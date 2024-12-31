@@ -19,7 +19,7 @@ impl<D: Dictionary> IsolateEnglish<D> {
 }
 
 impl<D: Dictionary> Parser for IsolateEnglish<D> {
-    fn parse(&mut self, source: &[char]) -> Vec<Token> {
+    fn parse(&self, source: &[char]) -> Vec<Token> {
         let tokens = self.inner.parse(source);
 
         let mut english_tokens: Vec<Token> = Vec::with_capacity(tokens.len());

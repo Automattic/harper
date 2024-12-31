@@ -4,12 +4,11 @@ use crate::{Span, Token};
 
 /// A parser that will attempt to lex as many tokens a possible,
 /// without discrimination and until the end of input.
+#[derive(Clone, Copy)]
 pub struct PlainEnglish;
 
-impl PlainEnglish {}
-
 impl Parser for PlainEnglish {
-    fn parse(&mut self, source: &[char]) -> Vec<Token> {
+    fn parse(&self, source: &[char]) -> Vec<Token> {
         let mut cursor = 0;
 
         // Lex tokens

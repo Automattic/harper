@@ -91,7 +91,7 @@ impl TreeSitterMasker {
 }
 
 impl Masker for TreeSitterMasker {
-    fn create_mask(&mut self, source: &[char]) -> Mask {
+    fn create_mask(&self, source: &[char]) -> Mask {
         let text: String = source.iter().collect();
 
         let Some(root) = self.parse_root(&text) else {

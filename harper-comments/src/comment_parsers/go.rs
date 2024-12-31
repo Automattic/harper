@@ -7,7 +7,7 @@ use super::without_initiators;
 pub struct Go;
 
 impl Parser for Go {
-    fn parse(&mut self, source: &[char]) -> Vec<Token> {
+    fn parse(&self, source: &[char]) -> Vec<Token> {
         let mut actual = without_initiators(source);
         let mut actual_source = actual.get_content(source);
 
@@ -25,9 +25,7 @@ impl Parser for Go {
             actual_source = new_source
         }
 
-        let mut markdown_parser = Markdown;
-
-        let mut new_tokens = markdown_parser.parse(actual_source);
+        let mut new_tokens = Markdown.parse(actual_source);
 
         new_tokens
             .iter_mut()

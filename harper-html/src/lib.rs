@@ -25,7 +25,7 @@ impl Default for HtmlParser {
 }
 
 impl Parser for HtmlParser {
-    fn parse(&mut self, source: &[char]) -> Vec<Token> {
+    fn parse(&self, source: &[char]) -> Vec<Token> {
         self.inner.parse(source)
     }
 }

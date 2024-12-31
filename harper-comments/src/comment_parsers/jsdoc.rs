@@ -7,7 +7,7 @@ use super::without_initiators;
 pub struct JsDoc;
 
 impl Parser for JsDoc {
-    fn parse(&mut self, source: &[char]) -> Vec<Token> {
+    fn parse(&self, source: &[char]) -> Vec<Token> {
         let mut tokens = Vec::new();
 
         let mut chars_traversed = 0;

@@ -12,7 +12,7 @@ use super::without_initiators;
 pub struct Unit;
 
 impl Parser for Unit {
-    fn parse(&mut self, source: &[char]) -> Vec<Token> {
+    fn parse(&self, source: &[char]) -> Vec<Token> {
         let mut tokens = Vec::new();
 
         let mut chars_traversed = 0;
@@ -57,10 +57,7 @@ fn parse_line(source: &[char]) -> Vec<Token> {
     }
 
     let source = actual.get_content(source);
-
-    let mut markdown_parser = Markdown;
-
-    let mut new_tokens = markdown_parser.parse(source);
+    let mut new_tokens = Markdown.parse(source);
 
     new_tokens
         .iter_mut()

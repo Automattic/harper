@@ -32,3 +32,6 @@ tree-sitter-haskell = "0.15.0"
 
 [dev-dependencies]
 paste = "1.0.15"
+
+[features]
+typst = ["harper-core/typst"]

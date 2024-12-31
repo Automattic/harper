@@ -4,6 +4,11 @@ mod markdown;
 mod mask;
 mod plain_english;
 
+#[cfg(feature = "typst")]
+mod typst;
+#[cfg(feature = "typst")]
+pub use typst::Typst;
+
 use blanket::blanket;
 pub use collapse_identifiers::CollapseIdentifiers;
 pub use isolate_english::IsolateEnglish;
@@ -16,24 +21,24 @@ pub use crate::token::{Token, TokenKind, TokenStringExt};
 #[cfg(not(feature = "concurrent"))]
 #[blanket(derive(Box))]
 pub trait Parser {
-    fn parse(&mut self, source: &[char]) -> Vec<Token>;
+    fn parse(&self, source: &[char]) -> Vec<Token>;
 }
 
 #[cfg(feature = "concurrent")]
 #[blanket(derive(Box))]
 pub trait Parser: Send + Sync {
-    fn parse(&mut self, source: &[char]) -> Vec<Token>;
+    fn parse(&self, source: &[char]) -> Vec<Token>;
 }
 
 pub trait StrParser {
-    fn parse_str(&mut self, source: impl AsRef<str>) -> Vec<Token>;
+    fn parse_str(&self, source: impl AsRef<str>) -> Vec<Token>;
 }
 
 impl<T> StrParser for T
 where
     T: Parser,
 {
-    fn parse_str(&mut self, source: impl AsRef<str>) -> Vec<Token> {
+    fn parse_str(&self, source: impl AsRef<str>) -> Vec<Token> {
         let source: Vec<_> = source.as_ref().chars().collect();
         self.parse(&source)
     }

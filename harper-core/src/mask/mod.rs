@@ -8,7 +8,7 @@ use crate::Span;
 /// This is primarily used by [`crate::parsers::Mask`] to create parsers for
 /// things like comments of programming languages.
 pub trait Masker: Send + Sync {
-    fn create_mask(&mut self, source: &[char]) -> Mask;
+    fn create_mask(&self, source: &[char]) -> Mask;
 }
 
 /// Identifies portions of a [`char`] sequence that should __not__ be ignored by

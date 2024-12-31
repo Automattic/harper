@@ -32,7 +32,7 @@ thread_local! {
 }
 
 impl Parser for CollapseIdentifiers {
-    fn parse(&mut self, source: &[char]) -> Vec<Token> {
+    fn parse(&self, source: &[char]) -> Vec<Token> {
         let mut tokens = self.inner.parse(source);
 
         let mut to_remove = VecDeque::default();

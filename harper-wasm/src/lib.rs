@@ -72,7 +72,7 @@ impl Linter {
     pub fn isolate_english(&self, text: String) -> String {
         let document = Document::new(
             &text,
-            &mut IsolateEnglish::new(Box::new(PlainEnglish), self.dictionary.clone()),
+            &IsolateEnglish::new(Box::new(PlainEnglish), self.dictionary.clone()),
             &self.dictionary,
         );
 
@@ -117,7 +117,7 @@ impl Linter {
         let source = Lrc::new(source);
 
         let document =
-            Document::new_from_vec(source.clone(), &mut Markdown, &FullDictionary::curated());
+            Document::new_from_vec(source.clone(), &Markdown, &FullDictionary::curated());
 
         let mut lints = self.lint_group.lint(&document);
 

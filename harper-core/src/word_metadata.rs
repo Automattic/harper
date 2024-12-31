@@ -128,7 +128,7 @@ pub enum Tense {
     Future,
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct VerbData {
     pub is_linking: Option<bool>,
     pub tense: Option<Tense>,
@@ -144,7 +144,7 @@ impl VerbData {
     }
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct NounData {
     pub is_proper: Option<bool>,
     pub is_plural: Option<bool>,
@@ -164,7 +164,7 @@ impl NounData {
     }
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct AdjectiveData {}
 
 impl AdjectiveData {
@@ -174,7 +174,7 @@ impl AdjectiveData {
     }
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct AdverbData {}
 
 impl AdverbData {
@@ -184,7 +184,7 @@ impl AdverbData {
     }
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct ConjunctionData {}
 
 impl ConjunctionData {

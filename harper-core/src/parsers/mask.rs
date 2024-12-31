@@ -27,7 +27,7 @@ where
     M: Masker,
     P: Parser,
 {
-    fn parse(&mut self, source: &[char]) -> Vec<Token> {
+    fn parse(&self, source: &[char]) -> Vec<Token> {
         let mask = self.masker.create_mask(source);
 
         let mut tokens: Vec<Token> = Vec::new();

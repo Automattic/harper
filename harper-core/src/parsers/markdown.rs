@@ -120,8 +120,8 @@ impl Markdown {
 impl Parser for Markdown {
     /// This implementation is quite gross to look at, but it works.
     /// If any issues arise, it would likely help to refactor this out first.
-    fn parse(&mut self, source: &[char]) -> Vec<Token> {
-        let mut english_parser = PlainEnglish;
+    fn parse(&self, source: &[char]) -> Vec<Token> {
+        let english_parser = PlainEnglish;
 
         let source_str: String = source.iter().collect();
         let md_parser = pulldown_cmark::Parser::new_ext(

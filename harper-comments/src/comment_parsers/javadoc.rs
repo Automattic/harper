@@ -12,7 +12,7 @@ pub struct JavaDoc {
 }
 
 impl Parser for JavaDoc {
-    fn parse(&mut self, source: &[char]) -> Vec<Token> {
+    fn parse(&self, source: &[char]) -> Vec<Token> {
         let actual = without_initiators(source);
         let actual_source = actual.get_content(source);
 
