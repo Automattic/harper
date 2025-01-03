@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::path::{Component, PathBuf};
 use std::sync::Arc;
 
-use anyhow::anyhow;
+use anyhow::{anyhow, Context};
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{CollapseIdentifiers, IsolateEnglish, Markdown, Parser, PlainEnglish};
@@ -13,7 +13,6 @@ use harper_core::{
 use harper_html::HtmlParser;
 use serde_json::Value;
 use tokio::sync::{Mutex, RwLock};
-use tower_lsp::jsonrpc::Result;
 use tower_lsp::lsp_types::notification::PublishDiagnostics;
 use tower_lsp::lsp_types::{
     CodeActionOrCommand, CodeActionParams, CodeActionProviderCapability, CodeActionResponse,
@@ -51,58 +50,68 @@ impl Backend {
 
     /// Rewrites a path to a filename using the same conventions as
     /// [Neovim's undo-files](https://neovim.io/doc/user/options.html#'undodir').
-    fn file_dict_name(url: &Url) -> Option<PathBuf> {
+    fn file_dict_name(url: &Url) -> anyhow::Result<PathBuf> {
         let mut rewritten = String::new();
 
         // We assume all URLs are local files and have a base
-        for seg in url.to_file_path().ok()?.components() {
+        for seg in url
+            .to_file_path()
+            .map_err(|_| anyhow!("Unable to convert URL to file path."))?
+            .components()
+        {
             if !matches!(seg, Component::RootDir) {
                 rewritten.push_str(&seg.as_os_str().to_string_lossy());
                 rewritten.push('%');
             }
         }
 
-        Some(rewritten.into())
+        Ok(rewritten.into())
     }
 
     /// Get the location of the file's specific dictionary
-    async fn get_file_dict_path(&self, url: &Url) -> Option<PathBuf> {
+    async fn get_file_dict_path(&self, url: &Url) -> anyhow::Result<PathBuf> {
         let config = self.config.read().await;
 
-        Some(config.file_dict_path.join(Self::file_dict_name(url)?))
+        Ok(config.file_dict_path.join(Self::file_dict_name(url)?))
     }
 
-    /// Load a speCific file's dictionary
-    async fn load_file_dictionary(&self, url: &Url) -> Option<FullDictionary> {
-        match load_dict(self.get_file_dict_path(url).await?).await {
-            Ok(dict) => Some(dict),
-            Err(_err) => Some(FullDictionary::new()),
-        }
+    /// Load a specific file's dictionary
+    async fn load_file_dictionary(&self, url: &Url) -> anyhow::Result<FullDictionary> {
+        let path = self
+            .get_file_dict_path(url)
+            .await
+            .context("Unable to get file path.")?;
+
+        load_dict(path)
+            .await
+            .map_err(|err| info!("{err}"))
+            .or(Ok(FullDictionary::new()))
     }
 
     async fn save_file_dictionary(&self, url: &Url, dict: impl Dictionary) -> anyhow::Result<()> {
-        Ok(save_dict(
+        save_dict(
             self.get_file_dict_path(url)
                 .await
-                .ok_or(anyhow!("Could not compute dictionary path."))?,
+                .context("Unable to get file path.")?,
             dict,
         )
-        .await?)
+        .await
+        .context("Unable to save dictionary to path.")
     }
 
     async fn load_user_dictionary(&self) -> FullDictionary {
         let config = self.config.read().await;
 
-        match load_dict(&config.user_dict_path).await {
-            Ok(dict) => dict,
-            Err(_err) => FullDictionary::new(),
-        }
+        load_dict(&config.user_dict_path)
+            .await
+            .map_err(|err| info!("{err}"))
+            .unwrap_or(FullDictionary::new())
     }
 
     async fn save_user_dictionary(&self, dict: impl Dictionary) -> anyhow::Result<()> {
         let config = self.config.read().await;
 
-        Ok(save_dict(&config.user_dict_path, dict).await?)
+        save_dict(&config.user_dict_path, dict).await
     }
 
     async fn generate_global_dictionary(&self) -> anyhow::Result<MergedDictionary> {
@@ -119,12 +128,11 @@ impl Backend {
             self.load_file_dictionary(url)
         );
 
-        let Some(file_dictionary) = file_dictionary else {
-            return Err(anyhow!("Unable to compute dictionary path."));
-        };
-
-        let mut global_dictionary = global_dictionary?;
-        global_dictionary.add_dictionary(Arc::new(file_dictionary));
+        let mut global_dictionary =
+            global_dictionary.context("Unable to load global dictionary.")?;
+        global_dictionary.add_dictionary(Arc::new(
+            file_dictionary.context("Unable to load file dictionary.")?,
+        ));
 
         Ok(global_dictionary)
     }
@@ -134,18 +142,12 @@ impl Backend {
         url: &Url,
         language_id: Option<&str>,
     ) -> anyhow::Result<()> {
-        let content = match tokio::fs::read_to_string(
+        let content = tokio::fs::read_to_string(
             url.to_file_path()
-                .map_err(|_| anyhow::format_err!("Could not extract file path."))?,
+                .map_err(|_| anyhow!("Unable to convert URL to file path."))?,
         )
         .await
-        {
-            Ok(content) => content,
-            Err(err) => {
-                error!("Error updating document from file: {}", err);
-                return Ok(());
-            }
-        };
+        .with_context(|| format!("Unable to read from file {:?}", url))?;
 
         self.update_document(url, &content, language_id).await
     }
@@ -161,7 +163,11 @@ impl Backend {
         let mut doc_lock = self.doc_state.lock().await;
         let config_lock = self.config.read().await;
 
-        let dict = Arc::new(self.generate_file_dictionary(url).await?);
+        let dict = Arc::new(
+            self.generate_file_dictionary(url)
+                .await
+                .context("Unable to generate file dictionary.")?,
+        );
 
         let doc_state = doc_lock.entry(url.clone()).or_insert(DocumentState {
             linter: LintGroup::new(config_lock.lint_config, dict.clone()),
@@ -190,7 +196,10 @@ impl Backend {
 
                     if doc_state.ident_dict != new_dict {
                         doc_state.ident_dict = new_dict.clone();
-                        let mut merged = self.generate_file_dictionary(url).await?;
+                        let mut merged = self
+                            .generate_file_dictionary(url)
+                            .await
+                            .context("Unable to generate file dictionary.")?;
                         merged.add_dictionary(new_dict);
                         let merged = Arc::new(merged);
 
@@ -236,7 +245,7 @@ impl Backend {
         &self,
         url: &Url,
         range: Range,
-    ) -> Result<Vec<CodeActionOrCommand>> {
+    ) -> tower_lsp::jsonrpc::Result<Vec<CodeActionOrCommand>> {
         let (config, mut doc_states) = tokio::join!(self.config.read(), self.doc_state.lock());
         let Some(doc_state) = doc_states.get_mut(url) else {
             return Ok(Vec::new());
@@ -307,15 +316,7 @@ impl Backend {
     /// Update the configuration of the server and publish document updates that
     /// match it.
     async fn update_config_from_obj(&self, json_obj: Value) {
-        let new_config = match Config::from_lsp_config(json_obj) {
-            Ok(new_config) => new_config,
-            Err(err) => {
-                error!("Unable to change config: {}", err);
-                return;
-            }
-        };
-
-        {
+        if let Ok(new_config) = Config::from_lsp_config(json_obj).map_err(|err| error!("{err}")) {
             let mut config = self.config.write().await;
             *config = new_config;
         }
@@ -339,7 +340,10 @@ impl Backend {
 
 #[tower_lsp::async_trait]
 impl LanguageServer for Backend {
-    async fn initialize(&self, _: InitializeParams) -> Result<InitializeResult> {
+    async fn initialize(
+        &self,
+        _: InitializeParams,
+    ) -> tower_lsp::jsonrpc::Result<InitializeResult> {
         Ok(InitializeResult {
             server_info: None,
             capabilities: ServerCapabilities {
@@ -375,21 +379,23 @@ impl LanguageServer for Backend {
     }
 
     async fn did_save(&self, params: DidSaveTextDocumentParams) {
-        let _ = self
-            .update_document_from_file(&params.text_document.uri, None)
-            .await;
+        self.update_document_from_file(&params.text_document.uri, None)
+            .await
+            .map_err(|err| error!("{err}"))
+            .err();
 
         self.publish_diagnostics(&params.text_document.uri).await;
     }
 
     async fn did_open(&self, params: DidOpenTextDocumentParams) {
-        let _ = self
-            .update_document(
-                &params.text_document.uri,
-                &params.text_document.text,
-                Some(&params.text_document.language_id),
-            )
-            .await;
+        self.update_document(
+            &params.text_document.uri,
+            &params.text_document.text,
+            Some(&params.text_document.language_id),
+        )
+        .await
+        .map_err(|err| error!("{err}"))
+        .err();
 
         self.publish_diagnostics(&params.text_document.uri).await;
     }
@@ -407,7 +413,10 @@ impl LanguageServer for Backend {
 
     async fn did_close(&self, _params: DidCloseTextDocumentParams) {}
 
-    async fn execute_command(&self, params: ExecuteCommandParams) -> Result<Option<Value>> {
+    async fn execute_command(
+        &self,
+        params: ExecuteCommandParams,
+    ) -> tower_lsp::jsonrpc::Result<Option<Value>> {
         let mut string_args = params
             .arguments
             .into_iter()
@@ -431,8 +440,14 @@ impl LanguageServer for Backend {
 
                 let mut dict = self.load_user_dictionary().await;
                 dict.append_word(word, WordMetadata::default());
-                let _ = self.save_user_dictionary(dict).await;
-                let _ = self.update_document_from_file(&file_url, None).await;
+                self.save_user_dictionary(dict)
+                    .await
+                    .map_err(|err| error!("{err}"))
+                    .err();
+                self.update_document_from_file(&file_url, None)
+                    .await
+                    .map_err(|err| error!("{err}"))
+                    .err();
                 self.publish_diagnostics(&file_url).await;
             }
             "HarperAddToFileDict" => {
@@ -444,14 +459,26 @@ impl LanguageServer for Backend {
 
                 let file_url = second.parse().unwrap();
 
-                let Some(mut dict) = self.load_file_dictionary(&file_url).await else {
-                    error!("Unable resolve dictionary path: {file_url}");
-                    return Ok(None);
+                let mut dict = match self
+                    .load_file_dictionary(&file_url)
+                    .await
+                    .map_err(|err| error!("{err}"))
+                {
+                    Ok(dict) => dict,
+                    Err(_) => {
+                        return Ok(None);
+                    }
                 };
                 dict.append_word(word, WordMetadata::default());
 
-                let _ = self.save_file_dictionary(&file_url, dict).await;
-                let _ = self.update_document_from_file(&file_url, None).await;
+                self.save_file_dictionary(&file_url, dict)
+                    .await
+                    .map_err(|err| error!("{err}"))
+                    .err();
+                self.update_document_from_file(&file_url, None)
+                    .await
+                    .map_err(|err| error!("{err}"))
+                    .err();
                 self.publish_diagnostics(&file_url).await;
             }
             "HarperOpen" => match open::that(&first) {
@@ -490,12 +517,18 @@ impl LanguageServer for Backend {
         };
 
         for url in urls {
-            let _ = self.update_document_from_file(&url, None).await;
+            self.update_document_from_file(&url, None)
+                .await
+                .map_err(|err| error!("{err}"))
+                .err();
             self.publish_diagnostics(&url).await;
         }
     }
 
-    async fn code_action(&self, params: CodeActionParams) -> Result<Option<CodeActionResponse>> {
+    async fn code_action(
+        &self,
+        params: CodeActionParams,
+    ) -> tower_lsp::jsonrpc::Result<Option<CodeActionResponse>> {
         let actions = self
             .generate_code_actions(&params.text_document.uri, params.range)
             .await?;
@@ -503,7 +536,7 @@ impl LanguageServer for Backend {
         Ok(Some(actions))
     }
 
-    async fn shutdown(&self) -> Result<()> {
+    async fn shutdown(&self) -> tower_lsp::jsonrpc::Result<()> {
         let doc_states = self.doc_state.lock().await;
 
         // Clears the diagnostics for open buffers.
