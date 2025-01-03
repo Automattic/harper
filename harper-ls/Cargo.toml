@@ -10,6 +10,7 @@ repository = "https://github.com/automattic/harper"
 [dependencies]
 harper-core = { path = "../harper-core", version = "0.14.0", features = ["concurrent"] }
 harper-comments = { path = "../harper-comments", version = "0.14.0" }
+harper-literate-haskell = { path = "../harper-literate-haskell", version = "0.14.0" }
 harper-html = { path = "../harper-html", version = "0.14.0" }
 tower-lsp = "0.20.0"
 tokio = { version = "1.42.0", features = ["fs", "rt", "rt-multi-thread", "macros", "io-std", "io-util", "net"] }

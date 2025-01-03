@@ -560,6 +560,7 @@ dependencies = [
  "clap",
  "harper-comments",
  "harper-core",
+ "harper-literate-haskell",
  "serde_json",
 ]
 
@@ -627,6 +628,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-literate-haskell"
+version = "0.14.0"
+dependencies = [
+ "harper-comments",
+ "harper-core",
+ "harper-tree-sitter",
+ "itertools 0.13.0",
+ "paste",
+]
+
+[[package]]
 name = "harper-ls"
 version = "0.14.0"
 dependencies = [
@@ -637,6 +649,7 @@ dependencies = [
  "harper-comments",
  "harper-core",
  "harper-html",
+ "harper-literate-haskell",
  "itertools 0.13.0",
  "once_cell",
  "open",
