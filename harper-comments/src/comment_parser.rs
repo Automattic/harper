@@ -37,6 +37,7 @@ impl CommentParser {
             "shellscript" => tree_sitter_bash::language(),
             "java" => tree_sitter_java::language(),
             "haskell" => tree_sitter_haskell::language(),
+            "vim" => tree_sitter_vim::language(),
             _ => return None,
         };
 
@@ -87,6 +88,7 @@ impl CommentParser {
             "bash" => "shellscript",
             "java" => "java",
             "hs" => "haskell",
+            "vim" => "vim",
             _ => return None,
         })
     }
