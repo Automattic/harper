@@ -589,6 +589,7 @@ dependencies = [
  "tree-sitter-swift",
  "tree-sitter-toml",
  "tree-sitter-typescript",
+ "tree-sitter-vim",
 ]
 
 [[package]]
@@ -1865,6 +1866,15 @@ name = "tree-sitter-typescript"
 version = "0.20.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c8bc1d2c24276a48ef097a71b56888ac9db63717e8f8d0b324668a27fd619670"
+dependencies = [
+ "cc",
+ "tree-sitter",
+]
+
+[[package]]
+name = "tree-sitter-vim"
+version = "0.3.0"
+source = "git+https://github.com/tree-sitter-grammars/tree-sitter-vim.git?tag=v0.3.0#1e0f794eb3d2a7f99d98dc1e6c178ad1e94a45af"
 dependencies = [
  "cc",
  "tree-sitter",

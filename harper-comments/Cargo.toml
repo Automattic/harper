@@ -27,6 +27,7 @@ tree-sitter-lua = "0.0.19"
 tree-sitter-bash = "0.20.0"
 tree-sitter-java = "0.20.0"
 tree-sitter-nix = "0.0.1"
+tree-sitter-vim = { git = "https://github.com/tree-sitter-grammars/tree-sitter-vim.git", tag = "v0.3.0" }
 itertools = "0.13.0"
 tree-sitter-haskell = "0.15.0"
 
