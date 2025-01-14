@@ -22,8 +22,7 @@ impl Linter for LinkingVerbs {
                             span: linking_verb.span,
                             lint_kind: LintKind::Miscellaneous,
                             message: format!(
-                                "Linking verbs like “{}” must be preceded by a noun.",
-                                linking_verb_text
+                                "Linking verbs like “{linking_verb_text}” must be preceded by a noun."
                             ),
                             ..Default::default()
                         })

@@ -56,7 +56,7 @@ impl Display for LintKind {
             LintKind::Style => "Style",
         };
 
-        write!(f, "{}", s)
+        write!(f, "{s}")
     }
 }
 

@@ -53,7 +53,7 @@ async fn main() -> anyhow::Result<()> {
         Server::new(stdin, stdout, socket).serve(service).await;
     } else {
         let listener = TcpListener::bind(DEFAULT_ADDRESS).await.unwrap();
-        println!("Listening on {}", DEFAULT_ADDRESS);
+        println!("Listening on {DEFAULT_ADDRESS}");
         let (stream, _) = listener.accept().await.unwrap();
         let (read, write) = tokio::io::split(stream);
         Server::new(read, write, socket).serve(service).await;

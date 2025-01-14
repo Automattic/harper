@@ -12,7 +12,7 @@ pub struct Span {
 impl Span {
     pub fn new(start: usize, end: usize) -> Self {
         if start > end {
-            panic!("{} > {}", start, end);
+            panic!("{start} > {end}");
         }
         Self { start, end }
     }

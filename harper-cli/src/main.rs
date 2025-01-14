@@ -90,7 +90,7 @@ fn main() -> anyhow::Result<()> {
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
-                println!("{}", json);
+                println!("{json}");
             }
 
             Ok(())
@@ -149,7 +149,7 @@ fn main() -> anyhow::Result<()> {
                 word_str.clear();
                 word_str.extend(word);
 
-                println!("{}", word_str);
+                println!("{word_str}");
             }
 
             Ok(())

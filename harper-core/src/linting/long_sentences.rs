@@ -17,7 +17,7 @@ impl Linter for LongSentences {
                 output.push(Lint {
                     span: Span::new(sentence[0].span.start, sentence.last().unwrap().span.end),
                     lint_kind: LintKind::Readability,
-                    message: format!("This sentence is {} words long.", word_count),
+                    message: format!("This sentence is {word_count} words long."),
                     ..Default::default()
                 })
             }

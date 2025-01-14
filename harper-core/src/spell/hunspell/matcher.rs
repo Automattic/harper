@@ -74,12 +74,12 @@ impl Display for Matcher {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         for op in &self.operators {
             match op {
-                Operator::Literal(c) => write!(f, "{}", c)?,
+                Operator::Literal(c) => write!(f, "{c}")?,
                 Operator::MatchOne(cs) => {
                     write!(f, "[")?;
 
                     for c in cs {
-                        write!(f, "{}", c)?;
+                        write!(f, "{c}")?;
                     }
 
                     write!(f, "]")?;
@@ -88,7 +88,7 @@ impl Display for Matcher {
                     write!(f, "[^")?;
 
                     for c in cs {
-                        write!(f, "{}", c)?;
+                        write!(f, "{c}")?;
                     }
 
                     write!(f, "]")?;

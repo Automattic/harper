@@ -551,7 +551,7 @@ impl LanguageServer for Backend {
             }
             "HarperOpen" => match open::that(&first) {
                 Ok(()) => {
-                    let message = format!(r#"Opened "{}""#, first);
+                    let message = format!(r#"Opened "{first}""#);
 
                     self.client.log_message(MessageType::INFO, &message).await;
 
