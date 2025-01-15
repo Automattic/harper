@@ -29,7 +29,7 @@ tree-sitter-bash = "0.20.0"
 tree-sitter-java = "0.20.0"
 tree-sitter-nix = "0.0.1"
 itertools = "0.14.0"
-tree-sitter-haskell = "0.15.0"
+tree-sitter-haskell = "0.21.0"
 
 [dev-dependencies]
 paste = "1.0.15"
