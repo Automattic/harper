@@ -122,5 +122,8 @@ mod tests {
         let transformed_str: String = text.iter().collect();
 
         assert_eq!(transformed_str.as_str(), expected_result);
+
+        // Applying the suggestions should fix all the lints.
+        assert_lint_count(&transformed_str, linter, 0);
     }
 }
