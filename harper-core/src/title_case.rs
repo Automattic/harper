@@ -28,10 +28,8 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
         return Vec::new();
     }
 
-    let start_index = toks.first().unwrap().span.start;
-
     let mut words = toks.iter_word_likes().enumerate().peekable();
-    let mut output = toks.span().unwrap().get_content(source).to_vec();
+    let mut output = source.to_vec();
 
     // Only specific conjunctions are not capitalized.
     lazy_static! {
@@ -62,17 +60,16 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
             || words.peek().is_none();
 
         if should_capitalize {
-            output[word.span.start - start_index] =
-                output[word.span.start - start_index].to_ascii_uppercase();
+            output[word.span.start] = output[word.span.start].to_ascii_uppercase();
 
             // The rest of the word should be lowercase.
-            for v in &mut output[word.span.start + 1 - start_index..word.span.end - start_index] {
+            for v in &mut output[word.span.start + 1..word.span.end] {
                 *v = v.to_ascii_lowercase();
             }
         } else {
             // The whole word should be lowercase.
             for i in word.span {
-                output[i - start_index] = output[i].to_ascii_lowercase();
+                output[i] = output[i].to_ascii_lowercase();
             }
         }
     }
@@ -117,6 +114,29 @@ mod tests {
         assert_eq!(
             make_title_case_str("THIS IS A TEST", &PlainEnglish, &FstDictionary::curated()),
             "This Is a Test"
+        )
+    }
+
+    #[test]
+    fn span_breaks_in_source() {
+        use super::make_title_case;
+        use crate::{CharStringExt, Span, Token, TokenKind, WordMetadata};
+        use itertools::Itertools;
+
+        let source = "// linted
+// linted";
+        let source = source.chars().collect_vec();
+
+        let toks = &[
+            Token::new(Span::new(3, 9), TokenKind::Word(WordMetadata::default())),
+            Token::new(Span::new(9, 10), TokenKind::Newline(1)),
+            Token::new(Span::new(13, 19), TokenKind::Word(WordMetadata::default())),
+        ];
+
+        assert_eq!(
+            make_title_case(toks, &source, &FstDictionary::curated()).to_string(),
+            "// Linted
+// Linted"
         )
     }
 
