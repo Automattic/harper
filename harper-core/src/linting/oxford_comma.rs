@@ -81,7 +81,7 @@ impl Linter for OxfordComma {
     }
 
     fn description(&self) -> &str {
-        "The Oxford comma is one of the more controversial rules in common use today. Here, we make sure that we put a comma before `and` when listing out more than two ideas."
+        "The Oxford comma is one of the more controversial rules in common use today. Enabling this lint checks that there is a comma before `and` or `or` when listing out more than two ideas."
     }
 }
 
