@@ -108,3 +108,23 @@ impl Parser for CommentParser {
         self.inner.parse(source)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::{CommentParser, MarkdownOptions, Parser};
+    use harper_core::TokenKind;
+
+    #[test]
+    fn shebang_unlintable() {
+        let source = String::from("#!/usr/bin/env python3")
+            .chars()
+            .collect::<Vec<char>>();
+        let markdown_options = MarkdownOptions::default();
+
+        let parser = CommentParser::new_from_language_id("python", markdown_options).unwrap();
+        let tokens = parser.parse(&source);
+        let kinds: Vec<_> = tokens.into_iter().map(|v| v.kind).collect();
+
+        assert!(kinds == &[TokenKind::Unlintable]);
+    }
+}
