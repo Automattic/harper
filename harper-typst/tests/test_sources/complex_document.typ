@@ -7,7 +7,10 @@
   title: "Default Title",
   authors: ("Author 1", "Author 2"),
   abstract: [*This is content*],
+  body,
 ) = {
+  set document(date: none)
+  set par(justify: true)
   set page(
     header: context {
       if counter(page).get().first() > 1 [
@@ -31,7 +34,7 @@
     #let count = authors.len()
     #let authors_slice = authors.slice(0, calc.min(count, 3))
     _#if count > 3 {
-        // et al. isn't parsed properly, but this isn't the fault of the typst
+        // et al. isn't parsed properly, but this isn't the fault of the Typst
         // parser
         // authors_slice.push("et al.")
         authors_slice.join(", ")
@@ -45,15 +48,16 @@
       #abstract
     ]
   ]
+  body
 }
 
 #show: doc => [
   #titleblock(
     title: "A fluid dynamic model for glacier flow",
     authors: ("Grant Lemons", "John Doe", "Jane Doe"),
-    abstract: lorem(80)
+    abstract: lorem(80),
+    doc,
   )
-  #doc
 ]
 
 = Introduction

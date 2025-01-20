@@ -225,9 +225,6 @@ impl<'a> TypstTranslator<'a> {
             Expr::Strong(strong) => iter_recurse(&mut strong.body().exprs()),
             Expr::Emph(emph) => iter_recurse(&mut emph.body().exprs()),
             Expr::Link(a) => token!(a, TokenKind::Url),
-            Expr::Ref(a) => {
-                token!(a, TokenKind::Word(WordMetadata::default()))
-            }
             Expr::Heading(heading) => iter_recurse(&mut heading.body().exprs()),
             Expr::List(list_item) => iter_recurse(&mut list_item.body().exprs()),
             Expr::Enum(enum_item) => iter_recurse(&mut enum_item.body().exprs()),
