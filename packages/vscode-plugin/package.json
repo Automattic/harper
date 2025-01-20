@@ -99,6 +99,12 @@
 					"default": false,
 					"description": "Only lint English text in documents that are a mixture of English and another language."
 				},
+				"harper-ls.markdown.ignore_link_title": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Skip linting link titles."
+				},
 				"harper-ls.linters.amazon_names": {
 					"scope": "resource",
 					"type": "boolean",
