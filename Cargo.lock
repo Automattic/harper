@@ -606,6 +606,7 @@ dependencies = [
  "harper-core",
  "harper-literate-haskell",
  "harper-typst",
+ "serde",
  "serde_json",
 ]
 
