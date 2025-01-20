@@ -87,6 +87,12 @@
 					"default": "information",
 					"description": "How severe do you want diagnostics to appear in the editor?"
 				},
+				"harper-ls.isolateEnglish": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Only lint English text in documents that are a mixture of English and another language."
+				},
 				"harper-ls.linters.amazon_names": {
 					"scope": "resource",
 					"type": "boolean",
