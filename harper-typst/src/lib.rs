@@ -216,10 +216,10 @@ mod tests {
     }
 
     #[test]
-    fn label_unlintable() {
+    fn label_ref_unlintable() {
         let source = "= Header
                       <label>
-                      Paragraph";
+                      Paragraph @label";
 
         let document = Document::new_curated(source, &Typst);
         let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
@@ -233,6 +233,8 @@ mod tests {
                 TokenKind::Unlintable,
                 TokenKind::Newline(1),
                 TokenKind::Word(_),
+                TokenKind::Space(_),
+                TokenKind::Unlintable,
             ]
         ))
     }
