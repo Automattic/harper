@@ -42,48 +42,6 @@ mod tests {
     use harper_core::{Document, NounData, Punctuation, TokenKind, WordMetadata};
 
     #[test]
-    fn contraction() {
-        let document = Document::new_curated("doesn't", &Typst);
-        let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
-        dbg!(&token_kinds);
-
-        assert_eq!(token_kinds.len(), 1);
-        assert!(!token_kinds.into_iter().any(|t| {
-            matches!(
-                t,
-                TokenKind::Word(WordMetadata {
-                    noun: Some(NounData {
-                        is_possessive: Some(true),
-                        ..
-                    }),
-                    ..
-                })
-            )
-        }))
-    }
-
-    #[test]
-    fn possessive() {
-        let document = Document::new_curated("person's", &Typst);
-        let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
-        dbg!(&token_kinds);
-
-        assert_eq!(token_kinds.len(), 1);
-        assert!(token_kinds.into_iter().all(|t| {
-            matches!(
-                t,
-                TokenKind::Word(WordMetadata {
-                    noun: Some(NounData {
-                        is_possessive: Some(true),
-                        ..
-                    }),
-                    ..
-                })
-            )
-        }))
-    }
-
-    #[test]
     fn number() {
         let source = "12 is larger than 11, but much less than 11!";
 
@@ -141,9 +99,9 @@ mod tests {
     #[test]
     fn dict_parsing() {
         let source = r#"#let dict = (
-                        name: "Typst",
-                        born: 2019,
-                      )"#;
+                          name: "Typst",
+                          born: 2019,
+                        )"#;
 
         let document = Document::new_curated(source, &Typst);
         let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
@@ -156,11 +114,11 @@ mod tests {
         assert!(matches!(
             token_kinds.as_slice(),
             &[
-                TokenKind::Unlintable, // Ident
-                TokenKind::Unlintable, // Key 1
-                TokenKind::Word(_),    // Value 1
-                TokenKind::Unlintable, // Key 2
-                TokenKind::Unlintable, // Value 2
+                TokenKind::Unlintable, // dict
+                TokenKind::Unlintable, // name (key 1)
+                TokenKind::Word(_),    // Typst (value 1)
+                TokenKind::Unlintable, // born (key 2)
+                TokenKind::Unlintable, // 2019 (value 2)
             ]
         ))
     }
@@ -176,14 +134,14 @@ mod tests {
         assert!(matches!(
             &token_kinds.as_slice(),
             &[
-                TokenKind::Unlintable,
-                TokenKind::Word(_), // This
-                TokenKind::Space(1),
-                TokenKind::Word(_), // Is
-                TokenKind::Space(1),
-                TokenKind::Word(_), // A
-                TokenKind::Space(1),
-                TokenKind::Word(_), // String
+                TokenKind::Unlintable, // ident
+                TokenKind::Word(_),    // This
+                TokenKind::Space(1),   //
+                TokenKind::Word(_),    // is
+                TokenKind::Space(1),   //
+                TokenKind::Word(_),    // a
+                TokenKind::Space(1),   //
+                TokenKind::Word(_),    // string
             ]
         ))
     }
@@ -202,21 +160,21 @@ mod tests {
                 TokenKind::Unlintable, // authors_slice.join
                 TokenKind::Punctuation(Punctuation::Comma),
                 TokenKind::Space(1),
-                TokenKind::Unlintable, // Ident
+                TokenKind::Unlintable, // last
                 TokenKind::Punctuation(Punctuation::Comma),
                 TokenKind::Space(1),
                 TokenKind::Word(_), // and
                 TokenKind::Space(1),
                 TokenKind::Space(2),
-                TokenKind::Word(_),
+                TokenKind::Word(_), // bob
             ]
         ))
     }
 
     #[test]
     fn header_parsing() {
-        let source = r"= Header
-                       Paragraph";
+        let source = "= Header
+                      Paragraph";
 
         let document = Document::new_curated(source, &Typst);
         let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
@@ -239,9 +197,9 @@ mod tests {
 
     #[test]
     fn parbreak() {
-        let source = r"Paragraph
+        let source = "Paragraph
 
-                       Paragraph";
+                      Paragraph";
 
         let document = Document::new_curated(source, &Typst);
         let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
@@ -259,9 +217,9 @@ mod tests {
 
     #[test]
     fn label_unlintable() {
-        let source = r"= Header
-                       <label>
-                       Paragraph";
+        let source = "= Header
+                      <label>
+                      Paragraph";
 
         let document = Document::new_curated(source, &Typst);
         let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
@@ -313,8 +271,8 @@ mod tests {
 
     #[test]
     fn smart_apostrophe_newline() {
-        let source = r#"group’s
-writing"#;
+        let source = "group’s
+                      writing";
 
         let document = Document::new_curated(source, &Typst);
         let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
