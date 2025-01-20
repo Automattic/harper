@@ -75,6 +75,12 @@
 					"type": "string",
 					"description": "Optional path to a harper-ls executable to use."
 				},
+				"harper-ls.codeActions.forceStable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Make code actions appear in \"stable\" positions by placing code actions that should always be available like adding misspelled words in the dictionary first."
+				},
 				"harper-ls.diagnosticSeverity": {
 					"scope": "resource",
 					"type": "string",
