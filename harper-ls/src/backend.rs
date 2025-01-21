@@ -29,7 +29,7 @@ use tower_lsp::lsp_types::{
     TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Url, WatchKind,
 };
 use tower_lsp::{Client, LanguageServer};
-use tracing::{error, info, warn};
+use tracing::{debug, error, info, warn};
 
 use crate::config::Config;
 use crate::diagnostics::{lint_to_code_actions, lints_to_diagnostics};
@@ -89,7 +89,7 @@ impl Backend {
 
         load_dict(path)
             .await
-            .map_err(|err| info!("{err}"))
+            .map_err(|err| debug!("Attempting to open file dictionary: {err}"))
             .or(Ok(FullDictionary::new()))
     }
 
