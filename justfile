@@ -128,6 +128,38 @@ package-vscode target="":
     yarn package
   fi
 
+update-vscode-linters:
+  #! /bin/bash
+  set -eo pipefail
+
+  linters=$(
+    cargo run --bin harper-cli -- config |
+      jq 'with_entries(.key |= "harper-ls.linters." + . |
+        .value |= {
+          "scope": "resource",
+          "type": "boolean",
+          "default": .default_value,
+          "description": .description
+        }
+      )'
+  )
+
+  cd "{{justfile_directory()}}/packages/vscode-plugin"
+
+  manifest_without_linters=$(
+    jq 'walk(
+      if type == "object" then
+        with_entries(select(.key | startswith("harper-ls.linters") | not))
+      end
+    )' package.json
+  )
+
+  jq --argjson linters "$linters" \
+    '.contributes.configuration.properties += $linters' <<< \
+    "$manifest_without_linters" > \
+    package.json
+  yarn prettier --write package.json
+
 # Run Rust formatting and linting.
 check-rust:
   #! /bin/bash

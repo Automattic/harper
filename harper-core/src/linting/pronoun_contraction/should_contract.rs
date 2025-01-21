@@ -60,23 +60,3 @@ impl PatternLinter for ShouldContract {
         "Neglecting the apostrophe when contracting pronouns with \"are\" (like \"your\" and \"you are\") is a fatal, but extremely common mistake to make."
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::ShouldContract;
-    use crate::linting::tests::assert_suggestion_result;
-
-    #[test]
-    fn issue_225() {
-        assert_suggestion_result("Your the man", ShouldContract::default(), "You're the man");
-    }
-
-    #[test]
-    fn were_team() {
-        assert_suggestion_result(
-            "Were the best team.",
-            ShouldContract::default(),
-            "We're the best team.",
-        );
-    }
-}

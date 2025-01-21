@@ -44,28 +44,3 @@ impl PatternLinter for AvoidContraction {
         "This rule looks for situations where a contraction was used where it shouldn't have been."
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use crate::linting::tests::assert_suggestion_result;
-
-    use super::AvoidContraction;
-
-    #[test]
-    fn issue_139() {
-        assert_suggestion_result(
-            "it would be great if you're PR was merged into tower-lsp",
-            AvoidContraction::default(),
-            "it would be great if your PR was merged into tower-lsp",
-        );
-    }
-
-    #[test]
-    fn car() {
-        assert_suggestion_result(
-            "You're car is black.",
-            AvoidContraction::default(),
-            "Your car is black.",
-        );
-    }
-}

@@ -16,8 +16,8 @@ impl Linter for CurrencyPlacement {
                 lints.extend(generate_lint_for_tokens(*a, *b, document));
             }
 
-            for (a, b, c) in chunk.iter().tuple_windows() {
-                if !b.kind.is_whitespace() {
+            for (p, a, b, c) in chunk.iter().tuple_windows() {
+                if !b.kind.is_whitespace() || p.kind.is_currency() {
                     continue;
                 }
 

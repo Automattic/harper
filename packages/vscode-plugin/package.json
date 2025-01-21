@@ -75,113 +75,11 @@
 					"type": "string",
 					"description": "Optional path to a harper-ls executable to use."
 				},
-				"harper-ls.linters.spell_check": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Detect and provide suggestions for misspelled words."
-				},
-				"harper-ls.linters.spelled_numbers": {
+				"harper-ls.codeActions.forceStable": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": false,
-					"description": "Detect and fix instances where small numbers should be spelled out."
-				},
-				"harper-ls.linters.an_a": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Detect and fix improper articles."
-				},
-				"harper-ls.linters.sentence_capitalization": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Ensure your sentences are capitalized."
-				},
-				"harper-ls.linters.unclosed_quotes": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Make sure you close your quotation marks."
-				},
-				"harper-ls.linters.wrong_quotes": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": false,
-					"description": "Make sure you use the correct unicode characters for your quotation marks."
-				},
-				"harper-ls.linters.long_sentences": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Warn about run-on sentences."
-				},
-				"harper-ls.linters.repeated_words": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Detect and fix commonly repeated words."
-				},
-				"harper-ls.linters.spaces": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Detect improper spacing between words."
-				},
-				"harper-ls.linters.matcher": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "A collection of hand-crafted common grammar mistakes."
-				},
-				"harper-ls.linters.correct_number_suffix": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Make sure you provide the correct suffix for numbers."
-				},
-				"harper-ls.linters.number_suffix_capitalization": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Make sure you correctly capitalize your number suffixes."
-				},
-				"harper-ls.linters.multiple_sequential_pronouns": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Detect improper sequences of pronouns."
-				},
-				"harper-ls.linters.linking_verbs": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Detect improper use of linking verbs."
-				},
-				"harper-ls.linters.avoid_curses": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Catch use of curse/swear words."
-				},
-				"harper-ls.linters.terminating_conjunctions": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Catch improper use of conjuctions to terminate clauses."
-				},
-				"harper-ls.linters.ellipsis_length": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Ensure ellipsis are always the correct length. Also useful for catching accidental double periods."
-				},
-				"harper-ls.linters.dot_initialisms": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Make sure certain initialisms are correctly dot-separated."
+					"description": "Make code actions appear in \"stable\" positions by placing code actions that should always be available like adding misspelled words in the dictionary first."
 				},
 				"harper-ls.diagnosticSeverity": {
 					"scope": "resource",
@@ -194,6 +92,256 @@
 					],
 					"default": "information",
 					"description": "How severe do you want diagnostics to appear in the editor?"
+				},
+				"harper-ls.fileDictPath": {
+					"scope": "resource",
+					"type": "string",
+					"description": "Optional path to a file dictionary directory to use."
+				},
+				"harper-ls.isolateEnglish": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Only lint English text in documents that are a mixture of English and another language."
+				},
+				"harper-ls.markdown.ignore_link_title": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Skip linting link titles."
+				},
+				"harper-ls.userDictPath": {
+					"scope": "resource",
+					"type": "string",
+					"description": "Optional path to a global dictionary file to use."
+				},
+				"harper-ls.linters.amazon_names": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to the various products of Amazon.com, make sure to treat them as a proper noun."
+				},
+				"harper-ls.linters.americas": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to the continents, make sure to treat them as a proper noun."
+				},
+				"harper-ls.linters.an_a": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A rule that looks for incorrect indefinite articles. For example, `this is an mule` would be flagged as incorrect."
+				},
+				"harper-ls.linters.apple_names": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to Apple products and services, make sure to treat them as proper nouns."
+				},
+				"harper-ls.linters.avoid_curses": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A rule that looks for common offensive language."
+				},
+				"harper-ls.linters.azure_names": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to Azure cloud services, make sure to treat them as proper nouns."
+				},
+				"harper-ls.linters.boring_words": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "This rule looks for particularly boring or overused words. Using varied language is an easy way to keep a reader's attention."
+				},
+				"harper-ls.linters.capitalize_personal_pronouns": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Forgetting to capitalize personal pronouns, like \"I\" or \"I'm\" is one of the most common errors. This rule helps with that."
+				},
+				"harper-ls.linters.chinese_communist_party": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to the political party, make sure to treat them as a proper noun."
+				},
+				"harper-ls.linters.correct_number_suffix": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When making quick edits, it is common for authors to change the value of a number without changing its suffix. This rule looks for these cases, for example: `2st`."
+				},
+				"harper-ls.linters.currency_placement": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "The location of currency symbols varies by country. The rule looks for and corrects improper positioning."
+				},
+				"harper-ls.linters.dot_initialisms": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Ensures common initialisms (like \"i.e.\") are properly dot-separated."
+				},
+				"harper-ls.linters.ellipsis_length": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Make sure you have the correct number of dots in your ellipsis."
+				},
+				"harper-ls.linters.google_names": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to Google products and services, make sure to treat them as proper nouns."
+				},
+				"harper-ls.linters.holidays": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to holidays, make sure to treat them as a proper noun."
+				},
+				"harper-ls.linters.koreas": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to the nations, make sure to treat them as a proper noun."
+				},
+				"harper-ls.linters.linking_verbs": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Linking verbs connect nouns to other ideas. Make sure you do not accidentally link words that aren't nouns."
+				},
+				"harper-ls.linters.long_sentences": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule looks for run-on sentences, which can make your work harder to grok."
+				},
+				"harper-ls.linters.matcher": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A collection of curated rules. A catch-all that will be removed in the future."
+				},
+				"harper-ls.linters.merge_words": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Accidentally inserting a space inside a word is common. This rule looks for valid words that are split by whitespace."
+				},
+				"harper-ls.linters.meta_names": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to Meta products and services, make sure to treat them as proper nouns."
+				},
+				"harper-ls.linters.microsoft_names": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to Microsoft products and services, make sure to treat them as proper nouns."
+				},
+				"harper-ls.linters.multiple_sequential_pronouns": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When editing work to change point of view (i.e. first-person or third-person) it is common to add pronouns while neglecting to remove old ones. This rule catches cases where you have multiple disparate pronouns in sequence."
+				},
+				"harper-ls.linters.number_suffix_capitalization": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "You should never capitalize number suffixes."
+				},
+				"harper-ls.linters.oxford_comma": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "The Oxford comma is one of the more controversial rules in common use today. Here, we make sure that we put a comma before `and` when listing out more than two ideas."
+				},
+				"harper-ls.linters.plural_conjugate": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Make sure you use the correct conjugation of the verb \"to be\" in plural contexts."
+				},
+				"harper-ls.linters.pronoun_contraction": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Choosing when to contract pronouns is a challenging art. This rule looks for faults."
+				},
+				"harper-ls.linters.repeated_words": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule looks for repetitions of words that are not homographs."
+				},
+				"harper-ls.linters.sentence_capitalization": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "The opening word of a sentence should almost always be capitalized."
+				},
+				"harper-ls.linters.spaces": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Words should be separated by at most one space."
+				},
+				"harper-ls.linters.spell_check": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks and provides corrections for misspelled words."
+				},
+				"harper-ls.linters.spelled_numbers": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Most style guides recommend that you spell out numbers less than ten."
+				},
+				"harper-ls.linters.terminating_conjunctions": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Subordinating conjunctions are words that create a grammatical space for another idea or clause. As such, they should never appear at the end of a clause."
+				},
+				"harper-ls.linters.that_which": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Repeating the word \"that\" twice is often redundant. `That which` is easier to read."
+				},
+				"harper-ls.linters.unclosed_quotes": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Quotation marks should always be closed. Unpaired quotation marks are a hallmark of sloppy work."
+				},
+				"harper-ls.linters.united_organizations": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "When referring to national or international organizations, make sure to treat them as a proper noun."
+				},
+				"harper-ls.linters.use_genitive": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Looks situations where the genitive case of \"there\" should be used."
+				},
+				"harper-ls.linters.wrong_quotes": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "The key on the keyboard often used as a quotation mark is actually a double-apostrophe. Use the correct character."
 				}
 			}
 		}

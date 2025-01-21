@@ -37,5 +37,6 @@ macro_rules! create_test {
     };
 }
 
-create_test!(complex_typst.typ, 0);
-create_test!(typst_spelling_mistakes.typ, 4);
+create_test!(complex_document.typ, 0);
+create_test!(simplified_document.typ, 0);
+create_test!(complex_document_with_spelling_mistakes.typ, 4);
