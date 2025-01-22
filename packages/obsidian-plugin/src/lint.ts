@@ -165,7 +165,7 @@ function maybeEnableLint(state: EditorState, effects: readonly StateEffect<unkno
 }
 
 /// Returns a transaction spec which updates the current set of
-/// diagnostics, and enables the lint extension if if wasn't already
+/// diagnostics, and enables the lint extension if it wasn't already
 /// active.
 export function setDiagnostics(
 	state: EditorState,
