@@ -31,7 +31,7 @@ impl PartialOrd for FuzzyMatchResult<'_> {
 /// Order the suggestions to be shown to the user.
 fn order_suggestions(matches: Vec<FuzzyMatchResult>) -> Vec<&[char]> {
     let mut found: Vec<&FuzzyMatchResult> = Vec::with_capacity(matches.len());
-    // Often the longest and the shortest words are the most helpful, so lets push
+    // Often the longest and the shortest words are the most helpful, so let's push
     // them first.
     let minmax = matches.iter().position_minmax_by_key(|fmr| fmr.word.len());
     if let MinMaxResult::MinMax(a, b) = minmax {
