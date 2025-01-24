@@ -56,7 +56,16 @@ pub fn remove_overlaps(lints: &mut Vec<Lint>) {
 
     for (i, lint) in lints.iter().enumerate() {
         if lint.span.start < cur {
-            remove_indices.push_back(i);
+            let Some(prev) = lints.get(i - 1) else {
+                remove_indices.push_back(i);
+                continue;
+            };
+
+            if lint.priority < prev.priority {
+                remove_indices.push_back(i - 1);
+            } else {
+                remove_indices.push_back(i);
+            }
             continue;
         }
         cur = lint.span.end;
