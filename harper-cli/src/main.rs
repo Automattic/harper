@@ -1,6 +1,8 @@
 #![doc = include_str!("../README.md")]
 
 use std::collections::{BTreeMap, HashMap};
+use std::fs::File;
+use std::io::BufReader;
 use std::path::{Path, PathBuf};
 
 use anyhow::format_err;
@@ -11,6 +13,7 @@ use harper_core::linting::{LintGroup, LintGroupConfig, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions};
 use harper_core::{remove_overlaps, Dictionary, Document, FstDictionary, TokenKind};
 use harper_literate_haskell::LiterateHaskellParser;
+use harper_stats::Stats;
 use serde::Serialize;
 
 /// A debugging tool for the Harper grammar checker.
@@ -43,6 +46,8 @@ enum Args {
     Metadata { word: String },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
     Words,
+    /// Summarize a lint record
+    SummarizeLintRecord { file: PathBuf },
     /// Print the default config with descriptions.
     Config,
 }
@@ -166,6 +171,16 @@ fn main() -> anyhow::Result<()> {
             let json = serde_json::to_string_pretty(&metadata).unwrap();
 
             println!("{json}");
+
+            Ok(())
+        }
+        Args::SummarizeLintRecord { file } => {
+            let file = File::open(file)?;
+            let mut reader = BufReader::new(file);
+            let stats = Stats::read_csv(&mut reader)?;
+
+            let summary = stats.summarize_lints_applied();
+            println!("{summary}");
 
             Ok(())
         }

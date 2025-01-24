@@ -28,7 +28,7 @@ impl Default for Lint {
     }
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, Is, Default)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, Is, Default, PartialEq, Eq, Hash)]
 pub enum LintKind {
     Spelling,
     Capitalization,
@@ -40,6 +40,23 @@ pub enum LintKind {
     WordChoice,
     #[default]
     Miscellaneous,
+}
+
+impl LintKind {
+    pub fn new_from_str(s: &str) -> Option<Self> {
+        Some(match s {
+            "Spelling" => LintKind::Spelling,
+            "Capitalization" => LintKind::Capitalization,
+            "Formatting" => LintKind::Formatting,
+            "Repetition" => LintKind::Repetition,
+            "Readability" => LintKind::Readability,
+            "Miscellaneous" => LintKind::Miscellaneous,
+            "Enhancement" => LintKind::Enhancement,
+            "Word Choice" => LintKind::WordChoice,
+            "Style" => LintKind::Style,
+            _ => return None,
+        })
+    }
 }
 
 impl Display for LintKind {
