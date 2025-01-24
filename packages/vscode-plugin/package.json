@@ -319,6 +319,12 @@
 					"default": true,
 					"description": "Repeating the word \"that\" twice is often redundant. `That which` is easier to read."
 				},
+				"harper-ls.linters.foo_bar": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Repeating the word \"foo\" twice is often redundant. `Foo bar` is easier to read."
+				},
 				"harper-ls.linters.unclosed_quotes": {
 					"scope": "resource",
 					"type": "boolean",

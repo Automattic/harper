@@ -28,6 +28,7 @@ use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::terminating_conjunctions::TerminatingConjunctions;
 use super::that_which::ThatWhich;
+use super::foo_bar::FooBar;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
 use super::wrong_quotes::WrongQuotes;
@@ -172,6 +173,7 @@ create_lint_group_config!(
     BoringWords => false,
     UseGenitive => false,
     ThatWhich => true,
+    FooBar => true,
     CapitalizePersonalPronouns => true,
     Americas => true,
     Koreas => true,
