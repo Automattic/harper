@@ -27,7 +27,7 @@ levenshtein_automata = { version = "0.2.1", features = ["fst_automaton"] }
 
 [dev-dependencies]
 criterion = { version = "0.5.1", default-features = false }
-rand = "0.8.5"
+rand = "0.9.0"
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
 
