@@ -9,7 +9,7 @@ pub struct UseGenitive {
 
 impl UseGenitive {
     fn new() -> Self {
-        // Define the environment in the genitive case __should__ be used in.
+        // Define the environment in which the genitive case __should__ be used.
         let environment = Lrc::new(SequencePattern::default().then_whitespace().then(Box::new(
             EitherPattern::new(vec![
                     Box::new(
@@ -69,7 +69,7 @@ impl PatternLinter for UseGenitive {
     }
 
     fn description(&self) -> &'static str {
-        "Looks situations where the genitive case of \"there\" should be used."
+        "Looks for situations where the genitive case of \"there\" should be used."
     }
 }
 

@@ -233,7 +233,7 @@ impl Document {
     }
 
     /// Searches for quotation marks and fills the
-    /// [`Punctuation::Quote::twin_loc`] field. This is on a best effort
+    /// [`Punctuation::Quote::twin_loc`] field. This is on a best-effort
     /// basis.
     ///
     /// Current algorithm is basic and could use some work.

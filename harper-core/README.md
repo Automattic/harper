@@ -1,8 +1,8 @@
 # `harper-core`
 
-`harper-core` is fundamental engine behind [Harper](https://writewithharper.com), the grammar checker for developers.
+`harper-core` is the fundamental engine behind [Harper](https://writewithharper.com), the grammar checker for developers.
 
-`harper-core` _is_ [available on `crates.io`](https://crates.io/crates/harper-core), however improving the API is not currently a high priority.
+`harper-core` _is_ [available on `crates.io`](https://crates.io/crates/harper-core). However, improving the API is not currently a high priority.
 Feel free to use `harper-core` in your projects.
 If you run into issues, create a pull request.
 

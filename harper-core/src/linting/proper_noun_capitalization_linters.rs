@@ -115,7 +115,7 @@ create_linter_for!(
                 .then(Box::new(EitherPattern::new(vec![
                     Box::new(WordSet::all(&[
                         "Presidents'",
-                        "Valentines",
+                        "Valentine's",
                         "Christmas",
                         "Easter",
                         "Flag",

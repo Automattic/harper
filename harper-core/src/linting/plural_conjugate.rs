@@ -61,7 +61,7 @@ impl PatternLinter for PluralConjugate {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::PluralConjugate;
 
@@ -89,6 +89,24 @@ mod tests {
             "The house are just sitting there.",
             PluralConjugate::default(),
             "The house is just sitting there.",
+        );
+    }
+
+    #[test]
+    fn review_doc_page() {
+        assert_lint_count(
+            "If you are testing it, try harder.",
+            PluralConjugate::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn pronoun_singular() {
+        assert_suggestion_result(
+            "If he are testing it.",
+            PluralConjugate::default(),
+            "If he is testing it.",
         );
     }
 }

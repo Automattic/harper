@@ -186,7 +186,11 @@ impl Matcher {
             "to", "towards" => "towards",
             "though", "process" => "thought process",
             "the", "this" => "that this",
-            "take", "a", "decision" => "make a decision"
+            "take", "a", "decision" => "make a decision",
+            "same", "than" => "same as",
+            "Same", "than" => "same as",
+            "same", "then" => "same as",
+            "Same", "then" => "same as"
         };
 
         triggers.push(Rule {

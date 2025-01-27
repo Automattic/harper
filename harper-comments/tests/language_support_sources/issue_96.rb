@@ -1,4 +1,4 @@
-# Below, we have situation where the line terminates and should end the sentence.
+# Below, we have a situation where the line terminates and should end the sentence.
 
 alphabet = [
  "a",  # This is a test
