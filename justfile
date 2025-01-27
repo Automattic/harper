@@ -243,6 +243,10 @@ parse file:
 lint file:
   cargo run --bin harper-cli -- lint {{file}}
 
+# Lint a provided file in verbose mode using Harper and print the results.
+lint-verbose file:
+  cargo run --bin harper-cli -- lint {{file}} --verbose
+
 # Show the spans of the parsed tokens overlapped in the provided file.
 spans file:
   cargo run --bin harper-cli -- spans {{file}}

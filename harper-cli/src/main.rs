@@ -25,6 +25,9 @@ enum Args {
         /// without further details.
         #[arg(short, long)]
         count: bool,
+        /// Whether to show all lints in the document, regardless of whether they overlap.
+        #[arg(short, long)]
+        verbose: bool,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -54,7 +57,11 @@ fn main() -> anyhow::Result<()> {
     let dictionary = FstDictionary::curated();
 
     match args {
-        Args::Lint { file, count } => {
+        Args::Lint {
+            file,
+            count,
+            verbose,
+        } => {
             let (doc, source) = load_file(&file, markdown_options)?;
 
             let mut linter = LintGroup::new(linting_options, dictionary);
@@ -70,7 +77,9 @@ fn main() -> anyhow::Result<()> {
                 return Ok(());
             }
 
-            remove_overlaps(&mut lints);
+            if !verbose {
+                remove_overlaps(&mut lints);
+            }
 
             let primary_color = Color::Magenta;
 
