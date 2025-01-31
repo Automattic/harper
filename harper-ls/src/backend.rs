@@ -289,10 +289,15 @@ impl Backend {
         url: &Url,
         range: Range,
     ) -> JsonResult<Vec<CodeActionOrCommand>> {
-        let (config, mut doc_states) = tokio::join!(self.config.read(), self.doc_state.lock());
+        let (config_guard, mut doc_states) =
+            tokio::join!(self.config.read(), self.doc_state.lock());
         let Some(doc_state) = doc_states.get_mut(url) else {
             return Ok(Vec::new());
         };
+
+        // Allow writes as soon as possible to avoid deadlocks
+        let config = config_guard.clone();
+        drop(config_guard);
 
         let mut lints = doc_state.linter.lint(&doc_state.document);
         lints.sort_by_key(|l| l.priority);
