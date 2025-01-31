@@ -16,3 +16,7 @@ pnpm-lock.yaml
 package-lock.json
 yarn.lock
 dist
+
+markdown
+temp
+web/static/docs/harperjs/ref

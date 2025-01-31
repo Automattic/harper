@@ -4,14 +4,13 @@ format:
   cd "{{justfile_directory()}}/packages"; yarn prettier -w .
 
 # Build the WebAssembly for a specific target (usually either `web` or `bundler`)
-build-wasm target:
-  cd "{{justfile_directory()}}/harper-wasm" && wasm-pack build --target {{target}}
+build-wasm:
+  cd "{{justfile_directory()}}/harper-wasm" && wasm-pack build --target web
 
 # Build `harper.js` with all size optimizations available.
-build-harperjs:
+build-harperjs: build-wasm 
   #! /bin/bash
   set -eo pipefail
-  just build-wasm web
 
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
   perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
@@ -23,10 +22,9 @@ build-harperjs:
   # Generate API reference
   ./docs.sh
 
-test-harperjs:
+test-harperjs: build-harperjs
   #!/bin/bash
   set -eo pipefail
-  just build-harperjs
   
   cd "{{justfile_directory()}}/packages/harper.js"
   yarn install -f
@@ -50,22 +48,19 @@ dev-web:
   yarn dev
 
 # Build the Harper website.
-build-web:
+build-web: build-harperjs
   #! /bin/bash
   set -eo pipefail
-  
-  just build-harperjs
   
   cd "{{justfile_directory()}}/packages/web"
   yarn install -f
   yarn run build
 
 # Build the Harper Obsidian plugin.
-build-obsidian:
+build-obsidian: build-harperjs
   #! /bin/bash
   set -eo pipefail
   
-  just build-harperjs
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
 
   yarn install -f
@@ -169,11 +164,9 @@ check-rust:
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
 # Perform format and type checking.
-check:
+check: check-rust build-web
   #! /bin/bash
   set -eo pipefail
-
-  just check-rust
 
   cd "{{justfile_directory()}}/packages"
   yarn install
@@ -182,37 +175,20 @@ check:
 
   # Needed because Svelte has special linters
   cd web
-  just build-web
   yarn run check
 
 # Populate build caches and install necessary local tooling (tools callable via `yarn run <tool>`).
-setup:
-  #! /bin/bash
-  set -eo pipefail
-
-  cargo build
-  just build-harperjs
-  just build-obsidian
-  just test-vscode
-  just test-harperjs
-  just build-web
+setup: build-harperjs build-obsidian test-vscode test-harperjs build-web
 
 # Perform full format and type checking, build all projects and run all tests. Run this before pushing your code.
-precommit:
+precommit: check test build-harperjs build-obsidian build-web
   #! /bin/bash
   set -eo pipefail
-
-  just check
-  just test
 
   cargo doc
   cargo build
   cargo build --release
   cargo bench
-
-  just build-harperjs
-  just build-obsidian
-  just build-web
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
@@ -230,10 +206,8 @@ dogfood:
   done
 
 # Test everything.
-test:
+test: test-vscode test-harperjs
   cargo test
-  just test-vscode
-  just test-harperjs
 
 # Use `harper-cli` to parse a provided file and print out the resulting tokens.
 parse file:
