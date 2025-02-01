@@ -3,6 +3,7 @@ mod hostname;
 mod url;
 
 use hostname::lex_hostname_token;
+use ordered_float::OrderedFloat;
 use url::lex_url;
 
 use self::email_address::lex_email_address;
@@ -24,6 +25,7 @@ pub fn lex_token(source: &[char]) -> Option<FoundToken> {
         lex_tabs,
         lex_spaces,
         lex_newlines,
+        lex_hex_number,
         lex_number,
         lex_url,
         lex_email_address,
@@ -80,6 +82,34 @@ pub fn lex_number(source: &[char]) -> Option<FoundToken> {
             return Some(FoundToken {
                 token: TokenKind::Number(n.into(), None),
                 next_index: s.len(),
+            });
+        }
+
+        s.pop();
+    }
+
+    None
+}
+
+pub fn lex_hex_number(source: &[char]) -> Option<FoundToken> {
+    if source.len() < 3 || source[0] != '0' || source[1] != 'x' {
+        return None;
+    }
+
+    let end = &source[2..]
+        .iter()
+        .enumerate()
+        .rev()
+        .find_map(|(i, v)| v.is_ascii_hexdigit().then_some(i))?;
+
+    let mut s: String = source[2..end + 2 + 1].iter().collect();
+
+    // Find the longest possible valid number
+    while !s.is_empty() {
+        if let Ok(n) = u64::from_str_radix(&s, 16) {
+            return Some(FoundToken {
+                token: TokenKind::Number(OrderedFloat(n as f64), None),
+                next_index: s.len() + 2,
             });
         }
 
