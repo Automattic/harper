@@ -124,6 +124,7 @@ lspconfig.harper_ls.setup {
         repeated_words = true,
         spaces = true,
         matcher = true,
+        matcher_spelling = true,
         correct_number_suffix = true,
         number_suffix_capitalization = true,
         multiple_sequential_pronouns = true,

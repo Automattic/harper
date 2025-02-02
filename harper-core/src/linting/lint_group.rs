@@ -13,6 +13,7 @@ use super::lets_confusion::LetsConfusion;
 use super::linking_verbs::LinkingVerbs;
 use super::long_sentences::LongSentences;
 use super::matcher::Matcher;
+use super::matcher_spelling::MatcherSpelling;
 use super::merge_words::MergeWords;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
@@ -167,6 +168,7 @@ create_lint_group_config!(
     RepeatedWords => true,
     Spaces => true,
     Matcher => true,
+    MatcherSpelling => true,
     CorrectNumberSuffix => true,
     NumberSuffixCapitalization => true,
     MultipleSequentialPronouns => true,
