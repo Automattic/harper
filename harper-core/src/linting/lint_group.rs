@@ -9,6 +9,7 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 use super::despite_of::DespiteOf;
 use super::dot_initialisms::DotInitialisms;
 use super::ellipsis_length::EllipsisLength;
+use super::foo_bar::FooBar;
 use super::lets_confusion::LetsConfusion;
 use super::linking_verbs::LinkingVerbs;
 use super::long_sentences::LongSentences;
@@ -178,6 +179,7 @@ create_lint_group_config!(
     BoringWords => false,
     UseGenitive => false,
     ThatWhich => true,
+    FooBar => true,
     CapitalizePersonalPronouns => true,
     Americas => true,
     Koreas => true,
