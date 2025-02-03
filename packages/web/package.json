@@ -20,7 +20,7 @@
 		"flowbite-svelte": "^0.44.18",
 		"postcss": "^8.4.31",
 		"svelte": "^5.15.0",
-		"svelte-check": "^4.1.1",
+		"svelte-check": "^4.1.4",
 		"tailwindcss": "^3.3.3",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
