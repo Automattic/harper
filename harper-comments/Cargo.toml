@@ -30,7 +30,7 @@ tree-sitter-java = "0.20.0"
 tree-sitter-nix = "0.0.1"
 itertools = "0.14.0"
 tree-sitter-haskell = "0.15.0"
-tree-sitter-php = "=0.22.2"
+tree-sitter-php = "=0.23.0"
 tree-sitter-dart = "0.0.4"
 
 [dev-dependencies]
