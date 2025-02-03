@@ -2416,10 +2416,10 @@
   dependencies:
     "@types/unist" "*"
 
-"@types/jasmine@^5.1.4":
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-5.1.4.tgz#0de3f6ca753e10d1600ce1864ae42cfd47cf9924"
-  integrity sha512-px7OMFO/ncXxixDe1zR13V1iycqWae0MxTaw62RpFlksUi5QuNWgQJFkTQjIOvrmutJbI7Fp2Y2N1F6D2R4G6w==
+"@types/jasmine@^5.1.5":
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-5.1.5.tgz#bba343c504f48e596837415f0558e10b8a0e5f7d"
+  integrity sha512-SaCZ3kM5NjOiJqMRYwHpLbTfUC2Dyk1KS3QanNFsUYPGTk70CWVK/J9ueun6zNhw/UkgV7xl8V4ZLQZNRbfnNw==
 
 "@types/mdast@^4.0.0", "@types/mdast@^4.0.2":
   version "4.0.4"
@@ -5019,7 +5019,7 @@ glob-parent@^6.0.2:
   dependencies:
     is-glob "^4.0.3"
 
-glob@^10.2.2:
+glob@^10.2.2, glob@^10.3.10:
   version "10.4.5"
   resolved "https://registry.yarnpkg.com/glob/-/glob-10.4.5.tgz#f4d9f0b90ffdbab09c9d77f5f29b4262517b0956"
   integrity sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg==
@@ -5029,17 +5029,6 @@ glob@^10.2.2:
     minimatch "^9.0.4"
     minipass "^7.1.2"
     package-json-from-dist "^1.0.0"
-    path-scurry "^1.11.1"
-
-glob@^10.3.10:
-  version "10.4.1"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-10.4.1.tgz#0cfb01ab6a6b438177bfe6a58e2576f6efe909c2"
-  integrity sha512-2jelhlq3E4ho74ZyVLN03oKdAZVUa6UDZzFLVH1H7dnoax+y9qyaq8zBkfDIggjniU19z0wU18y16jMB2eyVIw==
-  dependencies:
-    foreground-child "^3.1.0"
-    jackspeak "^3.1.2"
-    minimatch "^9.0.4"
-    minipass "^7.1.2"
     path-scurry "^1.11.1"
 
 glob@^11.0.0:
@@ -5159,7 +5148,7 @@ gzip-size@^6.0.0:
     duplexer "^0.1.2"
 
 "harper.js@link:harper.js":
-  version "0.18.0"
+  version "0.19.1"
 
 has-bigints@^1.0.2:
   version "1.1.0"
@@ -5738,18 +5727,18 @@ jake@^10.8.5:
     filelist "^1.0.4"
     minimatch "^3.1.2"
 
-jasmine-core@~5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-5.3.0.tgz#ed784e5a10af43988d8408bad80b9f08e240a3f8"
-  integrity sha512-zsOmeBKESky4toybvWEikRiZ0jHoBEu79wNArLfMdSnlLMZx3Xcp6CSm2sUcYyoJC+Uyj8LBJap/MUbVSfJ27g==
+jasmine-core@~5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-5.5.0.tgz#43564e4b41f73a37cff3aeb262e23bbd073576d8"
+  integrity sha512-NHOvoPO6o9gVR6pwqEACTEpbgcH+JJ6QDypyymGbSUIFIFsMMbBJ/xsFNud8MSClfnWclXd7RQlAZBz7yVo5TQ==
 
-jasmine@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/jasmine/-/jasmine-5.3.0.tgz#523dea612f3573f896e7f680f54752685e48581b"
-  integrity sha512-Vrv5VWTXVZ/5xcNawlYCmE24pOaZu3KduLr9iAaENoMJ8W8Ryvhfpw2cf3rI4Unc2ajvu2t4tCKjS72TnraBGQ==
+jasmine@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/jasmine/-/jasmine-5.5.0.tgz#dbcb7a59a3ce88d475cc6e9341db92b8a8bb7974"
+  integrity sha512-JKlEVCVD5QBPYLsg/VE+IUtjyseDCrW8rMBu8la+9ysYashDgavMLM9Kotls1FhI6dCJLJ40dBCIfQjGLPZI1Q==
   dependencies:
     glob "^10.2.2"
-    jasmine-core "~5.3.0"
+    jasmine-core "~5.5.0"
 
 "jiti-v1@npm:jiti@^1.21.6":
   version "1.21.7"
