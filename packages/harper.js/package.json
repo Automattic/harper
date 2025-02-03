@@ -16,7 +16,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc && vite build",
+		"build": "vite build && tsc",
 		"test": "vitest run --browser chromium && vitest run --browser firefox"
 	},
 	"devDependencies": {
@@ -32,5 +32,9 @@
 		"wasm": "link:../../harper-wasm/pkg"
 	},
 	"main": "dist/harper.js",
+	"exports": {
+		".": "dist/harper.js",
+		"./multifile": "dist/multifile/main.js"
+	},
 	"types": "dist/harper.d.ts"
 }

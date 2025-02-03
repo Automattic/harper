@@ -7,11 +7,10 @@
 		"skipLibCheck": true,
 		/* Bundler mode */
 		"moduleResolution": "bundler",
-		"allowImportingTsExtensions": true,
 		"isolatedModules": true,
 		"moduleDetection": "force",
-		"noEmit": true,
 		/* Linting */
+		"outDir": "dist/multifile",
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
