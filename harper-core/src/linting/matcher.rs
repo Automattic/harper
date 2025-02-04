@@ -94,18 +94,26 @@ struct Rule {
 /// A linter that uses a variety of curated pattern matches to find and fix
 /// common grammatical issues.
 pub struct Matcher {
+    is_spelling: bool,
     triggers: Vec<Rule>,
 }
 
 impl Matcher {
-    pub fn new() -> Self {
+    pub fn new(is_spelling: bool) -> Self {
         // This match list needs to be automatically expanded instead of explicitly
         // defined like it is now.
+        let spellings = pt! {
+            "geiger","counter" => "Geiger counter",
+            "grammer" => "grammar",
+            "hashmap" => "hash map",
+            "hashtable" => "hash table",
+            "ngram" => "n-gram",
+            "todo" => "to-do",
+            "wellbeing" => "well-being",
+            "wordlist" => "word list"
+        };
         let mut triggers = pt! {
             "spacial","attention" => "special attention",
-            "wellbeing" => "well-being",
-            "hashtable" => "hash table",
-            "hashmap" => "hash map",
             "dep" => "dependency",
             "deps" => "dependencies",
             "off","the","cuff" => "off-the-cuff",
@@ -113,7 +121,6 @@ impl Matcher {
             "my","self" => "myself",
             "eight","grade" => "eighth grade",
             "and","also" => "and",
-            "todo" => "to-do",
             "To-Do" => "To-do",
             "performing","this" => "perform this",
             "mins" => "minutes",
@@ -125,17 +132,13 @@ impl Matcher {
             "hr" => "hour",
             "w/o" => "without",
             "w/" => "with",
-            "wordlist" => "word list" ,
             "the","challenged" => "that challenged",
             "stdin" => "standard input",
             "stdout" => "standard output",
             "no","to" => "not to",
             "No","to" => "not to",
-            "ngram" => "n-gram",
-            "grammer" => "grammar",
             "There","fore" => "Therefore",
             "fatal","outcome" => "death",
-            "geiger","counter" => "Geiger counter",
             "world","war","2" => "World War II",
             "World","war","ii" => "World War II",
             "world","War","ii" => "World War II",
@@ -203,13 +206,16 @@ impl Matcher {
             replace_with: vecword!("large language model"),
         });
 
-        Self { triggers }
+        Self {
+            is_spelling,
+            triggers: if is_spelling { spellings } else { triggers },
+        }
     }
 }
 
 impl Default for Matcher {
     fn default() -> Self {
-        Self::new()
+        Self::new(false)
     }
 }
 
@@ -242,15 +248,27 @@ impl Linter for Matcher {
                         match_tokens.first().unwrap().span.start,
                         match_tokens.last().unwrap().span.end,
                     );
+                    let message = if self.is_spelling {
+                        format!(
+                            "Expected “{}” instead.",
+                            trigger.replace_with.iter().collect::<String>()
+                        )
+                    } else {
+                        format!(
+                            "Did you mean “{}”?",
+                            trigger.replace_with.iter().collect::<String>()
+                        )
+                    };
 
                     lints.push(Lint {
                         span,
-                        lint_kind: LintKind::Miscellaneous,
+                        lint_kind: if self.is_spelling {
+                            LintKind::Spelling
+                        } else {
+                            LintKind::Miscellaneous
+                        },
                         suggestions: vec![Suggestion::ReplaceWith(trigger.replace_with.to_owned())],
-                        message: format!(
-                            "Did you mean “{}”?",
-                            trigger.replace_with.iter().collect::<String>()
-                        ),
+                        message,
                         priority: 15,
                     })
                 }
@@ -261,7 +279,7 @@ impl Linter for Matcher {
     }
 
     fn description(&self) -> &'static str {
-        "A collection of curated rules. A catch-all that will be removed in the future."
+        "A collection of curated rules: \"Did you mean ...\"? A catch-all that will be removed in the future."
     }
 }
 
@@ -273,7 +291,7 @@ mod tests {
     #[test]
     fn matches_therefore() {
         let document = Document::new_plain_english_curated("There fore.");
-        let mut matcher = Matcher::new();
+        let mut matcher = Matcher::default();
         let lints = matcher.lint(&document);
         assert_eq!(lints.len(), 1);
     }
