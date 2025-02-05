@@ -286,7 +286,7 @@ impl Document {
             if let (TokenKind::Number(..), TokenKind::Word(..)) = (a.kind, b.kind) {
                 if let Some(found_suffix) = NumberSuffix::from_chars(self.get_span_content(b.span))
                 {
-                    *self.tokens[idx].kind.as_mut_number().unwrap().1 = Some(found_suffix);
+                    self.tokens[idx].kind.as_mut_number().unwrap().suffix = Some(found_suffix);
                     replace_starts.push(idx);
                 }
             }

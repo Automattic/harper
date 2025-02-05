@@ -1,7 +1,7 @@
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
 
-use crate::NumberSuffix;
+use crate::Number;
 
 #[derive(Debug, Is, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Hash)]
 pub enum Currency {
@@ -62,14 +62,10 @@ impl Currency {
     }
 
     /// Format an amount of the specific currency.
-    pub fn format_amount(&self, value: f64, suffix: Option<NumberSuffix>) -> String {
+    pub fn format_amount(&self, amount: Number) -> String {
         let c = self.to_char();
 
-        let mut amount = value.to_string();
-
-        if let Some(suffix) = suffix {
-            amount.extend(suffix.to_chars());
-        }
+        let amount = amount.to_string();
 
         match self {
             Currency::Dollar => format!("{}{amount}", c),

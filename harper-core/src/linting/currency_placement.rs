@@ -45,14 +45,11 @@ fn generate_lint_for_tokens(a: Token, b: Token, document: &Document) -> Option<L
         .expect_punctuation();
     let currency = punct.as_currency()?;
 
-    let (value, suffix) = matched_tokens.first_number()?.kind.expect_number();
+    let number = matched_tokens.first_number()?.kind.expect_number();
 
     let span = matched_tokens.span().unwrap();
 
-    let correct: Vec<_> = currency
-        .format_amount(value.into(), suffix)
-        .chars()
-        .collect();
+    let correct: Vec<_> = currency.format_amount(number).chars().collect();
     let actual = document.get_span_content(span);
 
     if correct != actual {
@@ -140,5 +137,10 @@ mod tests {
             CurrencyPlacement::default(),
             "It was my $20th.",
         );
+    }
+
+    #[test]
+    fn seven_even_two_decimal_clean() {
+        assert_lint_count("$7.00", CurrencyPlacement::default(), 0);
     }
 }
