@@ -290,3 +290,13 @@ fuzz:
           exit $?
       fi
   done
+
+# Print affixes and their descriptions from affixes.json
+printaffixes:
+  #! /usr/bin/env node
+  Object.entries(
+    require('{{justfile_directory()}}/harper-core/affixes.json').affixes
+  ).forEach(([affix, fields]) => {
+    const description = fields['#'] || '';
+    description && console.log(affix + ': ' + description);
+  });

@@ -1,6 +1,7 @@
 {
   "affixes": {
     "K": {
+      "#": "'pro-' prefix",
       "suffix": false,
       "cross_product": true,
       "replacements": [
@@ -14,6 +15,7 @@
       "gifts_metadata": {}
     },
     "L": {
+      "#": "'-ment' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -27,6 +29,7 @@
       "gifts_metadata": {}
     },
     "E": {
+      "#": "'dis-' prefix",
       "suffix": false,
       "cross_product": true,
       "replacements": [
@@ -40,6 +43,7 @@
       "gifts_metadata": {}
     },
     "Y": {
+      "#": "'-ly' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -53,6 +57,7 @@
       "gifts_metadata": {}
     },
     "U": {
+      "#": "'un-' prefix",
       "suffix": false,
       "cross_product": true,
       "replacements": [
@@ -66,6 +71,7 @@
       "gifts_metadata": {}
     },
     "H": {
+      "#": "'-ieth' suffix",
       "suffix": true,
       "cross_product": false,
       "replacements": [
@@ -84,6 +90,7 @@
       "gifts_metadata": {}
     },
     "T": {
+      "#": "'-(i)est' suffix",
       "suffix": true,
       "cross_product": false,
       "replacements": [
@@ -112,6 +119,7 @@
       "gifts_metadata": {}
     },
     "R": {
+      "#": "'-(i)er' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -140,6 +148,7 @@
       "gifts_metadata": {}
     },
     "C": {
+      "#": "'de-' prefix",
       "suffix": false,
       "cross_product": true,
       "replacements": [
@@ -153,6 +162,7 @@
       "gifts_metadata": {}
     },
     "V": {
+      "#": "'-ive' suffix",
       "suffix": true,
       "cross_product": false,
       "replacements": [
@@ -171,6 +181,7 @@
       "gifts_metadata": {}
     },
     "N": {
+      "#": "nominalization suffixes",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -194,6 +205,7 @@
       "gifts_metadata": {}
     },
     "A": {
+      "#": "'re-' prefix",
       "suffix": false,
       "cross_product": true,
       "replacements": [
@@ -207,6 +219,7 @@
       "gifts_metadata": {}
     },
     "Z": {
+      "#": "'-(i)(e)rs' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -235,6 +248,7 @@
       "gifts_metadata": {}
     },
     "P": {
+      "#": "'-(i)ness' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -258,6 +272,7 @@
       "gifts_metadata": {}
     },
     "M": {
+      "#": "-'s possessive suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -277,6 +292,7 @@
       }
     },
     "F": {
+      "#": "'con-' prefix",
       "suffix": false,
       "cross_product": true,
       "replacements": [
@@ -290,6 +306,7 @@
       "gifts_metadata": {}
     },
     "B": {
+      "#": "'-able' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -313,6 +330,7 @@
       "gifts_metadata": {}
     },
     "S": {
+      "#": "'-(i)(e)s' plural suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -345,6 +363,7 @@
       "gifts_metadata": {}
     },
     "D": {
+      "#": "'-(e)d' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -377,6 +396,7 @@
       "gifts_metadata": {}
     },
     "G": {
+      "#": "'-ing' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -398,6 +418,7 @@
       "gifts_metadata": {}
     },
     "Q": {
+      "#": "'ally' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -411,6 +432,7 @@
       "gifts_metadata": {}
     },
     "O": {
+      "#": "'-ful' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -424,6 +446,7 @@
       "gifts_metadata": {}
     },
     "I": {
+      "#": "'in-' prefix",
       "suffix": false,
       "cross_product": true,
       "replacements": [
@@ -437,6 +460,7 @@
       "gifts_metadata": {}
     },
     "X": {
+      "#": "'-ions', '-ications', '-ens' suffixes",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -460,6 +484,7 @@
       "gifts_metadata": {}
     },
     "J": {
+      "#": "'-ings' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -478,6 +503,7 @@
       "gifts_metadata": {}
     },
     "1": {
+      "#": "singular noun property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -489,6 +515,7 @@
       }
     },
     "2": {
+      "#": "proper noun property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -500,6 +527,7 @@
       }
     },
     "3": {
+      "#": "linking verb property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -511,6 +539,7 @@
       }
     },
     "4": {
+      "#": "verb property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -520,6 +549,7 @@
       }
     },
     "5": {
+      "#": "adjective property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -529,6 +559,7 @@
       }
     },
     "6": {
+      "#": "swear word property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -540,6 +571,7 @@
       }
     },
     "7": {
+      "#": "conjunction property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -549,6 +581,7 @@
       }
     },
     "8": {
+      "#": "pronoun property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -560,6 +593,7 @@
       }
     },
     "9": {
+      "#": "plural noun property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -571,6 +605,7 @@
       }
     },
     "~": {
+      "#": "common word property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -580,6 +615,7 @@
       }
     },
     "+": {
+      "#": "preposition property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
@@ -589,6 +625,7 @@
       }
     },
     "-": {
+      "#": "article property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
