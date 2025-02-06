@@ -1,19 +1,24 @@
-import type { Lint, Span, Suggestion, Linter as WasmLinter } from 'wasm';
-import { Language } from 'wasm';
-import Linter from './Linter';
-import loadWasm from './loadWasm';
+import type { Lint, Span, Suggestion, Linter as WasmLinter } from 'harper-wasm';
+import { Language } from 'harper-wasm';
+import Linter, { LinterInit } from './Linter';
 import { LintConfig, LintOptions } from './main';
+import { binary, loadBinary } from './binary';
 
 /** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).  */
 export default class LocalLinter implements Linter {
+	private binary: string;
 	private inner: WasmLinter | undefined;
+
+	constructor(init: LinterInit) {
+		this.binary = init.binary;
+	}
 
 	/** Initialize the WebAssembly and construct the inner Linter. */
 	private async initialize(): Promise<void> {
 		if (!this.inner) {
-			const wasm = await loadWasm();
-			wasm.setup();
-			this.inner = wasm.Linter.new();
+			const exports = await loadBinary(this.binary);
+			exports.setup();
+			this.inner = exports.Linter.new();
 		}
 	}
 
@@ -33,7 +38,7 @@ export default class LocalLinter implements Linter {
 	}
 
 	async applySuggestion(text: string, suggestion: Suggestion, span: Span): Promise<string> {
-		const wasm = await loadWasm();
+		const wasm = await loadBinary(binary);
 		return wasm.apply_suggestion(text, span, suggestion);
 	}
 
@@ -54,13 +59,13 @@ export default class LocalLinter implements Linter {
 	}
 
 	async getDefaultLintConfigAsJSON(): Promise<string> {
-		const wasm = await loadWasm();
+		const wasm = await loadBinary(binary);
 
 		return wasm.get_default_lint_config_as_json();
 	}
 
 	async getDefaultLintConfig(): Promise<LintConfig> {
-		const wasm = await loadWasm();
+		const wasm = await loadBinary(binary);
 
 		return wasm.get_default_lint_config();
 	}
@@ -84,7 +89,7 @@ export default class LocalLinter implements Linter {
 	}
 
 	async toTitleCase(text: string): Promise<string> {
-		const wasm = await loadWasm();
+		const wasm = await loadBinary(binary);
 		return wasm.to_title_case(text);
 	}
 

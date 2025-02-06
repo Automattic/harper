@@ -368,7 +368,7 @@
 		"esbuild": "^0.24.2",
 		"eslint": "^8.57.0",
 		"jasmine": "^5.3.0",
-		"typescript": "^5.4.5"
+		"typescript": "^5.7.2"
 	},
 	"dependencies": {
 		"vscode-languageclient": "^9.0.1"

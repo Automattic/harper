@@ -1,7 +1,8 @@
 import { expect, test } from 'vitest';
 import { deserializeArg, serializeArg } from './communication';
-import { Span } from 'wasm';
+import { Span } from 'harper-wasm';
 import LocalLinter from '../LocalLinter';
+import { binary } from '../binary';
 
 test('works with strings', async () => {
 	const start = 'This is a string';
@@ -50,7 +51,7 @@ test('works with Spans', async () => {
 });
 
 test('works with Lints', async () => {
-	const linter = new LocalLinter();
+	const linter = new LocalLinter({ binary });
 	const lints = await linter.lint('This is an test.');
 	const start = lints[0];
 

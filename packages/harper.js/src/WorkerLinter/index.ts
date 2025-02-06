@@ -1,8 +1,7 @@
 import { DeserializedRequest, deserializeArg, serialize } from './communication';
-import type { Lint, Suggestion, Span } from 'wasm';
-import Linter from '../Linter';
-import Worker from './worker.js?worker&inline';
-import { getWasmUri } from '../loadWasm';
+import type { Lint, Suggestion, Span } from 'harper-wasm';
+import Linter, { LinterInit } from '../Linter';
+import Worker from './worker?worker&inline';
 import { LintConfig, LintOptions } from '../main';
 
 /** The data necessary to complete a request once the worker has responded. */
@@ -17,11 +16,13 @@ type RequestItem = {
  *
  * NOTE: This class will not work properly in Node. In that case, just use `LocalLinter`. */
 export default class WorkerLinter implements Linter {
-	private worker;
+	private binary: string;
+	private worker: Worker;
 	private requestQueue: RequestItem[];
 	private working = true;
 
-	constructor() {
+	constructor(init: LinterInit) {
+		this.binary = init.binary;
 		this.worker = new Worker();
 		this.requestQueue = [];
 
@@ -29,7 +30,7 @@ export default class WorkerLinter implements Linter {
 		this.worker.onmessage = () => {
 			this.setupMainEventListeners();
 
-			this.worker.postMessage(getWasmUri());
+			this.worker.postMessage(this.binary);
 
 			this.working = false;
 			this.submitRemainingRequests();

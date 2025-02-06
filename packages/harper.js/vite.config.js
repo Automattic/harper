@@ -1,13 +1,7 @@
+/// <reference types="vitest" />
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
 import { defineConfig } from 'vite';
-import virtual from 'vite-plugin-virtual';
-import fs from 'fs';
-
-function fileAsObject(path) {
-	let content = fs.readFileSync(path);
-	return JSON.parse(content);
-}
 
 export default defineConfig({
 	build: {
@@ -15,10 +9,11 @@ export default defineConfig({
 			entry: resolve(__dirname, 'src/main.ts'),
 			fileName: `harper`,
 			name: 'harper',
-			formats: ['es']
+			formats: ['es'],
 		},
 		rollupOptions: {
 			output: {
+				minifyInternalExports: false,
 				inlineDynamicImports: true
 			}
 		}
@@ -26,20 +21,12 @@ export default defineConfig({
 	base: './',
 	plugins: [
 		dts({
-			...fileAsObject('./api-extractor.json'),
+			...require('./api-extractor.json'),
 			rollupTypes: true,
-			tsconfigPath: './tsconfig.json'
+			tsconfigPath: './tsconfig.json',
 		}),
-		virtual({
-			'virtual:wasm': `import wasmUri from 'wasm/harper_wasm_bg.wasm?inline'; export default wasmUri`
-		})
 	],
 	worker: {
-		plugins: [
-			virtual({
-				'virtual:wasm': `export default ''`
-			})
-		],
 		format: 'es',
 		rollupOptions: {
 			output: {
@@ -56,7 +43,12 @@ export default defineConfig({
 		browser: {
 			provider: 'playwright',
 			enabled: true,
-			headless: true
+			headless: true,
+			screenshotFailures: false,
+			instances: [
+				{ browser: 'chromium' },
+				{ browser: 'firefox' }
+			]
 		}
 	},
 	assetsInclude: ['**/*.wasm']
