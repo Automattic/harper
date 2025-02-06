@@ -6,6 +6,7 @@ mod an_a;
 mod avoid_curses;
 mod boring_words;
 mod capitalize_personal_pronouns;
+mod closed_compounds;
 mod correct_number_suffix;
 mod currency_placement;
 mod dashes;
@@ -41,12 +42,27 @@ mod terminating_conjunctions;
 mod that_which;
 mod unclosed_quotes;
 mod use_genitive;
+mod whereas;
 mod wrong_quotes;
 
 pub use an_a::AnA;
 pub use avoid_curses::AvoidCurses;
 pub use boring_words::BoringWords;
 pub use capitalize_personal_pronouns::CapitalizePersonalPronouns;
+pub use closed_compounds::{
+    Altogether, Anybody, Anyhow, Anytime, Anyway, Anywhere, Asleep, Backpack, Backplane, Bathroom,
+    Bitrate, Bitstream, Blockchain, Cupboard, Cyberattack, Cyberspace, Dashboard, Datacenter,
+    Datamining, Datascience, Desktop, Devops, Downright, Ecommerce, Evermore, Everyone, Everywhere,
+    Facewash, Fingerprint, Firewall, Firmware, Forever, Forthwith, Framework, Handheld, Headphone,
+    Headset, Henceforth, Hereafter, Hereby, Hereunder, However, Insofar, Instead, Intact, Into,
+    Itself, Keyboard, Laptop, Likewise, Microprocessor, Microservices, Middleware, Misunderstand,
+    Misunderstood, Misuse, Misused, Multicore, Multimedia, Multithreading, Myself, Nobody,
+    Nonetheless, Northeast, Northeastern, Notebook, Nothing, Notwithstanding, Nowhere, Opensource,
+    Otherwise, Overall, Overclocking, Overload, Overnight, Playground, Postpone, Proofread,
+    Regardless, Runway, Sitemap, Smartcard, Smartphone, Smartwatch, Somebody, Somehow, Somewhere,
+    Thereafter, Therefore, Therein, Thereupon, Thumbnail, Tonight, Touchpad, Touchscreen,
+    Underclock, Upholstery, Upset, Upward, Webcam, Websocket, Whereupon, Widespread, Worldwide,
+};
 pub use correct_number_suffix::CorrectNumberSuffix;
 pub use currency_placement::CurrencyPlacement;
 pub use despite_of::DespiteOf;
@@ -67,8 +83,8 @@ pub use oxford_comma::OxfordComma;
 pub use pattern_linter::PatternLinter;
 pub use phrase_corrections::{
     AndAlike, BadRap, BatedBreath, BeckAndCall, ChangeTack, EnMasse, HumanLife, HungerPang,
-    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SupposeTo,
-    ThatChallenged, TurnItOff,
+    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SpecialAttention,
+    SupposeTo, ThanOthers, ThatChallenged, TurnItOff,
 };
 pub use plural_conjugate::PluralConjugate;
 pub use pronoun_contraction::PronounContraction;
@@ -87,6 +103,7 @@ pub use terminating_conjunctions::TerminatingConjunctions;
 pub use that_which::ThatWhich;
 pub use unclosed_quotes::UnclosedQuotes;
 pub use use_genitive::UseGenitive;
+pub use whereas::Whereas;
 pub use wrong_quotes::WrongQuotes;
 
 use crate::Document;

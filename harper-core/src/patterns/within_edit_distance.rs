@@ -1,5 +1,5 @@
 use super::Pattern;
-use crate::{CharString, Token, TokenKind};
+use crate::{CharString, CharStringExt, Token, TokenKind};
 
 use crate::edit_distance::edit_distance;
 
@@ -36,7 +36,7 @@ impl Pattern for WithinEditDistance {
 
         let content = first.span.get_content(source);
 
-        if edit_distance(content, &self.word) <= self.max_edit_dist {
+        if edit_distance(&content.to_lower(), &self.word.to_lower()) <= self.max_edit_dist {
             1
         } else {
             0

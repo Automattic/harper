@@ -5,6 +5,20 @@ use super::an_a::AnA;
 use super::avoid_curses::AvoidCurses;
 use super::boring_words::BoringWords;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
+use super::closed_compounds::{
+    Altogether, Anybody, Anyhow, Anytime, Anyway, Anywhere, Asleep, Backpack, Backplane, Bathroom,
+    Bitrate, Bitstream, Blockchain, Cupboard, Cyberattack, Cyberspace, Dashboard, Datacenter,
+    Datamining, Datascience, Desktop, Devops, Downright, Ecommerce, Evermore, Everyone, Everywhere,
+    Facewash, Fingerprint, Firewall, Firmware, Forever, Forthwith, Framework, Handheld, Headphone,
+    Headset, Henceforth, Hereafter, Hereby, Hereunder, However, Insofar, Instead, Intact, Into,
+    Itself, Keyboard, Laptop, Likewise, Microprocessor, Microservices, Middleware, Misunderstand,
+    Misunderstood, Misuse, Misused, Multicore, Multimedia, Multithreading, Myself, Nobody,
+    Nonetheless, Northeast, Northeastern, Notebook, Nothing, Notwithstanding, Nowhere, Opensource,
+    Otherwise, Overall, Overclocking, Overload, Overnight, Playground, Postpone, Proofread,
+    Regardless, Runway, Sitemap, Smartcard, Smartphone, Smartwatch, Somebody, Somehow, Somewhere,
+    Thereafter, Therefore, Therein, Thereupon, Thumbnail, Tonight, Touchpad, Touchscreen,
+    Underclock, Upholstery, Upset, Upward, Webcam, Websocket, Whereupon, Widespread, Worldwide,
+};
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::despite_of::DespiteOf;
 use super::dot_initialisms::DotInitialisms;
@@ -18,8 +32,8 @@ use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::phrase_corrections::{
     AndAlike, BadRap, BatedBreath, BeckAndCall, ChangeTack, EnMasse, HumanLife, HungerPang,
-    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SupposeTo,
-    ThatChallenged, TurnItOff,
+    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SpecialAttention,
+    SupposeTo, ThanOthers, ThatChallenged, TurnItOff,
 };
 use super::plural_conjugate::PluralConjugate;
 use super::pronoun_contraction::PronounContraction;
@@ -37,6 +51,7 @@ use super::terminating_conjunctions::TerminatingConjunctions;
 use super::that_which::ThatWhich;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
+use super::whereas::Whereas;
 use super::wrong_quotes::WrongQuotes;
 use super::{CurrencyPlacement, Lint, Linter, NoOxfordComma, OxfordComma};
 use crate::{Dictionary, Document};
@@ -160,6 +175,111 @@ macro_rules! create_lint_group_config {
 }
 
 create_lint_group_config!(
+    Evermore => true,
+    Regardless => true,
+    Henceforth => true,
+    Upward => true,
+    Downright => true,
+    Thereafter => true,
+    Whereupon => true,
+    Insofar => true,
+    Forthwith => true,
+    Hereunder => true,
+    Hereby => true,
+    Thereupon => true,
+    Therein => true,
+    Otherwise => true,
+    Hereafter => true,
+    Nonetheless => true,
+    Anyhow => true,
+    Notwithstanding => true,
+    Widespread => true,
+    Fingerprint => true,
+    Websocket => true,
+    Cyberattack => true,
+    Datascience => true,
+    Datamining => true,
+    Ecommerce => true,
+    Multimedia => true,
+    Cyberspace => true,
+    Dashboard => true,
+    Microservices => true,
+    Multicore => true,
+    Multithreading => true,
+    Sitemap => true,
+    Firewall => true,
+    Bitstream => true,
+    Devops => true,
+    Opensource => true,
+    Blockchain => true,
+    Underclock => true,
+    Overload => true,
+    Bitrate => true,
+    Smartcard => true,
+    Backplane => true,
+    Overclocking => true,
+    Laptop => true,
+    Desktop => true,
+    Headphone => true,
+    Webcam => true,
+    Smartphone => true,
+    Datacenter => true,
+    Microprocessor => true,
+    Touchpad => true,
+    Framework => true,
+    Headset => true,
+    Touchscreen => true,
+    Smartwatch => true,
+    Firmware => true,
+    Middleware => true,
+    Somewhere => true,
+    Keyboard => true,
+    Cupboard => true,
+    Notebook => true,
+    Backpack => true,
+    Instead => true,
+    Overnight => true,
+    Everywhere => true,
+    Nowhere => true,
+    Anywhere => true,
+    Anytime => true,
+    Anyway => true,
+    Nothing => true,
+    Anybody => true,
+    Somebody => true,
+    Nobody => true,
+    Everyone => true,
+    Into => true,
+    Forever => true,
+    Proofread => true,
+    Upholstery => true,
+    Northeastern => true,
+    Northeast => true,
+    Runway => true,
+    Playground => true,
+    Handheld => true,
+    Facewash => true,
+    Bathroom => true,
+    Somehow => true,
+    Intact => true,
+    Thumbnail => true,
+    Upset => true,
+    Misunderstood => true,
+    Asleep => true,
+    Altogether => true,
+    However => true,
+    Likewise => true,
+    Overall => true,
+    Worldwide => true,
+    Postpone => true,
+    Misused => true,
+    Misuse => true,
+    Misunderstand => true,
+    Therefore => true,
+    Myself => true,
+    Tonight => true,
+    Itself => true,
+    Whereas => true,
     SpelledNumbers => false,
     AnA => true,
     SentenceCapitalization => true,
@@ -217,7 +337,9 @@ create_lint_group_config!(
     LetAlone => true,
     LoAndBehold => true,
     SneakingSuspicion => true,
-    SupposeTo => true
+    SupposeTo => true,
+    SpecialAttention => true,
+    ThanOthers => true,
 );
 
 impl<T: Dictionary + Default> Default for LintGroup<T> {

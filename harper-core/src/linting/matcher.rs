@@ -102,7 +102,6 @@ impl Matcher {
         // This match list needs to be automatically expanded instead of explicitly
         // defined like it is now.
         let mut triggers = pt! {
-            "spacial","attention" => "special attention",
             "wellbeing" => "well-being",
             "hashtable" => "hash table",
             "hashmap" => "hash map",
@@ -110,7 +109,6 @@ impl Matcher {
             "deps" => "dependencies",
             "off","the","cuff" => "off-the-cuff",
             "an","in" => "and in",
-            "my","self" => "myself",
             "eight","grade" => "eighth grade",
             "and","also" => "and",
             "todo" => "to-do",
@@ -133,7 +131,6 @@ impl Matcher {
             "No","to" => "not to",
             "ngram" => "n-gram",
             "grammer" => "grammar",
-            "There","fore" => "Therefore",
             "fatal","outcome" => "death",
             "geiger","counter" => "Geiger counter",
             "world","war","2" => "World War II",
@@ -143,36 +140,22 @@ impl Matcher {
             "World","War","iI" => "World War II",
             "black","sea" => "Black Sea",
             "I","a","m" => "I am",
-            "We","a","re" => "We are",
             "The","re" => "There",
             "my","french" => "my French",
             "It","cam" => "It can",
             "can","be","seem" => "can be seen",
             "mu","house" => "my house",
             "kid","regards" => "kind regards",
-            "miss","understand" => "misunderstand",
-            "miss","use" => "misuse",
-            "miss","used" => "misused",
             "bee","there" => "been there",
             "want","be" => "won't be",
             "more","then" => "more than",
             "gong","to" => "going to",
-            "then","others" => "than others",
-            "Then","others" => "than others",
-            "then","before" => "than before",
-            "Then","before" => "than before",
             "then","last","week" => "than last week",
             "then","her" => "than her",
             "then","hers" => "than hers",
             "then","him" => "than him",
             "then","his" => "than his",
             "simply","grammatical" => "simple grammatical",
-            "you","r" => "your",
-            "you","re" => "you're",
-            "that","s" => "that's",
-            "That","s" => "That's",
-            "that","s" => "that is",
-            "That","s" => "that is",
             "ms" => "milliseconds",
             "case", "sensitive" => "case-sensitive",
             "Tree", "sitter" => "Tree-sitter",
@@ -262,19 +245,5 @@ impl Linter for Matcher {
 
     fn description(&self) -> &'static str {
         "A collection of curated rules. A catch-all that will be removed in the future."
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::{Linter, Matcher};
-    use crate::Document;
-
-    #[test]
-    fn matches_therefore() {
-        let document = Document::new_plain_english_curated("There fore.");
-        let mut matcher = Matcher::new();
-        let lints = matcher.lint(&document);
-        assert_eq!(lints.len(), 1);
     }
 }
