@@ -192,8 +192,8 @@ precommit: check test build-harperjs build-obsidian build-web
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
-  cargo install --path harper-ls
-  cargo install --path harper-cli
+  cargo install --path harper-ls --locked
+  cargo install --path harper-cli --locked
 
 # Run `harper-cli` on the Harper repository
 dogfood:
@@ -290,3 +290,13 @@ fuzz:
           exit $?
       fi
   done
+
+registerlinter module name:
+  #! /bin/bash
+
+  D="{{justfile_directory()}}/harper-core/src/linting"
+
+  sed -i "/pub use an_a::AnA;/a pub use {{module}}::{{name}};" "$D/mod.rs"
+  sed -i "/use super::an_a::AnA;/a use super::{{module}}::{{name}};" "$D/lint_group.rs"
+  sed -i "/create_lint_group_config\!/a \ \ \ \ {{name}} => true," "$D/lint_group.rs"
+  just format

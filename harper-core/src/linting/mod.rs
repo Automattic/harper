@@ -6,6 +6,8 @@ mod an_a;
 mod avoid_curses;
 mod boring_words;
 mod capitalize_personal_pronouns;
+mod closed_compounds;
+mod compound_nouns;
 mod correct_number_suffix;
 mod currency_placement;
 mod dashes;
@@ -41,12 +43,23 @@ mod terminating_conjunctions;
 mod that_which;
 mod unclosed_quotes;
 mod use_genitive;
+mod whereas;
 mod wrong_quotes;
 
 pub use an_a::AnA;
 pub use avoid_curses::AvoidCurses;
 pub use boring_words::BoringWords;
 pub use capitalize_personal_pronouns::CapitalizePersonalPronouns;
+pub use closed_compounds::{
+    Altogether, Anybody, Anyhow, Anywhere, Asleep, Backplane, Devops, Downright, Ecommerce,
+    Everywhere, Forthwith, Henceforth, Hereafter, Hereby, Hereunder, However, Insofar, Instead,
+    Intact, Into, Itself, Likewise, Middleware, Misunderstand, Misunderstood, Misuse, Misused,
+    Multicore, Multimedia, Multithreading, Myself, Nobody, Nonetheless, Nothing, Notwithstanding,
+    Otherwise, Overall, Overclocking, Overload, Postpone, Proofread, Regardless, Somebody, Somehow,
+    Somewhere, Thereafter, Therefore, Therein, Thereupon, Tonight, Underclock, Upset, Upward,
+    Whereupon, Widespread, Worldwide,
+};
+pub use compound_nouns::CompoundNouns;
 pub use correct_number_suffix::CorrectNumberSuffix;
 pub use currency_placement::CurrencyPlacement;
 pub use despite_of::DespiteOf;
@@ -67,8 +80,8 @@ pub use oxford_comma::OxfordComma;
 pub use pattern_linter::PatternLinter;
 pub use phrase_corrections::{
     AndAlike, BadRap, BatedBreath, BeckAndCall, ChangeTack, EnMasse, HumanLife, HungerPang,
-    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SupposeTo,
-    ThatChallenged, TurnItOff,
+    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SpecialAttention,
+    SupposeTo, ThanOthers, ThatChallenged, TurnItOff,
 };
 pub use plural_conjugate::PluralConjugate;
 pub use pronoun_contraction::PronounContraction;
@@ -87,6 +100,7 @@ pub use terminating_conjunctions::TerminatingConjunctions;
 pub use that_which::ThatWhich;
 pub use unclosed_quotes::UnclosedQuotes;
 pub use use_genitive::UseGenitive;
+pub use whereas::Whereas;
 pub use wrong_quotes::WrongQuotes;
 
 use crate::Document;

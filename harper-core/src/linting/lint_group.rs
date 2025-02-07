@@ -5,6 +5,16 @@ use super::an_a::AnA;
 use super::avoid_curses::AvoidCurses;
 use super::boring_words::BoringWords;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
+use super::closed_compounds::{
+    Altogether, Anybody, Anyhow, Anywhere, Asleep, Backplane, Devops, Downright, Ecommerce,
+    Everywhere, Forthwith, Henceforth, Hereafter, Hereby, Hereunder, However, Insofar, Instead,
+    Intact, Into, Itself, Likewise, Middleware, Misunderstand, Misunderstood, Misuse, Misused,
+    Multicore, Multimedia, Multithreading, Myself, Nobody, Nonetheless, Nothing, Notwithstanding,
+    Otherwise, Overall, Overclocking, Overload, Postpone, Proofread, Regardless, Somebody, Somehow,
+    Somewhere, Thereafter, Therefore, Therein, Thereupon, Tonight, Underclock, Upset, Upward,
+    Whereupon, Widespread, Worldwide,
+};
+use super::compound_nouns::CompoundNouns;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::despite_of::DespiteOf;
 use super::dot_initialisms::DotInitialisms;
@@ -18,8 +28,8 @@ use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::phrase_corrections::{
     AndAlike, BadRap, BatedBreath, BeckAndCall, ChangeTack, EnMasse, HumanLife, HungerPang,
-    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SupposeTo,
-    ThatChallenged, TurnItOff,
+    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SpecialAttention,
+    SupposeTo, ThanOthers, ThatChallenged, TurnItOff,
 };
 use super::plural_conjugate::PluralConjugate;
 use super::pronoun_contraction::PronounContraction;
@@ -37,6 +47,7 @@ use super::terminating_conjunctions::TerminatingConjunctions;
 use super::that_which::ThatWhich;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
+use super::whereas::Whereas;
 use super::wrong_quotes::WrongQuotes;
 use super::{CurrencyPlacement, Lint, Linter, NoOxfordComma, OxfordComma};
 use crate::{Dictionary, Document};
@@ -160,6 +171,63 @@ macro_rules! create_lint_group_config {
 }
 
 create_lint_group_config!(
+    CompoundNouns => true,
+    Regardless => true,
+    Henceforth => true,
+    Upward => true,
+    Downright => true,
+    Thereafter => true,
+    Whereupon => true,
+    Insofar => true,
+    Forthwith => true,
+    Hereunder => true,
+    Hereby => true,
+    Thereupon => true,
+    Therein => true,
+    Otherwise => true,
+    Hereafter => true,
+    Nonetheless => true,
+    Anyhow => true,
+    Notwithstanding => true,
+    Widespread => true,
+    Ecommerce => true,
+    Multimedia => true,
+    Multicore => true,
+    Multithreading => true,
+    Devops => true,
+    Underclock => true,
+    Overload => true,
+    Backplane => true,
+    Overclocking => true,
+    Middleware => true,
+    Somewhere => true,
+    Instead => true,
+    Anywhere => true,
+    Nothing => true,
+    Anybody => true,
+    Somebody => true,
+    Nobody => true,
+    Into => true,
+    Proofread => true,
+    Somehow => true,
+    Intact => true,
+    Upset => true,
+    Misunderstood => true,
+    Asleep => true,
+    Altogether => true,
+    However => true,
+    Likewise => true,
+    Overall => true,
+    Worldwide => true,
+    Postpone => true,
+    Misused => true,
+    Misuse => true,
+    Misunderstand => true,
+    Therefore => true,
+    Myself => true,
+    Tonight => true,
+    Itself => true,
+    Whereas => true,
     SpelledNumbers => false,
     AnA => true,
     SentenceCapitalization => true,
@@ -217,7 +285,10 @@ create_lint_group_config!(
     LetAlone => true,
     LoAndBehold => true,
     SneakingSuspicion => true,
-    SupposeTo => true
+    SupposeTo => true,
+    SpecialAttention => true,
+    Everywhere => true,
+    ThanOthers => true,
 );
 
 impl<T: Dictionary + Default> Default for LintGroup<T> {
