@@ -1,6 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-use std::collections::{BTreeMap, HashMap};
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use anyhow::format_err;
@@ -9,8 +9,13 @@ use clap::Parser;
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, LintGroupConfig, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions};
-use harper_core::{remove_overlaps, Dictionary, Document, FstDictionary, TokenKind};
+use harper_core::spell::hunspell::parse_default_attribute_list;
+use harper_core::spell::hunspell::word_list::parse_word_list;
+use harper_core::{
+    remove_overlaps, CharString, Dictionary, Document, FstDictionary, TokenKind, WordMetadata,
+};
 use harper_literate_haskell::LiterateHaskellParser;
+use hashbrown::HashMap;
 use serde::Serialize;
 
 /// A debugging tool for the Harper grammar checker.
@@ -41,6 +46,8 @@ enum Args {
     },
     /// Get the metadata associated with a particular word.
     Metadata { word: String },
+    /// Get all the forms of a word using the affixes.
+    Forms { word: String },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
     Words,
     /// Print the default config with descriptions.
@@ -156,7 +163,7 @@ fn main() -> anyhow::Result<()> {
                 word_str.clear();
                 word_str.extend(word);
 
-                println!("{}", word_str);
+                println!("{:?}", word_str);
             }
 
             Ok(())
@@ -167,6 +174,22 @@ fn main() -> anyhow::Result<()> {
 
             println!("{json}");
 
+            Ok(())
+        }
+        Args::Forms { word } => {
+            let hunspell_word_list = format!("1\n{word}");
+            let words = parse_word_list(&hunspell_word_list.to_string()).unwrap();
+
+            let attributes = parse_default_attribute_list();
+
+            let mut expanded: HashMap<CharString, WordMetadata> = HashMap::new();
+
+            attributes.expand_marked_words(words, &mut expanded);
+
+            expanded.keys().for_each(|form| {
+                let string_form: String = form.iter().collect();
+                println!("{}", string_form);
+            });
             Ok(())
         }
         Args::Config => {

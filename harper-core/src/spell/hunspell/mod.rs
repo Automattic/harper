@@ -3,7 +3,7 @@ mod attribute_list;
 mod error;
 mod expansion;
 mod matcher;
-mod word_list;
+pub mod word_list;
 
 pub use attribute_list::AttributeList;
 use attribute_list::HumanReadableAttributeList;

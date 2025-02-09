@@ -16,7 +16,7 @@ pub mod parsers;
 pub mod patterns;
 mod punctuation;
 mod span;
-mod spell;
+pub mod spell;
 mod sync;
 mod title_case;
 mod token;

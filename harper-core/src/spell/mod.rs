@@ -12,7 +12,7 @@ pub use self::merged_dictionary::MergedDictionary;
 mod dictionary;
 mod fst_dictionary;
 mod full_dictionary;
-mod hunspell;
+pub mod hunspell;
 mod merged_dictionary;
 
 #[derive(PartialEq, Debug)]
