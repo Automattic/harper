@@ -1,6 +1,6 @@
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::TokenStringExt;
 use crate::{Document, Span, TokenKind};
+use crate::{Number, TokenStringExt};
 
 /// Detect and warn that the sentence is too long.
 #[derive(Debug, Clone, Copy, Default)]
@@ -11,7 +11,7 @@ impl Linter for NumberSuffixCapitalization {
         let mut output = Vec::new();
 
         for number_tok in document.iter_numbers() {
-            if let TokenKind::Number(_, None) = number_tok.kind {
+            if let TokenKind::Number(Number { suffix: None, .. }) = number_tok.kind {
                 continue;
             }
 

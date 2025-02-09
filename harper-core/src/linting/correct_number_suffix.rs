@@ -1,6 +1,6 @@
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::TokenStringExt;
 use crate::{Document, NumberSuffix, Span, TokenKind};
+use crate::{Number, TokenStringExt};
 
 /// Detect and warn that the sentence is too long.
 #[derive(Debug, Clone, Copy, Default)]
@@ -15,8 +15,13 @@ impl Linter for CorrectNumberSuffix {
                 continue;
             };
 
-            if let TokenKind::Number(number, Some(suffix)) = number_tok.kind {
-                if let Some(correct_suffix) = NumberSuffix::correct_suffix_for(number) {
+            if let TokenKind::Number(Number {
+                value,
+                suffix: Some(suffix),
+                ..
+            }) = number_tok.kind
+            {
+                if let Some(correct_suffix) = NumberSuffix::correct_suffix_for(value) {
                     if suffix != correct_suffix {
                         output.push(Lint {
                             span: suffix_span,
