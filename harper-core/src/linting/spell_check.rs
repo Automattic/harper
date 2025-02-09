@@ -76,17 +76,27 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             }
 
             let suggestions = possibilities
-                .into_iter()
+                .iter()
                 .map(|word| Suggestion::ReplaceWith(word.to_vec()));
+
+            // If there's only one suggestion, save the user a step in the GUI
+            let message = if suggestions.len() == 1 {
+                format!(
+                    "Did you mean “{}”?",
+                    possibilities.last().unwrap().iter().collect::<String>()
+                )
+            } else {
+                format!(
+                    "Did you mean to spell “{}” this way?",
+                    document.get_span_content_str(word.span)
+                )
+            };
 
             lints.push(Lint {
                 span: word.span,
                 lint_kind: LintKind::Spelling,
                 suggestions: suggestions.collect(),
-                message: format!(
-                    "Did you mean to spell “{}” this way?",
-                    document.get_span_content_str(word.span)
-                ),
+                message,
                 priority: 63,
             })
         }
