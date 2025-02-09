@@ -68,7 +68,7 @@ pub use oxford_comma::OxfordComma;
 pub use pattern_linter::PatternLinter;
 pub use phrase_corrections::{
     AndAlike, BadRap, BatedBreath, BeckAndCall, ChangeTack, EnMasse, HumanLife, HungerPang,
-    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SupposeTo,
+    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SupposedTo,
     ThatChallenged, TurnItOff,
 };
 pub use plural_conjugate::PluralConjugate;
