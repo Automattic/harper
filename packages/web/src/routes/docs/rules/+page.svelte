@@ -1,5 +1,5 @@
 <script module lang="ts">
-	import { LocalLinter } from 'harper.js';
+	import { LocalLinter, binary } from 'harper.js';
 
 	export const prerender = true;
 	export const frontmatter = {
@@ -9,7 +9,7 @@
 	let info: Record<string, string> = $state({});
 	let titles: Record<string, string> = $state({});
 
-	let linter = new LocalLinter();
+	let linter = new LocalLinter({ binary });
 	linter.getLintDescriptions().then(async (v) => {
 		info = v;
 

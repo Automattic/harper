@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest';
 import WorkerLinter from './WorkerLinter';
 import LocalLinter from './LocalLinter';
+import { binary } from './binary';
 
 const linters = {
 	WorkerLinter: WorkerLinter,
@@ -9,7 +10,7 @@ const linters = {
 
 for (const [linterName, Linter] of Object.entries(linters)) {
 	test(`${linterName} detects repeated words`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		const lints = await linter.lint('The the problem is...');
 
@@ -17,7 +18,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} detects repeated words with multiple synchronous requests`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		const promises = [
 			linter.lint('The problem is that that...'),
@@ -38,7 +39,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} detects repeated words with concurrent requests`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		const promises = [
 			linter.lint('The problem is that that...'),
@@ -55,7 +56,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} detects lorem ipsum paragraph as not english`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		const result = await linter.isLikelyEnglish(
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
@@ -66,20 +67,20 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} can run setup without issues`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		await linter.setup();
 	});
 
 	test(`${linterName} contains configuration option for repetition`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		const lintConfig = await linter.getLintConfig();
 		expect(lintConfig).toHaveProperty('repeated_words');
 	});
 
 	test(`${linterName} can both get and set its configuration`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		let lintConfig = await linter.getLintConfig();
 
@@ -96,7 +97,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} can make things title case`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		const titleCase = await linter.toTitleCase('THIS IS A TEST FOR MAKING TITLES');
 
@@ -104,7 +105,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} can get rule descriptions`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		const descriptions = await linter.getLintDescriptions();
 
@@ -112,7 +113,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} rule descriptions are not empty`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		const descriptions = await linter.getLintDescriptions();
 
@@ -123,7 +124,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} default lint config has no null values`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		const lintConfig = await linter.getDefaultLintConfig();
 
@@ -133,7 +134,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} can ignore lints`, async () => {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 		const source = 'This is an test.';
 
 		const firstRound = await linter.lint(source);
@@ -150,7 +151,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	test(`${linterName} can reimport ignored lints.`, async () => {
 		const source = 'This is an test of xporting lints.';
 
-		const firstLinter = new Linter();
+		const firstLinter = new Linter({ binary });
 
 		const firstLints = await firstLinter.lint(source);
 
@@ -161,7 +162,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const exported = await firstLinter.exportIgnoredLints();
 
 		/// Create a new instance and reimport the lints.
-		const secondLinter = new Linter();
+		const secondLinter = new Linter({ binary });
 		await secondLinter.importIgnoredLints(exported);
 
 		const secondLints = await secondLinter.lint(source);
@@ -175,7 +176,7 @@ test('Linters have the same config format', async () => {
 	const configs = [];
 
 	for (const Linter of Object.values(linters)) {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		configs.push(await linter.getLintConfig());
 	}
@@ -190,7 +191,7 @@ test('Linters have the same JSON config format', async () => {
 	const configs = [];
 
 	for (const Linter of Object.values(linters)) {
-		const linter = new Linter();
+		const linter = new Linter({ binary });
 
 		configs.push(await linter.getLintConfigAsJSON());
 	}

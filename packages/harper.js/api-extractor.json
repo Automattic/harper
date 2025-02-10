@@ -9,10 +9,13 @@
 	"dtsRollup": {
 		"enabled": false
 	},
-	"bundledPackages": ["wasm"],
+	"bundledPackages": ["harper-wasm"],
 	"messages": {
 		"extractorMessageReporting": {
 			"ae-missing-release-tag": {
+				"logLevel": "none"
+			},
+			"ae-forgotten-export": {
 				"logLevel": "none"
 			}
 		}

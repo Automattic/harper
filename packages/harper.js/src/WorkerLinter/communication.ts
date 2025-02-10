@@ -1,8 +1,7 @@
+import { binary, loadBinary } from '../binary';
+
 /** This module aims to define the communication protocol between the main thread and the worker.
  * Note that most of the complication here comes from the fact that we can't serialize function calls or referenced WebAssembly memory.*/
-
-import loadWasm from '../loadWasm';
-
 export type Type =
 	| 'string'
 	| 'number'
@@ -27,7 +26,7 @@ export async function serialize(req: DeserializedRequest): Promise<SerializedReq
 }
 
 export async function serializeArg(arg: any): Promise<RequestArg> {
-	const { Lint, Span, Suggestion } = await loadWasm();
+	const { Lint, Span, Suggestion } = await loadBinary(binary);
 
 	if (Array.isArray(arg)) {
 		return { json: JSON.stringify(await Promise.all(arg.map(serializeArg))), type: 'Array' };
@@ -65,7 +64,7 @@ export async function serializeArg(arg: any): Promise<RequestArg> {
 }
 
 export async function deserializeArg(requestArg: RequestArg): Promise<any> {
-	const { Lint, Span, Suggestion } = await loadWasm();
+	const { Lint, Span, Suggestion } = await loadBinary(binary);
 
 	switch (requestArg.type) {
 		case 'undefined':
@@ -94,6 +93,10 @@ export type SerializedRequest = {
 	/** The arguments to the procedure */
 	args: RequestArg[];
 };
+
+export function isSerializedRequest(v: unknown): v is SerializedRequest {
+	return typeof v === 'object' && v !== null && 'procName' in v && 'args' in v;
+}
 
 /** An object that is received by the web worker to request work to be done. */
 export type DeserializedRequest = {
