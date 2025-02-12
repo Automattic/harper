@@ -47,7 +47,7 @@ enum Args {
     /// Get the metadata associated with a particular word.
     Metadata { word: String },
     /// Get all the forms of a word using the affixes.
-    Forms { word: String },
+    Forms { words: Vec<String> },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
     Words,
     /// Print the default config with descriptions.
@@ -176,20 +176,34 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Forms { word } => {
-            let hunspell_word_list = format!("1\n{word}");
-            let words = parse_word_list(&hunspell_word_list.to_string()).unwrap();
-
-            let attributes = parse_default_attribute_list();
-
+        Args::Forms { words } => {
             let mut expanded: HashMap<CharString, WordMetadata> = HashMap::new();
+            let attributes = parse_default_attribute_list();
+            let total = words.len();
 
-            attributes.expand_marked_words(words, &mut expanded);
+            for (index, word) in words.iter().enumerate() {
+                expanded.clear();
 
-            expanded.keys().for_each(|form| {
-                let string_form: String = form.iter().collect();
-                println!("{}", string_form);
-            });
+                let hunspell_word_list = format!("1\n{word}");
+                let words = parse_word_list(&hunspell_word_list.to_string()).unwrap();
+                attributes.expand_marked_words(words, &mut expanded);
+
+                println!(
+                    "{}{}{}",
+                    if index > 0 { "\n" } else { "" },
+                    if total != 1 {
+                        format!("{}/{}: ", index + 1, total)
+                    } else {
+                        "".to_string()
+                    },
+                    word
+                );
+                expanded.keys().for_each(|form| {
+                    let string_form: String = form.iter().collect();
+                    println!("  - {}", string_form);
+                });
+            }
+
             Ok(())
         }
         Args::Config => {
