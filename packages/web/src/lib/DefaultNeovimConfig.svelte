@@ -1,8 +1,8 @@
 <script>
-	import { LocalLinter } from 'harper.js';
+	import { LocalLinter, binary } from 'harper.js';
 	import { Button } from 'flowbite-svelte';
 
-	let linter = new LocalLinter();
+	let linter = new LocalLinter({ binary });
 
 	let head = `lspconfig.harper_ls.setup {
   settings = {

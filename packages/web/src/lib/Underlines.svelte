@@ -5,7 +5,7 @@
 	// For now, it works.
 
 	import type { Lint } from 'harper.js';
-	import { WorkerLinter } from 'harper.js';
+	import { WorkerLinter, binary } from 'harper.js';
 	import lintKindColor from '$lib/lintKindColor';
 
 	export let content: string;
@@ -13,7 +13,7 @@
 
 	let lints: [Lint, number][] = [];
 	let lintHighlights: HTMLSpanElement[] = [];
-	let linter = new WorkerLinter();
+	let linter = new WorkerLinter({ binary });
 	linter.setup();
 
 	$: linter
