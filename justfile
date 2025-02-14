@@ -234,11 +234,16 @@ addnoun noun:
     exit 0
   fi
 
-  if [[ "{{noun}}" =~ ^[A-Z] ]]; then
-    echo "{{noun}}/M" >> $DICT_FILE
-  else
-    echo "{{noun}}/SM" >> $DICT_FILE
+  # 'M', possessive -'s suffix for both common and proper nouns
+  flags='M'
+
+  # 'S', plural -(e)s suffix only for common nouns (not capitalized)
+  if [[ "{{noun}}" =~ ^[a-z] ]]; then
+    flags+='S'
   fi
+
+  # Echo the noun with its flags to the dictionary file
+  echo "{{noun}}/$flags" >> $DICT_FILE
 
 # Search Harper's curated dictionary for a specific word
 searchdictfor word:
