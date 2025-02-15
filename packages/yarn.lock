@@ -1694,7 +1694,7 @@
   resolved "https://registry.yarnpkg.com/@lukeed/csprng/-/csprng-1.1.0.tgz#1e3e4bd05c1cc7a0b2ddbd8a03f39f6e4b5e6cfe"
   integrity sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==
 
-"@microsoft/api-documenter@^7.26.5":
+"@microsoft/api-documenter@^7.26.7":
   version "7.26.7"
   resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.26.7.tgz#695bf9bc0816bea6278d7de9f020a34a83dbc075"
   integrity sha512-VruYlHYAhQfuBNyndvyD9GBmCRWSOZ8D9+eXicygycNPMC/SPM71WWu2OwP98CTBvq/OhG/uRvUGGdL4QvgiFQ==
@@ -1716,7 +1716,7 @@
     "@microsoft/tsdoc-config" "~0.17.1"
     "@rushstack/node-core-library" "5.11.0"
 
-"@microsoft/api-extractor@^7.49.1":
+"@microsoft/api-extractor@^7.49.1", "@microsoft/api-extractor@^7.49.2":
   version "7.49.2"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.49.2.tgz#bc08c5fef1a3064f86657fd2e2f84c0ea64462f5"
   integrity sha512-DI/WnvhbkHcucxxc4ys00ejCiViFls5EKPrEfe4NV3GGpVkoM5ZXF61HZNSGA8IG0oEV4KfTqIa59Rc3wdMopw==
@@ -2327,10 +2327,10 @@
     twoslash "^0.2.12"
     twoslash-protocol "^0.2.12"
 
-"@sveltepress/vite@^1.1.2":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@sveltepress/vite/-/vite-1.1.4.tgz#92c021595c5a0b11ef364c0512ee0ecd81fbb0e6"
-  integrity sha512-NjKls1piIdFrBf/alMfnW8I/z24zq3bBNJIfJ8tQzgJWzth9rAMz1d9rGXONs97ibZbE4QAbZ1wZTkG8nnYhxw==
+"@sveltepress/vite@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@sveltepress/vite/-/vite-1.1.5.tgz#76cb81e3031feffdb9664e61c606542a1732bfee"
+  integrity sha512-YVZ8XG377l1MW7dIVdt0D9PUpjP1a4hQyAO6U0JwuOrlQavTFAPdpn7MfvZJV/Q9N1cEWO1S2eX2HC4G0f0nxQ==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^4.0.1"
     cross-spawn "^7.0.3"
@@ -5130,8 +5130,12 @@ gzip-size@^6.0.0:
   dependencies:
     duplexer "^0.1.2"
 
+"harper-wasm@link:../harper-wasm/pkg":
+  version "0.0.0"
+  uid ""
+
 "harper.js@link:harper.js":
-  version "0.19.1"
+  version "0.20.0"
 
 has-bigints@^1.0.2:
   version "1.1.0"
@@ -7230,7 +7234,7 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.2.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@^8.4.31, postcss@^8.4.38, postcss@^8.4.39, postcss@^8.4.40, postcss@^8.4.47, postcss@^8.4.49, postcss@^8.5.1:
+postcss@^8.4.31, postcss@^8.4.38, postcss@^8.4.39, postcss@^8.4.40, postcss@^8.4.47, postcss@^8.5.1:
   version "8.5.1"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.1.tgz#e2272a1f8a807fafa413218245630b5db10a3214"
   integrity sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==
@@ -7684,7 +7688,7 @@ rollup@^2.43.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
-rollup@^4.22.4, rollup@^4.23.0, rollup@^4.9.5:
+rollup@^4.22.4, rollup@^4.9.5:
   version "4.34.1"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-4.34.1.tgz#dcc318abee12e23dae4003af733c1987d7baca8e"
   integrity sha512-iYZ/+PcdLYSGfH3S+dGahlW/RWmsqDhLgj1BT9DH/xXJ0ggZN7xkdP9wipPNjjNLczI+fmMLmTB9pye+d2r4GQ==
@@ -8711,7 +8715,7 @@ typescript@5.7.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.2.tgz#3169cf8c4c8a828cde53ba9ecb3d2b1d5dd67be6"
   integrity sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==
 
-typescript@^5.7.3, typescript@~5.7.3:
+typescript@^5.7.2, typescript@^5.7.3:
   version "5.7.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.3.tgz#919b44a7dbb8583a9b856d162be24a54bf80073e"
   integrity sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==
@@ -9019,7 +9023,7 @@ vite-plugin-virtual@^0.3.0:
   resolved "https://registry.yarnpkg.com/vite-plugin-virtual/-/vite-plugin-virtual-0.3.0.tgz#5831af99864db65b9c46b970a919ec9fc17b374d"
   integrity sha512-TOtrWw6jKrJNXfxhGRUiQzfAP1gRkYkVzMkJNjHUJ8idLuxf8eeeDKZKZHhdeYfaCc/87rv+KvWE2iCy1QInWA==
 
-vite-plugin-wasm@^3.3.0:
+vite-plugin-wasm@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/vite-plugin-wasm/-/vite-plugin-wasm-3.4.1.tgz#62b546ac7e25cc2a0e7b1331ed5c4ba1dd71b743"
   integrity sha512-ja3nSo2UCkVeitltJGkS3pfQHAanHv/DqGatdI39ja6McgABlpsZ5hVgl6wuR8Qx5etY3T5qgDQhOWzc5RReZA==
@@ -9032,17 +9036,6 @@ vite-plugin-wasm@^3.3.0:
     esbuild "^0.24.2"
     postcss "^8.5.1"
     rollup "^4.30.1"
-  optionalDependencies:
-    fsevents "~2.3.3"
-
-vite@^6.0.9:
-  version "6.0.11"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-6.0.11.tgz#224497e93e940b34c3357c9ebf2ec20803091ed8"
-  integrity sha512-4VL9mQPKoHy4+FE0NnRE/kbY51TOfaknxAjt3fJbGJxhIpBZiqVzlZDEesWWsuREXHwNdAoOFZ9MkPEVXczHwg==
-  dependencies:
-    esbuild "^0.24.2"
-    postcss "^8.4.49"
-    rollup "^4.23.0"
   optionalDependencies:
     fsevents "~2.3.3"
 
@@ -9108,9 +9101,6 @@ vscode-uri@^3.0.8:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/vscode-uri/-/vscode-uri-3.0.8.tgz#1770938d3e72588659a172d0fd4642780083ff9f"
   integrity sha512-AyFQ0EVmsOZOlAnxoFOGOq1SQDWAB7C6aqMGS23svWAllfOaxbuFvcT8D1i8z3Gyn8fraVeZNNmN6e9bxxXkKw==
-
-"wasm@link:../harper-wasm/pkg":
-  version "0.0.0"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"

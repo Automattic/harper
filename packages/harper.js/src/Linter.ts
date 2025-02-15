@@ -1,5 +1,6 @@
-import type { Lint, Span, Suggestion } from 'wasm';
+import type { Lint, Span, Suggestion } from 'harper-wasm';
 import { LintConfig, LintOptions } from './main';
+import { BinaryModule } from './binary';
 
 /** An interface for an object that can perform linting actions. */
 export default interface Linter {
@@ -63,4 +64,9 @@ export default interface Linter {
 
 	/** Clear records of all previously ignored lints. */
 	clearIgnoredLints(): Promise<void>;
+}
+
+export interface LinterInit {
+	/** The module or path to the WebAssembly binary. */
+	binary: BinaryModule;
 }

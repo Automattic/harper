@@ -17,8 +17,8 @@
 	let linter: WorkerLinter;
 
 	(async () => {
-		let { WorkerLinter } = await import('harper.js');
-		linter = new WorkerLinter();
+		let { WorkerLinter, binary } = await import('harper.js');
+		linter = new WorkerLinter({ binary });
 
 		await linter.setup();
 	})();
