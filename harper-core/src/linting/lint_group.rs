@@ -59,7 +59,8 @@ use super::proper_noun_capitalization_linters::PocketCastsNames;
 use super::proper_noun_capitalization_linters::TumblrNames;
 use super::proper_noun_capitalization_linters::{
     AmazonNames, Americas, AppleNames, Australia, AzureNames, Canada, ChineseCommunistParty,
-    GoogleNames, Holidays, Koreas, Malaysia, MetaNames, MicrosoftNames, UnitedOrganizations,
+    Countries, GoogleNames, Holidays, Koreas, Malaysia, MetaNames, MicrosoftNames,
+    NationalCapitals, UnitedOrganizations,
 };
 use super::repeated_words::RepeatedWords;
 use super::sentence_capitalization::SentenceCapitalization;
@@ -333,7 +334,9 @@ create_lint_group_config!(
     SpecialAttention => true,
     Everywhere => true,
     ThanOthers => true,
-    SupposedTo => true
+    SupposedTo => true,
+    Countries => true,
+    NationalCapitals => true
 );
 
 impl<T: Dictionary + Default> Default for LintGroup<T> {

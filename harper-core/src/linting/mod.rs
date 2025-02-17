@@ -124,7 +124,8 @@ pub use proper_noun_capitalization_linters::PocketCastsNames;
 pub use proper_noun_capitalization_linters::TumblrNames;
 pub use proper_noun_capitalization_linters::{
     AmazonNames, Americas, AppleNames, Australia, AzureNames, Canada, ChineseCommunistParty,
-    GoogleNames, Holidays, Koreas, Malaysia, MetaNames, MicrosoftNames, UnitedOrganizations,
+    Countries, GoogleNames, Holidays, Koreas, Malaysia, MetaNames, MicrosoftNames,
+    NationalCapitals, UnitedOrganizations,
 };
 pub use repeated_words::RepeatedWords;
 pub use sentence_capitalization::SentenceCapitalization;
