@@ -200,8 +200,6 @@ impl Matcher {
 
         // wrong set phrases and collocations
         triggers.extend(pt! {
-            "back","in","the","days" => "back in the day",
-            "Back","in","the","days" => "Back in the day",
             "could", "of" => "could have",
             "could", "of" => "could've",
             "couldn't", "of" => "couldn't have",
