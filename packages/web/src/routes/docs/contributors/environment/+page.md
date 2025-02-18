@@ -14,6 +14,14 @@ To use the tooling required to build and debug Harper, you'll need the following
 - `zip`
 - `pandoc`
 
+To run integration tests, you may also need `libnss3` and/or `libasound3`.
+These are installable in Ubuntu using `apt-get`.
+
+```bash
+sudo apt-get install libnss3
+sudo apt-get install libasound2
+```
+
 We develop a set of tools, accessible via `just`, to build and debug Harper's algorithm (otherwise known as `harper-core`) and its various integrations.
 The source code is in the `justfile` [at the root of the repository](https://github.com/Automattic/harper/blob/master/justfile).
 To see all the tools in the toolbox, run:
