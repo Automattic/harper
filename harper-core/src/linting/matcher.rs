@@ -109,22 +109,33 @@ impl Matcher {
             "and","also" => "and"
         });
 
-        // phrase typos, each word passes spellcheck but one word is wrong
+        // phrase typos and misspellings, each word passes spellcheck but one word is wrong
         triggers.extend(pt! {
             "an","in" => "and in",
             "bee","there" => "been there",
             "can","be","seem" => "can be seen",
             "eight","grade" => "eighth grade",
+            "get","rid","off" => "get rid of",
+            "gets","rid","off" => "gets rid of",
+            "getting","rid","off" => "getting rid of",
+            "got","rid","off" => "got rid of",
+            "far","to","many" => "far too many",
+            "far","to","much" => "far too much",
             "gong","to" => "going to",
             "I","a","m" => "I am",
+            "in","particularly" => "in particular",
             "It","cam" => "It can",
             "kid","regards" => "kind regards",
             "mu","house" => "my house",
             "no","to" => "not to",
             "No","to" => "not to",
+            "operative","system" => "operating system",
+            "operative","systems" => "operating systems",
             "the", "this" => "that this",
             "The","re" => "There",
-            "though", "process" => "thought process"
+            "though", "process" => "thought process",
+            "way","to","many" => "way too many",
+            "way","to","much" => "way too much"
         });
 
         // phrase capitalization
@@ -167,9 +178,15 @@ impl Matcher {
             "fatal","outcome" => "death"
         });
 
-        // spellos
+        // misspellings
         triggers.extend(pt! {
             "grammer" => "grammar"
+        });
+
+        // slang & nonstandard spellings
+        triggers.extend(pt! {
+            "yea" => "yeah",    // new slang spelling; also formal opposite of "nay"
+            "yeh" => "yeah"     // new slang spelling
         });
 
         // expand compound words
@@ -181,6 +198,7 @@ impl Matcher {
 
         // mixing up than/then in context
         triggers.extend(pt! {
+            "better","then" => "better than",
             "more","then" => "more than",
             "then","her" => "than her",
             "then","hers" => "than hers",
