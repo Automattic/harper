@@ -67,7 +67,7 @@ impl PatternLinter for GeneralCompoundNouns {
 
         Lint {
             span,
-            lint_kind: LintKind::Spelling,
+            lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(word.to_vec(), orig)],
             message: format!(
                 "Did you mean the closed compound noun “{}”?",

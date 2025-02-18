@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 /// the existing categories.
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, Is, Default, Hash, PartialEq)]
 pub enum LintKind {
+    /// This should only be used by linters doing spellcheck on individual words.
     Spelling,
     Capitalization,
     Style,
