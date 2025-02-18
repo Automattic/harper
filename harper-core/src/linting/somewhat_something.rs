@@ -28,17 +28,17 @@ impl PatternLinter for SomewhatSomething {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let span = matched_tokens.first().unwrap().span;
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens.first()?.span;
         let og = span.get_content(source);
 
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::Style,
             suggestions: vec![Suggestion::replace_with_match_case_str("something", og)],
             message: "Use the traditional form.".to_owned(),
             priority: 63,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

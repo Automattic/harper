@@ -30,10 +30,10 @@ impl PatternLinter for ChockFull {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_toks: &[Token], source: &[char]) -> Lint {
-        let span = matched_toks.span().unwrap();
+    fn match_to_lint(&self, matched_toks: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_toks.span()?;
 
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
@@ -49,7 +49,7 @@ impl PatternLinter for ChockFull {
                 }
             ),
             priority: 126,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

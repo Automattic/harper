@@ -37,19 +37,19 @@ impl PatternLinter for DotInitialisms {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let found_word_tok = matched_tokens.first().unwrap();
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let found_word_tok = matched_tokens.first()?;
         let found_word = found_word_tok.span.get_content_string(source);
 
-        let correction = self.corrections.get(found_word.as_str()).unwrap();
+        let correction = self.corrections.get(found_word.as_str())?;
 
-        Lint {
-            span: matched_tokens.span().unwrap(),
+        Some(Lint {
+            span: matched_tokens.span()?,
             lint_kind: LintKind::Formatting,
             suggestions: vec![Suggestion::ReplaceWith(correction.chars().collect())],
             message: "Initialisms should have dot-separated letters.".to_owned(),
             priority: 63,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

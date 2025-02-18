@@ -41,7 +41,7 @@ impl PatternLinter for MultipleSequentialPronouns {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let mut suggestions = Vec::new();
 
         if matched_tokens.len() == 3 {
@@ -53,13 +53,13 @@ impl PatternLinter for MultipleSequentialPronouns {
             ));
         }
 
-        Lint {
-            span: matched_tokens.span().unwrap(),
+        Some(Lint {
+            span: matched_tokens.span()?,
             lint_kind: LintKind::Repetition,
             message: "There are too many personal pronouns in sequence here.".to_owned(),
             priority: 63,
             suggestions,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

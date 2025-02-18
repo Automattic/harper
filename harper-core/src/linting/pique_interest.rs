@@ -46,12 +46,12 @@ impl PatternLinter for PiqueInterest {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = matched_tokens[0].span;
         let word = span.get_content_string(source).to_lowercase();
-        let correct = Self::to_correct(&word).unwrap();
+        let correct = Self::to_correct(&word)?;
 
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
@@ -64,7 +64,7 @@ impl PatternLinter for PiqueInterest {
                 word,
             ),
             priority: 31,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

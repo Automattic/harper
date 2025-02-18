@@ -26,11 +26,11 @@ impl PatternLinter for WasAloud {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let verb = matched_tokens[0].span.get_content_string(source);
 
-        Lint {
-            span: matched_tokens.span().unwrap(),
+        Some(Lint {
+            span: matched_tokens.span()?,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
                 format!("{} allowed", verb).chars().collect(),
@@ -38,7 +38,7 @@ impl PatternLinter for WasAloud {
             )],
             message: format!("Did you mean `{verb} allowed`?"),
             priority: 31,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

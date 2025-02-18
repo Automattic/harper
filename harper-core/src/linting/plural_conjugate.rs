@@ -36,8 +36,8 @@ impl PatternLinter for PluralConjugate {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Lint {
-        let should_be_plural = matched_tokens.first().unwrap().kind.is_plural_noun();
+    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+        let should_be_plural = matched_tokens.first()?.kind.is_plural_noun();
 
         let sug = if should_be_plural {
             vec!['a', 'r', 'e']
@@ -45,13 +45,13 @@ impl PatternLinter for PluralConjugate {
             vec!['i', 's']
         };
 
-        Lint {
-            span: matched_tokens.last().unwrap().span,
+        Some(Lint {
+            span: matched_tokens.last()?.span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::ReplaceWith(sug)],
             message: "Use the alternative conjugation of this verb to be consistent with the noun's plural nature.".to_owned(),
             priority: 63,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

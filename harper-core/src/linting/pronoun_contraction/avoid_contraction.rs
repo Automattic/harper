@@ -28,10 +28,10 @@ impl PatternLinter for AvoidContraction {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let word = matched_tokens[0].span.get_content(source);
 
-        Lint {
+        Some(Lint {
             span: matched_tokens[0].span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
@@ -41,7 +41,7 @@ impl PatternLinter for AvoidContraction {
             message: "It appears you intended to use the possessive version of this word"
                 .to_owned(),
             priority: 63,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

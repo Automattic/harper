@@ -27,11 +27,11 @@ impl PatternLinter for Whereas {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let span = matched_tokens.span().unwrap();
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens.span()?;
         let orig_chars = span.get_content(source);
 
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
@@ -40,7 +40,7 @@ impl PatternLinter for Whereas {
             )],
             message: "`Whereas` is commonly mistaken for `where as`.".to_owned(),
             ..Default::default()
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

@@ -4,6 +4,7 @@
 
 mod an_a;
 mod avoid_curses;
+mod back_in_the_day;
 mod boring_words;
 mod capitalize_personal_pronouns;
 mod chock_full;
@@ -61,6 +62,7 @@ mod wrong_quotes;
 
 pub use an_a::AnA;
 pub use avoid_curses::AvoidCurses;
+pub use back_in_the_day::BackInTheDay;
 pub use boring_words::BoringWords;
 pub use capitalize_personal_pronouns::CapitalizePersonalPronouns;
 pub use chock_full::ChockFull;

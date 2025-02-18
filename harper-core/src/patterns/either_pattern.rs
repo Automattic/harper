@@ -2,7 +2,7 @@ use crate::Token;
 
 use super::Pattern;
 
-/// A pattern that returns the value of the first non-zero match in a list.
+/// A pattern that returns the value of the longest match in a list.
 #[derive(Default)]
 pub struct EitherPattern {
     patterns: Vec<Box<dyn Pattern>>,
@@ -20,14 +20,16 @@ impl EitherPattern {
 
 impl Pattern for EitherPattern {
     fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
+        let mut longest = 0;
+
         for pattern in self.patterns.iter() {
             let match_len = pattern.matches(tokens, source);
 
-            if match_len > 0 {
-                return match_len;
+            if match_len > longest {
+                longest = match_len
             }
         }
 
-        0
+        longest
     }
 }

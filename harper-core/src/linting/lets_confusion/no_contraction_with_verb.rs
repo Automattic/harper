@@ -28,11 +28,11 @@ impl PatternLinter for NoContractionWithVerb {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let problem_span = matched_tokens.first().unwrap().span;
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let problem_span = matched_tokens.first()?.span;
         let template = problem_span.get_content(source);
 
-        Lint {
+        Some(Lint {
             span: problem_span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![
@@ -41,7 +41,7 @@ impl PatternLinter for NoContractionWithVerb {
             ],
             message: "It seems you forgot to include a subject here.".to_owned(),
             priority: 31,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

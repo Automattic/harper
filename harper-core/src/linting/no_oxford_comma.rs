@@ -23,17 +23,17 @@ impl NoOxfordComma {
         }
     }
 
-    fn match_to_lint(&self, matched_toks: &[Token], _source: &[char]) -> Lint {
-        let last_comma_index = matched_toks.last_comma_index().unwrap();
+    fn match_to_lint(&self, matched_toks: &[Token], _source: &[char]) -> Option<Lint> {
+        let last_comma_index = matched_toks.last_comma_index()?;
         let offender = matched_toks[last_comma_index];
 
-        Lint {
+        Some(Lint {
             span: offender.span,
             lint_kind: LintKind::Style,
             suggestions: vec![Suggestion::Remove],
             message: "Remove the Oxford comma here.".to_owned(),
             priority: 31,
-        }
+        })
     }
 }
 
@@ -65,7 +65,7 @@ impl Linter for NoOxfordComma {
                         document.get_source(),
                     );
 
-                    lints.push(lint);
+                    lints.extend(lint);
                     tok_cursor += match_len;
                 } else {
                     tok_cursor += 1;

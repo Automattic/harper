@@ -26,16 +26,12 @@ impl PatternLinter for LetUsRedundancy {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let template = matched_tokens.span().unwrap().get_content(source);
-        let pronoun = matched_tokens
-            .last()
-            .unwrap()
-            .span
-            .get_content_string(source);
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let template = matched_tokens.span()?.get_content(source);
+        let pronoun = matched_tokens.last()?.span.get_content_string(source);
 
-        Lint {
-            span: matched_tokens.span().unwrap(),
+        Some(Lint {
+            span: matched_tokens.span()?,
             lint_kind: LintKind::Repetition,
             suggestions: vec![
                 Suggestion::replace_with_match_case(
@@ -50,7 +46,7 @@ impl PatternLinter for LetUsRedundancy {
             message: "`let's` stands for `let us`, so including another pronoun is redundant."
                 .to_owned(),
             priority: 31,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

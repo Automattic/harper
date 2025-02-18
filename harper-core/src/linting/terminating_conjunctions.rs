@@ -49,11 +49,11 @@ impl PatternLinter for TerminatingConjunctions {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[crate::Token], source: &[char]) -> Lint {
+    fn match_to_lint(&self, matched_tokens: &[crate::Token], source: &[char]) -> Option<Lint> {
         let word_span = matched_tokens[1].span;
         let word = word_span.get_content_string(source);
 
-        Lint {
+        Some(Lint {
             span: word_span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![],
@@ -62,7 +62,7 @@ impl PatternLinter for TerminatingConjunctions {
                  clause."
             ),
             priority: 63,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

@@ -28,11 +28,11 @@ impl PatternLinter for PossessiveYour {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let span = matched_tokens.first().unwrap().span;
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens.first()?.span;
         let orig_chars = span.get_content(source);
 
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![
@@ -42,7 +42,7 @@ impl PatternLinter for PossessiveYour {
             message: "The possessive version of this word is more common in this context."
                 .to_owned(),
             ..Default::default()
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

@@ -27,17 +27,17 @@ impl OxfordComma {
         }
     }
 
-    fn match_to_lint(&self, matched_toks: &[Token], _source: &[char]) -> Lint {
-        let conj_index = matched_toks.last_conjunction_index().unwrap();
+    fn match_to_lint(&self, matched_toks: &[Token], _source: &[char]) -> Option<Lint> {
+        let conj_index = matched_toks.last_conjunction_index()?;
         let offender = matched_toks[conj_index - 2];
 
-        Lint {
+        Some(Lint {
             span: offender.span,
             lint_kind: LintKind::Style,
             suggestions: vec![Suggestion::InsertAfter(vec![','])],
             message: "An Oxford comma is necessary here.".to_owned(),
             priority: 31,
-        }
+        })
     }
 }
 
@@ -69,7 +69,7 @@ impl Linter for OxfordComma {
                         document.get_source(),
                     );
 
-                    lints.push(lint);
+                    lints.extend(lint);
                     tok_cursor += match_len;
                 } else {
                     tok_cursor += 1;

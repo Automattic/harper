@@ -40,16 +40,16 @@ macro_rules! create_linter_for {
                 self.pattern.as_ref()
             }
 
-            fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
+            fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
                 let proper = make_title_case(matched_tokens, source, &self.dict);
 
-                Lint {
-                    span: matched_tokens.span().unwrap(),
+                Some(Lint {
+                    span: matched_tokens.span()?,
                     lint_kind: LintKind::Capitalization,
                     suggestions: vec![Suggestion::ReplaceWith(proper)],
                     message: $message.to_string(),
                     priority: 31,
-                }
+                })
             }
 
             fn description(&self) -> &'static str {

@@ -28,11 +28,11 @@ impl PatternLinter for OutOfDate {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let span = matched_tokens.span().unwrap();
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens.span()?;
         let problem_text = span.get_content(source);
 
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::replace_with_match_case(
@@ -41,7 +41,7 @@ impl PatternLinter for OutOfDate {
             )],
             message: "Did you mean the compound adjective?".to_owned(),
             priority: 31,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

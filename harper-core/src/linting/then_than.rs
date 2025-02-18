@@ -34,11 +34,11 @@ impl PatternLinter for ThenThan {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let span = matched_tokens.last().unwrap().span;
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens.last()?.span;
         let offending_text = span.get_content(source);
 
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::replace_with_match_case(
@@ -47,7 +47,7 @@ impl PatternLinter for ThenThan {
             )],
             message: "Did you mean `than`?".to_string(),
             priority: 31,
-        }
+        })
     }
     fn description(&self) -> &'static str {
         "Corrects the misuse of `then` to `than`."

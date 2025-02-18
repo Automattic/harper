@@ -9,7 +9,7 @@ use crate::TokenStringExt;
 pub struct EllipsisLength;
 
 impl Linter for EllipsisLength {
-    fn lint(&mut self, document: &crate::Document) -> Vec<super::Lint> {
+    fn lint(&mut self, document: &crate::Document) -> Vec<Lint> {
         let mut lints = Vec::new();
 
         for tok in document.iter_ellipsiss() {

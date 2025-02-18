@@ -58,14 +58,14 @@ impl PatternLinter for UseGenitive {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Lint {
-        Lint {
+    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+        Some(Lint {
             span: matched_tokens[2].span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::ReplaceWith(vec!['t', 'h', 'e', 'i', 'r'])],
             message: "Use the genitive case.".to_string(),
             priority: 31,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

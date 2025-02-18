@@ -56,16 +56,15 @@ impl PatternLinter for GeneralCompoundNouns {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let span = matched_tokens.span().unwrap();
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens.span()?;
         let orig = span.get_content(source);
         // If the pattern matched, this will not return `None`.
-        let word = self
-            .split_pattern
-            .get_merged_word(matched_tokens[0], matched_tokens[2], source)
-            .unwrap();
+        let word =
+            self.split_pattern
+                .get_merged_word(matched_tokens[0], matched_tokens[2], source)?;
 
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::Spelling,
             suggestions: vec![Suggestion::replace_with_match_case(word.to_vec(), orig)],
@@ -74,7 +73,7 @@ impl PatternLinter for GeneralCompoundNouns {
                 word.to_string()
             ),
             priority: 63,
-        }
+        })
     }
 
     fn description(&self) -> &str {

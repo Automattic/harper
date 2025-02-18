@@ -36,15 +36,14 @@ impl PatternLinter for ImpliedOwnershipCompoundNouns {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let span = matched_tokens[2..].span().unwrap();
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens[2..].span()?;
         // If the pattern matched, this will not return `None`.
-        let word = self
-            .split_pattern
-            .get_merged_word(matched_tokens[2], matched_tokens[4], source)
-            .unwrap();
+        let word =
+            self.split_pattern
+                .get_merged_word(matched_tokens[2], matched_tokens[4], source)?;
 
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::Spelling,
             suggestions: vec![Suggestion::ReplaceWith(word.to_vec())],
@@ -53,7 +52,7 @@ impl PatternLinter for ImpliedOwnershipCompoundNouns {
                 word.to_string()
             ),
             priority: 63,
-        }
+        })
     }
 
     fn description(&self) -> &str {

@@ -26,11 +26,11 @@ impl PatternLinter for DespiteOf {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched: &[Token], source: &[char]) -> Lint {
-        let span = matched.span().unwrap();
+    fn match_to_lint(&self, matched: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched.span()?;
         let matched = span.get_content(source);
 
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![
@@ -39,7 +39,7 @@ impl PatternLinter for DespiteOf {
             ],
             message: "The phrase “despite of” is incorrect. Please use either “despite” or “in spite of” instead.".to_string(),
             priority: 126,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

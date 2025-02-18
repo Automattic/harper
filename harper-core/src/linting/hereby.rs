@@ -28,10 +28,10 @@ impl PatternLinter for Hereby {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let span = matched_tokens[0..3].span().unwrap();
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens[0..3].span()?;
         let orig_chars = span.get_content(source);
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
@@ -40,7 +40,7 @@ impl PatternLinter for Hereby {
             )],
             message: "Did you mean the closed compound `hereby`?".to_owned(),
             ..Default::default()
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

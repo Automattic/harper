@@ -36,7 +36,7 @@ impl PatternLinter for ThatWhich {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let suggestion = format!(
             "{} which",
             matched_tokens[0]
@@ -48,13 +48,13 @@ impl PatternLinter for ThatWhich {
         .chars()
         .collect_vec();
 
-        Lint {
-            span: matched_tokens.span().unwrap(),
+        Some(Lint {
+            span: matched_tokens.span()?,
             lint_kind: LintKind::Repetition,
             suggestions: vec![Suggestion::ReplaceWith(suggestion)],
             message: "“that that” sometimes means “that which”, which is clearer.".to_string(),
             priority: 126,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {

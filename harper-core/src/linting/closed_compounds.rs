@@ -26,11 +26,11 @@ macro_rules! create_closed_compound_linter {
                 self.pattern.as_ref()
             }
 
-            fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-                let span = matched_tokens.span().unwrap();
+            fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+                let span = matched_tokens.span()?;
                 let orig_chars = span.get_content(source);
 
-                Lint {
+                Some(Lint {
                     span,
                     lint_kind: LintKind::WordChoice,
                     suggestions: vec![Suggestion::replace_with_match_case(
@@ -39,7 +39,7 @@ macro_rules! create_closed_compound_linter {
                     )],
                     message: format!("Did you mean the closed compound `{}`?", $correct),
                     ..Default::default()
-                }
+                })
             }
 
             fn description(&self) -> &'static str {

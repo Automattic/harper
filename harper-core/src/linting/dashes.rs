@@ -30,25 +30,25 @@ impl PatternLinter for Dashes {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Lint {
-        let span = matched_tokens.span().unwrap();
+    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+        let span = matched_tokens.span()?;
         let lint_kind = LintKind::Formatting;
 
         match matched_tokens.len() {
-            2 => Lint {
+            2 => Some(Lint {
                 span,
                 lint_kind,
                 suggestions: vec![Suggestion::ReplaceWith(vec!['–'])],
                 message: "A sequence of hyphens is not an en dash.".to_owned(),
                 priority: 63,
-            },
-            3 => Lint {
+            }),
+            3 => Some(Lint {
                 span,
                 lint_kind,
                 suggestions: vec![Suggestion::ReplaceWith(vec!['—'])],
                 message: "A sequence of hyphens is not an em dash.".to_owned(),
                 priority: 63,
-            },
+            }),
             _ => panic!("Received unexpected number of tokens."),
         }
     }

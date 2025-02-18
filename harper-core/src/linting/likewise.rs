@@ -34,10 +34,10 @@ impl PatternLinter for Likewise {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let span = matched_tokens.span().unwrap();
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens.span()?;
         let orig_chars = span.get_content(source);
-        Lint {
+        Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
@@ -46,7 +46,7 @@ impl PatternLinter for Likewise {
             )],
             message: format!("Did you mean the closed compound `{}`?", "likewise"),
             ..Default::default()
-        }
+        })
     }
     fn description(&self) -> &'static str {
         "Looks for incorrect spacing inside the closed compound `likewise`."

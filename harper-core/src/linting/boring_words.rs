@@ -30,11 +30,11 @@ impl PatternLinter for BoringWords {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
-        let matched_word = matched_tokens.span().unwrap().get_content_string(source);
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let matched_word = matched_tokens.span()?.get_content_string(source);
 
-        Lint {
-            span: matched_tokens.span().unwrap(),
+        Some(Lint {
+            span: matched_tokens.span()?,
             lint_kind: LintKind::Enhancement,
             suggestions: vec![],
             message: format!(
@@ -42,7 +42,7 @@ impl PatternLinter for BoringWords {
                 matched_word
             ),
             priority: 127,
-        }
+        })
     }
 
     fn description(&self) -> &'static str {
