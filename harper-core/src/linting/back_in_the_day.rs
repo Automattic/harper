@@ -13,7 +13,7 @@ pub struct BackInTheDay {
 
 impl Default for BackInTheDay {
     fn default() -> Self {
-        let exceptions = Lrc::new(WordSet::all(&["of", "when"]));
+        let exceptions = Lrc::new(WordSet::all(&["before", "of", "when"]));
         let phrase = Lrc::new(ExactPhrase::from_phrase("back in the days"));
 
         let pattern = SequencePattern::default()
@@ -124,6 +124,77 @@ mod tests {
     fn avoids_false_positive_code_usage() {
         assert_lint_count(
             "Back in the days when I had 100% of my code in ...",
+            BackInTheDay::default(),
+            0,
+        );
+    }
+    #[test]
+    fn catches_uppercase() {
+        assert_lint_count(
+            "Back in the days, we went for a walk.",
+            BackInTheDay::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn catches_lowercase() {
+        assert_lint_count(
+            "We used to go for walks back in the days.",
+            BackInTheDay::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn doesnt_catch_false_positive_of() {
+        assert_lint_count(
+            "Back in the days of CRTs, computers were expensive.",
+            BackInTheDay::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn doesnt_catch_false_positive_when() {
+        assert_lint_count(
+            "Back in the days when videogame arcades were popular.",
+            BackInTheDay::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn catches_comma_when() {
+        assert_lint_count(
+            "Back in the days, when we were children, we played outside.",
+            BackInTheDay::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn doesnt_catch_false_positive_before() {
+        assert_lint_count(
+            "Back in the days before laptops we had \"luggables\".",
+            BackInTheDay::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn catches_comma_before() {
+        assert_lint_count(
+            "Back in the days, before laptops.",
+            BackInTheDay::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn doesnt_catch_qualified_days() {
+        assert_lint_count(
+            "Back in the old days we did this by hand.",
             BackInTheDay::default(),
             0,
         );
