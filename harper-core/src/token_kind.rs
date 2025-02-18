@@ -10,6 +10,7 @@ use crate::{ConjunctionData, NounData, Number, Punctuation, Quote, WordMetadata}
 pub enum TokenKind {
     Word(WordMetadata),
     Punctuation(Punctuation),
+    Decade,
     Number(Number),
     /// A sequence of " " spaces.
     Space(usize),
@@ -46,6 +47,7 @@ impl TokenKind {
             TokenKind::Word(..)
                 | TokenKind::EmailAddress
                 | TokenKind::Hostname
+                | TokenKind::Decade
                 | TokenKind::Number(..)
         )
     }

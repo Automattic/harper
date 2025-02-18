@@ -25,7 +25,8 @@ pub fn lex_token(source: &[char]) -> Option<FoundToken> {
         lex_tabs,
         lex_spaces,
         lex_newlines,
-        lex_hex_number, // before lex_number, which would match the initial 0
+        lex_hex_number,  // before lex_number, which would match the initial 0
+        lex_long_decade, // before lex_number, which would match the digits up to the -s
         lex_number,
         lex_url,
         lex_email_address,
@@ -139,6 +140,33 @@ pub fn lex_hex_number(source: &[char]) -> Option<FoundToken> {
     None
 }
 
+pub fn lex_long_decade(source: &[char]) -> Option<FoundToken> {
+    // lex 4-digit decades in their plural such as: 1980s 1990s 2000s 2020s
+    if source.len() < 5 {
+        return None;
+    }
+    if source[0] != '1' && source[0] != '2' {
+        return None;
+    }
+    if !source[1].is_ascii_digit() {
+        return None;
+    }
+    if !source[2].is_ascii_digit() {
+        return None;
+    }
+    if source[3] != '0' {
+        return None;
+    }
+    if source[4] != 's' {
+        return None;
+    }
+
+    Some(FoundToken {
+        token: TokenKind::Decade,
+        next_index: 5,
+    })
+}
+
 fn lex_newlines(source: &[char]) -> Option<FoundToken> {
     let count = source.iter().take_while(|c| **c == '\n').count();
 
@@ -216,6 +244,7 @@ fn lex_catch(_source: &[char]) -> Option<FoundToken> {
 #[cfg(test)]
 mod tests {
     use super::lex_hex_number;
+    use super::lex_long_decade;
     use super::lex_token;
     use super::lex_word;
     use super::{FoundToken, TokenKind};
@@ -332,5 +361,113 @@ mod tests {
     fn does_not_lex_uppercase_prefix() {
         let source: Vec<_> = "0Xf00d".chars().collect();
         assert!(lex_hex_number(&source).is_none());
+    }
+
+    #[test]
+    fn lexes_20c_decade() {
+        let source: Vec<_> = "1980s".chars().collect();
+        assert!(matches!(
+            lex_long_decade(&source),
+            Some(FoundToken {
+                token: TokenKind::Decade,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_21c_decade() {
+        let source: Vec<_> = "2020s".chars().collect();
+        assert!(matches!(
+            lex_long_decade(&source),
+            Some(FoundToken {
+                token: TokenKind::Decade,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_ancient_decade() {
+        let source: Vec<_> = "1010s".chars().collect();
+        assert!(matches!(
+            lex_long_decade(&source),
+            Some(FoundToken {
+                token: TokenKind::Decade,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_word_before_decade() {
+        let source: Vec<_> = "late 1980s".chars().collect();
+        assert!(matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Word(_),
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_word_after_decade() {
+        let source: Vec<_> = "1980s and".chars().collect();
+        assert!(matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Decade,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn doesnt_lex_far_future_decade() {
+        let source: Vec<_> = "3190s".chars().collect();
+        assert!(lex_long_decade(&source).is_none());
+    }
+
+    #[test]
+    fn doesnt_lex_too_ancient_decade() {
+        let source: Vec<_> = "100s".chars().collect();
+        assert!(lex_long_decade(&source).is_none());
+    }
+
+    #[test]
+    fn doesnt_lex_0_prefixed_decade() {
+        let source: Vec<_> = "0100s".chars().collect();
+        assert!(lex_long_decade(&source).is_none());
+    }
+
+    #[test]
+    fn doesnt_lex_uppercase_decade() {
+        let source: Vec<_> = "2000S".chars().collect();
+        assert!(lex_long_decade(&source).is_none());
+    }
+
+    #[test]
+    fn doesnt_lex_overlong_decade() {
+        let source: Vec<_> = "20000s".chars().collect();
+        assert!(lex_long_decade(&source).is_none());
+    }
+
+    #[test]
+    fn doesnt_lex_apostrophe_long_decade() {
+        let source: Vec<_> = "2020's".chars().collect();
+        assert!(lex_long_decade(&source).is_none());
+    }
+
+    #[test]
+    fn doesnt_lex_bad_apostrophe_short_decade() {
+        let source: Vec<_> = "80's".chars().collect();
+        assert!(lex_long_decade(&source).is_none());
+    }
+
+    #[test]
+    fn doesnt_lex_good_apostrophe_short_decade() {
+        let source: Vec<_> = "'90s".chars().collect();
+        assert!(lex_long_decade(&source).is_none());
     }
 }
