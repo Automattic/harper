@@ -139,14 +139,71 @@ create_linter_map_phrase!(MutePoint, ExactPhrase::from_phrase("mute point"),
     "Did you mean `moot point`?",
     "Ensures `moot point` is used instead of `mute point`, as `moot` means debatable or irrelevant.");
 
+create_linter_map_phrase!(
+    GetRidOff,
+    ExactPhrase::from_phrase("get rid off"),
+    "get rid of",
+    "Did you mean `get rid of`?",
+    "Ensures `get rid of` is used instead of `get rid off`."
+);
+create_linter_map_phrase!(
+    GetsRidOff,
+    ExactPhrase::from_phrase("gets rid off"),
+    "gets rid of",
+    "Did you mean `gets rid of`?",
+    "Ensures `gets rid of` is used instead of `gets rid off`."
+);
+create_linter_map_phrase!(
+    GettingRidOff,
+    ExactPhrase::from_phrase("getting rid off"),
+    "getting rid of",
+    "Did you mean `getting rid of`?",
+    "Ensures `getting rid of` is used instead of `getting rid off`."
+);
+create_linter_map_phrase!(
+    GotRidOff,
+    ExactPhrase::from_phrase("got rid off"),
+    "got rid of",
+    "Did you mean `got rid of`?",
+    "Ensures `got rid of` is used instead of `got rid off`."
+);
+
 #[cfg(test)]
 mod tests {
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::{
-        BadRap, BatedBreath, ChangeTack, EnMasse, HungerPang, LetAlone, LoAndBehold, OfCourse,
-        SneakingSuspicion, SpecialAttention, SupposedTo, ThanOthers, TurnItOff,
+        BadRap, BatedBreath, ChangeTack, EnMasse, GetRidOff, GetsRidOff, GettingRidOff, GotRidOff,
+        HungerPang, LetAlone, LoAndBehold, OfCourse, SneakingSuspicion, SpecialAttention,
+        SupposedTo, ThanOthers, TurnItOff,
     };
+
+    // todo: 4 tests: get/gets/getting rid off
+    #[test]
+    fn get_rid_off() {
+        assert_suggestion_result(
+            "Please bump axios version to get rid off npm warning #624",
+            GetRidOff::default(),
+            "Please bump axios version to get rid of npm warning #624",
+        );
+    }
+    fn gets_rid_off() {
+        assert_suggestion_result(
+            "Adding at as a runtime dependency gets rid off that error",
+            GetsRidOff::default(),
+            "Adding at as a runtime dependency gets rid of that error",
+        );
+    }
+    fn getting_rid_off() {
+        assert_suggestion_result("getting rid off of all the complexity of the different accesses method of API service providers", GettingRidOff::default(), "getting rid of of all the complexity of the different accesses method of API service providers");
+    }
+    fn got_rid_off() {
+        assert_suggestion_result(
+            "For now we got rid off circular deps in model tree structure and it's API.",
+            GotRidOff::default(),
+            "For now we got rid of circular deps in model tree structure and it's API.",
+        );
+    }
 
     #[test]
     fn issue_574() {

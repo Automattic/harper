@@ -112,9 +112,10 @@ pub use phrase_corrections::MutePoint;
 pub use phrase_corrections::StateOfTheArt;
 pub use phrase_corrections::WantBe;
 pub use phrase_corrections::{
-    AndTheLike, BadRap, BatedBreath, BeckAndCall, ChangeTack, EnMasse, HumanLife, HungerPang,
-    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SpecialAttention,
-    SupposedTo, ThanOthers, ThatChallenged, TurnItOff,
+    AndTheLike, BadRap, BatedBreath, BeckAndCall, ChangeTack, EnMasse, GetRidOff, GetsRidOff,
+    GettingRidOff, GotRidOff, HumanLife, HungerPang, LetAlone, LoAndBehold, NeedHelp, NoLonger,
+    OfCourse, SneakingSuspicion, SpecialAttention, SupposedTo, ThanOthers, ThatChallenged,
+    TurnItOff,
 };
 pub use pique_interest::PiqueInterest;
 pub use plural_conjugate::PluralConjugate;

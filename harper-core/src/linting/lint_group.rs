@@ -46,9 +46,10 @@ use super::phrase_corrections::MutePoint;
 use super::phrase_corrections::StateOfTheArt;
 use super::phrase_corrections::WantBe;
 use super::phrase_corrections::{
-    AndTheLike, BadRap, BatedBreath, BeckAndCall, ChangeTack, EnMasse, HumanLife, HungerPang,
-    LetAlone, LoAndBehold, NeedHelp, NoLonger, OfCourse, SneakingSuspicion, SpecialAttention,
-    SupposedTo, ThanOthers, ThatChallenged, TurnItOff,
+    AndTheLike, BadRap, BatedBreath, BeckAndCall, ChangeTack, EnMasse, GetRidOff, GetsRidOff,
+    GettingRidOff, GotRidOff, HumanLife, HungerPang, LetAlone, LoAndBehold, NeedHelp, NoLonger,
+    OfCourse, SneakingSuspicion, SpecialAttention, SupposedTo, ThanOthers, ThatChallenged,
+    TurnItOff,
 };
 use super::pique_interest::PiqueInterest;
 use super::plural_conjugate::PluralConjugate;
@@ -335,7 +336,11 @@ create_lint_group_config!(
     SpecialAttention => true,
     Everywhere => true,
     ThanOthers => true,
-    SupposedTo => true
+    SupposedTo => true,
+    GetRidOff => true,
+    GetsRidOff => true,
+    GettingRidOff => true,
+    GotRidOff => true
 );
 
 impl<T: Dictionary + Default> Default for LintGroup<T> {
