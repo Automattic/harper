@@ -33,6 +33,7 @@ use super::linking_verbs::LinkingVerbs;
 use super::long_sentences::LongSentences;
 use super::matcher::Matcher;
 use super::merge_words::MergeWords;
+use super::modal_of::ModalOf;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nobody::Nobody;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
@@ -335,7 +336,8 @@ create_lint_group_config!(
     SpecialAttention => true,
     Everywhere => true,
     ThanOthers => true,
-    SupposedTo => true
+    SupposedTo => true,
+    ModalOf => true,
 );
 
 impl<T: Dictionary + Default> Default for LintGroup<T> {
