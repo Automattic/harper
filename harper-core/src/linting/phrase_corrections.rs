@@ -211,6 +211,30 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `my house`?",
             "Fixes the typo `mu house` to `my house`."
         ),
+        "FarToMany" => (
+            "far to many",
+            ["far too many"],
+            "Did you mean `far too many`?",
+            "Ensures `too many` is used instead of `to many`."
+        ),
+        "FarToMuch" => (
+            "far to much",
+            ["far too much"],
+            "Did you mean `far too much`?",
+            "Ensures `too much` is used instead of `to much`."
+        ),
+        "WayToMany" => (
+            "way to many",
+            ["way too many"],
+            "Did you mean `way too many`?",
+            "Ensures `way too many` is used instead of `to many`."
+        ),
+        "WayToMuch" => (
+            "way to much",
+            ["way too much"],
+            "Did you mean `way too much`?",
+            "Ensures `way too much` is used instead of `to much`."
+        ),
         "BanTogether" => (
             "ban together",
             ["band together"],
@@ -328,5 +352,38 @@ mod tests {
     #[test]
     fn now_on_hold() {
         assert_lint_count("Those are now on hold for month.", lint_group(), 0);
+    }
+
+    #[test]
+    fn far_to_many() {
+        assert_suggestion_result(
+            "darknet detecting far to many objects and in random locations",
+            lint_group(),
+            "darknet detecting far too many objects and in random locations",
+        );
+    }
+
+    fn far_to_much() {
+        assert_suggestion_result(
+            "requires far to much day today support and troubleshooting",
+            lint_group(),
+            "requires far too much day today support and troubleshooting",
+        );
+    }
+
+    fn way_to_many() {
+        assert_suggestion_result(
+            "Way to many TEMP files",
+            lint_group(),
+            "way too many TEMP files",
+        );
+    }
+
+    fn way_to_much() {
+        assert_suggestion_result(
+            "proper java development has way to much overhead",
+            lint_group(),
+            "proper java development has way too much overhead",
+        );
     }
 }
