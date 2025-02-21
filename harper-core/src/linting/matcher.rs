@@ -177,6 +177,77 @@ impl Matcher {
             "World","War","Ii" => "World War II"
         });
 
+        // countries and capitals with special casing or punctuation
+        triggers.extend(pt! {
+           "andorra","la","vella" => "Andorra la Vella",
+           "Andorra","la","vella" => "Andorra la Vella",
+           "Andorra","La","Vella" => "Andorra la Vella",
+           "guinea","bissau" => "Guinea-Bissau",
+           "Guinea","bissau" => "Guinea-Bissau",
+           "Guinea","Bissau" => "Guinea-Bissau",
+           "ndjamena" => "N'Djamena",
+           "Ndjamena" => "N'Djamena",
+           "n'djamena" => "N'Djamena",
+           "N'djamena" => "N'Djamena",
+           "port","au","prince" => "Port-au-Prince",
+           "Port","au","prince" => "Port-au-Prince",
+           "Port","Au","Prince" => "Port-au-Prince",
+           // port-au-prince won't work here because the left side has hyphens
+           // Port-au-prince ditto
+           // Port-Au-Prince ditto
+           "porto","novo" => "Porto-Novo",
+           "Porto","novo" => "Porto-Novo",
+           "Porto","Novo" => "Porto-Novo",
+           "st","georges" => "St. George's",
+           // "st.","georges" => "St. George's",
+           "st","george's" => "St. George's",
+           // "st.","george's" => "St. George's",
+           "St","georges" => "St. George's",
+           // "St.","georges" => "St. George's",
+           "St","george's" => "St. George's",
+           // "St.","george's" => "St. George's",
+           "St","Georges" => "St. George's",
+           // "St.","Georges" => "St. George's",
+           "St","George's" => "St. George's"
+        });
+
+        // countries and capitals with accents and diacritics
+        triggers.extend(pt! {
+            "asuncion" => "Asunción",
+            "Asuncion" => "Asunción",
+            "chisinau" => "Chișinău",
+            "Chisinau" => "Chișinău",
+            "bogota" => "Bogotá",
+            "Bogota" => "Bogotá",
+            "curacao" => "Curaçao",
+            "curacao" => "Curaçao",
+            "lome" => "Lomé",
+            "Lome" => "Lomé",
+            "male" => "Malé",
+            "Male" => "Malé",
+            "noumea" => "Nouméa",
+            "Noumea" => "Nouméa",
+            "nukualofa" => "Nukuʻalofa",
+            "Nukualofa" => "Nukuʻalofa",
+            "nuku'alofa" => "Nukuʻalofa",
+            "Nuku'alofa" => "Nukuʻalofa",
+            "reykjavik" => "Reykjavík",
+            "Reykjavik" => "Reykjavík",
+            "san","jose" => "San José",
+            "San","jose" => "San José",
+            "sao","tome" => "São Tomé",
+            "Sao","Tome" => "São Tomé",
+            "sao","tome","and","principe" => "São Tomé and Príncipe",
+            "Sao","Tome","and","Principe" => "São Tomé and Príncipe",
+            "Sao","Tome","And","Principe" => "São Tomé and Príncipe",
+            "torshavn" => "Tórshavn",
+            "Torshavn" => "Tórshavn",
+            "turkiye" => "Türkiye",
+            "Turkiye" => "Türkiye",
+            "yaounde" => "Yaoundé",
+            "Yaounde" => "Yaoundé"
+        });
+
         triggers.push(Rule {
             pattern: vec![pt!("L"), pt!(Period), pt!("L"), pt!(Period), pt!("M")],
             replace_with: vecword!("large language model"),

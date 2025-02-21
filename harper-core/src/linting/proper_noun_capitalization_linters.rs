@@ -295,6 +295,357 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 );
 
     group.add(
+        "Countries",
+        Box::new(ProperNounCapitalizationLinter::new(
+            EitherPattern::new(vec![
+                // Grouped country names
+                // ... Guinea
+                Box::new(
+                    SequencePattern::default()
+                        .then(EitherPattern::new(vec![
+                            Box::new(SequencePattern::aco("Equatorial")),
+                            Box::new(SequencePattern::aco("Papua").then_whitespace().t_aco("New")),
+                        ]))
+                        .then_whitespace()
+                        .t_aco("Guinea"),
+                ),
+                // ... Islands
+                Box::new(
+                    SequencePattern::default()
+                        .then(EitherPattern::new(vec![
+                            Box::new(WordSet::new(&["Cayman", "Falkland", "Marshall", "Solomon"])),
+                            Box::new(
+                                SequencePattern::default()
+                                    .then(EitherPattern::new(vec![
+                                        Box::new(SequencePattern::aco("British")),
+                                        Box::new(
+                                            SequencePattern::aco("United")
+                                                .then_whitespace()
+                                                .t_aco("States"),
+                                        ),
+                                    ]))
+                                    .then_whitespace()
+                                    .t_aco("Virgin"),
+                            ),
+                            Box::new(
+                                SequencePattern::aco("Northern")
+                                    .then_whitespace()
+                                    .t_aco("Mariana"),
+                            ),
+                        ]))
+                        .then_whitespace()
+                        .t_aco("Islands"),
+                ),
+                // New ...
+                Box::new(
+                    SequencePattern::aco("New")
+                        .then_whitespace()
+                        .then(WordSet::new(&["Caledonia", "Zealand"])),
+                ),
+                // Northern ...
+                Box::new(
+                    SequencePattern::aco("Northern")
+                        .then_whitespace()
+                        .then(WordSet::new(&["Cyprus", "Ireland"])),
+                ),
+                // ... Republic
+                Box::new(
+                    SequencePattern::default()
+                        .then(EitherPattern::new(vec![
+                            Box::new(
+                                SequencePattern::aco("Central")
+                                    .then_whitespace()
+                                    .t_aco("African"),
+                            ),
+                            Box::new(WordSet::new(&["Czech", "Dominican"])),
+                        ]))
+                        .then_whitespace()
+                        .t_aco("Republic"),
+                ),
+                // Saint ...
+                Box::new(
+                    SequencePattern::aco("Saint")
+                        .then_whitespace()
+                        .then(WordSet::new(&["Helena", "Lucia", "Martin"])),
+                ),
+                // South ...
+                Box::new(
+                    SequencePattern::aco("South")
+                        .then_whitespace()
+                        .then(WordSet::new(&["Africa", "Ossetia", "Sudan"])),
+                ),
+                // South Korea is under "Koreas"
+                // One-off country names
+                Box::new(
+                    SequencePattern::aco("American")
+                        .then_whitespace()
+                        .t_aco("Samoa"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Antigua")
+                        .then_whitespace()
+                        .t_aco("and")
+                        .then_whitespace()
+                        .t_aco("Barbuda"),
+                ),
+                // United Arab Emirates is under "United Organizations"
+                Box::new(
+                    SequencePattern::aco("Bosnia")
+                        .then_whitespace()
+                        .t_aco("and")
+                        .then_whitespace()
+                        .t_aco("Herzegovina"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Burkina")
+                        .then_whitespace()
+                        .t_aco("Faso"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Cape")
+                        .then_whitespace()
+                        .t_aco("Verde"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Costa")
+                        .then_whitespace()
+                        .t_aco("Rica"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Democratic")
+                        .then_whitespace()
+                        .t_aco("Republic")
+                        .then_whitespace()
+                        .t_aco("of")
+                        .then_whitespace()
+                        .t_aco("the")
+                        .then_whitespace()
+                        .t_aco("Congo"),
+                ),
+                Box::new(
+                    SequencePattern::aco("East")
+                        .then_whitespace()
+                        .t_aco("Timor"),
+                ),
+                Box::new(
+                    SequencePattern::aco("El")
+                        .then_whitespace()
+                        .t_aco("Salvador"),
+                ),
+                Box::new(
+                    SequencePattern::aco("French")
+                        .then_whitespace()
+                        .t_aco("Polynesia"),
+                ),
+                Box::new(SequencePattern::aco("Guinea").then_hyphen().t_aco("Bissau")),
+                Box::new(
+                    SequencePattern::aco("Isle")
+                        .then_whitespace()
+                        .t_aco("of")
+                        .then_whitespace()
+                        .t_aco("Man"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Ivory")
+                        .then_whitespace()
+                        .t_aco("Coast"),
+                ),
+                Box::new(
+                    SequencePattern::aco("North")
+                        .then_whitespace()
+                        .t_aco("Macedonia"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Puerto")
+                        .then_whitespace()
+                        .t_aco("Rico"),
+                ),
+                Box::new(
+                    SequencePattern::aco("São")
+                        .then_whitespace()
+                        .t_aco("Tomé")
+                        .then_whitespace()
+                        .t_aco("and")
+                        .then_whitespace()
+                        .t_aco("Príncipe"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Saudi")
+                        .then_whitespace()
+                        .t_aco("Arabia"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Sierra")
+                        .then_whitespace()
+                        .t_aco("Leone"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Sint")
+                        .then_whitespace()
+                        .t_aco("Maarten"),
+                ),
+                Box::new(SequencePattern::aco("Sri").then_whitespace().t_aco("Lanka")),
+                Box::new(
+                    SequencePattern::aco("Trinidad")
+                        .then_whitespace()
+                        .t_aco("and")
+                        .then_whitespace()
+                        .t_aco("Tobago"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Western")
+                        .then_whitespace()
+                        .t_aco("Sahara"),
+                ),
+            ]),
+            "When referring to Countries, make sure to treat it as a proper noun.",
+            dictionary.clone(),
+        )),
+    );
+
+    group.add(
+        "NationalCapitals",
+        Box::new(ProperNounCapitalizationLinter::new(
+            EitherPattern::new(vec![
+                // Grouped capital names
+                // ... City
+                Box::new(
+                    SequencePattern::default()
+                        .then(EitherPattern::new(vec![
+                            Box::new(WordSet::new(&[
+                                "Belize",
+                                "Guatemala",
+                                "Kuwait",
+                                "Mexico",
+                                "Panama",
+                                "Vatican",
+                            ])),
+                            Box::new(
+                                SequencePattern::aco("Ho")
+                                    .then_whitespace()
+                                    .t_aco("Chi")
+                                    .then_whitespace()
+                                    .t_aco("Minh"),
+                            ),
+                        ]))
+                        .then_whitespace()
+                        .t_aco("City"),
+                ),
+                // Saint ...
+                Box::new(
+                    SequencePattern::aco("Saint")
+                        .then_whitespace()
+                        .then(EitherPattern::new(vec![
+                            Box::new(
+                                SequencePattern::aco("Kitts")
+                                    .then_whitespace()
+                                    .t_aco("and")
+                                    .then_whitespace()
+                                    .t_aco("Nevis"),
+                            ),
+                            Box::new(
+                                SequencePattern::aco("Pierre")
+                                    .then_whitespace()
+                                    .t_aco("and")
+                                    .then_whitespace()
+                                    .t_aco("Miquelon"),
+                            ),
+                            Box::new(
+                                SequencePattern::aco("Vincent")
+                                    .then_whitespace()
+                                    .t_aco("and")
+                                    .then_whitespace()
+                                    .t_aco("the")
+                                    .then_whitespace()
+                                    .t_aco("Grenadines"),
+                            ),
+                        ])),
+                ),
+                // San ...
+                Box::new(
+                    SequencePattern::aco("San")
+                        .then_whitespace()
+                        .then(WordSet::new(&["José", "Juan", "Marino", "Salvador"])),
+                ),
+                // St. ... TODO the period should be optional but this doesn't match even when it's not optional
+                // Box::new(
+                //     SequencePattern::aco("St")
+                //         .then_period()
+                //         .then_whitespace()
+                //         .then(Box::new(WordSet::new(&["Helier", "John's", "Pierre"])))
+                // ),
+                // ... Town
+                Box::new(
+                    SequencePattern::default()
+                        .then(WordSet::new(&[
+                            "Cape", "George", // Cayman Islands
+                        ]))
+                        .then_whitespace()
+                        .t_aco("Town"),
+                ),
+                // One-off capital names
+                Box::new(SequencePattern::aco("Abu").then_whitespace().t_aco("Dhabi")),
+                Box::new(
+                    SequencePattern::aco("Addis")
+                        .then_whitespace()
+                        .t_aco("Ababa"),
+                ),
+                // Andorra la Vella can't be done here because "la" must not be capitalized
+                Box::new(
+                    SequencePattern::aco("Bandar")
+                        .then_whitespace()
+                        .t_aco("Seri")
+                        .then_whitespace()
+                        .t_aco("Begawan"),
+                ),
+                Box::new(
+                    SequencePattern::aco("Buenos")
+                        .then_whitespace()
+                        .t_aco("Aires"),
+                ),
+                // Dar es Salaam can't be done here because "es" must not be capitalized
+                Box::new(
+                    SequencePattern::aco("Diego")
+                        .then_whitespace()
+                        .t_aco("Garcia"),
+                ),
+                // Kuala Lumpur is under "Malaysia"
+                Box::new(SequencePattern::aco("La").then_whitespace().t_aco("Paz")),
+                Box::new(SequencePattern::aco("New").then_whitespace().t_aco("Delhi")),
+                Box::new(SequencePattern::aco("Pago").then_whitespace().t_aco("Pago")),
+                Box::new(
+                    SequencePattern::aco("Phnom")
+                        .then_whitespace()
+                        .t_aco("Penh"),
+                ),
+                // Port-au-Prince can't be done here because "au" must not be capitalized
+                Box::new(
+                    SequencePattern::aco("Port")
+                        .then_whitespace()
+                        .then(EitherPattern::new(vec![
+                            Box::new(WordSet::new(&["Louis", "Moresby", "Vila"])),
+                            Box::new(SequencePattern::aco("of").then_whitespace().t_aco("Spain")),
+                        ])),
+                ),
+                Box::new(SequencePattern::aco("Porto").then_hyphen().t_aco("Novo")),
+                Box::new(
+                    SequencePattern::aco("Santo")
+                        .then_whitespace()
+                        .t_aco("Domingo"),
+                ),
+                Box::new(SequencePattern::aco("São").then_whitespace().t_aco("Tomé")),
+                Box::new(
+                    SequencePattern::aco("The")
+                        .then_whitespace()
+                        .then(WordSet::new(&["Bahamas", "Hague"])),
+                ),
+            ]),
+            "When referring to national capitals, make sure to treat it as a proper noun.",
+            dictionary.clone(),
+        )),
+    );
+
+    group.add(
         "ChineseCommunistParty",
         Box::new(ProperNounCapitalizationLinter::new(
             SequencePattern::aco("Chinese")
