@@ -15,7 +15,7 @@ impl Default for PossessiveYour {
             SequencePattern::aco("you")
                 .then_whitespace()
                 .then(|tok: &Token, _source: &[char]| {
-                    tok.kind.is_noun() && !tok.kind.is_verb() && !tok.kind.is_adverb()
+                    tok.kind.is_nominal() && !tok.kind.is_verb() && !tok.kind.is_adverb()
                 });
 
         Self {

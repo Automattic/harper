@@ -39,7 +39,7 @@ mod tests {
     use ordered_float::OrderedFloat;
 
     use super::Typst;
-    use harper_core::{Document, NounData, Number, Punctuation, TokenKind, WordMetadata};
+    use harper_core::{Document, NominalData, Number, Punctuation, TokenKind, WordMetadata};
 
     #[test]
     fn number() {
@@ -298,7 +298,7 @@ mod tests {
             token_kinds.as_slice(),
             &[
                 TokenKind::Word(Some(WordMetadata {
-                    noun: Some(NounData {
+                    nominal: Some(NominalData {
                         is_possessive: Some(true),
                         ..
                     }),

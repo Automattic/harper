@@ -19,7 +19,7 @@ impl Default for ShouldContract {
                     .then_whitespace()
                     .t_aco("the")
                     .then_whitespace()
-                    .then_noun(),
+                    .then_nominal(),
             ),
         }
     }

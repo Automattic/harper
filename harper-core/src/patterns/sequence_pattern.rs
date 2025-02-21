@@ -21,7 +21,7 @@ use crate::{Token, TokenKind};
 ///
 /// let document = Document::new_markdown_default_curated("This is a test.");
 ///
-/// let pattern = SequencePattern::default().then_article().then_whitespace().then_noun();
+/// let pattern = SequencePattern::default().then_article().then_whitespace().then_nominal();
 /// let matches = pattern.find_all_matches_in_doc(&document);
 ///
 /// // The pattern found that the tokens at indexes 4, 5, and 6 fit the criteria.
@@ -66,9 +66,9 @@ macro_rules! gen_then_from_is {
 }
 
 impl SequencePattern {
-    gen_then_from_is!(noun);
-    gen_then_from_is!(possessive_noun);
-    gen_then_from_is!(plural_noun);
+    gen_then_from_is!(nominal);
+    gen_then_from_is!(possessive_nominal);
+    gen_then_from_is!(plural_nominal);
     gen_then_from_is!(verb);
     gen_then_from_is!(linking_verb);
     gen_then_from_is!(pronoun);
@@ -83,7 +83,7 @@ impl SequencePattern {
     gen_then_from_is!(apostrophe);
     gen_then_from_is!(hyphen);
     gen_then_from_is!(article);
-    gen_then_from_is!(proper_noun);
+    gen_then_from_is!(proper_nominal);
 
     pub fn then_indefinite_article(self) -> Self {
         self.then(IndefiniteArticle::default())

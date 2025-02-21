@@ -21,7 +21,7 @@ impl Linter for LinkingVerbs {
                         .kind
                         .as_word()
                         .unwrap()
-                        .is_some_and(|m| m.is_noun())
+                        .is_some_and(|m| m.is_nominal())
                     {
                         output.push(Lint {
                             span: linking_verb.span,

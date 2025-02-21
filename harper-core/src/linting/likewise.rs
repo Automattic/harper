@@ -22,7 +22,7 @@ impl Default for Likewise {
                 .then_whitespace()
                 .then_anything()
                 .then_whitespace()
-                .then_noun(),
+                .then_nominal(),
         )));
 
         Self {

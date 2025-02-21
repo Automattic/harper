@@ -4595,7 +4595,7 @@ I'd/~
 I'll/~
 I'm/~
 I've/~
-I/81M~
+I/81M~sf
 IA/21
 IBM/21M
 ICBM/1SM
@@ -10772,7 +10772,7 @@ Zworykin/M
 Zyrtec/M
 Zyuganov/M
 Zzz
-a/-+457~
+a/-~
 as/j
 aah/14
 aardvark/1SM
@@ -13920,7 +13920,7 @@ bespeak/41SG
 bespectacled/5
 bespoke/54
 bespoken/45
-best/514SGMD
+best/514SGMDu
 bestial/51Y
 bestiality/1M
 bestiary/1SM
@@ -13955,7 +13955,7 @@ betroth/4DG
 betrothal/1SM
 betrothed/451M
 betroths/4
-better/514MDGLS
+better/514MDGLSc
 betterment/1M
 betting/541
 bettor/1MS
@@ -26402,7 +26402,7 @@ hazy/51RTP
 hdqrs/1
 he'd/
 he'll/
-he/81M~
+he/81M~st
 head/154MDRZGJS
 headache/1MS
 headband/1MS
@@ -26821,7 +26821,7 @@ hillside/1SM
 hilltop/1MS
 hilly/5PRT
 hilt/14MS
-him/81S
+him/81Sot
 himself/8
 hind/51MRZS
 hinder/451GD
@@ -27553,8 +27553,8 @@ hysteria/1M
 hysteric/51SM
 hysterical/5Y
 hysterics/1M
-i/18US
-is/4813
+i/8
+is/43
 iOS/2M
 iPad/1M
 iPhone/1M
@@ -29022,7 +29022,7 @@ isthmian/51
 isthmus/1MS
 it'd/
 it'll/
-it/815USM~
+it/815USM~sot
 ital/15
 italic/51SM
 italicization/1M
@@ -41577,7 +41577,7 @@ shawl/14MS
 shay/1MS
 she'd/
 she'll/
-she/81DM~
+she/81DM~st
 sheaf/14M
 shear/415MDRSZG
 shearer/1M
@@ -45489,7 +45489,7 @@ thanklessness/1M
 thanksgiving/1SM
 that'd/
 that'll/
-that/781M~
+that/7M~-
 thatch/14MDRSZG
 thatcher/1M
 thatching/14M
@@ -45508,7 +45508,7 @@ their/S~
 theism/1M
 theist/1SM
 theistic/5
-them/8~
+them/8~ot
 thematic/51
 thematically/
 theme/14DSM
@@ -45574,12 +45574,13 @@ thermostatic/5
 thermostatically/
 thesauri/1
 thesaurus/1MS
-these/8S~9
+these/~-
+theses/9M
 thesis/1M
 thespian/51SM
 theta/1SM
 thew/14MS
-they/8~
+they/8~st
 they'd/
 they'll/
 they're/
@@ -45631,7 +45632,7 @@ thirteenths/1
 thirtieth/51M
 thirtieths/1
 thirty/1HSM
-this/81~
+this/~-
 thistle/1MS
 thistledown/1M
 thither/5
@@ -45649,7 +45650,7 @@ thoroughbred/51MS
 thoroughfare/1MS
 thoroughgoing/5
 thoroughness/1M
-those/8
+those/-
 thou/8417MS
 though/74
 thought/14SM
@@ -47616,7 +47617,7 @@ usurp/4SDRZG
 usurpation/1M
 usurper/1M
 usury/1M
-us/8
+us/8of
 utensil/1SM
 uteri/1
 uterine/51
@@ -48544,7 +48545,7 @@ wayside/15SM
 wayward/5PY
 waywardness/1M
 wazoo/1S
-we/8~
+we/8~sf
 we'd/
 we'll/
 we're/
@@ -49266,12 +49267,12 @@ worrisome/5
 worry/41ZGDRSMJ
 worrying/541Y
 worrywart/1SM
-worse/514M
+worse/514Mc
 worsen/4DSG
 worship/14ZGSMDR
 worshiper/1M
 worshipful/51
-worst/514SGMD
+worst/514SGMDu
 worsted/145M
 wort/1M
 worth/514M
@@ -49515,7 +49516,7 @@ you'd/
 you'll/
 you're/
 you've/
-you/8SMH~
+you/8SMH~son
 young/514TMR
 youngish/5
 youngster/1MS

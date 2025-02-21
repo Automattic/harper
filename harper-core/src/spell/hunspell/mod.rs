@@ -131,12 +131,12 @@ mod tests {
                       }
                     ],
                     "adds_metadata": {
-                        "noun": {
+                        "nominal": {
                             "is_plural": true
                         }
                     },
                     "gifts_metadata": {
-                        "noun": {}
+                        "nominal": {}
                     }
                 },
                 "M": {
@@ -162,10 +162,10 @@ mod tests {
         attributes.expand_marked_words(words, &mut expanded);
 
         let giant_data = expanded.get(&split("giant")).unwrap();
-        assert!(giant_data.is_noun());
+        assert!(giant_data.is_nominal());
 
         let giants_data = expanded.get(&split("giants")).unwrap();
-        assert!(giants_data.is_plural_noun());
+        assert!(giants_data.is_plural_nominal());
     }
 
     fn build_expanded() -> HashMap<CharString, WordMetadata> {
@@ -209,18 +209,18 @@ mod tests {
             build_expanded()
                 .get(&split("abandonment's"))
                 .unwrap()
-                .is_possessive_noun()
+                .is_possessive_nominal()
         )
     }
 
     #[test]
-    fn has_is_not_a_noun() {
+    fn has_is_not_a_nominal() {
         let expanded = build_expanded();
 
         let has = expanded.get(&split("has"));
         assert!(has.is_some());
 
-        assert!(!has.unwrap().is_noun(),)
+        assert!(!has.unwrap().is_nominal(),)
     }
 
     #[test]

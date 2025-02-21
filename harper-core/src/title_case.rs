@@ -36,7 +36,7 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
 
     while let Some((index, word)) = word_likes.next() {
         if let Some(Some(metadata)) = word.kind.as_word() {
-            if metadata.is_proper_noun() {
+            if metadata.is_proper_nominal() {
                 // Replace it with the dictionary entry verbatim.
                 let orig_text = word.span.get_content(source);
 

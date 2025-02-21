@@ -1,4 +1,4 @@
-use crate::{NounData, TokenKind, TokenStringExt, WordMetadata};
+use crate::{TokenKind, TokenStringExt, WordMetadata};
 
 use super::{Lint, LintKind, Linter, Suggestion};
 
@@ -12,12 +12,7 @@ impl Linter for CapitalizePersonalPronouns {
 
         for tok in document.iter_words() {
             if let TokenKind::Word(Some(WordMetadata {
-                noun:
-                    Some(NounData {
-                        is_pronoun: Some(true),
-                        ..
-                    }),
-                ..
+                pronoun: Some(_), ..
             })) = tok.kind
             {
                 if document.get_span_content(tok.span) == ['i'] {

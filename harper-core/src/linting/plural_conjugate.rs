@@ -12,13 +12,13 @@ pub struct PluralConjugate {
 impl Default for PluralConjugate {
     fn default() -> Self {
         let plural_case = SequencePattern::default()
-            .then_plural_noun()
+            .then_plural_nominal()
             .then_whitespace()
             .then_exact_word("is");
 
         let non_plural_case = SequencePattern::default()
             .then(|tok: &Token, _source: &[char]| {
-                tok.kind.is_not_plural_noun() && tok.kind.is_noun()
+                tok.kind.is_not_plural_nominal() && tok.kind.is_nominal()
             })
             .then_whitespace()
             .then_exact_word("are");
@@ -37,7 +37,7 @@ impl PatternLinter for PluralConjugate {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
-        let should_be_plural = matched_tokens.first()?.kind.is_plural_noun();
+        let should_be_plural = matched_tokens.first()?.kind.is_plural_nominal();
 
         let sug = if should_be_plural {
             vec!['a', 'r', 'e']

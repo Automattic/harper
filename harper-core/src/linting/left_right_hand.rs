@@ -16,7 +16,7 @@ impl Default for LeftRightHand {
             .then_whitespace()
             .t_aco("hand")
             .then_whitespace()
-            .then_noun();
+            .then_nominal();
 
         Self {
             pattern: Box::new(pattern),
@@ -71,7 +71,7 @@ mod tests {
     }
 
     #[test]
-    fn does_not_correct_noun_usage() {
+    fn does_not_correct_nominal_usage() {
         assert_suggestion_result(
             "She raised her right hand.",
             LeftRightHand::default(),

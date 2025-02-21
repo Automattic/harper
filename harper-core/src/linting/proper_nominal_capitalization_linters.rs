@@ -5,13 +5,13 @@ use crate::{Dictionary, make_title_case};
 use crate::{Token, TokenStringExt};
 use std::sync::Arc;
 
-pub struct ProperNounCapitalizationLinter<D: Dictionary + 'static> {
+pub struct ProperNominalCapitalizationLinter<D: Dictionary + 'static> {
     pattern: Box<dyn Pattern>,
     description: String,
     dictionary: Arc<D>,
 }
 
-impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
+impl<D: Dictionary + 'static> ProperNominalCapitalizationLinter<D> {
     pub fn new(
         search_for: impl Pattern + 'static,
         description: impl ToString,
@@ -30,7 +30,7 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
     }
 }
 
-impl<D: Dictionary + 'static> PatternLinter for ProperNounCapitalizationLinter<D> {
+impl<D: Dictionary + 'static> PatternLinter for ProperNominalCapitalizationLinter<D> {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }
@@ -57,7 +57,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
     "Americas",
-    Box::new(ProperNounCapitalizationLinter::new(
+    Box::new(ProperNominalCapitalizationLinter::new(
     SequencePattern::default()
         .then(WordSet::new(&["South", "North", "Central"]))
         .then_whitespace()
@@ -68,7 +68,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "Australia",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
             EitherPattern::new(vec![
                 // the states and territories
                 Box::new(
@@ -132,7 +132,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
     "OceansAndSeas",
-    Box::new(ProperNounCapitalizationLinter::new(
+    Box::new(ProperNominalCapitalizationLinter::new(
         EitherPattern::new(vec![
             Box::new(
                 SequencePattern::default()
@@ -178,7 +178,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "Canada",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
             EitherPattern::new(vec![
                 // the provinces and territories
                 Box::new(
@@ -228,7 +228,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "Koreas",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
             SequencePattern::default()
                 .then(WordSet::new(&["South", "North"]))
                 .then_whitespace()
@@ -240,7 +240,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
     "Malaysia",
-    Box::new(ProperNounCapitalizationLinter::new(
+    Box::new(ProperNominalCapitalizationLinter::new(
     EitherPattern::new(vec![
         // multi-word states
         Box::new(SequencePattern::default()
@@ -296,7 +296,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "ChineseCommunistParty",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
             SequencePattern::aco("Chinese")
                 .then_whitespace()
                 .t_aco("Communist")
@@ -309,7 +309,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
     "UnitedOrganizations",
-    Box::new(ProperNounCapitalizationLinter::new(
+    Box::new(ProperNominalCapitalizationLinter::new(
     SequencePattern::default()
         .t_aco("United")
         .then_whitespace()
@@ -331,7 +331,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "Holidays",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
             EitherPattern::new(vec![
                 Box::new(
                     SequencePattern::default()
@@ -481,7 +481,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
     "AmazonNames",
-    Box::new(ProperNounCapitalizationLinter::new(
+    Box::new(ProperNominalCapitalizationLinter::new(
     SequencePattern::default()
     .t_aco("Amazon")
     .then_whitespace()
@@ -551,7 +551,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "GoogleNames",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
         SequencePattern::default()
             .t_aco("Google")
             .then_whitespace()
@@ -586,7 +586,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "AzureNames",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
             SequencePattern::default()
                 .t_aco("Azure")
                 .then_whitespace()
@@ -663,7 +663,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
     "MicrosoftNames",
-    Box::new(ProperNounCapitalizationLinter::new(
+    Box::new(ProperNominalCapitalizationLinter::new(
     SequencePattern::default()
         .t_aco("Microsoft")
         .then_whitespace()
@@ -697,7 +697,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "AppleNames",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
         SequencePattern::default()
             .t_aco("Apple")
             .then_whitespace()
@@ -743,7 +743,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "MetaNames",
-        Box::new(ProperNounCapitalizationLinter::new(SequencePattern::aco("Meta")
+        Box::new(ProperNominalCapitalizationLinter::new(SequencePattern::aco("Meta")
             .then_whitespace()
             .then(EitherPattern::new(vec![
                 Box::new(WordSet::new(&[
@@ -763,7 +763,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "JetpackNames",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
             SequencePattern::default()
                 .t_aco("Jetpack")
                 .then_whitespace()
@@ -814,7 +814,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "TumblrNames",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
             SequencePattern::default()
                 .t_aco("Tumblr")
                 .then_whitespace()
@@ -834,7 +834,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "PocketCastsNames",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
             EitherPattern::new(vec![
                 Box::new(
                     SequencePattern::default()
@@ -858,7 +858,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
     group.add(
         "DayOneNames",
-        Box::new(ProperNounCapitalizationLinter::new(
+        Box::new(ProperNominalCapitalizationLinter::new(
             EitherPattern::new(vec![
                 Box::new(
                     SequencePattern::default()

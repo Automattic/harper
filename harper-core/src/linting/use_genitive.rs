@@ -16,9 +16,9 @@ impl UseGenitive {
                         SequencePattern::default()
                             .then_one_or_more_adjectives()
                             .then_whitespace()
-                            .then_noun(),
+                            .then_nominal(),
                     ),
-                    Box::new(SequencePattern::default().then_noun()),
+                    Box::new(SequencePattern::default().then_nominal()),
                 ]),
         ));
 
@@ -86,7 +86,7 @@ mod tests {
     use super::UseGenitive;
 
     #[test]
-    fn catches_adjective_noun() {
+    fn catches_adjective_nominal() {
         assert_suggestion_result(
             "What are there big problems?",
             UseGenitive::default(),
@@ -95,7 +95,7 @@ mod tests {
     }
 
     #[test]
-    fn catches_just_noun() {
+    fn catches_just_nominal() {
         assert_suggestion_result(
             "What are there problems?",
             UseGenitive::default(),

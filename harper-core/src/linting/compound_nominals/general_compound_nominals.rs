@@ -12,12 +12,12 @@ use crate::{
 };
 
 /// Covers the general cases of accidentally split compound nouns.
-pub struct GeneralCompoundNouns {
+pub struct GeneralCompoundNominals {
     pattern: Box<dyn Pattern>,
     split_pattern: Lrc<SplitCompoundWord>,
 }
 
-impl Default for GeneralCompoundNouns {
+impl Default for GeneralCompoundNominals {
     fn default() -> Self {
         let exceptions_pattern = SequencePattern::default()
             .then(|tok: &Token, _: &[char]| {
@@ -37,7 +37,7 @@ impl Default for GeneralCompoundNouns {
             });
 
         let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
-            meta.is_noun() && !meta.is_adjective()
+            meta.is_nominal() && !meta.is_adjective()
         }));
 
         let mut pattern = All::default();
@@ -51,7 +51,7 @@ impl Default for GeneralCompoundNouns {
     }
 }
 
-impl PatternLinter for GeneralCompoundNouns {
+impl PatternLinter for GeneralCompoundNominals {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }

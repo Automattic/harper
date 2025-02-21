@@ -11,7 +11,7 @@ impl Default for SingularSubject {
         Self {
             inner: SequencePattern::default()
                 .then_pronoun()
-                .or(Box::new(SequencePattern::default().then_proper_noun())),
+                .or(Box::new(SequencePattern::default().then_proper_nominal())),
         }
     }
 }

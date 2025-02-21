@@ -1,6 +1,6 @@
 use crate::{
     Document, Token, TokenStringExt,
-    patterns::{NounPhrase, Pattern, SequencePattern, WordSet},
+    patterns::{NominalPhrase, Pattern, SequencePattern, WordSet},
 };
 
 use super::{Lint, LintKind, Linter, Suggestion};
@@ -16,16 +16,16 @@ impl OxfordComma {
                 let this = {
                     let this = SequencePattern::default().then_one_or_more(Box::new(
                         SequencePattern::default()
-                            .then(NounPhrase)
+                            .then(NominalPhrase)
                             .then_comma()
                             .then_whitespace(),
                     ));
-                    this.then(NounPhrase)
+                    this.then(NominalPhrase)
                 }
                 .then_whitespace()
                 .then(WordSet::new(&["and", "or", "nor"]))
                 .then_whitespace();
-                this.then(NounPhrase)
+                this.then(NominalPhrase)
             },
         }
     }

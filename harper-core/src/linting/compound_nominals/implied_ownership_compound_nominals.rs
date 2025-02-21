@@ -11,16 +11,16 @@ use crate::{
 
 /// Looks for closed compound nouns which can be condensed due to their position after a
 /// possessive noun (which implies ownership).
-pub struct ImpliedOwnershipCompoundNouns {
+pub struct ImpliedOwnershipCompoundNominals {
     pattern: Box<dyn Pattern>,
     split_pattern: Lrc<SplitCompoundWord>,
 }
 
-impl Default for ImpliedOwnershipCompoundNouns {
+impl Default for ImpliedOwnershipCompoundNominals {
     fn default() -> Self {
-        let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| meta.is_noun()));
+        let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| meta.is_nominal()));
         let pattern = SequencePattern::default()
-            .then_possessive_noun()
+            .then_possessive_nominal()
             .then_whitespace()
             .then(split_pattern.clone());
 
@@ -31,7 +31,7 @@ impl Default for ImpliedOwnershipCompoundNouns {
     }
 }
 
-impl PatternLinter for ImpliedOwnershipCompoundNouns {
+impl PatternLinter for ImpliedOwnershipCompoundNominals {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }
