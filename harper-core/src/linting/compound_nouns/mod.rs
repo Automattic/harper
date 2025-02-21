@@ -264,4 +264,9 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn allows_issue_722() {
+        assert_lint_count("Leaving S and K alone.", CompoundNouns::default(), 0);
+    }
 }
