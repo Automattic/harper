@@ -17,9 +17,9 @@ impl Default for ShouldContract {
                 SequencePattern::default()
                     .then(WordSet::new(&["your", "were"]))
                     .then_whitespace()
-                    .t_aco("the")
+                    .then_article()
                     .then_whitespace()
-                    .then_noun(),
+                    .then_adjective(),
             ),
         }
     }
@@ -58,5 +58,58 @@ impl PatternLinter for ShouldContract {
 
     fn description(&self) -> &'static str {
         "Neglecting the apostrophe when contracting pronouns with \"are\" (like \"your\" and \"you are\") is a fatal, but extremely common mistake to make."
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::ShouldContract;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+
+    #[test]
+    fn contracts_your_correctly() {
+        assert_suggestion_result(
+            "your the best",
+            ShouldContract::default(),
+            "you're the best",
+        );
+    }
+
+    #[test]
+    fn contracts_were_complex_correctly() {
+        assert_suggestion_result(
+            "were a good team",
+            ShouldContract::default(),
+            "we're a good team",
+        );
+    }
+
+    #[test]
+    fn case_insensitive_handling() {
+        assert_suggestion_result(
+            "Your the best",
+            ShouldContract::default(),
+            "You're the best",
+        );
+    }
+
+    #[test]
+    fn no_match_without_the() {
+        assert_lint_count("your best", ShouldContract::default(), 0);
+        assert_lint_count("were best", ShouldContract::default(), 0);
+    }
+
+    #[test]
+    fn no_match_with_punctuation() {
+        assert_lint_count("your, the best", ShouldContract::default(), 0);
+    }
+
+    #[test]
+    fn allow_norm() {
+        assert_lint_count(
+            "Let's start this story by going back to the dark ages before internet applications were the norm.",
+            ShouldContract::default(),
+            0,
+        );
     }
 }
