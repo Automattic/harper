@@ -21,6 +21,7 @@ pub struct FoundToken {
 
 pub fn lex_token(source: &[char]) -> Option<FoundToken> {
     let lexers = [
+        lex_regexish,
         lex_punctuation,
         lex_tabs,
         lex_spaces,
@@ -97,6 +98,43 @@ pub fn lex_number(source: &[char]) -> Option<FoundToken> {
     }
 
     None
+}
+
+// Often in comments we mention partial- or pseudo- regexes. Here's an example from Ghidra:
+// ([a-z0-9]+ only) - We previously flagged just the z0 in the middle of it.
+pub fn lex_regexish(src: &[char]) -> Option<FoundToken> {
+    let l = src.len();
+    let mut i = 0;
+
+    if i >= l || src[i] != '[' {
+        return None;
+    }
+    i += 1;
+
+    loop {
+        if i >= l || !src[i].is_alphanumeric() {
+            return None;
+        }
+        i += 1;
+        if i < l && src[i] == '-' {
+            i += 1;
+            if i >= l || !src[i].is_alphanumeric() {
+                return None;
+            }
+            i += 1;
+        }
+
+        if i >= l || src[i] != ']' {
+            continue;
+        }
+        i += 1;
+        break;
+    }
+
+    Some(FoundToken {
+        token: TokenKind::Regexish,
+        next_index: i + 1,
+    })
 }
 
 pub fn lex_hex_number(source: &[char]) -> Option<FoundToken> {
@@ -262,6 +300,151 @@ mod tests {
             lex_token(&source),
             Some(FoundToken {
                 token: TokenKind::Hostname,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn doesnt_lex_regex_mini_range() {
+        let source: Vec<_> = "[]".chars().collect();
+        assert!(!matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ))
+    }
+
+    #[test]
+    fn lexes_regex_one_letter() {
+        let source: Vec<_> = "[a]".chars().collect();
+        assert!(matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_regex_two_letters() {
+        let source: Vec<_> = "[az]".chars().collect();
+        assert!(matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_regex_digits() {
+        let source: Vec<_> = "[123]".chars().collect();
+        assert!(matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_regex_two_alphanumeric() {
+        let source: Vec<_> = "[a0b1c2]".chars().collect();
+        assert!(matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_regex_one_range() {
+        let source: Vec<_> = "[a-z]".chars().collect();
+        assert!(matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_regex_letter_plus_range() {
+        let source: Vec<_> = "[ax-z]".chars().collect();
+        assert!(matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_regex_range_plus_letter() {
+        let source: Vec<_> = "[a-cz]".chars().collect();
+        assert!(matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_regex_two_ranges() {
+        let source: Vec<_> = "[a-cx-z]".chars().collect();
+        assert!(matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn doesnt_lex_regex_broken_two_ranges() {
+        // you can't end a range and start a range with a single letter
+        let source: Vec<_> = "[a-x-z]".chars().collect();
+        assert!(!matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn doesnt_lex_regex_hyphen_at_start() {
+        let source: Vec<_> = "[a-]".chars().collect();
+        assert!(!matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn doesnt_lex_regex_hyphen_at_end() {
+        let source: Vec<_> = "[-z]".chars().collect();
+        assert!(!matches!(
+            lex_token(&source),
+            Some(FoundToken {
+                token: TokenKind::Regexish,
                 ..
             })
         ));
