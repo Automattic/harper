@@ -2475,6 +2475,7 @@ DEC/12SD
 DH/12
 DHS/2
 DI/1
+DIY/5
 DJ/142
 DMCA/24
 DMD/1M
@@ -2484,6 +2485,7 @@ DOA/5
 DOB/12
 DOD/1
 DOE/142
+DOJ/1M
 DOS/12M
 DOT/21
 DP/142SM
@@ -5474,7 +5476,9 @@ LCM
 LDC/1
 LED/1M
 LG/12M
+LGB/51
 LGBT/51
+LGBTQ/51
 LIFO/5
 LL/15
 LLB/1M
@@ -8240,6 +8244,7 @@ Reaganomics/1M
 Realtor/M
 Reasoner/2M
 Reba/2M
+Rebecca/2M
 Rebekah/2M
 Recife/2M
 Reconstruction/2M
@@ -9641,7 +9646,7 @@ Terri/2M
 Terrie/2M
 Terry/2M
 Tertiary/52M
-Tesla/21M
+Tesla/21MS
 Tess/2M
 Tessa/2M
 Tessie/2M
@@ -9985,6 +9990,7 @@ URL/1S
 US/215M
 USA/21M
 USAF/2
+USAID/2M
 USB/21MS
 USCG/2
 USDA/2M
@@ -16390,6 +16396,7 @@ chastiser/1M
 chastity/1M
 chasuble/1SM
 chat/41SM
+chatbot/1SM
 chateau/1SM
 chateaux/1
 chatelaine/1SM
@@ -18555,7 +18562,9 @@ countersign/14GSMD
 countersignature/1MS
 countersink/14GSM
 counterspy/14SM
+counterstrike/14GSM
 counterstroke/1SM
+counterstruck/4
 countersunk/45
 countertenor/1MS
 countervail/4GSD
@@ -25050,7 +25059,7 @@ geometry/1SM
 geophysical/5
 geophysicist/1SM
 geophysics/1M
-geopolitical/5
+geopolitical/4Y
 geopolitics/1M
 geostationary/5
 geosynchronous/5
@@ -39187,6 +39196,7 @@ reflector/1MS
 reflexive/51SMY
 reflexivity/1
 reflexology/1
+refloat/4DGS
 reforge/4DSG
 reform/14MZ
 reformat/4V
@@ -47097,6 +47107,7 @@ uncontroversial/5
 uncool/5
 uncooperative/5
 uncouth/5Y
+uncrewed/5
 uncrushable/5
 unction/1SM
 unctuous/5YP
@@ -49951,6 +49962,10 @@ Polldaddy/2M
 P2/M
 VideoPress/2M
 stylization/SM
+DM/1MS
+SNL/2M
+TSMC/2M
+AOC/2M
 cybersecurity/M
 authenticator/SM
 WebRTC/2M
