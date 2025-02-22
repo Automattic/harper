@@ -805,6 +805,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-quarto"
+version = "0.1.0"
+
+[[package]]
 name = "harper-tree-sitter"
 version = "0.22.0"
 dependencies = [
