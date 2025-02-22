@@ -35,6 +35,12 @@ where
         let mut last_allowed: Option<Span> = None;
 
         for (span, content) in mask.iter_allowed(source) {
+            // Check if the span is a shebang
+            if content.len() >= 2 && content[0..2] == ['#', '!'] {
+                tokens.push(Token::new(span, TokenKind::Unlintable));
+                continue;
+            }
+
             // Check for a line break separating the current chunk from the preceding one.
             if let Some(last_allowed) = last_allowed {
                 let intervening = Span::new(last_allowed.end, span.start);
