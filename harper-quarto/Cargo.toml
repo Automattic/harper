@@ -4,3 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+harper-core = { version = "0.22.0", path = "../harper-core" }
+itertools = "0.14.0"
+paste = "1.0.15"
