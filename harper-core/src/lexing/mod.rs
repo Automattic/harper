@@ -470,4 +470,62 @@ mod tests {
         let source: Vec<_> = "'90s".chars().collect();
         assert!(lex_long_decade(&source).is_none());
     }
+
+    #[test]
+    fn accepts_sentence_with_decade() {
+        let sentence: Vec<_> = "To the early 1990s there were a lot of Movies where the bad guys were former Russian intelligence agents.".chars().collect();
+        let expected_tokens = [
+            TokenKind::Word(None),
+            TokenKind::Space(1),
+            TokenKind::Word(None),
+            TokenKind::Space(1),
+            TokenKind::Word(None),
+            TokenKind::Space(1),
+            TokenKind::Decade,
+        ];
+
+        let mut next_index = 0;
+
+        for expected_token in expected_tokens.iter() {
+            if next_index >= sentence.len() {
+                break; // Exit if we've processed the entire source
+            }
+
+            let token = lex_token(&sentence[next_index..]).expect("Failed to lex token");
+            assert_eq!(token.token, *expected_token);
+            next_index += token.next_index;
+        }
+    }
+
+    #[test]
+    fn rejects_sentence_with_number() {
+        let sentence: Vec<_> = "To the early 1990s there were a lot of Movies where the bad guys were former Russian intelligence agents.".chars().collect();
+        let expected_tokens = [
+            TokenKind::Word(None),
+            TokenKind::Space(1),
+            TokenKind::Word(None),
+            TokenKind::Space(1),
+            TokenKind::Word(None),
+            TokenKind::Space(1),
+            TokenKind::Number(Default::default()),
+        ];
+
+        let mut next_index = 0;
+
+        for (i, expected_token) in expected_tokens.iter().enumerate() {
+            if next_index >= sentence.len() {
+                break; // Exit if we've processed the entire source
+            }
+
+            let token = lex_token(&sentence[next_index..]).expect("Failed to lex token");
+
+            if i < 6 {
+                assert_eq!(token.token, *expected_token);
+            } else {
+                assert_ne!(token.token, *expected_token);
+            }
+
+            next_index += token.next_index;
+        }
+    }
 }
