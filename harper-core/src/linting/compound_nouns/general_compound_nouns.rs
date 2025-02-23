@@ -25,7 +25,7 @@ impl Default for GeneralCompoundNouns {
                     return false;
                 };
 
-                meta.article || meta.is_adjective()
+                meta.determiner || meta.is_adjective()
             })
             .then_whitespace()
             .then(|tok: &Token, _: &[char]| {
@@ -33,7 +33,7 @@ impl Default for GeneralCompoundNouns {
                     return false;
                 };
 
-                tok.span.len() > 1 && !meta.article && !meta.preposition && !meta.is_adverb()
+                tok.span.len() > 1 && !meta.determiner && !meta.preposition && !meta.is_adverb()
             })
             .then_whitespace()
             .then(|tok: &Token, _: &[char]| {
@@ -41,11 +41,11 @@ impl Default for GeneralCompoundNouns {
                     return false;
                 };
 
-                tok.span.len() > 1 && !meta.article && !meta.is_adverb() && !meta.preposition
+                tok.span.len() > 1 && !meta.determiner && !meta.is_adverb() && !meta.preposition
             });
 
         let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
-            meta.is_noun() && !meta.is_adjective()
+            meta.is_nominal() && !meta.is_adjective()
         }));
 
         let mut pattern = All::default();

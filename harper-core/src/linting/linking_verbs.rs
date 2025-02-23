@@ -11,7 +11,7 @@ impl Linter for LinkingVerbs {
         let mut output = Vec::new();
 
         for chunk in document.iter_chunks() {
-            // The word prior to "is" must be a noun.
+            // The word prior to "is" must be a nominal (noun or pronoun).
             for idx in chunk.iter_linking_verb_indices() {
                 let linking_verb = chunk[idx];
                 let linking_verb_text = document.get_span_content_str(linking_verb.span);
@@ -21,13 +21,13 @@ impl Linter for LinkingVerbs {
                         .kind
                         .as_word()
                         .unwrap()
-                        .is_some_and(|m| m.is_noun())
+                        .is_some_and(|m| m.is_nominal())
                     {
                         output.push(Lint {
                             span: linking_verb.span,
                             lint_kind: LintKind::Miscellaneous,
                             message: format!(
-                                "Linking verbs like “{}” must be preceded by a noun.",
+                                "Linking verbs like “{}” must be preceded by a noun or pronoun.",
                                 linking_verb_text
                             ),
                             ..Default::default()

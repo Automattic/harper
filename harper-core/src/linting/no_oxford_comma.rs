@@ -1,6 +1,6 @@
 use crate::{
     Document, Token, TokenStringExt,
-    patterns::{NounPhrase, Pattern, SequencePattern, WordSet},
+    patterns::{NominalPhrase, Pattern, SequencePattern, WordSet},
 };
 
 use super::{Lint, LintKind, Linter, Suggestion};
@@ -15,11 +15,11 @@ impl NoOxfordComma {
             pattern: {
                 let this = {
                     let this = SequencePattern::default();
-                    this.then(NounPhrase)
+                    this.then(NominalPhrase)
                 }
                 .then_comma()
                 .then_whitespace();
-                this.then(NounPhrase)
+                this.then(NominalPhrase)
             }
             .then_comma()
             .then_whitespace()

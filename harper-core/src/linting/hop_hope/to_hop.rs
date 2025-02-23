@@ -15,7 +15,7 @@ impl Default for ToHop {
             .then_whitespace()
             .t_aco("on")
             .then_whitespace()
-            .then_article()
+            .then_determiner()
             .then_whitespace()
             .then(WordSet::new(&["airplane", "plane", "bus", "call", "train"]));
 

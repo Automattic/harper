@@ -214,13 +214,13 @@ mod tests {
     }
 
     #[test]
-    fn has_is_not_a_noun() {
+    fn has_is_not_a_nominal() {
         let expanded = build_expanded();
 
         let has = expanded.get(&split("has"));
         assert!(has.is_some());
 
-        assert!(!has.unwrap().is_noun(),)
+        assert!(!has.unwrap().is_nominal(),)
     }
 
     #[test]

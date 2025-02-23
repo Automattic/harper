@@ -274,7 +274,7 @@
       "gifts_metadata": {}
     },
     "M": {
-      "#": "-'s possessive suffix",
+      "#": "-'s possessive suffix; contraction of 'has' and 'is",
       "suffix": true,
       "cross_product": true,
       "replacements": [
@@ -415,7 +415,8 @@
       ],
       "adds_metadata": {
         "verb": {},
-        "noun": null
+        "noun": null,
+        "adjective": null
       },
       "gifts_metadata": {}
     },
@@ -589,9 +590,7 @@
       "replacements": [],
       "adds_metadata": {},
       "gifts_metadata": {
-        "noun": {
-          "is_pronoun": true
-        }
+        "pronoun": {}
       }
     },
     "9": {
@@ -627,13 +626,13 @@
       }
     },
     "-": {
-      "#": "article property",
+      "#": "determiner property",
       "suffix": true,
       "cross_product": true,
       "replacements": [],
       "adds_metadata": {},
       "gifts_metadata": {
-        "article": true
+        "determiner": true
       }
     },
     "j": {
@@ -644,6 +643,76 @@
       "adds_metadata": {},
       "gifts_metadata": {
         "adverb": {}
+      }
+    },
+    "s": {
+      "#": "subject case property",
+      "suffix": true,
+      "cross_product": true,
+      "replacements": [],
+      "adds_metadata": {},
+      "gifts_metadata": {
+        "pronoun": {}
+      }
+    },
+    "o": {
+      "#": "object case property",
+      "suffix": true,
+      "cross_product": true,
+      "replacements": [],
+      "adds_metadata": {},
+      "gifts_metadata": {
+        "pronoun": {}
+      }
+    },
+    "f": {
+      "#": "first-person property",
+      "suffix": true,
+      "cross_product": true,
+      "replacements": [],
+      "adds_metadata": {},
+      "gifts_metadata": {
+        "pronoun": {}
+      }
+    },
+    "n": {
+      "#": "second-person property",
+      "suffix": true,
+      "cross_product": true,
+      "replacements": [],
+      "adds_metadata": {},
+      "gifts_metadata": {
+        "pronoun": {}
+      }
+    },
+    "t": {
+      "#": "third-person property",
+      "suffix": true,
+      "cross_product": true,
+      "replacements": [],
+      "adds_metadata": {},
+      "gifts_metadata": {
+        "pronoun": {}
+      }
+    },
+    "c": {
+      "#": "comparative property",
+      "suffix": true,
+      "cross_product": true,
+      "replacements": [],
+      "adds_metadata": {},
+      "gifts_metadata": {
+        "adjective": {}
+      }
+    },
+    "u": {
+      "#": "superlative property",
+      "suffix": true,
+      "cross_product": true,
+      "replacements": [],
+      "adds_metadata": {},
+      "gifts_metadata": {
+        "adjective": {}
       }
     }
   }

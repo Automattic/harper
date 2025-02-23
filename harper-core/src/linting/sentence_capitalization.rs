@@ -67,13 +67,13 @@ impl Linter for SentenceCapitalization {
 }
 
 fn is_full_sentence(toks: &[Token]) -> bool {
-    let mut has_noun = false;
+    let mut has_nominal = false;
     let mut has_verb = false;
 
     for tok in toks {
         if let TokenKind::Word(Some(metadata)) = tok.kind {
-            if metadata.is_noun() {
-                has_noun = true;
+            if metadata.is_nominal() {
+                has_nominal = true;
             }
 
             if metadata.is_verb() {
@@ -82,7 +82,7 @@ fn is_full_sentence(toks: &[Token]) -> bool {
         }
     }
 
-    has_noun && has_verb
+    has_nominal && has_verb
 }
 
 #[cfg(test)]

@@ -327,12 +327,15 @@ mod tests {
         assert!(dict.contains_word_str("This"));
     }
 
-    #[test]
-    fn this_is_noun() {
-        let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("this").unwrap().is_noun());
-        assert!(dict.get_word_metadata_str("This").unwrap().is_noun());
-    }
+    // TODO "this" is a determiner when used similarly to "the"
+    // TODO but when used alone it's a "demonstrative pronoun"
+    // TODO Harper previously wrongly classified it as a noun
+    // #[test]
+    // fn this_is_determiner() {
+    //     let dict = MutableDictionary::curated();
+    //     assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
+    //     assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
+    // }
 
     #[test]
     fn than_is_conjunction() {
@@ -344,16 +347,8 @@ mod tests {
     #[test]
     fn herself_is_pronoun() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_word_metadata_str("herself")
-                .unwrap()
-                .is_pronoun_noun()
-        );
-        assert!(
-            dict.get_word_metadata_str("Herself")
-                .unwrap()
-                .is_pronoun_noun()
-        );
+        assert!(dict.get_word_metadata_str("herself").unwrap().is_pronoun());
+        assert!(dict.get_word_metadata_str("Herself").unwrap().is_pronoun());
     }
 
     #[test]
@@ -386,12 +381,7 @@ mod tests {
     fn there_is_not_a_pronoun() {
         let dict = MutableDictionary::curated();
 
-        assert!(!dict.get_word_metadata_str("there").unwrap().is_noun());
-        assert!(
-            !dict
-                .get_word_metadata_str("there")
-                .unwrap()
-                .is_pronoun_noun()
-        );
+        assert!(!dict.get_word_metadata_str("there").unwrap().is_nominal());
+        assert!(!dict.get_word_metadata_str("there").unwrap().is_pronoun());
     }
 }

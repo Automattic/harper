@@ -1,6 +1,6 @@
 use crate::{
     Token,
-    patterns::{EitherPattern, NounPhrase, Pattern, SequencePattern},
+    patterns::{EitherPattern, NominalPhrase, Pattern, SequencePattern},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -19,14 +19,14 @@ impl Default for HyphenateNumberDay {
                 Box::new(
                     SequencePattern::default()
                         .then_whitespace()
-                        .then(NounPhrase),
+                        .then(NominalPhrase),
                 ),
                 Box::new(
                     SequencePattern::default()
                         .then_hyphen()
                         .then_adjective()
                         .then_whitespace()
-                        .then(NounPhrase),
+                        .then(NominalPhrase),
                 ),
             ]));
 

@@ -15,7 +15,7 @@ impl Default for PossessiveYour {
             SequencePattern::aco("you")
                 .then_whitespace()
                 .then(|tok: &Token, _source: &[char]| {
-                    tok.kind.is_noun() && !tok.kind.is_likely_homograph()
+                    tok.kind.is_nominal() && !tok.kind.is_likely_homograph()
                 });
 
         Self {

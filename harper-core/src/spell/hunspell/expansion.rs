@@ -6,6 +6,8 @@ use crate::WordMetadata;
 
 #[derive(Debug, Clone)]
 pub struct Expansion {
+    // TODO some attributes only signify a property and neither a prefix nor a suffix
+    // TODO currently those have the "suffix" field set to true
     /// If `!true`, this is a prefix
     pub suffix: bool,
     pub cross_product: bool,

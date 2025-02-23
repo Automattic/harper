@@ -59,12 +59,12 @@ fn order_suggestions(matches: Vec<FuzzyMatchResult>) -> Vec<&[char]> {
         found.swap(0, 2);
     }
 
-    if let Some(noun_index) = found
+    if let Some(nominal_index) = found
         .iter()
         .skip(3)
         .position(|i| i.metadata.is_proper_noun())
     {
-        found.swap(2, noun_index + 3);
+        found.swap(2, nominal_index + 3);
     }
 
     // Make commonality relevant

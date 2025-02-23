@@ -16,7 +16,7 @@ impl ImpliesQuantity {
 
         match token.kind {
             TokenKind::Word(Some(word_metadata)) => {
-                if word_metadata.article {
+                if word_metadata.determiner {
                     return Some(false);
                 }
 

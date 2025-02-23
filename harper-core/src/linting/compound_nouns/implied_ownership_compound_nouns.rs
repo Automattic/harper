@@ -20,7 +20,7 @@ impl Default for ImpliedOwnershipCompoundNouns {
     fn default() -> Self {
         let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| meta.is_noun()));
         let pattern = SequencePattern::default()
-            .then_possessive_noun()
+            .then_possessive_nominal()
             .then_whitespace()
             .then(split_pattern.clone());
 
