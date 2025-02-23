@@ -1,8 +1,8 @@
-import wasm from 'vite-plugin-wasm';
-import topLevelAwait from 'vite-plugin-top-level-await';
-import { defineConfig } from 'vite';
-import { sveltepress } from '@sveltepress/vite';
 import { defaultTheme } from '@sveltepress/theme-default';
+import { sveltepress } from '@sveltepress/vite';
+import { defineConfig } from 'vite';
+import topLevelAwait from 'vite-plugin-top-level-await';
+import wasm from 'vite-plugin-wasm';
 
 export default defineConfig({
 	server: {
@@ -121,6 +121,10 @@ export default defineConfig({
 								{
 									title: 'Author a Rule',
 									to: '/docs/contributors/author-a-rule'
+								},
+								{
+									title: 'Visual Studio Code',
+									to: '/docs/contributors/visual-studio-code'
 								},
 								{
 									title: 'Reviewing Pull Requests',
