@@ -45,12 +45,12 @@ export default defineConfig({
 									to: '/docs/integrations/obsidian'
 								},
 								{
-									title: 'Visual Studio Code',
-									to: '/docs/integrations/visual-studio-code'
-								},
-								{
 									title: 'Language Server',
 									to: '/docs/integrations/language-server'
+								},
+								{
+									title: 'Visual Studio Code',
+									to: '/docs/integrations/visual-studio-code'
 								},
 								{
 									title: 'Neovim',
@@ -61,12 +61,12 @@ export default defineConfig({
 									to: '/docs/integrations/helix'
 								},
 								{
-									title: 'Zed',
-									to: '/docs/integrations/zed'
-								},
-								{
 									title: 'Emacs',
 									to: '/docs/integrations/emacs'
+								},
+								{
+									title: 'Zed',
+									to: '/docs/integrations/zed'
 								}
 							]
 						},
