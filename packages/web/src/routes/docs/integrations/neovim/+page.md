@@ -2,54 +2,11 @@
 title: Neovim
 ---
 
-[Neovim](https://neovim.io/) is a popular open-source text editor.
-Its lack of fast grammar-checking was the primary motivation for creating Harper.
+Our Neovim integration is powered by [`harper-ls`](./language-server).
 
 ## Installation
 
-How you choose to install `harper-ls` depends on your use-case.
-Right now, we only directly support usage through [`nvim-lspconfig`](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#harper_ls).
-Refer to the linked documentation for more information.
-
-If you happen to use [`mason.nvim`](https://github.com/williamboman/mason.nvim), installation will be pretty straightforward.
-`harper-ls` is in the official Mason registry, so you can install it the same way you install anything through Mason.
-
-If you **don't** install your LSPs through Mason, we have binary releases available on [GitHub](https://github.com/Automattic/harper/releases) or you can use one of a number of package managers.
-
-### Cargo
-
-If you have [Rust installed](https://www.rust-lang.org/tools/install), you're in luck!
-To install `harper-ls`, simply run:
-
-```bash
-cargo install harper-ls --locked
-```
-
-If you are on a Debian-based Linux distribution, you may need to install `build-essential`.
-
-### Arch Linux
-
-Harper is available through the `extra` repo:
-
-```bash
-sudo pacman -S harper
-```
-
-### Scoop
-
-You can install Harper on Windows through [Scoop](https://scoop.sh/).
-
-```bash
-scoop install harper
-```
-
-### Homebrew
-
-You may install Harper through [Homebrew](https://brew.sh).
-
-```bash
-brew install harper
-```
+How you choose to install `harper-ls` depends on your use-case. For Neovim, we only directly support usage through [`nvim-lspconfig`](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#harper_ls) and installation via [`mason.nvim`](https://mason-registry.dev/registry/list?search=harper-ls). However, you can also [install it separately](./language-server#Installation) and set it up yourself if you wish.
 
 ## Configuration
 
