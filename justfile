@@ -16,7 +16,7 @@ build-harperjs: build-wasm
   perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
 
   cd "{{justfile_directory()}}/packages/harper.js"
-  yarn install -f
+  yarn install
   yarn run build
 
   # Generate API reference
@@ -27,7 +27,7 @@ test-harperjs: build-harperjs
   set -eo pipefail
   
   cd "{{justfile_directory()}}/packages/harper.js"
-  yarn install -f
+  yarn install
   yarn playwright install
   yarn test
 
@@ -44,7 +44,7 @@ dev-web:
   just build-harperjs
 
   cd "{{justfile_directory()}}/packages/web"
-  yarn install -f
+  yarn install
   yarn dev
 
 # Build the Harper website.
@@ -53,7 +53,7 @@ build-web: build-harperjs
   set -eo pipefail
   
   cd "{{justfile_directory()}}/packages/web"
-  yarn install -f
+  yarn install
   yarn run build
 
 # Build the Harper Obsidian plugin.
@@ -63,7 +63,7 @@ build-obsidian: build-harperjs
   
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
 
-  yarn install -f
+  yarn install
   yarn build
 
   zip harper-obsidian-plugin.zip manifest.json main.js
@@ -85,7 +85,7 @@ test-vscode:
 
   cd "$ext_dir"
 
-  yarn install -f
+  yarn install
   # For environments without displays like CI servers or containers
   if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
     xvfb-run --auto-servernum yarn test
@@ -116,7 +116,7 @@ package-vscode target="":
 
   cd "$ext_dir"
 
-  yarn install -f
+  yarn install
   if [[ -n "{{target}}" ]]; then
     yarn package --target {{target}}
   else
