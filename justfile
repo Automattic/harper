@@ -129,7 +129,7 @@ update-vscode-linters:
 
   linters=$(
     cargo run --bin harper-cli -- config |
-      jq 'with_entries(.key |= "harper-ls.linters." + . |
+      jq 'with_entries(.key |= "harper.linters." + . |
         .value |= {
           "scope": "resource",
           "type": "boolean",
@@ -144,7 +144,7 @@ update-vscode-linters:
   manifest_without_linters=$(
     jq 'walk(
       if type == "object" then
-        with_entries(select(.key | startswith("harper-ls.linters") | not))
+        with_entries(select(.key | startswith("harper.linters") | not))
       end
     )' package.json
   )

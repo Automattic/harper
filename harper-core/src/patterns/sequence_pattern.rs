@@ -166,7 +166,7 @@ impl SequencePattern {
     }
 
     /// Match against any single token.
-    /// More of a filler then anything else.
+    /// More of a filler than anything else.
     pub fn then_anything(mut self) -> Self {
         self.token_patterns.push(Box::new(AnyPattern));
         self

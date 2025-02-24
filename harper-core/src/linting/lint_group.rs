@@ -1,4 +1,5 @@
 use std::collections::BTreeMap;
+use std::mem;
 use std::sync::Arc;
 
 use cached::proc_macro::cached;
@@ -104,12 +105,20 @@ impl LintGroupConfig {
     ///
     /// Conflicting keys will be overridden by the value in the other group.
     pub fn merge_from(&mut self, other: &mut LintGroupConfig) {
-        self.inner.extend(other.inner.drain());
+        for (key, val) in other.inner.drain() {
+            if val.is_none() {
+                continue;
+            }
+
+            self.inner.insert(key, val);
+        }
     }
 
     /// Fill the group with the values for the curated lint group.
     pub fn fill_with_curated(&mut self) {
-        self.merge_from(&mut Self::new_curated());
+        let mut temp = Self::new_curated();
+        mem::swap(self, &mut temp);
+        self.merge_from(&mut temp);
     }
 
     pub fn new_curated() -> Self {

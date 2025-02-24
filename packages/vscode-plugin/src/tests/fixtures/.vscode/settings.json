@@ -2,6 +2,6 @@
 	"files.associations": {
 		"git-commit": "git-commit"
 	},
-	"harper-ls.linters.SpellCheck": true,
-	"harper-ls.linters.RepeatedWords": true
+	"harper.linters.SpellCheck": true,
+	"harper.linters.RepeatedWords": true
 }

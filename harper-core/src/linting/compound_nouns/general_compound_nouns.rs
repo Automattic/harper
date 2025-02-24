@@ -25,7 +25,15 @@ impl Default for GeneralCompoundNouns {
                     return false;
                 };
 
-                tok.span.len() > 1 && !meta.article && !meta.preposition
+                meta.article || meta.is_adjective()
+            })
+            .then_whitespace()
+            .then(|tok: &Token, _: &[char]| {
+                let Some(Some(meta)) = tok.kind.as_word() else {
+                    return false;
+                };
+
+                tok.span.len() > 1 && !meta.article && !meta.preposition && !meta.is_adverb()
             })
             .then_whitespace()
             .then(|tok: &Token, _: &[char]| {
@@ -41,8 +49,13 @@ impl Default for GeneralCompoundNouns {
         }));
 
         let mut pattern = All::default();
-        pattern.add(Box::new(split_pattern.clone()));
         pattern.add(Box::new(exceptions_pattern));
+        pattern.add(Box::new(
+            SequencePattern::default()
+                .then_anything()
+                .then_anything()
+                .then(split_pattern.clone()),
+        ));
 
         Self {
             pattern: Box::new(pattern),
@@ -57,12 +70,12 @@ impl PatternLinter for GeneralCompoundNouns {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let span = matched_tokens.span()?;
+        let span = matched_tokens[2..].span()?;
         let orig = span.get_content(source);
         // If the pattern matched, this will not return `None`.
         let word =
             self.split_pattern
-                .get_merged_word(matched_tokens[0], matched_tokens[2], source)?;
+                .get_merged_word(matched_tokens[2], matched_tokens[4], source)?;
 
         Some(Lint {
             span,

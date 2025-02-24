@@ -34,7 +34,7 @@ macro_rules! generate_metadata_queries {
                     return true;
                 }
 
-                [$(
+                [self.article, self.preposition, $(
                     self.[< is_ $category >](),
                 )*].iter().map(|b| *b as u8).sum::<u8>() > 1
             }

@@ -26,7 +26,7 @@ impl ThenThan {
                         .then(Invert::new(AnyCapitalization::new(char_string!("that")))),
                 ),
                 // Denotes exceptions to the rule.
-                Box::new(Invert::new(WordSet::new(&["back"]))),
+                Box::new(Invert::new(WordSet::new(&["back", "this"]))),
             ])),
         }
     }

@@ -1,12 +1,14 @@
 mod general_compound_nouns;
+mod implied_action_compound_nouns;
 mod implied_ownership_compound_nouns;
 
 use super::{Lint, LintKind, Suggestion, merge_linters::merge_linters};
 
 use general_compound_nouns::GeneralCompoundNouns;
+use implied_action_compound_nouns::ImpliedActionCompoundNouns;
 use implied_ownership_compound_nouns::ImpliedOwnershipCompoundNouns;
 
-merge_linters!(CompoundNouns => GeneralCompoundNouns, ImpliedOwnershipCompoundNouns => "Detects compound nouns split by a space and suggests merging them when both parts form a valid noun." );
+merge_linters!(CompoundNouns => GeneralCompoundNouns, ImpliedOwnershipCompoundNouns, ImpliedActionCompoundNouns => "Detects compound nouns split by a space and suggests merging them when both parts form a valid noun." );
 
 #[cfg(test)]
 mod tests {
@@ -260,6 +262,24 @@ mod tests {
     fn allow_issue_704() {
         assert_lint_count(
             "Here are some ways to do that:",
+            CompoundNouns::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allows_issue_721() {
+        assert_lint_count(
+            "So if you adjust any one of these adjusters that can have a negative or a positive effect.",
+            CompoundNouns::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allows_678() {
+        assert_lint_count(
+            "they can't catch all the bugs.",
             CompoundNouns::default(),
             0,
         );

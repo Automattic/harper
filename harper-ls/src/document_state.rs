@@ -22,7 +22,13 @@ impl DocumentState {
     }
 
     pub fn generate_diagnostics(&mut self, severity: DiagnosticSeverity) -> Vec<Diagnostic> {
+        let temp = self.linter.config.clone();
+        self.linter.config.fill_with_curated();
+
         let mut lints = self.linter.lint(&self.document);
+
+        self.linter.config = temp;
+
         self.ignored_lints
             .remove_ignored(&mut lints, &self.document);
 
@@ -35,7 +41,13 @@ impl DocumentState {
         range: Range,
         code_action_config: &CodeActionConfig,
     ) -> Vec<CodeActionOrCommand> {
+        let temp = self.linter.config.clone();
+        self.linter.config.fill_with_curated();
+
         let mut lints = self.linter.lint(&self.document);
+
+        self.linter.config = temp;
+
         self.ignored_lints
             .remove_ignored(&mut lints, &self.document);
 

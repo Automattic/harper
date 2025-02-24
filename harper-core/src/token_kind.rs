@@ -135,6 +135,16 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Currency(..)))
     }
 
+    pub fn is_preposition(&self) -> bool {
+        matches!(
+            self,
+            TokenKind::Word(Some(WordMetadata {
+                preposition: true,
+                ..
+            }))
+        )
+    }
+
     pub fn is_article(&self) -> bool {
         matches!(
             self,

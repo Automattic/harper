@@ -235,6 +235,18 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `way too much`?",
             "Ensures `way too much` is used instead of `to much`."
         ),
+        "OperativeSystem" => (
+            "operative system",
+            ["operating system"],
+            "Did you mean `operating system`?",
+            "Ensures `operating system` is used correctly instead of `operative system`."
+        ),
+        "OperativeSystems" => (
+            "operative systems",
+            ["operating systems"],
+            "Did you mean `operating systems`?",
+            "Ensures `operating systems` is used correctly instead of `operative systems`."
+        ),
         "BanTogether" => (
             "ban together",
             ["band together"],
@@ -384,6 +396,23 @@ mod tests {
             "proper java development has way to much overhead",
             lint_group(),
             "proper java development has way too much overhead",
+        );
+    }
+          
+    fn operative_system() {
+        assert_suggestion_result(
+            "COS is a operative system made with the COSMOS Kernel and written in C#, COS its literally the same than MS-DOS but written in C# and open-source.",
+            lint_group(),
+            "COS is a operating system made with the COSMOS Kernel and written in C#, COS its literally the same than MS-DOS but written in C# and open-source.",
+        );
+    }
+
+    #[test]
+    fn operative_systems() {
+        assert_suggestion_result(
+            "My dotfiles for my operative systems and other configurations.",
+            lint_group(),
+            "My dotfiles for my operating systems and other configurations.",
         );
     }
 }
