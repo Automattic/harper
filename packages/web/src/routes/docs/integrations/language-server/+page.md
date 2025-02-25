@@ -5,6 +5,8 @@ title: Language Server
 `harper-ls` is the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) frontend for Harper.
 Out of the box, it has built-in support for parsing the comments of most programming languages, as well as any and all Markdown files.
 
+## Installation
+
 ### Cargo
 
 If you have [Rust installed](https://www.rust-lang.org/tools/install), you're in luck!
@@ -68,6 +70,10 @@ or if you have the `nix-command` and `flakes` experimental features enabled:
 ```bash
 nix shell 'nixpkgs#harper'
 ```
+
+### GitHub Releases
+
+If none of the previous installation methods are available to you, we also provide [portable pre-built binaries on GitHub](https://github.com/Automattic/harper/releases).
 
 ## Dictionaries
 

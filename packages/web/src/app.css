@@ -7,6 +7,10 @@
 		@apply list-disc pl-4;
 	}
 
+	ol {
+		@apply list-decimal pl-4;
+	}
+
 	h1 {
 		@apply text-5xl py-4;
 	}
