@@ -234,6 +234,35 @@ mod tests {
         assert!(is.unwrap().is_linking_verb());
     }
 
+    #[test]
+    fn are_merged_attrs_same_as_spread_attrs() {
+        let merged_word = parse_word_list("1\nblork/DGS").unwrap();
+        let spread_word = parse_word_list("2\nblork/DG\nblork/S").unwrap();
+
+        let merged_attrs = parse_default_attribute_list();
+        let spread_attrs = parse_default_attribute_list();
+
+        let mut expanded1 = HashMap::new();
+        let mut expanded2 = HashMap::new();
+
+        merged_attrs.expand_marked_words(merged_word, &mut expanded1);
+        let expanded_merged: HashSet<String> = expanded1
+            .into_iter()
+            .map(|v| v.0.into_iter().collect())
+            .collect();
+
+        spread_attrs.expand_marked_words(spread_word, &mut expanded2);
+        let expanded_spread: HashSet<String> = expanded2
+            .into_iter()
+            .map(|v| v.0.into_iter().collect())
+            .collect();
+
+        assert_eq!(
+            expanded_merged.into_iter().collect::<HashSet<_>>(),
+            expanded_spread.into_iter().collect::<HashSet<_>>()
+        );
+    }
+
     fn split(text: &str) -> CharString {
         text.chars().collect()
     }
