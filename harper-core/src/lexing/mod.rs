@@ -25,8 +25,9 @@ pub fn lex_token(source: &[char]) -> Option<FoundToken> {
         lex_tabs,
         lex_spaces,
         lex_newlines,
-        lex_hex_number,  // before lex_number, which would match the initial 0
-        lex_long_decade, // before lex_number, which would match the digits up to the -s
+        lex_plural_digit, // Before lex_number, which would match the initial digit
+        lex_hex_number,   // Before lex_number, which would match the initial 0
+        lex_long_decade,  // Before lex_number, which would match the digits up to the -s
         lex_number,
         lex_url,
         lex_email_address,
@@ -167,6 +168,33 @@ pub fn lex_long_decade(source: &[char]) -> Option<FoundToken> {
     })
 }
 
+pub fn lex_plural_digit(src: &[char]) -> Option<FoundToken> {
+    // Issue #774
+    let l = src.len();
+    let mut i = 0;
+
+    if src.len() == 0 || !src[i].is_ascii_alphanumeric() {
+        return None;
+    }
+    i += 1;
+
+    if l > i && src[i] == '\'' {
+        i += 1;
+    }
+
+    if l > i && src[i] == 's' {
+        i += 1;
+
+        if l == i || !src[i].is_ascii_alphanumeric() {
+            return Some(FoundToken {
+                token: TokenKind::Word(None),
+                next_index: i,
+            });
+        }
+    }
+    None
+}
+
 fn lex_newlines(source: &[char]) -> Option<FoundToken> {
     let count = source.iter().take_while(|c| **c == '\n').count();
 
@@ -243,6 +271,8 @@ fn lex_catch(_source: &[char]) -> Option<FoundToken> {
 
 #[cfg(test)]
 mod tests {
+    use crate::lexing::lex_plural_digit;
+
     use super::lex_hex_number;
     use super::lex_long_decade;
     use super::lex_token;
@@ -361,6 +391,70 @@ mod tests {
     fn does_not_lex_uppercase_prefix() {
         let source: Vec<_> = "0Xf00d".chars().collect();
         assert!(lex_hex_number(&source).is_none());
+    }
+
+    #[test]
+    fn lexes_0s() {
+        let source: Vec<_> = "0s".chars().collect();
+        assert!(matches!(
+            // lex_token(&source),
+            lex_plural_digit(&source),
+            Some(FoundToken {
+                token: TokenKind::Word(_),
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_1_apostrophe_s() {
+        let source: Vec<_> = "1's".chars().collect();
+        assert!(matches!(
+            // lex_token(&source),
+            lex_plural_digit(&source),
+            Some(FoundToken {
+                token: TokenKind::Word(_),
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_0s_and_1s() {
+        let source: Vec<_> = "0s and 1s".chars().collect();
+        assert!(matches!(
+            // lex_token(&source),
+            lex_plural_digit(&source),
+            Some(FoundToken {
+                token: TokenKind::Word(_),
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn lexes_1s_and_0s_apostrophes() {
+        let source: Vec<_> = "1's and 0's".chars().collect();
+        assert!(matches!(
+            // lex_token(&source),
+            lex_plural_digit(&source),
+            Some(FoundToken {
+                token: TokenKind::Word(_),
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn doesnt_lex_0s_joined_letter() {
+        let source: Vec<_> = "0ss".chars().collect();
+        assert!(lex_plural_digit(&source).is_none());
+    }
+
+    #[test]
+    fn doesnt_lex_1s_apostrophe_joined_number() {
+        let source: Vec<_> = "1's1".chars().collect();
+        assert!(lex_plural_digit(&source).is_none());
     }
 
     #[test]
