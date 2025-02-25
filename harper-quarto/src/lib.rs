@@ -6,7 +6,9 @@ use harper_core::{
 mod masker;
 pub use masker::QuartoMasker;
 
-/// Parses a Literate Haskell document by masking out the code and considering text as Markdown.
+/// Parses a quarto document by ignoring the YAML header, and treating the remainder as Markdown.
+///
+/// TODO: Parse [quarto specific syntax elements](https://quarto.org/docs/authoring/markdown-basics.html)
 pub struct QuartoParser {
     inner: Lrc<dyn Parser>,
 }
