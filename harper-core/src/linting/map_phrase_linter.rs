@@ -1,6 +1,6 @@
 use super::{Lint, LintKind, PatternLinter};
 use crate::linting::Suggestion;
-use crate::patterns::{ExactPhrase, Pattern, SimilarToPhrase};
+use crate::patterns::{EitherPattern, ExactPhrase, Pattern, SimilarToPhrase};
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseLinter {
@@ -32,6 +32,25 @@ impl MapPhraseLinter {
             format!("Did you mean the phrase `{phrase}`?"),
             format!("Looks for slight improper modifications to the phrase `{phrase}`."),
         )
+    }
+
+    pub fn new_exact_phrases(
+        phrase: impl IntoIterator<Item = impl AsRef<str>>,
+        correct_forms: impl IntoIterator<Item = impl ToString>,
+        message: impl ToString,
+        description: impl ToString,
+    ) -> Self {
+        let patterns = EitherPattern::new(
+            phrase
+                .into_iter()
+                .map(|p| {
+                    let pattern: Box<dyn Pattern> = Box::new(ExactPhrase::from_phrase(p.as_ref()));
+                    pattern
+                })
+                .collect(),
+        );
+
+        Self::new(Box::new(patterns), correct_forms, message, description)
     }
 
     pub fn new_exact_phrase(

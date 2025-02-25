@@ -20,11 +20,11 @@ impl MultipleSequentialPronouns {
             pattern: Box::new(
                 SequencePattern::default()
                     .then(pronouns.clone())
-                    .then_one_or_more(Box::new(
+                    .then_one_or_more(
                         SequencePattern::default()
                             .then_whitespace()
                             .then(pronouns.clone()),
-                    )),
+                    ),
             ),
         }
     }

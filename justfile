@@ -192,8 +192,8 @@ precommit: check test build-harperjs build-obsidian build-web
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
-  cargo install --path harper-ls --locked
-  cargo install --path harper-cli --locked
+  cargo install --path harper-ls --locked 
+  cargo install --path harper-cli --locked 
 
 # Run `harper-cli` on the Harper repository
 dogfood:

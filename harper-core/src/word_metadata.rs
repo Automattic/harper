@@ -103,7 +103,7 @@ impl WordMetadata {
 
     generate_metadata_queries!(
         noun has proper, plural, possessive, pronoun.
-        verb has linking.
+        verb has linking, auxiliary.
         conjunction has.
         adjective has.
         adverb has
@@ -131,6 +131,7 @@ pub enum Tense {
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct VerbData {
     pub is_linking: Option<bool>,
+    pub is_auxiliary: Option<bool>,
     pub tense: Option<Tense>,
 }
 
@@ -139,6 +140,7 @@ impl VerbData {
     pub fn or(&self, other: &Self) -> Self {
         Self {
             is_linking: self.is_linking.or(other.is_linking),
+            is_auxiliary: self.is_auxiliary.or(other.is_auxiliary),
             tense: self.tense.or(other.tense),
         }
     }

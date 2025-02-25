@@ -259,6 +259,14 @@ impl TokenKind {
         metadata.is_verb()
     }
 
+    pub fn is_auxiliary_verb(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return false;
+        };
+
+        metadata.is_auxiliary_verb()
+    }
+
     pub fn is_linking_verb(&self) -> bool {
         let TokenKind::Word(Some(metadata)) = self else {
             return false;

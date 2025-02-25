@@ -125,12 +125,39 @@ impl Document {
         self.condense_ellipsis();
         self.condense_latin();
         self.match_quotes();
+        self.articles_imply_nouns();
 
         for token in self.tokens.iter_mut() {
             if let TokenKind::Word(meta) = &mut token.kind {
                 let word_source = token.span.get_content(&self.source);
                 let found_meta = dictionary.get_word_metadata(word_source);
                 *meta = found_meta
+            }
+        }
+    }
+
+    fn uncached_article_pattern() -> Lrc<SequencePattern> {
+        Lrc::new(
+            SequencePattern::default()
+                .then_article()
+                .then_whitespace()
+                .then(|t: &Token, _source: &[char]| t.kind.is_adjective() && t.kind.is_noun())
+                .then_whitespace()
+                .then_noun(),
+        )
+    }
+
+    thread_local! {static ARTICLE_PATTERN: Lrc<SequencePattern> = Document::uncached_article_pattern()}
+
+    /// When a word that is either an adjective or a noun is sandwiched between an article and a noun,
+    /// it definitely is not a noun.
+    fn articles_imply_nouns(&mut self) {
+        let pattern = Self::ELLIPSIS_PATTERN.with(|v| v.clone());
+
+        for m in pattern.find_all_matches_in_doc(self) {
+            if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start + 2].kind {
+                metadata.noun = None;
+                metadata.verb = None;
             }
         }
     }

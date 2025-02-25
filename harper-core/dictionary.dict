@@ -8831,7 +8831,7 @@ Schneider/2M
 Schoenberg/2M
 Schopenhauer/2M
 Schrieffer/M
-Schrodinger/2M
+Schrödinger/2M
 Schroeder/2M
 Schubert/2M
 Schultz/2M
@@ -10758,7 +10758,7 @@ Cloudflare/M
 TLS/12
 Everdeen/M
 pseudorandom/5P
-counterintuitively/
+counterintuitive/Y
 Leto/2M
 Ouranos/M
 Hecatoncheires/1M
@@ -12389,7 +12389,7 @@ appetizing/514Y
 applaud/14ZGDRS
 applauder/1M
 applause/1M
-apple/14MS
+apple/1MS
 applejack/1M
 applesauce/1M
 applet/1MS
@@ -13647,7 +13647,7 @@ bazillion/1S
 bazooka/14SM
 bbl/1
 bdrm/1
-be/41~
+be/m1~
 beach/14MDSG
 beachcomber/1SM
 beachfront/51
@@ -13957,7 +13957,7 @@ bespeak/41SG
 bespectacled/5
 bespoke/54
 bespoken/45
-best/514SGMD
+best/51mSGMD
 bestial/51Y
 bestiality/1M
 bestiary/1SM
@@ -13992,7 +13992,7 @@ betroth/4DG
 betrothal/1SM
 betrothed/451M
 betroths/4
-better/514MDGLS
+better/51mMDGLS
 betterment/1M
 betting/541
 bettor/1MS
@@ -15656,8 +15656,8 @@ campsite/1SM
 campus/14MS
 campy/5TR
 camshaft/1SM
-can't/4
-can/41SMDRZG
+can't/m
+can/m1SMDRZG
 canal/14MS
 canalization/1M
 canalize/4GDS
@@ -17287,7 +17287,7 @@ coerce/4DRSZGNV
 coercer/1M
 coercion/1M
 coeval/51SMY
-coexist/4DSG
+coexist/4DG
 coexistence/1M
 coexistent/51
 coextensive/5
@@ -18534,7 +18534,7 @@ couchette/1S
 cougar/1SM
 cough/41MDG
 coughs/14
-could/41~
+could/m1~
 could've/4
 couldn't/4
 coulee/1SM
@@ -19248,7 +19248,7 @@ cwt/1
 cyan/15M
 cyanide/14M
 cyanobacteria/1
-cyberbully/14SM
+cyberbully/14SMG
 cybercafe/1S
 cybernetic/5S
 cyber/5
@@ -19388,7 +19388,7 @@ dankness/1M
 danseuse/1MS
 dapper/5TR
 dapple/154MGDS
-dare/41DRSMZG
+dare/m1DRSMZG
 daredevil/154MS
 daredevilry/1M
 darer/1M
@@ -20718,7 +20718,7 @@ dizzily/
 dizziness/1M
 dizzy/541DRSPTG
 djellaba/1MS
-do/41SJMRHZG~
+do/m1SJMRHZG~
 doable/51
 dob/41S
 dobbed/4
@@ -20887,7 +20887,7 @@ dopier/5
 dopiest/5
 dopiness/1M
 doping/41M
-doppelganger/1S
+doppelgänger/1S
 dork/14MS
 dorky/5RT
 dorm/14MRZS
@@ -26410,7 +26410,7 @@ haunt/41SMDRZG
 haunter/1M
 haunting/451Y
 hauteur/1M
-have/41MGS~
+have/m1MGS~
 haven't/4
 haven/14SM
 haversack/1SM
@@ -31587,7 +31587,7 @@ maximal/51Y
 maximization/1M
 maximize/4GDS
 maximum/15SM
-may/41M
+may/m1M
 maybe/5j1SM
 mayday/1MS
 mayflower/1MS
@@ -32082,10 +32082,10 @@ midyear/1MS
 mien/1M
 miff/14DSG
 might've/4
-might/154M
+might/15mM
 mightily/
 mightiness/1M
-mightn't/4
+mightn't/m
 mighty/15TRP
 mignonette/15SM
 migraine/1MS
@@ -32437,7 +32437,7 @@ mite/14MZRS
 miter/41MDG
 mitigate/4DSGN
 mitigated/54U
-mitigation/1M
+mitigation/1MS
 mitochondria/1
 mitochondrial/5
 mitochondrion/1
@@ -33358,7 +33358,7 @@ necrotic/5
 nectar/14M
 nectarine/15MS
 nee/5
-need/14MDSG~
+need/1mMDSG~
 needed/54U
 needful/51Y
 neediness/1M
@@ -33369,7 +33369,7 @@ needlessness/1M
 needlewoman/1M
 needlewomen/9
 needlework/1M
-needn't/4
+needn't/m
 needy/5PTR
 nefarious/5YP
 nefariousness/1M
@@ -34804,8 +34804,8 @@ otter/1MS
 ottoman/1MS
 oubliette/1MS
 ouch/14
-ought/481
-oughtn't/4
+ought/m81
+oughtn't/m
 ounce/1MS
 our/4S~
 ourselves/8
@@ -35180,7 +35180,7 @@ overstay/41DSG
 overstep/41S
 overstepped/4
 overstepping/4
-overstimulate/4DSG
+overstimulate/4DSGX
 overstock/41GSD
 overstretch/41GDS
 overstrict/5
@@ -39151,7 +39151,7 @@ recursion/1S
 recuse/4DSG
 recyclable/51SM
 recycling/14M
-red/514PSM
+red/51PSM
 redact/4SDG
 redaction/1M
 redactor/1SM
@@ -41556,7 +41556,7 @@ shakily/
 shakiness/1M
 shaky/5RPT
 shale/14M
-shall/4
+shall/m
 shallot/1MS
 shallow/514TPMRYS
 shallowness/1M
@@ -41824,7 +41824,7 @@ shot/514MS
 shotgun/14SM
 shotgunned/4
 shotgunning/4
-should/4
+should/m
 should've/4
 shoulder/14MDGS
 shouldn't/41
@@ -43765,8 +43765,8 @@ stifling/541Y
 stigma/1SM
 stigmata/1
 stigmatic/51
-stigmatization/1M
-stigmatize/4GDS
+stigmatization/1CM
+stigmatize/4GDSC
 stile/14SM
 stiletto/14SM
 still's
@@ -44654,7 +44654,7 @@ survive/4DSGB
 survivor/1SM
 susceptibility/1SM
 susceptible/51I
-sushi/14M
+sushi/1M
 suspect/415SMDG
 suspected/54U
 suspend/4SDRZG
@@ -48996,7 +48996,7 @@ wildness/1M
 wilds/14M
 wile/14MGDS
 wiliness/1M
-will/41MDS~
+will/m1MDS~
 willful/5PY
 willfulness/1M
 willies/1M
@@ -49342,8 +49342,8 @@ worthy/514UPRT
 wot/48
 wotcha/
 would've/
-would/41S~
-wouldn't/4
+would/m1S~
+wouldn't/m
 wouldst/4
 wound/14SGMDR
 wove/45A
@@ -49721,7 +49721,6 @@ pseudocode/1MG
 Zettelkasten/1M
 OAuth/M
 MacBook/2SM
-MacOS/2M
 SVG/21s
 URI/1s
 suprachiasmatic/5
@@ -50003,7 +50002,7 @@ Crowdsignal/2M
 Mullenweg/M
 journaling/SM3
 Polldaddy/2M
-P2/M
+P2/MS
 VideoPress/2M
 stylization/SM
 DM/1MS
@@ -50023,5 +50022,31 @@ N4/2M
 N5/2M
 Lenovo/2M
 ThinkPad/2SM
+interconnectedness/1
+transformative/5
+Spotify/2M
+Waymo/2M
+gameplay/1
+chatbot/SM
+Siri/2M
+Alexa/2M
+gamify/4D
+perceptron/SM
+telemedicine/SM
+rainforest/SM
+reskilling/4
+overhyped/45
+preloaded/54
+NLP/M
+overstimulation/1
+VR/2M
+NPC/SM
+hydropower/1
+IPCC/2M
+AlphaFold/2M
+DeepMind/2M
 GLFW/2M
 ChatGPT/2M
+amidst/+
+reimagined/4
+coexists/4

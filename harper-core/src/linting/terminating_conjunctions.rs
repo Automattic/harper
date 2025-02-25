@@ -32,7 +32,6 @@ impl Default for TerminatingConjunctions {
                         "whereas",
                         "wherever",
                         "whether",
-                        "not",
                         "while",
                         "or",
                         "nor",

@@ -26,9 +26,9 @@ impl CollapseIdentifiers {
 thread_local! {
     static WORD_OR_NUMBER: Lrc<SequencePattern> = Lrc::new(SequencePattern::default()
                 .then_any_word()
-                .then_one_or_more(Box::new(SequencePattern::default()
+                .then_one_or_more(SequencePattern::default()
         .then_case_separator()
-        .then_any_word())));
+        .then_any_word()));
 }
 
 impl Parser for CollapseIdentifiers {

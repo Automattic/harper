@@ -9,22 +9,20 @@ use crate::{
     patterns::{Pattern, SequencePattern},
 };
 
-/// Looks for closed compound nouns which can be condensed due to their position after a
-/// possessive noun (which implies ownership).
-pub struct ImpliedActionCompoundNouns {
+pub struct ImpliedInstantiatedCompoundNouns {
     pattern: Box<dyn Pattern>,
     split_pattern: Lrc<SplitCompoundWord>,
 }
 
-impl Default for ImpliedActionCompoundNouns {
+impl Default for ImpliedInstantiatedCompoundNouns {
     fn default() -> Self {
-        let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| meta.is_noun()));
+        let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
+            meta.is_noun() && !meta.is_proper_noun()
+        }));
         let pattern = SequencePattern::default()
             .then(split_pattern.clone())
             .then_whitespace()
-            .then(|tok: &Token, _source: &[char]| {
-                tok.kind.is_verb() && !tok.kind.is_likely_homograph()
-            });
+            .then(|tok: &Token, _source: &[char]| tok.kind.is_auxiliary_verb());
 
         Self {
             pattern: Box::new(pattern),
@@ -33,7 +31,7 @@ impl Default for ImpliedActionCompoundNouns {
     }
 }
 
-impl PatternLinter for ImpliedActionCompoundNouns {
+impl PatternLinter for ImpliedInstantiatedCompoundNouns {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }

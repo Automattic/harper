@@ -1,14 +1,14 @@
 mod general_compound_nouns;
-mod implied_action_compound_nouns;
+mod implied_instantiated_compound_nouns;
 mod implied_ownership_compound_nouns;
 
 use super::{Lint, LintKind, Suggestion, merge_linters::merge_linters};
 
 use general_compound_nouns::GeneralCompoundNouns;
-use implied_action_compound_nouns::ImpliedActionCompoundNouns;
+use implied_instantiated_compound_nouns::ImpliedInstantiatedCompoundNouns;
 use implied_ownership_compound_nouns::ImpliedOwnershipCompoundNouns;
 
-merge_linters!(CompoundNouns => GeneralCompoundNouns, ImpliedOwnershipCompoundNouns, ImpliedActionCompoundNouns => "Detects compound nouns split by a space and suggests merging them when both parts form a valid noun." );
+merge_linters!(CompoundNouns => GeneralCompoundNouns, ImpliedInstantiatedCompoundNouns, ImpliedOwnershipCompoundNouns => "Detects compound nouns split by a space and suggests merging them when both parts form a valid noun." );
 
 #[cfg(test)]
 mod tests {
@@ -280,6 +280,24 @@ mod tests {
     fn allows_678() {
         assert_lint_count(
             "they can't catch all the bugs.",
+            CompoundNouns::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ina_not_suggested() {
+        assert_lint_count(
+            "past mistakes or a character in a looping reality facing personal challenges.",
+            CompoundNouns::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allow_suppress_or() {
+        assert_lint_count(
+            "He must decide whether to suppress or coexist with his doppelgänger.",
             CompoundNouns::default(),
             0,
         );

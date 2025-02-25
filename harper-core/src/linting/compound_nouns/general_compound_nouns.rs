@@ -45,7 +45,7 @@ impl Default for GeneralCompoundNouns {
             });
 
         let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
-            meta.is_noun() && !meta.is_adjective()
+            meta.is_noun() && !meta.is_proper_noun() && !meta.is_adjective()
         }));
 
         let mut pattern = All::default();
