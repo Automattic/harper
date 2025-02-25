@@ -120,7 +120,7 @@ fn is_unreserved(c: char) -> bool {
 }
 
 fn is_hex(c: char) -> bool {
-    c.is_ascii_digit() || matches!(c, 'A'..='F' | 'a'..='f')
+    c.is_ascii_hexdigit()
 }
 
 /// Lex an escaped hex code, returning the subsequent index
