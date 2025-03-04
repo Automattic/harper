@@ -359,6 +359,246 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `got rid of`?",
             "Ensures `got rid of` is used instead of `got rid off`."
         ),
+        "LastButNotLeast" => (
+            ["last but not the least", "last, but not the least", "last but, not least"],
+            ["last but not least"],
+            "Use the more idiomatic phrasing.",
+            "Corrects common errors in the phrase `last but not least`."
+        ),
+        "BlanketStatement" => (
+            ["blanketed statement"],
+            ["blanket statement"],
+            "Use the more idiomatic phrasing.",
+            "Corrects common errors in the phrase `blanket statement`."
+        ),
+        "SpokeTooSoon" => (
+            ["spoke to soon"],
+            ["spoke too soon"],
+            "Use the adverb `too` instead.",
+            "Identifies common misuse of the preposition `to` in the phrase `spoke too soon`."
+        ),
+        "TakeItSeriously" => (
+            ["take it serious"],
+            ["take it seriously"],
+            "Did you mean `take it seriously`?",
+            "Ensures the correct use of the adverb `seriously` instead of the adjective `serious` in phrases like `take it seriously`."
+        ),
+        "PiggyBag" => (
+            ["piggy bag"],
+            ["piggyback"],
+            "Did you mean `piggyback`?",
+            "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system."
+        ),
+        "PiggyBagging" => (
+            ["piggy bagging"],
+            ["piggybacking"],
+            "Did you mean `piggybacking`?",
+            "Corrects the eggcorn `piggy bagging` to `piggybacking`, the proper verb form for riding on someone’s back or leveraging an existing system."
+        ),
+        "PiggyBagged" => (
+            ["piggy bagged"],
+            ["piggybacked"],
+            "Did you mean `piggybacked`?",
+            "Corrects the eggcorn `piggy bagged` to `piggybacked`, the proper past tense form for riding on someone’s back or making use of an existing system."
+        ),
+        "DampSquib" => (
+            ["damp squid"],
+            ["damp squib"],
+            "Use the correct phrase for a disappointing outcome.",
+            "Corrects the eggcorn `damp squid` to `damp squib`, ensuring the intended meaning of a failed or underwhelming outcome."
+        ),
+        "Expatriate" => (
+            ["ex-patriot"],
+            ["expatriate"],
+            "Use the correct term for someone living abroad.",
+            "Fixes the misinterpretation of `expatriate`, ensuring the correct term is used for individuals residing abroad."
+        ),
+        "FetalPosition" => (
+            ["the feeble position"],
+            ["the fetal position"],
+            "Use the correct term for a curled-up posture.",
+            "Ensures the correct use of `fetal position`, avoiding confusion with `feeble position`, which is not a standard phrase."
+        ),
+        "ForAllIntentsAndPurposes" => (
+            ["for all intensive purposes"],
+            ["for all intents and purposes"],
+            "Use the correct phrase meaning 'in every practical sense'.",
+            "Corrects `for all intensive purposes` to `for all intents and purposes`, ensuring the phrase conveys its intended meaning."
+        ),
+        "FreeRein" => (
+            ["free reign"],
+            ["free rein"],
+            "Use the correct phrase for unrestricted control.",
+            "Ensures the correct use of `free rein`, avoiding confusion with `free reign`, which incorrectly suggests authority rather than freedom of action."
+        ),
+        "InOneFellSwoop" => (
+            ["in one foul swoop"],
+            ["in one fell swoop"],
+            "Use the correct phrase for something happening suddenly.",
+            "Corrects `in one foul swoop` to `in one fell swoop`, preserving the phrase’s original meaning of sudden and complete action."
+        ),
+        "JawDropping" => (
+            ["jar-dropping"],
+            ["jaw-dropping"],
+            "Use the correct phrase for something astonishing.",
+            "Corrects `jar-dropping` to `jaw-dropping`, ensuring the intended meaning of something that causes amazement."
+        ),
+        "JustDeserts" => (
+            ["just desserts"],
+            ["just deserts"],
+            "Use the correct phrase for receiving what one deserves.",
+            "Ensures `just deserts` is used correctly, preserving its meaning of receiving an appropriate outcome for one's actions."
+        ),
+        "AlzheimersDisease" => (
+            ["old-timers' disease"],
+            ["Alzheimer’s disease"],
+            "Use the correct medical term.",
+            "Fixes the common misnomer `old-timers' disease`, ensuring the correct medical term `Alzheimer’s disease` is used."
+        ),
+        "OldWivesTale" => (
+            ["old wise tale"],
+            ["old wives' tale"],
+            "Use the correct phrase for a superstition or myth.",
+            "Corrects `old wise tale` to `old wives' tale`, preserving the phrase’s meaning as an unfounded traditional belief."
+        ),
+        "OnTheSpurOfTheMoment" => (
+            ["on the spurt of the moment"],
+            ["on the spur of the moment"],
+            "Use the correct phrase for acting spontaneously.",
+            "Ensures the correct use of `on the spur of the moment`, avoiding confusion with the incorrect `spurt` variation."
+        ),
+        "PrayingMantis" => (
+            ["preying mantis"],
+            ["praying mantis"],
+            "Use the insect's correct name.",
+            "Corrects `preying mantis` to `praying mantis`, ensuring accurate reference to the insect’s characteristic pose."
+        ),
+        "RealTrouper" => (
+            ["real trooper"],
+            ["real trouper"],
+            "Use the correct phrase for someone who perseveres.",
+            "Ensures the correct use of `real trouper`, distinguishing it from `trooper`, which refers to a soldier or police officer."
+        ),
+        "RifeWith" => (
+            ["ripe with"],
+            ["rife with"],
+            "Use the correct phrase for something abundant.",
+            "Corrects `ripe with` to `rife with`, preserving the phrase’s meaning of being filled with something, often undesirable."
+        ),
+        "ScantilyClad" => (
+            ["scandally clad"],
+            ["scantily clad"],
+            "Use the correct phrase for minimal attire.",
+            "Fixes `scandally clad` to `scantily clad`, ensuring clarity in describing minimal attire."
+        ),
+        "ToTheMannerBorn" => (
+            ["to the manor born"],
+            ["to the manner born"],
+            "Use the correct phrase for being naturally suited to something.",
+            "Corrects `to the manor born` to `to the manner born`, ensuring the intended meaning of being naturally suited to a way of life."
+        ),
+        "WhetYourAppetite" => (
+            ["wet your appetite"],
+            ["whet your appetite"],
+            "Use the correct phrase for stimulating desire.",
+            "Ensures `whet your appetite` is used correctly, distinguishing it from the incorrect `wet` variation."
+        ),
+        "CaseSensitive" => (
+            ["case sensitive"],
+            ["case-sensitive"],
+            "Use the hyphenated form for `case-sensitive`.",
+            "Ensures `case-sensitive` is correctly hyphenated."
+        ),
+        "ChockFull" => (
+            ["chock full"],
+            ["chock-full"],
+            "Use the hyphenated form for `chock-full`.",
+            "Ensures `chock-full` is correctly hyphenated."
+        ),
+        "OffTheCuff" => (
+            ["off the cuff"],
+            ["off-the-cuff"],
+            "Use the hyphenated form for `off-the-cuff`.",
+            "Ensures `off-the-cuff` is correctly hyphenated."
+        ),
+        "WellBeing" => (
+            ["wellbeing"],
+            ["well-being"],
+            "Use the hyphenated form for `well-being`.",
+            "Ensures `well-being` is correctly hyphenated."
+        ),
+        "PerformThis" => (
+            ["performing this"],
+            ["perform this"],
+            "Use `perform this` for correct verb usage.",
+            "Corrects `performing this` to `perform this` for proper verb usage."
+        ),
+        "SimpleGrammatical" => (
+            ["simply grammatical"],
+            ["simple grammatical"],
+            "Use `simple grammatical` for correct adjective usage.",
+            "Corrects `simply grammatical` to `simple grammatical` for proper adjective usage."
+        ),
+        "ThatChallenged" => (
+            ["the challenged"],
+            ["that challenged"],
+            "Use `that challenged` for correct relative clause.",
+            "Corrects `the challenged` to `that challenged` for proper relative clause usage."
+        ),
+        "ToDoHyphen" => (
+            ["todo"],
+            ["to-do"],
+            "Hyphenate `to-do`.",
+            "Ensures `to-do` is correctly hyphenated."
+        ),
+        "Discuss" => (
+            ["discuss about"],
+            ["discuss"],
+            "`About` is redundant",
+            "Removes unnecessary `about` after `discuss`."
+        ),
+        "Discussed" => (
+            ["discussed about"],
+            ["discussed"],
+            "Use `discussed` without `about`.",
+            "Removes unnecessary `about` after `discussed`."
+        ),
+        "Discusses" => (
+            ["discusses about"],
+            ["discusses"],
+            "`About` is redundant",
+            "Removes unnecessary `about` after `discusses`."
+        ),
+        "Discussing" => (
+            ["discussing about"],
+            ["discussing"],
+            "`About` is redundant",
+            "Removes unnecessary `about` after `discussing`."
+        ),
+        "WorldWarII" => (
+            ["world war 2", "world war ii", "world war ii", "world war ii", "world war ii"],
+            ["World War II"],
+            "Use the correct capitalization for `World War II`.",
+            "Ensures `World War II` is correctly capitalized."
+        ),
+        "Towards" => (
+            ["to towards"],
+            ["towards"],
+            "Use `towards` without the preceding `to`.",
+            "Removes redundant `to` before `towards`."
+        ),
+        "Haphazard" => (
+            ["half hazard", "half-hazard", "halfhazard"],
+            ["haphazard"],
+            "Use `haphazard` for randomness or lack of organization.",
+            "Corrects the eggcorn `half hazard` to `haphazard`, which properly means lacking organization or being random."
+        ),
+         "DayAndAge" => (
+            ["day in age"],
+            ["day and age"],
+            "Use `day and age` for referring to the present time.",
+            "Corrects the eggcorn `day in age` to `day and age`, which properly means the current era or time period."
+        )
     });
 
     group.set_all_rules_to(Some(true));
@@ -517,5 +757,23 @@ mod tests {
     #[test]
     fn point_is_moot() {
         assert_suggestion_result("Your point is mute.", lint_group(), "Your point is moot.");
+    }
+
+    #[test]
+    fn issue_777() {
+        assert_suggestion_result(
+            "Last but not the least, with VS2013 you can use Web Essentials 2013",
+            lint_group(),
+            "Last but not least, with VS2013 you can use Web Essentials 2013",
+        );
+    }
+
+    #[test]
+    fn issue_790() {
+        assert_suggestion_result(
+            "This seems like a blanketed statement and I have not found any info to back up whether PyJWT is affected.",
+            lint_group(),
+            "This seems like a blanket statement and I have not found any info to back up whether PyJWT is affected.",
+        );
     }
 }

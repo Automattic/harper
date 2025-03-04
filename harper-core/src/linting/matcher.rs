@@ -103,16 +103,6 @@ impl Matcher {
         // defined like it is now.
         let mut triggers = Vec::new();
 
-        // hyphenated phrases
-        triggers.extend(pt! {
-            "case", "sensitive" => "case-sensitive",
-            "chock","full" => "chock-full",
-            "ngram" => "n-gram",
-            "off","the","cuff" => "off-the-cuff",
-            "Tree", "sitter" => "Tree-sitter",
-            "wellbeing" => "well-being"
-        });
-
         // expand abbreviations
         triggers.extend(pt! {
             "dep" => "dependency",
@@ -144,27 +134,7 @@ impl Matcher {
         triggers.extend(pt! {
             "performing","this" => "perform this",
             "simply","grammatical" => "simple grammatical",
-            "the","challenged" => "that challenged",
-            "to", "towards" => "towards",
-            "To-Do" => "To-do",
-            "todo" => "to-do"
-        });
-
-        // wrong set phrases and collocations
-        triggers.extend(pt! {
-            "discuss", "about" => "discuss",
-            "discussed", "about" => "discussed",
-            "discusses", "about" => "discusses",
-            "discussing", "about" => "discussing"
-        });
-
-        // normalization
-        triggers.extend(pt! {
-            "world","war","2" => "World War II",
-            "world","War","ii" => "World War II",
-            "World","war","ii" => "World War II",
-            "World","War","iI" => "World War II",
-            "World","War","Ii" => "World War II"
+            "the","challenged" => "that challenged"
         });
 
         // countries and capitals with special casing or punctuation

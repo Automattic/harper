@@ -21,10 +21,10 @@ jobs:
           - os: macOS-latest
             rust_target: aarch64-apple-darwin
             code_target: darwin-arm64
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             rust_target: x86_64-unknown-linux-gnu
             code_target: linux-x64
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             rust_target: aarch64-unknown-linux-gnu
             code_target: linux-arm64
     runs-on: ${{ matrix.platform.os }}

@@ -29,11 +29,11 @@ impl Pattern for AnyCapitalization {
             return 0;
         }
 
-        let tok_chars = tok.span.get_content(source);
-
-        if tok_chars.len() != self.word.len() {
+        if tok.span.len() != self.word.len() {
             return 0;
         }
+
+        let tok_chars = tok.span.get_content(source);
 
         let partial_match = tok_chars
             .iter()

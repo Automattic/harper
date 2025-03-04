@@ -1,6 +1,7 @@
 ARG NODE_VERSION=slim
 
 FROM rust:latest AS wasm-build
+RUN rustup toolchain install stable-x86_64-unknown-linux-gnu
 
 RUN mkdir -p /usr/build/
 WORKDIR /usr/build/

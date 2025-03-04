@@ -1138,7 +1138,7 @@
 		"lint": "eslint src --ext ts"
 	},
 	"devDependencies": {
-		"@types/jasmine": "^5.1.6",
+		"@types/jasmine": "^5.1.7",
 		"@types/node": "22.x",
 		"@types/vscode": "^1.89.0",
 		"@typescript-eslint/eslint-plugin": "^7.7.1",

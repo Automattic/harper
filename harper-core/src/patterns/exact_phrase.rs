@@ -31,6 +31,10 @@ impl ExactPhrase {
                 TokenKind::ParagraphBreak => {
                     phrase = phrase.then_whitespace();
                 }
+                TokenKind::Number(n) => {
+                    phrase = phrase
+                        .then(move |tok: &Token, _source: &[char]| tok.kind == TokenKind::Number(n))
+                }
                 _ => panic!("Fell out of expected document formats."),
             }
         }
