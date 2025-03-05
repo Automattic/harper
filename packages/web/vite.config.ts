@@ -1,8 +1,8 @@
-import wasm from 'vite-plugin-wasm';
-import topLevelAwait from 'vite-plugin-top-level-await';
-import { defineConfig } from 'vite';
-import { sveltepress } from '@sveltepress/vite';
 import { defaultTheme } from '@sveltepress/theme-default';
+import { sveltepress } from '@sveltepress/vite';
+import { defineConfig } from 'vite';
+import topLevelAwait from 'vite-plugin-top-level-await';
+import wasm from 'vite-plugin-wasm';
 
 export default defineConfig({
 	server: {
@@ -45,12 +45,12 @@ export default defineConfig({
 									to: '/docs/integrations/obsidian'
 								},
 								{
-									title: 'Visual Studio Code',
-									to: '/docs/integrations/visual-studio-code'
-								},
-								{
 									title: 'Language Server',
 									to: '/docs/integrations/language-server'
+								},
+								{
+									title: 'Visual Studio Code',
+									to: '/docs/integrations/visual-studio-code'
 								},
 								{
 									title: 'Neovim',
@@ -61,12 +61,12 @@ export default defineConfig({
 									to: '/docs/integrations/helix'
 								},
 								{
-									title: 'Zed',
-									to: '/docs/integrations/zed'
-								},
-								{
 									title: 'Emacs',
 									to: '/docs/integrations/emacs'
+								},
+								{
+									title: 'Zed',
+									to: '/docs/integrations/zed'
 								}
 							]
 						},
@@ -123,6 +123,10 @@ export default defineConfig({
 									to: '/docs/contributors/author-a-rule'
 								},
 								{
+									title: 'Visual Studio Code',
+									to: '/docs/contributors/visual-studio-code'
+								},
+								{
 									title: 'Reviewing Pull Requests',
 									to: '/docs/contributors/review'
 								}
@@ -150,7 +154,9 @@ export default defineConfig({
 						'scss',
 						'toml',
 						'rust',
-						'lua'
+						'lua',
+						'json',
+						'elisp'
 					]
 				}
 			})

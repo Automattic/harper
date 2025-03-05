@@ -2,9 +2,4 @@
 title: Zed
 ---
 
-[Zed](https://zed.dev) is a new editor from the folks who made [Atom](https://atom-editor.cc/).
-It has a host of attractive features that align quite well with Harper's mission (including lightning-fast startup and responsiveness).
-
-The best part: thanks to the wonderful work of community contributors, Harper has support for it!
-To get started, follow the instructions over on the [Zed plugin's README](https://github.com/Stef16Robbe/harper_zed).
-Once installed, it will automatically download and run [`harper-ls`](/docs/integrations/language-server).
+For our Zed integration, we have a [community-maintained extension](https://github.com/Stef16Robbe/harper_zed) that automatically downloads and runs [`harper-ls`](./language-server). For more information on how to install it and how it works, you can head over to the [extension's README](https://github.com/Stef16Robbe/harper_zed/blob/main/README.md).

@@ -2,117 +2,30 @@
 title: Neovim
 ---
 
-[Neovim](https://neovim.io/) is a popular open-source text editor.
-Its lack of fast grammar-checking was the primary motivation for creating Harper.
+Our Neovim integration is powered by [`harper-ls`](./language-server).
 
-## Installation
+## Required Setup
 
-How you choose to install `harper-ls` depends on your use-case.
-Right now, we only directly support usage through [`nvim-lspconfig`](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#harper_ls).
-Refer to the linked documentation for more information.
+Make sure you have `harper-ls` installed and available on your global or Neovim's `PATH`. You can do this using [`mason.nvim`](https://mason-registry.dev/registry/list?search=harper-ls) or via any of our other [supported installation methods](./language-server#Installation).
 
-If you happen to use [`mason.nvim`](https://github.com/williamboman/mason.nvim), installation will be pretty straightforward.
-`harper-ls` is in the official Mason registry, so you can install it the same way you install anything through Mason.
+Though Neovim supports language servers [out-of-the-box](https://neovim.io/doc/user/lsp.html), for ease of use, we suggest using `harper-ls` through [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig).
 
-If you **don't** install your LSPs through Mason, we have binary releases available on [GitHub](https://github.com/Automattic/harper/releases) or you can use one of a number of package managers.
+Once you have `harper-ls` and nvim-lspconfig installed, you need to add this to your `init.lua`:
 
-### Cargo
-
-If you have [Rust installed](https://www.rust-lang.org/tools/install), you're in luck!
-To install `harper-ls`, simply run:
-
-```bash
-cargo install harper-ls --locked
+```lua title=inti.lua
+require('lspconfig').harper_ls.setup {}
 ```
 
-If you are on a Debian-based Linux distribution, you may need to install `build-essential`.
+## Optional Configuration
 
-### Arch Linux
+Additionally, you can also configure things like which linters to use or how you want code actions to appear. Below is an example config where everything is set to their default values:
 
-Harper is available through the `extra` repo:
-
-```bash
-sudo pacman -S harper
-```
-
-### Scoop
-
-You can install Harper on Windows through [Scoop](https://scoop.sh/).
-
-```bash
-scoop install harper
-```
-
-### Homebrew
-
-You may install Harper through [Homebrew](https://brew.sh).
-
-```bash
-brew install harper
-```
-
-## Configuration
-
-Neovim is also one of the two primarily supported editors for `harper-ls`.
-As such, you can view this page as canonical documentation for the available configuration options.
-[Helix](./helix) and [Zed](./zed) users may also find it helpful.
-
-### Markdown-Specific Config
-
-The Markdown parser has its own configuration option, used to modify its behavior in specific ways.
-For example, the title of a link is linted by default, but this behavior can be changed through the `ignore_link_title` key:
-
-```lua
-lspconfig.harper_ls.setup {
+```lua title=inti.lua
+require('lspconfig').harper_ls.setup {
   settings = {
     ["harper-ls"] = {
-      markdown = {
-        IgnoreLinkTitle = true,
-      }
-    }
-  },
-}
-```
-
-### Dictionaries
-
-You do not have to stick with the default dictionary locations ([listed on this page](./language-server)).
-If you use Neovim, you can set the location of the user dictionary with the `userDictPath` key, and the file dictionary with the `fileDictPath` key:
-
-```lua
-lspconfig.harper_ls.setup {
-  settings = {
-    ["harper-ls"] = {
-      userDictPath = "~/dict.txt",
-      fileDictPath = "~/.harper/",
-    }
-  },
-}
-```
-
-For example, if you want to use Vim's dictionary, you can do something like this:
-
-```lua
-lspconfig.harper_ls.setup {
-  settings = {
-    ["harper-ls"] = {
-      userDictPath = vim.fn.stdpath("config") .. "/spell/en.utf-8.add",
-    }
-  },
-}
-```
-
-See the [relevant issue for details](https://github.com/Automattic/harper/issues/143).
-
-### Linters
-
-Linters are grammatical rules Harper looks for to correct your work.
-You can toggle them on or off to your liking.
-
-```lua
-lspconfig.harper_ls.setup {
-  settings = {
-    ["harper-ls"] = {
+      userDictPath = "",
+      fileDictPath = "",
       linters = {
         SpellCheck = true,
         SpelledNumbers = false,
@@ -124,62 +37,27 @@ lspconfig.harper_ls.setup {
         RepeatedWords = true,
         Spaces = true,
         Matcher = true,
-        CorrectNumberSuffix = true,
-      }
-    }
-  },
-}
-```
-
-<script>
-import DefaultNeovimConfig from "$lib/DefaultNeovimConfig.svelte"
-</script>
-
-<DefaultNeovimConfig/>
-
-By default, `harper-ls` will mark all diagnostics with HINT.
-If you want to configure this, refer below:
-
-```lua
-lspconfig.harper_ls.setup {
-  settings = {
-    ["harper-ls"] = {
-        diagnosticSeverity = "hint" -- Can also be "information", "warning", or "error"
-    }
-  },
-}
-```
-
-You can also configure how `harper-ls` displays code actions.
-For example, to make code actions appear in "stable" positions, use the following configuration:
-
-```lua
-lspconfig.harper_ls.setup {
-  settings = {
-    ["harper-ls"] = {
+        CorrectNumberSuffix = true
+      },
       codeActions = {
-        ForceStable = true
-      }
+        ForceStable = false
+      },
+      markdown = {
+        IgnoreLinkTitle = false
+      },
+      diagnosticSeverity = "hint",
+      isolateEnglish = false
     }
-  },
+  }
 }
 ```
-
-If you work with a lot of documents that are a mixture of English and another language, Harper can attempt to automatically detect which is which and only lint the English text.
-To enable it, just set the `isolateEnglish` key.
 
 :::note
-This feature is incredibly new and unstable.
-Do not expect it to work perfectly.
-If improvements are important to you, feel free to [open an issue](https://github.com/Automattic/harper/issues/new?template=Blank+issue) to let us know.
+This example only contains some of the available linters, check out our [rules page](../rules) to view the full list.
 :::
 
-```lua
-lspconfig.harper_ls.setup {
-  settings = {
-    ["harper-ls"] = {
-        isolateEnglish = false
-    }
-  },
-}
-```
+For more information on what each of these configs do, you can head over to the [configuration section](./language-server#Configuration) of our `harper-ls` documentation.
+
+## Additional Links
+
+- [nvim-lspconfig's documentation on `harper-ls`](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#harper_ls)

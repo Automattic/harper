@@ -5,39 +5,11 @@ title: Language Server
 `harper-ls` is the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) frontend for Harper.
 Out of the box, it has built-in support for parsing the comments of most programming languages, as well as any and all Markdown files.
 
-### Cargo
-
-If you have [Rust installed](https://www.rust-lang.org/tools/install), you're in luck!
-To install `harper-ls`, simply run:
-
-```bash
-cargo install harper-ls --locked
-```
-
-For this to work, make sure that `~/.cargo/bin` is in your system `$PATH`. If you are on a Debian-based Linux distribution, you may need to install `build-essential`.
-
-### Arch Linux
-
-**Stable Release**
-
-The latest stable release is available through the `extra` repo:
-
-```bash
-sudo pacman -S harper
-```
-
-**Bleeding-Edge**
-
-If you want the latest bleeding-edge, you can install `harper-git` from the [Arch User Repository](https://aur.archlinux.org/packages/harper-git) with your favorite AUR helper:
-
-```bash
-paru -S harper-git
-# or yay -S harper-git, etc.
-```
+## Installation
 
 ### Scoop
 
-You can install Harper on Windows through [Scoop](https://scoop.sh/).
+You can install Harper on Windows through [Scoop](https://scoop.sh/#/apps?q=harper).
 
 ```bash
 scoop install harper
@@ -45,10 +17,29 @@ scoop install harper
 
 ### Homebrew
 
-You may install Harper through [Homebrew](https://brew.sh).
+You can install Harper on macOS and Linux through [Homebrew](https://formulae.brew.sh/formula/harper).
 
 ```bash
 brew install harper
+```
+
+### Arch Linux
+
+#### Stable Release
+
+The latest stable release is available through the [`extra` repo](https://archlinux.org/packages/extra/x86_64/harper):
+
+```bash
+sudo pacman -S harper
+```
+
+#### Bleeding-Edge
+
+If you want the latest bleeding-edge, you can install `harper-git` from the [Arch User Repository](https://aur.archlinux.org/packages/harper-git) with your favorite AUR helper:
+
+```bash
+paru -S harper-git
+# or yay -S harper-git, etc.
 ```
 
 ### Nixpkgs/NixOS
@@ -69,46 +60,164 @@ or if you have the `nix-command` and `flakes` experimental features enabled:
 nix shell 'nixpkgs#harper'
 ```
 
+### Cargo
+
+If you have Rust installed, `harper-ls` is on [crates.io](https://crates.io/crates/harper-ls), so you can simply run:
+
+```bash
+cargo install harper-ls --locked
+```
+
+For this to work, make sure that `~/.cargo/bin` is in your system `$PATH`. If you are on a Debian-based Linux distribution, you may need to install `build-essential`.
+
+### GitHub Releases
+
+If none of the previous installation methods are available to you, we also provide [portable pre-built binaries on GitHub](https://github.com/Automattic/harper/releases).
+
 ## Dictionaries
 
-`harper-ls` has three kinds of dictionaries: user, file-local, and static dictionaries.
+`harper-ls` has three kinds of dictionaries: user, file-local, and static dictionaries. All three dictionaries are combined and used together when spell checking files.
 
 ### User Dictionary
 
-Each user of `harper-ls` has their own dictionary, located in the following directories on each operating system:
+Each user of `harper-ls` has their own dictionary, which by default, is located in the following directories on each operating system:
 
-| Operating System |                                       Location |
-| :--------------- | ---------------------------------------------: |
-| Linux            |                  `$XDG_CONFIG_HOME/harper-ls/` |
-| MacOS            | `$HOME/Library/Application Support/harper-ls/` |
-| Windows          |             `FOLDERID_LocalAppData/harper-ls/` |
+| Operating System |                                                  Location |
+| :--------------- | --------------------------------------------------------: |
+| Linux            | `$XDG_CONFIG_HOME/harper-ls` or `$HOME/.config/harper-ls` |
+| macOS            |             `$HOME/Library/Application Support/harper-ls` |
+| Windows          |                     `%FOLDERID_RoamingAppData%/harper-ls` |
 
-This dictionary is a simple line-separated word list in plain-text.
-You can add and remove words at will.
-Code actions on misspelled words allow you to add elements to this list.
-
-This was added in response to [issue #89](https://github.com/automattic/harper/issues/89).
+This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Dictionaries_).
 
 ### File-Local Dictionary
 
-Sometimes, you'll encounter a word (or name) that is only valid within the context of a specific file.
-In this case, you can use the code action that adds the word to the file-local dictionary.
-Any words added to this dictionary will, like the name implies, only be included in the dictionary when performing corrections on the file at that specific path.
+Sometimes, you'll encounter a word (or name) that is only valid within the context of a specific file. In this case, you can add this file-specific word to a file-local dictionary using code actions. Any words added to this dictionary will only be included in the combined dictionary when spell checking a file at that specific path.
 
-You can find the file-local dictionaries in the following directories on each operation system:
+You can find the file-local dictionaries in the following directories by default on each operation system:
 
 | Operating System |                                                                                         Location |
 | :--------------- | -----------------------------------------------------------------------------------------------: |
 | Linux            | `$XDG_DATA_HOME/harper-ls/file_dictionaries` or `$HOME/.local/share/harper-ls/file_dictionaries` |
-| MacOS            |                                  `$HOME/Library/Application Support/harper-ls/file_dictionaries` |
-| Windows          |                                              `FOLDERID_LocalAppData/harper-ls/file_dictionaries` |
+| macOS            |                                  `$HOME/Library/Application Support/harper-ls/file_dictionaries` |
+| Windows          |                                            `%FOLDERID_LocalAppData%/harper-ls/file_dictionaries` |
 
-The format of these files is identical to user dictionaries.
+The format of these files is identical to user dictionaries and [their location can also be configured](#Dictionaries_).
 
-### Configuration
+### Static Dictionary
 
-Configuration of `harper-ls` varies by editor.
-If you use Neovim, [read this documentation](./neovim#Configuration).
+The static dictionary is built into the binary and is (as of now) immutable. It contains almost all words you could possibly encounter.
+
+We _do_ take pull requests or issues for adding words to the static dictionary. [Read the documentation on the matter before you do](../contributors/dictionary).
+
+## Code Actions
+
+`harper-ls` has code actions that help in quickly dealing with spelling or grammar errors you encounter. The examples below assume that you have misspelled "contained" as "containes" and have selected it to apply a code action to it.
+
+| Code Action or Command | Description                                                | Example                                     |
+| ---------------------- | ---------------------------------------------------------- | ------------------------------------------- |
+| Quick Fixes            | Suggests fixes for the selected error                      | `Replace with: "contained"`                 |
+| `HarperIgnoreLint`     | Ignores the selected error for the duration of the session | `Ignore Harper error.`                      |
+| `HarperAddToUserDict`  | Adds the selected word to the user dictionary              | `Add "containes" to the global dictionary.` |
+| `HarperAddToFileDict`  | Adds the selected word to a file-local dictionary          | `Add "containes" to the file dictionary.`   |
+
+## Configuration
+
+`harper-ls` expects a JSON object with a `harper-ls` key that contains your configs:
+
+```json
+{
+	"harper-ls": {
+		// Your config goes here...
+	}
+}
+```
+
+### Dictionaries
+
+| Config         | Type     | Default Value | Description                                                     |
+| -------------- | -------- | ------------- | --------------------------------------------------------------- |
+| `userDictPath` | `string` | `""`          | Set the directory where the user dictionary is located          |
+| `fileDictPath` | `string` | `""`          | Set the directory where the file-local dictionaries are located |
+
+### Linters
+
+These configs are under the `linters` key:
+
+```json
+{
+	"harper-ls": {
+		"linters": {
+			// Your linter configs go here...
+		}
+	}
+}
+```
+
+The list of linters together with their descriptions can be found at our [rules page](../rules). All linters are of `boolean` type. Here's an example config with some of them and their default values:
+
+```json
+{
+	"harper-ls": {
+		"linters": {
+			"SpellCheck": true,
+			"SpelledNumbers": false,
+			"AnA": true,
+			"SentenceCapitalization": true,
+			"UnclosedQuotes": true,
+			"WrongQuotes": false,
+			"LongSentences": true,
+			"RepeatedWords": true,
+			"Spaces": true,
+			"Matcher": true,
+			"CorrectNumberSuffix": true
+		}
+	}
+}
+```
+
+### Code Actions
+
+These configs are under the `codeActions` key:
+
+```json
+{
+	"harper-ls": {
+		"codeActions": {
+			// Your code action configs go here...
+		}
+	}
+}
+```
+
+| Config        | Type      | Default Value | Description                                                                                                                                                    |
+| ------------- | --------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ForceStable` | `boolean` | `false`       | Make code actions appear in "stable" positions by placing code actions that should always be available, like adding misspelled words in the dictionary, first. |
+
+### Markdown
+
+These configs are under the `markdown` key:
+
+```json
+{
+	"harper-ls": {
+		"markdown": {
+			// Your Markdown configs go here...
+		}
+	}
+}
+```
+
+| Config            | Type      | Default Value | Description              |
+| ----------------- | --------- | ------------- | ------------------------ |
+| `IgnoreLinkTitle` | `boolean` | `false`       | Skip linting link titles |
+
+### Other Configs
+
+| Config               | Type                                              | Default Value | Description                                                                                                                                                               |
+| -------------------- | ------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `diagnosticSeverity` | `"error"`, `"hint"`, `"information"`, `"warning"` | `"hint"`      | Configures how severe diagnostics appear in your editor                                                                                                                   |
+| `isolateEnglish`     | `boolean`                                         | `false`       | In documents that are a mixture of English and another language, only lint English text. This feature is incredibly new and unstable. Do not expect it to work perfectly. |
 
 ## Supported Languages
 
@@ -147,11 +256,3 @@ If you use Neovim, [read this documentation](./neovim#Configuration).
 
 Want your language added?
 Let us know by [commenting on this issue](https://github.com/Automattic/harper/issues/79).
-
-### Static Dictionary
-
-The static dictionary is built into the binary and is (as of now) immutable.
-It contains almost all words you could possibly encounter.
-
-I _do_ take pull requests or issues for adding words to the static dictionary.
-[Read the documentation on the matter before you do.](../contributors/dictionary)

@@ -24,13 +24,13 @@ Most of our build tooling exists for Harper's various integrations.
 If you are testing `harper-core`, you can skip all the fluff and compile the patch using [Cargo](https://doc.rust-lang.org/cargo/) directly.
 
 ```bash
-cargo install --git https://github.com/automattic/harper --branch <branch-name> <binary-artifact>
+cargo install --git https://github.com/automattic/harper --branch <branch-name> <binary-artifact> --locked
 ```
 
 For example, for [PR #445](https://github.com/Automattic/harper/pull/455), we can install the patched version of the `harper-cli` debug tool with the following command:
 
 ```bash
-cargo install --git https://github.com/automattic/harper --branch somewhat-something harper-cli
+cargo install --git https://github.com/automattic/harper --branch somewhat-something harper-cli --locked
 ```
 
 From there, you can run the tool on any file with `harper-cli lint <path>`.
