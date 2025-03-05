@@ -348,3 +348,106 @@ printaffixes:
     const description = fields['#'] || '';
     description && console.log(affix + ': ' + description);
   });
+
+# Get the most recent changes to the curated dictionary. Includes an optional argument to specify the number of commits to look back. Defaults to 1.
+newest-dict-changes *numCommits:
+  #! /usr/bin/env node
+
+  const { exec } = require('child_process');
+
+  const DICT_FILE = 'harper-core/dictionary.dict';
+
+  const [RST, BOLD, DIM, ITAL, NORM] = [0, 1, 2, 3, 22].map(c => `\x1b[${c}m`);
+  const [RED, GRN, YLW, BLU, MGN, CYN, WHT] = [1, 2, 3, 4, 5, 6, 7].map(c => `\x1b[${30+c}m`);
+
+  const argv = [...process.argv];
+
+  const [showHashes, showDiff] = ["--show-hashes", "--show-diff"].map(flag => argv.includes(flag) && argv.splice(argv.indexOf(flag), 1));
+
+  // uncomment first line to use in justfile, comment out second line to use standalone
+  const numCommits = "{{numCommits}}" || 1;
+  // const numCommits = argv[2] || 1;
+
+  // Command to get the last commit hash that modified the specified file
+  const hashCommand = `git log --no-merges -n ${numCommits} --format="%H" -- ${DICT_FILE}`;
+  console.log(`${MGN}${BOLD}GET HASHES${NORM}: ${hashCommand}${RST}`);
+
+  // Execute the command to get the hash
+  exec(hashCommand, (error, hashString, stderr) => {
+    if (error) return console.error(`Error executing command: ${error.message}`);
+    if (stderr) return console.error(`stderr: ${stderr}`);
+
+    // avoid empty last line
+    const longHashes = hashString.trim().split('\n');
+    if (showHashes) console.log(longHashes.length, longHashes);
+
+    if (longHashes.length < 1) {
+      console.error('No hash(es) returned. Exiting.');
+      process.exit(1);
+    }
+
+    // keep the last line and second last if there's more than one hash
+    const [hash2, hash1] = longHashes.slice(-2).map((h) => h.substring(0, 7));
+
+    // Command to get the word-level diff using the retrieved hash, using either one or two hashes
+    const hashes = longHashes.length == 1 ? `${hash2}` : `${hash1} ${hash2}`;
+    const diffCommand = `git diff --word-diff --no-color --unified=0 ${hashes} -- ${DICT_FILE}`;
+    console.log(`${MGN}${BOLD}GET DIFF${NORM}: ${diffCommand}${RST}`);
+
+    // Execute the diff command with a large buffer to avoid failing to handle large diffs such as:
+    // git diff --word-diff --no-color --unified=0 0761702 baeb08e -- harper-core/dictionary.dict
+    exec(diffCommand, { maxBuffer: 2048 * 1024 }, (diffError, diffString, diffStderr) => {
+      if (diffError) {
+        console.error(`Error executing diff command: ${diffError.message}`);
+        return;
+      }
+      if (diffStderr) return console.error(`stderr: ${diffStderr}`);
+
+      if (showDiff) console.log(`DIFFSTART\n${diffString}\nDIFFEND`);
+
+      // uncomment first line to use in justfile, comment out second line to use standalone
+      const affixes = require('{{justfile_directory()}}/harper-core/affixes.json').affixes;
+      // const affixes = require('./harper-core/affixes.json').affixes;
+
+      diffString.split("\n").forEach(line => {
+        const match = line.match(/^(?:\[-(.*?)-\])?(?:\{\+(.*?)\+\})?$/);
+        if (match) {
+          let [, before, after] = match;
+
+          if (before && after) {
+            // An entry changed
+            const [[oldword, oldaff], [newword, newaff]] = [before, after].map(e => e.split('/'));
+            if (oldword === newword) {
+              if (oldaff !== newaff) {
+                const [oldRest, newRest] = [oldaff, newaff].map(aff => aff ? `${DIM}/${aff}${RST}`: '');
+                console.log(`${BOLD}${CYN}CHG${RST} # ${oldword}${oldRest} -> ${newRest}`);
+                const [oldNorm, newNorm] = [oldaff, newaff].map(a => a ? a.split(''): [])
+                                                           .map(a => new Set(a))
+                                                           .map(a => Array.from(a))
+                                                           .map(a => a.sort());
+                const removed = oldNorm.filter(o => !newNorm.includes(o));
+                const added = newNorm.filter(n => !oldNorm.includes(n));
+                const [addStr, remStr] = [added, removed]
+                  .map(a => a.map(a => `    ${BOLD}${ITAL}${a}${RST} -> ${ (affixes[a] && affixes[a]['#']) || '???' }`)
+                             .join('\n')
+                  );
+                if (removed.length > 0) console.log(`${RED}  ${BOLD}REMOVED${RST}:\n${remStr}`);
+                if (added.length > 0) console.log(`${GRN}  ${BOLD}ADDED${RST}:\n${addStr}`);
+              } else {
+                // should never happen
+                console.log(`${YLW} ?NO AFFIX CHG? '${oldaff}' -> '${newaff}'${RST}`);
+              }
+            } else {
+              // The word changed rather than its affixes
+              console.log(`${YLW}  ${BOLD}CHANGED${RST} ${RED}${oldword}${RST} -> ${GRN}${newword}${RST}`);
+            }
+          } else if (before || after) {
+            // An entry was added or removed
+            const [entry, symbol, action, colour] = before ? [before, "-", 'DEL', RED] : [after, "+", 'ADD', GRN];
+            const [word, affix] = entry.split('/');
+            console.log(`${colour}${BOLD}${action}${RST} ${symbol} ${word}${ affix ? `${DIM}/${affix}` : '' }${RST}`);
+          }
+        }
+      });
+    });
+  });

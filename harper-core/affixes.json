@@ -421,7 +421,7 @@
       "gifts_metadata": {}
     },
     "Q": {
-      "#": "'ally' suffix",
+      "#": "'-ally' suffix",
       "suffix": true,
       "cross_product": true,
       "replacements": [
