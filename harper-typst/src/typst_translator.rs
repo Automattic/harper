@@ -149,7 +149,16 @@ impl<'a> TypstTranslator<'a> {
 
         // Recurse on each element of an iterator
         let iter_recurse = |exprs: &mut dyn Iterator<Item = Expr>| {
-            Some(exprs.filter_map(|e| recurse!(e)).flatten().collect_vec())
+            let mut buf = Vec::new();
+            let exprs = exprs.collect_vec();
+            let exprs = super::convert_parbreaks(&mut buf, &exprs);
+            Some(
+                exprs
+                    .into_iter()
+                    .filter_map(|e| recurse!(e))
+                    .flatten()
+                    .collect_vec(),
+            )
         };
 
         // Parse the parameters of a function or closure
@@ -225,9 +234,6 @@ impl<'a> TypstTranslator<'a> {
             Expr::Strong(strong) => iter_recurse(&mut strong.body().exprs()),
             Expr::Emph(emph) => iter_recurse(&mut emph.body().exprs()),
             Expr::Link(a) => token!(a, TokenKind::Url),
-            Expr::Ref(a) => {
-                token!(a, TokenKind::Word(None))
-            }
             Expr::Heading(heading) => iter_recurse(&mut heading.body().exprs()),
             Expr::List(list_item) => iter_recurse(&mut list_item.body().exprs()),
             Expr::Enum(enum_item) => iter_recurse(&mut enum_item.body().exprs()),
