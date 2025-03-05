@@ -25,6 +25,7 @@ pub enum TokenKind {
     #[default]
     Unlintable,
     ParagraphBreak,
+    Regexish,
 }
 
 impl TokenKind {
