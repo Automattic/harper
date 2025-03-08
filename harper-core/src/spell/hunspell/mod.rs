@@ -29,6 +29,7 @@ pub fn parse_default_attribute_list() -> AttributeList {
 #[cfg(test)]
 mod tests {
     use hashbrown::{HashMap, HashSet};
+    use once_cell::sync::Lazy;
     use serde_json::json;
 
     use super::word_list::parse_word_list;
@@ -36,12 +37,17 @@ mod tests {
     use crate::spell::hunspell::attribute_list::HumanReadableAttributeList;
     use crate::{CharString, WordMetadata};
 
-    pub const TEST_WORD_LIST: &str = "3\nhello\ntry/B\nwork/AB";
+    pub const TEST_WORD_LIST: &str = "4\nhello\ntry/B\nwork/AB\nblank/";
 
-    #[test]
-    fn correctly_expands_test_files() {
-        let words = parse_word_list(TEST_WORD_LIST).unwrap();
-        let attributes: HumanReadableAttributeList = serde_json::from_value(json!({
+    pub const TEST_WORD_LIST_WITH_BLANK_LINES: &str = "4\n\nhello\n\ntry/B\nwork/AB\n\n\nblank/";
+
+    pub const TEST_WORD_LIST_WITH_FULL_LINE_COMMENTS: &str =
+        "4\n#\nhello\n#with\ntry/B\nwork/AB\n# some\n# comments aded\nblank/";
+
+    pub const TEST_WORD_LIST_WITH_COMMENTS: &str = "4\nhello       # a word without attributes\ntry/B   \t  # a word with empty attributes\nwork/AB\t   #a word with one attribute\nblank/      #a word with two attributes";
+
+    pub const TEST_AFFIX_JSON: Lazy<serde_json::Value> = Lazy::new(|| {
+        json!({
             "affixes": {
                 "A": {
                     "suffix": false,
@@ -81,8 +87,60 @@ mod tests {
                     "gifts_metadata": {}
                 }
             }
-        }))
-        .unwrap();
+        })
+    });
+
+    fn assert_expansion_results(test_word_list: &str, expected: Vec<&str>) {
+        let words = parse_word_list(test_word_list).unwrap();
+        let attributes: HumanReadableAttributeList =
+            serde_json::from_value(TEST_AFFIX_JSON.clone()).unwrap();
+        let attributes = attributes.into_normal().unwrap();
+
+        let mut expanded = HashMap::new();
+        attributes.expand_marked_words(words, &mut expanded);
+        let expanded: HashSet<String> = expanded
+            .into_iter()
+            .map(|v| v.0.into_iter().collect())
+            .collect();
+
+        assert_eq!(expanded, expected.into_iter().map(|v| v.into()).collect());
+    }
+
+    #[test]
+    fn correctly_expands_test_files() {
+        assert_expansion_results(
+            TEST_WORD_LIST,
+            vec![
+                "reworked", "rework", "tried", "try", "hello", "worked", "work", "blank",
+            ],
+        );
+    }
+
+    #[test]
+    fn correctly_expands_test_files_with_blank_lines() {
+        assert_expansion_results(
+            TEST_WORD_LIST_WITH_BLANK_LINES,
+            vec![
+                "reworked", "rework", "tried", "try", "hello", "worked", "work", "blank",
+            ],
+        );
+    }
+
+    fn correctly_expands_test_files_with_full_line_comments() {
+        assert_expansion_results(
+            TEST_WORD_LIST_WITH_FULL_LINE_COMMENTS,
+            vec![
+                "reworked", "rework", "tried", "try", "hello", "worked", "work", "blank",
+            ],
+        );
+    }
+
+    #[test]
+    fn correctly_expands_test_files_with_comments() {
+        let words = parse_word_list(TEST_WORD_LIST_WITH_COMMENTS).unwrap();
+
+        let attributes: HumanReadableAttributeList =
+            serde_json::from_value(TEST_AFFIX_JSON.clone()).unwrap();
         let attributes = attributes.into_normal().unwrap();
 
         let mut expanded = HashMap::new();
@@ -96,7 +154,7 @@ mod tests {
         assert_eq!(
             expanded,
             vec![
-                "hello", "tried", "reworked", "rework", "worked", "work", "try"
+                "reworked", "rework", "tried", "try", "hello", "worked", "work", "blank"
             ]
             .into_iter()
             .map(|v| v.into())

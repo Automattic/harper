@@ -743,6 +743,7 @@ dependencies = [
  "lazy_static",
  "levenshtein_automata",
  "lru",
+ "once_cell",
  "ordered-float",
  "paste",
  "pulldown-cmark",

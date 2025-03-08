@@ -22,17 +22,32 @@ pub fn parse_word_list(source: &str) -> Result<Vec<MarkedWord>, Error> {
     let mut words = Vec::with_capacity(approx_item_count);
 
     for line in lines {
-        if let Some((word, attributes)) = line.split_once('/') {
-            words.push(MarkedWord {
-                letters: word.chars().collect(),
-                attributes: attributes.chars().collect(),
-            })
-        } else {
-            words.push(MarkedWord {
-                letters: line.chars().collect(),
-                attributes: Vec::new(),
-            })
+        // Ignore blank lines and full line comments.
+        if line.is_empty() || line.starts_with('#') {
+            continue;
         }
+
+        let entry: &str;
+        if let Some((entry_part, _comment_part)) = line.split_once('#') {
+            entry = entry_part.trim_end();
+        } else {
+            entry = line.trim_end();
+        }
+
+        let word: &str;
+        let attr: Option<&str>;
+        if let Some((word_part, attr_part)) = entry.split_once('/') {
+            word = word_part;
+            attr = Some(attr_part);
+        } else {
+            word = entry;
+            attr = None;
+        }
+
+        words.push(MarkedWord {
+            letters: word.chars().collect(),
+            attributes: attr.unwrap_or_default().chars().collect(),
+        })
     }
 
     Ok(words)
@@ -47,7 +62,7 @@ mod tests {
     fn can_parse_test_file() {
         let list = parse_word_list(TEST_WORD_LIST).unwrap();
 
-        assert_eq!(list.last().unwrap().attributes.len(), 2);
-        assert_eq!(list.len(), 3);
+        assert_eq!(list.last().unwrap().attributes.len(), 0);
+        assert_eq!(list.len(), 4);
     }
 }
