@@ -326,10 +326,37 @@ impl<'a> TypstTranslator<'a> {
                 parse_params(&mut closure.params().children()),
                 recurse!(closure.body())
             ],
-            Expr::FuncCall(func) => merge![
-                token!(func.callee(), TokenKind::Unlintable),
-                parse_args(&mut func.args().items())
-            ],
+            Expr::FuncCall(func) => {
+                let general_case = || {
+                    merge![
+                        token!(func.callee(), TokenKind::Unlintable),
+                        parse_args(&mut func.args().items())
+                    ]
+                };
+
+                match func.callee() {
+                    Expr::Ident(callee) => match callee.as_str() {
+                        // Globally accessible `rgb` function may take hex values
+                        // as a string parameter, and should not be linted
+                        // https://typst.app/docs/reference/visualize/color/#definitions-rgb-hex
+                        "rgb" => {
+                            token!(func, TokenKind::Unlintable)
+                        }
+                        _ => general_case(),
+                    },
+                    Expr::FieldAccess(callee) => match callee.target() {
+                        Expr::Ident(target) => match target.as_str() {
+                            // No need to lint anything from the color module
+                            "color" => {
+                                token!(func, TokenKind::Unlintable)
+                            }
+                            _ => general_case(),
+                        },
+                        _ => general_case(),
+                    },
+                    _ => general_case(),
+                }
+            }
             a => token!(a, TokenKind::Unlintable),
         }
     }
