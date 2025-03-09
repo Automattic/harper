@@ -31,13 +31,49 @@ pub fn lint_group() -> LintGroup {
         // The name of the rule
         "ChangeTack" => (
             // The exact phrase to look for.
-            ["change tact"],
+            ["change tact", "change tacks", "change tacts"],
             // The corrections to provide.
             ["change tack"],
             // The message to be shown with the error.
-            "Did you mean the sailing idiom?",
+            "Did you mean `change tack`? This idiom is commonly used to indicate a change in direction or approach.",
             // A description of the rule.
-            "Locates minor errors in the sailing idiom `change tack`."
+            "Locates errors in the idiom `to change tack` to convey the correct meaning of altering one's course or strategy."
+        ),
+        "ChangedTack" => (
+            ["changed tact", "changed tacks", "changed tacts"],
+            ["changed tack"],
+            "Did you mean `changed tack`? This idiom is commonly used to indicate a change in direction or approach.",
+            "Locates errors in the idiom `to change tack` to convey the correct meaning of altering one's course or strategy."
+        ),
+        "ChangesTack" => (
+            ["changes tact", "changes tacks", "changes tacts"],
+            ["changes tack"],
+            "Did you mean `changes tack`? This idiom is commonly used to indicate a change in direction or approach.",
+            "Locates errors in the idiom `to change tack` to convey the correct meaning of altering one's course or strategy."
+        ),
+        "ChangingTack" => (
+            ["changing tact", "changing tacks", "changing tacts"],
+            ["changing tack"],
+            "Did you mean `changing tack`? This idiom is commonly used to indicate a change in direction or approach.",
+            "Locates errors in the idiom `to change tack` to convey the correct meaning of altering one's course or strategy."
+        ),
+        "ChangeOfTack" => (
+            ["change of tact", "change of tacks", "change of tacts"],
+            ["change of tack"],
+            "Did you mean `change of tack`? This idiom is commonly used to indicate a change in direction or approach.",
+            "Locates errors in the idiom `change of tack` to convey the correct meaning of an alternative course or strategy."
+        ),
+        "ChangesOfTack" => (
+            ["changes of tact", "changes of tacks", "changes of tacts"],
+            ["changes of tack"],
+            "Did you mean `changes of tack`? This idiom is commonly used to indicate changes in direction or approach.",
+            "Locates errors in the idiom `change of tack` to convey the correct meaning of an alternative course or strategy."
+        ),
+        "ChangingOfTack" => (
+            ["changing of tact", "changing of tacks", "changing of tacts"],
+            ["changing of tack"],
+            "Did you mean `changing of tack`? This idiom is commonly used to indicate a change in direction or approach.",
+            "Locates errors in the idiom `to change of tack` to convey the correct meaning of altering one's course or strategy."
         ),
         "WantBe" => (
             ["want be"],
@@ -727,8 +763,64 @@ mod tests {
     }
 
     #[test]
-    fn change_tact() {
+    fn change_tact_atomic() {
         assert_suggestion_result("change tact", lint_group(), "change tack");
+    }
+
+    #[test]
+    fn changed_tacks_atomic() {
+        assert_suggestion_result("changed tacks", lint_group(), "changed tack");
+    }
+
+    #[test]
+    fn changes_tacts_atomic() {
+        assert_suggestion_result("changes tacts", lint_group(), "changes tack");
+    }
+
+    #[test]
+    fn changing_tact_atomic() {
+        assert_suggestion_result("changing tact", lint_group(), "changing tack");
+    }
+
+    #[test]
+    fn change_of_tacks_atomic() {
+        assert_suggestion_result("change of tacks", lint_group(), "change of tack");
+    }
+
+    #[test]
+    fn change_of_tact_real_world() {
+        assert_suggestion_result(
+            "Change of tact : come give your concerns - Death Knight",
+            lint_group(),
+            "Change of tack : come give your concerns - Death Knight",
+        );
+    }
+
+    #[test]
+    fn change_of_tacts_real_world() {
+        assert_suggestion_result(
+            "2013.08.15 - A Change of Tacts | Hero MUX Wiki | Fandom",
+            lint_group(),
+            "2013.08.15 - A Change of Tack | Hero MUX Wiki | Fandom",
+        );
+    }
+
+    #[test]
+    fn changing_of_tacks_real_world() {
+        assert_suggestion_result(
+            "Duffy's changing of tacks hidden in her poetry collection ...",
+            lint_group(),
+            "Duffy's changing of tack hidden in her poetry collection ...",
+        );
+    }
+
+    #[test]
+    fn changes_of_tact_real_world() {
+        assert_suggestion_result(
+            "While the notes and the changes of tact started to ...",
+            lint_group(),
+            "While the notes and the changes of tack started to ...",
+        );
     }
 
     #[test]
