@@ -17,7 +17,7 @@
 	let descriptions: Record<string, string> = $state({});
 	let default_config: LintConfig = $state({});
 
-	let linter = new LocalLinter();
+	let linter = new LocalLinter({ binary });
 	linter.getLintDescriptions().then(async (v) => {
 		descriptions = v;
 	});

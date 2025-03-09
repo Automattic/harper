@@ -3376,10 +3376,10 @@
     twoslash "^0.2.12"
     twoslash-protocol "^0.2.12"
 
-"@sveltepress/vite@^1.1.2":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@sveltepress/vite/-/vite-1.2.0.tgz#11ca954abd318651a54e6390614a686e35ec8331"
-  integrity sha512-spO3/g9eii3T9DkwsAdt4aTUe9hLWeMQ8TtbuRtXfuUV8BXM9NBcefejqeyb7/7bqIsdNl6jdew2sNz72tGrdw==
+"@sveltepress/vite@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@sveltepress/vite/-/vite-1.1.5.tgz#76cb81e3031feffdb9664e61c606542a1732bfee"
+  integrity sha512-YVZ8XG377l1MW7dIVdt0D9PUpjP1a4hQyAO6U0JwuOrlQavTFAPdpn7MfvZJV/Q9N1cEWO1S2eX2HC4G0f0nxQ==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^4.0.1"
     cross-spawn "^7.0.3"
@@ -10088,6 +10088,10 @@ hard-rejection@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/hard-rejection/-/hard-rejection-2.1.0.tgz#1c6eda5c1685c63942766d79bb40ae773cecd883"
   integrity sha512-VIZB+ibDhx7ObhAe7OVtoEbuP4h/MuOTHJ+J8h/eBXotJYl0fBgR72xDFCKgIh22OJZIOVNxBMWuhAr10r8HdA==
+
+"harper-wasm@link:../harper-wasm/pkg":
+  version "0.0.0"
+  uid ""
 
 "harper.js@link:harper.js":
   version "0.24.0"
@@ -16941,7 +16945,7 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@5.7.3, typescript@~5.7.3:
+typescript@5.7.3, typescript@^5.7.2:
   version "5.7.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.3.tgz#919b44a7dbb8583a9b856d162be24a54bf80073e"
   integrity sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==
@@ -17373,12 +17377,12 @@ vite-plugin-virtual@^0.3.0:
   resolved "https://registry.yarnpkg.com/vite-plugin-virtual/-/vite-plugin-virtual-0.3.0.tgz#5831af99864db65b9c46b970a919ec9fc17b374d"
   integrity sha512-TOtrWw6jKrJNXfxhGRUiQzfAP1gRkYkVzMkJNjHUJ8idLuxf8eeeDKZKZHhdeYfaCc/87rv+KvWE2iCy1QInWA==
 
-vite-plugin-wasm@^3.3.0:
+vite-plugin-wasm@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/vite-plugin-wasm/-/vite-plugin-wasm-3.4.1.tgz#62b546ac7e25cc2a0e7b1331ed5c4ba1dd71b743"
   integrity sha512-ja3nSo2UCkVeitltJGkS3pfQHAanHv/DqGatdI39ja6McgABlpsZ5hVgl6wuR8Qx5etY3T5qgDQhOWzc5RReZA==
 
-"vite@^5.0.0 || ^6.0.0", vite@^6.0.9, vite@^6.1.0:
+"vite@^5.0.0 || ^6.0.0", vite@^6.1.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/vite/-/vite-6.2.0.tgz#9dcb543380dab18d8384eb840a76bf30d78633f0"
   integrity sha512-7dPxoo+WsT/64rDcwoOjk76XHj+TqNTIvHKcuMQ1k4/SeHDaQt5GFAeLYzrimZrMpn/O6DtdI03WUjdxuPM0oQ==
@@ -17476,9 +17480,6 @@ walker@^1.0.8:
   integrity sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==
   dependencies:
     makeerror "1.0.12"
-
-"wasm@link:../harper-wasm/pkg":
-  version "0.0.0"
 
 watchpack@^2.4.1:
   version "2.4.2"

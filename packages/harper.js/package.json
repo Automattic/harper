@@ -17,20 +17,27 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
-		"test": "vitest run --browser chromium"
+		"test": "vitest run",
+		"test:debug": "vitest run --browser.headless false --testTimeout 0",
+		"api:extractor": "api-extractor run",
+		"api:documenter": "api-documenter markdown -i temp"
 	},
 	"devDependencies": {
 		"@microsoft/api-documenter": "^7.26.10",
 		"@microsoft/api-extractor": "^7.50.1",
 		"@vitest/browser": "^3.0.6",
 		"playwright": "^1.49.1",
-		"typescript": "~5.7.3",
+		"typescript": "^5.7.3",
 		"vite": "^6.1.0",
 		"vite-plugin-dts": "^4.5.0",
 		"vite-plugin-virtual": "^0.3.0",
 		"vitest": "^3.0.5",
-		"wasm": "link:../../harper-wasm/pkg"
+		"harper-wasm": "link:../../harper-wasm/pkg"
 	},
 	"main": "dist/harper.js",
-	"types": "dist/harper.d.ts"
+	"types": "dist/harper.d.ts",
+	"sideEffects": false,
+	"files": [
+		"dist"
+	]
 }

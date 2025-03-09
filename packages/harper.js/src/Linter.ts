@@ -1,5 +1,6 @@
-import type { Lint, Span, Suggestion } from 'wasm';
+import type { Lint, Span, Suggestion } from 'harper-wasm';
 import { LintConfig, LintOptions } from './main';
+import { BinaryModule } from './binary';
 
 /** An interface for an object that can perform linting actions. */
 export default interface Linter {
@@ -70,4 +71,9 @@ export default interface Linter {
 	/** Export all added words from the dictionary. Note that this will NOT export anything from the curated dictionary,
 	 * only words from previous calls to `this.importWords`. */
 	exportWords(): Promise<string[]>;
+}
+
+export interface LinterInit {
+	/** The module or path to the WebAssembly binary. */
+	binary: BinaryModule;
 }

@@ -6,6 +6,6 @@
 		"start": "node index.js"
 	},
 	"dependencies": {
-		"harper.js": "^0.14.0"
+		"harper.js": "*"
 	}
 }

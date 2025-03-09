@@ -1,27 +1,28 @@
-import { DeserializedRequest, deserializeArg, serialize } from './communication';
-import type { Lint, Suggestion, Span } from 'wasm';
-import Linter from '../Linter';
-import Worker from './worker.js?worker&inline';
-import { getWasmUri } from '../loadWasm';
+import type { Lint, Suggestion, Span } from 'harper-wasm';
+import Linter, { LinterInit } from '../Linter';
+import Worker from './worker.ts?worker&inline';
 import { LintConfig, LintOptions } from '../main';
+import { BinaryModule, DeserializedRequest } from '../binary';
 
 /** The data necessary to complete a request once the worker has responded. */
-type RequestItem = {
+export interface RequestItem {
 	resolve: (item: unknown) => void;
 	reject: (item: unknown) => void;
 	request: DeserializedRequest;
-};
+}
 
 /** A Linter that spins up a dedicated web worker to do processing on a separate thread.
  * Main benefit: this Linter will not block the event loop for large documents.
  *
  * NOTE: This class will not work properly in Node. In that case, just use `LocalLinter`. */
 export default class WorkerLinter implements Linter {
-	private worker;
+	private binary: BinaryModule;
+	private worker: Worker;
 	private requestQueue: RequestItem[];
 	private working = true;
 
-	constructor() {
+	constructor(init: LinterInit) {
+		this.binary = init.binary;
 		this.worker = new Worker();
 		this.requestQueue = [];
 
@@ -29,7 +30,7 @@ export default class WorkerLinter implements Linter {
 		this.worker.onmessage = () => {
 			this.setupMainEventListeners();
 
-			this.worker.postMessage(getWasmUri());
+			this.worker.postMessage(this.binary.url);
 
 			this.working = false;
 			this.submitRemainingRequests();
@@ -39,7 +40,7 @@ export default class WorkerLinter implements Linter {
 	private setupMainEventListeners() {
 		this.worker.onmessage = (e: MessageEvent) => {
 			const { resolve } = this.requestQueue.shift()!;
-			deserializeArg(e.data).then((v) => {
+			this.binary.deserializeArg(e.data).then((v) => {
 				resolve(v);
 
 				this.working = false;
@@ -161,8 +162,8 @@ export default class WorkerLinter implements Linter {
 
 		if (this.requestQueue.length > 0) {
 			const { request } = this.requestQueue[0];
-
-			this.worker.postMessage(await serialize(request));
+			const serialized = await this.binary.serialize(request);
+			this.worker.postMessage(serialized);
 		} else {
 			this.working = false;
 		}
