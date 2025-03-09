@@ -615,6 +615,19 @@ pub fn lint_group() -> LintGroup {
             "Use `nerve-racking` for something that causes anxiety or tension.",
             "Corrects common misspellings and missing hyphen in `nerve-racking`."
         ),
+        "WholeEntire" => (
+            ["whole entire"],
+            ["whole", "entire"],
+            "Avoid redundancy. Use either `whole` or `entire` for referring to the complete amount or extent.",
+            "Corrects the redundancy in `whole entire` to `whole` or `entire`."
+        ),
+        // Avoid suggestions resulting in "a entire ...."
+        // "AWholeEntire" => (
+        //     ["a whole entire"],
+        //     ["a whole", "an entire"],
+        //     "Avoid redundancy. Use either `whole` or `entire` for referring to the complete amount or extent.",
+        //     "Corrects the redundancy in `whole entire` to `whole` or `entire`."
+        // ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -851,4 +864,43 @@ mod tests {
             "It's nerve-racking to think about it because I have code inside the callback that resolves the member and somehow I feel like it's so ..",
         );
     }
+
+    #[test]
+    fn detect_atomic_whole_entire() {
+        assert_suggestion_result("whole entire", lint_group(), "whole");
+    }
+
+    #[test]
+    fn correct_atomic_a_whole_entire_to_a_whole() {
+        assert_suggestion_result("a whole entire", lint_group(), "a whole");
+    }
+
+    // TODO: uncomment with assert_second_suggestion_result arrives via my other PR
+    // #[test]
+    // fn correct_atomic_an_whole_entire_to_an_entire() {
+    //     assert_second_suggestion_result(
+    //         "an whole entire",
+    //         lint_group(),
+    //         "an entire",
+    //     );
+    // }
+
+    #[test]
+    fn correct_real_world_whole_entire() {
+        assert_suggestion_result(
+            "[FR] support use system dns in whole entire app",
+            lint_group(),
+            "[FR] support use system dns in whole app",
+        );
+    }
+
+    // TODO: something goes wrong when both WholeEntire and AWholeEntire are enabled
+    // #[test]
+    // fn correct_real_world_a_whole_entire() {
+    //     assert_suggestion_result(
+    //         "Start mapping a whole entire new planet using NASA’s MOLA.",
+    //         lint_group(),
+    //         "Start mapping a whole new planet using NASA’s MOLA.",
+    //     );
+    // }
 }
