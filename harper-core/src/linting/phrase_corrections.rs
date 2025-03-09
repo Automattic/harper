@@ -603,7 +603,7 @@ pub fn lint_group() -> LintGroup {
             "Use `haphazard` for randomness or lack of organization.",
             "Corrects the eggcorn `half hazard` to `haphazard`, which properly means lacking organization or being random."
         ),
-         "DayAndAge" => (
+        "DayAndAge" => (
             ["day in age"],
             ["day and age"],
             "Use `day and age` for referring to the present time.",
@@ -615,6 +615,12 @@ pub fn lint_group() -> LintGroup {
             "Use `nerve-racking` for something that causes anxiety or tension.",
             "Corrects common misspellings and missing hyphen in `nerve-racking`."
         ),
+        "TickingTimeClock" => (
+            ["ticking time clock"],
+            ["ticking time bomb", "ticking clock"],
+            "Use `ticking time bomb` for disastrous consequences, otherwise avoid redundancy with just `ticking clock`.",
+            "Corrects `ticking time clock` to `ticking time bomb` for idiomatic urgency or `ticking clock` otherwise."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -624,7 +630,9 @@ pub fn lint_group() -> LintGroup {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count, assert_second_suggestion_result, assert_suggestion_result,
+    };
 
     use super::lint_group;
 
@@ -849,6 +857,24 @@ mod tests {
             "It's nerve racking to think about it because I have code inside the callback that resolves the member and somehow I feel like it's so ..",
             lint_group(),
             "It's nerve-racking to think about it because I have code inside the callback that resolves the member and somehow I feel like it's so ..",
+        );
+    }
+
+    #[test]
+    fn suggests_ticking_time_bomb() {
+        assert_suggestion_result(
+            "One element that can help up the stakes (and tension!) is a “ticking time clock.”",
+            lint_group(),
+            "One element that can help up the stakes (and tension!) is a “ticking time bomb.”",
+        );
+    }
+
+    #[test]
+    fn suggests_ticking_clock() {
+        assert_second_suggestion_result(
+            "The opportunity itself has a ticking time clock as all great opportunities do.",
+            lint_group(),
+            "The opportunity itself has a ticking clock as all great opportunities do.",
         );
     }
 }
