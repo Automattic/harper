@@ -1,3 +1,5 @@
+use itertools::Itertools;
+
 use crate::Span;
 
 /// A Masker is a tool that can be composed to eliminate chunks of text from
@@ -20,6 +22,20 @@ pub struct Mask {
     pub(self) allowed: Vec<Span>,
 }
 
+impl FromIterator<Span> for Mask {
+    fn from_iter<T: IntoIterator<Item = Span>>(iter: T) -> Self {
+        let spans = iter.into_iter().sorted_by_key(|span| span.start);
+        assert!(
+            spans.clone().tuple_windows().all(|(a, b)| b.start >= a.end),
+            "Masker elements cannot overlap and must be sorted!"
+        );
+
+        Self {
+            allowed: spans.collect(),
+        }
+    }
+}
+
 impl Mask {
     /// Create a new Mask for a given piece of text, marking all text as
     /// disallowed.
@@ -39,7 +55,10 @@ impl Mask {
     /// Mark a span of the text as allowed.
     pub fn push_allowed(&mut self, allowed: Span) {
         if let Some(last) = self.allowed.last_mut() {
-            assert!(allowed.start >= last.end);
+            assert!(
+                allowed.start >= last.end,
+                "Masker elements cannot overlap and must be sorted!"
+            );
 
             if allowed.start == last.end {
                 last.end = allowed.end;

@@ -3,13 +3,13 @@ use std::path::Path;
 use comment_parsers::{Go, JavaDoc, JsDoc, Unit};
 use harper_core::parsers::{self, MarkdownOptions, Parser};
 use harper_core::{MutableDictionary, Token};
-use harper_tree_sitter::TreeSitterMasker;
 use tree_sitter::Node;
 
 use crate::comment_parsers;
+use crate::masker::CommentMasker;
 
 pub struct CommentParser {
-    inner: parsers::Mask<TreeSitterMasker, Box<dyn Parser>>,
+    inner: parsers::Mask<CommentMasker, Box<dyn Parser>>,
 }
 
 impl CommentParser {
@@ -57,7 +57,7 @@ impl CommentParser {
 
         Some(Self {
             inner: parsers::Mask::new(
-                TreeSitterMasker::new(language, Self::node_condition),
+                CommentMasker::new(language, Self::node_condition),
                 comment_parser,
             ),
         })
