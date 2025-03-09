@@ -615,6 +615,18 @@ pub fn lint_group() -> LintGroup {
             "Use `nerve-racking` for something that causes anxiety or tension.",
             "Corrects common misspellings and missing hyphen in `nerve-racking`."
         ),
+        "InDetail" => (
+            ["in details"],
+            ["in detail"],
+            "Use singular `in detail` for referring to a detailed description.",
+            "Correct unidiomatic plural `in details` to `in detail`."
+        ),
+        "InMoreDetail" => (
+            ["in more details"],
+            ["in more detail"],
+            "Use singular `in more detail` for referring to a detailed description.",
+            "Correct unidiomatic plural `in more details` to `in more detail`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -849,6 +861,34 @@ mod tests {
             "It's nerve racking to think about it because I have code inside the callback that resolves the member and somehow I feel like it's so ..",
             lint_group(),
             "It's nerve-racking to think about it because I have code inside the callback that resolves the member and somehow I feel like it's so ..",
+        );
+    }
+
+    #[test]
+    fn in_detail_atomic() {
+        assert_suggestion_result("in details", lint_group(), "in detail");
+    }
+
+    #[test]
+    fn in_more_detail_atomic() {
+        assert_suggestion_result("in more details", lint_group(), "in more detail");
+    }
+
+    #[test]
+    fn in_detail_real_world() {
+        assert_suggestion_result(
+            "c++ - who can tell me \"*this pointer\" in details?",
+            lint_group(),
+            "c++ - who can tell me \"*this pointer\" in detail?",
+        );
+    }
+
+    #[test]
+    fn in_more_detail_real_world() {
+        assert_suggestion_result(
+            "Document the interface in more details · Issue #3 · owlbarn ...",
+            lint_group(),
+            "Document the interface in more detail · Issue #3 · owlbarn ...",
         );
     }
 }
