@@ -615,6 +615,12 @@ pub fn lint_group() -> LintGroup {
             "Use `nerve-racking` for something that causes anxiety or tension.",
             "Corrects common misspellings and missing hyphen in `nerve-racking`."
         ),
+        "InAndOfItself" => (
+            ["in of itself"],
+            ["in and of itself"],
+            "Use `in and of itself` for referring to something's inherent or intrinsic quality.",
+            "Corrects nonstandard `in of itself` to standard `in and of itself`."
+        )
     });
 
     group.set_all_rules_to(Some(true));
@@ -849,6 +855,20 @@ mod tests {
             "It's nerve racking to think about it because I have code inside the callback that resolves the member and somehow I feel like it's so ..",
             lint_group(),
             "It's nerve-racking to think about it because I have code inside the callback that resolves the member and somehow I feel like it's so ..",
+        );
+    }
+
+    #[test]
+    fn detect_atomic_in_of_itself() {
+        assert_suggestion_result("in of itself", lint_group(), "in and of itself");
+    }
+
+    #[test]
+    fn correct_real_world_in_of_itself() {
+        assert_suggestion_result(
+            "This is not entirely unexpected in of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently...",
+            lint_group(),
+            "This is not entirely unexpected in and of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently...",
         );
     }
 }
