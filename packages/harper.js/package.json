@@ -22,7 +22,7 @@
 	"devDependencies": {
 		"@microsoft/api-documenter": "^7.26.10",
 		"@microsoft/api-extractor": "^7.50.1",
-		"@vitest/browser": "^3.0.6",
+		"@vitest/browser": "^3.0.8",
 		"playwright": "^1.49.1",
 		"typescript": "~5.8.2",
 		"vite": "^6.1.0",
