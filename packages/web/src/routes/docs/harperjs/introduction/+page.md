@@ -21,3 +21,6 @@ On the inside, it uses a copy of Harper's core algorithm compiled to [WebAssembl
 It can be imported [natively in a browser](./CDN) or through [npm](https://www.npmjs.com/package/harper.js) and [consumed in Node.js](./node).
 
 @install-pkg(harper.js)
+
+Notice that the `harper.js` package is currently in early access.
+This means that the API is not yet stable and we are still working out the kinks.

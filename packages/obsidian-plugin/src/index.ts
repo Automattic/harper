@@ -2,7 +2,7 @@ import { toArray } from 'lodash-es';
 import logoSvg from '../logo.svg';
 import { Plugin, Menu, PluginManifest, App, Notice } from 'obsidian';
 import { LintConfig, Linter, Suggestion } from 'harper.js';
-import { LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
+import { LocalLinter, SuggestionKind, WorkerLinter, binary } from 'harper.js';
 import { linter } from './lint';
 import { Extension } from '@codemirror/state';
 import { HarperSettingTab } from './HarperSettingTab';
@@ -30,7 +30,7 @@ export default class HarperPlugin extends Plugin {
 
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
-		this.harper = new WorkerLinter();
+		this.harper = new WorkerLinter({ binary });
 		this.editorExtensions = [];
 	}
 
@@ -43,9 +43,9 @@ export default class HarperPlugin extends Plugin {
 
 		if (settings.useWebWorker != oldSettings.useWebWorker) {
 			if (settings.useWebWorker) {
-				this.harper = new WorkerLinter();
+				this.harper = new WorkerLinter({ binary });
 			} else {
-				this.harper = new LocalLinter();
+				this.harper = new LocalLinter({ binary });
 			}
 		} else {
 			await this.harper.clearIgnoredLints();

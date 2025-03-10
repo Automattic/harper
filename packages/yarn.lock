@@ -3376,10 +3376,10 @@
     twoslash "^0.2.12"
     twoslash-protocol "^0.2.12"
 
-"@sveltepress/vite@^1.1.2":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@sveltepress/vite/-/vite-1.2.0.tgz#11ca954abd318651a54e6390614a686e35ec8331"
-  integrity sha512-spO3/g9eii3T9DkwsAdt4aTUe9hLWeMQ8TtbuRtXfuUV8BXM9NBcefejqeyb7/7bqIsdNl6jdew2sNz72tGrdw==
+"@sveltepress/vite@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@sveltepress/vite/-/vite-1.1.5.tgz#76cb81e3031feffdb9664e61c606542a1732bfee"
+  integrity sha512-YVZ8XG377l1MW7dIVdt0D9PUpjP1a4hQyAO6U0JwuOrlQavTFAPdpn7MfvZJV/Q9N1cEWO1S2eX2HC4G0f0nxQ==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^4.0.1"
     cross-spawn "^7.0.3"
@@ -10089,6 +10089,10 @@ hard-rejection@^2.1.0:
   resolved "https://registry.yarnpkg.com/hard-rejection/-/hard-rejection-2.1.0.tgz#1c6eda5c1685c63942766d79bb40ae773cecd883"
   integrity sha512-VIZB+ibDhx7ObhAe7OVtoEbuP4h/MuOTHJ+J8h/eBXotJYl0fBgR72xDFCKgIh22OJZIOVNxBMWuhAr10r8HdA==
 
+"harper-wasm@link:../harper-wasm/pkg":
+  version "0.0.0"
+  uid ""
+
 "harper.js@link:harper.js":
   version "0.24.0"
 
@@ -12943,6 +12947,11 @@ mimic-fn@^2.1.0:
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
   integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
 
+mimic-fn@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-4.0.0.tgz#60a90550d5cb0b239cca65d893b1a53b29871ecc"
+  integrity sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==
+
 mimic-response@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-3.1.0.tgz#2d1d59af9c1b129815accc2c46a022a5ce1fa3c9"
@@ -13568,6 +13577,11 @@ own-keys@^1.0.1:
     object-keys "^1.1.1"
     safe-push-apply "^1.0.0"
 
+p-lazy@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/p-lazy/-/p-lazy-5.0.0.tgz#43762897d0c208d656ab24364e91c9684939ec79"
+  integrity sha512-C4xW5/wLGqswBx1xgu/t7fBaHMDKm7SXycgc0MEQvQ5KwzjT1E4MmE9cg0RXn9d0MTgUGJLUCb2EkLBevXi6eA==
+
 p-limit@^2.0.0, p-limit@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-2.3.0.tgz#3dd33c647a214fdfffd835933eb086da0dc21db1"
@@ -13621,6 +13635,14 @@ p-map@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/p-map/-/p-map-2.1.0.tgz#310928feef9c9ecc65b68b17693018a665cea175"
   integrity sha512-y3b8Kpd8OAN444hxfBbFfj1FY/RjtTd8tzYwhUqNYXx0fXx2iX4maP4Qr6qhIKbQXI02wTLAda4fYUbDagTUFw==
+
+p-memoize@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/p-memoize/-/p-memoize-7.1.1.tgz#53b1d0e6007288f7261cfa11a7603b84c9261bfa"
+  integrity sha512-DZ/bONJILHkQ721hSr/E9wMz5Am/OTJ9P6LhLFo2Tu+jL8044tgc9LwHO8g4PiaYePnlVVRAJcKmgy8J9MVFrA==
+  dependencies:
+    mimic-fn "^4.0.0"
+    type-fest "^3.0.0"
 
 p-retry@^4.5.0:
   version "4.6.2"
@@ -16852,7 +16874,7 @@ type-fest@^0.8.1:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
 
-type-fest@^3.2.0:
+type-fest@^3.0.0, type-fest@^3.2.0:
   version "3.13.1"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-3.13.1.tgz#bb744c1f0678bea7543a2d1ec24e83e68e8c8706"
   integrity sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==
@@ -16861,6 +16883,11 @@ type-fest@^4.26.1:
   version "4.36.0"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.36.0.tgz#e656de02aa880aa01b4d3a71188bb6adb18668a2"
   integrity sha512-3T/PUdKTCnkUmhQU6FFJEHsLwadsRegktX3TNHk+2JJB9HlA8gp1/VXblXVDI93kSnXF2rdPx0GMbHtJIV2LPg==
+
+type-fest@^4.37.0:
+  version "4.37.0"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.37.0.tgz#7cf008bf77b63a33f7ca014fa2a3f09fd69e8937"
+  integrity sha512-S/5/0kFftkq27FPNye0XM1e2NsnoD/3FS+pBmbjmmtLT6I+i344KoOf7pvXreaFsDamWeaJX55nczA1m5PsBDg==
 
 type-is@~1.6.18:
   version "1.6.18"
@@ -16941,7 +16968,7 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@5.7.3, typescript@~5.7.3:
+typescript@5.7.3, typescript@^5.7.2:
   version "5.7.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.3.tgz#919b44a7dbb8583a9b856d162be24a54bf80073e"
   integrity sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==
@@ -17373,12 +17400,12 @@ vite-plugin-virtual@^0.3.0:
   resolved "https://registry.yarnpkg.com/vite-plugin-virtual/-/vite-plugin-virtual-0.3.0.tgz#5831af99864db65b9c46b970a919ec9fc17b374d"
   integrity sha512-TOtrWw6jKrJNXfxhGRUiQzfAP1gRkYkVzMkJNjHUJ8idLuxf8eeeDKZKZHhdeYfaCc/87rv+KvWE2iCy1QInWA==
 
-vite-plugin-wasm@^3.3.0:
+vite-plugin-wasm@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/vite-plugin-wasm/-/vite-plugin-wasm-3.4.1.tgz#62b546ac7e25cc2a0e7b1331ed5c4ba1dd71b743"
   integrity sha512-ja3nSo2UCkVeitltJGkS3pfQHAanHv/DqGatdI39ja6McgABlpsZ5hVgl6wuR8Qx5etY3T5qgDQhOWzc5RReZA==
 
-"vite@^5.0.0 || ^6.0.0", vite@^6.0.9, vite@^6.1.0:
+"vite@^5.0.0 || ^6.0.0", vite@^6.1.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/vite/-/vite-6.2.0.tgz#9dcb543380dab18d8384eb840a76bf30d78633f0"
   integrity sha512-7dPxoo+WsT/64rDcwoOjk76XHj+TqNTIvHKcuMQ1k4/SeHDaQt5GFAeLYzrimZrMpn/O6DtdI03WUjdxuPM0oQ==
@@ -17476,9 +17503,6 @@ walker@^1.0.8:
   integrity sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==
   dependencies:
     makeerror "1.0.12"
-
-"wasm@link:../harper-wasm/pkg":
-  version "0.0.0"
 
 watchpack@^2.4.1:
   version "2.4.2"

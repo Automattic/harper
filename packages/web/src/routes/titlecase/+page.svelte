@@ -2,10 +2,10 @@
 	import { onMount } from 'svelte';
 	import { Textarea } from 'flowbite-svelte';
 	import Typed from 'typed.js';
-	import { WorkerLinter } from 'harper.js';
+	import { WorkerLinter, binary } from 'harper.js';
 
 	let textareaRef;
-	let linter = new WorkerLinter();
+	let linter = new WorkerLinter({ binary });
 
 	let text = $state('');
 
