@@ -7,7 +7,7 @@ publish = false
 repository = "https://github.com/automattic/harper"
 
 [dependencies]
-anyhow = "1.0.96"
+anyhow = "1.0.97"
 ariadne = "0.4.1"
 clap = { version = "4.5.31", features = ["derive"] }
 harper-literate-haskell = { path = "../harper-literate-haskell", version = "0.24.0" }
