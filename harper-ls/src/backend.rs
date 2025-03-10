@@ -157,16 +157,21 @@ impl Backend {
 
         let mut doc_lock = self.doc_state.lock().await;
 
-        let doc_state = doc_lock.entry(url.clone()).or_insert(DocumentState {
-            linter: LintGroup::new_curated(dict.clone()).with_lint_config(lint_config.clone()),
-            language_id: language_id.map(|v| v.to_string()),
-            dict: dict.clone(),
-            url: url.clone(),
-            ..Default::default()
+        let doc_state = doc_lock.entry(url.clone()).or_insert_with(|| {
+            info!("Constructing new LintGroup for new document.");
+
+            DocumentState {
+                linter: LintGroup::new_curated(dict.clone()).with_lint_config(lint_config.clone()),
+                language_id: language_id.map(|v| v.to_string()),
+                dict: dict.clone(),
+                url: url.clone(),
+                ..Default::default()
+            }
         });
 
         if doc_state.dict != dict {
             doc_state.dict = dict.clone();
+            info!("Constructing new linter because of modified dictionary.");
             doc_state.linter =
                 LintGroup::new_curated(dict.clone()).with_lint_config(lint_config.clone());
         }
@@ -185,6 +190,7 @@ impl Backend {
             lint_config: &LintGroupConfig,
         ) -> Result<Box<dyn Parser>> {
             if doc_state.ident_dict != new_dict {
+                info!("Constructing new linter because of modified ident dictionary.");
                 doc_state.ident_dict = new_dict.clone();
 
                 let mut merged = backend.generate_file_dictionary(url).await?;
@@ -590,6 +596,7 @@ impl LanguageServer for Backend {
             let config_lock = self.config.read().await;
 
             for doc in doc_lock.values_mut() {
+                info!("Constructing new LintGroup for updated configuration.");
                 doc.linter = LintGroup::new_curated(doc.dict.clone())
                     .with_lint_config(config_lock.lint_config.clone());
             }

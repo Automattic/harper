@@ -1,4 +1,6 @@
-use hashbrown::HashMap;
+use std::num::NonZero;
+
+use lru::LruCache;
 use smallvec::ToSmallVec;
 
 use super::Suggestion;
@@ -12,41 +14,40 @@ where
     T: Dictionary,
 {
     dictionary: T,
-    word_cache: HashMap<CharString, Vec<CharString>>,
+    word_cache: LruCache<CharString, Vec<CharString>>,
 }
 
 impl<T: Dictionary> SpellCheck<T> {
     pub fn new(dictionary: T) -> Self {
         Self {
             dictionary,
-            word_cache: HashMap::new(),
+            word_cache: LruCache::new(NonZero::new(10000).unwrap()),
         }
     }
 }
 
 impl<T: Dictionary> SpellCheck<T> {
     fn cached_suggest_correct_spelling(&mut self, word: &[char]) -> Vec<CharString> {
-        let word = word.to_smallvec();
+        if let Some(hit) = self.word_cache.get(word) {
+            return hit.clone();
+        }
 
-        self.word_cache
-            .entry(word.clone())
-            .or_insert_with(|| {
-                // Back off until we find a match.
-                let mut suggestions = Vec::new();
-                let mut dist = 2;
+        // Back off until we find a match.
+        let mut suggestions = Vec::new();
+        let mut dist = 2;
 
-                while suggestions.is_empty() && dist < 5 {
-                    suggestions = suggest_correct_spelling(&word, 100, dist, &self.dictionary)
-                        .into_iter()
-                        .map(|v| v.to_smallvec())
-                        .collect();
+        while suggestions.is_empty() && dist < 5 {
+            suggestions = suggest_correct_spelling(word, 100, dist, &self.dictionary)
+                .into_iter()
+                .map(|v| v.to_smallvec())
+                .collect();
 
-                    dist += 1;
-                }
+            dist += 1;
+        }
 
-                suggestions
-            })
-            .clone()
+        self.word_cache.put(word.into(), suggestions.clone());
+
+        suggestions
     }
 }
 

@@ -27,6 +27,8 @@ unicode-width = "0.2.0"
 levenshtein_automata = { version = "0.2.1", features = ["fst_automaton"] }
 cached = "0.54.0"
 lru = "0.13.0"
+foldhash = "0.1.4"
+indexmap = { version = "2.7.1", features = ["serde"] }
 
 [dev-dependencies]
 criterion = { version = "0.5.1", default-features = false }

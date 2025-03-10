@@ -103,7 +103,7 @@ pub use number_suffix_capitalization::NumberSuffixCapitalization;
 pub use out_of_date::OutOfDate;
 pub use oxford_comma::OxfordComma;
 pub use oxymorons::Oxymorons;
-pub use pattern_linter::{PatternLinter, PatternLinterCache};
+pub use pattern_linter::PatternLinter;
 pub use pique_interest::PiqueInterest;
 pub use plural_conjugate::PluralConjugate;
 pub use possessive_your::PossessiveYour;

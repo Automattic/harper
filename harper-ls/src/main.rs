@@ -39,7 +39,7 @@ async fn main() -> anyhow::Result<()> {
     let subscriber = FmtSubscriber::builder()
         .map_writer(move |_| stderr)
         .with_ansi(false)
-        .with_max_level(Level::WARN)
+        .with_max_level(Level::INFO)
         .finish();
 
     tracing::subscriber::set_global_default(subscriber)?;

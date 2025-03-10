@@ -1,8 +1,6 @@
-use std::num::NonZeroUsize;
+use blanket::blanket;
 
-use lru::LruCache;
-
-use crate::{CharString, Document, LSend, Lrc, Token, TokenStringExt, patterns::Pattern};
+use crate::{Document, LSend, Token, TokenStringExt, patterns::Pattern};
 
 use super::{Lint, Linter};
 
@@ -10,6 +8,7 @@ use super::{Lint, Linter};
 ///
 /// Makes use of [`TokenStringExt::iter_chunks`] to avoid matching across sentence or clause
 /// boundaries.
+#[blanket(derive(Box))]
 pub trait PatternLinter: LSend {
     /// A simple getter for the pattern to be searched for.
     fn pattern(&self) -> &dyn Pattern;
@@ -43,46 +42,7 @@ where
     }
 }
 
-type ChunkCache = LruCache<CharString, Lrc<Vec<Lint>>>;
-
-/// A cache that wraps around a [`PatternLinter`], caching
-/// results by chunk.
-pub struct PatternLinterCache<P: PatternLinter> {
-    cache: ChunkCache,
-    inner: P,
-}
-
-impl<P: PatternLinter> PatternLinterCache<P> {
-    /// Add a cache to a given [`PatternLinter`] with a given cache size.
-    /// About a 1000 rows is recommended.
-    pub fn new(inner: P, cache_size: NonZeroUsize) -> Self {
-        Self {
-            cache: ChunkCache::new(cache_size),
-            inner,
-        }
-    }
-}
-
-impl<P: PatternLinter> Linter for PatternLinterCache<P> {
-    fn lint(&mut self, document: &Document) -> Vec<Lint> {
-        let mut lints = Vec::new();
-        let source = document.get_source();
-
-        for chunk in document.iter_chunks() {
-            let chunk_lints = run_on_chunk_cached(&self.inner, chunk, source, &mut self.cache);
-
-            lints.extend(chunk_lints.as_ref().iter().cloned());
-        }
-
-        lints
-    }
-
-    fn description(&self) -> &str {
-        self.inner.description()
-    }
-}
-
-fn run_on_chunk(linter: &impl PatternLinter, chunk: &[Token], source: &[char]) -> Vec<Lint> {
+pub fn run_on_chunk(linter: &impl PatternLinter, chunk: &[Token], source: &[char]) -> Vec<Lint> {
     let mut lints = Vec::new();
     let mut tok_cursor = 0;
 
@@ -104,25 +64,4 @@ fn run_on_chunk(linter: &impl PatternLinter, chunk: &[Token], source: &[char]) -
     }
 
     lints
-}
-
-fn run_on_chunk_cached(
-    linter: &impl PatternLinter,
-    chunk: &[Token],
-    source: &[char],
-    cache: &mut ChunkCache,
-) -> Lrc<Vec<Lint>> {
-    let Some(chunk_span) = chunk.span() else {
-        return Vec::new().into();
-    };
-
-    let key = chunk_span.get_content(source);
-
-    if let Some(hit) = cache.get(key) {
-        hit.clone()
-    } else {
-        let lints = Lrc::new(run_on_chunk(linter, chunk, source));
-        cache.put(key.into(), lints.clone());
-        lints
-    }
 }

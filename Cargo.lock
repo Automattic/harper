@@ -736,8 +736,10 @@ dependencies = [
  "blanket",
  "cached",
  "criterion",
+ "foldhash",
  "fst",
  "hashbrown 0.15.2",
+ "indexmap",
  "is-macro",
  "itertools 0.14.0",
  "lazy_static",
@@ -793,6 +795,7 @@ dependencies = [
  "harper-html",
  "harper-literate-haskell",
  "harper-typst",
+ "indexmap",
  "itertools 0.14.0",
  "once_cell",
  "open",
@@ -1032,6 +1035,7 @@ checksum = "8c9c992b02b5b4c94ea26e32fe5bccb7aa7d9f390ab5c1221ff895bc7ea8b652"
 dependencies = [
  "equivalent",
  "hashbrown 0.15.2",
+ "serde",
 ]
 
 [[package]]

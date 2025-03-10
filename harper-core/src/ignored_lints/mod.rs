@@ -48,6 +48,10 @@ impl IgnoredLints {
 
     /// Remove ignored Lints from a [`Vec`].
     pub fn remove_ignored(&self, lints: &mut Vec<Lint>, document: &Document) {
+        if self.context_hashes.is_empty() {
+            return;
+        }
+
         lints.retain(|lint| !self.is_ignored(lint, document));
     }
 }

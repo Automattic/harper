@@ -1,13 +1,17 @@
 use std::collections::BTreeMap;
+use std::hash::Hash;
+use std::hash::{BuildHasher, Hasher};
 use std::mem;
+use std::num::NonZero;
 use std::sync::Arc;
 
 use cached::proc_macro::cached;
+use foldhash::quality::RandomState;
 use hashbrown::HashMap;
+use indexmap::IndexMap;
+use lru::LruCache;
 use serde::{Deserialize, Serialize};
 
-use super::Lint;
-use super::PatternLinterCache;
 use super::an_a::AnA;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
@@ -38,6 +42,7 @@ use super::nobody::Nobody;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
+use super::pattern_linter::run_on_chunk;
 use super::pique_interest::PiqueInterest;
 use super::plural_conjugate::PluralConjugate;
 use super::possessive_your::PossessiveYour;
@@ -59,15 +64,15 @@ use super::whereas::Whereas;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::wrong_quotes::WrongQuotes;
 use super::{CurrencyPlacement, Linter, NoOxfordComma, OxfordComma};
-use crate::Document;
+use super::{Lint, PatternLinter};
 use crate::linting::{closed_compounds, phrase_corrections};
+use crate::{CharString, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
-use std::num::NonZero;
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone)]
 #[serde(transparent)]
 pub struct LintGroupConfig {
-    inner: HashMap<String, Option<bool>>,
+    inner: IndexMap<String, Option<bool>>,
 }
 
 #[cached]
@@ -85,7 +90,7 @@ impl LintGroupConfig {
     /// Remove any configuration attached to a rule.
     /// This allows it to assume its default (curated) state.
     pub fn unset_rule_enabled(&mut self, key: impl AsRef<str>) {
-        self.inner.remove_entry(key.as_ref());
+        self.inner.swap_remove_entry(key.as_ref());
     }
 
     pub fn set_rule_enabled_if_unset(&mut self, key: impl AsRef<str>, val: bool) {
@@ -111,7 +116,7 @@ impl LintGroupConfig {
     ///
     /// Conflicting keys will be overridden by the value in the other group.
     pub fn merge_from(&mut self, other: &mut LintGroupConfig) {
-        for (key, val) in other.inner.drain() {
+        for (key, val) in other.inner.drain(..) {
             if val.is_none() {
                 continue;
             }
@@ -132,28 +137,79 @@ impl LintGroupConfig {
     }
 }
 
-#[derive(Default)]
+impl Hash for LintGroupConfig {
+    fn hash<H: Hasher>(&self, hasher: &mut H) {
+        for (key, value) in &self.inner {
+            hasher.write(key.as_bytes());
+            if let Some(value) = value {
+                hasher.write_u8(1);
+                hasher.write_u8(*value as u8);
+            } else {
+                hasher.write_u8(0);
+                hasher.write_u8(0);
+            }
+        }
+    }
+}
+
 pub struct LintGroup {
     pub config: LintGroupConfig,
     /// We use a binary map here so the ordering is stable.
-    inner: BTreeMap<String, Box<dyn Linter>>,
+    linters: BTreeMap<String, Box<dyn Linter>>,
+    /// We use a binary map here so the ordering is stable.
+    pattern_linters: BTreeMap<String, Box<dyn PatternLinter>>,
+    /// Since [`PatternLinter`]s operate on a chunk-basis, we can store a
+    /// mapping of `Chunk -> Lint` and only re-run the pattern linters
+    /// when a chunk changes.
+    ///
+    /// Since the pattern linter results also depend on the config, we hash it and pass it as part
+    /// of the key.
+    chunk_pattern_cache: LruCache<(CharString, u64), Vec<Lint>>,
+    hasher_builder: RandomState,
 }
 
 impl LintGroup {
     pub fn empty() -> Self {
         Self {
             config: LintGroupConfig::default(),
-            inner: BTreeMap::new(),
+            linters: BTreeMap::new(),
+            pattern_linters: BTreeMap::new(),
+            chunk_pattern_cache: LruCache::new(NonZero::new(10000).unwrap()),
+            hasher_builder: RandomState::default(),
         }
+    }
+
+    /// Check if the group already contains a linter with a given name.
+    pub fn contains_key(&self, name: impl AsRef<str>) -> bool {
+        self.linters.contains_key(name.as_ref()) || self.pattern_linters.contains_key(name.as_ref())
     }
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     pub fn add(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter>) -> bool {
-        if self.inner.contains_key(name.as_ref()) {
+        if self.contains_key(&name) {
             false
         } else {
-            self.inner.insert(name.as_ref().to_string(), linter);
+            self.linters.insert(name.as_ref().to_string(), linter);
+            true
+        }
+    }
+
+    /// Add a [`PatternLinter`] to the group, returning whether the operation was successful.
+    /// If it returns `false`, it is because a linter with that key already existed in the group.
+    ///
+    /// This function is not significantly different from [`Self::add`], but allows us to take
+    /// advantage of some properties of [`PatterLinter`]s for cache optimization.
+    pub fn add_pattern_linter(
+        &mut self,
+        name: impl AsRef<str>,
+        linter: Box<dyn PatternLinter>,
+    ) -> bool {
+        if self.contains_key(&name) {
+            false
+        } else {
+            self.pattern_linters
+                .insert(name.as_ref().to_string(), linter);
             true
         }
     }
@@ -163,15 +219,26 @@ impl LintGroup {
     pub fn merge_from(&mut self, other: &mut LintGroup) {
         self.config.merge_from(&mut other.config);
 
-        let other_map = std::mem::take(&mut other.inner);
+        let other_linters = std::mem::take(&mut other.linters);
+        self.linters.extend(other_linters);
 
-        self.inner.extend(other_map);
+        let other_pattern_linters = std::mem::take(&mut other.pattern_linters);
+        self.pattern_linters.extend(other_pattern_linters);
+    }
+
+    pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
+        self.linters
+            .keys()
+            .chain(self.pattern_linters.keys())
+            .map(|v| v.as_str())
     }
 
     /// Set all contained rules to a specific value.
     /// Passing `None` will unset that rule, allowing it to assume its default state.
     pub fn set_all_rules_to(&mut self, enabled: Option<bool>) {
-        for key in self.inner.keys() {
+        let keys = self.iter_keys().map(|v| v.to_string()).collect::<Vec<_>>();
+
+        for key in keys {
             match enabled {
                 Some(v) => self.config.set_rule_enabled(key, v),
                 None => self.config.unset_rule_enabled(key),
@@ -180,9 +247,14 @@ impl LintGroup {
     }
 
     pub fn all_descriptions(&self) -> HashMap<&str, &str> {
-        self.inner
+        self.linters
             .iter()
             .map(|(key, value)| (key.as_str(), value.description()))
+            .chain(
+                self.pattern_linters
+                    .iter()
+                    .map(|(key, value)| (key.as_str(), PatternLinter::description(value))),
+            )
             .collect()
     }
 
@@ -205,13 +277,7 @@ impl LintGroup {
 
         macro_rules! insert_pattern_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add(
-                    stringify!($rule),
-                    Box::new(PatternLinterCache::new(
-                        $rule::default(),
-                        NonZero::new(1000).unwrap(),
-                    )),
-                );
+                out.add_pattern_linter(stringify!($rule), Box::new($rule::default()));
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -226,9 +292,9 @@ impl LintGroup {
         // Add all the more complex rules to the group.
         insert_pattern_rule!(BackInTheDay, true);
         insert_struct_rule!(WordPressDotcom, true);
-        insert_struct_rule!(OutOfDate, true);
-        insert_struct_rule!(ThenThan, true);
-        insert_struct_rule!(PiqueInterest, true);
+        insert_pattern_rule!(OutOfDate, true);
+        insert_pattern_rule!(ThenThan, true);
+        insert_pattern_rule!(PiqueInterest, true);
         insert_pattern_rule!(WasAloud, true);
         insert_pattern_rule!(HyphenateNumberDay, true);
         insert_pattern_rule!(LeftRightHand, true);
@@ -250,12 +316,12 @@ impl LintGroup {
         insert_struct_rule!(Matcher, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
-        insert_struct_rule!(MultipleSequentialPronouns, true);
+        insert_pattern_rule!(MultipleSequentialPronouns, true);
         insert_struct_rule!(LinkingVerbs, false);
         insert_struct_rule!(AvoidCurses, true);
-        insert_struct_rule!(TerminatingConjunctions, true);
+        insert_pattern_rule!(TerminatingConjunctions, true);
         insert_struct_rule!(EllipsisLength, true);
-        insert_struct_rule!(DotInitialisms, true);
+        insert_pattern_rule!(DotInitialisms, true);
         insert_pattern_rule!(BoringWords, false);
         insert_pattern_rule!(UseGenitive, false);
         insert_pattern_rule!(ThatWhich, true);
@@ -290,13 +356,47 @@ impl LintGroup {
     }
 }
 
+impl Default for LintGroup {
+    fn default() -> Self {
+        Self::empty()
+    }
+}
+
 impl Linter for LintGroup {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut results = Vec::new();
 
-        for (key, linter) in &mut self.inner {
+        // Normal linters
+        for (key, linter) in &mut self.linters {
             if self.config.is_rule_enabled(key) {
                 results.extend(linter.lint(document));
+            }
+        }
+
+        // Pattern linters
+        for chunk in document.iter_chunks() {
+            let Some(chunk_span) = chunk.span() else {
+                continue;
+            };
+
+            let chunk_chars = document.get_span_content(chunk_span);
+            let config_hash = self.hasher_builder.hash_one(&self.config);
+            let key = (chunk_chars.into(), config_hash);
+
+            if let Some(hit) = self.chunk_pattern_cache.get(&key) {
+                results.extend(hit.iter().cloned());
+            } else {
+                let mut pattern_lints = Vec::new();
+
+                for (key, linter) in &mut self.pattern_linters {
+                    if self.config.is_rule_enabled(key) {
+                        pattern_lints.extend(run_on_chunk(linter, chunk, document.get_source()));
+                    }
+                }
+
+                self.chunk_pattern_cache.put(key, pattern_lints.clone());
+
+                results.append(&mut pattern_lints);
             }
         }
 
