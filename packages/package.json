@@ -8,7 +8,7 @@
 		"wordpress-plugin"
 	],
 	"devDependencies": {
-		"eslint": "^8.28.0",
+		"eslint": "^9.22.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-prettier": "^5.2.1",
 		"eslint-plugin-svelte": "^2.46.1",
