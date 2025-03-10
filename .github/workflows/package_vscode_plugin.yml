@@ -36,10 +36,11 @@ jobs:
         with:
           node-version-file: ".node-version"
       - name: Build harper-ls
-        uses: houseabsolute/actions-rust-cross@v0
+        uses: houseabsolute/actions-rust-cross@v1
         with:
           target: ${{ matrix.platform.rust_target }}
           args: "--locked --release --bin harper-ls"
+          force-use-cross: true
           strip: true
       - name: Package extension
         shell: bash
