@@ -53,6 +53,7 @@ use super::somewhat_something::SomewhatSomething;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
+use super::split_words::SplitWords;
 use super::terminating_conjunctions::TerminatingConjunctions;
 use super::that_which::ThatWhich;
 use super::then_than::ThenThan;
@@ -327,6 +328,7 @@ impl LintGroup {
         insert_pattern_rule!(ThatWhich, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_struct_rule!(MergeWords, true);
+        insert_struct_rule!(SplitWords, true);
         insert_pattern_rule!(PluralConjugate, false);
         insert_struct_rule!(OxfordComma, true);
         insert_struct_rule!(NoOxfordComma, false);
