@@ -49,7 +49,7 @@ create_test!(merged_lines.ts, 1);
 create_test!(javadoc_clean_simple.java, 0);
 create_test!(javadoc_complex.java, 4);
 create_test!(issue_132.rs, 1);
-create_test!(laravel_app.php, 2);
+create_test!(laravel_app.php, 3);
 
 // Checks that some comments are masked out
 create_test!(ignore_comments.rs, 1);
