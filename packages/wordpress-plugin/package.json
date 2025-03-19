@@ -24,7 +24,7 @@
 		"@wordpress/data": "^10.15.1",
 		"@wordpress/edit-post": "^8.16.0",
 		"@wordpress/editor": "^14.20.0",
-		"@wordpress/preferences-persistence": "^2.17.0",
+		"@wordpress/preferences-persistence": "^2.20.0",
 		"harper.js": "link:../harper.js",
 		"lodash-es": "^4.17.21",
 		"react": "^18.0.0",

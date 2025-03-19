@@ -5873,13 +5873,13 @@
     "@wordpress/base-styles" "^5.19.0"
     autoprefixer "^10.4.20"
 
-"@wordpress/preferences-persistence@^2.17.0":
-  version "2.19.0"
-  resolved "https://registry.yarnpkg.com/@wordpress/preferences-persistence/-/preferences-persistence-2.19.0.tgz#1671ea9a857be8222a4986141c8981b53b860d89"
-  integrity sha512-8rD/qGKAgTPgIS1t16K0Z2S5Bb1DZnxxamk7rHG7luX9si1Rpq2Z5BDzm6VV43aEvXxagkXphFoqTYlAF/UA3g==
+"@wordpress/preferences-persistence@^2.20.0":
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/preferences-persistence/-/preferences-persistence-2.20.0.tgz#5d7d1d422d9b291a17942f7283bb8587f5382c7f"
+  integrity sha512-OVE24+dVtrdqghKBTtQ6OqV6CfUjpQAZER+yAVJICP+7HD7zpYMnoQKke/5f0rNL3FTzgGKlGyY9MwJ4Upuzug==
   dependencies:
     "@babel/runtime" "7.25.7"
-    "@wordpress/api-fetch" "^7.19.0"
+    "@wordpress/api-fetch" "^7.20.0"
 
 "@wordpress/preferences@^4.19.0", "@wordpress/preferences@^4.20.0":
   version "4.20.0"
