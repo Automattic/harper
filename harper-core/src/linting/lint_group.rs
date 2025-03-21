@@ -24,6 +24,7 @@ use super::despite_of::DespiteOf;
 use super::dot_initialisms::DotInitialisms;
 use super::ellipsis_length::EllipsisLength;
 use super::expand_time_shorthands::ExpandTimeShorthands;
+use super::for_noun::ForNoun;
 use super::hedging::Hedging;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
@@ -341,6 +342,7 @@ impl LintGroup {
         insert_pattern_rule!(Hedging, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
         insert_pattern_rule!(ModalOf, true);
+        insert_pattern_rule!(ForNoun, true);
 
         out.add("SpellCheck", Box::new(SpellCheck::new(dictionary, dialect)));
         out.config.set_rule_enabled("SpellCheck", true);
