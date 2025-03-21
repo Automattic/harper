@@ -1,10 +1,13 @@
 use std::collections::HashMap;
+use std::fs::OpenOptions;
+use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 use std::sync::Arc;
 
 use anyhow::{Context, Result, anyhow};
+use futures::future::join;
 use harper_comments::CommentParser;
-use harper_core::linting::{LintGroup, LintGroupConfig};
+use harper_core::linting::{LintGroup, LintGroupConfig, LintKind};
 use harper_core::parsers::{CollapseIdentifiers, IsolateEnglish, Markdown, Parser, PlainEnglish};
 use harper_core::{
     Dialect, Dictionary, Document, FstDictionary, MergedDictionary, MutableDictionary, WordMetadata,
@@ -33,10 +36,12 @@ use crate::config::Config;
 use crate::dictionary_io::{file_dict_name, load_dict, save_dict};
 use crate::document_state::DocumentState;
 use crate::git_commit_parser::GitCommitParser;
+use harper_stats::{LintRecord, Stats};
 
 pub struct Backend {
     client: Client,
     config: RwLock<Config>,
+    stats: RwLock<Stats>,
     doc_state: Mutex<HashMap<Url, DocumentState>>,
 }
 
@@ -44,6 +49,7 @@ impl Backend {
     pub fn new(client: Client, config: Config) -> Self {
         Self {
             client,
+            stats: RwLock::new(Stats::new()),
             config: RwLock::new(config),
             doc_state: Mutex::new(HashMap::new()),
         }
@@ -100,6 +106,26 @@ impl Backend {
         save_dict(&config.user_dict_path, dict)
             .await
             .map_err(|err| anyhow!("Unable to save the dictionary to file: {err}"))
+    }
+
+    async fn save_stats(&self) -> Result<()> {
+        let (config, stats) = join(self.config.read(), self.stats.read()).await;
+
+        if let Some(parent) = config.stats_path.parent() {
+            tokio::fs::create_dir_all(parent).await?;
+        }
+
+        let mut writer = BufWriter::new(
+            OpenOptions::new()
+                .read(true)
+                .append(true)
+                .create(true)
+                .open(&config.stats_path)?,
+        );
+        stats.write_csv(&mut writer)?;
+        writer.flush()?;
+
+        Ok(())
     }
 
     async fn generate_global_dictionary(&self) -> Result<MergedDictionary> {
@@ -363,6 +389,7 @@ impl LanguageServer for Backend {
                 code_action_provider: Some(CodeActionProviderCapability::Simple(true)),
                 execute_command_provider: Some(ExecuteCommandOptions {
                     commands: vec![
+                        "HarperRecordLint".to_owned(),
                         "HarperAddToUserDict".to_owned(),
                         "HarperAddToFileDict".to_owned(),
                         "HarperOpen".to_owned(),
@@ -497,6 +524,20 @@ impl LanguageServer for Backend {
         info!("Received command: \"{}\"", params.command.as_str());
 
         match params.command.as_str() {
+            "HarperRecordLint" => {
+                let Some(kind) = LintKind::new_from_str(&first) else {
+                    error!("Unable to deserialize LintKind.");
+                    return Ok(None);
+                };
+
+                let Ok(record) = LintRecord::record_now(kind) else {
+                    error!("System time error");
+                    return Ok(None);
+                };
+
+                let mut stats = self.stats.write().await;
+                stats.lint_applied(record);
+            }
             "HarperAddToUserDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
 
@@ -648,6 +689,10 @@ impl LanguageServer for Backend {
             self.client
                 .send_notification::<PublishDiagnostics>(result)
                 .await;
+        }
+
+        if self.save_stats().await.is_err() {
+            error!("Unable to save stats.")
         }
 
         Ok(())
