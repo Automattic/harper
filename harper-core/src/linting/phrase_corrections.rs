@@ -28,7 +28,7 @@ pub fn lint_group() -> LintGroup {
     add_exact_mappings!(group, {
         // The name of the rule
         "ChangeTack" => (
-            // The exact phrase to look for.
+            // The exact phrase(s) to look for.
             ["change tact", "change tacks", "change tacts"],
             // The corrections to provide.
             ["change tack"],
@@ -643,6 +643,39 @@ pub fn lint_group() -> LintGroup {
             "Use `day and age` for referring to the present time.",
             "Corrects the eggcorn `day in age` to `day and age`, which properly means the current era or time period."
         ),
+        "GuineaBissau" => (
+            // Note: this lint matches any case but cannot correct wrong case
+            // Note: It can only correct the hyphenation
+            // Note: See linting/matcher.rs for case corrections
+            // Note: $input must already be the correct case
+            // Note: do not add other case variants here
+            ["Guinea Bissau"],
+            ["Guinea-Bissau"],
+            "The official spelling is hyphenated.",
+            "Checks for the correct official name of the African country."
+        ),
+        "PortAuPrince" => (
+            // Note: this lint matches any case but cannot correct wrong case
+            // Note: It can only correct the hyphenation
+            // Note: See linting/matcher.rs for case corrections
+            // Note: $input must already be the correct case
+            // Note: do not add other case variants here
+            ["Port au Prince"],
+            ["Port-au-Prince"],
+            "The official spelling is hyphenated.",
+            "Checks for the correct official name of the capital of Haiti."
+        ),
+        "PortoNovo" => (
+            // Note: this lint matches any case but cannot correct wrong case
+            // Note: It can only correct the hyphenation
+            // Note: See linting/matcher.rs for case corrections
+            // Note: $input must already be the correct case
+            // Note: do not add other case variants here
+            ["Porto Novo"],
+            ["Porto-Novo"],
+            "The official spelling is hyphenated.",
+            "Checks for the correct official name of the capital of Benin."
+        ),
         "NerveRacking" => (
             ["nerve racking", "nerve wracking", "nerve wrecking", "nerve-wracking", "nerve-wrecking"],
             ["nerve-racking"],
@@ -1068,6 +1101,10 @@ mod tests {
     }
 
     #[test]
+    fn guinea_bissau_missing_hyphen_only() {
+        assert_suggestion_result("Guinea Bissau", lint_group(), "Guinea-Bissau");
+    }
+
     fn detect_nerve_wracking_hyphen() {
         assert_suggestion_result(
             "We've gone through several major changes / upgrades to atlantis, and it's always a little bit nerve-wracking because if we mess something up we ...",
