@@ -649,6 +649,19 @@ pub fn lint_group() -> LintGroup {
             "Use `nerve-racking` for something that causes anxiety or tension.",
             "Corrects common misspellings and missing hyphen in `nerve-racking`."
         ),
+        // Avoid suggestions resulting in "a entire ...."
+        "AWholeEntire" => (
+            ["a whole entire"],
+            ["a whole", "an entire"],
+            "Avoid redundancy. Use either `whole` or `entire` for referring to the complete amount or extent.",
+            "Corrects the redundancy in `whole entire` to `whole` or `entire`."
+        ),
+        "WholeEntire" => (
+            ["whole entire"],
+            ["whole", "entire"],
+            "Avoid redundancy. Use either `whole` or `entire` for referring to the complete amount or extent.",
+            "Corrects the redundancy in `whole entire` to `whole` or `entire`."
+        ),
         "InDetail" => (
             ["in details"],
             ["in detail"],
@@ -1113,6 +1126,48 @@ mod tests {
     }
 
     #[test]
+    fn detect_atomic_whole_entire() {
+        assert_suggestion_result("whole entire", lint_group(), "whole");
+    }
+
+    #[test]
+    fn correct_atomic_a_whole_entire_to_a_whole() {
+        assert_suggestion_result("a whole entire", lint_group(), "a whole");
+    }
+
+    #[test]
+    fn correct_atomic_a_whole_entire_to_an_entire() {
+        assert_nth_suggestion_result("a whole entire", lint_group(), "an entire", 1);
+    }
+
+    #[test]
+    fn correct_real_world_whole_entire() {
+        assert_suggestion_result(
+            "[FR] support use system dns in whole entire app",
+            lint_group(),
+            "[FR] support use system dns in whole app",
+        );
+    }
+
+    #[test]
+    fn correct_real_world_a_whole_entire_to_a_whole() {
+        assert_suggestion_result(
+            "Start mapping a whole entire new planet using NASA’s MOLA.",
+            lint_group(),
+            "Start mapping a whole new planet using NASA’s MOLA.",
+        );
+    }
+
+    #[test]
+    fn correct_real_world_a_whole_entire_to_an_entire() {
+        assert_nth_suggestion_result(
+            "I am not sure I can pass in a whole entire query via the include.",
+            lint_group(),
+            "I am not sure I can pass in an entire query via the include.",
+            1,
+        );
+    }
+
     fn in_detail_atomic() {
         assert_suggestion_result("in details", lint_group(), "in detail");
     }
