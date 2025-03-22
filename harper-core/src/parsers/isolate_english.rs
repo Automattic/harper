@@ -25,7 +25,7 @@ impl<D: Dictionary> Parser for IsolateEnglish<D> {
         let mut english_tokens: Vec<Token> = Vec::with_capacity(tokens.len());
 
         for chunk in tokens.iter_chunks() {
-            if chunk.len() < 5 || is_likely_english(chunk, source, &self.dict) {
+            if chunk.len() < 4 || is_likely_english(chunk, source, &self.dict) {
                 english_tokens.extend_from_slice(chunk);
             }
         }
