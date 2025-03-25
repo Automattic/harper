@@ -32,6 +32,7 @@ itertools = "0.14.0"
 tree-sitter-haskell = "0.15.0"
 tree-sitter-php = "=0.22.2"
 tree-sitter-dart = "0.0.4"
+tree-sitter-scala = "0.20.3"
 
 [dev-dependencies]
 paste = "1.0.15"

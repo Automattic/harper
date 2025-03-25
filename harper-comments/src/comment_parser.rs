@@ -42,7 +42,7 @@ impl CommentParser {
             "java" => tree_sitter_java::language(),
             "haskell" => tree_sitter_haskell::language(),
             "php" => tree_sitter_php::language_php(),
-            "dart" => tree_sitter_dart::language(),
+            "scala" => tree_sitter_scala::language(),
             _ => return None,
         };
 
@@ -98,6 +98,9 @@ impl CommentParser {
             "hs" => "haskell",
             "php" => "php",
             "dart" => "dart",
+            "scala" => "scala",
+            "mill" => "scala",
+            "sbt" => "scala",
             _ => return None,
         })
     }
