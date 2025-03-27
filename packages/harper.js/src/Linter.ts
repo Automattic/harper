@@ -1,4 +1,4 @@
-import type { Dialect, Lint, Span, Suggestion } from 'harper-wasm';
+import type { Dialect, Lint, Suggestion } from 'harper-wasm';
 import type { BinaryModule } from './binary';
 import type { LintConfig, LintOptions } from './main';
 
@@ -12,8 +12,8 @@ export default interface Linter {
 	/** Lint the provided text. */
 	lint(text: string, options?: LintOptions): Promise<Lint[]>;
 
-	/** Apply a suggestion to the given text, returning the transformed result. */
-	applySuggestion(text: string, suggestion: Suggestion, span: Span): Promise<string>;
+	/** Apply a suggestion from a lint, returning the changed text. */
+	applySuggestion(lint: Lint, suggestion: Suggestion): Promise<string>;
 
 	/** Determine if the provided text is likely to be intended to be English.
 	 * The algorithm can be described as "proof of concept" and as such does not work terribly well.*/
@@ -77,6 +77,15 @@ export default interface Linter {
 
 	/** Get the dialect of English this linter was constructed for. */
 	setDialect(dialect: Dialect): Promise<void>;
+
+	/** Summarize the linter's usage statistics. */
+	summarizeStats(): Promise<Record<string, number>>;
+
+	/** Generate a statistics log file you can save to permanent storage. */
+	generateStatsFile(): Promise<string>;
+
+	/** Import a statistics log file. */
+	importStatsFile(statsFile: string): Promise<void>;
 }
 
 export interface LinterInit {

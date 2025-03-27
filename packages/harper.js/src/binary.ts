@@ -1,10 +1,4 @@
-import {
-	Dialect,
-	type InitInput,
-	type Span,
-	type Suggestion,
-	type Linter as WasmLinter,
-} from 'harper-wasm';
+import { Dialect, type InitInput, type Linter as WasmLinter } from 'harper-wasm';
 import { default as binaryInlinedUrl } from 'harper-wasm/harper_wasm_bg.wasm?inline';
 import { default as binaryUrl } from 'harper-wasm/harper_wasm_bg.wasm?no-inline';
 import LazyPromise from 'p-lazy';
@@ -80,11 +74,6 @@ export class BinaryModule {
 		this.inner = LazyPromise.from(() =>
 			loadBinary(typeof this.url === 'string' ? this.url : this.url.href),
 		);
-	}
-
-	async applySuggestion(text: string, suggestion: Suggestion, span: Span): Promise<string> {
-		const exported = await this.inner;
-		return exported.apply_suggestion(text, span, suggestion);
 	}
 
 	async getDefaultLintConfigAsJSON(): Promise<string> {

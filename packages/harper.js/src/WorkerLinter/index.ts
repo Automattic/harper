@@ -1,4 +1,4 @@
-import type { Dialect, Lint, Span, Suggestion } from 'harper-wasm';
+import type { Dialect, Lint, Suggestion } from 'harper-wasm';
 import type Linter from '../Linter';
 import type { LinterInit } from '../Linter';
 import type { BinaryModule, DeserializedRequest } from '../binary';
@@ -69,8 +69,8 @@ export default class WorkerLinter implements Linter {
 		return this.rpc('lint', [text, options]);
 	}
 
-	applySuggestion(text: string, suggestion: Suggestion, span: Span): Promise<string> {
-		return this.rpc('applySuggestion', [text, suggestion, span]);
+	applySuggestion(lint: Lint, suggestion: Suggestion): Promise<string> {
+		return this.rpc('applySuggestion', [lint, suggestion]);
 	}
 
 	isLikelyEnglish(text: string): Promise<boolean> {
@@ -147,6 +147,18 @@ export default class WorkerLinter implements Linter {
 
 	setDialect(dialect: Dialect): Promise<void> {
 		return this.rpc('setDialect', [dialect]);
+	}
+
+	summarizeStats(): Promise<Record<string, number>> {
+		return this.rpc('summarizeStats', []);
+	}
+
+	generateStatsFile(): Promise<string> {
+		return this.rpc('generateStatsFile', []);
+	}
+
+	importStatsFile(statsFile: string): Promise<void> {
+		return this.rpc('importStatsFile', [statsFile]);
 	}
 
 	/** Run a procedure on the remote worker. */

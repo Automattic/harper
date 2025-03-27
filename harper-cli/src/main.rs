@@ -1,6 +1,8 @@
 #![doc = include_str!("../README.md")]
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
+use std::fs::File;
+use std::io::BufReader;
 use std::path::{Path, PathBuf};
 use std::process;
 
@@ -15,7 +17,7 @@ use harper_core::{
     MutableDictionary, TokenKind, TokenStringExt, WordId,
 };
 use harper_literate_haskell::LiterateHaskellParser;
-use hashbrown::HashMap;
+use harper_stats::Stats;
 use serde::Serialize;
 
 /// A debugging tool for the Harper grammar checker.
@@ -56,6 +58,8 @@ enum Args {
     Forms { line: String },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
     Words,
+    /// Summarize a lint record
+    SummarizeLintRecord { file: PathBuf },
     /// Print the default config with descriptions.
     Config,
     /// Print a list of all the words in a document, sorted by frequency.
@@ -197,6 +201,16 @@ fn main() -> anyhow::Result<()> {
             let json = serde_json::to_string_pretty(&metadata).unwrap();
 
             println!("{json}");
+
+            Ok(())
+        }
+        Args::SummarizeLintRecord { file } => {
+            let file = File::open(file)?;
+            let mut reader = BufReader::new(file);
+            let stats = Stats::read(&mut reader)?;
+
+            let summary = stats.summarize();
+            println!("{summary}");
 
             Ok(())
         }

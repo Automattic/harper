@@ -1,6 +1,8 @@
 #![doc = include_str!("../README.md")]
 
+use std::collections::HashMap;
 use std::convert::Into;
+use std::io::Cursor;
 use std::sync::Arc;
 
 use harper_core::language_detection::is_doc_likely_english;
@@ -10,14 +12,12 @@ use harper_core::{
     CharString, Dictionary, Document, FstDictionary, IgnoredLints, Lrc, MergedDictionary,
     MutableDictionary, WordMetadata, remove_overlaps,
 };
+use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::JsValue;
 use wasm_bindgen::prelude::wasm_bindgen;
 
 /// Setup the WebAssembly module's logging.
-///
-///
-/// painful.
 #[wasm_bindgen(start)]
 pub fn setup() {
     console_error_panic_hook::set_once();
@@ -92,6 +92,7 @@ pub struct Linter {
     dictionary: Arc<MergedDictionary>,
     ignored_lints: IgnoredLints,
     dialect: Dialect,
+    stats: Stats,
 }
 
 #[wasm_bindgen]
@@ -109,6 +110,7 @@ impl Linter {
             dictionary,
             ignored_lints: IgnoredLints::default(),
             dialect,
+            stats: Stats::default(),
         }
     }
 
@@ -164,6 +166,19 @@ impl Linter {
             .config
             .merge_from(&mut serde_json::from_str(&json).map_err(|v| v.to_string())?);
         Ok(())
+    }
+
+    pub fn summarize_stats(&self) -> JsValue {
+        serde_wasm_bindgen::to_value(
+            &self
+                .stats
+                .summarize()
+                .lint_counts
+                .iter()
+                .map(|(key, value)| (key.to_string_key(), *value))
+                .collect::<HashMap<_, _>>(),
+        )
+        .unwrap()
     }
 
     /// Get a Record containing the descriptions of all the linting rules.
@@ -274,25 +289,46 @@ impl Linter {
     pub fn get_dialect(&self) -> Dialect {
         self.dialect
     }
+
+    /// Apply a suggestion from a given lint.
+    /// This action will be logged to the Linter's statistics.
+    pub fn apply_suggestion(
+        &mut self,
+        lint: &Lint,
+        suggestion: &Suggestion,
+    ) -> Result<String, String> {
+        let mut source = lint.source.clone();
+
+        self.stats
+            .records
+            .push(Record::now(RecordKind::Lint(lint.inner.lint_kind)));
+
+        suggestion.inner.apply(lint.inner.span, &mut source);
+
+        Ok(source.iter().collect())
+    }
+
+    pub fn generate_stats_file(&self) -> String {
+        let mut output = Vec::new();
+        self.stats.write(&mut output).unwrap();
+
+        String::from_utf8(output).unwrap()
+    }
+
+    pub fn import_stats_file(&mut self, file: String) -> Result<(), String> {
+        let data = file.as_bytes();
+        let mut read = Cursor::new(data);
+
+        let mut new_stats = Stats::read(&mut read).map_err(|err| err.to_string())?;
+        self.stats.records.append(&mut new_stats.records);
+
+        Ok(())
+    }
 }
 
 #[wasm_bindgen]
 pub fn to_title_case(text: String) -> String {
     harper_core::make_title_case_str(&text, &PlainEnglish, &FstDictionary::curated())
-}
-
-#[wasm_bindgen]
-pub fn apply_suggestion(
-    text: String,
-    span: Span,
-    suggestion: &Suggestion,
-) -> Result<String, String> {
-    let mut source: Vec<_> = text.chars().collect();
-    let span: harper_core::Span = span.into();
-
-    suggestion.inner.apply(span, &mut source);
-
-    Ok(source.iter().collect())
 }
 
 /// A suggestion to fix a Lint.

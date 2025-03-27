@@ -106,7 +106,7 @@ $: superSmall = (w ?? 1024) < 550;
 										style="height: 40px; margin: 5px 0px;"
 										on:click={() =>
 											linter
-												.applySuggestion(content, suggestion, lint.span())
+												.applySuggestion(lint, suggestion)
 												.then((edited) => (content = edited))}
 									>
 										{#if suggestion.kind() == SuggestionKind.Remove}
@@ -142,7 +142,7 @@ $: superSmall = (w ?? 1024) < 550;
 							on:click={() =>
 								focused != null &&
 								linter
-									.applySuggestion(content, suggestion, lints[focused].span())
+									.applySuggestion(lints[focused], suggestion)
 									.then((edited) => (content = edited))}
 						>
 							{#if suggestion.kind() == SuggestionKind.Remove}

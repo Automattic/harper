@@ -69,7 +69,7 @@ use crate::linting::{closed_compounds, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
 
-#[derive(Debug, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
 #[serde(transparent)]
 pub struct LintGroupConfig {
     inner: HashMap<String, Option<bool>>,
@@ -428,9 +428,11 @@ impl Linter for LintGroup {
 mod tests {
     use std::sync::Arc;
 
+    use quickcheck::Arbitrary;
+
     use crate::{Dialect, Document, FstDictionary, MutableDictionary, linting::Linter};
 
-    use super::LintGroup;
+    use super::{LintGroup, LintGroupConfig};
 
     #[test]
     fn can_get_all_descriptions() {
