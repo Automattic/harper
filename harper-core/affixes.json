@@ -2,7 +2,7 @@
 	"affixes": {
 		"K": {
 			"#": "'pro-' prefix",
-			"suffix": false,
+			"kind": "prefix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -11,12 +11,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"L": {
 			"#": "'-ment' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -25,12 +25,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"E": {
 			"#": "'dis-' prefix",
-			"suffix": false,
+			"kind": "prefix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -39,12 +39,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"Y": {
 			"#": "'-ly' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -53,12 +53,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"U": {
 			"#": "'un-' prefix",
-			"suffix": false,
+			"kind": "prefix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -67,12 +67,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"H": {
 			"#": "'-ieth' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
 				{
@@ -86,12 +86,12 @@
 					"condition": "[^y]"
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"T": {
 			"#": "'-(i)est' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
 				{
@@ -115,12 +115,12 @@
 					"condition": "[^ey]"
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"R": {
 			"#": "'-(i)er' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -144,14 +144,14 @@
 					"condition": "[^ey]"
 				}
 			],
-			"adds_metadata": {
+			"target_metadata": {
 				"adjective": {}
 			},
-			"gifts_metadata": {}
+			"base_metadata": {}
 		},
 		"C": {
 			"#": "'de-' prefix",
-			"suffix": false,
+			"kind": "prefix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -160,12 +160,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"V": {
 			"#": "'-ive' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
 				{
@@ -179,12 +179,12 @@
 					"condition": "[^e]"
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"N": {
 			"#": "nominalization suffixes: -ion, -ication, -en",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -203,12 +203,12 @@
 					"condition": "[^ey]"
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"A": {
 			"#": "'re-' prefix",
-			"suffix": false,
+			"kind": "prefix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -217,12 +217,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"Z": {
 			"#": "'-(i)(e)rs' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -246,12 +246,12 @@
 					"condition": "[^ey]"
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"P": {
 			"#": "'-(i)ness' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -270,12 +270,12 @@
 					"condition": "[^y]"
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"M": {
 			"#": "-'s possessive suffix; contraction of 'has' and 'is",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -284,18 +284,18 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {
+			"target_metadata": {
 				"noun": {
 					"is_possessive": true
 				}
 			},
-			"gifts_metadata": {
+			"base_metadata": {
 				"noun": {}
 			}
 		},
 		"F": {
 			"#": "'con-' prefix",
-			"suffix": false,
+			"kind": "prefix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -304,12 +304,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"B": {
 			"#": "'-able' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -328,12 +328,12 @@
 					"condition": "[^aeiou]e"
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"S": {
 			"#": "'-(i)(e)s' plural suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -357,16 +357,16 @@
 					"condition": "[^sxzhy]"
 				}
 			],
-			"adds_metadata": {
+			"target_metadata": {
 				"noun": {
 					"is_plural": true
 				}
 			},
-			"gifts_metadata": {}
+			"base_metadata": {}
 		},
 		"D": {
 			"#": "'-(e)d' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -390,16 +390,16 @@
 					"condition": "[aeiou]y"
 				}
 			],
-			"adds_metadata": {
+			"target_metadata": {
 				"kind": {
 					"kind": "Adjective"
 				}
 			},
-			"gifts_metadata": {}
+			"base_metadata": {}
 		},
 		"G": {
 			"#": "'-ing' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -413,16 +413,16 @@
 					"condition": "[^e]"
 				}
 			],
-			"adds_metadata": {
+			"target_metadata": {
 				"verb": {},
 				"noun": null,
 				"adjective": null
 			},
-			"gifts_metadata": {}
+			"base_metadata": {}
 		},
 		"Q": {
 			"#": "'-ally' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -431,12 +431,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"O": {
 			"#": "'-ful' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -445,12 +445,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"I": {
 			"#": "'in-' prefix",
-			"suffix": false,
+			"kind": "prefix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -459,12 +459,12 @@
 					"condition": "."
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"X": {
 			"#": "'-ions', '-ications', '-ens' suffixes",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -483,12 +483,12 @@
 					"condition": "[^ey]"
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"J": {
 			"#": "'-ings' suffix",
-			"suffix": true,
+			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
@@ -502,16 +502,16 @@
 					"condition": "[^e]"
 				}
 			],
-			"adds_metadata": {},
-			"gifts_metadata": {}
+			"target_metadata": {},
+			"base_metadata": {}
 		},
 		"1": {
 			"#": "singular noun property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"noun": {
 					"is_plural": false
 				}
@@ -519,11 +519,11 @@
 		},
 		"2": {
 			"#": "proper noun property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"noun": {
 					"is_proper": true
 				}
@@ -531,11 +531,11 @@
 		},
 		"3": {
 			"#": "linking verb property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"verb": {
 					"is_linking": true
 				}
@@ -543,63 +543,63 @@
 		},
 		"4": {
 			"#": "verb property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"verb": {}
 			}
 		},
 		"5": {
 			"#": "adjective property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"adjective": {}
 			}
 		},
 		"6": {
 			"#": "swear word property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {
+			"target_metadata": {
 				"swear": true
 			},
-			"gifts_metadata": {
+			"base_metadata": {
 				"swear": true
 			}
 		},
 		"7": {
 			"#": "conjunction property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"conjunction": {}
 			}
 		},
 		"8": {
 			"#": "pronoun property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"pronoun": {}
 			}
 		},
 		"9": {
 			"#": "plural noun property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"noun": {
 					"is_plural": true
 				}
@@ -607,71 +607,71 @@
 		},
 		"~": {
 			"#": "common word property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"common": true
 			}
 		},
 		"+": {
 			"#": "preposition property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"preposition": true
 			}
 		},
 		"-": {
 			"#": "determiner property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"determiner": true
 			}
 		},
 		"j": {
 			"#": "adverb property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"adverb": {}
 			}
 		},
 		"s": {
 			"#": "subject case property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"pronoun": {}
 			}
 		},
 		"o": {
 			"#": "object case property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"pronoun": {}
 			}
 		},
 		"f": {
 			"#": "first-person property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"pronoun": {
 					"is_plural": false
 				}
@@ -679,51 +679,51 @@
 		},
 		"n": {
 			"#": "second-person property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"pronoun": {}
 			}
 		},
 		"t": {
 			"#": "third-person property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"pronoun": {}
 			}
 		},
 		"c": {
 			"#": "comparative property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"adjective": {}
 			}
 		},
 		"u": {
 			"#": "superlative property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"adjective": {}
 			}
 		},
 		"*": {
 			"#": "singular third-person pronoun property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"pronoun": {
 					"is_plural": false,
 					"person": "Third"
@@ -732,11 +732,11 @@
 		},
 		":": {
 			"#": "plural pronoun property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"pronoun": {
 					"is_plural": true
 				}
@@ -744,11 +744,11 @@
 		},
 		"m": {
 			"#": "auxiliary verb property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"verb": {
 					"is_auxiliary": true
 				}
@@ -756,31 +756,31 @@
 		},
 		"<": {
 			"#": "American property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"dialect": "American"
 			}
 		},
 		"!": {
 			"#": "GB property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"dialect": "British"
 			}
 		},
 		"@": {
 			"#": "CA property",
-			"suffix": true,
+			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
-			"adds_metadata": {},
-			"gifts_metadata": {
+			"target_metadata": {},
+			"base_metadata": {
 				"dialect": "Canadian"
 			}
 		}
