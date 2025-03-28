@@ -2,6 +2,7 @@ import type { ExtensionContext } from 'vscode';
 import type { Executable, LanguageClientOptions } from 'vscode-languageclient/node';
 
 import { Uri, commands, window, workspace } from 'vscode';
+import { StatusBarAlignment, type StatusBarItem } from 'vscode';
 import { LanguageClient, ResponseError, TransportKind } from 'vscode-languageclient/node';
 
 // There's no publicly available extension manifest type except for the internal one from VS Code's
@@ -51,6 +52,8 @@ const clientOptions: LanguageClientOptions = {
 	},
 };
 
+let dialectStatusBarItem: StatusBarItem | undefined;
+
 export async function activate(context: ExtensionContext): Promise<void> {
 	serverOptions.command = getExecutablePath(context);
 
@@ -99,6 +102,22 @@ export async function activate(context: ExtensionContext): Promise<void> {
 	);
 
 	await startLanguageServer();
+
+	// <= 100 is between Copilot and Notifications.
+	// 101..102 is between the magnifying glass and encoding
+	// >= 103 is left of the magnifying glass
+	dialectStatusBarItem = window.createStatusBarItem(StatusBarAlignment.Right, 101);
+	context.subscriptions.push(dialectStatusBarItem);
+
+	context.subscriptions.push(
+		workspace.onDidChangeConfiguration(async (event) => {
+			if (event.affectsConfiguration('harper.dialect')) {
+				updateDialectStatusBar();
+			}
+		}),
+	);
+
+	updateDialectStatusBar();
 }
 
 function getExecutablePath(context: ExtensionContext): string {
@@ -158,10 +177,33 @@ function showError(message: string, error: Error | unknown): void {
 	});
 }
 
+function updateDialectStatusBar(): void {
+	if (!dialectStatusBarItem) return;
+
+	const dialect = workspace.getConfiguration('harper').get<string>('dialect', '');
+	if (dialect === '') return;
+
+	const flagAndCode = getFlagAndCode(dialect);
+	if (!flagAndCode) return;
+
+	dialectStatusBarItem.text = flagAndCode.join(' ');
+	dialectStatusBarItem.show();
+	console.log(`** dialect set to ${dialect} **`, dialect);
+}
+
 export function deactivate(): Thenable<void> | undefined {
 	if (!client) {
 		return undefined;
 	}
 
 	return client.stop();
+}
+
+function getFlagAndCode(dialect: string): string[] | undefined {
+	return {
+		American: ['🇺🇸', 'US'],
+		Australian: ['🇦🇺', 'AU'],
+		British: ['🇬🇧', 'GB'],
+		Canadian: ['🇨🇦', 'CA'],
+	}[dialect];
 }
