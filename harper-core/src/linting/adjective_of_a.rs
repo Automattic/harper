@@ -19,17 +19,20 @@ impl Linter for AdjectiveOfA {
 
             // Rule out false positives
 
-            // "much of a" is a different and valid construction.
-            if adj_chars == ['m', 'u', 'c', 'h']
+            if match adj_chars {
+                // "much of a" is a different and valid construction.
+                ['m', 'u', 'c', 'h'] | ['M', 'u', 'c', 'h'] => true,
                 // The word is used more as a noun in this context.
                 // (using .kind.is_likely_homograph() here is too strict)
-                || adj_chars == ['k', 'i', 'n', 'd']
-                || adj_chars == ['m', 'e', 'a', 'n', 'i', 'n', 'g']
-                || adj_chars == ['p', 'a', 'r', 't']
-            {
+                ['f', 'r', 'o', 'n', 't'] | ['F', 'r', 'o', 'n', 't'] => true,
+                ['k', 'i', 'n', 'd'] | ['K', 'i', 'n', 'd'] => true,
+                ['m', 'e', 'a', 'n', 'i', 'n', 'g'] | ['M', 'e', 'a', 'n', 'i', 'n', 'g'] => true,
+                ['p', 'a', 'r', 't'] | ['P', 'a', 'r', 't'] => true,
+                // TODO: consider "more of a" and "less of a"
+                _ => false,
+            } {
                 continue;
             }
-
             // Rule out comparatives and superlatives.
 
             // Pros:
@@ -172,6 +175,15 @@ mod tests {
     fn dont_flag_much() {
         assert_lint_count(
             "How much of a performance impact when switching from rails to rails-api ?",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_false_positive_upper() {
+        assert_lint_count(
+            "Quarkus Extension as Part of a Project inside a Monorepo?",
             AdjectiveOfA,
             0,
         );
