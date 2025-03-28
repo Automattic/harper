@@ -1,7 +1,7 @@
 use is_macro::Is;
 use paste::paste;
 use serde::{Deserialize, Serialize};
-use strum_macros::EnumString;
+use strum_macros::{Display, EnumString};
 
 use crate::WordId;
 
@@ -352,7 +352,7 @@ impl ConjunctionData {
 
 /// A regional dialect.
 #[derive(
-    Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, EnumString,
+    Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, EnumString, Display,
 )]
 pub enum Dialect {
     American,
