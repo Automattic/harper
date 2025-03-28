@@ -266,7 +266,7 @@ impl Backend {
                 Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
             }
             "html" => Some(Box::new(HtmlParser::default())),
-            "mail" | "plaintext" => Some(Box::new(PlainEnglish)),
+            "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "typst" => Some(Box::new(Typst)),
             _ => None,
         };
