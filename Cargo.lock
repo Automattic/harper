@@ -689,6 +689,7 @@ dependencies = [
  "anyhow",
  "ariadne",
  "clap",
+ "dirs 6.0.0",
  "harper-comments",
  "harper-core",
  "harper-literate-haskell",
