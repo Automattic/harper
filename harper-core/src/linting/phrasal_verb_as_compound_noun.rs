@@ -71,7 +71,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             ];
 
             // * Must not be in the set of known false positives.
-            if nountok_charsl == &['g', 'a', 'l', 'l', 'o', 'n'] {
+            if nountok_charsl == ['g', 'a', 'l', 'l', 'o', 'n'] {
                 // eprintln!(
                 //     "* Rejected '{}' because it's a known false positive",
                 //     nountok_charsl.iter().collect::<String>()
@@ -109,10 +109,10 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             let (verb_part_is_verb, phrasal_verb_is_verb) = (
                 self.dict
                     .get_word_metadata(verb_part)
-                    .map_or(false, |md| md.verb.is_some()),
+                    .is_some_and(|md| md.verb.is_some()),
                 self.dict
                     .get_word_metadata_str(&phrasal_verb)
-                    .map_or(false, |md| md.verb.is_some()),
+                    .is_some_and(|md| md.verb.is_some()),
             );
 
             // If neither is a verb, then it's not a phrasal verb
@@ -163,7 +163,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                     continue;
                 }
 
-                // "dictionary lookup" is not a mistakes but "couples breakup" is.
+                // "dictionary lookup" is not a mistake but "couples breakup" is.
                 if prev_tok.kind.is_noun() && !prev_tok.kind.is_plural_noun() {
                     // eprintln!(
                     //     "* Rejected '{}' because it follows the singular noun '{}",
