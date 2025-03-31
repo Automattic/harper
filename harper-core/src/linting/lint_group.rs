@@ -58,6 +58,7 @@ use super::terminating_conjunctions::TerminatingConjunctions;
 use super::that_which::ThatWhich;
 use super::then_than::ThenThan;
 use super::unclosed_quotes::UnclosedQuotes;
+use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
 use super::was_aloud::WasAloud;
 use super::whereas::Whereas;
@@ -343,6 +344,7 @@ impl LintGroup {
         insert_pattern_rule!(Hedging, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
         insert_pattern_rule!(ModalOf, true);
+        insert_struct_rule!(UpdatePlaceNames, true);
 
         out.add("SpellCheck", Box::new(SpellCheck::new(dictionary, dialect)));
         out.config.set_rule_enabled("SpellCheck", true);
