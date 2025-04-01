@@ -16,13 +16,25 @@ Since version 29, Emacs has had native support for the Language Server Protocol 
                '(text-mode . ("harper-ls" "--stdio"))))
 ```
 
-where `text-mode` can be set to any, some, or all major modes that correspond to the [languages `harper-ls` supports](./language-server#Supported-Languages). Typically, if you may want to use `harper-ls` to edit Markdown files and you have [`markdown-mode`](https://jblevins.org/projects/markdown-mode) installed, you can configure it like this:
+where `text-mode` can be set to any, some, or all major modes that correspond to the [languages `harper-ls` supports](./language-server#Supported-Languages). Typically, if you want to use `harper-ls` to edit Markdown files and you have [`markdown-mode`](https://jblevins.org/projects/markdown-mode) installed, you can configure it like this:
 
 ```elisp title=init.el
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
                '(markdown-mode . ("harper-ls" "--stdio"))))
 ```
+
+:::note
+
+A possible gotcha you may be encountering if you don't see any diagnostics is when Eglot automatically deduces the language ID being sent to `harper-ls` based on the major mode you used. In which case, you can set the language ID to one that is supported:
+
+```elisp title=init.el
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '((english-prose-mode :language-id "plaintext") . ("harper-ls" "--stdio"))
+```
+
+:::
 
 ## Optional Configuration
 
