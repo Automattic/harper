@@ -121,15 +121,6 @@ impl Matcher {
             "wordlist" => "word list"
         });
 
-        // mixing up than/then in context
-        triggers.extend(pt! {
-            "then","her" => "than her",
-            "then","hers" => "than hers",
-            "then","him" => "than him",
-            "then","his" => "than his",
-            "then","last","week" => "than last week"
-        });
-
         // not a perfect fit for any of the other categories
         triggers.extend(pt! {
             "performing","this" => "perform this",

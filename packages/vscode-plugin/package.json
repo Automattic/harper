@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper",
 	"description": "The grammar checker for developers",
-	"version": "0.26.0",
+	"version": "0.27.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -125,6 +125,18 @@
 					"default": true,
 					"description": "Corrects `a lot worst` to `a lot worse` for proper comparative usage."
 				},
+				"harper.linters.AWholeEntire": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the redundancy in `whole entire` to `whole` or `entire`."
+				},
+				"harper.linters.AdjectiveOfA": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule looks for sequences of words of the form `adjective of a`."
+				},
 				"harper.linters.AlzheimersDisease": {
 					"scope": "resource",
 					"type": "boolean",
@@ -149,6 +161,12 @@
 					"default": true,
 					"description": "A rule that looks for incorrect indefinite articles. For example, `this is an mule` would be flagged as incorrect."
 				},
+				"harper.linters.AnAnother": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `an another` and `a another`."
+				},
 				"harper.linters.AndIn": {
 					"scope": "resource",
 					"type": "boolean",
@@ -160,6 +178,24 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Fixes the typo in `and the like`."
+				},
+				"harper.linters.AnotherAn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `another an` to `another`."
+				},
+				"harper.linters.AnotherOnes": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `another ones`."
+				},
+				"harper.linters.AnotherThings": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `another things`."
 				},
 				"harper.linters.Anybody": {
 					"scope": "resource",
@@ -617,6 +653,12 @@
 					"default": true,
 					"description": "Ensures `gotten rid of` is used instead of `gotten rid off`."
 				},
+				"harper.linters.GuineaBissau": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for the correct official name of the African country."
+				},
 				"harper.linters.HadOf": {
 					"scope": "resource",
 					"type": "boolean",
@@ -724,6 +766,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Detects and corrects a spacing error where `in the` is mistakenly written as `int he`. Proper spacing is essential for readability and grammatical correctness in common phrases."
+				},
+				"harper.linters.InflectedVerbAfterTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule looks for `to verb` where `verb` is not in the infinitive form."
 				},
 				"harper.linters.Insofar": {
 					"scope": "resource",
@@ -1109,12 +1157,6 @@
 					"default": true,
 					"description": "Flags oxymoronic phrases (e.g. `amateur expert`, `increasingly less`, etc.)."
 				},
-				"harper.linters.PerformThis": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `performing this` to `perform this` for proper verb usage."
-				},
 				"harper.linters.PiggyBag": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1156,6 +1198,18 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Typo: `moot` (meaning debatable) is correct rather than `mute`."
+				},
+				"harper.linters.PortAuPrince": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for the correct official name of the capital of Haiti."
+				},
+				"harper.linters.PortoNovo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for the correct official name of the capital of Benin."
 				},
 				"harper.linters.PossessiveYour": {
 					"scope": "resource",
@@ -1349,6 +1403,12 @@
 					"default": true,
 					"description": "Repeating the word \"that\" is often redundant. The phrase `that which` is easier to read."
 				},
+				"harper.linters.TheAnother": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `the another`."
+				},
 				"harper.linters.ThenThan": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1498,6 +1558,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `whet your appetite` is used correctly, distinguishing it from the incorrect `wet` variation."
+				},
+				"harper.linters.WholeEntire": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the redundancy in `whole entire` to `whole` or `entire`."
 				},
 				"harper.linters.Widespread": {
 					"scope": "resource",

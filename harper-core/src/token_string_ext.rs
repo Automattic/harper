@@ -75,6 +75,8 @@ pub trait TokenStringExt {
     create_decl_for!(likely_homograph);
     create_decl_for!(comma);
     create_decl_for!(adjective);
+    create_decl_for!(verb);
+    create_decl_for!(preposition);
 
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_;
     fn iter_linking_verbs(&self) -> impl Iterator<Item = &Token> + '_;
@@ -119,6 +121,8 @@ impl TokenStringExt for [Token] {
     create_fns_for!(likely_homograph);
     create_fns_for!(comma);
     create_fns_for!(adjective);
+    create_fns_for!(verb);
+    create_fns_for!(preposition);
 
     fn first_non_whitespace(&self) -> Option<&Token> {
         self.iter().find(|t| !t.kind.is_whitespace())

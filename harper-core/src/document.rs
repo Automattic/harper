@@ -581,6 +581,8 @@ impl TokenStringExt for Document {
     create_fns_on_doc!(likely_homograph);
     create_fns_on_doc!(comma);
     create_fns_on_doc!(adjective);
+    create_fns_on_doc!(verb);
+    create_fns_on_doc!(preposition);
 
     fn first_sentence_word(&self) -> Option<&Token> {
         self.tokens.first_sentence_word()

@@ -29,6 +29,7 @@ use super::hedging::Hedging;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
 use super::hyphenate_number_day::HyphenateNumberDay;
+use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::left_right_hand::LeftRightHand;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
@@ -346,8 +347,17 @@ impl LintGroup {
         insert_pattern_rule!(ModalOf, true);
         insert_struct_rule!(UpdatePlaceNames, true);
 
-        out.add("SpellCheck", Box::new(SpellCheck::new(dictionary, dialect)));
+        out.add(
+            "SpellCheck",
+            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
+        );
         out.config.set_rule_enabled("SpellCheck", true);
+
+        out.add(
+            "InflectedVerbAfterTo",
+            Box::new(InflectedVerbAfterTo::new(dictionary.clone(), dialect)),
+        );
+        out.config.set_rule_enabled("InflectedVerbAfterTo", true);
 
         out
     }
