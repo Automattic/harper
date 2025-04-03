@@ -6,8 +6,11 @@ use lazy_static::lazy_static;
 #[derive(Debug, Clone, Copy, Default)]
 pub struct UpdatePlaceNames;
 
+type PlaceNameEntryStr<'a> = ((i16, &'a str), &'a [&'a str]);
+type PlaceNameEntryVecChar = ((i16, Vec<char>), Vec<Vec<Vec<char>>>);
+
 // (year, new name), [old names]
-const RAW_PLACE_NAME_UPDATES: &[((i16, &str), &[&str])] = &[
+const RAW_PLACE_NAME_UPDATES: &[PlaceNameEntryStr] = &[
     // Africa
     ((1984, "Burkina Faso"), &["Upper Volta"]),
     ((1985, "Côte d'Ivoire"), &["Ivory Coast"]), // TODO: Can we recommend Cote d'Ivoire as well?
@@ -72,7 +75,7 @@ const RAW_PLACE_NAME_UPDATES: &[((i16, &str), &[&str])] = &[
 ];
 
 lazy_static! {
-    static ref PLACE_NAME_UPDATES: Vec<((i16, Vec<char>), Vec<Vec<Vec<char>>>)> = {
+    static ref PLACE_NAME_UPDATES: Vec<PlaceNameEntryVecChar> = {
         RAW_PLACE_NAME_UPDATES
             .iter()
             .map(|(year_and_new_name, old_names)| {
@@ -91,7 +94,7 @@ lazy_static! {
     };
 }
 
-fn get_place_name_updates() -> &'static Vec<((i16, Vec<char>), Vec<Vec<Vec<char>>>)> {
+fn get_place_name_updates() -> &'static Vec<PlaceNameEntryVecChar> {
     &PLACE_NAME_UPDATES
 }
 
@@ -104,13 +107,13 @@ impl Linter for UpdatePlaceNames {
             for start_idx in 0..chunk.len() {
                 let mut matched_tokens = Vec::new();
 
-                'next_place: for update_idx in 0..place_name_updates.len() {
-                    let place = &place_name_updates[update_idx];
+                'next_place: for place_name_update in place_name_updates {
+                    let place = place_name_update;
                     let old_names = &place.1;
 
-                    'next_old_name: for old_name_idx in 0..old_names.len() {
+                    'next_old_name: for old_name in old_names {
                         let token_txt = document.get_span_content(&chunk[start_idx].span);
-                        let first_word = &old_names[old_name_idx][0];
+                        let first_word = &old_name[0];
 
                         if token_txt != first_word {
                             continue 'next_old_name;
@@ -119,7 +122,7 @@ impl Linter for UpdatePlaceNames {
                         let mut token_idx = start_idx;
                         matched_tokens.push(token_idx);
 
-                        for old_name_word in old_names[old_name_idx].iter().skip(1) {
+                        for old_name_word in old_name.iter().skip(1) {
                             token_idx += 2;
 
                             if token_idx >= chunk.len() {
@@ -141,8 +144,8 @@ impl Linter for UpdatePlaceNames {
                             matched_tokens.push(token_idx);
                         }
 
-                        if matched_tokens.len() == old_names[old_name_idx].len() {
-                            let update = &place_name_updates[update_idx];
+                        if matched_tokens.len() == old_name.len() {
+                            let update = place_name_update;
                             let year = update.0.0;
                             let new_name = &update.0.1;
 
