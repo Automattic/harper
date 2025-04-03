@@ -8,6 +8,7 @@ readme = "README.md"
 repository = "https://github.com/automattic/harper"
 
 [dependencies]
+harper-stats = { path = "../harper-stats", version = "0.27.0" }
 harper-literate-haskell = { path = "../harper-literate-haskell", version = "0.27.0" }
 harper-core = { path = "../harper-core", version = "0.27.0", features = ["concurrent"] }
 harper-comments = { path = "../harper-comments", version = "0.27.0" }

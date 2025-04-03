@@ -404,7 +404,7 @@ pub fn lint_group() -> LintGroup {
             "Ensures `gotten rid of` is used instead of `gotten rid off`."
         ),
         "LastButNotLeast" => (
-            ["last but not the least", "last, but not the least", "last but, not least"],
+            ["last but not the least", "last, but not the least", "last but, not least", "last but not last"],
             ["last but not least"],
             "Use the more idiomatic phrasing.",
             "Corrects common errors in the phrase `last but not least`."
@@ -802,6 +802,54 @@ pub fn lint_group() -> LintGroup {
             ["each and every one"],
             "Use `each and every one` for referring to a group of people or things.",
             "Corrects `each and everyone` to `each and every one`."
+        ),
+        "InsteadOf" => (
+            ["in stead of"],
+            ["instead of"],
+            "Use the modern single word `instead of` to indicate a replacement.",
+            "Corrects the archaic or mistaken separation `in stead of` to `instead of` in everyday usage."
+        ),
+        "Intact" => (
+            ["in tact"],
+            ["intact"],
+            "Use `intact` to mean undamaged or whole.",
+            "Prevents the erroneous spacing in `in tact`; `intact` is the single correct word."
+        ),
+        "IveGotTo" => (
+            ["I've go to"],
+            ["I've got to"],
+            "Use `I've got to` for necessity or obligation.",
+            "Corrects the slip `I've go to` to the idiomatic `I've got to`."
+        ),
+        "ForALongTime" => (
+            ["for along time"],
+            ["for a long time"],
+            "Use the standard phrase `for a long time` to indicate an extended duration.",
+            "Eliminates the incorrect merging in `for along time`."
+        ),
+        "InAWhile" => (
+            ["in awhile", "in while"],
+            ["in a while"],
+            "When describing a timeframe, use `in a while` for clarity.",
+            "Corrects the missing article in `in while` or `in awhile`, forming `in a while`."
+        ),
+        "InQuiteAWhile" => (
+            ["in quite awhile"],
+            ["in quite a while"],
+            "Add `a` to form `in quite a while`, clarifying the duration.",
+            "Corrects `in quite awhile` => `in quite a while` by inserting the missing article."
+        ),
+        "HumanBeings" => (
+            ["human's beings", "humans beings"],
+            ["human beings"],
+            "Use `human beings` to refer to people collectively.",
+            "Eliminates the incorrect possessive/plural usage like `human's beings` or `humans beings`."
+        ),
+        "HalfAnHour" => (
+            ["half an our"],
+            ["half an hour"],
+            "Remember the silent 'h' when writing `hour`: `half an hour`.",
+            "Fixes the eggcorn `half an our` to the accepted `half an hour`."
         ),
         "AnAnother" => (
             ["an another", "a another"],
@@ -1509,11 +1557,35 @@ mod tests {
     }
 
     #[test]
+    fn test_instead_of() {
+        assert_suggestion_result(
+            "He used water in stead of soda.",
+            lint_group(),
+            "He used water instead of soda.",
+        );
+    }
+
+    #[test]
     fn correct_an_another() {
         assert_suggestion_result(
             "Render shader to use it as texture in an another shader.",
             lint_group(),
             "Render shader to use it as texture in another shader.",
+        );
+    }
+
+    #[test]
+    fn test_instead_of_clean() {
+        // Ensure no lint is triggered when it's already correct
+        assert_lint_count("He used water instead of soda.", lint_group(), 0);
+    }
+
+    #[test]
+    fn test_intact() {
+        assert_suggestion_result(
+            "The code remains in tact after the merge.",
+            lint_group(),
+            "The code remains intact after the merge.",
         );
     }
 
@@ -1527,11 +1599,34 @@ mod tests {
     }
 
     #[test]
+    fn test_intact_clean() {
+        assert_lint_count("The data set remains intact.", lint_group(), 0);
+    }
+
+    #[test]
+    fn test_ive_got_to() {
+        assert_suggestion_result(
+            "I've go to finish this before Monday.",
+            lint_group(),
+            "I've got to finish this before Monday.",
+        );
+    }
+
+    #[test]
     fn correct_another_an() {
         assert_suggestion_result(
             "Yet another an atomic deployment tool.",
             lint_group(),
             "Yet another atomic deployment tool.",
+        );
+    }
+
+    #[test]
+    fn test_for_a_long_time() {
+        assert_suggestion_result(
+            "I was stuck there for along time.",
+            lint_group(),
+            "I was stuck there for a long time.",
         );
     }
 
@@ -1546,12 +1641,67 @@ mod tests {
     }
 
     #[test]
+    fn test_in_a_while() {
+        assert_suggestion_result(
+            "I haven't checked in awhile.",
+            lint_group(),
+            "I haven't checked in a while.",
+        );
+        assert_suggestion_result(
+            "We’ll talk again in while.",
+            lint_group(),
+            "We’ll talk again in a while.",
+        );
+    }
+
+    #[test]
     fn correct_another_things() {
         assert_nth_suggestion_result(
             "Another things to fix in the Mask editor",
             lint_group(),
             "Other things to fix in the Mask editor",
             1,
+        );
+    }
+
+    #[test]
+    fn test_in_quite_a_while() {
+        assert_suggestion_result(
+            "I haven’t seen him in quite awhile.",
+            lint_group(),
+            "I haven’t seen him in quite a while.",
+        );
+    }
+
+    #[test]
+    fn test_human_beings() {
+        assert_suggestion_result(
+            "All humans beings deserve empathy.",
+            lint_group(),
+            "All human beings deserve empathy.",
+        );
+        assert_suggestion_result(
+            "We should respect a human's beings fundamental rights.",
+            lint_group(),
+            "We should respect a human beings fundamental rights.",
+        );
+    }
+
+    #[test]
+    fn test_last_but_not_least() {
+        assert_suggestion_result(
+            "Last but not last, I'd like to thank my parents.",
+            lint_group(),
+            "Last but not least, I'd like to thank my parents.",
+        );
+    }
+
+    #[test]
+    fn test_half_an_hour() {
+        assert_suggestion_result(
+            "It took half an our to get there.",
+            lint_group(),
+            "It took half an hour to get there.",
         );
     }
 

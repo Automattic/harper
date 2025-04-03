@@ -65,6 +65,7 @@ impl CodeActionConfig {
 pub struct Config {
     pub user_dict_path: PathBuf,
     pub file_dict_path: PathBuf,
+    pub stats_path: PathBuf,
     pub lint_config: LintGroupConfig,
     pub diagnostic_severity: DiagnosticSeverity,
     pub code_action_config: CodeActionConfig,
@@ -104,6 +105,14 @@ impl Config {
             let path = v.as_str().unwrap();
             if !path.is_empty() {
                 base.file_dict_path = path.try_resolve()?.to_path_buf();
+            }
+        }
+
+        if let Some(v) = value.get("statsPath") {
+            if let Value::String(path) = v {
+                base.file_dict_path = path.try_resolve()?.to_path_buf();
+            } else {
+                bail!("fileDict path must be a string.");
             }
         }
 
@@ -148,6 +157,7 @@ impl Default for Config {
             file_dict_path: data_local_dir()
                 .unwrap()
                 .join("harper-ls/file_dictionaries/"),
+            stats_path: data_local_dir().unwrap().join("harper-ls/stats.txt"),
             lint_config: LintGroupConfig::default(),
             diagnostic_severity: DiagnosticSeverity::Hint,
             code_action_config: CodeActionConfig::default(),

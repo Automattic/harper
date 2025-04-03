@@ -1,4 +1,5 @@
-import type { Dialect, Lint, Span, Suggestion } from 'harper-wasm';
+import type { Dialect, Lint, Suggestion } from 'harper-wasm';
+import type Summary from './Summary';
 import type { BinaryModule } from './binary';
 import type { LintConfig, LintOptions } from './main';
 
@@ -12,8 +13,8 @@ export default interface Linter {
 	/** Lint the provided text. */
 	lint(text: string, options?: LintOptions): Promise<Lint[]>;
 
-	/** Apply a suggestion to the given text, returning the transformed result. */
-	applySuggestion(text: string, suggestion: Suggestion, span: Span): Promise<string>;
+	/** Apply a suggestion from a lint to text, returning the changed text. */
+	applySuggestion(text: string, lint: Lint, suggestion: Suggestion): Promise<string>;
 
 	/** Determine if the provided text is likely to be intended to be English.
 	 * The algorithm can be described as "proof of concept" and as such does not work terribly well.*/
@@ -53,7 +54,7 @@ export default interface Linter {
 	toTitleCase(text: string): Promise<string>;
 
 	/** Ignore future instances of a lint from a previous linting run in future invocations. */
-	ignoreLint(lint: Lint): Promise<void>;
+	ignoreLint(source: string, lint: Lint): Promise<void>;
 
 	/** Export the ignored lints to a JSON list of privacy-respecting hashes. */
 	exportIgnoredLints(): Promise<string>;
@@ -77,6 +78,18 @@ export default interface Linter {
 
 	/** Get the dialect of English this linter was constructed for. */
 	setDialect(dialect: Dialect): Promise<void>;
+
+	/** Summarize the linter's usage statistics.
+	 * You may optionally pass in a start and/or end time.
+	 *
+	 * If so, the summary with only include data from _after_ the start time but _before_ the end time. */
+	summarizeStats(start?: bigint, end?: bigint): Promise<Summary>;
+
+	/** Generate a statistics log file you can save to permanent storage. */
+	generateStatsFile(): Promise<string>;
+
+	/** Import a statistics log file. */
+	importStatsFile(statsFile: string): Promise<void>;
 }
 
 export interface LinterInit {

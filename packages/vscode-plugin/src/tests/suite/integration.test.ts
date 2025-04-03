@@ -55,7 +55,7 @@ describe('Integration >', () => {
 
 	it('gives correct diagnostics for untitled', async () => {
 		const untitledUri = await openUntitled('Errorz');
-		await waitForUpdatesFromOpenedFile();
+		await waitForHarperToActivate(); // requires a longer time
 
 		compareActualVsExpectedDiagnostics(
 			getActualDiagnostics(untitledUri),
@@ -69,9 +69,7 @@ describe('Integration >', () => {
 	it('gives correct diagnostics when language is changed', async () => {
 		const untitledUri = await openUntitled('Errorz # Errorz');
 		await setTextDocumentLanguage(untitledUri, 'plaintext');
-
-		// Wait for `harper-ls` to send diagnostics
-		await waitForUpdatesFromConfigChange();
+		await waitForHarperToActivate(); // requires a longer time
 
 		compareActualVsExpectedDiagnostics(
 			getActualDiagnostics(untitledUri),

@@ -244,10 +244,11 @@ These configs are under the `markdown` key:
 | Markdown          |          `markdown`           |               |
 | Nix               |             `nix`             |            ✅ |
 | PHP               |             `php`             |            ✅ |
-| Plain Text        |          `plaintext`          |               |
+| Plain Text        |      `plaintext`/`text`       |               |
 | Python            |           `python`            |            ✅ |
 | Ruby              |            `ruby`             |            ✅ |
 | Rust              |            `rust`             |            ✅ |
+| Scala             |           `scala`             |            ✅ |
 | Shell/Bash Script |         `shellscript`         |            ✅ |
 | Swift             |            `swift`            |            ✅ |
 | TOML              |            `toml`             |            ✅ |

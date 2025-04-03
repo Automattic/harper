@@ -37,6 +37,11 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
 
     let mut score = sug.edit_distance as i32 * 10;
 
+    // People are much less likely to mistype the first letter.
+    if misspelled_word.first().unwrap() == sug.word.first().unwrap() {
+        score -= 10;
+    }
+
     // If the original word is plural, the correct one probably is too.
     if *misspelled_word.last().unwrap() == 's' && *sug.word.last().unwrap() == 's' {
         score -= 5;

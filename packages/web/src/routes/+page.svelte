@@ -82,7 +82,7 @@ let mobile = $derived(width < 640);
 	<span slot="title">Native Everywhere</span>
 	<span slot="subtitle"
 		>Harper is both available as a <a
-			href="https://github.com/automattic/harper/tree/master/harper-ls">language server</a
+			href="https://writewithharper.com/docs/integrations/language-server">language server</a
 		>, and through WebAssembly, so you can get fantastic grammar checking anywhere you work.
 		<br /><br /> That said, we take extra care to make sure the
 		<a href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"

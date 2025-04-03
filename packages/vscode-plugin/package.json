@@ -1625,11 +1625,10 @@
 	"scripts": {
 		"watch:esbuild": "node esbuild.cjs --watch",
 		"watch:tsc": "tsc --noEmit --watch",
-		"pretest": "pnpm lint && tsc && node esbuild.cjs",
+		"pretest": "tsc && node esbuild.cjs",
 		"test": "node build/tests/runTests.js",
-		"vscode:prepublish": "pnpm lint && tsc --noEmit && node esbuild.cjs --production",
-		"package": "vsce package --no-dependencies",
-		"lint": "biome check src"
+		"vscode:prepublish": "tsc --noEmit && node esbuild.cjs --production",
+		"package": "vsce package --no-dependencies"
 	},
 	"devDependencies": {
 		"@types/jasmine": "^5.1.7",

@@ -24,22 +24,27 @@ function suggestionToLabel(sug: Suggestion) {
 	}
 }
 
+const DEFAULT_DELAY = -1;
+
 export type Settings = {
 	ignoredLints?: string;
 	useWebWorker: boolean;
 	dialect?: Dialect;
 	lintSettings: LintConfig;
 	userDictionary?: string[];
+	delay?: number;
 };
 
 export default class HarperPlugin extends Plugin {
 	private harper: Linter;
 	private editorExtensions: Extension[];
+	private delay: number;
 
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
 		this.harper = new WorkerLinter({ binary: binaryInlined });
 		this.editorExtensions = [];
+		this.delay = DEFAULT_DELAY;
 	}
 
 	public async initializeFromSettings(settings: Settings | null) {
@@ -73,6 +78,8 @@ export default class HarperPlugin extends Plugin {
 		await this.harper.setLintConfig(settings.lintSettings);
 		this.harper.setup();
 
+		this.delay = settings.delay ?? DEFAULT_DELAY;
+
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
 			this.disableEditorLinter();
@@ -96,6 +103,7 @@ export default class HarperPlugin extends Plugin {
 			lintSettings: await this.harper.getLintConfig(),
 			userDictionary: await this.harper.exportWords(),
 			dialect: await this.harper.getDialect(),
+			delay: this.delay,
 		};
 	}
 
@@ -191,8 +199,6 @@ export default class HarperPlugin extends Plugin {
 
 				const lints = await this.harper.lint(text);
 
-				console.log(lints);
-
 				return lints.map((lint) => {
 					const span = lint.span();
 
@@ -259,7 +265,7 @@ export default class HarperPlugin extends Plugin {
 				});
 			},
 			{
-				delay: -1,
+				delay: this.delay,
 			},
 		);
 	}

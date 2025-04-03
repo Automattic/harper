@@ -54,6 +54,22 @@ export class HarperSettingTab extends PluginSettingTab {
 				});
 		});
 
+		new Setting(containerEl)
+			.setName('Delay')
+			.setDesc(
+				'Set the delay (in milliseconds) before Harper checks your work after you make a change. Set to -1 for no delay.',
+			)
+			.addSlider((slider) => {
+				slider
+					.setDynamicTooltip()
+					.setLimits(-1, 10000, 50)
+					.setValue(this.settings.delay ?? -1)
+					.onChange(async (value) => {
+						this.settings.delay = value;
+						await this.plugin.initializeFromSettings(this.settings);
+					});
+			});
+
 		new Setting(containerEl).setName('The Danger Zone').addButton((button) => {
 			button
 				.setButtonText('Forget Ignored Suggestions')

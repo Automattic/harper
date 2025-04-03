@@ -137,7 +137,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		expect(firstRound.length).toBeGreaterThanOrEqual(1);
 
-		await linter.ignoreLint(firstRound[0]);
+		await linter.ignoreLint(source, firstRound[0]);
 
 		const secondRound = await linter.lint(source);
 
@@ -152,7 +152,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const firstLints = await firstLinter.lint(source);
 
 		for (const lint of firstLints) {
-			await firstLinter.ignoreLint(lint);
+			await firstLinter.ignoreLint(source, lint);
 		}
 
 		const exported = await firstLinter.exportIgnoredLints();
@@ -187,6 +187,56 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		expect(lints).toHaveLength(0);
 	});
+
+	test(`${linterName} can summarize simple stat records`, async () => {
+		const linter = new Linter({ binary });
+		linter.setup();
+
+		const source = 'This is an test.';
+
+		const lints = await linter.lint(source);
+
+		const lint = lints[0];
+
+		expect(lint).not.toBeNull();
+
+		const sug = lint.suggestions()[0];
+
+		expect(sug).not.toBeNull();
+
+		const applied = await linter.applySuggestion(source, lint, sug);
+
+		expect(applied).toBe('This is a test.');
+
+		const summary = await linter.summarizeStats();
+		expect(summary).toBeTypeOf('object');
+	});
+
+	test(`${linterName} can save and restore stat records`, async () => {
+		const linter = new Linter({ binary });
+		linter.setup();
+
+		const source = 'This is an test.';
+
+		const lints = await linter.lint(source);
+
+		const lint = lints[0];
+
+		expect(lint).not.toBeNull();
+
+		const sug = lint.suggestions()[0];
+
+		expect(sug).not.toBeNull();
+
+		const applied = await linter.applySuggestion(source, lint, sug);
+
+		expect(applied).toBe('This is a test.');
+
+		const stats = await linter.generateStatsFile();
+
+		const newLinter = new Linter({ binary });
+		await newLinter.importStatsFile(stats);
+	});
 }
 
 test('Linters have the same config format', async () => {
@@ -210,12 +260,11 @@ test('Linters have the same JSON config format', async () => {
 	for (const Linter of Object.values(linters)) {
 		const linter = new Linter({ binary });
 
-		configs.push(await linter.getLintConfig());
+		configs.push(await linter.getLintConfigAsJSON());
 	}
 
 	for (const config of configs) {
-		// The keys of stringified configs would be unstable, so we'll just check the object.
 		expect(config).toEqual(configs[0]);
-		expect(config).toBeTypeOf('object');
+		expect(config).toBeTypeOf('string');
 	}
 });

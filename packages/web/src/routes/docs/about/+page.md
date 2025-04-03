@@ -15,7 +15,7 @@ Most Harper users are catching their mistakes in Neovim, [Obsidian](./integratio
 
 ## How Does It Work?
 
-Harper takes advantage of decades of natural language research analyze how exactly how your words come together.
+Harper takes advantage of decades of natural language research to analyze exactly how your words come together.
 If something is off, Harper lets you know.
 
 In a way, Harper is an error-tolerant parser for English.

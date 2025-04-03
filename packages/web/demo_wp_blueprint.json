@@ -21,7 +21,7 @@
 			"step": "installPlugin",
 			"pluginData": {
 				"resource": "url",
-				"url": "https://github.com/Automattic/harper/releases/download/v0.24.0/harper.zip"
+				"url": "https://github.com/Automattic/harper/releases/download/v0.27.0/harper.zip"
 			},
 			"options": {
 				"activate": true

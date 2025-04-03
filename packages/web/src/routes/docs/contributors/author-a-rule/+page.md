@@ -29,6 +29,7 @@ Please read our [guide for getting your environment set up](./environment).
 Next, you'll want to open a draft pull request.
 This gives us (the Harper maintainers) a better view of what is actively being worked on.
 It also makes it much easier to ask questions about how Harper works while you're working on your rule.
+[This page has more detail on why we want draft pull requests as early as possible.](https://elijahpotter.dev/articles/never_wait).
 
 GitHub has some [good documentation on how to create a draft PR](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) if this is your first time.
 
@@ -53,31 +54,27 @@ All you have to do is add a line to `harper-core/src/linting/phrase_corrections.
 
 This method also covers more complex cases, like if one of the words contains capitalization or the phrase is split by a line break.
 
-Similarly, if you just want Harper to enforce proper capitalization of a multi-token proper noun (like "Tumblr Blaze") you just need to add an entry to `harper-core/src/linting/proper_noun_capitalization_linters.rs`.
+Similarly, if you just want Harper to enforce proper capitalization of a multi-token proper noun (like "Tumblr Blaze") you just need to add an entry to `harper-core/proper_noun_rules.json`.
 
-```rust
-group.add(
-    "TumblrNames",
-    Box::new(ProperNounCapitalizationLinter::new(
-        SequencePattern::default()
-            .t_aco("Tumblr")
-            .then_whitespace()
-            .then((EitherPattern::new(vec![
-                Box::new(SequencePattern::default().t_aco("Blaze")),
-                Box::new(SequencePattern::default().t_aco("Pro")),
-                Box::new(SequencePattern::default().t_aco("Live")),
-                Box::new(SequencePattern::default().t_aco("Ads")),
-                Box::new(SequencePattern::default().t_aco("Communities")),
-                Box::new(SequencePattern::default().t_aco("Shop")),
-                Box::new(SequencePattern::default().t_aco("Dashboard")),
-            ]))),
-        "Ensure proper capitalization of Tumblr-related terms.",
-        dictionary.clone(),
-    )),
-);
+```javascript
+// The name of the rule
+"TumblrNames": {
+    // The canonical capitalization of the proper noun.
+	"canonical": [
+		"Tumblr Blaze",
+		"Tumblr Pro",
+		"Tumblr Live",
+		"Tumblr Ads",
+		"Tumblr Communities",
+		"Tumblr Shop",
+		"Tumblr Dashboard"
+	],
+    // A description to be shown to the user when they make a mistake.
+	"description": "Ensure proper capitalization of Tumblr-related terms."
+},
 ```
 
-If neither of those match the rule you have in mind, continue on to the next section.
+If neither of those work for the rule you have in mind, continue on to the next section.
 
 ## Create Your Rule's Module
 
@@ -150,6 +147,7 @@ pub struct MyRule {
 
 impl Default for MyRule {
     fn default() -> Self {
+        // Define the grammatical pattern the rule should look for in user text.
         let mut pattern = todo!();
 
         Self {
@@ -159,13 +157,14 @@ impl Default for MyRule {
 }
 
 impl PatternLinter for ThatWhich {
+    /// Pass the pattern to the PatternLinter framework.
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }
 
     /// Any series of tokens that match the pattern provided in the `default()` method above will
     /// be provided to this function, which you are required to map into a [`Lint`] object.
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Lint {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         unimplemented!();
     }
 
@@ -177,7 +176,7 @@ impl PatternLinter for ThatWhich {
 
 ## Test Your Changes
 
-To test your rule, write out an example of the error it looks for in a test file at the root of the Harper monorepo.
+To test your rule, first write out an example of the error it looks for in a test file at the root of the Harper monorepo.
 
 ```markdown title="test.md"
 This is an test of the `an_a` rule.

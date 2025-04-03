@@ -152,6 +152,10 @@ export default defineConfig({
 									to: '/docs/contributors/review',
 								},
 								{
+									title: 'Local Statistics',
+									to: '/docs/contributors/local-stats',
+								},
+								{
 									title: 'FAQ',
 									to: '/docs/contributors/faq',
 								},

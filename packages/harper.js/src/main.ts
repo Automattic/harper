@@ -13,7 +13,7 @@ export {
 	binaryInlined,
 	isSerializedRequest,
 } from './binary';
-
+export type { default as Summary } from './Summary';
 /** A linting rule configuration dependent on upstream Harper's available rules.
  * This is a record, since you shouldn't hard-code the existence of any particular rules and should generalize based on this struct. */
 export type LintConfig = Record<string, boolean | undefined>;

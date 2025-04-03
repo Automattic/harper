@@ -1,10 +1,4 @@
-import {
-	Dialect,
-	type InitInput,
-	type Span,
-	type Suggestion,
-	type Linter as WasmLinter,
-} from 'harper-wasm';
+import { Dialect, type InitInput, type Linter as WasmLinter } from 'harper-wasm';
 import { default as binaryInlinedUrl } from 'harper-wasm/harper_wasm_bg.wasm?inline';
 import { default as binaryUrl } from 'harper-wasm/harper_wasm_bg.wasm?no-inline';
 import LazyPromise from 'p-lazy';
@@ -36,6 +30,7 @@ export type SerializableTypes =
 	| 'string'
 	| 'number'
 	| 'boolean'
+	| 'object'
 	| 'Suggestion'
 	| 'Lint'
 	| 'Span'
@@ -80,11 +75,6 @@ export class BinaryModule {
 		this.inner = LazyPromise.from(() =>
 			loadBinary(typeof this.url === 'string' ? this.url : this.url.href),
 		);
-	}
-
-	async applySuggestion(text: string, suggestion: Suggestion, span: Span): Promise<string> {
-		const exported = await this.inner;
-		return exported.apply_suggestion(text, span, suggestion);
 	}
 
 	async getDefaultLintConfigAsJSON(): Promise<string> {
@@ -144,13 +134,17 @@ export class BinaryModule {
 			}
 
 			if (type === undefined) {
-				throw new Error('Unhandled case');
+				throw new Error('Unhandled case: type undefined');
 			}
 
 			return { json, type };
 		}
 
-		throw new Error('Unhandled case');
+		if (argType == 'object') {
+			return { json: JSON.stringify(arg), type: 'object' };
+		}
+
+		throw new Error(`Unhandled case: ${arg}`);
 	}
 
 	async serialize(req: DeserializedRequest): Promise<SerializedRequest> {
@@ -180,6 +174,10 @@ export class BinaryModule {
 				const parsed = JSON.parse(requestArg.json);
 				assert(Array.isArray(parsed));
 				return await Promise.all(parsed.map((arg) => this.deserializeArg(arg)));
+			}
+			case 'object': {
+				const parsed = JSON.parse(requestArg.json);
+				return parsed;
 			}
 			default:
 				throw new Error(`Unhandled case: ${requestArg.type}`);

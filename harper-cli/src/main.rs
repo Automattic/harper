@@ -1,21 +1,25 @@
 #![doc = include_str!("../README.md")]
 
-use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
-use std::process;
+use std::collections::{BTreeMap, HashMap};
+use std::fs::File;
+use std::io::BufReader;
+use std::path::{Component, Path, PathBuf};
+use std::sync::Arc;
+use std::{fs, process};
 
 use anyhow::format_err;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
+use dirs::{config_dir, data_local_dir};
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions};
 use harper_core::{
-    remove_overlaps, CharStringExt, Dialect, Dictionary, Document, FstDictionary,
-    MutableDictionary, TokenKind, TokenStringExt, WordId,
+    remove_overlaps, CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
+    MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
 };
 use harper_literate_haskell::LiterateHaskellParser;
-use hashbrown::HashMap;
+use harper_stats::Stats;
 use serde::Serialize;
 
 /// A debugging tool for the Harper grammar checker.
@@ -37,6 +41,12 @@ enum Args {
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]
         dialect: Dialect,
+        /// Path to the user dictionary.
+        #[arg(short, long, default_value = config_dir().unwrap().join("harper-ls/dictionary.txt").into_os_string())]
+        user_dict_path: PathBuf,
+        /// Path to the directory for file-local dictionaries.
+        #[arg(short, long, default_value = data_local_dir().unwrap().join("harper-ls/file_dictionaries/").into_os_string())]
+        file_dict_path: PathBuf,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -57,6 +67,8 @@ enum Args {
     Forms { line: String },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
     Words,
+    /// Summarize a lint record
+    SummarizeLintRecord { file: PathBuf },
     /// Print the default config with descriptions.
     Config,
     /// Print a list of all the words in a document, sorted by frequency.
@@ -77,10 +89,26 @@ fn main() -> anyhow::Result<()> {
             count,
             only_lint_with,
             dialect,
+            user_dict_path,
+            file_dict_path,
         } => {
-            let (doc, source) = load_file(&file, markdown_options)?;
+            let mut merged_dict = MergedDictionary::new();
+            merged_dict.add_dictionary(dictionary);
 
-            let mut linter = LintGroup::new_curated(dictionary, dialect);
+            match load_dict(&user_dict_path) {
+                Ok(user_dict) => merged_dict.add_dictionary(Arc::new(user_dict)),
+                Err(err) => println!("{}: {}", user_dict_path.display(), err),
+            }
+
+            let file_dict_path = file_dict_path.join(file_dict_name(&file));
+            match load_dict(&file_dict_path) {
+                Ok(file_dict) => merged_dict.add_dictionary(Arc::new(file_dict)),
+                Err(err) => println!("{}: {}", file_dict_path.display(), err),
+            }
+
+            let (doc, source) = load_file(&file, markdown_options, &merged_dict)?;
+
+            let mut linter = LintGroup::new_curated(Arc::new(merged_dict), dialect);
 
             if let Some(rules) = only_lint_with {
                 linter.set_all_rules_to(Some(false));
@@ -127,7 +155,7 @@ fn main() -> anyhow::Result<()> {
             process::exit(1)
         }
         Args::Parse { file } => {
-            let (doc, _) = load_file(&file, markdown_options)?;
+            let (doc, _) = load_file(&file, markdown_options, &dictionary)?;
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
@@ -140,7 +168,7 @@ fn main() -> anyhow::Result<()> {
             file,
             include_newlines,
         } => {
-            let (doc, source) = load_file(&file, markdown_options)?;
+            let (doc, source) = load_file(&file, markdown_options, &dictionary)?;
 
             let primary_color = Color::Blue;
             let secondary_color = Color::Magenta;
@@ -198,6 +226,16 @@ fn main() -> anyhow::Result<()> {
             let json = serde_json::to_string_pretty(&metadata).unwrap();
 
             println!("{json}");
+
+            Ok(())
+        }
+        Args::SummarizeLintRecord { file } => {
+            let file = File::open(file)?;
+            let mut reader = BufReader::new(file);
+            let stats = Stats::read(&mut reader)?;
+
+            let summary = stats.summarize();
+            println!("{summary}");
 
             Ok(())
         }
@@ -297,7 +335,7 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::MineWords { file } => {
-            let (doc, _source) = load_file(&file, MarkdownOptions::default())?;
+            let (doc, _source) = load_file(&file, MarkdownOptions::default(), &dictionary)?;
 
             let mut words = HashMap::new();
 
@@ -326,7 +364,11 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-fn load_file(file: &Path, markdown_options: MarkdownOptions) -> anyhow::Result<(Document, String)> {
+fn load_file(
+    file: &Path,
+    markdown_options: MarkdownOptions,
+    dictionary: &impl Dictionary,
+) -> anyhow::Result<(Document, String)> {
     let source = std::fs::read_to_string(file)?;
 
     let parser: Box<dyn harper_core::parsers::Parser> =
@@ -343,7 +385,7 @@ fn load_file(file: &Path, markdown_options: MarkdownOptions) -> anyhow::Result<(
             ),
         };
 
-    Ok((Document::new_curated(&source, &parser), source))
+    Ok((Document::new(&source, &parser, dictionary), source))
 }
 
 /// Split a dictionary line into its word and annotation segments
@@ -370,4 +412,31 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
         let child_str: String = child.iter().collect();
         println!(" - {}", child_str);
     }
+}
+
+/// Sync version of harper-ls/src/dictionary_io@load_dict
+fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
+    let str = fs::read_to_string(path)?;
+
+    let mut dict = MutableDictionary::new();
+    dict.extend_words(
+        str.lines()
+            .map(|l| (l.chars().collect::<Vec<_>>(), WordMetadata::default())),
+    );
+
+    Ok(dict)
+}
+
+/// Path version of harper-ls/src/dictionary_io@file_dict_name
+fn file_dict_name(path: &Path) -> PathBuf {
+    let mut rewritten = String::new();
+
+    for seg in path.components() {
+        if !matches!(seg, Component::RootDir) {
+            rewritten.push_str(&seg.as_os_str().to_string_lossy());
+            rewritten.push('%');
+        }
+    }
+
+    rewritten.into()
 }
