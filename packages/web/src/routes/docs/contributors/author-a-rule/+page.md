@@ -123,7 +123,7 @@ insert_struct_rule!(AdjectiveOfA, true);
 insert_pattern_rule!(BackInTheDay, true);
 insert_struct_rule!(WordPressDotcom, true);
 insert_pattern_rule!(OutOfDate, true);
-// [svp! df:+]   insert_pattern_rule!(MyRule, true); 
+// [svp! df:+]   insert_pattern_rule!(MyRule, true);
 ```
 
 If you use a `PatternLinter`, use `insert_pattern_rule` to take advantage of Harper's aggressive caching.
@@ -207,6 +207,10 @@ Every time you want to test a change, you'll have to recompile `harper-ls` and r
 ```bash
 cargo build --release # Run in the monorepo to compile `harper-ls`.
 ```
+
+:::note
+This workflow only works if all you're changing is the Rust code. If your changes include updates to the VS Code extension or if you'd like to test your new rule's setting in VS Code by adding it to `package.json`, then you'd need to open the extension in an [Extension Development Host](./visual-studio-code#Running-the-Extension).
+:::
 
 ## Elevate Your Pull Request
 
