@@ -923,6 +923,24 @@ pub fn lint_group() -> LintGroup {
             "Use `without` instead of `w/o`",
             "Expands the abbreviation `w/o` to the full word `without` for clarity."
         ),
+        "OnSecondThought" => (
+            ["on second though"],
+            ["on second thought"],
+            "Idiomatic expression: use `on second thought` instead of `on second though`",
+            "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration."
+        ),
+        "Excellent" => (
+            ["very good"],
+            ["excellent"],
+            "Vocabulary enhancement: use `excellent` instead of `very good`",
+            "Provides a stronger word choice by replacing `very good` with `excellent` for clarity and emphasis."
+        ),
+        "AnyQuestions" => (
+            ["any question"],
+            ["any questions"],
+            "Count agreement: use `Any questions` instead of `Any question`",
+            "Changes the singular to the plural form in a standard request for feedback or clarification."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -1753,6 +1771,78 @@ mod tests {
             "Another possible cause is simply that the application does not have file creation permissions on the another machine.",
             lint_group(),
             "Another possible cause is simply that the application does not have file creation permissions on the other machine.",
+        );
+    }
+
+    #[test]
+    fn on_second_thought_clean() {
+        assert_lint_count(
+            "She considered driving home, but on second thought, she decided to walk.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn on_second_thought_incorrect() {
+        assert_suggestion_result(
+            "I was going to buy it, but on second though, maybe I'll wait.",
+            lint_group(),
+            "I was going to buy it, but on second thought, maybe I'll wait.",
+        );
+    }
+
+    #[test]
+    fn on_second_thought_no_false_positive() {
+        assert_lint_count(
+            "My second though is that I'd prefer something else entirely.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn excellent_clean() {
+        assert_lint_count(
+            "The performance was excellent, drawing praise from all critics.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn excellent_incorrect() {
+        assert_suggestion_result(
+            "Her results were very good this semester.",
+            lint_group(),
+            "Her results were excellent this semester.",
+        );
+    }
+
+    #[test]
+    fn excellent_no_false_positive() {
+        assert_lint_count(
+            "He radiated a sense of very goodness in his charitable acts.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn any_questions_clean() {
+        assert_lint_count(
+            "Does anyone have any questions before we conclude the meeting?",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn any_questions_incorrect() {
+        assert_suggestion_result(
+            "Any question before we finish?",
+            lint_group(),
+            "Any questions before we finish?",
         );
     }
 }
