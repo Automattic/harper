@@ -59,6 +59,7 @@ use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
 use super::then_than::ThenThan;
 use super::unclosed_quotes::UnclosedQuotes;
+use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
 use super::was_aloud::WasAloud;
 use super::whereas::Whereas;
@@ -348,6 +349,7 @@ impl LintGroup {
         insert_pattern_rule!(Hedging, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
         insert_pattern_rule!(ModalOf, true);
+        insert_struct_rule!(UpdatePlaceNames, true);
         insert_pattern_rule!(ForNoun, true);
 
         out.add(
