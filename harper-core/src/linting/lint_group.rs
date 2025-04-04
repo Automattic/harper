@@ -36,7 +36,6 @@ use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::linking_verbs::LinkingVerbs;
 use super::long_sentences::LongSentences;
-use super::matcher::Matcher;
 use super::merge_words::MergeWords;
 use super::modal_of::ModalOf;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
@@ -47,7 +46,6 @@ use super::oxymorons::Oxymorons;
 use super::pattern_linter::run_on_chunk;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
-use super::plural_conjugate::PluralConjugate;
 use super::possessive_your::PossessiveYour;
 use super::pronoun_contraction::PronounContraction;
 use super::proper_noun_capitalization_linters;
@@ -57,17 +55,18 @@ use super::somewhat_something::SomewhatSomething;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
-use super::terminating_conjunctions::TerminatingConjunctions;
 use super::that_which::ThatWhich;
+use super::the_how_why::TheHowWhy;
 use super::then_than::ThenThan;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
 use super::was_aloud::WasAloud;
 use super::whereas::Whereas;
+use super::widely_accepted::WidelyAccepted;
 use super::wordpress_dotcom::WordPressDotcom;
-use super::wrong_quotes::WrongQuotes;
 use super::{CurrencyPlacement, Linter, NoOxfordComma, OxfordComma};
 use super::{Lint, PatternLinter};
+use crate::linting::dashes::Dashes;
 use crate::linting::{closed_compounds, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
@@ -308,6 +307,7 @@ impl LintGroup {
         insert_pattern_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
         insert_struct_rule!(CurrencyPlacement, true);
+        insert_pattern_rule!(Dashes, true);
         insert_pattern_rule!(DespiteOf, true);
         insert_pattern_rule!(DotInitialisms, true);
         insert_struct_rule!(EllipsisLength, true);
@@ -322,7 +322,6 @@ impl LintGroup {
         insert_pattern_rule!(Likewise, true);
         insert_struct_rule!(LinkingVerbs, false);
         insert_struct_rule!(LongSentences, true);
-        insert_struct_rule!(Matcher, true);
         insert_struct_rule!(MergeWords, true);
         insert_pattern_rule!(ModalOf, true);
         insert_pattern_rule!(Nobody, true);
@@ -334,7 +333,6 @@ impl LintGroup {
         insert_pattern_rule!(Oxymorons, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_pattern_rule!(PiqueInterest, true);
-        insert_pattern_rule!(PluralConjugate, false);
         insert_pattern_rule!(PossessiveYour, true);
         insert_struct_rule!(PronounContraction, true);
         insert_struct_rule!(RepeatedWords, true);
@@ -342,15 +340,15 @@ impl LintGroup {
         insert_pattern_rule!(SomewhatSomething, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
-        insert_pattern_rule!(TerminatingConjunctions, true);
         insert_pattern_rule!(ThatWhich, true);
+        insert_pattern_rule!(TheHowWhy, true);
         insert_pattern_rule!(ThenThan, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_pattern_rule!(UseGenitive, false);
         insert_pattern_rule!(WasAloud, true);
         insert_pattern_rule!(Whereas, true);
+        insert_pattern_rule!(WidelyAccepted, true);
         insert_struct_rule!(WordPressDotcom, true);
-        insert_struct_rule!(WrongQuotes, false);
 
         out.add(
             "SpellCheck",

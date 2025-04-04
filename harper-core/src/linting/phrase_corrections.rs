@@ -881,6 +881,48 @@ pub fn lint_group() -> LintGroup {
             "Use `the other` or `another`, not both.",
             "Corrects `the another`."
         ),
+        "ExpandDependency" => (
+            ["dep"],
+            ["dependency"],
+            "Use `dependency` instead of `dep`",
+            "Expands the abbreviation `dep` to the full word `dependency` for clarity."
+        ),
+        "ExpandDependencies" => (
+            ["deps"],
+            ["dependencies"],
+            "Use `dependencies` instead of `deps`",
+            "Expands the abbreviation `deps` to the full word `dependencies` for clarity."
+        ),
+        "ExpandMinimum" => (
+            ["min"],
+            ["minimum"],
+            "Use `minimum` instead of `min`",
+            "Expands the abbreviation `min` to the full word `minimum` for clarity."
+        ),
+        "ExpandStandardInput" => (
+            ["stdin"],
+            ["standard input"],
+            "Use `standard input` instead of `stdin`",
+            "Expands the abbreviation `stdin` to `standard input` for clarity."
+        ),
+        "ExpandStandardOutput" => (
+            ["stdout"],
+            ["standard output"],
+            "Use `standard output` instead of `stdout`",
+            "Expands the abbreviation `stdout` to `standard output` for clarity."
+        ),
+        "ExpandWith" => (
+            ["w/"],
+            ["with"],
+            "Use `with` instead of `w/`",
+            "Expands the abbreviation `w/` to the full word `with` for clarity."
+        ),
+        "ExpandWithout" => (
+            ["w/o"],
+            ["without"],
+            "Use `without` instead of `w/o`",
+            "Expands the abbreviation `w/o` to the full word `without` for clarity."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -928,7 +970,7 @@ mod tests {
         assert_suggestion_result(
             "For now we got rid off circular deps in model tree structure and it's API.",
             lint_group(),
-            "For now we got rid of circular deps in model tree structure and it's API.",
+            "For now we got rid of circular dependencies in model tree structure and it's API.",
         );
     }
 

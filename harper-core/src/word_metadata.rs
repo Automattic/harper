@@ -45,10 +45,6 @@ macro_rules! generate_metadata_queries {
     ($($category:ident has $($sub:ident),*).*) => {
         paste! {
             pub fn is_likely_homograph(&self) -> bool {
-                if [$($(self.[< is_ $sub _ $category >](),)*)*].iter().map(|b| *b as u8).sum::<u8>() > 1 {
-                    return true;
-                }
-
                 [self.determiner, self.preposition, $(
                     self.[< is_ $category >](),
                 )*].iter().map(|b| *b as u8).sum::<u8>() > 1

@@ -4,43 +4,52 @@ use super::Error;
 use super::affix_replacement::{AffixReplacement, HumanReadableAffixReplacement};
 use crate::WordMetadata;
 
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "snake_case")]
+pub enum AffixEntryKind {
+    Property,
+    Suffix,
+    Prefix,
+}
+
 #[derive(Debug, Clone)]
 pub struct Expansion {
     /// If `!true`, this is a prefix
-    pub suffix: bool,
+    /// But if `true` it may be a prefix but may be a property only
+    pub kind: AffixEntryKind,
     pub cross_product: bool,
     pub replacements: Vec<AffixReplacement>,
     /// When the expansion is applied, the resulting word will have this
     /// metadata appended to it.
-    pub adds_metadata: WordMetadata,
+    pub target_metadata: WordMetadata,
     /// When the expansion is applied, the __parent__ word will have this
     /// metadata appended to it.
-    pub gifts_metadata: WordMetadata,
+    pub base_metadata: WordMetadata,
 }
 
 impl Expansion {
     pub fn into_human_readable(self) -> HumanReadableExpansion {
         HumanReadableExpansion {
-            suffix: self.suffix,
+            kind: self.kind,
             cross_product: self.cross_product,
             replacements: self
                 .replacements
                 .iter()
                 .map(AffixReplacement::to_human_readable)
                 .collect(),
-            adds_metadata: self.adds_metadata,
-            gifts_metadata: self.gifts_metadata,
+            target_metadata: self.target_metadata,
+            base_metadata: self.base_metadata,
         }
     }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HumanReadableExpansion {
-    pub suffix: bool,
+    pub kind: AffixEntryKind,
     pub cross_product: bool,
     pub replacements: Vec<HumanReadableAffixReplacement>,
-    pub adds_metadata: WordMetadata,
-    pub gifts_metadata: WordMetadata,
+    pub target_metadata: WordMetadata,
+    pub base_metadata: WordMetadata,
 }
 
 impl HumanReadableExpansion {
@@ -52,11 +61,11 @@ impl HumanReadableExpansion {
         }
 
         Ok(Expansion {
-            suffix: self.suffix,
+            kind: self.kind,
             cross_product: self.cross_product,
             replacements,
-            adds_metadata: self.adds_metadata,
-            gifts_metadata: self.gifts_metadata,
+            target_metadata: self.target_metadata,
+            base_metadata: self.base_metadata,
         })
     }
 }

@@ -19,7 +19,7 @@ In `affixes.json`, this expansion rule looks like this:
 {
 	"L": {
         // Denotes that the area of interest is at the _end_ of the base word.
-		"suffix": true,
+		"kind": "suffix",
         // Declare that it is OK to use the result of the expansion with other expansions.
 		"cross_product": true,
         // The actual replacement rules that result in an expansion.

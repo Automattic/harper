@@ -39,57 +39,42 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
             }
 
             let chars = document.get_span_content(&word.span);
-            let (len, form) = match word.kind {
-                _ if word.kind.is_verb() => match chars {
-                    // breaks the Laravel test at "prior to deploying the application"
-                    // [.., 'i', 'n', 'g'] => (3, "continuous"),
-                    // TODO: needs to handle both -d and -ed (smile-d, frown-ed)
-                    [.., 'e', 'd'] => (2, "past"),
-                    // TODO: needs to handle both -s and -es (throw-s, catch-es)
-                    [.., 's'] => (1, "3rd person singular present"),
-                    _ => continue,
-                },
-                // 3ps pres. verbs currently get wrong metadata from the affix engine!
-                _ if word.kind.is_plural_noun() => match chars {
-                    // TODO: as above, needs to handle both -s and -es
-                    [.., 's'] => (1, "3rd person singular present"), // can use "plural" here for debugging
-                    _ => continue,
-                },
-                _ => continue,
-            };
-            let stem = chars[..chars.len() - len].to_vec();
-            // let dbg_word: String = chars.iter().collect::<String>();
-            // let dbg_stem: String = stem.iter().collect();
-            let Some(md) = self.dictionary.get_word_metadata(&stem) else {
-                // eprintln!(">>>> '{}': Stem '{}' not found", dbg_word, dbg_stem);
-                continue;
-            };
-            if !md.is_verb() {
-                // eprintln!(">>>> '{}': Stem '{}' is not a verb", dbg_word, dbg_stem);
-                continue;
-            }
-            if word.kind.is_plural_noun() && md.is_noun() {
-                // eprintln!(
-                //     ">>>> '{}' is a plural noun. But '{}' is a noun",
-                //     dbg_word, dbg_stem
-                // );
+
+            if chars.len() < 4 {
                 continue;
             }
 
-            lints.push(Lint {
-                span: Span::new(prep.span.start, word.span.end),
-                lint_kind: LintKind::WordChoice,
-                message: format!("This verb seems to be in the {} form.", form).to_string(),
-                suggestions: vec![Suggestion::ReplaceWith(
-                    prep_to
-                        .iter()
-                        .chain([' '].iter())
-                        .chain(stem.iter())
-                        .copied()
-                        .collect(),
-                )],
-                ..Default::default()
-            });
+            let mut check_stem = |stem: &[char]| {
+                if let Some(metadata) = self.dictionary.get_word_metadata(stem) {
+                    if metadata.is_verb() && !metadata.is_noun() {
+                        lints.push(Lint {
+                            span: Span::new(prep.span.start, word.span.end),
+                            lint_kind: LintKind::WordChoice,
+                            message: "The base form of the verb is needed here.".to_string(),
+                            suggestions: vec![Suggestion::ReplaceWith(
+                                prep_to
+                                    .iter()
+                                    .chain([' '].iter())
+                                    .chain(stem.iter())
+                                    .copied()
+                                    .collect(),
+                            )],
+                            ..Default::default()
+                        });
+                    }
+                }
+            };
+
+            if chars.ends_with(&['e', 'd']) {
+                check_stem(&chars[..chars.len() - 2]);
+                check_stem(&chars[..chars.len() - 1]);
+            }
+            if chars.ends_with(&['e', 's']) {
+                check_stem(&chars[..chars.len() - 2]);
+            }
+            if chars.ends_with(&['s']) {
+                check_stem(&chars[..chars.len() - 1]);
+            }
         }
         lints
     }
@@ -141,11 +126,11 @@ mod tests {
     // }
 
     #[test]
-    fn flag_check_ed() {
+    fn dont_flag_check_ed() {
         assert_lint_count(
             "to checked",
             InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-            1,
+            0,
         );
     }
 
@@ -167,6 +152,7 @@ mod tests {
         );
     }
 
+    // can't check yet. 'capture' is noun as well as verb. "to nouns" is good English. we can't disambiguate verbs from nouns.
     // #[test]
     // fn check_993_suggestions() {
     //     assert_suggestion_result(
@@ -194,7 +180,7 @@ mod tests {
         );
     }
 
-    // TODO: possible once we can check both catche_s and catch_es
+    // can't check yet. 'catch' is noun as well as verb. "to nouns" is good English. we can't disambiguate verbs from nouns.
     // #[test]
     // fn corrects_es_ending() {
     //     assert_suggestion_result(
@@ -204,25 +190,23 @@ mod tests {
     //     );
     // }
 
-    // TODO: dict has expand with D flag but expanded is not granted verb status
-    // #[test]
-    // fn corrects_ed_ending() {
-    //     assert_suggestion_result(
-    //         "I had to expanded my horizon.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-    //         "I had to expand my horizon.",
-    //     );
-    // }
+    #[test]
+    fn corrects_ed_ending() {
+        assert_suggestion_result(
+            "I had to expanded my horizon.",
+            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "I had to expand my horizon.",
+        );
+    }
 
-    // TODO: possible once we can check both expir_ed and expire_d
-    // #[test]
-    // fn flags_expire_d() {
-    //     assert_lint_count(
-    //         "I didn't know it was going to expired.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-    //         1,
-    //     );
-    // }
+    #[test]
+    fn flags_expire_d() {
+        assert_lint_count(
+            "I didn't know it was going to expired.",
+            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            1,
+        );
+    }
 
     #[test]
     fn corrects_explain_ed() {
@@ -233,7 +217,7 @@ mod tests {
         );
     }
 
-    // TODO: possible once we can check both explor_ed and explore_d
+    // can't check yet. surprisingly, 'explore' is noun as well as verb. "to nouns" is good English. we can't disambiguate verbs from nouns.
     // #[test]
     // fn corrects_explor_ed() {
     //     assert_suggestion_result(

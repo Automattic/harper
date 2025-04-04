@@ -12,7 +12,7 @@ pub struct RepeatedWords {
 impl RepeatedWords {
     pub fn new() -> Self {
         Self {
-            special_cases: vec![char_string!("is"), char_string!("this")],
+            special_cases: vec![char_string!("this")],
         }
     }
 

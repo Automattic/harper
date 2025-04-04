@@ -11,6 +11,8 @@ const FALSE_POSITIVES: &[&str] = &[
     "emblematic",
     "full",
     "inside",
+    // "more" is tricky but it often seems correct and idiomatic.
+    "more",
     "much",
     "out",
     // The word is used more as a noun in this context.
@@ -73,13 +75,18 @@ impl Linter for AdjectiveOfA {
             // "see if you can give us a little better of an answer"
             // "hopefully it won't be too much worse of a problem"
             // "seems far worse of a result to me"
-            let len = adj_chars.len();
-            if len > 2 {
-                let ending = &adj_chars[len - 2..len];
-                if ending == ['e', 'r'] || ending == ['s', 't'] {
-                    continue;
-                }
+            if adj_chars.ends_with(&['e', 'r']) || adj_chars.ends_with(&['s', 't']) {
+                continue;
             }
+            // Rule out present participles (e.g. "beginning of a")
+            // The -ing form of a verb acts as an adjective called a present participle
+            // and also acts as a noun called a gerund.
+            if adj_chars.ends_with(&['i', 'n', 'g'])
+                && (adjective.kind.is_noun() && adjective.kind.is_verb())
+            {
+                continue;
+            }
+
             if space_1.is_none() || word_of.is_none() || space_2.is_none() || a_or_an.is_none() {
                 continue;
             }
@@ -402,5 +409,11 @@ mod tests {
     fn dont_flag_dream() {
         // Can be an adjective in e.g. "we built our dream house"
         assert_lint_count("When the dream of a united Europe began", AdjectiveOfA, 0);
+    }
+
+    #[test]
+    fn dont_flag_beginning() {
+        // Present participles have properties of adjectives, nouns, and verbs
+        assert_lint_count("That's the beginning of a conversation.", AdjectiveOfA, 0);
     }
 }
