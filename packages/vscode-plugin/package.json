@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper",
 	"description": "The grammar checker for developers",
-	"version": "0.26.0",
+	"version": "0.28.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -125,6 +125,18 @@
 					"default": true,
 					"description": "Corrects `a lot worst` to `a lot worse` for proper comparative usage."
 				},
+				"harper.linters.AWholeEntire": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the redundancy in `whole entire` to `whole` or `entire`."
+				},
+				"harper.linters.AdjectiveOfA": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule looks for sequences of words of the form `adjective of a`."
+				},
 				"harper.linters.AlzheimersDisease": {
 					"scope": "resource",
 					"type": "boolean",
@@ -149,6 +161,12 @@
 					"default": true,
 					"description": "A rule that looks for incorrect indefinite articles. For example, `this is an mule` would be flagged as incorrect."
 				},
+				"harper.linters.AnAnother": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `an another` and `a another`."
+				},
 				"harper.linters.AndIn": {
 					"scope": "resource",
 					"type": "boolean",
@@ -160,6 +178,24 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Fixes the typo in `and the like`."
+				},
+				"harper.linters.AnotherAn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `another an` to `another`."
+				},
+				"harper.linters.AnotherOnes": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `another ones`."
+				},
+				"harper.linters.AnotherThings": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `another things`."
 				},
 				"harper.linters.Anybody": {
 					"scope": "resource",
@@ -365,6 +401,12 @@
 					"default": true,
 					"description": "Ensures `chock-full` is correctly hyphenated."
 				},
+				"harper.linters.CommaFixes": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Fix common comma errors such as no space after, erroneous space before, etc., Asian commas instead of English commas, etc."
+				},
 				"harper.linters.CompoundNouns": {
 					"scope": "resource",
 					"type": "boolean",
@@ -557,11 +599,23 @@
 					"default": true,
 					"description": "Ensures the correct use of `fetal position`, avoiding confusion with `feeble position`, which is not a standard phrase."
 				},
+				"harper.linters.ForALongTime": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Eliminates the incorrect merging in `for along time`."
+				},
 				"harper.linters.ForAllIntentsAndPurposes": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `for all intensive purposes` to `for all intents and purposes`, ensuring the phrase conveys its intended meaning."
+				},
+				"harper.linters.ForNoun": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the archaic or mistaken `fro` to `for` when followed by a noun."
 				},
 				"harper.linters.FreeRein": {
 					"scope": "resource",
@@ -617,11 +671,23 @@
 					"default": true,
 					"description": "Ensures `gotten rid of` is used instead of `gotten rid off`."
 				},
+				"harper.linters.GuineaBissau": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for the correct official name of the African country."
+				},
 				"harper.linters.HadOf": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Flags the unnecessary use of `of` after `had` and suggests the correct forms."
+				},
+				"harper.linters.HalfAnHour": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Fixes the eggcorn `half an our` to the accepted `half an hour`."
 				},
 				"harper.linters.Haphazard": {
 					"scope": "resource",
@@ -665,6 +731,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `however`."
 				},
+				"harper.linters.HumanBeings": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Eliminates the incorrect possessive/plural usage like `human's beings` or `humans beings`."
+				},
 				"harper.linters.HumanLife": {
 					"scope": "resource",
 					"type": "boolean",
@@ -688,6 +760,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Fixes the incorrect spacing in `I a m` to properly form `I am`."
+				},
+				"harper.linters.InAWhile": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the missing article in `in while` or `in awhile`, forming `in a while`."
 				},
 				"harper.linters.InAndOfItself": {
 					"scope": "resource",
@@ -719,11 +797,23 @@
 					"default": true,
 					"description": "Corrects `in one foul swoop` to `in one fell swoop`, preserving the phrase’s original meaning of sudden and complete action."
 				},
+				"harper.linters.InQuiteAWhile": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `in quite awhile` => `in quite a while` by inserting the missing article."
+				},
 				"harper.linters.InThe": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Detects and corrects a spacing error where `in the` is mistakenly written as `int he`. Proper spacing is essential for readability and grammatical correctness in common phrases."
+				},
+				"harper.linters.InflectedVerbAfterTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule looks for `to verb` where `verb` is not in the infinitive form."
 				},
 				"harper.linters.Insofar": {
 					"scope": "resource",
@@ -737,11 +827,17 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `instead`."
 				},
+				"harper.linters.InsteadOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the archaic or mistaken separation `in stead of` to `instead of` in everyday usage."
+				},
 				"harper.linters.Intact": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Looks for incorrect spacing inside the closed compound `intact`."
+					"description": "Prevents the erroneous spacing in `in tact`; `intact` is the single correct word."
 				},
 				"harper.linters.Into": {
 					"scope": "resource",
@@ -766,6 +862,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `itself`."
+				},
+				"harper.linters.IveGotTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the slip `I've go to` to the idiomatic `I've got to`."
 				},
 				"harper.linters.JawDropping": {
 					"scope": "resource",
@@ -1007,6 +1109,12 @@
 					"default": true,
 					"description": "Corrects `no to` to `not to`, ensuring proper negation."
 				},
+				"harper.linters.NotablePlaces": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Ensure proper capitalization of notable places that are significant regional centers, travel destinations, or have international importance."
+				},
 				"harper.linters.Nothing": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1109,12 +1217,6 @@
 					"default": true,
 					"description": "Flags oxymoronic phrases (e.g. `amateur expert`, `increasingly less`, etc.)."
 				},
-				"harper.linters.PerformThis": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `performing this` to `perform this` for proper verb usage."
-				},
 				"harper.linters.PiggyBag": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1157,6 +1259,18 @@
 					"default": true,
 					"description": "Typo: `moot` (meaning debatable) is correct rather than `mute`."
 				},
+				"harper.linters.PortAuPrince": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for the correct official name of the capital of Haiti."
+				},
+				"harper.linters.PortoNovo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for the correct official name of the capital of Benin."
+				},
 				"harper.linters.PossessiveYour": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1186,6 +1300,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `proofread`."
+				},
+				"harper.linters.ProperNouns": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Ensure proper capitalization of proper nouns."
 				},
 				"harper.linters.RealTrouper": {
 					"scope": "resource",
@@ -1349,6 +1469,12 @@
 					"default": true,
 					"description": "Repeating the word \"that\" is often redundant. The phrase `that which` is easier to read."
 				},
+				"harper.linters.TheAnother": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `the another`."
+				},
 				"harper.linters.ThenThan": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1499,6 +1625,12 @@
 					"default": true,
 					"description": "Ensures `whet your appetite` is used correctly, distinguishing it from the incorrect `wet` variation."
 				},
+				"harper.linters.WholeEntire": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the redundancy in `whole entire` to `whole` or `entire`."
+				},
 				"harper.linters.Widespread": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1559,11 +1691,10 @@
 	"scripts": {
 		"watch:esbuild": "node esbuild.cjs --watch",
 		"watch:tsc": "tsc --noEmit --watch",
-		"pretest": "pnpm lint && tsc && node esbuild.cjs",
+		"pretest": "tsc && node esbuild.cjs",
 		"test": "node build/tests/runTests.js",
-		"vscode:prepublish": "pnpm lint && tsc --noEmit && node esbuild.cjs --production",
-		"package": "vsce package --no-dependencies",
-		"lint": "biome check src"
+		"vscode:prepublish": "tsc --noEmit && node esbuild.cjs --production",
+		"package": "vsce package --no-dependencies"
 	},
 	"devDependencies": {
 		"@types/jasmine": "^5.1.7",

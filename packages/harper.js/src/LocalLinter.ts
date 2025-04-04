@@ -1,4 +1,4 @@
-import type { Dialect, Lint, Span, Suggestion, Linter as WasmLinter } from 'harper-wasm';
+import type { Dialect, Lint, Suggestion, Linter as WasmLinter } from 'harper-wasm';
 import { Language } from 'harper-wasm';
 import LazyPromise from 'p-lazy';
 import type Linter from './Linter';
@@ -38,8 +38,9 @@ export default class LocalLinter implements Linter {
 		return lints;
 	}
 
-	async applySuggestion(text: string, suggestion: Suggestion, span: Span): Promise<string> {
-		return await this.binary.applySuggestion(text, suggestion, span);
+	async applySuggestion(text: string, lint: Lint, suggestion: Suggestion): Promise<string> {
+		const inner = await this.inner;
+		return inner.apply_suggestion(text, lint, suggestion);
 	}
 
 	async isLikelyEnglish(text: string): Promise<boolean> {
@@ -94,9 +95,9 @@ export default class LocalLinter implements Linter {
 		return inner.get_lint_descriptions_as_json();
 	}
 
-	async ignoreLint(lint: Lint): Promise<void> {
+	async ignoreLint(source: string, lint: Lint): Promise<void> {
 		const inner = await this.inner;
-		inner.ignore_lint(lint);
+		inner.ignore_lint(source, lint);
 	}
 
 	async exportIgnoredLints(): Promise<string> {
@@ -140,5 +141,20 @@ export default class LocalLinter implements Linter {
 		}
 
 		return Promise.resolve();
+	}
+
+	async summarizeStats(start?: bigint, end?: bigint): Promise<any> {
+		const inner = await this.inner;
+		return inner.summarize_stats(start, end);
+	}
+
+	async generateStatsFile(): Promise<string> {
+		const inner = await this.inner;
+		return inner.generate_stats_file();
+	}
+
+	async importStatsFile(statsFile: string): Promise<void> {
+		const inner = await this.inner;
+		return inner.import_stats_file(statsFile);
 	}
 }

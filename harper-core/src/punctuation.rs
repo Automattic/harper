@@ -97,6 +97,8 @@ impl Punctuation {
             ':' => Punctuation::Colon,
             ';' => Punctuation::Semicolon,
             ',' => Punctuation::Comma,
+            '、' => Punctuation::Comma,
+            '，' => Punctuation::Comma,
             '-' => Punctuation::Hyphen,
             '[' => Punctuation::OpenSquare,
             ']' => Punctuation::CloseSquare,

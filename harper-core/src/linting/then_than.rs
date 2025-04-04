@@ -1,6 +1,5 @@
 use super::{Lint, LintKind, PatternLinter};
 use crate::Token;
-use crate::char_string::char_string;
 use crate::linting::Suggestion;
 use crate::patterns::{
     All, AnyCapitalization, Invert, OwnedPatternExt, Pattern, SequencePattern, WordSet,
@@ -23,7 +22,7 @@ impl ThenThan {
                         .then_whitespace()
                         .then_any_capitalization_of("then")
                         .then_whitespace()
-                        .then(Invert::new(AnyCapitalization::new(char_string!("that")))),
+                        .then(Invert::new(AnyCapitalization::of("that"))),
                 ),
                 // Denotes exceptions to the rule.
                 Box::new(Invert::new(WordSet::new(&["back", "this", "so", "but"]))),
@@ -204,6 +203,133 @@ mod tests {
             "So then after talking about how he would, he didn't.",
             ThenThan::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn issue_720_school_but_then_his() {
+        assert_lint_count(
+            "She loved the atmosphere of the school but then his argument is that it lacks proper resources for students.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "The teacher praised the efforts of the school but then his argument is that the curriculum needs to be updated.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "They were excited about the new program at school but then his argument is that it won't be effective without proper training.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "The community supported the school but then his argument is that funding is still a major issue.",
+            ThenThan::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn issue_720_so_then_these_resistors() {
+        assert_lint_count(
+            "So then these resistors are connected up in parallel to reduce the overall resistance.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "So then these resistors are connected up to ensure the current flows properly.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "So then these resistors are connected up to achieve the desired voltage drop.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "So then these resistors are connected up to demonstrate the principles of series and parallel circuits.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "So then these resistors are connected up to optimize the circuit's performance.",
+            ThenThan::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn issue_720_yes_so_then_sorry() {
+        assert_lint_count(
+            "Yes so then sorry you didn't receive the memo about the meeting changes.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "Yes so then sorry you had to wait so long for a response from our team.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "Yes so then sorry you felt left out during the discussion; we value your input.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "Yes so then sorry you missed the deadline; we can discuss an extension.",
+            ThenThan::default(),
+            0,
+        );
+        assert_lint_count(
+            "Yes so then sorry you encountered issues with the software; let me help you troubleshoot.",
+            ThenThan::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn more_talented_then_her_issue_720() {
+        assert_suggestion_result(
+            "He was more talented then her at writing code.",
+            ThenThan::default(),
+            "He was more talented than her at writing code.",
+        );
+    }
+
+    #[test]
+    fn simpler_then_hers_issue_720() {
+        assert_suggestion_result(
+            "The design was simpler then hers in layout and color scheme.",
+            ThenThan::default(),
+            "The design was simpler than hers in layout and color scheme.",
+        );
+    }
+
+    #[test]
+    fn earlier_then_him_issue_720() {
+        assert_suggestion_result(
+            "We arrived earlier then him at the event.",
+            ThenThan::default(),
+            "We arrived earlier than him at the event.",
+        );
+    }
+
+    #[test]
+    fn more_robust_then_his_issue_720() {
+        assert_suggestion_result(
+            "This approach is more robust then his for handling edge cases.",
+            ThenThan::default(),
+            "This approach is more robust than his for handling edge cases.",
+        );
+    }
+
+    #[test]
+    fn patch_more_recently_then_last_week_issue_720() {
+        assert_suggestion_result(
+            "We submitted the patch more recently then last week, so they should have it already.",
+            ThenThan::default(),
+            "We submitted the patch more recently than last week, so they should have it already.",
         );
     }
 }

@@ -1,7 +1,7 @@
 name: Fuzz
 
 on:
-  schedule:
+  schedule: 
     - cron: "*/10 * * * *"
 
 env:

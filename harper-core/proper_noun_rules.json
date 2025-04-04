@@ -511,5 +511,22 @@
 			"Colorado School of Mines"
 		],
 		"description": "Ensure proper capitalization of major universities in the United States."
+	},
+	"NotablePlaces": {
+		"canonical": [
+			"Darien Gap",
+			"Las Palmas",
+			"Las Vegas",
+			"Los Angeles",
+			"Novi Sad",
+			"Panama Canal",
+			"Rio de Janeiro",
+			"San Francisco"
+		],
+		"description": "Ensure proper capitalization of notable places that are significant regional centers, travel destinations, or have international importance."
+	},
+	"ProperNouns": {
+		"canonical": ["Pax Americana"],
+		"description": "Ensure proper capitalization of proper nouns."
 	}
 }

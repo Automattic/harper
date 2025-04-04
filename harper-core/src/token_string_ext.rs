@@ -69,11 +69,13 @@ pub trait TokenStringExt {
     create_decl_for!(noun);
     create_decl_for!(paragraph_break);
     create_decl_for!(pipe);
+    create_decl_for!(preposition);
     create_decl_for!(punctuation);
     create_decl_for!(quote);
     create_decl_for!(sentence_terminator);
     create_decl_for!(space);
     create_decl_for!(unlintable);
+    create_decl_for!(verb);
     create_decl_for!(word);
     create_decl_for!(word_like);
 
@@ -101,26 +103,28 @@ pub trait TokenStringExt {
 
 impl TokenStringExt for [Token] {
     create_fns_for!(adjective);
-    create_fns_for!(at);
     create_fns_for!(apostrophe);
+    create_fns_for!(at);
     create_fns_for!(chunk_terminator);
     create_fns_for!(comma);
-    create_fns_for!(currency);
     create_fns_for!(conjunction);
+    create_fns_for!(currency);
     create_fns_for!(ellipsis);
     create_fns_for!(hostname);
     create_fns_for!(likely_homograph);
-    create_fns_for!(number);
     create_fns_for!(noun);
+    create_fns_for!(number);
     create_fns_for!(paragraph_break);
     create_fns_for!(pipe);
+    create_fns_for!(preposition);
     create_fns_for!(punctuation);
     create_fns_for!(quote);
     create_fns_for!(sentence_terminator);
     create_fns_for!(space);
     create_fns_for!(unlintable);
-    create_fns_for!(word);
+    create_fns_for!(verb);
     create_fns_for!(word_like);
+    create_fns_for!(word);
 
     fn first_non_whitespace(&self) -> Option<&Token> {
         self.iter().find(|t| !t.kind.is_whitespace())

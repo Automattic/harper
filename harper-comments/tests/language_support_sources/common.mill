@@ -1,0 +1,19 @@
+import mill._, scalalib._
+
+object hello extends ScalaModule {
+  def scalaVersion = "2.13.8"
+
+  // Define third-party dependencies
+  def ivyDeps = Agg(
+    ivy"com.lihaoyi::scalatags:0.9.4",  // for HTML generation
+    ivy"com.lihaoyi::mainargs:0.6.2"     // for CLI argument parsing
+  )
+
+  // Define an test sub-module using a test framework.
+  object test extends ScalaTests {
+    def testFramework = "utest.runner.Framework"
+    def ivyDeps = Agg(
+      ivy"com.lihaoyi::utest:0.7.10"
+    )
+  }
+}

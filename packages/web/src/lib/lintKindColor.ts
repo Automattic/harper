@@ -18,6 +18,8 @@ export default function lintKindColor(lintKindKey: string): string {
 			return '#0EAD69';
 		case 'Miscellaneous':
 			return '#3BCEAC';
+		case 'Punctuation':
+			return '#D4850F';
 		default:
 			throw new Error(`Unexpected lint kind: ${lintKindKey}`);
 	}

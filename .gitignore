@@ -1,4 +1,7 @@
 target
 build
+.idea
+.vscode
+.DS_Store
 *.pdf
 node_modules

@@ -25,10 +25,12 @@ use super::despite_of::DespiteOf;
 use super::dot_initialisms::DotInitialisms;
 use super::ellipsis_length::EllipsisLength;
 use super::expand_time_shorthands::ExpandTimeShorthands;
+use super::for_noun::ForNoun;
 use super::hedging::Hedging;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
 use super::hyphenate_number_day::HyphenateNumberDay;
+use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::left_right_hand::LeftRightHand;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
@@ -70,10 +72,11 @@ use crate::linting::{closed_compounds, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
 
-#[derive(Debug, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
 #[serde(transparent)]
 pub struct LintGroupConfig {
-    inner: HashMap<String, Option<bool>>,
+    /// A `BTreeMap` so that the config has a stable ordering when written to disk.
+    inner: BTreeMap<String, Option<bool>>,
 }
 
 #[cached]
@@ -95,7 +98,7 @@ impl LintGroupConfig {
     }
 
     pub fn set_rule_enabled_if_unset(&mut self, key: impl AsRef<str>, val: bool) {
-        if self.inner.get(key.as_ref()).is_none() {
+        if !self.inner.contains_key(key.as_ref()) {
             self.set_rule_enabled(key.as_ref().to_string(), val);
         }
     }
@@ -117,13 +120,15 @@ impl LintGroupConfig {
     ///
     /// Conflicting keys will be overridden by the value in the other group.
     pub fn merge_from(&mut self, other: &mut LintGroupConfig) {
-        for (key, val) in other.inner.drain() {
+        for (key, val) in other.inner.iter() {
             if val.is_none() {
                 continue;
             }
 
-            self.inner.insert(key, val);
+            self.inner.insert(key.to_string(), *val);
         }
+
+        other.clear();
     }
 
     /// Fill the group with the values for the curated lint group.
@@ -307,6 +312,7 @@ impl LintGroup {
         insert_pattern_rule!(DotInitialisms, true);
         insert_struct_rule!(EllipsisLength, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
+        insert_pattern_rule!(ForNoun, true);
         insert_pattern_rule!(Hedging, true);
         insert_pattern_rule!(Hereby, true);
         insert_struct_rule!(HopHope, true);
@@ -346,8 +352,17 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_struct_rule!(WrongQuotes, false);
 
-        out.add("SpellCheck", Box::new(SpellCheck::new(dictionary, dialect)));
+        out.add(
+            "SpellCheck",
+            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
+        );
         out.config.set_rule_enabled("SpellCheck", true);
+
+        out.add(
+            "InflectedVerbAfterTo",
+            Box::new(InflectedVerbAfterTo::new(dictionary.clone(), dialect)),
+        );
+        out.config.set_rule_enabled("InflectedVerbAfterTo", true);
 
         out
     }

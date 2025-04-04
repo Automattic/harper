@@ -10,7 +10,9 @@ use crate::patterns::{
 };
 use crate::punctuation::Punctuation;
 use crate::vec_ext::VecExt;
-use crate::{Dictionary, FatToken, FstDictionary, Lrc, Token, TokenKind, TokenStringExt};
+use crate::{
+    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, Token, TokenKind, TokenStringExt,
+};
 use crate::{NumberSuffix, Span};
 
 /// A document containing some amount of lexed and parsed English text.
@@ -34,6 +36,18 @@ impl Document {
         self.tokens()
             .enumerate()
             .filter_map(|(idx, tok)| tok.span.overlaps_with(span).then_some(idx))
+            .collect()
+    }
+
+    /// Locate all the tokens that intersect a provided span and convert them to [`FatToken`]s.
+    ///
+    /// Desperately needs optimization.
+    pub fn fat_tokens_intersecting(&self, span: Span) -> Vec<FatToken> {
+        let indices = self.token_indices_intersecting(span);
+
+        indices
+            .into_iter()
+            .map(|i| self.tokens[i].to_fat(&self.source))
             .collect()
     }
 
@@ -243,6 +257,11 @@ impl Document {
     /// Get an iterator over all the tokens contained in the document.
     pub fn fat_tokens(&self) -> impl Iterator<Item = FatToken> + '_ {
         self.tokens().map(|token| token.to_fat(&self.source))
+    }
+
+    /// Get an iterator over all the tokens contained in the document.
+    pub fn fat_string_tokens(&self) -> impl Iterator<Item = FatStringToken> + '_ {
+        self.fat_tokens().map(|t| t.into())
     }
 
     pub fn get_span_content(&self, span: &Span) -> &[char] {
@@ -575,11 +594,13 @@ impl TokenStringExt for Document {
     create_fns_on_doc!(number);
     create_fns_on_doc!(paragraph_break);
     create_fns_on_doc!(pipe);
+    create_fns_on_doc!(preposition);
     create_fns_on_doc!(punctuation);
     create_fns_on_doc!(quote);
     create_fns_on_doc!(sentence_terminator);
     create_fns_on_doc!(space);
     create_fns_on_doc!(unlintable);
+    create_fns_on_doc!(verb);
     create_fns_on_doc!(word);
     create_fns_on_doc!(word_like);
 
