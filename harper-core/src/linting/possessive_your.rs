@@ -38,6 +38,7 @@ impl PatternLinter for PossessiveYour {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![
                 Suggestion::replace_with_match_case("your".chars().collect(), orig_chars),
+                Suggestion::replace_with_match_case("you're a".chars().collect(), orig_chars),
                 Suggestion::replace_with_match_case("you're an".chars().collect(), orig_chars),
             ],
             message: "The possessive version of this word is more common in this context."

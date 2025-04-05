@@ -148,7 +148,7 @@ pub trait Linter: LSend {
 
 #[cfg(test)]
 mod tests {
-    use super::Linter;
+    use super::{Linter, PossessiveYour};
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
 
     #[track_caller]
@@ -238,5 +238,62 @@ mod tests {
     #[track_caller]
     pub fn assert_suggestion_result(text: &str, linter: impl Linter, expected_result: &str) {
         assert_nth_suggestion_result(text, linter, expected_result, 0);
+    }
+
+    /// Runs a provided linter on text, applies each suggestion from each lint in turn
+    /// and asserts whether any of the results is equal to a given value.
+    #[track_caller]
+    pub fn assert_any_suggestion_result(
+        text: &str,
+        mut linter: impl Linter,
+        expected_result: &str,
+    ) {
+        let test = Document::new_from_vec(
+            text.chars().collect::<Vec<char>>().into(),
+            &PlainEnglish,
+            &FstDictionary::curated(),
+        );
+        let lints = linter.lint(&test);
+
+        if lints.iter().any(|lint| {
+            lint.suggestions.iter().any(|suggestion| {
+                let mut text_chars = text.chars().collect::<Vec<_>>();
+                suggestion.apply(lint.span, &mut text_chars);
+                text_chars.iter().collect::<String>() == expected_result
+            })
+        }) {
+            return;
+        }
+
+        panic!(
+            "No suggestion produced the expected result \"{}\".\n\n\
+            Original text: \"{}\"\n\n\
+            Available suggestions:\n{}",
+            expected_result,
+            text,
+            lints
+                .iter()
+                .flat_map(|l| l.suggestions.iter())
+                .map(|s| format!("- {}\n", s))
+                .collect::<String>()
+        );
+    }
+
+    #[test]
+    fn test_any_suggestion_your() {
+        assert_any_suggestion_result(
+            "You combination of artist and teacher.",
+            PossessiveYour::default(),
+            "Your combination of artist and teacher.",
+        );
+    }
+
+    #[test]
+    fn test_any_suggestion_youre_a() {
+        assert_any_suggestion_result(
+            "You combination of artist and teacher.",
+            PossessiveYour::default(),
+            "You're a combination of artist and teacher.",
+        );
     }
 }
