@@ -21,6 +21,7 @@ const FALSE_POSITIVES: &[&str] = &[
     "bit",
     "bottom",
     "chance",
+    "derivative",
     "dream",
     "front",
     "half",
@@ -35,6 +36,7 @@ const FALSE_POSITIVES: &[&str] = &[
     "precision",
     // for "rid" I removed the `5` flag in `dictionary.dict``
     "shadow",
+    "side",
     "short",
     "something",
     "sound",
@@ -415,5 +417,25 @@ mod tests {
     fn dont_flag_beginning() {
         // Present participles have properties of adjectives, nouns, and verbs
         assert_lint_count("That's the beginning of a conversation.", AdjectiveOfA, 0);
+    }
+
+    #[test]
+    fn dont_flag_side() {
+        // Can be an adjective in e.g. "via a side door"
+        assert_lint_count(
+            "it hit the barrier on the side of a highway",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_derivative() {
+        // Adj: "a derivative story", Noun: "stocks and derivatives"
+        assert_lint_count(
+            "Techniques for evaluating the *partial derivative of a function",
+            AdjectiveOfA,
+            0,
+        )
     }
 }
