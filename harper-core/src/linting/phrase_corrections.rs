@@ -923,6 +923,12 @@ pub fn lint_group() -> LintGroup {
             "Use `without` instead of `w/o`",
             "Expands the abbreviation `w/o` to the full word `without` for clarity."
         ),
+        "ExpandBecause" => (
+            ["cuz"],
+            ["because"],
+            "Use `because` instead of informal `cuz`",
+            "Expands the informal abbreviation `cuz` to the full word `because` for formality."
+        )
     });
 
     group.set_all_rules_to(Some(true));
@@ -1753,6 +1759,15 @@ mod tests {
             "Another possible cause is simply that the application does not have file creation permissions on the another machine.",
             lint_group(),
             "Another possible cause is simply that the application does not have file creation permissions on the other machine.",
+        );
+    }
+
+    #[test]
+    fn expand_cuz() {
+        assert_suggestion_result(
+            "Stick around cuz I got a surprise for you at the end.",
+            lint_group(),
+            "Stick around because I got a surprise for you at the end.",
         );
     }
 }
