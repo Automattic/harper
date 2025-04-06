@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::hash::{Hash, Hasher};
 
 use crate::{
     Document, FatToken,
@@ -7,13 +8,23 @@ use crate::{
 
 /// A location-agnostic structure that attempts to captures the context and content that a [`Lint`]
 /// occurred.
-#[derive(Debug, Hash, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct LintContext {
     pub lint_kind: LintKind,
     pub suggestions: Vec<Suggestion>,
     pub message: String,
     pub priority: u8,
     pub tokens: Vec<FatToken>,
+}
+
+impl Hash for LintContext {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.lint_kind.hash(state);
+        self.suggestions.hash(state);
+        self.message.hash(state);
+        self.priority.hash(state);
+        self.tokens.hash(state);
+    }
 }
 
 impl LintContext {

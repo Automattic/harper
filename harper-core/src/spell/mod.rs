@@ -14,7 +14,7 @@ mod rune;
 mod word_id;
 mod word_map;
 
-#[derive(PartialEq, Debug, Hash, Eq)]
+#[derive(PartialEq, Debug, Eq)]
 pub struct FuzzyMatchResult<'a> {
     pub word: &'a [char],
     pub edit_distance: u8,

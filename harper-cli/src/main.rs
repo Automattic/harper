@@ -76,6 +76,8 @@ enum Args {
         /// The document to mine words from.
         file: PathBuf,
     },
+    /// Get the word associated with a particular word id.
+    WordFromId { hash: u64 },
 }
 
 fn main() -> anyhow::Result<()> {
@@ -227,6 +229,21 @@ fn main() -> anyhow::Result<()> {
 
             println!("{json}");
 
+            // iterate through any and all derived_from and resolve the word from each wordid
+            if let Some(metadata) = dictionary.get_word_metadata_str(&word) {
+                if let Some(derived_from) = &metadata.derived_from {
+                    let derived_words: Vec<String> = derived_from
+                        .iter()
+                        .filter_map(|wordid| dictionary.get_word_from_id(wordid))
+                        .map(|word| word.iter().collect())
+                        .collect();
+
+                    if !derived_words.is_empty() {
+                        println!("derived_from: {:?}", derived_words);
+                    }
+                }
+            }
+
             Ok(())
         }
         Args::SummarizeLintRecord { file } => {
@@ -361,6 +378,11 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        Args::WordFromId { hash } => {
+            let id = WordId::from_hash(hash);
+            println!("{:?}", dictionary.get_word_from_id(&id));
+            Ok(())
+        }
     }
 }
 
@@ -402,9 +424,14 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
 
     let id = WordId::from_word_str(word);
 
-    let children = dictionary
-        .words_iter()
-        .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
+    let children = dictionary.words_iter().filter(|e| {
+        dictionary
+            .get_word_metadata(e)
+            .unwrap()
+            .derived_from
+            .as_ref()
+            .is_some_and(|derived| derived.contains(&id))
+    });
 
     println!(" - {}", word);
 
