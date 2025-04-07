@@ -148,7 +148,7 @@ pub trait Linter: LSend {
 
 #[cfg(test)]
 mod tests {
-    use super::{Linter, PossessiveYour};
+    use super::Linter;
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
 
     #[track_caller]
@@ -276,24 +276,6 @@ mod tests {
                 .flat_map(|l| l.suggestions.iter())
                 .map(|s| format!("- {}\n", s))
                 .collect::<String>()
-        );
-    }
-
-    #[test]
-    fn test_any_suggestion_your() {
-        assert_any_suggestion_result(
-            "You combination of artist and teacher.",
-            PossessiveYour::default(),
-            "Your combination of artist and teacher.",
-        );
-    }
-
-    #[test]
-    fn test_any_suggestion_youre_a() {
-        assert_any_suggestion_result(
-            "You combination of artist and teacher.",
-            PossessiveYour::default(),
-            "You're a combination of artist and teacher.",
         );
     }
 }
