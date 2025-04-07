@@ -923,6 +923,18 @@ pub fn lint_group() -> LintGroup {
             "Use `without` instead of `w/o`",
             "Expands the abbreviation `w/o` to the full word `without` for clarity."
         ),
+        "OnSecondThought" => (
+            ["on second though"],
+            ["on second thought"],
+            "Idiomatic expression: use `on second thought` instead of `on second though`",
+            "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration."
+        ),
+        "Excellent" => (
+            ["very good"],
+            ["excellent"],
+            "Vocabulary enhancement: use `excellent` instead of `very good`",
+            "Provides a stronger word choice by replacing `very good` with `excellent` for clarity and emphasis."
+        ),
         "ExpandBecause" => (
             ["cuz"],
             ["because"],
@@ -1769,11 +1781,65 @@ mod tests {
     }
 
     #[test]
+    fn on_second_thought_clean() {
+        assert_lint_count(
+            "She considered driving home, but on second thought, she decided to walk.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn on_second_thought_incorrect() {
+        assert_suggestion_result(
+            "I was going to buy it, but on second though, maybe I'll wait.",
+            lint_group(),
+            "I was going to buy it, but on second thought, maybe I'll wait.",
+        );
+    }
+
+    #[test]
     fn expand_cuz() {
         assert_suggestion_result(
             "Stick around cuz I got a surprise for you at the end.",
             lint_group(),
             "Stick around because I got a surprise for you at the end.",
+        );
+    }
+
+    #[test]
+    fn on_second_thought_no_false_positive() {
+        assert_lint_count(
+            "My second though is that I'd prefer something else entirely.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn excellent_clean() {
+        assert_lint_count(
+            "The performance was excellent, drawing praise from all critics.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn excellent_incorrect() {
+        assert_suggestion_result(
+            "Her results were very good this semester.",
+            lint_group(),
+            "Her results were excellent this semester.",
+        );
+    }
+
+    #[test]
+    fn excellent_no_false_positive() {
+        assert_lint_count(
+            "He radiated a sense of very goodness in his charitable acts.",
+            lint_group(),
+            0,
         );
     }
 
