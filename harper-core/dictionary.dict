@@ -10192,7 +10192,7 @@ Tyree/2M
 Tyrolean/51
 Tyrone/21M
 Tyson/2M
-U/15+2M
+U/M                 # removed `1`noun `5`adj. `2`proper noun `+`prep., was interfering with linter heuristics. I only know this as an abbreviation for university
 UAE/2M              # United Arab Emirates
 UAR/2
 UAW/2
@@ -10212,7 +10212,7 @@ UPC/1
 UPI/21M
 UPS/142M
 URL/1S
-US/215M
+US/2M
 USA/21M
 USAF/2
 USAID/2M            # agency
@@ -35786,7 +35786,7 @@ omniscient/51
 omnivore/1MS
 omnivorous/~5PY
 omnivorousness/1M
-on/~5+4
+on/~5+              # verb sense is nonstandard dialectal and interferes with linter heuristics
 onboard/~5j4SDG
 once/~71M
 oncogene/1SM
@@ -48889,7 +48889,7 @@ tyrant/~154SM
 tyre/14MS!
 tyro/1MS
 tzatziki/1
-u/~185S
+# u/~185S           # probably left over from hunspell, causes havoc with linter heuristics
 ubiquitous/~5Y
 ubiquity/1M
 udder/1SM

@@ -923,6 +923,18 @@ pub fn lint_group() -> LintGroup {
             "Use `without` instead of `w/o`",
             "Expands the abbreviation `w/o` to the full word `without` for clarity."
         ),
+        "ExpandBecause" => (
+            ["cuz"],
+            ["because"],
+            "Use `because` instead of informal `cuz`",
+            "Expands the informal abbreviation `cuz` to the full word `because` for formality."
+        ),
+        "AtFaceValue" => (
+            ["on face value"],
+            ["at face value"],
+            "`at face value is more idiomatic and more common.",
+            "Corrects `on face value` to the more usual `at face value`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -1753,6 +1765,24 @@ mod tests {
             "Another possible cause is simply that the application does not have file creation permissions on the another machine.",
             lint_group(),
             "Another possible cause is simply that the application does not have file creation permissions on the other machine.",
+        );
+    }
+
+    #[test]
+    fn expand_cuz() {
+        assert_suggestion_result(
+            "Stick around cuz I got a surprise for you at the end.",
+            lint_group(),
+            "Stick around because I got a surprise for you at the end.",
+        );
+    }
+
+    #[test]
+    fn correct_on_face_value() {
+        assert_suggestion_result(
+            "Obviously what you want is possible and on face value it's a trivial change on our end.",
+            lint_group(),
+            "Obviously what you want is possible and at face value it's a trivial change on our end.",
         );
     }
 }
