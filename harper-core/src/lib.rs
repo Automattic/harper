@@ -35,7 +35,7 @@ pub use fat_token::{FatStringToken, FatToken};
 pub use ignored_lints::IgnoredLints;
 use linting::Lint;
 pub use mask::{Mask, Masker};
-pub use number::{Number, NumberSuffix};
+pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
 pub use span::Span;
 pub use spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
