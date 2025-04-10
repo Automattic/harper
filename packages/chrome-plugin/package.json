@@ -6,12 +6,7 @@
 	"description": "",
 	"type": "module",
 	"license": "Apache-2.0",
-	"keywords": [
-		"chrome-extension",
-		"svelte",
-		"vite",
-		"create-chrome-ext"
-	],
+	"keywords": ["chrome-extension", "svelte", "vite", "create-chrome-ext"],
 	"engines": {
 		"node": ">=14.18.0"
 	},
@@ -27,6 +22,8 @@
 		"@sveltejs/vite-plugin-svelte": "2.4.6",
 		"@types/chrome": "^0.0.246",
 		"@types/jquery": "^3.5.32",
+		"@types/lodash-es": "^4.17.12",
+		"@types/virtual-dom": "^2.1.4",
 		"gulp": "^5.0.0",
 		"gulp-zip": "^6.0.0",
 		"prettier": "^3.0.3",
@@ -40,9 +37,9 @@
 	},
 	"dependencies": {
 		"@webcomponents/custom-elements": "^1.6.0",
-		"crelt": "^1.0.5",
 		"harper.js": "workspace:*",
 		"jquery": "^3.7.1",
-		"lodash-es": "^4.17.21"
+		"lodash-es": "^4.17.21",
+		"virtual-dom": "^2.1.1"
 	}
 }

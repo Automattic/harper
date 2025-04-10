@@ -1,4 +1,4 @@
-import type { Lint, SuggestionKind } from 'harper.js';
+import { Lint, SuggestionKind } from 'harper.js';
 
 export type UnpackedSpan = {
 	start: number;
@@ -35,4 +35,15 @@ export default function unpackLint(lint: Lint): UnpackedLint {
 			return { kind: sug.kind(), replacement_text: sug.get_replacement_text() };
 		}),
 	};
+}
+
+export function applySuggestion(text: string, span: UnpackedSpan, sug: UnpackedSuggestion, ): string{
+  switch (sug.kind){
+    case SuggestionKind.Remove:
+      return text.slice(0, span.start) + text.slice(span.end);
+    case SuggestionKind.Replace:
+      return text.slice(0, span.start) + sug.replacement_text + text.slice(span.end);
+    case SuggestionKind.InsertAfter:
+      return text.slice(0, span.end) + sug.replacement_text + text.slice(span.end);
+  }
 }

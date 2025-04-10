@@ -1,14 +1,14 @@
 import { type Lint, LocalLinter, Span, type Suggestion, binaryInlined } from 'harper.js';
-import type { Box } from './Box';
+import type { Box, LintBox } from './Box';
 import TextareaRange from './TextareaRange';
-import type { UnpackedSpan } from './unpackLint';
+import { applySuggestion, type UnpackedLint, type UnpackedSpan, type UnpackedSuggestion } from './unpackLint';
 
 export type EditContentCallback = (newContent: string) => void;
 
 export default class Textbox {
-	private targetElement: Element;
+	private targetElement: HTMLTextAreaElement;
 
-	constructor(targetElement: Element) {
+	constructor(targetElement: HTMLTextAreaElement) {
 		this.targetElement = targetElement;
 	}
 
@@ -20,21 +20,21 @@ export default class Textbox {
 		return this.targetElement.textContent ?? '';
 	}
 
-	public computeBoxes(span: UnpackedSpan): Box[] {
+	public computeBoxes(lint: UnpackedLint): LintBox[] {
 		if (this.targetElement.tagName != 'TEXTAREA') {
 			return [];
 		}
 
 		const range = new TextareaRange(
 			this.targetElement as HTMLTextAreaElement,
-			span.start,
-			span.end,
+			lint.span.start,
+			lint.span.end,
 		);
 
 		const targetRects = range.getClientRects();
 		range.detach();
 
-		const boxes: Box[] = [];
+		const boxes: LintBox[] = [];
 
 		for (const targetRect of targetRects) {
 			boxes.push({
@@ -42,6 +42,10 @@ export default class Textbox {
 				y: targetRect.y,
 				width: targetRect.width,
 				height: targetRect.height,
+				lint,
+				applySuggestion: (sug: UnpackedSuggestion) => {
+					this.targetElement.value = applySuggestion(this.targetElement.value, lint.span, sug);
+				},
 			});
 		}
 
