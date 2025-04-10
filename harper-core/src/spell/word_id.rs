@@ -31,4 +31,8 @@ impl WordId {
         let chars: CharString = text.as_ref().chars().collect();
         Self::from_word_chars(chars)
     }
+
+    pub fn from_hash(hash: u64) -> Self {
+        Self { hash }
+    }
 }

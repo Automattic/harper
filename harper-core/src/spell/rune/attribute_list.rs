@@ -1,4 +1,4 @@
-use hashbrown::HashMap;
+use hashbrown::{HashMap, HashSet};
 use serde::{Deserialize, Serialize};
 use smallvec::ToSmallVec;
 
@@ -89,11 +89,17 @@ impl AttributeList {
                     );
                     let t_metadata = dest.get_metadata_mut_chars(&new_word).unwrap();
                     t_metadata.append(&metadata);
-                    t_metadata.derived_from = Some(WordId::from_word_chars(&word.letters))
+                    t_metadata
+                        .derived_from
+                        .get_or_insert_with(HashSet::new)
+                        .insert(WordId::from_word_chars(&word.letters));
                 }
             } else {
                 for (key, mut value) in new_words.into_iter() {
-                    value.derived_from = Some(WordId::from_word_chars(&word.letters));
+                    value
+                        .derived_from
+                        .get_or_insert_with(HashSet::new)
+                        .insert(WordId::from_word_chars(&word.letters));
 
                     if let Some(val) = dest.get_metadata_mut_chars(&key) {
                         val.append(&value);
