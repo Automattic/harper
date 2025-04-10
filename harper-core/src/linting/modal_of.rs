@@ -25,14 +25,10 @@ impl Default for ModalOf {
             SequencePattern::default()
                 .then(words)
                 .then_whitespace()
-                .then_exact_word("of"),
+                .t_aco("of"),
         );
 
-        let ws_course = Lrc::new(
-            SequencePattern::default()
-                .then_whitespace()
-                .then_exact_word("course"),
-        );
+        let ws_course = Lrc::new(SequencePattern::default().then_whitespace().t_aco("course"));
 
         let modal_of_course = Lrc::new(
             SequencePattern::default()
@@ -44,9 +40,9 @@ impl Default for ModalOf {
             SequencePattern::default()
                 .then_any_word()
                 .then_whitespace()
-                .then_exact_word("might")
+                .t_aco("might")
                 .then_whitespace()
-                .then_exact_word("of"),
+                .t_aco("of"),
         );
 
         let anyword_might_of_course = Lrc::new(
@@ -292,5 +288,19 @@ mod tests {
     #[test]
     fn doesnt_catch_to_take_on_the_full_might_of_nato() {
         assert_lint_count("To take on the full might of NATO.", ModalOf::default(), 0);
+    }
+
+    #[test]
+    fn doesnt_catch_mixed_case_of_course() {
+        assert_lint_count(
+            "... for now you could of Course put ...",
+            ModalOf::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn catches_mixed_case_could_of_put() {
+        assert_lint_count("... for now you could of Put ...", ModalOf::default(), 1);
     }
 }
