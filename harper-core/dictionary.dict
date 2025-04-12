@@ -51617,7 +51617,7 @@ worksheet/14MS
 workshop/~14MS
 workshy/5
 worksite/1S
-workspace/1
+workspace/1S
 workstation/~1MS
 worktable/1MS
 worktop/1S
@@ -52362,6 +52362,28 @@ WD40/1M
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
 
+ChaCha20/M2 # Cryptography
+NSERC/M2 # Natural Sciences and Engineering Research Council of Canada
+Ed25519/M2 # Cryptography
+ECDH/M2 # Cryptography
+Poly1305/M2 # Cryptography
+Waybar/M2 # Linux software
+CSE/M2 # Communication Security Establishment
+aerc/M2 # Linux software
+Niri/M2 # Linux Software
+DSA/M2 # Cryptography
+X25519/M2 # Cryptography
+TOTP/M2 # Cryptography
+SpeechBrain/M2 # Machine learning
+tmux/M2 # Linux Software
+OpenAI/M2 # Machine Learning
+codec/M1S # Technical term
+LLM/M1S # Machine learning
+HackerRank/M2 # Platform
+Maildir/M1S # Linux term
+MITM/1MS # Cybersecurity
+Diffie/M2 # Cryptography (Diffie-Hellman)
+
 # Experimental multi-word entries
 # Harper may not recognize these as words in documents
 # But it will be able to include them in suggestions
@@ -52674,3 +52696,10 @@ write-off/1MS
 # And they will be reviewed
 # Word added using the `just addnoun` command will be added here
 
+Liu/M2 # Surname
+SMTP/M2
+monorepository/M1S
+inherence/M1S
+remap/ABGD
+neurodivergent/PY
+exfiltration/NS
