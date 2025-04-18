@@ -6,6 +6,11 @@ use crate::{
 use crate::Lint;
 use crate::linting::{LintKind, PatternLinter, Suggestion};
 
+/// See also:
+/// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
+/// harper-core/src/linting/lets_confusion/mod.rs
+/// harper-core/src/linting/lets_confusion/let_us_redundancy.rs
+/// harper-core/src/linting/lets_confusion/no_contraction_with_verb.rs
 pub struct ShouldContract {
     pattern: Box<dyn Pattern>,
 }

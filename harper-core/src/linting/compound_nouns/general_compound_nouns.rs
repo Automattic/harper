@@ -11,15 +11,20 @@ use crate::{
     patterns::{Pattern, SequencePattern},
 };
 
-/// Covers the general cases of accidentally split compound nouns.
+/// Two adjacent words separated by whitespace that if joined would be a valid noun.
 pub struct GeneralCompoundNouns {
     pattern: Box<dyn Pattern>,
     split_pattern: Lrc<SplitCompoundWord>,
 }
 
+// This heuristic identifies potential compound nouns by:
+// 1. Looking for a determiner or adjective (e.g., "a", "big", "red")
+// 2. Followed by two content words (not determiners, adverbs, or prepositions)
+// 3. Finally, checking if the combination forms a noun in the dictionary
+//    that is not also an adjective
 impl Default for GeneralCompoundNouns {
     fn default() -> Self {
-        let exceptions_pattern = SequencePattern::default()
+        let context_pattern = SequencePattern::default()
             .then(|tok: &Token, _: &[char]| {
                 let Some(Some(meta)) = tok.kind.as_word() else {
                     return false;
@@ -44,22 +49,22 @@ impl Default for GeneralCompoundNouns {
                 tok.span.len() > 1 && !meta.determiner && !meta.is_adverb() && !meta.preposition
             });
 
-        let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
-            meta.is_nominal() && !meta.is_adjective()
+        let compound_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
+            meta.is_noun() && !meta.is_adjective()
         }));
 
         let mut pattern = All::default();
-        pattern.add(Box::new(exceptions_pattern));
+        pattern.add(Box::new(context_pattern));
         pattern.add(Box::new(
             SequencePattern::default()
                 .then_anything()
                 .then_anything()
-                .then(split_pattern.clone()),
+                .then(compound_pattern.clone()),
         ));
 
         Self {
             pattern: Box::new(pattern),
-            split_pattern,
+            split_pattern: compound_pattern,
         }
     }
 }

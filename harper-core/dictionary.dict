@@ -30577,7 +30577,7 @@ juryman/1M
 jurymen/9
 jurywoman/1M
 jurywomen/9
-just/~514RYPT
+just/~54RYPT        # removed `1` noun. archaic and interferes with linter heuristics
 justice/~1IMS
 justifiable/~5U
 justifiably/Uj
@@ -42132,7 +42132,7 @@ rumourmonger/14SM!@
 rump/~14MYS
 rumple/41DSMG
 rumpus/1MS
-run/~415AM
+run/~41AMS          # removed `5` adj. a bit marginal and interferes with linter heuristics
 runabout/1MS
 runaround/1SM
 runaway/~15MS
@@ -42147,7 +42147,6 @@ runner/~1SM
 running/~451+M
 runny/5RT
 runoff/~1SM
-runs/~4
 runt/1MS
 runtime/~51
 runty/5RT
