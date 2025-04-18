@@ -13,7 +13,7 @@ use crate::vec_ext::VecExt;
 use crate::{
     Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, Token, TokenKind, TokenStringExt,
 };
-use crate::{NumberSuffix, Span};
+use crate::{OrdinalSuffix, Span};
 
 /// A document containing some amount of lexed and parsed English text.
 #[derive(Debug, Clone)]
@@ -330,7 +330,8 @@ impl Document {
             // TODO: Allow spaces between `a` and `b`
 
             if let (TokenKind::Number(..), TokenKind::Word(..)) = (&a.kind, &b.kind) {
-                if let Some(found_suffix) = NumberSuffix::from_chars(self.get_span_content(&b.span))
+                if let Some(found_suffix) =
+                    OrdinalSuffix::from_chars(self.get_span_content(&b.span))
                 {
                     self.tokens[idx].kind.as_mut_number().unwrap().suffix = Some(found_suffix);
                     replace_starts.push(idx);
