@@ -307,26 +307,27 @@ mod tests {
     #[test]
     fn plural_llamas_derived_from_llama() {
         let dict = FstDictionary::curated();
-
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str("llamas")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("llama")
-        )
+                .as_ref()
+                .unwrap()
+                .contains(&WordId::from_word_str("llama"))
+        );
     }
 
     #[test]
     fn plural_cats_derived_from_cat() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str("cats")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("cat")
+                .as_ref()
+                .unwrap()
+                .contains(&WordId::from_word_str("cat"))
         );
     }
 
@@ -334,12 +335,13 @@ mod tests {
     fn unhappy_derived_from_happy() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str("unhappy")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("happy")
+                .as_ref()
+                .unwrap()
+                .contains(&WordId::from_word_str("happy"))
         );
     }
 
@@ -347,12 +349,13 @@ mod tests {
     fn quickly_derived_from_quick() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str("quickly")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("quick")
+                .as_ref()
+                .unwrap()
+                .contains(&WordId::from_word_str("quick"))
         );
     }
 }

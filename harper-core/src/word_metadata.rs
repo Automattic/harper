@@ -1,3 +1,6 @@
+use hashbrown::HashSet;
+use std::hash::{Hash, Hasher};
+
 use is_macro::Is;
 use paste::paste;
 use serde::{Deserialize, Serialize};
@@ -5,7 +8,7 @@ use strum_macros::{Display, EnumString};
 
 use crate::WordId;
 
-#[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Hash)]
+#[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct WordMetadata {
     pub noun: Option<NounData>,
     pub pronoun: Option<PronounData>,
@@ -28,7 +31,28 @@ pub struct WordMetadata {
     #[serde(default = "default_false")]
     pub common: bool,
     #[serde(default = "default_none")]
-    pub derived_from: Option<WordId>,
+    pub derived_from: Option<HashSet<WordId>>,
+}
+
+impl Hash for WordMetadata {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.noun.hash(state);
+        self.pronoun.hash(state);
+        self.verb.hash(state);
+        self.adjective.hash(state);
+        self.adverb.hash(state);
+        self.conjunction.hash(state);
+        self.swear.hash(state);
+        self.dialect.hash(state);
+        self.determiner.hash(state);
+        self.preposition.hash(state);
+        self.common.hash(state);
+        if let Some(ref derived_from) = self.derived_from {
+            for id in derived_from.iter() {
+                id.hash(state);
+            }
+        }
+    }
 }
 
 /// Needed for `serde`
@@ -111,7 +135,16 @@ impl WordMetadata {
             determiner: self.determiner || other.determiner,
             preposition: self.preposition || other.preposition,
             common: self.common || other.common,
-            derived_from: self.derived_from.or(other.derived_from),
+            derived_from: match (&self.derived_from, &other.derived_from) {
+                (Some(a), Some(b)) => {
+                    let mut set = a.clone();
+                    set.extend(b);
+                    Some(set)
+                }
+                (Some(a), None) => Some(a.clone()),
+                (None, Some(b)) => Some(b.clone()),
+                (None, None) => None,
+            },
         }
     }
 
