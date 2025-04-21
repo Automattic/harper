@@ -1,4 +1,5 @@
 <script lang="ts">
+import { Button } from 'flowbite-svelte';
 import { createEventDispatcher } from 'svelte';
 import logo from '/logo.png';
 import Main from './Main.svelte';
@@ -15,6 +16,10 @@ $effect(() => {
 $effect(() => {
 	chrome.storage.local.set({ popupState: page });
 });
+
+function openSettings() {
+	chrome.runtime?.openOptionsPage?.();
+}
 </script>
 
 <div class="w-[340px] border border-gray-200 bg-white font-sans flex flex-col rounded-lg shadow-sm select-none">
@@ -32,5 +37,6 @@ $effect(() => {
   <footer class="flex items-center justify-center gap-6 px-3 py-2 text-sm border-t border-gray-100 rounded-b-lg bg-white/60">
     <a href="https://github.com/Automattic/harper" target="_blank" rel="noopener" class="text-primary-600 hover:underline">GitHub</a>
     <a href="https://writewithharper.com" target="_blank" rel="noopener" class="text-primary-600 hover:underline">Discover</a>
+    <a target="_blank" rel="noopener" class="text-primary-600 hover:underline" on:click={openSettings}>Settings</a>
   </footer>
 </div>

@@ -34,10 +34,6 @@ export async function getCurrentTabDomain(): Promise<string | undefined> {
 	}
 }
 
-function openSettings() {
-	chrome.runtime?.openOptionsPage?.();
-}
-
 function toggleDomainEnabled() {
 	console.log('toggle');
 	enabled = !enabled;
@@ -46,7 +42,6 @@ function toggleDomainEnabled() {
 </script>
 
 <main class="p-6 space-y-5 text-gray-800">
-  <div class="flex items-center justify-between">
   <!-- power button section -->
   <section class="flex flex-row items-center gap-3 py-6">
     <Button
@@ -75,7 +70,4 @@ function toggleDomainEnabled() {
       {enabled ? 'Enabled on ' : 'Disabled on '}{domain}
     </p>
   </section>
-  <Button color="primary" fullWidth class="h-10 font-medium" on:click={openSettings}>
-    More settings
-  </Button>
 </main>
