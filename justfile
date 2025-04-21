@@ -95,7 +95,7 @@ build-chrome-plugin: build-harperjs
   cd "{{justfile_directory()}}/packages/chrome-plugin"
 
   pnpm install 
-  pnpm build
+  pnpm zip
 
 # Run VSCode plugin unit and integration tests.
 test-vscode:

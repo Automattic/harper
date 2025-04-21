@@ -39,6 +39,7 @@ async function enableDefaultDomains() {
 		'webmail.porkbun.com',
 		'mail.google.com',
 		'trix-editor.org',
+		'github.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
