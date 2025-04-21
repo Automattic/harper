@@ -42,7 +42,7 @@ export default class LintFramework {
 				text = target.textContent;
 			}
 
-			if (text == null) {
+			if (text == null || text.length > 120000) {
 				continue;
 			}
 
