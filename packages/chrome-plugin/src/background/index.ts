@@ -141,13 +141,18 @@ async function setDialect(dialect: Dialect) {
 	initializeLinter(dialect);
 }
 
+/** Format the key to be used in local storage to store domain status. */
+function formatDomainKey(domain: string): string {
+	return `domainStatus ${domain}`;
+}
+
 /** Check if Harper has been enabled for a given domain. */
 async function enabledForDomain(domain: string): Promise<boolean> {
-	const req = await chrome.storage.local.get({ domainStatus: { [domain]: false } });
-	return req.domainStatus[domain];
+	const req = await chrome.storage.local.get({ [formatDomainKey(domain)]: false });
+	return req[formatDomainKey(domain)];
 }
 
 /** Set whether Harper is enabled for a given domain. */
 async function setDomainEnable(domain: string, status: boolean) {
-	await chrome.storage.local.set({ domainStatus: { [domain]: status } });
+	await chrome.storage.local.set({ [formatDomainKey(domain)]: status });
 }
