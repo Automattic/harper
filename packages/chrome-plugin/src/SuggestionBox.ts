@@ -1,3 +1,4 @@
+import type { walk } from 'svelte/compiler';
 import h from 'virtual-dom/h';
 import type { LintBox } from './Box';
 import lintKindColor from './lintKindColor';
@@ -66,11 +67,21 @@ function suggestions(
 }
 
 export default function SuggestionBox(box: LintBox) {
+	const top = box.y + box.height + 3;
+	let bottom: number | undefined;
+	const left = box.x;
+
+	if (top + 400 > window.innerHeight) {
+		bottom = window.innerHeight - box.y - 3;
+	}
+
 	const containerStyle: { [key: string]: string } = {
 		position: 'fixed',
-		top: `${box.y + box.height + 3}px`,
-		left: `${box.x}px`,
+		top: bottom ? '' : `${top}px`,
+		bottom: bottom ? `${bottom}px` : '',
+		left: `${left}px`,
 		maxWidth: '400px',
+		maxHeight: '400px',
 		background: '#ffffff',
 		border: '1px solid #d0d7de',
 		borderRadius: '6px',
