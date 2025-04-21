@@ -32,7 +32,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 async function enableDefaultDomains() {
-	const defaultEnabledDomains = ['chatgpt.com', 'www.perplexity.ai', 'textarea.online'];
+	const defaultEnabledDomains = [
+		'chatgpt.com',
+		'www.perplexity.ai',
+		'textarea.online',
+		'webmail.porkbun.com',
+		'mail.google.com',
+		'trix-editor.org',
+	];
 
 	for (const item of defaultEnabledDomains) {
 		if (!(await isDomainSet(item))) {
