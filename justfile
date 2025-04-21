@@ -473,3 +473,6 @@ newest-dict-changes *numCommits:
       });
     });
   });
+# Annotate text using the dictionary and affix system
+annotate text:
+  cargo run --bin harper-cli -- annotate {{text}}

@@ -76,6 +76,8 @@ enum Args {
         /// The document to mine words from.
         file: PathBuf,
     },
+    /// Annotate a provided string.
+    Annotate { text: String },
 }
 
 fn main() -> anyhow::Result<()> {
@@ -357,6 +359,87 @@ fn main() -> anyhow::Result<()> {
 
             for (word, _) in words_ordered {
                 println!("{word}");
+            }
+
+            Ok(())
+        }
+        Args::Annotate { text } => {
+            // TODO: should be plain text? How?
+            let parser = Box::new(Markdown::default());
+            let doc = Document::new(&text, &parser, &dictionary);
+
+            enum DictStatus {
+                Exact,     // Word is in the dictionary as-is
+                Lowercase, // Only lowercase version is in the dictionary
+                Missing,   // Not in the dictionary at all
+            }
+
+            for (ci, chunk) in doc.iter_chunks().enumerate() {
+                print!("chunk {}:", ci);
+
+                for tok in chunk.iter() {
+                    let toktext = doc.get_span_content(&tok.span);
+
+                    let dict_status = if tok.kind.as_word().is_some() {
+                        if dictionary.contains_exact_word(toktext) {
+                            DictStatus::Exact
+                        } else if dictionary.contains_exact_word(&toktext.to_lower()) {
+                            DictStatus::Lowercase
+                        } else {
+                            DictStatus::Missing
+                        }
+                    } else {
+                        DictStatus::Missing
+                    };
+
+                    let mut annot = String::new();
+                    if tok.kind.is_whitespace() {
+                        print!(" ");
+                    } else if tok.kind.is_punctuation() {
+                        print!("\x1b[2m{}\x1b[0m", toktext.iter().collect::<String>());
+                    } else {
+                        if tok.kind.is_noun() {
+                            annot += "\x1b[31mn.\x1b[0m"; // red (31m)
+                        }
+                        if tok.kind.is_verb() {
+                            annot += "\x1b[32mv.\x1b[0m"; // green (32m)
+                        }
+                        if tok.kind.is_adjective() {
+                            annot += "\x1b[33madj.\x1b[0m"; // yellow (33m)
+                        }
+                        if tok.kind.is_adverb() {
+                            annot += "\x1b[34madv.\x1b[0m"; // blue (34m)
+                        }
+                        if tok.kind.is_pronoun() {
+                            annot += "\x1b[35mpr.\x1b[0m"; // magenta (35m)
+                        }
+                        if tok.kind.is_conjunction() {
+                            annot += "\x1b[36mconj.\x1b[0m"; // cyan (36m)
+                        }
+                        if tok.kind.is_preposition() {
+                            annot += "\x1b[91mprep.\x1b[0m"; // bright red (91m)
+                        }
+                        if tok.kind.is_determiner() {
+                            annot += "\x1b[92mdet.\x1b[0m"; // bright green (92m)
+                        }
+
+                        // Underline if missing from dictionary
+                        let underline = match dict_status {
+                            DictStatus::Exact => "",
+                            DictStatus::Lowercase => "3", // italic
+                            DictStatus::Missing => "4",   // underline
+                        };
+                        print!(
+                            "'\x1b[{}m{}\x1b[0m'",
+                            underline,
+                            toktext.iter().collect::<String>()
+                        );
+                        if !annot.is_empty() {
+                            print!(".{annot}");
+                        }
+                    }
+                }
+                println!();
             }
 
             Ok(())
