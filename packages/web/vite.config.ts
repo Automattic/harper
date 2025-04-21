@@ -144,6 +144,10 @@ export default defineConfig({
 									to: '/docs/contributors/visual-studio-code',
 								},
 								{
+									title: 'Chrome Extension',
+									to: '/docs/contributors/chrome-extension',
+								},
+								{
 									title: 'WordPress',
 									to: '/docs/contributors/wordpress',
 								},
