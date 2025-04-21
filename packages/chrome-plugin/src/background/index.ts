@@ -1,18 +1,22 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
-import type {
-	GetConfigRequest,
-	GetConfigResponse,
-	GetDialectRequest,
-	GetDialectResponse,
-	GetLintDescriptionsRequest,
-	GetLintDescriptionsResponse,
-	LintRequest,
-	LintResponse,
-	Request,
-	Response,
-	SetConfigRequest,
-	SetDialectRequest,
-	UnitResponse,
+import {
+	type GetConfigRequest,
+	type GetConfigResponse,
+	type GetDialectRequest,
+	type GetDialectResponse,
+	type GetDomainStatusRequest,
+	type GetDomainStatusResponse,
+	type GetLintDescriptionsRequest,
+	type GetLintDescriptionsResponse,
+	type LintRequest,
+	type LintResponse,
+	type Request,
+	type Response,
+	type SetConfigRequest,
+	type SetDialectRequest,
+	type SetDomainStatusRequest,
+	type UnitResponse,
+	createUnitResponse,
 } from '../protocol';
 import unpackLint from '../unpackLint';
 console.log('background is running');
@@ -22,8 +26,6 @@ let linter: LocalLinter;
 getDialect().then(setDialect);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-	console.log(request);
-
 	handleRequest(request).then(sendResponse);
 
 	return true;
@@ -43,10 +45,19 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleSetDialect(message);
 		case 'getDialect':
 			return handleGetDialect(message);
+		case 'getDomainStatus':
+			return handleGetDomainStatus(message);
+		case 'setDomainStatus':
+			return handleSetDomainStatus(message);
 	}
 }
 
+/** Handle a request for linting. */
 async function handleLint(req: LintRequest): Promise<LintResponse> {
+	if (!(await enabledForDomain(req.domain))) {
+		return { kind: 'lints', lints: [] };
+	}
+
 	const lints = await linter.lint(req.text);
 	const unpackedLints = lints.map(unpackLint);
 	return { kind: 'lints', lints: unpackedLints };
@@ -59,17 +70,33 @@ async function handleGetConfig(req: GetConfigRequest): Promise<GetConfigResponse
 async function handleSetConfig(req: SetConfigRequest): Promise<UnitResponse> {
 	await setLintConfig(req.config);
 
-	return { kind: 'unit' };
+	return createUnitResponse();
 }
 
 async function handleSetDialect(req: SetDialectRequest): Promise<UnitResponse> {
 	await setDialect(req.dialect);
 
-	return { kind: 'unit' };
+	return createUnitResponse();
 }
 
 async function handleGetDialect(req: GetDialectRequest): Promise<GetDialectResponse> {
 	return { kind: 'getDialect', dialect: await getDialect() };
+}
+
+async function handleGetDomainStatus(
+	req: GetDomainStatusRequest,
+): Promise<GetDomainStatusResponse> {
+	return {
+		kind: 'getDomainStatus',
+		domain: req.domain,
+		enabled: await enabledForDomain(req.domain),
+	};
+}
+
+async function handleSetDomainStatus(req: SetDomainStatusRequest): Promise<UnitResponse> {
+	await setDomainEnable(req.domain, req.enabled);
+
+	return createUnitResponse();
 }
 
 async function handleGetLintDescriptions(
@@ -112,4 +139,15 @@ function initializeLinter(dialect: Dialect) {
 async function setDialect(dialect: Dialect) {
 	await chrome.storage.local.set({ dialect });
 	initializeLinter(dialect);
+}
+
+/** Check if Harper has been enabled for a given domain. */
+async function enabledForDomain(domain: string): Promise<boolean> {
+	const req = await chrome.storage.local.get({ domainStatus: { [domain]: false } });
+	return req.domainStatus[domain];
+}
+
+/** Set whether Harper is enabled for a given domain. */
+async function setDomainEnable(domain: string, status: boolean) {
+	await chrome.storage.local.set({ domainStatus: { [domain]: status } });
 }

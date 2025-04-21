@@ -3,8 +3,8 @@ import type { UnpackedLint } from './unpackLint';
 
 /** A wrapper around Chrome's messaging protocol for communicating with the background worker. */
 export default class ProtocolClient {
-	public static async lint(text: string): Promise<UnpackedLint[]> {
-		return (await chrome.runtime.sendMessage({ kind: 'lint', text })).lints;
+	public static async lint(text: string, domain: string): Promise<UnpackedLint[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'lint', text, domain })).lints;
 	}
 
 	public static async getLintConfig(): Promise<LintConfig> {
@@ -25,5 +25,15 @@ export default class ProtocolClient {
 
 	public static async setDialect(dialect: Dialect): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setDialect', dialect });
+	}
+
+	public static async getDomainEnabled(domain: string): Promise<boolean> {
+		const resp = await chrome.runtime.sendMessage({ kind: 'getDomainStatus', domain });
+
+		return resp.enabled;
+	}
+
+	public static async setDomainEnabled(domain: string, enabled: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setDomainStatus', enabled, domain });
 	}
 }

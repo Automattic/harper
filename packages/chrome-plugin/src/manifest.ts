@@ -32,7 +32,7 @@ export default defineManifest({
 	icons: {
 		'512': 'logo.png',
 	},
-	permissions: ['storage'],
+	permissions: ['storage', 'tabs'],
 	content_security_policy: {
 		extension_pages: "script-src 'self' 'wasm-unsafe-eval'",
 	},

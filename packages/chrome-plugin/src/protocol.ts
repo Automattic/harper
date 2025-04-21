@@ -7,17 +7,21 @@ export type Request =
 	| SetConfigRequest
 	| GetLintDescriptionsRequest
 	| SetDialectRequest
-	| GetDialectRequest;
+	| GetDialectRequest
+	| SetDomainStatusRequest
+	| GetDomainStatusRequest;
 
 export type Response =
 	| LintResponse
 	| GetConfigResponse
 	| UnitResponse
 	| GetLintDescriptionsResponse
-	| GetDialectResponse;
+	| GetDialectResponse
+	| GetDomainStatusResponse;
 
 export type LintRequest = {
 	kind: 'lint';
+	domain: string;
 	text: string;
 };
 
@@ -45,10 +49,6 @@ export type SetDialectRequest = {
 	dialect: Dialect;
 };
 
-export type GetDialectRequest = {
-	kind: 'getDialect';
-};
-
 export type GetLintDescriptionsRequest = {
 	kind: 'getLintDescriptions';
 };
@@ -58,12 +58,37 @@ export type GetLintDescriptionsResponse = {
 	descriptions: Record<string, string>;
 };
 
+export type GetDialectRequest = {
+	kind: 'getDialect';
+};
+
 export type GetDialectResponse = {
 	kind: 'getDialect';
 	dialect: Dialect;
+};
+
+export type GetDomainStatusRequest = {
+	kind: 'getDomainStatus';
+	domain: string;
+};
+
+export type GetDomainStatusResponse = {
+	kind: 'getDomainStatus';
+	domain: string;
+	enabled: boolean;
+};
+
+export type SetDomainStatusRequest = {
+	kind: 'setDomainStatus';
+	domain: string;
+	enabled: boolean;
 };
 
 /** Similar to returning void. */
 export type UnitResponse = {
 	kind: 'unit';
 };
+
+export function createUnitResponse(): UnitResponse {
+	return { kind: 'unit' };
+}

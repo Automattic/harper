@@ -46,7 +46,7 @@ export default class LintFramework {
 				continue;
 			}
 
-			const lints = await ProtocolClient.lint(text);
+			const lints = await ProtocolClient.lint(text, window.location.hostname);
 			boxes.push(...lints.flatMap((l) => computeLintBoxes(target, l)));
 		}
 

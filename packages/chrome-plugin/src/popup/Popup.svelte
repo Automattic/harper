@@ -17,7 +17,7 @@ $effect(() => {
 });
 </script>
 
-<div class="w-[340px] border border-gray-200 bg-white font-sans flex flex-col rounded-lg shadow-sm">
+<div class="w-[340px] border border-gray-200 bg-white font-sans flex flex-col rounded-lg shadow-sm select-none">
   <header class="flex items-center gap-2 px-3 py-2 bg-gray-50/60 rounded-t-lg">
     <img src={logo} alt="Harper logo" class="h-6 w-auto" />
     <span class="font-semibold text-sm">Harper</span>
