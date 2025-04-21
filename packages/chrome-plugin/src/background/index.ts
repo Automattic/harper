@@ -31,6 +31,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	return true;
 });
 
+async function enableDefaultDomains() {
+	const defaultEnabledDomains = ['chatgpt.com', 'www.perplexity.ai', 'web.whatsapp.com'];
+
+	for (const item of defaultEnabledDomains) {
+		if (!(await isDomainSet(item))) {
+			setDomainEnable(item, true);
+		}
+	}
+}
+
+enableDefaultDomains();
+
 function handleRequest(message: Request): Promise<Response> {
 	switch (message.kind) {
 		case 'lint':
@@ -155,4 +167,10 @@ async function enabledForDomain(domain: string): Promise<boolean> {
 /** Set whether Harper is enabled for a given domain. */
 async function setDomainEnable(domain: string, status: boolean) {
 	await chrome.storage.local.set({ [formatDomainKey(domain)]: status });
+}
+
+/** Check whether Harper's state has been set for a given domain. */
+async function isDomainSet(domain: string): Promise<boolean> {
+	const resp = await chrome.storage.local.get(formatDomainKey(domain));
+	return typeof resp[formatDomainKey(domain)] == 'boolean';
 }
