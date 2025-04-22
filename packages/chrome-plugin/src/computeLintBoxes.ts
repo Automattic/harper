@@ -3,19 +3,25 @@ import TextFieldRange from './TextFieldRange';
 import { getRangeForTextSpan } from './domUtils';
 import { type UnpackedLint, type UnpackedSuggestion, applySuggestion } from './unpackLint';
 
+function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement {
+	switch (el.tagName) {
+		case 'TEXTAREA':
+		case 'INPUT':
+			return true;
+		default:
+			return false;
+	}
+}
+
 export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): LintBox[] {
 	let range: Range | TextFieldRange;
 	let text: string | null = null;
 
-	switch (el.tagName) {
-		case 'TEXTAREA':
-		case 'INPUT':
-			range = new TextFieldRange(el, lint.span.start, lint.span.end);
-			text = el.value;
-			break;
-		default:
-			range = getRangeForTextSpan(el, lint.span);
-			break;
+	if (isFormEl(el)) {
+		range = new TextFieldRange(el, lint.span.start, lint.span.end);
+		text = el.value;
+	} else {
+		range = getRangeForTextSpan(el, lint.span);
 	}
 
 	const targetRects = range.getClientRects();
@@ -67,17 +73,21 @@ function selectText(element: HTMLElement) {
 }
 
 function replaceValue(el: HTMLElement, value: string) {
-	if (typeof el.focus == 'function') {
-		el.focus();
-	} else {
-		console.log('Cannot focus element');
-	}
-
-	selectText(el);
-	if (!document.execCommand('insertText', false, value)) {
-		console.log('execCommand failed');
-		// Fallback for Firefox: just replace the value
+	if (isFormEl(el)) {
 		el.value = value;
+	} else {
+		if (typeof el.focus == 'function') {
+			el.focus();
+		} else {
+			console.log('Cannot focus element');
+		}
+
+		selectText(el);
+		if (!document.execCommand('insertText', false, value)) {
+			console.log('execCommand failed');
+			// Fallback for Firefox: just replace the value
+			el.value = value;
+		}
 	}
 	el.dispatchEvent(new Event('change', { bubbles: true })); // usually not needed
 }
