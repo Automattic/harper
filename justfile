@@ -474,7 +474,7 @@ newest-dict-changes *numCommits:
     });
   });
 
-# Test using harper.js from packages/harper.js in `justfile`
+# Example of using harper.js with Node.js in `justfile`
 harperjsnode test_string:
   #! /usr/bin/env node
   (async () => {
@@ -485,7 +485,7 @@ harperjsnode test_string:
     console.log(lints.map(lint => lint.message()));
   })();
 
-# Test using harper.js from packages/harper.js in `justfile`
+# Example of using harper.js with Bun in `justfile`
 harperjsbun test_string:
   #! /usr/bin/env bun
   const hjs = require('{{justfile_directory()}}/packages/harper.js/');
