@@ -1,10 +1,21 @@
 import type { Dialect, LintConfig } from 'harper.js';
+import { LRUCache } from 'lru-cache';
 import type { UnpackedLint } from './unpackLint';
 
 /** A wrapper around Chrome's messaging protocol for communicating with the background worker. */
 export default class ProtocolClient {
+	private static lintCache: LRUCache<string, UnpackedLint[]> = new LRUCache({ max: 1000 });
+
 	public static async lint(text: string, domain: string): Promise<UnpackedLint[]> {
-		return (await chrome.runtime.sendMessage({ kind: 'lint', text, domain })).lints;
+		const cacheValue = this.lintCache.get(text);
+
+		if (cacheValue == null) {
+			const lints = (await chrome.runtime.sendMessage({ kind: 'lint', text, domain })).lints;
+			this.lintCache.set(text, lints);
+			return lints;
+		} else {
+			return cacheValue;
+		}
 	}
 
 	public static async getLintConfig(): Promise<LintConfig> {

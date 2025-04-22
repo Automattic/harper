@@ -19,8 +19,11 @@ export default defineManifest({
 	},
 	content_scripts: [
 		{
-			matches: ['http://*/*', 'https://*/*'],
+			matches: ['<all_urls>'],
+			all_frames: true,
+			match_about_blank: true,
 			js: ['src/contentScript/index.ts'],
+			run_at: 'document_idle',
 		},
 	],
 	web_accessible_resources: [

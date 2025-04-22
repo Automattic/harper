@@ -44,6 +44,7 @@
 		"harper.js": "workspace:*",
 		"jquery": "^3.7.1",
 		"lodash-es": "^4.17.21",
+		"lru-cache": "^11.1.0",
 		"tailwindcss": "^4.1.4",
 		"virtual-dom": "^2.1.1"
 	}

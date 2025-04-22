@@ -4,6 +4,21 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@babel/runtime':
+      specifier: ^7.26.10
+      version: 7.26.10
+    '@types/node':
+      specifier: ^22.13.10
+      version: 22.13.10
+    tslib:
+      specifier: ^2.8.1
+      version: 2.8.1
+    typescript:
+      specifier: ^5.8.2
+      version: 5.8.2
+
 importers:
 
   .:
@@ -40,6 +55,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      lru-cache:
+        specifier: ^11.1.0
+        version: 11.1.0
       tailwindcss:
         specifier: ^4.1.4
         version: 4.1.4
@@ -7736,6 +7754,10 @@ packages:
 
   lru-cache@11.0.2:
     resolution: {integrity: sha512-123qHRfJBmo2jXDbo/a5YOQrJoHF/GNQTLzQ5+IdK5pWpceK17yRc6ozlWd25FxvGKQbIUs91fDFkXmDHTKcyA==}
+    engines: {node: 20 || >=22}
+
+  lru-cache@11.1.0:
+    resolution: {integrity: sha512-QIXZUBJUx+2zHUdQujWejBkcD9+cs94tLn0+YL8UrCh+D5sCXZ4c7LaEH48pNwRY3MLDgqUFyhlCyjJPf1WP0A==}
     engines: {node: 20 || >=22}
 
   lru-cache@5.1.1:
@@ -21149,6 +21171,8 @@ snapshots:
   lru-cache@10.4.3: {}
 
   lru-cache@11.0.2: {}
+
+  lru-cache@11.1.0: {}
 
   lru-cache@5.1.1:
     dependencies:
