@@ -473,3 +473,23 @@ newest-dict-changes *numCommits:
       });
     });
   });
+
+# Test using harper.js from packages/harper.js in `justfile`
+harperjsnode test_string:
+  #! /usr/bin/env node
+  (async () => {
+    const hjs = await import('{{justfile_directory()}}/packages/harper.js/dist/harper.js');
+
+    const linter = new hjs.LocalLinter({ binary: hjs.binary });
+    const lints = await linter.lint('{{test_string}}');
+    console.log(lints.map(lint => lint.message()));
+  })();
+
+# Test using harper.js from packages/harper.js in `justfile`
+harperjsbun test_string:
+  #! /usr/bin/env bun
+  const hjs = require('{{justfile_directory()}}/packages/harper.js/');
+
+  const linter: hjs.LocalLinter = new hjs.LocalLinter({ binary: hjs.binary });
+  const lints = await linter.lint('{{test_string}}');
+  console.log(lints.map(lint => lint.message()));
