@@ -57,10 +57,6 @@ export default class PopupHandler {
 			b.source.addEventListener('pointerdown', this.pointerDownCallback),
 		);
 
-		if (this.popupLint ?? 0 >= boxes.length) {
-			this.popupLint = undefined;
-		}
-
 		this.render();
 	}
 }

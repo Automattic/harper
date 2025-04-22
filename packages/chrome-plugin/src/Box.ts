@@ -24,5 +24,5 @@ export type IgnorableLintBox = LintBox & {
 export function isPointInBox(point: [number, number], box: Box) {
 	const [x, y] = point;
 
-	return x > box.x && x < box.x + box.width && y > box.y && y < box.y + box.height;
+	return x >= box.x && x <= box.x + box.width && y >= box.y && y <= box.y + box.height;
 }
