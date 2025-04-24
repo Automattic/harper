@@ -29,18 +29,28 @@ pub struct MutableDictionary {
 
 /// The uncached function that is used to produce the original copy of the
 /// curated dictionary.
-fn uncached_inner_new() -> Arc<MutableDictionary> {
-    Arc::new(
-        MutableDictionary::from_rune_files(
-            include_str!("../../dictionary.dict"),
-            include_str!("../../affixes.json"),
+fn uncached_inner_new(langiso639: &str) -> Arc<MutableDictionary> {
+    if langiso639 == "en" {
+        Arc::new(
+            MutableDictionary::from_rune_files(
+                include_str!("../../dictionary.dict"),
+                include_str!("../../affixes.json"),
+            )
+            .expect("Curated dictionary should be valid."),
         )
-        .expect("Curated dictionary should be valid."),
-    )
+    } else {
+        Arc::new(
+            MutableDictionary::from_rune_files(
+                &std::fs::read_to_string(format!("../harper-core/dictionary-{}.dict", langiso639)).expect("Missing English dict"),
+                &std::fs::read_to_string(format!("../harper-core/affixes-{}.json", langiso639)).expect("Missing English affixes"),
+            )
+            .expect("Curated dictionary should be valid."),
+        )
+    }
 }
 
 lazy_static! {
-    static ref DICT: Arc<MutableDictionary> = uncached_inner_new();
+    static ref DICT_EN: Arc<MutableDictionary> = uncached_inner_new("en");
 }
 
 impl MutableDictionary {
@@ -65,8 +75,11 @@ impl MutableDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
     /// Consider using [`super::FstDictionary::curated()`] instead, as it is more performant for spellchecking.
-    pub fn curated() -> Arc<Self> {
-        (*DICT).clone()
+    pub fn curated(langiso639: &str) -> Arc<Self> {
+        match langiso639 {
+            "en" => (*DICT_EN).clone(),
+            _ => uncached_inner_new(langiso639),
+        }
     }
 
     /// Appends words to the dictionary.
@@ -256,13 +269,13 @@ mod tests {
 
     #[test]
     fn curated_contains_no_duplicates() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.words_iter().all_unique());
     }
 
     #[test]
     fn curated_matches_capitalized() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.contains_word_str("this"));
         assert!(dict.contains_word_str("This"));
     }
@@ -272,40 +285,40 @@ mod tests {
     // TODO Harper previously wrongly classified it as a noun
     // #[test]
     // fn this_is_determiner() {
-    //     let dict = MutableDictionary::curated();
+    //     let dict = MutableDictionary::curated("en");
     //     assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
     //     assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
     // }
 
     #[test]
     fn than_is_conjunction() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.get_word_metadata_str("than").unwrap().is_conjunction());
         assert!(dict.get_word_metadata_str("Than").unwrap().is_conjunction());
     }
 
     #[test]
     fn herself_is_pronoun() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.get_word_metadata_str("herself").unwrap().is_pronoun());
         assert!(dict.get_word_metadata_str("Herself").unwrap().is_pronoun());
     }
 
     #[test]
     fn discussion_171() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.contains_word_str("natively"));
     }
 
     #[test]
     fn im_is_common() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.get_word_metadata_str("I'm").unwrap().common);
     }
 
     #[test]
     fn fuzzy_result_sorted_by_edit_distance() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
 
         let results = dict.fuzzy_match_str("hello", 3, 100);
         let is_sorted_by_dist = results
@@ -319,7 +332,7 @@ mod tests {
 
     #[test]
     fn there_is_not_a_pronoun() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
 
         assert!(!dict.get_word_metadata_str("there").unwrap().is_nominal());
         assert!(!dict.get_word_metadata_str("there").unwrap().is_pronoun());
@@ -327,17 +340,17 @@ mod tests {
 
     #[test]
     fn expanded_contains_giants() {
-        assert!(MutableDictionary::curated().contains_word_str("giants"));
+        assert!(MutableDictionary::curated("en").contains_word_str("giants"));
     }
 
     #[test]
     fn expanded_contains_deallocate() {
-        assert!(MutableDictionary::curated().contains_word_str("deallocate"));
+        assert!(MutableDictionary::curated("en").contains_word_str("deallocate"));
     }
 
     #[test]
     fn curated_contains_repo() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
 
         assert!(dict.contains_word_str("repo"));
         assert!(dict.contains_word_str("repos"));
@@ -347,7 +360,7 @@ mod tests {
     #[test]
     fn curated_contains_possessive_abandonment() {
         assert!(
-            MutableDictionary::curated()
+            MutableDictionary::curated("en")
                 .get_word_metadata_str("abandonment's")
                 .unwrap()
                 .is_possessive_noun()
@@ -356,7 +369,7 @@ mod tests {
 
     #[test]
     fn has_is_not_a_nominal() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
 
         let has = dict.get_word_metadata_str("has");
         assert!(has.is_some());
@@ -366,7 +379,7 @@ mod tests {
 
     #[test]
     fn is_is_linking_verb() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
 
         let is = dict.get_word_metadata_str("is");
 

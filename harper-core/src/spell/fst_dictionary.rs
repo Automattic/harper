@@ -26,7 +26,7 @@ const EXPECTED_DISTANCE: u8 = 3;
 const TRANSPOSITION_COST_ONE: bool = false;
 
 lazy_static! {
-    static ref DICT: Arc<FstDictionary> = Arc::new((*MutableDictionary::curated()).clone().into());
+    static ref DICT: Arc<FstDictionary> = Arc::new((*MutableDictionary::curated("en")).clone().into());
 }
 
 thread_local! {
