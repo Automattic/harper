@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use crate::Token;
 
 use super::{Pattern, SequencePattern, WordSet};
@@ -15,7 +17,7 @@ impl Default for IndefiniteArticle {
 }
 
 impl Pattern for IndefiniteArticle {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
         self.inner.matches(tokens, source)
     }
 }

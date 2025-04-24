@@ -5,7 +5,7 @@
 //!
 //! See the page about [`SequencePattern`] for a concrete example of their use.
 
-use std::collections::VecDeque;
+use std::{collections::VecDeque, num::NonZeroUsize};
 
 use crate::{Document, Span, Token, VecExt};
 
@@ -55,16 +55,13 @@ pub use whitespace_pattern::WhitespacePattern;
 pub use word_pattern_group::WordPatternGroup;
 pub use word_set::WordSet;
 
-#[cfg(not(feature = "concurrent"))]
-#[blanket(derive(Rc, Arc))]
-pub trait Pattern {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize;
-}
-
-#[cfg(feature = "concurrent")]
-#[blanket(derive(Arc))]
+#[cfg_attr(feature = "concurrent", blanket(derive(Arc)))]
+#[cfg_attr(not(feature = "concurrent"), blanket(derive(Rc, Arc)))]
 pub trait Pattern: Send + Sync {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize;
+    /// Check if the pattern matches at the start of the given token slice.
+    ///
+    /// Returns the length of the match if successful, or `None` if not.
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize>;
 }
 
 pub trait PatternExt {
@@ -82,8 +79,8 @@ where
         for i in 0..tokens.len() {
             let len = self.matches(&tokens[i..], source);
 
-            if len > 0 {
-                found.push(Span::new_with_len(i, len));
+            if let Some(len) = len {
+                found.push(Span::new_with_len(i, len.get()));
             }
         }
 
@@ -127,14 +124,8 @@ where
     F: Fn(&Token, &[char]) -> bool,
     F: Send + Sync,
 {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        if tokens.is_empty() {
-            return 0;
-        }
-
-        let tok = &tokens[0];
-
-        if self(tok, source) { 1 } else { 0 }
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        NonZeroUsize::new(if self(tokens.first()?, source) { 1 } else { 0 })
     }
 }
 
@@ -143,14 +134,8 @@ impl<F> Pattern for F
 where
     F: Fn(&Token, &[char]) -> bool,
 {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        if tokens.is_empty() {
-            return 0;
-        }
-
-        let tok = &tokens[0];
-
-        if self(tok, source) { 1 } else { 0 }
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        NonZeroUsize::new(if self(tokens.first()?, source) { 1 } else { 0 })
     }
 }
 
