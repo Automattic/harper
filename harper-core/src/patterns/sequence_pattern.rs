@@ -239,7 +239,7 @@ mod tests {
 
         assert_eq!(
             pat.matches(doc.get_tokens(), doc.get_source()),
-            doc.get_tokens().len()
+            NonZeroUsize::new(doc.get_tokens().len())
         );
     }
 }
