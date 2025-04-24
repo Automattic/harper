@@ -21,7 +21,10 @@ impl<D: Dictionary> Pattern for IsNotTitleCase<D> {
     fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
         let inner_match = self.inner.matches(tokens, source)?;
 
-        let matched_chars = tokens[0..inner_match.get()].span().unwrap().get_content(source);
+        let matched_chars = tokens[0..inner_match.get()]
+            .span()
+            .unwrap()
+            .get_content(source);
         if make_title_case(&tokens[0..inner_match.get()], source, &self.dict) != matched_chars {
             Some(inner_match)
         } else {

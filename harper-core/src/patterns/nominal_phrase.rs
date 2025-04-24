@@ -70,7 +70,11 @@ mod tests {
     #[test]
     fn simplest_banana() {
         let doc = Document::new_markdown_default_curated("a banana");
-        assert!(NominalPhrase.matches(doc.get_tokens(), doc.get_source()).is_some());
+        assert!(
+            NominalPhrase
+                .matches(doc.get_tokens(), doc.get_source())
+                .is_some()
+        );
     }
 
     #[test]
