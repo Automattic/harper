@@ -11767,7 +11767,7 @@ aftershave/1SM
 aftershock/1SM
 aftertaste/1SM
 afterthought/14SM
-afterward/~S
+afterward/~S<
 afterwards/j!@_
 afterword/1MS
 again/~+
@@ -15858,6 +15858,7 @@ bushcraft/1M
 bushel/14SGMD
 bushelled/4!@_
 bushelling/41S!@_
+bushfire/1MS_
 bushiness/1M
 bushing/14M
 bushman/1M
@@ -18827,6 +18828,7 @@ contractible/5
 contractile/5
 contractility/1
 contraction/~1S
+contractionary/5
 contractual/~51Y
 contradict/~4SDG
 contradiction/~1SM
@@ -22109,6 +22111,7 @@ durance/1M
 duration/~1MS
 duress/~14M
 during/~+4
+durometer/1MS
 durst/4
 durum/1M
 dusk/~514M
@@ -22585,7 +22588,7 @@ elongation/1M
 elope/4DSGL
 elopement/1MS
 eloquence/~1M
-eloquent/~5Y
+eloquent/~5YI
 else/~57M
 elsewhere/~1
 elucidate/45DSGNX
@@ -23859,7 +23862,7 @@ eyewitness/~14MS
 f/~1CIAVTR
 fMRI/1
 fa/~1+M
-fab/~514
+fab/~51MS4
 fable/~14DSM
 fabric/~14SM
 fabricate/4DSGNX
@@ -24142,6 +24145,7 @@ fearful/~5YP
 fearfulness/1M
 fearless/~5PY
 fearlessness/1M
+fearmonger/1M4SDG
 fearsome/~5
 feasibility/~1M
 feasible/~5IU
@@ -25699,7 +25703,7 @@ fuzz/~14MDSG
 fuzzball/1S
 fuzzily/j
 fuzziness/1M
-fuzzy/~51PTR
+fuzzy/~51PTRS
 fwd/~514
 fwy/1
 g/~1SNXVB
@@ -29368,6 +29372,7 @@ inductance/~1M
 inductee/~1SM
 induction/~1MS
 inductive/~5Y
+inductor/1MS
 indulge/~4DSG
 indulgence/~14SM
 indulgent/5Y
@@ -35357,6 +35362,7 @@ nonmetallic/5
 nonmigratory/5
 nonmilitant/51
 nonmilitary/5
+nonmonetary/5
 nonnarcotic/51SM
 nonnative/51MS
 nonnegotiable/51
@@ -36038,7 +36044,7 @@ om/~14SMNX
 ombudsman/~1M
 ombudsmen/9
 omega/~15SM
-omelet/1MS
+omelet/1MS<
 omelette/14MS!@_
 omen/~14M
 omicron/~1MS
@@ -36086,7 +36092,7 @@ onomatopoetic/5
 onrush/14MSG
 onscreen/~5
 onset/~14MS
-onshore/54
+onshore/54SDG
 onside/51
 onsite/5
 onslaught/~1MS
@@ -40842,6 +40848,7 @@ rebidding/4
 rebirth/~14M
 reboard/4GDS
 reboil/4SDG
+rebox/4SDG
 rebuild/~41SG
 rebuke/14DSMG
 rebuking/41Y
@@ -44753,6 +44760,7 @@ sociological/~5Y
 sociologist/~1SM
 sociology/~1M
 sociopath/1M
+sociopathic/5
 sociopaths/1
 sociopathy/1MS
 sociopolitical/5
@@ -46843,9 +46851,9 @@ swashbuckling/5M
 swastika/1SM
 swat/~41MS
 swatch/14MS
-swath/1GMDS
-swathe/14M
-swaths/1
+swath/1GMDS<
+swathe/14M!@_
+swaths/1<
 swatted/4
 swatter/14SMDG
 swatting/41
@@ -50366,7 +50374,7 @@ vhf/~
 vi/~1
 via/~1+
 viability/~1M
-viable/~51
+viable/~51U
 viably/j
 viaduct/~1SM
 vial/14MS
@@ -51240,8 +51248,8 @@ whimsicality/1M
 whimsy/145SM
 whine/14DRSMZG
 whiner/1M
-whinge/41DRSZG
-whingeing/41
+whinge/41DRSZG!_
+whingeing/41!_
 whinny/14GDSM
 whiny/5RT
 whip/~14MS
@@ -51939,6 +51947,7 @@ yawl/14MS
 yawn/41MDRSZG
 yawner/1M
 yaws/14M
+yay
 yd/~1
 ye/~8-1RST
 yea/~71SM
@@ -52192,6 +52201,7 @@ DMed/4
 DMing/4
 DNS/2SM             # domain name system
 DOM/1SM             # document object model
+DRM/1M              # digital rights management
 DSL/1SM             # domain-specific language
 DeepMind/2M
 DevOps/SM
@@ -52534,6 +52544,7 @@ custom-made/5
 cut scene/1MS
 cutting edge/1MS
 cutting-edge/5
+day-to-day/5j
 de-extinct/4GD
 de-extinction/1MS
 de facto/51M
@@ -52597,6 +52608,7 @@ hard-pressed/5
 hard right/1M
 hard-right/5
 head-scratcher/1MS
+heat-resistant/5
 heavy-duty/5
 heavy-handed/5
 hi-tech/15
@@ -52634,6 +52646,8 @@ labour-intensive/5!@_
 laid-back/5
 large-scale/5
 last-ditch/5
+last minute/15
+last-minute/5
 lead off/1M4
 lead-up/1MS
 left-wing/5
@@ -52711,6 +52725,7 @@ post-truth/14M
 pre-COVID/5
 pro-democracy/5
 quid pro quo/1M
+quote unquote/5j
 rack-mounted/5
 re-enable/4DSG
 real time/1M
@@ -52777,6 +52792,7 @@ third-party/5
 thought out/4
 thought-out/5
 thought-provoking/5
+three-quarters/1
 time-consuming/5Y
 time-honored/5<
 time-honoured/5!@_

@@ -48,6 +48,7 @@ const FALSE_POSITIVES: &[&str] = &[
     "shadow",
     "side",
     "short",
+    "slack",
     "something",
     "sound",
     "top",
@@ -546,5 +547,14 @@ mod tests {
     #[test]
     fn dont_flag_top() {
         assert_lint_count("The top of a hill.", AdjectiveOfA, 0);
+    }
+
+    #[test]
+    fn dont_flag_slack() {
+        assert_lint_count(
+            "They've been picking up the slack of a federal government mostly dominated by whatever this is.",
+            AdjectiveOfA,
+            0,
+        );
     }
 }
