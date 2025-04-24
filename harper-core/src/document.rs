@@ -272,16 +272,8 @@ impl Document {
     pub fn get_next_word_from_offset(&self, base: usize, offset: isize) -> Option<&Token> {
         // Look for whitespace at the expected offset
         if !self.get_token_offset(base, offset)?.kind.is_whitespace() {
-            eprintln!(
-                "*** {:?} is not whitespace ***",
-                self.get_span_content(&self.get_token_offset(base, offset).unwrap().span)
-            );
             return None;
         }
-        eprintln!(
-            "*** {:?} is whitespace ***",
-            self.get_span_content(&self.get_token_offset(base, offset).unwrap().span)
-        );
         // Now look beyond the whitespace for a word token
         let word_token = self.get_token_offset(base, offset + offset.signum());
         let word_token = word_token?;
