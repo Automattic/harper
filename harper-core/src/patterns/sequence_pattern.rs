@@ -152,6 +152,11 @@ impl SequencePattern {
         self
     }
 
+    /// Shorthand for [`Self::then_whitespace`].
+    pub fn t_ws(self) -> Self {
+        self.then_whitespace()
+    }
+
     /// Match against one or more whitespace tokens.
     pub fn then_whitespace(mut self) -> Self {
         self.token_patterns.push(Box::new(WhitespacePattern));
@@ -224,6 +229,17 @@ mod tests {
         assert_eq!(
             pat.matches(doc.get_tokens(), doc.get_source()),
             NonZeroUsize::new(doc.get_tokens().len())
+        );
+    }
+
+    #[test]
+    fn match_t_aco_and_t_ws() {
+        let pat = SequencePattern::aco("foo").t_ws().t_aco("bar");
+        let doc = Document::new_plain_english_curated("foo\nBAR");
+
+        assert_eq!(
+            pat.matches(doc.get_tokens(), doc.get_source()),
+            doc.get_tokens().len()
         );
     }
 }
