@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
 
 	return {
 		build: {
-			emptyOutDir: true,
+			minify: false,
 			outDir: 'build',
 			rollupOptions: {
 				output: {
@@ -21,6 +21,15 @@ export default defineConfig(({ mode }) => {
 			},
 		},
 		plugins: [
+			copy({
+				hook: 'buildStart',
+				targets: [
+					{
+						src: '../harper.js/dist/harper_wasm_bg.wasm',
+						dest: './public/wasm',
+					},
+				],
+			}),
 			tailwindcss(),
 			crx({ manifest }),
 			svelte({
@@ -28,15 +37,6 @@ export default defineConfig(({ mode }) => {
 					dev: !production,
 				},
 				preprocess: sveltePreprocess(),
-			}),
-			copy({
-				hook: 'buildStart',
-				targets: [
-					{
-						src: '../harper.js/dist/harper_wasm_bg.wasm',
-						dest: './build/wasm',
-					},
-				],
 			}),
 		],
 		resolve: {

@@ -28,8 +28,8 @@ export default defineManifest({
 	],
 	web_accessible_resources: [
 		{
-			resources: [],
-			matches: [],
+			matches: ['<all_urls>'],
+			resources: ['wasm/harper_wasm_bg.wasm'],
 		},
 	],
 	icons: {
@@ -37,6 +37,6 @@ export default defineManifest({
 	},
 	permissions: ['storage', 'tabs'],
 	content_security_policy: {
-		extension_pages: "script-src 'self' 'wasm-unsafe-eval'",
+		extension_pages: "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; connect-src 'self'",
 	},
 });

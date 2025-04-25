@@ -21,3 +21,5 @@
 
 # secrets
 secrets.*.js
+
+public/wasm
