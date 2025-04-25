@@ -41,6 +41,7 @@ async function enableDefaultDomains() {
 		'mail.google.com',
 		'trix-editor.org',
 		'github.com',
+		'messages.google.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

@@ -46,6 +46,11 @@ export default class LintFramework {
 		for (const target of this.targets) {
 			let text: string | null = null;
 
+			if (!document.contains(target)) {
+				this.targets.delete(target);
+				continue;
+			}
+
 			if (target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement) {
 				text = target.value;
 			} else {
