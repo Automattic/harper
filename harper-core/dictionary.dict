@@ -7736,6 +7736,7 @@ PBS/12M             # organization
 PBX/1
 PC/5124SM
 PCB/1MS             # printed circuit board
+PCI/1MS             # expansion slot standard
 PCM/1M
 PCMCIA/2            # standard
 PCP/1M              # drug
@@ -9052,6 +9053,7 @@ Schedar/2M
 Scheherazade/2M
 Schelling/2M
 Schenectady/2M
+Schengen/2M
 Schiaparelli/2M
 Schick/2M
 Schiller/2M
@@ -12272,7 +12274,7 @@ amusing/~45Y
 amygdala/1
 amylase/1M
 amyloid/15
-an/~-7+CS
+an/~-+CS            # removed `7` conjunction: archaic
 anabolism/1M
 anachronism/1SM
 anachronistic/5Q
@@ -15887,7 +15889,7 @@ busy/~514DRSTGP
 busybody/14SM
 busyness/1M
 busywork/1M
-but/~+714ACS
+but/~+71ACS         # removed `4` verb: archaic
 butane/1M
 butch/~514MRSZ
 butcher/~145MDG
@@ -15975,6 +15977,7 @@ cabriolet/1SM
 cabstand/1SM
 cacao/1MS
 cache/~14MGDS
+cacheable/5
 cachepot/1SM
 cachet/14MS
 cackle/14MZGDRS
@@ -19255,6 +19258,7 @@ counterpetition/14
 counterpoint/~14MDGS
 counterpoise/14MGDS
 counterproductive/~5
+counterprotest/14MSDG
 counterrevolution/1SM
 counterrevolutionary/51SM
 countersign/14GSMD
@@ -21115,6 +21119,7 @@ dinghy/14SM
 dingily/j
 dinginess/1M
 dingle/~15SM
+dingleberry/1MS
 dingo/14M
 dingoes/14
 dingus/1MS
@@ -23606,6 +23611,7 @@ exoticism/1M
 exp/~
 expand/~4BGSD
 expandability/1M
+expander/1MS
 expanse/~1XMNVS
 expansible/5
 expansion/~1M
@@ -24656,7 +24662,7 @@ flapping/514
 flappy/5
 flare/~14DSMG
 flareup/1SM
-flash/~415ZTGMDRS
+flash/~415ZTGMDRSB
 flashback/~14SM
 flashbulb/1SM
 flashcard/1SM
@@ -25493,6 +25499,7 @@ frontierswoman/1
 frontierswomen/9
 frontispiece/14MS
 frontline/1SM
+frontside/5
 frontward/5S
 frosh/14M
 frost/~14CSDG
@@ -25781,6 +25788,7 @@ gamechanger/1MS
 gamecock/1MS
 gamekeeper/1MS
 gameness/1M
+gamepad/1MS
 gameplay/~1
 gamer/~1SM
 gamesmanship/1M
@@ -27278,6 +27286,7 @@ handspring/1MS
 handstand/14SM
 handsy/51RT
 handwave/1MS4DG
+handwavy/5
 handwork/14M
 handwoven/5
 handwriting/~14M
@@ -30194,6 +30203,7 @@ isms/1
 isn't/~41
 isobar/1MS
 isobaric/5
+isochronous/5
 isolate/~415DSMGN
 isolation/~1M
 isolationism/1M
@@ -31893,6 +31903,7 @@ lobsterman/1M
 lobstermen/9M
 local/~51SMY
 locale/~1MS
+localhost/1SM
 localisation/1M!_
 localise/4DSG!_
 localish/5
@@ -32610,9 +32621,9 @@ mantis/~1MS
 mantissa/1SM
 mantle/~14EGDS
 mantle's
-mantoes/1!@_
 mantra/~1MS
 manual/~15MYS
+manufacturability/1M
 manufacture/~14DRSMZGA
 manufacturer/~1M
 manufacturing/~154MA
@@ -32674,6 +32685,7 @@ marital/~5Y
 maritime/~5
 marjoram/1M
 mark/~14AMDSG
+markdown/1MS
 marked/~54U
 markedly/~j
 marker/~14MS
@@ -34325,9 +34337,11 @@ muckraker/1M
 mucky/5TR
 mucous/~5
 mucus/~1M
-mud/~14M
+mud/~14MS
+mudded/4
 muddily/j
 muddiness/1M
+mudding/4
 muddle/41MGDS
 muddleheaded/5
 muddy/~541PTGDRS
@@ -34381,6 +34395,7 @@ mulligatawny/1M
 mullion/14SMD
 multi/~1
 multibillion/5
+multibyte/5
 multicellular/51
 multichannel/5
 multicolored/5
@@ -36176,7 +36191,7 @@ optometry/1M
 opulence/1M
 opulent/5Y
 opus/~1MS
-or/~71+             # removed `5` adjective, rare heraldic usage, interferes with linter heuristics
+or/~71              # removed `5` adjective, rare heraldic usage; `+` preposition: archaic
 oracle/~14SM
 oracular/5
 oral/~51MYS
@@ -36698,6 +36713,7 @@ overrange/41GDS
 overrate/41GDS
 overreach/41GDS
 overreact/4SDG
+overread/54SDG
 overreaction/1SM
 overrefined/45
 overregulate/4DSGN
@@ -41036,6 +41052,7 @@ refinement/~1SM
 refiner/1SM
 refinery/~1S
 refitting/41
+reflash/4DSG1M
 reflate/4XDSGN
 reflationary/5
 reflect/~4GVSD
@@ -46078,6 +46095,7 @@ stringify/4DSG
 stringiness/1M
 stringy/5PTR
 strip/~14SMD
+stripdown/1MS
 stripe/~14MS
 stripey/51
 stripling/1MS
@@ -47695,7 +47713,7 @@ thatch/14MDRSZG
 thatcher/~1M
 thatching/14M
 thaw/~41MDGS
-the/~-+J
+the/~-J             # removed `+` preposition: archaic
 theater/~1SM
 theatergoer/1SM
 theatre/1SM!@_
@@ -47711,7 +47729,7 @@ theirs/~8
 theism/~1M
 theist/1SM
 theistic/~5
-them/~8ot
+them/~8otM          # them's as in (one of) them is/has
 thematic/~51Q
 thematically/
 theme/~14DSMG
@@ -49417,6 +49435,7 @@ undercharge/41MGDS
 underclass/1MS
 underclassman/1M
 underclassmen/9
+underclock/4SDG
 underclothes/1M
 underclothing/1M
 undercoat/14GJSMD
@@ -52114,92 +52133,94 @@ zymurgy/1M
 # This section contains mostly programming and technical terms
 # Some words may be very domain-specific, proprietary, or trademarked
 
-0s/~9                   # not sure how well "words" starting with numbers are handled
-1s/~9                   # not sure how well "words" starting with numbers are handled
-3D/5                    # not sure how well "words" starting with numbers are handled
+0s/~9               # not sure how well "words" starting with numbers are handled
+1s/~9               # not sure how well "words" starting with numbers are handled
+3D/5                # not sure how well "words" starting with numbers are handled
 ACM/1M
-AGI/MS                  # artificial general intelligence
-AMC/12MS                # old car brand
-AOC/2M                  # US politician Alexandria Ocasio-Cortez
-ATF/1M                  # automatic transmission fluid
+AGI/MS              # artificial general intelligence
+AMC/12MS            # old car brand
+AOC/2M              # US politician Alexandria Ocasio-Cortez
+ASUS/2M
+ATF/1M              # automatic transmission fluid
 Akismet/2M
-Alexa/2M                # voice assistant
+Alexa/2M            # voice assistant
 Alexandre/2SM
 AliExpress/2M
-AlphaFold/2M            # Google DeepMind project
-Ambien/1SM              # insomnia treatment
+AlphaFold/2M        # Google DeepMind project
+Ambien/1SM          # insomnia treatment
 Anker/SM
-Archytas/SM             # !! please check and comment !! we also have archytas
-Automattic/SM           # WordPress company
+Archytas/SM         # !! please check and comment !! we also have archytas
+Automattic/SM       # WordPress company
 Automattician/SM
-BCPL/1M                 # old programming language
+BCD/1M              # binary coded decimal
+BCPL/1M             # old programming language
 BLM/1M
-BRICS/                  # intergovernmental organization
-BYD/2MS                 # Chinese automobile manufacturer
+BRICS/              # intergovernmental organization
+BYD/2MS             # Chinese automobile manufacturer
 Bachiyski/SM
-Bezos/2                 # Surname, Amazon founder
-Bing/2M                 # Microsoft product
+Bezos/2             # Surname, Amazon founder
+Bing/2M             # Microsoft product
 BitKeeper/1M        # version control
 BlasterHacks/SM
 BurpSuite/21MS
-C++/2SM                 # programming language
-CCP/2S                  # Chinese Communist Party
-CEO/1SM                 # chief executive officer
-CERN/2M                 # intergovernmental organization
-CI/1SM                  # continuous integration
-CISC/1M                 # cpu architecture
-CMOS/1                  # microchip process
-CMake/SM                # build tool
+C++/2SM             # programming language
+CCP/2S              # Chinese Communist Party
+CEO/1SM             # chief executive officer
+CERN/2M             # intergovernmental organization
+CI/1SM              # continuous integration
+CISC/1M             # cpu architecture
+CMOS/1              # microchip process
+CMake/SM            # build tool
 CQL/1
 CRDT/1SM
 CRM/12SM
 CTE/1S
-ChatGPT/2M              # OpenAI product
-Codeberg/21M            # GitHub alternative
+ChatGPT/2M          # OpenAI product
+Codeberg/21M        # GitHub alternative
 Colemak/15M
 CommonMark/M
-CompUSA                 # retailer
+CompUSA             # retailer
 Corretto/SM
 Crowdsignal/2M
 Cypher/21M
-DATETIME/1MS            # dictionaries prefer: datetime
-DBMS/12SM               # database management system
+DATETIME/1MS        # dictionaries prefer: datetime
+DBMS/12SM           # database management system
 DEI
 DKIM/1SM
-DM/1MS4                 # direct message
+DM/1MS4             # direct message
 DM'd/4
 DMed/4
 DMing/4
-DNS/2SM                 # domain name system
-DOM/1SM                 # document object model
-DSL/1SM                 # domain-specific language
+DNS/2SM             # domain name system
+DOM/1SM             # document object model
+DSL/1SM             # domain-specific language
 DeepMind/2M
 DevOps/SM
-Dreamcast/2MS           # game console
-EGR/                    # exhaust gas recirculation
+Dreamcast/2MS       # game console
+EGR/                # exhaust gas recirculation
 EMR/12SM
 ESLint/2M
-EV/1SM                  # electric vehicle
+EV/1SM              # electric vehicle
 ElasticSearch/SM
 Elon/2M
-Erdoğan/2M              # surname, Turkish politician
-Ethereum/2M             # digital currency
-Evo/2MS                 # car model
+Erdoğan/2M          # surname, Turkish politician
+Ethereum/2M         # digital currency
+Evo/2MS             # car model
 Expedia/2M
 FIDO/12SM
-FIFA/1M                 # football/soccer association
-FPGA/1SM                # field-programmable gate array
+FIFA/1M             # football/soccer association
+FPGA/1SM            # field-programmable gate array
 FPM/SM
-FSD/1M                  # full self-driving
+FSD/1M              # full self-driving
 Famicom/12MS        # game console
-FireWire/MS             # trademark
+FireWire/MS         # trademark
 Firestore/M
 Foddy/SM
 Frankl/SM
 GLFW/2M
-GPL/2M                  # GNU General Public License
-GPT/1SM                 # generative pre-trained transformer
-GPU/1S                  # graphics processing unit
+GPL/2M              # GNU General Public License
+GPT/1SM             # generative pre-trained transformer
+GPU/1S              # graphics processing unit
 Ganeti/SM
 Gateron/SM
 GitLab/SM           # GitHub alternative
@@ -52221,6 +52242,7 @@ IMAP/2SM            # internet message access protocol
 IPC/1M              # interprocess communication
 IPCC/2M
 IPv4/2SM
+ISA/12MS            # instruction set architecture; industry standard architecture
 IntelliJ/SM
 IntelliSense/2M
 JNI/2M              # Java Native Interface
@@ -52259,6 +52281,7 @@ Loctite/2M          # product
 Logotherapy/SM
 Longreads/2M
 Lua/SM              # programming language
+MMX/1M              # multimedia extension
 MPC/21M
 MSNBC/2M            # media company
 MTA/1SM
@@ -52418,6 +52441,9 @@ a11n/1
 a12s/9
 a8c/SM
 archytas/SM         # !! please check and comment !! we also have Archytas
+autoconfig/1M
+autoconfiguration/1M
+autoconfigure/4SDG
 backend/1SM         # dictionaries prefer: back end
 baz/~               # cf. foo, bar
 config/14SM         # not marked as a verb since "configed" and "configing" look wrong
@@ -52425,6 +52451,7 @@ corpo/1MS
 dedup/1M            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/14SMDG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
 dotfile/~1SM        # not well covered by dictionaries.
+eVTOL/1MS
 filesystem/~SM      # dictionaries prefer: file system
 frontend/1SM        # dictionaries prefer: front end
 gRPC/2SM            # framework
@@ -52621,6 +52648,7 @@ low-budget/5
 low-cost/5
 low-end/5
 low-income/5
+low-level/5
 low-maintenance/5
 low-profile/5
 made up/4
