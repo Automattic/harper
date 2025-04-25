@@ -9,7 +9,8 @@ export type Request =
 	| SetDialectRequest
 	| GetDialectRequest
 	| SetDomainStatusRequest
-	| GetDomainStatusRequest;
+	| GetDomainStatusRequest
+	| AddToUserDictionaryRequest;
 
 export type Response =
 	| LintResponse
@@ -82,6 +83,11 @@ export type SetDomainStatusRequest = {
 	kind: 'setDomainStatus';
 	domain: string;
 	enabled: boolean;
+};
+
+export type AddToUserDictionaryRequest = {
+	kind: 'addToUserDictionary';
+	word: string;
 };
 
 /** Similar to returning void. */

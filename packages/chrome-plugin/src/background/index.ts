@@ -1,5 +1,6 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
 import {
+	type AddToUserDictionaryRequest,
 	type GetConfigRequest,
 	type GetConfigResponse,
 	type GetDialectRequest,
@@ -69,6 +70,8 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetDomainStatus(message);
 		case 'setDomainStatus':
 			return handleSetDomainStatus(message);
+		case 'addToUserDictionary':
+			return handleAddToUserDictionary(message);
 	}
 }
 
@@ -125,6 +128,12 @@ async function handleGetLintDescriptions(
 	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptions() };
 }
 
+async function handleAddToUserDictionary(req: AddToUserDictionaryRequest): Promise<UnitResponse> {
+	await addToDictionary(req.word);
+
+	return createUnitResponse();
+}
+
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
 async function setLintConfig(lintConfig: LintConfig): Promise<void> {
 	await linter.setLintConfig(lintConfig);
@@ -152,6 +161,7 @@ function initializeLinter(dialect: Dialect) {
 		dialect,
 	});
 
+	getUserDictionary().then((u) => linter.importWords(u));
 	getLintConfig().then((c) => linter.setLintConfig(c));
 	linter.setup();
 }
@@ -181,4 +191,21 @@ async function setDomainEnable(domain: string, status: boolean) {
 async function isDomainSet(domain: string): Promise<boolean> {
 	const resp = await chrome.storage.local.get(formatDomainKey(domain));
 	return typeof resp[formatDomainKey(domain)] == 'boolean';
+}
+
+/** Add a word to the persistent user dictionary. */
+async function addToDictionary(word: string): Promise<void> {
+	const words = await linter.exportWords();
+	words.push(word);
+
+	await Promise.all([
+		linter.importWords(words),
+		chrome.storage.local.set({ userDictionary: words }),
+	]);
+}
+
+/** Grab the user dictionary from persistent storage. */
+async function getUserDictionary(): Promise<string[]> {
+	const resp = await chrome.storage.local.get({ userDictionary: [] });
+	return resp.userDictionary;
 }

@@ -24,6 +24,7 @@ export default class ProtocolClient {
 
 	public static async setLintConfig(lintConfig: LintConfig): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setConfig', config: lintConfig });
+		this.lintCache.clear();
 	}
 
 	public static async getLintDescriptions(): Promise<Record<string, string>> {
@@ -36,6 +37,7 @@ export default class ProtocolClient {
 
 	public static async setDialect(dialect: Dialect): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setDialect', dialect });
+		this.lintCache.clear();
 	}
 
 	public static async getDomainEnabled(domain: string): Promise<boolean> {
@@ -46,5 +48,11 @@ export default class ProtocolClient {
 
 	public static async setDomainEnabled(domain: string, enabled: boolean): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setDomainStatus', enabled, domain });
+		this.lintCache.clear();
+	}
+
+	public static async addToUserDictionary(word: string): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'addToUserDictionary', word });
+		this.lintCache.clear();
 	}
 }

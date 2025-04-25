@@ -1,8 +1,8 @@
-import type { walk } from 'svelte/compiler';
 import h from 'virtual-dom/h';
 import type { LintBox } from './Box';
+import ProtocolClient from './ProtocolClient';
 import lintKindColor from './lintKindColor';
-import type { UnpackedSuggestion } from './unpackLint';
+import type { UnpackedLint, UnpackedSuggestion } from './unpackLint';
 
 function header(title: string, color: string): any {
 	const headerStyle: { [key: string]: string } = {
@@ -41,29 +41,44 @@ function button(
 	return h('button', { style: combinedStyle, onclick: onClick }, label);
 }
 
+function footer(children: any) {
+	const footerStyle: { [key: string]: string } = {
+		display: 'flex',
+		gap: '0.5rem',
+		padding: '0.5rem',
+		justifyContent: 'flex-end',
+	};
+	return h('div', { style: footerStyle }, children);
+}
+
+function addToDictionary(box: LintBox): any {
+	const buttonStyle: { [key: string]: string } = {
+		background: '#852387',
+		color: '#ffffff',
+	};
+
+	if (box.lint.lint_kind == 'Spelling') {
+		return button('Add to Dictionary', buttonStyle, () => {
+			ProtocolClient.addToUserDictionary(box.lint.problem_text);
+		});
+	}
+}
+
 function suggestions(
 	suggestions: UnpackedSuggestion[],
 	apply: (sug: UnpackedSuggestion) => void,
 ): any {
-	const footerStyle: { [key: string]: string } = {
-		display: 'flex',
-		gap: '0.5rem',
-		justifyContent: 'flex-end',
-	};
 	const suggestionButtonStyle: { [key: string]: string } = {
 		background: '#238636',
 		color: '#ffffff',
 	};
-	return h(
-		'div',
-		{ style: footerStyle },
-		suggestions.map((s: UnpackedSuggestion) => {
-			const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
-			return button(label, suggestionButtonStyle, () => {
-				apply(s);
-			});
-		}),
-	);
+
+	return suggestions.map((s: UnpackedSuggestion) => {
+		const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
+		return button(label, suggestionButtonStyle, () => {
+			apply(s);
+		});
+	});
 }
 
 export default function SuggestionBox(box: LintBox) {
@@ -94,6 +109,7 @@ export default function SuggestionBox(box: LintBox) {
 	return h('div', { style: containerStyle }, [
 		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind)),
 		body(box.lint.message),
-		suggestions(box.lint.suggestions, box.applySuggestion),
+		footer(suggestions(box.lint.suggestions, box.applySuggestion)),
+		footer(addToDictionary(box)),
 	]);
 }
