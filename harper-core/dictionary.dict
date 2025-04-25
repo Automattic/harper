@@ -1,4 +1,4 @@
-52800
+52900
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -1681,7 +1681,7 @@ CST/21M
 CSV/1M              # data file format
 CT/2145M
 CUDA/21M            # computing architecture
-CV/125              # curriculum vitae
+CV/125S             # curriculum vitae
 CVS/12M             # version control
 CZ/1
 Ca/M                # calcium
@@ -7586,7 +7586,7 @@ Okinawa/2M          # island, prefecture
 Okinawan/512
 Okla/2
 Oklahoma/2M
-Oklahoman/15M
+Oklahoman/15MS
 Oktoberfest/1M
 Ola/2M
 Olaf/2M
@@ -11101,6 +11101,7 @@ abaft/+
 abalone/1SM
 abandon/~41LSDG
 abandonment/~1M
+abandonware/1M
 abase/4LGDS
 abasement/1M
 abash/4GLDS
@@ -12641,7 +12642,7 @@ anvil/~14MS
 anxiety/~1SM
 anxious/~5YP
 anxiousness/1M
-any/~8j5
+any/~8j-            # removed `5` adjective. it's determiner/pronoun/adverb only
 anybody/~8SM
 anyhow/~5
 anymore/~
@@ -23092,6 +23093,8 @@ epileptic/~51SM
 epilogue/~14MS
 epinephrine/1M
 epiphany/~1SM
+epiphenomena/9
+epiphenomenon/1M
 episcopacy/1M
 episcopal/~5
 episcopate/~14M
@@ -24193,6 +24196,7 @@ feedbag/1SM
 feeder/~1M
 feeding/~41M
 feedlot/1SM
+feedstock/1M
 feel/~4185MRZGSJ
 feeler/1M
 feelgood/5
@@ -27143,6 +27147,7 @@ haggish/5
 haggle/4MZGDRS
 haggler/1M
 hagiographer/1SM
+hagiographic/5
 hagiography/1SM
 hahnium/1M
 haiku/~1MS
@@ -27289,6 +27294,7 @@ handsomeness/1M
 handspring/1MS
 handstand/14SM
 handsy/51RT
+handwash/1MS
 handwave/1MS4DG
 handwavy/5
 handwork/14M
@@ -28134,6 +28140,7 @@ homey/15SMP
 homeyness/1M
 homicidal/5
 homicide/~1MS
+homie/1MS
 homier/5
 homiest/5
 homiletic/5
@@ -30721,6 +30728,7 @@ keyboarder/1M
 keyboardist/~1SM
 keycap/1SM
 keychain/1MS
+keygen/1MS
 keyhole/~14MS
 keymap/1SM
 keynote/~14MZGDRS
@@ -31387,6 +31395,7 @@ legalistic/5Q
 legality/~1SM
 legalization/~1M
 legalize/4GDS
+legalizer/1MS
 legate/~14CXMNS
 legatee/1MS
 legation's/AC
@@ -32669,6 +32678,7 @@ marge/~1
 margin/~14MS
 marginal/~51YS
 marginalia/1M
+marginality/1M
 marginalisation/1!_
 marginalise/4GDS!_
 marginalization/1M
@@ -34668,6 +34678,7 @@ nanocurie/1MS
 nanogram/1SM
 nanometer/1S<
 nanometre/1S!@_
+nanoparticle/1MS
 nanoprocessor/1SM
 nanosecond/1SM
 nanotechnology/~1SM
@@ -39975,6 +39986,7 @@ psychological/~5Y
 psychologist/~1MS
 psychology/~1SM
 psychometric/5
+psychometrician/1SM
 psychoneuroses/1
 psychoneurosis/1M
 psychopath/1M
@@ -40013,7 +40025,7 @@ publicity/~1M
 publicize/4GDS
 publicly/~j
 publish/~4AGDS
-publishable/5
+publishable/5U
 published/~45U
 publisher/~1MS
 publishing/~14M
@@ -41565,6 +41577,7 @@ restroom/1SM
 restructuring/~41SM
 result/~41GSMD
 resultant/~51SM
+résumé/1SM
 resumé/1SM
 resume/~41DSMG
 resumption/~1MS
@@ -47777,8 +47790,8 @@ thereabout/S
 thereafter/~1
 thereat/
 thereby/~
-therefor/
-therefore/~
+therefor/j
+therefore/j~
 therefrom/
 therein/~
 theremin/1SM
@@ -49269,6 +49282,10 @@ typographic/5
 typographical/5Y
 typography/~1M
 typology/~1SM
+typosquat/1MS4
+typosquatted/4
+typosquatter/1MS
+typosquatting/4
 tyrannic/5
 tyrannical/5Y
 tyrannicidal/5
@@ -49717,6 +49734,7 @@ unleaded/541M
 unless/~7
 unlike/~5+14PB
 unlikely/~51T
+unlink/1M4SDG
 unlit/5
 unlivable/5!_
 unlock/~41DSG
@@ -52665,6 +52683,7 @@ low-income/5
 low-level/5
 low-maintenance/5
 low-profile/5
+lower-income/5
 made up/4
 made-up/5
 make believe/4
@@ -52678,6 +52697,7 @@ mind-blowing/5
 mind game/1MS
 mock up/4
 mock-up/1MS
+multiple-choice/5
 nail biter/1MS
 nano-farad/1MS
 neo-Nazi/15SM
@@ -52836,6 +52856,7 @@ well-used/5
 Wi-Fi/1M
 wishy-washy/5
 working-class/15MS
+would-be/5
 write off/4
 write-off/1MS
 write-up/1MS

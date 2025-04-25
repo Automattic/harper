@@ -12,6 +12,7 @@ const FALSE_POSITIVES: &[&str] = &[
     "equivalent",
     "full",
     "fun",
+    "illustrative",
     "inside",
     "more",
     "much",
@@ -553,6 +554,15 @@ mod tests {
     fn dont_flag_slack() {
         assert_lint_count(
             "They've been picking up the slack of a federal government mostly dominated by whatever this is.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_illustrative() {
+        assert_lint_count(
+            "Yet, the fact that they clearly give a one-sided account of most of their case studies is illustrative of a bias.",
             AdjectiveOfA,
             0,
         );
