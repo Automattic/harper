@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use paste::paste;
 
 use super::whitespace_pattern::WhitespacePattern;
@@ -150,6 +152,11 @@ impl SequencePattern {
         self
     }
 
+    /// Shorthand for [`Self::then_whitespace`].
+    pub fn t_ws(self) -> Self {
+        self.then_whitespace()
+    }
+
     /// Match against one or more whitespace tokens.
     pub fn then_whitespace(mut self) -> Self {
         self.token_patterns.push(Box::new(WhitespacePattern));
@@ -176,25 +183,22 @@ impl SequencePattern {
 }
 
 impl Pattern for SequencePattern {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
         let mut tok_cursor = 0;
 
         for pat in self.token_patterns.iter() {
-            let match_length = pat.matches(&tokens[tok_cursor..], source);
-
-            if match_length == 0 {
-                return 0;
-            }
-
-            tok_cursor += match_length;
+            let match_length = pat.matches(&tokens[tok_cursor..], source)?;
+            tok_cursor += match_length.get();
         }
 
-        tok_cursor
+        NonZeroUsize::new(tok_cursor)
     }
 }
 
 #[cfg(test)]
 mod tests {
+
+    use std::num::NonZeroUsize;
 
     use super::SequencePattern;
     use crate::Document;
@@ -210,7 +214,7 @@ mod tests {
 
         assert_eq!(
             pat.matches(doc.get_tokens(), doc.get_source()),
-            doc.get_tokens().len()
+            NonZeroUsize::new(doc.get_tokens().len())
         );
     }
 
@@ -224,7 +228,18 @@ mod tests {
 
         assert_eq!(
             pat.matches(doc.get_tokens(), doc.get_source()),
-            doc.get_tokens().len()
+            NonZeroUsize::new(doc.get_tokens().len())
+        );
+    }
+
+    #[test]
+    fn match_t_aco_and_t_ws() {
+        let pat = SequencePattern::aco("foo").t_ws().t_aco("bar");
+        let doc = Document::new_plain_english_curated("foo\nBAR");
+
+        assert_eq!(
+            pat.matches(doc.get_tokens(), doc.get_source()),
+            NonZeroUsize::new(doc.get_tokens().len())
         );
     }
 }

@@ -1,8 +1,11 @@
+use std::num::NonZeroUsize;
+
 use crate::{CharString, Token};
 
 use super::Pattern;
 
 /// A [`Pattern`] that matches any capitalization of a provided word.
+#[derive(Clone)]
 pub struct AnyCapitalization {
     word: CharString,
 }
@@ -20,17 +23,15 @@ impl AnyCapitalization {
 }
 
 impl Pattern for AnyCapitalization {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        let Some(tok) = tokens.first() else {
-            return 0;
-        };
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        let tok = tokens.first()?;
 
         if !tok.kind.is_word() {
-            return 0;
+            return None;
         }
 
         if tok.span.len() != self.word.len() {
-            return 0;
+            return None;
         }
 
         let tok_chars = tok.span.get_content(source);
@@ -40,6 +41,6 @@ impl Pattern for AnyCapitalization {
             .zip(&self.word)
             .all(|(a, b)| a.eq_ignore_ascii_case(b));
 
-        if partial_match { 1 } else { 0 }
+        NonZeroUsize::new(if partial_match { 1 } else { 0 })
     }
 }

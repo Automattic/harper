@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use hashbrown::HashMap;
 
 use super::Pattern;
@@ -9,15 +11,9 @@ pub struct TokenKindPatternGroup {
 }
 
 impl Pattern for TokenKindPatternGroup {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        let Some(first_kind) = tokens.first().map(|t| &t.kind) else {
-            return 0;
-        };
-
-        let Some(pattern) = self.strict_patterns.get(first_kind) else {
-            return 0;
-        };
-
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        let first_kind = tokens.first().map(|t| &t.kind)?;
+        let pattern = self.strict_patterns.get(first_kind)?;
         pattern.matches(tokens, source)
     }
 }

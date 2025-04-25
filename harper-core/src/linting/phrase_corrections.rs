@@ -743,6 +743,13 @@ pub fn lint_group() -> LintGroup {
             "Use `worse` for comparing. (`Worst` is for the extreme case)",
             "Corrects `worst and worst` to `worse and worse` for proper comparative usage."
         ),
+        "WorseCaseScenario" => (
+            ["worse case scenario", "worse-case scenario", "worse-case-scenario",
+             "worst case scenario",                        "worst-case-scenario"],
+            ["worst-case scenario"],
+            "Use `worst` for referring to the worst possible scenario. (`Worse` is for comparing)",
+            "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
+        ),
         "WorseThan" => (
             ["worst than"],
             ["worse than"],
@@ -1073,6 +1080,54 @@ pub fn lint_group() -> LintGroup {
             ["having passed"],
             "Did you mean the verb `passed`?",
             "Suggests `past` for `passed` in case a verb was intended."
+        ),
+        "ClientSide" => (
+            ["client's side"],
+            ["client-side"],
+            "In client-server contexts, use `client-side` rather than `client's side`.",
+            "Corrects `client's side` to `client-side`, which is usual in `client-server contexts`."
+        ),
+        "ServerSide" => (
+            ["server's side"],
+            ["server-side"],
+            "In client-server contexts, use `server-side` rather than `server's side`.",
+            "Corrects `server's side` to `server-side`, which is usual in `client-server contexts`."
+        ),
+        "InCase" => (
+            ["incase"],
+            ["in case"],
+            "`In case` should be written as two words.",
+            "Corrects `incase` to `in case`."
+        ),
+        "DoNotWant" => (
+            ["don't wan", "do not wan"],
+            ["don't want", "do not want"],
+            "Use the full verb “want” after negation: “don't want” or “do not want.”",
+            "In English, negation still requires the complete verb form (“want”), so avoid truncating it to “wan.”"
+        ),
+        "CoursingThroughVeins" => (
+            ["cursing through veins"],
+            ["coursing through veins"],
+            "In this idiom, blood “courses” (flows) through veins, not “curses”.",
+            "In English idioms, “to course” means to flow rapidly—so avoid the eggcorn `cursing through veins.`"
+        ),
+        "BestRegards" => (
+            ["beat regards"],
+            ["best regards"],
+            "Use `best regards` to convey sincere well wishes in a closing.",
+            "In valedictions, `best` expresses your highest regard—avoid the typo `beat regards`."
+        ),
+        "Freezing" => (
+            ["very cold", "really cold", "extremely cold"],
+            ["freezing"],
+            "A more vivid adjective would better capture extreme cold.",
+            "Encourages vivid writing by suggesting `freezing` instead of weaker expressions like `very cold.`"
+        ),
+        "Starving" => (
+            ["very hungry", "really hungry", "extremely hungry"],
+            ["starving"],
+            "A more vivid adjective would better convey intense hunger.",
+            "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`"
         ),
     });
 
@@ -2192,6 +2247,128 @@ mod tests {
             "Return to computer, with enough time having past for the computer to go to full sleep.",
             lint_group(),
             "Return to computer, with enough time having passed for the computer to go to full sleep.",
+        );
+    }
+
+    #[test]
+    fn correct_in_case() {
+        assert_suggestion_result(
+            "Support for enum variable incase of reusable enum class",
+            lint_group(),
+            "Support for enum variable in case of reusable enum class",
+        );
+    }
+
+    #[test]
+    fn correct_worse_case_space() {
+        assert_suggestion_result(
+            "In the worse case scenario, remote code execution could be achieved.",
+            lint_group(),
+            "In the worst-case scenario, remote code execution could be achieved.",
+        );
+    }
+
+    #[test]
+    fn correct_worse_case_hyphen() {
+        assert_suggestion_result(
+            "Basically I want my pods to get the original client IP address... or at least have X-Forwarded-For header, in a worse-case scenario.",
+            lint_group(),
+            "Basically I want my pods to get the original client IP address... or at least have X-Forwarded-For header, in a worst-case scenario.",
+        );
+    }
+
+    #[test]
+    fn correct_worse_case_two_hyphens() {
+        assert_suggestion_result(
+            "In a worse-case-scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
+            lint_group(),
+            "In a worst-case scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
+        );
+    }
+
+    #[test]
+    fn correct_worst_case_space() {
+        assert_suggestion_result(
+            "The worst case scenario can be calculated without looking at streams of data.",
+            lint_group(),
+            "The worst-case scenario can be calculated without looking at streams of data.",
+        );
+    }
+
+    #[test]
+    fn correct_worst_case_two_hyphens() {
+        assert_suggestion_result(
+            "CAPD worst-case-scenario cloud simulator for naughty clouds.",
+            lint_group(),
+            "CAPD worst-case scenario cloud simulator for naughty clouds.",
+        );
+    }
+
+    #[test]
+    fn corrects_dont_wan() {
+        assert_suggestion_result(
+            "I don't wan to pay for this.",
+            lint_group(),
+            "I don't want to pay for this.",
+        );
+    }
+
+    #[test]
+    fn correct_clients_side() {
+        assert_suggestion_result(
+            "I want to debug this server-side as I cannot find out why the connection is being refused from the client's side.",
+            lint_group(),
+            "I want to debug this server-side as I cannot find out why the connection is being refused from the client-side.",
+        );
+    }
+
+    #[test]
+    fn corrects_mixed_case() {
+        assert_suggestion_result(
+            "Don't Wan that option.",
+            lint_group(),
+            "Don't Want that option.",
+        );
+    }
+
+    #[test]
+    fn does_not_flag_already_correct() {
+        assert_lint_count("I don't want to leave.", lint_group(), 0);
+    }
+
+    #[test]
+    fn detect_cursing_through_veins_atomic() {
+        assert_suggestion_result(
+            "cursing through veins",
+            lint_group(),
+            "coursing through veins",
+        );
+    }
+
+    #[test]
+    fn detect_cursing_through_veins_real_world() {
+        assert_suggestion_result(
+            "It felt like the drugs were cursing through veins.",
+            lint_group(),
+            "It felt like the drugs were coursing through veins.",
+        );
+    }
+
+    #[test]
+    fn does_not_flag_other_contexts() {
+        assert_lint_count(
+            "He was cursing through the entire meeting.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn correct_servers_side() {
+        assert_suggestion_result(
+            "A client-server model where the client can execute commands in a terminal on the server's side",
+            lint_group(),
+            "A client-server model where the client can execute commands in a terminal on the server-side",
         );
     }
 }
