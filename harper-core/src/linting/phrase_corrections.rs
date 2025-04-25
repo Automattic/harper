@@ -1129,6 +1129,30 @@ pub fn lint_group() -> LintGroup {
             "A more vivid adjective would better convey intense hunger.",
             "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`"
         ),
+        "InvestIn" => (
+            ["invest into"],
+            ["invest in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "InvestedIn" => (
+            ["invested into"],
+            ["invested in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "InvestingIn" => (
+            ["investing into"],
+            ["investing in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "InvestsIn" => (
+            ["invests into"],
+            ["invests in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2369,6 +2393,42 @@ mod tests {
             "A client-server model where the client can execute commands in a terminal on the server's side",
             lint_group(),
             "A client-server model where the client can execute commands in a terminal on the server-side",
+        );
+    }
+
+    #[test]
+    fn corrects_invested_into() {
+        assert_suggestion_result(
+            "it's all automatically invested into a collection of loans that match the criteria that ...",
+            lint_group(),
+            "it's all automatically invested in a collection of loans that match the criteria that ...",
+        );
+    }
+
+    #[test]
+    fn corrects_invest_into() {
+        assert_suggestion_result(
+            "which represents the amount of money they want to invest into a particular deal.",
+            lint_group(),
+            "which represents the amount of money they want to invest in a particular deal.",
+        );
+    }
+
+    #[test]
+    fn corrects_investing_into() {
+        assert_suggestion_result(
+            "Taking dividends in cash (rather than automatically re-investing into the originating fund) can help alleviate the need for rebalancing.",
+            lint_group(),
+            "Taking dividends in cash (rather than automatically re-investing in the originating fund) can help alleviate the need for rebalancing.",
+        );
+    }
+
+    #[test]
+    fn corrects_invests_into() {
+        assert_suggestion_result(
+            "If a user invests into the protocol first using USDC but afterward changing to DAI, ...",
+            lint_group(),
+            "If a user invests in the protocol first using USDC but afterward changing to DAI, ...",
         );
     }
 }
