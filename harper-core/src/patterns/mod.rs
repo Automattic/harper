@@ -55,8 +55,16 @@ pub use whitespace_pattern::WhitespacePattern;
 pub use word_pattern_group::WordPatternGroup;
 pub use word_set::WordSet;
 
-#[cfg_attr(feature = "concurrent", blanket(derive(Arc)))]
-#[cfg_attr(not(feature = "concurrent"), blanket(derive(Rc, Arc)))]
+#[cfg(not(feature = "concurrent"))]
+#[blanket(derive(Rc, Arc))]
+pub trait Pattern {
+    /// Check if the pattern matches at the start of the given token slice.
+    ///
+    /// Returns the length of the match if successful, or `None` if not.
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize>;
+}
+#[cfg(feature = "concurrent")]
+#[blanket(derive(Arc))]
 pub trait Pattern: Send + Sync {
     /// Check if the pattern matches at the start of the given token slice.
     ///
