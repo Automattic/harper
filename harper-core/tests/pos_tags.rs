@@ -1,6 +1,17 @@
 //! This test creats snapshots of the part-of-speech (POS) tags assigned by the
 //! [`Document`] struct to the text files in the `tests/text` directory.
 //!
+//! # Usage
+//!
+//! To add a new snapshot, simply add the document to `tests/text` and run this
+//! test. It will automatically create a new snapshot in `tests/text/tagged`.
+//! To update an existing snapshot, also just run this test.
+//!
+//! Note: This test will fail if the snapshot files are not up to date. This
+//! ensures that CI will fail if the POS tagger changes its behavior.
+//!
+//! # Snapshot format
+//!
 //! The snapshot files contain 2 lines for every line in the original text. The
 //! first line contains the original text, and the second line contains the POS
 //! tags. The text and tags are aligned so that the tags are directly below the
@@ -11,7 +22,7 @@
 //! # ISg V    I/J/D NSg/C ISg V   V/J     NSg/V/J/P NPrSg/V/J/P NPr     C/P D/P NPrSg J/P D  J   NPrSg/J .
 //! ```
 //!
-//! # Tags
+//! ## Tags
 //!
 //! Tags are assigned based on the [`TokenKind`] and [`WordMetadata`] of a
 //! token.
