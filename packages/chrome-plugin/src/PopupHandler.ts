@@ -11,7 +11,7 @@ export default class PopupHandler {
 
 	constructor() {
 		this.currentLintBoxes = [];
-		this.renderBox = new RenderBox();
+		this.renderBox = new RenderBox(document.body);
 		this.pointerDownCallback = (e) => {
 			this.onPointerDown(e);
 		};

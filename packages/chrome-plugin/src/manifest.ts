@@ -4,6 +4,33 @@ import packageData from '../package.json';
 //@ts-ignore
 const isDev = process.env.NODE_ENV == 'development';
 
+/**
+ * Builds a CSP string that:
+ *   • always meets the MV3 minimum (`'self' 'wasm-unsafe-eval'`)
+ *   • whitelists the Vite HMR server only when `isDev` is true
+ *
+ * NOTE: `'unsafe-eval'` is *omitted* because Chrome blocks it outright.
+ */
+export function makeExtensionCSP(isDev: boolean): string {
+	const scriptSrc = ["'self'", "'wasm-unsafe-eval'"]; // minimum, cannot add more
+	const objectSrc = ["'self'"]; // standard
+	const connectSrc = ["'self'"]; // WebSocket goes here
+
+	if (isDev) {
+		// `ws://` and `http://` use the same host:port → list both
+		connectSrc.push('http://localhost:5173', 'ws://localhost:5173');
+		// include the 127.0.0.1 loopback in case you switch hosts
+		connectSrc.push('http://127.0.0.1:*', 'ws://127.0.0.1:*');
+	}
+
+	// Assemble the semicolon-delimited CSP
+	return `${[
+		`script-src ${scriptSrc.join(' ')}`,
+		`object-src ${objectSrc.join(' ')}`,
+		`connect-src ${connectSrc.join(' ')}`,
+	].join('; ')};`;
+}
+
 export default defineManifest({
 	name: `Private Grammar Checking - Harper${isDev ? ' ➡️ Dev' : ''}`,
 	description: packageData.description,
@@ -37,6 +64,6 @@ export default defineManifest({
 	},
 	permissions: ['storage', 'tabs'],
 	content_security_policy: {
-		extension_pages: "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; connect-src 'self'",
+		extension_pages: makeExtensionCSP(isDev),
 	},
 });

@@ -4,18 +4,8 @@ import type { UnpackedLint } from './unpackLint';
 
 /** A wrapper around Chrome's messaging protocol for communicating with the background worker. */
 export default class ProtocolClient {
-	private static lintCache: LRUCache<string, UnpackedLint[]> = new LRUCache({ max: 1000 });
-
 	public static async lint(text: string, domain: string): Promise<UnpackedLint[]> {
-		const cacheValue = this.lintCache.get(text);
-
-		if (cacheValue == null) {
-			const lints = (await chrome.runtime.sendMessage({ kind: 'lint', text, domain })).lints;
-			this.lintCache.set(text, lints);
-			return lints;
-		} else {
-			return cacheValue;
-		}
+		return (await chrome.runtime.sendMessage({ kind: 'lint', text, domain })).lints;
 	}
 
 	public static async getLintConfig(): Promise<LintConfig> {
@@ -24,7 +14,6 @@ export default class ProtocolClient {
 
 	public static async setLintConfig(lintConfig: LintConfig): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setConfig', config: lintConfig });
-		this.lintCache.clear();
 	}
 
 	public static async getLintDescriptions(): Promise<Record<string, string>> {
@@ -37,7 +26,6 @@ export default class ProtocolClient {
 
 	public static async setDialect(dialect: Dialect): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setDialect', dialect });
-		this.lintCache.clear();
 	}
 
 	public static async getDomainEnabled(domain: string): Promise<boolean> {
@@ -48,11 +36,9 @@ export default class ProtocolClient {
 
 	public static async setDomainEnabled(domain: string, enabled: boolean): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setDomainStatus', enabled, domain });
-		this.lintCache.clear();
 	}
 
 	public static async addToUserDictionary(word: string): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'addToUserDictionary', word });
-		this.lintCache.clear();
 	}
 }

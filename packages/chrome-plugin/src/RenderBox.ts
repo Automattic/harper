@@ -11,20 +11,30 @@ export default class RenderBox {
 	/** The current state of the virtual DOM */
 	private virtualTree: VNode | undefined;
 	/** The shadow DOM the `virtualRoot` is attached to. */
-	private shadowHost: HTMLElement | undefined;
+	private shadowHost: HTMLElement;
+
+	constructor(parent: Node) {
+		this.shadowHost = document.createElement('div');
+		parent.appendChild(this.shadowHost);
+	}
 
 	/** Render to the box. */
 	public render(node: VNode) {
 		if (!this.virtualRoot || !this.virtualTree) {
-			this.shadowHost = document.createElement('div');
-			const shadow = this.shadowHost.attachShadow({ mode: 'closed' });
 			this.virtualRoot = createElement(node);
-			document.body.appendChild(this.shadowHost);
+			const shadow = this.shadowHost.attachShadow({ mode: 'closed' });
 			shadow.appendChild(this.virtualRoot);
 		} else {
 			const patches = diff(this.virtualTree, node);
 			this.virtualRoot = patch(this.virtualRoot, patches);
 		}
 		this.virtualTree = node;
+	}
+
+	/** Remove the box from the DOM. */
+	public remove() {
+		this.shadowHost.outerHTML = this.shadowHost.outerHTML;
+		this.virtualRoot = undefined;
+		this.virtualTree = undefined;
 	}
 }
