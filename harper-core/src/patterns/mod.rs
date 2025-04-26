@@ -10,7 +10,6 @@ use std::{collections::VecDeque, num::NonZeroUsize};
 use crate::{Document, Span, Token, VecExt};
 
 mod all;
-mod any_capitalization;
 mod any_pattern;
 mod either_pattern;
 mod exact_phrase;
@@ -26,11 +25,11 @@ mod similar_to_phrase;
 mod split_compound_word;
 mod whitespace_pattern;
 mod within_edit_distance;
+mod word;
 mod word_pattern_group;
 mod word_set;
 
 pub use all::All;
-pub use any_capitalization::AnyCapitalization;
 pub use any_pattern::AnyPattern;
 use blanket::blanket;
 pub use either_pattern::EitherPattern;
@@ -46,6 +45,7 @@ pub use sequence_pattern::SequencePattern;
 pub use similar_to_phrase::SimilarToPhrase;
 pub use split_compound_word::SplitCompoundWord;
 pub use whitespace_pattern::WhitespacePattern;
+pub use word::Word;
 pub use word_pattern_group::WordPatternGroup;
 pub use word_set::WordSet;
 

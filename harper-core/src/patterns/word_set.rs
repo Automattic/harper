@@ -5,10 +5,10 @@ use smallvec::SmallVec;
 
 use crate::{CharString, Token};
 
-// A [`Pattern`] that matches against any of a set of provided words.
-// For small sets of short words, it doesn't allocate.
-//
-// Note that any capitalization of the contained words will result in a match.
+/// A [`Pattern`] that matches against any of a set of provided words.
+/// For small sets of short words, it doesn't allocate.
+///
+/// Note that any capitalization of the contained words will result in a match.
 #[derive(Debug, Default, Clone)]
 pub struct WordSet {
     words: SmallVec<[CharString; 4]>,

@@ -2,8 +2,7 @@ use super::{Lint, LintKind, PatternLinter};
 use crate::Token;
 use crate::linting::Suggestion;
 use crate::patterns::{
-    All, AnyCapitalization, EitherPattern, Invert, OwnedPatternExt, Pattern, SequencePattern,
-    WordSet,
+    All, EitherPattern, Invert, OwnedPatternExt, Pattern, SequencePattern, Word, WordSet,
 };
 
 #[doc = "Corrects the misuse of `then` to `than`."]
@@ -19,7 +18,7 @@ impl ThenThan {
                     // Comparative form of adjective
                     Box::new(
                         SequencePattern::default()
-                            .then(AnyCapitalization::of("other").or(Box::new(
+                            .then(Word::new("other").or(Box::new(
                                 |tok: &Token, source: &[char]| {
                                     is_comparative_adjective(tok, source)
                                 },
@@ -27,7 +26,7 @@ impl ThenThan {
                             .then_whitespace()
                             .then_any_capitalization_of("then")
                             .then_whitespace()
-                            .then(Invert::new(AnyCapitalization::of("that"))),
+                            .then(Invert::new(Word::new("that"))),
                     ),
                     // Positive form of adjective following "more" or "less"
                     Box::new(
@@ -38,7 +37,7 @@ impl ThenThan {
                             .then_whitespace()
                             .then_any_capitalization_of("then")
                             .then_whitespace()
-                            .then(Invert::new(AnyCapitalization::of("that"))),
+                            .then(Invert::new(Word::new("that"))),
                     ),
                 ])),
                 // Exceptions to the rule.
