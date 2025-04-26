@@ -267,7 +267,7 @@ impl Document {
         self.tokens().map(|token| token.to_fat(&self.source))
     }
 
-    /// Get the next or previous word token relative to a base index, iff separated by whitespace.
+    /// Get the next or previous word token relative to a base index, if separated by whitespace.
     /// Returns None if the next/previous token is not a word or does not exist.
     pub fn get_next_word_from_offset(&self, base: usize, offset: isize) -> Option<&Token> {
         // Look for whitespace at the expected offset
