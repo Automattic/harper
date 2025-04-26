@@ -228,7 +228,7 @@ impl WordMetadata {
 pub enum Tense {
     Past,
     Present,
-    Future,
+    // Future,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
