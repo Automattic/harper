@@ -1129,6 +1129,12 @@ pub fn lint_group() -> LintGroup {
             "A more vivid adjective would better convey intense hunger.",
             "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`"
         ),
+        "LastDitch" => (
+            ["last ditch", "last ditched", "last-ditched"],
+            ["last-ditch"],
+            "In this idiom, `ditch` is a noun and a hyphen is needed.",
+            "Corrects wrong variations of the idiomatic adjective `last-ditch`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2369,6 +2375,24 @@ mod tests {
             "A client-server model where the client can execute commands in a terminal on the server's side",
             lint_group(),
             "A client-server model where the client can execute commands in a terminal on the server-side",
+        );
+    }
+
+    #[test]
+    fn correct_last_ditched_space() {
+        assert_suggestion_result(
+            "I was actually just trying that as a last ditched attempt to get it working, previously those ...",
+            lint_group(),
+            "I was actually just trying that as a last-ditch attempt to get it working, previously those ...",
+        );
+    }
+
+    #[test]
+    fn correct_last_ditch_hyphen() {
+        assert_suggestion_result(
+            "There are unique use cases and is meant to be a last ditch option.",
+            lint_group(),
+            "There are unique use cases and is meant to be a last-ditch option.",
         );
     }
 }
