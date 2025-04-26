@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use super::Pattern;
 use crate::Token;
 
@@ -15,13 +17,9 @@ impl ConsumesRemainingPattern {
 }
 
 impl Pattern for ConsumesRemainingPattern {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        let match_len = self.inner.matches(tokens, source);
-
-        if match_len == tokens.len() {
-            match_len
-        } else {
-            0
-        }
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        self.inner
+            .matches(tokens, source)
+            .filter(|match_len| match_len.get() == tokens.len())
     }
 }

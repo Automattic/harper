@@ -60,6 +60,7 @@ use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
+use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
@@ -304,6 +305,7 @@ impl LintGroup {
         insert_pattern_rule!(Dashes, true);
         insert_struct_rule!(WordPressDotcom, true);
         insert_pattern_rule!(OutOfDate, true);
+        insert_struct_rule!(TheMy, true);
         insert_pattern_rule!(ThenThan, true);
         insert_pattern_rule!(PiqueInterest, true);
         insert_pattern_rule!(WasAloud, true);

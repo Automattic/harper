@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.29.1",
+	"version": "0.30.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -332,6 +332,12 @@
 					"default": true,
 					"description": "Corrects the misspelling `bee there` to the proper phrase `been there`."
 				},
+				"harper.linters.BestRegards": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "In valedictions, `best` expresses your highest regard—avoid the typo `beat regards`."
+				},
 				"harper.linters.BlanketStatement": {
 					"scope": "resource",
 					"type": "boolean",
@@ -434,6 +440,12 @@
 					"default": true,
 					"description": "Ensures `chock-full` is correctly hyphenated."
 				},
+				"harper.linters.ClientSide": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `client's side` to `client-side`, which is usual in `client-server contexts`."
+				},
 				"harper.linters.CommaFixes": {
 					"scope": "resource",
 					"type": "boolean",
@@ -475,6 +487,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "When referring to Countries, make sure to treat it as a proper noun."
+				},
+				"harper.linters.CoursingThroughVeins": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "In English idioms, “to course” means to flow rapidly—so avoid the eggcorn `cursing through veins.`"
 				},
 				"harper.linters.CurrencyPlacement": {
 					"scope": "resource",
@@ -547,6 +565,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Removes unnecessary `about` after `discussing`."
+				},
+				"harper.linters.DoNotWant": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "In English, negation still requires the complete verb form (“want”), so avoid truncating it to “wan.”"
 				},
 				"harper.linters.DotInitialisms": {
 					"scope": "resource",
@@ -698,6 +722,12 @@
 					"default": true,
 					"description": "Ensures the correct use of `fetal position`, avoiding confusion with `feeble position`, which is not a standard phrase."
 				},
+				"harper.linters.FirstAidKit": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects when “kid” after “aid”, “starter”, “travel”, or “tool” should be “kit” (a set of supplies)."
+				},
 				"harper.linters.ForALongTime": {
 					"scope": "resource",
 					"type": "boolean",
@@ -727,6 +757,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures the correct use of `free rein`, avoiding confusion with `free reign`, which incorrectly suggests authority rather than freedom of action."
+				},
+				"harper.linters.Freezing": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Encourages vivid writing by suggesting `freezing` instead of weaker expressions like `very cold.`"
 				},
 				"harper.linters.Furthermore": {
 					"scope": "resource",
@@ -794,6 +830,12 @@
 					"default": true,
 					"description": "Flags the unnecessary use of `of` after `had` and suggests the correct forms."
 				},
+				"harper.linters.HadPassed": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests `past` for `passed` in case a verb was intended."
+				},
 				"harper.linters.HalfAnHour": {
 					"scope": "resource",
 					"type": "boolean",
@@ -812,17 +854,35 @@
 					"default": true,
 					"description": "Corrects `has went` to `has gone`."
 				},
+				"harper.linters.HasPassed": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests `past` for `passed` in case a verb was intended."
+				},
 				"harper.linters.HaveGone": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `have went` to `have gone`."
 				},
+				"harper.linters.HavePassed": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests `past` for `passed` in case a verb was intended."
+				},
 				"harper.linters.HavingGone": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `having went` to `having gone`."
+				},
+				"harper.linters.HavingPassed": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests `past` for `passed` in case a verb was intended."
 				},
 				"harper.linters.Hedging": {
 					"scope": "resource",
@@ -931,6 +991,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects ungrammatical `in anyway` to `in any way`."
+				},
+				"harper.linters.InCase": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `incase` to `in case`."
 				},
 				"harper.linters.InDetail": {
 					"scope": "resource",
@@ -1442,6 +1508,12 @@
 					"default": true,
 					"description": "Choosing when to contract pronouns is a challenging art. This rule looks for faults."
 				},
+				"harper.linters.PronounKnew": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects when “new” following a pronoun (optionally with an adverb) is a typo for the past tense “knew.”"
+				},
 				"harper.linters.Proofread": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1507,6 +1579,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "The opening word of a sentence should almost always be capitalized."
+				},
+				"harper.linters.ServerSide": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `server's side` to `server-side`, which is usual in `client-server contexts`."
 				},
 				"harper.linters.SimpleGrammatical": {
 					"scope": "resource",
@@ -1579,6 +1657,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Identifies common misuse of the preposition `to` in the phrase `spoke too soon`."
+				},
+				"harper.linters.Starving": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`"
 				},
 				"harper.linters.StateOfTheArt": {
 					"scope": "resource",
@@ -1849,6 +1933,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `worst and worst` to `worse and worse` for proper comparative usage."
+				},
+				"harper.linters.WorseCaseScenario": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
 				},
 				"harper.linters.WorseThan": {
 					"scope": "resource",
