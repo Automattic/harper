@@ -1129,6 +1129,30 @@ pub fn lint_group() -> LintGroup {
             "A more vivid adjective would better convey intense hunger.",
             "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`"
         ),
+        "WhatItLooksLike" => (
+            ["how it looks like", "how it look like"],
+            ["how it looks", "what it looks like"],
+            "Don't use both `how` and `like` together to express similarity.",
+            "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
+        ),
+        "WhatTheyLookLike" => (
+            ["how they look like", "how they looks like"],
+            ["how they look", "what they look like"],
+            "Don't use both `how` and `like` together to express similarity.",
+            "Corrects `how ... look like` to `how ... look` or `what ... look like`."
+        ),
+        "WhatHeLooksLike" => (
+            ["how he looks like"],
+            ["how he looks", "what he looks like"],
+            "Don't use both `how` and `like` together to express similarity.",
+            "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
+        ),
+        "WhatSheLooksLike" => (
+            ["how she looks like"],
+            ["how she looks", "what she looks like"],
+            "Don't use both `how` and `like` together to express similarity.",
+            "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2369,6 +2393,101 @@ mod tests {
             "A client-server model where the client can execute commands in a terminal on the server's side",
             lint_group(),
             "A client-server model where the client can execute commands in a terminal on the server-side",
+        );
+    }
+
+    #[test]
+    fn correct_how_it_looks_like_1() {
+        assert_suggestion_result(
+            "And here is how it looks like: As you can see, there is no real difference in the diagram itself.",
+            lint_group(),
+            "And here is how it looks: As you can see, there is no real difference in the diagram itself.",
+        );
+    }
+
+    #[test]
+    fn correct_how_it_looks_like_2() {
+        assert_nth_suggestion_result(
+            "This is how it looks like when run from Windows PowerShell or Cmd: image.",
+            lint_group(),
+            "This is what it looks like when run from Windows PowerShell or Cmd: image.",
+            1,
+        );
+    }
+
+    #[test]
+    fn correct_how_they_look_like_1() {
+        assert_suggestion_result(
+            "This is a sample project illustrating a demo of how to use the new Material 3 components and how they look like.",
+            lint_group(),
+            "This is a sample project illustrating a demo of how to use the new Material 3 components and how they look.",
+        );
+    }
+
+    #[test]
+    fn correct_how_they_look_like_2() {
+        assert_nth_suggestion_result(
+            "So for now I'll just leave this issue here of how they look like in the XLSX",
+            lint_group(),
+            "So for now I'll just leave this issue here of what they look like in the XLSX",
+            1,
+        );
+    }
+
+    #[test]
+    fn correct_how_they_looks_like_1() {
+        assert_suggestion_result(
+            "Here I demonstrate how disney works and how they looks like Don't miss to give me a star.",
+            lint_group(),
+            "Here I demonstrate how disney works and how they look Don't miss to give me a star.",
+        );
+    }
+
+    #[test]
+    fn correct_how_they_looks_like_2() {
+        assert_nth_suggestion_result(
+            "You can check how they looks like on Android app by this command:",
+            lint_group(),
+            "You can check what they look like on Android app by this command:",
+            1,
+        );
+    }
+
+    #[test]
+    fn correct_how_she_looks_like_1() {
+        assert_suggestion_result(
+            "You all know how she looks like.",
+            lint_group(),
+            "You all know how she looks.",
+        );
+    }
+
+    #[test]
+    fn correct_how_he_looks_like_2() {
+        assert_nth_suggestion_result(
+            "Here's how he looks like, when he's supposed to just look like his old fatui design.",
+            lint_group(),
+            "Here's what he looks like, when he's supposed to just look like his old fatui design.",
+            1,
+        );
+    }
+
+    #[test]
+    fn correct_how_it_look_like_1() {
+        assert_suggestion_result(
+            "And I don't mind how it look like, language code subpath or the last subpath as below.",
+            lint_group(),
+            "And I don't mind how it looks, language code subpath or the last subpath as below.",
+        );
+    }
+
+    #[test]
+    fn correct_how_it_look_like_2() {
+        assert_nth_suggestion_result(
+            "Here is how it look like in your browser:",
+            lint_group(),
+            "Here is what it looks like in your browser:",
+            1,
         );
     }
 }
