@@ -2379,7 +2379,7 @@ mod tests {
     }
 
     #[test]
-    fn correct_last_ditched_space() {
+    fn correct_last_ditched() {
         assert_suggestion_result(
             "I was actually just trying that as a last ditched attempt to get it working, previously those ...",
             lint_group(),
@@ -2388,7 +2388,7 @@ mod tests {
     }
 
     #[test]
-    fn correct_last_ditch_hyphen() {
+    fn correct_last_ditch_space() {
         assert_suggestion_result(
             "There are unique use cases and is meant to be a last ditch option.",
             lint_group(),
