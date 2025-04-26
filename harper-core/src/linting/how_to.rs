@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
     linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Pattern, SequencePattern},
+    patterns::{All, InflectionOfBe, Invert, OwnedPatternExt, Pattern, SequencePattern},
 };
 
 pub struct HowTo {
@@ -10,10 +10,26 @@ pub struct HowTo {
 
 impl Default for HowTo {
     fn default() -> Self {
-        let pattern = SequencePattern::default()
+        let mut pattern = All::default();
+
+        let pos_pattern = SequencePattern::default()
             .t_aco("how")
             .then_whitespace()
             .then_verb();
+        pattern.add(Box::new(pos_pattern));
+
+        let exceptions = SequencePattern::default()
+            .then_anything()
+            .then_anything()
+            .then(
+                InflectionOfBe::new().or(Box::new(|tok: &Token, _: &[char]| {
+                    tok.kind.is_auxiliary_verb()
+                        || tok.kind.is_adjective()
+                        || tok.kind.is_present_tense_verb()
+                })),
+            );
+
+        pattern.add(Box::new(Invert::new(exceptions)));
 
         Self {
             pattern: Box::new(pattern),
@@ -184,6 +200,34 @@ mod tests {
     fn already_correct_fix() {
         assert_lint_count(
             "He showed me how to fix the zipper in ten minutes.",
+            HowTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn how_are_you() {
+        assert_lint_count("How are you?", HowTo::default(), 0);
+    }
+
+    #[test]
+    fn how_calm_you_are() {
+        assert_lint_count("I like how calm you are.", HowTo::default(), 0);
+    }
+
+    #[test]
+    fn how_will_you_make_up() {
+        assert_lint_count(
+            "How will you make up for your mistakes?",
+            HowTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn storytelling_clause() {
+        assert_lint_count(
+            "I will tell about how leaving my husband led to my dog winning a Nobel Prize.",
             HowTo::default(),
             0,
         );
