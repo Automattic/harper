@@ -84,23 +84,39 @@ mod tests {
 
     #[test]
     fn catches_basic() {
-        assert_lint_count("I wanted the the banana.", RepeatedWords::default(), 1)
+        assert_lint_count(
+            "I wanted the the banana.",
+            "en",
+            RepeatedWords::default(),
+            1,
+        )
     }
 
     #[test]
     fn does_not_lint_homographs_address() {
-        assert_lint_count("To address address problems.", RepeatedWords::default(), 0);
+        assert_lint_count(
+            "To address address problems.",
+            "en",
+            RepeatedWords::default(),
+            0,
+        );
     }
 
     #[test]
     fn does_not_lint_homographs_record() {
-        assert_lint_count("To record record profits.", RepeatedWords::default(), 0);
+        assert_lint_count(
+            "To record record profits.",
+            "en",
+            RepeatedWords::default(),
+            0,
+        );
     }
 
     #[test]
     fn issue_253() {
         assert_lint_count(
             "this paper shows that, while the method may be more accurate accurate, the turnout overestimate suggests that self-selection bias is not sufficiently reduced",
+            "en",
             RepeatedWords::default(),
             1,
         );
@@ -110,6 +126,7 @@ mod tests {
     fn issue_333() {
         assert_suggestion_result(
             "This is is a test",
+            "en",
             RepeatedWords::default(),
             "This is a test",
         );
@@ -119,6 +136,7 @@ mod tests {
     fn double_a() {
         assert_suggestion_result(
             "This is a a test",
+            "en",
             RepeatedWords::default(),
             "This is a test",
         );
@@ -128,6 +146,7 @@ mod tests {
     fn double_and() {
         assert_suggestion_result(
             "And and this is also a test",
+            "en",
             RepeatedWords::default(),
             "And this is also a test",
         );
@@ -137,6 +156,7 @@ mod tests {
     fn on_on_github() {
         assert_suggestion_result(
             "Take a look at the project on on GitHub.",
+            "en",
             RepeatedWords::default(),
             "Take a look at the project on GitHub.",
         );

@@ -3,14 +3,14 @@ use crate::linting::Suggestion;
 use crate::patterns::{EitherPattern, ExactPhrase, Pattern, SimilarToPhrase};
 use crate::{Token, TokenStringExt};
 
-pub struct MapPhraseLinter {
+pub struct MapPhraseLinterEn {
     description: String,
     pattern: Box<dyn Pattern>,
     correct_forms: Vec<String>,
     message: String,
 }
 
-impl MapPhraseLinter {
+impl MapPhraseLinterEn {
     pub fn new(
         pattern: Box<dyn Pattern>,
         correct_forms: impl IntoIterator<Item = impl ToString>,
@@ -35,6 +35,7 @@ impl MapPhraseLinter {
     }
 
     pub fn new_exact_phrases(
+        langiso639: &str,
         phrase: impl IntoIterator<Item = impl AsRef<str>>,
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
@@ -44,7 +45,8 @@ impl MapPhraseLinter {
             phrase
                 .into_iter()
                 .map(|p| {
-                    let pattern: Box<dyn Pattern> = Box::new(ExactPhrase::from_phrase(p.as_ref()));
+                    let pattern: Box<dyn Pattern> =
+                        Box::new(ExactPhrase::from_phrase(p.as_ref(), langiso639));
                     pattern
                 })
                 .collect(),
@@ -54,13 +56,14 @@ impl MapPhraseLinter {
     }
 
     pub fn new_exact_phrase(
+        langiso639: &str,
         phrase: impl AsRef<str>,
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
         description: impl ToString,
     ) -> Self {
         Self::new(
-            Box::new(ExactPhrase::from_phrase(phrase.as_ref())),
+            Box::new(ExactPhrase::from_phrase(phrase.as_ref(), langiso639)),
             correct_forms,
             message,
             description,
@@ -78,11 +81,11 @@ impl MapPhraseLinter {
             correct_form.to_string()
         );
 
-        Self::new_exact_phrase(phrase, [correct_form], message, description)
+        Self::new_exact_phrase("en", phrase, [correct_form], message, description)
     }
 }
 
-impl PatternLinter for MapPhraseLinter {
+impl PatternLinter for MapPhraseLinterEn {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }

@@ -95,6 +95,7 @@ mod tests {
     fn fruits() {
         assert_lint_count(
             "An apple, a banana, and a pear",
+            "en",
             NoOxfordComma::default(),
             1,
         );
@@ -104,6 +105,7 @@ mod tests {
     fn people() {
         assert_suggestion_result(
             "Nancy, Steve, and Carl are going to the coffee shop.",
+            "en",
             NoOxfordComma::default(),
             "Nancy, Steve and Carl are going to the coffee shop.",
         );
@@ -113,6 +115,7 @@ mod tests {
     fn places() {
         assert_suggestion_result(
             "I've always wanted to visit Paris, Tokyo, and Rome.",
+            "en",
             NoOxfordComma::default(),
             "I've always wanted to visit Paris, Tokyo and Rome.",
         );
@@ -122,6 +125,7 @@ mod tests {
     fn foods() {
         assert_suggestion_result(
             "My favorite foods are pizza, sushi, tacos, and burgers.",
+            "en",
             NoOxfordComma::default(),
             "My favorite foods are pizza, sushi, tacos and burgers.",
         );
@@ -131,6 +135,7 @@ mod tests {
     fn allows_clean_music() {
         assert_lint_count(
             "I enjoy listening to pop music, rock, hip-hop, electronic dance and classical music.",
+            "en",
             NoOxfordComma::default(),
             0,
         );
@@ -140,6 +145,7 @@ mod tests {
     fn allows_clean_nations() {
         assert_lint_count(
             "The team consists of players from different countries: France, Germany, Italy and Spain.",
+            "en",
             NoOxfordComma::default(),
             0,
         );
@@ -149,6 +155,7 @@ mod tests {
     fn or_writing() {
         assert_suggestion_result(
             "Harper can be a lifesaver when writing technical documents, emails, or other formal forms of communication.",
+            "en",
             NoOxfordComma::default(),
             "Harper can be a lifesaver when writing technical documents, emails or other formal forms of communication.",
         );
@@ -158,6 +165,7 @@ mod tests {
     fn sports() {
         assert_suggestion_result(
             "They enjoy playing soccer, basketball, or tennis.",
+            "en",
             NoOxfordComma::default(),
             "They enjoy playing soccer, basketball or tennis.",
         );
@@ -167,6 +175,7 @@ mod tests {
     fn nor_vegetables() {
         assert_suggestion_result(
             "I like carrots, kale, nor broccoli.",
+            "en",
             NoOxfordComma::default(),
             "I like carrots, kale nor broccoli.",
         );

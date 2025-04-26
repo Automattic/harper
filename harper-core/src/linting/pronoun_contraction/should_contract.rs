@@ -75,6 +75,7 @@ mod tests {
     fn contracts_your_correctly() {
         assert_suggestion_result(
             "your the best",
+            "en",
             ShouldContract::default(),
             "you're the best",
         );
@@ -84,6 +85,7 @@ mod tests {
     fn contracts_were_complex_correctly() {
         assert_suggestion_result(
             "were a good team",
+            "en",
             ShouldContract::default(),
             "we're a good team",
         );
@@ -93,6 +95,7 @@ mod tests {
     fn case_insensitive_handling() {
         assert_suggestion_result(
             "Your the best",
+            "en",
             ShouldContract::default(),
             "You're the best",
         );
@@ -100,19 +103,20 @@ mod tests {
 
     #[test]
     fn no_match_without_the() {
-        assert_lint_count("your best", ShouldContract::default(), 0);
-        assert_lint_count("were best", ShouldContract::default(), 0);
+        assert_lint_count("your best", "en", ShouldContract::default(), 0);
+        assert_lint_count("were best", "en", ShouldContract::default(), 0);
     }
 
     #[test]
     fn no_match_with_punctuation() {
-        assert_lint_count("your, the best", ShouldContract::default(), 0);
+        assert_lint_count("your, the best", "en", ShouldContract::default(), 0);
     }
 
     #[test]
     fn allow_norm() {
         assert_lint_count(
             "Let's start this story by going back to the dark ages before internet applications were the norm.",
+            "en",
             ShouldContract::default(),
             0,
         );

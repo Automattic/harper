@@ -70,6 +70,7 @@ mod tests {
     fn eof() {
         assert_suggestion_result(
             "It was my last bill worth more than 4$.",
+            "en",
             CurrencyPlacement::default(),
             "It was my last bill worth more than $4.",
         );
@@ -77,13 +78,19 @@ mod tests {
 
     #[test]
     fn blog_title_allows_correct() {
-        assert_lint_count("The Best $25 I Ever Spent", CurrencyPlacement::default(), 0);
+        assert_lint_count(
+            "The Best $25 I Ever Spent",
+            "en",
+            CurrencyPlacement::default(),
+            0,
+        );
     }
 
     #[test]
     fn blog_title() {
         assert_suggestion_result(
             "The Best 25$ I Ever Spent",
+            "en",
             CurrencyPlacement::default(),
             "The Best $25 I Ever Spent",
         );
@@ -93,6 +100,7 @@ mod tests {
     fn blog_title_cents() {
         assert_suggestion_result(
             "The Best ¢25 I Ever Spent",
+            "en",
             CurrencyPlacement::default(),
             "The Best 25¢ I Ever Spent",
         );
@@ -102,6 +110,7 @@ mod tests {
     fn blog_title_with_space() {
         assert_suggestion_result(
             "The Best 25   $ I Ever Spent",
+            "en",
             CurrencyPlacement::default(),
             "The Best $25 I Ever Spent",
         );
@@ -111,6 +120,7 @@ mod tests {
     fn multiple_dollar() {
         assert_suggestion_result(
             "They were either 25$ 24$ or 23$.",
+            "en",
             CurrencyPlacement::default(),
             "They were either $25 $24 or $23.",
         );
@@ -120,6 +130,7 @@ mod tests {
     fn multiple_pound() {
         assert_suggestion_result(
             "They were either 25£ 24£ or 23£.",
+            "en",
             CurrencyPlacement::default(),
             "They were either £25 £24 or £23.",
         );
@@ -129,6 +140,7 @@ mod tests {
     fn suffix() {
         assert_suggestion_result(
             "It was my 20th$.",
+            "en",
             CurrencyPlacement::default(),
             "It was my $20th.",
         );
@@ -136,6 +148,6 @@ mod tests {
 
     #[test]
     fn seven_even_two_decimal_clean() {
-        assert_lint_count("$7.00", CurrencyPlacement::default(), 0);
+        assert_lint_count("$7.00", "en", CurrencyPlacement::default(), 0);
     }
 }

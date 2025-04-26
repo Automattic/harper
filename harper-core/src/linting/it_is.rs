@@ -96,6 +96,7 @@ mod tests {
     fn flags_simple_case() {
         assert_suggestion_result(
             "Its amazing to see this.",
+            "en",
             ItIs::default(),
             "It's amazing to see this.",
         );
@@ -105,6 +106,7 @@ mod tests {
     fn flags_with_preposition() {
         assert_suggestion_result(
             "Its critical for the project.",
+            "en",
             ItIs::default(),
             "It's critical for the project.",
         );
@@ -112,12 +114,12 @@ mod tests {
 
     #[test]
     fn does_not_flag_exception_own() {
-        assert_lint_count("Its own design is unique.", ItIs::default(), 0);
+        assert_lint_count("Its own design is unique.", "en", ItIs::default(), 0);
     }
 
     #[test]
     fn does_not_flag_exception_team() {
-        assert_lint_count("Its team lead is excellent.", ItIs::default(), 0);
+        assert_lint_count("Its team lead is excellent.", "en", ItIs::default(), 0);
     }
 
     // This case fails, but I think that's acceptable.
@@ -132,13 +134,14 @@ mod tests {
 
     #[test]
     fn does_not_flag_already_correct() {
-        assert_lint_count("It's important to note.", ItIs::default(), 0);
+        assert_lint_count("It's important to note.", "en", ItIs::default(), 0);
     }
 
     #[test]
     fn flags_search_filter_context() {
         assert_suggestion_result(
             "Its important to note that the search filter will currently only search the current page.",
+            "en",
             ItIs::default(),
             "It's important to note that the search filter will currently only search the current page.",
         );
@@ -148,6 +151,7 @@ mod tests {
     fn flags_ens_restart_context() {
         assert_suggestion_result(
             "Today is the third day and I am still stuck on Register. Its important to note that after hours of waiting, I tried to restart the process and clicked on register again but it gets stuck at TX pending.",
+            "en",
             ItIs::default(),
             "Today is the third day and I am still stuck on Register. It's important to note that after hours of waiting, I tried to restart the process and clicked on register again but it gets stuck at TX pending.",
         );
@@ -157,6 +161,7 @@ mod tests {
     fn flags_academics_support_context() {
         assert_suggestion_result(
             "To assist learners, because its critical for academics to support their ideas and arguments with sources of published research.",
+            "en",
             ItIs::default(),
             "To assist learners, because it's critical for academics to support their ideas and arguments with sources of published research.",
         );
@@ -166,6 +171,7 @@ mod tests {
     fn flags_parents_explain_context() {
         assert_suggestion_result(
             "I also think its critical for parents to explain their reason for saying no though I would advise against attempting to use logic in the face of either toddler or teenage rage.",
+            "en",
             ItIs::default(),
             "I also think it's critical for parents to explain their reason for saying no though I would advise against attempting to use logic in the face of either toddler or teenage rage.",
         );
@@ -175,6 +181,7 @@ mod tests {
     fn flags_chapter_context() {
         assert_suggestion_result(
             "I think it's okay since its critical for the rest of the chapter in terms of tone and approach.",
+            "en",
             ItIs::default(),
             "I think it's okay since it's critical for the rest of the chapter in terms of tone and approach.",
         );
@@ -184,6 +191,7 @@ mod tests {
     fn flags_microsoft_work_context() {
         assert_suggestion_result(
             "... Need help, its critical for my work, as i am a technical blog writer ...",
+            "en",
             ItIs::default(),
             "... Need help, it's critical for my work, as i am a technical blog writer ...",
         );
@@ -193,6 +201,7 @@ mod tests {
     fn flags_feminists_context() {
         assert_suggestion_result(
             "when it comes to the teaching of grammar and diverse linguistics practices. Its critical for feminists to think about the ways in which they frame language.",
+            "en",
             ItIs::default(),
             "when it comes to the teaching of grammar and diverse linguistics practices. It's critical for feminists to think about the ways in which they frame language.",
         );
@@ -202,6 +211,7 @@ mod tests {
     fn flags_students_proofreading_context() {
         assert_suggestion_result(
             "its critical for students to develop a similarly sharp eye for misspellings and grammatical errors.",
+            "en",
             ItIs::default(),
             "it's critical for students to develop a similarly sharp eye for misspellings and grammatical errors.",
         );
@@ -211,6 +221,7 @@ mod tests {
     fn flags_americans_context() {
         assert_suggestion_result(
             "Its critical for Americans to realize that Fox has nothing to do with news.",
+            "en",
             ItIs::default(),
             "It's critical for Americans to realize that Fox has nothing to do with news.",
         );
@@ -219,7 +230,7 @@ mod tests {
     // Negative guard: correct possessive use
     #[test]
     fn does_not_flag_its_team_lead() {
-        assert_lint_count("Its team lead is excellent.", ItIs::default(), 0);
+        assert_lint_count("Its team lead is excellent.", "en", ItIs::default(), 0);
     }
 
     // Imagined edge cases based on real usage:
@@ -227,6 +238,7 @@ mod tests {
     fn flags_crucial_api_context() {
         assert_suggestion_result(
             "Its crucial to understand the API before using it.",
+            "en",
             ItIs::default(),
             "It's crucial to understand the API before using it.",
         );
@@ -236,6 +248,7 @@ mod tests {
     fn flags_essential_standards_context() {
         assert_suggestion_result(
             "Its essential to follow the coding standards in this project.",
+            "en",
             ItIs::default(),
             "It's essential to follow the coding standards in this project.",
         );
@@ -245,6 +258,7 @@ mod tests {
     fn flags_vital_dependencies_context() {
         assert_suggestion_result(
             "Its vital to keep dependencies up to date.",
+            "en",
             ItIs::default(),
             "It's vital to keep dependencies up to date.",
         );

@@ -12,9 +12,9 @@ pub struct OutOfDate {
 impl Default for OutOfDate {
     fn default() -> Self {
         let pattern = EitherPattern::new(vec![
-            Box::new(ExactPhrase::from_phrase("out of date")),
-            Box::new(ExactPhrase::from_phrase("out-of date")),
-            Box::new(ExactPhrase::from_phrase("out of-date")),
+            Box::new(ExactPhrase::from_phrase("out of date", "en")),
+            Box::new(ExactPhrase::from_phrase("out-of date", "en")),
+            Box::new(ExactPhrase::from_phrase("out of-date", "en")),
         ]);
 
         Self {
@@ -58,6 +58,7 @@ mod tests {
     fn corrects_out_of_date() {
         assert_suggestion_result(
             "The software is out of date.",
+            "en",
             OutOfDate::default(),
             "The software is out-of-date.",
         );
@@ -67,6 +68,7 @@ mod tests {
     fn corrects_out_of_date_with_variation() {
         assert_suggestion_result(
             "This information is out of-date.",
+            "en",
             OutOfDate::default(),
             "This information is out-of-date.",
         );
@@ -76,6 +78,7 @@ mod tests {
     fn allows_correct_usage() {
         assert_suggestion_result(
             "The guidelines are out-of-date.",
+            "en",
             OutOfDate::default(),
             "The guidelines are out-of-date.",
         );

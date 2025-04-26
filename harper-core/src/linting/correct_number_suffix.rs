@@ -51,15 +51,15 @@ mod tests {
 
     #[test]
     fn passes_correct_cases() {
-        assert_lint_count("2nd", CorrectNumberSuffix, 0);
-        assert_lint_count("101st", CorrectNumberSuffix, 0);
-        assert_lint_count("1012th", CorrectNumberSuffix, 0);
+        assert_lint_count("2nd", "en", CorrectNumberSuffix, 0);
+        assert_lint_count("101st", "en", CorrectNumberSuffix, 0);
+        assert_lint_count("1012th", "en", CorrectNumberSuffix, 0);
     }
 
     #[test]
     fn detects_incorrect_cases() {
-        assert_lint_count("2st", CorrectNumberSuffix, 1);
-        assert_lint_count("101nd", CorrectNumberSuffix, 1);
-        assert_lint_count("1012rd", CorrectNumberSuffix, 1);
+        assert_lint_count("2st", "en", CorrectNumberSuffix, 1);
+        assert_lint_count("101nd", "en", CorrectNumberSuffix, 1);
+        assert_lint_count("1012rd", "en", CorrectNumberSuffix, 1);
     }
 }

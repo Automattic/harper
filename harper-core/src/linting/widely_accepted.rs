@@ -53,6 +53,7 @@ mod tests {
     fn wide_accepted_lowercase() {
         assert_suggestion_result(
             "It is wide accepted that exercise improves health.",
+            "en",
             WidelyAccepted::default(),
             "It is widely accepted that exercise improves health.",
         );
@@ -62,6 +63,7 @@ mod tests {
     fn wide_acceptable_mixed_case() {
         assert_suggestion_result(
             "Wide acceptable standards are used in the design.",
+            "en",
             WidelyAccepted::default(),
             "Widely acceptable standards are used in the design.",
         );
@@ -71,6 +73,7 @@ mod tests {
     fn widely_already_correct() {
         assert_lint_count(
             "It is widely accepted that sunlight is beneficial in moderation.",
+            "en",
             WidelyAccepted::default(),
             0,
         );
@@ -80,6 +83,7 @@ mod tests {
     fn no_false_positive() {
         assert_lint_count(
             "The house had wide open windows during the renovation.",
+            "en",
             WidelyAccepted::default(),
             0,
         );
@@ -89,6 +93,7 @@ mod tests {
     fn wide_accepted_in_long_text() {
         assert_suggestion_result(
             "This is an example paragraph, and it is wide accepted that these changes will improve performance. In fact, widely used frameworks have already adopted them.",
+            "en",
             WidelyAccepted::default(),
             "This is an example paragraph, and it is widely accepted that these changes will improve performance. In fact, widely used frameworks have already adopted them.",
         );
@@ -98,6 +103,7 @@ mod tests {
     fn wide_twice_in_one_sentence() {
         assert_suggestion_result(
             "It is wide accepted and wide used by many professionals.",
+            "en",
             WidelyAccepted::default(),
             "It is widely accepted and widely used by many professionals.",
         );

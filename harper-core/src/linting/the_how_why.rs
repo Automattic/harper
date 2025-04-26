@@ -96,6 +96,7 @@ mod tests {
     fn basic_the_how() {
         assert_suggestion_result(
             "This is the how it all started.",
+            "en",
             TheHowWhy::default(),
             "This is how it all started.",
         );
@@ -105,6 +106,7 @@ mod tests {
     fn the_why() {
         assert_suggestion_result(
             "The important part is the why it matters.",
+            "en",
             TheHowWhy::default(),
             "The important part is why it matters.",
         );
@@ -114,6 +116,7 @@ mod tests {
     fn skip_how_to() {
         assert_lint_count(
             "I'd like to explain the how to install this properly.",
+            "en",
             TheHowWhy::default(),
             0,
         );
@@ -123,6 +126,7 @@ mod tests {
     fn skip_whos_who() {
         assert_lint_count(
             "We covered the who's who of corporate leadership last time.",
+            "en",
             TheHowWhy::default(),
             0,
         );
@@ -132,6 +136,7 @@ mod tests {
     fn the_who() {
         assert_suggestion_result(
             "We must identify the who is responsible.",
+            "en",
             TheHowWhy::default(),
             "We must identify who is responsible.",
         );
@@ -141,6 +146,7 @@ mod tests {
     fn the_when() {
         assert_suggestion_result(
             "He outlined the when the new phase will start.",
+            "en",
             TheHowWhy::default(),
             "He outlined when the new phase will start.",
         );
@@ -150,6 +156,7 @@ mod tests {
     fn the_what() {
         assert_suggestion_result(
             "The presentation clarifies the what we intend to build.",
+            "en",
             TheHowWhy::default(),
             "The presentation clarifies what we intend to build.",
         );
@@ -159,6 +166,7 @@ mod tests {
     fn no_false_positive() {
         assert_lint_count(
             "These tips examine the how to fix your code quickly, plus the what's next.",
+            "en",
             TheHowWhy::default(),
             0,
         );

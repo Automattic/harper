@@ -42,7 +42,7 @@ mod tests {
 
     /// Assert that the provided text contains _no_ chunks of valid English
     fn assert_no_english(text: &str) {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         let document = Document::new(
             text,
@@ -57,7 +57,7 @@ mod tests {
     /// Assert that, once stripped of non-English chunks, the resulting document looks like another
     /// piece of text.
     fn assert_stripped_english(source: &str, target: &str) {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         let document = Document::new(
             source,

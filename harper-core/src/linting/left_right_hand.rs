@@ -56,6 +56,7 @@ mod tests {
     fn corrects_left_hand_side() {
         assert_suggestion_result(
             "You'll see it on the left hand side.",
+            "en",
             LeftRightHand::default(),
             "You'll see it on the left-hand side.",
         );
@@ -65,6 +66,7 @@ mod tests {
     fn corrects_right_hand_corner() {
         assert_suggestion_result(
             "It's in the right hand corner.",
+            "en",
             LeftRightHand::default(),
             "It's in the right-hand corner.",
         );
@@ -74,6 +76,7 @@ mod tests {
     fn does_not_correct_noun_usage() {
         assert_suggestion_result(
             "She raised her right hand.",
+            "en",
             LeftRightHand::default(),
             "She raised her right hand.",
         );

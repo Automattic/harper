@@ -23,8 +23,9 @@ pub struct Document {
 }
 
 impl Default for Document {
+    // TODO since it says PlainEnglish, should we just use "en"?
     fn default() -> Self {
-        Self::new("", &PlainEnglish, &FstDictionary::curated())
+        Self::new("", &PlainEnglish, &FstDictionary::curated("en"))
     }
 }
 
@@ -61,10 +62,14 @@ impl Document {
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and the included curated dictionary.
-    pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
+    pub fn new_curated(text: &str, parser: &impl Parser, langiso639: &str) -> Self {
         let source: Vec<_> = text.chars().collect();
 
-        Self::new_from_vec(Lrc::new(source), parser, &FstDictionary::curated())
+        Self::new_from_vec(
+            Lrc::new(source),
+            parser,
+            &FstDictionary::curated(langiso639),
+        )
     }
 
     /// Lexes and parses text to produce a document using a provided language
@@ -85,7 +90,7 @@ impl Document {
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and curated dictionary.
     pub fn new_plain_english_curated(text: &str) -> Self {
-        Self::new(text, &PlainEnglish, &FstDictionary::curated())
+        Self::new(text, &PlainEnglish, &FstDictionary::curated("en"))
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
@@ -96,18 +101,22 @@ impl Document {
 
     /// Parse text to produce a document using the built-in [`Markdown`] parser
     /// and curated dictionary.
-    pub fn new_markdown_curated(text: &str, markdown_options: MarkdownOptions) -> Self {
+    pub fn new_markdown_curated(
+        langiso639: &str,
+        text: &str,
+        markdown_options: MarkdownOptions,
+    ) -> Self {
         Self::new(
             text,
             &Markdown::new(markdown_options),
-            &FstDictionary::curated(),
+            &FstDictionary::curated(langiso639),
         )
     }
 
     /// Parse text to produce a document using the built-in [`Markdown`] parser
     /// and curated dictionary with the default Markdown configuration.
-    pub fn new_markdown_default_curated(text: &str) -> Self {
-        Self::new_markdown_curated(text, MarkdownOptions::default())
+    pub fn new_markdown_default_curated(text: &str, langiso639: &str) -> Self {
+        Self::new_markdown_curated(langiso639, text, MarkdownOptions::default())
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
@@ -658,7 +667,7 @@ mod tests {
 
         assert_eq!(document.tokens.len(), final_tok_count);
 
-        let document = Document::new_markdown_curated(text, MarkdownOptions::default());
+        let document = Document::new_markdown_curated("en", text, MarkdownOptions::default());
 
         assert_eq!(document.tokens.len(), final_tok_count);
     }

@@ -33,7 +33,7 @@ impl Oxymorons {
         // Build a vector of exact-match patterns for each oxymoron.
         let patterns: Vec<Box<dyn Pattern>> = phrases
             .into_iter()
-            .map(|s| Box::new(ExactPhrase::from_phrase(s)) as Box<dyn Pattern>)
+            .map(|s| Box::new(ExactPhrase::from_phrase(s, "en")) as Box<dyn Pattern>)
             .collect();
 
         let pattern = Box::new(EitherPattern::new(patterns));
@@ -77,13 +77,19 @@ mod tests {
 
     #[test]
     fn detects_amateur_expert() {
-        assert_lint_count("The amateur expert gave his opinion.", Oxymorons::new(), 1);
+        assert_lint_count(
+            "The amateur expert gave his opinion.",
+            "en",
+            Oxymorons::new(),
+            1,
+        );
     }
 
     #[test]
     fn detects_increasingly_less() {
         assert_lint_count(
             "The solution was increasingly less effective.",
+            "en",
             Oxymorons::new(),
             1,
         );
@@ -91,13 +97,19 @@ mod tests {
 
     #[test]
     fn detects_advancing_backwards() {
-        assert_lint_count("The project is advancing backwards?", Oxymorons::new(), 1);
+        assert_lint_count(
+            "The project is advancing backwards?",
+            "en",
+            Oxymorons::new(),
+            1,
+        );
     }
 
     #[test]
     fn detects_alludes_explicitly_to() {
         assert_lint_count(
             "The report alludes explicitly to several issues.",
+            "en",
             Oxymorons::new(),
             1,
         );
@@ -107,6 +119,7 @@ mod tests {
     fn detects_explicitly_alludes_to() {
         assert_lint_count(
             "The report explicitly alludes to several issues.",
+            "en",
             Oxymorons::new(),
             1,
         );
@@ -114,13 +127,19 @@ mod tests {
 
     #[test]
     fn does_not_flag_clean_text() {
-        assert_lint_count("The expert provided clear advice.", Oxymorons::new(), 0);
+        assert_lint_count(
+            "The expert provided clear advice.",
+            "en",
+            Oxymorons::new(),
+            0,
+        );
     }
 
     #[test]
     fn lowercase_match() {
         assert_lint_count(
             "the amateur expert is often unreliable.",
+            "en",
             Oxymorons::new(),
             1,
         );
@@ -128,13 +147,14 @@ mod tests {
 
     #[test]
     fn phrase_with_extra_whitespace() {
-        assert_lint_count("An organized    mess was found.", Oxymorons::new(), 1);
+        assert_lint_count("An organized    mess was found.", "en", Oxymorons::new(), 1);
     }
 
     #[test]
     fn phrase_split_by_line_break() {
         assert_lint_count(
             "nonworking\nmother is not a term to be used.",
+            "en",
             Oxymorons::new(),
             1,
         );

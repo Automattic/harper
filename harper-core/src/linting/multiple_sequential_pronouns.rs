@@ -141,6 +141,7 @@ mod tests {
     fn can_detect_two_pronouns() {
         assert_lint_count(
             "...little bit about my I want to do.",
+            "en",
             MultipleSequentialPronouns::new(),
             1,
         )
@@ -150,6 +151,7 @@ mod tests {
     fn can_detect_three_pronouns() {
         assert_lint_count(
             "...little bit about my I you want to do.",
+            "en",
             MultipleSequentialPronouns::new(),
             1,
         )
@@ -159,6 +161,7 @@ mod tests {
     fn allows_single_pronouns() {
         assert_lint_count(
             "...little bit about I want to do.",
+            "en",
             MultipleSequentialPronouns::new(),
             0,
         )
@@ -168,6 +171,7 @@ mod tests {
     fn detects_multiple_pronouns_at_end() {
         assert_lint_count(
             "...I need to explain this to you them.",
+            "en",
             MultipleSequentialPronouns::new(),
             1,
         )
@@ -175,13 +179,19 @@ mod tests {
 
     #[test]
     fn comma_separated() {
-        assert_lint_count("To prove it, we...", MultipleSequentialPronouns::new(), 0)
+        assert_lint_count(
+            "To prove it, we...",
+            "en",
+            MultipleSequentialPronouns::new(),
+            0,
+        )
     }
 
     #[test]
     fn dont_flag_578() {
         assert_lint_count(
             "I can lend you my car.",
+            "en",
             MultipleSequentialPronouns::new(),
             0,
         )
@@ -191,6 +201,7 @@ mod tests {
     fn dont_flag_724() {
         assert_lint_count(
             "One told me they were able to begin reading.",
+            "en",
             MultipleSequentialPronouns::new(),
             0,
         )
@@ -200,6 +211,7 @@ mod tests {
     fn dont_flag_us() {
         assert_lint_count(
             "Take the plunge and pull plug from their US tech.",
+            "en",
             MultipleSequentialPronouns::new(),
             0,
         )
@@ -209,6 +221,7 @@ mod tests {
     fn dont_flag_my_us_your_us() {
         assert_lint_count(
             "My US passport looks different from your US passport.",
+            "en",
             MultipleSequentialPronouns::new(),
             0,
         )
@@ -218,6 +231,7 @@ mod tests {
     fn dont_flag_subject_after_usa() {
         assert_lint_count(
             "And if it’s manufactured in the US it may have more automation.",
+            "en",
             MultipleSequentialPronouns::new(),
             0,
         )
@@ -227,6 +241,7 @@ mod tests {
     fn dont_flag_case_insensitive_cost_him_his_life() {
         assert_lint_count(
             "to the point where it very well likely cost Him his life",
+            "en",
             MultipleSequentialPronouns::new(),
             0,
         )

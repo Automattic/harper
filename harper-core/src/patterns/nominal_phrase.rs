@@ -42,7 +42,7 @@ mod tests {
 
     #[test]
     fn simple_apple() {
-        let doc = Document::new_markdown_default_curated("A red apple");
+        let doc = Document::new_markdown_default_curated("A red apple", "en");
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 
         assert_eq!(matches, vec![Span::new(0, 5)])
@@ -50,7 +50,7 @@ mod tests {
 
     #[test]
     fn complex_apple() {
-        let doc = Document::new_markdown_default_curated("A red apple with a long stem");
+        let doc = Document::new_markdown_default_curated("A red apple with a long stem", "en");
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 
         assert_eq!(matches, vec![Span::new(0, 5), Span::new(8, 13)])
@@ -58,7 +58,7 @@ mod tests {
 
     #[test]
     fn list_fruit() {
-        let doc = Document::new_markdown_default_curated("An apple, a banana and a pear");
+        let doc = Document::new_markdown_default_curated("An apple, a banana and a pear", "en");
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 
         assert_eq!(
@@ -69,7 +69,7 @@ mod tests {
 
     #[test]
     fn simplest_banana() {
-        let doc = Document::new_markdown_default_curated("a banana");
+        let doc = Document::new_markdown_default_curated("a banana", "en");
         assert!(
             NominalPhrase
                 .matches(doc.get_tokens(), doc.get_source())
@@ -81,6 +81,7 @@ mod tests {
     fn food() {
         let doc = Document::new_markdown_default_curated(
             "My favorite foods are pizza, sushi, tacos and burgers.",
+            "en",
         );
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 

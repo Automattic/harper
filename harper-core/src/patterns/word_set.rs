@@ -77,7 +77,8 @@ mod tests {
     fn fruit() {
         let set = WordSet::new(&["banana", "apple", "orange"]);
 
-        let doc = Document::new_markdown_default_curated("I ate a banana and an apple today.");
+        let doc =
+            Document::new_markdown_default_curated("I ate a banana and an apple today.", "en");
 
         let matches = set.find_all_matches_in_doc(&doc);
 
@@ -88,7 +89,8 @@ mod tests {
     fn fruit_whack_capitalization() {
         let set = WordSet::new(&["banana", "apple", "orange"]);
 
-        let doc = Document::new_markdown_default_curated("I Ate A bAnaNa And aN apPlE today.");
+        let doc =
+            Document::new_markdown_default_curated("I Ate A bAnaNa And aN apPlE today.", "en");
 
         let matches = set.find_all_matches_in_doc(&doc);
 

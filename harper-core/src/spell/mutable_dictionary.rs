@@ -25,6 +25,7 @@ use super::dictionary::Dictionary;
 pub struct MutableDictionary {
     /// All English words
     word_map: WordMap,
+    langiso639: String,
 }
 
 /// The uncached function that is used to produce the original copy of the
@@ -33,6 +34,7 @@ fn uncached_inner_new(langiso639: &str) -> Arc<MutableDictionary> {
     if langiso639 == "en" {
         Arc::new(
             MutableDictionary::from_rune_files(
+                langiso639,
                 include_str!("../../dictionary.dict"),
                 include_str!("../../affixes.json"),
             )
@@ -41,10 +43,16 @@ fn uncached_inner_new(langiso639: &str) -> Arc<MutableDictionary> {
     } else {
         Arc::new(
             MutableDictionary::from_rune_files(
-                &std::fs::read_to_string(format!("../harper-core/dictionary-{}.dict", langiso639)).expect("Missing English dict"),
-                &std::fs::read_to_string(format!("../harper-core/affixes-{}.json", langiso639)).expect("Missing English affixes"),
+                langiso639,
+                &std::fs::read_to_string(format!("../harper-core/dictionary-{}.dict", langiso639))
+                    //.expect("Missing English dict"),
+                    .unwrap_or_else(|_| panic!("Missing dictionary for language {}", langiso639)),
+                &std::fs::read_to_string(format!("../harper-core/affixes-{}.json", langiso639))
+                    // .expect("Missing English affixes"),
+                    .unwrap_or_else(|_| panic!("Missing affixes for language {}", langiso639)),
             )
-            .expect("Curated dictionary should be valid."),
+            // .expect("Curated dictionary should be valid."),
+            .unwrap_or_else(|_| panic!("Failed to create dictionary for language {}", langiso639)),
         )
     }
 }
@@ -54,13 +62,18 @@ lazy_static! {
 }
 
 impl MutableDictionary {
-    pub fn new() -> Self {
+    pub fn new(langiso639: &str) -> Self {
         Self {
             word_map: WordMap::default(),
+            langiso639: langiso639.to_string(),
         }
     }
 
-    pub fn from_rune_files(word_list: &str, attr_list: &str) -> Result<Self, rune::Error> {
+    pub fn from_rune_files(
+        langiso639: &str,
+        word_list: &str,
+        attr_list: &str,
+    ) -> Result<Self, rune::Error> {
         let word_list = parse_word_list(word_list)?;
         let attr_list = AttributeList::parse(attr_list)?;
 
@@ -69,7 +82,10 @@ impl MutableDictionary {
 
         attr_list.expand_marked_words(word_list, &mut word_map);
 
-        Ok(Self { word_map })
+        Ok(Self {
+            word_map,
+            langiso639: langiso639.to_string(),
+        })
     }
 
     /// Create a dictionary from the curated dictionary included
@@ -112,11 +128,9 @@ impl MutableDictionary {
     pub fn append_word_str(&mut self, word: &str, metadata: WordMetadata) {
         self.append_word(word.chars().collect::<Vec<_>>(), metadata)
     }
-}
 
-impl Default for MutableDictionary {
-    fn default() -> Self {
-        Self::new()
+    pub fn get_langiso639(&self) -> &str {
+        &self.langiso639
     }
 }
 
@@ -246,6 +260,10 @@ impl Dictionary for MutableDictionary {
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
         self.word_map.get(id).map(|w| w.canonical_spelling.as_ref())
     }
+
+    fn get_langiso639(&self) -> &str {
+        &self.langiso639
+    }
 }
 
 impl From<MutableDictionary> for FstDictionary {
@@ -256,7 +274,7 @@ impl From<MutableDictionary> for FstDictionary {
             .map(|entry| (entry.canonical_spelling, entry.metadata))
             .collect();
 
-        FstDictionary::new(words)
+        FstDictionary::new(&dict.langiso639, words)
     }
 }
 
@@ -391,9 +409,18 @@ mod tests {
     fn are_merged_attrs_same_as_spread_attrs() {
         let curated_attr_list = include_str!("../../affixes.json");
 
-        let merged = MutableDictionary::from_rune_files("1\nblork/DGS", curated_attr_list).unwrap();
-        let spread =
-            MutableDictionary::from_rune_files("2\nblork/DG\nblork/S", curated_attr_list).unwrap();
+        let merged = MutableDictionary::from_rune_files(
+            "fake_language_code_amasasa_m",
+            "1\nblork/DGS",
+            curated_attr_list,
+        )
+        .unwrap();
+        let spread = MutableDictionary::from_rune_files(
+            "fake_language_code_amasasa_s",
+            "2\nblork/DG\nblork/S",
+            curated_attr_list,
+        )
+        .unwrap();
 
         assert_eq!(
             merged.word_map.into_iter().collect::<HashSet<_>>(),

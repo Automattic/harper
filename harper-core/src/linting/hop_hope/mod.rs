@@ -16,6 +16,7 @@ mod tests {
     fn corrects_hop_to_hope() {
         assert_suggestion_result(
             "I hop we can clarify this soon.",
+            "en",
             HopHope::default(),
             "I hope we can clarify this soon.",
         );
@@ -25,6 +26,7 @@ mod tests {
     fn does_not_correct_unrelated_use() {
         assert_suggestion_result(
             "I hop on one foot for fun.",
+            "en",
             HopHope::default(),
             "I hop on one foot for fun.",
         );
@@ -34,6 +36,7 @@ mod tests {
     fn corrects_mixed_case_hop() {
         assert_suggestion_result(
             "I HoP we can find a solution.",
+            "en",
             HopHope::default(),
             "I HoPe we can find a solution.",
         );
@@ -43,6 +46,7 @@ mod tests {
     fn corrects_hoping_on_call() {
         assert_suggestion_result(
             "I was hoping on a call to discuss this.",
+            "en",
             HopHope::default(),
             "I was hopping on a call to discuss this.",
         );
@@ -52,6 +56,7 @@ mod tests {
     fn corrects_hoped_on_plane() {
         assert_suggestion_result(
             "She hoped on an airplane to visit family.",
+            "en",
             HopHope::default(),
             "She hopped on an airplane to visit family.",
         );
@@ -61,6 +66,7 @@ mod tests {
     fn corrects_hope_on_bus() {
         assert_suggestion_result(
             "They hope on a bus every morning.",
+            "en",
             HopHope::default(),
             "They hop on a bus every morning.",
         );
@@ -70,6 +76,7 @@ mod tests {
     fn does_not_correct_unrelated_context() {
         assert_suggestion_result(
             "I hope everything goes well with your project.",
+            "en",
             HopHope::default(),
             "I hope everything goes well with your project.",
         );
@@ -79,6 +86,7 @@ mod tests {
     fn corrects_mixed_case() {
         assert_suggestion_result(
             "She HoPeD on a train to get home.",
+            "en",
             HopHope::default(),
             "She HoPpEd on a train to get home.",
         );

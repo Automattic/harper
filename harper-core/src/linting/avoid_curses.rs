@@ -31,6 +31,11 @@ mod tests {
 
     #[test]
     fn detects_shit() {
-        assert_lint_count("He ate shit when he fell off the bike.", AvoidCurses, 1);
+        assert_lint_count(
+            "He ate shit when he fell off the bike.",
+            "en",
+            AvoidCurses,
+            1,
+        );
     }
 }

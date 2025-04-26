@@ -49,7 +49,7 @@ impl Default for GeneralCompoundNouns {
                 tok.span.len() > 1 && !meta.determiner && !meta.is_adverb() && !meta.preposition
             });
 
-        let compound_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
+        let compound_pattern = Lrc::new(SplitCompoundWord::new("en", |meta| {
             meta.is_noun() && !meta.is_adjective()
         }));
 

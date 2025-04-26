@@ -96,7 +96,8 @@ mod tests {
     fn dont_flag_to_check_both_verb_and_noun() {
         assert_lint_count(
             "to check",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             0,
         );
     }
@@ -105,7 +106,8 @@ mod tests {
     fn dont_flag_to_checks_both_verb_and_noun() {
         assert_lint_count(
             "to checks",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             0,
         );
     }
@@ -114,7 +116,8 @@ mod tests {
     fn dont_flag_to_cheques_not_a_verb() {
         assert_lint_count(
             "to cheques",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             0,
         );
     }
@@ -122,14 +125,15 @@ mod tests {
     // -ing forms can act as nouns, current heuristics cannot distinguish
     // #[test]
     // fn flag_to_checking() {
-    //     assert_lint_count("to checking", InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American), 1);
+    //     assert_lint_count("to checking", InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American), 1);
     // }
 
     #[test]
     fn dont_flag_check_ed() {
         assert_lint_count(
             "to checked",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             0,
         );
     }
@@ -138,7 +142,8 @@ mod tests {
     fn dont_flag_noun_belief_s() {
         assert_lint_count(
             "to beliefs",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             0,
         );
     }
@@ -147,7 +152,8 @@ mod tests {
     fn dont_flag_noun_meat_s() {
         assert_lint_count(
             "to meats",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             0,
         );
     }
@@ -157,7 +163,7 @@ mod tests {
     // fn check_993_suggestions() {
     //     assert_suggestion_result(
     //         "A location-agnostic structure that attempts to captures the context and content that a Lint occurred.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+    //         InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
     //         "A location-agnostic structure that attempts to capture the context and content that a Lint occurred.",
     //     );
     // }
@@ -166,7 +172,8 @@ mod tests {
     fn dont_flag_embarrass_not_in_dictionary() {
         assert_lint_count(
             "Second I'm going to embarrass you for a.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             0,
         );
     }
@@ -175,7 +182,8 @@ mod tests {
     fn corrects_exist_s() {
         assert_suggestion_result(
             "A valid solution is expected to exists.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             "A valid solution is expected to exist.",
         );
     }
@@ -185,7 +193,7 @@ mod tests {
     // fn corrects_es_ending() {
     //     assert_suggestion_result(
     //         "I need it to catches every exception.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+    //         InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
     //         "I need it to catch every exception.",
     //     );
     // }
@@ -194,7 +202,8 @@ mod tests {
     fn corrects_ed_ending() {
         assert_suggestion_result(
             "I had to expanded my horizon.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             "I had to expand my horizon.",
         );
     }
@@ -203,7 +212,8 @@ mod tests {
     fn flags_expire_d() {
         assert_lint_count(
             "I didn't know it was going to expired.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             1,
         );
     }
@@ -212,7 +222,8 @@ mod tests {
     fn corrects_explain_ed() {
         assert_suggestion_result(
             "To explained the rules to the team.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             "To explain the rules to the team.",
         );
     }
@@ -222,7 +233,7 @@ mod tests {
     // fn corrects_explor_ed() {
     //     assert_suggestion_result(
     //         "I went to explored distant galaxies.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+    //         InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
     //         "I went to explore distant galaxies.",
     //     );
     // }
@@ -231,7 +242,8 @@ mod tests {
     fn cant_flag_express_ed_also_noun() {
         assert_lint_count(
             "I failed to clearly expressed my point.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             0,
         );
     }
@@ -240,7 +252,8 @@ mod tests {
     fn correct_feign_ed() {
         assert_suggestion_result(
             "I was able to feigned ignorance.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "en",
+            InflectedVerbAfterTo::new(FstDictionary::curated("en"), Dialect::American),
             "I was able to feign ignorance.",
         );
     }

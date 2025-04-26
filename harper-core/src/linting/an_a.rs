@@ -194,78 +194,79 @@ mod tests {
 
     #[test]
     fn detects_html_as_vowel() {
-        assert_lint_count("Here is a HTML document.", AnA, 1);
+        assert_lint_count("Here is a HTML document.", "en", AnA, 1);
     }
 
     #[test]
     fn detects_llm_as_vowel() {
-        assert_lint_count("Here is a LLM document.", AnA, 1);
+        assert_lint_count("Here is a LLM document.", "en", AnA, 1);
     }
 
     #[test]
     fn detects_llm_hyphen_as_vowel() {
-        assert_lint_count("Here is a LLM-based system.", AnA, 1);
+        assert_lint_count("Here is a LLM-based system.", "en", AnA, 1);
     }
 
     #[test]
     fn capitalized_fourier() {
-        assert_lint_count("Then, perform a Fourier transform.", AnA, 0);
+        assert_lint_count("Then, perform a Fourier transform.", "en", AnA, 0);
     }
 
     #[test]
     fn once_over() {
-        assert_lint_count("give this a once-over.", AnA, 0);
+        assert_lint_count("give this a once-over.", "en", AnA, 0);
     }
 
     #[test]
     fn issue_196() {
-        assert_lint_count("This is formatted as an `ext4` file system.", AnA, 0);
+        assert_lint_count("This is formatted as an `ext4` file system.", "en", AnA, 0);
     }
 
     #[test]
     fn allows_lowercase_vowels() {
-        assert_lint_count("not an error", AnA, 0);
+        assert_lint_count("not an error", "en", AnA, 0);
     }
 
     #[test]
     fn allows_lowercase_consonants() {
-        assert_lint_count("not a crash", AnA, 0);
+        assert_lint_count("not a crash", "en", AnA, 0);
     }
 
     #[test]
     fn disallows_lowercase_vowels() {
-        assert_lint_count("not a error", AnA, 1);
+        assert_lint_count("not a error", "en", AnA, 1);
     }
 
     #[test]
     fn disallows_lowercase_consonants() {
-        assert_lint_count("not an crash", AnA, 1);
+        assert_lint_count("not an crash", "en", AnA, 1);
     }
 
     #[test]
     fn allows_uppercase_vowels() {
-        assert_lint_count("not an Error", AnA, 0);
+        assert_lint_count("not an Error", "en", AnA, 0);
     }
 
     #[test]
     fn allows_uppercase_consonants() {
-        assert_lint_count("not a Crash", AnA, 0);
+        assert_lint_count("not a Crash", "en", AnA, 0);
     }
 
     #[test]
     fn disallows_uppercase_vowels() {
-        assert_lint_count("not a Error", AnA, 1);
+        assert_lint_count("not a Error", "en", AnA, 1);
     }
 
     #[test]
     fn disallows_uppercase_consonants() {
-        assert_lint_count("not an Crash", AnA, 1);
+        assert_lint_count("not an Crash", "en", AnA, 1);
     }
 
     #[test]
     fn disallows_a_interface() {
         assert_lint_count(
             "A interface for an object that can perform linting actions.",
+            "en",
             AnA,
             1,
         );
@@ -273,6 +274,6 @@ mod tests {
 
     #[test]
     fn allow_issue_751() {
-        assert_lint_count("He got a 52% approval rating.", AnA, 0);
+        assert_lint_count("He got a 52% approval rating.", "en", AnA, 0);
     }
 }

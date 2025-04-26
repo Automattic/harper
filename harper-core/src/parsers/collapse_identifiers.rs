@@ -81,7 +81,7 @@ mod tests {
 
     #[test]
     fn no_collapse() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
         let source = "This is a test.";
 
         let tokens =
@@ -92,17 +92,17 @@ mod tests {
     #[test]
     fn one_collapse() {
         let source = "This is a separated_identifier, wow!";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated("en");
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
                 .parse_str(source);
         assert_eq!(tokens.len(), 13);
 
-        let mut dict = MutableDictionary::new();
+        let mut dict = MutableDictionary::new("en");
         dict.append_word_str("separated_identifier", WordMetadata::default());
 
-        let mut merged_dict = MergedDictionary::new();
+        let mut merged_dict = MergedDictionary::new("en");
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
@@ -115,7 +115,7 @@ mod tests {
     #[test]
     fn kebab_collapse() {
         let source = "This is a separated-identifier, wow!";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated("en");
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
@@ -123,10 +123,10 @@ mod tests {
 
         assert_eq!(tokens.len(), 13);
 
-        let mut dict = MutableDictionary::new();
+        let mut dict = MutableDictionary::new("en");
         dict.append_word_str("separated-identifier", WordMetadata::default());
 
-        let mut merged_dict = MergedDictionary::new();
+        let mut merged_dict = MergedDictionary::new("en");
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
@@ -140,17 +140,17 @@ mod tests {
     #[test]
     fn double_collapse() {
         let source = "This is a separated_identifier_token, wow!";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated("en");
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
                 .parse_str(source);
         assert_eq!(tokens.len(), 15);
 
-        let mut dict = MutableDictionary::new();
+        let mut dict = MutableDictionary::new("en");
         dict.append_word_str("separated_identifier_token", WordMetadata::default());
 
-        let mut merged_dict = MergedDictionary::new();
+        let mut merged_dict = MergedDictionary::new("en");
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
@@ -163,17 +163,17 @@ mod tests {
     #[test]
     fn two_collapses() {
         let source = "This is a separated_identifier, wow! separated_identifier";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated("en");
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
                 .parse_str(source);
         assert_eq!(tokens.len(), 17);
 
-        let mut dict = MutableDictionary::new();
+        let mut dict = MutableDictionary::new("en");
         dict.append_word_str("separated_identifier", WordMetadata::default());
 
-        let mut merged_dict = MergedDictionary::new();
+        let mut merged_dict = MergedDictionary::new("en");
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
@@ -186,18 +186,18 @@ mod tests {
     #[test]
     fn overlapping_identifiers() {
         let source = "This is a separated_identifier_token, wow!";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated("en");
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
                 .parse_str(source);
         assert_eq!(tokens.len(), 15);
 
-        let mut dict = MutableDictionary::new();
+        let mut dict = MutableDictionary::new("en");
         dict.append_word_str("separated_identifier", WordMetadata::default());
         dict.append_word_str("identifier_token", WordMetadata::default());
 
-        let mut merged_dict = MergedDictionary::new();
+        let mut merged_dict = MergedDictionary::new("en");
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
@@ -210,18 +210,18 @@ mod tests {
     #[test]
     fn nested_identifiers() {
         let source = "This is a separated_identifier_token, wow!";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated("en");
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
                 .parse_str(source);
         assert_eq!(tokens.len(), 15);
 
-        let mut dict = MutableDictionary::new();
+        let mut dict = MutableDictionary::new("en");
         dict.append_word_str("separated_identifier_token", WordMetadata::default());
         dict.append_word_str("separated_identifier", WordMetadata::default());
 
-        let mut merged_dict = MergedDictionary::new();
+        let mut merged_dict = MergedDictionary::new("en");
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 

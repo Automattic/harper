@@ -101,13 +101,14 @@ mod tests {
 
     #[test]
     fn allows_back_then() {
-        assert_lint_count("I was a gross kid back then.", ThenThan::default(), 0);
+        assert_lint_count("I was a gross kid back then.", "en", ThenThan::default(), 0);
     }
 
     #[test]
     fn catches_shorter_then() {
         assert_suggestion_result(
             "One was shorter then the other.",
+            "en",
             ThenThan::default(),
             "One was shorter than the other.",
         );
@@ -117,6 +118,7 @@ mod tests {
     fn catches_better_then() {
         assert_suggestion_result(
             "One was better then the other.",
+            "en",
             ThenThan::default(),
             "One was better than the other.",
         );
@@ -126,6 +128,7 @@ mod tests {
     fn catches_longer_then() {
         assert_suggestion_result(
             "One was longer then the other.",
+            "en",
             ThenThan::default(),
             "One was longer than the other.",
         );
@@ -135,6 +138,7 @@ mod tests {
     fn catches_less_then() {
         assert_suggestion_result(
             "I eat less then you.",
+            "en",
             ThenThan::default(),
             "I eat less than you.",
         );
@@ -144,6 +148,7 @@ mod tests {
     fn catches_more_then() {
         assert_suggestion_result(
             "I eat more then you.",
+            "en",
             ThenThan::default(),
             "I eat more than you.",
         );
@@ -153,6 +158,7 @@ mod tests {
     fn stronger_should_change() {
         assert_suggestion_result(
             "a chain is no stronger then its weakest link",
+            "en",
             ThenThan::default(),
             "a chain is no stronger than its weakest link",
         );
@@ -162,6 +168,7 @@ mod tests {
     fn half_a_loaf_should_change() {
         assert_suggestion_result(
             "half a loaf is better then no bread",
+            "en",
             ThenThan::default(),
             "half a loaf is better than no bread",
         );
@@ -169,13 +176,14 @@ mod tests {
 
     #[test]
     fn then_everyone_clapped_should_be_allowed() {
-        assert_lint_count("and then everyone clapped", ThenThan::default(), 0);
+        assert_lint_count("and then everyone clapped", "en", ThenThan::default(), 0);
     }
 
     #[test]
     fn crazier_than_rat_should_change() {
         assert_suggestion_result(
             "crazier then a shithouse rat",
+            "en",
             ThenThan::default(),
             "crazier than a shithouse rat",
         );
@@ -185,6 +193,7 @@ mod tests {
     fn poke_in_eye_should_change() {
         assert_suggestion_result(
             "better then a poke in the eye with a sharp stick",
+            "en",
             ThenThan::default(),
             "better than a poke in the eye with a sharp stick",
         );
@@ -194,6 +203,7 @@ mod tests {
     fn other_then_should_change() {
         assert_suggestion_result(
             "There was no one other then us at the campsite.",
+            "en",
             ThenThan::default(),
             "There was no one other than us at the campsite.",
         );
@@ -201,30 +211,33 @@ mod tests {
 
     #[test]
     fn allows_and_then() {
-        assert_lint_count("And then we left.", ThenThan::default(), 0);
+        assert_lint_count("And then we left.", "en", ThenThan::default(), 0);
     }
 
     #[test]
     fn allows_this_then() {
-        assert_lint_count("Do this then that.", ThenThan::default(), 0);
+        assert_lint_count("Do this then that.", "en", ThenThan::default(), 0);
     }
 
     #[test]
     fn allows_issue_720() {
         assert_lint_count(
             "And if just one of those is set incorrectly or it has the tiniest bit of dirt inside then that will wreak havoc with the engine's running ability.",
+            "en",
             ThenThan::default(),
             0,
         );
-        assert_lint_count("So let's check it out then.", ThenThan::default(), 0);
+        assert_lint_count("So let's check it out then.", "en", ThenThan::default(), 0);
         assert_lint_count(
             "And if just the tiniest bit of dirt gets inside then that will wreak havoc.",
+            "en",
             ThenThan::default(),
             0,
         );
 
         assert_lint_count(
             "He was always a top student in school but then his argument is that grades don't define intelligence.",
+            "en",
             ThenThan::default(),
             0,
         );
@@ -234,6 +247,7 @@ mod tests {
     fn allows_issue_744() {
         assert_lint_count(
             "So then after talking about how he would, he didn't.",
+            "en",
             ThenThan::default(),
             0,
         );
@@ -243,21 +257,25 @@ mod tests {
     fn issue_720_school_but_then_his() {
         assert_lint_count(
             "She loved the atmosphere of the school but then his argument is that it lacks proper resources for students.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "The teacher praised the efforts of the school but then his argument is that the curriculum needs to be updated.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "They were excited about the new program at school but then his argument is that it won't be effective without proper training.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "The community supported the school but then his argument is that funding is still a major issue.",
+            "en",
             ThenThan::default(),
             0,
         );
@@ -267,26 +285,31 @@ mod tests {
     fn issue_720_so_then_these_resistors() {
         assert_lint_count(
             "So then these resistors are connected up in parallel to reduce the overall resistance.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "So then these resistors are connected up to ensure the current flows properly.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "So then these resistors are connected up to achieve the desired voltage drop.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "So then these resistors are connected up to demonstrate the principles of series and parallel circuits.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "So then these resistors are connected up to optimize the circuit's performance.",
+            "en",
             ThenThan::default(),
             0,
         );
@@ -296,26 +319,31 @@ mod tests {
     fn issue_720_yes_so_then_sorry() {
         assert_lint_count(
             "Yes so then sorry you didn't receive the memo about the meeting changes.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "Yes so then sorry you had to wait so long for a response from our team.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "Yes so then sorry you felt left out during the discussion; we value your input.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "Yes so then sorry you missed the deadline; we can discuss an extension.",
+            "en",
             ThenThan::default(),
             0,
         );
         assert_lint_count(
             "Yes so then sorry you encountered issues with the software; let me help you troubleshoot.",
+            "en",
             ThenThan::default(),
             0,
         );
@@ -325,6 +353,7 @@ mod tests {
     fn more_talented_then_her_issue_720() {
         assert_suggestion_result(
             "He was more talented then her at writing code.",
+            "en",
             ThenThan::default(),
             "He was more talented than her at writing code.",
         );
@@ -334,6 +363,7 @@ mod tests {
     fn simpler_then_hers_issue_720() {
         assert_suggestion_result(
             "The design was simpler then hers in layout and color scheme.",
+            "en",
             ThenThan::default(),
             "The design was simpler than hers in layout and color scheme.",
         );
@@ -343,6 +373,7 @@ mod tests {
     fn earlier_then_him_issue_720() {
         assert_suggestion_result(
             "We arrived earlier then him at the event.",
+            "en",
             ThenThan::default(),
             "We arrived earlier than him at the event.",
         );
@@ -352,6 +383,7 @@ mod tests {
     fn more_robust_then_his_issue_720() {
         assert_suggestion_result(
             "This approach is more robust then his for handling edge cases.",
+            "en",
             ThenThan::default(),
             "This approach is more robust than his for handling edge cases.",
         );
@@ -361,6 +393,7 @@ mod tests {
     fn patch_more_recently_then_last_week_issue_720() {
         assert_suggestion_result(
             "We submitted the patch more recently then last week, so they should have it already.",
+            "en",
             ThenThan::default(),
             "We submitted the patch more recently than last week, so they should have it already.",
         );
@@ -370,6 +403,7 @@ mod tests {
     fn allows_well_then() {
         assert_lint_count(
             "Well then we're just going to raise all of these taxes",
+            "en",
             ThenThan::default(),
             0,
         );
@@ -379,6 +413,7 @@ mod tests {
     fn allows_nervous_then() {
         assert_lint_count(
             "I think both of us were getting nervous then because the system would have automatically aborted.",
+            "en",
             ThenThan::default(),
             0,
         );
@@ -388,6 +423,7 @@ mod tests {
     fn flags_stupider_then_and_more_and_less_stupid_then() {
         assert_lint_count(
             "He was stupider then her but she was more stupid then some. Then again he was less stupid then some too.",
+            "en",
             ThenThan::default(),
             3,
         );
@@ -397,6 +433,7 @@ mod tests {
     fn patch_worse_then() {
         assert_suggestion_result(
             "He was worse then her at writing code.",
+            "en",
             ThenThan::default(),
             "He was worse than her at writing code.",
         );

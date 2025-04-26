@@ -115,6 +115,7 @@ mod tests {
     fn fruits() {
         assert_lint_count(
             "An apple, a banana and a pear walk into a bar.",
+            "en",
             OxfordComma::default(),
             1,
         );
@@ -124,6 +125,7 @@ mod tests {
     fn people() {
         assert_suggestion_result(
             "Nancy, Steve and Carl are going to the coffee shop.",
+            "en",
             OxfordComma::default(),
             "Nancy, Steve, and Carl are going to the coffee shop.",
         );
@@ -133,6 +135,7 @@ mod tests {
     fn places() {
         assert_suggestion_result(
             "I've always wanted to visit Paris, Tokyo and Rome.",
+            "en",
             OxfordComma::default(),
             "I've always wanted to visit Paris, Tokyo, and Rome.",
         );
@@ -142,6 +145,7 @@ mod tests {
     fn foods() {
         assert_suggestion_result(
             "My favorite foods are pizza, sushi, tacos and burgers.",
+            "en",
             OxfordComma::default(),
             "My favorite foods are pizza, sushi, tacos, and burgers.",
         );
@@ -151,6 +155,7 @@ mod tests {
     fn allows_clean_music() {
         assert_lint_count(
             "I enjoy listening to pop music, rock, hip-hop, electronic dance, and classical music.",
+            "en",
             OxfordComma::default(),
             0,
         );
@@ -160,6 +165,7 @@ mod tests {
     fn allows_clean_nations() {
         assert_lint_count(
             "The team consists of players from different countries: France, Germany, Italy, and Spain.",
+            "en",
             OxfordComma::default(),
             0,
         );
@@ -169,6 +175,7 @@ mod tests {
     fn or_writing() {
         assert_suggestion_result(
             "Harper can be a lifesaver when writing technical documents, emails or other formal forms of communication.",
+            "en",
             OxfordComma::default(),
             "Harper can be a lifesaver when writing technical documents, emails, or other formal forms of communication.",
         );
@@ -178,6 +185,7 @@ mod tests {
     fn sports() {
         assert_suggestion_result(
             "They enjoy playing soccer, basketball or tennis.",
+            "en",
             OxfordComma::default(),
             "They enjoy playing soccer, basketball, or tennis.",
         );
@@ -187,6 +195,7 @@ mod tests {
     fn nor_vegetables() {
         assert_suggestion_result(
             "I like carrots, kale nor broccoli.",
+            "en",
             OxfordComma::default(),
             "I like carrots, kale, nor broccoli.",
         );
@@ -196,6 +205,7 @@ mod tests {
     fn allow_non_list_transportation() {
         assert_lint_count(
             "In transportation, autonomous vehicles and smart traffic management systems promise to reduce accidents and optimize travel routes.",
+            "en",
             OxfordComma::default(),
             0,
         );
@@ -205,6 +215,7 @@ mod tests {
     fn allow_pill() {
         assert_lint_count(
             "Develop a pill that causes partial amnesia, affecting relationships and identity.",
+            "en",
             OxfordComma::default(),
             0,
         );
@@ -214,6 +225,7 @@ mod tests {
     fn allow_at_first() {
         assert_lint_count(
             "In the heart of a bustling city, Sarah finds herself trapped in an endless cycle of the same day. Each morning, she awakens to find the date unchanged, her life on repeat. At first, confusion and frustration cloud her thoughts, but soon she notices something peculiar—each day has tiny differences, subtle changes that hint at a larger pattern.",
+            "en",
             OxfordComma::default(),
             0,
         );
@@ -223,6 +235,7 @@ mod tests {
     fn allow_standoff() {
         assert_lint_count(
             "In a tense standoff, Alex and his reflection engage in a battle of wills.",
+            "en",
             OxfordComma::default(),
             0,
         );

@@ -69,6 +69,7 @@ mod tests {
     fn simple_pronoun_new() {
         assert_suggestion_result(
             "I new you would say that.",
+            "en",
             PronounKnew::default(),
             "I knew you would say that.",
         );
@@ -78,6 +79,7 @@ mod tests {
     fn with_adverb() {
         assert_suggestion_result(
             "She often new the answer.",
+            "en",
             PronounKnew::default(),
             "She often knew the answer.",
         );
@@ -85,11 +87,11 @@ mod tests {
 
     #[test]
     fn does_not_flag_without_pronoun() {
-        assert_lint_count("The software is new.", PronounKnew::default(), 0);
+        assert_lint_count("The software is new.", "en", PronounKnew::default(), 0);
     }
 
     #[test]
     fn does_not_flag_other_context() {
-        assert_lint_count("They called it \"new\".", PronounKnew::default(), 0);
+        assert_lint_count("They called it \"new\".", "en", PronounKnew::default(), 0);
     }
 }

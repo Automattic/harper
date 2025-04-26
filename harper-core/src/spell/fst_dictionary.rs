@@ -20,13 +20,16 @@ pub struct FstDictionary {
     word_map: FstMap<Vec<u8>>,
     /// Used for fuzzy-finding the index of words or metadata
     words: Vec<(CharString, WordMetadata)>,
+    /// The language of the dictionary
+    langiso639: String,
 }
 
 const EXPECTED_DISTANCE: u8 = 3;
 const TRANSPOSITION_COST_ONE: bool = false;
 
 lazy_static! {
-    static ref DICT: Arc<FstDictionary> = Arc::new((*MutableDictionary::curated("en")).clone().into());
+    static ref DICT_EN: Arc<FstDictionary> =
+        Arc::new((*MutableDictionary::curated("en")).clone().into());
 }
 
 thread_local! {
@@ -49,13 +52,16 @@ impl PartialEq for FstDictionary {
 impl FstDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
-    pub fn curated() -> Arc<Self> {
-        (*DICT).clone()
+    pub fn curated(langiso639: &str) -> Arc<Self> {
+        match langiso639 {
+            "en" => (*DICT_EN).clone(),
+            _ => Arc::new((*MutableDictionary::curated(langiso639)).clone().into()),
+        }
     }
 
     /// Construct a new [`FstDictionary`] using a word list as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
-    pub fn new(mut words: Vec<(CharString, WordMetadata)>) -> Self {
+    pub fn new(langiso639: &str, mut words: Vec<(CharString, WordMetadata)>) -> Self {
         words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
         words.dedup_by(|(a, _), (b, _)| a == b);
 
@@ -67,7 +73,7 @@ impl FstDictionary {
                 .expect("Insertion not in lexicographical order!");
         }
 
-        let mut full_dict = MutableDictionary::new();
+        let mut full_dict = MutableDictionary::new(langiso639);
         full_dict.extend_words(words.iter().cloned());
 
         let fst_bytes = builder.into_inner().unwrap();
@@ -77,6 +83,7 @@ impl FstDictionary {
             full_dict: Arc::new(full_dict),
             word_map,
             words,
+            langiso639: langiso639.to_string(),
         }
     }
 }
@@ -212,6 +219,10 @@ impl Dictionary for FstDictionary {
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
         self.full_dict.get_word_from_id(id)
     }
+
+    fn get_langiso639(&self) -> &str {
+        &self.langiso639
+    }
 }
 
 #[cfg(test)]
@@ -226,7 +237,7 @@ mod tests {
 
     #[test]
     fn fst_map_contains_all_in_full_dict() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         for word in dict.words_iter() {
             let misspelled_normalized = word.normalized();
@@ -245,7 +256,7 @@ mod tests {
 
     #[test]
     fn fst_contains_hello() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         let word: Vec<_> = "hello".chars().collect();
         let misspelled_normalized = word.normalized();
@@ -261,14 +272,14 @@ mod tests {
 
     #[test]
     fn on_is_not_nominal() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         assert!(!dict.get_word_metadata_str("on").unwrap().is_nominal());
     }
 
     #[test]
     fn fuzzy_result_sorted_by_edit_distance() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         let results = dict.fuzzy_match_str("hello", 3, 100);
         let is_sorted_by_dist = results
@@ -282,14 +293,14 @@ mod tests {
 
     #[test]
     fn curated_contains_no_duplicates() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         assert!(dict.words.iter().map(|(word, _)| word).all_unique());
     }
 
     #[test]
     fn contractions_not_derived() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         let contractions = ["there's", "we're", "here's"];
 
@@ -306,7 +317,7 @@ mod tests {
 
     #[test]
     fn plural_llamas_derived_from_llama() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         assert_eq!(
             dict.get_word_metadata_str("llamas")
@@ -319,7 +330,7 @@ mod tests {
 
     #[test]
     fn plural_cats_derived_from_cat() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         assert_eq!(
             dict.get_word_metadata_str("cats")
@@ -332,7 +343,7 @@ mod tests {
 
     #[test]
     fn unhappy_derived_from_happy() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         assert_eq!(
             dict.get_word_metadata_str("unhappy")
@@ -345,7 +356,7 @@ mod tests {
 
     #[test]
     fn quickly_derived_from_quick() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
 
         assert_eq!(
             dict.get_word_metadata_str("quickly")

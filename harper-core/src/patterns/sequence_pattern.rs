@@ -19,7 +19,7 @@ use crate::{Token, TokenKind};
 /// use harper_core::patterns::{SequencePattern, DocPattern};
 /// use harper_core::{Document, Span};
 ///
-/// let document = Document::new_markdown_default_curated("This is a test.");
+/// let document = Document::new_markdown_default_curated("This is a test.", "en");
 ///
 /// let pattern = SequencePattern::default().then_determiner().then_whitespace().then_nominal();
 /// let matches = pattern.find_all_matches_in_doc(&document);

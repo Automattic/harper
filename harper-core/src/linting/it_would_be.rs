@@ -95,6 +95,7 @@ mod tests {
     fn flags_simple_shame() {
         assert_suggestion_result(
             "I think I would be a shame if this happened.",
+            "en",
             ItWouldBe::default(),
             "I think it would be a shame if this happened.",
         );
@@ -104,6 +105,7 @@ mod tests {
     fn flags_believe_bummer() {
         assert_suggestion_result(
             "We believe I might not be a bummer after all.",
+            "en",
             ItWouldBe::default(),
             "We believe it might not be a bummer after all.",
         );
@@ -113,6 +115,7 @@ mod tests {
     fn flags_doubt_good_idea() {
         assert_suggestion_result(
             "They doubt I will be a good idea for the team.",
+            "en",
             ItWouldBe::default(),
             "They doubt it will be a good idea for the team.",
         );
@@ -122,6 +125,7 @@ mod tests {
     fn ignores_correct_it() {
         assert_lint_count(
             "I think it would be a shame if this happened.",
+            "en",
             ItWouldBe::default(),
             0,
         );
@@ -131,6 +135,7 @@ mod tests {
     fn ignores_first_person_statement() {
         assert_lint_count(
             "I would be a good fit for the role.",
+            "en",
             ItWouldBe::default(),
             0,
         );

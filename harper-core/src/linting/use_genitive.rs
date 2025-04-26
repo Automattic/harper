@@ -89,6 +89,7 @@ mod tests {
     fn catches_adjective_noun() {
         assert_suggestion_result(
             "What are there big problems?",
+            "en",
             UseGenitive::default(),
             "What are their big problems?",
         )
@@ -98,6 +99,7 @@ mod tests {
     fn catches_just_noun() {
         assert_suggestion_result(
             "What are there problems?",
+            "en",
             UseGenitive::default(),
             "What are their problems?",
         )
@@ -105,13 +107,14 @@ mod tests {
 
     #[test]
     fn allows_clause_termination() {
-        assert_lint_count("Look there!", UseGenitive::default(), 0)
+        assert_lint_count("Look there!", "en", UseGenitive::default(), 0)
     }
 
     #[test]
     fn allows_there_are() {
         assert_lint_count(
             "Since there are people here, we should be socially aware.",
+            "en",
             UseGenitive::default(),
             0,
         )
@@ -121,6 +124,7 @@ mod tests {
     fn allows_there_at_beginning() {
         assert_lint_count(
             "There is a cute cat sitting on the chair at home.",
+            "en",
             UseGenitive::default(),
             0,
         )
@@ -130,6 +134,7 @@ mod tests {
     fn catches_they_are() {
         assert_suggestion_result(
             "The students received they're test results today.",
+            "en",
             UseGenitive::default(),
             "The students received their test results today.",
         )
@@ -137,13 +142,19 @@ mod tests {
 
     #[test]
     fn allows_grantlemons_issue_267_cat() {
-        assert_lint_count("Were there cats at her house?", UseGenitive::default(), 0);
+        assert_lint_count(
+            "Were there cats at her house?",
+            "en",
+            UseGenitive::default(),
+            0,
+        );
     }
 
     #[test]
     fn allows_grantlemons_issue_267_apple() {
         assert_lint_count(
             "Were there any apples at the store?",
+            "en",
             UseGenitive::default(),
             0,
         );
@@ -153,6 +164,7 @@ mod tests {
     fn allows_grantlemons_issue_267_fruit() {
         assert_lint_count(
             "Were there many kinds of fruit at the store?",
+            "en",
             UseGenitive::default(),
             0,
         );
@@ -162,6 +174,7 @@ mod tests {
     fn allows_grantlemons_issue_267_people() {
         assert_lint_count(
             "Were there more than, or less than six people at the party?",
+            "en",
             UseGenitive::default(),
             0,
         );
@@ -171,6 +184,7 @@ mod tests {
     fn allows_faster_at_running() {
         assert_lint_count(
             "Melissa was faster at running than her friend.",
+            "en",
             UseGenitive::default(),
             0,
         );

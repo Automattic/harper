@@ -56,10 +56,14 @@ impl Backend {
     }
 
     /// Load a specific file's dictionary
-    async fn load_file_dictionary(&self, url: &Url) -> anyhow::Result<MutableDictionary> {
+    async fn load_file_dictionary(
+        &self,
+        url: &Url,
+        langiso639: &str,
+    ) -> anyhow::Result<MutableDictionary> {
         // VS Code's unsaved documents have "untitled" scheme
         if url.scheme() == "untitled" {
-            return Ok(MutableDictionary::new());
+            return Ok(MutableDictionary::new("fake_language_code_lfd"));
         }
 
         let path = self
@@ -67,10 +71,10 @@ impl Backend {
             .await
             .context("Unable to get the file path.")?;
 
-        load_dict(path)
+        load_dict(path, langiso639)
             .await
             .map_err(|err| info!("{err}"))
-            .or(Ok(MutableDictionary::new()))
+            .or(Ok(MutableDictionary::new("fake_language_code_ld")))
     }
 
     /// Compute the location of the file's specific dictionary
@@ -94,10 +98,10 @@ impl Backend {
     async fn load_user_dictionary(&self) -> MutableDictionary {
         let config = self.config.read().await;
 
-        load_dict(&config.user_dict_path)
+        load_dict(&config.user_dict_path, &config.langiso639)
             .await
             .map_err(|err| info!("{err}"))
-            .unwrap_or(MutableDictionary::new())
+            .unwrap_or(MutableDictionary::new("fake_language_code_lud"))
     }
 
     async fn save_user_dictionary(&self, dict: impl Dictionary) -> Result<()> {
@@ -129,17 +133,21 @@ impl Backend {
     }
 
     async fn generate_global_dictionary(&self) -> Result<MergedDictionary> {
-        let mut dict = MergedDictionary::new();
-        dict.add_dictionary(FstDictionary::curated());
+        let mut dict = MergedDictionary::new("fake_language_code_ggdm");
+        dict.add_dictionary(FstDictionary::curated("fake_language_code_ggdc"));
         let user_dict = self.load_user_dictionary().await;
         dict.add_dictionary(Arc::new(user_dict));
         Ok(dict)
     }
 
-    async fn generate_file_dictionary(&self, url: &Url) -> Result<MergedDictionary> {
+    async fn generate_file_dictionary(
+        &self,
+        url: &Url,
+        langiso639: &str,
+    ) -> Result<MergedDictionary> {
         let (global_dictionary, file_dictionary) = tokio::join!(
             self.generate_global_dictionary(),
-            self.load_file_dictionary(url)
+            self.load_file_dictionary(url, langiso639)
         );
 
         let mut global_dictionary =
@@ -171,18 +179,19 @@ impl Backend {
         self.pull_config().await;
 
         // Copy necessary configuration to avoid holding lock.
-        let (lint_config, markdown_options, isolate_english, dialect) = {
+        let (lint_config, markdown_options, isolate_english, dialect, langiso639) = {
             let config = self.config.read().await;
             (
                 config.lint_config.clone(),
                 config.markdown_options,
                 config.isolate_english,
                 config.dialect,
+                config.langiso639.clone(),
             )
         };
 
         let dict = Arc::new(
-            self.generate_file_dictionary(url)
+            self.generate_file_dictionary(url, &langiso639)
                 .await
                 .context("Unable to generate the file dictionary.")?,
         );
@@ -195,21 +204,21 @@ impl Backend {
             DocumentState {
                 linter: LintGroup::new_curated(dict.clone(), dialect)
                     .with_lint_config(lint_config.clone()),
-                language_id: language_id.map(|v| v.to_string()),
-                dict: dict.clone(),
+                code_language_id: language_id.map(|v| v.to_string()),
+                dict: Some(dict.clone()),
                 url: url.clone(),
                 ..Default::default()
             }
         });
 
-        if doc_state.dict != dict {
-            doc_state.dict = dict.clone();
+        if doc_state.dict.as_ref() != Some(&dict) {
+            doc_state.dict = Some(dict.clone());
             info!("Constructing new linter because of modified dictionary.");
             doc_state.linter =
                 LintGroup::new_curated(dict.clone(), dialect).with_lint_config(lint_config.clone());
         }
 
-        let Some(language_id) = &doc_state.language_id else {
+        let Some(language_id) = &doc_state.code_language_id else {
             doc_lock.remove(url);
             return Ok(());
         };
@@ -223,22 +232,24 @@ impl Backend {
             lint_config: &LintGroupConfig,
             dialect: Dialect,
         ) -> Result<Box<dyn Parser>> {
-            if doc_state.ident_dict != new_dict {
+            if doc_state.ident_dict.as_ref() != Some(&new_dict) {
                 info!("Constructing new linter because of modified ident dictionary.");
-                doc_state.ident_dict = new_dict.clone();
+                doc_state.ident_dict = Some(new_dict.clone());
 
-                let mut merged = backend.generate_file_dictionary(url).await?;
+                let langiso639 = new_dict.get_langiso639();
+
+                let mut merged = backend.generate_file_dictionary(url, langiso639).await?;
                 merged.add_dictionary(new_dict);
                 let merged = Arc::new(merged);
 
                 doc_state.linter = LintGroup::new_curated(merged.clone(), dialect)
                     .with_lint_config(lint_config.clone());
-                doc_state.dict = merged.clone();
+                doc_state.dict = Some(merged.clone());
             }
 
             Ok(Box::new(CollapseIdentifiers::new(
                 Box::new(parser),
-                Box::new(doc_state.dict.clone()),
+                Box::new(doc_state.dict.clone().unwrap()),
             )))
         }
 
@@ -303,10 +314,13 @@ impl Backend {
             }
             Some(mut parser) => {
                 if isolate_english {
-                    parser = Box::new(IsolateEnglish::new(parser, doc_state.dict.clone()));
+                    parser = Box::new(IsolateEnglish::new(
+                        parser,
+                        doc_state.dict.as_ref().unwrap().clone(),
+                    ));
                 }
 
-                doc_state.document = Document::new(text, &parser, &doc_state.dict);
+                doc_state.document = Document::new(text, &parser, doc_state.dict.as_ref().unwrap());
             }
         }
 
@@ -577,8 +591,11 @@ impl LanguageServer for Backend {
 
                 let file_url = second.parse().unwrap();
 
+                let config = self.config.read().await;
+                let langiso639 = config.langiso639.clone();
+
                 let mut dict = match self
-                    .load_file_dictionary(&file_url)
+                    .load_file_dictionary(&file_url, &langiso639)
                     .await
                     .map_err(|err| error!("{err}"))
                 {
@@ -657,7 +674,7 @@ impl LanguageServer for Backend {
 
             for doc in doc_lock.values_mut() {
                 info!("Constructing new LintGroup for updated configuration.");
-                doc.linter = LintGroup::new_curated(doc.dict.clone(), config_lock.dialect)
+                doc.linter = LintGroup::new_curated(doc.dict.clone().unwrap(), config_lock.dialect)
                     .with_lint_config(config_lock.lint_config.clone());
             }
 

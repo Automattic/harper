@@ -26,7 +26,11 @@ impl TreeSitterMasker {
         parser.parse(text, None)
     }
 
-    pub fn create_ident_dict(&self, source: &[char]) -> Option<MutableDictionary> {
+    pub fn create_ident_dict(
+        &self,
+        langiso639: &str,
+        source: &[char],
+    ) -> Option<MutableDictionary> {
         let text: String = source.iter().collect();
 
         // Byte-indexed
@@ -52,7 +56,7 @@ impl TreeSitterMasker {
             .map(|ident| (ident, WordMetadata::default()))
             .collect();
 
-        let mut dictionary = MutableDictionary::new();
+        let mut dictionary = MutableDictionary::new(langiso639);
         dictionary.extend_words(idents);
 
         Some(dictionary)

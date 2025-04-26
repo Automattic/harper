@@ -38,6 +38,9 @@ enum Args {
         /// If omitted, `harper-cli` will run every rule.
         #[arg(short, long)]
         only_lint_with: Option<Vec<String>>,
+        /// Specify the language.
+        #[arg(short, long, default_value = "en")]
+        langiso639: String,
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]
         dialect: Dialect,
@@ -50,11 +53,17 @@ enum Args {
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
+        /// Specify the language.
+        #[arg(short, long, default_value = "en")]
+        language: String,
         /// The file you wish to parse.
         file: PathBuf,
     },
     /// Parse a provided document and show the spans of the detected tokens.
     Spans {
+        /// Specify the language.
+        #[arg(short, long, default_value = "en")]
+        langiso639: String,
         /// The file you wish to display the spans.
         file: PathBuf,
         /// Include newlines in the output
@@ -62,17 +71,32 @@ enum Args {
         include_newlines: bool,
     },
     /// Get the metadata associated with a particular word.
-    Metadata { word: String },
+    Metadata {
+        /// Specify the language.
+        #[arg(short, long, default_value = "en")]
+        language: String,
+        /// The word you wish to get metadata for.
+        word: String,
+    },
     /// Get all the forms of a word using the affixes.
-    Forms { line: String },
+    Forms {
+        /// Specify the language.
+        #[arg(short, long, default_value = "en")]
+        language: String,
+        /// The word you wish to get forms for.
+        line: String,
+    },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
-    Words,
+    Words { language: String },
     /// Summarize a lint record
     SummarizeLintRecord { file: PathBuf },
     /// Print the default config with descriptions.
-    Config,
+    Config { language: String },
     /// Print a list of all the words in a document, sorted by frequency.
     MineWords {
+        /// Specify the language.
+        #[arg(short, long, default_value = "en")]
+        langiso639: String,
         /// The document to mine words from.
         file: PathBuf,
     },
@@ -81,27 +105,28 @@ enum Args {
 fn main() -> anyhow::Result<()> {
     let args = Args::parse();
     let markdown_options = MarkdownOptions::default();
-    let dictionary = FstDictionary::curated();
 
     match args {
         Args::Lint {
             file,
             count,
             only_lint_with,
+            langiso639,
             dialect,
             user_dict_path,
             file_dict_path,
         } => {
-            let mut merged_dict = MergedDictionary::new();
+            let dictionary = FstDictionary::curated(&langiso639);
+            let mut merged_dict = MergedDictionary::new(&langiso639);
             merged_dict.add_dictionary(dictionary);
 
-            match load_dict(&user_dict_path) {
+            match load_dict(&user_dict_path, &langiso639) {
                 Ok(user_dict) => merged_dict.add_dictionary(Arc::new(user_dict)),
                 Err(err) => println!("{}: {}", user_dict_path.display(), err),
             }
 
             let file_dict_path = file_dict_path.join(file_dict_name(&file));
-            match load_dict(&file_dict_path) {
+            match load_dict(&file_dict_path, &langiso639) {
                 Ok(file_dict) => merged_dict.add_dictionary(Arc::new(file_dict)),
                 Err(err) => println!("{}: {}", file_dict_path.display(), err),
             }
@@ -154,7 +179,11 @@ fn main() -> anyhow::Result<()> {
 
             process::exit(1)
         }
-        Args::Parse { file } => {
+        Args::Parse {
+            language: langiso639,
+            file,
+        } => {
+            let dictionary = FstDictionary::curated(&langiso639);
             let (doc, _) = load_file(&file, markdown_options, &dictionary)?;
 
             for token in doc.tokens() {
@@ -165,9 +194,11 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::Spans {
+            langiso639,
             file,
             include_newlines,
         } => {
+            let dictionary = FstDictionary::curated(&langiso639);
             let (doc, source) = load_file(&file, markdown_options, &dictionary)?;
 
             let primary_color = Color::Blue;
@@ -209,7 +240,10 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Words => {
+        Args::Words {
+            language: langiso639,
+        } => {
+            let dictionary = FstDictionary::curated(&langiso639);
             let mut word_str = String::new();
 
             for word in dictionary.words_iter() {
@@ -221,7 +255,11 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Metadata { word } => {
+        Args::Metadata {
+            language: langiso639,
+            word,
+        } => {
+            let dictionary = FstDictionary::curated(&langiso639);
             let metadata = dictionary.get_word_metadata_str(&word);
             let json = serde_json::to_string_pretty(&metadata).unwrap();
 
@@ -239,7 +277,10 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Forms { line } => {
+        Args::Forms {
+            language: langiso639,
+            line,
+        } => {
             let (word, annot) = line_to_parts(&line);
 
             let curated_word_list = include_str!("../../harper-core/dictionary.dict");
@@ -290,12 +331,13 @@ fn main() -> anyhow::Result<()> {
 
             if let Some((dict_word, dict_annot)) = &entry_in_dict {
                 println!("Old, from the dictionary:");
-                print_word_derivations(dict_word, dict_annot, &FstDictionary::curated());
+                print_word_derivations(dict_word, dict_annot, &FstDictionary::curated(&langiso639));
             };
 
             if !annot.is_empty() {
                 let rune_words = format!("1\n{line}");
                 let dict = MutableDictionary::from_rune_files(
+                    &langiso639,
                     &rune_words,
                     include_str!("../../harper-core/affixes.json"),
                 )?;
@@ -306,13 +348,14 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Config => {
+        Args::Config { language } => {
             #[derive(Serialize)]
             struct Config {
                 default_value: bool,
                 description: String,
             }
 
+            let dictionary = FstDictionary::curated(&language);
             let linter = LintGroup::new_curated(dictionary, Dialect::American);
 
             let default_config: HashMap<String, bool> =
@@ -334,7 +377,8 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::MineWords { file } => {
+        Args::MineWords { langiso639, file } => {
+            let dictionary = FstDictionary::curated(&langiso639);
             let (doc, _source) = load_file(&file, MarkdownOptions::default(), &dictionary)?;
 
             let mut words = HashMap::new();
@@ -415,10 +459,10 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
 }
 
 /// Sync version of harper-ls/src/dictionary_io@load_dict
-fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
+fn load_dict(path: &Path, language: &str) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
-    let mut dict = MutableDictionary::new();
+    let mut dict = MutableDictionary::new(language);
     dict.extend_words(
         str.lines()
             .map(|l| (l.chars().collect::<Vec<_>>(), WordMetadata::default())),

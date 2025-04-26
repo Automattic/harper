@@ -48,16 +48,16 @@ mod tests {
 
     #[test]
     fn detects_uppercase_suffix() {
-        assert_lint_count("2ND", NumberSuffixCapitalization, 1);
+        assert_lint_count("2ND", "en", NumberSuffixCapitalization, 1);
     }
 
     #[test]
     fn detects_inconsistent_suffix() {
-        assert_lint_count("2nD", NumberSuffixCapitalization, 1);
+        assert_lint_count("2nD", "en", NumberSuffixCapitalization, 1);
     }
 
     #[test]
     fn passes_correct_case() {
-        assert_lint_count("2nd", NumberSuffixCapitalization, 0);
+        assert_lint_count("2nd", "en", NumberSuffixCapitalization, 0);
     }
 }

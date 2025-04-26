@@ -16,13 +16,16 @@ pub struct SplitCompoundWord {
 impl SplitCompoundWord {
     /// Create a new instance of the linter which will only look for compound words that fit the
     /// provided predicate.
-    pub fn new(predicate: impl Fn(&WordMetadata) -> bool + Send + Sync + 'static) -> Self {
+    pub fn new(
+        langiso639: &str,
+        predicate: impl Fn(&WordMetadata) -> bool + Send + Sync + 'static,
+    ) -> Self {
         Self {
             inner: SequencePattern::default()
                 .then_any_word()
                 .then_whitespace()
                 .then_any_word(),
-            dict: FstDictionary::curated(),
+            dict: FstDictionary::curated(langiso639),
             predicate: Box::new(predicate),
         }
     }

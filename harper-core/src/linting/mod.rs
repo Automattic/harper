@@ -105,7 +105,7 @@ pub use lint::Lint;
 pub use lint_group::{LintGroup, LintGroupConfig};
 pub use lint_kind::LintKind;
 pub use long_sentences::LongSentences;
-pub use map_phrase_linter::MapPhraseLinter;
+pub use map_phrase_linter::MapPhraseLinterEn;
 pub use merge_words::MergeWords;
 pub use modal_of::ModalOf;
 pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
@@ -160,8 +160,8 @@ mod tests {
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
 
     #[track_caller]
-    pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {
-        let test = Document::new_markdown_default_curated(text);
+    pub fn assert_lint_count(text: &str, langiso639: &str, mut linter: impl Linter, count: usize) {
+        let test = Document::new_markdown_default_curated(text, langiso639);
         let lints = linter.lint(&test);
         dbg!(&lints);
         if lints.len() != count {
@@ -175,8 +175,13 @@ mod tests {
     /// Assert the total number of suggestions produced by a [`Linter`], spread across all produced
     /// [`Lint`]s.
     #[track_caller]
-    pub fn assert_suggestion_count(text: &str, mut linter: impl Linter, count: usize) {
-        let test = Document::new_markdown_default_curated(text);
+    pub fn assert_suggestion_count(
+        text: &str,
+        langiso639: &str,
+        mut linter: impl Linter,
+        count: usize,
+    ) {
+        let test = Document::new_markdown_default_curated(text, langiso639);
         let lints = linter.lint(&test);
         assert_eq!(
             lints.iter().map(|l| l.suggestions.len()).sum::<usize>(),
@@ -191,6 +196,7 @@ mod tests {
     #[track_caller]
     pub fn assert_nth_suggestion_result(
         text: &str,
+        langiso639: &str,
         mut linter: impl Linter,
         expected_result: &str,
         n: usize,
@@ -205,7 +211,7 @@ mod tests {
             let test = Document::new_from_vec(
                 text_chars.clone().into(),
                 &PlainEnglish,
-                &FstDictionary::curated(),
+                &FstDictionary::curated("en"),
             );
             let lints = linter.lint(&test);
 
@@ -238,13 +244,18 @@ mod tests {
         }
 
         // Applying the suggestions should fix all the lints.
-        assert_lint_count(&transformed_str, linter, 0);
+        assert_lint_count(&transformed_str, langiso639, linter, 0);
     }
 
     /// Runs a provided linter on text, applies the first suggestion from each lint
     /// and asserts whether the result is equal to a given value.
     #[track_caller]
-    pub fn assert_suggestion_result(text: &str, linter: impl Linter, expected_result: &str) {
-        assert_nth_suggestion_result(text, linter, expected_result, 0);
+    pub fn assert_suggestion_result(
+        text: &str,
+        langiso639: &str,
+        linter: impl Linter,
+        expected_result: &str,
+    ) {
+        assert_nth_suggestion_result(text, langiso639, linter, expected_result, 0);
     }
 }

@@ -43,13 +43,14 @@ mod tests {
 
     #[test]
     fn simple() {
-        assert_suggestion_result("wordpress.com", WordPressDotcom, "WordPress.com");
+        assert_suggestion_result("wordpress.com", "en", WordPressDotcom, "WordPress.com");
     }
 
     #[test]
     fn sentence() {
         assert_suggestion_result(
             "wordpress.com is a great hosting provider",
+            "en",
             WordPressDotcom,
             "WordPress.com is a great hosting provider",
         );

@@ -56,6 +56,7 @@ mod tests {
     fn corrects_first_aid_kid() {
         assert_suggestion_result(
             "A first aid kid is a collection of medical supplies.",
+            "en",
             FirstAidKit::default(),
             "A first aid kit is a collection of medical supplies.",
         );
@@ -65,6 +66,7 @@ mod tests {
     fn corrects_starter_kid() {
         assert_suggestion_result(
             "Check the starter kid before proceeding.",
+            "en",
             FirstAidKit::default(),
             "Check the starter kit before proceeding.",
         );
@@ -74,6 +76,7 @@ mod tests {
     fn corrects_travel_kid() {
         assert_suggestion_result(
             "Pack your travel kid for the trip.",
+            "en",
             FirstAidKit::default(),
             "Pack your travel kit for the trip.",
         );
@@ -83,6 +86,7 @@ mod tests {
     fn corrects_tool_kid() {
         assert_suggestion_result(
             "Don't forget the tool kid for assembly.",
+            "en",
             FirstAidKit::default(),
             "Don't forget the tool kit for assembly.",
         );
@@ -92,6 +96,7 @@ mod tests {
     fn does_not_flag_kid_in_other_contexts() {
         assert_lint_count(
             "The kid ran through the aid station.",
+            "en",
             FirstAidKit::default(),
             0,
         );

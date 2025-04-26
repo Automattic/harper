@@ -11,16 +11,16 @@ pub struct MergeWords {
 }
 
 impl MergeWords {
-    pub fn new() -> Self {
+    pub fn new(langiso639: &str) -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: FstDictionary::curated(langiso639),
         }
     }
 }
 
 impl Default for MergeWords {
     fn default() -> Self {
-        Self::new()
+        Self::new("en")
     }
 }
 
@@ -101,6 +101,7 @@ mod tests {
     fn clean() {
         assert_lint_count(
             "When referring to the political party, make sure to treat them as a proper noun.",
+            "en",
             MergeWords::default(),
             0,
         );
@@ -110,6 +111,7 @@ mod tests {
     fn heretofore() {
         assert_lint_count(
             "This is a her etofore unseen problem.",
+            "en",
             MergeWords::default(),
             1,
         );
@@ -117,17 +119,22 @@ mod tests {
 
     #[test]
     fn therefore() {
-        assert_lint_count("The refore", MergeWords::default(), 1);
+        assert_lint_count("The refore", "en", MergeWords::default(), 1);
     }
 
     #[test]
     fn that_is_contraction() {
-        assert_suggestion_result("That s", MergeWords::default(), "That's");
+        assert_suggestion_result("That s", "en", MergeWords::default(), "That's");
     }
 
     #[test]
     fn allows_issue_722() {
-        assert_lint_count("Leaving S and K alone.", MergeWords::default(), 0);
-        assert_lint_count("Similarly an S with a line.", MergeWords::default(), 0);
+        assert_lint_count("Leaving S and K alone.", "en", MergeWords::default(), 0);
+        assert_lint_count(
+            "Similarly an S with a line.",
+            "en",
+            MergeWords::default(),
+            0,
+        );
     }
 }

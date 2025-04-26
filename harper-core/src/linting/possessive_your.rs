@@ -63,6 +63,7 @@ mod tests {
     fn your_comments() {
         assert_suggestion_result(
             "You comments may end up in the documentation.",
+            "en",
             PossessiveYour::default(),
             "Your comments may end up in the documentation.",
         );
@@ -72,6 +73,7 @@ mod tests {
     fn allow_intro_page() {
         assert_lint_count(
             "You can try out an editor that uses Harper under-the-hood here.",
+            "en",
             PossessiveYour::default(),
             0,
         );
@@ -81,6 +83,7 @@ mod tests {
     fn allow_you_guys() {
         assert_lint_count(
             "I mean I'm pretty sure you guys can't do anything with this stuff.",
+            "en",
             PossessiveYour::default(),
             0,
         );

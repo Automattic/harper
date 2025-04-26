@@ -23,7 +23,7 @@ pub struct ImpliedOwnershipCompoundNouns {
 
 impl Default for ImpliedOwnershipCompoundNouns {
     fn default() -> Self {
-        let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| meta.is_noun()));
+        let split_pattern = Lrc::new(SplitCompoundWord::new("en", |meta| meta.is_noun()));
         let pattern = SequencePattern::default()
             .then_possessive_nominal()
             .then_whitespace()
@@ -85,6 +85,7 @@ mod tests {
     fn does_not_flag_lets() {
         assert_lint_count(
             "Let's check out this article.",
+            "en",
             ImpliedOwnershipCompoundNouns::default(),
             0,
         );

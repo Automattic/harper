@@ -56,6 +56,7 @@ mod tests {
     fn catches_lowercase() {
         assert_suggestion_result(
             "The team performed well, despite of the difficulties they faced.",
+            "en",
             DespiteOf::default(),
             "The team performed well, despite the difficulties they faced.",
         );
@@ -65,6 +66,7 @@ mod tests {
     fn catches_different_cases() {
         assert_lint_count(
             "Despite of the rain, we went for a walk.",
+            "en",
             DespiteOf::default(),
             1,
         );
@@ -74,6 +76,7 @@ mod tests {
     fn likes_correction() {
         assert_lint_count(
             "The team performed well, despite the difficulties they faced. In spite of the rain, we went for a walk.",
+            "en",
             DespiteOf::default(),
             0,
         );

@@ -82,13 +82,19 @@ mod tests {
 
     #[test]
     fn flags_of_curse() {
-        assert_suggestion_result("Yes, of curse!", OfCourse::default(), "Yes, of course!");
+        assert_suggestion_result(
+            "Yes, of curse!",
+            "en",
+            OfCourse::default(),
+            "Yes, of course!",
+        );
     }
 
     #[test]
     fn flags_of_corse() {
         assert_suggestion_result(
             "Well, of corse we can.",
+            "en",
             OfCourse::default(),
             "Well, of course we can.",
         );
@@ -96,18 +102,29 @@ mod tests {
 
     #[test]
     fn ignores_kind_of_curse() {
-        assert_lint_count("This kind of curse is dangerous.", OfCourse::default(), 0);
+        assert_lint_count(
+            "This kind of curse is dangerous.",
+            "en",
+            OfCourse::default(),
+            0,
+        );
     }
 
     #[test]
     fn ignores_sort_of_curse() {
-        assert_lint_count("It's a sort of curse that lingers.", OfCourse::default(), 0);
+        assert_lint_count(
+            "It's a sort of curse that lingers.",
+            "en",
+            OfCourse::default(),
+            0,
+        );
     }
 
     #[test]
     fn ignores_curse_of_title() {
         assert_lint_count(
             "The Curse of Strahd is a famous module.",
+            "en",
             OfCourse::default(),
             0,
         );

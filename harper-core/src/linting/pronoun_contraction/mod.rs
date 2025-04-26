@@ -17,6 +17,7 @@ mod tests {
     fn issue_225() {
         assert_suggestion_result(
             "Your the man",
+            "en",
             PronounContraction::default(),
             "You're the man",
         );
@@ -26,6 +27,7 @@ mod tests {
     fn were_team() {
         assert_suggestion_result(
             "Were the best team.",
+            "en",
             PronounContraction::default(),
             "We're the best team.",
         );
@@ -35,6 +37,7 @@ mod tests {
     fn issue_139() {
         assert_suggestion_result(
             "it would be great if you're PR was merged into tower-lsp",
+            "en",
             PronounContraction::default(),
             "it would be great if your PR was merged into tower-lsp",
         );
@@ -44,6 +47,7 @@ mod tests {
     fn car() {
         assert_suggestion_result(
             "You're car is black.",
+            "en",
             PronounContraction::default(),
             "Your car is black.",
         );
@@ -53,6 +57,7 @@ mod tests {
     fn allows_you_are_still() {
         assert_lint_count(
             "In case you're still not convinced.",
+            "en",
             PronounContraction::default(),
             0,
         );
@@ -62,12 +67,14 @@ mod tests {
     fn issue_576() {
         assert_lint_count(
             "If you're not happy you try again.",
+            "en",
             PronounContraction::default(),
             0,
         );
-        assert_lint_count("No you're not.", PronounContraction::default(), 0);
+        assert_lint_count("No you're not.", "en", PronounContraction::default(), 0);
         assert_lint_count(
             "Even if you're not fluent in arm assembly, you surely noticed this.",
+            "en",
             PronounContraction::default(),
             0,
         );

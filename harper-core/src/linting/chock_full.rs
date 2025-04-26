@@ -66,6 +66,7 @@ mod tests {
     fn allows_correct_form() {
         assert_lint_count(
             "'Chalk full', 'chalk-full', 'choke full', and 'choke-full' are nonstandard forms of 'chock-full'.",
+            "en",
             ChockFull::default(),
             4,
         );
@@ -75,6 +76,7 @@ mod tests {
     fn lower_space_chalk() {
         assert_suggestion_result(
             "The codebase is chalk full of errors that we need to address.",
+            "en",
             ChockFull::default(),
             "The codebase is chock-full of errors that we need to address.",
         );
@@ -84,6 +86,7 @@ mod tests {
     fn lower_space_choke() {
         assert_suggestion_result(
             "The project is choke full of questionable decisions that we need to revisit.",
+            "en",
             ChockFull::default(),
             "The project is chock-full of questionable decisions that we need to revisit.",
         );
@@ -93,6 +96,7 @@ mod tests {
     fn upper_space_chalk() {
         assert_suggestion_result(
             "Chalk full of deprecated methods; we should refactor.",
+            "en",
             ChockFull::default(),
             "Chock-full of deprecated methods; we should refactor.",
         );
@@ -102,6 +106,7 @@ mod tests {
     fn upper_space_choke() {
         assert_suggestion_result(
             "Choke full of unnecessary complexity; simplify it.",
+            "en",
             ChockFull::default(),
             "Chock-full of unnecessary complexity; simplify it.",
         );
@@ -111,6 +116,7 @@ mod tests {
     fn lower_hyphen_chalk() {
         assert_suggestion_result(
             "The code is chalk-full of bugs; we need to debug before release.",
+            "en",
             ChockFull::default(),
             "The code is chock-full of bugs; we need to debug before release.",
         );
@@ -120,6 +126,7 @@ mod tests {
     fn lower_hyphen_choke() {
         assert_suggestion_result(
             "The project is choke-full of warnings; we should address them.",
+            "en",
             ChockFull::default(),
             "The project is chock-full of warnings; we should address them.",
         );
@@ -129,6 +136,7 @@ mod tests {
     fn upper_hyphen_chalk() {
         assert_suggestion_result(
             "Chalk-full of features, but we only need a few.",
+            "en",
             ChockFull::default(),
             "Chock-full of features, but we only need a few.",
         );
@@ -138,6 +146,7 @@ mod tests {
     fn upper_hyphen_choke() {
         assert_suggestion_result(
             "Choke-full of pitfalls; let's consider alternatives.",
+            "en",
             ChockFull::default(),
             "Chock-full of pitfalls; let's consider alternatives.",
         );

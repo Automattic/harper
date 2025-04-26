@@ -56,6 +56,7 @@ mod tests {
     fn issue_414() {
         assert_suggestion_result(
             "This may be somewhat of a surprise.",
+            "en",
             SomewhatSomething::default(),
             "This may be something of a surprise.",
         );
