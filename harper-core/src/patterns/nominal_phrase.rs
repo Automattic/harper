@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use crate::Token;
 
 use super::Pattern;
@@ -6,21 +8,17 @@ use super::Pattern;
 pub struct NominalPhrase;
 
 impl Pattern for NominalPhrase {
-    fn matches(&self, tokens: &[Token], _source: &[char]) -> usize {
+    fn matches(&self, tokens: &[Token], _source: &[char]) -> Option<NonZeroUsize> {
         let mut cursor = 0;
 
         loop {
-            let Some(tok) = tokens.get(cursor) else {
-                return 0;
-            };
+            let tok = tokens.get(cursor)?;
 
             if tok.kind.is_adjective() || tok.kind.is_determiner() {
-                let Some(next) = tokens.get(cursor + 1) else {
-                    return 0;
-                };
+                let next = tokens.get(cursor + 1)?;
 
                 if !next.kind.is_whitespace() {
-                    return 0;
+                    return None;
                 }
 
                 cursor += 2;
@@ -28,10 +26,10 @@ impl Pattern for NominalPhrase {
             }
 
             if tok.kind.is_nominal() {
-                return cursor + 1;
+                return NonZeroUsize::new(cursor + 1);
             }
 
-            return 0;
+            return None;
         }
     }
 }
@@ -72,7 +70,11 @@ mod tests {
     #[test]
     fn simplest_banana() {
         let doc = Document::new_markdown_default_curated("a banana");
-        assert!(NominalPhrase.matches(doc.get_tokens(), doc.get_source()) != 0);
+        assert!(
+            NominalPhrase
+                .matches(doc.get_tokens(), doc.get_source())
+                .is_some()
+        );
     }
 
     #[test]

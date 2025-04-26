@@ -1,3 +1,5 @@
+use std::num::NonZero;
+
 use super::Pattern;
 use crate::Token;
 use crate::patterns::WordSet;
@@ -24,7 +26,7 @@ impl InflectionOfBe {
 }
 
 impl Pattern for InflectionOfBe {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZero<usize>> {
         self.inner.matches(tokens, source)
     }
 }

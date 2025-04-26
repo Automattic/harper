@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use crate::Token;
 
 use super::Pattern;
@@ -19,17 +21,17 @@ impl EitherPattern {
 }
 
 impl Pattern for EitherPattern {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
         let mut longest = 0;
 
         for pattern in self.patterns.iter() {
-            let match_len = pattern.matches(tokens, source);
+            let match_len = pattern.matches(tokens, source).map_or(0, NonZeroUsize::get);
 
             if match_len > longest {
                 longest = match_len
             }
         }
 
-        longest
+        NonZeroUsize::new(longest)
     }
 }

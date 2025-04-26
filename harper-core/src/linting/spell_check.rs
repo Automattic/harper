@@ -137,11 +137,11 @@ mod tests {
     use super::SpellCheck;
 
     #[test]
-    fn markdown_capitalized() {
+    fn america_capitalized() {
         assert_suggestion_result(
-            "The word markdown should be capitalized.",
+            "The word america should be capitalized.",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "The word Markdown should be capitalized.",
+            "The word America should be capitalized.",
         );
     }
 

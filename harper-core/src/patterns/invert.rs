@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use crate::Token;
 
 use super::Pattern;
@@ -16,11 +18,11 @@ impl Invert {
 }
 
 impl Pattern for Invert {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        if self.inner.matches(tokens, source) != 0 {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        NonZeroUsize::new(if self.inner.matches(tokens, source).is_some() {
             0
         } else {
             1
-        }
+        })
     }
 }
