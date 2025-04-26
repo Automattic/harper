@@ -1130,7 +1130,7 @@ pub fn lint_group() -> LintGroup {
             "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`"
         ),
         "WhatItLooksLike" => (
-            ["how it looks like", "how it look like"],
+            ["how it looks like", "how it look like", "how it look's like"],
             ["how it looks", "what it looks like"],
             "Don't use both `how` and `like` together to express similarity.",
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
@@ -2488,6 +2488,15 @@ mod tests {
             lint_group(),
             "Here is what it looks like in your browser:",
             1,
+        );
+    }
+
+    #[test]
+    fn correct_how_it_looks_like_with_apostrophe() {
+        assert_suggestion_result(
+            "In the picture we can see how It look's like on worker desktop.",
+            lint_group(),
+            "In the picture we can see how It looks on worker desktop.",
         );
     }
 }
