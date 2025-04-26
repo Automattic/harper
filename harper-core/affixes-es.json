@@ -1,5 +1,60 @@
 {
     "affixes": {
-        
+        "a": {
+            "#": "adjective property",
+            "kind": "property",
+            "cross_product": true,
+            "replacements": [],
+            "target_metadata": {},
+            "base_metadata": {
+                "adjective": {}
+            }
+        },
+        "f": {
+            "#": "feminine property",
+            "kind": "property",
+            "cross_product": true,
+            "replacements": [],
+            "target_metadata": {},
+            "base_metadata": {
+                "noun": {
+                    "//": "should be an enum rather than a boolean",
+                    "is_feminine": true
+                }
+            }
+        },
+        "m": {
+            "#": "masculine property",
+            "kind": "property",
+            "cross_product": true,
+            "replacements": [],
+            "target_metadata": {},
+            "base_metadata": {
+                "noun": {
+                    "//": "should be an enum rather than a boolean",
+                    "is_masculine": true
+                }
+            }
+        },
+        "n": {
+            "#": "noun property",
+            "kind": "property",
+            "cross_product": true,
+            "replacements": [],
+            "target_metadata": {},
+            "base_metadata": {
+                "noun": {}
+            }
+        },
+        "v": {
+            "#": "verb property",
+            "kind": "property",
+            "cross_product": true,
+            "replacements": [],
+            "target_metadata": {},
+            "base_metadata": {
+                "verb": {}
+            }
+        }
     }
 }

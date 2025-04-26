@@ -10,6 +10,7 @@ mod dictionary;
 mod fst_dictionary;
 mod merged_dictionary;
 mod mutable_dictionary;
+mod mutable_dictionary_es;
 mod rune;
 mod word_id;
 mod word_map;
