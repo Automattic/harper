@@ -2,7 +2,7 @@ use super::{Lint, LintKind, Linter, Suggestion};
 use crate::{Document, NumberSuffix, Span, TokenKind};
 use crate::{Number, TokenStringExt};
 
-/// Detect and warn that the sentence is too long.
+/// Detect incorrect number suffix (e.g. "2st").
 #[derive(Debug, Clone, Copy, Default)]
 pub struct CorrectNumberSuffix;
 
