@@ -44,6 +44,7 @@ use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nobody::Nobody;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
+use super::one_and_the_same::OneAndTheSame;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
 use super::pattern_linter::run_on_chunk;
@@ -356,6 +357,7 @@ impl LintGroup {
         insert_pattern_rule!(ExpandTimeShorthands, true);
         insert_pattern_rule!(ModalOf, true);
         insert_pattern_rule!(ForNoun, true);
+        insert_pattern_rule!(OneAndTheSame, true);
 
         out.add(
             "SpellCheck",
