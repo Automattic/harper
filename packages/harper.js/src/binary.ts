@@ -97,9 +97,9 @@ export class BinaryModule {
 		exported.setup();
 	}
 
-	async createLinter(dialect?: Dialect): Promise<WasmLinter> {
+	async createLinter(langiso639?: string, dialect?: Dialect): Promise<WasmLinter> {
 		const exported = await this.inner;
-		return exported.Linter.new('en', dialect ?? Dialect.American);
+		return exported.Linter.new(langiso639 ?? 'en', dialect ?? Dialect.American);
 	}
 
 	async serializeArg(arg: any): Promise<RequestArg> {
