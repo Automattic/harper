@@ -145,8 +145,8 @@ export default class WorkerLinter implements Linter {
 		return this.rpc('getDialect', []);
 	}
 
-	setDialect(dialect: Dialect): Promise<void> {
-		return this.rpc('setDialect', [dialect]);
+	setDialect(langiso639: string, dialect: Dialect): Promise<void> {
+		return this.rpc('setDialect', [langiso639, dialect]);
 	}
 
 	summarizeStats(start?: bigint, end?: bigint): Promise<any> {

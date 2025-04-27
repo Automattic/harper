@@ -5,6 +5,7 @@ import { useLinter } from './LinterProvider';
 import type RichText from './RichText';
 import useDialect from './useDialect';
 import useIgnoredLintState, { useIgnoreLint } from './useIgnoredLintState';
+import useIsoLang639 from './useIsoLang639';
 import useLintConfig from './useLintConfig';
 import usePersonalDictionary from './usePersonalDictionary';
 
@@ -16,6 +17,7 @@ import usePersonalDictionary from './usePersonalDictionary';
 export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[][], boolean] {
 	const linter = useLinter();
 	const [config] = useLintConfig();
+	const [langiso639] = useIsoLang639();
 	const [dialect] = useDialect();
 	const [ignoreState] = useIgnoredLintState();
 	const [personalDictionary] = usePersonalDictionary();
@@ -30,9 +32,7 @@ export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[]
 			await linter.clearIgnoredLints();
 		}
 
-		console.log(dialect);
-
-		await linter.setDialect(dialect);
+		await linter.setDialect(langiso639, dialect);
 
 		if (personalDictionary) {
 			await linter.importWords(personalDictionary);
