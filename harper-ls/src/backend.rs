@@ -62,8 +62,12 @@ impl Backend {
         langiso639: &str,
     ) -> anyhow::Result<MutableDictionary> {
         // VS Code's unsaved documents have "untitled" scheme
+        eprintln!(
+            "##📁## load_file_dictionary() :: scheme: '{}'",
+            url.scheme()
+        );
         if url.scheme() == "untitled" {
-            return Ok(MutableDictionary::new("fake_language_code_lfd"));
+            return Ok(MutableDictionary::new(langiso639));
         }
 
         let path = self
@@ -71,10 +75,11 @@ impl Backend {
             .await
             .context("Unable to get the file path.")?;
 
+        eprintln!("##🗂️## load_file_directory() / load_dict()");
         load_dict(path, langiso639)
             .await
             .map_err(|err| info!("{err}"))
-            .or(Ok(MutableDictionary::new("fake_language_code_ld")))
+            .or(Ok(MutableDictionary::new(langiso639)))
     }
 
     /// Compute the location of the file's specific dictionary
@@ -98,10 +103,11 @@ impl Backend {
     async fn load_user_dictionary(&self) -> MutableDictionary {
         let config = self.config.read().await;
 
+        eprintln!("##👤## load_user_dictionary() / load_dict()");
         load_dict(&config.user_dict_path, &config.langiso639)
             .await
             .map_err(|err| info!("{err}"))
-            .unwrap_or(MutableDictionary::new("fake_language_code_lud"))
+            .unwrap_or(MutableDictionary::new(&config.langiso639))
     }
 
     async fn save_user_dictionary(&self, dict: impl Dictionary) -> Result<()> {
@@ -133,8 +139,13 @@ impl Backend {
     }
 
     async fn generate_global_dictionary(&self) -> Result<MergedDictionary> {
-        let mut dict = MergedDictionary::new("fake_language_code_ggdm");
-        dict.add_dictionary(FstDictionary::curated("fake_language_code_ggdc"));
+        eprintln!("##🧜‍♀️## generate_global_dictionary() / MergedDictionary::new()");
+        // let mut dict = MergedDictionary::new("fake_language_code_ggdm");
+        let mut dict = MergedDictionary::new("en");
+        eprintln!("##🥌## generate_global_dictionary() / FstDictionary::curated()");
+        // dict.add_dictionary(FstDictionary::curated("fake_language_code_ggdc")); // TODO
+        // dict.add_dictionary(FstDictionary::curated("es")); // TODO
+        dict.add_dictionary(FstDictionary::curated("en")); // TODO
         let user_dict = self.load_user_dictionary().await;
         dict.add_dictionary(Arc::new(user_dict));
         Ok(dict)
@@ -230,6 +241,7 @@ impl Backend {
             url: &'a Url,
             doc_state: &'a mut DocumentState,
             lint_config: &LintGroupConfig,
+            // TODO: langiso639 ?
             dialect: Dialect,
         ) -> Result<Box<dyn Parser>> {
             if doc_state.ident_dict.as_ref() != Some(&new_dict) {
@@ -313,7 +325,9 @@ impl Backend {
                 doc_lock.remove(url);
             }
             Some(mut parser) => {
+                // TODO: currently english-specific
                 if isolate_english {
+                    // TODO: currently english-specific
                     parser = Box::new(IsolateEnglish::new(
                         parser,
                         doc_state.dict.as_ref().unwrap().clone(),

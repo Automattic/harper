@@ -8,7 +8,10 @@ pub struct CommentMasker {
 
 impl CommentMasker {
     pub fn create_ident_dict(&self, source: &[char]) -> Option<MutableDictionary> {
-        self.inner.create_ident_dict("fake_language_cid", source)
+        // self.inner.create_ident_dict("fake_language_cid", source)
+        eprintln!("##🚜## CommentMasker/create_ident_dict");
+        // self.inner.create_ident_dict("es", source)
+        self.inner.create_ident_dict("en", source)
     }
 
     pub fn new(

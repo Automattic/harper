@@ -41,17 +41,35 @@ fn uncached_inner_new(langiso639: &str) -> Arc<MutableDictionary> {
             .expect("Curated dictionary should be valid."),
         )
     } else {
+        let mut dictpath = String::new();
+        let mut affixpath = String::new();
+
+        if let Ok(cargo_manifest_dir) = std::env::var("CARGO_MANIFEST_DIR") {
+            dictpath = format!("{}/dictionary-{}.dict", cargo_manifest_dir, langiso639);
+            affixpath = format!("{}/affixes-{}.json", cargo_manifest_dir, langiso639);
+            eprintln!("##✅## dictpath: '{}'", dictpath);
+        } else {
+            let current_exe = std::env::current_exe().unwrap();
+            let rsrc_path = current_exe
+                .parent()
+                .unwrap()
+                .parent()
+                .unwrap()
+                .parent()
+                .unwrap()
+                .display();
+            dictpath = format!("{}/harper-core/dictionary-{}.dict", rsrc_path, langiso639);
+            affixpath = format!("{}/harper-core/affixes-{}.json", rsrc_path, langiso639);
+            eprintln!("##🚀## dictpath: '{}'", dictpath);
+        }
         Arc::new(
             MutableDictionary::from_rune_files(
                 langiso639,
-                &std::fs::read_to_string(format!("../harper-core/dictionary-{}.dict", langiso639))
-                    //.expect("Missing English dict"),
+                &std::fs::read_to_string(dictpath)
                     .unwrap_or_else(|_| panic!("Missing dictionary for language {}", langiso639)),
-                &std::fs::read_to_string(format!("../harper-core/affixes-{}.json", langiso639))
-                    // .expect("Missing English affixes"),
+                &std::fs::read_to_string(affixpath)
                     .unwrap_or_else(|_| panic!("Missing affixes for language {}", langiso639)),
             )
-            // .expect("Curated dictionary should be valid."),
             .unwrap_or_else(|_| panic!("Failed to create dictionary for language {}", langiso639)),
         )
     }
@@ -408,15 +426,17 @@ mod tests {
     #[test]
     fn are_merged_attrs_same_as_spread_attrs() {
         let curated_attr_list = include_str!("../../affixes.json");
-
+        eprintln!("##🧪## are_merged_attrs_same_as_spread_attrs()");
         let merged = MutableDictionary::from_rune_files(
-            "fake_language_code_amasasa_m",
+            // "fake_language_code_amasasa_m",
+            "en",
             "1\nblork/DGS",
             curated_attr_list,
         )
         .unwrap();
         let spread = MutableDictionary::from_rune_files(
-            "fake_language_code_amasasa_s",
+            // "fake_language_code_amasasa_s",
+            "en",
             "2\nblork/DG\nblork/S",
             curated_attr_list,
         )
