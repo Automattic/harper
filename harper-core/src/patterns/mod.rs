@@ -5,9 +5,9 @@
 //!
 //! See the page about [`SequencePattern`] for a concrete example of their use.
 
-use std::{collections::VecDeque, num::NonZeroUsize};
+use std::num::NonZeroUsize;
 
-use crate::{Document, Span, Token, VecExt};
+use crate::{Document, Span, Token};
 
 mod all;
 mod any_capitalization;
@@ -67,43 +67,63 @@ pub trait Pattern: Send + Sync {
 }
 
 pub trait PatternExt {
+    fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span>;
+
     /// Search through all tokens to locate all non-overlapping pattern matches.
-    fn find_all_matches(&self, tokens: &[Token], source: &[char]) -> Vec<Span>;
+    fn find_all_matches(&self, tokens: &[Token], source: &[char]) -> Vec<Span> {
+        self.iter_matches(tokens, source).collect()
+    }
 }
 
 impl<P> PatternExt for P
 where
-    P: Pattern,
+    P: Pattern + ?Sized,
 {
-    fn find_all_matches(&self, tokens: &[Token], source: &[char]) -> Vec<Span> {
-        let mut found = Vec::new();
+    fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span> {
+        MatchIter::new(self, tokens, source)
+    }
+}
 
-        for i in 0..tokens.len() {
-            let len = self.matches(&tokens[i..], source);
+struct MatchIter<'a, 'b, 'c, P: ?Sized> {
+    pattern: &'a P,
+    tokens: &'b [Token],
+    source: &'c [char],
+    index: usize,
+}
+impl<'a, 'b, 'c, P> MatchIter<'a, 'b, 'c, P>
+where
+    P: Pattern + ?Sized,
+{
+    fn new(pattern: &'a P, tokens: &'b [Token], source: &'c [char]) -> Self {
+        Self {
+            pattern,
+            tokens,
+            source,
+            index: 0,
+        }
+    }
+}
+impl<P> Iterator for MatchIter<'_, '_, '_, P>
+where
+    P: Pattern + ?Sized,
+{
+    type Item = Span;
 
-            if let Some(len) = len {
-                found.push(Span::new_with_len(i, len.get()));
+    fn next(&mut self) -> Option<Self::Item> {
+        while self.index < self.tokens.len() {
+            if let Some(len) = self
+                .pattern
+                .matches(&self.tokens[self.index..], self.source)
+            {
+                let span = Span::new_with_len(self.index, len.get());
+                self.index += len.get();
+                return Some(span);
+            } else {
+                self.index += 1;
             }
         }
 
-        if found.len() < 2 {
-            return found;
-        }
-
-        let mut remove_indices = VecDeque::new();
-
-        for i in 0..found.len() - 1 {
-            let cur = &found[i];
-            let next = &found[i + 1];
-
-            if cur.overlaps_with(*next) {
-                remove_indices.push_back(i + 1);
-            }
-        }
-
-        found.remove_indices(remove_indices);
-
-        found
+        None
     }
 }
 
