@@ -288,4 +288,13 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn abandonware_correction() {
+        assert_suggestion_result(
+            "abanonedware",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            "abandonware",
+        );
+    }
 }
