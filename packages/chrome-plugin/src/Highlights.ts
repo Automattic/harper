@@ -109,6 +109,12 @@ export default class Highlights {
 			return el.parentElement.parentElement;
 		}
 
+		const lexicalRoot = getLexicalRoot(el);
+
+		if (lexicalRoot != null) {
+			return lexicalRoot.parentElement;
+		}
+
 		return el.parentElement;
 	}
 }
@@ -120,6 +126,22 @@ function getInitialContainingRect(el: HTMLElement): DOMRect | null {
 		if (isContainingBlock(node)) {
 			return node.getBoundingClientRect();
 		}
+		node = node.parentElement;
+	}
+
+	return null;
+}
+
+/** Determines if a given node is a child of a Lexical editor instance.
+ * If so, returns the root node of that instance. */
+function getLexicalRoot(el: HTMLElement): HTMLElement | null {
+	let node = el.parentElement;
+
+	while (node != null) {
+		if (node.getAttribute('data-lexical-editor') == 'true') {
+			return node;
+		}
+
 		node = node.parentElement;
 	}
 
