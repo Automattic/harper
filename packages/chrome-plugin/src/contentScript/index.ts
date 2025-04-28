@@ -7,9 +7,9 @@ const fw = new LintFramework();
 
 function scan() {
 	$('textarea:visible').each(function () {
-    if (this.getAttribute('data-enable-grammarly') == "false"){
-      return;
-    }
+		if (this.getAttribute('data-enable-grammarly') == 'false') {
+			return;
+		}
 
 		fw.addTarget(this as HTMLTextAreaElement);
 	});

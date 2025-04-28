@@ -39,6 +39,19 @@ export default class Highlights {
 				this.renderBoxes.set(source, renderBox);
 			}
 
+			const rect = getInitialContainingRect(renderBox.getShadowHost());
+
+			if (rect != null) {
+				renderBox.getShadowHost().style.contain = 'layout';
+				renderBox.getShadowHost().style.position = 'fixed';
+				renderBox.getShadowHost().style.left = `${-rect.x}px`;
+				renderBox.getShadowHost().style.top = `${-rect.y}px`;
+				renderBox.getShadowHost().style.width = '100vw';
+				renderBox.getShadowHost().style.height = '100vh';
+				renderBox.getShadowHost().style.zIndex = '100';
+				renderBox.getShadowHost().style.pointerEvents = 'none';
+			}
+
 			renderBox.render(this.renderTree(boxes));
 			updated.add(source);
 		}
@@ -76,6 +89,7 @@ export default class Highlights {
 						width: `${box.width}px`,
 						height: `${box.height}px`,
 						pointerEvents: 'none',
+						zIndex: 10,
 						borderBottom: `2px solid ${lintKindColor(box.lint.lint_kind)}`,
 					},
 				},
@@ -87,4 +101,91 @@ export default class Highlights {
 
 		return h('div', {}, elements);
 	}
+}
+
+function getInitialContainingRect(el: HTMLElement): DOMRect | null {
+	let node = el.parentElement;
+
+	while (node && node.nodeType === 1) {
+		if (isContainingBlock(node)) {
+			console.log(node.getBoundingClientRect());
+			console.log(node);
+			return node.getBoundingClientRect();
+		}
+		node = node.parentElement;
+	}
+
+	return null;
+}
+
+/**
+ * Determines whether a given element would form the containing block
+ * for a descendant with `position: fixed`, based on CSS transforms,
+ * filters, containment, container queries, will-change, and
+ * content-visibility.
+ *
+ * Logs the element and the precise reason it qualifies.
+ *
+ * @param {Element} el
+ * @returns {boolean}
+ */
+function isContainingBlock(el): boolean {
+	if (!(el instanceof Element)) {
+		throw new TypeError('Expected a DOM Element');
+	}
+
+	const style = window.getComputedStyle(el);
+
+	const filter = style.getPropertyValue('filter');
+	if (filter !== 'none') {
+		console.log(el, `⟶ fixed containing block due to filter '${filter}'`);
+		return true;
+	}
+
+	const backdrop = style.getPropertyValue('backdrop-filter');
+	if (backdrop !== 'none') {
+		console.log(el, `⟶ fixed containing block due to backdrop-filter '${backdrop}'`);
+		return true;
+	}
+
+	const transform = style.getPropertyValue('transform');
+	if (transform !== 'none') {
+		console.log(el, `⟶ fixed containing block due to transform '${transform}'`);
+		return true;
+	}
+
+	const perspective = style.getPropertyValue('perspective');
+	if (perspective !== 'none') {
+		console.log(el, `⟶ fixed containing block due to perspective '${perspective}'`);
+		return true;
+	}
+
+	const contain = style.getPropertyValue('contain');
+	const containMatch = contain.match(/\b(layout|paint|strict|content)\b/);
+	if (containMatch) {
+		console.log(el, `⟶ fixed containing block due to contain flag '${containMatch[0]}'`);
+		return true;
+	}
+
+	const willChange = style.getPropertyValue('will-change');
+	if (willChange && willChange.trim() !== 'auto') {
+		const declared = willChange.split(',').map((p) => p.trim());
+		const triggers = ['filter', 'backdrop-filter', 'transform', 'perspective'];
+		const intersection = declared.filter((p) => triggers.includes(p));
+		if (intersection.length) {
+			console.log(
+				el,
+				`⟶ fixed containing block due to will-change on '${intersection.join(', ')}'`,
+			);
+			return true;
+		}
+	}
+
+	const contentVis = style.getPropertyValue('content-visibility');
+	if (contentVis === 'auto') {
+		console.log(el, `⟶ fixed containing block due to content-visibility 'auto'`);
+		return true;
+	}
+
+	return false;
 }

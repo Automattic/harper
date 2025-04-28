@@ -33,8 +33,16 @@ export default class RenderBox {
 
 	/** Remove the box from the DOM. */
 	public remove() {
-		this.shadowHost.outerHTML = this.shadowHost.outerHTML;
+		try {
+			this.shadowHost.outerHTML = this.shadowHost.outerHTML;
+		} catch (e) {
+			console.error(e);
+		}
 		this.virtualRoot = undefined;
 		this.virtualTree = undefined;
+	}
+
+	public getShadowHost(): HTMLElement {
+		return this.shadowHost;
 	}
 }
