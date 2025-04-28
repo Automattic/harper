@@ -28,17 +28,18 @@ impl Suggestion {
     /// For example, if we want to replace "You're" with "You are", we can provide "you are" and
     /// "You're".
     pub fn replace_with_match_case(mut value: Vec<char>, template: &[char]) -> Self {
-        let mut template_cursor = 0;
+        // If the value is longer than the template, use this.
+        let template_term = [template.last().copied().unwrap_or('l')]
+            .into_iter()
+            .cycle();
 
-        for v in value.iter_mut() {
-            while template_cursor < template.len() - 1 && template[template_cursor].is_whitespace()
-            {
-                template_cursor += 1;
-            }
-
-            let t = template.get(template_cursor).copied();
-            let t = t.unwrap_or(template.last().copied()).unwrap_or('l');
-
+        for (v, t) in value.iter_mut().filter(|v| v.is_alphabetic()).zip(
+            template
+                .iter()
+                .filter(|v| v.is_alphabetic())
+                .copied()
+                .chain(template_term),
+        ) {
             if v.is_ascii_uppercase() != t.is_ascii_uppercase() {
                 if t.is_uppercase() {
                     *v = v.to_ascii_uppercase();
@@ -46,8 +47,6 @@ impl Suggestion {
                     *v = v.to_ascii_lowercase();
                 }
             }
-
-            template_cursor += 1;
         }
 
         Self::ReplaceWith(value)
