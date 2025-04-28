@@ -141,7 +141,11 @@ where
     F: Fn(&Token, &[char]) -> bool,
 {
     fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
-        NonZeroUsize::new(if self(tokens.first()?, source) { 1 } else { 0 })
+        if self(tokens.first()?, source) {
+            Some(1)
+        } else {
+            None
+        }
     }
 }
 
