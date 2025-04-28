@@ -11,7 +11,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  # make sure the crate works with all features enabled/disabled
+  # make sure all crates work with all features enabled/disabled
   features:
     runs-on: ubuntu-latest
     steps:
