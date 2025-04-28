@@ -84,15 +84,17 @@ pub fn lex_number(source: &[char]) -> Option<FoundToken> {
         if let Ok(n) = s.parse::<f64>() {
             let precision = s.chars().rev().position(|c| c == '.').unwrap_or_default();
 
-            return Some(FoundToken {
-                token: TokenKind::Number(Number {
-                    value: n.into(),
-                    suffix: None,
-                    radix: 10,
-                    precision,
-                }),
-                next_index: s.len(),
-            });
+            if !s.ends_with('.') {
+                return Some(FoundToken {
+                    token: TokenKind::Number(Number {
+                        value: n.into(),
+                        suffix: None,
+                        radix: 10,
+                        precision,
+                    }),
+                    next_index: s.len(),
+                });
+            }
         }
 
         s.pop();
@@ -309,6 +311,7 @@ fn lex_catch(_source: &[char]) -> Option<FoundToken> {
 #[cfg(test)]
 mod tests {
     use crate::Punctuation;
+    use crate::char_string::char_string;
     use crate::lexing::lex_plural_digit;
 
     use super::lex_hex_number;
@@ -902,5 +905,21 @@ mod tests {
 
             next_index += token.next_index;
         }
+    }
+
+    #[test]
+    fn issue_1010() {
+        let source = char_string!("3.");
+
+        let tok = lex_number(&source).unwrap();
+        assert_eq!(tok.next_index, 1);
+    }
+
+    #[test]
+    fn lexes_full_number() {
+        let source = char_string!("3.0");
+
+        let tok = lex_number(&source).unwrap();
+        assert_eq!(tok.next_index, 3);
     }
 }
