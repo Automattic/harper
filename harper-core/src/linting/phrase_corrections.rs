@@ -1153,6 +1153,12 @@ pub fn lint_group() -> LintGroup {
             "Traditionally `invest` uses the preposition `in`.",
             "`Invest` is traditionally followed by 'in,' not `into.`"
         ),
+        "AsWell" => (
+            ["aswell"],
+            ["as well"],
+            "The correct term is `as well` with a space.",
+            "Corrects `aswell`, which should be written as two words."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2429,6 +2435,33 @@ mod tests {
             "If a user invests into the protocol first using USDC but afterward changing to DAI, ...",
             lint_group(),
             "If a user invests in the protocol first using USDC but afterward changing to DAI, ...",
+        );
+    }
+
+    #[test]
+    fn corrects_as_keyboards_aswell() {
+        assert_suggestion_result(
+            "Tool to read physical joystick devices, keyboards aswell, and create virtual joystick devices and output keyboard presses on a Linux system.",
+            lint_group(),
+            "Tool to read physical joystick devices, keyboards as well, and create virtual joystick devices and output keyboard presses on a Linux system.",
+        );
+    }
+
+    #[test]
+    fn corrects_aswell_as() {
+        assert_suggestion_result(
+            "When UseAcrylic is true in Focused aswell as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
+            lint_group(),
+            "When UseAcrylic is true in Focused as well as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
+        );
+    }
+
+    #[test]
+    fn corrects_toml_aswell() {
+        assert_suggestion_result(
+            "format Cargo.toml aswell #5893 - rust-lang/rustfmt",
+            lint_group(),
+            "format Cargo.toml as well #5893 - rust-lang/rustfmt",
         );
     }
 }
