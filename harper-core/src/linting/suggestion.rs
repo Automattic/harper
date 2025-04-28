@@ -28,7 +28,17 @@ impl Suggestion {
     /// For example, if we want to replace "You're" with "You are", we can provide "you are" and
     /// "You're".
     pub fn replace_with_match_case(mut value: Vec<char>, template: &[char]) -> Self {
-        for (v, t) in value.iter_mut().zip(template.iter()) {
+        let mut template_cursor = 0;
+
+        for v in value.iter_mut() {
+            while template_cursor < template.len() - 1 && template[template_cursor].is_whitespace()
+            {
+                template_cursor += 1;
+            }
+
+            let t = template.get(template_cursor).copied();
+            let t = t.unwrap_or(template.last().copied()).unwrap_or('l');
+
             if v.is_ascii_uppercase() != t.is_ascii_uppercase() {
                 if t.is_uppercase() {
                     *v = v.to_ascii_uppercase();
@@ -36,6 +46,8 @@ impl Suggestion {
                     *v = v.to_ascii_lowercase();
                 }
             }
+
+            template_cursor += 1;
         }
 
         Self::ReplaceWith(value)
@@ -109,6 +121,19 @@ mod tests {
         let value: Vec<_> = "you are".chars().collect();
 
         let correct = "You are".chars().collect();
+
+        assert_eq!(
+            Suggestion::replace_with_match_case(value, &template),
+            Suggestion::ReplaceWith(correct)
+        )
+    }
+
+    #[test]
+    fn issue_1065() {
+        let template: Vec<_> = "Stack Overflow".chars().collect();
+        let value: Vec<_> = "stackoverflow".chars().collect();
+
+        let correct = "StackOverflow".chars().collect();
 
         assert_eq!(
             Suggestion::replace_with_match_case(value, &template),
