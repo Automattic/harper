@@ -35,7 +35,7 @@ export default class Highlights {
 			let renderBox = this.renderBoxes.get(source);
 
 			if (renderBox == null) {
-				renderBox = new RenderBox(source.parentElement);
+				renderBox = new RenderBox(this.computeRenderTarget(source));
 				this.renderBoxes.set(source, renderBox);
 			}
 
@@ -101,6 +101,16 @@ export default class Highlights {
 
 		return h('div', {}, elements);
 	}
+
+	/** Determines which target the render boxes should be attached to.
+	 * Depends on text editor. */
+	private computeRenderTarget(el: HTMLElement): HTMLElement {
+		if (el.parentElement?.classList.contains('ProseMirror')) {
+			return el.parentElement.parentElement;
+		}
+
+		return el.parentElement;
+	}
 }
 
 function getInitialContainingRect(el: HTMLElement): DOMRect | null {
@@ -108,8 +118,6 @@ function getInitialContainingRect(el: HTMLElement): DOMRect | null {
 
 	while (node && node.nodeType === 1) {
 		if (isContainingBlock(node)) {
-			console.log(node.getBoundingClientRect());
-			console.log(node);
 			return node.getBoundingClientRect();
 		}
 		node = node.parentElement;
@@ -138,32 +146,27 @@ function isContainingBlock(el): boolean {
 
 	const filter = style.getPropertyValue('filter');
 	if (filter !== 'none') {
-		console.log(el, `⟶ fixed containing block due to filter '${filter}'`);
 		return true;
 	}
 
 	const backdrop = style.getPropertyValue('backdrop-filter');
 	if (backdrop !== 'none') {
-		console.log(el, `⟶ fixed containing block due to backdrop-filter '${backdrop}'`);
 		return true;
 	}
 
 	const transform = style.getPropertyValue('transform');
 	if (transform !== 'none') {
-		console.log(el, `⟶ fixed containing block due to transform '${transform}'`);
 		return true;
 	}
 
 	const perspective = style.getPropertyValue('perspective');
 	if (perspective !== 'none') {
-		console.log(el, `⟶ fixed containing block due to perspective '${perspective}'`);
 		return true;
 	}
 
 	const contain = style.getPropertyValue('contain');
 	const containMatch = contain.match(/\b(layout|paint|strict|content)\b/);
 	if (containMatch) {
-		console.log(el, `⟶ fixed containing block due to contain flag '${containMatch[0]}'`);
 		return true;
 	}
 
@@ -173,17 +176,12 @@ function isContainingBlock(el): boolean {
 		const triggers = ['filter', 'backdrop-filter', 'transform', 'perspective'];
 		const intersection = declared.filter((p) => triggers.includes(p));
 		if (intersection.length) {
-			console.log(
-				el,
-				`⟶ fixed containing block due to will-change on '${intersection.join(', ')}'`,
-			);
 			return true;
 		}
 	}
 
 	const contentVis = style.getPropertyValue('content-visibility');
 	if (contentVis === 'auto') {
-		console.log(el, `⟶ fixed containing block due to content-visibility 'auto'`);
 		return true;
 	}
 
