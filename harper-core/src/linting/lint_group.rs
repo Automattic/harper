@@ -18,6 +18,7 @@ use super::back_in_the_day::BackInTheDay;
 use super::boring_words::BoringWords;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::chock_full::ChockFull;
+use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
@@ -319,6 +320,7 @@ impl LintGroup {
         insert_struct_rule!(EllipsisLength, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
         insert_struct_rule!(FirstAidKit, true);
+        insert_struct_rule!(ForNoun, true);
         insert_pattern_rule!(Hedging, true);
         insert_pattern_rule!(Hereby, true);
         insert_struct_rule!(HopHope, true);
@@ -345,7 +347,6 @@ impl LintGroup {
         insert_struct_rule!(PronounContraction, true);
         insert_struct_rule!(PronounKnew, true);
         insert_struct_rule!(RepeatedWords, true);
-        insert_struct_rule!(SentenceCapitalization, true);
         insert_pattern_rule!(SomewhatSomething, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
