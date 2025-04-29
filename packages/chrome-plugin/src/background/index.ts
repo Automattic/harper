@@ -42,6 +42,7 @@ async function enableDefaultDomains() {
 		'trix-editor.org',
 		'github.com',
 		'messages.google.com',
+		'blank.page',
 	];
 
 	for (const item of defaultEnabledDomains) {

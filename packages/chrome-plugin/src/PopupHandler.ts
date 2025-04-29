@@ -44,7 +44,9 @@ export default class PopupHandler {
 
 		if (this.popupLint != null && this.popupLint < this.currentLintBoxes.length) {
 			const box = this.currentLintBoxes[this.popupLint];
-			tree = SuggestionBox(box);
+			tree = SuggestionBox(box, () => {
+				this.popupLint = undefined;
+			});
 			this.renderBox.getShadowHost().showPopover();
 		} else {
 			this.renderBox.getShadowHost().hidePopover();

@@ -81,7 +81,7 @@ function suggestions(
 	});
 }
 
-export default function SuggestionBox(box: LintBox) {
+export default function SuggestionBox(box: LintBox, close: () => void) {
 	const top = box.y + box.height + 3;
 	let bottom: number | undefined;
 	const left = box.x;
@@ -110,7 +110,12 @@ export default function SuggestionBox(box: LintBox) {
 	return h('div', { style: containerStyle }, [
 		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind)),
 		body(box.lint.message),
-		footer(suggestions(box.lint.suggestions, box.applySuggestion)),
+		footer(
+			suggestions(box.lint.suggestions, (v) => {
+				box.applySuggestion(v);
+				close();
+			}),
+		),
 		footer(addToDictionary(box)),
 	]);
 }
