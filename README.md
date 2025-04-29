@@ -37,7 +37,7 @@ Harper currently only supports English, but the core is extensible to support ot
 We consider long lint times bugs.
 If you encounter any significant performance issues, please create an issue on the topic.
 
-If you find a fix to any performance issue, we are open the contribution.
+If you find a fix to any performance issue, we are open to the contribution.
 Just make sure to read [our contribution guidelines first.](https://github.com/automattic/harper/blob/master/CONTRIBUTING.md)
 
 ## Links
