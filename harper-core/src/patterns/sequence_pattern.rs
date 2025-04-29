@@ -1,7 +1,7 @@
 use paste::paste;
 
 use super::whitespace_pattern::WhitespacePattern;
-use super::{AnyCapitalization, AnyPattern, IndefiniteArticle, Pattern, RepeatingPattern};
+use super::{AnyPattern, IndefiniteArticle, Pattern, RepeatingPattern, Word};
 use crate::{Token, TokenKind};
 
 /// A pattern that checks that a sequence of other patterns match.
@@ -69,6 +69,7 @@ impl SequencePattern {
     gen_then_from_is!(possessive_nominal);
     gen_then_from_is!(plural_nominal);
     gen_then_from_is!(verb);
+    gen_then_from_is!(auxiliary_verb);
     gen_then_from_is!(linking_verb);
     gen_then_from_is!(pronoun);
     gen_then_from_is!(punctuation);
@@ -91,25 +92,7 @@ impl SequencePattern {
     }
 
     pub fn then_exact_word(mut self, word: &'static str) -> Self {
-        self.token_patterns
-            .push(Box::new(|tok: &Token, source: &[char]| {
-                if !tok.kind.is_word() {
-                    return false;
-                }
-
-                let tok_chars = tok.span.get_content(source);
-
-                let mut w_char_count = 0;
-                for (i, w_char) in word.chars().enumerate() {
-                    w_char_count += 1;
-
-                    if tok_chars.get(i).cloned() != Some(w_char) {
-                        return false;
-                    }
-                }
-
-                w_char_count == tok_chars.len()
-            }));
+        self.token_patterns.push(Box::new(Word::new_exact(word)));
         self
     }
 
@@ -129,8 +112,7 @@ impl SequencePattern {
 
     /// Match examples of `word` that have any capitalization.
     pub fn then_any_capitalization_of(mut self, word: &'static str) -> Self {
-        self.token_patterns
-            .push(Box::new(AnyCapitalization::of(word)));
+        self.token_patterns.push(Box::new(Word::new(word)));
         self
     }
 

@@ -1,6 +1,6 @@
 use crate::{Document, Token, TokenKind};
 
-use super::{AnyCapitalization, Pattern, SequencePattern};
+use super::{Pattern, SequencePattern, Word};
 
 pub struct ExactPhrase {
     inner: SequencePattern,
@@ -18,7 +18,7 @@ impl ExactPhrase {
         for token in doc.fat_tokens() {
             match token.kind {
                 TokenKind::Word(_word_metadata) => {
-                    phrase = phrase.then(AnyCapitalization::new(token.content.as_slice().into()));
+                    phrase = phrase.then(Word::from_chars(token.content.as_slice()));
                 }
                 TokenKind::Space(_) => {
                     phrase = phrase.then_whitespace();

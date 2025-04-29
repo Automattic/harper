@@ -25,6 +25,7 @@ mod for_noun;
 mod hedging;
 mod hereby;
 mod hop_hope;
+mod how_to;
 mod hyphenate_number_day;
 mod inflected_verb_after_to;
 mod it_is;
@@ -50,6 +51,7 @@ mod out_of_date;
 mod oxford_comma;
 mod oxymorons;
 mod pattern_linter;
+mod phrasal_verb_as_compound_noun;
 mod phrase_corrections;
 mod pique_interest;
 mod possessive_your;
@@ -95,6 +97,7 @@ pub use for_noun::ForNoun;
 pub use hedging::Hedging;
 pub use hereby::Hereby;
 pub use hop_hope::HopHope;
+pub use how_to::HowTo;
 pub use hyphenate_number_day::HyphenateNumberDay;
 pub use inflected_verb_after_to::InflectedVerbAfterTo;
 pub use left_right_hand::LeftRightHand;
@@ -117,6 +120,7 @@ pub use out_of_date::OutOfDate;
 pub use oxford_comma::OxfordComma;
 pub use oxymorons::Oxymorons;
 pub use pattern_linter::PatternLinter;
+pub use phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 pub use pique_interest::PiqueInterest;
 pub use possessive_your::PossessiveYour;
 pub use pronoun_contraction::PronounContraction;
@@ -184,6 +188,13 @@ mod tests {
         );
     }
 
+    /// Runs a provided linter on text, applies the first suggestion from each lint
+    /// and asserts whether the result is equal to a given value.
+    #[track_caller]
+    pub fn assert_suggestion_result(text: &str, linter: impl Linter, expected_result: &str) {
+        assert_nth_suggestion_result(text, linter, expected_result, 0);
+    }
+
     /// Runs a provided linter on text, applies the nth suggestion from each lint
     /// and asserts whether the result is equal to a given value.
     ///
@@ -195,6 +206,52 @@ mod tests {
         expected_result: &str,
         n: usize,
     ) {
+        let transformed_str = transform_nth_str(text, &mut linter, n);
+
+        if transformed_str.as_str() != expected_result {
+            panic!(
+                "Expected \"{transformed_str}\" to be \"{expected_result}\" after applying the computed suggestions."
+            );
+        }
+
+        // Applying the suggestions should fix all the lints.
+        assert_lint_count(&transformed_str, linter, 0);
+    }
+
+    pub fn assert_top3_suggestion_result(
+        text: &str,
+        mut linter: impl Linter,
+        expected_result: &str,
+    ) {
+        let zeroth = transform_nth_str(text, &mut linter, 0);
+        let first = transform_nth_str(text, &mut linter, 1);
+        let second = transform_nth_str(text, &mut linter, 2);
+
+        match (
+            zeroth.as_str() == expected_result,
+            first.as_str() == expected_result,
+            second.as_str() == expected_result,
+        ) {
+            (true, false, false) => assert_lint_count(&zeroth, linter, 0),
+            (false, true, false) => assert_lint_count(&first, linter, 0),
+            (false, false, true) => assert_lint_count(&second, linter, 0),
+            (false, false, false) => panic!(
+                "None of the top 3 suggestions produced the expected result:\n\
+                Expected: \"{expected_result}\"\n\
+                Got:\n\
+                [0]: \"{zeroth}\"\n\
+                [1]: \"{first}\"\n\
+                [2]: \"{second}\""
+            ),
+            // I think it's not possible for more than one suggestion to be correct
+            (true, true, false) => unreachable!(),
+            (true, false, true) => unreachable!(),
+            (false, true, true) => unreachable!(),
+            (true, true, true) => unreachable!(),
+        }
+    }
+
+    fn transform_nth_str(text: &str, linter: &mut impl Linter, n: usize) -> String {
         let mut text_chars: Vec<char> = text.chars().collect();
 
         let mut iter_count = 0;
@@ -229,22 +286,6 @@ mod tests {
 
         eprintln!("Corrected {} times.", iter_count);
 
-        let transformed_str: String = text_chars.iter().collect();
-
-        if transformed_str.as_str() != expected_result {
-            panic!(
-                "Expected \"{transformed_str}\" to be \"{expected_result}\" after applying the computed suggestions."
-            );
-        }
-
-        // Applying the suggestions should fix all the lints.
-        assert_lint_count(&transformed_str, linter, 0);
-    }
-
-    /// Runs a provided linter on text, applies the first suggestion from each lint
-    /// and asserts whether the result is equal to a given value.
-    #[track_caller]
-    pub fn assert_suggestion_result(text: &str, linter: impl Linter, expected_result: &str) {
-        assert_nth_suggestion_result(text, linter, expected_result, 0);
+        text_chars.iter().collect()
     }
 }

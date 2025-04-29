@@ -1,7 +1,6 @@
 use crate::{
     Token,
-    char_string::char_string,
-    patterns::{AnyCapitalization, OwnedPatternExt, Pattern, SequencePattern},
+    patterns::{OwnedPatternExt, Pattern, SequencePattern, Word},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -15,7 +14,7 @@ impl Default for Confident {
         let pattern = SequencePattern::default()
             .then(
                 (|tok: &Token, _source: &[char]| tok.kind.is_verb() || tok.kind.is_determiner())
-                    .or(Box::new(AnyCapitalization::new(char_string!("very")))),
+                    .or(Box::new(Word::new("very"))),
             )
             .then_whitespace()
             .t_aco("confidant");

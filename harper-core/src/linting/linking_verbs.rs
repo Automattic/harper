@@ -3,7 +3,9 @@ use crate::CharStringExt;
 use crate::Document;
 use crate::TokenStringExt;
 
-/// Detect and warn that the sentence is too long.
+/// Detect incorrect usage of linking verbs.
+///
+/// This ensures that linking verbs are preceded by a noun or pronoun.
 #[derive(Debug, Clone, Copy, Default)]
 pub struct LinkingVerbs;
 
