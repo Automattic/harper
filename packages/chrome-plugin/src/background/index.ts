@@ -43,6 +43,8 @@ async function enableDefaultDomains() {
 		'github.com',
 		'messages.google.com',
 		'blank.page',
+		'blankpage.im',
+		'froala.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

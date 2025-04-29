@@ -59,17 +59,10 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): L
 }
 
 function selectText(element: HTMLElement) {
-	if (document.selection) {
-		// IE
-		const range = document.body.createTextRange();
-		range.moveToElementText(element);
-		range.select();
-	} else if (window.getSelection) {
-		const range = document.createRange();
-		range.selectNode(element);
-		window.getSelection().removeAllRanges();
-		window.getSelection().addRange(range);
-	}
+	const range = document.createRange();
+	range.selectNode(element);
+	window.getSelection().removeAllRanges();
+	window.getSelection().addRange(range);
 }
 
 function replaceValue(el: HTMLElement, value: string) {

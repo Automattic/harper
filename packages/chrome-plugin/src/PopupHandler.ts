@@ -28,7 +28,6 @@ export default class PopupHandler {
 			const box = this.currentLintBoxes[i];
 
 			if (isPointInBox([e.x, e.y], box)) {
-				console.log('hit');
 				this.popupLint = i;
 				this.render();
 				return;
