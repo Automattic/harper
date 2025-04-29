@@ -12,6 +12,8 @@ export default class PopupHandler {
 	constructor() {
 		this.currentLintBoxes = [];
 		this.renderBox = new RenderBox(document.body);
+		this.renderBox.getShadowHost().popover = 'manual';
+		this.renderBox.getShadowHost().style.pointerEvents = 'none';
 		this.pointerDownCallback = (e) => {
 			this.onPointerDown(e);
 		};
@@ -43,6 +45,9 @@ export default class PopupHandler {
 		if (this.popupLint != null && this.popupLint < this.currentLintBoxes.length) {
 			const box = this.currentLintBoxes[this.popupLint];
 			tree = SuggestionBox(box);
+			this.renderBox.getShadowHost().showPopover();
+		} else {
+			this.renderBox.getShadowHost().hidePopover();
 		}
 
 		this.renderBox.render(tree);

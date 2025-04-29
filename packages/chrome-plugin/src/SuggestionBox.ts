@@ -104,6 +104,7 @@ export default function SuggestionBox(box: LintBox) {
 		padding: '1rem',
 		zIndex: '5000',
 		fontFamily: 'sans-serif',
+		pointerEvents: 'auto',
 	};
 
 	return h('div', { style: containerStyle }, [
