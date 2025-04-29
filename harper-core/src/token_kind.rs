@@ -1,7 +1,10 @@
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
 
-use crate::{ConjunctionData, NounData, Number, PronounData, Punctuation, Quote, WordMetadata};
+use crate::{
+    ConjunctionData, NounData, Number, PronounData, Punctuation, Quote, Tense, VerbData,
+    WordMetadata,
+};
 
 #[derive(Debug, Is, Clone, Serialize, Deserialize, Default, PartialOrd, Hash, Eq, PartialEq)]
 #[serde(tag = "kind", content = "value")]
@@ -186,6 +189,19 @@ impl TokenKind {
             self,
             TokenKind::Word(Some(WordMetadata {
                 adjective: Some(_),
+                ..
+            }))
+        )
+    }
+
+    pub fn is_present_tense_verb(&self) -> bool {
+        matches!(
+            self,
+            TokenKind::Word(Some(WordMetadata {
+                verb: Some(VerbData {
+                    tense: Some(Tense::Present),
+                    ..
+                }),
                 ..
             }))
         )
