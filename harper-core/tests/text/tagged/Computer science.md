@@ -86,8 +86,8 @@
 #
 > Wilhelm Schickard designed and constructed the first   working mechanical
 # NPr     ?         W?       V/C W?          D   NSg/V/J V       NSg/J
-> calculator in          1623. In          1673 , Gottfried Leibniz demonstrated a   digital mechanical
-# NSg        NPrSg/V/J/P #     NPrSg/V/J/P #    . ?         NPr     W?           D/P NSg/J   NSg/J
+> calculator in          1623 . In          1673 , Gottfried Leibniz demonstrated a   digital mechanical
+# NSg        NPrSg/V/J/P #    . NPrSg/V/J/P #    . ?         NPr     W?           D/P NSg/J   NSg/J
 > calculator , called the Stepped Reckoner . Leibniz may      be     considered the first
 # NSg        . V/J    D   W?      ?        . NPr     NPrSg/VX NSg/VX V/J        D   NSg/V/J
 > computer scientist and information theorist , because of  various reasons ,
@@ -271,7 +271,7 @@
 > " In          the U.S. , however , informatics is linked with applied computing , or
 # . NPrSg/V/J/P D   ?    . C       . NSg         VL W?     P    W?      NSg/V     . NPrSg/C
 > computing in          the context of  another domain . "
-# NSg/V     NPrSg/V/J/P D   NSg/V   V/P I       NSg    . .
+# NSg/V     NPrSg/V/J/P D   NSg/V   V/P I/D     NSg    . .
 >
 #
 > A   folkloric quotation , often attributed to — but     almost certainly not   first
@@ -385,7 +385,7 @@
 > programs , but     a   problem remains in          defining the laws and theorems of  computer
 # NPl      . NSg/C/P D/P NSg/J   NPl     NPrSg/V/J/P V        D   NPl  V/C NPl      V/P NSg/V
 > science ( if    any   exist ) and defining the nature of  experiments in          computer
-# NSg/V   . NSg/C I/J/R V     . V/C V        D   NSg/V  V/P NPl         NPrSg/V/J/P NSg/V
+# NSg/V   . NSg/C I/R/D V     . V/C V        D   NSg/V  V/P NPl         NPrSg/V/J/P NSg/V
 > science . Proponents of  classifying computer science as    an  engineering discipline
 # NSg/V   . NPl        V/P V           NSg/V    NSg/V   NSg/R D/P NSg/V       NSg/V
 > argue that    the reliability of  computational systems is investigated in          the same
@@ -539,7 +539,7 @@
 > properties of  codes ( systems for converting information from one       form  to
 # NPl        V/P NPl   . NPl     C/P V          NSg         P    NSg/I/V/J NSg/V P
 > another ) and their fitness for a   specific application . Codes are used for data
-# I       . V/C D     NSg     C/P D/P NSg/J    NSg         . NPl   V   V/J  C/P NSg
+# I/D     . V/C D     NSg     C/P D/P NSg/J    NSg         . NPl   V   V/J  C/P NSg
 > compression , cryptography , error detection and correction , and more        recently
 # NSg         . NSg          . NSg/V NSg       V/C NSg        . V/C NPrSg/I/V/J J/R
 > also for network coding . Codes are studied for the purpose of  designing
@@ -885,9 +885,9 @@
 >
 #
 > All       the information about any   computable problem can      be     represented using
-# NSg/I/J/C D   NSg         J/P   I/J/R ?          NSg/J   NPrSg/VX NSg/VX V           V
+# NSg/I/J/C D   NSg         J/P   I/R/D ?          NSg/J   NPrSg/VX NSg/VX V           V
 > only 0 and 1 ( or      any   other   bistable pair  that    can      flip    - flop  between two
-# W?   # V/C # . NPrSg/C I/J/R NSg/V/J ?        NSg/V N/I/C/D NPrSg/VX NSg/V/J . NSg/V NSg/P   NSg
+# W?   # V/C # . NPrSg/C I/R/D NSg/V/J ?        NSg/V N/I/C/D NPrSg/VX NSg/V/J . NSg/V NSg/P   NSg
 > easily distinguishable states , such  as    " on  / off       " , " magnetized / de    - magnetized " ,
 # R      J               NPrSg  . NSg/I NSg/R . J/P . NSg/V/J/P . . . W?         . NPrSg . W?         . .
 > " high    - voltage / low     - voltage " , etc. ) .
@@ -947,7 +947,7 @@
 >
 #
 > Only three rules are needed to combine any   set       of  basic   instructions into more
-# W?   NSg   NPl   V   V/J    P  NSg/V   I/J/R NPrSg/V/J V/P NPrSg/J NPl          P    NPrSg/I/V/J
+# W?   NSg   NPl   V   V/J    P  NSg/V   I/R/D NPrSg/V/J V/P NPrSg/J NPl          P    NPrSg/I/V/J
 > complex ones :
 # NSg/V/J NPl  .
 >
@@ -1027,7 +1027,7 @@
 > object - oriented computer programs are made  out         of  objects that    interact with
 # NSg/V  . W?       NSg/V    NPl      V   NSg/V NSg/V/J/R/P V/P NPl     N/I/C/D NSg/V    P
 > one       another .
-# NSg/I/V/J I       .
+# NSg/I/V/J I/D     .
 >
 #
 > Service - oriented programming , a   programming paradigm that    uses " services " as

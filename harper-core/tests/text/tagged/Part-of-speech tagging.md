@@ -259,7 +259,7 @@
 > noun  followed by      a   verb  , the next    item  may      be     very likely a   preposition ,
 # NSg/V W?       NSg/J/P D/P NSg/V . D   NSg/J/P NSg/V NPrSg/VX NSg/VX J    NSg/J  D/P NSg/V       .
 > article , or      noun  , but     much  less    likely another verb  .
-# NSg/V   . NPrSg/C NSg/V . NSg/C/P N/I/J V/J/C/P NSg/J  I       NSg/V .
+# NSg/V   . NPrSg/C NSg/V . NSg/C/P N/I/J V/J/C/P NSg/J  I/D     NSg/V .
 >
 #
 > When    several ambiguous words occur together , the possibilities multiply .
@@ -292,8 +292,8 @@
 # NPl   W?        D   NSg/V V/P V   . W?    NSg/V/J V/P NSg/V  NSg/V   NSg/C/P V   NSg
 > expensive since it        enumerated all       possibilities . It        sometimes had to resort to
 # J         C/P   NPrSg/ISg W?         NSg/I/J/C NPl           . NPrSg/ISg R         V   P  NSg/V  P
-> backup  methods when    there were  simply too many    options ( the Brown     Corpus
-# NSg/V/J NPl     NSg/I/C W?    NSg/V R      W?  N/I/J/D NPl     . D   NPrSg/V/J NSg
+> backup methods when    there were  simply too many    options ( the Brown     Corpus
+# NSg/J  NPl     NSg/I/C W?    NSg/V R      W?  N/I/J/D NPl     . D   NPrSg/V/J NSg
 > contains a   case    with 17 ambiguous words in          a   row   , and there are words such  as
 # NPl      D/P NPrSg/V P    #  J         NPl   NPrSg/V/J/P D/P NSg/V . V/C W?    V   NPl   NSg/I NSg/R
 > " still   " that    can      represent as    many    as    7 distinct parts of  speech .
