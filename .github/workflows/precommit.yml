@@ -25,6 +25,8 @@ jobs:
         run: corepack enable
       - name: Install `pandoc`
         run: sudo apt-get update && sudo apt-get install pandoc -y
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2.7.8
       - name: Install `wasm-pack`
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
       - name: Precommit
