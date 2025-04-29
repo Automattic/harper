@@ -31,6 +31,7 @@ use super::for_noun::ForNoun;
 use super::hedging::Hedging;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
+use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::left_right_hand::LeftRightHand;
@@ -345,6 +346,7 @@ impl LintGroup {
         insert_struct_rule!(LetsConfusion, true);
         insert_pattern_rule!(DespiteOf, true);
         insert_pattern_rule!(ChockFull, true);
+        insert_struct_rule!(HowTo, true);
         insert_struct_rule!(OfCourse, true);
         insert_struct_rule!(FirstAidKit, true);
         insert_struct_rule!(PronounKnew, true);

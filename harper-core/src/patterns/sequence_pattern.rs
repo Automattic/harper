@@ -71,6 +71,7 @@ impl SequencePattern {
     gen_then_from_is!(possessive_nominal);
     gen_then_from_is!(plural_nominal);
     gen_then_from_is!(verb);
+    gen_then_from_is!(auxiliary_verb);
     gen_then_from_is!(linking_verb);
     gen_then_from_is!(pronoun);
     gen_then_from_is!(punctuation);

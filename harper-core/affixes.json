@@ -417,7 +417,9 @@
 				}
 			],
 			"target_metadata": {
-				"verb": {},
+				"verb": {
+					"tense": "Present"
+				},
 				"noun": null,
 				"adjective": null
 			},
