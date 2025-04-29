@@ -5,6 +5,9 @@ use crate::{
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
 
+const EN_DASH: char = '–';
+const EM_DASH: char = '—';
+
 pub struct Dashes {
     pattern: Box<dyn Pattern>,
 }
@@ -38,14 +41,14 @@ impl PatternLinter for Dashes {
             2 => Some(Lint {
                 span,
                 lint_kind,
-                suggestions: vec![Suggestion::ReplaceWith(vec!['–'])],
+                suggestions: vec![Suggestion::ReplaceWith(vec![EN_DASH])],
                 message: "A sequence of hyphens is not an en dash.".to_owned(),
                 priority: 63,
             }),
             3.. => Some(Lint {
                 span,
                 lint_kind,
-                suggestions: vec![Suggestion::ReplaceWith(vec!['—'])],
+                suggestions: vec![Suggestion::ReplaceWith(vec![EM_DASH])],
                 message: "A sequence of hyphens is not an em dash.".to_owned(),
                 priority: 63,
             }),
@@ -63,13 +66,14 @@ mod tests {
     use crate::linting::tests::{assert_suggestion_count, assert_suggestion_result};
 
     use super::Dashes;
+    use super::{EM_DASH, EN_DASH};
 
     #[test]
     fn catches_en_dash() {
         assert_suggestion_result(
             "pre--Industrial Revolution",
             Dashes::default(),
-            "pre–Industrial Revolution",
+            &format!("pre{EN_DASH}Industrial Revolution"),
         );
     }
 
@@ -78,7 +82,7 @@ mod tests {
         assert_suggestion_result(
             "'There is no box' --- Scott",
             Dashes::default(),
-            "'There is no box' — Scott",
+            &format!("'There is no box' {EM_DASH} Scott"),
         );
     }
 
