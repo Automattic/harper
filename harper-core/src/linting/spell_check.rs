@@ -131,19 +131,25 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 mod tests {
     use crate::{
         Dialect, FstDictionary,
-        linting::tests::{assert_lint_count, assert_suggestion_result},
+        linting::tests::{
+            assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
+        },
     };
 
     use super::SpellCheck;
 
+    // Capitalization tests
+
     #[test]
-    fn markdown_capitalized() {
+    fn america_capitalized() {
         assert_suggestion_result(
-            "The word markdown should be capitalized.",
+            "The word america should be capitalized.",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "The word Markdown should be capitalized.",
+            "The word America should be capitalized.",
         );
     }
+
+    // Dialect tests
 
     #[test]
     fn harper_automattic_capitalized() {
@@ -160,6 +166,144 @@ mod tests {
             "Do you like the color?",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             1,
+        );
+    }
+
+    #[test]
+    fn canadian_words_in_australian_dialect() {
+        assert_lint_count(
+            "Does your mom like yogourt?",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            2,
+        );
+    }
+
+    #[test]
+    fn australian_words_in_canadian_dialect() {
+        assert_lint_count(
+            "We mine bauxite to make aluminium.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+            1,
+        );
+    }
+
+    #[test]
+    fn mum_and_mummy_not_just_commonwealth() {
+        assert_lint_count(
+            "Mum's the word about that Egyptian mummy.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            0,
+        );
+    }
+
+    #[test]
+    fn australian_verandah() {
+        assert_lint_count(
+            "Our house has a verandah.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            0,
+        );
+    }
+
+    #[test]
+    fn australian_verandah_in_american_dialect() {
+        assert_lint_count(
+            "Our house has a verandah.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
+        );
+    }
+
+    #[test]
+    fn austrlaian_verandah_in_british_dialect() {
+        assert_lint_count(
+            "Our house has a verandah.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            1,
+        );
+    }
+
+    #[test]
+    fn australian_verandah_in_canadian_dialect() {
+        assert_lint_count(
+            "Our house has a verandah.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+            1,
+        );
+    }
+
+    #[test]
+    fn mixing_australian_and_canadian_dialects() {
+        assert_lint_count(
+            "In summer we sit on the verandah and eat yogourt.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            1,
+        );
+    }
+
+    #[test]
+    fn mixing_canadian_and_australian_dialects() {
+        assert_lint_count(
+            "In summer we sit on the verandah and eat yogourt.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+            1,
+        );
+    }
+
+    #[test]
+    fn australian_and_canadian_spellings_that_are_not_american() {
+        assert_lint_count(
+            "In summer we sit on the verandah and eat yogourt.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            2,
+        );
+    }
+
+    #[test]
+    fn australian_and_canadian_spellings_that_are_not_british() {
+        assert_lint_count(
+            "In summer we sit on the verandah and eat yogourt.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            2,
+        );
+    }
+
+    // #[test]
+    // fn australian_labour_vs_labor() {
+    //     assert_lint_count(
+    //         "In Australia we write 'labour' but the political party is the 'Labor Party'.",
+    //         SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+    //         0,
+    //     )
+    // }
+
+    #[test]
+    fn australian_words_flagged_for_american_english() {
+        assert_lint_count(
+            "There's an esky full of beers in the back of the ute.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            2,
+        );
+    }
+
+    #[test]
+    fn american_words_not_flagged_for_australian_english() {
+        assert_lint_count(
+            "In general, utes have unibody construction while pickups have frames.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            0,
+        );
+    }
+
+    // Unit tests for specific spell check corrections
+
+    #[test]
+    fn corrects_abandonedware_1131_1166() {
+        // assert_suggestion_result(
+        assert_top3_suggestion_result(
+            "Abandonedware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "Abandonware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
         );
     }
 }

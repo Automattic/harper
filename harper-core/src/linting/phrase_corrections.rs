@@ -743,6 +743,13 @@ pub fn lint_group() -> LintGroup {
             "Use `worse` for comparing. (`Worst` is for the extreme case)",
             "Corrects `worst and worst` to `worse and worse` for proper comparative usage."
         ),
+        "WorseCaseScenario" => (
+            ["worse case scenario", "worse-case scenario", "worse-case-scenario",
+             "worst case scenario",                        "worst-case-scenario"],
+            ["worst-case scenario"],
+            "Use `worst` for referring to the worst possible scenario. (`Worse` is for comparing)",
+            "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
+        ),
         "WorseThan" => (
             ["worst than"],
             ["worse than"],
@@ -830,14 +837,26 @@ pub fn lint_group() -> LintGroup {
         "InAWhile" => (
             ["in awhile", "in while"],
             ["in a while"],
-            "When describing a timeframe, use `in a while` for clarity.",
+            "When describing a timeframe, use `a while`.",
             "Corrects the missing article in `in while` or `in awhile`, forming `in a while`."
         ),
-        "InQuiteAWhile" => (
-            ["in quite awhile"],
-            ["in quite a while"],
-            "Add `a` to form `in quite a while`, clarifying the duration.",
-            "Corrects `in quite awhile` => `in quite a while` by inserting the missing article."
+        "QuiteAWhile" => (
+            ["quite awhile"],
+            ["quite a while"],
+            "Add `a` to form `quite a while`, clarifying the duration.",
+            "Corrects `quite awhile` => `quite a while` by inserting the missing article."
+        ),
+        "ForAWhile" => (
+            ["for awhile", "for while"],
+            ["for a while"],
+            "When describing a timeframe, use `a while`.",
+            "Corrects the missing article in `for while` or `for awhile`, forming `for a while`."
+        ),
+        "AfterAWhile" => (
+            ["after awhile", "after while"],
+            ["after a while"],
+            "When describafterg a timeframe, use `a while`.",
+            "Corrects the missing article after `after while` or `after awhile`, forming `after a while`."
         ),
         "HumanBeings" => (
             ["human's beings", "humans beings"],
@@ -923,6 +942,25 @@ pub fn lint_group() -> LintGroup {
             "Use `without` instead of `w/o`",
             "Expands the abbreviation `w/o` to the full word `without` for clarity."
         ),
+        "OnSecondThought" => (
+            ["on second though"],
+            ["on second thought"],
+            "Idiomatic expression: use `on second thought` instead of `on second though`",
+            "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration."
+        ),
+        "Excellent" => (
+            ["very good"],
+            ["excellent"],
+            "Vocabulary enhancement: use `excellent` instead of `very good`",
+            "Provides a stronger word choice by replacing `very good` with `excellent` for clarity and emphasis."
+        ),
+        "WellKept" => (
+            ["highly-kept", "highly kept"],
+            // There may be other good alternatives such as closely-guarded or tightly-held
+            ["well-kept"],
+            "`Highly-kept` is not standard. To describe secrets, `well-kept` is the most used phrase.",
+            "Flags `highly-kept` and recommends `well-kept` as an alternative."
+        ),
         "ExpandBecause" => (
             ["cuz"],
             ["because"],
@@ -940,6 +978,204 @@ pub fn lint_group() -> LintGroup {
             ["trial and error"],
             "You misspelled `trial`.",
             "Corrects `trail` to `trial` in `trial and error`."
+        ),
+        "HomeInOn" => (
+            ["hone in on"],
+            ["home in on"],
+            "Use `home in on` rather than `hone in on`",
+            "Corrects `hone in on` to `home in on`."
+        ),
+        "HomesInOn" => (
+            ["hones in on"],
+            ["homes in on"],
+            "Use `home in on` rather than `hone in on`",
+            "Corrects `hone in on` to `home in on`."
+        ),
+        "HomedInOn" => (
+            ["honed in on"],
+            ["homed in on"],
+            "Use `home in on` rather than `hone in on`",
+            "Corrects `hone in on` to `home in on`."
+        ),
+        "HomingInOn" => (
+            ["honing in on"],
+            ["homing in on"],
+            "Use `home in on` rather than `hone in on`",
+            "Corrects `hone in on` to `home in on`."
+        ),
+        "Unless" => (
+            ["unless if"],
+            ["unless"],
+            "Use `unless` on its own.",
+            "Corrects `unless if` to `unless`."
+        ),
+        "SufficeItToSay" => (
+            ["suffice to say"],
+            ["suffice it to say"],
+            "`Suffice it to say` is more standard and more common variant.",
+            "Corrects `suffice to say` to `suffice it to say`."
+        ),
+        "LikeThePlague" => (
+            ["like a plague"],
+            ["like the plague"],
+            "`Things are avoided `like the plague` not `like a plague`.",
+            "Corrects `like a plague` to `like the plague`."
+        ),
+        "HaveGone" => (
+            ["have went"],
+            ["have gone"],
+            "`Have gone` is the correct form.",
+            "Corrects `have went` to `have gone`."
+        ),
+        "HadGone" => (
+            ["had went"],
+            ["had gone"],
+            "`Had gone` is the correct form.",
+            "Corrects `had went` to `had gone`."
+        ),
+        "HavingGone" => (
+            ["having went"],
+            ["having gone"],
+            "`Having gone` is the correct form.",
+            "Corrects `having went` to `having gone`."
+        ),
+        "HasGone" => (
+            ["has went"],
+            ["has gone"],
+            "`Has gone` is the correct form.",
+            "Corrects `has went` to `has gone`."
+        ),
+        "CaseInPoint" => (
+            ["case and point"],
+            ["case in point"],
+            "`Case in point` is the correct form of the phrase.",
+            "Corrects `case and point` to `case in point`."
+        ),
+        "AsWell" => (
+            ["aswell"],
+            ["as well"],
+            "`as well` should be written as two words.",
+            "Corrects `aswell` to `as well`."
+        ),
+        "HasPassed" => (
+            ["has past"],
+            ["has passed"],
+            "Did you mean the verb `passed`?",
+            "Suggests `past` for `passed` in case a verb was intended."
+        ),
+        "HavePassed" => (
+            ["have past"],
+            ["have passed"],
+            "Did you mean the verb `passed`?",
+            "Suggests `past` for `passed` in case a verb was intended."
+        ),
+        "HadPassed" => (
+            ["had past"],
+            ["had passed"],
+            "Did you mean the verb `passed`?",
+            "Suggests `past` for `passed` in case a verb was intended."
+        ),
+        "HavingPassed" => (
+            ["having past"],
+            ["having passed"],
+            "Did you mean the verb `passed`?",
+            "Suggests `past` for `passed` in case a verb was intended."
+        ),
+        "ClientSide" => (
+            ["client's side"],
+            ["client-side"],
+            "In client-server contexts, use `client-side` rather than `client's side`.",
+            "Corrects `client's side` to `client-side`, which is usual in `client-server contexts`."
+        ),
+        "ServerSide" => (
+            ["server's side"],
+            ["server-side"],
+            "In client-server contexts, use `server-side` rather than `server's side`.",
+            "Corrects `server's side` to `server-side`, which is usual in `client-server contexts`."
+        ),
+        "InCase" => (
+            ["incase"],
+            ["in case"],
+            "`In case` should be written as two words.",
+            "Corrects `incase` to `in case`."
+        ),
+        "DoNotWant" => (
+            ["don't wan", "do not wan"],
+            ["don't want", "do not want"],
+            "Use the full verb “want” after negation: “don't want” or “do not want.”",
+            "In English, negation still requires the complete verb form (“want”), so avoid truncating it to “wan.”"
+        ),
+        "CoursingThroughVeins" => (
+            ["cursing through veins"],
+            ["coursing through veins"],
+            "In this idiom, blood “courses” (flows) through veins, not “curses”.",
+            "In English idioms, “to course” means to flow rapidly—so avoid the eggcorn `cursing through veins.`"
+        ),
+        "BestRegards" => (
+            ["beat regards"],
+            ["best regards"],
+            "Use `best regards` to convey sincere well wishes in a closing.",
+            "In valedictions, `best` expresses your highest regard—avoid the typo `beat regards`."
+        ),
+        "Freezing" => (
+            ["very cold", "really cold", "extremely cold"],
+            ["freezing"],
+            "A more vivid adjective would better capture extreme cold.",
+            "Encourages vivid writing by suggesting `freezing` instead of weaker expressions like `very cold.`"
+        ),
+        "Starving" => (
+            ["very hungry", "really hungry", "extremely hungry"],
+            ["starving"],
+            "A more vivid adjective would better convey intense hunger.",
+            "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`"
+        ),
+        "ThereIsAny" => (
+            ["there any"],
+            ["there is any"],
+            "Insert `is` for correct grammar.",
+            "Replaces `there any` with `there is any`."
+        ),
+        "NotIn" => (
+            ["no in"],
+            ["not in"],
+            "Use `not in` for correct grammar.",
+            "Replaces `no in` with `not in`."
+        ),
+        "LastDitch" => (
+            ["last ditch", "last ditched", "last-ditched"],
+            ["last-ditch"],
+            "In this idiom, `ditch` is a noun and a hyphen is needed.",
+            "Corrects wrong variations of the idiomatic adjective `last-ditch`."
+        ),
+        "InvestIn" => (
+            ["invest into"],
+            ["invest in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "InvestedIn" => (
+            ["invested into"],
+            ["invested in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "InvestingIn" => (
+            ["investing into"],
+            ["investing in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "InvestsIn" => (
+            ["invests into"],
+            ["invests in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "AsWell" => (
+            ["aswell"],
+            ["as well"],
+            "The correct term is `as well` with a space.",
+            "Corrects `aswell`, which should be written as two words."
         ),
     });
 
@@ -1774,11 +2010,84 @@ mod tests {
         );
     }
 
+    #[test]
+    fn on_second_thought_clean() {
+        assert_lint_count(
+            "She considered driving home, but on second thought, she decided to walk.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn on_second_thought_incorrect() {
+        assert_suggestion_result(
+            "I was going to buy it, but on second though, maybe I'll wait.",
+            lint_group(),
+            "I was going to buy it, but on second thought, maybe I'll wait.",
+        );
+    }
+
+    #[test]
+    fn correct_highly_kept_space() {
+        assert_suggestion_result(
+            "I assure you that frequency/angle dependence is a highly kept secret.",
+            lint_group(),
+            "I assure you that frequency/angle dependence is a well-kept secret.",
+        );
+    }
+
+    #[test]
     fn expand_cuz() {
         assert_suggestion_result(
             "Stick around cuz I got a surprise for you at the end.",
             lint_group(),
             "Stick around because I got a surprise for you at the end.",
+        );
+    }
+
+    #[test]
+    fn on_second_thought_no_false_positive() {
+        assert_lint_count(
+            "My second though is that I'd prefer something else entirely.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn excellent_clean() {
+        assert_lint_count(
+            "The performance was excellent, drawing praise from all critics.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn excellent_incorrect() {
+        assert_suggestion_result(
+            "Her results were very good this semester.",
+            lint_group(),
+            "Her results were excellent this semester.",
+        );
+    }
+
+    #[test]
+    fn excellent_no_false_positive() {
+        assert_lint_count(
+            "He radiated a sense of very goodness in his charitable acts.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn correct_highly_kept_no_hyphen() {
+        assert_suggestion_result(
+            "Well, Kushina's giving birth was already a highly-kept secret so it makes sense to operate with only the completely necessary personnel.",
+            lint_group(),
+            "Well, Kushina's giving birth was already a well-kept secret so it makes sense to operate with only the completely necessary personnel.",
         );
     }
 
@@ -1797,6 +2106,398 @@ mod tests {
             "It was produced through trail and error.",
             lint_group(),
             "It was produced through trial and error.",
+        );
+    }
+
+    #[test]
+    fn correct_hone_in_on() {
+        assert_suggestion_result(
+            "This way you can use an object detector algorithm to hone in on subjects and tell sam to only focus in certain areas when looking to extend ...",
+            lint_group(),
+            "This way you can use an object detector algorithm to home in on subjects and tell sam to only focus in certain areas when looking to extend ...",
+        );
+    }
+
+    #[test]
+    fn correct_honing_in_on() {
+        assert_suggestion_result(
+            "I think I understand the syntax limitation you're honing in on.",
+            lint_group(),
+            "I think I understand the syntax limitation you're homing in on.",
+        );
+    }
+
+    #[test]
+    fn correct_hones_in_on() {
+        assert_suggestion_result(
+            "[FEATURE] Add a magnet that hones in on mobs",
+            lint_group(),
+            "[FEATURE] Add a magnet that homes in on mobs",
+        );
+    }
+
+    #[test]
+    fn correct_honed_in_on() {
+        assert_suggestion_result(
+            "But it took me quite a bit of faffing about checking things out before I honed in on the session as the problem and tried to dump out the ...",
+            lint_group(),
+            "But it took me quite a bit of faffing about checking things out before I homed in on the session as the problem and tried to dump out the ...",
+        );
+    }
+
+    #[test]
+    fn correct_unless_if() {
+        assert_suggestion_result(
+            "Simplex does not interpret the following invite link as an invite link unless if it has https:// in front of it.",
+            lint_group(),
+            "Simplex does not interpret the following invite link as an invite link unless it has https:// in front of it.",
+        );
+    }
+
+    #[test]
+    fn suffice_it_to_say() {
+        assert_suggestion_result(
+            "I don't fully grok the bug, but suffice to say it is not an RCD issue.",
+            lint_group(),
+            "I don't fully grok the bug, but suffice it to say it is not an RCD issue.",
+        );
+    }
+
+    #[test]
+    fn correct_for_awhile() {
+        assert_suggestion_result(
+            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile",
+            lint_group(),
+            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while",
+        );
+    }
+
+    #[test]
+    fn correct_after_awhile() {
+        assert_suggestion_result(
+            "Links on portal stop working after awhile, requiring page refresh.",
+            lint_group(),
+            "Links on portal stop working after a while, requiring page refresh.",
+        );
+    }
+
+    #[test]
+    fn correct_after_while() {
+        assert_suggestion_result(
+            "bromite Crashes on all sites after while.",
+            lint_group(),
+            "bromite Crashes on all sites after a while.",
+        );
+    }
+
+    #[test]
+    fn correct_for_while() {
+        assert_suggestion_result(
+            "Build flutter releases in github actions for production only android for while.",
+            lint_group(),
+            "Build flutter releases in github actions for production only android for a while.",
+        );
+    }
+
+    #[test]
+    fn correct_like_a_plague() {
+        assert_suggestion_result(
+            "Below is the worst example of them all (avoid such coding like a plague):",
+            lint_group(),
+            "Below is the worst example of them all (avoid such coding like the plague):",
+        );
+    }
+
+    #[test]
+    fn correct_have_went() {
+        assert_suggestion_result(
+            "I have went into the btle.py file and added a print statement in _connect()",
+            lint_group(),
+            "I have gone into the btle.py file and added a print statement in _connect()",
+        );
+    }
+
+    #[test]
+    fn correct_had_went() {
+        assert_suggestion_result(
+            "Not sure if TroLoos had went from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
+            lint_group(),
+            "Not sure if TroLoos had gone from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
+        );
+    }
+
+    #[test]
+    fn correct_having_went() {
+        assert_suggestion_result(
+            "Having went through the setup guidelines and picking react starter, running npm run watch results in an error",
+            lint_group(),
+            "Having gone through the setup guidelines and picking react starter, running npm run watch results in an error",
+        );
+    }
+
+    #[test]
+    fn correct_has_went() {
+        assert_suggestion_result(
+            "I would like to report that the package request which you are loading has went into maintenance mode.",
+            lint_group(),
+            "I would like to report that the package request which you are loading has gone into maintenance mode.",
+        );
+    }
+
+    #[test]
+    fn correct_case_and_point_spaced() {
+        assert_suggestion_result(
+            "They are just not as high of a priority as other tasks that user's are requesting for, a case and point is I have never ran into this issue.",
+            lint_group(),
+            "They are just not as high of a priority as other tasks that user's are requesting for, a case in point is I have never ran into this issue.",
+        );
+    }
+
+    #[test]
+    fn correct_aswell() {
+        assert_suggestion_result(
+            "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
+            lint_group(),
+            "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
+        );
+    }
+
+    #[test]
+    fn correct_has_past() {
+        assert_suggestion_result(
+            "Track the amount of time that has past since a point in time.",
+            lint_group(),
+            "Track the amount of time that has passed since a point in time.",
+        );
+    }
+
+    #[test]
+    fn correct_have_past() {
+        assert_suggestion_result(
+            "Another 14+ days have past, any updates on this?",
+            lint_group(),
+            "Another 14+ days have passed, any updates on this?",
+        );
+    }
+
+    #[test]
+    fn correct_had_past() {
+        assert_suggestion_result(
+            "Few days had past, so im starting to thinks there is a problem in my local version.",
+            lint_group(),
+            "Few days had passed, so im starting to thinks there is a problem in my local version.",
+        );
+    }
+
+    #[test]
+    fn correct_having_past() {
+        assert_suggestion_result(
+            "Return to computer, with enough time having past for the computer to go to full sleep.",
+            lint_group(),
+            "Return to computer, with enough time having passed for the computer to go to full sleep.",
+        );
+    }
+
+    #[test]
+    fn correct_in_case() {
+        assert_suggestion_result(
+            "Support for enum variable incase of reusable enum class",
+            lint_group(),
+            "Support for enum variable in case of reusable enum class",
+        );
+    }
+
+    #[test]
+    fn correct_worse_case_space() {
+        assert_suggestion_result(
+            "In the worse case scenario, remote code execution could be achieved.",
+            lint_group(),
+            "In the worst-case scenario, remote code execution could be achieved.",
+        );
+    }
+
+    #[test]
+    fn correct_worse_case_hyphen() {
+        assert_suggestion_result(
+            "Basically I want my pods to get the original client IP address... or at least have X-Forwarded-For header, in a worse-case scenario.",
+            lint_group(),
+            "Basically I want my pods to get the original client IP address... or at least have X-Forwarded-For header, in a worst-case scenario.",
+        );
+    }
+
+    #[test]
+    fn correct_worse_case_two_hyphens() {
+        assert_suggestion_result(
+            "In a worse-case-scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
+            lint_group(),
+            "In a worst-case scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
+        );
+    }
+
+    #[test]
+    fn correct_worst_case_space() {
+        assert_suggestion_result(
+            "The worst case scenario can be calculated without looking at streams of data.",
+            lint_group(),
+            "The worst-case scenario can be calculated without looking at streams of data.",
+        );
+    }
+
+    #[test]
+    fn correct_worst_case_two_hyphens() {
+        assert_suggestion_result(
+            "CAPD worst-case-scenario cloud simulator for naughty clouds.",
+            lint_group(),
+            "CAPD worst-case scenario cloud simulator for naughty clouds.",
+        );
+    }
+
+    #[test]
+    fn corrects_dont_wan() {
+        assert_suggestion_result(
+            "I don't wan to pay for this.",
+            lint_group(),
+            "I don't want to pay for this.",
+        );
+    }
+
+    #[test]
+    fn correct_clients_side() {
+        assert_suggestion_result(
+            "I want to debug this server-side as I cannot find out why the connection is being refused from the client's side.",
+            lint_group(),
+            "I want to debug this server-side as I cannot find out why the connection is being refused from the client-side.",
+        );
+    }
+
+    #[test]
+    fn corrects_mixed_case() {
+        assert_suggestion_result(
+            "Don't Wan that option.",
+            lint_group(),
+            "Don't Want that option.",
+        );
+    }
+
+    #[test]
+    fn does_not_flag_already_correct() {
+        assert_lint_count("I don't want to leave.", lint_group(), 0);
+    }
+
+    #[test]
+    fn detect_cursing_through_veins_atomic() {
+        assert_suggestion_result(
+            "cursing through veins",
+            lint_group(),
+            "coursing through veins",
+        );
+    }
+
+    #[test]
+    fn detect_cursing_through_veins_real_world() {
+        assert_suggestion_result(
+            "It felt like the drugs were cursing through veins.",
+            lint_group(),
+            "It felt like the drugs were coursing through veins.",
+        );
+    }
+
+    #[test]
+    fn does_not_flag_other_contexts() {
+        assert_lint_count(
+            "He was cursing through the entire meeting.",
+            lint_group(),
+            0,
+        );
+    }
+
+    #[test]
+    fn correct_servers_side() {
+        assert_suggestion_result(
+            "A client-server model where the client can execute commands in a terminal on the server's side",
+            lint_group(),
+            "A client-server model where the client can execute commands in a terminal on the server-side",
+        );
+    }
+
+    #[test]
+    fn correct_last_ditched() {
+        assert_suggestion_result(
+            "I was actually just trying that as a last ditched attempt to get it working, previously those ...",
+            lint_group(),
+            "I was actually just trying that as a last-ditch attempt to get it working, previously those ...",
+        );
+    }
+
+    #[test]
+    fn corrects_invested_into() {
+        assert_suggestion_result(
+            "it's all automatically invested into a collection of loans that match the criteria that ...",
+            lint_group(),
+            "it's all automatically invested in a collection of loans that match the criteria that ...",
+        );
+    }
+
+    #[test]
+    fn correct_last_ditch_space() {
+        assert_suggestion_result(
+            "There are unique use cases and is meant to be a last ditch option.",
+            lint_group(),
+            "There are unique use cases and is meant to be a last-ditch option.",
+        );
+    }
+
+    #[test]
+    fn corrects_invest_into() {
+        assert_suggestion_result(
+            "which represents the amount of money they want to invest into a particular deal.",
+            lint_group(),
+            "which represents the amount of money they want to invest in a particular deal.",
+        );
+    }
+
+    #[test]
+    fn corrects_investing_into() {
+        assert_suggestion_result(
+            "Taking dividends in cash (rather than automatically re-investing into the originating fund) can help alleviate the need for rebalancing.",
+            lint_group(),
+            "Taking dividends in cash (rather than automatically re-investing in the originating fund) can help alleviate the need for rebalancing.",
+        );
+    }
+
+    #[test]
+    fn corrects_invests_into() {
+        assert_suggestion_result(
+            "If a user invests into the protocol first using USDC but afterward changing to DAI, ...",
+            lint_group(),
+            "If a user invests in the protocol first using USDC but afterward changing to DAI, ...",
+        );
+    }
+
+    #[test]
+    fn corrects_as_keyboards_aswell() {
+        assert_suggestion_result(
+            "Tool to read physical joystick devices, keyboards aswell, and create virtual joystick devices and output keyboard presses on a Linux system.",
+            lint_group(),
+            "Tool to read physical joystick devices, keyboards as well, and create virtual joystick devices and output keyboard presses on a Linux system.",
+        );
+    }
+
+    #[test]
+    fn corrects_aswell_as() {
+        assert_suggestion_result(
+            "When UseAcrylic is true in Focused aswell as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
+            lint_group(),
+            "When UseAcrylic is true in Focused as well as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
+        );
+    }
+
+    #[test]
+    fn corrects_toml_aswell() {
+        assert_suggestion_result(
+            "format Cargo.toml aswell #5893 - rust-lang/rustfmt",
+            lint_group(),
+            "format Cargo.toml as well #5893 - rust-lang/rustfmt",
         );
     }
 }

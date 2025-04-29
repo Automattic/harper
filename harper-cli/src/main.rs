@@ -76,6 +76,8 @@ enum Args {
         /// The document to mine words from.
         file: PathBuf,
     },
+    /// Print harper-core version.
+    CoreVersion,
 }
 
 fn main() -> anyhow::Result<()> {
@@ -359,6 +361,10 @@ fn main() -> anyhow::Result<()> {
                 println!("{word}");
             }
 
+            Ok(())
+        }
+        Args::CoreVersion => {
+            println!("harper-core v{}", harper_core::core_version());
             Ok(())
         }
     }

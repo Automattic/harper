@@ -27,3 +27,7 @@ The settings below are VS Code specific. There are other settings that `harper-l
 | Setting       | Type     | Default Value | Description                                                                                                                                                 |
 | ------------- | -------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `harper.path` | `string` | `""`          | Optional path to a `harper-ls` executable to use. Primarily useful if the bundled binary doesn't work in your system like in immutable Linux distributions. |
+
+## Other Features
+
+Since the extension is powered by `harper-ls`, it also supports [dictionaries](./language-server#Dictionaries), [code actions](./language-server#Code-Actions), and [ignore comments](./language-server#Ignore-Comments).

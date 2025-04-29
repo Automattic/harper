@@ -11,36 +11,48 @@ const FALSE_POSITIVES: &[&str] = &[
     "emblematic",
     "equivalent",
     "full",
+    "fun",
+    "illustrative",
     "inside",
-    // "more" is tricky but it often seems correct and idiomatic.
     "more",
     "much",
+    "off",
     "out",
+    "shy",
+    "up",
     // The word is used more as a noun in this context.
     // (using .kind.is_likely_homograph() here is too strict)
     "back",
     "bit",
+    "borderline",
     "bottom",
     "chance",
+    "clockwork",
     "derivative",
     "dream",
+    "eighth",
     "front",
     "half",
     "head",
     "kind",
     "left",
+    "light",
     "meaning",
     "middle",
+    "multiple",
     "one",
     "part",
     "potential",
     "precision",
+    "red",
     // for "rid" I removed the `5` flag in `dictionary.dict``
     "shadow",
     "side",
     "short",
+    "slack",
     "something",
     "sound",
+    "top",
 ];
 
 fn is_false_positive(chars: &[char]) -> bool {
@@ -444,6 +456,113 @@ mod tests {
     fn dont_flag_equivalent() {
         assert_lint_count(
             "Rust's equivalent of a switch statement is a match expression",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_clockwork() {
+        assert_lint_count(
+            "so something's wrong in this clockwork of a thing and I'm not going to bother taking this apart",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_up() {
+        assert_lint_count(
+            "Yeah gas is made up of a bunch of teenytiny particles all moving around.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_eighth() {
+        assert_lint_count(
+            "It's about an eighth of an inch or whatever",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_shy() {
+        assert_lint_count(
+            "... or just shy of a third of the country's total trade deficit.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_fun() {
+        assert_lint_count(
+            "Remember that $4,000 Hermes horse bag I was making fun of a little while ago.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_off() {
+        // Can be an adjective in e.g. "The TV is off".
+        // This should be in a different lint that handles based on/off/off of.
+        assert_lint_count(
+            "can't identify a person based off of an IP from 10 years ago",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_borderline_of() {
+        assert_lint_count(
+            "it's very very on the borderline of a rock pop ballad",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_light() {
+        assert_lint_count("The light of a star.", AdjectiveOfA, 0);
+    }
+
+    #[test]
+    fn dont_flag_multiple() {
+        assert_lint_count(
+            "The image needs to be a multiple of a certain size.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_red() {
+        assert_lint_count("The red of a drop of blood.", AdjectiveOfA, 0);
+    }
+
+    #[test]
+    fn dont_flag_top() {
+        assert_lint_count("The top of a hill.", AdjectiveOfA, 0);
+    }
+
+    #[test]
+    fn dont_flag_slack() {
+        assert_lint_count(
+            "They've been picking up the slack of a federal government mostly dominated by whatever this is.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_illustrative() {
+        assert_lint_count(
+            "Yet, the fact that they clearly give a one-sided account of most of their case studies is illustrative of a bias.",
             AdjectiveOfA,
             0,
         );

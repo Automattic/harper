@@ -21,7 +21,7 @@ export default defineConfig({
 				editLink: 'https://github.com/automattic/harper/edit/master/packages/web/src/routes/:route',
 				logo: '/circle-logo.png',
 				github: 'https://github.com/automattic/harper',
-				discord: 'https://discord.gg/JBqcAaKrzQ',
+				discord: 'https://discord.gg/invite/JBqcAaKrzQ',
 				themeColor: {
 					primary: '#818eae',
 					dark: '#355280',
@@ -39,8 +39,16 @@ export default defineConfig({
 				sidebar: {
 					'/docs/': [
 						{
-							title: 'About',
-							to: '/docs/about',
+							items: [
+								{
+									title: 'About',
+									to: '/docs/about',
+								},
+								{
+									title: 'FAQ',
+									to: '/docs/faq',
+								},
+							],
 						},
 						{
 							title: 'Integrations',
@@ -152,6 +160,10 @@ export default defineConfig({
 									to: '/docs/contributors/wordpress',
 								},
 								{
+									title: 'Obsidian',
+									to: '/docs/contributors/obsidian',
+								},
+								{
 									title: 'Reviewing Pull Requests',
 									to: '/docs/contributors/review',
 								},
@@ -164,10 +176,6 @@ export default defineConfig({
 									to: '/docs/contributors/faq',
 								},
 							],
-						},
-						{
-							title: 'FAQ',
-							to: '/docs/faq',
 						},
 						{
 							title: 'Rules',
