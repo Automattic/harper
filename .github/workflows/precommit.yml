@@ -9,8 +9,6 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  # Run for 300 times the default
-  QUICKCHECK_TESTS: 30000
 
 jobs:
   precommit:
@@ -18,13 +16,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v2
-      - uses: actions/setup-node@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
+          cache: 'pnpm'
       - name: Enable Corepack
         run: corepack enable
       - name: Install `pandoc`
         run: sudo apt-get update && sudo apt-get install pandoc -y
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2.7.8
       - name: Install `wasm-pack`
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
       - name: Precommit

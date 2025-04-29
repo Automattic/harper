@@ -49,6 +49,11 @@ pub use word_metadata::{
     AdverbData, ConjunctionData, Dialect, NounData, PronounData, Tense, VerbData, WordMetadata,
 };
 
+/// Return harper-core version
+pub fn core_version() -> &'static str {
+    env!("CARGO_PKG_VERSION")
+}
+
 /// A utility function that removes overlapping lints in a vector,
 /// keeping the more important ones.
 ///

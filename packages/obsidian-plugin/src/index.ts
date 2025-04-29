@@ -286,7 +286,7 @@ export default class HarperPlugin extends Plugin {
 						title: lint.lint_kind(),
 						message: lint.message(),
 						ignore: async () => {
-							await this.harper.ignoreLint(lint);
+							await this.harper.ignoreLint(text, lint);
 							await this.reinitialize();
 						},
 						actions,
