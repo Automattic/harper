@@ -58,6 +58,7 @@ mod tests {
     fn declare() {
         assert_suggestion_result(
             "I here by declare this state to be free.",
+            "en",
             Hereby::default(),
             "I hereby declare this state to be free.",
         );

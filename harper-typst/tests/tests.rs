@@ -8,7 +8,7 @@ use harper_typst::Typst;
 fn number() {
     let source = "12 is larger than 11, but much less than 11!";
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -56,7 +56,7 @@ fn number() {
 fn math_unlintable() {
     let source = "$12 > 11$, $12 << 11!$";
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -78,7 +78,7 @@ fn dict_parsing() {
                           born: 2019,
                         )"#;
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -102,7 +102,7 @@ fn dict_parsing() {
 fn str_parsing() {
     let source = r#"#let ident = "This is a string""#;
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -125,7 +125,7 @@ fn str_parsing() {
 fn non_adjacent_spaces_not_condensed() {
     let source = r#"#authors_slice.join(", ", last: ", and ")  bob"#;
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -151,7 +151,7 @@ fn header_parsing() {
     let source = "= Header
                       Paragraph";
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -176,7 +176,7 @@ fn parbreak() {
 
                       Paragraph";
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -196,7 +196,7 @@ fn label_ref_unlintable() {
                       <label>
                       Paragraph @label";
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -218,7 +218,7 @@ fn label_ref_unlintable() {
 fn sentence() {
     let source = "This is a sentence, it is not interesting.";
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -251,7 +251,7 @@ fn smart_apostrophe_newline() {
     let source = "group’s
                       writing";
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -281,7 +281,7 @@ fn newline_in_paragraph() {
 newlines
 not paragraph breaks";
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
@@ -310,7 +310,7 @@ fn parbreaks_in_list() {
 - p2
 - p3";
 
-    let document = Document::new_curated(source, &Typst);
+    let document = Document::new_curated(source, &Typst, "en");
     let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 

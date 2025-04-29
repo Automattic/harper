@@ -56,6 +56,7 @@ mod tests {
     fn corrects_fro_basic_correction() {
         assert_suggestion_result(
             "I got a text fro Sarah.",
+            "en",
             ForNoun::default(),
             "I got a text for Sarah.",
         );
@@ -63,13 +64,14 @@ mod tests {
 
     #[test]
     fn allows_for_clean() {
-        assert_lint_count("I got a text for Sarah.", ForNoun::default(), 0);
+        assert_lint_count("I got a text for Sarah.", "en", ForNoun::default(), 0);
     }
 
     #[test]
     fn corrects_fro_sure() {
         assert_suggestion_result(
             "He was away fro sure!",
+            "en",
             ForNoun::default(),
             "He was away for sure!",
         );

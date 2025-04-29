@@ -50,16 +50,16 @@ mod tests {
 
     #[test]
     fn dora() {
-        assert_lint_count("Dora is a noun.", LinkingVerbs, 0);
+        assert_lint_count("Dora is a noun.", "en", LinkingVerbs, 0);
     }
 
     #[test]
     fn working_wrong() {
-        assert_lint_count("working is not a noun.", LinkingVerbs, 1);
+        assert_lint_count("working is not a noun.", "en", LinkingVerbs, 1);
     }
 
     #[test]
     fn working_right() {
-        assert_lint_count("\"working\" is a noun.", LinkingVerbs, 0);
+        assert_lint_count("\"working\" is a noun.", "en", LinkingVerbs, 0);
     }
 }

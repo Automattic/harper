@@ -86,7 +86,7 @@ mod tests {
     fn keeps_space_lint() {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut linter = LintGroup::new_curated(FstDictionary::curated("en"), Dialect::American);
 
         let mut lints = linter.lint(&doc);
 

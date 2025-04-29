@@ -25,32 +25,73 @@ use super::dictionary::Dictionary;
 pub struct MutableDictionary {
     /// All English words
     word_map: WordMap,
+    langiso639: String,
 }
 
 /// The uncached function that is used to produce the original copy of the
 /// curated dictionary.
-fn uncached_inner_new() -> Arc<MutableDictionary> {
-    Arc::new(
-        MutableDictionary::from_rune_files(
-            include_str!("../../dictionary.dict"),
-            include_str!("../../affixes.json"),
+fn uncached_inner_new(langiso639: &str) -> Arc<MutableDictionary> {
+    if langiso639 == "en" {
+        Arc::new(
+            MutableDictionary::from_rune_files(
+                langiso639,
+                include_str!("../../dictionary.dict"),
+                include_str!("../../affixes.json"),
+            )
+            .expect("Curated dictionary should be valid."),
         )
-        .expect("Curated dictionary should be valid."),
-    )
+    } else {
+        let mut dictpath = String::new();
+        let mut affixpath = String::new();
+
+        if let Ok(cargo_manifest_dir) = std::env::var("CARGO_MANIFEST_DIR") {
+            dictpath = format!("{}/dictionary-{}.dict", cargo_manifest_dir, langiso639);
+            affixpath = format!("{}/affixes-{}.json", cargo_manifest_dir, langiso639);
+            eprintln!("##✅## dictpath: '{}'", dictpath);
+        } else {
+            let current_exe = std::env::current_exe().unwrap();
+            let rsrc_path = current_exe
+                .parent()
+                .unwrap()
+                .parent()
+                .unwrap()
+                .parent()
+                .unwrap()
+                .display();
+            dictpath = format!("{}/harper-core/dictionary-{}.dict", rsrc_path, langiso639);
+            affixpath = format!("{}/harper-core/affixes-{}.json", rsrc_path, langiso639);
+            eprintln!("##🚀## dictpath: '{}'", dictpath);
+        }
+        Arc::new(
+            MutableDictionary::from_rune_files(
+                langiso639,
+                &std::fs::read_to_string(dictpath)
+                    .unwrap_or_else(|_| panic!("Missing dictionary for language {}", langiso639)),
+                &std::fs::read_to_string(affixpath)
+                    .unwrap_or_else(|_| panic!("Missing affixes for language {}", langiso639)),
+            )
+            .unwrap_or_else(|_| panic!("Failed to create dictionary for language {}", langiso639)),
+        )
+    }
 }
 
 lazy_static! {
-    static ref DICT: Arc<MutableDictionary> = uncached_inner_new();
+    static ref DICT_EN: Arc<MutableDictionary> = uncached_inner_new("en");
 }
 
 impl MutableDictionary {
-    pub fn new() -> Self {
+    pub fn new(langiso639: &str) -> Self {
         Self {
             word_map: WordMap::default(),
+            langiso639: langiso639.to_string(),
         }
     }
 
-    pub fn from_rune_files(word_list: &str, attr_list: &str) -> Result<Self, rune::Error> {
+    pub fn from_rune_files(
+        langiso639: &str,
+        word_list: &str,
+        attr_list: &str,
+    ) -> Result<Self, rune::Error> {
         let word_list = parse_word_list(word_list)?;
         let attr_list = AttributeList::parse(attr_list)?;
 
@@ -59,14 +100,20 @@ impl MutableDictionary {
 
         attr_list.expand_marked_words(word_list, &mut word_map);
 
-        Ok(Self { word_map })
+        Ok(Self {
+            word_map,
+            langiso639: langiso639.to_string(),
+        })
     }
 
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
     /// Consider using [`super::FstDictionary::curated()`] instead, as it is more performant for spellchecking.
-    pub fn curated() -> Arc<Self> {
-        (*DICT).clone()
+    pub fn curated(langiso639: &str) -> Arc<Self> {
+        match langiso639 {
+            "en" => (*DICT_EN).clone(),
+            _ => uncached_inner_new(langiso639),
+        }
     }
 
     /// Appends words to the dictionary.
@@ -99,11 +146,9 @@ impl MutableDictionary {
     pub fn append_word_str(&mut self, word: &str, metadata: WordMetadata) {
         self.append_word(word.chars().collect::<Vec<_>>(), metadata)
     }
-}
 
-impl Default for MutableDictionary {
-    fn default() -> Self {
-        Self::new()
+    pub fn get_langiso639(&self) -> &str {
+        &self.langiso639
     }
 }
 
@@ -233,6 +278,10 @@ impl Dictionary for MutableDictionary {
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
         self.word_map.get(id).map(|w| w.canonical_spelling.as_ref())
     }
+
+    fn get_langiso639(&self) -> &str {
+        &self.langiso639
+    }
 }
 
 impl From<MutableDictionary> for FstDictionary {
@@ -243,7 +292,7 @@ impl From<MutableDictionary> for FstDictionary {
             .map(|entry| (entry.canonical_spelling, entry.metadata))
             .collect();
 
-        FstDictionary::new(words)
+        FstDictionary::new(&dict.langiso639, words)
     }
 }
 
@@ -256,13 +305,13 @@ mod tests {
 
     #[test]
     fn curated_contains_no_duplicates() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.words_iter().all_unique());
     }
 
     #[test]
     fn curated_matches_capitalized() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.contains_word_str("this"));
         assert!(dict.contains_word_str("This"));
     }
@@ -272,40 +321,40 @@ mod tests {
     // TODO Harper previously wrongly classified it as a noun
     // #[test]
     // fn this_is_determiner() {
-    //     let dict = MutableDictionary::curated();
+    //     let dict = MutableDictionary::curated("en");
     //     assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
     //     assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
     // }
 
     #[test]
     fn than_is_conjunction() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.get_word_metadata_str("than").unwrap().is_conjunction());
         assert!(dict.get_word_metadata_str("Than").unwrap().is_conjunction());
     }
 
     #[test]
     fn herself_is_pronoun() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.get_word_metadata_str("herself").unwrap().is_pronoun());
         assert!(dict.get_word_metadata_str("Herself").unwrap().is_pronoun());
     }
 
     #[test]
     fn discussion_171() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.contains_word_str("natively"));
     }
 
     #[test]
     fn im_is_common() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
         assert!(dict.get_word_metadata_str("I'm").unwrap().common);
     }
 
     #[test]
     fn fuzzy_result_sorted_by_edit_distance() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
 
         let results = dict.fuzzy_match_str("hello", 3, 100);
         let is_sorted_by_dist = results
@@ -319,7 +368,7 @@ mod tests {
 
     #[test]
     fn there_is_not_a_pronoun() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
 
         assert!(!dict.get_word_metadata_str("there").unwrap().is_nominal());
         assert!(!dict.get_word_metadata_str("there").unwrap().is_pronoun());
@@ -327,17 +376,17 @@ mod tests {
 
     #[test]
     fn expanded_contains_giants() {
-        assert!(MutableDictionary::curated().contains_word_str("giants"));
+        assert!(MutableDictionary::curated("en").contains_word_str("giants"));
     }
 
     #[test]
     fn expanded_contains_deallocate() {
-        assert!(MutableDictionary::curated().contains_word_str("deallocate"));
+        assert!(MutableDictionary::curated("en").contains_word_str("deallocate"));
     }
 
     #[test]
     fn curated_contains_repo() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
 
         assert!(dict.contains_word_str("repo"));
         assert!(dict.contains_word_str("repos"));
@@ -347,7 +396,7 @@ mod tests {
     #[test]
     fn curated_contains_possessive_abandonment() {
         assert!(
-            MutableDictionary::curated()
+            MutableDictionary::curated("en")
                 .get_word_metadata_str("abandonment's")
                 .unwrap()
                 .is_possessive_noun()
@@ -356,7 +405,7 @@ mod tests {
 
     #[test]
     fn has_is_not_a_nominal() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
 
         let has = dict.get_word_metadata_str("has");
         assert!(has.is_some());
@@ -366,7 +415,7 @@ mod tests {
 
     #[test]
     fn is_is_linking_verb() {
-        let dict = MutableDictionary::curated();
+        let dict = MutableDictionary::curated("en");
 
         let is = dict.get_word_metadata_str("is");
 
@@ -377,10 +426,21 @@ mod tests {
     #[test]
     fn are_merged_attrs_same_as_spread_attrs() {
         let curated_attr_list = include_str!("../../affixes.json");
-
-        let merged = MutableDictionary::from_rune_files("1\nblork/DGS", curated_attr_list).unwrap();
-        let spread =
-            MutableDictionary::from_rune_files("2\nblork/DG\nblork/S", curated_attr_list).unwrap();
+        eprintln!("##🧪## are_merged_attrs_same_as_spread_attrs()");
+        let merged = MutableDictionary::from_rune_files(
+            // "fake_language_code_amasasa_m",
+            "en",
+            "1\nblork/DGS",
+            curated_attr_list,
+        )
+        .unwrap();
+        let spread = MutableDictionary::from_rune_files(
+            // "fake_language_code_amasasa_s",
+            "en",
+            "2\nblork/DG\nblork/S",
+            curated_attr_list,
+        )
+        .unwrap();
 
         assert_eq!(
             merged.word_map.into_iter().collect::<HashSet<_>>(),

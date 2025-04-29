@@ -112,6 +112,7 @@ mod tests {
     fn fix_lets_inspect() {
         assert_suggestion_result(
             "In the end lets inspect with git-blame the results.",
+            "en",
             NoContractionWithVerb::default(),
             "In the end let's inspect with git-blame the results.",
         );
@@ -121,13 +122,19 @@ mod tests {
 
     #[test]
     fn dont_flag_let_chance() {
-        assert_lint_count("Let chance decide", NoContractionWithVerb::default(), 0);
+        assert_lint_count(
+            "Let chance decide",
+            "en",
+            NoContractionWithVerb::default(),
+            0,
+        );
     }
 
     #[test]
     fn dont_flag_let_time() {
         assert_lint_count(
             "Let time granularity be parametrized",
+            "en",
             NoContractionWithVerb::default(),
             0,
         );
@@ -137,6 +144,7 @@ mod tests {
     fn dont_flag_lets_staff() {
         assert_lint_count(
             "A plugin that backs up player's inventories and lets staff restore them or export it as a shulker.",
+            "en",
             NoContractionWithVerb::default(),
             0,
         );
@@ -146,6 +154,7 @@ mod tests {
     fn dont_flag_lets_time() {
         assert_lint_count(
             "This is very different than demo recording, which just simulates a network level connection and lets time move at its own rate.",
+            "en",
             NoContractionWithVerb::default(),
             0,
         );
@@ -155,6 +164,7 @@ mod tests {
     fn dont_flag_lets_play() {
         assert_lint_count(
             "Sometimes the umpire lets play continue",
+            "en",
             NoContractionWithVerb::default(),
             0,
         );
@@ -166,6 +176,7 @@ mod tests {
     fn dont_flag_let_sleeping() {
         assert_lint_count(
             "Let sleeping logs lie.",
+            "en",
             NoContractionWithVerb::default(),
             0,
         );
@@ -177,6 +188,7 @@ mod tests {
     fn dont_flag_let_processed() {
         assert_lint_count(
             "Let processed response be a new structure analogous to server auction response.",
+            "en",
             NoContractionWithVerb::default(),
             0,
         );
@@ -188,6 +200,7 @@ mod tests {
     fn corrects_lets_make_this() {
         assert_suggestion_result(
             "Lets make this joke repo into one of the best.",
+            "en",
             NoContractionWithVerb::default(),
             "Let's make this joke repo into one of the best.",
         );
@@ -199,6 +212,7 @@ mod tests {
     fn corrects_lets_mock_them() {
         assert_suggestion_result(
             "Then lets mock them using Module._load based mocker.",
+            "en",
             NoContractionWithVerb::default(),
             "Then let's mock them using Module._load based mocker.",
         );

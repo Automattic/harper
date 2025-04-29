@@ -172,6 +172,7 @@ mod tests {
     fn correct_large_of_a() {
         assert_suggestion_result(
             "Yeah I'm using as large of a batch size as I can on this machine",
+            "en",
             AdjectiveOfA,
             "Yeah I'm using as large a batch size as I can on this machine",
         )
@@ -181,6 +182,7 @@ mod tests {
     fn correct_bad_of_an() {
         assert_suggestion_result(
             "- If forking is really that bad of an option, let's first decide where to put this.",
+            "en",
             AdjectiveOfA,
             "- If forking is really that bad an option, let's first decide where to put this.",
         );
@@ -190,6 +192,7 @@ mod tests {
     fn dont_flag_comparative() {
         assert_lint_count(
             "I only worked with custom composer installers for the better of a day, so please excuse me if I missed a thing.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -199,6 +202,7 @@ mod tests {
     fn dont_flag_superlative() {
         assert_lint_count(
             "I am trying to use composites to visualize the worst of a set of metrics.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -209,6 +213,7 @@ mod tests {
         // Adjective as in "a kind person" vs noun as in "A kind of person"
         assert_lint_count(
             "Log.txt file automatic creation in PWD is kind of an anti-feature",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -219,6 +224,7 @@ mod tests {
         // Can be an adjective in e.g. "He is just part owner"
         assert_lint_count(
             "cannot delete a food that is no longer part of a recipe",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -229,6 +235,7 @@ mod tests {
         // "much of" is correct idiomatic usage
         assert_lint_count(
             "How much of a performance impact when switching from rails to rails-api ?",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -239,6 +246,7 @@ mod tests {
         // Can be an adjective in e.g. "Part man, part machine"
         assert_lint_count(
             "Quarkus Extension as Part of a Project inside a Monorepo?",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -249,6 +257,7 @@ mod tests {
         // "all of" is correct idiomatic usage
         assert_lint_count(
             "This repository is deprecated. All of its content and history has been moved.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -259,6 +268,7 @@ mod tests {
         // "inside of" is idiomatic usage
         assert_lint_count(
             "Michael and Brock sat inside of a diner in Brandon",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -269,6 +279,7 @@ mod tests {
         // "out of" is correct idiomatic usage
         assert_lint_count(
             "not only would he potentially be out of a job and back to sort of poverty",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -279,6 +290,7 @@ mod tests {
         // "full of" is correct idiomatic usage
         assert_lint_count(
             "fortunately I happen to have this Tupperware full of an unceremoniously disassembled LED Mac Mini",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -289,6 +301,7 @@ mod tests {
         // Can be a noun in e.g. "a certain something"
         assert_lint_count(
             "Well its popularity seems to be taking something of a dip right now.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -299,6 +312,7 @@ mod tests {
         // Can be a noun in e.g. "use a multimeter to find the short"
         assert_lint_count(
             "I found one Youtube short of an indonesian girl.",
+            "en",
             AdjectiveOfA,
             0,
         )
@@ -309,6 +323,7 @@ mod tests {
         // Can be an adjective in e.g. "bottom bunk"
         assert_lint_count(
             "When leaves are just like coming out individually from the bottom of a fruit.",
+            "en",
             AdjectiveOfA,
             0,
         )
@@ -317,12 +332,17 @@ mod tests {
     #[test]
     fn dont_flag_left() {
         // Can be an adjective in e.g. "left hand"
-        assert_lint_count("and what is left of a 12vt coil", AdjectiveOfA, 0)
+        assert_lint_count("and what is left of a 12vt coil", "en", AdjectiveOfA, 0)
     }
 
     #[test]
     fn dont_flag_full_uppercase() {
-        assert_lint_count("Full of a bunch varnish like we get.", AdjectiveOfA, 0);
+        assert_lint_count(
+            "Full of a bunch varnish like we get.",
+            "en",
+            AdjectiveOfA,
+            0,
+        );
     }
 
     #[test]
@@ -330,6 +350,7 @@ mod tests {
         // Can be an adjective in e.g. "the head cook"
         assert_lint_count(
             "You need to get out if you're the head of an education department and you're not using AI",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -340,6 +361,7 @@ mod tests {
         // Can be an adjective in e.g. "middle child"
         assert_lint_count(
             "just to get to that part in the middle of a blizzard",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -350,6 +372,7 @@ mod tests {
         // Can be an adjective in e.g. "a chance encounter"
         assert_lint_count(
             "products that you overpay for because there are subtle details in the terms and conditions that reduce the size or chance of a payout.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -360,6 +383,7 @@ mod tests {
         // Can be an adjective in e.g. "a potential candidate"
         assert_lint_count(
             "People that are happy to accept it for the potential of a reward.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -368,14 +392,14 @@ mod tests {
     #[test]
     fn dont_flag_sound() {
         // Can be an adjective in e.g. "sound advice"
-        assert_lint_count("the sound of an approaching Krampus", AdjectiveOfA, 0);
+        assert_lint_count("the sound of an approaching Krampus", "en", AdjectiveOfA, 0);
     }
 
     #[test]
     fn dont_flag_rid() {
         // I removed the `5` flag from `rid` in `dictionary.dict`
         // because dictionaries say the sense is archaic.
-        assert_lint_count("I need to get rid of a problem", AdjectiveOfA, 0);
+        assert_lint_count("I need to get rid of a problem", "en", AdjectiveOfA, 0);
     }
 
     #[test]
@@ -383,6 +407,7 @@ mod tests {
         // Can be an adjective in e.g. "a precision instrument"
         assert_lint_count(
             "a man whose crew cut has the precision of a targeted drone strike",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -393,6 +418,7 @@ mod tests {
         // Can be an adjective in e.g. "back door"
         assert_lint_count(
             "a man whose crew cut has the back of a targeted drone strike",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -403,6 +429,7 @@ mod tests {
         // "emblematic of" is correct idiomatic usage
         assert_lint_count(
             "... situation was emblematic of a publication that ...",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -411,25 +438,40 @@ mod tests {
     #[test]
     fn dont_flag_half() {
         // Can be an adjective in e.g. "half man, half machine"
-        assert_lint_count("And now I only have half of a CyberTruck", AdjectiveOfA, 0);
+        assert_lint_count(
+            "And now I only have half of a CyberTruck",
+            "en",
+            AdjectiveOfA,
+            0,
+        );
     }
 
     #[test]
     fn dont_flag_bit() {
         // Technically also an adj as in "that guy's bit - he'll turn into a zombie"
-        assert_lint_count("we ran into a bit of an issue", AdjectiveOfA, 0);
+        assert_lint_count("we ran into a bit of an issue", "en", AdjectiveOfA, 0);
     }
 
     #[test]
     fn dont_flag_dream() {
         // Can be an adjective in e.g. "we built our dream house"
-        assert_lint_count("When the dream of a united Europe began", AdjectiveOfA, 0);
+        assert_lint_count(
+            "When the dream of a united Europe began",
+            "en",
+            AdjectiveOfA,
+            0,
+        );
     }
 
     #[test]
     fn dont_flag_beginning() {
         // Present participles have properties of adjectives, nouns, and verbs
-        assert_lint_count("That's the beginning of a conversation.", AdjectiveOfA, 0);
+        assert_lint_count(
+            "That's the beginning of a conversation.",
+            "en",
+            AdjectiveOfA,
+            0,
+        );
     }
 
     #[test]
@@ -437,6 +479,7 @@ mod tests {
         // Can be an adjective in e.g. "via a side door"
         assert_lint_count(
             "it hit the barrier on the side of a highway",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -447,6 +490,7 @@ mod tests {
         // Adj: "a derivative story", Noun: "stocks and derivatives"
         assert_lint_count(
             "Techniques for evaluating the *partial derivative of a function",
+            "en",
             AdjectiveOfA,
             0,
         )
@@ -456,6 +500,7 @@ mod tests {
     fn dont_flag_equivalent() {
         assert_lint_count(
             "Rust's equivalent of a switch statement is a match expression",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -465,6 +510,7 @@ mod tests {
     fn dont_flag_clockwork() {
         assert_lint_count(
             "so something's wrong in this clockwork of a thing and I'm not going to bother taking this apart",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -474,6 +520,7 @@ mod tests {
     fn dont_flag_up() {
         assert_lint_count(
             "Yeah gas is made up of a bunch of teenytiny particles all moving around.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -483,6 +530,7 @@ mod tests {
     fn dont_flag_eighth() {
         assert_lint_count(
             "It's about an eighth of an inch or whatever",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -492,6 +540,7 @@ mod tests {
     fn dont_flag_shy() {
         assert_lint_count(
             "... or just shy of a third of the country's total trade deficit.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -501,6 +550,7 @@ mod tests {
     fn dont_flag_fun() {
         assert_lint_count(
             "Remember that $4,000 Hermes horse bag I was making fun of a little while ago.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -512,6 +562,7 @@ mod tests {
         // This should be in a different lint that handles based on/off/off of.
         assert_lint_count(
             "can't identify a person based off of an IP from 10 years ago",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -521,6 +572,7 @@ mod tests {
     fn dont_flag_borderline_of() {
         assert_lint_count(
             "it's very very on the borderline of a rock pop ballad",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -528,13 +580,14 @@ mod tests {
 
     #[test]
     fn dont_flag_light() {
-        assert_lint_count("The light of a star.", AdjectiveOfA, 0);
+        assert_lint_count("The light of a star.", "en", AdjectiveOfA, 0);
     }
 
     #[test]
     fn dont_flag_multiple() {
         assert_lint_count(
             "The image needs to be a multiple of a certain size.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -542,18 +595,19 @@ mod tests {
 
     #[test]
     fn dont_flag_red() {
-        assert_lint_count("The red of a drop of blood.", AdjectiveOfA, 0);
+        assert_lint_count("The red of a drop of blood.", "en", AdjectiveOfA, 0);
     }
 
     #[test]
     fn dont_flag_top() {
-        assert_lint_count("The top of a hill.", AdjectiveOfA, 0);
+        assert_lint_count("The top of a hill.", "en", AdjectiveOfA, 0);
     }
 
     #[test]
     fn dont_flag_slack() {
         assert_lint_count(
             "They've been picking up the slack of a federal government mostly dominated by whatever this is.",
+            "en",
             AdjectiveOfA,
             0,
         );
@@ -563,6 +617,7 @@ mod tests {
     fn dont_flag_illustrative() {
         assert_lint_count(
             "Yet, the fact that they clearly give a one-sided account of most of their case studies is illustrative of a bias.",
+            "en",
             AdjectiveOfA,
             0,
         );

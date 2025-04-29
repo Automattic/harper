@@ -8,10 +8,10 @@ use tower_lsp::lsp_types::{CodeActionOrCommand, Command, Diagnostic, Range, Url}
 
 pub struct DocumentState {
     pub document: Document,
-    pub ident_dict: Lrc<MutableDictionary>,
-    pub dict: Lrc<MergedDictionary>,
+    pub ident_dict: Option<Lrc<MutableDictionary>>,
+    pub dict: Option<Lrc<MergedDictionary>>,
     pub linter: LintGroup,
-    pub language_id: Option<String>,
+    pub code_language_id: Option<String>,
     pub ignored_lints: IgnoredLints,
     pub url: Url,
 }
@@ -90,7 +90,7 @@ impl Default for DocumentState {
             ident_dict: Default::default(),
             dict: Default::default(),
             linter: Default::default(),
-            language_id: Default::default(),
+            code_language_id: Default::default(),
             ignored_lints: Default::default(),
             url: Url::parse("https://example.net").unwrap(),
         }

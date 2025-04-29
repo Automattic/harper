@@ -85,7 +85,8 @@ pub struct LintGroupConfig {
 #[cached]
 fn curated_config() -> LintGroupConfig {
     // The Dictionary and Dialect do not matter, we're just after the config.
-    let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
+    // So the language also does not matter right?
+    let group = LintGroup::new_curated(MutableDictionary::new("en").into(), Dialect::American);
     group.config
 }
 
@@ -463,13 +464,13 @@ mod tests {
     #[test]
     fn can_get_all_descriptions() {
         let group =
-            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+            LintGroup::new_curated(Arc::new(MutableDictionary::new("en")), Dialect::American);
         group.all_descriptions();
     }
 
     #[test]
     fn lint_descriptions_are_clean() {
-        let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut group = LintGroup::new_curated(FstDictionary::curated("en"), Dialect::American);
         let pairs: Vec<_> = group
             .all_descriptions()
             .into_iter()
@@ -477,7 +478,7 @@ mod tests {
             .collect();
 
         for (key, value) in pairs {
-            let doc = Document::new_markdown_default_curated(&value);
+            let doc = Document::new_markdown_default_curated(&value, "en");
             eprintln!("{key}: {value}");
 
             if !group.lint(&doc).is_empty() {

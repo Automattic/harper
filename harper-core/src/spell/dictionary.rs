@@ -9,6 +9,8 @@ use crate::WordMetadata;
 /// See also: [`super::FstDictionary`] and [`super::MutableDictionary`].
 #[blanket(derive(Arc))]
 pub trait Dictionary: Send + Sync {
+    /// The language of the dictionary.
+    fn get_langiso639(&self) -> &str;
     /// Check if the dictionary contains any capitalization of a given word.
     fn contains_word(&self, word: &[char]) -> bool;
     /// Check if the dictionary contains any capitalization of a given word.

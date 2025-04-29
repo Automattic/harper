@@ -9,8 +9,8 @@ pub struct ExactPhrase {
 }
 
 impl ExactPhrase {
-    pub fn from_phrase(text: &str) -> Self {
-        let document = Document::new_markdown_default_curated(text);
+    pub fn from_phrase(text: &str, language: &str) -> Self {
+        let document = Document::new_markdown_default_curated(text, language);
         Self::from_document(&document)
     }
 

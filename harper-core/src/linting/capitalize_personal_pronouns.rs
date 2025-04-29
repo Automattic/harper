@@ -52,13 +52,19 @@ mod tests {
 
     #[test]
     fn start() {
-        assert_suggestion_result("i am hungry", CapitalizePersonalPronouns, "I am hungry");
+        assert_suggestion_result(
+            "i am hungry",
+            "en",
+            CapitalizePersonalPronouns,
+            "I am hungry",
+        );
     }
 
     #[test]
     fn end() {
         assert_suggestion_result(
             "There is no one stronger than i",
+            "en",
             CapitalizePersonalPronouns,
             "There is no one stronger than I",
         );
@@ -68,6 +74,7 @@ mod tests {
     fn middle() {
         assert_suggestion_result(
             "First of all, i am not happy with this.",
+            "en",
             CapitalizePersonalPronouns,
             "First of all, I am not happy with this.",
         );
@@ -77,6 +84,7 @@ mod tests {
     fn issue_365() {
         assert_lint_count(
             "access will succeed, unlike with UDEREF/i386.",
+            "en",
             CapitalizePersonalPronouns,
             0,
         );
@@ -84,13 +92,14 @@ mod tests {
 
     #[test]
     fn corrects_id() {
-        assert_suggestion_result("i'd", CapitalizePersonalPronouns, "I'd");
+        assert_suggestion_result("i'd", "en", CapitalizePersonalPronouns, "I'd");
     }
 
     #[test]
     fn correct_real_world_id() {
         assert_suggestion_result(
             "Personal Homebrew tap with tools i'd like to use",
+            "en",
             CapitalizePersonalPronouns,
             "Personal Homebrew tap with tools I'd like to use",
         )
@@ -98,13 +107,14 @@ mod tests {
 
     #[test]
     fn corrects_idve() {
-        assert_suggestion_result("i'd've", CapitalizePersonalPronouns, "I'd've");
+        assert_suggestion_result("i'd've", "en", CapitalizePersonalPronouns, "I'd've");
     }
 
     #[test]
     fn correct_real_world_idve() {
         assert_suggestion_result(
             "... i'd've loved this even more twice length , but let not get greedy",
+            "en",
             CapitalizePersonalPronouns,
             "... I'd've loved this even more twice length , but let not get greedy",
         )
@@ -112,13 +122,14 @@ mod tests {
 
     #[test]
     fn corrects_ill() {
-        assert_suggestion_result("i'll", CapitalizePersonalPronouns, "I'll");
+        assert_suggestion_result("i'll", "en", CapitalizePersonalPronouns, "I'll");
     }
 
     #[test]
     fn correct_real_world_ill() {
         assert_suggestion_result(
             "Hey i deploy my contract it give me error and i'll match with the script file both are same if someone have idea how i slove this please ...",
+            "en",
             CapitalizePersonalPronouns,
             "Hey I deploy my contract it give me error and I'll match with the script file both are same if someone have idea how I slove this please ...",
         )
@@ -126,13 +137,14 @@ mod tests {
 
     #[test]
     fn corrects_im() {
-        assert_suggestion_result("i'm", CapitalizePersonalPronouns, "I'm");
+        assert_suggestion_result("i'm", "en", CapitalizePersonalPronouns, "I'm");
     }
 
     #[test]
     fn correct_real_world_im() {
         assert_suggestion_result(
             "Grid view not working, i'm not using any template",
+            "en",
             CapitalizePersonalPronouns,
             "Grid view not working, I'm not using any template",
         )
@@ -140,13 +152,14 @@ mod tests {
 
     #[test]
     fn corrects_ive() {
-        assert_suggestion_result("i've", CapitalizePersonalPronouns, "I've");
+        assert_suggestion_result("i've", "en", CapitalizePersonalPronouns, "I've");
     }
 
     #[test]
     fn correct_real_world_ive() {
         assert_suggestion_result(
             "Can't use Github Pro although i've verified for student pack",
+            "en",
             CapitalizePersonalPronouns,
             "Can't use Github Pro although I've verified for student pack",
         )

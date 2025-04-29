@@ -16,7 +16,7 @@ macro_rules! create_test {
                     )
                  );
 
-                 let dict = FstDictionary::curated();
+                 let dict = FstDictionary::curated("en");
                  let document = Document::new(&source, &Typst, &dict);
 
                  let mut linter = LintGroup::new_curated(dict, Dialect::American);

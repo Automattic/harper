@@ -63,6 +63,7 @@ mod tests {
     fn wise_men() {
         assert_suggestion_result(
             "Like wise men, we waited.",
+            "en",
             Likewise::default(),
             "Like wise men, we waited.",
         );
@@ -72,6 +73,7 @@ mod tests {
     fn like_wise() {
         assert_suggestion_result(
             "He acted, like wise, without hesitation.",
+            "en",
             Likewise::default(),
             "He acted, likewise, without hesitation.",
         );

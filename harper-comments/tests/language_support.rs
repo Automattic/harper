@@ -22,7 +22,7 @@ macro_rules! create_test {
                  );
 
                  let parser = CommentParser::new_from_filename(Path::new(filename), MarkdownOptions::default()).unwrap();
-                 let dict = FstDictionary::curated();
+                 let dict = FstDictionary::curated("en");
                  let document = Document::new(&source, &parser, &dict);
 
                  let mut linter = LintGroup::new_curated(dict, Dialect::American);

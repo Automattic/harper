@@ -71,6 +71,7 @@ mod tests {
     fn corrects_three_day_training() {
         assert_suggestion_result(
             "The company offers a 3 day training program.",
+            "en",
             HyphenateNumberDay::default(),
             "The company offers a 3-day training program.",
         );
@@ -80,6 +81,7 @@ mod tests {
     fn corrects_five_day_challenge() {
         assert_suggestion_result(
             "Join the 5 day challenge to improve your skills.",
+            "en",
             HyphenateNumberDay::default(),
             "Join the 5-day challenge to improve your skills.",
         );
@@ -89,6 +91,7 @@ mod tests {
     fn corrects_seven_day_plan() {
         assert_suggestion_result(
             "She followed a strict 7 day meal plan.",
+            "en",
             HyphenateNumberDay::default(),
             "She followed a strict 7-day meal plan.",
         );
@@ -98,6 +101,7 @@ mod tests {
     fn does_not_correct_when_not_adjective() {
         assert_suggestion_result(
             "The seminar lasts for 2 days.",
+            "en",
             HyphenateNumberDay::default(),
             "The seminar lasts for 2 days.",
         );
@@ -107,12 +111,14 @@ mod tests {
     fn corrects_varied_phrases() {
         assert_suggestion_result(
             "They implemented a new 6 day work schedule.",
+            "en",
             HyphenateNumberDay::default(),
             "They implemented a new 6-day work schedule.",
         );
 
         assert_suggestion_result(
             "Enroll in our 10 day fitness bootcamp!",
+            "en",
             HyphenateNumberDay::default(),
             "Enroll in our 10-day fitness bootcamp!",
         );
@@ -122,6 +128,7 @@ mod tests {
     fn edge_case_day_long() {
         assert_suggestion_result(
             "The 4 day-long seminar was insightful.",
+            "en",
             HyphenateNumberDay::default(),
             "The 4-day-long seminar was insightful.",
         );
@@ -131,6 +138,7 @@ mod tests {
     fn edge_case_plural_days() {
         assert_suggestion_result(
             "The trip was a fun 5 day experience.",
+            "en",
             HyphenateNumberDay::default(),
             "The trip was a fun 5-day experience.",
         );
@@ -140,6 +148,7 @@ mod tests {
     fn ignores_spelled_out_numbers() {
         assert_suggestion_result(
             "We had a three day holiday.",
+            "en",
             HyphenateNumberDay::default(),
             "We had a three day holiday.",
         );

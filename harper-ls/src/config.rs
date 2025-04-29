@@ -71,6 +71,7 @@ pub struct Config {
     pub code_action_config: CodeActionConfig,
     pub isolate_english: bool,
     pub markdown_options: MarkdownOptions,
+    pub langiso639: String,
     pub dialect: Dialect,
 }
 
@@ -163,6 +164,7 @@ impl Default for Config {
             code_action_config: CodeActionConfig::default(),
             isolate_english: false,
             markdown_options: MarkdownOptions::default(),
+            langiso639: "en".to_string(),
             dialect: Dialect::American,
         }
     }

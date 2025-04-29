@@ -48,18 +48,18 @@ mod tests {
 
     #[test]
     fn allows_correct_ellipsis() {
-        assert_lint_count("...", EllipsisLength, 0);
+        assert_lint_count("...", "en", EllipsisLength, 0);
     }
 
     #[test]
     fn corrects_long_ellipsis() {
-        assert_lint_count(".....", EllipsisLength, 1);
-        assert_suggestion_result(".....", EllipsisLength, "...");
+        assert_lint_count(".....", "en", EllipsisLength, 1);
+        assert_suggestion_result(".....", "en", EllipsisLength, "...");
     }
 
     #[test]
     fn corrects_short_ellipsis() {
-        assert_lint_count("..", EllipsisLength, 1);
-        assert_suggestion_result("..", EllipsisLength, "...");
+        assert_lint_count("..", "en", EllipsisLength, 1);
+        assert_suggestion_result("..", "en", EllipsisLength, "...");
     }
 }

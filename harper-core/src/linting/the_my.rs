@@ -90,44 +90,45 @@ mod tests {
 
     #[test]
     fn correct_the_my_atomic_lowercase() {
-        assert_suggestion_result("the my", TheMy::default(), "my");
+        assert_suggestion_result("the my", "en", TheMy::default(), "my");
     }
 
     #[test]
     fn correct_the_my_atomic_2nd_suggestion() {
-        assert_nth_suggestion_result("the my", TheMy::default(), "the", 1);
+        assert_nth_suggestion_result("the my", "en", TheMy::default(), "the", 1);
     }
 
     #[test]
     fn correct_the_my_atomic_uppercase() {
-        assert_suggestion_result("The my", TheMy::default(), "My");
+        assert_suggestion_result("The my", "en", TheMy::default(), "My");
     }
 
     #[test]
     fn correct_my_the_atomic_lowercase() {
-        assert_suggestion_result("my the", TheMy::default(), "my");
+        assert_suggestion_result("my the", "en", TheMy::default(), "my");
     }
 
     #[test]
     fn correct_my_the_atomic_2nd_suggestion() {
-        assert_nth_suggestion_result("my the", TheMy::default(), "the", 1);
+        assert_nth_suggestion_result("my the", "en", TheMy::default(), "the", 1);
     }
 
     #[test]
     fn correct_my_the_atomic_uppercase() {
-        assert_suggestion_result("My the", TheMy::default(), "My");
+        assert_suggestion_result("My the", "en", TheMy::default(), "My");
     }
 
     #[test]
     fn dont_correct_capitalized_possessive() {
         assert_lint_count("For some time the My Projects personal page was \"sluggish\" or took some time to generate the miniature depicting the project, now it seems completely stuck ...
-", TheMy::default(), 0);
+", "en", TheMy::default(), 0);
     }
 
     #[test]
     fn correct_the_my_github() {
         assert_suggestion_result(
             "When I try to configure the my react-native app to support koltin file, this library gives these errors",
+            "en",
             TheMy::default(),
             "When I try to configure my react-native app to support koltin file, this library gives these errors",
         );
@@ -137,6 +138,7 @@ mod tests {
     fn correct_the_our_github() {
         assert_suggestion_result(
             "Source codes of the our paper titled \"Multi-level Textual-Visual Alignment and Fusion Network for Multimodal Aspect-based Sentiment Analysis\"",
+            "en",
             TheMy::default(),
             "Source codes of our paper titled \"Multi-level Textual-Visual Alignment and Fusion Network for Multimodal Aspect-based Sentiment Analysis\"",
         );
@@ -146,6 +148,7 @@ mod tests {
     fn correct_the_their_github() {
         assert_suggestion_result(
             "the slider cannot render when i use again the their component on NextJS app",
+            "en",
             TheMy::default(),
             "the slider cannot render when i use again their component on NextJS app",
         );
@@ -155,6 +158,7 @@ mod tests {
     fn correct_your_the_github() {
         assert_suggestion_result(
             "This plugin allows you to view your the information about order and customer from your spree store on zendesk",
+            "en",
             TheMy::default(),
             "This plugin allows you to view your information about order and customer from your spree store on zendesk",
         );
@@ -164,6 +168,7 @@ mod tests {
     fn correct_my_the_github() {
         assert_suggestion_result(
             "Scripts used my the project to collect, process and store social media data from a number of sources",
+            "en",
             TheMy::default(),
             "Scripts used my project to collect, process and store social media data from a number of sources",
         );
@@ -173,6 +178,7 @@ mod tests {
     fn dont_correct_the_your_github() {
         assert_lint_count(
             "What exactly is the sort order of list names on the Your Stars page?",
+            "en",
             TheMy::default(),
             0,
         );
@@ -182,6 +188,7 @@ mod tests {
     fn dont_correct_my_the_github() {
         assert_lint_count(
             "My The Frame TV is not pulling information properly",
+            "en",
             TheMy::default(),
             0,
         )
@@ -191,6 +198,7 @@ mod tests {
     fn correct_our_the_github() {
         assert_suggestion_result(
             "Companion Repository to our the whitepaper \"Towards Reliable and Scalable Linux Kernel CVE Attribution in Automated Static Firmware Analyses\"",
+            "en",
             TheMy::default(),
             "Companion Repository to our whitepaper \"Towards Reliable and Scalable Linux Kernel CVE Attribution in Automated Static Firmware Analyses\"",
         )
@@ -200,6 +208,7 @@ mod tests {
     fn correct_their_the_github() {
         assert_suggestion_result(
             "Types exported by @_exported remember only their the original module",
+            "en",
             TheMy::default(),
             "Types exported by @_exported remember only their original module",
         )
@@ -209,6 +218,7 @@ mod tests {
     fn dont_correct_her_the_github() {
         assert_lint_count(
             "Create an admin role for boba-tan and give her the GoreMaster role only in !gore",
+            "en",
             TheMy::default(),
             0,
         )
@@ -218,6 +228,7 @@ mod tests {
     fn correct_the_his_github() {
         assert_suggestion_result(
             "Allows the user to specify the his last name.",
+            "en",
             TheMy::default(),
             "Allows the user to specify his last name.",
         )
@@ -227,6 +238,7 @@ mod tests {
     fn correct_his_the_github() {
         assert_suggestion_result(
             "One interesting creation was his the Schelling segregation model",
+            "en",
             TheMy::default(),
             "One interesting creation was his Schelling segregation model",
         )
@@ -236,6 +248,7 @@ mod tests {
     fn correct_the_her_github() {
         assert_suggestion_result(
             "In memory of the occasion when our Queen Victoria graciously came to see our Island, and the her Royal Consort Albert landed at Ramsey",
+            "en",
             TheMy::default(),
             "In memory of the occasion when our Queen Victoria graciously came to see our Island, and her Royal Consort Albert landed at Ramsey",
         )

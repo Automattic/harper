@@ -54,7 +54,7 @@ mod tests {
     use crate::{Document, FstDictionary};
 
     fn assert_not_english(source: &'static str) {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
         let doc = Document::new_plain_english(source, &dict);
         let is_likely_english = is_doc_likely_english(&doc, &dict);
         dbg!(source);
@@ -62,7 +62,7 @@ mod tests {
     }
 
     fn assert_english(source: &'static str) {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated("en");
         let doc = Document::new_plain_english(source, &dict);
         let is_likely_english = is_doc_likely_english(&doc, &dict);
         dbg!(source);

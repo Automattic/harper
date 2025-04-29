@@ -100,13 +100,13 @@ impl Linter {
     /// Construct a new `Linter`.
     /// Note that this can mean constructing the curated dictionary, which is the most expensive operation
     /// in Harper.
-    pub fn new(dialect: Dialect) -> Self {
-        let dictionary = Self::construct_merged_dict(MutableDictionary::default());
+    pub fn new(langiso639: &str, dialect: Dialect) -> Self {
+        let dictionary = Self::construct_merged_dict(MutableDictionary::new(langiso639));
         let lint_group = LintGroup::new_curated_empty_config(dictionary.clone(), dialect.into());
 
         Self {
             lint_group,
-            user_dictionary: MutableDictionary::new(),
+            user_dictionary: MutableDictionary::new(langiso639),
             dictionary,
             ignored_lints: IgnoredLints::default(),
             dialect,
@@ -127,9 +127,9 @@ impl Linter {
     /// Construct the actual dictionary to be used for linting and parsing from the curated dictionary
     /// and [`Self::user_dictionary`].
     fn construct_merged_dict(user_dictionary: MutableDictionary) -> Arc<MergedDictionary> {
-        let mut lint_dict = MergedDictionary::new();
+        let mut lint_dict = MergedDictionary::new(user_dictionary.get_langiso639());
 
-        lint_dict.add_dictionary(FstDictionary::curated());
+        lint_dict.add_dictionary(FstDictionary::curated(user_dictionary.get_langiso639()));
         lint_dict.add_dictionary(Arc::new(user_dictionary.clone()));
 
         Arc::new(lint_dict)
@@ -344,7 +344,8 @@ impl Linter {
 
 #[wasm_bindgen]
 pub fn to_title_case(text: String) -> String {
-    harper_core::make_title_case_str(&text, &PlainEnglish, &FstDictionary::curated())
+    // TODO: If `PlainEnglish` changes to something language-independent, this will need to be changed.
+    harper_core::make_title_case_str(&text, &PlainEnglish, &FstDictionary::curated("en"))
 }
 
 /// A suggestion to fix a Lint.
@@ -460,16 +461,22 @@ impl Lint {
 
 #[wasm_bindgen]
 pub fn get_default_lint_config_as_json() -> String {
-    let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+    let config = LintGroup::new_curated(
+        MutableDictionary::new("en").into(),
+        Dialect::American.into(),
+    )
+    .config;
 
     serde_json::to_string(&config).unwrap()
 }
 
 #[wasm_bindgen]
 pub fn get_default_lint_config() -> JsValue {
-    let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+    let config = LintGroup::new_curated(
+        MutableDictionary::new("en").into(),
+        Dialect::American.into(),
+    )
+    .config;
 
     // Important for downstream JSON serialization
     let serializer = Serializer::json_compatible();

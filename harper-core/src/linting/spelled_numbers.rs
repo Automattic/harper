@@ -125,12 +125,22 @@ mod tests {
 
     #[test]
     fn corrects_nine() {
-        assert_suggestion_result("There are 9 pigs.", SpelledNumbers, "There are nine pigs.");
+        assert_suggestion_result(
+            "There are 9 pigs.",
+            "en",
+            SpelledNumbers,
+            "There are nine pigs.",
+        );
     }
 
     #[test]
     fn does_not_correct_ten() {
-        assert_suggestion_result("There are 10 pigs.", SpelledNumbers, "There are 10 pigs.");
+        assert_suggestion_result(
+            "There are 10 pigs.",
+            "en",
+            SpelledNumbers,
+            "There are 10 pigs.",
+        );
     }
 
     /// Check that the algorithm won't stack overflow or return `None` for any numbers within the specified range.

@@ -55,6 +55,7 @@ mod tests {
     fn corrects_was_aloud() {
         assert_suggestion_result(
             "He was aloud to enter the room.",
+            "en",
             WasAloud::default(),
             "He was allowed to enter the room.",
         );
@@ -64,6 +65,7 @@ mod tests {
     fn corrects_were_aloud() {
         assert_suggestion_result(
             "They were aloud to participate.",
+            "en",
             WasAloud::default(),
             "They were allowed to participate.",
         );
@@ -73,6 +75,7 @@ mod tests {
     fn does_not_correct_proper_use_of_aloud() {
         assert_suggestion_result(
             "She read the passage aloud to the class.",
+            "en",
             WasAloud::default(),
             "She read the passage aloud to the class.",
         );
@@ -82,6 +85,7 @@ mod tests {
     fn does_not_flag_unrelated_text() {
         assert_suggestion_result(
             "The concert was loud and exciting.",
+            "en",
             WasAloud::default(),
             "The concert was loud and exciting.",
         );
@@ -91,6 +95,7 @@ mod tests {
     fn be_aloud() {
         assert_suggestion_result(
             "You may be aloud to enter the room.",
+            "en",
             WasAloud::default(),
             "You may be allowed to enter the room.",
         );
@@ -100,6 +105,7 @@ mod tests {
     fn been_aloud() {
         assert_suggestion_result(
             "If I had been aloud to enter I would've jumped at the chance.",
+            "en",
             WasAloud::default(),
             "If I had been allowed to enter I would've jumped at the chance.",
         );

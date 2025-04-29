@@ -122,23 +122,24 @@ mod tests {
 
     #[test]
     fn allows_english_comma_atomic() {
-        assert_lint_count(",", CommaFixes, 0);
+        assert_lint_count(",", "en", CommaFixes, 0);
     }
 
     #[test]
     fn flags_fullwidth_comma_atomic() {
-        assert_lint_count("，", CommaFixes, 1);
+        assert_lint_count("，", "en", CommaFixes, 1);
     }
 
     #[test]
     fn flags_ideographic_comma_atomic() {
-        assert_lint_count("、", CommaFixes, 1);
+        assert_lint_count("、", "en", CommaFixes, 1);
     }
 
     #[test]
     fn corrects_fullwidth_comma_real_world() {
         assert_suggestion_result(
             "higher 2 bits of the number of nodes， whether abandoned or not decided by .index section",
+            "en",
             CommaFixes,
             "higher 2 bits of the number of nodes, whether abandoned or not decided by .index section",
         );
@@ -146,61 +147,61 @@ mod tests {
 
     #[test]
     fn corrects_ideographic_comma_real_world() {
-        assert_suggestion_result("cout、endl、string", CommaFixes, "cout, endl, string")
+        assert_suggestion_result("cout、endl、string", "en", CommaFixes, "cout, endl, string")
     }
 
     #[test]
     fn doesnt_flag_comma_space_between_words() {
-        assert_lint_count("foo, bar", CommaFixes, 0);
+        assert_lint_count("foo, bar", "en", CommaFixes, 0);
     }
 
     #[test]
     fn flags_fullwidth_comma_space_between_words() {
-        assert_lint_count("foo， bar", CommaFixes, 1);
+        assert_lint_count("foo， bar", "en", CommaFixes, 1);
     }
 
     #[test]
     fn flags_ideographic_comma_space_between_words() {
-        assert_lint_count("foo、 bar", CommaFixes, 1);
+        assert_lint_count("foo、 bar", "en", CommaFixes, 1);
     }
 
     #[test]
     fn doesnt_flag_semicolon_space_between_words() {
-        assert_lint_count("foo; bar", CommaFixes, 0);
+        assert_lint_count("foo; bar", "en", CommaFixes, 0);
     }
 
     #[test]
     fn corrects_comma_between_words_with_no_space() {
-        assert_suggestion_result("foo,bar", CommaFixes, "foo, bar")
+        assert_suggestion_result("foo,bar", "en", CommaFixes, "foo, bar")
     }
 
     #[test]
     fn corrects_asian_comma_between_words_with_no_space() {
-        assert_suggestion_result("foo，bar", CommaFixes, "foo, bar")
+        assert_suggestion_result("foo，bar", "en", CommaFixes, "foo, bar")
     }
 
     #[test]
     fn corrects_space_on_wrong_side_of_comma_between_words() {
-        assert_suggestion_result("foo ,bar", CommaFixes, "foo, bar")
+        assert_suggestion_result("foo ,bar", "en", CommaFixes, "foo, bar")
     }
 
     #[test]
     fn corrects_comma_on_wrong_side_of_asian_comma_between_words() {
-        assert_suggestion_result("foo ，bar", CommaFixes, "foo, bar")
+        assert_suggestion_result("foo ，bar", "en", CommaFixes, "foo, bar")
     }
 
     #[test]
     fn corrects_comma_between_words_with_space_on_both_sides() {
-        assert_suggestion_result("foo , bar", CommaFixes, "foo, bar")
+        assert_suggestion_result("foo , bar", "en", CommaFixes, "foo, bar")
     }
 
     #[test]
     fn corrects_asian_comma_between_words_with_space_on_both_sides() {
-        assert_suggestion_result("foo 、 bar", CommaFixes, "foo, bar")
+        assert_suggestion_result("foo 、 bar", "en", CommaFixes, "foo, bar")
     }
 
     #[test]
     fn doesnt_correct_comma_between_non_english_tokens() {
-        assert_lint_count("严禁采摘花、 果、叶，挖掘树根、草药!", CommaFixes, 0);
+        assert_lint_count("严禁采摘花、 果、叶，挖掘树根、草药!", "en", CommaFixes, 0);
     }
 }

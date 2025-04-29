@@ -81,6 +81,7 @@ mod tests {
     fn corrects_peak_interest() {
         assert_suggestion_result(
             "The story managed to peak his interest.",
+            "en",
             PiqueInterest::default(),
             "The story managed to pique his interest.",
         );
@@ -90,6 +91,7 @@ mod tests {
     fn corrects_peeked_interest_at_start() {
         assert_suggestion_result(
             "Peeked his interest, did she?",
+            "en",
             PiqueInterest::default(),
             "Piqued his interest, did she?",
         );
@@ -99,6 +101,7 @@ mod tests {
     fn corrects_peak_interest_in_middle() {
         assert_suggestion_result(
             "She tried to peak his interest during the lecture.",
+            "en",
             PiqueInterest::default(),
             "She tried to pique his interest during the lecture.",
         );
@@ -108,6 +111,7 @@ mod tests {
     fn corrects_peaked_interest_at_end() {
         assert_suggestion_result(
             "All along, she hoped she peaked his interest.",
+            "en",
             PiqueInterest::default(),
             "All along, she hoped she piqued his interest.",
         );
@@ -117,6 +121,7 @@ mod tests {
     fn does_not_correct_unrelated_peak() {
         assert_suggestion_result(
             "He reached the peak of the mountain.",
+            "en",
             PiqueInterest::default(),
             "He reached the peak of the mountain.",
         );
@@ -126,6 +131,7 @@ mod tests {
     fn corrects_peaking_interest() {
         assert_suggestion_result(
             "She was peaking his interest with her stories.",
+            "en",
             PiqueInterest::default(),
             "She was piquing his interest with her stories.",
         );

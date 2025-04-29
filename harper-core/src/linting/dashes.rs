@@ -68,6 +68,7 @@ mod tests {
     fn catches_en_dash() {
         assert_suggestion_result(
             "pre--Industrial Revolution",
+            "en",
             Dashes::default(),
             "pre–Industrial Revolution",
         );
@@ -77,6 +78,7 @@ mod tests {
     fn catches_em_dash() {
         assert_suggestion_result(
             "'There is no box' --- Scott",
+            "en",
             Dashes::default(),
             "'There is no box' — Scott",
         );
@@ -84,6 +86,6 @@ mod tests {
 
     #[test]
     fn no_overlaps() {
-        assert_suggestion_count("'There is no box' --- Scott", Dashes::default(), 1);
+        assert_suggestion_count("'There is no box' --- Scott", "en", Dashes::default(), 1);
     }
 }

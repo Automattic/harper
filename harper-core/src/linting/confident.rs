@@ -57,6 +57,7 @@ mod tests {
     fn describing_person_incorrect() {
         assert_suggestion_result(
             "She felt confidant about her presentation.",
+            "en",
             Confident::default(),
             "She felt confident about her presentation.",
         );
@@ -66,6 +67,7 @@ mod tests {
     fn describing_person_correct() {
         assert_lint_count(
             "She felt confident about her presentation.",
+            "en",
             Confident::default(),
             0,
         );
@@ -75,6 +77,7 @@ mod tests {
     fn certainty_incorrect() {
         assert_suggestion_result(
             "I am confidant the test results are accurate.",
+            "en",
             Confident::default(),
             "I am confident the test results are accurate.",
         );
@@ -84,6 +87,7 @@ mod tests {
     fn certainty_correct() {
         assert_lint_count(
             "I am confident the test results are accurate.",
+            "en",
             Confident::default(),
             0,
         );
@@ -93,6 +97,7 @@ mod tests {
     fn demeanor_incorrect() {
         assert_suggestion_result(
             "He walked to the stage with a confidant stride.",
+            "en",
             Confident::default(),
             "He walked to the stage with a confident stride.",
         );
@@ -102,6 +107,7 @@ mod tests {
     fn demeanor_correct() {
         assert_lint_count(
             "He walked to the stage with a confident stride.",
+            "en",
             Confident::default(),
             0,
         );
@@ -111,6 +117,7 @@ mod tests {
     fn professional_incorrect() {
         assert_suggestion_result(
             "You should sound confidant during job interviews.",
+            "en",
             Confident::default(),
             "You should sound confident during job interviews.",
         );
@@ -120,6 +127,7 @@ mod tests {
     fn professional_correct() {
         assert_lint_count(
             "You should sound confident during job interviews.",
+            "en",
             Confident::default(),
             0,
         );
@@ -129,6 +137,7 @@ mod tests {
     fn assured_tone_incorrect() {
         assert_suggestion_result(
             "Present your argument in a confidant, persuasive manner.",
+            "en",
             Confident::default(),
             "Present your argument in a confident, persuasive manner.",
         );
@@ -138,6 +147,7 @@ mod tests {
     fn assured_tone_correct() {
         assert_lint_count(
             "Present your argument in a confident, persuasive manner.",
+            "en",
             Confident::default(),
             0,
         );
@@ -147,6 +157,7 @@ mod tests {
     fn extra_text_between() {
         assert_suggestion_result(
             "She felt very confidant about her presentation.",
+            "en",
             Confident::default(),
             "She felt very confident about her presentation.",
         );
@@ -156,6 +167,7 @@ mod tests {
     fn linking_verb_was_confidant() {
         assert_suggestion_result(
             "She was confidant about her presentation.",
+            "en",
             Confident::default(),
             "She was confident about her presentation.",
         );

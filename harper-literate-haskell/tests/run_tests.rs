@@ -17,8 +17,8 @@ macro_rules! create_test {
                     )
                  );
 
-                 let dict = FstDictionary::curated();
-                 let document = Document::new_curated(&source, &LiterateHaskellParser::new_markdown(MarkdownOptions::default()));
+                 let dict = FstDictionary::curated("en");
+                 let document = Document::new_curated(&source, &LiterateHaskellParser::new_markdown(MarkdownOptions::default()), "en");
 
                  let mut linter = LintGroup::new_curated(dict, Dialect::American);
                  let lints = linter.lint(&document);

@@ -18,14 +18,16 @@ pub struct MergedDictionary {
     children: Vec<Arc<dyn Dictionary>>,
     hasher_builder: FixedState,
     child_hashes: Vec<u64>,
+    langiso639: String,
 }
 
 impl MergedDictionary {
-    pub fn new() -> Self {
+    pub fn new(langiso639: &str) -> Self {
         Self {
             children: Vec::new(),
             hasher_builder: FixedState::default(),
             child_hashes: Vec::new(),
+            langiso639: langiso639.to_string(),
         }
     }
 
@@ -36,9 +38,10 @@ impl MergedDictionary {
 
     fn hash_dictionary(&self, dictionary: &Arc<dyn Dictionary>) -> u64 {
         // Hashing the curated dictionary isn't super helpful and takes a long time.
+        let langiso639 = dictionary.get_langiso639();
         if Arc::ptr_eq(
             dictionary,
-            &(FstDictionary::curated() as Arc<dyn Dictionary>),
+            &(FstDictionary::curated(langiso639) as Arc<dyn Dictionary>),
         ) {
             return 1;
         }
@@ -51,17 +54,15 @@ impl MergedDictionary {
 
         hasher.finish()
     }
+
+    pub fn get_langiso639(&self) -> &str {
+        &self.langiso639
+    }
 }
 
 impl PartialEq for MergedDictionary {
     fn eq(&self, other: &Self) -> bool {
         self.child_hashes == other.child_hashes
-    }
-}
-
-impl Default for MergedDictionary {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -158,5 +159,9 @@ impl Dictionary for MergedDictionary {
         self.children
             .iter()
             .find_map(|dict| dict.get_word_from_id(id))
+    }
+
+    fn get_langiso639(&self) -> &str {
+        todo!()
     }
 }

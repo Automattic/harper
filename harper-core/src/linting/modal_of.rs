@@ -133,37 +133,37 @@ mod tests {
 
     #[test]
     fn test_lowercase() {
-        assert_suggestion_result("could of", ModalOf::default(), "could have");
+        assert_suggestion_result("could of", "en", ModalOf::default(), "could have");
     }
 
     #[test]
     fn test_negative() {
-        assert_suggestion_result("mightn't of", ModalOf::default(), "mightn't have");
+        assert_suggestion_result("mightn't of", "en", ModalOf::default(), "mightn't have");
     }
 
     #[test]
     fn test_uppercase_negative() {
-        assert_suggestion_result("Mustn't of", ModalOf::default(), "Mustn't have");
+        assert_suggestion_result("Mustn't of", "en", ModalOf::default(), "Mustn't have");
     }
 
     #[test]
     fn test_false_positive_of_course() {
-        assert_lint_count("should of course", ModalOf::default(), 0);
+        assert_lint_count("should of course", "en", ModalOf::default(), 0);
     }
 
     #[test]
     fn test_false_positive_the_might_of() {
-        assert_lint_count("the might of", ModalOf::default(), 0);
+        assert_lint_count("the might of", "en", ModalOf::default(), 0);
     }
 
     #[test]
     fn test_false_positive_great_might_of() {
-        assert_lint_count("great might of", ModalOf::default(), 0);
+        assert_lint_count("great might of", "en", ModalOf::default(), 0);
     }
 
     #[test]
     fn test_false_positive_capital_negative() {
-        assert_lint_count("Wouldn't of course", ModalOf::default(), 0);
+        assert_lint_count("Wouldn't of course", "en", ModalOf::default(), 0);
     }
 
     // real-world tests
@@ -172,6 +172,7 @@ mod tests {
     fn test_buggy_implementation() {
         assert_lint_count(
             "... could of just been a buggy implementation",
+            "en",
             ModalOf::default(),
             1,
         );
@@ -181,6 +182,7 @@ mod tests {
     fn test_missed_one() {
         assert_lint_count(
             "We already have a function ... that nedb can understand so we might of missed one.",
+            "en",
             ModalOf::default(),
             1,
         );
@@ -190,6 +192,7 @@ mod tests {
     fn test_user_option() {
         assert_lint_count(
             "im more likely to believe you might of left in the 'user' option",
+            "en",
             ModalOf::default(),
             1,
         );
@@ -199,6 +202,7 @@ mod tests {
     fn catches_must_of() {
         assert_suggestion_result(
             "Ah I must of missed that part.",
+            "en",
             ModalOf::default(),
             "Ah I must have missed that part.",
         );
@@ -208,6 +212,7 @@ mod tests {
     fn catches_should_of() {
         assert_lint_count(
             "Yeah I should of just mentioned it should of been a for of.",
+            "en",
             ModalOf::default(),
             2,
         );
@@ -217,6 +222,7 @@ mod tests {
     fn catches_would_of() {
         assert_suggestion_result(
             "now this issue would of caused hundreds of thousands of extra lines",
+            "en",
             ModalOf::default(),
             "now this issue would have caused hundreds of thousands of extra lines",
         );
@@ -226,6 +232,7 @@ mod tests {
     fn doesnt_catch_you_could_of_course() {
         assert_lint_count(
             "You could of course explicit the else with each possibility",
+            "en",
             ModalOf::default(),
             0,
         );
@@ -235,6 +242,7 @@ mod tests {
     fn doesnt_catch_compiler_could_of_course() {
         assert_lint_count(
             "The compiler could of course detect this too",
+            "en",
             ModalOf::default(),
             0,
         );
@@ -244,6 +252,7 @@ mod tests {
     fn doesnt_catch_might_of_course_be() {
         assert_lint_count(
             "There might of course be other places where not implementing the IMemberSource might break ...",
+            "en",
             ModalOf::default(),
             0,
         );
@@ -253,6 +262,7 @@ mod tests {
     fn doesnt_catch_not_a_must_of_course() {
         assert_lint_count(
             "Not a must of course if the convention should be .ts",
+            "en",
             ModalOf::default(),
             0,
         );
@@ -262,6 +272,7 @@ mod tests {
     fn doesnt_catch_must_of_course_also() {
         assert_lint_count(
             "the schedular must of course also have run through",
+            "en",
             ModalOf::default(),
             0,
         );
@@ -271,6 +282,7 @@ mod tests {
     fn doesnt_catch_should_of_course_not() {
         assert_lint_count(
             "not being local should of course not be supported",
+            "en",
             ModalOf::default(),
             0,
         );
@@ -280,6 +292,7 @@ mod tests {
     fn doesnt_catch_would_of_course_just() {
         assert_lint_count(
             "I would of course just test this by compiling with MATX_MULTI_GPU=ON",
+            "en",
             ModalOf::default(),
             0,
         );
@@ -287,13 +300,19 @@ mod tests {
 
     #[test]
     fn doesnt_catch_to_take_on_the_full_might_of_nato() {
-        assert_lint_count("To take on the full might of NATO.", ModalOf::default(), 0);
+        assert_lint_count(
+            "To take on the full might of NATO.",
+            "en",
+            ModalOf::default(),
+            0,
+        );
     }
 
     #[test]
     fn doesnt_catch_mixed_case_of_course() {
         assert_lint_count(
             "... for now you could of Course put ...",
+            "en",
             ModalOf::default(),
             0,
         );
@@ -301,6 +320,11 @@ mod tests {
 
     #[test]
     fn catches_mixed_case_could_of_put() {
-        assert_lint_count("... for now you could of Put ...", ModalOf::default(), 1);
+        assert_lint_count(
+            "... for now you could of Put ...",
+            "en",
+            ModalOf::default(),
+            1,
+        );
     }
 }

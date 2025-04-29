@@ -22,6 +22,7 @@ mod tests {
     fn walking() {
         assert_suggestion_result(
             "The crutch let's him walk.",
+            "en",
             LetsConfusion::default(),
             "The crutch lets him walk.",
         );
@@ -29,18 +30,19 @@ mod tests {
 
     #[test]
     fn issue_426_us() {
-        assert_suggestion_result("let's us do", LetsConfusion::default(), "lets us do");
+        assert_suggestion_result("let's us do", "en", LetsConfusion::default(), "lets us do");
     }
 
     #[test]
     fn issue_426_me() {
-        assert_suggestion_result("let's me do", LetsConfusion::default(), "lets me do");
+        assert_suggestion_result("let's me do", "en", LetsConfusion::default(), "lets me do");
     }
 
     #[test]
     fn from_harper_docs() {
         assert_suggestion_result(
             "Often the longest and the shortest words are the most helpful, so lets push them first.",
+            "en",
             LetsConfusion::default(),
             "Often the longest and the shortest words are the most helpful, so let's push them first.",
         );
@@ -49,28 +51,39 @@ mod tests {
     // "play" is also a noun so in a context like "Sometimes the umpire lets play continue"
     // #[test]
     // fn issue_470_missing_apostrophe() {
-    //     assert_suggestion_result("lets play", LetsConfusion::default(), "let's play");
+    //     assert_suggestion_result("lets play", "en", LetsConfusion::default(), "let's play");
     // }
 
     // #[test]
     // fn issue_470_missing_subject() {
-    //     assert_suggestion_result("let play", LetsConfusion::default(), "let's play");
+    //     assert_suggestion_result("let play", "en", LetsConfusion::default(), "let's play");
     // }
 
     #[test]
     fn issue_470_missing_apostrophe() {
-        assert_suggestion_result("lets proceed", LetsConfusion::default(), "let's proceed");
+        assert_suggestion_result(
+            "lets proceed",
+            "en",
+            LetsConfusion::default(),
+            "let's proceed",
+        );
     }
 
     #[test]
     fn issue_470_missing_subject() {
-        assert_suggestion_result("let proceed", LetsConfusion::default(), "let's proceed");
+        assert_suggestion_result(
+            "let proceed",
+            "en",
+            LetsConfusion::default(),
+            "let's proceed",
+        );
     }
 
     #[test]
     fn issue_548() {
         assert_lint_count(
             "A simple web app that lets you fetch random issues.",
+            "en",
             LetsConfusion::default(),
             0,
         );

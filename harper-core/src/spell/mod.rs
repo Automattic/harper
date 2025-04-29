@@ -10,6 +10,7 @@ mod dictionary;
 mod fst_dictionary;
 mod merged_dictionary;
 mod mutable_dictionary;
+mod mutable_dictionary_es;
 mod rune;
 mod word_id;
 mod word_map;
@@ -126,7 +127,7 @@ mod tests {
             "punctation",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated("en"),
         );
 
         assert!(results.iter().all_unique())
@@ -158,7 +159,7 @@ mod tests {
             "Semantical",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated("en"),
         );
 
         dbg!(&results);
@@ -177,7 +178,7 @@ mod tests {
             "hvllo",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated("en"),
         );
 
         dbg!(&results);
@@ -193,7 +194,7 @@ mod tests {
             misspelled_word,
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated("en"),
         );
 
         dbg!(&results);
@@ -217,19 +218,19 @@ mod tests {
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated("en"),
         );
         let results2 = suggest_correct_spelling_str(
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated("en"),
         );
         let results3 = suggest_correct_spelling_str(
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated("en"),
         );
 
         assert_eq!(results1, results2);

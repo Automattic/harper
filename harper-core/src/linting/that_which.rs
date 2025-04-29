@@ -71,6 +71,7 @@ mod tests {
     fn catches_lowercase() {
         assert_lint_count(
             "To reiterate, that that is cool is not uncool.",
+            "en",
             ThatWhich::default(),
             1,
         );
@@ -78,13 +79,19 @@ mod tests {
 
     #[test]
     fn catches_different_cases() {
-        assert_lint_count("That that is cool is not uncool.", ThatWhich::default(), 1);
+        assert_lint_count(
+            "That that is cool is not uncool.",
+            "en",
+            ThatWhich::default(),
+            1,
+        );
     }
 
     #[test]
     fn likes_correction() {
         assert_lint_count(
             "To reiterate, that which is cool is not uncool.",
+            "en",
             ThatWhich::default(),
             0,
         );

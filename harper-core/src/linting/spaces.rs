@@ -76,13 +76,13 @@ mod tests {
     fn detects_space_before_period() {
         let source = "There is a space at the end of this sentence .";
 
-        assert_lint_count(source, Spaces, 1)
+        assert_lint_count(source, "en", Spaces, 1)
     }
 
     #[test]
     fn allows_period_without_space() {
         let source = "There isn't a space at the end of this sentence.";
 
-        assert_lint_count(source, Spaces, 0)
+        assert_lint_count(source, "en", Spaces, 0)
     }
 }
