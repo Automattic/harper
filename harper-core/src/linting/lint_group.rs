@@ -25,10 +25,12 @@ use super::despite_of::DespiteOf;
 use super::dot_initialisms::DotInitialisms;
 use super::ellipsis_length::EllipsisLength;
 use super::expand_time_shorthands::ExpandTimeShorthands;
+use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
 use super::hedging::Hedging;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
+use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::left_right_hand::LeftRightHand;
@@ -41,6 +43,7 @@ use super::modal_of::ModalOf;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nobody::Nobody;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
+use super::of_course::OfCourse;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
 use super::pattern_linter::run_on_chunk;
@@ -48,6 +51,7 @@ use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::possessive_your::PossessiveYour;
 use super::pronoun_contraction::PronounContraction;
+use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
 use super::repeated_words::RepeatedWords;
 use super::sentence_capitalization::SentenceCapitalization;
@@ -57,6 +61,7 @@ use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
+use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
@@ -303,6 +308,7 @@ impl LintGroup {
         insert_pattern_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_pattern_rule!(ChockFull, true);
+        insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_pattern_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
@@ -312,10 +318,11 @@ impl LintGroup {
         insert_pattern_rule!(DotInitialisms, true);
         insert_struct_rule!(EllipsisLength, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
-        insert_pattern_rule!(ForNoun, true);
+        insert_struct_rule!(FirstAidKit, true);
         insert_pattern_rule!(Hedging, true);
         insert_pattern_rule!(Hereby, true);
         insert_struct_rule!(HopHope, true);
+        insert_struct_rule!(HowTo, true);
         insert_pattern_rule!(HyphenateNumberDay, true);
         insert_pattern_rule!(LeftRightHand, true);
         insert_struct_rule!(LetsConfusion, true);
@@ -324,10 +331,11 @@ impl LintGroup {
         insert_struct_rule!(LongSentences, true);
         insert_struct_rule!(MergeWords, true);
         insert_pattern_rule!(ModalOf, true);
-        insert_pattern_rule!(Nobody, true);
         insert_pattern_rule!(MultipleSequentialPronouns, true);
         insert_struct_rule!(NoOxfordComma, false);
+        insert_pattern_rule!(Nobody, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
+        insert_struct_rule!(OfCourse, true);
         insert_pattern_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
         insert_pattern_rule!(Oxymorons, true);
@@ -335,6 +343,7 @@ impl LintGroup {
         insert_pattern_rule!(PiqueInterest, true);
         insert_pattern_rule!(PossessiveYour, true);
         insert_struct_rule!(PronounContraction, true);
+        insert_struct_rule!(PronounKnew, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SentenceCapitalization, true);
         insert_pattern_rule!(SomewhatSomething, true);
@@ -342,12 +351,15 @@ impl LintGroup {
         insert_struct_rule!(SpelledNumbers, false);
         insert_pattern_rule!(ThatWhich, true);
         insert_pattern_rule!(TheHowWhy, true);
+        insert_struct_rule!(TheHowWhy, true);
+        insert_struct_rule!(TheMy, true);
         insert_pattern_rule!(ThenThan, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_pattern_rule!(UseGenitive, false);
         insert_pattern_rule!(WasAloud, true);
         insert_pattern_rule!(Whereas, true);
         insert_pattern_rule!(WidelyAccepted, true);
+        insert_struct_rule!(WidelyAccepted, true);
         insert_struct_rule!(WordPressDotcom, true);
 
         out.add(
@@ -361,6 +373,12 @@ impl LintGroup {
             Box::new(InflectedVerbAfterTo::new(dictionary.clone(), dialect)),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
+
+        out.add(
+            "SentenceCapitalization",
+            Box::new(SentenceCapitalization::new(dictionary.clone(), dialect)),
+        );
+        out.config.set_rule_enabled("SentenceCapitalization", true);
 
         out
     }

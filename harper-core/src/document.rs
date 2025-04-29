@@ -249,6 +249,14 @@ impl Document {
         self.tokens.get(index)
     }
 
+    /// Get a token at a signed offset from a base index, or None if out of bounds.
+    pub fn get_token_offset(&self, base: usize, offset: isize) -> Option<&Token> {
+        match base.checked_add_signed(offset) {
+            None => None,
+            Some(idx) => self.get_token(idx),
+        }
+    }
+
     /// Get an iterator over all the tokens contained in the document.
     pub fn tokens(&self) -> impl Iterator<Item = &Token> + '_ {
         self.tokens.iter()
@@ -257,6 +265,19 @@ impl Document {
     /// Get an iterator over all the tokens contained in the document.
     pub fn fat_tokens(&self) -> impl Iterator<Item = FatToken> + '_ {
         self.tokens().map(|token| token.to_fat(&self.source))
+    }
+
+    /// Get the next or previous word token relative to a base index, if separated by whitespace.
+    /// Returns None if the next/previous token is not a word or does not exist.
+    pub fn get_next_word_from_offset(&self, base: usize, offset: isize) -> Option<&Token> {
+        // Look for whitespace at the expected offset
+        if !self.get_token_offset(base, offset)?.kind.is_whitespace() {
+            return None;
+        }
+        // Now look beyond the whitespace for a word token
+        let word_token = self.get_token_offset(base, offset + offset.signum());
+        let word_token = word_token?;
+        word_token.kind.is_word().then_some(word_token)
     }
 
     /// Get an iterator over all the tokens contained in the document.
@@ -749,5 +770,77 @@ mod tests {
     #[test]
     fn parses_short_ellipsis() {
         assert_token_count("..", 1);
+    }
+
+    #[test]
+    fn selects_token_at_offset() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let tok = doc.get_token_offset(1, -1).unwrap();
+
+        assert_eq!(tok.span, Span::new(0, 3));
+    }
+
+    #[test]
+    fn cant_select_token_before_start() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let tok = doc.get_token_offset(0, -1);
+
+        assert!(tok.is_none());
+    }
+
+    #[test]
+    fn select_next_word_pos_offset() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let bar = doc.get_next_word_from_offset(0, 1).unwrap();
+        let bar = doc.get_span_content(&bar.span);
+        assert_eq!(bar, ['b', 'a', 'r']);
+    }
+
+    #[test]
+    fn select_next_word_neg_offset() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let bar = doc.get_next_word_from_offset(2, -1).unwrap();
+        let bar = doc.get_span_content(&bar.span);
+        assert_eq!(bar, ['F', 'o', 'o']);
+    }
+
+    #[test]
+    fn cant_select_next_word_not_from_whitespace() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let tok = doc.get_next_word_from_offset(0, 2);
+
+        assert!(tok.is_none());
+    }
+
+    #[test]
+    fn cant_select_next_word_before_start() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let tok = doc.get_next_word_from_offset(0, -1);
+
+        assert!(tok.is_none());
+    }
+
+    #[test]
+    fn cant_select_next_word_with_punctuation_instead_of_whitespace() {
+        let doc = Document::new_plain_english_curated("Foo, bar, baz");
+
+        let tok = doc.get_next_word_from_offset(0, 1);
+
+        assert!(tok.is_none());
+    }
+
+    #[test]
+    fn cant_select_next_word_with_punctuation_after_whitespace() {
+        let doc = Document::new_plain_english_curated("Foo \"bar\", baz");
+
+        let tok = doc.get_next_word_from_offset(0, 1);
+
+        assert!(tok.is_none());
     }
 }

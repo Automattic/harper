@@ -92,7 +92,7 @@ fn to_lower_word(word: &[char]) -> Cow<'_, [char]> {
 
 /// Checks whether a provided word begins with a vowel _sound_.
 ///
-/// It was produced through trail and error.
+/// It was produced through trial and error.
 /// Matches with 99.71% and 99.77% of vowels and non-vowels in the
 /// Carnegie-Mellon University word -> pronunciation dataset.
 fn starts_with_vowel(word: &[char]) -> bool {

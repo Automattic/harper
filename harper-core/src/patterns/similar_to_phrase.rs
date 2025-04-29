@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use crate::{Document, Token, TokenKind};
 
 use super::{
@@ -59,14 +61,10 @@ impl SimilarToPhrase {
 }
 
 impl Pattern for SimilarToPhrase {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        let exact_match = self.phrase.matches(tokens, source);
-        let fuzzy_match = self.fuzzy_phrase.matches(tokens, source);
-
-        if (exact_match == 0) && fuzzy_match > 0 {
-            exact_match.max(fuzzy_match)
-        } else {
-            0
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        if self.phrase.matches(tokens, source).is_some() {
+            return None;
         }
+        self.fuzzy_phrase.matches(tokens, source)
     }
 }

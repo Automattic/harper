@@ -1,22 +1,52 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 set -eo pipefail
 
-pnpm api-extractor run 
+pnpm api-extractor run
 pnpm api-documenter markdown -i temp
 
-rm -r html || true
-mkdir html || true
+html_dir="./html"
+if [[ -d "$html_dir" ]]; then
+	echo "Deleting old output from ${html_dir}"
+	rm -r "$html_dir" || true
+fi
+mkdir "$html_dir" || true
 
-echo Rendering HTML...
+harperjs_docs_dir="../web/static/docs/harperjs"
+if [[ -d "$harperjs_docs_dir" ]]; then
+	echo "Deleting old output from ${harperjs_docs_dir}"
+	rm -r "$harperjs_docs_dir" || true
+fi
+mkdir -p "$harperjs_docs_dir" || true
 
-parallel '
-  BASE=$(basename {} .md)
-  pandoc {} -o html/$BASE.html
-  perl -pi -e "s/\"\\K([^\"]+)\.md(?=\")/\1.html/g" html/$BASE.html
-  echo "<link rel=\"stylesheet\" href=\"https://unpkg.com/mvp.css\">" >> "html/$BASE.html"
-' ::: ./markdown/*.md
+cat <<- PANDOC_FILTER > "./temp/md_to_html.lua"
+	function Link(elem)
+	  elem.target = string.gsub(elem.target, "%.md$", ".html")
+	  return elem
+	end
+PANDOC_FILTER
 
-rm -r ../web/static/docs/harperjs || true
-mkdir -p ../web/static/docs/harperjs || true
-mv -f html ../web/static/docs/harperjs/ref 
+echo "Rendering HTML..."
+if command -v parallel &> /dev/null; then
+	parallel '
+        base=$(basename {} .md)
+        pandoc -s \
+            -V pagetitle="${base#"harper.js."} - Harper" \
+            -V description-meta="API reference documentation for harper.js" \
+            -V document-css="true" \
+            -L "./temp/md_to_html.lua" \
+            -o "html/${base}.html" {}
+    ' ::: ./markdown/*.md
+else
+	echo "parallel not found, falling back to sequential processing"
+	for file in ./markdown/*.md; do
+		base=$(basename "$file" .md)
+		pandoc -s \
+			-V pagetitle="${base#"harper.js."} - Harper" \
+			-V description-meta="API reference documentation for harper.js" \
+			-V document-css="true" \
+			-L "./temp/md_to_html.lua" \
+			-o "html/${base}.html" "$file"
+	done
+fi
+mv -f "$html_dir" "${harperjs_docs_dir}/ref"

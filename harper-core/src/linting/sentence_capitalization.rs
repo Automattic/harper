@@ -1,14 +1,26 @@
-use itertools::Itertools;
-
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::{Token, TokenKind, TokenStringExt};
+use crate::{Dialect, Dictionary, Token, TokenKind, TokenStringExt};
 
-#[derive(Debug, Clone, Copy, Default)]
-pub struct SentenceCapitalization;
+pub struct SentenceCapitalization<T>
+where
+    T: Dictionary,
+{
+    dictionary: T,
+    dialect: Dialect,
+}
 
-impl Linter for SentenceCapitalization {
+impl<T: Dictionary> SentenceCapitalization<T> {
+    pub fn new(dictionary: T, dialect: Dialect) -> Self {
+        Self {
+            dictionary,
+            dialect,
+        }
+    }
+}
+
+impl<T: Dictionary> Linter for SentenceCapitalization<T> {
     /// A linter that checks to make sure the first word of each sentence is
     /// capitalized.
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
@@ -38,20 +50,39 @@ impl Linter for SentenceCapitalization {
                         continue;
                     }
 
-                    let letters = document.get_span_content(&first_word.span);
+                    let word_chars = document.get_span_content(&first_word.span);
 
-                    if let Some(first_letter) = letters.first() {
-                        if first_letter.is_alphabetic() && !first_letter.is_uppercase() {
+                    if let Some(first_char) = word_chars.first() {
+                        if first_char.is_alphabetic() && !first_char.is_uppercase() {
+                            if let Some(canonical_spelling) =
+                                self.dictionary.get_correct_capitalization_of(word_chars)
+                            {
+                                // Skip if it's a proper noun or contains uppercase letters before a separator
+                                if first_word.kind.is_proper_noun() {
+                                    continue;
+                                }
+
+                                // Check for uppercase letters in the rest of the word before any separators
+                                if canonical_spelling
+                                    .iter()
+                                    .skip(1)
+                                    .take_while(|&c| !c.is_whitespace() && *c != '-' && *c != '\'')
+                                    .any(|&c| c.is_uppercase())
+                                {
+                                    continue;
+                                }
+                            }
+
                             lints.push(Lint {
                                 span: first_word.span.with_len(1),
                                 lint_kind: LintKind::Capitalization,
                                 suggestions: vec![Suggestion::ReplaceWith(
-                                    first_letter.to_uppercase().collect_vec(),
+                                    [first_char.to_ascii_uppercase()].to_vec(),
                                 )],
                                 priority: 31,
                                 message: "This sentence does not start with a capital letter"
                                     .to_string(),
-                            })
+                            });
                         }
                     }
                 }
@@ -87,6 +118,8 @@ fn is_full_sentence(toks: &[Token]) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use crate::{Dialect, FstDictionary};
+
     use super::super::tests::assert_lint_count;
     use super::SentenceCapitalization;
 
@@ -94,7 +127,7 @@ mod tests {
     fn catches_basic() {
         assert_lint_count(
             "there is no way she is not guilty.",
-            SentenceCapitalization,
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
             1,
         )
     }
@@ -103,7 +136,7 @@ mod tests {
     fn no_period() {
         assert_lint_count(
             "there is no way she is not guilty",
-            SentenceCapitalization,
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
             1,
         )
     }
@@ -112,7 +145,7 @@ mod tests {
     fn two_sentence() {
         assert_lint_count(
             "i have complete conviction in this. she is absolutely guilty",
-            SentenceCapitalization,
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
             2,
         )
     }
@@ -121,7 +154,7 @@ mod tests {
     fn start_with_number() {
         assert_lint_count(
             "53 is the length of the longest word.",
-            SentenceCapitalization,
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
             0,
         );
     }
@@ -130,7 +163,7 @@ mod tests {
     fn ignores_unlintable() {
         assert_lint_count(
             "[`misspelled_word`] is assumed to be quite small (n < 100). ",
-            SentenceCapitalization,
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
             0,
         )
     }
@@ -139,7 +172,7 @@ mod tests {
     fn unfazed_unlintable() {
         assert_lint_count(
             "the linter should not be affected by `this` unlintable.",
-            SentenceCapitalization,
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
             1,
         )
     }
@@ -148,7 +181,7 @@ mod tests {
     fn unfazed_ellipsis() {
         assert_lint_count(
             "the linter should not be affected by... that ellipsis.",
-            SentenceCapitalization,
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
             1,
         )
     }
@@ -157,13 +190,62 @@ mod tests {
     fn unfazed_comma() {
         assert_lint_count(
             "the linter should not be affected by, that comma.",
-            SentenceCapitalization,
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
             1,
         )
     }
 
     #[test]
     fn issue_228_allows_labels() {
-        assert_lint_count("python lsp (fork of pyright)", SentenceCapitalization, 0)
+        assert_lint_count(
+            "python lsp (fork of pyright)",
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
+            0,
+        )
+    }
+
+    #[test]
+    fn allow_camel_case_trademarks() {
+        // Some words are marked as proper nouns in `dictionary.dict` but are lower camel case.
+        assert_lint_count(
+            "macOS 16 could be called something like Redwood or Shasta",
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
+            0,
+        )
+    }
+
+    // TODO: This can't work because currently hyphens are not included in tokenized words
+    // TODO: although they are now permitted in `dictionary.dict`
+    // #[test]
+    // fn uppercase_unamerican_at_start() {
+    //     assert_lint_count("un-American starts with a lowercase letter and contains an uppercase letter, but is not a proper noun or trademark.",
+    //         SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
+    //         1,
+    //     )
+    // }
+
+    #[test]
+    fn allow_lowercase_proper_nouns() {
+        // A very few words are marked as proper nouns even though they're all lowercase.
+        // https://css-tricks.com/start-sentence-npm/
+        assert_lint_count(
+            concat!(
+                "npm is the world's largest software registry. Open source developers from every ",
+                "continent use npm to share and borrow packages, and many organizations use npm to ",
+                "manage private development as well."
+            ),
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
+            0,
+        )
+    }
+
+    #[test]
+    fn allow_lower_camel_case_non_proper_nouns() {
+        // A very few words are not considered proper nouns but still start with a lowercase letter that shouldn't be uppercased at the start of a sentence.
+        assert_lint_count(
+            "mRNA is synthesized from the coding sequence of a gene during the transcriptional process.",
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
+            0,
+        )
     }
 }
