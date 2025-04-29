@@ -1,5 +1,3 @@
-use std::num::NonZeroUsize;
-
 use super::Pattern;
 
 use crate::{CharString, Token};
@@ -39,7 +37,7 @@ impl Word {
 }
 
 impl Pattern for Word {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         let tok = tokens.first()?;
         if !tok.kind.is_word() {
             return None;
@@ -58,7 +56,7 @@ impl Pattern for Word {
                 .all(|(a, b)| a.eq_ignore_ascii_case(b))
         };
 
-        NonZeroUsize::new(if eq { 1 } else { 0 })
+        if eq { Some(1) } else { None }
     }
 }
 
