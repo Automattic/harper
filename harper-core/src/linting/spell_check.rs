@@ -131,10 +131,14 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 mod tests {
     use crate::{
         Dialect, FstDictionary,
-        linting::tests::{assert_lint_count, assert_suggestion_result},
+        linting::tests::{
+            assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
+        },
     };
 
     use super::SpellCheck;
+
+    // Capitalization tests
 
     #[test]
     fn america_capitalized() {
@@ -144,6 +148,8 @@ mod tests {
             "The word America should be capitalized.",
         );
     }
+
+    // Dialect tests
 
     #[test]
     fn harper_automattic_capitalized() {
@@ -286,6 +292,18 @@ mod tests {
             "In general, utes have unibody construction while pickups have frames.",
             SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
             0,
+        );
+    }
+
+    // Unit tests for specific spell check corrections
+
+    #[test]
+    fn corrects_abandonedware_1131_1166() {
+        // assert_suggestion_result(
+        assert_top3_suggestion_result(
+            "Abandonedware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "Abandonware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
         );
     }
 }
