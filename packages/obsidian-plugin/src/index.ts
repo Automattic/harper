@@ -1,7 +1,7 @@
 import type { Extension } from '@codemirror/state';
 import type { LintConfig, Linter, Suggestion } from 'harper.js';
 import {
-	type Dialect,
+	Dialect,
 	LocalLinter,
 	SuggestionKind,
 	WorkerLinter,
@@ -39,6 +39,7 @@ export default class HarperPlugin extends Plugin {
 	private harper: Linter;
 	private editorExtensions: Extension[];
 	private delay: number;
+	private dialectSpan: HTMLSpanElement | null = null;
 
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
@@ -127,14 +128,43 @@ export default class HarperPlugin extends Plugin {
 		return await this.harper.getLintDescriptions();
 	}
 
+	private getDialectStatus(dialectNum: Dialect): string {
+		const code = {
+			American: 'US',
+			British: 'GB',
+			Australian: 'AU',
+			Canadian: 'CA',
+		}[Dialect[dialectNum]];
+		if (code === undefined) {
+			return '';
+		}
+		return `${code
+			.split('')
+			.map((c) => String.fromCodePoint(c.charCodeAt(0) + 127397))
+			.join('')}${code}`;
+	}
+
 	private setupStatusBar() {
 		/** @type HTMLElement */
 		const statusBarItem = this.addStatusBarItem();
 		statusBarItem.className += ' mod-clickable';
 
 		const button = document.createElement('span');
-		button.style = 'width:24px';
-		button.innerHTML = logoSvg;
+		button.style.display = 'flex';
+		button.style.alignItems = 'center';
+
+		const logo = document.createElement('span');
+		logo.style.width = '24px';
+		logo.innerHTML = logoSvg;
+		button.appendChild(logo);
+
+		const dialect = document.createElement('span');
+		this.dialectSpan = dialect;
+
+		this.harper.getDialect().then((dialectNum) => {
+			this.updateStatusBar(dialectNum);
+			button.appendChild(dialect);
+		});
 
 		button.addEventListener('click', (event) => {
 			const menu = new Menu();
@@ -195,7 +225,6 @@ export default class HarperPlugin extends Plugin {
 			async (view) => {
 				const text = view.state.doc.sliceString(-1);
 				const chars = toArray(text);
-				console.log(text);
 
 				const lints = await this.harper.lint(text);
 
@@ -257,7 +286,7 @@ export default class HarperPlugin extends Plugin {
 						title: lint.lint_kind(),
 						message: lint.message(),
 						ignore: async () => {
-							await this.harper.ignoreLint(lint);
+							await this.harper.ignoreLint(text, lint);
 							await this.reinitialize();
 						},
 						actions,
@@ -268,6 +297,12 @@ export default class HarperPlugin extends Plugin {
 				delay: this.delay,
 			},
 		);
+	}
+
+	updateStatusBar(dialect: Dialect) {
+		if (this.dialectSpan != null) {
+			this.dialectSpan.innerHTML = this.getDialectStatus(dialect);
+		}
 	}
 }
 

@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{num::NonZeroUsize, sync::Arc};
 
 use crate::{CharString, Dictionary, FstDictionary, Token, WordMetadata};
 
@@ -57,20 +57,20 @@ impl SplitCompoundWord {
 }
 
 impl Pattern for SplitCompoundWord {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        let inner_match = self.inner.matches(tokens, source);
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        let inner_match = self.inner.matches(tokens, source)?;
 
-        if inner_match != 3 {
-            return 0;
+        if inner_match.get() != 3 {
+            return None;
         }
 
         let a = &tokens[0];
         let b = &tokens[2];
 
         if self.get_merged_word(a, b, source).is_some() {
-            return inner_match;
+            return Some(inner_match);
         }
 
-        0
+        None
     }
 }

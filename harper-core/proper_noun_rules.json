@@ -514,10 +514,15 @@
 	},
 	"NotablePlaces": {
 		"canonical": [
+			"Bretton Woods",
 			"Darien Gap",
+			"Des Moines",
+			"Hong Kong",
 			"Las Palmas",
 			"Las Vegas",
 			"Los Angeles",
+			"New York",
+			"Niagara Falls",
 			"Novi Sad",
 			"Panama Canal",
 			"Rio de Janeiro",
@@ -528,5 +533,9 @@
 	"ProperNouns": {
 		"canonical": ["Pax Americana"],
 		"description": "Ensure proper capitalization of proper nouns."
+	},
+	"CompaniesProductsAndTrademarks": {
+		"canonical": ["Stack Exchange", "Stack Overflow"],
+		"description": "Ensure proper capitalization of companies, products, and trademarks."
 	}
 }

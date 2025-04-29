@@ -2,7 +2,8 @@
 title: Set Up Your Environment
 ---
 
-To use the tooling required to build and debug Harper, you'll need the following programs available in your `$PATH`.
+To use the tooling required to build and debug Harper, you'll need the following programs available in your `$PATH`. 
+For Nix users, we provide a [Nix development shell](#Nix-development-shell) to setup all the necessary tooling automatically.
 
 - [`just`](https://github.com/casey/just)
 - `bash`
@@ -34,3 +35,15 @@ just --list
 
 Before making any modifications, we highly recommend that you run `just setup` to populate your build caches and download all dependencies.
 If you see a Visual Studio code window pop open, don't worry! That's just a part of our integration tests.
+
+## Nix development shell
+
+If you use [nix-direnv](https://github.com/nix-community/nix-direnv), the shell will be loaded automatically when you change into the project directory.
+
+Otherwise, run:
+
+```bash
+nix develop
+```
+
+This will start a bash shell that provides the build environment with everything you need to start contributing!

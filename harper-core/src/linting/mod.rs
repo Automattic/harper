@@ -20,12 +20,15 @@ mod despite_of;
 mod dot_initialisms;
 mod ellipsis_length;
 mod expand_time_shorthands;
+mod first_aid_kit;
 mod for_noun;
 mod hedging;
 mod hereby;
 mod hop_hope;
 mod hyphenate_number_day;
 mod inflected_verb_after_to;
+mod it_is;
+mod it_would_be;
 mod left_right_hand;
 mod lets_confusion;
 mod likewise;
@@ -42,6 +45,7 @@ mod multiple_sequential_pronouns;
 mod no_oxford_comma;
 mod nobody;
 mod number_suffix_capitalization;
+mod of_course;
 mod out_of_date;
 mod oxford_comma;
 mod oxymorons;
@@ -50,6 +54,7 @@ mod phrase_corrections;
 mod pique_interest;
 mod possessive_your;
 mod pronoun_contraction;
+mod pronoun_knew;
 mod proper_noun_capitalization_linters;
 mod repeated_words;
 mod sentence_capitalization;
@@ -60,6 +65,7 @@ mod spelled_numbers;
 mod suggestion;
 mod that_which;
 mod the_how_why;
+mod the_my;
 mod then_than;
 mod unclosed_quotes;
 mod use_genitive;
@@ -106,6 +112,7 @@ pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
 pub use no_oxford_comma::NoOxfordComma;
 pub use nobody::Nobody;
 pub use number_suffix_capitalization::NumberSuffixCapitalization;
+pub use of_course::OfCourse;
 pub use out_of_date::OutOfDate;
 pub use oxford_comma::OxfordComma;
 pub use oxymorons::Oxymorons;
@@ -122,6 +129,7 @@ pub use spelled_numbers::SpelledNumbers;
 pub use suggestion::Suggestion;
 pub use that_which::ThatWhich;
 pub use the_how_why::TheHowWhy;
+pub use the_my::TheMy;
 pub use then_than::ThenThan;
 pub use unclosed_quotes::UnclosedQuotes;
 pub use use_genitive::UseGenitive;
@@ -238,44 +246,5 @@ mod tests {
     #[track_caller]
     pub fn assert_suggestion_result(text: &str, linter: impl Linter, expected_result: &str) {
         assert_nth_suggestion_result(text, linter, expected_result, 0);
-    }
-
-    /// Runs a provided linter on text, applies each suggestion from each lint in turn
-    /// and asserts whether any of the results is equal to a given value.
-    #[track_caller]
-    pub fn assert_any_suggestion_result(
-        text: &str,
-        mut linter: impl Linter,
-        expected_result: &str,
-    ) {
-        let test = Document::new_from_vec(
-            text.chars().collect::<Vec<char>>().into(),
-            &PlainEnglish,
-            &FstDictionary::curated(),
-        );
-        let lints = linter.lint(&test);
-
-        if lints.iter().any(|lint| {
-            lint.suggestions.iter().any(|suggestion| {
-                let mut text_chars = text.chars().collect::<Vec<_>>();
-                suggestion.apply(lint.span, &mut text_chars);
-                text_chars.iter().collect::<String>() == expected_result
-            })
-        }) {
-            return;
-        }
-
-        panic!(
-            "No suggestion produced the expected result \"{}\".\n\n\
-            Original text: \"{}\"\n\n\
-            Available suggestions:\n{}",
-            expected_result,
-            text,
-            lints
-                .iter()
-                .flat_map(|l| l.suggestions.iter())
-                .map(|s| format!("- {}\n", s))
-                .collect::<String>()
-        );
     }
 }

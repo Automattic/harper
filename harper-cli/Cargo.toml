@@ -2,20 +2,19 @@
 name = "harper-cli"
 version = "0.1.0"
 edition = "2021"
-private = true
 publish = false
 repository = "https://github.com/automattic/harper"
 
 [dependencies]
-anyhow = "1.0.97"
+anyhow = "1.0.98"
 ariadne = "0.4.1"
-clap = { version = "4.5.34", features = ["derive", "string"] }
-harper-stats = { path = "../harper-stats", version = "0.28.0" }
+clap = { version = "4.5.37", features = ["derive", "string"] }
+harper-stats = { path = "../harper-stats", version = "0.31.0" }
 dirs = "6.0.0"
-harper-literate-haskell = { path = "../harper-literate-haskell", version = "0.28.0" }
-harper-core = { path = "../harper-core", version = "0.28.0" }
-harper-comments = { path = "../harper-comments", version = "0.28.0" }
-harper-typst = { path = "../harper-typst", version = "0.28.0" }
+harper-literate-haskell = { path = "../harper-literate-haskell", version = "0.31.0" }
+harper-core = { path = "../harper-core", version = "0.31.0" }
+harper-comments = { path = "../harper-comments", version = "0.31.0" }
+harper-typst = { path = "../harper-typst", version = "0.31.0" }
 hashbrown = "0.15.2"
 serde = { version = "1.0.219", features = ["derive"] }
 serde_json = "1.0.140"
