@@ -15,7 +15,7 @@ impl Default for Dashes {
         let em_dash = SequencePattern::default()
             .then_hyphen()
             .then_hyphen()
-            .then_hyphen();
+            .then_one_or_more_hyphens();
 
         let pattern = EitherPattern::new(vec![Box::new(em_dash), Box::new(en_dash)]);
 
@@ -42,7 +42,7 @@ impl PatternLinter for Dashes {
                 message: "A sequence of hyphens is not an en dash.".to_owned(),
                 priority: 63,
             }),
-            3 => Some(Lint {
+            3.. => Some(Lint {
                 span,
                 lint_kind,
                 suggestions: vec![Suggestion::ReplaceWith(vec!['—'])],
@@ -85,5 +85,10 @@ mod tests {
     #[test]
     fn no_overlaps() {
         assert_suggestion_count("'There is no box' --- Scott", Dashes::default(), 1);
+    }
+
+    #[test]
+    fn single_lint_for_long_hyphen_sequences() {
+        assert_suggestion_count("'There is no box' ------ Scott", Dashes::default(), 1);
     }
 }
