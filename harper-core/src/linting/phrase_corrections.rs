@@ -1177,6 +1177,12 @@ pub fn lint_group() -> LintGroup {
             "The correct term is `as well` with a space.",
             "Corrects `aswell`, which should be written as two words."
         ),
+        "ExpandPullRequest" => (
+            ["pr"],
+            ["pull request"],
+            "Use `pull request` instead of `pr`",
+            "Expands the abbreviation `pr` to `pull request` for clarity."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
