@@ -2506,4 +2506,13 @@ mod tests {
             "format Cargo.toml as well #5893 - rust-lang/rustfmt",
         );
     }
+
+    #[test]
+    fn expand_pull_request() {
+        assert_suggestion_result(
+            "I'm implementing the feature in a PR.",
+            lint_group(),
+            "I'm implementing the feature in a pull request.",
+        );
+    }
 }
