@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use super::Pattern;
 use smallvec::SmallVec;
 
@@ -21,6 +23,10 @@ impl WordSet {
         }
     }
 
+    pub fn contains(&self, word: &str) -> bool {
+        self.words.contains(&word.chars().collect())
+    }
+
     /// Create a new word set that matches against any word in the provided list.
     pub fn new(words: &[&'static str]) -> Self {
         let mut set = Self::default();
@@ -34,13 +40,10 @@ impl WordSet {
 }
 
 impl Pattern for WordSet {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        let Some(tok) = tokens.first() else {
-            return 0;
-        };
-
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        let tok = tokens.first()?;
         if !tok.kind.is_word() {
-            return 0;
+            return None;
         }
 
         let tok_chars = tok.span.get_content(source);
@@ -56,11 +59,11 @@ impl Pattern for WordSet {
                 .all(|(a, b)| a.eq_ignore_ascii_case(b));
 
             if partial_match {
-                return 1;
+                return NonZeroUsize::new(1);
             }
         }
 
-        0
+        None
     }
 }
 

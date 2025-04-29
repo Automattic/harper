@@ -49,8 +49,10 @@ export class HarperSettingTab extends PluginSettingTab {
 				.addOption(Dialect.Australian.toString(), 'Australian')
 				.setValue((this.settings.dialect ?? Dialect.American).toString())
 				.onChange(async (value) => {
-					this.settings.dialect = Number.parseInt(value);
+					const dialect = Number.parseInt(value);
+					this.settings.dialect = dialect;
 					await this.plugin.initializeFromSettings(this.settings);
+					this.plugin.updateStatusBar(dialect);
 				});
 		});
 

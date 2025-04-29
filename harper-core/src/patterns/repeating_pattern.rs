@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use super::Pattern;
 use crate::Token;
 
@@ -19,22 +21,20 @@ impl RepeatingPattern {
 }
 
 impl Pattern for RepeatingPattern {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
         let mut tok_cursor = 0;
         let mut repetition = 0;
 
         loop {
             let match_len = self.inner.matches(&tokens[tok_cursor..], source);
 
-            if match_len == 0 {
-                if repetition >= self.required_repetitions {
-                    return tok_cursor;
-                } else {
-                    return 0;
-                }
-            } else {
-                tok_cursor += match_len;
+            if let Some(match_len) = match_len {
+                tok_cursor += match_len.get();
                 repetition += 1;
+            } else if repetition >= self.required_repetitions {
+                return NonZeroUsize::new(tok_cursor);
+            } else {
+                return None;
             }
         }
     }
@@ -42,6 +42,8 @@ impl Pattern for RepeatingPattern {
 
 #[cfg(test)]
 mod tests {
+    use std::num::NonZeroUsize;
+
     use super::RepeatingPattern;
     use crate::Document;
     use crate::patterns::{AnyPattern, Pattern};
@@ -55,7 +57,7 @@ mod tests {
 
         assert_eq!(
             pat.matches(doc.get_tokens(), doc.get_source()),
-            doc.get_tokens().len()
+            NonZeroUsize::new(doc.get_tokens().len())
         )
     }
 
@@ -64,6 +66,6 @@ mod tests {
         let doc = Document::new_plain_english_curated("No match");
         let pat = RepeatingPattern::new(Box::new(AnyPattern), 4);
 
-        assert_eq!(pat.matches(doc.get_tokens(), doc.get_source()), 0)
+        assert_eq!(pat.matches(doc.get_tokens(), doc.get_source()), None)
     }
 }
