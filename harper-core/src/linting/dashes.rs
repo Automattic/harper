@@ -87,6 +87,15 @@ mod tests {
     }
 
     #[test]
+    fn suggests_em_dash_for_long_hyphen_sequences() {
+        assert_suggestion_result(
+            "'There is no box' ------ Scott",
+            Dashes::default(),
+            &format!("'There is no box' {EM_DASH} Scott"),
+        );
+    }
+
+    #[test]
     fn no_overlaps() {
         assert_suggestion_count("'There is no box' --- Scott", Dashes::default(), 1);
     }
