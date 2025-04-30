@@ -148,6 +148,8 @@ impl Document {
                 *meta = found_meta.cloned()
             }
         }
+
+        self.known_preposition();
     }
 
     fn uncached_article_pattern() -> Lrc<SequencePattern> {
@@ -172,6 +174,26 @@ impl Document {
             if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start + 2].kind {
                 metadata.noun = None;
                 metadata.verb = None;
+            }
+        }
+    }
+
+    /// A proposition-like word followed by a determiner or number is typically
+    /// really a preposition.
+    fn known_preposition(&mut self) {
+        let pattern = SequencePattern::default()
+            .then(WordSet::new(&[
+                "in", "at", "of", "on", "to", "for", "by", "with",
+            ]))
+            .then_whitespace()
+            .then(|t: &Token, _source: &[char]| t.kind.is_determiner() || t.kind.is_number());
+
+        for m in pattern.find_all_matches_in_doc(self) {
+            if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start].kind {
+                metadata.noun = None;
+                metadata.pronoun = None;
+                metadata.verb = None;
+                metadata.adjective = None;
             }
         }
     }
