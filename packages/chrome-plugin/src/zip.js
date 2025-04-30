@@ -6,5 +6,5 @@ const manifest = require('../build/manifest.json');
 
 gulp
 	.src('build/**', { encoding: false })
-	.pipe(zip(`harper-chrome-plugin.zip`))
+	.pipe(zip('harper-chrome-plugin.zip'))
 	.pipe(gulp.dest('package'));
