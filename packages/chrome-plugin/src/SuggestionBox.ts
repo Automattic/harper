@@ -6,20 +6,26 @@ import type { UnpackedLint, UnpackedSuggestion } from './unpackLint';
 
 function header(title: string, color: string): any {
 	const headerStyle: { [key: string]: string } = {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'space-between',
 		fontWeight: '600',
-		fontSize: '1rem',
-		marginBottom: '0.5rem',
-		color: '#24292f',
+		fontSize: '14px',
+		lineHeight: '20px',
+		color: '#1F2328',
+		paddingBottom: '8px',
+		marginBottom: '8px',
 		borderBottom: `2px solid ${color}`,
+		userSelect: 'none',
 	};
 	return h('div', { style: headerStyle }, title);
 }
 
 function body(message: string): any {
 	const bodyStyle: { [key: string]: string } = {
-		fontSize: '0.875rem',
-		color: '#57606a',
-		marginBottom: '1rem',
+		fontSize: '14px',
+		lineHeight: '20px',
+		color: '#57606A',
 	};
 	return h('div', { style: bodyStyle }, [h('p', message)]);
 }
@@ -30,49 +36,68 @@ function button(
 	onClick: (event: Event) => void,
 ): any {
 	const buttonStyle: { [key: string]: string } = {
+		display: 'inline-flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		gap: '4px',
 		cursor: 'pointer',
 		border: 'none',
-		borderRadius: '4px',
-		padding: '0.5rem 1rem',
-		fontSize: '0.875rem',
-		fontWeight: '500',
+		borderRadius: '6px',
+		padding: '6px 12px',
+		minHeight: '28px',
+		fontSize: '13px',
+		fontWeight: '600',
+		lineHeight: '20px',
+		transition: 'background 120ms ease',
 	};
 	const combinedStyle = { ...buttonStyle, ...extraStyle };
 	return h('button', { style: combinedStyle, onclick: onClick }, label);
 }
 
-function footer(children: any) {
-	const footerStyle: { [key: string]: string } = {
+function footer(leftChildren: any, rightChildren: any) {
+	const childContStyle: { [key: string]: string } = {
 		display: 'flex',
-		gap: '0.5rem',
-		padding: '0.5rem',
+		flexWrap: 'wrap',
 		justifyContent: 'flex-end',
+		gap: '8px',
 	};
-	return h('div', { style: footerStyle }, children);
+
+	const left = h('div', { style: childContStyle }, leftChildren);
+	const right = h('div', { style: childContStyle }, rightChildren);
+
+	return h(
+		'div',
+		{
+			style: {
+				display: 'flex',
+				flexWrap: 'wrap',
+				justifyContent: 'space-between',
+				padding: '4px',
+				gap: '16px',
+			},
+		},
+		[left, right],
+	);
 }
 
 function addToDictionary(box: LintBox): any {
 	const buttonStyle: { [key: string]: string } = {
-		background: '#852387',
-		color: '#ffffff',
+		background: '#8250DF',
+		color: '#FFFFFF',
 	};
-
-	if (box.lint.lint_kind == 'Spelling') {
-		return button('Add to Dictionary', buttonStyle, () => {
-			ProtocolClient.addToUserDictionary(box.lint.problem_text);
-		});
-	}
+	return button('Add to Dictionary', buttonStyle, () => {
+		ProtocolClient.addToUserDictionary(box.lint.problem_text);
+	});
 }
 
 function suggestions(
 	suggestions: UnpackedSuggestion[],
-	apply: (sug: UnpackedSuggestion) => void,
+	apply: (s: UnpackedSuggestion) => void,
 ): any {
 	const suggestionButtonStyle: { [key: string]: string } = {
-		background: '#238636',
-		color: '#ffffff',
+		background: '#2DA44E',
+		color: '#FFFFFF',
 	};
-
 	return suggestions.map((s: UnpackedSuggestion) => {
 		const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
 		return button(label, suggestionButtonStyle, () => {
@@ -95,15 +120,18 @@ export default function SuggestionBox(box: LintBox, close: () => void) {
 		top: bottom ? '' : `${top}px`,
 		bottom: bottom ? `${bottom}px` : '',
 		left: `${left}px`,
-		maxWidth: '400px',
+		maxWidth: '420px',
 		maxHeight: '400px',
-		background: '#ffffff',
-		border: '1px solid #d0d7de',
-		borderRadius: '6px',
-		boxShadow: '0 2px 4px rgba(27, 31, 35, 0.15)',
-		padding: '1rem',
+		overflowY: 'auto',
+		background: '#FFFFFF',
+		border: '1px solid #D0D7DE',
+		borderRadius: '8px',
+		boxShadow: '0 4px 12px rgba(140,149,159,0.3)',
+		padding: '16px',
+		display: 'flex',
+		flexDirection: 'column',
 		zIndex: '5000',
-		fontFamily: 'sans-serif',
+		fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif',
 		pointerEvents: 'auto',
 	};
 
@@ -111,11 +139,12 @@ export default function SuggestionBox(box: LintBox, close: () => void) {
 		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind)),
 		body(box.lint.message),
 		footer(
+			box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
+
 			suggestions(box.lint.suggestions, (v) => {
 				box.applySuggestion(v);
 				close();
 			}),
 		),
-		footer(addToDictionary(box)),
 	]);
 }
