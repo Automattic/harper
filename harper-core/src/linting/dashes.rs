@@ -15,12 +15,12 @@ pub struct Dashes {
 impl Default for Dashes {
     fn default() -> Self {
         let en_dash = SequencePattern::default().then_hyphen().then_hyphen();
-        let em_dash = SequencePattern::default()
+        let em_dash_or_longer = SequencePattern::default()
             .then_hyphen()
             .then_hyphen()
             .then_one_or_more_hyphens();
 
-        let pattern = EitherPattern::new(vec![Box::new(em_dash), Box::new(en_dash)]);
+        let pattern = EitherPattern::new(vec![Box::new(em_dash_or_longer), Box::new(en_dash)]);
 
         Self {
             pattern: Box::new(pattern),
@@ -45,13 +45,14 @@ impl PatternLinter for Dashes {
                 message: "A sequence of hyphens is not an en dash.".to_owned(),
                 priority: 63,
             }),
-            3.. => Some(Lint {
+            3 => Some(Lint {
                 span,
                 lint_kind,
                 suggestions: vec![Suggestion::ReplaceWith(vec![EM_DASH])],
                 message: "A sequence of hyphens is not an em dash.".to_owned(),
                 priority: 63,
             }),
+            4.. => None, // Ignore longer hyphen sequences.
             _ => panic!("Received unexpected number of tokens."),
         }
     }
@@ -87,21 +88,12 @@ mod tests {
     }
 
     #[test]
-    fn suggests_em_dash_for_long_hyphen_sequences() {
-        assert_suggestion_result(
-            "'There is no box' ------ Scott",
-            Dashes::default(),
-            &format!("'There is no box' {EM_DASH} Scott"),
-        );
-    }
-
-    #[test]
     fn no_overlaps() {
         assert_suggestion_count("'There is no box' --- Scott", Dashes::default(), 1);
     }
 
     #[test]
-    fn single_lint_for_long_hyphen_sequences() {
-        assert_suggestion_count("'There is no box' ------ Scott", Dashes::default(), 1);
+    fn no_lint_for_long_hyphen_sequences() {
+        assert_suggestion_count("'There is no box' ------ Scott", Dashes::default(), 0);
     }
 }
