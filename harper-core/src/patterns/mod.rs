@@ -163,7 +163,7 @@ impl<F> Pattern for F
 where
     F: Fn(&Token, &[char]) -> bool,
 {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         if self(tokens.first()?, source) {
             Some(1)
         } else {
