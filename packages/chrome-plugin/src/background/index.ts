@@ -45,6 +45,12 @@ async function enableDefaultDomains() {
 		'blank.page',
 		'blankpage.im',
 		'froala.com',
+		'playground.lexical.dev',
+		'discord.com',
+		'youtube.com',
+		'instagram.com',
+		'web.whatsapp.com',
+		'outlook.live.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

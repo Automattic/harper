@@ -58,29 +58,18 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): L
 	return boxes;
 }
 
-function selectText(element: HTMLElement) {
-	const range = document.createRange();
-	range.selectNode(element);
-	window.getSelection().removeAllRanges();
-	window.getSelection().addRange(range);
-}
-
 function replaceValue(el: HTMLElement, value: string) {
 	if (isFormEl(el)) {
 		el.value = value;
 	} else {
-		if (typeof el.focus == 'function') {
-			el.focus();
-		} else {
-			console.log('Cannot focus element');
-		}
+		const previousText = el.textContent;
 
-		selectText(el);
-		if (!document.execCommand('insertText', false, value)) {
-			console.log('execCommand failed');
-			// Fallback for Firefox: just replace the value
-			el.value = value;
-		}
+		el.textContent = value;
+
+		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
+		el.dispatchEvent(new InputEvent('input', { bubbles: true }));
+		console.log(document.contains(el));
 	}
-	el.dispatchEvent(new Event('change', { bubbles: true })); // usually not needed
+
+	el.dispatchEvent(new Event('change', { bubbles: true }));
 }

@@ -115,6 +115,12 @@ export default class Highlights {
 			return lexicalRoot.parentElement;
 		}
 
+		const trixRoot = getTrixRoot(el);
+
+		if (trixRoot != null) {
+			return trixRoot.parentElement;
+		}
+
 		return el.parentElement;
 	}
 }
@@ -139,6 +145,22 @@ function getLexicalRoot(el: HTMLElement): HTMLElement | null {
 
 	while (node != null) {
 		if (node.getAttribute('data-lexical-editor') == 'true') {
+			return node;
+		}
+
+		node = node.parentElement;
+	}
+
+	return null;
+}
+
+/** Determines if a given node is a child of a Trix editor instance.
+ * If so, returns the root node of that instance. */
+function getTrixRoot(el: HTMLElement): HTMLElement | null {
+	let node = el.parentElement;
+
+	while (node != null) {
+		if (node.nodeName == 'TRIX-EDITOR') {
 			return node;
 		}
 
