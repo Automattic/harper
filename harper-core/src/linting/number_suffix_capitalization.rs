@@ -2,7 +2,7 @@ use super::{Lint, LintKind, Linter, Suggestion};
 use crate::{Document, Span, TokenKind};
 use crate::{Number, TokenStringExt};
 
-/// Detect and warn that the sentence is too long.
+/// Detect incorrect capitalization for number suffixes (e.g. "2ND").
 #[derive(Debug, Clone, Copy, Default)]
 pub struct NumberSuffixCapitalization;
 

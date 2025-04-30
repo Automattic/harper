@@ -1153,6 +1153,60 @@ pub fn lint_group() -> LintGroup {
             "Don't use both `how` and `like` together to express similarity.",
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
         ),
+        "ThereIsAny" => (
+            ["there any"],
+            ["there is any"],
+            "Insert `is` for correct grammar.",
+            "Replaces `there any` with `there is any`."
+        ),
+        "NotIn" => (
+            ["no in"],
+            ["not in"],
+            "Use `not in` for correct grammar.",
+            "Replaces `no in` with `not in`."
+        ),
+        "LastDitch" => (
+            ["last ditch", "last ditched", "last-ditched"],
+            ["last-ditch"],
+            "In this idiom, `ditch` is a noun and a hyphen is needed.",
+            "Corrects wrong variations of the idiomatic adjective `last-ditch`."
+        ),
+        "InvestIn" => (
+            ["invest into"],
+            ["invest in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "InvestedIn" => (
+            ["invested into"],
+            ["invested in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "InvestingIn" => (
+            ["investing into"],
+            ["investing in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "InvestsIn" => (
+            ["invests into"],
+            ["invests in"],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "AsWell" => (
+            ["aswell"],
+            ["as well"],
+            "The correct term is `as well` with a space.",
+            "Corrects `aswell`, which should be written as two words."
+        ),
+        "OnceInAWhile" => (
+            ["once a while"],
+            ["once in a while"],
+            "The correct idiom is `once in a while`.",
+            "Corrects `once a while`, which requires the word `in`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2406,6 +2460,15 @@ mod tests {
     }
 
     #[test]
+    fn correct_last_ditched() {
+        assert_suggestion_result(
+            "I was actually just trying that as a last ditched attempt to get it working, previously those ...",
+            lint_group(),
+            "I was actually just trying that as a last-ditch attempt to get it working, previously those ...",
+        );
+    }
+
+    #[test]
     fn correct_how_it_looks_like_2() {
         assert_nth_suggestion_result(
             "This is how it looks like when run from Windows PowerShell or Cmd: image.",
@@ -2421,6 +2484,15 @@ mod tests {
             "This is a sample project illustrating a demo of how to use the new Material 3 components and how they look like.",
             lint_group(),
             "This is a sample project illustrating a demo of how to use the new Material 3 components and how they look.",
+        );
+    }
+
+    #[test]
+    fn corrects_invested_into() {
+        assert_suggestion_result(
+            "it's all automatically invested into a collection of loans that match the criteria that ...",
+            lint_group(),
+            "it's all automatically invested in a collection of loans that match the criteria that ...",
         );
     }
 
@@ -2444,6 +2516,15 @@ mod tests {
     }
 
     #[test]
+    fn correct_last_ditch_space() {
+        assert_suggestion_result(
+            "There are unique use cases and is meant to be a last ditch option.",
+            lint_group(),
+            "There are unique use cases and is meant to be a last-ditch option.",
+        );
+    }
+
+    #[test]
     fn correct_how_they_looks_like_2() {
         assert_nth_suggestion_result(
             "You can check how they looks like on Android app by this command:",
@@ -2459,6 +2540,15 @@ mod tests {
             "You all know how she looks like.",
             lint_group(),
             "You all know how she looks.",
+        );
+    }
+
+    #[test]
+    fn corrects_invest_into() {
+        assert_suggestion_result(
+            "which represents the amount of money they want to invest into a particular deal.",
+            lint_group(),
+            "which represents the amount of money they want to invest in a particular deal.",
         );
     }
 
@@ -2482,6 +2572,15 @@ mod tests {
     }
 
     #[test]
+    fn corrects_investing_into() {
+        assert_suggestion_result(
+            "Taking dividends in cash (rather than automatically re-investing into the originating fund) can help alleviate the need for rebalancing.",
+            lint_group(),
+            "Taking dividends in cash (rather than automatically re-investing in the originating fund) can help alleviate the need for rebalancing.",
+        );
+    }
+
+    #[test]
     fn correct_how_it_look_like_2() {
         assert_nth_suggestion_result(
             "Here is how it look like in your browser:",
@@ -2497,6 +2596,51 @@ mod tests {
             "In the picture we can see how It look's like on worker desktop.",
             lint_group(),
             "In the picture we can see how It looks on worker desktop.",
+        );
+    }
+
+    #[test]
+    fn corrects_invests_into() {
+        assert_suggestion_result(
+            "If a user invests into the protocol first using USDC but afterward changing to DAI, ...",
+            lint_group(),
+            "If a user invests in the protocol first using USDC but afterward changing to DAI, ...",
+        );
+    }
+
+    #[test]
+    fn corrects_as_keyboards_aswell() {
+        assert_suggestion_result(
+            "Tool to read physical joystick devices, keyboards aswell, and create virtual joystick devices and output keyboard presses on a Linux system.",
+            lint_group(),
+            "Tool to read physical joystick devices, keyboards as well, and create virtual joystick devices and output keyboard presses on a Linux system.",
+        );
+    }
+
+    #[test]
+    fn corrects_aswell_as() {
+        assert_suggestion_result(
+            "When UseAcrylic is true in Focused aswell as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
+            lint_group(),
+            "When UseAcrylic is true in Focused as well as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
+        );
+    }
+
+    #[test]
+    fn corrects_toml_aswell() {
+        assert_suggestion_result(
+            "format Cargo.toml aswell #5893 - rust-lang/rustfmt",
+            lint_group(),
+            "format Cargo.toml as well #5893 - rust-lang/rustfmt",
+        );
+    }
+
+    #[test]
+    fn corrects_once_a_while() {
+        assert_suggestion_result(
+            "For me it is a SMB mount I have on the client device that I sync only once a while for a backup into the cloud.",
+            lint_group(),
+            "For me it is a SMB mount I have on the client device that I sync only once in a while for a backup into the cloud.",
         );
     }
 }

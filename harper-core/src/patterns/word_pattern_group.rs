@@ -1,5 +1,3 @@
-use std::num::NonZeroUsize;
-
 use hashbrown::HashMap;
 
 use super::naive_pattern_group::NaivePatternGroup;
@@ -42,7 +40,7 @@ impl<P> Pattern for WordPatternGroup<P>
 where
     P: Pattern,
 {
-    fn matches(&self, tokens: &[crate::Token], source: &[char]) -> Option<NonZeroUsize> {
+    fn matches(&self, tokens: &[crate::Token], source: &[char]) -> Option<usize> {
         let first = tokens.first()?;
         if !first.kind.is_word() {
             return None;

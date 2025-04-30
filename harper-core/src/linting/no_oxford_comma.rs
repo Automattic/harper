@@ -1,6 +1,6 @@
 use crate::{
     Document, Token, TokenStringExt,
-    patterns::{NominalPhrase, Pattern, SequencePattern, WordSet},
+    patterns::{NominalPhrase, PatternExt, SequencePattern, WordSet},
 };
 
 use super::{Lint, LintKind, Linter, Suggestion};
@@ -52,28 +52,12 @@ impl Linter for NoOxfordComma {
         let mut lints = Vec::new();
 
         for sentence in document.iter_sentences() {
-            let mut tok_cursor = 0;
-
-            loop {
-                if tok_cursor >= sentence.len() {
-                    break;
-                }
-
-                let match_len = self
-                    .pattern
-                    .matches(&sentence[tok_cursor..], document.get_source());
-
-                if let Some(match_len) = match_len {
-                    let lint = self.match_to_lint(
-                        &sentence[tok_cursor..tok_cursor + match_len.get()],
-                        document.get_source(),
-                    );
-
-                    lints.extend(lint);
-                    tok_cursor += match_len.get();
-                } else {
-                    tok_cursor += 1;
-                }
+            for match_span in self.pattern.iter_matches(sentence, document.get_source()) {
+                let lint = self.match_to_lint(
+                    &sentence[match_span.start..match_span.end],
+                    document.get_source(),
+                );
+                lints.extend(lint);
             }
         }
 

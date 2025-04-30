@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.30.0",
+	"version": "0.31.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -1058,6 +1058,30 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `into`."
 				},
+				"harper.linters.InvestIn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "`Invest` is traditionally followed by 'in,' not `into.`"
+				},
+				"harper.linters.InvestedIn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "`Invest` is traditionally followed by 'in,' not `into.`"
+				},
+				"harper.linters.InvestingIn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "`Invest` is traditionally followed by 'in,' not `into.`"
+				},
+				"harper.linters.InvestsIn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "`Invest` is traditionally followed by 'in,' not `into.`"
+				},
 				"harper.linters.IsKnownFor": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1717,6 +1741,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Removes the extra `the` from expressions like `the how`, skipping `how to` and `who's who`."
+				},
+				"harper.linters.TheMy": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags the definite article used together with a possessive."
 				},
 				"harper.linters.ThenThan": {
 					"scope": "resource",
