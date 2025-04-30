@@ -1177,6 +1177,12 @@ pub fn lint_group() -> LintGroup {
             "The correct term is `as well` with a space.",
             "Corrects `aswell`, which should be written as two words."
         ),
+        "ExpandPullRequest" => (
+            ["pr"],
+            ["pull request"],
+            "Use `pull request` instead of `pr`",
+            "Expands the abbreviation `pr` to `pull request` for clarity."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2498,6 +2504,15 @@ mod tests {
             "format Cargo.toml aswell #5893 - rust-lang/rustfmt",
             lint_group(),
             "format Cargo.toml as well #5893 - rust-lang/rustfmt",
+        );
+    }
+
+    #[test]
+    fn expand_pull_request() {
+        assert_suggestion_result(
+            "I'm implementing the feature in a PR.",
+            lint_group(),
+            "I'm implementing the feature in a pull request.",
         );
     }
 }
