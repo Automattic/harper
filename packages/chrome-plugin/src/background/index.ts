@@ -51,6 +51,7 @@ async function enableDefaultDomains() {
 		'instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
+		'reddit.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

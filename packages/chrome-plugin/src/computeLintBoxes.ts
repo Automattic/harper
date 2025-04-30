@@ -62,8 +62,6 @@ function replaceValue(el: HTMLElement, value: string) {
 	if (isFormEl(el)) {
 		el.value = value;
 	} else {
-		const previousText = el.textContent;
-
 		el.textContent = value;
 
 		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));

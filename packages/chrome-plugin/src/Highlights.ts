@@ -109,6 +109,12 @@ export default class Highlights {
 			return el.parentElement.parentElement;
 		}
 
+		const scr = getShredditComposerRoot(el);
+
+		if (scr != null) {
+			return scr.parentElement;
+		}
+
 		const lexicalRoot = getLexicalRoot(el);
 
 		if (lexicalRoot != null) {
@@ -138,13 +144,14 @@ function getInitialContainingRect(el: HTMLElement): DOMRect | null {
 	return null;
 }
 
-/** Determines if a given node is a child of a Lexical editor instance.
- * If so, returns the root node of that instance. */
-function getLexicalRoot(el: HTMLElement): HTMLElement | null {
+function findAncestor(
+	el: HTMLElement,
+	predicate: (el: HTMLElement) => boolean,
+): HTMLElement | null {
 	let node = el.parentElement;
 
 	while (node != null) {
-		if (node.getAttribute('data-lexical-editor') == 'true') {
+		if (predicate(node)) {
 			return node;
 		}
 
@@ -154,20 +161,25 @@ function getLexicalRoot(el: HTMLElement): HTMLElement | null {
 	return null;
 }
 
+/** Determines if a given node is a child of a Lexical editor instance.
+ * If so, returns the root node of that instance. */
+function getLexicalRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(
+		el,
+		(node: HTMLElement) => node.getAttribute('data-lexical-editor') == 'true',
+	);
+}
+
 /** Determines if a given node is a child of a Trix editor instance.
  * If so, returns the root node of that instance. */
 function getTrixRoot(el: HTMLElement): HTMLElement | null {
-	let node = el.parentElement;
+	return findAncestor(el, (node: HTMLElement) => node.nodeName == 'TRIX-EDITOR');
+}
 
-	while (node != null) {
-		if (node.nodeName == 'TRIX-EDITOR') {
-			return node;
-		}
-
-		node = node.parentElement;
-	}
-
-	return null;
+/** Determines if a given node is a child of a Reddit composer instance.
+ * If so, returns the root node of that instance. */
+function getShredditComposerRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.nodeName == 'SHREDDIT-COMPOSER');
 }
 
 /**
