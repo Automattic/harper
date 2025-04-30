@@ -52926,3 +52926,11 @@ work out/4
 # Word added using the `just addnoun` command will be added here
 
 Yoast/M2
+NixOS/M2
+WSL/M2
+OCaml/M2
+Vercel/M2
+Netlify/M2
+SolidJS/M2
+Vue/M2
+Tree-sitter/M2
