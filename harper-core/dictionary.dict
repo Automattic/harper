@@ -52513,6 +52513,7 @@ strat/1MS           # gamer slang strategy
 vid/1MS             # video
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
+handedly
 
 # Experimental multi-word entries
 # Harper may not recognize these as words in documents
@@ -52787,7 +52788,6 @@ shout-out/1S
 sign on/4
 sign-on/1MS
 single-handedly/j
-handedly
 six-pack/1MS
 so-called/5
 socio-political/5
