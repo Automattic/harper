@@ -29,9 +29,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: harper-chrome-plugin.zip
-          path: "packages/chrome-plugin/harper-chrome-plugin.zip"
+          path: "packages/chrome-plugin/package/harper-chrome-plugin.zip"
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "packages/chrome-plugin/harper-chrome-plugin.zip"
+          artifacts: "packages/chrome-plugin/package/harper-chrome-plugin.zip"
           allowUpdates: true
           draft: true
