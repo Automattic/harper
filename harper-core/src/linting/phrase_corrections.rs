@@ -1177,6 +1177,12 @@ pub fn lint_group() -> LintGroup {
             "The correct term is `as well` with a space.",
             "Corrects `aswell`, which should be written as two words."
         ),
+        "OnceInAWhile" => (
+            ["once a while"],
+            ["once in a while"],
+            "The correct idiom is `once in a while`.",
+            "Corrects `once a while`, which requires the word `in`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2498,6 +2504,15 @@ mod tests {
             "format Cargo.toml aswell #5893 - rust-lang/rustfmt",
             lint_group(),
             "format Cargo.toml as well #5893 - rust-lang/rustfmt",
+        );
+    }
+
+    #[test]
+    fn corrects_once_a_while() {
+        assert_suggestion_result(
+            "For me it is a SMB mount I have on the client device that I sync only once a while for a backup into the cloud.",
+            lint_group(),
+            "For me it is a SMB mount I have on the client device that I sync only once in a while for a backup into the cloud.",
         );
     }
 }
