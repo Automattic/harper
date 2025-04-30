@@ -3,6 +3,7 @@ use crate::Token;
 use super::Pattern;
 
 /// A [`Pattern`] that will match any single token.
+#[derive(Clone, Copy)]
 pub struct AnyPattern;
 
 impl Pattern for AnyPattern {

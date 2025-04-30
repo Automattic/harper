@@ -1,6 +1,6 @@
 use crate::{
-    Lrc, Token, TokenStringExt,
-    patterns::{EitherPattern, Pattern, SequencePattern, WordSet},
+    Token, TokenStringExt,
+    patterns::{Pattern, new_syntax_experiment::prelude::*},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -21,43 +21,11 @@ impl Default for ModalOf {
             words.add(&format!("{}n't", word));
         });
 
-        let modal_of = Lrc::new(
-            SequencePattern::default()
-                .then(words)
-                .then_whitespace()
-                .t_aco("of"),
-        );
-
-        let ws_course = Lrc::new(SequencePattern::default().then_whitespace().t_aco("course"));
-
-        let modal_of_course = Lrc::new(
-            SequencePattern::default()
-                .then(modal_of.clone())
-                .then(ws_course.clone()),
-        );
-
-        let anyword_might_of = Lrc::new(
-            SequencePattern::default()
-                .then_any_word()
-                .then_whitespace()
-                .t_aco("might")
-                .then_whitespace()
-                .t_aco("of"),
-        );
-
-        let anyword_might_of_course = Lrc::new(
-            SequencePattern::default()
-                .then(anyword_might_of.clone())
-                .then(ws_course.clone()),
-        );
-
         Self {
-            pattern: Box::new(EitherPattern::new(vec![
-                Box::new(anyword_might_of_course),
-                Box::new(modal_of_course),
-                Box::new(anyword_might_of),
-                Box::new(modal_of),
-            ])),
+            pattern: Box::new(choice![
+                seq![AnyWord, WS, "might", WS, "of", not_next![WS, "course"]],
+                seq![words, WS, "of", not_next![WS, "course"]],
+            ]),
         }
     }
 }
@@ -69,20 +37,7 @@ impl PatternLinter for ModalOf {
 
     fn match_to_lint(&self, matched_toks: &[Token], source_chars: &[char]) -> Option<Lint> {
         let modal_index = match matched_toks.len() {
-            // Without context, always an error from the start
-            3 => 0,
             5 => {
-                // False positives: modal _ of _ course / adj. _ might _ of / art. _ might _ of
-                let w3_text = matched_toks
-                    .last()
-                    .unwrap()
-                    .span
-                    .get_content(source_chars)
-                    .iter()
-                    .collect::<String>();
-                if w3_text.as_str() != "of" {
-                    return None;
-                }
                 let w1_kind = &matched_toks.first().unwrap().kind;
                 // the might of something, great might of something
                 if w1_kind.is_adjective() || w1_kind.is_determiner() {
@@ -91,9 +46,8 @@ impl PatternLinter for ModalOf {
                 // not a false positive, skip context before
                 2
             }
-            // False positive: <word> _ might _ of _ course
-            7 => return None,
-            _ => unreachable!(),
+            // Without context, always an error from the start
+            _ => 0,
         };
 
         let span_modal_of = matched_toks[modal_index..modal_index + 3].span().unwrap();

@@ -1,5 +1,6 @@
 use super::Pattern;
 
+#[derive(Clone, Copy)]
 pub struct WhitespacePattern;
 
 impl Pattern for WhitespacePattern {

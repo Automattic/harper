@@ -1,6 +1,6 @@
 use crate::{
     Token, TokenStringExt,
-    patterns::{Pattern, SequencePattern},
+    patterns::{Pattern, new_syntax_experiment::prelude::*},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -11,12 +11,8 @@ pub struct DespiteOf {
 
 impl Default for DespiteOf {
     fn default() -> Self {
-        let pattern = SequencePattern::aco("despite")
-            .then_whitespace()
-            .then_exact_word("of");
-
         Self {
-            pattern: Box::new(pattern),
+            pattern: Box::new(seq!["despite", WS, exact("of")]),
         }
     }
 }

@@ -16,6 +16,7 @@ mod indefinite_article;
 mod inflection_of_be;
 mod invert;
 mod naive_pattern_group;
+pub mod new_syntax_experiment;
 mod nominal_phrase;
 mod pattern_map;
 mod repeating_pattern;
@@ -144,13 +145,18 @@ where
 }
 
 #[cfg(feature = "concurrent")]
-impl<F> Pattern for F
-where
-    F: Fn(&Token, &[char]) -> bool,
-    F: Send + Sync,
-{
+pub trait SinlgeTokenPattern: Send + Sync + 'static {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool;
+}
+#[cfg(not(feature = "concurrent"))]
+pub trait SinlgeTokenPattern: 'static {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool;
+}
+
+impl<P: SinlgeTokenPattern> Pattern for P {
     fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        if self(tokens.first()?, source) {
+        let t = tokens.first()?;
+        if self.matches_token(t, source) {
             Some(1)
         } else {
             None
@@ -158,17 +164,25 @@ where
     }
 }
 
-#[cfg(not(feature = "concurrent"))]
-impl<F> Pattern for F
+#[cfg(feature = "concurrent")]
+impl<F> SinlgeTokenPattern for F
 where
     F: Fn(&Token, &[char]) -> bool,
+    F: Send + Sync + 'static,
 {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
-        if self(tokens.first()?, source) {
-            Some(1)
-        } else {
-            None
-        }
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        self(token, source)
+    }
+}
+
+#[cfg(not(feature = "concurrent"))]
+impl<F> SinlgeTokenPattern for F
+where
+    F: Fn(&Token, &[char]) -> bool,
+    F: 'static,
+{
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        self(token, source)
     }
 }
 
