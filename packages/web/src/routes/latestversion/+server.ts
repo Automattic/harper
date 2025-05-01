@@ -16,3 +16,12 @@ export async function GET() {
 		},
 	});
 }
+
+export async function OPTIONS() {
+	return new Response(null, {
+		headers: {
+			'Access-Control-Allow-Origin': 'app://obsidian.md',
+			'Access-Control-Allow-Methods': 'GET',
+		},
+	});
+}
