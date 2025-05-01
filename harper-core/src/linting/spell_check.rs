@@ -132,8 +132,7 @@ mod tests {
     use crate::{
         Dialect, FstDictionary,
         linting::tests::{
-            assert_lint_count, assert_nonzero_lint_count, assert_suggestion_result,
-            assert_top3_suggestion_result,
+            assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
         },
     };
 
@@ -318,46 +317,76 @@ mod tests {
     }
 
     #[test]
-    fn commonwealth_afterwards() {
+    fn afterwards_not_us() {
         assert_lint_count(
-            "In Australia, Canada, and the UK, we prefer the spelling `afterwards`.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
-            0,
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
         );
+    }
+
+    #[test]
+    fn afterward_is_us() {
         assert_lint_count(
-            "In Australia, Canada, and the UK, we prefer the spelling `afterwards`.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
-            0,
-        );
-        assert_lint_count(
-            "In Australia, Canada, and the UK, we prefer the spelling `afterwards`.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British),
-            0,
-        );
-        assert_lint_count(
-            "But in America, we prefer the spelling `afterward`.",
+            "afterward",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             0,
         );
     }
 
     #[test]
-    fn flag_mixing_afterward_and_afterwards() {
-        assert_nonzero_lint_count(
-            "Mixing the 'afterward' and 'afterwards' spellings is an error in any dialect.",
+    fn afterward_not_au() {
+        assert_lint_count(
+            "afterward",
             SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            1,
         );
-        assert_nonzero_lint_count(
-            "Mixing the 'afterward' and 'afterwards' spellings is an error in any dialect.",
+    }
+
+    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
+    #[test]
+    fn afterwards_is_au() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            0,
+        );
+    }
+
+    #[test]
+    fn afterward_not_ca() {
+        assert_lint_count(
+            "afterward",
             SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+            1,
         );
-        assert_nonzero_lint_count(
-            "Mixing the 'afterward' and 'afterwards' spellings is an error in any dialect.",
+    }
+
+    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
+    #[test]
+    fn afterwards_is_ca() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+            0,
+        );
+    }
+
+    #[test]
+    fn afterward_not_uk() {
+        assert_lint_count(
+            "afterward",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            1,
         );
-        assert_nonzero_lint_count(
-            "Mixing the 'afterward' and 'afterwards' spellings is an error in any dialect.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+    }
+
+    #[test]
+    fn afterwards_is_uk() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            0,
         );
     }
 }

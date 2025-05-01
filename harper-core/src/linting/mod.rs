@@ -164,16 +164,6 @@ mod tests {
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
 
     #[track_caller]
-    pub fn assert_nonzero_lint_count(text: &str, mut linter: impl Linter) {
-        let test = Document::new_markdown_default_curated(text);
-        let lints = linter.lint(&test);
-        assert!(
-            !lints.is_empty(),
-            "Expected \"{text}\" to create at least one lint, but it created none."
-        );
-    }
-
-    #[track_caller]
     pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {
         let test = Document::new_markdown_default_curated(text);
         let lints = linter.lint(&test);
