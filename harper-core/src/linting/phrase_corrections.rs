@@ -1207,6 +1207,12 @@ pub fn lint_group() -> LintGroup {
             "The correct idiom is `once in a while`.",
             "Corrects `once a while`, which requires the word `in`."
         ),
+        "GildedAge" => (
+            ["guilded age"],
+            ["Gilded Age"],
+            "The period of economic prosperity is called the `Gilded Age`.",
+            "If referring to the period of economic prosperity, the correct term is `Gilded Age`.",
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2641,6 +2647,15 @@ mod tests {
             "For me it is a SMB mount I have on the client device that I sync only once a while for a backup into the cloud.",
             lint_group(),
             "For me it is a SMB mount I have on the client device that I sync only once in a while for a backup into the cloud.",
+        );
+    }
+
+    #[test]
+    fn corrects_gilded_age() {
+        assert_suggestion_result(
+            "It is especially a reflection of the socio-economic patterns in the Guilded Age.",
+            lint_group(),
+            "It is especially a reflection of the socio-economic patterns in the Gilded Age.",
         );
     }
 }
