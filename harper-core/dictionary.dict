@@ -7486,6 +7486,7 @@ Numbers/2M
 Nunavut/2M
 Nunez/2M
 Nunki/2M
+Nürburgring/2M
 Nuremberg/2M        # city
 Nureyev/2M          # rudolf -
 NutraSweet/M        # trademark
@@ -8072,6 +8073,7 @@ Pinyin/21           # romanization
 Pippin/2M
 Piraeus/2M
 Pirandello/M
+Pirelli/12MS        # surname, tyres
 Pisa/2M             # city
 Pisces/21M
 Pisistratus/2M
@@ -10569,7 +10571,7 @@ Volcker/M
 Voldemort/14M
 Volga/21M
 Volgograd/2M
-Volkswagen/21M
+Volkswagen/21MS
 Volodymyr/2M
 Volstead/2M
 Volta/2M
@@ -11769,7 +11771,7 @@ aftershave/1SM
 aftershock/1SM
 aftertaste/1SM
 afterthought/14SM
-afterward/~S<
+afterward/j~<
 afterwards/j!@_
 afterword/1MS
 again/~+
@@ -12486,7 +12488,7 @@ anorak/1MS
 anorectic/51SM
 anorexia/1M
 anorexic/51MS
-another/~8
+another/~8-
 answer/~14BMDGS
 answerable/5U
 answered/~54U
@@ -13653,7 +13655,7 @@ backstretch/1MS
 backstroke/~14MGDS
 backtalk/14M
 backtrack/14SDG
-backup/~154MS
+backup/~15MS
 backward/~51PSY
 backwardness/1M
 backwash/14M
@@ -13978,6 +13980,7 @@ basket/~14SM
 basketball/~14MS
 basketry/1M
 basketwork/1M
+basmati/1M
 basque/~1S
 bass/~514MS
 basset/~14SM
@@ -17564,7 +17567,7 @@ cleanly/5UTPRj
 cleanness/1UM
 cleanse/41ZGDRS
 cleanser/1M
-cleanup/~14MS
+cleanup/~1MS
 clear/~541JPTGMDRYS
 clearance/~1SM
 clearheaded/5
@@ -24127,6 +24130,7 @@ fauvism/1M
 fauvist/51SM
 faux/~5
 fave/514S
+favicon/~1SM
 favor/~14ESMDG
 favorability/1MU
 favorable/~5U
@@ -26517,6 +26521,7 @@ gooseneck/1MS
 goosestep/4S
 goosestepped/4
 goosestepping/4
+goosy/51MS
 gopher/~1SM
 gore/~14MGDS
 gorge/~145EDSG
@@ -27994,7 +27999,7 @@ historical/~51Y
 historicity/~1M
 historiographer/1MS
 historiography/~1M
-history/~14SM
+history/~1SM        # removed `4` verb sense is obsolte and interferes with heuristics
 histrionic/5SQ
 histrionics/1M
 hit/~4158SM
@@ -29672,6 +29677,7 @@ insert's
 insertion/~1AM
 insertions/~1
 insetting/4
+inshallah
 inshore/~5
 inside/~15+RSMZ
 insider/~1M
@@ -29935,6 +29941,7 @@ interpretative/5
 interpreted/~45U
 interpreter/~1MS
 interprocess/5
+interprovincial/5
 interracial/~5
 interred/~54E
 interregnum/~1SM
@@ -30324,6 +30331,7 @@ jangle/41DRSMZG
 jangler/1M
 janitor/~1SM
 janitorial/5
+jank/1M
 janky/5TR
 japan/~14SM
 japanned/4
@@ -32641,7 +32649,7 @@ mantle's
 mantra/~1MS
 manual/~15MYS
 manufacturability/1M
-manufacture/~14DRSMZGA
+manufacture/~14DRSMZGAB
 manufacturer/~1M
 manufacturing/~154MA
 manumission/1SM
@@ -32681,9 +32689,9 @@ marge/~1
 margin/~14MS
 marginal/~51YS
 marginalia/1M
-marginality/1M
 marginalisation/1!_
 marginalise/4GDS!_
+marginality/1M
 marginalization/1M
 marginalize/4GDS
 maria/~1M
@@ -35610,6 +35618,7 @@ notorious/~5Y
 notwithstanding/~7+
 nougat/1MS
 nought/154j8MS!@_
+noughties/9!_
 noun/~14KMS
 nourish/14DSLG
 nourishment/~1M
@@ -36636,6 +36645,7 @@ overexcite/4DSG
 overexercise/41GDS
 overexert/4SDG
 overexertion/1M
+overexploit/4GDS
 overexpose/4GDS
 overexposure/1M
 overextend/4DGS
@@ -36733,8 +36743,8 @@ overrange/41GDS
 overrate/41GDS
 overreach/41GDS
 overreact/4SDG
-overread/54SDG
 overreaction/1SM
+overread/54SDG
 overrefined/45
 overregulate/4DSGN
 overreliance/1M
@@ -40027,11 +40037,11 @@ publicist/~1MS
 publicity/~1M
 publicize/4GDS
 publicly/~j
-publish/~4AGDS
+publish/~4AGDSU
 publishable/5U
 published/~45U
 publisher/~1MS
-publishing/~14M
+publishing/~14MU
 puce/15M
 puck/~14ZMRS
 pucker/41MDG
@@ -41580,8 +41590,8 @@ restroom/1SM
 restructuring/~41SM
 result/~41GSMD
 resultant/~51SM
-résumé/1SM
 resumé/1SM
+résumé/1SM
 resume/~41DSMG
 resumption/~1MS
 resupply/~41DSG
@@ -41648,6 +41658,7 @@ retrofitting/41
 retrograde/~514DSG
 retrogress/41GVDS
 retrogression/1M
+retronic/5
 retrorocket/1MS
 retrospect/~14MDSGV
 retrospection/1M
@@ -42229,6 +42240,7 @@ runner/~1SM
 running/~451+M
 runny/5RT
 runoff/~1SM
+runout/1MS
 runt/1MS
 runtime/~51
 runty/5RT
@@ -52255,6 +52267,7 @@ GPT/1SM             # generative pre-trained transformer
 GPU/1S              # graphics processing unit
 Ganeti/SM
 Gateron/SM
+Gerber/1M           # file format
 GitLab/SM           # GitHub alternative
 Gmail/214SM
 Golang/SM           # programming language
@@ -52344,13 +52357,16 @@ NYTimes/SM
 NYU/2M
 Neo4J/21M
 Neovim/M            # code editor
+Netlify/M2          # cloud
 Nikolay/SM
+NixOS/M2
 NoSQL/1
 Node.js/2M          # official spelling has dot
 NumPy/21M
 Nvidia/2M           # FIXME! elsewhere we have NVIDIA
 O'Reilly/2SM
 OAuth/M             # open authentication
+OCaml/M2            # programming language
 OG/1MS
 ORM/12S             # object-relational mapping
 OpenGL/SM           # open graphics library
@@ -52407,6 +52423,7 @@ Simplenote/2M
 Sioyek/M1
 Siri/2M             # voice assistant
 Snapchat/SM
+SolidJS/M2          # ui lib
 Soros/2M            # financier George Soros
 Spotify/2M
 Stellantis/2M       # car company
@@ -52425,6 +52442,7 @@ ThinkPad/2SM        # pc brand
 TikTok/SM
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
 Toronado/2MS        # car brand
+Tree-sitter/M2      # parsing
 Trocla/SM
 TrueNAS/SM
 Tumblr/2M
@@ -52441,14 +52459,17 @@ VPN/1SM             # virtual private network
 VR/2M
 Vaadin/SM
 VaultPress/2M
+Vercel/M2           # cloud
 VideoPress/2M
 Viktor/SM
 VirtualBox/21MS
 Vite/SM
+Vue/M2              # framework
 WAL/21SM
 WASI/MS
 WASM/MS             # see WebAssembly
 WD40/1M
+WSL/M2              # windows subsystem for linux
 Waymo/2M
 WebAssembly/M       # see WASM
 WebGPU/SM
@@ -52465,6 +52486,7 @@ Xorg/21MS
 Y2K/M               # year 2000
 YAML/2SM            # markup language
 Yazi/21MS
+Yoast/M2            # seo
 YubiKey/SM
 Zettelkasten/1M
 Zig/2M              # programming language
@@ -52518,6 +52540,7 @@ wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
 # Harper may not recognize these as words in documents
 # But it will be able to include them in suggestions
 
+a lot
 ad nauseam/j
 add-on/1MS
 air-cooled/5
@@ -52535,6 +52558,7 @@ anti-vaxxer/1MS
 avant-garde/1M5
 back to back/j
 back-to-back/5
+barn find/1MS
 beck and call/1
 bell-pull/1MS
 bench-warmer/1MS
@@ -52544,6 +52568,7 @@ bona fide/j5
 boot up/4
 break out/4
 breaks out/4
+Bretton Woods/2M
 built-in/1MS5
 built-up/5
 car bomb/1MS
@@ -52702,6 +52727,7 @@ mind-blowing/5
 mind game/1MS
 mock up/4
 mock-up/1MS
+moon landing/1MS
 multiple-choice/5
 nail biter/1MS
 nano-farad/1MS
@@ -52830,6 +52856,7 @@ tom yam/1M
 top-end/5
 trade in/4
 trade-in/1MS
+two-door/51MS
 two-thirds/1
 type-check/4SDG
 type checking/1M
@@ -52866,6 +52893,59 @@ write off/4
 write-off/1MS
 write-up/1MS
 year-over-year/5
+
+# Phrasal verbs. These help correct the error where people write "to login" instead of "to log in"
+# For this reason the most important ones to include are the ones that have a noun counterpart.
+# Remember not to add any affixes since only the verb part at the start undergoes inflection.
+
+back up/4
+break up/4
+carry out/4
+check in/4
+check out/4
+clean up/4
+come back/4
+cut back/4
+cut off/4
+cut over/4
+fail over/4
+fall back/4
+fight back/4
+fix up/4
+hand out/4
+hang out/4
+hook up/4
+knock out/4
+lock down/4
+log in/4
+log off/4
+log on/4
+log out/4
+look up/4
+meet up/4
+melt down/4
+pick up/4
+push back/4
+roll back/4
+roll out/4
+roll over/4
+run away/4
+set up/4
+show off/4
+shut down/4
+shut off/4
+sign in/4
+sign off/4
+sign out/4
+sign up/4
+slow down/4
+splash down/4
+start out/4
+start up/4
+take down/4
+turn out/4
+work around/4
+work out/4
 
 # New entries may be added below this line
 # If you're not confident in using the affix annotations, add missing words here

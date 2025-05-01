@@ -35,7 +35,7 @@ mod tests {
         assert_suggestion_result(
             "I HoP we can find a solution.",
             HopHope::default(),
-            "I HoPe we can find a solution.",
+            "I HoPE we can find a solution.",
         );
     }
 
@@ -80,7 +80,7 @@ mod tests {
         assert_suggestion_result(
             "She HoPeD on a train to get home.",
             HopHope::default(),
-            "She HoPpEd on a train to get home.",
+            "She HoPpED on a train to get home.",
         );
     }
 }

@@ -17,11 +17,13 @@ pub struct NoContractionWithVerb {
 
 impl Default for NoContractionWithVerb {
     fn default() -> Self {
+        // Only tests "let".
         let let_ws = SequencePattern::default()
             .then(WordSet::new(&["lets", "let"]))
             .then_whitespace();
 
         // Word is only a verb, and not the gerund/present participle form.
+        // Only tests the next word after "let".
         let non_ing_verb = SequencePattern::default().then(|tok: &Token, source: &[char]| {
             let Some(Some(meta)) = tok.kind.as_word() else {
                 return false;
@@ -50,8 +52,13 @@ impl Default for NoContractionWithVerb {
         });
 
         // Ambiguous word is a verb determined by heuristic of following word's part of speech
+        // Tests the next two words after "let".
         let verb_due_to_following_pos = SequencePattern::default()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_verb() || tok.kind.is_noun())
+            .then(|tok: &Token, source: &[char]| {
+                tok.kind.is_verb()
+                // TODO: because 'US' is a noun, 'us' also gets marked as a noun
+                || (tok.kind.is_noun() && tok.span.get_content(source) != ['u', 's'])
+            })
             .then_whitespace()
             .then(|tok: &Token, _source: &[char]| {
                 tok.kind.is_determiner() || tok.kind.is_pronoun() || tok.kind.is_conjunction()
@@ -195,5 +202,12 @@ mod tests {
             NoContractionWithVerb::default(),
             "Then let's mock them using Module._load based mocker.",
         );
+    }
+
+    // False positives / edge cases files on GitHub
+
+    #[test]
+    fn dont_flag_let_us() {
+        assert_lint_count("Let us do this.", NoContractionWithVerb::default(), 0);
     }
 }

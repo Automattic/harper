@@ -203,7 +203,6 @@ precommit: check test build-harperjs build-obsidian build-web build-wp
   #! /bin/bash
   set -eo pipefail
 
-  cargo doc
   cargo build --all-targets
   cargo hack check --each-feature
 

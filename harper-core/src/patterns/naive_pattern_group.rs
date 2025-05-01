@@ -1,5 +1,3 @@
-use std::num::NonZeroUsize;
-
 use super::Pattern;
 use crate::Token;
 
@@ -17,7 +15,7 @@ impl NaivePatternGroup {
 }
 
 impl Pattern for NaivePatternGroup {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         self.patterns
             .iter()
             .filter_map(|p| p.matches(tokens, source))

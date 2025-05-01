@@ -1,6 +1,9 @@
 use blanket::blanket;
 
-use crate::{Document, LSend, Token, TokenStringExt, patterns::Pattern};
+use crate::{
+    Document, LSend, Token, TokenStringExt,
+    patterns::{Pattern, PatternExt},
+};
 
 use super::{Lint, Linter};
 
@@ -44,24 +47,10 @@ where
 
 pub fn run_on_chunk(linter: &impl PatternLinter, chunk: &[Token], source: &[char]) -> Vec<Lint> {
     let mut lints = Vec::new();
-    let mut tok_cursor = 0;
 
-    loop {
-        if tok_cursor >= chunk.len() {
-            break;
-        }
-
-        let match_len = linter.pattern().matches(&chunk[tok_cursor..], source);
-
-        if let Some(match_len) = match_len {
-            let lint =
-                linter.match_to_lint(&chunk[tok_cursor..tok_cursor + match_len.get()], source);
-
-            lints.extend(lint);
-            tok_cursor += match_len.get();
-        } else {
-            tok_cursor += 1;
-        }
+    for match_span in linter.pattern().iter_matches(chunk, source) {
+        let lint = linter.match_to_lint(&chunk[match_span.start..match_span.end], source);
+        lints.extend(lint);
     }
 
     lints
