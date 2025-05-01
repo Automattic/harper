@@ -39,7 +39,7 @@
 > much  out         of  the way   to hear the Rabbit say   to itself , “ Oh      dear    ! Oh      dear    ! I   shall
 # N/I/J NSg/V/J/R/P V/P D   NSg/J P  V    D   NSg/V  NSg/V P  I      . . NPrSg/V NSg/V/J . NPrSg/V NSg/V/J . ISg VX
 > be     late  ! ” ( when    she thought it        over      afterwards , it        occurred to her   that    she
-# NSg/VX NSg/J . . . NSg/I/C ISg NSg/V   NPrSg/ISg NSg/V/J/P NPl/R/Br   . NPrSg/ISg V        P  I/J/D N/I/C/D ISg
+# NSg/VX NSg/J . . . NSg/I/C ISg NSg/V   NPrSg/ISg NSg/V/J/P R/Br       . NPrSg/ISg V        P  I/J/D N/I/C/D ISg
 > ought    to have   wondered at        this , but     at        the time  it        all       seemed quite natural ) ;
 # NSg/I/VX P  NSg/VX W?       NSg/I/V/P I/D  . NSg/C/P NSg/I/V/P D   NSg/V NPrSg/ISg NSg/I/J/C W?     NSg   NSg/J   . .
 > but     when    the Rabbit actually took a   watch out         of  its   waistcoat - pocket  , and
@@ -635,7 +635,7 @@
 > mouse , come    over      with William the Conqueror . ” ( For , with all       her   knowledge of
 # NSg/V . NSg/V/P NSg/V/J/P P    NPrSg   D   NSg       . . . C/P . P    NSg/I/J/C I/J/D NSg/V     V/P
 > history , Alice had no      very clear   notion how   long      ago anything had happened . ) So
-# NSg/V   . NPr   V   NPrSg/P J    NSg/V/J NSg    NSg/C NPrSg/V/J J/P NSg/I/V  V   W?       . . NSg/I/J/C
+# NSg     . NPr   V   NPrSg/P J    NSg/V/J NSg    NSg/C NPrSg/V/J J/P NSg/I/V  V   W?       . . NSg/I/J/C
 > she began again : “ Où est   ma      chatte ? ” which was the first   sentence in          her   French
 # ISg V     P     . . ?  NPrSg NPrSg/J ?      . . I/C   V   D   NSg/V/J NSg/V    NPrSg/V/J/P I/J/D NPrSg/V/J
 > lesson - book  . The Mouse gave a   sudden leap    out         of  the water , and seemed to quiver
@@ -713,7 +713,7 @@
 > passion , Alice thought ) , and it        said in          a   low     trembling voice , “ Let   us      get   to
 # NPrSg/V . NPr   NSg/V   . . V/C NPrSg/ISg V/J  NPrSg/V/J/P D/P NSg/V/J V         NSg/V . . NSg/V NPr/ISg NSg/V P
 > the shore , and then    I’ll tell    you my history , and you’ll understand why   it        is I
-# D   NSg/V . V/C NSg/J/C W?   NPrSg/V IPl D  NSg/V   . V/C W?     V          NSg/V NPrSg/ISg VL ISg
+# D   NSg/V . V/C NSg/J/C W?   NPrSg/V IPl D  NSg     . V/C W?     V          NSg/V NPrSg/ISg VL ISg
 > hate  cats and dogs . ”
 # NSg/V NPl  V/C NPl  . .
 >
@@ -963,7 +963,7 @@
 >
 #
 > “ You promised to tell    me        your history , you know  , ” said Alice , “ and why   it        is you
-# . IPl W?       P  NPrSg/V NPrSg/ISg D    NSg/V   . IPl NSg/V . . V/J  NPr   . . V/C NSg/V NPrSg/ISg VL IPl
+# . IPl W?       P  NPrSg/V NPrSg/ISg D    NSg     . IPl NSg/V . . V/J  NPr   . . V/C NSg/V NPrSg/ISg VL IPl
 > hate  — C         and D       , ” she added in          a   whisper , half      afraid that    it        would  be     offended
 # NSg/V . NPrSg/V/J V/C NPrSg/J . . ISg W?    NPrSg/V/J/P D/P NSg/V   . NSg/V/J/P J      N/I/C/D NPrSg/ISg NSg/VX NSg/VX W?
 > again .
@@ -4167,7 +4167,7 @@
 >
 #
 > “ Come    on  , then    , ” said the Queen   , “ and he      shall tell    you his   history . ”
-# . NSg/V/P J/P . NSg/J/C . . V/J  D   NPrSg/V . . V/C NPr/ISg VX    NPrSg/V IPl ISg/D NSg/V   . .
+# . NSg/V/P J/P . NSg/J/C . . V/J  D   NPrSg/V . . V/C NPr/ISg VX    NPrSg/V IPl ISg/D NSg     . .
 >
 #
 > As    they walked off       together , Alice heard the King    say   in          a   low     voice , to the
@@ -4185,7 +4185,7 @@
 > know  what  a   Gryphon is , look  at        the picture . ) “ Up        , lazy    thing ! ” said the Queen   ,
 # NSg/V NSg/I D/P ?       VL . NSg/V NSg/I/V/P D   NSg/V   . . . NSg/V/J/P . NSg/V/J NSg/V . . V/J  D   NPrSg/V .
 > “ and take  this young     lady    to see   the Mock    Turtle , and to hear his   history . I
-# . V/C NSg/V I/D  NPrSg/V/J NPrSg/V P  NSg/V D   NSg/V/J NSg/V  . V/C P  V    ISg/D NSg/V   . ISg
+# . V/C NSg/V I/D  NPrSg/V/J NPrSg/V P  NSg/V D   NSg/V/J NSg/V  . V/C P  V    ISg/D NSg     . ISg
 > must  go      back    and see   after some  executions I   have   ordered ; ” and she walked off       ,
 # NSg/V NSg/V/J NSg/V/J V/C NSg/V J/P   I/J/R W?         ISg NSg/VX V/J     . . V/C ISg W?     NSg/V/J/P .
 > leaving Alice alone with the Gryphon . Alice did not   quite like        the look  of  the
@@ -4241,7 +4241,7 @@
 >
 #
 > “ This here    young     lady    , ” said the Gryphon , “ she wants for to know  your history ,
-# . I/D  NSg/J/R NPrSg/V/J NPrSg/V . . V/J  D   ?       . . ISg NPl   C/P P  NSg/V D    NSg/V   .
+# . I/D  NSg/J/R NPrSg/V/J NPrSg/V . . V/J  D   ?       . . ISg NPl   C/P P  NSg/V D    NSg     .
 > she do     . ”
 # ISg NSg/VX . .
 >
@@ -5541,7 +5541,7 @@
 > their slates and pencils had been  found and handed back    to them , they set       to
 # D     NPl    V/C NPl     V   NSg/V NSg/V V/C V/J    NSg/V/J P  N/I  . IPl  NPrSg/V/J P
 > work  very diligently to write out         a   history of  the accident , all       except the
-# NSg/V J    J/R        P  NSg/V NSg/V/J/R/P D/P NSg/V   V/P D   NSg/J    . NSg/I/J/C V/C/P  D
+# NSg/V J    J/R        P  NSg/V NSg/V/J/R/P D/P NSg     V/P D   NSg/J    . NSg/I/J/C V/C/P  D
 > Lizard , who     seemed too much  overcome to do     anything but     sit   with its   mouth open    ,
 # NSg    . NPrSg/I W?     W?  N/I/J NSg/V    P  NSg/VX NSg/I/V  NSg/C/P NSg/V P    ISg/D NSg/V NSg/V/J .
 > gazing up        into the roof  of  the court .
@@ -5857,7 +5857,7 @@
 >
 #
 > “ No      , no      ! ” said the Queen   . “ Sentence first   — verdict afterwards . ”
-# . NPrSg/P . NPrSg/P . . V/J  D   NPrSg/V . . NSg/V    NSg/V/J . NSg     NPl/R/Br   . .
+# . NPrSg/P . NPrSg/P . . V/J  D   NPrSg/V . . NSg/V    NSg/V/J . NSg     R/Br       . .
 >
 #
 > “ Stuff and nonsense ! ” said Alice loudly . “ The idea of  having the sentence

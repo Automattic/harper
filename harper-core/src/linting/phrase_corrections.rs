@@ -1202,10 +1202,16 @@ pub fn lint_group() -> LintGroup {
             "Corrects `aswell`, which should be written as two words."
         ),
         "OnceInAWhile" => (
-            ["once a while"],
+            ["once a while", "once and a while"],
             ["once in a while"],
             "The correct idiom is `once in a while`.",
-            "Corrects `once a while`, which requires the word `in`."
+            "Corrects two common malapropisms of `once in a while`."
+        ),
+        "GildedAge" => (
+            ["guilded age"],
+            ["Gilded Age"],
+            "The period of economic prosperity is called the `Gilded Age`.",
+            "If referring to the period of economic prosperity, the correct term is `Gilded Age`."
         ),
     });
 
@@ -2641,6 +2647,37 @@ mod tests {
             "For me it is a SMB mount I have on the client device that I sync only once a while for a backup into the cloud.",
             lint_group(),
             "For me it is a SMB mount I have on the client device that I sync only once in a while for a backup into the cloud.",
+        );
+    }
+
+    // There's a bug when changing the length of title case phrases
+    // I believe there's a fix coming in a PR. Uncomment when fixed.
+    // #[test]
+    // fn corrects_gilded_age_capitalized() {
+    //     assert_suggestion_result(
+    //         "It is especially a reflection of the socio-economic patterns in the Guilded Age.",
+    //         lint_group(),
+    //         "It is especially a reflection of the socio-economic patterns in the Gilded Age.",
+    //     );
+    // }
+
+    // Currently the correct spelling is suggested but the case is not changed.
+    // This maybe also be fixed in the coming PR mentioned above.
+    // #[test]
+    // fn corrects_gilded_age_lowercase() {
+    //     assert_suggestion_result(
+    //         "It is especially a reflection of the socio-economic patterns in the guilded age.",
+    //         lint_group(),
+    //         "It is especially a reflection of the socio-economic patterns in the Gilded Age.",
+    //     );
+    // }
+
+    #[test]
+    fn corrects_once_and_a_while() {
+        assert_suggestion_result(
+            "Every once and a while all the links on my page seem to stop working.",
+            lint_group(),
+            "Every once in a while all the links on my page seem to stop working.",
         );
     }
 }

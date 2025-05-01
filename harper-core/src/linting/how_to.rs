@@ -22,10 +22,12 @@ impl Default for HowTo {
             .then_anything()
             .then_anything()
             .then(
-                InflectionOfBe::new().or(Box::new(|tok: &Token, _: &[char]| {
+                InflectionOfBe::new().or(Box::new(|tok: &Token, src: &[char]| {
                     tok.kind.is_auxiliary_verb()
                         || tok.kind.is_adjective()
                         || tok.kind.is_present_tense_verb()
+                        // Special case for "did" as in "how did you do that?"
+                        || tok.span.get_content_string(src).eq_ignore_ascii_case("did")
                 })),
             );
 
@@ -231,5 +233,11 @@ mod tests {
             HowTo::default(),
             0,
         );
+    }
+
+    #[test]
+    #[ignore]
+    fn dont_flag_how_did_you() {
+        assert_lint_count("How did you get to school every day?", HowTo::default(), 0);
     }
 }

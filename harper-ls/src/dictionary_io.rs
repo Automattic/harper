@@ -1,4 +1,5 @@
 use anyhow::anyhow;
+use itertools::Itertools;
 use std::path::{Component, Path, PathBuf};
 
 use harper_core::{Dictionary, MutableDictionary, WordMetadata};
@@ -26,7 +27,7 @@ pub async fn save_dict(path: impl AsRef<Path>, dict: impl Dictionary) -> Result<
 async fn write_word_list(dict: impl Dictionary, mut w: impl AsyncWrite + Unpin) -> Result<()> {
     let mut cur_str = String::new();
 
-    for word in dict.words_iter() {
+    for word in dict.words_iter().sorted() {
         cur_str.clear();
         cur_str.extend(word);
 
