@@ -33,20 +33,15 @@ impl Default for NoContractionWithVerb {
                 return false;
             }
 
-            let tok_chars = tok.span.get_content(source);
+            let lowercase = tok.span.get_content_string(source).to_lowercase();
 
             // If it ends with 'ing' and is at least 5 chars long, it could be a gerund or past participle
             // TODO: replace with metadata check when affix system supports verb forms
-            if tok_chars.len() < 5 {
+            if lowercase.len() < 5 {
                 return true;
             }
 
-            let is_ing_form = tok_chars
-                .iter()
-                .skip(tok_chars.len() - 3)
-                .map(|&c| c.to_ascii_lowercase())
-                .collect::<Vec<_>>()
-                .ends_with(&['i', 'n', 'g']);
+            let is_ing_form = lowercase.ends_with("ing");
 
             !is_ing_form
         });
@@ -57,7 +52,7 @@ impl Default for NoContractionWithVerb {
             .then(|tok: &Token, source: &[char]| {
                 tok.kind.is_verb()
                 // TODO: because 'US' is a noun, 'us' also gets marked as a noun
-                || (tok.kind.is_noun() && tok.span.get_content(source) != ['u', 's'])
+                || tok.kind.is_noun() && tok.span.get_content_string(source) != "us"
             })
             .then_whitespace()
             .then(|tok: &Token, _source: &[char]| {
@@ -81,6 +76,16 @@ impl PatternLinter for NoContractionWithVerb {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let (let_string, verb_string) = (
+            matched_tokens[0].span.get_content_string(source),
+            matched_tokens[2].span.get_content_string(source),
+        );
+
+        // "to let go" is a phrasal verb but "lets go" is quite a common mistak for "let's go"
+        if let_string == "let" && verb_string == "go" {
+            return None;
+        }
+
         let problem_span = matched_tokens.first()?.span;
         let template = problem_span.get_content(source);
 
@@ -209,5 +214,14 @@ mod tests {
     #[test]
     fn dont_flag_let_us() {
         assert_lint_count("Let us do this.", NoContractionWithVerb::default(), 0);
+    }
+
+    #[test]
+    fn dont_flag_let_go_1202() {
+        assert_lint_count(
+            "... until you hit your opponent, then let go and quickly retap",
+            NoContractionWithVerb::default(),
+            0,
+        );
     }
 }
