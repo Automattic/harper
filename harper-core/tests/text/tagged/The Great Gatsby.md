@@ -257,7 +257,7 @@
 > Across the courtesy bay     the white     palaces of  fashionable East    Egg   glittered
 # NSg/P  D   NSg/V/J  NSg/V/J D   NPrSg/V/J NPl     V/P NSg/J       NPrSg/J NSg/V W?
 > along the water , and the history of  the summer  really begins on  the evening I
-# P     D   NSg/V . V/C D   NSg/V   V/P D   NPrSg/V J/R    NPl    J/P D   NSg/V   ISg
+# P     D   NSg/V . V/C D   NSg     V/P D   NPrSg/V J/R    NPl    J/P D   NSg/V   ISg
 > drove over      there to have   dinner with the Tom     Buchanans . Daisy was my second
 # NSg/V NSg/V/J/P W?    P  NSg/VX NSg/V  P    D   NPrSg/V ?         . NPrSg V   D  NSg/V/J
 > cousin once  removed , and I’d known   Tom     in          college . And just after the war   I
@@ -3037,7 +3037,7 @@
 >
 #
 > “ The piece is known   , ” he      concluded lustily , “ as    ‘          Vladmir Tostoff’s Jazz  History
-# . D   NSg/V VL NSg/V/J . . NPr/ISg W?        R       . . NSg/R Unlintable ?       ?         NSg/V NSg/V
+# . D   NSg/V VL NSg/V/J . . NPr/ISg W?        R       . . NSg/R Unlintable ?       ?         NSg/V NSg
 > of  the World . ’ ”
 # V/P D   NSg/V . . .
 >
@@ -3055,7 +3055,7 @@
 > drinking helped to set       him off       from his   guests , for it        seemed to me        that    he      grew
 # V        W?     P  NPrSg/V/J I   NSg/V/J/P P    ISg/D NPl    . C/P NPrSg/ISg W?     P  NPrSg/ISg N/I/C/D NPr/ISg V
 > more        correct as    the fraternal hilarity increased . When    the “ Jazz  History of  the
-# NPrSg/I/V/J NSg/V/J NSg/R D   NSg/J     NSg      W?        . NSg/I/C D   . NSg/V NSg/V   V/P D
+# NPrSg/I/V/J NSg/V/J NSg/R D   NSg/J     NSg      W?        . NSg/I/C D   . NSg/V NSg     V/P D
 > World ” was over      , girls were  putting their heads on  men’s shoulders in          a
 # NSg/V . V   NSg/V/J/P . NPl   NSg/V NSg/V   D     NPl   J/P N$    NPl       NPrSg/V/J/P D/P
 > puppyish , convivial way   , girls were  swooning backward playfully into men’s arms ,
@@ -3987,7 +3987,7 @@
 > Little    Montenegro ! He      lifted up        the words and nodded at        them — with his   smile . The
 # NPrSg/I/J NPr        . NPr/ISg W?     NSg/V/J/P D   NPl   V/C V      NSg/I/V/P N/I  . P    ISg/D NSg/V . D
 > smile comprehended Montenegro’s troubled history and sympathized with the brave
-# NSg/V W?           N$           V/J      NSg/V   V/C W?          P    D   NSg/V/J
+# NSg/V W?           N$           V/J      NSg     V/C W?          P    D   NSg/V/J
 > struggles of  the Montenegrin people . It        appreciated fully the chain of  national
 # NPl       V/P D   NSg/J       NSg/V  . NPrSg/ISg V/J         V     D   NSg/V V/P NSg/J
 > circumstances which had elicited this tribute from Montenegro’s warm    little
@@ -8129,7 +8129,7 @@
 >
 #
 > “ That    was his   cousin . I   knew his   whole family history before he      left      . He      gave me
-# . N/I/C/D V   ISg/D NSg/V  . ISg V    ISg/D NSg/J NSg/J  NSg/V   C/P    NPr/ISg NPrSg/V/J . NPr/ISg V    NPrSg/ISg
+# . N/I/C/D V   ISg/D NSg/V  . ISg V    ISg/D NSg/J NSg/J  NSg     C/P    NPr/ISg NPrSg/V/J . NPr/ISg V    NPrSg/ISg
 > an  aluminum putter  that    I   use   to - day   . ”
 # D/P NSg/Ca   NSg/V/J N/I/C/D ISg NSg/V P  . NPrSg . .
 >
@@ -11633,7 +11633,7 @@
 > contemplation he      neither understood nor   desired , face  to face  for the last    time
 # NSg           NPr/ISg I/C     V/J        NSg/C V/J     . NSg/V P  NSg/V C/P D   NSg/V/J NSg/V
 > in          history with something commensurate to his   capacity for wonder .
-# NPrSg/V/J/P NSg/V   P    NSg/I/V/J V/J          P  ISg/D NSg/J    C/P NSg/V  .
+# NPrSg/V/J/P NSg     P    NSg/I/V/J V/J          P  ISg/D NSg/J    C/P NSg/V  .
 >
 #
 > And as    I   sat     there brooding on  the old   , unknown world , I   thought of  Gatsby’s

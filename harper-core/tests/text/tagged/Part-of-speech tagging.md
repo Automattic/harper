@@ -157,7 +157,7 @@
 >
 #
 > History
-# NSg/V
+# NSg
 >
 #
 > The Brown     Corpus

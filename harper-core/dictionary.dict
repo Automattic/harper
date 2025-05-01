@@ -7486,6 +7486,7 @@ Numbers/2M
 Nunavut/2M
 Nunez/2M
 Nunki/2M
+Nürburgring/2M
 Nuremberg/2M        # city
 Nureyev/2M          # rudolf -
 NutraSweet/M        # trademark
@@ -8072,6 +8073,7 @@ Pinyin/21           # romanization
 Pippin/2M
 Piraeus/2M
 Pirandello/M
+Pirelli/12MS        # surname, tyres
 Pisa/2M             # city
 Pisces/21M
 Pisistratus/2M
@@ -10569,7 +10571,7 @@ Volcker/M
 Voldemort/14M
 Volga/21M
 Volgograd/2M
-Volkswagen/21M
+Volkswagen/21MS
 Volodymyr/2M
 Volstead/2M
 Volta/2M
@@ -13978,6 +13980,7 @@ basket/~14SM
 basketball/~14MS
 basketry/1M
 basketwork/1M
+basmati/1M
 basque/~1S
 bass/~514MS
 basset/~14SM
@@ -26517,6 +26520,7 @@ gooseneck/1MS
 goosestep/4S
 goosestepped/4
 goosestepping/4
+goosy/51MS
 gopher/~1SM
 gore/~14MGDS
 gorge/~145EDSG
@@ -27994,7 +27998,7 @@ historical/~51Y
 historicity/~1M
 historiographer/1MS
 historiography/~1M
-history/~14SM
+history/~1SM        # removed `4` verb sense is obsolte and interferes with heuristics
 histrionic/5SQ
 histrionics/1M
 hit/~4158SM
@@ -29672,6 +29676,7 @@ insert's
 insertion/~1AM
 insertions/~1
 insetting/4
+inshallah
 inshore/~5
 inside/~15+RSMZ
 insider/~1M
@@ -29935,6 +29940,7 @@ interpretative/5
 interpreted/~45U
 interpreter/~1MS
 interprocess/5
+interprovincial/5
 interracial/~5
 interred/~54E
 interregnum/~1SM
@@ -30324,6 +30330,7 @@ jangle/41DRSMZG
 jangler/1M
 janitor/~1SM
 janitorial/5
+jank/1M
 janky/5TR
 japan/~14SM
 japanned/4
@@ -35610,6 +35617,7 @@ notorious/~5Y
 notwithstanding/~7+
 nougat/1MS
 nought/154j8MS!@_
+noughties/9!_
 noun/~14KMS
 nourish/14DSLG
 nourishment/~1M
@@ -36636,6 +36644,7 @@ overexcite/4DSG
 overexercise/41GDS
 overexert/4SDG
 overexertion/1M
+overexploit/4GDS
 overexpose/4GDS
 overexposure/1M
 overextend/4DGS
@@ -41648,6 +41657,7 @@ retrofitting/41
 retrograde/~514DSG
 retrogress/41GVDS
 retrogression/1M
+retronic/5
 retrorocket/1MS
 retrospect/~14MDSGV
 retrospection/1M
@@ -42229,6 +42239,7 @@ runner/~1SM
 running/~451+M
 runny/5RT
 runoff/~1SM
+runout/1MS
 runt/1MS
 runtime/~51
 runty/5RT
@@ -52255,6 +52266,7 @@ GPT/1SM             # generative pre-trained transformer
 GPU/1S              # graphics processing unit
 Ganeti/SM
 Gateron/SM
+Gerber/1M           # file format
 GitLab/SM           # GitHub alternative
 Gmail/214SM
 Golang/SM           # programming language
@@ -52527,6 +52539,7 @@ wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
 # Harper may not recognize these as words in documents
 # But it will be able to include them in suggestions
 
+a lot
 ad nauseam/j
 add-on/1MS
 air-cooled/5
@@ -52544,6 +52557,7 @@ anti-vaxxer/1MS
 avant-garde/1M5
 back to back/j
 back-to-back/5
+barn find/1MS
 beck and call/1
 bell-pull/1MS
 bench-warmer/1MS
@@ -52553,6 +52567,7 @@ bona fide/j5
 boot up/4
 break out/4
 breaks out/4
+Bretton Woods/2M
 built-in/1MS5
 built-up/5
 car bomb/1MS
@@ -52711,6 +52726,7 @@ mind-blowing/5
 mind game/1MS
 mock up/4
 mock-up/1MS
+moon landing/1MS
 multiple-choice/5
 nail biter/1MS
 nano-farad/1MS
@@ -52839,6 +52855,7 @@ tom yam/1M
 top-end/5
 trade in/4
 trade-in/1MS
+two-door/51MS
 two-thirds/1
 type-check/4SDG
 type checking/1M
