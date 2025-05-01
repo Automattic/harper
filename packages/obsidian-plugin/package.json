@@ -1,9 +1,10 @@
 {
 	"name": "obsidian-plugin",
 	"private": true,
-	"version": "0.0.1",
+	"version": "0.31.0",
 	"main": "main.js",
 	"devDependencies": {
+		"@rollup/plugin-json": "^6.1.0",
 		"@rollup/plugin-node-resolve": "^16.0.0",
 		"@rollup/plugin-typescript": "^12.1.2",
 		"@rollup/plugin-wasm": "^6.2.2",
@@ -31,8 +32,8 @@
 	},
 	"dependencies": {
 		"crelt": "^1.0.5",
-		"tslib": "catalog:",
 		"harper.js": "workspace:*",
-		"lodash-es": "^4.17.21"
+		"lodash-es": "^4.17.21",
+		"tslib": "catalog:"
 	}
 }
