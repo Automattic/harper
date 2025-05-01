@@ -59,9 +59,9 @@ export default class PopupHandler {
 			b.source.removeEventListener('pointerdown', this.pointerDownCallback),
 		);
 
-    if (boxes.length != this.currentLintBoxes.length){
-      this.popupLint = undefined;
-    }
+		if (boxes.length != this.currentLintBoxes.length) {
+			this.popupLint = undefined;
+		}
 
 		this.currentLintBoxes = boxes;
 		this.currentLintBoxes.forEach((b) =>

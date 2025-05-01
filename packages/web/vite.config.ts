@@ -34,7 +34,7 @@ export default defineConfig({
 					{ title: 'Documentation', to: '/docs/about' },
 					{ title: 'Visual Studio Code', to: '/docs/integrations/visual-studio-code' },
 					{ title: 'Obsidian', to: '/docs/integrations/obsidian' },
-					{ title: 'harper.js', to: '/docs/harperjs/introduction' },
+					{ title: 'Chrome Extension', to: '/docs/integrations/chrome-extension' },
 				],
 				sidebar: {
 					'/docs/': [
@@ -56,6 +56,10 @@ export default defineConfig({
 								{
 									title: 'Obsidian',
 									to: '/docs/integrations/obsidian',
+								},
+								{
+									title: 'Chrome Extension',
+									to: '/docs/integrations/chrome-extension',
 								},
 								{
 									title: 'WordPress',

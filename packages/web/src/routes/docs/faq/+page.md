@@ -28,9 +28,7 @@ For `harper.js` and those that use it under the hood like our Obsidian plugin, w
 
 ## Is There a Chrome or Firefox Extension?
 
-**Short answer**: not yet.
-
-**Long answer:** our road map has higher priority items at the moment, so don't expect the official Harper maintainers to make an attempt in the near future. However, if you're interested in trying to make one, let us know how it goes. We might be able to help.
+Yes! You can [learn more about it here](/docs/integrations/chrome-extension)
 
 ## Where Did the Name Harper Come From?
 
