@@ -107,12 +107,13 @@ mod tests {
         );
     }
 
-    // #[test]
-    // fn test_top3_suggestion_multiple() {
-    //     assert_top3_suggestion_result(
-    //         "You knowledge. You imagination. You icosahedron",
-    //         PossessiveYour::default(),
-    //         "Your knowledge. Your imagination. You're an icosahedron",
-    //     );
-    // }
+    #[test]
+    #[ignore]
+    fn test_top3_suggestion_multiple() {
+        assert_top3_suggestion_result(
+            "You knowledge. You imagination. You icosahedron",
+            PossessiveYour::default(),
+            "Your knowledge. Your imagination. You're an icosahedron",
+        );
+    }
 }
