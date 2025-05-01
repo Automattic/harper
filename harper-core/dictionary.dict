@@ -32681,9 +32681,9 @@ marge/~1
 margin/~14MS
 marginal/~51YS
 marginalia/1M
-marginality/1M
 marginalisation/1!_
 marginalise/4GDS!_
+marginality/1M
 marginalization/1M
 marginalize/4GDS
 maria/~1M
@@ -36733,8 +36733,8 @@ overrange/41GDS
 overrate/41GDS
 overreach/41GDS
 overreact/4SDG
-overread/54SDG
 overreaction/1SM
+overread/54SDG
 overrefined/45
 overregulate/4DSGN
 overreliance/1M
@@ -41580,8 +41580,8 @@ restroom/1SM
 restructuring/~41SM
 result/~41GSMD
 resultant/~51SM
-résumé/1SM
 resumé/1SM
+résumé/1SM
 resume/~41DSMG
 resumption/~1MS
 resupply/~41DSG
@@ -52344,13 +52344,16 @@ NYTimes/SM
 NYU/2M
 Neo4J/21M
 Neovim/M            # code editor
+Netlify/M2          # cloud
 Nikolay/SM
+NixOS/M2
 NoSQL/1
 Node.js/2M          # official spelling has dot
 NumPy/21M
 Nvidia/2M           # FIXME! elsewhere we have NVIDIA
 O'Reilly/2SM
 OAuth/M             # open authentication
+OCaml/M2            # programming language
 OG/1MS
 ORM/12S             # object-relational mapping
 OpenGL/SM           # open graphics library
@@ -52407,6 +52410,7 @@ Simplenote/2M
 Sioyek/M1
 Siri/2M             # voice assistant
 Snapchat/SM
+SolidJS/M2          # ui lib
 Soros/2M            # financier George Soros
 Spotify/2M
 Stellantis/2M       # car company
@@ -52425,6 +52429,7 @@ ThinkPad/2SM        # pc brand
 TikTok/SM
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
 Toronado/2MS        # car brand
+Tree-sitter/M2      # parsing
 Trocla/SM
 TrueNAS/SM
 Tumblr/2M
@@ -52441,14 +52446,17 @@ VPN/1SM             # virtual private network
 VR/2M
 Vaadin/SM
 VaultPress/2M
+Vercel/M2           # cloud
 VideoPress/2M
 Viktor/SM
 VirtualBox/21MS
 Vite/SM
+Vue/M2              # framework
 WAL/21SM
 WASI/MS
 WASM/MS             # see WebAssembly
 WD40/1M
+WSL/M2              # windows subsystem for linux
 Waymo/2M
 WebAssembly/M       # see WASM
 WebGPU/SM
@@ -52465,6 +52473,7 @@ Xorg/21MS
 Y2K/M               # year 2000
 YAML/2SM            # markup language
 Yazi/21MS
+Yoast/M2            # seo
 YubiKey/SM
 Zettelkasten/1M
 Zig/2M              # programming language
@@ -52891,8 +52900,8 @@ hook up/4
 knock out/4
 lock down/4
 log in/4
-log on/4
 log off/4
+log on/4
 log out/4
 look up/4
 meet up/4
@@ -52925,12 +52934,3 @@ work out/4
 # And they will be reviewed
 # Word added using the `just addnoun` command will be added here
 
-Yoast/M2
-NixOS/M2
-WSL/M2
-OCaml/M2
-Vercel/M2
-Netlify/M2
-SolidJS/M2
-Vue/M2
-Tree-sitter/M2
