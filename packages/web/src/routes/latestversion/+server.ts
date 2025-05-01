@@ -22,6 +22,7 @@ export async function OPTIONS() {
 		headers: {
 			'Access-Control-Allow-Origin': 'app://obsidian.md',
 			'Access-Control-Allow-Methods': 'GET',
+			'Access-Control-Allow-Headers': 'Harper-Version',
 		},
 	});
 }
