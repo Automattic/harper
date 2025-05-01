@@ -39,7 +39,7 @@
 > much  out         of  the way   to hear the Rabbit say   to itself , “ Oh      dear    ! Oh      dear    ! I   shall
 # N/I/J NSg/V/J/R/P V/P D   NSg/J P  V    D   NSg/V  NSg/V P  I      . . NPrSg/V NSg/V/J . NPrSg/V NSg/V/J . ISg VX
 > be     late  ! ” ( when    she thought it        over      afterwards , it        occurred to her   that    she
-# NSg/VX NSg/J . . . NSg/I/C ISg NSg/V   NPrSg/ISg NSg/V/J/P NPl/R/Br   . NPrSg/ISg V        P  I/J/D N/I/C/D ISg
+# NSg/VX NSg/J . . . NSg/I/C ISg NSg/V   NPrSg/ISg NSg/V/J/P R/Br       . NPrSg/ISg V        P  I/J/D N/I/C/D ISg
 > ought    to have   wondered at        this , but     at        the time  it        all       seemed quite natural ) ;
 # NSg/I/VX P  NSg/VX W?       NSg/I/V/P I/D  . NSg/C/P NSg/I/V/P D   NSg/V NPrSg/ISg NSg/I/J/C W?     NSg   NSg/J   . .
 > but     when    the Rabbit actually took a   watch out         of  its   waistcoat - pocket  , and
@@ -5857,7 +5857,7 @@
 >
 #
 > “ No      , no      ! ” said the Queen   . “ Sentence first   — verdict afterwards . ”
-# . NPrSg/P . NPrSg/P . . V/J  D   NPrSg/V . . NSg/V    NSg/V/J . NSg     NPl/R/Br   . .
+# . NPrSg/P . NPrSg/P . . V/J  D   NPrSg/V . . NSg/V    NSg/V/J . NSg     R/Br       . .
 >
 #
 > “ Stuff and nonsense ! ” said Alice loudly . “ The idea of  having the sentence

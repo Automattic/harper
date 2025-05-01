@@ -273,7 +273,7 @@
 > one       of  those men who     reach such  an  acute   limited excellence at        twenty - one       that
 # NSg/I/V/J V/P I/D   NSg NPrSg/I NSg/V NSg/I D/P NSg/V/J NSg/V/J NSg        NSg/I/V/P NSg    . NSg/I/V/J N/I/C/D
 > everything afterward savors of  anti    - climax . His   family were  enormously
-# N/I/V      Am        NPl    V/P NSg/J/P . NSg/V  . ISg/D NSg/J  NSg/V J/R
+# N/I/V      R/Am      NPl    V/P NSg/J/P . NSg/V  . ISg/D NSg/J  NSg/V J/R
 > wealthy — even    in          college his   freedom with money was a   matter  for reproach — but     now
 # NSg/J   . NSg/V/J NPrSg/V/J/P NSg     ISg/D NSg     P    NSg/J V   D/P NSg/V/J C/P NSg/V    . NSg/C/P NPrSg/V/J/C
 > he’d left      Chicago and come    East    in          a   fashion that    rather    took your breath  away :
@@ -2215,7 +2215,7 @@
 >
 #
 > It        was nine o’clock — almost immediately afterward I   looked at        my watch and found
-# NPrSg/ISg V   NSg  W?      . NSg    J/R         Am        ISg W?     NSg/I/V/P D  NSg/V V/C NSg/V
+# NPrSg/ISg V   NSg  W?      . NSg    J/R         R/Am      ISg W?     NSg/I/V/P D  NSg/V V/C NSg/V
 > it        was ten . Mr  . McKee was asleep on  a   chair with his   fists clenched in          his   lap     ,
 # NPrSg/ISg V   NSg . NSg . NPr   V   J      J/P D/P NSg/V P    ISg/D NPl   W?       NPrSg/V/J/P ISg/D NSg/V/J .
 > like        a   photograph of  a   man         of  action  . Taking  out         my handkerchief I   wiped from
@@ -3739,7 +3739,7 @@
 > Catlips and the Bembergs and G. Earl  Muldoon , brother to that    Muldoon who
 # ?       V/C D   ?        V/C ?  NPrSg ?       . NSg/V/J P  N/I/C/D ?       NPrSg/I
 > afterward strangled his   wife  . Da        Fontano the promoter came    there , and Ed    Legros
-# Am        W?        ISg/D NSg/V . NPrSg/V/J ?       D   NSg/J    NSg/V/P W?    . V/C NPrSg ?
+# R/Am      W?        ISg/D NSg/V . NPrSg/V/J ?       D   NSg/J    NSg/V/P W?    . V/C NPrSg ?
 > and James B. ( “ Rot   - Gut     ” ) Ferret and the De    Jongs and Ernest Lilly — they came    to
 # V/C NPrPl ?  . . NSg/V . NSg/V/J . . NSg/V  V/C D   NPrSg ?     V/C NPr    NPrSg . IPl  NSg/V/P P
 > gamble  , and when    Ferret wandered into the garden  it        meant he      was cleaned out         and
@@ -7295,7 +7295,7 @@
 >
 #
 > Gatsby and I   in          turn  leaned down      and took the small     reluctant hand  . Afterward he
-# NPr    V/C ISg NPrSg/V/J/P NSg/V W?     NSg/V/J/P V/C V    D   NPrSg/V/J J         NSg/V . Am        NPr/ISg
+# NPr    V/C ISg NPrSg/V/J/P NSg/V W?     NSg/V/J/P V/C V    D   NPrSg/V/J J         NSg/V . R/Am      NPr/ISg
 > kept looking at        the child with surprise . I   don’t think he      had ever really
 # V    V       NSg/I/V/P D   NSg/V P    NSg/V    . ISg NSg/V NSg/V NPr/ISg V   J    J/R
 > believed in          its   existence before .
@@ -10339,7 +10339,7 @@
 >
 #
 > His   movements — he      was on  foot  all       the time  — were  afterward traced to Port
-# ISg/D NPl       . NPr/ISg V   J/P NSg/V NSg/I/J/C D   NSg/V . NSg/V Am        W?     P  NPrSg/V/J
+# ISg/D NPl       . NPr/ISg V   J/P NSg/V NSg/I/J/C D   NSg/V . NSg/V R/Am      W?     P  NPrSg/V/J
 > Roosevelt and then    to Gad’s Hill    , where he      bought a   sandwich that    he      didn’t eat   ,
 # NPr       V/C NSg/J/C P  ?     NPrSg/V . NSg/C NPr/ISg NSg/V  D/P NSg/V/J  N/I/C/D NPr/ISg V      NSg/V .
 > and a   cup   of  coffee  . He      must  have   been  tired and walking slowly , for he      didn’t
@@ -10413,7 +10413,7 @@
 >
 #
 > The chauffeur — he      was one       of  Wolfshiem’s protégés — heard the shots — afterward he
-# D   NSg/V     . NPr/ISg V   NSg/I/V/J V/P ?           ?        . V/J   D   NPl   . Am        NPr/ISg
+# D   NSg/V     . NPr/ISg V   NSg/I/V/J V/P ?           ?        . V/J   D   NPl   . R/Am      NPr/ISg
 > could  only say   that    he      hadn’t thought anything much  about them . I   drove from the
 # NSg/VX W?   NSg/V N/I/C/D NPr/ISg V      NSg/V   NSg/I/V  N/I/J J/P   N/I  . ISg NSg/V P    D
 > station directly to Gatsby’s house   and my rushing anxiously up        the front   steps
@@ -11413,7 +11413,7 @@
 > saw   Jordan Baker   and talked over      and around what  had happened to us      together ,
 # NSg/V NPr    NPrSg/J V/C W?     NSg/V/J/P V/C J/P    NSg/I V   W?       P  NPr/ISg J        .
 > and what  had happened afterward to me        , and she lay     perfectly still   , listening ,
-# V/C NSg/I V   W?       Am        P  NPrSg/ISg . V/C ISg NSg/V/J J/R       NSg/V/J . V         .
+# V/C NSg/I V   W?       R/Am      P  NPrSg/ISg . V/C ISg NSg/V/J J/R       NSg/V/J . V         .
 > in          a   big     chair .
 # NPrSg/V/J/P D/P NSg/V/J NSg/V .
 >

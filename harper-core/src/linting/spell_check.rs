@@ -132,7 +132,8 @@ mod tests {
     use crate::{
         Dialect, FstDictionary,
         linting::tests::{
-            assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
+            assert_lint_count, assert_nonzero_lint_count, assert_suggestion_result,
+            assert_top3_suggestion_result,
         },
     };
 
@@ -313,6 +314,50 @@ mod tests {
             "Abandonedware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "Abandonware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
+        );
+    }
+
+    #[test]
+    fn commonwealth_afterwards() {
+        assert_lint_count(
+            "In Australia, Canada, and the UK, we prefer the spelling `afterwards`.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            0,
+        );
+        assert_lint_count(
+            "In Australia, Canada, and the UK, we prefer the spelling `afterwards`.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+            0,
+        );
+        assert_lint_count(
+            "In Australia, Canada, and the UK, we prefer the spelling `afterwards`.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            0,
+        );
+        assert_lint_count(
+            "But in America, we prefer the spelling `afterward`.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            0,
+        );
+    }
+
+    #[test]
+    fn flag_mixing_afterward_and_afterwards() {
+        assert_nonzero_lint_count(
+            "Mixing the 'afterward' and 'afterwards' spellings is an error in any dialect.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+        );
+        assert_nonzero_lint_count(
+            "Mixing the 'afterward' and 'afterwards' spellings is an error in any dialect.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+        );
+        assert_nonzero_lint_count(
+            "Mixing the 'afterward' and 'afterwards' spellings is an error in any dialect.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+        );
+        assert_nonzero_lint_count(
+            "Mixing the 'afterward' and 'afterwards' spellings is an error in any dialect.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
         );
     }
 }
