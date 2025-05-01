@@ -205,6 +205,7 @@ precommit: check test build-harperjs build-obsidian build-web build-wp
 
   cargo doc
   cargo build --all-targets
+  cargo hack check --each-feature
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:

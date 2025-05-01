@@ -27,5 +27,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install pandoc -y
       - name: Install `wasm-pack`
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - name: Install `cargo-hack`
+        uses: taiki-e/install-action@cargo-hack
+        run: cargo hack check --each-feature
       - name: Precommit
         run: just precommit
