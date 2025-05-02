@@ -51,17 +51,17 @@
 >
 #
 > That    could  be     a   solution .
-# N/I/C/D NSg/VX NSg/VX D/P W?       .
+# N/I/C/D NSg/VX NSg/VX D/P NSg      .
 > Find  all       candidates that    could  be     a   solution .
-# NSg/V NSg/I/J/C NPl/V      N/I/C/D NSg/VX NSg/VX D/P W?       .
+# NSg/V NSg/I/J/C NPl/V      N/I/C/D NSg/VX NSg/VX D/P NSg      .
 >
 #
 > This is all       that    I   have   .
 # I/D  VL NSg/I/J/C N/I/C/D ISg NSg/VX .
 > This is all       that    solutions can      do     .
-# I/D  VL NSg/I/J/C N/I/C/D W?        NPrSg/VX NSg/VX .
+# I/D  VL NSg/I/J/C N/I/C/D NPl       NPrSg/VX NSg/VX .
 > That    solution can      do     .
-# N/I/C/D W?       NPrSg/VX NSg/VX .
+# N/I/C/D NSg      NPrSg/VX NSg/VX .
 >
 #
 > We  can      do     this !
