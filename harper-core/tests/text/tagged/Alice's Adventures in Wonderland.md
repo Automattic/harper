@@ -2701,7 +2701,7 @@
 > mushroom , and raised herself to about two feet high    : even    then    she walked up
 # NSg/V/J  . V/C W?     I       P  J/P   NSg NSg  NSg/V/J . NSg/V/J NSg/J/C ISg W?     NSg/V/J/P
 > towards it        rather    timidly , saying to herself “ Suppose it        should be     raving  mad
-# NPl     NPrSg/ISg NPrSg/V/J J/R     . NSg/V  P  I       . V       NPrSg/ISg VX     NSg/VX NSg/V/J N/V/J
+# P       NPrSg/ISg NPrSg/V/J J/R     . NSg/V  P  I       . V       NPrSg/ISg VX     NSg/VX NSg/V/J N/V/J
 > after all       ! I   almost wish  I’d gone  to see   the Hatter instead ! ”
 # J/P   NSg/I/J/C . ISg NSg    NSg/V W?  V/J/P P  NSg/V D   NSg/V  W?      . .
 >
