@@ -134,6 +134,9 @@ importers:
         specifier: 'catalog:'
         version: 2.8.1
     devDependencies:
+      '@rollup/plugin-json':
+        specifier: ^6.1.0
+        version: 6.1.0(rollup@4.35.0)
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.0
         version: 16.0.1(rollup@4.35.0)

@@ -531,7 +531,7 @@
 		"description": "Ensure proper capitalization of notable places that are significant regional centers, travel destinations, or have international importance."
 	},
 	"ProperNouns": {
-		"canonical": ["Pax Americana"],
+		"canonical": ["Gilded Age", "Pax Americana"],
 		"description": "Ensure proper capitalization of proper nouns."
 	},
 	"CompaniesProductsAndTrademarks": {

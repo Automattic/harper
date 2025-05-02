@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.31.0",
+	"version": "0.32.1",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -510,7 +510,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Rather than outright using an em dash or en dash, authors often use a sequence of hyphens, expecting them to be condensed.\nThis rule does so."
+					"description": "Rather than outright using an em dash or en dash, authors often use a sequence of hyphens, expecting them to be condensed. Use two hyphens to denote an en dash and three to denote an em dash."
 				},
 				"harper.linters.DayAndAge": {
 					"scope": "resource",
@@ -788,6 +788,12 @@
 					"default": true,
 					"description": "Ensures `getting rid of` is used instead of `getting rid off`."
 				},
+				"harper.linters.GildedAge": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "If referring to the period of economic prosperity, the correct term is `Gilded Age`."
+				},
 				"harper.linters.GoingTo": {
 					"scope": "resource",
 					"type": "boolean",
@@ -937,6 +943,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Handles common errors involving `hop` and `hope`. Ensures `hop` is used correctly in phrases like `hop on a bus` while correcting mistaken uses of `hope` in contexts where `hop` is expected."
+				},
+				"harper.linters.HowTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects the omission of `to` in constructions like `how clone / how install` and suggests `how to …`."
 				},
 				"harper.linters.However": {
 					"scope": "resource",
@@ -1148,6 +1160,12 @@
 					"default": true,
 					"description": "Corrects common errors in the phrase `last but not least`."
 				},
+				"harper.linters.LastDitch": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects wrong variations of the idiomatic adjective `last-ditch`."
+				},
 				"harper.linters.LeftRightHand": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1340,6 +1358,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `nonetheless`."
 				},
+				"harper.linters.NotIn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Replaces `no in` with `not in`."
+				},
 				"harper.linters.NotTo": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1406,6 +1430,12 @@
 					"default": true,
 					"description": "Ensures the correct use of `on the spur of the moment`, avoiding confusion with the incorrect `spurt` variation."
 				},
+				"harper.linters.OnceInAWhile": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects two common malapropisms of `once in a while`."
+				},
 				"harper.linters.OperativeSystem": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1460,6 +1490,12 @@
 					"default": true,
 					"description": "Flags oxymoronic phrases (e.g. `amateur expert`, `increasingly less`, etc.)."
 				},
+				"harper.linters.PhrasalVerbAsCompoundNoun": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule looks for phrasal verbs written as compound nouns."
+				},
 				"harper.linters.PiggyBag": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1512,7 +1548,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "The possessive version of `you` is more common before nouns."
+					"description": "The possessive form of `you` is more likely before nouns."
 				},
 				"harper.linters.Postpone": {
 					"scope": "resource",
@@ -1754,6 +1790,12 @@
 					"default": true,
 					"description": "Corrects the misuse of `then` to `than`."
 				},
+				"harper.linters.ThereIsAny": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Replaces `there any` with `there is any`."
+				},
 				"harper.linters.Therefore": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1897,6 +1939,30 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags `highly-kept` and recommends `well-kept` as an alternative."
+				},
+				"harper.linters.WhatHeLooksLike": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
+				},
+				"harper.linters.WhatItLooksLike": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
+				},
+				"harper.linters.WhatSheLooksLike": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
+				},
+				"harper.linters.WhatTheyLookLike": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `how ... look like` to `how ... look` or `what ... look like`."
 				},
 				"harper.linters.Whereas": {
 					"scope": "resource",

@@ -214,15 +214,15 @@ mod tests {
         )
     }
 
-    // TODO: This can't work because currently hyphens are not included in tokenized words
-    // TODO: although they are now permitted in `dictionary.dict`
-    // #[test]
-    // fn uppercase_unamerican_at_start() {
-    //     assert_lint_count("un-American starts with a lowercase letter and contains an uppercase letter, but is not a proper noun or trademark.",
-    //         SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
-    //         1,
-    //     )
-    // }
+    #[test]
+    #[ignore = "This can't work because currently hyphens are not included in tokenized words\nalthough they are now permitted in `dictionary.dict`"]
+    fn uppercase_unamerican_at_start() {
+        assert_lint_count(
+            "un-American starts with a lowercase letter and contains an uppercase letter, but is not a proper noun or trademark.",
+            SentenceCapitalization::new(FstDictionary::curated(), Dialect::American),
+            1,
+        )
+    }
 
     #[test]
     fn allow_lowercase_proper_nouns() {

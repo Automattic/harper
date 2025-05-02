@@ -335,16 +335,15 @@ mod tests {
         );
     }
 
-    // "Shakedown" is a compound noun -- it's part of a comma-separated list with another noun "threat"
-    // But this is not easy to check for so is not implemented yet.
-    // #[test]
-    // fn dont_flag_a_threat_or_shakedown() {
-    //     assert_lint_count(
-    //         "Just a threat or Shakedown.",
-    //         PhrasalVerbAsCompoundNoun::default(),
-    //         0,
-    //     );
-    // }
+    #[test]
+    #[ignore = "\"Shakedown\" is a compound noun -- it's part of a comma-separated list with another noun \"threat\"\nBut this is not easy to check for so is not implemented yet."]
+    fn dont_flag_a_threat_or_shakedown() {
+        assert_lint_count(
+            "Just a threat or Shakedown.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
 
     #[test]
     fn dont_flag_a_flyover() {
