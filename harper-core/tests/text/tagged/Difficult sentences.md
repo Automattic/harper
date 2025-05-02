@@ -715,7 +715,7 @@
 > Smith   scored again on  twelve minutes , doubling Mudchester Rovers ' lead    .
 # NPrSg/V W?     P     J/P NSg    NPl     . V        ?          W?     . NSg/V/J .
 > I   was reading a   book  on  history .
-# ISg V   NPrSg/V D/P NSg/V J/P NSg/V   .
+# ISg V   NPrSg/V D/P NSg/V J/P NSg     .
 > The city hosted the World Summit on the Information Society
 # D   NSg  W?     D   NSg/V NSg/V  P  D   NSg         NSg
 > I   have   no      opinion on this subject .
