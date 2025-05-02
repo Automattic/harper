@@ -43,10 +43,7 @@ mod tests {
                         "condition": "."
                       }
                     ],
-                    "target_metadata": {
-                      "kind": null,
-                      "tense": null
-                    },
+                    "target": [],
                     "base_metadata": {}
                 },
                 "B": {
@@ -64,10 +61,13 @@ mod tests {
                         "condition": "y"
                       }
                     ],
-                    "target_metadata": {
-                      "kind": null,
-                      "tense": null
-                    },
+                    "target": [
+                        {
+                            "metadata": {
+                                "noun": {}
+                            }
+                        }
+                    ],
                     "base_metadata": {}
                 }
             }
@@ -170,11 +170,15 @@ mod tests {
                             "condition": "[^sxzhy]"
                           }
                         ],
-                        "target_metadata": {
-                            "noun": {
-                                "is_plural": true
+                        "target": [
+                            {
+                                "metadata": {
+                                    "noun": {
+                                        "is_plural": true
+                                    }
+                                }
                             }
-                        },
+                        ],
                         "base_metadata": {
                             "noun": {}
                         }
@@ -189,7 +193,7 @@ mod tests {
                             "condition": "."
                           }
                         ],
-                        "target_metadata": {},
+                        "target": [],
                         "base_metadata": {}
                     }
                 }
