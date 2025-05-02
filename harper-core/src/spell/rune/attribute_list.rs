@@ -132,7 +132,9 @@ impl AttributeList {
                 continue;
             }
 
-            dest.get_metadata_mut_chars(&letters).unwrap().append(&metadata);
+            dest.get_metadata_mut_chars(&letters)
+                .unwrap()
+                .append(&metadata);
         }
     }
 
