@@ -602,28 +602,29 @@ macro_rules! create_fns_on_doc {
 }
 
 impl TokenStringExt for Document {
-    create_fns_on_doc!(word);
-    create_fns_on_doc!(hostname);
-    create_fns_on_doc!(word_like);
-    create_fns_on_doc!(conjunction);
-    create_fns_on_doc!(space);
-    create_fns_on_doc!(apostrophe);
-    create_fns_on_doc!(pipe);
-    create_fns_on_doc!(quote);
-    create_fns_on_doc!(number);
-    create_fns_on_doc!(at);
-    create_fns_on_doc!(ellipsis);
-    create_fns_on_doc!(unlintable);
-    create_fns_on_doc!(sentence_terminator);
-    create_fns_on_doc!(paragraph_break);
-    create_fns_on_doc!(chunk_terminator);
-    create_fns_on_doc!(punctuation);
-    create_fns_on_doc!(currency);
-    create_fns_on_doc!(likely_homograph);
-    create_fns_on_doc!(comma);
     create_fns_on_doc!(adjective);
-    create_fns_on_doc!(verb);
+    create_fns_on_doc!(apostrophe);
+    create_fns_on_doc!(at);
+    create_fns_on_doc!(chunk_terminator);
+    create_fns_on_doc!(comma);
+    create_fns_on_doc!(conjunction);
+    create_fns_on_doc!(currency);
+    create_fns_on_doc!(ellipsis);
+    create_fns_on_doc!(hostname);
+    create_fns_on_doc!(likely_homograph);
+    create_fns_on_doc!(noun);
+    create_fns_on_doc!(number);
+    create_fns_on_doc!(paragraph_break);
+    create_fns_on_doc!(pipe);
     create_fns_on_doc!(preposition);
+    create_fns_on_doc!(punctuation);
+    create_fns_on_doc!(quote);
+    create_fns_on_doc!(sentence_terminator);
+    create_fns_on_doc!(space);
+    create_fns_on_doc!(unlintable);
+    create_fns_on_doc!(verb);
+    create_fns_on_doc!(word);
+    create_fns_on_doc!(word_like);
 
     fn first_sentence_word(&self) -> Option<&Token> {
         self.tokens.first_sentence_word()

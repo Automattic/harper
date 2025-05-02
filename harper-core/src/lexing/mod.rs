@@ -358,29 +358,29 @@ mod tests {
         ));
     }
 
-    // #[test]
-    // fn lexes_negative_1() {
-    //     let source: Vec<_> = "-1".chars().collect();
-    //     assert!(matches!(
-    //         lex_number(&source),
-    //         Some(FoundToken {
-    //             token: TokenKind::Number(_),
-    //             ..
-    //         })
-    //     ));
-    // }
+    #[ignore = "Negative numbers are not yet supported"]
+    fn lexes_negative_1() {
+        let source: Vec<_> = "-1".chars().collect();
+        assert!(matches!(
+            lex_number(&source),
+            Some(FoundToken {
+                token: TokenKind::Number(_),
+                ..
+            })
+        ));
+    }
 
-    // #[test]
-    // fn lexes_positive_1() {
-    //     let source: Vec<_> = "+1".chars().collect();
-    //     assert!(matches!(
-    //         lex_number(&source),
-    //         Some(FoundToken {
-    //             token: TokenKind::Number(_),
-    //             ..
-    //         })
-    //     ));
-    // }
+    #[ignore = "Positive numbers with a leading + are not supported"]
+    fn lexes_positive_1() {
+        let source: Vec<_> = "+1".chars().collect();
+        assert!(matches!(
+            lex_number(&source),
+            Some(FoundToken {
+                token: TokenKind::Number(_),
+                ..
+            })
+        ));
+    }
 
     #[test]
     fn lexes_pi() {

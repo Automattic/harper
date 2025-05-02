@@ -1,7 +1,7 @@
 use super::{Lint, LintKind, PatternLinter, Suggestion};
 use crate::{
     CharStringExt, Token, TokenStringExt,
-    patterns::{AnyCapitalization, EitherPattern, Pattern, SequencePattern, WordSet},
+    patterns::{EitherPattern, Pattern, SequencePattern, Word, WordSet},
 };
 
 pub struct TheMy {
@@ -10,7 +10,7 @@ pub struct TheMy {
 
 impl Default for TheMy {
     fn default() -> Self {
-        let the = AnyCapitalization::of("the");
+        let the = Word::new("the");
         let any_possessive = WordSet::new(&["my", "your", "his", "her", "its", "our", "their"]);
 
         let the_poss = SequencePattern::default()

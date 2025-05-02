@@ -1,4 +1,4 @@
-use std::{num::NonZeroUsize, sync::Arc};
+use std::sync::Arc;
 
 use crate::{CharString, Dictionary, FstDictionary, Token, WordMetadata};
 
@@ -57,10 +57,10 @@ impl SplitCompoundWord {
 }
 
 impl Pattern for SplitCompoundWord {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         let inner_match = self.inner.matches(tokens, source)?;
 
-        if inner_match.get() != 3 {
+        if inner_match != 3 {
             return None;
         }
 

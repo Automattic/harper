@@ -46,24 +46,25 @@ mod tests {
         );
     }
 
-    // "play" is also a noun so in a context like "Sometimes the umpire lets play continue"
-    // #[test]
-    // fn issue_470_missing_apostrophe() {
-    //     assert_suggestion_result("lets play", LetsConfusion::default(), "let's play");
-    // }
-
-    // #[test]
-    // fn issue_470_missing_subject() {
-    //     assert_suggestion_result("let play", LetsConfusion::default(), "let's play");
-    // }
+    #[test]
+    #[ignore = "\"play\" is also a noun so in a context like \"Sometimes the umpire lets play continue\""]
+    fn issue_470_missing_apostrophe_play() {
+        assert_suggestion_result("lets play", LetsConfusion::default(), "let's play");
+    }
 
     #[test]
-    fn issue_470_missing_apostrophe() {
+    #[ignore]
+    fn issue_470_missing_subject_play() {
+        assert_suggestion_result("let play", LetsConfusion::default(), "let's play");
+    }
+
+    #[test]
+    fn issue_470_missing_apostrophe_proceed() {
         assert_suggestion_result("lets proceed", LetsConfusion::default(), "let's proceed");
     }
 
     #[test]
-    fn issue_470_missing_subject() {
+    fn issue_470_missing_subject_proceed() {
         assert_suggestion_result("let proceed", LetsConfusion::default(), "let's proceed");
     }
 

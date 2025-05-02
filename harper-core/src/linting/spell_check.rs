@@ -268,14 +268,15 @@ mod tests {
         );
     }
 
-    // #[test]
-    // fn australian_labour_vs_labor() {
-    //     assert_lint_count(
-    //         "In Australia we write 'labour' but the political party is the 'Labor Party'.",
-    //         SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
-    //         0,
-    //     )
-    // }
+    #[test]
+    #[ignore = "This test is broken due to the metadata dialect field not being a collection"]
+    fn australian_labour_vs_labor() {
+        assert_lint_count(
+            "In Australia we write 'labour' but the political party is the 'Labor Party'.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            0,
+        )
+    }
 
     #[test]
     fn australian_words_flagged_for_american_english() {
@@ -295,7 +296,16 @@ mod tests {
         );
     }
 
-    // Unit tests for specific spell check corrections
+    #[test]
+    fn abandonware_correction() {
+        assert_suggestion_result(
+            "abanonedware",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            "abandonware",
+        );
+    }
+
+    // Unit tests for specific spellcheck corrections
 
     #[test]
     fn corrects_abandonedware_1131_1166() {
@@ -304,6 +314,80 @@ mod tests {
             "Abandonedware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "Abandonware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
+        );
+    }
+
+    #[test]
+    fn afterwards_not_us() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
+        );
+    }
+
+    #[test]
+    fn afterward_is_us() {
+        assert_lint_count(
+            "afterward",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            0,
+        );
+    }
+
+    #[test]
+    fn afterward_not_au() {
+        assert_lint_count(
+            "afterward",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            1,
+        );
+    }
+
+    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
+    #[test]
+    fn afterwards_is_au() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            0,
+        );
+    }
+
+    #[test]
+    fn afterward_not_ca() {
+        assert_lint_count(
+            "afterward",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+            1,
+        );
+    }
+
+    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
+    #[test]
+    fn afterwards_is_ca() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+            0,
+        );
+    }
+
+    #[test]
+    fn afterward_not_uk() {
+        assert_lint_count(
+            "afterward",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            1,
+        );
+    }
+
+    #[test]
+    fn afterwards_is_uk() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            0,
         );
     }
 }

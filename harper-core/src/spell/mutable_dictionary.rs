@@ -270,6 +270,7 @@ mod tests {
     // TODO "this" is a determiner when used similarly to "the"
     // TODO but when used alone it's a "demonstrative pronoun"
     // TODO Harper previously wrongly classified it as a noun
+    // TODO .is_determiner() is not yet implemented
     // #[test]
     // fn this_is_determiner() {
     //     let dict = MutableDictionary::curated();

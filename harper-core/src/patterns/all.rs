@@ -1,5 +1,3 @@
-use std::num::NonZeroUsize;
-
 use crate::Token;
 
 use super::Pattern;
@@ -24,14 +22,14 @@ impl All {
 }
 
 impl Pattern for All {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         let mut max = 0;
 
         for pattern in &self.children {
             let len = pattern.matches(tokens, source)?;
-            max = max.max(len.get());
+            max = max.max(len);
         }
 
-        NonZeroUsize::new(max)
+        Some(max)
     }
 }
