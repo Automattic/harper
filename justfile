@@ -334,6 +334,11 @@ bump-versions: update-vscode-linters
   cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
   mv package.json.edited package.json
 
+  cd "{{justfile_directory()}}/packages/obsidian-plugin"
+
+  cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
+  mv package.json.edited package.json
+
   just format
 
   lazygit

@@ -39,7 +39,7 @@
 > much  out         of  the way   to hear the Rabbit say   to itself , “ Oh      dear    ! Oh      dear    ! I   shall
 # N/I/J NSg/V/J/R/P V/P D   NSg/J P  V    D   NSg    NSg/V P  I      . . NPrSg/V NSg/V/J . NPrSg/V NSg/V/J . ISg VX
 > be     late  ! ” ( when    she thought it        over      afterwards , it        occurred to her   that    she
-# NSg/VX NSg/J . . . NSg/I/C ISg NSg/V   NPrSg/ISg NSg/V/J/P NPl/R/Br   . NPrSg/ISg V        P  I/J/D N/I/C/D ISg
+# NSg/VX NSg/J . . . NSg/I/C ISg NSg/V   NPrSg/ISg NSg/V/J/P R/Br       . NPrSg/ISg V        P  I/J/D N/I/C/D ISg
 > ought    to have   wondered at        this , but     at        the time it        all       seemed quite natural ) ;
 # NSg/I/VX P  NSg/VX W?       NSg/I/V/P I/D  . NSg/C/P NSg/I/V/P D   NSg  NPrSg/ISg NSg/I/J/C W?     NSg   NSg/J   . .
 > but     when    the Rabbit actually took a   watch out         of  its   waistcoat - pocket  , and
@@ -635,7 +635,7 @@
 > mouse , come    over      with William the Conqueror . ” ( For , with all       her   knowledge of
 # NSg/V . NSg/V/P NSg/V/J/P P    NPrSg   D   NSg       . . . C/P . P    NSg/I/J/C I/J/D NSg/V     V/P
 > history , Alice had no      very clear   notion how   long      ago anything had happened . ) So
-# NSg/V   . NPr   V   NPrSg/P J    NSg/V/J NSg    NSg/C NPrSg/V/J J/P NSg/I/V  V   W?       . . NSg/I/J/C
+# NSg     . NPr   V   NPrSg/P J    NSg/V/J NSg    NSg/C NPrSg/V/J J/P NSg/I/V  V   W?       . . NSg/I/J/C
 > she began again : “ Où est   ma      chatte ? ” which was the first sentence in          her   French
 # ISg V     P     . . ?  NPrSg NPrSg/J ?      . . I/C   V   D   NSg/J NSg/V    NPrSg/V/J/P I/J/D NPrSg/V/J
 > lesson - book  . The Mouse gave a   sudden leap    out         of  the water , and seemed to quiver
@@ -5857,7 +5857,7 @@
 >
 #
 > “ No      , no      ! ” said the Queen . “ Sentence first   — verdict afterwards . ”
-# . NPrSg/P . NPrSg/P . . V/J  D   NPrSg . . NSg/V    NSg/V/J . NSg     NPl/R/Br   . .
+# . NPrSg/P . NPrSg/P . . V/J  D   NPrSg . . NSg/V    NSg/V/J . NSg     R/Br       . .
 >
 #
 > “ Stuff and nonsense ! ” said Alice loudly . “ The idea of  having the sentence
