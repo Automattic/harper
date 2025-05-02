@@ -1,12 +1,12 @@
 use crate::Token;
 
-use super::Pattern;
+use super::SingleTokenPattern;
 
-/// A [`Pattern`] that will match any single token.
+/// Matches any single token.
 pub struct AnyPattern;
 
-impl Pattern for AnyPattern {
-    fn matches(&self, tokens: &[Token], _source: &[char]) -> Option<usize> {
-        if tokens.is_empty() { None } else { Some(1) }
+impl SingleTokenPattern for AnyPattern {
+    fn matches_token(&self, _token: &Token, _source: &[char]) -> bool {
+        true
     }
 }

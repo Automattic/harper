@@ -1,9 +1,9 @@
-use super::Pattern;
+use super::SingleTokenPattern;
 use smallvec::SmallVec;
 
 use crate::{CharString, Token};
 
-/// A [`Pattern`] that matches against any of a set of provided words.
+/// A [`super::Pattern`] that matches against any of a set of provided words.
 /// For small sets of short words, it doesn't allocate.
 ///
 /// Note that any capitalization of the contained words will result in a match.
@@ -37,14 +37,13 @@ impl WordSet {
     }
 }
 
-impl Pattern for WordSet {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        let tok = tokens.first()?;
-        if !tok.kind.is_word() {
-            return None;
+impl SingleTokenPattern for WordSet {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        if !token.kind.is_word() {
+            return false;
         }
 
-        let tok_chars = tok.span.get_content(source);
+        let tok_chars = token.span.get_content(source);
 
         for word in &self.words {
             if tok_chars.len() != word.len() {
@@ -57,11 +56,11 @@ impl Pattern for WordSet {
                 .all(|(a, b)| a.eq_ignore_ascii_case(b));
 
             if partial_match {
-                return Some(1);
+                return true;
             }
         }
 
-        None
+        false
     }
 }
 

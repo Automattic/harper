@@ -1,6 +1,6 @@
 use crate::{Token, TokenKind};
 
-use super::Pattern;
+use super::SingleTokenPattern;
 
 /// This struct does two things.
 ///
@@ -11,9 +11,7 @@ use super::Pattern;
 pub struct ImpliesQuantity;
 
 impl ImpliesQuantity {
-    pub fn implies_plurality(tokens: &[Token], source: &[char]) -> Option<bool> {
-        let token = tokens.first()?;
-
+    pub fn implies_plurality(token: &Token, source: &[char]) -> Option<bool> {
         match &token.kind {
             TokenKind::Word(Some(word_metadata)) => {
                 if word_metadata.determiner {
@@ -35,13 +33,9 @@ impl ImpliesQuantity {
     }
 }
 
-impl Pattern for ImpliesQuantity {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        if Self::implies_plurality(tokens, source).is_some() {
-            Some(1)
-        } else {
-            None
-        }
+impl SingleTokenPattern for ImpliesQuantity {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        Self::implies_plurality(token, source).is_some()
     }
 }
 

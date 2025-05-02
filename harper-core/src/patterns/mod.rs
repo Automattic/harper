@@ -143,14 +143,26 @@ where
     }
 }
 
+/// A simpler version of the [`Pattern`] trait that only matches a single
+/// token.
+pub trait SingleTokenPattern {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool;
+}
+
 #[cfg(feature = "concurrent")]
-impl<F> Pattern for F
-where
-    F: Fn(&Token, &[char]) -> bool,
-    F: Send + Sync,
-{
+impl<S: SingleTokenPattern + Send + Sync> Pattern for S {
     fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        if self(tokens.first()?, source) {
+        if self.matches_token(tokens.first()?, source) {
+            Some(1)
+        } else {
+            None
+        }
+    }
+}
+#[cfg(not(feature = "concurrent"))]
+impl<S: SingleTokenPattern> Pattern for S {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
+        if self.matches_token(tokens.first()?, source) {
             Some(1)
         } else {
             None
@@ -158,17 +170,9 @@ where
     }
 }
 
-#[cfg(not(feature = "concurrent"))]
-impl<F> Pattern for F
-where
-    F: Fn(&Token, &[char]) -> bool,
-{
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        if self(tokens.first()?, source) {
-            Some(1)
-        } else {
-            None
-        }
+impl<F: Fn(&Token, &[char]) -> bool> SingleTokenPattern for F {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        self(token, source)
     }
 }
 
