@@ -148,7 +148,7 @@ update-vscode-linters:
   set -eo pipefail
 
   linters=$(
-    cargo run --bin harper-cli -- config |
+    cargo run --bin harper-debug -- config |
       jq 'with_entries(.key |= "harper.linters." + . |
         .value |= {
           "scope": "resource",
@@ -205,36 +205,36 @@ precommit: check test build-harperjs build-obsidian build-web build-wp
 
   cargo build --all-targets
 
-# Install `harper-cli` and `harper-ls` to your machine via `cargo`
+# Install `harper-debug` and `harper-ls` to your machine via `cargo`
 install:
   cargo install --path harper-ls --locked 
-  cargo install --path harper-cli --locked 
+  cargo install --path harper-debug --locked 
 
-# Run `harper-cli` on the Harper repository
+# Run `harper-debug` on the Harper repository
 dogfood:
   #! /bin/bash
   cargo build --release
   for file in `fd -e rs`
   do
     echo Linting $file
-    ./target/release/harper-cli lint $file
+    ./target/release/harper-debug lint $file
   done
 
 # Test everything.
 test: test-vscode test-harperjs
   cargo test
 
-# Use `harper-cli` to parse a provided file and print out the resulting tokens.
+# Use `harper-debug` to parse a provided file and print out the resulting tokens.
 parse file:
-  cargo run --bin harper-cli -- parse {{file}}
+  cargo run --bin harper-debug -- parse {{file}}
 
 # Lint a provided file using Harper and print the results.
 lint file:
-  cargo run --bin harper-cli -- lint {{file}}
+  cargo run --bin harper-debug -- lint {{file}}
 
 # Show the spans of the parsed tokens overlapped in the provided file.
 spans file:
-  cargo run --bin harper-cli -- spans {{file}}
+  cargo run --bin harper-debug -- spans {{file}}
 
 # Add a noun to Harper's curated dictionary.
 addnoun noun:
@@ -269,9 +269,9 @@ addnoun noun:
 searchdictfor word:
   #! /bin/bash
   if command -v rg > /dev/null; then
-    cargo run --bin harper-cli -- words | rg {{word}}
+    cargo run --bin harper-debug -- words | rg {{word}}
   else
-    cargo run --bin harper-cli -- words | grep {{word}}
+    cargo run --bin harper-debug -- words | grep {{word}}
   fi
 
 # Find words in the user's `harper-ls/dictionary.txt` for words already in the curated dictionary.
@@ -285,10 +285,10 @@ userdictoverlap:
 
 # Get the metadata associated with a particular word in Harper's dictionary as JSON.
 getmetadata word:
-  cargo run --bin harper-cli -- metadata {{word}}
+  cargo run --bin harper-debug -- metadata {{word}}
 # Get all the forms of a word using the affixes.
 getforms word:
-  cargo run --bin harper-cli -- forms {{word}}
+  cargo run --bin harper-debug -- forms {{word}}
 # Get a random sample of words from Harper's dictionary and list all forms of each.
 sampleforms count:
   #!/bin/bash
@@ -314,7 +314,7 @@ sampleforms count:
     exit 1
   fi
   
-  cargo run --bin harper-cli -- forms $words
+  cargo run --bin harper-debug -- forms $words
 
 bump-versions: update-vscode-linters
   #! /bin/bash

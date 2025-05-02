@@ -744,24 +744,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "harper-cli"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "ariadne",
- "clap",
- "dirs 6.0.0",
- "harper-comments",
- "harper-core",
- "harper-literate-haskell",
- "harper-stats",
- "harper-typst",
- "hashbrown 0.15.2",
- "serde",
- "serde_json",
-]
-
-[[package]]
 name = "harper-comments"
 version = "0.32.1"
 dependencies = [
@@ -824,6 +806,24 @@ dependencies = [
  "unicode-blocks",
  "unicode-script",
  "unicode-width 0.2.0",
+]
+
+[[package]]
+name = "harper-debug"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "ariadne",
+ "clap",
+ "dirs 6.0.0",
+ "harper-comments",
+ "harper-core",
+ "harper-literate-haskell",
+ "harper-stats",
+ "harper-typst",
+ "hashbrown 0.15.2",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

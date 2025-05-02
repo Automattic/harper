@@ -65,51 +65,51 @@ jobs:
           - release_for: Windows-x86_64
             os: windows-latest
             target: x86_64-pc-windows-msvc
-            project: harper-cli
-            bin: harper-cli.exe
-            name: harper-cli-x86_64-pc-windows-msvc.zip
+            project: harper-debug
+            bin: harper-debug.exe
+            name: harper-debug-x86_64-pc-windows-msvc.zip
             command: build
           - release_for: macOS-x86_64
             os: macOS-latest
             target: x86_64-apple-darwin
-            project: harper-cli
-            bin: harper-cli
-            name: harper-cli-x86_64-apple-darwin.tar.gz
+            project: harper-debug
+            bin: harper-debug
+            name: harper-debug-x86_64-apple-darwin.tar.gz
             command: build
           - release_for: macOS-aarch64
             os: macOS-latest
             target: aarch64-apple-darwin
-            project: harper-cli
-            bin: harper-cli
-            name: harper-cli-aarch64-apple-darwin.tar.gz
+            project: harper-debug
+            bin: harper-debug
+            name: harper-debug-aarch64-apple-darwin.tar.gz
             command: build
           - release_for: Linux-x86_64-GNU
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            project: harper-cli
-            bin: harper-cli
-            name: harper-cli-x86_64-unknown-linux-gnu.tar.gz
+            project: harper-debug
+            bin: harper-debug
+            name: harper-debug-x86_64-unknown-linux-gnu.tar.gz
             command: build
           - release_for: Linux-aarch64-GNU
             os: ubuntu-latest
             target: aarch64-unknown-linux-gnu
-            project: harper-cli
-            bin: harper-cli
-            name: harper-cli-aarch64-unknown-linux-gnu.tar.gz
+            project: harper-debug
+            bin: harper-debug
+            name: harper-debug-aarch64-unknown-linux-gnu.tar.gz
             command: build
           - release_for: Linux-x86_64-musl
             os: ubuntu-latest
             target: x86_64-unknown-linux-musl
-            project: harper-cli
-            bin: harper-cli
-            name: harper-cli-x86_64-unknown-linux-musl.tar.gz
+            project: harper-debug
+            bin: harper-debug
+            name: harper-debug-x86_64-unknown-linux-musl.tar.gz
             command: build
           - release_for: Linux-aarch64-musl
             os: ubuntu-latest
             target: aarch64-unknown-linux-musl
-            project: harper-cli
-            bin: harper-cli
-            name: harper-cli-aarch64-unknown-linux-musl.tar.gz
+            project: harper-debug
+            bin: harper-debug
+            name: harper-debug-aarch64-unknown-linux-musl.tar.gz
             command: build
 
     runs-on: ${{ matrix.platform.os }}
