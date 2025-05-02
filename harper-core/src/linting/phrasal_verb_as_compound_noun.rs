@@ -47,27 +47,25 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                 continue;
             }
             let nountok_charsl = document.get_span_content(&token.span);
-            // * Can't contain a hyphen or space.
-            if nountok_charsl.contains(&'-') || nountok_charsl.contains(&' ') {
-                // This means Harper's tokenizer's concept of a word is different to what we expect
-                // or has changed since this code was written.
-                unreachable!();
-            }
-            // * Can't contain an apostrophe
-            if nountok_charsl.contains(&'\'') || nountok_charsl.contains(&'’') {
+            // * Can't contain space, hyphen or apostrophe
+            if nountok_charsl.contains(&' ')
+                || nountok_charsl.contains(&'-')
+                || nountok_charsl.contains(&'\'')
+                || nountok_charsl.contains(&'’')
+            {
                 continue;
             }
             // * Must end with the same letters as one of the particles used in phrasal verbs.
             let particle_endings: &[&[char]] = &[
-                &['a', 'r', 'o', 'u', 'n', 'd'][..],
-                &['b', 'a', 'c', 'k'][..],
-                &['d', 'o', 'w', 'n'][..],
-                &['i', 'n'][..],
-                &['o', 'n'][..],
-                &['o', 'f', 'f'][..],
-                &['o', 'u', 't'][..],
-                &['o', 'v', 'e', 'r'][..],
-                &['u', 'p'][..],
+                &['a', 'r', 'o', 'u', 'n', 'd'],
+                &['b', 'a', 'c', 'k'],
+                &['d', 'o', 'w', 'n'],
+                &['i', 'n'],
+                &['o', 'n'],
+                &['o', 'f', 'f'],
+                &['o', 'u', 't'],
+                &['o', 'v', 'e', 'r'],
+                &['u', 'p'],
             ];
 
             // * Must not be in the set of known false positives.
