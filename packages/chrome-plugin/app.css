@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@plugin "flowbite/plugin";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+	--color-primary-50: #fefee3;
+	--color-primary-100: #e3eccf;
+	--color-primary-200: #c9dabc;
+	--color-primary-300: #afc8a9;
+	--color-primary-400: #95b696;
+	--color-primary-500: #7aa482;
+	--color-primary-600: #60926f;
+	--color-primary-700: #46805c;
+	--color-primary-800: #2c6e49;
+	--color-primary-900: #23583a;
+
+	--color-accent-peach: #ffc9b9;
+	--color-accent-sand: #d68c45;
+}
+
+@source "../node_modules/flowbite-svelte/dist";

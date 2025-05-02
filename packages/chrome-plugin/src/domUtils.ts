@@ -86,20 +86,3 @@ export function getRangeForTextSpan(target: Element, span: Span): Range | null {
 
 	return null;
 }
-
-/**
- * Locate the rich text containers inside a given element.
- * Notice: this function may return the provided element.
- * @param target
- */
-export function getRichTextContainers(target: Element): Element[] {
-	const elms: Element[] = [];
-
-	if (target.classList.contains('rich-text')) {
-		elms.push(target);
-	}
-
-	elms.push(...extractFromHTMLCollection(target.getElementsByClassName('rich-text')));
-
-	return elms;
-}

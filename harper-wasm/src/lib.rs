@@ -162,9 +162,7 @@ impl Linter {
     }
 
     pub fn set_lint_config_from_json(&mut self, json: String) -> Result<(), String> {
-        self.lint_group
-            .config
-            .merge_from(&mut serde_json::from_str(&json).map_err(|v| v.to_string())?);
+        self.lint_group.config = serde_json::from_str(&json).map_err(|v| v.to_string())?;
         Ok(())
     }
 
@@ -202,9 +200,8 @@ impl Linter {
     }
 
     pub fn set_lint_config_from_object(&mut self, object: JsValue) -> Result<(), String> {
-        self.lint_group
-            .config
-            .merge_from(&mut serde_wasm_bindgen::from_value(object).map_err(|v| v.to_string())?);
+        self.lint_group.config =
+            serde_wasm_bindgen::from_value(object).map_err(|v| v.to_string())?;
         Ok(())
     }
 

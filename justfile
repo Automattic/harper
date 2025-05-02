@@ -87,6 +87,16 @@ build-obsidian: build-harperjs
 
   zip harper-obsidian-plugin.zip manifest.json main.js
 
+# Build the Chrome extension.
+build-chrome-plugin: build-harperjs
+  #! /bin/bash
+  set -eo pipefail
+  
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+
+  pnpm install 
+  pnpm zip
+
 # Run VSCode plugin unit and integration tests.
 test-vscode:
   #! /bin/bash
@@ -196,10 +206,10 @@ check: check-rust build-web
   pnpm check
 
 # Populate build caches and install necessary local tooling (tools callable via `pnpm run <tool>`).
-setup: build-harperjs build-obsidian test-vscode test-harperjs build-web build-wp
+setup: build-harperjs test-harperjs test-vscode build-web build-wp build-obsidian build-chrome-plugin
 
 # Perform full format and type checking, build all projects and run all tests. Run this before pushing your code.
-precommit: check test build-harperjs build-obsidian build-web build-wp
+precommit: check test build-harperjs build-obsidian build-web build-wp build-chrome-plugin
   #! /bin/bash
   set -eo pipefail
 
@@ -330,6 +340,11 @@ bump-versions: update-vscode-linters
   mv package.json.edited package.json
 
   cd "{{justfile_directory()}}/packages/vscode-plugin"
+
+  cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
+  mv package.json.edited package.json
+
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
 
   cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
   mv package.json.edited package.json

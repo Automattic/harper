@@ -1,4 +1,4 @@
-name: Release WordPress Plugin 
+name: Release Chrome Plugin 
 
 on:
   push:
@@ -24,14 +24,14 @@ jobs:
       - name: Install `wasm-pack`
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
       - name: Build
-        run: just build-wp 
+        run: just build-chrome-plugin 
       - name: Upload extension
         uses: actions/upload-artifact@v4
         with:
-          name: harper.zip
-          path: "packages/wordpress-plugin/harper.zip"
+          name: harper-chrome-plugin.zip
+          path: "packages/chrome-plugin/package/harper-chrome-plugin.zip"
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "packages/wordpress-plugin/harper.zip"
+          artifacts: "packages/chrome-plugin/package/harper-chrome-plugin.zip"
           allowUpdates: true
           draft: true
