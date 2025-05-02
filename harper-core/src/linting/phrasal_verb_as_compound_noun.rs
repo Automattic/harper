@@ -369,4 +369,13 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn ignore_multi_word() {
+        assert_lint_count(
+            "I like this add-on!",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
 }
