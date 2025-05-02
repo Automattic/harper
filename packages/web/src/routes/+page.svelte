@@ -105,8 +105,7 @@ const headings = [
 		<a href="/docs/integrations/visual-studio-code"
 			>Visual Studio Code</a
 		>, <a href="/docs/integrations/neovim">Neovim</a>,
-		and
-		<a href="/docs/integrations/obsidian">Obsidian</a> integrations are amazing.
+		<a href="/docs/integrations/obsidian">Obsidian</a>, and <a href="/docs/integrations/chrome-extension">Chrome</a> integrations are amazing.
 	</span>
 
 	<img
