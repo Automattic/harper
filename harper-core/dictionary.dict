@@ -1,4 +1,4 @@
-52900
+53000
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -7761,6 +7761,7 @@ PM/14SMDG           # prime minister; private message
 PMS/1245M
 PNG/2M              # Papua New Guinea; image format
 PO/15
+POS/1M              # part-of-speech
 POV/1SM             # point of view
 POW/1MS             # prisoner of war
 PP/12
@@ -21200,7 +21201,7 @@ dirty/~54DRSTGP
 dis/~418M
 disable/~45DSGL
 disablement/1M
-disambiguate/~4N
+disambiguate/~4NSDG
 disappointing/~54Y
 disarming/54Y
 disassembly/1
@@ -52532,6 +52533,7 @@ sioyek/SM           # !! please check and comment !!
 stacktrace/SM1      # dictionaries prefer: stack trace
 standup/SM          # dictionaries prefer: stand-up
 strat/1MS           # gamer slang strategy
+tagset/1MS
 vid/1MS             # video
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
@@ -52563,10 +52565,10 @@ barn find/1MS
 beck and call/1
 bell-pull/1MS
 bench-warmer/1MS
+blow-up/51MS
 blue-blooded/5
 blue-collar/5
 bona fide/j5
-boot up/4
 break out/4
 breaks out/4
 Bretton Woods/2M
@@ -52574,6 +52576,7 @@ built-in/1MS5
 built-up/5
 car bomb/1MS
 car-bomb/4
+cash-strapped/5
 CD-ROM/1MS
 centre-left/5!@_
 centre-right/5!@_
@@ -52765,6 +52768,8 @@ OS X/2M             # before macOS
 out-and-out/5
 out of date
 Pan Am/1M           # old airline
+part of speech/1M
+parts speech/9
 Pax Americana/2M
 peer review/1MSDG
 peer-reviewed/5
@@ -52838,6 +52843,7 @@ sussed out/4
 susses out/4
 sussing out/4
 ta-da
+take-home/51MS
 tax-exempt/5
 tech-savvy/5
 teeny-tiny/5
@@ -52900,7 +52906,13 @@ year-over-year/5
 # Remember not to add any affixes since only the verb part at the start undergoes inflection.
 
 back up/4
+black out/4
+blast off/4
+blow up/4
+boot up/4
 break up/4
+buy back/4
+buy out/4
 carry out/4
 check in/4
 check out/4
@@ -52941,10 +52953,25 @@ sign out/4
 sign up/4
 slow down/4
 splash down/4
-start out/4
+stand off/4
+stand out/4
 start up/4
 take down/4
+take off/4
+take out/4
+throw back/4
+tie back/4
+toss up/4
+try out/4
+tune up/4
+turn about/4
+turn around/4
+turn off/4
 turn out/4
+walk out/4
+wash out/4
+white out/4
+wipe out/4
 work around/4
 work out/4
 
