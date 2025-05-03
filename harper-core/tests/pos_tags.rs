@@ -1,4 +1,4 @@
-//! This test creats snapshots of the part-of-speech (POS) tags assigned by the
+//! This test creates snapshots of the part-of-speech (POS) tags assigned by the
 //! [`Document`] struct to the text files in the `tests/text` directory.
 //!
 //! # Usage
@@ -27,7 +27,7 @@
 //! Tags are assigned based on the [`TokenKind`] and [`WordMetadata`] of a
 //! token.
 //!
-//! - The tag of [`TokenKind::Word`] variants depends on the their
+//! - The tag of [`TokenKind::Word`] variants depends on their
 //!   [`WordMetadata`]. If they don't have any metadata, they are denoted by `?`.
 //!   Otherwise, the tag is constructed as follows:
 //!
@@ -48,7 +48,7 @@
 //!   - Prepositions are denoted by `P`.
 //!   - Dialects are denoted by `Am`, `Br`, `Ca`, or `Au`.
 //!
-//!   The tagger supports uncertaintiy, so a single word can be e.g. both a
+//!   The tagger supports uncertainty, so a single word can be e.g. both a
 //!   noun and a verb. This is denoted by a `/` between the tags.
 //!   For example, `N/V/J` means the word is a noun, verb, and/or adjective.
 //!
