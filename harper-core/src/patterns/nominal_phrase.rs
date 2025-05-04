@@ -41,14 +41,16 @@ mod tests {
     trait SpanVecExt {
         fn to_strings(&self, doc: &Document) -> Vec<String>;
     }
-    
+
     impl SpanVecExt for Vec<Span> {
         fn to_strings(&self, doc: &Document) -> Vec<String> {
             self.iter()
-                .map(|sp| doc.get_tokens()[sp.start..sp.end]
-                    .iter()
-                    .map(|tok| doc.get_span_content_str(&tok.span))
-                    .collect::<String>())
+                .map(|sp| {
+                    doc.get_tokens()[sp.start..sp.end]
+                        .iter()
+                        .map(|tok| doc.get_span_content_str(&tok.span))
+                        .collect::<String>()
+                })
                 .collect()
         }
     }
@@ -58,7 +60,7 @@ mod tests {
         let doc = Document::new_markdown_default_curated("A red apple");
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 
-        assert_eq!(matches, vec![Span::new(0, 5)])
+        assert_eq!(matches.to_strings(&doc), vec!["A red apple"])
     }
 
     #[test]
@@ -74,7 +76,10 @@ mod tests {
         let doc = Document::new_markdown_default_curated("An apple, a banana and a pear");
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 
-        assert_eq!(matches.to_strings(&doc), vec!["An apple", "a banana", "a pear"])
+        assert_eq!(
+            matches.to_strings(&doc),
+            vec!["An apple", "a banana", "a pear"]
+        )
     }
 
     #[test]
@@ -95,7 +100,16 @@ mod tests {
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 
         dbg!(&matches);
+        dbg!(matches.to_strings(&doc));
 
-        assert_eq!(matches.to_strings(&doc), vec!["My favorite foods", "pizza", "sushi", "tacos", "burgers"])
+        for span in &matches {
+            let gc = span.get_content(doc.get_source());
+            dbg!(gc);
+        }
+
+        assert_eq!(
+            matches.to_strings(&doc),
+            vec!["My favorite foods", "pizza", "sushi", "tacos", "burgers"]
+        )
     }
 }
