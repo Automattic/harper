@@ -35967,7 +35967,7 @@ oestrogen/1MS!_
 oestrous/5!_
 oestrus/1MS!_
 oeuvre/~1MS
-of/~+4
+of/~+
 off/~5+41SZGDRJ
 offal/1M
 offbeat/~15MS
@@ -48466,7 +48466,8 @@ tourniquet/14MS
 tousle/41GDS
 tout/~14MDGS
 tow/~41SZGMDR
-toward/~+5S
+toward/~+5
+towards/~+
 towboat/1MS
 towel/~14JGSMD
 towelette/1SM
@@ -52535,6 +52536,7 @@ strat/1MS           # gamer slang strategy
 vid/1MS             # video
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
+handedly
 
 # Experimental multi-word entries
 # Harper may not recognize these as words in documents

@@ -8,7 +8,7 @@ pub struct ExactPhrase {
 
 impl ExactPhrase {
     pub fn from_phrase(text: &str) -> Self {
-        let document = Document::new_markdown_default_curated(text);
+        let document = Document::new_plain_english_curated(text);
         Self::from_document(&document)
     }
 
