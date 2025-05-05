@@ -23,20 +23,22 @@ impl ThenThan {
                                     is_comparative_adjective(tok, source)
                                 },
                             )))
-                            .then_whitespace()
-                            .then_any_capitalization_of("then")
-                            .then_whitespace()
+                            .t_ws()
+                            .t_aco("then")
+                            .t_ws()
                             .then(Invert::new(Word::new("that"))),
                     ),
                     // Positive form of adjective following "more" or "less"
                     Box::new(
                         SequencePattern::default()
                             .then(WordSet::new(&["more", "less"]))
-                            .then_whitespace()
-                            .then_adjective()
-                            .then_whitespace()
-                            .then_any_capitalization_of("then")
-                            .then_whitespace()
+                            .t_ws()
+                            .then(|tok: &Token, _source: &[char]| {
+                                tok.kind.is_adjective() || tok.kind.is_adverb()
+                            })
+                            .t_ws()
+                            .t_aco("then")
+                            .t_ws()
                             .then(Invert::new(Word::new("that"))),
                     ),
                 ])),
