@@ -82,3 +82,57 @@ pub fn file_dict_name(url: &Url) -> anyhow::Result<PathBuf> {
 
     Ok(rewritten.into())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::io::Cursor;
+
+    const TEST_UNSORTED_WORDS: [&str; 10] = [
+        "peafowl",
+        "housebroken",
+        "blackjack",
+        "Žižek",
+        "BMX",
+        "icebox",
+        "stetting",
+        "ツ",
+        "ASCII",
+        "link",
+    ];
+    const TEST_SORTED_WORDS: [&str; 10] = [
+        "ASCII",
+        "BMX",
+        "blackjack",
+        "housebroken",
+        "icebox",
+        "link",
+        "peafowl",
+        "stetting",
+        "Žižek",
+        "ツ",
+    ];
+
+    /// Creates an unsorted `MutableDictionary` for testing.
+    fn get_test_unsorted_dict() -> MutableDictionary {
+        let mut test_unsorted_dict = MutableDictionary::new();
+        test_unsorted_dict.extend_words(
+            TEST_UNSORTED_WORDS.map(|w| (w.chars().collect::<Vec<_>>(), WordMetadata::default())),
+        );
+        test_unsorted_dict
+    }
+
+    #[tokio::test]
+    async fn writes_sorted_word_list() {
+        let test_unsorted_dict = get_test_unsorted_dict();
+        let mut test_writer = Cursor::new(Vec::new());
+        write_word_list(test_unsorted_dict, &mut test_writer)
+            .await
+            .expect("writing to Vec<u8> should not fail. (Unless OOM?)");
+        assert_eq!(
+            // Append trailing newline to match write_word_list output format.
+            TEST_SORTED_WORDS.join("\n") + "\n",
+            String::from_utf8_lossy(&test_writer.into_inner())
+        );
+    }
+}
