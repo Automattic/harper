@@ -75,6 +75,30 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(lintConfig).toHaveProperty('RepeatedWords');
 	});
 
+	test(`${linterName} can set its configuration away and to default`, async () => {
+		const linter = new Linter({ binary });
+
+		let lintConfig = await linter.getLintConfig();
+
+		for (const key of Object.keys(lintConfig)) {
+			lintConfig[key] = true;
+		}
+
+		await linter.setLintConfig(lintConfig);
+		lintConfig = await linter.getLintConfig();
+
+		for (const key of Object.keys(lintConfig)) {
+			lintConfig[key] = null;
+		}
+
+		await linter.setLintConfig(lintConfig);
+		lintConfig = await linter.getLintConfig();
+
+		for (const key of Object.keys(lintConfig)) {
+			expect(lintConfig[key]).toBe(null);
+		}
+	});
+
 	test(`${linterName} can both get and set its configuration`, async () => {
 		const linter = new Linter({ binary });
 

@@ -23,7 +23,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install pandoc -y
       - name: Install `wasm-pack`
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
-      - name: Precommit
+      - name: Build
         run: just build-wp 
       - name: Upload extension
         uses: actions/upload-artifact@v4

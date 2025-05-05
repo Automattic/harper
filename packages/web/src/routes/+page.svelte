@@ -1,4 +1,5 @@
 <script module>
+import ChromeLogo from '$lib/ChromeLogo.svelte';
 import CodeLogo from '$lib/CodeLogo.svelte';
 import Editor from '$lib/Editor.svelte';
 import GitHubLogo from '$lib/GitHubLogo.svelte';
@@ -43,8 +44,17 @@ const headings = [
 		class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><GitHubLogo width="40px" height="40px" />GitHub</a
 	>
+	<a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+		><ChromeLogo width="40px" height="40px" />Chrome Extension</a
+	>
 	<a href="/docs/integrations/obsidian" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><ObsidianLogo width="40px" height="40px" />Obsidian Plugin</a
+	>
+
+	<a
+		href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
+		class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+		><CodeLogo width="40px" height="40px" />Code Plugin</a
 	>
 	<a href="https://elijahpotter.dev" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><img
@@ -54,11 +64,6 @@ const headings = [
 			src="/icons/profile.svg"
 			alt="Author"
 		/>Author</a
-	>
-	<a
-		href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
-		class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-		><CodeLogo width="40px" height="40px" />Code Plugin</a
 	>
 </div>
 
@@ -100,8 +105,7 @@ const headings = [
 		<a href="/docs/integrations/visual-studio-code"
 			>Visual Studio Code</a
 		>, <a href="/docs/integrations/neovim">Neovim</a>,
-		and
-		<a href="/docs/integrations/obsidian">Obsidian</a> integrations are amazing.
+		<a href="/docs/integrations/obsidian">Obsidian</a>, and <a href="/docs/integrations/chrome-extension">Chrome</a> integrations are amazing.
 	</span>
 
 	<img
