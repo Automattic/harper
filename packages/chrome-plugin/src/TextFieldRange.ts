@@ -133,6 +133,15 @@ export default class TextFieldRange {
 		return arr;
 	}
 
+	getBoundingClientRect(): DOMRect | null {
+		this._updateMirrorText();
+		if (this.mirror == null) {
+			return null;
+		}
+
+		return this.mirror.getBoundingClientRect();
+	}
+
 	/**
 	 * Detaches (removes) the mirror element from the document.
 	 */

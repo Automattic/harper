@@ -25,7 +25,7 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): L
 	}
 
 	const targetRects = range.getClientRects();
-
+	const elBox = domRectToBox(range.getBoundingClientRect());
 	range.detach();
 
 	const boxes: LintBox[] = [];
@@ -41,8 +41,6 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): L
 	if (source == null) {
 		return [];
 	}
-
-	const elBox = domRectToBox(el.getBoundingClientRect());
 
 	for (const targetRect of targetRects) {
 		if (!isBottomEdgeInBox(targetRect, elBox)) {
