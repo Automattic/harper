@@ -54,4 +54,5 @@ It:
 
 ## Other Reading
 
+- [Putting Harper in the Browser: Technical Details](https://elijahpotter.dev/articles/putting_harper_in_your_browser)
 - [The Art of Exception](https://elijahpotter.dev/articles/the_art_of_exception)
