@@ -5,7 +5,7 @@
 //!
 //! See the page about [`SequencePattern`] for a concrete example of their use.
 
-use crate::{Document, Span, Token};
+use crate::{Document, LSend, Span, Token};
 
 mod all;
 mod any_pattern;
@@ -49,17 +49,9 @@ pub use word::Word;
 pub use word_pattern_group::WordPatternGroup;
 pub use word_set::WordSet;
 
-#[cfg(not(feature = "concurrent"))]
-#[blanket(derive(Rc, Arc))]
-pub trait Pattern {
-    /// Check if the pattern matches at the start of the given token slice.
-    ///
-    /// Returns the length of the match if successful, or `None` if not.
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize>;
-}
-#[cfg(feature = "concurrent")]
-#[blanket(derive(Arc))]
-pub trait Pattern: Send + Sync {
+#[cfg_attr(feature = "concurrent", blanket(derive(Arc)))]
+#[cfg_attr(not(feature = "concurrent"), blanket(derive(Rc, Arc)))]
+pub trait Pattern: LSend {
     /// Check if the pattern matches at the start of the given token slice.
     ///
     /// Returns the length of the match if successful, or `None` if not.
@@ -79,9 +71,6 @@ impl<P> PatternExt for P
 where
     P: Pattern + ?Sized,
 {
-    fn find_all_matches(&self, tokens: &[Token], source: &[char]) -> Vec<Span> {
-        self.iter_matches(tokens, source).collect()
-    }
     fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span> {
         MatchIter::new(self, tokens, source)
     }
@@ -143,25 +132,9 @@ where
     }
 }
 
-#[cfg(feature = "concurrent")]
 impl<F> Pattern for F
 where
-    F: Fn(&Token, &[char]) -> bool,
-    F: Send + Sync,
-{
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        if self(tokens.first()?, source) {
-            Some(1)
-        } else {
-            None
-        }
-    }
-}
-
-#[cfg(not(feature = "concurrent"))]
-impl<F> Pattern for F
-where
-    F: Fn(&Token, &[char]) -> bool,
+    F: LSend + Fn(&Token, &[char]) -> bool,
 {
     fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         if self(tokens.first()?, source) {

@@ -52,6 +52,7 @@ async function enableDefaultDomains() {
 		'web.whatsapp.com',
 		'outlook.live.com',
 		'www.reddit.com',
+		'www.linkedin.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

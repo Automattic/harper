@@ -1,4 +1,4 @@
-import type { LintBox } from './Box';
+import { type LintBox, domRectToBox, isBottomEdgeInBox } from './Box';
 import TextFieldRange from './TextFieldRange';
 import { getRangeForTextSpan } from './domUtils';
 import { type UnpackedLint, type UnpackedSuggestion, applySuggestion } from './unpackLint';
@@ -25,6 +25,7 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): L
 	}
 
 	const targetRects = range.getClientRects();
+	const elBox = domRectToBox(range.getBoundingClientRect());
 	range.detach();
 
 	const boxes: LintBox[] = [];
@@ -42,6 +43,10 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): L
 	}
 
 	for (const targetRect of targetRects) {
+		if (!isBottomEdgeInBox(targetRect, elBox)) {
+			continue;
+		}
+
 		boxes.push({
 			x: targetRect.x,
 			y: targetRect.y,
