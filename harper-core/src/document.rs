@@ -181,12 +181,19 @@ impl Document {
     /// A proposition-like word followed by a determiner or number is typically
     /// really a preposition.
     fn known_preposition(&mut self) {
-        let pattern = SequencePattern::default()
-            .then(WordSet::new(&[
-                "in", "at", "of", "on", "to", "for", "by", "with",
-            ]))
-            .then_whitespace()
-            .then(|t: &Token, _source: &[char]| t.kind.is_determiner() || t.kind.is_number());
+        fn create_pattern() -> Lrc<SequencePattern> {
+            Lrc::new(
+                SequencePattern::default()
+                    .then(WordSet::new(&["in", "at", "on", "to", "for", "by", "with"]))
+                    .then_whitespace()
+                    .then(|t: &Token, _source: &[char]| {
+                        t.kind.is_determiner() || t.kind.is_number()
+                    }),
+            )
+        }
+        thread_local! {static PATTERN: Lrc<SequencePattern> = create_pattern()}
+
+        let pattern = PATTERN.with(|v| v.clone());
 
         for m in pattern.find_all_matches_in_doc(self) {
             if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start].kind {
