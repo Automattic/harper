@@ -252,8 +252,8 @@
 # D   NSg . ?           . ?          . NSg/V . NPl    . NPrSg/I/V/J . W?      NSg/J . NSg           .
 > and applied epistemologist . Three months later in          the same journal , comptologist
 # V/C W?      ?              . NSg   NSg    J     NPrSg/V/J/P D   I/J  NSg/V/J . ?
-> was suggested , followed next    year  by      hypologist . The term    computics has also
-# V   W?        . W?       NSg/J/P NSg/J NSg/J/P ?          . D   NSg/V/J ?         V   W?
+> was suggested , followed next    year by      hypologist . The term    computics has also
+# V   W?        . W?       NSg/J/P NSg  NSg/J/P ?          . D   NSg/V/J ?         V   W?
 > been  suggested . In          Europe , terms derived from contracted translations of  the
 # NSg/V W?        . NPrSg/V/J/P NPr    . NPl   W?      P    W?         W?           V/P D
 > expression " automatic information " ( e.g. " informazione automatica " in          Italian )
@@ -294,8 +294,8 @@
 # NSg/P   D   J       NSg/V    . J       NPl         . NSg/V    NSg/V   NSg/V    W?
 > often intersects other   disciplines , such  as    cognitive science , linguistics ,
 # J     NPl        NSg/V/J NPl         . NSg/I NSg/R NSg/J     NSg/V   . NSg         .
-> mathematics , physics , biology , Earth     science , statistics , philosophy , and logic   .
-# NSg         . NSg/V   . NSg     . NPrSg/V/J NSg/V   . NPl        . NSg/V      . V/C NSg/V/J .
+> mathematics , physics , biology , Earth   science , statistics , philosophy , and logic   .
+# NSg         . NSg/V   . NSg     . NPrSg/V NSg/V   . NPl        . NSg/V      . V/C NSg/V/J .
 >
 #
 > Computer science is considered by      some  to have   a   much  closer relationship with
@@ -543,7 +543,7 @@
 > compression , cryptography , error detection and correction , and more        recently
 # NSg         . NSg          . NSg/V NSg       V/C NSg        . V/C NPrSg/I/V/J R
 > also for network coding . Codes are studied for the purpose of  designing
-# W?   C/P NSg/V   V      . NPl   V   V/J     C/P D   NSg/V/J V/P V
+# W?   C/P NSg/V   V      . NPl   V   V/J     C/P D   NSg/V   V/P V
 > efficient and reliable data transmission methods .
 # NSg/J     V/C NSg/J    NSg  NSg          NPl     .
 >
