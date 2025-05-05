@@ -209,7 +209,7 @@ mod tests {
         );
     }
 
-    // False positives / edge cases files on GitHub
+    // False positives / edge cases filed on GitHub
 
     #[test]
     fn dont_flag_let_us() {
