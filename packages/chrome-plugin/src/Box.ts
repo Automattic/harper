@@ -60,3 +60,22 @@ export function isBoxInScreen(box: Box): boolean {
 
 	return false;
 }
+
+export function boxesOverlap(a: Box, b: Box): boolean {
+	return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
+}
+
+export function domRectToBox(rect: DOMRect): Box {
+	return {
+		x: rect.x,
+		y: rect.y,
+		width: rect.width,
+		height: rect.height,
+	};
+}
+
+export function isBottomEdgeInBox(inner: Box, outer: Box): boolean {
+	const leftBottom: [number, number] = [inner.x, inner.y + inner.height];
+	const rightBottom: [number, number] = [inner.x + inner.width, inner.y + inner.height];
+	return isPointInBox(leftBottom, outer) && isPointInBox(rightBottom, outer);
+}
