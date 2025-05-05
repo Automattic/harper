@@ -29549,7 +29549,7 @@ inguinal/5
 inhabit/~4DG
 inhabitable/5U
 inhabitant/~15SM
-inhabited/~5U
+inhabited/~5UP
 inhalant/51SM
 inhalation/~1MS
 inhalator/1MS
@@ -33870,7 +33870,7 @@ ml/~
 mm/~1
 mnemonic/~51MS
 mnemonically/j
-mo/~51CKHS
+mo/~51KHS           # removed `C` de- prefix should only be for negation; breaks heuristics otherwise
 moan/14MDRSZG
 moaner/1M
 moat/~14MDS
@@ -34093,6 +34093,7 @@ monopolizer/1M
 monopoly/~1SM
 monorail/~1MS
 monorepo/1SM
+monospace/5
 monosyllabic/51
 monosyllable/1MS
 monotheism/1M
@@ -52189,6 +52190,7 @@ ATF/1M              # automatic transmission fluid
 Akismet/2M
 Alexa/2M            # voice assistant
 Alexandre/2SM
+Alibaba/2M
 AliExpress/2M
 AlphaFold/2M        # Google DeepMind project
 Ambien/1SM          # insomnia treatment
@@ -52196,6 +52198,7 @@ Anker/SM
 Archytas/SM         # !! please check and comment !! we also have archytas
 Automattic/SM       # WordPress company
 Automattician/SM
+B2B/5               # business-to-business
 BCD/1M              # binary coded decimal
 BCPL/1M             # old programming language
 BLM/1M
@@ -52438,7 +52441,8 @@ TSMC/2M             # Taiwanese Semiconductor Manufacturing Company
 TSR/1MS             # terminate and stay resident
 TUI/12SM            # text user interface
 Tandy/2M            # surname, given name, old computer company
-TechCrunch/SM
+TechCrunch/M
+Tencent/2M
 ThinkPad/2SM        # pc brand
 TikTok/SM
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
@@ -52448,7 +52452,7 @@ Trocla/SM
 TrueNAS/SM
 Tumblr/2M
 Typst/SM
-UDP/12SM
+UDP/12SM            # internet protocol
 ULA/1MS             # uncommitted logic array
 URI/1SM             # uniform resource identifier
 VAG/2M              # car company
@@ -52630,6 +52634,7 @@ first-person/5
 first time/1MS
 first-time/5
 flash point/1MS
+forward-thinking/5
 four-speed/1MS
 front-line/5
 front man/1M
@@ -52692,6 +52697,7 @@ jury-rig/4S
 jury-rigged/4
 jury-rigging/4
 kick start/4SDG
+kick-starter/1MS
 knock-on effect/1MS
 kung fu/1M
 labor-intensive/5
@@ -52779,6 +52785,7 @@ petty bourgeois/1M
 petty bourgeoisie/1M
 pick-me-up/1MS
 plan B/M
+play-by-play/51MS
 post-truth/14M
 pre-COVID/5
 pro-democracy/5
@@ -52895,6 +52902,7 @@ well-used/5
 Wi-Fi/1M
 wishy-washy/5
 working-class/15MS
+world-class/5
 would-be/5
 write off/4
 write-off/1MS
