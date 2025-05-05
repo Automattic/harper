@@ -201,7 +201,7 @@ impl Parser for Markdown {
                 | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::CodeBlock)
                 | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::TableCell) => {
                     tokens.push(Token {
-                        span: Span::new_with_len(traversed_chars, 0),
+                        span: Span::new_with_len(tokens.last().map_or(0, |last| last.span.end), 0),
                         kind: TokenKind::ParagraphBreak,
                     });
                     stack.pop();
@@ -534,5 +534,16 @@ Paragraph.
                 TokenKind::Punctuation(_),
             ]
         ))
+    }
+
+    /// Helps ensure that ending tokens (like `ParagraphBreak`) don't get erroneously placed at
+    /// the beginning of a sentence. This kind of behavior can cause crashes, as seen in
+    /// [#1181](https://github.com/Automattic/harper/issues/1181).
+    #[test]
+    fn no_end_token_incorrectly_ending_at_zero() {
+        let source = "Something\n";
+        let parser = Markdown::new(MarkdownOptions::default());
+        let tokens = parser.parse_str(source);
+        assert_ne!(tokens.last().unwrap().span.end, 0);
     }
 }
