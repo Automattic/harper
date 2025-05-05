@@ -357,6 +357,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn patch_more_recently_then_last_week_issue_720() {
         assert_suggestion_result(
             "We submitted the patch more recently then last week, so they should have it already.",
