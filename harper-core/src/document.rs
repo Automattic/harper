@@ -184,19 +184,25 @@ impl Document {
 
     /// The first word after an article cannot be a verb.
     fn articles_imply_not_verb(&mut self) {
-        let pattern = SequencePattern::default()
-            .then(WordSet::new(&[
-                // articles
-                "a", "an", "the",
-                // Dependent genitive pronouns serve a similar role to articles.
-                // Unfortunately, some overlap with other pronoun forms. E.g.
-                // "I like her", "Something about her struck me as odd."
-                "my", "your", "thy", "thine", "his", /*"her",*/ "its", "our", "their", "whose",
-                // "no" is also a determiner
-                "no",
-            ]))
-            .then_whitespace()
-            .then_verb();
+        fn create_pattern() -> Lrc<SequencePattern> {
+            Lrc::new(
+                SequencePattern::default()
+                    .then(WordSet::new(&[
+                        // articles
+                        "a", "an", "the",
+                        // Dependent genitive pronouns serve a similar role to articles.
+                        // Unfortunately, some overlap with other pronoun forms. E.g.
+                        // "I like her", "Something about her struck me as odd."
+                        "my", "your", "thy", "thine", "his", /*"her",*/ "its", "our", "their",
+                        "whose", // "no" is also a determiner
+                        "no",
+                    ]))
+                    .then_whitespace()
+                    .then_verb(),
+            )
+        }
+        thread_local! {static PATTERN: Lrc<SequencePattern> = create_pattern()}
+        let pattern = PATTERN.with(|v| v.clone());
 
         for m in pattern.find_all_matches_in_doc(self) {
             if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.end - 1].kind {
