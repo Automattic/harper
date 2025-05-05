@@ -52535,6 +52535,7 @@ strat/1MS           # gamer slang strategy
 vid/1MS             # video
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
+handedly
 
 # Experimental multi-word entries
 # Harper may not recognize these as words in documents

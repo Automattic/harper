@@ -1,3 +1,4 @@
+import json from '@rollup/plugin-json';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import { wasm } from '@rollup/plugin-wasm';
@@ -12,6 +13,7 @@ export default {
 	},
 	external: ['obsidian', 'electron'],
 	plugins: [
+		json(),
 		svg({
 			stringify: true,
 		}),

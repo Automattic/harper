@@ -11,8 +11,36 @@ import {
 import { toArray } from 'lodash-es';
 import { type App, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg';
+import packageJson from '../package.json';
 import { HarperSettingTab } from './HarperSettingTab';
 import { linter } from './lint';
+
+async function getLatestVersion(): Promise<string> {
+	const response = await fetch('https://writewithharper.com/latestversion', {
+		headers: {
+			'Harper-Version': packageJson.version,
+		},
+	});
+
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+
+	return response.text();
+}
+
+export async function logVersionInfo(): Promise<void> {
+	try {
+		const latest = await getLatestVersion();
+		console.info(`Latest available Harper version: ${latest}`);
+	} catch (err) {
+		console.error(`Unable to obtain latest version: ${err}`);
+	}
+
+	console.info(`Current version: ${packageJson.version}`);
+}
+
+logVersionInfo();
 
 function suggestionToLabel(sug: Suggestion) {
 	if (sug.kind() === SuggestionKind.Remove) {
