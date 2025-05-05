@@ -115,6 +115,12 @@ export default class Highlights {
 			return scr.parentElement;
 		}
 
+		const qr = getQuillJsRoot(el);
+
+		if (qr != null) {
+			return qr.parentElement;
+		}
+
 		const lexicalRoot = getLexicalRoot(el);
 
 		if (lexicalRoot != null) {
@@ -180,6 +186,12 @@ function getTrixRoot(el: HTMLElement): HTMLElement | null {
  * If so, returns the root node of that instance. */
 function getShredditComposerRoot(el: HTMLElement): HTMLElement | null {
 	return findAncestor(el, (node: HTMLElement) => node.nodeName == 'SHREDDIT-COMPOSER');
+}
+
+/** Determines if a given node is a child of a Quill.js editor instance.
+ * If so, returns the root node of that instance. */
+function getQuillJsRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.classList.contains('ql-container'));
 }
 
 /**
