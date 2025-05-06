@@ -10,8 +10,10 @@ use crate::patterns::{
 };
 use crate::punctuation::Punctuation;
 use crate::vec_ext::VecExt;
+use crate::word_metadata::AdjectiveData;
 use crate::{
-    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, Token, TokenKind, TokenStringExt,
+    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, NounData, Token, TokenKind,
+    TokenStringExt,
 };
 use crate::{OrdinalSuffix, Span};
 
@@ -141,6 +143,7 @@ impl Document {
         self.match_quotes();
         self.articles_imply_nouns();
 
+        // annotate word metadata
         for token in self.tokens.iter_mut() {
             if let TokenKind::Word(meta) = &mut token.kind {
                 let word_source = token.span.get_content(&self.source);
@@ -148,6 +151,9 @@ impl Document {
                 *meta = found_meta.cloned()
             }
         }
+
+        // refine and disambiguate word metadata
+        self.articles_imply_not_verb();
     }
 
     fn uncached_article_pattern() -> Lrc<SequencePattern> {
@@ -171,6 +177,42 @@ impl Document {
         for m in pattern.find_all_matches_in_doc(self) {
             if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start + 2].kind {
                 metadata.noun = None;
+                metadata.verb = None;
+            }
+        }
+    }
+
+    /// The first word after an article cannot be a verb.
+    fn articles_imply_not_verb(&mut self) {
+        fn create_pattern() -> Lrc<SequencePattern> {
+            Lrc::new(
+                SequencePattern::default()
+                    .then(WordSet::new(&[
+                        // articles
+                        "a", "an", "the",
+                        // Dependent genitive pronouns serve a similar role to articles.
+                        // Unfortunately, some overlap with other pronoun forms. E.g.
+                        // "I like her", "Something about her struck me as odd."
+                        "my", "your", "thy", "thine", "his", /*"her",*/ "its", "our", "their",
+                        "whose", // "no" is also a determiner
+                        "no",
+                    ]))
+                    .then_whitespace()
+                    .then_verb(),
+            )
+        }
+        thread_local! {static PATTERN: Lrc<SequencePattern> = create_pattern()}
+        let pattern = PATTERN.with(|v| v.clone());
+
+        for m in pattern.find_all_matches_in_doc(self) {
+            if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.end - 1].kind {
+                if metadata.noun.is_none()
+                    && metadata.adjective.is_none()
+                    && metadata.adverb.is_none()
+                {
+                    metadata.noun = Some(NounData::default());
+                    metadata.adjective = Some(AdjectiveData::default());
+                }
                 metadata.verb = None;
             }
         }
