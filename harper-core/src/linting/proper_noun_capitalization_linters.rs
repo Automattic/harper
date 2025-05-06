@@ -323,4 +323,13 @@ mod tests {
             "I love Day One. It is the best journaling app.",
         );
     }
+
+    #[test]
+    fn gilded_age_in_sentence() {
+        assert_suggestion_result(
+            "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the gilded age.",
+            lint_group(FstDictionary::curated()),
+            "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the Gilded Age.",
+        );
+    }
 }

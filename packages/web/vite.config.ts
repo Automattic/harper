@@ -32,9 +32,15 @@ export default defineConfig({
 				},
 				navbar: [
 					{ title: 'Documentation', to: '/docs/about' },
-					{ title: 'Visual Studio Code', to: '/docs/integrations/visual-studio-code' },
+					{
+						title: 'Visual Studio Code',
+						to: 'https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper',
+					},
 					{ title: 'Obsidian', to: '/docs/integrations/obsidian' },
-					{ title: 'harper.js', to: '/docs/harperjs/introduction' },
+					{
+						title: 'Chrome Extension',
+						to: 'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb',
+					},
 				],
 				sidebar: {
 					'/docs/': [
@@ -56,6 +62,10 @@ export default defineConfig({
 								{
 									title: 'Obsidian',
 									to: '/docs/integrations/obsidian',
+								},
+								{
+									title: 'Chrome Extension',
+									to: '/docs/integrations/chrome-extension',
 								},
 								{
 									title: 'WordPress',
@@ -150,6 +160,10 @@ export default defineConfig({
 								{
 									title: 'Visual Studio Code',
 									to: '/docs/contributors/visual-studio-code',
+								},
+								{
+									title: 'Chrome Extension',
+									to: '/docs/contributors/chrome-extension',
 								},
 								{
 									title: 'WordPress',

@@ -34,7 +34,7 @@ export function getNodesFromQuerySelector(element: Element, query: string) {
 }
 
 /**
- * Flatten a provided node, and it's children into a single array.
+ * Flatten a provided node, and its children into a single array.
  * @param node
  */
 export function leafNodes(node: Node): Node[] {
