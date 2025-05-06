@@ -2,7 +2,7 @@ use super::{Lint, LintKind, Linter, Suggestion};
 use crate::{Document, Span, TokenKind};
 use crate::{Number, TokenStringExt};
 
-/// Detect and warn that the sentence is too long.
+/// Detect incorrect capitalization for number suffixes (e.g. "2ND").
 #[derive(Debug, Clone, Copy, Default)]
 pub struct NumberSuffixCapitalization;
 
@@ -18,7 +18,7 @@ impl Linter for NumberSuffixCapitalization {
             let suffix_span = Span::new_with_len(number_tok.span.end, 2)
                 .pulled_by(2)
                 .unwrap();
-            let chars = document.get_span_content(suffix_span);
+            let chars = document.get_span_content(&suffix_span);
 
             if chars.iter().any(|c| !c.is_lowercase()) {
                 output.push(Lint {

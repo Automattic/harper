@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { draw } from 'svelte/transition';
+import { draw } from 'svelte/transition';
 
-	export let width = '100%';
-	export let height = '100%';
+export let width = '100%';
+export let height = '100%';
 </script>
 
 <svg

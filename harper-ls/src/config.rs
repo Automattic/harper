@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use anyhow::{Result, bail};
 use dirs::{config_dir, data_local_dir};
-use harper_core::{linting::LintGroupConfig, parsers::MarkdownOptions};
+use harper_core::{Dialect, linting::LintGroupConfig, parsers::MarkdownOptions};
 use resolve_path::PathResolveExt;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -65,11 +65,13 @@ impl CodeActionConfig {
 pub struct Config {
     pub user_dict_path: PathBuf,
     pub file_dict_path: PathBuf,
+    pub stats_path: PathBuf,
     pub lint_config: LintGroupConfig,
     pub diagnostic_severity: DiagnosticSeverity,
     pub code_action_config: CodeActionConfig,
     pub isolate_english: bool,
     pub markdown_options: MarkdownOptions,
+    pub dialect: Dialect,
 }
 
 impl Config {
@@ -106,12 +108,24 @@ impl Config {
             }
         }
 
+        if let Some(v) = value.get("statsPath") {
+            if let Value::String(path) = v {
+                base.file_dict_path = path.try_resolve()?.to_path_buf();
+            } else {
+                bail!("fileDict path must be a string.");
+            }
+        }
+
         if let Some(v) = value.get("linters") {
             base.lint_config = serde_json::from_value(v.clone())?;
         }
 
         if let Some(v) = value.get("diagnosticSeverity") {
             base.diagnostic_severity = serde_json::from_value(v.clone())?;
+        }
+
+        if let Some(v) = value.get("dialect") {
+            base.dialect = serde_json::from_value(v.clone())?;
         }
 
         if let Some(v) = value.get("codeActions") {
@@ -143,11 +157,13 @@ impl Default for Config {
             file_dict_path: data_local_dir()
                 .unwrap()
                 .join("harper-ls/file_dictionaries/"),
+            stats_path: data_local_dir().unwrap().join("harper-ls/stats.txt"),
             lint_config: LintGroupConfig::default(),
             diagnostic_severity: DiagnosticSeverity::Hint,
             code_action_config: CodeActionConfig::default(),
             isolate_english: false,
             markdown_options: MarkdownOptions::default(),
+            dialect: Dialect::American,
         }
     }
 }

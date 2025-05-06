@@ -1,10 +1,10 @@
 <script lang="ts">
-	import '../app.css';
-	import GutterCenter from '$lib/GutterCenter.svelte';
-	import AutomatticLogo from '$lib/AutomatticLogo.svelte';
+import '../app.css';
+import AutomatticLogo from '$lib/AutomatticLogo.svelte';
+import GutterCenter from '$lib/GutterCenter.svelte';
 
-	let names = ['Grammar Guru', 'Grammar Checker', 'Grammar Savior'];
-	let displayName = names[Math.floor(Math.random() * names.length)];
+let names = ['Grammar Guru', 'Grammar Checker', 'Grammar Savior'];
+let displayName = names[Math.floor(Math.random() * names.length)];
 </script>
 
 <link

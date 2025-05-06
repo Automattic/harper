@@ -4,12 +4,15 @@ use std::sync::Arc;
 use foldhash::quality::FixedState;
 use itertools::Itertools;
 
-use super::FstDictionary;
+use super::{FstDictionary, WordId};
 use super::{FuzzyMatchResult, dictionary::Dictionary};
 use crate::{CharString, WordMetadata};
 
 /// A simple wrapper over [`Dictionary`] that allows
 /// one to merge multiple dictionaries without copying.
+///
+/// In cases where more than one dictionary contains a word, data in the first
+/// dictionary inserted will be returned.
 #[derive(Clone)]
 pub struct MergedDictionary {
     children: Vec<Arc<dyn Dictionary>>,
@@ -90,34 +93,18 @@ impl Dictionary for MergedDictionary {
         false
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<WordMetadata> {
-        let mut found_anything = false;
-        let mut found_metadata = WordMetadata::default();
-
+    fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata> {
         for child in &self.children {
             if let Some(found_item) = child.get_word_metadata(word) {
-                found_metadata.append(&found_item);
-                found_anything = true;
+                return Some(found_item);
             }
         }
 
-        if found_anything {
-            Some(found_metadata)
-        } else {
-            None
-        }
+        None
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
         Box::new(self.children.iter().flat_map(|c| c.words_iter()))
-    }
-
-    fn words_with_len_iter(&self, len: usize) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        Box::new(
-            self.children
-                .iter()
-                .flat_map(move |c| c.words_with_len_iter(len)),
-        )
     }
 
     fn contains_word_str(&self, word: &str) -> bool {
@@ -130,7 +117,7 @@ impl Dictionary for MergedDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<WordMetadata> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<&WordMetadata> {
         let chars: CharString = word.chars().collect();
         self.get_word_metadata(&chars)
     }
@@ -165,5 +152,11 @@ impl Dictionary for MergedDictionary {
 
     fn word_count(&self) -> usize {
         self.children.iter().map(|d| d.word_count()).sum()
+    }
+
+    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
+        self.children
+            .iter()
+            .find_map(|dict| dict.get_word_from_id(id))
     }
 }

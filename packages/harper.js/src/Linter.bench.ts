@@ -1,14 +1,15 @@
 import { bench } from 'vitest';
 import LocalLinter from './LocalLinter';
 import WorkerLinter from './WorkerLinter';
+import { binary } from './binary';
 
 const linters = {
 	WorkerLinter: WorkerLinter,
-	LocalLinter: LocalLinter
+	LocalLinter: LocalLinter,
 };
 
 for (const [linterName, Linter] of Object.entries(linters)) {
-	const linter = new Linter();
+	const linter = new Linter({ binary });
 
 	// Prime caches
 	linter.setup();

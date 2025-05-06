@@ -8,147 +8,190 @@ export default defineConfig({
 	server: {
 		port: 3000,
 		fs: {
-			allow: ['../harper.js/dist']
-		}
+			allow: ['../harper.js/dist'],
+		},
 	},
 	plugins: [
 		sveltepress({
 			siteConfig: {
 				title: 'Harper',
-				description: 'A Grammar Checker from Automattic'
+				description: 'A Grammar Checker from Automattic',
 			},
 			theme: defaultTheme({
-				editLink: `https://github.com/automattic/harper/edit/master/packages/web/src/routes/:route`,
+				editLink: 'https://github.com/automattic/harper/edit/master/packages/web/src/routes/:route',
 				logo: '/circle-logo.png',
 				github: 'https://github.com/automattic/harper',
-				discord: 'https://discord.gg/JBqcAaKrzQ',
+				discord: 'https://discord.gg/invite/JBqcAaKrzQ',
 				themeColor: {
 					primary: '#818eae',
 					dark: '#355280',
 					gradient: {
 						start: '#355280',
-						end: '#818eae'
-					}
+						end: '#818eae',
+					},
 				},
-				navbar: [{ title: 'Documentation', to: '/docs/about' }],
+				navbar: [
+					{ title: 'Documentation', to: '/docs/about' },
+					{
+						title: 'Visual Studio Code',
+						to: 'https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper',
+					},
+					{ title: 'Obsidian', to: '/docs/integrations/obsidian' },
+					{
+						title: 'Chrome Extension',
+						to: 'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb',
+					},
+				],
 				sidebar: {
 					'/docs/': [
 						{
-							title: 'About',
-							to: '/docs/about'
+							items: [
+								{
+									title: 'About',
+									to: '/docs/about',
+								},
+								{
+									title: 'FAQ',
+									to: '/docs/faq',
+								},
+							],
 						},
 						{
 							title: 'Integrations',
 							items: [
 								{
 									title: 'Obsidian',
-									to: '/docs/integrations/obsidian'
+									to: '/docs/integrations/obsidian',
+								},
+								{
+									title: 'Chrome Extension',
+									to: '/docs/integrations/chrome-extension',
 								},
 								{
 									title: 'WordPress',
-									to: '/docs/integrations/wordpress'
+									to: '/docs/integrations/wordpress',
 								},
 								{
 									title: 'Language Server',
-									to: '/docs/integrations/language-server'
+									to: '/docs/integrations/language-server',
 								},
 								{
 									title: 'Visual Studio Code',
-									to: '/docs/integrations/visual-studio-code'
+									to: '/docs/integrations/visual-studio-code',
 								},
 								{
 									title: 'Neovim',
-									to: '/docs/integrations/neovim'
+									to: '/docs/integrations/neovim',
 								},
 								{
 									title: 'Helix',
-									to: '/docs/integrations/helix'
+									to: '/docs/integrations/helix',
 								},
 								{
 									title: 'Emacs',
-									to: '/docs/integrations/emacs'
+									to: '/docs/integrations/emacs',
 								},
 								{
 									title: 'Zed',
-									to: '/docs/integrations/zed'
-								}
-							]
+									to: '/docs/integrations/zed',
+								},
+							],
 						},
 						{
 							title: 'harper.js',
 							items: [
 								{
 									title: 'Introduction',
-									to: '/docs/harperjs/introduction'
+									to: '/docs/harperjs/introduction',
 								},
 								{
 									title: 'Linting',
-									to: '/docs/harperjs/linting'
+									to: '/docs/harperjs/linting',
+								},
+								{
+									title: 'Spans',
+									to: '/docs/harperjs/spans',
+								},
+								{
+									title: 'Configure Rules',
+									to: '/docs/harperjs/configurerules',
 								},
 								{
 									title: 'Node.js',
-									to: '/docs/harperjs/node'
+									to: '/docs/harperjs/node',
 								},
 								{
 									title: 'CDN',
-									to: '/docs/harperjs/CDN'
+									to: '/docs/harperjs/CDN',
 								},
 								{
 									title: 'API Reference',
-									to: '/docs/harperjs/ref/index.html'
-								}
-							]
+									to: '/docs/harperjs/ref/index.html',
+								},
+							],
 						},
 						{
 							title: 'Contributors',
 							items: [
 								{
 									title: 'Introduction',
-									to: '/docs/contributors/introduction'
+									to: '/docs/contributors/introduction',
 								},
 								{
 									title: 'Environment',
-									to: '/docs/contributors/environment'
+									to: '/docs/contributors/environment',
 								},
 								{
 									title: 'Committing',
-									to: '/docs/contributors/committing'
+									to: '/docs/contributors/committing',
 								},
 								{
 									title: 'Architecture',
-									to: '/docs/contributors/architecture'
+									to: '/docs/contributors/architecture',
 								},
 								{
 									title: 'Dictionary',
-									to: '/docs/contributors/dictionary'
+									to: '/docs/contributors/dictionary',
 								},
 								{
 									title: 'Author a Rule',
-									to: '/docs/contributors/author-a-rule'
+									to: '/docs/contributors/author-a-rule',
 								},
 								{
 									title: 'Visual Studio Code',
-									to: '/docs/contributors/visual-studio-code'
+									to: '/docs/contributors/visual-studio-code',
+								},
+								{
+									title: 'Chrome Extension',
+									to: '/docs/contributors/chrome-extension',
 								},
 								{
 									title: 'WordPress',
-									to: '/docs/contributors/wordpress'
+									to: '/docs/contributors/wordpress',
+								},
+								{
+									title: 'Obsidian',
+									to: '/docs/contributors/obsidian',
 								},
 								{
 									title: 'Reviewing Pull Requests',
-									to: '/docs/contributors/review'
-								}
-							]
-						},
-						{
-							title: 'FAQ',
-							to: '/docs/faq'
+									to: '/docs/contributors/review',
+								},
+								{
+									title: 'Local Statistics',
+									to: '/docs/contributors/local-stats',
+								},
+								{
+									title: 'FAQ',
+									to: '/docs/contributors/faq',
+								},
+							],
 						},
 						{
 							title: 'Rules',
-							to: '/docs/rules'
-						}
-					]
+							to: '/docs/rules',
+						},
+					],
 				},
 				highlighter: {
 					languages: [
@@ -164,12 +207,12 @@ export default defineConfig({
 						'rust',
 						'lua',
 						'json',
-						'elisp'
-					]
-				}
-			})
+						'elisp',
+					],
+				},
+			}),
 		}),
 		wasm(),
-		topLevelAwait()
-	]
+		topLevelAwait(),
+	],
 });

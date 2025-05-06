@@ -15,10 +15,7 @@ impl Parser for PlainEnglish {
         let mut tokens = Vec::new();
 
         loop {
-            if cursor > source.len() {
-                panic!()
-            }
-            if cursor == source.len() {
+            if cursor >= source.len() {
                 return tokens;
             }
 

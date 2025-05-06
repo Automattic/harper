@@ -12,7 +12,7 @@ pub struct RepeatedWords {
 impl RepeatedWords {
     pub fn new() -> Self {
         Self {
-            special_cases: vec![char_string!("is"), char_string!("this")],
+            special_cases: vec![char_string!("this")],
         }
     }
 
@@ -39,8 +39,8 @@ impl Linter for RepeatedWords {
             let mut iter = chunk.iter_word_indices().zip(chunk.iter_words()).peekable();
 
             while let (Some((idx_a, tok_a)), Some((idx_b, tok_b))) = (iter.next(), iter.peek()) {
-                let word_a = document.get_span_content(tok_a.span);
-                let word_b = document.get_span_content(tok_b.span);
+                let word_a = document.get_span_content(&tok_a.span);
+                let word_b = document.get_span_content(&tok_b.span);
 
                 if (tok_a.kind.is_preposition()
                     || tok_a.kind.is_conjunction()
@@ -58,7 +58,7 @@ impl Linter for RepeatedWords {
                         span: Span::new(tok_a.span.start, tok_b.span.end),
                         lint_kind: LintKind::Repetition,
                         suggestions: vec![Suggestion::ReplaceWith(
-                            document.get_span_content(tok_a.span).to_vec(),
+                            document.get_span_content(&tok_a.span).to_vec(),
                         )],
                         message: "Did you mean to repeat this word?".to_string(),
                         ..Default::default()

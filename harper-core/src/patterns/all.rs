@@ -22,21 +22,14 @@ impl All {
 }
 
 impl Pattern for All {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         let mut max = 0;
 
         for pattern in &self.children {
-            let len = pattern.matches(tokens, source);
-
-            if len == 0 {
-                return 0;
-            }
-
-            if len > max {
-                max = len;
-            }
+            let len = pattern.matches(tokens, source)?;
+            max = max.max(len);
         }
 
-        max
+        Some(max)
     }
 }

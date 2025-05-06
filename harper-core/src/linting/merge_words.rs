@@ -35,8 +35,8 @@ impl Linter for MergeWords {
                 continue;
             }
 
-            let a_chars = document.get_span_content(a.span);
-            let b_chars = document.get_span_content(b.span);
+            let a_chars = document.get_span_content(&a.span);
+            let b_chars = document.get_span_content(&b.span);
 
             if (a_chars.len() == 1 && a_chars[0].is_uppercase())
                 || (b_chars.len() == 1 && b_chars[0].is_uppercase())

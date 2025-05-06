@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 
 use super::Pattern;
-use crate::{CharString, CharStringExt, Token, TokenKind};
+use crate::{CharString, CharStringExt, Token};
 
 use crate::edit_distance::edit_distance_min_alloc;
 
@@ -32,28 +32,25 @@ thread_local! {
 }
 
 impl Pattern for WithinEditDistance {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        let Some(first) = tokens.first() else {
-            return 0;
-        };
-
-        let TokenKind::Word(_) = first.kind else {
-            return 0;
-        };
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
+        let first = tokens.first()?;
+        if !first.kind.is_word() {
+            return None;
+        }
 
         let content = first.span.get_content(source);
 
         BUFFERS.with_borrow_mut(|(buffer_a, buffer_b)| {
-            if edit_distance_min_alloc(
+            let distance = edit_distance_min_alloc(
                 &content.to_lower(),
                 &self.word.to_lower(),
                 buffer_a,
                 buffer_b,
-            ) <= self.max_edit_dist
-            {
-                1
+            );
+            if distance <= self.max_edit_dist {
+                Some(1)
             } else {
-                0
+                None
             }
         })
     }

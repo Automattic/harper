@@ -11,12 +11,14 @@ use hashbrown::HashMap;
 use lru::LruCache;
 use serde::{Deserialize, Serialize};
 
+use super::adjective_of_a::AdjectiveOfA;
 use super::an_a::AnA;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::boring_words::BoringWords;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::chock_full::ChockFull;
+use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
@@ -24,28 +26,33 @@ use super::despite_of::DespiteOf;
 use super::dot_initialisms::DotInitialisms;
 use super::ellipsis_length::EllipsisLength;
 use super::expand_time_shorthands::ExpandTimeShorthands;
+use super::first_aid_kit::FirstAidKit;
+use super::for_noun::ForNoun;
 use super::hedging::Hedging;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
+use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
+use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::left_right_hand::LeftRightHand;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::linking_verbs::LinkingVerbs;
 use super::long_sentences::LongSentences;
-use super::matcher::Matcher;
 use super::merge_words::MergeWords;
 use super::modal_of::ModalOf;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nobody::Nobody;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
+use super::of_course::OfCourse;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
 use super::pattern_linter::run_on_chunk;
+use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
-use super::plural_conjugate::PluralConjugate;
 use super::possessive_your::PossessiveYour;
 use super::pronoun_contraction::PronounContraction;
+use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
 use super::repeated_words::RepeatedWords;
 use super::sentence_capitalization::SentenceCapitalization;
@@ -54,31 +61,34 @@ use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
-use super::terminating_conjunctions::TerminatingConjunctions;
 use super::that_which::ThatWhich;
+use super::the_how_why::TheHowWhy;
+use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
 use super::was_aloud::WasAloud;
 use super::whereas::Whereas;
+use super::widely_accepted::WidelyAccepted;
 use super::wordpress_dotcom::WordPressDotcom;
-use super::wrong_quotes::WrongQuotes;
 use super::{CurrencyPlacement, Linter, NoOxfordComma, OxfordComma};
 use super::{Lint, PatternLinter};
+use crate::linting::dashes::Dashes;
 use crate::linting::{closed_compounds, phrase_corrections};
-use crate::{CharString, Document, TokenStringExt};
+use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
 
-#[derive(Debug, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
 #[serde(transparent)]
 pub struct LintGroupConfig {
-    inner: HashMap<String, Option<bool>>,
+    /// A `BTreeMap` so that the config has a stable ordering when written to disk.
+    inner: BTreeMap<String, Option<bool>>,
 }
 
 #[cached]
 fn curated_config() -> LintGroupConfig {
-    // Dictionary does not matter, we're just after the config.
-    let group = LintGroup::new_curated(MutableDictionary::new().into());
+    // The Dictionary and Dialect do not matter, we're just after the config.
+    let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
     group.config
 }
 
@@ -94,7 +104,7 @@ impl LintGroupConfig {
     }
 
     pub fn set_rule_enabled_if_unset(&mut self, key: impl AsRef<str>, val: bool) {
-        if self.inner.get(key.as_ref()).is_none() {
+        if !self.inner.contains_key(key.as_ref()) {
             self.set_rule_enabled(key.as_ref().to_string(), val);
         }
     }
@@ -116,13 +126,15 @@ impl LintGroupConfig {
     ///
     /// Conflicting keys will be overridden by the value in the other group.
     pub fn merge_from(&mut self, other: &mut LintGroupConfig) {
-        for (key, val) in other.inner.drain() {
+        for (key, val) in other.inner.iter() {
             if val.is_none() {
                 continue;
             }
 
-            self.inner.insert(key, val);
+            self.inner.insert(key.to_string(), *val);
         }
+
+        other.clear();
     }
 
     /// Fill the group with the values for the curated lint group.
@@ -200,7 +212,7 @@ impl LintGroup {
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     ///
     /// This function is not significantly different from [`Self::add`], but allows us to take
-    /// advantage of some properties of [`PatterLinter`]s for cache optimization.
+    /// advantage of some properties of [`PatternLinter`]s for cache optimization.
     pub fn add_pattern_linter(
         &mut self,
         name: impl AsRef<str>,
@@ -265,7 +277,7 @@ impl LintGroup {
         self
     }
 
-    pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>) -> Self {
+    pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) -> Self {
         let mut out = Self::empty();
 
         macro_rules! insert_struct_rule {
@@ -291,68 +303,95 @@ impl LintGroup {
         out.merge_from(&mut closed_compounds::lint_group());
 
         // Add all the more complex rules to the group.
+        insert_struct_rule!(AdjectiveOfA, true);
+        insert_struct_rule!(AnA, true);
+        insert_struct_rule!(AvoidCurses, true);
         insert_pattern_rule!(BackInTheDay, true);
-        insert_struct_rule!(WordPressDotcom, true);
-        insert_pattern_rule!(OutOfDate, true);
-        insert_pattern_rule!(ThenThan, true);
-        insert_pattern_rule!(PiqueInterest, true);
-        insert_pattern_rule!(WasAloud, true);
+        insert_pattern_rule!(BoringWords, false);
+        insert_struct_rule!(CapitalizePersonalPronouns, true);
+        insert_pattern_rule!(ChockFull, true);
+        insert_struct_rule!(CommaFixes, true);
+        insert_struct_rule!(CompoundNouns, true);
+        insert_pattern_rule!(Confident, true);
+        insert_struct_rule!(CorrectNumberSuffix, true);
+        insert_struct_rule!(CurrencyPlacement, true);
+        insert_pattern_rule!(Dashes, true);
+        insert_pattern_rule!(DespiteOf, true);
+        insert_pattern_rule!(DotInitialisms, true);
+        insert_struct_rule!(EllipsisLength, true);
+        insert_pattern_rule!(ExpandTimeShorthands, true);
+        insert_struct_rule!(FirstAidKit, true);
+        insert_struct_rule!(ForNoun, true);
+        insert_pattern_rule!(Hedging, true);
+        insert_pattern_rule!(Hereby, true);
+        insert_struct_rule!(HopHope, true);
+        insert_struct_rule!(HowTo, true);
         insert_pattern_rule!(HyphenateNumberDay, true);
         insert_pattern_rule!(LeftRightHand, true);
-        insert_struct_rule!(HopHope, true);
-        insert_pattern_rule!(Hereby, true);
-        insert_pattern_rule!(Likewise, true);
-        insert_struct_rule!(CompoundNouns, true);
-        insert_pattern_rule!(Nobody, true);
-        insert_pattern_rule!(Whereas, true);
-        insert_pattern_rule!(PossessiveYour, true);
-        insert_struct_rule!(SpelledNumbers, false);
-        insert_struct_rule!(AnA, true);
-        insert_struct_rule!(SentenceCapitalization, true);
-        insert_struct_rule!(UnclosedQuotes, true);
-        insert_struct_rule!(WrongQuotes, false);
-        insert_struct_rule!(LongSentences, true);
-        insert_struct_rule!(RepeatedWords, true);
-        insert_struct_rule!(Spaces, true);
-        insert_struct_rule!(Matcher, true);
-        insert_struct_rule!(CorrectNumberSuffix, true);
-        insert_struct_rule!(NumberSuffixCapitalization, true);
-        insert_pattern_rule!(MultipleSequentialPronouns, true);
-        insert_struct_rule!(LinkingVerbs, false);
-        insert_struct_rule!(AvoidCurses, true);
-        insert_pattern_rule!(TerminatingConjunctions, true);
-        insert_struct_rule!(EllipsisLength, true);
-        insert_pattern_rule!(DotInitialisms, true);
-        insert_pattern_rule!(BoringWords, false);
-        insert_pattern_rule!(UseGenitive, false);
-        insert_pattern_rule!(ThatWhich, true);
-        insert_struct_rule!(CapitalizePersonalPronouns, true);
-        insert_struct_rule!(MergeWords, true);
-        insert_struct_rule!(SplitWords, true);
-        insert_pattern_rule!(PluralConjugate, false);
-        insert_struct_rule!(OxfordComma, true);
-        insert_struct_rule!(NoOxfordComma, false);
-        insert_struct_rule!(PronounContraction, true);
-        insert_struct_rule!(CurrencyPlacement, true);
-        insert_pattern_rule!(SomewhatSomething, true);
         insert_struct_rule!(LetsConfusion, true);
-        insert_pattern_rule!(DespiteOf, true);
-        insert_pattern_rule!(ChockFull, true);
-        insert_pattern_rule!(Confident, true);
-        insert_pattern_rule!(Oxymorons, true);
-        insert_pattern_rule!(Hedging, true);
-        insert_pattern_rule!(ExpandTimeShorthands, true);
+        insert_pattern_rule!(Likewise, true);
+        insert_struct_rule!(LinkingVerbs, false);
+        insert_struct_rule!(LongSentences, true);
+        insert_struct_rule!(MergeWords, true);
         insert_pattern_rule!(ModalOf, true);
+        insert_pattern_rule!(MultipleSequentialPronouns, true);
+        insert_struct_rule!(NoOxfordComma, false);
+        insert_pattern_rule!(Nobody, true);
+        insert_struct_rule!(NumberSuffixCapitalization, true);
+        insert_struct_rule!(OfCourse, true);
+        insert_pattern_rule!(OutOfDate, true);
+        insert_struct_rule!(OxfordComma, true);
+        insert_pattern_rule!(Oxymorons, true);
+        insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
+        insert_pattern_rule!(PiqueInterest, true);
+        insert_pattern_rule!(PossessiveYour, true);
+        insert_struct_rule!(PronounContraction, true);
+        insert_struct_rule!(PronounKnew, true);
+        insert_struct_rule!(RepeatedWords, true);
+        insert_pattern_rule!(SomewhatSomething, true);
+        insert_struct_rule!(Spaces, true);
+        insert_struct_rule!(SpelledNumbers, false);
+        insert_struct_rule!(SplitWords, true);
+        insert_pattern_rule!(ThatWhich, true);
+        insert_pattern_rule!(TheHowWhy, true);
+        insert_struct_rule!(TheHowWhy, true);
+        insert_struct_rule!(TheMy, true);
+        insert_pattern_rule!(ThenThan, true);
+        insert_struct_rule!(UnclosedQuotes, true);
+        insert_pattern_rule!(UseGenitive, false);
+        insert_pattern_rule!(WasAloud, true);
+        insert_pattern_rule!(Whereas, true);
+        insert_pattern_rule!(WidelyAccepted, true);
+        insert_struct_rule!(WidelyAccepted, true);
+        insert_struct_rule!(WordPressDotcom, true);
 
-        out.add("SpellCheck", Box::new(SpellCheck::new(dictionary)));
+        out.add(
+            "SpellCheck",
+            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
+        );
         out.config.set_rule_enabled("SpellCheck", true);
+
+        out.add(
+            "InflectedVerbAfterTo",
+            Box::new(InflectedVerbAfterTo::new(dictionary.clone(), dialect)),
+        );
+        out.config.set_rule_enabled("InflectedVerbAfterTo", true);
+
+        out.add(
+            "SentenceCapitalization",
+            Box::new(SentenceCapitalization::new(dictionary.clone(), dialect)),
+        );
+        out.config.set_rule_enabled("SentenceCapitalization", true);
 
         out
     }
 
     /// Create a new curated group with all config values cleared out.
-    pub fn new_curated_empty_config(dictionary: Arc<impl Dictionary + 'static>) -> Self {
-        let mut group = Self::new_curated(dictionary);
+    pub fn new_curated_empty_config(
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: Dialect,
+    ) -> Self {
+        let mut group = Self::new_curated(dictionary, dialect);
         group.config.clear();
         group
     }
@@ -381,12 +420,12 @@ impl Linter for LintGroup {
                 continue;
             };
 
-            let chunk_chars = document.get_span_content(chunk_span);
+            let chunk_chars = document.get_span_content(&chunk_span);
             let config_hash = self.hasher_builder.hash_one(&self.config);
             let key = (chunk_chars.into(), config_hash);
 
-            if let Some(hit) = self.chunk_pattern_cache.get(&key) {
-                results.extend(hit.iter().cloned());
+            let mut chunk_results = if let Some(hit) = self.chunk_pattern_cache.get(&key) {
+                hit.clone()
             } else {
                 let mut pattern_lints = Vec::new();
 
@@ -396,10 +435,21 @@ impl Linter for LintGroup {
                     }
                 }
 
-                self.chunk_pattern_cache.put(key, pattern_lints.clone());
+                // Make the spans relative to the chunk start
+                for lint in &mut pattern_lints {
+                    lint.span.pull_by(chunk_span.start);
+                }
 
-                results.append(&mut pattern_lints);
+                self.chunk_pattern_cache.put(key, pattern_lints.clone());
+                pattern_lints
+            };
+
+            // Bring the spans back into document-space
+            for lint in &mut chunk_results {
+                lint.span.push_by(chunk_span.start);
             }
+
+            results.append(&mut chunk_results);
         }
 
         results
@@ -414,19 +464,20 @@ impl Linter for LintGroup {
 mod tests {
     use std::sync::Arc;
 
-    use crate::{Document, FstDictionary, MutableDictionary, linting::Linter};
+    use crate::{Dialect, Document, FstDictionary, MutableDictionary, linting::Linter};
 
     use super::LintGroup;
 
     #[test]
     fn can_get_all_descriptions() {
-        let group = LintGroup::new_curated(Arc::new(MutableDictionary::default()));
+        let group =
+            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
         group.all_descriptions();
     }
 
     #[test]
     fn lint_descriptions_are_clean() {
-        let mut group = LintGroup::new_curated(FstDictionary::curated());
+        let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
         let pairs: Vec<_> = group
             .all_descriptions()
             .into_iter()

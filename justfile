@@ -1,7 +1,7 @@
 # Format entire project
 format:
   cargo fmt  
-  cd "{{justfile_directory()}}/packages"; yarn prettier -w .
+  pnpm format
 
 # Build the WebAssembly for a specific target (usually either `web` or `bundler`)
 build-wasm:
@@ -13,12 +13,13 @@ build-harperjs: build-wasm
   #! /bin/bash
   set -eo pipefail
 
+  pnpm install
+
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
   perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
 
   cd "{{justfile_directory()}}/packages/harper.js"
-  yarn install -f
-  yarn run build
+  pnpm build
 
   # Generate API reference
   ./docs.sh
@@ -26,16 +27,15 @@ build-harperjs: build-wasm
 test-harperjs: build-harperjs
   #!/bin/bash
   set -eo pipefail
-  
+
+  pnpm install
   cd "{{justfile_directory()}}/packages/harper.js"
-  yarn install -f
-  yarn playwright install
-  yarn test
+  pnpm playwright install
+  pnpm test
 
   # Test runnable examples
   cd "{{justfile_directory()}}/packages/harper.js/examples/commonjs-simple"
-  yarn install
-  yarn start
+  pnpm start
 
 dev-wp: build-harperjs
   #! /bin/bash
@@ -43,9 +43,9 @@ dev-wp: build-harperjs
   set -eo pipefail
 
   cd "{{justfile_directory()}}/packages/wordpress-plugin"
-  yarn install -f
-  yarn run wp-now start &
-  yarn start 
+  pnpm install
+  pnpm wp-now start &
+  pnpm start 
 
 # Build the WordPress plugin
 build-wp: build-harperjs
@@ -53,9 +53,9 @@ build-wp: build-harperjs
   set -eo pipefail
 
   cd "{{justfile_directory()}}/packages/wordpress-plugin"
-  yarn install -f
-  yarn build
-  yarn plugin-zip
+  pnpm install
+  pnpm build
+  pnpm plugin-zip
 
 # Compile the website's dependencies and start a development server. Note that if you make changes to `harper-wasm`, you will have to re-run this command.
 dev-web: build-harperjs
@@ -63,8 +63,8 @@ dev-web: build-harperjs
   set -eo pipefail
 
   cd "{{justfile_directory()}}/packages/web"
-  yarn install -f
-  yarn dev
+  pnpm install
+  pnpm dev
 
 # Build the Harper website.
 build-web: build-harperjs
@@ -72,8 +72,8 @@ build-web: build-harperjs
   set -eo pipefail
   
   cd "{{justfile_directory()}}/packages/web"
-  yarn install -f
-  yarn run build
+  pnpm install
+  pnpm build
 
 # Build the Harper Obsidian plugin.
 build-obsidian: build-harperjs
@@ -82,10 +82,20 @@ build-obsidian: build-harperjs
   
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
 
-  yarn install -f
-  yarn build
+  pnpm install
+  pnpm build
 
   zip harper-obsidian-plugin.zip manifest.json main.js
+
+# Build the Chrome extension.
+build-chrome-plugin: build-harperjs
+  #! /bin/bash
+  set -eo pipefail
+  
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+
+  pnpm install 
+  pnpm zip
 
 # Run VSCode plugin unit and integration tests.
 test-vscode:
@@ -100,16 +110,17 @@ test-vscode:
   fi
 
   cargo build --release
+
   cp "{{justfile_directory()}}/target/release/harper-ls"* "$bin_dir"
 
   cd "$ext_dir"
 
-  yarn install -f
+  pnpm install
   # For environments without displays like CI servers or containers
   if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
-    xvfb-run --auto-servernum yarn test
+    xvfb-run --auto-servernum pnpm test
   else
-    yarn test
+    pnpm test
   fi
 
 # Build and package the Visual Studio Code extension.
@@ -135,11 +146,11 @@ package-vscode target="":
 
   cd "$ext_dir"
 
-  yarn install -f
+  pnpm install
   if [[ -n "{{target}}" ]]; then
-    yarn package --target {{target}}
+    pnpm package --target {{target}}
   else
-    yarn package
+    pnpm package
   fi
 
 update-vscode-linters:
@@ -172,7 +183,7 @@ update-vscode-linters:
     '.contributes.configuration.properties += $linters' <<< \
     "$manifest_without_linters" > \
     package.json
-  yarn prettier --write package.json
+  just format
 
 # Run Rust formatting and linting.
 check-rust:
@@ -187,27 +198,23 @@ check: check-rust build-web
   #! /bin/bash
   set -eo pipefail
 
-  cd "{{justfile_directory()}}/packages"
-  yarn install
-  yarn prettier --check .
-  yarn eslint .
+  pnpm install
+  pnpm check
 
   # Needed because Svelte has special linters
-  cd web
-  yarn run check
+  cd "{{justfile_directory()}}/packages/web"
+  pnpm check
 
-# Populate build caches and install necessary local tooling (tools callable via `yarn run <tool>`).
-setup: build-harperjs build-obsidian test-vscode test-harperjs build-web build-wp
+# Populate build caches and install necessary local tooling (tools callable via `pnpm run <tool>`).
+setup: build-harperjs test-harperjs test-vscode build-web build-wp build-obsidian build-chrome-plugin
 
 # Perform full format and type checking, build all projects and run all tests. Run this before pushing your code.
-precommit: check test build-harperjs build-obsidian build-web build-wp
+precommit: check test build-harperjs build-obsidian build-web build-wp build-chrome-plugin
   #! /bin/bash
   set -eo pipefail
 
-  cargo doc
-  cargo build
-  cargo build --release
-  cargo bench
+  cargo build --all-targets
+  cargo hack check --each-feature
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
@@ -266,7 +273,8 @@ addnoun noun:
   fi
 
   # Echo the noun with its flags to the dictionary file
-  echo "{{noun}}/$flags" >> $DICT_FILE
+  [[ -s $DICT_FILE && -n $(tail -c1 "$DICT_FILE") ]] && echo >> "$DICT_FILE"
+  echo "{{noun}}/$flags" >> "$DICT_FILE"
 
 # Search Harper's curated dictionary for a specific word
 searchdictfor word:
@@ -325,7 +333,7 @@ bump-versions: update-vscode-linters
 
   cargo ws version --no-git-push --no-git-tag --force '*'
 
-  HARPER_VERSION=$(tq --file harper-core/Cargo.toml .package.version)
+  HARPER_VERSION=$(tq --raw --file harper-core/Cargo.toml .package.version)
 
   cd "{{justfile_directory()}}/packages/harper.js"
 
@@ -333,6 +341,16 @@ bump-versions: update-vscode-linters
   mv package.json.edited package.json
 
   cd "{{justfile_directory()}}/packages/vscode-plugin"
+
+  cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
+  mv package.json.edited package.json
+
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+
+  cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
+  mv package.json.edited package.json
+
+  cd "{{justfile_directory()}}/packages/obsidian-plugin"
 
   cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
   mv package.json.edited package.json
@@ -360,7 +378,7 @@ registerlinter module name:
 
   sed -i "/pub use an_a::AnA;/a pub use {{module}}::{{name}};" "$D/mod.rs"
   sed -i "/use super::an_a::AnA;/a use super::{{module}}::{{name}};" "$D/lint_group.rs"
-  sed -i "/insert_struct_rule!(ChockFull, true);/a \ \ \ \ insert_struct_rule!({{name}}, true);" "$D/lint_group.rs"
+  sed -i "/insert_pattern_rule!(ChockFull, true);/a \ \ \ \ insert_struct_rule!({{name}}, true);" "$D/lint_group.rs"
   just format
 
 # Print affixes and their descriptions from affixes.json

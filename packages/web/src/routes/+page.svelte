@@ -1,30 +1,40 @@
 <script module>
-	import Graph from '$lib/Graph.svelte';
-	import CodeLogo from '$lib/CodeLogo.svelte';
-	import Editor from '$lib/Editor.svelte';
-	import Section from '$lib/Section.svelte';
-	import Logo from '$lib/Logo.svelte';
-	import GitHubLogo from '$lib/GitHubLogo.svelte';
-	import ObsidianLogo from '$lib/ObsidianLogo.svelte';
+import ChromeLogo from '$lib/ChromeLogo.svelte';
+import CodeLogo from '$lib/CodeLogo.svelte';
+import Editor from '$lib/Editor.svelte';
+import GitHubLogo from '$lib/GitHubLogo.svelte';
+import Graph from '$lib/Graph.svelte';
+import Logo from '$lib/Logo.svelte';
+import ObsidianLogo from '$lib/ObsidianLogo.svelte';
+import Section from '$lib/Section.svelte';
+import TypewriterHeading from '$lib/TypewriterHeading.svelte';
 
-	export const frontmatter = {
-		home: false
-	};
+export const frontmatter = {
+	home: false,
+};
 
-	let width = $state(window.innerWidth);
+let width = $state(window.innerWidth);
 
-	window.addEventListener('resize', () => {
-		width = window.innerWidth;
-	});
+window.addEventListener('resize', () => {
+	width = window.innerWidth;
+});
 
-	let mobile = $derived(width < 640);
+let mobile = $derived(width < 640);
+
+const headings = [
+	'Grammar Checking That Fits into Your Workflow',
+	'Quality Grammar Checking, Straight and Simple',
+	'Grammar Checking Without the Cloud',
+	'Grammar Checking That Respects Your Privacy',
+	'Grammar Checking for Developers',
+];
 </script>
 
 <div class="w-full flex flex-col items-center">
 	<Logo width="200px" />
 </div>
 <h1 class="font-bold text-center">Hi. I’m Harper.</h1>
-<h2 class="text-center">The Grammar Checker for Developers</h2>
+<TypewriterHeading items={headings} />
 
 <div
 	class="md:flex md:flex-row grid grid-cols-2 items-center justify-evenly mt-5 transition-all place-items-center"
@@ -34,8 +44,17 @@
 		class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><GitHubLogo width="40px" height="40px" />GitHub</a
 	>
+	<a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+		><ChromeLogo width="40px" height="40px" />Chrome Extension</a
+	>
 	<a href="/docs/integrations/obsidian" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><ObsidianLogo width="40px" height="40px" />Obsidian Plugin</a
+	>
+
+	<a
+		href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
+		class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+		><CodeLogo width="40px" height="40px" />Code Plugin</a
 	>
 	<a href="https://elijahpotter.dev" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><img
@@ -45,11 +64,6 @@
 			src="/icons/profile.svg"
 			alt="Author"
 		/>Author</a
-	>
-	<a
-		href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
-		class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-		><CodeLogo width="40px" height="40px" />Code Plugin</a
 	>
 </div>
 
@@ -81,22 +95,25 @@
 <Section swapped={!mobile}>
 	<span slot="title">Native Everywhere</span>
 	<span slot="subtitle"
-		>Harper is both available as a <a
-			href="https://github.com/automattic/harper/tree/master/harper-ls">language server</a
-		>, and through WebAssembly, so you can get fantastic grammar checking anywhere you work.
+		>Harper is available as a <a
+			href="/docs/integrations/language-server">language server</a
+		>, <a href="/docs/harperjs/introduction">JavaScript library</a
+		> through WebAssembly, and <a
+		href="https://crates.io/crates/harper-core">Rust crate</a
+		>, so you can get fantastic grammar checking anywhere you work.
 		<br /><br /> That said, we take extra care to make sure the
-		<a href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
+		<a href="/docs/integrations/visual-studio-code"
 			>Visual Studio Code</a
-		>, Neovim,
-		<a href="https://github.com/Stef16Robbe/harper_zed">Zed</a>
-		and
-		<a href="/docs/integrations/obsidian">Obsidian</a> integration is amazing.
+		>, <a href="/docs/integrations/neovim">Neovim</a>,
+		<a href="/docs/integrations/obsidian">Obsidian</a>, and <a href="/docs/integrations/chrome-extension">Chrome</a> integrations are amazing.
 	</span>
 
 	<img
-		src="/images/example_nvim.webp"
+		src={['/images/harper_wp_playground_screenshot.png', '/images/obsidian_screenshot.webp'][
+			Math.floor(Math.random() * 2)
+		]}
 		class="dark:invert rounded"
-		alt="A screenshot of Neovim with Harper suggestions."
+		alt="A screenshot of a text editor with Harper suggestions."
 	/></Section
 >
 

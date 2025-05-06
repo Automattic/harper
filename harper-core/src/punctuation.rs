@@ -68,7 +68,7 @@ pub enum Punctuation {
     /// `@`
     At,
     /// `^`
-    Carrot,
+    Caret,
     /// `+`
     Plus,
     Currency(Currency),
@@ -97,6 +97,8 @@ impl Punctuation {
             ':' => Punctuation::Colon,
             ';' => Punctuation::Semicolon,
             ',' => Punctuation::Comma,
+            '、' => Punctuation::Comma,
+            '，' => Punctuation::Comma,
             '-' => Punctuation::Hyphen,
             '[' => Punctuation::OpenSquare,
             ']' => Punctuation::CloseSquare,
@@ -110,7 +112,7 @@ impl Punctuation {
             '–' => Punctuation::EnDash,
             '—' => Punctuation::EmDash,
             '…' => Punctuation::Ellipsis,
-            '^' => Punctuation::Carrot,
+            '^' => Punctuation::Caret,
             '+' => Punctuation::Plus,
             '|' => Punctuation::Pipe,
             '_' => Punctuation::Underscore,

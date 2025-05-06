@@ -18,7 +18,7 @@
 		"noFallthroughCasesInSwitch": true,
 		"types": ["vite/client"],
 		"paths": {
-			"wasm": ["../../harper-wasm/pkg"]
+			"harper-wasm": ["../../harper-wasm/pkg"]
 		}
 	},
 	"include": ["src"]

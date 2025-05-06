@@ -6,18 +6,18 @@ const KEY = 'personalDictionary';
 /** Read and add to the user's personal dictionary. */
 export default function usePersonalDictionary(): [
 	string[] | undefined,
-	(updatedDictionary: string[]) => void
+	(updatedDictionary: string[]) => void,
 ] {
 	const personalDictionary = useSelect(
 		(select) => select('core/preferences').get('harper-wp', KEY),
-		[]
+		[],
 	);
 
 	const { set } = useDispatch('core/preferences');
 
 	const updateState = useCallback(
 		(updatedDictionary: string[]) => set('harper-wp', KEY, updatedDictionary),
-		[set]
+		[set],
 	);
 
 	return [personalDictionary, updateState];
@@ -33,6 +33,6 @@ export function useAddToDictionary(): (word: string) => void {
 				setDict([...(dict ?? []), word]);
 			}
 		},
-		[dict, setDict]
+		[dict, setDict],
 	);
 }

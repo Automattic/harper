@@ -3,9 +3,9 @@
 An example of using `harper.js` in a Node.js application.
 Read the source code in `index.cjs` to see what's going on.
 
-You can run it using Yarn:
+You can run it using pnpm:
 
 ```
-yarn install
-yarn start
+pnpm install
+pnpm start
 ```

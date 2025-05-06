@@ -1,34 +1,34 @@
 <script lang="ts">
-	import IntersectionObserver from 'svelte-intersection-observer';
-	let data = new Map<string, number>();
-	data.set('Harper', 10);
-	data.set('LanguageTool', 650);
-	data.set('Grammarly', 4000);
+import IntersectionObserver from 'svelte-intersection-observer';
+let data = new Map<string, number>();
+data.set('Harper', 10);
+data.set('LanguageTool', 650);
+data.set('Grammarly', 4000);
 
-	let maxW = 0;
+let maxW = 0;
 
-	for (let val of data.values()) {
-		if (val > maxW) {
-			maxW = val;
-		}
+for (let val of data.values()) {
+	if (val > maxW) {
+		maxW = val;
 	}
+}
 
-	let scaledData = new Map();
+let scaledData = new Map();
 
-	for (let [key, val] of data.entries()) {
-		scaledData.set(key, val / maxW);
-	}
+for (let [key, val] of data.entries()) {
+	scaledData.set(key, val / maxW);
+}
 
-	let els: Record<string, HTMLElement> = {};
+let els: Record<string, HTMLElement> = {};
 
-	function expand(node: HTMLElement, { width, duration }: { width: number; duration: number }) {
-		return {
-			duration,
-			css: (t: number) => {
-				return `width: ${width * 100 * t}%;`;
-			}
-		};
-	}
+function expand(node: HTMLElement, { width, duration }: { width: number; duration: number }) {
+	return {
+		duration,
+		css: (t: number) => {
+			return `width: ${width * 100 * t}%;`;
+		},
+	};
+}
 </script>
 
 <div class="flex flex-col justify-start w-full h-full">

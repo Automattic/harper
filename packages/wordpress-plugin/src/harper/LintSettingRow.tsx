@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import { Animate, CheckboxControl } from '@wordpress/components';
+import React, { useEffect, useState } from 'react';
 import { useLinter } from './LinterProvider';
 
 export default function LintSettingRow({
@@ -7,7 +7,7 @@ export default function LintSettingRow({
 	value,
 	defaultValue,
 	setValue,
-	description
+	description,
 }: {
 	name: string;
 	description: string;
@@ -40,7 +40,7 @@ export default function LintSettingRow({
 						}
 						onChange={(val) => setValue(val)}
 						checked={value ?? defaultValue}
-					></CheckboxControl>
+					/>
 				</div>
 			)}
 		</Animate>

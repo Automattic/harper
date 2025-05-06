@@ -1,54 +1,56 @@
 <script lang="ts">
-	import { Card } from 'flowbite-svelte';
-	import demo from '../../../../demo.md?raw';
-	import Underlines from '$lib/Underlines.svelte';
-	import { Button } from 'flowbite-svelte';
-	import { type Lint, type WorkerLinter, SuggestionKind } from 'harper.js';
-	import CheckMark from '$lib/CheckMark.svelte';
-	import { fly } from 'svelte/transition';
-	import lintKindColor from './lintKindColor';
+import CheckMark from '$lib/CheckMark.svelte';
+import Underlines from '$lib/Underlines.svelte';
+import { Card } from 'flowbite-svelte';
+import { Button } from 'flowbite-svelte';
+import { type Lint, SuggestionKind, type WorkerLinter } from 'harper.js';
+import { fly } from 'svelte/transition';
+import demo from '../../../../demo.md?raw';
+import lintKindColor from './lintKindColor';
 
-	export let content = demo;
+export let content = demo;
 
-	let lints: Lint[] = [];
-	let lintCards: HTMLButtonElement[] = [];
-	let focused: number | undefined;
-	let editor: HTMLTextAreaElement | null;
-	let linter: WorkerLinter;
+let lints: Lint[] = [];
+let lintCards: HTMLButtonElement[] = [];
+let focused: number | undefined;
+let editor: HTMLTextAreaElement | null;
+let linter: WorkerLinter;
 
-	(async () => {
-		let { WorkerLinter } = await import('harper.js');
-		linter = new WorkerLinter();
+(async () => {
+	let { WorkerLinter, binary } = await import('harper.js');
+	linter = new WorkerLinter({ binary });
 
-		await linter.setup();
-	})();
+	await linter.setup();
+})();
 
-	let w: number | undefined;
+let w: number | undefined;
 
-	$: linter?.lint(content).then((newLints) => (lints = newLints));
-	$: boxHeight = calcHeight(content);
-	$: if (focused != null && lintCards[focused])
-		lintCards[focused].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
-	$: if (focused != null && focused >= lints.length) focused = undefined;
+$: linter?.lint(content).then((newLints) => {
+	lints = newLints;
+});
+$: boxHeight = calcHeight(content);
+$: if (focused != null && lintCards[focused])
+	lintCards[focused].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+$: if (focused != null && focused >= lints.length) focused = undefined;
 
-	$: if (editor != null && focused != null) {
-		let lint = lints[focused % lints.length];
-		if (lint != null) {
-			let p = lint.span().end;
-			editor.selectionStart = p;
-			editor.selectionEnd = p;
-		}
+$: if (editor != null && focused != null) {
+	let lint = lints[focused % lints.length];
+	if (lint != null) {
+		let p = lint.span().end;
+		editor.selectionStart = p;
+		editor.selectionEnd = p;
 	}
+}
 
-	function calcHeight(boxContent: string): number {
-		let numberOfLineBreaks = (boxContent.match(/\n/g) || []).length;
-		let newHeight = 20 + numberOfLineBreaks * 30 + 12 + 2;
-		return newHeight;
-	}
+function calcHeight(boxContent: string): number {
+	let numberOfLineBreaks = (boxContent.match(/\n/g) || []).length;
+	let newHeight = 20 + numberOfLineBreaks * 30 + 12 + 2;
+	return newHeight;
+}
 
-	// Whether to display a smallar variant of the editor
-	$: small = (w ?? 1024) < 1024;
-	$: superSmall = (w ?? 1024) < 550;
+// Whether to display a smallar variant of the editor
+$: small = (w ?? 1024) < 1024;
+$: superSmall = (w ?? 1024) < 550;
 </script>
 
 <div class={`flex w-full h-full p-5 ${small ? 'flex-col' : 'flex-row'}`} bind:clientWidth={w}>
@@ -104,7 +106,7 @@
 										style="height: 40px; margin: 5px 0px;"
 										on:click={() =>
 											linter
-												.applySuggestion(content, suggestion, lint.span())
+												.applySuggestion(content, lint, suggestion)
 												.then((edited) => (content = edited))}
 									>
 										{#if suggestion.kind() == SuggestionKind.Remove}
@@ -140,7 +142,7 @@
 							on:click={() =>
 								focused != null &&
 								linter
-									.applySuggestion(content, suggestion, lints[focused].span())
+									.applySuggestion(content, lints[focused], suggestion)
 									.then((edited) => (content = edited))}
 						>
 							{#if suggestion.kind() == SuggestionKind.Remove}

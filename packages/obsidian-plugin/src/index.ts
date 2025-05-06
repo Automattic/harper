@@ -1,37 +1,79 @@
+import type { Extension } from '@codemirror/state';
+import type { LintConfig, Linter, Suggestion } from 'harper.js';
+import {
+	Dialect,
+	LocalLinter,
+	SuggestionKind,
+	WorkerLinter,
+	binary,
+	binaryInlined,
+} from 'harper.js';
 import { toArray } from 'lodash-es';
+import { type App, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg';
-import { Plugin, Menu, PluginManifest, App, Notice } from 'obsidian';
-import { LintConfig, Linter, Suggestion } from 'harper.js';
-import { LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
-import { linter } from './lint';
-import { Extension } from '@codemirror/state';
+import packageJson from '../package.json';
 import { HarperSettingTab } from './HarperSettingTab';
+import { linter } from './lint';
+
+async function getLatestVersion(): Promise<string> {
+	const response = await fetch('https://writewithharper.com/latestversion', {
+		headers: {
+			'Harper-Version': packageJson.version,
+		},
+	});
+
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+
+	return response.text();
+}
+
+export async function logVersionInfo(): Promise<void> {
+	try {
+		const latest = await getLatestVersion();
+		console.info(`Latest available Harper version: ${latest}`);
+	} catch (err) {
+		console.error(`Unable to obtain latest version: ${err}`);
+	}
+
+	console.info(`Current version: ${packageJson.version}`);
+}
+
+logVersionInfo();
 
 function suggestionToLabel(sug: Suggestion) {
-	if (sug.kind() == SuggestionKind.Remove) {
+	if (sug.kind() === SuggestionKind.Remove) {
 		return 'Remove';
-	} else if (sug.kind() == SuggestionKind.Replace) {
+	} else if (sug.kind() === SuggestionKind.Replace) {
 		return `Replace with “${sug.get_replacement_text()}”`;
-	} else if (sug.kind() == SuggestionKind.InsertAfter) {
+	} else if (sug.kind() === SuggestionKind.InsertAfter) {
 		return `Insert “${sug.get_replacement_text()}” after this.`;
 	}
 }
 
+const DEFAULT_DELAY = -1;
+
 export type Settings = {
 	ignoredLints?: string;
 	useWebWorker: boolean;
+	dialect?: Dialect;
 	lintSettings: LintConfig;
 	userDictionary?: string[];
+	delay?: number;
 };
 
 export default class HarperPlugin extends Plugin {
 	private harper: Linter;
 	private editorExtensions: Extension[];
+	private delay: number;
+	private dialectSpan: HTMLSpanElement | null = null;
 
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
-		this.harper = new WorkerLinter();
+		this.harper = new WorkerLinter({ binary: binaryInlined });
 		this.editorExtensions = [];
+		this.delay = DEFAULT_DELAY;
 	}
 
 	public async initializeFromSettings(settings: Settings | null) {
@@ -41,11 +83,14 @@ export default class HarperPlugin extends Plugin {
 
 		const oldSettings = await this.getSettings();
 
-		if (settings.useWebWorker != oldSettings.useWebWorker) {
+		if (
+			settings.useWebWorker !== oldSettings.useWebWorker ||
+			settings.dialect !== oldSettings.dialect
+		) {
 			if (settings.useWebWorker) {
-				this.harper = new WorkerLinter();
+				this.harper = new WorkerLinter({ binary: binaryInlined, dialect: settings.dialect });
 			} else {
-				this.harper = new LocalLinter();
+				this.harper = new LocalLinter({ binary: binaryInlined, dialect: settings.dialect });
 			}
 		} else {
 			await this.harper.clearIgnoredLints();
@@ -61,6 +106,8 @@ export default class HarperPlugin extends Plugin {
 
 		await this.harper.setLintConfig(settings.lintSettings);
 		this.harper.setup();
+
+		this.delay = settings.delay ?? DEFAULT_DELAY;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
@@ -83,12 +130,14 @@ export default class HarperPlugin extends Plugin {
 			ignoredLints: await this.harper.exportIgnoredLints(),
 			useWebWorker: usingWebWorker,
 			lintSettings: await this.harper.getLintConfig(),
-			userDictionary: await this.harper.exportWords()
+			userDictionary: await this.harper.exportWords(),
+			dialect: await this.harper.getDialect(),
+			delay: this.delay,
 		};
 	}
 
 	async onload() {
-		if (typeof Response == 'undefined') {
+		if (typeof Response === 'undefined') {
 			new Notice('Please update your Electron version before running Harper.', 0);
 			return;
 		}
@@ -107,14 +156,43 @@ export default class HarperPlugin extends Plugin {
 		return await this.harper.getLintDescriptions();
 	}
 
+	private getDialectStatus(dialectNum: Dialect): string {
+		const code = {
+			American: 'US',
+			British: 'GB',
+			Australian: 'AU',
+			Canadian: 'CA',
+		}[Dialect[dialectNum]];
+		if (code === undefined) {
+			return '';
+		}
+		return `${code
+			.split('')
+			.map((c) => String.fromCodePoint(c.charCodeAt(0) + 127397))
+			.join('')}${code}`;
+	}
+
 	private setupStatusBar() {
 		/** @type HTMLElement */
 		const statusBarItem = this.addStatusBarItem();
 		statusBarItem.className += ' mod-clickable';
 
 		const button = document.createElement('span');
-		button.style = 'width:24px';
-		button.innerHTML = logoSvg;
+		button.style.display = 'flex';
+		button.style.alignItems = 'center';
+
+		const logo = document.createElement('span');
+		logo.style.width = '24px';
+		logo.innerHTML = logoSvg;
+		button.appendChild(logo);
+
+		const dialect = document.createElement('span');
+		this.dialectSpan = dialect;
+
+		this.harper.getDialect().then((dialectNum) => {
+			this.updateStatusBar(dialectNum);
+			button.appendChild(dialect);
+		});
 
 		button.addEventListener('click', (event) => {
 			const menu = new Menu();
@@ -125,7 +203,7 @@ export default class HarperPlugin extends Plugin {
 					.setIcon('documents')
 					.onClick(() => {
 						this.toggleAutoLint();
-					})
+					}),
 			);
 
 			menu.showAtMouseEvent(event);
@@ -138,7 +216,7 @@ export default class HarperPlugin extends Plugin {
 		this.addCommand({
 			id: 'harper-toggle-auto-lint',
 			name: 'Toggle automatic grammar checking',
-			callback: () => this.toggleAutoLint()
+			callback: () => this.toggleAutoLint(),
 		});
 	}
 
@@ -158,7 +236,7 @@ export default class HarperPlugin extends Plugin {
 	}
 
 	hasEditorLinter(): boolean {
-		return this.editorExtensions.length != 0;
+		return this.editorExtensions.length !== 0;
 	}
 
 	private toggleAutoLint() {
@@ -193,31 +271,31 @@ export default class HarperPlugin extends Plugin {
 										changes: {
 											from: span.start,
 											to: span.end,
-											insert: ''
-										}
+											insert: '',
+										},
 									});
 								} else if (sug.kind() === SuggestionKind.Replace) {
 									view.dispatch({
 										changes: {
 											from: span.start,
 											to: span.end,
-											insert: sug.get_replacement_text()
-										}
+											insert: sug.get_replacement_text(),
+										},
 									});
 								} else if (sug.kind() === SuggestionKind.InsertAfter) {
 									view.dispatch({
 										changes: {
 											from: span.end,
 											to: span.end,
-											insert: sug.get_replacement_text()
-										}
+											insert: sug.get_replacement_text(),
+										},
 									});
 								}
-							}
+							},
 						};
 					});
 
-					if (lint.lint_kind() == 'Spelling') {
+					if (lint.lint_kind() === 'Spelling') {
 						const word = lint.get_problem_text();
 
 						actions.push({
@@ -225,7 +303,7 @@ export default class HarperPlugin extends Plugin {
 							apply: (view) => {
 								this.harper.importWords([word]);
 								this.reinitialize();
-							}
+							},
 						});
 					}
 
@@ -236,17 +314,23 @@ export default class HarperPlugin extends Plugin {
 						title: lint.lint_kind(),
 						message: lint.message(),
 						ignore: async () => {
-							await this.harper.ignoreLint(lint);
+							await this.harper.ignoreLint(text, lint);
 							await this.reinitialize();
 						},
-						actions
+						actions,
 					};
 				});
 			},
 			{
-				delay: -1
-			}
+				delay: this.delay,
+			},
 		);
+	}
+
+	updateStatusBar(dialect: Dialect) {
+		if (this.dialectSpan != null) {
+			this.dialectSpan.innerHTML = this.getDialectStatus(dialect);
+		}
 	}
 }
 

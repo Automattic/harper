@@ -1,0 +1,87 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"include": ["packages/**/*", "**/*.json"],
+		"ignore": [
+			"node_modules",
+			"dist",
+			"target",
+			"build",
+			"temp",
+			"*.zip",
+			"**/*.rs",
+			"harper-wasm/pkg",
+			".vscode-test",
+			".svelte-kit",
+			".sveltepress",
+			"packages/obsidian-plugin/main.js",
+			"pnpm-lock.yaml",
+			"package-lock.json",
+			"yarn.lock"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"lineWidth": 100,
+		"indentStyle": "tab",
+		"useEditorconfig": true
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"suspicious": {
+				"noExplicitAny": "off",
+				"noArrayIndexKey": "off",
+				"noLabelVar": "warn",
+				"noDoubleEquals": "off"
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"useGenericFontNames": "warn"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "off"
+			},
+			"style": {
+				"noParameterAssign": "off",
+				"noArguments": "off",
+				"noNonNullAssertion": "off",
+				"noUselessElse": "off",
+				"useNodejsImportProtocol": "off"
+			},
+			"complexity": {
+				"noForEach": "off",
+				"noStaticOnlyClass": "off",
+				"noThisInStatic": "off"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	},
+	"overrides": [
+		{
+			"include": ["*.svelte", "*.astro", "*.vue"],
+			"linter": {
+				"rules": {
+					"style": {
+						"useConst": "off",
+						"useImportType": "off"
+					}
+				}
+			}
+		}
+	]
+}

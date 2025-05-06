@@ -1,14 +1,14 @@
 <script lang="ts">
-	import 'reveal.js/dist/reveal.css';
-	import 'reveal.js/dist/theme/serif.css';
-	import Reveal from 'reveal.js';
-	import { onMount } from 'svelte';
-	import Logo from '$lib/Logo.svelte';
+import 'reveal.js/dist/reveal.css';
+import 'reveal.js/dist/theme/serif.css';
+import Logo from '$lib/Logo.svelte';
+import Reveal from 'reveal.js';
+import { onMount } from 'svelte';
 
-	onMount(() => {
-		let deck = new Reveal();
-		deck.initialize();
-	});
+onMount(() => {
+	let deck = new Reveal();
+	deck.initialize();
+});
 </script>
 
 <div class="reveal">

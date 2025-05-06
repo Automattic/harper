@@ -10,11 +10,11 @@ pub struct ToHope {
 impl Default for ToHope {
     fn default() -> Self {
         let pattern = SequencePattern::default()
-            .then_singular_subject()
+            .then_not_plural_nominal()
             .then_whitespace()
             .then(WordSet::new(&["hop", "hopped"]))
             .then_whitespace()
-            .then_singular_subject();
+            .then_nominal();
 
         Self {
             pattern: Box::new(pattern),
@@ -28,7 +28,7 @@ impl PatternLinter for ToHope {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let offending_word = matched_tokens[2];
+        let offending_word = &matched_tokens[2];
         let word_chars = offending_word.span.get_content(source);
 
         Some(Lint {

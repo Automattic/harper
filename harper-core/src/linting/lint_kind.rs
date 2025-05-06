@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 /// The general category a [`Lint`](super::Lint) falls into.
 /// There's no reason not to add a new item here if you are adding a new rule that doesn't fit
 /// the existing categories.
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, Is, Default, Hash, PartialEq)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, Is, Default, Hash, PartialEq, Eq)]
 pub enum LintKind {
     /// This should only be used by linters doing spellcheck on individual words.
     Spelling,
@@ -19,9 +19,25 @@ pub enum LintKind {
     WordChoice,
     #[default]
     Miscellaneous,
+    Punctuation,
 }
 
 impl LintKind {
+    pub fn new_from_str(s: &str) -> Option<Self> {
+        Some(match s {
+            "Spelling" => LintKind::Spelling,
+            "Capitalization" => LintKind::Capitalization,
+            "Formatting" => LintKind::Formatting,
+            "Repetition" => LintKind::Repetition,
+            "Readability" => LintKind::Readability,
+            "Miscellaneous" => LintKind::Miscellaneous,
+            "Enhancement" => LintKind::Enhancement,
+            "Word Choice" => LintKind::WordChoice,
+            "Style" => LintKind::Style,
+            _ => return None,
+        })
+    }
+
     /// Produce a string representation, which can be used as keys in a map or CSS variables.
     pub fn to_string_key(&self) -> String {
         match self {
@@ -34,6 +50,7 @@ impl LintKind {
             LintKind::Enhancement => "Enhancement",
             LintKind::WordChoice => "WordChoice",
             LintKind::Style => "Style",
+            LintKind::Punctuation => "Punctuation",
         }
         .to_owned()
     }
@@ -51,6 +68,7 @@ impl Display for LintKind {
             LintKind::Enhancement => "Enhancement",
             LintKind::WordChoice => "Word Choice",
             LintKind::Style => "Style",
+            LintKind::Punctuation => "Punctuation",
         };
 
         write!(f, "{}", s)

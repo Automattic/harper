@@ -1,11 +1,12 @@
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
 
-use crate::{ConjunctionData, NounData, Number, PronounData, Punctuation, Quote, WordMetadata};
+use crate::{
+    ConjunctionData, NounData, Number, PronounData, Punctuation, Quote, Tense, VerbData,
+    WordMetadata,
+};
 
-#[derive(
-    Debug, Is, Clone, Copy, Serialize, Deserialize, Default, PartialOrd, Hash, Eq, PartialEq,
-)]
+#[derive(Debug, Is, Clone, Serialize, Deserialize, Default, PartialOrd, Hash, Eq, PartialEq)]
 #[serde(tag = "kind", content = "value")]
 pub enum TokenKind {
     /// `None` if the word does not exist in the dictionary.
@@ -193,6 +194,19 @@ impl TokenKind {
         )
     }
 
+    pub fn is_present_tense_verb(&self) -> bool {
+        matches!(
+            self,
+            TokenKind::Word(Some(WordMetadata {
+                verb: Some(VerbData {
+                    tense: Some(Tense::Present),
+                    ..
+                }),
+                ..
+            }))
+        )
+    }
+
     pub fn is_adverb(&self) -> bool {
         matches!(
             self,
@@ -229,7 +243,7 @@ impl TokenKind {
             TokenKind::Number(..) => TokenKind::Number(Default::default()),
             TokenKind::Space(_) => TokenKind::Space(Default::default()),
             TokenKind::Newline(_) => TokenKind::Newline(Default::default()),
-            _ => *self,
+            _ => self.clone(),
         }
     }
 }

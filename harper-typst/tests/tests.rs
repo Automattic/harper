@@ -9,7 +9,7 @@ fn number() {
     let source = "12 is larger than 11, but much less than 11!";
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     assert!(matches!(
@@ -57,7 +57,7 @@ fn math_unlintable() {
     let source = "$12 > 11$, $12 << 11!$";
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     assert!(matches!(
@@ -79,7 +79,7 @@ fn dict_parsing() {
                         )"#;
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     let charslice = source.chars().collect_vec();
@@ -103,7 +103,7 @@ fn str_parsing() {
     let source = r#"#let ident = "This is a string""#;
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     assert!(matches!(
@@ -126,7 +126,7 @@ fn non_adjacent_spaces_not_condensed() {
     let source = r#"#authors_slice.join(", ", last: ", and ")  bob"#;
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     assert!(matches!(
@@ -152,7 +152,7 @@ fn header_parsing() {
                       Paragraph";
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     let charslice = source.chars().collect_vec();
@@ -177,7 +177,7 @@ fn parbreak() {
                       Paragraph";
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     assert!(matches!(
@@ -197,7 +197,7 @@ fn label_ref_unlintable() {
                       Paragraph @label";
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     assert!(matches!(
@@ -219,7 +219,7 @@ fn sentence() {
     let source = "This is a sentence, it is not interesting.";
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     assert!(matches!(
@@ -252,7 +252,7 @@ fn smart_apostrophe_newline() {
                       writing";
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     let charslice = source.chars().collect_vec();
@@ -282,7 +282,7 @@ newlines
 not paragraph breaks";
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     assert!(matches!(
@@ -311,7 +311,7 @@ fn parbreaks_in_list() {
 - p3";
 
     let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
+    let token_kinds = document.tokens().map(|t| t.kind.clone()).collect_vec();
     dbg!(&token_kinds);
 
     assert!(matches!(
@@ -332,19 +332,5 @@ fn parbreaks_in_list() {
             TokenKind::ParagraphBreak,
             TokenKind::Word(_)
         ]
-    ))
-}
-
-#[test]
-fn do_not_lint_rgb() {
-    let source = r#"#color.rgb("ffffff")"#;
-
-    let document = Document::new_curated(source, &Typst);
-    let token_kinds = document.tokens().map(|t| t.kind).collect_vec();
-    dbg!(&token_kinds);
-
-    assert!(matches!(
-        &token_kinds.as_slice(),
-        &[TokenKind::Unlintable, TokenKind::Unlintable]
     ))
 }

@@ -2,4 +2,5 @@
 
 mod comment_parser;
 mod comment_parsers;
+mod masker;
 pub use comment_parser::CommentParser;

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import type { LintBox } from './Box';
+import type RichText from './RichText';
 import SuggestionControl from './SuggestionControl';
-import RichText from './RichText';
-import { LintBox } from './Box';
 
 /**
  * Renders controls to the user around the errors.
@@ -11,7 +11,7 @@ import { LintBox } from './Box';
  */
 export default function Highlighter({
 	lintBoxes,
-	richText
+	richText,
 }: {
 	lintBoxes: LintBox[];
 	richText: RichText;

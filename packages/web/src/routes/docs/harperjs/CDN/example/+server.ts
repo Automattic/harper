@@ -3,7 +3,7 @@ import pageHtml from '../../../../../../../harper.js/examples/raw-web/index.html
 export async function GET() {
 	return new Response(pageHtml, {
 		headers: {
-			['Content-Type']: 'text/html'
-		}
+			'Content-Type': 'text/html',
+		},
 	});
 }

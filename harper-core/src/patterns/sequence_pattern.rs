@@ -1,9 +1,7 @@
 use paste::paste;
 
 use super::whitespace_pattern::WhitespacePattern;
-use super::{
-    AnyCapitalization, AnyPattern, IndefiniteArticle, Pattern, RepeatingPattern, SingularSubject,
-};
+use super::{AnyPattern, IndefiniteArticle, Pattern, RepeatingPattern, Word};
 use crate::{Token, TokenKind};
 
 /// A pattern that checks that a sequence of other patterns match.
@@ -71,6 +69,7 @@ impl SequencePattern {
     gen_then_from_is!(possessive_nominal);
     gen_then_from_is!(plural_nominal);
     gen_then_from_is!(verb);
+    gen_then_from_is!(auxiliary_verb);
     gen_then_from_is!(linking_verb);
     gen_then_from_is!(pronoun);
     gen_then_from_is!(punctuation);
@@ -86,36 +85,15 @@ impl SequencePattern {
     gen_then_from_is!(determiner);
     gen_then_from_is!(proper_noun);
     gen_then_from_is!(preposition);
+    gen_then_from_is!(not_plural_nominal);
 
     pub fn then_indefinite_article(self) -> Self {
         self.then(IndefiniteArticle::default())
     }
 
     pub fn then_exact_word(mut self, word: &'static str) -> Self {
-        self.token_patterns
-            .push(Box::new(|tok: &Token, source: &[char]| {
-                if !tok.kind.is_word() {
-                    return false;
-                }
-
-                let tok_chars = tok.span.get_content(source);
-
-                let mut w_char_count = 0;
-                for (i, w_char) in word.chars().enumerate() {
-                    w_char_count += 1;
-
-                    if tok_chars.get(i).cloned() != Some(w_char) {
-                        return false;
-                    }
-                }
-
-                w_char_count == tok_chars.len()
-            }));
+        self.token_patterns.push(Box::new(Word::new_exact(word)));
         self
-    }
-
-    pub fn then_singular_subject(self) -> Self {
-        self.then(SingularSubject::default())
     }
 
     /// Shorthand for [`Self::any_capitalization_of`].
@@ -134,8 +112,7 @@ impl SequencePattern {
 
     /// Match examples of `word` that have any capitalization.
     pub fn then_any_capitalization_of(mut self, word: &'static str) -> Self {
-        self.token_patterns
-            .push(Box::new(AnyCapitalization::of(word)));
+        self.token_patterns.push(Box::new(Word::new(word)));
         self
     }
 
@@ -155,6 +132,11 @@ impl SequencePattern {
         self
     }
 
+    /// Shorthand for [`Self::then_whitespace`].
+    pub fn t_ws(self) -> Self {
+        self.then_whitespace()
+    }
+
     /// Match against one or more whitespace tokens.
     pub fn then_whitespace(mut self) -> Self {
         self.token_patterns.push(Box::new(WhitespacePattern));
@@ -163,7 +145,7 @@ impl SequencePattern {
 
     pub fn then_one_or_more(mut self, pat: impl Pattern + 'static) -> Self {
         self.token_patterns
-            .push(Box::new(RepeatingPattern::new(Box::new(pat), 0)));
+            .push(Box::new(RepeatingPattern::new(Box::new(pat), 1)));
         self
     }
 
@@ -181,20 +163,15 @@ impl SequencePattern {
 }
 
 impl Pattern for SequencePattern {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         let mut tok_cursor = 0;
 
         for pat in self.token_patterns.iter() {
-            let match_length = pat.matches(&tokens[tok_cursor..], source);
-
-            if match_length == 0 {
-                return 0;
-            }
-
+            let match_length = pat.matches(&tokens[tok_cursor..], source)?;
             tok_cursor += match_length;
         }
 
-        tok_cursor
+        Some(tok_cursor)
     }
 }
 
@@ -215,7 +192,7 @@ mod tests {
 
         assert_eq!(
             pat.matches(doc.get_tokens(), doc.get_source()),
-            doc.get_tokens().len()
+            Some(doc.get_tokens().len())
         );
     }
 
@@ -229,7 +206,18 @@ mod tests {
 
         assert_eq!(
             pat.matches(doc.get_tokens(), doc.get_source()),
-            doc.get_tokens().len()
+            Some(doc.get_tokens().len())
+        );
+    }
+
+    #[test]
+    fn match_t_aco_and_t_ws() {
+        let pat = SequencePattern::aco("foo").t_ws().t_aco("bar");
+        let doc = Document::new_plain_english_curated("foo\nBAR");
+
+        assert_eq!(
+            pat.matches(doc.get_tokens(), doc.get_source()),
+            Some(doc.get_tokens().len())
         );
     }
 }

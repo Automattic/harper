@@ -1,36 +1,38 @@
 <script>
-	import { onMount } from 'svelte';
-	import { Textarea } from 'flowbite-svelte';
-	import Typed from 'typed.js';
-	import { WorkerLinter } from 'harper.js';
+import { Textarea } from 'flowbite-svelte';
+import { WorkerLinter, binary } from 'harper.js';
+import { onMount } from 'svelte';
+import Typed from 'typed.js';
 
-	let textareaRef;
-	let linter = new WorkerLinter();
+let textareaRef;
+let linter = new WorkerLinter({ binary });
 
-	let text = $state('');
+let text = $state('');
 
-	$effect(() => {
-		linter.toTitleCase(text).then((t) => (text = t));
+$effect(() => {
+	linter.toTitleCase(text).then((t) => {
+		text = t;
+	});
+});
+
+onMount(() => {
+	const typed = new Typed('#titleCaseInputField', {
+		strings: [
+			'Click Here to Write an Article Title',
+			'Click Here to Write a Blog Title',
+			'Click Here to Write a Social Media Post Title',
+			'Click Here to Write a Newsletter Title',
+			'Click Here to Write a Video Script Title',
+			'Click Here to Write a Press Release Title',
+			'Click Here to Brainstorm a New Ebook Title',
+		],
+		typeSpeed: 50,
+		showCursor: false,
+		attr: 'placeholder',
 	});
 
-	onMount(() => {
-		const typed = new Typed('#titleCaseInputField', {
-			strings: [
-				'Click Here to Write an Article Title',
-				'Click Here to Write a Blog Title',
-				'Click Here to Write a Social Media Post Title',
-				'Click Here to Write a Newsletter Title',
-				'Click Here to Write a Video Script Title',
-				'Click Here to Write a Press Release Title',
-				'Click Here to Brainstorm a New Ebook Title'
-			],
-			typeSpeed: 50,
-			showCursor: false,
-			attr: 'placeholder'
-		});
-
-		return () => typed.destroy();
-	});
+	return () => typed.destroy();
+});
 </script>
 
 <h1>Title Case Converter</h1>

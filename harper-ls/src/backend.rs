@@ -1,13 +1,16 @@
 use std::collections::HashMap;
+use std::fs::OpenOptions;
+use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 use std::sync::Arc;
 
 use anyhow::{Context, Result, anyhow};
+use futures::future::join;
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, LintGroupConfig};
 use harper_core::parsers::{CollapseIdentifiers, IsolateEnglish, Markdown, Parser, PlainEnglish};
 use harper_core::{
-    Dictionary, Document, FstDictionary, MergedDictionary, MutableDictionary, WordMetadata,
+    Dialect, Dictionary, Document, FstDictionary, MergedDictionary, MutableDictionary, WordMetadata,
 };
 use harper_html::HtmlParser;
 use harper_literate_haskell::LiterateHaskellParser;
@@ -33,10 +36,12 @@ use crate::config::Config;
 use crate::dictionary_io::{file_dict_name, load_dict, save_dict};
 use crate::document_state::DocumentState;
 use crate::git_commit_parser::GitCommitParser;
+use harper_stats::{Record, Stats};
 
 pub struct Backend {
     client: Client,
     config: RwLock<Config>,
+    stats: RwLock<Stats>,
     doc_state: Mutex<HashMap<Url, DocumentState>>,
 }
 
@@ -44,6 +49,7 @@ impl Backend {
     pub fn new(client: Client, config: Config) -> Self {
         Self {
             client,
+            stats: RwLock::new(Stats::new()),
             config: RwLock::new(config),
             doc_state: Mutex::new(HashMap::new()),
         }
@@ -51,6 +57,11 @@ impl Backend {
 
     /// Load a specific file's dictionary
     async fn load_file_dictionary(&self, url: &Url) -> anyhow::Result<MutableDictionary> {
+        // VS Code's unsaved documents have "untitled" scheme
+        if url.scheme() == "untitled" {
+            return Ok(MutableDictionary::new());
+        }
+
         let path = self
             .get_file_dict_path(url)
             .await
@@ -97,6 +108,26 @@ impl Backend {
             .map_err(|err| anyhow!("Unable to save the dictionary to file: {err}"))
     }
 
+    async fn save_stats(&self) -> Result<()> {
+        let (config, stats) = join(self.config.read(), self.stats.read()).await;
+
+        if let Some(parent) = config.stats_path.parent() {
+            tokio::fs::create_dir_all(parent).await?;
+        }
+
+        let mut writer = BufWriter::new(
+            OpenOptions::new()
+                .read(true)
+                .append(true)
+                .create(true)
+                .open(&config.stats_path)?,
+        );
+        stats.write(&mut writer)?;
+        writer.flush()?;
+
+        Ok(())
+    }
+
     async fn generate_global_dictionary(&self) -> Result<MergedDictionary> {
         let mut dict = MergedDictionary::new();
         dict.add_dictionary(FstDictionary::curated());
@@ -140,12 +171,13 @@ impl Backend {
         self.pull_config().await;
 
         // Copy necessary configuration to avoid holding lock.
-        let (lint_config, markdown_options, isolate_english) = {
+        let (lint_config, markdown_options, isolate_english, dialect) = {
             let config = self.config.read().await;
             (
                 config.lint_config.clone(),
                 config.markdown_options,
                 config.isolate_english,
+                config.dialect,
             )
         };
 
@@ -161,7 +193,8 @@ impl Backend {
             info!("Constructing new LintGroup for new document.");
 
             DocumentState {
-                linter: LintGroup::new_curated(dict.clone()).with_lint_config(lint_config.clone()),
+                linter: LintGroup::new_curated(dict.clone(), dialect)
+                    .with_lint_config(lint_config.clone()),
                 language_id: language_id.map(|v| v.to_string()),
                 dict: dict.clone(),
                 url: url.clone(),
@@ -173,7 +206,7 @@ impl Backend {
             doc_state.dict = dict.clone();
             info!("Constructing new linter because of modified dictionary.");
             doc_state.linter =
-                LintGroup::new_curated(dict.clone()).with_lint_config(lint_config.clone());
+                LintGroup::new_curated(dict.clone(), dialect).with_lint_config(lint_config.clone());
         }
 
         let Some(language_id) = &doc_state.language_id else {
@@ -188,6 +221,7 @@ impl Backend {
             url: &'a Url,
             doc_state: &'a mut DocumentState,
             lint_config: &LintGroupConfig,
+            dialect: Dialect,
         ) -> Result<Box<dyn Parser>> {
             if doc_state.ident_dict != new_dict {
                 info!("Constructing new linter because of modified ident dictionary.");
@@ -197,8 +231,8 @@ impl Backend {
                 merged.add_dictionary(new_dict);
                 let merged = Arc::new(merged);
 
-                doc_state.linter =
-                    LintGroup::new_curated(merged.clone()).with_lint_config(lint_config.clone());
+                doc_state.linter = LintGroup::new_curated(merged.clone(), dialect)
+                    .with_lint_config(lint_config.clone());
                 doc_state.dict = merged.clone();
             }
 
@@ -223,6 +257,7 @@ impl Backend {
                             url,
                             doc_state,
                             &lint_config,
+                            dialect,
                         )
                         .await?,
                     )
@@ -244,6 +279,7 @@ impl Backend {
                             url,
                             doc_state,
                             &lint_config,
+                            dialect,
                         )
                         .await?,
                     )
@@ -256,7 +292,7 @@ impl Backend {
                 Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
             }
             "html" => Some(Box::new(HtmlParser::default())),
-            "mail" | "plaintext" => Some(Box::new(PlainEnglish)),
+            "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "typst" => Some(Box::new(Typst)),
             _ => None,
         };
@@ -270,7 +306,11 @@ impl Backend {
                     parser = Box::new(IsolateEnglish::new(parser, doc_state.dict.clone()));
                 }
 
-                doc_state.document = Document::new(text, &parser, &doc_state.dict);
+                // Don't lint on large documents.
+                // This should eventually be configurable, but that isn't necessary yet.
+                if text.len() < 120_000 {
+                    doc_state.document = Document::new(text, &parser, &doc_state.dict);
+                }
             }
         }
 
@@ -353,6 +393,7 @@ impl LanguageServer for Backend {
                 code_action_provider: Some(CodeActionProviderCapability::Simple(true)),
                 execute_command_provider: Some(ExecuteCommandOptions {
                     commands: vec![
+                        "HarperRecordLint".to_owned(),
                         "HarperAddToUserDict".to_owned(),
                         "HarperAddToFileDict".to_owned(),
                         "HarperOpen".to_owned(),
@@ -440,7 +481,19 @@ impl LanguageServer for Backend {
         self.publish_diagnostics(&params.text_document.uri).await;
     }
 
-    async fn did_close(&self, _params: DidCloseTextDocumentParams) {}
+    async fn did_close(&self, _params: DidCloseTextDocumentParams) {
+        let url = _params.text_document.uri;
+        let mut doc_lock = self.doc_state.lock().await;
+        doc_lock.remove(&url);
+
+        self.client
+            .send_notification::<PublishDiagnostics>(PublishDiagnosticsParams {
+                uri: url.clone(),
+                diagnostics: vec![],
+                version: None,
+            })
+            .await;
+    }
 
     async fn did_change_watched_files(&self, params: DidChangeWatchedFilesParams) {
         let mut doc_lock = self.doc_state.lock().await;
@@ -487,6 +540,17 @@ impl LanguageServer for Backend {
         info!("Received command: \"{}\"", params.command.as_str());
 
         match params.command.as_str() {
+            "HarperRecordLint" => {
+                let Ok(kind) = serde_json::from_str(&first) else {
+                    error!("Unable to deserialize RecordKind.");
+                    return Ok(None);
+                };
+
+                let record = Record::now(kind);
+
+                let mut stats = self.stats.write().await;
+                stats.records.push(record);
+            }
             "HarperAddToUserDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
 
@@ -597,7 +661,7 @@ impl LanguageServer for Backend {
 
             for doc in doc_lock.values_mut() {
                 info!("Constructing new LintGroup for updated configuration.");
-                doc.linter = LintGroup::new_curated(doc.dict.clone())
+                doc.linter = LintGroup::new_curated(doc.dict.clone(), config_lock.dialect)
                     .with_lint_config(config_lock.lint_config.clone());
             }
 
@@ -638,6 +702,10 @@ impl LanguageServer for Backend {
             self.client
                 .send_notification::<PublishDiagnostics>(result)
                 .await;
+        }
+
+        if self.save_stats().await.is_err() {
+            error!("Unable to save stats.")
         }
 
         Ok(())

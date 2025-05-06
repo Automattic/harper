@@ -1,6 +1,6 @@
-import DataBlock from './DataBlock';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
+import DataBlock from './DataBlock';
 import Highlighter from './Highlighter';
 import SidebarTabContainer from './SidebarTabContainer';
 import useLintBoxes from './useLintBoxes';
@@ -19,7 +19,7 @@ export default function SidebarControl() {
 
 		observer.observe(documentContainer, {
 			subtree: true,
-			childList: true
+			childList: true,
 		});
 
 		return () => observer.disconnect();
@@ -35,7 +35,7 @@ export default function SidebarControl() {
 			const boxes = lintBoxes[index] ?? [];
 			return createPortal(
 				<Highlighter richText={richText} key={richText.getTextContent()} lintBoxes={boxes} />,
-				documentContainer
+				documentContainer,
 			);
 		});
 

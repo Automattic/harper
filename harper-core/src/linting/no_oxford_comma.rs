@@ -1,6 +1,6 @@
 use crate::{
     Document, Token, TokenStringExt,
-    patterns::{NominalPhrase, Pattern, SequencePattern, WordSet},
+    patterns::{NominalPhrase, PatternExt, SequencePattern, WordSet},
 };
 
 use super::{Lint, LintKind, Linter, Suggestion};
@@ -29,7 +29,7 @@ impl NoOxfordComma {
 
     fn match_to_lint(&self, matched_toks: &[Token], _source: &[char]) -> Option<Lint> {
         let last_comma_index = matched_toks.last_comma_index()?;
-        let offender = matched_toks[last_comma_index];
+        let offender = &matched_toks[last_comma_index];
 
         Some(Lint {
             span: offender.span,
@@ -52,28 +52,12 @@ impl Linter for NoOxfordComma {
         let mut lints = Vec::new();
 
         for sentence in document.iter_sentences() {
-            let mut tok_cursor = 0;
-
-            loop {
-                if tok_cursor >= sentence.len() {
-                    break;
-                }
-
-                let match_len = self
-                    .pattern
-                    .matches(&sentence[tok_cursor..], document.get_source());
-
-                if match_len != 0 {
-                    let lint = self.match_to_lint(
-                        &sentence[tok_cursor..tok_cursor + match_len],
-                        document.get_source(),
-                    );
-
-                    lints.extend(lint);
-                    tok_cursor += match_len;
-                } else {
-                    tok_cursor += 1;
-                }
+            for match_span in self.pattern.iter_matches(sentence, document.get_source()) {
+                let lint = self.match_to_lint(
+                    &sentence[match_span.start..match_span.end],
+                    document.get_source(),
+                );
+                lints.extend(lint);
             }
         }
 

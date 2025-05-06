@@ -1,27 +1,21 @@
 import {
-	activateHarper,
 	compareActualVsExpectedDiagnostics,
 	createExpectedDiagnostics,
 	createRange,
 	getActualDiagnostics,
 	openFile,
-	sleep
+	waitForUpdatesFromOpenedFile,
 } from './helper';
 
 describe('Languages >', () => {
-	beforeAll(async () => {
-		await activateHarper();
-		// Wait for `harper-ls` to start
-		await sleep(500);
-	});
+	// NOTE: There's no need to activate Harper here since it was already activated in
+	// `integration.test.ts`, which runs first.
 
 	[
 		// Uncomment when #265 is fixed.
 		// { type: 'JavaScript JSX', file: 'javascriptreact.jsx', row: 1, column: 36 },
-		// Uncomment when #65 is fixed.
-		// { type: 'Shellscript without extension', file: 'shellscript', row: 2, column: 2 },
 
-		// VSCode doesn't support CMake, Haskell, Literate Haskell, Nix, TOML, and Typst files out of
+		// VS Code doesn't support CMake, Haskell, Literate Haskell, Nix, TOML, and Typst files out of
 		// the box. Uncomment when you figure out how to support them during testing.
 		// { type: 'CMake', file: 'CMakeLists.txt', row: 2, column: 30 },
 		// { type: 'Haskell', file: 'haskell.hs', row: 1, column: 3 },
@@ -47,24 +41,23 @@ describe('Languages >', () => {
 		{ type: 'Python', file: 'python.py', row: 1, column: 2 },
 		{ type: 'Ruby', file: 'ruby.rb', row: 3, column: 16 },
 		{ type: 'Rust', file: 'rust.rs', row: 0, column: 4 },
+		{ type: 'Shellscript without extension', file: 'shellscript', row: 3, column: 2 },
 		{ type: 'Shellscript with .bash extension', file: 'shellscript.bash', row: 7, column: 9 },
 		{ type: 'Shellscript with .sh extension', file: 'shellscript.sh', row: 0, column: 22 },
 		{ type: 'Swift', file: 'swift.swift', row: 9, column: 26 },
 		{ type: 'TypeScript', file: 'typescript.ts', row: 0, column: 32 },
-		{ type: 'TypeScript JSX', file: 'typescriptreact.tsx', row: 3, column: 7 }
+		{ type: 'TypeScript JSX', file: 'typescriptreact.tsx', row: 3, column: 7 },
 	].forEach((testCase) => {
 		it(`gives correct diagnostics for ${testCase.type} files`, async () => {
 			const uri = await openFile('languages', testCase.file);
-
-			// Wait for `harper-ls` to send diagnostics
-			await sleep(75);
+			await waitForUpdatesFromOpenedFile();
 
 			compareActualVsExpectedDiagnostics(
 				getActualDiagnostics(uri),
 				createExpectedDiagnostics({
 					message: 'Did you mean to spell “Errorz” this way?',
-					range: createRange(testCase.row, testCase.column, testCase.row, testCase.column + 6)
-				})
+					range: createRange(testCase.row, testCase.column, testCase.row, testCase.column + 6),
+				}),
 			);
 		});
 	});

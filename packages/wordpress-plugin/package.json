@@ -11,21 +11,17 @@
 		"start": "wp-scripts start --webpack-copy-php"
 	},
 	"devDependencies": {
-		"@wordpress/eslint-plugin": "^22.2.0",
 		"@wordpress/scripts": "^30.9.0",
 		"@wp-now/wp-now": "^0.1.74",
-		"eslint": "^8.57.0",
-		"prettier": "^3.4.2",
-		"typescript": "^5.8.2"
+		"typescript": "catalog:"
 	},
-	"packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
 	"dependencies": {
 		"@wordpress/components": "^29.2.0",
 		"@wordpress/data": "^10.15.1",
 		"@wordpress/edit-post": "^8.16.0",
-		"@wordpress/editor": "^14.16.0",
+		"@wordpress/editor": "^14.20.0",
 		"@wordpress/preferences-persistence": "^2.17.0",
-		"harper.js": "link:../harper.js",
+		"harper.js": "workspace:*",
 		"lodash-es": "^4.17.21",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0"

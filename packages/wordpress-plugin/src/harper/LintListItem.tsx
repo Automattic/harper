@@ -1,8 +1,8 @@
-import { Card, Button, CardBody } from '@wordpress/components';
-import { useAddToDictionary } from './usePersonalDictionary';
-import { IgnorableLintBox } from './Box';
+import { Button, Card, CardBody } from '@wordpress/components';
 import React from 'react';
+import type { IgnorableLintBox } from './Box';
 import { suggestionText } from './lintUtils';
+import { useAddToDictionary } from './usePersonalDictionary';
 
 export default function LintListItem({ box }: { box: IgnorableLintBox }) {
 	const addToDictionary = useAddToDictionary();

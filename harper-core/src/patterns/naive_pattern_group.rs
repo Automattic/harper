@@ -15,14 +15,10 @@ impl NaivePatternGroup {
 }
 
 impl Pattern for NaivePatternGroup {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         self.patterns
             .iter()
-            .find_map(|p| {
-                let res = p.matches(tokens, source);
-
-                if res != 0 { Some(res) } else { None }
-            })
-            .unwrap_or_default()
+            .filter_map(|p| p.matches(tokens, source))
+            .next()
     }
 }

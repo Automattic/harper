@@ -5,6 +5,11 @@ use super::merge_linters::merge_linters;
 use let_us_redundancy::LetUsRedundancy;
 use no_contraction_with_verb::NoContractionWithVerb;
 
+// See also:
+// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
+// harper-core/src/linting/lets_confusion/let_us_redundancy.rs
+// harper-core/src/linting/lets_confusion/no_contraction_with_verb.rs
+// harper-core/src/linting/pronoun_contraction/should_contract.rs
 merge_linters!(LetsConfusion => LetUsRedundancy, NoContractionWithVerb => "It's often hard to determine where the subject should go with the word `let`. This rule attempts to find common errors with redundancy and contractions that may lead to confusion for readers.");
 
 #[cfg(test)]
@@ -42,13 +47,25 @@ mod tests {
     }
 
     #[test]
-    fn issue_470_missing_apostrophe() {
+    #[ignore = "\"play\" is also a noun so in a context like \"Sometimes the umpire lets play continue\""]
+    fn issue_470_missing_apostrophe_play() {
         assert_suggestion_result("lets play", LetsConfusion::default(), "let's play");
     }
 
     #[test]
-    fn issue_470_missing_subject() {
+    #[ignore]
+    fn issue_470_missing_subject_play() {
         assert_suggestion_result("let play", LetsConfusion::default(), "let's play");
+    }
+
+    #[test]
+    fn issue_470_missing_apostrophe_proceed() {
+        assert_suggestion_result("lets proceed", LetsConfusion::default(), "let's proceed");
+    }
+
+    #[test]
+    fn issue_470_missing_subject_proceed() {
+        assert_suggestion_result("let proceed", LetsConfusion::default(), "let's proceed");
     }
 
     #[test]

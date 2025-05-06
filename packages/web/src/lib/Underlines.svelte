@@ -1,133 +1,128 @@
 <script lang="ts">
-	// This is some of the shittiest code I've ever written.
-	// It is quite hard to look at.
-	// Someday, I'll return to it and spruce it up.
-	// For now, it works.
+// This is some of the shittiest code I've ever written.
+// It is quite hard to look at.
+// Someday, I'll return to it and spruce it up.
+// For now, it works.
 
-	import type { Lint, WorkerLinter } from 'harper.js';
-	import lintKindColor from '$lib/lintKindColor';
+import lintKindColor from '$lib/lintKindColor';
+import type { Lint, WorkerLinter } from 'harper.js';
 
-	export let content: string;
-	export let focusLintIndex: number | undefined;
+export let content: string;
+export let focusLintIndex: number | undefined;
 
-	import { quintOut } from 'svelte/easing';
+import { quintOut } from 'svelte/easing';
 
-	let loadTime = Date.now();
+let loadTime = Date.now();
 
-	function slideUnderline(node: any) {
-		return {
-			duration: 300,
-			css: (t: number) => {
-				if (Date.now() - loadTime > 2000) {
-					t = 1;
-				}
+function slideUnderline(_node: HTMLElement) {
+	return {
+		duration: 300,
+		css: (t: number) => {
+			if (Date.now() - loadTime > 2000) {
+				t = 1;
+			}
 
-				return `
+			return `
         transform: scaleX(${t});
         transform-origin: left;
       `;
-			},
-			easing: quintOut
-		};
-	}
-
-	let lints: [Lint, number][] = [];
-	let lintHighlights: HTMLSpanElement[] = [];
-	let linter: WorkerLinter;
-
-	(async () => {
-		let { WorkerLinter } = await import('harper.js');
-
-		linter = new WorkerLinter();
-
-		await linter.setup();
-	})();
-
-	$: linter
-		?.lint(content)
-		.then(
-			(newLints) =>
-				(lints = newLints
-					.map<[Lint, number]>((lint, index) => [lint, index])
-					.toSorted(([a], [b]) => a.span().start - b.span().end))
-		);
-	$: if (focusLintIndex != null && lintHighlights[focusLintIndex] != null)
-		lintHighlights[focusLintIndex].scrollIntoView({
-			behavior: 'smooth',
-			block: 'nearest',
-			inline: 'nearest'
-		});
-
-	function reOrgString(text: string): (string | undefined)[] {
-		let output: (string | undefined)[] = [];
-
-		for (let chunk of text.replaceAll(' ', '\u00A0').split('\n')) {
-			if (output.length > 0) {
-				output.push(undefined);
-			}
-			output.push(chunk);
-		}
-
-		return output;
-	}
-
-	type UnderlineDetails = {
-		focused: boolean;
-		content: string;
-		index: number;
-		color: string;
-		context: string;
+		},
+		easing: quintOut,
 	};
+}
 
-	type UnderlineToken = string | null | undefined | UnderlineDetails;
+let lints: [Lint, number][] = [];
+let lintHighlights: HTMLSpanElement[] = [];
+let linter: WorkerLinter;
 
-	function processString(lintMap: [Lint, number][], focusLintIndex?: number) {
-		let results: UnderlineToken[] = lintMap
-			.map(([lint, lintIndex], index, arr) => {
-				let prevStart = 0;
-				let prev = arr[index - 1];
+(async () => {
+	let { WorkerLinter, binary } = await import('harper.js');
 
-				if (prev != null) {
-					prevStart = prev[0].span().end;
-				}
+	linter = new WorkerLinter({ binary });
 
-				let prevEnd = lint.span().start;
+	await linter.setup();
+})();
 
-				let prevContent = [];
+$: linter?.lint(content).then((newLints) => {
+	lints = newLints
+		.map<[Lint, number]>((lint, index) => [lint, index])
+		.toSorted(([a], [b]) => a.span().start - b.span().end);
+});
+$: if (focusLintIndex != null && lintHighlights[focusLintIndex] != null)
+	lintHighlights[focusLintIndex].scrollIntoView({
+		behavior: 'smooth',
+		block: 'nearest',
+		inline: 'nearest',
+	});
 
-				if (prevStart != prevEnd) {
-					prevContent.push(...reOrgString(content.substring(prevStart, prevEnd)));
-				}
+function reOrgString(text: string): (string | undefined)[] {
+	let output: (string | undefined)[] = [];
 
-				let lintContent: UnderlineDetails = {
-					focused: lintIndex === focusLintIndex,
-					index: lintIndex,
-					content: lint.get_problem_text().replaceAll(' ', '\u00A0'),
-					color: lintKindColor(lint.lint_kind()),
-					context: prevContent[prevContent.length - 1] ?? ''
-				};
-
-				return [...prevContent, lintContent];
-			})
-			.flat();
-
-		let lastLint = lints.at(-1);
-
-		let finalChunk;
-
-		if (lastLint != null) {
-			finalChunk = content.substring(lastLint[0].span().end);
-		} else {
-			finalChunk = content;
+	for (let chunk of text.replaceAll(' ', '\u00A0').split('\n')) {
+		if (output.length > 0) {
+			output.push(undefined);
 		}
-
-		results.push(...reOrgString(finalChunk));
-
-		return results;
+		output.push(chunk);
 	}
 
-	// string | [string, string, string, index] | null
-	$: modified = processString(lints, focusLintIndex);
+	return output;
+}
+
+type UnderlineDetails = {
+	focused: boolean;
+	content: string;
+	index: number;
+	color: string;
+	context: string;
+};
+
+type UnderlineToken = string | null | undefined | UnderlineDetails;
+
+function processString(lintMap: [Lint, number][], focusLintIndex?: number) {
+	let results: UnderlineToken[] = lintMap.flatMap(([lint, lintIndex], index, arr) => {
+		let prevStart = 0;
+		let prev = arr[index - 1];
+
+		if (prev != null) {
+			prevStart = prev[0].span().end;
+		}
+
+		let prevEnd = lint.span().start;
+
+		let prevContent = [];
+
+		if (prevStart !== prevEnd) {
+			prevContent.push(...reOrgString(content.substring(prevStart, prevEnd)));
+		}
+
+		let lintContent: UnderlineDetails = {
+			focused: lintIndex === focusLintIndex,
+			index: lintIndex,
+			content: lint.get_problem_text().replaceAll(' ', '\u00A0'),
+			color: lintKindColor(lint.lint_kind()),
+			context: prevContent[prevContent.length - 1] ?? '',
+		};
+
+		return [...prevContent, lintContent];
+	});
+
+	let lastLint = lints.at(-1);
+
+	let finalChunk: string;
+
+	if (lastLint != null) {
+		finalChunk = content.substring(lastLint[0].span().end);
+	} else {
+		finalChunk = content;
+	}
+
+	results.push(...reOrgString(finalChunk));
+
+	return results;
+}
+
+// string | [string, string, string, index] | null
+$: modified = processString(lints, focusLintIndex);
 </script>
 
 <div class="grid">

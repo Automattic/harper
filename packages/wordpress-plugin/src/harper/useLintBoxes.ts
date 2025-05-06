@@ -1,11 +1,12 @@
-import usePersonalDictionary from './usePersonalDictionary';
+import type { Lint } from 'harper.js';
 import { useCallback, useEffect, useState } from 'react';
-import { IgnorableLintBox, LintBox } from './Box';
-import RichText from './RichText';
-import { Lint } from 'harper.js';
+import { type IgnorableLintBox, LintBox } from './Box';
 import { useLinter } from './LinterProvider';
-import useLintConfig from './useLintConfig';
+import type RichText from './RichText';
+import useDialect from './useDialect';
 import useIgnoredLintState, { useIgnoreLint } from './useIgnoredLintState';
+import useLintConfig from './useLintConfig';
+import usePersonalDictionary from './usePersonalDictionary';
 
 /**
  * Lint given elements and return the resulting error targets.
@@ -15,6 +16,7 @@ import useIgnoredLintState, { useIgnoreLint } from './useIgnoredLintState';
 export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[][], boolean] {
 	const linter = useLinter();
 	const [config] = useLintConfig();
+	const [dialect] = useDialect();
 	const [ignoreState] = useIgnoredLintState();
 	const [personalDictionary] = usePersonalDictionary();
 	const ignoreLint = useIgnoreLint();
@@ -27,6 +29,10 @@ export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[]
 		if ((await linter.exportIgnoredLints()) !== ignoreState) {
 			await linter.clearIgnoredLints();
 		}
+
+		console.log(dialect);
+
+		await linter.setDialect(dialect);
 
 		if (personalDictionary) {
 			await linter.importWords(personalDictionary);
@@ -46,12 +52,12 @@ export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[]
 				const contents = richText.getTextContent();
 
 				return await linter.lint(contents);
-			})
+			}),
 		);
 
 		setLoading(false);
 		setLints(newLints);
-	}, [richTexts, linter, config, ignoreState, personalDictionary]);
+	}, [richTexts, linter, config, ignoreState, personalDictionary, dialect]);
 
 	useEffect(() => {
 		updateLints();
@@ -61,7 +67,7 @@ export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[]
 			observer.observe(richText.getTargetElement(), {
 				childList: true,
 				characterData: true,
-				subtree: true
+				subtree: true,
 			});
 			return observer;
 		});
@@ -87,7 +93,7 @@ export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[]
 					.map((box) => {
 						return {
 							...box,
-							ignoreLint: () => ignoreLint(box.lint)
+							ignoreLint: () => ignoreLint(box.lint),
 						};
 					});
 			});

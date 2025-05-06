@@ -1,6 +1,6 @@
 <script lang="ts">
-	export let swapped = false;
-	export let noChild = false;
+export let swapped = false;
+export let noChild = false;
 </script>
 
 <section

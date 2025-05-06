@@ -1,10 +1,11 @@
 import type { ExtensionContext } from 'vscode';
 import type { Executable, LanguageClientOptions } from 'vscode-languageclient/node';
 
-import { commands, Uri, window, workspace } from 'vscode';
+import { Uri, commands, window, workspace } from 'vscode';
+import { StatusBarAlignment, type StatusBarItem } from 'vscode';
 import { LanguageClient, ResponseError, TransportKind } from 'vscode-languageclient/node';
 
-// There's no publicly available extension manifest type except for the internal one from VSCode's
+// There's no publicly available extension manifest type except for the internal one from VS Code's
 // codebase. So, we declare our own with only the fields we need and have. See:
 // https://stackoverflow.com/a/78536803
 type ExtensionManifest = {
@@ -14,7 +15,44 @@ type ExtensionManifest = {
 
 let client: LanguageClient | undefined;
 const serverOptions: Executable = { command: '', transport: TransportKind.stdio };
-const clientOptions: LanguageClientOptions = {};
+const clientOptions: LanguageClientOptions = {
+	middleware: {
+		workspace: {
+			async configuration(params, token, next) {
+				const response = await next(params, token);
+
+				if (response instanceof ResponseError) {
+					return response;
+				}
+
+				return [{ 'harper-ls': response[0].harper }];
+			},
+		},
+		executeCommand(command, args, next) {
+			if (
+				['HarperAddToUserDict', 'HarperAddToFileDict'].includes(command) &&
+				args.find((a) => typeof a === 'string' && a.startsWith('untitled:'))
+			) {
+				window
+					.showInformationMessage(
+						'Save the file to add words to the dictionary.',
+						'Save File',
+						'Dismiss',
+					)
+					.then((selected) => {
+						if (selected === 'Save File') {
+							commands.executeCommand('workbench.action.files.save');
+						}
+					});
+				return;
+			}
+
+			next(command, args);
+		},
+	},
+};
+
+let dialectStatusBarItem: StatusBarItem | undefined;
 
 export async function activate(context: ExtensionContext): Promise<void> {
 	serverOptions.command = getExecutablePath(context);
@@ -22,7 +60,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 	let manifest: ExtensionManifest;
 	try {
 		manifest = JSON.parse(
-			(await workspace.fs.readFile(Uri.joinPath(context.extensionUri, 'package.json'))).toString()
+			(await workspace.fs.readFile(Uri.joinPath(context.extensionUri, 'package.json'))).toString(),
 		);
 	} catch (error) {
 		showError('Failed to read manifest file', error);
@@ -31,7 +69,13 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
 	clientOptions.documentSelector = manifest.activationEvents
 		.filter((e) => e.startsWith('onLanguage:'))
-		.map((e) => ({ language: e.split(':')[1] }));
+		.flatMap((e) => {
+			const language = e.split(':')[1];
+			return [
+				{ language, scheme: 'file' },
+				{ language, scheme: 'untitled' },
+			];
+		});
 
 	clientOptions.outputChannel = window.createOutputChannel('Harper');
 	context.subscriptions.push(clientOptions.outputChannel);
@@ -47,17 +91,38 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
 			if (configs.find((c) => event.affectsConfiguration(c))) {
 				await client?.sendNotification('workspace/didChangeConfiguration', {
-					settings: { 'harper-ls': workspace.getConfiguration('harper') }
+					settings: { 'harper-ls': workspace.getConfiguration('harper') },
 				});
 			}
-		})
+		}),
 	);
 
 	context.subscriptions.push(
-		commands.registerCommand('harper.languageserver.restart', startLanguageServer)
+		commands.registerCommand('harper.languageserver.restart', startLanguageServer),
 	);
 
 	await startLanguageServer();
+
+	// VS Code:
+	// <= 100 is between Copilot and Notifications.
+	// 101..102 is between the magnifying glass and encoding
+	// >= 103 is left of the magnifying glass
+	// Windsurf:
+	// 100 is just to the right of programming language - perfect!
+	// 101 is left of line/column
+	dialectStatusBarItem = window.createStatusBarItem(StatusBarAlignment.Right, 100);
+	dialectStatusBarItem.tooltip = 'Harper English dialect';
+	context.subscriptions.push(dialectStatusBarItem);
+
+	context.subscriptions.push(
+		workspace.onDidChangeConfiguration(async (event) => {
+			if (event.affectsConfiguration('harper.dialect')) {
+				updateDialectStatusBar();
+			}
+		}),
+	);
+
+	updateDialectStatusBar();
 }
 
 function getExecutablePath(context: ExtensionContext): string {
@@ -70,12 +135,12 @@ function getExecutablePath(context: ExtensionContext): string {
 	return Uri.joinPath(
 		context.extensionUri,
 		'bin',
-		`harper-ls${process.platform === 'win32' ? '.exe' : ''}`
+		`harper-ls${process.platform === 'win32' ? '.exe' : ''}`,
 	).fsPath;
 }
 
 async function startLanguageServer(): Promise<void> {
-	if (client && client.needsStop()) {
+	if (client?.needsStop()) {
 		if (client.diagnostics) {
 			client.diagnostics.clear();
 		}
@@ -90,19 +155,6 @@ async function startLanguageServer(): Promise<void> {
 
 	try {
 		client = new LanguageClient('harper', 'Harper', serverOptions, clientOptions);
-
-		client.middleware.workspace = {
-			async configuration(params, token, next) {
-				const response = await next(params, token);
-
-				if (response instanceof ResponseError) {
-					return response;
-				}
-
-				return [{ 'harper-ls': response[0].harper }];
-			}
-		};
-
 		await client.start();
 	} catch (error) {
 		showError('Failed to start harper-ls', error);
@@ -122,12 +174,26 @@ function showError(message: string, error: Error | unknown): void {
 			clientOptions.outputChannel?.appendLine(message);
 			clientOptions.outputChannel?.appendLine(info);
 			clientOptions.outputChannel?.appendLine(
-				'If the issue persists, please report at https://github.com/automattic/harper/issues'
+				'If the issue persists, please report at https://github.com/automattic/harper/issues',
 			);
 			clientOptions.outputChannel?.appendLine('---');
 			clientOptions.outputChannel?.show();
 		}
 	});
+}
+
+function updateDialectStatusBar(): void {
+	if (!dialectStatusBarItem) return;
+
+	const dialect = workspace.getConfiguration('harper').get<string>('dialect', '');
+	if (dialect === '') return;
+
+	const flagAndCode = getFlagAndCode(dialect);
+	if (!flagAndCode) return;
+
+	dialectStatusBarItem.text = `$(harper-logo) ${flagAndCode.join(' ')}`;
+	dialectStatusBarItem.show();
+	console.log(`** dialect set to ${dialect} **`, dialect);
 }
 
 export function deactivate(): Thenable<void> | undefined {
@@ -136,4 +202,13 @@ export function deactivate(): Thenable<void> | undefined {
 	}
 
 	return client.stop();
+}
+
+function getFlagAndCode(dialect: string): string[] | undefined {
+	return {
+		American: ['🇺🇸', 'US'],
+		Australian: ['🇦🇺', 'AU'],
+		British: ['🇬🇧', 'GB'],
+		Canadian: ['🇨🇦', 'CA'],
+	}[dialect];
 }

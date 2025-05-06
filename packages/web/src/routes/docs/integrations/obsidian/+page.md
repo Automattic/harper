@@ -6,6 +6,8 @@ The Harper plugin is a powerful, privacy-first grammar and spell-checking tool d
 
 ![A screenshot of Obsidian with Harper installed](/images/obsidian_screenshot.webp)
 
+Unlike other offerings (like Grammarly) Harper explicitly ignores the contents of code fences and inline code blocks.
+
 ## Key Features
 
 ### Privacy-Focused

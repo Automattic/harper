@@ -15,7 +15,7 @@ mod pos_conv;
 use backend::Backend;
 use clap::Parser;
 use tower_lsp::{LspService, Server};
-use tracing::Level;
+use tracing::{Level, error, info};
 use tracing_subscriber::FmtSubscriber;
 
 static DEFAULT_ADDRESS: &str = "127.0.0.1:4000";
@@ -32,7 +32,7 @@ struct Args {
     stdio: bool,
 }
 
-// Setting worker threads to 4 means the process will use about 5 threads total
+// Setting worker threads to four means the process will use about five threads total
 // This is because worker threads do not include blocking threads
 #[tokio::main(worker_threads = 4)]
 async fn main() -> anyhow::Result<()> {
@@ -43,6 +43,8 @@ async fn main() -> anyhow::Result<()> {
         .finish();
 
     tracing::subscriber::set_global_default(subscriber)?;
+
+    tokio::spawn(log_version_info());
 
     let args = Args::parse();
     let config = Config::default();
@@ -62,4 +64,28 @@ async fn main() -> anyhow::Result<()> {
     }
 
     Ok(())
+}
+
+/// Ping Harper's website to get the latest available version.
+async fn get_latest_version() -> Result<String, reqwest::Error> {
+    let client = reqwest::Client::new();
+
+    client
+        .get("https://writewithharper.com/latestversion")
+        .header("Harper-Version", harper_core::core_version())
+        .send()
+        .await?
+        .error_for_status()?
+        .text()
+        .await
+}
+
+/// Log the current version information to the console.
+async fn log_version_info() {
+    match get_latest_version().await {
+        Ok(version) => info!("Latest available Harper version: {}", version),
+        Err(_err) => error!("Unable to obtain latest version."),
+    }
+
+    info!("Current version: {}", harper_core::core_version());
 }

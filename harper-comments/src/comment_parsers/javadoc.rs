@@ -24,7 +24,7 @@ impl Parser for JavaDoc {
         let mut cursor = 0;
 
         while cursor < tokens.len() {
-            let maybe_newline = tokens[cursor];
+            let maybe_newline = &tokens[cursor];
 
             if let TokenKind::Newline(_) = maybe_newline.kind {
                 cursor += 1;
@@ -34,7 +34,7 @@ impl Parser for JavaDoc {
                         break;
                     }
 
-                    let maybe_removable = tokens[cursor];
+                    let maybe_removable = &tokens[cursor];
 
                     if matches!(
                         maybe_removable.kind,
@@ -61,10 +61,10 @@ impl Parser for JavaDoc {
 
         // Mark @tags as unlintable
         for i in 3..tokens.len() {
-            let a = tokens[i - 3];
-            let b = tokens[i - 2];
-            let c = tokens[i - 1];
-            let d = tokens[i];
+            let a = &tokens[i - 3];
+            let b = &tokens[i - 2];
+            let c = &tokens[i - 1];
+            let d = &tokens[i];
 
             if a.kind.is_at() && b.kind.is_word() && c.kind.is_space() && d.kind.is_word() {
                 tokens[i - 3].kind = TokenKind::Unlintable;

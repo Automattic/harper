@@ -1,11 +1,11 @@
-import React from 'react';
-import { IgnorableLintBox } from './Box';
-import LintListItem from './LintListItem';
 import { Animate, Spinner } from '@wordpress/components';
+import React from 'react';
+import type { IgnorableLintBox } from './Box';
+import LintListItem from './LintListItem';
 
 export default function LintList({
 	lintBoxes,
-	loading
+	loading,
 }: {
 	lintBoxes: IgnorableLintBox[];
 	loading: boolean;
@@ -20,7 +20,7 @@ export default function LintList({
 								<Spinner
 									style={{
 										height: 'calc(4px * 20)',
-										width: 'calc(4px * 20)'
+										width: 'calc(4px * 20)',
 									}}
 								/>
 							) : (

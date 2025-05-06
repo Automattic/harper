@@ -42,7 +42,7 @@ impl PatternLinter for ToHop {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let offending_word = matched_tokens[0];
+        let offending_word = &matched_tokens[0];
         let word_chars = offending_word.span.get_content(source);
         let word = word_chars.to_string();
         let correct = Self::to_correct(&word)?;

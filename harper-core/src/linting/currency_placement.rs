@@ -1,6 +1,6 @@
 use itertools::Itertools;
 
-use crate::{Document, Token, TokenStringExt, remove_overlaps};
+use crate::{Document, Span, Token, TokenStringExt, remove_overlaps};
 
 use super::{Lint, LintKind, Linter, Suggestion};
 
@@ -13,7 +13,7 @@ impl Linter for CurrencyPlacement {
 
         for chunk in document.iter_chunks() {
             for (a, b) in chunk.iter().tuple_windows() {
-                lints.extend(generate_lint_for_tokens(*a, *b, document));
+                lints.extend(generate_lint_for_tokens(a, b, document));
             }
 
             for (p, a, b, c) in chunk.iter().tuple_windows() {
@@ -21,7 +21,7 @@ impl Linter for CurrencyPlacement {
                     continue;
                 }
 
-                lints.extend(generate_lint_for_tokens(*a, *c, document));
+                lints.extend(generate_lint_for_tokens(a, c, document));
             }
         }
 
@@ -36,21 +36,16 @@ impl Linter for CurrencyPlacement {
 }
 
 // Given two tokens that may have an error, check if they do and create a [`Lint`].
-fn generate_lint_for_tokens(a: Token, b: Token, document: &Document) -> Option<Lint> {
-    let matched_tokens = [a, b];
-
-    let punct = matched_tokens
-        .first_punctuation()?
-        .kind
-        .expect_punctuation();
+fn generate_lint_for_tokens(a: &Token, b: &Token, document: &Document) -> Option<Lint> {
+    let punct = a.kind.as_punctuation().or(b.kind.as_punctuation())?;
     let currency = punct.as_currency()?;
 
-    let number = matched_tokens.first_number()?.kind.expect_number();
+    let number = a.kind.as_number().or(b.kind.as_number())?;
 
-    let span = matched_tokens.span().unwrap();
+    let span = Span::new(a.span.start, b.span.end);
 
     let correct: Vec<_> = currency.format_amount(number).chars().collect();
-    let actual = document.get_span_content(span);
+    let actual = document.get_span_content(&span);
 
     if correct != actual {
         Some(Lint {

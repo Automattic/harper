@@ -11,9 +11,11 @@ pub struct AvoidContraction {
 
 impl Default for AvoidContraction {
     fn default() -> Self {
-        let pattern = SequencePattern::aco("you're")
-            .then_whitespace()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_noun() && !tok.kind.is_adjective());
+        let pattern = SequencePattern::aco("you're").then_whitespace().then(
+            |tok: &Token, _source: &[char]| {
+                tok.kind.is_nominal() && !tok.kind.is_likely_homograph()
+            },
+        );
 
         Self {
             pattern: Box::new(pattern),

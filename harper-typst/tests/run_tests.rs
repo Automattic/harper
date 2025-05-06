@@ -1,5 +1,5 @@
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::{Document, FstDictionary};
+use harper_core::{Dialect, Document, FstDictionary};
 use harper_typst::Typst;
 
 /// Creates a unit test checking that the linting of a document in
@@ -19,7 +19,7 @@ macro_rules! create_test {
                  let dict = FstDictionary::curated();
                  let document = Document::new(&source, &Typst, &dict);
 
-                 let mut linter = LintGroup::new_curated(dict);
+                 let mut linter = LintGroup::new_curated(dict, Dialect::American);
                  let lints = linter.lint(&document);
 
                  dbg!(&lints);
@@ -38,3 +38,4 @@ create_test!(complex_document.typ, 0);
 create_test!(simplified_document.typ, 0);
 create_test!(complex_document_with_spelling_mistakes.typ, 4);
 // create_test!(issue_399.typ, 3);
+create_test!(function_with_ignorable_args.typ, 9);

@@ -13,7 +13,7 @@ impl Linter for WordPressDotcom {
         let mut lints = Vec::new();
 
         for hostname in document.iter_hostnames() {
-            let text = document.get_span_content(hostname.span);
+            let text = document.get_span_content(&hostname.span);
 
             if correct.as_slice() != text && text.to_lower() == correct_lower {
                 lints.push(Lint {

@@ -1,10 +1,17 @@
-import { Linter, WorkerLinter } from 'harper.js';
-import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from 'react';
+import { type Linter, WorkerLinter, binaryInlined } from 'harper.js';
+import React, {
+	createContext,
+	type ReactNode,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
-const linterContext = createContext<Linter>(new WorkerLinter());
+const linterContext = createContext<Linter>(new WorkerLinter({ binary: binaryInlined }));
 
 export default function LinterProvider({ children }: { children: ReactNode | ReactNode[] }) {
-	const linter = useRef(new WorkerLinter());
+	const linter = useRef(new WorkerLinter({ binary: binaryInlined }));
 
 	return <linterContext.Provider value={linter.current}>{children}</linterContext.Provider>;
 }

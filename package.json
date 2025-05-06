@@ -1,0 +1,19 @@
+{
+	"private": true,
+	"scripts": {
+		"check-dependency-version-consistency": "check-dependency-version-consistency",
+		"check": "biome check --diagnostic-level=error",
+		"format": "biome check --write . --unsafe"
+	},
+	"engines": {
+		"node": ">=22",
+		"pnpm": "^10.6.3"
+	},
+	"devDependencies": {
+		"@babel/runtime": "catalog:",
+		"@biomejs/biome": "1.9.4",
+		"check-dependency-version-consistency": "^5.0.0",
+		"typescript": "catalog:"
+	},
+	"packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
+}

@@ -20,7 +20,7 @@ const esbuildProblemMatcherPlugin = {
 			});
 			console.log('[watch] build finished');
 		});
-	}
+	},
 };
 
 async function main() {
@@ -37,8 +37,8 @@ async function main() {
 		logLevel: 'silent',
 		plugins: [
 			/* Add to the end of plugins array */
-			esbuildProblemMatcherPlugin
-		]
+			esbuildProblemMatcherPlugin,
+		],
 	});
 	if (watch) {
 		await ctx.watch();

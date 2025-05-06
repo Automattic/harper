@@ -15,11 +15,11 @@ impl Linter for SpelledNumbers {
                 value,
                 suffix: None,
                 ..
-            } = number_tok.kind.number().unwrap()
+            } = number_tok.kind.as_number().unwrap()
             else {
                 continue;
             };
-            let value: f64 = value.into();
+            let value: f64 = (*value).into();
 
             if (value - value.floor()).abs() < f64::EPSILON && value < 10. {
                 lints.push(Lint {

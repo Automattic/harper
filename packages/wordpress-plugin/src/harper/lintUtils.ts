@@ -9,7 +9,7 @@ import { SuggestionKind } from 'harper.js';
 export function suggestionText(
 	kind: SuggestionKind,
 	problemText: string,
-	replacementText: string
+	replacementText: string,
 ): string {
 	if (kind === SuggestionKind.Remove) {
 		return `Remove “${problemText}”`;

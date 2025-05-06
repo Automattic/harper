@@ -1,23 +1,24 @@
-use std::borrow::Cow;
-
 use crate::{CharString, CharStringExt, WordMetadata};
 
 pub use self::dictionary::Dictionary;
 pub use self::fst_dictionary::FstDictionary;
 pub use self::merged_dictionary::MergedDictionary;
 pub use self::mutable_dictionary::MutableDictionary;
+pub use self::word_id::WordId;
 
 mod dictionary;
 mod fst_dictionary;
-pub mod hunspell;
 mod merged_dictionary;
 mod mutable_dictionary;
+mod rune;
+mod word_id;
+mod word_map;
 
 #[derive(PartialEq, Debug, Hash, Eq)]
 pub struct FuzzyMatchResult<'a> {
     pub word: &'a [char],
     pub edit_distance: u8,
-    pub metadata: WordMetadata,
+    pub metadata: &'a WordMetadata,
 }
 
 impl PartialOrd for FuzzyMatchResult<'_> {
@@ -35,6 +36,15 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
     }
 
     let mut score = sug.edit_distance as i32 * 10;
+
+    // People are much less likely to mistype the first letter.
+    if misspelled_word
+        .first()
+        .unwrap()
+        .eq_ignore_ascii_case(sug.word.first().unwrap())
+    {
+        score -= 10;
+    }
 
     // If the original word is plural, the correct one probably is too.
     if *misspelled_word.last().unwrap() == 's' && *sug.word.last().unwrap() == 's' {
@@ -95,38 +105,21 @@ pub fn suggest_correct_spelling_str(
         .collect()
 }
 
-/// Convert a given character sequence to the standard character set
-/// the dictionary is in.
-fn seq_to_normalized(seq: &[char]) -> Cow<'_, [char]> {
-    if seq.iter().any(|c| char_to_normalized(*c) != *c) {
-        Cow::Owned(seq.iter().copied().map(char_to_normalized).collect())
-    } else {
-        Cow::Borrowed(seq)
-    }
-}
-
-fn char_to_normalized(c: char) -> char {
-    match c {
-        '’' => '\'',
-        '‘' => '\'',
-        '＇' => '\'',
-        _ => c,
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use itertools::Itertools;
 
-    use super::{FstDictionary, seq_to_normalized, suggest_correct_spelling_str};
+    use crate::CharStringExt;
+
+    use super::{FstDictionary, suggest_correct_spelling_str};
 
     const RESULT_LIMIT: usize = 100;
     const MAX_EDIT_DIST: u8 = 2;
 
     #[test]
     fn normalizes_weve() {
-        let word = vec!['w', 'e', '’', 'v', 'e'];
-        let norm = seq_to_normalized(&word);
+        let word = ['w', 'e', '’', 'v', 'e'];
+        let norm = word.normalized();
 
         assert_eq!(norm.clone(), vec!['w', 'e', '\'', 'v', 'e'])
     }
@@ -198,6 +191,7 @@ mod tests {
 
     /// Assert that the default suggestion settings result in a specific word
     /// being in the top three results for a given misspelling.
+    #[track_caller]
     fn assert_suggests_correction(misspelled_word: &str, correct: &str) {
         let results = suggest_correct_spelling_str(
             misspelled_word,

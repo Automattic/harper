@@ -4,7 +4,7 @@ export class GithubClient {
 
 	public static async getLatestReleaseFromCache(
 		repoOwner: string,
-		repoName: string
+		repoName: string,
 	): Promise<string | null> {
 		const key = `${repoOwner}/${repoName}`;
 
@@ -33,9 +33,9 @@ export class GithubClient {
 			`https://api.github.com/repos/${encodeURIComponent(repoOwner)}/${encodeURIComponent(repoName)}/releases/latest`,
 			{
 				headers: {
-					['ContentType']: 'application/json'
-				}
-			}
+					ContentType: 'application/json',
+				},
+			},
 		);
 
 		const body = await resp.json();

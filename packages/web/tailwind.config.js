@@ -3,7 +3,7 @@ import flowbitePlugin from 'flowbite/plugin';
 export default {
 	content: [
 		'./src/**/*.{html,js,svelte,ts}',
-		'../node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
+		'./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}',
 	],
 	plugins: [flowbitePlugin],
 	darkMode: 'class',
@@ -20,9 +20,9 @@ export default {
 					300: '#b3bace',
 					200: '#ccd0de',
 					100: '#e5e7ef',
-					50: '#ffffff'
-				}
-			}
-		}
-	}
+					50: '#ffffff',
+				},
+			},
+		},
+	},
 };

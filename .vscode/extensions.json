@@ -1,5 +1,3 @@
 {
-    "recommendations": [
-        "elijah-potter.harper"
-    ]
+	"recommendations": ["elijah-potter.harper", "biomejs.biome"]
 }

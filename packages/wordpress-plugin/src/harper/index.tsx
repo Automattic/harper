@@ -1,7 +1,7 @@
-import { registerPlugin } from '@wordpress/plugins';
 import { PluginSidebar, PluginSidebarMoreMenuItem } from '@wordpress/edit-post';
-import SidebarControl from './SidebarControl';
+import { registerPlugin } from '@wordpress/plugins';
 import Logo from './Logo';
+import SidebarControl from './SidebarControl';
 import './index.css';
 import React from 'react';
 import LinterProvider from './LinterProvider';
@@ -9,7 +9,7 @@ import LinterProvider from './LinterProvider';
 function Sidebar() {
 	return (
 		<>
-			<PluginSidebarMoreMenuItem target="harper-sidebar" icon={Logo}>
+			<PluginSidebarMoreMenuItem target="harper-sidebar" icon={Logo()}>
 				Harper
 			</PluginSidebarMoreMenuItem>
 			<PluginSidebar name="harper-sidebar" title="Harper" icon={Logo}>

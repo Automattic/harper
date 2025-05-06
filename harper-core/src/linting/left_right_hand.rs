@@ -30,7 +30,7 @@ impl PatternLinter for LeftRightHand {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
-        let space = matched_tokens[1];
+        let space = &matched_tokens[1];
 
         Some(Lint {
             span: space.span,

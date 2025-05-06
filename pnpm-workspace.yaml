@@ -1,0 +1,19 @@
+packages:
+  - packages/*
+  - harper-wasm/pkg
+  - packages/harper.js/examples/*
+catalog:
+  typescript: ^5.8.2
+  tslib: ^2.8.1
+  '@types/node': ^22.13.10
+  '@babel/runtime': ^7.26.10
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - '@parcel/watcher'
+  - '@swc/core'
+  - '@vscode/vsce-sign'
+  - core-js
+  - core-js-pure
+  - esbuild
+  - keytar
+  - msw

@@ -80,13 +80,13 @@ If none of the previous installation methods are available to you, we also provi
 
 ### User Dictionary
 
-Each user of `harper-ls` has their own dictionary, which by default, is located in the following directories on each operating system:
+Each user of `harper-ls` has their own dictionary, which by default, is located at the following paths on each operating system:
 
-| Operating System |                                                  Location |
-| :--------------- | --------------------------------------------------------: |
-| Linux            | `$XDG_CONFIG_HOME/harper-ls` or `$HOME/.config/harper-ls` |
-| macOS            |             `$HOME/Library/Application Support/harper-ls` |
-| Windows          |                     `%FOLDERID_RoamingAppData%/harper-ls` |
+| Operating System |                                                                                Location |
+| :--------------- | --------------------------------------------------------------------------------------: |
+| Linux            | `$XDG_CONFIG_HOME/harper-ls/dictionary.txt` or `$HOME/.config/harper-ls/dictionary.txt` |
+| macOS            |                            `$HOME/Library/Application Support/harper-ls/dictionary.txt` |
+| Windows          |                                    `%FOLDERID_RoamingAppData%/harper-ls/dictionary.txt` |
 
 This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Dictionaries_).
 
@@ -121,6 +121,36 @@ We _do_ take pull requests or issues for adding words to the static dictionary. 
 | `HarperAddToUserDict`  | Adds the selected word to the user dictionary              | `Add "containes" to the global dictionary.` |
 | `HarperAddToFileDict`  | Adds the selected word to a file-local dictionary          | `Add "containes" to the file dictionary.`   |
 
+## Ignore Comments
+
+`harper-ls` supports skipping comment blocks that contain any of following:
+
+- `harper:ignore`
+- `harper: ignore`
+- `spellcheck:ignore`
+- `spellcheck: ignore`
+- `spell-checker:ignore`
+- `spell-checker: ignore`
+- `spellchecker:ignore`
+- `spellchecker: ignore`
+
+You may notice that the last four ignore comments are the same with some of CSpell's ignore comments. That is intentional in case users wish to use Harper and CSpell together.
+
+Here's an example of how these comments can be used:
+
+```js
+// harper:ignore this line will not be spellcheckd
+function sample() {
+	// harper: ignore
+	// This line and any other line after it
+	// will also not be spellcheckd
+
+	// including this this one
+}
+```
+
+In the above example, "spellcheckd", "this this", and other spelling or grammar errors will not be flagged.
+
 ## Configuration
 
 `harper-ls` expects a JSON object with a `harper-ls` key that contains your configs:
@@ -137,7 +167,7 @@ We _do_ take pull requests or issues for adding words to the static dictionary. 
 
 | Config         | Type     | Default Value | Description                                                     |
 | -------------- | -------- | ------------- | --------------------------------------------------------------- |
-| `userDictPath` | `string` | `""`          | Set the directory where the user dictionary is located          |
+| `userDictPath` | `string` | `""`          | Set the file path where the user dictionary is located          |
 | `fileDictPath` | `string` | `""`          | Set the directory where the file-local dictionaries are located |
 
 ### Linters
@@ -214,10 +244,11 @@ These configs are under the `markdown` key:
 
 ### Other Configs
 
-| Config               | Type                                              | Default Value | Description                                                                                                                                                               |
-| -------------------- | ------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `diagnosticSeverity` | `"error"`, `"hint"`, `"information"`, `"warning"` | `"hint"`      | Configures how severe diagnostics appear in your editor                                                                                                                   |
-| `isolateEnglish`     | `boolean`                                         | `false`       | In documents that are a mixture of English and another language, only lint English text. This feature is incredibly new and unstable. Do not expect it to work perfectly. |
+| Config               | Type                                                    | Default Value | Description                                                                                                                                                               |
+| -------------------- | ------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `diagnosticSeverity` | `"error"`, `"hint"`, `"information"`, `"warning"`       | `"hint"`      | Configures how severe diagnostics appear in your editor                                                                                                                   |
+| `isolateEnglish`     | `boolean`                                               | `false`       | In documents that are a mixture of English and another language, only lint English text. This feature is incredibly new and unstable. Do not expect it to work perfectly. |
+| `dialect`            | `"American"`, `"British"`, `"Australian"`, `"Canadian"` | `"American"`  | Set the dialect of English Harper should expect.                                                                                                                          |
 
 ## Supported Languages
 
@@ -243,10 +274,11 @@ These configs are under the `markdown` key:
 | Markdown          |          `markdown`           |               |
 | Nix               |             `nix`             |            ✅ |
 | PHP               |             `php`             |            ✅ |
-| Plain Text        |          `plaintext`          |               |
+| Plain Text        |      `plaintext`/`text`       |               |
 | Python            |           `python`            |            ✅ |
 | Ruby              |            `ruby`             |            ✅ |
 | Rust              |            `rust`             |            ✅ |
+| Scala             |           `scala`             |            ✅ |
 | Shell/Bash Script |         `shellscript`         |            ✅ |
 | Swift             |            `swift`            |            ✅ |
 | TOML              |            `toml`             |            ✅ |

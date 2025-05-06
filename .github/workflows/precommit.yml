@@ -5,11 +5,10 @@ on:
     branches: ["master", "web-prod"]
   pull_request:
     branches: ["master"]
+  merge_group:
 
 env:
   CARGO_TERM_COLOR: always
-  # Run for 100 times the default
-  QUICKCHECK_TESTS: 10000
 
 jobs:
   precommit:
@@ -17,12 +16,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v2
-      - uses: actions/setup-node@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
+          cache: 'pnpm'
+      - name: Enable Corepack
+        run: corepack enable
       - name: Install `pandoc`
         run: sudo apt-get update && sudo apt-get install pandoc -y
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2.7.8
       - name: Install `wasm-pack`
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - uses: taiki-e/install-action@cargo-hack
+      - name: Install `cargo-hack`
+        run: cargo hack check --each-feature
       - name: Precommit
         run: just precommit

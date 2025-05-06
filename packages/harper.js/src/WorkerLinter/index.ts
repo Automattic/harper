@@ -1,27 +1,31 @@
-import { DeserializedRequest, deserializeArg, serialize } from './communication';
-import type { Lint, Suggestion, Span } from 'wasm';
-import Linter from '../Linter';
-import Worker from './worker.js?worker&inline';
-import { getWasmUri } from '../loadWasm';
-import { LintConfig, LintOptions } from '../main';
+import type { Dialect, Lint, Suggestion } from 'harper-wasm';
+import type Linter from '../Linter';
+import type { LinterInit } from '../Linter';
+import type { BinaryModule, DeserializedRequest } from '../binary';
+import type { LintConfig, LintOptions } from '../main';
+import Worker from './worker.ts?worker&inline';
 
 /** The data necessary to complete a request once the worker has responded. */
-type RequestItem = {
+export interface RequestItem {
 	resolve: (item: unknown) => void;
 	reject: (item: unknown) => void;
 	request: DeserializedRequest;
-};
+}
 
 /** A Linter that spins up a dedicated web worker to do processing on a separate thread.
  * Main benefit: this Linter will not block the event loop for large documents.
  *
  * NOTE: This class will not work properly in Node. In that case, just use `LocalLinter`. */
 export default class WorkerLinter implements Linter {
-	private worker;
+	private binary: BinaryModule;
+	private dialect?: Dialect;
+	private worker: Worker;
 	private requestQueue: RequestItem[];
 	private working = true;
 
-	constructor() {
+	constructor(init: LinterInit) {
+		this.binary = init.binary;
+		this.dialect = init.dialect;
 		this.worker = new Worker();
 		this.requestQueue = [];
 
@@ -29,7 +33,7 @@ export default class WorkerLinter implements Linter {
 		this.worker.onmessage = () => {
 			this.setupMainEventListeners();
 
-			this.worker.postMessage(getWasmUri());
+			this.worker.postMessage([this.binary.url, this.dialect]);
 
 			this.working = false;
 			this.submitRemainingRequests();
@@ -39,7 +43,7 @@ export default class WorkerLinter implements Linter {
 	private setupMainEventListeners() {
 		this.worker.onmessage = (e: MessageEvent) => {
 			const { resolve } = this.requestQueue.shift()!;
-			deserializeArg(e.data).then((v) => {
+			this.binary.deserializeArg(e.data).then((v) => {
 				resolve(v);
 
 				this.working = false;
@@ -65,8 +69,8 @@ export default class WorkerLinter implements Linter {
 		return this.rpc('lint', [text, options]);
 	}
 
-	applySuggestion(text: string, suggestion: Suggestion, span: Span): Promise<string> {
-		return this.rpc('applySuggestion', [text, suggestion, span]);
+	applySuggestion(text: string, lint: Lint, suggestion: Suggestion): Promise<string> {
+		return this.rpc('applySuggestion', [text, lint, suggestion]);
 	}
 
 	isLikelyEnglish(text: string): Promise<boolean> {
@@ -113,37 +117,57 @@ export default class WorkerLinter implements Linter {
 		return JSON.parse(await this.getDefaultLintConfigAsJSON()) as LintConfig;
 	}
 
-	async ignoreLint(lint: Lint): Promise<void> {
-		return this.rpc('ignoreLint', [lint]);
+	ignoreLint(source: string, lint: Lint): Promise<void> {
+		return this.rpc('ignoreLint', [source, lint]);
 	}
 
-	async exportIgnoredLints(): Promise<string> {
+	exportIgnoredLints(): Promise<string> {
 		return this.rpc('exportIgnoredLints', []);
 	}
 
-	async importIgnoredLints(json: string): Promise<void> {
+	importIgnoredLints(json: string): Promise<void> {
 		return this.rpc('importIgnoredLints', [json]);
 	}
 
-	async clearIgnoredLints(): Promise<void> {
+	clearIgnoredLints(): Promise<void> {
 		return this.rpc('clearIgnoredLints', []);
 	}
 
-	async importWords(words: string[]): Promise<void> {
+	importWords(words: string[]): Promise<void> {
 		return this.rpc('importWords', [words]);
 	}
 
-	async exportWords(): Promise<string[]> {
+	exportWords(): Promise<string[]> {
 		return this.rpc('exportWords', []);
 	}
 
+	getDialect(): Promise<Dialect> {
+		return this.rpc('getDialect', []);
+	}
+
+	setDialect(dialect: Dialect): Promise<void> {
+		return this.rpc('setDialect', [dialect]);
+	}
+
+	summarizeStats(start?: bigint, end?: bigint): Promise<any> {
+		return this.rpc('summarizeStats', [start, end]);
+	}
+
+	generateStatsFile(): Promise<string> {
+		return this.rpc('generateStatsFile', []);
+	}
+
+	importStatsFile(statsFile: string): Promise<void> {
+		return this.rpc('importStatsFile', [statsFile]);
+	}
+
 	/** Run a procedure on the remote worker. */
-	private async rpc(procName: string, args: any[]): Promise<any> {
+	private async rpc(procName: string, args: unknown[]): Promise<any> {
 		const promise = new Promise((resolve, reject) => {
 			this.requestQueue.push({
 				resolve,
 				reject,
-				request: { procName, args }
+				request: { procName, args },
 			});
 
 			this.submitRemainingRequests();
@@ -161,8 +185,8 @@ export default class WorkerLinter implements Linter {
 
 		if (this.requestQueue.length > 0) {
 			const { request } = this.requestQueue[0];
-
-			this.worker.postMessage(await serialize(request));
+			const serialized = await this.binary.serialize(request);
+			this.worker.postMessage(serialized);
 		} else {
 			this.working = false;
 		}

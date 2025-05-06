@@ -1,8 +1,8 @@
-import { merge } from 'lodash-es';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { LintConfig } from 'harper.js';
-import { useLinter } from './LinterProvider';
+import type { LintConfig } from 'harper.js';
+import { merge } from 'lodash-es';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useLinter } from './LinterProvider';
 
 const KEY = 'lintConfig';
 

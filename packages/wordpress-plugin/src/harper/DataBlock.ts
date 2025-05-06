@@ -1,6 +1,6 @@
-import { getNodesFromQuerySelector, getRichTextContainers } from './domUtils';
-import RichText from './RichText';
 import { dispatch } from '@wordpress/data';
+import RichText from './RichText';
+import { getNodesFromQuerySelector, getRichTextContainers } from './domUtils';
 
 /**
  * Represents a Gutenberg block on-screen.
@@ -28,9 +28,9 @@ export default class DataBlock {
 					const attributeName = cont.getAttribute('data-wp-block-attribute-key') ?? 'content';
 
 					await updateBlockAttributes(this.getClientId(), {
-						[attributeName]: newContent
+						[attributeName]: newContent,
 					});
-				})
+				}),
 		);
 	}
 

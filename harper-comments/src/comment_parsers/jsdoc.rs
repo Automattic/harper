@@ -184,7 +184,7 @@ mod tests {
         assert!(matches!(
             document
                 .tokens()
-                .map(|t| t.kind)
+                .map(|t| t.kind.clone())
                 .collect::<Vec<_>>()
                 .as_slice(),
             &[

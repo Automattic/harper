@@ -1,5 +1,5 @@
-import Jasmine from 'jasmine';
 import path from 'node:path';
+import Jasmine from 'jasmine';
 
 export async function run(): Promise<void> {
 	const jasmine = new Jasmine();
@@ -7,7 +7,7 @@ export async function run(): Promise<void> {
 	jasmine.loadConfig({
 		spec_dir: path.relative(process.cwd(), __dirname),
 		spec_files: ['*.test.js'],
-		random: false
+		random: false,
 	});
 
 	const result = await jasmine.execute();

@@ -1,6 +1,6 @@
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::{Document, FstDictionary};
+use harper_core::{Dialect, Document, FstDictionary};
 
 static ESSAY: &str = include_str!("./essay.md");
 
@@ -12,7 +12,7 @@ fn parse_essay(c: &mut Criterion) {
 
 fn lint_essay(c: &mut Criterion) {
     let dictionary = FstDictionary::curated();
-    let mut lint_set = LintGroup::new_curated(dictionary);
+    let mut lint_set = LintGroup::new_curated(dictionary, Dialect::American);
     let document = Document::new_markdown_default_curated(black_box(ESSAY));
 
     c.bench_function("lint_essay", |b| {
@@ -24,7 +24,7 @@ fn lint_essay_uncached(c: &mut Criterion) {
     c.bench_function("lint_essay_uncached", |b| {
         b.iter(|| {
             let dictionary = FstDictionary::curated();
-            let mut lint_set = LintGroup::new_curated(dictionary.clone());
+            let mut lint_set = LintGroup::new_curated(dictionary.clone(), Dialect::American);
             let document = Document::new_markdown_default(black_box(ESSAY), &dictionary);
             lint_set.lint(&document)
         })

@@ -19,14 +19,20 @@ impl EitherPattern {
 }
 
 impl Pattern for EitherPattern {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        let mut longest = 0;
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
+        let mut longest = None;
 
         for pattern in self.patterns.iter() {
-            let match_len = pattern.matches(tokens, source);
+            let Some(match_len) = pattern.matches(tokens, source) else {
+                continue;
+            };
 
-            if match_len > longest {
-                longest = match_len
+            if let Some(longest_len) = longest {
+                if match_len > longest_len {
+                    longest = Some(match_len);
+                }
+            } else {
+                longest = Some(match_len);
             }
         }
 

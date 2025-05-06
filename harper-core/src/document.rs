@@ -10,8 +10,10 @@ use crate::patterns::{
 };
 use crate::punctuation::Punctuation;
 use crate::vec_ext::VecExt;
-use crate::{Dictionary, FatToken, FstDictionary, Lrc, Token, TokenKind, TokenStringExt};
-use crate::{NumberSuffix, Span};
+use crate::{
+    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, Token, TokenKind, TokenStringExt,
+};
+use crate::{OrdinalSuffix, Span};
 
 /// A document containing some amount of lexed and parsed English text.
 #[derive(Debug, Clone)]
@@ -34,6 +36,18 @@ impl Document {
         self.tokens()
             .enumerate()
             .filter_map(|(idx, tok)| tok.span.overlaps_with(span).then_some(idx))
+            .collect()
+    }
+
+    /// Locate all the tokens that intersect a provided span and convert them to [`FatToken`]s.
+    ///
+    /// Desperately needs optimization.
+    pub fn fat_tokens_intersecting(&self, span: Span) -> Vec<FatToken> {
+        let indices = self.token_indices_intersecting(span);
+
+        indices
+            .into_iter()
+            .map(|i| self.tokens[i].to_fat(&self.source))
             .collect()
     }
 
@@ -131,7 +145,7 @@ impl Document {
             if let TokenKind::Word(meta) = &mut token.kind {
                 let word_source = token.span.get_content(&self.source);
                 let found_meta = dictionary.get_word_metadata(word_source);
-                *meta = found_meta
+                *meta = found_meta.cloned()
             }
         }
     }
@@ -152,7 +166,7 @@ impl Document {
     /// When a word that is either an adjective or a noun is sandwiched between an article and a noun,
     /// it definitely is not a noun.
     fn articles_imply_nouns(&mut self) {
-        let pattern = Self::ELLIPSIS_PATTERN.with(|v| v.clone());
+        let pattern = Self::ARTICLE_PATTERN.with(|v| v.clone());
 
         for m in pattern.find_all_matches_in_doc(self) {
             if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start + 2].kind {
@@ -181,7 +195,7 @@ impl Document {
     fn condense_indices(&mut self, indices: &[usize], stretch_len: usize) {
         // Update spans
         for idx in indices {
-            let end_tok = self.tokens[idx + stretch_len - 1];
+            let end_tok = self.tokens[idx + stretch_len - 1].clone();
             let start_tok = &mut self.tokens[*idx];
 
             start_tok.span.end = end_tok.span.end;
@@ -198,7 +212,7 @@ impl Document {
         let mut iter = indices.iter().peekable();
 
         while let (Some(a_idx), b) = (iter.next(), iter.peek()) {
-            self.tokens.push(old[*a_idx]);
+            self.tokens.push(old[*a_idx].clone());
 
             if let Some(b_idx) = b {
                 self.tokens
@@ -215,7 +229,7 @@ impl Document {
         );
     }
 
-    pub fn get_token_at_char_index(&self, char_index: usize) -> Option<Token> {
+    pub fn get_token_at_char_index(&self, char_index: usize) -> Option<&Token> {
         let index = self
             .tokens
             .binary_search_by(|t| {
@@ -227,17 +241,25 @@ impl Document {
             })
             .ok()?;
 
-        Some(self.tokens[index])
+        Some(&self.tokens[index])
     }
 
     /// Defensively attempt to grab a specific token.
-    pub fn get_token(&self, index: usize) -> Option<Token> {
-        self.tokens.get(index).copied()
+    pub fn get_token(&self, index: usize) -> Option<&Token> {
+        self.tokens.get(index)
+    }
+
+    /// Get a token at a signed offset from a base index, or None if out of bounds.
+    pub fn get_token_offset(&self, base: usize, offset: isize) -> Option<&Token> {
+        match base.checked_add_signed(offset) {
+            None => None,
+            Some(idx) => self.get_token(idx),
+        }
     }
 
     /// Get an iterator over all the tokens contained in the document.
-    pub fn tokens(&self) -> impl Iterator<Item = Token> + '_ {
-        self.tokens.iter().copied()
+    pub fn tokens(&self) -> impl Iterator<Item = &Token> + '_ {
+        self.tokens.iter()
     }
 
     /// Get an iterator over all the tokens contained in the document.
@@ -245,16 +267,34 @@ impl Document {
         self.tokens().map(|token| token.to_fat(&self.source))
     }
 
-    pub fn get_span_content(&self, span: Span) -> &[char] {
+    /// Get the next or previous word token relative to a base index, if separated by whitespace.
+    /// Returns None if the next/previous token is not a word or does not exist.
+    pub fn get_next_word_from_offset(&self, base: usize, offset: isize) -> Option<&Token> {
+        // Look for whitespace at the expected offset
+        if !self.get_token_offset(base, offset)?.kind.is_whitespace() {
+            return None;
+        }
+        // Now look beyond the whitespace for a word token
+        let word_token = self.get_token_offset(base, offset + offset.signum());
+        let word_token = word_token?;
+        word_token.kind.is_word().then_some(word_token)
+    }
+
+    /// Get an iterator over all the tokens contained in the document.
+    pub fn fat_string_tokens(&self) -> impl Iterator<Item = FatStringToken> + '_ {
+        self.fat_tokens().map(|t| t.into())
+    }
+
+    pub fn get_span_content(&self, span: &Span) -> &[char] {
         span.get_content(&self.source)
     }
 
-    pub fn get_span_content_str(&self, span: Span) -> String {
+    pub fn get_span_content_str(&self, span: &Span) -> String {
         String::from_iter(self.get_span_content(span))
     }
 
     pub fn get_full_string(&self) -> String {
-        self.get_span_content_str(Span {
+        self.get_span_content_str(&Span {
             start: 0,
             end: self.source.len(),
         })
@@ -305,13 +345,14 @@ impl Document {
         let mut replace_starts = Vec::new();
 
         for idx in 0..self.tokens.len() - 1 {
-            let b = self.tokens[idx + 1];
-            let a = self.tokens[idx];
+            let b = &self.tokens[idx + 1];
+            let a = &self.tokens[idx];
 
             // TODO: Allow spaces between `a` and `b`
 
-            if let (TokenKind::Number(..), TokenKind::Word(..)) = (a.kind, b.kind) {
-                if let Some(found_suffix) = NumberSuffix::from_chars(self.get_span_content(b.span))
+            if let (TokenKind::Number(..), TokenKind::Word(..)) = (&a.kind, &b.kind) {
+                if let Some(found_suffix) =
+                    OrdinalSuffix::from_chars(self.get_span_content(&b.span))
                 {
                     self.tokens[idx].kind.as_mut_number().unwrap().suffix = Some(found_suffix);
                     replace_starts.push(idx);
@@ -461,8 +502,8 @@ impl Document {
         let mut initialism_start = None;
 
         loop {
-            let a = self.tokens[cursor - 1];
-            let b = self.tokens[cursor];
+            let a = &self.tokens[cursor - 1];
+            let b = &self.tokens[cursor];
 
             let is_initialism_chunk = a.kind.is_word() && a.span.len() == 1 && b.kind.is_period();
 
@@ -537,11 +578,11 @@ impl Document {
 macro_rules! create_fns_on_doc {
     ($thing:ident) => {
         paste! {
-            fn [< first_ $thing >](&self) -> Option<Token> {
+            fn [< first_ $thing >](&self) -> Option<&Token> {
                 self.tokens.[< first_ $thing >]()
             }
 
-            fn [< last_ $thing >](&self) -> Option<Token> {
+            fn [< last_ $thing >](&self) -> Option<&Token> {
                 self.tokens.[< last_ $thing >]()
             }
 
@@ -553,7 +594,7 @@ macro_rules! create_fns_on_doc {
                 self.tokens.[< iter_ $thing _indices >]()
             }
 
-            fn [<iter_ $thing s>](&self) -> impl Iterator<Item = Token> + '_ {
+            fn [<iter_ $thing s>](&self) -> impl Iterator<Item = &Token> + '_ {
                 self.tokens.[< iter_ $thing s >]()
             }
         }
@@ -561,31 +602,35 @@ macro_rules! create_fns_on_doc {
 }
 
 impl TokenStringExt for Document {
-    create_fns_on_doc!(word);
-    create_fns_on_doc!(hostname);
-    create_fns_on_doc!(word_like);
-    create_fns_on_doc!(conjunction);
-    create_fns_on_doc!(space);
+    create_fns_on_doc!(adjective);
     create_fns_on_doc!(apostrophe);
-    create_fns_on_doc!(pipe);
-    create_fns_on_doc!(quote);
-    create_fns_on_doc!(number);
     create_fns_on_doc!(at);
-    create_fns_on_doc!(ellipsis);
-    create_fns_on_doc!(unlintable);
-    create_fns_on_doc!(sentence_terminator);
-    create_fns_on_doc!(paragraph_break);
     create_fns_on_doc!(chunk_terminator);
-    create_fns_on_doc!(punctuation);
-    create_fns_on_doc!(currency);
-    create_fns_on_doc!(likely_homograph);
     create_fns_on_doc!(comma);
+    create_fns_on_doc!(conjunction);
+    create_fns_on_doc!(currency);
+    create_fns_on_doc!(ellipsis);
+    create_fns_on_doc!(hostname);
+    create_fns_on_doc!(likely_homograph);
+    create_fns_on_doc!(noun);
+    create_fns_on_doc!(number);
+    create_fns_on_doc!(paragraph_break);
+    create_fns_on_doc!(pipe);
+    create_fns_on_doc!(preposition);
+    create_fns_on_doc!(punctuation);
+    create_fns_on_doc!(quote);
+    create_fns_on_doc!(sentence_terminator);
+    create_fns_on_doc!(space);
+    create_fns_on_doc!(unlintable);
+    create_fns_on_doc!(verb);
+    create_fns_on_doc!(word);
+    create_fns_on_doc!(word_like);
 
-    fn first_sentence_word(&self) -> Option<Token> {
+    fn first_sentence_word(&self) -> Option<&Token> {
         self.tokens.first_sentence_word()
     }
 
-    fn first_non_whitespace(&self) -> Option<Token> {
+    fn first_non_whitespace(&self) -> Option<&Token> {
         self.tokens.first_non_whitespace()
     }
 
@@ -597,7 +642,7 @@ impl TokenStringExt for Document {
         self.tokens.iter_linking_verb_indices()
     }
 
-    fn iter_linking_verbs(&self) -> impl Iterator<Item = Token> + '_ {
+    fn iter_linking_verbs(&self) -> impl Iterator<Item = &Token> + '_ {
         self.tokens.iter_linking_verbs()
     }
 
@@ -617,7 +662,7 @@ impl TokenStringExt for Document {
 impl Display for Document {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for token in &self.tokens {
-            write!(f, "{}", self.get_span_content_str(token.span))?;
+            write!(f, "{}", self.get_span_content_str(&token.span))?;
         }
 
         Ok(())
@@ -680,7 +725,7 @@ mod tests {
     fn assert_token_count(source: &str, count: usize) {
         let document = Document::new_plain_english_curated(source);
 
-        dbg!(document.tokens().map(|t| t.kind).collect_vec());
+        dbg!(document.tokens().map(|t| t.kind.clone()).collect_vec());
         assert_eq!(document.tokens.len(), count);
     }
 
@@ -726,5 +771,77 @@ mod tests {
     #[test]
     fn parses_short_ellipsis() {
         assert_token_count("..", 1);
+    }
+
+    #[test]
+    fn selects_token_at_offset() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let tok = doc.get_token_offset(1, -1).unwrap();
+
+        assert_eq!(tok.span, Span::new(0, 3));
+    }
+
+    #[test]
+    fn cant_select_token_before_start() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let tok = doc.get_token_offset(0, -1);
+
+        assert!(tok.is_none());
+    }
+
+    #[test]
+    fn select_next_word_pos_offset() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let bar = doc.get_next_word_from_offset(0, 1).unwrap();
+        let bar = doc.get_span_content(&bar.span);
+        assert_eq!(bar, ['b', 'a', 'r']);
+    }
+
+    #[test]
+    fn select_next_word_neg_offset() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let bar = doc.get_next_word_from_offset(2, -1).unwrap();
+        let bar = doc.get_span_content(&bar.span);
+        assert_eq!(bar, ['F', 'o', 'o']);
+    }
+
+    #[test]
+    fn cant_select_next_word_not_from_whitespace() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let tok = doc.get_next_word_from_offset(0, 2);
+
+        assert!(tok.is_none());
+    }
+
+    #[test]
+    fn cant_select_next_word_before_start() {
+        let doc = Document::new_plain_english_curated("Foo bar baz");
+
+        let tok = doc.get_next_word_from_offset(0, -1);
+
+        assert!(tok.is_none());
+    }
+
+    #[test]
+    fn cant_select_next_word_with_punctuation_instead_of_whitespace() {
+        let doc = Document::new_plain_english_curated("Foo, bar, baz");
+
+        let tok = doc.get_next_word_from_offset(0, 1);
+
+        assert!(tok.is_none());
+    }
+
+    #[test]
+    fn cant_select_next_word_with_punctuation_after_whitespace() {
+        let doc = Document::new_plain_english_curated("Foo \"bar\", baz");
+
+        let tok = doc.get_next_word_from_offset(0, 1);
+
+        assert!(tok.is_none());
     }
 }

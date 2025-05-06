@@ -42,8 +42,8 @@ impl PatternLinter for HyphenateNumberDay {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
-        let number = matched_tokens[0].kind.expect_number();
-        let space = matched_tokens[1];
+        let number = matched_tokens[0].kind.as_number()?;
+        let space = &matched_tokens[1];
 
         Some(Lint {
             span: space.span,

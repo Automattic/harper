@@ -3,13 +3,13 @@ use std::path::Path;
 use comment_parsers::{Go, JavaDoc, JsDoc, Unit};
 use harper_core::parsers::{self, MarkdownOptions, Parser};
 use harper_core::{MutableDictionary, Token};
-use harper_tree_sitter::TreeSitterMasker;
 use tree_sitter::Node;
 
 use crate::comment_parsers;
+use crate::masker::CommentMasker;
 
 pub struct CommentParser {
-    inner: parsers::Mask<TreeSitterMasker, Box<dyn Parser>>,
+    inner: parsers::Mask<CommentMasker, Box<dyn Parser>>,
 }
 
 impl CommentParser {
@@ -43,6 +43,7 @@ impl CommentParser {
             "haskell" => tree_sitter_haskell::language(),
             "php" => tree_sitter_php::language_php(),
             "dart" => tree_sitter_dart::language(),
+            "scala" => tree_sitter_scala::language(),
             _ => return None,
         };
 
@@ -57,7 +58,7 @@ impl CommentParser {
 
         Some(Self {
             inner: parsers::Mask::new(
-                TreeSitterMasker::new(language, Self::node_condition),
+                CommentMasker::new(language, Self::node_condition),
                 comment_parser,
             ),
         })
@@ -98,6 +99,7 @@ impl CommentParser {
             "hs" => "haskell",
             "php" => "php",
             "dart" => "dart",
+            "scala" | "sbt" | "mill" => "scala",
             _ => return None,
         })
     }

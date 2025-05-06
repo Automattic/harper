@@ -31,14 +31,14 @@ use std::collections::VecDeque;
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
 pub use document::Document;
-pub use fat_token::FatToken;
+pub use fat_token::{FatStringToken, FatToken};
 pub use ignored_lints::IgnoredLints;
 use linting::Lint;
 pub use mask::{Mask, Masker};
-pub use number::{Number, NumberSuffix};
+pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
 pub use span::Span;
-pub use spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
+pub use spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 pub use sync::{LSend, Lrc};
 pub use title_case::{make_title_case, make_title_case_str};
 pub use token::Token;
@@ -46,8 +46,14 @@ pub use token_kind::TokenKind;
 pub use token_string_ext::TokenStringExt;
 pub use vec_ext::VecExt;
 pub use word_metadata::{
-    AdverbData, ConjunctionData, NounData, PronounData, Tense, VerbData, WordMetadata,
+    AdverbData, ConjunctionData, Degree, Dialect, NounData, PronounData, Tense, VerbData,
+    WordMetadata,
 };
+
+/// Return harper-core version
+pub fn core_version() -> &'static str {
+    env!("CARGO_PKG_VERSION")
+}
 
 /// A utility function that removes overlapping lints in a vector,
 /// keeping the more important ones.
@@ -77,7 +83,7 @@ pub fn remove_overlaps(lints: &mut Vec<Lint>) {
 #[cfg(test)]
 mod tests {
     use crate::{
-        Document, FstDictionary,
+        Dialect, Document, FstDictionary,
         linting::{LintGroup, Linter},
         remove_overlaps,
     };
@@ -86,7 +92,7 @@ mod tests {
     fn keeps_space_lint() {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
-        let mut linter = LintGroup::new_curated(FstDictionary::curated());
+        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
 
         let mut lints = linter.lint(&doc);
 

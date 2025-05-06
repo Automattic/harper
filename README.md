@@ -30,15 +30,15 @@ Harper is even small enough to load via [WebAssembly.](https://writewithharper.c
 
 ## Language Support
 
-Harper currently only supports American English, but the core is extensible to support other languages, so we welcome contributions that allow for other language support.
+Harper currently only supports English, but the core is extensible to support other languages, so we welcome contributions that allow for other language support.
 
 ## Performance Issues
 
 We consider long lint times bugs.
 If you encounter any significant performance issues, please create an issue on the topic.
 
-If you find a fix to any performance issue, we are open the contribution.
-Just make sure to read [our contribution guidelines first.](https://github.com/automattic/harper/blob/master/CONTRIBUTING.md)
+If you find a fix to any performance issue, we would appreciate the contribution.
+Just please make sure to read [our contribution guidelines first.](https://github.com/automattic/harper/blob/master/CONTRIBUTING.md)
 
 ## Links
 

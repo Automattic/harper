@@ -62,7 +62,7 @@ impl Currency {
     }
 
     /// Format an amount of the specific currency.
-    pub fn format_amount(&self, amount: Number) -> String {
+    pub fn format_amount(&self, amount: &Number) -> String {
         let c = self.to_char();
 
         let amount = amount.to_string();

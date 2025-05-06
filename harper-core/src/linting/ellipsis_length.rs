@@ -13,7 +13,7 @@ impl Linter for EllipsisLength {
         let mut lints = Vec::new();
 
         for tok in document.iter_ellipsiss() {
-            let tok_content = document.get_span_content(tok.span);
+            let tok_content = document.get_span_content(&tok.span);
 
             if tok_content.is_empty() {
                 continue;

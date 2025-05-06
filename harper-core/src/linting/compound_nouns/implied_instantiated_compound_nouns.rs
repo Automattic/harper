@@ -42,14 +42,15 @@ impl PatternLinter for ImpliedInstantiatedCompoundNouns {
         // If the pattern matched, this will not return `None`.
         let word =
             self.split_pattern
-                .get_merged_word(matched_tokens[0], matched_tokens[2], source)?;
+                .get_merged_word(&matched_tokens[0], &matched_tokens[2], source)?;
 
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(word.to_vec(), orig)],
             message: format!(
-                "The verb here implies the existence of the closed compound noun “{}”.",
+                "The auxiliary verb “{}” implies the existence of the closed compound noun “{}”.",
+                matched_tokens[4].span.get_content(source).to_string(),
                 word.to_string()
             ),
             priority: 63,

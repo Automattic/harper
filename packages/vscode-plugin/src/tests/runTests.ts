@@ -1,5 +1,5 @@
-import { runTests } from '@vscode/test-electron';
 import path from 'node:path';
+import { runTests } from '@vscode/test-electron';
 
 (async () => {
 	try {
@@ -8,8 +8,8 @@ import path from 'node:path';
 			extensionTestsPath: path.join(__dirname, 'suite'),
 			launchArgs: [
 				'--disable-extensions',
-				path.join(__dirname, '..', '..', 'src', 'tests', 'fixtures')
-			]
+				path.join(__dirname, '..', '..', 'src', 'tests', 'fixtures'),
+			],
 		});
 	} catch (error) {
 		console.error('Failed to run tests', error);

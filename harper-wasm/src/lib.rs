@@ -1,6 +1,7 @@
 #![doc = include_str!("../README.md")]
 
 use std::convert::Into;
+use std::io::Cursor;
 use std::sync::Arc;
 
 use harper_core::language_detection::is_doc_likely_english;
@@ -10,14 +11,13 @@ use harper_core::{
     CharString, Dictionary, Document, FstDictionary, IgnoredLints, Lrc, MergedDictionary,
     MutableDictionary, WordMetadata, remove_overlaps,
 };
+use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};
+use serde_wasm_bindgen::Serializer;
 use wasm_bindgen::JsValue;
 use wasm_bindgen::prelude::wasm_bindgen;
 
 /// Setup the WebAssembly module's logging.
-///
-///
-/// painful.
 #[wasm_bindgen(start)]
 pub fn setup() {
     console_error_panic_hook::set_once();
@@ -63,6 +63,26 @@ impl Language {
 }
 
 #[wasm_bindgen]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
+pub enum Dialect {
+    American,
+    British,
+    Australian,
+    Canadian,
+}
+
+impl From<Dialect> for harper_core::Dialect {
+    fn from(dialect: Dialect) -> Self {
+        match dialect {
+            Dialect::American => harper_core::Dialect::American,
+            Dialect::Canadian => harper_core::Dialect::Canadian,
+            Dialect::Australian => harper_core::Dialect::Australian,
+            Dialect::British => harper_core::Dialect::British,
+        }
+    }
+}
+
+#[wasm_bindgen]
 pub struct Linter {
     lint_group: LintGroup,
     /// The user-supplied dictionary.
@@ -71,6 +91,8 @@ pub struct Linter {
     user_dictionary: MutableDictionary,
     dictionary: Arc<MergedDictionary>,
     ignored_lints: IgnoredLints,
+    dialect: Dialect,
+    stats: Stats,
 }
 
 #[wasm_bindgen]
@@ -78,15 +100,17 @@ impl Linter {
     /// Construct a new `Linter`.
     /// Note that this can mean constructing the curated dictionary, which is the most expensive operation
     /// in Harper.
-    pub fn new() -> Self {
+    pub fn new(dialect: Dialect) -> Self {
         let dictionary = Self::construct_merged_dict(MutableDictionary::default());
-        let lint_group = LintGroup::new_curated_empty_config(dictionary.clone());
+        let lint_group = LintGroup::new_curated_empty_config(dictionary.clone(), dialect.into());
 
         Self {
             lint_group,
             user_dictionary: MutableDictionary::new(),
             dictionary,
             ignored_lints: IgnoredLints::default(),
+            dialect,
+            stats: Stats::default(),
         }
     }
 
@@ -95,7 +119,8 @@ impl Linter {
     fn synchronize_lint_dict(&mut self) {
         let mut lint_config = self.lint_group.config.clone();
         self.dictionary = Self::construct_merged_dict(self.user_dictionary.clone());
-        self.lint_group = LintGroup::new_curated_empty_config(self.dictionary.clone());
+        self.lint_group =
+            LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into());
         self.lint_group.config.merge_from(&mut lint_config);
     }
 
@@ -137,15 +162,30 @@ impl Linter {
     }
 
     pub fn set_lint_config_from_json(&mut self, json: String) -> Result<(), String> {
-        self.lint_group
-            .config
-            .merge_from(&mut serde_json::from_str(&json).map_err(|v| v.to_string())?);
+        self.lint_group.config = serde_json::from_str(&json).map_err(|v| v.to_string())?;
         Ok(())
+    }
+
+    pub fn summarize_stats(&self, start_time: Option<i64>, end_time: Option<i64>) -> JsValue {
+        let mut operable_copy = self.stats.clone();
+
+        if let Some(start_time) = start_time {
+            operable_copy.records.retain(|i| i.when > start_time);
+        }
+
+        if let Some(end_time) = end_time {
+            operable_copy.records.retain(|i| i.when < end_time);
+        }
+
+        operable_copy
+            .summarize()
+            .serialize(&Serializer::json_compatible())
+            .unwrap()
     }
 
     /// Get a Record containing the descriptions of all the linting rules.
     pub fn get_lint_descriptions_as_object(&self) -> JsValue {
-        let serializer = serde_wasm_bindgen::Serializer::json_compatible();
+        let serializer = Serializer::json_compatible();
         self.lint_group
             .all_descriptions()
             .serialize(&serializer)
@@ -154,21 +194,22 @@ impl Linter {
 
     pub fn get_lint_config_as_object(&self) -> JsValue {
         // Important for downstream JSON serialization
-        let serializer = serde_wasm_bindgen::Serializer::json_compatible();
+        let serializer = Serializer::json_compatible();
 
         self.lint_group.config.serialize(&serializer).unwrap()
     }
 
     pub fn set_lint_config_from_object(&mut self, object: JsValue) -> Result<(), String> {
-        self.lint_group
-            .config
-            .merge_from(&mut serde_wasm_bindgen::from_value(object).map_err(|v| v.to_string())?);
+        self.lint_group.config =
+            serde_wasm_bindgen::from_value(object).map_err(|v| v.to_string())?;
         Ok(())
     }
 
-    pub fn ignore_lint(&mut self, lint: Lint) {
+    pub fn ignore_lint(&mut self, source_text: String, lint: Lint) {
+        let source: Vec<_> = source_text.chars().collect();
+
         let document = Document::new_from_vec(
-            lint.source.into(),
+            source.into(),
             &lint.language.create_parser(),
             &self.dictionary,
         );
@@ -198,7 +239,10 @@ impl Linter {
 
         lints
             .into_iter()
-            .map(|l| Lint::new(l, source.to_vec(), language))
+            .map(|l| {
+                let problem_text = l.span.get_content_string(&source);
+                Lint::new(l, problem_text, language)
+            })
             .collect()
     }
 
@@ -246,31 +290,58 @@ impl Linter {
             .map(|v| v.iter().collect())
             .collect()
     }
-}
 
-impl Default for Linter {
-    fn default() -> Self {
-        Self::new()
+    /// Get the dialect this struct was constructed for.
+    pub fn get_dialect(&self) -> Dialect {
+        self.dialect
+    }
+
+    /// Apply a suggestion from a given lint.
+    /// This action will be logged to the Linter's statistics.
+    pub fn apply_suggestion(
+        &mut self,
+        source_text: String,
+        lint: &Lint,
+        suggestion: &Suggestion,
+    ) -> Result<String, String> {
+        let mut source: Vec<_> = source_text.chars().collect();
+
+        let doc = Document::new_from_vec(
+            source.clone().into(),
+            &lint.language.create_parser(),
+            &self.dictionary,
+        );
+
+        self.stats
+            .records
+            .push(Record::now(RecordKind::from_lint(&lint.inner, &doc)));
+
+        suggestion.inner.apply(lint.inner.span, &mut source);
+
+        Ok(source.iter().collect())
+    }
+
+    pub fn generate_stats_file(&self) -> String {
+        let mut output = Vec::new();
+        self.stats.write(&mut output).unwrap();
+
+        String::from_utf8(output).unwrap()
+    }
+
+    pub fn import_stats_file(&mut self, file: String) -> Result<(), String> {
+        let data = file.as_bytes();
+        let mut read = Cursor::new(data);
+
+        let mut new_stats = Stats::read(&mut read).map_err(|err| err.to_string())?;
+        self.stats.records.append(&mut new_stats.records);
+
+        Ok(())
     }
 }
 
 #[wasm_bindgen]
 pub fn to_title_case(text: String) -> String {
     harper_core::make_title_case_str(&text, &PlainEnglish, &FstDictionary::curated())
-}
-
-#[wasm_bindgen]
-pub fn apply_suggestion(
-    text: String,
-    span: Span,
-    suggestion: &Suggestion,
-) -> Result<String, String> {
-    let mut source: Vec<_> = text.chars().collect();
-    let span: harper_core::Span = span.into();
-
-    suggestion.inner.apply(span, &mut source);
-
-    Ok(source.iter().collect())
 }
 
 /// A suggestion to fix a Lint.
@@ -325,7 +396,8 @@ impl Suggestion {
 #[wasm_bindgen]
 pub struct Lint {
     inner: harper_core::linting::Lint,
-    source: Vec<char>,
+    /// The problematic text that produced this lint.
+    problem_text: String,
     language: Language,
 }
 
@@ -333,19 +405,19 @@ pub struct Lint {
 impl Lint {
     pub(crate) fn new(
         inner: harper_core::linting::Lint,
-        source: Vec<char>,
+        problem_text: String,
         language: Language,
     ) -> Self {
         Self {
             inner,
-            source,
+            problem_text,
             language,
         }
     }
 
     /// Get the content of the source material pointed to by [`Self::span`]
     pub fn get_problem_text(&self) -> String {
-        self.inner.span.get_content_string(&self.source)
+        self.problem_text.clone()
     }
 
     /// Get a string representing the general category of the lint.
@@ -385,17 +457,19 @@ impl Lint {
 
 #[wasm_bindgen]
 pub fn get_default_lint_config_as_json() -> String {
-    let config = LintGroup::new_curated(MutableDictionary::new().into()).config;
+    let config =
+        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
 
     serde_json::to_string(&config).unwrap()
 }
 
 #[wasm_bindgen]
 pub fn get_default_lint_config() -> JsValue {
-    let config = LintGroup::new_curated(MutableDictionary::new().into()).config;
+    let config =
+        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
 
     // Important for downstream JSON serialization
-    let serializer = serde_wasm_bindgen::Serializer::json_compatible();
+    let serializer = Serializer::json_compatible();
 
     config.serialize(&serializer).unwrap()
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
-	export let width = '100%';
-	export let height = '100%';
+export let width = '100%';
+export let height = '100%';
 </script>
 
 <svg

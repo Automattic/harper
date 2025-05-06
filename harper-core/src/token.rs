@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{FatToken, Span, TokenKind};
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Default)]
 pub struct Token {
     pub span: Span,
     pub kind: TokenKind,
@@ -19,7 +19,7 @@ impl Token {
 
         FatToken {
             content,
-            kind: self.kind,
+            kind: self.kind.clone(),
         }
     }
 }

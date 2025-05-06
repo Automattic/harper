@@ -2,6 +2,7 @@
 //!
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
+mod adjective_of_a;
 mod an_a;
 mod avoid_curses;
 mod back_in_the_day;
@@ -9,6 +10,7 @@ mod boring_words;
 mod capitalize_personal_pronouns;
 mod chock_full;
 mod closed_compounds;
+mod comma_fixes;
 mod compound_nouns;
 mod confident;
 mod correct_number_suffix;
@@ -18,10 +20,16 @@ mod despite_of;
 mod dot_initialisms;
 mod ellipsis_length;
 mod expand_time_shorthands;
+mod first_aid_kit;
+mod for_noun;
 mod hedging;
 mod hereby;
 mod hop_hope;
+mod how_to;
 mod hyphenate_number_day;
+mod inflected_verb_after_to;
+mod it_is;
+mod it_would_be;
 mod left_right_hand;
 mod lets_confusion;
 mod likewise;
@@ -31,7 +39,6 @@ mod lint_group;
 mod lint_kind;
 mod long_sentences;
 mod map_phrase_linter;
-mod matcher;
 mod merge_linters;
 mod merge_words;
 mod modal_of;
@@ -39,15 +46,17 @@ mod multiple_sequential_pronouns;
 mod no_oxford_comma;
 mod nobody;
 mod number_suffix_capitalization;
+mod of_course;
 mod out_of_date;
 mod oxford_comma;
 mod oxymorons;
 mod pattern_linter;
+mod phrasal_verb_as_compound_noun;
 mod phrase_corrections;
 mod pique_interest;
-mod plural_conjugate;
 mod possessive_your;
 mod pronoun_contraction;
+mod pronoun_knew;
 mod proper_noun_capitalization_linters;
 mod repeated_words;
 mod sentence_capitalization;
@@ -57,34 +66,41 @@ mod spell_check;
 mod spelled_numbers;
 mod split_words;
 mod suggestion;
-mod terminating_conjunctions;
 mod that_which;
+mod the_how_why;
+mod the_my;
 mod then_than;
 mod unclosed_quotes;
 mod use_genitive;
 mod was_aloud;
 mod whereas;
+mod widely_accepted;
 mod wordpress_dotcom;
-mod wrong_quotes;
 
+pub use adjective_of_a::AdjectiveOfA;
 pub use an_a::AnA;
 pub use avoid_curses::AvoidCurses;
 pub use back_in_the_day::BackInTheDay;
 pub use boring_words::BoringWords;
 pub use capitalize_personal_pronouns::CapitalizePersonalPronouns;
 pub use chock_full::ChockFull;
+pub use comma_fixes::CommaFixes;
 pub use compound_nouns::CompoundNouns;
 pub use confident::Confident;
 pub use correct_number_suffix::CorrectNumberSuffix;
 pub use currency_placement::CurrencyPlacement;
+pub use dashes::Dashes;
 pub use despite_of::DespiteOf;
 pub use dot_initialisms::DotInitialisms;
 pub use ellipsis_length::EllipsisLength;
 pub use expand_time_shorthands::ExpandTimeShorthands;
+pub use for_noun::ForNoun;
 pub use hedging::Hedging;
 pub use hereby::Hereby;
 pub use hop_hope::HopHope;
+pub use how_to::HowTo;
 pub use hyphenate_number_day::HyphenateNumberDay;
+pub use inflected_verb_after_to::InflectedVerbAfterTo;
 pub use left_right_hand::LeftRightHand;
 pub use lets_confusion::LetsConfusion;
 pub use likewise::Likewise;
@@ -94,19 +110,19 @@ pub use lint_group::{LintGroup, LintGroupConfig};
 pub use lint_kind::LintKind;
 pub use long_sentences::LongSentences;
 pub use map_phrase_linter::MapPhraseLinter;
-pub use matcher::Matcher;
 pub use merge_words::MergeWords;
 pub use modal_of::ModalOf;
 pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
 pub use no_oxford_comma::NoOxfordComma;
 pub use nobody::Nobody;
 pub use number_suffix_capitalization::NumberSuffixCapitalization;
+pub use of_course::OfCourse;
 pub use out_of_date::OutOfDate;
 pub use oxford_comma::OxfordComma;
 pub use oxymorons::Oxymorons;
 pub use pattern_linter::PatternLinter;
+pub use phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 pub use pique_interest::PiqueInterest;
-pub use plural_conjugate::PluralConjugate;
 pub use possessive_your::PossessiveYour;
 pub use pronoun_contraction::PronounContraction;
 pub use repeated_words::RepeatedWords;
@@ -117,15 +133,16 @@ pub use spell_check::SpellCheck;
 pub use spelled_numbers::SpelledNumbers;
 pub use split_words::SplitWords;
 pub use suggestion::Suggestion;
-pub use terminating_conjunctions::TerminatingConjunctions;
 pub use that_which::ThatWhich;
+pub use the_how_why::TheHowWhy;
+pub use the_my::TheMy;
 pub use then_than::ThenThan;
 pub use unclosed_quotes::UnclosedQuotes;
 pub use use_genitive::UseGenitive;
 pub use was_aloud::WasAloud;
 pub use whereas::Whereas;
+pub use widely_accepted::WidelyAccepted;
 pub use wordpress_dotcom::WordPressDotcom;
-pub use wrong_quotes::WrongQuotes;
 
 use crate::{Document, LSend};
 
@@ -146,17 +163,24 @@ pub trait Linter: LSend {
 #[cfg(test)]
 mod tests {
     use super::Linter;
-    use crate::Document;
+    use crate::{Document, FstDictionary, parsers::PlainEnglish};
 
+    #[track_caller]
     pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {
         let test = Document::new_markdown_default_curated(text);
         let lints = linter.lint(&test);
         dbg!(&lints);
-        assert_eq!(lints.len(), count);
+        if lints.len() != count {
+            panic!(
+                "Expected \"{text}\" to create {count} lints, but it created {}.",
+                lints.len()
+            );
+        }
     }
 
     /// Assert the total number of suggestions produced by a [`Linter`], spread across all produced
     /// [`Lint`]s.
+    #[track_caller]
     pub fn assert_suggestion_count(text: &str, mut linter: impl Linter, count: usize) {
         let test = Document::new_markdown_default_curated(text);
         let lints = linter.lint(&test);
@@ -166,53 +190,104 @@ mod tests {
         );
     }
 
-    /// Runs a provided linter on text, applies the first suggestion from each
-    /// lint and asserts whether the result is equal to a given value.
-    pub fn assert_suggestion_result(text: &str, mut linter: impl Linter, expected_result: &str) {
-        let test = Document::new_markdown_default_curated(text);
-        let lints = linter.lint(&test);
+    /// Runs a provided linter on text, applies the first suggestion from each lint
+    /// and asserts whether the result is equal to a given value.
+    #[track_caller]
+    pub fn assert_suggestion_result(text: &str, linter: impl Linter, expected_result: &str) {
+        assert_nth_suggestion_result(text, linter, expected_result, 0);
+    }
 
-        let mut text: Vec<char> = text.chars().collect();
+    /// Runs a provided linter on text, applies the nth suggestion from each lint
+    /// and asserts whether the result is equal to a given value.
+    ///
+    /// Note that `n` starts at zero.
+    #[track_caller]
+    pub fn assert_nth_suggestion_result(
+        text: &str,
+        mut linter: impl Linter,
+        expected_result: &str,
+        n: usize,
+    ) {
+        let transformed_str = transform_nth_str(text, &mut linter, n);
 
-        for lint in lints {
-            dbg!(&lint);
-            if let Some(sug) = lint.suggestions.first() {
-                sug.apply(lint.span, &mut text);
-            }
+        if transformed_str.as_str() != expected_result {
+            panic!(
+                "Expected \"{transformed_str}\" to be \"{expected_result}\" after applying the computed suggestions."
+            );
         }
-
-        let transformed_str: String = text.iter().collect();
-
-        assert_eq!(transformed_str.as_str(), expected_result);
 
         // Applying the suggestions should fix all the lints.
         assert_lint_count(&transformed_str, linter, 0);
     }
 
-    /// Runs a provided linter on text, applies the second suggestion from each
-    /// lint and asserts whether the result is equal to a given value.
-    pub fn assert_second_suggestion_result(
+    pub fn assert_top3_suggestion_result(
         text: &str,
         mut linter: impl Linter,
         expected_result: &str,
     ) {
-        let test = Document::new_markdown_default_curated(text);
-        let lints = linter.lint(&test);
+        let zeroth = transform_nth_str(text, &mut linter, 0);
+        let first = transform_nth_str(text, &mut linter, 1);
+        let second = transform_nth_str(text, &mut linter, 2);
 
-        let mut text: Vec<char> = text.chars().collect();
+        match (
+            zeroth.as_str() == expected_result,
+            first.as_str() == expected_result,
+            second.as_str() == expected_result,
+        ) {
+            (true, false, false) => assert_lint_count(&zeroth, linter, 0),
+            (false, true, false) => assert_lint_count(&first, linter, 0),
+            (false, false, true) => assert_lint_count(&second, linter, 0),
+            (false, false, false) => panic!(
+                "None of the top 3 suggestions produced the expected result:\n\
+                Expected: \"{expected_result}\"\n\
+                Got:\n\
+                [0]: \"{zeroth}\"\n\
+                [1]: \"{first}\"\n\
+                [2]: \"{second}\""
+            ),
+            // I think it's not possible for more than one suggestion to be correct
+            (true, true, false) => unreachable!(),
+            (true, false, true) => unreachable!(),
+            (false, true, true) => unreachable!(),
+            (true, true, true) => unreachable!(),
+        }
+    }
 
-        for lint in lints {
-            dbg!(&lint);
-            if let Some(sug) = lint.suggestions.get(1) {
-                sug.apply(lint.span, &mut text);
+    fn transform_nth_str(text: &str, linter: &mut impl Linter, n: usize) -> String {
+        let mut text_chars: Vec<char> = text.chars().collect();
+
+        let mut iter_count = 0;
+
+        loop {
+            iter_count += 1;
+
+            let test = Document::new_from_vec(
+                text_chars.clone().into(),
+                &PlainEnglish,
+                &FstDictionary::curated(),
+            );
+            let lints = linter.lint(&test);
+
+            if let Some(lint) = lints.first() {
+                if let Some(sug) = lint.suggestions.get(n) {
+                    sug.apply(lint.span, &mut text_chars);
+
+                    let transformed_str: String = text_chars.iter().collect();
+                    dbg!(transformed_str);
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+
+            if iter_count == 100 {
+                break;
             }
         }
 
-        let transformed_str: String = text.iter().collect();
+        eprintln!("Corrected {} times.", iter_count);
 
-        assert_eq!(transformed_str.as_str(), expected_result);
-
-        // Applying the suggestions should fix all the lints.
-        assert_lint_count(&transformed_str, linter, 0);
+        text_chars.iter().collect()
     }
 }

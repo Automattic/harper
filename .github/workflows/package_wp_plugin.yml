@@ -5,6 +5,7 @@ on:
     branches: ["master"]
   pull_request:
     branches: ["master"]
+  merge_group:
 
 env:
   CARGO_TERM_COLOR: always
@@ -18,6 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
+      - name: Enable Corepack
+        run: corepack enable
       - name: Install `pandoc`
         run: sudo apt-get update && sudo apt-get install pandoc -y
       - name: Install `wasm-pack`

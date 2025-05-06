@@ -8,9 +8,9 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			out: 'build'
-		})
-	}
+			out: 'build',
+		}),
+	},
 };
 
 export default config;

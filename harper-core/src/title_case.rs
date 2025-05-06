@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 use crate::Lrc;
 use crate::Token;
 use crate::TokenKind;
@@ -46,23 +48,17 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
                         .iter_mut()
                         .enumerate()
                         .for_each(|(idx, c)| *c = correct_caps[idx]);
-                    continue;
                 }
             }
         };
 
-        let should_capitalize = should_capitalize_token(&word, source, dict)
+        let should_capitalize = should_capitalize_token(word, source, dict)
             || index == 0
             || word_likes.peek().is_none();
 
         if should_capitalize {
             output[word.span.start - start_index] =
                 output[word.span.start - start_index].to_ascii_uppercase();
-
-            // The rest of the word should be lowercase.
-            for v in &mut output[word.span.start + 1 - start_index..word.span.end - start_index] {
-                *v = v.to_ascii_lowercase();
-            }
         } else {
             // The whole word should be lowercase.
             for i in word.span {
@@ -77,8 +73,8 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
 /// Determines whether a token should be capitalized.
 /// Is not responsible for capitalization requirements that are dependent on token position.
 fn should_capitalize_token(tok: &Token, source: &[char], dict: &impl Dictionary) -> bool {
-    match tok.kind {
-        TokenKind::Word(Some(mut metadata)) => {
+    match &tok.kind {
+        TokenKind::Word(Some(metadata)) => {
             // Only specific conjunctions are not capitalized.
             lazy_static! {
                 static ref SPECIAL_CONJUNCTIONS: HashSet<Vec<char>> =
@@ -91,7 +87,11 @@ fn should_capitalize_token(tok: &Token, source: &[char], dict: &impl Dictionary)
             let chars = tok.span.get_content(source);
             let chars_lower = chars.to_lower();
 
-            metadata = metadata.or(&dict.get_word_metadata(&chars_lower).unwrap_or_default());
+            let mut metadata = Cow::Borrowed(metadata);
+
+            if let Some(metadata_lower) = dict.get_word_metadata(&chars_lower) {
+                metadata = Cow::Owned(metadata.clone().or(metadata_lower));
+            }
 
             let is_short_preposition = metadata.preposition && tok.span.len() <= 4;
 
@@ -132,14 +132,6 @@ mod tests {
                 &FstDictionary::curated()
             ),
             "The First and Last Words Should Be Capitalized, Even If It Is \"The\""
-        )
-    }
-
-    #[test]
-    fn start_as_uppercase() {
-        assert_eq!(
-            make_title_case_str("THIS IS A TEST", &PlainEnglish, &FstDictionary::curated()),
-            "This Is a Test"
         )
     }
 
