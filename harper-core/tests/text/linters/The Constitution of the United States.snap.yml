@@ -1,0 +1,1683 @@
+Lint:    Readability (127 priority)
+Message: |
+       5 | **We the People** of the United States, in Order to form a more perfect Union,
+         |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       6 | establish Justice, insure domestic Tranquility, provide for the common defence,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       7 | promote the general Welfare, and secure the Blessings of Liberty to ourselves
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       8 | and our Posterity, do ordain and establish this Constitution for the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       9 | States of America.
+         | ~~~~~~~~~~~~~~~~~~ This sentence is 52 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+       6 | establish Justice, insure domestic Tranquility, provide for the common defence,
+         |                                                                        ^~~~~~~ Did you mean to spell “defence” this way?
+       7 | promote the general Welfare, and secure the Blessings of Liberty to ourselves
+Suggest:
+  - Replace with: “defense”
+  - Replace with: “decency”
+  - Replace with: “deface”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+       8 | and our Posterity, do ordain and establish this Constitution for the United
+         |                                                                      ^~~~~~~
+       9 | States of America.
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      11 | ## Article. I.
+         |             ^~ Did you mean to spell “I.” this way?
+Suggest:
+  - Replace with: “Ir”
+  - Replace with: “IC”
+  - Replace with: “IE”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+      17 | Representatives. Congress shall make no law respecting an establishment of
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      18 | religion, or prohibiting the free exercise thereof; or abridging the freedom of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      19 | speech, or of the press; or the right of the people peaceably to assemble, and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      20 | to petition the government for a redress of grievances.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+      22 | No person shall be a Senator or Representative in Congress, or elector of
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      23 | President and Vice President, or hold any office, civil or military, under the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      24 | United States, or under any State, who, having previously taken an oath, as a
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      25 | member of Congress, or as an officer of the United States, or as a member of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      26 | any State legislature, or as an executive or judicial officer of any State, to
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      27 | support the Constitution of the United States, shall have engaged in
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      28 | insurrection or rebellion against the same, or given aid or comfort to the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      29 | enemies thereof. But Congress may, by a vote of two-thirds of each House,
+         | ~~~~~~~~~~~~~~~~ This sentence is 96 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+      38 | The House of Representatives shall be composed of Members
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      39 | chosen every second Year by the People of the several States, and the Electors
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      40 | in each State shall have the Qualifications requisite for Electors of the most
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      41 | numerous Branch of the State Legislature.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+      43 | No Person shall be a Representative who shall not have attained to the Age of
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      44 | twenty five Years, and been seven Years a Citizen of the United States, and who
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      45 | shall not, when elected, be an Inhabitant of that State in which he shall be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      46 | chosen.
+         | ~~~~~~~ This sentence is 46 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+      50 | excluding Indians not taxed. But when the right to vote at any election for the
+         |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      51 | choice of electors for President and Vice President of the United States,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      52 | Representatives in Congress, the Executive and Judicial officers of a State, or
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      53 | the members of the Legislature thereof, is denied to any of the male
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      54 | inhabitants of such State, being twenty-one years of age, and citizens of the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      55 | United States, or in any way abridged, except for participation in rebellion,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      56 | or other crime, the basis of representation therein shall be reduced in the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      57 | proportion which the number of such male citizens shall bear to the whole
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      58 | number of male citizens twenty-one years of age in such State. The actual
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 112 words long.
+
+
+
+Lint:    Style (31 priority)
+Message: |
+      51 | choice of electors for President and Vice President of the United States,
+      52 | Representatives in Congress, the Executive and Judicial officers of a State, or
+         |                                  ^~~~~~~~~ An Oxford comma is necessary here.
+      53 | the members of the Legislature thereof, is denied to any of the male
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+      61 | in such Manner as they shall by Law direct. The Number of Representatives shall
+         |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      62 | not exceed one for every thirty Thousand, but each State shall have at Least
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      63 | one Representative; and until such enumeration shall be made, the State of New
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      64 | Hampshire shall be entitled to chuse three, Massachusetts eight, Rhode-Island
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      65 | and Providence Plantations one, Connecticut five, New-York six, New Jersey
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      66 | four, Pennsylvania eight, Delaware one, Maryland six, Virginia ten, North
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      67 | Carolina five, South Carolina five, and Georgia three.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 72 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      63 | one Representative; and until such enumeration shall be made, the State of New
+      64 | Hampshire shall be entitled to chuse three, Massachusetts eight, Rhode-Island
+         |                                ^~~~~ Did you mean to spell “chuse” this way?
+Suggest:
+  - Replace with: “cause”
+  - Replace with: “chase”
+  - Replace with: “chose”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      72 | The House of Representatives shall chuse their Speaker and other Officers; and
+         |                                    ^~~~~ Did you mean to spell “chuse” this way?
+Suggest:
+  - Replace with: “cause”
+  - Replace with: “chase”
+  - Replace with: “chose”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+      86 | they shall be divided as equally as may be into three Classes. The Seats of the
+         |                                                               ^~~~~~~~~~~~~~~~~~
+      87 | Senators of the first Class shall be vacated at the Expiration of the second
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      88 | Year, of the second Class at the Expiration of the fourth Year, and of the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      89 | third Class at the Expiration of the sixth Year, so that one third may be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      90 | chosen every second Year; and when vacancies happen in the representation of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      91 | any State in the Senate, the executive authority of such State shall issue
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      92 | writs of election to fill such vacancies: Provided, That the legislature of any
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      93 | State may empower the executive thereof to make temporary appointments until
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      94 | the people fill the vacancies by election as the legislature may direct.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 109 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+      96 | No Person shall be a Senator who shall not have attained to the Age of thirty
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      97 | Years, and been nine Years a Citizen of the United States, and who shall not,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      98 | when elected, be an Inhabitant of that State for which he shall be chosen.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     103 | The Senate shall chuse their other Officers, and also a President pro tempore,
+         |                  ^~~~~ Did you mean to spell “chuse” this way?
+Suggest:
+  - Replace with: “cause”
+  - Replace with: “chase”
+  - Replace with: “chose”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+     103 | The Senate shall chuse their other Officers, and also a President pro tempore,
+         |                                              ^~~~~~~~ Consider using just `and`.
+     104 | in the Absence of the Vice President, or when he shall exercise the Office of
+Suggest:
+  - Replace with: “and”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     103 | The Senate shall chuse their other Officers, and also a President pro tempore,
+         |                                                                       ^~~~~~~ Did you mean to spell “tempore” this way?
+     104 | in the Absence of the Vice President, or when he shall exercise the Office of
+Suggest:
+  - Replace with: “temper”
+  - Replace with: “temple”
+  - Replace with: “tempo”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     112 | Judgment in Cases of impeachment shall not extend further than to removal from
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     113 | Office, and disqualification to hold and enjoy any Office of honor, Trust or
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     114 | Profit under the United States: but the Party convicted shall nevertheless be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     115 | liable and subject to Indictment, Trial, Judgment and Punishment, according to
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     116 | Law.
+         | ~~~~ This sentence is 50 words long.
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     113 | Office, and disqualification to hold and enjoy any Office of honor, Trust or
+         |                                                                     ^~~~~ An Oxford comma is necessary here.
+     114 | Profit under the United States: but the Party convicted shall nevertheless be
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     115 | liable and subject to Indictment, Trial, Judgment and Punishment, according to
+         |                                          ^~~~~~~~ An Oxford comma is necessary here.
+     116 | Law.
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     122 | The Times, Places and Manner of holding Elections for Senators
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     123 | and Representatives, shall be prescribed in each State by the Legislature
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     124 | thereof; but the Congress may at any time by Law make or alter such
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     125 | Regulations, except as to the Places of chusing Senators.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 44 words long.
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     122 | The Times, Places and Manner of holding Elections for Senators
+         |            ^~~~~~ An Oxford comma is necessary here.
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     124 | thereof; but the Congress may at any time by Law make or alter such
+     125 | Regulations, except as to the Places of chusing Senators.
+         |                                         ^~~~~~~ Did you mean to spell “chusing” this way?
+Suggest:
+  - Replace with: “chasing”
+  - Replace with: “causing”
+  - Replace with: “casing”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     133 | Each House shall be the Judge of the Elections, Returns and
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     134 | Qualifications of its own Members, and a Majority of each shall constitute a
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     135 | Quorum to do Business; but a smaller Number may adjourn from day to day, and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     136 | may be authorized to compel the Attendance of absent Members, in such Manner,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     137 | and under such Penalties as each House may provide.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 61 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     139 | Each House may determine the Rules of its Proceedings, punish its Members for
+     140 | disorderly Behaviour, and, with the Concurrence of two thirds, expel a Member.
+         |            ^~~~~~~~~ Did you mean “Behavior”?
+Suggest:
+  - Replace with: “Behavior”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     142 | Each House shall keep a Journal of its Proceedings, and from time to time
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     143 | publish the same, excepting such Parts as may in their Judgment require
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     144 | Secrecy; and the Yeas and Nays of the Members of either House on any question
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     145 | shall, at the Desire of one fifth of those Present, be entered on the Journal.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 56 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     155 | the United States. They shall in all Cases, except Treason, Felony and Breach
+         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     156 | of the Peace, be privileged from Arrest during their Attendance at the Session
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     157 | of their respective Houses, and in going to and returning from the same; and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     158 | for any Speech or Debate in either House, they shall not be questioned in any
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     159 | other Place.
+         | ~~~~~~~~~~~~ This sentence is 54 words long.
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     155 | the United States. They shall in all Cases, except Treason, Felony and Breach
+         |                                                             ^~~~~~ An Oxford comma is necessary here.
+     156 | of the Peace, be privileged from Arrest during their Attendance at the Session
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     161 | No Senator or Representative shall, during the Time for which he was elected,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     162 | be appointed to any civil Office under the Authority of the United States,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     163 | which shall have been created, or the Emoluments whereof shall have been
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     164 | encreased during such time; and no Person holding any Office under the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     165 | States, shall be a Member of either House during his Continuance in Office. No
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 64 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     163 | which shall have been created, or the Emoluments whereof shall have been
+     164 | encreased during such time; and no Person holding any Office under the United
+         | ^~~~~~~~~ Did you mean to spell “encreased” this way?
+Suggest:
+  - Replace with: “increased”
+  - Replace with: “encased”
+  - Replace with: “entreated”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     164 | encreased during such time; and no Person holding any Office under the United
+         |                                                                        ^~~~~~~
+     165 | States, shall be a Member of either House during his Continuance in Office. No
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     177 | Every Bill which shall have passed the House of Representatives and the Senate,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     178 | shall, before it become a Law, be presented to the President of the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     179 | States; If he approve he shall sign it, but if not he shall return it, with his
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     180 | Objections to that House in which it shall have originated, who shall enter the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     181 | Objections at large on their Journal, and proceed to reconsider it. If after
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 69 words long.
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     178 | shall, before it become a Law, be presented to the President of the United
+         |                                                                     ^~~~~~~
+     179 | States; If he approve he shall sign it, but if not he shall return it, with his
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     181 | Objections at large on their Journal, and proceed to reconsider it. If after
+         |                                                                    ^~~~~~~~~~
+     182 | such Reconsideration two thirds of that House shall agree to pass the Bill, it
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     183 | shall be sent, together with the Objections, to the other House, by which it
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     184 | shall likewise be reconsidered, and if approved by two thirds of that House, it
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     185 | shall become a Law. But in all such Cases the Votes of both Houses shall be
+         | ~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     187 | against the Bill shall be entered on the Journal of each House respectively. If
+         |                                                                             ^~~~
+     188 | any Bill shall not be returned by the President within ten Days (Sundays
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     189 | excepted) after it shall have been presented to him, the Same shall be a Law,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     190 | in like Manner as if he had signed it, unless the Congress by their Adjournment
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     191 | prevent its Return, in which Case it shall not be a Law.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 56 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     193 | Every Order, Resolution, or Vote to which the Concurrence of the Senate and
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     194 | House of Representatives may be necessary (except on a question of Adjournment)
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     195 | shall be presented to the President of the United States; and before the Same
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     196 | shall take Effect, shall be approved by him, or being disapproved by him, shall
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     197 | be repassed by two thirds of the Senate and House of Representatives, according
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     198 | to the Rules and Limitations prescribed in the Case of a Bill.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 78 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     196 | shall take Effect, shall be approved by him, or being disapproved by him, shall
+     197 | be repassed by two thirds of the Senate and House of Representatives, according
+         |    ^~~~~~~~ Did you mean to spell “repassed” this way?
+Suggest:
+  - Replace with: “recessed”
+  - Replace with: “rehashed”
+  - Replace with: “relapsed”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     202 | The Congress shall have Power To lay and collect Taxes, Duties,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     203 | Imposts and Excises, to pay the Debts and provide for the common Defence and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     204 | general Welfare of the United States; but all Duties, Imposts and Excises shall
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 44 words long.
+     205 | be uniform throughout the United States;
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     202 | The Congress shall have Power To lay and collect Taxes, Duties,
+     203 | Imposts and Excises, to pay the Debts and provide for the common Defence and
+         | ^~~~~~~ An Oxford comma is necessary here.
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     203 | Imposts and Excises, to pay the Debts and provide for the common Defence and
+         |                                                                  ^~~~~~~ Did you mean to spell “Defence” this way?
+     204 | general Welfare of the United States; but all Duties, Imposts and Excises shall
+Suggest:
+  - Replace with: “Defense”
+  - Replace with: “Fence”
+  - Replace with: “Terence”
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     204 | general Welfare of the United States; but all Duties, Imposts and Excises shall
+         |                                                       ^~~~~~~ An Oxford comma is necessary here.
+     205 | be uniform throughout the United States;
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+     212 | 3. To establish an uniform Rule of Naturalization, and uniform Laws on the subject
+         |                 ^~ Incorrect indefinite article.
+Suggest:
+  - Replace with: “a”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     229 | 9. To define and punish Piracies and Felonies committed on the high Seas, and
+         |                         ^~~~~~~~ Did you mean to spell “Piracies” this way?
+Suggest:
+  - Replace with: “Curacies”
+  - Replace with: “Miracles”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     245 | 15. To provide for organizing, arming, and disciplining, the Militia, and for
+         |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     246 | governing such Part of them as may be employed in the Service of the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     247 | States, reserving to the States respectively, the Appointment of the Officers,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     248 | and the Authority of training the Militia according to the discipline
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 51 words long.
+     249 | prescribed by Congress;
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     246 | governing such Part of them as may be employed in the Service of the United
+         |                                                                      ^~~~~~~
+     247 | States, reserving to the States respectively, the Appointment of the Officers,
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     251 | 16. To exercise exclusive Legislation in all Cases whatsoever, over such District
+         |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     252 | (not exceeding ten Miles square) as may, by Cession of particular States, and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     253 | the Acceptance of Congress, become the Seat of the Government of the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     254 | States, and to exercise like Authority over all Places purchased by the Consent
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     255 | of the Legislature of the State in which the Same shall be, for the Erection of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 76 words long.
+     256 | Forts, Magazines, Arsenals, dock-Yards, and other needful Buildings;—And
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     253 | the Acceptance of Congress, become the Seat of the Government of the United
+         |                                                                      ^~~~~~~
+     254 | States, and to exercise like Authority over all Places purchased by the Consent
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+     253 | the Acceptance of Congress, become the Seat of the Government of the United
+     254 | States, and to exercise like Authority over all Places purchased by the Consent
+         |                                        ^~~~~~~~ Did you mean the closed compound `overall`?
+     255 | of the Legislature of the State in which the Same shall be, for the Erection of
+Suggest:
+  - Replace with: “overall”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     265 | The Migration or Importation of such Persons as any of the
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     266 | States now existing shall think proper to admit, shall not be prohibited by the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     267 | Congress prior to the Year one thousand eight hundred and eight, but a Tax or
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     268 | duty may be imposed on such Importation, not exceeding ten dollars for each
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     269 | Person.
+         | ~~~~~~~ This sentence is 54 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     271 | The Privilege of the Writ of Habeas Corpus shall not be suspended, unless when
+         |                              ^~~~~~ Did you mean to spell “Habeas” this way?
+Suggest:
+  - Replace with: “Haber's”
+  - Replace with: “Hale's”
+  - Replace with: “Hebe's”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     274 | No Bill of Attainder or ex post facto Law shall be passed.
+         |                                 ^~~~~ Did you mean to spell “facto” this way?
+Suggest:
+  - Replace with: “fact”
+  - Replace with: “factor”
+  - Replace with: “facts”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     284 | No Preference shall be given by any Regulation of Commerce or Revenue to the
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     285 | Ports of one State over those of another: nor shall Vessels bound to, or from,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     286 | one State, be obliged to enter, clear, or pay Duties in another.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     292 | No Title of Nobility shall be granted by the United States: And no Person
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     293 | holding any Office of Profit or Trust under them, shall, without the Consent of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     294 | the Congress, accept of any present, Emolument, Office, or Title, of any kind
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     295 | whatever, from any King, Prince, or foreign State.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 49 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     297 | The right of citizens of the United States to vote in any primary or other
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     298 | election for President or Vice President, for electors for President or Vice
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     299 | President, or for Senator or Representative in Congress, shall not be denied or
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     300 | abridged by the United States or any State by reason of failure to pay any poll
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     301 | tax or other tax.
+         | ~~~~~~~~~~~~~~~~~ This sentence is 60 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     305 | No State shall enter into any Treaty, Alliance, or
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     306 | Confederation; grant Letters of Marque and Reprisal; coin Money; emit Bills of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     307 | Credit; make any Thing but gold and silver Coin a Tender in Payment of Debts;
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     308 | pass any Bill of Attainder, ex post facto Law, or Law impairing the Obligation
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     309 | of Contracts, or grant any Title of Nobility.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 58 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     308 | pass any Bill of Attainder, ex post facto Law, or Law impairing the Obligation
+         |                                     ^~~~~ Did you mean to spell “facto” this way?
+     309 | of Contracts, or grant any Title of Nobility.
+Suggest:
+  - Replace with: “fact”
+  - Replace with: “factor”
+  - Replace with: “facts”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     311 | No State shall, without the Consent of the Congress, lay any Imposts or Duties
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     312 | on Imports or Exports, except what may be absolutely necessary for executing
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     313 | it's inspection Laws: and the net Produce of all Duties and Imposts, laid by
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     314 | any State on Imports or Exports, shall be for the Use of the Treasury of the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     315 | United States; and all such Laws shall be subject to the Revision and Controul
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     316 | of the Congress.
+         | ~~~~~~~~~~~~~~~~ This sentence is 73 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     315 | United States; and all such Laws shall be subject to the Revision and Controul
+         |                                                                       ^~~~~~~~ Did you mean “Control”?
+     316 | of the Congress.
+Suggest:
+  - Replace with: “Control”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     318 | No State shall, without the Consent of Congress, lay any Duty of Tonnage, keep
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     319 | Troops, or Ships of War in time of Peace, enter into any Agreement or Compact
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     320 | with another State, or with a foreign Power, or engage in War, unless actually
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     321 | invaded, or in such imminent Danger as will not admit of delay.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 55 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     332 | Each State shall appoint, in such Manner as the Legislature thereof may direct,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     333 | a Number of Electors, equal to the whole Number of Senators and Representatives
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     334 | to which the State may be entitled in the Congress: but no Senator or
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     335 | Representative, or Person holding an Office of Trust or Profit under the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     336 | States, shall be appointed an Elector.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 59 words long.
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     335 | Representative, or Person holding an Office of Trust or Profit under the United
+         |                                                                          ^~~~~~~
+     336 | States, shall be appointed an Elector.
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     340 | The Electors shall meet in their respective states, and vote
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     341 | by ballot for President and Vice-President, one of whom, at least, shall not be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     342 | an inhabitant of the same state with themselves; they shall name in their
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     343 | ballots the person voted for as President, and in distinct ballots the person
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     344 | voted for as Vice-President, and they shall make distinct lists of all persons
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     345 | voted for as President, and all persons voted for as Vice-President and of the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     346 | number of votes for each, which lists they shall sign and certify, and transmit
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     347 | sealed to the seat of the government of the United States, directed to the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     348 | President of the Senate;—The President of the Senate shall, in the presence of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     349 | the Senate and House of Representatives, open all the certificates and the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     350 | votes shall then be counted;—The person having the greatest Number of votes for
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     351 | President, shall be the President, if such number be a majority of the whole
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     352 | number of Electors appointed; and if no person have such majority, then from
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     353 | the persons having the highest numbers not exceeding three on the list of those
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     354 | voted for as President, the House of Representatives shall choose immediately,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     355 | by ballot, the President. But in choosing the President, the votes shall be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 204 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     355 | by ballot, the President. But in choosing the President, the votes shall be
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     356 | taken by states, the representation from each state having one vote; a quorum
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     357 | for this purpose shall consist of a member or members from two-thirds of the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     358 | states, and a majority of all the states shall be necessary to a choice. [If,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 51 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     360 | elect shall have died, the Vice President elect shall become President. If a
+         |                                                                        ^~~~~~
+     361 | President shall not have been chosen before the time fixed for the beginning of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     362 | his term, or if the President elect shall have failed to qualify, then the Vice
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     363 | President elect shall act as President until a President shall have qualified;
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     364 | and the Congress may by law provide for the case wherein neither a President
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     365 | elect nor a Vice President elect shall have qualified, declaring who shall then
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     366 | act as President, or the manner in which one who is to act shall be selected,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     367 | and such person shall act accordingly until a President or Vice President shall
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     368 | have qualified.The Congress may by law provide for the case of the death of any
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     369 | of the persons from whom the House of Representatives may choose a President
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     370 | whenever the right of choice shall have devolved upon them, and for the case of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     371 | the death of any of the persons from whom the Senate may choose a Vice
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     372 | President whenever the right of choice shall have devolved upon them.]The
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 167 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     372 | President whenever the right of choice shall have devolved upon them.]The
+         |                                                                      ^~~~~
+     373 | person having the greatest number of votes as Vice-President, shall be the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     374 | Vice-President, if such number be a majority of the whole number of Electors
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     375 | appointed, and if no person have a majority, then from the two highest numbers
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     376 | on the list, the Senate shall choose the Vice-President; a quorum for the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     377 | purpose shall consist of two-thirds of the whole number of Senators, and a
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     378 | majority of the whole number shall be necessary to a choice. But no person
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 81 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     383 | The Congress may determine the Time of chusing the Electors, and the Day on
+         |                                        ^~~~~~~ Did you mean to spell “chusing” this way?
+     384 | which they shall give their Votes; which Day shall be the same throughout the
+Suggest:
+  - Replace with: “chasing”
+  - Replace with: “causing”
+  - Replace with: “casing”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     390 | No Person except a natural born Citizen, or a Citizen of the
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     391 | United States, at the time of the Adoption of this Constitution, shall be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     392 | eligible to the Office of President; neither shall any Person be eligible to
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     393 | that Office who shall not have attained to the Age of thirty five Years, and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     394 | been fourteen Years a Resident within the United States.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 62 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     396 | No person shall be elected to the office of the President more than twice, and
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     397 | no person who has held the office of President, or acted as President, for more
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     398 | than two years of a term to which some other person was elected President shall
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     399 | be elected to the office of the President more than once. But this article
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 56 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     399 | be elected to the office of the President more than once. But this article
+         |                                                          ^~~~~~~~~~~~~~~~~~
+     400 | shall not apply to any person holding the office of President when this article
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     401 | was proposed by the Congress, and shall not prevent any person who may be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     402 | holding the office of President, or acting as President, during the term within
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     403 | which this article becomes operative from holding the office of President or
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     404 | acting as President during the remainder of such term.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 65 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     415 | Whenever the President transmits to the President pro tempore of the Senate and
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     416 | the Speaker of the House of Representatives his written declaration that he is
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     417 | unable to discharge the powers and duties of his office, and until he transmits
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     418 | to them a written declaration to the contrary, such powers and duties shall be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     419 | discharged by the Vice President as Acting President.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 62 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     415 | Whenever the President transmits to the President pro tempore of the Senate and
+         |                                                       ^~~~~~~ Did you mean to spell “tempore” this way?
+     416 | the Speaker of the House of Representatives his written declaration that he is
+Suggest:
+  - Replace with: “temper”
+  - Replace with: “temple”
+  - Replace with: “tempo”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     421 | Whenever the Vice President and a majority of either the principal officers of
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     422 | the executive departments or of such other body as Congress may by law provide,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     423 | transmit to the President pro tempore of the Senate and the Speaker of the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     424 | House of Representatives their written declaration that the President is unable
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     425 | to discharge the powers and duties of his office, the Vice President shall
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     426 | immediately assume the powers and duties of the office as Acting President.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 77 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     422 | the executive departments or of such other body as Congress may by law provide,
+     423 | transmit to the President pro tempore of the Senate and the Speaker of the
+         |                               ^~~~~~~ Did you mean to spell “tempore” this way?
+Suggest:
+  - Replace with: “temper”
+  - Replace with: “temple”
+  - Replace with: “tempo”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     428 | Thereafter, when the President transmits to the President pro tempore of the
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     429 | Senate and the Speaker of the House of Representatives his written declaration
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     430 | that no inability exists, he shall resume the powers and duties of his office
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     431 | unless the Vice President and a majority of either the principal officers of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     432 | the executive department or of such other body as Congress may by law provide,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     433 | transmit within four days to the President pro tempore of the Senate and the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     434 | Speaker of the House of Representatives their written declaration that the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     435 | President is unable to discharge the powers and duties of his office. Thereupon
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 102 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     428 | Thereafter, when the President transmits to the President pro tempore of the
+         |                                                               ^~~~~~~ Did you mean to spell “tempore” this way?
+     429 | Senate and the Speaker of the House of Representatives his written declaration
+Suggest:
+  - Replace with: “temper”
+  - Replace with: “temple”
+  - Replace with: “tempo”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     433 | transmit within four days to the President pro tempore of the Senate and the
+         |                                                ^~~~~~~ Did you mean to spell “tempore” this way?
+     434 | Speaker of the House of Representatives their written declaration that the
+Suggest:
+  - Replace with: “temper”
+  - Replace with: “temple”
+  - Replace with: “tempo”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     437 | purpose if not in session. If the Congress, within twenty-one days after
+         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     438 | receipt of the latter written declaration, or, if Congress is not in session,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     439 | within twenty-one days after Congress is required to assemble, determines by
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     440 | two-thirds vote of both Houses that the President is unable to discharge the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     441 | powers and duties of his office, the Vice President shall continue to discharge
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     442 | the same as Acting President; otherwise, the President shall resume the powers
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     443 | and duties of his office.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 77 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     448 | The President shall, at stated Times, receive for his
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     449 | Services, a Compensation, which shall neither be encreased nor diminished
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     450 | during the Period for which he shall have been elected, and he shall not
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     451 | receive within that Period any other Emolument from the United States, or any
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     452 | of them.
+         | ~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     449 | Services, a Compensation, which shall neither be encreased nor diminished
+         |                                                  ^~~~~~~~~ Did you mean to spell “encreased” this way?
+     450 | during the Period for which he shall have been elected, and he shall not
+Suggest:
+  - Replace with: “increased”
+  - Replace with: “encased”
+  - Replace with: “entreated”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     454 | Before he enter on the Execution of his Office, he shall take the following
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     455 | Oath or Affirmation:-- "I do solemnly swear (or affirm) that I will faithfully
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     456 | execute the Office of President of the United States, and will to the best of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     457 | my Ability, preserve, protect and defend the Constitution of the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     458 | States."
+         | ~~~~~~~ This sentence is 54 words long.
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+     455 | Oath or Affirmation:-- "I do solemnly swear (or affirm) that I will faithfully
+         |                     ^~ A sequence of hyphens is not an en dash.
+Suggest:
+  - Replace with: “–”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     457 | my Ability, preserve, protect and defend the Constitution of the United
+         |                                                                  ^~~~~~~
+     458 | States."
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     465 | A number of electors of President and Vice President equal to the whole number
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     466 | of Senators and Representatives in Congress to which the District would be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     467 | entitled if it were a State, but in no event more than the least populous
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     468 | State; they shall be in addition to those appointed by the States, but they
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     469 | shall be considered, for the purposes of the election of President and Vice
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     470 | President, to be electors appointed by a State; and they shall meet in the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     471 | District and perform such duties as provided by this article of the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     472 | Constitution.
+         | ~~~~~~~~~~~~~ This sentence is 95 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     476 | The President shall be Commander in Chief of the Army and Navy
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     477 | of the United States, and of the Militia of the several States, when called
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     478 | into the actual Service of the United States; he may require the Opinion, in
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     479 | writing, of the principal Officer in each of the executive Departments, upon
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     480 | any Subject relating to the Duties of their respective Offices, and he shall
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     481 | have Power to grant Reprieves and Pardons for Offences against the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     482 | States, except in Cases of Impeachment.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 83 words long.
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     481 | have Power to grant Reprieves and Pardons for Offences against the United
+         |                                                                    ^~~~~~~
+     482 | States, except in Cases of Impeachment.
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     484 | He shall have Power, by and with the Advice and Consent of the Senate, to make
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     485 | Treaties, provided two thirds of the Senators present concur; and he shall
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     486 | nominate, and by and with the Advice and Consent of the Senate, shall appoint
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     487 | Ambassadors, other public Ministers and Consuls, Judges of the supreme Court,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     488 | and all other Officers of the United States, whose Appointments are not herein
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     489 | otherwise provided for, and which shall be established by Law: but the Congress
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     490 | may by Law vest the Appointment of such inferior Officers, as they think
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     491 | proper, in the President alone, in the Courts of Law, or in the Heads of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     492 | Departments.
+         | ~~~~~~~~~~~~ This sentence is 108 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     504 | He shall from time to time give to the Congress Information of
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     505 | the State of the Union, and recommend to their Consideration such Measures as
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     506 | he shall judge necessary and expedient; he may, on extraordinary Occasions,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     507 | convene both Houses, or either of them, and in Case of Disagreement between
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     508 | them, with Respect to the Time of Adjournment, he may adjourn them to such Time
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     509 | as he shall think proper; he shall receive Ambassadors and other public
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     510 | Ministers; he shall take Care that the Laws be faithfully executed, and shall
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     511 | Commission all the Officers of the United States.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 97 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     525 | time ordain and establish. The Judges, both of the supreme and inferior Courts,
+     526 | shall hold their Offices during good Behaviour, and shall, at stated Times,
+         |                                      ^~~~~~~~~ Did you mean “Behavior”?
+     527 | receive for their Services, a Compensation, which shall not be diminished
+Suggest:
+  - Replace with: “Behavior”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     532 | The judicial Power shall extend to all Cases, in Law and
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     533 | Equity, arising under this Constitution, the Laws of the United States, and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     534 | Treaties made, or which shall be made, under their Authority;—to all Cases
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     535 | affecting Ambassadors, other public Ministers and Consuls;—to all Cases of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     536 | admiralty and maritime Jurisdiction;—to Controversies to which the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     537 | States shall be a Party;—to Controversies between two or more States;—between
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     538 | Citizens of different States, —between Citizens of the same State claiming
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     539 | Lands under Grants of different States.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 87 words long.
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     536 | admiralty and maritime Jurisdiction;—to Controversies to which the United
+         |                                                                    ^~~~~~~
+     537 | States shall be a Party;—to Controversies between two or more States;—between
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     548 | The Trial of all Crimes, except in Cases of Impeachment, shall be by Jury; and
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     549 | such Trial shall be held in the State where the said Crimes shall have been
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     550 | committed; but when not committed within any State, the Trial shall be at such
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     551 | Place or Places as the Congress may by Law have directed.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 55 words long.
+
+
+
+Lint:    WordChoice (63 priority)
+Message: |
+     550 | committed; but when not committed within any State, the Trial shall be at such
+     551 | Place or Places as the Congress may by Law have directed.
+         |                                     ^~~~~~ The auxiliary verb “have” implies the existence of the closed compound noun “bylaw”.
+Suggest:
+  - Replace with: “byLaw”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     561 | Attainder of Treason shall work Corruption of Blood, or Forfeiture except
+     562 | during the Life of the Person attainted.
+         |                               ^~~~~~~~~ Did you mean to spell “attainted” this way?
+Suggest:
+  - Replace with: “attained”
+  - Replace with: “attainder”
+  - Replace with: “tainted”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     566 | The right of the people to be secure in their persons, houses,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     567 | papers, and effects, against unreasonable searches and seizures, shall not be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     568 | violated, and no warrants shall issue, but upon probable cause, supported by
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     569 | oath or affirmation, and particularly describing the place to be searched, and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     570 | the persons or things to be seized.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 54 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     572 | No person shall be held to answer for a capital, or otherwise infamous crime,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     573 | unless on a presentment or indictment of a grand jury, except in cases arising
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     574 | in the land or naval forces, or in the militia, when in actual service in time
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     575 | of war or public danger; nor shall any person be subject for the same offense
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     576 | to be twice put in jeopardy of life or limb; nor shall be compelled in any
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     577 | criminal case to be a witness against himself, nor be deprived of life,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     578 | liberty, or property, without due process of law; nor shall private property be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     579 | taken for public use, without just compensation.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 108 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     581 | In all criminal prosecutions, the accused shall enjoy the right to a speedy and
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     582 | public trial, by an impartial jury of the state and district wherein the crime
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     583 | shall have been committed, which district shall have been previously
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     584 | ascertained by law, and to be informed of the nature and cause of the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     585 | accusation; to be confronted with the witnesses against him; to have compulsory
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     586 | process for obtaining witnesses in his favor, and to have the assistance of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     587 | counsel for his defense.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 81 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     589 | In suits at common law, where the value in controversy shall exceed twenty
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     590 | dollars, the right of trial by jury shall be preserved, and no fact tried by a
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     591 | jury, shall be otherwise reexamined in any court of the United States, than
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     592 | according to the rules of the common law.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 50 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     610 | the State wherein they reside. No State shall make or enforce any law which
+         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     611 | shall abridge the privileges or immunities of citizens of the United States;
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     612 | nor shall any State deprive any person of life, liberty, or property, without
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     613 | due process of law; nor deny to any person within its jurisdiction the equal
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     614 | protection of the laws.
+         | ~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 52 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     610 | the State wherein they reside. No State shall make or enforce any law which
+     611 | shall abridge the privileges or immunities of citizens of the United States;
+         |                                 ^~~~~~~~~~ Did you mean to spell “immunities” this way?
+Suggest:
+  - Replace with: “immunity's”
+  - Replace with: “immensities”
+  - Replace with: “immunises”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     616 | The right of citizens of the United States, who are eighteen years of age or
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     617 | older, to vote shall not be denied or abridged by the United States or by any
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     618 | State on account of age, sex, race, color, or previous condition of servitude.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 44 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     620 | A Person charged in any State with Treason, Felony, or other Crime, who shall
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     621 | flee from Justice, and be found in another State, shall on Demand of the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     622 | executive Authority of the State from which he fled, be delivered up, to be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     623 | removed to the State having Jurisdiction of the Crime.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 51 words long.
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     626 | whereof the party shall have been duly convicted, shall exist within the United
+         |                                                                          ^~~~~~~
+     627 | States, or any place subject to their jurisdiction. No Person held to Service
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     627 | States, or any place subject to their jurisdiction. No Person held to Service
+         |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+     628 | or Labour in one State, under the Laws thereof, escaping into another, shall,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     629 | in Consequence of any Law or Regulation therein, be discharged from such
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     631 | Service or Labour may be due.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 52 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     627 | States, or any place subject to their jurisdiction. No Person held to Service
+     628 | or Labour in one State, under the Laws thereof, escaping into another, shall,
+         |    ^~~~~~ Did you mean to spell “Labour” this way?
+Suggest:
+  - Replace with: “Labor”
+  - Replace with: “Labours”
+  - Replace with: “About”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     629 | in Consequence of any Law or Regulation therein, be discharged from such
+     630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
+         |            ^~~~~~ Did you mean to spell “Labour” this way?
+Suggest:
+  - Replace with: “Labor”
+  - Replace with: “Labours”
+  - Replace with: “About”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
+     631 | Service or Labour may be due.
+         |            ^~~~~~ Did you mean to spell “Labour” this way?
+Suggest:
+  - Replace with: “Labor”
+  - Replace with: “Labours”
+  - Replace with: “About”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     635 | New States may be admitted by the Congress into this Union; but
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     636 | no new State shall be formed or erected within the Jurisdiction of any other
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     637 | State; nor any State be formed by the Junction of two or more States, or Parts
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     638 | of States, without the Consent of the Legislatures of the States concerned as
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     639 | well as of the Congress.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 60 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     641 | The Congress shall have Power to dispose of and make all needful Rules and
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     642 | Regulations respecting the Territory or other Property belonging to the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     643 | States; and nothing in this Constitution shall be so construed as to Prejudice
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     644 | any Claims of the United States, or of any particular State.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 49 words long.
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     642 | Regulations respecting the Territory or other Property belonging to the United
+         |                                                                         ^~~~~~~
+     643 | States; and nothing in this Constitution shall be so construed as to Prejudice
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     648 | The United States shall guarantee to every State in this Union
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     649 | a Republican Form of Government, and shall protect each of them against
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     650 | Invasion; and on Application of the Legislature, or of the Executive (when the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     651 | Legislature cannot be convened) against domestic Violence.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     658 | questioned. But neither the United States nor any State shall assume or pay any
+         |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     659 | debt or obligation incurred in aid of insurrection or rebellion against the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     660 | United States, or any claim for the loss or emancipation of any slave; but all
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     661 | such debts, obligations and claims shall be held illegal and void.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 51 words long.
+
+
+
+Lint:    WordChoice (63 priority)
+Message: |
+     658 | questioned. But neither the United States nor any State shall assume or pay any
+     659 | debt or obligation incurred in aid of insurrection or rebellion against the
+         | ^~~~~~~ Did you mean the closed compound noun “debtor”?
+Suggest:
+  - Replace with: “debtor”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     663 | ## Article. V.
+         |             ^~ Did you mean to spell “V.” this way?
+Suggest:
+  - Replace with: “Vs.”
+  - Replace with: “V”
+  - Replace with: “Vb”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     665 | The Congress, whenever two thirds of both Houses shall deem it necessary, shall
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     666 | propose Amendments to this Constitution, or, on the Application of the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     667 | Legislatures of two thirds of the several States, shall call a Convention for
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     668 | proposing Amendments, which, in either Case, shall be valid to all Intents and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     669 | Purposes, as Part of this Constitution, when ratified by the Legislatures of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     670 | three fourths of the several States, or by Conventions in three fourths
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     671 | thereof, as the one or the other Mode of Ratification may be proposed by the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     672 | Congress; Provided that no Amendment which may be made prior to the Year One
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     673 | thousand eight hundred and eight shall in any Manner affect the first and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     674 | fourth Clauses in the Ninth Section of the first Article; and that no State,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     675 | without its Consent, shall be deprived of its equal Suffrage in the Senate.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 143 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     683 | This Constitution, and the Laws of the United States which shall be made in
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     684 | Pursuance thereof; and all Treaties made, or which shall be made, under the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     685 | Authority of the United States, shall be the supreme Law of the Land; and the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     686 | Judges in every State shall be bound thereby, any Thing in the Constitution or
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     687 | Laws of any State to the Contrary notwithstanding.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 64 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     689 | The Senators and Representatives before mentioned, and the Members of the
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     690 | several State Legislatures, and all executive and judicial Officers, both of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     691 | the United States and of the several States, shall be bound by Oath or
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     692 | Affirmation, to support this Constitution; but no religious Test shall ever be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     693 | required as a Qualification to any Office or public Trust under the United
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     694 | States.
+         | ~~~~~~~ This sentence is 62 words long.
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     693 | required as a Qualification to any Office or public Trust under the United
+         |                                                                     ^~~~~~~
+     694 | States.
+         | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
+Suggest:
+  - Replace with: “United States”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     714 | first Page, The Word "Thirty" being partly written on an Erazure in the
+         |                                                          ^~~~~~~ Did you mean to spell “Erazure” this way?
+     715 | fifteenth Line of the first Page. The Words "is tried" being interlined between
+Suggest:
+  - Replace with: “Erasure”
+  - Replace with: “Azure”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     721 | done in Convention by the Unanimous Consent of the States present the
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “D”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     721 | done in Convention by the Unanimous Consent of the States present the
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     722 | Seventeenth Day of September in the Year of our Lord one thousand seven hundred
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     723 | and Eighty seven and of the Independence of the United States of America the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 50 words long.
+     724 | Twelfth In witness whereof We have hereunto subscribed our Names,
+
+
+

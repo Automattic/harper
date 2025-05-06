@@ -1,0 +1,1213 @@
+Lint:    Spelling (63 priority)
+Message: |
+      45 | Wilhelm Schickard designed and constructed the first working mechanical
+         |         ^~~~~~~~~ Did you mean “Schick”?
+Suggest:
+  - Replace with: “Schick”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      46 | calculator in 1623. In 1673, Gottfried Leibniz demonstrated a digital mechanical
+         |                              ^~~~~~~~~ Did you mean to spell “Gottfried” this way?
+Suggest:
+  - Replace with: “Lotteries”
+  - Replace with: “Notified”
+  - Replace with: “Pottered”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      46 | calculator in 1623. In 1673, Gottfried Leibniz demonstrated a digital mechanical
+      47 | calculator, called the Stepped Reckoner. Leibniz may be considered the first
+         |                                ^~~~~~~~ Did you mean to spell “Reckoner” this way?
+Suggest:
+  - Replace with: “Rickover”
+  - Replace with: “Reckoned”
+  - Replace with: “Beckoned”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      49 | including the fact that he documented the binary number system. In 1820, Thomas
+      50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
+         | ^~ Did you mean to spell “de” this way?
+Suggest:
+  - Replace with: “d”
+  - Replace with: “db”
+  - Replace with: “dc”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      49 | including the fact that he documented the binary number system. In 1820, Thomas
+      50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
+         |    ^~~~~~ Did you mean to spell “Colmar” this way?
+Suggest:
+  - Replace with: “Collar”
+  - Replace with: “Colemak”
+  - Replace with: “Coleman”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
+      51 | his simplified arithmometer, the first calculating machine strong enough and
+         |                ^~~~~~~~~~~~ Did you mean to spell “arithmometer” this way?
+Suggest:
+  - Replace with: “arithmetic”
+  - Replace with: “anemometer”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+      59 | programmable.[note 2] In 1843, during the translation of a French article on the
+         |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      60 | Analytical Engine, Ada Lovelace wrote, in one of the many notes she included, an
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      61 | algorithm to compute the Bernoulli numbers, which is considered to be the first
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      62 | published algorithm ever specifically tailored for implementation on a computer.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      65 | Following Babbage, although unaware of his earlier work, Percy Ludgate in 1909
+         |                                                                ^~~~~~~ Did you mean to spell “Ludgate” this way?
+      66 | published the 2nd of the only two designs for mechanical analytical engines in
+Suggest:
+  - Replace with: “Luddite”
+  - Replace with: “Vulgate”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      67 | history. In 1914, the Spanish engineer Leonardo Torres Quevedo published his
+         |                                                        ^~~~~~~ Did you mean “Acevedo”?
+      68 | Essays on Automatics, and designed, inspired by Babbage, a theoretical
+Suggest:
+  - Replace with: “Acevedo”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      68 | Essays on Automatics, and designed, inspired by Babbage, a theoretical
+      69 | electromechanical calculating machine which was to be controlled by a read-only
+         | ^~~~~~~~~~~~~~~~~ Did you mean to spell “electromechanical” this way?
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      71 | 1920, to celebrate the 100th anniversary of the invention of the arithmometer,
+         |                                                                  ^~~~~~~~~~~~ Did you mean to spell “arithmometer” this way?
+      72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
+Suggest:
+  - Replace with: “arithmetic”
+  - Replace with: “anemometer”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      71 | 1920, to celebrate the 100th anniversary of the invention of the arithmometer,
+      72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
+         |                               ^~~~~~~~~~~~~~~~~ Did you mean to spell “Electromechanical” this way?
+      73 | demonstrated the feasibility of an electromechanical analytical engine, on which
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
+         |                                                 ^~~~~~~~~~~~ Did you mean to spell “Arithmometer” this way?
+      73 | demonstrated the feasibility of an electromechanical analytical engine, on which
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
+      73 | demonstrated the feasibility of an electromechanical analytical engine, on which
+         |                                    ^~~~~~~~~~~~~~~~~ Did you mean to spell “electromechanical” this way?
+      74 | commands could be typed and the results printed automatically. In 1937, one
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+      74 | commands could be typed and the results printed automatically. In 1937, one
+         |                                                               ^~~~~~~~~~~~~~
+      75 | hundred years after Babbage's impossible dream, Howard Aiken convinced IBM,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      76 | which was making all kinds of punched card equipment and was also in the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      77 | calculator business to develop his giant programmable calculator, the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      78 | ASCC/Harvard Mark I, based on Babbage's Analytical Engine, which itself used
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      79 | cards and a central computing unit. When the machine was finished, some hailed
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 53 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      77 | calculator business to develop his giant programmable calculator, the
+      78 | ASCC/Harvard Mark I, based on Babbage's Analytical Engine, which itself used
+         | ^~~~ Did you mean to spell “ASCC” this way?
+Suggest:
+  - Replace with: “ABC”
+  - Replace with: “ABCs”
+  - Replace with: “ACL”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      82 | During the 1940s, with the development of new and more powerful computing
+      83 | machines such as the Atanasoff–Berry computer and ENIAC, the term computer came
+         |                      ^~~~~~~~~ Did you mean “Standoff”?
+Suggest:
+  - Replace with: “Standoff”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      83 | machines such as the Atanasoff–Berry computer and ENIAC, the term computer came
+         |                                                   ^~~~~ Did you mean to spell “ENIAC” this way?
+      84 | to refer to the machines rather than their human predecessors. As it became
+Suggest:
+  - Replace with: “ENE's”
+  - Replace with: “Anzac”
+  - Replace with: “Fenian”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+      87 | 1945, IBM founded the Watson Scientific Computing Laboratory at Columbia
+         |                                                                 ^~~~~~~~~
+      88 | University in New York City. The renovated fraternity house on Manhattan's West
+         | ~~~~~~~~~~ Ensure proper capitalization of major universities in the United States.
+Suggest:
+  - Replace with: “Columbia University”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+      91 | around the world. Ultimately, the close relationship between IBM and Columbia
+         |                                                                      ^~~~~~~~~
+      92 | University was instrumental in the emergence of a new scientific discipline,
+         | ~~~~~~~~~~ Ensure proper capitalization of major universities in the United States.
+Suggest:
+  - Replace with: “Columbia University”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     104 | Although first proposed in 1956, the term "computer science" appears in a 1959
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     105 | article in Communications of the ACM, in which Louis Fein argues for the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     106 | creation of a Graduate School in Computer Sciences analogous to the creation of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     107 | Harvard Business School in 1921. Louis justifies the name by arguing that, like
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     105 | article in Communications of the ACM, in which Louis Fein argues for the
+         |                                                      ^~~~ Did you mean to spell “Fein” this way?
+     106 | creation of a Graduate School in Computer Sciences analogous to the creation of
+Suggest:
+  - Replace with: “Fern”
+  - Replace with: “Fain”
+  - Replace with: “Vein”
+
+
+
+Lint:    Style (63 priority)
+Message: |
+     108 | management science, the subject is applied and interdisciplinary in nature,
+     109 | while having the characteristics typical of an academic discipline. His efforts,
+         |                                  ^~~~~~~~~~~~~ The word `of` is not needed here.
+Suggest:
+  - Replace with: “typical an”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     110 | and those of others such as numerical analyst George Forsythe, were rewarded:
+         |                                                      ^~~~~~~~ Did you mean to spell “Forsythe” this way?
+Suggest:
+  - Replace with: “Forster”
+  - Replace with: “Forsythia”
+  - Replace with: “Porsche”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     115 | computing science, to emphasize precisely that difference. Danish scientist
+     116 | Peter Naur suggested the term datalogy, to reflect the fact that the scientific
+         |       ^~~~ Did you mean to spell “Naur” this way?
+Suggest:
+  - Replace with: “Nauru”
+  - Replace with: “Nair”
+  - Replace with: “Na's”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     115 | computing science, to emphasize precisely that difference. Danish scientist
+     116 | Peter Naur suggested the term datalogy, to reflect the fact that the scientific
+         |                               ^~~~~~~~ Did you mean to spell “datalogy” this way?
+Suggest:
+  - Replace with: “analogy”
+  - Replace with: “catalog”
+  - Replace with: “catalogs”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     118 | involving computers. The first scientific institution to use the term was the
+     119 | Department of Datalogy at the University of Copenhagen, founded in 1969, with
+         |               ^~~~~~~~ Did you mean to spell “Datalogy” this way?
+Suggest:
+  - Replace with: “Analogy”
+  - Replace with: “Catalog”
+  - Replace with: “Catalogs”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     119 | Department of Datalogy at the University of Copenhagen, founded in 1969, with
+     120 | Peter Naur being the first professor in datalogy. The term is used mainly in the
+         |       ^~~~ Did you mean to spell “Naur” this way?
+Suggest:
+  - Replace with: “Nauru”
+  - Replace with: “Nair”
+  - Replace with: “Na's”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     119 | Department of Datalogy at the University of Copenhagen, founded in 1969, with
+     120 | Peter Naur being the first professor in datalogy. The term is used mainly in the
+         |                                         ^~~~~~~~ Did you mean to spell “datalogy” this way?
+Suggest:
+  - Replace with: “analogy”
+  - Replace with: “catalog”
+  - Replace with: “catalogs”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     121 | Scandinavian countries. An alternative term, also proposed by Naur, is data
+         |                                                               ^~~~ Did you mean to spell “Naur” this way?
+     122 | science; this is now used for a multi-disciplinary field of data analysis,
+Suggest:
+  - Replace with: “Nauru”
+  - Replace with: “Nair”
+  - Replace with: “Na's”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     126 | field of computing were suggested (albeit facetiously) in the Communications of
+     127 | the ACM—turingineer, turologist, flow-charts-man, applied meta-mathematician,
+         |         ^~~~~~~~~~~ Did you mean to spell “turingineer” this way?
+Suggest:
+  - Replace with: “engineer”
+  - Replace with: “springier”
+  - Replace with: “springiness”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     126 | field of computing were suggested (albeit facetiously) in the Communications of
+     127 | the ACM—turingineer, turologist, flow-charts-man, applied meta-mathematician,
+         |                      ^~~~~~~~~~ Did you mean to spell “turologist” this way?
+Suggest:
+  - Replace with: “urologist”
+  - Replace with: “theologist”
+  - Replace with: “neurologist”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     127 | the ACM—turingineer, turologist, flow-charts-man, applied meta-mathematician,
+     128 | and applied epistemologist. Three months later in the same journal, comptologist
+         |             ^~~~~~~~~~~~~~ Did you mean to spell “epistemologist” this way?
+Suggest:
+  - Replace with: “epistemological”
+  - Replace with: “epistemology”
+  - Replace with: “epidemiologist”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     128 | and applied epistemologist. Three months later in the same journal, comptologist
+         |                                                                     ^~~~~~~~~~~~ Did you mean “cosmetologist”?
+     129 | was suggested, followed next year by hypologist. The term computics has also
+Suggest:
+  - Replace with: “cosmetologist”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     128 | and applied epistemologist. Three months later in the same journal, comptologist
+     129 | was suggested, followed next year by hypologist. The term computics has also
+         |                                      ^~~~~~~~~~ Did you mean to spell “hypologist” this way?
+Suggest:
+  - Replace with: “horologist”
+  - Replace with: “hydrologist”
+  - Replace with: “apologist”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     129 | was suggested, followed next year by hypologist. The term computics has also
+         |                                                           ^~~~~~~~~ Did you mean to spell “computics” this way?
+     130 | been suggested. In Europe, terms derived from contracted translations of the
+Suggest:
+  - Replace with: “computers”
+  - Replace with: “computes”
+  - Replace with: “computing”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     130 | been suggested. In Europe, terms derived from contracted translations of the
+         |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     132 | or "information and mathematics" are often used, e.g. informatique (French),
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     134 | Portuguese), informatika (Slavic languages and Hungarian) or pliroforiki
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     135 | (πληροφορική, which means informatics) in Greek. Similar words have also been
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 47 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
+         |                                           ^~~~~~~~~~~~ Did you mean “information”?
+     132 | or "information and mathematics" are often used, e.g. informatique (French),
+Suggest:
+  - Replace with: “information”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
+         |                                                        ^~~~~~~~~~ Did you mean to spell “automatica” this way?
+     132 | or "information and mathematics" are often used, e.g. informatique (French),
+Suggest:
+  - Replace with: “automatic”
+  - Replace with: “automatics”
+  - Replace with: “automata”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     132 | or "information and mathematics" are often used, e.g. informatique (French),
+         |                                                       ^~~~~~~~~~~~ Did you mean “informative”?
+     133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
+Suggest:
+  - Replace with: “informative”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     132 | or "information and mathematics" are often used, e.g. informatique (French),
+     133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
+         | ^~~~~~~~~~ Did you mean to spell “Informatik” this way?
+Suggest:
+  - Replace with: “Informatics”
+  - Replace with: “Information”
+  - Replace with: “Informative”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     132 | or "information and mathematics" are often used, e.g. informatique (French),
+     133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
+         |                      ^~~~~~~~~~~ Did you mean to spell “informatica” this way?
+Suggest:
+  - Replace with: “informatics”
+  - Replace with: “information”
+  - Replace with: “informative”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
+         |                                                    ^~~~~~~~~~~ Did you mean “informatics”?
+     134 | Portuguese), informatika (Slavic languages and Hungarian) or pliroforiki
+Suggest:
+  - Replace with: “informatics”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
+     134 | Portuguese), informatika (Slavic languages and Hungarian) or pliroforiki
+         |              ^~~~~~~~~~~ Did you mean to spell “informatika” this way?
+Suggest:
+  - Replace with: “informatics”
+  - Replace with: “information”
+  - Replace with: “informative”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     134 | Portuguese), informatika (Slavic languages and Hungarian) or pliroforiki
+         |                                                              ^~~~~~~~~~~ Did you mean to spell “pliroforiki” this way?
+     135 | (πληροφορική, which means informatics) in Greek. Similar words have also been
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     137 | "In the U.S., however, informatics is linked with applied computing, or
+         |         ^~~~ Did you mean to spell “U.S.” this way?
+Suggest:
+  - Replace with: “UBS”
+  - Replace with: “USA”
+  - Replace with: “USB”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     140 | A folkloric quotation, often attributed to—but almost certainly not first
+     141 | formulated by—Edsger Dijkstra, states that "computer science is no more about
+         |               ^~~~~~ Did you mean to spell “Edsger” this way?
+Suggest:
+  - Replace with: “Edger”
+  - Replace with: “Easter”
+  - Replace with: “Edgar”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     154 | computing is a mathematical science. Early computer science was strongly
+         |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     157 | interchange of ideas between the two fields in areas such as mathematical logic,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     158 | category theory, domain theory, and algebra.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 51 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
+         |                                                       ^~~~~ Did you mean to spell “Gödel” this way?
+     156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
+Suggest:
+  - Replace with: “Godel”
+  - Replace with: “Gael”
+  - Replace with: “Gide”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
+     156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
+         | ^~~ Did you mean to spell “von” this way?
+Suggest:
+  - Replace with: “van”
+  - Replace with: “vol”
+  - Replace with: “vow”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
+     156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
+         |     ^~~~~~~ Did you mean to spell “Neumann” this way?
+Suggest:
+  - Replace with: “Newman”
+  - Replace with: “Newman's”
+  - Replace with: “Norman”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
+     156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
+         |              ^~~~~ Did you mean to spell “Rózsa” this way?
+Suggest:
+  - Replace with: “Rosa”
+  - Replace with: “R's”
+  - Replace with: “RV's”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
+     156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
+         |                    ^~~~~ Did you mean to spell “Péter” this way?
+Suggest:
+  - Replace with: “Peter”
+  - Replace with: “Patel”
+  - Replace with: “Pete”
+
+
+
+Lint:    WordChoice (63 priority)
+Message: |
+     161 | contentious issue, which is further muddied by disputes over what the term
+     162 | "software engineering" means, and how computer science is defined. David Parnas,
+         |                                   ^~~~ Insert `to` after `how` (e.g., `how to clone`).
+Suggest:
+  - Insert “to ”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     162 | "software engineering" means, and how computer science is defined. David Parnas,
+         |                                                                   ^~~~~~~~~~~~~~~
+     163 | taking a cue from the relationship between other engineering and science
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     164 | disciplines, has claimed that the principal focus of computer science is
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     165 | studying the properties of computation in general, while the principal focus of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     166 | software engineering is the design of specific computations to achieve practical
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     167 | goals, making the two separate but complementary disciplines.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 55 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     162 | "software engineering" means, and how computer science is defined. David Parnas,
+         |                                                                          ^~~~~~ Did you mean to spell “Parnas” this way?
+     163 | taking a cue from the relationship between other engineering and science
+Suggest:
+  - Replace with: “Parana's”
+  - Replace with: “Parr's”
+  - Replace with: “Patna's”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     181 | computer science is a discipline of science, mathematics, or engineering. Allen
+     182 | Newell and Herbert A. Simon argued in 1975,
+         | ^~~~~~ Did you mean to spell “Newell” this way?
+Suggest:
+  - Replace with: “Newels”
+  - Replace with: “Jewell”
+  - Replace with: “Nell”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     181 | computer science is a discipline of science, mathematics, or engineering. Allen
+     182 | Newell and Herbert A. Simon argued in 1975,
+         |                    ^~ Did you mean to spell “A.” this way?
+Suggest:
+  - Replace with: “Ax”
+  - Replace with: “A”
+  - Replace with: “Ab”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     192 | It has since been argued that computer science can be classified as an empirical
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     193 | science since it makes use of empirical testing to evaluate the correctness of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     194 | programs, but a problem remains in defining the laws and theorems of computer
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     195 | science (if any exist) and defining the nature of experiments in computer
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     196 | science. Proponents of classifying computer science as an engineering discipline
+         | ~~~~~~~~ This sentence is 53 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     198 | way as bridges in civil engineering and airplanes in aerospace engineering. They
+         |                                                                            ^~~~~~
+     199 | also argue that while empirical sciences observe what presently exists, computer
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     200 | science observes what is possible to exist and while scientists discover laws
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     201 | from observation, no proper laws have been found in computer science and it is
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     202 | instead concerned with creating phenomena.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
+         |                     ^~~~~~ Did you mean to spell “Edsger” this way?
+Suggest:
+  - Replace with: “Edger”
+  - Replace with: “Easter”
+  - Replace with: “Edgar”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
+         |                            ^~ Did you mean to spell “W.” this way?
+Suggest:
+  - Replace with: “We”
+  - Replace with: “WA”
+  - Replace with: “WC”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
+         |                                                 ^~~~~ Did you mean to spell “Hoare” this way?
+     208 | computer programs as mathematical sentences and interpret formal semantics for
+Suggest:
+  - Replace with: “Hare”
+  - Replace with: “Hoard”
+  - Replace with: “Hoary”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     214 | separate paradigms in computer science. Peter Wegner argued that those paradigms
+         |                                               ^~~~~~ Did you mean to spell “Wegner” this way?
+     215 | are science, technology, and mathematics. Peter Denning's working group argued
+Suggest:
+  - Replace with: “Wagner”
+  - Replace with: “Wigner”
+  - Replace with: “Warner”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     215 | are science, technology, and mathematics. Peter Denning's working group argued
+         |                                                 ^~~~~~~~~ Did you mean to spell “Denning's” this way?
+     216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
+Suggest:
+  - Replace with: “Deming's”
+  - Replace with: “Dennis's”
+  - Replace with: “Jennings's”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
+         |                                                          ^~~~~~~~~~~~~~~
+     217 | described them as the "rationalist paradigm" (which treats computer science as a
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     218 | branch of mathematics, which is prevalent in theoretical computer science, and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     219 | mainly employs deductive reasoning), the "technocratic paradigm" (which might be
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     220 | found in engineering approaches, most prominently in software engineering), and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     221 | the "scientific paradigm" (which approaches computer-related artifacts from the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     222 | empirical perspective of natural sciences, identifiable in some branches of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     223 | artificial intelligence). Computer science focuses on methods involved in
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
+         |                                                           ^~~~~ Did you mean to spell “Amnon” this way?
+Suggest:
+  - Replace with: “Amnion”
+  - Replace with: “Anon”
+  - Replace with: “Aaron”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
+         |                                                                 ^~ Did you mean to spell “H.” this way?
+Suggest:
+  - Replace with: “Hi”
+  - Replace with: “H”
+  - Replace with: “He”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     231 | implementing computing systems in hardware and software. CSAB, formerly called
+         |                                                         ^~~~~~~~~~~~~~~~~~~~~~~
+     232 | Computing Sciences Accreditation Board—which is made up of representatives of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     233 | the Association for Computing Machinery (ACM), and the IEEE Computer Society
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     234 | (IEEE CS)—identifies four areas that it considers crucial to the discipline of
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     235 | computer science: theory of computation, algorithms and data structures,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     236 | programming methodology and languages, and computer elements and architecture.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 56 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     231 | implementing computing systems in hardware and software. CSAB, formerly called
+         |                                                          ^~~~ Did you mean to spell “CSAB” this way?
+     232 | Computing Sciences Accreditation Board—which is made up of representatives of
+Suggest:
+  - Replace with: “Cab”
+  - Replace with: “CAI”
+  - Replace with: “CIA”
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     235 | computer science: theory of computation, algorithms and data structures,
+         |                                          ^~~~~~~~~~ An Oxford comma is necessary here.
+     236 | programming methodology and languages, and computer elements and architecture.
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     236 | programming methodology and languages, and computer elements and architecture.
+         |                                                                               ^
+     237 | In addition to these four areas, CSAB also identifies fields such as software
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     238 | engineering, artificial intelligence, computer networking and communication,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     239 | database systems, parallel computation, distributed computation, human–computer
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     240 | interaction, computer graphics, operating systems, and numerical and symbolic
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     241 | computation as being important areas of computer science.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     237 | In addition to these four areas, CSAB also identifies fields such as software
+         |                                  ^~~~ Did you mean to spell “CSAB” this way?
+Suggest:
+  - Replace with: “Cab”
+  - Replace with: “CAI”
+  - Replace with: “CIA”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     252 | According to Peter Denning, the fundamental question underlying computer science
+         |                    ^~~~~~~ Did you mean to spell “Denning” this way?
+Suggest:
+  - Replace with: “Denying”
+  - Replace with: “Donning”
+  - Replace with: “Penning”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     255 | are required to perform those computations. In an effort to answer the first
+     256 | question, computability theory examines which computational problems are
+         |           ^~~~~~~~~~~~~ Did you mean to spell “computability” this way?
+Suggest:
+  - Replace with: “compatibility”
+  - Replace with: “comparability”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
+         |                ^~ Did you mean to spell “NP” this way?
+Suggest:
+  - Replace with: “N”
+  - Replace with: “Nap”
+  - Replace with: “Nip”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
+         |                    ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “P”
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     291 | Formal methods are a particular kind of mathematically based technique for the
+     292 | specification, development and verification of software and hardware systems.
+         |                ^~~~~~~~~~~ An Oxford comma is necessary here.
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     302 | safety or security is of utmost importance. Formal methods are best described as
+         |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     303 | the application of a fairly broad variety of theoretical computer science
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     304 | fundamentals, in particular logic calculi, formal languages, automata theory,
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     305 | and program semantics, but also type systems and algebraic data types to
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     306 | problems in software and hardware specification and verification.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 46 words long.
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     320 | Information can take the form of images, sound, video or other multimedia. Bits
+         |                                                 ^~~~~ An Oxford comma is necessary here.
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     323 | processing algorithms independently of the type of information carrier – whether
+     324 | it is electrical, mechanical or biological. This field plays important role in
+         |                   ^~~~~~~~~~ An Oxford comma is necessary here.
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     327 | is the lower bound on the complexity of fast Fourier transform algorithms? is
+         |                                                                            ^ This sentence does not start with a capital letter
+     328 | one of the unsolved problems in theoretical computer science.
+Suggest:
+  - Replace with: “I”
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     330 | #### Computational science, finance and engineering
+         |                             ^~~~~~~ An Oxford comma is necessary here.
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     346 | Human–computer interaction (HCI) is the field of study and research concerned
+         |                             ^~~ Did you mean to spell “HCI” this way?
+Suggest:
+  - Replace with: “Hi”
+  - Replace with: “CI”
+  - Replace with: “MCI”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     348 | interaction between humans and computer interfaces. HCI has several subfields
+         |                                                     ^~~ Did you mean to spell “HCI” this way?
+     349 | that focus on the relationship between emotions, social behavior and brain
+Suggest:
+  - Replace with: “Hi”
+  - Replace with: “CI”
+  - Replace with: “MCI”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     371 | semiotics, electrical engineering, philosophy of mind, neurophysiology, and
+         |                                                        ^~~~~~~~~~~~~~~ Did you mean “neurobiology”?
+     372 | social intelligence. AI is associated in the popular mind with robotic
+Suggest:
+  - Replace with: “neurobiology”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     393 | term "architecture" in computer literature can be traced to the work of Lyle R.
+         |                                                                              ^~ Did you mean to spell “R.” this way?
+Suggest:
+  - Replace with: “Rm”
+  - Replace with: “R”
+  - Replace with: “Re”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
+         |                       ^~ Did you mean to spell “P.” this way?
+Suggest:
+  - Replace with: “Pt”
+  - Replace with: “Pa”
+  - Replace with: “Pf”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     401 | mathematical models have been developed for general concurrent computation
+     402 | including Petri nets, process calculi and the parallel random access machine
+         |           ^~~~~ Did you mean to spell “Petri” this way?
+Suggest:
+  - Replace with: “Petra”
+  - Replace with: “Patti”
+  - Replace with: “Peary”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+     421 | Modern cryptography is the scientific study of problems relating to distributed
+         |                                                                  ^~~~~~~~~~~~~~ The base form of the verb is needed here.
+     422 | computations that can be attacked. Technologies studied in modern cryptography
+Suggest:
+  - Replace with: “to distribute”
+
+
+
+Lint:    WordChoice (63 priority)
+Message: |
+     432 | languages. Data mining is a process of discovering patterns in large data sets.
+         |                                                                      ^~~~~~~~~ Did you mean the closed compound noun “datasets”?
+Suggest:
+  - Replace with: “datasets”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     436 | The philosopher of computing Bill Rapaport noted three Great Insights of
+         |                                   ^~~~~~~~ Did you mean to spell “Rapaport” this way?
+     437 | Computer Science:
+Suggest:
+  - Replace with: “Rapport”
+  - Replace with: “Rappaport”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     439 | - Gottfried Wilhelm Leibniz's, George Boole's, Alan Turing's, Claude Shannon's,
+         |   ^~~~~~~~~ Did you mean to spell “Gottfried” this way?
+Suggest:
+  - Replace with: “Lotteries”
+  - Replace with: “Notified”
+  - Replace with: “Pottered”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     441 |   deal with in order to represent "anything".[note 4]
+     442 |   > All the information about any computable problem can be represented using
+         |                                   ^~~~~~~~~~ Did you mean to spell “computable” this way?
+     443 |   > only 0 and 1 (or any other bistable pair that can flip-flop between two
+Suggest:
+  - Replace with: “commutable”
+  - Replace with: “comparable”
+  - Replace with: “compatible”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     442 |   > All the information about any computable problem can be represented using
+     443 |   > only 0 and 1 (or any other bistable pair that can flip-flop between two
+         |                                ^~~~~~~~ Did you mean to spell “bistable” this way?
+Suggest:
+  - Replace with: “beatable”
+  - Replace with: “biddable”
+  - Replace with: “billable”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
+         |                                                                  ^~ Did you mean to spell “de” this way?
+     445 |   > "high-voltage/low-voltage", etc.).
+Suggest:
+  - Replace with: “d”
+  - Replace with: “db”
+  - Replace with: “dc”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     456 |   - print 1 at current location.
+         |     ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “P”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
+         |   ^~~~~~~ Did you mean to spell “Corrado” this way?
+Suggest:
+  - Replace with: “Colorado”
+  - Replace with: “Conrad”
+  - Replace with: “Coronado”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
+         |           ^~~~ Did you mean to spell “Böhm” this way?
+Suggest:
+  - Replace with: “Baum”
+  - Replace with: “Bohr”
+  - Replace with: “Chm”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
+         |                             ^~~~~~~~~~ Did you mean to spell “Jacopini's” this way?
+Suggest:
+  - Replace with: “Jacobin's”
+  - Replace with: “Jacobi's”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     466 |   - selection: IF such-and-such is the case, THEN do this, ELSE do that;
+         |     ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “S”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     467 |   - repetition: WHILE such-and-such is the case, DO this. The three rules of
+         |     ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “R”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     467 |   - repetition: WHILE such-and-such is the case, DO this. The three rules of
+     468 |     Boehm's and Jacopini's insight can be further simplified with the use of
+         |     ^~~~~~~ Did you mean to spell “Boehm's” this way?
+Suggest:
+  - Replace with: “Boer's”
+  - Replace with: “Bohr's”
+  - Replace with: “Ohm's”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     467 |   - repetition: WHILE such-and-such is the case, DO this. The three rules of
+     468 |     Boehm's and Jacopini's insight can be further simplified with the use of
+         |                 ^~~~~~~~~~ Did you mean to spell “Jacopini's” this way?
+Suggest:
+  - Replace with: “Jacobin's”
+  - Replace with: “Jacobi's”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     468 |     Boehm's and Jacopini's insight can be further simplified with the use of
+     469 |     goto (which means it is more elementary than structured programming).
+         |     ^~~~ Did you mean to spell “goto” this way?
+Suggest:
+  - Replace with: “got”
+  - Replace with: “goo”
+  - Replace with: “gore”
+
+
+
