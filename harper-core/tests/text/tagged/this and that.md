@@ -6,8 +6,8 @@
 #
 > This document contains various sentences that    use   " this " , " that    " , " these " , and
 # I/D  NSg/V    V        J       NPl/V     N/I/C/D NSg/V . I/D  . . . N/I/C/D . . . I/D   . . V/C
-> " those " in          different contexts with a   lot     of edge  cases .
-# . I/D   . NPrSg/V/J/P NSg/J     NPl/V    P    D/P NPrSg/V P  NSg/V NPl/V .
+> " those " in          different contexts with a   lot   of edge  cases .
+# . I/D   . NPrSg/V/J/P NSg/J     NPl/V    P    D/P NPrSg P  NSg/V NPl/V .
 >
 #
 > Examples
