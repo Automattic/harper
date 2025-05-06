@@ -1,5 +1,3 @@
-use std::num::NonZeroUsize;
-
 use crate::Token;
 
 use super::Pattern;
@@ -8,7 +6,7 @@ use super::Pattern;
 pub struct AnyPattern;
 
 impl Pattern for AnyPattern {
-    fn matches(&self, tokens: &[Token], _source: &[char]) -> Option<NonZeroUsize> {
-        NonZeroUsize::new(if tokens.is_empty() { 0 } else { 1 })
+    fn matches(&self, tokens: &[Token], _source: &[char]) -> Option<usize> {
+        if tokens.is_empty() { None } else { Some(1) }
     }
 }

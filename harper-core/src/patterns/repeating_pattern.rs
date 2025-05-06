@@ -1,5 +1,3 @@
-use std::num::NonZeroUsize;
-
 use super::Pattern;
 use crate::Token;
 
@@ -21,7 +19,7 @@ impl RepeatingPattern {
 }
 
 impl Pattern for RepeatingPattern {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         let mut tok_cursor = 0;
         let mut repetition = 0;
 
@@ -29,10 +27,17 @@ impl Pattern for RepeatingPattern {
             let match_len = self.inner.matches(&tokens[tok_cursor..], source);
 
             if let Some(match_len) = match_len {
-                tok_cursor += match_len.get();
+                if match_len == 0 {
+                    // If match_len == 0, we won't move forward ever again.
+                    // This means that we can get infinitely many repetitions,
+                    // so repetition >= self.required_repetitions is guaranteed.
+                    return Some(tok_cursor);
+                }
+
+                tok_cursor += match_len;
                 repetition += 1;
             } else if repetition >= self.required_repetitions {
-                return NonZeroUsize::new(tok_cursor);
+                return Some(tok_cursor);
             } else {
                 return None;
             }
@@ -42,7 +47,6 @@ impl Pattern for RepeatingPattern {
 
 #[cfg(test)]
 mod tests {
-    use std::num::NonZeroUsize;
 
     use super::RepeatingPattern;
     use crate::Document;
@@ -57,7 +61,7 @@ mod tests {
 
         assert_eq!(
             pat.matches(doc.get_tokens(), doc.get_source()),
-            NonZeroUsize::new(doc.get_tokens().len())
+            Some(doc.get_tokens().len())
         )
     }
 

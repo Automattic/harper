@@ -1,8 +1,10 @@
+---
+title: Harper for WordPress
+---
+
 <script>
     import {Button} from "flowbite-svelte"
 </script>
-
-# Harper for WordPress
 
 Harper is now ready to be installed to the nearest WordPress site near you.
 It's still early days, so expect bugs.

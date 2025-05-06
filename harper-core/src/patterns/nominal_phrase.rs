@@ -1,5 +1,3 @@
-use std::num::NonZeroUsize;
-
 use crate::Token;
 
 use super::Pattern;
@@ -8,7 +6,7 @@ use super::Pattern;
 pub struct NominalPhrase;
 
 impl Pattern for NominalPhrase {
-    fn matches(&self, tokens: &[Token], _source: &[char]) -> Option<NonZeroUsize> {
+    fn matches(&self, tokens: &[Token], _source: &[char]) -> Option<usize> {
         let mut cursor = 0;
 
         loop {
@@ -26,7 +24,7 @@ impl Pattern for NominalPhrase {
             }
 
             if tok.kind.is_nominal() {
-                return NonZeroUsize::new(cursor + 1);
+                return Some(cursor + 1);
             }
 
             return None;

@@ -7,13 +7,12 @@ use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 use std::{fs, process};
 
-use anyhow::format_err;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::parsers::{Markdown, MarkdownOptions};
+use harper_core::parsers::{Markdown, MarkdownOptions, PlainEnglish};
 use harper_core::{
     remove_overlaps, CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
     MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
@@ -36,7 +35,7 @@ enum Args {
         count: bool,
         /// Restrict linting to only a specific set of rules.
         /// If omitted, `harper-cli` will run every rule.
-        #[arg(short, long)]
+        #[arg(short, long, value_delimiter = ',')]
         only_lint_with: Option<Vec<String>>,
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]
@@ -76,6 +75,8 @@ enum Args {
         /// The document to mine words from.
         file: PathBuf,
     },
+    /// Print harper-core version.
+    CoreVersion,
 }
 
 fn main() -> anyhow::Result<()> {
@@ -361,6 +362,10 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        Args::CoreVersion => {
+            println!("harper-core v{}", harper_core::core_version());
+            Ok(())
+        }
     }
 }
 
@@ -371,19 +376,26 @@ fn load_file(
 ) -> anyhow::Result<(Document, String)> {
     let source = std::fs::read_to_string(file)?;
 
-    let parser: Box<dyn harper_core::parsers::Parser> =
-        match file.extension().map(|v| v.to_str().unwrap()) {
-            Some("md") => Box::new(Markdown::default()),
-            Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
-                MarkdownOptions::default(),
-            )),
-            Some("typ") => Box::new(harper_typst::Typst),
-            _ => Box::new(
-                CommentParser::new_from_filename(file, markdown_options)
-                    .map(Box::new)
-                    .ok_or(format_err!("Could not detect language ID."))?,
-            ),
-        };
+    let parser: Box<dyn harper_core::parsers::Parser> = match file
+        .extension()
+        .map(|v| v.to_str().unwrap())
+    {
+        Some("md") => Box::new(Markdown::default()),
+        Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
+            MarkdownOptions::default(),
+        )),
+        Some("typ") => Box::new(harper_typst::Typst),
+        _ => {
+            if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {
+                Box::new(comment_parser)
+            } else {
+                println!(
+                    "Warning: could not detect language ID; falling back to PlainEnglish parser."
+                );
+                Box::new(PlainEnglish)
+            }
+        }
+    };
 
     Ok((Document::new(&source, &parser, dictionary), source))
 }
