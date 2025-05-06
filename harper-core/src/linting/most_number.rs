@@ -40,17 +40,28 @@ impl PatternLinter for MostNumber {
     }
 
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
+        let most_amt_num_span = toks[0..3].span()?;
+        let noun_string = toks[2].span.get_content_string(source);
+        let superlatives = if noun_string == "amount" {
+            vec!["largest", "greatest"]
+        } else {
+            vec!["highest", "largest"]
+        };
+        let suggestions = superlatives
+            .into_iter()
+            .map(|superlative| {
+                Suggestion::replace_with_match_case(
+                    format!("{} {}", superlative, noun_string).chars().collect(),
+                    most_amt_num_span.get_content(source),
+                )
+            })
+            .collect();
         Some(Lint {
-            span: toks[0..3].span()?,
+            span: most_amt_num_span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                format!("highest {}", toks[2].span.get_content_string(source))
-                    .chars()
-                    .collect(),
-                toks[0..3].span()?.get_content(source),
-            )],
+            suggestions,
             message: format!(
-                "Did you mean `highest {}`?",
+                "`Most` is not standard before `{}`.",
                 toks[2].span.get_content_string(source)
             ),
             priority: 31,
@@ -64,7 +75,9 @@ impl PatternLinter for MostNumber {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
+    };
 
     use super::MostNumber;
 
@@ -78,11 +91,21 @@ mod tests {
     }
 
     #[test]
-    fn corrects_most_amount() {
-        assert_suggestion_result(
-            "In a section of typing output results, the hisat-genotype tool has default parameters to show up the top ten alleles that the most number of reads are mapped to or compatible with.",
+    #[ignore = "replace_with_match_case currently produces 'GreatEst'"]
+    fn corrects_most_amount_title_case() {
+        assert_top3_suggestion_result(
+            "Area of Container with the Most Amount of Water",
             MostNumber::default(),
-            "In a section of typing output results, the hisat-genotype tool has default parameters to show up the top ten alleles that the highest number of reads are mapped to or compatible with.",
+            "Area of Container with the Greatest Amount of Water",
+        );
+    }
+
+    #[test]
+    fn corrects_most_amount() {
+        assert_top3_suggestion_result(
+            "I just wanted to make sure it's good for the most amount of people, not just what I like.",
+            MostNumber::default(),
+            "I just wanted to make sure it's good for the greatest amount of people, not just what I like.",
         );
     }
 
