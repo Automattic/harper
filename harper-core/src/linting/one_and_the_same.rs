@@ -133,15 +133,15 @@ mod tests {
         );
     }
 
-    // TODO needs zero-width end-of-chunk pattern akin to regex `$`
-    // #[test]
-    // fn corrects_at_end() {
-    //     assert_suggestion_result(
-    //         "I think this is one in the same.",
-    //         OneAndTheSame::default(),
-    //         "I think this is one and the same.",
-    //     );
-    // }
+    #[test]
+    #[ignore = "needs zero-width end-of-chunk pattern akin to regex `$`"]
+    fn corrects_at_end() {
+        assert_suggestion_result(
+            "I think this is one in the same.",
+            OneAndTheSame::default(),
+            "I think this is one and the same.",
+        );
+    }
 
     #[test]
     fn corrects_is_as() {
@@ -161,15 +161,15 @@ mod tests {
         );
     }
 
-    // // Cannot detect unexpected ungrammatical "same of"
-    // #[test]
-    // fn corrects_is_of() {
-    //     assert_suggestion_result(
-    //         "R3 that Stephan Buhre noted is one-in-the-same of what I posted.",
-    //         OneAndTheSame::default(),
-    //         "R3 that Stephan Buhre noted is one and the same of what I posted.",
-    //     );
-    // }
+    #[test]
+    #[ignore = "Cannot detect unexpected ungrammatical `same of`"]
+    fn corrects_is_of() {
+        assert_suggestion_result(
+            "R3 that Stephan Buhre noted is one-in-the-same of what I posted.",
+            OneAndTheSame::default(),
+            "R3 that Stephan Buhre noted is one and the same of what I posted.",
+        );
+    }
 
     #[test]
     fn doesnt_flag_ambiguous_before_noun() {
