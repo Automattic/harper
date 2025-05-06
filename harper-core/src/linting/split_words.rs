@@ -37,7 +37,7 @@ impl Linter for SplitWords {
                 continue;
             }
 
-            let w_chars = document.get_span_content(w.span);
+            let w_chars = document.get_span_content(&w.span);
 
             if self.dict.contains_word(w_chars) {
                 continue;
