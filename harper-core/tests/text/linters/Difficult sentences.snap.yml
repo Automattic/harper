@@ -1,0 +1,317 @@
+Lint:    Capitalization (31 priority)
+Message: |
+      20 | at the bottom of the page; sitting at the table; at church; at sea
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “A”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+      32 | men at work; children at play
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “M”
+
+
+
+Lint:    WordChoice (63 priority)
+Message: |
+      49 | The stream runs by our back door.
+         |                        ^~~~~~~~~ Did you mean the closed compound noun “backdoor”?
+Suggest:
+  - Replace with: “backdoor”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      56 | He was protected by his body armour.
+         |                              ^~~~~~ Did you mean to spell “armour” this way?
+Suggest:
+  - Replace with: “amour”
+  - Replace with: “armor”
+  - Replace with: “armours”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+      76 | sold by the yard; cheaper if bought by the gross
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “S”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      87 | Are you eating by Rabbi Fischer? (at the house of)
+      88 | By Chabad, it's different. (with, among)
+         |    ^~~~~~ Did you mean to spell “Chabad” this way?
+Suggest:
+  - Replace with: “Canad”
+  - Replace with: “Chiba”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     100 | a by path; a by room (Out of the way, off to one side.)
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “A”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     160 | to account for one's whereabouts.
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “T”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     180 | I’ve been doing this from pickney.
+         |                           ^~~~~~~ Did you mean to spell “pickney” this way?
+Suggest:
+  - Replace with: “picket”
+  - Replace with: “pickle”
+  - Replace with: “piney”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     208 | My aim in travelling there was to find my missing friend.
+         |           ^~~~~~~~~~ Did you mean to spell “travelling” this way?
+Suggest:
+  - Replace with: “traveling”
+  - Replace with: “travellings”
+  - Replace with: “travelling's”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+     243 | His parents got him an in with the company.
+         |                     ^~~~~ Did you mean `and in`?
+Suggest:
+  - Replace with: “and in”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     254 | the in train (incoming train)
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “T”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     256 | in by descent; in by purchase; in of the seisin of her husband
+         |                                          ^~~~~~ Did you mean to spell “seisin” this way?
+     257 | He is very in with the Joneses.
+Suggest:
+  - Replace with: “season”
+  - Replace with: “seismic”
+  - Replace with: “sepsis”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     258 | I need to keep in with the neighbours in case I ever need a favour from them.
+         |                                                             ^~~~~~ Did you mean to spell “favour” this way?
+Suggest:
+  - Replace with: “favor”
+  - Replace with: “favours”
+  - Replace with: “famous”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     280 | Welcome to the historic town of Harwich.
+         |                                 ^~~~~~~ Did you mean to spell “Harwich” this way?
+Suggest:
+  - Replace with: “Norwich”
+  - Replace with: “Warwick”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     284 | This behaviour is typical of teenagers.
+         |      ^~~~~~~~~ Did you mean to spell “behaviour” this way?
+Suggest:
+  - Replace with: “behavior”
+  - Replace with: “behaviours”
+  - Replace with: “behaviour's”
+
+
+
+Lint:    Style (63 priority)
+Message: |
+     289 | It's not that big of a deal.
+         |               ^~~~~~~~ The word `of` is not needed here.
+Suggest:
+  - Replace with: “big a”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     300 | That TV programme that you wanted to watch is on now.
+         |         ^~~~~~~~~ Did you mean to spell “programme” this way?
+Suggest:
+  - Replace with: “programmed”
+  - Replace with: “programmer”
+  - Replace with: “programmes”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     310 | Ponsonby-Smythe hit a thumping on drive.
+         | ^~~~~~~~ Did you mean to spell “Ponsonby” this way?
+Suggest:
+  - Replace with: “Jonson's”
+  - Replace with: “Jonson”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     310 | Ponsonby-Smythe hit a thumping on drive.
+         |          ^~~~~~ Did you mean to spell “Smythe” this way?
+Suggest:
+  - Replace with: “Scythe”
+  - Replace with: “Myth”
+  - Replace with: “Myths”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     316 | turn the television on
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “T”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     322 | and so on.
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “A”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+     343 | All of the responsibility is on him.
+         | ^~~~~~~~~~ Consider simplifying to `all the`.
+Suggest:
+  - Replace with: “All the”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     345 | tug on the rope; push hard on the door.
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “T”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     349 | to play on a violin or piano.
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “T”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     358 | Smith scored again on twelve minutes, doubling Mudchester Rovers' lead.
+         |                                                ^~~~~~~~~~ Did you mean to spell “Mudchester” this way?
+Suggest:
+  - Replace with: “Manchester”
+  - Replace with: “Rochester”
+  - Replace with: “Winchester”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     366 | He travelled on false documents.
+         |    ^~~~~~~~~ Did you mean to spell “travelled” this way?
+Suggest:
+  - Replace with: “traveled”
+  - Replace with: “traveler”
+  - Replace with: “travailed”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     398 | Who am I to criticise? I've done worse things myself.
+         |             ^~~~~~~~~ Did you mean to spell “criticise” this way?
+Suggest:
+  - Replace with: “criticism”
+  - Replace with: “criticize”
+  - Replace with: “criticised”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     443 | With their reputation on the line, they decided to fire their PR team.
+         |                                                               ^~ Did you mean to spell “PR” this way?
+Suggest:
+  - Replace with: “Pre”
+  - Replace with: “P”
+  - Replace with: “Pa”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     449 | slain with robbers.
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “S”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     450 | cut with a knife
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “C”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     461 | overcome with happiness
+         | ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “O”
+
+
+

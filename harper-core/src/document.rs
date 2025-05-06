@@ -153,6 +153,7 @@ impl Document {
         }
 
         // refine and disambiguate word metadata
+        self.known_preposition();
         self.articles_imply_not_verb();
     }
 
@@ -178,6 +179,33 @@ impl Document {
             if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start + 2].kind {
                 metadata.noun = None;
                 metadata.verb = None;
+            }
+        }
+    }
+
+    /// A proposition-like word followed by a determiner or number is typically
+    /// really a preposition.
+    fn known_preposition(&mut self) {
+        fn create_pattern() -> Lrc<SequencePattern> {
+            Lrc::new(
+                SequencePattern::default()
+                    .then(WordSet::new(&["in", "at", "on", "to", "for", "by", "with"]))
+                    .then_whitespace()
+                    .then(|t: &Token, _source: &[char]| {
+                        t.kind.is_determiner() || t.kind.is_number()
+                    }),
+            )
+        }
+        thread_local! {static PATTERN: Lrc<SequencePattern> = create_pattern()}
+
+        let pattern = PATTERN.with(|v| v.clone());
+
+        for m in pattern.find_all_matches_in_doc(self) {
+            if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start].kind {
+                metadata.noun = None;
+                metadata.pronoun = None;
+                metadata.verb = None;
+                metadata.adjective = None;
             }
         }
     }
