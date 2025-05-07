@@ -44,11 +44,17 @@ export default interface Linter {
 	/** Set the linter's current configuration from JSON. */
 	setLintConfigWithJSON(config: string): Promise<void>;
 
-	/** Get the linting rule descriptions as a JSON map. */
+	/** Get the linting rule descriptions as a JSON map, formatted in Markdown. */
 	getLintDescriptionsAsJSON(): Promise<string>;
 
-	/** Get the linting rule descriptions as an object */
+	/** Get the linting rule descriptions as an object, formatted in Markdown. */
 	getLintDescriptions(): Promise<Record<string, string>>;
+
+	/** Get the linting rule descriptions as a JSON map, formatted in HTML. */
+	getLintDescriptionsHTMLAsJSON(): Promise<string>;
+
+	/** Get the linting rule descriptions as an object, formatted in HTML */
+	getLintDescriptionsHTML(): Promise<Record<string, string>>;
 
 	/** Convert a string to Chicago-style title case. */
 	toTitleCase(text: string): Promise<string>;

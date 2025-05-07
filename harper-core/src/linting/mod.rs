@@ -158,6 +158,24 @@ pub trait Linter: LSend {
     fn description(&self) -> &str;
 }
 
+/// A blanket-implemented trait that renders the Markdown description field of a linter to HTML.
+pub trait HtmlDescriptionLinter {
+    fn description_html(&self) -> String;
+}
+
+impl<L: ?Sized> HtmlDescriptionLinter for L
+where
+    L: Linter,
+{
+    fn description_html(&self) -> String {
+        let desc = self.description();
+        let parser = pulldown_cmark::Parser::new(desc);
+        let mut html = String::new();
+        pulldown_cmark::html::push_html(&mut html, parser);
+        html
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::Linter;
