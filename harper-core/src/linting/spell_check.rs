@@ -100,12 +100,12 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             // If there's only one suggestion, save the user a step in the GUI
             let message = if suggestions.len() == 1 {
                 format!(
-                    "Did you mean “{}”?",
+                    "Did you mean `{}`?",
                     possibilities.last().unwrap().iter().collect::<String>()
                 )
             } else {
                 format!(
-                    "Did you mean to spell “{}” this way?",
+                    "Did you mean to spell `{}` this way?",
                     document.get_span_content_str(&word.span)
                 )
             };
