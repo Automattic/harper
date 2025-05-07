@@ -467,6 +467,11 @@ impl Lint {
     pub fn message(&self) -> String {
         self.inner.message.clone()
     }
+
+    /// Get a description of the error as HTML.
+    pub fn message_html(&self) -> String {
+        self.inner.message_html()
+    }
 }
 
 #[wasm_bindgen]

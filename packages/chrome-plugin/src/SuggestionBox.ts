@@ -21,13 +21,13 @@ function header(title: string, color: string): any {
 	return h('div', { style: headerStyle }, title);
 }
 
-function body(message: string): any {
+function body(message_html: string): any {
 	const bodyStyle: { [key: string]: string } = {
 		fontSize: '14px',
 		lineHeight: '20px',
 		color: '#57606A',
 	};
-	return h('div', { style: bodyStyle }, [h('p', message)]);
+	return h('div', { style: bodyStyle, innerHTML: message_html }, []);
 }
 
 function button(
@@ -137,7 +137,7 @@ export default function SuggestionBox(box: LintBox, close: () => void) {
 
 	return h('div', { style: containerStyle }, [
 		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind)),
-		body(box.lint.message),
+		body(box.lint.message_html),
 		footer(
 			box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
 

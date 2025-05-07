@@ -7,7 +7,7 @@ export type UnpackedSpan = {
 
 export type UnpackedLint = {
 	span: UnpackedSpan;
-	message: string;
+	message_html: string;
 	problem_text: string;
 	lint_kind: string;
 	lint_kind_pretty: string;
@@ -23,11 +23,9 @@ export type UnpackedSuggestion = {
 export default function unpackLint(lint: Lint): UnpackedLint {
 	const span = lint.span();
 
-	console.log(span);
-
 	return {
 		span: { start: span.start, end: span.end },
-		message: lint.message(),
+		message_html: lint.message_html(),
 		problem_text: lint.get_problem_text(),
 		lint_kind: lint.lint_kind(),
 		lint_kind_pretty: lint.lint_kind_pretty(),

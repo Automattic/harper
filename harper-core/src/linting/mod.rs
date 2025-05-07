@@ -142,7 +142,7 @@ pub use whereas::Whereas;
 pub use widely_accepted::WidelyAccepted;
 pub use wordpress_dotcom::WordPressDotcom;
 
-use crate::{Document, LSend};
+use crate::{Document, LSend, render_markdown};
 
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
@@ -169,10 +169,7 @@ where
 {
     fn description_html(&self) -> String {
         let desc = self.description();
-        let parser = pulldown_cmark::Parser::new(desc);
-        let mut html = String::new();
-        pulldown_cmark::html::push_html(&mut html, parser);
-        html
+        render_markdown(desc)
     }
 }
 
