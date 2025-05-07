@@ -201,6 +201,11 @@ impl Parser for Markdown {
                 | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::CodeBlock)
                 | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::TableCell) => {
                     tokens.push(Token {
+                        // We cannot use `traversed_chars` here, as it will still point to the
+                        // first character of the `Event` at this point. Instead, we use the
+                        // position of the previous token's last character. This ensures the
+                        // paragraph break is placed at the end of the content, not its beginning.
+                        // For more info, see: https://github.com/Automattic/harper/pull/1239.
                         span: Span::new_with_len(tokens.last().map_or(0, |last| last.span.end), 0),
                         kind: TokenKind::ParagraphBreak,
                     });
