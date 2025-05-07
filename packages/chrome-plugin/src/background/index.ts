@@ -137,7 +137,7 @@ async function handleSetDomainStatus(req: SetDomainStatusRequest): Promise<UnitR
 async function handleGetLintDescriptions(
 	req: GetLintDescriptionsRequest,
 ): Promise<GetLintDescriptionsResponse> {
-	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptions() };
+	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptionsHTML() };
 }
 
 async function handleAddToUserDictionary(req: AddToUserDictionaryRequest): Promise<UnitResponse> {
