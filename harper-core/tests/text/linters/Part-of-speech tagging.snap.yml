@@ -96,7 +96,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       33 | as the more common plural noun. Grammatical context is one way to determine
-         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       34 | this; semantic analysis can also be used to infer that "sailor" and "hatch"
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       35 | implicate "dogs" as 1) in the nautical context and 2) an action applied to the
@@ -411,7 +411,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      148 | expensive since it enumerated all possibilities. It sometimes had to resort to
-         |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      149 | backup methods when there were simply too many options (the Brown Corpus
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      150 | contains a case with 17 ambiguous words in a row, and there are words such as
@@ -476,19 +476,6 @@ Suggest:
 
 
 
-Lint:    Readability (127 priority)
-Message: |
-     162 | fields. DeRose used a table of pairs, while Church used a table of triples and a
-         |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     163 | method of estimating the values for triples that were rare or nonexistent in the
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     164 | Brown Corpus (an actual measurement of triple probabilities would require a much
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     165 | larger corpus). Both methods achieved an accuracy of over 95%. DeRose's 1990
-         | ~~~~~~~~~~~~~~~ This sentence is 43 words long.
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      162 | fields. DeRose used a table of pairs, while Church used a table of triples and a
@@ -497,6 +484,19 @@ Suggest:
   - Replace with: “Depose”
   - Replace with: “Defoe”
   - Replace with: “Denise”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     162 | fields. DeRose used a table of pairs, while Church used a table of triples and a
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     163 | method of estimating the values for triples that were rare or nonexistent in the
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     164 | Brown Corpus (an actual measurement of triple probabilities would require a much
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     165 | larger corpus). Both methods achieved an accuracy of over 95%. DeRose's 1990
+         | ~~~~~~~~~~~~~~~ This sentence is 43 words long.
 
 
 
@@ -527,7 +527,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      175 | semantics is required, but those proved negligibly rare. This convinced many in
-         |                                                         ^~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                          ^~~~~~~~~~~~~~~~~~~~~~~
      176 | the field that part-of-speech tagging could usefully be separated from the other
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      177 | levels of processing; this, in turn, simplified the theory and practice of

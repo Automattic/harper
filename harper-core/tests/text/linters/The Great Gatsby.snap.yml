@@ -40,7 +40,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       17 | bores. The abnormal mind is quick to detect and attach itself to this quality
-         |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       18 | when it appears in a normal person, and so it came about that in college I was
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       19 | unjustly accused of being a politician, because I was privy to the secret griefs
@@ -53,7 +53,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
       20 | of wild, unknown men. Most of the confidences were unsought—frequently I have
-         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       21 | feigned sleep, preoccupation, or a hostile levity when I realized by some
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       22 | unmistakable sign that an intimate revelation was quivering on the horizon; for
@@ -101,7 +101,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       32 | after a certain point I don’t care what it’s founded on. When I came back from
-         |                                                         ^~~~~~~~~~~~~~~~~~~~~~~
+         |                                                          ^~~~~~~~~~~~~~~~~~~~~~
       33 | the East last autumn I felt that I wanted the world to be in uniform and at a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       34 | sort of moral attention forever; I wanted no more riotous excursions with
@@ -114,7 +114,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
       37 | everything for which I have an unaffected scorn. If personality is an unbroken
-         |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       38 | series of successful gestures, then there was something gorgeous about him, some
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       39 | heightened sensitivity to the promises of life, as if he were related to one of
@@ -127,7 +127,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
       40 | those intricate machines that register earthquakes ten thousand miles away. This
-         |                                                                            ^~~~~~
+         |                                                                             ^~~~~
       41 | responsiveness had nothing to do with that flabby impressionability which is
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       42 | dignified under the name of the “creative temperament”—it was an extraordinary
@@ -142,7 +142,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
       44 | person and which it is not likely I shall ever find again. No—Gatsby turned out
-         |                                                           ^~~~~~~~~~~~~~~~~~~~~~
+         |                                                            ^~~~~~~~~~~~~~~~~~~~~
       45 | all right at the end; it is what preyed on Gatsby, what foul dust floated in the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       46 | wake of his dreams that temporarily closed out my interest in the abortive
@@ -167,7 +167,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       50 | three generations. The Carraways are something of a clan, and we have a
-         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       51 | tradition that we’re descended from the Dukes of Buccleuch, but the actual
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       52 | founder of my line was my grandfather’s brother, who came here in fifty-one,
@@ -240,7 +240,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       74 | Washington, and I went out to the country alone. I had a dog—at least I had him
-         |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       75 | for a few days until he ran away—and an old Dodge and a Finnish woman, who made
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       76 | my bed and cooked breakfast and muttered Finnish wisdom to herself over the
@@ -253,7 +253,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
       93 | down out of the young breath-giving air. I bought a dozen volumes on banking and
-         |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       94 | credit and investment securities, and they stood on my shelf in red and gold
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       95 | like new money from the mint, promising to unfold the shining secrets that only
@@ -278,7 +278,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       97 | other books besides. I was rather literary in college—one year I wrote a series
-         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       98 | of very solemn and obvious editorials for the Yale News—and now I was going to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       99 | bring back all such things into my life and become again that most limited of
@@ -291,7 +291,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      106 | natural curiosities, two unusual formations of land. Twenty miles from the city
-         |                                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
      107 | a pair of enormous eggs, identical in contour and separated only by a courtesy
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      108 | bay, jut out into the most domesticated body of salt water in the Western
@@ -304,7 +304,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      119 | thousand a season. The one on my right was a colossal affair by any standard—it
-         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      121 | side, spanking new under a thin beard of raw ivy, and a marble swimming pool,
@@ -363,7 +363,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      124 | of that name. My own house was an eyesore, but it was a small eyesore, and it
-         |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      125 | had been overlooked, so I had a view of the water, a partial view of my
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      126 | neighbor’s lawn, and the consoling proximity of millionaires—all for eighty
@@ -409,7 +409,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      138 | everything afterward savors of anti-climax. His family were enormously
-         |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
      139 | wealthy—even in college his freedom with money was a matter for reproach—but now
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      140 | he’d left Chicago and come East in a fashion that rather took your breath away:
@@ -432,7 +432,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      146 | played polo and were rich together. This was a permanent move, said Daisy over
-         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      147 | the telephone, but I didn’t believe it—I had no sight into Daisy’s heart, but I
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      148 | felt that Tom would drift on forever seeking, a little wistfully, for the
@@ -445,7 +445,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      154 | the bay. The lawn started at the beach and ran toward the front door for a
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      155 | quarter of a mile, jumping over sun-dials and brick walks and burning
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      156 | gardens—finally when it reached the house drifting up the side in bright vines
@@ -467,7 +467,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      165 | appearance of always leaning aggressively forward. Not even the effeminate swank
-         |                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      166 | of his riding clothes could hide the enormous power of that body—he seemed to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      167 | fill those glistening boots until he strained the top lacing, and you could see
@@ -532,7 +532,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      195 | into the house. A breeze blew through the room, blew curtains in at one end and
-         |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      196 | out the other like pale flags, twisting them up toward the frosted wedding-cake
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      197 | of the ceiling, and then rippled over the wine-colored rug, making a shadow on
@@ -545,7 +545,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      236 | speech is an arrangement of notes that will never be played again. Her face was
-         |                                                                   ^~~~~~~~~~~~~~
+         |                                                                    ^~~~~~~~~~~~~
      237 | sad and lovely with bright things in it, bright eyes and a bright passionate
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      238 | mouth, but there was an excitement in her voice that men who had cared for her
@@ -698,7 +698,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      484 | The horses, needless to say, were not mentioned again. Tom and Miss Baker, with
-         |                                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                        ^~~~~~~~~~~~~~~~~~~~~~~~~
      485 | several feet of twilight between them, strolled back into the library, as if to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      486 | a vigil beside a perfectly tangible body, while, trying to look pleasantly
@@ -812,7 +812,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      633 | of the earth blew the frogs full of life. The silhouette of a moving cat wavered
-         |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      634 | across the moonlight, and turning my head to watch it, I saw that I was not
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      635 | alone—fifty feet away a figure had emerged from the shadow of my neighbor’s
@@ -827,7 +827,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      642 | do for an introduction. But I didn’t call to him, for he gave a sudden
-         |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      643 | intimation that he was content to be alone—he stretched out his arms toward the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      644 | dark water in a curious way, and, far as I was from him, I could have sworn he
@@ -850,7 +850,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      654 | certain desolate area of land. This is a valley of ashes—a fantastic farm where
-         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      655 | ashes grow like wheat into ridges and hills and grotesque gardens; where ashes
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      656 | take the forms of houses and chimneys and rising smoke and, finally, with a
@@ -865,7 +865,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      658 | through the powdery air. Occasionally a line of gray cars crawls along an
-         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      659 | invisible track, gives out a ghastly creak, and comes to rest, and immediately
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      660 | the ash-gray men swarm up with leaden spades and stir up an impenetrable cloud,
@@ -1033,7 +1033,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      703 | dust-covered wreck of a Ford which crouched in a dim corner. It had occurred to
-         |                                                             ^~~~~~~~~~~~~~~~~~~~
+         |                                                              ^~~~~~~~~~~~~~~~~~~
      704 | me that this shadow of a garage must be a blind, and that sumptuous and romantic
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      705 | apartments were concealed overhead, when the proprietor himself appeared in the
@@ -1179,7 +1179,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      850 | Wilson was first concerned with the dog. A reluctant elevator-boy went for a box
-         |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      851 | full of straw and some milk, to which he added on his own initiative a tin of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      852 | large, hard dog-biscuits— one of which decomposed apathetically in the saucer of
@@ -1192,7 +1192,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      860 | and I went out to buy some at the drugstore on the corner. When I came back they
-         |                                                           ^~~~~~~~~~~~~~~~~~~~~~~
+         |                                                            ^~~~~~~~~~~~~~~~~~~~~~
      861 | had both disappeared, so I sat down discreetly in the living-room and read a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      862 | chapter of “Simon Called Peter”—either it was terrible stuff or the whiskey
@@ -1344,7 +1344,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1078 | supper in themselves. I wanted to get out and walk eastward toward the park
-         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1079 | through the soft twilight, but each time I tried to go I became entangled in
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1080 | some wild, strident argument which pulled me back, as if with ropes, into my
@@ -1390,7 +1390,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1128 | awoke from his doze and started in a daze toward the door. When he had gone half
-         |                                                           ^~~~~~~~~~~~~~~~~~~~~~~
+         |                                                            ^~~~~~~~~~~~~~~~~~~~~~
     1129 | way he turned around and stared at the scene—his wife and Catherine scolding and
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1130 | consoling as they stumbled here and there among the crowded furniture with
@@ -1465,7 +1465,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1161 | champagne and the stars. At high tide in the afternoon I watched his guests
-         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1162 | diving from the tower of his raft, or taking the sun on the hot sand of his
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1163 | beach while his two motor-boats slit the waters of the Sound, drawing aquaplanes
@@ -1546,7 +1546,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1188 | piccolos, and low and high drums. The last swimmers have come in from the beach
-         |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1189 | now and are dressing up-stairs; the cars from New York are parked five deep in
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1190 | the drive, and already the halls and salons and verandas are gaudy with primary
@@ -1573,7 +1573,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1192 | Castile. The bar is in full swing, and floating rounds of cocktails permeate the
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1193 | garden outside, until the air is alive with chatter and laughter, and casual
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1194 | innuendo and introductions forgotten on the spot, and enthusiastic meetings
@@ -1586,7 +1586,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1200 | tipped out at a cheerful word. The groups change more swiftly, swell with new
-         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1201 | arrivals, dissolve and form in the same breath; already there are wanderers,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1202 | confident girls who weave here and there among the stouter and more stable,
@@ -1626,7 +1626,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1223 | I had been actually invited. A chauffeur in a uniform of robin’s-egg blue
-         |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1224 | crossed my lawn early that Saturday morning with a surprisingly formal note from
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1225 | his employer: the honor would be entirely Gatsby’s, it said, if I would attend
@@ -1855,7 +1855,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1463 | prejudice in your favor. It understood you just so far as you wanted to be
-         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1464 | understood, believed in you as you would like to believe in yourself, and
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1465 | assured you that it had precisely the impression of you that, at your best, you
@@ -1937,7 +1937,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1529 | more correct as the fraternal hilarity increased. When the “Jazz History of the
-         |                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1530 | World” was over, girls were putting their heads on men’s shoulders in a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1531 | puppyish, convivial way, girls were swooning backward playfully into men’s arms,
@@ -1976,7 +1976,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1574 | rent asunder by dissension. One of the men was talking with curious intensity to
-         |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1575 | a young actress, and his wife, after attempting to laugh at the situation in a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1576 | dignified and indifferent way, broke down entirely and resorted to flank
@@ -2099,7 +2099,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1740 | potatoes and coffee. I even had a short affair with a girl who lived in Jersey
-         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1741 | City and worked in the accounting department, but her brother began throwing
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1742 | mean looks in my direction, so when she went on her vacation in July I let it
@@ -2112,7 +2112,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1759 | darkness. At the enchanted metropolitan twilight I felt a haunting loneliness
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1760 | sometimes, and felt it in others—poor young clerks who loitered in front of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1761 | windows waiting until it was time for a solitary restaurant dinner—young clerks
@@ -2150,7 +2150,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1777 | found what it was. When we were on a house-party together up in Warwick, she
-         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1778 | left a borrowed car out in the rain with the top down, and then lied about
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1779 | it—and suddenly I remembered the story about her that had eluded me that night
@@ -2163,7 +2163,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1789 | thought impossible. She was incurably dishonest. She wasn’t able to endure being
-         |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1790 | at a disadvantage and, given this unwillingness, I suppose she had begun dealing
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1791 | in subterfuges when she was very young in order to keep that cool, insolent
@@ -2565,19 +2565,6 @@ Suggest:
 
 
 
-Lint:    Readability (127 priority)
-Message: |
-    1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
-         |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    1874 | Associated Traction would have to fluctuate profitably next day.
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 49 words long.
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
@@ -2586,6 +2573,19 @@ Suggest:
   - Replace with: “D”
   - Replace with: “Dab”
   - Replace with: “Dad”
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+    1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
+         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    1874 | Associated Traction would have to fluctuate profitably next day.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 49 words long.
 
 
 
@@ -2692,7 +2692,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1879 | Bull. Also from New York were the Chromes and the Backhyssons and the Dennickers
-         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1880 | and Russel Betty and the Corrigans and the Kellehers and the Dewars and the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
@@ -2856,7 +2856,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1887 | inevitably seemed they had been there before. I have forgotten their
-         |                                              ^~~~~~~~~~~~~~~~~~~~~~~~
+         |                                               ^~~~~~~~~~~~~~~~~~~~~~~
     1888 | names—Jaqueline, I think, or else Consuela, or Gloria or Judy or June, and their
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1889 | last names were either the melodious names of flowers and months or the sterner
@@ -3004,7 +3004,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1974 | “After that I lived like a young rajah in all the capitals of Europe—Paris,
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1975 | Venice, Rome—collecting jewels, chiefly rubies, hunting big game, painting a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1976 | little, things for myself only, and trying to forget something very sad that had
@@ -3507,7 +3507,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2291 | with rubber nobs on the soles that bit into the soft ground. I had on a new
-         |                                                             ^~~~~~~~~~~~~~~~
+         |                                                              ^~~~~~~~~~~~~~~
     2292 | plaid skirt also that blew a little in the wind, and whenever this happened the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2293 | red, white, and blue banners in front of all the houses stretched out stiff and
@@ -3555,7 +3555,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2332 | than Louisville ever knew before. He came down with a hundred people in four
-         |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2333 | private cars, and hired a whole floor of the Muhlbach Hotel, and the day before
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2334 | the wedding he gave her a string of pearls valued at three hundred and fifty
@@ -3631,7 +3631,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2360 | But she didn’t say another word. We gave her spirits of ammonia and put ice on
-         |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2361 | her forehead and hooked her back into her dress, and half an hour later, when we
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2362 | walked out of the room, the pearls were around her neck and the incident was
@@ -3785,7 +3785,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2606 | thin drops swam like dew. Gatsby looked with vacant eyes through a copy of
-         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2607 | Clay’s “Economics,” starting at the Finnish tread that shook the kitchen floor,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2608 | and peering toward the bleared windows from time to time as if a series of
@@ -3851,7 +3851,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2673 | a strained counterfeit of perfect ease, even of boredom. His head leaned back so
-         |                                                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                          ^~~~~~~~~~~~~~~~~~~~~~~~
     2674 | far that it rested against the face of a defunct mantelpiece clock, and from
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2675 | this position his distraught eyes stared down at Daisy, who was sitting,
@@ -3884,7 +3884,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2743 | steeple, for half an hour. A brewer had built it early in the “period” craze, a
-         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2744 | decade before, and there was a story that he’d agreed to pay five years’ taxes
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2745 | on all the neighboring cottages if the owners would have their roofs thatched
@@ -3938,7 +3938,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2827 | entered by the big postern. With enchanting murmurs Daisy admired this aspect or
-         |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2828 | that of the feudal silhouette against the sky, admired the gardens, the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2829 | sparkling odor of jonquils and the frothy odor of hawthorn and plum blossoms and
@@ -4128,7 +4128,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     3020 | short of being news. Contemporary legends such as the “underground pipe-line to
-         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3021 | Canada” attached themselves to him, and there was one persistent story that he
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3022 | didn’t live in a house at all, but in a boat that looked like a house and was
@@ -4164,7 +4164,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     3029 | on Lake Superior. It was James Gatz who had been loafing along the beach that
-         |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3030 | afternoon in a torn green jersey and a pair of canvas pants, but it was already
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3031 | Jay Gatsby who borrowed a rowboat, pulled out to the Tuolomee, and informed Cody
@@ -4339,7 +4339,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     3116 | It was a halt, too, in my association with his affairs. For several weeks I
-         |                                                        ^~~~~~~~~~~~~~~~~~~~~
+         |                                                         ^~~~~~~~~~~~~~~~~~~~
     3117 | didn’t see him or hear his voice on the phone—mostly I was in New York, trotting
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3118 | around with Jordan and trying to ingratiate myself with her senile aunt—but
@@ -4404,7 +4404,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     3235 | in my memory from Gatsby’s other parties that summer. There were the same
-         |                                                      ^~~~~~~~~~~~~~~~~~~~~
+         |                                                       ^~~~~~~~~~~~~~~~~~~~
     3236 | people, or at least the same sort of people, the same profusion of champagne,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3237 | the same many-colored, many-keyed commotion, but I felt an unpleasantness in the
@@ -4428,7 +4428,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     3238 | air, a pervading harshness that hadn’t been there before. Or perhaps I had
-         |                                                          ^~~~~~~~~~~~~~~~~~
+         |                                                           ^~~~~~~~~~~~~~~~~
     3239 | merely grown used to it, grown to accept West Egg as a world complete in itself,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3240 | with its own standards and its own great figures, second to nothing because it
@@ -4526,7 +4526,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     3350 | emotion. She was appalled by West Egg, this unprecedented “place” that Broadway
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3351 | had begotten upon a Long Island fishing village—appalled by its raw vigor that
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3352 | chafed under the old euphemisms and by the too obtrusive fate that herded its
@@ -4550,7 +4550,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     3414 | dim, incalculable hours? Perhaps some unbelievable guest would arrive, a person
-         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3415 | infinitely rare and to be marvelled at, some authentically radiant young girl
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3416 | who with one fresh glance at Gatsby, one moment of magical encounter, would blot
@@ -4585,10 +4585,8 @@ Message: |
 
 Lint:    Readability (127 priority)
 Message: |
-    3473 | humming out into the darkness and there was a stir and bustle among the stars.
-         |                                                                               ^
     3474 | Out of the corner of his eye Gatsby saw that the blocks of the sidewalks really
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3475 | formed a ladder and mounted to a secret place above the trees—he could climb to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3476 | it, if he climbed alone, and once there he could suck on the pap of life, gulp
@@ -4683,7 +4681,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     3553 | of the National Biscuit Company broke the simmering hush at noon. The straw
-         |                                                                  ^~~~~~~~~~~
+         |                                                                   ^~~~~~~~~~
     3554 | seats of the car hovered on the edge of combustion; the woman next to me
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3555 | perspired delicately for a while into her white shirtwaist, and then, as her
@@ -5028,7 +5026,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     3937 | world, and the shock had made him physically sick. I stared at him and then at
-         |                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3938 | Tom, who had made a parallel discovery less than an hour before—and it occurred
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3939 | to me that there was no difference between men, in intelligence or race, so
@@ -5086,7 +5084,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     3955 | into her face like objects into a slowly developing picture. Her expression was
-         |                                                             ^~~~~~~~~~~~~~~~~~~~
+         |                                                              ^~~~~~~~~~~~~~~~~~~
     3956 | curiously familiar—it was an expression I had often seen on women’s faces, but
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3957 | on Myrtle Wilson’s face it seemed purposeless and inexplicable until I realized
@@ -5101,7 +5099,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     3963 | ago secure and inviolate, were slipping precipitately from his control. Instinct
-         |                                                                        ^~~~~~~~~~
+         |                                                                         ^~~~~~~~~
     3964 | made him step on the accelerator with the double purpose of overtaking Daisy and
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3965 | leaving Wilson behind, and we sped along toward Astoria at fifty miles an hour,
@@ -5432,7 +5430,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     4337 | defending his name against accusations that had not been made. But with every
-         |                                                               ^~~~~~~~~~~~~~~~
+         |                                                                ^~~~~~~~~~~~~~~
     4338 | word she was drawing further and further into herself, so he gave that up, and
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4339 | only the dead dream fought on as the afternoon slipped away, trying to touch
@@ -5596,7 +5594,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     4427 | policeman that it was light green. The other car, the one going toward New York,
-         |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4428 | came to rest a hundred yards beyond, and it’s driver hurried back to where
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4429 | Myrtle Wilson, her life violently extinguished, knelt in the road and mingled
@@ -5672,7 +5670,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     4470 | a little book. At first I couldn’t find the source of the high, groaning words
-         |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4471 | that echoed clamorously through the bare garage—then I saw Wilson standing on
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4472 | the raised threshold of his office, swaying back and forth and holding to the
@@ -5980,10 +5978,8 @@ Suggest:
 
 Lint:    Readability (127 priority)
 Message: |
-    4738 | and I tossed half-sick between grotesque reality and savage, frightening dreams.
-         |                                                                                 ^
     4739 | Toward dawn I heard a taxi go up Gatsby’s drive, and immediately I jumped out of
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4740 | bed and began to dress—I felt that I had something to tell him, something to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4741 | warn him about, and morning would be too late.
@@ -6005,7 +6001,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     4780 | her as his tent out at camp was to him. There was a ripe mystery about it, a
-         |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4781 | hint of bedrooms up-stairs more beautiful and cool than other bedrooms, of gay
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4782 | and radiant activities taking place through its corridors, and of romances that
@@ -6022,7 +6018,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     4797 | pretenses. I don’t mean that he had traded on his phantom millions, but he had
-         |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4798 | deliberately given Daisy a sense of security; he let her believe that he was a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4799 | person from much the same strata as herself—that he was fully able to take care
@@ -6035,7 +6031,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     4814 | kissed her curious and lovely mouth. She had caught a cold, and it made her
-         |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4815 | voice huskier and more charming than ever, and Gatsby was overwhelmingly aware
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4816 | of the youth and mystery that wealth imprisons and preserves, of the freshness
@@ -6059,10 +6055,8 @@ Suggest:
 
 Lint:    Readability (127 priority)
 Message: |
-    4832 | as if to give them a deep memory for the long parting the next day promised.
-         |                                                                             ^
     4833 | They had never been closer in their month of love, nor communicated more
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4834 | profoundly one with another, than when she brushed silent lips against his
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4835 | coat’s shoulder or when he touched the end of her fingers, gently, as though she
@@ -6154,7 +6148,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5016 | to the other side of the car. I supposed there’d be a curious crowd around there
-         |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5017 | all day with little boys searching for dark spots in the dust, and some
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5018 | garrulous man telling over and over what had happened, until it became less and
@@ -6198,7 +6192,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5041 | quieter and began to talk about the yellow car. He announced that he had a way
-         |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5042 | of finding out whom the yellow car belonged to, and then he blurted out that a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5043 | couple of months ago his wife had come from the city with her face bruised and
@@ -6240,7 +6234,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5059 | the car that hadn’t stopped a few hours before. He didn’t like to go into the
-         |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5060 | garage, because the work bench was stained where the body had been lying, so he
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5061 | moved uncomfortably around the office—he knew every object in it before
@@ -6478,7 +6472,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5230 | and out of Gatsby’s front door. A rope stretched across the main gate and a
-         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5231 | policeman by it kept out the curious, but little boys soon discovered that they
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5232 | could enter through my yard, and there were always a few of them clustered
@@ -6511,10 +6505,8 @@ Suggest:
 
 Lint:    Readability (127 priority)
 Message: |
-    5241 | racy pasquinade—but Catherine, who might have said anything, didn’t say a word.
-         |                                                                                ^
     5242 | She showed a surprising amount of character about it too—looked at the coroner
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5243 | with determined eyes under that corrected brow of hers, and swore that her
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5244 | sister had never seen Gatsby, that her sister was completely happy with her
@@ -6527,7 +6519,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     5253 | referred to me. At first I was surprised and confused; then, as he lay in his
-         |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5254 | house and didn’t move or breathe or speak, hour upon hour, it grew upon me that
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5255 | I was responsible, because no one else was interested—interested, I mean, with
@@ -6749,7 +6741,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5386 | face flushed slightly, his eyes leaking isolated and unpunctual tears. He had
-         |                                                                       ^~~~~~~~
+         |                                                                        ^~~~~~~
     5387 | reached an age where death no longer has the quality of ghastly surprise, and
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5388 | when he looked around him now for the first time and saw the height and splendor
@@ -7043,7 +7035,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5660 | from college at Christmas time. Those who went farther than Chicago would gather
-         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5661 | in the old dim Union Street station at six o’clock of a December evening, with a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5662 | few Chicago friends, already caught up into their own holiday gayeties, to bid
@@ -7068,7 +7060,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5663 | them a hasty good-by. I remember the fur coats of the girls returning from Miss
-         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5664 | This-or-That’s and the chatter of frozen breath and the hands waving overhead as
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5665 | we caught sight of old acquaintances, and the matchings of invitations: “Are you
@@ -7170,7 +7162,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5683 | city where dwellings are still called through decades by a family’s name. I see
-         |                                                                          ^~~~~~~
+         |                                                                           ^~~~~~
     5684 | now that this has been a story of the West, after all—Tom and Gatsby, Daisy and
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5685 | Jordan and I, were all Westerners, and perhaps we possessed some deficiency in
@@ -7278,7 +7270,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5743 | One afternoon late in October I saw Tom Buchanan. He was walking ahead of me
-         |                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
     5744 | along Fifth Avenue in his alert, aggressive way, his hands out a little from his
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5745 | body as if to fight off interference, his head moving sharply here and there,
@@ -7291,7 +7283,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     5775 | “And if you think I didn’t have my share of suffering—look here, when I went to
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5776 | give up that flat and saw that damn box of dog biscuits sitting there on the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5777 | sideboard, I sat down and cried like a baby. By God it was awful—”
@@ -7302,7 +7294,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     5780 | entirely justified. It was all very careless and confused. They were careless
-         |                                                           ^~~~~~~~~~~~~~~~~~~~
+         |                                                            ^~~~~~~~~~~~~~~~~~~
     5781 | people, Tom and Daisy—they smashed up things and creatures and then retreated
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5782 | back into their money or their vast carelessness, or whatever it was that kept
@@ -7325,7 +7317,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5791 | long as mine. One of the taxi drivers in the village never took a fare past the
-         |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5792 | entrance gate without stopping for a minute and pointing inside; perhaps it was
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5793 | he who drove Daisy and Gatsby over to East Egg the night of the accident, and
@@ -7363,7 +7355,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     5814 | green breast of the new world. Its vanished trees, the trees that had made way
-         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5815 | for Gatsby’s house, had once pandered in whispers to the last and greatest of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5816 | all human dreams; for a transitory enchanted moment man must have held his

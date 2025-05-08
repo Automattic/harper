@@ -1,6 +1,6 @@
 use crate::Token;
 
-use super::{Pattern, WordSet};
+use super::{SingleTokenPattern, WordSet};
 
 pub struct IndefiniteArticle {
     inner: WordSet,
@@ -14,8 +14,8 @@ impl Default for IndefiniteArticle {
     }
 }
 
-impl Pattern for IndefiniteArticle {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        self.inner.matches(tokens, source)
+impl SingleTokenPattern for IndefiniteArticle {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        self.inner.matches_token(token, source)
     }
 }

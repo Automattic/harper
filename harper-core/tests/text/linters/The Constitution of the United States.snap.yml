@@ -50,7 +50,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       17 | Representatives. Congress shall make no law respecting an establishment of
-         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       18 | religion, or prohibiting the free exercise thereof; or abridging the freedom of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       19 | speech, or of the press; or the right of the people peaceably to assemble, and
@@ -110,7 +110,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
       50 | excluding Indians not taxed. But when the right to vote at any election for the
-         |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       51 | choice of electors for President and Vice President of the United States,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       52 | Representatives in Congress, the Executive and Judicial officers of a State, or
@@ -144,7 +144,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       61 | in such Manner as they shall by Law direct. The Number of Representatives shall
-         |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       62 | not exceed one for every thirty Thousand, but each State shall have at Least
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       63 | one Representative; and until such enumeration shall be made, the State of New
@@ -186,7 +186,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       86 | they shall be divided as equally as may be into three Classes. The Seats of the
-         |                                                               ^~~~~~~~~~~~~~~~~~
+         |                                                                ^~~~~~~~~~~~~~~~~
       87 | Senators of the first Class shall be vacated at the Expiration of the second
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       88 | Year, of the second Class at the Expiration of the fourth Year, and of the
@@ -360,7 +360,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      155 | the United States. They shall in all Cases, except Treason, Felony and Breach
-         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      156 | of the Peace, be privileged from Arrest during their Attendance at the Session
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      157 | of their respective Houses, and in going to and returning from the same; and
@@ -449,7 +449,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      181 | Objections at large on their Journal, and proceed to reconsider it. If after
-         |                                                                    ^~~~~~~~~~
+         |                                                                     ^~~~~~~~~
      182 | such Reconsideration two thirds of that House shall agree to pass the Bill, it
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      183 | shall be sent, together with the Objections, to the other House, by which it
@@ -464,7 +464,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      187 | against the Bill shall be entered on the Journal of each House respectively. If
-         |                                                                             ^~~~
+         |                                                                              ^~~
      188 | any Bill shall not be returned by the President within ten Days (Sundays
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      189 | excepted) after it shall have been presented to him, the Same shall be a Law,
@@ -840,7 +840,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      355 | by ballot, the President. But in choosing the President, the votes shall be
-         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      356 | taken by states, the representation from each state having one vote; a quorum
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      357 | for this purpose shall consist of a member or members from two-thirds of the
@@ -853,7 +853,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      360 | elect shall have died, the Vice President elect shall become President. If a
-         |                                                                        ^~~~~~
+         |                                                                         ^~~~~
      361 | President shall not have been chosen before the time fixed for the beginning of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      362 | his term, or if the President elect shall have failed to qualify, then the Vice
@@ -884,7 +884,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      372 | President whenever the right of choice shall have devolved upon them.]The
-         |                                                                      ^~~~~
+         |                                                                       ^~~~
      373 | person having the greatest number of votes as Vice-President, shall be the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      374 | Vice-President, if such number be a majority of the whole number of Electors
@@ -943,7 +943,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      399 | be elected to the office of the President more than once. But this article
-         |                                                          ^~~~~~~~~~~~~~~~~~
+         |                                                           ^~~~~~~~~~~~~~~~~
      400 | shall not apply to any person holding the office of President when this article
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      401 | was proposed by the Congress, and shall not prevent any person who may be
@@ -1061,7 +1061,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      437 | purpose if not in session. If the Congress, within twenty-one days after
-         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      438 | receipt of the latter written declaration, or, if Congress is not in session,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      439 | within twenty-one days after Congress is required to assemble, determines by
@@ -1383,7 +1383,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      610 | the State wherein they reside. No State shall make or enforce any law which
-         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      611 | shall abridge the privileges or immunities of citizens of the United States;
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      612 | nor shall any State deprive any person of life, liberty, or property, without
@@ -1445,7 +1445,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      627 | States, or any place subject to their jurisdiction. No Person held to Service
-         |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
      628 | or Labour in one State, under the Laws thereof, escaping into another, shall,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      629 | in Consequence of any Law or Regulation therein, be discharged from such
@@ -1548,7 +1548,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      658 | questioned. But neither the United States nor any State shall assume or pay any
-         |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      659 | debt or obligation incurred in aid of insurrection or rebellion against the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      660 | United States, or any claim for the loss or emancipation of any slave; but all
