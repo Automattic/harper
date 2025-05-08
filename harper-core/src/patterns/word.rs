@@ -1,4 +1,4 @@
-use super::Pattern;
+use super::SingleTokenPattern;
 
 use crate::{CharString, Token};
 
@@ -36,17 +36,16 @@ impl Word {
     }
 }
 
-impl Pattern for Word {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        let tok = tokens.first()?;
-        if !tok.kind.is_word() {
-            return None;
+impl SingleTokenPattern for Word {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        if !token.kind.is_word() {
+            return false;
         }
-        if tok.span.len() != self.word.len() {
-            return None;
+        if token.span.len() != self.word.len() {
+            return false;
         }
 
-        let chars = tok.span.get_content(source);
+        let chars = token.span.get_content(source);
         let eq = if self.exact {
             chars == self.word.as_slice()
         } else {
@@ -56,7 +55,7 @@ impl Pattern for Word {
                 .all(|(a, b)| a.eq_ignore_ascii_case(b))
         };
 
-        if eq { Some(1) } else { None }
+        eq
     }
 }
 

@@ -815,6 +815,7 @@ dependencies = [
  "quickcheck",
  "quickcheck_macros",
  "rand",
+ "rayon",
  "serde",
  "serde_json",
  "smallvec",

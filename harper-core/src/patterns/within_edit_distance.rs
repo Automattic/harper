@@ -1,11 +1,11 @@
 use std::cell::RefCell;
 
-use super::Pattern;
+use super::SingleTokenPattern;
 use crate::{CharString, CharStringExt, Token};
 
 use crate::edit_distance::edit_distance_min_alloc;
 
-/// A [`Pattern`] that matches single words within a certain edit distance of a given word.
+/// Matches single words within a certain edit distance of a given word.
 pub struct WithinEditDistance {
     word: CharString,
     max_edit_dist: u8,
@@ -31,14 +31,13 @@ thread_local! {
     static BUFFERS: RefCell<(Vec<u8>, Vec<u8>)> = const { RefCell::new((Vec::new(), Vec::new())) };
 }
 
-impl Pattern for WithinEditDistance {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        let first = tokens.first()?;
-        if !first.kind.is_word() {
-            return None;
+impl SingleTokenPattern for WithinEditDistance {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        if !token.kind.is_word() {
+            return false;
         }
 
-        let content = first.span.get_content(source);
+        let content = token.span.get_content(source);
 
         BUFFERS.with_borrow_mut(|(buffer_a, buffer_b)| {
             let distance = edit_distance_min_alloc(
@@ -47,11 +46,7 @@ impl Pattern for WithinEditDistance {
                 buffer_a,
                 buffer_b,
             );
-            if distance <= self.max_edit_dist {
-                Some(1)
-            } else {
-                None
-            }
+            distance <= self.max_edit_dist
         })
     }
 }

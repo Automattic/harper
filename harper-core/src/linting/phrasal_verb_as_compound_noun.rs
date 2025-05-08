@@ -139,10 +139,8 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             }
 
             let message = match (phrasal_verb_is_verb, verb_part_is_verb) {
-                (true, _) => Some("This word should be a phrasal verb, not a compound noun."),
-                (false, true) => {
-                    Some("This word might be a phrasal verb rather than a compound noun.")
-                }
+                (true, _) => "This word should be a phrasal verb, not a compound noun.",
+                (false, true) => "This word might be a phrasal verb rather than a compound noun.",
                 _ => continue,
             };
 
@@ -176,7 +174,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                 span: Span::new(token.span.start, token.span.end),
                 lint_kind: LintKind::WordChoice,
                 suggestions: vec![Suggestion::ReplaceWith(phrasal_verb.chars().collect())],
-                message: message.unwrap().to_string(),
+                message: message.to_string(),
                 priority: 63,
             });
         }

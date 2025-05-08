@@ -1,4 +1,9 @@
-use std::path::{Path, PathBuf};
+use std::{
+    marker::Sync,
+    path::{Path, PathBuf},
+};
+
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
 fn get_tests_dir() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests")
@@ -60,20 +65,24 @@ fn get_snapshot_file(text_file: &Path, snapshot_dir: &Path, ext: &str) -> PathBu
 pub fn snapshot_all_text_files(
     out_dir: &str,
     snapshot_ext: &str,
-    create_snapshot: impl Copy + Fn(&str) -> String,
+    create_snapshot: impl Copy + Fn(&str) -> String + 'static + Sync,
 ) {
     let snapshot_dir = get_text_dir().join(out_dir);
     std::fs::create_dir_all(&snapshot_dir).expect("Failed to create snapshot directory");
 
-    let mut errors = 0;
-    for text_file in get_text_files() {
-        println!("Processing {}", text_file.display());
-        let snapshot_file = get_snapshot_file(&text_file, &snapshot_dir, snapshot_ext);
-        if let Err(e) = tag_file(&text_file, &snapshot_file, create_snapshot) {
-            eprintln!("Error processing {}: {}", text_file.display(), e);
-            errors += 1;
-        }
-    }
+    let errors: u64 = get_text_files()
+        .par_iter()
+        .map(|text_file| {
+            println!("Processing {}", text_file.display());
+            let snapshot_file = get_snapshot_file(text_file, &snapshot_dir, snapshot_ext);
+            if let Err(e) = tag_file(text_file, &snapshot_file, create_snapshot) {
+                eprintln!("Error processing {}: {}", text_file.display(), e);
+                1
+            } else {
+                0
+            }
+        })
+        .sum();
 
     if errors > 0 {
         panic!("{} errors occurred while processing files", errors);
