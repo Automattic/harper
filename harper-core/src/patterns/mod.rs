@@ -132,16 +132,25 @@ where
     }
 }
 
-impl<F> Pattern for F
-where
-    F: LSend + Fn(&Token, &[char]) -> bool,
-{
+/// A simpler version of the [`Pattern`] trait that only matches a single
+/// token.
+pub trait SingleTokenPattern: LSend {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool;
+}
+
+impl<S: SingleTokenPattern> Pattern for S {
     fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        if self(tokens.first()?, source) {
+        if self.matches_token(tokens.first()?, source) {
             Some(1)
         } else {
             None
         }
+    }
+}
+
+impl<F: LSend + Fn(&Token, &[char]) -> bool> SingleTokenPattern for F {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        self(token, source)
     }
 }
 

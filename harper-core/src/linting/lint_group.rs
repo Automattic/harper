@@ -45,6 +45,7 @@ use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nobody::Nobody;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
+use super::one_and_the_same::OneAndTheSame;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
 use super::pattern_linter::run_on_chunk;
@@ -338,6 +339,7 @@ impl LintGroup {
         insert_pattern_rule!(Nobody, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
+        insert_pattern_rule!(OneAndTheSame, true);
         insert_pattern_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
         insert_pattern_rule!(Oxymorons, true);
