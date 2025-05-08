@@ -710,16 +710,6 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-     515 | hour old and Tom was God knows where. I woke up out of the ether with an utterly
-         |                                                                       ^~ Incorrect indefinite article.
-     516 | abandoned feeling, and asked the nurse right away if it was a boy or a girl. She
-Suggest:
-  - Replace with: “a”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      529 | the whole evening had been a trick of some sort to exact a contributary emotion
