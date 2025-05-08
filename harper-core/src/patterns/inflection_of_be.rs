@@ -1,4 +1,4 @@
-use super::Pattern;
+use super::SingleTokenPattern;
 use crate::Token;
 use crate::patterns::WordSet;
 
@@ -23,8 +23,8 @@ impl InflectionOfBe {
     }
 }
 
-impl Pattern for InflectionOfBe {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        self.inner.matches(tokens, source)
+impl SingleTokenPattern for InflectionOfBe {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        self.inner.matches_token(token, source)
     }
 }

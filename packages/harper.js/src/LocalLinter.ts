@@ -95,6 +95,16 @@ export default class LocalLinter implements Linter {
 		return inner.get_lint_descriptions_as_json();
 	}
 
+	async getLintDescriptionsHTML(): Promise<Record<string, string>> {
+		const inner = await this.inner;
+		return inner.get_lint_descriptions_html_as_object();
+	}
+
+	async getLintDescriptionsHTMLAsJSON(): Promise<string> {
+		const inner = await this.inner;
+		return inner.get_lint_descriptions_html_as_json();
+	}
+
 	async ignoreLint(source: string, lint: Lint): Promise<void> {
 		const inner = await this.inner;
 		inner.ignore_lint(source, lint);

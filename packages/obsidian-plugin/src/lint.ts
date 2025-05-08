@@ -484,6 +484,13 @@ const baseTheme = EditorView.baseTheme({
 		marginTop: '8px',
 	},
 
+	'.cm-diagnosticText code': {
+		borderRadius: '0.25rem',
+		backgroundColor: 'var(--background-secondary) !important',
+		padding: '0.25rem',
+		filter: 'invert(1)',
+	},
+
 	'.cm-diagnosticAction': {
 		font: 'inherit',
 		border: 'none',

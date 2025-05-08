@@ -16,7 +16,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
        6 | establish Justice, insure domestic Tranquility, provide for the common defence,
-         |                                                                        ^~~~~~~ Did you mean to spell “defence” this way?
+         |                                                                        ^~~~~~~ Did you mean to spell `defence` this way?
        7 | promote the general Welfare, and secure the Blessings of Liberty to ourselves
 Suggest:
   - Replace with: “defense”
@@ -39,7 +39,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       11 | ## Article. I.
-         |             ^~ Did you mean to spell “I.” this way?
+         |             ^~ Did you mean to spell `I.` this way?
 Suggest:
   - Replace with: “Ir”
   - Replace with: “IC”
@@ -50,7 +50,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       17 | Representatives. Congress shall make no law respecting an establishment of
-         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       18 | religion, or prohibiting the free exercise thereof; or abridging the freedom of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       19 | speech, or of the press; or the right of the people peaceably to assemble, and
@@ -110,7 +110,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
       50 | excluding Indians not taxed. But when the right to vote at any election for the
-         |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       51 | choice of electors for President and Vice President of the United States,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       52 | Representatives in Congress, the Executive and Judicial officers of a State, or
@@ -144,7 +144,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       61 | in such Manner as they shall by Law direct. The Number of Representatives shall
-         |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       62 | not exceed one for every thirty Thousand, but each State shall have at Least
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       63 | one Representative; and until such enumeration shall be made, the State of New
@@ -164,7 +164,7 @@ Lint:    Spelling (63 priority)
 Message: |
       63 | one Representative; and until such enumeration shall be made, the State of New
       64 | Hampshire shall be entitled to chuse three, Massachusetts eight, Rhode-Island
-         |                                ^~~~~ Did you mean to spell “chuse” this way?
+         |                                ^~~~~ Did you mean to spell `chuse` this way?
 Suggest:
   - Replace with: “cause”
   - Replace with: “chase”
@@ -175,7 +175,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       72 | The House of Representatives shall chuse their Speaker and other Officers; and
-         |                                    ^~~~~ Did you mean to spell “chuse” this way?
+         |                                    ^~~~~ Did you mean to spell `chuse` this way?
 Suggest:
   - Replace with: “cause”
   - Replace with: “chase”
@@ -186,7 +186,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       86 | they shall be divided as equally as may be into three Classes. The Seats of the
-         |                                                               ^~~~~~~~~~~~~~~~~~
+         |                                                                ^~~~~~~~~~~~~~~~~
       87 | Senators of the first Class shall be vacated at the Expiration of the second
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       88 | Year, of the second Class at the Expiration of the fourth Year, and of the
@@ -220,7 +220,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      103 | The Senate shall chuse their other Officers, and also a President pro tempore,
-         |                  ^~~~~ Did you mean to spell “chuse” this way?
+         |                  ^~~~~ Did you mean to spell `chuse` this way?
 Suggest:
   - Replace with: “cause”
   - Replace with: “chase”
@@ -241,7 +241,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      103 | The Senate shall chuse their other Officers, and also a President pro tempore,
-         |                                                                       ^~~~~~~ Did you mean to spell “tempore” this way?
+         |                                                                       ^~~~~~~ Did you mean to spell `tempore` this way?
      104 | in the Absence of the Vice President, or when he shall exercise the Office of
 Suggest:
   - Replace with: “temper”
@@ -311,7 +311,7 @@ Lint:    Spelling (63 priority)
 Message: |
      124 | thereof; but the Congress may at any time by Law make or alter such
      125 | Regulations, except as to the Places of chusing Senators.
-         |                                         ^~~~~~~ Did you mean to spell “chusing” this way?
+         |                                         ^~~~~~~ Did you mean to spell `chusing` this way?
 Suggest:
   - Replace with: “chasing”
   - Replace with: “causing”
@@ -338,7 +338,7 @@ Lint:    Spelling (63 priority)
 Message: |
      139 | Each House may determine the Rules of its Proceedings, punish its Members for
      140 | disorderly Behaviour, and, with the Concurrence of two thirds, expel a Member.
-         |            ^~~~~~~~~ Did you mean “Behavior”?
+         |            ^~~~~~~~~ Did you mean `Behavior`?
 Suggest:
   - Replace with: “Behavior”
 
@@ -360,7 +360,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      155 | the United States. They shall in all Cases, except Treason, Felony and Breach
-         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      156 | of the Peace, be privileged from Arrest during their Attendance at the Session
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      157 | of their respective Houses, and in going to and returning from the same; and
@@ -401,7 +401,7 @@ Lint:    Spelling (63 priority)
 Message: |
      163 | which shall have been created, or the Emoluments whereof shall have been
      164 | encreased during such time; and no Person holding any Office under the United
-         | ^~~~~~~~~ Did you mean to spell “encreased” this way?
+         | ^~~~~~~~~ Did you mean to spell `encreased` this way?
 Suggest:
   - Replace with: “increased”
   - Replace with: “encased”
@@ -449,7 +449,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      181 | Objections at large on their Journal, and proceed to reconsider it. If after
-         |                                                                    ^~~~~~~~~~
+         |                                                                     ^~~~~~~~~
      182 | such Reconsideration two thirds of that House shall agree to pass the Bill, it
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      183 | shall be sent, together with the Objections, to the other House, by which it
@@ -464,7 +464,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      187 | against the Bill shall be entered on the Journal of each House respectively. If
-         |                                                                             ^~~~
+         |                                                                              ^~~
      188 | any Bill shall not be returned by the President within ten Days (Sundays
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      189 | excepted) after it shall have been presented to him, the Same shall be a Law,
@@ -497,7 +497,7 @@ Lint:    Spelling (63 priority)
 Message: |
      196 | shall take Effect, shall be approved by him, or being disapproved by him, shall
      197 | be repassed by two thirds of the Senate and House of Representatives, according
-         |    ^~~~~~~~ Did you mean to spell “repassed” this way?
+         |    ^~~~~~~~ Did you mean to spell `repassed` this way?
 Suggest:
   - Replace with: “recessed”
   - Replace with: “rehashed”
@@ -530,7 +530,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      203 | Imposts and Excises, to pay the Debts and provide for the common Defence and
-         |                                                                  ^~~~~~~ Did you mean to spell “Defence” this way?
+         |                                                                  ^~~~~~~ Did you mean to spell `Defence` this way?
      204 | general Welfare of the United States; but all Duties, Imposts and Excises shall
 Suggest:
   - Replace with: “Defense”
@@ -561,7 +561,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      229 | 9. To define and punish Piracies and Felonies committed on the high Seas, and
-         |                         ^~~~~~~~ Did you mean to spell “Piracies” this way?
+         |                         ^~~~~~~~ Did you mean to spell `Piracies` this way?
 Suggest:
   - Replace with: “Curacies”
   - Replace with: “Miracles”
@@ -649,7 +649,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      271 | The Privilege of the Writ of Habeas Corpus shall not be suspended, unless when
-         |                              ^~~~~~ Did you mean to spell “Habeas” this way?
+         |                              ^~~~~~ Did you mean to spell `Habeas` this way?
 Suggest:
   - Replace with: “Haber's”
   - Replace with: “Hale's”
@@ -660,7 +660,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      274 | No Bill of Attainder or ex post facto Law shall be passed.
-         |                                 ^~~~~ Did you mean to spell “facto” this way?
+         |                                 ^~~~~ Did you mean to spell `facto` this way?
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
@@ -725,7 +725,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      308 | pass any Bill of Attainder, ex post facto Law, or Law impairing the Obligation
-         |                                     ^~~~~ Did you mean to spell “facto” this way?
+         |                                     ^~~~~ Did you mean to spell `facto` this way?
      309 | of Contracts, or grant any Title of Nobility.
 Suggest:
   - Replace with: “fact”
@@ -754,7 +754,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      315 | United States; and all such Laws shall be subject to the Revision and Controul
-         |                                                                       ^~~~~~~~ Did you mean “Control”?
+         |                                                                       ^~~~~~~~ Did you mean `Control`?
      316 | of the Congress.
 Suggest:
   - Replace with: “Control”
@@ -840,7 +840,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      355 | by ballot, the President. But in choosing the President, the votes shall be
-         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      356 | taken by states, the representation from each state having one vote; a quorum
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      357 | for this purpose shall consist of a member or members from two-thirds of the
@@ -853,7 +853,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      360 | elect shall have died, the Vice President elect shall become President. If a
-         |                                                                        ^~~~~~
+         |                                                                         ^~~~~
      361 | President shall not have been chosen before the time fixed for the beginning of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      362 | his term, or if the President elect shall have failed to qualify, then the Vice
@@ -884,7 +884,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      372 | President whenever the right of choice shall have devolved upon them.]The
-         |                                                                      ^~~~~
+         |                                                                       ^~~~
      373 | person having the greatest number of votes as Vice-President, shall be the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      374 | Vice-President, if such number be a majority of the whole number of Electors
@@ -903,7 +903,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      383 | The Congress may determine the Time of chusing the Electors, and the Day on
-         |                                        ^~~~~~~ Did you mean to spell “chusing” this way?
+         |                                        ^~~~~~~ Did you mean to spell `chusing` this way?
      384 | which they shall give their Votes; which Day shall be the same throughout the
 Suggest:
   - Replace with: “chasing”
@@ -943,7 +943,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      399 | be elected to the office of the President more than once. But this article
-         |                                                          ^~~~~~~~~~~~~~~~~~
+         |                                                           ^~~~~~~~~~~~~~~~~
      400 | shall not apply to any person holding the office of President when this article
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      401 | was proposed by the Congress, and shall not prevent any person who may be
@@ -975,7 +975,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      415 | Whenever the President transmits to the President pro tempore of the Senate and
-         |                                                       ^~~~~~~ Did you mean to spell “tempore” this way?
+         |                                                       ^~~~~~~ Did you mean to spell `tempore` this way?
      416 | the Speaker of the House of Representatives his written declaration that he is
 Suggest:
   - Replace with: “temper”
@@ -1005,7 +1005,7 @@ Lint:    Spelling (63 priority)
 Message: |
      422 | the executive departments or of such other body as Congress may by law provide,
      423 | transmit to the President pro tempore of the Senate and the Speaker of the
-         |                               ^~~~~~~ Did you mean to spell “tempore” this way?
+         |                               ^~~~~~~ Did you mean to spell `tempore` this way?
 Suggest:
   - Replace with: “temper”
   - Replace with: “temple”
@@ -1037,7 +1037,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      428 | Thereafter, when the President transmits to the President pro tempore of the
-         |                                                               ^~~~~~~ Did you mean to spell “tempore” this way?
+         |                                                               ^~~~~~~ Did you mean to spell `tempore` this way?
      429 | Senate and the Speaker of the House of Representatives his written declaration
 Suggest:
   - Replace with: “temper”
@@ -1049,7 +1049,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      433 | transmit within four days to the President pro tempore of the Senate and the
-         |                                                ^~~~~~~ Did you mean to spell “tempore” this way?
+         |                                                ^~~~~~~ Did you mean to spell `tempore` this way?
      434 | Speaker of the House of Representatives their written declaration that the
 Suggest:
   - Replace with: “temper”
@@ -1061,7 +1061,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      437 | purpose if not in session. If the Congress, within twenty-one days after
-         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      438 | receipt of the latter written declaration, or, if Congress is not in session,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      439 | within twenty-one days after Congress is required to assemble, determines by
@@ -1095,7 +1095,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      449 | Services, a Compensation, which shall neither be encreased nor diminished
-         |                                                  ^~~~~~~~~ Did you mean to spell “encreased” this way?
+         |                                                  ^~~~~~~~~ Did you mean to spell `encreased` this way?
      450 | during the Period for which he shall have been elected, and he shall not
 Suggest:
   - Replace with: “increased”
@@ -1238,7 +1238,7 @@ Lint:    Spelling (63 priority)
 Message: |
      525 | time ordain and establish. The Judges, both of the supreme and inferior Courts,
      526 | shall hold their Offices during good Behaviour, and shall, at stated Times,
-         |                                      ^~~~~~~~~ Did you mean “Behavior”?
+         |                                      ^~~~~~~~~ Did you mean `Behavior`?
      527 | receive for their Services, a Compensation, which shall not be diminished
 Suggest:
   - Replace with: “Behavior”
@@ -1304,7 +1304,7 @@ Lint:    Spelling (63 priority)
 Message: |
      561 | Attainder of Treason shall work Corruption of Blood, or Forfeiture except
      562 | during the Life of the Person attainted.
-         |                               ^~~~~~~~~ Did you mean to spell “attainted” this way?
+         |                               ^~~~~~~~~ Did you mean to spell `attainted` this way?
 Suggest:
   - Replace with: “attained”
   - Replace with: “attainder”
@@ -1383,7 +1383,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      610 | the State wherein they reside. No State shall make or enforce any law which
-         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      611 | shall abridge the privileges or immunities of citizens of the United States;
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      612 | nor shall any State deprive any person of life, liberty, or property, without
@@ -1399,7 +1399,7 @@ Lint:    Spelling (63 priority)
 Message: |
      610 | the State wherein they reside. No State shall make or enforce any law which
      611 | shall abridge the privileges or immunities of citizens of the United States;
-         |                                 ^~~~~~~~~~ Did you mean to spell “immunities” this way?
+         |                                 ^~~~~~~~~~ Did you mean to spell `immunities` this way?
 Suggest:
   - Replace with: “immunity's”
   - Replace with: “immensities”
@@ -1445,7 +1445,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      627 | States, or any place subject to their jurisdiction. No Person held to Service
-         |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
      628 | or Labour in one State, under the Laws thereof, escaping into another, shall,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      629 | in Consequence of any Law or Regulation therein, be discharged from such
@@ -1461,7 +1461,7 @@ Lint:    Spelling (63 priority)
 Message: |
      627 | States, or any place subject to their jurisdiction. No Person held to Service
      628 | or Labour in one State, under the Laws thereof, escaping into another, shall,
-         |    ^~~~~~ Did you mean to spell “Labour” this way?
+         |    ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
   - Replace with: “Labours”
@@ -1473,7 +1473,7 @@ Lint:    Spelling (63 priority)
 Message: |
      629 | in Consequence of any Law or Regulation therein, be discharged from such
      630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
-         |            ^~~~~~ Did you mean to spell “Labour” this way?
+         |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
   - Replace with: “Labours”
@@ -1485,7 +1485,7 @@ Lint:    Spelling (63 priority)
 Message: |
      630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
      631 | Service or Labour may be due.
-         |            ^~~~~~ Did you mean to spell “Labour” this way?
+         |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
   - Replace with: “Labours”
@@ -1548,7 +1548,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      658 | questioned. But neither the United States nor any State shall assume or pay any
-         |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      659 | debt or obligation incurred in aid of insurrection or rebellion against the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      660 | United States, or any claim for the loss or emancipation of any slave; but all
@@ -1571,7 +1571,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      663 | ## Article. V.
-         |             ^~ Did you mean to spell “V.” this way?
+         |             ^~ Did you mean to spell `V.` this way?
 Suggest:
   - Replace with: “Vs.”
   - Replace with: “V”
@@ -1652,7 +1652,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      714 | first Page, The Word "Thirty" being partly written on an Erazure in the
-         |                                                          ^~~~~~~ Did you mean to spell “Erazure” this way?
+         |                                                          ^~~~~~~ Did you mean to spell `Erazure` this way?
      715 | fifteenth Line of the first Page. The Words "is tried" being interlined between
 Suggest:
   - Replace with: “Erasure”
