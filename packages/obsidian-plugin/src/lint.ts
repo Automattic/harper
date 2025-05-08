@@ -485,9 +485,9 @@ const baseTheme = EditorView.baseTheme({
 	},
 
 	'.cm-diagnosticText p': {
-    margin: '0px',
-    padding: '0px',
-    display: 'inline'
+		margin: '0px',
+		padding: '0px',
+		display: 'inline',
 	},
 
 	'.cm-diagnosticText code': {
