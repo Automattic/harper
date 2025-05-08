@@ -14,6 +14,7 @@ export default class PopupHandler {
 		this.renderBox = new RenderBox(document.body);
 		this.renderBox.getShadowHost().popover = 'manual';
 		this.renderBox.getShadowHost().style.pointerEvents = 'none';
+		this.renderBox.getShadowHost().style.border = 'none';
 		this.pointerDownCallback = (e) => {
 			this.onPointerDown(e);
 		};
