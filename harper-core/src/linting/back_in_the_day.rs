@@ -20,7 +20,7 @@ impl Default for BackInTheDay {
             .then(phrase.clone())
             .then_whitespace()
             .then(exceptions.clone())
-            .or(Box::new(phrase));
+            .or(phrase);
 
         Self {
             pattern: Box::new(pattern),

@@ -1213,6 +1213,12 @@ pub fn lint_group() -> LintGroup {
             "The period of economic prosperity is called the `Gilded Age`.",
             "If referring to the period of economic prosperity, the correct term is `Gilded Age`."
         ),
+        "EverPresent" => (
+            ["ever present"],
+            ["ever-present"],
+            "Hyphenate `ever-present` when it functions as a compound adjective.",
+            "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2678,6 +2684,20 @@ mod tests {
             "Every once and a while all the links on my page seem to stop working.",
             lint_group(),
             "Every once in a while all the links on my page seem to stop working.",
+        );
+    }
+
+    #[test]
+    fn detect_ever_present_atomic() {
+        assert_suggestion_result("ever present", lint_group(), "ever-present");
+    }
+
+    #[test]
+    fn detect_ever_present_real_world() {
+        assert_suggestion_result(
+            "Distrust was an ever present tension in the negotiations.",
+            lint_group(),
+            "Distrust was an ever-present tension in the negotiations.",
         );
     }
 }

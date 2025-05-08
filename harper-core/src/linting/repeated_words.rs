@@ -45,7 +45,8 @@ impl Linter for RepeatedWords {
                 if (tok_a.kind.is_preposition()
                     || tok_a.kind.is_conjunction()
                     || !tok_a.kind.is_likely_homograph()
-                    || self.is_special_case(word_a))
+                    || self.is_special_case(word_a)
+                    || tok_a.kind.is_adverb())
                     && word_a.to_lower() == word_b.to_lower()
                 {
                     let intervening_tokens = &chunk[idx_a + 1..*idx_b];
@@ -139,6 +140,15 @@ mod tests {
             "Take a look at the project on on GitHub.",
             RepeatedWords::default(),
             "Take a look at the project on GitHub.",
+        );
+    }
+
+    #[test]
+    fn as_as() {
+        assert_suggestion_result(
+            "he is as as hard as nails",
+            RepeatedWords::default(),
+            "he is as hard as nails",
         );
     }
 }

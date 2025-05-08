@@ -50,9 +50,9 @@ impl Default for ItWouldBe {
         };
 
         let combined = branch(false, false)
-            .or(Box::new(branch(false, true)))
-            .or(Box::new(branch(true, false)))
-            .or(Box::new(branch(true, true)));
+            .or(branch(false, true))
+            .or(branch(true, false))
+            .or(branch(true, true));
 
         Self {
             pattern: Box::new(combined),

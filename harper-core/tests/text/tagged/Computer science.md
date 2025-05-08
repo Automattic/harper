@@ -219,7 +219,7 @@
 > universities went  on  to create such  departments , starting with Purdue in 1962 .
 # NPl          NSg/V J/P P  V/J    NSg/I NPl         . V        P    NPr    P  #    .
 > Despite its   name , a   significant amount of computer science does  not   involve the
-# NSg/V/P ISg/D NSg  . D/P NSg/J       NSg/V  P  NSg/V    NSg/V   NSg/V NSg/C V       D
+# NSg/V/P ISg/D NSg  . D/P NSg/J       NSg/V  P  NSg/V    NSg/V   NPl/V NSg/C V       D
 > study of computers themselves . Because of this , several alternative names have
 # NSg   P  NPl       I          . C/P     P  I/D  . J/D     NSg/J       NPl   NSg/VX
 > been  proposed . Certain departments of major     universities prefer the term
@@ -711,7 +711,7 @@
 > application of engineering practices to software . Software engineering deals
 # NSg         P  NSg/V       NPl       P  NSg      . NSg      NSg/V       NPl
 > with the organizing and analyzing of software — it        does  not   just deal    with the
-# P    D   N/J        V/C V         P  NSg      . NPrSg/ISg NSg/V NSg/C V/J  NSg/V/J P    D
+# P    D   N/J        V/C V         P  NSg      . NPrSg/ISg NPl/V NSg/C V/J  NSg/V/J P    D
 > creation or      manufacture of new     software , but     its   internal arrangement and
 # NSg      NPrSg/C NSg/V       P  NSg/V/J NSg      . NSg/C/P ISg/D J        NSg         V/C
 > maintenance . For example software testing , systems engineering , technical debt

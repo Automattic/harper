@@ -17,9 +17,9 @@ pub enum LintKind {
     Enhancement,
     Readability,
     WordChoice,
+    Punctuation,
     #[default]
     Miscellaneous,
-    Punctuation,
 }
 
 impl LintKind {

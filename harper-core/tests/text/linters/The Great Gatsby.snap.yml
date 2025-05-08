@@ -3710,6 +3710,15 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (55 priority)
+Message: |
+    2462 | “Does she want to see Gatsby?”
+         |           ^~~~ Did you mean `wants`?
+Suggest:
+  - Replace with: “wants”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2467 | We passed a barrier of dark trees, and then the façade of Fifty-ninth Street, a

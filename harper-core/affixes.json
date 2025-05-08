@@ -672,14 +672,28 @@
 			}
 		},
 		"f": {
-			"#": "first-person property",
+			"#": "first-person singular property",
 			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
 			"target_metadata": {},
 			"base_metadata": {
 				"pronoun": {
-					"is_plural": false
+					"is_plural": false,
+					"person": "First"
+				}
+			}
+		},
+		"w": {
+			"#": "first-person plural property",
+			"kind": "property",
+			"cross_product": true,
+			"replacements": [],
+			"target_metadata": {},
+			"base_metadata": {
+				"pronoun": {
+					"is_plural": true,
+					"person": "First"
 				}
 			}
 		},
@@ -690,7 +704,9 @@
 			"replacements": [],
 			"target_metadata": {},
 			"base_metadata": {
-				"pronoun": {}
+				"pronoun": {
+					"person": "Second"
+				}
 			}
 		},
 		"t": {
