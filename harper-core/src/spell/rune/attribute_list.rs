@@ -5,6 +5,7 @@ use smallvec::ToSmallVec;
 use super::super::word_map::{WordMap, WordMapEntry};
 use super::Error;
 use super::affix_replacement::AffixReplacement;
+use super::expansion::Property;
 use super::expansion::{
     AffixEntryKind,
     AffixEntryKind::{Prefix, Suffix},
@@ -17,6 +18,7 @@ use crate::{CharString, Span, WordId, WordMetadata};
 pub struct AttributeList {
     /// Key = Affix Flag
     affixes: HashMap<char, Expansion>,
+    properties: HashMap<char, Property>,
 }
 
 impl AttributeList {
@@ -27,6 +29,7 @@ impl AttributeList {
                 .into_iter()
                 .map(|(affix, exp)| (affix, exp.into_human_readable()))
                 .collect(),
+            properties: self.properties,
         }
     }
 
@@ -47,6 +50,14 @@ impl AttributeList {
         let mut gifted_metadata = WordMetadata::default();
 
         let mut conditional_expansion_metadata = Vec::new();
+
+        for attr in &word.attributes {
+            let Some(property) = self.properties.get(attr) else {
+                continue;
+            };
+
+            gifted_metadata.append(&property.metadata);
+        }
 
         for attr in &word.attributes {
             let Some(expansion) = self.affixes.get(attr) else {
@@ -77,6 +88,16 @@ impl AttributeList {
 
             if expansion.cross_product {
                 let mut opp_attr = Vec::new();
+
+                for attr in &word.attributes {
+                    let Some(property) = self.properties.get(attr) else {
+                        continue;
+                    };
+                    // This is the same logic as below, plus propagation
+                    if expansion.kind == Prefix || property.propagate {
+                        opp_attr.push(*attr);
+                    }
+                }
 
                 for attr in &word.attributes {
                     let Some(attr_def) = self.affixes.get(attr) else {
@@ -210,6 +231,7 @@ impl AttributeList {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HumanReadableAttributeList {
     affixes: HashMap<char, HumanReadableExpansion>,
+    properties: HashMap<char, Property>,
 }
 
 impl HumanReadableAttributeList {
@@ -220,6 +242,9 @@ impl HumanReadableAttributeList {
             affixes.insert(affix, expansion.into_normal()?);
         }
 
-        Ok(AttributeList { affixes })
+        Ok(AttributeList {
+            affixes,
+            properties: self.properties,
+        })
     }
 }
