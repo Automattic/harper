@@ -57,6 +57,7 @@ async function enableDefaultDomains() {
 		'pootlewriter.com',
 		'www.tumblr.com',
 		'dayone.me',
+		'medium.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
