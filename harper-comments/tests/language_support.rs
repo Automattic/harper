@@ -49,7 +49,7 @@ create_test!(merged_lines.ts, 1);
 create_test!(javadoc_clean_simple.java, 0);
 create_test!(javadoc_complex.java, 5);
 create_test!(issue_132.rs, 1);
-create_test!(laravel_app.php, 2);
+create_test!(laravel_app.php, 3);
 create_test!(ignore_shebang_1.sh, 0);
 create_test!(ignore_shebang_2.sh, 0);
 create_test!(ignore_shebang_3.sh, 0);
@@ -58,7 +58,8 @@ create_test!(common.mill, 1);
 
 // Checks that some comments are masked out
 create_test!(ignore_comments.rs, 1);
-create_test!(ignore_comments.c, 1);
+// Both spell_check and split_words linters flag this now
+create_test!(ignore_comments.c, 2);
 
 // These are to make sure nothing crashes.
 create_test!(empty.js, 0);
