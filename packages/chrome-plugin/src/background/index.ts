@@ -60,6 +60,7 @@ async function enableDefaultDomains() {
 		'medium.com',
 		'x.com',
 		'www.notion.so',
+		'hashnode.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
