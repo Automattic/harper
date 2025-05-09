@@ -163,12 +163,13 @@ In the above example, "spellcheckd", "this this", and other spelling or grammar 
 }
 ```
 
-### Dictionaries
+## Directories 
 
 | Config         | Type     | Default Value | Description                                                     |
 | -------------- | -------- | ------------- | --------------------------------------------------------------- |
 | `userDictPath` | `string` | `""`          | Set the file path where the user dictionary is located          |
 | `fileDictPath` | `string` | `""`          | Set the directory where the file-local dictionaries are located |
+| `ignoredLintsPath` | `string` | `""`          | Set the directory where the ignored lint lists are located |
 
 ### Linters
 

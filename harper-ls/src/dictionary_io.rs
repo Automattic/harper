@@ -1,11 +1,9 @@
-use anyhow::anyhow;
 use itertools::Itertools;
-use std::path::{Component, Path, PathBuf};
+use std::path::Path;
 
 use harper_core::{Dictionary, MutableDictionary, WordMetadata};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
-use tower_lsp::lsp_types::Url;
 
 /// Save the contents of a dictionary to a file.
 /// Ensures that the path to the destination exists.
@@ -61,26 +59,6 @@ async fn dict_from_word_list(mut r: impl AsyncRead + Unpin) -> Result<MutableDic
     );
 
     Ok(dict)
-}
-
-/// Rewrites a path to a filename using the same conventions as
-/// [Neovim's undo-files](https://neovim.io/doc/user/options.html#'undodir').
-pub fn file_dict_name(url: &Url) -> anyhow::Result<PathBuf> {
-    let mut rewritten = String::new();
-
-    // We assume all URLs are local files and have a base.
-    for seg in url
-        .to_file_path()
-        .map_err(|_| anyhow!("Unable to convert URL to file path."))?
-        .components()
-    {
-        if !matches!(seg, Component::RootDir) {
-            rewritten.push_str(&seg.as_os_str().to_string_lossy());
-            rewritten.push('%');
-        }
-    }
-
-    Ok(rewritten.into())
 }
 
 #[cfg(test)]
