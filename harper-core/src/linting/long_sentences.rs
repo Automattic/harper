@@ -15,7 +15,10 @@ impl Linter for LongSentences {
 
             if word_count > 40 {
                 output.push(Lint {
-                    span: Span::new(sentence[0].span.start, sentence.last().unwrap().span.end),
+                    span: Span::new(
+                        sentence.first_word().unwrap().span.start,
+                        sentence.last().unwrap().span.end,
+                    ),
                     lint_kind: LintKind::Readability,
                     message: format!("This sentence is {} words long.", word_count),
                     ..Default::default()

@@ -17698,7 +17698,7 @@ closeup/1SM
 closing/~154M
 closure/~14ESM
 clot/~14MS
-cloth/~1M
+cloth/~1MS
 clothe/4UDSG
 clotheshorse/1MS
 clothesline/14SM
@@ -31379,6 +31379,7 @@ lectern/1MS
 lecture/~14MZGDRS
 lecturer/~1M
 lectureship/1SM
+led/~4
 ledge/~14RSMZ
 ledger/~14M
 lee/~15RSMZ
@@ -35970,7 +35971,7 @@ oestrogen/1MS!_
 oestrous/5!_
 oestrus/1MS!_
 oeuvre/~1MS
-of/~+4
+of/~+
 off/~5+41SZGDRJ
 offal/1M
 offbeat/~15MS
@@ -44890,6 +44891,7 @@ soluble/~5MS
 solute/514AXN
 solute's
 solutes/1
+solution/~1S
 solution's/AE
 solvable/5IU
 solve/~41EADSG
@@ -48469,7 +48471,8 @@ tourniquet/14MS
 tousle/41GDS
 tout/~14MDGS
 tow/~41SZGMDR
-toward/~+5S
+toward/~+5
+towards/~+
 towboat/1MS
 towel/~14JGSMD
 towelette/1SM

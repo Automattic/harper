@@ -7,10 +7,10 @@ pub use std::sync::Arc as Lrc;
 pub trait LSend {}
 
 #[cfg(not(feature = "concurrent"))]
-impl<T> LSend for T {}
+impl<T: ?Sized> LSend for T {}
 
 #[cfg(feature = "concurrent")]
 pub trait LSend: Send + Sync {}
 
 #[cfg(feature = "concurrent")]
-impl<T: Send + Sync> LSend for T {}
+impl<T: Send + Sync + ?Sized> LSend for T {}

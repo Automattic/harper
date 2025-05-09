@@ -45,6 +45,7 @@ use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nobody::Nobody;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
+use super::one_and_the_same::OneAndTheSame;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
 use super::pattern_linter::run_on_chunk;
@@ -70,9 +71,10 @@ use super::was_aloud::WasAloud;
 use super::whereas::Whereas;
 use super::widely_accepted::WidelyAccepted;
 use super::wordpress_dotcom::WordPressDotcom;
-use super::{CurrencyPlacement, Linter, NoOxfordComma, OxfordComma};
+use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
 use super::{Lint, PatternLinter};
 use crate::linting::dashes::Dashes;
+use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{closed_compounds, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
@@ -258,6 +260,7 @@ impl LintGroup {
         }
     }
 
+    /// Get map from each contained linter's name to its associated description.
     pub fn all_descriptions(&self) -> HashMap<&str, &str> {
         self.linters
             .iter()
@@ -266,6 +269,19 @@ impl LintGroup {
                 self.pattern_linters
                     .iter()
                     .map(|(key, value)| (key.as_str(), PatternLinter::description(value))),
+            )
+            .collect()
+    }
+
+    /// Get map from each contained linter's name to its associated description, rendered to HTML.
+    pub fn all_descriptions_html(&self) -> HashMap<&str, String> {
+        self.linters
+            .iter()
+            .map(|(key, value)| (key.as_str(), value.description_html()))
+            .chain(
+                self.pattern_linters
+                    .iter()
+                    .map(|(key, value)| (key.as_str(), value.description_html())),
             )
             .collect()
     }
@@ -323,6 +339,7 @@ impl LintGroup {
         insert_struct_rule!(ForNoun, true);
         insert_pattern_rule!(Hedging, true);
         insert_pattern_rule!(Hereby, true);
+        insert_pattern_rule!(OpenCompounds, true);
         insert_struct_rule!(HopHope, true);
         insert_struct_rule!(HowTo, true);
         insert_pattern_rule!(HyphenateNumberDay, true);
@@ -338,6 +355,7 @@ impl LintGroup {
         insert_pattern_rule!(Nobody, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
+        insert_pattern_rule!(OneAndTheSame, true);
         insert_pattern_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
         insert_pattern_rule!(Oxymorons, true);
@@ -471,6 +489,13 @@ mod tests {
         let group =
             LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
         group.all_descriptions();
+    }
+
+    #[test]
+    fn can_get_all_descriptions_as_html() {
+        let group =
+            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+        group.all_descriptions_html();
     }
 
     #[test]

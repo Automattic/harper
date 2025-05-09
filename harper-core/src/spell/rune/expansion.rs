@@ -21,7 +21,7 @@ pub struct Expansion {
     pub replacements: Vec<AffixReplacement>,
     /// When the expansion is applied, the resulting word will have this
     /// metadata appended to it.
-    pub target_metadata: WordMetadata,
+    pub target: Vec<MetadataExpansion>,
     /// When the expansion is applied, the __parent__ word will have this
     /// metadata appended to it.
     pub base_metadata: WordMetadata,
@@ -37,10 +37,16 @@ impl Expansion {
                 .iter()
                 .map(AffixReplacement::to_human_readable)
                 .collect(),
-            target_metadata: self.target_metadata,
+            target: self.target,
             base_metadata: self.base_metadata,
         }
     }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct MetadataExpansion {
+    pub metadata: WordMetadata,
+    pub if_base: Option<WordMetadata>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -48,7 +54,7 @@ pub struct HumanReadableExpansion {
     pub kind: AffixEntryKind,
     pub cross_product: bool,
     pub replacements: Vec<HumanReadableAffixReplacement>,
-    pub target_metadata: WordMetadata,
+    pub target: Vec<MetadataExpansion>,
     pub base_metadata: WordMetadata,
 }
 
@@ -64,7 +70,7 @@ impl HumanReadableExpansion {
             kind: self.kind,
             cross_product: self.cross_product,
             replacements,
-            target_metadata: self.target_metadata,
+            target: self.target,
             base_metadata: self.base_metadata,
         })
     }

@@ -109,6 +109,14 @@ export default class WorkerLinter implements Linter {
 		return JSON.parse(await this.getLintDescriptionsAsJSON()) as Record<string, string>;
 	}
 
+	getLintDescriptionsHTMLAsJSON(): Promise<string> {
+		return this.rpc('getLintDescriptionsHTMLAsJSON', []);
+	}
+
+	async getLintDescriptionsHTML(): Promise<Record<string, string>> {
+		return JSON.parse(await this.getLintDescriptionsHTMLAsJSON()) as Record<string, string>;
+	}
+
 	getDefaultLintConfigAsJSON(): Promise<string> {
 		return this.rpc('getDefaultLintConfigAsJSON', []);
 	}
