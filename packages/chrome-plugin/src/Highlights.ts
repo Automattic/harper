@@ -110,6 +110,7 @@ export default class Highlights {
 		}
 
 		const queries = [
+			getNotionRoot,
 			getMediumRoot,
 			getShredditComposerRoot,
 			getQuillJsRoot,
@@ -192,6 +193,12 @@ function getMediumRoot(el: HTMLElement): HTMLElement | null {
 		el,
 		(node: HTMLElement) => node.nodeName == 'MAIN' && location.hostname == 'medium.com',
 	);
+}
+
+/** Determines if a given node is a child of a Notion editor instance.
+ * If so, returns the root node of that instance. */
+function getNotionRoot(el: HTMLElement): HTMLElement | null {
+	return document.getElementById('notion-app');
 }
 
 /**

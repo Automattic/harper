@@ -58,6 +58,8 @@ async function enableDefaultDomains() {
 		'www.tumblr.com',
 		'dayone.me',
 		'medium.com',
+		'x.com',
+		'www.notion.so',
 	];
 
 	for (const item of defaultEnabledDomains) {
