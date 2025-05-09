@@ -22,6 +22,10 @@ function scan() {
 		const leafs = leafNodes(this);
 
 		for (const leaf of leafs) {
+			if (leaf.parentElement?.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
+				continue;
+			}
+
 			fw.addTarget(leaf as HTMLElement);
 		}
 	});
