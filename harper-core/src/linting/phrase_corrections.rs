@@ -1216,13 +1216,13 @@ pub fn lint_group() -> LintGroup {
         "FurtherAdo" => (
             ["further adieu"],
             ["further ado"],
-            "Don't confuse the German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
+            "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
             "Corrects `adieu` to `ado`."
         ),
         "MuchAdo" => (
             ["much adieu"],
             ["much ado"],
-            "Don't confuse the German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
+            "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
             "Corrects `adieu` to `ado`."
         ),
     });
