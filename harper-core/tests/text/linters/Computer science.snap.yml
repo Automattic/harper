@@ -177,9 +177,10 @@ Lint:    Spelling (63 priority)
 Message: |
       82 | During the 1940s, with the development of new and more powerful computing
       83 | machines such as the Atanasoff–Berry computer and ENIAC, the term computer came
-         |                      ^~~~~~~~~ Did you mean `Standoff`?
+         |                      ^~~~~~~~~ Did you mean to spell `Atanasoff` this way?
 Suggest:
   - Replace with: “Standoff”
+  - Replace with: “Stand off”
 
 
 
@@ -1019,9 +1020,9 @@ Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “Pa”
-  - Replace with: “Pf”
+  - Replace with: “Pp”
+  - Replace with: “Pg”
+  - Replace with: “Pi”
 
 
 

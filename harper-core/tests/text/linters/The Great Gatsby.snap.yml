@@ -1000,8 +1000,8 @@ Message: |
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Be”
   - Replace with: “Bf”
+  - Replace with: “Bk”
 
 
 
@@ -1274,8 +1274,8 @@ Message: |
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Be”
   - Replace with: “Bf”
+  - Replace with: “Bk”
 
 
 
@@ -2297,9 +2297,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “Pa”
-  - Replace with: “Pf”
+  - Replace with: “Pp”
+  - Replace with: “Pg”
+  - Replace with: “Pi”
 
 
 
@@ -2374,8 +2374,8 @@ Message: |
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Be”
   - Replace with: “Bf”
+  - Replace with: “Bk”
 
 
 
@@ -2591,8 +2591,8 @@ Message: |
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Be”
   - Replace with: “Bf”
+  - Replace with: “Bk”
 
 
 
@@ -2934,9 +2934,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “Pa”
-  - Replace with: “Pf”
+  - Replace with: “Pp”
+  - Replace with: “Pg”
+  - Replace with: “Pi”
 
 
 
@@ -6770,8 +6770,8 @@ Message: |
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Be”
   - Replace with: “Bf”
+  - Replace with: “Bk”
 
 
 

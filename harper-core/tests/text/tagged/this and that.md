@@ -1,7 +1,7 @@
 > " This " and " that    " are common  and fulfill multiple purposes in          everyday English   .
 # . I/D  . V/C . N/I/C/D . V   NSg/V/J V/C V       NSg/J    NPl/V    NPrSg/V/J/P NSg/J    NPrSg/V/J .
 > As    such  , disambiguating them is necessary .
-# NSg/R NSg/I . ?              N/I  VL NSg/J     .
+# NSg/R NSg/I . V              N/I  VL NSg/J     .
 >
 #
 > This document contains various sentences that    use   " this " , " that    " , " these " , and
