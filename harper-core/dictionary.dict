@@ -1,4 +1,4 @@
-52900
+53000
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -7486,6 +7486,7 @@ Numbers/2M
 Nunavut/2M
 Nunez/2M
 Nunki/2M
+Nürburgring/2M
 Nuremberg/2M        # city
 Nureyev/2M          # rudolf -
 NutraSweet/M        # trademark
@@ -7760,6 +7761,7 @@ PM/14SMDG           # prime minister; private message
 PMS/1245M
 PNG/2M              # Papua New Guinea; image format
 PO/15
+POS/1M              # part-of-speech
 POV/1SM             # point of view
 POW/1MS             # prisoner of war
 PP/12
@@ -8072,6 +8074,7 @@ Pinyin/21           # romanization
 Pippin/2M
 Piraeus/2M
 Pirandello/M
+Pirelli/12MS        # surname, tyres
 Pisa/2M             # city
 Pisces/21M
 Pisistratus/2M
@@ -10569,7 +10572,7 @@ Volcker/M
 Voldemort/14M
 Volga/21M
 Volgograd/2M
-Volkswagen/21M
+Volkswagen/21MS
 Volodymyr/2M
 Volstead/2M
 Volta/2M
@@ -11769,7 +11772,7 @@ aftershave/1SM
 aftershock/1SM
 aftertaste/1SM
 afterthought/14SM
-afterward/~S<
+afterward/j~<
 afterwards/j!@_
 afterword/1MS
 again/~+
@@ -13978,6 +13981,7 @@ basket/~14SM
 basketball/~14MS
 basketry/1M
 basketwork/1M
+basmati/1M
 basque/~1S
 bass/~514MS
 basset/~14SM
@@ -17694,7 +17698,7 @@ closeup/1SM
 closing/~154M
 closure/~14ESM
 clot/~14MS
-cloth/~1M
+cloth/~1MS
 clothe/4UDSG
 clotheshorse/1MS
 clothesline/14SM
@@ -19846,6 +19850,7 @@ curacao/1
 curacy/1SM
 curare/1M
 curate/~14DSMGV
+curation/1MS
 curative/~51MS
 curator/~1KMS
 curatorial/5
@@ -21197,7 +21202,7 @@ dirty/~54DRSTGP
 dis/~418M
 disable/~45DSGL
 disablement/1M
-disambiguate/~4N
+disambiguate/~4NSDG
 disappointing/~54Y
 disarming/54Y
 disassembly/1
@@ -24127,6 +24132,7 @@ fauvism/1M
 fauvist/51SM
 faux/~5
 fave/514S
+favicon/~1SM
 favor/~14ESMDG
 favorability/1MU
 favorable/~5U
@@ -26517,6 +26523,7 @@ gooseneck/1MS
 goosestep/4S
 goosestepped/4
 goosestepping/4
+goosy/51MS
 gopher/~1SM
 gore/~14MGDS
 gorge/~145EDSG
@@ -27994,7 +28001,7 @@ historical/~51Y
 historicity/~1M
 historiographer/1MS
 historiography/~1M
-history/~14SM
+history/~1SM        # removed `4` verb sense is obsolte and interferes with heuristics
 histrionic/5SQ
 histrionics/1M
 hit/~4158SM
@@ -29543,7 +29550,7 @@ inguinal/5
 inhabit/~4DG
 inhabitable/5U
 inhabitant/~15SM
-inhabited/~5U
+inhabited/~5UP
 inhalant/51SM
 inhalation/~1MS
 inhalator/1MS
@@ -29672,6 +29679,7 @@ insert's
 insertion/~1AM
 insertions/~1
 insetting/4
+inshallah
 inshore/~5
 inside/~15+RSMZ
 insider/~1M
@@ -29935,6 +29943,7 @@ interpretative/5
 interpreted/~45U
 interpreter/~1MS
 interprocess/5
+interprovincial/5
 interracial/~5
 interred/~54E
 interregnum/~1SM
@@ -30324,6 +30333,7 @@ jangle/41DRSMZG
 jangler/1M
 janitor/~1SM
 janitorial/5
+jank/1M
 janky/5TR
 japan/~14SM
 japanned/4
@@ -31369,6 +31379,7 @@ lectern/1MS
 lecture/~14MZGDRS
 lecturer/~1M
 lectureship/1SM
+led/~4
 ledge/~14RSMZ
 ledger/~14M
 lee/~15RSMZ
@@ -32641,7 +32652,7 @@ mantle's
 mantra/~1MS
 manual/~15MYS
 manufacturability/1M
-manufacture/~14DRSMZGA
+manufacture/~14DRSMZGAB
 manufacturer/~1M
 manufacturing/~154MA
 manumission/1SM
@@ -32681,9 +32692,9 @@ marge/~1
 margin/~14MS
 marginal/~51YS
 marginalia/1M
-marginality/1M
 marginalisation/1!_
 marginalise/4GDS!_
+marginality/1M
 marginalization/1M
 marginalize/4GDS
 maria/~1M
@@ -33861,7 +33872,7 @@ ml/~
 mm/~1
 mnemonic/~51MS
 mnemonically/j
-mo/~51CKHS
+mo/~51KHS           # removed `C` de- prefix should only be for negation; breaks heuristics otherwise
 moan/14MDRSZG
 moaner/1M
 moat/~14MDS
@@ -34084,6 +34095,7 @@ monopolizer/1M
 monopoly/~1SM
 monorail/~1MS
 monorepo/1SM
+monospace/5
 monosyllabic/51
 monosyllable/1MS
 monotheism/1M
@@ -35610,6 +35622,7 @@ notorious/~5Y
 notwithstanding/~7+
 nougat/1MS
 nought/154j8MS!@_
+noughties/9!_
 noun/~14KMS
 nourish/14DSLG
 nourishment/~1M
@@ -35958,7 +35971,7 @@ oestrogen/1MS!_
 oestrous/5!_
 oestrus/1MS!_
 oeuvre/~1MS
-of/~+4
+of/~+
 off/~5+41SZGDRJ
 offal/1M
 offbeat/~15MS
@@ -36636,6 +36649,7 @@ overexcite/4DSG
 overexercise/41GDS
 overexert/4SDG
 overexertion/1M
+overexploit/4GDS
 overexpose/4GDS
 overexposure/1M
 overextend/4DGS
@@ -36733,8 +36747,8 @@ overrange/41GDS
 overrate/41GDS
 overreach/41GDS
 overreact/4SDG
-overread/54SDG
 overreaction/1SM
+overread/54SDG
 overrefined/45
 overregulate/4DSGN
 overreliance/1M
@@ -41580,8 +41594,8 @@ restroom/1SM
 restructuring/~41SM
 result/~41GSMD
 resultant/~51SM
-résumé/1SM
 resumé/1SM
+résumé/1SM
 resume/~41DSMG
 resumption/~1MS
 resupply/~41DSG
@@ -41648,6 +41662,7 @@ retrofitting/41
 retrograde/~514DSG
 retrogress/41GVDS
 retrogression/1M
+retronic/5
 retrorocket/1MS
 retrospect/~14MDSGV
 retrospection/1M
@@ -42229,6 +42244,7 @@ runner/~1SM
 running/~451+M
 runny/5RT
 runoff/~1SM
+runout/1MS
 runt/1MS
 runtime/~51
 runty/5RT
@@ -44875,6 +44891,7 @@ soluble/~5MS
 solute/514AXN
 solute's
 solutes/1
+solution/~1S
 solution's/AE
 solvable/5IU
 solve/~41EADSG
@@ -48454,7 +48471,8 @@ tourniquet/14MS
 tousle/41GDS
 tout/~14MDGS
 tow/~41SZGMDR
-toward/~+5S
+toward/~+5
+towards/~+
 towboat/1MS
 towel/~14JGSMD
 towelette/1SM
@@ -52176,6 +52194,7 @@ ATF/1M              # automatic transmission fluid
 Akismet/2M
 Alexa/2M            # voice assistant
 Alexandre/2SM
+Alibaba/2M
 AliExpress/2M
 AlphaFold/2M        # Google DeepMind project
 Ambien/1SM          # insomnia treatment
@@ -52183,6 +52202,7 @@ Anker/SM
 Archytas/SM         # !! please check and comment !! we also have archytas
 Automattic/SM       # WordPress company
 Automattician/SM
+B2B/5               # business-to-business
 BCD/1M              # binary coded decimal
 BCPL/1M             # old programming language
 BLM/1M
@@ -52255,6 +52275,7 @@ GPT/1SM             # generative pre-trained transformer
 GPU/1S              # graphics processing unit
 Ganeti/SM
 Gateron/SM
+Gerber/1M           # file format
 GitLab/SM           # GitHub alternative
 Gmail/214SM
 Golang/SM           # programming language
@@ -52344,13 +52365,16 @@ NYTimes/SM
 NYU/2M
 Neo4J/21M
 Neovim/M            # code editor
+Netlify/M2          # cloud
 Nikolay/SM
+NixOS/M2
 NoSQL/1
 Node.js/2M          # official spelling has dot
 NumPy/21M
 Nvidia/2M           # FIXME! elsewhere we have NVIDIA
 O'Reilly/2SM
 OAuth/M             # open authentication
+OCaml/M2            # programming language
 OG/1MS
 ORM/12S             # object-relational mapping
 OpenGL/SM           # open graphics library
@@ -52407,6 +52431,7 @@ Simplenote/2M
 Sioyek/M1
 Siri/2M             # voice assistant
 Snapchat/SM
+SolidJS/M2          # ui lib
 Soros/2M            # financier George Soros
 Spotify/2M
 Stellantis/2M       # car company
@@ -52420,16 +52445,18 @@ TSMC/2M             # Taiwanese Semiconductor Manufacturing Company
 TSR/1MS             # terminate and stay resident
 TUI/12SM            # text user interface
 Tandy/2M            # surname, given name, old computer company
-TechCrunch/SM
+TechCrunch/M
+Tencent/2M
 ThinkPad/2SM        # pc brand
 TikTok/SM
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
 Toronado/2MS        # car brand
+Tree-sitter/M2      # parsing
 Trocla/SM
 TrueNAS/SM
 Tumblr/2M
 Typst/SM
-UDP/12SM
+UDP/12SM            # internet protocol
 ULA/1MS             # uncommitted logic array
 URI/1SM             # uniform resource identifier
 VAG/2M              # car company
@@ -52441,14 +52468,17 @@ VPN/1SM             # virtual private network
 VR/2M
 Vaadin/SM
 VaultPress/2M
+Vercel/M2           # cloud
 VideoPress/2M
 Viktor/SM
 VirtualBox/21MS
 Vite/SM
+Vue/M2              # framework
 WAL/21SM
 WASI/MS
 WASM/MS             # see WebAssembly
 WD40/1M
+WSL/M2              # windows subsystem for linux
 Waymo/2M
 WebAssembly/M       # see WASM
 WebGPU/SM
@@ -52465,6 +52495,7 @@ Xorg/21MS
 Y2K/M               # year 2000
 YAML/2SM            # markup language
 Yazi/21MS
+Yoast/M2            # seo
 YubiKey/SM
 Zettelkasten/1M
 Zig/2M              # programming language
@@ -52510,14 +52541,17 @@ sioyek/SM           # !! please check and comment !!
 stacktrace/SM1      # dictionaries prefer: stack trace
 standup/SM          # dictionaries prefer: stand-up
 strat/1MS           # gamer slang strategy
+tagset/1MS
 vid/1MS             # video
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
+handedly
 
 # Experimental multi-word entries
 # Harper may not recognize these as words in documents
 # But it will be able to include them in suggestions
 
+a lot
 ad nauseam/j
 add-on/1MS
 air-cooled/5
@@ -52535,19 +52569,22 @@ anti-vaxxer/1MS
 avant-garde/1M5
 back to back/j
 back-to-back/5
+barn find/1MS
 beck and call/1
 bell-pull/1MS
 bench-warmer/1MS
+blow-up/51MS
 blue-blooded/5
 blue-collar/5
 bona fide/j5
-boot up/4
 break out/4
 breaks out/4
+Bretton Woods/2M
 built-in/1MS5
 built-up/5
 car bomb/1MS
 car-bomb/4
+cash-strapped/5
 CD-ROM/1MS
 centre-left/5!@_
 centre-right/5!@_
@@ -52601,6 +52638,7 @@ first-person/5
 first time/1MS
 first-time/5
 flash point/1MS
+forward-thinking/5
 four-speed/1MS
 front-line/5
 front man/1M
@@ -52663,6 +52701,7 @@ jury-rig/4S
 jury-rigged/4
 jury-rigging/4
 kick start/4SDG
+kick-starter/1MS
 knock-on effect/1MS
 kung fu/1M
 labor-intensive/5
@@ -52702,6 +52741,7 @@ mind-blowing/5
 mind game/1MS
 mock up/4
 mock-up/1MS
+moon landing/1MS
 multiple-choice/5
 nail biter/1MS
 nano-farad/1MS
@@ -52738,6 +52778,8 @@ OS X/2M             # before macOS
 out-and-out/5
 out of date
 Pan Am/1M           # old airline
+part of speech/1M
+parts speech/9
 Pax Americana/2M
 peer review/1MSDG
 peer-reviewed/5
@@ -52747,6 +52789,7 @@ petty bourgeois/1M
 petty bourgeoisie/1M
 pick-me-up/1MS
 plan B/M
+play-by-play/51MS
 post-truth/14M
 pre-COVID/5
 pro-democracy/5
@@ -52811,6 +52854,7 @@ sussed out/4
 susses out/4
 sussing out/4
 ta-da
+take-home/51MS
 tax-exempt/5
 tech-savvy/5
 teeny-tiny/5
@@ -52830,6 +52874,7 @@ tom yam/1M
 top-end/5
 trade in/4
 trade-in/1MS
+two-door/51MS
 two-thirds/1
 type-check/4SDG
 type checking/1M
@@ -52861,6 +52906,7 @@ well-used/5
 Wi-Fi/1M
 wishy-washy/5
 working-class/15MS
+world-class/5
 would-be/5
 write off/4
 write-off/1MS
@@ -52872,7 +52918,13 @@ year-over-year/5
 # Remember not to add any affixes since only the verb part at the start undergoes inflection.
 
 back up/4
+black out/4
+blast off/4
+blow up/4
+boot up/4
 break up/4
+buy back/4
+buy out/4
 carry out/4
 check in/4
 check out/4
@@ -52891,8 +52943,8 @@ hook up/4
 knock out/4
 lock down/4
 log in/4
-log on/4
 log off/4
+log on/4
 log out/4
 look up/4
 meet up/4
@@ -52913,10 +52965,25 @@ sign out/4
 sign up/4
 slow down/4
 splash down/4
-start out/4
+stand off/4
+stand out/4
 start up/4
 take down/4
+take off/4
+take out/4
+throw back/4
+tie back/4
+toss up/4
+try out/4
+tune up/4
+turn about/4
+turn around/4
+turn off/4
 turn out/4
+walk out/4
+wash out/4
+white out/4
+wipe out/4
 work around/4
 work out/4
 
@@ -52925,12 +52992,3 @@ work out/4
 # And they will be reviewed
 # Word added using the `just addnoun` command will be added here
 
-Yoast/M2
-NixOS/M2
-WSL/M2
-OCaml/M2
-Vercel/M2
-Netlify/M2
-SolidJS/M2
-Vue/M2
-Tree-sitter/M2

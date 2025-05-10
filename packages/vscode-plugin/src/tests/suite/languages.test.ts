@@ -55,7 +55,7 @@ describe('Languages >', () => {
 			compareActualVsExpectedDiagnostics(
 				getActualDiagnostics(uri),
 				createExpectedDiagnostics({
-					message: 'Did you mean to spell “Errorz” this way?',
+					message: 'Did you mean to spell `Errorz` this way?',
 					range: createRange(testCase.row, testCase.column, testCase.row, testCase.column + 6),
 				}),
 			);

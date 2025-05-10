@@ -42,11 +42,11 @@ describe('Integration >', () => {
 					range: createRange(2, 39, 2, 48),
 				},
 				{
-					message: 'Did you mean to spell “errorz” this way?',
+					message: 'Did you mean to spell `errorz` this way?',
 					range: createRange(2, 26, 2, 32),
 				},
 				{
-					message: 'Did you mean to spell “realise” this way?',
+					message: 'Did you mean `realize`?',
 					range: createRange(4, 26, 4, 33),
 				},
 			),
@@ -60,7 +60,7 @@ describe('Integration >', () => {
 		compareActualVsExpectedDiagnostics(
 			getActualDiagnostics(untitledUri),
 			createExpectedDiagnostics({
-				message: 'Did you mean to spell “Errorz” this way?',
+				message: 'Did you mean to spell `Errorz` this way?',
 				range: createRange(0, 0, 0, 6),
 			}),
 		);
@@ -75,11 +75,11 @@ describe('Integration >', () => {
 			getActualDiagnostics(untitledUri),
 			createExpectedDiagnostics(
 				{
-					message: 'Did you mean to spell “Errorz” this way?',
+					message: 'Did you mean to spell `Errorz` this way?',
 					range: createRange(0, 0, 0, 6),
 				},
 				{
-					message: 'Did you mean to spell “Errorz” this way?',
+					message: 'Did you mean to spell `Errorz` this way?',
 					range: createRange(0, 9, 0, 15),
 				},
 			),
@@ -93,7 +93,7 @@ describe('Integration >', () => {
 		compareActualVsExpectedDiagnostics(
 			getActualDiagnostics(untitledUri),
 			createExpectedDiagnostics({
-				message: 'Did you mean to spell “Errorz” this way?',
+				message: 'Did you mean to spell `Errorz` this way?',
 				range: createRange(0, 9, 0, 15),
 			}),
 		);
@@ -108,11 +108,11 @@ describe('Integration >', () => {
 			getActualDiagnostics(markdownUri),
 			createExpectedDiagnostics(
 				{
-					message: 'Did you mean to spell “errorz” this way?',
+					message: 'Did you mean to spell `errorz` this way?',
 					range: createRange(2, 26, 2, 32),
 				},
 				{
-					message: 'Did you mean to spell “realise” this way?',
+					message: 'Did you mean `realize`?',
 					range: createRange(4, 26, 4, 33),
 				},
 			),
@@ -135,7 +135,7 @@ describe('Integration >', () => {
 					range: createRange(2, 39, 2, 48),
 				},
 				{
-					message: 'Did you mean to spell “errorz” this way?',
+					message: 'Did you mean to spell `errorz` this way?',
 					range: createRange(2, 26, 2, 32),
 				},
 			),

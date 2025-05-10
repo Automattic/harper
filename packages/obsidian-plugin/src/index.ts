@@ -11,8 +11,36 @@ import {
 import { toArray } from 'lodash-es';
 import { type App, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg';
+import packageJson from '../package.json';
 import { HarperSettingTab } from './HarperSettingTab';
 import { linter } from './lint';
+
+async function getLatestVersion(): Promise<string> {
+	const response = await fetch('https://writewithharper.com/latestversion', {
+		headers: {
+			'Harper-Version': packageJson.version,
+		},
+	});
+
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+
+	return response.text();
+}
+
+export async function logVersionInfo(): Promise<void> {
+	try {
+		const latest = await getLatestVersion();
+		console.info(`Latest available Harper version: ${latest}`);
+	} catch (err) {
+		console.error(`Unable to obtain latest version: ${err}`);
+	}
+
+	console.info(`Current version: ${packageJson.version}`);
+}
+
+logVersionInfo();
 
 function suggestionToLabel(sug: Suggestion) {
 	if (sug.kind() === SuggestionKind.Remove) {
@@ -51,6 +79,13 @@ export default class HarperPlugin extends Plugin {
 	public async initializeFromSettings(settings: Settings | null) {
 		if (settings == null) {
 			settings = { useWebWorker: true, lintSettings: {} };
+		}
+
+		if (Object.keys(settings.lintSettings).length == 0) {
+			settings.lintSettings = await this.harper.getDefaultLintConfig();
+			Object.keys(settings.lintSettings).forEach((key) => {
+				settings.lintSettings[key] = null;
+			});
 		}
 
 		const oldSettings = await this.getSettings();
@@ -283,8 +318,12 @@ export default class HarperPlugin extends Plugin {
 						from: span.start,
 						to: span.end,
 						severity: 'error',
-						title: lint.lint_kind(),
-						message: lint.message(),
+						title: lint.lint_kind_pretty(),
+						renderMessage: (view) => {
+							const node = document.createElement('template');
+							node.innerHTML = lint.message_html();
+							return node.content;
+						},
 						ignore: async () => {
 							await this.harper.ignoreLint(text, lint);
 							await this.reinitialize();

@@ -835,25 +835,19 @@ pub fn lint_group() -> LintGroup {
             "Eliminates the incorrect merging in `for along time`."
         ),
         "InAWhile" => (
-            ["in awhile", "in while"],
+            ["in while"],
             ["in a while"],
             "When describing a timeframe, use `a while`.",
             "Corrects the missing article in `in while` or `in awhile`, forming `in a while`."
         ),
-        "QuiteAWhile" => (
-            ["quite awhile"],
-            ["quite a while"],
-            "Add `a` to form `quite a while`, clarifying the duration.",
-            "Corrects `quite awhile` => `quite a while` by inserting the missing article."
-        ),
         "ForAWhile" => (
-            ["for awhile", "for while"],
+            ["for while"],
             ["for a while"],
             "When describing a timeframe, use `a while`.",
             "Corrects the missing article in `for while` or `for awhile`, forming `for a while`."
         ),
         "AfterAWhile" => (
-            ["after awhile", "after while"],
+            ["after while"],
             ["after a while"],
             "When describafterg a timeframe, use `a while`.",
             "Corrects the missing article after `after while` or `after awhile`, forming `after a while`."
@@ -1195,18 +1189,30 @@ pub fn lint_group() -> LintGroup {
             "Traditionally `invest` uses the preposition `in`.",
             "`Invest` is traditionally followed by 'in,' not `into.`"
         ),
-        "AsWell" => (
-            ["aswell"],
-            ["as well"],
-            "The correct term is `as well` with a space.",
-            "Corrects `aswell`, which should be written as two words."
-        ),
         "OnceInAWhile" => (
-            ["once a while"],
+            ["once a while", "once and a while"],
             ["once in a while"],
             "The correct idiom is `once in a while`.",
-            "Corrects `once a while`, which requires the word `in`."
+            "Corrects two common malapropisms of `once in a while`."
         ),
+        "GildedAge" => (
+            ["guilded age"],
+            ["Gilded Age"],
+            "The period of economic prosperity is called the `Gilded Age`.",
+            "If referring to the period of economic prosperity, the correct term is `Gilded Age`."
+        ),
+        "DefiniteArticle" => (
+            ["definitive article"],
+            ["definite article"],
+            "The correct term for `the` is `definite article`.",
+            "The name of the word `the` is `definite article`."
+        ),
+        "DefiniteArticles" => (
+            ["definitive articles"],
+            ["definite articles"],
+            "The correct term for `the` is `definite article`.",
+            "The name of the word `the` is `definite article`."
+        )
     });
 
     group.set_all_rules_to(Some(true));
@@ -1969,11 +1975,6 @@ mod tests {
     #[test]
     fn test_in_a_while() {
         assert_suggestion_result(
-            "I haven't checked in awhile.",
-            lint_group(),
-            "I haven't checked in a while.",
-        );
-        assert_suggestion_result(
             "We’ll talk again in while.",
             lint_group(),
             "We’ll talk again in a while.",
@@ -1987,15 +1988,6 @@ mod tests {
             lint_group(),
             "Other things to fix in the Mask editor",
             1,
-        );
-    }
-
-    #[test]
-    fn test_in_quite_a_while() {
-        assert_suggestion_result(
-            "I haven’t seen him in quite awhile.",
-            lint_group(),
-            "I haven’t seen him in quite a while.",
         );
     }
 
@@ -2194,24 +2186,6 @@ mod tests {
     }
 
     #[test]
-    fn correct_for_awhile() {
-        assert_suggestion_result(
-            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile",
-            lint_group(),
-            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while",
-        );
-    }
-
-    #[test]
-    fn correct_after_awhile() {
-        assert_suggestion_result(
-            "Links on portal stop working after awhile, requiring page refresh.",
-            lint_group(),
-            "Links on portal stop working after a while, requiring page refresh.",
-        );
-    }
-
-    #[test]
     fn correct_after_while() {
         assert_suggestion_result(
             "bromite Crashes on all sites after while.",
@@ -2284,15 +2258,6 @@ mod tests {
     }
 
     #[test]
-    fn correct_aswell() {
-        assert_suggestion_result(
-            "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
-            lint_group(),
-            "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
-        );
-    }
-
-    #[test]
     fn correct_has_past() {
         assert_suggestion_result(
             "Track the amount of time that has past since a point in time.",
@@ -2325,15 +2290,6 @@ mod tests {
             "Return to computer, with enough time having past for the computer to go to full sleep.",
             lint_group(),
             "Return to computer, with enough time having passed for the computer to go to full sleep.",
-        );
-    }
-
-    #[test]
-    fn correct_in_case() {
-        assert_suggestion_result(
-            "Support for enum variable incase of reusable enum class",
-            lint_group(),
-            "Support for enum variable in case of reusable enum class",
         );
     }
 
@@ -2609,38 +2565,68 @@ mod tests {
     }
 
     #[test]
-    fn corrects_as_keyboards_aswell() {
-        assert_suggestion_result(
-            "Tool to read physical joystick devices, keyboards aswell, and create virtual joystick devices and output keyboard presses on a Linux system.",
-            lint_group(),
-            "Tool to read physical joystick devices, keyboards as well, and create virtual joystick devices and output keyboard presses on a Linux system.",
-        );
-    }
-
-    #[test]
-    fn corrects_aswell_as() {
-        assert_suggestion_result(
-            "When UseAcrylic is true in Focused aswell as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
-            lint_group(),
-            "When UseAcrylic is true in Focused as well as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
-        );
-    }
-
-    #[test]
-    fn corrects_toml_aswell() {
-        assert_suggestion_result(
-            "format Cargo.toml aswell #5893 - rust-lang/rustfmt",
-            lint_group(),
-            "format Cargo.toml as well #5893 - rust-lang/rustfmt",
-        );
-    }
-
-    #[test]
     fn corrects_once_a_while() {
         assert_suggestion_result(
             "For me it is a SMB mount I have on the client device that I sync only once a while for a backup into the cloud.",
             lint_group(),
             "For me it is a SMB mount I have on the client device that I sync only once in a while for a backup into the cloud.",
+        );
+    }
+
+    #[test]
+    #[ignore = "There's a bug when changing the length of title case phrases.\nI believe there's a fix coming in a PR. Uncomment when fixed."]
+    fn corrects_gilded_age_capitalized() {
+        assert_suggestion_result(
+            "It is especially a reflection of the socio-economic patterns in the Guilded Age.",
+            lint_group(),
+            "It is especially a reflection of the socio-economic patterns in the Gilded Age.",
+        );
+    }
+
+    #[test]
+    #[ignore = "Currently the correct spelling is suggested but the case is not changed.\nThis may also be fixed in the coming PR mentioned above."]
+    fn corrects_gilded_age_lowercase() {
+        assert_suggestion_result(
+            "It is especially a reflection of the socio-economic patterns in the guilded age.",
+            lint_group(),
+            "It is especially a reflection of the socio-economic patterns in the Gilded Age.",
+        );
+    }
+
+    #[test]
+    fn corrects_once_and_a_while() {
+        assert_suggestion_result(
+            "Every once and a while all the links on my page seem to stop working.",
+            lint_group(),
+            "Every once in a while all the links on my page seem to stop working.",
+        );
+    }
+
+    #[test]
+    fn corrects_definite_article() {
+        assert_suggestion_result(
+            "As for format of outputs: the spec defines the field as using the singular definitive article \"the\"",
+            lint_group(),
+            "As for format of outputs: the spec defines the field as using the singular definite article \"the\"",
+        );
+    }
+
+    #[test]
+    #[ignore = "Title case capitalization problem causes this one to fail too."]
+    fn corrects_definite_articles_title_case() {
+        assert_suggestion_result(
+            "01 Definitive Articles: De or Het. Before starting more complicated topics in Dutch grammar, you should be aware of the articles.",
+            lint_group(),
+            "01 Definite Articles: De or Het. Before starting more complicated topics in Dutch grammar, you should be aware of the articles.",
+        );
+    }
+
+    #[test]
+    fn corrects_definite_articles_lowercase() {
+        assert_suggestion_result(
+            ".. definitive articles -та /-ta/ and -те /-te/ (postfixed in Bulgarian).",
+            lint_group(),
+            ".. definite articles -та /-ta/ and -те /-te/ (postfixed in Bulgarian).",
         );
     }
 }

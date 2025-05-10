@@ -1,0 +1,26 @@
+# OS 
+.DS_Store
+
+# ignore node dependency directories & lock
+node_modules
+yarn.lock
+pnpm-lock.yaml
+package-lock.json
+
+# ignore log files and local
+*.log
+*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.history
+
+# ignore compiled files
+build
+types
+coverage
+
+# ignore ide settings
+.idea
+.vscode

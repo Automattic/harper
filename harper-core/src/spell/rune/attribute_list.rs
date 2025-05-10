@@ -46,6 +46,8 @@ impl AttributeList {
         dest.reserve(word.attributes.len() + 1);
         let mut gifted_metadata = WordMetadata::default();
 
+        let mut conditional_expansion_metadata = Vec::new();
+
         for attr in &word.attributes {
             let Some(expansion) = self.affixes.get(attr) else {
                 continue;
@@ -58,10 +60,17 @@ impl AttributeList {
                 if let Some(replaced) =
                     Self::apply_replacement(replacement, &word.letters, expansion.kind)
                 {
-                    if let Some(val) = new_words.get_mut(&replaced) {
-                        val.append(&expansion.target_metadata);
-                    } else {
-                        new_words.insert(replaced, expansion.target_metadata.clone());
+                    let metadata = new_words.entry(replaced.clone()).or_default();
+                    for target in &expansion.target {
+                        if let Some(condition) = &target.if_base {
+                            conditional_expansion_metadata.push((
+                                replaced.clone(),
+                                target.metadata.clone(),
+                                condition.clone(),
+                            ));
+                        } else {
+                            metadata.append(&target.metadata);
+                        }
                     }
                 }
             }
@@ -107,16 +116,25 @@ impl AttributeList {
             }
         }
 
+        let mut full_metadata = gifted_metadata;
         if let Some(prev_val) = dest.get_with_chars(&word.letters) {
-            dest.insert(WordMapEntry {
-                metadata: gifted_metadata.or(&prev_val.metadata),
-                canonical_spelling: word.letters,
-            });
-        } else {
-            dest.insert(WordMapEntry {
-                metadata: gifted_metadata,
-                canonical_spelling: word.letters,
-            });
+            full_metadata.append(&prev_val.metadata);
+        }
+
+        dest.insert(WordMapEntry {
+            metadata: full_metadata.clone(),
+            canonical_spelling: word.letters,
+        });
+
+        for (letters, metadata, condition) in conditional_expansion_metadata {
+            let condition_satisfied = full_metadata.or(&condition) == full_metadata;
+            if !condition_satisfied {
+                continue;
+            }
+
+            dest.get_metadata_mut_chars(&letters)
+                .unwrap()
+                .append(&metadata);
         }
     }
 

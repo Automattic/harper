@@ -47,27 +47,25 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                 continue;
             }
             let nountok_charsl = document.get_span_content(&token.span);
-            // * Can't contain a hyphen or space.
-            if nountok_charsl.contains(&'-') || nountok_charsl.contains(&' ') {
-                // This means Harper's tokenizer's concept of a word is different to what we expect
-                // or has changed since this code was written.
-                unreachable!();
-            }
-            // * Can't contain an apostrophe
-            if nountok_charsl.contains(&'\'') || nountok_charsl.contains(&'’') {
+            // * Can't contain space, hyphen or apostrophe
+            if nountok_charsl.contains(&' ')
+                || nountok_charsl.contains(&'-')
+                || nountok_charsl.contains(&'\'')
+                || nountok_charsl.contains(&'’')
+            {
                 continue;
             }
             // * Must end with the same letters as one of the particles used in phrasal verbs.
             let particle_endings: &[&[char]] = &[
-                &['a', 'r', 'o', 'u', 'n', 'd'][..],
-                &['b', 'a', 'c', 'k'][..],
-                &['d', 'o', 'w', 'n'][..],
-                &['i', 'n'][..],
-                &['o', 'n'][..],
-                &['o', 'f', 'f'][..],
-                &['o', 'u', 't'][..],
-                &['o', 'v', 'e', 'r'][..],
-                &['u', 'p'][..],
+                &['a', 'r', 'o', 'u', 'n', 'd'],
+                &['b', 'a', 'c', 'k'],
+                &['d', 'o', 'w', 'n'],
+                &['i', 'n'],
+                &['o', 'n'],
+                &['o', 'f', 'f'],
+                &['o', 'u', 't'],
+                &['o', 'v', 'e', 'r'],
+                &['u', 'p'],
             ];
 
             // * Must not be in the set of known false positives.
@@ -141,10 +139,8 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             }
 
             let message = match (phrasal_verb_is_verb, verb_part_is_verb) {
-                (true, _) => Some("This word should be a phrasal verb, not a compound noun."),
-                (false, true) => {
-                    Some("This word might be a phrasal verb rather than a compound noun.")
-                }
+                (true, _) => "This word should be a phrasal verb, not a compound noun.",
+                (false, true) => "This word might be a phrasal verb rather than a compound noun.",
                 _ => continue,
             };
 
@@ -178,7 +174,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                 span: Span::new(token.span.start, token.span.end),
                 lint_kind: LintKind::WordChoice,
                 suggestions: vec![Suggestion::ReplaceWith(phrasal_verb.chars().collect())],
-                message: message.unwrap().to_string(),
+                message: message.to_string(),
                 priority: 63,
             });
         }
@@ -335,16 +331,15 @@ mod tests {
         );
     }
 
-    // "Shakedown" is a compound noun -- it's part of a comma-separated list with another noun "threat"
-    // But this is not easy to check for so is not implemented yet.
-    // #[test]
-    // fn dont_flag_a_threat_or_shakedown() {
-    //     assert_lint_count(
-    //         "Just a threat or Shakedown.",
-    //         PhrasalVerbAsCompoundNoun::default(),
-    //         0,
-    //     );
-    // }
+    #[test]
+    #[ignore = "\"Shakedown\" is a compound noun -- it's part of a comma-separated list with another noun \"threat\"\nBut this is not easy to check for so is not implemented yet."]
+    fn dont_flag_a_threat_or_shakedown() {
+        assert_lint_count(
+            "Just a threat or Shakedown.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
 
     #[test]
     fn dont_flag_a_flyover() {
@@ -368,6 +363,15 @@ mod tests {
     fn dont_flag_my_meetup_repository() {
         assert_lint_count(
             "I might have in my Meetup repository",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_multi_word() {
+        assert_lint_count(
+            "I like this add-on!",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );

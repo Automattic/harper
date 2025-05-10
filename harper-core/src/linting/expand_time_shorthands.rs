@@ -63,7 +63,7 @@ impl PatternLinter for ExpandTimeShorthands {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let offending_span = matched_tokens.last()?.span;
-        let implies_plural = ImpliesQuantity::implies_plurality(matched_tokens, source);
+        let implies_plural = ImpliesQuantity::implies_plurality(matched_tokens.first()?, source);
 
         let offending_text = offending_span.get_content(source);
 

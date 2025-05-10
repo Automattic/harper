@@ -11,17 +11,11 @@ pub use markdown::{Markdown, MarkdownOptions};
 pub use mask::Mask;
 pub use plain_english::PlainEnglish;
 
-use crate::{Token, TokenStringExt};
+use crate::{LSend, Token, TokenStringExt};
 
-#[cfg(not(feature = "concurrent"))]
-#[blanket(derive(Box, Rc))]
-pub trait Parser {
-    fn parse(&self, source: &[char]) -> Vec<Token>;
-}
-
-#[cfg(feature = "concurrent")]
-#[blanket(derive(Box, Arc))]
-pub trait Parser: Send + Sync {
+#[cfg_attr(feature = "concurrent", blanket(derive(Box, Arc)))]
+#[cfg_attr(not(feature = "concurrent"), blanket(derive(Box, Rc)))]
+pub trait Parser: LSend {
     fn parse(&self, source: &[char]) -> Vec<Token>;
 }
 

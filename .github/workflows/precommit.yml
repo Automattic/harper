@@ -31,5 +31,8 @@ jobs:
         uses: Swatinem/rust-cache@v2.7.8
       - name: Install `wasm-pack`
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - uses: taiki-e/install-action@cargo-hack
+      - name: Install `cargo-hack`
+        run: cargo hack check --each-feature
       - name: Precommit
         run: just precommit
