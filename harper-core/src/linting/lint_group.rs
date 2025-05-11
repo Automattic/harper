@@ -25,6 +25,7 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 use super::despite_of::DespiteOf;
 use super::dot_initialisms::DotInitialisms;
 use super::ellipsis_length::EllipsisLength;
+use super::everyday::Everyday;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
@@ -318,6 +319,7 @@ impl LintGroup {
         insert_pattern_rule!(DespiteOf, true);
         insert_pattern_rule!(DotInitialisms, true);
         insert_struct_rule!(EllipsisLength, true);
+        insert_struct_rule!(Everyday, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
         insert_struct_rule!(FirstAidKit, true);
         insert_struct_rule!(ForNoun, true);
