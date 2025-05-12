@@ -220,7 +220,7 @@ impl Backend {
         );
 
         let mut doc_lock = self.doc_state.lock().await;
-        let ignored_lints = self.load_ignored_lints(url).await?;
+        let ignored_lints = self.load_ignored_lints(url).await.unwrap_or_default();
 
         let doc_state = doc_lock.entry(url.clone()).or_insert_with(|| {
             info!("Constructing new LintGroup for new document.");
