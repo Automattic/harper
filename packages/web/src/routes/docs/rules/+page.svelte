@@ -17,7 +17,7 @@ let descriptions: Record<string, string> = $state({});
 let default_config: LintConfig = $state({});
 
 let linter = new LocalLinter({ binary });
-linter.getLintDescriptions().then(async (v) => {
+linter.getLintDescriptionsHTML().then(async (v) => {
 	descriptions = v;
 });
 linter.getDefaultLintConfig().then(async (v) => {
@@ -38,7 +38,7 @@ linter.getDefaultLintConfig().then(async (v) => {
 			<TableBodyRow>
 				<TableBodyCell>{name}</TableBodyCell>
 				<TableBodyCell>{default_config[name] ? '✔️' : '❌'}</TableBodyCell>
-				<TableBodyCell tdClass="px-6 py-4 font-medium">{description}</TableBodyCell>
+				<TableBodyCell tdClass="px-6 py-4 font-medium">{@html description.replaceAll('<p>', "").replaceAll('<p />', "")}</TableBodyCell>
 			</TableBodyRow>
 		{/each}
 	</TableBody>

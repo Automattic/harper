@@ -53,6 +53,10 @@ async function enableDefaultDomains() {
 		'outlook.live.com',
 		'www.reddit.com',
 		'www.linkedin.com',
+		'bsky.app',
+		'pootlewriter.com',
+		'www.tumblr.com',
+		'dayone.me',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -137,7 +141,7 @@ async function handleSetDomainStatus(req: SetDomainStatusRequest): Promise<UnitR
 async function handleGetLintDescriptions(
 	req: GetLintDescriptionsRequest,
 ): Promise<GetLintDescriptionsResponse> {
-	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptions() };
+	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptionsHTML() };
 }
 
 async function handleAddToUserDictionary(req: AddToUserDictionaryRequest): Promise<UnitResponse> {

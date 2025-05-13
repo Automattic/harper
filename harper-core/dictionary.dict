@@ -1,4 +1,4 @@
-52900
+53000
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -7761,6 +7761,7 @@ PM/14SMDG           # prime minister; private message
 PMS/1245M
 PNG/2M              # Papua New Guinea; image format
 PO/15
+POS/1M              # part-of-speech
 POV/1SM             # point of view
 POW/1MS             # prisoner of war
 PP/12
@@ -17697,7 +17698,7 @@ closeup/1SM
 closing/~154M
 closure/~14ESM
 clot/~14MS
-cloth/~1M
+cloth/~1MS
 clothe/4UDSG
 clotheshorse/1MS
 clothesline/14SM
@@ -19849,6 +19850,7 @@ curacao/1
 curacy/1SM
 curare/1M
 curate/~14DSMGV
+curation/1MS
 curative/~51MS
 curator/~1KMS
 curatorial/5
@@ -21200,7 +21202,7 @@ dirty/~54DRSTGP
 dis/~418M
 disable/~45DSGL
 disablement/1M
-disambiguate/~4N
+disambiguate/~4NSDG
 disappointing/~54Y
 disarming/54Y
 disassembly/1
@@ -29548,7 +29550,7 @@ inguinal/5
 inhabit/~4DG
 inhabitable/5U
 inhabitant/~15SM
-inhabited/~5U
+inhabited/~5UP
 inhalant/51SM
 inhalation/~1MS
 inhalator/1MS
@@ -31377,6 +31379,7 @@ lectern/1MS
 lecture/~14MZGDRS
 lecturer/~1M
 lectureship/1SM
+led/~4
 ledge/~14RSMZ
 ledger/~14M
 lee/~15RSMZ
@@ -33869,7 +33872,7 @@ ml/~
 mm/~1
 mnemonic/~51MS
 mnemonically/j
-mo/~51CKHS
+mo/~51KHS           # removed `C` de- prefix should only be for negation; breaks heuristics otherwise
 moan/14MDRSZG
 moaner/1M
 moat/~14MDS
@@ -34092,6 +34095,7 @@ monopolizer/1M
 monopoly/~1SM
 monorail/~1MS
 monorepo/1SM
+monospace/5
 monosyllabic/51
 monosyllable/1MS
 monotheism/1M
@@ -44887,6 +44891,7 @@ soluble/~5MS
 solute/514AXN
 solute's
 solutes/1
+solution/~1S
 solution's/AE
 solvable/5IU
 solve/~41EADSG
@@ -52189,6 +52194,7 @@ ATF/1M              # automatic transmission fluid
 Akismet/2M
 Alexa/2M            # voice assistant
 Alexandre/2SM
+Alibaba/2M
 AliExpress/2M
 AlphaFold/2M        # Google DeepMind project
 Ambien/1SM          # insomnia treatment
@@ -52196,6 +52202,7 @@ Anker/SM
 Archytas/SM         # !! please check and comment !! we also have archytas
 Automattic/SM       # WordPress company
 Automattician/SM
+B2B/5               # business-to-business
 BCD/1M              # binary coded decimal
 BCPL/1M             # old programming language
 BLM/1M
@@ -52438,7 +52445,8 @@ TSMC/2M             # Taiwanese Semiconductor Manufacturing Company
 TSR/1MS             # terminate and stay resident
 TUI/12SM            # text user interface
 Tandy/2M            # surname, given name, old computer company
-TechCrunch/SM
+TechCrunch/M
+Tencent/2M
 ThinkPad/2SM        # pc brand
 TikTok/SM
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
@@ -52448,7 +52456,7 @@ Trocla/SM
 TrueNAS/SM
 Tumblr/2M
 Typst/SM
-UDP/12SM
+UDP/12SM            # internet protocol
 ULA/1MS             # uncommitted logic array
 URI/1SM             # uniform resource identifier
 VAG/2M              # car company
@@ -52533,6 +52541,7 @@ sioyek/SM           # !! please check and comment !!
 stacktrace/SM1      # dictionaries prefer: stack trace
 standup/SM          # dictionaries prefer: stand-up
 strat/1MS           # gamer slang strategy
+tagset/1MS
 vid/1MS             # video
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
@@ -52564,10 +52573,10 @@ barn find/1MS
 beck and call/1
 bell-pull/1MS
 bench-warmer/1MS
+blow-up/51MS
 blue-blooded/5
 blue-collar/5
 bona fide/j5
-boot up/4
 break out/4
 breaks out/4
 Bretton Woods/2M
@@ -52575,6 +52584,7 @@ built-in/1MS5
 built-up/5
 car bomb/1MS
 car-bomb/4
+cash-strapped/5
 CD-ROM/1MS
 centre-left/5!@_
 centre-right/5!@_
@@ -52628,6 +52638,7 @@ first-person/5
 first time/1MS
 first-time/5
 flash point/1MS
+forward-thinking/5
 four-speed/1MS
 front-line/5
 front man/1M
@@ -52690,6 +52701,7 @@ jury-rig/4S
 jury-rigged/4
 jury-rigging/4
 kick start/4SDG
+kick-starter/1MS
 knock-on effect/1MS
 kung fu/1M
 labor-intensive/5
@@ -52766,6 +52778,8 @@ OS X/2M             # before macOS
 out-and-out/5
 out of date
 Pan Am/1M           # old airline
+part of speech/1M
+parts speech/9
 Pax Americana/2M
 peer review/1MSDG
 peer-reviewed/5
@@ -52775,6 +52789,7 @@ petty bourgeois/1M
 petty bourgeoisie/1M
 pick-me-up/1MS
 plan B/M
+play-by-play/51MS
 post-truth/14M
 pre-COVID/5
 pro-democracy/5
@@ -52839,6 +52854,7 @@ sussed out/4
 susses out/4
 sussing out/4
 ta-da
+take-home/51MS
 tax-exempt/5
 tech-savvy/5
 teeny-tiny/5
@@ -52890,6 +52906,7 @@ well-used/5
 Wi-Fi/1M
 wishy-washy/5
 working-class/15MS
+world-class/5
 would-be/5
 write off/4
 write-off/1MS
@@ -52901,7 +52918,13 @@ year-over-year/5
 # Remember not to add any affixes since only the verb part at the start undergoes inflection.
 
 back up/4
+black out/4
+blast off/4
+blow up/4
+boot up/4
 break up/4
+buy back/4
+buy out/4
 carry out/4
 check in/4
 check out/4
@@ -52942,10 +52965,25 @@ sign out/4
 sign up/4
 slow down/4
 splash down/4
-start out/4
+stand off/4
+stand out/4
 start up/4
 take down/4
+take off/4
+take out/4
+throw back/4
+tie back/4
+toss up/4
+try out/4
+tune up/4
+turn about/4
+turn around/4
+turn off/4
 turn out/4
+walk out/4
+wash out/4
+white out/4
+wipe out/4
 work around/4
 work out/4
 

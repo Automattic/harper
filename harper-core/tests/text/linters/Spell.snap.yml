@@ -1,0 +1,92 @@
+Lint:    Spelling (63 priority)
+Message: |
+       7 | My favourite color is blu.
+         |    ^~~~~~~~~ Did you mean `favorite`?
+Suggest:
+  - Replace with: “favorite”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+       7 | My favourite color is blu.
+         |                       ^~~ Did you mean to spell `blu` this way?
+Suggest:
+  - Replace with: “bl”
+  - Replace with: “blue”
+  - Replace with: “blur”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+       8 | I must defend my honour!
+         |                  ^~~~~~ Did you mean `honor`?
+Suggest:
+  - Replace with: “honor”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+       9 | I recognize that you recognise me.
+         |                      ^~~~~~~~~ Did you mean `recognize`?
+Suggest:
+  - Replace with: “recognize”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      11 | I analyse how you infantilise me.
+         |   ^~~~~~~ Did you mean `analyze`?
+Suggest:
+  - Replace with: “analyze”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      11 | I analyse how you infantilise me.
+         |                   ^~~~~~~~~~~ Did you mean `infantilize`?
+Suggest:
+  - Replace with: “infantilize”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      12 | Careful, traveller!
+         |          ^~~~~~~~~ Did you mean `traveler`?
+Suggest:
+  - Replace with: “traveler”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      13 | At the centre of the theatre I dropped a litre of coke.
+         |        ^~~~~~ Did you mean `center`?
+Suggest:
+  - Replace with: “center”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      13 | At the centre of the theatre I dropped a litre of coke.
+         |                      ^~~~~~~ Did you mean `theater`?
+Suggest:
+  - Replace with: “theater”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      13 | At the centre of the theatre I dropped a litre of coke.
+         |                                          ^~~~~ Did you mean `liter`?
+Suggest:
+  - Replace with: “liter”
+
+
+

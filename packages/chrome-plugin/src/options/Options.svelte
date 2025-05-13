@@ -95,7 +95,7 @@ function configStringToValue(str: string): boolean | undefined | null {
             <div class="flex items-start justify-between gap-4">
               <div class="space-y-0.5">
                 <p class="font-medium">{key}</p>
-                <p class="text-xs text-gray-600">{lintDescriptions[key]}</p>
+                <p class="text-xs text-gray-600">{@html lintDescriptions[key]}</p>
               </div>
               <Select
                 size="sm"

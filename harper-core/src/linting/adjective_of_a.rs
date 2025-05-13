@@ -97,7 +97,7 @@ impl Linter for AdjectiveOfA {
             // The -ing form of a verb acts as an adjective called a present participle
             // and also acts as a noun called a gerund.
             if adj_chars.ends_with(&['i', 'n', 'g'])
-                && (adjective.kind.is_noun() && adjective.kind.is_verb())
+                && (adjective.kind.is_noun() || adjective.kind.is_verb())
             {
                 continue;
             }

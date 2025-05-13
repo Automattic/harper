@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.33.0",
+	"version": "0.34.1",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -523,6 +523,18 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensure proper capitalization of Day One and Day One Premium as brand names."
+				},
+				"harper.linters.DefiniteArticle": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "The name of the word `the` is `definite article`."
+				},
+				"harper.linters.DefiniteArticles": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "The name of the word `the` is `definite article`."
 				},
 				"harper.linters.Desktop": {
 					"scope": "resource",
@@ -1436,6 +1448,18 @@
 					"default": true,
 					"description": "Corrects two common malapropisms of `once in a while`."
 				},
+				"harper.linters.OneAndTheSame": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This linter flags instances of the nonstandard phrase `one in the same`. The correct, more accepted form is `one and the same`"
+				},
+				"harper.linters.OpenCompounds": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects compound words that should be written as two words."
+				},
 				"harper.linters.OperativeSystem": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1585,12 +1609,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensure proper capitalization of proper nouns."
-				},
-				"harper.linters.QuiteAWhile": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `quite awhile` => `quite a while` by inserting the missing article."
 				},
 				"harper.linters.RealTrouper": {
 					"scope": "resource",

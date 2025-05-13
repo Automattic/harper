@@ -2,7 +2,7 @@ use std::hash::{DefaultHasher, Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
 
-use crate::Span;
+use crate::{Span, render_markdown::render_markdown};
 
 use super::{LintKind, Suggestion};
 
@@ -41,6 +41,11 @@ impl Lint {
         self.priority.hash(&mut hasher);
 
         hasher.finish()
+    }
+
+    /// Interpret the message as Markdown and render it to HTML.
+    pub fn message_html(&self) -> String {
+        render_markdown(&self.message)
     }
 }
 

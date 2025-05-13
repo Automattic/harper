@@ -154,6 +154,10 @@ export default defineConfig({
 									to: '/docs/contributors/dictionary',
 								},
 								{
+									title: 'Test Suite',
+									to: '/docs/contributors/tests',
+								},
+								{
 									title: 'Author a Rule',
 									to: '/docs/contributors/author-a-rule',
 								},
