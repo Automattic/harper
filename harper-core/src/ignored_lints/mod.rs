@@ -1,9 +1,7 @@
 mod lint_context;
 
-use std::hash::{DefaultHasher, Hash, Hasher};
-
 use hashbrown::HashSet;
-use lint_context::LintContext;
+pub use lint_context::LintContext;
 use serde::{Deserialize, Serialize};
 
 use crate::{Document, linting::Lint};
@@ -27,24 +25,22 @@ impl IgnoredLints {
         self.context_hashes.extend(other.context_hashes)
     }
 
-    fn hash_lint_context(&self, lint: &Lint, document: &Document) -> u64 {
-        let context = LintContext::from_lint(lint, document);
-
-        let mut hasher = DefaultHasher::default();
-        context.hash(&mut hasher);
-
-        hasher.finish()
-    }
-
     /// Add a lint to the list.
     pub fn ignore_lint(&mut self, lint: &Lint, document: &Document) {
-        let context_hash = self.hash_lint_context(lint, document);
+        let context = LintContext::from_lint(lint, document);
+        let context_hash = context.default_hash();
 
-        self.context_hashes.insert(context_hash);
+        self.ignore_hash(context_hash);
+    }
+
+    /// Add a context hash to the list of ignored lints.
+    pub fn ignore_hash(&mut self, hash: u64) {
+        self.context_hashes.insert(hash);
     }
 
     pub fn is_ignored(&self, lint: &Lint, document: &Document) -> bool {
-        let hash = self.hash_lint_context(lint, document);
+        let context = LintContext::from_lint(lint, document);
+        let hash = context.default_hash();
 
         self.context_hashes.contains(&hash)
     }

@@ -1,5 +1,5 @@
 import h from 'virtual-dom/h';
-import type { LintBox } from './Box';
+import type { IgnorableLintBox, LintBox } from './Box';
 import ProtocolClient from './ProtocolClient';
 import lintKindColor from './lintKindColor';
 import type { UnpackedSuggestion } from './unpackLint';
@@ -116,7 +116,15 @@ function styleTag() {
 	]);
 }
 
-export default function SuggestionBox(box: LintBox, close: () => void) {
+function ignoreLint(onIgnore: () => void): any {
+	const buttonStyle: { [key: string]: string } = {
+		background: '#6E7781',
+		color: '#FFFFFF',
+	};
+	return button('Ignore', buttonStyle, onIgnore);
+}
+
+export default function SuggestionBox(box: IgnorableLintBox, close: () => void) {
 	const top = box.y + box.height + 3;
 	let bottom: number | undefined;
 	const left = box.x;
@@ -150,7 +158,10 @@ export default function SuggestionBox(box: LintBox, close: () => void) {
 		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind)),
 		body(box.lint.message_html),
 		footer(
-			box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
+			[
+				box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
+				ignoreLint(box.ignoreLint),
+			],
 
 			suggestions(box.lint.suggestions, (v) => {
 				box.applySuggestion(v);

@@ -54,4 +54,10 @@ export default class ProtocolClient {
 		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'addToUserDictionary', word });
 	}
+
+	public static async ignoreHash(hash: string): Promise<void> {
+    console.log(hash)
+		await chrome.runtime.sendMessage({ kind: 'ignoreLint', contextHash: hash });
+		this.lintCache.clear();
+	}
 }
