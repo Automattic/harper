@@ -39,7 +39,11 @@ impl Default for NoContractionWithVerb {
             // TODO which is wrong. replace with .is_progressive_form() when it's merged
             if meta.is_present_tense_verb() {
                 // A verb in -s (good) or -ing (bad)
-                return !tok.span.get_content_string(source).to_lowercase().ends_with("ing");
+                return !tok
+                    .span
+                    .get_content_string(source)
+                    .to_lowercase()
+                    .ends_with("ing");
             }
 
             // A verb lemma or in -ed (good)
@@ -49,9 +53,7 @@ impl Default for NoContractionWithVerb {
         // Ambiguous word is a verb determined by heuristic of following word's part of speech
         // Tests the next two words after "let".
         let verb_due_to_following_pos = SequencePattern::default()
-            .then(|tok: &Token, _source: &[char]| {
-                tok.kind.is_verb()
-            })
+            .then(|tok: &Token, _source: &[char]| tok.kind.is_verb())
             .then_whitespace()
             .then(|tok: &Token, _source: &[char]| {
                 // The 3rd word after let/lets and a verb
@@ -228,6 +230,10 @@ mod tests {
 
     #[test]
     fn dont_flag_let_in_and() {
-        assert_lint_count("Japanese is good enough to be let in and.", NoContractionWithVerb::default(), 0);
+        assert_lint_count(
+            "Japanese is good enough to be let in and.",
+            NoContractionWithVerb::default(),
+            0,
+        );
     }
 }
