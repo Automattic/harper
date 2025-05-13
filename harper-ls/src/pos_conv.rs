@@ -121,7 +121,7 @@ mod tests {
         let source: Vec<_> = "This is a short test\n".chars().collect();
 
         let a = Position {
-            line: 1,
+            line: 0,
             character: 20,
         };
 
@@ -133,7 +133,7 @@ mod tests {
         let source: Vec<_> = "This is a short test".chars().collect();
 
         let a = Position {
-            line: 1,
+            line: 0,
             character: 20,
         };
 
@@ -146,11 +146,11 @@ mod tests {
 
         let range = Range {
             start: Position {
-                line: 1,
+                line: 0,
                 character: 9,
             },
             end: Position {
-                line: 1,
+                line: 0,
                 character: 10,
             },
         };
