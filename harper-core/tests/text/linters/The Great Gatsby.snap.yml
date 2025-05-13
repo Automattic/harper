@@ -27,6 +27,15 @@ Message: |
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+      10 | “Whenever you feel like criticising any one,” he told me, “just remember that
+         |                         ^~~~~~~~~~~ Did you mean `criticizing`?
+Suggest:
+  - Replace with: “criticizing”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
       15 | consequence, I’m inclined to reserve all judgments, a habit that has opened up
@@ -706,6 +715,18 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
+     487 | interested and a little deaf, I followed Daisy around a chain of connecting
+     488 | verandas to the porch in front. In its deep gloom we sat down side by side on a
+         | ^~~~~~~~ Did you mean to spell `verandas` this way?
+Suggest:
+  - Replace with: “vegan's”
+  - Replace with: “viand's”
+  - Replace with: “vandal”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
      529 | the whole evening had been a trick of some sort to exact a contributary emotion
          |                                                            ^~~~~~~~~~~~ Did you mean to spell `contributary` this way?
      530 | from me. I waited, and sure enough, in a moment she looked at me with an
@@ -762,10 +783,8 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      592 | “Did you give Nick a little heart to heart talk on the veranda?” demanded Tom
-         |                                                        ^~~~~~~ Did you mean to spell `veranda` this way?
+         |                                                        ^~~~~~~ Did you mean `Miranda`?
 Suggest:
-  - Replace with: “verandas”
-  - Replace with: “veranda's”
   - Replace with: “Miranda”
 
 
@@ -1077,6 +1096,16 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
+     730 | beauty, but there was an immediately perceptible vitality about her as if the
+     731 | nerves of her body were continually smouldering. She smiled slowly and, walking
+         |                                     ^~~~~~~~~~~ Did you mean `smoldering`?
+Suggest:
+  - Replace with: “smoldering”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
      756 | “Terrible place, isn’t it,” said Tom, exchanging a frown with Doctor Eckleburg.
          |                                                                      ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
@@ -1286,8 +1315,8 @@ Message: |
     1030 | two days in the private rooms. We had an awful time getting back, I can tell
 Suggest:
   - Replace with: “gaped”
-  - Replace with: “gybed”
   - Replace with: “gypped”
+  - Replace with: “gyved”
 
 
 
@@ -1542,6 +1571,18 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
+    1190 | the drive, and already the halls and salons and verandas are gaudy with primary
+         |                                                 ^~~~~~~~ Did you mean to spell `verandas` this way?
+    1191 | colors, and hair bobbed in strange new ways, and shawls beyond the dreams of
+Suggest:
+  - Replace with: “vegan's”
+  - Replace with: “viand's”
+  - Replace with: “vandal”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
     1191 | colors, and hair bobbed in strange new ways, and shawls beyond the dreams of
     1192 | Castile. The bar is in full swing, and floating rounds of cocktails permeate the
          | ^~~~~~~ Did you mean to spell `Castile` this way?
@@ -1676,6 +1717,15 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
+    1310 | “I don’t think it’s so much that,” argued Lucille sceptically; “it’s more that
+         |                                                   ^~~~~~~~~~~ Did you mean `skeptically`?
+Suggest:
+  - Replace with: “skeptically”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
     1336 | West Egg, and carefully on guard against its spectroscopic gayety.
          |                                                            ^~~~~~ Did you mean to spell `gayety` this way?
 Suggest:
@@ -1688,10 +1738,8 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1346 | couldn’t find him from the top of the steps, and he wasn’t on the veranda. On a
-         |                                                                   ^~~~~~~ Did you mean to spell `veranda` this way?
+         |                                                                   ^~~~~~~ Did you mean `Miranda`?
 Suggest:
-  - Replace with: “verandas”
-  - Replace with: “veranda's”
   - Replace with: “Miranda”
 
 
@@ -4871,10 +4919,8 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3693 | I went with them out to the veranda. On the green Sound, stagnant in the heat,
-         |                             ^~~~~~~ Did you mean to spell `veranda` this way?
+         |                             ^~~~~~~ Did you mean `Miranda`?
 Suggest:
-  - Replace with: “verandas”
-  - Replace with: “veranda's”
   - Replace with: “Miranda”
 
 
@@ -5132,17 +5178,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    4016 | “Well, we’d better telephone for an axe———”
-         |                                     ^~~ Did you mean to spell `axe` this way?
-Suggest:
-  - Replace with: “aye”
-  - Replace with: “ace”
-  - Replace with: “age”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     4054 | “Biloxi,” he answered shortly.
          |  ^~~~~~ Did you mean to spell `Biloxi` this way?
 Suggest:
@@ -5203,7 +5238,6 @@ Message: |
     4067 | an aluminum putter that I use to-day.”
          |    ^~~~~~~~ Did you mean to spell `aluminum` this way?
 Suggest:
-  - Replace with: “aluminum's”
   - Replace with: “alumnus”
   - Replace with: “alumina”
 
@@ -5929,10 +5963,8 @@ Lint:    Spelling (63 priority)
 Message: |
     4703 | I walked back along the border of the lawn, traversed the gravel softly, and
     4704 | tiptoed up the veranda steps. The drawing-room curtains were open, and I saw
-         |                ^~~~~~~ Did you mean to spell `veranda` this way?
+         |                ^~~~~~~ Did you mean `Miranda`?
 Suggest:
-  - Replace with: “verandas”
-  - Replace with: “veranda's”
   - Replace with: “Miranda”
 
 

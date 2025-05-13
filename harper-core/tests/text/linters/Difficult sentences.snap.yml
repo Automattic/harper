@@ -101,6 +101,17 @@ Suggest:
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+     249 | The bullet is about five centimetres in.
+         |                          ^~~~~~~~~~~ Did you mean to spell `centimetres` this way?
+Suggest:
+  - Replace with: “centimeter's”
+  - Replace with: “centimeters”
+  - Replace with: “centimeter”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      254 | the in train (incoming train)
@@ -119,6 +130,15 @@ Suggest:
   - Replace with: “season”
   - Replace with: “seismic”
   - Replace with: “sepsis”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     258 | I need to keep in with the neighbours in case I ever need a favour from them.
+         |                            ^~~~~~~~~~ Did you mean `neighbors`?
+Suggest:
+  - Replace with: “neighbors”
 
 
 

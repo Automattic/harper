@@ -773,7 +773,7 @@
 > driest thing I   know  . Silence all       round     , if    you please ! ‘          William the Conqueror ,
 # W?     NSg/V ISg NSg/V . NSg/V   NSg/I/J/C NSg/V/J/P . NSg/C IPl V      . Unlintable NPrSg   D   NSg       .
 > whose cause was favoured by the pope  , was soon submitted to by the English , who
-# I     NSg/C V   V/J      P  D   NPrSg . V   J/R  V         P  P  D   NPrSg/J . NPrSg/I
+# I     NSg/C V   V/J/Br   P  D   NPrSg . V   J/R  V         P  P  D   NPrSg/J . NPrSg/I
 > wanted leaders , and had been  of late  much  accustomed to usurpation and conquest .
 # V/J    W?      . V/C V   NSg/V P  NSg/J N/I/J V/J        P  NSg        V/C NSg/V    .
 > Edwin and Morcar , the earls of Mercia and Northumbria — ’ ”
@@ -5941,7 +5941,7 @@
 > The long    grass   rustled at her   feet as    the White   Rabbit hurried by      — the frightened
 # D   NPrSg/J NPrSg/V V/J     P  I/J/D NSg  NSg/R D   NPrSg/J NSg/V  V/J     NSg/J/P . D   J
 > Mouse splashed his   way   through the neighbouring pool  — she could  hear the rattle
-# NSg/V V/J      ISg/D NSg/J NSg/J/P D   N/J          NSg/V . ISg NSg/VX V    D   NSg
+# NSg/V V/J      ISg/D NSg/J NSg/J/P D   N/J/Br       NSg/V . ISg NSg/VX V    D   NSg
 > of the teacups as    the March Hare    and his   friends shared their never - ending meal  ,
 # P  D   NPl     NSg/R D   NPrSg NSg/V/J V/C ISg/D NPl     V/J    D     N/J   . NSg/V  NSg/V .
 > and the shrill voice of the Queen ordering off       her   unfortunate guests to

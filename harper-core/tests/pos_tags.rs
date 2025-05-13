@@ -47,6 +47,7 @@
 //!   - Determiners are denoted by `D`.
 //!   - Prepositions are denoted by `P`.
 //!   - Dialects are denoted by `Am`, `Br`, `Ca`, or `Au`.
+//!   - Swear words are denoted by `B` (for bad).
 //!
 //!   The tagger supports uncertainty, so a single word can be e.g. both a
 //!   noun and a verb. This is denoted by a `/` between the tags.
@@ -142,6 +143,10 @@ fn format_word_tag(word: &WordMetadata) -> String {
             harper_core::Dialect::Canadian => "Ca",
             harper_core::Dialect::Australian => "Au",
         });
+    }
+
+    if word.swear == Some(true) {
+        add("B");
     }
 
     if tags.is_empty() {

@@ -17,7 +17,7 @@
 >
 #
 > “ Whenever you feel      like        criticising any   one       , ” he      told me        , “ just remember that
-# . C        IPl NSg/I/V/J NSg/V/J/C/P V           I/R/D NSg/I/V/J . . NPr/ISg V    NPrSg/ISg . . V/J  NSg/V    N/I/C/D
+# . C        IPl NSg/I/V/J NSg/V/J/C/P V/Br        I/R/D NSg/I/V/J . . NPr/ISg V    NPrSg/ISg . . V/J  NSg/V    N/I/C/D
 > all       the people in this world haven’t had the advantages that    you’ve had . ”
 # NSg/I/J/C D   NSg    P  I/D  NSg/V V       V   D   NPl        N/I/C/D W?     V   . .
 >
@@ -973,7 +973,7 @@
 > interested and a   little    deaf    , I   followed Daisy around a   chain of connecting
 # V/J        V/C D/P NPrSg/I/J NSg/V/J . ISg V/J      NPrSg J/P    D/P NSg   P  V
 > verandas to the porch in          front   . In its   deep  gloom we  sat     down      side    by      side    on a
-# NPl      P  D   NSg   NPrSg/V/J/P NSg/V/J . P  ISg/D NSg/J NSg/V IPl NSg/V/J NSg/V/J/P NSg/V/J NSg/J/P NSg/V/J P  D/P
+# NPl/Br   P  D   NSg   NPrSg/V/J/P NSg/V/J . P  ISg/D NSg/J NSg/V IPl NSg/V/J NSg/V/J/P NSg/V/J NSg/J/P NSg/V/J P  D/P
 > wicker settee .
 # NSg/J  NSg    .
 >
@@ -1459,7 +1459,7 @@
 > beauty  , but     there was an  immediately perceptible vitality about her   as    if    the
 # NSg/V/J . NSg/C/P W?    V   D/P J/R         NSg/J       NSg      J/P   I/J/D NSg/R NSg/C D
 > nerves of her   body  were  continually smouldering . She smiled slowly and , walking
-# NPl    P  I/J/D NSg/V NSg/V J/R         V           . ISg V/J    J/R    V/C . NSg/V/J
+# NPl    P  I/J/D NSg/V NSg/V J/R         V/Br        . ISg V/J    J/R    V/C . NSg/V/J
 > through her   husband as    if    he      were  a   ghost , shook   hands with Tom     , looking him
 # NSg/J/P I/J/D NSg/V   NSg/R NSg/C NPr/ISg NSg/V D/P NSg   . NSg/V/J NPl/V P    NPrSg/V . V       I
 > flush   in the eye . Then    she wet     her   lips  , and without turning around spoke to her
@@ -2377,9 +2377,9 @@
 > now         and are dressing up        - stairs ; the cars from New     York are parked five deep  in
 # NPrSg/V/J/C V/C V   NSg/V    NSg/V/J/P . NPl    . D   NPl  P    NSg/V/J NPr  V   V/J    NSg  NSg/J P
 > the drive , and already the halls and salons and verandas are gaudy with primary
-# D   NSg   . V/C W?      D   NPl   V/C NPl    V/C NPl      V   NSg/J P    NSg/V/J
-> colors , and hair  bobbed in          strange new     ways , and shawls beyond the dreams of
-# NPl/V  . V/C NSg/V V/J    NPrSg/V/J/P NSg/V/J NSg/V/J NPl  . V/C NPl/V  NSg/P  D   NPl    P
+# D   NSg   . V/C W?      D   NPl   V/C NPl    V/C NPl/Br   V   NSg/J P    NSg/V/J
+> colors   , and hair  bobbed in          strange new     ways , and shawls beyond the dreams of
+# NPl/V/Am . V/C NSg/V V/J    NPrSg/V/J/P NSg/V/J NSg/V/J NPl  . V/C NPl/V  NSg/P  D   NPl    P
 > Castile . The bar   is in          full    swing , and floating rounds of cocktails permeate the
 # ?       . D   NSg/P VL NPrSg/V/J/P NSg/V/J NSg/V . V/C V        NPl/V  P  NPl/V     NSg/V    D
 > garden outside   , until the air is alive with chatter and laughter , and casual
@@ -2419,7 +2419,7 @@
 > rhythm obligingly for her   , and there is a   burst of chatter as    the erroneous news
 # NSg    J/R        C/P I/J/D . V/C W?    VL D/P NSg   P  NSg/V   NSg/R D   J         NSg/V
 > goes  around that    she is Gilda Gray’s understudy from the Follies . The party has
-# NSg/V J/P    N/I/C/D ISg VL NPr   N$     NSg/V      P    D   NPl     . D   NSg/J V
+# NSg/V J/P    N/I/C/D ISg VL NPr   N$/Am  NSg/V      P    D   NPl     . D   NSg/J V
 > begun .
 # V     .
 >
@@ -2617,7 +2617,7 @@
 >
 #
 > “ I   don’t think it’s so        much  that    , ” argued Lucille sceptically ; “ it’s more        that
-# . ISg NSg/V NSg/V W?   NSg/I/J/C N/I/J N/I/C/D . . V/J    NPr     J/R         . . W?   NPrSg/I/V/J N/I/C/D
+# . ISg NSg/V NSg/V W?   NSg/I/J/C N/I/J N/I/C/D . . V/J    NPr     J/R/Br      . . W?   NPrSg/I/V/J N/I/C/D
 > he      was a   German  spy   during the war . ”
 # NPr/ISg V   D/P NPrSg/J NSg/V V/P    D   NSg . .
 >
@@ -5677,7 +5677,7 @@
 >
 #
 > We  went  up        - stairs , through period  bedrooms swathed in          rose      and lavender silk  and
-# IPl NSg/V NSg/V/J/P . NPl    . NSg/J/P NSg/V/J NPl      J       NPrSg/V/J/P NPrSg/V/J V/C NSg/V/J  NSg/V V/C
+# IPl NSg/V NSg/V/J/P . NPl    . NSg/J/P NSg/V/J NPl      J/Am    NPrSg/V/J/P NPrSg/V/J V/C NSg/V/J  NSg/V V/C
 > vivid with new     flowers , through dressing - rooms and poolrooms , and bathrooms with
 # NSg/J P    NSg/V/J NPrPl/V . NSg/J/P NSg/V    . NPl/V V/C NPl       . V/C NPl/V     P
 > sunken baths — intruding into one       chamber where a   dishevelled man         in          pajamas was
@@ -8028,8 +8028,8 @@
 # . W?    V      I/R/D NPrSg/I/V/J . .
 >
 #
-> “ Well    , we’d better   telephone for an  axe    — — — ”
-# . NSg/V/J . W?   NSg/VX/J NSg/V     C/P D/P NSg/Br . . . .
+> “ Well    , we’d better   telephone for an  axe — — — ”
+# . NSg/V/J . W?   NSg/VX/J NSg/V     C/P D/P NSg . . . .
 >
 #
 > “ The thing to do     is to forget about the heat , ” said Tom     impatiently . “ You make

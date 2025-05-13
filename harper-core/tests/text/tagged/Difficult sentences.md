@@ -495,7 +495,7 @@
 > Little    by      little    I   pushed the snake into the basket , until finally all       of it        was in          .
 # NPrSg/I/J NSg/J/P NPrSg/I/J ISg V/J    D   NPrSg P    D   NSg    . C/P   J/R     NSg/I/J/C P  NPrSg/ISg V   NPrSg/V/J/P .
 > The bullet is about five centimetres in          .
-# D   NSg    VL J/P   NSg  NPl         NPrSg/V/J/P .
+# D   NSg    VL J/P   NSg  NPl/Br      NPrSg/V/J/P .
 > If    the tennis ball    bounces on the line then    it's in          .
 # NSg/C D   NSg    NPrSg/V NPl/V   P  D   NSg  NSg/J/C W?   NPrSg/V/J/P .
 > I've discovered why   the TV  wasn't working – the plug wasn't in          !
@@ -513,7 +513,7 @@
 > He      is very in          with the Joneses .
 # NPr/ISg VL J    NPrSg/V/J/P P    D   NPl     .
 > I   need   to keep  in          with the neighbours in          case    I   ever need   a   favour from them .
-# ISg NSg/VX P  NSg/V NPrSg/V/J/P P    D   NPl        NPrSg/V/J/P NPrSg/V ISg J    NSg/VX D/P NSg/Br P    N/I  .
+# ISg NSg/VX P  NSg/V NPrSg/V/J/P P    D   NPl/Br     NPrSg/V/J/P NPrSg/V ISg J    NSg/VX D/P NSg/Br P    N/I  .
 > I   think that    bird      fancies you . You're in          there , mate  !
 # ISg NSg/V N/I/C/D NPrSg/V/J NPl/V   IPl . W?     NPrSg/V/J/P W?    . NSg/V .
 > I'm three drinks in          right     now         .

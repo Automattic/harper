@@ -7,7 +7,6 @@ use crate::WordMetadata;
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "snake_case")]
 pub enum AffixEntryKind {
-    Property,
     Suffix,
     Prefix,
 }
@@ -74,4 +73,13 @@ impl HumanReadableExpansion {
             base_metadata: self.base_metadata,
         })
     }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Property {
+    /// Whether the metadata will propagate to all derived words.
+    #[serde(default)]
+    pub propagate: bool,
+    /// The metadata applied to the word.
+    pub metadata: WordMetadata,
 }
