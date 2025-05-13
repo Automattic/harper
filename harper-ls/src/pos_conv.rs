@@ -159,4 +159,19 @@ mod tests {
         assert_eq!(out.start, 9);
         assert_eq!(out.end, 10);
     }
+
+    /// Ensures that `position_to_index` produces the correct result for an input `Position`
+    /// of `{ line: 1, character: 0 }`.
+    /// Related to: https://github.com/Automattic/harper/issues/1253
+    #[test]
+    fn pos_to_index_correct_for_l1_c0() {
+        let source: Vec<_> = ". one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twenty-one twenty-two twenty-three twenty-four twenty-five twenty-six twenty-seven twenty-eight twenty-nine thirty thirty-one\n".chars().collect();
+        let position = Position {
+            line: 1,
+            character: 0,
+        };
+
+        let out = position_to_index(&source, position);
+        assert_ne!(out, 0);
+    }
 }
