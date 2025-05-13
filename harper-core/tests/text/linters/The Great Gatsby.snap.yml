@@ -1103,8 +1103,8 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “D”
   - Replace with: “Dc”
+  - Replace with: “Dd”
   - Replace with: “Do”
 
 
@@ -1364,8 +1364,8 @@ Message: |
          |        ^~~ Did you mean to spell `Dai` this way?
 Suggest:
   - Replace with: “Day”
-  - Replace with: “Dab”
   - Replace with: “Dad”
+  - Replace with: “Dais”
 
 
 
@@ -2544,9 +2544,9 @@ Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
-  - Replace with: “D”
   - Replace with: “Dab”
   - Replace with: “Dad”
+  - Replace with: “Dag”
 
 
 
@@ -2602,9 +2602,9 @@ Message: |
          |                                         ^~ Did you mean to spell `De` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
-  - Replace with: “D”
   - Replace with: “Dc”
-  - Replace with: “Dev”
+  - Replace with: “Dd”
+  - Replace with: “Deb”
 
 
 
@@ -5248,7 +5248,7 @@ Message: |
          |                                                                  ^~~ Did you mean to spell `Asa` this way?
     4084 | brought him around at the last minute and asked if we had room for him.”
 Suggest:
-  - Replace with: “Ask”
+  - Replace with: “Ass”
   - Replace with: “Ada”
   - Replace with: “Ala”
 
