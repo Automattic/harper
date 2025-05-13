@@ -56,7 +56,6 @@ export default class ProtocolClient {
 	}
 
 	public static async ignoreHash(hash: string): Promise<void> {
-    console.log(hash)
 		await chrome.runtime.sendMessage({ kind: 'ignoreLint', contextHash: hash });
 		this.lintCache.clear();
 	}

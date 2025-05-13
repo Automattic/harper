@@ -34,6 +34,7 @@ function button(
 	label: string,
 	extraStyle: { [key: string]: string },
 	onClick: (event: Event) => void,
+	description?: string,
 ): any {
 	const buttonStyle: { [key: string]: string } = {
 		display: 'inline-flex',
@@ -51,7 +52,12 @@ function button(
 		transition: 'background 120ms ease',
 	};
 	const combinedStyle = { ...buttonStyle, ...extraStyle };
-	return h('button', { style: combinedStyle, onclick: onClick }, label);
+	const desc = description || label;
+	return h(
+		'button',
+		{ style: combinedStyle, onclick: onClick, title: desc, 'aria-label': desc },
+		label,
+	);
 }
 
 function footer(leftChildren: any, rightChildren: any) {
@@ -85,9 +91,14 @@ function addToDictionary(box: LintBox): any {
 		background: '#8250DF',
 		color: '#FFFFFF',
 	};
-	return button('Add to Dictionary', buttonStyle, () => {
-		ProtocolClient.addToUserDictionary(box.lint.problem_text);
-	});
+	return button(
+		'Add to Dictionary',
+		buttonStyle,
+		() => {
+			ProtocolClient.addToUserDictionary(box.lint.problem_text);
+		},
+		'Add this word to your dictionary',
+	);
 }
 
 function suggestions(
@@ -100,9 +111,15 @@ function suggestions(
 	};
 	return suggestions.map((s: UnpackedSuggestion) => {
 		const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
-		return button(label, suggestionButtonStyle, () => {
-			apply(s);
-		});
+		const desc = `Replace with \"${label}\"`;
+		return button(
+			label,
+			suggestionButtonStyle,
+			() => {
+				apply(s);
+			},
+			desc,
+		);
 	});
 }
 
@@ -121,7 +138,7 @@ function ignoreLint(onIgnore: () => void): any {
 		background: '#6E7781',
 		color: '#FFFFFF',
 	};
-	return button('Ignore', buttonStyle, onIgnore);
+	return button('Ignore', buttonStyle, onIgnore, 'Ignore this suggestion.');
 }
 
 export default function SuggestionBox(box: IgnorableLintBox, close: () => void) {
