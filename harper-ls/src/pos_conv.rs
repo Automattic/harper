@@ -174,4 +174,31 @@ mod tests {
         let out = position_to_index(&source, position);
         assert_ne!(out, 0);
     }
+
+    /// Ensures `position_to_index` produces the correct result when indexing line 0.
+    #[test]
+    fn off_by_one_check_line0() {
+        let source: Vec<_> = "abc\ndef\nghi\njkl".chars().collect();
+        let position = Position {
+            line: 0,
+            character: 0,
+        };
+
+        let out = position_to_index(&source, position);
+        assert_eq!(source[out], 'a');
+    }
+
+    /// Ensures `position_to_index` produces the correct result when indexing a non-zero line and
+    /// character.
+    #[test]
+    fn off_by_one_check_non_zero_line() {
+        let source: Vec<_> = "abc\ndef\nghi\njkl".chars().collect();
+        let position = Position {
+            line: 2,
+            character: 1,
+        };
+
+        let out = position_to_index(&source, position);
+        assert_eq!(source[out], 'h');
+    }
 }
