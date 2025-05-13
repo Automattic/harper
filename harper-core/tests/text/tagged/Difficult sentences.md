@@ -80,8 +80,8 @@
 # NSg/V
 >
 #
-> ( In          online chats : ) Don't @ me        ! Don't at        me        !
-# . NPrSg/V/J/P V/J    NPl/V . . NSg/V . NPrSg/ISg . NSg/V NSg/I/V/P NPrSg/ISg .
+> ( In        online chats : ) Don't @ me        ! Don't at        me        !
+# . NPrSg/J/P V/J    NPl/V . . NSg/V . NPrSg/ISg . NSg/V NSg/I/V/P NPrSg/ISg .
 >
 #
 > By
@@ -128,8 +128,8 @@
 # NSg/J/P . NSg/J/R . ISg NPl/V . NPrSg/P . .
 > The electricity was cut     off       , so        we  had to read  by      candlelight .
 # D   NSg         V   NSg/V/J NSg/V/J/P . NSg/I/J/C IPl V   P  NSg/V NSg/J/P NSg         .
-> By the power vested in          me        , I   now         pronounce you man         and wife  .
-# P  D   NSg/J V/J    NPrSg/V/J/P NPrSg/ISg . ISg NPrSg/V/J/C NSg/V     IPl NPrSg/I/V/J V/C NSg/V .
+> By the power vested in        me        , I   now         pronounce you man         and wife  .
+# P  D   NSg/J V/J    NPrSg/J/P NPrSg/ISg . ISg NPrSg/V/J/C NSg/V     IPl NPrSg/I/V/J V/C NSg/V .
 > By      Jove ! I   think she's got it        !
 # NSg/J/P NPr  . ISg NSg/V W?    V   NPrSg/ISg .
 > By      all       that    is holy    , I'll put   an  end to this .
@@ -168,8 +168,8 @@
 # D   NSg/J V   J/P   # NSg/V P  # NSg/V .
 > The bricks used to build the wall  measured 10 by 20 by 30 cm .
 # D   NPl    V/J  P  NSg/V D   NPrSg V/J      #  P  #  P  #  N  .
-> She's a   lovely  little    filly , by      Big     Lad , out         of Damsel in          Distress .
-# W?    D/P NSg/J/R NPrSg/I/J NSg   . NSg/J/P NSg/V/J NSg . NSg/V/J/R/P P  NSg    NPrSg/V/J/P NSg/V    .
+> She's a   lovely  little    filly , by      Big     Lad , out         of Damsel in        Distress .
+# W?    D/P NSg/J/R NPrSg/I/J NSg   . NSg/J/P NSg/V/J NSg . NSg/V/J/R/P P  NSg    NPrSg/J/P NSg/V    .
 > Are you eating by      Rabbi Fischer ? ( at the house of )
 # V   IPl V      NSg/J/P NSg   NPr     . . P  D   NPrSg P  .
 > By      Chabad , it's different . ( with , among )
@@ -274,8 +274,8 @@
 # D   NSg   VL V/J    C/P D   NPrSg .
 > I   can      see   for miles .
 # ISg NPrSg/VX NSg/V C/P NPrPl .
-> I   will     stand in          for him .
-# ISg NPrSg/VX NSg/V NPrSg/V/J/P C/P I   .
+> I   will     stand in        for him .
+# ISg NPrSg/VX NSg/V NPrSg/J/P C/P I   .
 > I   speak for the Prime Minister .
 # ISg NSg/V C/P D   NSg/J NSg/V    .
 > It        is unreasonable for our boss  to withhold our wages .
@@ -310,8 +310,8 @@
 # NPr/ISg VL V/J   C/P ISg/D NSg         .
 > He      totally screwed up        that    project . Now         he's surely for the sack .
 # NPr/ISg J/R     V/J     NSg/V/J/P N/I/C/D NSg/V   . NPrSg/V/J/C N$   J/R    C/P D   NSg  .
-> In          term    of base    hits  , Jones   was three for four on the day
-# NPrSg/V/J/P NSg/V/J P  NSg/V/J NPl/V . NPrSg/V V   NSg   C/P NSg  P  D   NPrSg
+> In        term    of base    hits  , Jones   was three for four on the day
+# NPrSg/J/P NSg/V/J P  NSg/V/J NPl/V . NPrSg/V V   NSg   C/P NSg  P  D   NPrSg
 > At        close   of play  , England were  305 for 3 .
 # NSg/I/V/P NSg/V/J P  NSg/V . NPr     NSg/V #   C/P # .
 > He      took the swing shift for he      could  get   more        overtime .
@@ -365,7 +365,7 @@
 >
 #
 > In
-# NPrSg/V/J/P
+# NPrSg/J/P
 >
 #
 > Preposition
@@ -390,8 +390,8 @@
 # ISg V/J     NSg/V/J/P P  D   NSg/J  NSg/V P  D   NSg/J NSg/V .
 > There wasn't much  of interest in her   speech .
 # W?    V      N/I/J P  NSg/V    P  I/J/D NSg/V  .
-> He      hasn't got an  original idea in          him .
-# NPr/ISg V      V   D/P NSg/J    NSg  NPrSg/V/J/P I   .
+> He      hasn't got an  original idea in        him .
+# NPr/ISg V      V   D/P NSg/J    NSg  NPrSg/J/P I   .
 > You are one       in a   million .
 # IPl V   NSg/I/V/J P  D/P N       .
 > She's in an  orchestra .
@@ -408,46 +408,46 @@
 # V/J/C/P NSg/V NPl/V P  D    NPl   I/D  NSg/J .
 > She stood there looking in the window longingly .
 # ISg V     W?    V       P  D   NSg    J/R       .
-> In          replacing the faucet washers , he      felt    he      was making his   contribution to the environment .
-# NPrSg/V/J/P V         D   NSg    W?      . NPr/ISg NSg/V/J NPr/ISg V   NSg/V  ISg/D NSg          P  D   NSg         .
-> In          trying  to make  amends , she actually made  matters worse   .
-# NPrSg/V/J/P NSg/V/J P  NSg/V NPl/V  . ISg J/R      NSg/V W?      NSg/V/J .
-> My aim in          travelling there was to find  my missing friend  .
-# D  NSg NPrSg/V/J/P NSg/V/J/Br W?    V   P  NSg/V D  N/J     NPrSg/V .
-> My fat   rolls around in          folds .
-# D  NSg/J NPl/V J/P    NPrSg/V/J/P NPl/V .
-> The planes flew    over      in          waves .
-# D   NPl    NSg/V/J NSg/V/J/P NPrSg/V/J/P NPl/V .
+> In        replacing the faucet washers , he      felt    he      was making his   contribution to the environment .
+# NPrSg/J/P V         D   NSg    W?      . NPr/ISg NSg/V/J NPr/ISg V   NSg/V  ISg/D NSg          P  D   NSg         .
+> In        trying  to make  amends , she actually made  matters worse   .
+# NPrSg/J/P NSg/V/J P  NSg/V NPl/V  . ISg J/R      NSg/V W?      NSg/V/J .
+> My aim in        travelling there was to find  my missing friend  .
+# D  NSg NPrSg/J/P NSg/V/J/Br W?    V   P  NSg/V D  N/J     NPrSg/V .
+> My fat   rolls around in        folds .
+# D  NSg/J NPl/V J/P    NPrSg/J/P NPl/V .
+> The planes flew    over      in        waves .
+# D   NPl    NSg/V/J NSg/V/J/P NPrSg/J/P NPl/V .
 > Arrange the chairs in a   circle .
 # NSg/V   D   NPl    P  D/P NSg    .
-> He      stalked away in          anger .
-# NPr/ISg V/J     V/J  NPrSg/V/J/P NSg/V .
+> He      stalked away in        anger .
+# NPr/ISg V/J     V/J  NPrSg/J/P NSg/V .
 > John  is in a   coma .
 # NPrSg VL P  D/P NSg  .
-> My fruit trees are in          bud     .
-# D  NSg   NPl/V V   NPrSg/V/J/P NPrSg/V .
-> The company is in          profit  .
-# D   NSg     VL NPrSg/V/J/P NSg/V/J .
-> You've got a   friend in          me        .
-# W?     V   D/P NPrSg  NPrSg/V/J/P NPrSg/ISg .
+> My fruit trees are in        bud     .
+# D  NSg   NPl/V V   NPrSg/J/P NPrSg/V .
+> The company is in        profit  .
+# D   NSg     VL NPrSg/J/P NSg/V/J .
+> You've got a   friend in        me        .
+# W?     V   D/P NPrSg  NPrSg/J/P NPrSg/ISg .
 > He's met his   match in her   .
 # N$   V   ISg/D NSg   P  I/J/D .
 > There has been  no      change in his   condition .
 # W?    V   NSg/V NPrSg/P NSg    P  ISg/D NSg       .
-> What  grade did he      get   in          English   ?
-# NSg/I NSg/V V   NPr/ISg NSg/V NPrSg/V/J/P NPrSg/V/J .
-> Please pay     me        in          cash      — preferably in          tens and twenties .
-# V      NSg/V/J NPrSg/ISg NPrSg/V/J/P NPrSg/V/J . R          NPrSg/V/J/P W?   V/C NPl      .
-> The deposit can      be     in any   legal tender  , even    in          gold    .
-# D   NSg     NPrSg/VX NSg/VX P  I/R/D NSg/J NSg/V/J . NSg/V/J NPrSg/V/J/P NSg/V/J .
-> Beethoven's " Symphony No      . 5 " in          C         minor   is among his   most    popular .
-# N$          . NSg      NPrSg/P . # . NPrSg/V/J/P NPrSg/V/J NSg/V/J VL P     ISg/D NSg/I/J NSg/J   .
-> His   speech was in          French    , but     was simultaneously translated into eight languages .
-# ISg/D NSg    V   NPrSg/V/J/P NPrSg/V/J . NSg/C/P V   J/R            V/J        P    NSg/J NPl/V     .
-> When    you write in          cursive , it's illegible .
-# NSg/I/C IPl NSg/V NPrSg/V/J/P NSg/J   . W?   J         .
-> Military letters should be     formal in          tone    , but     not   stilted .
-# NSg/J    NPl/V   VX     NSg/VX NSg/J  NPrSg/V/J/P NSg/I/V . NSg/C/P NSg/C V/J     .
+> What  grade did he      get   in        English   ?
+# NSg/I NSg/V V   NPr/ISg NSg/V NPrSg/J/P NPrSg/V/J .
+> Please pay     me        in        cash      — preferably in        tens and twenties .
+# V      NSg/V/J NPrSg/ISg NPrSg/J/P NPrSg/V/J . R          NPrSg/J/P W?   V/C NPl      .
+> The deposit can      be     in any   legal tender  , even    in        gold    .
+# D   NSg     NPrSg/VX NSg/VX P  I/R/D NSg/J NSg/V/J . NSg/V/J NPrSg/J/P NSg/V/J .
+> Beethoven's " Symphony No      . 5 " in        C         minor   is among his   most    popular .
+# N$          . NSg      NPrSg/P . # . NPrSg/J/P NPrSg/V/J NSg/V/J VL P     ISg/D NSg/I/J NSg/J   .
+> His   speech was in        French    , but     was simultaneously translated into eight languages .
+# ISg/D NSg    V   NPrSg/J/P NPrSg/V/J . NSg/C/P V   J/R            V/J        P    NSg/J NPl/V     .
+> When    you write in        cursive , it's illegible .
+# NSg/I/C IPl NSg/V NPrSg/J/P NSg/J   . W?   J         .
+> Military letters should be     formal in        tone    , but     not   stilted .
+# NSg/J    NPl/V   VX     NSg/VX NSg/J  NPrSg/J/P NSg/I/V . NSg/C/P NSg/C V/J     .
 >
 #
 > Verb
@@ -462,20 +462,20 @@
 # NSg/V
 >
 #
-> Suddenly a   strange man         walked in          .
-# J/R      D/P NSg/J   NPrSg/I/V/J V/J    NPrSg/V/J/P .
-> Would  you like        that    to take  away or      eat   in          ?
-# NSg/VX IPl NSg/V/J/C/P N/I/C/D P  NSg/V V/J  NPrSg/C NSg/V NPrSg/V/J/P .
-> He      ran   to the edge of the swimming pool  and dived in          .
-# NPr/ISg NSg/V P  D   NSg  P  D   NSg      NSg/V V/C V/J   NPrSg/V/J/P .
-> They flew    in          from London last    night .
-# IPl  NSg/V/J NPrSg/V/J/P P    NPr    NSg/V/J NSg/V .
-> For six hours the tide flows in          , then    for another six hours it        flows out         .
-# C/P NSg NPl   D   NSg  NPl/V NPrSg/V/J/P . NSg/J/C C/P I/D     NSg NPl   NPrSg/ISg NPl/V NSg/V/J/R/P .
-> Bring the water to the boil and drop  the vegetables in          .
-# V     D   NSg   P  D   NSg  V/C NSg/V D   NPl        NPrSg/V/J/P .
-> The show still   didn't become interesting 20 minutes in          .
-# D   NSg  NSg/V/J V      V      V/J         #  NPl/V   NPrSg/V/J/P .
+> Suddenly a   strange man         walked in        .
+# J/R      D/P NSg/J   NPrSg/I/V/J V/J    NPrSg/J/P .
+> Would  you like        that    to take  away or      eat   in        ?
+# NSg/VX IPl NSg/V/J/C/P N/I/C/D P  NSg/V V/J  NPrSg/C NSg/V NPrSg/J/P .
+> He      ran   to the edge of the swimming pool  and dived in        .
+# NPr/ISg NSg/V P  D   NSg  P  D   NSg      NSg/V V/C V/J   NPrSg/J/P .
+> They flew    in        from London last    night .
+# IPl  NSg/V/J NPrSg/J/P P    NPr    NSg/V/J NSg/V .
+> For six hours the tide flows in        , then    for another six hours it        flows out         .
+# C/P NSg NPl   D   NSg  NPl/V NPrSg/J/P . NSg/J/C C/P I/D     NSg NPl   NPrSg/ISg NPl/V NSg/V/J/R/P .
+> Bring the water to the boil and drop  the vegetables in        .
+# V     D   NSg   P  D   NSg  V/C NSg/V D   NPl        NPrSg/J/P .
+> The show still   didn't become interesting 20 minutes in        .
+# D   NSg  NSg/V/J V      V      V/J         #  NPl/V   NPrSg/J/P .
 >
 #
 > Noun
@@ -490,36 +490,36 @@
 # NSg/V/J
 >
 #
-> Is Mr  . Smith   in          ?
-# VL NSg . NPrSg/V NPrSg/V/J/P .
-> Little    by      little    I   pushed the snake into the basket , until finally all       of it        was in          .
-# NPrSg/I/J NSg/J/P NPrSg/I/J ISg V/J    D   NPrSg P    D   NSg    . C/P   J/R     NSg/I/J/C P  NPrSg/ISg V   NPrSg/V/J/P .
-> The bullet is about five centimetres in          .
-# D   NSg    VL J/P   NSg  NPl         NPrSg/V/J/P .
-> If    the tennis ball    bounces on the line then    it's in          .
-# NSg/C D   NSg    NPrSg/V NPl/V   P  D   NSg  NSg/J/C W?   NPrSg/V/J/P .
-> I've discovered why   the TV  wasn't working – the plug wasn't in          !
-# W?   V/J        NSg/V D   NSg V      V       . D   NSg  V      NPrSg/V/J/P .
-> The replies to the questionnaires are now         all       in          .
-# D   NPl     P  D   NPl            V   NPrSg/V/J/C NSg/I/J/C NPrSg/V/J/P .
+> Is Mr  . Smith   in        ?
+# VL NSg . NPrSg/V NPrSg/J/P .
+> Little    by      little    I   pushed the snake into the basket , until finally all       of it        was in        .
+# NPrSg/I/J NSg/J/P NPrSg/I/J ISg V/J    D   NPrSg P    D   NSg    . C/P   J/R     NSg/I/J/C P  NPrSg/ISg V   NPrSg/J/P .
+> The bullet is about five centimetres in        .
+# D   NSg    VL J/P   NSg  NPl         NPrSg/J/P .
+> If    the tennis ball    bounces on the line then    it's in        .
+# NSg/C D   NSg    NPrSg/V NPl/V   P  D   NSg  NSg/J/C W?   NPrSg/J/P .
+> I've discovered why   the TV  wasn't working – the plug wasn't in        !
+# W?   V/J        NSg/V D   NSg V      V       . D   NSg  V      NPrSg/J/P .
+> The replies to the questionnaires are now         all       in        .
+# D   NPl     P  D   NPl            V   NPrSg/V/J/C NSg/I/J/C NPrSg/J/P .
 > Skirts are in this year .
 # NPl/V  V   P  I/D  NSg  .
 > the in        train ( incoming train )
 # D   NPrSg/J/P NSg/V . V        NSg/V .
-> You can't get   round     the headland when    the tide's in          .
-# IPl VX    NSg/V NSg/V/J/P D   NSg      NSg/I/C D   N$     NPrSg/V/J/P .
-> in          by      descent ;            in          by      purchase ;            in          of the seisin of her   husband
-# NPrSg/V/J/P NSg/J/P NSg/V   . Unlintable NPrSg/V/J/P NSg/J/P NSg/V    . Unlintable NPrSg/V/J/P P  D   ?      P  I/J/D NSg/V
-> He      is very in          with the Joneses .
-# NPr/ISg VL J    NPrSg/V/J/P P    D   NPl     .
-> I   need   to keep  in          with the neighbours in          case    I   ever need   a   favour from them .
-# ISg NSg/VX P  NSg/V NPrSg/V/J/P P    D   NPl        NPrSg/V/J/P NPrSg/V ISg J    NSg/VX D/P NSg/Br P    N/I  .
-> I   think that    bird      fancies you . You're in          there , mate  !
-# ISg NSg/V N/I/C/D NPrSg/V/J NPl/V   IPl . W?     NPrSg/V/J/P W?    . NSg/V .
-> I'm three drinks in          right     now         .
-# W?  NSg   NPl/V  NPrSg/V/J/P NPrSg/V/J NPrSg/V/J/C .
-> I   was 500 dollars in          when    the stock crashed .
-# ISg V   #   NPl     NPrSg/V/J/P NSg/I/C D   NSg/J V/J     .
+> You can't get   round     the headland when    the tide's in        .
+# IPl VX    NSg/V NSg/V/J/P D   NSg      NSg/I/C D   N$     NPrSg/J/P .
+> in        by      descent ;            in        by      purchase ;            in        of the seisin of her   husband
+# NPrSg/J/P NSg/J/P NSg/V   . Unlintable NPrSg/J/P NSg/J/P NSg/V    . Unlintable NPrSg/J/P P  D   ?      P  I/J/D NSg/V
+> He      is very in        with the Joneses .
+# NPr/ISg VL J    NPrSg/J/P P    D   NPl     .
+> I   need   to keep  in        with the neighbours in        case    I   ever need   a   favour from them .
+# ISg NSg/VX P  NSg/V NPrSg/J/P P    D   NPl        NPrSg/J/P NPrSg/V ISg J    NSg/VX D/P NSg/Br P    N/I  .
+> I   think that    bird      fancies you . You're in        there , mate  !
+# ISg NSg/V N/I/C/D NPrSg/V/J NPl/V   IPl . W?     NPrSg/J/P W?    . NSg/V .
+> I'm three drinks in        right     now         .
+# W?  NSg   NPl/V  NPrSg/J/P NPrSg/V/J NPrSg/V/J/C .
+> I   was 500 dollars in        when    the stock crashed .
+# ISg V   #   NPl     NPrSg/J/P NSg/I/C D   NSg/J V/J     .
 >
 #
 > Unit
@@ -528,8 +528,8 @@
 #
 > The glass is 8 inches .
 # D   NPrSg VL # NPl/V  .
-> The glass is 8 in          .
-# D   NPrSg VL # NPrSg/V/J/P .
+> The glass is 8 in        .
+# D   NPrSg VL # NPrSg/J/P .
 >
 #
 > Of
@@ -764,8 +764,8 @@
 # NPr/ISg NPrSg/VX NSg/V   J/P I/J     NPl/V      .
 > A   curse on  him !
 # D/P NSg   J/P I   .
-> Please don't tell    on her   and get   her   in          trouble .
-# V      NSg/V NPrSg/V P  I/J/D V/C NSg/V I/J/D NPrSg/V/J/P NSg/V   .
+> Please don't tell    on her   and get   her   in        trouble .
+# V      NSg/V NPrSg/V P  I/J/D V/C NSg/V I/J/D NPrSg/J/P NSg/V   .
 >
 #
 > Verb
@@ -880,8 +880,8 @@
 # D   NSg   NSg/V  V   #  . # . P    NPrSg V       NSg   NPl/V .
 > With a   heavy sigh  , she looked around the empty room    .
 # P    D/P NSg/J NSg/V . ISg V/J    J/P    D   NSg/J NSg/V/J .
-> Four people were  injured , with one       of them in          critical condition .
-# NSg  NSg/V  NSg/V V/J     . P    NSg/I/V/J P  N/I  NPrSg/V/J/P NSg/J    NSg/V     .
+> Four people were  injured , with one       of them in        critical condition .
+# NSg  NSg/V  NSg/V V/J     . P    NSg/I/V/J P  N/I  NPrSg/J/P NSg/J    NSg/V     .
 > With their reputation on the line , they decided to fire    their PR  team  .
 # P    D     NSg        P  D   NSg  . IPl  NSg/V/J P  NSg/V/J D     NSg NSg/V .
 > We  are with you all       the way   .

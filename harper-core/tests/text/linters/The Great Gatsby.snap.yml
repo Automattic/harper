@@ -5464,17 +5464,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-    4380 | the elevated overhead. Human sympathy has its limits, and we were content to let
-         |                                                                              ^~~ To suggest an action, use 'let's' or 'let us'.
-    4381 | all their tragic arguments fade with the city lights behind. Thirty—the promise
-Suggest:
-  - Replace with: “let's”
-  - Replace with: “let us”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4391 | The young Greek, Michaelis, who ran the coffee joint beside the ashheaps was the
