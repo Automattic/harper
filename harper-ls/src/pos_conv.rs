@@ -34,32 +34,46 @@ fn index_to_position(source: &[char], index: usize) -> Position {
     }
 }
 
+/// Converts a position to a (zero-based) character index within the source character array.
+///
+/// The position is converted to an index using saturating arithmetic. If the requested line index
+/// is too high, the index of the last character in the source is returned. If the line is
+/// in-bounds but the requested character isn't, the last character of that line is returned.
 fn position_to_index(source: &[char], position: Position) -> usize {
-    let mut newline_indices: Vec<_> = source
-        .iter()
-        .enumerate()
-        .filter_map(|(idx, c)| if *c == '\n' { Some(idx + 1) } else { None })
-        .take(position.line as usize + 1)
-        .collect();
+    // Find target line.
+    let Some(target_line) = source
+        // Split including the newline character so we don't lose any characters.
+        .split_inclusive(|char| *char == '\n')
+        .nth(position.line as usize)
+    else {
+        // Requested line index is too high.
+        // Return the last char in `source' as the closest approximation.
+        // Uses `saturating_sub` to avoid underflow when `source` is empty.
+        return source.len().saturating_sub(1);
+    };
 
-    let line_end_idx = newline_indices.pop().unwrap_or(source.len());
-    let line_start_idx = newline_indices.pop().unwrap_or(0);
+    // Get a pointer to the char we seek.
+    // Check if specified character index is within bounds of the target line.
+    let target_char_pointer = if position.character
+        < target_line
+            .len()
+            .try_into()
+            .expect("target_line.len() can fit in u32")
+    {
+        // Character index is inside the bounds of the specified line.
+        // Calculate pointer to the char we're looking for.
+        target_line
+            .as_ptr()
+            .wrapping_add(position.character as usize)
+    } else {
+        // Character index is outside the bounds of the specified line.
+        // Return pointer to the last character of the line.
+        target_line.last().expect("line cannot be empty")
+    };
 
-    let mut traversed_cols = 0;
-
-    for (traversed_chars, c) in source[line_start_idx..line_end_idx].iter().enumerate() {
-        if traversed_cols == position.character as usize {
-            return line_start_idx + traversed_chars;
-        }
-
-        traversed_cols += c.len_utf16();
-    }
-
-    if traversed_cols > 0 {
-        return line_end_idx;
-    }
-
-    line_start_idx
+    // Convert the char pointer to its index within `source`.
+    // Note: this could be simplified with `offset_from`, but that would require `unsafe`.
+    (target_char_pointer as usize - source.as_ptr() as usize) / size_of::<char>()
 }
 
 pub fn range_to_span(source: &[char], range: Range) -> Span {
