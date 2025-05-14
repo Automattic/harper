@@ -49,13 +49,19 @@ function button(
 		fontSize: '13px',
 		fontWeight: '600',
 		lineHeight: '20px',
-		transition: 'background 120ms ease',
+		transition: 'background 120ms ease, transform 80ms ease',
 	};
 	const combinedStyle = { ...buttonStyle, ...extraStyle };
 	const desc = description || label;
 	return h(
 		'button',
-		{ style: combinedStyle, onclick: onClick, title: desc, 'aria-label': desc },
+		{
+			style: combinedStyle,
+			onclick: onClick,
+			title: desc,
+			'aria-label': desc,
+			className: 'harper-btn',
+		},
 		label,
 	);
 }
@@ -97,7 +103,7 @@ function addToDictionary(box: LintBox): any {
 		() => {
 			ProtocolClient.addToUserDictionary(box.lint.problem_text);
 		},
-		'Add this word to your dictionary',
+		'Add word to user dictionary',
 	);
 }
 
@@ -112,24 +118,26 @@ function suggestions(
 	return suggestions.map((s: UnpackedSuggestion) => {
 		const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
 		const desc = `Replace with \"${label}\"`;
-		return button(
-			label,
-			suggestionButtonStyle,
-			() => {
-				apply(s);
-			},
-			desc,
-		);
+		return button(label, suggestionButtonStyle, () => apply(s), desc);
 	});
 }
 
 function styleTag() {
-	return h('style', {}, [
+	return h('style', { id: 'harper-suggestion-style' }, [
 		`code {
 			background-color: #e3eccf;
 			padding: 0.25rem;
-      border-radius: 0.25rem;
-		}`,
+	      border-radius: 0.25rem;
+		}
+
+		.harper-btn:hover {
+			filter: brightness(0.92);
+		}
+
+		.harper-btn:active {
+			transform: scale(0.97);
+		}
+		`,
 	]);
 }
 
@@ -138,7 +146,7 @@ function ignoreLint(onIgnore: () => void): any {
 		background: '#6E7781',
 		color: '#FFFFFF',
 	};
-	return button('Ignore', buttonStyle, onIgnore, 'Ignore this suggestion.');
+	return button('Ignore', buttonStyle, onIgnore, 'Ignore this lint');
 }
 
 export default function SuggestionBox(box: IgnorableLintBox, close: () => void) {
@@ -179,7 +187,6 @@ export default function SuggestionBox(box: IgnorableLintBox, close: () => void) 
 				box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
 				ignoreLint(box.ignoreLint),
 			],
-
 			suggestions(box.lint.suggestions, (v) => {
 				box.applySuggestion(v);
 				close();
