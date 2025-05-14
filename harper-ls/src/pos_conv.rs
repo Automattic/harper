@@ -67,7 +67,7 @@ fn position_to_index(source: &[char], position: Position) -> usize {
             .wrapping_add(position.character as usize)
     } else {
         // Character index is outside the bounds of the specified line.
-        // Return pointer to the last character of the line.
+        // Get pointer to the last character of the line.
         target_line.last().expect("line cannot be empty")
     };
 
@@ -174,8 +174,8 @@ mod tests {
         assert_eq!(out.end, 10);
     }
 
-    /// Ensures that `position_to_index` produces the correct result for an input `Position`
-    /// of `{ line: 1, character: 0 }`.
+    /// Ensures that `position_to_index` does not produce an incorrect index of 0 for an input
+    /// `Position` of `{ line: 1, character: 0 }`.
     /// Related to: https://github.com/Automattic/harper/issues/1253
     #[test]
     fn pos_to_index_correct_for_l1_c0() {
@@ -185,34 +185,35 @@ mod tests {
             character: 0,
         };
 
-        let out = position_to_index(&source, position);
-        assert_ne!(out, 0);
+        let out_index = position_to_index(&source, position);
+        assert_ne!(out_index, 0);
     }
 
-    /// Ensures `position_to_index` produces the correct result when indexing line 0.
+    /// Ensures `position_to_index` produces the correct result when indexing line 0 character 0.
     #[test]
-    fn off_by_one_check_line0() {
+    fn pos_to_index_off_by_one_check_l0_c0() {
         let source: Vec<_> = "abc\ndef\nghi\njkl".chars().collect();
         let position = Position {
             line: 0,
             character: 0,
         };
 
-        let out = position_to_index(&source, position);
-        assert_eq!(source[out], 'a');
+        let out_index = position_to_index(&source, position);
+        assert_eq!(source[out_index], 'a');
     }
 
     /// Ensures `position_to_index` produces the correct result when indexing a non-zero line and
     /// character.
     #[test]
-    fn off_by_one_check_non_zero_line() {
+    fn pos_to_index_off_by_one_check_l2_c1() {
         let source: Vec<_> = "abc\ndef\nghi\njkl".chars().collect();
         let position = Position {
             line: 2,
             character: 1,
         };
 
-        let out = position_to_index(&source, position);
-        assert_eq!(source[out], 'h');
+        let out_index = position_to_index(&source, position);
+        assert_eq!(source[out_index], 'h');
+    }
     }
 }
