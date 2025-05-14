@@ -119,6 +119,7 @@ export default class Highlights {
 
 		const queries = [
 			getNotionRoot,
+			getSlateRoot,
 			getMediumRoot,
 			getShredditComposerRoot,
 			getQuillJsRoot,

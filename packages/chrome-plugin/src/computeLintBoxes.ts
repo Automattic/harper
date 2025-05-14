@@ -1,4 +1,5 @@
-import { type LintBox, domRectToBox, isBottomEdgeInBox } from './Box';
+import { type IgnorableLintBox, type LintBox, domRectToBox, isBottomEdgeInBox } from './Box';
+import ProtocolClient from './ProtocolClient';
 import TextFieldRange from './TextFieldRange';
 import { getRangeForTextSpan } from './domUtils';
 import { getSlateRoot } from './editorUtils';
@@ -14,7 +15,7 @@ function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement
 	}
 }
 
-export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): LintBox[] {
+export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): IgnorableLintBox[] {
 	let range: Range | TextFieldRange;
 	let text: string | null = null;
 
@@ -29,7 +30,7 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): L
 	const elBox = domRectToBox(range.getBoundingClientRect());
 	range.detach();
 
-	const boxes: LintBox[] = [];
+	const boxes: IgnorableLintBox[] = [];
 
 	let source: HTMLElement | null = null;
 
@@ -58,6 +59,7 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): L
 			applySuggestion: (sug: UnpackedSuggestion) => {
 				replaceValue(el, applySuggestion(el.value ?? el.textContent, lint.span, sug));
 			},
+			ignoreLint: () => ProtocolClient.ignoreHash(lint.context_hash),
 		});
 	}
 

@@ -110,6 +110,11 @@ export default class LocalLinter implements Linter {
 		inner.ignore_lint(source, lint);
 	}
 
+	async ignoreLintHash(hash: bigint): Promise<void> {
+		const inner = await this.inner;
+		inner.ignore_hash(hash);
+	}
+
 	async exportIgnoredLints(): Promise<string> {
 		const inner = await this.inner;
 		return inner.export_ignored_lints();
@@ -118,6 +123,11 @@ export default class LocalLinter implements Linter {
 	async importIgnoredLints(json: string): Promise<void> {
 		const inner = await this.inner;
 		inner.import_ignored_lints(json);
+	}
+
+	async contextHash(source: string, lint: Lint): Promise<bigint> {
+		const inner = await this.inner;
+		return inner.context_hash(source, lint);
 	}
 
 	async clearIgnoredLints(): Promise<void> {

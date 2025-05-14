@@ -43,7 +43,7 @@
 > Look  out         ! UFO at        two o'clock !
 # NSg/V NSg/V/J/R/P . NSg NSg/I/V/P NSg W?      .
 > Don't pick  at your food !
-# NSg/V NSg/V P  D    NSg  .
+# V     NSg/V P  D    NSg  .
 > My cat   keeps scratching at the furniture .
 # D  NSg/J NPl/V V          P  D   NSg       .
 > I   was working at the problem all       day   .
@@ -81,7 +81,7 @@
 >
 #
 > ( In        online chats : ) Don't @ me        ! Don't at        me        !
-# . NPrSg/J/P V/J    NPl/V . . NSg/V . NPrSg/ISg . NSg/V NSg/I/V/P NPrSg/ISg .
+# . NPrSg/J/P V/J    NPl/V . . V     . NPrSg/ISg . V     NSg/I/V/P NPrSg/ISg .
 >
 #
 > By
@@ -281,7 +281,7 @@
 > It        is unreasonable for our boss  to withhold our wages .
 # NPrSg/ISg VL J            C/P D   NSg/J P  NSg/V    D   NPl   .
 > I   don't think it's a   good    idea for you and me        to meet    ever again .
-# ISg NSg/V NSg/V W?   D/P NPrSg/J NSg  C/P IPl V/C NPrSg/ISg P  NSg/V/J J    P     .
+# ISg V     NSg/V W?   D/P NPrSg/J NSg  C/P IPl V/C NPrSg/ISg P  NSg/V/J J    P     .
 > I   am        aiming for completion by the end of business Thursday .
 # ISg NPrSg/V/J V      C/P NSg        P  D   NSg P  NSg/J    NSg      .
 > He's going   for his   doctorate .
@@ -291,13 +291,13 @@
 > I'm saving    up        for a   car .
 # W?  NSg/V/J/P NSg/V/J/P C/P D/P NSg .
 > Don't wait  for an  answer .
-# NSg/V NSg/V C/P D/P NSg    .
+# V     NSg/V C/P D/P NSg    .
 > Fair    for its   day   .
 # NSg/V/J C/P ISg/D NPrSg .
 > She's spry for an  old   lady    .
 # W?    J    C/P D/P NSg/J NPrSg/V .
 > Don't take  me        for a   fool  .
-# NSg/V NSg/V NPrSg/ISg C/P D/P NSg/J .
+# V     NSg/V NPrSg/ISg C/P D/P NSg/J .
 > For all       his   expensive education , he      didn't seem very bright    .
 # C/P NSg/I/J/C ISg/D J         NSg       . NPr/ISg V      V    J    NPrSg/V/J .
 > And now         for a   slap  - up        meal  !
@@ -305,7 +305,7 @@
 > Go      scuba diving  ? For one       thing , I   can't even    swim  .
 # NSg/V/J NSg/V NSg/V/J . C/P NSg/I/V/J NSg/V . ISg VX    NSg/V/J NSg/V .
 > For another , we  don't have   any   equipment .
-# C/P I/D     . IPl NSg/V NSg/VX I/R/D NSg       .
+# C/P I/D     . IPl V     NSg/VX I/R/D NSg       .
 > He      is named for his   grandfather .
 # NPr/ISg VL V/J   C/P ISg/D NSg         .
 > He      totally screwed up        that    project . Now         he's surely for the sack .
@@ -765,7 +765,7 @@
 > A   curse on  him !
 # D/P NSg   J/P I   .
 > Please don't tell    on her   and get   her   in        trouble .
-# V      NSg/V NPrSg/V P  I/J/D V/C NSg/V I/J/D NPrSg/J/P NSg/V   .
+# V      V     NPrSg/V P  I/J/D V/C NSg/V I/J/D NPrSg/J/P NSg/V   .
 >
 #
 > Verb
@@ -925,7 +925,7 @@
 > She was with Acme for twenty years before retiring last    fall  .
 # ISg V   P    NSg  C/P NSg    NPl   C/P    V        NSg/V/J NSg/V .
 > With your kind  of body  size  , you shouldn’t be     eating pizza at        all       .
-# P    D    NSg/J P  NSg/V NSg/V . IPl NSg/V     NSg/VX V      NSg   NSg/I/V/P NSg/I/J/C .
+# P    D    NSg/J P  NSg/V NSg/V . IPl V         NSg/VX V      NSg   NSg/I/V/P NSg/I/J/C .
 > That    was a   lot   to explain ; are you still   with me        ?
 # N/I/C/D V   D/P NPrSg P  V       . V   IPl NSg/V/J P    NPrSg/ISg .
 >
