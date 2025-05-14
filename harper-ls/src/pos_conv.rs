@@ -148,10 +148,10 @@ mod tests {
 
         let a = Position {
             line: 0,
-            character: 20,
+            character: 19,
         };
 
-        assert_eq!(position_to_index(&source, a), 20);
+        assert_eq!(position_to_index(&source, a), 19);
     }
 
     #[test]
