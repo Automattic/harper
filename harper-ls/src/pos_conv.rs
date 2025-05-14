@@ -215,5 +215,46 @@ mod tests {
         let out_index = position_to_index(&source, position);
         assert_eq!(source[out_index], 'h');
     }
+
+    /// Ensures `position_to_index` produces an index of 0 when indexing line 0 character 0 of
+    /// a source that contains only a newline (`\n`).
+    #[test]
+    fn pos_to_index_newline_only_l0_c0() {
+        let source: Vec<_> = "\n".chars().collect();
+        let position = Position {
+            line: 0,
+            character: 0,
+        };
+
+        let out_index = position_to_index(&source, position);
+        assert_eq!(out_index, 0);
+    }
+
+    /// Ensures `position_to_index` produces the last character index when indexing an out of
+    /// bounds line in a source that contains only newlines (`\n`).
+    #[test]
+    fn pos_to_index_newlines_only_l7_c0() {
+        let source: Vec<_> = "\n\n\n".chars().collect();
+        let position = Position {
+            line: 7,
+            character: 0,
+        };
+
+        let out_index = position_to_index(&source, position);
+        assert_eq!(out_index, 2);
+    }
+
+    /// Ensures `position_to_index` gives the last character of the line when indexing an out of
+    /// bounds character.
+    #[test]
+    fn pos_to_index_out_of_bounds_char() {
+        let source: Vec<_> = "abc\ndef\nghi\njkl".chars().collect();
+        let position = Position {
+            line: 3, // "jkl"
+            character: 8,
+        };
+
+        let out_index = position_to_index(&source, position);
+        assert_eq!(source[out_index], 'l');
     }
 }
