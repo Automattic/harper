@@ -1,6 +1,7 @@
 import { type LintBox, domRectToBox, isBottomEdgeInBox } from './Box';
 import TextFieldRange from './TextFieldRange';
 import { getRangeForTextSpan } from './domUtils';
+import { getSlateRoot } from './editorUtils';
 import { type UnpackedLint, type UnpackedSuggestion, applySuggestion } from './unpackLint';
 
 function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement {
@@ -64,6 +65,24 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): L
 }
 
 function replaceValue(el: HTMLElement, value: string) {
+	const slateRoot = getSlateRoot(el);
+
+	if (isFormEl(el)) {
+		el.value = value;
+	} else if (slateRoot != null) {
+		replaceValueSlate(el, value);
+	} else {
+		el.textContent = value;
+
+		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
+		el.dispatchEvent(new InputEvent('input', { bubbles: true }));
+	}
+
+	el.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+/** Replace the content of a Slate editor node. */
+function replaceValueSlate(el: HTMLElement, value: string) {
 	selectAllText(el);
 	orchestratedInsert(el, value);
 }
@@ -83,79 +102,28 @@ function selectAllText(target: Node): Range {
 	return range;
 }
 
-async function orchestratedInsert(
-	el: HTMLElement,
-	raw: string,
-	staticRange: StaticRange | null = null,
-): Promise<void> {
-	const pause = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
+function orchestratedInsert(el: HTMLElement, raw: string): void {
+	const inputType = 'insertText';
 
-	const chunks: string[] = [];
-	raw.split('\n').forEach((seg, idx, arr) => {
-		if (seg) chunks.push(seg);
-		if (idx + 1 < arr.length) chunks.push('\n');
-	});
+	const evInit: InputEventInit = {
+		bubbles: true,
+		cancelable: true,
+		inputType,
+		data: raw,
+	};
 
-	for (let i = 0; i < chunks.length; i++) {
-		const fragment: string = chunks[i];
-		const isBreak: boolean = fragment === '\n';
-		const inputType: 'insertText' | 'insertLineBreak' = isBreak ? 'insertLineBreak' : 'insertText';
+	if ('StaticRange' in self && 'getTargetRanges' in InputEvent.prototype) {
+		const sel = el.ownerDocument.defaultView!.getSelection();
+		if (sel?.rangeCount) evInit.targetRanges = [new StaticRange(sel.getRangeAt(0))];
+	}
 
-		const evInit: InputEventInit = {
-			bubbles: true,
-			cancelable: true,
-			inputType,
-			data: fragment,
-		};
+	const beforeEvt = new InputEvent('beforeinput', evInit);
+	const biSuccess: boolean = el.dispatchEvent(beforeEvt);
 
-		if ('StaticRange' in self && 'getTargetRanges' in InputEvent.prototype) {
-			if (staticRange && i === 0) {
-				evInit.targetRanges = [new StaticRange(staticRange)];
-			} else {
-				const sel = el.ownerDocument.defaultView!.getSelection();
-				if (sel?.rangeCount) evInit.targetRanges = [new StaticRange(sel.getRangeAt(0))];
-			}
-		}
+	const textEvt = new InputEvent('textInput', evInit);
+	const teSuccess = el.dispatchEvent(textEvt);
 
-		if (isBreak) {
-			const kdInit: KeyboardEventInit = {
-				bubbles: true,
-				cancelable: true,
-				key: 'Enter',
-				code: 'Enter',
-				keyCode: 13,
-				which: 13,
-				shiftKey: true,
-			};
-			const kd = new KeyboardEvent('keydown', kdInit);
-			if (!el.dispatchEvent(kd)) {
-				await pause(10);
-				continue;
-			}
-			const kp = new KeyboardEvent('keypress', { ...kdInit, charCode: 13 });
-			if (!el.dispatchEvent(kp)) {
-				await pause(10);
-				continue;
-			}
-		}
-
-		const beforeEvt = new InputEvent('beforeinput', evInit);
-		const proceed1: boolean = el.dispatchEvent(beforeEvt);
-
-		const ua: string = navigator.userAgent;
-		const chromiumFamily: boolean = ua.includes('Chrome/') || ua.includes('Chromium/');
-		const notSafari: boolean = !ua.includes('Safari/') || chromiumFamily;
-
-		let proceed2 = true;
-		if ('TextEvent' in self && notSafari) {
-			const textEvt = new InputEvent('textInput', evInit);
-			proceed2 = el.dispatchEvent(textEvt);
-		}
-
-		if (proceed1 && proceed2) {
-			el.ownerDocument.execCommand(inputType, false, fragment);
-		}
-
-		await pause(10);
+	if (biSuccess && teSuccess) {
+		el.ownerDocument.execCommand(inputType, false, raw);
 	}
 }
