@@ -5,80 +5,71 @@ import lintKindColor from './lintKindColor';
 import type { UnpackedSuggestion } from './unpackLint';
 
 function header(title: string, color: string): any {
-  return h(
-    'div',
-    {
-      className: 'harper-header',
-      style: { borderBottom: `2px solid ${color}` },
-    },
-    title,
-  );
+	return h(
+		'div',
+		{
+			className: 'harper-header',
+			style: { borderBottom: `2px solid ${color}` },
+		},
+		title,
+	);
 }
 
 function body(message_html: string): any {
-  return h(
-    'div',
-    { className: 'harper-body', innerHTML: message_html },
-    [],
-  );
+	return h('div', { className: 'harper-body', innerHTML: message_html }, []);
 }
 
 function button(
-  label: string,
-  extraStyle: { [key: string]: string },
-  onClick: (event: Event) => void,
-  description?: string,
+	label: string,
+	extraStyle: { [key: string]: string },
+	onClick: (event: Event) => void,
+	description?: string,
 ): any {
-  const desc = description || label;
-  return h(
-    'button',
-    {
-      className: 'harper-btn',
-      style: extraStyle,
-      onclick: onClick,
-      title: desc,
-      'aria-label': desc,
-    },
-    label,
-  );
+	const desc = description || label;
+	return h(
+		'button',
+		{
+			className: 'harper-btn',
+			style: extraStyle,
+			onclick: onClick,
+			title: desc,
+			'aria-label': desc,
+		},
+		label,
+	);
 }
 
 function footer(leftChildren: any, rightChildren: any) {
-  const left = h('div', { className: 'harper-child-cont' }, leftChildren);
-  const right = h('div', { className: 'harper-child-cont' }, rightChildren);
-  return h('div', { className: 'harper-footer' }, [left, right]);
+	const left = h('div', { className: 'harper-child-cont' }, leftChildren);
+	const right = h('div', { className: 'harper-child-cont' }, rightChildren);
+	return h('div', { className: 'harper-footer' }, [left, right]);
 }
 
 function addToDictionary(box: LintBox): any {
-  return button(
-    'Add to Dictionary',
-    { background: '#8250DF', color: '#FFFFFF' },
-    () => {
-      ProtocolClient.addToUserDictionary(box.lint.problem_text);
-    },
-    'Add word to user dictionary',
-  );
+	return button(
+		'Add to Dictionary',
+		{ background: '#8250DF', color: '#FFFFFF' },
+		() => {
+			ProtocolClient.addToUserDictionary(box.lint.problem_text);
+		},
+		'Add word to user dictionary',
+	);
 }
 
 function suggestions(
-  suggestions: UnpackedSuggestion[],
-  apply: (s: UnpackedSuggestion) => void,
+	suggestions: UnpackedSuggestion[],
+	apply: (s: UnpackedSuggestion) => void,
 ): any {
-  return suggestions.map((s: UnpackedSuggestion) => {
-    const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
-    const desc = `Replace with \"${label}\"`;
-    return button(
-      label,
-      { background: '#2DA44E', color: '#FFFFFF' },
-      () => apply(s),
-      desc,
-    );
-  });
+	return suggestions.map((s: UnpackedSuggestion) => {
+		const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
+		const desc = `Replace with \"${label}\"`;
+		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc);
+	});
 }
 
 function styleTag() {
-  return h('style', { id: 'harper-suggestion-style' }, [
-    `code {
+	return h('style', { id: 'harper-suggestion-style' }, [
+		`code {
       background-color: #e3eccf;
       padding: 0.25rem;
       border-radius: 0.25rem;
@@ -157,47 +148,47 @@ function styleTag() {
       padding: 4px;
       gap: 16px;
     }`,
-  ]);
+	]);
 }
 
 function ignoreLint(onIgnore: () => void): any {
-  return button(
-    'Ignore',
-    { background: '#6e7781', color: '#ffffff' },
-    onIgnore,
-    'Ignore this lint',
-  );
+	return button(
+		'Ignore',
+		{ background: '#6e7781', color: '#ffffff' },
+		onIgnore,
+		'Ignore this lint',
+	);
 }
 
 export default function SuggestionBox(box: IgnorableLintBox, close: () => void) {
-  const top = box.y + box.height + 3;
-  let bottom: number | undefined;
-  const left = box.x;
+	const top = box.y + box.height + 3;
+	let bottom: number | undefined;
+	const left = box.x;
 
-  if (top + 400 > window.innerHeight) {
-    bottom = window.innerHeight - box.y - 3;
-  }
+	if (top + 400 > window.innerHeight) {
+		bottom = window.innerHeight - box.y - 3;
+	}
 
-  const positionStyle: { [key: string]: string } = {
-    position: 'fixed',
-    top: bottom ? '' : `${top}px`,
-    bottom: bottom ? `${bottom}px` : '',
-    left: `${left}px`,
-  };
+	const positionStyle: { [key: string]: string } = {
+		position: 'fixed',
+		top: bottom ? '' : `${top}px`,
+		bottom: bottom ? `${bottom}px` : '',
+		left: `${left}px`,
+	};
 
-  return h('div', { className: 'harper-container', style: positionStyle }, [
-    styleTag(),
-    header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind)),
-    body(box.lint.message_html),
-    footer(
-      [
-        box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
-        ignoreLint(box.ignoreLint),
-      ],
-      suggestions(box.lint.suggestions, (v) => {
-        box.applySuggestion(v);
-        close();
-      }),
-    ),
-  ]);
+	return h('div', { className: 'harper-container', style: positionStyle }, [
+		styleTag(),
+		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind)),
+		body(box.lint.message_html),
+		footer(
+			[
+				box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
+				ignoreLint(box.ignoreLint),
+			],
+			suggestions(box.lint.suggestions, (v) => {
+				box.applySuggestion(v);
+				close();
+			}),
+		),
+	]);
 }
