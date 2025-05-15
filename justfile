@@ -43,7 +43,6 @@ test-obsidian: build-obsidian
 
   pnpm install
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
-  pnpm playwright install
   pnpm test
 
 dev-wp: build-harperjs
