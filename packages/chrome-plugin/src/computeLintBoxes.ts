@@ -85,11 +85,11 @@ function replaceValue(el: HTMLElement, value: string) {
 
 /** Replace the content of a Slate editor node. */
 function replaceValueSlate(el: HTMLElement, value: string) {
-	selectAllText(el);
-	orchestratedInsert(el, value);
+	slateSelectAllText(el);
+	slateInsertText(el, value);
 }
 
-function selectAllText(target: Node): Range {
+function slateSelectAllText(target: Node): Range {
 	const range = target.ownerDocument!.createRange();
 	if (target.nodeType === Node.TEXT_NODE) {
 		const len = (target as Text).data.length;
@@ -104,7 +104,7 @@ function selectAllText(target: Node): Range {
 	return range;
 }
 
-function orchestratedInsert(el: HTMLElement, raw: string): void {
+function slateInsertText(el: HTMLElement, raw: string): void {
 	const inputType = 'insertText';
 
 	const evInit: InputEventInit = {
