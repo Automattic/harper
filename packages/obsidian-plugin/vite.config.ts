@@ -19,4 +19,14 @@ export default defineConfig({
 			},
 		},
 	},
+	test: {
+		retry: process.env.CI ? 5 : 0,
+		browser: {
+			provider: 'playwright',
+			enabled: true,
+			headless: true,
+			screenshotFailures: false,
+			instances: [{ browser: 'chromium' }],
+		},
+	},
 });

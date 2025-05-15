@@ -5,6 +5,8 @@
 	"main": "main.js",
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^16.0.0",
+		"@types/lodash-es": "^4.17.12",
+		"@vitest/browser": "^3.0.6",
 		"obsidian": "^1.7.2",
 		"rollup-plugin-peer-deps-external": "^2.2.4",
 		"rollup-plugin-svg-import": "^3.0.0",
