@@ -824,7 +824,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "0.34.1"
+version = "0.35.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -856,7 +856,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.34.1"
+version = "0.35.0"
 dependencies = [
  "ammonia",
  "blanket",
@@ -891,7 +891,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.34.1"
+version = "0.35.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -902,7 +902,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.34.1"
+version = "0.35.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -913,7 +913,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.34.1"
+version = "0.35.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -941,7 +941,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.34.1"
+version = "0.35.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -952,7 +952,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.34.1"
+version = "0.35.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -960,7 +960,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.34.1"
+version = "0.35.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -2455,9 +2455,9 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"
-version = "1.44.2"
+version = "1.45.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e6b88822cbe49de4185e3a4cbf8321dd487cf5fe0c5c65695fef6346371e9c48"
+checksum = "2513ca694ef9ede0fb23fe71a4ee4107cb102b9dc1930f6d0fd77aae068ae165"
 dependencies = [
  "backtrace",
  "bytes",
