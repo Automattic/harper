@@ -11,6 +11,7 @@ import {
 	getNotionRoot,
 	getQuillJsRoot,
 	getShredditComposerRoot,
+	getSlateRoot,
 	getTrixRoot,
 } from './editorUtils';
 import lintKindColor from './lintKindColor';
