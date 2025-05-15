@@ -3,7 +3,7 @@ import { type App, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg?raw';
 import packageJson from '../package.json';
 import { HarperSettingTab } from './HarperSettingTab';
-import Logic from './Logic';
+import State from './State';
 
 async function getLatestVersion(): Promise<string> {
 	const response = await fetch('https://writewithharper.com/latestversion', {
@@ -33,12 +33,12 @@ export async function logVersionInfo(): Promise<void> {
 logVersionInfo();
 
 export default class HarperPlugin extends Plugin {
-	private logic: Logic;
+	private state: State;
 	private dialectSpan: HTMLSpanElement | null = null;
 
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
-		this.logic = new Logic(
+		this.state = new State(
 			(n) => this.saveData(n),
 			() => this.app.workspace.updateOptions(),
 		);
@@ -51,13 +51,13 @@ export default class HarperPlugin extends Plugin {
 		}
 
 		const data = await this.loadData();
-		await this.logic.initializeFromSettings(data);
-		this.registerEditorExtension(this.logic.getCMEditorExtensions());
+		await this.state.initializeFromSettings(data);
+		this.registerEditorExtension(this.state.getCMEditorExtensions());
 		this.setupCommands();
 		this.setupStatusBar();
-		this.logic.enableEditorLinter();
+		this.state.enableEditorLinter();
 
-		this.addSettingTab(new HarperSettingTab(this.app, this, this.logic));
+		this.addSettingTab(new HarperSettingTab(this.app, this, this.state));
 	}
 
 	private getDialectStatus(dialectNum: Dialect): string {
@@ -92,7 +92,7 @@ export default class HarperPlugin extends Plugin {
 		const dialect = document.createElement('span');
 		this.dialectSpan = dialect;
 
-		this.logic.getSettings().then((settings) => {
+		this.state.getSettings().then((settings) => {
 			const dialectNum = settings.dialect ?? Dialect.American;
 			this.updateStatusBar(dialectNum);
 			button.appendChild(dialect);
@@ -103,10 +103,10 @@ export default class HarperPlugin extends Plugin {
 
 			menu.addItem((item) =>
 				item
-					.setTitle(`${this.logic.hasEditorLinter() ? 'Disable' : 'Enable'} automatic checking`)
+					.setTitle(`${this.state.hasEditorLinter() ? 'Disable' : 'Enable'} automatic checking`)
 					.setIcon('documents')
 					.onClick(() => {
-						this.logic.toggleAutoLint();
+						this.state.toggleAutoLint();
 					}),
 			);
 
@@ -120,7 +120,7 @@ export default class HarperPlugin extends Plugin {
 		this.addCommand({
 			id: 'harper-toggle-auto-lint',
 			name: 'Toggle automatic grammar checking',
-			callback: () => this.logic.toggleAutoLint(),
+			callback: () => this.state.toggleAutoLint(),
 		});
 	}
 

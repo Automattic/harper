@@ -16,7 +16,9 @@ export type Settings = {
 
 const DEFAULT_DELAY = -1;
 
-export default class Logic {
+/** The centralized state for the entire Obsidian plugin.
+ * Since it also contains most business logic, for testing purpose it should not interact with Obsidian directly.*/
+export default class State {
 	private harper: Linter;
 	private saveData: (data: any) => Promise<void>;
 	private delay: number;
@@ -26,7 +28,7 @@ export default class Logic {
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
 
-	/** @param saveDataCallback A callback this class can use to save data on disk.
+	/** @param saveDataCallback A callback which will be used to save data on disk.
 	 * @param onExtensionChange A callback this class will run when the extension array is modified. */
 	constructor(saveDataCallback: (data: any) => Promise<void>, onExtensionChange: () => void) {
 		this.harper = new WorkerLinter({ binary: binaryInlined });

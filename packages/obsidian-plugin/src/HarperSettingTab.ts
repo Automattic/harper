@@ -2,19 +2,19 @@ import './index.js';
 import { Dialect } from 'harper.js';
 import { startCase } from 'lodash-es';
 import { type App, PluginSettingTab, Setting } from 'obsidian';
-import type Logic from './Logic.js';
-import type { Settings } from './Logic.js';
+import type State from './State.js';
+import type { Settings } from './State.js';
 import type HarperPlugin from './index.js';
 
 export class HarperSettingTab extends PluginSettingTab {
-	private logic: Logic;
+	private state: State;
 	private settings: Settings;
 	private descriptions: Record<string, string>;
 	private plugin: HarperPlugin;
 
-	constructor(app: App, plugin: HarperPlugin, logic: Logic) {
+	constructor(app: App, plugin: HarperPlugin, state: State) {
 		super(app, plugin);
-		this.logic = logic;
+		this.state = state;
 		this.plugin = plugin;
 
 		this.updateDescriptions();
@@ -22,13 +22,13 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	updateSettings() {
-		this.logic.getSettings().then((v) => {
+		this.state.getSettings().then((v) => {
 			this.settings = v;
 		});
 	}
 
 	updateDescriptions() {
-		this.logic.getDescriptions().then((v) => {
+		this.state.getDescriptions().then((v) => {
 			this.descriptions = v;
 		});
 	}
@@ -40,7 +40,7 @@ export class HarperSettingTab extends PluginSettingTab {
 		new Setting(containerEl).setName('Use Web Worker').addToggle((toggle) =>
 			toggle.setValue(this.settings.useWebWorker).onChange(async (value) => {
 				this.settings.useWebWorker = value;
-				await this.logic.initializeFromSettings(this.settings);
+				await this.state.initializeFromSettings(this.settings);
 			}),
 		);
 
@@ -54,7 +54,7 @@ export class HarperSettingTab extends PluginSettingTab {
 				.onChange(async (value) => {
 					const dialect = Number.parseInt(value);
 					this.settings.dialect = dialect;
-					await this.logic.initializeFromSettings(this.settings);
+					await this.state.initializeFromSettings(this.settings);
 					this.plugin.updateStatusBar(dialect);
 				});
 		});
@@ -71,7 +71,7 @@ export class HarperSettingTab extends PluginSettingTab {
 					.setValue(this.settings.delay ?? -1)
 					.onChange(async (value) => {
 						this.settings.delay = value;
-						await this.logic.initializeFromSettings(this.settings);
+						await this.state.initializeFromSettings(this.settings);
 					});
 			});
 
@@ -80,7 +80,7 @@ export class HarperSettingTab extends PluginSettingTab {
 				.setButtonText('Forget Ignored Suggestions')
 				.onClick(() => {
 					this.settings.ignoredLints = undefined;
-					this.logic.initializeFromSettings(this.settings);
+					this.state.initializeFromSettings(this.settings);
 				})
 				.setWarning();
 		});
@@ -131,7 +131,7 @@ export class HarperSettingTab extends PluginSettingTab {
 						.setValue(valueToString(value))
 						.onChange(async (value) => {
 							this.settings.lintSettings[setting] = stringToValue(value);
-							await this.logic.initializeFromSettings(this.settings);
+							await this.state.initializeFromSettings(this.settings);
 						}),
 				);
 		}
