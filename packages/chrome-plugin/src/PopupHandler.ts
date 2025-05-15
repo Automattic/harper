@@ -21,10 +21,6 @@ export default class PopupHandler {
 	}
 
 	private onPointerDown(e: PointerEvent) {
-		console.log('pointerdown');
-		console.log([e.x, e.y]);
-		console.log(this.currentLintBoxes);
-
 		for (let i = 0; i < this.currentLintBoxes.length; i++) {
 			const box = this.currentLintBoxes[i];
 

@@ -13,7 +13,7 @@ impl Default for ForNoun {
     fn default() -> Self {
         let pattern = SequencePattern::aco("fro")
             .then_whitespace()
-            .then(NominalPhrase.or(Box::new(Word::new("sure"))));
+            .then(NominalPhrase.or(Word::new("sure")));
 
         Self {
             pattern: Box::new(pattern),
