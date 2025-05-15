@@ -24,8 +24,13 @@ impl Default for NoContractionWithVerb {
 
         // Match verbs that are only verbs (not also nouns/adjectives) and not in -ing form
         let non_ing_verb = SequencePattern::default().then(|tok: &Token, _src: &[char]| {
-            let Some(Some(meta)) = tok.kind.as_word() else { return false };
-            meta.is_verb() && !meta.is_noun() && !meta.is_adjective() && !meta.is_verb_progressive_form()
+            let Some(Some(meta)) = tok.kind.as_word() else {
+                return false;
+            };
+            meta.is_verb()
+                && !meta.is_noun()
+                && !meta.is_adjective()
+                && !meta.is_verb_progressive_form()
         });
 
         // Ambiguous word is a verb determined by heuristic of following word's part of speech
