@@ -1,12 +1,6 @@
 import type { Extension } from '@codemirror/state';
 import type { LintConfig, Linter, Suggestion } from 'harper.js';
-import {
-	Dialect,
-	LocalLinter,
-	SuggestionKind,
-	WorkerLinter,
-	binaryInlined,
-} from 'harper.js';
+import { Dialect, LocalLinter, SuggestionKind, WorkerLinter, binaryInlined } from 'harper.js';
 import { toArray } from 'lodash-es';
 import { type App, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg?raw';
@@ -179,8 +173,7 @@ export default class HarperPlugin extends Plugin {
 	}
 
 	private setupStatusBar() {
-		/** @type HTMLElement */
-		const statusBarItem = this.addStatusBarItem();
+		const statusBarItem: HTMLElement = this.addStatusBarItem();
 		statusBarItem.className += ' mod-clickable';
 
 		const button = document.createElement('span');

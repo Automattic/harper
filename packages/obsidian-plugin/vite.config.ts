@@ -1,14 +1,11 @@
-import { defineConfig } from 'vite';
-import svg from 'rollup-plugin-svg-import';
 import external from 'rollup-plugin-peer-deps-external';
+import svg from 'rollup-plugin-svg-import';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [
-		svg({ stringify: true }),
-		external(),
-	],
+	plugins: [svg({ stringify: true }), external()],
 	build: {
-    outDir: ".",
+		outDir: '.',
 		target: 'es6',
 		lib: {
 			entry: 'src/index.ts',

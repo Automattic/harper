@@ -13,7 +13,8 @@
 	},
 	"scripts": {
 		"build": "vite build",
-		"dev": "vite build --watch"
+		"dev": "vite build --watch",
+		"test": "vitest run"
 	},
 	"peerDependencies": {
 		"@codemirror/autocomplete": "^6.16.3",
