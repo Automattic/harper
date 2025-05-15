@@ -5,12 +5,11 @@ import {
 	LocalLinter,
 	SuggestionKind,
 	WorkerLinter,
-	binary,
 	binaryInlined,
 } from 'harper.js';
 import { toArray } from 'lodash-es';
 import { type App, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
-import logoSvg from '../logo.svg';
+import logoSvg from '../logo.svg?raw';
 import packageJson from '../package.json';
 import { HarperSettingTab } from './HarperSettingTab';
 import { linter } from './lint';
