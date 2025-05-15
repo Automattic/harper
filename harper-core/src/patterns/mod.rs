@@ -120,15 +120,15 @@ where
 }
 
 pub trait OwnedPatternExt {
-    fn or(self, other: Box<dyn Pattern>) -> EitherPattern;
+    fn or(self, other: impl Pattern + 'static) -> EitherPattern;
 }
 
 impl<P> OwnedPatternExt for P
 where
     P: Pattern + 'static,
 {
-    fn or(self, other: Box<dyn Pattern>) -> EitherPattern {
-        EitherPattern::new(vec![Box::new(self), other])
+    fn or(self, other: impl Pattern + 'static) -> EitherPattern {
+        EitherPattern::new(vec![Box::new(self), Box::new(other)])
     }
 }
 

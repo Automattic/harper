@@ -3678,6 +3678,15 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (55 priority)
+Message: |
+    2462 | “Does she want to see Gatsby?”
+         |           ^~~~ Did you mean `wants`?
+Suggest:
+  - Replace with: “wants”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2467 | We passed a barrier of dark trees, and then the façade of Fifty-ninth Street, a
@@ -5461,17 +5470,6 @@ Suggest:
   - Replace with: “coup”
   - Replace with: “coupe”
   - Replace with: “coups”
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-    4380 | the elevated overhead. Human sympathy has its limits, and we were content to let
-         |                                                                              ^~~ To suggest an action, use 'let's' or 'let us'.
-    4381 | all their tragic arguments fade with the city lights behind. Thirty—the promise
-Suggest:
-  - Replace with: “let's”
-  - Replace with: “let us”
 
 
 

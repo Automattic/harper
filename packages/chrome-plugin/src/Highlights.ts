@@ -111,6 +111,7 @@ export default class Highlights {
 
 		const queries = [
 			getNotionRoot,
+			getSlateRoot,
 			getMediumRoot,
 			getShredditComposerRoot,
 			getQuillJsRoot,
@@ -184,6 +185,12 @@ function getShredditComposerRoot(el: HTMLElement): HTMLElement | null {
  * If so, returns the root node of that instance. */
 function getQuillJsRoot(el: HTMLElement): HTMLElement | null {
 	return findAncestor(el, (node: HTMLElement) => node.classList.contains('ql-container'));
+}
+
+/** Determines if a given node is a child of a Slate editor instance.
+ * If so, returns the root node of that instance. */
+function getSlateRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.getAttribute('data-slate-editor') == 'true');
 }
 
 /** Determines if a given node is a child of a Medium.com editor instance.

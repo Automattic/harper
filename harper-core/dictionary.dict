@@ -21557,7 +21557,7 @@ dodgy/5RT
 dodo/~1MS
 doe/~14SM
 doer/1M
-does/~41AU
+does/~4AU
 doeskin/1MS
 doesn't/~4
 doff/4DGS
@@ -21637,7 +21637,7 @@ dominion/~1SM
 domino/~14M
 dominoes/1
 don/~14SM
-don't/~41
+don't/~4
 dona/~MS
 donate/~4DSXGN
 donation/~1M
@@ -29195,7 +29195,7 @@ impure/~54RYT
 impurity/~1SM
 imputation/1SM
 impute/4BDSG
-in/~+415ASM
+in/~+15ASM          # removed `4`, verb senses are obsolete
 inaccuracy/1S
 inaction/~1M
 inadequacy/1S
@@ -43869,7 +43869,7 @@ shotgunning/4
 should/~m
 should've/4
 shoulder/~14MDGS
-shouldn't/41
+shouldn't/4
 shout/~14ZGMDRS
 shouter/1M
 shove/41MGDS
@@ -47872,7 +47872,7 @@ thesis/~1M
 thespian/51SM
 theta/~1SM
 thew/14MS
-they/~:st
+they/~st:*
 they'd/
 they'll/
 they're/
@@ -51080,7 +51080,7 @@ wayside/15SM
 wayward/~5PY
 waywardness/1M
 wazoo/1S
-we/~:
+we/~w
 we'd/
 we'll/
 we're/~
