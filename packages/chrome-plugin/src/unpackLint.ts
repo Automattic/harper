@@ -1,4 +1,4 @@
-import { type Lint, SuggestionKind } from 'harper.js';
+import { type Lint, type Linter, SuggestionKind } from 'harper.js';
 
 export type UnpackedSpan = {
 	start: number;
@@ -7,11 +7,12 @@ export type UnpackedSpan = {
 
 export type UnpackedLint = {
 	span: UnpackedSpan;
-	message: string;
+	message_html: string;
 	problem_text: string;
 	lint_kind: string;
 	lint_kind_pretty: string;
 	suggestions: UnpackedSuggestion[];
+	context_hash: string;
 };
 
 export type UnpackedSuggestion = {
@@ -20,20 +21,23 @@ export type UnpackedSuggestion = {
 	replacement_text: string;
 };
 
-export default function unpackLint(lint: Lint): UnpackedLint {
+export default async function unpackLint(
+	source: string,
+	lint: Lint,
+	linter: Linter,
+): Promise<UnpackedLint> {
 	const span = lint.span();
-
-	console.log(span);
 
 	return {
 		span: { start: span.start, end: span.end },
-		message: lint.message(),
+		message_html: lint.message_html(),
 		problem_text: lint.get_problem_text(),
 		lint_kind: lint.lint_kind(),
 		lint_kind_pretty: lint.lint_kind_pretty(),
 		suggestions: lint.suggestions().map((sug) => {
 			return { kind: sug.kind(), replacement_text: sug.get_replacement_text() };
 		}),
+		context_hash: (await linter.contextHash(source, lint)).toString(),
 	};
 }
 

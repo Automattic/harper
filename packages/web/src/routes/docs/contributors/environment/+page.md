@@ -2,7 +2,7 @@
 title: Set Up Your Environment
 ---
 
-To use the tooling required to build and debug Harper, you'll need the following programs available in your `$PATH`. 
+To use the tooling required to build and debug Harper, you'll need the following programs available in your `$PATH`.
 For Nix users, we provide a [Nix development shell](#Nix-development-shell) to setup all the necessary tooling automatically.
 
 - [`just`](https://github.com/casey/just)
@@ -14,6 +14,7 @@ For Nix users, we provide a [Nix development shell](#Nix-development-shell) to s
 - [`wasm-pack`](https://rustwasm.github.io/wasm-pack/installer/)
 - `zip`
 - `pandoc`
+- [`cargo-hack`](https://github.com/taiki-e/cargo-hack?tab=readme-ov-file#installation)
 
 To run integration tests, you may also need `libnss3` and/or `libasound3`.
 These are installable in Ubuntu using `apt-get`.

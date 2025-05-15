@@ -44,11 +44,17 @@ export default interface Linter {
 	/** Set the linter's current configuration from JSON. */
 	setLintConfigWithJSON(config: string): Promise<void>;
 
-	/** Get the linting rule descriptions as a JSON map. */
+	/** Get the linting rule descriptions as a JSON map, formatted in Markdown. */
 	getLintDescriptionsAsJSON(): Promise<string>;
 
-	/** Get the linting rule descriptions as an object */
+	/** Get the linting rule descriptions as an object, formatted in Markdown. */
 	getLintDescriptions(): Promise<Record<string, string>>;
+
+	/** Get the linting rule descriptions as a JSON map, formatted in HTML. */
+	getLintDescriptionsHTMLAsJSON(): Promise<string>;
+
+	/** Get the linting rule descriptions as an object, formatted in HTML */
+	getLintDescriptionsHTML(): Promise<Record<string, string>>;
 
 	/** Convert a string to Chicago-style title case. */
 	toTitleCase(text: string): Promise<string>;
@@ -56,12 +62,18 @@ export default interface Linter {
 	/** Ignore future instances of a lint from a previous linting run in future invocations. */
 	ignoreLint(source: string, lint: Lint): Promise<void>;
 
+	/** Ignore future instances of a lint from a previous linting run in future invocations using its hash. */
+	ignoreLintHash(hash: bigint): Promise<void>;
+
 	/** Export the ignored lints to a JSON list of privacy-respecting hashes. */
 	exportIgnoredLints(): Promise<string>;
 
 	/** Import ignored lints from a JSON list to the linter.
 	 * This function appends to the existing lints, if any. */
 	importIgnoredLints(json: string): Promise<void>;
+
+	/** Produce a context-sensitive hash that represents a lint.  */
+	contextHash(source: string, lint: Lint): Promise<bigint>;
 
 	/** Clear records of all previously ignored lints. */
 	clearIgnoredLints(): Promise<void>;

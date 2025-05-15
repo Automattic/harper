@@ -132,6 +132,14 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(descriptions).toBeTypeOf('object');
 	});
 
+	test(`${linterName} can get rule descriptions in HTML.`, async () => {
+		const linter = new Linter({ binary });
+
+		const descriptions = await linter.getLintDescriptionsHTML();
+
+		expect(descriptions).toBeTypeOf('object');
+	});
+
 	test(`${linterName} rule descriptions are not empty`, async () => {
 		const linter = new Linter({ binary });
 
@@ -153,6 +161,17 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		}
 	});
 
+	test(`${linterName} can generate lint context hashes`, async () => {
+		const linter = new Linter({ binary });
+		const source = 'This is an test.';
+
+		const lints = await linter.lint(source);
+
+		expect(lints.length).toBeGreaterThanOrEqual(1);
+
+		await linter.contextHash(source, lints[0]);
+	});
+
 	test(`${linterName} can ignore lints`, async () => {
 		const linter = new Linter({ binary });
 		const source = 'This is an test.';
@@ -162,6 +181,22 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(firstRound.length).toBeGreaterThanOrEqual(1);
 
 		await linter.ignoreLint(source, firstRound[0]);
+
+		const secondRound = await linter.lint(source);
+
+		expect(secondRound.length).toBeLessThan(firstRound.length);
+	});
+
+	test(`${linterName} can ignore lints with hashes`, async () => {
+		const linter = new Linter({ binary });
+		const source = 'This is an test.';
+
+		const firstRound = await linter.lint(source);
+
+		expect(firstRound.length).toBeGreaterThanOrEqual(1);
+
+		const hash = await linter.contextHash(source, firstRound[0]);
+		await linter.ignoreLintHash(hash);
 
 		const secondRound = await linter.lint(source);
 

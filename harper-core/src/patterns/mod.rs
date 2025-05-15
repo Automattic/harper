@@ -5,7 +5,7 @@
 //!
 //! See the page about [`SequencePattern`] for a concrete example of their use.
 
-use crate::{Document, Span, Token};
+use crate::{Document, LSend, Span, Token};
 
 mod all;
 mod any_pattern;
@@ -49,17 +49,9 @@ pub use word::Word;
 pub use word_pattern_group::WordPatternGroup;
 pub use word_set::WordSet;
 
-#[cfg(not(feature = "concurrent"))]
-#[blanket(derive(Rc, Arc))]
-pub trait Pattern {
-    /// Check if the pattern matches at the start of the given token slice.
-    ///
-    /// Returns the length of the match if successful, or `None` if not.
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize>;
-}
-#[cfg(feature = "concurrent")]
-#[blanket(derive(Arc))]
-pub trait Pattern: Send + Sync {
+#[cfg_attr(feature = "concurrent", blanket(derive(Arc)))]
+#[cfg_attr(not(feature = "concurrent"), blanket(derive(Rc, Arc)))]
+pub trait Pattern: LSend {
     /// Check if the pattern matches at the start of the given token slice.
     ///
     /// Returns the length of the match if successful, or `None` if not.
@@ -79,9 +71,6 @@ impl<P> PatternExt for P
 where
     P: Pattern + ?Sized,
 {
-    fn find_all_matches(&self, tokens: &[Token], source: &[char]) -> Vec<Span> {
-        self.iter_matches(tokens, source).collect()
-    }
     fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span> {
         MatchIter::new(self, tokens, source)
     }
@@ -131,26 +120,27 @@ where
 }
 
 pub trait OwnedPatternExt {
-    fn or(self, other: Box<dyn Pattern>) -> EitherPattern;
+    fn or(self, other: impl Pattern + 'static) -> EitherPattern;
 }
 
 impl<P> OwnedPatternExt for P
 where
     P: Pattern + 'static,
 {
-    fn or(self, other: Box<dyn Pattern>) -> EitherPattern {
-        EitherPattern::new(vec![Box::new(self), other])
+    fn or(self, other: impl Pattern + 'static) -> EitherPattern {
+        EitherPattern::new(vec![Box::new(self), Box::new(other)])
     }
 }
 
-#[cfg(feature = "concurrent")]
-impl<F> Pattern for F
-where
-    F: Fn(&Token, &[char]) -> bool,
-    F: Send + Sync,
-{
+/// A simpler version of the [`Pattern`] trait that only matches a single
+/// token.
+pub trait SingleTokenPattern: LSend {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool;
+}
+
+impl<S: SingleTokenPattern> Pattern for S {
     fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        if self(tokens.first()?, source) {
+        if self.matches_token(tokens.first()?, source) {
             Some(1)
         } else {
             None
@@ -158,17 +148,9 @@ where
     }
 }
 
-#[cfg(not(feature = "concurrent"))]
-impl<F> Pattern for F
-where
-    F: Fn(&Token, &[char]) -> bool,
-{
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        if self(tokens.first()?, source) {
-            Some(1)
-        } else {
-            None
-        }
+impl<F: LSend + Fn(&Token, &[char]) -> bool> SingleTokenPattern for F {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        self(token, source)
     }
 }
 

@@ -95,9 +95,24 @@ export default class LocalLinter implements Linter {
 		return inner.get_lint_descriptions_as_json();
 	}
 
+	async getLintDescriptionsHTML(): Promise<Record<string, string>> {
+		const inner = await this.inner;
+		return inner.get_lint_descriptions_html_as_object();
+	}
+
+	async getLintDescriptionsHTMLAsJSON(): Promise<string> {
+		const inner = await this.inner;
+		return inner.get_lint_descriptions_html_as_json();
+	}
+
 	async ignoreLint(source: string, lint: Lint): Promise<void> {
 		const inner = await this.inner;
 		inner.ignore_lint(source, lint);
+	}
+
+	async ignoreLintHash(hash: bigint): Promise<void> {
+		const inner = await this.inner;
+		inner.ignore_hash(hash);
 	}
 
 	async exportIgnoredLints(): Promise<string> {
@@ -108,6 +123,11 @@ export default class LocalLinter implements Linter {
 	async importIgnoredLints(json: string): Promise<void> {
 		const inner = await this.inner;
 		inner.import_ignored_lints(json);
+	}
+
+	async contextHash(source: string, lint: Lint): Promise<bigint> {
+		const inner = await this.inner;
+		return inner.context_hash(source, lint);
 	}
 
 	async clearIgnoredLints(): Promise<void> {

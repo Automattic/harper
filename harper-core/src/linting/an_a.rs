@@ -141,6 +141,10 @@ fn starts_with_vowel(word: &[char]) -> bool {
         return true;
     }
 
+    if matches!(word, ['u', 't', 't', ..]) {
+        return true;
+    }
+
     if matches!(
         word,
         ['u', 't' | 'r' | 'n', ..] | ['e', 'u', 'r', ..] | ['u', 'w', ..] | ['u', 's', 'e', ..]

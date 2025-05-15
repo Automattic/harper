@@ -7,7 +7,7 @@ import computeLintBoxes from './computeLintBoxes';
 /** Events on an input (any kind) that can trigger a re-render. */
 const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
 /** Events on the window that can trigger a re-render. */
-const PAGE_EVENTS = ['resize'];
+const PAGE_EVENTS = ['resize', 'scroll'];
 
 /** Orchestrates linting and rendering in response to events on the page. */
 export default class LintFramework {

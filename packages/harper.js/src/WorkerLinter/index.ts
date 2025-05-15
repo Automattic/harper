@@ -109,6 +109,14 @@ export default class WorkerLinter implements Linter {
 		return JSON.parse(await this.getLintDescriptionsAsJSON()) as Record<string, string>;
 	}
 
+	getLintDescriptionsHTMLAsJSON(): Promise<string> {
+		return this.rpc('getLintDescriptionsHTMLAsJSON', []);
+	}
+
+	async getLintDescriptionsHTML(): Promise<Record<string, string>> {
+		return JSON.parse(await this.getLintDescriptionsHTMLAsJSON()) as Record<string, string>;
+	}
+
 	getDefaultLintConfigAsJSON(): Promise<string> {
 		return this.rpc('getDefaultLintConfigAsJSON', []);
 	}
@@ -121,12 +129,20 @@ export default class WorkerLinter implements Linter {
 		return this.rpc('ignoreLint', [source, lint]);
 	}
 
+	ignoreLintHash(hash: bigint): Promise<void> {
+		return this.rpc('ignoreLintHash', [hash]);
+	}
+
 	exportIgnoredLints(): Promise<string> {
 		return this.rpc('exportIgnoredLints', []);
 	}
 
 	importIgnoredLints(json: string): Promise<void> {
 		return this.rpc('importIgnoredLints', [json]);
+	}
+
+	contextHash(source: string, lint: Lint): Promise<bigint> {
+		return this.rpc('contextHash', [source, lint]);
 	}
 
 	clearIgnoredLints(): Promise<void> {

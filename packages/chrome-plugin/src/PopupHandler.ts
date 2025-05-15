@@ -14,16 +14,13 @@ export default class PopupHandler {
 		this.renderBox = new RenderBox(document.body);
 		this.renderBox.getShadowHost().popover = 'manual';
 		this.renderBox.getShadowHost().style.pointerEvents = 'none';
+		this.renderBox.getShadowHost().style.border = 'none';
 		this.pointerDownCallback = (e) => {
 			this.onPointerDown(e);
 		};
 	}
 
 	private onPointerDown(e: PointerEvent) {
-		console.log('pointerdown');
-		console.log([e.x, e.y]);
-		console.log(this.currentLintBoxes);
-
 		for (let i = 0; i < this.currentLintBoxes.length; i++) {
 			const box = this.currentLintBoxes[i];
 

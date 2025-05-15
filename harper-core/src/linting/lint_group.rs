@@ -13,6 +13,7 @@ use serde::{Deserialize, Serialize};
 
 use super::adjective_of_a::AdjectiveOfA;
 use super::an_a::AnA;
+use super::ask_no_preposition::AskNoPreposition;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::boring_words::BoringWords;
@@ -25,6 +26,7 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 use super::despite_of::DespiteOf;
 use super::dot_initialisms::DotInitialisms;
 use super::ellipsis_length::EllipsisLength;
+use super::else_possessive::ElsePossessive;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
@@ -34,6 +36,7 @@ use super::hop_hope::HopHope;
 use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
+use super::its_contraction::ItsContraction;
 use super::left_right_hand::LeftRightHand;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
@@ -42,9 +45,12 @@ use super::long_sentences::LongSentences;
 use super::merge_words::MergeWords;
 use super::modal_of::ModalOf;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
+use super::nail_on_the_head::NailOnTheHead;
 use super::nobody::Nobody;
+use super::nominal_wants::NominalWants;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
+use super::one_and_the_same::OneAndTheSame;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
 use super::pattern_linter::run_on_chunk;
@@ -55,6 +61,7 @@ use super::pronoun_contraction::PronounContraction;
 use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
 use super::repeated_words::RepeatedWords;
+use super::save_to_safe::SaveToSafe;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::somewhat_something::SomewhatSomething;
 use super::spaces::Spaces;
@@ -69,10 +76,12 @@ use super::use_genitive::UseGenitive;
 use super::was_aloud::WasAloud;
 use super::whereas::Whereas;
 use super::widely_accepted::WidelyAccepted;
+use super::win_prize::WinPrize;
 use super::wordpress_dotcom::WordPressDotcom;
-use super::{CurrencyPlacement, Linter, NoOxfordComma, OxfordComma};
+use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
 use super::{Lint, PatternLinter};
 use crate::linting::dashes::Dashes;
+use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{closed_compounds, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
@@ -258,6 +267,7 @@ impl LintGroup {
         }
     }
 
+    /// Get map from each contained linter's name to its associated description.
     pub fn all_descriptions(&self) -> HashMap<&str, &str> {
         self.linters
             .iter()
@@ -266,6 +276,19 @@ impl LintGroup {
                 self.pattern_linters
                     .iter()
                     .map(|(key, value)| (key.as_str(), PatternLinter::description(value))),
+            )
+            .collect()
+    }
+
+    /// Get map from each contained linter's name to its associated description, rendered to HTML.
+    pub fn all_descriptions_html(&self) -> HashMap<&str, String> {
+        self.linters
+            .iter()
+            .map(|(key, value)| (key.as_str(), value.description_html()))
+            .chain(
+                self.pattern_linters
+                    .iter()
+                    .map(|(key, value)| (key.as_str(), value.description_html())),
             )
             .collect()
     }
@@ -309,6 +332,13 @@ impl LintGroup {
         insert_pattern_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_pattern_rule!(ChockFull, true);
+        insert_struct_rule!(SaveToSafe, true);
+        insert_struct_rule!(NailOnTheHead, true);
+        insert_struct_rule!(NominalWants, true);
+        insert_struct_rule!(ElsePossessive, true);
+        insert_pattern_rule!(WinPrize, true);
+        insert_pattern_rule!(AskNoPreposition, true);
+        insert_pattern_rule!(ItsContraction, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_pattern_rule!(Confident, true);
@@ -323,6 +353,7 @@ impl LintGroup {
         insert_struct_rule!(ForNoun, true);
         insert_pattern_rule!(Hedging, true);
         insert_pattern_rule!(Hereby, true);
+        insert_pattern_rule!(OpenCompounds, true);
         insert_struct_rule!(HopHope, true);
         insert_struct_rule!(HowTo, true);
         insert_pattern_rule!(HyphenateNumberDay, true);
@@ -338,6 +369,7 @@ impl LintGroup {
         insert_pattern_rule!(Nobody, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
+        insert_pattern_rule!(OneAndTheSame, true);
         insert_pattern_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
         insert_pattern_rule!(Oxymorons, true);
@@ -471,6 +503,13 @@ mod tests {
         let group =
             LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
         group.all_descriptions();
+    }
+
+    #[test]
+    fn can_get_all_descriptions_as_html() {
+        let group =
+            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+        group.all_descriptions_html();
     }
 
     #[test]

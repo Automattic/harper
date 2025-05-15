@@ -45,13 +45,15 @@ where
     }
 }
 
-pub fn run_on_chunk(linter: &impl PatternLinter, chunk: &[Token], source: &[char]) -> Vec<Lint> {
-    let mut lints = Vec::new();
-
-    for match_span in linter.pattern().iter_matches(chunk, source) {
-        let lint = linter.match_to_lint(&chunk[match_span.start..match_span.end], source);
-        lints.extend(lint);
-    }
-
-    lints
+pub fn run_on_chunk(
+    linter: &impl PatternLinter,
+    chunk: &[Token],
+    source: &[char],
+) -> impl Iterator<Item = Lint> {
+    linter
+        .pattern()
+        .iter_matches(chunk, source)
+        .filter_map(|match_span| {
+            linter.match_to_lint(&chunk[match_span.start..match_span.end], source)
+        })
 }

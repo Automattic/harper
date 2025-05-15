@@ -8,8 +8,8 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Parser, PlainEnglish};
 use harper_core::{
-    CharString, Dictionary, Document, FstDictionary, IgnoredLints, Lrc, MergedDictionary,
-    MutableDictionary, WordMetadata, remove_overlaps,
+    CharString, Dictionary, Document, FstDictionary, IgnoredLints, LintContext, Lrc,
+    MergedDictionary, MutableDictionary, WordMetadata, remove_overlaps,
 };
 use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};
@@ -152,9 +152,32 @@ impl Linter {
         document.to_string()
     }
 
-    /// Get a JSON map containing the descriptions of all the linting rules.
+    /// Get a JSON map containing the descriptions of all the linting rules, formatted as HTML.
+    pub fn get_lint_descriptions_html_as_json(&self) -> String {
+        serde_json::to_string(&self.lint_group.all_descriptions_html()).unwrap()
+    }
+
+    /// Get a Record containing the descriptions of all the linting rules, formatted as HTML.
+    pub fn get_lint_descriptions_html_as_object(&self) -> JsValue {
+        let serializer = Serializer::json_compatible();
+        self.lint_group
+            .all_descriptions_html()
+            .serialize(&serializer)
+            .unwrap()
+    }
+
+    /// Get a JSON map containing the descriptions of all the linting rules, formatted as Markdown.
     pub fn get_lint_descriptions_as_json(&self) -> String {
         serde_json::to_string(&self.lint_group.all_descriptions()).unwrap()
+    }
+
+    /// Get a Record containing the descriptions of all the linting rules, formatted as Markdown.
+    pub fn get_lint_descriptions_as_object(&self) -> JsValue {
+        let serializer = Serializer::json_compatible();
+        self.lint_group
+            .all_descriptions()
+            .serialize(&serializer)
+            .unwrap()
     }
 
     pub fn get_lint_config_as_json(&self) -> String {
@@ -183,15 +206,6 @@ impl Linter {
             .unwrap()
     }
 
-    /// Get a Record containing the descriptions of all the linting rules.
-    pub fn get_lint_descriptions_as_object(&self) -> JsValue {
-        let serializer = Serializer::json_compatible();
-        self.lint_group
-            .all_descriptions()
-            .serialize(&serializer)
-            .unwrap()
-    }
-
     pub fn get_lint_config_as_object(&self) -> JsValue {
         // Important for downstream JSON serialization
         let serializer = Serializer::json_compatible();
@@ -215,6 +229,25 @@ impl Linter {
         );
 
         self.ignored_lints.ignore_lint(&lint.inner, &document);
+    }
+
+    /// Add a specific context hash to the ignored lints list.
+    pub fn ignore_hash(&mut self, hash: u64) {
+        self.ignored_lints.ignore_hash(hash);
+    }
+
+    /// Compute the context hash of a given lint.
+    pub fn context_hash(&self, source_text: String, lint: &Lint) -> u64 {
+        let source: Vec<_> = source_text.chars().collect();
+
+        let document = Document::new_from_vec(
+            source.into(),
+            &lint.language.create_parser(),
+            &self.dictionary,
+        );
+
+        let ctx = LintContext::from_lint(&lint.inner, &document);
+        ctx.default_hash()
     }
 
     /// Perform the configured linting on the provided text.
@@ -452,6 +485,11 @@ impl Lint {
     /// Get a description of the error.
     pub fn message(&self) -> String {
         self.inner.message.clone()
+    }
+
+    /// Get a description of the error as HTML.
+    pub fn message_html(&self) -> String {
+        self.inner.message_html()
     }
 }
 

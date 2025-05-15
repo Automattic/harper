@@ -17,7 +17,7 @@ impl Default for OxfordComma {
                 .then_determiner()
                 .then_whitespace()
                 .then_nominal()
-                .or(Box::new(SequencePattern::default().then_nominal())),
+                .or(SequencePattern::default().then_nominal()),
         );
 
         let item_chunk = SequencePattern::default()

@@ -81,6 +81,13 @@ export default class HarperPlugin extends Plugin {
 			settings = { useWebWorker: true, lintSettings: {} };
 		}
 
+		if (Object.keys(settings.lintSettings).length == 0) {
+			settings.lintSettings = await this.harper.getDefaultLintConfig();
+			Object.keys(settings.lintSettings).forEach((key) => {
+				settings.lintSettings[key] = null;
+			});
+		}
+
 		const oldSettings = await this.getSettings();
 
 		if (
@@ -311,8 +318,12 @@ export default class HarperPlugin extends Plugin {
 						from: span.start,
 						to: span.end,
 						severity: 'error',
-						title: lint.lint_kind(),
-						message: lint.message(),
+						title: lint.lint_kind_pretty(),
+						renderMessage: (view) => {
+							const node = document.createElement('template');
+							node.innerHTML = lint.message_html();
+							return node.content;
+						},
 						ignore: async () => {
 							await this.harper.ignoreLint(text, lint);
 							await this.reinitialize();

@@ -22,45 +22,41 @@ impl Default for NoContractionWithVerb {
             .then(WordSet::new(&["lets", "let"]))
             .then_whitespace();
 
-        // Word is only a verb, and not the gerund/present participle form.
+        // Word is only a verb, and not the gerund/present participle/progressive -ing form.
         // Only tests the next word after "let".
         let non_ing_verb = SequencePattern::default().then(|tok: &Token, source: &[char]| {
             let Some(Some(meta)) = tok.kind.as_word() else {
+                // Not a word
                 return false;
             };
 
             if !meta.is_verb() || meta.is_noun() || meta.is_adjective() {
+                // Not a verb, or a verb that's also a noun or adjective
                 return false;
             }
 
-            let tok_chars = tok.span.get_content(source);
-
-            // If it ends with 'ing' and is at least 5 chars long, it could be a gerund or past participle
-            // TODO: replace with metadata check when affix system supports verb forms
-            if tok_chars.len() < 5 {
-                return true;
+            // TODO affix system currently marks -ing and -s verb forms as present tense
+            // TODO which is wrong. replace with .is_progressive_form() when it's merged
+            if meta.is_present_tense_verb() {
+                // A verb in -s (good) or -ing (bad)
+                return !tok
+                    .span
+                    .get_content_string(source)
+                    .to_lowercase()
+                    .ends_with("ing");
             }
 
-            let is_ing_form = tok_chars
-                .iter()
-                .skip(tok_chars.len() - 3)
-                .map(|&c| c.to_ascii_lowercase())
-                .collect::<Vec<_>>()
-                .ends_with(&['i', 'n', 'g']);
-
-            !is_ing_form
+            // A verb lemma or in -ed (good)
+            true
         });
 
         // Ambiguous word is a verb determined by heuristic of following word's part of speech
         // Tests the next two words after "let".
         let verb_due_to_following_pos = SequencePattern::default()
-            .then(|tok: &Token, source: &[char]| {
-                tok.kind.is_verb()
-                // TODO: because 'US' is a noun, 'us' also gets marked as a noun
-                || (tok.kind.is_noun() && tok.span.get_content(source) != ['u', 's'])
-            })
+            .then(|tok: &Token, _source: &[char]| tok.kind.is_verb())
             .then_whitespace()
             .then(|tok: &Token, _source: &[char]| {
+                // The 3rd word after let/lets and a verb
                 tok.kind.is_determiner() || tok.kind.is_pronoun() || tok.kind.is_conjunction()
             });
 
@@ -81,6 +77,16 @@ impl PatternLinter for NoContractionWithVerb {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let (let_string, verb_string) = (
+            matched_tokens[0].span.get_content_string(source),
+            matched_tokens[2].span.get_content_string(source),
+        );
+
+        // "to let go" is a phrasal verb but "lets go" is quite a common mistake for "let's go"
+        if let_string == "let" && verb_string == "go" {
+            return None;
+        }
+
         let problem_span = matched_tokens.first()?.span;
         let template = problem_span.get_content(source);
 
@@ -106,7 +112,7 @@ mod tests {
     use super::NoContractionWithVerb;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
-    // Corrections
+    // Correct unambiguous verb
 
     #[test]
     fn fix_lets_inspect() {
@@ -182,7 +188,7 @@ mod tests {
         );
     }
 
-    // Disambiguated noun/verb by following determiner
+    // Correct disambiguated noun/verb by following determiner
 
     #[test]
     fn corrects_lets_make_this() {
@@ -193,7 +199,7 @@ mod tests {
         );
     }
 
-    // Disambiguated verb by following pronoun
+    // Correct disambiguated verb by following pronoun
 
     #[test]
     fn corrects_lets_mock_them() {
@@ -204,10 +210,30 @@ mod tests {
         );
     }
 
-    // False positives / edge cases files on GitHub
+    // False positives / edge cases filed on GitHub
 
     #[test]
     fn dont_flag_let_us() {
         assert_lint_count("Let us do this.", NoContractionWithVerb::default(), 0);
+    }
+
+    #[test]
+    fn dont_flag_let_go_1202() {
+        assert_lint_count(
+            "... until you hit your opponent, then let go and quickly retap",
+            NoContractionWithVerb::default(),
+            0,
+        );
+    }
+
+    // False positive wrongly flagged by previous version of this linter
+
+    #[test]
+    fn dont_flag_let_in_and() {
+        assert_lint_count(
+            "Japanese is good enough to be let in and.",
+            NoContractionWithVerb::default(),
+            0,
+        );
     }
 }

@@ -472,6 +472,7 @@ const baseTheme = EditorView.baseTheme({
 		display: 'flex',
 		flexDirection: 'column',
 		whiteSpace: 'pre-wrap',
+		maxHeight: 'calc(100% - var(--header-height)) !important',
 	},
 
 	'.cm-diagnosticTitle': {
@@ -482,6 +483,19 @@ const baseTheme = EditorView.baseTheme({
 
 	'.cm-diagnosticText': {
 		marginTop: '8px',
+	},
+
+	'.cm-diagnosticText p': {
+		margin: '0px',
+		padding: '0px',
+		display: 'inline',
+	},
+
+	'.cm-diagnosticText code': {
+		borderRadius: '0.25rem',
+		backgroundColor: 'var(--background-secondary) !important',
+		padding: '0.25rem',
+		filter: 'invert(1)',
 	},
 
 	'.cm-diagnosticAction': {
@@ -507,7 +521,6 @@ const baseTheme = EditorView.baseTheme({
 		boxShadow: 'var(--shadow-s) !important',
 		zIndex: 'var(--layer-menu) !important',
 		userSelect: 'none !important',
-		maxHeight: 'calc(100% - var(--header-height)) !important',
 		overflow: 'hidden !important',
 	},
 
