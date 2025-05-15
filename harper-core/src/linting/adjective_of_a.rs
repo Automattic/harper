@@ -23,6 +23,7 @@ const FALSE_POSITIVES: &[&str] = &[
     // The word is used more as a noun in this context.
     // (using .kind.is_likely_homograph() here is too strict)
     "back",
+    "bastard",
     "bit",
     "borderline",
     "bottom",

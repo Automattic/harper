@@ -1,3 +1,5 @@
+use std::hash::{DefaultHasher, Hash, Hasher};
+
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -50,5 +52,12 @@ impl LintContext {
             priority,
             tokens,
         }
+    }
+
+    pub fn default_hash(&self) -> u64 {
+        let mut hasher = DefaultHasher::default();
+        self.hash(&mut hasher);
+
+        hasher.finish()
     }
 }

@@ -1201,6 +1201,12 @@ pub fn lint_group() -> LintGroup {
             "The period of economic prosperity is called the `Gilded Age`.",
             "If referring to the period of economic prosperity, the correct term is `Gilded Age`."
         ),
+        "EverPresent" => (
+            ["ever present"],
+            ["ever-present"],
+            "Hyphenate `ever-present` when it functions as a compound adjective.",
+            "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`."
+        ),
         "DefiniteArticle" => (
             ["definitive article"],
             ["definite article"],
@@ -1212,7 +1218,25 @@ pub fn lint_group() -> LintGroup {
             ["definite articles"],
             "The correct term for `the` is `definite article`.",
             "The name of the word `the` is `definite article`."
-        )
+        ),
+        "FurtherAdo" => (
+            ["further adieu"],
+            ["further ado"],
+            "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
+            "Corrects `adieu` to `ado`."
+        ),
+        "MuchAdo" => (
+            ["much adieu"],
+            ["much ado"],
+            "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
+            "Corrects `adieu` to `ado`."
+        ),
+        "FairBit" => (
+            ["fare bit"],
+            ["fair bit"],
+            "A `decent amount` is a `fair bit`. `Fare` is the price of a ticket.",
+            "Corrects malapropisms of `a fair bit`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2603,6 +2627,20 @@ mod tests {
     }
 
     #[test]
+    fn detect_ever_present_atomic() {
+        assert_suggestion_result("ever present", lint_group(), "ever-present");
+    }
+
+    #[test]
+    fn detect_ever_present_real_world() {
+        assert_suggestion_result(
+            "Distrust was an ever present tension in the negotiations.",
+            lint_group(),
+            "Distrust was an ever-present tension in the negotiations.",
+        );
+    }
+
+    #[test]
     fn corrects_definite_article() {
         assert_suggestion_result(
             "As for format of outputs: the spec defines the field as using the singular definitive article \"the\"",
@@ -2627,6 +2665,33 @@ mod tests {
             ".. definitive articles -та /-ta/ and -те /-te/ (postfixed in Bulgarian).",
             lint_group(),
             ".. definite articles -та /-ta/ and -те /-te/ (postfixed in Bulgarian).",
+        );
+    }
+
+    #[test]
+    fn corrects_further_ado() {
+        assert_suggestion_result(
+            "... but we finally hit a great spot, so without further adieu.",
+            lint_group(),
+            "... but we finally hit a great spot, so without further ado.",
+        );
+    }
+
+    #[test]
+    fn corrects_much_ado() {
+        assert_suggestion_result(
+            "After much adieu this functionality is now available.",
+            lint_group(),
+            "After much ado this functionality is now available.",
+        );
+    }
+
+    #[test]
+    fn corrects_fair_bit() {
+        assert_suggestion_result(
+            "I've read through a fare bit of the ecosystem framework, but I am not clear on what is modified...",
+            lint_group(),
+            "I've read through a fair bit of the ecosystem framework, but I am not clear on what is modified...",
         );
     }
 }

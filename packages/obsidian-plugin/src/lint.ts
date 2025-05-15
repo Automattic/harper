@@ -472,6 +472,7 @@ const baseTheme = EditorView.baseTheme({
 		display: 'flex',
 		flexDirection: 'column',
 		whiteSpace: 'pre-wrap',
+		maxHeight: 'calc(100% - var(--header-height)) !important',
 	},
 
 	'.cm-diagnosticTitle': {
@@ -520,7 +521,6 @@ const baseTheme = EditorView.baseTheme({
 		boxShadow: 'var(--shadow-s) !important',
 		zIndex: 'var(--layer-menu) !important',
 		userSelect: 'none !important',
-		maxHeight: 'calc(100% - var(--header-height)) !important',
 		overflow: 'hidden !important',
 	},
 

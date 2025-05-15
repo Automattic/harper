@@ -4,6 +4,7 @@
 
 mod adjective_of_a;
 mod an_a;
+mod ask_no_preposition;
 mod avoid_curses;
 mod back_in_the_day;
 mod boring_words;
@@ -19,6 +20,7 @@ mod dashes;
 mod despite_of;
 mod dot_initialisms;
 mod ellipsis_length;
+mod else_possessive;
 mod expand_time_shorthands;
 mod first_aid_kit;
 mod for_noun;
@@ -30,6 +32,7 @@ mod hyphenate_number_day;
 mod inflected_verb_after_to;
 mod it_is;
 mod it_would_be;
+mod its_contraction;
 mod left_right_hand;
 mod lets_confusion;
 mod likewise;
@@ -44,8 +47,10 @@ mod merge_words;
 mod modal_of;
 mod most_number;
 mod multiple_sequential_pronouns;
+mod nail_on_the_head;
 mod no_oxford_comma;
 mod nobody;
+mod nominal_wants;
 mod number_suffix_capitalization;
 mod of_course;
 mod one_and_the_same;
@@ -62,6 +67,7 @@ mod pronoun_contraction;
 mod pronoun_knew;
 mod proper_noun_capitalization_linters;
 mod repeated_words;
+mod save_to_safe;
 mod sentence_capitalization;
 mod somewhat_something;
 mod spaces;
@@ -77,10 +83,12 @@ mod use_genitive;
 mod was_aloud;
 mod whereas;
 mod widely_accepted;
+mod win_prize;
 mod wordpress_dotcom;
 
 pub use adjective_of_a::AdjectiveOfA;
 pub use an_a::AnA;
+pub use ask_no_preposition::AskNoPreposition;
 pub use avoid_curses::AvoidCurses;
 pub use back_in_the_day::BackInTheDay;
 pub use boring_words::BoringWords;
@@ -103,6 +111,7 @@ pub use hop_hope::HopHope;
 pub use how_to::HowTo;
 pub use hyphenate_number_day::HyphenateNumberDay;
 pub use inflected_verb_after_to::InflectedVerbAfterTo;
+pub use its_contraction::ItsContraction;
 pub use left_right_hand::LeftRightHand;
 pub use lets_confusion::LetsConfusion;
 pub use likewise::Likewise;
@@ -116,6 +125,7 @@ pub use merge_words::MergeWords;
 pub use modal_of::ModalOf;
 pub use most_number::MostNumber;
 pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
+pub use nail_on_the_head::NailOnTheHead;
 pub use no_oxford_comma::NoOxfordComma;
 pub use nobody::Nobody;
 pub use number_suffix_capitalization::NumberSuffixCapitalization;
@@ -130,6 +140,7 @@ pub use pique_interest::PiqueInterest;
 pub use possessive_your::PossessiveYour;
 pub use pronoun_contraction::PronounContraction;
 pub use repeated_words::RepeatedWords;
+pub use save_to_safe::SaveToSafe;
 pub use sentence_capitalization::SentenceCapitalization;
 pub use somewhat_something::SomewhatSomething;
 pub use spaces::Spaces;
@@ -145,6 +156,7 @@ pub use use_genitive::UseGenitive;
 pub use was_aloud::WasAloud;
 pub use whereas::Whereas;
 pub use widely_accepted::WidelyAccepted;
+pub use win_prize::WinPrize;
 pub use wordpress_dotcom::WordPressDotcom;
 
 use crate::{Document, LSend, render_markdown};
@@ -277,8 +289,6 @@ mod tests {
         let mut iter_count = 0;
 
         loop {
-            iter_count += 1;
-
             let test = Document::new_from_vec(
                 text_chars.clone().into(),
                 &PlainEnglish,
@@ -298,6 +308,8 @@ mod tests {
             } else {
                 break;
             }
+
+            iter_count += 1;
 
             if iter_count == 100 {
                 break;
