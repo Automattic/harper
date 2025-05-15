@@ -246,6 +246,10 @@ mod tests {
 
     #[test]
     fn dont_flag_how_come() {
-        assert_lint_count("How come this has to be a special case?", HowTo::default(), 0);
+        assert_lint_count(
+            "How come this has to be a special case?",
+            HowTo::default(),
+            0,
+        );
     }
 }
