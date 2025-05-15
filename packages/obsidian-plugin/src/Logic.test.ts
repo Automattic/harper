@@ -95,7 +95,7 @@ test('Can be initialized with incomplete lint settings and retain default state.
 	);
 	expect(Object.keys(reducedLintSettings).length).toBe(numberToKeep);
 
-  await logic.initializeFromSettings({...defaultSettings, lintSettings: reducedLintSettings});
+	await logic.initializeFromSettings({ ...defaultSettings, lintSettings: reducedLintSettings });
 
-  expect(await logic.getSettings()).toStrictEqual(defaultSettings)
+	expect(await logic.getSettings()).toStrictEqual(defaultSettings);
 });

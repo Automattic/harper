@@ -41,12 +41,12 @@ export default class Logic {
 			settings = { useWebWorker: true, lintSettings: {} };
 		}
 
-    const defaultConfig = await this.harper.getDefaultLintConfig();
-    for (const [key, value] of Object.entries(defaultConfig)){
-      if (settings.lintSettings[key] == undefined){
-        settings.lintSettings[key] = null;
-      }
-    }
+		const defaultConfig = await this.harper.getDefaultLintConfig();
+		for (const [key, value] of Object.entries(defaultConfig)) {
+			if (settings.lintSettings[key] == undefined) {
+				settings.lintSettings[key] = null;
+			}
+		}
 
 		const oldSettings = await this.getSettings();
 

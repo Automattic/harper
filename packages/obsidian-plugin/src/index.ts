@@ -1,4 +1,3 @@
-import type { Extension } from '@codemirror/state';
 import { Dialect } from 'harper.js';
 import { type App, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg?raw';
