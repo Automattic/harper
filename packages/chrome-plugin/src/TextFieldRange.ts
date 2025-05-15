@@ -67,8 +67,6 @@ export default class TextFieldRange {
 		const scrollTop = window.scrollY || document.documentElement.scrollTop;
 		const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
 
-		console.log(fieldRect);
-
 		// Position the mirror exactly over the field.
 		Object.assign(this.mirror.style, {
 			top: `${fieldRect.top + scrollTop}px`,

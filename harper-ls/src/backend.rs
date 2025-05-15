@@ -10,7 +10,8 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, LintGroupConfig};
 use harper_core::parsers::{CollapseIdentifiers, IsolateEnglish, Markdown, Parser, PlainEnglish};
 use harper_core::{
-    Dialect, Dictionary, Document, FstDictionary, MergedDictionary, MutableDictionary, WordMetadata,
+    Dialect, Dictionary, Document, FstDictionary, IgnoredLints, MergedDictionary,
+    MutableDictionary, WordMetadata,
 };
 use harper_html::HtmlParser;
 use harper_literate_haskell::LiterateHaskellParser;
@@ -33,9 +34,11 @@ use tower_lsp::{Client, LanguageServer};
 use tracing::{error, info, warn};
 
 use crate::config::Config;
-use crate::dictionary_io::{file_dict_name, load_dict, save_dict};
+use crate::dictionary_io::{load_dict, save_dict};
 use crate::document_state::DocumentState;
 use crate::git_commit_parser::GitCommitParser;
+use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
+use crate::io_utils::fileify_path;
 use harper_stats::{Record, Stats};
 
 pub struct Backend {
@@ -73,11 +76,40 @@ impl Backend {
             .or(Ok(MutableDictionary::new()))
     }
 
+    /// Compute the location of the ignored lint's store.
+    async fn get_ignored_lints_path(&self, url: &Url) -> anyhow::Result<PathBuf> {
+        let config = self.config.read().await;
+
+        Ok(config.ignored_lints_path.join(fileify_path(url)?))
+    }
+
+    async fn save_ignored_lints(&self, url: &Url, ignored_lints: &IgnoredLints) -> Result<()> {
+        save_ignored_lints(
+            self.get_ignored_lints_path(url)
+                .await
+                .context("Unable to get ignored lints path.")?,
+            ignored_lints,
+        )
+        .await
+        .context("Unable to save ignored lints to path.")
+    }
+
+    async fn load_ignored_lints(&self, url: &Url) -> Result<IgnoredLints> {
+        Ok(load_ignored_lints(
+            self.get_ignored_lints_path(url)
+                .await
+                .context("Unable to get ignored lints path.")?,
+        )
+        .await
+        .map_err(|err| info!("{err}"))
+        .unwrap_or(IgnoredLints::new()))
+    }
+
     /// Compute the location of the file's specific dictionary
     async fn get_file_dict_path(&self, url: &Url) -> anyhow::Result<PathBuf> {
         let config = self.config.read().await;
 
-        Ok(config.file_dict_path.join(file_dict_name(url)?))
+        Ok(config.file_dict_path.join(fileify_path(url)?))
     }
 
     async fn save_file_dictionary(&self, url: &Url, dict: impl Dictionary) -> Result<()> {
@@ -188,11 +220,13 @@ impl Backend {
         );
 
         let mut doc_lock = self.doc_state.lock().await;
+        let ignored_lints = self.load_ignored_lints(url).await.unwrap_or_default();
 
         let doc_state = doc_lock.entry(url.clone()).or_insert_with(|| {
             info!("Constructing new LintGroup for new document.");
 
             DocumentState {
+                ignored_lints,
                 linter: LintGroup::new_curated(dict.clone(), dialect)
                     .with_lint_config(lint_config.clone()),
                 language_id: language_id.map(|v| v.to_string()),
@@ -641,6 +675,13 @@ impl LanguageServer for Backend {
                 };
 
                 doc_state.ignore_lint(&lint);
+                if let Err(_err) = self
+                    .save_ignored_lints(&url, &doc_state.ignored_lints)
+                    .await
+                {
+                    error!("Unable to save ignored lints.");
+                    return Ok(None);
+                }
 
                 drop(doc_lock);
 

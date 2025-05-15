@@ -14,7 +14,7 @@ impl Default for Confident {
         let pattern = SequencePattern::default()
             .then(
                 (|tok: &Token, _source: &[char]| tok.kind.is_verb() || tok.kind.is_determiner())
-                    .or(Box::new(Word::new("very"))),
+                    .or(Word::new("very")),
             )
             .then_whitespace()
             .t_aco("confidant");

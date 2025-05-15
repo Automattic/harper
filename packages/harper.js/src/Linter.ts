@@ -62,12 +62,18 @@ export default interface Linter {
 	/** Ignore future instances of a lint from a previous linting run in future invocations. */
 	ignoreLint(source: string, lint: Lint): Promise<void>;
 
+	/** Ignore future instances of a lint from a previous linting run in future invocations using its hash. */
+	ignoreLintHash(hash: bigint): Promise<void>;
+
 	/** Export the ignored lints to a JSON list of privacy-respecting hashes. */
 	exportIgnoredLints(): Promise<string>;
 
 	/** Import ignored lints from a JSON list to the linter.
 	 * This function appends to the existing lints, if any. */
 	importIgnoredLints(json: string): Promise<void>;
+
+	/** Produce a context-sensitive hash that represents a lint.  */
+	contextHash(source: string, lint: Lint): Promise<bigint>;
 
 	/** Clear records of all previously ignored lints. */
 	clearIgnoredLints(): Promise<void>;
