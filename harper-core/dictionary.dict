@@ -50091,6 +50091,7 @@ utensil/1SM
 uteri/1
 uterine/~51
 uterus/~1M
+util/1MS
 utilisation/1M!_
 utilise/4GBDS!_
 utilitarian/~51MS
@@ -52256,6 +52257,7 @@ CISC/1M             # cpu architecture
 CMOS/1              # microchip process
 CMake/SM            # build tool
 CQL/1
+CRC/1MS             # cyclic redundancy check
 CRDT/1SM
 CRM/12SM
 CTE/1S
@@ -52625,6 +52627,7 @@ blow-up/51MS
 blue-blooded/5
 blue-collar/5
 bona fide/j5
+boot loader/1MS
 break out/4
 breaks out/4
 Bretton Woods/2M
@@ -52750,6 +52753,7 @@ hissy fit/1MS
 holy moley
 holy moly
 home school/1MS4DG
+how come/j
 Humpty Dumpty/2M
 ice cream/1MS
 in-depth/5
