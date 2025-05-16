@@ -181,14 +181,14 @@ export default function SuggestionBox(box: IgnorableLintBox, close: () => void) 
 		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind)),
 		body(box.lint.message_html),
 		footer(
-			[
-				box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
-				ignoreLint(box.ignoreLint),
-			],
 			suggestions(box.lint.suggestions, (v) => {
 				box.applySuggestion(v);
 				close();
 			}),
+			[
+				box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
+				ignoreLint(box.ignoreLint),
+			],
 		),
 	]);
 }
