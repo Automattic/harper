@@ -9,6 +9,7 @@
 		"ignoreUnknown": true,
 		"include": ["packages/**/*", "**/*.json"],
 		"ignore": [
+			"test-results",
 			"node_modules",
 			"dist",
 			"target",

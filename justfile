@@ -13,12 +13,11 @@ build-harperjs: build-wasm
   #! /bin/bash
   set -eo pipefail
 
-  pnpm install
-
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
   perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
 
   cd "{{justfile_directory()}}/packages/harper.js"
+  pnpm install
   pnpm build
 
   # Generate API reference
@@ -104,6 +103,15 @@ build-chrome-plugin: build-harperjs
 
   pnpm install 
   pnpm zip
+
+test-chrome-plugin: build-chrome-plugin
+  #!/bin/bash
+  set -eo pipefail
+
+  pnpm install
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+  pnpm playwright install
+  pnpm test
 
 # Run VSCode plugin unit and integration tests.
 test-vscode:
@@ -240,7 +248,7 @@ dogfood:
   done
 
 # Test everything.
-test: test-vscode test-harperjs test-obsidian
+test: test-harperjs test-vscode test-obsidian test-chrome-plugin
   cargo test
 
 # Use `harper-cli` to parse a provided file and print out the resulting tokens.

@@ -22,7 +22,7 @@ export default class RenderBox {
 	public render(node: VNode) {
 		if (!this.virtualRoot || !this.virtualTree) {
 			this.virtualRoot = createElement(node);
-			const shadow = this.shadowHost.attachShadow({ mode: 'closed' });
+			const shadow = this.shadowHost.attachShadow({ mode: 'open' });
 			shadow.appendChild(this.virtualRoot);
 		} else {
 			const patches = diff(this.virtualTree, node);
