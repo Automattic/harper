@@ -41,13 +41,13 @@ fn has_context_word(document: &Document, adj_idx: usize) -> bool {
     false
 }
 
-fn is_good_adjective(word: &String) -> bool {
+fn is_good_adjective(word: &str) -> bool {
     ADJECTIVE_WHITELIST
         .iter()
         .any(|&adj| word.eq_ignore_ascii_case(adj))
 }
 
-fn is_bad_adjective(word: &String) -> bool {
+fn is_bad_adjective(word: &str) -> bool {
     ADJECTIVE_BLACKLIST
         .iter()
         .any(|&adj| word.eq_ignore_ascii_case(adj))
