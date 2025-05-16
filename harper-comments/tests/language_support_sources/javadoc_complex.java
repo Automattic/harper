@@ -17,7 +17,7 @@ class TestClass {
   }
 
   /**
-   * This doc has a link in it: {@link this sould b ignor} but not tis
+   * This doc has a link in it: {@link this sould b ignor} but not thsi
    *
    * @param name this is anoher test.
    */
