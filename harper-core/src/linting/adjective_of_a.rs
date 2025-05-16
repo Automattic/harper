@@ -5,64 +5,52 @@ use crate::{Document, Span, TokenStringExt};
 #[derive(Debug, Clone, Copy, Default)]
 pub struct AdjectiveOfA;
 
-const FALSE_POSITIVES: &[&str] = &[
-    // Different valid constructions.
-    "all",
-    "emblematic",
-    "equivalent",
-    "full",
-    "fun",
-    "illustrative",
-    "inside",
-    "more",
-    "much",
-    "off",
-    "out",
-    "shy",
-    "up",
-    // The word is used more as a noun in this context.
-    // (using .kind.is_likely_homograph() here is too strict)
-    "back",
-    "bastard",
-    "bit",
-    "borderline",
-    "bottom",
-    "chance",
-    "clockwork",
-    "derivative",
-    "dream",
-    "eighth",
-    "front",
-    "half",
-    "head",
-    "kind",
-    "left",
-    "light",
-    "meaning",
-    "middle",
-    "multiple",
-    "one",
-    "part",
-    "perspective",
-    "potential",
-    "precision",
-    "red",
-    // for "rid" I removed the `5` flag in `dictionary.dict``
-    "shadow",
-    "side",
-    "short",
-    "slack",
-    "something",
-    "sound",
-    "top",
-    "waste",
+const ADJECTIVE_WHITELIST: &[&str] = &["bad", "big", "good", "large", "long", "vague"];
+
+const CONTEXT_WORDS: &[&str] = &[
+    "as", "how", // but "how much of a"
+    "that", "this", "too",
 ];
 
-fn is_false_positive(chars: &[char]) -> bool {
-    let word = chars.iter().collect::<String>();
-    FALSE_POSITIVES
+const ADJECTIVE_BLACKLIST: &[&str] = &["much", "part"];
+
+fn has_context_word(document: &Document, adj_idx: usize) -> bool {
+    if adj_idx < 2 {
+        // Need at least 2 tokens before the adjective (word + space)
+        return false;
+    }
+
+    // Get the token before the adjective (should be a space)
+    if let Some(space_token) = document.get_token(adj_idx - 1) {
+        if !space_token.kind.is_whitespace() {
+            return false;
+        }
+
+        // Get the token before the space (should be our context word)
+        if let Some(word_token) = document.get_token(adj_idx - 2) {
+            if !word_token.kind.is_word() {
+                return false;
+            }
+
+            let word = document.get_span_content_str(&word_token.span);
+
+            return CONTEXT_WORDS.iter().any(|&w| w.eq_ignore_ascii_case(&word));
+        }
+    }
+
+    false
+}
+
+fn is_good_adjective(word: &str) -> bool {
+    ADJECTIVE_WHITELIST
         .iter()
-        .any(|&false_pos| word.eq_ignore_ascii_case(false_pos))
+        .any(|&adj| word.eq_ignore_ascii_case(adj))
+}
+
+fn is_bad_adjective(word: &str) -> bool {
+    ADJECTIVE_BLACKLIST
+        .iter()
+        .any(|&adj| word.eq_ignore_ascii_case(adj))
 }
 
 impl Linter for AdjectiveOfA {
@@ -75,10 +63,17 @@ impl Linter for AdjectiveOfA {
             let word_of = document.get_token(i + 2);
             let space_2 = document.get_token(i + 3);
             let a_or_an = document.get_token(i + 4);
-            let adj_chars: &[char] = document.get_span_content(&adjective.span);
+            let adj_str = document
+                .get_span_content_str(&adjective.span)
+                .to_lowercase();
 
-            // Rule out false positives
-            if is_false_positive(adj_chars) {
+            // Only flag adjectives known to use this construction
+            // Unless we have a clearer context
+            if !is_good_adjective(&adj_str) && !has_context_word(document, i) {
+                continue;
+            }
+            // Some adjectives still create false positives even with the extra context
+            if is_bad_adjective(&adj_str) {
                 continue;
             }
 
@@ -93,15 +88,13 @@ impl Linter for AdjectiveOfA {
             // "see if you can give us a little better of an answer"
             // "hopefully it won't be too much worse of a problem"
             // "seems far worse of a result to me"
-            if adj_chars.ends_with(&['e', 'r']) || adj_chars.ends_with(&['s', 't']) {
+            if adj_str.ends_with("er") || adj_str.ends_with("st") {
                 continue;
             }
             // Rule out present participles (e.g. "beginning of a")
             // The -ing form of a verb acts as an adjective called a present participle
             // and also acts as a noun called a gerund.
-            if adj_chars.ends_with(&['i', 'n', 'g'])
-                && (adjective.kind.is_noun() || adjective.kind.is_verb())
-            {
+            if adj_str.ends_with("ing") && (adjective.kind.is_noun() || adjective.kind.is_verb()) {
                 continue;
             }
 
@@ -116,8 +109,8 @@ impl Linter for AdjectiveOfA {
             if !word_of.kind.is_word() {
                 continue;
             }
-            let word_of = document.get_span_content(&word_of.span);
-            if word_of != ['o', 'f'] {
+            let word_of = document.get_span_content_str(&word_of.span).to_lowercase();
+            if word_of != "of" {
                 continue;
             }
             let space_2 = space_2.unwrap();
@@ -128,8 +121,8 @@ impl Linter for AdjectiveOfA {
             if !a_or_an.kind.is_word() {
                 continue;
             }
-            let a_or_an_chars = document.get_span_content(&a_or_an.span);
-            if a_or_an_chars != ['a'] && a_or_an_chars != ['a', 'n'] {
+            let a_or_an_str = document.get_span_content_str(&a_or_an.span).to_lowercase();
+            if a_or_an_str != "a" && a_or_an_str != "an" {
                 continue;
             }
 
@@ -465,15 +458,6 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_clockwork() {
-        assert_lint_count(
-            "so something's wrong in this clockwork of a thing and I'm not going to bother taking this apart",
-            AdjectiveOfA,
-            0,
-        );
-    }
-
-    #[test]
     fn dont_flag_up() {
         assert_lint_count(
             "Yeah gas is made up of a bunch of teenytiny particles all moving around.",
@@ -578,5 +562,113 @@ mod tests {
             AdjectiveOfA,
             0,
         );
+    }
+
+    #[test]
+    fn correct_too_large_of_a() {
+        assert_suggestion_result(
+            "Warn users if setting too large of a session object",
+            AdjectiveOfA,
+            "Warn users if setting too large a session object",
+        )
+    }
+
+    #[test]
+    fn correct_too_long_of_a() {
+        assert_suggestion_result(
+            "An Org Role with Too Long of a Name Hides Delete Option",
+            AdjectiveOfA,
+            "An Org Role with Too Long a Name Hides Delete Option",
+        )
+    }
+
+    #[test]
+    fn correct_too_big_of_a() {
+        assert_suggestion_result(
+            "StepButton has too big of a space to click",
+            AdjectiveOfA,
+            "StepButton has too big a space to click",
+        )
+    }
+
+    #[test]
+    fn correct_too_vague_of_a() {
+        assert_suggestion_result(
+            "\"No Speech provider is registered.\" is too vague of an error",
+            AdjectiveOfA,
+            "\"No Speech provider is registered.\" is too vague an error",
+        )
+    }
+
+    #[test]
+    fn correct_too_dumb_of_a() {
+        assert_suggestion_result(
+            "Hopefully this isn't too dumb of a question.",
+            AdjectiveOfA,
+            "Hopefully this isn't too dumb a question.",
+        )
+    }
+
+    #[test]
+    fn correct_how_important_of_a() {
+        assert_suggestion_result(
+            "This should tell us how important of a use case that is and how often writing a type literal in a case is deliberate.",
+            AdjectiveOfA,
+            "This should tell us how important a use case that is and how often writing a type literal in a case is deliberate.",
+        )
+    }
+
+    #[test]
+    fn correct_that_rare_of_an() {
+        assert_suggestion_result(
+            "so making changes isn't that rare of an occurrence for me.",
+            AdjectiveOfA,
+            "so making changes isn't that rare an occurrence for me.",
+        )
+    }
+
+    #[test]
+    fn correct_as_important_of_a() {
+        assert_suggestion_result(
+            "Might be nice to have it draggable from other places as well, but not as important of a bug anymore.",
+            AdjectiveOfA,
+            "Might be nice to have it draggable from other places as well, but not as important a bug anymore.",
+        )
+    }
+
+    #[test]
+    fn correct_too_short_of_a() {
+        assert_suggestion_result(
+            "I login infrequently as well and 6 months is too short of a time.",
+            AdjectiveOfA,
+            "I login infrequently as well and 6 months is too short a time.",
+        )
+    }
+
+    #[test]
+    fn correct_that_common_of_a() {
+        assert_suggestion_result(
+            "that common of a name for a cluster role its hard to rule out",
+            AdjectiveOfA,
+            "that common a name for a cluster role its hard to rule out",
+        )
+    }
+
+    #[test]
+    fn correct_as_great_of_an() {
+        assert_suggestion_result(
+            "the w factor into the u factor to as great of an extent as possible.",
+            AdjectiveOfA,
+            "the w factor into the u factor to as great an extent as possible.",
+        )
+    }
+
+    #[test]
+    fn correct_too_uncommon_of_a() {
+        assert_suggestion_result(
+            "but this is probably too uncommon of a practice to be the default",
+            AdjectiveOfA,
+            "but this is probably too uncommon a practice to be the default",
+        )
     }
 }
