@@ -62,6 +62,7 @@ async function enableDefaultDomains() {
 		'x.com',
 		'www.notion.so',
 		'hashnode.com',
+		'www.slatejs.org',
 	];
 
 	for (const item of defaultEnabledDomains) {

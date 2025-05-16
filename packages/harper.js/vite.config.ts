@@ -68,10 +68,7 @@ export default defineConfig({
 			enabled: true,
 			headless: true,
 			screenshotFailures: false,
-			instances: [
-				{ browser: 'chromium' },
-				// { browser: 'firefox' },
-			],
+			instances: [{ browser: 'chromium' }],
 		},
 	},
 	assetsInclude: ['**/*.wasm'],
