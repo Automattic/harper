@@ -40,7 +40,7 @@ async function replaceSlateContent(page: Page, text: string) {
 test('Can apply basic suggestion.', async ({ page }) => {
 	await page.goto('https://slatejs.org');
 
-	await replaceSlateContent(page, 'This is an test.');
+	await replaceSlateContent(page, 'This is an test');
 
 	await page.waitForTimeout(3000);
 
@@ -49,7 +49,12 @@ test('Can apply basic suggestion.', async ({ page }) => {
 
 	await page.waitForTimeout(3000);
 
-	expect(getSlateEditor(page)).toContainText('This is a test');
+  const slateEditor = getSlateEditor(page);
+	expect(slateEditor).toHaveText('This is a test');
+
+  // Slate has be known to revert changes after typing some more.
+  await slateEditor.pressSequentially(" of Harper's grammar checking.")
+	expect(slateEditor).toContainText("This is a test of Harper's grammar checking.");
 });
 
 test('Can ignore suggestion.', async ({ page }) => {
