@@ -49,11 +49,11 @@ test('Can apply basic suggestion.', async ({ page }) => {
 
 	await page.waitForTimeout(3000);
 
-  const slateEditor = getSlateEditor(page);
+	const slateEditor = getSlateEditor(page);
 	expect(slateEditor).toContainText('This is a test');
 
-  // Slate has be known to revert changes after typing some more.
-  await slateEditor.pressSequentially(" of Harper's grammar checking.")
+	// Slate has be known to revert changes after typing some more.
+	await slateEditor.pressSequentially(" of Harper's grammar checking.");
 	expect(slateEditor).toContainText("This is a test of Harper's grammar checking.");
 });
 
