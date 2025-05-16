@@ -5,7 +5,8 @@ export const test = base.extend<{
 	context: BrowserContext;
 	extensionId: string;
 }>({
-	context: async (_, use) => {
+	// biome-ignore lint/correctness/noEmptyPattern: it's by Playwright. Explanation not provided.
+	context: async ({}, use) => {
 		const pathToExtension = path.join(import.meta.dirname, '../build');
 		console.log(`Loading extension from ${pathToExtension}`);
 		const context = await chromium.launchPersistentContext('', {
