@@ -48,7 +48,7 @@ pub use token_kind::TokenKind;
 pub use token_string_ext::TokenStringExt;
 pub use vec_ext::VecExt;
 pub use word_metadata::{
-    AdverbData, ConjunctionData, Degree, Dialect, NounData, PronounData, Tense, VerbData,
+    AdverbData, ConjunctionData, Degree, Dialect, NounData, PronounData, VerbData, VerbForm,
     WordMetadata,
 };
 
