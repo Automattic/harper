@@ -149,6 +149,11 @@ impl SequencePattern {
         self
     }
 
+    /// Shorthand for [`Self::then_anything`].
+    pub fn t_any(self) -> Self {
+        self.then_anything()
+    }
+
     /// Match against any single token.
     /// More of a filler than anything else.
     pub fn then_anything(mut self) -> Self {
