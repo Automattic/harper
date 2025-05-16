@@ -32,30 +32,22 @@ fn has_context_word(document: &Document, adj_idx: usize) -> bool {
                 return false;
             }
 
-            let word = document.get_span_content(&word_token.span);
-            let word_str: String = word.iter().collect();
-    
-            let is_context = CONTEXT_WORDS.iter().any(|&w| {
-                let matches = w.eq_ignore_ascii_case(&word_str);
-                matches
-            });
+            let word = document.get_span_content_str(&word_token.span);
 
-            return is_context;
+            return CONTEXT_WORDS.iter().any(|&w| w.eq_ignore_ascii_case(&word));
         }
     }
 
     false
 }
 
-fn is_good_adjective(chars: &[char]) -> bool {
-    let word = chars.iter().collect::<String>();
+fn is_good_adjective(word: &String) -> bool {
     ADJECTIVE_WHITELIST
         .iter()
         .any(|&adj| word.eq_ignore_ascii_case(adj))
 }
 
-fn is_bad_adjective(chars: &[char]) -> bool {
-    let word = chars.iter().collect::<String>();
+fn is_bad_adjective(word: &String) -> bool {
     ADJECTIVE_BLACKLIST
         .iter()
         .any(|&adj| word.eq_ignore_ascii_case(adj))
@@ -71,15 +63,17 @@ impl Linter for AdjectiveOfA {
             let word_of = document.get_token(i + 2);
             let space_2 = document.get_token(i + 3);
             let a_or_an = document.get_token(i + 4);
-            let adj_chars: &[char] = document.get_span_content(&adjective.span);
+            let adj_str = document
+                .get_span_content_str(&adjective.span)
+                .to_lowercase();
 
             // Only flag adjectives known to use this construction
             // Unless we have a clearer context
-            if !is_good_adjective(adj_chars) && !has_context_word(document, i) {
+            if !is_good_adjective(&adj_str) && !has_context_word(document, i) {
                 continue;
             }
             // Some adjectives still create false positives even with the extra context
-            if is_bad_adjective(adj_chars) {
+            if is_bad_adjective(&adj_str) {
                 continue;
             }
 
@@ -94,15 +88,13 @@ impl Linter for AdjectiveOfA {
             // "see if you can give us a little better of an answer"
             // "hopefully it won't be too much worse of a problem"
             // "seems far worse of a result to me"
-            if adj_chars.ends_with(&['e', 'r']) || adj_chars.ends_with(&['s', 't']) {
+            if adj_str.ends_with("er") || adj_str.ends_with("st") {
                 continue;
             }
             // Rule out present participles (e.g. "beginning of a")
             // The -ing form of a verb acts as an adjective called a present participle
             // and also acts as a noun called a gerund.
-            if adj_chars.ends_with(&['i', 'n', 'g'])
-                && (adjective.kind.is_noun() || adjective.kind.is_verb())
-            {
+            if adj_str.ends_with("ing") && (adjective.kind.is_noun() || adjective.kind.is_verb()) {
                 continue;
             }
 
@@ -117,8 +109,8 @@ impl Linter for AdjectiveOfA {
             if !word_of.kind.is_word() {
                 continue;
             }
-            let word_of = document.get_span_content(&word_of.span);
-            if word_of != ['o', 'f'] {
+            let word_of = document.get_span_content_str(&word_of.span).to_lowercase();
+            if word_of != "of" {
                 continue;
             }
             let space_2 = space_2.unwrap();
@@ -129,8 +121,8 @@ impl Linter for AdjectiveOfA {
             if !a_or_an.kind.is_word() {
                 continue;
             }
-            let a_or_an_chars = document.get_span_content(&a_or_an.span);
-            if a_or_an_chars != ['a'] && a_or_an_chars != ['a', 'n'] {
+            let a_or_an_str = document.get_span_content_str(&a_or_an.span).to_lowercase();
+            if a_or_an_str != "a" && a_or_an_str != "an" {
                 continue;
             }
 
