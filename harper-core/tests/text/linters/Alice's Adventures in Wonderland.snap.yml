@@ -338,16 +338,6 @@ Message: |
 
 
 
-Lint:    Style (63 priority)
-Message: |
-     149 | altogether, like a candle. I wonder what I should be like then?” And she tried
-     150 | to fancy what the flame of a candle is like after the candle is blown out, for
-         |                   ^~~~~~~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “flame a”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
      154 | garden at once; but, alas for poor Alice! when she got to the door, she found
