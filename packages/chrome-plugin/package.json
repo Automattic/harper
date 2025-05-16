@@ -15,14 +15,17 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"fmt": "prettier --write '**/*.{svelte,ts,json,css,scss,md}'",
-		"zip": "npm run build && node src/zip.js"
+		"zip": "npm run build && node src/zip.js",
+		"test": "playwright test"
 	},
 	"devDependencies": {
 		"@crxjs/vite-plugin": "^2.0.0-beta.26",
+		"@playwright/test": "^1.52.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"@types/chrome": "^0.0.246",
 		"@types/jquery": "^3.5.32",
 		"@types/lodash-es": "^4.17.12",
+		"@types/node": "catalog:",
 		"@types/virtual-dom": "^2.1.4",
 		"flowbite": "^3.1.2",
 		"flowbite-svelte": "^0.44.18",
