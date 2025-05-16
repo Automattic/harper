@@ -5,7 +5,7 @@ export const test = base.extend<{
 	context: BrowserContext;
 	extensionId: string;
 }>({
-	context: async ({}, use) => {
+	context: async (_, use) => {
 		const pathToExtension = path.join(import.meta.dirname, '../build');
 		console.log(`Loading extension from ${pathToExtension}`);
 		const context = await chromium.launchPersistentContext('', {
@@ -19,7 +19,6 @@ export const test = base.extend<{
 		await context.close();
 	},
 	extensionId: async ({ context }, use) => {
-		// for manifest v3:
 		let [background] = context.serviceWorkers();
 		if (!background) background = await context.waitForEvent('serviceworker');
 
