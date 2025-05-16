@@ -1237,6 +1237,12 @@ pub fn lint_group() -> LintGroup {
             "A `decent amount` is a `fair bit`. `Fare` is the price of a ticket.",
             "Corrects malapropisms of `a fair bit`."
         ),
+        "ExpandPullRequest" => (
+            ["pr"],
+            ["pull request"],
+            "Use `pull request` instead of `pr`",
+            "Expands the abbreviation `pr` to `pull request` for clarity."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2692,6 +2698,15 @@ mod tests {
             "I've read through a fare bit of the ecosystem framework, but I am not clear on what is modified...",
             lint_group(),
             "I've read through a fair bit of the ecosystem framework, but I am not clear on what is modified...",
+        );
+    }
+
+    #[test]
+    fn expand_pull_request() {
+        assert_suggestion_result(
+            "I'm implementing the feature in a PR.",
+            lint_group(),
+            "I'm implementing the feature in a pull request.",
         );
     }
 }
