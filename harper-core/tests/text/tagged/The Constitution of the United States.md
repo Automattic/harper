@@ -43,7 +43,7 @@
 > President and Vice      President , or      hold    any   office , civil or      military , under   the
 # NSg/V     V/C NSg/V/J/P NSg/V     . NPrSg/C NSg/V/J I/R/D NSg/V  . J     NPrSg/C NSg/J    . NSg/J/P D
 > United States  , or      under   any   State , who     , having previously taken an  oath , as    a
-# J      NPrSg/V . NPrSg/C NSg/J/P I/R/D NSg/V . NPrSg/I . V      J/R        V/J   D/P NSg  . NSg/R D/P
+# J      NPrSg/V . NPrSg/C NSg/J/P I/R/D NSg/V . NPrSg/I . V      R          V/J   D/P NSg  . NSg/R D/P
 > member of Congress , or      as    an  officer of the United States  , or      as    a   member of
 # NSg    P  NPrSg/V  . NPrSg/C NSg/R D/P NSg/J   P  D   J      NPrSg/V . NPrSg/C NSg/R D/P NSg    P
 > any   State legislature , or      as    an  executive or      judicial officer of any   State , to
@@ -161,9 +161,9 @@
 >
 #
 > Immediately after they shall be     assembled in        Consequence of the first Election ,
-# J/R         J/P   IPl  VX    NSg/VX V/J       NPrSg/J/P NSg/V       P  D   NSg/J NSg      .
+# R           J/P   IPl  VX    NSg/VX V/J       NPrSg/J/P NSg/V       P  D   NSg/J NSg      .
 > they shall be     divided as    equally as    may      be     into three Classes . The Seats of the
-# IPl  VX    NSg/VX V/J     NSg/R J/R     NSg/R NPrSg/VX NSg/VX P    NSg   NPl/V   . D   NPl   P  D
+# IPl  VX    NSg/VX V/J     NSg/R R       NSg/R NPrSg/VX NSg/VX P    NSg   NPl/V   . D   NPl   P  D
 > Senators of the first Class   shall be     vacated at the Expiration of the second
 # NPl      P  D   NSg/J NSg/V/J VX    NSg/VX V/J     P  D   NSg        P  D   NSg/J
 > Year , of the second Class   at the Expiration of the fourth  Year , and of the
@@ -193,7 +193,7 @@
 > The Vice    President of the United States  shall be     President of the Senate , but
 # D   NSg/J/P NSg/V     P  D   J      NPrSg/V VX    NSg/VX NSg/V     P  D   NPrSg  . NSg/C/P
 > shall have   no      Vote , unless they be     equally divided .
-# VX    NSg/VX NPrSg/P NSg  . C      IPl  NSg/VX J/R     V/J     .
+# VX    NSg/VX NPrSg/P NSg  . C      IPl  NSg/VX R       V/J     .
 >
 #
 > The Senate shall chuse their other Officers , and also a   President pro     tempore ,
@@ -234,8 +234,8 @@
 # D   NPl   . NPl/V  V/C NSg    P  NSg/V   NPl       C/P NPl
 > and Representatives , shall be     prescribed in each State by the Legislature
 # V/C NPl             . VX    NSg/VX V/J        P  D    NSg/V P  D   NSg
-> thereof ; but     the Congress may      at any   time  by      Law   make  or      alter such
-# W?      . NSg/C/P D   NPrSg    NPrSg/VX P  I/R/D NSg/V NSg/J/P NSg/V NSg/V NPrSg/C NSg/V NSg/I
+> thereof ; but     the Congress may      at any   time    by      Law   make  or      alter such
+# W?      . NSg/C/P D   NPrSg    NPrSg/VX P  I/R/D NSg/V/J NSg/J/P NSg/V NSg/V NPrSg/C NSg/V NSg/I
 > Regulations , except as    to the Places of chusing Senators .
 # NSg         . V/C/P  NSg/R P  D   NPl    P  ?       NPl      .
 >
@@ -267,11 +267,11 @@
 > Each House   may      determine the Rules of its   Proceedings , punish its   Members for
 # D    NPrSg/V NPrSg/VX V         D   NPl   P  ISg/D W?          . V      ISg/D NPl     C/P
 > disorderly Behaviour , and , with the Concurrence of two thirds , expel a   Member .
-# J/R        NSg/Br    . V/C . P    D   NSg         P  NSg NPl/V  . V     D/P NSg    .
+# R          NSg/Br    . V/C . P    D   NSg         P  NSg NPl/V  . V     D/P NSg    .
 >
 #
-> Each House   shall keep  a   Journal of its   Proceedings , and from time  to time
-# D    NPrSg/V VX    NSg/V D/P NSg/J   P  ISg/D W?          . V/C P    NSg/V P  NSg/V
+> Each House   shall keep  a   Journal of its   Proceedings , and from time    to time
+# D    NPrSg/V VX    NSg/V D/P NSg/J   P  ISg/D W?          . V/C P    NSg/V/J P  NSg/V/J
 > publish the same , excepting such  Parts as    may      in their Judgment require
 # V       D   I/J  . V         NSg/I NPl/V NSg/R NPrSg/VX P  D     NSg      NSg/V
 > Secrecy ; and the Yeas and Nays  of the Members of either House   on any   question
@@ -308,14 +308,14 @@
 # NSg/V/J NSg/V .
 >
 #
-> No      Senator or      Representative shall , during the Time for which he      was elected ,
-# NPrSg/P NSg     NPrSg/C NSg/J          VX    . V/P    D   NSg  C/P I/C   NPr/ISg V   NSg/V/J .
+> No      Senator or      Representative shall , during the Time  for which he      was elected ,
+# NPrSg/P NSg     NPrSg/C NSg/J          VX    . V/P    D   NSg/J C/P I/C   NPr/ISg V   NSg/V/J .
 > be     appointed to any   civil Office under   the Authority of the United States  ,
 # NSg/VX V/J       P  I/R/D J     NSg/V  NSg/J/P D   NSg       P  D   J      NPrSg/V .
 > which shall have   been  created , or      the Emoluments whereof shall have   been
 # I/C   VX    NSg/VX NSg/V V/J     . NPrSg/C D   NPl        C       VX    NSg/VX NSg/V
-> encreased during such  time  ; and no      Person holding any   Office under   the United
-# ?         V/P    NSg/I NSg/V . V/C NPrSg/P NSg    NSg/V   I/R/D NSg/V  NSg/J/P D   J
+> encreased during such  time    ; and no      Person holding any   Office under   the United
+# ?         V/P    NSg/I NSg/V/J . V/C NPrSg/P NSg    NSg/V   I/R/D NSg/V  NSg/J/P D   J
 > States  , shall be     a   Member of either House   during his   Continuance in        Office . No
 # NPrSg/V . VX    NSg/VX D/P NSg    P  I/C    NPrSg/V V/P    ISg/D NSg         NPrSg/J/P NSg/V  . NPrSg/P
 > law , varying the compensation for the services of the Senators and
@@ -359,7 +359,7 @@
 > determined by      yeas and Nays  , and the Names of the Persons voting for and
 # V/J        NSg/J/P NPl  V/C NPl/V . V/C D   NPl   P  D   NPl     V      C/P V/C
 > against the Bill  shall be     entered on the Journal of each House   respectively . If
-# C/P     D   NPrSg VX    NSg/VX V/J     P  D   NSg/J   P  D    NPrSg/V J/R          . NSg/C
+# C/P     D   NPrSg VX    NSg/VX V/J     P  D   NSg/J   P  D    NPrSg/V R            . NSg/C
 > any   Bill    shall not   be     returned by the President within ten Days ( Sundays
 # I/R/D NPrSg/V VX    NSg/C NSg/VX V/J      P  D   NSg       N/J/P  NSg NPl  . NPl/V
 > excepted ) after it        shall have   been  presented to him , the Same shall be     a   Law ,
@@ -470,8 +470,8 @@
 #
 >
 #
-> To constitute Tribunals inferior to the supreme Court ;
-# P  NSg/V      NPl       NSg/J    P  D   NSg/J   NSg/V .
+> To constitute Tribunals inferior to the supreme Court   ;
+# P  NSg/V      NPl       NSg/J    P  D   NSg/J   NSg/V/J .
 >
 #
 >
@@ -539,7 +539,7 @@
 > governing such  Part    of them as    may      be     employed in the Service of the United
 # V         NSg/I NSg/V/J P  N/I  NSg/R NPrSg/VX NSg/VX V/J      P  D   NSg     P  D   J
 > States  , reserving to the States respectively , the Appointment of the Officers ,
-# NPrSg/V . V         P  D   NPrSg  J/R          . D   NSg         P  D   W?       .
+# NPrSg/V . V         P  D   NPrSg  R            . D   NSg         P  D   W?       .
 > and the Authority of training the Militia according to the discipline
 # V/C D   NSg       P  NSg/V    D   NSg     V/J       P  D   NSg
 > prescribed by      Congress ;
@@ -636,8 +636,8 @@
 # NPrSg/P NSg/J VX    NSg/VX V/J   P    D   NPrSg    . NSg/C/P NPrSg/J/P NSg/V       P  W?
 > made  by      Law   ; and a   regular Statement and Account of the Receipts and
 # NSg/V NSg/J/P NSg/V . V/C D/P NSg/J   NSg/V/J   V/C NSg/V   P  D   NPl      V/C
-> Expenditures of all       public  Money shall be     published from time  to time  .
-# NPl          P  NSg/I/J/C NSg/V/J NSg/J VX    NSg/VX V/J       P    NSg/V P  NSg/V .
+> Expenditures of all       public  Money shall be     published from time    to time    .
+# NPl          P  NSg/I/J/C NSg/V/J NSg/J VX    NSg/VX V/J       P    NSg/V/J P  NSg/V/J .
 >
 #
 > No      Title of Nobility shall be     granted by the United States  : And no      Person
@@ -646,8 +646,8 @@
 # NSg/V   I/R/D NSg/V  P  NSg/V/J NPrSg/C NSg/V/J NSg/J/P N/I  . VX    . C/P     D   NSg     P
 > the Congress , accept  of any   present , Emolument , Office , or      Title , of any   kind
 # D   NPrSg    . NSg/V/J P  I/R/D NSg/V/J . NSg       . NSg/V  . NPrSg/C NSg/V . P  I/R/D NSg/J
-> whatever , from any   King    , Prince  , or      foreign State .
-# NSg/I/J  . P    I/R/D NPrSg/V . NPrSg/V . NPrSg/C NSg/J   NSg/V .
+> whatever , from any   King      , Prince    , or      foreign State .
+# NSg/I/J  . P    I/R/D NPrSg/V/J . NPrSg/V/J . NPrSg/C NSg/J   NSg/V .
 >
 #
 > The right   of citizens of the United States  to vote  in any   primary or      other
@@ -681,7 +681,7 @@
 > No      State shall , without the Consent of the Congress , lay     any   Imposts or      Duties
 # NPrSg/P NSg   VX    . C/P     D   NSg     P  D   NPrSg    . NSg/V/J I/R/D NPl     NPrSg/C NPl
 > on  Imports or      Exports , except what  may      be     absolutely necessary for executing
-# J/P NPl/V   NPrSg/C NPl/V   . V/C/P  NSg/I NPrSg/VX NSg/VX J/R        NSg/J     C/P V
+# J/P NPl/V   NPrSg/C NPl/V   . V/C/P  NSg/I NPrSg/VX NSg/VX R          NSg/J     C/P V
 > it's inspection Laws  : and the net   Produce of all       Duties and Imposts , laid by
 # W?   NSg        NPl/V . V/C D   NSg/J NSg/V   P  NSg/I/J/C NPl    V/C NPl     . V/J  P
 > any   State on  Imports or      Exports , shall be     for the Use of the Treasury of the
@@ -694,10 +694,10 @@
 #
 > No      State shall , without the Consent of Congress , lay     any   Duty of Tonnage , keep
 # NPrSg/P NSg   VX    . C/P     D   NSg     P  NPrSg/V  . NSg/V/J I/R/D NSg  P  NSg     . NSg/V
-> Troops , or      Ships of War   in        time  of Peace   , enter into any   Agreement or      Compact
-# NPl/V  . NPrSg/C NPl/V P  NSg/V NPrSg/J/P NSg/V P  NPrSg/V . NSg/V P    I/R/D NSg       NPrSg/C NSg/V/J
+> Troops , or      Ships of War   in        time    of Peace   , enter into any   Agreement or      Compact
+# NPl/V  . NPrSg/C NPl/V P  NSg/V NPrSg/J/P NSg/V/J P  NPrSg/V . NSg/V P    I/R/D NSg       NPrSg/C NSg/V/J
 > with another State , or      with a   foreign Power   , or      engage in        War   , unless actually
-# P    I/D     NSg/V . NPrSg/C P    D/P NSg/J   NSg/V/J . NPrSg/C V      NPrSg/J/P NSg/V . C      J/R
+# P    I/D     NSg/V . NPrSg/C P    D/P NSg/J   NSg/V/J . NPrSg/C V      NPrSg/J/P NSg/V . C      R
 > invaded , or      in        such  imminent Danger  as    will     not   admit of delay   .
 # V/J     . NPrSg/C NPrSg/J/P NSg/I J        NSg/V/J NSg/R NPrSg/VX NSg/C V     P  NSg/V/J .
 >
@@ -765,7 +765,7 @@
 > the persons having the highest numbers not   exceeding three on the list of those
 # D   NPl     V      D   W?      NPrPl/V NSg/C NSg/V/J   NSg   P  D   NSg  P  I/D
 > voted for as    President , the House of Representatives shall choose  immediately ,
-# V/J   C/P NSg/R NSg/V     . D   NPrSg P  NPl             VX    NSg/V/C J/R         .
+# V/J   C/P NSg/R NSg/V     . D   NPrSg P  NPl             VX    NSg/V/C R           .
 > by      ballot , the President . But     in        choosing the President , the votes shall be
 # NSg/J/P NSg/V  . D   NSg       . NSg/C/P NPrSg/J/P V        D   NSg       . D   NPl   VX    NSg/VX
 > taken by      states  , the representation from each state having one       vote  ; a   quorum
@@ -774,12 +774,12 @@
 # C/P I/D  NSg/V   VX    NSg/V   P  D/P NSg    NPrSg/C NPl/V   P    NSg . NPl/V  P  D
 > states , and a   majority of all       the states shall be     necessary to a   choice . [ If    ,
 # NPrSg  . V/C D/P NSg      P  NSg/I/J/C D   NPrSg  VX    NSg/VX NSg/J     P  D/P NSg/J  . . NSg/C .
-> at the time fixed for the beginning of the term  of the President , the President
-# P  D   NSg  V/J   C/P D   NSg/J     P  D   NSg/J P  D   NSg       . D   NSg
+> at the time  fixed for the beginning of the term  of the President , the President
+# P  D   NSg/J V/J   C/P D   NSg/J     P  D   NSg/J P  D   NSg       . D   NSg
 > elect   shall have   died , the Vice    President elect   shall become President . If    a
 # NSg/V/J VX    NSg/VX V/J  . D   NSg/J/P NSg/V     NSg/V/J VX    V      NSg/V     . NSg/C D/P
-> President shall not   have   been  chosen before the time fixed for the beginning of
-# NSg       VX    NSg/C NSg/VX NSg/V V/J    C/P    D   NSg  V/J   C/P D   NSg/J     P
+> President shall not   have   been  chosen before the time  fixed for the beginning of
+# NSg       VX    NSg/C NSg/VX NSg/V V/J    C/P    D   NSg/J V/J   C/P D   NSg/J     P
 > his   term  , or      if    the President elect   shall have   failed to qualify , then    the Vice
 # ISg/D NSg/J . NPrSg/C NSg/C D   NSg       NSg/V/J VX    NSg/VX V/J    P  NSg/V   . NSg/J/C D   NSg/J/P
 > President elect   shall act     as    President until a   President shall have   qualified ;
@@ -791,7 +791,7 @@
 > act     as    President , or      the manner in        which one       who     is to act     shall be     selected ,
 # NPrSg/V NSg/R NSg/V     . NPrSg/C D   NSg    NPrSg/J/P I/C   NSg/I/V/J NPrSg/I VL P  NPrSg/V VX    NSg/VX V/J      .
 > and such  person shall act     accordingly until a   President or      Vice      President shall
-# V/C NSg/I NSg/V  VX    NPrSg/V J/R         C/P   D/P NSg       NPrSg/C NSg/V/J/P NSg/V     VX
+# V/C NSg/I NSg/V  VX    NPrSg/V R           C/P   D/P NSg       NPrSg/C NSg/V/J/P NSg/V     VX
 > have   qualified.The Congress may      by      law   provide for the case  of the death of any
 # NSg/VX Hostname      NPrSg/V  NPrSg/VX NSg/J/P NSg/V V       C/P D   NPrSg P  D   NPrSg P  I/R/D
 > of the persons from whom the House of Representatives may      choose  a   President
@@ -815,13 +815,13 @@
 > majority of the whole number  shall be     necessary to a   choice . But     no      person
 # NSg      P  D   NSg/J NSg/V/J VX    NSg/VX NSg/J     P  D/P NSg/J  . NSg/C/P NPrSg/P NSg
 > constitutionally ineligible to the office of President shall be     eligible to
-# J/R              NSg/J      P  D   NSg    P  NSg/V     VX    NSg/VX NSg/J    P
+# R                NSg/J      P  D   NSg    P  NSg/V     VX    NSg/VX NSg/J    P
 > that    of Vice      - President of the United States  .
 # N/I/C/D P  NSg/V/J/P . NSg/V     P  D   J      NPrSg/V .
 >
 #
-> The Congress may      determine the Time of chusing the Electors , and the Day   on
-# D   NPrSg    NPrSg/VX V         D   NSg  P  ?       D   NPl      . V/C D   NPrSg J/P
+> The Congress may      determine the Time  of chusing the Electors , and the Day   on
+# D   NPrSg    NPrSg/VX V         D   NSg/J P  ?       D   NPl      . V/C D   NPrSg J/P
 > which they shall give  their Votes ; which Day   shall be     the same throughout the
 # I/C   IPl  VX    NSg/V D     NPl   . I/C   NPrSg VX    NSg/VX D   I/J  P          D
 > United States  .
@@ -834,8 +834,8 @@
 #
 > No      Person except a   natural born      Citizen , or      a   Citizen of the
 # NPrSg/P NSg    V/C/P  D/P NSg/J   NPrSg/V/J NSg     . NPrSg/C D/P NSg     P  D
-> United States  , at the time of the Adoption of this Constitution , shall be
-# J      NPrSg/V . P  D   NSg  P  D   NSg      P  I/D  NPrSg        . VX    NSg/VX
+> United States  , at the time  of the Adoption of this Constitution , shall be
+# J      NPrSg/V . P  D   NSg/J P  D   NSg      P  I/D  NPrSg        . VX    NSg/VX
 > eligible to the Office of President ; neither shall any   Person be     eligible to
 # NSg/J    P  D   NSg    P  NSg/V     . I/C     VX    I/R/D NSg/V  NSg/VX NSg/J    P
 > that    Office who     shall not   have   attained to the Age of thirty five Years , and
@@ -905,7 +905,7 @@
 > to discharge the powers and duties of his   office , the Vice    President shall
 # P  NSg/V     D   NPrSg  V/C NPl    P  ISg/D NSg    . D   NSg/J/P NSg/V     VX
 > immediately assume the powers and duties of the office as    Acting  President .
-# J/R         V      D   NPrSg  V/C NPl    P  D   NSg    NSg/R NSg/V/J NSg/V     .
+# R           V      D   NPrSg  V/C NPl    P  D   NSg    NSg/R NSg/V/J NSg/V     .
 >
 #
 > Thereafter , when    the President transmits to the President pro     tempore of the
@@ -961,7 +961,7 @@
 > Before he      enter on the Execution of his   Office , he      shall take  the following
 # C/P    NPr/ISg NSg/V P  D   NSg       P  ISg/D NSg    . NPr/ISg VX    NSg/V D   NSg/J/P
 > Oath  or      Affirmation : - - " I   do     solemnly swear   ( or      affirm ) that    I   will     faithfully
-# NSg/V NPrSg/C NSg         . . . . ISg NSg/VX J/R      NSg/V/J . NPrSg/C V      . N/I/C/D ISg NPrSg/VX J/R
+# NSg/V NPrSg/C NSg         . . . . ISg NSg/VX R        NSg/V/J . NPrSg/C V      . N/I/C/D ISg NPrSg/VX R
 > execute the Office of President of the United States  , and will     to the best    of
 # V       D   NSg    P  NSg/V     P  D   J      NPrSg/V . V/C NPrSg/VX P  D   NPrSg/J P
 > my Ability , preserve , protect and defend the Constitution of the United
@@ -1024,8 +1024,8 @@
 # NPl/V    . V/J/C    NSg NPl/V  P  D   NPl      NSg/V/J V      . V/C NPr/ISg VX
 > nominate , and by      and with the Advice and Consent of the Senate , shall appoint
 # V/J      . V/C NSg/J/P V/C P    D   NSg    V/C NSg/V   P  D   NPrSg  . VX    V
-> Ambassadors , other   public  Ministers and Consuls , Judges  of the supreme Court ,
-# NPl         . NSg/V/J NSg/V/J NPl/V     V/C NPl     . NPrPl/V P  D   NSg/J   NSg/V .
+> Ambassadors , other   public  Ministers and Consuls , Judges  of the supreme Court   ,
+# NPl         . NSg/V/J NSg/V/J NPl/V     V/C NPl     . NPrPl/V P  D   NSg/J   NSg/V/J .
 > and all       other   Officers of the United States  , whose Appointments are not   herein
 # V/C NSg/I/J/C NSg/V/J W?       P  D   J      NPrSg/V . I     NPl          V   NSg/C W?
 > otherwise provided for , and which shall be     established by      Law   : but     the Congress
@@ -1046,10 +1046,10 @@
 # P  D     NSg/J/P NSg/V   .
 >
 #
-> No      soldier shall , in        time  of peace   be     quartered in any   house   , without the
-# NPrSg/P NSg     VX    . NPrSg/J/P NSg/V P  NPrSg/V NSg/VX V/J       P  I/R/D NPrSg/V . C/P     D
-> consent of the owner , nor   in        time  of war   , but     in a   manner to be     prescribed by
-# NSg     P  D   NSg   . NSg/C NPrSg/J/P NSg/V P  NSg/V . NSg/C/P P  D/P NSg    P  NSg/VX V/J        NSg/J/P
+> No      soldier shall , in        time    of peace   be     quartered in any   house   , without the
+# NPrSg/P NSg/J   VX    . NPrSg/J/P NSg/V/J P  NPrSg/V NSg/VX V/J       P  I/R/D NPrSg/V . C/P     D
+> consent of the owner , nor   in        time    of war   , but     in a   manner to be     prescribed by
+# NSg     P  D   NSg   . NSg/C NPrSg/J/P NSg/V/J P  NSg/V . NSg/C/P P  D/P NSg    P  NSg/VX V/J        NSg/J/P
 > law   .
 # NSg/V .
 >
@@ -1058,20 +1058,20 @@
 # NSg/V   . # .
 >
 #
-> He      shall from time  to time  give  to the Congress Information of
-# NPr/ISg VX    P    NSg/V P  NSg/V NSg/V P  D   NPrSg    NSg         P
+> He      shall from time    to time    give  to the Congress Information of
+# NPr/ISg VX    P    NSg/V/J P  NSg/V/J NSg/V P  D   NPrSg    NSg         P
 > the State of the Union   , and recommend to their Consideration such  Measures as
 # D   NSg   P  D   NPrSg/J . V/C NSg/V     P  D     NSg           NSg/I NPl/V    NSg/R
 > he      shall judge necessary and expedient ; he      may      , on  extraordinary Occasions ,
 # NPr/ISg VX    NSg/V NSg/J     V/C NSg/J     . NPr/ISg NPrSg/VX . J/P NSg/J         NPl/V     .
 > convene both Houses , or      either of them , and in        Case    of Disagreement between
 # V       I/C  NPl/V  . NPrSg/C I/C    P  N/I  . V/C NPrSg/J/P NPrSg/V P  NSg          NSg/P
-> them , with Respect to the Time of Adjournment , he      may      adjourn them to such  Time
-# N/I  . P    NSg/V   P  D   NSg  P  NSg         . NPr/ISg NPrSg/VX V       N/I  P  NSg/I NSg/V
+> them , with Respect to the Time  of Adjournment , he      may      adjourn them to such  Time
+# N/I  . P    NSg/V   P  D   NSg/J P  NSg         . NPr/ISg NPrSg/VX V       N/I  P  NSg/I NSg/V/J
 > as    he      shall think proper ; he      shall receive Ambassadors and other   public
 # NSg/R NPr/ISg VX    NSg/V NSg/J  . NPr/ISg VX    NSg/V   NPl         V/C NSg/V/J NSg/V/J
 > Ministers ; he      shall take  Care  that    the Laws be     faithfully executed , and shall
-# NPl/V     . NPr/ISg VX    NSg/V NSg/V N/I/C/D D   NPl  NSg/VX J/R        V/J      . V/C VX
+# NPl/V     . NPr/ISg VX    NSg/V NSg/V N/I/C/D D   NPl  NSg/VX R          V/J      . V/C VX
 > Commission all       the Officers of the United States  .
 # NSg/V      NSg/I/J/C D   W?       P  D   J      NPrSg/V .
 >
@@ -1098,10 +1098,10 @@
 #
 > The judicial Power   of the United States  , shall be     vested in
 # D   NSg/J    NSg/V/J P  D   J      NPrSg/V . VX    NSg/VX V/J    NPrSg/J/P
-> one       supreme Court , and in        such  inferior Courts as    the Congress may      from time  to
-# NSg/I/V/J NSg/V/J NSg/V . V/C NPrSg/J/P NSg/I NSg/J    NPl/V  NSg/R D   NPrSg    NPrSg/VX P    NSg/V P
-> time  ordain and establish . The Judges , both of the supreme and inferior Courts ,
-# NSg/V V      V/C V         . D   NPrPl  . I/C  P  D   NSg/J   V/C NSg/J    NPl/V  .
+> one       supreme Court   , and in        such  inferior Courts as    the Congress may      from time    to
+# NSg/I/V/J NSg/V/J NSg/V/J . V/C NPrSg/J/P NSg/I NSg/J    NPl/V  NSg/R D   NPrSg    NPrSg/VX P    NSg/V/J P
+> time    ordain and establish . The Judges , both of the supreme and inferior Courts ,
+# NSg/V/J V      V/C V         . D   NPrPl  . I/C  P  D   NSg/J   V/C NSg/J    NPl/V  .
 > shall hold    their Offices during good      Behaviour , and shall , at        stated Times ,
 # VX    NSg/V/J D     NPl     V/P    NPrSg/V/J NSg/Br    . V/C VX    . NSg/I/V/P V/J    NPl/V .
 > receive for their Services , a   Compensation , which shall not   be     diminished
@@ -1134,10 +1134,10 @@
 #
 > In        all       Cases affecting Ambassadors , other   public  Ministers and Consuls , and
 # NPrSg/J/P NSg/I/J/C NPl/V V/J       NPl         . NSg/V/J NSg/V/J NPl/V     V/C NPl     . V/C
-> those in        which a   State shall be     Party   , the supreme Court shall have   original
-# I/D   NPrSg/J/P I/C   D/P NSg   VX    NSg/VX NSg/V/J . D   NSg/J   NSg/V VX    NSg/VX NSg/J
-> Jurisdiction . In        all       the other Cases before mentioned , the supreme Court shall
-# NSg          . NPrSg/J/P NSg/I/J/C D   NSg/J NPl/V C/P    V/J       . D   NSg/J   NSg/V VX
+> those in        which a   State shall be     Party   , the supreme Court   shall have   original
+# I/D   NPrSg/J/P I/C   D/P NSg   VX    NSg/VX NSg/V/J . D   NSg/J   NSg/V/J VX    NSg/VX NSg/J
+> Jurisdiction . In        all       the other Cases before mentioned , the supreme Court   shall
+# NSg          . NPrSg/J/P NSg/I/J/C D   NSg/J NPl/V C/P    V/J       . D   NSg/J   NSg/V/J VX
 > have   appellate Jurisdiction , both as    to Law   and Fact , with such  Exceptions , and
 # NSg/VX J         NSg          . I/C  NSg/R P  NSg/V V/C NSg  . P    NSg/I NPl        . V/C
 > under   such  Regulations as    the Congress shall make  .
@@ -1164,8 +1164,8 @@
 # V       NSg/V C/P     N/I  . NPrSg/C NPrSg/J/P V        P  D     NPl     . V      N/I  NSg/V V/C
 > Comfort . No      Person shall be     convicted of Treason unless on the Testimony of two
 # NSg/V   . NPrSg/P NSg    VX    NSg/VX V/J       P  NSg     C      P  D   NSg       P  NSg
-> Witnesses to the same overt Act     , or      on  Confession in        open    Court .
-# NPl/V     P  D   I/J  NSg/J NPrSg/V . NPrSg/C J/P NSg        NPrSg/J/P NSg/V/J NSg/V .
+> Witnesses to the same overt Act     , or      on  Confession in        open    Court   .
+# NPl/V     P  D   I/J  NSg/J NPrSg/V . NPrSg/C J/P NSg        NPrSg/J/P NSg/V/J NSg/V/J .
 >
 #
 > The Congress shall have   Power   to declare the Punishment of Treason , but     no
@@ -1187,7 +1187,7 @@
 > violated , and no      warrants shall issue , but     upon probable cause   , supported by
 # V/J      . V/C NPrSg/P NPl      VX    NSg/V . NSg/C/P P    NSg/J    NSg/V/C . V/J       NSg/J/P
 > oath  or      affirmation , and particularly describing the place to be     searched , and
-# NSg/V NPrSg/C NSg         . V/C J/R          V          D   NSg   P  NSg/VX V/J      . V/C
+# NSg/V NPrSg/C NSg         . V/C R            V          D   NSg   P  NSg/VX V/J      . V/C
 > the persons or      things to be     seized .
 # D   NPl     NPrSg/C NPl/V  P  NSg/VX V/J    .
 >
@@ -1197,7 +1197,7 @@
 > unless on a   presentment or      indictment of a   grand jury    , except in        cases arising
 # C      P  D/P NSg         NPrSg/C NSg        P  D/P NSg/J NSg/V/J . V/C/P  NPrSg/J/P NPl/V V
 > in the land  or      naval forces , or      in the militia , when    in        actual service in        time
-# P  D   NPrSg NPrSg/C J     NPl/V  . NPrSg/C P  D   NSg     . NSg/I/C NPrSg/J/P NSg/J  NSg/V   NPrSg/J/P NSg/V
+# P  D   NPrSg NPrSg/C J     NPl/V  . NPrSg/C P  D   NSg     . NSg/I/C NPrSg/J/P NSg/J  NSg/V   NPrSg/J/P NSg/V/J
 > of war   or      public  danger  ; nor   shall any   person be     subject for the same offense
 # P  NSg/V NPrSg/C NSg/V/J NSg/V/J . NSg/C VX    I/R/D NSg/V  NSg/VX NSg/V/J C/P D   I/J  NSg
 > to be     twice put   in        jeopardy of life  or      limb  ; nor   shall be     compelled in any
@@ -1215,7 +1215,7 @@
 > public  trial   , by an  impartial jury    of the state and district wherein the crime
 # NSg/V/J NSg/V/J . P  D/P J         NSg/V/J P  D   NSg   V/C NSg/V/J  C       D   NSg
 > shall have   been  committed , which district shall have   been  previously
-# VX    NSg/VX NSg/V V/J       . I/C   NSg/V/J  VX    NSg/VX NSg/V J/R
+# VX    NSg/VX NSg/V V/J       . I/C   NSg/V/J  VX    NSg/VX NSg/V R
 > ascertained by      law   , and to be     informed of the nature and cause   of the
 # V/J         NSg/J/P NSg/V . V/C P  NSg/VX V/J      P  D   NSg    V/C NSg/V/C P  D
 > accusation ; to be     confronted with the witnesses against him ; to have   compulsory
@@ -1230,8 +1230,8 @@
 # NPrSg/J/P NPl/V NSg/I/V/P NSg/V/J NSg/V . NSg/C D   NSg   NPrSg/J/P NSg         VX    V      NSg
 > dollars , the right   of trial   by      jury    shall be     preserved , and no      fact tried by a
 # NPl     . D   NPrSg/J P  NSg/V/J NSg/J/P NSg/V/J VX    NSg/VX V/J       . V/C NPrSg/P NSg  V/J   P  D/P
-> jury  , shall be     otherwise reexamined in any   court of the United States  , than
-# NSg/J . VX    NSg/VX J         V/J        P  I/R/D NSg/V P  D   J      NPrSg/V . C/P
+> jury  , shall be     otherwise reexamined in any   court   of the United States  , than
+# NSg/J . VX    NSg/VX J         V/J        P  I/R/D NSg/V/J P  D   J      NPrSg/V . C/P
 > according to the rules of the common law   .
 # V/J       P  D   NPl   P  D   NSg/J  NSg/V .
 >
@@ -1319,7 +1319,7 @@
 >
 #
 > New     States  may      be     admitted by the Congress into this Union     ; but
-# NSg/V/J NPrSg/V NPrSg/VX NSg/VX V        P  D   NPrSg    P    I/D  NPrSg/V/J . NSg/C/P
+# NSg/V/J NPrSg/V NPrSg/VX NSg/VX V/J      P  D   NPrSg    P    I/D  NPrSg/V/J . NSg/C/P
 > no      new   State shall be     formed or      erected within the Jurisdiction of any   other
 # NPrSg/P NSg/J NSg/V VX    NSg/VX V/J    NPrSg/C V/J     N/J/P  D   NSg          P  I/R/D NSg/V/J
 > State ; nor   any   State be     formed by the Junction of two or      more        States  , or      Parts
@@ -1459,7 +1459,7 @@
 > The powers not   delegated to the United States  by the Constitution , nor
 # D   NPrSg  NSg/C V/J       P  D   J      NPrSg/V P  D   NPrSg        . NSg/C
 > prohibited by      it        to the states , are reserved to the states respectively , or      to
-# V/J        NSg/J/P NPrSg/ISg P  D   NPrSg  . V   V/J      P  D   NPrSg  J/R          . NPrSg/C P
+# V/J        NSg/J/P NPrSg/ISg P  D   NPrSg  . V   V/J      P  D   NPrSg  R            . NPrSg/C P
 > the people .
 # D   NSg    .
 >
@@ -1490,8 +1490,8 @@
 #
 > done    in        Convention by the Unanimous Consent of the States present the
 # NSg/V/J NPrSg/J/P NSg        P  D   J         NSg/V   P  D   NPrSg  NSg/V/J D
-> Seventeenth Day   of September in the Year of our Lord  one       thousand seven hundred
-# NSg/J       NPrSg P  NPr       P  D   NSg  P  D   NPrSg NSg/I/V/J NSg      NSg   NSg
+> Seventeenth Day   of September in the Year of our Lord    one       thousand seven hundred
+# NSg/J       NPrSg P  NPr       P  D   NSg  P  D   NPrSg/J NSg/I/V/J NSg      NSg   NSg
 > and Eighty seven and of the Independence of the United States  of America the
 # V/C N      NSg   V/C P  D   NPrSg        P  D   J      NPrSg/V P  NPr     D
 > Twelfth In        witness whereof We  have   hereunto subscribed our Names ,

@@ -56,12 +56,13 @@
 			"target": [
 				{
 					"metadata": {
-						"adjective": {},
 						"adverb": {}
 					}
 				}
 			],
-			"base_metadata": {}
+			"base_metadata": {
+				"adjective": {}
+			}
 		},
 		"U": {
 			"#": "'un-' prefix",
