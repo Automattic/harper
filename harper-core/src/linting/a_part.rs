@@ -1,11 +1,11 @@
 use crate::{
-    linting::{Lint, LintKind, PatternLinter, Suggestion}, 
-    patterns::{EitherPattern, ExactPhrase, Pattern}, 
-    Token, TokenStringExt, Lrc
+    Lrc, Token, TokenStringExt,
+    linting::{Lint, LintKind, PatternLinter, Suggestion},
+    patterns::{EitherPattern, ExactPhrase, Pattern},
 };
 
 pub struct APart {
-    pattern: Box<dyn Pattern>,    
+    pattern: Box<dyn Pattern>,
 }
 
 impl Default for APart {
@@ -41,14 +41,14 @@ impl PatternLinter for APart {
                     Suggestion::ReplaceWith("apart from".chars().collect()),
                     Suggestion::ReplaceWith("a part of".chars().collect()),
                 ],
-                "If you mean 'except for', use 'apart from'. If you mean 'a piece belonging to', use 'a part of'. Keep it this way if referring to the origin of a piece."
+                "If you mean 'except for', use 'apart from'. If you mean 'a piece belonging to', use 'a part of'. Keep it this way if referring to the origin of a piece.",
             ),
             "apart of" => (
                 vec![
                     Suggestion::ReplaceWith("a part of".chars().collect()),
                     Suggestion::ReplaceWith("apart from".chars().collect()),
                 ],
-                "Did you mean 'a part of' (a piece belonging to) or 'apart from' (except for)?"
+                "Did you mean 'a part of' (a piece belonging to) or 'apart from' (except for)?",
             ),
             // Not necessarily always a mistake:
             // How would you detect how far a part is from another part?
@@ -59,11 +59,11 @@ impl PatternLinter for APart {
             // But could the next word after "part" help us understand if it's a mistake?
             "far a part" => (
                 vec![Suggestion::ReplaceWith("far apart".chars().collect())],
-                "If you mean 'separated by a distance', use 'far apart'. If referring to the distance of a piece, keep it this way."
+                "If you mean 'separated by a distance', use 'far apart'. If referring to the distance of a piece, keep it this way.",
             ),
             "fall a part" => (
                 vec![Suggestion::ReplaceWith("fall apart".chars().collect())],
-                "'Fall apart' meaning 'collapse into pieces' or 'stop functioning' is written as two words."
+                "'Fall apart' meaning 'collapse into pieces' or 'stop functioning' is written as two words.",
             ),
             _ => return None,
         };
@@ -89,7 +89,11 @@ mod tests {
 
     #[test]
     fn allow_normal_use_of_a_part() {
-        assert_lint_count("That's not the whole truth, it's just a part.", APart::default(), 0);
+        assert_lint_count(
+            "That's not the whole truth, it's just a part.",
+            APart::default(),
+            0,
+        );
     }
 
     #[test]
@@ -131,7 +135,7 @@ mod tests {
         assert_top3_suggestion_result(
             "Do you know there are more languages out there a part from English right?",
             APart::default(),
-            "Do you know there are more languages out there apart from English right?"
+            "Do you know there are more languages out there apart from English right?",
         )
     }
 
@@ -140,7 +144,7 @@ mod tests {
         assert_top3_suggestion_result(
             "An easy tool to generate backdoor with msfvenom (a part from metasploit framework).",
             APart::default(),
-            "An easy tool to generate backdoor with msfvenom (a part of metasploit framework)."
+            "An easy tool to generate backdoor with msfvenom (a part of metasploit framework).",
         )
     }
 
@@ -149,7 +153,7 @@ mod tests {
         assert_top3_suggestion_result(
             "Doesn't work with any stacks apart of cflinuxfs2 and cflinuxfs3",
             APart::default(),
-            "Doesn't work with any stacks apart from cflinuxfs2 and cflinuxfs3"
+            "Doesn't work with any stacks apart from cflinuxfs2 and cflinuxfs3",
         )
     }
 
@@ -158,16 +162,16 @@ mod tests {
         assert_top3_suggestion_result(
             "apart of using filter, i can't find it in the documentation",
             APart::default(),
-            "apart from using filter, i can't find it in the documentation"
+            "apart from using filter, i can't find it in the documentation",
         )
     }
-    
+
     #[test]
     fn corrects_apart_of_to_a_part_of_openai() {
         assert_top3_suggestion_result(
             "export 'Usage' class as apart of openai.types",
             APart::default(),
-            "export 'Usage' class as a part of openai.types"
+            "export 'Usage' class as a part of openai.types",
         )
     }
 
@@ -176,7 +180,7 @@ mod tests {
         assert_top3_suggestion_result(
             "FormlyDatepickerTypeComponent is not listed as apart of the Formly Public API",
             APart::default(),
-            "FormlyDatepickerTypeComponent is not listed as a part of the Formly Public API"
+            "FormlyDatepickerTypeComponent is not listed as a part of the Formly Public API",
         )
     }
 
@@ -185,7 +189,7 @@ mod tests {
         assert_top3_suggestion_result(
             "That leaves you only the other hand on the keyboard and you don't want the keys to be that far a part.",
             APart::default(),
-            "That leaves you only the other hand on the keyboard and you don't want the keys to be that far apart."
+            "That leaves you only the other hand on the keyboard and you don't want the keys to be that far apart.",
         )
     }
 
@@ -194,7 +198,7 @@ mod tests {
         assert_top3_suggestion_result(
             "I can't see in the code what is done really with this session_timeout so far a part from being taken from the conf if defined there or setup ...",
             APart::default(),
-            "I can't see in the code what is done really with this session_timeout so far apart from being taken from the conf if defined there or setup ..."
+            "I can't see in the code what is done really with this session_timeout so far apart from being taken from the conf if defined there or setup ...",
         )
     }
 
@@ -203,7 +207,7 @@ mod tests {
         assert_top3_suggestion_result(
             "Any workaround so far a part from the version upgrade?",
             APart::default(),
-            "Any workaround so far apart from the version upgrade?"
+            "Any workaround so far apart from the version upgrade?",
         )
     }
 
@@ -212,7 +216,7 @@ mod tests {
         assert_top3_suggestion_result(
             "When I set up a script I set up card priority based on my frontline but sometimes a servant dies which sometimes causes things to fall a part.",
             APart::default(),
-            "When I set up a script I set up card priority based on my frontline but sometimes a servant dies which sometimes causes things to fall apart."
+            "When I set up a script I set up card priority based on my frontline but sometimes a servant dies which sometimes causes things to fall apart.",
         )
     }
 
@@ -224,4 +228,4 @@ mod tests {
     // Docker image running as different user **apart of** multiple groups
     // Diamond Checker is a cookie checker **apart of** the DIamond Software
     // fetchParent() doesn't work properly with foreign key referencing just a part from a composed primary key
-}            
+}
