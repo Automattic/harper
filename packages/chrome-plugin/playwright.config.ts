@@ -21,7 +21,6 @@ export default defineConfig({
 	webServer: {
 		command: 'pnpm http-server ./tests/pages/',
 		url: 'http://localhost:8081',
-		reuseExistingServer: !process.env.CI,
 		stdout: 'ignore',
 		stderr: 'pipe',
 	},
