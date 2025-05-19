@@ -7344,7 +7344,8 @@ Nevsky/M
 Newark/2M
 Newburgh/2M
 Newcastle/2M
-Newfoundland/21MRS
+Newfoundland/21MS
+Newfoundlander/1SM
 Newman/2M
 Newport/2M
 Newsweek/M
@@ -12039,7 +12040,7 @@ alligator/~14MS
 alliterate/4DSXGNV
 alliteration/1M
 alliterative/5Y
-allocate/~4ADSGNYC
+allocate/~4ADSGNYCB
 allocation/~1AM
 allocations/~1
 allocator/1C
@@ -27218,6 +27219,7 @@ halcyon/~15
 hale/~514ITGDRS
 half/~154+M
 halfback/~14SM
+halfcourt/
 halfhearted/5PY
 halfheartedness/1M
 halfpence/1
@@ -40900,6 +40902,7 @@ rebirth/~14M
 reboard/4GDS
 reboil/4SDG
 rebox/4SDG
+rebuckle/4SDG
 rebuild/~41SG
 rebuke/14DSMG
 rebuking/41Y
@@ -52720,6 +52723,7 @@ H-1B/1MS
 habeas corpus/1
 half cent/1MS
 half-cocked/5
+half court/1M
 half-life/1M
 half-lives/9
 ham-fisted/5
@@ -52820,6 +52824,7 @@ not-for-profit/51MS
 object-oriented/5
 odd-numbered/5
 of course/j
+off-grid/5
 off-limits/5
 off-ramp/1MS
 off-road/1MS
@@ -52827,6 +52832,7 @@ off-roader/1MS
 off-roading/1M
 off-the-books/5
 okey-dokey/1MS
+old-fashioned/51
 old-timey/5
 Old World/2M
 old-world/5
@@ -52899,6 +52905,7 @@ shout-out/1S
 sign on/4
 sign-on/1MS
 single-handedly/j
+six-footer/1MS
 six-pack/1MS
 so-called/5
 socio-political/5
@@ -52917,6 +52924,8 @@ stand-up/51
 standard-bearer/1MS
 stay behind/4
 stay-behind/1MS
+straight up/j
+straight-up/5
 surface-to-air/5
 suss out/4
 sussed out/4
