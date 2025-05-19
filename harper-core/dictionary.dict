@@ -2368,6 +2368,7 @@ Cordilleras/M
 Cordoba/2M
 Corey/2M
 Corfu/2M
+Corg/21M            # company
 Corina/2M
 Corine/M
 Corinne/2M
@@ -11547,6 +11548,7 @@ adjunct/~154MS
 adjuration/1MS
 adjure/4GDS
 adjust/~4AGDSL
+adjustability/1M
 adjustable/~51
 adjuster/1SM
 adjustment/~1AMS
@@ -17306,6 +17308,7 @@ chromatin/~1M
 chromatography/~1
 chrome/~14MGDS
 chromium/~1M
+chromoly/1M
 chromosomal/~5
 chromosome/~1MS
 chronic/~51Q
@@ -17397,6 +17400,7 @@ circa/~+
 circadian/5
 circle/~14MGDS
 circlet/1MS
+circlip/1MS
 circuit/~14MDGS
 circuital/5
 circuitous/5YP
@@ -18646,6 +18650,7 @@ conquered/~4U
 conqueror/~1MS
 conquest/~14AM
 conquistador/~1SM
+conrod/1MS
 cons/~14DSG
 consanguineous/5
 consanguinity/1M
@@ -28664,6 +28669,7 @@ hyperaggressive/5
 hyperbola/1SM
 hyperbole/~1M
 hyperbolic/~5Q
+hypercar/1MS
 hyperconservative/5
 hypercritical/5Y
 hypercube/1
@@ -32054,6 +32060,7 @@ longing/~41MYS
 longish/5
 longitude/~1MS
 longitudinal/~51Y
+longnose/5
 longshoreman/1M
 longshoremen/9
 longsighted/5
@@ -33539,7 +33546,7 @@ milky/~5RTP
 mill/~14MDRSZGJ
 millage/1M
 millennia/~1
-millennial/51M
+millennial/51MS
 millennium/~1MS
 miller/~1M
 millet/~1M
@@ -34516,7 +34523,8 @@ mummify/4GNDS
 mummy/~14SM         # "mother" sense is UK/AU, "mummified" sense is universal
 mumps/14M
 mun/~418
-munch/~41GDSR
+munch/~41GDS
+muncher/1MS
 munchie/1S
 munchies/1M
 munchkin/1SM
@@ -37569,6 +37577,7 @@ peal/~14AMDSG
 peanut/~14MS
 pear/~1MYS
 pearl/~14SGMD
+pearlescent/5
 pearly/15RT
 peasant/~15SM
 peasantry/~1M
@@ -40976,6 +40985,7 @@ recon/~14S
 reconcile/~4GDSB
 reconciliation/~1S
 recondite/514SM
+reconditioner/1MS
 reconfiguration/1
 reconfigure/4GDS
 reconfigure/4D
@@ -46708,6 +46718,7 @@ superior/~51MS
 superiority/~1M
 superlative/~15SMY
 superlinear/5Y
+supermajority/1MS
 superman/~1M
 supermarket/~1SM
 supermassive/5
@@ -52603,6 +52614,7 @@ wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
 # But it will be able to include them in suggestions
 
 a lot
+ad-free/5
 ad nauseam/j
 add-on/1MS
 air-conditioned/5
@@ -52677,6 +52689,8 @@ dire wolves/9
 door to door/j
 door-to-door/S
 double-decker/5
+drop in/4
+drop-in/1MS5
 e-book/1MS
 easy peasy/5
 editor in chief/1
@@ -52686,6 +52700,8 @@ et al./~
 even-numbered/5
 ever-present/5
 ex-friend/1MS
+face off/4
+face-off/1MS
 fact check/1S
 fact-check/4SDG
 fact-checking/1M
@@ -52742,6 +52758,7 @@ hi-tech/15
 high definition/1M
 high frequency/1MS
 high-frequency/5
+high-grade/5
 high-level/5
 high-paying/5
 high-pitched/5
@@ -53030,6 +53047,7 @@ log off/4
 log on/4
 log out/4
 look up/4
+low fidelity/5
 meet up/4
 melt down/4
 pick up/4
