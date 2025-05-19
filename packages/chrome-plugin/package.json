@@ -32,6 +32,7 @@
 		"flowbite-svelte-icons": "^2.1.1",
 		"gulp": "^5.0.0",
 		"gulp-zip": "^6.0.0",
+		"http-server": "^14.1.1",
 		"prettier": "^3.1.0",
 		"prettier-plugin-svelte": "^3.2.6",
 		"rollup-plugin-copy": "^3.5.0",

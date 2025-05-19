@@ -27,4 +27,5 @@ export const test = base.extend<{
 		await use(extensionId);
 	},
 });
+
 export const expect = test.expect;
