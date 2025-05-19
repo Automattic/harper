@@ -451,15 +451,6 @@ Message: |
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-     162 | He had changed since his New Haven years. Now he was a sturdy straw-haired man
-         |                          ^~~ Did you mean “knew” (the past tense of “know”)?
-Suggest:
-  - Replace with: “Knew”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      165 | appearance of always leaning aggressively forward. Not even the effeminate swank
