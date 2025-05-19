@@ -302,4 +302,9 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn allow_an_arm_and_a_leg() {
+        assert_lint_count("I have to pay an arm and a leg get a worker to come and be my assistant baker.", CompoundNouns::default(), 0);
+    }
 }

@@ -24,30 +24,30 @@ pub struct GeneralCompoundNouns {
 //    that is not also an adjective
 impl Default for GeneralCompoundNouns {
     fn default() -> Self {
+        // Helper function to check if a token is a content word (not a function word)
+        fn is_content_word(tok: &Token, _: &[char]) -> bool {
+            let Some(Some(meta)) = tok.kind.as_word() else {
+                return false;
+            };
+
+            tok.span.len() > 1
+                && !meta.determiner
+                && !meta.preposition
+                && !meta.is_adverb()
+                && !meta.is_conjunction()
+        }
+
         let context_pattern = SequencePattern::default()
             .then(|tok: &Token, _: &[char]| {
                 let Some(Some(meta)) = tok.kind.as_word() else {
                     return false;
                 };
-
                 meta.determiner || meta.is_adjective()
             })
             .then_whitespace()
-            .then(|tok: &Token, _: &[char]| {
-                let Some(Some(meta)) = tok.kind.as_word() else {
-                    return false;
-                };
-
-                tok.span.len() > 1 && !meta.determiner && !meta.preposition && !meta.is_adverb()
-            })
+            .then(is_content_word)
             .then_whitespace()
-            .then(|tok: &Token, _: &[char]| {
-                let Some(Some(meta)) = tok.kind.as_word() else {
-                    return false;
-                };
-
-                tok.span.len() > 1 && !meta.determiner && !meta.is_adverb() && !meta.preposition
-            });
+            .then(is_content_word);
 
         let compound_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
             meta.is_noun() && !meta.is_adjective()
