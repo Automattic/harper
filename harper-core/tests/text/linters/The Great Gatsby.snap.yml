@@ -3404,15 +3404,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-    2212 | “Well!” I inspected them. “That’s a very interesting idea.”
-         |                                   ^~~~~~ The possessive noun implies ownership of the closed compound noun “Avery”.
-Suggest:
-  - Replace with: “Avery”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2218 | Mr. Wolfshiem drank his coffee with a jerk and got to his feet.
@@ -5334,15 +5325,6 @@ Message: |
          |                                                       ^~~~~~~~~ Did you mean the closed compound noun “backdoor”?
 Suggest:
   - Replace with: “backdoor”
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-    4227 | “Daisy, that’s all over now,” he said earnestly. “It doesn’t matter any more.
-         |                ^~~~~~~~ The possessive noun implies ownership of the closed compound noun “allover”.
-Suggest:
-  - Replace with: “allover”
 
 
 
