@@ -43,9 +43,9 @@ impl PatternLinter for MostNumber {
         let most_amt_num_span = toks[0..3].span()?;
         let noun_string = toks[2].span.get_content_string(source);
         let superlatives = if noun_string == "amount" {
-            vec!["largest", "greatest"]
+            vec!["largest", "greatest", "maximum"]
         } else {
-            vec!["highest", "largest"]
+            vec!["highest", "largest", "maximum"]
         };
         let suggestions = superlatives
             .into_iter()
@@ -115,6 +115,15 @@ mod tests {
             "The random non-sequential nature should prevent most number gaming/sniping/lunging.",
             MostNumber::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn corrects_most_amount_with_maximum() {
+        assert_top3_suggestion_result(
+            "If you want to support the most amount of different architectures ...",
+            MostNumber::default(),
+            "If you want to support the maximum amount of different architectures ...",
         );
     }
 }
