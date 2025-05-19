@@ -1,5 +1,3 @@
-use std::mem::replace;
-
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
