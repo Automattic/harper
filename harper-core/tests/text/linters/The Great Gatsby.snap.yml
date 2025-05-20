@@ -858,7 +858,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -892,7 +892,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -981,7 +981,7 @@ Message: |
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bi”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -1094,9 +1094,9 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “Dd”
   - Replace with: “D”
   - Replace with: “Db”
+  - Replace with: “Dc”
 
 
 
@@ -1265,7 +1265,7 @@ Message: |
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bi”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -2365,7 +2365,7 @@ Message: |
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bi”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -2500,9 +2500,9 @@ Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
+  - Replace with: “Gt”
   - Replace with: “Go”
   - Replace with: “Gr”
-  - Replace with: “Gs”
 
 
 
@@ -2582,7 +2582,7 @@ Message: |
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bi”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -2803,9 +2803,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “Lb”
+  - Replace with: “Lg”
   - Replace with: “L”
-  - Replace with: “La”
+  - Replace with: “LC”
 
 
 
@@ -4928,7 +4928,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -4997,7 +4997,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -6174,7 +6174,7 @@ Message: |
 Suggest:
   - Replace with: “H'm”
   - Replace with: “Ha”
-  - Replace with: “Hem”
+  - Replace with: “Ham”
 
 
 
@@ -6236,7 +6236,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -6574,7 +6574,7 @@ Message: |
 Suggest:
   - Replace with: “Cw”
   - Replace with: “C”
-  - Replace with: “Ca”
+  - Replace with: “Cc”
 
 
 
@@ -6674,7 +6674,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -6701,7 +6701,7 @@ Message: |
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bi”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 

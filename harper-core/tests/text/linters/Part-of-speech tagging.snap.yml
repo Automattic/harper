@@ -29,8 +29,8 @@ Message: |
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
   - Replace with: “E”
-  - Replace with: “Es”
-  - Replace with: “EC”
+  - Replace with: “Ea”
+  - Replace with: “Eh”
 
 
 
@@ -67,8 +67,8 @@ Message: |
          |                    ^~ Did you mean to spell `NN` this way?
 Suggest:
   - Replace with: “Nun”
+  - Replace with: “N”
   - Replace with: “Non”
-  - Replace with: “N1”
 
 
 
