@@ -1,22 +1,16 @@
 use std::sync::Arc;
 
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::{Dictionary, Document, FstDictionary, Span, Token, TokenStringExt};
+use crate::{Dictionary, Document, FstDictionary, Span, TokenStringExt};
 
 /// Detect phrasal verbs written as compound nouns.
 pub struct PhrasalVerbAsCompoundNoun {
     dict: Arc<FstDictionary>,
 }
 
-// Helper functions to get tokens before or after the current one
-// After is easy since it already handles going past the end
-fn get_token_after(doc: &Document, i: usize, n: usize) -> Option<&Token> {
-    doc.get_token(i + n)
-}
-
-// Before is trickier since we have to handle going past the start
-fn get_token_before(doc: &Document, i: usize, n: usize) -> Option<&Token> {
-    (i >= n).then(|| doc.get_token(i - n).unwrap())
+enum Confidence {
+    DefinitelyVerb,
+    PossiblyVerb,
 }
 
 impl PhrasalVerbAsCompoundNoun {
@@ -123,52 +117,49 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             // For that we need some heuristics based on the surrounding context.
             // Let's try to get the word before and the word after.
             // To do that we have to get the tokens immediately before and after, which we expect to be whitespace.
-            let maybe_prev_ws = get_token_before(document, i, 1);
-            let maybe_prev_tok = maybe_prev_ws.and_then(|prev_ws| {
-                (prev_ws.kind.is_whitespace()).then(|| get_token_before(document, i, 2).unwrap())
-            });
-
-            let maybe_next_ws = get_token_after(document, i, 1);
-            let maybe_next_tok = maybe_next_ws.and_then(|next_ws| {
-                (next_ws.kind.is_whitespace()).then(|| get_token_after(document, i, 2).unwrap())
-            });
+            let maybe_prev_tok = document.get_next_word_from_offset(i, -1);
+            let maybe_next_tok = document.get_next_word_from_offset(i, 1);
 
             // If it's in isolation, a compound noun is fine.
             if maybe_prev_tok.is_none() && maybe_next_tok.is_none() {
                 continue;
             }
 
-            let message = match (phrasal_verb_is_verb, verb_part_is_verb) {
-                (true, _) => "This word should be a phrasal verb, not a compound noun.",
-                (false, true) => "This word might be a phrasal verb rather than a compound noun.",
+            let confidence = match (phrasal_verb_is_verb, verb_part_is_verb) {
+                (true, _) => Confidence::DefinitelyVerb,
+                (false, true) => Confidence::PossiblyVerb,
                 _ => continue,
             };
 
             if let Some(prev_tok) = maybe_prev_tok {
                 if prev_tok.kind.is_adjective() || prev_tok.kind.is_determiner() {
-                    // eprintln!(
-                    //     "* Rejected '{}' because it follows the {} '{}'",
-                    //     nountok_charsl.iter().collect::<String>(),
-                    //     if prev_tok.kind.is_adjective() {
-                    //         "adjective"
-                    //     } else {
-                    //         "determiner"
-                    //     },
-                    //     document.get_span_content(&prev_tok.span).iter().collect::<String>(),
-                    // );
                     continue;
                 }
 
                 // "dictionary lookup" is not a mistake but "couples breakup" is.
                 if prev_tok.kind.is_noun() && !prev_tok.kind.is_plural_noun() {
-                    // eprintln!(
-                    //     "* Rejected '{}' because it follows the singular noun '{}",
-                    //     nountok_charsl.iter().collect::<String>(),
-                    //     document.get_span_content(&prev_tok.span).iter().collect::<String>(),
-                    // );
                     continue;
                 }
+
+                // If the compound is part of a list of nouns, it's probably not a verb.
+                if prev_tok.kind.is_conjunction() {
+                    let maybe_prev_tok_2 = document.get_next_word_from_offset(i, -3);
+                    if let Some(prev_tok_2) = maybe_prev_tok_2 {
+                        if prev_tok_2.kind.is_noun() {
+                            continue;
+                        }
+                    }
+                }
             }
+
+            let message = match confidence {
+                Confidence::DefinitelyVerb => {
+                    "This word should be a phrasal verb, not a compound noun."
+                }
+                Confidence::PossiblyVerb => {
+                    "This word might be a phrasal verb rather than a compound noun."
+                }
+            };
 
             lints.push(Lint {
                 span: Span::new(token.span.start, token.span.end),
@@ -372,6 +363,15 @@ mod tests {
     fn ignore_multi_word() {
         assert_lint_count(
             "I like this add-on!",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_list_of_nouns_1298() {
+        assert_lint_count(
+            "A printable format and layout.",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
