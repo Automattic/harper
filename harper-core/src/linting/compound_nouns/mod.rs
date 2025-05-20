@@ -311,4 +311,13 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn allow_well_and_723() {
+        assert_lint_count(
+            "I understood very well and decided to go.",
+            CompoundNouns::default(),
+            0,
+        );
+    }
 }
