@@ -226,9 +226,11 @@ impl Document {
                         "no",
                         // List of Determiners from the 2003 "Longman Student Grammar of
                         // Spoken and Written English" Chapter 4.5
-                        "all", "both", "half", "this", "that", "every", "each", "either", "neither",
+                        // But of these only "every" is never followed by a verb
+                        /*"all", "both", "half", "this", "that", "each", "either", "neither",
                         "any", "many", "some", "these", "those", "few", "enough", "several",
-                        "much",
+                        "much",*/
+                        "every",
                     ]))
                     .then_whitespace()
                     .then_verb(),
