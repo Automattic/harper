@@ -20,7 +20,10 @@ impl Default for PronounKnew {
         let pronoun_pattern = |tok: &Token, source: &[char]| {
             if tok.kind.is_pronoun() {
                 let pronorm = tok.span.get_content_string(source).to_lowercase();
-                return pronorm != "its" && pronorm != "his" && pronorm != "her";
+                // Personal pronouns that are not only/always subject pronouns.
+                return pronorm != "its" && pronorm != "his" && pronorm != "her"
+                    // Indefinite pronouns can come before adjectives.
+                    && pronorm != "every" && pronorm != "something" && pronorm != "nothing";
             }
             false
         };
@@ -125,5 +128,10 @@ mod tests {
     #[test]
     fn does_not_flag_with_her() {
         assert_lint_count("Her new car is fast.", PronounKnew::default(), 0);
+    }
+
+    #[test]
+    fn does_not_flag_with_nothing_1298() {
+        assert_lint_count("This is nothing new.", PronounKnew::default(), 0);
     }
 }
