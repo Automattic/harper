@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::{Dictionary, Document, FstDictionary, Span, TokenKind, TokenStringExt};
+use crate::{CharStringExt, Dictionary, Document, FstDictionary, Span, TokenKind, TokenStringExt};
 
 /// Detect phrasal verbs written as compound nouns.
 pub struct PhrasalVerbAsCompoundNoun {
@@ -49,6 +49,17 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             {
                 continue;
             }
+
+            let nountok_lower = nountok_charsl.to_lower();
+            let nountok_lower = nountok_lower.as_ref();
+
+            // * Must not be in the set of known false positives.
+            if nountok_lower == ['g', 'a', 'l', 'l', 'o', 'n']
+                || nountok_lower == ['d', 'r', 'a', 'g', 'o', 'n']
+            {
+                continue;
+            }
+
             // * Must end with the same letters as one of the particles used in phrasal verbs.
             let particle_endings: &[&[char]] = &[
                 &['a', 'r', 'o', 'u', 'n', 'd'],
@@ -61,15 +72,6 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                 &['o', 'v', 'e', 'r'],
                 &['u', 'p'],
             ];
-
-            // * Must not be in the set of known false positives.
-            if nountok_charsl == ['g', 'a', 'l', 'l', 'o', 'n'] {
-                // eprintln!(
-                //     "* Rejected '{}' because it's a known false positive",
-                //     nountok_charsl.iter().collect::<String>()
-                // );
-                continue;
-            }
 
             let mut found_particle_len = 0;
             if !particle_endings.iter().any(|ending| {
@@ -386,6 +388,24 @@ mod tests {
     fn dont_flag_oov_nvim_plugin_1280() {
         assert_lint_count(
             "This is the nvim plugin for you.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn flag_title_case() {
+        assert_lint_count(
+            "I Will Never Breakup With Gym. We Just Seem To Workout.",
+            PhrasalVerbAsCompoundNoun::default(),
+            2,
+        );
+    }
+
+    #[test]
+    fn dont_flag_all_caps() {
+        assert_lint_count(
+            "I WILL NEVER BREAKUP WITH GYM. WE JUST SEEM TO WORKOUT.",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
