@@ -3400,6 +3400,7 @@ FDA/2
 FDIC/2M
 FDR/21M
 FEMA/2M
+FFT/1MS             # fast Fourier transform
 FHA/2M
 FICA/2M
 FIFO/1
@@ -5637,6 +5638,7 @@ LDC/1
 LED/1MS
 LG/12M
 LGB/51
+LGPL/12             # GNU Lesser General Public License
 LGBT/51
 LGBTQ/51
 LIFO/5
@@ -6186,7 +6188,8 @@ MO/215
 MOOC/1
 MOSFET/1MS          # transistor
 MP/125M             # military police; member of parliament
-MP3/1SM
+MP3/1SM             # audio format
+MP4/1SM             # audio/video format
 MPEG/21
 MRI/14M             # magnetic resonance imaging
 MS/12M
@@ -8390,7 +8393,7 @@ REM/1SM
 RF/12
 RFC/21S
 RFD/512
-RGB
+RGB                 # colour model
 RI/21
 RIF/14
 RIFA/2M
@@ -52246,12 +52249,15 @@ zymurgy/1M
 0s/~9               # not sure how well "words" starting with numbers are handled
 1s/~9               # not sure how well "words" starting with numbers are handled
 3D/5                # not sure how well "words" starting with numbers are handled
+AAC/1M              # audio format
 ACM/1M
 AGI/MS              # artificial general intelligence
 AMC/12MS            # old car brand
 AOC/2M              # US politician Alexandria Ocasio-Cortez
+ASM/1               # assembly language - should "asm" be included as well/instead?
 ASUS/2M
 ATF/1M              # automatic transmission fluid
+AVC/1M              # H.264 video format
 Akismet/2M
 Alexa/2M            # voice assistant
 Alexandre/2SM
@@ -52284,6 +52290,7 @@ CI/1SM              # continuous integration
 CISC/1M             # cpu architecture
 CMOS/1              # microchip process
 CMake/SM            # build tool
+CMYK                # colour model
 CQL/1
 CRC/1MS             # cyclic redundancy check
 CRDT/1SM
@@ -52299,6 +52306,7 @@ Crowdsignal/2M
 Cypher/21M
 DATETIME/1MS        # dictionaries prefer: datetime
 DBMS/12SM           # database management system
+DCT/1MS             # discrete cosine transform
 DEI
 DKIM/1SM
 DM/1MS4             # direct message
@@ -52316,6 +52324,7 @@ DirectX/2M
 Dreamcast/2MS       # game console
 EGR/                # exhaust gas recirculation
 EMR/12SM
+EPUB/12MS           # e-book format
 ESLint/2M
 EV/1SM              # electric vehicle
 ElasticSearch/SM
@@ -52390,8 +52399,11 @@ LEGO/1SM            # official trademark form of Lego
 LIDAR/1             # FIXME! elsewhere we have LiDAR
 LLM/1MS             # large language model
 LLVM/1M             # compiler system
+LOC/9               # source lines of code
+LSB/1MS2            # least significant bit/byte; Linux Standard Base
 LSP/1MS             # language server protocol
 LTS/1SM
+LUT/1MS             # lookup table
 LVM/SM
 Labriola/2SM
 LanguageTool/M      # grammar checker
@@ -52407,6 +52419,8 @@ Longreads/2M
 Lua/SM              # programming language
 MMX/1M              # multimedia extension
 MPC/21M
+MSB/1MS             # most significant bit/byte
+MSE/1MS             # mean squared error
 MSNBC/2M            # media company
 MSVC                # Microsoft Visual C++
 MTA/1SM
@@ -52433,6 +52447,7 @@ NLP/M
 NMI/1MS             # non-maskable interrupt
 NPC/SM
 NPM/SM
+NTP/1               # network time protocol
 NYTimes/SM
 NYU/2M
 Neo4J/21M
@@ -52462,6 +52477,7 @@ PCH/2M              # highway
 PDP/1SM             # old computer
 PII/1SM
 PKCS/SM
+POSIX/2M            # unix standard
 PRQL/1
 PTSD/1SM            # post-traumatic stress disorder
 PWA/21SM
@@ -52495,6 +52511,7 @@ SDK/1SM             # software development kit
 SDL/2M              # Simple DirectMedia Layer
 SIMD/1SM            # single instruction, multiple data
 SLA/1SM
+SLOC/9              # source lines of code
 SNL/2M              # Saturday Night Live
 SQLAlchemy/1
 SVG/21s             # scalable vector graphics
@@ -52515,6 +52532,7 @@ Subversion/1M       # version control
 Svelte/2M           # js framework
 Systemd/SM          # Linux system software
 TCP/52SM            # internet protocol
+TL;DR               # internet slang
 TODO                # FIXME! elsewhere in Harper we refer to Todo and to-do
 TOML/1M             # configuration file format
 TSMC/2M             # Taiwanese Semiconductor Manufacturing Company
@@ -52617,6 +52635,7 @@ raytracer/1         # dictionaries prefer: ray tracer
 roadmap/1MS         # overtook "road map" c. 2000 but not in dictionaries yet
 royale/~15SM        # !! please check and comment !! dictionaries only list noun sense type of custard
 s.t./~              # !! please check and comment !!
+sRGB/2M             # colour space
 scatterplot/14SMG   # dictionaries prefer: scatter plot
 scrollbar/1SM       # dictionaries prefer: scroll bar
 sioyek/SM           # !! please check and comment !!

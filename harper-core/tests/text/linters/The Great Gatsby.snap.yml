@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “F”
   - Replace with: “Ff”
-  - Replace with: “Fr”
+  - Replace with: “Fl”
 
 
 
@@ -14,9 +14,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |       ^~~~~ Did you mean to spell `SCOTT` this way?
 Suggest:
+  - Replace with: “Scot”
+  - Replace with: “SCM's”
   - Replace with: “SEO's”
-  - Replace with: “Alcott”
-  - Replace with: “Lott”
 
 
 
@@ -847,7 +847,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -881,7 +881,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -2288,7 +2288,7 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
+  - Replace with: “Pt”
   - Replace with: “P”
   - Replace with: “Pa”
 
@@ -2376,7 +2376,7 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Av”
+  - Replace with: “Aw”
   - Replace with: “Ab”
   - Replace with: “Ac”
 
@@ -2535,7 +2535,7 @@ Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
-  - Replace with: “Dab”
+  - Replace with: “D”
   - Replace with: “Dad”
   - Replace with: “Dam”
 
@@ -2803,9 +2803,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “Lg”
-  - Replace with: “L”
-  - Replace with: “LC”
+  - Replace with: “Lo”
+  - Replace with: “La”
+  - Replace with: “Ll”
 
 
 
@@ -2925,7 +2925,7 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
+  - Replace with: “Pt”
   - Replace with: “P”
   - Replace with: “Pa”
 
@@ -4917,7 +4917,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -4986,7 +4986,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -6225,7 +6225,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -6713,7 +6713,7 @@ Message: |
 Suggest:
   - Replace with: “F”
   - Replace with: “Ff”
-  - Replace with: “Fr”
+  - Replace with: “Fl”
 
 
 
