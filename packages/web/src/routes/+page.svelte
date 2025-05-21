@@ -70,7 +70,7 @@ const headings = [
 <Section noChild>
 	<span slot="title"> What is it? </span>
 	<span slot="subtitle">
-		Harper is an English grammar checker designed to be <em>just right</em>. You can think of it as
+		Harper is a free English grammar checker designed to be <em>just right</em>. You can think of it as
 		an open-source alternative to Grammarly. I created it after years of dealing with the
 		shortcomings of the competition.
 	</span>
