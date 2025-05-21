@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::{Dictionary, Document, FstDictionary, Span, TokenStringExt};
+use crate::{Dictionary, Document, FstDictionary, Span, TokenKind, TokenStringExt};
 
 /// Detect phrasal verbs written as compound nouns.
 pub struct PhrasalVerbAsCompoundNoun {
@@ -150,6 +150,12 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                         }
                     }
                 }
+
+                // If the previous word is OOV, those are most commonly nouns
+                if let TokenKind::Word(None) = &prev_tok.kind {
+                    continue;
+                }
+                
             }
 
             let message = match confidence {
@@ -372,6 +378,15 @@ mod tests {
     fn dont_flag_list_of_nouns_1298() {
         assert_lint_count(
             "A printable format and layout.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_oov_nvim_plugin_1280() {
+        assert_lint_count(
+            "This is the nvim plugin for you.",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
