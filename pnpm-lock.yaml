@@ -301,6 +301,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      posthog-js:
+        specifier: ^1.245.1
+        version: 1.245.1
       reveal.js:
         specifier: ^5.1.0
         version: 5.1.0
@@ -6063,6 +6066,9 @@ packages:
       picomatch:
         optional: true
 
+  fflate@0.4.8:
+    resolution: {integrity: sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==}
+
   file-entry-cache@10.0.7:
     resolution: {integrity: sha512-txsf5fu3anp2ff3+gOJJzRImtrtm/oa9tYLN0iTuINZ++EyVR/nRrg2fKYwvG/pXDofcrvvb0scEbX3NyW/COw==}
 
@@ -8955,6 +8961,17 @@ packages:
   postcss@8.5.3:
     resolution: {integrity: sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==}
     engines: {node: ^10 || ^12 || >=14}
+
+  posthog-js@1.245.1:
+    resolution: {integrity: sha512-I2HWR4VKAfX6Y8e/VtAq1DRUMcZi/1pjlpaRqDp60AGs0JnTiJ1F7o2ke52VTIs6gBnoZIQCe3Xh8z384hLMGQ==}
+    peerDependencies:
+      '@rrweb/types': 2.0.0-alpha.17
+      rrweb-snapshot: 2.0.0-alpha.17
+    peerDependenciesMeta:
+      '@rrweb/types':
+        optional: true
+      rrweb-snapshot:
+        optional: true
 
   preact@10.26.4:
     resolution: {integrity: sha512-KJhO7LBFTjP71d83trW+Ilnjbo+ySsaAgCfXOXUlmGzJ4ygYPWmysm77yg4emwfmoz3b22yvH5IsVFHbhUaH5w==}
@@ -19215,6 +19232,8 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
+  fflate@0.4.8: {}
+
   file-entry-cache@10.0.7:
     dependencies:
       flat-cache: 6.1.7
@@ -22605,6 +22624,13 @@ snapshots:
       nanoid: 3.3.8
       picocolors: 1.1.1
       source-map-js: 1.2.1
+
+  posthog-js@1.245.1:
+    dependencies:
+      core-js: 3.41.0
+      fflate: 0.4.8
+      preact: 10.26.4
+      web-vitals: 4.2.4
 
   preact@10.26.4: {}
 
