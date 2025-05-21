@@ -48,17 +48,22 @@ export default class Highlights {
 				this.renderBoxes.set(source, renderBox);
 			}
 
+			const host = renderBox.getShadowHost();
+			host.id = 'harper-highlight-host';
+
 			const rect = getInitialContainingRect(renderBox.getShadowHost());
 
 			if (rect != null) {
-				renderBox.getShadowHost().style.contain = 'layout';
-				renderBox.getShadowHost().style.position = 'fixed';
-				renderBox.getShadowHost().style.left = `${-rect.x}px`;
-				renderBox.getShadowHost().style.top = `${-rect.y}px`;
-				renderBox.getShadowHost().style.width = '100vw';
-				renderBox.getShadowHost().style.height = '100vh';
-				renderBox.getShadowHost().style.zIndex = '100';
-				renderBox.getShadowHost().style.pointerEvents = 'none';
+				const hostStyle = host.style;
+
+				hostStyle.contain = 'layout';
+				hostStyle.position = 'fixed';
+				hostStyle.left = `${-rect.x}px`;
+				hostStyle.top = `${-rect.y}px`;
+				hostStyle.width = '100vw';
+				hostStyle.height = '100vh';
+				hostStyle.zIndex = '100';
+				hostStyle.pointerEvents = 'none';
 			}
 
 			renderBox.render(this.renderTree(boxes));
@@ -100,7 +105,9 @@ export default class Highlights {
 						pointerEvents: 'none',
 						zIndex: 10,
 						borderBottom: `2px solid ${lintKindColor(box.lint.lint_kind)}`,
+						backgroundColor: `${lintKindColor(box.lint.lint_kind)}22`,
 					},
+					id: 'harper-highlight',
 				},
 				[],
 			);

@@ -73,7 +73,7 @@ export default class TextFieldRange {
 			left: `${fieldRect.left + scrollLeft}px`,
 			width: `${fieldRect.width}px`,
 			height: `${fieldRect.height}px`,
-			overflow: 'scroll',
+			boxSizing: 'border-box',
 			// For a textarea, use "pre-wrap" (so line-breaks are preserved); for a single‑line input, use "pre"
 			whiteSpace: this.field.tagName.toLowerCase() === 'textarea' ? 'pre-wrap' : 'pre',
 			wordWrap: 'break-word',

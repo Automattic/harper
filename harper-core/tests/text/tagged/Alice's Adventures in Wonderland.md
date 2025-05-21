@@ -4486,8 +4486,8 @@
 # . NPrSg/V I/J/D NSg/I/V/J J/P   D   NPl   NPrSg/V/J/C . .
 >
 #
-> CHAPTER X         : The Lobster Quadrille
-# NSg/V   NPrSg/J/C . D   NSg/J   NSg/V/J
+> CHAPTER X       : The Lobster Quadrille
+# NSg/V   NPrSg/J . D   NSg/J   NSg/V/J
 >
 #
 > The Mock  Turtle sighed deeply , and drew  the back  of one       flapper across his   eyes .

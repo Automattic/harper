@@ -17,7 +17,7 @@ pub struct ImpliedInstantiatedCompoundNouns {
 impl Default for ImpliedInstantiatedCompoundNouns {
     fn default() -> Self {
         let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
-            meta.is_noun() && !meta.is_proper_noun()
+            meta.is_noun() && !meta.is_proper_noun() && !meta.is_verb()
         }));
         let pattern = SequencePattern::default()
             .then(split_pattern.clone())
