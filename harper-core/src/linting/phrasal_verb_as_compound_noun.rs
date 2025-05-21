@@ -155,7 +155,6 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                 if let TokenKind::Word(None) = &prev_tok.kind {
                     continue;
                 }
-                
             }
 
             let message = match confidence {
