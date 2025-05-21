@@ -45,12 +45,12 @@ impl PatternLinter for ImpliedOwnershipCompoundNouns {
         // "Let's" can technically be a possessive noun (of a lease, or a let in tennis, etc.)
         // but in practice it's almost always a contraction of "let us" before a verb
         // or a mistake for "lets", the 3rd person singular present form of "to let".
-        let word_apostrophe_s = matched_tokens[0].span.get_content(source);
-        if word_apostrophe_s
-            .iter()
-            .map(|&c| c.to_ascii_lowercase())
-            .eq(['l', 'e', 't', '\'', 's'].iter().copied())
-        {
+        let word_apostrophe_s = matched_tokens[0]
+            .span
+            .get_content_string(source)
+            .to_ascii_lowercase()
+            .replace('’', "'");
+        if word_apostrophe_s == "let's" || word_apostrophe_s == "that's" {
             return None;
         }
         let span = matched_tokens[2..].span()?;
@@ -82,9 +82,27 @@ mod tests {
     use crate::linting::tests::assert_lint_count;
 
     #[test]
-    fn does_not_flag_lets() {
+    fn lets_is_not_possessive() {
         assert_lint_count(
             "Let's check out this article.",
+            ImpliedOwnershipCompoundNouns::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn lets_is_not_possessive_typographic_apostrophe() {
+        assert_lint_count(
+            "“Let’s go on with the game,” the Queen said to Alice;",
+            ImpliedOwnershipCompoundNouns::default(),
+            0,
+        )
+    }
+
+    #[test]
+    fn thats_is_not_possessive() {
+        assert_lint_count(
+            "And you might not be thinking that that's a very big issue, but ...",
             ImpliedOwnershipCompoundNouns::default(),
             0,
         );

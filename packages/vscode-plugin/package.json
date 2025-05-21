@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.36.0",
+	"version": "0.37.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -134,6 +134,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `a lot worst` to `a lot worse` for proper comparative usage."
+				},
+				"harper.linters.APart": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Finds and corrects common mistakes between 'a part' and 'apart'"
 				},
 				"harper.linters.AWholeEntire": {
 					"scope": "resource",
@@ -1826,6 +1832,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Fixes `suppose to` to the correct `supposed to`."
+				},
+				"harper.linters.TakeItPersonally": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `take it personal` to `take it personally`."
 				},
 				"harper.linters.TakeItSeriously": {
 					"scope": "resource",

@@ -29,8 +29,8 @@ Message: |
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
   - Replace with: “E”
-  - Replace with: “Es”
-  - Replace with: “EC”
+  - Replace with: “Ea”
+  - Replace with: “Eh”
 
 
 
@@ -67,8 +67,8 @@ Message: |
          |                    ^~ Did you mean to spell `NN` this way?
 Suggest:
   - Replace with: “Nun”
+  - Replace with: “N”
   - Replace with: “Non”
-  - Replace with: “N1”
 
 
 
@@ -229,16 +229,6 @@ Suggest:
   - Replace with: “We”
   - Replace with: “WA”
   - Replace with: “WC”
-
-
-
-Lint:    Style (63 priority)
-Message: |
-      94 | many years. A first approximation was done with a program by Greene and Rubin,
-      95 | which consisted of a huge handmade list of what categories could co-occur at
-         |       ^~~~~~~~~~~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “consisted a”
 
 
 
