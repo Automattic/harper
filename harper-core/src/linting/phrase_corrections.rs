@@ -1237,6 +1237,12 @@ pub fn lint_group() -> LintGroup {
             "A `decent amount` is a `fair bit`. `Fare` is the price of a ticket.",
             "Corrects malapropisms of `a fair bit`."
         ),
+        "TakeItPersonally" => (
+            ["take it personal"],
+            ["take it personally"],
+            "The more standard, less colloquial form is `take it personally`.",
+            "Corrects `take it personal` to `take it personally`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2692,6 +2698,15 @@ mod tests {
             "I've read through a fare bit of the ecosystem framework, but I am not clear on what is modified...",
             lint_group(),
             "I've read through a fair bit of the ecosystem framework, but I am not clear on what is modified...",
+        );
+    }
+
+    #[test]
+    fn corrects_take_it_personal() {
+        assert_suggestion_result(
+            "This is not personal, do not take it personal, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)",
+            lint_group(),
+            "This is not personal, do not take it personally, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)",
         );
     }
 }

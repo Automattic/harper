@@ -47,8 +47,6 @@ export default class LintFramework {
 			let text: string | null = null;
 
 			if (!document.contains(target)) {
-				console.log('Removing target because it has left the document.', target);
-				console.log(`There are ${this.targets.size} targets left.`);
 				this.targets.delete(target);
 				continue;
 			}

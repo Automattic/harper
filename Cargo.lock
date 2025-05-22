@@ -396,23 +396,20 @@ checksum = "773648b94d0e5d620f64f280777445740e61fe701025087ec8b57f45c791888b"
 
 [[package]]
 name = "criterion"
-version = "0.5.1"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f2b12d017a929603d80db1831cd3a24082f8137ce19c69e6447f54f5fc8d692f"
+checksum = "3bf7af66b0989381bd0be551bd7cc91912a655a58c6918420c9527b1fd8b4679"
 dependencies = [
  "anes",
  "cast",
  "ciborium",
  "clap",
  "criterion-plot",
- "is-terminal",
- "itertools 0.10.5",
+ "itertools 0.13.0",
  "num-traits",
- "once_cell",
  "oorandom",
  "regex",
  "serde",
- "serde_derive",
  "serde_json",
  "tinytemplate",
  "walkdir",
@@ -824,7 +821,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "0.35.0"
+version = "0.37.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -842,6 +839,7 @@ dependencies = [
  "tree-sitter-haskell",
  "tree-sitter-java",
  "tree-sitter-javascript",
+ "tree-sitter-kotlin",
  "tree-sitter-lua",
  "tree-sitter-nix",
  "tree-sitter-php",
@@ -856,7 +854,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.35.0"
+version = "0.37.0"
 dependencies = [
  "ammonia",
  "blanket",
@@ -891,7 +889,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.35.0"
+version = "0.37.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -902,7 +900,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.35.0"
+version = "0.37.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -913,7 +911,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.35.0"
+version = "0.37.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -941,7 +939,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.35.0"
+version = "0.37.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -952,7 +950,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.35.0"
+version = "0.37.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -960,7 +958,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.35.0"
+version = "0.37.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -1012,12 +1010,6 @@ name = "heck"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
-
-[[package]]
-name = "hermit-abi"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fbf6a919d6cf397374f7dfeeea91d974c7c0a7221d0d0f4f20d859d329e53fcc"
 
 [[package]]
 name = "html5ever"
@@ -1336,17 +1328,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "is-terminal"
-version = "0.4.15"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e19b23d53f35ce9f56aebc7d1bb4e6ac1e9c0db7ac85c8d1760c04379edced37"
-dependencies = [
- "hermit-abi",
- "libc",
- "windows-sys 0.59.0",
-]
-
-[[package]]
 name = "is-wsl"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1367,6 +1348,15 @@ name = "itertools"
 version = "0.10.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b0fd2260e829bddf4cb6ea802289de2f86d6a7a690192fbe91b3f46e0f2c8473"
+dependencies = [
+ "either",
+]
+
+[[package]]
+name = "itertools"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186"
 dependencies = [
  "either",
 ]
@@ -2795,6 +2785,16 @@ name = "tree-sitter-javascript"
 version = "0.20.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d015c02ea98b62c806f7329ff71c383286dfc3a7a7da0cc484f6e42922f73c2c"
+dependencies = [
+ "cc",
+ "tree-sitter",
+]
+
+[[package]]
+name = "tree-sitter-kotlin"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8df217a0e1fec649f3e13157de932439f3d37ea4e265038dd0873971ef56e726"
 dependencies = [
  "cc",
  "tree-sitter",

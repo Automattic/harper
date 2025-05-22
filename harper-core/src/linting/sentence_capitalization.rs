@@ -73,12 +73,15 @@ impl<T: Dictionary> Linter for SentenceCapitalization<T> {
                                 }
                             }
 
+                            let target_span = first_word.span;
+                            let mut replacement_chars =
+                                document.get_span_content(&target_span).to_vec();
+                            replacement_chars[0] = replacement_chars[0].to_ascii_uppercase();
+
                             lints.push(Lint {
-                                span: first_word.span.with_len(1),
+                                span: target_span,
                                 lint_kind: LintKind::Capitalization,
-                                suggestions: vec![Suggestion::ReplaceWith(
-                                    [first_char.to_ascii_uppercase()].to_vec(),
-                                )],
+                                suggestions: vec![Suggestion::ReplaceWith(replacement_chars)],
                                 priority: 31,
                                 message: "This sentence does not start with a capital letter"
                                     .to_string(),

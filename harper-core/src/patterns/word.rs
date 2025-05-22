@@ -46,16 +46,14 @@ impl SingleTokenPattern for Word {
         }
 
         let chars = token.span.get_content(source);
-        let eq = if self.exact {
+        if self.exact {
             chars == self.word.as_slice()
         } else {
             chars
                 .iter()
                 .zip(&self.word)
                 .all(|(a, b)| a.eq_ignore_ascii_case(b))
-        };
-
-        eq
+        }
     }
 }
 

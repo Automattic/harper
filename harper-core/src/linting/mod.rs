@@ -2,6 +2,7 @@
 //!
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
+mod a_part;
 mod adjective_of_a;
 mod an_a;
 mod ask_no_preposition;
@@ -45,6 +46,7 @@ mod map_phrase_linter;
 mod merge_linters;
 mod merge_words;
 mod modal_of;
+mod most_number;
 mod multiple_sequential_pronouns;
 mod nail_on_the_head;
 mod no_oxford_comma;
@@ -85,6 +87,7 @@ mod widely_accepted;
 mod win_prize;
 mod wordpress_dotcom;
 
+pub use a_part::APart;
 pub use adjective_of_a::AdjectiveOfA;
 pub use an_a::AnA;
 pub use ask_no_preposition::AskNoPreposition;
@@ -122,6 +125,7 @@ pub use long_sentences::LongSentences;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use merge_words::MergeWords;
 pub use modal_of::ModalOf;
+pub use most_number::MostNumber;
 pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
 pub use nail_on_the_head::NailOnTheHead;
 pub use no_oxford_comma::NoOxfordComma;

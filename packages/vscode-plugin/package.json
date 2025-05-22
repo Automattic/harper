@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.35.0",
+	"version": "0.37.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -37,6 +37,7 @@
 		"onLanguage:java",
 		"onLanguage:javascript",
 		"onLanguage:javascriptreact",
+		"onLanguage:kotlin",
 		"onLanguage:literate haskell",
 		"onLanguage:lua",
 		"onLanguage:markdown",
@@ -133,6 +134,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `a lot worst` to `a lot worse` for proper comparative usage."
+				},
+				"harper.linters.APart": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Finds and corrects common mistakes between 'a part' and 'apart'"
 				},
 				"harper.linters.AWholeEntire": {
 					"scope": "resource",
@@ -1322,6 +1329,12 @@
 					"default": true,
 					"description": "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage."
 				},
+				"harper.linters.MostNumber": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `most number` and `most amount`"
+				},
 				"harper.linters.MuchAdo": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1819,6 +1832,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Fixes `suppose to` to the correct `supposed to`."
+				},
+				"harper.linters.TakeItPersonally": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `take it personal` to `take it personally`."
 				},
 				"harper.linters.TakeItSeriously": {
 					"scope": "resource",
