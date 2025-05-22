@@ -3,9 +3,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |    ^~ Did you mean to spell `F.` this way?
 Suggest:
-  - Replace with: “Fa”
+  - Replace with: “F”
   - Replace with: “Ff”
-  - Replace with: “Fr”
+  - Replace with: “Fl”
 
 
 
@@ -14,9 +14,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |       ^~~~~ Did you mean to spell `SCOTT` this way?
 Suggest:
+  - Replace with: “Scot”
+  - Replace with: “SCM's”
   - Replace with: “SEO's”
-  - Replace with: “Alcott”
-  - Replace with: “Lott”
 
 
 
@@ -441,15 +441,6 @@ Message: |
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-     162 | He had changed since his New Haven years. Now he was a sturdy straw-haired man
-         |                          ^~~ Did you mean “knew” (the past tense of “know”)?
-Suggest:
-  - Replace with: “Knew”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      165 | appearance of always leaning aggressively forward. Not even the effeminate swank
@@ -560,16 +551,6 @@ Message: |
          |                            ^~~~~~~ Did you mean `That'll`?
 Suggest:
   - Replace with: “That'll”
-
-
-
-Lint:    Style (63 priority)
-Message: |
-     345 | do it. That’s what I get for marrying a brute of a man, a great, big, hulking
-         |                                         ^~~~~~~~~~ The word `of` is not needed here.
-     346 | physical specimen of a—”’
-Suggest:
-  - Replace with: “brute a”
 
 
 
@@ -847,7 +828,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -856,9 +837,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                         ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -881,7 +862,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -890,9 +871,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -981,7 +962,7 @@ Message: |
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bf”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -1005,6 +986,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      706 | door of an office, wiping his hands on a piece of waste. He was a blond,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Style (63 priority)
+Message: |
+     703 | dust-covered wreck of a Ford which crouched in a dim corner. It had occurred to
+     704 | me that this shadow of a garage must be a blind, and that sumptuous and romantic
+         |              ^~~~~~~~~~~ The word `of` is not needed here.
+Suggest:
+  - Replace with: “shadow a”
 
 
 
@@ -1084,9 +1075,9 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
+  - Replace with: “D”
+  - Replace with: “Db”
   - Replace with: “Dc”
-  - Replace with: “Dd”
-  - Replace with: “Do”
 
 
 
@@ -1255,7 +1246,7 @@ Message: |
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bf”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -1957,9 +1948,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
-         |               ^ This sentence does not start with a capital letter
+         |               ^~~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “S”
+  - Replace with: “Simply”
 
 
 
@@ -2017,7 +2008,7 @@ Message: |
 Suggest:
   - Replace with: “W12's”
   - Replace with: “WAL's”
-  - Replace with: “WNW's”
+  - Replace with: “WIP's”
 
 
 
@@ -2267,9 +2258,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Rm”
-  - Replace with: “R”
   - Replace with: “Re”
+  - Replace with: “R”
+  - Replace with: “Rd”
 
 
 
@@ -2278,9 +2269,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
-  - Replace with: “Pg”
-  - Replace with: “Pi”
+  - Replace with: “Pt”
+  - Replace with: “P”
+  - Replace with: “Pa”
 
 
 
@@ -2344,8 +2335,8 @@ Message: |
          |                            ^~ Did you mean to spell `S.` this way?
 Suggest:
   - Replace with: “Sf”
+  - Replace with: “Sh”
   - Replace with: “So”
-  - Replace with: “Sq”
 
 
 
@@ -2355,7 +2346,7 @@ Message: |
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bf”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -2366,9 +2357,9 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Ax”
-  - Replace with: “A”
+  - Replace with: “Aw”
   - Replace with: “Ab”
+  - Replace with: “Ac”
 
 
 
@@ -2447,8 +2438,8 @@ Message: |
          |                                                  ^~ Did you mean to spell `S.` this way?
 Suggest:
   - Replace with: “Sf”
+  - Replace with: “Sh”
   - Replace with: “So”
-  - Replace with: “Sq”
 
 
 
@@ -2491,7 +2482,7 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Gt”
-  - Replace with: “G”
+  - Replace with: “Go”
   - Replace with: “Gr”
 
 
@@ -2525,9 +2516,9 @@ Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
-  - Replace with: “Dab”
+  - Replace with: “D”
   - Replace with: “Dad”
-  - Replace with: “Dag”
+  - Replace with: “Dam”
 
 
 
@@ -2572,7 +2563,7 @@ Message: |
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bf”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -2583,7 +2574,7 @@ Message: |
          |                                         ^~ Did you mean to spell `De` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
-  - Replace with: “Dc”
+  - Replace with: “Db”
   - Replace with: “Dd”
   - Replace with: “Deb”
 
@@ -2736,8 +2727,8 @@ Message: |
          |             ^~ Did you mean to spell `S.` this way?
 Suggest:
   - Replace with: “Sf”
+  - Replace with: “Sh”
   - Replace with: “So”
-  - Replace with: “Sq”
 
 
 
@@ -2793,9 +2784,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “Lg”
+  - Replace with: “Lo”
   - Replace with: “La”
-  - Replace with: “LC”
+  - Replace with: “Ll”
 
 
 
@@ -2915,9 +2906,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
-  - Replace with: “Pg”
-  - Replace with: “Pi”
+  - Replace with: “Pt”
+  - Replace with: “P”
+  - Replace with: “Pa”
 
 
 
@@ -3385,15 +3376,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-    2212 | “Well!” I inspected them. “That’s a very interesting idea.”
-         |                                   ^~~~~~ The possessive noun implies ownership of the closed compound noun “Avery”.
-Suggest:
-  - Replace with: “Avery”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2218 | Mr. Wolfshiem drank his coffee with a jerk and got to his feet.
@@ -3734,9 +3716,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     2603 | “Of course, of course! They’re fine!” and he added hollowly, “. . . old sport.”
-         |                                                                     ^ This sentence does not start with a capital letter
+         |                                                                     ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “O”
+  - Replace with: “Old”
 
 
 
@@ -4407,19 +4389,6 @@ Suggest:
 
 
 
-Lint:    Style (63 priority)
-Message: |
-    3263 | “Perhaps you know that lady,” Gatsby indicated a gorgeous, scarcely human orchid
-         |                                                                           ^~~~~~~
-    3264 | of a woman who sat in state under a white-plum tree. Tom and Daisy stared, with
-         | ~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “orchid
-a”
-  - Replace with: “orchid a”
-
-
-
 Lint:    Formatting (63 priority)
 Message: |
     3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
@@ -4432,9 +4401,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
-         |                      ^ This sentence does not start with a capital letter
+         |                      ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “A”
+  - Replace with: “And”
 
 
 
@@ -4729,9 +4698,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     3607 | all . . . and as for your bothering me about it at lunch time, I won’t stand
-         |           ^ This sentence does not start with a capital letter
+         |           ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “A”
+  - Replace with: “And”
 
 
 
@@ -4929,7 +4898,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -4938,9 +4907,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                     ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -4964,15 +4933,6 @@ Suggest:
   - Replace with: “coup”
   - Replace with: “coupe”
   - Replace with: “coups”
-
-
-
-Lint:    Style (63 priority)
-Message: |
-    3923 | The coupé flashed by us with a flurry of dust and the flash of a waving hand.
-         |                                                       ^~~~~~~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “flash a”
 
 
 
@@ -5007,7 +4967,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -5016,9 +4976,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                       ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -5318,15 +5278,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-    4227 | “Daisy, that’s all over now,” he said earnestly. “It doesn’t matter any more.
-         |                ^~~~~~~~ The possessive noun implies ownership of the closed compound noun “allover”.
-Suggest:
-  - Replace with: “allover”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4241 | “Not at Kapiolani?” demanded Tom suddenly.
@@ -5430,15 +5381,6 @@ Message: |
          |    ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Style (63 priority)
-Message: |
-    4375 | I was thirty. Before me stretched the portentous, menacing road of a new decade.
-         |                                                            ^~~~~~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “road a”
 
 
 
@@ -5572,15 +5514,6 @@ Message: |
          |                                  ^~~~~~~~~ Did you mean `Wilson`?
 Suggest:
   - Replace with: “Wilson”
-
-
-
-Lint:    Style (63 priority)
-Message: |
-    4450 | I became aware now of a hollow, wailing sound which issued incessantly from the
-         |                ^~~~~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “now a”
 
 
 
@@ -6220,9 +6153,9 @@ Message: |
     5122 | ghost of a superior “Hm!”
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H”
+  - Replace with: “H'm”
+  - Replace with: “Ha”
   - Replace with: “Ham”
-  - Replace with: “He”
 
 
 
@@ -6273,7 +6206,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -6282,9 +6215,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -6382,9 +6315,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     5205 | like that ashen, fantastic figure gliding toward him through the amorphous
-         | ^ This sentence does not start with a capital letter
+         | ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “L”
+  - Replace with: “Like”
 
 
 
@@ -6609,9 +6542,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     5350 | exclamation . . . then a quick squawk as the connection was broken.
-         |                   ^ This sentence does not start with a capital letter
+         |                   ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “Then”
 
 
 
@@ -6622,7 +6555,7 @@ Message: |
 Suggest:
   - Replace with: “Cw”
   - Replace with: “C”
-  - Replace with: “Ca”
+  - Replace with: “Cc”
 
 
 
@@ -6720,9 +6653,9 @@ Message: |
     5412 | “If he’d of lived, he’d of been a great man. A man like James J. Hill. He’d of
          |                                                               ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -6749,7 +6682,7 @@ Message: |
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bf”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -6759,9 +6692,9 @@ Message: |
     5455 | and I’m sort of helpless without them. My address is care of B. F.———”
          |                                                                 ^~ Did you mean to spell `F.` this way?
 Suggest:
-  - Replace with: “Fa”
+  - Replace with: “F”
   - Replace with: “Ff”
-  - Replace with: “Fr”
+  - Replace with: “Fl”
 
 
 
@@ -6966,9 +6899,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     5653 | “Go on!” He started. “Why, my God! they used to go there by the hundreds.”
-         |                                    ^ This sentence does not start with a capital letter
+         |                                    ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “They”
 
 
 
@@ -7152,7 +7085,7 @@ Message: |
 Suggest:
   - Replace with: “Ea”
   - Replace with: “Ed”
-  - Replace with: “Eel”
+  - Replace with: “En”
 
 
 
@@ -7185,16 +7118,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5714 | leaf, her face the same brown tint as the fingerless glove on her knee. When I
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
-
-
-
-Lint:    Style (63 priority)
-Message: |
-    5713 | illustration, her chin raised a little jauntily, her hair the color of an autumn
-         |                                                               ^~~~~~~~~~~ The word `of` is not needed here.
-    5714 | leaf, her face the same brown tint as the fingerless glove on her knee. When I
-Suggest:
-  - Replace with: “color an”
 
 
 

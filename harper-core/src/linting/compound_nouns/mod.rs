@@ -302,4 +302,9 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn allow_can_not() {
+        assert_lint_count("Size can not be determined.", CompoundNouns::default(), 0);
+    }
 }
