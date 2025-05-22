@@ -337,16 +337,6 @@ Message: |
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-     148 | expensive since it enumerated all possibilities. It sometimes had to resort to
-     149 | backup methods when there were simply too many options (the Brown Corpus
-         | ^~~~~~ This word should be a phrasal verb, not a compound noun.
-Suggest:
-  - Replace with: “back up”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      153 | HMMs underlie the functioning of stochastic taggers and are used in various

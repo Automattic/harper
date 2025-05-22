@@ -141,7 +141,6 @@ impl Document {
         self.condense_ellipsis();
         self.condense_latin();
         self.match_quotes();
-        self.articles_imply_nouns();
 
         // annotate word metadata
         for token in self.tokens.iter_mut() {
@@ -154,17 +153,20 @@ impl Document {
 
         // refine and disambiguate word metadata
         self.known_preposition();
+        self.articles_imply_nouns();
         self.articles_imply_not_verb();
     }
 
     fn uncached_article_pattern() -> Lrc<SequencePattern> {
         Lrc::new(
             SequencePattern::default()
-                .then_determiner()
+                .then(|t: &Token, _source: &[char]| {
+                    t.kind.is_preposition() || t.kind.is_determiner()
+                })
                 .then_whitespace()
-                .then(|t: &Token, _source: &[char]| t.kind.is_adjective() && t.kind.is_noun())
+                .then(|t: &Token, _source: &[char]| t.kind.is_adjective() && t.kind.is_nominal())
                 .then_whitespace()
-                .then_noun(),
+                .then_nominal(),
         )
     }
 
@@ -183,7 +185,7 @@ impl Document {
         }
     }
 
-    /// A proposition-like word followed by a determiner or number is typically
+    /// A preposition-like word followed by a determiner or number is typically
     /// really a preposition.
     fn known_preposition(&mut self) {
         fn create_pattern() -> Lrc<SequencePattern> {
@@ -913,5 +915,15 @@ mod tests {
         let tok = doc.get_next_word_from_offset(0, 1);
 
         assert!(tok.is_none());
+    }
+
+    #[test]
+    fn removes_noun() {
+        let doc = Document::new_plain_english_curated("With one attack");
+
+        let tok = doc.get_token(2);
+
+        dbg!(tok);
+        assert!(!tok.unwrap().kind.is_noun());
     }
 }

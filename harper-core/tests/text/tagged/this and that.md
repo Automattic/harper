@@ -1,5 +1,5 @@
 > " This " and " that    " are common  and fulfill multiple purposes in        everyday English   .
-# . I/D  . V/C . N/I/C/D . V   NSg/V/J V/C V       NSg/J    NPl/V    NPrSg/J/P NSg/J    NPrSg/V/J .
+# . I/D  . V/C . N/I/C/D . V   NSg/V/J V/C V       NSg/J    NPl/V    NPrSg/J/P J        NPrSg/V/J .
 > As    such  , disambiguating them is necessary .
 # NSg/R NSg/I . V              N/I  VL NSg/J     .
 >
@@ -7,7 +7,7 @@
 > This document contains various sentences that    use   " this " , " that    " , " these " , and
 # I/D  NSg/V    V        J       NPl/V     N/I/C/D NSg/V . I/D  . . . N/I/C/D . . . I/D   . . V/C
 > " those " in        different contexts with a   lot   of edge  cases .
-# . I/D   . NPrSg/J/P NSg/J     NPl/V    P    D/P NPrSg P  NSg/V NPl/V .
+# . I/D   . NPrSg/J/P J         NPl/V    P    D/P NPrSg P  NSg/V NPl/V .
 >
 #
 > Examples

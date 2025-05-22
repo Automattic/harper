@@ -11,7 +11,7 @@
 >
 #
 > My favourite color      is blu .
-# D  NSg/J/Br  NSg/V/J/Am VL W?  .
+# D  J/Br      NSg/V/J/Am VL W?  .
 > I   must  defend my honour !
 # ISg NSg/V NSg/V  D  NSg/Br .
 > I   recognize that    you recognise me        .
