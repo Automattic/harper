@@ -126,7 +126,7 @@ impl LintGroupConfig {
     }
 
     /// Clear all config options.
-    /// This will reset them all to disabled.
+    /// This will reset them all to disable them.
     pub fn clear(&mut self) {
         for val in self.inner.values_mut() {
             *val = None
@@ -403,21 +403,18 @@ impl LintGroup {
         insert_pattern_rule!(WinPrize, true);
         insert_struct_rule!(WordPressDotcom, true);
 
-        out.add(
-            "SpellCheck",
-            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
-        );
+        out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
 
         out.add(
             "InflectedVerbAfterTo",
-            Box::new(InflectedVerbAfterTo::new(dictionary.clone(), dialect)),
+            InflectedVerbAfterTo::new(dictionary.clone(), dialect),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
 
         out.add(
             "SentenceCapitalization",
-            Box::new(SentenceCapitalization::new(dictionary.clone(), dialect)),
+            SentenceCapitalization::new(dictionary.clone(), dialect),
         );
         out.config.set_rule_enabled("SentenceCapitalization", true);
 
