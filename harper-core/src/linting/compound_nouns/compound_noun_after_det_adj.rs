@@ -31,7 +31,7 @@ impl Default for CompoundNounAfterDetAdj {
                 };
                 meta.determiner
                     || (meta.is_adjective()
-                        && tok.span.get_content_string(src).to_ascii_lowercase() != "go")
+                        && tok.span.get_content_string(src).to_lowercase() != "go")
             })
             .then_whitespace()
             .then(is_content_word)

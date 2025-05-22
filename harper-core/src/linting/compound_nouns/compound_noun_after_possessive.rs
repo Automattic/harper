@@ -63,7 +63,7 @@ impl PatternLinter for CompoundNounAfterPossessive {
         let word_apostrophe_s = matched_tokens[0]
             .span
             .get_content_string(source)
-            .to_ascii_lowercase()
+            .to_lowercase()
             .replace('’', "'");
         if word_apostrophe_s == "let's" || word_apostrophe_s == "that's" {
             return None;

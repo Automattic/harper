@@ -16,8 +16,8 @@
 # NSg/V NSg/V   NSg/V/J/P P  D  NSg  J    C/P   .
 >
 #
-> “ Whenever you feel      like        criticising any   one       , ” he      told me        , “ just remember that
-# . C        IPl NSg/I/V/J NSg/V/J/C/P V           I/R/D NSg/I/V/J . . NPr/ISg V    NPrSg/ISg . . V/J  NSg/V    N/I/C/D
+> “ Whenever you feel    like        criticising any   one       , ” he      told me        , “ just remember that
+# . C        IPl NSg/I/V NSg/V/J/C/P V           I/R/D NSg/I/V/J . . NPr/ISg V    NPrSg/ISg . . V/J  NSg/V    N/I/C/D
 > all       the people in this world haven’t had the advantages that    you’ve had . ”
 # NSg/I/J/C D   NSg    P  I/D  NSg/V V       V   D   NPl        N/I/C/D W?     V   . .
 >
@@ -720,8 +720,8 @@
 # NSg/V/J P  D   NSg    I      .
 >
 #
-> “ You make  me        feel      uncivilized , Daisy , ” I   confessed on my second glass   of corky
-# . IPl NSg/V NPrSg/ISg NSg/I/V/J V/J         . NPrSg . . ISg V/J       P  D  NSg/J  NPrSg/V P  ?
+> “ You make  me        feel    uncivilized , Daisy , ” I   confessed on my second glass   of corky
+# . IPl NSg/V NPrSg/ISg NSg/I/V V/J         . NPrSg . . ISg V/J       P  D  NSg/J  NPrSg/V P  ?
 > but     rather    impressive claret  . “ Can’t you talk  about crops or      something ? ”
 # NSg/C/P NPrSg/V/J J          NSg/V/J . . VX    IPl NSg/V J/P   NPl/V NPrSg/C NSg/I/V/J . .
 >
@@ -1024,8 +1024,8 @@
 # . J    N/I/J . .
 >
 #
-> “ I’ll show  you how   I’ve gotten to feel      about — things . Well    , she was less    than an
-# . W?   NSg/V IPl NSg/C W?   V/J    P  NSg/I/V/J J/P   . NPl/V  . NSg/V/J . ISg V   V/J/C/P C/P  D/P
+> “ I’ll show  you how   I’ve gotten to feel    about — things . Well    , she was less    than an
+# . W?   NSg/V IPl NSg/C W?   V/J    P  NSg/I/V J/P   . NPl/V  . NSg/V/J . ISg V   V/J/C/P C/P  D/P
 > hour old   and Tom     was God     knows where . I   woke    up        out         of the ether with an  utterly
 # NSg  NSg/J V/C NPrSg/V V   NPrSg/V NPl/V NSg/C . ISg NSg/V/J NSg/V/J/P NSg/V/J/R/P P  D   NSg   P    D/P J/R
 > abandoned feeling , and asked the nurse right     away if    it        was a   boy or      a   girl . She
@@ -1436,8 +1436,8 @@
 # . NSg/V NSg/V/J NSg/V/J . V     NPr/ISg . .
 >
 #
-> “ No      , he      doesn’t , ” said Tom     coldly . “ And if    you feel      that    way   about it        , maybe   I’d
-# . NPrSg/P . NPr/ISg V       . . V/J  NPrSg/V J/R    . . V/C NSg/C IPl NSg/I/V/J N/I/C/D NSg/J J/P   NPrSg/ISg . NSg/J/R W?
+> “ No      , he      doesn’t , ” said Tom     coldly . “ And if    you feel    that    way   about it        , maybe   I’d
+# . NPrSg/P . NPr/ISg V       . . V/J  NPrSg/V J/R    . . V/C NSg/C IPl NSg/I/V N/I/C/D NSg/J J/P   NPrSg/ISg . NSg/J/R W?
 > better   sell  it        somewhere else  after all       . ”
 # NSg/VX/J NSg/V NPrSg/ISg NSg       N/J/C J/P   NSg/I/J/C . .
 >
@@ -3500,8 +3500,8 @@
 # NPr    NPrSg/V NSg   . V/C NSg/V/J/P #  NPrSg/J NSg/V/J P  D   NPr          NSg/V   .
 >
 #
-> I   began to like        New     York , the racy , adventurous feel      of it        at        night , and the
-# ISg V     P  NSg/V/J/C/P NSg/V/J NPr  . D   J    . J           NSg/I/V/J P  NPrSg/ISg NSg/I/V/P NSg/V . V/C D
+> I   began to like        New     York , the racy , adventurous feel    of it        at        night , and the
+# ISg V     P  NSg/V/J/C/P NSg/V/J NPr  . D   J    . J           NSg/I/V P  NPrSg/ISg NSg/I/V/P NSg/V . V/C D
 > satisfaction that    the constant flicker of men and women and machines gives to
 # NSg          N/I/C/D D   NSg/J    NSg/V/J P  NSg V/C NPl   V/C NPl/V    NPl/V P
 > the restless eye   . I   liked to walk  up        Fifth   Avenue and pick  out         romantic women
@@ -5872,8 +5872,8 @@
 #
 > I   tried to go      then    , but     they wouldn’t hear of it        ; perhaps my presence made  them
 # ISg V/J   P  NSg/V/J NSg/J/C . NSg/C/P IPl  VX       V    P  NPrSg/ISg . NSg     D  NSg      NSg/V N/I
-> feel      more        satisfactorily alone .
-# NSg/I/V/J NPrSg/I/V/J R              J     .
+> feel    more        satisfactorily alone .
+# NSg/I/V NPrSg/I/V/J R              J     .
 >
 #
 > “ I   know  what  we'll do     , ” said Gatsby , “ we'll have   Klipspringer play  the piano . ”
@@ -6618,8 +6618,8 @@
 # V   V/J    NPrSg/ISg NSg/J/C V/J    NSg/J  P  D   NSg NPrSg/V/J/C .
 >
 #
-> “ How   do     you feel      , Miss  Baedeker ? ”
-# . NSg/C NSg/VX IPl NSg/I/V/J . NSg/V NPrSg    . .
+> “ How   do     you feel    , Miss  Baedeker ? ”
+# . NSg/C NSg/VX IPl NSg/I/V . NSg/V NPrSg    . .
 >
 #
 > The girl addressed was trying  , unsuccessfully , to slump against my shoulder . At
@@ -6862,8 +6862,8 @@
 # NPr/ISg V   NSg/J  . V/C ISg V/J     P  ISg/D NSg/J       NSg        .
 >
 #
-> “ I   feel      far     away from her   , ” he      said . “ It’s hard    to make  her   understand . ”
-# . ISg NSg/I/V/J NSg/V/J V/J  P    I/J/D . . NPr/ISg V/J  . . W?   NSg/V/J P  NSg/V I/J/D V          . .
+> “ I   feel    far     away from her   , ” he      said . “ It’s hard    to make  her   understand . ”
+# . ISg NSg/I/V NSg/V/J V/J  P    I/J/D . . NPr/ISg V/J  . . W?   NSg/V/J P  NSg/V I/J/D V          . .
 >
 #
 > “ You mean    about the dance ? ”
@@ -9684,8 +9684,8 @@
 # V   V/J     NPrSg/V/J/C . W?    V   D/P NSg/J   P  J       NSg/V   NPrSg/J/P N$      NPl/V   . ISg
 > didn’t see   why   he      couldn’t come    . She was feeling the pressure of the world
 # V      NSg/V NSg/V NPr/ISg V        NSg/V/P . ISg V   NSg/V/J D   NSg      P  D   NSg
-> outside   , and she wanted to see   him and feel      his   presence beside her   and be
-# NSg/V/J/P . V/C ISg V/J    P  NSg/V I   V/C NSg/I/V/J ISg/D NSg      P      I/J/D V/C NSg/VX
+> outside   , and she wanted to see   him and feel    his   presence beside her   and be
+# NSg/V/J/P . V/C ISg V/J    P  NSg/V I   V/C NSg/I/V ISg/D NSg      P      I/J/D V/C NSg/VX
 > reassured that    she was doing the right   thing after all       .
 # V/J       N/I/C/D ISg V   NSg/V D   NPrSg/J NSg/V J/P   NSg/I/J/C .
 >
@@ -11356,8 +11356,8 @@
 # D   NSg/J     V         NPl/V  P  D  NSg   . V/C D   NSg/J  NPl/V V/C NSg/V/J
 > bells in the frosty dark    and the shadows of holly wreaths thrown by      lighted
 # NPl/V P  D   J      NSg/V/J V/C D   NPl     P  NPrSg NSg/V   V/J    NSg/J/P V/J
-> windows on the snow  . I   am        part    of that    , a   little    solemn with the feel    of those
-# NPrPl/V P  D   NPrSg . ISg NPrSg/V/J NSg/V/J P  N/I/C/D . D/P NPrSg/I/J J      P    D   NSg/I/J P  I/D
+> windows on the snow  . I   am        part    of that    , a   little    solemn with the feel  of those
+# NPrPl/V P  D   NPrSg . ISg NPrSg/V/J NSg/V/J P  N/I/C/D . D/P NPrSg/I/J J      P    D   NSg/I P  I/D
 > long      winters , a   little    complacent from growing up        in the Carraway house   in a
 # NPrSg/V/J NPrPl/V . D/P NPrSg/I/J J          P    NSg/V   NSg/V/J/P P  D   ?        NPrSg/V P  D/P
 > city where dwellings are still   called through decades by a   family’s name  . I   see

@@ -26,8 +26,8 @@
 #
 > So        she was considering in her   own     mind  ( as    well    as    she could  , for the hot   day
 # NSg/I/J/C ISg V   V           P  I/J/D NSg/V/J NSg/V . NSg/R NSg/V/J NSg/R ISg NSg/VX . C/P D   NSg/J NPrSg
-> made  her   feel      very sleepy and stupid ) , whether the pleasure of making a
-# NSg/V I/J/D NSg/I/V/J J    NSg/J  V/C NSg/J  . . I/C     D   NSg      P  NSg/V  D/P
+> made  her   feel    very sleepy and stupid ) , whether the pleasure of making a
+# NSg/V I/J/D NSg/I/V J    NSg/J  V/C NSg/J  . . I/C     D   NSg      P  NSg/V  D/P
 > daisy - chain would  be     worth   the trouble of getting up        and picking the daisies ,
 # NPrSg . NSg/V NSg/VX NSg/VX NSg/V/J D   NSg     P  NSg/V   NSg/V/J/P V/C V       D   NPl     .
 > when    suddenly a   White   Rabbit with pink    eyes  ran   close   by her   .
@@ -354,8 +354,8 @@
 #
 > She ate   a   little    bit   , and said anxiously to herself , “ Which way   ? Which way   ? ” ,
 # ISg NSg/V D/P NPrSg/I/J NSg/V . V/C V/J  J/R       P  I       . . I/C   NSg/J . I/C   NSg/J . . .
-> holding her   hand  on the top   of her   head      to feel      which way   it        was growing , and
-# NSg/V   I/J/D NSg/V P  D   NSg/J P  I/J/D NPrSg/V/J P  NSg/I/V/J I/C   NSg/J NPrSg/ISg V   NSg/V   . V/C
+> holding her   hand  on the top   of her   head      to feel    which way   it        was growing , and
+# NSg/V   I/J/D NSg/V P  D   NSg/J P  I/J/D NPrSg/V/J P  NSg/I/V I/C   NSg/J NPrSg/ISg V   NSg/V   . V/C
 > she was quite surprised to find  that    she remained the same size  : to be     sure ,
 # ISg V   NSg   V/J       P  NSg/V N/I/C/D ISg V/J      D   I/J  NSg/V . P  NSg/VX J    .
 > this generally happens when    one       eats  cake  , but     Alice had got so        much  into the
@@ -1646,8 +1646,8 @@
 # . NSg/V/J . NSg     IPl V       NSg/V NPrSg/ISg NSg/I/J/C NSg/V/C . . V/J  NPr   . . NSg/C/P NSg/I/C IPl NSg/VX P
 > turn  into a   chrysalis — you will     some  day   , you know  — and then    after that    into a
 # NSg/V P    D/P NSg       . IPl NPrSg/VX I/J/R NPrSg . IPl NSg/V . V/C NSg/J/C J/P   N/I/C/D P    D/P
-> butterfly , I   should think you’ll feel      it        a   little    queer   , won’t you ? ”
-# NSg       . ISg VX     NSg/V W?     NSg/I/V/J NPrSg/ISg D/P NPrSg/I/J NSg/V/J . V     IPl . .
+> butterfly , I   should think you’ll feel    it        a   little    queer   , won’t you ? ”
+# NSg       . ISg VX     NSg/V W?     NSg/I/V NPrSg/ISg D/P NPrSg/I/J NSg/V/J . V     IPl . .
 >
 #
 > “ Not   a   bit , ” said the Caterpillar .
@@ -1656,8 +1656,8 @@
 #
 > “ Well    , perhaps your feelings may      be     different , ” said Alice ; “ all       I   know  is , it
 # . NSg/V/J . NSg     D    W?       NPrSg/VX NSg/VX NSg/J     . . V/J  NPr   . . NSg/I/J/C ISg NSg/V VL . NPrSg/ISg
-> would  feel      very queer   to me        . ”
-# NSg/VX NSg/I/V/J J    NSg/V/J P  NPrSg/ISg . .
+> would  feel    very queer   to me        . ”
+# NSg/VX NSg/I/V J    NSg/V/J P  NPrSg/ISg . .
 >
 #
 > “ You ! ” said the Caterpillar contemptuously . “ Who     are you ? ”
@@ -3672,8 +3672,8 @@
 # . NSg/V/J/P P    I/J/D NPrSg/V/J . . J/P   NSg/C P  D/P NSg/J  .
 >
 #
-> Alice began to feel      very uneasy  : to be     sure , she had not   as    yet     had any   dispute
-# NPr   V     P  NSg/I/V/J J    NSg/V/J . P  NSg/VX J    . ISg V   NSg/C NSg/R NSg/V/C V   I/R/D NSg/V
+> Alice began to feel    very uneasy  : to be     sure , she had not   as    yet     had any   dispute
+# NPr   V     P  NSg/I/V J    NSg/V/J . P  NSg/VX J    . ISg V   NSg/C NSg/R NSg/V/C V   I/R/D NSg/V
 > with the Queen , but     she knew that    it        might    happen any   minute  , “ and then    , ”
 # P    D   NPrSg . NSg/C/P ISg V    N/I/C/D NPrSg/ISg NSg/VX/J V      I/R/D NSg/V/J . . V/C NSg/J/C . .
 > thought she , “ what  would  become of me        ? They’re dreadfully fond    of beheading
@@ -4084,8 +4084,8 @@
 # . V        P     . . D   NSg     V/J   . P    I/D     NSg/V P  I/J/D NPrSg/V/J NPrSg/I/J NPrSg/V .
 >
 #
-> “ I’ve a   right   to think , ” said Alice sharply , for she was beginning to feel      a
-# . W?   D/P NPrSg/J P  NSg/V . . V/J  NPr   J/R     . C/P ISg V   NSg/V/J   P  NSg/I/V/J D/P
+> “ I’ve a   right   to think , ” said Alice sharply , for she was beginning to feel    a
+# . W?   D/P NPrSg/J P  NSg/V . . V/J  NPr   J/R     . C/P ISg V   NSg/V/J   P  NSg/I/V D/P
 > little    worried .
 # NPrSg/I/J V/J     .
 >
@@ -4402,8 +4402,8 @@
 # D/P NSg       . .
 >
 #
-> Alice did not   feel      encouraged to ask   any   more        questions about it        , so        she turned
-# NPr   V   NSg/C NSg/I/V/J V/J        P  NSg/V I/R/D NPrSg/I/V/J NPl/V     J/P   NPrSg/ISg . NSg/I/J/C ISg V/J
+> Alice did not   feel    encouraged to ask   any   more        questions about it        , so        she turned
+# NPr   V   NSg/C NSg/I/V V/J        P  NSg/V I/R/D NPrSg/I/V/J NPl/V     J/P   NPrSg/ISg . NSg/I/J/C ISg V/J
 > to the Mock  Turtle , and said “ What  else  had you to learn ? ”
 # P  D   NSg/J NSg/V  . V/C V/J  . NSg/I N/J/C V   IPl P  NSg/V . .
 >
@@ -5988,8 +5988,8 @@
 # NSg/V  J/P   I/J/D NSg/V/J NPrSg/I/J NPl      . V/C NSg/V D     NPl  NPrSg/V/J V/C NSg/V/J
 > with many    a   strange tale  , perhaps even    with the dream of Wonderland of long      ago :
 # P    N/I/J/D D/P NSg/J   NSg/V . NSg     NSg/V/J P    D   NSg/J P  NSg        P  NPrSg/V/J J/P .
-> and how   she would  feel      with all       their simple sorrows , and find  a   pleasure in        all
-# V/C NSg/C ISg NSg/VX NSg/I/V/J P    NSg/I/J/C D     NSg/J  NPl/V   . V/C NSg/V D/P NSg      NPrSg/J/P NSg/I/J/C
+> and how   she would  feel    with all       their simple sorrows , and find  a   pleasure in        all
+# V/C NSg/C ISg NSg/VX NSg/I/V P    NSg/I/J/C D     NSg/J  NPl/V   . V/C NSg/V D/P NSg      NPrSg/J/P NSg/I/J/C
 > their simple joys  , remembering her   own     child - life  , and the happy summer  days .
 # D     NSg/J  NPl/V . V           I/J/D NSg/V/J NSg/V . NSg/V . V/C D   NSg/J NPrSg/V NPl  .
 >

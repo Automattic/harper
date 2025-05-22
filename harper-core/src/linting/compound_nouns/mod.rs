@@ -14,7 +14,7 @@ pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
     tok.span.len() > 1
         && (meta.is_noun() || meta.is_adjective())
         && !meta.determiner
-        && (!meta.preposition || tok.span.get_content_string(src).to_ascii_lowercase() == "bar")
+        && (!meta.preposition || tok.span.get_content_string(src).to_lowercase() == "bar")
         && !meta.is_adverb()
         && !meta.is_conjunction()
         && !meta.is_pronoun()
