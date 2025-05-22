@@ -25,11 +25,13 @@ pub struct CompoundNounAfterDetAdj {
 impl Default for CompoundNounAfterDetAdj {
     fn default() -> Self {
         let context_pattern = SequencePattern::default()
-            .then(|tok: &Token, _: &[char]| {
+            .then(|tok: &Token, src: &[char]| {
                 let Some(Some(meta)) = tok.kind.as_word() else {
                     return false;
                 };
-                meta.determiner || meta.is_adjective()
+                meta.determiner
+                    || (meta.is_adjective()
+                        && tok.span.get_content_string(src).to_ascii_lowercase() != "go")
             })
             .then_whitespace()
             .then(is_content_word)

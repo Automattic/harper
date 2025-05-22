@@ -1289,16 +1289,6 @@ Message: |
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-     550 | committed; but when not committed within any State, the Trial shall be at such
-     551 | Place or Places as the Congress may by Law have directed.
-         |                                     ^~~~~~ The auxiliary verb “have” implies the existence of the closed compound noun “bylaw”.
-Suggest:
-  - Replace with: “byLaw”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      561 | Attainder of Treason shall work Corruption of Blood, or Forfeiture except

@@ -1,8 +1,10 @@
 use crate::{
-    CharStringExt, Lrc, TokenStringExt, linting::PatternLinter, patterns::SplitCompoundWord,
+    CharStringExt, Lrc, TokenStringExt,
+    linting::PatternLinter,
+    patterns::{All, SplitCompoundWord},
 };
 
-use super::{Lint, LintKind, Suggestion, create_split_pattern};
+use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
 
 use crate::{
     Token,
@@ -23,11 +25,24 @@ pub struct CompoundNounAfterPossessive {
 
 impl Default for CompoundNounAfterPossessive {
     fn default() -> Self {
-        let split_pattern = create_split_pattern();
-        let pattern = SequencePattern::default()
+        let context_pattern = SequencePattern::default()
             .then_possessive_nominal()
-            .then_whitespace()
-            .then(split_pattern.clone());
+            .t_ws()
+            .then(is_content_word)
+            .t_ws()
+            .then(is_content_word);
+
+        let split_pattern = create_split_pattern();
+
+        let mut pattern = All::default();
+
+        pattern.add(Box::new(context_pattern));
+        pattern.add(Box::new(
+            SequencePattern::default()
+                .then_anything()
+                .then_anything()
+                .then(split_pattern.clone()),
+        ));
 
         Self {
             pattern: Box::new(pattern),

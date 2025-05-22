@@ -1,8 +1,10 @@
 use crate::{
-    CharStringExt, Lrc, TokenStringExt, linting::PatternLinter, patterns::SplitCompoundWord,
+    CharStringExt, Lrc, TokenStringExt,
+    linting::PatternLinter,
+    patterns::{All, SplitCompoundWord},
 };
 
-use super::{Lint, LintKind, Suggestion, create_split_pattern};
+use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
 
 use crate::{
     Token,
@@ -17,11 +19,22 @@ pub struct CompoundNounBeforeAuxVerb {
 
 impl Default for CompoundNounBeforeAuxVerb {
     fn default() -> Self {
+        let context_pattern = SequencePattern::default()
+            .then(is_content_word)
+            .t_ws()
+            .then(is_content_word)
+            .then_auxiliary_verb();
+
         let split_pattern = create_split_pattern();
-        let pattern = SequencePattern::default()
-            .then(split_pattern.clone())
-            .then_whitespace()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_auxiliary_verb());
+
+        let mut pattern = All::default();
+        pattern.add(Box::new(context_pattern));
+        pattern.add(Box::new(
+            SequencePattern::default()
+                .then(split_pattern.clone())
+                .then_anything()
+                .then_anything(),
+        ));
 
         Self {
             pattern: Box::new(pattern),
