@@ -12,7 +12,7 @@ use crate::{
 };
 
 /// Two adjacent words separated by whitespace that if joined would be a valid noun.
-pub struct GeneralCompoundNouns {
+pub struct CompoundNounAfterDetAdj {
     pattern: Box<dyn Pattern>,
     split_pattern: Lrc<SplitCompoundWord>,
 }
@@ -22,7 +22,7 @@ pub struct GeneralCompoundNouns {
 // 2. Followed by two content words (not determiners, adverbs, or prepositions)
 // 3. Finally, checking if the combination forms a noun in the dictionary
 //    that is not also an adjective
-impl Default for GeneralCompoundNouns {
+impl Default for CompoundNounAfterDetAdj {
     fn default() -> Self {
         let context_pattern = SequencePattern::default()
             .then(|tok: &Token, _: &[char]| {
@@ -54,7 +54,7 @@ impl Default for GeneralCompoundNouns {
     }
 }
 
-impl PatternLinter for GeneralCompoundNouns {
+impl PatternLinter for CompoundNounAfterDetAdj {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }

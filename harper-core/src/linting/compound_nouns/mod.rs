@@ -1,6 +1,6 @@
-mod general_compound_nouns;
-mod implied_instantiated_compound_nouns;
-mod implied_ownership_compound_nouns;
+mod compound_noun_after_det_adj;
+mod compound_noun_before_aux_verb;
+mod compound_noun_after_possessive;
 
 use super::{Lint, LintKind, Suggestion, merge_linters::merge_linters};
 use crate::{Lrc, Token, patterns::SplitCompoundWord};
@@ -26,11 +26,11 @@ pub(crate) fn create_split_pattern() -> Lrc<SplitCompoundWord> {
     }))
 }
 
-use general_compound_nouns::GeneralCompoundNouns;
-use implied_instantiated_compound_nouns::ImpliedInstantiatedCompoundNouns;
-use implied_ownership_compound_nouns::ImpliedOwnershipCompoundNouns;
+use compound_noun_after_det_adj::CompoundNounAfterDetAdj;
+use compound_noun_before_aux_verb::CompoundNounBeforeAuxVerb;
+use compound_noun_after_possessive::CompoundNounAfterPossessive;
 
-merge_linters!(CompoundNouns => GeneralCompoundNouns, ImpliedInstantiatedCompoundNouns, ImpliedOwnershipCompoundNouns => "Detects compound nouns split by a space and suggests merging them when both parts form a valid noun." );
+merge_linters!(CompoundNouns => CompoundNounAfterDetAdj, CompoundNounBeforeAuxVerb, CompoundNounAfterPossessive => "Detects compound nouns split by a space and suggests merging them when both parts form a valid noun." );
 
 #[cfg(test)]
 mod tests {

@@ -16,12 +16,12 @@ use crate::{
 /// harper-core/src/linting/lets_confusion/let_us_redundancy.rs
 /// harper-core/src/linting/lets_confusion/no_contraction_with_verb.rs
 /// harper-core/src/linting/pronoun_contraction/should_contract.rs
-pub struct ImpliedOwnershipCompoundNouns {
+pub struct CompoundNounAfterPossessive {
     pattern: Box<dyn Pattern>,
     split_pattern: Lrc<SplitCompoundWord>,
 }
 
-impl Default for ImpliedOwnershipCompoundNouns {
+impl Default for CompoundNounAfterPossessive {
     fn default() -> Self {
         let split_pattern = create_split_pattern();
         let pattern = SequencePattern::default()
@@ -36,7 +36,7 @@ impl Default for ImpliedOwnershipCompoundNouns {
     }
 }
 
-impl PatternLinter for ImpliedOwnershipCompoundNouns {
+impl PatternLinter for CompoundNounAfterPossessive {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }
@@ -78,14 +78,14 @@ impl PatternLinter for ImpliedOwnershipCompoundNouns {
 
 #[cfg(test)]
 mod tests {
-    use super::ImpliedOwnershipCompoundNouns;
+    use super::CompoundNounAfterPossessive;
     use crate::linting::tests::assert_lint_count;
 
     #[test]
     fn lets_is_not_possessive() {
         assert_lint_count(
             "Let's check out this article.",
-            ImpliedOwnershipCompoundNouns::default(),
+            CompoundNounAfterPossessive::default(),
             0,
         );
     }
@@ -94,7 +94,7 @@ mod tests {
     fn lets_is_not_possessive_typographic_apostrophe() {
         assert_lint_count(
             "“Let’s go on with the game,” the Queen said to Alice;",
-            ImpliedOwnershipCompoundNouns::default(),
+            CompoundNounAfterPossessive::default(),
             0,
         )
     }
@@ -103,7 +103,7 @@ mod tests {
     fn thats_is_not_possessive() {
         assert_lint_count(
             "And you might not be thinking that that's a very big issue, but ...",
-            ImpliedOwnershipCompoundNouns::default(),
+            CompoundNounAfterPossessive::default(),
             0,
         );
     }

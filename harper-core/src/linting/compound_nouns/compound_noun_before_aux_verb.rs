@@ -10,12 +10,12 @@ use crate::{
 };
 
 /// Two adjacent words separated by whitespace that if joined would be a valid noun.
-pub struct ImpliedInstantiatedCompoundNouns {
+pub struct CompoundNounBeforeAuxVerb {
     pattern: Box<dyn Pattern>,
     split_pattern: Lrc<SplitCompoundWord>,
 }
 
-impl Default for ImpliedInstantiatedCompoundNouns {
+impl Default for CompoundNounBeforeAuxVerb {
     fn default() -> Self {
         let split_pattern = create_split_pattern();
         let pattern = SequencePattern::default()
@@ -30,7 +30,7 @@ impl Default for ImpliedInstantiatedCompoundNouns {
     }
 }
 
-impl PatternLinter for ImpliedInstantiatedCompoundNouns {
+impl PatternLinter for CompoundNounBeforeAuxVerb {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }
