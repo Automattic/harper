@@ -4,7 +4,7 @@ use crate::{
     patterns::{All, SplitCompoundWord},
 };
 
-use super::{Lint, LintKind, Suggestion};
+use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
 
 use crate::{
     Lrc, Token,
@@ -24,19 +24,6 @@ pub struct GeneralCompoundNouns {
 //    that is not also an adjective
 impl Default for GeneralCompoundNouns {
     fn default() -> Self {
-        // Helper function to check if a token is a content word (not a function word)
-        fn is_content_word(tok: &Token, _: &[char]) -> bool {
-            let Some(Some(meta)) = tok.kind.as_word() else {
-                return false;
-            };
-
-            tok.span.len() > 1
-                && !meta.determiner
-                && !meta.preposition
-                && !meta.is_adverb()
-                && !meta.is_conjunction()
-        }
-
         let context_pattern = SequencePattern::default()
             .then(|tok: &Token, _: &[char]| {
                 let Some(Some(meta)) = tok.kind.as_word() else {
@@ -49,9 +36,7 @@ impl Default for GeneralCompoundNouns {
             .then_whitespace()
             .then(is_content_word);
 
-        let compound_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
-            meta.is_noun() && !meta.is_adjective()
-        }));
+        let split_pattern = create_split_pattern();
 
         let mut pattern = All::default();
         pattern.add(Box::new(context_pattern));
@@ -59,12 +44,12 @@ impl Default for GeneralCompoundNouns {
             SequencePattern::default()
                 .then_anything()
                 .then_anything()
-                .then(compound_pattern.clone()),
+                .then(split_pattern.clone()),
         ));
 
         Self {
             pattern: Box::new(pattern),
-            split_pattern: compound_pattern,
+            split_pattern,
         }
     }
 }

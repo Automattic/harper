@@ -3,6 +3,28 @@ mod implied_instantiated_compound_nouns;
 mod implied_ownership_compound_nouns;
 
 use super::{Lint, LintKind, Suggestion, merge_linters::merge_linters};
+use crate::{Lrc, Token, patterns::SplitCompoundWord};
+
+// Helper function to check if a token is a content word (not a function word)
+pub(crate) fn is_content_word(tok: &Token, _: &[char]) -> bool {
+    let Some(Some(meta)) = tok.kind.as_word() else {
+        return false;
+    };
+
+    tok.span.len() > 1
+        && !meta.determiner
+        && !meta.preposition
+        && !meta.is_adverb()
+        && !meta.is_conjunction()
+        && !meta.is_pronoun()
+        && !meta.is_auxiliary_verb()
+}
+
+pub(crate) fn create_split_pattern() -> Lrc<SplitCompoundWord> {
+    Lrc::new(SplitCompoundWord::new(|meta| {
+        meta.is_noun() && !meta.is_proper_noun()
+    }))
+}
 
 use general_compound_nouns::GeneralCompoundNouns;
 use implied_instantiated_compound_nouns::ImpliedInstantiatedCompoundNouns;
@@ -324,5 +346,23 @@ mod tests {
     #[test]
     fn allow_can_not() {
         assert_lint_count("Size can not be determined.", CompoundNouns::default(), 0);
+    }
+
+    #[test]
+    fn dont_flag_lot_to() {
+        assert_lint_count(
+            "but you'd have to raise taxes a lot to do it.",
+            CompoundNouns::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_to_me() {
+        assert_lint_count(
+            "There's no massive damage to the rockers or anything that to me would indicate that like the whole front of the car was off",
+            CompoundNouns::default(),
+            0,
+        );
     }
 }

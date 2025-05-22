@@ -2,13 +2,14 @@ use crate::{
     CharStringExt, Lrc, TokenStringExt, linting::PatternLinter, patterns::SplitCompoundWord,
 };
 
-use super::{Lint, LintKind, Suggestion};
+use super::{Lint, LintKind, Suggestion, create_split_pattern};
 
 use crate::{
     Token,
     patterns::{Pattern, SequencePattern},
 };
 
+/// Two adjacent words separated by whitespace that if joined would be a valid noun.
 pub struct ImpliedInstantiatedCompoundNouns {
     pattern: Box<dyn Pattern>,
     split_pattern: Lrc<SplitCompoundWord>,
@@ -16,9 +17,7 @@ pub struct ImpliedInstantiatedCompoundNouns {
 
 impl Default for ImpliedInstantiatedCompoundNouns {
     fn default() -> Self {
-        let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
-            meta.is_noun() && !meta.is_proper_noun() && !meta.is_verb()
-        }));
+        let split_pattern = create_split_pattern();
         let pattern = SequencePattern::default()
             .then(split_pattern.clone())
             .then_whitespace()

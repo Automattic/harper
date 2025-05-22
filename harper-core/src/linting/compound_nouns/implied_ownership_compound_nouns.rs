@@ -2,7 +2,7 @@ use crate::{
     CharStringExt, Lrc, TokenStringExt, linting::PatternLinter, patterns::SplitCompoundWord,
 };
 
-use super::{Lint, LintKind, Suggestion};
+use super::{Lint, LintKind, Suggestion, create_split_pattern};
 
 use crate::{
     Token,
@@ -23,7 +23,7 @@ pub struct ImpliedOwnershipCompoundNouns {
 
 impl Default for ImpliedOwnershipCompoundNouns {
     fn default() -> Self {
-        let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| meta.is_noun()));
+        let split_pattern = create_split_pattern();
         let pattern = SequencePattern::default()
             .then_possessive_nominal()
             .then_whitespace()
