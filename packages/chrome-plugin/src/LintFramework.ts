@@ -144,10 +144,12 @@ function getScrollableAncestors(element: Element): Element[] {
 		const { overflowY, overflowX } = style;
 		// Vertical scroll check: overflow-y is scrollable and content overflows
 		const canScrollY =
-			(overflowY === 'auto' || overflowY === 'scroll') && parent.scrollHeight > parent.clientHeight;
+			(overflowY.includes('auto') || overflowY.includes('scroll')) &&
+			parent.scrollHeight > parent.clientHeight;
 		// Horizontal scroll check: overflow-x is scrollable and content overflows
 		const canScrollX =
-			(overflowX === 'auto' || overflowX === 'scroll') && parent.scrollWidth > parent.clientWidth;
+			(overflowX.includes('auto') || overflowX.includes('scroll')) &&
+			parent.scrollWidth > parent.clientWidth;
 		if (canScrollY || canScrollX) {
 			scrollables.push(parent);
 		}
