@@ -68,7 +68,7 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): I
 
 function replaceValue(el: HTMLElement, value: string) {
 	const slateRoot = getSlateRoot(el);
-  const lexicalRoot = getLexicalRoot(el)
+	const lexicalRoot = getLexicalRoot(el);
 
 	if (isFormEl(el)) {
 		el.value = value;
