@@ -88,6 +88,8 @@ use crate::linting::{closed_compounds, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
 
+/// The configuration for a [`LintGroup`].
+/// Each child linter can be enabled, disabled, or set to a curated value.
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
 #[serde(transparent)]
 pub struct LintGroupConfig {
@@ -124,7 +126,7 @@ impl LintGroupConfig {
     }
 
     /// Clear all config options.
-    /// This will reset them all to disabled.
+    /// This will reset them all to disable them.
     pub fn clear(&mut self) {
         for val in self.inner.values_mut() {
             *val = None
@@ -175,6 +177,8 @@ impl Hash for LintGroupConfig {
     }
 }
 
+/// A struct for collecting the output of a number of individual [Linter]s.
+/// Each child can be toggled via the public, mutable [Self::config] object.
 pub struct LintGroup {
     pub config: LintGroupConfig,
     /// We use a binary map here so the ordering is stable.
@@ -209,11 +213,12 @@ impl LintGroup {
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
-    pub fn add(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter>) -> bool {
+    pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
         if self.contains_key(&name) {
             false
         } else {
-            self.linters.insert(name.as_ref().to_string(), linter);
+            self.linters
+                .insert(name.as_ref().to_string(), Box::new(linter));
             true
         }
     }
@@ -226,13 +231,13 @@ impl LintGroup {
     pub fn add_pattern_linter(
         &mut self,
         name: impl AsRef<str>,
-        linter: Box<dyn PatternLinter>,
+        linter: impl PatternLinter + 'static,
     ) -> bool {
         if self.contains_key(&name) {
             false
         } else {
             self.pattern_linters
-                .insert(name.as_ref().to_string(), linter);
+                .insert(name.as_ref().to_string(), Box::new(linter));
             true
         }
     }
@@ -306,7 +311,7 @@ impl LintGroup {
 
         macro_rules! insert_struct_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add(stringify!($rule), Box::new($rule::default()));
+                out.add(stringify!($rule), $rule::default());
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -314,7 +319,7 @@ impl LintGroup {
 
         macro_rules! insert_pattern_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add_pattern_linter(stringify!($rule), Box::new($rule::default()));
+                out.add_pattern_linter(stringify!($rule), $rule::default());
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -398,21 +403,18 @@ impl LintGroup {
         insert_pattern_rule!(WinPrize, true);
         insert_struct_rule!(WordPressDotcom, true);
 
-        out.add(
-            "SpellCheck",
-            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
-        );
+        out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
 
         out.add(
             "InflectedVerbAfterTo",
-            Box::new(InflectedVerbAfterTo::new(dictionary.clone(), dialect)),
+            InflectedVerbAfterTo::new(dictionary.clone(), dialect),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
 
         out.add(
             "SentenceCapitalization",
-            Box::new(SentenceCapitalization::new(dictionary.clone(), dialect)),
+            SentenceCapitalization::new(dictionary.clone(), dialect),
         );
         out.config.set_rule_enabled("SentenceCapitalization", true);
 
