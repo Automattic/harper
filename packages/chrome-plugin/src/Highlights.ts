@@ -9,6 +9,7 @@ import {
 	getLexicalRoot,
 	getMediumRoot,
 	getNotionRoot,
+	getP2Root,
 	getQuillJsRoot,
 	getShredditComposerRoot,
 	getSlateRoot,
@@ -132,6 +133,7 @@ export default class Highlights {
 			getShredditComposerRoot,
 			getQuillJsRoot,
 			getLexicalRoot,
+			getP2Root,
 			getTrixRoot,
 		];
 
