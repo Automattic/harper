@@ -390,7 +390,7 @@
 					},
 					"metadata": {
 						"verb": {
-							"tense": "Present"
+							"verb_form": "ThirdPersonSingularPresentForm"
 						}
 					}
 				}
@@ -460,7 +460,7 @@
 				{
 					"metadata": {
 						"verb": {
-							"tense": "Present"
+							"verb_form": "ProgressiveForm"
 						},
 						"noun": null,
 						"adjective": null

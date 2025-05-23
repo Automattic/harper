@@ -22,32 +22,15 @@ impl Default for NoContractionWithVerb {
             .then(WordSet::new(&["lets", "let"]))
             .then_whitespace();
 
-        // Word is only a verb, and not the gerund/present participle/progressive -ing form.
-        // Only tests the next word after "let".
-        let non_ing_verb = SequencePattern::default().then(|tok: &Token, source: &[char]| {
+        // Match verbs that are only verbs (not also nouns/adjectives) and not in -ing form
+        let non_ing_verb = SequencePattern::default().then(|tok: &Token, _src: &[char]| {
             let Some(Some(meta)) = tok.kind.as_word() else {
-                // Not a word
                 return false;
             };
-
-            if !meta.is_verb() || meta.is_noun() || meta.is_adjective() {
-                // Not a verb, or a verb that's also a noun or adjective
-                return false;
-            }
-
-            // TODO affix system currently marks -ing and -s verb forms as present tense
-            // TODO which is wrong. replace with .is_progressive_form() when it's merged
-            if meta.is_present_tense_verb() {
-                // A verb in -s (good) or -ing (bad)
-                return !tok
-                    .span
-                    .get_content_string(source)
-                    .to_lowercase()
-                    .ends_with("ing");
-            }
-
-            // A verb lemma or in -ed (good)
-            true
+            meta.is_verb()
+                && !meta.is_noun()
+                && !meta.is_adjective()
+                && !meta.is_verb_progressive_form()
         });
 
         // Ambiguous word is a verb determined by heuristic of following word's part of speech
