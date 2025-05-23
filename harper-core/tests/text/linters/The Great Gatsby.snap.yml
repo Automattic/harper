@@ -29,6 +29,16 @@ Message: |
 
 Lint:    Miscellaneous (31 priority)
 Message: |
+      10 | “Whenever you feel like criticising any one,” he told me, “just remember that
+         |                                     ^~~~~~~ Did you mean the closed compound `anyone`?
+      11 | all the people in this world haven’t had the advantages that you’ve had.”
+Suggest:
+  - Replace with: “anyone”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
       15 | consequence, I’m inclined to reserve all judgments, a habit that has opened up
       16 | many curious natures to me and also made me the victim of not a few veteran
          |                            ^~~~~~~~ Consider using just `and`.
@@ -660,6 +670,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+     477 | being lit again, pointlessly, and I was conscious of wanting to look squarely at
+     478 | every one, and yet to avoid all eyes. I couldn’t guess what Daisy and Tom were
+         | ^~~~~~~~~ Did you mean the closed compound `everyone`?
+Suggest:
+  - Replace with: “everyone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      479 | thinking, but I doubt if even Miss Baker, who seemed to have mastered a certain
@@ -1199,6 +1219,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+     881 | there was a white spot of lather on his cheekbone, and he was most respectful in
+     882 | his greeting to every one in the room. He informed me that he was in the
+         |                 ^~~~~~~~~ Did you mean the closed compound `everyone`?
+Suggest:
+  - Replace with: “everyone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      900 | last week to look at my feet, and when she gave me the bill you’d of thought she
@@ -1302,6 +1332,15 @@ Suggest:
   - Replace with: “kike”
   - Replace with: “tyke”
   - Replace with: “dyke”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    1062 | She pointed suddenly at me, and every one looked at me accusingly. I tried to
+         |                                 ^~~~~~~~~ Did you mean the closed compound `everyone`?
+Suggest:
+  - Replace with: “everyone”
 
 
 
@@ -1655,6 +1694,16 @@ Message: |
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    1250 | Welcome or not, I found it necessary to attach myself to some one before I
+         |                                                          ^~~~~~~~ Did you mean the closed compound `someone`?
+    1251 | should begin to address cordial remarks to the passers-by.
+Suggest:
+  - Replace with: “someone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1287 | and address—inside of a week I got a package from Croirier’s with a new evening
@@ -1941,11 +1990,11 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
+Lint:    Miscellaneous (31 priority)
 Message: |
     1531 | puppyish, convivial way, girls were swooning backward playfully into men’s arms,
     1532 | even into groups, knowing that some one would arrest their falls—but no one
-         |                                ^~~~~~~~ The auxiliary verb “would” implies the existence of the closed compound noun “someone”.
+         |                                ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
 
@@ -2053,6 +2102,15 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    1701 | “It came off,” some one explained.
+         |                ^~~~~~~~ Did you mean the closed compound `someone`?
+Suggest:
+  - Replace with: “someone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1710 | “Wonder’ff tell me where there’s a gas’line station?”
@@ -2123,6 +2181,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    1772 | again. At first I was flattered to go places with her, because she was a golf
+    1773 | champion, and every one knew her name. Then it was something more. I wasn’t
+         |               ^~~~~~~~~ Did you mean the closed compound `everyone`?
+Suggest:
+  - Replace with: “everyone”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1777 | found what it was. When we were on a house-party together up in Warwick, she
@@ -2146,6 +2214,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1792 | smile turned to the world and yet satisfy the demands of her hard, jaunty body.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    1827 | Every one suspects himself of at least one of the cardinal virtues, and this is
+         | ^~~~~~~~~ Did you mean the closed compound `everyone`?
+Suggest:
+  - Replace with: “Everyone”
 
 
 
@@ -3446,6 +3523,15 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    2265 | “Come along with me for a minute,” I said; “I’ve got to say hello to some one.”
+         |                                                                      ^~~~~~~~ Did you mean the closed compound `someone`?
+Suggest:
+  - Replace with: “someone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2269 | “Where’ve you been?” he demanded eagerly. “Daisy’s furious because you haven’t
@@ -4658,6 +4744,16 @@ Message: |
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    3562 | length and by the extreme tip of the corners to indicate that I had no designs
+    3563 | upon it—but every one near by, including the woman, suspected me just the same.
+         |             ^~~~~~~~~ Did you mean the closed compound `everyone`?
+Suggest:
+  - Replace with: “everyone”
+
+
+
 Lint:    Formatting (63 priority)
 Message: |
     3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
@@ -4667,12 +4763,12 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
+Lint:    Miscellaneous (31 priority)
 Message: |
     3568 | My commutation ticket came back to me with a dark stain from his hand. That any
          |                                                                             ^~~~
     3569 | one should care in this heat whose flushed lips he kissed, whose head made damp
-         | ~~~ The auxiliary verb “should” implies the existence of the closed compound noun “anyone”.
+         | ~~~ Did you mean the closed compound `anyone`?
 Suggest:
   - Replace with: “anyone”
 
@@ -4886,6 +4982,27 @@ Message: |
          |  ^~~~~~~ Did you mean `That'll`?
 Suggest:
   - Replace with: “That'll”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    3736 | mouth opened a little, and he looked at Gatsby, and then back at Daisy as if he
+    3737 | had just recognized her as some one he knew a long time ago.
+         |                            ^~~~~~~~ Did you mean the closed compound `someone`?
+Suggest:
+  - Replace with: “someone”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    3754 | “Are we just going to go?” she objected. “Like this? Aren’t we going to let any
+         |                                                                             ^~~~
+    3755 | one smoke a cigarette first?”
+         | ~~~ Did you mean the closed compound `anyone`?
+Suggest:
+  - Replace with: “anyone”
 
 
 
@@ -5110,6 +5227,15 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    4010 | “It’s a swell suite,” whispered Jordan respectfully, and every one laughed.
+         |                                                          ^~~~~~~~~ Did you mean the closed compound `everyone`?
+Suggest:
+  - Replace with: “everyone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4016 | “Well, we’d better telephone for an axe———”
@@ -5274,6 +5400,16 @@ Message: |
 Suggest:
   - Replace with: “you”
   - Replace with: “I”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    4182 | was poor and she was tired of waiting for me. It was a terrible mistake, but in
+    4183 | her heart she never loved any one except me!”
+         |                           ^~~~~~~ Did you mean the closed compound `anyone`?
+Suggest:
+  - Replace with: “anyone”
 
 
 
@@ -5463,6 +5599,16 @@ Message: |
          | ^~~~~~~~~ Did you mean `Michael`?
 Suggest:
   - Replace with: “Michael”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    4405 | stared at the people and the cars that passed along the road. When any one spoke
+         |                                                                    ^~~~~~~ Did you mean the closed compound `anyone`?
+    4406 | to him he invariably laughed in an agreeable, colorless way. He was his wife’s
+Suggest:
+  - Replace with: “anyone”
 
 
 
@@ -5824,6 +5970,15 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    4564 | Some one who had been driving a little behind us confirmed this, and the
+         | ^~~~~~~~ Did you mean the closed compound `someone`?
+Suggest:
+  - Replace with: “Someone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4572 | “If somebody’ll come here and sit with him,” he snapped authoritatively. He
@@ -6060,6 +6215,35 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5020 | achievement was forgotten. Now I want to go back a little and tell what happened
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 56 words long.
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5027 | intolerable part of the affair. Some one, kind or curious, took her in his car
+         |                                 ^~~~~~~~ Did you mean the closed compound `someone`?
+Suggest:
+  - Replace with: “Someone”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5032 | For a while the door of the office was open, and every one who came into the
+         |                                                  ^~~~~~~~~ Did you mean the closed compound `everyone`?
+    5033 | garage glanced irresistibly through it. Finally some one said it was a shame,
+Suggest:
+  - Replace with: “everyone”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5033 | garage glanced irresistibly through it. Finally some one said it was a shame,
+         |                                                 ^~~~~~~~ Did you mean the closed compound `someone`?
+    5034 | and closed the door. Michaelis and several other men were with him; first, four
+Suggest:
+  - Replace with: “someone”
 
 
 
@@ -6333,6 +6517,36 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5181 | easier, surer way of finding out what he wanted to know. By half-past two he was
+    5182 | in West Egg, where he asked some one the way to Gatsby’s house. So by that time
+         |                             ^~~~~~~~ Did you mean the closed compound `someone`?
+Suggest:
+  - Replace with: “someone”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5185 | At two o’clock Gatsby put on his bathing-suit and left word with the butler that
+    5186 | if any one phoned word was to be brought to him at the pool. He stopped at the
+         |    ^~~~~~~ Did you mean the closed compound `anyone`?
+Suggest:
+  - Replace with: “anyone”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5197 | for it until four o’clock—until long after there was any one to give it to if it
+         |                                                      ^~~~~~~ Did you mean the closed compound `anyone`?
+    5198 | came. I have an idea that Gatsby himself didn’t believe it would come, and
+Suggest:
+  - Replace with: “anyone”
+
+
+
 Lint:    Formatting (63 priority)
 Message: |
     5204 | where poor ghosts, breathing dreams like air, drifted fortuitously about . . .
@@ -6372,6 +6586,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5210 | station directly to Gatsby’s house and my rushing anxiously up the front steps
+    5211 | was the first thing that alarmed any one. But they knew then, I firmly believe.
+         |                                  ^~~~~~~ Did you mean the closed compound `anyone`?
+Suggest:
+  - Replace with: “anyone”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     5230 | and out of Gatsby’s front door. A rope stretched across the main gate and a
@@ -6382,6 +6606,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5233 | open-mouthed about the pool. Some one with a positive manner, perhaps a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5233 | open-mouthed about the pool. Some one with a positive manner, perhaps a
+         |                              ^~~~~~~~ Did you mean the closed compound `someone`?
+Suggest:
+  - Replace with: “Someone”
 
 
 
@@ -6434,6 +6667,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5255 | I was responsible, because no one else was interested—interested, I mean, with
+    5256 | that intense personal interest to which every one has some vague right at the
+         |                                         ^~~~~~~~~ Did you mean the closed compound `everyone`?
+    5257 | end.
+Suggest:
+  - Replace with: “everyone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5279 | Meyer Wolfshiem’s name wasn’t in the phone book. The butler gave me his office
@@ -6442,6 +6686,15 @@ Suggest:
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
   - Replace with: “Wolsey's”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5299 | Some one started to ask me questions, but I broke away and going up-stairs
+         | ^~~~~~~~ Did you mean the closed compound `someone`?
+Suggest:
+  - Replace with: “Someone”
 
 
 
@@ -6737,6 +6990,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5466 | advice of an elevator boy, was marked “The Swastika Holding Company,” and at
+    5467 | first there didn’t seem to be any one inside. But when I’d shouted “hello”
+         |                               ^~~~~~~ Did you mean the closed compound `anyone`?
+Suggest:
+  - Replace with: “anyone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5472 | “Nobody’s in,” she said. “Mr. Wolfshiem’s gone to Chicago.”
@@ -6745,6 +7008,16 @@ Suggest:
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
   - Replace with: “Wolsey's”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5474 | The first part of this was obviously untrue, for some one had begun to whistle
+         |                                                  ^~~~~~~~ Did you mean the closed compound `someone`?
+    5475 | “The Rosary,” tunelessly, inside.
+Suggest:
+  - Replace with: “someone”
 
 
 
@@ -6906,6 +7179,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5631 | wet to the skin. As we started through the gate into the cemetery I heard a car
+    5632 | stop and then the sound of some one splashing after us over the soggy ground. I
+         |                            ^~~~~~~~ Did you mean the closed compound `someone`?
+Suggest:
+  - Replace with: “someone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5633 | looked around. It was the man with owl-eyed glasses whom I had found marvelling
@@ -6913,6 +7196,16 @@ Message: |
     5634 | over Gatsby’s books in the library one night three months before.
 Suggest:
   - Replace with: “marveling”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5642 | message or a flower. Dimly I heard some one murmur “Blessed are the dead that
+         |                                    ^~~~~~~~ Did you mean the closed compound `someone`?
+    5643 | the rain falls on,” and then the owl-eyed man said “Amen to that,” in a brave
+Suggest:
+  - Replace with: “someone”
 
 
 

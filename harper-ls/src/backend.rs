@@ -18,9 +18,9 @@ use harper_literate_haskell::LiterateHaskellParser;
 use harper_typst::Typst;
 use serde_json::Value;
 use tokio::sync::{Mutex, RwLock};
-use tower_lsp::jsonrpc::Result as JsonResult;
-use tower_lsp::lsp_types::notification::PublishDiagnostics;
-use tower_lsp::lsp_types::{
+use tower_lsp_server::jsonrpc::Result as JsonResult;
+use tower_lsp_server::lsp_types::notification::PublishDiagnostics;
+use tower_lsp_server::lsp_types::{
     CodeActionOrCommand, CodeActionParams, CodeActionProviderCapability, CodeActionResponse,
     ConfigurationItem, Diagnostic, DidChangeConfigurationParams, DidChangeTextDocumentParams,
     DidChangeWatchedFilesParams, DidChangeWatchedFilesRegistrationOptions,
@@ -28,9 +28,9 @@ use tower_lsp::lsp_types::{
     ExecuteCommandOptions, ExecuteCommandParams, FileChangeType, FileSystemWatcher, GlobPattern,
     InitializeParams, InitializeResult, InitializedParams, MessageType, PublishDiagnosticsParams,
     Range, Registration, ServerCapabilities, TextDocumentSyncCapability, TextDocumentSyncKind,
-    TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Url, WatchKind,
+    TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Uri, WatchKind,
 };
-use tower_lsp::{Client, LanguageServer};
+use tower_lsp_server::{Client, LanguageServer, UriExt};
 use tracing::{error, info, warn};
 
 use crate::config::Config;
@@ -45,7 +45,7 @@ pub struct Backend {
     client: Client,
     config: RwLock<Config>,
     stats: RwLock<Stats>,
-    doc_state: Mutex<HashMap<Url, DocumentState>>,
+    doc_state: Mutex<HashMap<Uri, DocumentState>>,
 }
 
 impl Backend {
@@ -59,14 +59,17 @@ impl Backend {
     }
 
     /// Load a specific file's dictionary
-    async fn load_file_dictionary(&self, url: &Url) -> anyhow::Result<MutableDictionary> {
+    async fn load_file_dictionary(&self, uri: &Uri) -> anyhow::Result<MutableDictionary> {
         // VS Code's unsaved documents have "untitled" scheme
-        if url.scheme() == "untitled" {
+        if uri
+            .scheme()
+            .is_some_and(|scheme| scheme.eq_lowercase("untitled"))
+        {
             return Ok(MutableDictionary::new());
         }
 
         let path = self
-            .get_file_dict_path(url)
+            .get_file_dict_path(uri)
             .await
             .context("Unable to get the file path.")?;
 
@@ -77,15 +80,15 @@ impl Backend {
     }
 
     /// Compute the location of the ignored lint's store.
-    async fn get_ignored_lints_path(&self, url: &Url) -> anyhow::Result<PathBuf> {
+    async fn get_ignored_lints_path(&self, uri: &Uri) -> anyhow::Result<PathBuf> {
         let config = self.config.read().await;
 
-        Ok(config.ignored_lints_path.join(fileify_path(url)?))
+        Ok(config.ignored_lints_path.join(fileify_path(uri)?))
     }
 
-    async fn save_ignored_lints(&self, url: &Url, ignored_lints: &IgnoredLints) -> Result<()> {
+    async fn save_ignored_lints(&self, uri: &Uri, ignored_lints: &IgnoredLints) -> Result<()> {
         save_ignored_lints(
-            self.get_ignored_lints_path(url)
+            self.get_ignored_lints_path(uri)
                 .await
                 .context("Unable to get ignored lints path.")?,
             ignored_lints,
@@ -94,9 +97,9 @@ impl Backend {
         .context("Unable to save ignored lints to path.")
     }
 
-    async fn load_ignored_lints(&self, url: &Url) -> Result<IgnoredLints> {
+    async fn load_ignored_lints(&self, uri: &Uri) -> Result<IgnoredLints> {
         Ok(load_ignored_lints(
-            self.get_ignored_lints_path(url)
+            self.get_ignored_lints_path(uri)
                 .await
                 .context("Unable to get ignored lints path.")?,
         )
@@ -106,15 +109,15 @@ impl Backend {
     }
 
     /// Compute the location of the file's specific dictionary
-    async fn get_file_dict_path(&self, url: &Url) -> anyhow::Result<PathBuf> {
+    async fn get_file_dict_path(&self, uri: &Uri) -> anyhow::Result<PathBuf> {
         let config = self.config.read().await;
 
-        Ok(config.file_dict_path.join(fileify_path(url)?))
+        Ok(config.file_dict_path.join(fileify_path(uri)?))
     }
 
-    async fn save_file_dictionary(&self, url: &Url, dict: impl Dictionary) -> Result<()> {
+    async fn save_file_dictionary(&self, uri: &Uri, dict: impl Dictionary) -> Result<()> {
         save_dict(
-            self.get_file_dict_path(url)
+            self.get_file_dict_path(uri)
                 .await
                 .context("Unable to get the file path.")?,
             dict,
@@ -168,10 +171,10 @@ impl Backend {
         Ok(dict)
     }
 
-    async fn generate_file_dictionary(&self, url: &Url) -> Result<MergedDictionary> {
+    async fn generate_file_dictionary(&self, uri: &Uri) -> Result<MergedDictionary> {
         let (global_dictionary, file_dictionary) = tokio::join!(
             self.generate_global_dictionary(),
-            self.load_file_dictionary(url)
+            self.load_file_dictionary(uri)
         );
 
         let mut global_dictionary =
@@ -183,20 +186,20 @@ impl Backend {
         Ok(global_dictionary)
     }
 
-    async fn update_document_from_file(&self, url: &Url, language_id: Option<&str>) -> Result<()> {
+    async fn update_document_from_file(&self, uri: &Uri, language_id: Option<&str>) -> Result<()> {
         let content = tokio::fs::read_to_string(
-            url.to_file_path()
-                .map_err(|_| anyhow!("Unable to convert URL to file path."))?,
+            uri.to_file_path()
+                .ok_or_else(|| anyhow!("Unable to convert URL to file path."))?,
         )
         .await
-        .with_context(|| format!("Unable to read from file {:?}", url))?;
+        .with_context(|| format!("Unable to read from file {:?}", uri))?;
 
-        self.update_document(url, &content, language_id).await
+        self.update_document(uri, &content, language_id).await
     }
 
     async fn update_document(
         &self,
-        url: &Url,
+        uri: &Uri,
         text: &str,
         language_id: Option<&str>,
     ) -> Result<()> {
@@ -214,15 +217,15 @@ impl Backend {
         };
 
         let dict = Arc::new(
-            self.generate_file_dictionary(url)
+            self.generate_file_dictionary(uri)
                 .await
                 .context("Unable to generate the file dictionary.")?,
         );
 
         let mut doc_lock = self.doc_state.lock().await;
-        let ignored_lints = self.load_ignored_lints(url).await.unwrap_or_default();
+        let ignored_lints = self.load_ignored_lints(uri).await.unwrap_or_default();
 
-        let doc_state = doc_lock.entry(url.clone()).or_insert_with(|| {
+        let doc_state = doc_lock.entry(uri.clone()).or_insert_with(|| {
             info!("Constructing new LintGroup for new document.");
 
             DocumentState {
@@ -231,7 +234,7 @@ impl Backend {
                     .with_lint_config(lint_config.clone()),
                 language_id: language_id.map(|v| v.to_string()),
                 dict: dict.clone(),
-                url: url.clone(),
+                uri: uri.clone(),
                 ..Default::default()
             }
         });
@@ -244,7 +247,7 @@ impl Backend {
         }
 
         let Some(language_id) = &doc_state.language_id else {
-            doc_lock.remove(url);
+            doc_lock.remove(uri);
             return Ok(());
         };
 
@@ -252,7 +255,7 @@ impl Backend {
             backend: &'a Backend,
             new_dict: Arc<MutableDictionary>,
             parser: impl Parser + 'static,
-            url: &'a Url,
+            uri: &'a Uri,
             doc_state: &'a mut DocumentState,
             lint_config: &LintGroupConfig,
             dialect: Dialect,
@@ -261,7 +264,7 @@ impl Backend {
                 info!("Constructing new linter because of modified ident dictionary.");
                 doc_state.ident_dict = new_dict.clone();
 
-                let mut merged = backend.generate_file_dictionary(url).await?;
+                let mut merged = backend.generate_file_dictionary(uri).await?;
                 merged.add_dictionary(new_dict);
                 let merged = Arc::new(merged);
 
@@ -288,7 +291,7 @@ impl Backend {
                             self,
                             Arc::new(new_dict),
                             ts_parser,
-                            url,
+                            uri,
                             doc_state,
                             &lint_config,
                             dialect,
@@ -310,7 +313,7 @@ impl Backend {
                             self,
                             Arc::new(new_dict),
                             parser,
-                            url,
+                            uri,
                             doc_state,
                             &lint_config,
                             dialect,
@@ -333,7 +336,7 @@ impl Backend {
 
         match parser {
             None => {
-                doc_lock.remove(url);
+                doc_lock.remove(uri);
             }
             Some(mut parser) => {
                 if isolate_english {
@@ -353,18 +356,18 @@ impl Backend {
 
     async fn generate_code_actions(
         &self,
-        url: &Url,
+        uri: &Uri,
         range: Range,
     ) -> JsonResult<Vec<CodeActionOrCommand>> {
         let (config, mut doc_states) = tokio::join!(self.config.read(), self.doc_state.lock());
-        let Some(doc_state) = doc_states.get_mut(url) else {
+        let Some(doc_state) = doc_states.get_mut(uri) else {
             return Ok(Vec::new());
         };
 
         Ok(doc_state.generate_code_actions(range, &config.code_action_config))
     }
 
-    async fn generate_diagnostics(&self, url: &Url) -> Vec<Diagnostic> {
+    async fn generate_diagnostics(&self, uri: &Uri) -> Vec<Diagnostic> {
         // Copy necessary configuration to avoid holding lock.
         let diagnostic_severity = {
             let config = self.config.read().await;
@@ -372,18 +375,18 @@ impl Backend {
         };
 
         let mut doc_states = self.doc_state.lock().await;
-        let Some(doc_state) = doc_states.get_mut(url) else {
+        let Some(doc_state) = doc_states.get_mut(uri) else {
             return Vec::new();
         };
 
         doc_state.generate_diagnostics(diagnostic_severity)
     }
 
-    async fn publish_diagnostics(&self, url: &Url) {
-        let diagnostics = self.generate_diagnostics(url).await;
+    async fn publish_diagnostics(&self, uri: &Uri) {
+        let diagnostics = self.generate_diagnostics(uri).await;
 
         let result = PublishDiagnosticsParams {
-            uri: url.clone(),
+            uri: uri.clone(),
             diagnostics,
             version: None,
         };
@@ -418,7 +421,6 @@ impl Backend {
     }
 }
 
-#[tower_lsp::async_trait]
 impl LanguageServer for Backend {
     async fn initialize(&self, _: InitializeParams) -> JsonResult<InitializeResult> {
         Ok(InitializeResult {
@@ -516,13 +518,13 @@ impl LanguageServer for Backend {
     }
 
     async fn did_close(&self, _params: DidCloseTextDocumentParams) {
-        let url = _params.text_document.uri;
+        let uri = _params.text_document.uri;
         let mut doc_lock = self.doc_state.lock().await;
-        doc_lock.remove(&url);
+        doc_lock.remove(&uri);
 
         self.client
             .send_notification::<PublishDiagnostics>(PublishDiagnosticsParams {
-                uri: url.clone(),
+                uri: uri.clone(),
                 diagnostics: vec![],
                 version: None,
             })
@@ -531,29 +533,29 @@ impl LanguageServer for Backend {
 
     async fn did_change_watched_files(&self, params: DidChangeWatchedFilesParams) {
         let mut doc_lock = self.doc_state.lock().await;
-        let mut urls_to_clear = Vec::new();
+        let mut uris_to_clear = Vec::new();
 
         for change in &params.changes {
             if change.typ != FileChangeType::DELETED {
                 continue;
             }
 
-            doc_lock.retain(|url, _| {
+            doc_lock.retain(|uri, _| {
                 // `change.uri` could be a directory so use `starts_with` instead of `==`.
-                let to_remove = url.as_str().starts_with(change.uri.as_str());
+                let to_remove = uri.as_str().starts_with(change.uri.as_str());
 
                 if to_remove {
-                    urls_to_clear.push(url.clone());
+                    uris_to_clear.push(uri.clone());
                 }
 
                 !to_remove
             });
         }
 
-        for url in &urls_to_clear {
+        for uri in &uris_to_clear {
             self.client
                 .send_notification::<PublishDiagnostics>(PublishDiagnosticsParams {
-                    uri: url.clone(),
+                    uri: uri.clone(),
                     diagnostics: vec![],
                     version: None,
                 })
@@ -592,7 +594,7 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let file_url = second.parse().unwrap();
+                let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_user_dictionary().await;
                 dict.append_word(word, WordMetadata::default());
@@ -600,11 +602,11 @@ impl LanguageServer for Backend {
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.update_document_from_file(&file_url, None)
+                self.update_document_from_file(&file_uri, None)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_url).await;
+                self.publish_diagnostics(&file_uri).await;
             }
             "HarperAddToFileDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
@@ -613,10 +615,10 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let file_url = second.parse().unwrap();
+                let file_uri = second.parse().unwrap();
 
                 let mut dict = match self
-                    .load_file_dictionary(&file_url)
+                    .load_file_dictionary(&file_uri)
                     .await
                     .map_err(|err| error!("{err}"))
                 {
@@ -627,15 +629,15 @@ impl LanguageServer for Backend {
                 };
                 dict.append_word(word, WordMetadata::default());
 
-                self.save_file_dictionary(&file_url, dict)
+                self.save_file_dictionary(&file_uri, dict)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.update_document_from_file(&file_url, None)
+                self.update_document_from_file(&file_uri, None)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_url).await;
+                self.publish_diagnostics(&file_uri).await;
             }
             "HarperOpen" => match open::that(&first) {
                 Ok(()) => {
@@ -653,7 +655,7 @@ impl LanguageServer for Backend {
                 }
             },
             "HarperIgnoreLint" => {
-                let Ok(url) = Url::parse(&first) else {
+                let Ok(uri) = first.parse() else {
                     error!("Unable to parse URL from command: {first}");
                     return Ok(None);
                 };
@@ -669,14 +671,14 @@ impl LanguageServer for Backend {
                 };
 
                 let mut doc_lock = self.doc_state.lock().await;
-                let Some(doc_state) = doc_lock.get_mut(&url) else {
+                let Some(doc_state) = doc_lock.get_mut(&uri) else {
                     error!("Requested document has not been loaded.");
                     return Ok(None);
                 };
 
                 doc_state.ignore_lint(&lint);
                 if let Err(_err) = self
-                    .save_ignored_lints(&url, &doc_state.ignored_lints)
+                    .save_ignored_lints(&uri, &doc_state.ignored_lints)
                     .await
                 {
                     error!("Unable to save ignored lints.");
@@ -685,7 +687,7 @@ impl LanguageServer for Backend {
 
                 drop(doc_lock);
 
-                self.publish_diagnostics(&url).await;
+                self.publish_diagnostics(&uri).await;
             }
             _ => (),
         }
@@ -696,7 +698,7 @@ impl LanguageServer for Backend {
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
         self.update_config_from_obj(params.settings).await;
 
-        let urls: Vec<Url> = {
+        let uris: Vec<Uri> = {
             let mut doc_lock = self.doc_state.lock().await;
             let config_lock = self.config.read().await;
 
@@ -709,12 +711,12 @@ impl LanguageServer for Backend {
             doc_lock.keys().cloned().collect()
         };
 
-        for url in urls {
-            self.update_document_from_file(&url, None)
+        for uri in uris {
+            self.update_document_from_file(&uri, None)
                 .await
                 .map_err(|err| error!("{err}"))
                 .err();
-            self.publish_diagnostics(&url).await;
+            self.publish_diagnostics(&uri).await;
         }
     }
 
@@ -733,9 +735,9 @@ impl LanguageServer for Backend {
         let doc_states = self.doc_state.lock().await;
 
         // Clears the diagnostics for open buffers.
-        for url in doc_states.keys() {
+        for uri in doc_states.keys() {
             let result = PublishDiagnosticsParams {
-                uri: url.clone(),
+                uri: uri.clone(),
                 diagnostics: vec![],
                 version: None,
             };
