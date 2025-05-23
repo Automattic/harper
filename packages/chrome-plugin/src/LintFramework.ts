@@ -1,4 +1,3 @@
-import { memoize } from 'lodash-es';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import ProtocolClient from './ProtocolClient';
