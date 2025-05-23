@@ -1243,6 +1243,12 @@ pub fn lint_group() -> LintGroup {
             "The more standard, less colloquial form is `take it personally`.",
             "Corrects `take it personal` to `take it personally`."
         ),
+        "AsOfLate" => (
+            ["as of lately"],
+            ["as of late"],
+            "The standard form is `as of late`.",
+            "Corrects `as of lately` to `as of late`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2708,5 +2714,14 @@ mod tests {
             lint_group(),
             "This is not personal, do not take it personally, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)",
         );
+    }
+
+    #[test]
+    fn corrects_as_of_lately() {
+        assert_suggestion_result(
+            "I haven't noticed any crashing with AMDGPU as of lately, so this looks to not be an issue anymore.",
+            lint_group(),
+            "I haven't noticed any crashing with AMDGPU as of late, so this looks to not be an issue anymore.",
+        )
     }
 }

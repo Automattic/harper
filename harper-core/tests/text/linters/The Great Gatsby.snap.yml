@@ -402,16 +402,6 @@ Message: |
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-     136 | powerful ends that ever played football at New Haven—a national figure in a way,
-         |                                            ^~~ Did you mean “knew” (the past tense of “know”)?
-     137 | one of those men who reach such an acute limited excellence at twenty-one that
-Suggest:
-  - Replace with: “Knew”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      138 | everything afterward savors of anti-climax. His family were enormously
@@ -471,15 +461,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      168 | a great pack of muscle shifting when his shoulder moved under his thin coat. It
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-     173 | toward people he liked—and there were men at New Haven who had hated his guts.
-         |                                              ^~~ Did you mean “knew” (the past tense of “know”)?
-Suggest:
-  - Replace with: “Knew”
 
 
 

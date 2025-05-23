@@ -25,23 +25,23 @@
 >
 #
 > At
-# NSg/I/V/P
+# NSg/P
 >
 #
 > Preposition
 # NSg/V
 >
 #
-> Caesar was at        Rome ; a   climate treaty was signed at        Kyoto in 1997 .
-# NPrSg  V   NSg/I/V/P NPr  . D/P NSg     NSg/V  V   V/J    NSg/I/V/P NPr   P  #    .
-> I   was at        Jim’s house   at the corner of Fourth    Street  and Vine .
-# ISg V   NSg/I/V/P N$    NPrSg/V P  D   NSg/J  P  NPrSg/V/J NSg/V/J V/C NSg  .
-> at the bottom of the page  ; sitting at the table ; at        church  ; at        sea
-# P  D   NSg/J  P  D   NPrSg . NSg/V/J P  D   NSg   . NSg/I/V/P NPrSg/V . NSg/I/V/P NSg
-> Target at        five miles . Prepare torpedoes !
-# NSg/V  NSg/I/V/P NSg  NPrPl . NSg/V   NSg/V     .
-> Look  out         ! UFO at        two o'clock !
-# NSg/V NSg/V/J/R/P . NSg NSg/I/V/P NSg W?      .
+> Caesar was at    Rome ; a   climate treaty was signed at    Kyoto in 1997 .
+# NPrSg  V   NSg/P NPr  . D/P NSg     NSg/V  V   V/J    NSg/P NPr   P  #    .
+> I   was at    Jim’s house   at the corner of Fourth    Street  and Vine .
+# ISg V   NSg/P N$    NPrSg/V P  D   NSg/J  P  NPrSg/V/J NSg/V/J V/C NSg  .
+> at the bottom of the page  ; sitting at the table ; at    church  ; at    sea
+# P  D   NSg/J  P  D   NPrSg . NSg/V/J P  D   NSg   . NSg/P NPrSg/V . NSg/P NSg
+> Target at    five miles . Prepare torpedoes !
+# NSg/V  NSg/P NSg  NPrPl . NSg/V   NSg/V     .
+> Look  out         ! UFO at    two o'clock !
+# NSg/V NSg/V/J/R/P . NSg NSg/P NSg W?      .
 > Don't pick  at your food !
 # V     NSg/V P  D    NSg  .
 > My cat   keeps scratching at the furniture .
@@ -60,28 +60,28 @@
 # IPl V/J     P  D   NSg  .
 > She was mad   at their comments .
 # ISg V   N/V/J P  D     NPl      .
-> men at        work  ; children at        play
-# NSg NSg/I/V/P NSg/V . NPl      NSg/I/V/P NSg/V
-> The two countries are at        war   .
-# D   NSg NPl       V   NSg/I/V/P NSg/V .
-> She is at        sixes and sevens with him .
-# ISg VL NSg/I/V/P NPl   V/C NPl    P    I   .
+> men at    work  ; children at    play
+# NSg NSg/P NSg/V . NPl      NSg/P NSg/V
+> The two countries are at    war   .
+# D   NSg NPl       V   NSg/P NSg/V .
+> She is at    sixes and sevens with him .
+# ISg VL NSg/P NPl   V/C NPl    P    I   .
 >
 #
 > Noun
 # NSg/V
 >
 #
-> The at      sign  .
-# D   NSg/I/P NSg/V .
+> The at    sign  .
+# D   NSg/P NSg/V .
 >
 #
 > Verb
 # NSg/V
 >
 #
-> ( In        online chats : ) Don't @ me        ! Don't at        me        !
-# . NPrSg/J/P V/J    NPl/V . . V     . NPrSg/ISg . V     NSg/I/V/P NPrSg/ISg .
+> ( In        online chats : ) Don't @ me        ! Don't at    me        !
+# . NPrSg/J/P V/J    NPl/V . . V     . NPrSg/ISg . V     NSg/P NPrSg/ISg .
 >
 #
 > By
@@ -312,8 +312,8 @@
 # NPr/ISg R       V/J     NSg/V/J/P N/I/C/D NSg/V   . NPrSg/V/J/C N$   R      C/P D   NSg  .
 > In        term    of base    hits  , Jones   was three for four on the day
 # NPrSg/J/P NSg/V/J P  NSg/V/J NPl/V . NPrSg/V V   NSg   C/P NSg  P  D   NPrSg
-> At        close   of play  , England were  305 for 3 .
-# NSg/I/V/P NSg/V/J P  NSg/V . NPr     NSg/V #   C/P # .
+> At    close   of play  , England were  305 for 3 .
+# NSg/P NSg/V/J P  NSg/V . NPr     NSg/V #   C/P # .
 > He      took the swing shift for he      could  get   more        overtime .
 # NPr/ISg V    D   NSg   NSg/V C/P NPr/ISg NSg/VX NSg/V NPrSg/I/V/J NSg/V    .
 > to account for one's whereabouts .
@@ -924,8 +924,8 @@
 # NPrSg/V/J P    NSg/V . V/J     P    NSg
 > She was with Acme for twenty years before retiring last    fall  .
 # ISg V   P    NSg  C/P NSg    NPl   C/P    V        NSg/V/J NSg/V .
-> With your kind  of body  size  , you shouldn’t be     eating pizza at        all       .
-# P    D    NSg/J P  NSg/V NSg/V . IPl V         NSg/VX V      NSg   NSg/I/V/P NSg/I/J/C .
+> With your kind  of body  size  , you shouldn’t be     eating pizza at    all       .
+# P    D    NSg/J P  NSg/V NSg/V . IPl V         NSg/VX V      NSg   NSg/P NSg/I/J/C .
 > That    was a   lot   to explain ; are you still   with me        ?
 # N/I/C/D V   D/P NPrSg P  V       . V   IPl NSg/V/J P    NPrSg/ISg .
 >
