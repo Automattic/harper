@@ -1,6 +1,6 @@
 use super::{Lint, LintKind, PatternLinter, Suggestion};
 use crate::{
-    Lrc, Token, TokenKind, TokenStringExt,
+    Lrc, Punctuation, Token, TokenKind, TokenStringExt,
     patterns::{All, EitherPattern, Pattern, SequencePattern, Word},
 };
 
@@ -69,6 +69,47 @@ impl Default for Everyday {
             Box::new(|tok: &Token, src: &[char]| is_article(tok, src)),
         ]);
 
+        // (why does) everyday feel the (same ?)
+        let everyday_ambiverb_after_then_noun = All::new(vec![
+            Box::new(
+                SequencePattern::default()
+                    .then(everyday.clone())
+                    .t_ws()
+                    .then_any_word()
+                    .t_ws()
+                    .then_any_word(),
+            ),
+            Box::new(
+                SequencePattern::default()
+                    .t_any()
+                    .t_any()
+                    .then(|tok: &Token, _: &[char]| tok.kind.is_noun() && tok.kind.is_verb())
+                    .t_any()
+                    .then_determiner(),
+            ),
+        ]);
+
+        // (Do you actually improve if you draw) everyday?
+        let everyday_punctuation_after = All::new(vec![
+            Box::new(
+                SequencePattern::default()
+                    .then(everyday.clone())
+                    .then_punctuation(),
+            ),
+            Box::new(
+                SequencePattern::default()
+                    .t_any()
+                    .then(|tok: &Token, src: &[char]| {
+                        matches!(
+                            tok.kind,
+                            TokenKind::Punctuation(
+                                Punctuation::Question | Punctuation::Comma | Punctuation::Period
+                            )
+                        )
+                    }),
+            ),
+        ]);
+
         // Can we detect all mistakes with just one token before or after?
 
         // ❌ after adjective ✅ after adverb
@@ -95,6 +136,8 @@ impl Default for Everyday {
             pattern: Box::new(EitherPattern::new(vec![
                 Box::new(everyday_bad_after),
                 Box::new(bad_before_every_day),
+                Box::new(everyday_ambiverb_after_then_noun),
+                Box::new(everyday_punctuation_after),
             ])),
         }
     }
@@ -109,21 +152,30 @@ impl PatternLinter for Everyday {
         // Helper functions make the match tables more compact and readable.
         let norm = |i: usize| toks[i].span.get_content_string(src).to_lowercase();
         let isws = |i: usize| toks[i].kind.is_whitespace();
-        let span3 = |i: usize| toks[i].span;
-        let span5 = |i: usize| toks[i..i + 3].span().unwrap();
+        let tokspan = |i: usize| toks[i].span;
+        let slicespan = |i: usize| toks[i..i + 3].span().unwrap();
 
         let (span, replacement, pos) = match toks.len() {
+            2 => match (norm(0).as_str(), norm(1).as_str()) {
+                ("everyday", "?") | ("everyday", ",") | ("everyday", ".") => {
+                    Some((tokspan(0), "every day", "adverb"))
+                }
+                _ => None,
+            },
             3 => match (norm(0).as_str(), norm(2).as_str()) {
-                ("everyday", _) if isws(1) => Some((span3(0), "every day", "adverb")),
-                (_, "everyday") if isws(1) => Some((span3(2), "every day", "adverb")),
+                ("everyday", _) if isws(1) => Some((tokspan(0), "every day", "adverb")),
+                (_, "everyday") if isws(1) => Some((tokspan(2), "every day", "adverb")),
                 _ => None,
             },
             5 => match (norm(0).as_str(), norm(2).as_str(), norm(4).as_str()) {
                 ("every", "day", _) if isws(1) && isws(3) => {
-                    Some((span5(0), "everyday", "adjective"))
+                    Some((slicespan(0), "everyday", "adjective"))
                 }
                 (_, "every", "day") if isws(1) && isws(3) => {
-                    Some((span5(2), "everyday", "adjective"))
+                    Some((slicespan(2), "everyday", "adjective"))
+                }
+                ("everyday", _, _) if isws(1) && isws(3) => {
+                    Some((tokspan(0), "every day", "adverb"))
                 }
                 _ => None,
             },
@@ -150,7 +202,9 @@ impl PatternLinter for Everyday {
 #[cfg(test)]
 mod tests {
     use super::Everyday;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
+    };
 
     #[test]
     fn dont_flag_lone_adjective() {
@@ -163,7 +217,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "Can't yet match end-of-chunk after it. Verb before is legit for both adjective and adverb."]
     fn correct_adjective_at_end_of_chunk() {
         assert_suggestion_result(
             "This is something I do everyday.",
@@ -215,7 +268,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "Can't yet match end-of-chunk after it. Past verb before is legit for both adjective and adverb."]
     fn correct_everyday_at_end_of_sentence_after_past_verb() {
         assert_suggestion_result(
             "Trying to write about what I learned everyday.",
@@ -313,6 +365,51 @@ mod tests {
             "Every day the application crashes several times on macOS Sequoia version 15.3",
             Everyday::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn flag_everyday_and_every_day_used_wrongly() {
+        assert_top3_suggestion_result(
+            "Each and everyday you ought to strive to learn something that is not an every day thing.",
+            Everyday::default(),
+            "Each and every day you ought to strive to learn something that is not an everyday thing.",
+        );
+    }
+
+    #[test]
+    fn flag_reddit_why_does_everyday() {
+        assert_top3_suggestion_result(
+            "Why does everyday feel the same?",
+            Everyday::default(),
+            "Why does every day feel the same?",
+        );
+    }
+
+    #[test]
+    fn flag_reddit_everyday_is_going_to() {
+        assert_top3_suggestion_result(
+            "... everyday is going to be a good day that's just the way it is!",
+            Everyday::default(),
+            "... every day is going to be a good day that's just the way it is!",
+        );
+    }
+
+    #[test]
+    fn flag_reddit_draw_everyday() {
+        assert_top3_suggestion_result(
+            "Do you actually improve if you draw everyday?",
+            Everyday::default(),
+            "Do you actually improve if you draw every day?",
+        );
+    }
+
+    #[test]
+    fn flag_reddit_two_bad_out_of_three() {
+        assert_top3_suggestion_result(
+            "Yes you can jog everyday, not a personal best every day, but a steady pace run everyday.",
+            Everyday::default(),
+            "Yes you can jog every day, not a personal best every day, but a steady pace run every day.",
         );
     }
 }
