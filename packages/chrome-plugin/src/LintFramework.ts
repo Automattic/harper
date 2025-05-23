@@ -92,7 +92,7 @@ export default class LintFramework {
 		}
 
 		const observer = new MutationObserver(this.updateEventCallback);
-		const config = { attributes: true, childList: true, subtree: true, characterData: true };
+		const config = { subtree: true, characterData: true };
 
 		if (target.tagName == undefined) {
 			observer.observe(target.parentElement!, config);
