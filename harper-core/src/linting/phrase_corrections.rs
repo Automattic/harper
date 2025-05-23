@@ -1243,6 +1243,12 @@ pub fn lint_group() -> LintGroup {
             "The more standard, less colloquial form is `take it personally`.",
             "Corrects `take it personal` to `take it personally`."
         ),
+        "ExpandPullRequest" => (
+            ["pr"],
+            ["pull request"],
+            "Use `pull request` instead of `pr`",
+            "Expands the abbreviation `pr` to `pull request` for clarity."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2707,6 +2713,15 @@ mod tests {
             "This is not personal, do not take it personal, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)",
             lint_group(),
             "This is not personal, do not take it personally, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)",
+        );
+    }
+
+    #[test]
+    fn expand_pull_request() {
+        assert_suggestion_result(
+            "I'm implementing the feature in a PR.",
+            lint_group(),
+            "I'm implementing the feature in a pull request.",
         );
     }
 }
