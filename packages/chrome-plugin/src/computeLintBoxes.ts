@@ -2,7 +2,7 @@ import { type IgnorableLintBox, type LintBox, domRectToBox, isBottomEdgeInBox } 
 import ProtocolClient from './ProtocolClient';
 import TextFieldRange from './TextFieldRange';
 import { getRangeForTextSpan } from './domUtils';
-import { getSlateRoot } from './editorUtils';
+import { getLexicalRoot, getSlateRoot } from './editorUtils';
 import { type UnpackedLint, type UnpackedSuggestion, applySuggestion } from './unpackLint';
 
 function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement {
@@ -68,11 +68,12 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): I
 
 function replaceValue(el: HTMLElement, value: string) {
 	const slateRoot = getSlateRoot(el);
+	const lexicalRoot = getLexicalRoot(el);
 
 	if (isFormEl(el)) {
 		el.value = value;
-	} else if (slateRoot != null) {
-		replaceValueSlate(el, value);
+	} else if (slateRoot != null || lexicalRoot != null) {
+		replaceValueSpecial(el, value);
 	} else {
 		el.textContent = value;
 
@@ -83,13 +84,13 @@ function replaceValue(el: HTMLElement, value: string) {
 	el.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-/** Replace the content of a Slate editor node. */
-function replaceValueSlate(el: HTMLElement, value: string) {
-	slateSelectAllText(el);
-	slateInsertText(el, value);
+/** Replace the content of a special editor node. */
+function replaceValueSpecial(el: HTMLElement, value: string) {
+	specialSelectAllText(el);
+	specialInsertText(el, value);
 }
 
-function slateSelectAllText(target: Node): Range {
+function specialSelectAllText(target: Node): Range {
 	const range = target.ownerDocument!.createRange();
 	if (target.nodeType === Node.TEXT_NODE) {
 		const len = (target as Text).data.length;
@@ -104,7 +105,7 @@ function slateSelectAllText(target: Node): Range {
 	return range;
 }
 
-function slateInsertText(el: HTMLElement, raw: string): void {
+function specialInsertText(el: HTMLElement, raw: string): void {
 	const inputType = 'insertText';
 
 	const evInit: InputEventInit = {

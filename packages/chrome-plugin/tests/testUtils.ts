@@ -5,6 +5,11 @@ export function getSlateEditor(page: Page): Locator {
 	return page.locator('[data-slate-editor="true"]');
 }
 
+/** Locate the [`Lexical`](https://lexical.dev/) editor on the page.  */
+export function getLexicalEditor(page: Page): Locator {
+	return page.locator('[data-lexical-editor="true"]');
+}
+
 /** Replace the content of a text editor. */
 export async function replaceEditorContent(editorEl: Locator, text: string) {
 	await editorEl.selectText();

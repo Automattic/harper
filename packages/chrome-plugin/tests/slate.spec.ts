@@ -1,8 +1,10 @@
 import { expect, test } from './fixtures';
 import { clickHarperHighlight, getSlateEditor, replaceEditorContent } from './testUtils';
 
+const TEST_PAGE_URL = 'https://slatejs.org';
+
 test('Can apply basic suggestion.', async ({ page }) => {
-	await page.goto('https://slatejs.org');
+	await page.goto(TEST_PAGE_URL);
 
 	const slate = getSlateEditor(page);
 	await replaceEditorContent(slate, 'This is an test');
@@ -22,7 +24,7 @@ test('Can apply basic suggestion.', async ({ page }) => {
 });
 
 test('Can ignore suggestion.', async ({ page }) => {
-	await page.goto('https://slatejs.org');
+	await page.goto(TEST_PAGE_URL);
 	const slate = getSlateEditor(page);
 
 	await replaceEditorContent(slate, 'This is an test.');
