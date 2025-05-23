@@ -479,6 +479,16 @@ Message: |
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+     227 | I’ve kept her waiting!” Alice felt so desperate that she was ready to ask help
+     228 | of any one; so, when the Rabbit came near her, she began, in a low, timid voice,
+         |    ^~~~~~~ Did you mean the closed compound `anyone`?
+Suggest:
+  - Replace with: “anyone”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      229 | “If you please, sir—” The Rabbit started violently, dropped the white kid gloves
@@ -574,6 +584,16 @@ Message: |
      288 | up to her chin in salt water. Her first idea was that she had somehow fallen
 Suggest:
   - Replace with: “She”
+
+
+
+Lint:    WordChoice (63 priority)
+Message: |
+     287 | As she said these words her foot slipped, and in another moment, splash! she was
+     288 | up to her chin in salt water. Her first idea was that she had somehow fallen
+         |                   ^~~~~~~~~~ Did you mean the closed compound noun “saltwater”?
+Suggest:
+  - Replace with: “saltwater”
 
 
 
@@ -856,6 +876,16 @@ Message: |
 
 
 
+Lint:    WordChoice (63 priority)
+Message: |
+     458 | pulled out a box of comfits, (luckily the salt water had not got into it), and
+         |                                           ^~~~~~~~~~ Did you mean the closed compound noun “saltwater”?
+     459 | handed them round as prizes. There was exactly one a-piece, all round.
+Suggest:
+  - Replace with: “saltwater”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      474 | Alice thought the whole thing very absurd, but they all looked so grave that she
@@ -935,16 +965,6 @@ Suggest:
   - Replace with: “We”
   - Replace with: “WA”
   - Replace with: “WC”
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-     581 | in great fear lest she should meet the real Mary Ann, and be turned out of the
-         |                                             ^~~~~~~~ Did you mean the closed compound noun “Maryann”?
-     582 | house before she had found the fan and gloves.
-Suggest:
-  - Replace with: “MaryAnn”
 
 
 
@@ -1097,26 +1117,6 @@ Message: |
      691 | rope—Will the roof bear?—Mind that loose slate—Oh, it’s coming down! Heads
 Suggest:
   - Replace with: “Catch”
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-     692 | below!” (a loud crash)—“Now, who did that?—It was Bill, I fancy—Who’s to go down
-         |                                                                       ^~~~~ The possessive noun implies ownership of the closed compound noun “Togo”.
-     693 | the chimney?—Nay, I shan’t! You do it!—That I won’t, then!—Bill’s to go
-Suggest:
-  - Replace with: “Togo”
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-     693 | the chimney?—Nay, I shan’t! You do it!—That I won’t, then!—Bill’s to go
-         |                                                                   ^~~~~ The possessive noun implies ownership of the closed compound noun “Togo”.
-     694 | down—Here, Bill! the master says you’re to go down the chimney!”
-Suggest:
-  - Replace with: “Togo”
 
 
 
@@ -1929,6 +1929,15 @@ Message: |
     1833 | while, and fighting for the hedgehogs; and in a very short time the Queen was in
 Suggest:
   - Replace with: “quarreling”
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    1840 | people here; the great wonder is, that there’s any one left alive!”
+         |                                                ^~~~~~~ Did you mean the closed compound `anyone`?
+Suggest:
+  - Replace with: “anyone”
 
 
 
@@ -3399,6 +3408,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2773 | gazing up into the roof of the court.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    2891 | “If any one of them can explain it,” said Alice, (she had grown so large in the
+         |     ^~~~~~~ Did you mean the closed compound `anyone`?
+Suggest:
+  - Replace with: “anyone”
 
 
 

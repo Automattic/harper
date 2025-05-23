@@ -1,14 +1,37 @@
-mod general_compound_nouns;
-mod implied_instantiated_compound_nouns;
-mod implied_ownership_compound_nouns;
+mod compound_noun_after_det_adj;
+mod compound_noun_after_possessive;
+mod compound_noun_before_aux_verb;
 
 use super::{Lint, LintKind, Suggestion, merge_linters::merge_linters};
+use crate::{Lrc, Token, patterns::SplitCompoundWord};
 
-use general_compound_nouns::GeneralCompoundNouns;
-use implied_instantiated_compound_nouns::ImpliedInstantiatedCompoundNouns;
-use implied_ownership_compound_nouns::ImpliedOwnershipCompoundNouns;
+// Helper function to check if a token is a content word (not a function word)
+pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
+    let Some(Some(meta)) = tok.kind.as_word() else {
+        return false;
+    };
 
-merge_linters!(CompoundNouns => GeneralCompoundNouns, ImpliedInstantiatedCompoundNouns, ImpliedOwnershipCompoundNouns => "Detects compound nouns split by a space and suggests merging them when both parts form a valid noun." );
+    tok.span.len() > 1
+        && (meta.is_noun() || meta.is_adjective())
+        && !meta.determiner
+        && (!meta.preposition || tok.span.get_content_string(src).to_lowercase() == "bar")
+        && !meta.is_adverb()
+        && !meta.is_conjunction()
+        && !meta.is_pronoun()
+        && !meta.is_auxiliary_verb()
+}
+
+pub(crate) fn create_split_pattern() -> Lrc<SplitCompoundWord> {
+    Lrc::new(SplitCompoundWord::new(|meta| {
+        meta.is_noun() && !meta.is_proper_noun()
+    }))
+}
+
+use compound_noun_after_det_adj::CompoundNounAfterDetAdj;
+use compound_noun_after_possessive::CompoundNounAfterPossessive;
+use compound_noun_before_aux_verb::CompoundNounBeforeAuxVerb;
+
+merge_linters!(CompoundNouns => CompoundNounAfterDetAdj, CompoundNounBeforeAuxVerb, CompoundNounAfterPossessive => "Detects compound nouns split by a space and suggests merging them when both parts form a valid noun." );
 
 #[cfg(test)]
 mod tests {
@@ -191,6 +214,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "\"everyone\" is not a valid compound noun, it's a pronoun"]
     fn every_one() {
         let test_sentence = "Every one should have access to quality education.";
         let expected = "Everyone should have access to quality education.";
@@ -304,7 +328,43 @@ mod tests {
     }
 
     #[test]
+    fn allow_an_arm_and_a_leg() {
+        assert_lint_count(
+            "I have to pay an arm and a leg get a worker to come and be my assistant baker.",
+            CompoundNouns::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allow_well_and_723() {
+        assert_lint_count(
+            "I understood very well and decided to go.",
+            CompoundNouns::default(),
+            0,
+        );
+    }
+
+    #[test]
     fn allow_can_not() {
         assert_lint_count("Size can not be determined.", CompoundNouns::default(), 0);
+    }
+
+    #[test]
+    fn dont_flag_lot_to() {
+        assert_lint_count(
+            "but you'd have to raise taxes a lot to do it.",
+            CompoundNouns::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_to_me() {
+        assert_lint_count(
+            "There's no massive damage to the rockers or anything that to me would indicate that like the whole front of the car was off",
+            CompoundNouns::default(),
+            0,
+        );
     }
 }

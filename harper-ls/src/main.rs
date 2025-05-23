@@ -16,7 +16,7 @@ mod pos_conv;
 
 use backend::Backend;
 use clap::Parser;
-use tower_lsp::{LspService, Server};
+use tower_lsp_server::{LspService, Server};
 use tracing::{Level, error, info};
 use tracing_subscriber::FmtSubscriber;
 

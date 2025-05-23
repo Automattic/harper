@@ -1,17 +1,17 @@
 use anyhow::anyhow;
 use std::path::{Component, PathBuf};
 
-use tower_lsp::lsp_types::Url;
+use tower_lsp_server::{UriExt, lsp_types::Uri};
 
 /// Rewrites a path to a filename using the same conventions as
 /// [Neovim's undo-files](https://neovim.io/doc/user/options.html#'undodir').
-pub fn fileify_path(url: &Url) -> anyhow::Result<PathBuf> {
+pub fn fileify_path(uri: &Uri) -> anyhow::Result<PathBuf> {
     let mut rewritten = String::new();
 
     // We assume all URLs are local files and have a base.
-    for seg in url
+    for seg in uri
         .to_file_path()
-        .map_err(|_| anyhow!("Unable to convert URL to file path."))?
+        .ok_or_else(|| anyhow!("Unable to convert URI to file path."))?
         .components()
     {
         if !matches!(seg, Component::RootDir) {

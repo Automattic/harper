@@ -24234,7 +24234,7 @@ feeder/~1M
 feeding/~41M
 feedlot/1SM
 feedstock/1M
-feel/~4185MRZGSJ
+feel/~418MRZGSJ
 feeler/1M
 feelgood/5
 feeling/~514MY
@@ -32586,7 +32586,7 @@ mammon/2M
 mammoth/~15M
 mammoths/~1
 mammy/1SM
-man/~15842USY
+man/~1542USY        # removed `8` pronoun, dialectal & complicates lint heuristics
 man's/~15842F
 manacle/14DSMG
 manage/~41ZGDRSL
@@ -45278,8 +45278,7 @@ spell/~14JSMDRZG
 spellbind/4ZGRS
 spellbinder/1M
 spellbound/5
-spellcheck/14MDRZGS
-spellchecker/1M
+spellcheck/14MDGS
 spelldown/1SM
 speller/1M
 spelling/~41M
@@ -50876,7 +50875,7 @@ waist/~1SM
 waistband/1MS
 waistcoat/1MS
 waistline/1MS
-wait/~41MDRZGS
+wait/~41MDGS
 waiter/~14M
 waiting/~41M
 waitperson/1MS
@@ -52977,6 +52976,7 @@ socio-political/5
 solid-state/5
 sound wave/1MS
 space bar/1MS
+spell checker/1MS
 spot on/5
 spring-load/4SDG
 Stack Exchange/2M

@@ -128,8 +128,8 @@
 # NSg/J/P . NSg/J/R . ISg NPl/V . NPrSg/P . .
 > The electricity was cut     off       , so        we  had to read  by      candlelight .
 # D   NSg         V   NSg/V/J NSg/V/J/P . NSg/I/J/C IPl V   P  NSg/V NSg/J/P NSg         .
-> By the power vested in        me        , I   now         pronounce you man         and wife    .
-# P  D   NSg/J V/J    NPrSg/J/P NPrSg/ISg . ISg NPrSg/V/J/C NSg/V     IPl NPrSg/I/V/J V/C NSg/V/J .
+> By the power vested in        me        , I   now         pronounce you man       and wife    .
+# P  D   NSg/J V/J    NPrSg/J/P NPrSg/ISg . ISg NPrSg/V/J/C NSg/V     IPl NPrSg/V/J V/C NSg/V/J .
 > By      Jove ! I   think she's got it        !
 # NSg/J/P NPr  . ISg NSg/V W?    V   NPrSg/ISg .
 > By      all       that    is holy    , I'll put   an  end to this .
@@ -462,8 +462,8 @@
 # NSg/V
 >
 #
-> Suddenly a   strange man         walked in        .
-# R        D/P NSg/J   NPrSg/I/V/J V/J    NPrSg/J/P .
+> Suddenly a   strange man       walked in        .
+# R        D/P NSg/J   NPrSg/V/J V/J    NPrSg/J/P .
 > Would  you like        that    to take  away or      eat   in        ?
 # NSg/VX IPl NSg/V/J/C/P N/I/C/D P  NSg/V V/J  NPrSg/C NSg/V NPrSg/J/P .
 > He      ran   to the edge of the swimming pool  and dived in        .

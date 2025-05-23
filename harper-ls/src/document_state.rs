@@ -4,7 +4,7 @@ use crate::pos_conv::range_to_span;
 use harper_core::linting::{Lint, LintGroup, Linter};
 use harper_core::{Document, IgnoredLints, MergedDictionary, MutableDictionary, TokenKind};
 use harper_core::{Lrc, Token};
-use tower_lsp::lsp_types::{CodeActionOrCommand, Command, Diagnostic, Range, Url};
+use tower_lsp_server::lsp_types::{CodeActionOrCommand, Command, Diagnostic, Range, Uri};
 
 pub struct DocumentState {
     pub document: Document,
@@ -13,7 +13,7 @@ pub struct DocumentState {
     pub linter: LintGroup,
     pub language_id: Option<String>,
     pub ignored_lints: IgnoredLints,
-    pub url: Url,
+    pub uri: Uri,
 }
 
 impl DocumentState {
@@ -62,7 +62,7 @@ impl DocumentState {
             .into_iter()
             .filter(|lint| lint.span.overlaps_with(span))
             .flat_map(|lint| {
-                lint_to_code_actions(&lint, &self.url, &self.document, code_action_config)
+                lint_to_code_actions(&lint, &self.uri, &self.document, code_action_config)
             })
             .collect();
 
@@ -92,7 +92,7 @@ impl Default for DocumentState {
             linter: Default::default(),
             language_id: Default::default(),
             ignored_lints: Default::default(),
-            url: Url::parse("https://example.net").unwrap(),
+            uri: "https://example.net".parse().unwrap(),
         }
     }
 }
