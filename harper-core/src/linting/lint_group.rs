@@ -13,6 +13,7 @@ use serde::{Deserialize, Serialize};
 
 use super::a_part::APart;
 use super::adjective_of_a::AdjectiveOfA;
+use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
 use super::ask_no_preposition::AskNoPreposition;
 use super::avoid_curses::AvoidCurses;
@@ -335,6 +336,7 @@ impl LintGroup {
         // Add all the more complex rules to the group.
         insert_pattern_rule!(APart, true);
         insert_struct_rule!(AdjectiveOfA, true);
+        insert_pattern_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
         insert_pattern_rule!(AskNoPreposition, true);
         insert_struct_rule!(AvoidCurses, true);
