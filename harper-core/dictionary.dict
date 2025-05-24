@@ -4742,6 +4742,7 @@ IBM/21M
 IC/1MS              # integrated circuit
 ICBM/1SM
 ICC/2               # International Criminal Court
+ICQ/214             # chat protocol
 ICU/12              # Unicode library
 ID/1245SM
 IDE/1
@@ -8415,6 +8416,7 @@ RR/124
 RSA/1M              # encryption standard
 RSFSR/2
 RSI/1
+RSS/124             # Really Simple Syndication
 RSV/21
 RSVP/142
 RSVP'd/4
@@ -10901,6 +10903,7 @@ X/215M
 XEmacs/M
 XL/15M
 XML/2
+XMPP/214             # chat protocol
 XS/15
 XXL/15
 Xamarin/M
