@@ -52339,6 +52339,7 @@ CRDT/1SM
 CRM/12SM
 CTE/1S
 ChatGPT/2M          # OpenAI product
+ClickHouse/M
 Codeberg/21M        # GitHub alternative
 Colemak/15M
 CommonMark/M
