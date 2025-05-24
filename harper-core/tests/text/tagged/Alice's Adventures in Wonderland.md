@@ -3667,7 +3667,7 @@
 > while   , and fighting for the hedgehogs ; and in a   very short       time    the Queen   was in
 # NSg/C/P . V/C NSg/V/J  C/P D   NPl       . V/C P  D/P J    NPrSg/V/J/P NSg/V/J D   NPrSg/J V   P
 > a   furious passion , and went  stamping about , and shouting “ Off       with his   head    ! ” or
-# D/P J       NPrSg/V . V/C NSg/V V        J/P   . V/C V        . NSg/V/J/P P    ISg/D NPrSg/J . . NPrSg/C
+# D/P J       NPrSg/V . V/C NSg/V NSg      J/P   . V/C V        . NSg/V/J/P P    ISg/D NPrSg/J . . NPrSg/C
 > “ Off       with her   head      ! ” about once  in a   minute .
 # . NSg/V/J/P P    I/J/D NPrSg/V/J . . J/P   NSg/C P  D/P NSg/J  .
 >
@@ -4109,7 +4109,7 @@
 >
 #
 > “ Now         , I   give  you fair    warning , ” shouted the Queen   , stamping on the ground as    she
-# . NPrSg/V/J/C . ISg NSg/V IPl NSg/V/J NSg/V   . . V/J     D   NPrSg/J . V        P  D   NSg/J  NSg/R ISg
+# . NPrSg/V/J/C . ISg NSg/V IPl NSg/V/J NSg/V   . . V/J     D   NPrSg/J . NSg      P  D   NSg/J  NSg/R ISg
 > spoke ; “ either you or      your head    must  be     off       , and that    in        about half      no      time  !
 # NSg/V . . I/C    IPl NPrSg/C D    NPrSg/J NSg/V NSg/VX NSg/V/J/P . V/C N/I/C/D NPrSg/J/P J/P   NSg/V/J/P NPrSg/P NSg/J .
 > Take  your choice ! ”
