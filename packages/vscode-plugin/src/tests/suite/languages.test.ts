@@ -2,9 +2,9 @@ import {
 	compareActualVsExpectedDiagnostics,
 	createExpectedDiagnostics,
 	createRange,
-	getActualDiagnostics,
-	openFile,
-	waitForUpdatesFromOpenedFile,
+	getUri,
+	openUri,
+	waitForDiagnosticsChange,
 } from './helper';
 
 describe('Languages >', () => {
@@ -49,11 +49,10 @@ describe('Languages >', () => {
 		{ type: 'TypeScript JSX', file: 'typescriptreact.tsx', row: 3, column: 7 },
 	].forEach((testCase) => {
 		it(`gives correct diagnostics for ${testCase.type} files`, async () => {
-			const uri = await openFile('languages', testCase.file);
-			await waitForUpdatesFromOpenedFile();
+			const uri = getUri('languages', testCase.file);
 
 			compareActualVsExpectedDiagnostics(
-				getActualDiagnostics(uri),
+				await waitForDiagnosticsChange(uri, async () => await openUri(uri)),
 				createExpectedDiagnostics({
 					message: 'Did you mean to spell `Errorz` this way?',
 					range: createRange(testCase.row, testCase.column, testCase.row, testCase.column + 6),
