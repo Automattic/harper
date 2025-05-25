@@ -50,8 +50,6 @@ impl Pattern for SpelledNumberPattern {
 
         let tens_units_compounds = SequencePattern::default()
             .then(WordSet::new(tens))
-            // .then_hyphen()
-            // hyphen **token** or whitespace pattern
             .then(EitherPattern::new(vec![
                 Box::new(|t: &Token, _s: &[char]| t.kind.is_hyphen()),
                 Box::new(WhitespacePattern),
