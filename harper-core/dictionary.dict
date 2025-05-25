@@ -52323,6 +52323,7 @@ BitKeeper/1M        # version control
 BlasterHacks/SM
 Boxster/12MS        # car model
 Brembo/2MS          # brake company
+Btrfs/1M            # file system
 BurpSuite/21MS
 C++/2SM             # programming language
 CCP/2S              # Chinese Communist Party
@@ -52515,6 +52516,7 @@ OpenGL/SM           # open graphics library
 OpenMetrics/SM
 OpenPGP/SM
 OpenSearch/SM
+OpenZFS/1M          # file system
 P2/MS
 P2P/21M
 PCH/2M              # highway
@@ -52632,6 +52634,7 @@ WhatsApp/124MG      # messaging app
 Wikilink/MS1        # !! please check and comment !! elsewhere we have wikilink
 Wireguard/SM
 WooCommerce/2M
+XFS/1M              # file system
 XLR/1M              # connector
 Xbox/12MS
 Xorg/21MS
@@ -52641,6 +52644,7 @@ Yazi/21MS
 Yoast/M2            # seo
 YubiKey/SM
 Zettelkasten/1M
+ZFS/1M              # file system
 Zig/2M              # programming language
 Zuckerberg/2MS      # surname, Facebook founder
 a11n/1
@@ -52659,6 +52663,9 @@ dedup/1M            # not well covered by dictionaries. wiktionary has only sing
 dedupe/14SMDG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
 dotfile/~1SM        # not well covered by dictionaries.
 eVTOL/1MS
+ext2/1M             # file system
+ext3/1M             # file system
+ext4/1M             # file system
 filesystem/~SM      # dictionaries prefer: file system
 frontend/1SM        # dictionaries prefer: front end
 geofence/1MS4DG
