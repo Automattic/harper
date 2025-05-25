@@ -27,8 +27,8 @@ use tower_lsp_server::lsp_types::{
     DidCloseTextDocumentParams, DidOpenTextDocumentParams, DidSaveTextDocumentParams,
     ExecuteCommandOptions, ExecuteCommandParams, FileChangeType, FileSystemWatcher, GlobPattern,
     InitializeParams, InitializeResult, InitializedParams, MessageType, PublishDiagnosticsParams,
-    Range, Registration, ServerCapabilities, TextDocumentSyncCapability, TextDocumentSyncKind,
-    TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Uri, WatchKind,
+    Range, Registration, ServerCapabilities, ServerInfo, TextDocumentSyncCapability,
+    TextDocumentSyncKind, TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Uri, WatchKind,
 };
 use tower_lsp_server::{Client, LanguageServer, UriExt};
 use tracing::{error, info, warn};
@@ -424,7 +424,10 @@ impl Backend {
 impl LanguageServer for Backend {
     async fn initialize(&self, _: InitializeParams) -> JsonResult<InitializeResult> {
         Ok(InitializeResult {
-            server_info: None,
+            server_info: Some(ServerInfo {
+                name: "harper-ls".to_owned(),
+                version: Some(harper_core::core_version().to_owned()),
+            }),
             capabilities: ServerCapabilities {
                 code_action_provider: Some(CodeActionProviderCapability::Simple(true)),
                 execute_command_provider: Some(ExecuteCommandOptions {
