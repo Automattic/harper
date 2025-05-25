@@ -1249,6 +1249,12 @@ pub fn lint_group() -> LintGroup {
             "The standard form is `as of late`.",
             "Corrects `as of lately` to `as of late`."
         ),
+        "PointsOfView" => (
+            ["point of views"],
+            ["points of view"],
+            "The correct plural is `points of view`.",
+            "Corrects pluralizing the wrong noun in `point of view`."
+        )
     });
 
     group.set_all_rules_to(Some(true));
@@ -2722,6 +2728,15 @@ mod tests {
             "I haven't noticed any crashing with AMDGPU as of lately, so this looks to not be an issue anymore.",
             lint_group(),
             "I haven't noticed any crashing with AMDGPU as of late, so this looks to not be an issue anymore.",
+        )
+    }
+
+    #[test]
+    fn corrects_points_of_view() {
+        assert_suggestion_result(
+            "This will produce a huge amount of raw data, representing the region in multiple point of views.",
+            lint_group(),
+            "This will produce a huge amount of raw data, representing the region in multiple points of view.",
         )
     }
 }
