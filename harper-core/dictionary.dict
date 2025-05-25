@@ -4707,6 +4707,8 @@ Hunter/2M
 Huntington/2M
 Huntley/2M
 Huntsville/2M
+Huracán/2SM
+Huracan/2SM
 Hurd/2M
 Hurley/2M
 Huron/12M
@@ -13445,7 +13447,7 @@ autographs/14
 autoimmune/~5
 autoimmunity/1M
 autoload/4SDG
-automagical/5
+automagical/5Y
 automaker/~1SM
 automata/~1SM
 automate/4GNDS
@@ -25593,6 +25595,7 @@ fruity/51TPR
 frump/14SM
 frumpish/5
 frumpy/5TR
+frunk/1MS
 frustrate/45GNXDS
 frustrating/~54Y
 frustration/~1M
@@ -28043,7 +28046,7 @@ historiography/~1M
 history/~1SM        # removed `4` verb sense is obsolte and interferes with heuristics
 histrionic/5SQ
 histrionics/1M
-hit/~4158SM
+hit/~415SM          # removed `8` pronoun sense is dialectal and interferes with heuristics
 hitch/~14UDSG
 hitch's
 hitcher/1MS
@@ -29964,6 +29967,7 @@ internationalize/4DSG
 internecine/5
 internee/1SM
 internet/~214
+internetwork/1MS4DG
 internist/1MS
 internment/~1M
 internship/~1MS
@@ -33722,6 +33726,7 @@ misapprehend/4GSD
 misapprehension/1MS
 misappropriate/4XDSGN
 misappropriation/~1M
+misbalance/4GDS
 misbegotten/541
 misbehave/4GDS
 misbehavior/1M
@@ -33985,6 +33990,7 @@ modish/5YP
 modishness/1M
 modular/~5
 modularisation/1!_
+modularity/1M
 modularization/1
 modulate/4CGNDS
 modulation/~1CM
@@ -36058,6 +36064,7 @@ offish/5
 offline/~54
 offload/41SDG
 offprint/14SM
+offscreen/5j
 offset/~145MS
 offsetting/41
 offshoot/~1MS
@@ -39769,7 +39776,7 @@ prognosticator/1MS
 progovernment/5
 program/~14CAS
 programmable/~51MS
-programmatic/5
+programmatic/5Q
 programme/14BJDRSMZG!_
 programmed/~45AC
 programmer/~1MS
@@ -41512,6 +41519,7 @@ repugnant/5
 repulsion/~1M
 repulsive/~5YP
 repulsiveness/1M
+repunch/4SDG
 repurchase/41GDS
 repurposing/41M
 reputability/1M
@@ -45702,7 +45710,7 @@ stanch/541TGDRS
 stanchion/14SM
 stand/~41SMRJZG
 standalone/~51
-standard/~51MS
+standard/~51MSj
 standardisation/1M!_
 standardise/4DSG!_
 standardization/~1MS
@@ -46419,6 +46427,7 @@ submit/~4AS
 submitted/~4A
 submitter/1
 submitting/~41A
+subnet/1MS4
 subnode/1SM
 subnormal/51
 suboptimal/5
@@ -49260,7 +49269,7 @@ turquoise/~15SM
 turret/~1SMD
 turtle/~14SMDG
 turtledove/1SM
-turtleneck/1SMD
+turtleneck/1SMD4G
 tush/~14MS
 tusk/~14MDS
 tussle/14DSMG
@@ -50017,6 +50026,7 @@ upholstery/~1M
 upkeep/~14M
 upland/~15MS
 uplift/~41JSMDG
+uplink/1MS4DG
 upload/~41SDG
 upmarket/~54
 upmost/5
@@ -52305,6 +52315,7 @@ Bing/2M             # Microsoft product
 BitKeeper/1M        # version control
 BlasterHacks/SM
 Boxster/12MS        # car model
+Brembo/2MS          # brake company
 BurpSuite/21MS
 C++/2SM             # programming language
 CCP/2S              # Chinese Communist Party
@@ -52461,6 +52472,7 @@ Mockito/SM
 Molex/12MS          # Molex connector
 Mullenweg/M
 Munin/SM
+Mercielago/2SM
 N.S.A./2SM          # FIXME! elsewhere we have NSA
 N1/2M
 N2/2M
@@ -52523,6 +52535,7 @@ Qin/2SM
 RDBMS/12SM          # relational database management system
 RFID/21M            # radio frequency identification
 RISC/1M             # cpu architecture
+RJ45/1M             # ethernet connector
 RPC/21SM            # remote procedure call
 RPG/1MS             # role-playing game
 RTX/1SM
@@ -52688,6 +52701,7 @@ all-rounder/1MS
 all-woman/5
 alma mater/1M
 anarcho-punk/15MS
+AND gate/1MS
 anti-Semite/1MS
 anti-Semitic/5
 anti-Semitism/1M
@@ -52732,6 +52746,7 @@ company-wide        # in Cambridge and OED dictionaries
 cost cutting/1M
 cost-effective/5
 cotter pin/1MS
+cross-border/5j
 cross section/1MS
 cross-threaded/5
 cul-de-sac/1MS
@@ -52908,11 +52923,13 @@ moon landing/1MS
 motor ship/1MS
 multiple-choice/5
 nail biter/1MS
+NAND gate/1MS
 nano-farad/1MS
 neo-Nazi/15SM
 neo-Nazism/1M
 no-op/1MS           # no operation
 non-Western/5
+NOR gate/1MS
 not-for-profit/51MS
 object-oriented/5
 odd-numbered/5
@@ -52941,6 +52958,7 @@ one-to-one/15
 one-way/5
 open source/1M
 open-source/54SDG
+OR gate/1MS
 OS X/2M             # before macOS
 out-and-out/5
 out of date
@@ -52957,6 +52975,7 @@ petty bourgeoisie/1M
 pick-me-up/1MS
 plan B/M
 play-by-play/51MS
+post-Covid/5
 post-truth/14M
 pre-COVID/5
 pro-democracy/5
