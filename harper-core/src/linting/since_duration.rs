@@ -50,10 +50,7 @@ impl PatternLinter for SinceDuration {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         if let Some(last) = toks.last() {
             if last.span.get_content_string(src).to_lowercase() == "ago" {
-                eprintln!("❌{}❌", toks.span().unwrap().get_content_string(src));
                 return None;
-            } else {
-                eprintln!("💎{}💎", toks.span().unwrap().get_content_string(src));
             }
             let unit_charslice = last.span.get_content(src);
             let mut unit_plus_ago = unit_charslice.to_vec();
