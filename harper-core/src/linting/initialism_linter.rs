@@ -1,8 +1,8 @@
 use itertools::Itertools;
 
 use crate::{
-    Lrc, Token, TokenStringExt,
-    patterns::{Pattern, SequencePattern, Word, WordPatternGroup},
+    Token,
+    patterns::{Pattern, Word},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -20,7 +20,6 @@ impl InitialismLinter {
     pub fn new(initialism: &str, expansion: &str) -> Self {
         let expansion_lower = expansion
             .split(' ')
-            .into_iter()
             .map(|s| s.chars().map(|v| v.to_ascii_lowercase()).collect())
             .collect();
 
