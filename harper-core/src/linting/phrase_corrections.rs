@@ -1249,6 +1249,12 @@ pub fn lint_group() -> LintGroup {
             "The standard form is `as of late`.",
             "Corrects `as of lately` to `as of late`."
         ),
+        "RapidFire" => (
+            ["rapid fire"],
+            ["rapid-fire"],
+            "It is more idiomatic to hypenate `rapid-fire`.",
+            "Checks to ensure writers hyphenate `rapid-fire`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
