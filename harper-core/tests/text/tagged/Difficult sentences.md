@@ -616,10 +616,10 @@
 # W?   NSg/V/J/C/P P  NSg/V D   NSg/J NSg/J/P P  D   NSg/J NSg/V/J . NSg/C/P N/I/C/D NSg/V/J NSg/V J/P .
 > The captain moved two fielders to the on  side    .
 # D   NSg     V/J   NSg W?       P  D   J/P NSg/V/J .
-> Ponsonby - Smythe hit       a   thumping on  drive .
-# ?        . ?      NSg/I/V/J D/P NSg/J    J/P NSg/V .
-> If    the player fails to hit       the ball  on  , it's a   foul  .
-# NSg/C D   NSg    NPl/V P  NSg/I/V/J D   NPrSg J/P . W?   D/P NSg/J .
+> Ponsonby - Smythe hit     a   thumping on  drive .
+# ?        . ?      NSg/V/J D/P NSg/J    J/P NSg/V .
+> If    the player fails to hit     the ball  on  , it's a   foul  .
+# NSg/C D   NSg    NPl/V P  NSg/V/J D   NPrSg J/P . W?   D/P NSg/J .
 > He      always has to be     on  , it's so        exhausting .
 # NPr/ISg W?     V   P  NSg/VX J/P . W?   NSg/I/J/C V          .
 >

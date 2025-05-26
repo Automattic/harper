@@ -1454,8 +1454,8 @@
 # . D/P ?         P  NSg/I . . NSg/V   NPr   . NSg/C/P ISg V   NSg/C NPrSg/V/J P  NSg/V . C/P D
 > next    moment a   shower of little    pebbles came    rattling in        at the window , and some
 # NSg/J/P NSg    D/P NSg/J  P  NPrSg/I/J NPl/V   NSg/V/P V        NPrSg/J/P P  D   NSg    . V/C I/J/R
-> of them hit       her   in the face . “ I’ll put   a   stop to this , ” she said to herself , and
-# P  N/I  NSg/I/V/J I/J/D P  D   NSg  . . W?   NSg/V D/P NSg  P  I/D  . . ISg V/J  P  I       . V/C
+> of them hit     her   in the face . “ I’ll put   a   stop to this , ” she said to herself , and
+# P  N/I  NSg/V/J I/J/D P  D   NSg  . . W?   NSg/V D/P NSg  P  I/D  . . ISg V/J  P  I       . V/C
 > shouted out         , “ You’d better   not   do     that    again ! ” which produced another dead
 # V/J     NSg/V/J/R/P . . W?    NSg/VX/J NSg/C NSg/VX N/I/C/D P     . . I/C   V/J      I/D     NSg/V/J
 > silence .
@@ -2336,8 +2336,8 @@
 # NSg/V V        N/I/V      N/J/P  I/J/D NSg/V P  D   NSg     V/C D   NSg/J . D
 > fire  - irons came    first   ; then    followed a   shower of saucepans , plates , and dishes .
 # NSg/J . NPl/V NSg/V/P NSg/V/J . NSg/J/C V/J      D/P NSg/J  P  NPl/V     . NPl/V  . V/C NPl/V  .
-> The Duchess took no      notice of them even    when    they hit       her   ; and the baby  was
-# D   NSg     V    NPrSg/P NSg    P  N/I  NSg/V/J NSg/I/C IPl  NSg/I/V/J I/J/D . V/C D   NSg/J V
+> The Duchess took no      notice of them even    when    they hit     her   ; and the baby  was
+# D   NSg     V    NPrSg/P NSg    P  N/I  NSg/V/J NSg/I/C IPl  NSg/V/J I/J/D . V/C D   NSg/J V
 > howling so        much  already , that    it        was quite impossible to say   whether the blows
 # V       NSg/I/J/C N/I/J W?      . N/I/C/D NPrSg/ISg V   NSg   NSg/J      P  NSg/V I/C     D   NPl
 > hurt    it        or      not   .
