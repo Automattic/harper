@@ -44,8 +44,8 @@
 # NSg/V/J . P  . NSg/V  NSg/V   VL J      C/P  V/J  V      D/P NSg  P  NPl/V V/C D
 > parts of speech , because some  words can      represent more        than one       part    of speech
 # NPl   P  NSg/V  . C/P     I/J/R NPl/V NPrSg/VX V         NPrSg/I/V/J C/P  NSg/I/V/J NSg/V/J P  NSg/V
-> at        different times , and because some  parts of speech are complex . This is not
-# NSg/I/V/P NSg/J     NPl/V . V/C C/P     I/J/R NPl/V P  NSg/V  V   NSg/V/J . I/D  VL NSg/C
+> at    different times , and because some  parts of speech are complex . This is not
+# NSg/P NSg/J     NPl/V . V/C C/P     I/J/R NPl/V P  NSg/V  V   NSg/V/J . I/D  VL NSg/C
 > rare    — in        natural languages ( as    opposed to many    artificial languages ) , a   large
 # NSg/V/J . NPrSg/J/P NSg/J   NPl/V     . NSg/R V/J     P  N/I/J/D J          NPl/V     . . D/P NSg/J
 > percentage of word  - forms are ambiguous . For example , even    " dogs  " , which is
@@ -152,8 +152,8 @@
 # NPl      P  NPl/V . NPl/V . NSg         . V/C NSg/I/J/C J/P . . I/C     D/P J    NPrSg/V/J NPrSg/V/J P
 > very broad tags  or      a   much  larger set       of more        precise ones  is preferable , depends
 # J    NSg/J NPl/V NPrSg/C D/P N/I/J J      NPrSg/V/J P  NPrSg/I/V/J V/J     NPl/V VL W?         . NPl/V
-> on the purpose at        hand  . Automatic tagging is easier on  smaller tag   - sets  .
-# P  D   NSg     NSg/I/V/P NSg/V . NSg/J     NSg/V   VL J      J/P J       NSg/V . NPl/V .
+> on the purpose at    hand  . Automatic tagging is easier on  smaller tag   - sets  .
+# P  D   NSg     NSg/P NSg/V . NSg/J     NSg/V   VL J      J/P J       NSg/V . NPl/V .
 >
 #
 > History
@@ -168,8 +168,8 @@
 # NSg/V    J/P NSg/V/J . P  . NSg/V  NSg/V   V   NSg/V R       V/J  P  NSg    NSg         .
 > The first major     corpus of English   for computer analysis was the Brown   Corpus
 # D   NSg/J NPrSg/V/J NSg    P  NPrSg/V/J C/P NSg/V    NSg      V   D   NPrSg/J NSg
-> developed at        Brown     University by      Henry Kučera and W. Nelson Francis , in the
-# V/J       NSg/I/V/P NPrSg/V/J NSg        NSg/J/P NPrSg ?      V/C ?  NPrSg  NPr     . P  D
+> developed at    Brown     University by      Henry Kučera and W. Nelson Francis , in the
+# V/J       NSg/P NPrSg/V/J NSg        NSg/J/P NPrSg ?      V/C ?  NPrSg  NPr     . P  D
 > mid     - 1960s . It        consists of about 1 , 000 , 000 words of running   English   prose text  ,
 # NSg/J/P . #d    . NPrSg/ISg NPl/V    P  J/P   # . #   . #   NPl/V P  NSg/V/J/P NPrSg/V/J NSg/V NSg/V .
 > made  up        of 500 samples from randomly chosen publications . Each sample is 2 , 000
@@ -185,7 +185,7 @@
 > many    years . A   first approximation was done    with a   program by      Greene and Rubin ,
 # N/I/J/D NPl   . D/P NSg/J NSg           V   NSg/V/J P    D/P NPrSg   NSg/J/P NPr    V/C NPr   .
 > which consisted of a   huge handmade list  of what  categories could  co        - occur at
-# I/C   V/J       P  D/P J    NSg/J    NSg/V P  NSg/I NPl        NSg/VX NPrSg/I/V . V     NSg/I/V/P
+# I/C   V/J       P  D/P J    NSg/J    NSg/V P  NSg/I NPl        NSg/VX NPrSg/I/V . V     NSg/P
 > all       . For example , article then    noun  can      occur , but     article then    verb  ( arguably )
 # NSg/I/J/C . C/P NSg/V   . NSg/V   NSg/J/C NSg/V NPrSg/VX V     . NSg/C/P NSg/V   NSg/J/C NSg/V . R        .
 > cannot . The program got about 70 % correct . Its   results were  repeatedly reviewed
@@ -326,8 +326,8 @@
 # NPrSg/J NSg    . D/P NSg/J  NSg         P  NSg/V/J NPl           NSg/VX NSg/V   D/P N/I/J
 > larger corpus ) . Both methods achieved an  accuracy of over      95 % . DeRose's 1990
 # J      NSg    . . I/C  NPl/V   V/J      D/P NSg      P  NSg/V/J/P #  . . ?        #
-> dissertation at        Brown     University included analyses of the specific error types ,
-# NSg          NSg/I/V/P NPrSg/V/J NSg        V/J      NSg/V    P  D   NSg/J    NSg/V NPl/V .
+> dissertation at    Brown     University included analyses of the specific error types ,
+# NSg          NSg/P NPrSg/V/J NSg        V/J      NSg/V    P  D   NSg/J    NSg/V NPl/V .
 > probabilities , and other   related data , and replicated his   work for Greek     , where
 # NPl           . V/C NSg/V/J J       NSg  . V/C V/J        ISg/D NSg  C/P NPrSg/V/J . NSg/C
 > it        proved similarly effective .

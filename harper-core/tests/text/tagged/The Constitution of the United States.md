@@ -58,8 +58,8 @@
 # NSg/V  NSg/I NSg        .
 >
 #
-> The terms of Senators and Representatives shall end   at        noon  on the 3 d       day   of
-# D   NPl   P  NPl      V/C NPl             VX    NSg/V NSg/I/V/P NSg/V P  D   # NPrSg/J NPrSg P
+> The terms of Senators and Representatives shall end   at    noon  on the 3 d       day   of
+# D   NPl   P  NPl      V/C NPl             VX    NSg/V NSg/P NSg/V P  D   # NPrSg/J NPrSg P
 > January , of the years in        which such  terms end   ; and the terms of their
 # NPr     . P  D   NPl   NPrSg/J/P I/C   NSg/I NPl/V NSg/V . V/C D   NPl   P  D
 > successors shall then    begin .
@@ -118,8 +118,8 @@
 # NPrSg    P  D   J      NPrSg/V . V/C N/J/P  D     NSg/J      NSg/V/J P  NSg NPl   .
 > in        such  Manner as    they shall by      Law   direct . The Number of Representatives shall
 # NPrSg/J/P NSg/I NSg    NSg/R IPl  VX    NSg/J/P NSg/V V/J    . D   NSg/J  P  NPl             VX
-> not   exceed one       for every thirty Thousand , but     each State shall have   at        Least
-# NSg/C V      NSg/I/V/J C/P D     NSg    NSg      . NSg/C/P D    NSg/V VX    NSg/VX NSg/I/V/P NSg/J
+> not   exceed one       for every thirty Thousand , but     each State shall have   at    Least
+# NSg/C V      NSg/I/V/J C/P D     NSg    NSg      . NSg/C/P D    NSg/V VX    NSg/VX NSg/P NSg/J
 > one       Representative ; and until such  enumeration shall be     made  , the State of New
 # NSg/I/V/J NSg/J          . V/C C/P   NSg/I NSg         VX    NSg/VX NSg/V . D   NSg   P  NSg/V/J
 > Hampshire shall be     entitled to chuse three , Massachusetts eight , Rhode - Island
@@ -240,10 +240,10 @@
 # NSg         . V/C/P  NSg/R P  D   NPl    P  ?       NPl      .
 >
 #
-> The Congress shall assemble at        least once  in every year , and such  meeting shall
-# D   NPrSg    VX    V        NSg/I/V/P NSg/J NSg/C P  D     NSg  . V/C NSg/I NSg/V   VX
-> begin at        noon  on the 3 d       day   of January , unless they shall by      law   appoint a
-# NSg/V NSg/I/V/P NSg/V P  D   # NPrSg/J NPrSg P  NPr     . C      IPl  VX    NSg/J/P NSg/V V       D/P
+> The Congress shall assemble at    least once  in every year , and such  meeting shall
+# D   NPrSg    VX    V        NSg/P NSg/J NSg/C P  D     NSg  . V/C NSg/I NSg/V   VX
+> begin at    noon  on the 3 d       day   of January , unless they shall by      law   appoint a
+# NSg/V NSg/P NSg/V P  D   # NPrSg/J NPrSg P  NPr     . C      IPl  VX    NSg/J/P NSg/V V       D/P
 > different day   .
 # NSg/J     NPrSg .
 >
@@ -346,8 +346,8 @@
 # NPrSg/V . NSg/C NPr/ISg V       NPr/ISg VX    NSg/V NPrSg/ISg . NSg/C/P NSg/C NSg/C NPr/ISg VX    NSg/V  NPrSg/ISg . P    ISg/D
 > Objections to that    House   in        which it        shall have   originated , who     shall enter the
 # NPl        P  N/I/C/D NPrSg/V NPrSg/J/P I/C   NPrSg/ISg VX    NSg/VX V/J        . NPrSg/I VX    NSg/V D
-> Objections at        large on their Journal , and proceed to reconsider it        . If    after
-# NPl        NSg/I/V/P NSg/J P  D     NSg/J   . V/C V       P  V          NPrSg/ISg . NSg/C J/P
+> Objections at    large on their Journal , and proceed to reconsider it        . If    after
+# NPl        NSg/P NSg/J P  D     NSg/J   . V/C V       P  V          NPrSg/ISg . NSg/C J/P
 > such  Reconsideration two thirds of that    House   shall agree to pass  the Bill  , it
 # NSg/I NSg             NSg NPl/V  P  N/I/C/D NPrSg/V VX    V     P  NSg/V D   NPrSg . NPrSg/ISg
 > shall be     sent  , together with the Objections , to the other House   , by      which it
@@ -714,8 +714,8 @@
 # D   NSg/J     NSg/V/J VX    NSg/VX V/J    P  D/P NSg       P  D
 > United States  of America . He      shall hold    his   Office during the Term  of four
 # J      NPrSg/V P  NPr     . NPr/ISg VX    NSg/V/J ISg/D NSg    V/P    D   NSg/J P  NSg
-> Years ending at        noon  on the 20th day   of January , and , together with the Vice
-# NPl   NSg/V  NSg/I/V/P NSg/V P  D   #    NPrSg P  NPr     . V/C . J        P    D   NSg/J/P
+> Years ending at    noon  on the 20th day   of January , and , together with the Vice
+# NPl   NSg/V  NSg/P NSg/V P  D   #    NPrSg P  NPr     . V/C . J        P    D   NSg/J/P
 > President , chosen for the same Term    , be     elected , as    follows
 # NSg/V     . V/J    C/P D   I/J  NSg/V/J . NSg/VX NSg/V/J . NSg/R NPl/V
 >
@@ -738,8 +738,8 @@
 #
 > The Electors shall meet    in their respective states  , and vote
 # D   NPl      VX    NSg/V/J P  D     J          NPrSg/V . V/C NSg/V
-> by      ballot for President and Vice      - President , one       of whom , at        least , shall not   be
-# NSg/J/P NSg/V  C/P NSg/V     V/C NSg/V/J/P . NSg/V     . NSg/I/V/J P  I    . NSg/I/V/P NSg/J . VX    NSg/C NSg/VX
+> by      ballot for President and Vice      - President , one       of whom , at    least , shall not   be
+# NSg/J/P NSg/V  C/P NSg/V     V/C NSg/V/J/P . NSg/V     . NSg/I/V/J P  I    . NSg/P NSg/J . VX    NSg/C NSg/VX
 > an  inhabitant of the same state with themselves ; they shall name  in their
 # D/P NSg/J      P  D   I/J  NSg/V P    I          . IPl  VX    NSg/V P  D
 > ballots the person voted for as    President , and in        distinct ballots the person
@@ -946,8 +946,8 @@
 # NSg/V      # .
 >
 #
-> The President shall , at        stated Times , receive for his
-# D   NSg       VX    . NSg/I/V/P V/J    NPl/V . NSg/V   C/P ISg/D
+> The President shall , at    stated Times , receive for his
+# D   NSg       VX    . NSg/P V/J    NPl/V . NSg/V   C/P ISg/D
 > Services , a   Compensation , which shall neither be     encreased nor   diminished
 # NPl      . D/P NSg          . I/C   VX    I/C     NSg/VX ?         NSg/C V/J
 > during the Period for which he      shall have   been  elected , and he      shall not
@@ -1102,8 +1102,8 @@
 # NSg/I/V/J NSg/V/J NSg/V/J . V/C NPrSg/J/P NSg/I NSg/J    NPl/V  NSg/R D   NPrSg    NPrSg/VX P    NSg/V/J P
 > time    ordain and establish . The Judges , both of the supreme and inferior Courts ,
 # NSg/V/J V      V/C V         . D   NPrPl  . I/C  P  D   NSg/J   V/C NSg/J    NPl/V  .
-> shall hold    their Offices during good      Behaviour , and shall , at        stated Times ,
-# VX    NSg/V/J D     NPl     V/P    NPrSg/V/J NSg/Br    . V/C VX    . NSg/I/V/P V/J    NPl/V .
+> shall hold    their Offices during good      Behaviour , and shall , at    stated Times ,
+# VX    NSg/V/J D     NPl     V/P    NPrSg/V/J NSg/Br    . V/C VX    . NSg/P V/J    NPl/V .
 > receive for their Services , a   Compensation , which shall not   be     diminished
 # NSg/V   C/P D     NPl      . D/P NSg          . I/C   VX    NSg/C NSg/VX V/J
 > during their Continuance in        Office .
@@ -1148,8 +1148,8 @@
 # D   NSg/J P  NSg/I/J/C NPl/V  . V/C/P  NPrSg/J/P NPl/V P  NSg         . VX    NSg/VX NSg/J/P NSg/V/J . V/C
 > such  Trial   shall be     held in the State where the said Crimes shall have   been
 # NSg/I NSg/V/J VX    NSg/VX V    P  D   NSg   NSg/C D   J    NPl/V  VX    NSg/VX NSg/V
-> committed ; but     when    not   committed within any   State , the Trial shall be     at        such
-# V/J       . NSg/C/P NSg/I/C NSg/C V/J       N/J/P  I/R/D NSg/V . D   NSg/J VX    NSg/VX NSg/I/V/P NSg/I
+> committed ; but     when    not   committed within any   State , the Trial shall be     at    such
+# V/J       . NSg/C/P NSg/I/C NSg/C V/J       N/J/P  I/R/D NSg/V . D   NSg/J VX    NSg/VX NSg/P NSg/I
 > Place or      Places as    the Congress may      by      Law   have   directed .
 # NSg/V NPrSg/C NPl/V  NSg/R D   NPrSg    NPrSg/VX NSg/J/P NSg/V NSg/VX V/J      .
 >
@@ -1226,8 +1226,8 @@
 # NSg/V   C/P ISg/D NSg     .
 >
 #
-> In        suits at        common  law   , where the value in        controversy shall exceed twenty
-# NPrSg/J/P NPl/V NSg/I/V/P NSg/V/J NSg/V . NSg/C D   NSg   NPrSg/J/P NSg         VX    V      NSg
+> In        suits at    common  law   , where the value in        controversy shall exceed twenty
+# NPrSg/J/P NPl/V NSg/P NSg/V/J NSg/V . NSg/C D   NSg   NPrSg/J/P NSg         VX    V      NSg
 > dollars , the right   of trial   by      jury    shall be     preserved , and no      fact tried by a
 # NPl     . D   NPrSg/J P  NSg/V/J NSg/J/P NSg/V/J VX    NSg/VX V/J       . V/C NPrSg/P NSg  V/J   P  D/P
 > jury  , shall be     otherwise reexamined in any   court   of the United States  , than

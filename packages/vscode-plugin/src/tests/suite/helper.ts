@@ -27,10 +27,12 @@ export async function activateHarper(): Promise<Extension<void>> {
 	return harper;
 }
 
-export async function openFile(...pathSegments: string[]): Promise<Uri> {
-	const uri = Uri.joinPath(Uri.file(workspace.workspaceFolders![0].uri.path), ...pathSegments);
+export function getUri(...pathSegments: string[]): Uri {
+	return Uri.joinPath(Uri.file(workspace.workspaceFolders![0].uri.path), ...pathSegments);
+}
+
+export async function openUri(uri: Uri): Promise<void> {
 	await window.showTextDocument(await workspace.openTextDocument(uri));
-	return uri;
 }
 
 export async function openUntitled(text: string): Promise<Uri> {
@@ -43,10 +45,6 @@ export async function openUntitled(text: string): Promise<Uri> {
 export async function setTextDocumentLanguage(uri: Uri, languageId: string): Promise<void> {
 	const document = await workspace.openTextDocument(uri);
 	languages.setTextDocumentLanguage(document, languageId);
-}
-
-export function getActualDiagnostics(resource: Uri): Diagnostic[] {
-	return languages.getDiagnostics(resource).filter((d) => d.source === 'Harper');
 }
 
 export function createExpectedDiagnostics(
@@ -80,19 +78,51 @@ export function createRange(
 	return new Range(new Position(startRow, startColumn), new Position(endRow, endColumn));
 }
 
-// The numbers used in these functions are what works when running tests in GitHub CI.
-export async function waitForHarperToActivate() {
-	await sleep(500);
+function getActualDiagnostics(resource: Uri): Diagnostic[] {
+	return languages.getDiagnostics(resource).filter((d) => d.source === 'Harper');
 }
-export async function waitForUpdatesFromOpenedFile() {
-	await sleep(75);
-}
-export async function waitForUpdatesFromConfigChange() {
-	await sleep(300);
-}
-export async function waitForUpdatesFromDeletedFile() {
-	await sleep(450);
-}
-function sleep(duration: number): Promise<void> {
-	return new Promise((resolve) => setTimeout(resolve, duration));
+
+/** Note that this function times out if there is no change detected. */
+export function waitForDiagnosticsChange(
+	uri: Uri,
+	func?: () => Promise<void>,
+): Promise<Diagnostic[]> {
+	return new Promise((resolve, reject) => {
+		const before = func ? getActualDiagnostics(uri) : [];
+
+		(func || (async () => {}))().then(() => {
+			const delay = 10;
+			const limit = 10;
+			let counter = 0;
+
+			const tryCompare = () => {
+				const after = getActualDiagnostics(uri);
+				try {
+					compareActualVsExpectedDiagnostics(before, after);
+
+					// after didn't change, try again
+					counter = 0;
+					tryAgain();
+				} catch (e) {
+					// after did change, try until stabilized
+					counter++;
+					if (counter < limit) {
+						tryAgain();
+					} else {
+						clearTimeout(rejectTimer);
+						resolve(after);
+					}
+				}
+			};
+			let tryTimer = setTimeout(tryCompare);
+			const tryAgain = () => {
+				tryTimer = setTimeout(tryCompare, delay);
+			};
+
+			const rejectTimer = setTimeout(() => {
+				clearTimeout(tryTimer);
+				reject('No change of diagnostics detected.');
+			}, 4000);
+		});
+	});
 }
