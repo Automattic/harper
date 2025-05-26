@@ -1,4 +1,4 @@
-53000
+53200
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -12269,7 +12269,7 @@ amphetamine/~1SM
 amphibian/~51MS
 amphibious/~5Y
 amphitheater/~1SM
-amphitheatre/1SM!@@_
+amphitheatre/1SM!@_
 amphora/~1M
 amphorae/1
 ampicillin/1
@@ -13644,8 +13644,8 @@ backpack/~14ZGMDRS
 backpacker/1M
 backpacking/41M
 backpedal/41SDG
-backpedalled/4!@@_
-backpedalling/41!@@_
+backpedalled/4!@_
+backpedalling/41!@_
 backplane/SM
 backport/41DGSM
 backrest/1SM
@@ -14167,7 +14167,7 @@ bedding/14M
 bedeck/4GSD
 bedevil/4LGDS
 bedevilled/4!@_
-bedevilling/41!@@_
+bedevilling/41!@_
 bedevilment/1M
 bedfellow/1SM
 bedhead/1S
@@ -14282,7 +14282,7 @@ beige/~15M
 being/~417M
 bejewel/4SDG
 bejewelled/45!@_
-bejewelling/4!@@_
+bejewelling/4!@_
 belabor/4SDG
 belabour/4GSD!@_
 belated/45Y
@@ -29072,7 +29072,7 @@ imperialism/~1M
 imperialist/~51SM
 imperialistic/5Q
 imperil/4GSLD
-imperilled/4!@@_
+imperilled/4!@_
 imperilling/41!@_
 imperilment/1M
 imperious/5PY
@@ -35226,7 +35226,7 @@ nitrocellulose/1M
 nitrogen/~1M
 nitrogenous/5
 nitroglycerin/1M
-nitroglycerine/1M!@@_
+nitroglycerine/1M!@_
 nitrous/~1M
 nitwit/1MS
 nix/~14GMDS
@@ -41132,6 +41132,7 @@ reeve/~14G
 reexecute/4SDG
 reexport/41SDG
 ref/~14SZM
+refabricate/4GDS
 refactor/14DS
 refactoring/~14MS
 refashion/4DGS
@@ -46509,7 +46510,7 @@ subtly/~j
 subtopic/1SM
 subtotal/145SGMD
 subtotalled/4!@_
-subtotalling/4!@@_
+subtotalling/4!@_
 subtract/4GSD
 subtraction/~1SM
 subtrahend/1SM
@@ -49094,8 +49095,8 @@ trout/~14SM
 trove/1SM
 trow/41DSG
 trowel/14MDSG
-trowelled/4!@@_
-trowelling/4!@@_
+trowelled/4!@_
+trowelling/4!@_
 troy/~5S
 truancy/1M
 truant/514GMDS
