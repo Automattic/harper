@@ -1,25 +1,37 @@
 use itertools::Itertools;
 
 use crate::{
-    Token,
-    patterns::{Pattern, Word},
+    Lrc, Token, TokenStringExt,
+    patterns::{Pattern, SequencePattern, Word, WordPatternGroup},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
 
-pub struct ByTheWay {
+/// A struct that can be composed to expand initialisms, respecting the capitalization of each
+/// item.
+pub struct InitialismLinter {
     pattern: Box<dyn Pattern>,
+    /// The lowercase-normalized expansion of the initialism.
+    expansion_lower: Vec<Vec<char>>,
 }
 
-impl Default for ByTheWay {
-    fn default() -> Self {
+impl InitialismLinter {
+    /// Construct a linter that can correct an initialism to
+    pub fn new(initialism: &str, expansion: &str) -> Self {
+        let expansion_lower = expansion
+            .split(' ')
+            .into_iter()
+            .map(|s| s.chars().map(|v| v.to_ascii_lowercase()).collect())
+            .collect();
+
         Self {
-            pattern: Box::new(Word::new("btw")),
+            pattern: Box::new(Word::from_char_string(initialism.chars().collect())),
+            expansion_lower,
         }
     }
 }
 
-impl PatternLinter for ByTheWay {
+impl PatternLinter for InitialismLinter {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }
@@ -33,12 +45,9 @@ impl PatternLinter for ByTheWay {
             .map(char::is_ascii_uppercase)
             .chain([false].into_iter().cycle());
 
-        let mut phrase: Vec<Vec<char>> = ["by", "the", "way"]
-            .iter()
-            .map(|v| v.chars().collect())
-            .collect();
+        let mut expansion_lower = self.expansion_lower.to_owned();
 
-        for (word, cap) in phrase.iter_mut().zip(caps) {
+        for (word, cap) in expansion_lower.iter_mut().zip(caps) {
             word[0] = if cap {
                 word[0].to_ascii_uppercase()
             } else {
@@ -46,7 +55,7 @@ impl PatternLinter for ByTheWay {
             }
         }
 
-        let phrase = Itertools::intersperse_with(phrase.into_iter(), || vec![' '])
+        let phrase = Itertools::intersperse_with(expansion_lower.into_iter(), || vec![' '])
             .reduce(|mut left, mut right| {
                 left.append(&mut right);
                 left
@@ -63,31 +72,11 @@ impl PatternLinter for ByTheWay {
     }
 
     fn description(&self) -> &'static str {
-        "Expands the initialism, `btw`."
+        "Expands an initialism."
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
-
-    use super::ByTheWay;
-
-    #[test]
-    fn corrects_shopping() {
-        assert_suggestion_result(
-            "Btw, are you ready to go shopping soon?",
-            ByTheWay::default(),
-            "By the way, are you ready to go shopping soon?",
-        );
-    }
-
-    #[test]
-    fn corrects_style() {
-        assert_suggestion_result(
-            "I love the fit, btw.",
-            ByTheWay::default(),
-            "I love the fit, by the way.",
-        );
-    }
+    use super::InitialismLinter;
 }

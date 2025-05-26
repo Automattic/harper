@@ -19,7 +19,6 @@ use super::ask_no_preposition::AskNoPreposition;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::boring_words::BoringWords;
-use super::by_the_way::ByTheWay;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::chock_full::ChockFull;
 use super::comma_fixes::CommaFixes;
@@ -87,7 +86,7 @@ use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, Oxf
 use super::{Lint, PatternLinter};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, phrase_corrections};
+use crate::linting::{closed_compounds, initialisms, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
 
@@ -333,6 +332,7 @@ impl LintGroup {
             dictionary.clone(),
         ));
         out.merge_from(&mut closed_compounds::lint_group());
+        out.merge_from(&mut initialisms::lint_group());
 
         // Add all the more complex rules to the group.
         insert_pattern_rule!(APart, true);
@@ -345,7 +345,6 @@ impl LintGroup {
         insert_pattern_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_pattern_rule!(ChockFull, true);
-        insert_pattern_rule!(ByTheWay, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_pattern_rule!(Confident, true);
