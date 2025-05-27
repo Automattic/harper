@@ -45,6 +45,7 @@ fileDictPath = ""
 diagnosticSeverity = "hint"
 isolateEnglish = false
 dialect = "American"
+maxFileLength = 120000
 
 [language-server.harper-ls.config.harper-ls.linters]
 SpellCheck = true
