@@ -480,15 +480,6 @@ impl LanguageServer for Backend {
         }
     }
 
-    async fn did_save(&self, params: DidSaveTextDocumentParams) {
-        self.update_document_from_file(&params.text_document.uri, None)
-            .await
-            .map_err(|err| error!("{err}"))
-            .err();
-
-        self.publish_diagnostics(&params.text_document.uri).await;
-    }
-
     async fn did_open(&self, params: DidOpenTextDocumentParams) {
         self.update_document(
             &params.text_document.uri,
