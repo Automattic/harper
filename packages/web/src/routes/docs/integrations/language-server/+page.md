@@ -163,7 +163,7 @@ In the above example, "spellcheckd", "this this", and other spelling or grammar 
 }
 ```
 
-## Directories 
+### Directories 
 
 | Config         | Type     | Default Value | Description                                                     |
 | -------------- | -------- | ------------- | --------------------------------------------------------------- |
