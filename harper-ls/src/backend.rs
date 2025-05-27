@@ -206,13 +206,14 @@ impl Backend {
         self.pull_config().await;
 
         // Copy necessary configuration to avoid holding lock.
-        let (lint_config, markdown_options, isolate_english, dialect) = {
+        let (lint_config, markdown_options, isolate_english, dialect, max_file_length) = {
             let config = self.config.read().await;
             (
                 config.lint_config.clone(),
                 config.markdown_options,
                 config.isolate_english,
                 config.dialect,
+                config.max_file_length,
             )
         };
 
@@ -343,9 +344,8 @@ impl Backend {
                     parser = Box::new(IsolateEnglish::new(parser, doc_state.dict.clone()));
                 }
 
-                // Don't lint on large documents.
-                // This should eventually be configurable, but that isn't necessary yet.
-                if text.len() < 120_000 {
+                // Don't lint on documents larger than the configured maximum length.
+                if text.len() <= max_file_length {
                     doc_state.document = Document::new(text, &parser, &doc_state.dict);
                 }
             }
