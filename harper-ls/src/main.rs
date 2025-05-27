@@ -33,7 +33,7 @@ struct Args {
     #[arg(short, long, default_value_t = false)]
     stdio: bool,
     /// Skip the debug version check.
-    #[arg(short, long, default_value_t = false)]
+    #[arg(long, default_value_t = false)]
     skip_version_check: bool,
 }
 
