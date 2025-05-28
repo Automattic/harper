@@ -8994,8 +8994,8 @@
 # . NSg/I V/J      . . N$     NSg/I ISg NSg/V P  NSg/V . .
 >
 #
-> “ Auto    hit       her   . Ins’antly killed . ”
-# . NSg/V/J NSg/I/V/J I/J/D . ?         V/J    . .
+> “ Auto    hit     her   . Ins’antly killed . ”
+# . NSg/V/J NSg/V/J I/J/D . ?         V/J    . .
 >
 #
 > “ Instantly killed , ” repeated Tom     , staring .

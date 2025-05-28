@@ -55,7 +55,7 @@ async function enableDefaultDomains() {
 		'playground.lexical.dev',
 		'discord.com',
 		'youtube.com',
-		'instagram.com',
+		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
 		'www.reddit.com',

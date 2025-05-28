@@ -4,6 +4,7 @@
 
 mod a_part;
 mod adjective_of_a;
+mod amounts_for;
 mod an_a;
 mod ask_no_preposition;
 mod avoid_curses;
@@ -71,6 +72,7 @@ mod proper_noun_capitalization_linters;
 mod repeated_words;
 mod save_to_safe;
 mod sentence_capitalization;
+mod since_duration;
 mod somewhat_something;
 mod spaces;
 mod spell_check;
@@ -90,6 +92,7 @@ mod wordpress_dotcom;
 
 pub use a_part::APart;
 pub use adjective_of_a::AdjectiveOfA;
+pub use amounts_for::AmountsFor;
 pub use an_a::AnA;
 pub use ask_no_preposition::AskNoPreposition;
 pub use avoid_curses::AvoidCurses;
@@ -146,6 +149,7 @@ pub use pronoun_contraction::PronounContraction;
 pub use repeated_words::RepeatedWords;
 pub use save_to_safe::SaveToSafe;
 pub use sentence_capitalization::SentenceCapitalization;
+pub use since_duration::SinceDuration;
 pub use somewhat_something::SomewhatSomething;
 pub use spaces::Spaces;
 pub use spell_check::SpellCheck;

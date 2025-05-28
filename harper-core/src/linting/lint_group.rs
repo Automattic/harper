@@ -13,6 +13,7 @@ use serde::{Deserialize, Serialize};
 
 use super::a_part::APart;
 use super::adjective_of_a::AdjectiveOfA;
+use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
 use super::ask_no_preposition::AskNoPreposition;
 use super::avoid_curses::AvoidCurses;
@@ -66,6 +67,7 @@ use super::proper_noun_capitalization_linters;
 use super::repeated_words::RepeatedWords;
 use super::save_to_safe::SaveToSafe;
 use super::sentence_capitalization::SentenceCapitalization;
+use super::since_duration::SinceDuration;
 use super::somewhat_something::SomewhatSomething;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
@@ -335,6 +337,7 @@ impl LintGroup {
         // Add all the more complex rules to the group.
         insert_pattern_rule!(APart, true);
         insert_struct_rule!(AdjectiveOfA, true);
+        insert_pattern_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
         insert_pattern_rule!(AskNoPreposition, true);
         insert_struct_rule!(AvoidCurses, true);
@@ -389,6 +392,7 @@ impl LintGroup {
         insert_struct_rule!(PronounKnew, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);
+        insert_pattern_rule!(SinceDuration, true);
         insert_pattern_rule!(SomewhatSomething, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);

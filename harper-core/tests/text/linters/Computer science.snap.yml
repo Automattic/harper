@@ -966,7 +966,7 @@ Message: |
      346 | Human–computer interaction (HCI) is the field of study and research concerned
          |                             ^~~ Did you mean to spell `HCI` this way?
 Suggest:
-  - Replace with: “Hi”
+  - Replace with: “PCI”
   - Replace with: “CI”
   - Replace with: “MCI”
 
@@ -978,7 +978,7 @@ Message: |
          |                                                     ^~~ Did you mean to spell `HCI` this way?
      349 | that focus on the relationship between emotions, social behavior and brain
 Suggest:
-  - Replace with: “Hi”
+  - Replace with: “PCI”
   - Replace with: “CI”
   - Replace with: “MCI”
 

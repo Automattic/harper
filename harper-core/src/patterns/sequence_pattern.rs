@@ -91,6 +91,7 @@ impl SequencePattern {
         self.then(IndefiniteArticle::default())
     }
 
+    /// Match examples of `word` case-sensitively.
     pub fn then_exact_word(mut self, word: &'static str) -> Self {
         self.token_patterns.push(Box::new(Word::new_exact(word)));
         self
@@ -185,7 +186,7 @@ mod tests {
 
     use super::SequencePattern;
     use crate::Document;
-    use crate::patterns::Pattern;
+    use crate::patterns::{DocPattern, Pattern};
 
     #[test]
     fn matches_n_whitespace_tokens() {
@@ -224,5 +225,32 @@ mod tests {
             pat.matches(doc.get_tokens(), doc.get_source()),
             Some(doc.get_tokens().len())
         );
+    }
+
+    #[test]
+    fn exact_word_matches_title_case() {
+        let pat = SequencePattern::default().then_exact_word("Foo");
+        let doc = Document::new_plain_english_curated("Foo");
+
+        assert_eq!(
+            pat.matches(doc.get_tokens(), doc.get_source()),
+            Some(doc.get_tokens().len())
+        );
+    }
+
+    #[test]
+    fn exact_word_doesnt_match_different_cases() {
+        let pat = SequencePattern::default().then_exact_word("Foo");
+        let doc = Document::new_plain_english_curated("foo Foo FOO");
+        let matches = pat.find_all_matches_in_doc(&doc);
+        assert_eq!(matches.len(), 1); // Only "Foo" should match
+    }
+
+    #[test]
+    fn any_capitalization_of_matches_different_cases() {
+        let pat = SequencePattern::aco("foo");
+        let doc = Document::new_plain_english_curated("foo Foo FOO");
+        let matches = pat.find_all_matches_in_doc(&doc);
+        assert_eq!(matches.len(), 3); // All three should match
     }
 }
