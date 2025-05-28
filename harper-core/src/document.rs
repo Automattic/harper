@@ -153,7 +153,9 @@ impl Document {
                 let word_source_str = token.span.get_content_string(&self.source);
                 let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
 
-                let most_common_pos = freq_dict.mapping.get(&word_source_str);
+                let most_common_pos = freq_dict
+                    .mapping
+                    .get(word_source_str.to_lowercase().as_str());
                 if let Some(pos) = most_common_pos {
                     if let Some(meta) = &mut found_meta {
                         meta.declare_pos(pos);

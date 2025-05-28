@@ -4,7 +4,7 @@ use strum::IntoEnumIterator;
 
 use crate::upos::UPOS;
 
-/// A mapping between words and the most common UPOS tag.
+/// A mapping between words (normalized to lowercase) and the most common UPOS tag.
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct FreqDict {
     pub mapping: HashMap<String, UPOS>,
@@ -23,14 +23,15 @@ impl FreqDictBuilder {
     }
 
     pub fn inc(&mut self, word: &str, tag: &UPOS) {
-        let counter = self.mapping.get_mut(&(word, tag));
+        let word_lower = word.to_lowercase();
+        let counter = self.mapping.get_mut(&(word_lower.as_str(), tag));
 
         if let Some(counter) = counter {
             *counter += 1;
         } else {
             self.mapping.insert(
                 FreqDictBuilderKey {
-                    word: word.to_string(),
+                    word: word_lower.to_string(),
                     pos: *tag,
                 },
                 1,
@@ -41,10 +42,11 @@ impl FreqDictBuilder {
     // Inefficient, but effective method that gets the most used POS for a word in the map.
     // Returns none if the word does not exist in the map.
     fn most_freq_pos(&self, word: &str) -> Option<UPOS> {
+        let word_lower = word.to_lowercase();
         let mut max_found: Option<(UPOS, usize)> = None;
 
         for pos in UPOS::iter() {
-            if let Some(count) = self.mapping.get(&(word, &pos)) {
+            if let Some(count) = self.mapping.get(&(word_lower.as_str(), &pos)) {
                 if let Some((_, max_count)) = max_found {
                     if *count > max_count {
                         max_found = Some((pos, *count))
