@@ -142,7 +142,6 @@ impl Document {
         self.condense_ellipsis();
         self.condense_latin();
         self.match_quotes();
-        self.articles_imply_nouns();
 
         let freq_dict = prebuilt_freq_dict();
 
@@ -153,12 +152,10 @@ impl Document {
                 let word_source_str = token.span.get_content_string(&self.source);
                 let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
 
-                let most_common_pos = freq_dict
-                    .mapping
-                    .get(word_source_str.to_lowercase().as_str());
+                let most_common_pos = freq_dict.get(&word_source_str);
                 if let Some(pos) = most_common_pos {
                     if let Some(meta) = &mut found_meta {
-                        meta.declare_pos(pos);
+                        meta.declare_pos(&pos);
                     }
                 }
 
@@ -180,21 +177,6 @@ impl Document {
                 .then_whitespace()
                 .then_noun(),
         )
-    }
-
-    thread_local! {static ARTICLE_PATTERN: Lrc<SequencePattern> = Document::uncached_article_pattern()}
-
-    /// When a word that is either an adjective or a noun is sandwiched between an article and a noun,
-    /// it definitely is not a noun.
-    fn articles_imply_nouns(&mut self) {
-        let pattern = Self::ARTICLE_PATTERN.with(|v| v.clone());
-
-        for m in pattern.find_all_matches_in_doc(self) {
-            if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start + 2].kind {
-                metadata.noun = None;
-                metadata.verb = None;
-            }
-        }
     }
 
     /// A proposition-like word followed by a determiner or number is typically

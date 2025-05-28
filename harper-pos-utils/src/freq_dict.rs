@@ -1,13 +1,23 @@
+use std::{fs::File, path::Path};
+
 use hashbrown::{Equivalent, HashMap};
+use rs_conllu::parse_file;
 use serde::{Deserialize, Serialize};
 use strum::IntoEnumIterator;
 
-use crate::upos::UPOS;
+use crate::{conllu_utils::iter_sentences_in_conllu, upos::UPOS};
 
-/// A mapping between words (normalized to lowercase) and the most common UPOS tag.
-#[derive(Debug, Default, Serialize, Deserialize)]
+/// A mapping between words (normalized to lowercase) and their most common UPOS tag.
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct FreqDict {
     pub mapping: HashMap<String, UPOS>,
+}
+
+impl FreqDict {
+    pub fn get(&self, word: &str) -> Option<UPOS> {
+        let word_lower = word.to_lowercase();
+        self.mapping.get(word_lower.as_str()).copied()
+    }
 }
 
 /// A mapping between words and the frequency of each UPOS.
@@ -58,6 +68,18 @@ impl FreqDictBuilder {
         }
 
         max_found.map(|v| v.0)
+    }
+
+    /// Parse a `.conllu` file and use it to train a frequency dictionary.
+    /// For error-handling purposes, this function should not be made accessible outside of training.
+    pub fn inc_from_conllu_file(&mut self, path: impl AsRef<Path>) {
+        for sent in iter_sentences_in_conllu(path) {
+            for token in sent.tokens {
+                if let Some(upos) = token.upos.and_then(UPOS::from_conllu) {
+                    self.inc(&token.form, &upos)
+                }
+            }
+        }
     }
 
     pub fn build(self) -> FreqDict {

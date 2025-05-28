@@ -1,32 +1,13 @@
-use harper_pos_utils::UPOS;
 use serde_json::to_string_pretty;
 use std::env;
 use std::fs;
-use std::fs::File;
 use std::path::Path;
 
 use harper_pos_utils::FreqDictBuilder;
 
-use rs_conllu::parse_file;
-
 fn main() {
-    let file = File::open("./en_gum-ud-train.conllu").unwrap();
-    let doc = parse_file(file);
-
     let mut freq_dict_builder = FreqDictBuilder::new();
-
-    for res in doc {
-        match res {
-            Ok(s) => {
-                for token in s.tokens {
-                    if let Some(upos) = token.upos.and_then(UPOS::from_conllu) {
-                        freq_dict_builder.inc(&token.form, &upos)
-                    }
-                }
-            }
-            Err(err) => panic!("Fail: {err}"),
-        }
-    }
+    freq_dict_builder.inc_from_conllu_file("./en_gum-ud-train.conllu");
 
     let freq_dict = freq_dict_builder.build();
 

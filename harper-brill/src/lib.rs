@@ -1,7 +1,7 @@
 use lazy_static::lazy_static;
 use std::sync::Arc;
 
-pub use harper_pos_utils::*;
+pub use harper_pos_utils::{FreqDict, UPOS};
 
 const FREQ_DICT_SOURCE: &str = include_str!(concat!(env!("OUT_DIR"), "/freq_dict.json"));
 

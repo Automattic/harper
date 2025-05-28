@@ -964,8 +964,10 @@ version = "0.39.0"
 dependencies = [
  "hashbrown 0.15.3",
  "is-macro",
+ "rayon",
  "rs-conllu",
  "serde",
+ "serde_json",
  "strum",
  "strum_macros",
 ]
