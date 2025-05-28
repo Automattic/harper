@@ -5,7 +5,7 @@ use crate::patterns::{
     All, EitherPattern, Invert, OwnedPatternExt, Pattern, SequencePattern, Word, WordSet,
 };
 
-#[doc = "Corrects the misuse of `then` to `than`."]
+/// Corrects the misuse of `then` to `than`.
 pub struct ThenThan {
     pattern: Box<dyn Pattern>,
 }

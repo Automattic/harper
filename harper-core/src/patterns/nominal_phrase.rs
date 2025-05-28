@@ -109,7 +109,7 @@ mod tests {
 
         assert_eq!(
             matches.to_strings(&doc),
-            vec!["My favorite foods", "pizza", "sushi", "tacos", "burgers"]
+            vec!["favorite foods", "pizza", "sushi", "tacos", "burgers"]
         )
     }
 }

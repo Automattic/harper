@@ -1,8 +1,24 @@
+use is_macro::Is;
 use serde::{Deserialize, Serialize};
 use strum_macros::{AsRefStr, EnumIter};
 
 /// Represents the universal parts of speech as outlined by [universaldependencies.org](https://universaldependencies.org/u/pos/index.html).
-#[derive(Debug, Hash, Eq, PartialEq, Clone, Copy, EnumIter, AsRefStr, Serialize, Deserialize)]
+#[derive(
+    Debug,
+    Default,
+    Hash,
+    Eq,
+    PartialEq,
+    Clone,
+    Copy,
+    EnumIter,
+    AsRefStr,
+    Serialize,
+    Deserialize,
+    PartialOrd,
+    Ord,
+    Is,
+)]
 pub enum UPOS {
     ADJ,
     ADP,
@@ -11,6 +27,7 @@ pub enum UPOS {
     CCONJ,
     DET,
     INTJ,
+    #[default]
     NOUN,
     NUM,
     PART,
@@ -43,5 +60,9 @@ impl UPOS {
             rs_conllu::UPOS::VERB => UPOS::VERB,
             rs_conllu::UPOS::X => return None,
         })
+    }
+
+    pub fn is_nominal(&self) -> bool {
+        matches!(self, Self::NOUN | Self::PROPN)
     }
 }
