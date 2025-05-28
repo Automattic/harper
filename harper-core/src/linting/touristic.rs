@@ -13,29 +13,29 @@ const TOURISTY_NOUN_BLACKLIST: &[&str] = &[
     "data",
     "content",
     "establishment",
+    "establishments",
     "info",
     "information",
     "interest",
     "platform",
-    "service",
-    "establishments",
     "platforms",
+    "service",
     "services",
 ];
 const TOURISTY_NOUN_WHITELIST: &[&str] = &[
     "activity",
-    "area",
-    "destination",
-    "location",
-    "place",
-    "route",
-    "spot",
     "activities",
+    "area",
     "areas",
+    "destination",
     "destinations",
+    "location",
     "locations",
+    "place",
     "places",
+    "route",
     "routes",
+    "spot",
     "spots",
 ];
 
@@ -78,268 +78,137 @@ impl PatternLinter for Touristic {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let tok_span_content_string = toks.span()?.get_content_string(src);
-        eprintln!("⭐️ {}", tok_span_content_string); //toks.span()?.get_content_string(src));
         let tok_span_content_string = tok_span_content_string.to_lowercase();
-        match toks.len() {
-            1 => {
-                eprintln!("❤️ match_to_lint got 1 token = 1 word");
-                return Some(Lint {
-                    span: toks[0].span,
-                    lint_kind: LintKind::WordChoice,
-                    suggestions: vec![
-                        Suggestion::replace_with_match_case_str(
-                            "tourist",
-                            toks[0].span.get_content(src),
-                        ),
-                        Suggestion::replace_with_match_case_str(
-                            "tourism",
-                            toks[0].span.get_content(src),
-                        ),
-                        Suggestion::replace_with_match_case_str(
-                            "touristy",
-                            toks[0].span.get_content(src),
-                        ),
-                    ],
-                    message: "The word \"touristic\" is rarely used by native speakers."
-                        .to_string(),
-                    priority: 31,
-                });
+
+        let (span_number, suggested) = match (
+            toks.len(),
+            tok_span_content_string.starts_with("touristic "),
+            tok_span_content_string.ends_with(" touristic"),
+        ) {
+            (1, _, _) => (0, vec!["tourist", "tourism", "touristy"]),
+            (3, true, false) => {
+                let next_word = toks[2].span.get_content_string(src);
+                let next_kind = &toks[2].kind;
+
+                let mut sugg_touristy = None;
+                let mut sugg_tourist_and_tourism: Option<bool> = None;
+
+                if next_kind.is_noun() {
+                    if TOURISTY_NOUN_WHITELIST.contains(&next_word.as_str()) {
+                        if sugg_touristy == Some(false) {
+                            eprintln!("🖤 noun white list overriding touristy suggestion");
+                        }
+                        sugg_touristy = Some(true);
+                    }
+                    if TOURISTY_NOUN_BLACKLIST.contains(&next_word.as_str()) {
+                        if sugg_touristy == Some(true) {
+                            eprintln!("🖤 noun black list overriding touristy suggestion");
+                        }
+                        sugg_touristy = Some(false);
+                    }
+                }
+
+                let mut suggested = vec![];
+                if sugg_tourist_and_tourism == Some(true) || sugg_tourist_and_tourism == None {
+                    suggested.push("tourist");
+                    suggested.push("tourism");
+                }
+                if sugg_touristy == Some(true) || sugg_touristy == None {
+                    suggested.push("touristy");
+                }
+
+                (0, suggested)
             }
-            3 => {
-                eprintln!("🍏🍏 match_to_lint got 3 tokens = 2 words");
-                if tok_span_content_string.starts_with("touristic ") {
-                    eprintln!("🍏🍏 got 3 tokens = 2 words, starting with \"touristic \"");
-                    
-                    let next_word = toks[2].span.get_content_string(src);
-                    let next_kind = &toks[2].kind;
-                    let pos_string = tok_pos(next_kind);
-                    eprintln!("🍏🍏 \"touristic\" \"{next_word}\"<{pos_string}>🍏🍏");
-
-                    let mut can_suggest_touristy = None;
-                    let mut can_suggest_tourist_and_tourism: Option<bool> = None;
-
-                    if next_kind.is_noun() {
-                        if TOURISTY_NOUN_WHITELIST.contains(&next_word.as_str()) {
-                            eprintln!("🍏<🤍> 'touristy {}' sounds fine", next_word);
-                            if can_suggest_touristy == Some(false) {
-                                eprintln!("🖤 noun white list overriding touristy suggestion");
-                            }
-                            can_suggest_touristy = Some(true);
-                        }
-                        if TOURISTY_NOUN_BLACKLIST.contains(&next_word.as_str()) {
-                            eprintln!("🍏<🖤> 'touristy {}' sounds weird", next_word);
-                            if can_suggest_touristy == Some(true) {
-                                eprintln!("🖤 noun black list overriding touristy suggestion");
-                            }
-                            can_suggest_touristy = Some(false);
-                        }
-                    }
-
-                    let mut suggestions = vec![];
-                    if can_suggest_tourist_and_tourism == Some(true) || can_suggest_tourist_and_tourism == None {
-                        eprintln!("🍏 can suggest tourist+tourism: {:?}", can_suggest_tourist_and_tourism);
-                        suggestions.push(Suggestion::replace_with_match_case_str(
-                            "tourist",
-                            toks[0].span.get_content(src),
-                        ));
-                        suggestions.push(Suggestion::replace_with_match_case_str(
-                            "tourism",
-                            toks[0].span.get_content(src),
-                        ));
-                    }
-                    if can_suggest_touristy == Some(true) || can_suggest_touristy == None {
-                        eprintln!("🍏 can suggest touristy: {:?}", can_suggest_touristy);
-                        suggestions.push(Suggestion::replace_with_match_case_str(
-                            "touristy",
-                            toks[0].span.get_content(src),
-                        ));
-                    }
-                    
-                    return Some(Lint {
-                        span: toks[0].span,
-                        lint_kind: LintKind::WordChoice,
-                        suggestions,
-                        message: "The word \"touristic\" is rarely used by native speakers."
-                            .to_string(),
-                        priority: 31,
-                    });
-                }
-                if !tok_span_content_string.ends_with(" touristic") {
-                    eprintln!(
-                        "❤️ ❤️ got 3 tokens = 2 words but it doesn't start or end with \"touristic\""
-                    );
-                    return None;
-                }
-
-                let prev_word = toks[0].span.get_content_string(src);
+            (3, false, true) => {
                 let prev_kind = &toks[0].kind;
-                let pos_string = tok_pos(prev_kind);
-                eprintln!("❤️ ❤️ \"{prev_word}\"<{pos_string}> \"touristic\" ❤️ ❤️");
-                let suggestions = if prev_kind.is_adjective() || prev_kind.is_linking_verb() {
-                    vec![Suggestion::replace_with_match_case_str(
-                        "touristy",
-                        toks[0].span.get_content(src),
-                    )]
+                let suggested = if prev_kind.is_adjective() || prev_kind.is_linking_verb() {
+                    vec!["touristy"]
                 } else {
-                    vec![
-                        Suggestion::replace_with_match_case_str(
-                            "tourist",
-                            toks[0].span.get_content(src),
-                        ),
-                        Suggestion::replace_with_match_case_str(
-                            "tourism",
-                            toks[0].span.get_content(src),
-                        ),
-                        Suggestion::replace_with_match_case_str(
-                            "touristy",
-                            toks[0].span.get_content(src),
-                        ),
-                    ]
+                    vec!["tourist", "tourism", "touristy"]
                 };
-                return Some(Lint {
-                    span: toks[2].span,
-                    lint_kind: LintKind::WordChoice,
-                    suggestions,
-                    message: "The word \"touristic\" is rarely used by native speakers."
-                        .to_string(),
-                    priority: 31,
-                });
+
+                (2, suggested)
             }
-            5 => {
-                eprintln!("❤️ ❤️ ❤️ match_to_lint got 5 tokens = 3 words");
-                let prev_word = toks[0].span.get_content_string(src);
+            (5, _, _) => {
+                let prev_word = toks[0].span.get_content_string(src).to_lowercase();
                 let prev_kind = &toks[0].kind;
-                let next_word = toks[4].span.get_content_string(src);
+                let next_word = toks[4].span.get_content_string(src).to_lowercase();
                 let next_kind = &toks[4].kind;
-                let prev_pos_string = tok_pos(prev_kind);
-                let next_pos_string = tok_pos(next_kind);
-                eprintln!(
-                    "❤️ ❤️ ❤️ \"{prev_word}\"<{prev_pos_string}> \"touristic\" \"{next_word}\"<{next_pos_string}>"
-                );
-                let (prev_word, next_word) = (prev_word.to_lowercase(), next_word.to_lowercase());
-                eprintln!(
-                    "🍒🍒🍒 \"{prev_word}\"<{prev_pos_string}> \"touristic\" \"{next_word}\"<{next_pos_string}>"
-                );
 
-                let mut can_suggest_touristy = None;
-                let mut can_suggest_tourist_and_tourism = None;
+                let mut sugg_touristy = None;
+                let mut sugg_tourist_and_tourism = None;
 
-                // only add "tourist" and "tourism" if prev word is not adverb
                 if prev_kind.is_adverb() {
-                    eprintln!("🍊<🖤> '{} tourist' sounds weird", prev_word);
-                    if can_suggest_tourist_and_tourism == Some(true) {
+                    if sugg_tourist_and_tourism == Some(true) {
                         eprintln!("🖤 adverb rule overriding tourist/tourism suggestion");
                     }
-                    can_suggest_tourist_and_tourism = Some(false);
+                    sugg_tourist_and_tourism = Some(false);
                 }
 
                 if next_kind.is_noun() {
                     if TOURISTY_NOUN_WHITELIST.contains(&next_word.as_str()) {
-                        eprintln!("🍓<🤍> 'touristy {}' sounds fine", next_word);
-                        if can_suggest_touristy == Some(false) {
+                        if sugg_touristy == Some(false) {
                             eprintln!("🖤 noun white list overriding touristy suggestion");
                         }
-                        can_suggest_touristy = Some(true);
+                        sugg_touristy = Some(true);
                     }
                     if TOURISTY_NOUN_BLACKLIST.contains(&next_word.as_str()) {
-                        eprintln!("🍓<🖤> 'touristy {}' sounds weird", next_word);
-                        if can_suggest_touristy == Some(true) {
+                        if sugg_touristy == Some(true) {
                             eprintln!("🖤 noun black list overriding touristy suggestion");
                         }
-                        can_suggest_touristy = Some(false);
+                        sugg_touristy = Some(false);
                     }
                 }
 
                 if next_kind.is_adjective() && !next_kind.is_noun() {
-                    if can_suggest_tourist_and_tourism == Some(true) {
+                    if sugg_tourist_and_tourism == Some(true) {
                         eprintln!("🖤 adj rule overriding tourist/tourism suggestion");
                     }
-                    can_suggest_tourist_and_tourism = Some(false);
-                    if can_suggest_touristy == Some(false) {
+                    sugg_tourist_and_tourism = Some(false);
+                    if sugg_touristy == Some(false) {
                         eprintln!("🖤 adj rule overriding touristy suggestion");
                     }
-                    can_suggest_touristy = Some(true);
+                    sugg_touristy = Some(true);
                 }
 
-                let mut suggestions = vec![];
-                match can_suggest_tourist_and_tourism {
+                let mut suggested = vec![];
+                match sugg_tourist_and_tourism {
                     Some(true) | None => {
-                        suggestions.push(Suggestion::replace_with_match_case_str(
-                            "tourist",
-                            toks[2].span.get_content(src),
-                        ));
-                        suggestions.push(Suggestion::replace_with_match_case_str(
-                            "tourism",
-                            toks[2].span.get_content(src),
-                        ));
+                        suggested.push("tourist");
+                        suggested.push("tourism");
                     }
                     Some(false) => {}
                 }
-                match can_suggest_touristy {
-                    Some(true) | None => {
-                        suggestions.push(Suggestion::replace_with_match_case_str(
-                            "touristy",
-                            toks[2].span.get_content(src),
-                        ));
-                    }
-                    Some(false) => {} //| None => {}
+                match sugg_touristy {
+                    Some(true) | None => suggested.push("touristy"),
+                    Some(false) => {}
                 }
 
-                return Some(Lint {
-                    span: toks[2].span,
-                    lint_kind: LintKind::WordChoice,
-                    suggestions,
-                    message: "The word \"touristic\" is rarely used by native speakers."
-                        .to_string(),
-                    priority: 31,
-                });
+                (2, suggested)
             }
             _ => {
-                eprintln!(
-                    "❤️💎❤️ match_to_lint got an unexpected {} tokens",
-                    toks.len()
-                );
+                return None;
             }
-        }
-        None
+        }; // match
+        let span = toks[span_number].span;
+        Some(Lint {
+            span,
+            lint_kind: LintKind::WordChoice,
+            suggestions: suggested
+                .iter()
+                .map(|s| {
+                    let template = span.get_content(src);
+                    Suggestion::replace_with_match_case_str(s, template)
+                })
+                .collect(),
+            message: "The word `touristic` is rarely used by native speakers.".to_string(),
+            priority: 31,
+        })
     }
 
     fn description(&self) -> &'static str {
-        "Suggests replacing the uncommon word \"touristic\" with \"tourist\", \"tourism\", or \"touristy\"."
+        "Suggests replacing the uncommon word `touristic` with `tourist`, `tourism`, and/or `touristy`."
     }
-}
-
-fn tok_pos(tok_kind: &crate::TokenKind) -> String {
-    let mut next_pos = vec![];
-    if tok_kind.is_noun() {
-        next_pos.push("n.");
-    }
-    if tok_kind.is_linking_verb() {
-        next_pos.push("v.link.");
-    } else if tok_kind.is_verb() {
-        next_pos.push("v.");
-    }
-    if tok_kind.is_adjective() {
-        next_pos.push("adj.");
-    }
-    if tok_kind.is_adverb() {
-        next_pos.push("adv.");
-    }
-    if tok_kind.is_pronoun() {
-        next_pos.push("pron.");
-    }
-    if tok_kind.is_conjunction() {
-        next_pos.push("conj.");
-    }
-    if tok_kind.is_preposition() {
-        next_pos.push("prep.");
-    }
-    let res = if next_pos.is_empty() {
-        "??".to_string()
-    } else {
-        next_pos.join(" ").to_string()
-    };
-    res
 }
 
 #[cfg(test)]
@@ -403,7 +272,7 @@ mod tests {
     }
 
     #[test]
-    fn fices_t_data() {
+    fn fixes_t_data() {
         assert_good_and_bad_suggestions(
             "Official API to access Apidae touristic data.",
             Touristic::default(),
