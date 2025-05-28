@@ -22,6 +22,11 @@ use tracing_subscriber::FmtSubscriber;
 
 static DEFAULT_ADDRESS: &str = "127.0.0.1:4000";
 
+/// Return harper-ls version
+pub fn ls_version() -> &'static str {
+    env!("CARGO_PKG_VERSION")
+}
+
 /// Start a language server to provide grammar checking inside of developer
 /// environments.
 ///
@@ -89,5 +94,9 @@ async fn log_version_info() {
         Err(_err) => error!("Unable to obtain latest version."),
     }
 
-    info!("Current version: {}", harper_core::core_version());
+    info!(
+        "Current harper-core version: {}",
+        harper_core::core_version()
+    );
+    info!("Current harper-ls version: {}", ls_version());
 }
