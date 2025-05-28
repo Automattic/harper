@@ -347,6 +347,11 @@ impl Backend {
                 // Don't lint on documents larger than the configured maximum length.
                 if text.len() <= max_file_length {
                     doc_state.document = Document::new(text, &parser, &doc_state.dict);
+                } else {
+                    // Ensures that existing lints are cleared when we stop linting the file.
+                    // Otherwise, prior lints will remain, and they will quickly fall out of sync
+                    // with the document when it is edited.
+                    doc_state.document = Document::default();
                 }
             }
         }
