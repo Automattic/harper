@@ -1,7 +1,8 @@
+use serde::{Deserialize, Serialize};
 use strum_macros::{AsRefStr, EnumIter};
 
 /// Represents the universal parts of speech as outlined by [universaldependencies.org](https://universaldependencies.org/u/pos/index.html).
-#[derive(Debug, Hash, Eq, PartialEq, Clone, Copy, EnumIter, AsRefStr)]
+#[derive(Debug, Hash, Eq, PartialEq, Clone, Copy, EnumIter, AsRefStr, Serialize, Deserialize)]
 pub enum UPOS {
     ADJ,
     ADP,

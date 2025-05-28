@@ -1,18 +1,13 @@
 use hashbrown::{Equivalent, HashMap};
+use serde::{Deserialize, Serialize};
 use strum::IntoEnumIterator;
 
 use crate::upos::UPOS;
 
 /// A mapping between words and the most common UPOS tag.
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Serialize, Deserialize)]
 pub struct FreqDict {
     pub mapping: HashMap<String, UPOS>,
-}
-
-impl FreqDict {
-    pub fn new() -> Self {
-        Default::default()
-    }
 }
 
 /// A mapping between words and the frequency of each UPOS.
