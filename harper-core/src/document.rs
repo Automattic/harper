@@ -167,10 +167,6 @@ impl Document {
                 i += 1;
             }
         }
-
-        // refine and disambiguate word metadata
-        self.known_preposition();
-        self.articles_imply_not_verb();
     }
 
     fn uncached_article_pattern() -> Lrc<SequencePattern> {
@@ -182,69 +178,6 @@ impl Document {
                 .then_whitespace()
                 .then_noun(),
         )
-    }
-
-    /// A proposition-like word followed by a determiner or number is typically
-    /// really a preposition.
-    fn known_preposition(&mut self) {
-        fn create_pattern() -> Lrc<SequencePattern> {
-            Lrc::new(
-                SequencePattern::default()
-                    .then(WordSet::new(&["in", "at", "on", "to", "for", "by", "with"]))
-                    .then_whitespace()
-                    .then(|t: &Token, _source: &[char]| {
-                        t.kind.is_determiner() || t.kind.is_number()
-                    }),
-            )
-        }
-        thread_local! {static PATTERN: Lrc<SequencePattern> = create_pattern()}
-
-        let pattern = PATTERN.with(|v| v.clone());
-
-        for m in pattern.find_all_matches_in_doc(self) {
-            if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start].kind {
-                metadata.noun = None;
-                metadata.pronoun = None;
-                metadata.verb = None;
-                metadata.adjective = None;
-            }
-        }
-    }
-
-    /// The first word after an article cannot be a verb.
-    fn articles_imply_not_verb(&mut self) {
-        fn create_pattern() -> Lrc<SequencePattern> {
-            Lrc::new(
-                SequencePattern::default()
-                    .then(WordSet::new(&[
-                        // articles
-                        "a", "an", "the",
-                        // Dependent genitive pronouns serve a similar role to articles.
-                        // Unfortunately, some overlap with other pronoun forms. E.g.
-                        // "I like her", "Something about her struck me as odd."
-                        "my", "your", "thy", "thine", "his", /*"her",*/ "its", "our", "their",
-                        "whose", // "no" is also a determiner
-                        "no",
-                    ]))
-                    .then_whitespace()
-                    .then_verb(),
-            )
-        }
-        thread_local! {static PATTERN: Lrc<SequencePattern> = create_pattern()}
-        let pattern = PATTERN.with(|v| v.clone());
-
-        for m in pattern.find_all_matches_in_doc(self) {
-            if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.end - 1].kind {
-                if metadata.noun.is_none()
-                    && metadata.adjective.is_none()
-                    && metadata.adverb.is_none()
-                {
-                    metadata.noun = Some(NounData::default());
-                    metadata.adjective = Some(AdjectiveData::default());
-                }
-                metadata.verb = None;
-            }
-        }
     }
 
     /// Convert all sets of newlines greater than 2 to paragraph breaks.
