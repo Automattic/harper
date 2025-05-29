@@ -2,7 +2,6 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use harper_brill::prebuilt_freq_dict;
 use paste::paste;
 
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
@@ -143,21 +142,12 @@ impl Document {
         self.condense_latin();
         self.match_quotes();
 
-        let freq_dict = prebuilt_freq_dict();
-
         // annotate word metadata
         for token in self.tokens.iter_mut() {
             if let TokenKind::Word(meta) = &mut token.kind {
                 let word_source = token.span.get_content(&self.source);
                 let word_source_str = token.span.get_content_string(&self.source);
                 let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
-
-                let most_common_pos = freq_dict.get(&word_source_str);
-                if let Some(pos) = most_common_pos {
-                    if let Some(meta) = &mut found_meta {
-                        meta.declare_pos(&pos);
-                    }
-                }
 
                 *meta = found_meta;
             }

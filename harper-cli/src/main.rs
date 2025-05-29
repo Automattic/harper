@@ -18,6 +18,7 @@ use harper_core::{
     MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
 };
 use harper_literate_haskell::LiterateHaskellParser;
+use harper_pos_utils::BrillTagger;
 use harper_stats::Stats;
 use serde::Serialize;
 
@@ -74,6 +75,14 @@ enum Args {
     MineWords {
         /// The document to mine words from.
         file: PathBuf,
+    },
+    TrainBrillTagger {
+        /// Path to a `.conllu` dataset to train on.
+        dataset: PathBuf,
+        /// The number of epochs (and patch rules) to train.
+        epochs: usize,
+        /// The path to write the final JSON model file to.
+        output: PathBuf,
     },
     /// Print harper-core version.
     CoreVersion,
@@ -364,6 +373,16 @@ fn main() -> anyhow::Result<()> {
         }
         Args::CoreVersion => {
             println!("harper-core v{}", harper_core::core_version());
+            Ok(())
+        }
+        Args::TrainBrillTagger {
+            dataset,
+            epochs,
+            output,
+        } => {
+            let tagger = BrillTagger::train(dataset, epochs);
+            fs::write(output, serde_json::to_string_pretty(&tagger)?)?;
+
             Ok(())
         }
     }

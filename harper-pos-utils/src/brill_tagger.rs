@@ -1,9 +1,16 @@
+use std::path::Path;
+
+#[cfg(feature = "threaded")]
+use rayon::slice::ParallelSliceMut;
+
+use rs_conllu::Sentence;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    FreqDict, UPOS,
+    FreqDict, FreqDictBuilder, UPOS,
+    conllu_utils::iter_sentences_in_conllu,
     error_counter::{ErrorCounter, ErrorKind},
-    patch_criteria::PatchCriteria,
+    patch::Patch,
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -109,55 +116,8 @@ impl BrillTagger {
 
         errors
     }
-}
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-struct Patch {
-    from: UPOS,
-    to: UPOS,
-    criteria: PatchCriteria,
-}
-
-#[cfg(test)]
-mod tests {
-    use std::fs;
-
-    use rayon::slice::ParallelSliceMut;
-    use rs_conllu::Sentence;
-    use serde_json::to_string_pretty;
-    use strum::IntoEnumIterator;
-
-    use crate::{
-        FreqDictBuilder, UPOS, brill_tagger::BrillTagger, conllu_utils::iter_sentences_in_conllu,
-        error_counter::ErrorCounter, patch_criteria::PatchCriteria,
-    };
-
-    use super::Patch;
-
-    /// Lower is better
-    fn score_candidate(
-        tagger: &BrillTagger,
-        candidate: Patch,
-        sentences_tagged: &[(Vec<String>, Vec<Option<UPOS>>)],
-        base_tags: &[Vec<Option<UPOS>>],
-    ) -> usize {
-        let mut tagger = tagger.clone();
-        tagger.patches.push(candidate);
-
-        let mut candidate_errors = ErrorCounter::new();
-
-        for ((toks, tags), base) in sentences_tagged.iter().zip(base_tags.iter()) {
-            candidate_errors.merge_from(tagger.locate_patch_errors(
-                toks.as_slice(),
-                tags.as_slice(),
-                base,
-            ));
-        }
-
-        candidate_errors.total_errors()
-    }
-
-    fn epoch(tagger: &mut BrillTagger, training_file: &str) {
+    fn epoch(&mut self, training_file: impl AsRef<Path>) {
         let mut total_tokens = 0;
         let mut error_counter = ErrorCounter::new();
 
@@ -179,7 +139,7 @@ mod tests {
         for (tok_buf, tag_buf) in &sentences_tagged {
             total_tokens += tok_buf.len();
             error_counter
-                .merge_from(tagger.locate_tag_errors(tok_buf.as_slice(), tag_buf.as_slice()));
+                .merge_from(self.locate_tag_errors(tok_buf.as_slice(), tag_buf.as_slice()));
         }
 
         dbg!(total_tokens);
@@ -189,126 +149,65 @@ mod tests {
         // Before adding any patches, let's get a good base.
         let mut base_tags = Vec::new();
         for (toks, _) in &sentences_tagged {
-            base_tags.push(tagger.tag_sentence_no_patch(toks));
+            base_tags.push(self.tag_sentence_no_patch(toks));
         }
 
-        let mut candidates = generate_candidate_patches(&error_counter);
+        let mut candidates = Patch::generate_candidate_patches(&error_counter);
 
+        #[cfg(feature = "threaded")]
         candidates.par_sort_by_cached_key(|candidate| {
-            score_candidate(tagger, candidate.clone(), &sentences_tagged, &base_tags)
+            self.score_candidate(candidate.clone(), &sentences_tagged, &base_tags)
+        });
+
+        #[cfg(not(feature = "threaded"))]
+        candidates.sort_by_cached_key(|candidate| {
+            self.score_candidate(candidate.clone(), &sentences_tagged, &base_tags)
         });
 
         if let Some(best) = candidates.first() {
-            tagger.patches.push(best.clone());
+            self.patches.push(best.clone());
         }
     }
 
-    fn candidate_criterion() -> Vec<PatchCriteria> {
-        let mut criteria = Vec::new();
-        for upos in UPOS::iter() {
-            criteria.push(PatchCriteria::WordIsTaggedWith {
-                relative: -1,
-                is_tagged: upos,
-            });
-            criteria.push(PatchCriteria::WordIsTaggedWith {
-                relative: -2,
-                is_tagged: upos,
-            });
-            criteria.push(PatchCriteria::WordIsTaggedWith {
-                relative: -3,
-                is_tagged: upos,
-            });
-            criteria.push(PatchCriteria::AnyWordIsTaggedWith {
-                max_relative: -2,
-                is_tagged: upos,
-            });
-            criteria.push(PatchCriteria::AnyWordIsTaggedWith {
-                max_relative: -3,
-                is_tagged: upos,
-            });
-            criteria.push(PatchCriteria::AnyWordIsTaggedWith {
-                max_relative: -4,
-                is_tagged: upos,
-            });
+    /// Lower is better
+    fn score_candidate(
+        &self,
+        candidate: Patch,
+        sentences_tagged: &[(Vec<String>, Vec<Option<UPOS>>)],
+        base_tags: &[Vec<Option<UPOS>>],
+    ) -> usize {
+        let mut tagger = self.clone();
+        tagger.patches.push(candidate);
 
-            criteria.push(PatchCriteria::RelativeWordCaps {
-                relative: 0,
-                is_capitalized: true,
-            });
-            criteria.push(PatchCriteria::RelativeWordCaps {
-                relative: 0,
-                is_capitalized: false,
-            });
-            criteria.push(PatchCriteria::RelativeWordCaps {
-                relative: -1,
-                is_capitalized: true,
-            });
-            criteria.push(PatchCriteria::RelativeWordCaps {
-                relative: -1,
-                is_capitalized: false,
-            });
-            criteria.push(PatchCriteria::RelativeWordCaps {
-                relative: 1,
-                is_capitalized: true,
-            });
-            criteria.push(PatchCriteria::RelativeWordCaps {
-                relative: 1,
-                is_capitalized: false,
-            });
+        let mut candidate_errors = ErrorCounter::new();
 
-            for upos_b in UPOS::iter() {
-                criteria.push(PatchCriteria::SandwichTaggedWith {
-                    prev_word_tagged: upos,
-                    post_word_tagged: upos_b,
-                });
-
-                criteria.push(PatchCriteria::Combined {
-                    a: Box::new(PatchCriteria::WordIsTaggedWith {
-                        relative: 1,
-                        is_tagged: upos,
-                    }),
-                    b: Box::new(PatchCriteria::WordIsTaggedWith {
-                        relative: -2,
-                        is_tagged: upos_b,
-                    }),
-                })
-            }
+        for ((toks, tags), base) in sentences_tagged.iter().zip(base_tags.iter()) {
+            candidate_errors.merge_from(tagger.locate_patch_errors(
+                toks.as_slice(),
+                tags.as_slice(),
+                base,
+            ));
         }
 
-        criteria
+        candidate_errors.total_errors()
     }
 
-    fn generate_candidate_patches(error_counter: &ErrorCounter) -> Vec<Patch> {
-        let mut candidates = Vec::new();
-
-        for key in error_counter.error_counts.keys() {
-            candidates.extend(candidate_criterion().into_iter().map(|c| Patch {
-                from: key.was_tagged,
-                to: key.correct_tag,
-                criteria: c,
-            }));
-        }
-
-        candidates
-    }
-
-    #[test]
-    fn training() {
-        let training_file = "./en_gum-ud-train.conllu";
-
+    /// Train a brand-new tagger on a `.conllu` dataset, provided via a path.
+    /// This does not do _any_ error handling, and should not run in production.
+    /// It should be used for training a model that _will_ be used in production.
+    #[cfg(feature = "training")]
+    pub fn train(training_file: impl AsRef<Path>, epochs: usize) -> Self {
         let mut freq_dict_builder = FreqDictBuilder::new();
-        freq_dict_builder.inc_from_conllu_file(training_file);
+        freq_dict_builder.inc_from_conllu_file(&training_file);
 
         let freq_dict = freq_dict_builder.build();
 
-        let mut tagger = BrillTagger::new(freq_dict);
+        let mut tagger = Self::new(freq_dict);
 
-        for i in 0..1000 {
-            epoch(&mut tagger, training_file);
-            let dest_json = format!("epoch{}.json", i);
-            fs::write(dest_json, to_string_pretty(&tagger).unwrap()).unwrap();
+        for _ in 0..epochs {
+            tagger.epoch(&training_file);
         }
 
-        panic!();
+        tagger
     }
 }

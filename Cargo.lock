@@ -832,6 +832,7 @@ dependencies = [
  "harper-comments",
  "harper-core",
  "harper-literate-haskell",
+ "harper-pos-utils",
  "harper-stats",
  "harper-typst",
  "hashbrown 0.15.3",
@@ -967,7 +968,6 @@ dependencies = [
  "rayon",
  "rs-conllu",
  "serde",
- "serde_json",
  "strum",
  "strum_macros",
 ]

@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use strum::IntoEnumIterator;
 
 use crate::UPOS;
 
@@ -100,6 +101,82 @@ impl PatchCriteria {
                 a.fulfils(tokens, tags, index) && b.fulfils(tokens, tags, index)
             }
         }
+    }
+
+    /// Candidates to be tested against a dataset during training.
+    pub fn gen_candidates() -> Vec<PatchCriteria> {
+        let mut criteria = Vec::new();
+        for upos in UPOS::iter() {
+            criteria.push(PatchCriteria::WordIsTaggedWith {
+                relative: -1,
+                is_tagged: upos,
+            });
+            criteria.push(PatchCriteria::WordIsTaggedWith {
+                relative: -2,
+                is_tagged: upos,
+            });
+            criteria.push(PatchCriteria::WordIsTaggedWith {
+                relative: -3,
+                is_tagged: upos,
+            });
+            criteria.push(PatchCriteria::AnyWordIsTaggedWith {
+                max_relative: -2,
+                is_tagged: upos,
+            });
+            criteria.push(PatchCriteria::AnyWordIsTaggedWith {
+                max_relative: -3,
+                is_tagged: upos,
+            });
+            criteria.push(PatchCriteria::AnyWordIsTaggedWith {
+                max_relative: -4,
+                is_tagged: upos,
+            });
+
+            criteria.push(PatchCriteria::RelativeWordCaps {
+                relative: 0,
+                is_capitalized: true,
+            });
+            criteria.push(PatchCriteria::RelativeWordCaps {
+                relative: 0,
+                is_capitalized: false,
+            });
+            criteria.push(PatchCriteria::RelativeWordCaps {
+                relative: -1,
+                is_capitalized: true,
+            });
+            criteria.push(PatchCriteria::RelativeWordCaps {
+                relative: -1,
+                is_capitalized: false,
+            });
+            criteria.push(PatchCriteria::RelativeWordCaps {
+                relative: 1,
+                is_capitalized: true,
+            });
+            criteria.push(PatchCriteria::RelativeWordCaps {
+                relative: 1,
+                is_capitalized: false,
+            });
+
+            for upos_b in UPOS::iter() {
+                criteria.push(PatchCriteria::SandwichTaggedWith {
+                    prev_word_tagged: upos,
+                    post_word_tagged: upos_b,
+                });
+
+                criteria.push(PatchCriteria::Combined {
+                    a: Box::new(PatchCriteria::WordIsTaggedWith {
+                        relative: 1,
+                        is_tagged: upos,
+                    }),
+                    b: Box::new(PatchCriteria::WordIsTaggedWith {
+                        relative: -2,
+                        is_tagged: upos_b,
+                    }),
+                })
+            }
+        }
+
+        criteria
     }
 }
 
