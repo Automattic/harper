@@ -1,7 +1,7 @@
 use super::{Lint, LintKind, PatternLinter, Suggestion};
 use crate::{
     CharStringExt, Token, TokenStringExt,
-    patterns::{EitherPattern, Pattern, SequencePattern, Word, WordSet},
+    patterns::{LongestMatchOf, Pattern, SequencePattern, Word, WordSet},
 };
 
 pub struct TheMy {
@@ -24,7 +24,7 @@ impl Default for TheMy {
             .then(the);
 
         Self {
-            pattern: Box::new(EitherPattern::new(vec![
+            pattern: Box::new(LongestMatchOf::new(vec![
                 Box::new(the_poss),
                 Box::new(poss_the),
             ])),

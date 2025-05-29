@@ -1,6 +1,6 @@
 use crate::{
     Token, TokenStringExt,
-    patterns::{EitherPattern, Pattern, SequencePattern},
+    patterns::{LongestMatchOf, Pattern, SequencePattern},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -20,7 +20,7 @@ impl Default for Dashes {
             .then_hyphen()
             .then_one_or_more_hyphens();
 
-        let pattern = EitherPattern::new(vec![Box::new(em_dash_or_longer), Box::new(en_dash)]);
+        let pattern = LongestMatchOf::new(vec![Box::new(em_dash_or_longer), Box::new(en_dash)]);
 
         Self {
             pattern: Box::new(pattern),

@@ -31,6 +31,7 @@ use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
 use super::expand_time_shorthands::ExpandTimeShorthands;
+use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
 use super::hedging::Hedging;
@@ -357,6 +358,7 @@ impl LintGroup {
         insert_struct_rule!(ElsePossessive, true);
         insert_struct_rule!(Everyday, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
+        insert_pattern_rule!(FewUnitsOfTimeAgo, true);
         insert_struct_rule!(FirstAidKit, true);
         insert_struct_rule!(ForNoun, true);
         insert_pattern_rule!(Hedging, true);

@@ -1,13 +1,13 @@
 use crate::{
     Token, TokenStringExt,
     linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{EitherPattern, Invert, Pattern, SequencePattern},
+    patterns::{Invert, LongestMatchOf, Pattern, SequencePattern},
 };
 
 /// Suggests removing `the` when followed by how/why/who/when/what,
 /// skipping cases like `how to` and `who's who`.
 pub struct TheHowWhy {
-    pattern: EitherPattern,
+    pattern: LongestMatchOf,
 }
 
 impl Default for TheHowWhy {
@@ -47,7 +47,7 @@ impl Default for TheHowWhy {
             .then_whitespace()
             .t_aco("what");
 
-        let pattern = EitherPattern::new(vec![
+        let pattern = LongestMatchOf::new(vec![
             Box::new(the_how),
             Box::new(the_who),
             Box::new(the_why),

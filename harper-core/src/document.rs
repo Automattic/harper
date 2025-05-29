@@ -6,7 +6,7 @@ use paste::paste;
 
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
 use crate::patterns::{
-    DocPattern, EitherPattern, Pattern, RepeatingPattern, SequencePattern, WordSet,
+    DocPattern, LongestMatchOf, Pattern, RepeatingPattern, SequencePattern, WordSet,
 };
 use crate::punctuation::Punctuation;
 use crate::vec_ext::VecExt;
@@ -478,11 +478,11 @@ impl Document {
     }
 
     thread_local! {
-        static LATIN_PATTERN: Lrc<EitherPattern> = Document::uncached_latin_pattern();
+        static LATIN_PATTERN: Lrc<LongestMatchOf> = Document::uncached_latin_pattern();
     }
 
-    fn uncached_latin_pattern() -> Lrc<EitherPattern> {
-        Lrc::new(EitherPattern::new(vec![
+    fn uncached_latin_pattern() -> Lrc<LongestMatchOf> {
+        Lrc::new(LongestMatchOf::new(vec![
             Box::new(
                 SequencePattern::default()
                     .then(WordSet::new(&["etc", "vs"]))

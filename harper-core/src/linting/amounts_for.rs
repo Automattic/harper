@@ -1,6 +1,6 @@
 use crate::{
     Lrc, Token, TokenStringExt,
-    patterns::{EitherPattern, ExactPhrase, Pattern, SequencePattern, WordSet},
+    patterns::{ExactPhrase, LongestMatchOf, Pattern, SequencePattern, WordSet},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -28,7 +28,7 @@ impl Default for AmountsFor {
             .then(Lrc::new(ExactPhrase::from_phrase("amount for")));
 
         Self {
-            pattern: Box::new(EitherPattern::new(vec![
+            pattern: Box::new(LongestMatchOf::new(vec![
                 Box::new(singular_pattern),
                 Box::new(plural_pattern),
             ])),
