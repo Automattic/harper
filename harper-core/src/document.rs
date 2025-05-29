@@ -2,6 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
+use harper_brill::brill_tagger;
 use paste::paste;
 
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
@@ -142,14 +143,28 @@ impl Document {
         self.condense_latin();
         self.match_quotes();
 
+        let token_strings: Vec<_> = self
+            .iter_words()
+            .map(|t| self.get_span_content_str(&t.span))
+            .collect();
+
+        let token_tags = brill_tagger().tag_sentence(&token_strings);
+        let mut i = 0;
+
         // annotate word metadata
         for token in self.tokens.iter_mut() {
             if let TokenKind::Word(meta) = &mut token.kind {
                 let word_source = token.span.get_content(&self.source);
-                let word_source_str = token.span.get_content_string(&self.source);
                 let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
 
+                if let Some(found_meta) = &mut found_meta {
+                    if let Some(upos) = token_tags[i] {
+                        found_meta.declare_pos(&upos);
+                    }
+                }
+
                 *meta = found_meta;
+                i += 1;
             }
         }
 

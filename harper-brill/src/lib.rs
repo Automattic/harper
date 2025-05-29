@@ -1,18 +1,18 @@
 use lazy_static::lazy_static;
 use std::sync::Arc;
 
-pub use harper_pos_utils::{FreqDict, UPOS};
+pub use harper_pos_utils::{BrillTagger, UPOS};
 
-// const FREQ_DICT_SOURCE: &str = include_str!(concat!(env!("OUT_DIR"), "/freq_dict.json"));
-//
-// lazy_static! {
-//     static ref FREQ_DICT: Arc<FreqDict> = Arc::new(uncached_prebuilt_freq_dict());
-// }
-//
-// fn uncached_prebuilt_freq_dict() -> FreqDict {
-//     serde_json::from_str(FREQ_DICT_SOURCE).unwrap()
-// }
-//
-// pub fn prebuilt_freq_dict() -> Arc<FreqDict> {
-//     (*FREQ_DICT).clone()
-// }
+const BRILL_TAGGER_SOURCE: &str = include_str!("../trained_brill_model.json");
+
+lazy_static! {
+    static ref BRILL_TAGGER: Arc<BrillTagger> = Arc::new(uncached_brill_tagger());
+}
+
+fn uncached_brill_tagger() -> BrillTagger {
+    serde_json::from_str(BRILL_TAGGER_SOURCE).unwrap()
+}
+
+pub fn brill_tagger() -> Arc<BrillTagger> {
+    (*BRILL_TAGGER).clone()
+}
