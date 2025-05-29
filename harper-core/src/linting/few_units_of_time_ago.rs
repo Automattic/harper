@@ -55,7 +55,7 @@ impl PatternLinter for FewUnitsOfTimeAgo {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let mut span = None;
-        
+
         for tok in toks.iter().take(3) {
             if tok.span.get_content_string(src).eq_ignore_ascii_case("few") {
                 span = Some(tok.span);
