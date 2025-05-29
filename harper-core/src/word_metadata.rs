@@ -272,7 +272,7 @@ impl WordMetadata {
                 self.determiner = true;
             }
             CCONJ | SCONJ => {
-                if let None = self.conjunction {
+                if self.conjunction.is_none() {
                     self.conjunction = Some(ConjunctionData::default())
                 }
 

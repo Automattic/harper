@@ -117,6 +117,7 @@ impl BrillTagger {
         errors
     }
 
+    #[cfg(feature = "training")]
     fn epoch(&mut self, training_file: impl AsRef<Path>) {
         let mut total_tokens = 0;
         let mut error_counter = ErrorCounter::new();
@@ -142,9 +143,16 @@ impl BrillTagger {
                 .merge_from(self.locate_tag_errors(tok_buf.as_slice(), tag_buf.as_slice()));
         }
 
-        dbg!(total_tokens);
-        dbg!(error_counter.total_errors());
-        dbg!(error_counter.total_errors() as f32 / total_tokens as f32 * 100.);
+        println!("=============");
+        println!("Total tokens in training set: {}", total_tokens);
+        println!(
+            "Tokens incorrectly tagged: {}",
+            error_counter.total_errors()
+        );
+        println!(
+            "Error rate: {}%",
+            error_counter.total_errors() as f32 / total_tokens as f32 * 100.
+        );
 
         // Before adding any patches, let's get a good base.
         let mut base_tags = Vec::new();
@@ -170,6 +178,7 @@ impl BrillTagger {
     }
 
     /// Lower is better
+    #[cfg(feature = "training")]
     fn score_candidate(
         &self,
         candidate: Patch,

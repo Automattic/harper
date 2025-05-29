@@ -1,7 +1,6 @@
-use std::{fs::File, path::Path};
+use std::path::Path;
 
 use hashbrown::{Equivalent, HashMap};
-use rs_conllu::parse_file;
 use serde::{Deserialize, Serialize};
 use strum::IntoEnumIterator;
 

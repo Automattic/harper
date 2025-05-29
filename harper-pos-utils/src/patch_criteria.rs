@@ -53,14 +53,12 @@ impl PatchCriteria {
                     return false;
                 };
 
-                (farthest_index.min(index)..farthest_index.max(index))
-                    .into_iter()
-                    .any(|i| {
-                        tags.get(i)
-                            .copied()
-                            .flatten()
-                            .is_some_and(|t| t == *is_tagged)
-                    })
+                (farthest_index.min(index)..farthest_index.max(index)).any(|i| {
+                    tags.get(i)
+                        .copied()
+                        .flatten()
+                        .is_some_and(|t| t == *is_tagged)
+                })
             }
             PatchCriteria::SandwichTaggedWith {
                 prev_word_tagged,
