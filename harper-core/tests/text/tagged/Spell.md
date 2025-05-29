@@ -2,25 +2,25 @@
 # NSg/V
 >
 #
-> This document contains example sentences with misspelled words that    we  want  to test  the spell checker on  .
-# I/D  NSg/V    V        NSg/V   NPl/V     P    V/J        NPl/V N/I/C/D IPl NSg/V P  NSg/V D   NSg   NSg/V   J/P .
+> This document contains example sentences with misspelled words  that we  want to test   the spell checker on .
+# I    V!X      V!X      N!PrSg  N!PrPl    P    V/J        N!PrPl I    IPl V!X  P  N!PrSg D   NSg   NSg/V   P  .
 >
 #
 > Example Sentences
-# NSg/V   NPl/V
+# N!PrSg  NPl/V
 >
 #
-> My favourite color      is blu .
-# D  NSg/J/Br  NSg/V/J/Am VL W?  .
-> I   must  defend my honour !
-# ISg NSg/V NSg/V  D  NSg/Br .
-> I   recognize that    you recognise me        .
-# ISg V         N/I/C/D IPl V/Br      NPrSg/ISg .
-> I   analyze how   you infantilize me        .
-# ISg V       NSg/C IPl V           NPrSg/ISg .
-> I   analyse how   you infantilise me        .
-# ISg V/Br    NSg/C IPl ?           NPrSg/ISg .
+> My favourite color     is  blu .
+# I  J/Br      N!PrSg/Am VLX W?  .
+> I   must defend my honour    !
+# ISg VX   NSg/V  I  N!PrSg/Br .
+> I   recognize that you recognise me  .
+# ISg V!X       I    IPl V/Br      ISg .
+> I   analyze how you infantilize me  .
+# ISg V       R   IPl V           ISg .
+> I   analyse how you infantilise me  .
+# ISg V!X/Br  R   IPl ?           ISg .
 > Careful , traveller !
 # J       . NSg/Br    .
-> At the centre of the theatre I   dropped a   litre  of coke    .
-# P  D   NSg/Br P  D   NSg/Br  ISg V/J     D/P NSg/Br P  NPrSg/V .
+> At the centre    of the theatre   I   dropped a litre  of coke    .
+# P  D   N!PrSg/Br P  D   N!PrSg/Br ISg V!X     D NSg/Br P  NPrSg/V .

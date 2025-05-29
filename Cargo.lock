@@ -507,6 +507,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "derive_more"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4a9b99b9cbbe49445b21764dc0625032a89b145a2642e67603e1c936f5458d05"
+dependencies = [
+ "derive_more-impl",
+]
+
+[[package]]
+name = "derive_more-impl"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cb7330aeadfbe296029522e6c40f315320aba36fc43a5b3632f3795348f3bd22"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+ "unicode-xid",
+]
+
+[[package]]
 name = "dirs"
 version = "4.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -790,6 +811,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-brill"
+version = "0.39.0"
+dependencies = [
+ "harper-pos-utils",
+ "lazy_static",
+ "rs-conllu",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "harper-cli"
 version = "0.1.0"
 dependencies = [
@@ -800,6 +832,7 @@ dependencies = [
  "harper-comments",
  "harper-core",
  "harper-literate-haskell",
+ "harper-pos-utils",
  "harper-stats",
  "harper-typst",
  "hashbrown 0.15.3",
@@ -850,6 +883,7 @@ dependencies = [
  "criterion",
  "foldhash",
  "fst",
+ "harper-brill",
  "hashbrown 0.15.3",
  "is-macro",
  "itertools 0.14.0",
@@ -923,6 +957,19 @@ dependencies = [
  "tower-lsp-server",
  "tracing",
  "tracing-subscriber",
+]
+
+[[package]]
+name = "harper-pos-utils"
+version = "0.39.0"
+dependencies = [
+ "hashbrown 0.15.3",
+ "is-macro",
+ "rayon",
+ "rs-conllu",
+ "serde",
+ "strum",
+ "strum_macros",
 ]
 
 [[package]]
@@ -2017,6 +2064,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rs-conllu"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d6de5aecf17f8fff1b35d59a12e2b8c908cad4d67208805166483655554f9169"
+dependencies = [
+ "clap",
+ "derive_more",
+ "thiserror 1.0.69",
+ "walkdir",
+]
+
+[[package]]
 name = "rustc-demangle"
 version = "0.1.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2936,6 +2995,12 @@ name = "unicode-width"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1fc81956842c57dac11422a97c3b8195a1ff727f06e85c84ed2e8aa277c9a0fd"
+
+[[package]]
+name = "unicode-xid"
+version = "0.2.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ebc1c04c71510c7f702b52b7c350734c9ff1295c464a03335b00bb84fc54f853"
 
 [[package]]
 name = "unscanny"

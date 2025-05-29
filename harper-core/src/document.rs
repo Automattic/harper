@@ -2,6 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
+use harper_brill::brill_tagger;
 use paste::paste;
 
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
@@ -10,10 +11,8 @@ use crate::patterns::{
 };
 use crate::punctuation::Punctuation;
 use crate::vec_ext::VecExt;
-use crate::word_metadata::AdjectiveData;
 use crate::{
-    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, NounData, Token, TokenKind,
-    TokenStringExt,
+    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, Token, TokenKind, TokenStringExt,
 };
 use crate::{OrdinalSuffix, Span};
 
@@ -141,20 +140,31 @@ impl Document {
         self.condense_ellipsis();
         self.condense_latin();
         self.match_quotes();
-        self.articles_imply_nouns();
+
+        let token_strings: Vec<_> = self
+            .iter_words()
+            .map(|t| self.get_span_content_str(&t.span))
+            .collect();
+
+        let token_tags = brill_tagger().tag_sentence(&token_strings);
+        let mut i = 0;
 
         // annotate word metadata
         for token in self.tokens.iter_mut() {
             if let TokenKind::Word(meta) = &mut token.kind {
                 let word_source = token.span.get_content(&self.source);
-                let found_meta = dictionary.get_word_metadata(word_source);
-                *meta = found_meta.cloned()
+                let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
+
+                if let Some(found_meta) = &mut found_meta {
+                    if let Some(upos) = token_tags[i] {
+                        found_meta.declare_pos(&upos);
+                    }
+                }
+
+                *meta = found_meta;
+                i += 1;
             }
         }
-
-        // refine and disambiguate word metadata
-        self.known_preposition();
-        self.articles_imply_not_verb();
     }
 
     fn uncached_article_pattern() -> Lrc<SequencePattern> {
@@ -166,84 +176,6 @@ impl Document {
                 .then_whitespace()
                 .then_noun(),
         )
-    }
-
-    thread_local! {static ARTICLE_PATTERN: Lrc<SequencePattern> = Document::uncached_article_pattern()}
-
-    /// When a word that is either an adjective or a noun is sandwiched between an article and a noun,
-    /// it definitely is not a noun.
-    fn articles_imply_nouns(&mut self) {
-        let pattern = Self::ARTICLE_PATTERN.with(|v| v.clone());
-
-        for m in pattern.find_all_matches_in_doc(self) {
-            if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start + 2].kind {
-                metadata.noun = None;
-                metadata.verb = None;
-            }
-        }
-    }
-
-    /// A proposition-like word followed by a determiner or number is typically
-    /// really a preposition.
-    fn known_preposition(&mut self) {
-        fn create_pattern() -> Lrc<SequencePattern> {
-            Lrc::new(
-                SequencePattern::default()
-                    .then(WordSet::new(&["in", "at", "on", "to", "for", "by", "with"]))
-                    .then_whitespace()
-                    .then(|t: &Token, _source: &[char]| {
-                        t.kind.is_determiner() || t.kind.is_number()
-                    }),
-            )
-        }
-        thread_local! {static PATTERN: Lrc<SequencePattern> = create_pattern()}
-
-        let pattern = PATTERN.with(|v| v.clone());
-
-        for m in pattern.find_all_matches_in_doc(self) {
-            if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start].kind {
-                metadata.noun = None;
-                metadata.pronoun = None;
-                metadata.verb = None;
-                metadata.adjective = None;
-            }
-        }
-    }
-
-    /// The first word after an article cannot be a verb.
-    fn articles_imply_not_verb(&mut self) {
-        fn create_pattern() -> Lrc<SequencePattern> {
-            Lrc::new(
-                SequencePattern::default()
-                    .then(WordSet::new(&[
-                        // articles
-                        "a", "an", "the",
-                        // Dependent genitive pronouns serve a similar role to articles.
-                        // Unfortunately, some overlap with other pronoun forms. E.g.
-                        // "I like her", "Something about her struck me as odd."
-                        "my", "your", "thy", "thine", "his", /*"her",*/ "its", "our", "their",
-                        "whose", // "no" is also a determiner
-                        "no",
-                    ]))
-                    .then_whitespace()
-                    .then_verb(),
-            )
-        }
-        thread_local! {static PATTERN: Lrc<SequencePattern> = create_pattern()}
-        let pattern = PATTERN.with(|v| v.clone());
-
-        for m in pattern.find_all_matches_in_doc(self) {
-            if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.end - 1].kind {
-                if metadata.noun.is_none()
-                    && metadata.adjective.is_none()
-                    && metadata.adverb.is_none()
-                {
-                    metadata.noun = Some(NounData::default());
-                    metadata.adjective = Some(AdjectiveData::default());
-                }
-                metadata.verb = None;
-            }
-        }
     }
 
     /// Convert all sets of newlines greater than 2 to paragraph breaks.

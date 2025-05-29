@@ -1,74 +1,74 @@
-> " This " and " that    " are common  and fulfill multiple purposes in        everyday English   .
-# . I/D  . V/C . N/I/C/D . V   NSg/V/J V/C V       NSg/J    NPl/V    NPrSg/J/P NSg/J    NPrSg/V/J .
-> As    such  , disambiguating them is necessary .
-# NSg/R NSg/I . V              N/I  VL NSg/J     .
+> " This " and " that " are common and fulfill multiple purposes in everyday English .
+# . I    . C   . I    . VX  J      C   V!X     J        N!PrPl   P  J        NPrSg   .
+> As such , disambiguating them is  necessary .
+# C  J    . V              I    VLX J         .
 >
 #
-> This document contains various sentences that    use   " this " , " that    " , " these " , and
-# I/D  NSg/V    V        J       NPl/V     N/I/C/D NSg/V . I/D  . . . N/I/C/D . . . I/D   . . V/C
-> " those " in        different contexts with a   lot   of edge  cases .
-# . I/D   . NPrSg/J/P NSg/J     NPl/V    P    D/P NPrSg P  NSg/V NPl/V .
+> This document contains various sentences that use " this " , " that " , " these " , and
+# I    V!X      V!X      J       N!PrPl    I    V!X . D    . . . I    . . . D     . . C
+> " those " in different contexts with a lot    of edge   cases  .
+# . D     . P  J         N!PrPl   P    D N!PrSg P  N!PrSg N!PrPl .
 >
 #
 > Examples
-# NPl/V
+# N!PrPl
 >
 #
-> This triangle is nice      .
-# I/D  NSg      VL NPrSg/V/J .
-> This is nice      .
-# I/D  VL NPrSg/V/J .
-> That    triangle is nice      .
-# N/I/C/D NSg      VL NPrSg/V/J .
-> That    is nice      .
-# N/I/C/D VL NPrSg/V/J .
-> These triangles are nice      .
-# I/D   NPl       V   NPrSg/V/J .
-> These are nice      .
-# I/D   V   NPrSg/V/J .
-> Those triangles are nice      .
-# I/D   NPl       V   NPrSg/V/J .
-> Those are nice      .
-# I/D   V   NPrSg/V/J .
+> This triangle is  nice .
+# I    NSg      VLX J    .
+> This is  nice .
+# I    VLX J    .
+> That triangle is  nice .
+# I    NSg      VLX J    .
+> That is  nice .
+# I    VLX J    .
+> These triangles are nice .
+# D     NPl       VX  J    .
+> These are nice .
+# D     VX  J    .
+> Those triangles are nice .
+# D     NPl       VX  J    .
+> Those are nice .
+# D     VX  J    .
 >
 #
-> This massage is nice      .
-# I/D  NSg/V   VL NPrSg/V/J .
-> That    massage is nice      .
-# N/I/C/D NSg/V   VL NPrSg/V/J .
-> These massages are nice      .
-# I/D   NPl/V    V   NPrSg/V/J .
-> Those massages are nice      .
-# I/D   NPl/V    V   NPrSg/V/J .
-> This massages well    .
-# I/D  NPl/V    NSg/V/J .
-> That    massages well    .
-# N/I/C/D NPl/V    NSg/V/J .
-> These massage well    .
-# I/D   NSg/V   NSg/V/J .
-> Those massage well    .
-# I/D   NSg/V   NSg/V/J .
+> This massage is  nice .
+# I    N!PrSg  VLX J    .
+> That massage is  nice .
+# I    N!PrSg  VLX J    .
+> These massages are nice .
+# D     N!PrPl   VX  J    .
+> Those massages are nice .
+# D     N!PrPl   VX  J    .
+> This massages well .
+# I    N!PrPl   R    .
+> That massages well .
+# I    N!PrPl   R    .
+> These massage well .
+# D     N!PrSg  R    .
+> Those massage well .
+# D     N!PrSg  R    .
 >
 #
-> That    could  be     a   solution .
-# N/I/C/D NSg/VX NSg/VX D/P NSg      .
-> Find  all       candidates that    could  be     a   solution .
-# NSg/V NSg/I/J/C NPl/V      N/I/C/D NSg/VX NSg/VX D/P NSg      .
+> That could be a solution .
+# I    VX    VX D N!PrSg   .
+> Find all candidates that could be a solution .
+# V!X  D   N!PrPl     I    VX    VX D N!PrSg   .
 >
 #
-> This is all       that    I   have   .
-# I/D  VL NSg/I/J/C N/I/C/D ISg NSg/VX .
-> This is all       that    solutions can      do     .
-# I/D  VL NSg/I/J/C N/I/C/D NPl       NPrSg/VX NSg/VX .
-> That    solution can      do     .
-# N/I/C/D NSg      NPrSg/VX NSg/VX .
+> This is  all that I   have .
+# I    VLX D   I    ISg V!X  .
+> This is  all that solutions can do .
+# I    VLX D   I    N!PrPl    VX  VX .
+> That solution can do .
+# I    N!PrSg   VX  VX .
 >
 #
-> We  can      do     this !
-# IPl NPrSg/VX NSg/VX I/D  .
-> I   can      do     this and that    .
-# ISg NPrSg/VX NSg/VX I/D  V/C N/I/C/D .
+> We  can do this !
+# IPl VX  VX D    .
+> I   can do this and that .
+# ISg VX  VX D    C   I    .
 >
 #
-> We  unite to stand united in        unity .
-# IPl NSg/V P  NSg/V V/J    NPrSg/J/P NSg   .
+> We  unite to stand united in unity  .
+# IPl V!X   P  V!X   V!X    P  N!PrSg .
