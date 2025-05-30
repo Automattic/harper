@@ -68,11 +68,10 @@ impl BrillTagger {
         sentence: &[String],
         correct_tags: &[Option<UPOS>],
         base_tags: &[Option<UPOS>],
-    ) -> ErrorCounter {
+        errors: &mut ErrorCounter,
+    ) {
         let mut base_tags = base_tags.to_vec();
         self.apply_patches(sentence, &mut base_tags);
-
-        let mut errors = ErrorCounter::new();
 
         for (tag, correct_tag) in base_tags.iter().zip(correct_tags.iter()) {
             if let Some(tag) = tag {
@@ -86,8 +85,6 @@ impl BrillTagger {
                 }
             }
         }
-
-        errors
     }
 
     /// Tag a provided sentence with the tagger, providing the "correct" tags (from a dataset or
@@ -185,17 +182,19 @@ impl BrillTagger {
         sentences_tagged: &[(Vec<String>, Vec<Option<UPOS>>)],
         base_tags: &[Vec<Option<UPOS>>],
     ) -> usize {
-        let mut tagger = self.clone();
+        let mut tagger = BrillTagger::new(FreqDict::default());
+        tagger.patches = self.patches.clone();
         tagger.patches.push(candidate);
 
         let mut candidate_errors = ErrorCounter::new();
 
         for ((toks, tags), base) in sentences_tagged.iter().zip(base_tags.iter()) {
-            candidate_errors.merge_from(tagger.locate_patch_errors(
+            tagger.locate_patch_errors(
                 toks.as_slice(),
                 tags.as_slice(),
                 base,
-            ));
+                &mut candidate_errors,
+            );
         }
 
         candidate_errors.total_errors()

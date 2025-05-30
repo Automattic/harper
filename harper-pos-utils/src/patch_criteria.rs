@@ -1,9 +1,10 @@
+use hashbrown::HashSet;
 use serde::{Deserialize, Serialize};
 use strum::IntoEnumIterator;
 
 use crate::UPOS;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, Hash, PartialEq, Eq)]
 pub enum PatchCriteria {
     WordIsTaggedWith {
         /// Which token to inspect.
@@ -103,65 +104,65 @@ impl PatchCriteria {
 
     /// Candidates to be tested against a dataset during training.
     pub fn gen_candidates() -> Vec<PatchCriteria> {
-        let mut criteria = Vec::new();
+        let mut criteria = HashSet::new();
         for upos in UPOS::iter() {
-            criteria.push(PatchCriteria::WordIsTaggedWith {
+            criteria.insert(PatchCriteria::WordIsTaggedWith {
                 relative: -1,
                 is_tagged: upos,
             });
-            criteria.push(PatchCriteria::WordIsTaggedWith {
+            criteria.insert(PatchCriteria::WordIsTaggedWith {
                 relative: -2,
                 is_tagged: upos,
             });
-            criteria.push(PatchCriteria::WordIsTaggedWith {
+            criteria.insert(PatchCriteria::WordIsTaggedWith {
                 relative: -3,
                 is_tagged: upos,
             });
-            criteria.push(PatchCriteria::AnyWordIsTaggedWith {
+            criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
                 max_relative: -2,
                 is_tagged: upos,
             });
-            criteria.push(PatchCriteria::AnyWordIsTaggedWith {
+            criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
                 max_relative: -3,
                 is_tagged: upos,
             });
-            criteria.push(PatchCriteria::AnyWordIsTaggedWith {
+            criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
                 max_relative: -4,
                 is_tagged: upos,
             });
 
-            criteria.push(PatchCriteria::RelativeWordCaps {
+            criteria.insert(PatchCriteria::RelativeWordCaps {
                 relative: 0,
                 is_capitalized: true,
             });
-            criteria.push(PatchCriteria::RelativeWordCaps {
+            criteria.insert(PatchCriteria::RelativeWordCaps {
                 relative: 0,
                 is_capitalized: false,
             });
-            criteria.push(PatchCriteria::RelativeWordCaps {
+            criteria.insert(PatchCriteria::RelativeWordCaps {
                 relative: -1,
                 is_capitalized: true,
             });
-            criteria.push(PatchCriteria::RelativeWordCaps {
+            criteria.insert(PatchCriteria::RelativeWordCaps {
                 relative: -1,
                 is_capitalized: false,
             });
-            criteria.push(PatchCriteria::RelativeWordCaps {
+            criteria.insert(PatchCriteria::RelativeWordCaps {
                 relative: 1,
                 is_capitalized: true,
             });
-            criteria.push(PatchCriteria::RelativeWordCaps {
+            criteria.insert(PatchCriteria::RelativeWordCaps {
                 relative: 1,
                 is_capitalized: false,
             });
 
             for upos_b in UPOS::iter() {
-                criteria.push(PatchCriteria::SandwichTaggedWith {
+                criteria.insert(PatchCriteria::SandwichTaggedWith {
                     prev_word_tagged: upos,
                     post_word_tagged: upos_b,
                 });
 
-                criteria.push(PatchCriteria::Combined {
+                criteria.insert(PatchCriteria::Combined {
                     a: Box::new(PatchCriteria::WordIsTaggedWith {
                         relative: 1,
                         is_tagged: upos,
@@ -170,11 +171,11 @@ impl PatchCriteria {
                         relative: -2,
                         is_tagged: upos_b,
                     }),
-                })
+                });
             }
         }
 
-        criteria
+        criteria.into_iter().collect()
     }
 }
 
