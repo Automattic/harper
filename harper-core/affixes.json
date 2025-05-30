@@ -126,7 +126,7 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"R": {
+		">": {
 			"#": "'-(i)er' suffix",
 			"kind": "suffix",
 			"cross_product": true,
@@ -161,7 +161,7 @@
 			],
 			"base_metadata": {}
 		},
-		"C": {
+		"e": {
 			"#": "'de-' prefix",
 			"kind": "prefix",
 			"cross_product": true,
@@ -175,7 +175,7 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"V": {
+		"v": {
 			"#": "'-ive' suffix",
 			"kind": "suffix",
 			"cross_product": false,
@@ -194,7 +194,7 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"N": {
+		"n": {
 			"#": "nominalization suffixes: -ion, -ication, -en",
 			"kind": "suffix",
 			"cross_product": true,
@@ -218,7 +218,7 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"A": {
+		"r": {
 			"#": "'re-' prefix",
 			"kind": "prefix",
 			"cross_product": true,
@@ -261,7 +261,7 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"P": {
+		"p": {
 			"#": "'-(i)ness' suffix",
 			"kind": "suffix",
 			"cross_product": true,
@@ -285,7 +285,7 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"M": {
+		"g": {
 			"#": "-'s possessive suffix; contraction of 'has' and 'is",
 			"kind": "suffix",
 			"cross_product": true,
@@ -397,7 +397,7 @@
 			],
 			"base_metadata": {}
 		},
-		"D": {
+		"d": {
 			"#": "'-(e)d' suffix",
 			"kind": "suffix",
 			"cross_product": true,
@@ -483,7 +483,7 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"O": {
+		"f": {
 			"#": "'-ful' suffix",
 			"kind": "suffix",
 			"cross_product": true,
@@ -497,7 +497,7 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"I": {
+		"i": {
 			"#": "'in-' prefix",
 			"kind": "prefix",
 			"cross_product": true,
@@ -535,7 +535,7 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"J": {
+		"z": {
 			"#": "'-ings' suffix",
 			"kind": "suffix",
 			"cross_product": true,
@@ -554,7 +554,7 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"1": {
+		"N": {
 			"#": "(singular) noun property",
 			"kind": "property",
 			"cross_product": true,
@@ -566,7 +566,7 @@
 				}
 			}
 		},
-		"2": {
+		"O": {
 			"#": "proper noun property",
 			"kind": "property",
 			"cross_product": true,
@@ -578,7 +578,7 @@
 				}
 			}
 		},
-		"3": {
+		"l": {
 			"#": "linking verb property",
 			"//": "see also m: auxiliary verb property",
 			"kind": "property",
@@ -591,7 +591,7 @@
 				}
 			}
 		},
-		"4": {
+		"V": {
 			"#": "verb property",
 			"kind": "property",
 			"cross_product": true,
@@ -601,7 +601,7 @@
 				"verb": {}
 			}
 		},
-		"5": {
+		"J": {
 			"#": "adjective property",
 			"kind": "property",
 			"cross_product": true,
@@ -611,7 +611,7 @@
 				"adjective": {}
 			}
 		},
-		"6": {
+		"x": {
 			"#": "swear word property",
 			"kind": "property",
 			"cross_product": true,
@@ -627,7 +627,7 @@
 				"swear": true
 			}
 		},
-		"7": {
+		"C": {
 			"#": "conjunction property",
 			"kind": "property",
 			"cross_product": true,
@@ -637,7 +637,7 @@
 				"conjunction": {}
 			}
 		},
-		"8": {
+		"I": {
 			"#": "pronoun property",
 			"kind": "property",
 			"cross_product": true,
@@ -669,7 +669,7 @@
 				"common": true
 			}
 		},
-		"+": {
+		"P": {
 			"#": "preposition property",
 			"kind": "property",
 			"cross_product": true,
@@ -679,7 +679,7 @@
 				"preposition": true
 			}
 		},
-		"-": {
+		"D": {
 			"#": "determiner property",
 			"kind": "property",
 			"cross_product": true,
@@ -689,7 +689,7 @@
 				"determiner": true
 			}
 		},
-		"j": {
+		"R": {
 			"#": "adverb property",
 			"kind": "property",
 			"cross_product": true,
@@ -719,7 +719,7 @@
 				"pronoun": {}
 			}
 		},
-		"f": {
+		"1": {
 			"#": "first-person singular property",
 			"kind": "property",
 			"cross_product": true,
@@ -745,7 +745,7 @@
 				}
 			}
 		},
-		"n": {
+		"2": {
 			"#": "second-person property",
 			"kind": "property",
 			"cross_product": true,
@@ -757,7 +757,7 @@
 				}
 			}
 		},
-		"t": {
+		"3": {
 			"#": "third-person property",
 			"kind": "property",
 			"cross_product": true,
