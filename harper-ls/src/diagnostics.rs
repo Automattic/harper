@@ -4,8 +4,8 @@ use harper_core::linting::{Lint, Suggestion};
 use harper_core::{CharStringExt, Document};
 use harper_stats::RecordKind;
 use serde_json::Value;
-use tower_lsp::lsp_types::{
-    CodeAction, CodeActionKind, CodeActionOrCommand, Command, Diagnostic, TextEdit, Url,
+use tower_lsp_server::lsp_types::{
+    CodeAction, CodeActionKind, CodeActionOrCommand, Command, Diagnostic, TextEdit, Uri,
     WorkspaceEdit,
 };
 
@@ -25,7 +25,7 @@ pub fn lints_to_diagnostics(
 
 pub fn lint_to_code_actions<'a>(
     lint: &'a Lint,
-    url: &'a Url,
+    uri: &'a Uri,
     document: &Document,
     config: &CodeActionConfig,
 ) -> Vec<CodeActionOrCommand> {
@@ -54,7 +54,7 @@ pub fn lint_to_code_actions<'a>(
                     diagnostics: None,
                     edit: Some(WorkspaceEdit {
                         changes: Some(HashMap::from([(
-                            url.clone(),
+                            uri.clone(),
                             vec![TextEdit {
                                 range,
                                 new_text: replace_string,
@@ -82,7 +82,7 @@ pub fn lint_to_code_actions<'a>(
         title: "Ignore Harper error.".to_owned(),
         command: "HarperIgnoreLint".to_owned(),
         arguments: Some(vec![
-            serde_json::Value::String(url.to_string()),
+            serde_json::Value::String(uri.to_string()),
             serde_json::to_value(lint).unwrap(),
         ]),
     }));
@@ -93,13 +93,13 @@ pub fn lint_to_code_actions<'a>(
         results.push(CodeActionOrCommand::Command(Command::new(
             format!("Add \"{}\" to the global dictionary.", orig),
             "HarperAddToUserDict".to_string(),
-            Some(vec![orig.clone().into(), url.to_string().into()]),
+            Some(vec![orig.clone().into(), uri.to_string().into()]),
         )));
 
         results.push(CodeActionOrCommand::Command(Command::new(
             format!("Add \"{}\" to the file dictionary.", orig),
             "HarperAddToFileDict".to_string(),
-            Some(vec![orig.into(), url.to_string().into()]),
+            Some(vec![orig.into(), uri.to_string().into()]),
         )));
     }
 

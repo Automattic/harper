@@ -1,6 +1,7 @@
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{Criterion, criterion_group, criterion_main};
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::{Dialect, Document, FstDictionary};
+use std::hint::black_box;
 
 static ESSAY: &str = include_str!("./essay.md");
 

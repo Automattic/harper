@@ -5,6 +5,16 @@ import h from 'virtual-dom/h';
 import patch from 'virtual-dom/patch';
 import { type LintBox, isBoxInScreen } from './Box';
 import RenderBox from './RenderBox';
+import {
+	getLexicalRoot,
+	getMediumRoot,
+	getNotionRoot,
+	getP2Root,
+	getQuillJsRoot,
+	getShredditComposerRoot,
+	getSlateRoot,
+	getTrixRoot,
+} from './editorUtils';
 import lintKindColor from './lintKindColor';
 
 /** A class that renders highlights to a page and nothing else. Uses a virtual DOM to minimize jitter. */
@@ -39,17 +49,22 @@ export default class Highlights {
 				this.renderBoxes.set(source, renderBox);
 			}
 
+			const host = renderBox.getShadowHost();
+			host.id = 'harper-highlight-host';
+
 			const rect = getInitialContainingRect(renderBox.getShadowHost());
 
 			if (rect != null) {
-				renderBox.getShadowHost().style.contain = 'layout';
-				renderBox.getShadowHost().style.position = 'fixed';
-				renderBox.getShadowHost().style.left = `${-rect.x}px`;
-				renderBox.getShadowHost().style.top = `${-rect.y}px`;
-				renderBox.getShadowHost().style.width = '100vw';
-				renderBox.getShadowHost().style.height = '100vh';
-				renderBox.getShadowHost().style.zIndex = '100';
-				renderBox.getShadowHost().style.pointerEvents = 'none';
+				const hostStyle = host.style;
+
+				hostStyle.contain = 'layout';
+				hostStyle.position = 'fixed';
+				hostStyle.left = `${-rect.x}px`;
+				hostStyle.top = `${-rect.y}px`;
+				hostStyle.width = '100vw';
+				hostStyle.height = '100vh';
+				hostStyle.zIndex = '100';
+				hostStyle.pointerEvents = 'none';
 			}
 
 			renderBox.render(this.renderTree(boxes));
@@ -91,7 +106,9 @@ export default class Highlights {
 						pointerEvents: 'none',
 						zIndex: 10,
 						borderBottom: `2px solid ${lintKindColor(box.lint.lint_kind)}`,
+						backgroundColor: `${lintKindColor(box.lint.lint_kind)}22`,
 					},
+					id: 'harper-highlight',
 				},
 				[],
 			);
@@ -116,6 +133,7 @@ export default class Highlights {
 			getShredditComposerRoot,
 			getQuillJsRoot,
 			getLexicalRoot,
+			getP2Root,
 			getTrixRoot,
 		];
 
@@ -141,71 +159,6 @@ function getInitialContainingRect(el: HTMLElement): DOMRect | null {
 	}
 
 	return null;
-}
-
-function findAncestor(
-	el: HTMLElement,
-	predicate: (el: HTMLElement) => boolean,
-): HTMLElement | null {
-	let node = el.parentElement;
-
-	while (node != null) {
-		if (predicate(node)) {
-			return node;
-		}
-
-		node = node.parentElement;
-	}
-
-	return null;
-}
-
-/** Determines if a given node is a child of a Lexical editor instance.
- * If so, returns the root node of that instance. */
-function getLexicalRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(
-		el,
-		(node: HTMLElement) => node.getAttribute('data-lexical-editor') == 'true',
-	);
-}
-
-/** Determines if a given node is a child of a Trix editor instance.
- * If so, returns the root node of that instance. */
-function getTrixRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.nodeName == 'TRIX-EDITOR');
-}
-
-/** Determines if a given node is a child of a Reddit composer instance.
- * If so, returns the root node of that instance. */
-function getShredditComposerRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.nodeName == 'SHREDDIT-COMPOSER');
-}
-
-/** Determines if a given node is a child of a Quill.js editor instance.
- * If so, returns the root node of that instance. */
-function getQuillJsRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.classList.contains('ql-container'));
-}
-
-/** Determines if a given node is a child of a Slate editor instance.
- * If so, returns the root node of that instance. */
-function getSlateRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.getAttribute('data-slate-editor') == 'true');
-}
-
-/** Determines if a given node is a child of a Medium.com editor instance.
- * If so, returns the root node of that instance. */
-function getMediumRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(
-		el,
-		(node: HTMLElement) => node.nodeName == 'MAIN' && location.hostname == 'medium.com',
-	);
-}
-
-/** Determines if a given node is a child of a Notion editor instance.
- * If so, returns the root node of that instance. */
-function getNotionRoot(el: HTMLElement): HTMLElement | null {
-	return document.getElementById('notion-app');
 }
 
 /**
