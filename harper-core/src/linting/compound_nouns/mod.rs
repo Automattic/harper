@@ -3,7 +3,7 @@ mod compound_noun_after_possessive;
 mod compound_noun_before_aux_verb;
 
 use super::{Lint, LintKind, Suggestion, merge_linters::merge_linters};
-use crate::{Lrc, Token, patterns::SplitCompoundWord};
+use crate::{Lrc, Token, patterns::MergeableWords};
 
 // Helper function to check if a token is a content word (not a function word)
 pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
@@ -21,8 +21,8 @@ pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
         && !meta.is_auxiliary_verb()
 }
 
-pub(crate) fn create_split_pattern() -> Lrc<SplitCompoundWord> {
-    Lrc::new(SplitCompoundWord::new(|meta| {
+pub(crate) fn create_split_pattern() -> Lrc<MergeableWords> {
+    Lrc::new(MergeableWords::new(|meta| {
         meta.is_noun() && !meta.is_proper_noun()
     }))
 }

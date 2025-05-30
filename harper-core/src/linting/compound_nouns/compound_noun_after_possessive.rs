@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Lrc, TokenStringExt,
     linting::PatternLinter,
-    patterns::{All, SplitCompoundWord},
+    patterns::{All, MergeableWords},
 };
 
 use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
@@ -20,7 +20,7 @@ use crate::{
 /// harper-core/src/linting/pronoun_contraction/should_contract.rs
 pub struct CompoundNounAfterPossessive {
     pattern: Box<dyn Pattern>,
-    split_pattern: Lrc<SplitCompoundWord>,
+    split_pattern: Lrc<MergeableWords>,
 }
 
 impl Default for CompoundNounAfterPossessive {
