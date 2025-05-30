@@ -1,4 +1,6 @@
+use hashbrown::HashSet;
 use serde::{Deserialize, Serialize};
+use strum::IntoEnumIterator;
 
 use crate::{UPOS, error_counter::ErrorCounter, patch_criteria::PatchCriteria};
 
@@ -16,7 +18,7 @@ impl Patch {
         let mut candidates = Vec::new();
 
         for key in error_counter.error_counts.keys() {
-            candidates.extend(PatchCriteria::gen_candidates().into_iter().map(|c| Patch {
+            candidates.extend(Self::gen_simple_candidates().into_iter().map(|c| Patch {
                 from: key.was_tagged,
                 to: key.correct_tag,
                 criteria: c,
@@ -24,5 +26,81 @@ impl Patch {
         }
 
         candidates
+    }
+
+    /// Candidates to be tested against a dataset during training.
+    fn gen_simple_candidates() -> Vec<PatchCriteria> {
+        let mut criteria = HashSet::new();
+        for upos in UPOS::iter() {
+            criteria.insert(PatchCriteria::WordIsTaggedWith {
+                relative: -1,
+                is_tagged: upos,
+            });
+            criteria.insert(PatchCriteria::WordIsTaggedWith {
+                relative: -2,
+                is_tagged: upos,
+            });
+            criteria.insert(PatchCriteria::WordIsTaggedWith {
+                relative: -3,
+                is_tagged: upos,
+            });
+            criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
+                max_relative: -2,
+                is_tagged: upos,
+            });
+            criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
+                max_relative: -3,
+                is_tagged: upos,
+            });
+            criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
+                max_relative: -4,
+                is_tagged: upos,
+            });
+
+            criteria.insert(PatchCriteria::RelativeWordCaps {
+                relative: 0,
+                is_capitalized: true,
+            });
+            criteria.insert(PatchCriteria::RelativeWordCaps {
+                relative: 0,
+                is_capitalized: false,
+            });
+            criteria.insert(PatchCriteria::RelativeWordCaps {
+                relative: -1,
+                is_capitalized: true,
+            });
+            criteria.insert(PatchCriteria::RelativeWordCaps {
+                relative: -1,
+                is_capitalized: false,
+            });
+            criteria.insert(PatchCriteria::RelativeWordCaps {
+                relative: 1,
+                is_capitalized: true,
+            });
+            criteria.insert(PatchCriteria::RelativeWordCaps {
+                relative: 1,
+                is_capitalized: false,
+            });
+
+            for upos_b in UPOS::iter() {
+                criteria.insert(PatchCriteria::SandwichTaggedWith {
+                    prev_word_tagged: upos,
+                    post_word_tagged: upos_b,
+                });
+
+                criteria.insert(PatchCriteria::Combined {
+                    a: Box::new(PatchCriteria::WordIsTaggedWith {
+                        relative: 1,
+                        is_tagged: upos,
+                    }),
+                    b: Box::new(PatchCriteria::WordIsTaggedWith {
+                        relative: -2,
+                        is_tagged: upos_b,
+                    }),
+                });
+            }
+        }
+
+        criteria.into_iter().collect()
     }
 }

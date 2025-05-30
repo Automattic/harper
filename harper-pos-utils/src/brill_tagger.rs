@@ -123,11 +123,21 @@ impl BrillTagger {
         let mut sentences_tagged: Vec<(Vec<String>, Vec<Option<UPOS>>)> = Vec::new();
 
         for sent in &sentences {
-            let mut toks = Vec::new();
+            let mut toks: Vec<String> = Vec::new();
             let mut tags = Vec::new();
 
             for token in &sent.tokens {
-                toks.push(token.form.clone());
+                let form = token.form.clone();
+                if let Some(last) = toks.last_mut() {
+                    match form.as_str() {
+                        "'snt" | "'ll" | "'ve" | "'re" | "'d" | "'m" => {
+                            last.push_str(&form);
+                            continue;
+                        }
+                        _ => {}
+                    }
+                }
+                toks.push(form);
                 tags.push(token.upos.and_then(UPOS::from_conllu));
             }
 
