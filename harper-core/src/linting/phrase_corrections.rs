@@ -1237,6 +1237,42 @@ pub fn lint_group() -> LintGroup {
             "A `decent amount` is a `fair bit`. `Fare` is the price of a ticket.",
             "Corrects malapropisms of `a fair bit`."
         ),
+        "TakeItPersonally" => (
+            ["take it personal"],
+            ["take it personally"],
+            "The more standard, less colloquial form is `take it personally`.",
+            "Corrects `take it personal` to `take it personally`."
+        ),
+        "AsOfLate" => (
+            ["as of lately"],
+            ["as of late"],
+            "The standard form is `as of late`.",
+            "Corrects `as of lately` to `as of late`."
+        ),
+        "RapidFire" => (
+            ["rapid fire"],
+            ["rapid-fire"],
+            "It is more idiomatic to hypenate `rapid-fire`.",
+            "Checks to ensure writers hyphenate `rapid-fire`."
+        ),
+        "PointsOfView" => (
+            ["point of views"],
+            ["points of view"],
+            "The correct plural is `points of view`.",
+            "Corrects pluralizing the wrong noun in `point of view`."
+        ),
+        "Insurmountable" => (
+            ["unsurmountable"],
+            ["insurmountable"],
+            "This word has a more standard, more common synonym.",
+            "Suggests the more standard and common synonym `insurmountable`."
+        ),
+        "Brutality" => (
+            ["brutalness"],
+            ["brutality"],
+            "This word has a more standard, more common synonym.",
+            "Suggests the more standard and common synonym `brutality`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2693,5 +2729,50 @@ mod tests {
             lint_group(),
             "I've read through a fair bit of the ecosystem framework, but I am not clear on what is modified...",
         );
+    }
+
+    #[test]
+    fn corrects_take_it_personal() {
+        assert_suggestion_result(
+            "This is not personal, do not take it personal, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)",
+            lint_group(),
+            "This is not personal, do not take it personally, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)",
+        );
+    }
+
+    #[test]
+    fn corrects_as_of_lately() {
+        assert_suggestion_result(
+            "I haven't noticed any crashing with AMDGPU as of lately, so this looks to not be an issue anymore.",
+            lint_group(),
+            "I haven't noticed any crashing with AMDGPU as of late, so this looks to not be an issue anymore.",
+        )
+    }
+
+    #[test]
+    fn corrects_points_of_view() {
+        assert_suggestion_result(
+            "This will produce a huge amount of raw data, representing the region in multiple point of views.",
+            lint_group(),
+            "This will produce a huge amount of raw data, representing the region in multiple points of view.",
+        )
+    }
+
+    #[test]
+    fn corrects_brutalness() {
+        assert_suggestion_result(
+            "the mildness and brutalness of the story rises.",
+            lint_group(),
+            "the mildness and brutality of the story rises.",
+        )
+    }
+
+    #[test]
+    fn corrects_unsurmountable() {
+        assert_suggestion_result(
+            "That being said, if you find upgrading to newer versions to be unsurmountable, please open an issue.",
+            lint_group(),
+            "That being said, if you find upgrading to newer versions to be insurmountable, please open an issue.",
+        )
     }
 }

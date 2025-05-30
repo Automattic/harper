@@ -44,6 +44,7 @@ impl CommentParser {
             "php" => tree_sitter_php::language_php(),
             "dart" => tree_sitter_dart::language(),
             "scala" => tree_sitter_scala::language(),
+            "kotlin" => tree_sitter_kotlin::language(),
             _ => return None,
         };
 
@@ -100,6 +101,7 @@ impl CommentParser {
             "php" => "php",
             "dart" => "dart",
             "scala" | "sbt" | "mill" => "scala",
+            "kt" | "kts" => "kotlin",
             _ => return None,
         })
     }

@@ -4,7 +4,7 @@ use crate::{
     patterns::{All, SplitCompoundWord},
 };
 
-use super::{Lint, LintKind, Suggestion};
+use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
 
 use crate::{
     Lrc, Token,
@@ -12,7 +12,7 @@ use crate::{
 };
 
 /// Two adjacent words separated by whitespace that if joined would be a valid noun.
-pub struct GeneralCompoundNouns {
+pub struct CompoundNounAfterDetAdj {
     pattern: Box<dyn Pattern>,
     split_pattern: Lrc<SplitCompoundWord>,
 }
@@ -22,36 +22,23 @@ pub struct GeneralCompoundNouns {
 // 2. Followed by two content words (not determiners, adverbs, or prepositions)
 // 3. Finally, checking if the combination forms a noun in the dictionary
 //    that is not also an adjective
-impl Default for GeneralCompoundNouns {
+impl Default for CompoundNounAfterDetAdj {
     fn default() -> Self {
         let context_pattern = SequencePattern::default()
-            .then(|tok: &Token, _: &[char]| {
+            .then(|tok: &Token, src: &[char]| {
                 let Some(Some(meta)) = tok.kind.as_word() else {
                     return false;
                 };
-
-                meta.determiner || meta.is_adjective()
+                meta.determiner
+                    || (meta.is_adjective()
+                        && tok.span.get_content_string(src).to_lowercase() != "go")
             })
             .then_whitespace()
-            .then(|tok: &Token, _: &[char]| {
-                let Some(Some(meta)) = tok.kind.as_word() else {
-                    return false;
-                };
-
-                tok.span.len() > 1 && !meta.determiner && !meta.preposition && !meta.is_adverb()
-            })
+            .then(is_content_word)
             .then_whitespace()
-            .then(|tok: &Token, _: &[char]| {
-                let Some(Some(meta)) = tok.kind.as_word() else {
-                    return false;
-                };
+            .then(is_content_word);
 
-                tok.span.len() > 1 && !meta.determiner && !meta.is_adverb() && !meta.preposition
-            });
-
-        let compound_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
-            meta.is_noun() && !meta.is_adjective()
-        }));
+        let split_pattern = create_split_pattern();
 
         let mut pattern = All::default();
         pattern.add(Box::new(context_pattern));
@@ -59,17 +46,17 @@ impl Default for GeneralCompoundNouns {
             SequencePattern::default()
                 .then_anything()
                 .then_anything()
-                .then(compound_pattern.clone()),
+                .then(split_pattern.clone()),
         ));
 
         Self {
             pattern: Box::new(pattern),
-            split_pattern: compound_pattern,
+            split_pattern,
         }
     }
 }
 
-impl PatternLinter for GeneralCompoundNouns {
+impl PatternLinter for CompoundNounAfterDetAdj {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }
