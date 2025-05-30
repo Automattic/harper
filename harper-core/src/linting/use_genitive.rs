@@ -1,5 +1,5 @@
 use crate::linting::{LintKind, PatternLinter, Suggestion};
-use crate::patterns::{EitherPattern, Invert, Pattern, SequencePattern, WordPatternGroup};
+use crate::patterns::{Invert, LongestMatchOf, Pattern, SequencePattern, WordPatternGroup};
 use crate::{Lint, Lrc, Token};
 
 // Looks for places where the genitive case _isn't_ being used, and should be.
@@ -11,7 +11,7 @@ impl UseGenitive {
     fn new() -> Self {
         // Define the environment in which the genitive case __should__ be used.
         let environment = Lrc::new(SequencePattern::default().then_whitespace().then(
-            EitherPattern::new(vec![
+            LongestMatchOf::new(vec![
                     Box::new(
                         SequencePattern::default()
                             .then_one_or_more_adjectives()
@@ -39,7 +39,7 @@ impl UseGenitive {
 
         // Add a prelude to remove false-positives.
         let full_pattern = SequencePattern::default()
-            .then(Invert::new(EitherPattern::new(vec![
+            .then(Invert::new(LongestMatchOf::new(vec![
                 Box::new(SequencePattern::default().t_aco("is")),
                 Box::new(SequencePattern::default().t_aco("were")),
                 Box::new(SequencePattern::default().then_adjective()),

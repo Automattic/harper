@@ -2,7 +2,7 @@ use super::{Lint, LintKind, PatternLinter};
 use crate::Token;
 use crate::linting::Suggestion;
 use crate::patterns::{
-    All, EitherPattern, Invert, OwnedPatternExt, Pattern, SequencePattern, Word, WordSet,
+    All, Invert, LongestMatchOf, OwnedPatternExt, Pattern, SequencePattern, Word, WordSet,
 };
 
 #[doc = "Corrects the misuse of `then` to `than`."]
@@ -14,7 +14,7 @@ impl ThenThan {
     pub fn new() -> Self {
         Self {
             pattern: Box::new(All::new(vec![
-                Box::new(EitherPattern::new(vec![
+                Box::new(LongestMatchOf::new(vec![
                     // Comparative form of adjective
                     Box::new(
                         SequencePattern::default()

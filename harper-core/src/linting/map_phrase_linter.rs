@@ -1,6 +1,6 @@
 use super::{Lint, LintKind, PatternLinter};
 use crate::linting::Suggestion;
-use crate::patterns::{EitherPattern, ExactPhrase, Pattern, SimilarToPhrase};
+use crate::patterns::{ExactPhrase, LongestMatchOf, Pattern, SimilarToPhrase};
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseLinter {
@@ -40,7 +40,7 @@ impl MapPhraseLinter {
         message: impl ToString,
         description: impl ToString,
     ) -> Self {
-        let patterns = EitherPattern::new(
+        let patterns = LongestMatchOf::new(
             phrase
                 .into_iter()
                 .map(|p| {
