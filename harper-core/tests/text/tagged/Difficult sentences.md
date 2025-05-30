@@ -299,7 +299,7 @@
 > Don't take  me        for a   fool  .
 # V     NSg/V NPrSg/ISg C/P D/P NSg/J .
 > For all       his   expensive education , he      didn't seem very bright    .
-# C/P NSg/I/J/C ISg/D J         NSg       . NPr/ISg V      V    J    NPrSg/V/J .
+# C/P NSg/I/J/C ISg/D J         NSg       . NPr/ISg V      V    J/R  NPrSg/V/J .
 > And now         for a   slap  - up        meal  !
 # V/C NPrSg/V/J/C C/P D/P NSg/J . NSg/V/J/P NSg/V .
 > Go      scuba diving  ? For one       thing , I   can't even    swim  .
@@ -511,7 +511,7 @@
 > in        by      descent ;            in        by      purchase ;            in        of the seisin of her   husband
 # NPrSg/J/P NSg/J/P NSg/V   . Unlintable NPrSg/J/P NSg/J/P NSg/V    . Unlintable NPrSg/J/P P  D   ?      P  I/J/D NSg/V
 > He      is very in        with the Joneses .
-# NPr/ISg VL J    NPrSg/J/P P    D   NPl     .
+# NPr/ISg VL J/R  NPrSg/J/P P    D   NPl     .
 > I   need   to keep  in        with the neighbours in        case    I   ever need   a   favour from them .
 # ISg NSg/VX P  NSg/V NPrSg/J/P P    D   NPl        NPrSg/J/P NPrSg/V ISg J    NSg/VX D/P NSg/Br P    N/I  .
 > I   think that    bird      fancies you . You're in        there , mate  !
@@ -831,7 +831,7 @@
 > It        was to a   large extent true    .
 # NPrSg/ISg V   P  D/P NSg/J NSg/J  NSg/V/J .
 > We  manufacture these parts to a   very high    tolerance .
-# IPl NSg/V       I/D   NPl/V P  D/P J    NSg/V/J NSg/V     .
+# IPl NSg/V       I/D   NPl/V P  D/P J/R  NSg/V/J NSg/V     .
 > This gauge is accurate to a   second .
 # I/D  NSg/V VL J        P  D/P NSg/J  .
 > There's a   lot   of sense to what  he      says  .
