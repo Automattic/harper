@@ -52,7 +52,7 @@ impl MergeableWords {
         merged.extend_from_slice(&b_chars);
 
         if let Some(metadata) = self.dict.get_word_metadata(&merged) {
-            if (self.predicate)(&metadata) {
+            if (self.predicate)(metadata) {
                 let correct = self.dict.get_correct_capitalization_of(&merged).unwrap();
                 merged.clear();
                 merged.extend_from_slice(correct);
