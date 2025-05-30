@@ -77,6 +77,15 @@ enum Args {
     },
     /// Print harper-core version.
     CoreVersion,
+    /// Rename a flag in the dictionary and affixes.
+    RenameFlag {
+        /// The old flag.
+        old_flag: String,
+        /// The new flag.
+        new_flag: String,
+        /// The directory containing the dictionary and affixes.
+        dir: PathBuf,
+    },
 }
 
 fn main() -> anyhow::Result<()> {
@@ -364,6 +373,117 @@ fn main() -> anyhow::Result<()> {
         }
         Args::CoreVersion => {
             println!("harper-core v{}", harper_core::core_version());
+            Ok(())
+        }
+        Args::RenameFlag {
+            old_flag,
+            new_flag,
+            dir,
+        } => {
+            use serde_json::Value;
+
+            let dict_path = dir.join("dictionary.dict");
+            let affixes_path = dir.join("affixes.json");
+
+            // 1. Validate new flag is exactly one Unicode code point (Rust char)
+            if new_flag.chars().count() != 1 {
+                return Err(anyhow::anyhow!(
+                    "New flag must be exactly one Unicode code point, got '{}' ({} chars)",
+                    new_flag,
+                    new_flag.chars().count()
+                ));
+            }
+
+            // 2. Load and parse affixes
+            let affixes_content = fs::read_to_string(&affixes_path)?;
+            let mut affixes_json: Value = serde_json::from_str(&affixes_content)
+                .map_err(|e| anyhow::anyhow!("Failed to parse affixes.json: {}", e))?;
+
+            // Get the nested "affixes" object
+            let affixes_obj = affixes_json.get_mut("affixes")
+                .and_then(Value::as_object_mut)
+                .ok_or_else(|| anyhow::anyhow!("affixes.json does not contain 'affixes' object"))?;
+
+            // 3. Validate old flag exists and get its description
+            let old_entry = affixes_obj.get(&old_flag)
+                .ok_or_else(|| anyhow::anyhow!("Flag '{}' not found in affixes.json", old_flag))?;
+
+            let description = old_entry.get("#")
+                .and_then(Value::as_str)
+                .unwrap_or("(no description)");
+
+            println!("Renaming flag '{}' ({}): {}", old_flag, description, old_entry);
+
+            // 4. Validate new flag doesn't exist
+            if affixes_obj.contains_key(&new_flag) {
+                let new_desc = affixes_obj.get(&new_flag)
+                    .and_then(|v| v.get("#"))
+                    .and_then(Value::as_str)
+                    .unwrap_or("(no description)");
+
+                return Err(anyhow::anyhow!(
+                    "Cannot rename to '{}': flag already exists and is used for: {}", 
+                    new_flag,
+                    new_desc
+                ));
+            }
+
+            // 5. Create backups
+            let backup_dict = format!("{}.bak", dict_path.display());
+            let backup_affixes = format!("{}.bak", affixes_path.display());
+            fs::copy(&dict_path, &backup_dict)?;
+            fs::copy(&affixes_path, &backup_affixes)?;
+
+            // 6. Update dictionary with proper comment and whitespace handling
+            let dict_content = fs::read_to_string(&dict_path)?;
+            let updated_dict = dict_content
+                .lines()
+                .map(|line| {
+                    // Skip empty lines and full-line comments
+                    if line.is_empty() || line.starts_with('#') {
+                        return line.to_string();
+                    }
+
+                    // Split into entry and comment, preserving whitespace
+                    let (entry, comment) = if let Some(comment_start) = line.find('#') {
+                        // Split at the exact position to preserve whitespace
+                        let (e, c) = line.split_at(comment_start);
+                        (e.trim_end(), c)
+                    } else {
+                        (line.trim_end(), "")
+                    };
+
+                    // Split word and attributes
+                    if let Some((word_part, attr_part)) = entry.split_once('/') {
+                        let updated_attr = attr_part.replace(&old_flag, &new_flag);
+                        format!("{}/{}{}", word_part.trim_end(), updated_attr, comment)
+                    } else if !entry.is_empty() {
+                        // Preserve lines without attributes
+                        format!("{}{}", entry, comment)
+                    } else {
+                        line.to_string()
+                    }
+                })
+                .collect::<Vec<_>>()
+                .join("\n");
+
+            // 7. Update affixes (text-based replacement with context awareness)
+            let updated_affixes = affixes_content
+                // Handle keys in object: "A": {
+                .replace(&format!("\"{}\":", &old_flag), &format!("\"{}\":", &new_flag))
+                // Handle array elements: ["A", "B"]
+                .replace(&format!("\"{}\"", &old_flag), &format!("\"{}\"", &new_flag))
+                // Handle standalone flags in arrays: [A, B]
+                .replace(&format!(" {}", &old_flag), &format!(" {}", &new_flag))
+                .replace(&format!(",{}", &old_flag), &format!(",{}", &new_flag));
+
+            // 8. Write changes
+            fs::write(&dict_path, updated_dict)?;
+            fs::write(&affixes_path, updated_affixes)?;
+
+            println!("Successfully renamed flag '{}' to '{}'", old_flag, new_flag);
+            println!("  Description: {}", description);
+            println!("  Backups created at:\n    {}\n    {}", backup_dict, backup_affixes);
             Ok(())
         }
     }
