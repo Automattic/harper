@@ -59,7 +59,8 @@ Additionally, you can also configure things like which linters to use or how you
                             :markdown (:IgnoreLinkTitle :json-false)
                             :diagnosticSeverity "hint"
                             :isolateEnglish :json-false
-                            :dialect "American")))
+                            :dialect "American"
+                            :maxFileLength 120000)))
 ```
 
 :::note
