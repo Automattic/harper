@@ -87,7 +87,7 @@ use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, Oxf
 use super::{Lint, PatternLinter};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, phrase_corrections};
+use crate::linting::{closed_compounds, initialisms, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
 
@@ -333,6 +333,7 @@ impl LintGroup {
             dictionary.clone(),
         ));
         out.merge_from(&mut closed_compounds::lint_group());
+        out.merge_from(&mut initialisms::lint_group());
 
         // Add all the more complex rules to the group.
         insert_pattern_rule!(APart, true);
