@@ -3730,6 +3730,7 @@ GIF/14              # file format
 GIGO/
 GM/1245M            # car company
 GMAT/2              # global
+GMC/21MS            # car brand
 GMO/15
 GMT/21M
 GNP/1M
@@ -6180,6 +6181,7 @@ MFA/21M
 MGM/21M             # movie company
 MHz/
 MI/21M
+MI5/2M              # agency
 MI6/2M              # agency
 MIA/512             # missing in action
 MIDI/21M
@@ -16744,7 +16746,7 @@ cellist/~1SM
 cellmate/1SM
 cello/~1MS
 cellophane/14M
-cellphone/~14MS
+cellphone/~14MS@<
 cellular/~51SM
 cellulite/1M
 cellulitis/1
@@ -19082,6 +19084,7 @@ corncrake/1S
 cornea/~1SM
 corneal/~5
 corner/~14GMD
+cornerback/1MS<
 cornerstone/~1SM
 cornet/~1SM
 cornfield/1S
@@ -20447,6 +20450,7 @@ defenestration/1S
 defense/~14DSMGV
 defenseless/5YP
 defenselessness/1M
+defensibility/1M
 defensible/5I
 defensibly/Ij
 defensive/~51MYP
@@ -24820,6 +24824,7 @@ flextime/1M
 flibbertigibbet/1SM
 flick/~14SZGMDR
 flicker/~14GMD
+flickery/5
 flier/514M
 flight/~154MS
 flightiness/1M
@@ -24851,6 +24856,7 @@ flirtatiousness/1M
 flirty/5
 flit/145MS
 flitted/4
+flitter/4SDG1M
 flitting/145
 float/~41SMDRZG
 floater/1M
@@ -27318,6 +27324,7 @@ handclasp/1MS
 handcraft/14SMDG
 handcuff/14MDGS
 handed/~54P
+handedly
 handful/~1SM
 handgun/~1SM
 handheld/~51MS
@@ -31146,6 +31153,7 @@ laminae/9
 laminar/5
 laminate/415MGNDS
 lamination/1M
+laminectomy/1MS
 lammed/4
 lamming/41
 lamp/~14MS
@@ -31876,6 +31884,7 @@ listeme/1MS
 listen/~41BMDRZG
 listener/~1M
 listeria/1
+listicle/1MS
 listing/~541M
 listless/5YP
 listlessness/1M
@@ -33264,6 +33273,7 @@ meretricious/5YP
 meretriciousness/1M
 merganser/~1MS
 merge/~41DRSZG
+mergeable/5
 merger/~1M
 meridian/~514MS
 meringue/14MS
@@ -36527,6 +36537,7 @@ outhit/4S
 outhitting/4
 outhouse/14SM
 outing/~14M
+outjump/4SDG
 outlaid/4
 outland/51MS4DG
 outlandish/51PY
@@ -43734,6 +43745,7 @@ sheepfold/1SM
 sheepherder/1MS
 sheepish/5YP
 sheepishness/1M
+sheeple/9
 sheepskin/1MS
 sheer/~514MDRSPTG
 sheerness/1M
@@ -46113,7 +46125,7 @@ straggle/41DRSZG
 straggler/1M
 straggly/5TR
 straight/~514SPXTMNRY
-straightaway/15SM
+straightaway/15SM   # see also `straight away` adv.
 straightedge/51SM
 straighten/4ZGDR
 straightener/1M
@@ -48358,6 +48370,7 @@ toilsome/5
 toke/14MGDS
 token/~154SM
 tokenism/1M
+tokenization/1MS
 tokenize/4DSG
 tokenizer/1MS
 told/~4AU
@@ -49143,6 +49156,7 @@ trustworthy/~5TPR
 trusty/51TRSM
 truth/~14ZMR
 truther/1M
+trutherism/1M
 truthful/~5UYP
 truthfulness/1UM
 truthiness/1
@@ -52349,7 +52363,6 @@ Corretto/SM
 Crowdsignal/2M
 Cypher/21M
 DATETIME/1MS        # dictionaries prefer: datetime
-DBMS/12SM           # database management system
 DCT/1MS             # discrete cosine transform
 DEI
 DKIM/1SM
@@ -53054,6 +53067,7 @@ stand-up/51
 standard-bearer/1MS
 stay behind/4
 stay-behind/1MS
+straight away/j     # see also `straightaway` n. & adj.
 straight up/j
 straight-up/5
 surface-to-air/5
@@ -53139,6 +53153,7 @@ break up/4
 buy back/4
 buy out/4
 carry out/4
+cell phone/1MS@<
 check in/4
 check out/4
 clean up/4
@@ -53150,6 +53165,8 @@ fail over/4
 fall back/4
 fight back/4
 fix up/4
+flat out/5j1S
+hair-raiser/1MS
 hand out/4
 hang out/4
 hook up/4
@@ -53163,12 +53180,16 @@ look up/4
 low fidelity/5
 meet up/4
 melt down/4
+mobile phone/1MS!_
+nitty-gritty/1M5
 pick up/4
 push back/4
 roll back/4
 roll out/4
 roll over/4
 run away/4
+send up/4
+send-up/1MS
 set up/4
 show off/4
 shut down/4
@@ -53208,5 +53229,3 @@ z-axis/1M
 # If you're not confident in using the affix annotations, add missing words here
 # And they will be reviewed
 # Word added using the `just addnoun` command will be added here
-
-handedly
