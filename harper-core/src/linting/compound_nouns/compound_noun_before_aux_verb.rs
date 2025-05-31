@@ -4,7 +4,7 @@ use crate::{
     patterns::{All, MergeableWords},
 };
 
-use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
+use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 
 use crate::{
     Token,
@@ -25,7 +25,9 @@ impl Default for CompoundNounBeforeAuxVerb {
             .then(is_content_word)
             .then_auxiliary_verb();
 
-        let split_pattern = create_split_pattern();
+        let split_pattern = Lrc::new(MergeableWords::new(|meta_closed, meta_open| {
+            predicate(meta_closed, meta_open)
+        }));
 
         let mut pattern = All::default();
         pattern.add(Box::new(context_pattern));
