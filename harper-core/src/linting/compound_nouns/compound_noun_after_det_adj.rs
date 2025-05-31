@@ -1,10 +1,10 @@
 use crate::{
     CharStringExt, TokenStringExt,
     linting::PatternLinter,
-    patterns::{All, SplitCompoundWord},
+    patterns::{All, MergeableWords},
 };
 
-use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
+use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 
 use crate::{
     Lrc, Token,
@@ -14,7 +14,7 @@ use crate::{
 /// Two adjacent words separated by whitespace that if joined would be a valid noun.
 pub struct CompoundNounAfterDetAdj {
     pattern: Box<dyn Pattern>,
-    split_pattern: Lrc<SplitCompoundWord>,
+    split_pattern: Lrc<MergeableWords>,
 }
 
 // This heuristic identifies potential compound nouns by:
@@ -38,7 +38,9 @@ impl Default for CompoundNounAfterDetAdj {
             .then_whitespace()
             .then(is_content_word);
 
-        let split_pattern = create_split_pattern();
+        let split_pattern = Lrc::new(MergeableWords::new(|meta_closed, meta_open| {
+            predicate(meta_closed, meta_open)
+        }));
 
         let mut pattern = All::default();
         pattern.add(Box::new(context_pattern));
