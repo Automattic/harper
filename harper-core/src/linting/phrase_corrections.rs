@@ -1006,7 +1006,7 @@ pub fn lint_group() -> LintGroup {
         "SufficeItToSay" => (
             ["suffice to say"],
             ["suffice it to say"],
-            "`Suffice it to say` is more standard and more common variant.",
+            "`Suffice it to say` is the more standard and more common variant.",
             "Corrects `suffice to say` to `suffice it to say`."
         ),
         "LikeThePlague" => (
