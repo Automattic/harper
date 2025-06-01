@@ -27,7 +27,7 @@ use tower_lsp_server::lsp_types::{
     DidCloseTextDocumentParams, DidOpenTextDocumentParams, ExecuteCommandOptions,
     ExecuteCommandParams, FileChangeType, FileSystemWatcher, GlobPattern, InitializeParams,
     InitializeResult, InitializedParams, MessageType, PublishDiagnosticsParams, Range,
-    Registration, ServerCapabilities, TextDocumentSyncCapability, TextDocumentSyncKind,
+    Registration, ServerCapabilities, ServerInfo, TextDocumentSyncCapability, TextDocumentSyncKind,
     TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Uri, WatchKind,
 };
 use tower_lsp_server::{Client, LanguageServer, UriExt};
@@ -40,6 +40,11 @@ use crate::git_commit_parser::GitCommitParser;
 use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
 use crate::io_utils::fileify_path;
 use harper_stats::{Record, Stats};
+
+/// Return harper-ls version
+pub fn ls_version() -> &'static str {
+    env!("CARGO_PKG_VERSION")
+}
 
 pub struct Backend {
     client: Client,
@@ -429,7 +434,10 @@ impl Backend {
 impl LanguageServer for Backend {
     async fn initialize(&self, _: InitializeParams) -> JsonResult<InitializeResult> {
         Ok(InitializeResult {
-            server_info: None,
+            server_info: Some(ServerInfo {
+                name: "harper-ls".to_owned(),
+                version: Some(ls_version().to_owned()),
+            }),
             capabilities: ServerCapabilities {
                 code_action_provider: Some(CodeActionProviderCapability::Simple(true)),
                 execute_command_provider: Some(ExecuteCommandOptions {
