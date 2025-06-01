@@ -746,7 +746,7 @@ pub fn lint_group() -> LintGroup {
         "WorseCaseScenario" => (
             ["worse case scenario", "worse-case scenario", "worse-case-scenario"],
             ["worst-case scenario"],
-            "Use `worse` for comparing. (`Worst` is for the extreme case)",
+            "Use `worst` for referring to the worst possible scenario. (`Worse` is for comparing)",
             "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
         ),
         "WorstCaseScenario" => (
