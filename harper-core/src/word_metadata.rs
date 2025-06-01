@@ -124,11 +124,41 @@ impl WordMetadata {
         adverb has
     );
 
-    pub fn is_present_tense_verb(&self) -> bool {
+    pub fn is_verb_lemma(&self) -> bool {
         matches!(
             self.verb,
             Some(VerbData {
-                tense: Some(Tense::Present),
+                verb_form: Some(VerbForm::LemmaForm),
+                ..
+            })
+        )
+    }
+
+    pub fn is_verb_past_form(&self) -> bool {
+        matches!(
+            self.verb,
+            Some(VerbData {
+                verb_form: Some(VerbForm::PastForm),
+                ..
+            })
+        )
+    }
+
+    pub fn is_verb_progressive_form(&self) -> bool {
+        matches!(
+            self.verb,
+            Some(VerbData {
+                verb_form: Some(VerbForm::ProgressiveForm),
+                ..
+            })
+        )
+    }
+
+    pub fn is_verb_third_person_singular_present_form(&self) -> bool {
+        matches!(
+            self.verb,
+            Some(VerbData {
+                verb_form: Some(VerbForm::ThirdPersonSingularPresentForm),
                 ..
             })
         )
@@ -219,23 +249,34 @@ impl WordMetadata {
     }
 }
 
-// TODO currently unused and probably should be changed to the forms of an inflected verb
-// TODO - (present, infinitive); -ed (past tense, past participle), -ing (present participle, continuous, progressive)
-// TODO irregular verbs can have different forms for past tense and past participle
-// TODO -ed forms can act as verbs and adjectives, -ing forms can act as verbs and nouns
-// TODO future shares a form with present/infinitive
+// These verb forms are morphological variations, distinct from TAM (Tense-Aspect-Mood)
+// Each form can be used in various TAM combinations:
+// - Lemma form (infinitive, citation form, dictionary form)
+//   Used in infinitives (e.g., "to sleep"), imperatives (e.g., "sleep!"), and with modals (e.g., "will sleep")
+// - Past form (past participle and simple past)
+//   Used as verbs (e.g., "slept") or adjectives (e.g., "closed door")
+// - Progressive form (present participle and gerund)
+//   Used as verbs (e.g., "sleeping"), nouns (e.g., "sleeping is important"), or adjectives (e.g., "sleeping dog")
+// - Third person singular present (-s/-es)
+//   Used for third person singular subjects (e.g., "he sleeps", "she reads")
+//
+// Important notes:
+// 1. English expresses time through auxiliary verbs, not verb form alone
+// 2. Irregular verbs can have different forms for past participle and simple past
+// 3. Future is always expressed through auxiliary verbs (e.g., "will sleep", "going to sleep")
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
-pub enum Tense {
-    Past,
-    Present,
-    // Future,
+pub enum VerbForm {
+    LemmaForm,
+    PastForm,
+    ProgressiveForm,
+    ThirdPersonSingularPresentForm,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct VerbData {
     pub is_linking: Option<bool>,
     pub is_auxiliary: Option<bool>,
-    pub tense: Option<Tense>,
+    pub verb_form: Option<VerbForm>,
 }
 
 impl VerbData {
@@ -244,12 +285,11 @@ impl VerbData {
         Self {
             is_linking: self.is_linking.or(other.is_linking),
             is_auxiliary: self.is_auxiliary.or(other.is_auxiliary),
-            tense: self.tense.or(other.tense),
+            verb_form: self.verb_form.or(other.verb_form),
         }
     }
 }
 
-// TODO renamed from "noun" until refactoring is complete
 // TODO other noun properties may be worth adding:
 // TODO count vs mass; abstract
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
