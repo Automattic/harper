@@ -743,11 +743,10 @@ pub fn lint_group() -> LintGroup {
             "Use `worse` for comparing. (`Worst` is for the extreme case)",
             "Corrects `worst and worst` to `worse and worse` for proper comparative usage."
         ),
-
         "WorseCaseScenario" => (
             ["worse case scenario", "worse-case scenario", "worse-case-scenario"],
             ["worst-case scenario"],
-            "Use `worst` for referring to the worst possible scenario, and hyphenate `worst-case`. (`Worse` is for comparing)",
+            "Use `worse` for comparing. (`Worst` is for the extreme case)",
             "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
         ),
         "WorstCaseScenario" => (
@@ -756,7 +755,6 @@ pub fn lint_group() -> LintGroup {
             "Hyphenate `worst-case`.",
             "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
         ),
-
         "WorseThan" => (
             ["worst than"],
             ["worse than"],
