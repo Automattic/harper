@@ -123,7 +123,7 @@ impl Linter for ThrowRubbish {
 
 // TODO replace this when we have proper support for progressive verb form in metadata
 fn is_progressive_verb_form(document: &Document, token: &crate::Token) -> bool {
-    token.kind.is_present_tense_verb()
+    token.kind.is_verb_progressive_form()
         && document
             .get_span_content_str(&token.span)
             .to_lowercase()
