@@ -36,6 +36,7 @@
 		"chart.js": "^4.4.8",
 		"harper.js": "workspace:*",
 		"lodash-es": "^4.17.21",
+		"posthog-js": "^1.245.1",
 		"reveal.js": "^5.1.0",
 		"svelte-intersection-observer": "^1.0.0",
 		"typed.js": "^2.1.0"

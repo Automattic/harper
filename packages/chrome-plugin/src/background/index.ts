@@ -23,6 +23,12 @@ import {
 import unpackLint from '../unpackLint';
 console.log('background is running');
 
+chrome.runtime.onInstalled.addListener((details) => {
+	if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
+		chrome.runtime.setUninstallURL('https://writewithharper.com/uninstall-browser-extension');
+	}
+});
+
 let linter: LocalLinter;
 
 getDialect().then(setDialect);
@@ -49,7 +55,7 @@ async function enableDefaultDomains() {
 		'playground.lexical.dev',
 		'discord.com',
 		'youtube.com',
-		'instagram.com',
+		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
 		'www.reddit.com',
@@ -62,6 +68,8 @@ async function enableDefaultDomains() {
 		'x.com',
 		'www.notion.so',
 		'hashnode.com',
+		'www.slatejs.org',
+		'localhost',
 	];
 
 	for (const item of defaultEnabledDomains) {

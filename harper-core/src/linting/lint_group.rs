@@ -11,7 +11,9 @@ use hashbrown::HashMap;
 use lru::LruCache;
 use serde::{Deserialize, Serialize};
 
+use super::a_part::APart;
 use super::adjective_of_a::AdjectiveOfA;
+use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
 use super::ask_no_preposition::AskNoPreposition;
 use super::avoid_curses::AvoidCurses;
@@ -27,6 +29,7 @@ use super::despite_of::DespiteOf;
 use super::dot_initialisms::DotInitialisms;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
+use super::everyday::Everyday;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
@@ -44,6 +47,7 @@ use super::linking_verbs::LinkingVerbs;
 use super::long_sentences::LongSentences;
 use super::merge_words::MergeWords;
 use super::modal_of::ModalOf;
+use super::most_number::MostNumber;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
 use super::nobody::Nobody;
@@ -63,6 +67,7 @@ use super::proper_noun_capitalization_linters;
 use super::repeated_words::RepeatedWords;
 use super::save_to_safe::SaveToSafe;
 use super::sentence_capitalization::SentenceCapitalization;
+use super::since_duration::SinceDuration;
 use super::somewhat_something::SomewhatSomething;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
@@ -87,6 +92,8 @@ use crate::linting::{closed_compounds, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
 
+/// The configuration for a [`LintGroup`].
+/// Each child linter can be enabled, disabled, or set to a curated value.
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
 #[serde(transparent)]
 pub struct LintGroupConfig {
@@ -123,7 +130,7 @@ impl LintGroupConfig {
     }
 
     /// Clear all config options.
-    /// This will reset them all to disabled.
+    /// This will reset them all to disable them.
     pub fn clear(&mut self) {
         for val in self.inner.values_mut() {
             *val = None
@@ -174,6 +181,8 @@ impl Hash for LintGroupConfig {
     }
 }
 
+/// A struct for collecting the output of a number of individual [Linter]s.
+/// Each child can be toggled via the public, mutable [Self::config] object.
 pub struct LintGroup {
     pub config: LintGroupConfig,
     /// We use a binary map here so the ordering is stable.
@@ -208,11 +217,12 @@ impl LintGroup {
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
-    pub fn add(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter>) -> bool {
+    pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
         if self.contains_key(&name) {
             false
         } else {
-            self.linters.insert(name.as_ref().to_string(), linter);
+            self.linters
+                .insert(name.as_ref().to_string(), Box::new(linter));
             true
         }
     }
@@ -225,13 +235,13 @@ impl LintGroup {
     pub fn add_pattern_linter(
         &mut self,
         name: impl AsRef<str>,
-        linter: Box<dyn PatternLinter>,
+        linter: impl PatternLinter + 'static,
     ) -> bool {
         if self.contains_key(&name) {
             false
         } else {
             self.pattern_linters
-                .insert(name.as_ref().to_string(), linter);
+                .insert(name.as_ref().to_string(), Box::new(linter));
             true
         }
     }
@@ -305,7 +315,7 @@ impl LintGroup {
 
         macro_rules! insert_struct_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add(stringify!($rule), Box::new($rule::default()));
+                out.add(stringify!($rule), $rule::default());
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -313,7 +323,7 @@ impl LintGroup {
 
         macro_rules! insert_pattern_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add_pattern_linter(stringify!($rule), Box::new($rule::default()));
+                out.add_pattern_linter(stringify!($rule), $rule::default());
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -326,20 +336,16 @@ impl LintGroup {
         out.merge_from(&mut closed_compounds::lint_group());
 
         // Add all the more complex rules to the group.
+        insert_pattern_rule!(APart, true);
         insert_struct_rule!(AdjectiveOfA, true);
+        insert_pattern_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
+        insert_pattern_rule!(AskNoPreposition, true);
         insert_struct_rule!(AvoidCurses, true);
         insert_pattern_rule!(BackInTheDay, true);
         insert_pattern_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_pattern_rule!(ChockFull, true);
-        insert_struct_rule!(SaveToSafe, true);
-        insert_struct_rule!(NailOnTheHead, true);
-        insert_struct_rule!(NominalWants, true);
-        insert_struct_rule!(ElsePossessive, true);
-        insert_pattern_rule!(WinPrize, true);
-        insert_pattern_rule!(AskNoPreposition, true);
-        insert_pattern_rule!(ItsContraction, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_pattern_rule!(Confident, true);
@@ -349,6 +355,8 @@ impl LintGroup {
         insert_pattern_rule!(DespiteOf, true);
         insert_pattern_rule!(DotInitialisms, true);
         insert_struct_rule!(EllipsisLength, true);
+        insert_struct_rule!(ElsePossessive, true);
+        insert_struct_rule!(Everyday, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
         insert_struct_rule!(FirstAidKit, true);
         insert_struct_rule!(ForNoun, true);
@@ -358,6 +366,7 @@ impl LintGroup {
         insert_struct_rule!(HopHope, true);
         insert_struct_rule!(HowTo, true);
         insert_pattern_rule!(HyphenateNumberDay, true);
+        insert_pattern_rule!(ItsContraction, true);
         insert_pattern_rule!(LeftRightHand, true);
         insert_struct_rule!(LetsConfusion, true);
         insert_pattern_rule!(Likewise, true);
@@ -365,7 +374,10 @@ impl LintGroup {
         insert_struct_rule!(LongSentences, true);
         insert_struct_rule!(MergeWords, true);
         insert_pattern_rule!(ModalOf, true);
+        insert_pattern_rule!(MostNumber, true);
         insert_pattern_rule!(MultipleSequentialPronouns, true);
+        insert_struct_rule!(NailOnTheHead, true);
+        insert_struct_rule!(NominalWants, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_pattern_rule!(Nobody, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
@@ -380,11 +392,13 @@ impl LintGroup {
         insert_struct_rule!(PronounContraction, true);
         insert_struct_rule!(PronounKnew, true);
         insert_struct_rule!(RepeatedWords, true);
+        insert_struct_rule!(SaveToSafe, true);
+        insert_pattern_rule!(SinceDuration, true);
         insert_pattern_rule!(SomewhatSomething, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
         insert_pattern_rule!(ThatWhich, true);
-        insert_struct_rule!(TheHowWhy, true);
+        insert_pattern_rule!(TheHowWhy, true);
         insert_struct_rule!(TheMy, true);
         insert_pattern_rule!(ThenThan, true);
         insert_struct_rule!(ThrowRubbish, true);
@@ -394,23 +408,21 @@ impl LintGroup {
         insert_pattern_rule!(Whereas, true);
         insert_pattern_rule!(WidelyAccepted, true);
         insert_struct_rule!(WidelyAccepted, true);
+        insert_pattern_rule!(WinPrize, true);
         insert_struct_rule!(WordPressDotcom, true);
 
-        out.add(
-            "SpellCheck",
-            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
-        );
+        out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
 
         out.add(
             "InflectedVerbAfterTo",
-            Box::new(InflectedVerbAfterTo::new(dictionary.clone(), dialect)),
+            InflectedVerbAfterTo::new(dictionary.clone(), dialect),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
 
         out.add(
             "SentenceCapitalization",
-            Box::new(SentenceCapitalization::new(dictionary.clone(), dialect)),
+            SentenceCapitalization::new(dictionary.clone(), dialect),
         );
         out.config.set_rule_enabled("SentenceCapitalization", true);
 

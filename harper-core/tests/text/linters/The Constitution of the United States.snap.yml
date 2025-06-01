@@ -39,7 +39,7 @@ Message: |
       11 | ## Article. I.
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
-  - Replace with: “Ir”
+  - Replace with: “Id”
   - Replace with: “IC”
   - Replace with: “IE”
 
@@ -1289,16 +1289,6 @@ Message: |
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-     550 | committed; but when not committed within any State, the Trial shall be at such
-     551 | Place or Places as the Congress may by Law have directed.
-         |                                     ^~~~~~ The auxiliary verb “have” implies the existence of the closed compound noun “bylaw”.
-Suggest:
-  - Replace with: “byLaw”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      561 | Attainder of Treason shall work Corruption of Blood, or Forfeiture except
@@ -1551,16 +1541,6 @@ Message: |
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-     658 | questioned. But neither the United States nor any State shall assume or pay any
-     659 | debt or obligation incurred in aid of insurrection or rebellion against the
-         | ^~~~~~~ Did you mean the closed compound noun “debtor”?
-Suggest:
-  - Replace with: “debtor”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      663 | ## Article. V.
@@ -1655,9 +1635,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      721 | done in Convention by the Unanimous Consent of the States present the
-         | ^ This sentence does not start with a capital letter
+         | ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “D”
+  - Replace with: “Done”
 
 
 

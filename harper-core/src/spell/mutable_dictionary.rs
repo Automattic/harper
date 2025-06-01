@@ -388,4 +388,11 @@ mod tests {
             spread.word_map.into_iter().collect::<HashSet<_>>()
         );
     }
+
+    #[test]
+    fn apart_is_not_noun() {
+        let dict = MutableDictionary::curated();
+
+        assert!(!dict.get_word_metadata_str("apart").unwrap().is_noun());
+    }
 }

@@ -56,12 +56,13 @@
 			"target": [
 				{
 					"metadata": {
-						"adjective": {},
 						"adverb": {}
 					}
 				}
 			],
-			"base_metadata": {}
+			"base_metadata": {
+				"adjective": {}
+			}
 		},
 		"U": {
 			"#": "'un-' prefix",
@@ -389,7 +390,7 @@
 					},
 					"metadata": {
 						"verb": {
-							"tense": "Present"
+							"verb_form": "ThirdPersonSingularPresentForm"
 						}
 					}
 				}
@@ -459,7 +460,7 @@
 				{
 					"metadata": {
 						"verb": {
-							"tense": "Present"
+							"verb_form": "ProgressiveForm"
 						},
 						"noun": null,
 						"adjective": null
