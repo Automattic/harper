@@ -16,7 +16,7 @@ pub struct Everyday {
 // TODO Switch to use the .is_progressive_form() method when it's merged
 fn is_progressive_form(tok: &Token, src: &[char]) -> bool {
     tok.kind.is_verb()
-        && tok.kind.is_present_tense_verb()
+        && tok.kind.is_verb_progressive_form()
         && tok
             .span
             .get_content_string(src)
