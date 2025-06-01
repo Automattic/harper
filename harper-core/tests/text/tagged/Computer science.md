@@ -168,8 +168,8 @@
 # NSg/V/J N/I/C/D NPl/V     NSg/VX NSg/VX V/J  C/P NPrSg/I/V/J C/P  V/J  J            W?           .
 > the field of computer science broadened to study computation in        general . In
 # D   NSg   P  NSg/V    NSg/V   V/J       P  NSg/V NSg         NPrSg/J/P NSg/V/J . P
-> 1945 , IBM   founded the Watson Scientific Computing Laboratory at        Columbia
-# #    . NPrSg V/J     D   NPr    J          NSg/V     NSg        NSg/I/V/P NPr
+> 1945 , IBM   founded the Watson Scientific Computing Laboratory at    Columbia
+# #    . NPrSg V/J     D   NPr    J          NSg/V     NSg        NSg/P NPr
 > University in        New     York City . The renovated fraternity house   on  Manhattan's West
 # NSg        NPrSg/J/P NSg/V/J NPr  NSg  . D   J         NSg        NPrSg/V J/P N$          NPrSg/V/J
 > Side    was IBM's first   laboratory devoted to pure    science . The lab   is the
@@ -190,8 +190,8 @@
 # NSg    NPrSg/V . D   NPr       NSg     NPrSg/J/P NSg/V    NSg/V   . V     P  D
 > University of Cambridge Computer Laboratory in 1953 . The first computer science
 # NSg        P  NPr       NSg/V    NSg        P  #    . D   NSg/J NSg/V    NSg/V
-> department in the United States  was formed at        Purdue University in 1962 . Since
-# NSg        P  D   J      NPrSg/V V   V/J    NSg/I/V/P NPr    NSg        P  #    . C/P
+> department in the United States  was formed at    Purdue University in 1962 . Since
+# NSg        P  D   J      NPrSg/V V   V/J    NSg/P NPr    NSg        P  #    . C/P
 > practical computers became available , many    applications of computing have   become
 # NSg/J     NPl/V     V      J         . N/I/J/D W?           P  NSg/V     NSg/VX V
 > distinct areas of study in their own   rights .
@@ -248,8 +248,8 @@
 # P  D   NSg/J/R NPl  P  NSg/V     . D/P NSg/J  P  NPl/V C/P D   NPl           P  D
 > field of computing were  suggested ( albeit facetiously ) in the Communications of
 # NSg   P  NSg/V     NSg/V V/J       . C      R           . P  D   W?             P
-> the ACM — turingineer , turologist , flow  - charts - man         , applied meta  - mathematician ,
-# D   NSg . ?           . ?          . NSg/V . NPl/V  . NPrSg/I/V/J . V/J     NSg/J . NSg           .
+> the ACM — turingineer , turologist , flow  - charts - man       , applied meta  - mathematician ,
+# D   NSg . ?           . ?          . NSg/V . NPl/V  . NPrSg/V/J . V/J     NSg/J . NSg           .
 > and applied epistemologist . Three months later in the same journal , comptologist
 # V/C V/J     ?              . NSg   NSg    J     P  D   I/J  NSg/V/J . ?
 > was suggested , followed next    year by      hypologist . The term  computics has also
@@ -922,16 +922,16 @@
 # NSg/V NPrSg/V/J NSg/I/V/J NSg      .
 >
 #
-> read  symbol at        current location ;
-# NSg/V NSg/V  NSg/I/V/P NSg/J   NSg      .
+> read  symbol at    current location ;
+# NSg/V NSg/V  NSg/P NSg/J   NSg      .
 >
 #
-> print   0 at        current location ;
-# NSg/V/J # NSg/I/V/P NSg/J   NSg      .
+> print   0 at    current location ;
+# NSg/V/J # NSg/P NSg/J   NSg      .
 >
 #
-> print   1 at        current location .
-# NSg/V/J # NSg/I/V/P NSg/J   NSg      .
+> print   1 at    current location .
+# NSg/V/J # NSg/P NSg/J   NSg      .
 >
 #
 >

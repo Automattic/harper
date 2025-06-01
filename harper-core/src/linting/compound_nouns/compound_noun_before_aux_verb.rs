@@ -1,28 +1,40 @@
 use crate::{
-    CharStringExt, Lrc, TokenStringExt, linting::PatternLinter, patterns::SplitCompoundWord,
+    CharStringExt, Lrc, TokenStringExt,
+    linting::PatternLinter,
+    patterns::{All, SplitCompoundWord},
 };
 
-use super::{Lint, LintKind, Suggestion};
+use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
 
 use crate::{
     Token,
     patterns::{Pattern, SequencePattern},
 };
 
-pub struct ImpliedInstantiatedCompoundNouns {
+/// Two adjacent words separated by whitespace that if joined would be a valid noun.
+pub struct CompoundNounBeforeAuxVerb {
     pattern: Box<dyn Pattern>,
     split_pattern: Lrc<SplitCompoundWord>,
 }
 
-impl Default for ImpliedInstantiatedCompoundNouns {
+impl Default for CompoundNounBeforeAuxVerb {
     fn default() -> Self {
-        let split_pattern = Lrc::new(SplitCompoundWord::new(|meta| {
-            meta.is_noun() && !meta.is_proper_noun() && !meta.is_verb()
-        }));
-        let pattern = SequencePattern::default()
-            .then(split_pattern.clone())
-            .then_whitespace()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_auxiliary_verb());
+        let context_pattern = SequencePattern::default()
+            .then(is_content_word)
+            .t_ws()
+            .then(is_content_word)
+            .then_auxiliary_verb();
+
+        let split_pattern = create_split_pattern();
+
+        let mut pattern = All::default();
+        pattern.add(Box::new(context_pattern));
+        pattern.add(Box::new(
+            SequencePattern::default()
+                .then(split_pattern.clone())
+                .then_anything()
+                .then_anything(),
+        ));
 
         Self {
             pattern: Box::new(pattern),
@@ -31,7 +43,7 @@ impl Default for ImpliedInstantiatedCompoundNouns {
     }
 }
 
-impl PatternLinter for ImpliedInstantiatedCompoundNouns {
+impl PatternLinter for CompoundNounBeforeAuxVerb {
     fn pattern(&self) -> &dyn Pattern {
         self.pattern.as_ref()
     }

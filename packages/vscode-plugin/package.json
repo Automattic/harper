@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.38.0",
+	"version": "0.40.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -118,6 +118,12 @@
 					"default": false,
 					"description": "Skip linting link titles."
 				},
+				"harper.maxFileLength": {
+					"scope": "resource",
+					"type": "number",
+					"default": 120000,
+					"description": "Maximum length of file to be linted (in bytes). If a file is larger than this, it will not be linted."
+				},
 				"harper.userDictPath": {
 					"scope": "resource",
 					"type": "string",
@@ -177,6 +183,12 @@
 					"default": true,
 					"description": "When referring to North, Central, and South America, make sure to treat them as a proper noun."
 				},
+				"harper.linters.AmountsFor": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `amounts for` to either `amounts to` or `accounts for`"
+				},
 				"harper.linters.AnA": {
 					"scope": "resource",
 					"type": "boolean",
@@ -231,6 +243,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `anyhow`."
 				},
+				"harper.linters.Anyone": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `anyone`."
+				},
 				"harper.linters.Anywhere": {
 					"scope": "resource",
 					"type": "boolean",
@@ -248,6 +266,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects nonstandard `as early back as` to `as far back as`."
+				},
+				"harper.linters.AsOfLate": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `as of lately` to `as of late`."
 				},
 				"harper.linters.AsWell": {
 					"scope": "resource",
@@ -362,6 +386,12 @@
 					"type": "boolean",
 					"default": false,
 					"description": "This rule looks for particularly boring or overused words. Using varied language is an easy way to keep a reader's attention."
+				},
+				"harper.linters.Brutality": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests the more standard and common synonym `brutality`."
 				},
 				"harper.linters.ByAccident": {
 					"scope": "resource",
@@ -638,6 +668,24 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`."
+				},
+				"harper.linters.Everybody": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `everybody`."
+				},
+				"harper.linters.Everyday": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule tries to sort out confusing the adjective `everyday` and the adverb `every day`."
+				},
+				"harper.linters.Everyone": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `everyone`."
 				},
 				"harper.linters.Everywhere": {
 					"scope": "resource",
@@ -1107,6 +1155,12 @@
 					"default": true,
 					"description": "Corrects the archaic or mistaken separation `in stead of` to `instead of` in everyday usage."
 				},
+				"harper.linters.Insurmountable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests the more standard and common synonym `insurmountable`."
+				},
 				"harper.linters.Intact": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1467,6 +1521,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `notwithstanding`."
 				},
+				"harper.linters.Nowhere": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `nowhere`."
+				},
 				"harper.linters.NumberSuffixCapitalization": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1623,6 +1683,12 @@
 					"default": true,
 					"description": "Typo: `moot` (meaning debatable) is correct rather than `mute`."
 				},
+				"harper.linters.PointsOfView": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects pluralizing the wrong noun in `point of view`."
+				},
 				"harper.linters.PortAuPrince": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1676,6 +1742,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensure proper capitalization of proper nouns."
+				},
+				"harper.linters.RapidFire": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks to ensure writers hyphenate `rapid-fire`."
 				},
 				"harper.linters.RealTrouper": {
 					"scope": "resource",
@@ -1743,6 +1815,12 @@
 					"default": true,
 					"description": "Corrects `simply grammatical` to `simple grammatical` for proper adjective usage."
 				},
+				"harper.linters.SinceDuration": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects the use of 'since' with a duration instead of a point in time."
+				},
 				"harper.linters.SneakingSuspicion": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1760,6 +1838,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `somehow`."
+				},
+				"harper.linters.Someone": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `someone`."
 				},
 				"harper.linters.SomewhatSomething": {
 					"scope": "resource",

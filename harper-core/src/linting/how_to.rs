@@ -25,7 +25,7 @@ impl Default for HowTo {
                 InflectionOfBe::new().or(Box::new(|tok: &Token, src: &[char]| {
                     tok.kind.is_auxiliary_verb()
                         || tok.kind.is_adjective()
-                        || tok.kind.is_present_tense_verb()
+                        || tok.kind.is_verb_progressive_form()
                         // Special case for "did" as in "how did you do that?"
                         || tok.span.get_content_string(src).eq_ignore_ascii_case("did")
                 })),

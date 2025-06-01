@@ -2,7 +2,7 @@
 //! Harper uses, and the Ranges that the LSP uses.
 
 use harper_core::Span;
-use tower_lsp::lsp_types::{Position, Range};
+use tower_lsp_server::lsp_types::{Position, Range};
 
 pub fn span_to_range(source: &[char], span: Span) -> Range {
     let start = index_to_position(source, span.start);
@@ -85,7 +85,7 @@ pub fn range_to_span(source: &[char], range: Range) -> Span {
 
 #[cfg(test)]
 mod tests {
-    use tower_lsp::lsp_types::{Position, Range};
+    use tower_lsp_server::lsp_types::{Position, Range};
 
     use super::{index_to_position, position_to_index, range_to_span};
 

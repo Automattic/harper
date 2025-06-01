@@ -15,6 +15,12 @@ export function findAncestor(
 	return null;
 }
 
+/** Determines if a given node is a child of a P2 editor instance.
+ * If so, returns the root node of that instance. */
+export function getP2Root(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.classList.contains('p2-editor'));
+}
+
 /** Determines if a given node is a child of a Lexical editor instance.
  * If so, returns the root node of that instance. */
 export function getLexicalRoot(el: HTMLElement): HTMLElement | null {
