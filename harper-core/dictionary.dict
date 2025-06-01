@@ -1496,6 +1496,7 @@ Britannica/2M
 Briticism/1SM
 British/125MRZ
 Britisher/15M
+Britishness/1M
 Britney/21M
 Briton/1MS
 Britt/2MN
@@ -17038,6 +17039,7 @@ chauffeur/~14GMDS
 chauvinism/1M
 chauvinist/51SM
 chauvinistic/5Q
+chav/1MS!
 cheap/~154PXTNRY
 cheapen/4DG
 cheapness/1M
@@ -17570,6 +17572,7 @@ classifier/1MS
 classify/~4ACSDGN
 classiness/1M
 classism/1
+classist/1MS5
 classless/5P
 classman/1M
 classmate/~1MS
@@ -21699,6 +21702,7 @@ doom/~14MDGS
 doomer/1MS
 doomsayer/1MS
 doomsday/~15M
+doomsdayer/1MS
 doomster/1S
 door/~14IS
 door's
@@ -34093,6 +34097,7 @@ monetarist/51MS
 monetary/~5
 monetisation/1C!_
 monetise/4CGDS!_
+monetizable/5
 monetization/1C
 monetize/4CGDS
 money/~15SMD
@@ -34501,6 +34506,7 @@ multicoloured/5!@_
 multicore/5
 multicultural/~5
 multiculturalism/~1M
+multiculture/1M
 multidimensional/51
 multidisciplinary/~5
 multiethnic/5
@@ -39270,6 +39276,7 @@ prancer/1M
 prancing/451Y
 prang/14DSG
 prank/~145MSDG
+pranker/1MS
 prankster/1SM
 praseodymium/1M
 prat/~15S
@@ -41005,6 +41012,7 @@ reciprocal/~51SMY
 reciprocate/4GNDS
 reciprocation/1M
 reciprocity/~1M
+recision/1MS
 recital/~1SM
 recitalist/1MS
 recitative/15MS
@@ -41290,6 +41298,8 @@ rehears/4GD
 rehearsal/~1MS
 rehearsed/~45U
 rehi/
+rehire/4SDG
+rehirings/9
 rehome/4DSG
 rehung/4
 reify/4NDSG
@@ -44305,6 +44315,7 @@ skate/~145MZGDRS
 skateboard/~14MDRSZG
 skateboarder/1M
 skateboarding/~41M
+skatepark/1MS
 skater/~1M
 skating/~41M
 skedaddle/41MGDS
@@ -52451,6 +52462,7 @@ KanBan/M1
 KiCad/2M            # software
 Kia/21MS            # automobile brand
 Kubernetes/2SM
+Kubota/12MS         # tractor brand
 LADAR
 LEGO/1SM            # official trademark form of Lego
 LIDAR/1             # FIXME! elsewhere we have LiDAR
@@ -52760,6 +52772,7 @@ car-bomb/4
 carbon-intensive/5
 cash-strapped/5
 CD-ROM/1MS
+cell phone/1MS@<
 centre-left/5!@_
 centre-right/5!@_
 clear-sighted/5
@@ -52814,6 +52827,7 @@ fact check/1S
 fact-check/4SDG
 fact-checking/1M
 fail-safe/1MS5
+far-reaching/5
 far right/1MS
 far-right/5
 fast track/1MS4DG
@@ -52825,11 +52839,14 @@ first-person/5
 first time/1MS
 first-time/5
 flash point/1MS
+flat out/5j1S
+hair-raiser/1MS
 forward-thinking/5
 four-speed/1MS
 free-form/15
 front-line/5
 front man/1M
+front men/9
 front wheel/1MS5
 full on/5j
 full-on/5j
@@ -52901,6 +52918,8 @@ jaw-droppingly/5
 jury-rig/4S
 jury-rigged/4
 jury-rigging/4
+kick-arse/5!_
+kick-ass/56
 kick start/4SDG
 kick-starter/1MS
 knock-on effect/1MS
@@ -52922,6 +52941,7 @@ lesser-known/5
 live action/1
 load-bearing/5
 long-term/5
+long-termer/1MS
 longer-term/5R
 loosey-goosey/5
 low-budget/5
@@ -52941,10 +52961,13 @@ man child/1M
 man-made/5
 Mar-a-Lago/2M
 Mercedes-Benz/2M
+middle class/1M
+middle-class/5
 middle-sized/5
 mind-blowing/5
 mind-boggling/5Y!@_
 mind game/1MS
+mobile phone/1MS!_
 mock up/4
 mock-up/1MS
 moon landing/1MS
@@ -52955,6 +52978,8 @@ NAND gate/1MS
 nano-farad/1MS
 neo-Nazi/15SM
 neo-Nazism/1M
+New Yorker/1MS
+nitty-gritty/1M5
 no-op/1MS           # no operation
 non-Western/5
 NOR gate/1MS
@@ -53030,12 +53055,14 @@ sci-fi/1M
 sea lane/1MS
 second-degree/5
 self-awareness/1M
+self-correct/4DSG
 self-deception/1M
 self-driving/1M5
 self-fund/4SDG
 self-indulgent/5
 self-obsessed/5
 self-tapping/5
+send-up/1MS
 shark-infested/5
 short circuit/1MS4SDG
 short-circuit/3SDG
@@ -53127,6 +53154,7 @@ well-known/5
 well-made/5
 well-received/5
 well-respected/5
+well-spoken/5
 well-timed/5
 well-trodden/5
 well-used/5
@@ -53138,7 +53166,10 @@ would-be/5
 write off/4
 write-off/1MS
 write-up/1MS
+x-axis/1M
+y-axis/1M
 year-over-year/5
+z-axis/1M
 
 # Phrasal verbs. These help correct the error where people write "to login" instead of "to log in"
 # For this reason the most important ones to include are the ones that have a noun counterpart.
@@ -53153,7 +53184,6 @@ break up/4
 buy back/4
 buy out/4
 carry out/4
-cell phone/1MS@<
 check in/4
 check out/4
 clean up/4
@@ -53165,8 +53195,6 @@ fail over/4
 fall back/4
 fight back/4
 fix up/4
-flat out/5j1S
-hair-raiser/1MS
 hand out/4
 hang out/4
 hook up/4
@@ -53180,8 +53208,6 @@ look up/4
 low fidelity/5
 meet up/4
 melt down/4
-mobile phone/1MS!_
-nitty-gritty/1M5
 pick up/4
 push back/4
 roll back/4
@@ -53189,7 +53215,6 @@ roll out/4
 roll over/4
 run away/4
 send up/4
-send-up/1MS
 set up/4
 show off/4
 shut down/4
@@ -53221,9 +53246,6 @@ white out/4
 wipe out/4
 work around/4
 work out/4
-x-axis/1M
-y-axis/1M
-z-axis/1M
 
 # New entries may be added below this line
 # If you're not confident in using the affix annotations, add missing words here
