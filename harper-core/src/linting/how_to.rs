@@ -25,7 +25,7 @@ impl Default for HowTo {
                 InflectionOfBe::new().or(Box::new(|tok: &Token, src: &[char]| {
                     if tok.kind.is_auxiliary_verb()
                         || tok.kind.is_adjective()
-                        || tok.kind.is_present_tense_verb()
+                        || tok.kind.is_verb_progressive_form()
                     {
                         true
                     } else {

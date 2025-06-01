@@ -11,9 +11,21 @@ pub struct NominalWants {
 
 impl Default for NominalWants {
     fn default() -> Self {
+        // "That" can act as two kinds of pronoun: demonstrative and relative.
+        // As a demonstrative pronoun, it's third person singular.
+        // As a relative pronoun, it's behaves as any person:
+        // I am the one that wants to. He is the one that wants to.
+        fn is_applicable_pronoun(tok: &Token, src: &[char]) -> bool {
+            if tok.kind.is_pronoun() {
+                tok.span.get_content_string(src).to_lowercase() != "that"
+            } else {
+                false
+            }
+        }
+
         let miss = WordSet::new(&["wont", "wonts", "want", "wants"]);
         let pattern = SequencePattern::default()
-            .then_pronoun()
+            .then(is_applicable_pronoun)
             .then_whitespace()
             .then(miss);
         Self {
@@ -132,5 +144,14 @@ mod tests {
     #[test]
     fn ignores_correct_usage_he() {
         assert_lint_count("He wants to help.", NominalWants::default(), 0);
+    }
+
+    #[test]
+    fn ignores_correct_usage_that_1298() {
+        assert_lint_count(
+            "The projects that want to take it seriously are the best.",
+            NominalWants::default(),
+            0,
+        );
     }
 }
