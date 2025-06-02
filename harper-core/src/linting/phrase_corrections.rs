@@ -1273,6 +1273,12 @@ pub fn lint_group() -> LintGroup {
             "This word has a more standard, more common synonym.",
             "Suggests the more standard and common synonym `brutality`."
         ),
+        "PeaceOfMind" => (
+            ["piece of mind"],
+            ["peace of mind"],
+            "The phrase is `peace of mind`, meaning `calm`. A `piece` is a `part` of something.",
+            "Corrects `piece of mind` to `peace of mind`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2773,6 +2779,15 @@ mod tests {
             "That being said, if you find upgrading to newer versions to be unsurmountable, please open an issue.",
             lint_group(),
             "That being said, if you find upgrading to newer versions to be insurmountable, please open an issue.",
+        )
+    }
+
+    #[test]
+    fn corrects_piece_of_mind() {
+        assert_suggestion_result(
+            "A Discord bot that gives you piece of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
+            lint_group(),
+            "A Discord bot that gives you peace of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
         )
     }
 }
