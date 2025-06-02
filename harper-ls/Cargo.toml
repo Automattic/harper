@@ -29,7 +29,7 @@ open = "5.3.0"
 futures = "0.3.31"
 serde = { version = "1.0.219", features = ["derive"] }
 indexmap = { version = "2.9.0", features = ["serde"] }
-reqwest = { version = "0.12.15", features = ["rustls-tls"], default-features = false }
+reqwest = { version = "0.12.18", features = ["rustls-tls"], default-features = false }
 
 [features]
 default = []
