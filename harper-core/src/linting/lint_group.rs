@@ -52,6 +52,7 @@ use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
+use super::noun_instead_of_verb::NounInsteadOfVerb;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
 use super::one_and_the_same::OneAndTheSame;
@@ -379,6 +380,7 @@ impl LintGroup {
         insert_struct_rule!(NominalWants, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_pattern_rule!(Nobody, true);
+        insert_pattern_rule!(NounInsteadOfVerb, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
         insert_pattern_rule!(OneAndTheSame, true);
