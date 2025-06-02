@@ -48,3 +48,43 @@ impl Pattern for ExactPhrase {
         self.inner.matches(tokens, source)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::{
+        Document,
+        patterns::{ExactPhrase, Pattern},
+    };
+
+    #[test]
+    fn test_exact_does_not_mean_case_sensitive() {
+        let doc_lower = Document::new_plain_english_curated("hello world");
+        let doc_upper = Document::new_plain_english_curated("HELLO WORLD");
+        let doc_title = Document::new_plain_english_curated("Hello World");
+        let phrase = ExactPhrase::from_document(&doc_lower);
+        assert_eq!(
+            phrase.matches(doc_lower.get_tokens(), doc_title.get_source()),
+            Some(3)
+        );
+        assert_eq!(
+            phrase.matches(doc_lower.get_tokens(), doc_upper.get_source()),
+            Some(3)
+        );
+        assert_eq!(
+            phrase.matches(doc_title.get_tokens(), doc_lower.get_source()),
+            Some(3)
+        );
+        assert_eq!(
+            phrase.matches(doc_title.get_tokens(), doc_upper.get_source()),
+            Some(3)
+        );
+        assert_eq!(
+            phrase.matches(doc_upper.get_tokens(), doc_lower.get_source()),
+            Some(3)
+        );
+        assert_eq!(
+            phrase.matches(doc_upper.get_tokens(), doc_title.get_source()),
+            Some(3)
+        );
+    }
+}
