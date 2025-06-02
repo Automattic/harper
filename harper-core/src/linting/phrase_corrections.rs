@@ -1273,6 +1273,12 @@ pub fn lint_group() -> LintGroup {
             "This word has a more standard, more common synonym.",
             "Suggests the more standard and common synonym `brutality`."
         ),
+        "InNeedOf" => (
+            ["in need for"],
+            ["in need of"],
+            "Use `in need of` for when something is required or necessary.",
+            "Corrects `in need for` to `in need of`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2773,6 +2779,15 @@ mod tests {
             "That being said, if you find upgrading to newer versions to be unsurmountable, please open an issue.",
             lint_group(),
             "That being said, if you find upgrading to newer versions to be insurmountable, please open an issue.",
+        )
+    }
+
+    #[test]
+    fn corrects_in_need_of() {
+        assert_suggestion_result(
+            "In need for a native control for map symbols (map legend) #5203.",
+            lint_group(),
+            "In need of a native control for map symbols (map legend) #5203.",
         )
     }
 }
