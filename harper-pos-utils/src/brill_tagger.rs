@@ -145,7 +145,7 @@ impl BrillTagger {
                 let form = token.form.clone();
                 if let Some(last) = toks.last_mut() {
                     match form.as_str() {
-                        "'snt" | "'ll" | "'ve" | "'re" | "'d" | "'m" => {
+                        "'snt" | "'ll" | "'ve" | "'re" | "'d" | "'m" | "'s" => {
                             last.push_str(&form);
                             continue;
                         }
