@@ -10,9 +10,10 @@ strum = "0.27.1"
 strum_macros = "0.27.1"
 serde = { version = "1.0.219", features = ["derive"] }
 is-macro = "0.3.7"
-rayon = { version = "1.10.0", optional = true}
+rayon = { version = "1.10.0", optional = true }
+rand = { version = "0.9.1", optional = true }
 
 [features]
 default = []
 threaded = ["dep:rayon"]
-training = []
+training = ["dep:rand"]

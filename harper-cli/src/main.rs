@@ -81,6 +81,8 @@ enum Args {
         dataset: PathBuf,
         /// The number of epochs (and patch rules) to train.
         epochs: usize,
+        #[arg(short, long, default_value = "1.0")]
+        candidate_selection_chance: f32,
         /// The path to write the final JSON model file to.
         output: PathBuf,
     },
@@ -379,8 +381,9 @@ fn main() -> anyhow::Result<()> {
             dataset,
             epochs,
             output,
+            candidate_selection_chance,
         } => {
-            let tagger = BrillTagger::train(dataset, epochs);
+            let tagger = BrillTagger::train(dataset, epochs, candidate_selection_chance);
             fs::write(output, serde_json::to_string_pretty(&tagger)?)?;
 
             Ok(())

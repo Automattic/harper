@@ -40,8 +40,6 @@ impl Patch {
             }
         }
 
-        dbg!(candidates.len());
-
         candidates
     }
 

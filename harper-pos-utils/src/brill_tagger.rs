@@ -123,7 +123,14 @@ impl BrillTagger {
 
 #[cfg(feature = "training")]
 impl BrillTagger {
-    fn epoch(&mut self, training_file: impl AsRef<Path>) {
+    /// To speed up training, only try a subset of all possible candidates.
+    /// How many to select is given by the `candidate_selection_chance`. A higher chance means a
+    /// longer training time.
+    fn epoch(&mut self, training_file: impl AsRef<Path>, candidate_selection_chance: f32) {
+        use std::time::Instant;
+
+        assert!((0.0..=1.0).contains(&candidate_selection_chance));
+
         let mut total_tokens = 0;
         let mut error_counter = ErrorCounter::new();
 
@@ -175,10 +182,19 @@ impl BrillTagger {
             base_tags.push(self.tag_sentence_no_patch(toks));
         }
 
-        let mut candidates = Patch::generate_candidate_patches(&error_counter);
+        let all_candidates = Patch::generate_candidate_patches(&error_counter);
+        let mut pruned_candidates: Vec<Patch> = rand::seq::IndexedRandom::choose_multiple(
+            all_candidates.as_slice(),
+            &mut rand::rng(),
+            (all_candidates.len() as f32 * candidate_selection_chance) as usize,
+        )
+        .cloned()
+        .collect();
+
+        let start = Instant::now();
 
         #[cfg(feature = "threaded")]
-        candidates.par_sort_by_cached_key(|candidate| {
+        pruned_candidates.par_sort_by_cached_key(|candidate| {
             self.score_candidate(candidate.clone(), &sentences_tagged, &base_tags)
         });
 
@@ -187,7 +203,19 @@ impl BrillTagger {
             self.score_candidate(candidate.clone(), &sentences_tagged, &base_tags)
         });
 
-        if let Some(best) = candidates.first() {
+        let duration = start.elapsed();
+        let seconds = duration.as_secs();
+        let millis = duration.subsec_millis();
+
+        println!(
+            "It took {} seconds and {} milliseconds to search through {} candidates at {} c/sec.",
+            seconds,
+            millis,
+            pruned_candidates.len(),
+            pruned_candidates.len() as f32 / seconds as f32
+        );
+
+        if let Some(best) = pruned_candidates.first() {
             self.patches.push(best.clone());
         }
     }
@@ -220,7 +248,11 @@ impl BrillTagger {
     /// Train a brand-new tagger on a `.conllu` dataset, provided via a path.
     /// This does not do _any_ error handling, and should not run in production.
     /// It should be used for training a model that _will_ be used in production.
-    pub fn train(training_file: impl AsRef<Path>, epochs: usize) -> Self {
+    pub fn train(
+        training_file: impl AsRef<Path>,
+        epochs: usize,
+        candidate_selection_chance: f32,
+    ) -> Self {
         let mut freq_dict_builder = FreqDictBuilder::new();
         freq_dict_builder.inc_from_conllu_file(&training_file);
 
@@ -229,7 +261,7 @@ impl BrillTagger {
         let mut tagger = Self::new(freq_dict);
 
         for _ in 0..epochs {
-            tagger.epoch(&training_file);
+            tagger.epoch(&training_file, candidate_selection_chance);
         }
 
         tagger
