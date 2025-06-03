@@ -1,7 +1,7 @@
 use crate::{
     Token,
     linting::{Lint, LintKind, Suggestion},
-    patterns::{EitherPattern, Pattern, SequencePattern, WordSet},
+    patterns::{LongestMatchOf, Pattern, SequencePattern, WordSet},
 };
 
 use crate::linting::PatternLinter;
@@ -43,7 +43,7 @@ impl Default for NoContractionWithVerb {
                 tok.kind.is_determiner() || tok.kind.is_pronoun() || tok.kind.is_conjunction()
             });
 
-        let let_then_verb = let_ws.then(EitherPattern::new(vec![
+        let let_then_verb = let_ws.then(LongestMatchOf::new(vec![
             Box::new(non_ing_verb),
             Box::new(verb_due_to_following_pos),
         ]));

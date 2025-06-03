@@ -1,5 +1,5 @@
 use crate::linting::{Lint, LintKind, PatternLinter};
-use crate::patterns::{EitherPattern, ExactPhrase, Pattern};
+use crate::patterns::{ExactPhrase, LongestMatchOf, Pattern};
 use crate::{Token, TokenStringExt};
 
 /// A linter that detects hedging language.
@@ -16,7 +16,7 @@ impl Default for Hedging {
             .map(|s| Box::new(ExactPhrase::from_phrase(s)) as Box<dyn Pattern>)
             .collect();
 
-        let pattern = Box::new(EitherPattern::new(patterns));
+        let pattern = Box::new(LongestMatchOf::new(patterns));
         Self { pattern }
     }
 }

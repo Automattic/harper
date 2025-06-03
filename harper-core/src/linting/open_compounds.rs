@@ -1,6 +1,6 @@
 use crate::{
     Lrc, Token,
-    patterns::{EitherPattern, Pattern, SequencePattern, WordSet},
+    patterns::{LongestMatchOf, Pattern, SequencePattern, WordSet},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -53,7 +53,7 @@ impl Default for OpenCompounds {
             .then_anything();
 
         Self {
-            pattern: Box::new(EitherPattern::new(vec![
+            pattern: Box::new(LongestMatchOf::new(vec![
                 Box::new(with_prev_and_next),
                 Box::new(with_prev),
                 Box::new(with_next),

@@ -1,6 +1,6 @@
 use crate::{
     Lrc, Token, TokenStringExt,
-    patterns::{EitherPattern, Pattern, SequencePattern, WordSet},
+    patterns::{LongestMatchOf, Pattern, SequencePattern, WordSet},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -52,7 +52,7 @@ impl Default for ModalOf {
         );
 
         Self {
-            pattern: Box::new(EitherPattern::new(vec![
+            pattern: Box::new(LongestMatchOf::new(vec![
                 Box::new(anyword_might_of_course),
                 Box::new(modal_of_course),
                 Box::new(anyword_might_of),

@@ -3,7 +3,7 @@ use std::sync::Arc;
 use super::{Lint, LintKind, PatternLinter};
 use crate::Token;
 use crate::linting::Suggestion;
-use crate::patterns::{EitherPattern, ImpliesQuantity, Pattern, SequencePattern, WordSet};
+use crate::patterns::{ImpliesQuantity, LongestMatchOf, Pattern, SequencePattern, WordSet};
 
 pub struct ExpandTimeShorthands {
     pattern: Box<dyn Pattern>,
@@ -17,7 +17,7 @@ impl ExpandTimeShorthands {
 
         Self {
             pattern: Box::new(SequencePattern::default().then(ImpliesQuantity).then(
-                EitherPattern::new(vec![
+                LongestMatchOf::new(vec![
                         Box::new(SequencePattern::default().then(hotwords.clone())),
                         Box::new(
                             SequencePattern::default()

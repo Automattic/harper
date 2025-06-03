@@ -9,13 +9,13 @@ use crate::{Document, LSend, Span, Token};
 
 mod all;
 mod any_pattern;
-mod either_pattern;
 mod exact_phrase;
+mod first_match_of;
 mod implies_quantity;
 mod indefinite_article;
 mod inflection_of_be;
 mod invert;
-mod naive_pattern_group;
+mod longest_match_of;
 mod nominal_phrase;
 mod pattern_map;
 mod repeating_pattern;
@@ -23,6 +23,7 @@ mod sequence_pattern;
 mod similar_to_phrase;
 mod spelled_number_pattern;
 mod split_compound_word;
+mod time_unit_pattern;
 mod whitespace_pattern;
 mod within_edit_distance;
 mod word;
@@ -32,13 +33,13 @@ mod word_set;
 pub use all::All;
 pub use any_pattern::AnyPattern;
 use blanket::blanket;
-pub use either_pattern::EitherPattern;
 pub use exact_phrase::ExactPhrase;
+pub use first_match_of::FirstMatchOf;
 pub use implies_quantity::ImpliesQuantity;
 pub use indefinite_article::IndefiniteArticle;
 pub use inflection_of_be::InflectionOfBe;
 pub use invert::Invert;
-pub use naive_pattern_group::NaivePatternGroup;
+pub use longest_match_of::LongestMatchOf;
 pub use nominal_phrase::NominalPhrase;
 pub use pattern_map::PatternMap;
 pub use repeating_pattern::RepeatingPattern;
@@ -46,6 +47,7 @@ pub use sequence_pattern::SequencePattern;
 pub use similar_to_phrase::SimilarToPhrase;
 pub use spelled_number_pattern::SpelledNumberPattern;
 pub use split_compound_word::SplitCompoundWord;
+pub use time_unit_pattern::TimeUnitPattern;
 pub use whitespace_pattern::WhitespacePattern;
 pub use word::Word;
 pub use word_pattern_group::WordPatternGroup;
@@ -122,15 +124,15 @@ where
 }
 
 pub trait OwnedPatternExt {
-    fn or(self, other: impl Pattern + 'static) -> EitherPattern;
+    fn or(self, other: impl Pattern + 'static) -> LongestMatchOf;
 }
 
 impl<P> OwnedPatternExt for P
 where
     P: Pattern + 'static,
 {
-    fn or(self, other: impl Pattern + 'static) -> EitherPattern {
-        EitherPattern::new(vec![Box::new(self), Box::new(other)])
+    fn or(self, other: impl Pattern + 'static) -> LongestMatchOf {
+        LongestMatchOf::new(vec![Box::new(self), Box::new(other)])
     }
 }
 

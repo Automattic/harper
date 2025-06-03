@@ -1,7 +1,7 @@
 use super::{Lint, LintKind, PatternLinter, Suggestion};
 use crate::{
     Lrc, Punctuation, Token, TokenKind, TokenStringExt,
-    patterns::{All, EitherPattern, Pattern, SequencePattern, Word},
+    patterns::{All, LongestMatchOf, Pattern, SequencePattern, Word},
 };
 
 pub struct Everyday {
@@ -156,7 +156,7 @@ impl Default for Everyday {
         // verb, past form: "I coded every day" / "I learned everyday phrases"
 
         Self {
-            pattern: Box::new(EitherPattern::new(vec![
+            pattern: Box::new(LongestMatchOf::new(vec![
                 Box::new(everyday_bad_after),
                 Box::new(bad_before_every_day),
                 Box::new(everyday_ambiverb_after_then_noun),
