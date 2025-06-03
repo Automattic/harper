@@ -57,31 +57,6 @@ impl Patch {
                 is_tagged: upos,
             });
 
-            criteria.insert(PatchCriteria::RelativeWordCaps {
-                relative: 0,
-                is_capitalized: true,
-            });
-            criteria.insert(PatchCriteria::RelativeWordCaps {
-                relative: 0,
-                is_capitalized: false,
-            });
-            criteria.insert(PatchCriteria::RelativeWordCaps {
-                relative: -1,
-                is_capitalized: true,
-            });
-            criteria.insert(PatchCriteria::RelativeWordCaps {
-                relative: -1,
-                is_capitalized: false,
-            });
-            criteria.insert(PatchCriteria::RelativeWordCaps {
-                relative: 1,
-                is_capitalized: true,
-            });
-            criteria.insert(PatchCriteria::RelativeWordCaps {
-                relative: 1,
-                is_capitalized: false,
-            });
-
             for upos_b in UPOS::iter() {
                 criteria.insert(PatchCriteria::SandwichTaggedWith {
                     prev_word_tagged: upos,

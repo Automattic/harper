@@ -20,10 +20,6 @@ pub enum PatchCriteria {
         prev_word_tagged: UPOS,
         post_word_tagged: UPOS,
     },
-    RelativeWordCaps {
-        relative: isize,
-        is_capitalized: bool,
-    },
     Combined {
         a: Box<PatchCriteria>,
         b: Box<PatchCriteria>,
@@ -81,20 +77,6 @@ impl PatchCriteria {
                         .copied()
                         .flatten()
                         .is_some_and(|t| t == *post_word_tagged)
-            }
-            PatchCriteria::RelativeWordCaps {
-                relative,
-                is_capitalized,
-            } => {
-                let Some(index) = add(index, *relative) else {
-                    return false;
-                };
-
-                tokens.get(index).is_some_and(|t| {
-                    t.chars()
-                        .next()
-                        .is_some_and(|c| c.is_ascii_uppercase() == *is_capitalized)
-                })
             }
             Self::Combined { a, b } => {
                 a.fulfils(tokens, tags, index) && b.fulfils(tokens, tags, index)
