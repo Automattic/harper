@@ -15553,6 +15553,15 @@
 	},
 	"patches": [
 		{
+			"from": "PRON",
+			"to": "DET",
+			"criteria": {
+				"WordIs": {
+					"word": "my"
+				}
+			}
+		},
+		{
 			"from": "PART",
 			"to": "ADP",
 			"criteria": {

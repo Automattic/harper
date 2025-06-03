@@ -30,6 +30,8 @@ impl Default for CompoundNounAfterDetAdj {
                     return false;
                 };
                 meta.determiner
+                    || meta.is_possessive_pronoun()
+                    || meta.preposition
                     || (meta.is_adjective()
                         && tok.span.get_content_string(src).to_lowercase() != "go")
             })

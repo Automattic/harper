@@ -18,6 +18,9 @@ pub enum PatchCriteria {
         prev_word_tagged: UPOS,
         post_word_tagged: UPOS,
     },
+    WordIs {
+        word: String,
+    },
     Combined {
         a: Box<PatchCriteria>,
         b: Box<PatchCriteria>,
@@ -25,7 +28,7 @@ pub enum PatchCriteria {
 }
 
 impl PatchCriteria {
-    pub fn fulfils(&self, tags: &[Option<UPOS>], index: usize) -> bool {
+    pub fn fulfils(&self, tokens: &[String], tags: &[Option<UPOS>], index: usize) -> bool {
         match self {
             PatchCriteria::WordIsTaggedWith {
                 relative,
@@ -76,7 +79,13 @@ impl PatchCriteria {
                         .flatten()
                         .is_some_and(|t| t == *post_word_tagged)
             }
-            Self::Combined { a, b } => a.fulfils(tags, index) && b.fulfils(tags, index),
+            Self::WordIs { word } => tokens[index]
+                .chars()
+                .zip(word.chars())
+                .all(|(a, b)| a.eq_ignore_ascii_case(&b)),
+            Self::Combined { a, b } => {
+                a.fulfils(tokens, tags, index) && b.fulfils(tokens, tags, index)
+            }
         }
     }
 }
