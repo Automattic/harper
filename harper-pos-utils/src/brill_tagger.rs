@@ -73,14 +73,17 @@ impl BrillTagger {
         let mut base_tags = base_tags.to_vec();
         self.apply_patches(sentence, &mut base_tags);
 
-        for (tag, correct_tag) in base_tags.iter().zip(correct_tags.iter()) {
+        for ((tag, correct_tag), word) in base_tags.iter().zip(correct_tags.iter()).zip(sentence) {
             if let Some(tag) = tag {
                 if let Some(correct_tag) = correct_tag {
                     if tag != correct_tag {
-                        errors.inc(ErrorKind {
-                            was_tagged: *tag,
-                            correct_tag: *correct_tag,
-                        })
+                        errors.inc(
+                            ErrorKind {
+                                was_tagged: *tag,
+                                correct_tag: *correct_tag,
+                            },
+                            word.as_str(),
+                        )
                     }
                 }
             }
@@ -98,14 +101,17 @@ impl BrillTagger {
 
         let mut errors = ErrorCounter::new();
 
-        for (tag, correct_tag) in tags.iter().zip(correct_tags.iter()) {
+        for ((tag, correct_tag), word) in tags.iter().zip(correct_tags.iter()).zip(sentence) {
             if let Some(tag) = tag {
                 if let Some(correct_tag) = correct_tag {
                     if tag != correct_tag {
-                        errors.inc(ErrorKind {
-                            was_tagged: *tag,
-                            correct_tag: *correct_tag,
-                        })
+                        errors.inc(
+                            ErrorKind {
+                                was_tagged: *tag,
+                                correct_tag: *correct_tag,
+                            },
+                            word.as_str(),
+                        )
                     }
                 }
             }

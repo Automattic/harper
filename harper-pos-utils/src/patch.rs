@@ -23,7 +23,24 @@ impl Patch {
                 to: key.correct_tag,
                 criteria: c,
             }));
+
+            for c in &Self::gen_simple_candidates() {
+                for word in error_counter.iter_top_n_words(10) {
+                    candidates.push(Patch {
+                        from: key.was_tagged,
+                        to: key.correct_tag,
+                        criteria: PatchCriteria::Combined {
+                            a: Box::new(PatchCriteria::WordIs {
+                                word: word.to_string(),
+                            }),
+                            b: Box::new(c.clone()),
+                        },
+                    })
+                }
+            }
         }
+
+        dbg!(candidates.len());
 
         candidates
     }
