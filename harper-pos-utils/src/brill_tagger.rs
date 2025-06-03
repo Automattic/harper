@@ -179,7 +179,7 @@ impl BrillTagger {
         // Before adding any patches, let's get a good base.
         let mut base_tags = Vec::new();
         for (toks, _) in &sentences_tagged {
-            base_tags.push(self.tag_sentence_no_patch(toks));
+            base_tags.push(self.tag_sentence(toks));
         }
 
         let all_candidates = Patch::generate_candidate_patches(&error_counter);
@@ -228,7 +228,6 @@ impl BrillTagger {
         base_tags: &[Vec<Option<UPOS>>],
     ) -> usize {
         let mut tagger = BrillTagger::new(FreqDict::default());
-        tagger.patches = self.patches.clone();
         tagger.patches.push(candidate);
 
         let mut candidate_errors = ErrorCounter::new();
