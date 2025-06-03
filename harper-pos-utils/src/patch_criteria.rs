@@ -19,6 +19,7 @@ pub enum PatchCriteria {
         post_word_tagged: UPOS,
     },
     WordIs {
+        relative: isize,
         word: String,
     },
     Combined {
@@ -79,10 +80,17 @@ impl PatchCriteria {
                         .flatten()
                         .is_some_and(|t| t == *post_word_tagged)
             }
-            Self::WordIs { word } => tokens[index]
-                .chars()
-                .zip(word.chars())
-                .all(|(a, b)| a.eq_ignore_ascii_case(&b)),
+            Self::WordIs { relative, word } => {
+                let Some(index) = add(index, *relative) else {
+                    return false;
+                };
+
+                tokens.get(index).is_some_and(|w| {
+                    w.chars()
+                        .zip(word.chars())
+                        .all(|(a, b)| a.eq_ignore_ascii_case(&b))
+                })
+            }
             Self::Combined { a, b } => {
                 a.fulfils(tokens, tags, index) && b.fulfils(tokens, tags, index)
             }
