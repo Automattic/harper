@@ -1,6 +1,4 @@
-use hashbrown::HashSet;
 use serde::{Deserialize, Serialize};
-use strum::IntoEnumIterator;
 
 use crate::UPOS;
 
@@ -27,7 +25,7 @@ pub enum PatchCriteria {
 }
 
 impl PatchCriteria {
-    pub fn fulfils(&self, tokens: &[String], tags: &[Option<UPOS>], index: usize) -> bool {
+    pub fn fulfils(&self, tags: &[Option<UPOS>], index: usize) -> bool {
         match self {
             PatchCriteria::WordIsTaggedWith {
                 relative,
@@ -78,9 +76,7 @@ impl PatchCriteria {
                         .flatten()
                         .is_some_and(|t| t == *post_word_tagged)
             }
-            Self::Combined { a, b } => {
-                a.fulfils(tokens, tags, index) && b.fulfils(tokens, tags, index)
-            }
+            Self::Combined { a, b } => a.fulfils(tags, index) && b.fulfils(tags, index),
         }
     }
 }

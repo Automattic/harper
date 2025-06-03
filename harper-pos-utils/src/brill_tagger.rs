@@ -54,7 +54,7 @@ impl BrillTagger {
                     continue;
                 };
 
-                if patch.from == i_tag && patch.criteria.fulfils(sentence, tags, i) {
+                if patch.from == i_tag && patch.criteria.fulfils(tags, i) {
                     tags[i] = Some(patch.to);
                 }
             }
@@ -113,8 +113,10 @@ impl BrillTagger {
 
         errors
     }
+}
 
-    #[cfg(feature = "training")]
+#[cfg(feature = "training")]
+impl BrillTagger {
     fn epoch(&mut self, training_file: impl AsRef<Path>) {
         let mut total_tokens = 0;
         let mut error_counter = ErrorCounter::new();
@@ -185,7 +187,6 @@ impl BrillTagger {
     }
 
     /// Lower is better
-    #[cfg(feature = "training")]
     fn score_candidate(
         &self,
         candidate: Patch,
@@ -213,7 +214,6 @@ impl BrillTagger {
     /// Train a brand-new tagger on a `.conllu` dataset, provided via a path.
     /// This does not do _any_ error handling, and should not run in production.
     /// It should be used for training a model that _will_ be used in production.
-    #[cfg(feature = "training")]
     pub fn train(training_file: impl AsRef<Path>, epochs: usize) -> Self {
         let mut freq_dict_builder = FreqDictBuilder::new();
         freq_dict_builder.inc_from_conllu_file(&training_file);

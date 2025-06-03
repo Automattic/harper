@@ -123,7 +123,7 @@ impl WordMetadata {
     /// Additionally, if the metadata does not currently declare the potential of the word to be
     /// the specific POS, it becomes so. That means if we provide a [`UPOS::ADJ`] to the function
     /// for a metadata whose `Self::adjective = None`, it will become `Some`.
-    pub fn declare_pos(&mut self, pos: &UPOS) {
+    pub fn enforce_pos_exclusivity(&mut self, pos: &UPOS) {
         use UPOS::*;
         match pos {
             NOUN => {

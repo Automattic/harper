@@ -157,7 +157,7 @@ impl Document {
 
                 if let Some(found_meta) = &mut found_meta {
                     if let Some(upos) = token_tags[i] {
-                        found_meta.declare_pos(&upos);
+                        found_meta.enforce_pos_exclusivity(&upos);
                     }
                 }
 
