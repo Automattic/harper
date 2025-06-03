@@ -540,18 +540,6 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
-         |                                                       ^~~~~ Did you mean to spell `Gödel` this way?
-     156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
-Suggest:
-  - Replace with: “Godel”
-  - Replace with: “Gael”
-  - Replace with: “Gide”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
          | ^~~ Did you mean to spell `von` this way?
 Suggest:
@@ -786,7 +774,7 @@ Message: |
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
   - Replace with: “Hi”
-  - Replace with: “H”
+  - Replace with: “Ha”
   - Replace with: “He”
 
 
@@ -966,7 +954,7 @@ Message: |
      346 | Human–computer interaction (HCI) is the field of study and research concerned
          |                             ^~~ Did you mean to spell `HCI` this way?
 Suggest:
-  - Replace with: “PCI”
+  - Replace with: “Hi”
   - Replace with: “CI”
   - Replace with: “MCI”
 
@@ -978,7 +966,7 @@ Message: |
          |                                                     ^~~ Did you mean to spell `HCI` this way?
      349 | that focus on the relationship between emotions, social behavior and brain
 Suggest:
-  - Replace with: “PCI”
+  - Replace with: “Hi”
   - Replace with: “CI”
   - Replace with: “MCI”
 

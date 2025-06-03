@@ -17,9 +17,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `PoS` this way?
        9 | POST), also called grammatical tagging is the process of marking up a word in a
 Suggest:
+  - Replace with: “Poe”
   - Replace with: “PBS”
   - Replace with: “PMS”
-  - Replace with: “POS”
 
 
 
@@ -28,9 +28,9 @@ Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
+  - Replace with: “Er”
   - Replace with: “E”
-  - Replace with: “Ea”
-  - Replace with: “Eh”
+  - Replace with: “EC”
 
 
 
@@ -67,8 +67,8 @@ Message: |
          |                    ^~ Did you mean to spell `NN` this way?
 Suggest:
   - Replace with: “Nun”
-  - Replace with: “N”
   - Replace with: “Non”
+  - Replace with: “N1”
 
 
 
@@ -271,8 +271,8 @@ Message: |
      120 | to disambiguate parts of speech, when working to tag the Lancaster-Oslo-Bergen
 Suggest:
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
+  - Replace with: “HP's”
 
 
 
@@ -282,8 +282,8 @@ Message: |
          |                            ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
+  - Replace with: “HP's”
 
 
 
@@ -293,8 +293,8 @@ Message: |
          |                                ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
+  - Replace with: “HP's”
 
 
 
@@ -353,8 +353,8 @@ Message: |
          | ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
+  - Replace with: “HP's”
 
 
 

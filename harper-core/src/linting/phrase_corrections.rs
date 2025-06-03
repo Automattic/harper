@@ -1006,7 +1006,7 @@ pub fn lint_group() -> LintGroup {
         "SufficeItToSay" => (
             ["suffice to say"],
             ["suffice it to say"],
-            "`Suffice it to say` is more standard and more common variant.",
+            "`Suffice it to say` is the more standard and more common variant.",
             "Corrects `suffice to say` to `suffice it to say`."
         ),
         "LikeThePlague" => (
@@ -1278,6 +1278,12 @@ pub fn lint_group() -> LintGroup {
             ["kind of", "kinda"],
             "`Kinda` already means `kind of`, so `kinda of` is redundant.",
             "Corrects `kinda of` to `kind of`."
+        ),
+        "PeaceOfMind" => (
+            ["piece of mind"],
+            ["peace of mind"],
+            "The phrase is `peace of mind`, meaning `calm`. A `piece` is a `part` of something.",
+            "Corrects `piece of mind` to `peace of mind`."
         ),
     });
 
@@ -2789,5 +2795,14 @@ mod tests {
             lint_group(),
             "Some kind of Sync issue only with 0.79.1",
         );
+    }
+
+    #[test]
+    fn corrects_piece_of_mind() {
+        assert_suggestion_result(
+            "A Discord bot that gives you piece of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
+            lint_group(),
+            "A Discord bot that gives you peace of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
+        )
     }
 }
