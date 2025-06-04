@@ -5,18 +5,16 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Fa”
+  - Replace with: “Ff”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
        3 | BY F. SCOTT FITZGERALD
-         |       ^~~~~ Did you mean to spell `SCOTT` this way?
+         |       ^~~~~ Did you mean `SCART`?
 Suggest:
-  - Replace with: “Scot”
-  - Replace with: “SCM's”
-  - Replace with: “SEO's”
+  - Replace with: “SCART”
 
 
 
@@ -983,7 +981,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bk”
+  - Replace with: “Bi”
 
 
 
@@ -1288,7 +1286,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bk”
+  - Replace with: “Bi”
 
 
 
@@ -2435,7 +2433,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bk”
+  - Replace with: “Bi”
 
 
 
@@ -2606,7 +2604,7 @@ Message: |
 Suggest:
   - Replace with: “D”
   - Replace with: “Dad”
-  - Replace with: “Dam”
+  - Replace with: “Dag”
 
 
 
@@ -2652,7 +2650,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bk”
+  - Replace with: “Bi”
 
 
 
@@ -6348,9 +6346,9 @@ Message: |
     5122 | ghost of a superior “Hm!”
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H'm”
-  - Replace with: “Ha”
+  - Replace with: “H”
   - Replace with: “Ham”
+  - Replace with: “He”
 
 
 
@@ -6472,7 +6470,7 @@ Message: |
 Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gd's”
-  - Replace with: “Gag's”
+  - Replace with: “Gab's”
 
 
 
@@ -6484,7 +6482,7 @@ Message: |
 Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gd's”
-  - Replace with: “Gag's”
+  - Replace with: “Gab's”
 
 
 
@@ -6947,7 +6945,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bk”
+  - Replace with: “Bi”
 
 
 
@@ -6958,7 +6956,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Fa”
+  - Replace with: “Ff”
 
 
 
@@ -7387,9 +7385,9 @@ Message: |
     5692 | figures in my more fantastic dreams. I see it as a night scene by El Greco: a
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
+  - Replace with: “E”
   - Replace with: “Ea”
-  - Replace with: “Ed”
-  - Replace with: “En”
+  - Replace with: “Em”
 
 
 
