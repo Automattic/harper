@@ -13,7 +13,7 @@ pub fn lint_group() -> LintGroup {
                 $group.add_pattern_linter(
                     $name,
                     Box::new(
-                        MapPhraseLinter::new_exact_phrases(
+                        MapPhraseLinter::new_fixed_phrases(
                             $input,
                             $corrections,
                             $hint,
@@ -28,7 +28,7 @@ pub fn lint_group() -> LintGroup {
     add_exact_mappings!(group, {
         // The name of the rule
         "ChangeTack" => (
-            // The exact phrase(s) to look for.
+            // The phrase(s) to look for.
             ["change tact", "change tacks", "change tacts"],
             // The corrections to provide.
             ["change tack"],
