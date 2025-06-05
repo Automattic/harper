@@ -54,30 +54,19 @@ impl Patch {
 
         let mut criteria = HashSet::new();
         for upos in UPOS::iter() {
-            criteria.insert(PatchCriteria::WordIsTaggedWith {
-                relative: -1,
-                is_tagged: upos,
-            });
-            criteria.insert(PatchCriteria::WordIsTaggedWith {
-                relative: -2,
-                is_tagged: upos,
-            });
-            criteria.insert(PatchCriteria::WordIsTaggedWith {
-                relative: -3,
-                is_tagged: upos,
-            });
-            criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
-                max_relative: -2,
-                is_tagged: upos,
-            });
-            criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
-                max_relative: -3,
-                is_tagged: upos,
-            });
-            criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
-                max_relative: -4,
-                is_tagged: upos,
-            });
+            for i in -4..=4 {
+                criteria.insert(PatchCriteria::WordIsTaggedWith {
+                    relative: i,
+                    is_tagged: upos,
+                });
+            }
+
+            for i in -4..=4 {
+                criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
+                    max_relative: i,
+                    is_tagged: upos,
+                });
+            }
 
             for upos_b in UPOS::iter() {
                 criteria.insert(PatchCriteria::SandwichTaggedWith {
