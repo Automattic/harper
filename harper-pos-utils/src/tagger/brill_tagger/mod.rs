@@ -1,26 +1,33 @@
+mod patch;
+mod patch_criteria;
+
+#[cfg(feature = "training")]
 use std::path::Path;
 
-#[cfg(feature = "threaded")]
-use rayon::slice::ParallelSliceMut;
-
-use rs_conllu::Sentence;
+use patch::Patch;
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    FreqDict, FreqDictBuilder, Tagger, UPOS,
-    conllu_utils::iter_sentences_in_conllu,
-    error_counter::{ErrorCounter, ErrorKind},
-    patch::Patch,
-};
+#[cfg(feature = "training")]
+use super::FreqDict;
+#[cfg(feature = "training")]
+use super::error_counter::{ErrorCounter, ErrorKind};
+
+use crate::{Tagger, UPOS};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct BrillTagger {
-    base: FreqDict,
+pub struct BrillTagger<B>
+where
+    B: Tagger,
+{
+    base: B,
     patches: Vec<Patch>,
 }
 
-impl BrillTagger {
-    pub fn new(base: FreqDict) -> Self {
+impl<B> BrillTagger<B>
+where
+    B: Tagger,
+{
+    pub fn new(base: B) -> Self {
         Self {
             base,
             patches: Vec::new(),
@@ -40,7 +47,24 @@ impl BrillTagger {
             }
         }
     }
+}
 
+impl<B> Tagger for BrillTagger<B>
+where
+    B: Tagger,
+{
+    /// Tag a sentence using the provided frequency dictionary and current patch set.
+    /// If the tagger is unable to determine a POS, it returns [`None`] in that position.
+    fn tag_sentence(&self, sentence: &[String]) -> Vec<Option<UPOS>> {
+        let mut tags = self.base.tag_sentence(sentence);
+        self.apply_patches(sentence, &mut tags);
+
+        tags
+    }
+}
+
+#[cfg(feature = "training")]
+impl BrillTagger<FreqDict> {
     /// Tag a provided sentence with patches, providing the "correct" tags (from a dataset or
     /// other source), returning the number of errors.
     pub fn locate_patch_errors(
@@ -99,14 +123,13 @@ impl BrillTagger {
 
         errors
     }
-}
 
-#[cfg(feature = "training")]
-impl BrillTagger {
     /// To speed up training, only try a subset of all possible candidates.
     /// How many to select is given by the `candidate_selection_chance`. A higher chance means a
     /// longer training time.
     fn epoch(&mut self, training_file: impl AsRef<Path>, candidate_selection_chance: f32) {
+        use crate::conllu_utils::iter_sentences_in_conllu;
+        use rs_conllu::Sentence;
         use std::time::Instant;
 
         assert!((0.0..=1.0).contains(&candidate_selection_chance));
@@ -174,12 +197,15 @@ impl BrillTagger {
         let start = Instant::now();
 
         #[cfg(feature = "threaded")]
-        pruned_candidates.par_sort_by_cached_key(|candidate| {
-            self.score_candidate(candidate.clone(), &sentences_tagged, &base_tags)
-        });
+        rayon::slice::ParallelSliceMut::par_sort_by_cached_key(
+            pruned_candidates.as_mut_slice(),
+            |candidate: &Patch| {
+                self.score_candidate(candidate.clone(), &sentences_tagged, &base_tags)
+            },
+        );
 
         #[cfg(not(feature = "threaded"))]
-        candidates.sort_by_cached_key(|candidate| {
+        pruned_candidates.sort_by_cached_key(|candidate| {
             self.score_candidate(candidate.clone(), &sentences_tagged, &base_tags)
         });
 
@@ -232,6 +258,8 @@ impl BrillTagger {
         epochs: usize,
         candidate_selection_chance: f32,
     ) -> Self {
+        use crate::FreqDictBuilder;
+
         let mut freq_dict_builder = FreqDictBuilder::new();
         freq_dict_builder.inc_from_conllu_file(&training_file);
 
@@ -244,16 +272,5 @@ impl BrillTagger {
         }
 
         tagger
-    }
-}
-
-impl Tagger for BrillTagger {
-    /// Tag a sentence using the provided frequency dictionary and current patch set.
-    /// If the tagger is unable to determine a POS, it returns [`None`] in that position.
-    fn tag_sentence(&self, sentence: &[String]) -> Vec<Option<UPOS>> {
-        let mut tags = self.base.tag_sentence(sentence);
-        self.apply_patches(sentence, &mut tags);
-
-        tags
     }
 }

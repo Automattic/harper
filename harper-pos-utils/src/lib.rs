@@ -1,7 +1,5 @@
+#[cfg(feature = "training")]
 mod conllu_utils;
-mod error_counter;
-mod patch;
-mod patch_criteria;
 mod tagger;
 mod upos;
 

@@ -1,4 +1,6 @@
 mod brill_tagger;
+#[cfg(feature = "training")]
+mod error_counter;
 mod freq_dict;
 mod freq_dict_builder;
 

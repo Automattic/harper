@@ -1,8 +1,11 @@
+use crate::UPOS;
+#[cfg(feature = "training")]
+use crate::tagger::error_counter::ErrorCounter;
+#[cfg(feature = "training")]
 use hashbrown::HashSet;
 use serde::{Deserialize, Serialize};
-use strum::IntoEnumIterator;
 
-use crate::{UPOS, error_counter::ErrorCounter, patch_criteria::PatchCriteria};
+use super::patch_criteria::PatchCriteria;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Patch {
@@ -11,6 +14,7 @@ pub struct Patch {
     pub criteria: PatchCriteria,
 }
 
+#[cfg(feature = "training")]
 impl Patch {
     /// Given a list of tagging errors, generate a collection of candidate patches that _might_ fix
     /// them. Training involves determining which candidates actually work.
@@ -48,6 +52,8 @@ impl Patch {
 
     /// Candidates to be tested against a dataset during training.
     fn gen_simple_candidates() -> Vec<PatchCriteria> {
+        use strum::IntoEnumIterator;
+
         let mut criteria = HashSet::new();
         for upos in UPOS::iter() {
             criteria.insert(PatchCriteria::WordIsTaggedWith {
