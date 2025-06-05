@@ -1,7 +1,7 @@
 use lazy_static::lazy_static;
 use std::sync::Arc;
 
-pub use harper_pos_utils::{BrillTagger, UPOS};
+pub use harper_pos_utils::{BrillTagger, Tagger, UPOS};
 
 const BRILL_TAGGER_SOURCE: &str = include_str!("../trained_brill_model.json");
 

@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use harper_brill::brill_tagger;
+use harper_brill::{Tagger, brill_tagger};
 use paste::paste;
 
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
@@ -149,7 +149,7 @@ impl Document {
         let token_tags = brill_tagger().tag_sentence(&token_strings);
         let mut i = 0;
 
-        // annotate word metadata
+        // Annotate word metadata
         for token in self.tokens.iter_mut() {
             if let TokenKind::Word(meta) = &mut token.kind {
                 let word_source = token.span.get_content(&self.source);

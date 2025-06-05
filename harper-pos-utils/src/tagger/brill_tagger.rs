@@ -7,7 +7,7 @@ use rs_conllu::Sentence;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    FreqDict, FreqDictBuilder, UPOS,
+    FreqDict, FreqDictBuilder, Tagger, UPOS,
     conllu_utils::iter_sentences_in_conllu,
     error_counter::{ErrorCounter, ErrorKind},
     patch::Patch,
@@ -25,26 +25,6 @@ impl BrillTagger {
             base,
             patches: Vec::new(),
         }
-    }
-
-    fn tag_sentence_no_patch(&self, sentence: &[String]) -> Vec<Option<UPOS>> {
-        let mut tags = Vec::new();
-
-        for word in sentence {
-            let tag = self.base.get(word);
-            tags.push(tag);
-        }
-
-        tags
-    }
-
-    /// Tag a sentence using the provided frequency dictionary and current patch set.
-    /// If the tagger is unable to determine a POS, it returns [`None`] in that position.
-    pub fn tag_sentence(&self, sentence: &[String]) -> Vec<Option<UPOS>> {
-        let mut tags = self.tag_sentence_no_patch(sentence);
-        self.apply_patches(sentence, &mut tags);
-
-        tags
     }
 
     fn apply_patches(&self, sentence: &[String], tags: &mut [Option<UPOS>]) {
@@ -264,5 +244,16 @@ impl BrillTagger {
         }
 
         tagger
+    }
+}
+
+impl Tagger for BrillTagger {
+    /// Tag a sentence using the provided frequency dictionary and current patch set.
+    /// If the tagger is unable to determine a POS, it returns [`None`] in that position.
+    fn tag_sentence(&self, sentence: &[String]) -> Vec<Option<UPOS>> {
+        let mut tags = self.base.tag_sentence(sentence);
+        self.apply_patches(sentence, &mut tags);
+
+        tags
     }
 }
