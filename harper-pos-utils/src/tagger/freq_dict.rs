@@ -1,11 +1,8 @@
-use std::path::Path;
-
-use hashbrown::{Equivalent, HashMap};
+use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
-use strum::IntoEnumIterator;
 
 use super::Tagger;
-use crate::{conllu_utils::iter_sentences_in_conllu, upos::UPOS};
+use crate::upos::UPOS;
 
 /// A mapping between words (normalized to lowercase) and their most common UPOS tag.
 /// Can be used as a minimally accurate [`Tagger`].
