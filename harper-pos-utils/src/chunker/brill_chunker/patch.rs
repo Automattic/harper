@@ -1,49 +1,24 @@
-#[cfg(feature = "training")]
-use crate::tagger::error_counter::ErrorCounter;
-use crate::{UPOS, patch_criteria::PatchCriteria};
-#[cfg(feature = "training")]
 use hashbrown::HashSet;
-use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+use crate::{UPOS, patch_criteria::PatchCriteria};
+
+#[derive(Debug, Clone)]
 pub struct Patch {
-    pub from: UPOS,
-    pub to: UPOS,
+    pub from: bool,
     pub criteria: PatchCriteria,
 }
-
-#[cfg(feature = "training")]
 impl Patch {
-    /// Given a list of tagging errors, generate a collection of candidate patches that _might_ fix
-    /// them. Training involves determining which candidates actually work.
-    pub fn generate_candidate_patches(error_counter: &ErrorCounter) -> Vec<Patch> {
+    pub fn generate_candidate_patches() -> Vec<Patch> {
         let mut candidates = Vec::new();
 
-        for key in error_counter.error_counts.keys() {
-            candidates.extend(Self::gen_simple_candidates().into_iter().map(|c| Patch {
-                from: key.was_tagged,
-                to: key.correct_tag,
-                criteria: c,
-            }));
-
-            for c in &Self::gen_simple_candidates() {
-                for word in error_counter.iter_top_n_words(10) {
-                    for r in -3..3 {
-                        candidates.push(Patch {
-                            from: key.was_tagged,
-                            to: key.correct_tag,
-                            criteria: PatchCriteria::Combined {
-                                a: Box::new(PatchCriteria::WordIs {
-                                    relative: r,
-                                    word: word.to_string(),
-                                }),
-                                b: Box::new(c.clone()),
-                            },
-                        })
-                    }
-                }
-            }
-        }
+        candidates.extend(Self::gen_simple_candidates().into_iter().map(|c| Patch {
+            from: true,
+            criteria: c,
+        }));
+        candidates.extend(Self::gen_simple_candidates().into_iter().map(|c| Patch {
+            from: false,
+            criteria: c,
+        }));
 
         candidates
     }

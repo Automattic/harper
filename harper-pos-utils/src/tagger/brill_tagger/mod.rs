@@ -1,5 +1,4 @@
 mod patch;
-mod patch_criteria;
 
 #[cfg(feature = "training")]
 use std::path::Path;
