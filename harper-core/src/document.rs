@@ -142,7 +142,9 @@ impl Document {
         self.match_quotes();
 
         let token_strings: Vec<_> = self
-            .iter_words()
+            .tokens
+            .iter()
+            .filter(|t| !t.kind.is_whitespace())
             .map(|t| self.get_span_content_str(&t.span))
             .collect();
 
@@ -162,6 +164,8 @@ impl Document {
                 }
 
                 *meta = found_meta;
+                i += 1;
+            } else if !token.kind.is_whitespace() {
                 i += 1;
             }
         }
