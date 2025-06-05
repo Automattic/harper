@@ -27,7 +27,7 @@ impl Patch {
             }));
 
             for c in &Self::gen_simple_candidates() {
-                for word in error_counter.iter_top_n_words(10) {
+                for word in error_counter.word_counts.iter_top_n_words(10) {
                     for r in -3..3 {
                         candidates.push(Patch {
                             from: key.was_tagged,

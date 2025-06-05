@@ -3,6 +3,8 @@ mod patch;
 #[cfg(feature = "training")]
 use std::path::Path;
 
+#[cfg(feature = "training")]
+use crate::word_counter::WordCounter;
 use crate::{
     UPOS,
     chunker::{Chunker, upos_freq_dict::UPOSFreqDict},
@@ -75,13 +77,15 @@ impl BrillChunker {
         sentence: &[String],
         tags: &[Option<UPOS>],
         correct_np_flags: &[bool],
+        relevant_words: &mut WordCounter,
     ) -> usize {
         let flags = self.chunk_sentence(sentence, tags);
 
         let mut loss = 0;
-        for (a, b) in flags.into_iter().zip(correct_np_flags) {
+        for ((a, b), word) in flags.into_iter().zip(correct_np_flags).zip(sentence) {
             if a != *b {
                 loss += 1;
+                relevant_words.inc(word);
             }
         }
 
@@ -145,15 +149,21 @@ impl BrillChunker {
             sentences_flagged.push((toks, tags, actual_seq));
         }
 
+        let mut relevant_words = WordCounter::default();
+
         for (tok_buf, tag_buf, flag_buf) in &sentences_flagged {
             total_tokens += tok_buf.len();
-            error_counter +=
-                self.count_chunk_errors(tok_buf.as_slice(), &tag_buf, flag_buf.as_slice());
+            error_counter += self.count_chunk_errors(
+                tok_buf.as_slice(),
+                &tag_buf,
+                flag_buf.as_slice(),
+                &mut relevant_words,
+            );
         }
 
         println!("=============");
         println!("Total tokens in training set: {}", total_tokens);
-        println!("Tokens incorrectly tagged: {}", error_counter);
+        println!("Tokens incorrectly flagged: {}", error_counter);
         println!(
             "Error rate: {}%",
             error_counter as f32 / total_tokens as f32 * 100.
@@ -165,7 +175,7 @@ impl BrillChunker {
             base_flags.push(self.chunk_sentence(toks, tags));
         }
 
-        let all_candidates = Patch::generate_candidate_patches();
+        let all_candidates = Patch::generate_candidate_patches(&relevant_words);
         let mut pruned_candidates: Vec<Patch> = rand::seq::IndexedRandom::choose_multiple(
             all_candidates.as_slice(),
             &mut rand::rng(),
