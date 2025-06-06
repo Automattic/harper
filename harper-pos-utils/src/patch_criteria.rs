@@ -22,6 +22,11 @@ pub enum PatchCriteria {
         relative: isize,
         word: String,
     },
+    /// Not applicable to the Brill Tagger, only the chunker
+    NounPhraseAt {
+        is_np: bool,
+        relative: isize,
+    },
     Combined {
         a: Box<PatchCriteria>,
         b: Box<PatchCriteria>,
@@ -29,7 +34,13 @@ pub enum PatchCriteria {
 }
 
 impl PatchCriteria {
-    pub fn fulfils(&self, tokens: &[String], tags: &[Option<UPOS>], index: usize) -> bool {
+    pub fn fulfils(
+        &self,
+        tokens: &[String],
+        tags: &[Option<UPOS>],
+        np_flags: &[bool],
+        index: usize,
+    ) -> bool {
         match self {
             PatchCriteria::WordIsTaggedWith {
                 relative,
@@ -91,8 +102,16 @@ impl PatchCriteria {
                         .all(|(a, b)| a.eq_ignore_ascii_case(&b))
                 })
             }
+
+            Self::NounPhraseAt { is_np, relative } => {
+                let Some(index) = add(index, *relative) else {
+                    return false;
+                };
+
+                np_flags.get(index).is_some_and(|f| *is_np == *f)
+            }
             Self::Combined { a, b } => {
-                a.fulfils(tokens, tags, index) && b.fulfils(tokens, tags, index)
+                a.fulfils(tokens, tags, np_flags, index) && b.fulfils(tokens, tags, np_flags, index)
             }
         }
     }

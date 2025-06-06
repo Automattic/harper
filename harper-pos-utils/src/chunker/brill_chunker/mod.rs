@@ -28,7 +28,9 @@ impl BrillChunker {
     fn apply_patches(&self, sentence: &[String], tags: &[Option<UPOS>], np_states: &mut [bool]) {
         for patch in &self.patches {
             for i in 0..sentence.len() {
-                if patch.from == np_states[i] && patch.criteria.fulfils(sentence, tags, i) {
+                if patch.from == np_states[i]
+                    && patch.criteria.fulfils(sentence, tags, &np_states, i)
+                {
                     np_states[i] = !np_states[i];
                 }
             }

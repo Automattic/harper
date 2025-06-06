@@ -28,7 +28,7 @@ impl Patch {
         let mut candidates = simple_candidates.clone();
 
         for base_c in simple_candidates {
-            for word in relevant_words.iter_top_n_words(10) {
+            for word in relevant_words.iter_top_n_words(20) {
                 for r in -3..3 {
                     candidates.push(Patch {
                         from: base_c.from,
@@ -52,6 +52,18 @@ impl Patch {
         use strum::IntoEnumIterator;
 
         let mut criteria = HashSet::new();
+
+        for i in -4..=4 {
+            criteria.insert(PatchCriteria::NounPhraseAt {
+                is_np: true,
+                relative: i,
+            });
+            criteria.insert(PatchCriteria::NounPhraseAt {
+                is_np: false,
+                relative: i,
+            });
+        }
+
         for upos in UPOS::iter() {
             for i in -4..=4 {
                 criteria.insert(PatchCriteria::WordIsTaggedWith {

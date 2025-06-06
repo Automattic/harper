@@ -40,7 +40,7 @@ where
                     continue;
                 };
 
-                if patch.from == i_tag && patch.criteria.fulfils(sentence, tags, i) {
+                if patch.from == i_tag && patch.criteria.fulfils(sentence, tags, &[], i) {
                     tags[i] = Some(patch.to);
                 }
             }
