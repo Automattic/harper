@@ -424,8 +424,8 @@
 # NSg/V . I/D  NSg        NPl/V D   NPr  NSg/V NPrSg/V/J J/P I/J/R P  D   NPr  ?        NSg  .
 > so        the results are directly comparable . However , many    significant taggers are
 # NSg/I/J/C D   NPl     V   R/C      NSg/J      . C       . N/I/J/D NSg/J       NPl     V
-> not   included ( perhaps because of the labor    involved in        reconfiguring them for
-# NSg/C V/J      . NSg     C/P     P  D   NPrSg/Am V/J      NPrSg/J/P V             N/I  C/P
+> not   included ( perhaps because of the labor       involved in        reconfiguring them for
+# NSg/C V/J      . NSg     C/P     P  D   NPrSg/Am/Au V/J      NPrSg/J/P V             N/I  C/P
 > this particular dataset ) . Thus , it        should not   be     assumed that    the results
 # I/D  NSg/J      NSg     . . NSg  . NPrSg/ISg VX     NSg/C NSg/VX V/J     N/I/C/D D   NPl
 > reported here    are the best    that    can      be     achieved with a   given   approach ; nor   even
