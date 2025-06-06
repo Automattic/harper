@@ -108,8 +108,8 @@
 # D   NSg/J  V   NSg/V/J P  D   NSg      .
 > The boat was swamped by the water .
 # D   NSg  V   V/J     P  D   NSg   .
-> He      was protected by his   body armour     .
-# NPr/ISg V   V/J       P  ISg/D NSg  NPrSg/V/Br .
+> He      was protected by his   body armour           .
+# NPr/ISg V   V/J       P  ISg/D NSg  NPrSg/V/Ca/Au/Br .
 > There was a   call by the unions for a   30 % pay     rise  .
 # W?    V   D/P NSg  P  D   NPl    C/P D/P #  . NSg/V/J NSg/V .
 > I   was aghast by      what  I   saw   .
@@ -412,8 +412,8 @@
 # NPrSg/J/P V         D   NSg    W?      . NPr/ISg NSg/V/J NPr/ISg V   NSg/V  ISg/D NSg          P  D   NSg         .
 > In        trying  to make  amends , she actually made  matters worse   .
 # NPrSg/J/P NSg/V/J P  NSg/V NPl/V  . ISg R        NSg/V W?      NSg/V/J .
-> My aim in        travelling there was to find  my missing friend    .
-# D  NSg NPrSg/J/P NSg/V/J/Br W?    V   P  NSg/V D  N/J     NPrSg/V/J .
+> My aim in        travelling       there was to find  my missing friend    .
+# D  NSg NPrSg/J/P NSg/V/J/Ca/Au/Br W?    V   P  NSg/V D  N/J     NPrSg/V/J .
 > My fat   rolls around in        folds .
 # D  NSg/J NPl/V J/P    NPrSg/J/P NPl/V .
 > The planes flew    over      in        waves .
@@ -512,8 +512,8 @@
 # NPrSg/J/P NSg/J/P NSg/V   . Unlintable NPrSg/J/P NSg/J/P NSg/V    . Unlintable NPrSg/J/P P  D   ?      P  I/J/D NSg/V
 > He      is very in        with the Joneses .
 # NPr/ISg VL J    NPrSg/J/P P    D   NPl     .
-> I   need   to keep  in        with the neighbours in        case    I   ever need   a   favour from them .
-# ISg NSg/VX P  NSg/V NPrSg/J/P P    D   NPl        NPrSg/J/P NPrSg/V ISg J    NSg/VX D/P NSg/Br P    N/I  .
+> I   need   to keep  in        with the neighbours in        case    I   ever need   a   favour       from them .
+# ISg NSg/VX P  NSg/V NPrSg/J/P P    D   NPl        NPrSg/J/P NPrSg/V ISg J    NSg/VX D/P NSg/Ca/Au/Br P    N/I  .
 > I   think that    bird      fancies you . You're in        there , mate  !
 # ISg NSg/V N/I/C/D NPrSg/V/J NPl/V   IPl . W?     NPrSg/J/P W?    . NSg/V .
 > I'm three drinks in        right     now         .
@@ -564,8 +564,8 @@
 # W?  W?     V        P  IPl .
 > He      told us      the story of his   journey to India .
 # NPr/ISg V    NPr/ISg D   NSg   P  ISg/D NSg     P  NPrSg .
-> This behaviour is typical of teenagers .
-# I/D  NSg/Br    VL NSg/J   P  W?        .
+> This behaviour    is typical of teenagers .
+# I/D  NSg/Ca/Au/Br VL NSg/J   P  W?        .
 > He      is a   friend  of mine    .
 # NPr/ISg VL D/P NPrSg/J P  NSg/I/V .
 > We  want  a   larger slice   of the cake .
@@ -596,8 +596,8 @@
 # IPl V   P  NSg/V  D   NSg  C/P     W?    V   D/P NSg J/P .
 > Some  of the cast  went  down      with flu , but     the show's still   on  .
 # I/J/R P  D   NSg/J NSg/V NSg/V/J/P P    NSg . NSg/C/P D   N$     NSg/V/J J/P .
-> That    TV  programme that    you wanted to watch is on  now         .
-# N/I/C/D NSg NSg/V/Br  N/I/C/D IPl V/J    P  NSg/V VL J/P NPrSg/V/J/C .
+> That    TV  programme   that    you wanted to watch is on  now         .
+# N/I/C/D NSg NSg/V/Au/Br N/I/C/D IPl V/J    P  NSg/V VL J/P NPrSg/V/J/C .
 > This is her   last    song . You're on  next    !
 # I/D  VL I/J/D NSg/V/J NSg  . W?     J/P NSg/J/P .
 > Are we  still   on  for tonight ?
@@ -728,8 +728,8 @@
 # D  NSg/J    NPl/V V   J/P NPrSg NPr     .
 > I'll pay     on  card  .
 # W?   NSg/V/J J/P NSg/V .
-> He      travelled on  false   documents .
-# NPr/ISg V/J/Br    J/P NSg/V/J NPl/V     .
+> He      travelled    on  false   documents .
+# NPr/ISg V/J/Ca/Au/Br J/P NSg/V/J NPl/V     .
 > They planned an  attack on  London .
 # IPl  V/J     D/P NSg/J  J/P NPr    .
 > The soldiers mutinied and turned their guns on their officers .
@@ -793,7 +793,7 @@
 > To err is human   .
 # P  V   VL NSg/V/J .
 > Who     am        I   to criticise ? I've done    worse   things myself .
-# NPrSg/I NPrSg/V/J ISg P  V/Br      . W?   NSg/V/J NSg/V/J NPl/V  I      .
+# NPrSg/I NPrSg/V/J ISg P  V/Au/Br   . W?   NSg/V/J NSg/V/J NPl/V  I      .
 > Precisely to get   away from you was why   I   did what  I   did .
 # R         P  NSg/V V/J  P    IPl V   NSg/V ISg V   NSg/I ISg V   .
 > I   need   some  more        books to read  and friends to go      partying with .

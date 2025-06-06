@@ -52,8 +52,8 @@ impl<T: Dictionary> SpellCheck<T> {
                         self.dictionary
                             .get_word_metadata(v)
                             .unwrap()
-                            .dialect
-                            .is_none_or(|d| d == self.dialect)
+                            .dialects
+                            .is_dialect_enabled(self.dialect)
                     })
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
@@ -77,7 +77,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             let word_chars = document.get_span_content(&word.span);
 
             if let Some(metadata) = word.kind.as_word().unwrap() {
-                if metadata.dialect.is_none_or(|d| d == self.dialect)
+                if metadata.dialects.is_dialect_enabled(self.dialect)
                     && (self.dictionary.contains_exact_word(word_chars)
                         || self.dictionary.contains_exact_word(&word_chars.to_lower()))
                 {
@@ -282,7 +282,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "This test is broken due to the metadata dialect field not being a collection"]
     fn australian_labour_vs_labor() {
         assert_lint_count(
             "In Australia we write 'labour' but the political party is the 'Labor Party'.",
@@ -357,7 +356,6 @@ mod tests {
         );
     }
 
-    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
     #[test]
     fn afterwards_is_au() {
         assert_lint_count(
@@ -376,7 +374,6 @@ mod tests {
         );
     }
 
-    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
     #[test]
     fn afterwards_is_ca() {
         assert_lint_count(

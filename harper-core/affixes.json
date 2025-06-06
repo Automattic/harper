@@ -833,7 +833,7 @@
 			"replacements": [],
 			"target": [],
 			"base_metadata": {
-				"dialect": "American"
+				"dialects": "AMERICAN"
 			}
 		},
 		"!": {
@@ -843,7 +843,7 @@
 			"replacements": [],
 			"target": [],
 			"base_metadata": {
-				"dialect": "British"
+				"dialects": "BRITISH"
 			}
 		},
 		"@": {
@@ -853,7 +853,7 @@
 			"replacements": [],
 			"target": [],
 			"base_metadata": {
-				"dialect": "Canadian"
+				"dialects": "CANADIAN"
 			}
 		},
 		"_": {
@@ -863,7 +863,7 @@
 			"replacements": [],
 			"target": [],
 			"base_metadata": {
-				"dialect": "Australian"
+				"dialects": "AUSTRALIAN"
 			}
 		}
 	}

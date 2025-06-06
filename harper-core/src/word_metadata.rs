@@ -3,6 +3,8 @@ use paste::paste;
 use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumString};
 
+use std::convert::TryFrom;
+
 use crate::WordId;
 
 #[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Hash)]
@@ -14,10 +16,11 @@ pub struct WordMetadata {
     pub adverb: Option<AdverbData>,
     pub conjunction: Option<ConjunctionData>,
     pub swear: Option<bool>,
-    /// The dialect this word belongs to.
-    /// If no dialect is defined, it can be assumed that the word is
+    /// The dialects this word belongs to.
+    /// If no dialects are defined, it can be assumed that the word is
     /// valid in all dialects of English.
-    pub dialect: Option<Dialect>,
+    #[serde(default = "default_default")]
+    pub dialects: DialectFlags,
     /// Whether the word is a [determiner](https://en.wikipedia.org/wiki/English_determiners).
     #[serde(default = "default_false")]
     pub determiner: bool,
@@ -39,6 +42,11 @@ fn default_false() -> bool {
 /// Needed for `serde`
 fn default_none<T>() -> Option<T> {
     None
+}
+
+/// Needed for `serde`
+fn default_default<T: Default>() -> T {
+    T::default()
 }
 
 macro_rules! generate_metadata_queries {
@@ -106,7 +114,7 @@ impl WordMetadata {
             adjective: merge!(self.adjective, other.adjective),
             adverb: merge!(self.adverb, other.adverb),
             conjunction: merge!(self.conjunction, other.conjunction),
-            dialect: self.dialect.or(other.dialect),
+            dialects: self.dialects | other.dialects,
             swear: self.swear.or(other.swear),
             determiner: self.determiner || other.determiner,
             preposition: self.preposition || other.preposition,
@@ -401,8 +409,94 @@ impl ConjunctionData {
     Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, EnumString, Display,
 )]
 pub enum Dialect {
-    American,
-    Canadian,
-    Australian,
-    British,
+    // Note: these have bit-shifted values so that they can ergonomically integrate with
+    // `DialectFlags`. Each value here must have a unique bit index inside
+    // `DialectsUnderlyingType`.
+    American = 1 << 0,
+    Canadian = 1 << 1,
+    Australian = 1 << 2,
+    British = 1 << 3,
+}
+impl TryFrom<DialectFlags> for Dialect {
+    type Error = ();
+
+    /// Attempts to convert `DialectFlags` to a single `Dialect`.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err` if more than one dialect is enabled or if an undefined dialect is
+    /// enabled.
+    fn try_from(dialect_flags: DialectFlags) -> Result<Self, Self::Error> {
+        // Ensure only one dialect is enabled before converting.
+        if dialect_flags.bits().count_ones() == 1 {
+            match dialect_flags {
+                df if df.is_dialect_enabled_strict(Dialect::American) => Ok(Dialect::American),
+                df if df.is_dialect_enabled_strict(Dialect::Canadian) => Ok(Dialect::Canadian),
+                df if df.is_dialect_enabled_strict(Dialect::Australian) => Ok(Dialect::Australian),
+                df if df.is_dialect_enabled_strict(Dialect::British) => Ok(Dialect::British),
+                _ => Err(()),
+            }
+        } else {
+            // More than one dialect enabled; can't soundly convert.
+            Err(())
+        }
+    }
+}
+
+// The underlying type used for DialectFlags.
+// At the time of writing, this is currently a `u8`. If we want to define more than 8 dialects in
+// the future, we will need to switch this to a larger type.
+type DialectFlagsUnderlyingType = u8;
+
+bitflags::bitflags! {
+    /// A collection of bit flags used to represent enabled dialects.
+    ///
+    /// This is generally used to allow a word (or similar) to be tagged with multiple dialects.
+    #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
+    #[serde(transparent)]
+    pub struct DialectFlags: DialectFlagsUnderlyingType {
+        const AMERICAN = Dialect::American as DialectFlagsUnderlyingType;
+        const CANADIAN = Dialect::Canadian as DialectFlagsUnderlyingType;
+        const AUSTRALIAN = Dialect::Australian as DialectFlagsUnderlyingType;
+        const BRITISH = Dialect::British as DialectFlagsUnderlyingType;
+    }
+}
+impl DialectFlags {
+    /// Checks if the provided dialect is enabled.
+    /// If no dialect is explicitly enabled, it is assumed that all dialects are enabled.
+    #[must_use]
+    pub fn is_dialect_enabled(self, dialect: Dialect) -> bool {
+        self.is_empty() || self.intersects(Self::from_dialect(dialect))
+    }
+
+    /// Checks if the provided dialect is ***explicitly*** enabled.
+    ///
+    /// Unlike `is_dialect_enabled`, this will return false when no dialects are explicitly
+    /// enabled.
+    #[must_use]
+    pub fn is_dialect_enabled_strict(self, dialect: Dialect) -> bool {
+        self.intersects(Self::from_dialect(dialect))
+    }
+
+    /// Constructs a `DialectFlags` from the provided `Dialect`, with only that dialect being
+    /// enabled.
+    ///
+    /// # Panics
+    ///
+    /// This will panic if `dialect` represents a dialect that is not defined in
+    /// `DialectFlags`.
+    #[must_use]
+    pub fn from_dialect(dialect: Dialect) -> Self {
+        let Some(out) = Self::from_bits(dialect as DialectFlagsUnderlyingType) else {
+            panic!("The '{dialect}' dialect isn't defined in DialectFlags!");
+        };
+        out
+    }
+}
+impl Default for DialectFlags {
+    /// A default value with no dialects explicitly enabled.
+    /// Implicitly, this state corresponds to all dialects being enabled.
+    fn default() -> Self {
+        Self::empty()
+    }
 }

@@ -31,6 +31,7 @@ foldhash = "0.1.5"
 strum_macros = "0.27.1"
 strum = "0.27.1"
 ammonia = "4.1.0"
+bitflags = { version = "2.9.1", features = ["serde"] }
 
 [dev-dependencies]
 criterion = { version = "0.6.0", default-features = false }

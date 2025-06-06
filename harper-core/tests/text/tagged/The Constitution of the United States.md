@@ -266,8 +266,8 @@
 #
 > Each House   may      determine the Rules of its   Proceedings , punish its   Members for
 # D    NPrSg/V NPrSg/VX V         D   NPl   P  ISg/D W?          . V      ISg/D NPl     C/P
-> disorderly Behaviour , and , with the Concurrence of two thirds , expel a   Member .
-# R          NSg/Br    . V/C . P    D   NSg         P  NSg NPl/V  . V     D/P NSg    .
+> disorderly Behaviour    , and , with the Concurrence of two thirds , expel a   Member .
+# R          NSg/Ca/Au/Br . V/C . P    D   NSg         P  NSg NPl/V  . V     D/P NSg    .
 >
 #
 > Each House   shall keep  a   Journal of its   Proceedings , and from time    to time
@@ -1102,8 +1102,8 @@
 # NSg/I/V/J NSg/V/J NSg/V/J . V/C NPrSg/J/P NSg/I NSg/J    NPl/V  NSg/R D   NPrSg    NPrSg/VX P    NSg/V/J P
 > time    ordain and establish . The Judges , both of the supreme and inferior Courts ,
 # NSg/V/J V      V/C V         . D   NPrPl  . I/C  P  D   NSg/J   V/C NSg/J    NPl/V  .
-> shall hold    their Offices during good      Behaviour , and shall , at    stated Times ,
-# VX    NSg/V/J D     NPl     V/P    NPrSg/V/J NSg/Br    . V/C VX    . NSg/P V/J    NPl/V .
+> shall hold    their Offices during good      Behaviour    , and shall , at    stated Times ,
+# VX    NSg/V/J D     NPl     V/P    NPrSg/V/J NSg/Ca/Au/Br . V/C VX    . NSg/P V/J    NPl/V .
 > receive for their Services , a   Compensation , which shall not   be     diminished
 # NSg/V   C/P D     NPl      . D/P NSg          . I/C   VX    NSg/C NSg/VX V/J
 > during their Continuance in        Office .
@@ -1304,14 +1304,14 @@
 # C       D   NSg/J VX    NSg/VX NSg/V W?   V/J       . VX    V     N/J/P  D   J
 > States  , or      any   place subject to their jurisdiction . No      Person held to Service
 # NPrSg/V . NPrSg/C I/R/D NSg/V NSg/V/J P  D     NSg          . NPrSg/P NSg    V    P  NSg/V
-> or      Labour     in        one       State , under   the Laws thereof , escaping into another , shall ,
-# NPrSg/C NPrSg/V/Br NPrSg/J/P NSg/I/V/J NSg/V . NSg/J/P D   NPl  W?      . V        P    I/D     . VX    .
+> or      Labour           in        one       State , under   the Laws thereof , escaping into another , shall ,
+# NPrSg/C NPrSg/V/Ca/Au/Br NPrSg/J/P NSg/I/V/J NSg/V . NSg/J/P D   NPl  W?      . V        P    I/D     . VX    .
 > in        Consequence of any   Law   or      Regulation therein , be     discharged from such
 # NPrSg/J/P NSg/V       P  I/R/D NSg/V NPrSg/C NSg/J      W?      . NSg/VX V/J        P    NSg/I
-> Service or      Labour     , but     shall be     delivered up        on  Claim of the Party to whom such
-# NSg/V   NPrSg/C NPrSg/V/Br . NSg/C/P VX    NSg/VX V/J       NSg/V/J/P J/P NSg/V P  D   NSg/J P  I    NSg/I
-> Service or      Labour     may      be     due   .
-# NSg/V   NPrSg/C NPrSg/V/Br NPrSg/VX NSg/VX NSg/J .
+> Service or      Labour           , but     shall be     delivered up        on  Claim of the Party to whom such
+# NSg/V   NPrSg/C NPrSg/V/Ca/Au/Br . NSg/C/P VX    NSg/VX V/J       NSg/V/J/P J/P NSg/V P  D   NSg/J P  I    NSg/I
+> Service or      Labour           may      be     due   .
+# NSg/V   NPrSg/C NPrSg/V/Ca/Au/Br NPrSg/VX NSg/VX NSg/J .
 >
 #
 > Section . 3 .
