@@ -1,12 +1,9 @@
 use hashbrown::HashSet;
+use serde::{Deserialize, Serialize};
 
-use crate::{
-    UPOS,
-    patch_criteria::PatchCriteria,
-    word_counter::{self, WordCounter},
-};
+use crate::{UPOS, patch_criteria::PatchCriteria, word_counter::WordCounter};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Patch {
     pub from: bool,
     pub criteria: PatchCriteria,

@@ -11,7 +11,9 @@ use crate::{
 };
 
 use patch::Patch;
+use serde::{Deserialize, Serialize};
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BrillChunker {
     base: UPOSFreqDict,
     patches: Vec<Patch>,

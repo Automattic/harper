@@ -18,7 +18,7 @@ use harper_core::{
     MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
 };
 use harper_literate_haskell::LiterateHaskellParser;
-use harper_pos_utils::BrillTagger;
+use harper_pos_utils::{BrillChunker, BrillTagger};
 use harper_stats::Stats;
 use serde::Serialize;
 
@@ -77,6 +77,16 @@ enum Args {
         file: PathBuf,
     },
     TrainBrillTagger {
+        /// Path to a `.conllu` dataset to train on.
+        dataset: PathBuf,
+        /// The number of epochs (and patch rules) to train.
+        epochs: usize,
+        #[arg(short, long, default_value = "1.0")]
+        candidate_selection_chance: f32,
+        /// The path to write the final JSON model file to.
+        output: PathBuf,
+    },
+    TrainBrillChunker {
         /// Path to a `.conllu` dataset to train on.
         dataset: PathBuf,
         /// The number of epochs (and patch rules) to train.
@@ -385,6 +395,17 @@ fn main() -> anyhow::Result<()> {
         } => {
             let tagger = BrillTagger::train(dataset, epochs, candidate_selection_chance);
             fs::write(output, serde_json::to_string_pretty(&tagger)?)?;
+
+            Ok(())
+        }
+        Args::TrainBrillChunker {
+            dataset,
+            epochs,
+            output,
+            candidate_selection_chance,
+        } => {
+            let chunker = BrillChunker::train(dataset, epochs, candidate_selection_chance);
+            fs::write(output, serde_json::to_string_pretty(&chunker)?)?;
 
             Ok(())
         }

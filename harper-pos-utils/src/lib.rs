@@ -6,5 +6,6 @@ mod tagger;
 mod upos;
 mod word_counter;
 
+pub use chunker::{BrillChunker, Chunker, UPOSFreqDict};
 pub use tagger::{BrillTagger, FreqDict, FreqDictBuilder, Tagger};
 pub use upos::{UPOS, UPOSIter};

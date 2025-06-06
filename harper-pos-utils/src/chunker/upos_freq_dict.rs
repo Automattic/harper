@@ -1,6 +1,7 @@
 use std::path::Path;
 
 use hashbrown::HashMap;
+use serde::{Deserialize, Serialize};
 
 use crate::UPOS;
 
@@ -8,7 +9,7 @@ use super::Chunker;
 
 /// Tracks the number of times any given UPOS is associated with a noun phrase.
 /// Used as the baseline for the chunker.
-#[derive(Debug, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct UPOSFreqDict {
     /// The # of times each [`UPOS`] was not part of an NP subtracted from the number of times it
     /// was.
