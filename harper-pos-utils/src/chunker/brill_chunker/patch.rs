@@ -12,7 +12,7 @@ pub struct Patch {
 impl Patch {
     pub fn generate_candidate_patches(relevant_words: &WordCounter) -> Vec<Self> {
         const TOP_N_WORDS: usize = 50;
-        const REL_POS: [isize; 6] = [-3, -2, -1, 1, 2, 3];
+        const REL_POS: [isize; 7] = [-3, -2, -1, 0, 1, 2, 3];
 
         let mut atoms: Vec<(bool, PatchCriteria)> = Vec::new();
 
