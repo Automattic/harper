@@ -72,6 +72,7 @@ async function enableDefaultDomains() {
 		'hashnode.com',
 		'www.slatejs.org',
 		'localhost',
+		'writewithharper.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
