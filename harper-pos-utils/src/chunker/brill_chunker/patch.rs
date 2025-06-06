@@ -1,5 +1,5 @@
-use hashbrown::HashSet;
 use serde::{Deserialize, Serialize};
+use strum::IntoEnumIterator;
 
 use crate::{UPOS, patch_criteria::PatchCriteria, word_counter::WordCounter};
 
@@ -11,90 +11,106 @@ pub struct Patch {
 
 impl Patch {
     pub fn generate_candidate_patches(relevant_words: &WordCounter) -> Vec<Self> {
-        let mut simple_candidates = Vec::new();
+        const TOP_N_WORDS: usize = 50;
+        const REL_POS: [isize; 6] = [-3, -2, -1, 1, 2, 3];
 
-        simple_candidates.extend(Self::gen_simple_candidates().into_iter().map(|c| Patch {
-            from: true,
-            criteria: c,
-        }));
-        simple_candidates.extend(Self::gen_simple_candidates().into_iter().map(|c| Patch {
-            from: false,
-            criteria: c,
-        }));
+        let mut atoms: Vec<(bool, PatchCriteria)> = Vec::new();
 
-        let mut candidates = simple_candidates.clone();
-
-        for base_c in simple_candidates {
-            for word in relevant_words.iter_top_n_words(20) {
-                for r in -3..3 {
-                    candidates.push(Patch {
-                        from: base_c.from,
-                        criteria: PatchCriteria::Combined {
-                            a: Box::new(PatchCriteria::WordIs {
-                                relative: r,
-                                word: word.to_string(),
-                            }),
-                            b: Box::new(base_c.criteria.clone()),
+        for from in [false, true] {
+            for rel in REL_POS {
+                for tag in UPOS::iter() {
+                    atoms.push((
+                        from,
+                        PatchCriteria::WordIsTaggedWith {
+                            relative: rel,
+                            is_tagged: tag,
                         },
-                    })
+                    ));
+                }
+            }
+            for max_rel in 1..=5 {
+                for tag in UPOS::iter() {
+                    atoms.push((
+                        from,
+                        PatchCriteria::AnyWordIsTaggedWith {
+                            max_relative: max_rel,
+                            is_tagged: tag,
+                        },
+                    ));
+                }
+            }
+            for prev in UPOS::iter() {
+                for post in UPOS::iter() {
+                    atoms.push((
+                        from,
+                        PatchCriteria::SandwichTaggedWith {
+                            prev_word_tagged: prev,
+                            post_word_tagged: post,
+                        },
+                    ));
+                }
+            }
+            for rel in REL_POS {
+                for is_np in [false, true] {
+                    atoms.push((
+                        from,
+                        PatchCriteria::NounPhraseAt {
+                            is_np,
+                            relative: rel,
+                        },
+                    ));
                 }
             }
         }
 
-        candidates
-    }
+        let tag_atom_count = atoms.len();
 
-    /// Candidates to be tested against a dataset during training.
-    fn gen_simple_candidates() -> Vec<PatchCriteria> {
-        use strum::IntoEnumIterator;
+        let mut word_atoms: Vec<(bool, PatchCriteria)> = Vec::new();
+        for from in [false, true] {
+            for rel in REL_POS {
+                for w in relevant_words.iter_top_n_words(TOP_N_WORDS) {
+                    word_atoms.push((
+                        from,
+                        PatchCriteria::WordIs {
+                            relative: rel,
+                            word: w.clone(),
+                        },
+                    ));
+                }
+            }
+        }
 
-        let mut criteria = HashSet::new();
+        atoms.extend(word_atoms.into_iter());
 
-        for i in -4..=4 {
-            criteria.insert(PatchCriteria::NounPhraseAt {
-                is_np: true,
-                relative: i,
-            });
-            criteria.insert(PatchCriteria::NounPhraseAt {
-                is_np: false,
-                relative: i,
+        let total_atoms = atoms.len();
+        let word_start = tag_atom_count;
+        let word_atoms_ct = total_atoms - word_start;
+        let combos_ct = word_atoms_ct * total_atoms - word_atoms_ct;
+        let mut patches = Vec::with_capacity(total_atoms + combos_ct);
+
+        for (from, crit) in &atoms {
+            patches.push(Self {
+                from: *from,
+                criteria: crit.clone(),
             });
         }
 
-        for upos in UPOS::iter() {
-            for i in -4..=4 {
-                criteria.insert(PatchCriteria::WordIsTaggedWith {
-                    relative: i,
-                    is_tagged: upos,
-                });
-            }
-
-            for i in -4..=4 {
-                criteria.insert(PatchCriteria::AnyWordIsTaggedWith {
-                    max_relative: i,
-                    is_tagged: upos,
-                });
-            }
-
-            for upos_b in UPOS::iter() {
-                criteria.insert(PatchCriteria::SandwichTaggedWith {
-                    prev_word_tagged: upos,
-                    post_word_tagged: upos_b,
-                });
-
-                criteria.insert(PatchCriteria::Combined {
-                    a: Box::new(PatchCriteria::WordIsTaggedWith {
-                        relative: 1,
-                        is_tagged: upos,
-                    }),
-                    b: Box::new(PatchCriteria::WordIsTaggedWith {
-                        relative: -2,
-                        is_tagged: upos_b,
-                    }),
+        for i in word_start..total_atoms {
+            let (from_i, ref crit_i) = atoms[i];
+            for (j, (_from_j, crit_j)) in atoms.iter().enumerate() {
+                if i == j {
+                    continue;
+                }
+                patches.push(Self {
+                    from: from_i,
+                    criteria: PatchCriteria::Combined {
+                        a: Box::new(crit_i.clone()),
+                        b: Box::new(crit_j.clone()),
+                    },
                 });
             }
         }
 
-        criteria.into_iter().collect()
+        patches
     }
 }
