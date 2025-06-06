@@ -1004,7 +1004,7 @@ pub fn lint_group() -> LintGroup {
         ),
         "Unless" => (
             ["unless if"],
-            ["unless"],
+            ["unless", "except if", "except when"],
             "Use `unless` on its own.",
             "Corrects `unless if` to `unless`."
         ),
@@ -1248,6 +1248,12 @@ pub fn lint_group() -> LintGroup {
             "The more standard, less colloquial form is `take it personally`.",
             "Corrects `take it personal` to `take it personally`."
         ),
+        "Unless" => (
+            ["unless if"],
+            ["unless", "except if"],
+            "Use `unless` or `except if` to express a condition that is true in all cases except one.",
+            "Corrects `unless if`."
+        ),
         "AsOfLate" => (
             ["as of lately"],
             ["as of late"],
@@ -1307,6 +1313,7 @@ pub fn lint_group() -> LintGroup {
 mod tests {
     use crate::linting::tests::{
         assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+        assert_top3_suggestion_result,
     };
 
     use super::lint_group;
@@ -2760,6 +2767,24 @@ mod tests {
             "This is not personal, do not take it personal, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)",
             lint_group(),
             "This is not personal, do not take it personally, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)",
+        );
+    }
+
+    #[test]
+    fn correct_unless_if_to_except_if() {
+        assert_top3_suggestion_result(
+            "Simplex does not interpret the following invite link as an invite link unless if it has https:// in front of it.",
+            lint_group(),
+            "Simplex does not interpret the following invite link as an invite link except if it has https:// in front of it.",
+        );
+    }
+
+    #[test]
+    fn correct_unless_if_to_except_when() {
+        assert_top3_suggestion_result(
+            "my PC fails to use it unless if I force hardware accelerations by enabling certain flags",
+            lint_group(),
+            "my PC fails to use it except when I force hardware accelerations by enabling certain flags",
         );
     }
 
