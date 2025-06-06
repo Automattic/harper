@@ -494,8 +494,9 @@ const baseTheme = EditorView.baseTheme({
 	'.cm-diagnosticText code': {
 		borderRadius: '0.25rem',
 		backgroundColor: 'var(--background-secondary) !important',
+		border:
+			'1px solid rgb(from var(--background-secondary) calc(255 - r) calc(255 - g) calc(255 - b))',
 		padding: '0.25rem',
-		filter: 'invert(1)',
 	},
 
 	'.cm-diagnosticAction': {

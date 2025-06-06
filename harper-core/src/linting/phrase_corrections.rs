@@ -13,7 +13,7 @@ pub fn lint_group() -> LintGroup {
                 $group.add_pattern_linter(
                     $name,
                     Box::new(
-                        MapPhraseLinter::new_exact_phrases(
+                        MapPhraseLinter::new_fixed_phrases(
                             $input,
                             $corrections,
                             $hint,
@@ -28,7 +28,7 @@ pub fn lint_group() -> LintGroup {
     add_exact_mappings!(group, {
         // The name of the rule
         "ChangeTack" => (
-            // The exact phrase(s) to look for.
+            // The phrase(s) to look for.
             ["change tact", "change tacks", "change tacts"],
             // The corrections to provide.
             ["change tack"],
@@ -744,10 +744,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `worst and worst` to `worse and worse` for proper comparative usage."
         ),
         "WorseCaseScenario" => (
-            ["worse case scenario", "worse-case scenario", "worse-case-scenario",
-             "worst case scenario",                        "worst-case-scenario"],
+            ["worse case scenario", "worse-case scenario", "worse-case-scenario"],
             ["worst-case scenario"],
             "Use `worst` for referring to the worst possible scenario. (`Worse` is for comparing)",
+            "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
+        ),
+        "WorstCaseScenario" => (
+            ["worst case scenario", "worst-case-scenario"],
+            ["worst-case scenario"],
+            "Hyphenate `worst-case`.",
             "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
         ),
         "WorseThan" => (
@@ -1279,11 +1284,23 @@ pub fn lint_group() -> LintGroup {
             "`Kinda` already means `kind of`, so `kinda of` is redundant.",
             "Corrects `kinda of` to `kind of`."
         ),
+        "InNeedOf" => (
+            ["in need for"],
+            ["in need of"],
+            "Use `in need of` for when something is required or necessary.",
+            "Corrects `in need for` to `in need of`."
+        ),
         "PeaceOfMind" => (
             ["piece of mind"],
             ["peace of mind"],
             "The phrase is `peace of mind`, meaning `calm`. A `piece` is a `part` of something.",
             "Corrects `piece of mind` to `peace of mind`."
+        ),
+        "ACoupleMore" => (
+            ["a couple of more"],
+            ["a couple more"],
+            "The correct wording is `a couple more`, without the `of`.",
+            "Corrects `a couple of more` to `a couple more`."
         ),
     });
 
@@ -2798,11 +2815,29 @@ mod tests {
     }
 
     #[test]
+    fn corrects_in_need_of() {
+        assert_suggestion_result(
+            "In need for a native control for map symbols (map legend) #5203.",
+            lint_group(),
+            "In need of a native control for map symbols (map legend) #5203.",
+        );
+    }
+
+    #[test]
     fn corrects_piece_of_mind() {
         assert_suggestion_result(
             "A Discord bot that gives you piece of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
             lint_group(),
             "A Discord bot that gives you peace of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
+        )
+    }
+
+    #[test]
+    fn corrects_a_couple_of_more() {
+        assert_suggestion_result(
+            "There are a couple of more rules that could be added, how can I contribute?",
+            lint_group(),
+            "There are a couple more rules that could be added, how can I contribute?",
         )
     }
 }
