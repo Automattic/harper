@@ -282,7 +282,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "This test is broken due to the metadata dialect field not being a collection"]
     fn australian_labour_vs_labor() {
         assert_lint_count(
             "In Australia we write 'labour' but the political party is the 'Labor Party'.",
@@ -357,7 +356,6 @@ mod tests {
         );
     }
 
-    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
     #[test]
     fn afterwards_is_au() {
         assert_lint_count(
@@ -376,7 +374,6 @@ mod tests {
         );
     }
 
-    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
     #[test]
     fn afterwards_is_ca() {
         assert_lint_count(
