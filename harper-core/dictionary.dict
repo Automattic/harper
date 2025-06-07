@@ -52363,8 +52363,8 @@ AVC/1M              # H.264 video format
 Akismet/2M
 Alexa/2M            # voice assistant
 Alexandre/2SM
-Alibaba/2M
 AliExpress/2M
+Alibaba/2M
 AlphaFold/2M        # Google DeepMind project
 Ambien/1SM          # insomnia treatment
 Anker/SM
@@ -52389,13 +52389,14 @@ Btrfs/1M            # file system
 BurpSuite/21MS
 C++/2SM             # programming language
 CCP/2S              # Chinese Communist Party
+CDMA/15             # code-division multiple access
 CEO/1SM             # chief executive officer
 CERN/2M             # intergovernmental organization
 CI/1SM              # continuous integration
 CISC/1M             # cpu architecture
 CMOS/1              # microchip process
-CMake/SM            # build tool
 CMYK                # colour model
+CMake/SM            # build tool
 CQL/1
 CRC/1MS             # cyclic redundancy check
 CRDT/1SM
@@ -52414,8 +52415,8 @@ DATETIME/1MS        # dictionaries prefer: datetime
 DCT/1MS             # discrete cosine transform
 DEI
 DKIM/1SM
-DM/1MS4             # direct message
 DM'd/4
+DM/1MS4             # direct message
 DMed/4
 DMing/4
 DNS/2SM             # domain name system
@@ -52439,12 +52440,13 @@ Erdoğan/2M          # surname, Turkish politician
 Ethereum/2M         # digital currency
 Evo/2MS             # car model
 Expedia/2M
+Exynos/25M          # Samsung SoC series.
 FAT32/1M            # file system
 FIDO/12SM
 FIFA/1M             # football/soccer association
 FPGA/1SM            # field-programmable gate array
-FPV                 # first person view
 FPM/SM
+FPV                 # first person view
 FSD/1M              # full self-driving
 Famicom/12MS        # game console
 FireWire/MS         # trademark
@@ -52456,6 +52458,7 @@ GLFW/2M
 GPL/2M              # GNU General Public License
 GPT/1SM             # generative pre-trained transformer
 GPU/1S              # graphics processing unit
+GSM/25              # Global System for Mobile Communications
 Ganeti/SM
 Gateron/SM
 Gerber/1M           # file format
@@ -52471,6 +52474,7 @@ Grandey/SM
 Graphviz/SM
 Gravatar/2M
 HDL/1               # hardware description language
+HDR/5               # high dynamic range
 HQL/1
 Harper/SM           # surname; grammar checker
 Hasan/2SM           # surname, given name
@@ -52478,8 +52482,10 @@ Hiera/SM
 Holmdel/SM
 IDA/2M              # reverse engineering
 IMAP/2SM            # internet message access protocol
+IMSI/1              # international mobile subscriber identity
 IPC/1M              # interprocess communication
 IPCC/2M
+IPS/5               # in-plane switching (screen technology)
 IPv4/2SM
 ISA/12MS            # instruction set architecture; industry standard architecture
 IntelliJ/SM
@@ -52512,6 +52518,7 @@ LLVM/1M             # compiler system
 LOC/9               # source lines of code
 LSB/1MS2            # least significant bit/byte; Linux Standard Base
 LSP/1MS             # language server protocol
+LTE/125             # long-term evolution
 LTS/1SM
 LUT/1MS             # lookup table
 LVM/SM
@@ -52539,6 +52546,7 @@ Manilas/1
 Manilla/2M
 MapReduce/1
 Marchus/SM
+Mercielago/2SM
 Metasploit/21MS
 Minecraft/2M
 Minhaj/2SM
@@ -52547,7 +52555,6 @@ Mockito/SM
 Molex/12MS          # Molex connector
 Mullenweg/M
 Munin/SM
-Mercielago/2SM
 N.S.A./2SM          # FIXME! elsewhere we have NSA
 N1/2M
 N2/2M
@@ -52713,8 +52720,8 @@ YAML/2SM            # markup language
 Yazi/21MS
 Yoast/M2            # seo
 YubiKey/SM
-Zettelkasten/1M
 ZFS/1M              # file system
+Zettelkasten/1M
 Zig/2M              # programming language
 Zuckerberg/2MS      # surname, Facebook founder
 a11n/1
@@ -52738,8 +52745,8 @@ ext3/1M             # file system
 ext4/1M             # file system
 filesystem/~SM      # dictionaries prefer: file system
 frontend/1SM        # dictionaries prefer: front end
-geofence/1MS4DG
 gRPC/2SM            # framework
+geofence/1MS4DG
 glymph/SM           # !! please check and comment !!
 gzip/4S             # GNU compression utility
 gzipped/4
