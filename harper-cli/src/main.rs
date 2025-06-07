@@ -12,7 +12,7 @@ use clap::Parser;
 use dirs::{config_dir, data_local_dir};
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::parsers::{Markdown, MarkdownOptions, PlainEnglish};
+use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
     remove_overlaps, CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
     MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
@@ -439,6 +439,7 @@ fn load_file(
         Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
             MarkdownOptions::default(),
         )),
+        Some("org") => Box::new(OrgMode),
         Some("typ") => Box::new(harper_typst::Typst),
         _ => {
             if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {

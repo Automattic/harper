@@ -1,4 +1,5 @@
 use harper_core::linting::{LintGroup, Linter};
+use harper_core::parsers::OrgMode;
 use harper_core::{Dialect, Document, FstDictionary};
 
 /// Creates a unit test checking that the linting of a Markdown document (in
@@ -17,6 +18,38 @@ macro_rules! create_test {
 
                 let dict = FstDictionary::curated();
                 let document = Document::new_markdown_default(&source, &dict);
+
+                let mut linter = LintGroup::new_curated(dict, $dialect);
+                let lints = linter.lint(&document);
+
+                dbg!(&lints);
+                assert_eq!(lints.len(), $correct_expected);
+
+                // Make sure that all generated tokens span real characters
+                for token in document.tokens(){
+                     assert!(token.span.try_get_content(document.get_source()).is_some());
+                }
+            }
+        }
+    };
+}
+
+/// Creates a unit test checking that the linting of an Org mode document (in
+/// `tests_sources`) produces the expected number of lints.
+macro_rules! create_org_test {
+    ($filename:ident.org, $correct_expected:expr, $dialect:expr) => {
+        paste::paste! {
+            #[test]
+            fn [<lints_ $filename _correctly>](){
+                let source = include_str!(
+                    concat!(
+                        "./test_sources/",
+                        concat!(stringify!($filename), ".org")
+                    )
+                );
+
+                let dict = FstDictionary::curated();
+                let document = Document::new(&source, &OrgMode, &dict);
 
                 let mut linter = LintGroup::new_curated(dict, $dialect);
                 let lints = linter.lint(&document);
@@ -56,3 +89,6 @@ create_test!(yogurt_british_clean.md, 0, Dialect::British);
 
 // Make sure it doesn't panic
 create_test!(lukas_homework.md, 3, Dialect::American);
+
+// Org mode tests
+create_org_test!(index.org, 33, Dialect::American);
