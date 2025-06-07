@@ -1,6 +1,71 @@
 use super::{Parser, PlainEnglish};
 use crate::{Span, Token, TokenKind};
 
+#[derive(Debug, PartialEq, Copy, Clone)]
+enum SourceBlockMarker {
+    Begin,
+    End,
+}
+
+// Check if a line starts with a header (starts with one or more '*')
+fn is_header_line(chars: &[char], start: usize) -> bool {
+    chars.get(start).is_some_and(|c| *c == '*')
+}
+
+// Check if a line starts with a source block begin/end
+fn is_source_block_marker(chars: &[char], start: usize) -> Option<SourceBlockMarker> {
+    let line = get_line_from_start(chars, start);
+    let line_str: String = line.iter().collect();
+    let line_str = line_str.trim();
+
+    if line_str.starts_with("#+BEGIN_SRC") || line_str.starts_with("#+begin_src") {
+        Some(SourceBlockMarker::Begin)
+    } else if line_str.starts_with("#+END_SRC") || line_str.starts_with("#+end_src") {
+        Some(SourceBlockMarker::End)
+    } else {
+        None
+    }
+}
+
+// Check if a line is a directive (starts with #+)
+fn is_directive(chars: &[char], start: usize) -> bool {
+    if start + 1 >= chars.len() {
+        return false;
+    }
+    chars[start] == '#' && chars[start + 1] == '+'
+}
+
+// Get the rest of the line from a starting position
+fn get_line_from_start(chars: &[char], start: usize) -> &[char] {
+    let mut end = start;
+    while end < chars.len() && chars[end] != '\n' {
+        end += 1;
+    }
+    &chars[start..end]
+}
+
+// Find the end of the current line starting from position
+fn find_line_end(chars: &[char], start: usize) -> usize {
+    let mut pos = start;
+    while pos < chars.len() && chars[pos] != '\n' {
+        pos += 1;
+    }
+    if pos < chars.len() && chars[pos] == '\n' {
+        pos + 1 // Include the newline
+    } else {
+        pos
+    }
+}
+
+// Find the start of the line containing the given position
+fn find_line_start(chars: &[char], pos: usize) -> usize {
+    let mut start = pos;
+    while start > 0 && chars[start - 1] != '\n' {
+        start -= 1;
+    }
+    start
+}
+
 /// A parser that wraps the [`PlainEnglish`] parser that allows one to parse
 /// Org-mode files.
 ///
@@ -9,66 +74,7 @@ use crate::{Span, Token, TokenKind};
 #[derive(Default, Clone, Debug, Copy)]
 pub struct OrgMode;
 
-impl OrgMode {
-    // Check if a line starts with a header (starts with one or more '*')
-    fn is_header_line(chars: &[char], start: usize) -> bool {
-        chars.get(start).is_some_and(|c| *c == '*')
-    }
-
-    // Check if a line starts with a source block begin/end
-    fn is_source_block_marker(chars: &[char], start: usize) -> Option<bool> {
-        let line = Self::get_line_from_start(chars, start);
-        let line_str: String = line.iter().collect();
-        let line_str = line_str.trim();
-
-        if line_str.starts_with("#+BEGIN_SRC") || line_str.starts_with("#+begin_src") {
-            Some(true) // begin marker
-        } else if line_str.starts_with("#+END_SRC") || line_str.starts_with("#+end_src") {
-            Some(false) // end marker
-        } else {
-            None
-        }
-    }
-
-    // Check if a line is a directive (starts with #+)
-    fn is_directive(chars: &[char], start: usize) -> bool {
-        if start + 1 >= chars.len() {
-            return false;
-        }
-        chars[start] == '#' && chars[start + 1] == '+'
-    }
-
-    // Get the rest of the line from a starting position
-    fn get_line_from_start(chars: &[char], start: usize) -> &[char] {
-        let mut end = start;
-        while end < chars.len() && chars[end] != '\n' {
-            end += 1;
-        }
-        &chars[start..end]
-    }
-
-    // Find the end of the current line starting from position
-    fn find_line_end(chars: &[char], start: usize) -> usize {
-        let mut pos = start;
-        while pos < chars.len() && chars[pos] != '\n' {
-            pos += 1;
-        }
-        if pos < chars.len() && chars[pos] == '\n' {
-            pos + 1 // Include the newline
-        } else {
-            pos
-        }
-    }
-
-    // Find the start of the line containing the given position
-    fn find_line_start(chars: &[char], pos: usize) -> usize {
-        let mut start = pos;
-        while start > 0 && chars[start - 1] != '\n' {
-            start -= 1;
-        }
-        start
-    }
-}
+impl OrgMode {}
 
 impl Parser for OrgMode {
     fn parse(&self, source: &[char]) -> Vec<Token> {
@@ -78,25 +84,17 @@ impl Parser for OrgMode {
         let mut in_source_block = false;
 
         while cursor < source.len() {
-            let line_start = Self::find_line_start(source, cursor);
+            let line_start = find_line_start(source, cursor);
 
             // Check for source block markers
-            if let Some(is_begin) = Self::is_source_block_marker(source, line_start) {
-                in_source_block = is_begin;
-
-                // Skip the entire line
-                let line_end = Self::find_line_end(source, line_start);
-                tokens.push(Token {
-                    span: Span::new(line_start, line_end),
-                    kind: TokenKind::Unlintable,
-                });
-                cursor = line_end;
-                continue;
+            let source_marker = is_source_block_marker(source, line_start);
+            if let Some(marker) = source_marker {
+                in_source_block = marker == SourceBlockMarker::Begin;
             }
 
-            // If we're in a source block, make everything unlintable
-            if in_source_block {
-                let line_end = Self::find_line_end(source, line_start);
+            // If we're in a source block or found a source block marker, make the line unlintable
+            if in_source_block || source_marker.is_some() {
+                let line_end = find_line_end(source, line_start);
                 tokens.push(Token {
                     span: Span::new(line_start, line_end),
                     kind: TokenKind::Unlintable,
@@ -106,8 +104,8 @@ impl Parser for OrgMode {
             }
 
             // Check for headers
-            if Self::is_header_line(source, line_start) {
-                let line_end = Self::find_line_end(source, line_start);
+            if is_header_line(source, line_start) {
+                let line_end = find_line_end(source, line_start);
 
                 // Find where the header text starts (after the stars and spaces)
                 let mut header_text_start = line_start;
@@ -138,8 +136,8 @@ impl Parser for OrgMode {
             }
 
             // Check for directives (#+SOMETHING)
-            if Self::is_directive(source, line_start) {
-                let line_end = Self::find_line_end(source, line_start);
+            if is_directive(source, line_start) {
+                let line_end = find_line_end(source, line_start);
                 tokens.push(Token {
                     span: Span::new(line_start, line_end),
                     kind: TokenKind::Unlintable,
@@ -149,7 +147,7 @@ impl Parser for OrgMode {
             }
 
             // For normal text, parse with the English parser
-            let line_end = Self::find_line_end(source, cursor);
+            let line_end = find_line_end(source, cursor);
             if cursor < line_end {
                 let mut line_tokens = english_parser.parse(&source[cursor..line_end]);
                 line_tokens
@@ -161,6 +159,7 @@ impl Parser for OrgMode {
             cursor = line_end;
         }
 
+        // Remove trailing newline/paragraph break tokens if the source doesn't actually end with a newline.
         if matches!(
             tokens.last(),
             Some(Token {
@@ -180,7 +179,7 @@ impl Parser for OrgMode {
 mod tests {
     use super::super::StrParser;
     use super::OrgMode;
-    use crate::{Punctuation, TokenKind};
+    use crate::TokenKind;
 
     #[test]
     fn simple_text() {
