@@ -2420,9 +2420,9 @@ Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |                            ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
+  - Replace with: “So”
   - Replace with: “Sq”
+  - Replace with: “St”
 
 
 
@@ -2523,9 +2523,9 @@ Message: |
     1868 | Excellence, and Eckhaust and Clyde Cohen and Don S. Schwartze (the son) and
          |                                                  ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
+  - Replace with: “So”
   - Replace with: “Sq”
+  - Replace with: “St”
 
 
 
@@ -2567,9 +2567,9 @@ Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
-  - Replace with: “Gt”
   - Replace with: “Go”
   - Replace with: “Gr”
+  - Replace with: “Gs”
 
 
 
@@ -2812,9 +2812,9 @@ Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |             ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
+  - Replace with: “So”
   - Replace with: “Sq”
+  - Replace with: “St”
 
 
 
@@ -2871,8 +2871,8 @@ Message: |
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
   - Replace with: “Lo”
-  - Replace with: “La”
-  - Replace with: “Ll”
+  - Replace with: “Lb”
+  - Replace with: “Lg”
 
 
 
@@ -6348,7 +6348,7 @@ Message: |
 Suggest:
   - Replace with: “H”
   - Replace with: “Ham”
-  - Replace with: “He”
+  - Replace with: “Hem”
 
 
 
