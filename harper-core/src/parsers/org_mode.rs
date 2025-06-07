@@ -12,10 +12,7 @@ pub struct OrgMode;
 impl OrgMode {
     // Check if a line starts with a header (starts with one or more '*')
     fn is_header_line(chars: &[char], start: usize) -> bool {
-        if start >= chars.len() {
-            return false;
-        }
-        chars[start] == '*'
+        chars.get(start).is_some_and(|c| *c == '*')
     }
 
     // Check if a line starts with a source block begin/end
