@@ -77,7 +77,7 @@ test('Lint settings and descriptions have the same keys', async () => {
 	const state = createEphemeralState();
 
 	const settings = await state.getSettings();
-	const descriptions = await state.getDescriptions();
+	const descriptions = await state.getDescriptionHTML();
 
 	expect(Object.keys(descriptions).sort()).toStrictEqual(Object.keys(settings.lintSettings).sort());
 });
