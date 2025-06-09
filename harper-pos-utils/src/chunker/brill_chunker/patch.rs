@@ -85,7 +85,7 @@ impl Patch {
             }
         }
 
-        atoms.extend(word_atoms.into_iter());
+        atoms.extend(word_atoms);
 
         let total_atoms = atoms.len();
         let word_start = tag_atom_count;

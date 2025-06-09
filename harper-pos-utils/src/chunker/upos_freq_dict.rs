@@ -1,3 +1,4 @@
+#[cfg(feature = "training")]
 use std::path::Path;
 
 use hashbrown::HashMap;
@@ -24,10 +25,10 @@ impl UPOSFreqDict {
 
 impl Chunker for UPOSFreqDict {
     fn chunk_sentence(&self, _sentence: &[String], tags: &[Option<UPOS>]) -> Vec<bool> {
-        tags.into_iter()
+        tags.iter()
             .map(|t| {
                 t.as_ref()
-                    .map(|t| self.is_likely_np_component(&t))
+                    .map(|t| self.is_likely_np_component(t))
                     .unwrap_or(false)
             })
             .collect()
@@ -40,7 +41,7 @@ impl UPOSFreqDict {
     pub fn inc_is_np(&mut self, upos: UPOS, is_np: bool) {
         self.counts
             .entry(upos)
-            .and_modify(|counter| *counter += is_np.then_some(1).unwrap_or(-1))
+            .and_modify(|counter| *counter += if is_np { 1 } else { -1 })
             .or_insert(1);
     }
 

@@ -31,7 +31,7 @@ impl BrillChunker {
         for patch in &self.patches {
             for i in 0..sentence.len() {
                 if patch.from == np_states[i]
-                    && patch.criteria.fulfils(sentence, tags, &np_states, i)
+                    && patch.criteria.fulfils(sentence, tags, np_states, i)
                 {
                     np_states[i] = !np_states[i];
                 }
@@ -49,6 +49,9 @@ impl Chunker for BrillChunker {
         initial_pass
     }
 }
+
+#[cfg(feature = "training")]
+type CandidateArgs = (Vec<String>, Vec<Option<UPOS>>, Vec<bool>);
 
 #[cfg(feature = "training")]
 impl BrillChunker {
@@ -110,7 +113,7 @@ impl BrillChunker {
         let mut error_counter = 0;
 
         let sentences: Vec<Sentence> = iter_sentences_in_conllu(training_file).collect();
-        let mut sentences_flagged: Vec<(Vec<String>, Vec<Option<UPOS>>, Vec<bool>)> = Vec::new();
+        let mut sentences_flagged: Vec<CandidateArgs> = Vec::new();
 
         for sent in &sentences {
             use hashbrown::HashSet;
@@ -135,7 +138,7 @@ impl BrillChunker {
                 tags.push(token.upos.and_then(UPOS::from_conllu));
             }
 
-            let actual = locate_noun_phrases_in_sent(&sent);
+            let actual = locate_noun_phrases_in_sent(sent);
             let actual_flat = actual.into_iter().fold(HashSet::new(), |mut a, b| {
                 a.extend(b.into_iter());
                 a
@@ -159,7 +162,7 @@ impl BrillChunker {
             total_tokens += tok_buf.len();
             error_counter += self.count_chunk_errors(
                 tok_buf.as_slice(),
-                &tag_buf,
+                tag_buf,
                 flag_buf.as_slice(),
                 &mut relevant_words,
             );
@@ -224,7 +227,7 @@ impl BrillChunker {
     fn score_candidate(
         &self,
         candidate: Patch,
-        sentences_flagged: &[(Vec<String>, Vec<Option<UPOS>>, Vec<bool>)],
+        sentences_flagged: &[CandidateArgs],
         base_flags: &[Vec<bool>],
     ) -> usize {
         let mut tagger = BrillChunker::new(UPOSFreqDict::default());
@@ -233,7 +236,7 @@ impl BrillChunker {
         let mut errors = 0;
 
         for ((toks, tags, flags), base) in sentences_flagged.iter().zip(base_flags.iter()) {
-            errors += tagger.count_patch_errors(toks.as_slice(), tags.as_slice(), base, &flags);
+            errors += tagger.count_patch_errors(toks.as_slice(), tags.as_slice(), base, flags);
         }
 
         errors

@@ -163,12 +163,6 @@ impl Document {
                     inner.np_member = Some(np_flags[i]);
                 }
 
-                // if let Some(found_meta) = &mut found_meta {
-                //     if let Some(upos) = token_tags[i] {
-                //         found_meta.enforce_pos_exclusivity(&upos);
-                //     }
-                // }
-
                 *meta = found_meta;
                 i += 1;
             } else if !token.kind.is_whitespace() {

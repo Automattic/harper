@@ -16,8 +16,7 @@ pub fn locate_noun_phrases_in_sent(sent: &Sentence) -> Vec<HashSet<usize>> {
 
     found_noun_phrases.retain(is_contiguous);
 
-    let found_noun_phrases = reduce_to_maximal_nonoverlapping(found_noun_phrases);
-    found_noun_phrases
+    reduce_to_maximal_nonoverlapping(found_noun_phrases)
 }
 
 fn is_contiguous(indices: &HashSet<usize>) -> bool {
@@ -56,9 +55,9 @@ fn locate_noun_phrase_with_head_at(head_index: usize, sent: &Sentence) -> HashSe
 
         let tok = &sent.tokens[c_i];
 
-        if is_noun_phrase_constituent(&tok) || tok.upos.is_some_and(is_root_upos) {
+        if is_noun_phrase_constituent(tok) || tok.upos.is_some_and(is_root_upos) {
             children.insert(c_i);
-            queue.extend(get_children(&sent, c_i));
+            queue.extend(get_children(sent, c_i));
         }
     }
 
