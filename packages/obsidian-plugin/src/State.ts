@@ -194,8 +194,8 @@ export default class State {
 		};
 	}
 
-	public async getDescriptions(): Promise<Record<string, string>> {
-		return await this.harper.getLintDescriptions();
+	public async getDescriptionHTML(): Promise<Record<string, string>> {
+		return await this.harper.getLintDescriptionsHTML();
 	}
 
 	/** Get a reference to the CM editor extensions.

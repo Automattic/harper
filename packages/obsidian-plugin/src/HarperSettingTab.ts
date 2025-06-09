@@ -9,7 +9,7 @@ import type HarperPlugin from './index.js';
 export class HarperSettingTab extends PluginSettingTab {
 	private state: State;
 	private settings: Settings;
-	private descriptions: Record<string, string>;
+	private descriptionsHTML: Record<string, string>;
 	private plugin: HarperPlugin;
 
 	constructor(app: App, plugin: HarperPlugin, state: State) {
@@ -28,8 +28,8 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	updateDescriptions() {
-		this.state.getDescriptions().then((v) => {
-			this.descriptions = v;
+		this.state.getDescriptionHTML().then((v) => {
+			this.descriptionsHTML = v;
 		});
 	}
 
@@ -118,21 +118,26 @@ export class HarperSettingTab extends PluginSettingTab {
 
 		for (const setting of Object.keys(this.settings.lintSettings)) {
 			const value = this.settings.lintSettings[setting];
-			const description = this.descriptions[setting];
+			const descriptionHTML = this.descriptionsHTML[setting];
 
 			if (
 				searchQuery !== '' &&
 				!(
-					description.toLowerCase().contains(queryLower) ||
+					descriptionHTML.toLowerCase().contains(queryLower) ||
 					setting.toLowerCase().contains(queryLower)
 				)
 			) {
 				continue;
 			}
 
+			const fragment = document.createDocumentFragment();
+			const template = document.createElement('template');
+			template.innerHTML = descriptionHTML;
+			fragment.appendChild(template.content);
+
 			new Setting(containerEl)
 				.setName(startCase(setting))
-				.setDesc(description)
+				.setDesc(fragment)
 				.addDropdown((dropdown) =>
 					dropdown
 						.addOption('default', 'Default')
