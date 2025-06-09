@@ -138,8 +138,7 @@ impl BrillTagger<FreqDict> {
 
         let sentences: Vec<Sentence> = training_files
             .iter()
-            .map(iter_sentences_in_conllu)
-            .flatten()
+            .flat_map(iter_sentences_in_conllu)
             .collect();
         let mut sentences_tagged: Vec<(Vec<String>, Vec<Option<UPOS>>)> = Vec::new();
 
@@ -274,7 +273,7 @@ impl BrillTagger<FreqDict> {
         let mut tagger = Self::new(freq_dict);
 
         for _ in 0..epochs {
-            tagger.epoch(&training_files, candidate_selection_chance);
+            tagger.epoch(training_files, candidate_selection_chance);
         }
 
         tagger
