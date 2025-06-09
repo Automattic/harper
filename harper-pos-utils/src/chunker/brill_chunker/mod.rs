@@ -259,22 +259,3 @@ impl BrillChunker {
         chunker
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use hashbrown::{HashMap, HashSet};
-
-    use super::UPOSFreqDict;
-    use crate::{
-        UPOS,
-        chunker::{
-            Chunker, brill_chunker::BrillChunker, np_extraction::locate_noun_phrases_in_sent,
-        },
-        conllu_utils::iter_sentences_in_conllu,
-    };
-
-    #[test]
-    fn run_u() {
-        let chunker = BrillChunker::train("../en_gum-ud-train.conllu", 2000, 1.0);
-    }
-}

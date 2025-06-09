@@ -30,6 +30,7 @@ pub struct WordMetadata {
     pub common: bool,
     #[serde(default = "default_none")]
     pub derived_from: Option<WordId>,
+    pub np_member: Option<bool>,
 }
 
 /// Needed for `serde`
@@ -113,6 +114,7 @@ impl WordMetadata {
             preposition: self.preposition || other.preposition,
             common: self.common || other.common,
             derived_from: self.derived_from.or(other.derived_from),
+            np_member: self.np_member.or(other.np_member),
         }
     }
 

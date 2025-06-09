@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use harper_brill::{Tagger, brill_tagger};
+use harper_brill::{Chunker, Tagger, brill_chunker, brill_tagger};
 use paste::paste;
 
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
@@ -12,7 +12,8 @@ use crate::patterns::{
 use crate::punctuation::Punctuation;
 use crate::vec_ext::VecExt;
 use crate::{
-    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, Token, TokenKind, TokenStringExt,
+    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, NounData, Token, TokenKind,
+    TokenStringExt,
 };
 use crate::{OrdinalSuffix, Span};
 
@@ -149,6 +150,8 @@ impl Document {
             .collect();
 
         let token_tags = brill_tagger().tag_sentence(&token_strings);
+        let np_flags = brill_chunker().chunk_sentence(&token_strings, &token_tags);
+
         let mut i = 0;
 
         // Annotate word metadata
@@ -157,11 +160,15 @@ impl Document {
                 let word_source = token.span.get_content(&self.source);
                 let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
 
-                if let Some(found_meta) = &mut found_meta {
-                    if let Some(upos) = token_tags[i] {
-                        found_meta.enforce_pos_exclusivity(&upos);
-                    }
+                if let Some(inner) = &mut found_meta {
+                    inner.np_member = Some(np_flags[i]);
                 }
+
+                // if let Some(found_meta) = &mut found_meta {
+                //     if let Some(upos) = token_tags[i] {
+                //         found_meta.enforce_pos_exclusivity(&upos);
+                //     }
+                // }
 
                 *meta = found_meta;
                 i += 1;
@@ -169,17 +176,6 @@ impl Document {
                 i += 1;
             }
         }
-    }
-
-    fn uncached_article_pattern() -> Lrc<SequencePattern> {
-        Lrc::new(
-            SequencePattern::default()
-                .then_determiner()
-                .then_whitespace()
-                .then(|t: &Token, _source: &[char]| t.kind.is_adjective() && t.kind.is_noun())
-                .then_whitespace()
-                .then_noun(),
-        )
     }
 
     /// Convert all sets of newlines greater than 2 to paragraph breaks.

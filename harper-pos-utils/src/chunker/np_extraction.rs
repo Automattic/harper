@@ -3,41 +3,6 @@ use std::collections::VecDeque;
 use hashbrown::HashSet;
 use rs_conllu::{Sentence, Token, TokenID, UPOS};
 
-#[cfg(test)]
-mod tests {
-    use std::collections::VecDeque;
-
-    use hashbrown::HashSet;
-    use rs_conllu::UPOS;
-
-    use super::{
-        get_children, is_noun_phrase_constituent, is_root_upos, locate_noun_phrases_in_sent,
-    };
-    use crate::conllu_utils::iter_sentences_in_conllu;
-
-    #[test]
-    fn run() {
-        for sent in iter_sentences_in_conllu("../en_gum-ud-train.conllu") {
-            let found_noun_phrases = locate_noun_phrases_in_sent(&sent);
-
-            for phrase in found_noun_phrases {
-                let mut children_sorted: Vec<usize> = phrase.iter().cloned().collect();
-                children_sorted.sort();
-
-                let mut phrase = String::new();
-                for child in children_sorted {
-                    phrase.push_str(&sent.tokens[child].form);
-                    phrase.push(' ');
-                }
-
-                println!("{phrase}");
-            }
-        }
-
-        panic!()
-    }
-}
-
 pub fn locate_noun_phrases_in_sent(sent: &Sentence) -> Vec<HashSet<usize>> {
     let mut found_noun_phrases = Vec::new();
 

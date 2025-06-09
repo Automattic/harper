@@ -1,0 +1,2814 @@
+{
+	"base": {
+		"counts": {
+			"PROPN": 6703,
+			"VERB": -17826,
+			"PRON": 13650,
+			"NUM": -2002,
+			"PART": -4312,
+			"PUNCT": -24561,
+			"CCONJ": -5852,
+			"DET": -1050,
+			"SCONJ": -2879,
+			"SYM": -251,
+			"NOUN": 12124,
+			"AUX": -9653,
+			"INTJ": -1857,
+			"ADV": -8542,
+			"ADJ": -3530,
+			"ADP": -16611
+		}
+	},
+	"patches": [
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "of"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": false,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "these"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "."
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "PUNCT"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "."
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 4,
+							"is_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"AnyWordIsTaggedWith": {
+					"max_relative": 2,
+					"is_tagged": "CCONJ"
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"SandwichTaggedWith": {
+					"prev_word_tagged": "ADJ",
+					"post_word_tagged": "ADP"
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "these"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 2
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "This"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "any"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 2
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": ","
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "."
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "them"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "-"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 2,
+							"is_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "-"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 2,
+							"is_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "an"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "DET",
+							"post_word_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "is"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "DET"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": ","
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADP",
+							"post_word_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "it's"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": -2
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "there's"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": false,
+							"relative": -1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "."
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 2,
+							"is_tagged": "NUM"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "-"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": 0,
+							"word": "them"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "."
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 2,
+							"is_tagged": "DET"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "that's"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": -3,
+							"word": "that"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "that"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "DET",
+							"post_word_tagged": "SCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "them"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "PUNCT"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "and"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": -1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "they"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 3,
+							"is_tagged": "CCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "any"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 4,
+							"is_tagged": "AUX"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "it"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": -1,
+							"word": "it"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "to"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADJ",
+							"post_word_tagged": "PART"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"SandwichTaggedWith": {
+					"prev_word_tagged": "NOUN",
+					"post_word_tagged": "ADP"
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "and"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -2,
+							"is_tagged": "AUX"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "of"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "DET"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"SandwichTaggedWith": {
+					"prev_word_tagged": "PUNCT",
+					"post_word_tagged": "ADP"
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "them"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -1,
+							"is_tagged": "AUX"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "they"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 2,
+							"is_tagged": "PUNCT"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "The"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": -2,
+							"word": "The"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "-"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 2,
+							"is_tagged": "PROPN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "you"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": -3,
+							"word": "you"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "and"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": false,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "many"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "?"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": -1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"SandwichTaggedWith": {
+					"prev_word_tagged": "PART",
+					"post_word_tagged": "NOUN"
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "that"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": -1,
+							"word": "that's"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "for"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "it"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -2,
+							"is_tagged": "PRON"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "to"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "them"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 2,
+							"is_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "-"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "DET"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "them"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 2,
+							"is_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "."
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 1,
+							"is_tagged": "VERB"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "I'm"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": -2
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "that's"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "DET"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "those"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 4,
+							"is_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": ","
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -2,
+							"is_tagged": "AUX"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "them"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 2,
+							"is_tagged": "SCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "The"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "PROPN",
+							"post_word_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "other"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "-"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "this"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 5,
+							"is_tagged": "VERB"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "and"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -3,
+							"is_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "them"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "PRON"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": ","
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADP",
+							"post_word_tagged": "PUNCT"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "to"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "DET",
+							"post_word_tagged": "PART"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "."
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "of"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "DET"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "."
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 2
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "our"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "PRON",
+							"post_word_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "a"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "PRON"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "-"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "PROPN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "them"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 3,
+							"is_tagged": "NUM"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "any"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": false,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "."
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 1,
+							"is_tagged": "ADV"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "."
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": false,
+							"relative": 2
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "all"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 3,
+							"is_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "an"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "PUNCT"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "these"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -2,
+							"is_tagged": "AUX"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": ","
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -1,
+							"is_tagged": "AUX"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "them"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 2,
+							"is_tagged": "NUM"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "no"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -3,
+							"is_tagged": "PRON"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "."
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "PUNCT",
+							"post_word_tagged": "CCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "new"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "day"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "NUM"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "they"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "PRON"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "we"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": -3,
+							"word": "we"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "."
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADP",
+							"post_word_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "them"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADP",
+							"post_word_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "of"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "DET"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "in"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADJ",
+							"post_word_tagged": "SCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "was"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -2,
+							"is_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "them"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "DET",
+							"post_word_tagged": "CCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "in"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADJ",
+							"post_word_tagged": "VERB"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "these"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -2,
+							"is_tagged": "ADV"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "that's"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": -2,
+							"word": "that's"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "what"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -2,
+							"is_tagged": "AUX"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "all"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "PRON",
+							"post_word_tagged": "VERB"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "your"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "\""
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 3
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "every"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "these"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "CCONJ",
+							"post_word_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "more"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 3,
+							"is_tagged": "PROPN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "-"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": 3,
+							"word": "-"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "this"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "to"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": 0,
+							"word": "a"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": ","
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 3,
+							"is_tagged": "CCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "what"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 1,
+							"is_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "people"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "to"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "PROPN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "he"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "of"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "all"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADV",
+							"post_word_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": ","
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "PROPN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"WordIsTaggedWith": {
+					"relative": 1,
+					"is_tagged": "SYM"
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "-"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 2,
+							"is_tagged": "NUM"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "-"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "no"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "DET",
+							"post_word_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "of"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "PROPN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "I"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "DET",
+							"post_word_tagged": "CCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "that's"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "AUX",
+							"post_word_tagged": "PRON"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "of"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 2,
+							"is_tagged": "PRON"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "those"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 3,
+							"is_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "people"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 5,
+							"is_tagged": "PROPN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "it"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 3,
+							"is_tagged": "CCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "is"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADJ",
+							"post_word_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "them"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 3,
+							"is_tagged": "NUM"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "is"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": -1,
+							"word": "is"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "all"
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 2,
+							"is_tagged": "NUM"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "it's"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -2,
+							"is_tagged": "ADJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "is"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "SCONJ",
+							"post_word_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "that"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADJ",
+							"post_word_tagged": "SCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "which"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "one"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -2,
+							"is_tagged": "DET"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "it's"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": false,
+							"relative": -3
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "the"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADP",
+							"post_word_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": ","
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADP",
+							"post_word_tagged": "NOUN"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": ","
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -1,
+							"is_tagged": "AUX"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "for"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "DET",
+							"post_word_tagged": "PART"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "which"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "DET"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": ","
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADV",
+							"post_word_tagged": "PUNCT"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": ","
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "ADJ",
+							"post_word_tagged": "PUNCT"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 0,
+							"word": "this"
+						}
+					},
+					"b": {
+						"NounPhraseAt": {
+							"is_np": true,
+							"relative": 1
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 3,
+							"word": "of"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 0,
+							"is_tagged": "DET"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": ","
+						}
+					},
+					"b": {
+						"AnyWordIsTaggedWith": {
+							"max_relative": 1,
+							"is_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "a"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "PROPN",
+							"post_word_tagged": "ADP"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": false,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": "of"
+						}
+					},
+					"b": {
+						"SandwichTaggedWith": {
+							"prev_word_tagged": "DET",
+							"post_word_tagged": "PART"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -3,
+							"word": "he"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": -2,
+							"word": "he"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 1,
+							"word": "with"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": -1,
+							"word": "in"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "of"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": -2,
+							"is_tagged": "AUX"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -2,
+							"word": ","
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 1,
+							"is_tagged": "SCONJ"
+						}
+					}
+				}
+			}
+		},
+		{
+			"from": true,
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": 2,
+							"word": "we"
+						}
+					},
+					"b": {
+						"WordIsTaggedWith": {
+							"relative": 1,
+							"is_tagged": "ADP"
+						}
+					}
+				}
+			}
+		}
+	]
+}
