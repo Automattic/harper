@@ -114,13 +114,18 @@ export class HarperSettingTab extends PluginSettingTab {
 	renderLintSettings(searchQuery: string, containerEl: HTMLElement) {
 		containerEl.innerHTML = '';
 
+		const queryLower = searchQuery.toLowerCase();
+
 		for (const setting of Object.keys(this.settings.lintSettings)) {
 			const value = this.settings.lintSettings[setting];
 			const description = this.descriptions[setting];
 
 			if (
 				searchQuery !== '' &&
-				!(description.contains(searchQuery) || setting.contains(searchQuery))
+				!(
+					description.toLowerCase().contains(queryLower) ||
+					setting.toLowerCase().contains(queryLower)
+				)
 			) {
 				continue;
 			}
