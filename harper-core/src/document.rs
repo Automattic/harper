@@ -2,7 +2,9 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
+use fst::Map;
 use harper_brill::{Chunker, Tagger, brill_chunker, brill_tagger};
+use itertools::Itertools;
 use paste::paste;
 
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
@@ -262,6 +264,40 @@ impl Document {
     /// Get an iterator over all the tokens contained in the document.
     pub fn tokens(&self) -> impl Iterator<Item = &Token> + '_ {
         self.tokens.iter()
+    }
+
+    pub fn iter_nominal_phrases(&self) -> impl Iterator<Item = &[Token]> {
+        fn is_np_member(t: &Token) -> bool {
+            t.kind
+                .as_word()
+                .and_then(|x| x.as_ref())
+                .and_then(|w| w.np_member)
+                .unwrap_or(false)
+        }
+
+        fn trim(slice: &[Token]) -> &[Token] {
+            let mut start = 0;
+            let mut end = slice.len();
+            while start < end && slice[start].kind.is_whitespace() {
+                start += 1;
+            }
+            while end > start && slice[end - 1].kind.is_whitespace() {
+                end -= 1;
+            }
+            &slice[start..end]
+        }
+
+        self.tokens
+            .as_slice()
+            .split(|t| !(is_np_member(t) || t.kind.is_whitespace()))
+            .filter_map(|s| {
+                let s = trim(s);
+                if s.iter().any(is_np_member) {
+                    Some(s)
+                } else {
+                    None
+                }
+            })
     }
 
     /// Get an iterator over all the tokens contained in the document.

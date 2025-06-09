@@ -7,6 +7,7 @@ use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 use std::{fs, process};
 
+use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
@@ -101,6 +102,8 @@ enum Args {
     /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
     /// As long as there's either an open or hyphenated spelling.
     Compounds,
+    /// Provided a sentence or phrase, emit a list of each noun phrase contained within.
+    NominalPhrases { input: String },
 }
 
 fn main() -> anyhow::Result<()> {
@@ -463,6 +466,18 @@ fn main() -> anyhow::Result<()> {
             println!("\nFound {} compound word groups", results.len());
             Ok(())
         }
+        Args::NominalPhrases { input } => {
+            let doc = Document::new_markdown_default_curated(&input);
+
+            for phrase in doc.iter_nominal_phrases() {
+                let s =
+                    doc.get_span_content_str(&phrase.span().ok_or(anyhow!("Unable to get span"))?);
+
+                println!("{s}");
+            }
+
+            Ok(())
+        }
     }
 }
 
@@ -478,6 +493,7 @@ fn load_file(
         .map(|v| v.to_str().unwrap())
     {
         Some("md") => Box::new(Markdown::default()),
+
         Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
             MarkdownOptions::default(),
         )),
