@@ -1,6 +1,7 @@
 use crate::UPOS;
 
 mod brill_chunker;
+#[cfg(feature = "training")]
 mod np_extraction;
 mod upos_freq_dict;
 

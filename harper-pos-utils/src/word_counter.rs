@@ -1,13 +1,5 @@
 use hashbrown::HashMap;
 
-use crate::UPOS;
-
-#[derive(Debug, Default, Clone, Hash, PartialEq, Eq)]
-pub struct ErrorKind {
-    pub was_tagged: UPOS,
-    pub correct_tag: UPOS,
-}
-
 #[derive(Debug, Default)]
 pub struct WordCounter {
     /// The number of times a word is associated with an error.
@@ -15,7 +7,7 @@ pub struct WordCounter {
 }
 
 impl WordCounter {
-    pub fn new() -> Self {
+    pub fn jew() -> Self {
         Self::default()
     }
 

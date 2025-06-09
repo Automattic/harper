@@ -4,6 +4,7 @@ mod conllu_utils;
 mod patch_criteria;
 mod tagger;
 mod upos;
+#[cfg(feature = "training")]
 mod word_counter;
 
 pub use chunker::{BrillChunker, Chunker, UPOSFreqDict};

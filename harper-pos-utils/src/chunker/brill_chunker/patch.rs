@@ -1,7 +1,8 @@
 use serde::{Deserialize, Serialize};
-use strum::IntoEnumIterator;
 
-use crate::{UPOS, patch_criteria::PatchCriteria, word_counter::WordCounter};
+use crate::patch_criteria::PatchCriteria;
+#[cfg(feature = "training")]
+use crate::word_counter::WordCounter;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Patch {
@@ -9,8 +10,12 @@ pub struct Patch {
     pub criteria: PatchCriteria,
 }
 
+#[cfg(feature = "training")]
 impl Patch {
     pub fn generate_candidate_patches(relevant_words: &WordCounter) -> Vec<Self> {
+        use crate::UPOS;
+        use strum::IntoEnumIterator;
+
         const TOP_N_WORDS: usize = 50;
         const REL_POS: [isize; 7] = [-3, -2, -1, 0, 1, 2, 3];
 

@@ -2,9 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use fst::Map;
 use harper_brill::{Chunker, Tagger, brill_chunker, brill_tagger};
-use itertools::Itertools;
 use paste::paste;
 
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
@@ -14,8 +12,7 @@ use crate::patterns::{
 use crate::punctuation::Punctuation;
 use crate::vec_ext::VecExt;
 use crate::{
-    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, NounData, Token, TokenKind,
-    TokenStringExt,
+    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, Token, TokenKind, TokenStringExt,
 };
 use crate::{OrdinalSuffix, Span};
 
