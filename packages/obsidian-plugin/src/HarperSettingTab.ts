@@ -37,12 +37,17 @@ export class HarperSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		new Setting(containerEl).setName('Use Web Worker').addToggle((toggle) =>
-			toggle.setValue(this.settings.useWebWorker).onChange(async (value) => {
-				this.settings.useWebWorker = value;
-				await this.state.initializeFromSettings(this.settings);
-			}),
-		);
+		new Setting(containerEl)
+			.setName('Use Web Worker')
+			.setDesc(
+				'Whether to run the Harper engine in a separate thread. Improves stability and speed at the cost of memory.',
+			)
+			.addToggle((toggle) =>
+				toggle.setValue(this.settings.useWebWorker).onChange(async (value) => {
+					this.settings.useWebWorker = value;
+					await this.state.initializeFromSettings(this.settings);
+				}),
+			);
 
 		new Setting(containerEl).setName('English Dialect').addDropdown((dropdown) => {
 			dropdown
