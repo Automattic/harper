@@ -4,6 +4,7 @@ import { startCase } from 'lodash-es';
 import { type App, PluginSettingTab, Setting } from 'obsidian';
 import type State from './State.js';
 import type { Settings } from './State.js';
+import { dictToString, stringToDict } from './dictUtils';
 import type HarperPlugin from './index.js';
 
 export class HarperSettingTab extends PluginSettingTab {
@@ -17,8 +18,14 @@ export class HarperSettingTab extends PluginSettingTab {
 		this.state = state;
 		this.plugin = plugin;
 
-		this.updateDescriptions();
-		this.updateSettings();
+		// Poll every so often
+		const update = () => {
+			this.updateDescriptions();
+			this.updateSettings();
+			setTimeout(update, 1000);
+		};
+
+		update();
 	}
 
 	updateSettings() {
@@ -63,6 +70,20 @@ export class HarperSettingTab extends PluginSettingTab {
 					this.plugin.updateStatusBar(dialect);
 				});
 		});
+
+		new Setting(containerEl)
+			.setName('Personal Dictionary')
+			.setDesc(
+				'Make edits to your personal dictionary. Add names, places, or terms you use often. Each line should contain its own word.',
+			)
+			.addTextArea((ta) => {
+				ta.inputEl.cols = 20;
+				ta.setValue(dictToString(this.settings.userDictionary ?? [''])).onChange(async (v) => {
+					const dict = stringToDict(v);
+					this.settings.userDictionary = dict;
+					await this.state.initializeFromSettings(this.settings);
+				});
+			});
 
 		new Setting(containerEl)
 			.setName('Delay')
