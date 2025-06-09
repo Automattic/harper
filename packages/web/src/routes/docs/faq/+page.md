@@ -12,7 +12,7 @@ Do you want to use it within WordPress? We have a [WordPress plugin](/docs/integ
 
 Do you want to use it within your Browser? We have a [Chrome extension](/docs/integrations/chrome-extension). (Firefox add-on coming soon.)
 
-Do you want to use it within your code editor? We have documentation on how you can integrate with [Visual Studio Code and its forks](/docs/integrations/visual-studio-code), [Neovim](/docs/integrations/neovim), [Helix](/docs/integrations/helix), [Emacs](/docs/integrations/emacs), and [Zed](/docs/integrations/zed). If you're using a different code editor, then you can integrate directly with our language server, [`harper-ls`](/docs/integrations/language-server).
+Do you want to use it within your code editor? We have documentation on how you can integrate with [Visual Studio Code and its forks](/docs/integrations/visual-studio-code), [Neovim](/docs/integrations/neovim), [Helix](/docs/integrations/helix), [Emacs](/docs/integrations/emacs), [Zed](/docs/integrations/zed) and [Sublime Text](/docs/integrations/sublime-text). If you're using a different code editor, then you can integrate directly with our language server, [`harper-ls`](/docs/integrations/language-server).
 
 Do you want to integrate it in your web app or your JavaScript/TypeScript codebase? You can use [`harper.js`](./harperjs/introduction).
 

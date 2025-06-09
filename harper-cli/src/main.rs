@@ -98,6 +98,9 @@ enum Args {
     },
     /// Print harper-core version.
     CoreVersion,
+    /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
+    /// As long as there's either an open or hyphenated spelling.
+    Compounds,
 }
 
 fn main() -> anyhow::Result<()> {
@@ -406,7 +409,58 @@ fn main() -> anyhow::Result<()> {
         } => {
             let chunker = BrillChunker::train(dataset, epochs, candidate_selection_chance);
             fs::write(output, serde_json::to_string_pretty(&chunker)?)?;
+            Ok(())
+        }
+        Args::Compounds => {
+            let mut compound_map: HashMap<String, Vec<String>> = HashMap::new();
 
+            // First pass: process open and hyphenated compounds
+            for word in dictionary.words_iter() {
+                if !word.contains(&' ') && !word.contains(&'-') {
+                    continue;
+                }
+
+                let normalized_key: String = word
+                    .iter()
+                    .filter(|&&c| c != ' ' && c != '-')
+                    .collect::<String>()
+                    .to_lowercase();
+
+                let word_str = word.iter().collect::<String>();
+                compound_map
+                    .entry(normalized_key)
+                    .or_default()
+                    .push(word_str);
+            }
+
+            // Second pass: process closed compounds
+            for word in dictionary.words_iter() {
+                if word.contains(&' ') || word.contains(&'-') {
+                    continue;
+                }
+
+                let normalized_key: String = word.iter().collect::<String>().to_lowercase();
+                if let Some(variants) = compound_map.get_mut(&normalized_key) {
+                    variants.push(word.iter().collect());
+                }
+            }
+
+            // Process and print results
+            let mut results: Vec<_> = compound_map
+                .into_iter()
+                .filter(|(_, v)| v.len() > 1)
+                .collect();
+            results.sort_by_key(|(k, _)| k.clone());
+
+            // Instead of moving `results` into the for loop, iterate over a reference to it
+            for (normalized, originals) in &results {
+                println!("\nVariants for '{}':", normalized);
+                for original in originals {
+                    println!("  - {}", original);
+                }
+            }
+
+            println!("\nFound {} compound word groups", results.len());
             Ok(())
         }
     }

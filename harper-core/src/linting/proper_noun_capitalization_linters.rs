@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use super::{Lint, LintKind, Suggestion};
 use super::{LintGroup, PatternLinter};
 use crate::parsers::PlainEnglish;
-use crate::patterns::{ExactPhrase, Pattern, PatternMap};
+use crate::patterns::{FixedPhrase, Pattern, PatternMap};
 use crate::{Dictionary, Document};
 use crate::{Token, TokenStringExt};
 use std::sync::Arc;
@@ -51,7 +51,7 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
                 &PlainEnglish,
                 &dictionary,
             );
-            let pattern = ExactPhrase::from_document(&doc);
+            let pattern = FixedPhrase::from_document(&doc);
 
             pattern_map.insert(pattern, doc);
         }

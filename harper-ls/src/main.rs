@@ -32,6 +32,9 @@ struct Args {
     /// Set to listen on standard input / output rather than TCP.
     #[arg(short, long, default_value_t = false)]
     stdio: bool,
+    /// Skip the debug version check.
+    #[arg(long, default_value_t = false)]
+    skip_version_check: bool,
 }
 
 // Setting worker threads to four means the process will use about five threads total
@@ -46,10 +49,12 @@ async fn main() -> anyhow::Result<()> {
 
     tracing::subscriber::set_global_default(subscriber)?;
 
-    tokio::spawn(log_version_info());
-
     let args = Args::parse();
     let config = Config::default();
+
+    if !args.skip_version_check {
+        tokio::spawn(log_version_info());
+    }
 
     let (service, socket) = LspService::new(|client| Backend::new(client, config));
 
@@ -89,5 +94,9 @@ async fn log_version_info() {
         Err(_err) => error!("Unable to obtain latest version."),
     }
 
-    info!("Current version: {}", harper_core::core_version());
+    info!(
+        "Current harper-core version: {}",
+        harper_core::core_version()
+    );
+    info!("Current harper-ls version: {}", backend::ls_version());
 }
