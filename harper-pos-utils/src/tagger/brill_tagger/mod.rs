@@ -126,7 +126,7 @@ impl BrillTagger<FreqDict> {
     /// To speed up training, only try a subset of all possible candidates.
     /// How many to select is given by the `candidate_selection_chance`. A higher chance means a
     /// longer training time.
-    fn epoch(&mut self, training_file: impl AsRef<Path>, candidate_selection_chance: f32) {
+    fn epoch(&mut self, training_files: &[impl AsRef<Path>], candidate_selection_chance: f32) {
         use crate::conllu_utils::iter_sentences_in_conllu;
         use rs_conllu::Sentence;
         use std::time::Instant;
@@ -136,7 +136,11 @@ impl BrillTagger<FreqDict> {
         let mut total_tokens = 0;
         let mut error_counter = ErrorCounter::new();
 
-        let sentences: Vec<Sentence> = iter_sentences_in_conllu(training_file).collect();
+        let sentences: Vec<Sentence> = training_files
+            .iter()
+            .map(iter_sentences_in_conllu)
+            .flatten()
+            .collect();
         let mut sentences_tagged: Vec<(Vec<String>, Vec<Option<UPOS>>)> = Vec::new();
 
         for sent in &sentences {
@@ -253,21 +257,24 @@ impl BrillTagger<FreqDict> {
     /// This does not do _any_ error handling, and should not run in production.
     /// It should be used for training a model that _will_ be used in production.
     pub fn train(
-        training_file: impl AsRef<Path>,
+        training_files: &[impl AsRef<Path>],
         epochs: usize,
         candidate_selection_chance: f32,
     ) -> Self {
         use crate::FreqDictBuilder;
 
         let mut freq_dict_builder = FreqDictBuilder::new();
-        freq_dict_builder.inc_from_conllu_file(&training_file);
+
+        for file in training_files {
+            freq_dict_builder.inc_from_conllu_file(file);
+        }
 
         let freq_dict = freq_dict_builder.build();
 
         let mut tagger = Self::new(freq_dict);
 
         for _ in 0..epochs {
-            tagger.epoch(&training_file, candidate_selection_chance);
+            tagger.epoch(&training_files, candidate_selection_chance);
         }
 
         tagger

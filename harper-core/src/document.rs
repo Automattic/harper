@@ -149,7 +149,11 @@ impl Document {
             .collect();
 
         let token_tags = brill_tagger().tag_sentence(&token_strings);
+        dbg!(&token_tags);
         let np_flags = brill_chunker().chunk_sentence(&token_strings, &token_tags);
+
+        assert!(token_strings.len() == token_tags.len());
+        assert!(token_strings.len() == np_flags.len());
 
         let mut i = 0;
 

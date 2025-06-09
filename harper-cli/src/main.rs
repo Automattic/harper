@@ -78,17 +78,18 @@ enum Args {
         file: PathBuf,
     },
     TrainBrillTagger {
-        /// Path to a `.conllu` dataset to train on.
-        dataset: PathBuf,
-        /// The number of epochs (and patch rules) to train.
-        epochs: usize,
         #[arg(short, long, default_value = "1.0")]
         candidate_selection_chance: f32,
         /// The path to write the final JSON model file to.
         output: PathBuf,
+        /// The number of epochs (and patch rules) to train.
+        epochs: usize,
+        /// Path to a `.conllu` dataset to train on.
+        #[arg(num_args = 1..)]
+        datasets: Vec<PathBuf>,
     },
     TrainBrillChunker {
-        /// Path to a `.conllu` dataset to train on.
+        /// Paths to the `.conllu` datasets to train on. Comma delimited.
         dataset: PathBuf,
         /// The number of epochs (and patch rules) to train.
         epochs: usize,
@@ -394,12 +395,12 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::TrainBrillTagger {
-            dataset,
+            datasets: dataset,
             epochs,
             output,
             candidate_selection_chance,
         } => {
-            let tagger = BrillTagger::train(dataset, epochs, candidate_selection_chance);
+            let tagger = BrillTagger::train(&dataset, epochs, candidate_selection_chance);
             fs::write(output, serde_json::to_string_pretty(&tagger)?)?;
 
             Ok(())
