@@ -1,5 +1,5 @@
 use actix_web::{web, HttpResponse, Responder};
-use harper_core::Document;
+use harper_core::{Document, FstDictionary, Dialect, linting::LintGroup, linting::Linter};
 use serde::{Deserialize, Serialize};
 
 /// This struct represents a single lint suggestion in the JSON output.
@@ -28,20 +28,27 @@ pub struct LintRequest {
 /// and returns a JSON array of `LintOutput` objects.
 pub async fn lint_text(request: web::Json<LintRequest>) -> impl Responder {
     // Create a new document from the input text.
-    let mut document = Document::new_from_str(&request.text);
-    // Run all the available linters on the document.
-    document.run_all_linters();
+    let document = Document::new_plain_english_curated(&request.text);
+    
+    // Create a linter.
+    // TODO: Consider making Dialect configurable or detecting it.
+    // TODO: FstDictionary::curated() might be expensive to call repeatedly.
+    // Consider creating it once and sharing it (e.g., using web::Data).
+    let dictionary = FstDictionary::curated();
+    let mut linter = LintGroup::new_curated(dictionary, Dialect::American);
+
+    // Get lints from the linter.
+    let lints_from_linter = linter.lint(&document);
 
     // Convert the lints into our `LintOutput` format.
-    let lint_outputs: Vec<LintOutput> = document
-        .lints()
+    let lint_outputs: Vec<LintOutput> = lints_from_linter
         .iter()
         .map(|lint| LintOutput {
             start: lint.span.start,
             length: lint.span.end - lint.span.start,
-            issue: lint.lint_kind.message(),
+            issue: lint.lint_kind.to_string(), // Changed from message()
             r#type: lint.lint_kind.to_string(),
-            suggestions: lint.suggestions.iter().map(|s| s.text.clone()).collect(),
+            suggestions: lint.suggestions.iter().map(|s| s.to_string()).collect(), // Changed from s.text.clone()
         })
         .collect();
 
