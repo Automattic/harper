@@ -103,7 +103,7 @@ mod tests {
 
     #[test]
     fn does_not_merge_open_compound_in_dict() {
-        // straight away is not in the dictionary, but straightaway is
+        // straight away is in the dictionary, and straightaway is
         let doc = Document::new_plain_english_curated("straight away");
         let a = doc.tokens().nth(0).unwrap();
         let b = doc.tokens().nth(2).unwrap();

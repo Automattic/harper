@@ -1717,7 +1717,7 @@
 > Wilson called up        several people on the telephone ; then    there were  no      cigarettes ,
 # NPr    V/J    NSg/V/J/P J/D     NSg/V  P  D   NSg       . NSg/J/C W?    NSg/V NPrSg/P NPl        .
 > and I   went  out         to buy   some  at the drugstore on the corner . When    I   came    back    they
-# V/C ISg NSg/V NSg/V/J/R/P P  NSg/V I/J/R P  D   NSg/Am/Ca P  D   NSg/J  . NSg/I/C ISg NSg/V/P NSg/V/J IPl
+# V/C ISg NSg/V NSg/V/J/R/P P  NSg/V I/J/R P  D   NSg       P  D   NSg/J  . NSg/I/C ISg NSg/V/P NSg/V/J IPl
 > had both disappeared , so        I   sat     down      discreetly in the living - room    and read  a
 # V   I/C  V/J         . NSg/I/J/C ISg NSg/V/J NSg/V/J/P R          P  D   NSg/J  . NSg/V/J V/C NSg/V D/P
 > chapter of “ Simon Called Peter     ” — either it        was terrible stuff or      the whiskey
