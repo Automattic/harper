@@ -10,17 +10,17 @@
 # NSg/V   NPl/V
 >
 #
-> My favourite color      is blu .
-# D  NSg/J/Br  NSg/V/J/Am VL W?  .
-> I   must  defend my honour !
-# ISg NSg/V NSg/V  D  NSg/Br .
+> My favourite      color      is blu .
+# D  NSg/J/Ca/Au/Br NSg/V/J/Am VL W?  .
+> I   must  defend my honour       !
+# ISg NSg/V NSg/V  D  NSg/Ca/Au/Br .
 > I   recognize that    you recognise me        .
-# ISg V         N/I/C/D IPl V/Br      NPrSg/ISg .
+# ISg V         N/I/C/D IPl V/Au/Br   NPrSg/ISg .
 > I   analyze how   you infantilize me        .
 # ISg V       NSg/C IPl V           NPrSg/ISg .
 > I   analyse how   you infantilise me        .
-# ISg V/Br    NSg/C IPl ?           NPrSg/ISg .
-> Careful , traveller !
-# J       . NSg/Br    .
-> At the centre of the theatre I   dropped a   litre  of coke    .
-# P  D   NSg/Br P  D   NSg/Br  ISg V/J     D/P NSg/Br P  NPrSg/V .
+# ISg V/Au/Br NSg/C IPl ?           NPrSg/ISg .
+> Careful , traveller    !
+# J       . NSg/Ca/Au/Br .
+> At the centre       of the theatre      I   dropped a   litre        of coke    .
+# P  D   NSg/Ca/Au/Br P  D   NSg/Ca/Au/Br ISg V/J     D/P NSg/Ca/Au/Br P  NPrSg/V .
