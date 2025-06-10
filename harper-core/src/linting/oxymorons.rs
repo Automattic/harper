@@ -1,5 +1,5 @@
 use crate::linting::{Lint, LintKind, PatternLinter};
-use crate::patterns::{ExactPhrase, LongestMatchOf, Pattern};
+use crate::patterns::{FixedPhrase, LongestMatchOf, Pattern};
 use crate::{Token, TokenStringExt};
 
 /// A linter that flags oxymoronic phrases.
@@ -33,7 +33,7 @@ impl Oxymorons {
         // Build a vector of exact-match patterns for each oxymoron.
         let patterns: Vec<Box<dyn Pattern>> = phrases
             .into_iter()
-            .map(|s| Box::new(ExactPhrase::from_phrase(s)) as Box<dyn Pattern>)
+            .map(|s| Box::new(FixedPhrase::from_phrase(s)) as Box<dyn Pattern>)
             .collect();
 
         let pattern = Box::new(LongestMatchOf::new(patterns));

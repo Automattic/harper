@@ -276,16 +276,16 @@ addnoun noun:
     exit 0
   fi
 
-  # 'M': possessive -'s suffix for both common and proper nouns
-  flags='M'
+  # 'g': possessive -'s suffix for both common and proper nouns
+  flags='g'
 
   # If the first letter is uppercase, treat it as a proper noun
   if [[ "{{noun}}" =~ ^[A-Z] ]]; then
-    # '2': proper noun, usually no plural
-    flags+='2'
+    # 'O': proper noun, usually no plural
+    flags+='O'
   else
-    # '1': (common) singular noun, 'S': plural -(e)s
-    flags+='1S'
+    # 'N': (common) singular noun, 'S': plural -(e)s
+    flags+='NS'
   fi
 
   # Echo the noun with its flags to the dictionary file

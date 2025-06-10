@@ -305,7 +305,7 @@
 > computing is a   mathematical science . Early   computer science was strongly
 # NSg/V     VL D/P J            NSg/V   . NSg/J/R NSg/V    NSg/V   V   R
 > influenced by the work of mathematicians such  as    Kurt Gödel , Alan  Turing , John
-# V/J        P  D   NSg  P  NPl            NSg/I NSg/R NPr  ?     . NPrSg NPr    . NPrSg
+# V/J        P  D   NSg  P  NPl            NSg/I NSg/R NPr  NPr   . NPrSg NPr    . NPrSg
 > von Neumann , Rózsa Péter and Alonzo Church  and there continues to be     a   useful
 # ?   ?       . ?     ?     V/C NPr    NPrSg/V V/C W?    NPl/V     P  NSg/VX D/P J
 > interchange of ideas between the two fields  in        areas such  as    mathematical logic   ,

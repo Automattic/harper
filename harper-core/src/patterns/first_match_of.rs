@@ -4,7 +4,7 @@ use crate::Token;
 /// A naive pattern collection that naively iterates through a list of patterns,
 /// returning the first one that matches.
 ///
-/// Compare to [`EitherPattern`], which returns the longest match.
+/// Compare to [`LongestMatchOf`](super::LongestMatchOf), which returns the longest match.
 #[derive(Default)]
 pub struct FirstMatchOf {
     patterns: Vec<Box<dyn Pattern>>,

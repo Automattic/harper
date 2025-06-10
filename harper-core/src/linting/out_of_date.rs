@@ -1,6 +1,6 @@
 use crate::{
     Token, TokenStringExt,
-    patterns::{ExactPhrase, LongestMatchOf, Pattern},
+    patterns::{FixedPhrase, LongestMatchOf, Pattern},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -12,9 +12,9 @@ pub struct OutOfDate {
 impl Default for OutOfDate {
     fn default() -> Self {
         let pattern = LongestMatchOf::new(vec![
-            Box::new(ExactPhrase::from_phrase("out of date")),
-            Box::new(ExactPhrase::from_phrase("out-of date")),
-            Box::new(ExactPhrase::from_phrase("out of-date")),
+            Box::new(FixedPhrase::from_phrase("out of date")),
+            Box::new(FixedPhrase::from_phrase("out-of date")),
+            Box::new(FixedPhrase::from_phrase("out of-date")),
         ]);
 
         Self {

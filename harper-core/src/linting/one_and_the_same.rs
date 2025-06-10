@@ -1,6 +1,6 @@
 use crate::{
     Lrc, Token, TokenStringExt,
-    patterns::{ExactPhrase, LongestMatchOf, Pattern, SequencePattern, WordSet},
+    patterns::{FixedPhrase, LongestMatchOf, Pattern, SequencePattern, WordSet},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -11,7 +11,7 @@ pub struct OneAndTheSame {
 
 impl Default for OneAndTheSame {
     fn default() -> Self {
-        let one_in_the_same = Lrc::new(ExactPhrase::from_phrase("one in the same"));
+        let one_in_the_same = Lrc::new(FixedPhrase::from_phrase("one in the same"));
 
         Self {
             pattern: Box::new(LongestMatchOf::new(vec![

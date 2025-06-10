@@ -135,14 +135,16 @@ fn format_word_tag(word: &WordMetadata) -> String {
         add("P");
     }
 
-    if let Some(dialect) = word.dialect {
-        add(match dialect {
-            harper_core::Dialect::American => "Am",
-            harper_core::Dialect::British => "Br",
-            harper_core::Dialect::Canadian => "Ca",
-            harper_core::Dialect::Australian => "Au",
-        });
-    }
+    word.dialects.iter().for_each(|d| {
+        if let Ok(dialect) = harper_core::Dialect::try_from(d) {
+            add(match dialect {
+                harper_core::Dialect::American => "Am",
+                harper_core::Dialect::British => "Br",
+                harper_core::Dialect::Canadian => "Ca",
+                harper_core::Dialect::Australian => "Au",
+            });
+        }
+    });
 
     if tags.is_empty() {
         String::from("W?")
