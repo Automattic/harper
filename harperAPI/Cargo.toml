@@ -1,0 +1,10 @@
+[package]
+name = "harperAPI"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4"
+serde = { version = "1.0", features = ["derive"] }
+# Use a relative path to the harper-core crate
+harper-core = { path = "../harper-core" }
