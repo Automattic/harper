@@ -26,6 +26,7 @@ console.log('background is running');
 chrome.runtime.onInstalled.addListener((details) => {
 	if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
 		chrome.runtime.setUninstallURL('https://writewithharper.com/uninstall-browser-extension');
+		chrome.tabs.create({ url: 'https://writewithharper.com/install-browser-extension' });
 	}
 });
 
@@ -54,7 +55,8 @@ async function enableDefaultDomains() {
 		'froala.com',
 		'playground.lexical.dev',
 		'discord.com',
-		'youtube.com',
+		'www.youtube.com',
+		'www.google.com',
 		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
@@ -70,6 +72,7 @@ async function enableDefaultDomains() {
 		'hashnode.com',
 		'www.slatejs.org',
 		'localhost',
+		'writewithharper.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

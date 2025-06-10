@@ -16,7 +16,7 @@ pub fn lint_group() -> LintGroup {
                 $group.add_pattern_linter(
                     $name,
                     Box::new(
-                        MapPhraseLinter::new_exact_phrases(
+                        MapPhraseLinter::new_fixed_phrases(
                             $input,
                             $corrections,
                             $hint,
@@ -31,7 +31,7 @@ pub fn lint_group() -> LintGroup {
     add_exact_mappings!(group, {
         // The name of the rule
         "ChangeTack" => (
-            // The exact phrase(s) to look for.
+            // The phrase(s) to look for.
             ["change tact", "change tacks", "change tacts"],
             // The corrections to provide.
             ["change tack"],
@@ -747,10 +747,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `worst and worst` to `worse and worse` for proper comparative usage."
         ),
         "WorseCaseScenario" => (
-            ["worse case scenario", "worse-case scenario", "worse-case-scenario",
-             "worst case scenario",                        "worst-case-scenario"],
+            ["worse case scenario", "worse-case scenario", "worse-case-scenario"],
             ["worst-case scenario"],
             "Use `worst` for referring to the worst possible scenario. (`Worse` is for comparing)",
+            "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
+        ),
+        "WorstCaseScenario" => (
+            ["worst case scenario", "worst-case-scenario"],
+            ["worst-case scenario"],
+            "Hyphenate `worst-case`.",
             "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
         ),
         "WorseThan" => (
@@ -1009,7 +1014,7 @@ pub fn lint_group() -> LintGroup {
         "SufficeItToSay" => (
             ["suffice to say"],
             ["suffice it to say"],
-            "`Suffice it to say` is more standard and more common variant.",
+            "`Suffice it to say` is the more standard and more common variant.",
             "Corrects `suffice to say` to `suffice it to say`."
         ),
         "LikeThePlague" => (
@@ -1269,6 +1274,42 @@ pub fn lint_group() -> LintGroup {
             ["some of the"],
             "Add `of` to form the partitive phrase: `some of the`.",
             "Quantity words such as `some` normally take `of` before a definite article. Including `of` signals that you mean a subset of a larger set, preventing a momentary stumble in comprehension."
+        ),
+        "Insurmountable" => (
+            ["unsurmountable"],
+            ["insurmountable"],
+            "This word has a more standard, more common synonym.",
+            "Suggests the more standard and common synonym `insurmountable`."
+        ),
+        "Brutality" => (
+            ["brutalness"],
+            ["brutality"],
+            "This word has a more standard, more common synonym.",
+            "Suggests the more standard and common synonym `brutality`."
+        ),
+        "KindOf" => (
+            ["kinda of"],
+            ["kind of", "kinda"],
+            "`Kinda` already means `kind of`, so `kinda of` is redundant.",
+            "Corrects `kinda of` to `kind of`."
+        ),
+        "InNeedOf" => (
+            ["in need for"],
+            ["in need of"],
+            "Use `in need of` for when something is required or necessary.",
+            "Corrects `in need for` to `in need of`."
+        ),
+        "PeaceOfMind" => (
+            ["piece of mind"],
+            ["peace of mind"],
+            "The phrase is `peace of mind`, meaning `calm`. A `piece` is a `part` of something.",
+            "Corrects `piece of mind` to `peace of mind`."
+        ),
+        "ACoupleMore" => (
+            ["a couple of more"],
+            ["a couple more"],
+            "The correct wording is `a couple more`, without the `of`.",
+            "Corrects `a couple of more` to `a couple more`."
         ),
     });
 

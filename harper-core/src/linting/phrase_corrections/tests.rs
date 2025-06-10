@@ -1491,3 +1491,57 @@ fn corrects_some_the() {
         "You have misplaced some of the config files.",
     );
 }
+
+#[test]
+fn corrects_brutalness() {
+    assert_suggestion_result(
+        "the mildness and brutalness of the story rises.",
+        lint_group(),
+        "the mildness and brutality of the story rises.",
+    )
+}
+
+#[test]
+fn corrects_unsurmountable() {
+    assert_suggestion_result(
+        "That being said, if you find upgrading to newer versions to be unsurmountable, please open an issue.",
+        lint_group(),
+        "That being said, if you find upgrading to newer versions to be insurmountable, please open an issue.",
+    )
+}
+
+#[test]
+fn corrects_kinda_of() {
+    assert_suggestion_result(
+        "Some kinda of Sync issue only with 0.79.1",
+        lint_group(),
+        "Some kind of Sync issue only with 0.79.1",
+    );
+}
+
+#[test]
+fn corrects_in_need_of() {
+    assert_suggestion_result(
+        "In need for a native control for map symbols (map legend) #5203.",
+        lint_group(),
+        "In need of a native control for map symbols (map legend) #5203.",
+    );
+}
+
+#[test]
+fn corrects_piece_of_mind() {
+    assert_suggestion_result(
+        "A Discord bot that gives you piece of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
+        lint_group(),
+        "A Discord bot that gives you peace of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
+    )
+}
+
+#[test]
+fn corrects_a_couple_of_more() {
+    assert_suggestion_result(
+        "There are a couple of more rules that could be added, how can I contribute?",
+        lint_group(),
+        "There are a couple more rules that could be added, how can I contribute?",
+    )
+}

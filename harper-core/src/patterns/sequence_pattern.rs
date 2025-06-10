@@ -239,7 +239,7 @@ mod tests {
     }
 
     #[test]
-    fn exact_word_doesnt_match_different_cases() {
+    fn exact_means_case_sensitive() {
         let pat = SequencePattern::default().then_exact_word("Foo");
         let doc = Document::new_plain_english_curated("foo Foo FOO");
         let matches = pat.find_all_matches_in_doc(&doc);
