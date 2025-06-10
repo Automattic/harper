@@ -1,6 +1,6 @@
 use crate::{
     Lrc, Token, TokenStringExt,
-    patterns::{EitherPattern, ExactPhrase, Pattern, SequencePattern, WordSet},
+    patterns::{EitherPattern, FixedPhrase, Pattern, SequencePattern, WordSet},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -16,7 +16,7 @@ impl Default for AmountsFor {
         let singular_pattern = SequencePattern::default()
             .then(singular_context)
             .then_whitespace()
-            .then(Lrc::new(ExactPhrase::from_phrase("amounts for")));
+            .then(Lrc::new(FixedPhrase::from_phrase("amounts for")));
 
         let singular_context = WordSet::new(&[
             "they", "can", "could", "may", "might", "must", "should", "will", "would",
@@ -25,7 +25,7 @@ impl Default for AmountsFor {
         let plural_pattern = SequencePattern::default()
             .then(singular_context)
             .then_whitespace()
-            .then(Lrc::new(ExactPhrase::from_phrase("amount for")));
+            .then(Lrc::new(FixedPhrase::from_phrase("amount for")));
 
         Self {
             pattern: Box::new(EitherPattern::new(vec![

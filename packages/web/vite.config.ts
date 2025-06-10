@@ -95,6 +95,10 @@ export default defineConfig({
 									title: 'Zed',
 									to: '/docs/integrations/zed',
 								},
+								{
+									title: 'Sublime Text',
+									to: '/docs/integrations/sublime-text',
+								},
 							],
 						},
 						{

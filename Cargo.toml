@@ -13,3 +13,9 @@ opt-level = 3
 # Stripping binaries triggers a bug in `wasm-opt`.
 # Disable it for now.
 # strip = true
+
+# Release profile with debug info.
+# Useful for debugging and profiling.
+[profile.release-debug]
+inherits = "release"
+debug = 2

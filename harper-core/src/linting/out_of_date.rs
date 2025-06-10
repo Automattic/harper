@@ -1,6 +1,6 @@
 use crate::{
     Token, TokenStringExt,
-    patterns::{EitherPattern, ExactPhrase, Pattern},
+    patterns::{EitherPattern, FixedPhrase, Pattern},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -12,9 +12,9 @@ pub struct OutOfDate {
 impl Default for OutOfDate {
     fn default() -> Self {
         let pattern = EitherPattern::new(vec![
-            Box::new(ExactPhrase::from_phrase("out of date")),
-            Box::new(ExactPhrase::from_phrase("out-of date")),
-            Box::new(ExactPhrase::from_phrase("out of-date")),
+            Box::new(FixedPhrase::from_phrase("out of date")),
+            Box::new(FixedPhrase::from_phrase("out-of date")),
+            Box::new(FixedPhrase::from_phrase("out of-date")),
         ]);
 
         Self {
