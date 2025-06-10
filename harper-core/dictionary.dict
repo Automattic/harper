@@ -52327,6 +52327,7 @@ Btrfs/Ng            # file system
 BurpSuite/ONgS
 C++/OSg             # programming language
 CCP/OS              # Chinese Communist Party
+CDMA/NSg
 CEO/NSg             # chief executive officer
 CERN/Og             # intergovernmental organization
 CI/NSg              # continuous integration
@@ -52353,8 +52354,9 @@ DBMS/NOSg           # database management system
 DCT/NgS             # discrete cosine transform
 DEI
 DKIM/NSg
-DM/NgSV             # direct message
-DM'd/V
+DM/NgSV             
+DM'd/V              # direct message
+DM/NSgV
 DMed/V
 DMing/V
 DNS/OSg             # domain name system
@@ -52377,6 +52379,7 @@ Erdoğan/Og          # surname, Turkish politician
 Ethereum/Og         # digital currency
 Evo/OgS             # car model
 Expedia/Og
+Exynos/OJg          # Samsung SoC series.
 FAT32/Ng            # file system
 FIDO/NOSg
 FIFA/Ng             # football/soccer association
@@ -52393,6 +52396,7 @@ GLFW/Og
 GPL/Og              # GNU General Public License
 GPT/NSg             # generative pre-trained transformer
 GPU/NS              # graphics processing unit
+GSM/OJ              # Global System for Mobile Communications
 Ganeti/Sg
 Gateron/Sg
 Gerber/Ng           # file format
@@ -52407,6 +52411,7 @@ Grammarly/g         # grammar checker
 Grandey/Sg
 Graphviz/Sg
 Gravatar/Og
+HDR/J               # high dynamic range
 HQL/N
 Harper/Sg           # surname; grammar checker
 Hasan/OSg           # surname, given name
@@ -52414,8 +52419,10 @@ Hiera/Sg
 Holmdel/Sg
 IDA/Og              # reverse engineering
 IMAP/OSg            # internet message access protocol
+IMSI/N              # international mobile subscriber identity
 IPC/Ng              # interprocess communication
 IPCC/Og
+IPS/J               # in-plane switching (screen technology)
 IPv4/OSg
 ISA/NOgS            # instruction set architecture; industry standard architecture
 IntelliJ/Sg
@@ -52446,6 +52453,7 @@ LLVM/Ng             # compiler system
 LOC/9               # source lines of code
 LSB/NgSO            # least significant bit/byte; Linux Standard Base
 LSP/NgS             # language server protocol
+LTE/NOJ             # long-term evolution
 LTS/NSg
 LUT/NgS             # lookup table
 LVM/Sg
@@ -52473,6 +52481,7 @@ Manilas/N
 Manilla/Og
 MapReduce/N
 Marchus/Sg
+Mercielago/NSg
 Metasploit/ONgS
 Minecraft/Og
 Minhaj/OSg

@@ -1,10 +1,10 @@
 use crate::{
     CharStringExt, Lrc, TokenStringExt,
     linting::PatternLinter,
-    patterns::{All, SplitCompoundWord},
+    patterns::{All, MergeableWords},
 };
 
-use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
+use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 
 use crate::{
     Token,
@@ -20,7 +20,7 @@ use crate::{
 /// harper-core/src/linting/pronoun_contraction/should_contract.rs
 pub struct CompoundNounAfterPossessive {
     pattern: Box<dyn Pattern>,
-    split_pattern: Lrc<SplitCompoundWord>,
+    split_pattern: Lrc<MergeableWords>,
 }
 
 impl Default for CompoundNounAfterPossessive {
@@ -32,7 +32,9 @@ impl Default for CompoundNounAfterPossessive {
             .t_ws()
             .then(is_content_word);
 
-        let split_pattern = create_split_pattern();
+        let split_pattern = Lrc::new(MergeableWords::new(|meta_closed, meta_open| {
+            predicate(meta_closed, meta_open)
+        }));
 
         let mut pattern = All::default();
 
