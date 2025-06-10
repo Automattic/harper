@@ -30,15 +30,11 @@ const clientOptions: LanguageClientOptions = {
 		},
 		executeCommand(command, args, next) {
 			if (
-				['HarperAddToUserDict', 'HarperAddToFileDict'].includes(command) &&
+				['HarperAddToUserDict', 'HarperAddToFileDict', 'HarperIgnoreLint'].includes(command) &&
 				args.find((a) => typeof a === 'string' && a.startsWith('untitled:'))
 			) {
 				window
-					.showInformationMessage(
-						'Save the file to add words to the dictionary.',
-						'Save File',
-						'Dismiss',
-					)
+					.showInformationMessage('Save the file to execute this command.', 'Save File', 'Dismiss')
 					.then((selected) => {
 						if (selected === 'Save File') {
 							commands.executeCommand('workbench.action.files.save');
