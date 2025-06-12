@@ -1,4 +1,3 @@
-use crate::expr::LongestMatchOf;
 use super::super::{ExprLinter, Lint, LintKind};
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;

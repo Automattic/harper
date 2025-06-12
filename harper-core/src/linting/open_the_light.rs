@@ -1,5 +1,5 @@
-use crate::expr::LongestMatchOf;
 use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
 use crate::{
     Lrc, Token, TokenStringExt,
@@ -48,12 +48,12 @@ impl Default for OpenTheLight {
             .t_ws()
             .then_noun();
 
-        let pattern = Box::new(LongestMatchOf::new(vec![
+        let expr = Box::new(LongestMatchOf::new(vec![
             Box::new(open_the_device),
             Box::new(open_the_device_then_noun),
         ]));
 
-        Self { pattern }
+        Self { expr }
     }
 }
 

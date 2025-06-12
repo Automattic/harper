@@ -1,10 +1,10 @@
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
+use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{InflectionOfBe, Pattern, Word},
+    patterns::{InflectionOfBe, Word},
 };
 
 pub struct SaveToSafe {

@@ -1,7 +1,7 @@
 use crate::expr::Expr;
+use crate::expr::FixedPhrase;
 use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::{Token, TokenStringExt, patterns::FixedPhrase};
+use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 

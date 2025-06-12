@@ -1,4 +1,3 @@
-use crate::expr::LongestMatchOf;
 use super::Suggestion;
 use super::expr_linter::ExprLinter;
 use crate::expr::Expr;

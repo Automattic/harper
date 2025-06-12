@@ -3,11 +3,12 @@ use crate::Token;
 use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
+use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
 use crate::patterns::{Invert, Word, WordSet};
 
-#[doc = "Corrects the misuse of `then` to `than`."]
+/// Corrects the misuse of `then` to `than`.
 pub struct ThenThan {
     expr: Box<dyn Expr>,
 }

@@ -1,11 +1,9 @@
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
 use crate::expr::Expr;
 use itertools::Itertools;
 
 use crate::{
     Token,
-    patterns::{Pattern, Word},
+    patterns::Word,
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -80,5 +78,5 @@ impl ExprLinter for InitialismLinter {
 
 #[cfg(test)]
 mod tests {
-    use super::InitialismLinter;
+    
 }

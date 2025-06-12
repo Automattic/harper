@@ -1,10 +1,6 @@
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
+use crate::Token;
 use crate::expr::Expr;
-use crate::{
-    Token,
-    patterns::{Pattern, SequenceExpr},
-};
+use crate::expr::SequenceExpr;
 
 use super::super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -14,11 +10,12 @@ pub struct AvoidContraction {
 
 impl Default for AvoidContraction {
     fn default() -> Self {
-        let pattern = SequenceExpr::aco("you're").then_whitespace().then(
-            |tok: &Token, _source: &[char]| {
-                tok.kind.is_nominal() && !tok.kind.is_likely_homograph()
-            },
-        );
+        let pattern =
+            SequenceExpr::aco("you're")
+                .then_whitespace()
+                .then(|tok: &Token, _source: &[char]| {
+                    tok.kind.is_nominal() && !tok.kind.is_likely_homograph()
+                });
 
         Self {
             expr: Box::new(pattern),

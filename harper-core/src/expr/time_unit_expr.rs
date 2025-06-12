@@ -1,7 +1,8 @@
-use crate::Token;
 use crate::expr::LongestMatchOf;
+use crate::patterns::WordSet;
+use crate::{Span, Token};
 
-use super::{Pattern, WordSet};
+use super::Expr;
 
 /// Matches a time unit.
 ///
@@ -11,10 +12,10 @@ use super::{Pattern, WordSet};
 /// Matches possessive forms (which are also common misspellings for the plurals).
 /// Matches abbreviations.
 #[derive(Default)]
-pub struct TimeUnitPattern;
+pub struct TimeUnitExpr;
 
-impl Pattern for TimeUnitPattern {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
+impl Expr for TimeUnitExpr {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
         if tokens.is_empty() {
             return None;
         }
@@ -75,6 +76,6 @@ impl Pattern for TimeUnitPattern {
             Box::new(units_other_apos),
         ]);
 
-        units.matches(tokens, source)
+        units.run(cursor, tokens, source)
     }
 }

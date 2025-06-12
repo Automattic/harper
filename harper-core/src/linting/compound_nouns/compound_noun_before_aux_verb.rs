@@ -1,6 +1,5 @@
 use crate::expr::All;
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
 use crate::expr::MergeableWords;
 use crate::expr::SequenceExpr;
 use crate::patterns::AnyPattern;
@@ -8,7 +7,7 @@ use crate::{CharStringExt, Lrc, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 
-use crate::{Token, patterns::Pattern};
+use crate::Token;
 
 /// Two adjacent words separated by whitespace that if joined would be a valid noun.
 pub struct CompoundNounBeforeAuxVerb {

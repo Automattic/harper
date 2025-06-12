@@ -1,13 +1,10 @@
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::expr::Expr;
+use crate::expr::{Expr, ExprMap, FixedPhrase};
 use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
 
 use super::{ExprLinter, LintGroup};
 use super::{Lint, LintKind, Suggestion};
 use crate::parsers::PlainEnglish;
-use crate::patterns::{FixedPhrase, Pattern, PatternMap};
 use crate::{Dictionary, Document};
 use crate::{Token, TokenStringExt};
 use std::sync::Arc;
@@ -17,7 +14,7 @@ use std::sync::Arc;
 ///
 /// If you would like to add a proper noun to Harper, see `proper_noun_rules.json`.
 pub struct ProperNounCapitalizationLinter<D: Dictionary + 'static> {
-    pattern_map: PatternMap<Document>,
+    pattern_map: ExprMap<Document>,
     description: String,
     dictionary: Arc<D>,
 }
@@ -46,7 +43,7 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
     ) -> Self {
         let dictionary = Arc::new(dictionary);
 
-        let mut pattern_map = PatternMap::default();
+        let mut expr_map = ExprMap::default();
 
         for can_vers in canonical_versions {
             let doc = Document::new_from_vec(
@@ -54,13 +51,13 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
                 &PlainEnglish,
                 &dictionary,
             );
-            let pattern = FixedPhrase::from_document(&doc);
+            let expr = FixedPhrase::from_document(&doc);
 
-            pattern_map.insert(pattern, doc);
+            expr_map.insert(expr, doc);
         }
 
         Self {
-            pattern_map,
+            pattern_map: expr_map,
             dictionary: dictionary.clone(),
             description: description.to_string(),
         }
@@ -73,7 +70,7 @@ impl<D: Dictionary + 'static> ExprLinter for ProperNounCapitalizationLinter<D> {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let canonical_case = self.pattern_map.lookup(matched_tokens, source).unwrap();
+        let canonical_case = self.pattern_map.lookup(0, matched_tokens, source).unwrap();
 
         let mut broken = false;
 

@@ -1,10 +1,5 @@
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::expr::Expr;
-use crate::{
-    Token, TokenStringExt,
-    patterns::{Pattern, WordPatternGroup},
-};
+use crate::expr::{Expr, WordExprGroup};
+use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind};
 
@@ -14,16 +9,16 @@ pub struct BoringWords {
 
 impl Default for BoringWords {
     fn default() -> Self {
-        let mut pattern = WordPatternGroup::default();
+        let mut expr = WordExprGroup::default();
 
-        pattern.add_word("very");
-        pattern.add_word("interesting");
-        pattern.add_word("several");
-        pattern.add_word("most");
-        pattern.add_word("many");
+        expr.add_word("very");
+        expr.add_word("interesting");
+        expr.add_word("several");
+        expr.add_word("most");
+        expr.add_word("many");
 
         Self {
-            expr: Box::new(pattern),
+            expr: Box::new(expr),
         }
     }
 }

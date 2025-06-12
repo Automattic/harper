@@ -1,6 +1,6 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
-use crate::{Token, TokenStringExt, patterns::Pattern};
+use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 

@@ -1,10 +1,9 @@
-use crate::expr::LongestMatchOf;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::expr::TimeUnitExpr;
 use crate::{
     Lrc, Token,
     linting::{ExprLinter, Lint, Suggestion},
-    patterns::TimeUnitPattern,
 };
 
 pub struct FewUnitsOfTimeAgo {
@@ -13,7 +12,7 @@ pub struct FewUnitsOfTimeAgo {
 
 impl Default for FewUnitsOfTimeAgo {
     fn default() -> Self {
-        let units = TimeUnitPattern;
+        let units = TimeUnitExpr;
 
         let start = SequenceExpr::default()
             .then(|tok: &Token, src: &[char]| {

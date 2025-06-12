@@ -1,8 +1,7 @@
 use crate::expr::Expr;
+use crate::expr::FixedPhrase;
 use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
 use crate::linting::{ExprLinter, Lint, LintKind};
-use crate::patterns::{FixedPhrase, Pattern};
 use crate::{Token, TokenStringExt};
 
 /// A linter that detects hedging language.

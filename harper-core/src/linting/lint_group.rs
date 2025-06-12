@@ -1,6 +1,3 @@
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::expr::Expr;
 use std::collections::BTreeMap;
 use std::hash::Hash;
 use std::hash::{BuildHasher, Hasher};

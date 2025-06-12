@@ -1,6 +1,3 @@
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::expr::Expr;
 macro_rules! merge_linters {
     ($name:ident => $($linter:ident),* => $desc:expr) => {
         pub use merge_rule_hidden::$name;

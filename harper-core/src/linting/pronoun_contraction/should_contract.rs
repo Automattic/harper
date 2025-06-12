@@ -1,9 +1,8 @@
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
 use crate::{
     CharStringExt, Token,
-    patterns::{Pattern, WordSet},
+    patterns::WordSet,
 };
 
 use crate::Lint;

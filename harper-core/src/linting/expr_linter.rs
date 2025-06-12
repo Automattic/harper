@@ -1,4 +1,3 @@
-use crate::expr::LongestMatchOf;
 use crate::expr::{Expr, ExprExt};
 use blanket::blanket;
 

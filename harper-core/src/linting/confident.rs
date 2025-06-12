@@ -1,5 +1,5 @@
-use crate::expr::LongestMatchOf;
 use crate::expr::Expr;
+use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{Token, patterns::Word};
 
@@ -16,7 +16,7 @@ impl Default for Confident {
                 SequenceExpr::from(|tok: &Token, _source: &[char]| {
                     tok.kind.is_verb() || tok.kind.is_determiner()
                 })
-                .or(Word::new("very").into()),
+                .or(Word::new("very")),
             )
             .then_whitespace()
             .t_aco("confidant");

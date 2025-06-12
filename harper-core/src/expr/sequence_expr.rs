@@ -1,11 +1,11 @@
 use paste::paste;
 
 use crate::{
-    Document, Span, Token, TokenKind,
-    patterns::{AnyPattern, IndefiniteArticle, Pattern, WhitespacePattern, Word},
+    Span, Token, TokenKind,
+    patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word},
 };
 
-use super::{Condition, Expr, LongestMatchOf, Repeating, Step};
+use super::{Condition, Expr, Repeating, Step};
 
 #[derive(Default)]
 pub struct SequenceExpr {

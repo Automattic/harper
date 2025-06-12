@@ -1,10 +1,9 @@
 use super::{ExprLinter, Lint, LintKind};
 use crate::expr::Expr;
+use crate::expr::FixedPhrase;
 use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
 use crate::expr::SimilarToPhrase;
 use crate::linting::Suggestion;
-use crate::patterns::FixedPhrase;
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseLinter {

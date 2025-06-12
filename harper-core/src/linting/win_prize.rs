@@ -1,6 +1,5 @@
-use crate::expr::LongestMatchOf;
-use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::expr::{Expr, OwnedExprExt};
 use crate::{
     Lrc, Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},

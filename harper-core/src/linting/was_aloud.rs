@@ -1,4 +1,3 @@
-use crate::expr::LongestMatchOf;
 use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
 use crate::TokenStringExt;

@@ -1,10 +1,8 @@
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
-use crate::{
-    Lrc, Token, TokenStringExt,
-    patterns::{SpelledNumberPattern, WordSet},
-};
+use crate::expr::SpelledNumberExpr;
+use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -39,7 +37,7 @@ impl Default for SinceDuration {
                 .then_any_capitalization_of("since")
                 .then_whitespace()
                 .then(LongestMatchOf::new(vec![
-                    Box::new(SpelledNumberPattern),
+                    Box::new(SpelledNumberExpr),
                     Box::new(SequenceExpr::default().then_number()),
                 ]))
                 .then_whitespace()

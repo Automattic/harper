@@ -1,5 +1,6 @@
 mod all;
 mod condition;
+mod expr_map;
 mod first_match_of;
 mod fixed_phrase;
 mod longest_match_of;
@@ -7,23 +8,26 @@ mod mergeable_words;
 mod repeating;
 mod sequence_expr;
 mod similar_to_phrase;
+mod spelled_number_expr;
 mod step;
+mod time_unit_expr;
 mod word_expr_group;
 
 use std::rc::Rc;
 use std::sync::Arc;
 
 pub use all::All;
-use blanket::blanket;
 pub use condition::Condition;
-pub use first_match_of::FirstMatchOf;
+pub use expr_map::ExprMap;
 pub use fixed_phrase::FixedPhrase;
 pub use longest_match_of::LongestMatchOf;
 pub use mergeable_words::MergeableWords;
 pub use repeating::Repeating;
 pub use sequence_expr::SequenceExpr;
 pub use similar_to_phrase::SimilarToPhrase;
+pub use spelled_number_expr::SpelledNumberExpr;
 pub use step::Step;
+pub use time_unit_expr::TimeUnitExpr;
 pub use word_expr_group::WordExprGroup;
 
 use crate::{Document, LSend, Span, Token};
@@ -48,6 +52,16 @@ where
 }
 
 impl<E> Expr for Arc<E>
+where
+    E: Expr,
+{
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+        self.as_ref().run(cursor, tokens, source)
+    }
+}
+
+#[cfg(not(feature = "concurrent"))]
+impl<E> Expr for Rc<E>
 where
     E: Expr,
 {

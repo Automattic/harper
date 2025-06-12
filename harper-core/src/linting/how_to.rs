@@ -1,6 +1,6 @@
-use crate::expr::LongestMatchOf;
 use crate::expr::All;
 use crate::expr::Expr;
+use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{
     Token, TokenStringExt,

@@ -1,10 +1,9 @@
-use crate::expr::LongestMatchOf;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::expr::WordExprGroup;
 use hashbrown::HashMap;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::patterns::{Pattern, WordPatternGroup};
 use crate::{Token, TokenStringExt};
 
 pub struct DotInitialisms {
@@ -14,7 +13,7 @@ pub struct DotInitialisms {
 
 impl Default for DotInitialisms {
     fn default() -> Self {
-        let mut patterns = WordPatternGroup::default();
+        let mut patterns = WordExprGroup::default();
 
         let mut corrections = HashMap::new();
         corrections.insert("ie", "i.e.");

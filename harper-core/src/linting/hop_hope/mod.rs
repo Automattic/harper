@@ -1,6 +1,3 @@
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::expr::Expr;
 use super::merge_linters::merge_linters;
 
 mod to_hop;

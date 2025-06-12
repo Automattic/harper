@@ -3,7 +3,7 @@ use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
 use crate::{
     Token, TokenStringExt,
-    patterns::{Pattern, WhitespacePattern, WordSet},
+    patterns::{WhitespacePattern, WordSet},
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};

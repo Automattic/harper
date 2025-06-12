@@ -1,10 +1,10 @@
+use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
-use crate::expr::Expr;
 use crate::{
     Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{LongestMatchOf, SequenceExpr, WordSet},
+    patterns::WordSet,
 };
 
 pub struct PronounKnew {

@@ -1,9 +1,9 @@
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
+use crate::expr::WordExprGroup;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
 use crate::patterns::Word;
-use crate::patterns::{Invert, Pattern, WordPatternGroup};
 use crate::{Lint, Lrc, Token};
 
 // Looks for places where the genitive case _isn't_ being used, and should be.
@@ -28,7 +28,7 @@ impl UseGenitive {
 
         let trigger_words = ["there", "they're"];
 
-        let mut primary_pattern = WordPatternGroup::default();
+        let mut primary_pattern = WordExprGroup::default();
 
         for word in trigger_words {
             primary_pattern.add(

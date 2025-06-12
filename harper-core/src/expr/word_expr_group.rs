@@ -2,7 +2,6 @@ use hashbrown::HashMap;
 
 use super::first_match_of::FirstMatchOf;
 use super::{Expr, SequenceExpr};
-use crate::patterns::FirstMatchOf;
 use crate::{CharString, Span, Token};
 
 /// A expression collection to look for expressions that start with a specific

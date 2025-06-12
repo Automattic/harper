@@ -1,10 +1,9 @@
-use crate::expr::LongestMatchOf;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{
     Span, Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{Pattern, WordSet},
+    patterns::WordSet,
 };
 
 pub struct AskNoPreposition {

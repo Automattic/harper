@@ -1,10 +1,9 @@
 use crate::expr::Expr;
+use crate::expr::FixedPhrase;
 use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
 use crate::{
     Token, TokenStringExt,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::FixedPhrase,
 };
 
 pub struct APart {

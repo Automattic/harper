@@ -1,4 +1,3 @@
-use crate::expr::LongestMatchOf;
 use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::MergeableWords;
@@ -8,7 +7,7 @@ use crate::{CharStringExt, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 
-use crate::{Lrc, Token, patterns::Pattern};
+use crate::{Lrc, Token};
 
 /// Two adjacent words separated by whitespace that if joined would be a valid noun.
 pub struct CompoundNounAfterDetAdj {

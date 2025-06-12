@@ -1,6 +1,3 @@
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::expr::Expr;
 use crate::{Dialect, Dictionary, Document, Span, TokenStringExt};
 
 use super::{Lint, LintKind, Linter, Suggestion};

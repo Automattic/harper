@@ -1,9 +1,9 @@
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
+use crate::expr::WordExprGroup;
 use itertools::Itertools;
 
-use crate::{Lrc, Token, TokenStringExt, patterns::WordPatternGroup};
+use crate::{Lrc, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -13,7 +13,7 @@ pub struct ThatWhich {
 
 impl Default for ThatWhich {
     fn default() -> Self {
-        let mut pattern = WordPatternGroup::default();
+        let mut pattern = WordExprGroup::default();
 
         let matching_pattern = Lrc::new(
             SequenceExpr::default()
