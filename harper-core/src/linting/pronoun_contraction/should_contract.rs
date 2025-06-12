@@ -1,9 +1,6 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
-use crate::{
-    CharStringExt, Token,
-    patterns::WordSet,
-};
+use crate::{CharStringExt, Token, patterns::WordSet};
 
 use crate::Lint;
 use crate::linting::{ExprLinter, LintKind, Suggestion};

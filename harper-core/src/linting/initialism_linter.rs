@@ -1,10 +1,7 @@
 use crate::expr::Expr;
 use itertools::Itertools;
 
-use crate::{
-    Token,
-    patterns::Word,
-};
+use crate::{Token, patterns::Word};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -77,6 +74,4 @@ impl ExprLinter for InitialismLinter {
 }
 
 #[cfg(test)]
-mod tests {
-    
-}
+mod tests {}
