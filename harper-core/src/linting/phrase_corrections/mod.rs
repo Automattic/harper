@@ -1311,6 +1311,18 @@ pub fn lint_group() -> LintGroup {
             "The correct wording is `a couple more`, without the `of`.",
             "Corrects `a couple of more` to `a couple more`."
         ),
+        "AllOfASudden" => (
+            ["all of the sudden"],
+            ["all of a sudden"],
+            "The phrase is `all of a sudden`, meaning `unexpectedly`.",
+            "Corrects `all of the sudden` to `all of a sudden`."
+        ),
+        "LowHangingFruit" => (
+            ["low hanging fruit", "low hanging fruits", "low-hanging fruits"],
+            ["low-hanging fruit"],
+            "The standard form is `low-hanging fruit` with a hyphen and singular form.",
+            "Corrects non-standard variants of `low-hanging fruit`."
+        )
     });
 
     group.set_all_rules_to(Some(true));

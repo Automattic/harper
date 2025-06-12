@@ -1545,3 +1545,39 @@ fn corrects_a_couple_of_more() {
         "There are a couple more rules that could be added, how can I contribute?",
     )
 }
+
+#[test]
+fn corrects_all_of_a_sudden() {
+    assert_suggestion_result(
+        "On an app that has been released since December, all of the sudden around February 5th ANRs started going up.",
+        lint_group(),
+        "On an app that has been released since December, all of a sudden around February 5th ANRs started going up.",
+    )
+}
+
+#[test]
+fn corrects_low_hanging_fruit() {
+    assert_suggestion_result(
+        "If you add me as a collaborator i can start merging some of the low hanging fruit.",
+        lint_group(),
+        "If you add me as a collaborator i can start merging some of the low-hanging fruit.",
+    )
+}
+
+#[test]
+fn corrects_low_hanging_fruits_hyphen() {
+    assert_suggestion_result(
+        "Field guide to gather low-hanging fruits.",
+        lint_group(),
+        "Field guide to gather low-hanging fruit.",
+    )
+}
+
+#[test]
+fn corrects_low_hanging_fruits_space() {
+    assert_suggestion_result(
+        "Will search for low hanging fruits and useful information for escalation on a compromised workstation.",
+        lint_group(),
+        "Will search for low-hanging fruit and useful information for escalation on a compromised workstation.",
+    )
+}
