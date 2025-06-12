@@ -1,3 +1,6 @@
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::expr::Expr;
 use std::sync::Arc;
 
 use itertools::Itertools;

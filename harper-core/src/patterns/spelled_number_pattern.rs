@@ -1,5 +1,6 @@
-use super::{LongestMatchOf, Pattern, SequencePattern, WhitespacePattern, WordSet};
+use super::{Pattern, WhitespacePattern, WordSet};
 use crate::Token;
+use crate::expr::LongestMatchOf;
 
 /// Matches spelled-out numbers from one to ninety-nine
 #[derive(Default)]

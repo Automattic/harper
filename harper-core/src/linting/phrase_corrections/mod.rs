@@ -1,3 +1,5 @@
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use super::{LintGroup, MapPhraseLinter};
 
 #[cfg(test)]

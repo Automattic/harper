@@ -1,3 +1,5 @@
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use crate::linting::tests::{
     assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
 };

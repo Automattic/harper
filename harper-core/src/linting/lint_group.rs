@@ -1,3 +1,6 @@
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::expr::Expr;
 use std::collections::BTreeMap;
 use std::hash::Hash;
 use std::hash::{BuildHasher, Hasher};
@@ -31,6 +34,7 @@ use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
 use super::expand_time_shorthands::ExpandTimeShorthands;
+use super::expr_linter::run_on_chunk;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
@@ -60,7 +64,6 @@ use super::one_and_the_same::OneAndTheSame;
 use super::open_the_light::OpenTheLight;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
-use super::pattern_linter::run_on_chunk;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::possessive_your::PossessiveYour;
@@ -88,7 +91,7 @@ use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
-use super::{Lint, PatternLinter};
+use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{closed_compounds, initialisms, phrase_corrections};
@@ -191,7 +194,7 @@ pub struct LintGroup {
     /// We use a binary map here so the ordering is stable.
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
-    pattern_linters: BTreeMap<String, Box<dyn PatternLinter>>,
+    pattern_linters: BTreeMap<String, Box<dyn ExprLinter>>,
     /// Since [`PatternLinter`]s operate on a chunk-basis, we can store a
     /// mapping of `Chunk -> Lint` and only re-run the pattern linters
     /// when a chunk changes.
@@ -238,7 +241,7 @@ impl LintGroup {
     pub fn add_pattern_linter(
         &mut self,
         name: impl AsRef<str>,
-        linter: impl PatternLinter + 'static,
+        linter: impl ExprLinter + 'static,
     ) -> bool {
         if self.contains_key(&name) {
             false
@@ -289,7 +292,7 @@ impl LintGroup {
             .chain(
                 self.pattern_linters
                     .iter()
-                    .map(|(key, value)| (key.as_str(), PatternLinter::description(value))),
+                    .map(|(key, value)| (key.as_str(), ExprLinter::description(value))),
             )
             .collect()
     }

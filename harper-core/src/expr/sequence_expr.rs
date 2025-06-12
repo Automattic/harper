@@ -2,10 +2,10 @@ use paste::paste;
 
 use crate::{
     Document, Span, Token, TokenKind,
-    patterns::{IndefiniteArticle, Pattern, RepeatingPattern, WhitespacePattern, Word},
+    patterns::{AnyPattern, IndefiniteArticle, Pattern, WhitespacePattern, Word},
 };
 
-use super::{Condition, Expr, LongestMatchOf, Step};
+use super::{Condition, Expr, LongestMatchOf, Repeating, Step};
 
 #[derive(Default)]
 pub struct SequenceExpr {
@@ -45,14 +45,20 @@ impl Expr for SequenceExpr {
     /// Run the expression starting at an index, returning the total matched window.
     ///
     /// If any step returns `None`, the entire expression does as well.
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
         let mut window = Span::new_with_len(cursor, 0);
 
-        for cur_window in &self.exprs {
-            let out = cur_window.run(cursor, tokens, source)?;
+        for cur_expr in &self.exprs {
+            let out = cur_expr.run(cursor, tokens, source)?;
 
             window.expand_to_include(out.start);
             window.expand_to_include(out.end - 1);
+
+            if out.start < cursor {
+                cursor = out.start;
+            } else {
+                cursor = out.end;
+            }
         }
 
         Some(window)
@@ -69,30 +75,6 @@ impl SequenceExpr {
     pub fn then_expr(mut self, mut other: Self) -> Self {
         self.exprs.append(&mut other.exprs);
         self
-    }
-
-    /// Iterate over all matches of this expression in the document, automatically filtering out
-    /// overlapping matches, preferring the first.
-    pub fn iter_matches<'a>(
-        &'a self,
-        tokens: &'a [Token],
-        source: &'a [char],
-    ) -> impl Iterator<Item = Span> + 'a {
-        let mut last_end = 0usize;
-
-        (0..tokens.len()).filter_map(move |i| {
-            let span = self.run(i, tokens, source)?;
-            if span.start >= last_end {
-                last_end = span.end;
-                Some(span)
-            } else {
-                None
-            }
-        })
-    }
-
-    pub fn iter_matches_in_doc<'a>(&'a self, doc: &'a Document) -> impl Iterator<Item = Span> + 'a {
-        self.iter_matches(doc.get_tokens(), doc.get_source())
     }
 
     pub fn then_indefinite_article(self) -> Self {
@@ -143,8 +125,8 @@ impl SequenceExpr {
         self.then(WhitespacePattern)
     }
 
-    pub fn then_one_or_more(self, pat: impl Pattern + 'static) -> Self {
-        self.then(RepeatingPattern::new(Box::new(pat), 1))
+    pub fn then_one_or_more(self, expr: impl Expr + 'static) -> Self {
+        self.then(Repeating::new(Box::new(expr), 1))
     }
 
     /// Create a new condition that will step one token forward if met.
@@ -154,8 +136,12 @@ impl SequenceExpr {
         }))
     }
 
-    pub fn or(self, other: SequenceExpr) -> LongestMatchOf {
-        LongestMatchOf::new(vec![Box::new(self), Box::new(other)])
+    pub fn t_any(self) -> Self {
+        self.then_anything()
+    }
+
+    pub fn then_anything(self) -> Self {
+        self.then(AnyPattern)
     }
 
     gen_then_from_is!(nominal);

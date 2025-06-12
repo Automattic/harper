@@ -1,6 +1,7 @@
 use crate::Token;
+use crate::expr::LongestMatchOf;
 
-use super::{LongestMatchOf, Pattern, WordSet};
+use super::{Pattern, WordSet};
 
 /// Matches a time unit.
 ///

@@ -1,14 +1,15 @@
-use crate::{Document, Token, TokenKind};
+use crate::patterns::{WithinEditDistance, Word};
+use crate::{Document, Span, Token, TokenKind};
 
-use super::{Pattern, SequencePattern, Word, within_edit_distance::WithinEditDistance};
+use super::{Expr, SequenceExpr};
 
 pub struct SimilarToPhrase {
-    phrase: SequencePattern,
-    fuzzy_phrase: SequencePattern,
+    phrase: SequenceExpr,
+    fuzzy_phrase: SequenceExpr,
 }
 
 impl SimilarToPhrase {
-    /// Create an error-tolerant SequencePattern that looks for phrases similar to (but not the same as) that contained
+    /// Create an error-tolerant SequenceExpr that looks for phrases similar to (but not the same as) that contained
     /// in the provided text.
     ///
     /// This is an expensive operation, so try to only do it at startup and in tests.
@@ -20,15 +21,15 @@ impl SimilarToPhrase {
         Self::from_doc(&document, max_edit_dist)
     }
 
-    /// Create an error-tolerant SequencePattern that looks for phrases similar to (but not the same as) that contained
+    /// Create an error-tolerant SequenceExpr that looks for phrases similar to (but not the same as) that contained
     /// in the provided document.
     ///
     /// This is an expensive operation, so try to only do it at startup and in tests.
     ///
     /// It will panic if your document contains certain token types, so only run this with curated phrases.
     pub fn from_doc(document: &Document, max_edit_dist: u8) -> Self {
-        let mut phrase = SequencePattern::default();
-        let mut fuzzy_phrase = SequencePattern::default();
+        let mut phrase = SequenceExpr::default();
+        let mut fuzzy_phrase = SequenceExpr::default();
 
         for token in document.fat_tokens() {
             match token.kind {
@@ -56,11 +57,11 @@ impl SimilarToPhrase {
     }
 }
 
-impl Pattern for SimilarToPhrase {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        if self.phrase.matches(tokens, source).is_some() {
+impl Expr for SimilarToPhrase {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+        if self.phrase.run(cursor, tokens, source).is_some() {
             return None;
         }
-        self.fuzzy_phrase.matches(tokens, source)
+        self.fuzzy_phrase.run(cursor, tokens, source)
     }
 }

@@ -1,16 +1,32 @@
 mod all;
 mod condition;
+mod first_match_of;
+mod fixed_phrase;
 mod longest_match_of;
+mod mergeable_words;
+mod repeating;
 mod sequence_expr;
+mod similar_to_phrase;
 mod step;
+mod word_expr_group;
+
+use std::rc::Rc;
+use std::sync::Arc;
 
 pub use all::All;
+use blanket::blanket;
 pub use condition::Condition;
+pub use first_match_of::FirstMatchOf;
+pub use fixed_phrase::FixedPhrase;
 pub use longest_match_of::LongestMatchOf;
+pub use mergeable_words::MergeableWords;
+pub use repeating::Repeating;
 pub use sequence_expr::SequenceExpr;
+pub use similar_to_phrase::SimilarToPhrase;
 pub use step::Step;
+pub use word_expr_group::WordExprGroup;
 
-use crate::{LSend, Span, Token};
+use crate::{Document, LSend, Span, Token};
 
 pub trait Expr: LSend {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span>;
@@ -18,7 +34,7 @@ pub trait Expr: LSend {
 
 impl<S> Expr for S
 where
-    S: Step,
+    S: Step + ?Sized,
 {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
         self.step(tokens, cursor, source).map(|s| {
@@ -31,10 +47,74 @@ where
     }
 }
 
+impl<E> Expr for Arc<E>
+where
+    E: Expr,
+{
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+        self.as_ref().run(cursor, tokens, source)
+    }
+}
+
 fn add(u: usize, i: isize) -> Option<usize> {
     if i.is_negative() {
         u.checked_sub(i.wrapping_abs() as u32 as usize)
     } else {
         u.checked_add(i as usize)
+    }
+}
+
+pub trait ExprExt {
+    /// Iterate over all matches of this expression in the document, automatically filtering out
+    /// overlapping matches, preferring the first.
+    fn iter_matches<'a>(
+        &'a self,
+        tokens: &'a [Token],
+        source: &'a [char],
+    ) -> Box<dyn Iterator<Item = Span> + 'a>;
+
+    fn iter_matches_in_doc<'a>(&'a self, doc: &'a Document) -> Box<dyn Iterator<Item = Span> + 'a>;
+}
+
+impl<E: ?Sized> ExprExt for E
+where
+    E: Expr,
+{
+    fn iter_matches<'a>(
+        &'a self,
+        tokens: &'a [Token],
+        source: &'a [char],
+    ) -> Box<(dyn Iterator<Item = Span> + 'a)> {
+        let mut last_end = 0usize;
+
+        Box::new((0..tokens.len()).filter_map(move |i| {
+            let span = self.run(i, tokens, source)?;
+            if span.start >= last_end {
+                last_end = span.end;
+                Some(span)
+            } else {
+                None
+            }
+        }))
+    }
+
+    fn iter_matches_in_doc<'a>(
+        &'a self,
+        doc: &'a Document,
+    ) -> Box<(dyn Iterator<Item = Span> + 'a)> {
+        Box::new(self.iter_matches(doc.get_tokens(), doc.get_source()))
+    }
+}
+
+pub trait OwnedExprExt {
+    fn or(self, other: impl Expr + 'static) -> LongestMatchOf;
+}
+
+impl<E> OwnedExprExt for E
+where
+    E: Expr + 'static,
+{
+    fn or(self, other: impl Expr + 'static) -> LongestMatchOf {
+        LongestMatchOf::new(vec![Box::new(self), Box::new(other)])
     }
 }

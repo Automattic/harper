@@ -1,3 +1,6 @@
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::expr::Expr;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
 use crate::{Punctuation, Quote, TokenKind};

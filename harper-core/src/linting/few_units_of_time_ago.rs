@@ -1,39 +1,33 @@
+use crate::expr::LongestMatchOf;
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Lrc, Token,
-    linting::{Lint, PatternLinter, Suggestion},
-    patterns::{FirstMatchOf, Pattern, SequencePattern, TimeUnitPattern},
+    linting::{ExprLinter, Lint, Suggestion},
+    patterns::TimeUnitPattern,
 };
 
 pub struct FewUnitsOfTimeAgo {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for FewUnitsOfTimeAgo {
     fn default() -> Self {
         let units = TimeUnitPattern;
 
-        let mut start = FirstMatchOf::default();
-        // start.push(Box::new(
-        //     SequencePattern::default()
-        //         .then_chunk_start()
-        //         .t_ws(),
-        // ));
-        // start.push(Box::new(SequencePattern::default().then_chunk_start()));
-        start.push(Box::new(
-            SequencePattern::default()
-                .then(|tok: &Token, src: &[char]| {
-                    if tok.kind.is_word() {
-                        let chars = tok.span.get_content(src);
-                        chars != ['a'] && chars != ['A']
-                    } else {
-                        true
-                    }
-                })
-                .t_ws(),
-        ));
+        let start = SequenceExpr::default()
+            .then(|tok: &Token, src: &[char]| {
+                if tok.kind.is_word() {
+                    let chars = tok.span.get_content(src);
+                    chars != ['a'] && chars != ['A']
+                } else {
+                    true
+                }
+            })
+            .t_ws();
 
-        let pattern = Lrc::new(
-            SequencePattern::default()
+        let expr = Lrc::new(
+            SequenceExpr::default()
                 .then(start)
                 .t_aco("few")
                 .then_whitespace()
@@ -43,14 +37,14 @@ impl Default for FewUnitsOfTimeAgo {
         );
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(expr),
         }
     }
 }
 
-impl PatternLinter for FewUnitsOfTimeAgo {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for FewUnitsOfTimeAgo {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

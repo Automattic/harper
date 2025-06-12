@@ -1,17 +1,18 @@
 use std::sync::Arc;
 
-use crate::{CharString, Dictionary, FstDictionary, Token, WordMetadata};
+use crate::patterns::WhitespacePattern;
+use crate::{CharString, Dictionary, FstDictionary, Span, Token, WordMetadata};
 
-use super::{LongestMatchOf, Pattern, SequencePattern, WhitespacePattern};
+use super::{Expr, LongestMatchOf, SequenceExpr};
 
 type PredicateFn = dyn Fn(Option<&WordMetadata>, Option<&WordMetadata>) -> bool + Send + Sync;
 
-/// A [`Pattern`] that identifies adjacent words that could potentially be merged into a single word.
+/// A [`Expr`] that identifies adjacent words that could potentially be merged into a single word.
 ///
 /// This checks if two adjacent words could form a valid compound word, but first verifies
 /// that the two words aren't already a valid lexeme in the dictionary (like "straight away").
 pub struct MergeableWords {
-    inner: SequencePattern,
+    inner: SequenceExpr,
     dict: Arc<FstDictionary>,
     predicate: Box<PredicateFn>,
 }
@@ -21,7 +22,7 @@ impl MergeableWords {
         predicate: impl Fn(Option<&WordMetadata>, Option<&WordMetadata>) -> bool + Send + Sync + 'static,
     ) -> Self {
         Self {
-            inner: SequencePattern::default()
+            inner: SequenceExpr::default()
                 .then_any_word()
                 .then(LongestMatchOf::new(vec![
                     Box::new(WhitespacePattern),
@@ -62,11 +63,11 @@ impl MergeableWords {
     }
 }
 
-impl Pattern for MergeableWords {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        let inner_match = self.inner.matches(tokens, source)?;
+impl Expr for MergeableWords {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+        let inner_match = self.inner.run(cursor, tokens, source)?;
 
-        if inner_match != 3 {
+        if inner_match.len() != 3 {
             return None;
         }
 
@@ -83,7 +84,8 @@ impl Pattern for MergeableWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Document, WordMetadata, patterns::MergeableWords};
+    use super::MergeableWords;
+    use crate::{Document, WordMetadata};
 
     fn predicate(meta_closed: Option<&WordMetadata>, meta_open: Option<&WordMetadata>) -> bool {
         meta_open.is_none() && meta_closed.map_or(false, |m| m.is_noun() && !m.is_proper_noun())

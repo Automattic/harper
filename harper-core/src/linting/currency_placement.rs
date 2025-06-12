@@ -1,3 +1,6 @@
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::expr::Expr;
 use itertools::Itertools;
 
 use crate::{Document, Span, Token, TokenStringExt, remove_overlaps};

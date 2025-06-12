@@ -1,8 +1,11 @@
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::expr::Expr;
 use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
 
+use super::{ExprLinter, LintGroup};
 use super::{Lint, LintKind, Suggestion};
-use super::{LintGroup, PatternLinter};
 use crate::parsers::PlainEnglish;
 use crate::patterns::{FixedPhrase, Pattern, PatternMap};
 use crate::{Dictionary, Document};
@@ -64,8 +67,8 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
     }
 }
 
-impl<D: Dictionary + 'static> PatternLinter for ProperNounCapitalizationLinter<D> {
-    fn pattern(&self) -> &dyn Pattern {
+impl<D: Dictionary + 'static> ExprLinter for ProperNounCapitalizationLinter<D> {
+    fn expr(&self) -> &dyn Expr {
         &self.pattern_map
     }
 
