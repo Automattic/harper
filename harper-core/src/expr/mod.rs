@@ -1,4 +1,5 @@
 mod all;
+mod anchor_end;
 mod anchor_start;
 mod expr_map;
 mod first_match_of;
@@ -19,6 +20,8 @@ use std::rc::Rc;
 use std::sync::Arc;
 
 pub use all::All;
+pub use anchor_end::AnchorEnd;
+pub use anchor_start::AnchorStart;
 pub use expr_map::ExprMap;
 pub use fixed_phrase::FixedPhrase;
 pub use longest_match_of::LongestMatchOf;

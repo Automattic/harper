@@ -659,7 +659,7 @@ macro_rules! create_fns_on_doc {
                 self.tokens.[< last_ $thing _index >]()
             }
 
-            fn [<iter_ $thing _indices>](&self) -> impl Iterator<Item = usize> + '_ {
+            fn [<iter_ $thing _indices>](&self) -> impl DoubleEndedIterator<Item = usize> + '_ {
                 self.tokens.[< iter_ $thing _indices >]()
             }
 
