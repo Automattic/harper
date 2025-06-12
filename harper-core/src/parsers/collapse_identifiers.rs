@@ -5,7 +5,6 @@ use itertools::Itertools;
 
 use super::Parser;
 use crate::expr::{ExprExt, SequenceExpr};
-use crate::patterns::PatternExt;
 use crate::{Dictionary, Lrc, Span, Token, TokenKind, VecExt};
 
 /// A parser that wraps any other parser to collapse token strings that match

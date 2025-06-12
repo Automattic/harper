@@ -23,10 +23,8 @@ impl Expr for All {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
         let mut longest: Option<Span> = None;
 
-        for (i, expr) in self.children.iter().enumerate() {
-            let Some(window) = expr.run(cursor, tokens, source) else {
-                return None;
-            };
+        for expr in self.children.iter() {
+            let window = expr.run(cursor, tokens, source)?;
 
             if let Some(longest_window) = longest {
                 if window.len() > longest_window.len() {

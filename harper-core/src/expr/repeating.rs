@@ -36,7 +36,7 @@ impl Expr for Repeating {
                     cursor = res.end;
                 }
 
-                if res.len() == 0 {
+                if res.is_empty() {
                     return Some(window);
                 }
 

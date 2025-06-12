@@ -2,7 +2,6 @@ use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::MergeableWords;
 use crate::expr::SequenceExpr;
-use crate::patterns::AnyPattern;
 use crate::{CharStringExt, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};

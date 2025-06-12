@@ -88,17 +88,17 @@ mod tests {
     use crate::{Document, WordMetadata};
 
     fn predicate(meta_closed: Option<&WordMetadata>, meta_open: Option<&WordMetadata>) -> bool {
-        meta_open.is_none() && meta_closed.map_or(false, |m| m.is_noun() && !m.is_proper_noun())
+        meta_open.is_none() && meta_closed.is_some_and(|m| m.is_noun() && !m.is_proper_noun())
     }
 
     #[test]
     fn merges_open_compound_not_in_dict() {
         // note book is not in the dictionary, but notebook is
         let doc = Document::new_plain_english_curated("note book");
-        let a = doc.tokens().nth(0).unwrap();
+        let a = doc.tokens().next().unwrap();
         let b = doc.tokens().nth(2).unwrap();
 
-        let merged = MergeableWords::new(predicate).get_merged_word(&a, &b, doc.get_source());
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, Some("notebook".chars().collect()));
     }
@@ -107,10 +107,10 @@ mod tests {
     fn does_not_merge_open_compound_in_dict() {
         // straight away is in the dictionary, and straightaway is
         let doc = Document::new_plain_english_curated("straight away");
-        let a = doc.tokens().nth(0).unwrap();
+        let a = doc.tokens().next().unwrap();
         let b = doc.tokens().nth(2).unwrap();
 
-        let merged = MergeableWords::new(predicate).get_merged_word(&a, &b, doc.get_source());
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, None);
     }
@@ -119,10 +119,10 @@ mod tests {
     fn does_not_merge_invalid_compound() {
         // neither quick for nor quickfox are in the dictionary
         let doc = Document::new_plain_english_curated("quick fox");
-        let a = doc.tokens().nth(0).unwrap();
+        let a = doc.tokens().next().unwrap();
         let b = doc.tokens().nth(2).unwrap();
 
-        let merged = MergeableWords::new(predicate).get_merged_word(&a, &b, doc.get_source());
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, None);
     }
@@ -131,10 +131,10 @@ mod tests {
     fn merges_open_compound() {
         // Dictionary has "frontline" but not "front line"
         let doc = Document::new_plain_english_curated("front line");
-        let a = doc.tokens().nth(0).unwrap();
+        let a = doc.tokens().next().unwrap();
         let b = doc.tokens().nth(2).unwrap();
 
-        let merged = MergeableWords::new(predicate).get_merged_word(&a, &b, doc.get_source());
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, Some("frontline".chars().collect()));
     }
@@ -143,10 +143,10 @@ mod tests {
     fn merges_hyphenated_compound() {
         // Doesn't check for "front-line" in the dictionary but matches it and "frontline" is in the dictionary
         let doc = Document::new_plain_english_curated("front-line");
-        let a = doc.tokens().nth(0).unwrap();
+        let a = doc.tokens().next().unwrap();
         let b = doc.tokens().nth(2).unwrap();
 
-        let merged = MergeableWords::new(predicate).get_merged_word(&a, &b, doc.get_source());
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, Some("frontline".chars().collect()));
     }

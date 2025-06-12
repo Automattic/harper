@@ -13,6 +13,7 @@ mod step;
 mod time_unit_expr;
 mod word_expr_group;
 
+#[cfg(not(feature = "concurrent"))]
 use std::rc::Rc;
 use std::sync::Arc;
 
