@@ -116,7 +116,7 @@ fn lint_group_from_json(json: &str, dictionary: Arc<impl Dictionary + 'static>) 
     let rules: HashMap<String, RuleEntry> = serde_json::from_str(json).unwrap();
 
     for (key, rule) in rules.into_iter() {
-        group.add_pattern_linter(
+        group.add_expr_linter(
             key,
             Box::new(ProperNounCapitalizationLinter::new_strs(
                 rule.canonical,

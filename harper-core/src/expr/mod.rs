@@ -37,6 +37,10 @@ pub use word_expr_group::WordExprGroup;
 
 use crate::{Document, LSend, Span, Token};
 
+/// A common problem in Harper is that we need to identify tokens that fulfil certain criterion.
+/// An `Expr` is a way to express whether a certain set of tokens fulfil that criteria.
+/// When supplied a specific position in a token stream, the job of an `Expr` is to determine the window of tokens (including the cursor itself) that fulfils whatever criteria the author desires.
+/// It is then the job of another system to identify portions of documents that fulfil this criteria.
 pub trait Expr: LSend {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span>;
 }
