@@ -130,7 +130,7 @@ impl SequenceExpr {
     }
 
     /// Create a new condition that will step one token forward if met.
-    pub fn if_then_step_one(self, condition: impl Expr + 'static) -> Self {
+    pub fn if_not_then_step_one(self, condition: impl Expr + 'static) -> Self {
         self.then(Condition::new(condition, |_tok: &Token, _src: &[char]| {
             true
         }))

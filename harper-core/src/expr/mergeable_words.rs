@@ -72,7 +72,7 @@ impl Expr for MergeableWords {
         }
 
         if self
-            .get_merged_word(&tokens[0], &tokens[2], source)
+            .get_merged_word(&tokens[cursor], &tokens[cursor + 2], source)
             .is_some()
         {
             return Some(inner_match);

@@ -39,7 +39,7 @@ impl Default for HowTo {
                 })),
             );
 
-        pattern.add(SequenceExpr::default().if_then_step_one(exceptions));
+        pattern.add(SequenceExpr::default().if_not_then_step_one(exceptions));
 
         Self {
             expr: Box::new(pattern),

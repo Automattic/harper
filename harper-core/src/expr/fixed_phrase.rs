@@ -9,12 +9,12 @@ use super::{Expr, SequenceExpr};
 /// # Example
 ///
 /// ```rust
-/// use harper_core::patterns::{FixedPhrase, Pattern};
+/// use harper_core::expr::{FixedPhrase, Expr};
 /// use harper_core::Document;
 ///
 /// let doc = Document::new_plain_english_curated("Hello, world!");
 /// let phrase = FixedPhrase::from_phrase("Hello, world!");
-/// assert!(phrase.matches(doc.get_tokens(), doc.get_source()).is_some());
+/// assert!(phrase.run(0, doc.get_tokens(), doc.get_source()).is_some());
 /// ```
 pub struct FixedPhrase {
     inner: SequenceExpr,

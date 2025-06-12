@@ -6,7 +6,7 @@ mod char_string;
 mod currency;
 mod document;
 mod edit_distance;
-mod expr;
+pub mod expr;
 mod fat_token;
 mod ignored_lints;
 pub mod language_detection;

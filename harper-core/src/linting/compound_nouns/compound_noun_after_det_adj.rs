@@ -22,7 +22,7 @@ pub struct CompoundNounAfterDetAdj {
 //    that is not also an adjective
 impl Default for CompoundNounAfterDetAdj {
     fn default() -> Self {
-        let context_pattern = SequenceExpr::default()
+        let context_expr = SequenceExpr::default()
             .then(|tok: &Token, src: &[char]| {
                 let Some(Some(meta)) = tok.kind.as_word() else {
                     return false;
@@ -31,26 +31,26 @@ impl Default for CompoundNounAfterDetAdj {
                     || (meta.is_adjective()
                         && tok.span.get_content_string(src).to_lowercase() != "go")
             })
-            .then_whitespace()
+            .t_ws()
             .then(is_content_word)
-            .then_whitespace()
+            .t_ws()
             .then(is_content_word);
 
         let split_expr = Lrc::new(MergeableWords::new(|meta_closed, meta_open| {
             predicate(meta_closed, meta_open)
         }));
 
-        let mut pattern = All::default();
-        pattern.add(context_pattern);
-        pattern.add(
+        let mut expr = All::default();
+        expr.add(context_expr);
+        expr.add(
             SequenceExpr::default()
-                .then(AnyPattern)
-                .then(AnyPattern)
+                .t_any()
+                .t_any()
                 .then(split_expr.clone()),
         );
 
         Self {
-            expr: Box::new(pattern),
+            expr: Box::new(expr),
             split_expr,
         }
     }
