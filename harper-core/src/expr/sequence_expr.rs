@@ -5,7 +5,7 @@ use crate::{
     patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word},
 };
 
-use super::{Condition, Expr, Repeating, Step};
+use super::{Expr, Repeating, Step, UnlessStep};
 
 #[derive(Default)]
 pub struct SequenceExpr {
@@ -131,7 +131,7 @@ impl SequenceExpr {
 
     /// Create a new condition that will step one token forward if met.
     pub fn if_not_then_step_one(self, condition: impl Expr + 'static) -> Self {
-        self.then(Condition::new(condition, |_tok: &Token, _src: &[char]| {
+        self.then(UnlessStep::new(condition, |_tok: &Token, _src: &[char]| {
             true
         }))
     }

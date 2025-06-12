@@ -1,5 +1,5 @@
 mod all;
-mod condition;
+mod anchor_start;
 mod expr_map;
 mod first_match_of;
 mod fixed_phrase;
@@ -11,6 +11,7 @@ mod similar_to_phrase;
 mod spelled_number_expr;
 mod step;
 mod time_unit_expr;
+mod unless_step;
 mod word_expr_group;
 
 #[cfg(not(feature = "concurrent"))]
@@ -18,7 +19,6 @@ use std::rc::Rc;
 use std::sync::Arc;
 
 pub use all::All;
-pub use condition::Condition;
 pub use expr_map::ExprMap;
 pub use fixed_phrase::FixedPhrase;
 pub use longest_match_of::LongestMatchOf;
@@ -29,6 +29,7 @@ pub use similar_to_phrase::SimilarToPhrase;
 pub use spelled_number_expr::SpelledNumberExpr;
 pub use step::Step;
 pub use time_unit_expr::TimeUnitExpr;
+pub use unless_step::UnlessStep;
 pub use word_expr_group::WordExprGroup;
 
 use crate::{Document, LSend, Span, Token};
