@@ -4,6 +4,8 @@ use super::Step;
 
 /// A [`Step`] which will match only if the cursor is over the last non-whitespace character in stream.
 /// It will return that token.
+///
+/// For example, if you built `SequenceExpr::default().t_aco("word").then(AnchorEnd)` and ran it on `This is a word`, the resulting `Span` would only cover the final word token.
 pub struct AnchorEnd;
 
 impl Step for AnchorEnd {
