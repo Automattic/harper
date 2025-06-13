@@ -47,6 +47,7 @@
 //!   - Determiners are denoted by `D`.
 //!   - Prepositions are denoted by `P`.
 //!   - Dialects are denoted by `Am`, `Br`, `Ca`, or `Au`.
+//!   - Noun phrase membership is denoted by `+`
 //!
 //!   The tagger supports uncertainty, so a single word can be e.g. both a
 //!   noun and a verb. This is denoted by a `/` between the tags.
@@ -145,6 +146,8 @@ fn format_word_tag(word: &WordMetadata) -> String {
             });
         }
     });
+
+    add_switch(&mut tags, word.np_member, "+", "");
 
     if tags.is_empty() {
         String::from("W?")

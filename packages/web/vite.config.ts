@@ -190,6 +190,10 @@ export default defineConfig({
 									to: '/docs/contributors/local-stats',
 								},
 								{
+									title: 'Brill Tagging',
+									to: '/docs/contributors/brill',
+								},
+								{
 									title: 'FAQ',
 									to: '/docs/contributors/faq',
 								},

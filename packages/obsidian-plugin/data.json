@@ -1,5 +1,5 @@
 {
-	"ignoredLints": "{\"context_hashes\":[11327540533206285101]}",
+	"ignoredLints": "{\"context_hashes\":[8490731072225480652]}",
 	"useWebWorker": true,
 	"lintSettings": {
 		"ACoupleMore": null,
@@ -362,7 +362,7 @@
 		"WorstCaseScenario": null,
 		"WorstEver": null
 	},
-	"userDictionary": [],
+	"userDictionary": ["Paki", "Dalit", "Kailee", "Prayaag", "Colorism"],
 	"dialect": 0,
 	"delay": -1
 }

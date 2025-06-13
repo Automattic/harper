@@ -54,8 +54,7 @@ impl ThenThan {
 
 // TODO: This can be simplified or eliminated when the adjective improvements make it into the affix system.
 fn is_comparative_adjective(tok: &Token, source: &[char]) -> bool {
-    tok.kind
-        .is_adjective()
+    (tok.kind.is_adjective() || tok.kind.is_adverb())
         .then(|| tok.span.get_content(source))
         .is_some_and(|src| {
             // Regular comparative form?

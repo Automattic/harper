@@ -1,0 +1,19 @@
+[package]
+name = "harper-pos-utils"
+version = "0.42.0"
+edition = "2024"
+
+[dependencies]
+rs-conllu = "0.3.0"
+hashbrown = { version = "0.15.3", features = ["serde"] }
+strum = "0.27.1"
+strum_macros = "0.27.1"
+serde = { version = "1.0.219", features = ["derive"] }
+is-macro = "0.3.7"
+rayon = { version = "1.10.0", optional = true }
+rand = { version = "0.9.1", optional = true }
+
+[features]
+default = []
+threaded = ["dep:rayon"]
+training = ["dep:rand"]

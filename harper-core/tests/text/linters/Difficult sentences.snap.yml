@@ -209,6 +209,24 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+     340 | on the left, on the right, on the side, on the bottom.
+         | ^~ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “On”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     342 | on a bus, on a train, on a plane, on a ferry, on a yacht.
+         | ^~ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “On”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
      343 | All of the responsibility is on him.
