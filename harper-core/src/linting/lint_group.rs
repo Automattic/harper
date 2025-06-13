@@ -45,7 +45,6 @@ use super::its_contraction::ItsContraction;
 use super::left_right_hand::LeftRightHand;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
-use super::linking_verbs::LinkingVerbs;
 use super::long_sentences::LongSentences;
 use super::merge_words::MergeWords;
 use super::modal_of::ModalOf;
@@ -375,7 +374,6 @@ impl LintGroup {
         insert_pattern_rule!(LeftRightHand, true);
         insert_struct_rule!(LetsConfusion, true);
         insert_pattern_rule!(Likewise, true);
-        insert_struct_rule!(LinkingVerbs, false);
         insert_struct_rule!(LongSentences, true);
         insert_struct_rule!(MergeWords, true);
         insert_pattern_rule!(ModalOf, true);
