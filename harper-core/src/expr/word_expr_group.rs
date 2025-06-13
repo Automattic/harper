@@ -4,7 +4,7 @@ use super::first_match_of::FirstMatchOf;
 use super::{Expr, SequenceExpr};
 use crate::{CharString, Span, Token};
 
-/// A expression collection to look for expressions that start with a specific
+/// An expression collection to look for expressions that start with a specific
 /// word.
 ///
 /// The benefit of using this struct over other methods increases for larger collections.

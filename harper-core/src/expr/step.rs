@@ -2,7 +2,7 @@ use crate::{LSend, Token, patterns::Pattern};
 
 /// An atomic step within a larger expression.
 ///
-/// Its priciple job is to identify (if any) the next position of the cursor.
+/// Its principle job is to identify (if any) the next position of the cursor.
 /// When cursor is moved, all tokens between the current cursor and the target position will be
 /// added to the match group.
 pub trait Step: LSend {

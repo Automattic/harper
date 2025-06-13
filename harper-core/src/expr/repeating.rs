@@ -3,7 +3,7 @@ use crate::{Span, Token};
 
 /// An expression that will match one or more repetitions of the same expression.
 ///
-/// Somewhat reminiscent of the `.*` operator in Regex.
+/// Somewhat reminiscent of the `+*` operator in Regex.
 pub struct Repeating {
     inner: Box<dyn Expr>,
     required_repetitions: usize,
