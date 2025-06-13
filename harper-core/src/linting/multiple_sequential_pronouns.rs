@@ -1,13 +1,15 @@
 use super::Suggestion;
-use super::pattern_linter::PatternLinter;
+use super::expr_linter::ExprLinter;
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::linting::LintKind;
-use crate::patterns::{Pattern, SequencePattern, WordSet};
+use crate::patterns::WordSet;
 use crate::{CharStringExt, Lint, Lrc, Token, TokenStringExt};
 
 /// Linter that checks if multiple pronouns are being used right after each
 /// other. This is a common mistake to make during the revision process.
 pub struct MultipleSequentialPronouns {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
     subject_pronouns: Lrc<WordSet>,
     object_pronouns: Lrc<WordSet>,
     possessive_adjectives: Lrc<WordSet>,
@@ -45,11 +47,11 @@ impl MultipleSequentialPronouns {
         ]));
 
         Self {
-            pattern: Box::new(
-                SequencePattern::default()
+            expr: Box::new(
+                SequenceExpr::default()
                     .then(pronouns.clone())
                     .then_one_or_more(
-                        SequencePattern::default()
+                        SequenceExpr::default()
                             .then_whitespace()
                             .then(pronouns.clone()),
                     ),
@@ -73,9 +75,9 @@ impl MultipleSequentialPronouns {
     }
 }
 
-impl PatternLinter for MultipleSequentialPronouns {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for MultipleSequentialPronouns {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

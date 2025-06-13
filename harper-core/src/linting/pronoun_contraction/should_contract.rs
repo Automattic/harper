@@ -1,10 +1,9 @@
-use crate::{
-    CharStringExt, Token,
-    patterns::{Pattern, SequencePattern, WordSet},
-};
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::{CharStringExt, Token, patterns::WordSet};
 
 use crate::Lint;
-use crate::linting::{LintKind, PatternLinter, Suggestion};
+use crate::linting::{ExprLinter, LintKind, Suggestion};
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -12,14 +11,14 @@ use crate::linting::{LintKind, PatternLinter, Suggestion};
 /// harper-core/src/linting/lets_confusion/let_us_redundancy.rs
 /// harper-core/src/linting/lets_confusion/no_contraction_with_verb.rs
 pub struct ShouldContract {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ShouldContract {
     fn default() -> Self {
         Self {
-            pattern: Box::new(
-                SequencePattern::default()
+            expr: Box::new(
+                SequenceExpr::default()
                     .then(WordSet::new(&["your", "were"]))
                     .then_whitespace()
                     .then_determiner()
@@ -42,9 +41,9 @@ impl ShouldContract {
     }
 }
 
-impl PatternLinter for ShouldContract {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ShouldContract {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

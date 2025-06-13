@@ -1,11 +1,14 @@
+use crate::expr::Expr;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{OwnedPatternExt, Pattern, SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
 };
 
 pub struct ElsePossessive {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ElsePossessive {
@@ -19,22 +22,22 @@ impl Default for ElsePossessive {
             "everyone",
             "nobody",
         ])
-        .or(SequencePattern::aco("no").then_whitespace().t_aco("one"));
+        .or(SequenceExpr::aco("no").then_whitespace().t_aco("one"));
 
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(pronouns)
             .then_whitespace()
             .t_aco("elses");
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for ElsePossessive {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ElsePossessive {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

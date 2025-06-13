@@ -1,11 +1,13 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Span, Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Pattern, SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
 };
 
 pub struct AskNoPreposition {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for AskNoPreposition {
@@ -16,7 +18,7 @@ impl Default for AskNoPreposition {
 
         let objs = WordSet::new(&["me", "you", "him", "her", "it", "us", "them", "one"]);
 
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(verbs)
             .then_whitespace()
             .then_exact_word("to")
@@ -24,14 +26,14 @@ impl Default for AskNoPreposition {
             .then(objs);
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for AskNoPreposition {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for AskNoPreposition {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

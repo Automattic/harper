@@ -59,6 +59,18 @@ impl Span {
         Some(&source[self.start..self.end])
     }
 
+    /// Expand the span by either modifying [`Self::start`] or [`Self::end`] to include the target
+    /// index.
+    ///
+    /// Does nothing if the span already includes the target.
+    pub fn expand_to_include(&mut self, target: usize) {
+        if target < self.start {
+            self.start = target;
+        } else if target >= self.end {
+            self.end = target + 1;
+        }
+    }
+
     /// Get the associated content. Will panic if any aspect is invalid.
     pub fn get_content<'a>(&self, source: &'a [char]) -> &'a [char] {
         match self.try_get_content(source) {
@@ -159,5 +171,16 @@ mod tests {
         assert!(Span::new(0, 5).overlaps_with(Span::new(4, 4)));
 
         assert!(!Span::new(0, 3).overlaps_with(Span::new(3, 5)));
+    }
+
+    #[test]
+    fn expands_properly() {
+        let mut span = Span::new(2, 2);
+
+        span.expand_to_include(1);
+        assert_eq!(span, Span::new(1, 2));
+
+        span.expand_to_include(2);
+        assert_eq!(span, Span::new(1, 3));
     }
 }

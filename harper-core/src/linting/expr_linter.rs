@@ -1,21 +1,19 @@
+use crate::expr::{Expr, ExprExt};
 use blanket::blanket;
 
-use crate::{
-    Document, LSend, Token, TokenStringExt,
-    patterns::{Pattern, PatternExt},
-};
+use crate::{Document, LSend, Token, TokenStringExt};
 
 use super::{Lint, Linter};
 
-/// A trait that searches for [`Pattern`]s in [`Document`]s.
+/// A trait that searches for tokens that fulfil [`Expr`]s in a [`Document`].
 ///
 /// Makes use of [`TokenStringExt::iter_chunks`] to avoid matching across sentence or clause
 /// boundaries.
 #[blanket(derive(Box))]
-pub trait PatternLinter: LSend {
+pub trait ExprLinter: LSend {
     /// A simple getter for the pattern to be searched for.
-    fn pattern(&self) -> &dyn Pattern;
-    /// If any portions of a [`Document`] match [`Self::pattern`], they are passed through [`PatternLinter::match_to_lint`] to be
+    fn expr(&self) -> &dyn Expr;
+    /// If any portions of a [`Document`] match [`Self::expr`], they are passed through [`ExprLinter::match_to_lint`] to be
     /// transformed into a [`Lint`] for editor consumption.
     ///
     /// This function may return `None` to elect _not_ to produce a lint.
@@ -27,7 +25,7 @@ pub trait PatternLinter: LSend {
 
 impl<L> Linter for L
 where
-    L: PatternLinter,
+    L: ExprLinter,
 {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
@@ -45,13 +43,13 @@ where
     }
 }
 
-pub fn run_on_chunk(
-    linter: &impl PatternLinter,
-    chunk: &[Token],
-    source: &[char],
-) -> impl Iterator<Item = Lint> {
+pub fn run_on_chunk<'a>(
+    linter: &'a impl ExprLinter,
+    chunk: &'a [Token],
+    source: &'a [char],
+) -> impl Iterator<Item = Lint> + 'a {
     linter
-        .pattern()
+        .expr()
         .iter_matches(chunk, source)
         .filter_map(|match_span| {
             linter.match_to_lint(&chunk[match_span.start..match_span.end], source)

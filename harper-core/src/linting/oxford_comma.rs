@@ -1,31 +1,31 @@
-use crate::{
-    Lrc, Token, TokenStringExt,
-    linting::Linter,
-    patterns::{OwnedPatternExt, Pattern, PatternExt, SequencePattern, WordSet},
-};
+use crate::expr::Expr;
+use crate::expr::ExprExt;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
+use crate::{Lrc, Token, TokenStringExt, linting::Linter, patterns::WordSet};
 
 use super::{super::Lint, LintKind, Suggestion};
 
 pub struct OxfordComma {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for OxfordComma {
     fn default() -> Self {
         let item = Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then_determiner()
                 .then_whitespace()
                 .then_nominal()
-                .or(SequencePattern::default().then_nominal()),
+                .or(SequenceExpr::default().then_nominal()),
         );
 
-        let item_chunk = SequencePattern::default()
+        let item_chunk = SequenceExpr::default()
             .then(item.clone())
             .then_comma()
             .then_whitespace();
 
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then_one_or_more(item_chunk)
             .then(item.clone())
             .then_whitespace()
@@ -34,7 +34,7 @@ impl Default for OxfordComma {
             .then(item.clone());
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
@@ -76,7 +76,7 @@ impl Linter for OxfordComma {
 
             let sentence = &sentence[skip..];
 
-            for match_span in self.pattern.iter_matches(sentence, document.get_source()) {
+            for match_span in self.expr.iter_matches(sentence, document.get_source()) {
                 let lint = self.match_to_lint(
                     &sentence[match_span.start..match_span.end],
                     document.get_source(),

@@ -1,12 +1,14 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Pattern, SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
     word_metadata::Person,
 };
 
 pub struct NominalWants {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for NominalWants {
@@ -37,19 +39,19 @@ impl Default for NominalWants {
         }
 
         let miss = WordSet::new(&["wont", "wonts", "want", "wants"]);
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(is_applicable_pronoun)
             .then_whitespace()
             .then(miss);
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for NominalWants {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for NominalWants {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
