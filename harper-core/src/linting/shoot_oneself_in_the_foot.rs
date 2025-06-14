@@ -1,13 +1,14 @@
 use crate::{
     CharStringExt, Span, Token,
+    expr::{Expr, SequenceExpr},
     linting::Suggestion,
-    patterns::{Pattern, SequencePattern, WordSet},
+    patterns::WordSet,
 };
 
-use super::{Lint, LintKind, PatternLinter};
+use super::{ExprLinter, Lint, LintKind};
 
 pub struct ShootOneselfInTheFoot {
-    pattern: Box<dyn Pattern>,
+    pattern: Box<dyn Expr>,
 }
 
 impl Default for ShootOneselfInTheFoot {
@@ -34,7 +35,7 @@ impl Default for ShootOneselfInTheFoot {
 
         let body_parts = WordSet::new(&["foot", "feet", "leg", "legs"]);
 
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(verb_forms)
             .t_ws()
             .then(reflexive_pronouns)
@@ -50,8 +51,8 @@ impl Default for ShootOneselfInTheFoot {
     }
 }
 
-impl PatternLinter for ShootOneselfInTheFoot {
-    fn pattern(&self) -> &dyn Pattern {
+impl ExprLinter for ShootOneselfInTheFoot {
+    fn expr(&self) -> &dyn Expr {
         self.pattern.as_ref()
     }
 

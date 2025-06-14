@@ -160,7 +160,10 @@ mod tests {
 
     #[test]
     fn ends_with_ignore_ascii_case_chars_does_not_match_different_suffix() {
-        assert!(!['H', 'e', 'l', 'l', 'o'].ends_with_ignore_ascii_case_chars(&['w', 'o', 'r', 'l', 'd']));
+        assert!(
+            !['H', 'e', 'l', 'l', 'o']
+                .ends_with_ignore_ascii_case_chars(&['w', 'o', 'r', 'l', 'd'])
+        );
     }
 
     #[test]
