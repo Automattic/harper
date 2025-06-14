@@ -4,10 +4,9 @@ use std::fmt::Display;
 
 use paste::paste;
 
+use crate::expr::{Expr, ExprExt, LongestMatchOf, Repeating, SequenceExpr};
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
-use crate::patterns::{
-    DocPattern, LongestMatchOf, Pattern, RepeatingPattern, SequencePattern, WordSet,
-};
+use crate::patterns::WordSet;
 use crate::punctuation::Punctuation;
 use crate::vec_ext::VecExt;
 use crate::word_metadata::AdjectiveData;
@@ -157,9 +156,9 @@ impl Document {
         self.articles_imply_not_verb();
     }
 
-    fn uncached_article_pattern() -> Lrc<SequencePattern> {
+    fn uncached_article_expr() -> Lrc<SequenceExpr> {
         Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then_determiner()
                 .then_whitespace()
                 .then(|t: &Token, _source: &[char]| t.kind.is_adjective() && t.kind.is_noun())
@@ -168,14 +167,14 @@ impl Document {
         )
     }
 
-    thread_local! {static ARTICLE_PATTERN: Lrc<SequencePattern> = Document::uncached_article_pattern()}
+    thread_local! {static ARTICLE_EXPR: Lrc<SequenceExpr> = Document::uncached_article_expr()}
 
     /// When a word that is either an adjective or a noun is sandwiched between an article and a noun,
     /// it definitely is not a noun.
     fn articles_imply_nouns(&mut self) {
-        let pattern = Self::ARTICLE_PATTERN.with(|v| v.clone());
+        let expr = Self::ARTICLE_EXPR.with(|v| v.clone());
 
-        for m in pattern.find_all_matches_in_doc(self) {
+        for m in expr.iter_matches_in_doc(self).collect::<Vec<_>>() {
             if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start + 2].kind {
                 metadata.noun = None;
                 metadata.verb = None;
@@ -186,9 +185,9 @@ impl Document {
     /// A proposition-like word followed by a determiner or number is typically
     /// really a preposition.
     fn known_preposition(&mut self) {
-        fn create_pattern() -> Lrc<SequencePattern> {
+        fn create_expr() -> Lrc<SequenceExpr> {
             Lrc::new(
-                SequencePattern::default()
+                SequenceExpr::default()
                     .then(WordSet::new(&["in", "at", "on", "to", "for", "by", "with"]))
                     .then_whitespace()
                     .then(|t: &Token, _source: &[char]| {
@@ -196,11 +195,11 @@ impl Document {
                     }),
             )
         }
-        thread_local! {static PATTERN: Lrc<SequencePattern> = create_pattern()}
+        thread_local! {static EXPR: Lrc<SequenceExpr> = create_expr()}
 
-        let pattern = PATTERN.with(|v| v.clone());
+        let expr = EXPR.with(|v| v.clone());
 
-        for m in pattern.find_all_matches_in_doc(self) {
+        for m in expr.iter_matches_in_doc(self).collect::<Vec<_>>() {
             if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.start].kind {
                 metadata.noun = None;
                 metadata.pronoun = None;
@@ -212,9 +211,9 @@ impl Document {
 
     /// The first word after an article cannot be a verb.
     fn articles_imply_not_verb(&mut self) {
-        fn create_pattern() -> Lrc<SequencePattern> {
+        fn create_pattern() -> Lrc<SequenceExpr> {
             Lrc::new(
-                SequencePattern::default()
+                SequenceExpr::default()
                     .then(WordSet::new(&[
                         // articles
                         "a", "an", "the",
@@ -229,10 +228,10 @@ impl Document {
                     .then_verb(),
             )
         }
-        thread_local! {static PATTERN: Lrc<SequencePattern> = create_pattern()}
-        let pattern = PATTERN.with(|v| v.clone());
+        thread_local! {static EXPR: Lrc<SequenceExpr> = create_pattern()}
+        let expr = EXPR.with(|v| v.clone());
 
-        for m in pattern.find_all_matches_in_doc(self) {
+        for m in expr.iter_matches_in_doc(self).collect::<Vec<_>>() {
             if let TokenKind::Word(Some(metadata)) = &mut self.tokens[m.end - 1].kind {
                 if metadata.noun.is_none()
                     && metadata.adjective.is_none()
@@ -478,18 +477,18 @@ impl Document {
     }
 
     thread_local! {
-        static LATIN_PATTERN: Lrc<LongestMatchOf> = Document::uncached_latin_pattern();
+        static LATIN_EXPR: Lrc<LongestMatchOf> = Document::uncached_latin_expr();
     }
 
-    fn uncached_latin_pattern() -> Lrc<LongestMatchOf> {
+    fn uncached_latin_expr() -> Lrc<LongestMatchOf> {
         Lrc::new(LongestMatchOf::new(vec![
             Box::new(
-                SequencePattern::default()
+                SequenceExpr::default()
                     .then(WordSet::new(&["etc", "vs"]))
                     .then_period(),
             ),
             Box::new(
-                SequencePattern::aco("et")
+                SequenceExpr::aco("et")
                     .then_whitespace()
                     .t_aco("al")
                     .then_period(),
@@ -499,11 +498,11 @@ impl Document {
 
     /// Assumes that the first matched token is the canonical one to be condensed into.
     /// Takes a callback that can be used to retroactively edit the canonical token afterwards.
-    fn condense_pattern<F>(&mut self, pattern: &impl Pattern, edit: F)
+    fn condense_expr<F>(&mut self, expr: &impl Expr, edit: F)
     where
         F: Fn(&mut Token),
     {
-        let matches = pattern.find_all_matches_in_doc(self);
+        let matches = expr.iter_matches_in_doc(self).collect::<Vec<_>>();
 
         let mut remove_indices = VecDeque::with_capacity(matches.len());
 
@@ -517,7 +516,7 @@ impl Document {
     }
 
     fn condense_latin(&mut self) {
-        self.condense_pattern(&Self::LATIN_PATTERN.with(|v| v.clone()), |_| {})
+        self.condense_expr(&Self::LATIN_EXPR.with(|v| v.clone()), |_| {})
     }
 
     /// Searches for multiple sequential newline tokens and condenses them down
@@ -606,25 +605,25 @@ impl Document {
         self.tokens.remove_indices(to_remove);
     }
 
-    fn uncached_ellipsis_pattern() -> Lrc<RepeatingPattern> {
-        let period = SequencePattern::default().then_period();
-        Lrc::new(RepeatingPattern::new(Box::new(period), 2))
+    fn uncached_ellipsis_pattern() -> Lrc<Repeating> {
+        let period = SequenceExpr::default().then_period();
+        Lrc::new(Repeating::new(Box::new(period), 2))
     }
 
     thread_local! {
-        static ELLIPSIS_PATTERN: Lrc<RepeatingPattern> = Document::uncached_ellipsis_pattern();
+        static ELLIPSIS_EXPR: Lrc<Repeating> = Document::uncached_ellipsis_pattern();
     }
 
     fn condense_ellipsis(&mut self) {
-        let pattern = Self::ELLIPSIS_PATTERN.with(|v| v.clone());
-        self.condense_pattern(&pattern, |tok| {
+        let expr = Self::ELLIPSIS_EXPR.with(|v| v.clone());
+        self.condense_expr(&expr, |tok| {
             tok.kind = TokenKind::Punctuation(Punctuation::Ellipsis)
         });
     }
 
-    fn uncached_contraction_pattern() -> Lrc<SequencePattern> {
+    fn uncached_contraction_expr() -> Lrc<SequenceExpr> {
         Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then_any_word()
                 .then_apostrophe()
                 .then_any_word(),
@@ -632,15 +631,15 @@ impl Document {
     }
 
     thread_local! {
-        static CONTRACTION_PATTERN: Lrc<SequencePattern> = Document::uncached_contraction_pattern();
+        static CONTRACTION_EXPR: Lrc<SequenceExpr> = Document::uncached_contraction_expr();
     }
 
     /// Searches for contractions and condenses them down into single
     /// tokens.
     fn condense_contractions(&mut self) {
-        let pattern = Self::CONTRACTION_PATTERN.with(|v| v.clone());
+        let expr = Self::CONTRACTION_EXPR.with(|v| v.clone());
 
-        self.condense_pattern(&pattern, |_| {});
+        self.condense_expr(&expr, |_| {});
     }
 }
 
@@ -660,7 +659,7 @@ macro_rules! create_fns_on_doc {
                 self.tokens.[< last_ $thing _index >]()
             }
 
-            fn [<iter_ $thing _indices>](&self) -> impl Iterator<Item = usize> + '_ {
+            fn [<iter_ $thing _indices>](&self) -> impl DoubleEndedIterator<Item = usize> + '_ {
                 self.tokens.[< iter_ $thing _indices >]()
             }
 

@@ -1,31 +1,31 @@
-use crate::{
-    Token,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::Token;
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 
-use super::super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct AvoidContraction {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for AvoidContraction {
     fn default() -> Self {
-        let pattern = SequencePattern::aco("you're").then_whitespace().then(
-            |tok: &Token, _source: &[char]| {
-                tok.kind.is_nominal() && !tok.kind.is_likely_homograph()
-            },
-        );
+        let pattern =
+            SequenceExpr::aco("you're")
+                .then_whitespace()
+                .then(|tok: &Token, _source: &[char]| {
+                    tok.kind.is_nominal() && !tok.kind.is_likely_homograph()
+                });
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for AvoidContraction {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for AvoidContraction {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

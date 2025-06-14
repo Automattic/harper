@@ -1,17 +1,18 @@
 use std::sync::Arc;
 
-use crate::{CharString, Dictionary, FstDictionary, Token, WordMetadata};
+use crate::patterns::WhitespacePattern;
+use crate::{CharString, Dictionary, FstDictionary, Span, Token, WordMetadata};
 
-use super::{LongestMatchOf, Pattern, SequencePattern, WhitespacePattern};
+use super::{Expr, LongestMatchOf, SequenceExpr};
 
 type PredicateFn = dyn Fn(Option<&WordMetadata>, Option<&WordMetadata>) -> bool + Send + Sync;
 
-/// A [`Pattern`] that identifies adjacent words that could potentially be merged into a single word.
+/// A [`Expr`] that identifies adjacent words that could potentially be merged into a single word.
 ///
 /// This checks if two adjacent words could form a valid compound word, but first verifies
 /// that the two words aren't already a valid lexeme in the dictionary (like "straight away").
 pub struct MergeableWords {
-    inner: SequencePattern,
+    inner: SequenceExpr,
     dict: Arc<FstDictionary>,
     predicate: Box<PredicateFn>,
 }
@@ -21,7 +22,7 @@ impl MergeableWords {
         predicate: impl Fn(Option<&WordMetadata>, Option<&WordMetadata>) -> bool + Send + Sync + 'static,
     ) -> Self {
         Self {
-            inner: SequencePattern::default()
+            inner: SequenceExpr::default()
                 .then_any_word()
                 .then(LongestMatchOf::new(vec![
                     Box::new(WhitespacePattern),
@@ -62,16 +63,16 @@ impl MergeableWords {
     }
 }
 
-impl Pattern for MergeableWords {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        let inner_match = self.inner.matches(tokens, source)?;
+impl Expr for MergeableWords {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+        let inner_match = self.inner.run(cursor, tokens, source)?;
 
-        if inner_match != 3 {
+        if inner_match.len() != 3 {
             return None;
         }
 
         if self
-            .get_merged_word(&tokens[0], &tokens[2], source)
+            .get_merged_word(&tokens[cursor], &tokens[cursor + 2], source)
             .is_some()
         {
             return Some(inner_match);
@@ -83,20 +84,21 @@ impl Pattern for MergeableWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Document, WordMetadata, patterns::MergeableWords};
+    use super::MergeableWords;
+    use crate::{Document, WordMetadata};
 
     fn predicate(meta_closed: Option<&WordMetadata>, meta_open: Option<&WordMetadata>) -> bool {
-        meta_open.is_none() && meta_closed.map_or(false, |m| m.is_noun() && !m.is_proper_noun())
+        meta_open.is_none() && meta_closed.is_some_and(|m| m.is_noun() && !m.is_proper_noun())
     }
 
     #[test]
     fn merges_open_compound_not_in_dict() {
         // note book is not in the dictionary, but notebook is
         let doc = Document::new_plain_english_curated("note book");
-        let a = doc.tokens().nth(0).unwrap();
+        let a = doc.tokens().next().unwrap();
         let b = doc.tokens().nth(2).unwrap();
 
-        let merged = MergeableWords::new(predicate).get_merged_word(&a, &b, doc.get_source());
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, Some("notebook".chars().collect()));
     }
@@ -105,10 +107,10 @@ mod tests {
     fn does_not_merge_open_compound_in_dict() {
         // straight away is in the dictionary, and straightaway is
         let doc = Document::new_plain_english_curated("straight away");
-        let a = doc.tokens().nth(0).unwrap();
+        let a = doc.tokens().next().unwrap();
         let b = doc.tokens().nth(2).unwrap();
 
-        let merged = MergeableWords::new(predicate).get_merged_word(&a, &b, doc.get_source());
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, None);
     }
@@ -117,10 +119,10 @@ mod tests {
     fn does_not_merge_invalid_compound() {
         // neither quick for nor quickfox are in the dictionary
         let doc = Document::new_plain_english_curated("quick fox");
-        let a = doc.tokens().nth(0).unwrap();
+        let a = doc.tokens().next().unwrap();
         let b = doc.tokens().nth(2).unwrap();
 
-        let merged = MergeableWords::new(predicate).get_merged_word(&a, &b, doc.get_source());
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, None);
     }
@@ -129,10 +131,10 @@ mod tests {
     fn merges_open_compound() {
         // Dictionary has "frontline" but not "front line"
         let doc = Document::new_plain_english_curated("front line");
-        let a = doc.tokens().nth(0).unwrap();
+        let a = doc.tokens().next().unwrap();
         let b = doc.tokens().nth(2).unwrap();
 
-        let merged = MergeableWords::new(predicate).get_merged_word(&a, &b, doc.get_source());
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, Some("frontline".chars().collect()));
     }
@@ -141,10 +143,10 @@ mod tests {
     fn merges_hyphenated_compound() {
         // Doesn't check for "front-line" in the dictionary but matches it and "frontline" is in the dictionary
         let doc = Document::new_plain_english_curated("front-line");
-        let a = doc.tokens().nth(0).unwrap();
+        let a = doc.tokens().next().unwrap();
         let b = doc.tokens().nth(2).unwrap();
 
-        let merged = MergeableWords::new(predicate).get_merged_word(&a, &b, doc.get_source());
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, Some("frontline".chars().collect()));
     }

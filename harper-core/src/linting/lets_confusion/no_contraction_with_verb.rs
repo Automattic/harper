@@ -1,10 +1,13 @@
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
     linting::{Lint, LintKind, Suggestion},
-    patterns::{LongestMatchOf, Pattern, SequencePattern, WordSet},
+    patterns::WordSet,
 };
 
-use crate::linting::PatternLinter;
+use crate::linting::ExprLinter;
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -12,18 +15,18 @@ use crate::linting::PatternLinter;
 /// harper-core/src/linting/lets_confusion/let_us_redundancy.rs
 /// harper-core/src/linting/pronoun_contraction/should_contract.rs
 pub struct NoContractionWithVerb {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for NoContractionWithVerb {
     fn default() -> Self {
         // Only tests "let".
-        let let_ws = SequencePattern::default()
+        let let_ws = SequenceExpr::default()
             .then(WordSet::new(&["lets", "let"]))
             .then_whitespace();
 
         // Match verbs that are only verbs (not also nouns/adjectives) and not in -ing form
-        let non_ing_verb = SequencePattern::default().then(|tok: &Token, _src: &[char]| {
+        let non_ing_verb = SequenceExpr::default().then(|tok: &Token, _src: &[char]| {
             let Some(Some(meta)) = tok.kind.as_word() else {
                 return false;
             };
@@ -35,7 +38,7 @@ impl Default for NoContractionWithVerb {
 
         // Ambiguous word is a verb determined by heuristic of following word's part of speech
         // Tests the next two words after "let".
-        let verb_due_to_following_pos = SequencePattern::default()
+        let verb_due_to_following_pos = SequenceExpr::default()
             .then(|tok: &Token, _source: &[char]| tok.kind.is_verb())
             .then_whitespace()
             .then(|tok: &Token, _source: &[char]| {
@@ -49,14 +52,14 @@ impl Default for NoContractionWithVerb {
         ]));
 
         Self {
-            pattern: Box::new(let_then_verb),
+            expr: Box::new(let_then_verb),
         }
     }
 }
 
-impl PatternLinter for NoContractionWithVerb {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for NoContractionWithVerb {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

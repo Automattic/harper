@@ -1,28 +1,28 @@
-use crate::{
-    Token, TokenStringExt,
-    patterns::{All, Pattern, SequencePattern, WordSet},
-};
+use crate::expr::All;
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::{Token, TokenStringExt, patterns::WordSet};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct MostNumber {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for MostNumber {
     fn default() -> Self {
         Self {
-            pattern: Box::new(All::new(vec![
+            expr: Box::new(All::new(vec![
                 // Main pattern
                 Box::new(
-                    SequencePattern::default()
+                    SequenceExpr::default()
                         .t_aco("most")
                         .t_ws()
                         .then(WordSet::new(&["amount", "number"])),
                 ),
                 // Context pattern
                 Box::new(
-                    SequencePattern::default()
+                    SequenceExpr::default()
                         .then_anything()
                         .then_anything()
                         .then_anything()
@@ -34,9 +34,9 @@ impl Default for MostNumber {
     }
 }
 
-impl PatternLinter for MostNumber {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for MostNumber {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {

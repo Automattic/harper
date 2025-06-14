@@ -1,10 +1,12 @@
-use crate::linting::{Lint, LintKind, PatternLinter};
-use crate::patterns::{FixedPhrase, LongestMatchOf, Pattern};
+use crate::expr::Expr;
+use crate::expr::FixedPhrase;
+use crate::expr::LongestMatchOf;
+use crate::linting::{ExprLinter, Lint, LintKind};
 use crate::{Token, TokenStringExt};
 
 /// A linter that flags oxymoronic phrases.
 pub struct Oxymorons {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Oxymorons {
@@ -31,13 +33,13 @@ impl Oxymorons {
         ];
 
         // Build a vector of exact-match patterns for each oxymoron.
-        let patterns: Vec<Box<dyn Pattern>> = phrases
+        let exprs: Vec<Box<dyn Expr>> = phrases
             .into_iter()
-            .map(|s| Box::new(FixedPhrase::from_phrase(s)) as Box<dyn Pattern>)
+            .map(|s| Box::new(FixedPhrase::from_phrase(s)) as Box<dyn Expr>)
             .collect();
 
-        let pattern = Box::new(LongestMatchOf::new(patterns));
-        Self { pattern }
+        let expr = Box::new(LongestMatchOf::new(exprs));
+        Self { expr }
     }
 }
 
@@ -47,10 +49,10 @@ impl Default for Oxymorons {
     }
 }
 
-impl PatternLinter for Oxymorons {
+impl ExprLinter for Oxymorons {
     /// Returns the underlying pattern.
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

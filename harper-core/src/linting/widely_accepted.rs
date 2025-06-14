@@ -1,27 +1,29 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Pattern, SequencePattern, Word, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::{Word, WordSet},
 };
 
 pub struct WidelyAccepted {
-    pattern: SequencePattern,
+    expr: SequenceExpr,
 }
 
 impl Default for WidelyAccepted {
     fn default() -> Self {
-        let pattern = SequencePattern::default()
+        let expr = SequenceExpr::default()
             .then(Word::new("wide"))
             .then_whitespace()
             .then(WordSet::new(&["accepted", "acceptable", "used"]));
 
-        Self { pattern }
+        Self { expr }
     }
 }
 
-impl PatternLinter for WidelyAccepted {
-    fn pattern(&self) -> &dyn Pattern {
-        &self.pattern
+impl ExprLinter for WidelyAccepted {
+    fn expr(&self) -> &dyn Expr {
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

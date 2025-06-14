@@ -7,54 +7,28 @@
 
 use crate::{Document, LSend, Span, Token};
 
-mod all;
 mod any_pattern;
-mod first_match_of;
-mod fixed_phrase;
 mod implies_quantity;
 mod indefinite_article;
 mod inflection_of_be;
 mod invert;
-mod longest_match_of;
-mod mergeable_words;
 mod nominal_phrase;
-mod pattern_map;
-mod repeating_pattern;
-mod sequence_pattern;
-mod similar_to_phrase;
-mod spelled_number_pattern;
-mod time_unit_pattern;
 mod whitespace_pattern;
 mod within_edit_distance;
 mod word;
-mod word_pattern_group;
 mod word_set;
 
-pub use all::All;
 pub use any_pattern::AnyPattern;
-use blanket::blanket;
-pub use first_match_of::FirstMatchOf;
-pub use fixed_phrase::FixedPhrase;
 pub use implies_quantity::ImpliesQuantity;
 pub use indefinite_article::IndefiniteArticle;
 pub use inflection_of_be::InflectionOfBe;
 pub use invert::Invert;
-pub use longest_match_of::LongestMatchOf;
-pub use mergeable_words::MergeableWords;
 pub use nominal_phrase::NominalPhrase;
-pub use pattern_map::PatternMap;
-pub use repeating_pattern::RepeatingPattern;
-pub use sequence_pattern::SequencePattern;
-pub use similar_to_phrase::SimilarToPhrase;
-pub use spelled_number_pattern::SpelledNumberPattern;
-pub use time_unit_pattern::TimeUnitPattern;
 pub use whitespace_pattern::WhitespacePattern;
+pub use within_edit_distance::WithinEditDistance;
 pub use word::Word;
-pub use word_pattern_group::WordPatternGroup;
 pub use word_set::WordSet;
 
-#[cfg_attr(feature = "concurrent", blanket(derive(Arc)))]
-#[cfg_attr(not(feature = "concurrent"), blanket(derive(Rc, Arc)))]
 pub trait Pattern: LSend {
     /// Check if the pattern matches at the start of the given token slice.
     ///
@@ -120,19 +94,6 @@ where
         }
 
         None
-    }
-}
-
-pub trait OwnedPatternExt {
-    fn or(self, other: impl Pattern + 'static) -> LongestMatchOf;
-}
-
-impl<P> OwnedPatternExt for P
-where
-    P: Pattern + 'static,
-{
-    fn or(self, other: impl Pattern + 'static) -> LongestMatchOf {
-        LongestMatchOf::new(vec![Box::new(self), Box::new(other)])
     }
 }
 

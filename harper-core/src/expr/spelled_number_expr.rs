@@ -1,12 +1,15 @@
-use super::{LongestMatchOf, Pattern, SequencePattern, WhitespacePattern, WordSet};
-use crate::Token;
+use crate::expr::LongestMatchOf;
+use crate::patterns::{WhitespacePattern, WordSet};
+use crate::{Span, Token};
+
+use super::{Expr, SequenceExpr};
 
 /// Matches spelled-out numbers from one to ninety-nine
 #[derive(Default)]
-pub struct SpelledNumberPattern;
+pub struct SpelledNumberExpr;
 
-impl Pattern for SpelledNumberPattern {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
+impl Expr for SpelledNumberExpr {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
         if tokens.is_empty() {
             return None;
         }
@@ -48,7 +51,7 @@ impl Pattern for SpelledNumberPattern {
                 .collect::<Vec<&str>>(),
         );
 
-        let tens_units_compounds = SequencePattern::default()
+        let tens_units_compounds = SequenceExpr::default()
             .then(WordSet::new(tens))
             .then(LongestMatchOf::new(vec![
                 Box::new(|t: &Token, _s: &[char]| t.kind.is_hyphen()),
@@ -56,16 +59,17 @@ impl Pattern for SpelledNumberPattern {
             ]))
             .then(WordSet::new(units));
 
-        let pat = LongestMatchOf::new(vec![Box::new(single_words), Box::new(tens_units_compounds)]);
+        let expr =
+            LongestMatchOf::new(vec![Box::new(single_words), Box::new(tens_units_compounds)]);
 
-        pat.matches(tokens, source)
+        expr.run(cursor, tokens, source)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::super::DocPattern;
-    use super::SpelledNumberPattern;
+    use super::SpelledNumberExpr;
+    use crate::expr::ExprExt;
     use crate::{Document, Span};
 
     trait SpanVecExt {
@@ -88,28 +92,30 @@ mod tests {
     #[test]
     fn matches_single_digit() {
         let doc = Document::new_markdown_default_curated("one two three");
-        let matches = SpelledNumberPattern.find_all_matches_in_doc(&doc);
-        assert_eq!(matches.len(), 3);
+        let matches = SpelledNumberExpr.iter_matches_in_doc(&doc);
+        assert_eq!(matches.count(), 3);
     }
 
     #[test]
     fn matches_teens() {
         let doc = Document::new_markdown_default_curated("ten eleven twelve");
-        let matches = SpelledNumberPattern.find_all_matches_in_doc(&doc);
-        assert_eq!(matches.len(), 3);
+        let matches = SpelledNumberExpr.iter_matches_in_doc(&doc);
+        assert_eq!(matches.count(), 3);
     }
 
     #[test]
     fn matches_tens() {
         let doc = Document::new_markdown_default_curated("twenty thirty forty");
-        let matches = SpelledNumberPattern.find_all_matches_in_doc(&doc);
-        assert_eq!(matches.len(), 3);
+        let matches = SpelledNumberExpr.iter_matches_in_doc(&doc);
+        assert_eq!(matches.count(), 3);
     }
 
     #[test]
     fn matches_compound_numbers() {
         let doc = Document::new_markdown_default_curated("twenty-one thirty-two");
-        let matches = SpelledNumberPattern.find_all_matches_in_doc(&doc);
+        let matches = SpelledNumberExpr
+            .iter_matches_in_doc(&doc)
+            .collect::<Vec<_>>();
 
         // Debug output
         println!("Found {} matches:", matches.len());
@@ -129,7 +135,9 @@ mod tests {
         let doc = Document::new_markdown_default_curated(
             "the answer to the ultimate question of life, the universe, and everything is forty-two",
         );
-        let matches = SpelledNumberPattern.find_all_matches_in_doc(&doc);
+        let matches = SpelledNumberExpr
+            .iter_matches_in_doc(&doc)
+            .collect::<Vec<_>>();
 
         dbg!(&matches);
         dbg!(matches.to_strings(&doc));
@@ -142,7 +150,9 @@ mod tests {
         let doc = Document::new_markdown_default_curated(
             "A, B, C It's easy as one, two, three. Or simple as Do-Re-Mi",
         );
-        let matches = SpelledNumberPattern.find_all_matches_in_doc(&doc);
+        let matches = SpelledNumberExpr
+            .iter_matches_in_doc(&doc)
+            .collect::<Vec<_>>();
 
         assert_eq!(matches.to_strings(&doc), vec!["one", "two", "three"]);
     }
@@ -150,7 +160,9 @@ mod tests {
     #[test]
     fn orwell() {
         let doc = Document::new_markdown_default_curated("Nineteen Eighty-Four");
-        let matches = SpelledNumberPattern.find_all_matches_in_doc(&doc);
+        let matches = SpelledNumberExpr
+            .iter_matches_in_doc(&doc)
+            .collect::<Vec<_>>();
 
         assert_eq!(matches.to_strings(&doc), vec!["Nineteen", "Eighty-Four"]);
     }
@@ -160,7 +172,9 @@ mod tests {
         let doc = Document::new_markdown_default_curated(
             "Maxwell Smart was Agent Eighty-Six, but who was Agent Ninety-Nine?",
         );
-        let matches = SpelledNumberPattern.find_all_matches_in_doc(&doc);
+        let matches = SpelledNumberExpr
+            .iter_matches_in_doc(&doc)
+            .collect::<Vec<_>>();
 
         assert_eq!(matches.to_strings(&doc), vec!["Eighty-Six", "Ninety-Nine"]);
     }
@@ -170,7 +184,9 @@ mod tests {
         let doc = Document::new_markdown_default_curated(
             "twenty-one, thirty two, forty-three, fifty four, sixty-five, seventy six, eighty-seven, ninety eight",
         );
-        let matches = SpelledNumberPattern.find_all_matches_in_doc(&doc);
+        let matches = SpelledNumberExpr
+            .iter_matches_in_doc(&doc)
+            .collect::<Vec<_>>();
 
         assert_eq!(
             matches.to_strings(&doc),
@@ -190,7 +206,9 @@ mod tests {
     #[test]
     fn waiting_since() {
         let doc = Document::new_markdown_default_curated("I have been waiting since two hours.");
-        let matches = SpelledNumberPattern.find_all_matches_in_doc(&doc);
+        let matches = SpelledNumberExpr
+            .iter_matches_in_doc(&doc)
+            .collect::<Vec<_>>();
 
         assert_eq!(matches.to_strings(&doc), vec!["two"]);
     }

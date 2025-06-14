@@ -1,11 +1,14 @@
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use crate::{
     CharStringExt, Token, TokenStringExt,
-    patterns::{LongestMatchOf, Pattern, SequencePattern, Word, WordSet},
+    patterns::{Word, WordSet},
 };
 
 pub struct TheMy {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for TheMy {
@@ -13,18 +16,18 @@ impl Default for TheMy {
         let the = Word::new("the");
         let any_possessive = WordSet::new(&["my", "your", "his", "her", "its", "our", "their"]);
 
-        let the_poss = SequencePattern::default()
+        let the_poss = SequenceExpr::default()
             .then(the.clone())
             .then_whitespace()
             .then(any_possessive.clone());
 
-        let poss_the = SequencePattern::default()
+        let poss_the = SequenceExpr::default()
             .then(any_possessive)
             .then_whitespace()
             .then(the);
 
         Self {
-            pattern: Box::new(LongestMatchOf::new(vec![
+            expr: Box::new(LongestMatchOf::new(vec![
                 Box::new(the_poss),
                 Box::new(poss_the),
             ])),
@@ -32,9 +35,9 @@ impl Default for TheMy {
     }
 }
 
-impl PatternLinter for TheMy {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for TheMy {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

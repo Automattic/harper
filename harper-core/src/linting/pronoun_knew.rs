@@ -1,11 +1,14 @@
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{LongestMatchOf, SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
 };
 
 pub struct PronounKnew {
-    pattern: Box<dyn crate::patterns::Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 trait PronounKnewExt {
@@ -27,12 +30,12 @@ impl Default for PronounKnew {
             !excluded.contains(&&*pronorm)
         };
 
-        let pronoun_then_new = SequencePattern::default()
+        let pronoun_then_new = SequenceExpr::default()
             .then(pronoun_pattern)
             .then_whitespace()
             .then_any_capitalization_of("new");
 
-        let pronoun_adverb_then_new = SequencePattern::default()
+        let pronoun_adverb_then_new = SequenceExpr::default()
             .then(pronoun_pattern)
             .then_whitespace()
             .then(WordSet::new(&["always", "never", "also", "often"]))
@@ -45,14 +48,14 @@ impl Default for PronounKnew {
         ]);
 
         Self {
-            pattern: Box::new(combined_pattern),
+            expr: Box::new(combined_pattern),
         }
     }
 }
 
-impl PatternLinter for PronounKnew {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for PronounKnew {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {

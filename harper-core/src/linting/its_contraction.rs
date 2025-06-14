@@ -1,30 +1,32 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Pattern, SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
 };
 
 pub struct ItsContraction {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ItsContraction {
     fn default() -> Self {
         let its = WordSet::new(&["its"]);
         let verbs = WordSet::new(&["had", "been", "got"]);
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(its)
             .then_whitespace()
             .then(verbs);
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for ItsContraction {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ItsContraction {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {

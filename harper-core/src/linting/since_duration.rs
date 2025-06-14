@@ -1,9 +1,10 @@
-use crate::{
-    Lrc, Token, TokenStringExt,
-    patterns::{LongestMatchOf, Pattern, SequencePattern, SpelledNumberPattern, WordSet},
-};
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::expr::SpelledNumberExpr;
+use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 const AGO_VARIANTS: [&[char]; 3] = [&['a', 'g', 'o'], &['A', 'g', 'o'], &['A', 'G', 'O']];
 const FOR_VARIANTS: [&[char]; 3] = [&['f', 'o', 'r'], &['F', 'o', 'r'], &['F', 'O', 'R']];
@@ -21,7 +22,7 @@ fn match_case_string<'a>(template: &[char], variants: [&'a [char]; 3]) -> &'a [c
 }
 
 pub struct SinceDuration {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for SinceDuration {
@@ -32,24 +33,24 @@ impl Default for SinceDuration {
         ]);
 
         let pattern_without_ago = Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then_any_capitalization_of("since")
                 .then_whitespace()
                 .then(LongestMatchOf::new(vec![
-                    Box::new(SpelledNumberPattern),
-                    Box::new(SequencePattern::default().then_number()),
+                    Box::new(SpelledNumberExpr),
+                    Box::new(SequenceExpr::default().then_number()),
                 ]))
                 .then_whitespace()
                 .then(units),
         );
 
-        let pattern_with_ago = SequencePattern::default()
+        let pattern_with_ago = SequenceExpr::default()
             .then(pattern_without_ago.clone())
             .then_whitespace()
             .then_any_capitalization_of("ago");
 
         Self {
-            pattern: Box::new(LongestMatchOf::new(vec![
+            expr: Box::new(LongestMatchOf::new(vec![
                 Box::new(pattern_without_ago),
                 Box::new(pattern_with_ago),
             ])),
@@ -57,9 +58,9 @@ impl Default for SinceDuration {
     }
 }
 
-impl PatternLinter for SinceDuration {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for SinceDuration {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

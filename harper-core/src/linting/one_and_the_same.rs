@@ -1,12 +1,13 @@
-use crate::{
-    Lrc, Token, TokenStringExt,
-    patterns::{FixedPhrase, LongestMatchOf, Pattern, SequencePattern, WordSet},
-};
+use crate::expr::Expr;
+use crate::expr::FixedPhrase;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct OneAndTheSame {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for OneAndTheSame {
@@ -14,15 +15,15 @@ impl Default for OneAndTheSame {
         let one_in_the_same = Lrc::new(FixedPhrase::from_phrase("one in the same"));
 
         Self {
-            pattern: Box::new(LongestMatchOf::new(vec![
+            expr: Box::new(LongestMatchOf::new(vec![
                 Box::new(
-                    SequencePattern::default()
+                    SequenceExpr::default()
                         .then(WordSet::new(&["are", "were"]))
                         .t_ws()
                         .then(one_in_the_same.clone()),
                 ),
                 Box::new(
-                    SequencePattern::default()
+                    SequenceExpr::default()
                         .then(one_in_the_same.clone())
                         .t_ws()
                         .t_aco("as"),
@@ -32,13 +33,13 @@ impl Default for OneAndTheSame {
     }
 }
 
-fn ws_word(word: &'static str) -> SequencePattern {
-    SequencePattern::default().t_ws().t_aco(word)
+fn ws_word(word: &'static str) -> SequenceExpr {
+    SequenceExpr::default().t_ws().t_aco(word)
 }
 
-impl PatternLinter for OneAndTheSame {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for OneAndTheSame {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

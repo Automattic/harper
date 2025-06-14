@@ -1,25 +1,28 @@
-use super::{Lint, LintKind, PatternLinter};
+use super::{ExprLinter, Lint, LintKind};
+use crate::expr::Expr;
+use crate::expr::FixedPhrase;
+use crate::expr::LongestMatchOf;
+use crate::expr::SimilarToPhrase;
 use crate::linting::Suggestion;
-use crate::patterns::{FixedPhrase, LongestMatchOf, Pattern, SimilarToPhrase};
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseLinter {
     description: String,
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
     correct_forms: Vec<String>,
     message: String,
 }
 
 impl MapPhraseLinter {
     pub fn new(
-        pattern: Box<dyn Pattern>,
+        expr: Box<dyn Expr>,
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
         description: impl ToString,
     ) -> Self {
         Self {
             description: description.to_string(),
-            pattern,
+            expr,
             correct_forms: correct_forms.into_iter().map(|f| f.to_string()).collect(),
             message: message.to_string(),
         }
@@ -44,8 +47,8 @@ impl MapPhraseLinter {
             phrase
                 .into_iter()
                 .map(|p| {
-                    let pattern: Box<dyn Pattern> = Box::new(FixedPhrase::from_phrase(p.as_ref()));
-                    pattern
+                    let expr: Box<dyn Expr> = Box::new(FixedPhrase::from_phrase(p.as_ref()));
+                    expr
                 })
                 .collect(),
         );
@@ -82,9 +85,9 @@ impl MapPhraseLinter {
     }
 }
 
-impl PatternLinter for MapPhraseLinter {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for MapPhraseLinter {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
