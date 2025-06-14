@@ -1,5 +1,5 @@
 use crate::{
-    Span, Token,
+    CharStringExt, Span, Token,
     linting::Suggestion,
     patterns::{Pattern, SequencePattern, WordSet},
 };
@@ -61,32 +61,12 @@ impl PatternLinter for ShootOneselfInTheFoot {
         let det = &toks.get(6)?.span.get_content(src);
         let body_part = &toks.get(8)?.span.get_content(src);
 
-        // case-insensitive ends_with
-        let plural_pron = pron
-            .iter()
-            .rev()
-            .take(5)
-            .rev()
-            .zip("elves".chars())
-            .all(|(c, s)| c.to_ascii_lowercase() == s);
+        let plural_pron = pron.ends_with_ignore_ascii_case_str("elves");
         let plural_foot = toks.get(8)?.kind.is_plural_noun();
 
-        // case-insensitive comparison without allocating a String
-        let is_in = prep.len() == 2
-            && prep
-                .iter()
-                .zip("in".chars())
-                .all(|(c, s)| c.to_ascii_lowercase() == s);
-        let is_the = det.len() == 3
-            && det
-                .iter()
-                .zip("the".chars())
-                .all(|(c, s)| c.to_ascii_lowercase() == s);
-        let is_foot = body_part.len() == 4
-            && body_part
-                .iter()
-                .zip("foot".chars())
-                .all(|(c, s)| c.to_ascii_lowercase() == s);
+        let is_in = prep.eq_ignore_ascii_case_str("in");
+        let is_the = det.eq_ignore_ascii_case_str("the");
+        let is_foot = body_part.eq_ignore_ascii_case_str("foot");
 
         let foot_ok = is_foot || (plural_pron && plural_foot);
 
