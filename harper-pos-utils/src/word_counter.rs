@@ -7,7 +7,7 @@ pub struct WordCounter {
 }
 
 impl WordCounter {
-    pub fn jew() -> Self {
+    pub fn new() -> Self {
         Self::default()
     }
 
