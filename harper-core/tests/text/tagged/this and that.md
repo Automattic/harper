@@ -5,37 +5,37 @@
 >
 #
 > This document contains various sentences that     use   " this " , " that     " , " these " , and
-# I/D+ NSg/V    V        J       NPl/V+    N/I/C/D+ NSg/V . I/D+ . . . N/I/C/D+ . . . I/D   . . V/C
+# I/D+ NSg/V    V        J       NPl/V+    N/I/C/D+ NSg/V . I/D+ . . . N/I/C/D+ . . . I/D+  . . V/C
 > " those " in        different contexts with a   lot     of edge   cases  .
 # . I/D   . NPrSg/J/P NSg/J     NPl/V    P    D/P NPrSg/V P  NSg/V+ NPl/V+ .
 >
 #
 > Examples
-# NPl/V
+# NPl/V+
 >
 #
-> This triangle is nice       .
-# I/D  NSg      VL NPrSg/V/J+ .
+> This triangle is  nice       .
+# I/D+ NSg+     VL+ NPrSg/V/J+ .
 > This is  nice       .
 # I/D+ VL+ NPrSg/V/J+ .
 > That     triangle is  nice       .
-# N/I/C/D+ NSg      VL+ NPrSg/V/J+ .
+# N/I/C/D+ NSg+     VL+ NPrSg/V/J+ .
 > That     is  nice       .
 # N/I/C/D+ VL+ NPrSg/V/J+ .
 > These triangles are nice       .
-# I/D+  NPl       V+  NPrSg/V/J+ .
+# I/D+  NPl+      V+  NPrSg/V/J+ .
 > These are nice       .
 # I/D+  V+  NPrSg/V/J+ .
 > Those triangles are nice       .
-# I/D   NPl       V+  NPrSg/V/J+ .
+# I/D+  NPl+      V+  NPrSg/V/J+ .
 > Those are nice      .
 # I/D+  V+  NPrSg/V/J .
 >
 #
-> This massage is nice       .
-# I/D+ NSg/V   VL NPrSg/V/J+ .
-> That     massage is  nice       .
-# N/I/C/D+ NSg/V+  VL+ NPrSg/V/J+ .
+> This massage is  nice       .
+# I/D+ NSg/V+  VL+ NPrSg/V/J+ .
+> That    massage is  nice       .
+# N/I/C/D NSg/V+  VL+ NPrSg/V/J+ .
 > These massages are nice       .
 # I/D+  NPl/V+   V+  NPrSg/V/J+ .
 > Those massages are nice       .
@@ -52,16 +52,16 @@
 #
 > That     could  be     a   solution .
 # N/I/C/D+ NSg/VX NSg/VX D/P NSg      .
-> Find  all       candidates that     could  be     a   solution .
-# NSg/V NSg/I/J/C NPl/V+     N/I/C/D+ NSg/VX NSg/VX D/P NSg+     .
+> Find  all        candidates that     could  be     a   solution .
+# NSg/V NSg/I/J/C+ NPl/V+     N/I/C/D+ NSg/VX NSg/VX D/P NSg+     .
 >
 #
 > This is all       that    I    have    .
 # I/D+ VL NSg/I/J/C N/I/C/D ISg+ NSg/VX+ .
-> This is all       that     solutions can       do      .
-# I/D  VL NSg/I/J/C N/I/C/D+ NPl+      NPrSg/VX+ NSg/VX+ .
-> That     solution can       do     .
-# N/I/C/D+ NSg+     NPrSg/VX+ NSg/VX .
+> This is all       that    solutions can       do     .
+# I/D+ VL NSg/I/J/C N/I/C/D NPl+      NPrSg/VX+ NSg/VX .
+> That    solution can       do     .
+# N/I/C/D NSg+     NPrSg/VX+ NSg/VX .
 >
 #
 > We   can      do     this !
