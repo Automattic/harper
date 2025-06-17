@@ -226,8 +226,8 @@ Message: |
       62 | seemed like the ragged edge of the universe—so I decided to go East and learn
 Suggest:
   - Replace with: “center”
-  - Replace with: “centred”
-  - Replace with: “centres”
+  - Replace with: “censure”
+  - Replace with: “cent”
 
 
 
@@ -681,8 +681,7 @@ Message: |
          |       ^~~~~~~~~~ Did you mean to spell `scepticism` this way?
 Suggest:
   - Replace with: “skepticism”
-  - Replace with: “sceptic's”
-  - Replace with: “scepticism's”
+  - Replace with: “asceticism”
 
 
 
@@ -1075,9 +1074,11 @@ Lint:    Spelling (63 priority)
 Message: |
      730 | beauty, but there was an immediately perceptible vitality about her as if the
      731 | nerves of her body were continually smouldering. She smiled slowly and, walking
-         |                                     ^~~~~~~~~~~ Did you mean `smoldering`?
+         |                                     ^~~~~~~~~~~ Did you mean to spell `smouldering` this way?
 Suggest:
   - Replace with: “smoldering”
+  - Replace with: “shouldering”
+  - Replace with: “soldering”
 
 
 
@@ -1250,8 +1251,8 @@ Message: |
          | ^~~~~~~~~ Did you mean to spell `modelling` this way?
 Suggest:
   - Replace with: “modeling”
-  - Replace with: “modellings”
-  - Replace with: “modelling's”
+  - Replace with: “modelings”
+  - Replace with: “yodeling”
 
 
 
@@ -1638,8 +1639,8 @@ Message: |
     1204 | triumph, glide on through the sea-change of faces and voices and color under the
 Suggest:
   - Replace with: “center”
-  - Replace with: “centred”
-  - Replace with: “centres”
+  - Replace with: “censure”
+  - Replace with: “cent”
 
 
 
@@ -1727,9 +1728,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1310 | “I don’t think it’s so much that,” argued Lucille sceptically; “it’s more that
-         |                                                   ^~~~~~~~~~~ Did you mean `skeptically`?
+         |                                                   ^~~~~~~~~~~ Did you mean to spell `sceptically` this way?
 Suggest:
   - Replace with: “skeptically”
+  - Replace with: “scenically”
+  - Replace with: “ascetically”
 
 
 
@@ -1762,8 +1765,7 @@ Message: |
          |            ^~~~~~~~~~ Did you mean to spell `scepticism` this way?
 Suggest:
   - Replace with: “skepticism”
-  - Replace with: “sceptic's”
-  - Replace with: “scepticism's”
+  - Replace with: “asceticism”
 
 
 
@@ -2177,8 +2179,8 @@ Message: |
     1766 | heart. Forms leaned together in the taxis as they waited, and voices sang, and
 Suggest:
   - Replace with: “theater”
-  - Replace with: “theatres”
-  - Replace with: “theatre's”
+  - Replace with: “there”
+  - Replace with: “they're”
 
 
 
@@ -3771,8 +3773,7 @@ Message: |
     2456 | jauntily just within the circle of my arm. A phrase began to beat in my ears
 Suggest:
   - Replace with: “skepticism”
-  - Replace with: “sceptic's”
-  - Replace with: “scepticism's”
+  - Replace with: “asceticism”
 
 
 
@@ -4518,10 +4519,9 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     3254 | “I’m looking around. I’m having a marvellous—”
-         |                                   ^~~~~~~~~~ Did you mean to spell `marvellous` this way?
+         |                                   ^~~~~~~~~~ Did you mean `marvelous`?
 Suggest:
   - Replace with: “marvelous”
-  - Replace with: “marvellously”
 
 
 
@@ -4830,8 +4830,8 @@ Message: |
          |                     ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
-  - Replace with: “centred”
-  - Replace with: “centres”
+  - Replace with: “censure”
+  - Replace with: “cent”
 
 
 
@@ -5216,7 +5216,7 @@ Message: |
 Suggest:
   - Replace with: “signaled”
   - Replace with: “signaler”
-  - Replace with: “signalised”
+  - Replace with: “signalized”
 
 
 

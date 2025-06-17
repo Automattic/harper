@@ -4,8 +4,7 @@ Message: |
          |    ^~~~~~~~~ Did you mean to spell `favourite` this way?
 Suggest:
   - Replace with: “favorite”
-  - Replace with: “favourites”
-  - Replace with: “favourite's”
+  - Replace with: “favorites”
 
 
 
@@ -26,8 +25,8 @@ Message: |
          |                  ^~~~~~ Did you mean to spell `honour` this way?
 Suggest:
   - Replace with: “honor”
-  - Replace with: “honours”
-  - Replace with: “honour's”
+  - Replace with: “hour”
+  - Replace with: “honer”
 
 
 
@@ -37,8 +36,8 @@ Message: |
          |                      ^~~~~~~~~ Did you mean to spell `recognise` this way?
 Suggest:
   - Replace with: “recognize”
-  - Replace with: “recogniser”
-  - Replace with: “recognises”
+  - Replace with: “recognized”
+  - Replace with: “recognizer”
 
 
 
@@ -48,8 +47,8 @@ Message: |
          |   ^~~~~~~ Did you mean to spell `analyse` this way?
 Suggest:
   - Replace with: “analyze”
-  - Replace with: “analyses”
   - Replace with: “analyst”
+  - Replace with: “analysis”
 
 
 
@@ -70,8 +69,8 @@ Message: |
          |          ^~~~~~~~~ Did you mean to spell `traveller` this way?
 Suggest:
   - Replace with: “traveler”
-  - Replace with: “travellers”
   - Replace with: “traveled”
+  - Replace with: “travelers”
 
 
 
@@ -81,8 +80,8 @@ Message: |
          |        ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
-  - Replace with: “centred”
-  - Replace with: “centres”
+  - Replace with: “censure”
+  - Replace with: “cent”
 
 
 
@@ -92,8 +91,8 @@ Message: |
          |                      ^~~~~~~ Did you mean to spell `theatre` this way?
 Suggest:
   - Replace with: “theater”
-  - Replace with: “theatres”
-  - Replace with: “theatre's”
+  - Replace with: “there”
+  - Replace with: “they're”
 
 
 

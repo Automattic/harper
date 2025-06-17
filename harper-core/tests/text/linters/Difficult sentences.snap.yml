@@ -32,7 +32,7 @@ Message: |
 Suggest:
   - Replace with: “armor”
   - Replace with: “amour”
-  - Replace with: “armours”
+  - Replace with: “arbor”
 
 
 
@@ -91,8 +91,8 @@ Message: |
          |           ^~~~~~~~~~ Did you mean to spell `travelling` this way?
 Suggest:
   - Replace with: “traveling”
-  - Replace with: “travellings”
-  - Replace with: “travelling's”
+  - Replace with: “travailing”
+  - Replace with: “travelings”
 
 
 
@@ -140,20 +140,22 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      258 | I need to keep in with the neighbours in case I ever need a favour from them.
-         |                            ^~~~~~~~~~ Did you mean `neighbors`?
+         |                            ^~~~~~~~~~ Did you mean to spell `neighbours` this way?
 Suggest:
   - Replace with: “neighbors”
+  - Replace with: “neighbor's”
+  - Replace with: “neighbor”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
      258 | I need to keep in with the neighbours in case I ever need a favour from them.
-         |                                                             ^~~~~~ Did you mean `favor`?
+         |                                                             ^~~~~~ Did you mean to spell `favour` this way?
 Suggest:
   - Replace with: “favor”
-  - Replace with: “favours”
   - Replace with: “famous”
+  - Replace with: “flavor”
 
 
 
@@ -173,8 +175,7 @@ Message: |
          |      ^~~~~~~~~ Did you mean to spell `behaviour` this way?
 Suggest:
   - Replace with: “behavior”
-  - Replace with: “behaviours”
-  - Replace with: “behaviour's”
+  - Replace with: “behaviors”
 
 
 
@@ -311,7 +312,7 @@ Message: |
 Suggest:
   - Replace with: “criticize”
   - Replace with: “criticism”
-  - Replace with: “criticised”
+  - Replace with: “critic's”
 
 
 

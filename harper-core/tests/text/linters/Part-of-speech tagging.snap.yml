@@ -434,8 +434,8 @@ Message: |
          |                                           ^~~~~~~~ Did you mean to spell `analyses` this way?
      167 | probabilities, and other related data, and replicated his work for Greek, where
 Suggest:
-  - Replace with: “analysis”
   - Replace with: “analyzes”
+  - Replace with: “analysis”
   - Replace with: “analysts”
 
 

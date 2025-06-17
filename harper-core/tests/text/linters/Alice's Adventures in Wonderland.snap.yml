@@ -103,8 +103,8 @@ Message: |
          | ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
-  - Replace with: “centred”
-  - Replace with: “centres”
+  - Replace with: “censure”
+  - Replace with: “cent”
 
 
 
@@ -326,8 +326,8 @@ Message: |
      139 | custard, pine-apple, roast turkey, toffee, and hot buttered toast,) she very
 Suggest:
   - Replace with: “flavor”
-  - Replace with: “flavours”
   - Replace with: “favor”
+  - Replace with: “flour”
 
 
 
@@ -803,9 +803,11 @@ Lint:    Spelling (63 priority)
 Message: |
      387 | driest thing I know. Silence all round, if you please! ‘William the Conqueror,
      388 | whose cause was favoured by the pope, was soon submitted to by the English, who
-         |                 ^~~~~~~~ Did you mean `favored`?
+         |                 ^~~~~~~~ Did you mean to spell `favoured` this way?
 Suggest:
   - Replace with: “favored”
+  - Replace with: “flavored”
+  - Replace with: “floured”
 
 
 
@@ -1078,8 +1080,8 @@ Message: |
          | ^~~~~~ Did you mean to spell `honour` this way?
 Suggest:
   - Replace with: “honor”
-  - Replace with: “honours”
-  - Replace with: “honour's”
+  - Replace with: “hour”
+  - Replace with: “honer”
 
 
 
@@ -1089,8 +1091,8 @@ Message: |
          |                         ^~~~~~ Did you mean to spell `honour` this way?
 Suggest:
   - Replace with: “honor”
-  - Replace with: “honours”
-  - Replace with: “honour's”
+  - Replace with: “hour”
+  - Replace with: “honer”
 
 
 
@@ -1111,8 +1113,8 @@ Message: |
          |                     ^~~~~~ Did you mean to spell `honour` this way?
 Suggest:
   - Replace with: “honor”
-  - Replace with: “honours”
-  - Replace with: “honour's”
+  - Replace with: “hour”
+  - Replace with: “honer”
 
 
 
@@ -1122,8 +1124,8 @@ Message: |
          |                                            ^~~~~~ Did you mean to spell `honour` this way?
 Suggest:
   - Replace with: “honor”
-  - Replace with: “honours”
-  - Replace with: “honour's”
+  - Replace with: “hour”
+  - Replace with: “honer”
 
 
 
@@ -1724,7 +1726,6 @@ Message: |
 Suggest:
   - Replace with: “quarreled”
   - Replace with: “quarreler”
-  - Replace with: “quarrellers”
 
 
 
@@ -1861,8 +1862,8 @@ Message: |
          |                              ^~~~~~~~~~ Did you mean to spell `recognised` this way?
 Suggest:
   - Replace with: “recognized”
-  - Replace with: “recogniser”
-  - Replace with: “recognises”
+  - Replace with: “recognize”
+  - Replace with: “recognizer”
 
 
 
@@ -2237,8 +2238,7 @@ Message: |
          |               ^~~~~~~~~ Did you mean to spell `favourite` this way?
 Suggest:
   - Replace with: “favorite”
-  - Replace with: “favourites”
-  - Replace with: “favourite's”
+  - Replace with: “favorites”
 
 
 
@@ -3310,8 +3310,7 @@ Message: |
          |                ^~~~~~~~~ Did you mean to spell `neighbour` this way?
 Suggest:
   - Replace with: “neighbor”
-  - Replace with: “neighbours”
-  - Replace with: “neighbour's”
+  - Replace with: “neighbors”
 
 
 
@@ -3656,8 +3655,8 @@ Message: |
     2989 | farm-yard—while the lowing of the cattle in the distance would take the place of
 Suggest:
   - Replace with: “clamor”
-  - Replace with: “clamours”
   - Replace with: “glamour”
+  - Replace with: “clamber”
 
 
 

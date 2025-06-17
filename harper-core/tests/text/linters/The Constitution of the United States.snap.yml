@@ -583,9 +583,10 @@ Lint:    Spelling (63 priority)
 Message: |
      229 | 9. To define and punish Piracies and Felonies committed on the high Seas, and
      230 | Offences against the Law of Nations;
-         | ^~~~~~~~ Did you mean `Offenses`?
+         | ^~~~~~~~ Did you mean to spell `Offences` this way?
 Suggest:
   - Replace with: “Offenses”
+  - Replace with: “Fences”
 
 
 
@@ -1205,10 +1206,11 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      481 | have Power to grant Reprieves and Pardons for Offences against the United
-         |                                               ^~~~~~~~ Did you mean `Offenses`?
+         |                                               ^~~~~~~~ Did you mean to spell `Offences` this way?
      482 | States, except in Cases of Impeachment.
 Suggest:
   - Replace with: “Offenses”
+  - Replace with: “Fences”
 
 
 
@@ -1487,8 +1489,8 @@ Message: |
          |    ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Labours”
   - Replace with: “About”
+  - Replace with: “Amour”
 
 
 
@@ -1499,8 +1501,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Labours”
   - Replace with: “About”
+  - Replace with: “Amour”
 
 
 
@@ -1511,8 +1513,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Labours”
   - Replace with: “About”
+  - Replace with: “Amour”
 
 
 
