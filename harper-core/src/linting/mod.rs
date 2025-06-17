@@ -208,7 +208,7 @@ where
 }
 
 #[cfg(test)]
-mod tests {
+pub mod tests {
     use super::Linter;
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
 

@@ -1504,11 +1504,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1179 | enormous garden. On buffet tables, garnished with glistening hors-d’œuvre,
-         |                                                              ^~~~ Did you mean to spell `hors` this way?
+         |                                                              ^~~~ Did you mean `hours`?
     1180 | spiced baked hams crowded against salads of harlequin designs and pastry pigs
 Suggest:
-  - Replace with: “hers”
-  - Replace with: “ho's”
   - Replace with: “hours”
 
 

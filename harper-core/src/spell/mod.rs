@@ -320,7 +320,10 @@ pub fn suggest_correct_spelling_str(
 mod tests {
     use itertools::Itertools;
 
-    use crate::CharStringExt;
+    use crate::{
+        CharStringExt, Dialect,
+        linting::{SpellCheck, tests::assert_suggestion_result},
+    };
 
     use super::{FstDictionary, suggest_correct_spelling_str};
 
@@ -474,5 +477,23 @@ mod tests {
     #[test]
     fn conciousness_correction() {
         assert_suggests_correction("conciousness", "consciousness");
+    }
+
+    #[test]
+    fn suggest_grey_for_gray_in_non_american() {
+        assert_suggestion_result(
+            "I've got a gray cat.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "I've got a grey cat.",
+        );
+    }
+
+    #[test]
+    fn suggest_gray_for_grey_in_american() {
+        assert_suggestion_result(
+            "It's a greyscale photo.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "It's a grayscale photo.",
+        );
     }
 }

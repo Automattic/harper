@@ -2132,22 +2132,18 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
-         |   ^~~ Did you mean to spell `Tis` this way?
+         |   ^~~ Did you mean `Tic`?
 Suggest:
-  - Replace with: “T's”
-  - Replace with: “This”
-  - Replace with: “Ti's”
+  - Replace with: “Tic”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
-         |                                                              ^~~ Did you mean to spell `tis` this way?
+         |                                                              ^~~ Did you mean `tic`?
     1986 | love, that makes the world go round!’”
 Suggest:
-  - Replace with: “this”
-  - Replace with: “ti's”
   - Replace with: “tic”
 
 
@@ -2155,11 +2151,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
-         |                                                                         ^~~ Did you mean to spell `tis` this way?
+         |                                                                         ^~~ Did you mean `tic`?
     1986 | love, that makes the world go round!’”
 Suggest:
-  - Replace with: “this”
-  - Replace with: “ti's”
   - Replace with: “tic”
 
 
@@ -2832,11 +2826,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2418 | “Stand up and repeat ‘’Tis the voice of the sluggard,’” said the Gryphon.
-         |                        ^~~ Did you mean to spell `Tis` this way?
+         |                        ^~~ Did you mean `Tic`?
 Suggest:
-  - Replace with: “T's”
-  - Replace with: “This”
-  - Replace with: “Ti's”
+  - Replace with: “Tic”
 
 
 
@@ -2852,11 +2844,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
-         |     ^~~ Did you mean to spell `Tis` this way?
+         |     ^~~ Did you mean `Tic`?
 Suggest:
-  - Replace with: “T's”
-  - Replace with: “This”
-  - Replace with: “Ti's”
+  - Replace with: “Tic”
 
 
 
