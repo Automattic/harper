@@ -202,12 +202,12 @@ pub(crate) fn is_ay_ey_misspelling(a: &[char], b: &[char]) -> bool {
         }
 
         // Check for 'a'/'e' difference
-        if (a_char.to_ascii_lowercase() == 'a' && b_char.to_ascii_lowercase() == 'e')
-            || (a_char.to_ascii_lowercase() == 'e' && b_char.to_ascii_lowercase() == 'a')
+        if (a_char.eq_ignore_ascii_case(&'a') && b_char.eq_ignore_ascii_case(&'e'))
+            || (a_char.eq_ignore_ascii_case(&'e') && b_char.eq_ignore_ascii_case(&'a'))
         {
             // Check if next character is 'y' for both
             if let (Some(&a_next), Some(&b_next)) = (a_iter.next(), b_iter.next()) {
-                if a_next.to_ascii_lowercase() == 'y' && b_next.to_ascii_lowercase() == 'y' {
+                if a_next.eq_ignore_ascii_case(&'y') && b_next.eq_ignore_ascii_case(&'y') {
                     if found_ay_ey {
                         return false; // More than one ay/ey difference
                     }
