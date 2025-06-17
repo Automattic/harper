@@ -579,6 +579,16 @@ Suggest:
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+     229 | 9. To define and punish Piracies and Felonies committed on the high Seas, and
+     230 | Offences against the Law of Nations;
+         | ^~~~~~~~ Did you mean `Offenses`?
+Suggest:
+  - Replace with: “Offenses”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      245 | 15. To provide for organizing, arming, and disciplining, the Militia, and for
@@ -1192,6 +1202,16 @@ Message: |
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+     481 | have Power to grant Reprieves and Pardons for Offences against the United
+         |                                               ^~~~~~~~ Did you mean `Offenses`?
+     482 | States, except in Cases of Impeachment.
+Suggest:
+  - Replace with: “Offenses”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      481 | have Power to grant Reprieves and Pardons for Offences against the United
@@ -1406,7 +1426,7 @@ Message: |
 Suggest:
   - Replace with: “immunity's”
   - Replace with: “immensities”
-  - Replace with: “immunises”
+  - Replace with: “immunizes”
 
 
 

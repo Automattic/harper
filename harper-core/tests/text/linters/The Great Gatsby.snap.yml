@@ -27,6 +27,15 @@ Message: |
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+      10 | “Whenever you feel like criticising any one,” he told me, “just remember that
+         |                         ^~~~~~~~~~~ Did you mean `criticizing`?
+Suggest:
+  - Replace with: “criticizing”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
       10 | “Whenever you feel like criticising any one,” he told me, “just remember that
@@ -1062,6 +1071,16 @@ Suggest:
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+     730 | beauty, but there was an immediately perceptible vitality about her as if the
+     731 | nerves of her body were continually smouldering. She smiled slowly and, walking
+         |                                     ^~~~~~~~~~~ Did you mean `smoldering`?
+Suggest:
+  - Replace with: “smoldering”
+
+
+
 Lint:    WordChoice (31 priority)
 Message: |
      731 | nerves of her body were continually smouldering. She smiled slowly and, walking
@@ -1296,8 +1315,8 @@ Message: |
     1030 | two days in the private rooms. We had an awful time getting back, I can tell
 Suggest:
   - Replace with: “gaped”
-  - Replace with: “gybed”
   - Replace with: “gypped”
+  - Replace with: “gyved”
 
 
 
@@ -1702,6 +1721,15 @@ Message: |
          |                 ^~~~~~~~ Did you mean the closed compound `overall`?
 Suggest:
   - Replace with: “overall”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    1310 | “I don’t think it’s so much that,” argued Lucille sceptically; “it’s more that
+         |                                                   ^~~~~~~~~~~ Did you mean `skeptically`?
+Suggest:
+  - Replace with: “skeptically”
 
 
 

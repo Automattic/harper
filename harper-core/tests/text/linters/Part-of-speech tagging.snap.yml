@@ -430,6 +430,18 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
+     166 | dissertation at Brown University included analyses of the specific error types,
+         |                                           ^~~~~~~~ Did you mean to spell `analyses` this way?
+     167 | probabilities, and other related data, and replicated his work for Greek, where
+Suggest:
+  - Replace with: “analysis”
+  - Replace with: “analyzes”
+  - Replace with: “analysts”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
      173 | levels of linguistic analysis: syntax, morphology, semantics, and so on. CLAWS,
      174 | DeRose's and Church's methods did fail for some of the known cases where
          | ^~~~~~~~ Did you mean to spell `DeRose's` this way?

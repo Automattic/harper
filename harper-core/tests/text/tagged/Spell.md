@@ -14,12 +14,12 @@
 # D+ NSg/V/J/Ca/Au/Br NSg/V/J/Am VL+ W?  .
 > I    must  defend my honour          !
 # ISg+ NSg/V NSg/V  D+ NSg/V/Ca/Au/Br+ .
-> I    recognize that    you  recognise me         .
-# ISg+ V         N/I/C/D IPl+ V/Au/Br   NPrSg/ISg+ .
-> I    analyze how   you  infantilize me         .
-# ISg+ V       NSg/C IPl+ V           NPrSg/ISg+ .
-> I    analyse how   you  infantilise me         .
-# ISg+ V/Au/Br NSg/C IPl+ ?           NPrSg/ISg+ .
+> I    recognize that    you  recognise me       .
+# ISg+ V         N/I/C/D IPl+ V/Au/Br   NPrSg/I+ .
+> I    analyze how   you  infantilize me       .
+# ISg+ V       NSg/C IPl+ V           NPrSg/I+ .
+> I    analyse how   you  infantilise me       .
+# ISg+ V/Au/Br NSg/C IPl+ ?           NPrSg/I+ .
 > Careful , traveller     !
 # J       . NSg/Ca/Au/Br+ .
 > At    the centre         of the theatre       I    dropped a   litre        of coke     .

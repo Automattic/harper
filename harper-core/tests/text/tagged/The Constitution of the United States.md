@@ -480,8 +480,8 @@
 #
 > To define  and punish Piracies and Felonies committed on  the high     Seas , and
 # P  NSg/V/J V/C V      ?        V/C NPl      V/J       J/P D+  NSg/V/J+ NPl+ . V/C
-> Offences against the Law   of Nations ;
-# NPl      C/P     D   NSg/V P  NPl+    .
+> Offences     against the Law   of Nations ;
+# NPl/Ca/Au/Br C/P     D   NSg/V P  NPl+    .
 >
 #
 >
@@ -1012,8 +1012,8 @@
 # NSg/V   . P  D   NSg/J     NSg/V/J NPrSg/J/P D    P  D+  NSg/J+    NPl+        . P
 > any   Subject  relating to the Duties of their respective Offices , and he       shall
 # I/R/D NSg/V/J+ V        P  D   NPl    P  D+    J+         NPl/V+  . V/C NPr/ISg+ VX
-> have   Power    to grant   Reprieves and Pardons for Offences against the United
-# NSg/VX NSg/V/J+ P  NPrSg/V NPl/V     V/C NPl/V   C/P NPl      C/P     D+  V/J+
+> have   Power    to grant   Reprieves and Pardons for Offences     against the United
+# NSg/VX NSg/V/J+ P  NPrSg/V NPl/V     V/C NPl/V   C/P NPl/Ca/Au/Br C/P     D+  V/J+
 > States   , except in        Cases of Impeachment .
 # NPrSg/V+ . V/C/P  NPrSg/J/P NPl/V P  NSg         .
 >

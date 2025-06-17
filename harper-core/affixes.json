@@ -553,14 +553,12 @@
 			],
 			"target": [],
 			"base_metadata": {}
-		},
+		}
+	},
+	"properties": {
 		"N": {
 			"#": "(singular) noun property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"noun": {
 					"is_plural": false
 				}
@@ -568,11 +566,7 @@
 		},
 		"O": {
 			"#": "proper noun property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"noun": {
 					"is_proper": true
 				}
@@ -581,11 +575,7 @@
 		"l": {
 			"#": "linking verb property",
 			"//": "see also m: auxiliary verb property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"verb": {
 					"is_linking": true
 				}
@@ -593,67 +583,38 @@
 		},
 		"V": {
 			"#": "verb property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"verb": {}
 			}
 		},
 		"J": {
 			"#": "adjective property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"adjective": {}
 			}
 		},
 		"x": {
 			"#": "swear word property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [
-				{
-					"metadata": {
-						"swear": true
-					}
-				}
-			],
-			"base_metadata": {
+			"propagate": true,
+			"metadata": {
 				"swear": true
 			}
 		},
 		"C": {
 			"#": "conjunction property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"conjunction": {}
 			}
 		},
 		"I": {
 			"#": "pronoun property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"pronoun": {}
 			}
 		},
 		"9": {
 			"#": "plural noun property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"noun": {
 					"is_plural": true
 				}
@@ -661,97 +622,52 @@
 		},
 		"~": {
 			"#": "common word property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"common": true
 			}
 		},
 		"P": {
 			"#": "preposition property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"preposition": true
 			}
 		},
 		"D": {
 			"#": "determiner property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"determiner": true
 			}
 		},
 		"R": {
 			"#": "adverb property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"adverb": {}
 			}
 		},
 		"s": {
 			"#": "subject case property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"pronoun": {}
 			}
 		},
 		"o": {
 			"#": "object case property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"pronoun": {}
 			}
 		},
-		"1": {
-			"#": "first-person singular property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+		"f": {
+			"#": "first-person property",
+			"metadata": {
 				"pronoun": {
 					"is_plural": false,
 					"person": "First"
 				}
 			}
 		},
-		"w": {
-			"#": "first-person plural property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
-				"pronoun": {
-					"is_plural": true,
-					"person": "First"
-				}
-			}
-		},
 		"2": {
 			"#": "second-person property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"pronoun": {
 					"person": "Second"
 				}
@@ -759,42 +675,26 @@
 		},
 		"3": {
 			"#": "third-person property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"pronoun": {}
 			}
 		},
 		"c": {
 			"#": "comparative property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"adjective": {}
 			}
 		},
 		"u": {
 			"#": "superlative property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"adjective": {}
 			}
 		},
 		"*": {
 			"#": "singular third-person subject pronoun property",
 			"//": "so we can do verb agreement",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"pronoun": {
 					"is_plural": false,
 					"person": "Third"
@@ -803,11 +703,7 @@
 		},
 		":": {
 			"#": "plural pronoun property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"pronoun": {
 					"is_plural": true
 				}
@@ -816,11 +712,7 @@
 		"m": {
 			"#": "auxiliary verb property",
 			"//": "see also 3: linking verb property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"metadata": {
 				"verb": {
 					"is_auxiliary": true
 				}
@@ -828,42 +720,40 @@
 		},
 		"<": {
 			"#": "American property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"propagate": true,
+			"metadata": {
 				"dialects": "AMERICAN"
 			}
 		},
 		"!": {
 			"#": "GB property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"propagate": true,
+			"metadata": {
 				"dialects": "BRITISH"
 			}
 		},
 		"@": {
 			"#": "CA property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"propagate": true,
+			"metadata": {
 				"dialects": "CANADIAN"
 			}
 		},
 		"_": {
 			"#": "AU property",
-			"kind": "property",
-			"cross_product": true,
-			"replacements": [],
-			"target": [],
-			"base_metadata": {
+			"propagate": true,
+			"metadata": {
 				"dialects": "AUSTRALIAN"
+			}
+		},
+		"w": {
+			"#": "first-person plural property",
+			"propagate": true,
+			"metadata": {
+				"pronoun": {
+					"is_plural": true,
+					"person": "First"
+				}
 			}
 		}
 	}

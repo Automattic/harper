@@ -801,6 +801,16 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
+     387 | driest thing I know. Silence all round, if you please! ‘William the Conqueror,
+     388 | whose cause was favoured by the pope, was soon submitted to by the English, who
+         |                 ^~~~~~~~ Did you mean `favored`?
+Suggest:
+  - Replace with: “favored”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
      390 | Edwin and Morcar, the earls of Mercia and Northumbria—’”
          |           ^~~~~~ Did you mean to spell `Morcar` this way?
 Suggest:
@@ -3582,6 +3592,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2980 | Mock Turtle.
          | ~~~~~~~~~~~~ This sentence is 111 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2972 | The long grass rustled at her feet as the White Rabbit hurried by—the frightened
+    2973 | Mouse splashed his way through the neighbouring pool—she could hear the rattle
+         |                                    ^~~~~~~~~~~~ Did you mean `neighboring`?
+    2974 | of the teacups as the March Hare and his friends shared their never-ending meal,
+Suggest:
+  - Replace with: “neighboring”
 
 
 
