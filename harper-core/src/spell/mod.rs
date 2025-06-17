@@ -183,6 +183,48 @@ pub(crate) fn is_ll_misspelling(a: &[char], b: &[char]) -> bool {
     }
 }
 
+/// Returns whether the two words are the same, except that one is written
+/// with 'ay' and the other with 'ey'.
+///
+/// E.g. "gray" and "grey"
+pub(crate) fn is_ay_ey_misspelling(a: &[char], b: &[char]) -> bool {
+    if a.len() != b.len() {
+        return false;
+    }
+
+    let mut found_ay_ey = false;
+    let mut a_iter = a.iter();
+    let mut b_iter = b.iter();
+
+    while let (Some(&a_char), Some(&b_char)) = (a_iter.next(), b_iter.next()) {
+        if a_char.eq_ignore_ascii_case(&b_char) {
+            continue;
+        }
+
+        // Check for 'a'/'e' difference
+        if (a_char.to_ascii_lowercase() == 'a' && b_char.to_ascii_lowercase() == 'e')
+            || (a_char.to_ascii_lowercase() == 'e' && b_char.to_ascii_lowercase() == 'a')
+        {
+            // Check if next character is 'y' for both
+            if let (Some(&a_next), Some(&b_next)) = (a_iter.next(), b_iter.next()) {
+                if a_next.to_ascii_lowercase() == 'y' && b_next.to_ascii_lowercase() == 'y' {
+                    if found_ay_ey {
+                        return false; // More than one ay/ey difference
+                    }
+                    found_ay_ey = true;
+                    continue;
+                }
+            }
+        }
+        return false; // Non-ay/ey difference found
+    }
+
+    if !found_ay_ey {
+        return false;
+    }
+    found_ay_ey
+}
+
 /// Scores a possible spelling suggestion based on possible relevance to the user.
 ///
 /// Lower = better.
@@ -221,9 +263,10 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
     if sug.edit_distance == 1
         && (is_cksz_misspelling(misspelled_word, sug.word)
             || is_ou_misspelling(misspelled_word, sug.word)
-            || is_ll_misspelling(misspelled_word, sug.word))
+            || is_ll_misspelling(misspelled_word, sug.word)
+            || is_ay_ey_misspelling(misspelled_word, sug.word))
     {
-        score -= 5;
+        score -= 6;
     }
     if sug.edit_distance == 2 && is_er_misspelling(misspelled_word, sug.word) {
         score -= 15;
