@@ -12508,6 +12508,8 @@ anorectic/JNSg
 anorexia/Ng
 anorexic/JNgS
 another/~ID
+ansatz/NSg
+ansatze/9
 answer/~NVBgdGS
 answerable/JU
 answered/~JVU
@@ -14701,6 +14703,7 @@ bison/~Ng
 bisque/NJVg
 bistro/NVgS
 bit/~NVeSgG
+bitangent/NSg
 bitch/~NVGgdS
 bitchily/R
 bitchiness/Ng
@@ -18043,6 +18046,8 @@ collie/N>SgZ
 collier/~Ng
 colliery/~NSg
 collision/~NSg
+collisional/J
+collisionless/J
 collocate/VNJgGndSX
 collocation/Ng
 colloid/JNSg
@@ -21145,6 +21150,7 @@ dim/~JNVpS>Y
 dime/~NVgS
 dimension/~NVSgdG
 dimensional/~J
+dimensionality/Ng
 dimensionless/~J
 diminish/~VGdS
 diminished/~VJU
@@ -21302,6 +21308,8 @@ discrete/~JpYn
 discreteness/Ng
 discretion/~Nig
 discretionary/~J
+discretisation/Ng!_
+discretization/Ng
 discriminant/NJ
 discriminate/~VJGndSY
 discriminating/~JVU
@@ -23872,6 +23880,8 @@ extremeness/Ng
 extremism/~Ng
 extremist/~NJgS
 extremity/~NSg
+extrema/9
+extremum/NSg
 extricable/Ji
 extricate/VGndS
 extrication/Ng
@@ -27146,6 +27156,7 @@ gyration/Ng
 gyrator/NSg
 gyrfalcon/NgS
 gyro/~NgS
+gyrofrequency/NgS
 gyroscope/NgS
 gyroscopic/J
 gyve/NVgGdS
@@ -27754,6 +27765,7 @@ helical/~J
 helices/9
 helicopter/~NVSGgd
 heliocentric/J
+heliosphere/NSg
 heliotrope/NJSg
 helipad/NS
 heliport/~NgS
@@ -29618,6 +29630,7 @@ inhibit/~VGSd
 inhibition/~NSg
 inhibitor/~NSg
 inhibitory/~J
+inhomogeneous/J
 inhuman/~JY
 inhumane/JY
 inimical/JY
@@ -30296,9 +30309,11 @@ isomorphism/~N
 isopropyl/NgS
 isosceles/~J
 isotherm/NSg
+isothermal/J
 isotope/~NVSg
 isotopic/~J
 isotropic/~J
+isotropy/Ng
 issuance/~NgS
 issue/~NVrdSgG
 issuer/~NgS
@@ -32458,7 +32473,11 @@ magnetizable/J
 magnetization/Neg
 magnetize/VeGdS
 magneto/~NSg
+magnetohydrodynamic/J
+magnetohydrodynamics/N
 magnetometer/NSg
+magnetopause/NSg
+magnetosheath/NSg
 magnetosphere/N
 magnification/~Ng
 magnificence/Ng
@@ -42158,6 +42177,7 @@ rotary/~JNSg
 rotate/~VJdSGnX
 rotation/~Ng
 rotational/~JN
+rotationally/R
 rotatory/J
 rote/~NJVg
 rotgut/Ng
@@ -43451,6 +43471,8 @@ separation/~Ng
 separatism/~Ng
 separatist/~NJgS
 separator/~NgS
+separatrices/9
+separatrix/NgS
 sepia/NJg
 sepsis/~Ng
 septa/~N
@@ -47123,6 +47145,7 @@ sympathizer/Ng
 sympathy/~NSg
 symphonic/~J
 symphony/~NSg
+symplectic/J
 symposium/~NgS
 symptom/~NgS
 symptomatic/~JNQ
@@ -49862,6 +49885,8 @@ unlovable/J
 unlovely/JNT>
 unloving/JV
 unlucky/~JT
+unmagnetised/J!_
+unmagnetized/J
 unmanly/JT
 unmarried/~JN
 unmeaning/JN
@@ -51124,11 +51149,12 @@ wattle/~NVgGdS
 wave/~VNgZGd>S
 waveband/NS
 waveform/~N
-wavefront/N
+wavefront/NSg
 wavelength/~Ng
 wavelengths/~N
 wavelet/NSg
 wavelike/J
+wavenumber/NgS
 waver/VNZGgd>
 waverer/Ng
 wavering/JNVY
