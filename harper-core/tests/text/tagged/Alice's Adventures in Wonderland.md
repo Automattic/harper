@@ -45,7 +45,7 @@
 > but     when    the Rabbit actually took a   watch out         of its    waistcoat - pocket  , and
 # NSg/C/P NSg/I/C D+  NSg/V+ R        V    D/P NSg/V NSg/V/J/R/P P  ISg/D+ NSg       . NSg/V/J . V/C
 > looked at    it         , and then    hurried on  , Alice started to her    feet , for it         flashed
-# V/J    NSg/P NPrSg/ISg+ . V/C NSg/J/C V/J     J/P . NPr+  V/J     P  I/J/D+ NSg+ . C/P NPrSg/ISg+ V/J
+# V/J    NSg/P NPrSg/ISg+ . V/C NSg/J/C V/J     J/P . NPr+  V/J     P  I/J/D+ NPl+ . C/P NPrSg/ISg+ V/J
 > across her    mind   that     she  had never before seen  a   rabbit with either a
 # NSg/P  I/J/D+ NSg/V+ N/I/C/D+ ISg+ V   V     C/P    NSg/V D/P NSg/V  P    I/C    D/P
 > waistcoat - pocket  , or      a   watch to take  out         of it         , and burning with curiosity , she
@@ -171,7 +171,7 @@
 >
 #
 > Alice was not   a   bit    hurt    , and she  jumped up        on  to her    feet in        a    moment : she
-# NPr+  V   NSg/C D/P NSg/V+ NSg/V/J . V/C ISg+ V/J    NSg/V/J/P J/P P  I/J/D+ NSg+ NPrSg/J/P D/P+ NSg+   . ISg+
+# NPr+  V   NSg/C D/P NSg/V+ NSg/V/J . V/C ISg+ V/J    NSg/V/J/P J/P P  I/J/D+ NPl+ NPrSg/J/P D/P+ NSg+   . ISg+
 > looked up        , but     it         was all       dark    overhead ; before her    was another long      passage ,
 # V/J    NSg/V/J/P . NSg/C/P NPrSg/ISg+ V   NSg/I/J/C NSg/V/J NSg/J/P  . C/P    I/J/D+ V   I/D     NPrSg/V/J NSg/V/J .
 > and the White      Rabbit was still   in        sight  , hurrying down      it         . There was not   a
@@ -379,11 +379,11 @@
 > moment she  quite forgot how   to speak good      English    ) ; “ now         I’m opening out         like
 # NSg+   ISg+ NSg   V      NSg/C P  NSg/V NPrSg/V/J NPrSg/V/J+ . . . NPrSg/V/J/C W?  NSg/V/J NSg/V/J/R/P NSg/V/J/C/P
 > the largest telescope that     ever was ! Good      - bye     , feet ! ” ( for when    she  looked down
-# D+  +       NSg/V+    N/I/C/D+ J    V   . NPrSg/V/J . NSg/J/P . NSg+ . . . C/P NSg/I/C ISg+ V/J    NSg/V/J/P
+# D+  +       NSg/V+    N/I/C/D+ J    V   . NPrSg/V/J . NSg/J/P . NPl+ . . . C/P NSg/I/C ISg+ V/J    NSg/V/J/P
 > at    her    feet , they seemed to be     almost out         of sight  , they were  getting so        far
-# NSg/P I/J/D+ NSg+ . IPl+ V/J    P  NSg/VX NSg    NSg/V/J/R/P P  NSg/V+ . IPl+ NSg/V NSg/V   NSg/I/J/C NSg/V/J
+# NSg/P I/J/D+ NPl+ . IPl+ V/J    P  NSg/VX NSg    NSg/V/J/R/P P  NSg/V+ . IPl+ NSg/V NSg/V   NSg/I/J/C NSg/V/J
 > off        ) . “ Oh      , my poor     little     feet , I    wonder who      will     put   on  your shoes and
-# NSg/V/J/P+ . . . NPrSg/V . D+ NSg/V/J+ NPrSg/I/J+ NSg+ . ISg+ NSg/V  NPrSg/I+ NPrSg/VX NSg/V J/P D+   NPl/V V/C
+# NSg/V/J/P+ . . . NPrSg/V . D+ NSg/V/J+ NPrSg/I/J+ NPl+ . ISg+ NSg/V  NPrSg/I+ NPrSg/VX NSg/V J/P D+   NPl/V V/C
 > stockings for you  now         , dears  ? I’m sure I    shan’t be     able    ! I    shall be     a   great deal
 # NPl/V     C/P IPl+ NPrSg/V/J/C . NPl/V+ . W?  J    ISg+ V      NSg/VX NSg/V/J . ISg+ VX    NSg/VX D/P NSg/J NSg/V/J+
 > too far     off       to trouble myself about you  : you  must  manage the best        way    you
@@ -401,7 +401,7 @@
 > the carrier  , ” she  thought ; “ and how   funny it’ll seem , sending presents to one’s
 # D+  NPrSg/J+ . . ISg+ NSg/V   . . V/C NSg/C NSg/J W?    V    . V       NPl/V+   P  N$
 > own     feet ! And how   odd   the directions will     look  !
-# NSg/V/J NSg+ . V/C NSg/C NSg/J D+  NSg+       NPrSg/VX NSg/V .
+# NSg/V/J NPl+ . V/C NSg/C NSg/J D+  NSg+       NPrSg/VX NSg/V .
 >
 #
 > Alice’s Right     Foot  , Esq . , Hearthrug , near      the Fender  , ( with Alice’s love     ) .
@@ -415,7 +415,7 @@
 > Just then    her    head       struck against the roof  of the hall   : in        fact she  was now         more
 # V/J  NSg/J/C I/J/D+ NPrSg/V/J+ V      C/P     D   NSg/V P  D+  NPrSg+ . NPrSg/J/P NSg+ ISg+ V   NPrSg/V/J/C NPrSg/I/V/J
 > than nine feet high    , and she  at    once  took up        the little    golden    key       and hurried
-# C/P  NSg+ NSg+ NSg/V/J . V/C ISg+ NSg/P NSg/C V    NSg/V/J/P D   NPrSg/I/J NPrSg/V/J NPrSg/V/J V/C V/J
+# C/P  NSg+ NPl+ NSg/V/J . V/C ISg+ NSg/P NSg/C V    NSg/V/J/P D   NPrSg/I/J NPrSg/V/J NPrSg/V/J V/C V/J
 > off       to the garden   door   .
 # NSg/V/J/P P  D+  NSg/V/J+ NSg/V+ .
 >
@@ -441,7 +441,7 @@
 >
 #
 > After a    time     she  heard a   little    pattering of feet in        the distance , and she
-# J/P   D/P+ NSg/V/J+ ISg+ V/J   D/P NPrSg/I/J V         P  NSg+ NPrSg/J/P D+  NSg/V+   . V/C ISg+
+# J/P   D/P+ NSg/V/J+ ISg+ V/J   D/P NPrSg/I/J V         P  NPl+ NPrSg/J/P D+  NSg/V+   . V/C ISg+
 > hastily dried her    eyes   to see   what   was coming  . It         was the White     Rabbit
 # R       V/J   I/J/D+ NPl/V+ P  NSg/V NSg/I+ V+  NSg/V/J . NPrSg/ISg+ V   D   NPrSg/V/J NSg/V
 > returning , splendidly dressed , with a   pair  of white     kid    gloves in        one       hand   and a
@@ -547,7 +547,7 @@
 > got up        and went  to the table  to measure herself by      it         , and found that     , as    nearly
 # V   NSg/V/J/P V/C NSg/V P  D+  NSg/V+ P  NSg/V   I+      NSg/J/P NPrSg/ISg+ . V/C NSg/V N/I/C/D+ . NSg/R R
 > as    she  could  guess , she  was now         about two  feet high    , and was going   on  shrinking
-# NSg/R ISg+ NSg/VX NSg/V . ISg+ V   NPrSg/V/J/C J/P   NSg+ NSg+ NSg/V/J . V/C V   NSg/V/J J/P V
+# NSg/R ISg+ NSg/VX NSg/V . ISg+ V   NPrSg/V/J/C J/P   NSg+ NPl+ NSg/V/J . V/C V   NSg/V/J J/P V
 > rapidly : she  soon found out         that    the cause   of this was the fan   she  was holding ,
 # R       . ISg+ J/R  NSg/V NSg/V/J/R/P N/I/C/D D   NSg/V/C P  I/D+ V   D   NSg/V ISg+ V   NSg/V   .
 > and she  dropped it         hastily , just in        time     to avoid shrinking away altogether .
@@ -587,7 +587,7 @@
 > However , she  soon made  out         that    she  was in        the pool  of tears  which she  had wept
 # C       . ISg+ J/R  NSg/V NSg/V/J/R/P N/I/C/D ISg+ V   NPrSg/J/P D   NSg/V P  NPl/V+ I/C+  ISg+ V   V
 > when    she  was nine feet high    .
-# NSg/I/C ISg+ V   NSg+ NSg+ NSg/V/J .
+# NSg/I/C ISg+ V   NSg+ NPl+ NSg/V/J .
 >
 #
 > “ I    wish  I    hadn’t cried so        much  ! ” said Alice , as    she  swam about , trying  to find
@@ -835,7 +835,7 @@
 >
 #
 > “ In        that     case     , ” said the Dodo solemnly , rising    to its    feet , “ I    move  that    the
-# . NPrSg/J/P N/I/C/D+ NPrSg/V+ . . V/J  D   NSg  R        . NSg/V/J/P P  ISg/D+ NSg+ . . ISg+ NSg/V N/I/C/D D+
+# . NPrSg/J/P N/I/C/D+ NPrSg/V+ . . V/J  D   NSg  R        . NSg/V/J/P P  ISg/D+ NPl+ . . ISg+ NSg/V N/I/C/D D+
 > meeting adjourn , for the immediate adoption of more        energetic remedies — ”
 # NSg/V+  V       . C/P D   J         NSg      P  NPrSg/I/V/J NSg/J     NPl/V+   . .
 >
@@ -1285,7 +1285,7 @@
 > “ Mary Ann      ! Mary Ann      ! ” said the voice  . “ Fetch me       my gloves this moment ! ” Then
 # . NPr+ NPrSg/J+ . NPr+ NPrSg/J+ . . V/J  D+  NSg/V+ . . NSg/V NPrSg/I+ D+ NPl/V  I/D+ NSg+   . . NSg/J/C
 > came    a   little    pattering of feet on  the stairs . Alice knew it         was the Rabbit
-# NSg/V/P D/P NPrSg/I/J V         P  NSg+ J/P D+  NPl+   . NPr+  V    NPrSg/ISg+ V   D   NSg/V
+# NSg/V/P D/P NPrSg/I/J V         P  NPl+ J/P D+  NPl+   . NPr+  V    NPrSg/ISg+ V   D   NSg/V
 > coming  to look  for her    , and she  trembled till      she  shook   the house    , quite
 # NSg/V/J P  NSg/V C/P I/J/D+ . V/C ISg+ V/J      NSg/V/C/P ISg+ NSg/V/J D+  NPrSg/V+ . NSg
 > forgetting that    she  was now         about a   thousand times  as    large as    the Rabbit , and
@@ -1521,7 +1521,7 @@
 > Hardly knowing   what   she  did , she  picked up        a   little    bit   of stick    , and held it
 # R      NSg/V/J/P NSg/I+ ISg+ V   . ISg+ V/J    NSg/V/J/P D/P NPrSg/I/J NSg/V P  NSg/V/J+ . V/C V    NPrSg/ISg+
 > out         to the puppy  ; whereupon the puppy  jumped into the air   off       all       its    feet at
-# NSg/V/J/R/P P  D+  NSg/V+ . C         D+  NSg/V+ V/J    P    D   NSg/V NSg/V/J/P NSg/I/J/C ISg/D+ NSg+ NSg/P
+# NSg/V/J/R/P P  D+  NSg/V+ . C         D+  NSg/V+ V/J    P    D   NSg/V NSg/V/J/P NSg/I/J/C ISg/D+ NPl+ NSg/P
 > once  , with a   yelp  of delight  , and rushed at    the stick    , and made  believe to worry
 # NSg/C . P    D/P NSg/V P  NSg/V/J+ . V/C V/J    NSg/P D+  NSg/V/J+ . V/C NSg/V V       P  NSg/V
 > it         ; then    Alice dodged behind  a    great  thistle , to keep  herself from being   run
@@ -1533,7 +1533,7 @@
 > Alice , thinking it         was very like        having a   game    of play  with a   cart   - horse , and
 # NPr+  . V        NPrSg/ISg+ V   J    NSg/V/J/C/P V      D/P NSg/V/J P  NSg/V P    D/P NSg/V+ . NSg/V . V/C
 > expecting every moment to be     trampled under   its    feet , ran   round     the thistle
-# V         D+    NSg+   P  NSg/VX V/J      NSg/J/P ISg/D+ NSg+ . NSg/V NSg/V/J/P D   NSg
+# V         D+    NSg+   P  NSg/VX V/J      NSg/J/P ISg/D+ NPl+ . NSg/V NSg/V/J/P D   NSg
 > again ; then    the puppy  began a   series of short       charges at    the stick    , running   a
 # P     . NSg/J/C D+  NSg/V+ V     D/P NSg    P  NPrSg/V/J/P NPl/V   NSg/P D+  NSg/V/J+ . NSg/V/J/P D/P
 > very little    way   forwards each time    and a   long       way    back    , and barking hoarsely all
@@ -2105,7 +2105,7 @@
 > that     beautiful garden   — how   is that     to be     done    , I    wonder ? ” As    she  said this , she
 # N/I/C/D+ NSg/J     NSg/V/J+ . NSg/C VL N/I/C/D+ P  NSg/VX NSg/V/J . ISg+ NSg/V  . . NSg/R ISg+ V/J  I/D+ . ISg+
 > came    suddenly upon an  open     place  , with a   little    house   in        it         about four feet
-# NSg/V/P R        P    D/P NSg/V/J+ NSg/V+ . P    D/P NPrSg/I/J NPrSg/V NPrSg/J/P NPrSg/ISg+ J/P   NSg+ NSg+
+# NSg/V/P R        P    D/P NSg/V/J+ NSg/V+ . P    D/P NPrSg/I/J NPrSg/V NPrSg/J/P NPrSg/ISg+ J/P   NSg+ NPl+
 > high     . “ Whoever lives there , ” thought Alice , “ it’ll never do     to come    upon them
 # NSg/V/J+ . . I+      V+    W?    . . NSg/V   NPr+  . . W?    V     NSg/VX P  NSg/V/P P    N/I+
 > this size   : why   , I    should frighten them out         of their wits  ! ” So        she  began nibbling
@@ -2699,7 +2699,7 @@
 > did not   like        to go      nearer till      she  had nibbled some  more        of the lefthand bit   of
 # V   NSg/C NSg/V/J/C/P P  NSg/V/J J      NSg/V/C/P ISg+ V   V/J     I/J/R NPrSg/I/V/J P  D   ?        NSg/V P
 > mushroom , and raised herself to about two  feet high    : even    then    she  walked up
-# NSg/V/J  . V/C V/J    I+      P  J/P   NSg+ NSg+ NSg/V/J . NSg/V/J NSg/J/C ISg+ V/J    NSg/V/J/P
+# NSg/V/J  . V/C V/J    I+      P  J/P   NSg+ NPl+ NSg/V/J . NSg/V/J NSg/J/C ISg+ V/J    NSg/V/J/P
 > towards it         rather    timidly , saying to herself “ Suppose it         should be     raving  mad
 # P       NPrSg/ISg+ NPrSg/V/J R       . NSg/V  P  I+      . V       NPrSg/ISg+ VX     NSg/VX NSg/V/J N/V/J
 > after all       ! I    almost wish  I’d gone  to see   the Hatter instead ! ”
@@ -3417,7 +3417,7 @@
 > First    came    ten soldiers carrying clubs  ; these were  all       shaped like        the three
 # NSg/V/J+ NSg/V/P NSg NPl/V+   V        NPl/V+ . I/D+  NSg/V NSg/I/J/C V/J+   NSg/V/J/C/P D+  NSg+
 > gardeners , oblong  and flat    , with their hands and feet at    the corners : next    the
-# W?        . NSg/V/J V/C NSg/V/J . P    D+    NPl/V V/C NSg+ NSg/P D+  +       . NSg/J/P D
+# W?        . NSg/V/J V/C NSg/V/J . P    D+    NPl/V V/C NPl+ NSg/P D+  +       . NSg/J/P D
 > ten courtiers ; these were  ornamented all       over      with diamonds , and walked two and
 # NSg NPl       . I/D+  NSg/V V/J        NSg/I/J/C NSg/V/J/P P    NPl/V    . V/C V/J    NSg V/C
 > two , as    the soldiers did . After these came    the royal    children ; there were  ten of
@@ -3631,7 +3631,7 @@
 > furrows ; the balls  were  live hedgehogs , the mallets live flamingoes , and the
 # NPl/V   . D+  NSg/V+ NSg/V V/J  NPl/V     . D   NPl/V   V/J  ?          . V/C D+
 > soldiers had to double  themselves up        and to stand on  their hands and feet , to
-# NPl/V+   V   P  NSg/V/J I+         NSg/V/J/P V/C P  NSg/V J/P D+    NPl/V V/C NSg+ . P
+# NPl/V+   V   P  NSg/V/J I+         NSg/V/J/P V/C P  NSg/V J/P D+    NPl/V V/C NPl+ . P
 > make  the arches .
 # NSg/V D   NPl/V+ .
 >
@@ -5939,7 +5939,7 @@
 >
 #
 > The long      grass   rustled at    her    feet as    the White      Rabbit hurried by      — the frightened
-# D+  NPrSg/V/J NPrSg/V V/J     NSg/P I/J/D+ NSg+ NSg/R D+  NPrSg/V/J+ NSg/V+ V/J     NSg/J/P . D+  V/J+
+# D+  NPrSg/V/J NPrSg/V V/J     NSg/P I/J/D+ NPl+ NSg/R D+  NPrSg/V/J+ NSg/V+ V/J     NSg/J/P . D+  V/J+
 > Mouse  splashed his    way    through the neighbouring pool   — she  could  hear the rattle
 # NSg/V+ V/J      ISg/D+ NSg/J+ NSg/J/P D+  V/Ca/Au/Br+  NSg/V+ . ISg+ NSg/VX V    D   NSg/V
 > of the teacups as    the March    Hare    and his    friends shared their never - ending meal  ,
