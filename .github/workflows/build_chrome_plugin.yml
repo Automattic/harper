@@ -30,5 +30,4 @@ jobs:
       - name: Upload extension
         uses: actions/upload-artifact@v4
         with:
-          name: harper-chrome-plugin.zip
-          path: "packages/chrome-plugin/package/harper-chrome-plugin.zip"
+          path: "packages/chrome-plugin/package/*.zip"
