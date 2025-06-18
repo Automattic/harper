@@ -30,6 +30,9 @@ const headings = [
 	'Grammar Checking for Developers',
 ];
 
+/**
+ * @param {string} keyword
+ */
 function agentHas(keyword) {
 	return navigator.userAgent.toLowerCase().search(keyword.toLowerCase()) > -1;
 }
