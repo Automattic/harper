@@ -83,6 +83,7 @@ mod spaces;
 mod spell_check;
 mod spelled_numbers;
 mod suggestion;
+mod take_serious;
 mod that_which;
 mod the_how_why;
 mod the_my;
@@ -165,6 +166,7 @@ pub use spaces::Spaces;
 pub use spell_check::SpellCheck;
 pub use spelled_numbers::SpelledNumbers;
 pub use suggestion::Suggestion;
+pub use take_serious::TakeSerious;
 pub use that_which::ThatWhich;
 pub use the_how_why::TheHowWhy;
 pub use the_my::TheMy;
@@ -210,7 +212,7 @@ where
 }
 
 #[cfg(test)]
-mod tests {
+pub mod tests {
     use super::Linter;
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
 

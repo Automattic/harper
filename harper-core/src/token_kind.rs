@@ -1,3 +1,4 @@
+use harper_brill::UPOS;
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
 
@@ -446,5 +447,13 @@ impl TokenKind {
     /// Checks whether the token is whitespace.
     pub fn is_whitespace(&self) -> bool {
         matches!(self, TokenKind::Space(_) | TokenKind::Newline(_))
+    }
+
+    pub fn is_upos(&self, upos: UPOS) -> bool {
+        let Some(Some(meta)) = self.as_word() else {
+            return false;
+        };
+
+        meta.pos_tag == Some(upos)
     }
 }

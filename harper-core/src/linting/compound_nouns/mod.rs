@@ -12,13 +12,9 @@ pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
     };
 
     tok.span.len() > 1
-        && (meta.is_noun() || meta.is_adjective())
+        && (meta.is_noun() || meta.is_adjective() || meta.is_verb() || meta.is_adverb())
         && !meta.determiner
         && (!meta.preposition || tok.span.get_content_string(src).to_lowercase() == "bar")
-        && !meta.is_adverb()
-        && !meta.is_conjunction()
-        && !meta.is_pronoun()
-        && !meta.is_auxiliary_verb()
 }
 
 pub(crate) fn predicate(closed: Option<&WordMetadata>, open: Option<&WordMetadata>) -> bool {

@@ -28,9 +28,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       56 | He was protected by his body armour.
-         |                              ^~~~~~ Did you mean `armor`?
+         |                              ^~~~~~ Did you mean to spell `armour` this way?
 Suggest:
   - Replace with: “armor”
+  - Replace with: “amour”
+  - Replace with: “arbor”
 
 
 
@@ -86,9 +88,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      208 | My aim in travelling there was to find my missing friend.
-         |           ^~~~~~~~~~ Did you mean `traveling`?
+         |           ^~~~~~~~~~ Did you mean to spell `travelling` this way?
 Suggest:
   - Replace with: “traveling”
+  - Replace with: “travailing”
+  - Replace with: “travelings”
 
 
 
@@ -98,6 +102,17 @@ Message: |
          |                     ^~~~~ Did you mean `and in`?
 Suggest:
   - Replace with: “and in”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     249 | The bullet is about five centimetres in.
+         |                          ^~~~~~~~~~~ Did you mean to spell `centimetres` this way?
+Suggest:
+  - Replace with: “centimeter's”
+  - Replace with: “centimeters”
+  - Replace with: “centimeter”
 
 
 
@@ -125,9 +140,22 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      258 | I need to keep in with the neighbours in case I ever need a favour from them.
-         |                                                             ^~~~~~ Did you mean `favor`?
+         |                            ^~~~~~~~~~ Did you mean to spell `neighbours` this way?
+Suggest:
+  - Replace with: “neighbors”
+  - Replace with: “neighbor's”
+  - Replace with: “neighbor”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     258 | I need to keep in with the neighbours in case I ever need a favour from them.
+         |                                                             ^~~~~~ Did you mean to spell `favour` this way?
 Suggest:
   - Replace with: “favor”
+  - Replace with: “famous”
+  - Replace with: “flavor”
 
 
 
@@ -144,9 +172,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      284 | This behaviour is typical of teenagers.
-         |      ^~~~~~~~~ Did you mean `behavior`?
+         |      ^~~~~~~~~ Did you mean to spell `behaviour` this way?
 Suggest:
   - Replace with: “behavior”
+  - Replace with: “behaviors”
 
 
 
@@ -209,6 +238,24 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+     340 | on the left, on the right, on the side, on the bottom.
+         | ^~ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “On”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     342 | on a bus, on a train, on a plane, on a ferry, on a yacht.
+         | ^~ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “On”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
      343 | All of the responsibility is on him.
@@ -250,18 +297,22 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      366 | He travelled on false documents.
-         |    ^~~~~~~~~ Did you mean `traveled`?
+         |    ^~~~~~~~~ Did you mean to spell `travelled` this way?
 Suggest:
   - Replace with: “traveled”
+  - Replace with: “traveler”
+  - Replace with: “travailed”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
      398 | Who am I to criticise? I've done worse things myself.
-         |             ^~~~~~~~~ Did you mean `criticize`?
+         |             ^~~~~~~~~ Did you mean to spell `criticise` this way?
 Suggest:
   - Replace with: “criticize”
+  - Replace with: “criticism”
+  - Replace with: “critic's”
 
 
 

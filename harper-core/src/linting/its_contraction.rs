@@ -1,9 +1,15 @@
+use harper_brill::UPOS;
+
+use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::patterns::NominalPhrase;
+use crate::patterns::Pattern;
+use crate::patterns::UPOSSet;
+use crate::patterns::WordSet;
 use crate::{
     Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WordSet,
 };
 
 pub struct ItsContraction {
@@ -12,14 +18,22 @@ pub struct ItsContraction {
 
 impl Default for ItsContraction {
     fn default() -> Self {
-        let its = WordSet::new(&["its"]);
-        let verbs = WordSet::new(&["had", "been", "got"]);
-        let pattern = SequenceExpr::default()
-            .then(its)
+        let positive = SequenceExpr::default()
+            .t_aco("its")
             .then_whitespace()
-            .then(verbs);
+            .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX]));
+
+        let exceptions = SequenceExpr::default()
+            .then_anything()
+            .then_anything()
+            .then(WordSet::new(&["own", "intended"]));
+
+        let inverted = SequenceExpr::default().if_not_then_step_one(exceptions);
+
+        let expr = All::new(vec![Box::new(positive), Box::new(inverted)]);
+
         Self {
-            expr: Box::new(pattern),
+            expr: Box::new(expr),
         }
     }
 }
@@ -32,6 +46,13 @@ impl ExprLinter for ItsContraction {
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
         let offender = toks.first()?;
         let offender_chars = offender.span.get_content(source);
+
+        if !toks.get(2)?.kind.is_upos(UPOS::AUX)
+            && NominalPhrase.matches(&toks[2..], source).is_some()
+        {
+            return None;
+        }
+
         Some(Lint {
             span: offender.span,
             lint_kind: LintKind::WordChoice,
@@ -39,7 +60,8 @@ impl ExprLinter for ItsContraction {
                 Suggestion::replace_with_match_case_str("it's", offender_chars),
                 Suggestion::replace_with_match_case_str("it has", offender_chars),
             ],
-            message: "Use `it's` (short for `it has`) here, not the possessive `its`.".to_owned(),
+            message: "Use `it's` (short for `it has` or `it is`) here, not the possessive `its`."
+                .to_owned(),
             priority: 54,
         })
     }
@@ -94,6 +116,15 @@ mod tests {
     fn ignore_possessive() {
         assert_lint_count(
             "The company revised its policies last week.",
+            ItsContraction::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_coroutine() {
+        assert_lint_count(
+            "Launch each task within its own child coroutine.",
             ItsContraction::default(),
             0,
         );

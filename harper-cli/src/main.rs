@@ -20,6 +20,7 @@ use harper_core::{
     MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
 };
 use harper_literate_haskell::LiterateHaskellParser;
+use harper_pos_utils::{BrillChunker, BrillTagger};
 use harper_stats::Stats;
 use serde::Serialize;
 
@@ -77,6 +78,28 @@ enum Args {
         /// The document to mine words from.
         file: PathBuf,
     },
+    TrainBrillTagger {
+        #[arg(short, long, default_value = "1.0")]
+        candidate_selection_chance: f32,
+        /// The path to write the final JSON model file to.
+        output: PathBuf,
+        /// The number of epochs (and patch rules) to train.
+        epochs: usize,
+        /// Path to a `.conllu` dataset to train on.
+        #[arg(num_args = 1..)]
+        datasets: Vec<PathBuf>,
+    },
+    TrainBrillChunker {
+        #[arg(short, long, default_value = "1.0")]
+        candidate_selection_chance: f32,
+        /// The path to write the final JSON model file to.
+        output: PathBuf,
+        /// The number of epochs (and patch rules) to train.
+        epochs: usize,
+        /// Path to a `.conllu` dataset to train on.
+        #[arg(num_args = 1..)]
+        datasets: Vec<PathBuf>,
+    },
     /// Print harper-core version.
     CoreVersion,
     /// Rename a flag in the dictionary and affixes.
@@ -91,6 +114,8 @@ enum Args {
     /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
     /// As long as there's either an open or hyphenated spelling.
     Compounds,
+    /// Provided a sentence or phrase, emit a list of each noun phrase contained within.
+    NominalPhrases { input: String },
 }
 
 fn main() -> anyhow::Result<()> {
@@ -380,6 +405,27 @@ fn main() -> anyhow::Result<()> {
             println!("harper-core v{}", harper_core::core_version());
             Ok(())
         }
+        Args::TrainBrillTagger {
+            datasets: dataset,
+            epochs,
+            output,
+            candidate_selection_chance,
+        } => {
+            let tagger = BrillTagger::train(&dataset, epochs, candidate_selection_chance);
+            fs::write(output, serde_json::to_string_pretty(&tagger)?)?;
+
+            Ok(())
+        }
+        Args::TrainBrillChunker {
+            datasets,
+            epochs,
+            output,
+            candidate_selection_chance,
+        } => {
+            let chunker = BrillChunker::train(&datasets, epochs, candidate_selection_chance);
+            fs::write(output, serde_json::to_string_pretty(&chunker)?)?;
+            Ok(())
+        }
         Args::RenameFlag { old, new, dir } => {
             use serde_json::Value;
 
@@ -547,6 +593,18 @@ fn main() -> anyhow::Result<()> {
             println!("\nFound {} compound word groups", results.len());
             Ok(())
         }
+        Args::NominalPhrases { input } => {
+            let doc = Document::new_markdown_default_curated(&input);
+
+            for phrase in doc.iter_nominal_phrases() {
+                let s =
+                    doc.get_span_content_str(&phrase.span().ok_or(anyhow!("Unable to get span"))?);
+
+                println!("{s}");
+            }
+
+            Ok(())
+        }
     }
 }
 
@@ -562,6 +620,7 @@ fn load_file(
         .map(|v| v.to_str().unwrap())
     {
         Some("md") => Box::new(Markdown::default()),
+
         Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
             MarkdownOptions::default(),
         )),

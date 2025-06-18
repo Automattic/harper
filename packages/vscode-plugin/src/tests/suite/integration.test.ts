@@ -43,7 +43,7 @@ describe('Integration >', () => {
 					range: createRange(2, 26, 2, 32),
 				},
 				{
-					message: 'Did you mean `realize`?',
+					message: 'Did you mean to spell `realise` this way?',
 					range: createRange(4, 26, 4, 33),
 				},
 			),
@@ -108,7 +108,7 @@ describe('Integration >', () => {
 					range: createRange(2, 26, 2, 32),
 				},
 				{
-					message: 'Did you mean `realize`?',
+					message: 'Did you mean to spell `realise` this way?',
 					range: createRange(4, 26, 4, 33),
 				},
 			),
