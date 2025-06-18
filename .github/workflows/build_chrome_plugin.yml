@@ -27,7 +27,13 @@ jobs:
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
       - name: Build
         run: just build-chrome-plugin 
-      - name: Upload extension
+      - name: Upload Chrome extension
         uses: actions/upload-artifact@v4
         with:
-          path: "packages/chrome-plugin/package/*.zip"
+          name: harper-chrome-plugin.zip
+          path: "packages/chrome-plugin/package/harper-chrome-plugin.zip"
+      - name: Upload Firefox extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: harper-firefox-plugin.zip
+          path: "packages/chrome-plugin/package/harper-firefox-plugin.zip"
