@@ -173,10 +173,6 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
             device,
         }
     }
-
-    fn indices(&self, sentence: &[String]) -> Vec<i64> {
-        sentence.iter().map(|t| self.idx(t) as i64).collect()
-    }
 }
 
 impl<B: Backend + AutodiffBackend> Chunker for BurnChunker<B> {
@@ -200,7 +196,7 @@ mod tests {
             &["./en_gum-ud-train.conllu"],
             128,
             20,
-            0.000001,
+            0.0003,
             NdArrayDevice::Cpu,
         );
     }
