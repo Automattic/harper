@@ -1,6 +1,6 @@
 use crate::{
     CharStringExt, Span, Token,
-    expr::{Expr, SequenceExpr},
+    expr::{Expr, ReflexivePronoun, SequenceExpr},
     linting::Suggestion,
     patterns::WordSet,
 };
@@ -15,30 +15,12 @@ impl Default for ShootOneselfInTheFoot {
     fn default() -> Self {
         let verb_forms = WordSet::new(&["shoot", "shooting", "shoots", "shot", "shooted"]);
 
-        let reflexive_pronouns = WordSet::new(&[
-            "herself",
-            "himself",
-            "itself",
-            "myself",
-            "oneself",
-            "oneselves",
-            "ourself",
-            "ourselves",
-            "theirself",
-            "theirselves",
-            "themself",
-            "themselves",
-            "thyself",
-            "yourself",
-            "yourselves",
-        ]);
-
         let body_parts = WordSet::new(&["foot", "feet", "leg", "legs"]);
 
         let pattern = SequenceExpr::default()
             .then(verb_forms)
             .t_ws()
-            .then(reflexive_pronouns)
+            .then(ReflexivePronoun)
             .t_ws()
             .then_preposition()
             .t_ws()
