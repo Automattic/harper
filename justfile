@@ -102,7 +102,8 @@ build-chrome-plugin: build-harperjs
   cd "{{justfile_directory()}}/packages/chrome-plugin"
 
   pnpm install 
-  pnpm zip
+  pnpm zip-for-chrome
+  pnpm zip-for-firefox
 
 test-chrome-plugin: build-chrome-plugin
   #!/bin/bash
