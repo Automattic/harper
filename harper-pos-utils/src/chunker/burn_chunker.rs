@@ -1,7 +1,9 @@
 use crate::chunker::np_extraction::locate_noun_phrases_in_sent;
 use crate::{UPOS, chunker::Chunker, conllu_utils::iter_sentences_in_conllu};
+use burn::backend::Autodiff;
 use burn::nn::loss::{BinaryCrossEntropyLossConfig, MseLoss, Reduction};
 use burn::optim::{GradientsParams, Optimizer};
+use burn::record::{FullPrecisionSettings, NamedMpkFileRecorder};
 use burn::tensor::backend::AutodiffBackend;
 use burn::tensor::cast::ToElement;
 use burn::tensor::{Float, TensorData};
@@ -11,6 +13,7 @@ use burn::{
     optim::AdamConfig,
     tensor::{Int, Tensor, backend::Backend},
 };
+use burn_ndarray::{NdArray, NdArrayDevice};
 use hashbrown::HashMap;
 use rand::seq::SliceRandom;
 use rs_conllu::Sentence;
@@ -67,6 +70,14 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
 
         Tensor::<B, 1, _>::from_data(TensorData::from(ys.as_slice()), &self.device)
             .reshape([1, labels.len()])
+    }
+
+    pub fn save_to(&self, path: impl AsRef<Path>) {
+        let recorder = NamedMpkFileRecorder::<FullPrecisionSettings>::new();
+        self.model
+            .clone()
+            .save_file(path.as_ref(), &recorder)
+            .expect("Should be able to save the model");
     }
 
     pub fn train<T: AsRef<Path>>(
@@ -175,29 +186,21 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     }
 }
 
+impl BurnChunker<Autodiff<NdArray>> {
+    pub fn train_cpu<T: AsRef<Path>>(
+        files: &[T],
+        embed_dim: usize,
+        epochs: usize,
+        lr: f64,
+    ) -> Self {
+        BurnChunker::<Autodiff<NdArray>>::train(files, embed_dim, epochs, lr, NdArrayDevice::Cpu)
+    }
+}
+
 impl<B: Backend + AutodiffBackend> Chunker for BurnChunker<B> {
     fn chunk_sentence(&self, sentence: &[String], _tags: &[Option<UPOS>]) -> Vec<bool> {
         let tensor = self.to_tensor(sentence);
         let prob = self.model.forward(tensor);
         prob.to_data().iter().map(|p: f32| p > 0.5).collect()
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use burn::backend::Autodiff;
-    use burn_ndarray::{NdArray, NdArrayDevice};
-
-    use super::BurnChunker;
-
-    #[test]
-    fn run() {
-        let tarained = BurnChunker::<Autodiff<NdArray>>::train(
-            &["./en_gum-ud-train.conllu"],
-            128,
-            20,
-            0.0003,
-            NdArrayDevice::Cpu,
-        );
     }
 }

@@ -7,6 +7,7 @@ mod np_extraction;
 mod upos_freq_dict;
 
 pub use brill_chunker::BrillChunker;
+pub use burn_chunker::BurnChunker;
 pub use upos_freq_dict::UPOSFreqDict;
 
 /// An implementer of this trait is capable of identifying the noun phrases in a provided sentence.

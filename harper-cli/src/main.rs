@@ -20,7 +20,7 @@ use harper_core::{
     MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
 };
 use harper_literate_haskell::LiterateHaskellParser;
-use harper_pos_utils::{BrillChunker, BrillTagger};
+use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunker};
 use harper_stats::Stats;
 use serde::Serialize;
 
@@ -97,6 +97,16 @@ enum Args {
         /// The number of epochs (and patch rules) to train.
         epochs: usize,
         /// Path to a `.conllu` dataset to train on.
+        #[arg(num_args = 1..)]
+        datasets: Vec<PathBuf>,
+    },
+    TrainBurnChunker {
+        lr: f64,
+        embed_dim: usize,
+        /// The path to write the final  model file to.
+        output: PathBuf,
+        /// The number of epochs to train.
+        epochs: usize,
         #[arg(num_args = 1..)]
         datasets: Vec<PathBuf>,
     },
@@ -424,6 +434,18 @@ fn main() -> anyhow::Result<()> {
         } => {
             let chunker = BrillChunker::train(&datasets, epochs, candidate_selection_chance);
             fs::write(output, serde_json::to_string_pretty(&chunker)?)?;
+            Ok(())
+        }
+        Args::TrainBurnChunker {
+            datasets,
+            epochs,
+            output,
+            lr,
+            embed_dim,
+        } => {
+            let chunker = BurnChunker::train_cpu(&datasets, embed_dim, epochs, lr);
+            chunker.save_to(output);
+
             Ok(())
         }
         Args::RenameFlag { old, new, dir } => {
