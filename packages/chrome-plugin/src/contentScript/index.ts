@@ -1,7 +1,7 @@
 import '@webcomponents/custom-elements';
 import $ from 'jquery';
 import LintFramework from '../LintFramework';
-import { leafNodes } from '../domUtils';
+import { isVisible, leafNodes } from '../domUtils';
 
 const fw = new LintFramework();
 
@@ -26,7 +26,11 @@ function scan() {
 				continue;
 			}
 
-			fw.addTarget(leaf as HTMLElement);
+			if (!isVisible(leaf)) {
+				continue;
+			}
+
+			fw.addTarget(leaf);
 		}
 	});
 }
