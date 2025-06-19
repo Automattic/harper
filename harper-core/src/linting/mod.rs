@@ -77,12 +77,14 @@ mod proper_noun_capitalization_linters;
 mod repeated_words;
 mod save_to_safe;
 mod sentence_capitalization;
+mod shoot_oneself_in_the_foot;
 mod since_duration;
 mod somewhat_something;
 mod spaces;
 mod spell_check;
 mod spelled_numbers;
 mod suggestion;
+mod take_serious;
 mod that_which;
 mod the_how_why;
 mod the_my;
@@ -159,12 +161,14 @@ pub use pronoun_contraction::PronounContraction;
 pub use repeated_words::RepeatedWords;
 pub use save_to_safe::SaveToSafe;
 pub use sentence_capitalization::SentenceCapitalization;
+pub use shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 pub use since_duration::SinceDuration;
 pub use somewhat_something::SomewhatSomething;
 pub use spaces::Spaces;
 pub use spell_check::SpellCheck;
 pub use spelled_numbers::SpelledNumbers;
 pub use suggestion::Suggestion;
+pub use take_serious::TakeSerious;
 pub use that_which::ThatWhich;
 pub use the_how_why::TheHowWhy;
 pub use the_my::TheMy;
@@ -210,7 +214,7 @@ where
 }
 
 #[cfg(test)]
-mod tests {
+pub mod tests {
     use super::Linter;
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
 

@@ -434,8 +434,8 @@ Message: |
          |                                           ^~~~~~~~ Did you mean to spell `analyses` this way?
      167 | probabilities, and other related data, and replicated his work for Greek, where
 Suggest:
-  - Replace with: “analysis”
   - Replace with: “analyzes”
+  - Replace with: “analysis”
   - Replace with: “analysts”
 
 
@@ -494,10 +494,12 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also
-         |                                                           ^~~~~ Did you mean `Welsh`?
+         |                                                           ^~~~~ Did you mean to spell `Welch` this way?
      202 | known as the forward-backward algorithm). Hidden Markov model and visible Markov
 Suggest:
   - Replace with: “Welsh”
+  - Replace with: “Belch”
+  - Replace with: “Walsh”
 
 
 

@@ -607,7 +607,7 @@
 > England need   a   hundred runs  , with twenty - five overs  remaining . Game    on  !
 # NPr+    NSg/VX D/P NSg     NPl/V . P    NSg    . NSg+ NPl/V+ V+        . NSg/V/J J/P .
 > Your feet will     soon warm    up        once  your socks  are on  .
-# D+   NSg+ NPrSg/VX J/R  NSg/V/J NSg/V/J/P NSg/C D+   NPl/V+ V+  J/P .
+# D+   NPl+ NPrSg/VX J/R  NSg/V/J NSg/V/J/P NSg/C D+   NPl/V+ V+  J/P .
 > I    was trying  to drink out         of the bottle while     the top      was still   on  !
 # ISg+ V   NSg/V/J P  NSg/V NSg/V/J/R/P P  D+  NSg/V+ NSg/V/C/P D+  NSg/V/J+ V   NSg/V/J J/P .
 > Climbing up        that     steep   ridge  isn't  on  . We'll have   to find  another route  .
@@ -669,7 +669,7 @@
 > Should there be     an  accent on  the " e        " ?
 # VX     +     NSg/VX D/P NSg/V  J/P D   . NPrSg/I+ . .
 > He       wore old   shoes on  his    feet .
-# NPr/ISg+ V    NSg/J NPl/V J/P ISg/D+ NSg+ .
+# NPr/ISg+ V    NSg/J NPl/V J/P ISg/D+ NPl+ .
 > The lighthouse that     you  can      see   is on  the mainland .
 # D+  NSg+       N/I/C/D+ IPl+ NPrSg/VX NSg/V VL J/P D+  NSg+     .
 > The suspect  is thought to still   be     on  the campus .

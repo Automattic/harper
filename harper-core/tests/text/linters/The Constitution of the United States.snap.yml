@@ -16,10 +16,12 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
        6 | establish Justice, insure domestic Tranquility, provide for the common defence,
-         |                                                                        ^~~~~~~ Did you mean `defense`?
+         |                                                                        ^~~~~~~ Did you mean to spell `defence` this way?
        7 | promote the general Welfare, and secure the Blessings of Liberty to ourselves
 Suggest:
   - Replace with: “defense”
+  - Replace with: “decency”
+  - Replace with: “deface”
 
 
 
@@ -539,10 +541,12 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      203 | Imposts and Excises, to pay the Debts and provide for the common Defence and
-         |                                                                  ^~~~~~~ Did you mean `Defense`?
+         |                                                                  ^~~~~~~ Did you mean to spell `Defence` this way?
      204 | general Welfare of the United States; but all Duties, Imposts and Excises shall
 Suggest:
   - Replace with: “Defense”
+  - Replace with: “Fence”
+  - Replace with: “Terence”
 
 
 
@@ -579,9 +583,10 @@ Lint:    Spelling (63 priority)
 Message: |
      229 | 9. To define and punish Piracies and Felonies committed on the high Seas, and
      230 | Offences against the Law of Nations;
-         | ^~~~~~~~ Did you mean `Offenses`?
+         | ^~~~~~~~ Did you mean to spell `Offences` this way?
 Suggest:
   - Replace with: “Offenses”
+  - Replace with: “Fences”
 
 
 
@@ -1201,10 +1206,11 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      481 | have Power to grant Reprieves and Pardons for Offences against the United
-         |                                               ^~~~~~~~ Did you mean `Offenses`?
+         |                                               ^~~~~~~~ Did you mean to spell `Offences` this way?
      482 | States, except in Cases of Impeachment.
 Suggest:
   - Replace with: “Offenses”
+  - Replace with: “Fences”
 
 
 
@@ -1480,9 +1486,11 @@ Lint:    Spelling (63 priority)
 Message: |
      627 | States, or any place subject to their jurisdiction. No Person held to Service
      628 | or Labour in one State, under the Laws thereof, escaping into another, shall,
-         |    ^~~~~~ Did you mean `Labor`?
+         |    ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
+  - Replace with: “About”
+  - Replace with: “Amour”
 
 
 
@@ -1490,9 +1498,11 @@ Lint:    Spelling (63 priority)
 Message: |
      629 | in Consequence of any Law or Regulation therein, be discharged from such
      630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
-         |            ^~~~~~ Did you mean `Labor`?
+         |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
+  - Replace with: “About”
+  - Replace with: “Amour”
 
 
 
@@ -1500,9 +1510,11 @@ Lint:    Spelling (63 priority)
 Message: |
      630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
      631 | Service or Labour may be due.
-         |            ^~~~~~ Did you mean `Labor`?
+         |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
+  - Replace with: “About”
+  - Replace with: “Amour”
 
 
 
@@ -1665,10 +1677,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      714 | first Page, The Word "Thirty" being partly written on an Erazure in the
-         |                                                          ^~~~~~~ Did you mean `Erasure`?
+         |                                                          ^~~~~~~ Did you mean to spell `Erazure` this way?
      715 | fifteenth Line of the first Page. The Words "is tried" being interlined between
 Suggest:
   - Replace with: “Erasure”
+  - Replace with: “Azure”
 
 
 

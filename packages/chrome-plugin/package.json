@@ -15,7 +15,8 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"fmt": "prettier --write '**/*.{svelte,ts,json,css,scss,md}'",
-		"zip": "npm run build && node src/zip.js",
+		"zip-for-chrome": "TARGET_BROWSER=chrome npm run build && node src/zip.js harper-chrome-plugin.zip",
+		"zip-for-firefox": "TARGET_BROWSER=firefox npm run build && node src/zip.js harper-firefox-plugin.zip",
 		"test": "playwright test"
 	},
 	"devDependencies": {

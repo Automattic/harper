@@ -432,6 +432,14 @@ impl TokenKind {
         metadata.is_pronoun()
     }
 
+    pub fn is_reflexive_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return false;
+        };
+
+        metadata.is_reflexive_pronoun()
+    }
+
     pub fn is_likely_homograph(&self) -> bool {
         let TokenKind::Word(Some(metadata)) = self else {
             return false;
