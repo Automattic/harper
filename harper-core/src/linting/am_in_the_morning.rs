@@ -23,31 +23,6 @@ impl Default for AmInTheMorning {
             Box::new(SequenceExpr::default().then_whitespace().then(pm)),
         ]);
 
-        // 12am  night, morning?
-        // 1am   morning, night
-        // 2am   morning, night
-        // 3am   morning, night?
-        // 4am   morning, night?
-        // 5am   morning
-        // 6am   morning
-        // 7am   morning
-        // 8am   morning
-        // 9am   morning
-        // 10am  morning
-        // 11am  morning
-        // 12pm  ?
-        // 1pm   afternoon
-        // 2pm   afternoon
-        // 3pm   afternoon
-        // 4pm   afternoon
-        // 5pm   afternoon, evening?
-        // 6pm   evening
-        // 7pm   evening, night?
-        // 8pm   evening, night?
-        // 9pm   evening, night?
-        // 10pm  night
-        // 11pm  night
-
         let ws_in_periods = SequenceExpr::default()
             .then(FixedPhrase::from_phrase(" in the "))
             .then(WordSet::new(&["morning", "afternoon", "evening", "night"]));
