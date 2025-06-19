@@ -309,7 +309,7 @@
 				"noun": {}
 			}
 		},
-		"F": {
+		"W": {
 			"#": "'con-' prefix",
 			"kind": "prefix",
 			"cross_product": true,
@@ -753,6 +753,14 @@
 				"pronoun": {
 					"is_plural": true,
 					"person": "First"
+				}
+			}
+		},
+		"F": {
+			"#": "reflexive property",
+			"metadata": {
+				"pronoun": {
+					"is_reflexive": true
 				}
 			}
 		}
