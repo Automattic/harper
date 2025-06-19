@@ -1,5 +1,5 @@
 use crate::patterns::Word;
-use crate::{Document, Token, TokenKind};
+use crate::{Document, Span, Token, TokenKind};
 
 use super::{Expr, SequenceExpr};
 
@@ -21,14 +21,14 @@ pub struct FixedPhrase {
 }
 
 impl FixedPhrase {
-    /// Creates a [FixedPhrase] from a plain text string.
+    /// Creates a [`FixedPhrase`] from a plaintext string.
     /// Uses plain English tokenization rules.
     pub fn from_phrase(text: &str) -> Self {
         let document = Document::new_plain_english_curated(text);
         Self::from_document(&document)
     }
 
-    /// Creates a [FixedPhrase] from a pre-tokenized document.
+    /// Creates a [`FixedPhrase`] from a pre-tokenized document.
     /// Allows custom tokenization by creating a `Document` first.
     pub fn from_document(doc: &Document) -> Self {
         let mut phrase = SequenceExpr::default();
@@ -62,7 +62,7 @@ impl FixedPhrase {
 }
 
 impl Expr for FixedPhrase {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<crate::Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
         self.inner.run(cursor, tokens, source)
     }
 }
