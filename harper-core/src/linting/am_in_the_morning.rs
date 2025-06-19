@@ -55,10 +55,12 @@ impl ExprLinter for AmInTheMorning {
         let am_pm_idx = if toks[0].kind.is_whitespace() { 1 } else { 0 };
 
         let maybe_ws_am_pm_span = Span::new(toks[0].span.start, toks[am_pm_idx].span.end);
-        let sugg_am_pm_only = Suggestion::ReplaceWith(maybe_ws_am_pm_span.get_content(src).to_vec());
+        let sugg_am_pm_only =
+            Suggestion::ReplaceWith(maybe_ws_am_pm_span.get_content(src).to_vec());
 
         let ws_prep_period = Span::new(toks[am_pm_idx + 1].span.start, all_after_number_span.end);
-        let sugg_prep_period_only = Suggestion::ReplaceWith(ws_prep_period.get_content(src).to_vec());
+        let sugg_prep_period_only =
+            Suggestion::ReplaceWith(ws_prep_period.get_content(src).to_vec());
 
         Some(Lint {
             span: all_after_number_span,
@@ -76,7 +78,9 @@ impl ExprLinter for AmInTheMorning {
 #[cfg(test)]
 mod tests {
     use super::AmInTheMorning;
-    use crate::linting::tests::{assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+    };
 
     #[test]
     fn flag_at_4am_in_the_morning() {
@@ -153,7 +157,7 @@ mod tests {
             "I wrote this whole program as a joke, at 1 AM in the morning. Nothing else to say.",
             AmInTheMorning::default(),
             "I wrote this whole program as a joke, at 1 in the morning. Nothing else to say.",
-            1
+            1,
         );
     }
 
@@ -168,7 +172,7 @@ mod tests {
             "Luckily I was at home, but it was not fun at 3am in the morning.",
             AmInTheMorning::default(),
             "Luckily I was at home, but it was not fun at 3 in the morning.",
-            1
+            1,
         );
     }
 
@@ -183,7 +187,7 @@ mod tests {
             "If I want to run my script or some cron job at 3am at night, it seems to be not possible after macOS is in sleep mode.",
             AmInTheMorning::default(),
             "If I want to run my script or some cron job at 3 at night, it seems to be not possible after macOS is in sleep mode.",
-            1
+            1,
         );
     }
 
@@ -198,7 +202,7 @@ mod tests {
             "The servers stop at 9PM at night and starts again at 9AM.",
             AmInTheMorning::default(),
             "The servers stop at 9 at night and starts again at 9AM.",
-            1
+            1,
         );
     }
 
@@ -213,7 +217,7 @@ mod tests {
             "Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 AM in the morning.",
             AmInTheMorning::default(),
             "Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 in the morning.",
-            1
+            1,
         );
     }
 
@@ -228,7 +232,7 @@ mod tests {
             "Style issues get a blue marker: It's 5 P.M. in the afternoon.",
             AmInTheMorning::default(),
             "Style issues get a blue marker: It's 5 in the afternoon.",
-            1
+            1,
         );
     }
 
@@ -243,7 +247,7 @@ mod tests {
             "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 PM in the afternoon on Monday, 27 May 2007.",
             AmInTheMorning::default(),
             "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 in the afternoon on Monday, 27 May 2007.",
-            1
+            1,
         );
     }
 
@@ -258,7 +262,7 @@ mod tests {
             "I am in China and it is six pm in the evening.",
             AmInTheMorning::default(),
             "I am in China and it is six in the evening.",
-            1
+            1,
         );
     }
 
@@ -273,7 +277,7 @@ mod tests {
             "On the second application, we normally have the 503 between 1am and 4 am in the morning, almost every day.",
             AmInTheMorning::default(),
             "On the second application, we normally have the 503 between 1am and 4 in the morning, almost every day.",
-            1
+            1,
         );
     }
 }
