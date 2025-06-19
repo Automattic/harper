@@ -58,10 +58,16 @@ mod tests {
                 assert!(md.is_pronoun());
                 assert!(md.is_reflexive_pronoun());
             }
-            (true, false, TokenKind::Word(None)) => panic!("Widely accepted pronoun '{word}' has gone missing from the dictionary!"),
-            (false, true, TokenKind::Word(Some(_))) => panic!("Unaccepted pronoun '{word}' that's used in bad English is now in the dictionary!"),
+            (true, false, TokenKind::Word(None)) => {
+                panic!("Widely accepted pronoun '{word}' has gone missing from the dictionary!")
+            }
+            (false, true, TokenKind::Word(Some(_))) => panic!(
+                "Unaccepted pronoun '{word}' that's used in bad English is now in the dictionary!"
+            ),
             (false, true, TokenKind::Word(None)) => {}
-            (false, false, TokenKind::Word(Some(_))) => panic!("non-pronoun '{word}' is made up just for testing but is now in the dictionary!"),
+            (false, false, TokenKind::Word(Some(_))) => panic!(
+                "non-pronoun '{word}' is made up just for testing but is now in the dictionary!"
+            ),
             (false, false, TokenKind::Word(None)) => {}
             (true, true, _) => panic!("'{word}' is in both good and bad lists"),
             _ => panic!("'{word}' doesn't match any expected case"),
