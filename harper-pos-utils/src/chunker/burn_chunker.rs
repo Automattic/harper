@@ -153,7 +153,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
             );
 
             let score = util.score_model(&model, test_file);
-            println!("{}% correct in test dataset", score);
+            println!("{}% correct in test dataset", score * 100.);
         }
 
         Self {
