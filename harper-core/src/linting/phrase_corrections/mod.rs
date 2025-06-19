@@ -688,6 +688,18 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `I am`?",
             "Fixes the incorrect spacing in `I a m` to properly form `I am`."
         ),
+        "IAmAgreement" => (
+            ["I are"],
+            ["I am"],
+            "The first-person singular pronoun `I` requires the verb form `am`; `are` belongs to second-person or plural contexts.",
+            "Corrects `I are` to `I am`."
+        ),
+        "IDo" => (
+            ["I does"],
+            ["I do"],
+            "`I` pairs with the bare verb `do`; the –s inflection `does` is reserved for third-person singular subjects.",
+            "Corrects `I does` to `I do`."
+        ),
         "InAndOfItself" => (
             ["in of itself"],
             ["in and of itself"],
@@ -1316,18 +1328,6 @@ pub fn lint_group() -> LintGroup {
             ["worst ever"],
             "Use `worst` for the extreme case. (`Worse` is for comparing)",
             "Corrects `worse ever` to `worst ever` for proper comparative usage."
-        ),
-        "IAmAgreement" => (
-            ["I are"],
-            ["I am"],
-            "The first-person singular pronoun `I` requires the verb form `am`; `are` belongs to second-person or plural contexts.",
-            "Corrects `I are` to `I am`."
-        ),
-        "IDo" => (
-            ["I does"],
-            ["I do"],
-            "`I` pairs with the bare verb `do`; the –s inflection `does` is reserved for third-person singular subjects.",
-            "Corrects `I does` to `I do`."
         ),
     });
 

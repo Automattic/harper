@@ -931,6 +931,26 @@ fn hunger_pain() {
 // IAm
 // -none-
 
+// IAmAgreement
+#[test]
+fn corrects_i_are() {
+    assert_suggestion_result(
+        "I are really happy about this release.",
+        lint_group(),
+        "I am really happy about this release.",
+    );
+}
+
+// IDo
+#[test]
+fn corrects_i_does() {
+    assert_suggestion_result(
+        "I does enjoy writing Rust.",
+        lint_group(),
+        "I do enjoy writing Rust.",
+    );
+}
+
 // InAndOfItself
 #[test]
 fn detect_atomic_in_of_itself() {
@@ -1917,22 +1937,4 @@ fn detect_worst_ever_real_world() {
 #[test]
 fn now_on_hold() {
     assert_lint_count("Those are now on hold for month.", lint_group(), 0);
-}
-
-#[test]
-fn corrects_i_are() {
-    assert_suggestion_result(
-        "I are really happy about this release.",
-        lint_group(),
-        "I am really happy about this release.",
-    );
-}
-
-#[test]
-fn corrects_i_does() {
-    assert_suggestion_result(
-        "I does enjoy writing Rust.",
-        lint_group(),
-        "I do enjoy writing Rust.",
-    );
 }
