@@ -1,3 +1,5 @@
+use harper_brill::UPOS;
+
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
@@ -21,7 +23,7 @@ impl Default for PronounKnew {
         // But "its" commonly occurs before "new" and is a possessive pronoun. (Much more commonly a determiner)
         // Since "his" and "her" are possessive and object pronouns respectively, we ignore them too.
         let pronoun_pattern = |tok: &Token, source: &[char]| {
-            if !tok.kind.is_pronoun() {
+            if !tok.kind.is_upos(UPOS::PRON) {
                 return false;
             }
 
@@ -135,5 +137,46 @@ mod tests {
     #[test]
     fn does_not_flag_with_nothing_1298() {
         assert_lint_count("This is nothing new.", PronounKnew::default(), 0);
+    }
+
+    #[test]
+    fn issue_1381_tricks() {
+        assert_lint_count("To learn some new tricks.", PronounKnew::default(), 0);
+    }
+
+    #[test]
+    fn issue_1381_template() {
+        assert_lint_count(
+            "Let's build this new template function.",
+            PronounKnew::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn issue_1381_file() {
+        assert_lint_count(
+            "Move the function definition inside of that new file.",
+            PronounKnew::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn fixes_i_knew_what() {
+        assert_suggestion_result(
+            "I new what to do.",
+            PronounKnew::default(),
+            "I knew what to do.",
+        );
+    }
+
+    #[test]
+    fn fixes_she_knew_what() {
+        assert_suggestion_result(
+            "She new what to do.",
+            PronounKnew::default(),
+            "She knew what to do.",
+        );
     }
 }

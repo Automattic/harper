@@ -135,16 +135,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-      67 | have to ask them what the name of the country is, you know. Please, Ma’am, is
-      68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
-         |      ^~~ Did you mean “knew” (the past tense of “know”)?
-Suggest:
-  - Replace with: “Knew”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
