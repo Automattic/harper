@@ -3,7 +3,7 @@ mod compound_noun_after_possessive;
 mod compound_noun_before_aux_verb;
 
 use super::{Lint, LintKind, Suggestion, merge_linters::merge_linters};
-use crate::{Token, WordMetadata};
+use crate::{CharStringExt, Token, WordMetadata};
 
 // Helper function to check if a token is a content word (not a function word)
 pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
@@ -13,8 +13,8 @@ pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
 
     tok.span.len() > 1
         && (meta.is_noun() || meta.is_adjective() || meta.is_verb() || meta.is_adverb())
-        && !meta.determiner
-        && (!meta.preposition || tok.span.get_content_string(src).to_lowercase() == "bar")
+        && !meta.is_determiner()
+        && (!meta.preposition || *tok.span.get_content(src).to_lower() == ['b', 'a', 'r'])
 }
 
 pub(crate) fn predicate(closed: Option<&WordMetadata>, open: Option<&WordMetadata>) -> bool {

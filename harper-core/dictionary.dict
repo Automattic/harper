@@ -27843,7 +27843,7 @@ heppest/J
 heptagon/NgS
 heptagonal/J
 heptathlon/NSg
-her/~Do3
+her/~Do35
 herald/~NVSgdG
 heralded/~VU
 heraldic/~J
@@ -28048,7 +28048,7 @@ hireling/NgS
 hiring/NVJgS
 hirsute/JNp
 hirsuteness/Ng
-his/~*D
+his/~*D5
 hiss/~NVgdSG
 hist/~NV
 histamine/NgS
@@ -30344,7 +30344,7 @@ iteration/~Nrg
 iterator/NS
 itinerant/~JNSg
 itinerary/~NJSg
-its/~ID*
+its/~ID*5
 itself/~IF
 iv/~U
 ivory/~NJSg
@@ -34690,7 +34690,7 @@ muzak/NV
 muzzily/R
 muzzle/~NVdSgG
 muzzy/JNp
-my/~D
+my/~D5
 mycologist/NSg
 mycology/Ng
 myelitis/Ng
@@ -36475,7 +36475,7 @@ ouch/NV
 ought/~mIN
 oughtn't/m
 ounce/~NgS
-our/~D
+our/~D5
 ours/~I
 ourself/IF          # reflexive of the 'Royal We'
 ourselves/~IF
@@ -47863,7 +47863,7 @@ thankfulness/Ng
 thankless/JpY
 thanklessness/Ng
 thanksgiving/~NSg
-that/~CIgD
+that/~CIgDM
 that'd/
 that'll/
 thatch/NVgd>SZG
@@ -47881,7 +47881,7 @@ theatricals/Ng
 theatrics/Ng
 thee/~I2o
 theft/~NSg
-their/~D
+their/~D5
 theirs/~I
 theism/~Ng
 theist/NSg
@@ -47953,7 +47953,7 @@ thermostat/NgS
 thermostatic/JQ
 thesauri/N
 thesaurus/NgS
-these/~ID
+these/~IDM
 theses/~9g
 thesis/~Ng
 thespian/JNSg
@@ -48013,7 +48013,7 @@ thirteenths/N
 thirtieth/JNg
 thirtieths/N
 thirty/~NHSg
-this/~ID
+this/~IDM
 thistle/~NgS
 thistledown/Ng
 thither/J
@@ -48031,7 +48031,7 @@ thoroughbred/~JNgS
 thoroughfare/~NgS
 thoroughgoing/J
 thoroughness/Ng
-those/~ID
+those/~IDM
 thou/~I2s
 though/~CV
 thought/~NVSg
@@ -52198,7 +52198,7 @@ you've/
 young/~JNVTg>
 youngish/J
 youngster/~NgS
-your/~D
+your/~D5
 yours/~I
 yourself/~IF
 yourselves/~IF
