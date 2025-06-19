@@ -1,6 +1,7 @@
 use crate::chunker::np_extraction::locate_noun_phrases_in_sent;
 use crate::{UPOS, chunker::Chunker, conllu_utils::iter_sentences_in_conllu};
 use burn::backend::Autodiff;
+use burn::module::extract_type_name;
 use burn::nn::loss::{BinaryCrossEntropyLossConfig, MseLoss, Reduction};
 use burn::optim::{GradientsParams, Optimizer};
 use burn::record::{FullPrecisionSettings, NamedMpkFileRecorder};
@@ -80,46 +81,16 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
             .expect("Should be able to save the model");
     }
 
-    pub fn train<T: AsRef<Path>>(
-        files: &[T],
+    pub fn train(
+        training_files: &[impl AsRef<Path>],
+        test_file: &impl AsRef<Path>,
         embed_dim: usize,
         epochs: usize,
         lr: f64,
         device: B::Device,
     ) -> Self {
-        let mut vocab: HashMap<String, usize> = HashMap::new();
-        vocab.insert("<PAD>".into(), PAD_IDX);
-        vocab.insert("<UNK>".into(), UNK_IDX);
-        let mut sents: Vec<Vec<String>> = Vec::new();
-        let mut labs: Vec<Vec<bool>> = Vec::new();
-
-        println!("Preparing dataset...");
-
-        for file in files {
-            for sent in iter_sentences_in_conllu(file) {
-                let mut toks: Vec<String> = Vec::new();
-                let mut tags = Vec::new();
-                for tok in &sent.tokens {
-                    toks.push(tok.form.clone());
-                    tags.push(tok.upos.and_then(UPOS::from_conllu));
-                }
-                for t in &toks {
-                    if !vocab.contains_key(t) {
-                        let next = vocab.len();
-                        vocab.insert(t.clone(), next);
-                    }
-                }
-                let spans = locate_noun_phrases_in_sent(&sent);
-                let mut mask = vec![false; toks.len()];
-                for span in spans {
-                    for i in span {
-                        mask[i] = true;
-                    }
-                }
-                sents.push(toks);
-                labs.push(mask);
-            }
-        }
+        println!("Preparing datasets...");
+        let (sents, labs, vocab) = Self::extract_sents_from_files(training_files);
 
         println!("Preparing model and training config...");
 
@@ -173,9 +144,16 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
 
             println!(
                 "Average loss for epoch: {}",
-                total_loss / sents.len() as f64
+                total_loss / sents.len() as f64 * 100.
             );
-            println!("{}% correct", total_correct as f32 / total_tokens as f32);
+
+            println!(
+                "{}% correct in training dataset",
+                total_correct as f32 / total_tokens as f32 * 100.
+            );
+
+            let score = util.score_model(&model, test_file);
+            println!("{}% correct in test dataset", score);
         }
 
         Self {
@@ -184,16 +162,87 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
             device,
         }
     }
+
+    fn score_model(&self, model: &NpModel<B>, dataset: &impl AsRef<Path>) -> f32 {
+        let (sents, labs, _) = Self::extract_sents_from_files(&[dataset]);
+
+        let mut total_tokens = 0;
+        let mut total_correct: usize = 0;
+
+        for (x, y) in sents.iter().zip(labs.iter()) {
+            let x_tensor = self.to_tensor(x);
+
+            let logits = model.forward(x_tensor);
+            total_correct += logits
+                .to_data()
+                .iter()
+                .map(|p: f32| p > 0.5)
+                .zip(y)
+                .map(|(a, b)| if a == *b { 1 } else { 0 })
+                .sum::<usize>();
+
+            total_tokens += x.len();
+        }
+
+        total_correct as f32 / total_tokens as f32
+    }
+
+    fn extract_sents_from_files(
+        files: &[impl AsRef<Path>],
+    ) -> (Vec<Vec<String>>, Vec<Vec<bool>>, HashMap<String, usize>) {
+        let mut vocab: HashMap<String, usize> = HashMap::new();
+        vocab.insert("<PAD>".into(), PAD_IDX);
+        vocab.insert("<UNK>".into(), UNK_IDX);
+
+        let mut sents: Vec<Vec<String>> = Vec::new();
+        let mut labs: Vec<Vec<bool>> = Vec::new();
+
+        for file in files {
+            for sent in iter_sentences_in_conllu(file) {
+                let mut toks: Vec<String> = Vec::new();
+                let mut tags = Vec::new();
+                for tok in &sent.tokens {
+                    toks.push(tok.form.clone());
+                    tags.push(tok.upos.and_then(UPOS::from_conllu));
+                }
+                for t in &toks {
+                    if !vocab.contains_key(t) {
+                        let next = vocab.len();
+                        vocab.insert(t.clone(), next);
+                    }
+                }
+                let spans = locate_noun_phrases_in_sent(&sent);
+                let mut mask = vec![false; toks.len()];
+                for span in spans {
+                    for i in span {
+                        mask[i] = true;
+                    }
+                }
+                sents.push(toks);
+                labs.push(mask);
+            }
+        }
+
+        (sents, labs, vocab)
+    }
 }
 
 impl BurnChunker<Autodiff<NdArray>> {
-    pub fn train_cpu<T: AsRef<Path>>(
-        files: &[T],
+    pub fn train_cpu(
+        training_files: &[impl AsRef<Path>],
+        test_file: &impl AsRef<Path>,
         embed_dim: usize,
         epochs: usize,
         lr: f64,
     ) -> Self {
-        BurnChunker::<Autodiff<NdArray>>::train(files, embed_dim, epochs, lr, NdArrayDevice::Cpu)
+        BurnChunker::<Autodiff<NdArray>>::train(
+            training_files,
+            test_file,
+            embed_dim,
+            epochs,
+            lr,
+            NdArrayDevice::Cpu,
+        )
     }
 }
 

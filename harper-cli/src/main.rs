@@ -101,12 +101,19 @@ enum Args {
         datasets: Vec<PathBuf>,
     },
     TrainBurnChunker {
+        #[arg(short, long)]
         lr: f64,
-        embed_dim: usize,
+        // The number of embedding dimensions
+        #[arg(short, long)]
+        dim: usize,
         /// The path to write the final  model file to.
+        #[arg(short, long)]
         output: PathBuf,
         /// The number of epochs to train.
+        #[arg(short, long)]
         epochs: usize,
+        #[arg(short, long)]
+        test_file: PathBuf,
         #[arg(num_args = 1..)]
         datasets: Vec<PathBuf>,
     },
@@ -438,12 +445,13 @@ fn main() -> anyhow::Result<()> {
         }
         Args::TrainBurnChunker {
             datasets,
+            test_file,
             epochs,
             output,
             lr,
-            embed_dim,
+            dim: embed_dim,
         } => {
-            let chunker = BurnChunker::train_cpu(&datasets, embed_dim, epochs, lr);
+            let chunker = BurnChunker::train_cpu(&datasets, &test_file, embed_dim, epochs, lr);
             chunker.save_to(output);
 
             Ok(())
