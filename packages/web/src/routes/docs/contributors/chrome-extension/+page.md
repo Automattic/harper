@@ -52,6 +52,11 @@ It:
     - Rules
     - Domain toggling
 
+## The Firefox Extension
+
+Despite the name of the package, the `chrome-plugin` also supports Firefox. 
+To build for Firefox, just use `pnpm zip-for-firefox` or otherwise compile with the environment variable `TARGET_BROWSER=firefox`.
+
 ## Other Reading
 
 - [Putting Harper in the Browser: Technical Details](https://elijahpotter.dev/articles/putting_harper_in_your_browser)

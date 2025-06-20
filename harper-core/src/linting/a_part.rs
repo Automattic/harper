@@ -1,31 +1,33 @@
+use crate::expr::Expr;
+use crate::expr::FixedPhrase;
+use crate::expr::LongestMatchOf;
 use crate::{
     Token, TokenStringExt,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{EitherPattern, ExactPhrase, Pattern},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct APart {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for APart {
     fn default() -> Self {
-        let pattern = EitherPattern::new(vec![
-            Box::new(ExactPhrase::from_phrase("a part from")),
-            Box::new(ExactPhrase::from_phrase("apart of")),
-            Box::new(ExactPhrase::from_phrase("fall a part")),
-            Box::new(ExactPhrase::from_phrase("far a part")),
+        let pattern = LongestMatchOf::new(vec![
+            Box::new(FixedPhrase::from_phrase("a part from")),
+            Box::new(FixedPhrase::from_phrase("apart of")),
+            Box::new(FixedPhrase::from_phrase("fall a part")),
+            Box::new(FixedPhrase::from_phrase("far a part")),
         ]);
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for APart {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for APart {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

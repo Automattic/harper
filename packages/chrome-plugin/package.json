@@ -1,7 +1,7 @@
 {
 	"name": "chrome-plugin",
 	"displayName": "chrome-plugin",
-	"version": "0.39.0",
+	"version": "0.43.0",
 	"author": "no one",
 	"description": "A private grammar checker for 21st Century English",
 	"type": "module",
@@ -15,7 +15,8 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"fmt": "prettier --write '**/*.{svelte,ts,json,css,scss,md}'",
-		"zip": "npm run build && node src/zip.js",
+		"zip-for-chrome": "TARGET_BROWSER=chrome npm run build && node src/zip.js harper-chrome-plugin.zip",
+		"zip-for-firefox": "TARGET_BROWSER=firefox npm run build && node src/zip.js harper-firefox-plugin.zip",
 		"test": "playwright test"
 	},
 	"devDependencies": {

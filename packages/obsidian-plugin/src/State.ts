@@ -104,7 +104,11 @@ export default class State {
 
 					const actions = lint.suggestions().map((sug) => {
 						return {
-							name: suggestionToLabel(sug),
+							name:
+								sug.kind() == SuggestionKind.Replace
+									? sug.get_replacement_text()
+									: suggestionToLabel(sug),
+							title: suggestionToLabel(sug),
 							apply: (view) => {
 								if (sug.kind() === SuggestionKind.Remove) {
 									view.dispatch({
@@ -139,7 +143,8 @@ export default class State {
 						const word = lint.get_problem_text();
 
 						actions.push({
-							name: `Add “${word}” to your dictionary`,
+							name: '📖',
+							title: `Add “${word}” to your dictionary`,
 							apply: (view) => {
 								this.harper.importWords([word]);
 								this.reinitialize();
@@ -189,8 +194,8 @@ export default class State {
 		};
 	}
 
-	public async getDescriptions(): Promise<Record<string, string>> {
-		return await this.harper.getLintDescriptions();
+	public async getDescriptionHTML(): Promise<Record<string, string>> {
+		return await this.harper.getLintDescriptionsHTML();
 	}
 
 	/** Get a reference to the CM editor extensions.
@@ -248,7 +253,7 @@ function suggestionToLabel(sug: Suggestion) {
 	if (sug.kind() === SuggestionKind.Remove) {
 		return 'Remove';
 	} else if (sug.kind() === SuggestionKind.Replace) {
-		return `Replace with “${sug.get_replacement_text()}”`;
+		return `“Replace with ${sug.get_replacement_text()}”`;
 	} else if (sug.kind() === SuggestionKind.InsertAfter) {
 		return `Insert “${sug.get_replacement_text()}” after this.`;
 	}

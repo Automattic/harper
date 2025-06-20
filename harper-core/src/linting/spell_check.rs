@@ -6,10 +6,7 @@ use smallvec::ToSmallVec;
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::spell::{
-    is_cksz_misspelling, is_er_misspelling, is_ll_misspelling, is_ou_misspelling,
-    suggest_correct_spelling,
-};
+use crate::spell::suggest_correct_spelling;
 use crate::{CharString, CharStringExt, Dialect, Dictionary, TokenStringExt};
 
 pub struct SpellCheck<T>
@@ -52,8 +49,8 @@ impl<T: Dictionary> SpellCheck<T> {
                         self.dictionary
                             .get_word_metadata(v)
                             .unwrap()
-                            .dialect
-                            .is_none_or(|d| d == self.dialect)
+                            .dialects
+                            .is_dialect_enabled(self.dialect)
                     })
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
@@ -77,7 +74,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             let word_chars = document.get_span_content(&word.span);
 
             if let Some(metadata) = word.kind.as_word().unwrap() {
-                if metadata.dialect.is_none_or(|d| d == self.dialect)
+                if metadata.dialects.is_dialect_enabled(self.dialect)
                     && (self.dictionary.contains_exact_word(word_chars)
                         || self.dictionary.contains_exact_word(&word_chars.to_lower()))
                 {
@@ -86,16 +83,6 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             };
 
             let mut possibilities = self.suggest_correct_spelling(word_chars);
-            if let Some(most_likely) = possibilities.first() {
-                // If the most likely suggestion is a common misspelling, ignore all others.
-                if is_ou_misspelling(most_likely, word_chars)
-                    || is_cksz_misspelling(most_likely, word_chars)
-                    || is_er_misspelling(most_likely, word_chars)
-                    || is_ll_misspelling(most_likely, word_chars)
-                {
-                    possibilities.truncate(1);
-                }
-            }
 
             // If the misspelled word is capitalized, capitalize the results too.
             if let Some(mis_f) = word_chars.first() {
@@ -282,7 +269,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "This test is broken due to the metadata dialect field not being a collection"]
     fn australian_labour_vs_labor() {
         assert_lint_count(
             "In Australia we write 'labour' but the political party is the 'Labor Party'.",
@@ -357,7 +343,6 @@ mod tests {
         );
     }
 
-    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
     #[test]
     fn afterwards_is_au() {
         assert_lint_count(
@@ -376,7 +361,6 @@ mod tests {
         );
     }
 
-    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
     #[test]
     fn afterwards_is_ca() {
         assert_lint_count(

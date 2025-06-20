@@ -23,15 +23,22 @@ jobs:
         run: sudo apt-get update && sudo apt-get install pandoc -y
       - name: Install `wasm-pack`
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
-      - name: Build
+      - name: Build Chrome Plugin
         run: just build-chrome-plugin 
-      - name: Upload extension
+      - name: Build Firefox Plugin
+        run: just build-firefox-plugin 
+      - name: Upload Chrome extension
         uses: actions/upload-artifact@v4
         with:
           name: harper-chrome-plugin.zip
           path: "packages/chrome-plugin/package/harper-chrome-plugin.zip"
+      - name: Upload Firefox extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: harper-firefox-plugin.zip
+          path: "packages/chrome-plugin/package/harper-firefox-plugin.zip"
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "packages/chrome-plugin/package/harper-chrome-plugin.zip"
+          artifacts: "packages/chrome-plugin/package/*.zip"
           allowUpdates: true
           draft: true

@@ -1,42 +1,57 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Pattern, SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
     word_metadata::Person,
 };
 
 pub struct NominalWants {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for NominalWants {
     fn default() -> Self {
-        // "That" can act as two kinds of pronoun: demonstrative and relative.
-        // As a demonstrative pronoun, it's third person singular.
-        // As a relative pronoun, it's behaves as any person:
-        // I am the one that wants to. He is the one that wants to.
         fn is_applicable_pronoun(tok: &Token, src: &[char]) -> bool {
             if tok.kind.is_pronoun() {
-                tok.span.get_content_string(src).to_lowercase() != "that"
+                let pron = tok.span.get_content_string(src).to_lowercase();
+                // "That" can act as two kinds of pronoun: demonstrative and relative.
+                // As a demonstrative pronoun, it's third person singular.
+                // As a relative pronoun, it's behaves as any person:
+                // I am the one that wants to. He is the one that wants to.
+                pron != "that"
+                    // Personal pronouns have case. Object case personal pronouns
+                    // can come after "want":
+                    // Make them want to believe.
+                    // Note: "you" and "it" are both subject and object case.
+                    && pron != "me"
+                    && pron != "us"
+                    // "you" is subject and object both OK before "want".
+                    && pron != "him"
+                    && pron != "her"
+                    // "it" is both subject and object. Subject before "wants", object before "want".
+                    && pron != "it"
+                    && pron != "them"
             } else {
                 false
             }
         }
 
         let miss = WordSet::new(&["wont", "wonts", "want", "wants"]);
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(is_applicable_pronoun)
             .then_whitespace()
             .then(miss);
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for NominalWants {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for NominalWants {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
@@ -96,6 +111,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "This is not a grammar error if the previous word is `help`, `let`, or `make`."]
     fn fixes_it_wont() {
         assert_suggestion_result(
             "It wont to move forward.",
@@ -153,5 +169,132 @@ mod tests {
             NominalWants::default(),
             0,
         );
+    }
+
+    #[test]
+    fn ignores_correct_usage_make_me() {
+        assert_lint_count(
+            "Take another person code make me want to die.",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_makes_me() {
+        assert_lint_count(
+            "It makes me want to not use GitHub at all.",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_make_us() {
+        assert_lint_count(
+            "... try harder to make us want to implement it.",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_made_us() {
+        assert_lint_count(
+            "This change made us want to adopt luxon's strict mode",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_help_us() {
+        assert_lint_count("... help us want to help you.", NominalWants::default(), 0);
+    }
+
+    #[test]
+    fn ignores_correct_usage_make_you() {
+        assert_lint_count(
+            "I can certainly see why that would make you want to ditch Linux packaging.",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_makes_you() {
+        assert_lint_count(
+            "If something happens that makes you want to scream from the top of your lungs",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_made_you() {
+        assert_lint_count(
+            "What made you want to leave the LibFuzzer ...",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_make_him() {
+        assert_lint_count(
+            "make him want to help with your issue",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_make_her() {
+        assert_lint_count(
+            "... and make her want to get into coding.",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_make_it() {
+        assert_lint_count(
+            "you just make it want to appear as a drama",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_makes_it() {
+        assert_lint_count(
+            "using UHD makes it want to put labels in the corner saying UHD",
+            NominalWants::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_make_them() {
+        assert_lint_count(
+            "And make them want to believe in it.",
+            NominalWants::default(),
+            0,
+        )
+    }
+
+    #[test]
+    fn ignores_correct_usage_making_them() {
+        assert_lint_count(
+            "you're annoying ALMOST ALL of the users and making them want to switch to another ...",
+            NominalWants::default(),
+            0,
+        )
+    }
+
+    #[test]
+    fn ignores_correct_usage_help_them() {
+        assert_lint_count("And help them want to do it.", NominalWants::default(), 0)
     }
 }

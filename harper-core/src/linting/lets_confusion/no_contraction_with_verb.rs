@@ -1,10 +1,13 @@
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
     linting::{Lint, LintKind, Suggestion},
-    patterns::{EitherPattern, Pattern, SequencePattern, WordSet},
+    patterns::WordSet,
 };
 
-use crate::linting::PatternLinter;
+use crate::linting::ExprLinter;
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -12,47 +15,30 @@ use crate::linting::PatternLinter;
 /// harper-core/src/linting/lets_confusion/let_us_redundancy.rs
 /// harper-core/src/linting/pronoun_contraction/should_contract.rs
 pub struct NoContractionWithVerb {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for NoContractionWithVerb {
     fn default() -> Self {
         // Only tests "let".
-        let let_ws = SequencePattern::default()
+        let let_ws = SequenceExpr::default()
             .then(WordSet::new(&["lets", "let"]))
             .then_whitespace();
 
-        // Word is only a verb, and not the gerund/present participle/progressive -ing form.
-        // Only tests the next word after "let".
-        let non_ing_verb = SequencePattern::default().then(|tok: &Token, source: &[char]| {
+        // Match verbs that are only verbs (not also nouns/adjectives) and not in -ing form
+        let non_ing_verb = SequenceExpr::default().then(|tok: &Token, _src: &[char]| {
             let Some(Some(meta)) = tok.kind.as_word() else {
-                // Not a word
                 return false;
             };
-
-            if !meta.is_verb() || meta.is_noun() || meta.is_adjective() {
-                // Not a verb, or a verb that's also a noun or adjective
-                return false;
-            }
-
-            // TODO affix system currently marks -ing and -s verb forms as present tense
-            // TODO which is wrong. replace with .is_progressive_form() when it's merged
-            if meta.is_present_tense_verb() {
-                // A verb in -s (good) or -ing (bad)
-                return !tok
-                    .span
-                    .get_content_string(source)
-                    .to_lowercase()
-                    .ends_with("ing");
-            }
-
-            // A verb lemma or in -ed (good)
-            true
+            meta.is_verb()
+                && !meta.is_noun()
+                && !meta.is_adjective()
+                && !meta.is_verb_progressive_form()
         });
 
         // Ambiguous word is a verb determined by heuristic of following word's part of speech
         // Tests the next two words after "let".
-        let verb_due_to_following_pos = SequencePattern::default()
+        let verb_due_to_following_pos = SequenceExpr::default()
             .then(|tok: &Token, _source: &[char]| tok.kind.is_verb())
             .then_whitespace()
             .then(|tok: &Token, _source: &[char]| {
@@ -60,20 +46,20 @@ impl Default for NoContractionWithVerb {
                 tok.kind.is_determiner() || tok.kind.is_pronoun() || tok.kind.is_conjunction()
             });
 
-        let let_then_verb = let_ws.then(EitherPattern::new(vec![
+        let let_then_verb = let_ws.then(LongestMatchOf::new(vec![
             Box::new(non_ing_verb),
             Box::new(verb_due_to_following_pos),
         ]));
 
         Self {
-            pattern: Box::new(let_then_verb),
+            expr: Box::new(let_then_verb),
         }
     }
 }
 
-impl PatternLinter for NoContractionWithVerb {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for NoContractionWithVerb {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

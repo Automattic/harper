@@ -1,29 +1,32 @@
+use crate::expr::Expr;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    patterns::{NominalPhrase, OwnedPatternExt, Pattern, SequencePattern, Word},
+    patterns::{NominalPhrase, Word},
 };
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct ForNoun {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ForNoun {
     fn default() -> Self {
-        let pattern = SequencePattern::aco("fro")
+        let pattern = SequenceExpr::aco("fro")
             .then_whitespace()
             .then(NominalPhrase.or(Word::new("sure")));
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for ForNoun {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ForNoun {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

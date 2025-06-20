@@ -1,8 +1,9 @@
+use harper_brill::UPOS;
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    ConjunctionData, NounData, Number, PronounData, Punctuation, Quote, Tense, VerbData,
+    ConjunctionData, NounData, Number, PronounData, Punctuation, Quote, VerbData, VerbForm,
     WordMetadata,
 };
 
@@ -166,16 +167,6 @@ impl TokenKind {
         )
     }
 
-    pub fn is_determiner(&self) -> bool {
-        matches!(
-            self,
-            TokenKind::Word(Some(WordMetadata {
-                determiner: true,
-                ..
-            }))
-        )
-    }
-
     pub fn is_ellipsis(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Ellipsis))
     }
@@ -194,12 +185,51 @@ impl TokenKind {
         )
     }
 
-    pub fn is_present_tense_verb(&self) -> bool {
+    pub fn is_verb_lemma(&self) -> bool {
         matches!(
             self,
             TokenKind::Word(Some(WordMetadata {
                 verb: Some(VerbData {
-                    tense: Some(Tense::Present),
+                    verb_form: Some(VerbForm::LemmaForm),
+                    ..
+                }),
+                ..
+            }))
+        )
+    }
+
+    pub fn is_verb_past_form(&self) -> bool {
+        matches!(
+            self,
+            TokenKind::Word(Some(WordMetadata {
+                verb: Some(VerbData {
+                    verb_form: Some(VerbForm::PastForm),
+                    ..
+                }),
+                ..
+            }))
+        )
+    }
+
+    pub fn is_verb_progressive_form(&self) -> bool {
+        matches!(
+            self,
+            TokenKind::Word(Some(WordMetadata {
+                verb: Some(VerbData {
+                    verb_form: Some(VerbForm::ProgressiveForm),
+                    ..
+                }),
+                ..
+            }))
+        )
+    }
+
+    pub fn is_verb_third_person_singular_present_form(&self) -> bool {
+        matches!(
+            self,
+            TokenKind::Word(Some(WordMetadata {
+                verb: Some(VerbData {
+                    verb_form: Some(VerbForm::ThirdPersonSingularPresentForm),
                     ..
                 }),
                 ..
@@ -392,6 +422,38 @@ impl TokenKind {
         metadata.is_pronoun()
     }
 
+    pub fn is_reflexive_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return false;
+        };
+
+        metadata.is_reflexive_pronoun()
+    }
+
+    pub fn is_determiner(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return false;
+        };
+
+        metadata.is_determiner()
+    }
+
+    pub fn is_demonstrative_determiner(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return false;
+        };
+
+        metadata.is_demonstrative_determiner()
+    }
+
+    pub fn is_possessive_determiner(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return false;
+        };
+
+        metadata.is_possessive_determiner()
+    }
+
     pub fn is_likely_homograph(&self) -> bool {
         let TokenKind::Word(Some(metadata)) = self else {
             return false;
@@ -407,5 +469,13 @@ impl TokenKind {
     /// Checks whether the token is whitespace.
     pub fn is_whitespace(&self) -> bool {
         matches!(self, TokenKind::Space(_) | TokenKind::Newline(_))
+    }
+
+    pub fn is_upos(&self, upos: UPOS) -> bool {
+        let Some(Some(meta)) = self.as_word() else {
+            return false;
+        };
+
+        meta.pos_tag == Some(upos)
     }
 }

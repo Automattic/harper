@@ -73,6 +73,9 @@ pub struct Config {
     pub isolate_english: bool,
     pub markdown_options: MarkdownOptions,
     pub dialect: Dialect,
+    /// Maximum length (in bytes) a file can have before it's skipped.
+    /// Above this limit, the file will not be linted.
+    pub max_file_length: usize,
 }
 
 impl Config {
@@ -152,6 +155,10 @@ impl Config {
             }
         }
 
+        if let Some(v) = value.get("maxFileLength") {
+            base.max_file_length = serde_json::from_value(v.clone())?;
+        }
+
         if let Some(v) = value.get("markdown") {
             if let Some(v) = v.get("IgnoreLinkTitle") {
                 base.markdown_options.ignore_link_title = serde_json::from_value(v.clone())?;
@@ -177,6 +184,7 @@ impl Default for Config {
             isolate_english: false,
             markdown_options: MarkdownOptions::default(),
             dialect: Dialect::American,
+            max_file_length: 120_000,
         }
     }
 }

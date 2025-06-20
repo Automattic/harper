@@ -1,20 +1,17 @@
-use crate::{
-    CharStringExt, TokenStringExt,
-    linting::PatternLinter,
-    patterns::{All, SplitCompoundWord},
-};
+use crate::expr::All;
+use crate::expr::Expr;
+use crate::expr::MergeableWords;
+use crate::expr::SequenceExpr;
+use crate::{CharStringExt, TokenStringExt, linting::ExprLinter};
 
-use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
+use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 
-use crate::{
-    Lrc, Token,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::{Lrc, Token};
 
 /// Two adjacent words separated by whitespace that if joined would be a valid noun.
 pub struct CompoundNounAfterDetAdj {
-    pattern: Box<dyn Pattern>,
-    split_pattern: Lrc<SplitCompoundWord>,
+    expr: Box<dyn Expr>,
+    split_expr: Lrc<MergeableWords>,
 }
 
 // This heuristic identifies potential compound nouns by:
@@ -24,41 +21,42 @@ pub struct CompoundNounAfterDetAdj {
 //    that is not also an adjective
 impl Default for CompoundNounAfterDetAdj {
     fn default() -> Self {
-        let context_pattern = SequencePattern::default()
+        let context_expr = SequenceExpr::default()
             .then(|tok: &Token, src: &[char]| {
                 let Some(Some(meta)) = tok.kind.as_word() else {
                     return false;
                 };
-                meta.determiner
-                    || (meta.is_adjective()
-                        && tok.span.get_content_string(src).to_lowercase() != "go")
+                meta.is_determiner()
+                    || (meta.is_adjective() && *tok.span.get_content(src).to_lower() != ['g', 'o'])
             })
-            .then_whitespace()
+            .t_ws()
             .then(is_content_word)
-            .then_whitespace()
+            .t_ws()
             .then(is_content_word);
 
-        let split_pattern = create_split_pattern();
+        let split_expr = Lrc::new(MergeableWords::new(|meta_closed, meta_open| {
+            predicate(meta_closed, meta_open)
+        }));
 
-        let mut pattern = All::default();
-        pattern.add(Box::new(context_pattern));
-        pattern.add(Box::new(
-            SequencePattern::default()
-                .then_anything()
-                .then_anything()
-                .then(split_pattern.clone()),
-        ));
+        let mut expr = All::default();
+        expr.add(context_expr);
+        expr.add(
+            SequenceExpr::default()
+                .t_any()
+                .t_any()
+                .then(split_expr.clone()),
+        );
 
         Self {
-            pattern: Box::new(pattern),
-            split_pattern,
+            expr: Box::new(expr),
+            split_expr,
         }
     }
 }
 
-impl PatternLinter for CompoundNounAfterDetAdj {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for CompoundNounAfterDetAdj {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -66,7 +64,7 @@ impl PatternLinter for CompoundNounAfterDetAdj {
         let orig = span.get_content(source);
         // If the pattern matched, this will not return `None`.
         let word =
-            self.split_pattern
+            self.split_expr
                 .get_merged_word(&matched_tokens[2], &matched_tokens[4], source)?;
 
         Some(Lint {

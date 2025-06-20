@@ -8,7 +8,9 @@ use anyhow::{Context, Result, anyhow};
 use futures::future::join;
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, LintGroupConfig};
-use harper_core::parsers::{CollapseIdentifiers, IsolateEnglish, Markdown, Parser, PlainEnglish};
+use harper_core::parsers::{
+    CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
+};
 use harper_core::{
     Dialect, Dictionary, Document, FstDictionary, IgnoredLints, MergedDictionary,
     MutableDictionary, WordMetadata,
@@ -24,10 +26,10 @@ use tower_lsp_server::lsp_types::{
     CodeActionOrCommand, CodeActionParams, CodeActionProviderCapability, CodeActionResponse,
     ConfigurationItem, Diagnostic, DidChangeConfigurationParams, DidChangeTextDocumentParams,
     DidChangeWatchedFilesParams, DidChangeWatchedFilesRegistrationOptions,
-    DidCloseTextDocumentParams, DidOpenTextDocumentParams, DidSaveTextDocumentParams,
-    ExecuteCommandOptions, ExecuteCommandParams, FileChangeType, FileSystemWatcher, GlobPattern,
-    InitializeParams, InitializeResult, InitializedParams, MessageType, PublishDiagnosticsParams,
-    Range, Registration, ServerCapabilities, TextDocumentSyncCapability, TextDocumentSyncKind,
+    DidCloseTextDocumentParams, DidOpenTextDocumentParams, ExecuteCommandOptions,
+    ExecuteCommandParams, FileChangeType, FileSystemWatcher, GlobPattern, InitializeParams,
+    InitializeResult, InitializedParams, MessageType, PublishDiagnosticsParams, Range,
+    Registration, ServerCapabilities, ServerInfo, TextDocumentSyncCapability, TextDocumentSyncKind,
     TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Uri, WatchKind,
 };
 use tower_lsp_server::{Client, LanguageServer, UriExt};
@@ -40,6 +42,11 @@ use crate::git_commit_parser::GitCommitParser;
 use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
 use crate::io_utils::fileify_path;
 use harper_stats::{Record, Stats};
+
+/// Return harper-ls version
+pub fn ls_version() -> &'static str {
+    env!("CARGO_PKG_VERSION")
+}
 
 pub struct Backend {
     client: Client,
@@ -98,6 +105,14 @@ impl Backend {
     }
 
     async fn load_ignored_lints(&self, uri: &Uri) -> Result<IgnoredLints> {
+        // VS Code's unsaved documents have "untitled" scheme
+        if uri
+            .scheme()
+            .is_some_and(|scheme| scheme.eq_lowercase("untitled"))
+        {
+            return Ok(IgnoredLints::new());
+        }
+
         Ok(load_ignored_lints(
             self.get_ignored_lints_path(uri)
                 .await
@@ -206,13 +221,14 @@ impl Backend {
         self.pull_config().await;
 
         // Copy necessary configuration to avoid holding lock.
-        let (lint_config, markdown_options, isolate_english, dialect) = {
+        let (lint_config, markdown_options, isolate_english, dialect, max_file_length) = {
             let config = self.config.read().await;
             (
                 config.lint_config.clone(),
                 config.markdown_options,
                 config.isolate_english,
                 config.dialect,
+                config.max_file_length,
             )
         };
 
@@ -331,6 +347,7 @@ impl Backend {
             "html" => Some(Box::new(HtmlParser::default())),
             "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "typst" => Some(Box::new(Typst)),
+            "org" => Some(Box::new(OrgMode)),
             _ => None,
         };
 
@@ -343,10 +360,14 @@ impl Backend {
                     parser = Box::new(IsolateEnglish::new(parser, doc_state.dict.clone()));
                 }
 
-                // Don't lint on large documents.
-                // This should eventually be configurable, but that isn't necessary yet.
-                if text.len() < 120_000 {
+                // Don't lint on documents larger than the configured maximum length.
+                if text.len() <= max_file_length {
                     doc_state.document = Document::new(text, &parser, &doc_state.dict);
+                } else {
+                    // Ensures that existing lints are cleared when we stop linting the file.
+                    // Otherwise, prior lints will remain, and they will quickly fall out of sync
+                    // with the document when it is edited.
+                    doc_state.document = Document::default();
                 }
             }
         }
@@ -424,7 +445,10 @@ impl Backend {
 impl LanguageServer for Backend {
     async fn initialize(&self, _: InitializeParams) -> JsonResult<InitializeResult> {
         Ok(InitializeResult {
-            server_info: None,
+            server_info: Some(ServerInfo {
+                name: "harper-ls".to_owned(),
+                version: Some(ls_version().to_owned()),
+            }),
             capabilities: ServerCapabilities {
                 code_action_provider: Some(CodeActionProviderCapability::Simple(true)),
                 execute_command_provider: Some(ExecuteCommandOptions {
@@ -478,15 +502,6 @@ impl LanguageServer for Backend {
         {
             warn!("Unable to register watch file capability: {}", err);
         }
-    }
-
-    async fn did_save(&self, params: DidSaveTextDocumentParams) {
-        self.update_document_from_file(&params.text_document.uri, None)
-            .await
-            .map_err(|err| error!("{err}"))
-            .err();
-
-        self.publish_diagnostics(&params.text_document.uri).await;
     }
 
     async fn did_open(&self, params: DidOpenTextDocumentParams) {

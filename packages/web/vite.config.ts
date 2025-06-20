@@ -68,6 +68,10 @@ export default defineConfig({
 									to: '/docs/integrations/chrome-extension',
 								},
 								{
+									title: 'Firefox Extension',
+									to: '/docs/integrations/firefox-extension',
+								},
+								{
 									title: 'WordPress',
 									to: '/docs/integrations/wordpress',
 								},
@@ -94,6 +98,10 @@ export default defineConfig({
 								{
 									title: 'Zed',
 									to: '/docs/integrations/zed',
+								},
+								{
+									title: 'Sublime Text',
+									to: '/docs/integrations/sublime-text',
 								},
 							],
 						},
@@ -184,6 +192,10 @@ export default defineConfig({
 								{
 									title: 'Local Statistics',
 									to: '/docs/contributors/local-stats',
+								},
+								{
+									title: 'Brill Tagging',
+									to: '/docs/contributors/brill',
 								},
 								{
 									title: 'FAQ',
