@@ -561,7 +561,7 @@
 > I'm not   driving this   wreck of a    car  .
 # W?  NSg/C V       I/Ddem NSg/V P  D/P+ NSg+ .
 > I'm always thinking of you  .
-# W?  W?     V        P  IPl+ .
+# W?  R      V        P  IPl+ .
 > He       told us     the story of his     journey to India  .
 # NPr/ISg+ V    NPr/I+ D   NSg/V P  ISg/D$+ NSg/V+  P  NPrSg+ .
 > This    behaviour     is typical of teenagers .
@@ -621,7 +621,7 @@
 > If    the player fails to hit     the ball     on  , it's a    foul     .
 # NSg/C D+  NSg+   NPl/V P  NSg/V/J D+  NPrSg/V+ J/P . +    D/P+ NSg/V/J+ .
 > He       always has to be     on  , it's so         exhausting .
-# NPr/ISg+ W?     V   P  NSg/VX J/P . +    NSg/I/J/C+ V          .
+# NPr/ISg+ R      V   P  NSg/VX J/P . +    NSg/I/J/C+ V          .
 >
 #
 > Adverb
