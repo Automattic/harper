@@ -1873,15 +1873,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-    1446 | “Much better.” I turned again to my new acquaintance. “This is an unusual party
-         |                                     ^~~ Did you mean “knew” (the past tense of “know”)?
-Suggest:
-  - Replace with: “knew”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     1457 | “I thought you knew, old sport. I’m afraid I’m not a very good host.”
