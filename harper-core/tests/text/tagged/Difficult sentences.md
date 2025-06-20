@@ -724,8 +724,8 @@
 # ISg+ NSg/V NPrSg/ISg+ J/P NSg/V+     .
 > Can't you  see   I'm on  the phone  ?
 # VX    IPl+ NSg/V W?  J/P D+  NSg/V+ .
-> My favorite shows  are on  BBC    America .
-# D+ NSg/V/J+ NPl/V+ V   J/P NPrSg+ NPr+    .
+> My favorite    shows  are on  BBC    America .
+# D+ NSg/V/J/Am+ NPl/V+ V   J/P NPrSg+ NPr+    .
 > I'll pay     on  card   .
 # W?   NSg/V/J J/P NSg/V+ .
 > He       travelled    on  false    documents .

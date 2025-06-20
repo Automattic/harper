@@ -412,8 +412,8 @@
 # N/I/J/D+ NSg/V   V+       NPl/V+  NSg/VX W?   NSg/V V/J     P  D   NSg/J   P  NSg+
 > tagging . Methods such  as    SVM , maximum entropy classifier , perceptron , and
 # NSg/V+  . NPl/V+  NSg/I NSg/R ?   . NSg/J   NSg     NSg        . N          . V/C
-> nearest - neighbor have   all       been  tried , and most    can      achieve accuracy above
-# W?      . NSg/V/J  NSg/VX NSg/I/J/C NSg/V V/J   . V/C NSg/I/J NPrSg/VX V       NSg+     NSg/J/P
+> nearest - neighbor   have   all       been  tried , and most    can      achieve accuracy above
+# W?      . NSg/V/J/Am NSg/VX NSg/I/J/C NSg/V V/J   . V/C NSg/I/J NPrSg/VX V       NSg+     NSg/J/P
 > 95 % . [ citation needed ]
 # #  . . . NSg+     V/J+   .
 >
