@@ -1,29 +1,31 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
 };
 
 pub struct FirstAidKit {
-    pattern: Box<dyn crate::patterns::Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for FirstAidKit {
     fn default() -> Self {
         let supply_words = WordSet::new(&["aid", "starter", "travel", "tool"]);
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(supply_words)
             .then_whitespace()
             .then_any_capitalization_of("kid");
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for FirstAidKit {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for FirstAidKit {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {

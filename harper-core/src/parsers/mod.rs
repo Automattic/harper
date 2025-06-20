@@ -2,6 +2,7 @@ mod collapse_identifiers;
 mod isolate_english;
 mod markdown;
 mod mask;
+mod org_mode;
 mod plain_english;
 
 use blanket::blanket;
@@ -9,6 +10,7 @@ pub use collapse_identifiers::CollapseIdentifiers;
 pub use isolate_english::IsolateEnglish;
 pub use markdown::{Markdown, MarkdownOptions};
 pub use mask::Mask;
+pub use org_mode::OrgMode;
 pub use plain_english::PlainEnglish;
 
 use crate::{LSend, Token, TokenStringExt};
@@ -35,7 +37,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::{Markdown, Parser, PlainEnglish};
+    use super::{Markdown, OrgMode, Parser, PlainEnglish};
     use crate::Punctuation;
     use crate::TokenKind::{self, *};
 
@@ -53,6 +55,10 @@ mod tests {
 
     fn assert_tokens_eq_md(test_str: impl AsRef<str>, expected: &[TokenKind]) {
         assert_tokens_eq(test_str, expected, &Markdown::default())
+    }
+
+    fn assert_tokens_eq_org(test_str: impl AsRef<str>, expected: &[TokenKind]) {
+        assert_tokens_eq(test_str, expected, &OrgMode)
     }
 
     #[test]
@@ -117,5 +123,13 @@ mod tests {
     fn parses_non_english() {
         assert_tokens_eq_plain("Løvetann", &[TokenKind::blank_word()]);
         assert_tokens_eq_plain("Naïve", &[TokenKind::blank_word()]);
+    }
+
+    #[test]
+    fn org_mode_basic() {
+        assert_tokens_eq_org(
+            "hello world",
+            &[TokenKind::blank_word(), Space(1), TokenKind::blank_word()],
+        );
     }
 }

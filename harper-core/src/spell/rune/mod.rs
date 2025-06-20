@@ -70,7 +70,8 @@ mod tests {
                     ],
                     "base_metadata": {}
                 }
-            }
+            },
+            "properties": {}
         })
     });
 
@@ -196,7 +197,8 @@ mod tests {
                         "target": [],
                         "base_metadata": {}
                     }
-                }
+                },
+                "properties": {}
             })
             .to_string(),
         )

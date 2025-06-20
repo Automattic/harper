@@ -1,0 +1,81 @@
+#+OPTIONS: H:9 ^:nil
+* Nvim Orgmode
+
+Nvim orgmode is a clone of Emacs Orgmode for Neovim 0.10.3+.
+It aims to be a feature-complete implementation of Orgmode features in Neovim.
+
+Online version of this documentation is available at [[https://nvim-orgmode.github.io]].
+
+To view this documentation offline in Neovim, run =:Org help=. More info in [[#globals-and-commands][Globals and commands]] section.
+
+** Quick start
+:PROPERTIES:
+:CUSTOM_ID: quick-start
+:END:
+- Install with [[https://github.com/folke/lazy.nvim][lazy.nvim]]:
+  #+begin_src lua
+  {
+    'nvim-orgmode/orgmode',
+    event = 'VeryLazy',
+    config = function()
+      -- Setup orgmode
+      require('orgmode').setup({
+        org_agenda_files = '~/orgfiles/**/*',
+        org_default_notes_file = '~/orgfiles/refile.org',
+      })
+    end,
+  }
+  #+end_src
+- Capture your first note with =<leader>oc=
+- Open up the prompt for agenda with =<leader>oa=
+
+For more details about the installation and usage, check [[./installation.org][Installation page]].
+
+To see all configuration options, check [[file:./configuration.org][Configuration page]].
+
+** Getting started with orgmode
+:PROPERTIES:
+:CUSTOM_ID: getting-started
+:END:
+To get a basic idea how Orgmode works, check our hands-on [[file:./tutorial.org][tutorial]].
+
+You can also check this screencast from [[https://github.com/dhruvasagar][@dhruvasagar]]
+that demonstrates how the similar Orgmode clone [[https://github.com/dhruvasagar/vim-dotoo][vim-dotoo]] works.
+
+[[https://www.youtube.com/watch?v=nsv33iOnH34]]
+
+** API docs
+:PROPERTIES:
+:CUSTOM_ID: api-docs
+:END:
+Nvim-orgmode exposes a Lua API that can be used to interact with the orgmode. To view it, check [[file:../doc/orgmode_api.txt][orgmode_api.txt]]
+or do =:h OrgApi= in Neovim.
+
+** Globals and commands
+:PROPERTIES:
+:CUSTOM_ID: globals-and-commands
+:END:
+There are 2 additional ways to interact with Orgmode:
+1. Through the =:Org= command
+2. Through =Org= Lua global variable
+
+List of available actions:
+- =:Org help= - Open this documentation in new tab, set working directory to the docs folder for the tab to allow browsing
+- =:Org helpgrep= - Open search agenda view that allows searching through the documentation
+- =:Org agenda {type?}= - Open agenda view by the shortcut, for example =:Org agenda M= will open =tags_todo= view. When =type= is omitted, it opens up Agenda view.
+- =:Org capture {type?}= - Open capture template by the shortcut, for example =:Org capture t=. When =type= is omitted, it opens up Capture prompt.
+- =:Org install_treesitter_grammar= - Install the treesitter grammar for Orgmode. If installed, prompt to reinstall. Grammar is installed automatically
+  on first run, but this is useful in case when there are issues with the grammar.
+- =:Org store_link= - [[file:./configuration.org::#org_store_link][Store link]] to the headline under cursor. Works in both agenda and org files.
+- =:Org indent_mode= - Toggle virtual indent mode in the current buffer. See [[file:./configuration.org::#org_startup_indented][osg_startup_indented]] for additional info.
+
+All of the commands above can be executed through the global Lua =Org= variable. Examples:
+- =Org.help()=
+- =Org.helpgrep()=
+- =Org.install_treesitter_grammar()=
+- =Org.store_link()=
+- =Org.indent_mode()=
+- =Org.agenda()= - Opens =agenda= prompt
+- =Org.agenda.m()= - Opens =tags= view
+- =Org.capture()= - Opens capture prompt
+- =Org.capture.t()= - Opens capture template for =t= shortcut

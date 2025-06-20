@@ -1,31 +1,30 @@
-use crate::{
-    Token, TokenStringExt,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::{Token, TokenStringExt};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct Hereby {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for Hereby {
     fn default() -> Self {
-        let pattern = SequencePattern::aco("here")
+        let pattern = SequenceExpr::aco("here")
             .then_whitespace()
             .t_aco("by")
             .then_whitespace()
             .then_verb();
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for Hereby {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for Hereby {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

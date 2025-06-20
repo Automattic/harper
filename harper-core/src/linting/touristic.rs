@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{EitherPattern, SequencePattern},
+    expr::{Expr, LongestMatchOf, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -18,7 +18,7 @@ pub enum SuggestionPreference {
 use SuggestionPreference::*;
 
 pub struct Touristic {
-    pattern: Box<dyn crate::patterns::Pattern>,
+    expr: Box<dyn crate::expr::Expr>,
 }
 
 // "touristy" doesn't sound natural with these words
@@ -58,39 +58,39 @@ const WHITELIST: &[&str] = &[
 
 impl Default for Touristic {
     fn default() -> Self {
-        let with_prev_and_next_word = SequencePattern::default()
+        let with_prev_and_next_word = SequenceExpr::default()
             .then_any_word()
             .t_ws()
             .t_aco("touristic")
             .t_ws()
             .then_any_word();
 
-        let with_prev_word = SequencePattern::default()
+        let with_prev_word = SequenceExpr::default()
             .then_any_word()
             .t_ws()
             .t_aco("touristic");
 
-        let with_next_word = SequencePattern::default()
+        let with_next_word = SequenceExpr::default()
             .t_aco("touristic")
             .t_ws()
             .then_any_word();
 
-        let pattern = EitherPattern::new(vec![
+        let pattern = LongestMatchOf::new(vec![
             Box::new(with_prev_and_next_word),
             Box::new(with_prev_word),
             Box::new(with_next_word),
-            Box::new(SequencePattern::default().t_aco("touristic")),
+            Box::new(SequenceExpr::default().t_aco("touristic")),
         ]);
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for Touristic {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for Touristic {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

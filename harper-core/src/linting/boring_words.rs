@@ -1,33 +1,31 @@
-use crate::{
-    Token, TokenStringExt,
-    patterns::{Pattern, WordPatternGroup},
-};
+use crate::expr::{Expr, WordExprGroup};
+use crate::{Token, TokenStringExt};
 
-use super::{Lint, LintKind, PatternLinter};
+use super::{ExprLinter, Lint, LintKind};
 
 pub struct BoringWords {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for BoringWords {
     fn default() -> Self {
-        let mut pattern = WordPatternGroup::default();
+        let mut expr = WordExprGroup::default();
 
-        pattern.add_word("very");
-        pattern.add_word("interesting");
-        pattern.add_word("several");
-        pattern.add_word("most");
-        pattern.add_word("many");
+        expr.add_word("very");
+        expr.add_word("interesting");
+        expr.add_word("several");
+        expr.add_word("most");
+        expr.add_word("many");
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(expr),
         }
     }
 }
 
-impl PatternLinter for BoringWords {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for BoringWords {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

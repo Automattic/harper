@@ -1,30 +1,29 @@
-use crate::{
-    Token, TokenStringExt,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::{Token, TokenStringExt};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct Nobody {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for Nobody {
     fn default() -> Self {
-        let pattern = SequencePattern::aco("no")
+        let pattern = SequenceExpr::aco("no")
             .then_whitespace()
             .t_aco("body")
             .then_whitespace()
             .then_verb();
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for Nobody {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for Nobody {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
