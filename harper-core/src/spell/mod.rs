@@ -308,14 +308,13 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
     }
 
     // Detect dialect-specific variations
-    if sug.edit_distance == 1 {
-        if is_cksz_misspelling(misspelled_word, sug.word)
+    if sug.edit_distance == 1
+        && (is_cksz_misspelling(misspelled_word, sug.word)
             || is_ou_misspelling(misspelled_word, sug.word)
             || is_ll_misspelling(misspelled_word, sug.word)
-            || is_ay_ey_misspelling(misspelled_word, sug.word)
-        {
-            score -= 6;
-        }
+            || is_ay_ey_misspelling(misspelled_word, sug.word))
+    {
+        score -= 6;
     }
     if sug.edit_distance == 2 {
         if is_ei_ie_misspelling(misspelled_word, sug.word) {
