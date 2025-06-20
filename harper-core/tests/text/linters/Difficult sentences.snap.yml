@@ -65,15 +65,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-     130 | Clear the shelves for our new Christmas stock!
-         |                           ^~~ Did you mean “knew” (the past tense of “know”)?
-Suggest:
-  - Replace with: “knew”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
      160 | to account for one's whereabouts.
