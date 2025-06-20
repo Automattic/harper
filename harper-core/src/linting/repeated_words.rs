@@ -46,7 +46,8 @@ impl Linter for RepeatedWords {
                     || tok_a.kind.is_conjunction()
                     || !tok_a.kind.is_likely_homograph()
                     || self.is_special_case(word_a)
-                    || tok_a.kind.is_adverb())
+                    || tok_a.kind.is_adverb()
+                    || tok_a.kind.is_determiner())
                     && word_a.to_lower() == word_b.to_lower()
                 {
                     let intervening_tokens = &chunk[idx_a + 1..*idx_b];

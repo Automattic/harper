@@ -104,6 +104,16 @@ build-chrome-plugin: build-harperjs
   pnpm install 
   pnpm zip-for-chrome
 
+# Start a development server for the Chrome extension.
+dev-chrome-plugin: build-harperjs
+  #! /bin/bash
+  set -eo pipefail
+  
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+
+  pnpm install 
+  pnpm dev
+
 # Build the Firefox extension.
 build-firefox-plugin: build-harperjs
   #! /bin/bash

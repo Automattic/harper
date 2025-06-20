@@ -130,8 +130,11 @@ fn format_word_tag(word: &WordMetadata) -> String {
     if let Some(_conj) = word.conjunction {
         add("C", &mut tags);
     }
-    if word.determiner {
-        add("D", &mut tags);
+    if let Some(determiner) = word.determiner {
+        let mut tag = String::from("D");
+        add_bool(&mut tag, "$", determiner.is_possessive);
+        add_bool(&mut tag, "dem", determiner.is_demonstrative);
+        add(&tag, &mut tags);
     }
     if word.preposition {
         add("P", &mut tags);

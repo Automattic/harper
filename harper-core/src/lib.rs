@@ -49,8 +49,8 @@ pub use token_kind::TokenKind;
 pub use token_string_ext::TokenStringExt;
 pub use vec_ext::VecExt;
 pub use word_metadata::{
-    AdverbData, ConjunctionData, Degree, Dialect, NounData, PronounData, VerbData, VerbForm,
-    WordMetadata,
+    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, NounData, PronounData, VerbData,
+    VerbForm, WordMetadata,
 };
 
 /// Return harper-core version

@@ -167,16 +167,6 @@ impl TokenKind {
         )
     }
 
-    pub fn is_determiner(&self) -> bool {
-        matches!(
-            self,
-            TokenKind::Word(Some(WordMetadata {
-                determiner: true,
-                ..
-            }))
-        )
-    }
-
     pub fn is_ellipsis(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Ellipsis))
     }
@@ -438,6 +428,30 @@ impl TokenKind {
         };
 
         metadata.is_reflexive_pronoun()
+    }
+
+    pub fn is_determiner(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return false;
+        };
+
+        metadata.is_determiner()
+    }
+
+    pub fn is_demonstrative_determiner(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return false;
+        };
+
+        metadata.is_demonstrative_determiner()
+    }
+
+    pub fn is_possessive_determiner(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return false;
+        };
+
+        metadata.is_possessive_determiner()
     }
 
     pub fn is_likely_homograph(&self) -> bool {
