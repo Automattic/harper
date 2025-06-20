@@ -27,18 +27,12 @@ impl Default for PronounKnew {
                 return false;
             }
 
+            if tok.kind.is_possessive_determiner() {
+                return false;
+            }
+
             let pronorm = tok.span.get_content_string(source).to_lowercase();
-            // Eventually we can remove this in favor of the possessive determiner metadata
-            let excluded = [
-                "its",
-                "his",
-                "her",
-                "every",
-                "something",
-                "nothing",
-                "my",
-                "our",
-            ];
+            let excluded = ["every", "something", "nothing"];
             !excluded.contains(&&*pronorm)
         };
 
