@@ -1,20 +1,22 @@
+use crate::expr::ExprExt;
+use crate::expr::SequenceExpr;
 use crate::{
     Document, Token, TokenStringExt,
-    patterns::{NominalPhrase, PatternExt, SequencePattern, WordSet},
+    patterns::{NominalPhrase, WordSet},
 };
 
 use super::{Lint, LintKind, Linter, Suggestion};
 
 pub struct NoOxfordComma {
-    pattern: SequencePattern,
+    expr: SequenceExpr,
 }
 
 impl NoOxfordComma {
     pub fn new() -> Self {
         Self {
-            pattern: {
+            expr: {
                 let this = {
-                    let this = SequencePattern::default();
+                    let this = SequenceExpr::default();
                     this.then(NominalPhrase)
                 }
                 .then_comma()
@@ -52,7 +54,7 @@ impl Linter for NoOxfordComma {
         let mut lints = Vec::new();
 
         for sentence in document.iter_sentences() {
-            for match_span in self.pattern.iter_matches(sentence, document.get_source()) {
+            for match_span in self.expr.iter_matches(sentence, document.get_source()) {
                 let lint = self.match_to_lint(
                     &sentence[match_span.start..match_span.end],
                     document.get_source(),

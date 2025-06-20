@@ -1,15 +1,17 @@
-use super::super::{Lint, LintKind, PatternLinter};
+use super::super::{ExprLinter, Lint, LintKind};
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
-use crate::patterns::{Pattern, SequencePattern, WordSet};
+use crate::patterns::WordSet;
 use crate::{Token, char_string::char_string};
 
 pub struct ToHope {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ToHope {
     fn default() -> Self {
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then_not_plural_nominal()
             .then_whitespace()
             .then(WordSet::new(&["hop", "hopped"]))
@@ -17,14 +19,14 @@ impl Default for ToHope {
             .then_nominal();
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for ToHope {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ToHope {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

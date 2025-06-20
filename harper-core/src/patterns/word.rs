@@ -27,6 +27,11 @@ impl Word {
         }
     }
 
+    /// Matches the provided word, ignoring case.
+    pub fn from_char_string(word: CharString) -> Self {
+        Self { word, exact: false }
+    }
+
     /// Matches the provided word, case-sensitive.
     pub fn new_exact(word: &'static str) -> Self {
         Self {

@@ -1,51 +1,51 @@
-use crate::{
-    CharStringExt, Lrc, TokenStringExt,
-    linting::PatternLinter,
-    patterns::{All, SplitCompoundWord},
-};
+use crate::expr::All;
+use crate::expr::Expr;
+use crate::expr::MergeableWords;
+use crate::expr::SequenceExpr;
+use crate::patterns::AnyPattern;
+use crate::{CharStringExt, Lrc, TokenStringExt, linting::ExprLinter};
 
-use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
+use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 
-use crate::{
-    Token,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::Token;
 
 /// Two adjacent words separated by whitespace that if joined would be a valid noun.
 pub struct CompoundNounBeforeAuxVerb {
-    pattern: Box<dyn Pattern>,
-    split_pattern: Lrc<SplitCompoundWord>,
+    expr: Box<dyn Expr>,
+    split_pattern: Lrc<MergeableWords>,
 }
 
 impl Default for CompoundNounBeforeAuxVerb {
     fn default() -> Self {
-        let context_pattern = SequencePattern::default()
+        let context_pattern = SequenceExpr::default()
             .then(is_content_word)
             .t_ws()
             .then(is_content_word)
             .then_auxiliary_verb();
 
-        let split_pattern = create_split_pattern();
+        let split_pattern = Lrc::new(MergeableWords::new(|meta_closed, meta_open| {
+            predicate(meta_closed, meta_open)
+        }));
 
-        let mut pattern = All::default();
-        pattern.add(Box::new(context_pattern));
-        pattern.add(Box::new(
-            SequencePattern::default()
+        let mut expr = All::default();
+        expr.add(context_pattern);
+        expr.add(
+            SequenceExpr::default()
                 .then(split_pattern.clone())
-                .then_anything()
-                .then_anything(),
-        ));
+                .then(AnyPattern)
+                .then(AnyPattern),
+        );
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(expr),
             split_pattern,
         }
     }
 }
 
-impl PatternLinter for CompoundNounBeforeAuxVerb {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for CompoundNounBeforeAuxVerb {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

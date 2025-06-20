@@ -120,18 +120,18 @@ Finally, enable it in a macro invocation near the bottom:
 
 ```rust title="harper-core/src/linting/lint_group.rs"
 insert_struct_rule!(AdjectiveOfA, true);
-insert_pattern_rule!(BackInTheDay, true);
+insert_expr_rule!(BackInTheDay, true);
 insert_struct_rule!(WordPressDotcom, true);
-insert_pattern_rule!(OutOfDate, true);
-// [svp! df:+]   insert_pattern_rule!(MyRule, true);
+insert_expr_rule!(OutOfDate, true);
+// [svp! df:+]   insert_expr_rule!(MyRule, true);
 ```
 
-If you use a `PatternLinter`, use `insert_pattern_rule` to take advantage of Harper's aggressive caching.
+If you use a `ExprLinter`, use `insert_expr_rule` to take advantage of Harper's aggressive caching.
 Otherwise, use `insert_struct_rule`.
 
 ## Write Your Rule
 
-Defining a pattern and [implementing the PatternLinter trait](https://docs.rs/harper-core/latest/harper_core/linting/trait.PatternLinter.html) is the easiest way to define a new rule for Harper.
+Defining an expression and [implementing the ExprLinter trait](https://docs.rs/harper-core/latest/harper_core/linting/trait.ExprLinter.html) is the easiest way to define a new rule for Harper.
 Here's a template to get you started:
 
 ```rust title="my_rule.rs"
@@ -139,30 +139,30 @@ use crate::{
     Lrc, Token
 };
 
-use super::{Lint, PatternLinter};
+use super::{Lint, ExprLinter};
 
 pub struct MyRule {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for MyRule {
     fn default() -> Self {
-        // Define the grammatical pattern the rule should look for in user text.
-        let mut pattern = todo!();
+        // Define the grammatical expr the rule should look for in user text.
+        let mut expr = todo!();
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(expr),
         }
     }
 }
 
-impl PatternLinter for ThatWhich {
-    /// Pass the pattern to the PatternLinter framework.
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ThatWhich {
+    /// Pass the expr to the ExprLinter framework.
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
-    /// Any series of tokens that match the pattern provided in the `default()` method above will
+    /// Any series of tokens that match the expr provided in the `default()` method above will
     /// be provided to this function, which you are required to map into a [`Lint`] object.
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         unimplemented!();

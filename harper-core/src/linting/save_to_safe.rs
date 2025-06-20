@@ -1,16 +1,19 @@
+use crate::expr::Expr;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{InflectionOfBe, OwnedPatternExt, Pattern, SequencePattern, Word},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::{InflectionOfBe, Word},
 };
 
 pub struct SaveToSafe {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for SaveToSafe {
     fn default() -> Self {
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(InflectionOfBe::new().or(Word::new("it")))
             .then_whitespace()
             .t_aco("save")
@@ -19,14 +22,14 @@ impl Default for SaveToSafe {
             .then_whitespace()
             .then_verb();
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for SaveToSafe {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for SaveToSafe {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -1,38 +1,37 @@
-use crate::{
-    Token, TokenStringExt,
-    patterns::{All, Invert, Pattern, SequencePattern},
-};
+use crate::expr::All;
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::{Token, TokenStringExt};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct Likewise {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 impl Default for Likewise {
     fn default() -> Self {
-        let mut pattern = All::default();
+        let mut expr = All::default();
 
-        pattern.add(Box::new(
-            SequencePattern::aco("like").then_whitespace().t_aco("wise"),
-        ));
-
-        pattern.add(Box::new(Invert::new(
-            SequencePattern::default()
-                .then_anything()
-                .then_whitespace()
-                .then_anything()
-                .then_whitespace()
-                .then_noun(),
-        )));
+        expr.add(SequenceExpr::aco("like").then_whitespace().t_aco("wise"));
+        expr.add(
+            SequenceExpr::default().if_not_then_step_one(
+                SequenceExpr::default()
+                    .then_anything()
+                    .then_whitespace()
+                    .then_anything()
+                    .then_whitespace()
+                    .then_noun(),
+            ),
+        );
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(expr),
         }
     }
 }
-impl PatternLinter for Likewise {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for Likewise {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = matched_tokens.span()?;

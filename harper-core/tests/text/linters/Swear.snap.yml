@@ -1,0 +1,42 @@
+Lint:    Miscellaneous (63 priority)
+Message: |
+       7 | One turd, two turds.
+         |     ^~~~ Try to avoid offensive language.
+
+
+
+Lint:    Miscellaneous (63 priority)
+Message: |
+       7 | One turd, two turds.
+         |               ^~~~~ Try to avoid offensive language.
+
+
+
+Lint:    Miscellaneous (63 priority)
+Message: |
+       9 | I fart, you're farting, he farts, she farted.
+         |   ^~~~ Try to avoid offensive language.
+
+
+
+Lint:    Miscellaneous (63 priority)
+Message: |
+       9 | I fart, you're farting, he farts, she farted.
+         |                ^~~~~~~ Try to avoid offensive language.
+
+
+
+Lint:    Miscellaneous (63 priority)
+Message: |
+       9 | I fart, you're farting, he farts, she farted.
+         |                            ^~~~~ Try to avoid offensive language.
+
+
+
+Lint:    Miscellaneous (63 priority)
+Message: |
+       9 | I fart, you're farting, he farts, she farted.
+         |                                       ^~~~~~ Try to avoid offensive language.
+
+
+

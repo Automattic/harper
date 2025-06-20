@@ -1,24 +1,26 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::expr::WordExprGroup;
 use hashbrown::HashMap;
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
-use crate::patterns::{Pattern, SequencePattern, WordPatternGroup};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{Token, TokenStringExt};
 
 pub struct DotInitialisms {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
     corrections: HashMap<&'static str, &'static str>,
 }
 
 impl Default for DotInitialisms {
     fn default() -> Self {
-        let mut patterns = WordPatternGroup::default();
+        let mut patterns = WordExprGroup::default();
 
         let mut corrections = HashMap::new();
         corrections.insert("ie", "i.e.");
         corrections.insert("eg", "e.g.");
 
         for target in corrections.keys() {
-            let pattern = SequencePattern::default()
+            let pattern = SequenceExpr::default()
                 .then_exact_word(target)
                 .then_punctuation();
 
@@ -26,15 +28,15 @@ impl Default for DotInitialisms {
         }
 
         Self {
-            pattern: Box::new(patterns),
+            expr: Box::new(patterns),
             corrections,
         }
     }
 }
 
-impl PatternLinter for DotInitialisms {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for DotInitialisms {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

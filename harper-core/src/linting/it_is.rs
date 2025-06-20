@@ -1,11 +1,13 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Pattern, SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::{Pattern, WordSet},
 };
 
 pub struct ItIs {
-    pattern: Box<dyn crate::patterns::Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ItIs {
@@ -36,7 +38,7 @@ impl Default for ItIs {
             "key",
             "assault",
         ]);
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .t_aco("its")
             .then_whitespace()
             .then(move |tok: &Token, src: &[char]| {
@@ -55,14 +57,14 @@ impl Default for ItIs {
             .then_whitespace()
             .then_preposition();
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for ItIs {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ItIs {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {

@@ -40,8 +40,15 @@ export default defineManifest({
 		default_popup: 'popup.html',
 	},
 	options_page: 'options.html',
+	browser_specific_settings: {
+		gecko: {
+			id: 'harper@writewithharper.com',
+			strict_min_version: '135.0',
+		},
+	},
 	background: {
 		service_worker: 'src/background/index.ts',
+		scripts: ['src/background/index.ts'],
 		type: 'module',
 	},
 	content_scripts: [

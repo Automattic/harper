@@ -7,10 +7,8 @@ title: Frequently Asked Questions
 That depends on your use case.
 
 Do you want to use it within Obsidian? We have an [Obsidian plugin](/docs/integrations/obsidian).
-
 Do you want to use it within WordPress? We have a [WordPress plugin](/docs/integrations/wordpress).
-
-Do you want to use it within your Browser? We have a [Chrome extension](/docs/integrations/chrome-extension). (Firefox add-on coming soon.)
+Do you want to use it within your Browser? We have a [Chrome extension](/docs/integrations/chrome-extension) and a [Firefox plugin](/docs/integrations/firefox-extension). 
 
 Do you want to use it within your code editor? We have documentation on how you can integrate with [Visual Studio Code and its forks](/docs/integrations/visual-studio-code), [Neovim](/docs/integrations/neovim), [Helix](/docs/integrations/helix), [Emacs](/docs/integrations/emacs), [Zed](/docs/integrations/zed) and [Sublime Text](/docs/integrations/sublime-text). If you're using a different code editor, then you can integrate directly with our language server, [`harper-ls`](/docs/integrations/language-server).
 

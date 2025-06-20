@@ -68,6 +68,10 @@ export default defineConfig({
 									to: '/docs/integrations/chrome-extension',
 								},
 								{
+									title: 'Firefox Extension',
+									to: '/docs/integrations/firefox-extension',
+								},
+								{
 									title: 'WordPress',
 									to: '/docs/integrations/wordpress',
 								},
@@ -188,6 +192,10 @@ export default defineConfig({
 								{
 									title: 'Local Statistics',
 									to: '/docs/contributors/local-stats',
+								},
+								{
+									title: 'Brill Tagging',
+									to: '/docs/contributors/brill',
 								},
 								{
 									title: 'FAQ',

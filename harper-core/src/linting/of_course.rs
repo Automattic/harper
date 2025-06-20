@@ -1,30 +1,32 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
 };
 
 pub struct OfCourse {
-    pattern: Box<dyn crate::patterns::Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for OfCourse {
     fn default() -> Self {
         let wrong_forms = WordSet::new(&["curse", "corse"]);
-        let pattern = SequencePattern::default()
+        let expr = SequenceExpr::default()
             .t_aco("of")
             .then_whitespace()
             .then(wrong_forms);
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(expr),
         }
     }
 }
 
-impl PatternLinter for OfCourse {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for OfCourse {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched: &[Token], source: &[char]) -> Option<Lint> {

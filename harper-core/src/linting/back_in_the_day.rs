@@ -1,12 +1,16 @@
+use crate::expr::Expr;
+use crate::expr::FixedPhrase;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
 use crate::{
     Lrc, Token, TokenStringExt,
-    patterns::{ExactPhrase, OwnedPatternExt, Pattern, SequencePattern, WordSet},
+    patterns::{Pattern, WordSet},
 };
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct BackInTheDay {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
     // The trailing words that should tell us to ignore the rule.
     exceptions: Lrc<WordSet>,
 }
@@ -14,24 +18,24 @@ pub struct BackInTheDay {
 impl Default for BackInTheDay {
     fn default() -> Self {
         let exceptions = Lrc::new(WordSet::new(&["before", "of", "when"]));
-        let phrase = Lrc::new(ExactPhrase::from_phrase("back in the days"));
+        let phrase = Lrc::new(FixedPhrase::from_phrase("back in the days"));
 
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(phrase.clone())
             .then_whitespace()
             .then(exceptions.clone())
             .or(phrase);
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
             exceptions,
         }
     }
 }
 
-impl PatternLinter for BackInTheDay {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for BackInTheDay {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

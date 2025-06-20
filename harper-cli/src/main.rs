@@ -1,23 +1,26 @@
 #![doc = include_str!("../README.md")]
 
-use std::collections::{BTreeMap, HashMap};
+use hashbrown::HashMap;
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 use std::{fs, process};
 
+use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::parsers::{Markdown, MarkdownOptions, PlainEnglish};
+use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
     remove_overlaps, CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
     MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
 };
 use harper_literate_haskell::LiterateHaskellParser;
+use harper_pos_utils::{BrillChunker, BrillTagger};
 use harper_stats::Stats;
 use serde::Serialize;
 
@@ -75,8 +78,44 @@ enum Args {
         /// The document to mine words from.
         file: PathBuf,
     },
+    TrainBrillTagger {
+        #[arg(short, long, default_value = "1.0")]
+        candidate_selection_chance: f32,
+        /// The path to write the final JSON model file to.
+        output: PathBuf,
+        /// The number of epochs (and patch rules) to train.
+        epochs: usize,
+        /// Path to a `.conllu` dataset to train on.
+        #[arg(num_args = 1..)]
+        datasets: Vec<PathBuf>,
+    },
+    TrainBrillChunker {
+        #[arg(short, long, default_value = "1.0")]
+        candidate_selection_chance: f32,
+        /// The path to write the final JSON model file to.
+        output: PathBuf,
+        /// The number of epochs (and patch rules) to train.
+        epochs: usize,
+        /// Path to a `.conllu` dataset to train on.
+        #[arg(num_args = 1..)]
+        datasets: Vec<PathBuf>,
+    },
     /// Print harper-core version.
     CoreVersion,
+    /// Rename a flag in the dictionary and affixes.
+    RenameFlag {
+        /// The old flag.
+        old: String,
+        /// The new flag.
+        new: String,
+        /// The directory containing the dictionary and affixes.
+        dir: PathBuf,
+    },
+    /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
+    /// As long as there's either an open or hyphenated spelling.
+    Compounds,
+    /// Provided a sentence or phrase, emit a list of each noun phrase contained within.
+    NominalPhrases { input: String },
 }
 
 fn main() -> anyhow::Result<()> {
@@ -366,6 +405,206 @@ fn main() -> anyhow::Result<()> {
             println!("harper-core v{}", harper_core::core_version());
             Ok(())
         }
+        Args::TrainBrillTagger {
+            datasets: dataset,
+            epochs,
+            output,
+            candidate_selection_chance,
+        } => {
+            let tagger = BrillTagger::train(&dataset, epochs, candidate_selection_chance);
+            fs::write(output, serde_json::to_string_pretty(&tagger)?)?;
+
+            Ok(())
+        }
+        Args::TrainBrillChunker {
+            datasets,
+            epochs,
+            output,
+            candidate_selection_chance,
+        } => {
+            let chunker = BrillChunker::train(&datasets, epochs, candidate_selection_chance);
+            fs::write(output, serde_json::to_string_pretty(&chunker)?)?;
+            Ok(())
+        }
+        Args::RenameFlag { old, new, dir } => {
+            use serde_json::Value;
+
+            let dict_path = dir.join("dictionary.dict");
+            let affixes_path = dir.join("affixes.json");
+
+            // Validate old and new flags are exactly one Unicode code point (Rust char)
+            // And not characters used for the dictionary format
+            const BAD_CHARS: [char; 3] = ['/', '#', ' '];
+
+            // Then use it like this:
+            if old.chars().count() != 1 || BAD_CHARS.iter().any(|&c| old.contains(c)) {
+                return Err(anyhow!(
+                    "Flags must be one Unicode code point, not / or # or space. Old flag '{old}' is {}",
+                    old.chars().count()
+                ));
+            }
+            if new.chars().count() != 1 || BAD_CHARS.iter().any(|&c| new.contains(c)) {
+                return Err(anyhow!(
+                    "Flags must be one Unicode code point, not / or # or space. New flag '{new}' is {}",
+                    new.chars().count()
+                ));
+            }
+
+            // Load and parse affixes
+            let affixes_string = fs::read_to_string(&affixes_path)
+                .map_err(|e| anyhow!("Failed to read affixes.json: {e}"))?;
+
+            let mut affixes_json: Value = serde_json::from_str(&affixes_string)
+                .map_err(|e| anyhow!("Failed to parse affixes.json: {e}"))?;
+
+            // Get the nested "affixes" object
+            let affixes_obj = affixes_json
+                .get_mut("affixes")
+                .and_then(Value::as_object_mut)
+                .ok_or_else(|| anyhow!("affixes.json does not contain 'affixes' object"))?;
+
+            // Validate old flag exists and get its description
+            let old_entry = affixes_obj
+                .get(&old)
+                .ok_or_else(|| anyhow!("Flag '{old}' not found in affixes.json"))?;
+
+            let description = old_entry
+                .get("#")
+                .and_then(Value::as_str)
+                .unwrap_or("(no description)");
+
+            println!("Renaming flag '{old}' ({description})");
+
+            // Validate new flag doesn't exist
+            if let Some(new_entry) = affixes_obj.get(&new) {
+                let new_desc = new_entry
+                    .get("#")
+                    .and_then(Value::as_str)
+                    .unwrap_or("(no description)");
+                return Err(anyhow!(
+                    "Cannot rename to '{new}': flag already exists and is used for: {new_desc}"
+                ));
+            }
+
+            // Create backups
+            let backup_dict = format!("{}.bak", dict_path.display());
+            let backup_affixes = format!("{}.bak", affixes_path.display());
+            fs::copy(&dict_path, &backup_dict)
+                .map_err(|e| anyhow!("Failed to create dictionary backup: {e}"))?;
+            fs::copy(&affixes_path, &backup_affixes)
+                .map_err(|e| anyhow!("Failed to create affixes backup: {e}"))?;
+
+            // Update dictionary with proper comment and whitespace handling
+            let dict_content = fs::read_to_string(&dict_path)
+                .map_err(|e| anyhow!("Failed to read dictionary: {e}"))?;
+
+            let updated_dict = dict_content
+                .lines()
+                .map(|line| {
+                    if line.is_empty() || line.starts_with('#') {
+                        return line.to_string();
+                    }
+
+                    let hash_pos = line.find('#').unwrap_or(line.len());
+                    let (entry_part, comment_part) = line.split_at(hash_pos);
+
+                    let slash_pos = entry_part.find('/').unwrap_or(entry_part.len());
+                    let (lexeme, annotation) = entry_part.split_at(slash_pos);
+
+                    format!(
+                        "{}{}{}",
+                        lexeme,
+                        annotation.replace(&old, &new),
+                        comment_part
+                    )
+                })
+                .collect::<Vec<_>>()
+                .join("\n");
+
+            // Update affixes (text-based replacement with context awareness)
+            let updated_affixes_string =
+                affixes_string.replace(&format!("\"{}\":", &old), &format!("\"{}\":", &new));
+
+            // Verify that the updated affixes string is valid JSON
+            serde_json::from_str::<Value>(&updated_affixes_string)
+                .map_err(|e| anyhow!("Failed to parse updated affixes.json: {e}"))?;
+
+            // Write changes
+            fs::write(&dict_path, updated_dict)
+                .map_err(|e| anyhow!("Failed to write updated dictionary: {e}"))?;
+            fs::write(&affixes_path, updated_affixes_string)
+                .map_err(|e| anyhow!("Failed to write updated affixes: {e}"))?;
+
+            println!("Successfully renamed flag '{old}' to '{new}'");
+            println!("  Description: {description}");
+            println!("  Backups created at:\n    {backup_dict}\n    {backup_affixes}");
+
+            Ok(())
+        }
+        Args::Compounds => {
+            let mut compound_map: HashMap<String, Vec<String>> = HashMap::new();
+
+            // First pass: process open and hyphenated compounds
+            for word in dictionary.words_iter() {
+                if !word.contains(&' ') && !word.contains(&'-') {
+                    continue;
+                }
+
+                let normalized_key: String = word
+                    .iter()
+                    .filter(|&&c| c != ' ' && c != '-')
+                    .collect::<String>()
+                    .to_lowercase();
+
+                let word_str = word.iter().collect::<String>();
+                compound_map
+                    .entry(normalized_key)
+                    .or_default()
+                    .push(word_str);
+            }
+
+            // Second pass: process closed compounds
+            for word in dictionary.words_iter() {
+                if word.contains(&' ') || word.contains(&'-') {
+                    continue;
+                }
+
+                let normalized_key: String = word.iter().collect::<String>().to_lowercase();
+                if let Some(variants) = compound_map.get_mut(&normalized_key) {
+                    variants.push(word.iter().collect());
+                }
+            }
+
+            // Process and print results
+            let mut results: Vec<_> = compound_map
+                .into_iter()
+                .filter(|(_, v)| v.len() > 1)
+                .collect();
+            results.sort_by_key(|(k, _)| k.clone());
+
+            // Instead of moving `results` into the for loop, iterate over a reference to it
+            for (normalized, originals) in &results {
+                println!("\nVariants for '{}':", normalized);
+                for original in originals {
+                    println!("  - {}", original);
+                }
+            }
+
+            println!("\nFound {} compound word groups", results.len());
+            Ok(())
+        }
+        Args::NominalPhrases { input } => {
+            let doc = Document::new_markdown_default_curated(&input);
+
+            for phrase in doc.iter_nominal_phrases() {
+                let s =
+                    doc.get_span_content_str(&phrase.span().ok_or(anyhow!("Unable to get span"))?);
+
+                println!("{s}");
+            }
+
+            Ok(())
+        }
     }
 }
 
@@ -381,9 +620,11 @@ fn load_file(
         .map(|v| v.to_str().unwrap())
     {
         Some("md") => Box::new(Markdown::default()),
+
         Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
             MarkdownOptions::default(),
         )),
+        Some("org") => Box::new(OrgMode),
         Some("typ") => Box::new(harper_typst::Typst),
         _ => {
             if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {

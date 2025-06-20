@@ -43,9 +43,7 @@ In `affixes.json`, this expansion rule looks like this:
 Those familiar with `hunspell` might notice some similarities with their dictionary format.
 The main differences are the [metadata fields.](https://docs.rs/harper-core/latest/harper_core/struct.WordMetadata.html)
 
-Most words in `dictionary.dict` have simple rules applied to them that result in no expansion, but apply metadata through the `gifts_metadata`.
-Those particular rules are done automatically.
-When adding words to the dictionary, just worry about expansions, not metadata.
+There is a separate section, `properties` that is specifically for special rules that add only metadata to the words they're applied to.
 
 ## Adding Nouns
 

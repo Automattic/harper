@@ -1,15 +1,13 @@
-use crate::{
-    CharStringExt, Lrc, TokenStringExt,
-    linting::PatternLinter,
-    patterns::{All, SplitCompoundWord},
-};
+use crate::expr::All;
+use crate::expr::Expr;
+use crate::expr::MergeableWords;
+use crate::expr::SequenceExpr;
+use crate::patterns::AnyPattern;
+use crate::{CharStringExt, Lrc, TokenStringExt, linting::ExprLinter};
 
-use super::{Lint, LintKind, Suggestion, create_split_pattern, is_content_word};
+use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 
-use crate::{
-    Token,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::Token;
 
 /// Looks for closed compound nouns which can be condensed due to their position after a
 /// possessive noun (which implies ownership).
@@ -19,41 +17,43 @@ use crate::{
 /// harper-core/src/linting/lets_confusion/no_contraction_with_verb.rs
 /// harper-core/src/linting/pronoun_contraction/should_contract.rs
 pub struct CompoundNounAfterPossessive {
-    pattern: Box<dyn Pattern>,
-    split_pattern: Lrc<SplitCompoundWord>,
+    expr: Box<dyn Expr>,
+    split_pattern: Lrc<MergeableWords>,
 }
 
 impl Default for CompoundNounAfterPossessive {
     fn default() -> Self {
-        let context_pattern = SequencePattern::default()
+        let context_pattern = SequenceExpr::default()
             .then_possessive_nominal()
             .t_ws()
             .then(is_content_word)
             .t_ws()
             .then(is_content_word);
 
-        let split_pattern = create_split_pattern();
+        let split_pattern = Lrc::new(MergeableWords::new(|meta_closed, meta_open| {
+            predicate(meta_closed, meta_open)
+        }));
 
         let mut pattern = All::default();
 
-        pattern.add(Box::new(context_pattern));
-        pattern.add(Box::new(
-            SequencePattern::default()
-                .then_anything()
-                .then_anything()
+        pattern.add(context_pattern);
+        pattern.add(
+            SequenceExpr::default()
+                .then(AnyPattern)
+                .then(AnyPattern)
                 .then(split_pattern.clone()),
-        ));
+        );
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
             split_pattern,
         }
     }
 }
 
-impl PatternLinter for CompoundNounAfterPossessive {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for CompoundNounAfterPossessive {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
