@@ -55,7 +55,7 @@
   #titleblock(
     title: "A fluid dynamic model for glaier flow",
     authors: ("Grant Lemons", "John Doe", "Jane Doe"),
-    abstract: lorem(80),
+    abstract: lorrm(80),
     doc,
   )
 ]
@@ -63,5 +63,5 @@
 = Introduction
 #lorem(300)
 
-= Related ork
+= Related wrk
 #lorem(200)
