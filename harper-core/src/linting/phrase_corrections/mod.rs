@@ -1293,12 +1293,6 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `will contain`?",
             "Incorrect verb form: `will` should be followed by the base form `contain`."
         ),
-        "WorldWarII" => (
-            ["world war 2", "world war ii", "world war ii", "world war ii", "world war ii"],
-            ["World War II"],
-            "Use the correct capitalization for `World War II`.",
-            "Ensures `World War II` is correctly capitalized."
-        ),
         "WorseAndWorse" => (
             ["worst and worst", "worse and worst", "worst and worse"],
             ["worse and worse"],

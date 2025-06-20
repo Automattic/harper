@@ -68,6 +68,10 @@ export default defineConfig({
 									to: '/docs/integrations/chrome-extension',
 								},
 								{
+									title: 'Firefox Extension',
+									to: '/docs/integrations/firefox-extension',
+								},
+								{
 									title: 'WordPress',
 									to: '/docs/integrations/wordpress',
 								},
