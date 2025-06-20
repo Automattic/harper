@@ -3970,16 +3970,6 @@ Message: |
 
 
 
-Lint:    Style (31 priority)
-Message: |
-    2756 | it had seemed like the murmur of their voices, rising and swelling a little now
-         |                                                ^~~~~~ An Oxford comma is necessary here.
-    2757 | and then with gusts of emotion. But in the new silence I felt that silence had
-Suggest:
-  - Insert “,”
-
-
-
 Lint:    WordChoice (63 priority)
 Message: |
     2775 | twinkle-bells of sunshine in the room, he smiled like a weather man, like an

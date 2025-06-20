@@ -635,7 +635,7 @@
 		"D": {
 			"#": "determiner property",
 			"metadata": {
-				"determiner": true
+				"determiner": {}
 			}
 		},
 		"R": {
@@ -761,6 +761,22 @@
 			"metadata": {
 				"pronoun": {
 					"is_reflexive": true
+				}
+			}
+		},
+		"M": {
+			"#": "demonstrative determiner property",
+			"metadata": {
+				"determiner": {
+					"is_demonstrative": true
+				}
+			}
+		},
+		"5": {
+			"#": "possessive determiner property",
+			"metadata": {
+				"determiner": {
+					"is_possessive": true
 				}
 			}
 		}

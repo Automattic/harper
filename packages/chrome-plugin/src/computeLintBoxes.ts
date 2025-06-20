@@ -1,3 +1,4 @@
+import type { Span } from 'harper.js';
 import { type IgnorableLintBox, type LintBox, domRectToBox, isBottomEdgeInBox } from './Box';
 import ProtocolClient from './ProtocolClient';
 import TextFieldRange from './TextFieldRange';
@@ -16,14 +17,14 @@ function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement
 }
 
 export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): IgnorableLintBox[] {
-	let range: Range | TextFieldRange;
+	let range: Range | TextFieldRange | null = null;
 	let text: string | null = null;
 
 	if (isFormEl(el)) {
 		range = new TextFieldRange(el, lint.span.start, lint.span.end);
 		text = el.value;
 	} else {
-		range = getRangeForTextSpan(el, lint.span);
+		range = getRangeForTextSpan(el, lint.span as Span);
 	}
 
 	const targetRects = range.getClientRects();
@@ -71,7 +72,9 @@ function replaceValue(el: HTMLElement, value: string) {
 	const lexicalRoot = getLexicalRoot(el);
 
 	if (isFormEl(el)) {
+		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
 		el.value = value;
+		el.dispatchEvent(new InputEvent('input', { bubbles: true }));
 	} else if (slateRoot != null || lexicalRoot != null) {
 		replaceValueSpecial(el, value);
 	} else {
