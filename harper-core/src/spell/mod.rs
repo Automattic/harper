@@ -374,7 +374,11 @@ mod tests {
     use itertools::Itertools;
 
     use crate::{
-        linting::{tests::{assert_suggestion_result, assert_top3_suggestion_result}, SpellCheck}, CharStringExt, Dialect
+        CharStringExt, Dialect,
+        linting::{
+            SpellCheck,
+            tests::{assert_suggestion_result, assert_top3_suggestion_result},
+        },
     };
 
     use super::{FstDictionary, suggest_correct_spelling_str};
