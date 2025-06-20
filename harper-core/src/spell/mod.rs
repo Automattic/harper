@@ -225,6 +225,54 @@ pub(crate) fn is_ay_ey_misspelling(a: &[char], b: &[char]) -> bool {
     found_ay_ey
 }
 
+/// Returns whether the two words are the same, except that one is written
+/// with 'ei' and the other with 'ie'.
+///
+/// E.g. "recieved" instead of "received", "cheif" instead of "chief"
+pub(crate) fn is_ei_ie_misspelling(a: &[char], b: &[char]) -> bool {
+    if a.len() != b.len() {
+        return false;
+    }
+    let mut found_ei_ie = false;
+    let mut a_iter = a.iter();
+    let mut b_iter = b.iter();
+
+    while let (Some(&a_char), Some(&b_char)) = (a_iter.next(), b_iter.next()) {
+        if a_char.eq_ignore_ascii_case(&b_char) {
+            continue;
+        }
+
+        // Check for 'e' vs 'i' in first position
+        if a_char.eq_ignore_ascii_case(&'e') && b_char.eq_ignore_ascii_case(&'i') {
+            if let (Some(&a_next), Some(&b_next)) = (a_iter.next(), b_iter.next()) {
+                // Next chars must be 'i' and 'e' respectively
+                if a_next.eq_ignore_ascii_case(&'i') && b_next.eq_ignore_ascii_case(&'e') {
+                    if found_ei_ie {
+                        return false; // More than one ei/ie difference
+                    }
+                    found_ei_ie = true;
+                    continue;
+                }
+            }
+        }
+        // Check for 'i' vs 'e' in first position
+        else if a_char.eq_ignore_ascii_case(&'i') && b_char.eq_ignore_ascii_case(&'e') {
+            if let (Some(&a_next), Some(&b_next)) = (a_iter.next(), b_iter.next()) {
+                // Next chars must be 'e' and 'i' respectively
+                if a_next.eq_ignore_ascii_case(&'e') && b_next.eq_ignore_ascii_case(&'i') {
+                    if found_ei_ie {
+                        return false; // More than one ei/ie difference
+                    }
+                    found_ei_ie = true;
+                    continue;
+                }
+            }
+        }
+        return false;
+    }
+    found_ei_ie
+}
+
 /// Scores a possible spelling suggestion based on possible relevance to the user.
 ///
 /// Lower = better.
@@ -260,16 +308,22 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
     }
 
     // Detect dialect-specific variations
-    if sug.edit_distance == 1
-        && (is_cksz_misspelling(misspelled_word, sug.word)
+    if sug.edit_distance == 1 {
+        if is_cksz_misspelling(misspelled_word, sug.word)
             || is_ou_misspelling(misspelled_word, sug.word)
             || is_ll_misspelling(misspelled_word, sug.word)
-            || is_ay_ey_misspelling(misspelled_word, sug.word))
-    {
-        score -= 6;
+            || is_ay_ey_misspelling(misspelled_word, sug.word)
+        {
+            score -= 6;
+        }
     }
-    if sug.edit_distance == 2 && is_er_misspelling(misspelled_word, sug.word) {
-        score -= 15;
+    if sug.edit_distance == 2 {
+        if is_ei_ie_misspelling(misspelled_word, sug.word) {
+            score -= 11;
+        }
+        if is_er_misspelling(misspelled_word, sug.word) {
+            score -= 15;
+        }
     }
 
     score
@@ -494,6 +548,26 @@ mod tests {
             "It's a greyscale photo.",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "It's a grayscale photo.",
+        );
+    }
+
+    #[test]
+    // recieved to received
+    fn suggest_received_for_recieved() {
+        assert_suggestion_result(
+            "I recieved a letter.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "I received a letter.",
+        );
+    }
+
+    #[test]
+    // cheif to chief
+    fn suggest_chief_for_cheif() {
+        assert_suggestion_result(
+            "I met the cheif.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "I met the chief.",
         );
     }
 }
