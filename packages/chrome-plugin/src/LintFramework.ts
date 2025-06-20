@@ -17,6 +17,7 @@ export default class LintFramework {
 	private popupHandler: PopupHandler;
 	private targets: Set<Node>;
 	private scrollableAncestors: Set<HTMLElement>;
+	private frameRequested = false;
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
@@ -44,7 +45,6 @@ export default class LintFramework {
 
 	/** Returns the currents targets that are visible on-screen. */
 	onScreenTargets(): Node[] {
-		console.time('screen');
 		const onScreen = [];
 
 		for (const target of this.targets) {
@@ -53,40 +53,47 @@ export default class LintFramework {
 			}
 		}
 
-		console.timeEnd('screen');
-
 		return onScreen;
 	}
 
 	async update() {
-		const boxes = [];
-
-		console.time('linting');
-		for (const target of this.onScreenTargets()) {
-			let text: string | null = null;
-
-			if (!document.contains(target)) {
-				this.targets.delete(target);
-				continue;
-			}
-
-			if (target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement) {
-				text = target.value;
-			} else {
-				text = target.textContent;
-			}
-
-			if (text == null || text.length > 120000) {
-				continue;
-			}
-
-			const lints = await ProtocolClient.lint(text, window.location.hostname);
-			boxes.push(...lints.flatMap((l) => computeLintBoxes(target, l)));
+		// To avoid multiple redundant calls to try running at the same time.
+		if (this.frameRequested) {
+			return;
 		}
-		console.timeEnd('linting');
 
-		this.highlights.renderLintBoxes(boxes);
-		this.popupHandler.updateLintBoxes(boxes);
+		this.frameRequested = true;
+
+		const lintResults = await Promise.all(
+			this.onScreenTargets().map(async (target) => {
+				if (!document.contains(target)) {
+					this.targets.delete(target);
+					return { target: null as HTMLElement | null, lints: [] };
+				}
+
+				const text =
+					target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
+						? target.value
+						: target.textContent;
+
+				if (!text || text.length > 120000) {
+					return { target: null as HTMLElement | null, lints: [] };
+				}
+
+				const lints = await ProtocolClient.lint(text, window.location.hostname);
+				return { target: target as HTMLElement, lints };
+			}),
+		);
+
+		requestAnimationFrame(() => {
+			const boxes = lintResults.flatMap(({ target, lints }) =>
+				target ? lints.flatMap((l) => computeLintBoxes(target, l)) : [],
+			);
+			this.highlights.renderLintBoxes(boxes);
+			this.popupHandler.updateLintBoxes(boxes);
+
+			this.frameRequested = false;
+		});
 	}
 
 	public async addTarget(target: Node) {
