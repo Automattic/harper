@@ -96,7 +96,7 @@ fn should_capitalize_token(tok: &Token, source: &[char], dict: &impl Dictionary)
             let is_short_preposition = metadata.preposition && tok.span.len() <= 4;
 
             !is_short_preposition
-                && !metadata.determiner
+                && !metadata.is_determiner()
                 && !SPECIAL_CONJUNCTIONS.contains(chars_lower.as_ref())
         }
         _ => true,
