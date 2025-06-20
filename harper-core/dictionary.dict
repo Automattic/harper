@@ -12150,7 +12150,7 @@ alumnus/~Ng
 alveolar/~JNS
 alveoli/9
 alveolus/Ng
-always/~
+always/~R
 am/~Vn
 amalgam/~NVSg
 amalgamate/~VJNXGndS
@@ -35096,7 +35096,7 @@ neutralize/~Vd>SZG
 neutralizer/Ng
 neutrino/NSg
 neutron/~NSg
-never/~V
+never/~R           # removed `V` verb sense is dialectal
 nevermore/~
 nevertheless/~
 nevi/N
@@ -36101,7 +36101,7 @@ offspring/~Ng
 offstage/~JVS
 offtrack/J
 oft/~
-often/~JT>
+often/~RT>          # removed `J` adjective sense is archaic
 oftentimes/~
 ofttimes/
 ogle/~VNgZGd>S
@@ -43320,7 +43320,7 @@ seismologist/NgS
 seismology/Ng
 seize/~VGdSU
 seizure/~NVgS
-seldom/~J
+seldom/~R           # removed `J` adjective sense is archaic
 select/~JVeSGvd
 selection/~NSg
 selective/~JY
