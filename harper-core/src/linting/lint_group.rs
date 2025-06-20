@@ -9,10 +9,11 @@ use cached::proc_macro::cached;
 use foldhash::quality::RandomState;
 use hashbrown::HashMap;
 use lru::LruCache;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::a_part::APart;
 use super::adjective_of_a::AdjectiveOfA;
+use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
 use super::ask_no_preposition::AskNoPreposition;
@@ -80,6 +81,7 @@ use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::throw_rubbish::ThrowRubbish;
+use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
 use super::was_aloud::WasAloud;
@@ -95,13 +97,30 @@ use crate::linting::{closed_compounds, initialisms, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
 
+fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
+where
+    S: Serializer,
+{
+    let ordered: BTreeMap<_, _> = map.iter().map(|(k, v)| (k.clone(), *v)).collect();
+    ordered.serialize(ser)
+}
+
+fn de_hashbrown<'de, D>(de: D) -> Result<HashMap<String, Option<bool>>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let ordered: BTreeMap<String, Option<bool>> = BTreeMap::deserialize(de)?;
+    Ok(ordered.into_iter().collect())
+}
+
 /// The configuration for a [`LintGroup`].
 /// Each child linter can be enabled, disabled, or set to a curated value.
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
 #[serde(transparent)]
 pub struct LintGroupConfig {
-    /// A `BTreeMap` so that the config has a stable ordering when written to disk.
-    inner: BTreeMap<String, Option<bool>>,
+    /// We do this shenanigans with the [`BTreeMap`] to keep the serialized format consistent.
+    #[serde(serialize_with = "ser_ordered", deserialize_with = "de_hashbrown")]
+    inner: HashMap<String, Option<bool>>,
 }
 
 #[cached]
@@ -342,6 +361,7 @@ impl LintGroup {
         // Add all the more complex rules to the group.
         insert_pattern_rule!(APart, true);
         insert_struct_rule!(AdjectiveOfA, true);
+        insert_struct_rule!(AmInTheMorning, true);
         insert_pattern_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
         insert_pattern_rule!(AskNoPreposition, true);
@@ -409,6 +429,7 @@ impl LintGroup {
         insert_struct_rule!(TheMy, true);
         insert_pattern_rule!(ThenThan, true);
         insert_struct_rule!(ThrowRubbish, true);
+        insert_pattern_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_pattern_rule!(UseGenitive, false);
         insert_pattern_rule!(WasAloud, true);

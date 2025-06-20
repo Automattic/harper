@@ -405,7 +405,7 @@
 > Proponents of classifying computer science as    a   mathematical discipline argue
 # NPl        P  V           NSg/V+   NSg/V   NSg/R D/P J            NSg/V+     V
 > that       computer programs are physical realizations of mathematical entities and
-# N/I/C/Ddem NSg/V+   NPl/V+   V   NSg/J    NPl          P  J            NPl      V/C
+# N/I/C/Ddem NSg/V+   NPl/V+   V   NSg/J    NPl/Am/Ca    P  J            NPl      V/C
 > programs that        can      be     deductively reasoned through mathematical formal methods .
 # NPl/V+   N/I/C/Ddem+ NPrSg/VX NSg/VX R           V/J      NSg/J/P J+           NSg/J+ NPl/V+  .
 > Computer scientists Edsger W. Dijkstra and Tony    Hoare regard instructions for
@@ -675,7 +675,7 @@
 > designs as    complete aircraft . Notable in        electrical and electronic circuit
 # NPl/V   NSg/R NSg/V/J+ NSg+     . NSg/J   NPrSg/J/P NSg/J      V/C J          NSg/V+
 > design are SPICE , as    well    as    software for physical realization of new     ( or
-# NSg/V+ V   NSg/V . NSg/R NSg/V/J NSg/R NSg      C/P NSg/J    NSg         P  NSg/V/J . NPrSg/C
+# NSg/V+ V   NSg/V . NSg/R NSg/V/J NSg/R NSg      C/P NSg/J    NSg/Am/Ca   P  NSg/V/J . NPrSg/C
 > modified ) designs . The latter includes essential design software for integrated
 # NSg/V/J  . NPl/V+  . D   N/J    NPl/V    NSg/J     NSg/V+ NSg      C/P V/J+
 > circuits .
@@ -693,7 +693,7 @@
 > interaction between humans and computer interfaces . HCI has several subfields
 # NSg         NSg/P   NPl/V  V/C NSg/V+   NPl/V+     . ?   V   J/D     NPl
 > that        focus on  the relationship between emotions , social behavior and brain
-# N/I/C/Ddem+ NSg/V J/P D+  NSg+         NSg/P   +        . NSg/J  NSg      V/C NPrSg/V+
+# N/I/C/Ddem+ NSg/V J/P D+  NSg+         NSg/P   +        . NSg/J  NSg/Am   V/C NPrSg/V+
 > activity with computers .
 # NSg      P    NPl/V+    .
 >

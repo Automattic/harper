@@ -6,8 +6,8 @@
 #
 > We   the People of the United States   , in        Order  to form  a   more        perfect  Union     ,
 # IPl+ D   NSg/V  P  D+  V/J+   NPrSg/V+ . NPrSg/J/P NSg/V+ P  NSg/V D/P NPrSg/I/V/J NSg/V/J+ NPrSg/V/J .
-> establish Justice , insure domestic Tranquility , provide for the common   defence ,
-# V         NPrSg+  . V      NSg/J+   NSg         . V       C/P D+  NSg/V/J+ ?       .
+> establish Justice , insure domestic Tranquility , provide for the common   defence       ,
+# V         NPrSg+  . V      NSg/J+   NSg         . V       C/P D+  NSg/V/J+ NSg/Ca/Au/Br+ .
 > promote the general  Welfare , and secure the Blessings of Liberty to ourselves
 # NSg/V   D+  NSg/V/J+ NSg/V+  . V/C V/J    D   W?        P  NSg+    P  I+
 > and our Posterity , do     ordain and establish this    Constitution for the United
@@ -390,8 +390,8 @@
 #
 > The Congress shall have   Power    To lay     and collect Taxes , Duties ,
 # D+  NPrSg/V+ VX    NSg/VX NSg/V/J+ P  NSg/V/J V/C NSg/V/J NPl/V . NPl    .
-> Imposts and Excises , to pay     the Debts and provide for the common   Defence and
-# NPl     V/C NPl/V   . P  NSg/V/J D+  NPl+  V/C V       C/P D+  NSg/V/J+ ?       V/C
+> Imposts and Excises , to pay     the Debts and provide for the common   Defence       and
+# NPl     V/C NPl/V   . P  NSg/V/J D+  NPl+  V/C V       C/P D+  NSg/V/J+ NSg/Ca/Au/Br+ V/C
 > general Welfare of the United States   ; but     all        Duties , Imposts and Excises shall
 # NSg/V/J NSg/V   P  D+  V/J+   NPrSg/V+ . NSg/C/P NSg/I/J/C+ NPl    . NPl     V/C NPl/V   VX
 > be     uniform throughout the United States  ;
@@ -1220,10 +1220,10 @@
 # V/J         NSg/J/P NSg/V+ . V/C P  NSg/VX V/J      P  D   NSg/V  V/C NSg/V/C P  D
 > accusation ; to be     confronted with the witnesses against him ; to have   compulsory
 # NSg        . P  NSg/VX V/J        P    D+  NPl/V+    C/P     I+  . P  NSg/VX NSg/J
-> process for obtaining witnesses in        his     favor  , and to have   the assistance of
-# NSg/V   C/P V         NPl/V+    NPrSg/J/P ISg/D$+ NSg/V+ . V/C P  NSg/VX D   NSg        P
-> counsel for his     defense .
-# NSg/V   C/P ISg/D$+ NSg/V+  .
+> process for obtaining witnesses in        his     favor     , and to have   the assistance of
+# NSg/V   C/P V         NPl/V+    NPrSg/J/P ISg/D$+ NSg/V/Am+ . V/C P  NSg/VX D   NSg        P
+> counsel for his     defense   .
+# NSg/V   C/P ISg/D$+ NSg/V/Am+ .
 >
 #
 > In        suits at    common   law    , where the value  in        controversy shall exceed twenty
