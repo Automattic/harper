@@ -34,7 +34,9 @@ impl ReflexivePronoun {
     /// Matches only the correct forms: "myself", "yourself", "himself", "herself", "itself",
     /// "ourselves", "yourselves", and "themselves".
     pub fn standard() -> Self {
-        Self { include_common_errors: false }
+        Self {
+            include_common_errors: false,
+        }
     }
 
     /// Creates a matcher that includes non-standard but commonly used reflexive pronouns.
@@ -42,7 +44,9 @@ impl ReflexivePronoun {
     /// In addition to standard forms, matches common errors like "hisself", "theirself",
     /// and other non-standard forms that are frequently seen in user-generated content.
     pub fn with_common_errors() -> Self {
-        Self { include_common_errors: true }
+        Self {
+            include_common_errors: true,
+        }
     }
 }
 
@@ -59,7 +63,10 @@ impl Expr for ReflexivePronoun {
 
 #[cfg(test)]
 mod tests {
-    use crate::{expr::{reflexive_pronoun::BAD_REFLEXIVE_PRONOUNS, ExprExt, ReflexivePronoun}, Document, TokenKind};
+    use crate::{
+        Document, TokenKind,
+        expr::{ExprExt, ReflexivePronoun, reflexive_pronoun::BAD_REFLEXIVE_PRONOUNS},
+    };
 
     // These are considered grammatically correct, or are at least in `dictionary.dict`.
     // The tests below check if this changes so we can update this `Expr`
@@ -130,7 +137,8 @@ mod tests {
 
     #[test]
     fn ensure_standard_ctor_includes_myself() {
-        let doc = Document::new_plain_english_curated("If you want something done, do it yourself.");
+        let doc =
+            Document::new_plain_english_curated("If you want something done, do it yourself.");
         let rp = ReflexivePronoun::standard();
         let matches = rp.iter_matches_in_doc(&doc);
         assert_eq!(matches.count(), 1);
@@ -138,7 +146,9 @@ mod tests {
 
     #[test]
     fn ensure_default_ctor_includes_myself() {
-        let doc = Document::new_plain_english_curated("I wanted a reflexive pronoun module, so I wrote one myself.");
+        let doc = Document::new_plain_english_curated(
+            "I wanted a reflexive pronoun module, so I wrote one myself.",
+        );
         let rp = ReflexivePronoun::default();
         let matches = rp.iter_matches_in_doc(&doc);
         assert_eq!(matches.count(), 1);
