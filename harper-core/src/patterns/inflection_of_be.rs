@@ -12,14 +12,14 @@ pub struct InflectionOfBe {
 
 // These are the standard inflections of the verb "be":
 const FORMS: &[&str] = &[
-    "be",     // infinitive, dictionary form, citation form, lemma
-    "am",     // 1st person singular present
-    "is",     // 3rd person singular present
-    "are",    // 2nd person singular and all plural present
-    "was",    // 1st and 3rd person singular past
-    "were",   // 2nd person singular and all plural past
-    "been",   // past participle
-    "being",  // present participle, gerund, progressive
+    "be",    // infinitive, dictionary form, citation form, lemma
+    "am",    // 1st person singular present
+    "is",    // 3rd person singular present
+    "are",   // 2nd person singular and all plural present
+    "was",   // 1st and 3rd person singular past
+    "were",  // 2nd person singular and all plural past
+    "been",  // past participle
+    "being", // present participle, gerund, progressive
 ];
 
 impl Default for InflectionOfBe {
@@ -53,11 +53,12 @@ mod tests {
 
     #[test]
     fn ensure_common_forms_are_present() {
-        let doc = Document::new_markdown_default_curated("I am, you are, he is, we were, they have been");
+        let doc =
+            Document::new_markdown_default_curated("I am, you are, he is, we were, they have been");
         let matches = InflectionOfBe::standard().find_all_matches_in_doc(&doc);
         let mut matched = matches.to_strings(&doc);
         matched.sort();
-        
+
         assert_eq!(matched, vec!["am", "are", "been", "is", "were"]);
     }
 
@@ -67,7 +68,7 @@ mod tests {
         let matches = InflectionOfBe::standard().find_all_matches_in_doc(&doc);
         let mut matched = matches.to_strings(&doc);
         matched.sort();
-        
+
         assert_eq!(matched, vec!["be", "being", "was"]);
     }
 }

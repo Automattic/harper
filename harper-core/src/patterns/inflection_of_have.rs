@@ -3,7 +3,7 @@ use crate::Token;
 use crate::patterns::WordSet;
 
 /// Matches inflections of the verb "have".
-/// 
+///
 /// Currently only matches standard English inflections: "have", "has", "had", "having".
 pub struct InflectionOfHave {
     /// If using a `WordSet` proves expensive, we'll switch to something else.
@@ -57,10 +57,12 @@ mod tests {
 
     #[test]
     fn ensure_have_forms_are_present() {
-        let doc = Document::new_markdown_default_curated("I have, you have, he has, we had, they are having");
+        let doc = Document::new_markdown_default_curated(
+            "I have, you have, he has, we had, they are having",
+        );
         let matches = InflectionOfHave::standard().find_all_matches_in_doc(&doc);
         let matched = matches.to_strings(&doc);
-        
+
         assert_eq!(matched, vec!["have", "have", "has", "had", "having"]);
     }
 }
