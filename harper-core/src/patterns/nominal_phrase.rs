@@ -36,24 +36,10 @@ impl Pattern for NominalPhrase {
 mod tests {
     use super::super::DocPattern;
     use super::NominalPhrase;
-    use crate::{Document, Span, patterns::Pattern};
-
-    trait SpanVecExt {
-        fn to_strings(&self, doc: &Document) -> Vec<String>;
-    }
-
-    impl SpanVecExt for Vec<Span> {
-        fn to_strings(&self, doc: &Document) -> Vec<String> {
-            self.iter()
-                .map(|sp| {
-                    doc.get_tokens()[sp.start..sp.end]
-                        .iter()
-                        .map(|tok| doc.get_span_content_str(&tok.span))
-                        .collect::<String>()
-                })
-                .collect()
-        }
-    }
+    use crate::{
+        Document,
+        patterns::{Pattern, SpanVecExt},
+    };
 
     #[test]
     fn simple_apple() {

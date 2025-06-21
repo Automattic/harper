@@ -14,7 +14,7 @@ pub struct SaveToSafe {
 impl Default for SaveToSafe {
     fn default() -> Self {
         let pattern = SequenceExpr::default()
-            .then(InflectionOfBe::new().or(Word::new("it")))
+            .then(InflectionOfBe::standard().or(Word::new("it")))
             .then_whitespace()
             .t_aco("save")
             .then_whitespace()

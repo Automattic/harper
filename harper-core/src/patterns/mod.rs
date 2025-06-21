@@ -11,6 +11,9 @@ mod any_pattern;
 mod implies_quantity;
 mod indefinite_article;
 mod inflection_of_be;
+mod inflection_of_have;
+mod inflection_of_need;
+mod inflection_of_want;
 mod invert;
 mod nominal_phrase;
 mod upos_set;
@@ -23,6 +26,9 @@ pub use any_pattern::AnyPattern;
 pub use implies_quantity::ImpliesQuantity;
 pub use indefinite_article::IndefiniteArticle;
 pub use inflection_of_be::InflectionOfBe;
+pub use inflection_of_have::InflectionOfHave;
+pub use inflection_of_need::InflectionOfNeed;
+pub use inflection_of_want::InflectionOfWant;
 pub use invert::Invert;
 pub use nominal_phrase::NominalPhrase;
 pub use upos_set::UPOSSet;
@@ -118,6 +124,25 @@ impl<S: SingleTokenPattern> Pattern for S {
 impl<F: LSend + Fn(&Token, &[char]) -> bool> SingleTokenPattern for F {
     fn matches_token(&self, token: &Token, source: &[char]) -> bool {
         self(token, source)
+    }
+}
+
+/// Extension trait for working with vectors of Spans
+pub trait SpanVecExt {
+    /// Convert spans to their string representations from a document
+    fn to_strings(&self, doc: &Document) -> Vec<String>;
+}
+
+impl SpanVecExt for [Span] {
+    fn to_strings(&self, doc: &Document) -> Vec<String> {
+        self.iter()
+            .map(|sp| {
+                doc.get_tokens()[sp.start..sp.end]
+                    .iter()
+                    .map(|tok| doc.get_span_content_str(&tok.span))
+                    .collect::<String>()
+            })
+            .collect()
     }
 }
 

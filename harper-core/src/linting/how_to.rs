@@ -26,7 +26,7 @@ impl Default for HowTo {
             .then_anything()
             .then_anything()
             .then(
-                InflectionOfBe::new().or(Box::new(|tok: &Token, src: &[char]| {
+                InflectionOfBe::standard().or(Box::new(|tok: &Token, src: &[char]| {
                     if tok.kind.is_auxiliary_verb()
                         || tok.kind.is_adjective()
                         || tok.kind.is_verb_progressive_form()
