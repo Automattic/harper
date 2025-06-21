@@ -127,6 +127,25 @@ impl<F: LSend + Fn(&Token, &[char]) -> bool> SingleTokenPattern for F {
     }
 }
 
+/// Extension trait for working with vectors of Spans
+pub trait SpanVecExt {
+    /// Convert spans to their string representations from a document
+    fn to_strings(&self, doc: &Document) -> Vec<String>;
+}
+
+impl SpanVecExt for [Span] {
+    fn to_strings(&self, doc: &Document) -> Vec<String> {
+        self.iter()
+            .map(|sp| {
+                doc.get_tokens()[sp.start..sp.end]
+                    .iter()
+                    .map(|tok| doc.get_span_content_str(&tok.span))
+                    .collect::<String>()
+            })
+            .collect()
+    }
+}
+
 pub trait DocPattern {
     fn find_all_matches_in_doc(&self, document: &Document) -> Vec<Span>;
 }
