@@ -1,4 +1,4 @@
-//! This test creats snapshots of the reports of all linters.
+//! This test creates snapshots of the reports of all linters.
 //!
 //! # Usage
 //!
