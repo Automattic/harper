@@ -754,3 +754,28 @@ impl Default for DialectFlags {
         Self::empty()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::{Dialect, Document, word_metadata::DialectFlags};
+
+    #[test]
+    fn guess_british_dialect() {
+        let document = Document::new_plain_english_curated("Aluminium was used.");
+        let df = DialectFlags::get_most_used_dialects_from_document(&document);
+        assert!(
+            df.is_dialect_enabled_strict(Dialect::British)
+                && !df.is_dialect_enabled_strict(Dialect::American)
+        );
+    }
+
+    #[test]
+    fn guess_american_dialect() {
+        let document = Document::new_plain_english_curated("Aluminum was used.");
+        let df = DialectFlags::get_most_used_dialects_from_document(&document);
+        assert!(
+            df.is_dialect_enabled_strict(Dialect::American)
+                && !df.is_dialect_enabled_strict(Dialect::British)
+        );
+    }
+}
