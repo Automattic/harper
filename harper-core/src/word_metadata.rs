@@ -727,9 +727,9 @@ impl DialectFlags {
             if let TokenKind::Word(Some(word_metadata)) = &w.kind {
                 // If the token is a word, iterate though the dialects in `dialect_counters` and
                 // increment those counters where the word has the respective dialect enabled.
-                dialect_counters.iter_mut().for_each(|(dialect, acc)| {
+                dialect_counters.iter_mut().for_each(|(dialect, count)| {
                     if word_metadata.dialects.is_dialect_enabled(*dialect) {
-                        *acc += 1;
+                        *count += 1;
                     }
                 });
             }
