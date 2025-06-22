@@ -193,7 +193,10 @@ fn test_most_lints() {
         let dict = FstDictionary::curated();
         let document = Document::new_markdown_default(source, &dict);
 
-        let mut linter = LintGroup::new_curated(dict, Dialect::American);
+        let mut linter = LintGroup::new_curated(
+            dict,
+            Dialect::try_guess_from_document(&document).unwrap_or(Dialect::American),
+        );
 
         let mut lints = linter.lint(&document);
         lints.sort_by(|a, b| {
