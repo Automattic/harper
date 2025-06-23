@@ -51,7 +51,7 @@ impl ExprLinter for PronounInflectionBe {
         let span = matched_tokens.last()?.span;
 
         // The correct form
-        let correct = self.map.lookup(0, &matched_tokens, source)?;
+        let correct = self.map.lookup(0, matched_tokens, source)?;
 
         Some(Lint {
             span,
