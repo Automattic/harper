@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use comment_parsers::{Go, JavaDoc, JsDoc, Unit};
+use comment_parsers::{Go, JavaDoc, JsDoc, Solidity, Unit};
 use harper_core::parsers::{self, MarkdownOptions, Parser};
 use harper_core::{MutableDictionary, Token};
 use tree_sitter::Node;
@@ -26,7 +26,7 @@ impl CommentParser {
             "cpp" => tree_sitter_cpp::LANGUAGE,
             "csharp" => tree_sitter_c_sharp::LANGUAGE,
             "c" => tree_sitter_c::LANGUAGE,
-            // "dart" => tree_sitter_dart::language(),
+            // "dart" => tree_sitter_dart::language(), // crate is unmaintained
             "go" => tree_sitter_go::LANGUAGE,
             "haskell" => tree_sitter_haskell::LANGUAGE,
             "javascriptreact" => tree_sitter_typescript::LANGUAGE_TSX,
@@ -50,11 +50,12 @@ impl CommentParser {
         };
 
         let comment_parser: Box<dyn Parser> = match language_id {
+            "go" => Box::new(Go::new_markdown(markdown_options)),
+            "java" => Box::new(JavaDoc::default()),
             "javascriptreact" | "typescript" | "typescriptreact" | "javascript" => {
                 Box::new(JsDoc::new_markdown(markdown_options))
             }
-            "java" => Box::new(JavaDoc::default()),
-            "go" => Box::new(Go::new_markdown(markdown_options)),
+            "solidity" => Box::new(Solidity::new_markdown(markdown_options)),
             _ => Box::new(Unit::new_markdown(markdown_options)),
         };
 
@@ -83,7 +84,7 @@ impl CommentParser {
             "cmake" => "cmake",
             "cpp" => "cpp",
             "cs" => "csharp",
-            "dart" => "dart",
+            // "dart" => "dart", // grammar is unmaintained
             "go" => "go",
             "h" => "cpp",
             "hs" => "haskell",

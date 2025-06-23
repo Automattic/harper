@@ -1,12 +1,14 @@
 mod go;
 mod javadoc;
 mod jsdoc;
+mod solidity;
 mod unit;
 
 pub use go::Go;
 use harper_core::Span;
 pub use javadoc::JavaDoc;
 pub use jsdoc::JsDoc;
+pub use solidity::Solidity;
 pub use unit::Unit;
 
 /// Get the span of a tree-sitter-produced comment that doesn't include the
