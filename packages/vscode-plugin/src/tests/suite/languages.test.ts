@@ -28,7 +28,7 @@ describe('Languages >', () => {
 		{ type: 'C++', file: 'cpp.cpp', row: 3, column: 5 },
 		{ type: 'H', file: 'cpp.h', row: 0, column: 3 },
 		{ type: 'C#', file: 'csharp.cs', row: 2, column: 2 },
-		{ type: 'Dart', file: 'dart.dart', row: 1, column: 29 },
+		// { type: 'Dart', file: 'dart.dart', row: 1, column: 29 }, // tree-sitter grammar is unmaintained
 		{ type: 'Git Commit', file: 'git-commit', row: 0, column: 0 },
 		{ type: 'Go', file: 'go.go', row: 4, column: 4 },
 		{ type: 'HTML', file: 'html.html', row: 8, column: 6 },
@@ -44,6 +44,7 @@ describe('Languages >', () => {
 		{ type: 'Shellscript without extension', file: 'shellscript', row: 3, column: 2 },
 		{ type: 'Shellscript with .bash extension', file: 'shellscript.bash', row: 7, column: 9 },
 		{ type: 'Shellscript with .sh extension', file: 'shellscript.sh', row: 0, column: 22 },
+		{ type: 'Solidity', file: 'solidity.sol', row: 3, column: 22 },
 		{ type: 'Swift', file: 'swift.swift', row: 9, column: 26 },
 		{ type: 'TypeScript', file: 'typescript.ts', row: 0, column: 32 },
 		{ type: 'TypeScript JSX', file: 'typescriptreact.tsx', row: 3, column: 7 },
