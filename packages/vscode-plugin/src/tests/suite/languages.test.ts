@@ -44,7 +44,7 @@ describe('Languages >', () => {
 		{ type: 'Shellscript without extension', file: 'shellscript', row: 3, column: 2 },
 		{ type: 'Shellscript with .bash extension', file: 'shellscript.bash', row: 7, column: 9 },
 		{ type: 'Shellscript with .sh extension', file: 'shellscript.sh', row: 0, column: 22 },
-		{ type: 'Solidity', file: 'solidity.sol', row: 3, column: 22 },
+		{ type: 'Solidity', file: 'solidity.sol', row: 3, column: 4 },
 		{ type: 'Swift', file: 'swift.swift', row: 9, column: 26 },
 		{ type: 'TypeScript', file: 'typescript.ts', row: 0, column: 32 },
 		{ type: 'TypeScript JSX', file: 'typescriptreact.tsx', row: 3, column: 7 },
