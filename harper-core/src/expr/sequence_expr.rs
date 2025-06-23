@@ -166,6 +166,9 @@ impl SequenceExpr {
     gen_then_from_is!(proper_noun);
     gen_then_from_is!(preposition);
     gen_then_from_is!(not_plural_nominal);
+    gen_then_from_is!(third_person_pronoun);
+    gen_then_from_is!(third_person_singular_pronoun);
+    gen_then_from_is!(third_person_plural_pronoun);
 }
 
 impl<S> From<S> for SequenceExpr

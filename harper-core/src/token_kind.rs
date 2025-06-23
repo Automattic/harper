@@ -366,6 +366,30 @@ impl TokenKind {
         metadata.is_not_plural_pronoun()
     }
 
+    pub fn is_third_person_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return true;
+        };
+
+        metadata.is_third_person_pronoun()
+    }
+
+    pub fn is_third_person_singular_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return true;
+        };
+
+        metadata.is_third_person_singular_pronoun()
+    }
+
+    pub fn is_third_person_plural_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return true;
+        };
+
+        metadata.is_third_person_plural_pronoun()
+    }
+
     pub fn is_common_word(&self) -> bool {
         let TokenKind::Word(Some(metadata)) = self else {
             return true;

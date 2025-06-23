@@ -311,6 +311,38 @@ impl WordMetadata {
         adverb has
     );
 
+    pub fn is_third_person_plural_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Third),
+                is_plural: Some(true),
+                ..
+            })
+        )
+    }
+
+    pub fn is_third_person_singular_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Third),
+                is_plural: Some(false),
+                ..
+            })
+        )
+    }
+
+    pub fn is_third_person_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Third),
+                ..
+            })
+        )
+    }
+
     pub fn is_verb_lemma(&self) -> bool {
         matches!(
             self.verb,
