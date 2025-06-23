@@ -62,6 +62,7 @@ create_test!(basic_kotlin.kt, 0);
 // Checks that some comments are masked out
 create_test!(ignore_comments.rs, 1);
 create_test!(ignore_comments.c, 1);
+create_test!(ignore_comments.sol, 1);
 
 // These are to make sure nothing crashes.
 create_test!(empty.js, 0);
