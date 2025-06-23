@@ -16,6 +16,8 @@ use super::adjective_of_a::AdjectiveOfA;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
+use super::another_thing_coming::AnotherThingComing;
+use super::another_think_coming::AnotherThinkComing;
 use super::ask_no_preposition::AskNoPreposition;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
@@ -364,6 +366,8 @@ impl LintGroup {
         insert_struct_rule!(AmInTheMorning, true);
         insert_pattern_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
+        insert_pattern_rule!(AnotherThingComing, true);
+        insert_pattern_rule!(AnotherThinkComing, false);
         insert_pattern_rule!(AskNoPreposition, true);
         insert_struct_rule!(AvoidCurses, true);
         insert_pattern_rule!(BackInTheDay, true);
