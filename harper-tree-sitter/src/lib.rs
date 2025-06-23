@@ -115,24 +115,29 @@ impl Masker for TreeSitterMasker {
     }
 }
 
-/// Converts a set of byte-indexed [`Span`]s to char-index Spans, in-place.
+/// Converts a set of byte-indexed [`Span`]s to char-index Spans and returns them.
 /// NOTE: Will sort the given slice by their [`Span::start`].
 ///
-/// If any spans overlap, it will remove the second one.
+/// If any spans overlap, it will merge them.
 fn byte_spans_to_char_spans(mut byte_spans: Vec<Span>, source: &str) -> Vec<Span> {
     byte_spans.sort_unstable_by_key(|s| s.start);
-    let mut filtered_spans = Vec::with_capacity(byte_spans.len());
+
+    // merge overlapping spans
+    let mut spans = Vec::with_capacity(byte_spans.len());
     for span in byte_spans {
-        match filtered_spans.last() {
-            Some(last) if !span.overlaps_with(*last) => filtered_spans.push(span),
-            None => filtered_spans.push(span),
-            Some(_) => {}
+        match spans.last_mut() {
+            Some(last) if !span.overlaps_with(*last) => spans.push(span),
+            Some(last) => {
+                // ranges overlap, we can merge them
+                last.end = span.end;
+            }
+            None => spans.push(span),
         }
     }
 
     let mut last_byte_pos = 0;
     let mut last_char_pos = 0;
-    filtered_spans.iter_mut().for_each(|span| {
+    spans.iter_mut().for_each(|span| {
         let byte_span = *span;
 
         last_char_pos += source[last_byte_pos..byte_span.start].chars().count();
@@ -143,5 +148,5 @@ fn byte_spans_to_char_spans(mut byte_spans: Vec<Span>, source: &str) -> Vec<Span
 
         last_byte_pos = byte_span.end;
     });
-    filtered_spans
+    spans
 }
