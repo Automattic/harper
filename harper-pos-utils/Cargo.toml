@@ -7,7 +7,7 @@ license = "Apache-2.0"
 repository = "https://github.com/automattic/harper"
 
 [dependencies]
-rs-conllu = "0.3.0"
+rs-conllu = "0.4.1"
 hashbrown = { version = "0.15.3", features = ["serde"] }
 strum = "0.27.1"
 strum_macros = "0.27.1"

@@ -2102,14 +2102,12 @@ dependencies = [
 
 [[package]]
 name = "rs-conllu"
-version = "0.3.0"
+version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d6de5aecf17f8fff1b35d59a12e2b8c908cad4d67208805166483655554f9169"
+checksum = "3f8fb2748b04841485597820e79a17f35909b404d7e99acde5a5b4e46d24e219"
 dependencies = [
- "clap",
  "derive_more",
  "thiserror 1.0.69",
- "walkdir",
 ]
 
 [[package]]
