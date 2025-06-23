@@ -50,6 +50,9 @@ impl Parser for Solidity {
 
 fn parse_line(source: &[char], parser: Lrc<dyn Parser>) -> Vec<Token> {
     let mut actual = without_initiators(source);
+    if actual.is_empty() {
+        return Vec::new();
+    }
     let mut actual_source = actual.get_content(source);
 
     // ignore the special SPDX-License-Identifier comment
