@@ -1,10 +1,10 @@
 use harper_brill::UPOS;
-use hashbrown::HashMap;
 use is_macro::Is;
+use itertools::Itertools;
 use paste::paste;
 use serde::{Deserialize, Serialize};
-use strum::VariantArray;
-use strum_macros::{Display, EnumString, VariantArray};
+use strum::{EnumCount, VariantArray};
+use strum_macros::{Display, EnumCount, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
@@ -614,6 +614,7 @@ impl ConjunctionData {
     PartialOrd,
     Eq,
     Hash,
+    EnumCount,
     EnumString,
     Display,
     VariantArray,
@@ -719,8 +720,11 @@ impl DialectFlags {
     #[must_use]
     pub fn get_most_used_dialects_from_document(document: &Document) -> Self {
         // Initialize counters.
-        let mut dialect_counters: HashMap<Dialect, usize> =
-            HashMap::from_iter(Dialect::VARIANTS.iter().map(|d| (*d, 0)));
+        let mut dialect_counters: [(Dialect, usize); Dialect::COUNT] = Dialect::VARIANTS
+            .iter()
+            .map(|d| (*d, 0))
+            .collect_array()
+            .unwrap();
 
         // Count word dialects.
         document.iter_words().for_each(|w| {
@@ -736,14 +740,18 @@ impl DialectFlags {
         });
 
         // Find max counter.
-        let max_counter = dialect_counters.values().max().unwrap();
+        let max_counter = dialect_counters
+            .iter()
+            .map(|(_, count)| count)
+            .max()
+            .unwrap();
         // Get and convert the collection of most used dialects into a `DialectFlags`.
         dialect_counters
-            .iter()
-            .filter(|(_, count)| **count == *max_counter)
+            .into_iter()
+            .filter(|(_, count)| count == max_counter)
             .fold(DialectFlags::empty(), |acc, dialect| {
                 // Fold most used dialects into `DialectFlags` via bitwise or.
-                acc | Self::from_dialect(*dialect.0)
+                acc | Self::from_dialect(dialect.0)
             })
     }
 }
