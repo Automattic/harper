@@ -1,5 +1,8 @@
+use harper_brill::UPOS;
+
 use crate::Lrc;
 use crate::Token;
+use crate::expr::All;
 use crate::expr::ExprMap;
 use crate::expr::{Expr, SequenceExpr};
 
@@ -29,8 +32,12 @@ impl PronounInflectionBe {
 
         let map = Lrc::new(map);
 
+        let mut all = All::default();
+        all.add(map.clone());
+        all.add(|tok: &Token, _: &[char]| tok.kind.is_upos(UPOS::PRON));
+
         Self {
-            expr: Box::new(map.clone()),
+            expr: Box::new(all),
             map,
         }
     }
@@ -48,9 +55,9 @@ impl ExprLinter for PronounInflectionBe {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let span = matched_tokens.last()?.span;
+        let span = matched_tokens.get(2)?.span;
 
-        // The correct form
+        // Determine the correct inflection of "be".
         let correct = self.map.lookup(0, matched_tokens, source)?;
 
         Some(Lint {
@@ -60,18 +67,15 @@ impl ExprLinter for PronounInflectionBe {
                 correct,
                 span.get_content(source),
             )],
-            message: "With the singular pronouns “he”, “she”, and “it”, \
-                      the verb “be” must take the singular form “is”."
-                .to_string(),
+            message: "Make the verb agree with its subject.".to_owned(),
             priority: 30,
         })
     }
-
     fn description(&self) -> &str {
-        "Ensures basic subject-verb agreement by flagging instances where a \
-         third-person singular pronoun (“he”, “she”, “it”) is incorrectly \
-         paired with the plural verb form “are”. English grammar requires \
-         the singular inflection “is” in these cases."
+        "Checks subject–verb agreement for the verb `be`. Third-person singular \
+         pronouns (`he`, `she`, `it`) require the singular form `is`, while the \
+         plural pronoun `they` takes `are`. The linter flags mismatches such as \
+         `He are` or `They is` and offers the correct concord."
     }
 }
 
@@ -189,5 +193,15 @@ mod tests {
     #[test]
     fn allows_they_were() {
         assert_lint_count("They were already here.", PronounInflectionBe::default(), 0);
+    }
+
+    #[test]
+    fn allows_asdf_is() {
+        assert_lint_count("asdf is not a word", PronounInflectionBe::default(), 0);
+    }
+
+    #[test]
+    fn no_subject() {
+        assert_lint_count("is set", PronounInflectionBe::default(), 0);
     }
 }
