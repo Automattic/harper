@@ -112,6 +112,12 @@ pub fn lint_group() -> LintGroup {
             "Use `as far back as` for referring to a time in the past.",
             "Corrects nonstandard `as early back as` to `as far back as`."
         ),
+        "AsItHappens" => (
+            ["as it so happens"],
+            ["as it happens"],
+            "Did you mean `as it happens`?",
+            "Corrects `as it so happens` to `as it happens`."
+        ),
         "AsOfLate" => (
             ["as of lately"],
             ["as of late"],
@@ -364,6 +370,12 @@ pub fn lint_group() -> LintGroup {
             ["en masse"],
             "Did you mean `en masse`?",
             "Detects variants like `on mass` or `in mass` and suggests `en masse`."
+        ),
+        "EnRoute" => (
+            ["on route to", "in route to", "on-route to", "in-route to"],
+            ["en route to", "en-route to"],
+            "Did you mean `en route`?",
+            "Detects variants like `on route` or `in route` and suggests `en route`."
         ),
         "EverPresent" => (
             ["ever present"],
