@@ -24,7 +24,7 @@ build-harperjs: build-wasm
   ./docs.sh
 
 test-harperjs: build-harperjs
-  #!/bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   pnpm install
@@ -37,7 +37,7 @@ test-harperjs: build-harperjs
   pnpm start
 
 test-obsidian: build-obsidian
-  #!/bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   pnpm install
@@ -125,7 +125,7 @@ build-firefox-plugin: build-harperjs
   pnpm zip-for-firefox
 
 test-chrome-plugin: build-chrome-plugin
-  #!/bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   pnpm install
@@ -338,7 +338,7 @@ getforms word:
   cargo run --bin harper-cli -- forms {{word}}
 # Get a random sample of words from Harper's dictionary and list all forms of each.
 sampleforms count:
-  #!/bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
   DICT_FILE=./harper-core/dictionary.dict 
   # USER_DICT_FILE="$HOME/.config/harper-ls/dictionary.txt"
@@ -397,7 +397,7 @@ bump-versions: update-vscode-linters
 
 # Enter an infinite loop of property testing until a bug is found.
 fuzz:
-  #!/usr/bin/bash
+  #!/usr/bin/env bash
   
   while true
   do
