@@ -635,6 +635,33 @@ impl Dialect {
     pub fn try_guess_from_document(document: &Document) -> Option<Self> {
         Self::try_from(DialectFlags::get_most_used_dialects_from_document(document)).ok()
     }
+
+    /// Tries to get a dialect from its abbreviation. Returns `None` if the abbreviation is not
+    /// recognized.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use harper_core::Dialect;
+    ///
+    /// let abbrs = ["US", "CA", "AU", "GB"];
+    /// let mut dialects = abbrs.iter().map(|abbr| Dialect::try_from_abbr(abbr));
+    ///
+    /// assert_eq!(Some(Dialect::American), dialects.next().unwrap()); // US
+    /// assert_eq!(Some(Dialect::Canadian), dialects.next().unwrap()); // CA
+    /// assert_eq!(Some(Dialect::Australian), dialects.next().unwrap()); // AU
+    /// assert_eq!(Some(Dialect::British), dialects.next().unwrap()); // GB
+    /// ```
+    #[must_use]
+    pub fn try_from_abbr(abbr: &str) -> Option<Self> {
+        match abbr {
+            "US" => Some(Self::American),
+            "CA" => Some(Self::Canadian),
+            "AU" => Some(Self::Australian),
+            "GB" => Some(Self::British),
+            _ => None,
+        }
+    }
 }
 impl TryFrom<DialectFlags> for Dialect {
     type Error = ();
