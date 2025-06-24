@@ -20,6 +20,7 @@ pub enum LintKind {
     /// This should only be used by linters doing spellcheck on individual words.
     Spelling,
     Style,
+    Typo,
     WordChoice,
 }
 
@@ -35,6 +36,7 @@ impl LintKind {
             "Repetition" => LintKind::Repetition,
             "Spelling" => LintKind::Spelling,
             "Style" => LintKind::Style,
+            "Typo" => LintKind::Typo,
             "Word Choice" => LintKind::WordChoice,
             _ => return None,
         })
@@ -53,6 +55,7 @@ impl LintKind {
             LintKind::Repetition => "Repetition",
             LintKind::Spelling => "Spelling",
             LintKind::Style => "Style",
+            LintKind::Typo => "Typo",
             LintKind::WordChoice => "WordChoice",
         }
         .to_owned()
@@ -72,6 +75,7 @@ impl Display for LintKind {
             LintKind::Repetition => "Repetition",
             LintKind::Spelling => "Spelling",
             LintKind::Style => "Style",
+            LintKind::Typo => "Typo",
             LintKind::WordChoice => "Word Choice",
         };
 

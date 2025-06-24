@@ -80,6 +80,7 @@ use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::then_than::ThenThan;
+use super::thing_think::ThingThink;
 use super::throw_rubbish::ThrowRubbish;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
@@ -428,6 +429,7 @@ impl LintGroup {
         insert_pattern_rule!(TheHowWhy, true);
         insert_struct_rule!(TheMy, true);
         insert_pattern_rule!(ThenThan, true);
+        insert_pattern_rule!(ThingThink, true);
         insert_struct_rule!(ThrowRubbish, true);
         insert_pattern_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
