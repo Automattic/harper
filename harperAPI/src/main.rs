@@ -4,7 +4,8 @@ use harperAPI::lint_text;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("Starting server at http://127.0.0.1:8080");
+    // Updated to reflect the new address
+    println!("Starting server at http://0.0.0.0:8000");
 
     // Start the HTTP server.
     HttpServer::new(|| {
@@ -12,7 +13,8 @@ async fn main() -> std::io::Result<()> {
             // Define a POST route at `/lint` that uses our `lint_text` handler.
             .route("/lint", web::post().to(lint_text))
     })
-    .bind("127.0.0.1:8080")?
+    // Bind to 0.0.0.0 to make it accessible on all network interfaces
+    .bind("0.0.0.0:8000")?
     .run()
     .await
 }
