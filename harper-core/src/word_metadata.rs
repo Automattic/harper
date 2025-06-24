@@ -311,6 +311,28 @@ impl WordMetadata {
         adverb has
     );
 
+    pub fn is_first_person_plural_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::First),
+                is_plural: Some(true),
+                ..
+            })
+        )
+    }
+
+    pub fn is_first_person_singular_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::First),
+                is_plural: Some(false),
+                ..
+            })
+        )
+    }
+
     pub fn is_third_person_plural_pronoun(&self) -> bool {
         matches!(
             self.pronoun,
@@ -338,6 +360,16 @@ impl WordMetadata {
             self.pronoun,
             Some(PronounData {
                 person: Some(Person::Third),
+                ..
+            })
+        )
+    }
+
+    pub fn is_second_person_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Second),
                 ..
             })
         )

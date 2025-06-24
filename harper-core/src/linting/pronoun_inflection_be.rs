@@ -3,8 +3,10 @@ use harper_brill::UPOS;
 use crate::Lrc;
 use crate::Token;
 use crate::expr::All;
+use crate::expr::AnchorStart;
 use crate::expr::ExprMap;
 use crate::expr::{Expr, SequenceExpr};
+use crate::patterns::UPOSSet;
 
 use super::Suggestion;
 use super::{ExprLinter, Lint, LintKind};
@@ -16,19 +18,63 @@ pub struct PronounInflectionBe {
 
 impl PronounInflectionBe {
     pub fn new() -> Self {
+        let mod_term = Lrc::new(
+            SequenceExpr::default()
+                .t_ws()
+                .then(UPOSSet::new(&[UPOS::ADJ, UPOS::ADV])),
+        );
+
         let mut map = ExprMap::default();
 
         let are = SequenceExpr::default()
             .then_third_person_singular_pronoun()
+            .then_optional(mod_term.clone())
             .t_ws()
             .t_aco("are");
         map.insert(are, "is");
 
+        let arent = SequenceExpr::default()
+            .then_third_person_singular_pronoun()
+            .then_optional(mod_term.clone())
+            .t_ws()
+            .t_aco("aren't");
+        map.insert(arent, "isn't");
+
         let is = SequenceExpr::default()
             .then_third_person_plural_pronoun()
+            .then_optional(mod_term.clone())
             .t_ws()
             .t_aco("is");
         map.insert(is, "are");
+
+        let isnt = SequenceExpr::default()
+            .then_third_person_plural_pronoun()
+            .then_optional(mod_term.clone())
+            .t_ws()
+            .t_aco("isn't");
+        map.insert(isnt, "aren't");
+
+        let was = SequenceExpr::default()
+            .then(|tok: &Token, _: &[char]| {
+                tok.kind.is_first_person_plural_pronoun()
+                    || tok.kind.is_second_person_pronoun()
+                    || tok.kind.is_third_person_plural_pronoun()
+            })
+            .then_optional(mod_term.clone())
+            .t_ws()
+            .t_aco("was");
+        map.insert(was, "were");
+
+        let were = SequenceExpr::default()
+            .then(AnchorStart)
+            .then(|tok: &Token, _: &[char]| {
+                tok.kind.is_first_person_singular_pronoun()
+                    || tok.kind.is_third_person_singular_pronoun()
+            })
+            .then_optional(mod_term.clone())
+            .t_ws()
+            .t_aco("were");
+        map.insert(were, "was");
 
         let map = Lrc::new(map);
 
@@ -55,7 +101,7 @@ impl ExprLinter for PronounInflectionBe {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let span = matched_tokens.get(2)?.span;
+        let span = matched_tokens.last()?.span;
 
         // Determine the correct inflection of "be".
         let correct = self.map.lookup(0, matched_tokens, source)?;
@@ -203,5 +249,124 @@ mod tests {
     #[test]
     fn no_subject() {
         assert_lint_count("is set", PronounInflectionBe::default(), 0);
+    }
+
+    #[test]
+    fn corrects_i_were() {
+        assert_suggestion_result(
+            "I were the best player on the field.",
+            PronounInflectionBe::default(),
+            "I was the best player on the field.",
+        );
+    }
+
+    #[test]
+    fn corrects_we_was() {
+        assert_suggestion_result(
+            "We was the best players on the field.",
+            PronounInflectionBe::default(),
+            "We were the best players on the field.",
+        );
+    }
+
+    #[test]
+    fn corrects_you_was() {
+        assert_suggestion_result(
+            "You was my best friend.",
+            PronounInflectionBe::default(),
+            "You were my best friend.",
+        );
+    }
+
+    #[test]
+    fn allows_you_were() {
+        assert_lint_count(
+            "You were my best friend.",
+            PronounInflectionBe::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn corrects_he_were() {
+        assert_suggestion_result(
+            "He were late.",
+            PronounInflectionBe::default(),
+            "He was late.",
+        );
+    }
+
+    #[test]
+    fn corrects_they_was() {
+        assert_suggestion_result(
+            "They was on time.",
+            PronounInflectionBe::default(),
+            "They were on time.",
+        );
+    }
+
+    #[test]
+    fn allows_he_was() {
+        assert_lint_count("He was here.", PronounInflectionBe::default(), 0);
+    }
+
+    #[test]
+    fn allows_we_were() {
+        assert_lint_count("We were excited.", PronounInflectionBe::default(), 0);
+    }
+
+    #[test]
+    fn corrects_he_arent() {
+        assert_suggestion_result(
+            "He aren't ready.",
+            PronounInflectionBe::default(),
+            "He isn't ready.",
+        );
+    }
+
+    #[test]
+    fn corrects_they_isnt() {
+        assert_suggestion_result(
+            "They isn't coming.",
+            PronounInflectionBe::default(),
+            "They aren't coming.",
+        );
+    }
+
+    #[test]
+    fn allows_he_isnt() {
+        assert_lint_count("He isn't ready.", PronounInflectionBe::default(), 0);
+    }
+
+    #[test]
+    fn allows_they_arent() {
+        assert_lint_count("They aren't coming.", PronounInflectionBe::default(), 0);
+    }
+
+    #[test]
+    fn corrects_she_really_are() {
+        assert_suggestion_result(
+            "She really are talented.",
+            PronounInflectionBe::default(),
+            "She really is talented.",
+        );
+    }
+
+    #[test]
+    fn corrects_they_often_is() {
+        assert_suggestion_result(
+            "They often is late.",
+            PronounInflectionBe::default(),
+            "They often are late.",
+        );
+    }
+
+    #[test]
+    fn corrects_because_he_are() {
+        assert_suggestion_result(
+            "because he are tired.",
+            PronounInflectionBe::default(),
+            "because he is tired.",
+        );
     }
 }
