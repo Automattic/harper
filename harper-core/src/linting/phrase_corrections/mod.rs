@@ -1088,6 +1088,12 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `sneaking suspicion`?",
             "Changes `sneaky suspicion` to `sneaking suspicion`."
         ),
+        "SomebodyElses" => (
+            ["somebody's else", "somebody's else's"],
+            ["somebody else's"],
+            "This should be `somebody else's`?",
+            "Corrects `somebody else's` when the `'s` is in the wrong place."
+        ),
         "SomeOfThe" => (
             ["some the"],
             ["some of the"],

@@ -1498,6 +1498,25 @@ fn sneaky_suspicion() {
     assert_suggestion_result("sneaky suspicion", lint_group(), "sneaking suspicion");
 }
 
+// SomebodyElses
+#[test]
+fn correct_somebodys_else() {
+    assert_suggestion_result(
+        "I really like your component and change to somebody's else would be really bad for now.",
+        lint_group(),
+        "I really like your component and change to somebody else's would be really bad for now.",
+    );
+}
+
+#[test]
+fn correct_somebodys_elses() {
+    assert_suggestion_result(
+        "Nice to know it's somebody's else's problem for a change.",
+        lint_group(),
+        "Nice to know it's somebody else's problem for a change.",
+    );
+}
+
 // SomeOfThe
 #[test]
 fn corrects_some_the_beginning() {
