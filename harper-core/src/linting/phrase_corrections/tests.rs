@@ -1,5 +1,6 @@
 use crate::linting::tests::{
     assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+    assert_top3_suggestion_result,
 };
 
 use super::lint_group;
@@ -136,6 +137,16 @@ fn detect_as_early_back_as_real_world() {
         "skin overrides also supports a wide variety of minecraft versions - as early back as 1.14.4.",
         lint_group(),
         "skin overrides also supports a wide variety of minecraft versions - as far back as 1.14.4.",
+    );
+}
+
+// AsItHappens
+#[test]
+fn correct_as_it_happens() {
+    assert_suggestion_result(
+        "As it so happens, we have language currently in review that basically states that a major version break means backwards incompatibility ...",
+        lint_group(),
+        "As it happens, we have language currently in review that basically states that a major version break means backwards incompatibility ...",
     );
 }
 
@@ -452,6 +463,44 @@ fn detect_each_and_everyone_real_world() {
 #[test]
 fn in_mass() {
     assert_suggestion_result("in mass", lint_group(), "en masse");
+}
+
+// EnRoute
+#[test]
+fn on_route() {
+    assert_suggestion_result("on route to", lint_group(), "en route to");
+}
+
+#[test]
+fn in_route() {
+    assert_suggestion_result("in route to", lint_group(), "en route to");
+}
+
+#[test]
+fn on_route_real_world() {
+    assert_suggestion_result(
+        "vehicles may already be on route to one end of a Shipment",
+        lint_group(),
+        "vehicles may already be en route to one end of a Shipment",
+    );
+}
+
+#[test]
+fn on_hyphen_route_real_world() {
+    assert_top3_suggestion_result(
+        "I ultimately just want a slight preference for matches that are on-route to correct cases like the above.",
+        lint_group(),
+        "I ultimately just want a slight preference for matches that are en-route to correct cases like the above.",
+    );
+}
+
+#[test]
+fn in_route_real_world() {
+    assert_suggestion_result(
+        "TF-South is in route to conduct SSE on the strike.",
+        lint_group(),
+        "TF-South is en route to conduct SSE on the strike.",
+    );
 }
 
 // EverPresent

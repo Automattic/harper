@@ -15,7 +15,7 @@ describe('Languages >', () => {
 		// Uncomment when #265 is fixed.
 		// { type: 'JavaScript JSX', file: 'javascriptreact.jsx', row: 1, column: 36 },
 
-		// VS Code doesn't support CMake, Haskell, Literate Haskell, Nix, TOML, and Typst files out of
+		// VS Code doesn't support CMake, Haskell, Literate Haskell, Nix, Solidity, TOML, and Typst files out of
 		// the box. Uncomment when you figure out how to support them during testing.
 		// { type: 'CMake', file: 'CMakeLists.txt', row: 2, column: 30 },
 		// { type: 'Haskell', file: 'haskell.hs', row: 1, column: 3 },
@@ -23,6 +23,7 @@ describe('Languages >', () => {
 		// { type: 'Nix', file: 'nix.nix', row: 1, column: 2 },
 		// { type: 'TOML', file: 'toml.toml', row: 1, column: 2 },
 		// { type: 'Typst', file: 'typst.typ', row: 2, column: 1 },
+		// { type: 'Solidity', file: 'solidity.sol', row: 3, column: 4 },
 
 		{ type: 'C', file: 'c.c', row: 2, column: 3 },
 		{ type: 'C++', file: 'cpp.cpp', row: 3, column: 5 },
