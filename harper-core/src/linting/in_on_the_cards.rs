@@ -22,20 +22,7 @@ impl InOnTheCards {
         let pre_context = LongestMatchOf::new(vec![
             Box::new(InflectionOfBe::new()),
             Box::new(WordSet::new(&[
-                "isn't",
-                "it's",
-                "wasn't",
-                "weren't",
-                // TODO I'm surprised that the typographical quote marks need to be treated separately.
-                "isn’t",
-                "it’s",
-                "wasn’t",
-                "weren’t",
-                "not",
-                "isnt",
-                "its",
-                "wasnt",
-                "werent",
+                "isn't", "it's", "wasn't", "weren't", "not", "isnt", "its", "wasnt", "werent",
             ])),
         ]);
 
