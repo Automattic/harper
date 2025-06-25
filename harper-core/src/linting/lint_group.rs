@@ -392,7 +392,6 @@ impl LintGroup {
         insert_struct_rule!(HopHope, true);
         insert_struct_rule!(HowTo, true);
         insert_pattern_rule!(HyphenateNumberDay, true);
-        insert_pattern_rule!(InOnTheCards, true);
         insert_pattern_rule!(ItsContraction, true);
         insert_pattern_rule!(LeftRightHand, true);
         insert_struct_rule!(LetsConfusion, true);
@@ -449,6 +448,9 @@ impl LintGroup {
             InflectedVerbAfterTo::new(dictionary.clone(), dialect),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
+
+        out.add("InOnTheCards", InOnTheCards::new(dialect));
+        out.config.set_rule_enabled("InOnTheCards", true);
 
         out.add(
             "SentenceCapitalization",
