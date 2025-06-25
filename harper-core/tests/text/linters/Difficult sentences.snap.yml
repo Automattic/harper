@@ -316,15 +316,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (30 priority)
-Message: |
-     399 | Precisely to get away from you was why I did what I did.
-         |                                ^~~ Make the verb agree with its subject.
-Suggest:
-  - Replace with: “were”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      443 | With their reputation on the line, they decided to fire their PR team.

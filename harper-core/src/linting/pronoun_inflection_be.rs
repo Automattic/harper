@@ -55,18 +55,18 @@ impl PronounInflectionBe {
         map.insert(isnt, "aren't");
 
         let was = SequenceExpr::default()
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_first_person_plural_pronoun() || tok.kind.is_second_person_pronoun()
-            })
+            .then(|tok: &Token, _: &[char]| tok.kind.is_first_person_plural_pronoun())
             .then_optional(mod_term.clone())
             .t_ws()
             .t_aco("was");
         map.insert(was, "were");
 
-        // Special case for third-person
+        // Special case for second and third-person
         let was_third = SequenceExpr::default()
             .then(AnchorStart)
-            .then_third_person_plural_pronoun()
+            .then(|tok: &Token, _: &[char]| {
+                tok.kind.is_third_person_plural_pronoun() || tok.kind.is_second_person_pronoun()
+            })
             .then_optional(mod_term.clone())
             .t_ws()
             .t_aco("was");
