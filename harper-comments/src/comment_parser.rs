@@ -26,7 +26,7 @@ impl CommentParser {
             "cpp" => tree_sitter_cpp::LANGUAGE,
             "csharp" => tree_sitter_c_sharp::LANGUAGE,
             "c" => tree_sitter_c::LANGUAGE,
-            // "dart" => tree_sitter_dart::language(), // crate is unmaintained
+            "dart" => harper_tree_sitter_dart::LANGUAGE,
             "go" => tree_sitter_go::LANGUAGE,
             "haskell" => tree_sitter_haskell::LANGUAGE,
             "javascriptreact" => tree_sitter_typescript::LANGUAGE_TSX,
@@ -84,7 +84,7 @@ impl CommentParser {
             "cmake" => "cmake",
             "cpp" => "cpp",
             "cs" => "csharp",
-            // "dart" => "dart", // grammar is unmaintained
+            "dart" => "dart",
             "go" => "go",
             "h" => "cpp",
             "hs" => "haskell",

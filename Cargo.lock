@@ -849,6 +849,7 @@ dependencies = [
  "harper-core",
  "harper-html",
  "harper-tree-sitter",
+ "harper-tree-sitter-dart",
  "itertools 0.14.0",
  "paste",
  "tree-sitter",
@@ -993,6 +994,17 @@ version = "0.44.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
+]
+
+[[package]]
+name = "harper-tree-sitter-dart"
+version = "0.0.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2cffcbd6eedacbf7df10ddb03de6e5e2fa52c0c183f6f01f7bfec9d0f6b38fb7"
+dependencies = [
+ "cc",
+ "tree-sitter",
+ "tree-sitter-language",
 ]
 
 [[package]]

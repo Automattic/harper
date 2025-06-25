@@ -40,6 +40,7 @@
 		"onLanguage:literate haskell",
 		"onLanguage:lua",
 		"onLanguage:markdown",
+		"onLanguage:dart",
 		"onLanguage:nix",
 		"onLanguage:php",
 		"onLanguage:plaintext",
