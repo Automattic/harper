@@ -4635,16 +4635,6 @@ Message: |
 
 
 
-Lint:    Miscellaneous (30 priority)
-Message: |
-    3442 | decide upon the more practical measures to be taken. One of them was that, after
-         |                                                                  ^~~ Make the verb agree with its subject.
-    3443 | she was free, they were to go back to Louisville and be married from her
-Suggest:
-  - Replace with: “were”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     3474 | Out of the corner of his eye Gatsby saw that the blocks of the sidewalks really

@@ -304,7 +304,7 @@ impl WordMetadata {
 
     generate_metadata_queries!(
         noun has proper, plural, possessive.
-        pronoun has personal, singular, plural, possessive, reflexive.
+        pronoun has personal, singular, plural, possessive, reflexive, object.
         determiner has demonstrative, possessive.
         verb has linking, auxiliary.
         conjunction has.

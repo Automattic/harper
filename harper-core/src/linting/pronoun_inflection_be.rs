@@ -56,14 +56,21 @@ impl PronounInflectionBe {
 
         let was = SequenceExpr::default()
             .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_first_person_plural_pronoun()
-                    || tok.kind.is_second_person_pronoun()
-                    || tok.kind.is_third_person_plural_pronoun()
+                tok.kind.is_first_person_plural_pronoun() || tok.kind.is_second_person_pronoun()
             })
             .then_optional(mod_term.clone())
             .t_ws()
             .t_aco("was");
         map.insert(was, "were");
+
+        // Special case for third-person
+        let was_third = SequenceExpr::default()
+            .then(AnchorStart)
+            .then_third_person_plural_pronoun()
+            .then_optional(mod_term.clone())
+            .t_ws()
+            .t_aco("was");
+        map.insert(was_third, "were");
 
         let were = SequenceExpr::default()
             .then(AnchorStart)
