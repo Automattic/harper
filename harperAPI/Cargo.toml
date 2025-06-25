@@ -8,3 +8,5 @@ actix-web = "4"
 serde = { version = "1.0", features = ["derive"] }
 # Use a relative path to the harper-core crate
 harper-core = { path = "../harper-core" }
+# Add the actix-cors crate for handling CORS
+actix-cors = "0.7.0"
