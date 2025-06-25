@@ -106,6 +106,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         };
 
         let loss_fn = MseLoss::new();
+        let mut last_score = 0.;
 
         println!("Training...");
 
@@ -154,6 +155,13 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
 
             let score = util.score_model(&model, test_file);
             println!("{}% correct in test dataset", score * 100.);
+
+            if score < last_score {
+                println!("Overfitting detected. Stopping...");
+                break;
+            }
+
+            last_score = score;
         }
 
         Self {
