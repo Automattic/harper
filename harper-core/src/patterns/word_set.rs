@@ -61,7 +61,7 @@ impl SingleTokenPattern for WordSet {
 
             let partial_match = tok_chars
                 .iter()
-                .map(|c| canonical(c))
+                .map(canonical)
                 .zip(word.iter().map(canonical))
                 .all(|(a, b)| a.eq_ignore_ascii_case(&b));
 
