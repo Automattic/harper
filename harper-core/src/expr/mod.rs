@@ -25,6 +25,7 @@ pub use all::All;
 pub use anchor_end::AnchorEnd;
 pub use anchor_start::AnchorStart;
 pub use expr_map::ExprMap;
+pub use first_match_of::FirstMatchOf;
 pub use fixed_phrase::FixedPhrase;
 pub use longest_match_of::LongestMatchOf;
 pub use mergeable_words::MergeableWords;
