@@ -90,6 +90,7 @@ use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
 use super::was_aloud::WasAloud;
+use super::way_too_adjective::WayTooAdjective;
 use super::whereas::Whereas;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
@@ -377,6 +378,7 @@ impl LintGroup {
         insert_pattern_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_pattern_rule!(ChockFull, true);
+        insert_pattern_rule!(WayTooAdjective, true);
         insert_pattern_rule!(HavePronoun, true);
         insert_pattern_rule!(PronounInflectionBe, true);
         insert_struct_rule!(CommaFixes, true);
