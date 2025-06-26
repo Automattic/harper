@@ -48,8 +48,8 @@ impl ExprLinter for HavePronoun {
     }
 
     fn description(&self) -> &'static str {
-        "Flags questions that begin with “has” followed by a pronoun that requires “have”, \
-         such as “Has we …” or “Has I …”, and suggests the correct auxiliary."
+        "Flags questions that begin with `has` followed by a pronoun that requires `have`, \
+         such as `Has we …` or `Has I …`, and suggests the correct auxiliary."
     }
 }
 
