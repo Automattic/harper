@@ -454,18 +454,24 @@ fn main() -> anyhow::Result<()> {
             let affixes_string = fs::read_to_string(&affixes_path)
                 .map_err(|e| anyhow!("Failed to read affixes.json: {e}"))?;
 
-            let mut affixes_json: Value = serde_json::from_str(&affixes_string)
+            let affixes_json: Value = serde_json::from_str(&affixes_string)
                 .map_err(|e| anyhow!("Failed to parse affixes.json: {e}"))?;
 
             // Get the nested "affixes" object
-            let affixes_obj = affixes_json
-                .get_mut("affixes")
-                .and_then(Value::as_object_mut)
+            let affixes_obj = &affixes_json
+                .get("affixes")
+                .and_then(Value::as_object)
                 .ok_or_else(|| anyhow!("affixes.json does not contain 'affixes' object"))?;
+
+            let properties_obj = &affixes_json
+                .get("properties")
+                .and_then(Value::as_object)
+                .ok_or_else(|| anyhow!("affixes.json does not contain 'properties' object"))?;
 
             // Validate old flag exists and get its description
             let old_entry = affixes_obj
                 .get(&old)
+                .or_else(|| properties_obj.get(&old))
                 .ok_or_else(|| anyhow!("Flag '{old}' not found in affixes.json"))?;
 
             let description = old_entry
@@ -476,7 +482,7 @@ fn main() -> anyhow::Result<()> {
             println!("Renaming flag '{old}' ({description})");
 
             // Validate new flag doesn't exist
-            if let Some(new_entry) = affixes_obj.get(&new) {
+            if let Some(new_entry) = affixes_obj.get(&new).or_else(|| properties_obj.get(&new)) {
                 let new_desc = new_entry
                     .get("#")
                     .and_then(Value::as_str)
