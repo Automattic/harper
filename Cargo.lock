@@ -1470,6 +1470,7 @@ dependencies = [
  "rayon",
  "rs-conllu",
  "serde",
+ "serde_json",
  "strum",
  "strum_macros",
 ]
