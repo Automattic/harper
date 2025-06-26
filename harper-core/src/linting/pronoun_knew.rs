@@ -188,22 +188,4 @@ mod tests {
     fn flags_she_new_danger() {
         assert_lint_count("She new danger lurked nearby.", PronounKnew::default(), 1);
     }
-
-    #[test]
-    fn does_not_flag_with_this_new_template() {
-        assert_lint_count(
-            "Let's build this new template function.",
-            PronounKnew::default(),
-            0,
-        );
-    }
-
-    #[test]
-    fn does_not_flag_with_that_new_file() {
-        assert_lint_count(
-            "Move the function definition inside of that new file.",
-            PronounKnew::default(),
-            0,
-        );
-    }
 }

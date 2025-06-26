@@ -20,7 +20,7 @@ impl Default for ShootOneselfInTheFoot {
         let pattern = SequenceExpr::default()
             .then(verb_forms)
             .t_ws()
-            .then(ReflexivePronoun)
+            .then(ReflexivePronoun::default())
             .t_ws()
             .then_preposition()
             .t_ws()

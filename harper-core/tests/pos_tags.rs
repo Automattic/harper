@@ -97,13 +97,36 @@ fn format_word_tag(word: &WordMetadata) -> String {
     if let Some(noun) = word.noun {
         let mut tag = String::from("N");
         add_bool(&mut tag, "Pr", noun.is_proper);
-        add_switch(&mut tag, noun.is_plural, "Pl", "Sg");
+        match (
+            noun.is_singular.is_some_and(|sg| sg),
+            noun.is_plural.is_some_and(|pl| pl),
+        ) {
+            (true, false) => tag.push_str("Sg"),
+            (false, true) => tag.push_str("Pl"),
+            (true, true) => tag.push_str("SgPl"),
+            _ => {}
+        }
+        // Treat unmarked (neither singular nor plural) common nouns as singular
+        if noun.is_singular.is_none() && noun.is_plural.is_none() {
+            if noun.is_proper.is_none() {
+                tag.push_str("Sg");
+            }
+        }
         add_bool(&mut tag, "$", noun.is_possessive);
         add(&tag, &mut tags);
     }
     if let Some(pronoun) = word.pronoun {
         let mut tag = String::from("I");
-        add_switch(&mut tag, pronoun.is_plural, "Pl", "Sg");
+        add_bool(
+            &mut tag,
+            "Sg",
+            pronoun.is_singular.and_then(|sg| sg.then_some(true)),
+        );
+        add_bool(
+            &mut tag,
+            "Pl",
+            pronoun.is_plural.and_then(|pl| pl.then_some(true)),
+        );
         add_bool(&mut tag, "$", pronoun.is_possessive);
         add(&tag, &mut tags);
     }

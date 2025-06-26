@@ -20,22 +20,38 @@ use strum_macros::{AsRefStr, EnumIter};
     Is,
 )]
 pub enum UPOS {
+    /// Adjective
     ADJ,
+    /// Adposition
     ADP,
+    /// Adverb
     ADV,
+    /// Auxiliary
     AUX,
+    /// Coordinating conjunction
     CCONJ,
+    /// Determiner
     DET,
+    /// Interjection
     INTJ,
+    /// Noun
     #[default]
     NOUN,
+    /// Numeral
     NUM,
+    /// Particle
     PART,
+    /// Pronoun
     PRON,
+    /// Proper noun
     PROPN,
+    /// Punctuation
     PUNCT,
+    /// Subordinating conjunction
     SCONJ,
+    /// Symbol
     SYM,
+    /// Verb
     VERB,
 }
 
@@ -63,6 +79,6 @@ impl UPOS {
     }
 
     pub fn is_nominal(&self) -> bool {
-        matches!(self, Self::NOUN | Self::PROPN)
+        matches!(self, Self::NOUN | Self::PROPN | Self::PRON)
     }
 }

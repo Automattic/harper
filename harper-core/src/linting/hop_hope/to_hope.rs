@@ -12,7 +12,7 @@ pub struct ToHope {
 impl Default for ToHope {
     fn default() -> Self {
         let pattern = SequenceExpr::default()
-            .then_not_plural_nominal()
+            .then_nominal()
             .then_whitespace()
             .then(WordSet::new(&["hop", "hopped"]))
             .then_whitespace()

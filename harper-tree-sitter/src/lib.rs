@@ -20,7 +20,7 @@ impl TreeSitterMasker {
 
     fn parse_root(&self, text: &str) -> Option<Tree> {
         let mut parser = tree_sitter::Parser::new();
-        parser.set_language(self.language).unwrap();
+        parser.set_language(&self.language).unwrap();
 
         // TODO: Use incremental parsing
         parser.parse(text, None)
@@ -39,7 +39,7 @@ impl TreeSitterMasker {
             }
         });
 
-        byte_spans_to_char_spans(&mut ident_spans, &text);
+        let ident_spans = byte_spans_to_char_spans(ident_spans, &text);
 
         let mut idents = HashSet::new();
 
@@ -101,7 +101,7 @@ impl Masker for TreeSitterMasker {
         let mut comments_spans = Vec::new();
 
         self.extract_comments(&mut root.walk(), &mut comments_spans);
-        byte_spans_to_char_spans(&mut comments_spans, &text);
+        let comments_spans = byte_spans_to_char_spans(comments_spans, &text);
 
         let mut mask = Mask::new_blank();
 
@@ -115,29 +115,29 @@ impl Masker for TreeSitterMasker {
     }
 }
 
-/// Converts a set of byte-indexed [`Span`]s to char-index Spans, in-place.
+/// Converts a set of byte-indexed [`Span`]s to char-index Spans and returns them.
 /// NOTE: Will sort the given slice by their [`Span::start`].
 ///
-/// If any spans overlap, it will remove the second one.
-fn byte_spans_to_char_spans(byte_spans: &mut Vec<Span>, source: &str) {
-    byte_spans.sort_by_key(|s| s.start);
+/// If any spans overlap, it will merge them.
+fn byte_spans_to_char_spans(mut byte_spans: Vec<Span>, source: &str) -> Vec<Span> {
+    byte_spans.sort_unstable_by_key(|s| s.start);
 
-    let cloned = byte_spans.clone();
-
-    let mut i: usize = 0;
-    byte_spans.retain(|cur| {
-        i += 1;
-        if let Some(prev) = cloned.get(i.wrapping_sub(2)) {
-            !cur.overlaps_with(*prev)
-        } else {
-            true
+    // merge overlapping spans
+    let mut spans = Vec::with_capacity(byte_spans.len());
+    for span in byte_spans {
+        match spans.last_mut() {
+            Some(last) if !span.overlaps_with(*last) => spans.push(span),
+            Some(last) => {
+                // ranges overlap, we can merge them
+                last.end = span.end;
+            }
+            None => spans.push(span),
         }
-    });
+    }
 
     let mut last_byte_pos = 0;
     let mut last_char_pos = 0;
-
-    byte_spans.iter_mut().for_each(|span| {
+    spans.iter_mut().for_each(|span| {
         let byte_span = *span;
 
         last_char_pos += source[last_byte_pos..byte_span.start].chars().count();
@@ -147,5 +147,6 @@ fn byte_spans_to_char_spans(byte_spans: &mut Vec<Span>, source: &str) {
         span.end = last_char_pos;
 
         last_byte_pos = byte_span.end;
-    })
+    });
+    spans
 }

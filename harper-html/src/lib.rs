@@ -18,7 +18,7 @@ impl Default for HtmlParser {
     fn default() -> Self {
         Self {
             inner: parsers::Mask::new(
-                TreeSitterMasker::new(tree_sitter_html::language(), Self::node_condition),
+                TreeSitterMasker::new(tree_sitter_html::LANGUAGE.into(), Self::node_condition),
                 PlainEnglish,
             ),
         }
