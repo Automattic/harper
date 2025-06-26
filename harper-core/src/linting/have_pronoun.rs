@@ -1,5 +1,5 @@
+use crate::Token;
 use crate::expr::{AnchorStart, Expr, SequenceExpr};
-use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
