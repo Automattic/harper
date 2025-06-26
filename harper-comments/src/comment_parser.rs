@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use comment_parsers::{Go, JavaDoc, JsDoc, Unit};
+use comment_parsers::{Go, JavaDoc, JsDoc, Solidity, Unit};
 use harper_core::parsers::{self, MarkdownOptions, Parser};
 use harper_core::{MutableDictionary, Token};
 use tree_sitter::Node;
@@ -22,44 +22,46 @@ impl CommentParser {
         markdown_options: MarkdownOptions,
     ) -> Option<Self> {
         let language = match language_id {
-            "rust" => tree_sitter_rust::language(),
-            "typescriptreact" => tree_sitter_typescript::language_tsx(),
-            "typescript" => tree_sitter_typescript::language_typescript(),
-            "python" => tree_sitter_python::language(),
-            "nix" => tree_sitter_nix::language(),
-            "javascript" => tree_sitter_javascript::language(),
-            "javascriptreact" => tree_sitter_typescript::language_tsx(),
-            "go" => tree_sitter_go::language(),
-            "c" => tree_sitter_c::language(),
-            "cpp" => tree_sitter_cpp::language(),
-            "cmake" => tree_sitter_cmake::language(),
-            "ruby" => tree_sitter_ruby::language(),
-            "swift" => tree_sitter_swift::language(),
-            "csharp" => tree_sitter_c_sharp::language(),
-            "toml" => tree_sitter_toml::language(),
-            "lua" => tree_sitter_lua::language(),
-            "shellscript" => tree_sitter_bash::language(),
-            "java" => tree_sitter_java::language(),
-            "haskell" => tree_sitter_haskell::language(),
-            "php" => tree_sitter_php::language_php(),
-            "dart" => tree_sitter_dart::language(),
-            "scala" => tree_sitter_scala::language(),
-            "kotlin" => tree_sitter_kotlin::language(),
+            "cmake" => tree_sitter_cmake::LANGUAGE,
+            "cpp" => tree_sitter_cpp::LANGUAGE,
+            "csharp" => tree_sitter_c_sharp::LANGUAGE,
+            "c" => tree_sitter_c::LANGUAGE,
+            "dart" => harper_tree_sitter_dart::LANGUAGE,
+            "go" => tree_sitter_go::LANGUAGE,
+            "haskell" => tree_sitter_haskell::LANGUAGE,
+            "javascriptreact" => tree_sitter_typescript::LANGUAGE_TSX,
+            "javascript" => tree_sitter_javascript::LANGUAGE,
+            "java" => tree_sitter_java::LANGUAGE,
+            "kotlin" => tree_sitter_kotlin_ng::LANGUAGE,
+            "lua" => tree_sitter_lua::LANGUAGE,
+            "nix" => tree_sitter_nix::LANGUAGE,
+            "php" => tree_sitter_php::LANGUAGE_PHP,
+            "python" => tree_sitter_python::LANGUAGE,
+            "ruby" => tree_sitter_ruby::LANGUAGE,
+            "rust" => tree_sitter_rust::LANGUAGE,
+            "scala" => tree_sitter_scala::LANGUAGE,
+            "shellscript" => tree_sitter_bash::LANGUAGE,
+            "solidity" => tree_sitter_solidity::LANGUAGE,
+            "swift" => tree_sitter_swift::LANGUAGE,
+            "toml" => tree_sitter_toml_ng::LANGUAGE,
+            "typescriptreact" => tree_sitter_typescript::LANGUAGE_TSX,
+            "typescript" => tree_sitter_typescript::LANGUAGE_TYPESCRIPT,
             _ => return None,
         };
 
         let comment_parser: Box<dyn Parser> = match language_id {
+            "go" => Box::new(Go::new_markdown(markdown_options)),
+            "java" => Box::new(JavaDoc::default()),
             "javascriptreact" | "typescript" | "typescriptreact" | "javascript" => {
                 Box::new(JsDoc::new_markdown(markdown_options))
             }
-            "java" => Box::new(JavaDoc::default()),
-            "go" => Box::new(Go::new_markdown(markdown_options)),
+            "solidity" => Box::new(Solidity::new_markdown(markdown_options)),
             _ => Box::new(Unit::new_markdown(markdown_options)),
         };
 
         Some(Self {
             inner: parsers::Mask::new(
-                CommentMasker::new(language, Self::node_condition),
+                CommentMasker::new(language.into(), Self::node_condition),
                 comment_parser,
             ),
         })
@@ -77,31 +79,32 @@ impl CommentParser {
     /// [`Self::new_from_language_id`]
     fn filename_to_filetype(path: &Path) -> Option<&'static str> {
         Some(match path.extension()?.to_str()? {
-            "py" => "python",
-            "nix" => "nix",
-            "rs" => "rust",
-            "ts" => "typescript",
-            "tsx" => "typescriptreact",
+            "bash" => "shellscript",
+            "c" => "c",
+            "cmake" => "cmake",
+            "cpp" => "cpp",
+            "cs" => "csharp",
+            "dart" => "dart",
+            "go" => "go",
+            "h" => "cpp",
+            "hs" => "haskell",
+            "java" => "java",
             "js" => "javascript",
             "jsx" => "javascriptreact",
-            "go" => "go",
-            "c" => "c",
-            "cpp" => "cpp",
-            "cmake" => "cmake",
-            "h" => "cpp",
-            "rb" => "ruby",
-            "swift" => "swift",
-            "cs" => "csharp",
-            "toml" => "toml",
-            "lua" => "lua",
-            "sh" => "shellscript",
-            "bash" => "shellscript",
-            "java" => "java",
-            "hs" => "haskell",
-            "php" => "php",
-            "dart" => "dart",
-            "scala" | "sbt" | "mill" => "scala",
             "kt" | "kts" => "kotlin",
+            "lua" => "lua",
+            "nix" => "nix",
+            "php" => "php",
+            "py" => "python",
+            "rb" => "ruby",
+            "rs" => "rust",
+            "scala" | "sbt" | "mill" => "scala",
+            "sh" => "shellscript",
+            "sol" => "solidity",
+            "swift" => "swift",
+            "toml" => "toml",
+            "ts" => "typescript",
+            "tsx" => "typescriptreact",
             _ => return None,
         })
     }

@@ -1862,7 +1862,7 @@ Carrera/OgS
 Carrie/O>g
 Carrier/Og
 Carrillo/Og
-Carroll/ONg
+Carroll/Og
 Carson/Og
 Carter/Og
 Cartersville/Og
@@ -4375,7 +4375,7 @@ Hayworth/Og
 Hazel/Og
 Hazleton/Og
 Hazlitt/g
-He/IOg
+He/Ia3Og            # I~pronoun a~personal 3~person .~singular s~subject / Og~proper noun+possessive
 Head/Og
 Healey/Og
 Healy/Og
@@ -4734,7 +4734,7 @@ Hymen/Og
 Hyperion/Og
 Hyundai/Ng
 Hz/g
-I/I~f
+I/~Ia1.s            # I~pronoun a~personal 1~person .~singular s~subject
 I'd/~
 I'd've/
 I'll/~
@@ -11901,7 +11901,7 @@ airbox/NSg
 airbrush/NVgdSG
 airbus/~NgS
 aircon/Ng
-aircraft/~Ng
+aircraft/~N9g       # singular and plural
 aircraftman/N
 aircraftmen/9
 aircrew/~NS
@@ -14504,8 +14504,8 @@ bicarb/NgS
 bicarbonate/~NgS
 bicentenary/NSg
 bicentennial/~JNSg
-bicep/NgS
-biceps/Ng
+bicep/Ng
+biceps/N9g          # singular and plural
 bicker/VNgd>ZGS
 bickerer/Ng
 biconcave/J
@@ -24623,7 +24623,7 @@ firsthand/~JR
 firth/~Ng
 firths/N
 fiscal/~JNgYS
-fish/~NVgd>SZG
+fish/~N9Vgd>SZG
 fishbowl/~NSg
 fishcake/NSg
 fisher/~Ng
@@ -27163,7 +27163,7 @@ gyrofrequency/NgS
 gyroscope/NgS
 gyroscopic/J
 gyve/NVgGdS
-h/~NVJn>SXZGvz
+h/~NVJnSXZGvz       # removed `>` 'her' is not comparative of 'h'
 h'm/
 ha/~
 haberdasher/NSg
@@ -27581,7 +27581,7 @@ hazing/~NVg
 hazmat/~N
 hazy/JN>Tp
 hdqrs/N
-he/~*s3
+he/~Ia3s*           # I~pronoun a~personal 3~person .~singular s~subject *:3pers-sing-subj
 he'd/
 he'll/
 he's/~
@@ -27847,7 +27847,7 @@ heppest/J
 heptagon/NgS
 heptagonal/J
 heptathlon/NSg
-her/~Do35
+her/~D5Ia3.o        # I~pronoun a~personal 3~person .~singular o~object / D5=determiner+possessive
 herald/~NVSgdG
 heralded/~VU
 heraldic/~J
@@ -27913,7 +27913,7 @@ herpetology/Ng
 herring/~NgS
 herringbone/NVg
 hers/~I*
-herself/~IF
+herself/~Ia3.F      # I~pronoun a~personal 3~person .~singular F~reflexive
 hertz/~Ng
 hesitance/Ng
 hesitancy/Ng
@@ -28014,8 +28014,8 @@ hillside/~NSg
 hilltop/~NgS
 hilly/~Jp>T
 hilt/~NVgS
-him/~Io3
-himself/~IF
+him/~Ia3.o          # I~pronoun a~personal 3~person .~singular o~object
+himself/~Ia3.F      # I~pronoun a~personal 3~person .~singular F~reflexive
 hind/~JNg>ZS
 hinder/~VJNGd
 hindered/~VU
@@ -28788,7 +28788,7 @@ hysteria/~Ng
 hysteric/JNSg
 hysterical/~JY
 hysterics/Ng
-i/~I
+i/~
 i.e./~
 iMac/NgS
 iOS/Og
@@ -30327,7 +30327,7 @@ issue/~NVrdSgG
 issuer/~NgS
 isthmian/~JN
 isthmus/~NgS
-it/~*so3
+it/~Ia3so*          # I~pronoun a~personal 3~person .~singular s~subject o~object *~3pers-sing-subj
 it'd/
 it'll/
 it's/~
@@ -30353,7 +30353,7 @@ iterator/NS
 itinerant/~JNSg
 itinerary/~NJSg
 its/~ID*5
-itself/~IF
+itself/~Ia3.F       # I~pronoun a~personal 3~person .~singular F~reflexive
 iv/~U
 ivory/~NJSg
 ivy/~NdSg
@@ -33032,7 +33032,7 @@ mayst/V
 maze/~NVgS
 mazurka/NgS
 mdse/N
-me/~I1o
+me/~Ia1.o           # I~pronoun a~personal 1~person .~singular o~object
 mead/~Ng
 meadow/~NVgS
 meadowlark/NgS
@@ -34714,8 +34714,7 @@ myriad/~NJSg
 myrmidon/NgS
 myrrh/Ng
 myrtle/~NSg
-mys/
-myself/~IF
+myself/~Ia1.F       # I~pronoun a~personal 1~person .~singular F~reflexive
 mysterious/~JpY
 mysteriousness/Ng
 mystery/~NSg
@@ -36206,7 +36205,7 @@ onionskin/Ng
 online/~JV
 onlooker/NSg
 onlooking/J
-only/~
+only/~JRC
 onomatopoeia/Ng
 onomatopoeic/J
 onomatopoetic/J
@@ -36485,8 +36484,8 @@ oughtn't/m
 ounce/~NgS
 our/~D5
 ours/~I
-ourself/IF          # reflexive of the 'Royal We'
-ourselves/~IF
+ourself/Ia1F        # I:pronoun a:personal 1:person .~singular F:reflexive (of the 'Royal We')
+ourselves/~Ia1:F    # I:pronoun a:personal 1:person :~plural F:reflexive
 oust/~VZGd>S
 ouster/~NVg
 out/~PNVJSzGgd>R
@@ -39477,7 +39476,7 @@ prepaid/~VJN
 prepandemic/J
 preparation/~NSg
 preparatory/~J
-prepare/~VNGdS
+prepare/~VGdS       # remove `N` noun sense is obsolete
 prepared/~JVUp
 preparedness/~NUg
 prepay/VGSL
@@ -43742,7 +43741,7 @@ shaver/Ng
 shaving/~NVg
 shawl/~NVgS
 shay/~NgS
-she/~*s3
+she/~Ia3s*          # I~pronoun a:personal 3:person .~singular s~subject *:3rd pers. sing. subj.
 she'd/
 she'll/
 she's/
@@ -43760,7 +43759,7 @@ shed/~VNgS
 shedding/~VN
 sheen/~JNVg
 sheeny/NJT>
-sheep/~Ng
+sheep/~N9g
 sheepdog/NVgS
 sheepfold/NSg
 sheepherder/NgS
@@ -47894,11 +47893,11 @@ theirs/~I
 theism/~Ng
 theist/NSg
 theistic/~J
-them/~Io3g          # them's as in (one of) them is/has
+them/~Ia3:og        # I~pronoun a~personal 3~person :~plural o~object (g=them's as in (one of) them is/has)
 thematic/~JNQ
 thematically/
 theme/~NVdSgG
-themselves/~IF
+themselves/~Ia3:F   # I~pronoun a~personal 3~person :~plural F~reflexive
 then/~JNCg
 thence/~
 thenceforth/
@@ -47967,7 +47966,7 @@ thesis/~Ng
 thespian/JNSg
 theta/~NSg
 thew/NVgS
-they/~s3:*
+they/~Ia3:s         # I~pronoun a~personal 3~person :~plural s:~subject
 they'd/
 they'll/
 they're/
@@ -50166,7 +50165,7 @@ urologist/NgS
 urology/Ng
 ursine/JN
 urticaria/Ng
-us/~Io1
+us/~Ia1:o           # I~pronoun a~personal 1~person :~plural o~object
 usability/~Ng
 usable/~JUr
 usage/~NSg
@@ -51188,7 +51187,7 @@ wayside/NJSg
 wayward/~JpY
 waywardness/Ng
 wazoo/NS
-we/~w
+we/~Ia1:so          # I~pronoun a~personal 1~person :~plural s~subject
 we'd/
 we'll/
 we're/~
@@ -52198,7 +52197,7 @@ yon/~I
 yonder/~JN
 yonks/N
 yore/Ng
-you/~:so2
+you/~Ia2.:so        # I~pronoun a~personal 2~person :~plural s:~subject o~object
 you'd/
 you'll/
 you're/~
@@ -52208,8 +52207,8 @@ youngish/J
 youngster/~NgS
 your/~D5
 yours/~I
-yourself/~IF
-yourselves/~IF
+yourself/~Ia2.F     # I~pronoun a~personal 2~person F~reflexive
+yourselves/~Ia2:F   # I~pronoun a~personal 2~person :~plural F~reflexive
 youth/~Ng
 youthful/~JYp
 youthfulness/Ng
@@ -52449,7 +52448,6 @@ Graphviz/Sg
 Gravatar/Og
 HDR/J               # high dynamic range
 HQL/N
-Harper/Sg           # surname; grammar checker
 Hasan/OSg           # surname, given name
 Hiera/Sg
 Holmdel/Sg
@@ -52831,6 +52829,7 @@ double-decker/J
 drop in/V
 drop-in/NgSJ
 e-book/NgS
+each other/I
 easy peasy/J
 editor in chief/N
 end user/NgS
@@ -53007,6 +53006,7 @@ Old World/Og
 old-world/J
 on-off/J
 once-in-a-lifetime/J
+one another/I
 one-handed/J
 one-man/J
 one-off/J

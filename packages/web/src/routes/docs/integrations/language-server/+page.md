@@ -282,6 +282,7 @@ These configs are under the `markdown` key:
 | Rust              |            `rust`             |            ✅ |
 | Scala             |           `scala`             |            ✅ |
 | Shell/Bash Script |         `shellscript`         |            ✅ |
+| Solidity          |          `solidity`           |            ✅ |
 | Swift             |            `swift`            |            ✅ |
 | TOML              |            `toml`             |            ✅ |
 | TypeScript        |         `typescript`          |            ✅ |
