@@ -73,6 +73,7 @@ async function enableDefaultDomains() {
 		'www.slatejs.org',
 		'localhost',
 		'writewithharper.com',
+		'prosemirror.net',
 	];
 
 	for (const item of defaultEnabledDomains) {
