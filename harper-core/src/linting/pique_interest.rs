@@ -15,7 +15,7 @@ impl Default for PiqueInterest {
                 "peak", "peaked", "peek", "peeked", "peeking", "peaking",
             ]))
             .then_whitespace()
-            .then_not_plural_nominal()
+            .then_non_plural_nominal()
             .then_whitespace()
             .t_aco("interest");
 

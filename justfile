@@ -10,7 +10,7 @@ build-wasm:
 
 # Build `harper.js` with all size optimizations available.
 build-harperjs: build-wasm 
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
@@ -24,7 +24,7 @@ build-harperjs: build-wasm
   ./docs.sh
 
 test-harperjs: build-harperjs
-  #!/bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   pnpm install
@@ -37,7 +37,7 @@ test-harperjs: build-harperjs
   pnpm start
 
 test-obsidian: build-obsidian
-  #!/bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   pnpm install
@@ -45,7 +45,7 @@ test-obsidian: build-obsidian
   pnpm test
 
 dev-wp: build-harperjs
-  #! /bin/bash
+  #!/usr/bin/env bash
 
   set -eo pipefail
 
@@ -56,7 +56,7 @@ dev-wp: build-harperjs
 
 # Build the WordPress plugin
 build-wp: build-harperjs
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   cd "{{justfile_directory()}}/packages/wordpress-plugin"
@@ -66,7 +66,7 @@ build-wp: build-harperjs
 
 # Compile the website's dependencies and start a development server. Note that if you make changes to `harper-wasm`, you will have to re-run this command.
 dev-web: build-harperjs
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   cd "{{justfile_directory()}}/packages/web"
@@ -75,7 +75,7 @@ dev-web: build-harperjs
 
 # Build the Harper website.
 build-web: build-harperjs
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
   
   cd "{{justfile_directory()}}/packages/web"
@@ -84,7 +84,7 @@ build-web: build-harperjs
 
 # Build the Harper Obsidian plugin.
 build-obsidian: build-harperjs
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
   
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
@@ -96,7 +96,7 @@ build-obsidian: build-harperjs
 
 # Build the Chrome extension.
 build-chrome-plugin: build-harperjs
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
   
   cd "{{justfile_directory()}}/packages/chrome-plugin"
@@ -106,7 +106,7 @@ build-chrome-plugin: build-harperjs
 
 # Start a development server for the Chrome extension.
 dev-chrome-plugin: build-harperjs
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
   
   cd "{{justfile_directory()}}/packages/chrome-plugin"
@@ -116,7 +116,7 @@ dev-chrome-plugin: build-harperjs
 
 # Build the Firefox extension.
 build-firefox-plugin: build-harperjs
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
   
   cd "{{justfile_directory()}}/packages/chrome-plugin"
@@ -125,7 +125,7 @@ build-firefox-plugin: build-harperjs
   pnpm zip-for-firefox
 
 test-chrome-plugin: build-chrome-plugin
-  #!/bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   pnpm install
@@ -135,7 +135,7 @@ test-chrome-plugin: build-chrome-plugin
 
 # Run VSCode plugin unit and integration tests.
 test-vscode:
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   ext_dir="{{justfile_directory()}}/packages/vscode-plugin"
@@ -162,7 +162,7 @@ test-vscode:
 # Build and package the Visual Studio Code extension.
 # If `target` is passed, it is assumed that `harper-ls` has been compiled beforehand and is in `packages/vscode-plugin/bin`. This is used in CI.
 package-vscode target="":
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   ext_dir="{{justfile_directory()}}/packages/vscode-plugin"
@@ -190,7 +190,7 @@ package-vscode target="":
   fi
 
 update-vscode-linters:
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   linters=$(
@@ -223,7 +223,7 @@ update-vscode-linters:
 
 # Run Rust formatting and linting.
 check-rust:
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   cargo fmt -- --check
@@ -231,7 +231,7 @@ check-rust:
 
 # Perform format and type checking.
 check: check-rust build-web
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   pnpm install
@@ -246,7 +246,7 @@ setup: build-harperjs test-harperjs test-vscode build-web build-wp build-obsidia
 
 # Perform full format and type checking, build all projects and run all tests. Run this before pushing your code.
 precommit: check test build-harperjs build-obsidian build-web build-wp build-firefox-plugin build-chrome-plugin 
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   cargo build --all-targets
@@ -259,7 +259,7 @@ install:
 
 # Run `harper-cli` on the Harper repository
 dogfood:
-  #! /bin/bash
+  #!/usr/bin/env bash
   cargo build --release
   for file in `fd -e rs`
   do
@@ -285,7 +285,7 @@ spans file:
 
 # Add a noun to Harper's curated dictionary.
 addnoun noun:
-  #! /bin/bash
+  #!/usr/bin/env bash
   DICT_FILE=./harper-core/dictionary.dict 
 
   cat $DICT_FILE | grep "^{{noun}}/"
@@ -314,7 +314,7 @@ addnoun noun:
 
 # Search Harper's curated dictionary for a specific word
 searchdictfor word:
-  #! /bin/bash
+  #!/usr/bin/env bash
   if command -v rg > /dev/null; then
     cargo run --bin harper-cli -- words | rg {{word}}
   else
@@ -323,7 +323,7 @@ searchdictfor word:
 
 # Find words in the user's `harper-ls/dictionary.txt` for words already in the curated dictionary.
 userdictoverlap:
-  #! /bin/bash
+  #!/usr/bin/env bash
   USER_DICT_FILE="$HOME/.config/harper-ls/dictionary.txt"
 
   while read -r line; do
@@ -338,7 +338,7 @@ getforms word:
   cargo run --bin harper-cli -- forms {{word}}
 # Get a random sample of words from Harper's dictionary and list all forms of each.
 sampleforms count:
-  #!/bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
   DICT_FILE=./harper-core/dictionary.dict 
   # USER_DICT_FILE="$HOME/.config/harper-ls/dictionary.txt"
@@ -364,7 +364,7 @@ sampleforms count:
   cargo run --bin harper-cli -- forms $words
 
 bump-versions: update-vscode-linters
-  #! /bin/bash
+  #!/usr/bin/env bash
   set -eo pipefail
 
   cargo ws version --no-git-push --no-git-tag --force '*'
@@ -397,7 +397,7 @@ bump-versions: update-vscode-linters
 
 # Enter an infinite loop of property testing until a bug is found.
 fuzz:
-  #!/usr/bin/bash
+  #!/usr/bin/env bash
   
   while true
   do
@@ -408,7 +408,7 @@ fuzz:
   done
 
 registerlinter module name:
-  #! /bin/bash
+  #!/usr/bin/env bash
 
   D="{{justfile_directory()}}/harper-core/src/linting"
 

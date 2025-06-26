@@ -112,6 +112,12 @@ pub fn lint_group() -> LintGroup {
             "Use `as far back as` for referring to a time in the past.",
             "Corrects nonstandard `as early back as` to `as far back as`."
         ),
+        "AsItHappens" => (
+            ["as it so happens"],
+            ["as it happens"],
+            "Did you mean `as it happens`?",
+            "Corrects `as it so happens` to `as it happens`."
+        ),
         "AsOfLate" => (
             ["as of lately"],
             ["as of late"],
@@ -370,6 +376,12 @@ pub fn lint_group() -> LintGroup {
             ["en masse"],
             "Did you mean `en masse`?",
             "Detects variants like `on mass` or `in mass` and suggests `en masse`."
+        ),
+        "EnRoute" => (
+            ["on route to", "in route to", "on-route to", "in-route to"],
+            ["en route to", "en-route to"],
+            "Did you mean `en route`?",
+            "Detects variants like `on route` or `in route` and suggests `en route`."
         ),
         "EverPresent" => (
             ["ever present"],
@@ -959,10 +971,10 @@ pub fn lint_group() -> LintGroup {
             "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration."
         ),
         "OnTheSpurOfTheMoment" => (
-            ["on the spurt of the moment"],
+            ["on the spurt of the moment", "at the spur of the moment", "in the spur of the moment"],
             ["on the spur of the moment"],
             "Use the correct phrase for acting spontaneously.",
-            "Ensures the correct use of `on the spur of the moment`, avoiding confusion with the incorrect `spurt` variation."
+            "Ensures the correct use of `on the spur of the moment`, avoiding nonstandard variations."
         ),
         "OperativeSystem" => (
             ["operative system"],
@@ -1093,6 +1105,12 @@ pub fn lint_group() -> LintGroup {
             ["sneaking suspicion"],
             "Did you mean `sneaking suspicion`?",
             "Changes `sneaky suspicion` to `sneaking suspicion`."
+        ),
+        "SomebodyElses" => (
+            ["somebody's else", "somebody's else's"],
+            ["somebody else's"],
+            "This should be `somebody else's`?",
+            "Corrects `somebody else's` when the `'s` is in the wrong place."
         ),
         "SomeOfThe" => (
             ["some the"],

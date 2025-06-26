@@ -79,6 +79,6 @@ impl UPOS {
     }
 
     pub fn is_nominal(&self) -> bool {
-        matches!(self, Self::NOUN | Self::PROPN)
+        matches!(self, Self::NOUN | Self::PROPN | Self::PRON)
     }
 }
