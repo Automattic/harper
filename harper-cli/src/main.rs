@@ -20,7 +20,7 @@ use harper_core::{
     MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
 };
 use harper_literate_haskell::LiterateHaskellParser;
-use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunker};
+use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
 use harper_stats::Stats;
 use serde::Serialize;
 
@@ -451,7 +451,7 @@ fn main() -> anyhow::Result<()> {
             lr,
             dim: embed_dim,
         } => {
-            let chunker = BurnChunker::train_cpu(&datasets, &test_file, embed_dim, epochs, lr);
+            let chunker = BurnChunkerCpu::train_cpu(&datasets, &test_file, embed_dim, epochs, lr);
             chunker.save_to(output);
 
             Ok(())

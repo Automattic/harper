@@ -73,12 +73,18 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
             .reshape([1, labels.len()])
     }
 
-    pub fn save_to(&self, path: impl AsRef<Path>) {
+    pub fn save_to(&self, dir: impl AsRef<Path>) {
+        let dir = dir.as_ref();
+        std::fs::create_dir_all(dir).unwrap();
+
         let recorder = NamedMpkFileRecorder::<FullPrecisionSettings>::new();
         self.model
             .clone()
-            .save_file(path.as_ref(), &recorder)
-            .expect("Should be able to save the model");
+            .save_file(dir.join("model.mpk"), &recorder)
+            .unwrap();
+
+        let vocab_bytes = serde_json::to_vec(&self.vocab).unwrap();
+        std::fs::write(dir.join("vocab.json"), vocab_bytes).unwrap();
     }
 
     pub fn train(
@@ -235,7 +241,9 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     }
 }
 
-impl BurnChunker<Autodiff<NdArray>> {
+pub type BurnChunkerCpu = BurnChunker<Autodiff<NdArray>>;
+
+impl BurnChunkerCpu {
     pub fn train_cpu(
         training_files: &[impl AsRef<Path>],
         test_file: &impl AsRef<Path>,
