@@ -36,8 +36,7 @@ impl ExprLinter for BoringWords {
             lint_kind: LintKind::Enhancement,
             suggestions: vec![],
             message: format!(
-                "“{}” is a boring word. Try something a little more exotic.",
-                matched_word
+                "“{matched_word}” is a boring word. Try something a little more exotic."
             ),
             priority: 127,
         })
