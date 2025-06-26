@@ -13,7 +13,9 @@ export type Request =
 	| GetDomainStatusRequest
 	| GetDefaultStatusRequest
 	| AddToUserDictionaryRequest
-	| IgnoreLintRequest;
+	| SetUserDictionaryRequest
+	| IgnoreLintRequest
+	| GetUserDictionaryRequest;
 
 export type Response =
 	| LintResponse
@@ -22,7 +24,8 @@ export type Response =
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
 	| GetDomainStatusResponse
-	| GetDefaultStatusResponse;
+	| GetDefaultStatusResponse
+	| GetUserDictionaryResponse;
 
 export type LintRequest = {
 	kind: 'lint';
@@ -105,7 +108,21 @@ export type SetDefaultStatusRequest = {
 
 export type AddToUserDictionaryRequest = {
 	kind: 'addToUserDictionary';
-	word: string;
+	words: string[];
+};
+
+export type SetUserDictionaryRequest = {
+	kind: 'setUserDictionary';
+	words: string[];
+};
+
+export type GetUserDictionaryRequest = {
+	kind: 'getUserDictionary';
+};
+
+export type GetUserDictionaryResponse = {
+	kind: 'getUserDictionary';
+	words: string[];
 };
 
 export type IgnoreLintRequest = {

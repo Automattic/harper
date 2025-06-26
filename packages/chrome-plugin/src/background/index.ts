@@ -10,6 +10,7 @@ import {
 	type GetDomainStatusResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
+	type GetUserDictionaryResponse,
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
@@ -19,6 +20,7 @@ import {
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
+	type SetUserDictionaryRequest,
 	type UnitResponse,
 	createUnitResponse,
 } from '../protocol';
@@ -112,6 +114,10 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleSetDefaultStatus(message);
 		case 'getDefaultStatus':
 			return handleGetDefaultStatus();
+		case 'getUserDictionary':
+			return handleGetUserDictionary();
+		case 'setUserDictionary':
+			return handleSetUserDictionary(message);
 	}
 }
 
@@ -188,10 +194,23 @@ async function handleGetLintDescriptions(
 	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptionsHTML() };
 }
 
-async function handleAddToUserDictionary(req: AddToUserDictionaryRequest): Promise<UnitResponse> {
-	await addToDictionary(req.word);
+async function handleSetUserDictionary(req: SetUserDictionaryRequest): Promise<UnitResponse> {
+	await resetDictionary();
+	await addToDictionary(req.words);
 
 	return createUnitResponse();
+}
+
+async function handleAddToUserDictionary(req: AddToUserDictionaryRequest): Promise<UnitResponse> {
+	await addToDictionary(req.words);
+
+	return createUnitResponse();
+}
+
+async function handleGetUserDictionary(): Promise<GetUserDictionaryResponse> {
+	const dict = await getUserDictionary();
+
+	return { kind: 'getUserDictionary', words: dict };
 }
 
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
@@ -283,14 +302,21 @@ async function isDomainSet(domain: string): Promise<boolean> {
 	return typeof resp[formatDomainKey(domain)] == 'boolean';
 }
 
-/** Add a word to the persistent user dictionary. */
-async function addToDictionary(word: string): Promise<void> {
-	const words = await linter.exportWords();
-	words.push(word);
+/** Reset the persistent user dictionary. */
+async function resetDictionary(): Promise<void> {
+	await chrome.storage.local.set({ userDictionary: null });
+
+	initializeLinter(await linter.getDialect());
+}
+
+/** Add words to the persistent user dictionary. */
+async function addToDictionary(words: string[]): Promise<void> {
+	const exported = await linter.exportWords();
+	exported.push(...words);
 
 	await Promise.all([
-		linter.importWords(words),
-		chrome.storage.local.set({ userDictionary: words }),
+		linter.importWords(exported),
+		chrome.storage.local.set({ userDictionary: exported }),
 	]);
 }
 
