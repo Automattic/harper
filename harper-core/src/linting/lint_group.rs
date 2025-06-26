@@ -46,6 +46,7 @@ use super::hyphenate_number_day::HyphenateNumberDay;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::its_contraction::ItsContraction;
 use super::left_right_hand::LeftRightHand;
+use super::less_worse::LessWorse;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
@@ -399,6 +400,7 @@ impl LintGroup {
         insert_pattern_rule!(HyphenateNumberDay, true);
         insert_pattern_rule!(ItsContraction, true);
         insert_pattern_rule!(LeftRightHand, true);
+        insert_pattern_rule!(LessWorse, true);
         insert_struct_rule!(LetsConfusion, true);
         insert_pattern_rule!(Likewise, true);
         insert_struct_rule!(LongSentences, true);

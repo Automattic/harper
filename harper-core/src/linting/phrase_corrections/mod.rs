@@ -136,6 +136,12 @@ pub fn lint_group() -> LintGroup {
             "`at face value is more idiomatic and more common.",
             "Corrects `on face value` to the more usual `at face value`."
         ),
+        "AtTheEndOfTheDay" => (
+            ["in the end of the day"],
+            ["at the end of the day"],
+            "Did you mean `at the end of the day`?",
+            "Corrects `in the end of the day` to `at the end of the day`."
+        ),
         "AvoidAndAlso" => (
             ["and also"],
             ["and"],
