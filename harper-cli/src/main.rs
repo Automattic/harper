@@ -300,9 +300,7 @@ fn main() -> anyhow::Result<()> {
             let summary = match &entry_in_dict {
                 Some((dict_word, dict_annot)) => {
                     let mut status_summary = if dict_annot.is_empty() {
-                        format!(
-                            "'{dict_word}' is already in the dictionary but not annotated."
-                        )
+                        format!("'{dict_word}' is already in the dictionary but not annotated.")
                     } else {
                         format!(
                             "'{dict_word}' is already in the dictionary with annotation `{dict_annot}`."
