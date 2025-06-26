@@ -79,16 +79,14 @@ macro_rules! generate_metadata_queries {
                                 [< is_ $sub >]: Some(true),
                                 ..
                             })
-                        )
-                    }
-
+                        ) }
 
                     #[doc = concat!("Checks if the word is definitely a ", stringify!($category), " and more specifically is labeled as __not__ (a) ", stringify!($sub), ".")]
-                    pub fn [< is_not_ $sub _ $category >](&self) -> bool {
+                    pub fn [< is_non_ $sub _ $category >](&self) -> bool {
                         matches!(
                             self.$category,
                             Some([< $category:camel Data >]{
-                                [< is_ $sub >]: Some(false),
+                                [< is_ $sub >]: None | Some(false),
                                 ..
                             })
                         )
@@ -150,6 +148,7 @@ impl WordMetadata {
                 } else {
                     self.noun = Some(NounData {
                         is_proper: Some(false),
+                        is_singular: None,
                         is_plural: None,
                         is_possessive: None,
                     })
@@ -172,6 +171,7 @@ impl WordMetadata {
                 } else {
                     self.noun = Some(NounData {
                         is_proper: Some(true),
+                        is_singular: None,
                         is_plural: None,
                         is_possessive: None,
                     })
@@ -305,13 +305,77 @@ impl WordMetadata {
 
     generate_metadata_queries!(
         noun has proper, plural, possessive.
-        pronoun has plural, possessive, reflexive.
+        pronoun has personal, singular, plural, possessive, reflexive, object.
         determiner has demonstrative, possessive.
         verb has linking, auxiliary.
         conjunction has.
         adjective has.
         adverb has
     );
+
+    pub fn is_first_person_plural_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::First),
+                is_plural: Some(true),
+                ..
+            })
+        )
+    }
+
+    pub fn is_first_person_singular_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::First),
+                is_singular: Some(true),
+                ..
+            })
+        )
+    }
+
+    pub fn is_third_person_plural_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Third),
+                is_plural: Some(true),
+                ..
+            })
+        )
+    }
+
+    pub fn is_third_person_singular_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Third),
+                is_singular: Some(true),
+                ..
+            })
+        )
+    }
+
+    pub fn is_third_person_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Third),
+                ..
+            })
+        )
+    }
+
+    pub fn is_second_person_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Second),
+                ..
+            })
+        )
+    }
 
     pub fn is_verb_lemma(&self) -> bool {
         matches!(
@@ -358,6 +422,23 @@ impl WordMetadata {
         self.noun.is_some() || self.pronoun.is_some()
     }
 
+    /// Checks if the word is definitely a nominal and more specifically is labeled as (a) singular.
+    pub fn is_singular_nominal(&self) -> bool {
+        matches!(
+            self.noun,
+            Some(NounData {
+                is_singular: None | Some(true),
+                ..
+            })
+        ) || matches!(
+            self.pronoun,
+            Some(PronounData {
+                is_singular: None | Some(true),
+                ..
+            })
+        )
+    }
+
     /// Checks if the word is definitely a nominal and more specifically is labeled as (a) plural.
     pub fn is_plural_nominal(&self) -> bool {
         matches!(
@@ -392,25 +473,42 @@ impl WordMetadata {
         )
     }
 
-    /// Checks if the word is definitely a nominal and more specifically is labeled as __not__ (a) plural.
-    pub fn is_not_plural_nominal(&self) -> bool {
+    /// Checks if the word is definitely a nominal and more specifically is labeled as __not__ (a) singular.
+    pub fn is_non_singular_nominal(&self) -> bool {
         matches!(
             self.noun,
             Some(NounData {
-                is_plural: Some(false),
+                is_singular: Some(false),
                 ..
             })
         ) || matches!(
             self.pronoun,
             Some(PronounData {
-                is_plural: Some(false),
+                is_singular: Some(false),
+                ..
+            })
+        )
+    }
+
+    /// Checks if the word is definitely a nominal and more specifically is labeled as __not__ (a) plural.
+    pub fn is_non_plural_nominal(&self) -> bool {
+        matches!(
+            self.noun,
+            Some(NounData {
+                is_plural: None | Some(false),
+                ..
+            })
+        ) || matches!(
+            self.pronoun,
+            Some(PronounData {
+                is_plural: None | Some(false),
                 ..
             })
         )
     }
 
     /// Checks if the word is definitely a nominal and more specifically is labeled as __not__ (a) possessive.
-    pub fn is_not_possessive_nominal(&self) -> bool {
+    pub fn is_non_possessive_nominal(&self) -> bool {
         matches!(
             self.noun,
             Some(NounData {
@@ -479,11 +577,13 @@ impl VerbData {
     }
 }
 
+// nouns can be both singular and plural: "aircraft", "biceps", "fish", "sheep"
 // TODO other noun properties may be worth adding:
 // TODO count vs mass; abstract
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct NounData {
     pub is_proper: Option<bool>,
+    pub is_singular: Option<bool>,
     pub is_plural: Option<bool>,
     pub is_possessive: Option<bool>,
 }
@@ -493,6 +593,7 @@ impl NounData {
     pub fn or(&self, other: &Self) -> Self {
         Self {
             is_proper: self.is_proper.or(other.is_proper),
+            is_singular: self.is_singular.or(other.is_singular),
             is_plural: self.is_plural.or(other.is_plural),
             is_possessive: self.is_possessive.or(other.is_possessive),
         }
@@ -507,32 +608,31 @@ pub enum Person {
     Third,
 }
 
-// case is a property of pronouns
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
-pub enum Case {
-    Subject,
-    Object,
-}
-
 // TODO for now focused on personal pronouns?
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct PronounData {
+    pub is_personal: Option<bool>,
+    pub is_singular: Option<bool>,
     pub is_plural: Option<bool>,
     pub is_possessive: Option<bool>,
     pub is_reflexive: Option<bool>,
     pub person: Option<Person>,
-    pub case: Option<Case>,
+    pub is_subject: Option<bool>,
+    pub is_object: Option<bool>,
 }
 
 impl PronounData {
     /// Produce a copy of `self` with the known properties of `other` set.
     pub fn or(&self, other: &Self) -> Self {
         Self {
+            is_personal: self.is_personal.or(other.is_personal),
+            is_singular: self.is_singular.or(other.is_singular),
             is_plural: self.is_plural.or(other.is_plural),
             is_possessive: self.is_possessive.or(other.is_possessive),
             is_reflexive: self.is_reflexive.or(other.is_reflexive),
             person: self.person.or(other.person),
-            case: self.case.or(other.case),
+            is_subject: self.is_subject.or(other.is_subject),
+            is_object: self.is_object.or(other.is_object),
         }
     }
 }
@@ -792,25 +892,613 @@ impl Default for DialectFlags {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Dialect, Document, word_metadata::DialectFlags};
+    use crate::{Dictionary, FstDictionary, WordMetadata};
 
-    #[test]
-    fn guess_british_dialect() {
-        let document = Document::new_plain_english_curated("Aluminium was used.");
-        let df = DialectFlags::get_most_used_dialects_from_document(&document);
-        assert!(
-            df.is_dialect_enabled_strict(Dialect::British)
-                && !df.is_dialect_enabled_strict(Dialect::American)
-        );
+    // Helper function to get word metadata from the curated dictionary
+    fn md(word: &str) -> WordMetadata {
+        FstDictionary::curated()
+            .get_word_metadata_str(word)
+            .unwrap_or_else(|| panic!("Word '{}' not found in dictionary", word))
+            .clone()
+    }
+
+    mod dialect {
+        use super::super::{Dialect, DialectFlags};
+        use crate::Document;
+
+        #[test]
+        fn guess_british_dialect() {
+            let document = Document::new_plain_english_curated("Aluminium was used.");
+            let df = DialectFlags::get_most_used_dialects_from_document(&document);
+            assert!(
+                df.is_dialect_enabled_strict(Dialect::British)
+                    && !df.is_dialect_enabled_strict(Dialect::American)
+            );
+        }
+
+        #[test]
+        fn guess_american_dialect() {
+            let document = Document::new_plain_english_curated("Aluminum was used.");
+            let df = DialectFlags::get_most_used_dialects_from_document(&document);
+            assert!(
+                df.is_dialect_enabled_strict(Dialect::American)
+                    && !df.is_dialect_enabled_strict(Dialect::British)
+            );
+        }
+    }
+
+    mod noun {
+        use crate::word_metadata::tests::md;
+
+        #[test]
+        fn puppy_is_noun() {
+            assert!(md("puppy").noun.is_some());
+        }
+
+        #[test]
+        fn prepare_is_not_noun() {
+            assert!(md("prepare").noun.is_none());
+        }
+
+        #[test]
+        fn paris_is_proper_noun() {
+            assert!(md("Paris").noun.unwrap().is_proper.unwrap());
+        }
+
+        #[test]
+        fn permit_is_not_proper_noun() {
+            assert!(matches!(
+                md("lapdog").noun.and_then(|n| n.is_proper),
+                None | Some(false)
+            ));
+        }
+
+        #[test]
+        #[ignore = "noun singular property not implemented yet"]
+        fn hound_is_singular_noun() {
+            assert!(md("hound").noun.unwrap().is_singular.unwrap());
+        }
+
+        #[test]
+        fn pooches_is_not_singular_noun() {
+            assert!(matches!(
+                md("pooches").noun.and_then(|n| n.is_singular),
+                None | Some(false)
+            ));
+        }
+
+        #[test]
+        fn hounds_is_plural_noun() {
+            assert!(md("hounds").noun.unwrap().is_plural.unwrap());
+        }
+
+        #[test]
+        fn pooch_is_not_plural_noun() {
+            assert!(matches!(
+                md("pooch").noun.and_then(|n| n.is_plural),
+                None | Some(false)
+            ));
+        }
+
+        #[test]
+        #[ignore = "noun singular property not implemented yet"]
+        fn fish_is_singular_noun() {
+            assert!(md("fish").noun.unwrap().is_singular.unwrap());
+        }
+
+        #[test]
+        fn fish_is_plural_noun() {
+            assert!(md("fish").noun.unwrap().is_plural.unwrap());
+        }
+
+        #[test]
+        fn fishes_is_plural_noun() {
+            assert!(md("fishes").noun.unwrap().is_plural.unwrap());
+        }
+
+        #[test]
+        #[ignore = "noun singular property not implemented yet"]
+        fn sheep_is_singular_noun() {
+            assert!(md("sheep").noun.unwrap().is_singular.unwrap());
+        }
+
+        #[test]
+        fn sheep_is_plural_noun() {
+            assert!(md("sheep").noun.unwrap().is_plural.unwrap());
+        }
+
+        #[test]
+        #[should_panic]
+        fn sheeps_is_not_word() {
+            md("sheeps");
+        }
+
+        #[test]
+        #[ignore = "noun singular property not implemented yet"]
+        fn bicep_is_singular_noun() {
+            assert!(md("bicep").noun.unwrap().is_singular.unwrap());
+        }
+
+        #[test]
+        #[ignore = "noun singular property not implemented yet"]
+        fn biceps_is_singular_noun() {
+            assert!(md("biceps").noun.unwrap().is_singular.unwrap());
+        }
+
+        #[test]
+        fn biceps_is_plural_noun() {
+            assert!(md("biceps").noun.unwrap().is_plural.unwrap());
+        }
+
+        #[test]
+        #[ignore = "noun singular property not implemented yet"]
+        fn aircraft_is_singular_noun() {
+            assert!(md("aircraft").noun.unwrap().is_singular.unwrap());
+        }
+
+        #[test]
+        #[ignore = "noun plural property not implemented yet"]
+        fn aircraft_is_plural_noun() {
+            assert!(md("aircraft").noun.unwrap().is_plural.unwrap());
+        }
+
+        #[test]
+        #[should_panic]
+        fn aircrafts_is_not_word() {
+            md("aircrafts");
+        }
+
+        #[test]
+        fn dog_apostrophe_s_is_possessive_noun() {
+            assert!(md("dog's").noun.unwrap().is_possessive.unwrap());
+        }
+
+        #[test]
+        fn dogs_is_not_possessive_noun() {
+            assert!(md("dogs").noun.unwrap().is_possessive.is_none());
+        }
+    }
+
+    mod pronoun {
+        use crate::word_metadata::tests::md;
+
+        mod i_me_myself {
+            use crate::word_metadata::tests::md;
+
+            #[test]
+            fn i_is_pronoun() {
+                assert!(md("I").pronoun.is_some());
+            }
+            #[test]
+            fn i_is_personal_pronoun() {
+                assert!(md("I").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn i_is_singular_pronoun() {
+                assert!(md("I").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn i_is_subject_pronoun() {
+                assert!(md("I").pronoun.unwrap().is_subject.unwrap());
+            }
+
+            #[test]
+            fn me_is_pronoun() {
+                assert!(md("me").pronoun.is_some());
+            }
+            #[test]
+            fn me_is_personal_pronoun() {
+                assert!(md("me").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn me_is_singular_pronoun() {
+                assert!(md("me").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn me_is_object_pronoun() {
+                assert!(md("me").pronoun.unwrap().is_object.unwrap());
+            }
+
+            #[test]
+            fn myself_is_pronoun() {
+                assert!(md("myself").pronoun.is_some());
+            }
+            #[test]
+            fn myself_is_personal_pronoun() {
+                assert!(md("myself").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn myself_is_singular_pronoun() {
+                assert!(md("myself").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn myself_is_reflexive_pronoun() {
+                assert!(md("myself").pronoun.unwrap().is_reflexive.unwrap());
+            }
+        }
+
+        mod we_us_ourselves {
+            use crate::word_metadata::tests::md;
+
+            #[test]
+            fn we_is_pronoun() {
+                assert!(md("we").pronoun.is_some());
+            }
+            #[test]
+            fn we_is_personal_pronoun() {
+                assert!(md("we").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn we_is_plural_pronoun() {
+                assert!(md("we").pronoun.unwrap().is_plural.unwrap());
+            }
+            #[test]
+            fn we_is_subject_pronoun() {
+                assert!(md("we").pronoun.unwrap().is_subject.unwrap());
+            }
+
+            #[test]
+            fn us_is_pronoun() {
+                assert!(md("us").pronoun.is_some());
+            }
+            #[test]
+            fn us_is_personal_pronoun() {
+                assert!(md("us").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn us_is_plural_pronoun() {
+                assert!(md("us").pronoun.unwrap().is_plural.unwrap());
+            }
+            #[test]
+            fn us_is_object_pronoun() {
+                assert!(md("us").pronoun.unwrap().is_object.unwrap());
+            }
+
+            #[test]
+            fn ourselves_is_pronoun() {
+                assert!(md("ourselves").pronoun.is_some());
+            }
+            #[test]
+            fn ourselves_is_personal_pronoun() {
+                assert!(md("ourselves").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn ourselves_is_plural_pronoun() {
+                assert!(md("ourselves").pronoun.unwrap().is_plural.unwrap());
+            }
+            #[test]
+            fn ourselves_is_reflexive_pronoun() {
+                assert!(md("ourselves").pronoun.unwrap().is_reflexive.unwrap());
+            }
+        }
+
+        mod you_yourself {
+            use crate::word_metadata::tests::md;
+
+            #[test]
+            fn you_is_pronoun() {
+                assert!(md("you").pronoun.is_some());
+            }
+            #[test]
+            fn you_is_personal_pronoun() {
+                assert!(md("you").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn you_is_singular_pronoun() {
+                assert!(md("you").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn you_is_plural_pronoun() {
+                assert!(md("you").pronoun.unwrap().is_plural.unwrap());
+            }
+            #[test]
+            fn you_is_subject_pronoun() {
+                assert!(md("you").pronoun.unwrap().is_subject.unwrap());
+            }
+            #[test]
+            fn you_is_object_pronoun() {
+                assert!(md("you").pronoun.unwrap().is_object.unwrap());
+            }
+            #[test]
+            fn yourself_is_pronoun() {
+                assert!(md("yourself").pronoun.is_some());
+            }
+            #[test]
+            fn yourself_is_personal_pronoun() {
+                assert!(md("yourself").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn yourself_is_singular_pronoun() {
+                assert!(md("yourself").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn yourself_is_reflexive_pronoun() {
+                assert!(md("yourself").pronoun.unwrap().is_reflexive.unwrap());
+            }
+        }
+
+        mod he_him_himself {
+            use crate::word_metadata::tests::md;
+
+            #[test]
+            fn he_is_pronoun() {
+                assert!(md("he").pronoun.is_some());
+            }
+            #[test]
+            fn he_is_personal_pronoun() {
+                assert!(md("he").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn he_is_singular_pronoun() {
+                assert!(md("he").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn he_is_subject_pronoun() {
+                assert!(md("he").pronoun.unwrap().is_subject.unwrap());
+            }
+
+            #[test]
+            fn him_is_pronoun() {
+                assert!(md("him").pronoun.is_some());
+            }
+            #[test]
+            fn him_is_personal_pronoun() {
+                assert!(md("him").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn him_is_singular_pronoun() {
+                assert!(md("him").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn him_is_object_pronoun() {
+                assert!(md("him").pronoun.unwrap().is_object.unwrap());
+            }
+
+            #[test]
+            fn himself_is_pronoun() {
+                assert!(md("himself").pronoun.is_some());
+            }
+            #[test]
+            fn himself_is_personal_pronoun() {
+                assert!(md("himself").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn himself_is_singular_pronoun() {
+                assert!(md("himself").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn himself_is_reflexive_pronoun() {
+                assert!(md("himself").pronoun.unwrap().is_reflexive.unwrap());
+            }
+        }
+
+        mod she_her_herself {
+            use crate::word_metadata::tests::md;
+
+            #[test]
+            fn she_is_pronoun() {
+                assert!(md("she").pronoun.is_some());
+            }
+            #[test]
+            fn she_is_personal_pronoun() {
+                assert!(md("she").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn she_is_singular_pronoun() {
+                assert!(md("she").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn she_is_subject_pronoun() {
+                assert!(md("she").pronoun.unwrap().is_subject.unwrap());
+            }
+
+            #[test]
+            fn her_is_pronoun() {
+                assert!(md("her").pronoun.is_some());
+            }
+            #[test]
+            fn her_is_personal_pronoun() {
+                assert!(md("her").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn her_is_singular_pronoun() {
+                assert!(md("her").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn her_is_object_pronoun() {
+                assert!(md("her").pronoun.unwrap().is_object.unwrap());
+            }
+
+            #[test]
+            fn herself_is_pronoun() {
+                assert!(md("herself").pronoun.is_some());
+            }
+            #[test]
+            fn herself_is_personal_pronoun() {
+                assert!(md("herself").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn herself_is_singular_pronoun() {
+                assert!(md("herself").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn herself_is_reflexive_pronoun() {
+                assert!(md("herself").pronoun.unwrap().is_reflexive.unwrap());
+            }
+        }
+
+        mod it_itself {
+            use crate::word_metadata::tests::md;
+
+            #[test]
+            fn it_is_pronoun() {
+                assert!(md("it").pronoun.is_some());
+            }
+            #[test]
+            fn it_is_personal_pronoun() {
+                assert!(md("it").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn it_is_singular_pronoun() {
+                assert!(md("it").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn it_is_subject_pronoun() {
+                assert!(md("it").pronoun.unwrap().is_subject.unwrap());
+            }
+            #[test]
+            fn it_is_object_pronoun() {
+                assert!(md("it").pronoun.unwrap().is_object.unwrap());
+            }
+
+            #[test]
+            fn itself_is_pronoun() {
+                assert!(md("itself").pronoun.is_some());
+            }
+            #[test]
+            fn itself_is_personal_pronoun() {
+                assert!(md("itself").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn itself_is_singular_pronoun() {
+                assert!(md("itself").pronoun.unwrap().is_singular.unwrap());
+            }
+            #[test]
+            fn itself_is_reflexive_pronoun() {
+                assert!(md("itself").pronoun.unwrap().is_reflexive.unwrap());
+            }
+        }
+
+        mod they_them_themselves {
+            use crate::word_metadata::tests::md;
+
+            #[test]
+            fn they_is_pronoun() {
+                assert!(md("they").pronoun.is_some());
+            }
+            #[test]
+            fn they_is_personal_pronoun() {
+                assert!(md("they").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn they_is_plural_pronoun() {
+                assert!(md("they").pronoun.unwrap().is_plural.unwrap());
+            }
+            #[test]
+            fn they_is_subject_pronoun() {
+                assert!(md("they").pronoun.unwrap().is_subject.unwrap());
+            }
+
+            #[test]
+            fn them_is_pronoun() {
+                assert!(md("them").pronoun.is_some());
+            }
+            #[test]
+            fn them_is_personal_pronoun() {
+                assert!(md("them").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn them_is_plural_pronoun() {
+                assert!(md("them").pronoun.unwrap().is_plural.unwrap());
+            }
+            #[test]
+            fn them_is_object_pronoun() {
+                assert!(md("them").pronoun.unwrap().is_object.unwrap());
+            }
+
+            #[test]
+            fn themselves_is_pronoun() {
+                assert!(md("themselves").pronoun.is_some());
+            }
+            #[test]
+            fn themselves_is_personal_pronoun() {
+                assert!(md("themselves").pronoun.unwrap().is_personal.unwrap());
+            }
+            #[test]
+            fn themselves_is_plural_pronoun() {
+                assert!(md("themselves").pronoun.unwrap().is_plural.unwrap());
+            }
+            #[test]
+            fn themselves_is_reflexive_pronoun() {
+                assert!(md("themselves").pronoun.unwrap().is_reflexive.unwrap());
+            }
+        }
+
+        // Possessive pronouns (not to be confused with possessive adjectives/determiners)
+        #[test]
+        fn mine_is_pronoun() {
+            assert!(md("mine").pronoun.is_some());
+        }
+        #[test]
+        fn ours_is_pronoun() {
+            assert!(md("ours").pronoun.is_some());
+        }
+        #[test]
+        fn yours_is_pronoun() {
+            assert!(md("yours").pronoun.is_some());
+        }
+        #[test]
+        fn his_is_pronoun() {
+            assert!(md("his").pronoun.is_some());
+        }
+        #[test]
+        fn hers_is_pronoun() {
+            assert!(md("hers").pronoun.is_some());
+        }
+        #[test]
+        fn its_is_pronoun() {
+            assert!(md("its").pronoun.is_some());
+        }
+        #[test]
+        fn theirs_is_pronoun() {
+            assert!(md("theirs").pronoun.is_some());
+        }
+
+        // archaic pronouns
+        #[test]
+        fn archaic_pronouns() {
+            assert!(md("thou").pronoun.is_some());
+            assert!(md("thee").pronoun.is_some());
+            assert!(md("thyself").pronoun.is_some());
+            assert!(md("thine").pronoun.is_some());
+        }
+
+        // generic pronouns
+        #[test]
+        fn generic_pronouns() {
+            assert!(md("one").pronoun.is_some());
+            assert!(md("oneself").pronoun.is_some());
+        }
+
+        // relative and interrogative pronouns
+        #[test]
+        fn relative_and_interrogative_pronouns() {
+            assert!(md("who").pronoun.is_some());
+            assert!(md("whom").pronoun.is_some());
+            assert!(md("whose").pronoun.is_some());
+            assert!(md("which").pronoun.is_some());
+            assert!(md("what").pronoun.is_some());
+        }
+
+        // nonstandard pronouns
+        #[test]
+        #[ignore = "not in dictionary"]
+        fn nonstandard_pronouns() {
+            assert!(md("themself").pronoun.is_some());
+            assert!(md("y'all'").pronoun.is_some());
+        }
     }
 
     #[test]
-    fn guess_american_dialect() {
-        let document = Document::new_plain_english_curated("Aluminum was used.");
-        let df = DialectFlags::get_most_used_dialects_from_document(&document);
-        assert!(
-            df.is_dialect_enabled_strict(Dialect::American)
-                && !df.is_dialect_enabled_strict(Dialect::British)
-        );
+    fn the_is_determiner() {
+        assert!(md("the").determiner.is_some());
+    }
+    #[test]
+    fn this_is_demonstrative_determiner() {
+        assert!(md("this").determiner.unwrap().is_demonstrative.unwrap());
+    }
+    #[test]
+    fn your_is_possessive_determiner() {
+        assert!(md("your").determiner.unwrap().is_possessive.unwrap());
     }
 }
