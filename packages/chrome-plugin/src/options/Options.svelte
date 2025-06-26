@@ -91,7 +91,10 @@ function configStringToValue(str: string): boolean | undefined | null {
 
       <div class="space-y-5">
         <div class="flex items-center justify-between">
-          <span class="font-medium">Enable on New Sites by Default</span>
+          <div class="flex flex-col">
+            <span class="font-medium">Enable on New Sites by Default</span>
+            <span class="font-light">Can make some apps behave abnormally.</span>
+          </div>
           <input type="checkbox" bind:checked={defaultEnabled}/>
         </div>
       </div>
