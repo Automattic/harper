@@ -51,6 +51,14 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setDomainStatus', enabled, domain });
 	}
 
+	public static async getDefaultEnabled(): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'getDefaultStatus' })).enabled;
+	}
+
+	public static async setDefaultEnabled(enabled: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setDefaultStatus', enabled });
+	}
+
 	public static async addToUserDictionary(word: string): Promise<void> {
 		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'addToUserDictionary', word });

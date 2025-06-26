@@ -9,7 +9,9 @@ export type Request =
 	| SetDialectRequest
 	| GetDialectRequest
 	| SetDomainStatusRequest
+	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
+	| GetDefaultStatusRequest
 	| AddToUserDictionaryRequest
 	| IgnoreLintRequest;
 
@@ -19,7 +21,8 @@ export type Response =
 	| UnitResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
-	| GetDomainStatusResponse;
+	| GetDomainStatusResponse
+	| GetDefaultStatusResponse;
 
 export type LintRequest = {
 	kind: 'lint';
@@ -80,9 +83,23 @@ export type GetDomainStatusResponse = {
 	enabled: boolean;
 };
 
+export type GetDefaultStatusRequest = {
+	kind: 'getDefaultStatus';
+};
+
+export type GetDefaultStatusResponse = {
+	kind: 'getDefaultStatus';
+	enabled: boolean;
+};
+
 export type SetDomainStatusRequest = {
 	kind: 'setDomainStatus';
 	domain: string;
+	enabled: boolean;
+};
+
+export type SetDefaultStatusRequest = {
+	kind: 'setDefaultStatus';
 	enabled: boolean;
 };
 

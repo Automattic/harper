@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Input, Select, Toggle } from 'flowbite-svelte';
+import { Button, Checkbox, Input, Select, Toggle } from 'flowbite-svelte';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
@@ -9,6 +9,7 @@ let lintDescriptions: Record<string, string> = $state({});
 let searchQuery = $state('');
 let searchQueryLower = $derived(searchQuery.toLowerCase());
 let dialect = $state(Dialect.American);
+let defaultEnabled = $state(false);
 
 $effect(() => {
 	ProtocolClient.setLintConfig(lintConfig);
@@ -16,6 +17,10 @@ $effect(() => {
 
 $effect(() => {
 	ProtocolClient.setDialect(dialect);
+});
+
+$effect(() => {
+	ProtocolClient.setDefaultEnabled(defaultEnabled);
 });
 
 ProtocolClient.getLintConfig().then((l) => {
@@ -28,6 +33,10 @@ ProtocolClient.getLintDescriptions().then((d) => {
 
 ProtocolClient.getDialect().then((d) => {
 	dialect = d;
+});
+
+ProtocolClient.getDefaultEnabled().then((d) => {
+	defaultEnabled = d;
 });
 
 function configValueToString(value: boolean | undefined): string {
@@ -79,6 +88,14 @@ function configStringToValue(str: string): boolean | undefined | null {
           </Select>
         </div>
       </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <span class="font-medium">Enable on New Sites by Default</span>
+          <input type="checkbox" bind:checked={defaultEnabled}/>
+        </div>
+      </div>
+
     </section>
 
     <!-- ── RULES ─────────────────────────────── -->

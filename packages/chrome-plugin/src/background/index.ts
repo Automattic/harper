@@ -3,6 +3,7 @@ import {
 	type AddToUserDictionaryRequest,
 	type GetConfigRequest,
 	type GetConfigResponse,
+	type GetDefaultStatusResponse,
 	type GetDialectRequest,
 	type GetDialectResponse,
 	type GetDomainStatusRequest,
@@ -15,6 +16,7 @@ import {
 	type Request,
 	type Response,
 	type SetConfigRequest,
+	type SetDefaultStatusRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
 	type UnitResponse,
@@ -106,6 +108,10 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleAddToUserDictionary(message);
 		case 'ignoreLint':
 			return handleIgnoreLint(message);
+		case 'setDefaultStatus':
+			return handleSetDefaultStatus(message);
+		case 'getDefaultStatus':
+			return handleGetDefaultStatus();
 	}
 }
 
@@ -146,6 +152,14 @@ async function handleIgnoreLint(req: IgnoreLintRequest): Promise<UnitResponse> {
 
 	return createUnitResponse();
 }
+
+async function handleGetDefaultStatus(): Promise<GetDefaultStatusResponse> {
+	return {
+		kind: 'getDefaultStatus',
+		enabled: await enabledByDefault(),
+	};
+}
+
 async function handleGetDomainStatus(
 	req: GetDomainStatusRequest,
 ): Promise<GetDomainStatusResponse> {
@@ -158,6 +172,12 @@ async function handleGetDomainStatus(
 
 async function handleSetDomainStatus(req: SetDomainStatusRequest): Promise<UnitResponse> {
 	await setDomainEnable(req.domain, req.enabled);
+
+	return createUnitResponse();
+}
+
+async function handleSetDefaultStatus(req: SetDefaultStatusRequest): Promise<UnitResponse> {
+	await setDefaultEnable(req.enabled);
 
 	return createUnitResponse();
 }
@@ -235,13 +255,26 @@ function formatDomainKey(domain: string): string {
 
 /** Check if Harper has been enabled for a given domain. */
 async function enabledForDomain(domain: string): Promise<boolean> {
-	const req = await chrome.storage.local.get({ [formatDomainKey(domain)]: false });
+	const req = await chrome.storage.local.get({
+		[formatDomainKey(domain)]: await enabledByDefault(),
+	});
 	return req[formatDomainKey(domain)];
 }
 
 /** Set whether Harper is enabled for a given domain. */
 async function setDomainEnable(domain: string, status: boolean) {
 	await chrome.storage.local.set({ [formatDomainKey(domain)]: status });
+}
+
+/** Set whether Harper is enabled by default. */
+async function setDefaultEnable(status: boolean) {
+	await chrome.storage.local.set({ defaultEnable: status });
+}
+
+/** Check if Harper has been enabled by default. */
+async function enabledByDefault(): Promise<boolean> {
+	const req = await chrome.storage.local.get({ defaultEnable: false });
+	return req.defaultEnable;
 }
 
 /** Check whether Harper's state has been set for a given domain. */
