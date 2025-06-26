@@ -46,7 +46,7 @@ ProtocolClient.getDefaultEnabled().then((d) => {
 });
 
 ProtocolClient.getUserDictionary().then((d) => {
-	userDict = dictToString(d);
+	userDict = dictToString(d.toSorted());
 });
 
 function configValueToString(value: boolean | undefined): string {
