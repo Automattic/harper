@@ -94,8 +94,8 @@ impl Linter for ThrowRubbish {
                         .iter()
                         .flat_map(|adv| {
                             [
-                                format!("{} {}{}", verb, adv, rest),
-                                format!("{}{} {}", verb, rest, adv),
+                                format!("{verb} {adv}{rest}"),
+                                format!("{verb}{rest} {adv}"),
                             ]
                         })
                         .map(|sugg| Suggestion::ReplaceWith(sugg.chars().collect()))

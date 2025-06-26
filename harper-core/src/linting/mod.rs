@@ -225,6 +225,8 @@ where
 
 #[cfg(test)]
 pub mod tests {
+    use hashbrown::HashSet;
+
     use super::Linter;
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
 
@@ -331,10 +333,9 @@ pub mod tests {
 
                 if suggestion_text == bad_suggestion {
                     panic!(
-                        "Found undesired suggestion at lint[{}].suggestions[{}]:\n\
-                        Expected to not find suggestion: \"{}\"\n\
-                        But found: \"{}\"",
-                        i, j, bad_suggestion, suggestion_text
+                        "Found undesired suggestion at lint[{i}].suggestions[{j}]:\n\
+                        Expected to not find suggestion: \"{bad_suggestion}\"\n\
+                        But found: \"{suggestion_text}\""
                     );
                 }
             }
@@ -353,7 +354,7 @@ pub mod tests {
         let test = Document::new_markdown_default_curated(text);
         let lints = linter.lint(&test);
 
-        let mut unseen_good: std::collections::HashSet<_> = good.iter().cloned().collect();
+        let mut unseen_good: HashSet<_> = good.iter().cloned().collect();
         let mut found_bad = Vec::new();
         let mut found_good = Vec::new();
 
@@ -367,16 +368,14 @@ pub mod tests {
                 if bad.contains(&&*suggestion_text) {
                     found_bad.push((i, j, suggestion_text.clone()));
                     eprintln!(
-                        "  ❌ Found bad suggestion at lint[{}].suggestions[{}]: \"{}\"",
-                        i, j, suggestion_text
+                        "  ❌ Found bad suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                 }
                 // Check for good suggestions
                 else if good.contains(&&*suggestion_text) {
                     found_good.push((i, j, suggestion_text.clone()));
                     eprintln!(
-                        "  ✅ Found good suggestion at lint[{}].suggestions[{}]: \"{}\"",
-                        i, j, suggestion_text
+                        "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                     unseen_good.remove(suggestion_text.as_str());
                 }
@@ -391,7 +390,7 @@ pub mod tests {
             if !found_bad.is_empty() {
                 eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
                 for (i, j, text) in &found_bad {
-                    eprintln!("  - lint[{}].suggestions[{}]: \"{}\"", i, j, text);
+                    eprintln!("  - lint[{i}].suggestions[{j}]: \"{text}\"");
                 }
             }
 
@@ -402,7 +401,7 @@ pub mod tests {
                     unseen_good.len()
                 );
                 for text in &unseen_good {
-                    eprintln!("  - \"{}\"", text);
+                    eprintln!("  - \"{text}\"");
                 }
             }
 
@@ -453,7 +452,7 @@ pub mod tests {
             }
         }
 
-        eprintln!("Corrected {} times.", iter_count);
+        eprintln!("Corrected {iter_count} times.");
 
         text_chars.iter().collect()
     }

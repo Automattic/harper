@@ -199,7 +199,7 @@ fn main() -> anyhow::Result<()> {
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
-                println!("{}", json);
+                println!("{json}");
             }
 
             Ok(())
@@ -256,7 +256,7 @@ fn main() -> anyhow::Result<()> {
                 word_str.clear();
                 word_str.extend(word);
 
-                println!("{:?}", word_str);
+                println!("{word_str:?}");
             }
 
             Ok(())
@@ -301,13 +301,11 @@ fn main() -> anyhow::Result<()> {
                 Some((dict_word, dict_annot)) => {
                     let mut status_summary = if dict_annot.is_empty() {
                         format!(
-                            "'{}' is already in the dictionary but not annotated.",
-                            dict_word
+                            "'{dict_word}' is already in the dictionary but not annotated."
                         )
                     } else {
                         format!(
-                            "'{}' is already in the dictionary with annotation `{}`.",
-                            dict_word, dict_annot
+                            "'{dict_word}' is already in the dictionary with annotation `{dict_annot}`."
                         )
                     };
 
@@ -323,7 +321,7 @@ fn main() -> anyhow::Result<()> {
 
                     status_summary
                 }
-                None => format!("'{}' is not in the dictionary yet.", word),
+                None => format!("'{word}' is not in the dictionary yet."),
             };
 
             println!("{summary}");
@@ -590,9 +588,9 @@ fn main() -> anyhow::Result<()> {
 
             // Instead of moving `results` into the for loop, iterate over a reference to it
             for (normalized, originals) in &results {
-                println!("\nVariants for '{}':", normalized);
+                println!("\nVariants for '{normalized}':");
                 for original in originals {
-                    println!("  - {}", original);
+                    println!("  - {original}");
                 }
             }
 
@@ -665,11 +663,11 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
         .words_iter()
         .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
 
-    println!(" - {}", word);
+    println!(" - {word}");
 
     for child in children {
         let child_str: String = child.iter().collect();
-        println!(" - {}", child_str);
+        println!(" - {child_str}");
     }
 }
 

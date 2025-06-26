@@ -50,8 +50,7 @@ impl ExprLinter for HyphenateNumberDay {
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::ReplaceWith(vec!['-'])],
             message: format!(
-                "Use a hyphen in `{}-day` when forming an adjectival compound.",
-                number
+                "Use a hyphen in `{number}-day` when forming an adjectival compound."
             ),
             priority: 31,
         })
