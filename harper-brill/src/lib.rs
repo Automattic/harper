@@ -1,3 +1,4 @@
+use harper_pos_utils::BurnChunkerCpu;
 use lazy_static::lazy_static;
 use std::sync::Arc;
 
@@ -29,4 +30,19 @@ fn uncached_brill_chunker() -> BrillChunker {
 
 pub fn brill_chunker() -> Arc<BrillChunker> {
     (*BRILL_CHUNKER).clone()
+}
+
+const BURN_CHUNKER_VOCAB: &[u8; 530622] = include_bytes!("../finished_chunker_tiny/vocab.json");
+const BURN_CHUNKER_BIN: &[u8; 1063961] = include_bytes!("../finished_chunker_tiny/model.mpk");
+
+thread_local! {
+    static BURN_CHUNKER: Arc<BurnChunkerCpu> = Arc::new(uncached_burn_chunker());
+}
+
+fn uncached_burn_chunker() -> BurnChunkerCpu {
+    BurnChunkerCpu::load_from_bytes_cpu(BURN_CHUNKER_BIN, BURN_CHUNKER_VOCAB, 8)
+}
+
+pub fn burn_chunker() -> Arc<BurnChunkerCpu> {
+    (BURN_CHUNKER).with(|c| c.clone())
 }

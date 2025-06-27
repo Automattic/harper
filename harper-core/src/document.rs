@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use harper_brill::{Chunker, Tagger, brill_chunker, brill_tagger};
+use harper_brill::{Chunker, Tagger, brill_chunker, brill_tagger, burn_chunker};
 use paste::paste;
 
 use crate::expr::{Expr, ExprExt, LongestMatchOf, Repeating, SequenceExpr};
@@ -148,7 +148,7 @@ impl Document {
             .collect();
 
         let token_tags = brill_tagger().tag_sentence(&token_strings);
-        let np_flags = brill_chunker().chunk_sentence(&token_strings, &token_tags);
+        let np_flags = burn_chunker().chunk_sentence(&token_strings, &token_tags);
 
         let mut i = 0;
 

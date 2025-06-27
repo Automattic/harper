@@ -1,13 +1,11 @@
-use crate::chunker::np_extraction::locate_noun_phrases_in_sent;
-use crate::{UPOS, chunker::Chunker, conllu_utils::iter_sentences_in_conllu};
+use crate::{UPOS, chunker::Chunker};
 use burn::backend::Autodiff;
-use burn::module::extract_type_name;
-use burn::nn::loss::{BinaryCrossEntropyLossConfig, MseLoss, Reduction};
+use burn::nn::loss::{MseLoss, Reduction};
 use burn::optim::{GradientsParams, Optimizer};
-use burn::record::{FullPrecisionSettings, NamedMpkFileRecorder};
+use burn::record::{FullPrecisionSettings, NamedMpkBytesRecorder, NamedMpkFileRecorder, Recorder};
+use burn::tensor::TensorData;
 use burn::tensor::backend::AutodiffBackend;
 use burn::tensor::cast::ToElement;
-use burn::tensor::{Float, TensorData};
 use burn::{
     module::Module,
     nn::{BiLstmConfig, EmbeddingConfig, LinearConfig},
@@ -16,9 +14,6 @@ use burn::{
 };
 use burn_ndarray::{NdArray, NdArrayDevice};
 use hashbrown::HashMap;
-use rand::seq::SliceRandom;
-use rs_conllu::Sentence;
-use serde::de;
 use std::path::Path;
 
 const PAD_IDX: usize = 0;
@@ -32,11 +27,11 @@ struct NpModel<B: Backend> {
 }
 
 impl<B: Backend> NpModel<B> {
-    fn new(vocab: usize, embed_dim: usize, hidden: usize, device: &B::Device) -> Self {
+    fn new(vocab: usize, embed_dim: usize, device: &B::Device) -> Self {
         Self {
             embedding: EmbeddingConfig::new(vocab, embed_dim).init(device),
-            lstm: BiLstmConfig::new(embed_dim, hidden, false).init(device),
-            linear: LinearConfig::new(hidden * 2, 1).init(device),
+            lstm: BiLstmConfig::new(embed_dim, embed_dim, false).init(device),
+            linear: LinearConfig::new(embed_dim * 2, 1).init(device),
         }
     }
 
@@ -87,6 +82,32 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         std::fs::write(dir.join("vocab.json"), vocab_bytes).unwrap();
     }
 
+    pub fn load_from_bytes(
+        model_bytes: impl AsRef<[u8]>,
+        vocab_bytes: impl AsRef<[u8]>,
+        embed_dim: usize,
+        device: B::Device,
+    ) -> Self {
+        let vocab: HashMap<String, usize> = serde_json::from_slice(vocab_bytes.as_ref()).unwrap();
+
+        let recorder = NamedMpkBytesRecorder::<FullPrecisionSettings>::new();
+
+        let owned_data = model_bytes.as_ref().to_vec();
+        let record = recorder.load(owned_data, &device).unwrap();
+
+        let model = NpModel::new(vocab.len(), embed_dim, &device);
+        let model = model.load_record(record);
+
+        Self {
+            vocab,
+            model,
+            device,
+        }
+    }
+}
+
+#[cfg(feature = "training")]
+impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     pub fn train(
         training_files: &[impl AsRef<Path>],
         test_file: &impl AsRef<Path>,
@@ -100,8 +121,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
 
         println!("Preparing model and training config...");
 
-        let hidden = embed_dim;
-        let mut model = NpModel::<B>::new(vocab.len(), embed_dim, hidden, &device);
+        let mut model = NpModel::<B>::new(vocab.len(), embed_dim, &device);
         let opt_config = AdamConfig::new();
         let mut opt = opt_config.init();
 
@@ -204,6 +224,9 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     fn extract_sents_from_files(
         files: &[impl AsRef<Path>],
     ) -> (Vec<Vec<String>>, Vec<Vec<bool>>, HashMap<String, usize>) {
+        use super::np_extraction::locate_noun_phrases_in_sent;
+        use crate::conllu_utils::iter_sentences_in_conllu;
+
         let mut vocab: HashMap<String, usize> = HashMap::new();
         vocab.insert("<PAD>".into(), PAD_IDX);
         vocab.insert("<UNK>".into(), UNK_IDX);
@@ -211,27 +234,42 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         let mut sents: Vec<Vec<String>> = Vec::new();
         let mut labs: Vec<Vec<bool>> = Vec::new();
 
+        const CONTRACTIONS: &[&str] = &["sn't", "n't", "'ll", "'ve", "'re", "'d", "'m", "'s"];
+
         for file in files {
             for sent in iter_sentences_in_conllu(file) {
-                let mut toks: Vec<String> = Vec::new();
-                let mut tags = Vec::new();
-                for tok in &sent.tokens {
-                    toks.push(tok.form.clone());
-                    tags.push(tok.upos.and_then(UPOS::from_conllu));
+                let spans = locate_noun_phrases_in_sent(&sent);
+
+                let mut original_mask = vec![false; sent.tokens.len()];
+                for span in spans {
+                    for i in span {
+                        original_mask[i] = true;
+                    }
                 }
+
+                let mut toks: Vec<String> = Vec::new();
+                let mut mask: Vec<bool> = Vec::new();
+
+                for (idx, tok) in sent.tokens.iter().enumerate() {
+                    let is_contraction = CONTRACTIONS.contains(&&tok.form[..]);
+                    if is_contraction && !toks.is_empty() {
+                        let prev_tok = toks.pop().unwrap();
+                        let prev_mask = mask.pop().unwrap();
+                        toks.push(format!("{prev_tok}{}", tok.form));
+                        mask.push(prev_mask || original_mask[idx]);
+                    } else {
+                        toks.push(tok.form.clone());
+                        mask.push(original_mask[idx]);
+                    }
+                }
+
                 for t in &toks {
                     if !vocab.contains_key(t) {
                         let next = vocab.len();
                         vocab.insert(t.clone(), next);
                     }
                 }
-                let spans = locate_noun_phrases_in_sent(&sent);
-                let mut mask = vec![false; toks.len()];
-                for span in spans {
-                    for i in span {
-                        mask[i] = true;
-                    }
-                }
+
                 sents.push(toks);
                 labs.push(mask);
             }
@@ -243,6 +281,17 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
 
 pub type BurnChunkerCpu = BurnChunker<Autodiff<NdArray>>;
 
+impl BurnChunkerCpu {
+    pub fn load_from_bytes_cpu(
+        model_bytes: impl AsRef<[u8]>,
+        vocab_bytes: impl AsRef<[u8]>,
+        embed_dim: usize,
+    ) -> Self {
+        Self::load_from_bytes(model_bytes, vocab_bytes, embed_dim, NdArrayDevice::Cpu)
+    }
+}
+
+#[cfg(feature = "training")]
 impl BurnChunkerCpu {
     pub fn train_cpu(
         training_files: &[impl AsRef<Path>],
@@ -264,6 +313,11 @@ impl BurnChunkerCpu {
 
 impl<B: Backend + AutodiffBackend> Chunker for BurnChunker<B> {
     fn chunk_sentence(&self, sentence: &[String], _tags: &[Option<UPOS>]) -> Vec<bool> {
+        // Solves a divide-by-zero error in the linear layer.
+        if sentence.is_empty() {
+            return Vec::new();
+        }
+
         let tensor = self.to_tensor(sentence);
         let prob = self.model.forward(tensor);
         prob.to_data().iter().map(|p: f32| p > 0.5).collect()
