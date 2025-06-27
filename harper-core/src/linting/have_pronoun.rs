@@ -41,8 +41,7 @@ impl ExprLinter for HavePronoun {
                 "have".chars().collect(),
                 original,
             )],
-            message: "Use `have` with first-person singular or plural pronouns (e.g., “Have we …”, “Have I …”)."
-                .to_owned(),
+            message: "Use `have` with first-person singular or plural pronouns.".to_owned(),
             priority: 31,
         })
     }
