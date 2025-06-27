@@ -75,6 +75,6 @@ impl Display for LintKind {
             LintKind::WordChoice => "Word Choice",
         };
 
-        write!(f, "{}", s)
+        write!(f, "{s}")
     }
 }

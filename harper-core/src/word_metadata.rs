@@ -807,7 +807,7 @@ mod tests {
     fn md(word: &str) -> WordMetadata {
         FstDictionary::curated()
             .get_word_metadata_str(word)
-            .unwrap_or_else(|| panic!("Word '{}' not found in dictionary", word))
+            .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
             .clone()
     }
 

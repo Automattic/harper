@@ -225,7 +225,7 @@ fn test_most_lints() {
             if !lint.suggestions.is_empty() {
                 out.push_str("Suggest:\n");
                 for suggestion in &lint.suggestions {
-                    out.push_str(&format!("  - {}\n", suggestion));
+                    out.push_str(&format!("  - {suggestion}\n"));
                 }
             }
 
