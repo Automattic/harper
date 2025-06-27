@@ -19,10 +19,6 @@ function scan() {
 	});
 
 	$('[contenteditable="true"],[contenteditable]').each(function () {
-		if (this.spellcheck == false) {
-			return;
-		}
-
 		const leafs = leafNodes(this);
 
 		for (const leaf of leafs) {
