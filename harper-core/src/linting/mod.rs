@@ -23,6 +23,7 @@ mod correct_number_suffix;
 mod currency_placement;
 mod dashes;
 mod despite_of;
+mod discourse_markers;
 mod dot_initialisms;
 mod ellipsis_length;
 mod else_possessive;
@@ -126,6 +127,7 @@ pub use correct_number_suffix::CorrectNumberSuffix;
 pub use currency_placement::CurrencyPlacement;
 pub use dashes::Dashes;
 pub use despite_of::DespiteOf;
+pub use discourse_markers::DiscourseMarkers;
 pub use dot_initialisms::DotInitialisms;
 pub use ellipsis_length::EllipsisLength;
 pub use everyday::Everyday;
@@ -235,6 +237,11 @@ pub mod tests {
 
     use super::Linter;
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
+
+    #[track_caller]
+    pub fn assert_no_lints(text: &str, mut linter: impl Linter) {
+        assert_lint_count(text, linter, 0);
+    }
 
     #[track_caller]
     pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {

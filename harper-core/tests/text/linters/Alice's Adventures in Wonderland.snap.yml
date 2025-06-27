@@ -1523,6 +1523,15 @@ Suggest:
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+    1304 | I’m angry. Therefore I’m mad.”
+         |            ^~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1348 | like ears and the roof was thatched with fur. It was so large a house, that she

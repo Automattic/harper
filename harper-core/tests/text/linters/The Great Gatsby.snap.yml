@@ -219,6 +219,15 @@ Suggest:
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+      61 | restless. Instead of being the warm centre of the world, the Middle West now
+         |           ^~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       61 | restless. Instead of being the warm centre of the world, the Middle West now
@@ -1191,6 +1200,15 @@ Message: |
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+     853 | milk all afternoon. Meanwhile Tom brought out a bottle of whiskey from a locked
+         |                     ^~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      860 | and I went out to buy some at the drugstore on the corner. When I came back they
@@ -1736,6 +1754,16 @@ Suggest:
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+    1333 | person to a greater or lesser degree. Instead of rambling this party had
+         |                                       ^~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+    1334 | preserved a dignified homogeneity, and assumed to itself the function of
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1336 | West Egg, and carefully on guard against its spectroscopic gayety.
@@ -2229,6 +2257,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1792 | smile turned to the world and yet satisfy the demands of her hard, jaunty body.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+    1824 | perspiration appeared on her upper lip. Nevertheless there was a vague
+         |                                         ^~~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+    1825 | understanding that had to be tactfully broken off before I was free.
+Suggest:
+  - Insert “,”
 
 
 
@@ -3989,6 +4027,15 @@ Suggest:
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+    2826 | Instead of taking the short cut along the Sound we went down to the road and
+         | ^~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2826 | Instead of taking the short cut along the Sound we went down to the road and
@@ -4399,6 +4446,15 @@ Message: |
          |                       ^~~~~~~~~~~~~~ Did you mean `substantially`?
 Suggest:
   - Replace with: “substantially”
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+    3111 | faintly true. Moreover he told it to me at a time of confusion, when I had
+         |               ^~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
 
 
 
@@ -5038,6 +5094,15 @@ Message: |
          | ^ Incorrect indefinite article.
 Suggest:
   - Replace with: “an”
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+    3864 | “Nevertheless he’s an Oxford man.”
+         |  ^~~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
 
 
 
@@ -6054,6 +6119,16 @@ Message: |
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+    4789 | But he knew that he was in Daisy’s house by a colossal accident. However
+         |                                                                  ^~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+    4790 | glorious might be his future as Jay Gatsby, he was at present a penniless young
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     4797 | pretenses. I don’t mean that he had traded on his phantom millions, but he had
@@ -6485,6 +6560,15 @@ Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gd's”
   - Replace with: “Gag's”
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+    5174 | reach Gad’s Hill until noon. Thus far there was no difficulty in accounting for
+         |                              ^~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
 
 
 
@@ -7461,6 +7545,15 @@ Message: |
          |                                           ^~~~~~~~~~ Did you mean `linerless`?
 Suggest:
   - Replace with: “linerless”
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+    5721 | “Nevertheless you did throw me over,” said Jordan suddenly. ‘‘You threw me over
+         |  ^~~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
 
 
 
