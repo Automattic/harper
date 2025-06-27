@@ -173,6 +173,16 @@ fn correct_on_face_value() {
     );
 }
 
+// AtTheEndOfTheDay
+#[test]
+fn correct_at_the_end_of_the_day() {
+    assert_suggestion_result(
+        "In the end of the day, it's not a big deal.",
+        lint_group(),
+        "At the end of the day, it's not a big deal.",
+    );
+}
+
 // AvoidAndAlso
 // -none-
 

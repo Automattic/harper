@@ -221,7 +221,7 @@ impl ExprLinter for Everyday {
                 replacement,
                 span.get_content(src),
             )],
-            message: format!("You probably mean the {} `{}` here.", pos, replacement),
+            message: format!("You probably mean the {pos} `{replacement}` here."),
             priority: 31,
         })
     }

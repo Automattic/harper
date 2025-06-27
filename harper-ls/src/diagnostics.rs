@@ -91,13 +91,13 @@ pub fn lint_to_code_actions<'a>(
         let orig = lint.span.get_content_string(source);
 
         results.push(CodeActionOrCommand::Command(Command::new(
-            format!("Add \"{}\" to the global dictionary.", orig),
+            format!("Add \"{orig}\" to the global dictionary."),
             "HarperAddToUserDict".to_string(),
             Some(vec![orig.clone().into(), uri.to_string().into()]),
         )));
 
         results.push(CodeActionOrCommand::Command(Command::new(
-            format!("Add \"{}\" to the file dictionary.", orig),
+            format!("Add \"{orig}\" to the file dictionary."),
             "HarperAddToFileDict".to_string(),
             Some(vec![orig.into(), uri.to_string().into()]),
         )));

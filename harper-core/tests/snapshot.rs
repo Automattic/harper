@@ -85,6 +85,6 @@ pub fn snapshot_all_text_files(
         .sum();
 
     if errors > 0 {
-        panic!("{} errors occurred while processing files", errors);
+        panic!("{errors} errors occurred while processing files");
     }
 }

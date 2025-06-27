@@ -107,10 +107,8 @@ fn format_word_tag(word: &WordMetadata) -> String {
             _ => {}
         }
         // Treat unmarked (neither singular nor plural) common nouns as singular
-        if noun.is_singular.is_none() && noun.is_plural.is_none() {
-            if noun.is_proper.is_none() {
-                tag.push_str("Sg");
-            }
+        if noun.is_singular.is_none() && noun.is_plural.is_none() && noun.is_proper.is_none() {
+            tag.push_str("Sg");
         }
         add_bool(&mut tag, "$", noun.is_possessive);
         add(&tag, &mut tags);

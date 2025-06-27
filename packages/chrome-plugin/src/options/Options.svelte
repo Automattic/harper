@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Input, Select, Toggle } from 'flowbite-svelte';
+import { Button, Checkbox, Input, Select, Toggle } from 'flowbite-svelte';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
@@ -9,6 +9,8 @@ let lintDescriptions: Record<string, string> = $state({});
 let searchQuery = $state('');
 let searchQueryLower = $derived(searchQuery.toLowerCase());
 let dialect = $state(Dialect.American);
+let defaultEnabled = $state(false);
+let userDict = $state('');
 
 $effect(() => {
 	ProtocolClient.setLintConfig(lintConfig);
@@ -16,6 +18,15 @@ $effect(() => {
 
 $effect(() => {
 	ProtocolClient.setDialect(dialect);
+});
+
+$effect(() => {
+	ProtocolClient.setDefaultEnabled(defaultEnabled);
+});
+
+$effect(() => {
+	console.log('hit');
+	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
 ProtocolClient.getLintConfig().then((l) => {
@@ -28,6 +39,14 @@ ProtocolClient.getLintDescriptions().then((d) => {
 
 ProtocolClient.getDialect().then((d) => {
 	dialect = d;
+});
+
+ProtocolClient.getDefaultEnabled().then((d) => {
+	defaultEnabled = d;
+});
+
+ProtocolClient.getUserDictionary().then((d) => {
+	userDict = dictToString(d.toSorted());
 });
 
 function configValueToString(value: boolean | undefined): string {
@@ -54,6 +73,19 @@ function configStringToValue(str: string): boolean | undefined | null {
 
 	throw 'Fell through case';
 }
+
+/** Converts the content of a text area to viable dictionary values. */
+export function stringToDict(s: string): string[] {
+	return s
+		.split('\n')
+		.map((s) => s.trim())
+		.filter((v) => v.length > 0);
+}
+
+/** Converts the content of a text area to viable dictionary values. */
+export function dictToString(values: string[]): string {
+	return values.map((v) => v.trim()).join('\n');
+}
 </script>
 
 <!-- centered wrapper with side gutters -->
@@ -79,6 +111,27 @@ function configStringToValue(str: string): boolean | undefined | null {
           </Select>
         </div>
       </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="font-medium">Enable on New Sites by Default</span>
+            <span class="font-light">Can make some apps behave abnormally.</span>
+          </div>
+          <input type="checkbox" bind:checked={defaultEnabled}/>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="font-medium">User Dictionary</span>
+            <span class="font-light">Each word should be on its own line.</span>
+          </div>
+          <textarea bind:value={userDict} />
+        </div>
+      </div>
+
     </section>
 
     <!-- ── RULES ─────────────────────────────── -->
