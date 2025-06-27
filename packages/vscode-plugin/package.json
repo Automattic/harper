@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.44.0",
+	"version": "0.45.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -244,11 +244,23 @@
 					"default": true,
 					"description": "Corrects `another ones`."
 				},
+				"harper.linters.AnotherThingComing": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Though `another think coming` is the original phrase, `another thing coming` is now more common."
+				},
 				"harper.linters.AnotherThings": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `another things`."
+				},
+				"harper.linters.AnotherThinkComing": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Though `another thing coming` is now more common, `another think coming` is the original phrase."
 				},
 				"harper.linters.Anybody": {
 					"scope": "resource",
@@ -291,6 +303,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects nonstandard `as early back as` to `as far back as`."
+				},
+				"harper.linters.AsItHappens": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `as it so happens` to `as it happens`."
 				},
 				"harper.linters.AsOfLate": {
 					"scope": "resource",
@@ -705,6 +723,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Detects variants like `on mass` or `in mass` and suggests `en masse`."
+				},
+				"harper.linters.EnRoute": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects variants like `on route` or `in route` and suggests `en route`."
 				},
 				"harper.linters.EverPresent": {
 					"scope": "resource",
@@ -1676,7 +1700,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Ensures the correct use of `on the spur of the moment`, avoiding confusion with the incorrect `spurt` variation."
+					"description": "Ensures the correct use of `on the spur of the moment`, avoiding nonstandard variations."
 				},
 				"harper.linters.OnceInAWhile": {
 					"scope": "resource",
@@ -1846,6 +1870,12 @@
 					"default": true,
 					"description": "Choosing when to contract pronouns is a challenging art. This rule looks for faults."
 				},
+				"harper.linters.PronounInflectionBe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks subject–verb agreement for the verb `be`. Third-person singular pronouns (`he`, `she`, `it`) require the singular form `is`, while the plural pronoun `they` takes `are`. The linter flags mismatches such as `He are` or `They is` and offers the correct concord."
+				},
 				"harper.linters.PronounKnew": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1965,6 +1995,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `somebody`."
+				},
+				"harper.linters.SomebodyElses": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `somebody else's` when the `'s` is in the wrong place."
 				},
 				"harper.linters.Somehow": {
 					"scope": "resource",

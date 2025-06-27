@@ -44,6 +44,7 @@ export default class ProtocolClient {
 	}
 
 	public static async getDomainEnabled(domain: string): Promise<boolean> {
+		this.lintCache.clear();
 		return (await chrome.runtime.sendMessage({ kind: 'getDomainStatus', domain })).enabled;
 	}
 
@@ -51,9 +52,27 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setDomainStatus', enabled, domain });
 	}
 
-	public static async addToUserDictionary(word: string): Promise<void> {
+	public static async getDefaultEnabled(): Promise<boolean> {
 		this.lintCache.clear();
-		await chrome.runtime.sendMessage({ kind: 'addToUserDictionary', word });
+		return (await chrome.runtime.sendMessage({ kind: 'getDefaultStatus' })).enabled;
+	}
+
+	public static async setDefaultEnabled(enabled: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setDefaultStatus', enabled });
+	}
+
+	public static async addToUserDictionary(words: string[]): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'addToUserDictionary', words });
+	}
+
+	public static async setUserDictionary(words: string[]): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'setUserDictionary', words });
+	}
+
+	public static async getUserDictionary(): Promise<string[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getUserDictionary' })).words;
 	}
 
 	public static async ignoreHash(hash: string): Promise<void> {
