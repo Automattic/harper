@@ -4,7 +4,7 @@ use crate::{CharString, Token};
 
 /// Matches a predefined word.
 ///
-/// Note that any capitalization of the contained words will result in a match.
+/// Note that any capitalization of the contained word will result in a match.
 #[derive(Clone)]
 pub struct Word {
     word: CharString,
