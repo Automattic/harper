@@ -199,7 +199,7 @@ fn main() -> anyhow::Result<()> {
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
-                println!("{}", json);
+                println!("{json}");
             }
 
             Ok(())
@@ -256,7 +256,7 @@ fn main() -> anyhow::Result<()> {
                 word_str.clear();
                 word_str.extend(word);
 
-                println!("{:?}", word_str);
+                println!("{word_str:?}");
             }
 
             Ok(())
@@ -300,14 +300,10 @@ fn main() -> anyhow::Result<()> {
             let summary = match &entry_in_dict {
                 Some((dict_word, dict_annot)) => {
                     let mut status_summary = if dict_annot.is_empty() {
-                        format!(
-                            "'{}' is already in the dictionary but not annotated.",
-                            dict_word
-                        )
+                        format!("'{dict_word}' is already in the dictionary but not annotated.")
                     } else {
                         format!(
-                            "'{}' is already in the dictionary with annotation `{}`.",
-                            dict_word, dict_annot
+                            "'{dict_word}' is already in the dictionary with annotation `{dict_annot}`."
                         )
                     };
 
@@ -323,7 +319,7 @@ fn main() -> anyhow::Result<()> {
 
                     status_summary
                 }
-                None => format!("'{}' is not in the dictionary yet.", word),
+                None => format!("'{word}' is not in the dictionary yet."),
             };
 
             println!("{summary}");
@@ -454,18 +450,24 @@ fn main() -> anyhow::Result<()> {
             let affixes_string = fs::read_to_string(&affixes_path)
                 .map_err(|e| anyhow!("Failed to read affixes.json: {e}"))?;
 
-            let mut affixes_json: Value = serde_json::from_str(&affixes_string)
+            let affixes_json: Value = serde_json::from_str(&affixes_string)
                 .map_err(|e| anyhow!("Failed to parse affixes.json: {e}"))?;
 
             // Get the nested "affixes" object
-            let affixes_obj = affixes_json
-                .get_mut("affixes")
-                .and_then(Value::as_object_mut)
+            let affixes_obj = &affixes_json
+                .get("affixes")
+                .and_then(Value::as_object)
                 .ok_or_else(|| anyhow!("affixes.json does not contain 'affixes' object"))?;
+
+            let properties_obj = &affixes_json
+                .get("properties")
+                .and_then(Value::as_object)
+                .ok_or_else(|| anyhow!("affixes.json does not contain 'properties' object"))?;
 
             // Validate old flag exists and get its description
             let old_entry = affixes_obj
                 .get(&old)
+                .or_else(|| properties_obj.get(&old))
                 .ok_or_else(|| anyhow!("Flag '{old}' not found in affixes.json"))?;
 
             let description = old_entry
@@ -476,7 +478,7 @@ fn main() -> anyhow::Result<()> {
             println!("Renaming flag '{old}' ({description})");
 
             // Validate new flag doesn't exist
-            if let Some(new_entry) = affixes_obj.get(&new) {
+            if let Some(new_entry) = affixes_obj.get(&new).or_else(|| properties_obj.get(&new)) {
                 let new_desc = new_entry
                     .get("#")
                     .and_then(Value::as_str)
@@ -584,9 +586,9 @@ fn main() -> anyhow::Result<()> {
 
             // Instead of moving `results` into the for loop, iterate over a reference to it
             for (normalized, originals) in &results {
-                println!("\nVariants for '{}':", normalized);
+                println!("\nVariants for '{normalized}':");
                 for original in originals {
-                    println!("  - {}", original);
+                    println!("  - {original}");
                 }
             }
 
@@ -659,11 +661,11 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
         .words_iter()
         .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
 
-    println!(" - {}", word);
+    println!(" - {word}");
 
     for child in children {
         let child_str: String = child.iter().collect();
-        println!(" - {}", child_str);
+        println!(" - {child_str}");
     }
 }
 

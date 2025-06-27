@@ -171,7 +171,7 @@ impl BrillTagger<FreqDict> {
         }
 
         println!("=============");
-        println!("Total tokens in training set: {}", total_tokens);
+        println!("Total tokens in training set: {total_tokens}");
         println!(
             "Tokens incorrectly tagged: {}",
             error_counter.total_errors()

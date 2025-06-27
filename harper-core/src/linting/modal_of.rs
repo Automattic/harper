@@ -18,7 +18,7 @@ impl Default for ModalOf {
         let modals = ["could", "might", "must", "should", "would"];
         let mut words = WordSet::new(&modals);
         modals.iter().for_each(|word| {
-            words.add(&format!("{}n't", word));
+            words.add(&format!("{word}n't"));
         });
 
         let modal_of = Lrc::new(
