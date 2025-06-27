@@ -972,6 +972,15 @@ Suggest:
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+     360 | maintenance. For example software testing, systems engineering, technical debt
+         |              ^~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      371 | semiotics, electrical engineering, philosophy of mind, neurophysiology, and
@@ -1185,6 +1194,16 @@ Suggest:
   - Replace with: “got”
   - Replace with: “goo”
   - Replace with: “gore”
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+     490 |   the data fields of the object with which they are associated. Thus
+         |                                                                 ^~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+     491 |   object-oriented computer programs are made out of objects that interact with
+Suggest:
+  - Insert “,”
 
 
 

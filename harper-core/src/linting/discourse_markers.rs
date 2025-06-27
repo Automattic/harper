@@ -1,45 +1,58 @@
-use crate::expr::Expr;
+use crate::expr::{Expr, FixedPhrase, LongestMatchOf, SequenceExpr};
 use crate::patterns::WordSet;
 use crate::{Document, Lrc, Span, Token, TokenStringExt};
 
 use super::{Lint, LintKind, Linter, Suggestion};
 
 pub struct DiscourseMarkers {
-    expr: WordSet,
+    expr: SequenceExpr,
 }
 
 impl DiscourseMarkers {
     pub fn new() -> Self {
+        let phrases = &[
+            "however",
+            "therefore",
+            "meanwhile",
+            "furthermore",
+            "nevertheless",
+            "consequently",
+            "thus",
+            "instead",
+            "moreover",
+            "alternatively",
+            "frankly",
+            "additionally",
+            "subsequently",
+            "accordingly",
+            "otherwise",
+            "incidentally",
+            "conversely",
+            "notwithstanding",
+            "hence",
+            "indeed",
+            "for example",
+            "on the other hand",
+        ];
+
+        let phrases_expr = LongestMatchOf::new(
+            phrases
+                .iter()
+                .map(|text: &&str| Box::new(FixedPhrase::from_phrase(*text)) as Box<dyn Expr>)
+                .collect(),
+        );
+
         Self {
-            expr: WordSet::new(&[
-                "however",
-                "therefore",
-                "meanwhile",
-                "furthermore",
-                "nevertheless",
-                "consequently",
-                "thus",
-                "instead",
-                "moreover",
-                "alternatively",
-                "frankly",
-            ]),
+            expr: SequenceExpr::default().then(phrases_expr).t_ws(),
         }
     }
 
     fn lint_sentence(&self, sent: &[Token], source: &[char]) -> Option<Lint> {
         let first_word_idx = sent.iter_word_indices().next()?;
 
-        let first_word = &sent[first_word_idx];
-        let subq_tok = sent.get(first_word_idx + 1)?;
-
-        if !subq_tok.kind.is_whitespace() {
-            return None;
-        }
-
-        if self.expr.run(first_word_idx, sent, source).is_some() {
+        if let Some(matched_phrase) = self.expr.run(first_word_idx, sent, source) {
             Some(Lint {
-                span: first_word.span,
+                span: sent[matched_phrase.start..matched_phrase.end - 1].span()?,
                 lint_kind: LintKind::Punctuation,
                 suggestions: vec![Suggestion::InsertAfter(vec![','])],
                 message: "Discourse markers at the beginning of a sentence should be followed by a comma.".into(),
@@ -72,7 +85,7 @@ impl Linter for DiscourseMarkers {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     use super::DiscourseMarkers;
 
@@ -221,5 +234,48 @@ mod tests {
     #[test]
     fn allows_single_word_sentence() {
         assert_no_lints("Thus", DiscourseMarkers::default());
+    }
+
+    #[test]
+    fn corrects_for_example() {
+        assert_suggestion_result(
+            "For example I recommend updating the configuration.",
+            DiscourseMarkers::default(),
+            "For example, I recommend updating the configuration.",
+        );
+    }
+
+    #[test]
+    fn no_suggestion_if_comma_after_for_example() {
+        assert_no_lints(
+            "For example, I recommend updating the configuration.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn preserves_whitespace_for_example() {
+        assert_suggestion_result(
+            "For example   the outcome was unexpected.",
+            DiscourseMarkers::default(),
+            "For example,   the outcome was unexpected.",
+        );
+    }
+
+    #[test]
+    fn corrects_on_the_other_hand() {
+        assert_suggestion_result(
+            "On the other hand we could delay the deployment.",
+            DiscourseMarkers::default(),
+            "On the other hand, we could delay the deployment.",
+        );
+    }
+
+    #[test]
+    fn no_lint_for_mid_sentence_on_the_other_hand() {
+        assert_no_lints(
+            "We might postpone, on the other hand this introduces risk.",
+            DiscourseMarkers::default(),
+        );
     }
 }
