@@ -68,16 +68,16 @@ impl Currency {
         let amount = amount.to_string();
 
         match self {
-            Currency::Dollar => format!("{}{amount}", c),
-            Currency::Cent => format!("{amount}{}", c),
-            Currency::Euro => format!("{}{amount}", c),
-            Currency::Ruble => format!("{amount} {}", c),
-            Currency::Lira => format!("{amount} {}", c),
-            Currency::Pound => format!("{}{amount}", c),
-            Currency::Yen => format!("{} {amount}", c),
-            Currency::Baht => format!("{amount} {}", c),
-            Currency::Won => format!("{} {amount}", c),
-            Currency::Kip => format!("{}{amount}", c),
+            Currency::Dollar => format!("{c}{amount}"),
+            Currency::Cent => format!("{amount}{c}"),
+            Currency::Euro => format!("{c}{amount}"),
+            Currency::Ruble => format!("{amount} {c}"),
+            Currency::Lira => format!("{amount} {c}"),
+            Currency::Pound => format!("{c}{amount}"),
+            Currency::Yen => format!("{c} {amount}"),
+            Currency::Baht => format!("{amount} {c}"),
+            Currency::Won => format!("{c} {amount}"),
+            Currency::Kip => format!("{c}{amount}"),
         }
     }
 }

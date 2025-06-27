@@ -2,6 +2,7 @@ use harper_brill::UPOS;
 
 use crate::expr::All;
 use crate::expr::Expr;
+use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::NominalPhrase;
 use crate::patterns::Pattern;
@@ -30,7 +31,12 @@ impl Default for ItsContraction {
 
         let inverted = SequenceExpr::default().if_not_then_step_one(exceptions);
 
-        let expr = All::new(vec![Box::new(positive), Box::new(inverted)]);
+        let expr =
+            All::new(vec![Box::new(positive), Box::new(inverted)]).or(SequenceExpr::aco("its")
+                .t_ws()
+                .then_adjective()
+                .t_ws()
+                .t_aco("for"));
 
         Self {
             expr: Box::new(expr),
@@ -100,6 +106,15 @@ mod tests {
             "I think its got nothing to do with us.",
             ItsContraction::default(),
             "I think it's got nothing to do with us.",
+        );
+    }
+
+    #[test]
+    fn fixes_its_common() {
+        assert_suggestion_result(
+            "Its common for users to get frustrated.",
+            ItsContraction::default(),
+            "It's common for users to get frustrated.",
         );
     }
 

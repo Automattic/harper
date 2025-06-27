@@ -107,10 +107,8 @@ fn format_word_tag(word: &WordMetadata) -> String {
             _ => {}
         }
         // Treat unmarked (neither singular nor plural) common nouns as singular
-        if noun.is_singular.is_none() && noun.is_plural.is_none() {
-            if noun.is_proper.is_none() {
-                tag.push_str("Sg");
-            }
+        if noun.is_singular.is_none() && noun.is_plural.is_none() && noun.is_proper.is_none() {
+            tag.push_str("Sg");
         }
         add_bool(&mut tag, "$", noun.is_possessive);
         add(&tag, &mut tags);
@@ -273,7 +271,7 @@ impl Formatter {
 
 #[test]
 fn test_pos_tagger() {
-    snapshot::snapshot_all_text_files("tagged", ".md", |source| {
+    snapshot::snapshot_all_text_files("tagged", ".md", |source, _| {
         let dict = FstDictionary::curated();
         let document = Document::new_markdown_default(source, &dict);
 

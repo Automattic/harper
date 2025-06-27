@@ -22,7 +22,7 @@ impl Display for Number {
 
         if let Some(suffix) = self.suffix {
             for c in suffix.to_chars() {
-                write!(f, "{}", c)?;
+                write!(f, "{c}")?;
             }
         }
 

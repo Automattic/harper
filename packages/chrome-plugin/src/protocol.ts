@@ -9,9 +9,13 @@ export type Request =
 	| SetDialectRequest
 	| GetDialectRequest
 	| SetDomainStatusRequest
+	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
+	| GetDefaultStatusRequest
 	| AddToUserDictionaryRequest
-	| IgnoreLintRequest;
+	| SetUserDictionaryRequest
+	| IgnoreLintRequest
+	| GetUserDictionaryRequest;
 
 export type Response =
 	| LintResponse
@@ -19,7 +23,9 @@ export type Response =
 	| UnitResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
-	| GetDomainStatusResponse;
+	| GetDomainStatusResponse
+	| GetDefaultStatusResponse
+	| GetUserDictionaryResponse;
 
 export type LintRequest = {
 	kind: 'lint';
@@ -80,15 +86,43 @@ export type GetDomainStatusResponse = {
 	enabled: boolean;
 };
 
+export type GetDefaultStatusRequest = {
+	kind: 'getDefaultStatus';
+};
+
+export type GetDefaultStatusResponse = {
+	kind: 'getDefaultStatus';
+	enabled: boolean;
+};
+
 export type SetDomainStatusRequest = {
 	kind: 'setDomainStatus';
 	domain: string;
 	enabled: boolean;
 };
 
+export type SetDefaultStatusRequest = {
+	kind: 'setDefaultStatus';
+	enabled: boolean;
+};
+
 export type AddToUserDictionaryRequest = {
 	kind: 'addToUserDictionary';
-	word: string;
+	words: string[];
+};
+
+export type SetUserDictionaryRequest = {
+	kind: 'setUserDictionary';
+	words: string[];
+};
+
+export type GetUserDictionaryRequest = {
+	kind: 'getUserDictionary';
+};
+
+export type GetUserDictionaryResponse = {
+	kind: 'getUserDictionary';
+	words: string[];
 };
 
 export type IgnoreLintRequest = {

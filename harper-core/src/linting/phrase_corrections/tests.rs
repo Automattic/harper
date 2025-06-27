@@ -173,6 +173,16 @@ fn correct_on_face_value() {
     );
 }
 
+// AtTheEndOfTheDay
+#[test]
+fn correct_at_the_end_of_the_day() {
+    assert_suggestion_result(
+        "In the end of the day, it's not a big deal.",
+        lint_group(),
+        "At the end of the day, it's not a big deal.",
+    );
+}
+
 // AvoidAndAlso
 // -none-
 
@@ -2027,4 +2037,20 @@ fn detect_worst_ever_real_world() {
 #[test]
 fn now_on_hold() {
     assert_lint_count("Those are now on hold for month.", lint_group(), 0);
+}
+
+// ThanksALot
+#[test]
+fn thanks_lot() {
+    assert_suggestion_result("thanks lot", lint_group(), "thanks a lot");
+}
+
+#[test]
+fn thanks_alot() {
+    assert_suggestion_result("thanks alot", lint_group(), "thanks a lot");
+}
+
+#[test]
+fn thanks_a_lot_clean() {
+    assert_lint_count("thanks a lot", lint_group(), 0);
 }

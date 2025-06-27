@@ -68,3 +68,15 @@ export function getMediumRoot(el: HTMLElement): HTMLElement | null {
 export function getNotionRoot(el: HTMLElement): HTMLElement | null {
 	return document.getElementById('notion-app');
 }
+
+/** Determines if a given node is a child of a CodeMirror editor instance.
+ * If so, returns the root node of that instance. */
+export function getCMRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.classList.contains('cm-editor'));
+}
+
+/** Determines if a given node is a child of a ProseMirror editor instance.
+ * If so, returns the root node of that instance. */
+export function getPMRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.classList.contains('ProseMirror'));
+}

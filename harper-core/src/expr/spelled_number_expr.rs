@@ -124,7 +124,7 @@ mod tests {
                 .iter()
                 .map(|t| doc.get_span_content_str(&t.span))
                 .collect();
-            println!("- '{}' (span: {:?})", text, m);
+            println!("- '{text}' (span: {m:?})");
         }
 
         assert_eq!(matches.len(), 2);

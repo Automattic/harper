@@ -51,7 +51,7 @@ impl ExprLinter for MostNumber {
             .into_iter()
             .map(|superlative| {
                 Suggestion::replace_with_match_case(
-                    format!("{} {}", superlative, noun_string).chars().collect(),
+                    format!("{superlative} {noun_string}").chars().collect(),
                     most_amt_num_span.get_content(source),
                 )
             })

@@ -1,9 +1,8 @@
 use std::sync::Arc;
 
-use crate::patterns::WhitespacePattern;
 use crate::{CharString, Dictionary, FstDictionary, Span, Token, WordMetadata};
 
-use super::{Expr, LongestMatchOf, SequenceExpr};
+use super::{Expr, SequenceExpr, SpaceOrHyphen};
 
 type PredicateFn = dyn Fn(Option<&WordMetadata>, Option<&WordMetadata>) -> bool + Send + Sync;
 
@@ -24,10 +23,7 @@ impl MergeableWords {
         Self {
             inner: SequenceExpr::default()
                 .then_any_word()
-                .then(LongestMatchOf::new(vec![
-                    Box::new(WhitespacePattern),
-                    Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
-                ]))
+                .then(SpaceOrHyphen)
                 .then_any_word(),
             dict: FstDictionary::curated(),
             predicate: Box::new(predicate),

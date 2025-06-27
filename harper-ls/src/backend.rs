@@ -207,7 +207,7 @@ impl Backend {
                 .ok_or_else(|| anyhow!("Unable to convert URL to file path."))?,
         )
         .await
-        .with_context(|| format!("Unable to read from file {:?}", uri))?;
+        .with_context(|| format!("Unable to read from file {uri:?}"))?;
 
         self.update_document(uri, &content, language_id).await
     }
@@ -656,7 +656,7 @@ impl LanguageServer for Backend {
             }
             "HarperOpen" => match open::that(&first) {
                 Ok(()) => {
-                    let message = format!(r#"Opened "{}""#, first);
+                    let message = format!(r#"Opened "{first}""#);
 
                     self.client.log_message(MessageType::INFO, &message).await;
 

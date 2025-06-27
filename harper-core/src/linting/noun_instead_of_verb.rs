@@ -134,7 +134,7 @@ impl ExprLinter for NounInsteadOfVerb {
                 verb.chars().collect(),
                 noun_chars,
             )],
-            message: format!("`{}` is a noun, the verb should be `{}`.", noun_text, verb),
+            message: format!("`{noun_text}` is a noun, the verb should be `{verb}`."),
             priority: 63,
         })
     }

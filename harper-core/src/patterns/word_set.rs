@@ -50,10 +50,20 @@ impl SingleTokenPattern for WordSet {
                 continue;
             }
 
+            fn canonical(c: &char) -> char {
+                match c {
+                    '\u{2018}' | '\u{2019}' | '\u{02BC}' | '\u{FF07}' => '\'',
+                    '\u{201C}' | '\u{201D}' | '\u{FF02}' => '"',
+                    '\u{2013}' | '\u{2014}' | '\u{2212}' | '\u{FF0D}' => '-',
+                    _ => *c,
+                }
+            }
+
             let partial_match = tok_chars
                 .iter()
-                .zip(word)
-                .all(|(a, b)| a.eq_ignore_ascii_case(b));
+                .map(canonical)
+                .zip(word.iter().map(canonical))
+                .all(|(a, b)| a.eq_ignore_ascii_case(&b));
 
             if partial_match {
                 return true;
@@ -90,5 +100,16 @@ mod tests {
         let matches = set.find_all_matches_in_doc(&doc);
 
         assert_eq!(matches, vec![Span::new(6, 7), Span::new(12, 13)]);
+    }
+
+    #[test]
+    fn supports_typographic_apostrophes() {
+        let set = WordSet::new(&["They're"]);
+
+        let doc = Document::new_markdown_default_curated("They’re");
+
+        let matches = set.find_all_matches_in_doc(&doc);
+
+        assert_eq!(matches, vec![Span::new(0, 1)]);
     }
 }

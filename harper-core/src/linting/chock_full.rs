@@ -1,10 +1,7 @@
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
-use crate::{
-    Token, TokenStringExt,
-    patterns::{WhitespacePattern, WordSet},
-};
+use crate::expr::SpaceOrHyphen;
+use crate::{Token, TokenStringExt, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -18,10 +15,7 @@ impl Default for ChockFull {
             expr: Box::new(
                 SequenceExpr::default()
                     .then(WordSet::new(&["chalk", "choke"]))
-                    .then(LongestMatchOf::new(vec![
-                        Box::new(WhitespacePattern),
-                        Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
-                    ]))
+                    .then(SpaceOrHyphen)
                     .then_exact_word("full"),
             ),
         }

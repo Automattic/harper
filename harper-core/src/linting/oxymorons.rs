@@ -62,7 +62,7 @@ impl ExprLinter for Oxymorons {
             span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: Vec::new(),
-            message: format!("'{}' is an oxymoron.", matched_text),
+            message: format!("'{matched_text}' is an oxymoron."),
             priority: 31,
         })
     }

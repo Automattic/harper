@@ -136,6 +136,12 @@ pub fn lint_group() -> LintGroup {
             "`at face value is more idiomatic and more common.",
             "Corrects `on face value` to the more usual `at face value`."
         ),
+        "AtTheEndOfTheDay" => (
+            ["in the end of the day"],
+            ["at the end of the day"],
+            "Did you mean `at the end of the day`?",
+            "Corrects `in the end of the day` to `at the end of the day`."
+        ),
         "AvoidAndAlso" => (
             ["and also"],
             ["and"],
@@ -1341,6 +1347,17 @@ pub fn lint_group() -> LintGroup {
             "Use `worst` for the extreme case. (`Worse` is for comparing)",
             "Corrects `worse ever` to `worst ever` for proper comparative usage."
         ),
+        "BuiltIn" => (
+            ["in built", "in-built", "built in"],
+            ["built-in"],
+            "Prefer the hyphenated compound `built-in`.",
+            "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are non-standard and can feel awkward to readers."
+        ),
+        "ThanksALot" => (
+            ["thanks lot", "thanks alot"],
+            ["thanks a lot"],
+            "Prefer the two-word expression `thanks a lot`.",
+            "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers.")
     });
 
     group.set_all_rules_to(Some(true));

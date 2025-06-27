@@ -172,8 +172,8 @@ impl BrillChunker {
         }
 
         println!("=============");
-        println!("Total tokens in training set: {}", total_tokens);
-        println!("Tokens incorrectly flagged: {}", error_counter);
+        println!("Total tokens in training set: {total_tokens}");
+        println!("Tokens incorrectly flagged: {error_counter}");
         println!(
             "Error rate: {}%",
             error_counter as f32 / total_tokens as f32 * 100.

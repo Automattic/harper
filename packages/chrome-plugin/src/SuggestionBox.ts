@@ -53,7 +53,7 @@ function addToDictionary(box: LintBox): any {
 		{
 			className: 'harper-btn',
 			onclick: () => {
-				ProtocolClient.addToUserDictionary(box.lint.problem_text);
+				ProtocolClient.addToUserDictionary([box.lint.problem_text]);
 			},
 			title: 'Add word to user dictionary',
 			'aria-label': 'Add word to user dictionary',
