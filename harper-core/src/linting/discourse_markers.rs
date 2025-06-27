@@ -1,6 +1,5 @@
 use crate::expr::{Expr, FixedPhrase, LongestMatchOf, SequenceExpr};
-use crate::patterns::WordSet;
-use crate::{Document, Lrc, Span, Token, TokenStringExt};
+use crate::{Document, Token, TokenStringExt};
 
 use super::{Lint, LintKind, Linter, Suggestion};
 
@@ -38,7 +37,7 @@ impl DiscourseMarkers {
         let phrases_expr = LongestMatchOf::new(
             phrases
                 .iter()
-                .map(|text: &&str| Box::new(FixedPhrase::from_phrase(*text)) as Box<dyn Expr>)
+                .map(|text: &&str| Box::new(FixedPhrase::from_phrase(text)) as Box<dyn Expr>)
                 .collect(),
         );
 
