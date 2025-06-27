@@ -1,7 +1,7 @@
 use actix_cors::Cors;
 use actix_web::{http::header, web, App, HttpServer};
 // Import the handler from our library file.
-use harperAPI::lint_text;
+use harper_api::lint_text;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

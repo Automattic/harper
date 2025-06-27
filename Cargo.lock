@@ -1173,6 +1173,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-api"
+version = "0.1.0"
+dependencies = [
+ "actix-cors",
+ "actix-web",
+ "harper-core",
+ "serde",
+]
+
+[[package]]
 name = "harper-cli"
 version = "0.1.0"
 dependencies = [
@@ -1353,16 +1363,6 @@ dependencies = [
  "tracing",
  "tracing-wasm",
  "wasm-bindgen",
-]
-
-[[package]]
-name = "harperAPI"
-version = "0.1.0"
-dependencies = [
- "actix-cors",
- "actix-web",
- "harper-core",
- "serde",
 ]
 
 [[package]]

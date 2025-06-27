@@ -88,7 +88,7 @@ impl Display for Suggestion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Suggestion::ReplaceWith(with) => {
-                write!(f, "{}", with.iter().collect::<String>())
+                write!(f, "Replace with: “{}”", with.iter().collect::<String>())
             }
             Suggestion::InsertAfter(with) => {
                 write!(f, "{}", with.iter().collect::<String>())
