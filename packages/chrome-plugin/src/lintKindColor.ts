@@ -12,6 +12,8 @@ export default function lintKindColor(lintKindKey: string): string {
 			return '#D4850F'; // Dark orange
 		case 'Readability':
 			return '#2E8B57'; // Sea green
+		case 'Redundancy':
+			return '#1A5FB4'; // Deep blue
 		case 'Regionalism':
 			return '#C061CB'; // Vibrant purple
 		case 'Repetition':
@@ -20,6 +22,8 @@ export default function lintKindColor(lintKindKey: string): string {
 			return '#EE4266'; // Pink-red
 		case 'Style':
 			return '#FFD23F'; // Yellow
+		case 'Typo':
+			return '#FF6B35'; // Vibrant orange-red
 		case 'WordChoice':
 			return '#228B22'; // Forest green
 		default:
