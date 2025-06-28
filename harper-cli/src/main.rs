@@ -731,8 +731,7 @@ impl Input {
         match self {
             Input::File(file) => file
                 .file_name()
-                .map(|file_name| file_name.to_string_lossy())
-                .unwrap_or(Cow::from("<file>")),
+                .map_or(Cow::from("<file>"), |file_name| file_name.to_string_lossy()),
             Input::Text(_) => Cow::from("<input>"),
         }
     }
