@@ -49,10 +49,8 @@ impl ExprLinter for NoMatchFor {
         let phrase_toks = &toks[2..];
         let phrase_span = phrase_toks.span()?;
 
-        let suggestion = Suggestion::replace_with_match_case(
-            ['n', 'o', ' ', 'm', 'a', 't', 'c', 'h', ' ', 'f', 'o', 'r'].to_vec(),
-            phrase_span.get_content(src),
-        );
+        let suggestion =
+            Suggestion::replace_with_match_case_str("no match for", phrase_span.get_content(src));
 
         Some(Lint {
             span: phrase_span,
