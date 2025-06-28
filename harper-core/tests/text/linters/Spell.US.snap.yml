@@ -1,0 +1,149 @@
+Lint:    Spelling (63 priority)
+Message: |
+       9 | - Afterwards.
+         |   ^~~~~~~~~~ Did you mean to spell `Afterwards` this way?
+Suggest:
+  - Replace with: “Afterward”
+  - Replace with: “Afterwords”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      10 | - Centre.
+         |   ^~~~~~ Did you mean to spell `Centre` this way?
+Suggest:
+  - Replace with: “Entire”
+  - Replace with: “Entry”
+  - Replace with: “Genre”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      11 | - Labelled.
+         |   ^~~~~~~~ Did you mean to spell `Labelled` this way?
+Suggest:
+  - Replace with: “Labeled”
+  - Replace with: “Belled”
+  - Replace with: “Rebelled”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      12 | - Flavour.
+         |   ^~~~~~~ Did you mean to spell `Flavour` this way?
+Suggest:
+  - Replace with: “Flavor”
+  - Replace with: “Cavour”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      13 | - Favoured.
+         |   ^~~~~~~~ Did you mean to spell `Favoured` this way?
+Suggest:
+  - Replace with: “Favored”
+  - Replace with: “Devoured”
+  - Replace with: “Savored”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      14 | - Honour.
+         |   ^~~~~~ Did you mean to spell `Honour` this way?
+Suggest:
+  - Replace with: “Honor”
+  - Replace with: “Concur”
+  - Replace with: “Contour”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      15 | - Grey.
+         |   ^~~~ Did you mean to spell `Grey` this way?
+Suggest:
+  - Replace with: “Gorey”
+  - Replace with: “Greg”
+  - Replace with: “Trey”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      16 | - Quarrelled.
+         |   ^~~~~~~~~~ Did you mean `Quarreled`?
+Suggest:
+  - Replace with: “Quarreled”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      17 | - Quarrelling.
+         |   ^~~~~~~~~~~ Did you mean `Quarreling`?
+Suggest:
+  - Replace with: “Quarreling”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      18 | - Recognised.
+         |   ^~~~~~~~~~ Did you mean `Recognized`?
+Suggest:
+  - Replace with: “Recognized”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      19 | - Neighbour.
+         |   ^~~~~~~~~ Did you mean `Neighbor`?
+Suggest:
+  - Replace with: “Neighbor”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      20 | - Neighbouring.
+         |   ^~~~~~~~~~~~ Did you mean `Neighboring`?
+Suggest:
+  - Replace with: “Neighboring”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      21 | - Clamour.
+         |   ^~~~~~~ Did you mean to spell `Clamour` this way?
+Suggest:
+  - Replace with: “Clamor”
+  - Replace with: “Glamour”
+  - Replace with: “Cavour”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      22 | - Theatre.
+         |   ^~~~~~~ Did you mean `Sheathe`?
+Suggest:
+  - Replace with: “Sheathe”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      23 | - Analyse.
+         |   ^~~~~~~ Did you mean `Analyze`?
+Suggest:
+  - Replace with: “Analyze”
+
+
+

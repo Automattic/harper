@@ -6,10 +6,12 @@ import patch from 'virtual-dom/patch';
 import { type LintBox, isBoxInScreen } from './Box';
 import RenderBox from './RenderBox';
 import {
+	getCMRoot,
 	getLexicalRoot,
 	getMediumRoot,
 	getNotionRoot,
 	getP2Root,
+	getPMRoot,
 	getQuillJsRoot,
 	getShredditComposerRoot,
 	getSlateRoot,
@@ -127,6 +129,8 @@ export default class Highlights {
 		}
 
 		const queries = [
+			getPMRoot,
+			getCMRoot,
 			getNotionRoot,
 			getSlateRoot,
 			getMediumRoot,

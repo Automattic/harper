@@ -38,11 +38,13 @@ use super::expr_linter::run_on_chunk;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
+use super::have_pronoun::HavePronoun;
 use super::hedging::Hedging;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
 use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
+use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::its_contraction::ItsContraction;
 use super::left_right_hand::LeftRightHand;
@@ -90,6 +92,7 @@ use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
 use super::was_aloud::WasAloud;
+use super::way_too_adjective::WayTooAdjective;
 use super::whereas::Whereas;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
@@ -377,6 +380,8 @@ impl LintGroup {
         insert_pattern_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_pattern_rule!(ChockFull, true);
+        insert_pattern_rule!(WayTooAdjective, true);
+        insert_pattern_rule!(HavePronoun, true);
         insert_pattern_rule!(PronounInflectionBe, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
@@ -399,7 +404,7 @@ impl LintGroup {
         insert_struct_rule!(HopHope, true);
         insert_struct_rule!(HowTo, true);
         insert_pattern_rule!(HyphenateNumberDay, true);
-        insert_pattern_rule!(ItsContraction, true);
+        insert_struct_rule!(ItsContraction, true);
         insert_pattern_rule!(LeftRightHand, true);
         insert_pattern_rule!(LessWorse, true);
         insert_struct_rule!(LetsConfusion, true);
@@ -457,6 +462,9 @@ impl LintGroup {
             InflectedVerbAfterTo::new(dictionary.clone()),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
+
+        out.add("InOnTheCards", InOnTheCards::new(dialect));
+        out.config.set_rule_enabled("InOnTheCards", true);
 
         out.add(
             "SentenceCapitalization",
