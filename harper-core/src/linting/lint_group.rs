@@ -57,6 +57,7 @@ use super::modal_of::ModalOf;
 use super::most_number::MostNumber;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
+use super::no_match_for::NoMatchFor;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::noun_instead_of_verb::NounInsteadOfVerb;
@@ -413,6 +414,7 @@ impl LintGroup {
         insert_pattern_rule!(ModalOf, true);
         insert_pattern_rule!(MostNumber, true);
         insert_pattern_rule!(MultipleSequentialPronouns, true);
+        insert_pattern_rule!(NoMatchFor, true);
         insert_struct_rule!(NailOnTheHead, true);
         insert_struct_rule!(NominalWants, true);
         insert_struct_rule!(NoOxfordComma, false);
