@@ -298,7 +298,7 @@ impl Regionalisms {
         let terms: Vec<Box<dyn Expr>> = REGIONAL_TERMS
             .iter()
             .filter(|row| row.flag == Flag)
-            .map(|row| Box::new(FixedPhrase::from_phrase(&row.term)) as Box<dyn Expr>)
+            .map(|row| Box::new(FixedPhrase::from_phrase(row.term)) as Box<dyn Expr>)
             .collect();
 
         Self {
@@ -357,14 +357,11 @@ impl ExprLinter for Regionalisms {
 
         let message = if other_terms.len() == 1 {
             format!(
-                "`{}` isn't used in {}. Use `{}` instead.",
-                flagged_term_string, linter_dialect, other_terms[0]
+                "`{flagged_term_string}` isn't used in {linter_dialect}. Use `{}` instead.",
+                other_terms[0]
             )
         } else {
-            format!(
-                "`{}` isn't used in {}.",
-                flagged_term_string, linter_dialect
-            )
+            format!("`{flagged_term_string}` isn't used in {linter_dialect}.")
         };
 
         Some(Lint {
