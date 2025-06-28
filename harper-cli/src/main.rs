@@ -137,12 +137,14 @@ fn main() -> anyhow::Result<()> {
             let mut merged_dict = MergedDictionary::new();
             merged_dict.add_dictionary(dictionary);
 
+            // Attempt to load user dictionary.
             match load_dict(&user_dict_path) {
                 Ok(user_dict) => merged_dict.add_dictionary(Arc::new(user_dict)),
                 Err(err) => println!("{}: {}", user_dict_path.display(), err),
             }
 
             if let Input::File(ref file) = input {
+                // Only attempt to load file dictionary if input is a file.
                 let file_dict_path = file_dict_path.join(file_dict_name(file));
                 match load_dict(&file_dict_path) {
                     Ok(file_dict) => merged_dict.add_dictionary(Arc::new(file_dict)),
@@ -150,6 +152,7 @@ fn main() -> anyhow::Result<()> {
                 }
             }
 
+            // Load the file/text.
             let (doc, source) = input.load(markdown_options, &merged_dict)?;
 
             let mut linter = LintGroup::new_curated(Arc::new(merged_dict), dialect);
@@ -209,6 +212,7 @@ fn main() -> anyhow::Result<()> {
             input,
             include_newlines,
         } => {
+            // Load the file/text.
             let (doc, source) = input.load(markdown_options, &dictionary)?;
 
             let primary_color = Color::Blue;
