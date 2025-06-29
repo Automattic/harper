@@ -18,21 +18,32 @@ use CanFlag::*;
 #[derive(PartialEq)]
 enum Concept {
     AubergineEggplant,
+    BumBagFannyPack,
+    BurglarizeBurgle,
+    CampervanRv,
+    CaravanTrailer,
     CatsupKetchupTomatoSauce,
     CellPhoneMobilePhone,
     CoolboxCoolerEsky,
     ChipsCrisps,
     CilantroCoriander,
+    DiaperNappy,
     DummyPacifier,
     FaucetTap,
     FlashlightTorch,
     FootballSoccer,
     FootpathPavementSidewalk,
     GasolinePetrol,
+    GasStationPetrolStationServiceStation,
+    // HooverVacuumCleaner - Hoover is also a surname and vacuum cleaner is universal.
     JumperSweater,
     LightBulbLightGlobe,
     LorryTruck,
+    MotorhomeRv,
+    PhotocopierXerox,
+    PhotocopyXerox,
     PickupUte,
+    PramStroller,
     SpannerWrench,
     StationWagonEstate,
 }
@@ -43,11 +54,14 @@ use Concept::*;
 struct Term<'a> {
     /// The term (e.g., "light globe", "sidewalk")
     term: &'a str,
-    /// Whether to flag this term or only suggest it
+    /// Whether to flag this term or only suggest it.
+    /// We don't want to flag universal terms just because they have a regional synonym.
+    /// We also don't want to flag terms that are common in other senses.
     flag: CanFlag,
-    /// The dialect(s) this term is associated with
+    /// The dialect(s) this term is associated with.
     dialects: &'a [Dialect],
-    /// The concept this term is associated with
+    /// The concept this term is associated with.
+    /// Named by concatenating all the associated terms in alphabetical order.
     concept: Concept,
 }
 
@@ -57,6 +71,36 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[British],
         concept: AubergineEggplant,
+    },
+    Term {
+        term: "bum bag",
+        flag: Flag,
+        dialects: &[Australian],
+        concept: BumBagFannyPack,
+    },
+    Term {
+        term: "burglarize",
+        flag: Flag,
+        dialects: &[American],
+        concept: BurglarizeBurgle,
+    },
+    Term {
+        term: "burgle",
+        flag: Flag,
+        dialects: &[British],
+        concept: BurglarizeBurgle,
+    },
+    Term {
+        term: "campervan",
+        flag: Flag,
+        dialects: &[Australian, British],
+        concept: CampervanRv,
+    },
+    Term {
+        term: "caravan",
+        flag: DontFlag,
+        dialects: &[Australian, British],
+        concept: CaravanTrailer,
     },
     Term {
         term: "catsup",
@@ -107,6 +151,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: ChipsCrisps,
     },
     Term {
+        term: "diaper",
+        flag: Flag,
+        dialects: &[American, Canadian],
+        concept: DiaperNappy,
+    },
+    Term {
         term: "dummy",
         flag: DontFlag,
         dialects: &[Australian],
@@ -129,6 +179,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: DontFlag,
         dialects: &[British],
         concept: StationWagonEstate,
+    },
+    Term {
+        term: "fanny pack",
+        flag: Flag,
+        dialects: &[American, Canadian],
+        concept: BumBagFannyPack,
     },
     Term {
         term: "faucet",
@@ -155,6 +211,18 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: FootpathPavementSidewalk,
     },
     Term {
+        term: "gas",
+        flag: DontFlag,
+        dialects: &[American, Canadian],
+        concept: GasolinePetrol,
+    },
+    Term {
+        term: "gas station",
+        flag: DontFlag,
+        dialects: &[American, Canadian],
+        concept: GasStationPetrolStationServiceStation,
+    },
+    Term {
         term: "gasoline",
         flag: Flag,
         dialects: &[American],
@@ -169,7 +237,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     Term {
         term: "ketchup",
         flag: Flag,
-        dialects: &[American],
+        dialects: &[American, Canadian],
         concept: CatsupKetchupTomatoSauce,
     },
     Term {
@@ -197,6 +265,18 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: CellPhoneMobilePhone,
     },
     Term {
+        term: "motorhome",
+        flag: Flag,
+        dialects: &[Australian, British],
+        concept: MotorhomeRv,
+    },
+    Term {
+        term: "nappy",
+        flag: Flag,
+        dialects: &[Australian, British],
+        concept: DiaperNappy,
+    },
+    Term {
         term: "pacifier",
         flag: Flag,
         dialects: &[American],
@@ -215,10 +295,47 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: GasolinePetrol,
     },
     Term {
+        term: "petrol station",
+        flag: Flag,
+        dialects: &[Australian, British],
+        concept: GasStationPetrolStationServiceStation,
+    },
+    Term {
+        term: "photocopier",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian],
+        concept: PhotocopierXerox,
+    },
+    Term {
+        term: "photocopy",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian],
+        concept: PhotocopyXerox,
+    },
+    Term {
         term: "pickup truck",
         flag: Flag,
         dialects: &[American],
         concept: PickupUte,
+    },
+    Term {
+        term: "pram",
+        flag: Flag,
+        dialects: &[Australian, British],
+        concept: PramStroller,
+    },
+    Term {
+        // Must be normalized to lowercase
+        term: "rv",
+        flag: DontFlag,
+        dialects: &[American],
+        concept: CampervanRv,
+    },
+    Term {
+        term: "rv",
+        flag: Flag,
+        dialects: &[American],
+        concept: MotorhomeRv,
     },
     Term {
         term: "sidewalk",
@@ -245,6 +362,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: StationWagonEstate,
     },
     Term {
+        term: "stroller",
+        flag: Flag,
+        dialects: &[American, Australian],
+        concept: PramStroller,
+    },
+    Term {
         term: "sweater",
         flag: Flag,
         dialects: &[American],
@@ -269,6 +392,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: FlashlightTorch,
     },
     Term {
+        term: "trailer",
+        flag: DontFlag,
+        dialects: &[American],
+        concept: CaravanTrailer,
+    },
+    Term {
         term: "truck",
         flag: DontFlag,
         dialects: &[American, Australian, Canadian],
@@ -279,6 +408,18 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[Australian],
         concept: PickupUte,
+    },
+    Term {
+        term: "xerox",
+        dialects: &[American],
+        flag: Flag,
+        concept: PhotocopierXerox,
+    },
+    Term {
+        term: "xerox",
+        flag: Flag,
+        dialects: &[American],
+        concept: PhotocopyXerox,
     },
     Term {
         term: "wrench",
@@ -328,11 +469,13 @@ impl ExprLinter for Regionalisms {
             return None;
         }
 
-        let concept = &REGIONAL_TERMS
+        let concept = match REGIONAL_TERMS
             .iter()
             .find(|row| row.term == flagged_term_string)
-            .unwrap()
-            .concept;
+        {
+            Some(term) => &term.concept,
+            None => return None, // No matching term found, so nothing to lint
+        };
 
         let other_terms = REGIONAL_TERMS
             .iter()
@@ -357,11 +500,11 @@ impl ExprLinter for Regionalisms {
 
         let message = if other_terms.len() == 1 {
             format!(
-                "`{flagged_term_string}` isn't used in {linter_dialect}. Use `{}` instead.",
+                "`{flagged_term_string}` isn't used in {linter_dialect} English. Use `{}` instead.",
                 other_terms[0]
             )
         } else {
-            format!("`{flagged_term_string}` isn't used in {linter_dialect}.")
+            format!("`{flagged_term_string}` isn't used in {linter_dialect} English.")
         };
 
         Some(Lint {
@@ -381,7 +524,7 @@ impl ExprLinter for Regionalisms {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::linting::tests::assert_top3_suggestion_result;
+    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
 
     #[test]
     fn uk_to_us_food() {
@@ -453,6 +596,15 @@ mod tests {
             "I spilled ketchup on my clean sweater.",
             Regionalisms::new(Dialect::Australian),
             "I spilled tomato sauce on my clean jumper.",
+        )
+    }
+
+    #[test]
+    fn caravan_doesnt_always_mean_trailer() {
+        assert_lint_count(
+            "A caravan (from Persian کاروان kârvân) is a group of people traveling together, often on a trade expedition. Caravans were used mainly in desert areas.",
+            Regionalisms::new(Dialect::British),
+            0,
         )
     }
 }
