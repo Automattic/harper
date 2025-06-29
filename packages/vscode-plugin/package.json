@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.45.0",
+	"version": "0.46.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -340,6 +340,12 @@
 					"default": true,
 					"description": "Corrects `on face value` to the more usual `at face value`."
 				},
+				"harper.linters.AtTheEndOfTheDay": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `in the end of the day` to `at the end of the day`."
+				},
 				"harper.linters.Australia": {
 					"scope": "resource",
 					"type": "boolean",
@@ -447,6 +453,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Suggests the more standard and common synonym `brutality`."
+				},
+				"harper.linters.BuiltIn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are non-standard and can feel awkward to readers."
 				},
 				"harper.linters.ByAccident": {
 					"scope": "resource",
@@ -1054,6 +1066,12 @@
 					"default": true,
 					"description": "Suggests `past` for `passed` in case a verb was intended."
 				},
+				"harper.linters.HavePronoun": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags questions that begin with `has` followed by a pronoun that requires `have`, such as `Has we …` or `Has I …`, and suggests the correct auxiliary."
+				},
 				"harper.linters.HavingGone": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1228,6 +1246,12 @@
 					"default": true,
 					"description": "Corrects `in need for` to `in need of`."
 				},
+				"harper.linters.InOnTheCards": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects either `in the cards` or `on the cards` to the other, depending on the dialect."
+				},
 				"harper.linters.InOneFellSwoop": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1395,6 +1419,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `left hand` and `right hand` are hyphenated when used as adjectives before a noun, such as in `left-hand side` or `right-hand corner`."
+				},
+				"harper.linters.LessWorse": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests alternatives to `less/least worse/worst` for more standard, clearer comparisons."
 				},
 				"harper.linters.LetAlone": {
 					"scope": "resource",
@@ -2098,6 +2128,12 @@
 					"default": true,
 					"description": "Expands an initialism."
 				},
+				"harper.linters.ThanksALot": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers."
+				},
 				"harper.linters.ThatChallenged": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2295,6 +2331,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Identifies the mistake of merging `wave` and `function` into one word. In quantum mechanics, a `wave function` (written as two words) describes the mathematical function that represents the quantum state of a particle or system. Correct usage is crucial for clear and accurate scientific communication."
+				},
+				"harper.linters.WayTooAdjective": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Replaces the preposition `to` with the adverb `too` after `way` when followed by an adjective (e.g. `way too fast`)"
 				},
 				"harper.linters.WellBeing": {
 					"scope": "resource",

@@ -2038,3 +2038,19 @@ fn detect_worst_ever_real_world() {
 fn now_on_hold() {
     assert_lint_count("Those are now on hold for month.", lint_group(), 0);
 }
+
+// ThanksALot
+#[test]
+fn thanks_lot() {
+    assert_suggestion_result("thanks lot", lint_group(), "thanks a lot");
+}
+
+#[test]
+fn thanks_alot() {
+    assert_suggestion_result("thanks alot", lint_group(), "thanks a lot");
+}
+
+#[test]
+fn thanks_a_lot_clean() {
+    assert_lint_count("thanks a lot", lint_group(), 0);
+}

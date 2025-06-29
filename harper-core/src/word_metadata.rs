@@ -1,12 +1,14 @@
 use harper_brill::UPOS;
 use is_macro::Is;
+use itertools::Itertools;
 use paste::paste;
 use serde::{Deserialize, Serialize};
-use strum_macros::{Display, EnumString};
+use strum::{EnumCount, VariantArray};
+use strum_macros::{Display, EnumCount, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
-use crate::WordId;
+use crate::{Document, TokenKind, TokenStringExt, WordId};
 
 #[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Hash)]
 pub struct WordMetadata {
@@ -77,8 +79,7 @@ macro_rules! generate_metadata_queries {
                                 [< is_ $sub >]: Some(true),
                                 ..
                             })
-                        )
-                    }
+                        ) }
 
                     #[doc = concat!("Checks if the word is definitely a ", stringify!($category), " and more specifically is labeled as __not__ (a) ", stringify!($sub), ".")]
                     pub fn [< is_non_ $sub _ $category >](&self) -> bool {
@@ -704,7 +705,19 @@ impl ConjunctionData {
 
 /// A regional dialect.
 #[derive(
-    Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, EnumString, Display,
+    Debug,
+    Clone,
+    Copy,
+    Serialize,
+    Deserialize,
+    PartialEq,
+    PartialOrd,
+    Eq,
+    Hash,
+    EnumCount,
+    EnumString,
+    Display,
+    VariantArray,
 )]
 pub enum Dialect {
     // Note: these have bit-shifted values so that they can ergonomically integrate with
@@ -714,6 +727,41 @@ pub enum Dialect {
     Canadian = 1 << 1,
     Australian = 1 << 2,
     British = 1 << 3,
+}
+impl Dialect {
+    /// Tries to guess the dialect used in the document by finding which dialect is used the most.
+    /// Returns `None` if it fails to find a single dialect that is used the most.
+    #[must_use]
+    pub fn try_guess_from_document(document: &Document) -> Option<Self> {
+        Self::try_from(DialectFlags::get_most_used_dialects_from_document(document)).ok()
+    }
+
+    /// Tries to get a dialect from its abbreviation. Returns `None` if the abbreviation is not
+    /// recognized.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use harper_core::Dialect;
+    ///
+    /// let abbrs = ["US", "CA", "AU", "GB"];
+    /// let mut dialects = abbrs.iter().map(|abbr| Dialect::try_from_abbr(abbr));
+    ///
+    /// assert_eq!(Some(Dialect::American), dialects.next().unwrap()); // US
+    /// assert_eq!(Some(Dialect::Canadian), dialects.next().unwrap()); // CA
+    /// assert_eq!(Some(Dialect::Australian), dialects.next().unwrap()); // AU
+    /// assert_eq!(Some(Dialect::British), dialects.next().unwrap()); // GB
+    /// ```
+    #[must_use]
+    pub fn try_from_abbr(abbr: &str) -> Option<Self> {
+        match abbr {
+            "US" => Some(Self::American),
+            "CA" => Some(Self::Canadian),
+            "AU" => Some(Self::Australian),
+            "GB" => Some(Self::British),
+            _ => None,
+        }
+    }
 }
 impl TryFrom<DialectFlags> for Dialect {
     type Error = ();
@@ -790,6 +838,49 @@ impl DialectFlags {
         };
         out
     }
+
+    /// Gets the most commonly used dialect(s) in the document.
+    ///
+    /// If multiple dialects are used equally often, they will all be enabled in the returned
+    /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it
+    /// will be the only one enabled.
+    #[must_use]
+    pub fn get_most_used_dialects_from_document(document: &Document) -> Self {
+        // Initialize counters.
+        let mut dialect_counters: [(Dialect, usize); Dialect::COUNT] = Dialect::VARIANTS
+            .iter()
+            .map(|d| (*d, 0))
+            .collect_array()
+            .unwrap();
+
+        // Count word dialects.
+        document.iter_words().for_each(|w| {
+            if let TokenKind::Word(Some(word_metadata)) = &w.kind {
+                // If the token is a word, iterate though the dialects in `dialect_counters` and
+                // increment those counters where the word has the respective dialect enabled.
+                dialect_counters.iter_mut().for_each(|(dialect, count)| {
+                    if word_metadata.dialects.is_dialect_enabled(*dialect) {
+                        *count += 1;
+                    }
+                });
+            }
+        });
+
+        // Find max counter.
+        let max_counter = dialect_counters
+            .iter()
+            .map(|(_, count)| count)
+            .max()
+            .unwrap();
+        // Get and convert the collection of most used dialects into a `DialectFlags`.
+        dialect_counters
+            .into_iter()
+            .filter(|(_, count)| count == max_counter)
+            .fold(DialectFlags::empty(), |acc, dialect| {
+                // Fold most used dialects into `DialectFlags` via bitwise or.
+                acc | Self::from_dialect(dialect.0)
+            })
+    }
 }
 impl Default for DialectFlags {
     /// A default value with no dialects explicitly enabled.
@@ -809,6 +900,31 @@ mod tests {
             .get_word_metadata_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
             .clone()
+    }
+
+    mod dialect {
+        use super::super::{Dialect, DialectFlags};
+        use crate::Document;
+
+        #[test]
+        fn guess_british_dialect() {
+            let document = Document::new_plain_english_curated("Aluminium was used.");
+            let df = DialectFlags::get_most_used_dialects_from_document(&document);
+            assert!(
+                df.is_dialect_enabled_strict(Dialect::British)
+                    && !df.is_dialect_enabled_strict(Dialect::American)
+            );
+        }
+
+        #[test]
+        fn guess_american_dialect() {
+            let document = Document::new_plain_english_curated("Aluminum was used.");
+            let df = DialectFlags::get_most_used_dialects_from_document(&document);
+            assert!(
+                df.is_dialect_enabled_strict(Dialect::American)
+                    && !df.is_dialect_enabled_strict(Dialect::British)
+            );
+        }
     }
 
     mod noun {

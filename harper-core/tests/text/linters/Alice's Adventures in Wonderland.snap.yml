@@ -45,18 +45,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-      21 | be late!” (when she thought it over afterwards, it occurred to her that she
-         |                                     ^~~~~~~~~~ Did you mean to spell `afterwards` this way?
-      22 | ought to have wondered at this, but at the time it all seemed quite natural);
-Suggest:
-  - Replace with: “afterward”
-  - Replace with: “afterwords”
-  - Replace with: “afterword's”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
       39 | next. First, she tried to look down and make out what she was coming to, but it
@@ -82,29 +70,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       46 | she fell past it.
          | ~~~~~~~~~~~~~~~~~ This sentence is 55 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-      43 | shelves as she passed; it was labelled “ORANGE MARMALADE”, but to her great
-         |                               ^~~~~~~~ Did you mean to spell `labelled` this way?
-Suggest:
-  - Replace with: “labeled”
-  - Replace with: “labeler”
-  - Replace with: “labelless”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-      54 | I’ve fallen by this time?” she said aloud. “I must be getting somewhere near the
-      55 | centre of the earth. Let me see: that would be four thousand miles down, I
-         | ^~~~~~ Did you mean to spell `centre` this way?
-Suggest:
-  - Replace with: “center”
-  - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -306,18 +271,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      140 | soon finished it off.
          | ~~~~~~~~~~~~~~~~~~~~~ This sentence is 46 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     138 | finding it very nice, (it had, in fact, a sort of mixed flavour of cherry-tart,
-         |                                                         ^~~~~~~ Did you mean to spell `flavour` this way?
-     139 | custard, pine-apple, roast turkey, toffee, and hot buttered toast,) she very
-Suggest:
-  - Replace with: “flavor”
-  - Replace with: “favor”
-  - Replace with: “flour”
 
 
 
@@ -791,18 +744,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-     387 | driest thing I know. Silence all round, if you please! ‘William the Conqueror,
-     388 | whose cause was favoured by the pope, was soon submitted to by the English, who
-         |                 ^~~~~~~~ Did you mean to spell `favoured` this way?
-Suggest:
-  - Replace with: “favored”
-  - Replace with: “flavored”
-  - Replace with: “floured”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      390 | Edwin and Morcar, the earls of Mercia and Northumbria—’”
          |           ^~~~~~ Did you mean to spell `Morcar` this way?
 Suggest:
@@ -1065,57 +1006,12 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
-     660 | voice she had never heard before, “Sure then I’m here! Digging for apples, yer
-     661 | honour!”
-         | ^~~~~~ Did you mean to spell `honour` this way?
-Suggest:
-  - Replace with: “honor”
-  - Replace with: “hour”
-  - Replace with: “honer”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
-         |                         ^~~~~~ Did you mean to spell `honour` this way?
-Suggest:
-  - Replace with: “honor”
-  - Replace with: “hour”
-  - Replace with: “honer”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
          |                                                     ^~~~~ Did you mean to spell `arrum` this way?
 Suggest:
   - Replace with: “arum”
   - Replace with: “album”
   - Replace with: “alum”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     672 | “Sure, it does, yer honour: but it’s an arm for all that.”
-         |                     ^~~~~~ Did you mean to spell `honour` this way?
-Suggest:
-  - Replace with: “honor”
-  - Replace with: “hour”
-  - Replace with: “honer”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     677 | then; such as, “Sure, I don’t like it, yer honour, at all, at all!” “Do as I
-         |                                            ^~~~~~ Did you mean to spell `honour` this way?
-Suggest:
-  - Replace with: “honor”
-  - Replace with: “hour”
-  - Replace with: “honer”
 
 
 
@@ -1302,18 +1198,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      824 | butterfly, I should think you’ll feel it a little queer, won’t you?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     884 | > “In my youth,” said the sage, as he shook his grey locks, “I kept all my limbs
-         |                                                 ^~~~ Did you mean to spell `grey` this way?
-     885 | > very supple By the use of this ointment—one shilling the box— Allow me to sell
-Suggest:
-  - Replace with: “gray”
-  - Replace with: “grew”
-  - Replace with: “grep”
 
 
 
@@ -1708,17 +1592,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    1497 | The Hatter shook his head mournfully. “Not I!” he replied. “We quarrelled last
-         |                                                                ^~~~~~~~~~ Did you mean to spell `quarrelled` this way?
-    1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
-Suggest:
-  - Replace with: “quarreled”
-  - Replace with: “quarreler”
-
-
-
 Lint:    WordChoice (63 priority)
 Message: |
     1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
@@ -1845,18 +1718,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    1713 | they were all ornamented with hearts. Next came the guests, mostly Kings and
-    1714 | Queens, and among them Alice recognised the White Rabbit: it was talking in a
-         |                              ^~~~~~~~~~ Did you mean to spell `recognised` this way?
-Suggest:
-  - Replace with: “recognized”
-  - Replace with: “recognize”
-  - Replace with: “recognizer”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1720 | Alice was rather doubtful whether she ought not to lie down on her face like the
@@ -1949,16 +1810,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1834 | a furious passion, and went stamping about, and shouting “Off with his head!” or
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    1832 | The players all played at once without waiting for turns, quarrelling all the
-         |                                                           ^~~~~~~~~~~ Did you mean `quarreling`?
-    1833 | while, and fighting for the hedgehogs; and in a very short time the Queen was in
-Suggest:
-  - Replace with: “quarreling”
 
 
 
@@ -2221,17 +2072,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    2048 | But here, to Alice’s great surprise, the Duchess’s voice died away, even in the
-    2049 | middle of her favourite word ‘moral,’ and the arm that was linked into hers
-         |               ^~~~~~~~~ Did you mean to spell `favourite` this way?
-Suggest:
-  - Replace with: “favorite”
-  - Replace with: “favorites”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     2064 | The other guests had taken advantage of the Queen’s absence, and were resting in
@@ -2240,16 +2080,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2066 | Queen merely remarking that a moment’s delay would cost them their lives.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    2068 | All the time they were playing the Queen never left off quarrelling with the
-         |                                                         ^~~~~~~~~~~ Did you mean `quarreling`?
-    2069 | other players, and shouting “Off with his head!” or “Off with her head!” Those
-Suggest:
-  - Replace with: “quarreling”
 
 
 
@@ -3295,17 +3125,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    2547 | even make out that one of them didn’t know how to spell “stupid,” and that he
-    2548 | had to ask his neighbour to tell him. “A nice muddle their slates’ll be in
-         |                ^~~~~~~~~ Did you mean to spell `neighbour` this way?
-Suggest:
-  - Replace with: “neighbor”
-  - Replace with: “neighbors”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     2548 | had to ask his neighbour to tell him. “A nice muddle their slates’ll be in
          |                                                            ^~~~~~~~~ Did you mean to spell `slates’ll` this way?
     2549 | before the trial’s over!” thought Alice.
@@ -3474,17 +3293,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    2929 | “No, no!” said the Queen. “Sentence first—verdict afterwards.”
-         |                                                   ^~~~~~~~~~ Did you mean to spell `afterwards` this way?
-Suggest:
-  - Replace with: “afterward”
-  - Replace with: “afterwords”
-  - Replace with: “afterword's”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     2943 | At this the whole pack rose up into the air, and came flying down upon her: she
@@ -3586,17 +3394,6 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
-    2972 | The long grass rustled at her feet as the White Rabbit hurried by—the frightened
-    2973 | Mouse splashed his way through the neighbouring pool—she could hear the rattle
-         |                                    ^~~~~~~~~~~~ Did you mean `neighboring`?
-    2974 | of the teacups as the March Hare and his friends shared their never-ending meal,
-Suggest:
-  - Replace with: “neighboring”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     2977 | plates and dishes crashed around it—once more the shriek of the Gryphon, the
          |                                                                 ^~~~~~~ Did you mean `Krypton`?
     2978 | squeaking of the Lizard’s slate-pencil, and the choking of the suppressed
@@ -3635,18 +3432,6 @@ Message: |
     2988 | noises, would change (she knew) to the confused clamour of the busy
 Suggest:
   - Replace with: “Krypton”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    2988 | noises, would change (she knew) to the confused clamour of the busy
-         |                                                 ^~~~~~~ Did you mean to spell `clamour` this way?
-    2989 | farm-yard—while the lowing of the cattle in the distance would take the place of
-Suggest:
-  - Replace with: “clamor”
-  - Replace with: “glamour”
-  - Replace with: “clamber”
 
 
 
