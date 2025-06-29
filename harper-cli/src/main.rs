@@ -3,9 +3,8 @@
 use hashbrown::HashMap;
 use std::borrow::Cow;
 use std::collections::BTreeMap;
-use std::ffi::OsString;
 use std::fs::File;
-use std::io::BufReader;
+use std::io::{BufReader, Read};
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 use std::{fs, process};
@@ -32,8 +31,9 @@ use serde::Serialize;
 enum Args {
     /// Lint a provided document.
     Lint {
-        /// The text or file you wish to grammar check.
-        input: Input,
+        /// The text or file you wish to grammar check. If not provided, it will be read from
+        /// standard input.
+        input: Option<Input>,
         /// Whether to merely print out the number of errors encountered,
         /// without further details.
         #[arg(short, long)]
@@ -54,13 +54,15 @@ enum Args {
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
-        /// The text or file you wish to parse.
-        input: Input,
+        /// The text or file you wish to parse. If not provided, it will be read from standard
+        /// input.
+        input: Option<Input>,
     },
     /// Parse a provided document and show the spans of the detected tokens.
     Spans {
-        /// The file or text for which you wish to display the spans.
-        input: Input,
+        /// The file or text for which you wish to display the spans. If not provided, it will be
+        /// read from standard input.
+        input: Option<Input>,
         /// Include newlines in the output
         #[arg(short, long)]
         include_newlines: bool,
@@ -134,6 +136,9 @@ fn main() -> anyhow::Result<()> {
             user_dict_path,
             file_dict_path,
         } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
             let mut merged_dict = MergedDictionary::new();
             merged_dict.add_dictionary(dictionary);
 
@@ -199,6 +204,10 @@ fn main() -> anyhow::Result<()> {
             process::exit(1)
         }
         Args::Parse { input } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
             let (doc, _) = input.load(markdown_options, &dictionary)?;
 
             for token in doc.tokens() {
@@ -212,6 +221,9 @@ fn main() -> anyhow::Result<()> {
             input,
             include_newlines,
         } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
             // Load the file/text.
             let (doc, source) = input.load(markdown_options, &dictionary)?;
 
@@ -724,7 +736,7 @@ impl Input {
         }
     }
 
-    /// Gets a human-readable identifier for the input. For example, this can be a file name, or
+    /// Gets a human-readable identifier for the input. For example, this can be a filename, or
     /// simply the string `"<input>"`.
     #[must_use]
     fn get_identifier(&self) -> Cow<str> {
@@ -735,13 +747,21 @@ impl Input {
             Input::Text(_) => Cow::from("<input>"),
         }
     }
+
+    /// Tries to construct an `Input` by reading standard input. This will fail if the standard
+    /// input cannot be read.
+    fn try_from_stdin() -> anyhow::Result<Self> {
+        let mut buf = String::new();
+        std::io::stdin().lock().read_to_string(&mut buf)?;
+        Ok(Self::from(buf))
+    }
 }
 // This allows this type to be directly used with clap as an argument.
 // https://docs.rs/clap/latest/clap/macro.value_parser.html
-impl From<OsString> for Input {
-    /// Converts an `OsString` into an `Input`. `Input` is automatically set to the correct variant
+impl From<String> for Input {
+    /// Converts the given string into an `Input`. `Input` is automatically set to the correct variant
     /// depending on whether `input_string` is a valid file path or not.
-    fn from(input_string: OsString) -> Self {
+    fn from(input_string: String) -> Self {
         if let Ok(metadata) = std::fs::metadata(&input_string)
             && metadata.is_file()
         {
@@ -749,7 +769,7 @@ impl From<OsString> for Input {
             Self::File(input_string.into())
         } else {
             // Input is not a valid file path, we assume it's intended to be a string.
-            Self::Text(input_string.to_string_lossy().into_owned())
+            Self::Text(input_string)
         }
     }
 }
