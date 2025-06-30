@@ -33,7 +33,7 @@
 > two distinctive groups : rule   - based and  stochastic . E. Brill's tagger , one       of the
 # NSg NSg/J       NPl/V+ . NSg/V+ . V/J+  V/C+ J+         . ?  ?       NSg    . NSg/I/V/J P  D
 > first   and most    widely used English  POS  - taggers , employs rule   - based algorithms .
-# NSg/V/J V/C NSg/I/J R      V/J  NPr/V/J+ NSg+ . NPl     . NPl/V   NSg/V+ . V/J   NPl+       .
+# NSg/V/J V/C NSg/I/J R      V/J  NPr/V/J+ NSg+ . NPl     . V       NSg/V+ . V/J   NPl+       .
 >
 #
 > Principle
@@ -374,8 +374,8 @@
 # NSg/V   NPl/V+   NPr/J/P NSg/V+ NSg/V . V/C NSg/V  NSg/V/J . P  . NSg/V  NPl+       IPl+       .
 > For example , statistics readily reveal that          " the " , " a   " , and " an  " occur in
 # C/P NSg/V+  . NPl/V+     R       NSg/V  NSg/I/C/Ddem+ . D   . . . D/P . . V/C . D/P . V     NPr/J/P
-> similar contexts , while     " eat   " occurs in      very different ones   . With sufficient
-# NSg/J+  NPl/V+   . NSg/V/C/P . NSg/V . V      NPr/J/P J/R  NSg/J+    NPl/V+ . P    J+
+> similar contexts , while     " eat " occurs in      very different ones   . With sufficient
+# NSg/J+  NPl/V+   . NSg/V/C/P . V   . V      NPr/J/P J/R  NSg/J+    NPl/V+ . P    J+
 > iteration , similarity classes of words  emerge that          are remarkably similar to
 # NSg       . NSg        NPl/V   P  NPl/V+ NSg/V  NSg/I/C/Ddem+ V   R          NSg/J   P
 > those   human   linguists would  expect ; and the differences themselves sometimes

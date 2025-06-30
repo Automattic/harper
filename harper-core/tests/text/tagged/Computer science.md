@@ -33,7 +33,7 @@
 > the generation of images . Programming language theory considers different ways
 # D   NSg        P  NPl/V+ . NSg/V+      NSg/V+   NSg+   V         NSg/J     NPl
 > to describe computational processes , and database theory concerns the management
-# P  NSg/V    J+            NPl/V+    . V/C NSg/V+   NSg+   NSg/V+   D   NSg
+# P  V        J+            NPl/V+    . V/C NSg/V+   NSg+   NSg/V+   D   NSg
 > of repositories of data . Human   – computer interaction investigates the interfaces
 # P  NPl          P  NSg+ . NSg/V/J . NSg/V+   NSg+        V            D   NPl/V
 > through which humans and computers interact , and software engineering focuses on
@@ -43,7 +43,7 @@
 > systems , networks and embedded systems investigate the principles and design
 # NPl     . NPl/V+   V/C V/J      NPl+    V           D   NPl/V      V/C NSg/V+
 > behind  complex  systems . Computer architecture describes the construction of
-# NSg/J/P NSg/V/J+ NPl+    . NSg/V+   NSg+         NPl/V     D   NSg          P
+# NSg/J/P NSg/V/J+ NPl+    . NSg/V+   NSg+         V         D   NSg          P
 > computer components and computer - operated equipment . Artificial intelligence and
 # NSg/V+   NPl        V/C NSg/V+   . V/J      NSg       . J          NSg          V/C
 > machine learning aim    to synthesize goal   - orientated processes such  as
@@ -433,7 +433,7 @@
 > branch of mathematics , which is prevalent in      theoretical computer science , and
 # NPr/V  P  NSg+        . I/C+  VL NSg/J     NPr/J/P J+          NSg/V+   NSg/V+  . V/C
 > mainly employs deductive reasoning ) , the " technocratic paradigm " ( which might    be
-# R      NPl/V   J         NSg/V     . . D   . J            NSg+     . . I/C+  NSg/VX/J NSg/VX
+# R      V       J         NSg/V     . . D   . J            NSg+     . . I/C+  NSg/VX/J NSg/VX
 > found in      engineering approaches , most    prominently in      software engineering ) , and
 # NSg/V NPr/J/P NSg/V+      NPl/V+     . NSg/I/J R           NPr/J/P NSg+     NSg/V+      . . V/C
 > the " scientific paradigm " ( which approaches computer - related artifacts from the

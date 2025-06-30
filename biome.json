@@ -24,6 +24,7 @@
 			"packages/obsidian-plugin/main.js",
 			"pnpm-lock.yaml",
 			"package-lock.json",
+			"playwright-report",
 			"yarn.lock"
 		]
 	},
