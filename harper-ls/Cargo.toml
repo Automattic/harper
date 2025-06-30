@@ -28,7 +28,7 @@ resolve-path = "0.1.0"
 open = "5.3.0"
 futures = "0.3.31"
 serde = { version = "1.0.219", features = ["derive"] }
-indexmap = { version = "2.9.0", features = ["serde"] }
+indexmap = { version = "2.10.0", features = ["serde"] }
 reqwest = { version = "0.12.20", features = ["rustls-tls"], default-features = false }
 
 [features]

@@ -387,4 +387,22 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn corrects_hes() {
+        assert_suggestion_result(
+            "hes",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "he's",
+        );
+    }
+
+    #[test]
+    fn corrects_shes() {
+        assert_suggestion_result(
+            "shes",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "she's",
+        );
+    }
 }

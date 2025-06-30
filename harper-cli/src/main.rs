@@ -16,13 +16,16 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    remove_overlaps, CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
-    MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
+    CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
+    MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata, remove_overlaps,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_pos_utils::{BrillChunker, BrillTagger};
 use harper_stats::Stats;
 use serde::Serialize;
+
+mod input;
+use input::Input;
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Debug, Parser)]
@@ -30,8 +33,9 @@ use serde::Serialize;
 enum Args {
     /// Lint a provided document.
     Lint {
-        /// The file you wish to grammar check.
-        file: PathBuf,
+        /// The text or file you wish to grammar check. If not provided, it will be read from
+        /// standard input.
+        input: Option<Input>,
         /// Whether to merely print out the number of errors encountered,
         /// without further details.
         #[arg(short, long)]
@@ -52,13 +56,15 @@ enum Args {
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
-        /// The file you wish to parse.
-        file: PathBuf,
+        /// The text or file you wish to parse. If not provided, it will be read from standard
+        /// input.
+        input: Option<Input>,
     },
     /// Parse a provided document and show the spans of the detected tokens.
     Spans {
-        /// The file you wish to display the spans.
-        file: PathBuf,
+        /// The file or text for which you wish to display the spans. If not provided, it will be
+        /// read from standard input.
+        input: Option<Input>,
         /// Include newlines in the output
         #[arg(short, long)]
         include_newlines: bool,
@@ -125,28 +131,36 @@ fn main() -> anyhow::Result<()> {
 
     match args {
         Args::Lint {
-            file,
+            input,
             count,
             only_lint_with,
             dialect,
             user_dict_path,
             file_dict_path,
         } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
             let mut merged_dict = MergedDictionary::new();
             merged_dict.add_dictionary(dictionary);
 
+            // Attempt to load user dictionary.
             match load_dict(&user_dict_path) {
                 Ok(user_dict) => merged_dict.add_dictionary(Arc::new(user_dict)),
                 Err(err) => println!("{}: {}", user_dict_path.display(), err),
             }
 
-            let file_dict_path = file_dict_path.join(file_dict_name(&file));
-            match load_dict(&file_dict_path) {
-                Ok(file_dict) => merged_dict.add_dictionary(Arc::new(file_dict)),
-                Err(err) => println!("{}: {}", file_dict_path.display(), err),
+            if let Input::File(ref file) = input {
+                // Only attempt to load file dictionary if input is a file.
+                let file_dict_path = file_dict_path.join(file_dict_name(file));
+                match load_dict(&file_dict_path) {
+                    Ok(file_dict) => merged_dict.add_dictionary(Arc::new(file_dict)),
+                    Err(err) => println!("{}: {}", file_dict_path.display(), err),
+                }
             }
 
-            let (doc, source) = load_file(&file, markdown_options, &merged_dict)?;
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &merged_dict)?;
 
             let mut linter = LintGroup::new_curated(Arc::new(merged_dict), dialect);
 
@@ -174,28 +188,29 @@ fn main() -> anyhow::Result<()> {
 
             let primary_color = Color::Magenta;
 
-            let filename = file
-                .file_name()
-                .map(|s| s.to_string_lossy().into())
-                .unwrap_or("<file>".to_string());
+            let input_identifier = input.get_identifier();
 
-            let mut report_builder = Report::build(ReportKind::Advice, &filename, 0);
+            let mut report_builder = Report::build(ReportKind::Advice, &input_identifier, 0);
 
             for lint in lints {
                 report_builder = report_builder.with_label(
-                    Label::new((&filename, lint.span.into()))
+                    Label::new((&input_identifier, lint.span.into()))
                         .with_message(lint.message)
                         .with_color(primary_color),
                 );
             }
 
             let report = report_builder.finish();
-            report.print((&filename, Source::from(source)))?;
+            report.print((&input_identifier, Source::from(source)))?;
 
             process::exit(1)
         }
-        Args::Parse { file } => {
-            let (doc, _) = load_file(&file, markdown_options, &dictionary)?;
+        Args::Parse { input } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, _) = input.load(markdown_options, &dictionary)?;
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
@@ -205,21 +220,25 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::Spans {
-            file,
+            input,
             include_newlines,
         } => {
-            let (doc, source) = load_file(&file, markdown_options, &dictionary)?;
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &dictionary)?;
 
             let primary_color = Color::Blue;
             let secondary_color = Color::Magenta;
             let unlintable_color = Color::Red;
-            let filename = file
-                .file_name()
-                .map(|s| s.to_string_lossy().into())
-                .unwrap_or("<file>".to_string());
+            let input_identifier = input.get_identifier();
 
-            let mut report_builder =
-                Report::build(ReportKind::Custom("Spans", primary_color), &filename, 0);
+            let mut report_builder = Report::build(
+                ReportKind::Custom("Spans", primary_color),
+                &input_identifier,
+                0,
+            );
             let mut color = primary_color;
 
             for token in doc.tokens().filter(|t| {
@@ -227,7 +246,7 @@ fn main() -> anyhow::Result<()> {
                     || !matches!(t.kind, TokenKind::Newline(_) | TokenKind::ParagraphBreak)
             }) {
                 report_builder = report_builder.with_label(
-                    Label::new((&filename, token.span.into()))
+                    Label::new((&input_identifier, token.span.into()))
                         .with_message(format!("[{}, {})", token.span.start, token.span.end))
                         .with_color(if matches!(token.kind, TokenKind::Unlintable) {
                             unlintable_color
@@ -245,7 +264,7 @@ fn main() -> anyhow::Result<()> {
             }
 
             let report = report_builder.finish();
-            report.print((&filename, Source::from(source)))?;
+            report.print((&input_identifier, Source::from(source)))?;
 
             Ok(())
         }
