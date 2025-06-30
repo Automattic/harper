@@ -57,6 +57,8 @@ export default class TextFieldRange {
 			'borderBottomWidth',
 			'borderLeftWidth',
 			'boxSizing',
+			'overflowX',
+			'overflowY',
 		];
 		propertiesToCopy.forEach((prop) => {
 			this.mirror!.style[prop] = computed[prop];
@@ -145,8 +147,8 @@ export default class TextFieldRange {
 	 */
 	detach(): void {
 		if (this.mirror?.parentNode) {
-			this.mirror.parentNode.removeChild(this.mirror);
-			this.mirror = null;
+			// this.mirror.parentNode.removeChild(this.mirror);
+			// this.mirror = null;
 		}
 	}
 }
