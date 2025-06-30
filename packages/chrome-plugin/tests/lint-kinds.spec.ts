@@ -1,14 +1,14 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import lintKindColor, { LINT_KINDS } from '../src/lintKindColor';
 
 test('display lint kind colors', async ({}, testInfo) => {
-  // Generate color boxes for each lint kind
-  const colorBoxes = LINT_KINDS.map(kind => {
-    const color = lintKindColor(kind);
-    return `<div class="color-box" style="background-color: ${color}">${kind}</div>`;
-  }).join('\n');
-  
-  const htmlContent = `
+	// Generate color boxes for each lint kind
+	const colorBoxes = LINT_KINDS.map((kind) => {
+		const color = lintKindColor(kind);
+		return `<div class="color-box" style="background-color: ${color}">${kind}</div>`;
+	}).join('\n');
+
+	const htmlContent = `
     <!DOCTYPE html>
     <html>
     <head>
@@ -47,9 +47,9 @@ test('display lint kind colors', async ({}, testInfo) => {
     </html>
   `;
 
-  // Attach the HTML report
-  await testInfo.attach('lint-colors.html', {
-    body: htmlContent,
-    contentType: 'text/html'
-  });
+	// Attach the HTML report
+	await testInfo.attach('lint-colors.html', {
+		body: htmlContent,
+		contentType: 'text/html',
+	});
 });
