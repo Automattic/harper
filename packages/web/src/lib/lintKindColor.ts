@@ -11,6 +11,7 @@ const LINT_KIND_COLORS = {
 	Spelling: '#EE4266', // Pink-red
 	Style: '#FFD23F', // Yellow
 	WordChoice: '#228B22', // Forest green
+	Typo: '#FF6B35', // Vibrant orange-red
 } as const;
 
 // Export the type for the lint kind keys
