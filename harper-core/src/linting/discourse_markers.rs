@@ -1,4 +1,7 @@
+use harper_brill::UPOS;
+
 use crate::expr::{Expr, FixedPhrase, LongestMatchOf, SequenceExpr};
+use crate::patterns::UPOSSet;
 use crate::{Document, Token, TokenStringExt};
 
 use super::{Lint, LintKind, Linter, Suggestion};
@@ -42,7 +45,10 @@ impl DiscourseMarkers {
         );
 
         Self {
-            expr: SequenceExpr::default().then(phrases_expr).t_ws(),
+            expr: SequenceExpr::default()
+                .then(phrases_expr)
+                .t_ws()
+                .if_not_then_step_one(UPOSSet::new(&[UPOS::ADJ, UPOS::ADV])),
         }
     }
 
@@ -51,7 +57,7 @@ impl DiscourseMarkers {
 
         if let Some(matched_phrase) = self.expr.run(first_word_idx, sent, source) {
             Some(Lint {
-                span: sent[matched_phrase.start..matched_phrase.end - 1].span()?,
+                span: sent[matched_phrase.start..matched_phrase.end - 2].span()?,
                 lint_kind: LintKind::Punctuation,
                 suggestions: vec![Suggestion::InsertAfter(vec![','])],
                 message: "Discourse markers at the beginning of a sentence should be followed by a comma.".into(),
@@ -157,6 +163,14 @@ mod tests {
             "Thus we arrive at the final verdict.",
             DiscourseMarkers::default(),
             "Thus, we arrive at the final verdict.",
+        );
+    }
+
+    #[test]
+    fn allows_thus_far() {
+        assert_no_lints(
+            "Thus far there have been no problems.",
+            DiscourseMarkers::default(),
         );
     }
 

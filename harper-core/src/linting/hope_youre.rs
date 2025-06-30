@@ -1,6 +1,6 @@
 use crate::{
     Token,
-    expr::{OwnedExprExt, SequenceExpr},
+    expr::SequenceExpr,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };

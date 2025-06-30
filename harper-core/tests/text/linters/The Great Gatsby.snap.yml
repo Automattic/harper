@@ -6119,16 +6119,6 @@ Message: |
 
 
 
-Lint:    Punctuation (31 priority)
-Message: |
-    4789 | But he knew that he was in Daisy’s house by a colossal accident. However
-         |                                                                  ^~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
-    4790 | glorious might be his future as Jay Gatsby, he was at present a penniless young
-Suggest:
-  - Insert “,”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     4797 | pretenses. I don’t mean that he had traded on his phantom millions, but he had
@@ -6560,15 +6550,6 @@ Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gd's”
   - Replace with: “Gag's”
-
-
-
-Lint:    Punctuation (31 priority)
-Message: |
-    5174 | reach Gad’s Hill until noon. Thus far there was no difficulty in accounting for
-         |                              ^~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
-Suggest:
-  - Insert “,”
 
 
 
