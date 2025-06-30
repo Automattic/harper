@@ -1357,7 +1357,20 @@ pub fn lint_group() -> LintGroup {
             ["thanks lot", "thanks alot"],
             ["thanks a lot"],
             "Prefer the two-word expression `thanks a lot`.",
-            "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers.")
+            "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers."
+        ),
+        "WroughtIron" => (
+            ["rod iron", "rot iron", "rod-iron", "rot-iron"],
+            ["wrought iron"],
+            "Prefer the standard term `wrought iron`.",
+            "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
+        ),
+        "Beforehand" => (
+            ["before hand", "before-hand"],
+            ["beforehand"],
+            "Prefer the single-word adverb `beforehand`.",
+            "`Beforehand` functions as a fixed adverb meaning ‘in advance’; writing it as two words or with a hyphen is nonstandard and can jar readers."
+        ),
     });
 
     group.set_all_rules_to(Some(true));

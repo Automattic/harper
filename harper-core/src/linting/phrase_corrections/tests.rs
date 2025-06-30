@@ -2054,3 +2054,49 @@ fn thanks_alot() {
 fn thanks_a_lot_clean() {
     assert_lint_count("thanks a lot", lint_group(), 0);
 }
+
+#[test]
+fn corrects_rod_iron() {
+    assert_suggestion_result(
+        "The gate was crafted from rod iron.",
+        lint_group(),
+        "The gate was crafted from wrought iron.",
+    );
+}
+
+#[test]
+fn corrects_rot_iron() {
+    assert_suggestion_result(
+        "The artisan works in rot iron.",
+        lint_group(),
+        "The artisan works in wrought iron.",
+    );
+}
+
+#[test]
+fn allows_wrought_iron() {
+    assert_lint_count("She specialized in wrought iron artwork.", lint_group(), 0);
+}
+
+#[test]
+fn corrects_before_hand() {
+    assert_suggestion_result(
+        "Let me know before hand if you will attend.",
+        lint_group(),
+        "Let me know beforehand if you will attend.",
+    );
+}
+
+#[test]
+fn corrects_before_hand_hyphen() {
+    assert_suggestion_result(
+        "I prepared the documents before-hand.",
+        lint_group(),
+        "I prepared the documents beforehand.",
+    );
+}
+
+#[test]
+fn allows_beforehand() {
+    assert_lint_count("We finished the preparations beforehand.", lint_group(), 0);
+}
