@@ -509,7 +509,7 @@ impl ExprLinter for Regionalisms {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::WordChoice,
+            lint_kind: LintKind::Regionalism,
             suggestions,
             message,
             priority: 64,
