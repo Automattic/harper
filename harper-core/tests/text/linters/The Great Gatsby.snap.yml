@@ -219,15 +219,6 @@ Suggest:
 
 
 
-Lint:    Punctuation (31 priority)
-Message: |
-      61 | restless. Instead of being the warm centre of the world, the Middle West now
-         |           ^~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
-Suggest:
-  - Insert “,”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
       61 | restless. Instead of being the warm centre of the world, the Middle West now
@@ -1751,16 +1742,6 @@ Suggest:
   - Replace with: “skeptically”
   - Replace with: “scenically”
   - Replace with: “ascetically”
-
-
-
-Lint:    Punctuation (31 priority)
-Message: |
-    1333 | person to a greater or lesser degree. Instead of rambling this party had
-         |                                       ^~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
-    1334 | preserved a dignified homogeneity, and assumed to itself the function of
-Suggest:
-  - Insert “,”
 
 
 
@@ -4022,15 +4003,6 @@ Lint:    Style (31 priority)
 Message: |
     2823 | “I keep it always full of interesting people, night and day. People who do
          |                                               ^~~~~ An Oxford comma is necessary here.
-Suggest:
-  - Insert “,”
-
-
-
-Lint:    Punctuation (31 priority)
-Message: |
-    2826 | Instead of taking the short cut along the Sound we went down to the road and
-         | ^~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
 Suggest:
   - Insert “,”
 
