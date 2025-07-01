@@ -825,7 +825,7 @@ Azerbaijan/Og
 Azerbaijani/NOJgS
 Azores/Og
 Azov/Og
-Aztec/NOJSg        # ancient civilization
+Aztec/NOJSg         # ancient civilization
 Aztecan/JNg
 Aztlan/Og
 B/NOgnT
@@ -2060,7 +2060,7 @@ Cherie/Og
 Chernenko/g
 Chernobyl/ONg
 Chernomyrdin/g
-Cherokee/NOgS
+Cherokee/NOg09S     # singular and plural, but also has plural in -s
 Cherry/ONg
 Cheryl/Og
 Chesapeake/NOg
@@ -2279,7 +2279,7 @@ Columbia/Og
 Columbine/ONg
 Columbus/ONVg
 Com
-Comanche/NJOgS
+Comanche/NJOg09S    # singular and plural, but also has plural in -s
 Combs/Og
 Comdr
 Comintern/Og
@@ -2445,7 +2445,7 @@ Crayola/Og
 Creation/g
 Creator/Og
 Crecy/Og
-Cree/ONdSg
+Cree/ONdSg09        # singular and plural, but also has plural in -s
 Creek/NOJSg
 Creighton/Og
 Creole/NJOSg
@@ -4635,7 +4635,7 @@ Hooters/g
 Hoover/ONVgS
 Hope/Og
 Hopewell/Og
-Hopi/NOSg
+Hopi/NOSg09         # singular and plural, but also has plural in -s
 Hopkins/Og
 Hopper/Og
 Horace/Og
@@ -4904,7 +4904,7 @@ Irishwomen/9g
 Irkutsk/Og
 Irma/Og
 Iroquoian/JNSg
-Iroquois/NOg
+Iroquois/NOg09      # singular and plural
 Irrawaddy/Og
 Irtish/g
 Irvin/Og
@@ -5480,7 +5480,7 @@ Kinko's
 Kinney/Og
 Kinsey/ONg
 Kinshasa/Og
-Kiowa/NOgS
+Kiowa/NOgS09        # singular and plural, but also has plural in -s
 Kip/Og
 Kipling/Og
 Kirby/Og
@@ -6882,7 +6882,7 @@ Minsky/Og
 Mintaka/Og
 Minuit/g
 Minuteman/g
-Miocene/JOg        # geological period
+Miocene/JOg         # geological period
 Mir/Og
 Mira/Og
 Mirabeau/g
@@ -6915,7 +6915,7 @@ Mitsubishi/NgS      # car company
 Mitterrand/g        # president
 Mitty/g
 Mitzi/Og
-Mixtec/NJOg        # ethnicity
+Mixtec/NJOg         # ethnicity
 Mizar/Og
 Mk/N
 Mlle/N
@@ -7276,7 +7276,7 @@ Nativity/Og
 Naugahyde/Ng
 Nauru/Og
 Nautilus/g
-Navajo/NOSg
+Navajo/NOSg09       # singular and plural, but also has plural in -s
 Navajoes/N
 Navarre/Og
 Navarro/Og
@@ -7382,7 +7382,7 @@ Nichole/Og
 Nichols/Og
 Nicholson/Og
 Nick/Og
-Nickelodeon/Ng     # media company
+Nickelodeon/Ng      # media company
 Nicklaus/g
 Nickolas/Og
 Nicobar/JNg
@@ -7592,7 +7592,7 @@ Oglethorpe/Og
 Ohio/OJg
 Ohioan/NJSg
 Oise/Og
-Ojibwa/OSg
+Ojibwa/OSg09        # singular and plural, but also has plural in -s
 Okayama/O
 Okeechobee/Og
 Okefenokee/Og
@@ -9389,7 +9389,7 @@ Singh/Og
 Singleton/Og
 Sinhalese/JNg
 Sinkiang/Og
-Sioux/Og
+Sioux/Og09          # singular and plural
 Sir/NOSg
 Sirius/Og
 Sistine/Jg
@@ -10907,7 +10907,7 @@ X/ONJg
 XEmacs/g
 XL/NJg
 XML/O
-XMPP/ONV             # chat protocol
+XMPP/ONV            # chat protocol
 XS/NJ
 XXL/NJ
 Xamarin/g
@@ -11103,7 +11103,7 @@ Zubeneschamali/Og
 Zukor/Og
 Zulu/NOJSg
 Zululand/O
-Zuni/JNOg
+Zuni/JNOg09S
 Zurich/Og
 Zwingli/Og
 Zworykin/g
@@ -11673,7 +11673,7 @@ advertisement/~NgS
 advertiser/~Ng
 advertising/~NVg
 advertorial/NSg
-advice/~NVg
+advice/~Nmg
 advisability/Nig
 advisable/Ji
 advisably/R
@@ -11901,7 +11901,7 @@ airbox/NSg
 airbrush/NVgdSG
 airbus/~NgS
 aircon/Ng
-aircraft/~N9g       # singular and plural
+aircraft/~N09g      # singular and plural
 aircraftman/N
 aircraftmen/9
 aircrew/~NS
@@ -12402,7 +12402,7 @@ anesthetize/VGdS
 aneurysm/~NSg
 anew/~
 angel/~NVgS
-angelfish/N9gS
+angelfish/N9gS09    # singular and plural, also has a plural in -s
 angelic/~J
 angelica/~Ng
 angelical/JY
@@ -12771,7 +12771,7 @@ appetizing/JNVY
 applaud/NVZGd>S
 applauder/Ng
 applause/~Ng
-apple/~NgS
+apple/~NwgS
 applejack/Ng
 applesauce/Ng
 applet/NgS
@@ -13742,7 +13742,7 @@ bagpipe/NVgZ>S
 bagpiper/Ng
 baguette/NgS
 bah/~N
-baht/~NPSg
+baht/~NPSg09        # singular and plural, also has a plural in -s
 bail/~NVSBGgd
 bailey/~NS
 bailiff/~NS
@@ -14094,7 +14094,7 @@ bazillion/NS
 bazooka/NVSg
 bbl/N
 bdrm/N
-be/~mN
+be/~AN
 beach/~NVgdSG
 beachcomber/NSg
 beachfront/JN
@@ -14217,7 +14217,7 @@ beeline/NVgS
 been/~VN
 beep/NVSZGgd>
 beeper/Ng
-beer/~NVg
+beer/~NmVg
 beery/JT>
 beeswax/NVg
 beet/~NVSg
@@ -14420,7 +14420,7 @@ bespeak/VNSG
 bespectacled/J
 bespoke/~JV
 bespoken/VJ
-best/~JNVSGgdum
+best/~JNVSGgduA
 bestial/JNY
 bestiality/Ng
 bestiary/NSg
@@ -14456,7 +14456,7 @@ betroth/VdG
 betrothal/~NSg
 betrothed/~VJNg
 betroths/V
-better/~JNVgdGLScm
+better/~JNVgdGLScA
 better/~JNgdGLS
 betterment/Ng
 betting/~JVN
@@ -14504,8 +14504,8 @@ bicarb/NgS
 bicarbonate/~NgS
 bicentenary/NSg
 bicentennial/~JNSg
-bicep/Ng
-biceps/N9g          # singular and plural
+bicep/Ng0           # biceps is the standard/traditional singular but bicep has become accepted
+biceps/N09g         # singular and plural
 bicker/VNgd>ZGS
 bickerer/Ng
 biconcave/J
@@ -14700,7 +14700,7 @@ bisexuality/Ng
 bishop/~NVgS
 bishopric/~NSg
 bismuth/~Ng
-bison/~Ng
+bison/~Ng09         # singular and plural
 bisque/NJVg
 bistro/NVgS
 bit/~NVeSgG
@@ -14964,7 +14964,7 @@ blueberry/~NJVSg
 bluebird/~NgS
 bluebonnet/NSg
 bluebottle/NSg
-bluefish/N9gS
+bluefish/N9gS09     # singular and plural, also has a plural in -s
 bluegill/NgS
 bluegrass/~Ng
 blueish/J
@@ -15131,7 +15131,7 @@ bondsman/Ng
 bondsmen/9
 bondwoman/Ng
 bondwomen/9
-bone/~NJVd>SgZG
+bone/~NwJVd>SgZG
 bonehead/NSgd
 boneless/J
 boner/Ng
@@ -15721,7 +15721,7 @@ budget/~NJVSGgd
 budgetary/~J
 budgie/NSg
 buff/~NJVrgdGS
-buffalo/~NVgdG
+buffalo/~NVgdG09    # singular and plural, also has a plural in -s below
 buffaloes/~NV
 buffer/~NJVSgdG
 buffet/~NVSgdGz
@@ -16186,8 +16186,8 @@ campsite/~NSg
 campus/~NVgS
 campy/JT>
 camshaft/~NSg
-can/~mNSgd>ZG
-can't/~m
+can/~ANSgd>ZG
+can't/~A
 canal/~NVgS
 canalisation/Ng!_
 canalise/VGdS!_
@@ -16225,7 +16225,7 @@ candlestick/~NVgS
 candlewick/NSg
 candor/Ng
 candour/Ng!@_
-candy/~NVGdSg
+candy/~NwVGdSg
 candyfloss/N
 cane/~NVSg
 canebrake/NgS
@@ -16249,7 +16249,7 @@ cannibalize/VGdS
 cannily/UR
 canniness/Ng
 canning/~VN
-cannon/~NVJGgdS
+cannon/~NVJGgdS09   # singular and plural, also has a plural in -s
 cannonade/NVgGdS
 cannonball/~NVSg
 cannot/~VN
@@ -16473,7 +16473,7 @@ carousal/NSg
 carouse/VNd>SgZG
 carousel/~NVSg
 carouser/Ng
-carp/~NVSZGgd>
+carp/~NVSZGgd>09    # singular and plural, also has a plural in -s
 carpal/NJgS
 carpel/NgS
 carpenter/~NVgdGS
@@ -16630,7 +16630,7 @@ catercorner/J
 caterer/Ng
 caterpillar/~NVgS
 caterwaul/VNSgdG
-catfish/~N9VgS
+catfish/~N9VgS09    # singular and plural, also has a plural in -s
 catgut/Ng
 catharses/N
 catharsis/Ng
@@ -16657,7 +16657,7 @@ cattery/NS
 cattily/R
 cattiness/Ng
 catting/V
-cattle/~NVg
+cattle/~NmVg
 cattleman/Ng
 cattlemen/N9
 catty/JNTp>
@@ -17012,7 +17012,7 @@ chary/JT>p
 chase/~NVgZGd>S
 chaser/~Ng
 chasm/NgS
-chassis/~Ng
+chassis/~Ng09       # singular and plural
 chaste/JpYT>
 chasten/VdGS
 chasteness/Ng
@@ -17882,12 +17882,12 @@ coco/~NgS
 cocoa/~NJSg
 coconut/~NSg
 cocoon/~NVSgdG
-cod/~NJVSg
+cod/~NJVSg09        # singular and plural, also has a plural in -s
 coda/~NgS
 codded/V
 codding/VJ
 coddle/VNdSG
-code/~NVeZGd>S
+code/~NwVeZGd>S
 code's
 codebase/NS
 codec/NgS
@@ -17897,7 +17897,7 @@ codependency/Ng
 codependent/JNSg
 coder/NegS
 codex/~Ng
-codfish/NgS
+codfish/NgS09       # singular and plural, also has a plural in -s
 codger/NSg
 codices/9
 codicil/NVSg
@@ -17939,7 +17939,7 @@ cogent/JY
 cogitate/VdSXGnv
 cogitation/Ng
 cogitator/NgS
-cognac/NSg
+cognac/NwSg
 cognate/~JNgS
 cognisable/J!_
 cognisance/Nrg!_
@@ -17992,7 +17992,7 @@ colander/NSg
 cold/~JNg>YTpS
 coldblooded/J
 coldness/Ng
-coleslaw/Ng
+coleslaw/Nmg
 coleus/NgS
 coley/NS
 colic/NJg
@@ -18081,7 +18081,7 @@ colonnade/~NgdS
 colonoscopy/NSg
 colony/~NVSg
 colophon/NSg
-color/~NJVrEGdS<
+color/~NwJVrEGdS<
 color's/<
 colorant/NSg<
 coloration/~NEg<
@@ -18108,7 +18108,7 @@ colossi/N
 colossus/~Ng
 colostomy/NSg
 colostrum/Ng
-colour/~NJVrEGdS!@_
+colour/~NwJVrEGdS!@_
 colourant/NSg!@_
 colouration/NEg!_
 colourblind/Jp!@_
@@ -18272,7 +18272,7 @@ communicative/JU
 communicator/~NSg
 communion/~Ng
 communique/NSg
-communism/~Ng
+communism/~Nmg
 communist/~JNSg
 communistic/J
 community/~NSg
@@ -19243,7 +19243,7 @@ couchette/NS
 cougar/~NSg
 cough/~VNgdG
 coughs/NV
-could/~mN
+could/~AN
 could've/V
 couldn't/~V
 coulee/NSg
@@ -19506,13 +19506,13 @@ cravenness/Ng
 craving/~NVg
 craw/NVgS
 crawdad/NSg
-crawfish/Ng
+crawfish/NgS09      # singular and plural, also has a plural in -s
 crawl/~VNSgd>ZG
 crawler/~Ng
 crawlspace/NSg
 crawly/JT>Sg
 cray/~NJS
-crayfish/~NVgS
+crayfish/~NVgS09    # singular and plural, also has a plural in -s
 crayola/S
 crayon/~NVGSgd
 craze/~NVdSgG
@@ -19998,7 +19998,7 @@ cutout/NSg
 cutter/~NSg
 cutthroat/~NJSg
 cutting/~NJVgYS
-cuttlefish/N9gS
+cuttlefish/N9gS09   # singular and plural, also has a plural in -s
 cutup/NSg
 cutworm/NgS
 cw/~
@@ -20151,7 +20151,7 @@ dankness/Ng
 danseuse/NgS
 dapper/JT>
 dapple/NJVgGdS
-dare/~mNd>SgZG
+dare/~ANd>SgZG
 daredevil/~NJVgS
 daredevilry/Ng
 darer/Ng
@@ -20419,7 +20419,7 @@ deep/~JNSpXTgn>Y
 deepen/~VGd
 deepfake/NVSg
 deepness/Ng
-deer/~Ng
+deer/~Ng09          # singular and plural
 deerskin/Ng
 deerstalker/NS
 def/~NJZ
@@ -20950,7 +20950,7 @@ devotional/~NJSg
 devour/VSdG
 devout/~JNp>YT
 devoutness/Ng
-dew/~NVg
+dew/~NwVg
 dewberry/NSg
 dewclaw/NSg
 dewdrop/NSg
@@ -20964,7 +20964,7 @@ dextrose/Ng
 dharma/~N
 dhoti/NSg
 dhow/NgS
-diabetes/~Ng
+diabetes/~Nmg
 diabetic/~JNSg
 diabolic/J
 diabolical/JY
@@ -21526,7 +21526,7 @@ diversification/~Ng
 diversify/~VGndS
 diversion/~Ng
 diversionary/J
-diversity/~NSg
+diversity/~NmSg
 divert/~VSdG
 diverticulitis/Ng
 divest/~VSLdG
@@ -21559,7 +21559,7 @@ dizzily/R
 dizziness/~Ng
 dizzy/~JVNd>SpTG
 djellaba/NgS
-do/~mNSzg>HZG
+do/~ANSzg>HZG
 doability/Ng
 doable/JNU
 dob/VNS
@@ -21610,7 +21610,7 @@ dogcatcher/NSg
 doge/~NgS
 dogeared/JV
 dogfight/NVSg
-dogfish/NgS
+dogfish/NgS09       # singular and plural, also has a plural in -s
 dogfood/NgSVdG
 dogged/~VJpY
 doggedness/Ng
@@ -21685,7 +21685,7 @@ dona/~gS
 donate/~VdSXGn
 donation/~Ng
 done/~JVNWrU
-dong/~NVgdGS
+dong/~NVgdGS09      # singular and plural, currency plural is dong or dongs
 dongle/NSg
 donkey/~NSg
 donned/~V
@@ -21702,7 +21702,7 @@ doodlebug/NSg
 doodler/Ng
 doohickey/NSg
 doolally/J
-doom/~NVgdGS
+doom/~NwVgdGS
 doomer/NgS
 doomsayer/NgS
 doomsday/~NJg
@@ -21878,7 +21878,7 @@ draftsmen/9
 draftswoman/Ng
 draftswomen/9
 drafty/J>Tp
-drag/~NVgS
+drag/~NwVgS
 dragged/~V
 dragging/~JNV
 draggy/JNT>
@@ -21928,7 +21928,7 @@ drawl/VNSgdG
 drawn/~VJr
 drawstring/NgS
 dray/NgS
-dread/~VNJSgdG
+dread/~VNwJSgdG
 dreadful/~JNpY
 dreadfulness/Ng
 dreadlocks/NVg
@@ -22096,7 +22096,7 @@ ducting/VN
 ductless/J
 dud/NJGSgd
 dude/~NVgS
-dudgeon/Ng
+dudgeon/Nmg
 due/~JNSg
 duel/~NVgd>zZGS
 dueler/Ng
@@ -22210,7 +22210,7 @@ dwindle/VdSG
 dyadic/~JN
 dybbuk/NSg
 dybbukim/N
-dye/~NVd>SgZG
+dye/~NwVd>SgZG
 dyeing/~VNr
 dyer/~Ng
 dyestuff/Ng
@@ -22379,7 +22379,7 @@ ecu/NS
 ecumenical/~JY
 ecumenicism/Ng
 ecumenism/Ng
-eczema/Ng
+eczema/Nwg
 ed/~NreSg
 edamame/N
 eddy/~NVdSgG
@@ -22472,7 +22472,7 @@ effusiveness/Ng
 egad/
 egalitarian/~JNSg
 egalitarianism/Ng
-egg/~NVGSgd
+egg/~NwVGSgd
 eggbeater/NgS
 eggcorn/NgS
 eggcup/NSg
@@ -22633,7 +22633,7 @@ elite/~JNSg
 elitism/Ng
 elitist/~JNgS
 elixir/NSg
-elk/~NSg
+elk/~NSg09          # singular and plural, also has a plural in -s
 ell/~NSg
 ellipse/~NVgS
 ellipsis/Ng
@@ -22758,7 +22758,7 @@ emitted/~V
 emitter/~NgS
 emitting/~V
 emo/~NJSg
-emoji/~NSg
+emoji/~NSg09        # singular and plural, also has a plural in -s
 emollient/NJgS
 emolument/NgS
 emote/VNXdSGnv
@@ -22929,7 +22929,7 @@ energise/VZGd>S!_
 energiser/Ng!_
 energize/VZGd>S
 energizer/Ng
-energy/~NSg
+energy/~NwSg
 enervate/VJGndS
 enervation/Ng
 enfeeble/VGdSL
@@ -23212,7 +23212,7 @@ equinoctial/JN
 equinox/~NgS
 equip/~VNrS
 equipage/NVgS
-equipment/~Ng
+equipment/~Nmg
 equipoise/NVg
 equipped/~JVUr
 equipping/~VNr
@@ -23482,7 +23482,7 @@ everything/~IVg
 everywhere/~
 evict/VSdG
 eviction/~NgS
-evidence/~NVgGdS
+evidence/~NmgVGdS
 evident/~JY
 evil/~JNg>YTSp
 evildoer/NSg
@@ -24623,7 +24623,7 @@ firsthand/~JR
 firth/~Ng
 firths/N
 fiscal/~JNgYS
-fish/~N9Vgd>SZG
+fish/~N09Vgd>SZG    # singular and plural, also has a plural in -s
 fishbowl/~NSg
 fishcake/NSg
 fisher/~Ng
@@ -24757,7 +24757,7 @@ flatboat/NSg
 flatbread/N
 flatcar/NSg
 flatfeet/9
-flatfish/N9gS
+flatfish/N09gS      # singular and plural, also has a plural in -s
 flatfoot/NVSgd
 flathead/~NSg
 flatiron/NJSg
@@ -25667,7 +25667,7 @@ fumigate/VGndS
 fumigation/Ng
 fumigator/NSg
 fumy/J>T
-fun/~NJVgU
+fun/~NmJVgU
 function/~NVgdGS
 functional/~JNY
 functionalism/N
@@ -25724,7 +25724,7 @@ furnace/~NVSg
 furnish/NVrdSG
 furnished/~VJU
 furnishings/~Ng
-furniture/~Ng
+furniture/~Nmg
 furor/NSg
 furore/NgS!_
 furosemide/N
@@ -25919,7 +25919,7 @@ garden/~NVJSZGgd>
 gardener/~Ng
 gardenia/NgS
 gardening/~NVg
-garfish/N9gS
+garfish/N09gS       # singular and plural, also has a plural in -s
 gargantuan/J
 gargle/VNdSgG
 gargoyle/NSg
@@ -26033,7 +26033,7 @@ geek/~NVgSdG
 geeky/J>T
 geese/~N
 geezer/NgS
-geisha/~Ng
+geisha/~Ng09S       # singular and plural, also has a plural in -s
 gel/~NVSg
 gelatin/~Ng
 gelatinous/~J
@@ -26531,7 +26531,7 @@ golden/~JNVT>
 goldenrod/~NJg
 goldfield/NS
 goldfinch/NgS
-goldfish/~NgS
+goldfish/~NgS09     # singular and plural, also has a plural in -s
 goldmine/NSg
 goldsmith/~Ng
 goldsmiths/~N
@@ -27163,7 +27163,7 @@ gyrofrequency/NgS
 gyroscope/NgS
 gyroscopic/J
 gyve/NVgGdS
-h/~NVJnXZGvz       # removed `>` 'her' is not comparative of 'h'
+h/~NVJnXZGvz        # removed `>` 'her' is not comparative of 'h'
 h'm/
 ha/~
 haberdasher/NSg
@@ -27225,7 +27225,7 @@ haiku/~NgS
 hail/~NVJgdGS
 hailstone/NgS
 hailstorm/NgS
-hair/~NVgdS
+hair/~NwVgdS
 hairball/NgS
 hairband/NS
 hairbreadth/Ng
@@ -27403,7 +27403,7 @@ happen/~VSdGz
 happening/~VJNg
 happenstance/NSg
 happily/~UR
-happiness/~NUg
+happiness/~NmUg
 happy/~JNVU>Tp
 haptic/J
 harangue/NVgGdS
@@ -27546,7 +27546,7 @@ haunt/~VNSgd>ZG
 haunter/Ng
 haunting/~VJNY
 hauteur/Ng
-have/~mNgGS
+have/~ANgGS
 haven/~NVSg
 haven't/V
 haversack/NSg
@@ -28247,7 +28247,7 @@ honer/NVg
 honest/~JVEYT
 honester/J
 honesty/~NEg
-honey/~NJVSGgd
+honey/~NwJVSGgd
 honeybee/NSg
 honeycomb/~NVgdSG
 honeydew/NJSg
@@ -28259,7 +28259,7 @@ honeysuckle/NSg
 honk/VNgd>SZG
 honker/Ng
 honky/~NSg
-honor/~NVESGgdB<
+honor/~NwVESGgdB<
 honorableness/Ng<
 honorably/ER<
 honorarily/R
@@ -28268,14 +28268,14 @@ honorary/~JN
 honoree/NSg<
 honorer/NSg<
 honorific/~NJgS
-honour/NVEgdSBG!@_
+honour/NwVEgdSBG!@_
 honourableness/Ng!@_
 honourably/RE!@_
 honouree/NSg!@_
 honourer/NSg!@_
 honouree/NgS!@_
 honourer/NgS!@_
-hooch/Ng
+hooch/Nwg
 hood/~NVJgdSG
 hoodie/NgS
 hoodlum/NSg
@@ -28400,7 +28400,7 @@ hostelry/NSg
 hostess/~NVgdSG
 hostile/~JNgYS
 hostilities/~Ng
-hostility/~NSg
+hostility/~NwSg
 hostler/NgS
 hot/~JVNSYp
 hotbed/NgS
@@ -28476,7 +28476,7 @@ hove/~V
 hovel/NVSg
 hover/~VNSGd
 hoverboard/NVgS
-hovercraft/NgS
+hovercraft/NgS09    # singular and plural, also has a plural in -s
 how/~CNSg
 how'd/
 how're/
@@ -28589,7 +28589,7 @@ hump/~NVgdSG
 humpback/NVgdS
 humph/VdG
 humphs/V
-humus/Ng
+humus/Nwg
 hunch/NVgdSG
 hunchback/NSgd
 hundred/~NSgH
@@ -28761,7 +28761,7 @@ hypnotist/NgS
 hypnotize/VGdS
 hypo/NVgS
 hypoallergenic/J
-hypochondria/Ng
+hypochondria/Nmg
 hypochondriac/JNSg
 hypocrisy/~NSg
 hypocrite/NgS
@@ -29577,14 +29577,14 @@ influenced/~VJU
 influencer/NSg
 influential/~JNY
 influenza/~Ng
-info/~Ng
+info/~Nmg
 infographic/NJSg
 infomercial/NSg
 inform/~VJZ
 informal/~JY
 informant/~NSg
 informatics/~N
-information/~NEg
+information/~NmgE
 informational/~J
 informative/~JpY
 informativeness/Ng
@@ -30458,7 +30458,7 @@ jell/NVdSG
 jello/NS
 jelly/~NVJGdSg
 jellybean/NJgS
-jellyfish/N9gS
+jellyfish/N09gS     # singular and plural, also has a plural in -s
 jellylike/J
 jellyroll/NSg
 jemmy/NVJGdS
@@ -30669,7 +30669,7 @@ juggle/VNgZGd>S
 juggler/Ng
 jugglery/Ng
 jugular/JNSg
-juice/~NVJd>SgZG
+juice/~NwVJd>SgZG
 juicer/Ng
 juicily/R
 juiciness/Ng
@@ -30752,7 +30752,7 @@ kaleidoscopic/JQ
 kamikaze/~NVJgS
 kana/~NV
 kangaroo/~NVJgS
-kanji/~N
+kanji/~N09S         # singular and plural, also has a plural in -s
 kaolin/Ng
 kapok/Ng
 kappa/~NSg
@@ -30935,7 +30935,7 @@ kinsmen/9
 kinswoman/Ng
 kinswomen/9
 kiosk/~NSg
-kip/~NVSg
+kip/~NVSg09         # in the currency sense, singular and plural, also has a plural in -s
 kipped/V
 kipper/NVJgdGS
 kipping/V
@@ -31023,7 +31023,7 @@ knotting/VN
 knotty/JT>
 know/~VNSB
 knowing/~JPVNUYS
-knowledge/~NVg
+knowledge/~Nmg
 knowledgeable/~JN
 knowledgeably/R
 known/~JNV
@@ -32265,7 +32265,7 @@ ludo/N
 luff/NVdSG
 lug/~NVSg
 luge/~NVS
-luggage/~Ng
+luggage/~Nmg
 lugged/VJ
 lugger/NgS
 lugging/VN
@@ -32312,7 +32312,7 @@ lunchroom/NgS
 lunchtime/~NgS
 lung/~NgdSG
 lunge/NVSg
-lungfish/N9gS
+lungfish/N09gS      # singular and plural, also has a plural in -s
 lungful/NS
 lunkhead/NgS
 lupin/NSg!_
@@ -33014,7 +33014,7 @@ maximise/VGdS!_
 maximization/Ng
 maximize/~VGdS
 maximum/~NJSg
-may/~mNg
+may/~ANg
 maybe/~JRNSg
 mayday/NgS
 mayflower/~NgS
@@ -33070,7 +33070,7 @@ measure's
 measured/~JVU
 measureless/J
 measurement/~NgS
-meat/~NgS
+meat/~NwgS
 meatball/NgS
 meathead/NgS
 meatiness/Ng
@@ -33550,11 +33550,11 @@ midwives/NV
 midyear/NgS
 mien/Ng
 miff/NVdSG
-might/~NJmg
+might/~NmJAg
 might've/V
 mightily/R
 mightiness/Ng
-mightn't/m
+mightn't/A
 mighty/~NJT>p
 mignonette/NJSg
 migraine/NgS
@@ -33592,7 +33592,7 @@ militate/VGdS
 militia/~NSg
 militiaman/Ng
 militiamen/~9
-milk/~NVgd>SZG
+milk/~NwVgd>SZG
 milker/Ng
 milkiness/Ng
 milkmaid/NgS
@@ -34235,7 +34235,7 @@ moor/~NVgdzSG
 moorhen/~NS
 mooring/VNg
 moorland/~NgS
-moose/~Ng
+moose/~Ng09         # singular and plural
 moot/~JNVdSG
 mop/~NVSZGgd>
 mope/VNgS
@@ -34630,7 +34630,7 @@ mush/NVgd>SZG
 mushiness/Ng
 mushroom/~NJVGSgd
 mushy/JpT>
-music/~NVJSg
+music/~NwVJSg
 musical/~JNgYS
 musicale/NgS
 musicality/Ng
@@ -34942,7 +34942,7 @@ necrotic/J
 nectar/~NVg
 nectarine/NJgS
 nee/~J
-need/~NmgdSG
+need/~NwAgdSG
 needed/~JVU
 needful/JNY
 neediness/Ng
@@ -34953,7 +34953,7 @@ needlessness/Ng
 needlewoman/Ng
 needlewomen/9
 needlework/Ng
-needn't/m
+needn't/A
 needy/~JpT>
 nefarious/JYp
 nefariousness/Ng
@@ -35103,7 +35103,7 @@ neutralize/~Vd>SZG
 neutralizer/Ng
 neutrino/NSg
 neutron/~NSg
-never/~R           # removed `V` verb sense is dialectal
+never/~R            # removed `V` verb sense is dialectal
 nevermore/~
 nevertheless/~
 nevi/N
@@ -35118,7 +35118,7 @@ newfound/~J
 newline/~NS
 newlywed/NJSg
 newness/Ng
-news/~NVg
+news/~NmVg
 newsagent/NS
 newsboy/NSg
 newscast/~NVSg>Z
@@ -35229,7 +35229,7 @@ nineteenths/N
 ninetieth/JNg
 ninetieths/N
 ninety/~HSg
-ninja/~NJVSg
+ninja/~NJVSg09      # singular and plural, also has a plural in -s
 ninny/NSg
 ninth/~JNVg
 ninths/N
@@ -36479,8 +36479,8 @@ otter/~NgS
 ottoman/~NgS
 oubliette/NgS
 ouch/NV
-ought/~mIN
-oughtn't/m
+ought/~AIN
+oughtn't/A
 ounce/~NgS
 our/~D5
 ours/~I
@@ -37490,7 +37490,7 @@ pastor/~NVgS
 pastoral/~JNgS
 pastorate/NgS
 pastrami/Ng
-pastry/~NSg
+pastry/~NwSg
 pasturage/Ng
 pasture/~NVdSgG
 pastureland/Ng
@@ -38535,7 +38535,7 @@ pittance/NgS
 pitted/~JV
 pitting/~NV
 pituitary/~JNSg
-pity/~NVGdSg
+pity/~NwVGdSg
 pitying/VNY
 pivot/~NVgdGS
 pivotal/~JY
@@ -38543,7 +38543,7 @@ pix/~NVg
 pixel/~NVgS
 pixelate/VdSGn
 pixie/~NgS
-pizza/~NgS
+pizza/~NwgS
 pizzazz/Ng
 pizzeria/NSg
 pizzicati/N
@@ -41898,7 +41898,7 @@ ribber/NSg
 ribbing/VN
 ribbon/~NVSg
 riboflavin/~Ng
-rice/~NVgZGd>S
+rice/~NwVgZGd>S
 ricer/Ng
 rich/~JNVTg>SYp
 richness/~Ng
@@ -41974,7 +41974,7 @@ rimstone/NgS
 rind/NVgS
 ring/~NVZGgd>z
 ringer/~Ng
-ringgit/NgS
+ringgit/NgS09       # singular and plural, also has a plural in -s
 ringleader/NgS
 ringlet/NVgS
 ringlike/J
@@ -42360,7 +42360,7 @@ runtime/~JN
 runty/J>T
 runway/~NSg
 rupee/~NSg
-rupiah/Ng
+rupiah/Ng09         # singular and plural, also has a plural in -s below
 rupiahs/N
 rupture/~NVgGdS
 rural/~JN
@@ -42451,9 +42451,9 @@ safe/~JNVgYTp>S
 safeguard/~NVSgdG
 safekeeping/Ng
 safeness/Ng
-safety/~NVSgU
+safety/~NwVSgU
 safflower/NgS
-saffron/~NJVgS
+saffron/~NwJVgS
 sag/~NVSg
 saga/~NgS
 sagacious/JY
@@ -42473,7 +42473,7 @@ sailboarder/Ng
 sailboarding/Ng
 sailboat/~NgS
 sailcloth/Ng
-sailfish/N9gS
+sailfish/N09gS      # singular and plural, also has a plural in -s below
 sailing/~VJNg
 sailor/~NSg
 sailplane/NVgS
@@ -42519,7 +42519,7 @@ salivation/Ng
 sallow/JVN>Tp
 sallowness/Ng
 sally/~NVdSgG
-salmon/~NJVSg
+salmon/~NJVSg09     # singular and plural, also has a plural in -s below
 salmonella/Ng
 salmonellae/9
 salon/~NgS
@@ -42550,10 +42550,8 @@ salvation/~NVg
 salve/NVgZGd>S
 salver/Ng
 salvo/~NVgS
-sam/~NVJm
-samantha/~m
-samar/~m
-samara/~Nm
+samara/~NS
+samarae/9
 samarium/Ng
 samba/~NVgdSG
 same/~JISp
@@ -42700,7 +42698,7 @@ saturnine/J
 satyr/NgS
 satyriasis/Ng
 satyric/J
-sauce/~NVgZGd>S
+sauce/~NwVgZGd>S
 saucepan/NVSg
 saucer/~NVg
 saucily/R
@@ -42887,7 +42885,7 @@ schlemiel/NSg
 schlep/VNSg
 schlepped/V
 schlepping/V
-schlock/Ng
+schlock/Nmg
 schlocky/J>T
 schlong/NgSx
 schmaltz/Ng
@@ -43213,7 +43211,7 @@ secede/~VdSG
 secession/~Ng
 secessionist/~NJgS
 seclude/VGdS
-seclusion/~Ng
+seclusion/~Nwg
 seclusive/JN
 second/~JNVSLZGgd>Y
 secondarily/R
@@ -43529,7 +43527,7 @@ serialisation/NSg!_
 serialise/VGdSB!_
 serialization/NSg
 serialize/VGdSB>
-series/~Ng
+series/~Ng09        # singular and plural
 serif/~NJgS
 serigraph/Ng
 serigraphs/N
@@ -43638,7 +43636,7 @@ shack/~NVJgdSG
 shackle/NVUGdS
 shackle's
 shad/~NGgdSz
-shade/~NVgS
+shade/~NwVgS
 shader/NgS
 shadily/R
 shadiness/Ng
@@ -43668,7 +43666,7 @@ shakily/R
 shakiness/Ng
 shaky/~J>pT
 shale/~NVg
-shall/~m
+shall/~A
 shallot/NgS
 shallow/~JNVTpg>YS
 shallowness/Ng
@@ -43759,7 +43757,7 @@ shed/~VNgS
 shedding/~VN
 sheen/~JNVg
 sheeny/NJT>
-sheep/~N9g
+sheep/~N09g         # singular and plural
 sheepdog/NVgS
 sheepfold/NSg
 sheepherder/NgS
@@ -43784,7 +43782,7 @@ shellac/NVgS
 shellacked/J
 shellacking/VNgS
 shellfire/Ng
-shellfish/~N9gS
+shellfish/~N09gS    # singular and plural, also has a plural in -s
 shelter/~NVGgdS
 shelve/VNGdS
 shelving/JVNg
@@ -43954,7 +43952,7 @@ shot/~JNVgS
 shotgun/~NVSg
 shotgunned/V
 shotgunning/V
-should/~m
+should/~A
 should've/V
 shoulder/~NVgdGS
 shouldn't/V
@@ -44010,7 +44008,7 @@ shrike/~NgS
 shrill/JVNd>SpTG
 shrillness/Ng
 shrilly/JR
-shrimp/~NVgd>SZG
+shrimp/~NVgd>SZG09  # singular and plural, also has a plural in -s
 shrine/~NVgS
 shrink/~VNgSBG
 shrinkage/Ng
@@ -44184,7 +44182,7 @@ siloviki/9
 silt/~NVGgdS
 silty/JT>
 silver/~NJVGgdS
-silverfish/N9gS
+silverfish/N09gS    # singular and plural, also has a plural in -s
 silverish/J
 silversmith/Ng
 silversmiths/N
@@ -45184,7 +45182,7 @@ soybean/~NgS
 sozzled/JV
 spa/~NSg
 space/~NVd>SgZG
-spacecraft/~NgS
+spacecraft/~NgS09   # singular and plural, also has a plural in -s
 spaceflight/~NgS
 spaceman/Ng
 spacemen/9
@@ -45261,7 +45259,7 @@ speakeasy/~NSg
 speaker/~Ng
 speakerphone/NS
 spear/~NVJSgdG
-spearfish/NV9GgdS
+spearfish/NV09GgdS  # singular and plural, also has a plural in -s
 speargun/N
 spearhead/~NVGgdS
 spearmint/Ng
@@ -45276,7 +45274,7 @@ specialization/~NgS
 specialize/~VGdS
 specialty/~NSg
 specie/NSg
-species/~Ng
+species/~Ng09       # singular and plural
 specif/
 specifiable/J
 specific/~JNgSQ
@@ -45653,7 +45651,7 @@ squeezy/J
 squelch/VNGgdS
 squelchy/J
 squib/NVSg
-squid/~NVSg
+squid/~NVSg09       # singular and plural, also has a plural in -s
 squidgy/JN
 squiffy/J
 squiggle/NVdSgG
@@ -45690,7 +45688,7 @@ stably/NUR
 staccato/NJgS
 stack/~NVSgdGB
 stadium/~NgS
-staff/~NVrSdG
+staff/~NwVrSdG
 staff's
 staffer/~NgS
 staffing/~VNg
@@ -45783,7 +45781,7 @@ stardom/~Ng
 stardust/~Ng
 stare/~VNSg
 starer/Ng
-starfish/~NV9gS
+starfish/~NV09gS    # singular and plural, also has a plural in -s
 starfruit/N
 stargate/~NgS
 stargaze/Vd>SZG
@@ -45966,7 +45964,7 @@ stetson/NgS
 stetted/V
 stetting/V
 stevedore/NVSg
-stew/~NVgdGS
+stew/~NwVgdGS
 steward/~NVGgdS
 stewardess/NgS
 stewardship/~Ng
@@ -46078,7 +46076,7 @@ stomachache/NSg
 stomacher/Ng
 stomachs/NV
 stomp/~VNGSgd
-stone/~NVJd>SgZG
+stone/~NVJd>SgZG09  # weight sense in UK is singular and plural
 stonemason/~NgS
 stoner/~Ng
 stonewall/~NVJGSd
@@ -46330,7 +46328,7 @@ studiousness/Ng
 studly/J>T
 study/~VNrGdS
 study's
-stuff/~NVGSgdz
+stuff/~NmVGSgdz
 stuffily/R
 stuffiness/Ng
 stuffing/VNg
@@ -46619,7 +46617,7 @@ suffragette/~NSg
 suffragist/~NgS
 suffuse/VJdSGn
 suffusion/Ng
-sugar/~NVGSgd
+sugar/~NwVGSgd
 sugarcane/~Ng
 sugarcoat/VGdS
 sugarless/J
@@ -46717,7 +46715,7 @@ sundown/~NVSg
 sundress/NS
 sundries/Ng
 sundry/JNIS
-sunfish/NV9gS
+sunfish/NV09gS      # singular and plural, also has a plural in -s
 sunflower/~NgS
 sung/~VU
 sunglasses/~Ng
@@ -47095,7 +47093,7 @@ swoon/NVSGgd
 swoop/VNSGgd
 swoosh/VNgdSG
 sword/~NVSg
-swordfish/~NV9gS
+swordfish/~NV09gS   # singular and plural, also has a plural in -s
 swordplay/Ng
 swordsman/~Ng
 swordsmanship/Ng
@@ -48461,7 +48459,7 @@ tooter/Ng
 tooth/~NVgd
 toothache/NgS
 toothbrush/NVgS
-toothfish/NgS
+toothfish/NgS09     # singular and plural, also has a plural in -s
 toothily/R
 toothless/J
 toothpaste/NSg
@@ -48680,7 +48678,7 @@ traditionalism/Ng
 traditionalist/~NJSg
 traduce/Vd>SZG
 traducer/Ng
-traffic/~NVJSg
+traffic/~NmVJSg
 trafficked/JV
 trafficker/NSg
 trafficking/~VNg
@@ -48984,7 +48982,7 @@ tribute's
 trice/VNg
 tricentennial/NJgS
 triceps/NgS
-triceratops/Ng
+triceratops/Ng09S   # singular and plural, also has a plural in -s
 trichina/Ng
 trichinae/9
 trichinosis/Ng
@@ -49130,7 +49128,7 @@ trouser/~NVSg
 trousers/~Ng
 trousseau/Ng
 trousseaux/N
-trout/~NVSg
+trout/~NVSg09       # singular and plural, also has a plural in -s
 trove/NSg
 trow/VNdSG
 trowel/NVgdSG
@@ -49450,7 +49448,6 @@ tyrant/~NJVSg
 tyre/NVgS!_
 tyro/NgS
 tzatziki/N
-# u/~185S           # probably left over from hunspell, causes havoc with linter heuristics
 ubiquitous/~JY
 ubiquity/Ng
 udder/NSg
@@ -51119,7 +51116,7 @@ watchmen/~9
 watchstrap/NS
 watchtower/~NSg
 watchword/NgS
-water/~NVGSgd>
+water/~NwVGSgd>
 waterbed/NgS
 waterbird/NSg
 waterboard/NVgdzSG
@@ -51128,7 +51125,7 @@ waterborne/J
 watercolor/NJgS
 watercolour/NJVgS!@_
 watercourse/~NSg
-watercraft/~Ng
+watercraft/~Ng09S   # singular and plural, also has a plural in -s
 watercress/Ng
 waterfall/~NVSg
 waterfowl/~NSg
@@ -51195,7 +51192,7 @@ we've/
 weak/~Jpn>YXT
 weaken/~Vd>ZG
 weakener/Ng
-weakfish/N9gS
+weakfish/N09gS      # singular and plural, also has a plural in -s
 weakish/J
 weakling/NJSg
 weakness/~NgS
@@ -51470,7 +51467,7 @@ white/~JNVSpg
 whitebait/NV
 whiteboard/NVS
 whitecap/NSg
-whitefish/~NV9gS
+whitefish/~NV09gS   # singular and plural, also has a plural in -s
 whitehead/~NgS
 whitelist/NVGdS
 whiten/VZGd>z
@@ -51603,7 +51600,7 @@ wile/~NVgGdS
 wilful/JpY!@_
 wilfulness/Ng!@_
 wiliness/Ng
-will/~mNgdS
+will/~ANgdS
 willful/JpY
 willfulness/Ng
 willies/Ng
@@ -51802,7 +51799,7 @@ womble/NVS
 women/~9g
 womenfolk/9Sg
 womenfolks/9g
-won/~VNg
+won/~VNg09          # singular and plural
 won't/V
 wonder/~NVgdGLS
 wonderful/~JYp
@@ -51960,9 +51957,9 @@ worthy/~JNVUp>T
 worthy's
 wot/VI
 wotcha/
-would/~mNS
+would/~ANS
 would've/
-wouldn't/m
+wouldn't/A
 wouldst/V
 wound/~NVSGgd>
 wove/VJr
@@ -52104,7 +52101,7 @@ yahoo/~NVSg
 yak/~NVSg
 yakked/V
 yakking/V
-yakuza/NgS
+yakuza/NgS09        # singular and plural, also has a plural in -s
 yam/~NVSg
 yammer/VNSZGgd>
 yammerer/Ng
@@ -52152,7 +52149,7 @@ yellowish/~J
 yellowness/Ng
 yellowy/J
 yelp/NVgdSG
-yen/~NVSg
+yen/~NVSg09         # singular and plural, currency plural is yen, desire plural is yens
 yeoman/~Ng
 yeomanry/~Ng
 yeomen/~9
@@ -52218,7 +52215,7 @@ yowl/NVgdSG
 yr/~NS
 ytterbium/Ng
 yttrium/Ng
-yuan/~Ng
+yuan/~Ng09S         # singular and plural, also has a plural in -s
 yucca/~NSg
 yuck/NV
 yucky/JT>
@@ -53084,6 +53081,7 @@ so-called/J
 socio-political/J
 solid-state/J
 sound wave/NgS
+source code/Nmg
 space bar/NgS
 spell checker/NgS
 spot on/J

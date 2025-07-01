@@ -150,6 +150,8 @@ impl WordMetadata {
                         is_proper: Some(false),
                         is_singular: None,
                         is_plural: None,
+                        is_countable: None,
+                        is_mass: None,
                         is_possessive: None,
                     })
                 }
@@ -173,6 +175,8 @@ impl WordMetadata {
                         is_proper: Some(true),
                         is_singular: None,
                         is_plural: None,
+                        is_countable: None,
+                        is_mass: None,
                         is_possessive: None,
                     })
                 }
@@ -304,14 +308,19 @@ impl WordMetadata {
     }
 
     generate_metadata_queries!(
-        noun has proper, plural, possessive.
-        pronoun has personal, singular, plural, possessive, reflexive, object.
+        // Singular and countable default to true, so their metadata queries are not generated.
+        noun has proper, plural, mass, possessive.
+        pronoun has personal, singular, plural, possessive, reflexive, subject, object.
         determiner has demonstrative, possessive.
         verb has linking, auxiliary.
         conjunction has.
         adjective has.
         adverb has
     );
+
+    // Manual metadata queries
+
+    // Pronoun metadata queries
 
     pub fn is_first_person_plural_pronoun(&self) -> bool {
         matches!(
@@ -417,111 +426,87 @@ impl WordMetadata {
         )
     }
 
+    // Noun metadata queries
+
+    // Singular is default if number is not marked in the dictionary.
+    pub fn is_singular_noun(&self) -> bool {
+        if let Some(noun) = self.noun {
+            matches!(
+                (noun.is_singular, noun.is_plural),
+                (Some(true), _) | (None | Some(false), None | Some(false))
+            )
+        } else {
+            false
+        }
+    }
+    pub fn is_non_singular_noun(&self) -> bool {
+        if let Some(noun) = self.noun {
+            !matches!(
+                (noun.is_singular, noun.is_plural),
+                (Some(true), _) | (None | Some(false), None | Some(false))
+            )
+        } else {
+            false
+        }
+    }
+
+    // Countable is default if countability is not marked in the dictionary.
+    pub fn is_countable_noun(&self) -> bool {
+        if let Some(noun) = self.noun {
+            matches!(
+                (noun.is_singular, noun.is_plural),
+                (Some(true), _) | (None | Some(false), None | Some(false))
+            )
+        } else {
+            false
+        }
+    }
+    pub fn is_non_countable_noun(&self) -> bool {
+        if let Some(noun) = self.noun {
+            !matches!(
+                (noun.is_countable, noun.is_mass),
+                (Some(true), _) | (None | Some(false), None | Some(false))
+            )
+        } else {
+            false
+        }
+    }
+
+    // Nominal metadata queries (noun + pronoun)
+
     /// Checks if the word is definitely nominal.
     pub fn is_nominal(&self) -> bool {
-        self.noun.is_some() || self.pronoun.is_some()
+        self.is_noun() || self.is_pronoun()
     }
 
     /// Checks if the word is definitely a nominal and more specifically is labeled as (a) singular.
     pub fn is_singular_nominal(&self) -> bool {
-        matches!(
-            self.noun,
-            Some(NounData {
-                is_singular: None | Some(true),
-                ..
-            })
-        ) || matches!(
-            self.pronoun,
-            Some(PronounData {
-                is_singular: None | Some(true),
-                ..
-            })
-        )
+        self.is_singular_noun() || self.is_singular_pronoun()
     }
 
     /// Checks if the word is definitely a nominal and more specifically is labeled as (a) plural.
     pub fn is_plural_nominal(&self) -> bool {
-        matches!(
-            self.noun,
-            Some(NounData {
-                is_plural: Some(true),
-                ..
-            })
-        ) || matches!(
-            self.pronoun,
-            Some(PronounData {
-                is_plural: Some(true),
-                ..
-            })
-        )
+        self.is_plural_noun() || self.is_plural_pronoun()
     }
 
     /// Checks if the word is definitely a nominal and more specifically is labeled as (a) possessive.
     pub fn is_possessive_nominal(&self) -> bool {
-        matches!(
-            self.noun,
-            Some(NounData {
-                is_possessive: Some(true),
-                ..
-            })
-        ) || matches!(
-            self.pronoun,
-            Some(PronounData {
-                is_possessive: Some(true),
-                ..
-            })
-        )
+        self.is_possessive_noun() || self.is_possessive_pronoun()
     }
 
     /// Checks if the word is definitely a nominal and more specifically is labeled as __not__ (a) singular.
     pub fn is_non_singular_nominal(&self) -> bool {
-        matches!(
-            self.noun,
-            Some(NounData {
-                is_singular: Some(false),
-                ..
-            })
-        ) || matches!(
-            self.pronoun,
-            Some(PronounData {
-                is_singular: Some(false),
-                ..
-            })
-        )
+        self.is_non_singular_noun() || self.is_non_singular_pronoun()
     }
 
     /// Checks if the word is definitely a nominal and more specifically is labeled as __not__ (a) plural.
     pub fn is_non_plural_nominal(&self) -> bool {
-        matches!(
-            self.noun,
-            Some(NounData {
-                is_plural: None | Some(false),
-                ..
-            })
-        ) || matches!(
-            self.pronoun,
-            Some(PronounData {
-                is_plural: None | Some(false),
-                ..
-            })
-        )
+        self.is_non_plural_noun() || self.is_non_plural_pronoun()
     }
 
     /// Checks if the word is definitely a nominal and more specifically is labeled as __not__ (a) possessive.
     pub fn is_non_possessive_nominal(&self) -> bool {
-        matches!(
-            self.noun,
-            Some(NounData {
-                is_possessive: Some(false),
-                ..
-            })
-        ) && matches!(
-            self.pronoun,
-            Some(PronounData {
-                is_possessive: Some(false),
-                ..
-            })
-        )
+        self.is_non_possessive_noun() || self.is_non_possessive_pronoun()
     }
 
     /// Checks whether a word is _definitely_ a swear.
@@ -585,6 +570,8 @@ pub struct NounData {
     pub is_proper: Option<bool>,
     pub is_singular: Option<bool>,
     pub is_plural: Option<bool>,
+    pub is_countable: Option<bool>,
+    pub is_mass: Option<bool>,
     pub is_possessive: Option<bool>,
 }
 
@@ -595,6 +582,8 @@ impl NounData {
             is_proper: self.is_proper.or(other.is_proper),
             is_singular: self.is_singular.or(other.is_singular),
             is_plural: self.is_plural.or(other.is_plural),
+            is_countable: self.is_countable.or(other.is_countable),
+            is_mass: self.is_mass.or(other.is_mass),
             is_possessive: self.is_possessive.or(other.is_possessive),
         }
     }
@@ -932,79 +921,75 @@ mod tests {
 
         #[test]
         fn puppy_is_noun() {
-            assert!(md("puppy").noun.is_some());
+            assert!(md("puppy").is_noun());
         }
 
         #[test]
         fn prepare_is_not_noun() {
-            assert!(md("prepare").noun.is_none());
+            assert!(!md("prepare").is_noun());
         }
 
         #[test]
         fn paris_is_proper_noun() {
-            assert!(md("Paris").noun.unwrap().is_proper.unwrap());
+            assert!(md("Paris").is_proper_noun());
         }
 
         #[test]
-        fn permit_is_not_proper_noun() {
-            assert!(matches!(
-                md("lapdog").noun.and_then(|n| n.is_proper),
-                None | Some(false)
-            ));
+        fn permit_is_non_proper_noun() {
+            assert!(md("lapdog").is_non_proper_noun());
         }
 
         #[test]
-        #[ignore = "noun singular property not implemented yet"]
         fn hound_is_singular_noun() {
-            assert!(md("hound").noun.unwrap().is_singular.unwrap());
+            assert!(md("hound").is_singular_noun());
         }
 
         #[test]
-        fn pooches_is_not_singular_noun() {
-            assert!(matches!(
-                md("pooches").noun.and_then(|n| n.is_singular),
-                None | Some(false)
-            ));
+        fn pooches_is_non_singular_noun() {
+            assert!(md("pooches").is_non_singular_noun());
+        }
+
+        // Make sure is_non_xxx_noun methods don't behave like is_not_xxx_noun.
+        // In other words, make sure they don't return true for words that are not nouns.
+        // They must only pass for words that are nouns but not singular etc.
+        #[test]
+        fn loyal_doesnt_pass_is_non_singular_noun() {
+            assert!(!md("loyal").is_non_singular_noun());
         }
 
         #[test]
         fn hounds_is_plural_noun() {
-            assert!(md("hounds").noun.unwrap().is_plural.unwrap());
+            assert!(md("hounds").is_plural_noun());
         }
 
         #[test]
-        fn pooch_is_not_plural_noun() {
-            assert!(matches!(
-                md("pooch").noun.and_then(|n| n.is_plural),
-                None | Some(false)
-            ));
+        fn pooch_is_non_plural_noun() {
+            assert!(md("pooch").is_non_plural_noun());
         }
 
         #[test]
-        #[ignore = "noun singular property not implemented yet"]
         fn fish_is_singular_noun() {
-            assert!(md("fish").noun.unwrap().is_singular.unwrap());
+            assert!(md("fish").is_singular_noun());
         }
 
         #[test]
         fn fish_is_plural_noun() {
-            assert!(md("fish").noun.unwrap().is_plural.unwrap());
+            assert!(md("fish").is_plural_noun());
         }
 
         #[test]
         fn fishes_is_plural_noun() {
-            assert!(md("fishes").noun.unwrap().is_plural.unwrap());
+            assert!(md("fishes").is_plural_noun());
         }
 
         #[test]
-        #[ignore = "noun singular property not implemented yet"]
         fn sheep_is_singular_noun() {
-            assert!(md("sheep").noun.unwrap().is_singular.unwrap());
+            assert!(md("sheep").is_singular_noun());
         }
 
         #[test]
         fn sheep_is_plural_noun() {
-            assert!(md("sheep").noun.unwrap().is_plural.unwrap());
+            assert!(md("sheep").is_plural_noun());
         }
 
         #[test]
@@ -1014,32 +999,28 @@ mod tests {
         }
 
         #[test]
-        #[ignore = "noun singular property not implemented yet"]
         fn bicep_is_singular_noun() {
-            assert!(md("bicep").noun.unwrap().is_singular.unwrap());
+            assert!(md("bicep").is_singular_noun());
         }
 
         #[test]
-        #[ignore = "noun singular property not implemented yet"]
         fn biceps_is_singular_noun() {
-            assert!(md("biceps").noun.unwrap().is_singular.unwrap());
+            assert!(md("biceps").is_singular_noun());
         }
 
         #[test]
         fn biceps_is_plural_noun() {
-            assert!(md("biceps").noun.unwrap().is_plural.unwrap());
+            assert!(md("biceps").is_plural_noun());
         }
 
         #[test]
-        #[ignore = "noun singular property not implemented yet"]
         fn aircraft_is_singular_noun() {
-            assert!(md("aircraft").noun.unwrap().is_singular.unwrap());
+            assert!(md("aircraft").is_singular_noun());
         }
 
         #[test]
-        #[ignore = "noun plural property not implemented yet"]
         fn aircraft_is_plural_noun() {
-            assert!(md("aircraft").noun.unwrap().is_plural.unwrap());
+            assert!(md("aircraft").is_plural_noun());
         }
 
         #[test]
@@ -1050,12 +1031,41 @@ mod tests {
 
         #[test]
         fn dog_apostrophe_s_is_possessive_noun() {
-            assert!(md("dog's").noun.unwrap().is_possessive.unwrap());
+            assert!(md("dog's").is_possessive_noun());
         }
 
         #[test]
-        fn dogs_is_not_possessive_noun() {
-            assert!(md("dogs").noun.unwrap().is_possessive.is_none());
+        fn dogs_is_non_possessive_noun() {
+            assert!(md("dogs").is_non_possessive_noun());
+        }
+
+        // noun countability
+
+        #[test]
+        fn dog_is_countable() {
+            assert!(md("dog").is_countable_noun());
+        }
+        #[test]
+        fn dog_is_non_mass_noun() {
+            assert!(md("dog").is_non_mass_noun());
+        }
+
+        #[test]
+        fn furniture_is_mass_noun() {
+            assert!(md("furniture").is_mass_noun());
+        }
+        #[test]
+        fn furniture_is_not_countable_noun() {
+            assert!(md("furniture").is_non_countable_noun());
+        }
+
+        #[test]
+        fn beer_is_countable_noun() {
+            assert!(md("beer").is_countable_noun());
+        }
+        #[test]
+        fn beer_is_mass_noun() {
+            assert!(md("beer").is_mass_noun());
         }
     }
 
@@ -1067,53 +1077,53 @@ mod tests {
 
             #[test]
             fn i_is_pronoun() {
-                assert!(md("I").pronoun.is_some());
+                assert!(md("I").is_pronoun());
             }
             #[test]
             fn i_is_personal_pronoun() {
-                assert!(md("I").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("I").is_personal_pronoun());
             }
             #[test]
             fn i_is_singular_pronoun() {
-                assert!(md("I").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("I").is_singular_pronoun());
             }
             #[test]
             fn i_is_subject_pronoun() {
-                assert!(md("I").pronoun.unwrap().is_subject.unwrap());
+                assert!(md("I").is_subject_pronoun());
             }
 
             #[test]
             fn me_is_pronoun() {
-                assert!(md("me").pronoun.is_some());
+                assert!(md("me").is_pronoun());
             }
             #[test]
             fn me_is_personal_pronoun() {
-                assert!(md("me").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("me").is_personal_pronoun());
             }
             #[test]
             fn me_is_singular_pronoun() {
-                assert!(md("me").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("me").is_singular_pronoun());
             }
             #[test]
             fn me_is_object_pronoun() {
-                assert!(md("me").pronoun.unwrap().is_object.unwrap());
+                assert!(md("me").is_object_pronoun());
             }
 
             #[test]
             fn myself_is_pronoun() {
-                assert!(md("myself").pronoun.is_some());
+                assert!(md("myself").is_pronoun());
             }
             #[test]
             fn myself_is_personal_pronoun() {
-                assert!(md("myself").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("myself").is_personal_pronoun());
             }
             #[test]
             fn myself_is_singular_pronoun() {
-                assert!(md("myself").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("myself").is_singular_pronoun());
             }
             #[test]
             fn myself_is_reflexive_pronoun() {
-                assert!(md("myself").pronoun.unwrap().is_reflexive.unwrap());
+                assert!(md("myself").is_reflexive_pronoun());
             }
         }
 
@@ -1122,53 +1132,53 @@ mod tests {
 
             #[test]
             fn we_is_pronoun() {
-                assert!(md("we").pronoun.is_some());
+                assert!(md("we").is_pronoun());
             }
             #[test]
             fn we_is_personal_pronoun() {
-                assert!(md("we").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("we").is_personal_pronoun());
             }
             #[test]
             fn we_is_plural_pronoun() {
-                assert!(md("we").pronoun.unwrap().is_plural.unwrap());
+                assert!(md("we").is_plural_pronoun());
             }
             #[test]
             fn we_is_subject_pronoun() {
-                assert!(md("we").pronoun.unwrap().is_subject.unwrap());
+                assert!(md("we").is_subject_pronoun());
             }
 
             #[test]
             fn us_is_pronoun() {
-                assert!(md("us").pronoun.is_some());
+                assert!(md("us").is_pronoun());
             }
             #[test]
             fn us_is_personal_pronoun() {
-                assert!(md("us").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("us").is_personal_pronoun());
             }
             #[test]
             fn us_is_plural_pronoun() {
-                assert!(md("us").pronoun.unwrap().is_plural.unwrap());
+                assert!(md("us").is_plural_pronoun());
             }
             #[test]
             fn us_is_object_pronoun() {
-                assert!(md("us").pronoun.unwrap().is_object.unwrap());
+                assert!(md("us").is_object_pronoun());
             }
 
             #[test]
             fn ourselves_is_pronoun() {
-                assert!(md("ourselves").pronoun.is_some());
+                assert!(md("ourselves").is_pronoun());
             }
             #[test]
             fn ourselves_is_personal_pronoun() {
-                assert!(md("ourselves").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("ourselves").is_personal_pronoun());
             }
             #[test]
             fn ourselves_is_plural_pronoun() {
-                assert!(md("ourselves").pronoun.unwrap().is_plural.unwrap());
+                assert!(md("ourselves").is_plural_pronoun());
             }
             #[test]
             fn ourselves_is_reflexive_pronoun() {
-                assert!(md("ourselves").pronoun.unwrap().is_reflexive.unwrap());
+                assert!(md("ourselves").is_reflexive_pronoun());
             }
         }
 
@@ -1177,43 +1187,43 @@ mod tests {
 
             #[test]
             fn you_is_pronoun() {
-                assert!(md("you").pronoun.is_some());
+                assert!(md("you").is_pronoun());
             }
             #[test]
             fn you_is_personal_pronoun() {
-                assert!(md("you").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("you").is_personal_pronoun());
             }
             #[test]
             fn you_is_singular_pronoun() {
-                assert!(md("you").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("you").is_singular_pronoun());
             }
             #[test]
             fn you_is_plural_pronoun() {
-                assert!(md("you").pronoun.unwrap().is_plural.unwrap());
+                assert!(md("you").is_plural_pronoun());
             }
             #[test]
             fn you_is_subject_pronoun() {
-                assert!(md("you").pronoun.unwrap().is_subject.unwrap());
+                assert!(md("you").is_subject_pronoun());
             }
             #[test]
             fn you_is_object_pronoun() {
-                assert!(md("you").pronoun.unwrap().is_object.unwrap());
+                assert!(md("you").is_object_pronoun());
             }
             #[test]
             fn yourself_is_pronoun() {
-                assert!(md("yourself").pronoun.is_some());
+                assert!(md("yourself").is_pronoun());
             }
             #[test]
             fn yourself_is_personal_pronoun() {
-                assert!(md("yourself").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("yourself").is_personal_pronoun());
             }
             #[test]
             fn yourself_is_singular_pronoun() {
-                assert!(md("yourself").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("yourself").is_singular_pronoun());
             }
             #[test]
             fn yourself_is_reflexive_pronoun() {
-                assert!(md("yourself").pronoun.unwrap().is_reflexive.unwrap());
+                assert!(md("yourself").is_reflexive_pronoun());
             }
         }
 
@@ -1222,53 +1232,53 @@ mod tests {
 
             #[test]
             fn he_is_pronoun() {
-                assert!(md("he").pronoun.is_some());
+                assert!(md("he").is_pronoun());
             }
             #[test]
             fn he_is_personal_pronoun() {
-                assert!(md("he").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("he").is_personal_pronoun());
             }
             #[test]
             fn he_is_singular_pronoun() {
-                assert!(md("he").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("he").is_singular_pronoun());
             }
             #[test]
             fn he_is_subject_pronoun() {
-                assert!(md("he").pronoun.unwrap().is_subject.unwrap());
+                assert!(md("he").is_subject_pronoun());
             }
 
             #[test]
             fn him_is_pronoun() {
-                assert!(md("him").pronoun.is_some());
+                assert!(md("him").is_pronoun());
             }
             #[test]
             fn him_is_personal_pronoun() {
-                assert!(md("him").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("him").is_personal_pronoun());
             }
             #[test]
             fn him_is_singular_pronoun() {
-                assert!(md("him").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("him").is_singular_pronoun());
             }
             #[test]
             fn him_is_object_pronoun() {
-                assert!(md("him").pronoun.unwrap().is_object.unwrap());
+                assert!(md("him").is_object_pronoun());
             }
 
             #[test]
             fn himself_is_pronoun() {
-                assert!(md("himself").pronoun.is_some());
+                assert!(md("himself").is_pronoun());
             }
             #[test]
             fn himself_is_personal_pronoun() {
-                assert!(md("himself").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("himself").is_personal_pronoun());
             }
             #[test]
             fn himself_is_singular_pronoun() {
-                assert!(md("himself").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("himself").is_singular_pronoun());
             }
             #[test]
             fn himself_is_reflexive_pronoun() {
-                assert!(md("himself").pronoun.unwrap().is_reflexive.unwrap());
+                assert!(md("himself").is_reflexive_pronoun());
             }
         }
 
@@ -1277,53 +1287,53 @@ mod tests {
 
             #[test]
             fn she_is_pronoun() {
-                assert!(md("she").pronoun.is_some());
+                assert!(md("she").is_pronoun());
             }
             #[test]
             fn she_is_personal_pronoun() {
-                assert!(md("she").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("she").is_personal_pronoun());
             }
             #[test]
             fn she_is_singular_pronoun() {
-                assert!(md("she").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("she").is_singular_pronoun());
             }
             #[test]
             fn she_is_subject_pronoun() {
-                assert!(md("she").pronoun.unwrap().is_subject.unwrap());
+                assert!(md("she").is_subject_pronoun());
             }
 
             #[test]
             fn her_is_pronoun() {
-                assert!(md("her").pronoun.is_some());
+                assert!(md("her").is_pronoun());
             }
             #[test]
             fn her_is_personal_pronoun() {
-                assert!(md("her").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("her").is_personal_pronoun());
             }
             #[test]
             fn her_is_singular_pronoun() {
-                assert!(md("her").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("her").is_singular_pronoun());
             }
             #[test]
             fn her_is_object_pronoun() {
-                assert!(md("her").pronoun.unwrap().is_object.unwrap());
+                assert!(md("her").is_object_pronoun());
             }
 
             #[test]
             fn herself_is_pronoun() {
-                assert!(md("herself").pronoun.is_some());
+                assert!(md("herself").is_pronoun());
             }
             #[test]
             fn herself_is_personal_pronoun() {
-                assert!(md("herself").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("herself").is_personal_pronoun());
             }
             #[test]
             fn herself_is_singular_pronoun() {
-                assert!(md("herself").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("herself").is_singular_pronoun());
             }
             #[test]
             fn herself_is_reflexive_pronoun() {
-                assert!(md("herself").pronoun.unwrap().is_reflexive.unwrap());
+                assert!(md("herself").is_reflexive_pronoun());
             }
         }
 
@@ -1332,40 +1342,40 @@ mod tests {
 
             #[test]
             fn it_is_pronoun() {
-                assert!(md("it").pronoun.is_some());
+                assert!(md("it").is_pronoun());
             }
             #[test]
             fn it_is_personal_pronoun() {
-                assert!(md("it").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("it").is_personal_pronoun());
             }
             #[test]
             fn it_is_singular_pronoun() {
-                assert!(md("it").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("it").is_singular_pronoun());
             }
             #[test]
             fn it_is_subject_pronoun() {
-                assert!(md("it").pronoun.unwrap().is_subject.unwrap());
+                assert!(md("it").is_subject_pronoun());
             }
             #[test]
             fn it_is_object_pronoun() {
-                assert!(md("it").pronoun.unwrap().is_object.unwrap());
+                assert!(md("it").is_object_pronoun());
             }
 
             #[test]
             fn itself_is_pronoun() {
-                assert!(md("itself").pronoun.is_some());
+                assert!(md("itself").is_pronoun());
             }
             #[test]
             fn itself_is_personal_pronoun() {
-                assert!(md("itself").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("itself").is_personal_pronoun());
             }
             #[test]
             fn itself_is_singular_pronoun() {
-                assert!(md("itself").pronoun.unwrap().is_singular.unwrap());
+                assert!(md("itself").is_singular_pronoun());
             }
             #[test]
             fn itself_is_reflexive_pronoun() {
-                assert!(md("itself").pronoun.unwrap().is_reflexive.unwrap());
+                assert!(md("itself").is_reflexive_pronoun());
             }
         }
 
@@ -1374,110 +1384,110 @@ mod tests {
 
             #[test]
             fn they_is_pronoun() {
-                assert!(md("they").pronoun.is_some());
+                assert!(md("they").is_pronoun());
             }
             #[test]
             fn they_is_personal_pronoun() {
-                assert!(md("they").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("they").is_personal_pronoun());
             }
             #[test]
             fn they_is_plural_pronoun() {
-                assert!(md("they").pronoun.unwrap().is_plural.unwrap());
+                assert!(md("they").is_plural_pronoun());
             }
             #[test]
             fn they_is_subject_pronoun() {
-                assert!(md("they").pronoun.unwrap().is_subject.unwrap());
+                assert!(md("they").is_subject_pronoun());
             }
 
             #[test]
             fn them_is_pronoun() {
-                assert!(md("them").pronoun.is_some());
+                assert!(md("them").is_pronoun());
             }
             #[test]
             fn them_is_personal_pronoun() {
-                assert!(md("them").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("them").is_personal_pronoun());
             }
             #[test]
             fn them_is_plural_pronoun() {
-                assert!(md("them").pronoun.unwrap().is_plural.unwrap());
+                assert!(md("them").is_plural_pronoun());
             }
             #[test]
             fn them_is_object_pronoun() {
-                assert!(md("them").pronoun.unwrap().is_object.unwrap());
+                assert!(md("them").is_object_pronoun());
             }
 
             #[test]
             fn themselves_is_pronoun() {
-                assert!(md("themselves").pronoun.is_some());
+                assert!(md("themselves").is_pronoun());
             }
             #[test]
             fn themselves_is_personal_pronoun() {
-                assert!(md("themselves").pronoun.unwrap().is_personal.unwrap());
+                assert!(md("themselves").is_personal_pronoun());
             }
             #[test]
             fn themselves_is_plural_pronoun() {
-                assert!(md("themselves").pronoun.unwrap().is_plural.unwrap());
+                assert!(md("themselves").is_plural_pronoun());
             }
             #[test]
             fn themselves_is_reflexive_pronoun() {
-                assert!(md("themselves").pronoun.unwrap().is_reflexive.unwrap());
+                assert!(md("themselves").is_reflexive_pronoun());
             }
         }
 
         // Possessive pronouns (not to be confused with possessive adjectives/determiners)
         #[test]
         fn mine_is_pronoun() {
-            assert!(md("mine").pronoun.is_some());
+            assert!(md("mine").is_pronoun());
         }
         #[test]
         fn ours_is_pronoun() {
-            assert!(md("ours").pronoun.is_some());
+            assert!(md("ours").is_pronoun());
         }
         #[test]
         fn yours_is_pronoun() {
-            assert!(md("yours").pronoun.is_some());
+            assert!(md("yours").is_pronoun());
         }
         #[test]
         fn his_is_pronoun() {
-            assert!(md("his").pronoun.is_some());
+            assert!(md("his").is_pronoun());
         }
         #[test]
         fn hers_is_pronoun() {
-            assert!(md("hers").pronoun.is_some());
+            assert!(md("hers").is_pronoun());
         }
         #[test]
         fn its_is_pronoun() {
-            assert!(md("its").pronoun.is_some());
+            assert!(md("its").is_pronoun());
         }
         #[test]
         fn theirs_is_pronoun() {
-            assert!(md("theirs").pronoun.is_some());
+            assert!(md("theirs").is_pronoun());
         }
 
         // archaic pronouns
         #[test]
         fn archaic_pronouns() {
-            assert!(md("thou").pronoun.is_some());
-            assert!(md("thee").pronoun.is_some());
-            assert!(md("thyself").pronoun.is_some());
-            assert!(md("thine").pronoun.is_some());
+            assert!(md("thou").is_pronoun());
+            assert!(md("thee").is_pronoun());
+            assert!(md("thyself").is_pronoun());
+            assert!(md("thine").is_pronoun());
         }
 
         // generic pronouns
         #[test]
         fn generic_pronouns() {
-            assert!(md("one").pronoun.is_some());
-            assert!(md("oneself").pronoun.is_some());
+            assert!(md("one").is_pronoun());
+            assert!(md("oneself").is_pronoun());
         }
 
         // relative and interrogative pronouns
         #[test]
         fn relative_and_interrogative_pronouns() {
-            assert!(md("who").pronoun.is_some());
-            assert!(md("whom").pronoun.is_some());
-            assert!(md("whose").pronoun.is_some());
-            assert!(md("which").pronoun.is_some());
-            assert!(md("what").pronoun.is_some());
+            assert!(md("who").is_pronoun());
+            assert!(md("whom").is_pronoun());
+            assert!(md("whose").is_pronoun());
+            assert!(md("which").is_pronoun());
+            assert!(md("what").is_pronoun());
         }
 
         // nonstandard pronouns
@@ -1491,14 +1501,14 @@ mod tests {
 
     #[test]
     fn the_is_determiner() {
-        assert!(md("the").determiner.is_some());
+        assert!(md("the").is_determiner());
     }
     #[test]
     fn this_is_demonstrative_determiner() {
-        assert!(md("this").determiner.unwrap().is_demonstrative.unwrap());
+        assert!(md("this").is_demonstrative_determiner());
     }
     #[test]
     fn your_is_possessive_determiner() {
-        assert!(md("your").determiner.unwrap().is_possessive.unwrap());
+        assert!(md("your").is_possessive_determiner());
     }
 }

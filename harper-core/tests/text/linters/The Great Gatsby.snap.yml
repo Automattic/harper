@@ -2475,9 +2475,9 @@ Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |                            ^~ Did you mean to spell `S.` this way?
 Suggest:
+  - Replace with: “Sf”
+  - Replace with: “Sh”
   - Replace with: “So”
-  - Replace with: “Sq”
-  - Replace with: “St”
 
 
 
@@ -2498,9 +2498,9 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Aw”
+  - Replace with: “Av”
+  - Replace with: “A”
   - Replace with: “Ab”
-  - Replace with: “Ac”
 
 
 
@@ -2578,9 +2578,9 @@ Message: |
     1868 | Excellence, and Eckhaust and Clyde Cohen and Don S. Schwartze (the son) and
          |                                                  ^~ Did you mean to spell `S.` this way?
 Suggest:
+  - Replace with: “Sf”
+  - Replace with: “Sh”
   - Replace with: “So”
-  - Replace with: “Sq”
-  - Replace with: “St”
 
 
 
@@ -2867,9 +2867,9 @@ Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |             ^~ Did you mean to spell `S.` this way?
 Suggest:
+  - Replace with: “Sf”
+  - Replace with: “Sh”
   - Replace with: “So”
-  - Replace with: “Sq”
-  - Replace with: “St”
 
 
 
