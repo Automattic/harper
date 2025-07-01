@@ -4,6 +4,19 @@ use serde::{Deserialize, Serialize};
 
 use crate::{Number, Punctuation, Quote, TokenKind::Word, WordMetadata};
 
+macro_rules! delegate_to_metadata {
+    ($($method:ident),* $(,)?) => {
+        $(
+            pub fn $method(&self) -> bool {
+                let Word(Some(metadata)) = self else {
+                    return false;
+                };
+                metadata.$method()
+            }
+        )*
+    };
+}
+
 #[derive(Debug, Is, Clone, Serialize, Deserialize, Default, PartialOrd, Hash, Eq, PartialEq)]
 #[serde(tag = "kind", content = "value")]
 pub enum TokenKind {
@@ -60,42 +73,17 @@ impl TokenKind {
     // Word is-methods #1
 
     // Nominal is-methods (nouns and pronouns) #1
-
-    pub fn is_possessive_nominal(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_possessive_nominal()
-    }
-
-    pub fn is_possessive_noun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_possessive_noun()
-    }
-
-    pub fn is_possessive_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_possessive_pronoun()
-    }
-
-    pub fn is_proper_noun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_proper_noun()
+    delegate_to_metadata! {
+        is_possessive_nominal,
+        is_possessive_noun,
+        is_possessive_pronoun,
+        is_proper_noun
     }
 
     // Conjunction is-methods
 
-    pub fn is_conjunction(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_conjunction()
+    delegate_to_metadata! {
+        is_conjunction
     }
 
     // Miscellaneous is-methods #2
@@ -160,50 +148,23 @@ impl TokenKind {
 
     // Adjective is-methods
 
-    pub fn is_adjective(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_adjective()
+    delegate_to_metadata! {
+        is_adjective
     }
 
     // Verb is-methods #1
 
-    pub fn is_verb_lemma(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_verb_lemma()
-    }
-
-    pub fn is_verb_past_form(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_verb_past_form()
-    }
-
-    pub fn is_verb_progressive_form(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_verb_progressive_form()
-    }
-
-    pub fn is_verb_third_person_singular_present_form(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_verb_third_person_singular_present_form()
+    delegate_to_metadata! {
+        is_verb_lemma,
+        is_verb_past_form,
+        is_verb_progressive_form,
+        is_verb_third_person_singular_present_form
     }
 
     // Adverb is-methods
 
-    pub fn is_adverb(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_adverb()
+    delegate_to_metadata! {
+        is_adverb
     }
 
     // Miscellaneous word is-methods #1
@@ -290,97 +251,25 @@ impl TokenKind {
 
     // Verb is-methods #2
 
-    pub fn is_verb(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_verb()
-    }
-
-    pub fn is_auxiliary_verb(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_auxiliary_verb()
-    }
-
-    pub fn is_linking_verb(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_linking_verb()
+    delegate_to_metadata! {
+        is_verb,
+        is_auxiliary_verb,
+        is_linking_verb
     }
 
     // Nominal is-methods #2
 
-    pub fn is_non_plural_nominal(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return true;
-        };
-        metadata.is_non_plural_nominal()
-    }
-
-    pub fn is_non_plural_noun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return true;
-        };
-        metadata.is_non_plural_noun()
-    }
-
-    pub fn is_non_plural_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return true;
-        };
-        metadata.is_non_plural_pronoun()
-    }
-
-    pub fn is_second_person_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return true;
-        };
-        metadata.is_second_person_pronoun()
-    }
-
-    pub fn is_third_person_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return true;
-        };
-        metadata.is_third_person_pronoun()
-    }
-
-    pub fn is_first_person_singular_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return true;
-        };
-        metadata.is_first_person_singular_pronoun()
-    }
-
-    pub fn is_first_person_plural_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return true;
-        };
-        metadata.is_first_person_plural_pronoun()
-    }
-
-    pub fn is_third_person_singular_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return true;
-        };
-        metadata.is_third_person_singular_pronoun()
-    }
-
-    pub fn is_third_person_plural_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return true;
-        };
-        metadata.is_third_person_plural_pronoun()
-    }
-
-    pub fn is_object_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return true;
-        };
-        metadata.is_object_pronoun()
+    delegate_to_metadata! {
+        is_non_plural_nominal,
+        is_non_plural_noun,
+        is_non_plural_pronoun,
+        is_second_person_pronoun,
+        is_third_person_pronoun,
+        is_first_person_singular_pronoun,
+        is_first_person_plural_pronoun,
+        is_third_person_singular_pronoun,
+        is_third_person_plural_pronoun,
+        is_object_pronoun
     }
 
     // Miscellaneous word is-methods #2
@@ -394,111 +283,27 @@ impl TokenKind {
 
     // Nominal is-methods #3
 
-    pub fn is_singular_nominal(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_singular_nominal()
-    }
-
-    pub fn is_singular_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_singular_pronoun()
-    }
-
-    pub fn is_singular_noun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_singular_noun()
-    }
-
-    pub fn is_plural_nominal(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_plural_nominal()
-    }
-
-    pub fn is_plural_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_plural_pronoun()
-    }
-
-    pub fn is_plural_noun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_plural_noun()
-    }
-
-    pub fn is_countable_noun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_countable_noun()
-    }
-
-    pub fn is_mass_noun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_mass_noun()
-    }
-
-    pub fn is_nominal(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_nominal()
-    }
-
-    pub fn is_noun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_noun()
-    }
-
-    pub fn is_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_pronoun()
-    }
-
-    pub fn is_reflexive_pronoun(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_reflexive_pronoun()
+    delegate_to_metadata! {
+        is_singular_nominal,
+        is_singular_pronoun,
+        is_singular_noun,
+        is_plural_nominal,
+        is_plural_pronoun,
+        is_plural_noun,
+        is_countable_noun,
+        is_mass_noun,
+        is_nominal,
+        is_noun,
+        is_pronoun,
+        is_reflexive_pronoun
     }
 
     // Determiner is-methods
 
-    pub fn is_determiner(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_determiner()
-    }
-
-    pub fn is_demonstrative_determiner(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_demonstrative_determiner()
-    }
-
-    pub fn is_possessive_determiner(&self) -> bool {
-        let Word(Some(metadata)) = self else {
-            return false;
-        };
-        metadata.is_possessive_determiner()
+    delegate_to_metadata! {
+        is_determiner,
+        is_demonstrative_determiner,
+        is_possessive_determiner
     }
 
     // Miscellaneous word is-methods #3
