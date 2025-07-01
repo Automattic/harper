@@ -61,6 +61,20 @@ test('Wraps correctly', async ({ page }) => {
 	]);
 });
 
+test('Scrolls correctly', async ({ page }) => {
+	await page.goto(TEST_PAGE_URL);
+
+	const editor = getTextarea(page);
+	await replaceEditorContent(
+		editor,
+		'This is a test of the the Harper grammar checker, specifically if \n\n\n\n\n\n\n\n\n\n\n\n\nit scrolls beyo nd the height of the buffer.',
+	);
+
+	await page.waitForTimeout(6000);
+
+	await assertHarperHighlightBoxes(page, [{ width: 58.828125, x: 117.40625, y: 161, height: 18 }]);
+});
+
 async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
 	const highlights = getHarperHighlights(page);
 
