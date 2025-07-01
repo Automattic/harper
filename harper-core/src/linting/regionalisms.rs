@@ -9,12 +9,19 @@ use super::ExprLinter;
 
 #[derive(PartialEq)]
 enum CanFlag {
+    /// Flag this term as a regionalism that should be suggested against
     Flag,
-    DontFlag,
+    /// Don't flag this term because it's universally understood across dialects
+    UniversalTerm,
+    /// Don't flag this term because it has other common meanings that could cause false positives
+    HasOtherMeanings,
 }
 
 use CanFlag::*;
 
+/// Represents a unique concept that has different regional terms across English dialects.
+/// Each is named by an alphabetical concatenation of the terms that refer to the same concept.
+/// This allows us to suggest appropriate regional alternatives when a term from another dialect is detected.
 #[derive(PartialEq)]
 enum Concept {
     AubergineEggplant,
@@ -98,7 +105,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "caravan",
-        flag: DontFlag,
+        flag: UniversalTerm,
         dialects: &[Australian, British],
         concept: CaravanTrailer,
     },
@@ -116,7 +123,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "chips",
-        flag: DontFlag,
+        flag: UniversalTerm,
         dialects: &[American, Australian],
         concept: ChipsCrisps,
     },
@@ -134,7 +141,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "cooler",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[American, Canadian],
         concept: CoolboxCoolerEsky,
     },
@@ -158,7 +165,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "dummy",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[Australian],
         concept: DummyPacifier,
     },
@@ -176,7 +183,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "estate",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[British],
         concept: StationWagonEstate,
     },
@@ -200,7 +207,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "football",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[British],
         concept: FootballSoccer,
     },
@@ -212,13 +219,13 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "gas",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[American, Canadian],
         concept: GasolinePetrol,
     },
     Term {
         term: "gas station",
-        flag: DontFlag,
+        flag: Flag,
         dialects: &[American, Canadian],
         concept: GasStationPetrolStationServiceStation,
     },
@@ -230,7 +237,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "jumper",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[Australian],
         concept: JumperSweater,
     },
@@ -242,7 +249,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "light bulb",
-        flag: DontFlag,
+        flag: UniversalTerm,
         dialects: &[American, Australian, British, Canadian],
         concept: LightBulbLightGlobe,
     },
@@ -284,7 +291,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "pavement",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[British],
         concept: FootpathPavementSidewalk,
     },
@@ -327,7 +334,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     Term {
         // Must be normalized to lowercase
         term: "rv",
-        flag: DontFlag,
+        flag: Flag,
         dialects: &[American],
         concept: CampervanRv,
     },
@@ -339,7 +346,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "sidewalk",
-        flag: DontFlag,
+        flag: Flag,
         dialects: &[American, Canadian],
         concept: FootpathPavementSidewalk,
     },
@@ -375,31 +382,31 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     },
     Term {
         term: "tap",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[Australian, British],
         concept: FaucetTap,
     },
     Term {
         term: "tomato sauce",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[Australian],
         concept: CatsupKetchupTomatoSauce,
     },
     Term {
         term: "torch",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[Australian, British],
         concept: FlashlightTorch,
     },
     Term {
         term: "trailer",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[American],
         concept: CaravanTrailer,
     },
     Term {
         term: "truck",
-        flag: DontFlag,
+        flag: HasOtherMeanings,
         dialects: &[American, Australian, Canadian],
         concept: LorryTruck,
     },
