@@ -610,8 +610,18 @@
 				"pronoun": {}
 			}
 		},
+		"0": {
+			"#": "singular noun property",
+			"//": "mnemonic: the closest digit to single '1' that's not used for grammatical person",
+			"metadata": {
+				"noun": {
+					"is_singular": true
+				}
+			}
+		},
 		"9": {
 			"#": "plural noun property",
+			"//": "mnemonic: the biggest, most plural digit",
 			"metadata": {
 				"noun": {
 					"is_plural": true
