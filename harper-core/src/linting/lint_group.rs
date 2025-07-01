@@ -476,7 +476,7 @@ impl LintGroup {
         out.config.set_rule_enabled("SentenceCapitalization", true);
 
         out.add("PossessiveNoun", PossessiveNoun::new(dictionary.clone()));
-        out.config.set_rule_enabled("SentenceCapitalization", true);
+        out.config.set_rule_enabled("PossessiveNoun", true);
 
         out
     }

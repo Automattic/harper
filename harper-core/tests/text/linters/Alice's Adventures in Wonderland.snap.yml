@@ -2378,6 +2378,15 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (10 priority)
+Message: |
+    2215 | “Hadn’t time,” said the Gryphon: “I went to the Classics master, though. He was
+         |                                                 ^~~~~~~~ Use an apostrophe and `s` to form a noun’s possessive.
+Suggest:
+  - Replace with: “Classic's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2221 | “So he did, so he did,” said the Gryphon, sighing in his turn; and both
@@ -2698,6 +2707,15 @@ Message: |
          |                                                                  ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
+
+
+
+Lint:    Miscellaneous (10 priority)
+Message: |
+    2420 | “How the creatures order one about, and make one repeat lessons!” thought Alice;
+         |          ^~~~~~~~~ Use an apostrophe and `s` to form a noun’s possessive.
+Suggest:
+  - Replace with: “creature's”
 
 
 

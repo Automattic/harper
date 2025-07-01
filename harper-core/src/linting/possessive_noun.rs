@@ -21,19 +21,33 @@ where
 {
     pub fn new(dict: D) -> Self {
         let expr = SequenceExpr::default()
-            .then(UPOSSet::new(&[UPOS::DET, UPOS::ADJ, UPOS::PROPN]))
+            .then(UPOSSet::new(&[UPOS::DET, UPOS::PROPN]))
             .t_ws()
             .then_plural_nominal()
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]));
+            .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]))
+            .then_optional(SequenceExpr::default().t_any().t_any());
+
+        let additional_req = SequenceExpr::default()
+            .t_any()
+            .t_any()
+            .t_any()
+            .t_any()
+            .then_noun();
 
         let exceptions = SequenceExpr::default()
+            .t_any()
+            .t_any()
             .if_not_then_step_one(WordSet::new(&["flags", "checks", "catches", "you"]))
             .t_any()
-            .if_not_then_step_one(WordSet::new(&["form"]));
+            .if_not_then_step_one(WordSet::new(&["form", "go"]));
 
         Self {
-            expr: Box::new(All::new(vec![Box::new(expr), Box::new(exceptions)])),
+            expr: Box::new(All::new(vec![
+                Box::new(expr),
+                Box::new(additional_req),
+                Box::new(exceptions),
+            ])),
             dict,
         }
     }
@@ -48,6 +62,12 @@ where
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+        let last_kind = &matched_tokens.last()?.kind;
+
+        if last_kind.is_upos(UPOS::ADV) {
+            return None;
+        }
+
         let first = matched_tokens.get(2)?;
 
         let span = first.span;
@@ -372,5 +392,10 @@ mod tests {
             test_linter(),
             "The flower's scent filled the room.",
         );
+    }
+
+    #[test]
+    fn allows_birds_hurried() {
+        assert_lint_count("The birds hurried off.", test_linter(), 0);
     }
 }
