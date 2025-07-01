@@ -427,22 +427,20 @@ impl WordMetadata {
     // Singular is default if number is not marked in the dictionary.
     pub fn is_singular_noun(&self) -> bool {
         if let Some(noun) = self.noun {
-            match (noun.is_singular, noun.is_plural) {
-                (Some(true), _) => true,
-                (None | Some(false), None | Some(false)) => true,
-                _ => false,
-            }
+            matches!(
+                (noun.is_singular, noun.is_plural),
+                (Some(true), _) | (None | Some(false), None | Some(false))
+            )
         } else {
             false
         }
     }
     pub fn is_non_singular_noun(&self) -> bool {
         if let Some(noun) = self.noun {
-            match (noun.is_singular, noun.is_plural) {
-                (Some(true), _) => false,
-                (None | Some(false), None | Some(false)) => false,
-                _ => true,
-            }
+            !matches!(
+                (noun.is_singular, noun.is_plural),
+                (Some(true), _) | (None | Some(false), None | Some(false))
+            )
         } else {
             false
         }
@@ -919,6 +917,14 @@ mod tests {
         #[test]
         fn pooches_is_non_singular_noun() {
             assert!(md("pooches").is_non_singular_noun());
+        }
+
+        // Make sure is_non_xxx_noun methods don't behave like is_not_xxx_noun.
+        // In other words, make sure they don't return true for words that are not nouns.
+        // They must only pass for words that are nouns but not singular etc.
+        #[test]
+        fn loyal_doesnt_pass_is_non_singular_noun() {
+            assert!(!md("loyal").is_non_singular_noun());
         }
 
         #[test]
