@@ -1191,6 +1191,15 @@ Message: |
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+     853 | milk all afternoon. Meanwhile Tom brought out a bottle of whiskey from a locked
+         |                     ^~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      860 | and I went out to buy some at the drugstore on the corner. When I came back they
@@ -2229,6 +2238,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1792 | smile turned to the world and yet satisfy the demands of her hard, jaunty body.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+    1824 | perspiration appeared on her upper lip. Nevertheless there was a vague
+         |                                         ^~~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+    1825 | understanding that had to be tactfully broken off before I was free.
+Suggest:
+  - Insert “,”
 
 
 
@@ -4402,6 +4421,15 @@ Suggest:
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+    3111 | faintly true. Moreover he told it to me at a time of confusion, when I had
+         |               ^~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     3116 | It was a halt, too, in my association with his affairs. For several weeks I
@@ -5038,6 +5066,15 @@ Message: |
          | ^ Incorrect indefinite article.
 Suggest:
   - Replace with: “an”
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+    3864 | “Nevertheless he’s an Oxford man.”
+         |  ^~~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
 
 
 
@@ -7461,6 +7498,15 @@ Message: |
          |                                           ^~~~~~~~~~ Did you mean `linerless`?
 Suggest:
   - Replace with: “linerless”
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+    5721 | “Nevertheless you did throw me over,” said Jordan suddenly. ‘‘You threw me over
+         |  ^~~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
 
 
 

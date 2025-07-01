@@ -29,6 +29,7 @@ use super::compound_nouns::CompoundNouns;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::despite_of::DespiteOf;
+use super::discourse_markers::DiscourseMarkers;
 use super::dot_initialisms::DotInitialisms;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
@@ -381,6 +382,7 @@ impl LintGroup {
         insert_pattern_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_pattern_rule!(ChockFull, true);
+        insert_struct_rule!(DiscourseMarkers, true);
         insert_pattern_rule!(WayTooAdjective, true);
         insert_pattern_rule!(HavePronoun, true);
         insert_pattern_rule!(PronounInflectionBe, true);
