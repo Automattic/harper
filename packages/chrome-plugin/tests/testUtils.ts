@@ -1,4 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 /** Locate the [`Slate`](https://www.slatejs.org/examples/richtext) editor on the page.  */
 export function getSlateEditor(page: Page): Locator {
@@ -49,4 +50,57 @@ export async function clickHarperHighlight(page: Page): Promise<boolean> {
 
 	await page.mouse.click(cx, cy);
 	return true;
+}
+
+/** Grab the first `<textarea />` on a page. */
+export function getTextarea(page: Page): Locator {
+	return page.locator('textarea');
+}
+
+export async function testBasicSuggestionTextarea(testPageUrl: string) {
+	test('Can apply basic suggestion.', async ({ page }) => {
+		await page.goto(testPageUrl);
+
+		const editor = getTextarea(page);
+		await replaceEditorContent(editor, 'This is an test');
+
+		await page.waitForTimeout(6000);
+
+		await clickHarperHighlight(page);
+		await page.getByTitle('Replace with "a"').click();
+
+		await page.waitForTimeout(3000);
+
+		expect(editor).toHaveValue('This is a test');
+	});
+}
+
+export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
+	test('Can ignore suggestion.', async ({ page }) => {
+		await page.goto(testPageUrl);
+
+		const editor = getTextarea(page);
+		await replaceEditorContent(editor, 'This is an test');
+
+		await page.waitForTimeout(6000);
+
+		await clickHarperHighlight(page);
+		await page.getByTitle('Ignore this lint').click();
+
+		await page.waitForTimeout(3000);
+
+		// Nothing should change.
+		expect(editor).toHaveValue('This is an test');
+		expect(await clickHarperHighlight(page)).toBe(false);
+	});
+}
+
+export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
+	const highlights = getHarperHighlights(page);
+
+	expect(await highlights.count()).toBe(boxes.length);
+
+	for (let i = 0; i < (await highlights.count()); i++) {
+		expect(await highlights.nth(i).boundingBox()).toStrictEqual(boxes[i]);
+	}
 }

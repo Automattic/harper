@@ -1,15 +1,13 @@
 import { test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
-	clickHarperHighlight,
-	getHarperHighlights,
 	getTextarea,
 	replaceEditorContent,
 	testBasicSuggestionTextarea,
 	testCanIgnoreTextareaSuggestion,
 } from './testUtils';
 
-const TEST_PAGE_URL = 'http://localhost:8081/github_textarea.html';
+const TEST_PAGE_URL = 'http://localhost:8081/simple_textarea.html';
 
 testBasicSuggestionTextarea(TEST_PAGE_URL);
 testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
@@ -26,8 +24,10 @@ test('Wraps correctly', async ({ page }) => {
 	await page.waitForTimeout(6000);
 
 	await assertHarperHighlightBoxes(page, [
-		{ height: 18, width: 25.21875, x: 512.28125, y: 63 },
-		{ height: 18, width: 67.21875, x: 260.234375, y: 103 },
+		{ height: 19, width: 24, x: 241.90625, y: 27 },
+		{ height: 19, width: 48, x: 233.90625, y: 44 },
+		{ height: 19, width: 8, x: 281.90625, y: 44 },
+		{ height: 19, width: 8, x: 10, y: 61 },
 	]);
 });
 
@@ -42,5 +42,5 @@ test('Scrolls correctly', async ({ page }) => {
 
 	await page.waitForTimeout(6000);
 
-	await assertHarperHighlightBoxes(page, [{ width: 58.828125, x: 117.40625, y: 161, height: 18 }]);
+	await assertHarperHighlightBoxes(page, [{ height: 19, width: 56, x: 97.953125, y: 63 }]);
 });
