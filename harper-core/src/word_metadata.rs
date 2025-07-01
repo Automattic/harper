@@ -150,6 +150,8 @@ impl WordMetadata {
                         is_proper: Some(false),
                         is_singular: None,
                         is_plural: None,
+                        is_countable: None,
+                        is_mass: None,
                         is_possessive: None,
                     })
                 }
@@ -173,6 +175,8 @@ impl WordMetadata {
                         is_proper: Some(true),
                         is_singular: None,
                         is_plural: None,
+                        is_countable: None,
+                        is_mass: None,
                         is_possessive: None,
                     })
                 }
@@ -304,8 +308,8 @@ impl WordMetadata {
     }
 
     generate_metadata_queries!(
-        // Singular defaults to true, so its metadata queries are not generated.
-        noun has proper, plural, possessive.
+        // Singular and countable default to true, so their metadata queries are not generated.
+        noun has proper, plural, mass, possessive.
         pronoun has personal, singular, plural, possessive, reflexive, subject, object.
         determiner has demonstrative, possessive.
         verb has linking, auxiliary.
@@ -446,6 +450,28 @@ impl WordMetadata {
         }
     }
 
+    // Countable is default if countability is not marked in the dictionary.
+    pub fn is_countable_noun(&self) -> bool {
+        if let Some(noun) = self.noun {
+            matches!(
+                (noun.is_singular, noun.is_plural),
+                (Some(true), _) | (None | Some(false), None | Some(false))
+            )
+        } else {
+            false
+        }
+    }
+    pub fn is_non_countable_noun(&self) -> bool {
+        if let Some(noun) = self.noun {
+            !matches!(
+                (noun.is_countable, noun.is_mass),
+                (Some(true), _) | (None | Some(false), None | Some(false))
+            )
+        } else {
+            false
+        }
+    }
+
     // Nominal metadata queries (noun + pronoun)
 
     /// Checks if the word is definitely nominal.
@@ -544,6 +570,8 @@ pub struct NounData {
     pub is_proper: Option<bool>,
     pub is_singular: Option<bool>,
     pub is_plural: Option<bool>,
+    pub is_countable: Option<bool>,
+    pub is_mass: Option<bool>,
     pub is_possessive: Option<bool>,
 }
 
@@ -554,6 +582,8 @@ impl NounData {
             is_proper: self.is_proper.or(other.is_proper),
             is_singular: self.is_singular.or(other.is_singular),
             is_plural: self.is_plural.or(other.is_plural),
+            is_countable: self.is_countable.or(other.is_countable),
+            is_mass: self.is_mass.or(other.is_mass),
             is_possessive: self.is_possessive.or(other.is_possessive),
         }
     }
@@ -1007,6 +1037,35 @@ mod tests {
         #[test]
         fn dogs_is_non_possessive_noun() {
             assert!(md("dogs").is_non_possessive_noun());
+        }
+
+        // noun countability
+
+        #[test]
+        fn dog_is_countable() {
+            assert!(md("dog").is_countable_noun());
+        }
+        #[test]
+        fn dog_is_non_mass_noun() {
+            assert!(md("dog").is_non_mass_noun());
+        }
+
+        #[test]
+        fn furniture_is_mass_noun() {
+            assert!(md("furniture").is_mass_noun());
+        }
+        #[test]
+        fn furniture_is_not_countable_noun() {
+            assert!(md("furniture").is_non_countable_noun());
+        }
+
+        #[test]
+        fn beer_is_countable_noun() {
+            assert!(md("beer").is_countable_noun());
+        }
+        #[test]
+        fn beer_is_mass_noun() {
+            assert!(md("beer").is_mass_noun());
         }
     }
 

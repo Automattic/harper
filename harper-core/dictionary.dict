@@ -11673,7 +11673,7 @@ advertisement/~NgS
 advertiser/~Ng
 advertising/~NVg
 advertorial/NSg
-advice/~NVg
+advice/~Nmg
 advisability/Nig
 advisable/Ji
 advisably/R
@@ -12771,7 +12771,7 @@ appetizing/JNVY
 applaud/NVZGd>S
 applauder/Ng
 applause/~Ng
-apple/~NgS
+apple/~NwgS
 applejack/Ng
 applesauce/Ng
 applet/NgS
@@ -14094,7 +14094,7 @@ bazillion/NS
 bazooka/NVSg
 bbl/N
 bdrm/N
-be/~mN
+be/~AN
 beach/~NVgdSG
 beachcomber/NSg
 beachfront/JN
@@ -14217,7 +14217,7 @@ beeline/NVgS
 been/~VN
 beep/NVSZGgd>
 beeper/Ng
-beer/~NVg
+beer/~NmVg
 beery/JT>
 beeswax/NVg
 beet/~NVSg
@@ -14420,7 +14420,7 @@ bespeak/VNSG
 bespectacled/J
 bespoke/~JV
 bespoken/VJ
-best/~JNVSGgdum
+best/~JNVSGgduA
 bestial/JNY
 bestiality/Ng
 bestiary/NSg
@@ -14456,7 +14456,7 @@ betroth/VdG
 betrothal/~NSg
 betrothed/~VJNg
 betroths/V
-better/~JNVgdGLScm
+better/~JNVgdGLScA
 better/~JNgdGLS
 betterment/Ng
 betting/~JVN
@@ -15131,7 +15131,7 @@ bondsman/Ng
 bondsmen/9
 bondwoman/Ng
 bondwomen/9
-bone/~NJVd>SgZG
+bone/~NwJVd>SgZG
 bonehead/NSgd
 boneless/J
 boner/Ng
@@ -16186,8 +16186,8 @@ campsite/~NSg
 campus/~NVgS
 campy/JT>
 camshaft/~NSg
-can/~mNSgd>ZG
-can't/~m
+can/~ANSgd>ZG
+can't/~A
 canal/~NVgS
 canalisation/Ng!_
 canalise/VGdS!_
@@ -16225,7 +16225,7 @@ candlestick/~NVgS
 candlewick/NSg
 candor/Ng
 candour/Ng!@_
-candy/~NVGdSg
+candy/~NwVGdSg
 candyfloss/N
 cane/~NVSg
 canebrake/NgS
@@ -16657,7 +16657,7 @@ cattery/NS
 cattily/R
 cattiness/Ng
 catting/V
-cattle/~NVg
+cattle/~NmVg
 cattleman/Ng
 cattlemen/N9
 catty/JNTp>
@@ -19243,7 +19243,7 @@ couchette/NS
 cougar/~NSg
 cough/~VNgdG
 coughs/NV
-could/~mN
+could/~AN
 could've/V
 couldn't/~V
 coulee/NSg
@@ -20151,7 +20151,7 @@ dankness/Ng
 danseuse/NgS
 dapper/JT>
 dapple/NJVgGdS
-dare/~mNd>SgZG
+dare/~ANd>SgZG
 daredevil/~NJVgS
 daredevilry/Ng
 darer/Ng
@@ -21559,7 +21559,7 @@ dizzily/R
 dizziness/~Ng
 dizzy/~JVNd>SpTG
 djellaba/NgS
-do/~mNSzg>HZG
+do/~ANSzg>HZG
 doability/Ng
 doable/JNU
 dob/VNS
@@ -22472,7 +22472,7 @@ effusiveness/Ng
 egad/
 egalitarian/~JNSg
 egalitarianism/Ng
-egg/~NVGSgd
+egg/~NwVGSgd
 eggbeater/NgS
 eggcorn/NgS
 eggcup/NSg
@@ -22929,7 +22929,7 @@ energise/VZGd>S!_
 energiser/Ng!_
 energize/VZGd>S
 energizer/Ng
-energy/~NSg
+energy/~NwSg
 enervate/VJGndS
 enervation/Ng
 enfeeble/VGdSL
@@ -23212,7 +23212,7 @@ equinoctial/JN
 equinox/~NgS
 equip/~VNrS
 equipage/NVgS
-equipment/~Ng
+equipment/~Nmg
 equipoise/NVg
 equipped/~JVUr
 equipping/~VNr
@@ -23482,7 +23482,7 @@ everything/~IVg
 everywhere/~
 evict/VSdG
 eviction/~NgS
-evidence/~NVgGdS
+evidence/~NmgVGdS
 evident/~JY
 evil/~JNg>YTSp
 evildoer/NSg
@@ -25667,7 +25667,7 @@ fumigate/VGndS
 fumigation/Ng
 fumigator/NSg
 fumy/J>T
-fun/~NJVgU
+fun/~NmJVgU
 function/~NVgdGS
 functional/~JNY
 functionalism/N
@@ -25724,7 +25724,7 @@ furnace/~NVSg
 furnish/NVrdSG
 furnished/~VJU
 furnishings/~Ng
-furniture/~Ng
+furniture/~Nmg
 furor/NSg
 furore/NgS!_
 furosemide/N
@@ -27225,7 +27225,7 @@ haiku/~NgS
 hail/~NVJgdGS
 hailstone/NgS
 hailstorm/NgS
-hair/~NVgdS
+hair/~NwVgdS
 hairball/NgS
 hairband/NS
 hairbreadth/Ng
@@ -27403,7 +27403,7 @@ happen/~VSdGz
 happening/~VJNg
 happenstance/NSg
 happily/~UR
-happiness/~NUg
+happiness/~NmUg
 happy/~JNVU>Tp
 haptic/J
 harangue/NVgGdS
@@ -27546,7 +27546,7 @@ haunt/~VNSgd>ZG
 haunter/Ng
 haunting/~VJNY
 hauteur/Ng
-have/~mNgGS
+have/~ANgGS
 haven/~NVSg
 haven't/V
 haversack/NSg
@@ -29577,14 +29577,14 @@ influenced/~VJU
 influencer/NSg
 influential/~JNY
 influenza/~Ng
-info/~Ng
+info/~Nmg
 infographic/NJSg
 infomercial/NSg
 inform/~VJZ
 informal/~JY
 informant/~NSg
 informatics/~N
-information/~NEg
+information/~NmgE
 informational/~J
 informative/~JpY
 informativeness/Ng
@@ -31023,7 +31023,7 @@ knotting/VN
 knotty/JT>
 know/~VNSB
 knowing/~JPVNUYS
-knowledge/~NVg
+knowledge/~Nmg
 knowledgeable/~JN
 knowledgeably/R
 known/~JNV
@@ -32265,7 +32265,7 @@ ludo/N
 luff/NVdSG
 lug/~NVSg
 luge/~NVS
-luggage/~Ng
+luggage/~Nmg
 lugged/VJ
 lugger/NgS
 lugging/VN
@@ -33014,7 +33014,7 @@ maximise/VGdS!_
 maximization/Ng
 maximize/~VGdS
 maximum/~NJSg
-may/~mNg
+may/~ANg
 maybe/~JRNSg
 mayday/NgS
 mayflower/~NgS
@@ -33070,7 +33070,7 @@ measure's
 measured/~JVU
 measureless/J
 measurement/~NgS
-meat/~NgS
+meat/~NwgS
 meatball/NgS
 meathead/NgS
 meatiness/Ng
@@ -33550,11 +33550,11 @@ midwives/NV
 midyear/NgS
 mien/Ng
 miff/NVdSG
-might/~NJmg
+might/~NmJAg
 might've/V
 mightily/R
 mightiness/Ng
-mightn't/m
+mightn't/A
 mighty/~NJT>p
 mignonette/NJSg
 migraine/NgS
@@ -33592,7 +33592,7 @@ militate/VGdS
 militia/~NSg
 militiaman/Ng
 militiamen/~9
-milk/~NVgd>SZG
+milk/~NwVgd>SZG
 milker/Ng
 milkiness/Ng
 milkmaid/NgS
@@ -34630,7 +34630,7 @@ mush/NVgd>SZG
 mushiness/Ng
 mushroom/~NJVGSgd
 mushy/JpT>
-music/~NVJSg
+music/~NwVJSg
 musical/~JNgYS
 musicale/NgS
 musicality/Ng
@@ -34942,7 +34942,7 @@ necrotic/J
 nectar/~NVg
 nectarine/NJgS
 nee/~J
-need/~NmgdSG
+need/~NwAgdSG
 needed/~JVU
 needful/JNY
 neediness/Ng
@@ -34953,7 +34953,7 @@ needlessness/Ng
 needlewoman/Ng
 needlewomen/9
 needlework/Ng
-needn't/m
+needn't/A
 needy/~JpT>
 nefarious/JYp
 nefariousness/Ng
@@ -35118,7 +35118,7 @@ newfound/~J
 newline/~NS
 newlywed/NJSg
 newness/Ng
-news/~NVg
+news/~NmVg
 newsagent/NS
 newsboy/NSg
 newscast/~NVSg>Z
@@ -36479,8 +36479,8 @@ otter/~NgS
 ottoman/~NgS
 oubliette/NgS
 ouch/NV
-ought/~mIN
-oughtn't/m
+ought/~AIN
+oughtn't/A
 ounce/~NgS
 our/~D5
 ours/~I
@@ -37490,7 +37490,7 @@ pastor/~NVgS
 pastoral/~JNgS
 pastorate/NgS
 pastrami/Ng
-pastry/~NSg
+pastry/~NwSg
 pasturage/Ng
 pasture/~NVdSgG
 pastureland/Ng
@@ -41898,7 +41898,7 @@ ribber/NSg
 ribbing/VN
 ribbon/~NVSg
 riboflavin/~Ng
-rice/~NVgZGd>S
+rice/~NwVgZGd>S
 ricer/Ng
 rich/~JNVTg>SYp
 richness/~Ng
@@ -42550,10 +42550,8 @@ salvation/~NVg
 salve/NVgZGd>S
 salver/Ng
 salvo/~NVgS
-sam/~NVJm
-samantha/~m
-samar/~m
-samara/~Nm
+samara/~NS
+samarae/9
 samarium/Ng
 samba/~NVgdSG
 same/~JISp
@@ -42700,7 +42698,7 @@ saturnine/J
 satyr/NgS
 satyriasis/Ng
 satyric/J
-sauce/~NVgZGd>S
+sauce/~NwVgZGd>S
 saucepan/NVSg
 saucer/~NVg
 saucily/R
@@ -43638,7 +43636,7 @@ shack/~NVJgdSG
 shackle/NVUGdS
 shackle's
 shad/~NGgdSz
-shade/~NVgS
+shade/~NwVgS
 shader/NgS
 shadily/R
 shadiness/Ng
@@ -43668,7 +43666,7 @@ shakily/R
 shakiness/Ng
 shaky/~J>pT
 shale/~NVg
-shall/~m
+shall/~A
 shallot/NgS
 shallow/~JNVTpg>YS
 shallowness/Ng
@@ -43954,7 +43952,7 @@ shot/~JNVgS
 shotgun/~NVSg
 shotgunned/V
 shotgunning/V
-should/~m
+should/~A
 should've/V
 shoulder/~NVgdGS
 shouldn't/V
@@ -45690,7 +45688,7 @@ stably/NUR
 staccato/NJgS
 stack/~NVSgdGB
 stadium/~NgS
-staff/~NVrSdG
+staff/~NwVrSdG
 staff's
 staffer/~NgS
 staffing/~VNg
@@ -45966,7 +45964,7 @@ stetson/NgS
 stetted/V
 stetting/V
 stevedore/NVSg
-stew/~NVgdGS
+stew/~NwVgdGS
 steward/~NVGgdS
 stewardess/NgS
 stewardship/~Ng
@@ -46330,7 +46328,7 @@ studiousness/Ng
 studly/J>T
 study/~VNrGdS
 study's
-stuff/~NVGSgdz
+stuff/~NmVGSgdz
 stuffily/R
 stuffiness/Ng
 stuffing/VNg
@@ -46619,7 +46617,7 @@ suffragette/~NSg
 suffragist/~NgS
 suffuse/VJdSGn
 suffusion/Ng
-sugar/~NVGSgd
+sugar/~NwVGSgd
 sugarcane/~Ng
 sugarcoat/VGdS
 sugarless/J
@@ -48680,7 +48678,7 @@ traditionalism/Ng
 traditionalist/~NJSg
 traduce/Vd>SZG
 traducer/Ng
-traffic/~NVJSg
+traffic/~NmVJSg
 trafficked/JV
 trafficker/NSg
 trafficking/~VNg
@@ -51118,7 +51116,7 @@ watchmen/~9
 watchstrap/NS
 watchtower/~NSg
 watchword/NgS
-water/~NVGSgd>
+water/~NwVGSgd>
 waterbed/NgS
 waterbird/NSg
 waterboard/NVgdzSG
@@ -51602,7 +51600,7 @@ wile/~NVgGdS
 wilful/JpY!@_
 wilfulness/Ng!@_
 wiliness/Ng
-will/~mNgdS
+will/~ANgdS
 willful/JpY
 willfulness/Ng
 willies/Ng
@@ -51959,9 +51957,9 @@ worthy/~JNVUp>T
 worthy's
 wot/VI
 wotcha/
-would/~mNS
+would/~ANS
 would've/
-wouldn't/m
+wouldn't/A
 wouldst/V
 wound/~NVSGgd>
 wove/VJr
@@ -53083,6 +53081,7 @@ so-called/J
 socio-political/J
 solid-state/J
 sound wave/NgS
+source code/Nmg
 space bar/NgS
 spell checker/NgS
 spot on/J

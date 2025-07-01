@@ -730,7 +730,7 @@
 				}
 			}
 		},
-		"m": {
+		"A": {
 			"#": "auxiliary verb property",
 			"//": "see also l: linking verb property",
 			"metadata": {
@@ -797,6 +797,23 @@
 			"metadata": {
 				"pronoun": {
 					"is_personal": true
+				}
+			}
+		},
+		"m": {
+			"#": "mass noun (only) property",
+			"metadata": {
+				"noun": {
+					"is_mass": true
+				}
+			}
+		},
+		"w": {
+			"#": "mass + countable noun property",
+			"metadata": {
+				"noun": {
+					"is_countable": true,
+					"is_mass": true
 				}
 			}
 		}

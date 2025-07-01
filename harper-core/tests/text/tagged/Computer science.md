@@ -843,7 +843,7 @@
 > include symmetric and asymmetric encryption , digital signatures , cryptographic
 # NSg/V   J         V/C J+         NSg        . NSg/J+  NPl+       . J
 > hash   functions , key     - agreement protocols , blockchain , zero    - knowledge proofs , and
-# NSg/V+ NPl/V+    . NPr/V/J . NSg       NPl/V     . NSg        . NSg/V/J . NSg/V     NPl/V  . V/C
+# NSg/V+ NPl/V+    . NPr/V/J . NSg       NPl/V     . NSg        . NSg/V/J . NSg       NPl/V  . V/C
 > garbled circuits .
 # V/J+    NPl/V+   .
 >

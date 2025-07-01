@@ -113,7 +113,7 @@
 > lessons in      the schoolroom , and though this    was not   a   very good    opportunity for
 # NPl/V+  NPr/J/P D   NSg        . V/C V/C    I/Ddem+ V   NSg/C D/P J/R  NPr/V/J NSg         C/P
 > showing off       her     knowledge , as    there was no    one        to listen to her     , still   it       was
-# NSg/V   NSg/V/J/P ISg/D$+ NSg/V+    . NSg/R +     V   NPr/P NSg/I/V/J+ P  NSg/V  P  ISg/D$+ . NSg/V/J NPr/ISg+ V
+# NSg/V   NSg/V/J/P ISg/D$+ NSg+      . NSg/R +     V   NPr/P NSg/I/V/J+ P  NSg/V  P  ISg/D$+ . NSg/V/J NPr/ISg+ V
 > good    practice to say   it       over      ) “ — yes   , that’s about the right    distance — but     then    I
 # NPr/V/J NSg/V    P  NSg/V NPr/ISg+ NSg/V/J/P . . . NPl/V . NSg$   J/P   D+  NPr/V/J+ NSg/V+   . NSg/C/P NSg/J/C ISg+
 > wonder what   Latitude or    Longitude I’ve got to ? ” ( Alice had no     idea what   Latitude
@@ -323,7 +323,7 @@
 > sharply ; “ I    advise you    to leave off       this    minute   ! ” She  generally gave herself
 # R       . . ISg+ NSg/V  ISgPl+ P  NSg/V NSg/V/J/P I/Ddem+ NSg/V/J+ . . ISg+ R         V    ISg+
 > very good     advice , ( though she  very seldom followed it       ) , and sometimes she
-# J/R  NPr/V/J+ NSg/V+ . . V/C    ISg+ J/R  R      V/J      NPr/ISg+ . . V/C R         ISg+
+# J/R  NPr/V/J+ NSg+   . . V/C    ISg+ J/R  R      V/J      NPr/ISg+ . . V/C R         ISg+
 > scolded herself so        severely as    to bring tears  into her     eyes   ; and once  she
 # V/J     ISg+    NSg/I/J/C R        NSg/R P  V     NPl/V+ P    ISg/D$+ NPl/V+ . V/C NSg/C ISg+
 > remembered trying  to box   her     own      ears  for having cheated herself in      a   game    of
@@ -633,7 +633,7 @@
 > “ Perhaps it       doesn’t understand English  , ” thought Alice ; “ I    daresay it’s a    French
 # . NSg     NPr/ISg+ V       V          NPr/V/J+ . . NSg/V   NPr+  . . ISg+ V       W?   D/P+ NPr/V/J+
 > mouse , come    over      with William the Conqueror . ” ( For , with all       her     knowledge of
-# NSg/V . NSg/V/P NSg/V/J/P P    NPr+    D+  NSg       . . . C/P . P    NSg/I/J/C ISg/D$+ NSg/V     P
+# NSg/V . NSg/V/P NSg/V/J/P P    NPr+    D+  NSg       . . . C/P . P    NSg/I/J/C ISg/D$+ NSg       P
 > history , Alice had no     very clear   notion how   long    ago anything had happened . ) So
 # NSg+    . NPr+  V   NPr/P+ J/R  NSg/V/J NSg+   NSg/C NPr/V/J J/P NSg/I/V+ V+  V/J      . . NSg/I/J/C
 > she  began again : “ Où est  ma     chatte ? ” which was the first   sentence in      her     French
@@ -1591,7 +1591,7 @@
 >
 #
 > CHAPTER V     : Advice from a   Caterpillar
-# NSg/V   NSg/P . NSg/V  P    D/P NSg/V+
+# NSg/V   NSg/P . NSg    P    D/P NSg/V+
 >
 #
 > The Caterpillar and Alice looked at    each other   for some  time     in      silence : at    last
@@ -2361,7 +2361,7 @@
 > “ Which would  not   be     an  advantage , ” said Alice , who    felt    very glad    to get   an
 # . I/C+  NSg/VX NSg/C NSg/VX D/P NSg/V     . . V/J  NPr+  . NPr/I+ NSg/V/J J/R  NSg/V/J P  NSg/V D/P
 > opportunity of showing off       a   little  of her     knowledge . “ Just think of what   work
-# NSg         P  NSg/V   NSg/V/J/P D/P NPr/I/J P  ISg/D$+ NSg/V+    . . V/J  NSg/V P  NSg/I+ NSg/V+
+# NSg         P  NSg/V   NSg/V/J/P D/P NPr/I/J P  ISg/D$+ NSg+      . . V/J  NSg/V P  NSg/I+ NSg/V+
 > it       would  make  with the day and night  ! You    see   the earth  takes twenty - four hours
 # NPr/ISg+ NSg/VX NSg/V P    D   NPr V/C NSg/V+ . ISgPl+ NSg/V D+  NPr/V+ NPl/V NSg    . NSg  NPl
 > to turn  round     on  its     axis — ”

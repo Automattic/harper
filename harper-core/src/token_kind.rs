@@ -394,6 +394,27 @@ impl TokenKind {
 
     // Nominal is-methods #3
 
+    pub fn is_singular_nominal(&self) -> bool {
+        let Word(Some(metadata)) = self else {
+            return false;
+        };
+        metadata.is_singular_nominal()
+    }
+
+    pub fn is_singular_pronoun(&self) -> bool {
+        let Word(Some(metadata)) = self else {
+            return false;
+        };
+        metadata.is_singular_pronoun()
+    }
+
+    pub fn is_singular_noun(&self) -> bool {
+        let Word(Some(metadata)) = self else {
+            return false;
+        };
+        metadata.is_singular_noun()
+    }
+
     pub fn is_plural_nominal(&self) -> bool {
         let Word(Some(metadata)) = self else {
             return false;
@@ -413,6 +434,20 @@ impl TokenKind {
             return false;
         };
         metadata.is_plural_noun()
+    }
+
+    pub fn is_countable_noun(&self) -> bool {
+        let Word(Some(metadata)) = self else {
+            return false;
+        };
+        metadata.is_countable_noun()
+    }
+
+    pub fn is_mass_noun(&self) -> bool {
+        let Word(Some(metadata)) = self else {
+            return false;
+        };
+        metadata.is_mass_noun()
     }
 
     pub fn is_nominal(&self) -> bool {
@@ -494,5 +529,24 @@ impl TokenKind {
         };
 
         meta.pos_tag == Some(upos)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::Document;
+
+    #[test]
+    fn car_is_singular_noun() {
+        let doc = Document::new_plain_english_curated("car");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_singular_noun());
+    }
+
+    #[test]
+    fn traffic_is_mass_noun() {
+        let doc = Document::new_plain_english_curated("traffic");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_mass_noun());
     }
 }

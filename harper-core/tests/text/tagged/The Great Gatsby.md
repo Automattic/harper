@@ -11,7 +11,7 @@
 >
 #
 > In      my  younger and more      vulnerable years my  father gave me       some   advice that          I’ve
-# NPr/J/P D$+ J+      V/C NPr/I/V/J J          NPl+  D$+ NPr/V+ V    NPr/ISg+ I/J/R+ NSg/V+ NSg/I/C/Ddem+ W?
+# NPr/J/P D$+ J+      V/C NPr/I/V/J J          NPl+  D$+ NPr/V+ V    NPr/ISg+ I/J/R+ NSg+   NSg/I/C/Ddem+ W?
 > been  turning over      in      my  mind   ever since .
 # NSg/V NSg/V   NSg/V/J/P NPr/J/P D$+ NSg/V+ J+   C/P+  .
 >
@@ -2481,7 +2481,7 @@
 > people of whom I    asked his     whereabouts stared at    me       in      such  an  amazed way    , and
 # NSg/V  P  I+   ISg+ V/J   ISg/D$+ NSg+        V/J    NSg/P NPr/ISg+ NPr/J/P NSg/I D/P V/J    NSg/J+ . V/C
 > denied so        vehemently any   knowledge of his     movements , that         I    slunk off       in      the
-# V/J    NSg/I/J/C R          I/R/D NSg/V     P  ISg/D$+ NPl+      . NSg/I/C/Ddem ISg+ NSg/V NSg/V/J/P NPr/J/P D
+# V/J    NSg/I/J/C R          I/R/D NSg       P  ISg/D$+ NPl+      . NSg/I/C/Ddem ISg+ NSg/V NSg/V/J/P NPr/J/P D
 > direction of the cocktail table  — the only  place in      the garden   where a    single   man
 # NSg       P  D+  NSg/V/J+ NSg/V+ . D   J/R/C NSg/V NPr/J/P D+  NSg/V/J+ NSg/C D/P+ NSg/V/J+ NPr/V/J+
 > could  linger without looking purposeless and  alone .
@@ -10929,7 +10929,7 @@
 > couldn’t seem to reach him  any    other    way    . The door   that          I    pushed open    , on  the
 # V        V    P  NSg/V ISg+ I/R/D+ NSg/V/J+ NSg/J+ . D+  NSg/V+ NSg/I/C/Ddem+ ISg+ V/J    NSg/V/J . J/P D
 > advice of an   elevator boy    , was marked “ The Swastika Holding Company , ” and at
-# NSg/V  P  D/P+ NSg/V+   NSg/V+ . V   V/J    . D   NSg      NSg/V   NSg/V   . . V/C NSg/P
+# NSg    P  D/P+ NSg/V+   NSg/V+ . V   V/J    . D   NSg      NSg/V   NSg/V   . . V/C NSg/P
 > first   there didn’t seem to be     any   one        inside   . But     when    I’d shouted “ hello ”
 # NSg/V/J +     V      V    P  NSg/VX I/R/D NSg/I/V/J+ NSg/J/P+ . NSg/C/P NSg/I/C W?  V/J     . NSg/V .
 > several times in      vain , an  argument broke   out         behind  a    partition , and presently a
