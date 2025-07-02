@@ -673,7 +673,7 @@
 > habitats , among many       others . Modern computers enable optimization of such
 # NPl      . P     NSg/I/J/D+ NPl/V+ . NSg/J  NPl/V+    V      NSg          P  NSg/I
 > designs as    complete aircraft . Notable in      electrical and electronic circuit
-# NPl/V   NSg/R NSg/V/J+ NPl+     . NSg/J   NPr/J/P NSg/J      V/C J          NSg/V+
+# NPl/V   NSg/R NSg/V/J+ NSgPl+   . NSg/J   NPr/J/P NSg/J      V/C J          NSg/V+
 > design are SPICE , as    well    as    software for physical realization of new     ( or
 # NSg/V+ V   NSg/V . NSg/R NSg/V/J NSg/R NSg      C/P NSg/J    NSg/Am/Ca   P  NSg/V/J . NPr/C
 > modified ) designs . The latter includes essential design software for integrated
@@ -843,7 +843,7 @@
 > include symmetric and asymmetric encryption , digital signatures , cryptographic
 # NSg/V   J         V/C J+         NSg        . NSg/J+  NPl+       . J
 > hash   functions , key     - agreement protocols , blockchain , zero    - knowledge proofs , and
-# NSg/V+ NPl/V+    . NPr/V/J . NSg       NPl/V     . NSg        . NSg/V/J . NSg/V     NPl/V  . V/C
+# NSg/V+ NPl/V+    . NPr/V/J . NSg       NPl/V     . NSg        . NSg/V/J . NSg       NPl/V  . V/C
 > garbled circuits .
 # V/J+    NPl/V+   .
 >

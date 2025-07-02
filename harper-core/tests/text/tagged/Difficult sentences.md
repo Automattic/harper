@@ -140,8 +140,8 @@
 # NSg/V+ # NPl/V NPl/V   P  D$+ NPl+      V/J    NSg/V/J/P NSg/J/P NSg/V V/C NSg/V+ .
 > Our stock    is up        by      ten  percent .
 # D$+ NSg/V/J+ VL NSg/V/J/P NSg/J/P NSg+ NSg+    .
-> We   won   by      six goals  to three .
-# IPl+ NSg/V NSg/J/P NSg NPl/V+ P+ NSg   .
+> We   won     by      six goals  to three .
+# IPl+ NSgPl/V NSg/J/P NSg NPl/V+ P+ NSg   .
 > His     date  of birth    was wrong   by      ten  years .
 # ISg/D$+ NSg/V P  NSg/V/J+ V   NSg/V/J NSg/J/P NSg+ NPl+  .
 > We   went  through the book   page  by      page   .

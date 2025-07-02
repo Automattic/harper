@@ -249,7 +249,7 @@
 > a   verb  or    a    modal  . The same method can    , of course , be     used to benefit from
 # D/P NSg/V NPr/C D/P+ NSg/J+ . D+  I/J+ NSg/V+ NPr/VX . P  NSg/V+ . NSg/VX V/J  P  NSg/V   P
 > knowledge about the following  words .
-# NSg/V+    J/P   D+  NSg/V/J/P+ NPl/V .
+# NSg+      J/P   D+  NSg/V/J/P+ NPl/V .
 >
 #
 > More      advanced ( " higher - order " ) HMMs learn the probabilities not   only  of pairs

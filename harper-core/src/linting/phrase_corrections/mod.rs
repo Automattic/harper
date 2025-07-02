@@ -161,12 +161,6 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `bad rap`?",
             "Changes `bed rap` to the proper idiom `bad rap`."
         ),
-        "BaitedBreath" => (
-            ["baited breath"],
-            ["bated breath"],
-            "Did you mean `bated breath`?",
-            "Ensures `bated breath` is written correctly, as `baited breath` is incorrect."
-        ),
         "BanTogether" => (
             ["ban together"],
             ["band together"],
