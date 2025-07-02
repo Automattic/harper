@@ -1,8 +1,5 @@
 import type { VNode } from 'virtual-dom';
-import createElement from 'virtual-dom/create-element';
-import diff from 'virtual-dom/diff';
 import h from 'virtual-dom/h';
-import patch from 'virtual-dom/patch';
 import { type LintBox, isBoxInScreen } from './Box';
 import RenderBox from './RenderBox';
 import {
@@ -29,40 +26,42 @@ export default class Highlights {
 
 	public renderLintBoxes(boxes: LintBox[]) {
 		// Sort the lint boxes based on their source, so we can render them all together.
-		const sourceToBoxes: Map<HTMLElement, LintBox[]> = new Map();
+		const sourceToBoxes: Map<HTMLElement, { boxes: LintBox[]; icr: DOMRect | null }> = new Map();
 
 		for (const box of boxes) {
+			let renderBox = this.renderBoxes.get(box.source);
+
+			if (renderBox == null) {
+				renderBox = new RenderBox(this.computeRenderTarget(box.source));
+				this.renderBoxes.set(box.source, renderBox);
+			}
+
 			const value = sourceToBoxes.get(box.source);
+			const icr = getInitialContainingRect(renderBox.getShadowHost());
 
 			if (value == null) {
-				sourceToBoxes.set(box.source, [box]);
+				sourceToBoxes.set(box.source, { boxes: [box], icr });
 			} else {
-				sourceToBoxes.set(box.source, [...value, box]);
+				sourceToBoxes.set(box.source, { boxes: [...value.boxes, box], icr });
 			}
 		}
 
 		const updated = new Set();
 
-		for (const [source, boxes] of sourceToBoxes.entries()) {
-			let renderBox = this.renderBoxes.get(source);
-
-			if (renderBox == null) {
-				renderBox = new RenderBox(this.computeRenderTarget(source));
-				this.renderBoxes.set(source, renderBox);
-			}
+		for (const [source, { boxes, icr }] of sourceToBoxes.entries()) {
+			const renderBox = this.renderBoxes.get(source)!;
 
 			const host = renderBox.getShadowHost();
 			host.id = 'harper-highlight-host';
 
-			const rect = getInitialContainingRect(renderBox.getShadowHost());
-
-			if (rect != null) {
+			if (icr != null) {
 				const hostStyle = host.style;
 
 				hostStyle.contain = 'layout';
 				hostStyle.position = 'fixed';
-				hostStyle.left = `${-rect.x}px`;
-				hostStyle.top = `${-rect.y}px`;
+				hostStyle.top = '0px';
+				hostStyle.left = '0px';
+				hostStyle.transform = `translate(${-icr.x}px, ${-icr.y}px)`;
 				hostStyle.width = '100vw';
 				hostStyle.height = '100vh';
 				hostStyle.zIndex = '100';
@@ -101,8 +100,9 @@ export default class Highlights {
 				{
 					style: {
 						position: 'fixed',
-						left: `${box.x}px`,
-						top: `${box.y}px`,
+						left: '0px',
+						top: '0px',
+						transform: `translate(${box.x}px, ${box.y}px)`,
 						width: `${box.width}px`,
 						height: `${box.height}px`,
 						pointerEvents: 'none',
