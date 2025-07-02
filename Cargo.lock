@@ -1466,6 +1466,7 @@ dependencies = [
  "burn-ndarray",
  "hashbrown 0.15.4",
  "is-macro",
+ "itertools 0.14.0",
  "rand 0.9.1",
  "rayon",
  "rs-conllu",
