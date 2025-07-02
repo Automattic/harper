@@ -57,6 +57,7 @@ impl TokenKind {
         is_non_plural_noun,
         is_countable_noun,
         is_mass_noun,
+        is_mass_noun_only,
         is_singular_pronoun,
         is_plural_pronoun,
         is_non_plural_pronoun,
@@ -285,9 +286,9 @@ mod tests {
     }
 
     #[test]
-    fn traffic_is_mass_noun() {
+    fn traffic_is_mass_noun_only() {
         let doc = Document::new_plain_english_curated("traffic");
         let tk = &doc.tokens().next().unwrap().kind;
-        assert!(tk.is_mass_noun());
+        assert!(tk.is_mass_noun_only());
     }
 }
