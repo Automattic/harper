@@ -15,6 +15,7 @@ use burn::{
 };
 use burn_ndarray::{NdArray, NdArrayDevice};
 use hashbrown::HashMap;
+use itertools::Itertools;
 use std::path::Path;
 
 const PAD_IDX: usize = 0;
@@ -22,33 +23,47 @@ const UNK_IDX: usize = 1;
 
 #[derive(Module, Debug)]
 struct NpModel<B: Backend> {
-    embedding: burn::nn::Embedding<B>,
+    embedding_words: burn::nn::Embedding<B>,
+    embedding_upos: burn::nn::Embedding<B>,
     lstm: burn::nn::BiLstm<B>,
-    linear: burn::nn::Linear<B>,
+    linear_out: burn::nn::Linear<B>,
     dropout: Dropout,
 }
 
 impl<B: Backend> NpModel<B> {
     fn new(vocab: usize, embed_dim: usize, device: &B::Device) -> Self {
         Self {
-            embedding: EmbeddingConfig::new(vocab, embed_dim).init(device),
-            lstm: BiLstmConfig::new(embed_dim, embed_dim, false).init(device),
+            embedding_words: EmbeddingConfig::new(vocab, embed_dim).init(device),
+            embedding_upos: EmbeddingConfig::new(20, 8).init(device),
+            lstm: BiLstmConfig::new(embed_dim + 8, embed_dim + 8, false).init(device),
             // Multiply by two because the BiLSTM emits double the hidden parameters
-            linear: LinearConfig::new(embed_dim * 2, 1).init(device),
+            linear_out: LinearConfig::new((embed_dim + 8) * 2, 1).init(device),
             dropout: DropoutConfig::new(0.5).init(),
         }
     }
 
-    fn forward(&self, input: Tensor<B, 2, Int>, use_dropout: bool) -> Tensor<B, 2> {
-        let mut x = self.embedding.forward(input);
+    fn forward(
+        &self,
+        word_tens: Tensor<B, 2, Int>,
+        tag_tens: Tensor<B, 2, Int>,
+        use_dropout: bool,
+    ) -> Tensor<B, 2> {
+        let word_embed = self.embedding_words.forward(word_tens);
+        let tag_embed = self.embedding_upos.forward(tag_tens);
+
+        let mut x = Tensor::cat(vec![word_embed, tag_embed], 2);
+
         if use_dropout {
             x = self.dropout.forward(x);
         }
+
         let (mut x, _) = self.lstm.forward(x, None);
+
         if use_dropout {
             x = self.dropout.forward(x);
         }
-        let x = self.linear.forward(x);
+
+        let x = self.linear_out.forward(x);
         x.squeeze::<2>(2)
     }
 }
@@ -64,11 +79,28 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         *self.vocab.get(tok).unwrap_or(&UNK_IDX)
     }
 
-    fn to_tensor(&self, sent: &[String]) -> Tensor<B, 2, Int> {
+    fn to_tensors(
+        &self,
+        sent: &[String],
+        tags: &[Option<UPOS>],
+    ) -> (Tensor<B, 2, Int>, Tensor<B, 2, Int>) {
+        // Interleave with UPOS tags
         let idxs: Vec<_> = sent.iter().map(|t| self.idx(t) as i32).collect();
 
-        Tensor::<B, 1, Int>::from_data(TensorData::from(idxs.as_slice()), &self.device)
-            .reshape([1, sent.len()])
+        let upos: Vec<_> = tags
+            .iter()
+            .map(|t| t.map(|o| o as i32 + 2).unwrap_or(1))
+            .collect();
+
+        let word_tensor =
+            Tensor::<B, 1, Int>::from_data(TensorData::from(idxs.as_slice()), &self.device)
+                .reshape([1, sent.len()]);
+
+        let tag_tensor =
+            Tensor::<B, 1, Int>::from_data(TensorData::from(upos.as_slice()), &self.device)
+                .reshape([1, sent.len()]);
+
+        (word_tensor, tag_tensor)
     }
 
     fn to_label(&self, labels: &[bool]) -> Tensor<B, 2> {
@@ -127,7 +159,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         device: B::Device,
     ) -> Self {
         println!("Preparing datasets...");
-        let (sents, labs, vocab) = Self::extract_sents_from_files(training_files);
+        let (sents, tags, labs, vocab) = Self::extract_sents_from_files(training_files);
 
         println!("Preparing model and training config...");
 
@@ -151,11 +183,11 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
             let mut total_tokens = 0;
             let mut total_correct: usize = 0;
 
-            for (i, (x, y)) in sents.iter().zip(labs.iter()).enumerate() {
-                let x_tensor = util.to_tensor(x);
+            for (i, ((x, w), y)) in sents.iter().zip(tags.iter()).zip(labs.iter()).enumerate() {
+                let (word_tens, tag_tens) = util.to_tensors(x, w);
                 let y_tensor = util.to_label(y);
 
-                let logits = model.forward(x_tensor, true);
+                let logits = model.forward(word_tens, tag_tens, true);
                 total_correct += logits
                     .to_data()
                     .iter()
@@ -208,15 +240,15 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     }
 
     fn score_model(&self, model: &NpModel<B>, dataset: &impl AsRef<Path>) -> f32 {
-        let (sents, labs, _) = Self::extract_sents_from_files(&[dataset]);
+        let (sents, tags, labs, _) = Self::extract_sents_from_files(&[dataset]);
 
         let mut total_tokens = 0;
         let mut total_correct: usize = 0;
 
-        for (x, y) in sents.iter().zip(labs.iter()) {
-            let x_tensor = self.to_tensor(x);
+        for ((x, w), y) in sents.iter().zip(tags.iter()).zip(labs.iter()) {
+            let (word_tens, tag_tens) = self.to_tensors(x, w);
 
-            let logits = model.forward(x_tensor, false);
+            let logits = model.forward(word_tens, tag_tens, false);
             total_correct += logits
                 .to_data()
                 .iter()
@@ -233,7 +265,12 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
 
     fn extract_sents_from_files(
         files: &[impl AsRef<Path>],
-    ) -> (Vec<Vec<String>>, Vec<Vec<bool>>, HashMap<String, usize>) {
+    ) -> (
+        Vec<Vec<String>>,
+        Vec<Vec<Option<UPOS>>>,
+        Vec<Vec<bool>>,
+        HashMap<String, usize>,
+    ) {
         use super::np_extraction::locate_noun_phrases_in_sent;
         use crate::conllu_utils::iter_sentences_in_conllu;
 
@@ -242,6 +279,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         vocab.insert("<UNK>".into(), UNK_IDX);
 
         let mut sents: Vec<Vec<String>> = Vec::new();
+        let mut sent_tags: Vec<Vec<Option<UPOS>>> = Vec::new();
         let mut labs: Vec<Vec<bool>> = Vec::new();
 
         const CONTRACTIONS: &[&str] = &["sn't", "n't", "'ll", "'ve", "'re", "'d", "'m", "'s"];
@@ -258,6 +296,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
                 }
 
                 let mut toks: Vec<String> = Vec::new();
+                let mut tags: Vec<Option<UPOS>> = Vec::new();
                 let mut mask: Vec<bool> = Vec::new();
 
                 for (idx, tok) in sent.tokens.iter().enumerate() {
@@ -269,6 +308,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
                         mask.push(prev_mask || original_mask[idx]);
                     } else {
                         toks.push(tok.form.clone());
+                        tags.push(tok.upos.map(|u| UPOS::from_conllu(u)).flatten());
                         mask.push(original_mask[idx]);
                     }
                 }
@@ -281,11 +321,12 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
                 }
 
                 sents.push(toks);
+                sent_tags.push(tags);
                 labs.push(mask);
             }
         }
 
-        (sents, labs, vocab)
+        (sents, sent_tags, labs, vocab)
     }
 }
 
@@ -322,14 +363,14 @@ impl BurnChunkerCpu {
 }
 
 impl<B: Backend + AutodiffBackend> Chunker for BurnChunker<B> {
-    fn chunk_sentence(&self, sentence: &[String], _tags: &[Option<UPOS>]) -> Vec<bool> {
+    fn chunk_sentence(&self, sentence: &[String], tags: &[Option<UPOS>]) -> Vec<bool> {
         // Solves a divide-by-zero error in the linear layer.
         if sentence.is_empty() {
             return Vec::new();
         }
 
-        let tensor = self.to_tensor(sentence);
-        let prob = self.model.forward(tensor, false);
+        let (word_tens, tag_tens) = self.to_tensors(sentence, tags);
+        let prob = self.model.forward(word_tens, tag_tens, false);
         prob.to_data().iter().map(|p: f32| p > 0.5).collect()
     }
 }
