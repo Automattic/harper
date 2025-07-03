@@ -8,14 +8,8 @@ use crate::{
 #[derive(Debug, Clone, Copy)]
 pub enum Correction {
     JustStuff,
-    ReplaceWithSome,
-    ReplaceWithAPieceOf,
-    InsertBetweenPieceOf,
-    InsertBetweenPiecesOf,
-    ReplaceWithAll,
-    ReplaceWithLittle,
-    ReplaceWithMuch,
-    ReplaceWithALotOf,
+    ReplaceWith(&'static str),
+    InsertBetween(&'static str),
 }
 
 use Correction::*;
@@ -60,15 +54,19 @@ impl ExprLinter for NounCountability {
         let noun = toks[2].span.get_content_string(src).to_lowercase();
 
         let corrections: &'static [Correction] = match dq.as_str() {
-            "a" | "an" => &[JustStuff, ReplaceWithSome, ReplaceWithAPieceOf],
-            "another" => &[InsertBetweenPieceOf],
-            "both" => &[InsertBetweenPiecesOf],
-            "each" => &[InsertBetweenPieceOf],
-            "every" => &[InsertBetweenPieceOf],
-            "few" => &[ReplaceWithLittle, InsertBetweenPiecesOf],
-            "many" => &[ReplaceWithMuch, ReplaceWithALotOf, InsertBetweenPiecesOf],
-            "one" => &[InsertBetweenPieceOf],
-            "several" => &[InsertBetweenPiecesOf],
+            "a" | "an" => &[JustStuff, ReplaceWith("some "), ReplaceWith("a piece of ")],
+            "another" => &[InsertBetween(" piece of ")],
+            "both" => &[InsertBetween(" pieces of ")],
+            "each" => &[InsertBetween(" piece of ")],
+            "every" => &[InsertBetween(" piece of ")],
+            "few" => &[ReplaceWith("little "), InsertBetween(" pieces of ")],
+            "many" => &[
+                ReplaceWith("much "),
+                ReplaceWith(" a lot of "),
+                InsertBetween(" pieces of "),
+            ],
+            "one" => &[InsertBetween(" piece of ")],
+            "several" => &[InsertBetween(" pieces of ")],
             _ => return None,
         };
 
@@ -77,14 +75,8 @@ impl ExprLinter for NounCountability {
             .flat_map(|correction| {
                 let parts: &[&str] = match correction {
                     JustStuff => &[&noun],
-                    ReplaceWithSome => &["some ", &noun],
-                    ReplaceWithAPieceOf => &["a piece of ", &noun],
-                    InsertBetweenPieceOf => &[&dq, " piece of ", &noun],
-                    InsertBetweenPiecesOf => &[&dq, " pieces of ", &noun],
-                    ReplaceWithAll => &["all ", &noun],
-                    ReplaceWithLittle => &["little ", &noun],
-                    ReplaceWithMuch => &["much ", &noun],
-                    ReplaceWithALotOf => &["a lot of ", &noun],
+                    ReplaceWith(w) => &[w, &noun],
+                    InsertBetween(w) => &[&dq, w, &noun],
                 };
                 std::iter::once(parts.join(""))
             })
