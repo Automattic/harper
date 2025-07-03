@@ -36,9 +36,9 @@ AFN/ON
 AFT/O
 AI/NOSg             # artificial intelligence
 AIDS/NJg            # disease
-AK/ON
+AK/ON               # US state (Alaska)
 AKP/Og              # political party
-AL/NO
+AL/NO               # US state (Alabama)
 AM/OJNg
 AMA/ON
 AMD/NOg
@@ -52,7 +52,7 @@ APC/NOJ
 API/NSg             # application programming interface, cf. ABI
 APO/N
 APR/N
-AR/JNO
+AR/JNO              # US state (Arkansas)
 ARC/NOJ
 ASAP/               # as soon as possible
 ASCII/OSg
@@ -70,7 +70,7 @@ AVI/O               # media format
 AWACS/Ng
 AWOL/JNg            # absent without leave
 AWS/ONg
-AZ/Og
+AZ/Og               # US state (Arizona)
 AZT/Ng              # drug
 Aachen/Og
 Aaliyah/Og
@@ -1633,7 +1633,7 @@ Byronic/Jg
 Byzantine/JNgS
 Byzantium/ONg
 C/NOVJSg
-CA/ON
+CA/ON               # US state (California)
 CAD/Ng              # computer-aided design; canadian dollar
 CAI/NO
 CAM/NO
@@ -1663,7 +1663,7 @@ CNC'd/V             # past
 CNCing/NV           # present, gerund
 CNN/ONg             # media company
 CNS/Ng
-CO/ONVg
+CO/ONVg             # US state (Colorado)
 COBOL/OSg           # programming language
 COD/ON
 COL/ON
@@ -1679,7 +1679,7 @@ CRT/NSg             # cathode ray tube
 CSS/NOg
 CST/ONg
 CSV/Ng              # data file format
-CT/ONVJg
+CT/ONVJg            # US state (Connecticut)
 CUDA/ONg            # computing architecture
 CV/NOJS             # curriculum vitae
 CVS/NOg             # version control
@@ -2541,11 +2541,11 @@ DAR/O
 DARPA/Og
 DAT/Ng
 DBMS/Ng
-DC/ONJVg
+DC/ONJVg            # US District of Columbia
 DD/NOJg
 DDS/Ng
 DDT/NS
-DE/ON
+DE/ON               # US state (Delaware)
 DEA/ON
 DEC/NOSd
 DH/NO
@@ -3405,7 +3405,7 @@ FFT/NgS             # fast Fourier transform
 FHA/Og
 FICA/Og
 FIFO/N
-FL/NO
+FL/NO               # US state (Florida)
 FM/NSg
 FNMA/Og
 FOFL
@@ -3714,7 +3714,7 @@ Fushun/Og
 Fuzhou/Og
 Fuzzbuster/g
 G/Ngn>B
-GA/ON
+GA/ON               # US state (Georgia)
 GAO/O
 GATT/Og
 GB/NOg
@@ -4201,7 +4201,7 @@ HDMI/O
 HDTV/N
 HF/NJg
 HHS/ON
-HI/ON
+HI/ON               # US state (Hawaii)
 HIMARS/N
 HIV/Ng
 HM/NO
@@ -4740,26 +4740,26 @@ I'd've/
 I'll/~
 I'm/~
 I've/~
-IA/ON
+IA/ON               # US state (Iowa)
 IBM/ONg
 IC/NgS              # integrated circuit
 ICBM/NSg
 ICC/O               # International Criminal Court
 ICQ/ONV             # chat protocol
 ICU/NO              # Unicode library
-ID/NOVJSg
+ID/NOVJSg           # US state (Idaho)
 IDE/N
 IDF/Og              # Israel's military
 IE/ONJ
 IED/N               # improvised explosive device
 IEEE/O              # standards organization
 IKEA/Og             # furniture company
-IL/NO
+IL/NO               # US state (Illinois)
 IMF/Og              # International Monetary Fund
 IMHO/
 IMNSHO/
 IMO/NO
-IN/ON
+IN/ON               # US state (Indiana)
 ING/g
 INRI
 INS/NO
@@ -5276,8 +5276,8 @@ KIA/NJ              # killed in action
 KKK/Og
 KO/NVg
 KP/N
-KS/OVN
-KY/O
+KS/OVN              # US state (Kansas)
+KY/O                # US state (Kentucky)
 Kaaba/Og
 Kabul/Og
 Kafka/Og            # franz -
@@ -5636,7 +5636,7 @@ L'Amour/g
 L'Enfant
 L'Oreal/g
 L'Ouverture/g
-LA/NO
+LA/NO               # US state (Louisiana)
 LAN/Ng
 LBJ/NOg
 LC/NJ
@@ -6165,22 +6165,22 @@ Lysenko/Og
 Lysistrata/ONg
 Lysol/Og
 M/NOJSgGB
-MA/JNOg
+MA/JNOg             # US state (Massachusetts)
 MASH/N
 MB/NOVg
 MBA/Ng
 MC/NVO
 MCI/ONg
-MD/ONJg
+MD/ONJg             # US state (Maryland)
 MD5/Ng
 MDF/Ng              # medium-density fiberboard
 MDT/NO
-ME/ON
+ME/ON               # US state (Maine)
 MEGO/S
 MFA/ONg
 MGM/ONg             # movie company
 MHz/
-MI/ONg
+MI/ONg              # US state (Michigan)
 MI6/Og              # agency
 MIA/JNO             # missing in action
 MIDI/ONg
@@ -6191,8 +6191,8 @@ MLK/Og              # Martin Luther King
 MM/NO
 MMA/Ng              # mixed martial arts
 MMU/NgS             # memory management unit
-MN/ON
-MO/ONJ
+MN/ON               # US state (Minnesota)
+MO/ONJ              # US state (Missouri)
 MOOC/N
 MOSFET/NgS          # transistor
 MP/NOJg             # military police; member of parliament
@@ -6200,12 +6200,12 @@ MP3/NSg             # audio format
 MP4/NSg             # audio/video format
 MPEG/ON
 MRI/NVg             # magnetic resonance imaging
-MS/NOg
+MS/NOg              # US state (Mississippi)
 MSG/NOg             # flavour enhancer
 MSRP/NSg
 MST/ONVg
 MSW/N
-MT/JNOg
+MT/JNOg             # US state (Montana)
 MTV/Og
 MVP/Ng              # most valuable player
 MW/NO
@@ -7164,12 +7164,12 @@ NB/JNO
 NBA/Og              # sports organization
 NBC/ONJg
 NBS
-NC/ONJ
+NC/ONJ              # US state (North Carolina)
 NCAA/Og
 NCO/N
-ND/ONJ              # North Dakota
+ND/ONJ              # US state (North Dakota)
 NDA/NSg             # non-disclosure agreement
-NE/ONJg
+NE/ONJg             # US state (Nebraska)
 NEC/Og              # electronics company
 NEH/O
 NES/Ng              # game console
@@ -7177,13 +7177,13 @@ NF/OJN
 NFC/ON              # near-field communication
 NFL/ONg             # sports organization
 NGO/NgS             # non-government organization
-NH/ONVJ
+NH/ONVJ             # US state (New Hampshire)
 NHL/NOg             # sports organization
 NIH/OJ              # National Institutes of Health
 NIMBY/NJ            # not in my backyard
-NJ/OJ
+NJ/OJ               # US state (New Jersey)
 NLRB/O
-NM/OJNV
+NM/OJNV             # US state (New Mexico)
 NORAD/Og
 NOW/ON
 NP/ON
@@ -7202,12 +7202,12 @@ NSX/Ng              # car
 NT/ON
 NTFS/Ng             # file system
 NTSC/Ng             # television standard
-NV/ONJ
+NV/ONJ              # US state (Nevada)
 NVIDIA/g            # FIXME! elsewhere we have Nvidia
 NVMe/O
 NW/ONg
 NWT/O
-NY/O
+NY/O                # US state (New York)
 NYC/O
 NYSE/O              # stock exchange
 NZ/Og               # New Zealand
@@ -7528,14 +7528,14 @@ OE/ONJV
 OECD/Og             # organization
 OED/O               # dictionary
 OEM/JNgS            # original equipment manufacturer
-OH/ON
+OH/ON               # US state (Ohio)
 OHSA/g              # law
 OJ/NJ
-OK/NVJOSgdG
+OK/NVJOSgdG         # US state (Oklahoma)
 OLED/Ng             # organic light-emitting diode
 OMB/Og
 OPEC/Og             # organization
-OR/CNO
+OR/CNO              # Oregon
 OS/OJNg
 OSHA/Og             # agency
 OSes/N
@@ -7743,7 +7743,7 @@ Ozarks/NOg
 Ozymandias/Ng
 Ozzie/ONJg
 P/NJOgn
-PA/ONJg             # Pennsylvania
+PA/ONJg             # US state (Pennsylvania)
 PAC/NOg             # political action committee
 PARC/S              # xerox
 PASCAL              # cf. pascal, Pascal
@@ -7782,7 +7782,7 @@ POW/NgS             # prisoner of war
 PP/NO
 PPE/Ng              # personal protective equipment
 PPS/N
-PR/NgS              # public relations; pull request
+PR/NgS              # public relations; pull request; Puerto Rico
 PRC/ONg             # mainland China
 PRO/N
 PS/ONJg
@@ -8403,7 +8403,7 @@ RF/NO
 RFC/ONS
 RFD/JNO
 RGB                 # colour model
-RI/ON
+RI/ON               # US state (Rhode Island)
 RIF/NV
 RIFA/Og
 RIP/ON
@@ -8856,9 +8856,9 @@ SASE/N
 SAT/NgS
 SATA/Ng             # computing standard
 SBA/NO
-SC/JNOg
+SC/JNOg             # US state (South Carolina)
 SCSI/Og             # computing standard
-SD/ON
+SD/ON               # US state (San Diego)
 SDI/NO              # strategic defense initiative
 SE/NOJg
 SEATO/O
@@ -9782,7 +9782,7 @@ TKO/ONg
 TLC/NOg
 TLS/NO
 TM/N
-TN/ON
+TN/ON               # US state (Tennessee)
 TNT/NOg
 TOEFL/N
 TQM/N
@@ -9792,7 +9792,7 @@ TVA/O
 TVR/NOgS            # car company
 TWA/ONg
 TWX/O
-TX/OVN
+TX/OVN              # US state (Texas)
 Ta/g
 Tabasco/ONSg
 Tabatha/Og
@@ -10318,7 +10318,7 @@ USP/OJN
 USPS/O
 USS/NO
 USSR/Og
-UT/ONg
+UT/ONg              # US state (Utah)
 UTC/O
 UV/JNg
 Ubangi/Og
@@ -10393,7 +10393,7 @@ V10/NgS
 V12/NgS
 V6/NgS
 V8/NOgS
-VA/ONJ
+VA/ONJ              # US state (Virginia)
 VAT/Ng              # tax
 VAX                 # old computer
 VAXes
@@ -10419,7 +10419,7 @@ VMS/g               # operating system
 VOA/ON              # voice of america
 VP/NO               # vice president
 VRAM/Ng             # video memory
-VT/ONJV
+VT/ONJV             # US state (Vermont)
 VTOL/N              # vertical takeoff and landing
 VW/OgS              # car brand; cf. Volkswagen
 Va/Og
@@ -10604,25 +10604,25 @@ Vulcan/ONg
 Vulg
 Vulgate/OSg
 W12/NSg
-WA/ON
+WA/ON               # US state (Washington)
 WAC/ON
 WASP/Ng
 WATS/Ng
 WC/N
 WHO/Og
-WI/O
+WI/O                # US state (Wisconsin)
 WMD/N
 WNW/NJg
 WP/ON
 WSW/NJg
 WTF/NS
 WTO/O
-WV/O
+WV/O                # US state (West Virginia)
 WW/NO
 WWI/O
 WWII/O
 WWW/Og
-WY/O
+WY/O                # US state (Wyoming)
 WYSIWYG/N
 Wabash/Og
 Wac/N
@@ -18210,7 +18210,7 @@ commentary/~NSg
 commentate/VdSG
 commentator/~NSg
 commenter/NSg
-commerce/~NVg
+commerce/~NmVg
 commercial/~NJSgY
 commercialisation/Ng!_
 commercialise/VGdS!_
@@ -22369,7 +22369,7 @@ economizer/Ng
 economy/~NJSg
 ecosphere/NgS
 ecosystem/~NgS
-ecotourism/~Ng
+ecotourism/~Nmg
 ecotourist/NgS
 ecru/NJg
 ecstasy/~NVSg
@@ -28066,7 +28066,7 @@ historical/~JNY
 historicity/~Ng
 historiographer/NgS
 historiography/~Ng
-history/~NSg        # removed `4` verb sense is obsolte and interferes with heuristics
+history/~NwSg       # removed `4` verb sense is obsolte and interferes with heuristics
 histrionic/JSQ
 histrionics/Ng
 hit/~VNJSg          # removed `8` pronoun sense is dialectal and interferes with heuristics
@@ -29251,7 +29251,7 @@ impure/~JV>YT
 impurity/~NSg
 imputation/NSg
 impute/VBdSG
-in/~PNJrSg          # removed `4`, verb senses are obsolete
+in/~PJrg            # removed `4`, verb senses are obsolete, `NS`, noun sense is marginal
 inaccuracy/NS
 inaction/~Ng
 inadequacy/NS
@@ -31026,7 +31026,7 @@ knowing/~JPVNUYS
 knowledge/~Nmg
 knowledgeable/~JN
 knowledgeably/R
-known/~JNV
+known/~JV           # removed `N`, only a noun in the `unknown knows` sense
 knuckle/NVdSgG
 knuckleduster/NS
 knucklehead/NgS
@@ -32430,7 +32430,7 @@ maddening/JVY
 madder/NJVgS
 maddest/J
 madding/JV
-made/~NVrU
+made/~VrU           # removed `N`, noun is dialectal
 mademoiselle/NVgS
 madhouse/~NSg
 madman/~Ng
@@ -33101,7 +33101,7 @@ medallist/NSg!@_
 meddle/VZGd>S
 meddler/Ng
 meddlesome/J
-media/~NJSg
+media/~Nw09JSg
 medial/~JNrY
 median/~NJgS
 mediate/~VJrdSGn
@@ -37407,7 +37407,7 @@ partial/~JNVgYS
 partiality/Ng
 participant/~NJSg
 participate/~VJdSGn
-participation/~Ng
+participation/~Nmg
 participator/NgS
 participatory/~J
 participial/JNg
@@ -39215,7 +39215,7 @@ potherb/NSg
 potholder/NgS
 pothole/Nd>SgZG
 pothook/NSg
-potion/~NVSg
+potion/~NwVSg
 potluck/NVgS
 potpie/NSg
 potpourri/NSg
@@ -42083,7 +42083,7 @@ robotise/VGdS!_
 robotize/VGdS
 robust/~J>YpT
 robustness/Ng
-rock/~NVZGgd>S
+rock/~NwVZGgd>S
 rockabilly/~Ng
 rockbound/J
 rocker/~Ng
@@ -46076,7 +46076,7 @@ stomachache/NSg
 stomacher/Ng
 stomachs/NV
 stomp/~VNGSgd
-stone/~NVJd>SgZG09  # weight sense in UK is singular and plural
+stone/~NwVJd>SgZG09 # weight sense in UK is singular and plural
 stonemason/~NgS
 stoner/~Ng
 stonewall/~NVJGSd
@@ -48583,7 +48583,7 @@ toughness/~Ng
 toughs/N
 toupee/NgS
 tour/~NVeWSGdg
-tourism/~Ng
+tourism/~Nmg
 tourist/~NVgS
 touristed/J
 touristic/J
@@ -51957,7 +51957,7 @@ worthy/~JNVUp>T
 worthy's
 wot/VI
 wotcha/
-would/~ANS
+would/~A            # removed `NS` noun and plural seem very marginal
 would've/
 wouldn't/A
 wouldst/V

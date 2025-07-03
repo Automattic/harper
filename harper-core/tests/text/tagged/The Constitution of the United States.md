@@ -112,16 +112,16 @@
 # NSg/V+     I/C+  D   NSg/V/J P  NSg/I NPr/J+ NPl+     VX    NSg/V/J P  D   NSg/J
 > number  of male   citizens twenty - one       years of age    in      such   State  . The actual
 # NSg/V/J P  NPr/J+ NPl+     NSg    . NSg/I/V/J NPl   P  NSg/V+ NPr/J/P NSg/I+ NSg/V+ . D   NSg/J
-> Enumeration shall be     made  within  three Years after the first   Meeting of the
-# NSg         VX    NSg/VX NSg/V NSg/J/P NSg   NPl+  J/P   D   NSg/V/J NSg/V   P  D
+> Enumeration shall be     made within  three Years after the first   Meeting of the
+# NSg         VX    NSg/VX V    NSg/J/P NSg   NPl+  J/P   D   NSg/V/J NSg/V   P  D
 > Congress of the United States   , and within  every subsequent Term    of ten  Years ,
 # NPr/V    P  D+  V/J+   NPrPl/V+ . V/C NSg/J/P D     NSg/J      NSg/V/J P  NSg+ NPl+  .
 > in      such  Manner as    they shall by      Law    direct . The Number  of Representatives shall
 # NPr/J/P NSg/I NSg+   NSg/R IPl+ VX    NSg/J/P NSg/V+ V/J+   . D   NSg/V/J P  NPl+            VX
 > not   exceed one       for every thirty Thousand , but     each State  shall have   at    Least
 # NSg/C V      NSg/I/V/J C/P D+    NSg    NSg      . NSg/C/P D+   NSg/V+ VX    NSg/VX NSg/P NSg/J
-> one       Representative ; and until such  enumeration shall be     made  , the State of New
-# NSg/I/V/J NSg/J+         . V/C C/P   NSg/I NSg         VX    NSg/VX NSg/V . D   NSg/V P  NSg/V/J+
+> one       Representative ; and until such  enumeration shall be     made , the State of New
+# NSg/I/V/J NSg/J+         . V/C C/P   NSg/I NSg         VX    NSg/VX V    . D   NSg/V P  NSg/V/J+
 > Hampshire shall be     entitled to chuse three , Massachusetts eight , Rhode - Island
 # NPr+      VX    NSg/VX V/J      P  ?     NSg   . NPr+          NSg/J . NPr   . NSg/V
 > and Providence Plantations one       , Connecticut five , New     - York six , New      Jersey
@@ -634,8 +634,8 @@
 #
 > No     Money shall be     drawn from the Treasury , but     in      Consequence of Appropriations
 # NPr/P+ NSg/J VX    NSg/VX V/J   P    D   NPr      . NSg/C/P NPr/J/P NSg/V       P  +
-> made  by      Law    ; and a   regular Statement and Account of the Receipts and
-# NSg/V NSg/J/P NSg/V+ . V/C D/P NSg/J   NSg/V/J   V/C NSg/V   P  D+  NPl/V    V/C
+> made by      Law    ; and a   regular Statement and Account of the Receipts and
+# V    NSg/J/P NSg/V+ . V/C D/P NSg/J   NSg/V/J   V/C NSg/V   P  D+  NPl/V    V/C
 > Expenditures of all       public  Money  shall be     published from time     to time     .
 # NPl          P  NSg/I/J/C NSg/V/J NSg/J+ VX    NSg/VX V/J       P    NSg/V/J+ P+ NSg/V/J+ .
 >
@@ -982,8 +982,8 @@
 #
 > A   number  of electors of President and Vice       President equal   to the whole number
 # D/P NSg/V/J P  NPl      P  NSg/V     V/C NSg/V/J/P+ NSg/V+    NSg/V/J P  D   NSg/J NSg/V/J
-> of Senators and Representatives in      Congress to which the District would  be
-# P  NPl      V/C NPl+            NPr/J/P NPr/V+   P  I/C+  D+  NSg/V/J+ NSg/VX NSg/VX
+> of Senators and Representatives in      Congress to which the District would be
+# P  NPl      V/C NPl+            NPr/J/P NPr/V+   P  I/C+  D+  NSg/V/J+ VX    NSg/VX
 > entitled if    it       were  a   State , but     in      no    event  more      than the least populous
 # V/J      NSg/C NPr/ISg+ NSg/V D/P NSg/V . NSg/C/P NPr/J/P NPr/P NSg/V+ NPr/I/V/J C/P  D   NSg/J J
 > State  ; they shall be     in      addition to those  appointed by      the States   , but     they
@@ -1118,8 +1118,8 @@
 # D+  NSg/J    NSg/V/J VX    NSg/V  P  NSg/I/J/C+ NPl/V+ . NPr/J/P NSg/V V/C
 > Equity , arising under   this    Constitution , the Laws  of the United States   , and
 # NSg+   . V       NSg/J/P I/Ddem+ NPr+         . D   NPl/V P  D+  V/J+   NPrPl/V+ . V/C
-> Treaties made  , or    which shall be     made  , under   their Authority ; — to all        Cases
-# NPl/V+   NSg/V . NPr/C I/C+  VX    NSg/VX NSg/V . NSg/J/P D$+   NSg+      . . P  NSg/I/J/C+ NPl/V+
+> Treaties made , or    which shall be     made , under   their Authority ; — to all        Cases
+# NPl/V+   V    . NPr/C I/C+  VX    NSg/VX V    . NSg/J/P D$+   NSg+      . . P  NSg/I/J/C+ NPl/V+
 > affecting Ambassadors , other   public  Ministers and Consuls ; — to all       Cases of
 # V/J       NPl+        . NSg/V/J NSg/V/J NPl/V+    V/C NPl     . . P  NSg/I/J/C NPl/V P
 > admiralty and maritime Jurisdiction ; — to Controversies to which the United
@@ -1392,8 +1392,8 @@
 # NSg   NSg     P  D+  J/D+    NPrPl/V+ . NPr/C NSg/J/P NPl+        NPr/J/P NSg   NSg
 > thereof , as    the one       or    the other   Mode of Ratification may    be     proposed by      the
 # W?      . NSg/R D+  NSg/I/V/J NPr/C D   NSg/V/J NSg  P  NSg+         NPr/VX NSg/VX V/J      NSg/J/P D+
-> Congress ; Provided that         no     Amendment which may    be     made  prior to the Year One
-# NPr/V+   . V/J/C    NSg/I/C/Ddem NPr/P+ NSg+      I/C+  NPr/VX NSg/VX NSg/V NSg/J P  D+  NSg+ NSg/I/V/J+
+> Congress ; Provided that         no     Amendment which may    be     made prior to the Year One
+# NPr/V+   . V/J/C    NSg/I/C/Ddem NPr/P+ NSg+      I/C+  NPr/VX NSg/VX V    NSg/J P  D+  NSg+ NSg/I/V/J+
 > thousand eight hundred and eight shall in      any    Manner affect the first   and
 # NSg      NSg/J NSg     V/C NSg/J VX+   NPr/J/P I/R/D+ NSg+   NSg/V  D   NSg/V/J V/C
 > fourth  Clauses in      the Ninth   Section of the first    Article ; and that         no    State  ,
@@ -1414,10 +1414,10 @@
 # NPr+         . NSg/R NSg/J/P D   NSg/J+        .
 >
 #
-> This    Constitution , and the Laws  of the United States   which shall be     made  in
-# I/Ddem+ NPr          . V/C D   NPl/V P  D+  V/J+   NPrPl/V+ I/C+  VX    NSg/VX NSg/V NPr/J/P
-> Pursuance thereof ; and all        Treaties made  , or    which shall be     made  , under   the
-# NSg       W?      . V/C NSg/I/J/C+ NPl/V+   NSg/V . NPr/C I/C+  VX    NSg/VX NSg/V . NSg/J/P D
+> This    Constitution , and the Laws  of the United States   which shall be     made in
+# I/Ddem+ NPr          . V/C D   NPl/V P  D+  V/J+   NPrPl/V+ I/C+  VX    NSg/VX V    NPr/J/P
+> Pursuance thereof ; and all        Treaties made , or    which shall be     made , under   the
+# NSg       W?      . V/C NSg/I/J/C+ NPl/V+   V    . NPr/C I/C+  VX    NSg/VX V    . NSg/J/P D
 > Authority of the United States   , shall be     the supreme Law   of the Land   ; and the
 # NSg       P  D+  V/J+   NPrPl/V+ . VX    NSg/VX D   NSg/V/J NSg/V P  D+  NPr/V+ . V/C D+
 > Judges   in      every State  shall be     bound   thereby , any   Thing in      the Constitution or
