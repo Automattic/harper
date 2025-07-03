@@ -74,16 +74,19 @@ impl ExprLinter for NounCountability {
 
         let suggestions = corrections
             .iter()
-            .map(|correction| match correction {
-                JustStuff => format!("{noun}"),
-                ReplaceWithSome => format!("some {noun}"),
-                ReplaceWithAPieceOf => format!("a piece of {noun}"),
-                InsertBetweenPieceOf => format!("{dq} piece of {noun}"),
-                InsertBetweenPiecesOf => format!("{dq} pieces of {noun}"),
-                ReplaceWithAll => format!("all {noun}"),
-                ReplaceWithLittle => format!("little {noun}"),
-                ReplaceWithMuch => format!("much {noun}"),
-                ReplaceWithALotOf => format!("a lot of {noun}"),
+            .flat_map(|correction| {
+                let parts: &[&str] = match correction {
+                    JustStuff => &[&noun],
+                    ReplaceWithSome => &["some ", &noun],
+                    ReplaceWithAPieceOf => &["a piece of ", &noun],
+                    InsertBetweenPieceOf => &[&dq, " piece of ", &noun],
+                    InsertBetweenPiecesOf => &[&dq, " pieces of ", &noun],
+                    ReplaceWithAll => &["all ", &noun],
+                    ReplaceWithLittle => &["little ", &noun],
+                    ReplaceWithMuch => &["much ", &noun],
+                    ReplaceWithALotOf => &["a lot of ", &noun],
+                };
+                std::iter::once(parts.join(""))
             })
             .map(|s| Suggestion::replace_with_match_case(s.chars().collect(), toks_chars))
             .collect();
@@ -92,7 +95,7 @@ impl ExprLinter for NounCountability {
             span: toks.span()?,
             lint_kind: LintKind::Agreement,
             suggestions,
-            message: format!("`{}` is a mass noun.", noun),
+            message: format!("`{noun}` is a mass noun."),
             priority: 31,
         })
     }
