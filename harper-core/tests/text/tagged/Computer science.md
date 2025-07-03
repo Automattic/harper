@@ -433,7 +433,7 @@
 > branch of mathematics , which is prevalent in      theoretical computer science , and
 # NPr/V  P  NSg+        . I/C+  VL NSg/J     NPr/J/P J+          NSg/V+   NSg/V+  . V/C
 > mainly employs deductive reasoning ) , the " technocratic paradigm " ( which might    be
-# R      V       J         NSg/V     . . D   . J            NSg+     . . I/C+  NSg/VX/J NSg/VX
+# R      NPl/V   J         NSg/V     . . D   . J            NSg+     . . I/C+  NSg/VX/J NSg/VX
 > found in      engineering approaches , most    prominently in      software engineering ) , and
 # NSg/V NPr/J/P NSg/V+      NPl/V+     . NSg/I/J R           NPr/J/P NSg+     NSg/V+      . . V/C
 > the " scientific paradigm " ( which approaches computer - related artifacts from the

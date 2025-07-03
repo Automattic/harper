@@ -23,7 +23,9 @@ where
         let expr = SequenceExpr::default()
             .then(UPOSSet::new(&[UPOS::DET, UPOS::PROPN]))
             .t_ws()
-            .then_plural_nominal()
+            .then(|tok: &Token, _: &[char]| {
+                tok.kind.is_plural_nominal() && !tok.kind.is_singular_nominal()
+            })
             .t_ws()
             .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]))
             .then_optional(SequenceExpr::default().t_any().t_any());

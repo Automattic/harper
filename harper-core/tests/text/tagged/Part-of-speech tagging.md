@@ -33,7 +33,7 @@
 > two distinctive groups : rule   - based and  stochastic . E. Brill's tagger , one       of the
 # NSg NSg/J       NPl/V+ . NSg/V+ . V/J+  V/C+ J+         . ?  ?       NSg    . NSg/I/V/J P  D
 > first   and most    widely used English  POS  - taggers , employs rule   - based algorithms .
-# NSg/V/J V/C NSg/I/J R      V/J  NPr/V/J+ NSg+ . NPl     . V       NSg/V+ . V/J   NPl+       .
+# NSg/V/J V/C NSg/I/J R      V/J  NPr/V/J+ NSg+ . NPl     . NPl/V   NSg/V+ . V/J   NPl+       .
 >
 #
 > Principle
