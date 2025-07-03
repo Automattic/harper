@@ -7,9 +7,14 @@ use crate::{
 
 #[derive(Debug, Clone, Copy)]
 pub enum Correction {
-    JustStuff,
-    ReplaceWith(&'static str),
+    // Drop the determiner or quantifier
+    DropDQ,
+    // Replace the determiner or quantifier with a string
+    ReplaceDQWith(&'static str),
+    // Insert a string between the determiner or quantifier and the mass noun
     InsertBetween(&'static str),
+    // Replace the mass noun with a string
+    ReplaceNounWith(&'static str),
 }
 
 use Correction::*;
@@ -21,7 +26,7 @@ pub struct NounCountability {
 impl Default for NounCountability {
     fn default() -> Self {
         let quantifier = WordSet::new(&[
-            "another", "both", "each", "every", "few", "many", "one", "several",
+            "another", "both", "each", "every", "few", "many", "multiple", "one", "several",
         ]);
 
         // A determiner or quantifier followed by a mass noun
@@ -53,35 +58,86 @@ impl ExprLinter for NounCountability {
         // the mass noun
         let noun = toks[2].span.get_content_string(src).to_lowercase();
 
-        let corrections: &'static [Correction] = match dq.as_str() {
-            "a" | "an" => &[JustStuff, ReplaceWith("some "), ReplaceWith("a piece of ")],
-            "another" => &[InsertBetween(" piece of ")],
-            "both" => &[InsertBetween(" pieces of ")],
-            "each" => &[InsertBetween(" piece of ")],
-            "every" => &[InsertBetween(" piece of ")],
-            "few" => &[ReplaceWith("little "), InsertBetween(" pieces of ")],
-            "many" => &[
-                ReplaceWith("much "),
-                ReplaceWith(" a lot of "),
-                InsertBetween(" pieces of "),
+        let synonym_corrections: &'static [Correction] = match (noun.as_str(), dq.as_str()) {
+            ("advice", "a" | "an" | "another" | "each" | "every" | "one") => &[
+                ReplaceNounWith("tip"),
+                ReplaceNounWith("suggestion"),
+                ReplaceNounWith("recommendation"),
             ],
-            "one" => &[InsertBetween(" piece of ")],
-            "several" => &[InsertBetween(" pieces of ")],
+            ("advice", "both" | "many" | "multiple" | "several") => &[
+                ReplaceNounWith("tips"),
+                ReplaceNounWith("suggestions"),
+                ReplaceNounWith("recommendations"),
+            ],
+            ("clothing", "a" | "an" | "another" | "each" | "every" | "one") => {
+                &[ReplaceNounWith("garment")]
+            }
+            ("clothing", "both" | "many" | "multiple" | "several") => {
+                &[ReplaceNounWith("garments")]
+            }
+            ("luggage", "a" | "an" | "another" | "each" | "every" | "one") => {
+                &[ReplaceNounWith("suitcase"), ReplaceNounWith("bag")]
+            }
+            ("luggage", "both" | "many" | "multiple" | "several") => {
+                &[ReplaceNounWith("suitcases"), ReplaceNounWith("bags")]
+            }
+            ("software", "a") => &[
+                ReplaceNounWith("program"),
+                // ReplaceNounWith("software package"),
+                // ReplaceNounWith("software tool"),
+            ],
+            ("software", "an" | "another" | "each" | "every" | "one") => &[
+                ReplaceNounWith("app"),
+                ReplaceNounWith("application"),
+                ReplaceNounWith("program"),
+                // ReplaceNounWith("software package"),
+                // ReplaceNounWith("software tool"),
+            ],
+            ("software", "both" | "many" | "multiple" | "several") => &[
+                ReplaceNounWith("apps"),
+                ReplaceNounWith("applications"),
+                ReplaceNounWith("programs"),
+                // ReplaceNounWith("software packages"),
+                // ReplaceNounWith("software tools"),
+            ],
+            _ => &[],
+        };
+
+        let basic_corrections: &'static [Correction] = match dq.as_str() {
+            "a" | "an" => &[DropDQ, ReplaceDQWith("some"), ReplaceDQWith("a piece of")],
+            "another" | "each" | "every" | "one" => &[InsertBetween("piece of")],
+            "both" | "multiple" | "several" => &[InsertBetween("pieces of")],
+            "few" => &[ReplaceDQWith("little"), InsertBetween("pieces of")],
+            "many" => &[
+                ReplaceDQWith("much"),
+                ReplaceDQWith("a lot of"),
+                InsertBetween("pieces of"),
+            ],
             _ => return None,
         };
 
-        let suggestions = corrections
-            .iter()
-            .flat_map(|correction| {
-                let parts: &[&str] = match correction {
-                    JustStuff => &[&noun],
-                    ReplaceWith(w) => &[w, &noun],
-                    InsertBetween(w) => &[&dq, w, &noun],
-                };
-                std::iter::once(parts.join(""))
-            })
-            .map(|s| Suggestion::replace_with_match_case(s.chars().collect(), toks_chars))
-            .collect();
+        let mut suggestions = Vec::new();
+
+        for correction in synonym_corrections {
+            let parts = match correction {
+                ReplaceNounWith(w) => &[&dq, *w],
+                _ => return None,
+            };
+            suggestions.push(Suggestion::replace_with_match_case(
+                parts.join(" ").chars().collect(),
+                toks_chars,
+            ));
+        }
+
+        suggestions.extend(basic_corrections.iter().map(|correction| {
+            let parts: &[&str] = match correction {
+                DropDQ => &[&noun],
+                ReplaceDQWith(w) => &[w, &noun],
+                InsertBetween(w) => &[&dq, w, &noun],
+                ReplaceNounWith(w) => &[&dq, w],
+            };
+            Suggestion::replace_with_match_case(parts.join(" ").chars().collect(), toks_chars)
+        }));
 
         Some(Lint {
             span: toks.span()?,
@@ -200,7 +256,7 @@ mod tests {
         assert_top3_suggestion_result(
             "For example, it only makes sense to compare global protein q-value filtering in one software with that in another.",
             NounCountability::default(),
-            "For example, it only makes sense to compare global protein q-value filtering in one piece of software with that in another.",
+            "For example, it only makes sense to compare global protein q-value filtering in one application with that in another.",
         );
     }
 
@@ -230,6 +286,96 @@ mod tests {
             "A advice description is required for each advice.",
             NounCountability::default(),
             "A advice description is required for each piece of advice.",
+        );
+    }
+
+    #[test]
+    fn corrects_an_advice() {
+        assert_top3_suggestion_result(
+            "Origin will not always provide the right method when an advice is applied to a bridged method.",
+            NounCountability::default(),
+            "Origin will not always provide the right method when an tip is applied to a bridged method.",
+        );
+    }
+
+    #[test]
+    fn corrects_one_advice() {
+        assert_top3_suggestion_result(
+            "Is it possible to use more than one advice on the same method?",
+            NounCountability::default(),
+            "Is it possible to use more than one tip on the same method?",
+        );
+    }
+
+    #[test]
+    fn corrects_every_advice() {
+        assert_top3_suggestion_result(
+            "Ideally every advice would have a unique identifier.",
+            NounCountability::default(),
+            "Ideally every tip would have a unique identifier.",
+        );
+    }
+
+    #[test]
+    fn corrects_a_advice() {
+        assert_top3_suggestion_result(
+            "Hello! I need a advice.",
+            NounCountability::default(),
+            "Hello! I need a tip.",
+        );
+    }
+
+    #[test]
+    fn corrects_a_software() {
+        assert_top3_suggestion_result(
+            "HGroup-DIA, a software for analyzing multiple DIA data files.",
+            NounCountability::default(),
+            "HGroup-DIA, software for analyzing multiple DIA data files.",
+        );
+    }
+
+    #[test]
+    fn corrects_a_luggage() {
+        assert_top3_suggestion_result(
+            "A luggage with a little engine, sensors (gps, ultrasounds, etc...) and bluetooth connection that will follow you everywhere.",
+            NounCountability::default(),
+            "A suitcase with a little engine, sensors (gps, ultrasounds, etc...) and bluetooth connection that will follow you everywhere.",
+        );
+    }
+
+    #[test]
+    fn corrects_multiple_advice() {
+        assert_top3_suggestion_result(
+            "Update Advice API doc for event and data params, multiple advice.",
+            NounCountability::default(),
+            "Update Advice API doc for event and data params, multiple suggestions.",
+        );
+    }
+
+    #[test]
+    fn corrects_every_software() {
+        assert_top3_suggestion_result(
+            "Rewrite every software known to man in Rust.",
+            NounCountability::default(),
+            "Rewrite every application known to man in Rust.",
+        );
+    }
+
+    #[test]
+    fn corrects_each_furniture() {
+        assert_top3_suggestion_result(
+            "the position (x, y) and size (height, width, length) of each furniture",
+            NounCountability::default(),
+            "the position (x, y) and size (height, width, length) of each piece of furniture",
+        );
+    }
+
+    #[test]
+    fn corrects_one_clothing() {
+        assert_top3_suggestion_result(
+            "Each list element represents one clothing based on weather conditions.",
+            NounCountability::default(),
+            "Each list element represents one garment based on weather conditions.",
         );
     }
 }
