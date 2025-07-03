@@ -13480,6 +13480,7 @@ autoregressive/J
 autorun/NVGg
 autostereogram/NgS
 autosuggestion/N
+autotagging/NmgS
 autothysis/Ng
 autoworker/NgS
 autumn/~NVSg
@@ -15986,6 +15987,7 @@ byre/NS
 byroad/NSg
 bystander/NgS
 byte/~NgS
+bytecode/NwgS
 byway/~NSg
 byword/NSg
 byzantine/~JN
@@ -19508,6 +19510,7 @@ craw/NVgS
 crawdad/NSg
 crawfish/NgS09      # singular and plural, also has a plural in -s
 crawl/~VNSgd>ZG
+crawlable/J
 crawler/~Ng
 crawlspace/NSg
 crawly/JT>Sg
@@ -21092,8 +21095,9 @@ diffidence/Ng
 diffident/JY
 diffract/VGSd
 diffraction/~Ng
-diffuse/~VJdSYGnvp>
+diffuse/~VJdSYGnvp
 diffuseness/Ng
+diffuser/NgS
 diffusion/~Ng
 diffusivity/N
 dig/~VNSg
@@ -22012,6 +22016,7 @@ droopiness/Ng
 droopy/JTp>
 drop/~NVgS
 dropbox/NgS
+dropdown/NJSg
 dropkick/~NVgS
 droplet/NSg
 dropout/NSg
@@ -22692,7 +22697,7 @@ embassy/~NSg
 embattled/JV
 embed/~VNS
 embedded/~VJ
-embedding/~NV
+embedding/~NSgV
 embellish/VLGdS>
 embellishment/NSg
 ember/~NJSg
@@ -28727,6 +28732,7 @@ hyperinflate/VNGdSn
 hyperlink/NVGSgd
 hypermarket/NS
 hypermedia/Ng
+hypernetwork/NSg
 hyperparathyroidism/N
 hyperplane/N
 hypersensitive/Jp
@@ -32136,6 +32142,7 @@ loon/~NgS
 loonie/Ng
 loony/JN>SgT
 loop/~NVgdSG
+loopback/NwgS
 loophole/~NVgS
 loopy/J>T
 loos/~Nn>X
@@ -34406,6 +34413,7 @@ mournfulness/Ng
 mourning/~VNg
 mouse/~NVd>SgZG
 mouseless/J
+mouseover/NgS
 mouser/Ng
 mousetrap/NVSg
 mousetrapped/V
@@ -36574,6 +36582,7 @@ outmoded/JV
 outnumber/VdG
 outnumbers/J
 outpace/VGdS
+outpaint/VGdS
 outpatient/~NJgS
 outperform/VGSd
 outplace/VL
@@ -39494,6 +39503,7 @@ preposterous/JY
 prepped/V
 prepping/VN
 preppy/JNT>Sg
+preprocess/VdSG
 prepubescence/Ng
 prepubescent/JNSg
 prepuce/NgS
@@ -40824,6 +40834,7 @@ rasp/NVGgdS
 raspberry/~NJVSg
 raspy/J>T
 raster/~NV
+rasterization/NwgS
 rat/~NVSg
 ratatouille/Ng
 ratbag/NS
@@ -49544,6 +49555,7 @@ uncanny/~JNT
 uncap/VS
 uncaring/JN
 uncatalogued/J
+uncategorized/J
 unceasing/JY
 unchangeable/JN
 uncharacteristic/J
@@ -50095,6 +50107,7 @@ uproarious/JY
 uproot/VNGSd
 upsample/SgG
 upscale/~JVSdG
+upscaler/NgS
 upset/~JNVSg
 upsetting/~VNJ
 upshot/NSg
@@ -52405,6 +52418,7 @@ EMR/NOSg
 EPUB/NOgS           # e-book format
 ESLint/Og
 EV/NSg              # electric vehicle
+EXIF                # metadata
 ElasticSearch/Sg
 Elon/Og
 Erdoğan/Og          # surname, Turkish politician
@@ -53038,6 +53052,7 @@ pro-democracy/J
 quid pro quo/Ng
 quote unquote/JR
 rack-mounted/J
+ray casting/Nmg
 re-enable/VdSG
 real time/Ng
 real-time/J
