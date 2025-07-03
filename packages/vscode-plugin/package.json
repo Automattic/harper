@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.46.0",
+	"version": "0.47.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -1618,6 +1618,12 @@
 					"default": true,
 					"description": "Expands an initialism."
 				},
+				"harper.linters.NoMatchFor": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "No match for"
+				},
 				"harper.linters.NoOxfordComma": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2193,6 +2199,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `thereupon`."
+				},
+				"harper.linters.ThingThink": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the typo `thing` when it should be `think`."
 				},
 				"harper.linters.ThoughtProcess": {
 					"scope": "resource",
