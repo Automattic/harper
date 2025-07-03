@@ -105,22 +105,22 @@ impl ExprLinter for NounCountability {
             }
             ("software", "a") => &[
                 ReplaceNounWith("program"),
-                // ReplaceNounWith("software package"),
-                // ReplaceNounWith("software tool"),
+                ReplaceNounWith("software package"),
+                ReplaceNounWith("software tool"),
             ],
             ("software", "an" | "another" | "each" | "every" | "one") => &[
                 ReplaceNounWith("app"),
                 ReplaceNounWith("application"),
                 ReplaceNounWith("program"),
-                // ReplaceNounWith("software package"),
-                // ReplaceNounWith("software tool"),
+                ReplaceNounWith("software package"),
+                ReplaceNounWith("software tool"),
             ],
             ("software", "both" | "many" | "multiple" | "several") => &[
                 ReplaceNounWith("apps"),
                 ReplaceNounWith("applications"),
                 ReplaceNounWith("programs"),
-                // ReplaceNounWith("software packages"),
-                // ReplaceNounWith("software tools"),
+                ReplaceNounWith("software packages"),
+                ReplaceNounWith("software tools"),
             ],
             _ => &[],
         };
@@ -367,7 +367,7 @@ mod tests {
         assert_top3_suggestion_result(
             "HGroup-DIA, a software for analyzing multiple DIA data files.",
             NounCountability::default(),
-            "HGroup-DIA, software for analyzing multiple DIA data files.",
+            "HGroup-DIA, a software package for analyzing multiple DIA data files.",
         );
     }
 
