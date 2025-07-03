@@ -1,3 +1,5 @@
+use harper_brill::UPOS;
+
 use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::OwnedExprExt;
@@ -16,10 +18,12 @@ impl Default for HowTo {
     fn default() -> Self {
         let mut pattern = All::default();
 
-        let pos_pattern = SequenceExpr::default()
-            .t_aco("how")
-            .then_whitespace()
-            .then_verb();
+        let pos_pattern = SequenceExpr::default().t_aco("how").then_whitespace().then(
+            |tok: &Token, _: &[char]| {
+                tok.kind.is_upos(UPOS::VERB)
+                    || (tok.kind.is_verb() && tok.kind.is_likely_homograph())
+            },
+        );
         pattern.add(pos_pattern);
 
         let exceptions = SequenceExpr::default()
@@ -255,5 +259,10 @@ mod tests {
             HowTo::default(),
             0,
         );
+    }
+
+    #[test]
+    fn allows_how_has() {
+        assert_lint_count("How Has This Been Tested?", HowTo::default(), 0);
     }
 }
