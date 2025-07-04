@@ -33,7 +33,7 @@ fn uncached_inner_new() -> Arc<MutableDictionary> {
     Arc::new(
         MutableDictionary::from_rune_files(
             include_str!("../../dictionary.dict"),
-            include_str!("../../affixes.json"),
+            include_str!("../../annotations.json"),
         )
         .expect("Curated dictionary should be valid."),
     )
@@ -377,7 +377,7 @@ mod tests {
 
     #[test]
     fn are_merged_attrs_same_as_spread_attrs() {
-        let curated_attr_list = include_str!("../../affixes.json");
+        let curated_attr_list = include_str!("../../annotations.json");
 
         let merged = MutableDictionary::from_rune_files("1\nblork/DGS", curated_attr_list).unwrap();
         let spread =

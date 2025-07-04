@@ -352,7 +352,7 @@ fn main() -> anyhow::Result<()> {
                 let rune_words = format!("1\n{line}");
                 let dict = MutableDictionary::from_rune_files(
                     &rune_words,
-                    include_str!("../../harper-core/affixes.json"),
+                    include_str!("../../harper-core/annotations.json"),
                 )?;
 
                 println!("New, from you:");
@@ -445,7 +445,7 @@ fn main() -> anyhow::Result<()> {
             use serde_json::Value;
 
             let dict_path = dir.join("dictionary.dict");
-            let affixes_path = dir.join("affixes.json");
+            let affixes_path = dir.join("annotations.json");
 
             // Validate old and new flags are exactly one Unicode code point (Rust char)
             // And not characters used for the dictionary format
@@ -467,27 +467,27 @@ fn main() -> anyhow::Result<()> {
 
             // Load and parse affixes
             let affixes_string = fs::read_to_string(&affixes_path)
-                .map_err(|e| anyhow!("Failed to read affixes.json: {e}"))?;
+                .map_err(|e| anyhow!("Failed to read annotations.json: {e}"))?;
 
             let affixes_json: Value = serde_json::from_str(&affixes_string)
-                .map_err(|e| anyhow!("Failed to parse affixes.json: {e}"))?;
+                .map_err(|e| anyhow!("Failed to parse annotations.json: {e}"))?;
 
             // Get the nested "affixes" object
             let affixes_obj = &affixes_json
                 .get("affixes")
                 .and_then(Value::as_object)
-                .ok_or_else(|| anyhow!("affixes.json does not contain 'affixes' object"))?;
+                .ok_or_else(|| anyhow!("annotations.json does not contain 'affixes' object"))?;
 
             let properties_obj = &affixes_json
                 .get("properties")
                 .and_then(Value::as_object)
-                .ok_or_else(|| anyhow!("affixes.json does not contain 'properties' object"))?;
+                .ok_or_else(|| anyhow!("annotations.json does not contain 'properties' object"))?;
 
             // Validate old flag exists and get its description
             let old_entry = affixes_obj
                 .get(&old)
                 .or_else(|| properties_obj.get(&old))
-                .ok_or_else(|| anyhow!("Flag '{old}' not found in affixes.json"))?;
+                .ok_or_else(|| anyhow!("Flag '{old}' not found in annotations.json"))?;
 
             let description = old_entry
                 .get("#")
@@ -548,7 +548,7 @@ fn main() -> anyhow::Result<()> {
 
             // Verify that the updated affixes string is valid JSON
             serde_json::from_str::<Value>(&updated_affixes_string)
-                .map_err(|e| anyhow!("Failed to parse updated affixes.json: {e}"))?;
+                .map_err(|e| anyhow!("Failed to parse updated annotations.json: {e}"))?;
 
             // Write changes
             fs::write(&dict_path, updated_dict)

@@ -438,10 +438,10 @@ registerlinter module name:
   sed -i "/insert_expr_rule!(ChockFull, true);/a \ \ \ \ insert_struct_rule!({{name}}, true);" "$D/lint_group.rs"
   just format
 
-# Print affixes and their descriptions from affixes.json
+# Print affixes and their descriptions from annotations.json
 printaffixes:
   #! /usr/bin/env node
-  const affixesData = require('{{justfile_directory()}}/harper-core/affixes.json');
+  const affixesData = require('{{justfile_directory()}}/harper-core/annotations.json');
   const allAffixes = {
     ...affixesData.affixes || {},
     ...affixesData.properties || {}
@@ -508,8 +508,8 @@ newest-dict-changes *numCommits:
       if (showDiff) console.log(`DIFFSTART\n${diffString}\nDIFFEND`);
 
       // uncomment first line to use in justfile, comment out second line to use standalone
-      const affixes = require('{{justfile_directory()}}/harper-core/affixes.json').affixes;
-      // const affixes = require('./harper-core/affixes.json').affixes;
+      const affixes = require('{{justfile_directory()}}/harper-core/annotations.json').affixes;
+      // const affixes = require('./harper-core/annotations.json').affixes;
 
       diffString.split("\n").forEach(line => {
         const match = line.match(/^(?:\[-(.*?)-\])?(?:\{\+(.*?)\+\})?$/);
