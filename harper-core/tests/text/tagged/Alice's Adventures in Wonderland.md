@@ -151,21 +151,21 @@
 > wish  you    were  down      here    with me       ! There are no    mice  in      the air    , I’m afraid , but
 # NSg/V ISgPl+ NSg/V NSg/V/J/P NSg/J/R P    NPr/ISg+ . +     V   NPr/P NSg/V NPr/J/P D+  NSg/V+ . W?  J      . NSg/C/P
 > you    might    catch a    bat    , and that’s very like        a    mouse  , you    know   . But     do     cats   eat
-# ISgPl+ NSg/VX/J NSg/V D/P+ NSg/V+ . V/C NSg$   J/R  NSg/V/J/C/P D/P+ NSg/V+ . ISgPl+ NSg/V+ . NSg/C/P NSg/VX NPl/V+ NSg/V
+# ISgPl+ NSg/VX/J NSg/V D/P+ NSg/V+ . V/C NSg$   J/R  NSg/V/J/C/P D/P+ NSg/V+ . ISgPl+ NSg/V+ . NSg/C/P NSg/VX NPl/V+ V
 > bats  , I    wonder ? ” And here    Alice began to get   rather  sleepy , and went  on  saying
 # NPl/V . ISg+ NSg/V  . . V/C NSg/J/R NPr+  V     P  NSg/V NPr/V/J NSg/J  . V/C NSg/V J/P NSg/V
-> to herself , in      a   dreamy sort  of way    , “ Do     cats   eat   bats  ? Do     cats   eat   bats  ? ” and
-# P  ISg+    . NPr/J/P D/P J      NSg/V P  NSg/J+ . . NSg/VX NPl/V+ NSg/V NPl/V . NSg/VX NPl/V+ NSg/V NPl/V . . V/C
-> sometimes , “ Do     bats  eat   cats   ? ” for , you    see   , as    she  couldn’t answer either
-# R         . . NSg/VX NPl/V NSg/V NPl/V+ . . C/P . ISgPl+ NSg/V . NSg/R ISg+ V        NSg/V+ I/C
+> to herself , in      a   dreamy sort  of way    , “ Do     cats   eat bats  ? Do     cats   eat bats  ? ” and
+# P  ISg+    . NPr/J/P D/P J      NSg/V P  NSg/J+ . . NSg/VX NPl/V+ V   NPl/V . NSg/VX NPl/V+ V   NPl/V . . V/C
+> sometimes , “ Do     bats  eat cats   ? ” for , you    see   , as    she  couldn’t answer either
+# R         . . NSg/VX NPl/V V   NPl/V+ . . C/P . ISgPl+ NSg/V . NSg/R ISg+ V        NSg/V+ I/C
 > question , it       didn’t much    matter  which way    she  put   it       . She  felt    that         she  was
 # NSg/V+   . NPr/ISg+ V      NSg/I/J NSg/V/J I/C+  NSg/J+ ISg+ NSg/V NPr/ISg+ . ISg+ NSg/V/J NSg/I/C/Ddem ISg+ V
 > dozing off       , and had just begun to dream   that         she  was walking hand   in      hand  with
 # V      NSg/V/J/P . V/C V   V/J  V     P  NSg/V/J NSg/I/C/Ddem ISg+ V   NSg/V/J NSg/V+ NPr/J/P NSg/V P
 > Dinah , and saying to her     very earnestly , “ Now       , Dinah , tell  me       the truth  : did you
 # NPr   . V/C NSg/V  P  ISg/D$+ J/R  R         . . NPr/V/J/C . NPr   . NPr/V NPr/ISg+ D+  NSg/V+ . V   ISgPl+
-> ever eat   a    bat    ? ” when    suddenly , thump  ! thump  ! down      she  came    upon a   heap  of
-# J    NSg/V D/P+ NSg/V+ . . NSg/I/C R        . NSg/V+ . NSg/V+ . NSg/V/J/P ISg+ NSg/V/P P    D/P NSg/V P
+> ever eat a    bat    ? ” when    suddenly , thump  ! thump  ! down      she  came    upon a   heap  of
+# J    V   D/P+ NSg/V+ . . NSg/I/C R        . NSg/V+ . NSg/V+ . NSg/V/J/P ISg+ NSg/V/P P    D/P NSg/V P
 > sticks and dry      leaves , and the fall   was over      .
 # NPl/V+ V/C NSg/V/J+ NPl/V+ . V/C D+  NSg/V+ V+  NSg/V/J/P .
 >
@@ -340,10 +340,10 @@
 #
 > Soon her     eye   fell    on  a   little  glass  box    that          was lying   under   the table  : she
 # J/R  ISg/D$+ NSg/V NSg/V/J J/P D/P NPr/I/J NPr/V+ NSg/V+ NSg/I/C/Ddem+ V   NSg/V/J NSg/J/P D+  NSg/V+ . ISg+
-> opened it       , and found in      it       a   very small   cake  , on  which the words  “ EAT   ME       ” were
-# V/J    NPr/ISg+ . V/C NSg/V NPr/J/P NPr/ISg+ D/P J/R  NPr/V/J NSg/V . J/P I/C+  D+  NPl/V+ . NSg/V NPr/ISg+ . NSg/V
-> beautifully marked in      currants . “ Well    , I’ll eat   it       , ” said Alice , “ and if    it
-# R           V/J    NPr/J/P NPl      . . NSg/V/J . W?   NSg/V NPr/ISg+ . . V/J  NPr   . . V/C NSg/C NPr/ISg+
+> opened it       , and found in      it       a   very small   cake  , on  which the words  “ EAT ME       ” were
+# V/J    NPr/ISg+ . V/C NSg/V NPr/J/P NPr/ISg+ D/P J/R  NPr/V/J NSg/V . J/P I/C+  D+  NPl/V+ . V   NPr/ISg+ . NSg/V
+> beautifully marked in      currants . “ Well    , I’ll eat it       , ” said Alice , “ and if    it
+# R           V/J    NPr/J/P NPl      . . NSg/V/J . W?   V   NPr/ISg+ . . V/J  NPr   . . V/C NSg/C NPr/ISg+
 > makes me      grow larger , I    can    reach the key     ; and if    it       makes me      grow smaller , I
 # NPl/V NPr/ISg V    J      . ISg+ NPr/VX NSg/V D   NPr/V/J . V/C NSg/C NPr/ISg+ NPl/V NPr/ISg V    J       . ISg+
 > can    creep under   the door   ; so        either way    I’ll get   into the garden   , and I    don’t
@@ -358,8 +358,8 @@
 # NSg/V   ISg/D$+ NSg/V+ J/P D   NSg/V/J P  ISg/D$+ NPr/V/J+ P  NSg/I/V I/C+  NSg/J+ NPr/ISg+ V   NSg/V   . V/C
 > she  was quite surprised to find  that         she  remained the same size   : to be     sure ,
 # ISg+ V   NSg   V/J       P  NSg/V NSg/I/C/Ddem ISg+ V/J      D+  I/J+ NSg/V+ . P  NSg/VX J    .
-> this    generally happens when    one       eats  cake   , but     Alice had got so        much    into the
-# I/Ddem+ R         V       NSg/I/C NSg/I/V/J NPl/V NSg/V+ . NSg/C/P NPr+  V   V   NSg/I/J/C NSg/I/J P    D
+> this    generally happens when    one       eats cake   , but     Alice had got so        much    into the
+# I/Ddem+ R         V       NSg/I/C NSg/I/V/J V    NSg/V+ . NSg/C/P NPr+  V   V   NSg/I/J/C NSg/I/J P    D
 > way   of expecting nothing  but     out         - of - the - way   things to happen , that         it       seemed
 # NSg/J P  V         NSg/I/J+ NSg/C/P NSg/V/J/R/P . P  . D   . NSg/J NPl/V  P  V      . NSg/I/C/Ddem NPr/ISg+ V/J
 > quite dull and stupid for life   to go      on  in      the common   way   .
@@ -952,8 +952,8 @@
 # R      V/J   . V/C V    D   NSg/V   . V       NSg/R J      NSg/R ISg+ NSg/VX+ .
 >
 #
-> The next    thing was to eat   the comfits : this    caused some   noise and confusion , as
-# D+  NSg/J/P NSg/V V   P  NSg/V D   NPl/V   . I/Ddem+ V/J    I/J/R+ NSg/V V/C NSg/V+    . NSg/R
+> The next    thing was to eat the comfits : this    caused some   noise and confusion , as
+# D+  NSg/J/P NSg/V V   P  V   D   NPl/V   . I/Ddem+ V/J    I/J/R+ NSg/V V/C NSg/V+    . NSg/R
 > the large  birds  complained that         they could  not   taste   theirs , and the small    ones
 # D+  NSg/J+ NPl/V+ V/J        NSg/I/C/Ddem IPl+ NSg/VX NSg/C NSg/V/J I+     . V/C D+  NPr/V/J+ NPl/V+
 > choked and had to be     patted on  the back    . However , it       was over      at    last    , and they
@@ -1078,8 +1078,8 @@
 # NPr   V/J     R       . C/P ISg+ V   R      NSg/V/J P  NSg/V J/P   ISg/D$+ NPr/V/J+ . . NSg$
 > our cat      . And she’s such  a   capital one       for catching mice   you    can’t think ! And oh    ,
 # D$+ NSg/V/J+ . V/C W?    NSg/I D/P NSg/J+  NSg/I/V/J C/P V        NSg/V+ ISgPl+ VX    NSg/V . V/C NPr/V .
-> I    wish  you    could  see   her     after the birds  ! Why   , she’ll eat   a   little  bird     as    soon
-# ISg+ NSg/V ISgPl+ NSg/VX NSg/V ISg/D$+ J/P   D+  NPl/V+ . NSg/V . W?     NSg/V D/P NPr/I/J NPr/V/J+ NSg/R J/R
+> I    wish  you    could  see   her     after the birds  ! Why   , she’ll eat a   little  bird     as    soon
+# ISg+ NSg/V ISgPl+ NSg/VX NSg/V ISg/D$+ J/P   D+  NPl/V+ . NSg/V . W?     V   D/P NPr/I/J NPr/V/J+ NSg/R J/R
 > as    look  at    it      ! ”
 # NSg/R NSg/V NSg/P NPr/ISg . .
 >
@@ -1192,8 +1192,8 @@
 # V+      . NPr/V . +     V   NPr/P+ NSg/V+ I/Ddem+ NSg/V/J P    D+  NPl/V+ . NSg/V+ NPr/ISg . . NSg/C/P
 > nevertheless she  uncorked it       and put   it       to her     lips   . “ I    know  something
 # W?           ISg+ V/J      NPr/ISg+ V/C NSg/V NPr/ISg+ P  ISg/D$+ NPl/V+ . . ISg+ NSg/V NSg/I/V/J+
-> interesting is sure to happen , ” she  said to herself , “ whenever I    eat   or    drink
-# V/J         VL J    P  V      . . ISg+ V/J  P  ISg+    . . C        ISg+ NSg/V NPr/C NSg/V+
+> interesting is sure to happen , ” she  said to herself , “ whenever I    eat or    drink
+# V/J         VL J    P  V      . . ISg+ V/J  P  ISg+    . . C        ISg+ V   NPr/C NSg/V+
 > anything ; so        I’ll just see   what   this    bottle does   . I    do     hope  it’ll make  me       grow
 # NSg/I/V+ . NSg/I/J/C W?   V/J  NSg/V NSg/I+ I/Ddem+ NSg/V+ NPl/V+ . ISg+ NSg/VX NPr/V W?    NSg/V NPr/ISg+ V
 > large  again , for really I’m quite tired of being   such  a   tiny  little  thing  ! ”
@@ -1465,7 +1465,7 @@
 > Alice noticed with some   surprise that         the pebbles were  all       turning into little
 # NPr+  V/J     P    I/J/R+ NSg/V    NSg/I/C/Ddem D+  NPl/V+  NSg/V NSg/I/J/C NSg/V   P    NPr/I/J
 > cakes  as    they lay     on  the floor  , and a   bright  idea came    into her     head     . “ If    I    eat
-# NPl/V+ NSg/R IPl+ NSg/V/J J/P D+  NSg/V+ . V/C D/P NPr/V/J NSg  NSg/V/P P    ISg/D$+ NPr/V/J+ . . NSg/C ISg+ NSg/V
+# NPl/V+ NSg/R IPl+ NSg/V/J J/P D+  NSg/V+ . V/C D/P NPr/V/J NSg  NSg/V/P P    ISg/D$+ NPr/V/J+ . . NSg/C ISg+ V
 > one       of these   cakes  , ” she  thought , “ it’s sure to make  some  change in      my  size   ; and
 # NSg/I/V/J P  I/Ddem+ NPl/V+ . . ISg+ NSg/V   . . W?   J    P  NSg/V I/J/R NSg/V+ NPr/J/P D$+ NSg/V+ . V/C
 > as    it       can’t possibly make  me       larger , it       must  make  me       smaller , I    suppose . ”
@@ -1514,8 +1514,8 @@
 # D/P NSg/V/J NSg/I/V+ . V/C ISg+ V/J   NSg/V/J P  NSg/V   P  NPr/ISg+ . NSg/C/P ISg+ V   R
 > frightened all       the time    at    the thought that         it       might    be     hungry , in      which case   it
 # V/J        NSg/I/J/C D   NSg/V/J NSg/P D   NSg/V   NSg/I/C/Ddem NPr/ISg+ NSg/VX/J NSg/VX J      . NPr/J/P I/C+  NPr/V+ NPr/ISg+
-> would  be     very likely to eat   her     up        in      spite   of all       her     coaxing .
-# NSg/VX NSg/VX J/R  NSg/J  P  NSg/V ISg/D$+ NSg/V/J/P NPr/J/P NSg/V/P P  NSg/I/J/C ISg/D$+ NSg/V/J .
+> would  be     very likely to eat her     up        in      spite   of all       her     coaxing .
+# NSg/VX NSg/VX J/R  NSg/J  P  V   ISg/D$+ NSg/V/J/P NPr/J/P NSg/V/P P  NSg/I/J/C ISg/D$+ NSg/V/J .
 >
 #
 > Hardly knowing   what   she  did , she  picked up        a   little  bit   of stick    , and held it
@@ -1560,8 +1560,8 @@
 # NSg/VX V/J   NSg/V+   NPr/ISg+ NPl/V+ J/R  NSg/I/J . NSg/C . NSg/C W?  J/R/C NSg/V D   NPr/V/J NSg/V P
 > do     it       ! Oh    dear    ! I’d nearly forgotten that         I’ve got to grow up        again ! Let   me
 # NSg/VX NPr/ISg+ . NPr/V NSg/V/J . W?  R      NSg/V/J   NSg/I/C/Ddem W?   V   P  V    NSg/V/J/P P     . NSg/V NPr/ISg+
-> see   — how   is it       to be     managed ? I    suppose I    ought    to eat   or    drink  something or
-# NSg/V . NSg/C VL NPr/ISg+ P  NSg/VX V/J     . ISg+ V       ISg+ NSg/I/VX P  NSg/V NPr/C NSg/V+ NSg/I/V/J NPr/C
+> see   — how   is it       to be     managed ? I    suppose I    ought    to eat or    drink  something or
+# NSg/V . NSg/C VL NPr/ISg+ P  NSg/VX V/J     . ISg+ V       ISg+ NSg/I/VX P  V   NPr/C NSg/V+ NSg/I/V/J NPr/C
 > other   ; but     the great  question is , what  ? ”
 # NSg/V/J . NSg/C/P D+  NSg/J+ NSg/V+   VL . NSg/I . .
 >
@@ -1570,8 +1570,8 @@
 # D+  NSg/J NSg/V    R         V   . NSg/I . NPr+  V/J    NSg/I/J/C NSg/V/J/P ISg/D$+ NSg/P D+
 > flowers  and the blades of grass  , but     she  did not   see   anything that          looked like
 # NPrPl/V+ V/C D   NPl/V  P  NPr/V+ . NSg/C/P ISg+ V   NSg/C NSg/V NSg/I/V+ NSg/I/C/Ddem+ V/J    NSg/V/J/C/P
-> the right    thing to eat   or    drink  under   the circumstances . There was a   large
-# D+  NPr/V/J+ NSg/V P  NSg/V NPr/C NSg/V+ NSg/J/P D+  NPl/V+        . +     V   D/P NSg/J
+> the right    thing to eat or    drink  under   the circumstances . There was a   large
+# D+  NPr/V/J+ NSg/V P  V   NPr/C NSg/V+ NSg/J/P D+  NPl/V+        . +     V   D/P NSg/J
 > mushroom growing near      her     , about the same height as    herself ; and when    she  had
 # NSg/V/J  NSg/V   NSg/V/J/P ISg/D$+ . J/P   D+  I/J+ NSg+   NSg/R ISg+    . V/C NSg/I/C ISg+ V
 > looked under   it       , and on  both sides of it       , and behind  it       , it       occurred to her     that
@@ -1918,8 +1918,8 @@
 # ISg+ V   D/P NPr/V/J NSg/V/J V/J        NSg/J/P I/Ddem+ J/R  NSg/J+ NSg/V+ . NSg/C/P ISg+ NSg/V/J NSg/I/C/Ddem
 > there was no    time     to be     lost , as    she  was shrinking rapidly ; so        she  set     to work
 # +     V   NPr/P NSg/V/J+ P  NSg/VX V/J  . NSg/R ISg+ V   V         R       . NSg/I/J/C ISg+ NPr/V/J P  NSg/V
-> at    once  to eat   some  of the other    bit    . Her     chin   was pressed so        closely against
-# NSg/P NSg/C P  NSg/V I/J/R P  D+  NSg/V/J+ NSg/V+ . ISg/D$+ NPr/V+ V   V/J     NSg/I/J/C R       C/P
+> at    once  to eat some  of the other    bit    . Her     chin   was pressed so        closely against
+# NSg/P NSg/C P  V   I/J/R P  D+  NSg/V/J+ NSg/V+ . ISg/D$+ NPr/V+ V   V/J     NSg/I/J/C R       C/P
 > her     foot   , that         there was hardly room    to open    her     mouth  ; but     she  did it      at    last    ,
 # ISg/D$+ NSg/V+ . NSg/I/C/Ddem +     V   R      NSg/V/J P  NSg/V/J ISg/D$+ NSg/V+ . NSg/C/P ISg+ V   NPr/ISg NSg/P NSg/V/J .
 > and managed to swallow a   morsel of the lefthand bit    .
@@ -2048,8 +2048,8 @@
 #
 > “ I    have   tasted eggs  , certainly , ” said Alice , who    was a   very truthful child ; “ but
 # . ISg+ NSg/VX V/J    NPl/V . R         . . V/J  NPr+  . NPr/I+ V   D/P J/R  J        NSg/V . . NSg/C/P
-> little  girls  eat   eggs   quite as    much    as    serpents do     , you    know   . ”
-# NPr/I/J NPl/V+ NSg/V NPl/V+ NSg   NSg/R NSg/I/J NSg/R NPl/V    NSg/VX . ISgPl+ NSg/V+ . .
+> little  girls  eat eggs   quite as    much    as    serpents do     , you    know   . ”
+# NPr/I/J NPl/V+ V   NPl/V+ NSg   NSg/R NSg/I/J NSg/R NPl/V    NSg/VX . ISgPl+ NSg/V+ . .
 >
 #
 > “ I    don’t believe it       , ” said the Pigeon ; “ but     if    they do     , why   then    they’re a   kind
@@ -2808,8 +2808,8 @@
 #
 > “ Not   the same thing  a    bit    ! ” said the Hatter . “ You    might    just as    well    say   that          ‘          I
 # . NSg/C D   I/J  NSg/V+ D/P+ NSg/V+ . . V/J  D+  NSg/V  . . ISgPl+ NSg/VX/J V/J  NSg/R NSg/V/J NSg/V NSg/I/C/Ddem+ Unlintable ISg+
-> see   what   I    eat   ’ is the same thing  as    ‘          I    eat   what   I    see   ’ ! ”
-# NSg/V NSg/I+ ISg+ NSg/V . VL D   I/J  NSg/V+ NSg/R Unlintable ISg+ NSg/V NSg/I+ ISg+ NSg/V . . .
+> see   what   I    eat ’ is the same thing  as    ‘          I    eat what   I    see   ’ ! ”
+# NSg/V NSg/I+ ISg+ V   . VL D   I/J  NSg/V+ NSg/R Unlintable ISg+ V   NSg/I+ ISg+ NSg/V . . .
 >
 #
 > “ You    might    just as    well    say   , ” added the March  Hare     , “ that          ‘          I    like        what   I    get   ’ is
@@ -4429,7 +4429,7 @@
 >
 #
 > “ Hadn’t time    , ” said the Gryphon : “ I    went  to the Classics master   , though . He       was
-# . V      NSg/V/J . . V/J  D   ?       . . ISg+ NSg/V P  D+  NPl+     NPr/V/J+ . V/C    . NPr/ISg+ V
+# . V      NSg/V/J . . V/J  D   ?       . . ISg+ NSg/V P  D+  NSgPl+   NPr/V/J+ . V/C    . NPr/ISg+ V
 > an  old   crab  , he       was . ”
 # D/P NSg/J NSg/V . NPr/ISg+ V+  . .
 >

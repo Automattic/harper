@@ -191,6 +191,12 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `been there`?",
             "Corrects the misspelling `bee there` to the proper phrase `been there`."
         ),
+        "Beforehand" => (
+            ["before hand", "before-hand"],
+            ["beforehand"],
+            "Prefer the single-word adverb `beforehand`.",
+            "`Beforehand` functions as a fixed adverb meaning ‘in advance’; writing it as two words or with a hyphen is nonstandard and can jar readers."
+        ),
         "BestRegards" => (
             ["beat regards"],
             ["best regards"],
@@ -208,6 +214,12 @@ pub fn lint_group() -> LintGroup {
             ["brutality"],
             "This word has a more standard, more common synonym.",
             "Suggests the more standard and common synonym `brutality`."
+        ),
+        "BuiltIn" => (
+            ["in built", "in-built", "built in"],
+            ["built-in"],
+            "Prefer the hyphenated compound `built-in`.",
+            "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are non-standard and can feel awkward to readers."
         ),
         "ByAccident" => (
             ["on accident"],
@@ -388,6 +400,18 @@ pub fn lint_group() -> LintGroup {
             ["excellent"],
             "Vocabulary enhancement: use `excellent` instead of `very good`",
             "Provides a stronger word choice by replacing `very good` with `excellent` for clarity and emphasis."
+        ),
+        "ExpandArgument" => (
+            ["arg"],
+            ["argument"],
+            "Use `argument` instead of `arg`",
+            "Expands the abbreviation `arg` to the full word `argument` for clarity."
+        ),
+        "ExpandArguments" => (
+            ["args"],
+            ["arguments"],
+            "Use `arguments` instead of `args`",
+            "Expands the abbreviation `args` to the full word `arguments` for clarity."
         ),
         "ExpandBecause" => (
             ["cuz"],
@@ -1160,6 +1184,12 @@ pub fn lint_group() -> LintGroup {
             "The more standard, less colloquial form is `take it personally`.",
             "Corrects `take it personal` to `take it personally`."
         ),
+        "ThanksALot" => (
+            ["thanks lot", "thanks alot"],
+            ["thanks a lot"],
+            "Prefer the two-word expression `thanks a lot`.",
+            "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers."
+        ),
         "ThatChallenged" => (
             ["the challenged"],
             ["that challenged"],
@@ -1341,29 +1371,11 @@ pub fn lint_group() -> LintGroup {
             "Use `worst` for the extreme case. (`Worse` is for comparing)",
             "Corrects `worse ever` to `worst ever` for proper comparative usage."
         ),
-        "BuiltIn" => (
-            ["in built", "in-built", "built in"],
-            ["built-in"],
-            "Prefer the hyphenated compound `built-in`.",
-            "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are non-standard and can feel awkward to readers."
-        ),
-        "ThanksALot" => (
-            ["thanks lot", "thanks alot"],
-            ["thanks a lot"],
-            "Prefer the two-word expression `thanks a lot`.",
-            "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers."
-        ),
         "WroughtIron" => (
             ["rod iron", "rot iron", "rod-iron", "rot-iron"],
             ["wrought iron"],
             "Prefer the standard term `wrought iron`.",
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
-        ),
-        "Beforehand" => (
-            ["before hand", "before-hand"],
-            ["beforehand"],
-            "Prefer the single-word adverb `beforehand`.",
-            "`Beforehand` functions as a fixed adverb meaning ‘in advance’; writing it as two words or with a hyphen is nonstandard and can jar readers."
         ),
     });
 
