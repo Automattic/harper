@@ -131,7 +131,13 @@ test-chrome-plugin: build-chrome-plugin
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
   pnpm playwright install
-  pnpm test --project chromium
+
+  # For environments without displays like CI servers or containers
+  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
+    xvfb-run --auto-servernum pnpm test --project chromium
+  else
+    pnpm test --project chromium
+  fi
 
 test-firefox-plugin: build-firefox-plugin
   #!/usr/bin/env bash
@@ -140,7 +146,12 @@ test-firefox-plugin: build-firefox-plugin
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
   pnpm playwright install
-  pnpm test --project firefox 
+  # For environments without displays like CI servers or containers
+  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
+    xvfb-run --auto-servernum pnpm test --project firefox
+  else
+    pnpm test --project firefox 
+  fi
 
 
 # Run VSCode plugin unit and integration tests.
