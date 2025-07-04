@@ -9,13 +9,13 @@ If this happens to you, please open a PR to get them in.
 PR [#343](https://github.com/Automattic/harper/pull/343) is a practical example of the ideas described here.
 
 There are two files you need to worry about.
-[`harper-core/dictionary.dict`](https://github.com/Automattic/harper/blob/master/harper-core/dictionary.dict) and [`harper-core/affixes.json`](https://github.com/Automattic/harper/blob/master/harper-core/affixes.json).
+[`harper-core/dictionary.dict`](https://github.com/Automattic/harper/blob/master/harper-core/dictionary.dict) and [`harper-core/annotations.json`](https://github.com/Automattic/harper/blob/master/harper-core/annotations.json).
 The first is a list of words, tagged with modifiers defined in the second.
 
 For example, all words, such as "move", tagged with `L`, will be expanded to two dictionary entries, "move" and "movement".
-In `affixes.json`, this expansion rule looks like this:
+In `annotations.json`, this expansion rule looks like this:
 
-```js title=affixes.json
+```js title=annotations.json
 {
 	"L": {
         // Denotes that the area of interest is at the _end_ of the base word.
