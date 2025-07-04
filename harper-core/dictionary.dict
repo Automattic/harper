@@ -1661,7 +1661,7 @@ CNBC/Og
 CNC/NVg             # computer numerical control
 CNC'd/V             # past
 CNCing/NV           # present, gerund
-CNN/ONg             # media company
+CNN/ONgS            # media company; convolutional neural network
 CNS/Ng
 CO/ONVg
 COBOL/OSg           # programming language
@@ -26733,6 +26733,7 @@ grapefruit/NgS
 grapeshot/Ng
 grapevine/~NVSg
 graph/~NVgdG
+grapheme/NSg
 graphic/~JNgS
 graphical/~JY
 graphite/~NVg
@@ -30357,6 +30358,7 @@ itemize/VGdS
 iterable/J
 iterate/VNJrXGnvdS
 iteration/~Nrg
+iteratively/R
 iterator/NS
 itinerant/~JNSg
 itinerary/~NJSg
@@ -38161,6 +38163,7 @@ pharyngitis/Ng
 pharynx/~Ng
 phase/~NVOdSgG
 phaseout/NSg
+phaser/NgS
 phat/J
 pheasant/~NgS
 phenacetin/~Ng
@@ -41058,6 +41061,7 @@ recognizably/UR
 recognize/~Vd>SGB
 recognized/~JVU
 recombination/~N
+recommender/NgS
 recompense/NVdSgG
 recompilation/N
 recompile/VNGd
@@ -43560,11 +43564,12 @@ serpentine/~JNVg
 serrate/JVXnd
 serration/Ng
 serried/VJ
-serum/~NgS
+serum/~NwgS
 servant/~NVgS
 serve/~NVWreGdS
 serve's/rW
 server/~NSg
+serverless/J
 servery/NS
 service/~NVEgS
 serviceability/Ng
@@ -43951,6 +43956,7 @@ shortcrust/J
 shortcut/~NVgS
 shortcutting/NVg
 shorten/~VzGd
+shortener/NgS
 shortening/~NVg
 shortfall/NgS
 shorthand/~NVgd
@@ -48069,7 +48075,7 @@ thralldom/Ng
 thrash/~VNzgd>SZG
 thrasher/Ng
 thrashing/VNg
-thread/~NVSgd>ZGr
+thread/~NwVSgd>ZGr
 threadbare/J
 threader/Ng
 threadlike/J
@@ -52357,6 +52363,7 @@ AliExpress/Og
 AlphaFold/Og        # Google DeepMind project
 Ambien/NSg          # insomnia treatment
 Anker/Sg
+AngularJS/Og
 Archytas/Sg         # !! please check and comment !! we also have archytas
 Automattic/Sg       # WordPress company
 Automattician/Sg
@@ -52390,6 +52397,7 @@ CRC/NgS             # cyclic redundancy check
 CRDT/NSg
 CRM/NOSg
 CTE/NS
+Captcha/OSg
 ChatGPT/Og          # OpenAI product
 ClickHouse/g
 Codeberg/ONg        # GitHub alternative
@@ -52457,8 +52465,9 @@ Golang/Sg           # programming language
 Goleman/Sg
 Gradle/Sg           # build tool
 Grafana/Sg
-Grammarly/g         # grammar checker
+Grammarly/Og         # grammar checker
 Grandey/Sg
+GraphQL/Og
 Graphviz/Sg
 Gravatar/Og
 HDR/J               # high dynamic range
@@ -52487,6 +52496,7 @@ JavaScript/ONSg     # programming language
 Javadoc/Sg
 Jetpack/Og
 Joomla/Sg
+Jupyter/Og
 KSQL/N
 KVM/NSg             # keyboard-video-mouse
 Kagi/Sg
@@ -52570,6 +52580,7 @@ OG/NgS
 ORM/NOS             # object-relational mapping
 OpenAI/Og
 OpenBSD/Og          # operating system
+OpenCV/Og
 OpenGL/Sg           # open graphics library
 OpenMetrics/Sg
 OpenPGP/Sg
@@ -52590,6 +52601,7 @@ Parth/Sg
 Patreon/OgS
 Polldaddy/Og
 Postfix/Sg
+Postgres/Og
 PowerShell/Sg       # Microsoft product
 PromQL/Sg
 PyTorch/gO          # framework
@@ -52608,6 +52620,7 @@ RPC/ONSg            # remote procedure call
 RPG/NgS             # role-playing game
 RTX/NSg
 Raytheon/Og
+ReactJS/Og
 Reddit/Og
 Rivian/Sg           # ev company
 Roumania/Og         # pre-WWII spelling
