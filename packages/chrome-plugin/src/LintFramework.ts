@@ -1,3 +1,4 @@
+import type { Lint } from 'harper.js';
 import { clone } from 'lodash-es';
 import { isBoxInScreen } from './Box';
 import Highlights from './Highlights';
@@ -17,7 +18,9 @@ export default class LintFramework {
 	private popupHandler: PopupHandler;
 	private targets: Set<Node>;
 	private scrollableAncestors: Set<HTMLElement>;
-	private frameRequested = false;
+	private lintRequested = false;
+	private renderRequested = false;
+	private lastLints: { target: HTMLElement; lints: Lint[] }[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
@@ -27,6 +30,7 @@ export default class LintFramework {
 		this.popupHandler = new PopupHandler();
 		this.targets = new Set();
 		this.scrollableAncestors = new Set();
+		this.lastLints = [];
 
 		this.updateEventCallback = () => {
 			this.update();
@@ -35,7 +39,7 @@ export default class LintFramework {
 		const timeoutCallback = () => {
 			this.update();
 
-			setTimeout(timeoutCallback, 1000);
+			setTimeout(timeoutCallback, 100);
 		};
 
 		timeoutCallback();
@@ -57,12 +61,17 @@ export default class LintFramework {
 	}
 
 	async update() {
-		// To avoid multiple redundant calls to try running at the same time.
-		if (this.frameRequested) {
+		this.requestRender();
+		this.requestLintUpdate();
+	}
+
+	async requestLintUpdate() {
+		if (this.lintRequested) {
 			return;
 		}
 
-		this.frameRequested = true;
+		// Avoid duplicate requests in the queue
+		this.lintRequested = true;
 
 		const lintResults = await Promise.all(
 			this.onScreenTargets().map(async (target) => {
@@ -85,15 +94,9 @@ export default class LintFramework {
 			}),
 		);
 
-		requestAnimationFrame(() => {
-			const boxes = lintResults.flatMap(({ target, lints }) =>
-				target ? lints.flatMap((l) => computeLintBoxes(target, l)) : [],
-			);
-			this.highlights.renderLintBoxes(boxes);
-			this.popupHandler.updateLintBoxes(boxes);
-
-			this.frameRequested = false;
-		});
+		this.lastLints = lintResults;
+		this.lintRequested = false;
+		this.requestRender();
 	}
 
 	public async addTarget(target: Node) {
@@ -154,6 +157,24 @@ export default class LintFramework {
 		for (const event of PAGE_EVENTS) {
 			window.removeEventListener(event, this.updateEventCallback);
 		}
+	}
+
+	private requestRender() {
+		if (this.renderRequested) {
+			return;
+		}
+
+		this.renderRequested = true;
+
+		requestAnimationFrame(() => {
+			const boxes = this.lastLints.flatMap(({ target, lints }) =>
+				target ? lints.flatMap((l) => computeLintBoxes(target, l)) : [],
+			);
+			this.highlights.renderLintBoxes(boxes);
+			this.popupHandler.updateLintBoxes(boxes);
+
+			this.renderRequested = false;
+		});
 	}
 }
 

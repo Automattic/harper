@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.47.0",
+	"version": "0.48.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -388,12 +388,6 @@
 					"default": true,
 					"description": "Changes `bed rap` to the proper idiom `bad rap`."
 				},
-				"harper.linters.BaitedBreath": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Ensures `bated breath` is written correctly, as `baited breath` is incorrect."
-				},
 				"harper.linters.BanTogether": {
 					"scope": "resource",
 					"type": "boolean",
@@ -429,6 +423,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the misspelling `bee there` to the proper phrase `been there`."
+				},
+				"harper.linters.Beforehand": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "`Beforehand` functions as a fixed adverb meaning ‘in advance’; writing it as two words or with a hyphen is nonstandard and can jar readers."
 				},
 				"harper.linters.BestRegards": {
 					"scope": "resource",
@@ -670,6 +670,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `devops`."
 				},
+				"harper.linters.DiscourseMarkers": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags sentences that begin with a discourse marker but omit the required following comma."
+				},
 				"harper.linters.Discuss": {
 					"scope": "resource",
 					"type": "boolean",
@@ -777,6 +783,18 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Provides a stronger word choice by replacing `very good` with `excellent` for clarity and emphasis."
+				},
+				"harper.linters.ExpandArgument": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `arg` to the full word `argument` for clarity."
+				},
+				"harper.linters.ExpandArguments": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `args` to the full word `arguments` for clarity."
 				},
 				"harper.linters.ExpandBecause": {
 					"scope": "resource",
@@ -1882,6 +1900,12 @@
 					"default": true,
 					"description": "Checks for the correct official name of the capital of Benin."
 				},
+				"harper.linters.PossessiveNoun": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Use an apostrophe and `s` to form a noun’s possessive."
+				},
 				"harper.linters.PossessiveYour": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1947,6 +1971,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `regardless`."
+				},
+				"harper.linters.Regionalisms": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Regionalisms"
 				},
 				"harper.linters.RepeatedWords": {
 					"scope": "resource",
@@ -2475,6 +2505,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `worse ever` to `worst ever` for proper comparative usage."
+				},
+				"harper.linters.WroughtIron": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
 				}
 			}
 		}
