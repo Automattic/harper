@@ -1010,8 +1010,8 @@
 # D/P+ NSg+   ISg+ V/J      NPr/V/J R      P  D   NSg/V/J P  ISg/D$+ NSg+     .
 >
 #
-> “ I    suppose she  talks  , and — eats  , and everything . ”
-# . ISg+ V       ISg+ NPl/V+ . V/C . NPl/V . V/C NSg/I/V+   . .
+> “ I    suppose she  talks  , and — eats , and everything . ”
+# . ISg+ V       ISg+ NPl/V+ . V/C . V    . V/C NSg/I/V+   . .
 >
 #
 > “ Oh    , yes   . ” She  looked at    me       absently . “ Listen , Nick   ; let   me       tell  you    what   I    said
@@ -4254,8 +4254,8 @@
 # V/J/P+ . V/J    P    NPl/V+  V/J/P NPr/V/J/C+ NSg/J   . ISg+ VX    V      NSg/I/J/C NPr/V/J NSg/R ISg+ V/J  D+
 > night  they shot     Rosy     Rosenthal there . It       was six of us       at    the table  , and Rosy
 # NSg/V+ IPl+ NSg/V/J+ NSg/V/J+ NPr+      W?    . NPr/ISg+ V   NSg P  NPr/IPl+ NSg/P D+  NSg/V+ . V/C NSg/V/J
-> had eat   and drunk   a    lot    all       evening . When    it       was almost morning the waiter came
-# V   NSg/V V/C NSg/V/J D/P+ NPr/V+ NSg/I/J/C NSg/V+  . NSg/I/C NPr/ISg+ V   NSg    NSg/V   D+  NSg/V+ NSg/V/P
+> had eat and drunk   a    lot    all       evening . When    it       was almost morning the waiter came
+# V   V   V/C NSg/V/J D/P+ NPr/V+ NSg/I/J/C NSg/V+  . NSg/I/C NPr/ISg+ V   NSg    NSg/V   D+  NSg/V+ NSg/V/P
 > up        to him with a   funny look   and says  somebody wants to speak to him  outside    .
 # NSg/V/J/P P  ISg P    D/P NSg/J NSg/V+ V/C NPl/V NSg/I+   NPl/V P  NSg/V P  ISg+ NSg/V/J/P+ .
 > ‘          All       right   , ’ says  Rosy    , and begins to get   up        , and I    pulled him  down      in      his
@@ -4322,8 +4322,8 @@
 #
 > A   succulent hash  arrived , and Mr   . Wolfshiem , forgetting the more      sentimental
 # D/P NSg/J     NSg/V V/J     . V/C NSg+ . ?         . NSg/V      D   NPr/I/V/J J
-> atmosphere of the old    Metropole , began to eat   with ferocious delicacy . His     eyes   ,
-# NSg        P  D+  NSg/J+ ?         . V     P  NSg/V P    J         NSg+     . ISg/D$+ NPl/V+ .
+> atmosphere of the old    Metropole , began to eat with ferocious delicacy . His     eyes   ,
+# NSg        P  D+  NSg/J+ ?         . V     P  V   P    J         NSg+     . ISg/D$+ NPl/V+ .
 > meanwhile , roved very slowly all       around the room     — he       completed the arc      by      turning
 # NSg       . V/J   J/R  R      NSg/I/J/C J/P    D+  NSg/V/J+ . NPr/ISg+ V/J       D+  NPr/V/J+ NSg/J/P NSg/V
 > to inspect the people directly behind  . I    think that          , except for my  presence , he
@@ -4552,8 +4552,8 @@
 #
 > “ How’ve you    been  , anyhow ? ” demanded Tom   of me       . “ How’d you    happen to come    up        this
 # . ?      ISgPl+ NSg/V . J      . . V/J      NPr/V P  NPr/ISg+ . . W?    ISgPl+ V      P  NSg/V/P NSg/V/J/P I/Ddem+
-> far     to eat   ? ”
-# NSg/V/J P  NSg/V . .
+> far     to eat ? ”
+# NSg/V/J P  V   . .
 >
 #
 > “ I’ve been  having lunch  with Mr   . Gatsby . ”
@@ -5502,8 +5502,8 @@
 # J/P   NSg/V/J/P+ D/P+ NSg+ . D+  NPr/V+ V     P     . V/C D   NSg$     NSg/V/J    V/J
 > Gatsby’s drive with the raw     material for his     servants ’ dinner — I    felt    sure he
 # NSg$     NSg/V P    D   NSg/V/J NSg/V/J  C/P ISg/D$+ NPl/V+   . NSg/V+ . ISg+ NSg/V/J J    NPr/ISg+
-> wouldn’t eat   a    spoonful . A    maid began opening the upper windows of his     house  ,
-# VX       NSg/V D/P+ NSg+     . D/P+ NSg+ V     NSg/V/J D   NSg/J NPrPl/V P  ISg/D$+ NPr/V+ .
+> wouldn’t eat a    spoonful . A    maid began opening the upper windows of his     house  ,
+# VX       V   D/P+ NSg+     . D/P+ NSg+ V     NSg/V/J D   NSg/J NPrPl/V P  ISg/D$+ NPr/V+ .
 > appeared momentarily in      each , and , leaning from the large central bay      , spat
 # V/J      R           NPr/J/P D    . V/C . NSg/V   P    D   NSg/J NPr/J+  NSg/V/J+ . NSg/V
 > meditatively into the garden   . It       was time    I    went   back    . While     the rain   continued
@@ -6594,8 +6594,8 @@
 #
 > Tom    appeared from his     oblivion as    we   were  sitting down      to supper   together . “ Do
 # NPr/V+ V/J      P    ISg/D$+ NSg/V+   NSg/R IPl+ NSg/V NSg/V/J NSg/V/J/P P  NSg/V/J+ J        . . NSg/VX
-> you    mind   if    I    eat   with some  people over      here    ? ” he       said . “ A   fellow’s getting off
-# ISgPl+ NSg/V+ NSg/C ISg+ NSg/V P    I/J/R NSg/V+ NSg/V/J/P NSg/J/R . . NPr/ISg+ V/J+ . . D/P NSg$     NSg/V   NSg/V/J/P
+> you    mind   if    I    eat with some  people over      here    ? ” he       said . “ A   fellow’s getting off
+# ISgPl+ NSg/V+ NSg/C ISg+ V   P    I/J/R NSg/V+ NSg/V/J/P NSg/J/R . . NPr/ISg+ V/J+ . . D/P NSg$     NSg/V   NSg/V/J/P
 > some   funny  stuff  . ”
 # I/J/R+ NSg/J+ NSg/V+ . .
 >
@@ -9637,7 +9637,7 @@
 >
 #
 > “ I    can’t describe to you    how   surprised I    was to find  out         I    loved her     , old    sport  .
-# . ISg+ VX    NSg/V    P  ISgPl+ NSg/C V/J       ISg+ V   P  NSg/V NSg/V/J/R/P ISg+ V/J   ISg/D$+ . NSg/J+ NSg/V+ .
+# . ISg+ VX    V        P  ISgPl+ NSg/C V/J       ISg+ V   P  NSg/V NSg/V/J/R/P ISg+ V/J   ISg/D$+ . NSg/J+ NSg/V+ .
 > I    even    hoped for a    while      that          she’d throw me       over      , but     she  didn’t , because she
 # ISg+ NSg/V/J V/J   C/P D/P+ NSg/V/C/P+ NSg/I/C/Ddem+ W?    NSg/V NPr/ISg+ NSg/V/J/P . NSg/C/P ISg+ V      . C/P     ISg+
 > was in      love  with me       too . She  thought I    knew a    lot    because I    knew different
@@ -10340,8 +10340,8 @@
 #
 > His     movements — he       was on  foot   all       the time     — were  afterward traced to Port
 # ISg/D$+ NPl       . NPr/ISg+ V   J/P NSg/V+ NSg/I/J/C D+  NSg/V/J+ . NSg/V R/Am      V/J    P  NPr/V/J
-> Roosevelt and then    to Gad’s Hill   , where he       bought a    sandwich that          he       didn’t eat   ,
-# NPr+      V/C NSg/J/C P  ?     NPr/V+ . NSg/C NPr/ISg+ NSg/V  D/P+ NSg/V/J+ NSg/I/C/Ddem+ NPr/ISg+ V      NSg/V .
+> Roosevelt and then    to Gad’s Hill   , where he       bought a    sandwich that          he       didn’t eat ,
+# NPr+      V/C NSg/J/C P  ?     NPr/V+ . NSg/C NPr/ISg+ NSg/V  D/P+ NSg/V/J+ NSg/I/C/Ddem+ NPr/ISg+ V      V   .
 > and a   cup   of coffee   . He       must  have   been  tired and walking slowly , for he       didn’t
 # V/C D/P NSg/V P  NSg/V/J+ . NPr/ISg+ NSg/V NSg/VX NSg/V V/J   V/C NSg/V/J R      . C/P NPr/ISg+ V
 > reach Gad’s Hill   until noon   . Thus far     there was no    difficulty in      accounting for
@@ -10718,10 +10718,10 @@
 # NPl/V+ NPr/ISg+ V     P  NSg/V NSg/I/J/C R           NSg/P ISg/D$+ V/J    NPr/V/J/Am NPr/V+ NSg/I/C/Ddem+ ISg+ V
 > difficulty in      getting off       his     coat   . He       was on  the point of collapse , so        I    took
 # NSg+       NPr/J/P NSg/V   NSg/V/J/P ISg/D$+ NSg/V+ . NPr/ISg+ V   J/P D   NSg/V P  NSg/V+   . NSg/I/J/C ISg+ V
-> him  into the music    room     and made  him  sit   down      while     I    sent  for something  to eat   .
-# ISg+ P    D+  NSg/V/J+ NSg/V/J+ V/C NSg/V ISg+ NSg/V NSg/V/J/P NSg/V/C/P ISg+ NSg/V C/P NSg/I/V/J+ P+ NSg/V .
-> But     he       wouldn’t eat   , and the glass of milk   spilled from his     trembling hand   .
-# NSg/C/P NPr/ISg+ VX       NSg/V . V/C D   NPr/V P  NSg/V+ V/J     P    ISg/D$+ V         NSg/V+ .
+> him  into the music    room     and made  him  sit   down      while     I    sent  for something  to eat .
+# ISg+ P    D+  NSg/V/J+ NSg/V/J+ V/C NSg/V ISg+ NSg/V NSg/V/J/P NSg/V/C/P ISg+ NSg/V C/P NSg/I/V/J+ P+ V   .
+> But     he       wouldn’t eat , and the glass of milk   spilled from his     trembling hand   .
+# NSg/C/P NPr/ISg+ VX       V   . V/C D   NPr/V P  NSg/V+ V/J     P    ISg/D$+ V         NSg/V+ .
 >
 #
 > “ I    saw   it       in      the Chicago newspaper , ” he       said . “ It       was all       in      the Chicago
@@ -11012,8 +11012,8 @@
 # V   P  NSg/V J/P V       ISg/D$+ NSg/V/J+ C/P     NPr/ISg+ V        NSg/V I/J/R+ NSg/J+  NPl/V+  .
 > First   time     I    saw   him  was when    he       come    into Winebrenner’s poolroom at    Forty - third
 # NSg/V/J NSg/V/J+ ISg+ NSg/V ISg+ V   NSg/I/C NPr/ISg+ NSg/V/P P    ?             NSg      NSg/P NSg/J . NSg/V/J
-> Street  and asked for a    job    . He       hadn’t eat   anything for a   couple  of days . ‘          Come
-# NSg/V/J V/C V/J   C/P D/P+ NPr/V+ . NPr/ISg+ V      NSg/V NSg/I/V  C/P D/P NSg/V/J P  NPl+ . Unlintable NSg/V/P
+> Street  and asked for a    job    . He       hadn’t eat anything for a   couple  of days . ‘          Come
+# NSg/V/J V/C V/J   C/P D/P+ NPr/V+ . NPr/ISg+ V      V   NSg/I/V  C/P D/P NSg/V/J P  NPl+ . Unlintable NSg/V/P
 > on  have   some  lunch  with me       , ’ I    sid  . He       ate   more      than four dollars ’ worth   of food
 # J/P NSg/VX I/J/R NSg/V+ P    NPr/ISg+ . . ISg+ NPr+ . NPr/ISg+ NSg/V NPr/I/V/J C/P  NSg  NPl+    . NSg/V/J P  NSg+
 > in      half       an   hour . ”

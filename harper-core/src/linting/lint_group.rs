@@ -70,6 +70,7 @@ use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
+use super::possessive_noun::PossessiveNoun;
 use super::possessive_your::PossessiveYour;
 use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
@@ -476,6 +477,9 @@ impl LintGroup {
             SentenceCapitalization::new(dictionary.clone()),
         );
         out.config.set_rule_enabled("SentenceCapitalization", true);
+
+        out.add("PossessiveNoun", PossessiveNoun::new(dictionary.clone()));
+        out.config.set_rule_enabled("PossessiveNoun", true);
 
         out.add("Regionalisms", Regionalisms::new(dialect));
         out.config.set_rule_enabled("Regionalisms", true);

@@ -2710,6 +2710,15 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (10 priority)
+Message: |
+    2420 | “How the creatures order one about, and make one repeat lessons!” thought Alice;
+         |          ^~~~~~~~~ Use an apostrophe and `s` to form a noun’s possessive.
+Suggest:
+  - Replace with: “creature's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
