@@ -75,6 +75,7 @@ use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
+use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
 use super::save_to_safe::SaveToSafe;
 use super::sentence_capitalization::SentenceCapitalization;
@@ -475,6 +476,9 @@ impl LintGroup {
             SentenceCapitalization::new(dictionary.clone()),
         );
         out.config.set_rule_enabled("SentenceCapitalization", true);
+
+        out.add("Regionalisms", Regionalisms::new(dialect));
+        out.config.set_rule_enabled("Regionalisms", true);
 
         out
     }

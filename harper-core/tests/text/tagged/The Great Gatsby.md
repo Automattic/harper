@@ -11,7 +11,7 @@
 >
 #
 > In      my  younger and more      vulnerable years my  father gave me       some   advice that          I’ve
-# NPr/J/P D$+ J+      V/C NPr/I/V/J J          NPl+  D$+ NPr/V+ V    NPr/ISg+ I/J/R+ NSg/V+ NSg/I/C/Ddem+ W?
+# NPr/J/P D$+ J+      V/C NPr/I/V/J J          NPl+  D$+ NPr/V+ V    NPr/ISg+ I/J/R+ NSg+   NSg/I/C/Ddem+ W?
 > been  turning over      in      my  mind   ever since .
 # NSg/V NSg/V   NSg/V/J/P NPr/J/P D$+ NSg/V+ J+   C/P+  .
 >
@@ -73,7 +73,7 @@
 > everything for which I    have   an   unaffected scorn  . If    personality is an  unbroken
 # NSg/I/V+   C/P I/C+  ISg+ NSg/VX D/P+ NSg/V/J+   NSg/V+ . NSg/C NSg+        VL D/P V/J
 > series of successful gestures , then    there was something gorgeous about him  , some
-# NSg    P  J+         NPl/V+   . NSg/J/C +     V   NSg/I/V/J J        J/P   ISg+ . I/J/R
+# NSgPl  P  J+         NPl/V+   . NSg/J/C +     V   NSg/I/V/J J        J/P   ISg+ . I/J/R
 > heightened sensitivity to the promises of life   , as    if    he       were  related to one       of
 # V/J        NSg+        P  D   NPl/V    P  NSg/V+ . NSg/R NSg/C NPr/ISg+ NSg/V J       P  NSg/I/V/J P
 > those   intricate machines that          register earthquakes ten thousand miles  away . This
@@ -191,7 +191,7 @@
 > Midas and Morgan and Mæcenas knew . And I    had the high    intention of reading many
 # NPr   V/C NPr+   V/C ?       V    . V/C ISg+ V   D   NSg/V/J NSg/V     P  NPr/V   NSg/I/J/D+
 > other    books  besides . I    was rather  literary in      college — one       year I    wrote a   series
-# NSg/V/J+ NPl/V+ W?      . ISg+ V   NPr/V/J J        NPr/J/P NSg+    . NSg/I/V/J NSg+ ISg+ V     D/P NSg
+# NSg/V/J+ NPl/V+ W?      . ISg+ V   NPr/V/J J        NPr/J/P NSg+    . NSg/I/V/J NSg+ ISg+ V     D/P NSgPl
 > of very solemn and obvious editorials for the Yale News   — and now       I    was going   to
 # P  J/R  J      V/C J       NPl        C/P D+  NPr+ NPl/V+ . V/C NPr/V/J/C ISg+ V   NSg/V/J P
 > bring back    all       such  things into my  life   and become again that         most    limited of
@@ -571,7 +571,7 @@
 > Evidently it       surprised her     as    much    as    it       did me      , for she  yawned and with a
 # R         NPr/ISg+ V/J       ISg/D$+ NSg/R NSg/I/J NSg/R NPr/ISg+ V   NPr/ISg . C/P ISg+ V/J    V/C P    D/P
 > series of rapid , deft movements stood up        into the room     .
-# NSg    P  NSg/J . J    NPl+      V     NSg/V/J/P P    D+  NSg/V/J+ .
+# NSgPl  P  NSg/J . J    NPl+      V     NSg/V/J/P P    D+  NSg/V/J+ .
 >
 #
 > “ I’m stiff   , ” she  complained , “ I’ve been  lying   on  that          sofa  for as    long    as    I    can
@@ -1638,8 +1638,8 @@
 # IPl+ NSg/V NSg/V/J/P P  NSg/V/J+ NSg    . NSg/V/J V/C NSg/J . NSg    NSg/J    . J/P D+  NPr/V+
 > Sunday afternoon . I    wouldn’t have   been  surprised to see   a   great flock of white
 # NSg/V+ NSg+      . ISg+ VX       NSg/VX NSg/V V/J       P  NSg/V D/P NSg/J NSg/V P  NPr/V/J
-> sheep turn  the corner   .
-# NPl+  NSg/V D   NSg/V/J+ .
+> sheep  turn  the corner   .
+# NSgPl+ NSg/V D   NSg/V/J+ .
 >
 #
 > “ Hold    on  , ” I    said , “ I    have   to leave you    here     . ”
@@ -2481,7 +2481,7 @@
 > people of whom I    asked his     whereabouts stared at    me       in      such  an  amazed way    , and
 # NSg/V  P  I+   ISg+ V/J   ISg/D$+ NSg+        V/J    NSg/P NPr/ISg+ NPr/J/P NSg/I D/P V/J    NSg/J+ . V/C
 > denied so        vehemently any   knowledge of his     movements , that         I    slunk off       in      the
-# V/J    NSg/I/J/C R          I/R/D NSg/V     P  ISg/D$+ NPl+      . NSg/I/C/Ddem ISg+ NSg/V NSg/V/J/P NPr/J/P D
+# V/J    NSg/I/J/C R          I/R/D NSg       P  ISg/D$+ NPl+      . NSg/I/C/Ddem ISg+ NSg/V NSg/V/J/P NPr/J/P D
 > direction of the cocktail table  — the only  place in      the garden   where a    single   man
 # NSg       P  D+  NSg/V/J+ NSg/V+ . D   J/R/C NSg/V NPr/J/P D+  NSg/V/J+ NSg/C D/P+ NSg/V/J+ NPr/V/J+
 > could  linger without looking purposeless and  alone .
@@ -4485,15 +4485,15 @@
 > “ Meyer Wolfshiem ? No     , he’s a    gambler . ” Gatsby hesitated , then    added coolly :
 # . NPr   ?         . NPr/P+ . NSg$ D/P+ NSg/J+  . . NPr    V/J       . NSg/J/C V/J   R      .
 > “ He’s the man      who    fixed the World’s Series back    in      1919 . ”
-# . NSg$ D+  NPr/V/J+ NPr/I+ V/J   D+  NSg$+   NSg+   NSg/V/J NPr/J/P #    . .
+# . NSg$ D+  NPr/V/J+ NPr/I+ V/J   D+  NSg$+   NSgPl+ NSg/V/J NPr/J/P #    . .
 >
 #
 > “ Fixed the World’s Series ? ” I    repeated .
-# . V/J   D+  NSg$+   NSg+   . . ISg+ V/J+     .
+# . V/J   D+  NSg$+   NSgPl+ . . ISg+ V/J+     .
 >
 #
 > The idea staggered me       . I    remembered , of course , that         the World’s Series had been
-# D+  NSg  V/J       NPr/ISg+ . ISg+ V/J        . P  NSg/V+ . NSg/I/C/Ddem D+  NSg$+   NSg+   V   NSg/V
+# D+  NSg  V/J       NPr/ISg+ . ISg+ V/J        . P  NSg/V+ . NSg/I/C/Ddem D+  NSg$+   NSgPl+ V   NSg/V
 > fixed in      1919 , but     if    I    had thought of it       at    all       I    would  have   thought of it       as    a
 # V/J   NPr/J/P #    . NSg/C/P NSg/C ISg+ V   NSg/V   P  NPr/ISg+ NSg/P NSg/I/J/C ISg+ NSg/VX NSg/VX NSg/V   P  NPr/ISg+ NSg/R D/P+
 > thing  that          merely happened , the end   of some   inevitable chain  . It       never occurred
@@ -5057,7 +5057,7 @@
 >
 #
 > “ Oh    , it       isn’t about that         . At    least — ’ ’ He       fumbled with a   series of beginnings .
-# . NPr/V . NPr/ISg+ NSg/V J/P   NSg/I/C/Ddem . NSg/P NSg/J . . . NPr/ISg+ V/J     P    D/P NSg    P  NPl/V+     .
+# . NPr/V . NPr/ISg+ NSg/V J/P   NSg/I/C/Ddem . NSg/P NSg/J . . . NPr/ISg+ V/J     P    D/P NSgPl  P  NPl/V+     .
 > “ Why   , I    thought — why   , look  here    , old    sport  , you    don’t make  much    money  , do     you    ? ”
 # . NSg/V . ISg+ NSg/V   . NSg/V . NSg/V NSg/J/R . NSg/J+ NSg/V+ . ISgPl+ V     NSg/V NSg/I/J NSg/J+ . NSg/VX ISgPl+ . .
 >
@@ -5213,7 +5213,7 @@
 > Clay’s “ Economics , ” starting at    the Finnish tread that          shook   the kitchen floor  ,
 # NSg$   . NSg+      . . V        NSg/P D+  NSg/J+  NSg/V NSg/I/C/Ddem+ NSg/V/J D+  NSg/V+  NSg/V+ .
 > and peering toward the bleared windows  from time     to time    as    if    a   series of
-# V/C V       J/P    D+  ?       NPrPl/V+ P    NSg/V/J+ P  NSg/V/J NSg/R NSg/C D/P NSg    P
+# V/C V       J/P    D+  ?       NPrPl/V+ P    NSg/V/J+ P  NSg/V/J NSg/R NSg/C D/P NSgPl  P
 > invisible but     alarming happenings were  taking  place outside   . Finally he       got up
 # J         NSg/C/P V/J      W?         NSg/V NSg/V/J NSg/V NSg/V/J/P . R       NPr/ISg+ V   NSg/V/J/P
 > and informed me       , in      an   uncertain voice  , that         he       was going   home     .
@@ -6084,8 +6084,8 @@
 #
 > For over      a    year he       had been  beating his     way    along the south    shore of Lake
 # C/P NSg/V/J/P D/P+ NSg+ NPr/ISg+ V   NSg/V NSg/V   ISg/D$+ NSg/J+ P     D   NPr/V/J+ NSg/V P  NSg/V+
-> Superior as    a   clam    - digger and a   salmon   - fisher or    in      any    other    capacity that
-# NPr/J    NSg/R D/P NSg/V/J . NSg    V/C D/P NSg/V/J+ . NPr/J  NPr/C NPr/J/P I/R/D+ NSg/V/J+ NSg/J+   NSg/I/C/Ddem+
+> Superior as    a   clam    - digger and a   salmon     - fisher or    in      any    other    capacity that
+# NPr/J    NSg/R D/P NSg/V/J . NSg    V/C D/P NSgPl/V/J+ . NPr/J  NPr/C NPr/J/P I/R/D+ NSg/V/J+ NSg/J+   NSg/I/C/Ddem+
 > brought him  food and bed      . His     brown   , hardening body   lived naturally through the
 # V       ISg+ NSg  V/C NSg/V/J+ . ISg/D$+ NPr/V/J . V         NSg/V+ V/J   R         NSg/J/P D
 > half       - fierce , half       - lazy    work  of the bracing days . He       knew women early   , and since
@@ -6438,8 +6438,8 @@
 # NSg/V  NSg/C NPr/J/P D+  NPr/V+ NPr/ISg+ V+  NPr+  . NSg/J/P NPr/V+ . ISg+ NPr/VX NSg/VX NSg/J . V/J       NPr/J/P D$+
 > ideas , but     women run   around too much    these   days to suit  me       . They meet    all       kinds
 # NPl+  . NSg/C/P NPl+  NSg/V J/P    W?  NSg/I/J I/Ddem+ NPl+ P  NSg/V NPr/ISg+ . IPl+ NSg/V/J NSg/I/J/C NSg
-> of crazy  fish   . ”
-# P  NSg/J+ NPl/V+ . .
+> of crazy  fish     . ”
+# P  NSg/J+ NSgPl/V+ . .
 >
 #
 > Suddenly Mr  . Sloane and the lady   walked down      the steps  and mounted their horses .
@@ -10929,7 +10929,7 @@
 > couldn’t seem to reach him  any    other    way    . The door   that          I    pushed open    , on  the
 # V        V    P  NSg/V ISg+ I/R/D+ NSg/V/J+ NSg/J+ . D+  NSg/V+ NSg/I/C/Ddem+ ISg+ V/J    NSg/V/J . J/P D
 > advice of an   elevator boy    , was marked “ The Swastika Holding Company , ” and at
-# NSg/V  P  D/P+ NSg/V+   NSg/V+ . V   V/J    . D   NSg      NSg/V   NSg/V   . . V/C NSg/P
+# NSg    P  D/P+ NSg/V+   NSg/V+ . V   V/J    . D   NSg      NSg/V   NSg/V   . . V/C NSg/P
 > first   there didn’t seem to be     any   one        inside   . But     when    I’d shouted “ hello ”
 # NSg/V/J +     V      V    P  NSg/VX I/R/D NSg/I/V/J+ NSg/J/P+ . NSg/C/P NSg/I/C W?  V/J     . NSg/V .
 > several times in      vain , an  argument broke   out         behind  a    partition , and presently a
@@ -11047,7 +11047,7 @@
 >
 #
 > I    wondered if    this    partnership had included the World’s Series transaction
-# ISg+ V/J      NSg/C I/Ddem+ NSg+        V   V/J      D   NSg$+   NSg+   NSg
+# ISg+ V/J      NSg/C I/Ddem+ NSg+        V   V/J      D   NSg$+   NSgPl+ NSg
 > in      1919 .
 # NPr/J/P #    .
 >
@@ -11610,8 +11610,8 @@
 # NPr/V/J+ NPl/V+ D/P V/J     NSg/V+ . V/J      NSg/J/P I/J/R NSg/V+ P    D/P NSg/V P  NSg/V/J+ . V
 > out         clearly in      the moonlight , and I    erased it       , drawing my  shoe   raspingly along
 # NSg/V/J/R/P R       NPr/J/P D+  NSg/V+    . V/C ISg+ V/J    NPr/ISg+ . NSg/V   D$+ NSg/V+ ?         P
-> the stone    . Then    I    wandered down      to the beach  and sprawled out         on  the sand     .
-# D   NPr/V/J+ . NSg/J/C ISg+ V/J      NSg/V/J/P P  D+  NPr/V+ V/C V/J      NSg/V/J/R/P J/P D+  NSg/V/J+ .
+> the stone        . Then    I    wandered down      to the beach  and sprawled out         on  the sand     .
+# D   NPrSgPl/V/J+ . NSg/J/C ISg+ V/J      NSg/V/J/P P  D+  NPr/V+ V/C V/J      NSg/V/J/R/P J/P D+  NSg/V/J+ .
 >
 #
 > Most     of the big      shore  places were  closed now       and there were  hardly any   lights

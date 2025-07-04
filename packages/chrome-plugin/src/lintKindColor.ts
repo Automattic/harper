@@ -10,8 +10,8 @@ const LINT_KIND_COLORS = {
 	Repetition: '#00A67C', // Green-cyan
 	Spelling: '#EE4266', // Pink-red
 	Style: '#FFD23F', // Yellow
-	WordChoice: '#228B22', // Forest green
 	Typo: '#FF6B35', // Vibrant orange-red
+	WordChoice: '#228B22', // Forest green
 } as const;
 
 // Export the type for the lint kind keys
