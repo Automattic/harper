@@ -144,7 +144,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                     || prev_tok
                         .span
                         .get_content(document.get_source())
-                        .eq_ignore_ascii_case_chars(&['s', 'e', 't', 't', 'i', 'n', 'g', 's'])
+                        .eq_ignore_ascii_case_str("settings")
                 {
                     continue;
                 }
