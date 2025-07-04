@@ -34,7 +34,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
         let mut lints = Vec::new();
         for i in document.iter_noun_indices() {
             // It would be handy if there could be a dict flag for nouns which are compounds of phrasal verbs.
-            // Instead let's use a few heuristics.
+            // Instead, let's use a few heuristics.
             let token = document.get_token(i).unwrap();
             // * Can't also be a proper noun or a real verb.
             if token.kind.is_proper_noun() || token.kind.is_verb() {
@@ -139,7 +139,13 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                 }
 
                 // "dictionary lookup" is not a mistake but "couples breakup" is.
-                if prev_tok.kind.is_noun() && !prev_tok.kind.is_plural_noun() {
+                // But "settings plugin" is not.
+                if prev_tok.kind.is_noun() && !prev_tok.kind.is_plural_noun()
+                    || prev_tok
+                        .span
+                        .get_content(document.get_source())
+                        .eq_ignore_ascii_case_str("settings")
+                {
                     continue;
                 }
 
@@ -406,6 +412,15 @@ mod tests {
     fn dont_flag_all_caps() {
         assert_lint_count(
             "I WILL NEVER BREAKUP WITH GYM. WE JUST SEEM TO WORKOUT.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn false_positive_issue_1495() {
+        assert_lint_count(
+            "Color schemes are available by using the Style Settings plugin.",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
