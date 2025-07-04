@@ -17,7 +17,7 @@
 		"fmt": "prettier --write '**/*.{svelte,ts,json,css,scss,md}'",
 		"zip-for-chrome": "TARGET_BROWSER=chrome npm run build && node src/zip.js harper-chrome-plugin.zip",
 		"zip-for-firefox": "TARGET_BROWSER=firefox npm run build && node src/zip.js harper-firefox-plugin.zip",
-		"test": "playwright test"
+		"test": "playwright test --headed"
 	},
 	"devDependencies": {
 		"@crxjs/vite-plugin": "^2.0.0-beta.26",
@@ -34,6 +34,7 @@
 		"gulp": "^5.0.0",
 		"gulp-zip": "^6.0.0",
 		"http-server": "^14.1.1",
+		"playwright-webextext": "^0.0.4",
 		"prettier": "^3.1.0",
 		"prettier-plugin-svelte": "^3.2.6",
 		"rollup-plugin-copy": "^3.5.0",

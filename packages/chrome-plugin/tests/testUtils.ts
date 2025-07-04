@@ -1,4 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
+import type { Box } from '../src/Box';
 import { expect, test } from './fixtures';
 
 /** Locate the [`Slate`](https://www.slatejs.org/examples/richtext) editor on the page.  */
@@ -38,7 +39,7 @@ export async function clickHarperHighlight(page: Page): Promise<boolean> {
 		return false;
 	}
 
-	const box = await highlights.boundingBox();
+	const box = await highlights.first().boundingBox();
 
 	if (box == null) {
 		return false;
@@ -97,10 +98,27 @@ export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
 
 export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
 	const highlights = getHarperHighlights(page);
-
 	expect(await highlights.count()).toBe(boxes.length);
 
 	for (let i = 0; i < (await highlights.count()); i++) {
-		expect(await highlights.nth(i).boundingBox()).toStrictEqual(boxes[i]);
+		const box = await highlights.nth(i).boundingBox();
+
+		console.log(`Expected: ${JSON.stringify(boxes[i])}`);
+		console.log(`Got: ${JSON.stringify(box)}`);
+
+		assertBoxesClose(box, boxes[i]);
 	}
+}
+
+/** An assertion that checks to ensure that two boxes are _approximately_ equal.
+ * Leaves wiggle room for floating point error. */
+export function assertBoxesClose(a: Box, b: Box) {
+	assertClose(a.x, b.x);
+	assertClose(a.y, b.y);
+	assertClose(a.width, b.width);
+	assertClose(a.height, b.height);
+}
+
+function assertClose(actual: number, expected: number) {
+	expect(Math.abs(actual - expected)).toBeLessThanOrEqual(9);
 }

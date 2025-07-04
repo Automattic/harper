@@ -166,14 +166,7 @@ export default class LintFramework {
 
 		this.renderRequested = true;
 
-		// Detect if the event loop is too busy by comparing the render delay.
-		const start = performance.now();
-
 		requestAnimationFrame(() => {
-			const end = performance.now();
-
-			console.log(end - start);
-
 			const boxes = this.lastLints.flatMap(({ target, lints }) =>
 				target ? lints.flatMap((l) => computeLintBoxes(target, l)) : [],
 			);

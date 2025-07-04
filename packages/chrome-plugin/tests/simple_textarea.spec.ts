@@ -12,7 +12,7 @@ const TEST_PAGE_URL = 'http://localhost:8081/simple_textarea.html';
 testBasicSuggestionTextarea(TEST_PAGE_URL);
 testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
 
-test('Wraps correctly', async ({ page }) => {
+test('Wraps correctly', async ({ page }, testInfo) => {
 	await page.goto(TEST_PAGE_URL);
 
 	const editor = getTextarea(page);
@@ -23,12 +23,19 @@ test('Wraps correctly', async ({ page }) => {
 
 	await page.waitForTimeout(6000);
 
-	await assertHarperHighlightBoxes(page, [
-		{ height: 19, width: 24, x: 241.90625, y: 27 },
-		{ height: 19, width: 48, x: 233.90625, y: 44 },
-		{ height: 19, width: 8, x: 281.90625, y: 44 },
-		{ height: 19, width: 8, x: 10, y: 61 },
-	]);
+	if (testInfo.project.name == 'chromium') {
+		await assertHarperHighlightBoxes(page, [
+			{ height: 19, width: 24, x: 241.90625, y: 27 },
+			{ x: 233.90625, y: 44, width: 48, height: 19 },
+			{ x: 281.90625, y: 44, width: 8, height: 19 },
+			{ x: 10, y: 61, width: 8, height: 19 },
+		]);
+	} else {
+		await assertHarperHighlightBoxes(page, [
+			{ x: 218.8000030517578, y: 26, width: 21.600006103515625, height: 17 },
+			{ x: 10, y: 71, width: 57.599998474121094, height: 17 },
+		]);
+	}
 });
 
 test('Scrolls correctly', async ({ page }) => {

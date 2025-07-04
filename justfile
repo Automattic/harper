@@ -131,7 +131,17 @@ test-chrome-plugin: build-chrome-plugin
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
   pnpm playwright install
-  pnpm test
+  pnpm test --project chromium
+
+test-firefox-plugin: build-firefox-plugin
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  pnpm install
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+  pnpm playwright install
+  pnpm test --project firefox 
+
 
 # Run VSCode plugin unit and integration tests.
 test-vscode:
