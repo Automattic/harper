@@ -1,5 +1,7 @@
 use crate::{
-    expr::{Expr, SequenceExpr}, linting::{ExprLinter, Lint, LintKind, Suggestion}, Token, TokenStringExt
+    Token, TokenStringExt,
+    expr::{Expr, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct AdjectiveDoubleDegree {
@@ -13,7 +15,10 @@ impl Default for AdjectiveDoubleDegree {
                 |tok: &Token, _src: &[char]| {
                     eprintln!("🍅 '{:?}'", tok.span.get_content_string(_src));
                     // tok.kind.is_comparative_adjective() || tok.kind.is_superlative_adjective()
-                    let (cmp, sup) = (tok.kind.is_comparative_adjective(), tok.kind.is_superlative_adjective());
+                    let (cmp, sup) = (
+                        tok.kind.is_comparative_adjective(),
+                        tok.kind.is_superlative_adjective(),
+                    );
                     eprintln!("🍅🍅 '{:?}'", (cmp, sup));
                     cmp || sup
                 },
@@ -42,7 +47,9 @@ impl ExprLinter for AdjectiveDoubleDegree {
 #[cfg(test)]
 mod tests {
     use super::AdjectiveDoubleDegree;
-    use crate::linting::tests::{assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+    };
 
     #[test]
     fn flag_more_prettier() {
@@ -51,7 +58,11 @@ mod tests {
 
     #[test]
     fn fix_more_prettier() {
-        assert_suggestion_result("more prettier", AdjectiveDoubleDegree::default(), "prettier");
+        assert_suggestion_result(
+            "more prettier",
+            AdjectiveDoubleDegree::default(),
+            "prettier",
+        );
     }
 
     #[test]
@@ -61,7 +72,11 @@ mod tests {
 
     #[test]
     fn fix_most_prettiest() {
-        assert_suggestion_result("most prettiest", AdjectiveDoubleDegree::default(), "prettiest");
+        assert_suggestion_result(
+            "most prettiest",
+            AdjectiveDoubleDegree::default(),
+            "prettiest",
+        );
     }
 
     #[test]
