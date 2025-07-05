@@ -60,7 +60,7 @@ There are 2 additional ways to interact with Orgmode:
 2. Through =Org= Lua global variable
 
 List of available actions:
-- =:Org help= - Open this documentation in new tab, set working directory to the docs folder for the tab to allow browsing
+- =:Org help= - Open this documentation in new tab, set working directory to the doc's folder for the tab to allow browsing
 - =:Org helpgrep= - Open search agenda view that allows searching through the documentation
 - =:Org agenda {type?}= - Open agenda view by the shortcut, for example =:Org agenda M= will open =tags_todo= view. When =type= is omitted, it opens up Agenda view.
 - =:Org capture {type?}= - Open capture template by the shortcut, for example =:Org capture t=. When =type= is omitted, it opens up Capture prompt.
