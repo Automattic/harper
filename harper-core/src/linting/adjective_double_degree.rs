@@ -1,5 +1,5 @@
 use crate::{
-    Token, TokenStringExt,
+    CharStringExt, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
@@ -13,14 +13,7 @@ impl Default for AdjectiveDoubleDegree {
         Self {
             expr: Box::new(SequenceExpr::word_set(&["more", "most"]).t_ws().then(
                 |tok: &Token, _src: &[char]| {
-                    eprintln!("🍅 '{:?}'", tok.span.get_content_string(_src));
-                    // tok.kind.is_comparative_adjective() || tok.kind.is_superlative_adjective()
-                    let (cmp, sup) = (
-                        tok.kind.is_comparative_adjective(),
-                        tok.kind.is_superlative_adjective(),
-                    );
-                    eprintln!("🍅🍅 '{:?}'", (cmp, sup));
-                    cmp || sup
+                    tok.kind.is_comparative_adjective() || tok.kind.is_superlative_adjective()
                 },
             )),
         }
@@ -33,14 +26,81 @@ impl ExprLinter for AdjectiveDoubleDegree {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        eprintln!("🍏 '{}'", toks.span()?.get_content_string(src));
+        let phrase_span = toks.span()?;
+        let phrase_chars = phrase_span.get_content(src);
 
-        // TODO: implement
-        None
+        let adj_chars = toks.last()?.span.get_content(src);
+
+        let (lint_kind, message, suggestions) = match (
+            &toks.first()?.span.get_content(src).to_lower().as_ref(),
+            toks.last()?.kind.is_comparative_adjective(),
+            toks.last()?.kind.is_superlative_adjective(),
+        ) {
+            (['m', 'o', 'r', 'e'], true, false) => (
+                LintKind::Redundancy,
+                "Using `more` and the comparative form of the adjective together is redundant."
+                    .to_string(),
+                vec![Suggestion::replace_with_match_case(
+                    adj_chars.to_vec(),
+                    phrase_chars,
+                )],
+            ),
+            (['m', 'o', 's', 't'], false, true) => (
+                LintKind::Redundancy,
+                "Using `most` and the superlative form of the adjective together is redundant."
+                    .to_string(),
+                vec![Suggestion::replace_with_match_case(
+                    adj_chars.to_vec(),
+                    phrase_chars,
+                )],
+            ),
+            _ => {
+                let other_adj_degree = match adj_chars {
+                    &['b', 'e', 't', 't', 'e', 'r'] => vec!['b', 'e', 's', 't'],
+                    &['b', 'e', 's', 't'] => vec!['b', 'e', 't', 't', 'e', 'r'],
+                    &['w', 'o', 'r', 's', 'e'] => vec!['w', 'o', 'r', 's', 't'],
+                    &['w', 'o', 'r', 's', 't'] => vec!['w', 'o', 'r', 's', 'e'],
+                    adj_chars if adj_chars.ends_with(&['r']) => {
+                        let len = adj_chars.len() + 1;
+                        let mut other = vec!['\0'; len];
+                        other[..len - 2].copy_from_slice(&adj_chars[..len - 2]);
+                        other[len - 2] = 's';
+                        other[len - 1] = 't';
+                        other
+                    }
+                    adj_chars if adj_chars.ends_with(&['s', 't']) => {
+                        let len = adj_chars.len() - 1;
+                        let mut other = vec!['\0'; len];
+                        other[..len - 1].copy_from_slice(&adj_chars[..len - 1]);
+                        other[len - 1] = 'r';
+                        other
+                    }
+                    _ => return None,
+                };
+
+                (
+                    LintKind::WordChoice,
+                    "The degree of the adverb conflicts with the degree of the adjective."
+                        .to_string(),
+                    vec![
+                        Suggestion::replace_with_match_case(adj_chars.to_vec(), phrase_chars),
+                        Suggestion::replace_with_match_case(other_adj_degree, phrase_chars),
+                    ],
+                )
+            }
+        };
+
+        Some(Lint {
+            span: phrase_span,
+            lint_kind,
+            message,
+            suggestions,
+            priority: 126,
+        })
     }
 
     fn description(&self) -> &'static str {
-        "Finds adjectives that are used as double degrees (e.g. 'more prettier')."
+        "Finds adjectives that are used as double degrees (e.g. `more prettier`)."
     }
 }
 
@@ -48,59 +108,95 @@ impl ExprLinter for AdjectiveDoubleDegree {
 mod tests {
     use super::AdjectiveDoubleDegree;
     use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+        assert_good_and_bad_suggestions, assert_lint_count, assert_suggestion_result,
     };
 
     #[test]
-    fn flag_more_prettier() {
-        assert_lint_count("more prettier", AdjectiveDoubleDegree::default(), 1);
-    }
-
-    #[test]
-    fn fix_more_prettier() {
+    fn fix_double_regular_superlative() {
         assert_suggestion_result(
-            "more prettier",
+            "The most easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.",
             AdjectiveDoubleDegree::default(),
-            "prettier",
+            "The easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.",
         );
     }
 
     #[test]
-    fn flag_most_prettiest() {
-        assert_lint_count("most prettiest", AdjectiveDoubleDegree::default(), 1);
-    }
-
-    #[test]
-    fn fix_most_prettiest() {
+    fn fix_double_regular_comparative() {
         assert_suggestion_result(
-            "most prettiest",
+            "how can make docx gennerate more faster?",
             AdjectiveDoubleDegree::default(),
-            "prettiest",
+            "how can make docx gennerate faster?",
         );
     }
 
     #[test]
-    fn flag_more_better() {
-        assert_lint_count("more better", AdjectiveDoubleDegree::default(), 1);
+    fn fix_double_irregular_comparative() {
+        assert_suggestion_result(
+            "Find alternative product name more better than age .",
+            AdjectiveDoubleDegree::default(),
+            "Find alternative product name better than age .",
+        );
     }
 
     #[test]
-    fn fix_more_better() {
-        assert_suggestion_result("more better", AdjectiveDoubleDegree::default(), "better");
+    fn fix_double_irregular_superlative() {
+        assert_suggestion_result(
+            "how can i get a most best quality file",
+            AdjectiveDoubleDegree::default(),
+            "how can i get a best quality file",
+        );
     }
 
     #[test]
-    fn flag_most_best() {
-        assert_lint_count("most best", AdjectiveDoubleDegree::default(), 1);
+    fn conflicting_moster_offers_two_suggestions() {
+        assert_good_and_bad_suggestions(
+            "application which students to learn most faster in efficient way.",
+            AdjectiveDoubleDegree::default(),
+            &[
+                "application which students to learn faster in efficient way.",
+                "application which students to learn fastest in efficient way.",
+            ],
+            &[],
+        );
     }
 
     #[test]
-    fn fix_most_best() {
-        assert_suggestion_result("most best", AdjectiveDoubleDegree::default(), "best");
+    fn conflicting_morest_offers_two_suggestions() {
+        assert_good_and_bad_suggestions(
+            "I suggest migrating to vite that more flexible and more fastest.",
+            AdjectiveDoubleDegree::default(),
+            &[
+                "I suggest migrating to vite that more flexible and faster.",
+                "I suggest migrating to vite that more flexible and fastest.",
+            ],
+            &[],
+        );
     }
 
     #[test]
-    fn dont_flag_more_best_practices() {
-        assert_lint_count("more best practices", AdjectiveDoubleDegree::default(), 0);
+    fn conflicting_most_better_offers_two_suggestions() {
+        assert_good_and_bad_suggestions(
+            "But first logo is most better for me.",
+            AdjectiveDoubleDegree::default(),
+            &[
+                "But first logo is better for me.",
+                "But first logo is best for me.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn conflicting_most_worse_offers_two_suggestions() {
+        assert_good_and_bad_suggestions(
+            "We also see the need of a generic solution built-in in Pimcore, but currently it's probably the most worse time to implement a new solution.",
+            AdjectiveDoubleDegree::default(),
+            &[
+                // TODO: special-case after "the" since that implies a superlative
+                "We also see the need of a generic solution built-in in Pimcore, but currently it's probably the worse time to implement a new solution.",
+                "We also see the need of a generic solution built-in in Pimcore, but currently it's probably the worst time to implement a new solution.",
+            ],
+            &[],
+        );
     }
 }

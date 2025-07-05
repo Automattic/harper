@@ -97,8 +97,9 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"T": {
-			"#": "'-(i)est' suffix",
+		"^": {
+			"#": "'-(i)est' superlative suffix",
+			"//": "mnemonic: the topmost is the best",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -138,7 +139,8 @@
 			"base_metadata": {}
 		},
 		">": {
-			"#": "'-(i)er' suffix",
+			"#": "'-(i)er' comparative suffix; agent suffix",
+			"//": "mnemonic: greater than is better",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
