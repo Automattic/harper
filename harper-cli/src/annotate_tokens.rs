@@ -35,12 +35,11 @@ impl Annotation {
             AnnotationType::Upos => {
                 // Only annotate words (with word metadata) for `AnnotationType::Upos`.
                 if let TokenKind::Word(Some(metadata)) = &token.kind {
+                    let pos_tag = metadata.pos_tag;
                     Some(Self {
                         span,
-                        annotation_text: serde_json::to_string_pretty(&metadata.pos_tag).unwrap(),
-                        color: metadata
-                            .pos_tag
-                            .map_or(Color::Red, get_color_for_enum_variant),
+                        annotation_text: pos_tag.map_or("NONE".to_owned(), |upos| upos.to_string()),
+                        color: pos_tag.map_or(Color::Red, get_color_for_enum_variant),
                     })
                 } else {
                     // Not a word, or a word with no metadata.
