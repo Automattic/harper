@@ -2819,7 +2819,7 @@
 > stage  twins  , who    turned out         to be     the girls in      yellow  , did a   baby    act   in
 # NSg/V+ NPl/V+ . NPr/I+ V/J    NSg/V/J/R/P P  NSg/VX D   NPl/V NPr/J/P NSg/V/J . V   D/P NSg/V/J NPr/V NPr/J/P
 > costume , and champagne was served in      glasses bigger than finger - bowls . The moon
-# NSg/V   . V/C NSg/V/J+  V   V/J    NPr/J/P NPl/V+  V/J    C/P  NSg/V+ . NPl/V . D+  NPr/V+
+# NSg/V   . V/C NSg/V/J+  V   V/J    NPr/J/P NPl/V+  V/JC   C/P  NSg/V+ . NPl/V . D+  NPr/V+
 > had risen higher , and floating in      the Sound    was a   triangle of silver   scales ,
 # V   V/J   NSg/JC . V/C V        NPr/J/P D+  NSg/V/J+ V   D/P NSg      P  NSg/V/J+ NPl/V  .
 > trembling a   little  to the stiff   , tinny drip  of the banjoes on  the lawn   .
@@ -7368,8 +7368,8 @@
 # IPl+ NSg/V NPr/J/P NPr/V/J . J+     NPl/V+   .
 >
 #
-> “ I    read  somewhere that         the sun’s getting hotter  every year , ” said Tom    genially .
-# . ISg+ NSg/V NSg       NSg/I/C/Ddem D   NSg$  NSg/V   NSg/V/J D+    NSg+ . . V/J  NPr/V+ R+       .
+> “ I    read  somewhere that         the sun’s getting hotter   every year , ” said Tom    genially .
+# . ISg+ NSg/V NSg       NSg/I/C/Ddem D   NSg$  NSg/V   NSg/V/JC D+    NSg+ . . V/J  NPr/V+ R+       .
 > “ It       seems that         pretty  soon the earth’s going   to fall  into the sun    — or    wait  a
 # . NPr/ISg+ V     NSg/I/C/Ddem NSg/V/J J/R  D   W?      NSg/V/J P  NSg/V P    D+  NPr/V+ . NPr/C NSg/V D/P+
 > minute   — it’s just the opposite — the sun’s getting colder every year .

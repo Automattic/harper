@@ -99,7 +99,7 @@
 		},
 		"^": {
 			"#": "'-(i)est' superlative suffix",
-			"//": "mnemonic: the topmost is the best",
+			"//": "mnemonic: the topmost is the best. see also 'u' which derives a superlative form",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -139,7 +139,7 @@
 			"base_metadata": {}
 		},
 		">": {
-			"#": "'-(i)er' comparative suffix; agent suffix",
+			"#": "'-(i)er' comparative suffix; agent suffix. see also 'c' which derives a comparative form",
 			"//": "mnemonic: greater than is better",
 			"kind": "suffix",
 			"cross_product": true,
@@ -722,6 +722,7 @@
 		},
 		"c": {
 			"#": "comparative property",
+			"//": "see also '>' which derives a comparative form",
 			"metadata": {
 				"adjective": {
 					"degree": "Comparative"
@@ -730,6 +731,7 @@
 		},
 		"u": {
 			"#": "superlative property",
+			"//": "see also '^' which derives a superlative form",
 			"metadata": {
 				"adjective": {
 					"degree": "Superlative"
