@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 /// the existing categories.
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, Is, Default, Hash, PartialEq, Eq)]
 pub enum LintKind {
+    Agreement,
     Capitalization,
     Enhancement,
     Formatting,
@@ -28,6 +29,7 @@ pub enum LintKind {
 impl LintKind {
     pub fn new_from_str(s: &str) -> Option<Self> {
         Some(match s {
+            "Agreement" => LintKind::Agreement,
             "Capitalization" => LintKind::Capitalization,
             "Enhancement" => LintKind::Enhancement,
             "Formatting" => LintKind::Formatting,
@@ -47,6 +49,7 @@ impl LintKind {
     /// Produce a string representation, which can be used as keys in a map or CSS variables.
     pub fn to_string_key(&self) -> String {
         match self {
+            LintKind::Agreement => "Agreement",
             LintKind::Capitalization => "Capitalization",
             LintKind::Enhancement => "Enhancement",
             LintKind::Formatting => "Formatting",
@@ -68,6 +71,7 @@ impl LintKind {
 impl Display for LintKind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s = match self {
+            LintKind::Agreement => "Agreement",
             LintKind::Capitalization => "Capitalization",
             LintKind::Enhancement => "Enhancement",
             LintKind::Formatting => "Formatting",

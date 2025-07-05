@@ -1,5 +1,6 @@
 // First, define the color map as a constant
 const LINT_KIND_COLORS = {
+	Agreement: '#228B22', // Forest green
 	Capitalization: '#540D6E', // Deep purple
 	Enhancement: '#0EAD69', // Green
 	Formatting: '#7D3C98', // Amethyst purple

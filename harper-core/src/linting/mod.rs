@@ -66,6 +66,7 @@ mod no_match_for;
 mod no_oxford_comma;
 mod nobody;
 mod nominal_wants;
+mod noun_countability;
 mod noun_instead_of_verb;
 mod number_suffix_capitalization;
 mod of_course;
@@ -167,6 +168,7 @@ pub use nail_on_the_head::NailOnTheHead;
 pub use no_match_for::NoMatchFor;
 pub use no_oxford_comma::NoOxfordComma;
 pub use nobody::Nobody;
+pub use noun_countability::NounCountability;
 pub use noun_instead_of_verb::NounInsteadOfVerb;
 pub use number_suffix_capitalization::NumberSuffixCapitalization;
 pub use of_course::OfCourse;
@@ -331,6 +333,48 @@ pub mod tests {
                 [0]: \"{zeroth}\"\n\
                 [1]: \"{first}\"\n\
                 [2]: \"{second}\""
+            ),
+            // I think it's not possible for more than one suggestion to be correct
+            _ => {}
+        }
+    }
+
+    pub fn assert_top5_suggestion_result(
+        text: &str,
+        mut linter: impl Linter,
+        expected_result: &str,
+    ) {
+        let zeroth = transform_nth_str(text, &mut linter, 0);
+        let first = transform_nth_str(text, &mut linter, 1);
+        let second = transform_nth_str(text, &mut linter, 2);
+        let third = transform_nth_str(text, &mut linter, 3);
+        let fourth = transform_nth_str(text, &mut linter, 4);
+
+        match (
+            zeroth.as_str() == expected_result,
+            first.as_str() == expected_result,
+            second.as_str() == expected_result,
+            third.as_str() == expected_result,
+            fourth.as_str() == expected_result,
+        ) {
+            // (true, false, false) => assert_lint_count(&zeroth, linter, 0),
+            // (false, true, false) => assert_lint_count(&first, linter, 0),
+            // (false, false, true) => assert_lint_count(&second, linter, 0),
+            // (false, false, false) => panic!(
+            (true, false, false, false, false) => assert_lint_count(&zeroth, linter, 0),
+            (false, true, false, false, false) => assert_lint_count(&first, linter, 0),
+            (false, false, true, false, false) => assert_lint_count(&second, linter, 0),
+            (false, false, false, true, false) => assert_lint_count(&third, linter, 0),
+            (false, false, false, false, true) => assert_lint_count(&fourth, linter, 0),
+            (false, false, false, false, false) => panic!(
+                "None of the top 5 suggestions produced the expected result:\n\
+                Expected: \"{expected_result}\"\n\
+                Got:\n\
+                [0]: \"{zeroth}\"\n\
+                [1]: \"{first}\"\n\
+                [2]: \"{second}\"\n\
+                [3]: \"{third}\"\n\
+                [4]: \"{fourth}\""
             ),
             // I think it's not possible for more than one suggestion to be correct
             _ => {}

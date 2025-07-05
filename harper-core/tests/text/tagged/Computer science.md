@@ -70,8 +70,8 @@
 # NSg
 >
 #
-> The earliest foundations of what   would  become computer science predate the
-# D   W?       NPl         P  NSg/I+ NSg/VX V      NSg/V+   NSg/V+  NSg/V   D
+> The earliest foundations of what   would become computer science predate the
+# D   W?       NPl         P  NSg/I+ VX    V      NSg/V+   NSg/V+  NSg/V   D
 > invention of the modern digital computer . Machines for calculating fixed
 # NSg       P  D+  NSg/J+ NSg/J+  NSg/V+   . NPl/V    C/P V/J         V/J
 > numerical tasks  such  as    the abacus have   existed since antiquity , aiding in
@@ -362,8 +362,8 @@
 # ?      V/C NPr+    ?  NPr+  V/J    NPr/J/P #    .
 >
 #
-> Computer science is an  empirical discipline . We   would  have   called it       an
-# NSg/V+   NSg/V   VL D/P NSg/J+    NSg/V+     . IPl+ NSg/VX NSg/VX V/J    NPr/ISg+ D/P+
+> Computer science is an  empirical discipline . We   would have   called it       an
+# NSg/V+   NSg/V   VL D/P NSg/J+    NSg/V+     . IPl+ VX    NSg/VX V/J    NPr/ISg+ D/P+
 > experimental science , but     like        astronomy , economics , and geology , some  of its
 # NSg/J+       NSg/V+  . NSg/C/P NSg/V/J/C/P NSg       . NSg+      . V/C NSg     . I/J/R P  ISg/D$+
 > unique forms of observation and experience do     not   fit     a   narrow  stereotype of
@@ -444,8 +444,8 @@
 # J+         NSg+         . . NSg/V+   NSg/V+  NPl/V   J/P NPl/V+  V/J      NPr/J/P
 > design , specification , programming , verification , implementation and testing of
 # NSg/V  . NSg+          . NSg/V+      . NSg          . NSg            V/C V       P
-> human   - made  computing systems .
-# NSg/V/J . NSg/V NSg/V+    NPl+    .
+> human   - made computing systems .
+# NSg/V/J . V    NSg/V+    NPl+    .
 >
 #
 > Fields
@@ -458,8 +458,8 @@
 # NPl/V   P  NPl+       V/C D   NPl/V  P  NSg         P  D   NSg/J     NPl/V  P
 > implementing computing systems in      hardware and software . CSAB , formerly called
 # V            NSg/V+    NPl     NPr/J/P NSg      V/C NSg+     . ?    . R        V/J
-> Computing Sciences Accreditation Board  — which is made  up        of representatives of
-# NSg/V+    NPl/V+   NSg           NSg/V+ . I/C+  VL NSg/V NSg/V/J/P P  NPl             P
+> Computing Sciences Accreditation Board  — which is made up        of representatives of
+# NSg/V+    NPl/V+   NSg           NSg/V+ . I/C+  VL V    NSg/V/J/P P  NPl             P
 > the Association for Computing Machinery ( ACM ) , and the IEEE Computer Society
 # D+  NSg         C/P NSg/V+    NSg+      . NSg . . V/C D+  NPr+ NSg/V+   NSg+
 > ( IEEE CS    ) — identifies four areas that          it       considers crucial to the discipline of
@@ -802,8 +802,8 @@
 # V         ?     NPl/V+ . NSg/V+  NSg     V/C D   NSg/V/J  NSg/V/J NSg/V+ NSg/V
 > model    . When    multiple computers are connected in      a    network while     using
 # NSg/V/J+ . NSg/I/C NSg/J    NPl/V+    V   V/J       NPr/J/P D/P+ NSg/V+  NSg/V/C/P V
-> concurrency , this    is known   as    a    distributed system . Computers within  that
-# NSg         . I/Ddem+ VL NSg/V/J NSg/R D/P+ V/J+        NSg+   . NPl/V     NSg/J/P NSg/I/C/Ddem+
+> concurrency , this    is known as    a    distributed system . Computers within  that
+# NSg         . I/Ddem+ VL V/J   NSg/R D/P+ V/J+        NSg+   . NPl/V     NSg/J/P NSg/I/C/Ddem+
 > distributed system have   their own     private  memory , and information can    be
 # V/J         NSg+   NSg/VX D$+   NSg/V/J NSg/V/J+ NSg+   . V/C NSg+        NPr/VX NSg/VX
 > exchanged to achieve common   goals  .
@@ -1016,16 +1016,16 @@
 #
 > Object - oriented programming , a   programming paradigm based on  the concept of
 # NSg/V+ . V/J      NSg/V       . D/P NSg/V+      NSg+     V/J   J/P D   NSg/V   P
-> " objects " , which may    contain data , in      the form  of fields   , often known   as
-# . NPl/V+  . . I/C+  NPr/VX V       NSg  . NPr/J/P D   NSg/V P  NPrPl/V+ . R     NSg/V/J NSg/R
-> attributes ; and code   , in      the form  of procedures , often known   as    methods . A
-# NPl/V+     . V/C NSg/V+ . NPr/J/P D   NSg/V P  NPl+       . R     NSg/V/J NSg/R NPl/V+  . D/P
+> " objects " , which may    contain data , in      the form  of fields   , often known as
+# . NPl/V+  . . I/C+  NPr/VX V       NSg  . NPr/J/P D   NSg/V P  NPrPl/V+ . R     V/J   NSg/R
+> attributes ; and code   , in      the form  of procedures , often known as    methods . A
+# NPl/V+     . V/C NSg/V+ . NPr/J/P D   NSg/V P  NPl+       . R     V/J   NSg/R NPl/V+  . D/P
 > feature of objects is that         an   object's procedures can    access and often modify
 # NSg/V   P  NPl/V+  VL NSg/I/C/Ddem D/P+ NSg$+    NPl+       NPr/VX NSg/V  V/C R     V
 > the data fields  of the object with which they are associated . Thus
 # D   NSg+ NPrPl/V P  D+  NSg/V+ P    I/C+  IPl+ V   V/J        . NSg
-> object - oriented computer programs are made  out         of objects that          interact with
-# NSg/V+ . V/J      NSg/V    NPl/V+   V   NSg/V NSg/V/J/R/P P+ NPl/V+  NSg/I/C/Ddem+ NSg/V    P
+> object - oriented computer programs are made out         of objects that          interact with
+# NSg/V+ . V/J      NSg/V    NPl/V+   V   V    NSg/V/J/R/P P+ NPl/V+  NSg/I/C/Ddem+ NSg/V    P
 > one       another .
 # NSg/I/V/J I/D     .
 >

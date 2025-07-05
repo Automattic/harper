@@ -115,7 +115,7 @@ impl ExprLinter for PronounInflectionBe {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::Miscellaneous,
+            lint_kind: LintKind::Agreement,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 correct,
                 span.get_content(source),
