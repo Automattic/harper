@@ -2,7 +2,7 @@ use paste::paste;
 
 use crate::{
     Span, Token, TokenKind,
-    patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word},
+    patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
 
 use super::{Expr, Optional, Repeating, Step, UnlessStep};
@@ -97,6 +97,7 @@ impl SequenceExpr {
         Self::any_capitalization_of(word)
     }
 
+    /// Match examples of `word` that have any capitalization.
     pub fn any_capitalization_of(word: &'static str) -> Self {
         Self::default().then_any_capitalization_of(word)
     }
@@ -106,9 +107,17 @@ impl SequenceExpr {
         self.then_any_capitalization_of(word)
     }
 
-    /// Match examples of `word` that have any capitalization.
     pub fn then_any_capitalization_of(self, word: &'static str) -> Self {
         self.then(Word::new(word))
+    }
+
+    /// Match any word from the given set of words, case-insensitive.
+    pub fn word_set(words: &'static [&'static str]) -> Self {
+        Self::default().then_word_set(words)
+    }
+
+    pub fn then_word_set(self, words: &'static [&'static str]) -> Self {
+        self.then(WordSet::new(words))
     }
 
     /// Matches any word.

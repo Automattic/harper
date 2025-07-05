@@ -123,7 +123,18 @@
 					"condition": "[^ey]"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"if_base": {
+						"adjective": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Superlative"
+						}
+					}
+				}
+			],
 			"base_metadata": {}
 		},
 		">": {
@@ -154,8 +165,23 @@
 			],
 			"target": [
 				{
-					"metadata": {
+					"if_base": {
 						"adjective": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Comparative"
+						}
+					}
+				},
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"noun": {
+							"//": "TODO: agent noun: run -> runner"
+						}
 					}
 				}
 			],
@@ -695,13 +721,17 @@
 		"c": {
 			"#": "comparative property",
 			"metadata": {
-				"adjective": {}
+				"adjective": {
+					"degree": "Comparative"
+				}
 			}
 		},
 		"u": {
 			"#": "superlative property",
 			"metadata": {
-				"adjective": {}
+				"adjective": {
+					"degree": "Superlative"
+				}
 			}
 		},
 		"*": {

@@ -509,6 +509,28 @@ impl WordMetadata {
         self.is_non_possessive_noun() || self.is_non_possessive_pronoun()
     }
 
+    // Adjective metadata queries
+
+    pub fn is_comparative_adjective(&self) -> bool {
+        matches!(
+            self.adjective,
+            Some(AdjectiveData {
+                degree: Some(Degree::Comparative)
+            })
+        )
+    }
+
+    pub fn is_superlative_adjective(&self) -> bool {
+        matches!(
+            self.adjective,
+            Some(AdjectiveData {
+                degree: Some(Degree::Superlative)
+            })
+        )
+    }
+
+    // Non-POS queries
+
     /// Checks whether a word is _definitely_ a swear.
     pub fn is_swear(&self) -> bool {
         matches!(self.swear, Some(true))
