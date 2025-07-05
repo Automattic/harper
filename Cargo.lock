@@ -840,6 +840,8 @@ dependencies = [
  "hashbrown 0.15.4",
  "serde",
  "serde_json",
+ "strum",
+ "strum_macros",
 ]
 
 [[package]]
