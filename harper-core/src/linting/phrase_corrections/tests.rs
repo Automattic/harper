@@ -1642,7 +1642,6 @@ fn statute_of_limitations() {
         "Shouldn't there be a grandfathered-in or statue of limitations for posts before the original punishment?",
         lint_group(),
         "Shouldn't there be a grandfathered-in or statute of limitations for posts before the original punishment?",
-        
     );
 }
 
