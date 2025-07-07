@@ -40,9 +40,9 @@ where
         let exceptions = SequenceExpr::default()
             .t_any()
             .t_any()
-            .if_not_then_step_one(WordSet::new(&["flags", "checks", "catches", "you"]))
+            .then_unless(WordSet::new(&["flags", "checks", "catches", "you"]))
             .t_any()
-            .if_not_then_step_one(WordSet::new(&["form", "go"]));
+            .then_unless(WordSet::new(&["form", "go"]));
 
         Self {
             expr: Box::new(All::new(vec![

@@ -6,6 +6,7 @@ use harper_core::{MutableDictionary, Token};
 use tree_sitter::Node;
 
 use crate::comment_parsers;
+
 use crate::masker::CommentMasker;
 
 pub struct CommentParser {
