@@ -104,7 +104,7 @@ enum Args {
         #[arg(short, long)]
         lr: f64,
         // The number of embedding dimensions
-        #[arg(short, long)]
+        #[arg(long)]
         dim: usize,
         /// The path to write the final  model file to.
         #[arg(short, long)]
@@ -112,6 +112,9 @@ enum Args {
         /// The number of epochs to train.
         #[arg(short, long)]
         epochs: usize,
+        /// The dropout probability
+        #[arg(long)]
+        dropout: f32,
         #[arg(short, long)]
         test_file: PathBuf,
         #[arg(num_args = 1..)]
@@ -447,11 +450,13 @@ fn main() -> anyhow::Result<()> {
             datasets,
             test_file,
             epochs,
+            dropout,
             output,
             lr,
             dim: embed_dim,
         } => {
-            let chunker = BurnChunkerCpu::train_cpu(&datasets, &test_file, embed_dim, epochs, lr);
+            let chunker =
+                BurnChunkerCpu::train_cpu(&datasets, &test_file, embed_dim, dropout, epochs, lr);
             chunker.save_to(output);
 
             Ok(())

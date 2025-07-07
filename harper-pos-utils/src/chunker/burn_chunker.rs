@@ -31,14 +31,17 @@ struct NpModel<B: Backend> {
 }
 
 impl<B: Backend> NpModel<B> {
-    fn new(vocab: usize, embed_dim: usize, device: &B::Device) -> Self {
+    fn new(vocab: usize, word_embed_dim: usize, dropout: f32, device: &B::Device) -> Self {
+        let upos_embed = 8;
+        let total_embed = word_embed_dim + upos_embed;
+
         Self {
-            embedding_words: EmbeddingConfig::new(vocab, embed_dim).init(device),
-            embedding_upos: EmbeddingConfig::new(20, 8).init(device),
-            lstm: BiLstmConfig::new(embed_dim + 8, embed_dim + 8, false).init(device),
+            embedding_words: EmbeddingConfig::new(vocab, word_embed_dim).init(device),
+            embedding_upos: EmbeddingConfig::new(20, upos_embed).init(device),
+            lstm: BiLstmConfig::new(total_embed, total_embed, false).init(device),
             // Multiply by two because the BiLSTM emits double the hidden parameters
-            linear_out: LinearConfig::new((embed_dim + 8) * 2, 1).init(device),
-            dropout: DropoutConfig::new(0.5).init(),
+            linear_out: LinearConfig::new(total_embed * 2, 1).init(device),
+            dropout: DropoutConfig::new(dropout as f64).init(),
         }
     }
 
@@ -128,6 +131,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         model_bytes: impl AsRef<[u8]>,
         vocab_bytes: impl AsRef<[u8]>,
         embed_dim: usize,
+        dropout: f32,
         device: B::Device,
     ) -> Self {
         let vocab: HashMap<String, usize> = serde_json::from_slice(vocab_bytes.as_ref()).unwrap();
@@ -137,7 +141,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         let owned_data = model_bytes.as_ref().to_vec();
         let record = recorder.load(owned_data, &device).unwrap();
 
-        let model = NpModel::new(vocab.len(), embed_dim, &device);
+        let model = NpModel::new(vocab.len(), embed_dim, dropout, &device);
         let model = model.load_record(record);
 
         Self {
@@ -153,7 +157,8 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     pub fn train(
         training_files: &[impl AsRef<Path>],
         test_file: &impl AsRef<Path>,
-        embed_dim: usize,
+        word_embed_dim: usize,
+        dropout: f32,
         epochs: usize,
         lr: f64,
         device: B::Device,
@@ -163,7 +168,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
 
         println!("Preparing model and training config...");
 
-        let mut model = NpModel::<B>::new(vocab.len(), embed_dim, &device);
+        let mut model = NpModel::<B>::new(vocab.len(), word_embed_dim, dropout, &device);
         let opt_config = AdamConfig::new();
         let mut opt = opt_config.init();
 
@@ -337,8 +342,15 @@ impl BurnChunkerCpu {
         model_bytes: impl AsRef<[u8]>,
         vocab_bytes: impl AsRef<[u8]>,
         embed_dim: usize,
+        dropout: f32,
     ) -> Self {
-        Self::load_from_bytes(model_bytes, vocab_bytes, embed_dim, NdArrayDevice::Cpu)
+        Self::load_from_bytes(
+            model_bytes,
+            vocab_bytes,
+            embed_dim,
+            dropout,
+            NdArrayDevice::Cpu,
+        )
     }
 }
 
@@ -348,6 +360,7 @@ impl BurnChunkerCpu {
         training_files: &[impl AsRef<Path>],
         test_file: &impl AsRef<Path>,
         embed_dim: usize,
+        dropout: f32,
         epochs: usize,
         lr: f64,
     ) -> Self {
@@ -355,6 +368,7 @@ impl BurnChunkerCpu {
             training_files,
             test_file,
             embed_dim,
+            dropout,
             epochs,
             lr,
             NdArrayDevice::Cpu,

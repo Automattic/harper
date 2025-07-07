@@ -40,7 +40,7 @@ thread_local! {
 }
 
 fn uncached_burn_chunker() -> BurnChunkerCpu {
-    BurnChunkerCpu::load_from_bytes_cpu(BURN_CHUNKER_BIN, BURN_CHUNKER_VOCAB, 8)
+    BurnChunkerCpu::load_from_bytes_cpu(BURN_CHUNKER_BIN, BURN_CHUNKER_VOCAB, 8, 0.5)
 }
 
 pub fn burn_chunker() -> Arc<BurnChunkerCpu> {
