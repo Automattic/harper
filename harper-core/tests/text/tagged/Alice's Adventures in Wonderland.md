@@ -3159,7 +3159,7 @@
 >
 #
 > “ Nobody asked your opinion , ” said Alice .
-# . NSg/I+ V/J   D$+  NSg/V+  . . V/J  NPr+  .
+# . NSg/I+ V/J   D$+  NSg+    . . V/J  NPr+  .
 >
 #
 > “ Who’s making personal remarks now       ? ” the Hatter asked triumphantly .
@@ -3377,7 +3377,7 @@
 > “ Yes   , it       is his    business ! ” said Five , “ and I’ll tell  him  — it       was for bringing the
 # . NPl/V . NPr/ISg+ VL ISg/D$ NSg/J    . . V/J  NSg  . . V/C W?   NPr/V ISg+ . NPr/ISg+ V   C/P V        D
 > cook  tulip - roots instead of onions . ”
-# NPr/V NSg   . NPl/V W?      P  W?     . .
+# NPr/V NSg   . NPl/V W?      P  NPl    . .
 >
 #
 > Seven flung down      his     brush  , and had just begun “ Well    , of all       the unjust things — ”
@@ -5263,7 +5263,7 @@
 > All       this    time    the Queen    had never left    off       staring at    the Hatter , and , just as
 # NSg/I/J/C I/Ddem+ NSg/V/J D+  NPr/V/J+ V   R     NPr/V/J NSg/V/J/P V       NSg/P D   NSg/V  . V/C . V/J  NSg/R
 > the Dormouse crossed the court    , she  said to one       of the officers of the court    ,
-# D   NSg      V/J     D+  NSg/V/J+ . ISg+ V/J  P  NSg/I/V/J P  D   W?       P  D+  NSg/V/J+ .
+# D   NSg      V/J     D+  NSg/V/J+ . ISg+ V/J  P  NSg/I/V/J P  D   NPl/V    P  D+  NSg/V/J+ .
 > “ Bring me       the list  of the singers in      the last     concert ! ” on  which the wretched
 # . V     NPr/ISg+ D   NSg/V P  D   W?      NPr/J/P D+  NSg/V/J+ NSg/V+  . . J/P I/C+  D   J
 > Hatter trembled so        , that         he       shook   both his     shoes off       .
@@ -5357,7 +5357,7 @@
 > Here    one       of the guinea - pigs  cheered , and was immediately suppressed by      the
 # NSg/J/R NSg/I/V/J P  D   NPr+   . NPl/V V/J     . V/C V   R           V/J        NSg/J/P D
 > officers of the court    . ( As    that          is rather  a    hard     word   , I    will   just explain to
-# W?       P  D+  NSg/V/J+ . . NSg/R NSg/I/C/Ddem+ VL NPr/V/J D/P+ NSg/V/J+ NSg/V+ . ISg+ NPr/VX V/J  V       P
+# NPl/V    P  D+  NSg/V/J+ . . NSg/R NSg/I/C/Ddem+ VL NPr/V/J D/P+ NSg/V/J+ NSg/V+ . ISg+ NPr/VX V/J  V       P
 > you    how   it       was done    . They had a   large  canvas bag    , which tied up        at    the mouth
 # ISgPl+ NSg/C NPr/ISg+ V+  NSg/V/J . IPl+ V   D/P NSg/J+ NSg/V+ NSg/V+ . I/C+  V/J  NSg/V/J/P NSg/P D+  NSg/V+
 > with strings : into this   they slipped the guinea - pig   , head     first   , and then    sat
@@ -5371,7 +5371,7 @@
 > newspapers , at    the end   of trials , “ There was some  attempts at    applause , which
 # NPl/V+     . NSg/P D   NSg/V P  NPl/V+ . . +     V   I/J/R NPl/V    NSg/P NSg+     . I/C+
 > was immediately suppressed by      the officers of the court   , ” and I    never understood
-# V   R           V/J        NSg/J/P D   W?       P  D+  NSg/V/J . . V/C ISg+ R     V/J
+# V   R           V/J        NSg/J/P D   NPl/V    P  D+  NSg/V/J . . V/C ISg+ R     V/J
 > what   it       meant till       now       . ”
 # NSg/I+ NPr/ISg+ V     NSg/V/C/P+ NPr/V/J/C . .
 >
@@ -5411,7 +5411,7 @@
 >
 #
 > “ — and just take  his     head    off       outside   , ” the Queen    added to one       of the officers :
-# . . V/C V/J  NSg/V ISg/D$+ NPr/V/J NSg/V/J/P NSg/V/J/P . . D+  NPr/V/J+ V/J   P  NSg/I/V/J P  D+  +        .
+# . . V/C V/J  NSg/V ISg/D$+ NPr/V/J NSg/V/J/P NSg/V/J/P . . D+  NPr/V/J+ V/J   P  NSg/I/V/J P  D+  NPl/V+   .
 > but     the Hatter was out         of sight  before the officer  could  get   to the door   .
 # NSg/C/P D   NSg/V  V   NSg/V/J/R/P P  NSg/V+ C/P    D+  NSg/V/J+ NSg/VX NSg/V P  D+  NSg/V+ .
 >
