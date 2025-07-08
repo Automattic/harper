@@ -1,3 +1,5 @@
+//! This module implements rudimentary, dictionary-based English language detection.
+
 use crate::spell::Dictionary;
 use crate::{Document, Token, TokenKind};
 

@@ -1,3 +1,14 @@
+//! An `Expr` is a way to express whether a certain set of tokens fulfill a criteria.
+//!
+//! For example, if we want to look for the word "that" followed by an adjective, we could build an
+//! expression to do so.
+//!
+//! When supplied a specific position in a token stream, the technical job of an `Expr` is to determine the window of tokens (including the cursor itself) that fulfills whatever criteria the author desires.
+//! It is then the job of another system to run one or more `Expr` over a document to locate these
+//! positions.
+//!
+//! See also: [`SequenceExpr`].
+
 mod all;
 mod anchor_end;
 mod anchor_start;
@@ -44,16 +55,6 @@ pub use word_expr_group::WordExprGroup;
 
 use crate::{Document, LSend, Span, Token};
 
-/// An `Expr` is a way to express whether a certain set of tokens fulfill a criteria.
-///
-/// For example, if we want to look for the word "that" followed by an adjective, we could build an
-/// expression to do so.
-///
-/// When supplied a specific position in a token stream, the technical job of an `Expr` is to determine the window of tokens (including the cursor itself) that fulfills whatever criteria the author desires.
-/// It is then the job of another system to run one or more `Expr` over a document to locate these
-/// positions.
-///
-/// See also: [`SequenceExpr`].
 pub trait Expr: LSend {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span>;
 }

@@ -4,9 +4,17 @@ use serde::{Deserialize, Serialize};
 
 use crate::{Number, Punctuation, Quote, TokenKind::Word, WordMetadata};
 
+/// Generate wrapper code to pass a function call to the inner [`WordMetadata`],  
+/// if the token is indeed a word, while also emitting method-level documentation.
 macro_rules! delegate_to_metadata {
     ($($method:ident),* $(,)?) => {
         $(
+            #[doc = concat!(
+                "Delegates to [`WordMetadata::",
+                stringify!($method),
+                "`] when this token is a word.\n\n",
+                "Returns `false` if the token is not a word."
+            )]
             pub fn $method(&self) -> bool {
                 let Word(Some(metadata)) = self else {
                     return false;
@@ -17,6 +25,10 @@ macro_rules! delegate_to_metadata {
     };
 }
 
+/// The parsed value of a [`Token`](crate::Token).
+/// Has a variety of queries available.
+/// If there is a query missing, it may be easy to implement by just calling the
+/// `delegate_to_metadata` macro.
 #[derive(Debug, Is, Clone, Serialize, Deserialize, Default, PartialOrd, Hash, Eq, PartialEq)]
 #[serde(tag = "kind", content = "value")]
 pub enum TokenKind {
