@@ -301,7 +301,7 @@
 > Computer science is considered by      some   to have   a   much    closer relationship with
 # NSg/V+   NSg/V   VL V/J        NSg/J/P I/J/R+ P  NSg/VX D/P NSg/I/J NSg/J  NSg          P
 > mathematics than many       scientific disciplines , with some   observers saying that
-# NSg+        C/P  NSg/I/J/D+ J+         NPl/V+      . P    I/J/R+ +         NSg/V  NSg/I/C/Ddem
+# NSg+        C/P  NSg/I/J/D+ J+         NPl/V+      . P    I/J/R+ NPl+      NSg/V  NSg/I/C/Ddem
 > computing is a   mathematical science . Early   computer science was strongly
 # NSg/V+    VL D/P J+           NSg/V+  . NSg/J/R NSg/V+   NSg/V+  V   R
 > influenced by      the work  of mathematicians such  as    Kurt Gödel , Alan Turing , John

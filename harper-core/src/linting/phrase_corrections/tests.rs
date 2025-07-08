@@ -1635,6 +1635,16 @@ fn spacial_attention() {
 // StateOfTheArt
 // -none-
 
+// StatuteOfLimitations
+#[test]
+fn statute_of_limitations() {
+    assert_suggestion_result(
+        "Shouldn't there be a grandfathered-in or statue of limitations for posts before the original punishment?",
+        lint_group(),
+        "Shouldn't there be a grandfathered-in or statute of limitations for posts before the original punishment?",
+    );
+}
+
 // SufficeItToSay
 #[test]
 fn suffice_it_to_say() {

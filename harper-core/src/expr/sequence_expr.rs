@@ -51,14 +51,19 @@ impl Expr for SequenceExpr {
         for cur_expr in &self.exprs {
             let out = cur_expr.run(cursor, tokens, source)?;
 
-            window.expand_to_include(out.start);
-            window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
-
-            if out.start < cursor {
-                cursor = out.start;
-            } else {
-                cursor = out.end;
+            // Only expand the window if the match actually covers some tokens
+            if out.end > out.start {
+                window.expand_to_include(out.start);
+                window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
             }
+
+            // Only advance cursor if we actually matched something
+            if out.end > cursor {
+                cursor = out.end;
+            } else if out.start < cursor {
+                cursor = out.start;
+            }
+            // If both start and end are equal to cursor, don't move the cursor
         }
 
         Some(window)

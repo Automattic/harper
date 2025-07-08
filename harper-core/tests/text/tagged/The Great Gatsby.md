@@ -347,7 +347,7 @@
 >
 #
 > “ Now       , don’t think my  opinion on  these   matters is final   , ” he       seemed to say   , “ just
-# . NPr/V/J/C . V     NSg/V D$+ NSg/V+  J/P I/Ddem+ +       VL NSg/V/J . . NPr/ISg+ V/J    P  NSg/V . . V/J
+# . NPr/V/J/C . V     NSg/V D$+ NSg+    J/P I/Ddem+ +       VL NSg/V/J . . NPr/ISg+ V/J    P  NSg/V . . V/J
 > because I’m stronger and more      of a   man     than you    are . ” We   were  in      the same senior
 # C/P     W?  J        V/C NPr/I/V/J P  D/P NPr/V/J C/P  ISgPl+ V+  . . IPl+ NSg/V NPr/J/P D   I/J  NPr/J+
 > society , and while     we   were  never intimate I    always had the impression that          he
@@ -3299,7 +3299,7 @@
 > A    man     in      a    long     duster had dismounted from the wreck  and now       stood in      the middle
 # D/P+ NPr/V/J NPr/J/P D/P+ NPr/V/J+ NSg/J+ V   V/J        P    D+  NSg/V+ V/C NPr/V/J/C V     NPr/J/P D   NSg/V/J
 > of the road   , looking from the car to the tire  and from the tire  to the observers
-# P  D+  NSg/J+ . V       P    D   NSg P  D+  NSg/V V/C P    D   NSg/V P  D+  +
+# P  D+  NSg/J+ . V       P    D   NSg P  D+  NSg/V V/C P    D   NSg/V P  D+  NPl+
 > in      a   pleasant , puzzled way    .
 # NPr/J/P D/P NSg/J    . V/J     NSg/J+ .
 >
@@ -3875,7 +3875,7 @@
 >
 #
 > “ Look  here    , old    sport  , ” he       broke   out         surprisingly , “ what’s your opinion of me       ,
-# . NSg/V NSg/J/R . NSg/J+ NSg/V+ . . NPr/ISg+ NSg/V/J NSg/V/J/R/P R            . . NSg$   D$+  NSg/V   P  NPr/ISg+ .
+# . NSg/V NSg/J/R . NSg/J+ NSg/V+ . . NPr/ISg+ NSg/V/J NSg/V/J/R/P R            . . NSg$   D$+  NSg     P  NPr/ISg+ .
 > anyhow ? ”
 # J      . .
 >
@@ -4597,7 +4597,7 @@
 > little  white    roadster , and all        day  long    the telephone rang in      her     house  and
 # NPr/I/J NPr/V/J+ NSg      . V/C NSg/I/J/C+ NPr+ NPr/V/J D+  NSg/V+    V    NPr/J/P ISg/D$+ NPr/V+ V/C
 > excited young   officers from Camp     Taylor demanded the privilege of monopolizing
-# V/J     NPr/V/J W?       P    NSg/V/J+ NPr+   V/J      D   NSg/V     P  V
+# V/J     NPr/V/J NPl/V    P    NSg/V/J+ NPr+   V/J      D   NSg/V     P  V
 > her     that          night  . “ Anyways , for an   hour ! ”
 # ISg/D$+ NSg/I/C/Ddem+ NSg/V+ . . W?      . C/P D/P+ NSg+ . .
 >
@@ -7041,7 +7041,7 @@
 > telephone . The grocery boy    reported that         the kitchen looked like        a    pigsty , and
 # NSg/V+    . D+  NSg/V+  NSg/V+ V/J      NSg/I/C/Ddem D+  NSg/V+  V/J    NSg/V/J/C/P D/P+ NSg+   . V/C
 > the general opinion in      the village was that         the new      people weren’t servants at
-# D   NSg/V/J NSg/V   NPr/J/P D+  NSg+    V   NSg/I/C/Ddem D+  NSg/V/J+ NSg/V+ V       NPl/V+   NSg/P
+# D   NSg/V/J NSg     NPr/J/P D+  NSg+    V   NSg/I/C/Ddem D+  NSg/V/J+ NSg/V+ V       NPl/V+   NSg/P
 > all       .
 # NSg/I/J/C .
 >
@@ -8247,7 +8247,7 @@
 >
 #
 > “ It       was an  opportunity they gave to some  of the officers after the armistice , ”
-# . NPr/ISg+ V   D/P NSg         IPl+ V    P  I/J/R P  D   W?       J/P   D   NPr       . .
+# . NPr/ISg+ V   D/P NSg         IPl+ V    P  I/J/R P  D   NPl/V    J/P   D   NPr       . .
 > he       continued . “ We   could  go      to any   of the universities in      England or    France . ”
 # NPr/ISg+ V/J+      . . IPl+ NSg/VX NSg/V/J P  I/R/D P  D+  NPl+         NPr/J/P NPr     NPr/C NPr+   . .
 >
@@ -9551,7 +9551,7 @@
 > indiscernible barbed wire   between . He       found her     excitingly desirable . He       went  to
 # J             V/J    NSg/V+ NSg/P+  . NPr/ISg+ NSg/V ISg/D$+ R+         +         . NPr/ISg+ NSg/V P
 > her     house  , at    first   with other   officers from Camp     Taylor , then     alone . It       amazed
-# ISg/D$+ NPr/V+ . NSg/P NSg/V/J P    NSg/V/J W?       P    NSg/V/J+ NPr+   . NSg/J/C+ J     . NPr/ISg+ V/J
+# ISg/D$+ NPr/V+ . NSg/P NSg/V/J P    NSg/V/J NPl/V    P    NSg/V/J+ NPr+   . NSg/J/C+ J     . NPr/ISg+ V/J
 > him  — he       had never been  in      such  a   beautiful house  before . But     what   gave it       an  air
 # ISg+ . NPr/ISg+ V   R     NSg/V NPr/J/P NSg/I D/P NSg/J+    NPr/V+ C/P+   . NSg/C/P NSg/I+ V    NPr/ISg+ D/P NSg/V
 > of breathless intensity , was that          Daisy lived there — it       was as    casual a   thing to

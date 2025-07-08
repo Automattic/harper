@@ -1166,6 +1166,12 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `state of the art`?",
             "Detects incorrect usage of `state of art` and suggests `state of the art` as the correct phrase."
         ),
+        "StatuteOfLimitations" => (
+            ["statue of limitations"],
+            ["statute of limitations"],
+            "A `statue` is a sculpture; in legal terms, the correct word is `statute`.",
+            "Corrects `statue of limitations` to `statute of limitations`."
+        ),
         "SufficeItToSay" => (
             ["suffice to say"],
             ["suffice it to say"],
