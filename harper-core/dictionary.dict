@@ -22543,7 +22543,7 @@ elasticity/~Ng
 elasticize/VdSG
 elate/VJdSGn
 elated/JVY
-elation/Ng
+elation/Nmg
 elbow/~NVSgdG
 elbowroom/Ng
 elder/~JNVSgY
@@ -22565,7 +22565,7 @@ electric/~JNS
 electrical/~JNY
 electrician/NgS
 electricity/~Ng
-electrification/~Ng
+electrification/~Nmg
 electrifier/Ng
 electrify/VZnd>S
 electrifying/JVNY
@@ -22618,7 +22618,7 @@ elephantiasis/Ng
 elephantine/J
 elev
 elevate/~VJXdSGn
-elevation/~Ng
+elevation/~Nwg
 elevator/~NVgS
 eleven/~NSgH
 elevens/NS
@@ -22628,12 +22628,12 @@ elf/~NVg
 elfin/NJ
 elfish/J
 elicit/~VJSdG
-elicitation/Ng
+elicitation/Nwg
 elide/VdSG
 eligibility/~Nig
 eligible/~JN
 eliminate/~VXdSGn
-elimination/~Ng
+elimination/~Nwg
 eliminator/~NS
 elision/NgS
 elite/~JNSg
@@ -22672,7 +22672,7 @@ elvish/J
 em/~NIS
 em's
 emaciate/VJGndS
-emaciation/Ng
+emaciation/Nmg
 email/~NVSgdG
 emanate/VXdSGn
 emanation/Ng
@@ -22837,7 +22837,7 @@ enc/N
 encamp/VLSGd
 encampment/~NgS
 encapsulate/VXGndS
-encapsulation/Ng
+encapsulation/Nwg
 encase/VLdSG
 encasement/Ng
 encephalitic/J
@@ -23102,10 +23102,10 @@ entwine/VdSG
 enum/NSg
 enumerable/J
 enumerate/VdSGnX
-enumeration/~Ng
+enumeration/~Nwg
 enumerator/NSg
 enunciate/VdSGn
-enunciation/Ng
+enunciation/Nwg
 enuresis/Ng
 envelop/VSLd>ZG
 envelope/~NVSg
@@ -23292,7 +23292,7 @@ erythrocyte/NSg
 erythromycin/N
 escalade/NVSdGg
 escalate/~VedSGn
-escalation/~Neg
+escalation/~Nweg
 escalations/N
 escalator/~NVgS
 escalatory/J
@@ -23512,7 +23512,7 @@ ewer/Ng
 ex/~NVJgS
 exabyte/NgS
 exacerbate/VGndS
-exacerbation/Ng
+exacerbation/Nwg
 exact/~JVSpd>YTG
 exacting/JVY
 exaction/Ng
@@ -23744,7 +23744,7 @@ expertness/Ng
 expiate/VGndS
 expiation/Ng
 expiatory/J
-expiration/~Ng
+expiration/~Nwg
 expire/~VdSG
 expired/~VJU
 expiry/~Ng
@@ -23875,7 +23875,7 @@ extraordinaire/JN
 extraordinarily/~R
 extraordinary/~JNp
 extrapolate/VXGndS
-extrapolation/~Ng
+extrapolation/~Nwg
 extrasensory/J
 extraterrestrial/~JNgS
 extraterritorial/J
@@ -23974,9 +23974,9 @@ factoid/NSg
 factor/~NVrSdG
 factor's
 factorial/~NJgS
-factorisation/N!_
+factorisation/NwS!_
 factorise/VGdS!_
-factorization/~N
+factorization/~NwS
 factorize/VGdS
 factory/~NJSg
 factotum/NSg
@@ -24320,7 +24320,7 @@ fennel/Ng
 fentanyl/Ng
 feral/~JN
 ferment/~VNWegS
-fermentation/~Ng
+fermentation/~NwSg
 fermented/~VJ
 fermenting/V
 fermion/NgS
@@ -24528,7 +24528,7 @@ filthiness/Ng
 filthy/~JV>pT
 filtrate/NViGndS
 filtrate's
-filtration/~Nig
+filtration/~NwSig
 fin/~NVSg>
 finagle/Vd>SZG
 finagler/Ng
@@ -25250,7 +25250,7 @@ form's
 formal/~JNSgY
 formaldehyde/Ng
 formalin/N
-formalisation/Ng!_
+formalisation/NwSg!_
 formalise/VGdS!_
 formalism/~Ng
 formalist/NJgS
@@ -25384,7 +25384,7 @@ fragile/~JN>T
 fragility/NgS
 fragment/~NVGgdS
 fragmentary/~Jg
-fragmentation/~Ng
+fragmentation/~Nmg
 fragrance/~NVgS
 fragrant/~JY
 frail/~JNV>YTp
@@ -25649,8 +25649,8 @@ fugitive/~NJVgS
 fugue/~NVSg
 fuhrer/NSg
 fulcrum/NgS
-fulfil/VSL!_
-fulfill/~VLdGS
+fulfil/VSL!_@
+fulfill/~VLdGS<@
 fulfilled/~VJU
 fulfilling/~JVNU
 fulfillment/~Ng
@@ -26181,7 +26181,7 @@ germicidal/J
 germicide/NgS
 germinal/~Jg
 germinate/~VGndS
-germination/~Ng
+germination/~NwSg
 germophobe/NgS
 germophobia/Ng
 gerontocracy/Ng
@@ -27907,7 +27907,7 @@ hermitian/~J
 hernia/NSg
 hernial/J
 herniate/VGndS
-herniation/Ng
+herniation/NwSg
 hero/~Ng
 heroes/~N
 heroic/~JNSQ
@@ -28659,7 +28659,7 @@ hwy/~N
 hyacinth/Ng
 hyacinths/N
 hybrid/~NJSg
-hybridisation/Ng!_
+hybridisation/NwSg!_
 hybridise/VdSG!_
 hybridism/Ng
 hybridization/~Ng
@@ -28974,7 +28974,7 @@ imbroglio/NSg
 imbue/VdSG
 imitable/Ji
 imitate/~VdSGnvX
-imitation/~Ng
+imitation/~NwSg
 imitative/JpY
 imitativeness/Ng
 imitator/NSg
@@ -29300,7 +29300,7 @@ incel/NgS
 incendiary/~JNSg
 incense/~NVgGdS
 incentive/~NgES
-incentivization/Ng
+incentivization/NwSg
 incentivize/VGdSE
 inception/~NSg
 incessant/~JY
@@ -29925,7 +29925,7 @@ intercity/~JN
 intercollegiate/~JN
 intercom/NVSg
 intercommunicate/VdSGn
-intercommunication/Ng
+intercommunication/Nmg
 interconnect/~VNGdS
 interconnectedness/N
 interconnection/~NSg
@@ -30233,7 +30233,7 @@ ironwood/NgS
 ironwork/Ng
 irony/~NJSg
 irradiate/JVdSGn
-irradiation/~Ng
+irradiation/~NwSg
 irrational/~JNSgY
 irrationality/Ng
 irreclaimable/J
@@ -30732,7 +30732,7 @@ just/~JV>YpT        # removed `1` noun. archaic and interferes with linter heuri
 justice/~NigS
 justifiable/~JU
 justifiably/UR
-justification/~Ng
+justification/~NwSg
 justified/~JVU
 justify/~VXGdSn
 justifyingly/R
@@ -31798,7 +31798,7 @@ liminal/J
 liminality/NgS
 limit/~NJVeSZGd>
 limit's
-limitation/~Neg
+limitation/~NwSeg
 limitations/~N
 limited/~VJNUY
 limiter's
@@ -32485,12 +32485,12 @@ magnesium/~Ng
 magnet/~NgS
 magnetic/~JQ
 magnetisable/J!_
-magnetisation/Neg!_
+magnetisation/NwSeg!_
 magnetise/VeGdS!_
 magnetism/~Ng
 magnetite/Ng
 magnetizable/J
-magnetization/Neg
+magnetization/NwSeg
 magnetize/VeGdS
 magneto/~NSg
 magnetohydrodynamic/J
@@ -32930,7 +32930,7 @@ mastitis/N
 mastodon/NSg
 mastoid/JNSg
 masturbate/VGndS
-masturbation/Ng
+masturbation/Nmg
 masturbatory/J
 mat/~NVJSZGgd>
 matador/~NSg
@@ -33118,7 +33118,7 @@ medial/~JNrY
 median/~NJgS
 mediate/~VJrdSGn
 mediated/~VU
-mediation/~Nrg
+mediation/~NwSrg
 mediator/~NgS
 medic/~JNSg
 medicaid/g
@@ -33779,7 +33779,7 @@ misbehavior/Ng
 misbehaviour/Ng!@_
 misc/~J
 miscalculate/VdSXGn
-miscalculation/Ng
+miscalculation/NwSg
 miscall/VNdSG
 miscarriage/~NgS
 miscarry/VGdS
@@ -34836,10 +34836,10 @@ narrowness/Ng
 narwhal/NgS
 nary/J
 nasal/~JNSgY
-nasalisation/Ng!_
+nasalisation/NwSg!_
 nasalise/VdSG!_
 nasality/Ng
-nasalization/Ng
+nasalization/NwSg
 nasalize/VdSG
 nascence/Nrg
 nascent/~Jr
@@ -35415,7 +35415,7 @@ nondeterminism/N
 nondeterministic/J
 nondisciplinary/J
 nondisclosure/Ng
-nondiscrimination/Ng
+nondiscrimination/Nmg
 nondiscriminatory/J
 nondramatic/J
 nondrinker/NgS
@@ -35781,7 +35781,7 @@ nugget/~NVSg
 nuisance/~NgS
 nuke/~NVgGdS
 null/~NJVSdGB
-nullification/Ng
+nullification/NwSg
 nullify/VndSG
 nullity/Ng
 numb/~JVZTGpd>YS
@@ -36423,7 +36423,7 @@ orison/NSg
 ormolu/NJVg
 ornament/~NVSGgd
 ornamental/~JN
-ornamentation/~Nwg
+ornamentation/~NwSg
 ornate/~JVYp
 ornateness/Nmg
 orneriness/Nmg
@@ -36956,7 +36956,7 @@ oviparous/J
 ovoid/JNgS
 ovular/JN
 ovulate/VJdSGn
-ovulation/~Ng
+ovulation/~NwSg
 ovule/NgS
 ovum/Ng
 ow/~
@@ -37270,10 +37270,10 @@ paralegal/NgS
 parallax/~NVgS
 parallel/~JNVSGgd
 paralleled/~VU
-parallelisation/N!_
+parallelisation/NwSg!_
 parallelised/J!_
 parallelism/NgS
-parallelization/N
+parallelization/NwSg
 parallelize/VdSGB
 parallelogram/~NSg
 paralyse/VdSG!_
@@ -37895,7 +37895,7 @@ perfectness/Ng
 perfidious/JY
 perfidy/NSg
 perforate/VJGnXdS
-perforation/Ng
+perforation/NwSg
 perforce/V
 perform/~VSd>ZG
 performance/~NSg
@@ -38881,10 +38881,10 @@ pokey/~JNgS
 poky/NJT>
 pol/~NSGgd
 polar/~JN
-polarisation/Neg!_
+polarisation/NwSeg!_
 polarise/VedSG!_
 polarity/~NSg
-polarization/~Neg
+polarization/~NwSeg
 polarize/VedSG
 pole/~NVgS
 poleaxe/NVGdS
@@ -39415,7 +39415,7 @@ prefab/JNVSg
 prefabbed/V
 prefabbing/V
 prefabricate/VdSGn
-prefabrication/Ng
+prefabrication/Nmg
 preface/~NVdSgG
 prefatory/J
 prefect/~NSg
@@ -40208,7 +40208,7 @@ pulpwood/Ng
 pulpy/J>pT
 pulsar/~NSg
 pulsate/VXGndS
-pulsation/Ng
+pulsation/NwSg
 pulse/~NVrgGdS
 pulverisation/Ng!_
 pulverise/VdSG!_
@@ -40637,7 +40637,7 @@ radian/NS
 radiance/~Ng
 radiant/~JNY
 radiate/~VJNdSGnX
-radiation/~Ng
+radiation/~NwSg
 radiative/~J
 radiator/~NSg
 radical/~JNSgYp
@@ -41008,8 +41008,8 @@ recalcitrant/JN
 recant/VSdG
 recantation/NSg
 recap/~VNgS
-recapitalisation/N!_
-recapitalization/N
+recapitalisation/NwSg!_
+recapitalization/NwSg
 recce/NJVS
 recd
 receipt/~NVSgdG
@@ -41302,14 +41302,14 @@ regrind/VGS
 reground/V
 regroup/NVdGS
 regular/~JNgYS
-regularisation/Ng!_
+regularisation/NwSg!_
 regularise/VdSG!_
 regularity/~NSg
-regularization/Ng
+regularization/NwSg
 regularize/VdSG
 regulate/~VedSGnv
 regulated/~VJU
-regulation/~NJeg
+regulation/~NwSJeg
 regulations/~N
 regulator/~NgS
 regulatory/~J
@@ -41526,7 +41526,7 @@ repletion/Ng
 replica/~NSg
 replicant/NgS
 replicate/~VNJdSGnX
-replication/~Ng
+replication/~NwSg
 replicator/NS
 repo/~NVSg
 repoliticise/VdSG!_
@@ -42327,7 +42327,7 @@ ruffled/VJU
 rug/~NVJSg
 rugby/~NVg
 rugged/~JVpT>Y
-ruggedization/Ng
+ruggedization/NwSg
 ruggedize/VdSG
 ruggedness/Ng
 rugger/N
@@ -42689,7 +42689,7 @@ sateen/Ng
 satellite/~NVdSgG
 satiable/Ji
 satiate/VJGndS
-satiation/Ng
+satiation/Nmg
 satiety/Ng
 satin/~NJVg
 satinwood/NSg
@@ -43463,7 +43463,7 @@ sensitive/~JNSgYp
 sensitiveness/Nmg
 sensitivities/N
 sensitivity/~Nwig
-sensitization/Neg
+sensitization/NwSeg
 sensitize/VedSG
 sensor/~NSg
 sensory/~JN
@@ -45721,14 +45721,14 @@ stagecoach/~NVgS
 stagecraft/Ng
 stagehand/NgS
 stagestruck/J
-stagflation/Ng
+stagflation/NwSg
 stagger/NVgdGS
 staggering/~VJNY
 staging/~VNg
 stagnancy/Ng
 stagnant/~JY
 stagnate/VJdSGn
-stagnation/~Ng
+stagnation/~NwSg
 stagy/J>T
 staid/JVp>YT
 staidness/Ng
@@ -46457,7 +46457,7 @@ subjectivity/~Ng
 subjectivization/Ng
 subjoin/VNGdS
 subjugate/VJGndS
-subjugation/~Ng
+subjugation/~NwSg
 subjunctive/~JNSg
 sublease/NVgGdS
 sublet/VNSg
@@ -47268,7 +47268,7 @@ taboo/~NJVgdSG
 tabor/~NVgS
 tabular/JN
 tabulate/VNJdSGnX
-tabulation/Ng
+tabulation/NwSg
 tabulator/NSg
 tachograph/N
 tachographs/N
@@ -48831,7 +48831,7 @@ translucence/Ng
 translucency/~Ng
 translucent/~JY
 transmigrate/VGndS
-transmigration/Ng
+transmigration/NwSg
 transmissible/J
 transmission/~NgS
 transmit/~VS
@@ -49095,10 +49095,10 @@ trivalent/JN
 trivet/NgS
 trivia/~Ng
 trivial/~JNY
-trivialisation/Ng!_
+trivialisation/NwSg!_
 trivialise/VGdS!_
 triviality/NSg
-trivialization/Ng
+trivialization/NwSg
 trivialize/VGdS
 trivium/Ng
 trochaic/JN
@@ -49847,7 +49847,7 @@ unicellular/JN
 unicorn/~NVJSg
 unicycle/NVSg
 unidirectional/JN
-unification/~Nrg
+unification/~NwSrg
 unifier/NgS
 uniform/~NJVSgdYG
 uniformity/~Ng
@@ -50284,7 +50284,7 @@ valiance/Ng
 valiant/~JNY
 valid/~JY
 validate/~ViGndS
-validation/~Nig
+validation/~NwSig
 validations/N
 validator/NgS
 validity/~Nig
@@ -50475,9 +50475,9 @@ verandah/NSg_
 verapamil/N
 verb/~NVKgS
 verbal/~JNVgYS
-verbalisation/Ng!_
+verbalisation/NwSg!_
 verbalise/VGdS!_
-verbalization/Ng
+verbalization/NwSg
 verbalize/VGdS
 verbatim/~JN
 verbena/NSg
@@ -50715,8 +50715,8 @@ virility/Ng
 virologist/NSg
 virology/~Ng
 virtual/~JNY
-virtualisation/N!_
-virtualization/~N
+virtualisation/NwSg!_
+virtualization/~NwSg
 virtue/~NSg
 virtuosity/Ng
 virtuoso/~NJg

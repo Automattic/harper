@@ -46,7 +46,9 @@
 //!   - Conjunctions are denoted by `C`.
 //!   - Determiners are denoted by `D`.
 //!   - Prepositions are denoted by `P`.
-//!   - Dialects are denoted by `Am`, `Br`, `Ca`, or `Au`.
+//!   - Dialects are denoted by `Am`, `Br`, `Ca`, or `Au` for individual
+//!     dialects, or `NoAm` for North America (US and Canada)
+//!     or `Comm` for Commonwealth (UK, Australia, and Canada).
 //!   - Swear words are denoted by `B` (for bad).
 //!   - Noun phrase membership is denoted by `+`
 //!
@@ -62,7 +64,7 @@
 //! - All other token kinds are denoted by their variant name.
 use std::borrow::Cow;
 
-use harper_core::{Degree, Document, FstDictionary, TokenKind, WordMetadata};
+use harper_core::{Degree, Dialect, Document, FstDictionary, TokenKind, WordMetadata};
 
 mod snapshot;
 
@@ -161,18 +163,8 @@ fn format_word_tag(word: &WordMetadata) -> String {
         add("P", &mut tags);
     }
 
-    word.dialects.iter().for_each(|d| {
-        if let Ok(dialect) = harper_core::Dialect::try_from(d) {
-            add(
-                match dialect {
-                    harper_core::Dialect::American => "Am",
-                    harper_core::Dialect::British => "Br",
-                    harper_core::Dialect::Canadian => "Ca",
-                    harper_core::Dialect::Australian => "Au",
-                },
-                &mut tags,
-            );
-        }
+    get_dialect_annotations(word).into_iter().for_each(|tag| {
+        add(tag, &mut tags);
     });
 
     add_switch(&mut tags, word.np_member, "+", "");
@@ -187,6 +179,45 @@ fn format_word_tag(word: &WordMetadata) -> String {
         tags
     }
 }
+
+/// Returns a vector of dialect annotation strings for the given word.
+/// Handles both individual dialects and special groupings (NoAm, Comm).
+fn get_dialect_annotations(word: &WordMetadata) -> Vec<&'static str> {
+    let mut annotations = Vec::new();
+    let mut north_america = false;
+    let mut commonwealth = false;
+
+    let en_au = word.dialects.is_dialect_enabled_strict(Dialect::Australian);
+    let en_ca = word.dialects.is_dialect_enabled_strict(Dialect::Canadian);
+    let en_gb = word.dialects.is_dialect_enabled_strict(Dialect::British);
+    let en_us = word.dialects.is_dialect_enabled_strict(Dialect::American);
+
+    // Dialect groups in alphabetical order
+    if en_gb && en_au && en_ca {
+        annotations.push("Comm");
+        commonwealth = true;
+    }
+    if en_us && en_ca {
+        annotations.push("NoAm");
+        north_america = true;
+    }
+    // Individual dialects in alphabetical order
+    if en_us && !north_america {
+        annotations.push("Am");
+    }
+    if en_au && !commonwealth {
+        annotations.push("Au");
+    }
+    if en_gb && !commonwealth {
+        annotations.push("Br");
+    }
+    if en_ca && !north_america && !commonwealth {
+        annotations.push("Ca");
+    }
+
+    annotations
+}
+
 fn format_tag(kind: &TokenKind) -> Cow<'static, str> {
     match kind {
         TokenKind::Word(word) => {

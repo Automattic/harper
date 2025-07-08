@@ -108,8 +108,8 @@
 # D+  NSg/V/J+ V   NSg/V/J NSg/J/P D+  NSg/V+   .
 > The boat   was swamped by      the water  .
 # D+  NSg/V+ V   V/J     NSg/J/P D+  NSg/V+ .
-> He       was protected by      his     body   armour          .
-# NPr/ISg+ V   V/J       NSg/J/P ISg/D$+ NSg/V+ NPr/V/Ca/Au/Br+ .
+> He       was protected by      his     body   armour      .
+# NPr/ISg+ V   V/J       NSg/J/P ISg/D$+ NSg/V+ NPr/V/Comm+ .
 > There was a   call  by      the unions for a   30 % pay     rise   .
 # +     V   D/P NSg/V NSg/J/P D   NPl/V  C/P D/P #  . NSg/V/J NSg/V+ .
 > I    was aghast by      what   I    saw    .
@@ -412,8 +412,8 @@
 # NPr/J/P V         D   NSg    W?      . NPr/ISg+ NSg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D+  NSg+        .
 > In      trying  to make  amends , she  actually made  matters worse    .
 # NPr/J/P NSg/V/J P  NSg/V NPl/V  . ISg+ R        NSg/V +       NSg/V/J+ .
-> My  aim    in      travelling       there was to find  my  missing friend   .
-# D$+ NSg/V+ NPr/J/P NSg/V/J/Ca/Au/Br +     V   P  NSg/V D$+ V       NPr/V/J+ .
+> My  aim    in      travelling   there was to find  my  missing friend   .
+# D$+ NSg/V+ NPr/J/P NSg/V/J/Comm +     V   P  NSg/V D$+ V       NPr/V/J+ .
 > My  fat      rolls around in      folds  .
 # D$+ NSg/V/J+ NPl/V J/P    NPr/J/P NPl/V+ .
 > The planes flew    over      in      waves  .
@@ -494,8 +494,8 @@
 # VL+ NSg . NPr/V NPr/J/P .
 > Little  by      little  I    pushed the snake into the basket , until finally all       of it       was in      .
 # NPr/I/J NSg/J/P NPr/I/J ISg+ V/J    D   NPr/V P    D+  NSg/V+ . C/P   R       NSg/I/J/C P  NPr/ISg+ V+  NPr/J/P .
-> The bullet is about five centimetres   in      .
-# D+  NSg/V+ VL J/P   NSg+ NPl/Ca/Au/Br+ NPr/J/P .
+> The bullet is about five centimetres in      .
+# D+  NSg/V+ VL J/P   NSg+ NPl/Comm+   NPr/J/P .
 > If    the tennis ball   bounces on  the line   then    it's in      .
 # NSg/C D+  NSg/V+ NPr/V+ NPl/V   J/P D+  NSg/V+ NSg/J/C W?   NPr/J/P .
 > I've discovered why   the TV   wasn't working – the plug   wasn't in      !
@@ -512,8 +512,8 @@
 # NPr/J/P NSg/J/P NSg/V+  . Unlintable NPr/J/P NSg/J/P NSg/V+   . Unlintable NPr/J/P P  D   ?      P  ISg/D$+ NSg/V+
 > He       is very in      with the Joneses .
 # NPr/ISg+ VL J/R  NPr/J/P P    D+  NPl/V+  .
-> I    need   to keep  in      with the neighbours      in      case   I    ever need   a   favour         from them     .
-# ISg+ NSg/VX P  NSg/V NPr/J/P P    D+  NPl/V/Ca/Au/Br+ NPr/J/P NPr/V+ ISg+ J    NSg/VX D/P NSg/V/Ca/Au/Br P    NSg/IPl+ .
+> I    need   to keep  in      with the neighbours  in      case   I    ever need   a   favour     from them     .
+# ISg+ NSg/VX P  NSg/V NPr/J/P P    D+  NPl/V/Comm+ NPr/J/P NPr/V+ ISg+ J    NSg/VX D/P NSg/V/Comm P    NSg/IPl+ .
 > I    think that          bird     fancies you    . You're in      there , mate  !
 # ISg+ NSg/V NSg/I/C/Ddem+ NPr/V/J+ NPl/V   ISgPl+ . W?     NPr/J/P W?    . NSg/V .
 > I'm three drinks in      right    now        .
@@ -564,8 +564,8 @@
 # W?  R      V        P  ISgPl+ .
 > He       told us       the story of his     journey to India .
 # NPr/ISg+ V    NPr/IPl+ D   NSg/V P  ISg/D$+ NSg/V+  P  NPr+  .
-> This    behaviour     is typical of teenagers .
-# I/Ddem+ NSg/Ca/Au/Br+ VL NSg/J   P  +         .
+> This    behaviour is typical of teenagers .
+# I/Ddem+ NSg/Comm+ VL NSg/J   P  +         .
 > He       is a   friend  of mine     .
 # NPr/ISg+ VL D/P NPr/V/J P  NSg/I/V+ .
 > We   want  a   larger slice   of the cake   .
@@ -728,8 +728,8 @@
 # D$+ NSg/V/J/Am+ NPl/V+ V   J/P NPr+ NPr+    .
 > I'll pay     on  card   .
 # W?   NSg/V/J J/P NSg/V+ .
-> He       travelled    on  false    documents .
-# NPr/ISg+ V/J/Ca/Au/Br J/P NSg/V/J+ NPl/V+    .
+> He       travelled on  false    documents .
+# NPr/ISg+ V/J/Comm  J/P NSg/V/J+ NPl/V+    .
 > They planned an  attack  on  London .
 # IPl+ V/J     D/P NSg/V/J J/P NPr+   .
 > The soldiers mutinied and turned their guns   on  their officers .

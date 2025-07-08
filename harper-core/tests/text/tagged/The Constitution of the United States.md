@@ -6,8 +6,8 @@
 #
 > We   the People of the United States   , in      Order  to form  a   more      perfect  Union   ,
 # IPl+ D   NSg/V  P  D+  V/J+   NPrPl/V+ . NPr/J/P NSg/V+ P  NSg/V D/P NPr/I/V/J NSg/V/J+ NPr/V/J .
-> establish Justice , insure domestic Tranquility , provide for the common   defence       ,
-# V         NPr+    . V      NSg/J+   NSg         . V       C/P D+  NSg/V/J+ NSg/Ca/Au/Br+ .
+> establish Justice , insure domestic Tranquility , provide for the common   defence   ,
+# V         NPr+    . V      NSg/J+   NSg         . V       C/P D+  NSg/V/J+ NSg/Comm+ .
 > promote the general  Welfare , and secure the Blessings of Liberty to ourselves
 # NSg/V   D+  NSg/V/J+ NSg/V+  . V/C V/J    D   W?        P  NSg+    P  IPl+
 > and our Posterity , do     ordain and establish this    Constitution for the United
@@ -237,7 +237,7 @@
 > thereof ; but     the Congress may    at    any   time    by      Law    make  or    alter such
 # W?      . NSg/C/P D+  NPr/V+   NPr/VX NSg/P I/R/D NSg/V/J NSg/J/P NSg/V+ NSg/V NPr/C NSg/V NSg/I+
 > Regulations , except as    to the Places of chusing Senators .
-# NSg+        . V/C/P  NSg/R P  D   NPl/V  P  ?       NPl+     .
+# NPl+        . V/C/P  NSg/R P  D   NPl/V  P  ?       NPl+     .
 >
 #
 > The Congress shall assemble at    least once  in      every year , and such  meeting shall
@@ -266,8 +266,8 @@
 #
 > Each House may    determine the Rules of its     Proceedings , punish its     Members for
 # D+   NPr/V NPr/VX V         D   NPl/V P  ISg/D$+ +           . V      ISg/D$+ NPl/V   C/P
-> disorderly Behaviour     , and , with the Concurrence of two  thirds , expel a   Member .
-# R+         NSg/Ca/Au/Br+ . V/C . P    D   NSg         P  NSg+ NPl/V+ . V     D/P NSg/V+ .
+> disorderly Behaviour , and , with the Concurrence of two  thirds , expel a   Member .
+# R+         NSg/Comm+ . V/C . P    D   NSg         P  NSg+ NPl/V+ . V     D/P NSg/V+ .
 >
 #
 > Each House shall keep  a   Journal of its     Proceedings , and from time     to time
@@ -381,7 +381,7 @@
 > be     repassed by      two thirds of the Senate and House of Representatives , according
 # NSg/VX ?        NSg/J/P NSg NPl/V  P  D+  NPr    V/C NPr/V P  NPl+            . V/J
 > to the Rules and Limitations prescribed in      the Case  of a    Bill   .
-# P  D   NPl/V V/C NSg+        V/J        NPr/J/P D   NPr/V P  D/P+ NPr/V+ .
+# P  D   NPl/V V/C NPl+        V/J        NPr/J/P D   NPr/V P  D/P+ NPr/V+ .
 >
 #
 > Section . 8 .
@@ -390,8 +390,8 @@
 #
 > The Congress shall have   Power    To lay     and collect Taxes , Duties ,
 # D+  NPr/V+   VX    NSg/VX NSg/V/J+ P  NSg/V/J V/C NSg/V/J NPl/V . NPl    .
-> Imposts and Excises , to pay     the Debts and provide for the common   Defence       and
-# NPl     V/C NPl/V   . P  NSg/V/J D+  NPl+  V/C V       C/P D+  NSg/V/J+ NSg/Ca/Au/Br+ V/C
+> Imposts and Excises , to pay     the Debts and provide for the common   Defence   and
+# NPl     V/C NPl/V   . P  NSg/V/J D+  NPl+  V/C V       C/P D+  NSg/V/J+ NSg/Comm+ V/C
 > general Welfare of the United States   ; but     all        Duties , Imposts and Excises shall
 # NSg/V/J NSg/V   P  D+  V/J+   NPrPl/V+ . NSg/C/P NSg/I/J/C+ NPl    . NPl     V/C NPl/V   VX
 > be     uniform throughout the United States  ;
@@ -480,8 +480,8 @@
 #
 > To define  and punish Piracies and Felonies committed on  the high     Seas , and
 # P  NSg/V/J V/C V      ?        V/C NPl      V/J       J/P D+  NSg/V/J+ NPl+ . V/C
-> Offences     against the Law   of Nations ;
-# NPl/Ca/Au/Br C/P     D   NSg/V P  NPl+    .
+> Offences against the Law   of Nations ;
+# NPl/Comm C/P     D   NSg/V P  NPl+    .
 >
 #
 >
@@ -1012,8 +1012,8 @@
 # NSg/V   . P  D   NSg/J     NSg/V/J NPr/J/P D    P  D+  NSg/J+    NPl+        . P
 > any   Subject  relating to the Duties of their respective Offices , and he       shall
 # I/R/D NSg/V/J+ V        P  D   NPl    P  D$+   J+         NPl/V+  . V/C NPr/ISg+ VX
-> have   Power    to grant Reprieves and Pardons for Offences     against the United
-# NSg/VX NSg/V/J+ P  NPr/V NPl/V     V/C NPl/V   C/P NPl/Ca/Au/Br C/P     D+  V/J+
+> have   Power    to grant Reprieves and Pardons for Offences against the United
+# NSg/VX NSg/V/J+ P  NPr/V NPl/V     V/C NPl/V   C/P NPl/Comm C/P     D+  V/J+
 > States   , except in      Cases of Impeachment .
 # NPrPl/V+ . V/C/P  NPr/J/P NPl/V P  NSg         .
 >
@@ -1102,8 +1102,8 @@
 # NSg/I/V/J NSg/V/J+ NSg/V/J+ . V/C NPr/J/P NSg/I NSg/J    NPl/V+ NSg/R D+  NPr/V+   NPr/VX P    NSg/V/J+ P
 > time    ordain and  establish . The Judges   , both of the supreme and inferior Courts ,
 # NSg/V/J V      V/C+ V+        . D+  NPrPl/V+ . I/C  P  D   NSg/V/J V/C NSg/J+   NPl/V+ .
-> shall hold    their Offices during good     Behaviour     , and shall , at    stated Times  ,
-# VX    NSg/V/J D$+   NPl/V+  V/P    NPr/V/J+ NSg/Ca/Au/Br+ . V/C VX    . NSg/P V/J    NPl/V+ .
+> shall hold    their Offices during good     Behaviour , and shall , at    stated Times  ,
+# VX    NSg/V/J D$+   NPl/V+  V/P    NPr/V/J+ NSg/Comm+ . V/C VX    . NSg/P V/J    NPl/V+ .
 > receive for their Services , a    Compensation , which shall not   be     diminished
 # NSg/V   C/P D$+   NPl/V+   . D/P+ NSg+         . I/C+  VX    NSg/C NSg/VX V/J
 > during their Continuance in      Office .
@@ -1141,7 +1141,7 @@
 > have   appellate Jurisdiction , both as    to Law   and Fact , with such   Exceptions , and
 # NSg/VX J         NSg+         . I/C  NSg/R P  NSg/V V/C NSg+ . P    NSg/I+ NPl+       . V/C
 > under   such  Regulations as    the Congress shall make  .
-# NSg/J/P NSg/I NSg+        NSg/R D+  NPr/V+   VX+   NSg/V .
+# NSg/J/P NSg/I NPl+        NSg/R D+  NPr/V+   VX+   NSg/V .
 >
 #
 > The Trial   of all        Crimes , except in      Cases of Impeachment , shall be     by      Jury     ; and
@@ -1304,14 +1304,14 @@
 # C       D+  NSg/V/J+ VX    NSg/VX NSg/V W?   V/J       . VX    V     NSg/J/P D+  V/J+
 > States   , or    any   place  subject to their jurisdiction . No     Person held to Service
 # NPrPl/V+ . NPr/C I/R/D NSg/V+ NSg/V/J P  D$+   NSg+         . NPr/P+ NSg/V+ V    P  NSg/V
-> or    Labour          in      one        State  , under   the Laws   thereof , escaping into another , shall ,
-# NPr/C NPr/V/Ca/Au/Br+ NPr/J/P NSg/I/V/J+ NSg/V+ . NSg/J/P D+  NPl/V+ W?      . V        P    I/D     . VX    .
+> or    Labour      in      one        State  , under   the Laws   thereof , escaping into another , shall ,
+# NPr/C NPr/V/Comm+ NPr/J/P NSg/I/V/J+ NSg/V+ . NSg/J/P D+  NPl/V+ W?      . V        P    I/D     . VX    .
 > in      Consequence of any   Law   or    Regulation therein , be     discharged from such
 # NPr/J/P NSg/V       P  I/R/D NSg/V NPr/C NSg/J+     W?      . NSg/VX V/J        P    NSg/I
-> Service or    Labour          , but     shall be     delivered up        on  Claim of the Party    to whom such
-# NSg/V   NPr/C NPr/V/Ca/Au/Br+ . NSg/C/P VX    NSg/VX V/J       NSg/V/J/P J/P NSg/V P  D+  NSg/V/J+ P  I+   NSg/I
-> Service or    Labour          may     be      due   .
-# NSg/V   NPr/C NPr/V/Ca/Au/Br+ NPr/VX+ NSg/VX+ NSg/J .
+> Service or    Labour      , but     shall be     delivered up        on  Claim of the Party    to whom such
+# NSg/V   NPr/C NPr/V/Comm+ . NSg/C/P VX    NSg/VX V/J       NSg/V/J/P J/P NSg/V P  D+  NSg/V/J+ P  I+   NSg/I
+> Service or    Labour      may     be      due   .
+# NSg/V   NPr/C NPr/V/Comm+ NPr/VX+ NSg/VX+ NSg/J .
 >
 #
 > Section . 3 .
@@ -1333,7 +1333,7 @@
 > The Congress shall have   Power    to dispose of and make  all       needful Rules and
 # D+  NPr/V+   VX    NSg/VX NSg/V/J+ P  NSg/V   P  V/C NSg/V NSg/I/J/C NSg/J   NPl/V V/C
 > Regulations respecting the Territory or    other    Property belonging to the United
-# NSg+        V          D+  NSg       NPr/C NSg/V/J+ NSg/V+   NSg/V     P  D+  V/J+
+# NPl+        V          D+  NSg       NPr/C NSg/V/J+ NSg/V+   NSg/V     P  D+  V/J+
 > States   ; and nothing in      this    Constitution shall be     so        construed as    to Prejudice
 # NPrPl/V+ . V/C NSg/I/J NPr/J/P I/Ddem+ NPr+         VX    NSg/VX NSg/I/J/C V/J       NSg/R P  NSg/V/J+
 > any   Claims of the United States   , or    of any    particular State  .

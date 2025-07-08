@@ -405,7 +405,7 @@
 > Proponents of classifying computer science as    a   mathematical discipline argue
 # NPl        P  V           NSg/V+   NSg/V   NSg/R D/P J            NSg/V+     V
 > that         computer programs are physical realizations of mathematical entities and
-# NSg/I/C/Ddem NSg/V+   NPl/V+   V   NSg/J    NPl/Am/Ca    P  J            NPl      V/C
+# NSg/I/C/Ddem NSg/V+   NPl/V+   V   NSg/J    NPl/NoAm     P  J            NPl      V/C
 > programs that          can    be     deductively reasoned through mathematical formal methods .
 # NPl/V+   NSg/I/C/Ddem+ NPr/VX NSg/VX R           V/J      NSg/J/P J+           NSg/J+ NPl/V+  .
 > Computer scientists Edsger W. Dijkstra and Tony  Hoare regard instructions for
@@ -675,7 +675,7 @@
 > designs as    complete aircraft . Notable in      electrical and electronic circuit
 # NPl/V   NSg/R NSg/V/J+ NSgPl+   . NSg/J   NPr/J/P NSg/J      V/C J          NSg/V+
 > design are SPICE , as    well    as    software for physical realization of new     ( or
-# NSg/V+ V   NSg/V . NSg/R NSg/V/J NSg/R NSg      C/P NSg/J    NSg/Am/Ca   P  NSg/V/J . NPr/C
+# NSg/V+ V   NSg/V . NSg/R NSg/V/J NSg/R NSg      C/P NSg/J    NSg/NoAm    P  NSg/V/J . NPr/C
 > modified ) designs . The latter includes essential design software for integrated
 # NSg/V/J  . NPl/V+  . D   NSg/J  NPl/V    NSg/J     NSg/V+ NSg      C/P V/J+
 > circuits .
