@@ -213,7 +213,7 @@ use crate::{Document, LSend, render_markdown};
 
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
-/// Commonly implemented via [`PatternLinter`].
+/// Commonly implemented via [`ExprLinter`].
 ///
 /// See also: [`LintGroup`].
 pub trait Linter: LSend {

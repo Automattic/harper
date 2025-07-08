@@ -10,7 +10,7 @@ use super::Expr;
 /// all contained exprs, returning the first match found.
 /// You should not assume this search is deterministic.
 ///
-/// If you'd like to use this structure in a [`PatternLinter`](crate::linting::PatternLinter), you may want to provide
+/// If you'd like to use this structure in a [`ExprLinter`](crate::linting::ExprLinter), you may want to provide
 /// the map as the search expr, then use a pattern lookup once more to determine
 /// the corresponding key.
 pub struct ExprMap<T>
