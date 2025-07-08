@@ -1,13 +1,12 @@
 use crate::expr::All;
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::MergeableWords;
 use crate::expr::SequenceExpr;
 use crate::patterns::AnyPattern;
 use crate::{CharStringExt, Lrc, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
-
-use crate::Token;
 
 /// Two adjacent words separated by whitespace that if joined would be a valid noun.
 pub struct CompoundNounBeforeAuxVerb {
@@ -48,7 +47,8 @@ impl ExprLinter for CompoundNounBeforeAuxVerb {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let span = matched_tokens[0..3].span()?;
         let orig = span.get_content(source);
         // If the pattern matched, this will not return `None`.

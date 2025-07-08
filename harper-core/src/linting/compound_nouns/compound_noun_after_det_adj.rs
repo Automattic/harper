@@ -1,5 +1,6 @@
 use crate::expr::All;
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::MergeableWords;
 use crate::expr::SequenceExpr;
 use crate::{CharStringExt, TokenStringExt, linting::ExprLinter};
@@ -59,7 +60,8 @@ impl ExprLinter for CompoundNounAfterDetAdj {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let span = matched_tokens[2..].span()?;
         let orig = span.get_content(source);
         // If the pattern matched, this will not return `None`.

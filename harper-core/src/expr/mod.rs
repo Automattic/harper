@@ -148,3 +148,7 @@ where
         LongestMatchOf::new(vec![Box::new(self), Box::new(other)])
     }
 }
+
+pub struct MatchInfo<'a> {
+    pub matched_tokens: &'a [Token],
+}

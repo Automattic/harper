@@ -1,5 +1,5 @@
 use crate::Token;
-use crate::expr::{AnchorStart, Expr, SequenceExpr};
+use crate::expr::{AnchorStart, Expr, MatchInfo, SequenceExpr};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -28,7 +28,8 @@ impl ExprLinter for HavePronoun {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         // First real word in the match is always "has".
         let has_tok = toks.iter().find(|t| t.kind.is_word())?;
         let span = has_tok.span;

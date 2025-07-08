@@ -1,7 +1,8 @@
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::{
-    Span, Token,
+    Span,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -36,7 +37,8 @@ impl ExprLinter for AskNoPreposition {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         if toks.len() < 5 {
             return None;
         }

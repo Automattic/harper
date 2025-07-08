@@ -3,6 +3,7 @@ use crate::Token;
 use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
+use crate::expr::MatchInfo;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
@@ -76,7 +77,8 @@ impl ExprLinter for ThenThan {
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         // For both "stupider then X" and "more stupid then X", "then" is 3rd last token.
         let span = matched_tokens[matched_tokens.len() - 3].span;
         let offending_text = span.get_content(source);

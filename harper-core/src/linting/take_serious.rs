@@ -1,6 +1,6 @@
 use crate::{
-    Token, TokenStringExt,
-    expr::{Expr, SequenceExpr},
+    TokenStringExt,
+    expr::{Expr, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{NominalPhrase, WordSet},
 };
@@ -39,7 +39,8 @@ impl ExprLinter for TakeSerious {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let whole_phrase_span = matched_tokens.span()?;
         let all_but_last_token = matched_tokens[..matched_tokens.len() - 1].span()?;
 

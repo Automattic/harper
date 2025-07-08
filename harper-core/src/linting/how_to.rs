@@ -2,6 +2,7 @@ use harper_brill::UPOS;
 
 use crate::expr::All;
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{
@@ -56,7 +57,8 @@ impl ExprLinter for HowTo {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, _src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let span = toks[0..2].span()?;
         let fix: Vec<char> = "to ".chars().collect();
 

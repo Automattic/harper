@@ -1,7 +1,7 @@
-use crate::expr::SequenceExpr;
 use crate::expr::{Expr, OwnedExprExt};
+use crate::expr::{MatchInfo, SequenceExpr};
 use crate::{
-    Lrc, Token,
+    Lrc,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -37,7 +37,8 @@ impl ExprLinter for WinPrize {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let candidate = toks.last()?;
         let raw = candidate.span.get_content_string(src).to_lowercase();
         let repl = match raw.as_str() {

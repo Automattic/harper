@@ -1,7 +1,6 @@
 use harper_brill::UPOS;
 
-use crate::Token;
-use crate::expr::{All, Expr, OwnedExprExt, SequenceExpr};
+use crate::expr::{All, Expr, MatchInfo, OwnedExprExt, SequenceExpr};
 use crate::patterns::{UPOSSet, WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -42,7 +41,8 @@ impl ExprLinter for WayTooAdjective {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let to_tok = toks.get(2)?;
         let span = to_tok.span;
         let original = span.get_content(src);

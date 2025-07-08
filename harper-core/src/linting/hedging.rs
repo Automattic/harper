@@ -1,8 +1,9 @@
+use crate::TokenStringExt;
 use crate::expr::Expr;
 use crate::expr::FixedPhrase;
 use crate::expr::LongestMatchOf;
+use crate::expr::MatchInfo;
 use crate::linting::{ExprLinter, Lint, LintKind};
-use crate::{Token, TokenStringExt};
 
 /// A linter that detects hedging language.
 pub struct Hedging {
@@ -28,7 +29,8 @@ impl ExprLinter for Hedging {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, _source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let span = matched_tokens.span()?;
         Some(Lint {
             span,

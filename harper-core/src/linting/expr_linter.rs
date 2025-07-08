@@ -1,4 +1,4 @@
-use crate::expr::{Expr, ExprExt};
+use crate::expr::{Expr, ExprExt, MatchInfo};
 use blanket::blanket;
 
 use crate::{Document, LSend, Token, TokenStringExt};
@@ -17,7 +17,8 @@ pub trait ExprLinter: LSend {
     /// transformed into a [`Lint`] for editor consumption.
     ///
     /// This function may return `None` to elect _not_ to produce a lint.
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint>;
+    // fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint>;
+    fn match_to_lint(&self, match_info: MatchInfo, source: &[char]) -> Option<Lint>;
     /// A user-facing description of what kinds of grammatical errors this rule looks for.
     /// It is usually shown in settings menus.
     fn description(&self) -> &str;
@@ -52,6 +53,14 @@ pub fn run_on_chunk<'a>(
         .expr()
         .iter_matches(chunk, source)
         .filter_map(|match_span| {
-            linter.match_to_lint(&chunk[match_span.start..match_span.end], source)
+            // A [`Span`] is usually a range of indices into a [`Document`].
+            //
+            // In this case, we're using it to index into a [`Chunk`],
+            // which is a slice of tokens from a [`Document`].
+            let tokens_from_span = &chunk[match_span.start..match_span.end];
+            let match_info = MatchInfo {
+                matched_tokens: tokens_from_span,
+            };
+            linter.match_to_lint(match_info, source)
         })
 }

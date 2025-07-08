@@ -1,6 +1,6 @@
-use crate::expr::{Expr, SequenceExpr, SpaceOrHyphen};
+use crate::expr::{Expr, MatchInfo, SequenceExpr, SpaceOrHyphen};
 use crate::patterns::WordSet;
-use crate::{CharStringExt, Token, TokenStringExt};
+use crate::{CharStringExt, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -26,7 +26,8 @@ impl ExprLinter for LessWorse {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         if toks.len() != 3 {
             return None;
         }

@@ -1,5 +1,5 @@
-use crate::expr::{Expr, WordExprGroup};
-use crate::{Token, TokenStringExt};
+use crate::TokenStringExt;
+use crate::expr::{Expr, MatchInfo, WordExprGroup};
 
 use super::{ExprLinter, Lint, LintKind};
 
@@ -28,7 +28,8 @@ impl ExprLinter for BoringWords {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let matched_word = matched_tokens.span()?.get_content_string(source);
 
         Some(Lint {

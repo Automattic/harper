@@ -1,12 +1,12 @@
-use crate::expr::{Expr, ExprMap, FixedPhrase};
+use crate::expr::{Expr, ExprMap, FixedPhrase, MatchInfo};
 use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
 
 use super::{ExprLinter, LintGroup};
 use super::{Lint, LintKind, Suggestion};
+use crate::TokenStringExt;
 use crate::parsers::PlainEnglish;
 use crate::{Dictionary, Document};
-use crate::{Token, TokenStringExt};
 use std::sync::Arc;
 
 /// A linter that corrects the capitalization of multi-word proper nouns.
@@ -69,7 +69,8 @@ impl<D: Dictionary + 'static> ExprLinter for ProperNounCapitalizationLinter<D> {
         &self.pattern_map
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let canonical_case = self.pattern_map.lookup(0, matched_tokens, source).unwrap();
 
         let mut broken = false;

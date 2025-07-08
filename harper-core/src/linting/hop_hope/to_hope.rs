@@ -1,9 +1,10 @@
 use super::super::{ExprLinter, Lint, LintKind};
+use crate::char_string::char_string;
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
 use crate::patterns::WordSet;
-use crate::{Token, char_string::char_string};
 
 pub struct ToHope {
     expr: Box<dyn Expr>,
@@ -29,7 +30,8 @@ impl ExprLinter for ToHope {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let offending_word = &matched_tokens[2];
         let word_chars = offending_word.span.get_content(source);
 

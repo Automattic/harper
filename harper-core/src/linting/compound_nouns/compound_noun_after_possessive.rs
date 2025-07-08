@@ -1,13 +1,12 @@
 use crate::expr::All;
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::MergeableWords;
 use crate::expr::SequenceExpr;
 use crate::patterns::AnyPattern;
 use crate::{CharStringExt, Lrc, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
-
-use crate::Token;
 
 /// Looks for closed compound nouns which can be condensed due to their position after a
 /// possessive noun (which implies ownership).
@@ -56,7 +55,8 @@ impl ExprLinter for CompoundNounAfterPossessive {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         // "Let's" can technically be a possessive noun (of a lease, or a let in tennis, etc.)
         // but in practice it's almost always a contraction of "let us" before a verb
         // or a mistake for "lets", the 3rd person singular present form of "to let".

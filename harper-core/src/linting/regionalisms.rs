@@ -1,7 +1,7 @@
 use crate::{
     Dialect::{self, American, Australian, British, Canadian},
-    Token, TokenStringExt,
-    expr::{Expr, FirstMatchOf, FixedPhrase},
+    TokenStringExt,
+    expr::{Expr, FirstMatchOf, FixedPhrase, MatchInfo},
     linting::{Lint, LintKind, Suggestion},
 };
 
@@ -461,7 +461,8 @@ impl ExprLinter for Regionalisms {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let span = toks.span()?;
         let flagged_term_chars = span.get_content(src);
         let flagged_term_string = span.get_content_string(src).to_lowercase();

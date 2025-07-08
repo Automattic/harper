@@ -1,9 +1,10 @@
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::{
-    CharStringExt, Token, TokenStringExt,
+    CharStringExt, TokenStringExt,
     patterns::{Word, WordSet},
 };
 
@@ -40,7 +41,8 @@ impl ExprLinter for TheMy {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let span = matched_tokens.span().unwrap();
         let span_content = span.get_content(source);
 

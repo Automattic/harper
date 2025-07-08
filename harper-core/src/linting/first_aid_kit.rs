@@ -1,7 +1,7 @@
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::{
-    Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -28,7 +28,8 @@ impl ExprLinter for FirstAidKit {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let tokens = match_info.matched_tokens;
         let typo_token = tokens.last()?;
         let typo_span = typo_token.span;
         let typo_text = typo_span.get_content(source);
