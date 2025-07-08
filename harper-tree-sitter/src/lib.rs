@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 
-use harper_core::{Mask, Masker, MutableDictionary, Span, WordMetadata};
+use harper_core::spell::MutableDictionary;
+use harper_core::{Mask, Masker, Span, WordMetadata};
 use tree_sitter::{Language, Node, Tree, TreeCursor};
 
 /// A Harper [`Masker`] that wraps a given tree-sitter language and a condition,

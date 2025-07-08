@@ -8,7 +8,8 @@ use strum_macros::{Display, EnumCount, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
-use crate::{Document, TokenKind, TokenStringExt, WordId};
+use crate::spell::WordId;
+use crate::{Document, TokenKind, TokenStringExt};
 
 #[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Hash)]
 pub struct WordMetadata {
@@ -881,7 +882,8 @@ impl Default for DialectFlags {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Dictionary, FstDictionary, WordMetadata};
+    use crate::WordMetadata;
+    use crate::spell::{Dictionary, FstDictionary};
 
     // Helper function to get word metadata from the curated dictionary
     fn md(word: &str) -> WordMetadata {

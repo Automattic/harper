@@ -245,7 +245,8 @@ pub mod tests {
     use hashbrown::HashSet;
 
     use super::Linter;
-    use crate::{Document, FstDictionary, parsers::PlainEnglish};
+    use crate::spell::FstDictionary;
+    use crate::{Document, parsers::PlainEnglish};
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, mut linter: impl Linter) {

@@ -6,8 +6,8 @@ use smallvec::ToSmallVec;
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::spell::suggest_correct_spelling;
-use crate::{CharString, CharStringExt, Dialect, Dictionary, TokenStringExt};
+use crate::spell::{Dictionary, suggest_correct_spelling};
+use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
 
 pub struct SpellCheck<T>
 where
@@ -129,14 +129,14 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
 #[cfg(test)]
 mod tests {
+    use super::SpellCheck;
+    use crate::spell::FstDictionary;
     use crate::{
-        Dialect, FstDictionary,
+        Dialect,
         linting::tests::{
             assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
         },
     };
-
-    use super::SpellCheck;
 
     // Capitalization tests
 

@@ -8,8 +8,8 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Parser, PlainEnglish};
 use harper_core::{
-    CharString, Dictionary, Document, FstDictionary, IgnoredLints, LintContext, Lrc,
-    MergedDictionary, MutableDictionary, WordMetadata, remove_overlaps,
+    CharString, Document, IgnoredLints, LintContext, Lrc, WordMetadata, remove_overlaps,
+    spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
 };
 use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};

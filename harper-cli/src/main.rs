@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
@@ -16,8 +17,7 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
-    MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata, remove_overlaps,
+    CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_pos_utils::{BrillChunker, BrillTagger};

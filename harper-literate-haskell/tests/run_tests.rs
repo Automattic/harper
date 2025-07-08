@@ -1,6 +1,7 @@
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::MarkdownOptions;
-use harper_core::{Dialect, Document, FstDictionary};
+use harper_core::spell::FstDictionary;
+use harper_core::{Dialect, Document};
 use harper_literate_haskell::LiterateHaskellParser;
 
 /// Creates a unit test checking that the linting of a Markdown document (in
