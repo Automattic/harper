@@ -15,6 +15,10 @@ function scan() {
 	});
 
 	$('input[type="text"][spellcheck="true"]').each(function () {
+		if (this.disabled || this.readOnly) {
+			return;
+		}
+
 		fw.addTarget(this as HTMLInputElement);
 	});
 
