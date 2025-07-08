@@ -981,7 +981,7 @@
 > Daisy took her     face   in      her     hands  as    if     feeling its     lovely shape  , and her     eyes
 # NPr+  V    ISg/D$+ NSg/V+ NPr/J/P ISg/D$+ NPl/V+ NSg/R NSg/C+ NSg/V/J ISg/D$+ NSg/J+ NSg/V+ . V/C ISg/D$+ NPl/V+
 > moved gradually out         into the velvet   dusk     . I    saw   that         turbulent emotions
-# V/J   R         NSg/V/J/R/P P    D+  NSg/V/J+ NSg/V/J+ . ISg+ NSg/V NSg/I/C/Ddem J         +
+# V/J   R         NSg/V/J/R/P P    D+  NSg/V/J+ NSg/V/J+ . ISg+ NSg/V NSg/I/C/Ddem J         NPl+
 > possessed her     , so        I    asked what   I    thought would  be     some  sedative questions about
 # V/J       ISg/D$+ . NSg/I/J/C ISg+ V/J   NSg/I+ ISg+ NSg/V   NSg/VX NSg/VX I/J/R NSg/J    NPl/V+    J/P
 > her     little   girl   .
@@ -5093,7 +5093,7 @@
 > I    realize now       that         under   different circumstances that          conversation might    have
 # ISg+ V/NoAm  NPr/V/J/C NSg/I/C/Ddem NSg/J/P NSg/J+    NPl/V+        NSg/I/C/Ddem+ NSg/V+       NSg/VX/J NSg/VX
 > been  one       of the crises of my  life   . But     , because the offer    was obviously and
-# NSg/V NSg/I/V/J P  D   NSg    P  D$+ NSg/V+ . NSg/C/P . C/P     D+  NSg/V/J+ V   R         V/C
+# NSg/V NSg/I/V/J P  D   NPl    P  D$+ NSg/V+ . NSg/C/P . C/P     D+  NSg/V/J+ V   R         V/C
 > tactlessly for a   service to be     rendered , I    had no    choice except to cut     him off
 # R          C/P D/P NSg/V   P  NSg/VX V/J      . ISg+ V   NPr/P NSg/J  V/C/P  P  NSg/V/J ISg NSg/V/J/P
 > there .
@@ -8371,7 +8371,7 @@
 > competitive firmness that         we   remain — as    though neither of them     had anything to
 # J           NSg      NSg/I/C/Ddem IPl+ NSg/V  . NSg/R V/C    I/C     P  NSg/IPl+ V   NSg/I/V+ P
 > conceal and it       would  be     a   privilege to partake vicariously of their emotions .
-# V       V/C NPr/ISg+ NSg/VX NSg/VX D/P NSg/V     P  V       R           P  D$+   +        .
+# V       V/C NPr/ISg+ NSg/VX NSg/VX D/P NSg/V     P  V       R           P  D$+   NPl+     .
 >
 #
 > “ Sit   down      , Daisy , ” Tom’s voice  groped unsuccessfully for the paternal note   .
@@ -9571,7 +9571,7 @@
 > increased her     value in      his     eyes   . He       felt    their presence all       about the house  ,
 # V/J       ISg/D$+ NSg/V NPr/J/P ISg/D$+ NPl/V+ . NPr/ISg+ NSg/V/J D$+   NSg/V    NSg/I/J/C J/P   D+  NPr/V+ .
 > pervading the air   with the shades and echoes of still   vibrant emotions .
-# V         D   NSg/V P    D+  NPl/V  V/C NSg/V  P  NSg/V/J NSg/J+  +        .
+# V         D   NSg/V P    D+  NPl/V  V/C NSg/V  P  NSg/V/J NSg/J+  NPl+     .
 >
 #
 > But      he       knew that         he       was in      Daisy’s house  by      a    colossal accident . However

@@ -693,7 +693,7 @@
 > interaction between humans and computer interfaces . HCI has several subfields
 # NSg         NSg/P   NPl/V  V/C NSg/V+   NPl/V+     . ?   V   J/D     NPl
 > that          focus on  the relationship between emotions , social behavior and brain
-# NSg/I/C/Ddem+ NSg/V J/P D+  NSg+         NSg/P   +        . NSg/J  NSg/Am   V/C NPr/V+
+# NSg/I/C/Ddem+ NSg/V J/P D+  NSg+         NSg/P   NPl+     . NSg/J  NSg/Am   V/C NPr/V+
 > activity with computers .
 # NSg      P    NPl/V+    .
 >
