@@ -734,8 +734,8 @@
 # IPl+ V/J     D/P NSg/V/J J/P NPr+   .
 > The soldiers mutinied and turned their guns   on  their officers .
 # D+  NPl/V+   V/J      V/C V/J    D$+   NPl/V+ J/P D$+   NPl/V+   .
-> Her     words  made  a   lasting  impression on  my  mind   .
-# ISg/D$+ NPl/V+ NSg/V D/P NSg/V/J+ NSg/V      J/P D$+ NSg/V+ .
+> Her     words  made a   lasting  impression on  my  mind   .
+# ISg/D$+ NPl/V+ V    D/P NSg/V/J+ NSg/V      J/P D$+ NSg/V+ .
 > What   will   be     the effect on  morale ?
 # NSg/I+ NPr/VX NSg/VX D   NSg/V  J/P NSg+   .
 > I    haven't got any   money on  me       .
