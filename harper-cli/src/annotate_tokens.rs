@@ -23,6 +23,7 @@ impl Annotation {
             .with_message(self.annotation_text)
             .with_color(self.color)
     }
+
     /// Gets an iterator of annotation `Label` from the given document.
     ///
     /// This is similar to [`self::iter_from_document()`], but this additionally converts
