@@ -99,6 +99,9 @@ fn format_word_tag(word: &WordMetadata) -> String {
     if let Some(noun) = word.noun {
         let mut tag = String::from("N");
         add_bool(&mut tag, "Pr", noun.is_proper);
+        if word.is_mass_noun() {
+            add_switch(&mut tag, Some(word.is_countable_noun()), "🅪", "ᴹ");
+        }
         match (
             noun.is_singular.is_some_and(|sg| sg),
             noun.is_plural.is_some_and(|pl| pl),

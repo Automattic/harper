@@ -38,8 +38,8 @@
 # V/J/Comm+ .
 >
 #
-> Honour      .
-# NSg/V/Comm+ .
+> Honour       .
+# N🅪Sg/V/Comm+ .
 >
 #
 > Grey          .
@@ -50,8 +50,8 @@
 # V/Comm+    .
 >
 #
-> Quarrelling .
-# NSg/V/Comm+ .
+> Quarrelling  .
+# NᴹSg/V/Comm+ .
 >
 #
 > Recognised .
@@ -70,8 +70,8 @@
 # NSg/V/Comm+ .
 >
 #
-> Theatre   .
-# NSg/Comm+ .
+> Theatre    .
+# N🅪Sg/Comm+ .
 >
 #
 > Analyse .
