@@ -172,8 +172,8 @@
 # V/J       NSg/P NPr/V/J NSg        NSg/J/P NPr+  ?      V/C ?  NPr+   NPr+    . NPr/J/P D
 > mid      - 1960s . It       consists of about 1 , 000 , 000 words of running   English  prose text   ,
 # NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  NSg/V/J/P NPr/V/J+ NSg/V NSg/V+ .
-> made  up        of 500 samples from randomly chosen publications . Each sample is 2 , 000
-# NSg/V NSg/V/J/P P  #   NPl/V+  P    R+       V/J    NPl+         . D+   NSg/V+ VL # . #
+> made  up        of 500 samples from randomly chosen  publications . Each sample is 2 , 000
+# NSg/V NSg/V/J/P P  #   NPl/V+  P    R+       NSg/V/J NPl+         . D+   NSg/V+ VL # . #
 > or    more      words  ( ending at    the first    sentence - end   after 2 , 000 words  , so        that         the
 # NPr/C NPr/I/V/J NPl/V+ . NSg/V  NSg/P D   NSg/V/J+ NSg/V+   . NSg/V J/P   # . #   NPl/V+ . NSg/I/J/C NSg/I/C/Ddem D+
 > corpus contains only  complete sentences ) .
@@ -268,8 +268,8 @@
 # C       . NPr/ISg+ VL NSg/V/J P  V         D+    NSg+        V/C P  NSg/V  D/P NSg/J
 > probability to each one        , by      multiplying together the probabilities of each
 # NSg         P  D+   NSg/I/V/J+ . NSg/J/P V           J        D   NPl           P  D+
-> choice in      turn  . The combination with the highest probability is then     chosen . The
-# NSg/J+ NPr/J/P NSg/V . D   NSg         P    D+  +       NSg+        VL NSg/J/C+ V/J    . D+
+> choice in      turn  . The combination with the highest probability is then     chosen  . The
+# NSg/J+ NPr/J/P NSg/V . D   NSg         P    D+  +       NSg+        VL NSg/J/C+ NSg/V/J . D+
 > European group  developed CLAWS  , a   tagging program that          did exactly this    and
 # NSg/J+   NSg/V+ V/J       NPl/V+ . D/P NSg/V+  NPr/V+  NSg/I/C/Ddem+ V   R       I/Ddem+ V/C
 > achieved accuracy in      the 93 – 95 % range  .
@@ -329,7 +329,7 @@
 > dissertation at    Brown   University included analyses    of the specific error  types  ,
 # NSg+         NSg/P NPr/V/J NSg+       V/J      NSg/V/Au/Br P  D+  NSg/J+   NSg/V+ NPl/V+ .
 > probabilities , and other    related data , and replicated his     work  for Greek   , where
-# NPl+          . V/C NSg/V/J+ J+      NSg+ . V/C V/J        ISg/D$+ NSg/V C/P NPr/V/J . NSg/C
+# NPl+          . V/C NSg/V/J+ J+      NPl+ . V/C V/J        ISg/D$+ NSg/V C/P NPr/V/J . NSg/C
 > it       proved similarly effective .
 # NPr/ISg+ V/J    R+        NSg/J     .
 >
@@ -369,7 +369,7 @@
 > " unsupervised " tagging . Unsupervised tagging techniques use   an  untagged corpus
 # . V/J          . NSg/V   . V/J          NSg/V   NPl+       NSg/V D/P ?        NSg
 > for their training data and produce the tagset by       induction . That          is , they
-# C/P D$+   NSg/V+   NSg+ V/C NSg/V   D   NSg    NSg/J/P+ NSg       . NSg/I/C/Ddem+ VL . IPl+
+# C/P D$+   NSg/V+   NPl+ V/C NSg/V   D   NSg    NSg/J/P+ NSg       . NSg/I/C/Ddem+ VL . IPl+
 > observe patterns in      word   use   , and derive part    - of - speech categories themselves .
 # NSg/V   NPl/V+   NPr/J/P NSg/V+ NSg/V . V/C NSg/V  NSg/V/J . P  . NSg/V  NPl+       IPl+       .
 > For example , statistics readily reveal that          " the " , " a   " , and " an  " occur in
@@ -421,7 +421,7 @@
 > A   direct comparison of several methods is reported ( with references ) at    the ACL
 # D/P V/J    NSg        P  J/D+    NPl/V+  VL V/J      . P    NPl/V+     . NSg/P D+  NSg+
 > Wiki   . This    comparison uses  the Penn tag    set     on  some  of the Penn Treebank data ,
-# NSg/V+ . I/Ddem+ NSg+       NPl/V D+  NPr+ NSg/V+ NPr/V/J J/P I/J/R P  D+  NPr+ ?        NSg+ .
+# NSg/V+ . I/Ddem+ NSg+       NPl/V D+  NPr+ NSg/V+ NPr/V/J J/P I/J/R P  D+  NPr+ ?        NPl+ .
 > so        the results are directly comparable . However , many      significant taggers are
 # NSg/I/J/C D+  NPl/V+  V   R/C      NSg/J+     . C       . NSg/I/J/D NSg/J       NPl     V
 > not   included ( perhaps because of the labor        involved in      reconfiguring them     for

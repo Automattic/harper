@@ -21,7 +21,7 @@
 >
 #
 > Algorithms and data structures are central to computer science . The theory of
-# NPl+       V/C NSg+ NPl/V+     V   NPr/J   P  NSg/V    NSg/V+  . D   NSg    P
+# NPl+       V/C NPl+ NPl/V+     V   NPr/J   P  NSg/V    NSg/V+  . D   NSg    P
 > computation concerns abstract models of computation and general classes of
 # NSg         NSg/V+   NSg/V/J  NPl/V  P  NSg         V/C NSg/V/J NPl/V   P
 > problems that          can    be     solved using them     . The fields  of cryptography and computer
@@ -35,7 +35,7 @@
 > to describe computational processes , and database theory concerns the management
 # P  V        J+            NPl/V+    . V/C NSg/V+   NSg+   NSg/V+   D   NSg
 > of repositories of data . Human   – computer interaction investigates the interfaces
-# P  NPl          P  NSg+ . NSg/V/J . NSg/V+   NSg+        V            D   NPl/V
+# P  NPl          P  NPl+ . NSg/V/J . NSg/V+   NSg+        V            D   NPl/V
 > through which humans and computers interact , and software engineering focuses on
 # NSg/J/P I/C+  NPl/V  V/C NPl/V+    NSg/V    . V/C NSg+     NSg/V+      NPl/V   J/P
 > the design and principles behind  developing software . Areas such  as    operating
@@ -53,9 +53,9 @@
 > learning found in      humans and  animals . Within  artificial intelligence , computer
 # V+       NSg/V NPr/J/P NPl/V  V/C+ NPl+    . NSg/J/P J+         NSg+         . NSg/V+
 > vision aims  to understand and process image and video  data , while     natural
-# NSg/V+ NPl/V P  V          V/C NSg/V+  NSg/V V/C NSg/V+ NSg+ . NSg/V/C/P NSg/J
+# NSg/V+ NPl/V P  V          V/C NSg/V+  NSg/V V/C NSg/V+ NPl+ . NSg/V/C/P NSg/J
 > language processing aims  to understand and process textual and linguistic data .
-# NSg/V+   V+         NPl/V P  V          V/C NSg/V+  J       V/C J+         NSg+ .
+# NSg/V+   V+         NPl/V P  V          V/C NSg/V+  J       V/C J+         NPl+ .
 >
 #
 > The fundamental concern of computer science is determining what  can    and cannot
@@ -229,7 +229,7 @@
 > Peter    Naur suggested the term     datalogy , to reflect the fact that         the scientific
 # NPr/V/J+ ?    V/J       D+  NSg/V/J+ ?        . P  V       D+  NSg  NSg/I/C/Ddem D+  J+
 > discipline revolves around data and data treatment , while     not   necessarily
-# NSg/V+     NPl/V    J/P    NSg  V/C NSg+ NSg+      . NSg/V/C/P NSg/C R
+# NSg/V+     NPl/V    J/P    NPl  V/C NPl+ NSg+      . NSg/V/C/P NSg/C R
 > involving computers . The first   scientific institution to use   the term     was the
 # V         NPl/V+    . D   NSg/V/J J          NSg         P  NSg/V D+  NSg/V/J+ V   D
 > Department of Datalogy at    the University of Copenhagen , founded in      1969 , with
@@ -237,9 +237,9 @@
 > Peter    Naur being   the first   professor in      datalogy . The term     is used mainly in      the
 # NPr/V/J+ ?    NSg/V/C D   NSg/V/J NSg       NPr/J/P ?        . D+  NSg/V/J+ VL V/J  R      NPr/J/P D+
 > Scandinavian countries . An   alternative term     , also proposed by      Naur , is data
-# NSg/J+       NPl+      . D/P+ NSg/J+      NSg/V/J+ . W?   V/J      NSg/J/P ?    . VL NSg+
+# NSg/J+       NPl+      . D/P+ NSg/J+      NSg/V/J+ . W?   V/J      NSg/J/P ?    . VL NPl+
 > science ; this    is now       used for a   multi - disciplinary field of data analysis ,
-# NSg/V+  . I/Ddem+ VL NPr/V/J/C V/J  C/P D/P NSg   . NSg/J        NSg/V P  NSg+ NSg+     .
+# NSg/V+  . I/Ddem+ VL NPr/V/J/C V/J  C/P D/P NSg   . NSg/J        NSg/V P  NPl+ NSg+     .
 > including statistics and databases .
 # V         NPl/V      V/C NPl/V+    .
 >
@@ -465,7 +465,7 @@
 > ( IEEE CS    ) — identifies four areas that          it       considers crucial to the discipline of
 # . NPr  NPl/V . . V          NSg  NPl+  NSg/I/C/Ddem+ NPr/ISg+ V         J       P  D   NSg/V      P
 > computer science : theory of computation , algorithms and data structures ,
-# NSg/V+   NSg/V+  . NSg    P  NSg         . NPl        V/C NSg+ NPl/V+     .
+# NSg/V+   NSg/V+  . NSg    P  NSg         . NPl        V/C NPl+ NPl/V+     .
 > programming methodology and languages , and computer elements and  architecture .
 # NSg/V+      NSg         V/C NPl/V+    . V/C NSg/V+   NPl/V    V/C+ NSg+         .
 > In      addition to these   four areas , CSAB also identifies fields   such  as    software
@@ -533,27 +533,27 @@
 > the quantification of information . This    was developed by      Claude Shannon to find
 # D   NSg            P  NSg+        . I/Ddem+ V   V/J       NSg/J/P NPr+   NPr+    P  NSg/V
 > fundamental limits on  signal   processing operations such  as    compressing data and
-# NSg/J       NPl/V  J/P NSg/V/J+ V+         +          NSg/I NSg/R V           NSg  V/C
+# NSg/J       NPl/V  J/P NSg/V/J+ V+         +          NSg/I NSg/R V           NPl  V/C
 > on  reliably storing and communicating data . Coding theory is the study of the
-# J/P R        V       V/C V             NSg+ . V+     NSg+   VL D   NSg/V P  D
+# J/P R        V       V/C V             NPl+ . V+     NSg+   VL D   NSg/V P  D
 > properties of codes ( systems for converting information from one       form   to
 # NPl/V      P  NPl/V . NPl     C/P V          NSg         P    NSg/I/V/J NSg/V+ P
 > another ) and their fitness for a    specific application . Codes  are used for data
-# I/D+    . V/C D$+   NSg     C/P D/P+ NSg/J+   NSg+        . NPl/V+ V   V/J  C/P NSg+
+# I/D+    . V/C D$+   NSg     C/P D/P+ NSg/J+   NSg+        . NPl/V+ V   V/J  C/P NPl+
 > compression , cryptography , error  detection and correction , and more      recently
 # NSg+        . NSg          . NSg/V+ NSg       V/C NSg+       . V/C NPr/I/V/J R
 > also for network coding . Codes  are studied for the purpose of designing
 # W?   C/P NSg/V+  V+     . NPl/V+ V   V/J     C/P D   NSg/V   P  V
 > efficient and reliable data transmission methods .
-# NSg/J     V/C NSg/J    NSg+ NSg+         NPl/V+  .
+# NSg/J     V/C NSg/J    NPl+ NSg+         NPl/V+  .
 >
 #
 > Data structures and algorithms
-# NSg+ NPl/V      V/C NPl
+# NPl+ NPl/V      V/C NPl
 >
 #
 > Data structures and algorithms are the studies of commonly used computational
-# NSg+ NPl/V      V/C NPl+       V   D   NPl/V   P  R        V/J  J
+# NPl+ NPl/V      V/C NPl+       V   D   NPl/V   P  R        V/J  J
 > methods and their computational efficiency .
 # NPl/V   V/C D$+   J+            NSg+       .
 >
@@ -605,7 +605,7 @@
 > fundamentals , in      particular logic    calculi , formal languages , automata theory ,
 # NPl+         . NPr/J/P NSg/J+     NSg/V/J+ NSg     . NSg/J+ NPl/V+    . NSg      NSg+   .
 > and program semantics , but     also type   systems and algebraic data types  to
-# V/C NPr/V+  NPl+      . NSg/C/P W?   NSg/V+ NPl+    V/C J         NSg+ NPl/V+ P
+# V/C NPr/V+  NPl+      . NSg/C/P W?   NSg/V+ NPl+    V/C J         NPl+ NPl/V+ P
 > problems in      software and hardware specification and verification .
 # NPl      NPr/J/P NSg      V/C NSg+     NSg           V/C NSg+         .
 >
@@ -621,7 +621,7 @@
 > Computer graphics is the study of digital visual contents and involves the
 # NSg/V+   NPl      VL D   NSg/V P  NSg/J   NSg/J  NPl/V+   V/C V        D+
 > synthesis and manipulation of image  data . The study  is connected to many      other
-# NSg       V/C NSg          P  NSg/V+ NSg+ . D+  NSg/V+ VL V/J       P  NSg/I/J/D NSg/V/J
+# NSg       V/C NSg          P  NSg/V+ NPl+ . D+  NSg/V+ VL V/J       P  NSg/I/J/D NSg/V/J
 > fields  in      computer science , including computer vision , image  processing , and
 # NPrPl/V NPr/J/P NSg/V+   NSg/V+  . V         NSg/V+   NSg/V+ . NSg/V+ V+         . V/C
 > computational geometry , and is heavily applied in      the fields  of special effects
@@ -667,7 +667,7 @@
 > scientific computing is simulation of various processes , including computational
 # J+         NSg/V+    VL NSg        P  J+      NPl/V+    . V         J
 > fluid  dynamics , physical , electrical , and electronic systems and circuits , as
-# NSg/J+ NPl+     . NSg/J    . NSg/J      . V/C J          NPl+    V/C NPl/V    . NSg/R
+# NSg/J+ NSgPl+   . NSg/J    . NSg/J      . V/C J          NPl+    V/C NPl/V    . NSg/R
 > well    as    societies and social situations ( notably war    games  ) along with their
 # NSg/V/J NSg/R NPl+      V/C NSg/J  W?         . R       NSg/V+ NPl/V+ . P     P    D$+
 > habitats , among many       others . Modern computers enable optimization of such
@@ -757,7 +757,7 @@
 > intervention in      domains of computer application involving complex real  - world
 # NSg          NPr/J/P NPl     P  NSg/V+   NSg+        V         NSg/V/J NSg/J . NSg/V+
 > data .
-# NSg+ .
+# NPl+ .
 >
 #
 > Computer systems
@@ -849,17 +849,17 @@
 >
 #
 > Databases and data mining
-# NPl/V+    V/C NSg+ NSg/V+
+# NPl/V+    V/C NPl+ NSg/V+
 >
 #
 > A    database is intended to organize , store  , and retrieve large amounts of data
-# D/P+ NSg/V+   VL NSg/V/J  P  V        . NSg/V+ . V/C NSg/V    NSg/J NPl/V   P  NSg+
+# D/P+ NSg/V+   VL NSg/V/J  P  V        . NSg/V+ . V/C NSg/V    NSg/J NPl/V   P  NPl+
 > easily . Digital databases are managed using database management systems to
 # R+     . NSg/J   NPl/V+    V   V/J     V     NSg/V+   NSg+       NPl+    P
 > store , create , maintain , and search data , through database models and query
-# NSg/V . V/J    . V        . V/C NSg/V+ NSg+ . NSg/J/P NSg/V+   NPl/V  V/C NSg/V+
+# NSg/V . V/J    . V        . V/C NSg/V+ NPl+ . NSg/J/P NSg/V+   NPl/V  V/C NSg/V+
 > languages . Data mining is a   process of discovering patterns in      large  data sets   .
-# NPl/V+    . NSg+ NSg/V+ VL D/P NSg/V   P  V           NPl/V+   NPr/J/P NSg/J+ NSg+ NPl/V+ .
+# NPl/V+    . NPl+ NSg/V+ VL D/P NSg/V   P  V           NPl/V+   NPr/J/P NSg/J+ NPl+ NPl/V+ .
 >
 #
 > Discoveries
@@ -995,7 +995,7 @@
 > computer programs that          treats computation as    the evaluation of mathematical
 # NSg/V+   NPl/V+   NSg/I/C/Ddem+ NPl/V+ NSg         NSg/R D   NSg        P  J
 > functions and avoids state  and mutable data . It       is a   declarative programming
-# NPl/V+    V/C V      NSg/V+ V/C W?      NSg+ . NPr/ISg+ VL D/P NSg/J+      NSg/V+
+# NPl/V+    V/C V      NSg/V+ V/C W?      NPl+ . NPr/ISg+ VL D/P NSg/J+      NSg/V+
 > paradigm , which means programming is done    with expressions or    declarations
 # NSg+     . I/C+  NPl/V NSg/V+      VL NSg/V/J P    NPl         NPr/C NPl+
 > instead of statements .
@@ -1017,13 +1017,13 @@
 > Object - oriented programming , a   programming paradigm based on  the concept of
 # NSg/V+ . V/J      NSg/V       . D/P NSg/V+      NSg+     V/J   J/P D   NSg/V   P
 > " objects " , which may    contain data , in      the form  of fields   , often known   as
-# . NPl/V+  . . I/C+  NPr/VX V       NSg  . NPr/J/P D   NSg/V P  NPrPl/V+ . R     NSg/V/J NSg/R
+# . NPl/V+  . . I/C+  NPr/VX V       NPl  . NPr/J/P D   NSg/V P  NPrPl/V+ . R     NSg/V/J NSg/R
 > attributes ; and code   , in      the form  of procedures , often known   as    methods . A
 # NPl/V+     . V/C NSg/V+ . NPr/J/P D   NSg/V P  NPl+       . R     NSg/V/J NSg/R NPl/V+  . D/P
 > feature of objects is that         an   object's procedures can    access and often modify
 # NSg/V   P  NPl/V+  VL NSg/I/C/Ddem D/P+ NSg$+    NPl+       NPr/VX NSg/V  V/C R     V
 > the data fields  of the object with which they are associated . Thus
-# D   NSg+ NPrPl/V P  D+  NSg/V+ P    I/C+  IPl+ V   V/J        . NSg
+# D   NPl+ NPrPl/V P  D+  NSg/V+ P    I/C+  IPl+ V   V/J        . NSg
 > object - oriented computer programs are made  out         of objects that          interact with
 # NSg/V+ . V/J      NSg/V    NPl/V+   V   NSg/V NSg/V/J/R/P P+ NPl/V+  NSg/I/C/Ddem+ NSg/V    P
 > one       another .

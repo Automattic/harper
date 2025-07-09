@@ -2069,7 +2069,7 @@
 >
 #
 > “ It       matters a   good    deal    to me       , ” said Alice hastily ; “ but     I’m not   looking for
-# . NPr/ISg+ W?      D/P NPr/V/J NSg/V/J P  NPr/ISg+ . . V/J  NPr+  R       . . NSg/C/P W?  NSg/C V       C/P
+# . NPr/ISg+ NPl/V   D/P NPr/V/J NSg/V/J P  NPr/ISg+ . . V/J  NPr+  R       . . NSg/C/P W?  NSg/C V       C/P
 > eggs   , as    it       happens ; and if    I    was , I    shouldn’t want  yours : I    don’t like        them
 # NPl/V+ . NSg/R NPr/ISg+ V       . V/C NSg/C ISg+ V   . ISg+ V         NSg/V I+    . ISg+ V     NSg/V/J/C/P NSg/IPl+
 > raw      . ”
@@ -4639,7 +4639,7 @@
 >
 #
 > “ What   matters it       how   far     we   go      ? ” his     scaly  friend   replied . “ There is another
-# . NSg/I+ +       NPr/ISg+ NSg/C NSg/V/J IPl+ NSg/V/J . . ISg/D$+ NSg/J+ NPr/V/J+ V/J+    . . +     VL I/D+
+# . NSg/I+ NPl/V+  NPr/ISg+ NSg/C NSg/V/J IPl+ NSg/V/J . . ISg/D$+ NSg/J+ NPr/V/J+ V/J+    . . +     VL I/D+
 > shore  , you    know  , upon the other    side     . The further off       from England the nearer
 # NSg/V+ . ISgPl+ NSg/V . P    D+  NSg/V/J+ NSg/V/J+ . D   V/J     NSg/V/J/P P    NPr+    D   J
 > is to France — Then    turn  not   pale    , beloved  snail , but     come    and join  the dance  .

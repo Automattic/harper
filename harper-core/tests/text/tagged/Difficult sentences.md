@@ -411,7 +411,7 @@
 > In      replacing the faucet washers , he       felt    he       was making his     contribution to the environment .
 # NPr/J/P V         D   NSg    W?      . NPr/ISg+ NSg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D+  NSg+        .
 > In      trying  to make  amends , she  actually made  matters worse    .
-# NPr/J/P NSg/V/J P  NSg/V NPl/V  . ISg+ R        NSg/V +       NSg/V/J+ .
+# NPr/J/P NSg/V/J P  NSg/V NPl/V  . ISg+ R        NSg/V NPl/V+  NSg/V/J+ .
 > My  aim    in      travelling   there was to find  my  missing friend   .
 # D$+ NSg/V+ NPr/J/P NSg/V/J/Comm +     V   P  NSg/V D$+ V       NPr/V/J+ .
 > My  fat      rolls around in      folds  .

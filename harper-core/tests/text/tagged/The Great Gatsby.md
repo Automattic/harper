@@ -347,7 +347,7 @@
 >
 #
 > “ Now       , don’t think my  opinion on  these   matters is final   , ” he       seemed to say   , “ just
-# . NPr/V/J/C . V     NSg/V D$+ NSg+    J/P I/Ddem+ +       VL NSg/V/J . . NPr/ISg+ V/J    P  NSg/V . . V/J
+# . NPr/V/J/C . V     NSg/V D$+ NSg+    J/P I/Ddem+ NPl/V+  VL NSg/V/J . . NPr/ISg+ V/J    P  NSg/V . . V/J
 > because I’m stronger and more      of a   man     than you    are . ” We   were  in      the same senior
 # C/P     W?  J        V/C NPr/I/V/J P  D/P NPr/V/J C/P  ISgPl+ V+  . . IPl+ NSg/V NPr/J/P D   I/J  NPr/J+
 > society , and while     we   were  never intimate I    always had the impression that          he
@@ -3477,7 +3477,7 @@
 > with them     in      dark    , crowded restaurants on  little  pig    sausages and mashed
 # P    NSg/IPl+ NPr/J/P NSg/V/J . V/J     NPl         J/P NPr/I/J NSg/V+ NPl/V+   V/C V/J
 > potatoes and coffee   . I    even    had a   short     affair with a   girl   who    lived in      Jersey
-# NSg      V/C NSg/V/J+ . ISg+ NSg/V/J V   D/P NPr/V/J/P NSg    P    D/P NSg/V+ NPr/I+ V/J   NPr/J/P NPr+
+# NPl      V/C NSg/V/J+ . ISg+ NSg/V/J V   D/P NPr/V/J/P NSg    P    D/P NSg/V+ NPr/I+ V/J   NPr/J/P NPr+
 > City and worked in      the accounting department , but     her     brother  began throwing
 # NSg+ V/C V/J    NPr/J/P D+  NSg/V+     NSg+       . NSg/C/P ISg/D$+ NSg/V/J+ V     V
 > mean    looks in      my  direction , so        when    she  went  on  her     vacation in      July I    let   it
@@ -8559,7 +8559,7 @@
 >
 #
 > “ Of course it       matters . I’m going   to take  better   care  of you    from now        on   . ”
-# . P  NSg/V+ NPr/ISg+ +       . W?  NSg/V/J P  NSg/V NSg/VX/J NSg/V P  ISgPl+ P    NPr/V/J/C+ J/P+ . .
+# . P  NSg/V+ NPr/ISg+ NPl/V+  . W?  NSg/V/J P  NSg/V NSg/VX/J NSg/V P  ISgPl+ P    NPr/V/J/C+ J/P+ . .
 >
 #
 > “ You    don’t understand , ” said Gatsby , with a   touch of panic    . “ You’re not   going   to

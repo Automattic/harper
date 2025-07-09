@@ -72,8 +72,8 @@
 #
 > The House of Representatives shall be     composed of Members
 # D   NPr/V P  NPl+            VX    NSg/VX V/J      P  NPl/V+
-> chosen every second  Year by      the People of the several States   , and the Electors
-# V/J    D+    NSg/V/J NSg  NSg/J/P D   NSg/V  P  D+  J/D+    NPrPl/V+ . V/C D   NPl
+> chosen  every second  Year by      the People of the several States   , and the Electors
+# NSg/V/J D+    NSg/V/J NSg  NSg/J/P D   NSg/V  P  D+  J/D+    NPrPl/V+ . V/C D   NPl
 > in      each State  shall have   the Qualifications requisite for Electors of the most
 # NPr/J/P D+   NSg/V+ VX    NSg/VX D+  +              NSg/J     C/P NPl      P  D   NSg/I/J
 > numerous Branch of the State  Legislature .
@@ -86,8 +86,8 @@
 # NSg    NSg  NPl+  . V/C NSg/V NSg   NPl+  D/P NSg     P  D+  V/J+   NPrPl/V+ . V/C NPr/I+
 > shall not   , when    elected , be     an  Inhabitant of that          State  in      which he       shall be
 # VX    NSg/C . NSg/I/C NSg/V/J . NSg/VX D/P NSg/J      P  NSg/I/C/Ddem+ NSg/V+ NPr/J/P I/C+  NPr/ISg+ VX+   NSg/VX+
-> chosen .
-# V/J    .
+> chosen  .
+# NSg/V/J .
 >
 #
 > Representatives shall be     apportioned among the several States   according to
@@ -170,8 +170,8 @@
 # NSg+ . P  D   NSg/V/J NSg/V/J NSg/P D   NSg        P  D+  NPr/V/J+ NSg+ . V/C P  D
 > third   Class   at    the Expiration of the sixth    Year , so        that          one       third   may    be
 # NSg/V/J NSg/V/J NSg/P D   NSg        P  D+  NSg/V/J+ NSg+ . NSg/I/J/C NSg/I/C/Ddem+ NSg/I/V/J NSg/V/J NPr/VX NSg/VX
-> chosen every second  Year ; and when    vacancies happen in      the representation of
-# V/J    D+    NSg/V/J NSg+ . V/C NSg/I/C NPl       V      NPr/J/P D   NSg            P
+> chosen  every second  Year ; and when    vacancies happen in      the representation of
+# NSg/V/J D+    NSg/V/J NSg+ . V/C NSg/I/C NPl       V      NPr/J/P D   NSg            P
 > any   State in      the Senate , the executive authority of such  State  shall issue
 # I/R/D NSg/V NPr/J/P D+  NPr+   . D   NSg/J     NSg       P  NSg/I NSg/V+ VX    NSg/V+
 > writs of election to fill  such  vacancies : Provided , That         the legislature of any
@@ -186,8 +186,8 @@
 # NPr/P+ NSg/V  VX    NSg/VX D/P+ NSg+    NPr/I+ VX    NSg/C NSg/VX V/J      P  D   NSg/V P  NSg+
 > Years , and been  nine Years a   Citizen of the United States   , and who    shall not   ,
 # NPl+  . V/C NSg/V NSg  NPl+  D/P NSg     P  D+  V/J+   NPrPl/V+ . V/C NPr/I+ VX    NSg/C .
-> when    elected , be     an  Inhabitant of that          State for which he       shall be      chosen .
-# NSg/I/C NSg/V/J . NSg/VX D/P NSg/J      P  NSg/I/C/Ddem+ NSg/V C/P I/C+  NPr/ISg+ VX+   NSg/VX+ V/J    .
+> when    elected , be     an  Inhabitant of that          State for which he       shall be      chosen  .
+# NSg/I/C NSg/V/J . NSg/VX D/P NSg/J      P  NSg/I/C/Ddem+ NSg/V C/P I/C+  NPr/ISg+ VX+   NSg/VX+ NSg/V/J .
 >
 #
 > The Vice       President of the United States   shall be     President of the Senate , but
@@ -716,8 +716,8 @@
 # V/J    NPrPl/V P  NPr+    . NPr/ISg+ VX    NSg/V/J ISg/D$+ NSg/V+ V/P    D   NSg/V/J P  NSg
 > Years ending at    noon  on  the 20th day of January , and , together with the Vice
 # NPl+  NSg/V  NSg/P NSg/V J/P D   #    NPr P  NPr+    . V/C . J        P    D+  NSg/V/J/P+
-> President , chosen for the same Term     , be     elected , as     follows
-# NSg/V+    . V/J    C/P D+  I/J+ NSg/V/J+ . NSg/VX NSg/V/J . NSg/R+ NPl/V
+> President , chosen  for the same Term     , be     elected , as     follows
+# NSg/V+    . NSg/V/J C/P D+  I/J+ NSg/V/J+ . NSg/VX NSg/V/J . NSg/R+ NPl/V
 >
 #
 > Each State shall appoint , in      such  Manner as    the Legislature thereof may    direct ,
@@ -778,8 +778,8 @@
 # NSg/P D+  NSg/V/J+ V/J   C/P D   NSg/V/J   P  D   NSg/V/J P  D+  NSg/V+    . D+  NSg/V+
 > elect   shall have   died , the Vice       President elect   shall become President . If    a
 # NSg/V/J VX    NSg/VX V/J  . D+  NSg/V/J/P+ NSg/V+    NSg/V/J VX    V      NSg/V+    . NSg/C D/P+
-> President shall not   have   been  chosen before the time     fixed for the beginning of
-# NSg/V+    VX    NSg/C NSg/VX NSg/V V/J    C/P    D+  NSg/V/J+ V/J   C/P D   NSg/V/J   P
+> President shall not   have   been  chosen  before the time     fixed for the beginning of
+# NSg/V+    VX    NSg/C NSg/VX NSg/V NSg/V/J C/P    D+  NSg/V/J+ V/J   C/P D   NSg/V/J   P
 > his     term     , or    if    the President elect   shall have   failed to qualify , then    the Vice
 # ISg/D$+ NSg/V/J+ . NPr/C NSg/C D+  NSg/V+    NSg/V/J VX    NSg/VX V/J    P  NSg/V   . NSg/J/C D+  NSg/V/J/P+
 > President elect   shall act   as    President until a    President shall have   qualified ;
