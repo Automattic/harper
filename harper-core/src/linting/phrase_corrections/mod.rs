@@ -323,42 +323,6 @@ pub fn lint_group() -> LintGroup {
             "Use `day and age` for referring to the present time.",
             "Corrects the eggcorn `day in age` to `day and age`, which properly means the current era or time period."
         ),
-        "DefiniteArticle" => (
-            ["definitive article"],
-            ["definite article"],
-            "The correct term for `the` is `definite article`.",
-            "The name of the word `the` is `definite article`."
-        ),
-        "DefiniteArticles" => (
-            ["definitive articles"],
-            ["definite articles"],
-            "The correct term for `the` is `definite article`.",
-            "The name of the word `the` is `definite article`."
-        ),
-        "Discuss" => (
-            ["discuss about"],
-            ["discuss"],
-            "`About` is redundant",
-            "Removes unnecessary `about` after `discuss`."
-        ),
-        "Discussed" => (
-            ["discussed about"],
-            ["discussed"],
-            "Use `discussed` without `about`.",
-            "Removes unnecessary `about` after `discussed`."
-        ),
-        "Discusses" => (
-            ["discusses about"],
-            ["discusses"],
-            "`About` is redundant",
-            "Removes unnecessary `about` after `discusses`."
-        ),
-        "Discussing" => (
-            ["discussing about"],
-            ["discussing"],
-            "`About` is redundant",
-            "Removes unnecessary `about` after `discussing`."
-        ),
         "DoNotWant" => (
             ["don't wan", "do not wan"],
             ["don't want", "do not want"],
@@ -401,35 +365,11 @@ pub fn lint_group() -> LintGroup {
             "Vocabulary enhancement: use `excellent` instead of `very good`",
             "Provides a stronger word choice by replacing `very good` with `excellent` for clarity and emphasis."
         ),
-        "ExpandArgument" => (
-            ["arg"],
-            ["argument"],
-            "Use `argument` instead of `arg`",
-            "Expands the abbreviation `arg` to the full word `argument` for clarity."
-        ),
-        "ExpandArguments" => (
-            ["args"],
-            ["arguments"],
-            "Use `arguments` instead of `args`",
-            "Expands the abbreviation `args` to the full word `arguments` for clarity."
-        ),
         "ExpandBecause" => (
             ["cuz"],
             ["because"],
             "Use `because` instead of informal `cuz`",
             "Expands the informal abbreviation `cuz` to the full word `because` for formality."
-        ),
-        "ExpandDependencies" => (
-            ["deps"],
-            ["dependencies"],
-            "Use `dependencies` instead of `deps`",
-            "Expands the abbreviation `deps` to the full word `dependencies` for clarity."
-        ),
-        "ExpandDependency" => (
-            ["dep"],
-            ["dependency"],
-            "Use `dependency` instead of `dep`",
-            "Expands the abbreviation `dep` to the full word `dependency` for clarity."
         ),
         "ExpandMinimum" => (
             ["min"],
@@ -466,24 +406,6 @@ pub fn lint_group() -> LintGroup {
             ["expatriate"],
             "Use the correct term for someone living abroad.",
             "Fixes the misinterpretation of `expatriate`, ensuring the correct term is used for individuals residing abroad."
-        ),
-        "ExplanationMark" => (
-            ["explanation mark"],
-            ["exclamation mark"],
-            "The correct name for the `!` punctuation is `exclamation mark`.",
-            "Corrects the eggcorn `explanation mark` to `exclamation mark`."
-        ),
-        "ExplanationMarks" => (
-            ["explanation marks"],
-            ["exclamation marks"],
-            "The correct name for the `!` punctuation is `exclamation mark`.",
-            "Corrects the eggcorn `explanation mark` to `exclamation mark`."
-        ),
-        "ExplanationPoint" => (
-            ["explanation point"],
-            ["exclamation point"],
-            "The correct name for the `!` punctuation is `exclamation point`.",
-            "Corrects the eggcorn `explanation point` to `exclamation point`."
         ),
         "FaceFirst" => (
             ["face first into"],
