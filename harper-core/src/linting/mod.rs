@@ -58,6 +58,7 @@ mod long_sentences;
 mod map_phrase_linter;
 mod merge_linters;
 mod merge_words;
+mod missing_preposition;
 mod modal_of;
 mod most_number;
 mod multiple_sequential_pronouns;
@@ -161,6 +162,7 @@ pub use lint_kind::LintKind;
 pub use long_sentences::LongSentences;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use merge_words::MergeWords;
+pub use missing_preposition::MissingPreposition;
 pub use modal_of::ModalOf;
 pub use most_number::MostNumber;
 pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
@@ -250,7 +252,7 @@ pub mod tests {
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
 
     #[track_caller]
-    pub fn assert_no_lints(text: &str, mut linter: impl Linter) {
+    pub fn assert_no_lints(text: &str, linter: impl Linter) {
         assert_lint_count(text, linter, 0);
     }
 
