@@ -1,11 +1,15 @@
-//! An `Expr` is a way to express whether a certain set of tokens fulfill a criteria.
+//! An `Expr` is a declarative way to express whether a certain set of tokens fulfill a criteria.
 //!
 //! For example, if we want to look for the word "that" followed by an adjective, we could build an
 //! expression to do so.
 //!
+//! The actual searching is done by another system (usually a part of the [lint framework](crate::linting::ExprLinter)).
+//! It iterates through a document, checking if each index matches the criteria.
+//!
 //! When supplied a specific position in a token stream, the technical job of an `Expr` is to determine the window of tokens (including the cursor itself) that fulfills whatever criteria the author desires.
-//! It is then the job of another system to run one or more `Expr` over a document to locate these
-//! positions.
+//!
+//! The goal of the `Expr` initiative is to make rules easier to _read_ as well as to write.
+//! Gone are the days of trying to manually parse the logic of another man's Rust code.
 //!
 //! See also: [`SequenceExpr`].
 

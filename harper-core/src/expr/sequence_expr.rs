@@ -82,7 +82,7 @@ impl SequenceExpr {
     }
 
     /// Appends the steps in `other` onto the end of `self`.
-    /// This is more efficient then [`Self::then`] because it avoids pointer redirection.
+    /// This is more efficient than [`Self::then`] because it avoids pointer redirection.
     pub fn then_seq(mut self, mut other: Self) -> Self {
         self.exprs.append(&mut other.exprs);
         self
