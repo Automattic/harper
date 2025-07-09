@@ -23,6 +23,18 @@ impl Annotation {
             .with_message(self.annotation_text)
             .with_color(self.color)
     }
+    /// Gets an iterator of annotation `Label` from the given document.
+    ///
+    /// This is similar to [`self::iter_from_document()`], but this additionally converts
+    /// the [`Annotation`] into [`ariadne::Label`] for convenience.
+    pub(super) fn iter_labels_from_document<'inpt_id>(
+        annotation_type: AnnotationType,
+        document: &Document,
+        input_identifier: &'inpt_id str,
+    ) -> impl Iterator<Item = Label<(&'inpt_id str, std::ops::Range<usize>)>> {
+        Self::iter_from_document(annotation_type, document)
+            .map(|annotation| annotation.into_label(input_identifier))
+    }
 
     /// Constructs an [`Annotation`] from the given `token` based on the given `annotation_type`.
     ///
@@ -58,19 +70,6 @@ impl Annotation {
         document
             .tokens()
             .filter_map(move |token| Self::from_token(annotation_type, token))
-    }
-
-    /// Gets an iterator of annotation `Label` from the given document.
-    ///
-    /// This is similar to [`self::iter_from_document()`], but this additionally converts
-    /// the [`Annotation`] into [`ariadne::Label`] for convenience.
-    pub(super) fn iter_labels_from_document<'inpt_id>(
-        annotation_type: AnnotationType,
-        document: &Document,
-        input_identifier: &'inpt_id str,
-    ) -> impl Iterator<Item = Label<(&'inpt_id str, std::ops::Range<usize>)>> {
-        Self::iter_from_document(annotation_type, document)
-            .map(|annotation| annotation.into_label(input_identifier))
     }
 }
 
