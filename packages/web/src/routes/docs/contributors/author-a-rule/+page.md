@@ -123,7 +123,7 @@ insert_struct_rule!(AdjectiveOfA, true);
 insert_expr_rule!(BackInTheDay, true);
 insert_struct_rule!(WordPressDotcom, true);
 insert_expr_rule!(OutOfDate, true);
-// [svp! df:+]   insert_expr_rule!(MyRule, true);
+// [svp! df:+]insert_expr_rule!(MyRule, true);
 ```
 
 If you use a `ExprLinter`, use `insert_expr_rule` to take advantage of Harper's aggressive caching.
