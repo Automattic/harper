@@ -3,7 +3,7 @@ use clap::ValueEnum;
 use harper_core::{Document, Span, Token, TokenKind};
 use strum::IntoEnumIterator;
 
-/// Represents an annotation that may be converted to a `Label` and displayed.
+/// Represents an annotation.
 pub(super) struct Annotation {
     /// The range the annotation covers in the source. For instance, this might be a single word.
     span: Span,
@@ -13,7 +13,7 @@ pub(super) struct Annotation {
     color: Color,
 }
 impl Annotation {
-    /// Converts the annotation into an `ariadne::Label`.
+    /// Converts the annotation into an [`ariadne::Label`].
     #[must_use]
     pub(super) fn into_label(
         self,
@@ -24,7 +24,7 @@ impl Annotation {
             .with_color(self.color)
     }
 
-    /// Constructs an `Annotation` from the given `token` based on the given `annotation_type`.
+    /// Constructs an [`Annotation`] from the given `token` based on the given `annotation_type`.
     ///
     /// This will return `None` when the `token` should not be annotated according to
     /// `annotation_type`.
@@ -33,8 +33,8 @@ impl Annotation {
         let span = token.span;
         match annotation_type {
             AnnotationType::Upos => {
-                // Only annotate words (with word metadata) for `AnnotationType::Upos`.
                 if let TokenKind::Word(Some(metadata)) = &token.kind {
+                    // Only annotate words (with word metadata) for `AnnotationType::Upos`.
                     let pos_tag = metadata.pos_tag;
                     Some(Self {
                         span,
@@ -49,7 +49,7 @@ impl Annotation {
         }
     }
 
-    /// Gets an iterator of `Annotation` for a given document. The annotations will be based on
+    /// Gets an iterator of [`Annotation`] for a given document. The annotations will be based on
     /// `annotation_type`.
     fn iter_from_document(
         annotation_type: AnnotationType,
@@ -62,8 +62,8 @@ impl Annotation {
 
     /// Gets an iterator of annotation `Label` from the given document.
     ///
-    /// This is similar to `self::iter_from_document`, but this additionally converts
-    /// the `Annotation` into `ariadne::Label` for convenience.
+    /// This is similar to [`self::iter_from_document()`], but this additionally converts
+    /// the [`Annotation`] into [`ariadne::Label`] for convenience.
     pub(super) fn iter_labels_from_document<'inpt_id>(
         annotation_type: AnnotationType,
         document: &Document,
