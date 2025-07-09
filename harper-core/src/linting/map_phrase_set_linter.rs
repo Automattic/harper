@@ -23,8 +23,7 @@ impl<'a> MapPhraseSetLinter<'a> {
             wrong_forms_to_correct_forms
                 .iter()
                 .map(|(wrong_form, _correct_form)| {
-                    let expr: Box<dyn Expr> =
-                        Box::new(FixedPhrase::from_phrase(wrong_form.as_ref()));
+                    let expr: Box<dyn Expr> = Box::new(FixedPhrase::from_phrase(wrong_form));
                     expr
                 })
                 .collect(),
