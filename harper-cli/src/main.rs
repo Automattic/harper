@@ -78,7 +78,7 @@ enum Args {
         /// input.
         input: Option<Input>,
         /// How the tokens should be annotated.
-        #[arg(value_enum, default_value_t = AnnotationType::Upos)]
+        #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
         annotation_type: AnnotationType,
     },
     /// Get the metadata associated with a particular word.
