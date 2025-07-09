@@ -35,6 +35,7 @@ tree-sitter-swift = "0.7.1"
 tree-sitter-toml-ng = "0.7.0"
 tree-sitter-typescript = "0.23.2"
 harper-tree-sitter-dart = "0.0.5"
+tree-sitter-clojure = "0.1.0"
 
 [dev-dependencies]
 paste = "1.0.15"
