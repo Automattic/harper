@@ -142,13 +142,6 @@ pub fn lint_group() -> LintGroup {
             "Consider using just `and`.",
             "Reduces redundancy by replacing `and also` with `and`."
         ),
-        // Avoid suggestions resulting in "a entire ...."
-        "AWholeEntire" => (
-            ["a whole entire"],
-            ["a whole", "an entire"],
-            "Avoid redundancy. Use either `whole` or `entire` for referring to the complete amount or extent.",
-            "Corrects the redundancy in `whole entire` to `whole` or `entire`."
-        ),
         "BadRap" => (
             ["bed rap", "bad rep"],
             ["bad rap"],
@@ -945,41 +938,11 @@ pub fn lint_group() -> LintGroup {
             "`Highly-kept` is not standard. To describe secrets, `well-kept` is the most used phrase.",
             "Flags `highly-kept` and recommends `well-kept` as an alternative."
         ),
-        "WhatHeLooksLike" => (
-            ["how he looks like"],
-            ["how he looks", "what he looks like"],
-            "Don't use both `how` and `like` together to express similarity.",
-            "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
-        ),
-        "WhatItLooksLike" => (
-            ["how it looks like", "how it look like", "how it look's like"],
-            ["how it looks", "what it looks like"],
-            "Don't use both `how` and `like` together to express similarity.",
-            "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
-        ),
-        "WhatSheLooksLike" => (
-            ["how she looks like"],
-            ["how she looks", "what she looks like"],
-            "Don't use both `how` and `like` together to express similarity.",
-            "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
-        ),
-        "WhatTheyLookLike" => (
-            ["how they look like", "how they looks like"],
-            ["how they look", "what they look like"],
-            "Don't use both `how` and `like` together to express similarity.",
-            "Corrects `how ... look like` to `how ... look` or `what ... look like`."
-        ),
         "WhetYourAppetite" => (
             ["wet your appetite"],
             ["whet your appetite"],
             "Use the correct phrase for stimulating desire.",
             "Ensures `whet your appetite` is used correctly, distinguishing it from the incorrect `wet` variation."
-        ),
-        "WholeEntire" => (
-            ["whole entire"],
-            ["whole", "entire"],
-            "Avoid redundancy. Use either `whole` or `entire` for referring to the complete amount or extent.",
-            "Corrects the redundancy in `whole entire` to `whole` or `entire`."
         ),
         "WillContain" => (
             ["will contains"],
@@ -987,18 +950,8 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `will contain`?",
             "Incorrect verb form: `will` should be followed by the base form `contain`."
         ),
-        "WorseAndWorse" => (
-            ["worst and worst", "worse and worst", "worst and worse"],
-            ["worse and worse"],
-            "Use `worse` for comparing. (`Worst` is for the extreme case)",
-            "Corrects `worst and worst` to `worse and worse` for proper comparative usage."
-        ),
-        "WorseCaseScenario" => (
-            ["worse case scenario", "worse-case scenario", "worse-case-scenario"],
-            ["worst-case scenario"],
-            "Use `worst` for referring to the worst possible scenario. (`Worse` is for comparing)",
-            "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
-        ),
+        // WorseOrWorst corrects wrong words. This corrects hyphenation.
+        // The descriptions and messages differ between the two linters.
         "WorstCaseScenario" => (
             ["worst case scenario", "worst-case-scenario"],
             ["worst-case scenario"],

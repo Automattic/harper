@@ -1,4 +1,4 @@
-use crate::linting::tests::assert_suggestion_result;
+use crate::linting::tests::{assert_nth_suggestion_result, assert_suggestion_result};
 
 use super::lint_group;
 
@@ -399,6 +399,112 @@ fn changes_of_tact_real_world() {
     );
 }
 
+// WhatItLooksLike
+
+#[test]
+fn correct_how_it_looks_like_1() {
+    assert_suggestion_result(
+        "And here is how it looks like: As you can see, there is no real difference in the diagram itself.",
+        lint_group(),
+        "And here is how it looks: As you can see, there is no real difference in the diagram itself.",
+    );
+}
+
+#[test]
+fn correct_how_it_looks_like_2() {
+    assert_nth_suggestion_result(
+        "This is how it looks like when run from Windows PowerShell or Cmd: image.",
+        lint_group(),
+        "This is what it looks like when run from Windows PowerShell or Cmd: image.",
+        1,
+    );
+}
+
+#[test]
+fn correct_how_they_look_like_1() {
+    assert_suggestion_result(
+        "This is a sample project illustrating a demo of how to use the new Material 3 components and how they look like.",
+        lint_group(),
+        "This is a sample project illustrating a demo of how to use the new Material 3 components and how they look.",
+    );
+}
+
+#[test]
+fn correct_how_they_look_like_2() {
+    assert_nth_suggestion_result(
+        "So for now I'll just leave this issue here of how they look like in the XLSX",
+        lint_group(),
+        "So for now I'll just leave this issue here of what they look like in the XLSX",
+        1,
+    );
+}
+
+#[test]
+fn correct_how_they_looks_like_1() {
+    assert_suggestion_result(
+        "Here I demonstrate how disney works and how they looks like Don't miss to give me a star.",
+        lint_group(),
+        "Here I demonstrate how disney works and how they look Don't miss to give me a star.",
+    );
+}
+
+#[test]
+fn correct_how_they_looks_like_2() {
+    assert_nth_suggestion_result(
+        "You can check how they looks like on Android app by this command:",
+        lint_group(),
+        "You can check what they look like on Android app by this command:",
+        1,
+    );
+}
+
+#[test]
+fn correct_how_she_looks_like_1() {
+    assert_suggestion_result(
+        "You all know how she looks like.",
+        lint_group(),
+        "You all know how she looks.",
+    );
+}
+
+#[test]
+fn correct_how_he_looks_like_2() {
+    assert_nth_suggestion_result(
+        "Here's how he looks like, when he's supposed to just look like his old fatui design.",
+        lint_group(),
+        "Here's what he looks like, when he's supposed to just look like his old fatui design.",
+        1,
+    );
+}
+
+#[test]
+fn correct_how_it_look_like_1() {
+    assert_suggestion_result(
+        "And I don't mind how it look like, language code subpath or the last subpath as below.",
+        lint_group(),
+        "And I don't mind how it looks, language code subpath or the last subpath as below.",
+    );
+}
+
+#[test]
+fn correct_how_it_look_like_2() {
+    assert_nth_suggestion_result(
+        "Here is how it look like in your browser:",
+        lint_group(),
+        "Here is what it looks like in your browser:",
+        1,
+    );
+}
+
+#[test]
+fn correct_how_it_looks_like_with_apostrophe() {
+    assert_suggestion_result(
+        "In the picture we can see how It look's like on worker desktop.",
+        lint_group(),
+        "In the picture we can see how It looks on worker desktop.",
+    );
+}
+
 // GetRidOf
 
 #[test]
@@ -500,6 +606,52 @@ fn got_ride_of() {
     );
 }
 
+// WholeEntire
+
+#[test]
+fn detect_atomic_whole_entire() {
+    assert_suggestion_result("whole entire", lint_group(), "whole");
+}
+
+#[test]
+fn correct_real_world_whole_entire() {
+    assert_suggestion_result(
+        "[FR] support use system dns in whole entire app",
+        lint_group(),
+        "[FR] support use system dns in whole app",
+    );
+}
+
+// -a whole entire-
+#[test]
+fn correct_atomic_a_whole_entire_to_a_whole() {
+    assert_suggestion_result("a whole entire", lint_group(), "a whole");
+}
+
+#[test]
+fn correct_atomic_a_whole_entire_to_an_entire() {
+    assert_nth_suggestion_result("a whole entire", lint_group(), "an entire", 1);
+}
+
+#[test]
+fn correct_real_world_a_whole_entire_to_a_whole() {
+    assert_suggestion_result(
+        "Start mapping a whole entire new planet using NASA’s MOLA.",
+        lint_group(),
+        "Start mapping a whole new planet using NASA’s MOLA.",
+    );
+}
+
+#[test]
+fn correct_real_world_a_whole_entire_to_an_entire() {
+    assert_nth_suggestion_result(
+        "I am not sure I can pass in a whole entire query via the include.",
+        lint_group(),
+        "I am not sure I can pass in an entire query via the include.",
+        1,
+    );
+}
+
 // WorseOrWorst
 
 // -a lot worst-
@@ -589,5 +741,57 @@ fn detect_worst_ever_real_world() {
         "The Bcl package family is one of the worse ever published by Microsoft.",
         lint_group(),
         "The Bcl package family is one of the worst ever published by Microsoft.",
+    );
+}
+
+// -worse and worse-
+#[test]
+fn detect_worst_and_worst_atomic() {
+    assert_suggestion_result("worst and worst", lint_group(), "worse and worse");
+}
+
+#[test]
+fn detect_worst_and_worst_real_world() {
+    assert_suggestion_result(
+        "This control-L trick does not work for me. The padding is getting worst and worst.",
+        lint_group(),
+        "This control-L trick does not work for me. The padding is getting worse and worse.",
+    );
+}
+
+#[test]
+fn detect_worse_and_worst_real_world() {
+    assert_suggestion_result(
+        "This progressively got worse and worst to the point that the machine (LEAD 1010) stopped moving alltogether.",
+        lint_group(),
+        "This progressively got worse and worse to the point that the machine (LEAD 1010) stopped moving alltogether.",
+    );
+}
+
+// -worst case scenario-
+#[test]
+fn correct_worse_case_space() {
+    assert_suggestion_result(
+        "In the worse case scenario, remote code execution could be achieved.",
+        lint_group(),
+        "In the worst-case scenario, remote code execution could be achieved.",
+    );
+}
+
+#[test]
+fn correct_worse_case_hyphen() {
+    assert_suggestion_result(
+        "Basically I want my pods to get the original client IP address... or at least have X-Forwarded-For header, in a worse-case scenario.",
+        lint_group(),
+        "Basically I want my pods to get the original client IP address... or at least have X-Forwarded-For header, in a worst-case scenario.",
+    );
+}
+
+#[test]
+fn correct_worse_case_two_hyphens() {
+    assert_suggestion_result(
+        "In a worse-case-scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
+        lint_group(),
+        "In a worst-case scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
     );
 }

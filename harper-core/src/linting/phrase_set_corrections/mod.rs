@@ -219,6 +219,25 @@ pub fn lint_group() -> LintGroup {
             "The idiom is `to get rid of`, not `off` or `ride`.",
             "Corrects common misspellings of the idiom `get rid of`."
         ),
+        "HowItLooksLike" => (
+            &[
+                (&["how he looks like"], &["how he looks", "what he looks like"]),
+                (&["how it looks like", "how it look like", "how it look's like"], &["how it looks", "what it looks like"]),
+                (&["how she looks like"], &["how she looks", "what she looks like"]),
+                (&["how they look like", "how they looks like"], &["how they look", "what they look like"]),
+            ],
+            "Don't use both `how` and `like` together to express similarity.",
+            "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
+        ),
+        "WholeEntire" => (
+            &[
+                (&["whole entire"], &["whole", "entire"]),
+                // Avoid suggestions resulting in "a entire ...."
+                (&["a whole entire"], &["a whole", "an entire"]),
+            ],
+            "Avoid redundancy. Use either `whole` or `entire` for referring to the complete amount or extent.",
+            "Corrects the redundancy in `whole entire` to `whole` or `entire`."
+        ),
         "WorseOrWorst" => (
             &[
                 // worst -> worse
@@ -226,8 +245,10 @@ pub fn lint_group() -> LintGroup {
                 (&["far worst"], &["far worse"]),
                 (&["much worst"], &["much worse"]),
                 (&["turn for the worst"], &["turn for the worse"]),
+                (&["worst and worst", "worse and worst", "worst and worse"], &["worse and worse"]),
                 (&["worst than"], &["worse than"]),
                 // worse -> worst
+                (&["worse case scenario", "worse-case scenario", "worse-case-scenario"], &["worst-case scenario"]),
                 (&["worse ever"], &["worst ever"]),
             ],
             "`Worse` is for comparing and `worst` is for the extreme case.",
