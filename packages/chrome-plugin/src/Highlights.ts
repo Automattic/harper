@@ -4,6 +4,7 @@ import { type LintBox, isBoxInScreen } from './Box';
 import RenderBox from './RenderBox';
 import {
 	getCMRoot,
+	getDraftRoot,
 	getLexicalRoot,
 	getMediumRoot,
 	getNotionRoot,
@@ -129,6 +130,7 @@ export default class Highlights {
 		}
 
 		const queries = [
+			getDraftRoot,
 			getPMRoot,
 			getCMRoot,
 			getNotionRoot,
