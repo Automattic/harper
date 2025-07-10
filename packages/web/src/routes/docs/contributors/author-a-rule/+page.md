@@ -12,6 +12,8 @@ This guide will go through one easy way to add a complex rule to Harper.
 The lofty goal is for this to be doable by someone with little to no Rust experience.
 You should, however, be able to figure out how to use Git.
 
+While this guide should be enough to get stared, [others](https://elijahpotter.dev/articles/writing_a_grammatical_rule_for_harper) have been written.
+
 ## Fork the Harper Monorepo
 
 Before you can open a pull request or modify any code, you need a mutable copy of our monorepo.
