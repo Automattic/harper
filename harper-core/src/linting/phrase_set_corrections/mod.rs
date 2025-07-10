@@ -7,7 +7,8 @@ mod tests;
 pub fn lint_group() -> LintGroup {
     let mut group = LintGroup::default();
 
-    macro_rules! add_exact_mappings {
+    // Each correction pair has a single bad form and a single correct form.
+    macro_rules! add_1_to_1_mappings {
         ($group:expr, {
             $($name:expr => ($input_correction_pairs:expr, $message:expr, $description:expr)),+ $(,)?
         }) => {
@@ -15,7 +16,7 @@ pub fn lint_group() -> LintGroup {
                 $group.add_expr_linter(
                     $name,
                     Box::new(
-                        MapPhraseSetLinter::new(
+                        MapPhraseSetLinter::one_to_one(
                             $input_correction_pairs,
                             $message,
                             $description
@@ -26,7 +27,28 @@ pub fn lint_group() -> LintGroup {
         };
     }
 
-    add_exact_mappings!(group, {
+    // Each correction pair has multiple bad forms and multiple correct forms.
+    macro_rules! add_many_to_many_mappings {
+        ($group:expr, {
+            $($name:expr => ($input_correction_multi_pairs:expr, $message:expr, $description:expr)),+ $(,)?
+        }) => {
+            $(
+                // eprintln!("💗 {:?}", $name);
+                $group.add_expr_linter(
+                    $name,
+                    Box::new(
+                        MapPhraseSetLinter::many_to_many(
+                            $input_correction_multi_pairs,
+                            $message,
+                            $description
+                        ),
+                    ),
+                );
+            )+
+        };
+    }
+
+    add_1_to_1_mappings!(group, {
         "Ado" => (
             &[
                 ("further adieu", "further ado"),
@@ -168,15 +190,45 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `piggyback`?",
             "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system."
         ),
+    });
+
+    add_many_to_many_mappings!(group, {
+        "ChangeTack" => (
+            &[
+                // verb
+                (&["change tact", "change tacks", "change tacts"], &["change tack"]),
+                (&["changed tact", "changed tacks", "changed tacts"], &["changed tack"]),
+                (&["changes tact", "changes tacks", "changes tacts"], &["changes tack"]),
+                (&["changing tact", "changing tacks", "changing tacts"], &["changing tack"]),
+                // noun
+                (&["change of tact", "change of tacks", "change of tacts"], &["change of tack"]),
+                (&["changes of tact", "changes of tacks", "changes of tacts"], &["changes of tack"]),
+                (&["changing of tact", "changing of tacks", "changing of tacts"], &["changing of tack"])
+            ],
+            "A change in direction or approach is a change of `tack`. Not `tact` (or `tacks` or `tacts`).",
+            "Locates errors in the idioms `to change tack` and `change of tack` to convey the correct meaning of altering one's course or strategy."
+        ),
+        "GetRidOf" => (
+            &[
+                (&["get rid off", "get ride of", "get ride off"], &["get rid of"]),
+                (&["gets rid off", "gets ride of", "gets ride off"], &["gets rid of"]),
+                (&["getting rid off", "getting ride of", "getting ride off"], &["getting rid of"]),
+                (&["got rid off", "got ride of", "got ride off"], &["got rid of"]),
+                (&["gotten rid off", "gotten ride of", "gotten ride off"], &["gotten rid of"]),
+            ],
+            "The idiom is `to get rid of`, not `off` or `ride`.",
+            "Corrects common misspellings of the idiom `get rid of`."
+        ),
         "WorseOrWorst" => (
             &[
                 // worst -> worse
-                ("far worst", "far worse"),
-                ("much worst", "much worse"),
-                ("turn for the worst", "turn for the worse"),
-                ("worst than", "worse than"),
+                (&["a lot worst", "alot worst"], &["a lot worse"]),
+                (&["far worst"], &["far worse"]),
+                (&["much worst"], &["much worse"]),
+                (&["turn for the worst"], &["turn for the worse"]),
+                (&["worst than"], &["worse than"]),
                 // worse -> worst
-                ("worse ever", "worst ever")
+                (&["worse ever"], &["worst ever"]),
             ],
             "`Worse` is for comparing and `worst` is for the extreme case.",
             "Corrects `worse` and `worst` used in contexts where the other belongs."

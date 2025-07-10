@@ -2,6 +2,8 @@ use crate::linting::tests::assert_suggestion_result;
 
 use super::lint_group;
 
+// 1:1 tests
+
 // Ado
 #[test]
 fn corrects_further_ado() {
@@ -330,7 +332,191 @@ fn operative_systems() {
 // Piggyback
 // -none-
 
+// Many to many tests
+
+// ChangeTack
+
+// -change_tack-
+#[test]
+fn change_tact_atomic() {
+    assert_suggestion_result("change tact", lint_group(), "change tack");
+}
+
+#[test]
+fn changed_tacks_atomic() {
+    assert_suggestion_result("changed tacks", lint_group(), "changed tack");
+}
+
+#[test]
+fn changes_tacts_atomic() {
+    assert_suggestion_result("changes tacts", lint_group(), "changes tack");
+}
+
+#[test]
+fn changing_tact_atomic() {
+    assert_suggestion_result("changing tact", lint_group(), "changing tack");
+}
+
+// -change_of_tack-
+#[test]
+fn change_of_tacks_atomic() {
+    assert_suggestion_result("change of tacks", lint_group(), "change of tack");
+}
+
+#[test]
+fn change_of_tact_real_world() {
+    assert_suggestion_result(
+        "Change of tact : come give your concerns - Death Knight",
+        lint_group(),
+        "Change of tack : come give your concerns - Death Knight",
+    );
+}
+
+#[test]
+fn change_of_tacts_real_world() {
+    assert_suggestion_result(
+        "2013.08.15 - A Change of Tacts | Hero MUX Wiki | Fandom",
+        lint_group(),
+        "2013.08.15 - A Change of Tack | Hero MUX Wiki | Fandom",
+    );
+}
+
+#[test]
+fn changing_of_tacks_real_world() {
+    assert_suggestion_result(
+        "Duffy's changing of tacks hidden in her poetry collection ...",
+        lint_group(),
+        "Duffy's changing of tack hidden in her poetry collection ...",
+    );
+}
+
+#[test]
+fn changes_of_tact_real_world() {
+    assert_suggestion_result(
+        "While the notes and the changes of tact started to ...",
+        lint_group(),
+        "While the notes and the changes of tack started to ...",
+    );
+}
+
+// GetRidOf
+
+#[test]
+fn get_rid_off() {
+    assert_suggestion_result(
+        "Please bump axios version to get rid off npm warning #624",
+        lint_group(),
+        "Please bump axios version to get rid of npm warning #624",
+    );
+}
+
+#[test]
+fn gets_rid_off() {
+    assert_suggestion_result(
+        "Adding at as a runtime dependency gets rid off that error",
+        lint_group(),
+        "Adding at as a runtime dependency gets rid of that error",
+    );
+}
+
+#[test]
+fn getting_rid_off() {
+    assert_suggestion_result(
+        "getting rid off of all the complexity of the different accesses method of API service providers",
+        lint_group(),
+        "getting rid of of all the complexity of the different accesses method of API service providers",
+    );
+}
+
+#[test]
+fn got_rid_off() {
+    assert_suggestion_result(
+        "For now we got rid off circular deps in model tree structure and it's API.",
+        lint_group(),
+        "For now we got rid of circular dependencies in model tree structure and it's API.",
+    );
+}
+
+#[test]
+fn gotten_rid_off() {
+    assert_suggestion_result(
+        "The baX variable thingy I have gotten rid off, that was due to a bad character in the encryption key.",
+        lint_group(),
+        "The baX variable thingy I have gotten rid of, that was due to a bad character in the encryption key.",
+    );
+}
+
+#[test]
+fn get_ride_of() {
+    assert_suggestion_result(
+        "Get ride of \"WARNING Deprecated: markdown_github. Use gfm\"",
+        lint_group(),
+        "Get rid of \"WARNING Deprecated: markdown_github. Use gfm\"",
+    );
+}
+
+#[test]
+fn get_ride_off() {
+    assert_suggestion_result(
+        "This exact hack was what I trying to get ride off. ",
+        lint_group(),
+        "This exact hack was what I trying to get rid of. ",
+    );
+}
+
+#[test]
+fn getting_ride_of() {
+    assert_suggestion_result(
+        "If you have any idea how to fix this without getting ride of bootstrap I would be thankfull.",
+        lint_group(),
+        "If you have any idea how to fix this without getting rid of bootstrap I would be thankfull.",
+    );
+}
+
+#[test]
+fn gets_ride_of() {
+    assert_suggestion_result(
+        ".. gets ride of a central back-end/server and eliminates all the risks associated to it.",
+        lint_group(),
+        ".. gets rid of a central back-end/server and eliminates all the risks associated to it.",
+    );
+}
+
+#[test]
+fn gotten_ride_of() {
+    assert_suggestion_result(
+        "I have gotten ride of the react-table and everything works just fine.",
+        lint_group(),
+        "I have gotten rid of the react-table and everything works just fine.",
+    );
+}
+
+#[test]
+fn got_ride_of() {
+    assert_suggestion_result(
+        "I had to adjust the labels on the free version because you guys got ride of ...",
+        lint_group(),
+        "I had to adjust the labels on the free version because you guys got rid of ...",
+    );
+}
+
 // WorseOrWorst
+
+// -a lot worst-
+#[test]
+fn detect_a_lot_worse_atomic() {
+    assert_suggestion_result("a lot worst", lint_group(), "a lot worse");
+}
+
+#[test]
+fn detect_a_lot_worse_real_world() {
+    assert_suggestion_result(
+        "On a debug build, it's even a lot worst.",
+        lint_group(),
+        "On a debug build, it's even a lot worse.",
+    );
+}
+
 // -far worse-
 #[test]
 fn detect_far_worse_atomic() {

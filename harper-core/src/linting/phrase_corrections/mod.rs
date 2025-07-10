@@ -58,12 +58,6 @@ pub fn lint_group() -> LintGroup {
             "Use `a long time` for referring to a duration of time.",
             "Corrects `along time` to `a long time`."
         ),
-        "ALotWorst" => (
-            ["a lot worst", "alot worst"],
-            ["a lot worse"],
-            "Use `worse` for comparing. (`Worst` is for the extreme case)",
-            "Corrects `a lot worst` to `a lot worse` for proper comparative usage."
-        ),
         "AlzheimersDisease" => (
             ["old-timers' disease"],
             ["Alzheimer’s disease"],
@@ -245,48 +239,6 @@ pub fn lint_group() -> LintGroup {
             "Use the hyphenated form for `case-sensitive`.",
             "Ensures `case-sensitive` is correctly hyphenated."
         ),
-        "ChangedTack" => (
-            ["changed tact", "changed tacks", "changed tacts"],
-            ["changed tack"],
-            "Did you mean `changed tack`? This idiom is commonly used to indicate a change in direction or approach.",
-            "Locates errors in the idiom `to change tack` to convey the correct meaning of altering one's course or strategy."
-        ),
-        "ChangeOfTack" => (
-            ["change of tact", "change of tacks", "change of tacts"],
-            ["change of tack"],
-            "Did you mean `change of tack`? This idiom is commonly used to indicate a change in direction or approach.",
-            "Locates errors in the idiom `change of tack` to convey the correct meaning of an alternative course or strategy."
-        ),
-        "ChangesOfTack" => (
-            ["changes of tact", "changes of tacks", "changes of tacts"],
-            ["changes of tack"],
-            "Did you mean `changes of tack`? This idiom is commonly used to indicate changes in direction or approach.",
-            "Locates errors in the idiom `change of tack` to convey the correct meaning of an alternative course or strategy."
-        ),
-        "ChangesTack" => (
-            ["changes tact", "changes tacks", "changes tacts"],
-            ["changes tack"],
-            "Did you mean `changes tack`? This idiom is commonly used to indicate a change in direction or approach.",
-            "Locates errors in the idiom `to change tack` to convey the correct meaning of altering one's course or strategy."
-        ),
-        "ChangeTack" => (
-            ["change tact", "change tacks", "change tacts"],
-            ["change tack"],
-            "Did you mean `change tack`? This idiom is commonly used to indicate a change in direction or approach.",
-            "Locates errors in the idiom `to change tack` to convey the correct meaning of altering one's course or strategy."
-        ),
-        "ChangingOfTack" => (
-            ["changing of tact", "changing of tacks", "changing of tacts"],
-            ["changing of tack"],
-            "Did you mean `changing of tack`? This idiom is commonly used to indicate a change in direction or approach.",
-            "Locates errors in the idiom `to change of tack` to convey the correct meaning of altering one's course or strategy."
-        ),
-        "ChangingTack" => (
-            ["changing tact", "changing tacks", "changing tacts"],
-            ["changing tack"],
-            "Did you mean `changing tack`? This idiom is commonly used to indicate a change in direction or approach.",
-            "Locates errors in the idiom `to change tack` to convey the correct meaning of altering one's course or strategy."
-        ),
         "ChockFull" => (
             ["chock full"],
             ["chock-full"],
@@ -449,24 +401,6 @@ pub fn lint_group() -> LintGroup {
             "A more vivid adjective would better capture extreme cold.",
             "Encourages vivid writing by suggesting `freezing` instead of weaker expressions like `very cold.`"
         ),
-        "GetRidOff" => (
-            ["get rid off", "get ride of", "get ride off"],
-            ["get rid of"],
-            "Did you mean `get rid of`?",
-            "Ensures `get rid of` is used instead of `get rid off`."
-        ),
-        "GetsRidOff" => (
-            ["gets rid off", "gets ride of", "gets ride off"],
-            ["gets rid of"],
-            "Did you mean `gets rid of`?",
-            "Ensures `gets rid of` is used instead of `gets rid off`."
-        ),
-        "GettingRidOff" => (
-            ["getting rid off", "getting ride of", "getting ride off"],
-            ["getting rid of"],
-            "Did you mean `getting rid of`?",
-            "Ensures `getting rid of` is used instead of `getting rid off`."
-        ),
         "GildedAge" => (
             ["guilded age"],
             ["Gilded Age"],
@@ -478,18 +412,6 @@ pub fn lint_group() -> LintGroup {
             ["going to"],
             "Did you mean `going to`?",
             "Corrects `gong to` to the intended phrase `going to`."
-        ),
-        "GotRidOff" => (
-            ["got rid off", "got ride of", "got ride off"],
-            ["got rid of"],
-            "Did you mean `got rid of`?",
-            "Ensures `got rid of` is used instead of `got rid off`."
-        ),
-        "GottenRidOff" => (
-            ["gotten rid off", "gotten ride of", "gotten ride off"],
-            ["gotten rid of"],
-            "Did you mean `gotten rid of`?",
-            "Ensures `gotten rid of` is used instead of `gotten rid off`."
         ),
         "GuineaBissau" => (
             // Note: this lint matches any case but cannot correct wrong case
