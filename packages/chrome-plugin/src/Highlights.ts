@@ -4,6 +4,7 @@ import { type LintBox, isBoxInScreen } from './Box';
 import RenderBox from './RenderBox';
 import {
 	getCMRoot,
+	getGutenbergRoot,
 	getLexicalRoot,
 	getMediumRoot,
 	getNotionRoot,
@@ -138,6 +139,7 @@ export default class Highlights {
 			getQuillJsRoot,
 			getLexicalRoot,
 			getP2Root,
+			getGutenbergRoot,
 			getTrixRoot,
 		];
 
