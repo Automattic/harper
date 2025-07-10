@@ -31,6 +31,7 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 use super::despite_of::DespiteOf;
 use super::discourse_markers::DiscourseMarkers;
 use super::dot_initialisms::DotInitialisms;
+use super::double_modal::DoubleModal;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
@@ -385,6 +386,7 @@ impl LintGroup {
         insert_expr_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
+        insert_expr_rule!(DoubleModal, true);
         insert_struct_rule!(DiscourseMarkers, true);
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(HavePronoun, true);
