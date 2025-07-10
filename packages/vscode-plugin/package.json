@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.48.0",
+	"version": "0.49.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -1289,6 +1289,12 @@
 					"default": true,
 					"description": "This rule looks for `to verb` where `verb` is not in the infinitive form."
 				},
+				"harper.linters.Insensitive": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests the more standard and common synonym `insensitive`."
+				},
 				"harper.linters.Insofar": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1967,6 +1973,12 @@
 					"default": true,
 					"description": "Ensures the correct use of `real trouper`, distinguishing it from `trooper`, which refers to a soldier or police officer."
 				},
+				"harper.linters.RedundantAdditiveAdverbs": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects redundant additive adverbs."
+				},
 				"harper.linters.Regardless": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2140,6 +2152,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Detects incorrect usage of `state of art` and suggests `state of the art` as the correct phrase."
+				},
+				"harper.linters.StatuteOfLimitations": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `statue of limitations` to `statute of limitations`."
 				},
 				"harper.linters.SufficeItToSay": {
 					"scope": "resource",
