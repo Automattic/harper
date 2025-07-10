@@ -454,7 +454,7 @@ impl WordMetadata {
     pub fn is_countable_noun(&self) -> bool {
         if let Some(noun) = self.noun {
             matches!(
-                (noun.is_singular, noun.is_plural),
+                (noun.is_countable, noun.is_mass),
                 (Some(true), _) | (None | Some(false), None | Some(false))
             )
         } else {
@@ -1510,5 +1510,20 @@ mod tests {
     #[test]
     fn your_is_possessive_determiner() {
         assert!(md("your").is_possessive_determiner());
+    }
+
+    #[test]
+    fn equipment_is_mass_noun() {
+        assert!(md("equipment").is_mass_noun());
+    }
+
+    #[test]
+    fn equipment_is_non_countable_noun() {
+        assert!(md("equipment").is_non_countable_noun());
+    }
+
+    #[test]
+    fn equipment_isnt_countable_noun() {
+        assert!(!md("equipment").is_countable_noun());
     }
 }

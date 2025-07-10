@@ -56,7 +56,9 @@ impl TokenKind {
         is_plural_noun,
         is_non_plural_noun,
         is_countable_noun,
+        is_non_countable_noun,
         is_mass_noun,
+        is_non_mass_noun,
         is_singular_pronoun,
         is_plural_pronoun,
         is_non_plural_pronoun,
@@ -289,5 +291,26 @@ mod tests {
         let doc = Document::new_plain_english_curated("traffic");
         let tk = &doc.tokens().next().unwrap().kind;
         assert!(tk.is_mass_noun());
+    }
+
+    #[test]
+    fn equipment_is_mass_noun() {
+        let doc = Document::new_plain_english_curated("equipment");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_mass_noun());
+    }
+
+    #[test]
+    fn equipment_is_non_countable_noun() {
+        let doc = Document::new_plain_english_curated("equipment");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_non_countable_noun());
+    }
+
+    #[test]
+    fn equipment_isnt_countable_noun() {
+        let doc = Document::new_plain_english_curated("equipment");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(!tk.is_countable_noun());
     }
 }
