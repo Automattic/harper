@@ -5,7 +5,8 @@ use itertools::Itertools;
 
 use super::Parser;
 use crate::expr::{ExprExt, SequenceExpr};
-use crate::{Dictionary, Lrc, Span, Token, TokenKind, VecExt};
+use crate::spell::Dictionary;
+use crate::{Lrc, Span, Token, TokenKind, VecExt};
 
 /// A parser that wraps any other parser to collapse token strings that match
 /// the pattern `word_word` or `word-word`.
@@ -60,12 +61,12 @@ impl Parser for CollapseIdentifiers {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+    use crate::spell::{FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
-        FstDictionary, MergedDictionary, MutableDictionary, WordMetadata,
+        WordMetadata,
         parsers::{PlainEnglish, StrParser},
     };
-
-    use super::*;
 
     #[test]
     fn matches_kebab() {

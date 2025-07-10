@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
@@ -16,8 +17,7 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
-    MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata, remove_overlaps,
+    CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_pos_utils::{BrillChunker, BrillTagger};
@@ -26,6 +26,9 @@ use serde::Serialize;
 
 mod input;
 use input::Input;
+
+mod annotate_tokens;
+use annotate_tokens::{Annotation, AnnotationType};
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Debug, Parser)]
@@ -42,8 +45,12 @@ enum Args {
         count: bool,
         /// Restrict linting to only a specific set of rules.
         /// If omitted, `harper-cli` will run every rule.
-        #[arg(short, long, value_delimiter = ',')]
-        only_lint_with: Option<Vec<String>>,
+        #[arg(long, value_delimiter = ',')]
+        ignore: Option<Vec<String>>,
+        /// Restrict linting to only a specific set of rules.
+        /// If omitted, `harper-cli` will run every rule.
+        #[arg(long, value_delimiter = ',')]
+        only: Option<Vec<String>>,
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]
         dialect: Dialect,
@@ -68,6 +75,15 @@ enum Args {
         /// Include newlines in the output
         #[arg(short, long)]
         include_newlines: bool,
+    },
+    /// Parse a provided document and annotate its tokens.
+    AnnotateTokens {
+        /// The text or file you wish to parse. If not provided, it will be read from standard
+        /// input.
+        input: Option<Input>,
+        /// How the tokens should be annotated.
+        #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
+        annotation_type: AnnotationType,
     },
     /// Get the metadata associated with a particular word.
     Metadata { word: String },
@@ -133,7 +149,8 @@ fn main() -> anyhow::Result<()> {
         Args::Lint {
             input,
             count,
-            only_lint_with,
+            ignore,
+            only,
             dialect,
             user_dict_path,
             file_dict_path,
@@ -164,11 +181,17 @@ fn main() -> anyhow::Result<()> {
 
             let mut linter = LintGroup::new_curated(Arc::new(merged_dict), dialect);
 
-            if let Some(rules) = only_lint_with {
+            if let Some(rules) = only {
                 linter.set_all_rules_to(Some(false));
 
                 for rule in rules {
                     linter.config.set_rule_enabled(rule, true);
+                }
+            }
+
+            if let Some(rules) = ignore {
+                for rule in rules {
+                    linter.config.set_rule_enabled(rule, false);
                 }
             }
 
@@ -265,6 +288,35 @@ fn main() -> anyhow::Result<()> {
 
             let report = report_builder.finish();
             report.print((&input_identifier, Source::from(source)))?;
+
+            Ok(())
+        }
+        Args::AnnotateTokens {
+            input,
+            annotation_type,
+        } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &dictionary)?;
+
+            let input_identifier = input.get_identifier();
+
+            let mut report_builder = Report::build(
+                ReportKind::Custom("AnnotateTokens", Color::Blue),
+                &*input_identifier,
+                0,
+            );
+
+            report_builder = report_builder.with_labels(Annotation::iter_labels_from_document(
+                annotation_type,
+                &doc,
+                &input_identifier,
+            ));
+
+            let report = report_builder.finish();
+            report.print((&*input_identifier, Source::from(source)))?;
 
             Ok(())
         }

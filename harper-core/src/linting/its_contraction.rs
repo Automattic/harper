@@ -31,7 +31,7 @@ impl Default for ItsContraction {
             .then_anything()
             .then(WordSet::new(&["own", "intended"]));
 
-        let inverted = SequenceExpr::default().if_not_then_step_one(exceptions);
+        let inverted = SequenceExpr::default().then_unless(exceptions);
 
         let expr =
             All::new(vec![Box::new(positive), Box::new(inverted)]).or(SequenceExpr::aco("its")

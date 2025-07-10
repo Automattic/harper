@@ -217,7 +217,7 @@ use crate::{Document, LSend, render_markdown};
 
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
-/// Commonly implemented via [`PatternLinter`].
+/// Commonly implemented via [`ExprLinter`].
 ///
 /// See also: [`LintGroup`].
 pub trait Linter: LSend {
@@ -249,7 +249,8 @@ pub mod tests {
     use hashbrown::HashSet;
 
     use super::Linter;
-    use crate::{Document, FstDictionary, parsers::PlainEnglish};
+    use crate::spell::FstDictionary;
+    use crate::{Document, parsers::PlainEnglish};
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, linter: impl Linter) {

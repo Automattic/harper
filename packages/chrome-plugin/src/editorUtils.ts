@@ -44,6 +44,12 @@ export function getSlateRoot(el: HTMLElement): HTMLElement | null {
 	return findAncestor(el, (node: HTMLElement) => node.getAttribute('data-slate-editor') == 'true');
 }
 
+/** Determines if a given node is a child of a Draft.js editor instance.
+ * If so, returns the root node of that instance. */
+export function getDraftRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.classList.contains('DraftEditor-root'));
+}
+
 /** Determines if a given node is a child of a Trix editor instance.
  * If so, returns the root node of that instance. */
 export function getTrixRoot(el: HTMLElement): HTMLElement | null {

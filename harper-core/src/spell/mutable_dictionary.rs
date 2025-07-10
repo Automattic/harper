@@ -252,7 +252,7 @@ mod tests {
     use hashbrown::HashSet;
     use itertools::Itertools;
 
-    use crate::{Dictionary, MutableDictionary};
+    use crate::spell::{Dictionary, MutableDictionary};
 
     #[test]
     fn curated_contains_no_duplicates() {

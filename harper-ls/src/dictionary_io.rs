@@ -1,7 +1,8 @@
 use itertools::Itertools;
 use std::path::Path;
 
-use harper_core::{Dictionary, MutableDictionary, WordMetadata};
+use harper_core::WordMetadata;
+use harper_core::spell::{Dictionary, MutableDictionary};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
 
@@ -64,6 +65,7 @@ async fn dict_from_word_list(mut r: impl AsyncRead + Unpin) -> Result<MutableDic
 #[cfg(test)]
 mod tests {
     use super::*;
+    use harper_core::spell::MutableDictionary;
     use std::io::Cursor;
 
     const TEST_UNSORTED_WORDS: [&str; 10] = [

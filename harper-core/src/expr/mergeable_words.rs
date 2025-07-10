@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
-use crate::{CharString, Dictionary, FstDictionary, Span, Token, WordMetadata};
-
 use super::{Expr, SequenceExpr, SpaceOrHyphen};
+use crate::spell::{Dictionary, FstDictionary};
+use crate::{CharString, Span, Token, WordMetadata};
 
 type PredicateFn = dyn Fn(Option<&WordMetadata>, Option<&WordMetadata>) -> bool + Send + Sync;
 
