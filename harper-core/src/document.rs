@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use harper_brill::{Chunker, Tagger, brill_chunker, brill_tagger, burn_chunker};
+use harper_brill::{Chunker, Tagger, brill_tagger, burn_chunker};
 use paste::paste;
 
 use crate::expr::{Expr, ExprExt, LongestMatchOf, Repeating, SequenceExpr};
