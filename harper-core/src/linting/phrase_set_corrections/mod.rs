@@ -27,7 +27,22 @@ pub fn lint_group() -> LintGroup {
     }
 
     add_exact_mappings!(group, {
-        // The name of the rule
+        "Ado" => (
+            &[
+                ("further adieu", "further ado"),
+                ("much adieu", "much ado"),
+            ],
+            "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
+            "Corrects `adieu` to `ado`."
+        ),
+        "ClientOrServerSide" => (
+            &[
+                ("client's side", "client-side"),
+                ("server's side", "server-side"),
+            ],
+            "`Client-side` and `server-side` do not use an apostrophe.",
+            "Corrects extraneous apostrophe in `client's side` and `server's side`."
+        ),
         "DefiniteArticle" => (
             &[
                 ("definitive article", "definite article"),
@@ -62,6 +77,15 @@ pub fn lint_group() -> LintGroup {
             "Use `dependencies` instead of `deps`",
             "Expands the abbreviation `deps` to the full word `dependencies` for clarity."
         ),
+        "ExpandStandardInputAndOutput" => (
+            &[
+                ("stdin", "standard input"),
+                ("stdout", "standard output"),
+                ("stderr", "standard error"),
+            ],
+            "Use `standard input`, `standard output`, and `standard error` instead of `stdin`, `stdout`, and `stderr`",
+            "Expands the abbreviations `stdin`, `stdout`, and `stderr` to the full words `standard input`, etc. for clarity."
+        ),
         "ExplanationMark" => (
             &[
                 ("explanation mark", "exclamation mark"),
@@ -71,6 +95,92 @@ pub fn lint_group() -> LintGroup {
             "The correct names for the `!` punctuation are `exclamation mark` and `exclamation point`.",
             "Corrects the eggcorn `explanation mark/point` to `exclamation mark/point`."
         ),
+        "HaveGone" => (
+            &[
+                ("had went", "had gone"),
+                ("has went", "has gone"),
+                ("have went", "have gone"),
+                ("having went", "having gone"),
+            ],
+            "`Have gone` is the correct form.",
+            "Corrects `have went` to `have gone`."
+        ),
+        "HavePassed" => (
+            &[
+                ("had past", "had passed"),
+                ("has past", "has passed"),
+                ("have past", "have passed"),
+                ("having past", "having passed"),
+            ],
+            "Did you mean the verb `passed`?",
+            "Suggests `past` for `passed` in case a verb was intended."
+        ),
+        "HomeInOn" => (
+            &[
+                ("hone in on", "home in on"),
+                ("honed in on", "homed in on"),
+                ("hones in on", "homes in on"),
+                ("honing in on", "homing in on"),
+            ],
+            "Use `home in on` rather than `hone in on`",
+            "Corrects `hone in on` to `home in on`."
+        ),
+        "InDetail" => (
+            &[
+                ("in details", "in detail"),
+                ("in more details", "in more detail"),
+            ],
+            "Use singular `in detail` for referring to a detailed description.",
+            "Corrects unidiomatic plural `in details` to `in detail`."
+        ),
+        "InvestIn" => (
+            &[
+                ("invest into", "invest in"),
+                ("invested into", "invested in"),
+                ("investing into", "investing in"),
+                ("invests into", "invests in"),
+            ],
+            "Traditionally `invest` uses the preposition `in`.",
+            "`Invest` is traditionally followed by 'in,' not `into.`"
+        ),
+        "MootPoint" => (
+            &[
+                ("mute point", "moot point"),
+                ("point is mute", "point is moot"),
+            ],
+            "Use `moot` instead of `mute` when referring to a debatable or irrelevant point.",
+            "Corrects `mute` to `moot` in the phrase `moot point`."
+        ),
+        "OperatingSystem" => (
+            &[
+                ("operative system", "operating system"),
+                ("operative systems", "operating systems"),
+            ],
+            "Did you mean `operating system`?",
+            "Ensures `operating system` is used correctly instead of `operative system`."
+        ),
+        "Piggyback" => (
+            &[
+                ("piggy bag", "piggyback"),
+                ("piggy bagged", "piggybacked"),
+                ("piggy bagging", "piggybacking"),
+            ],
+            "Did you mean `piggyback`?",
+            "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system."
+        ),
+        "WorseOrWorst" => (
+            &[
+                // worst -> worse
+                ("far worst", "far worse"),
+                ("much worst", "much worse"),
+                ("turn for the worst", "turn for the worse"),
+                ("worst than", "worse than"),
+                // worse -> worst
+                ("worse ever", "worst ever")
+            ],
+            "`Worse` is for comparing and `worst` is for the extreme case.",
+            "Corrects `worse` and `worst` used in contexts where the other belongs."
+        )
     });
 
     group.set_all_rules_to(Some(true));

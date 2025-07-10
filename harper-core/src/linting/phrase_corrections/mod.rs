@@ -293,12 +293,6 @@ pub fn lint_group() -> LintGroup {
             "Use the hyphenated form for `chock-full`.",
             "Ensures `chock-full` is correctly hyphenated."
         ),
-        "ClientSide" => (
-            ["client's side"],
-            ["client-side"],
-            "In client-server contexts, use `client-side` rather than `client's side`.",
-            "Corrects `client's side` to `client-side`, which is usual in `client-server contexts`."
-        ),
         "CondenseAllThe" => (
             ["all of the"],
             ["all the"],
@@ -377,18 +371,6 @@ pub fn lint_group() -> LintGroup {
             "Use `minimum` instead of `min`",
             "Expands the abbreviation `min` to the full word `minimum` for clarity."
         ),
-        "ExpandStandardInput" => (
-            ["stdin"],
-            ["standard input"],
-            "Use `standard input` instead of `stdin`",
-            "Expands the abbreviation `stdin` to `standard input` for clarity."
-        ),
-        "ExpandStandardOutput" => (
-            ["stdout"],
-            ["standard output"],
-            "Use `standard output` instead of `stdout`",
-            "Expands the abbreviation `stdout` to `standard output` for clarity."
-        ),
         "ExpandWith" => (
             ["w/"],
             ["with"],
@@ -418,12 +400,6 @@ pub fn lint_group() -> LintGroup {
             ["fair bit"],
             "A `decent amount` is a `fair bit`. `Fare` is the price of a ticket.",
             "Corrects malapropisms of `a fair bit`."
-        ),
-        "FarWorse" => (
-            ["far worst"],
-            ["far worse"],
-            "Use `worse` for comparing. (`Worst` is for the extreme case)",
-            "Corrects `far worst` to `far worse` for proper comparative usage."
         ),
         "FastPaste" => (
             ["fast paste", "fast-paste"],
@@ -472,12 +448,6 @@ pub fn lint_group() -> LintGroup {
             ["freezing"],
             "A more vivid adjective would better capture extreme cold.",
             "Encourages vivid writing by suggesting `freezing` instead of weaker expressions like `very cold.`"
-        ),
-        "FurtherAdo" => (
-            ["further adieu"],
-            ["further ado"],
-            "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
-            "Corrects `adieu` to `ado`."
         ),
         "GetRidOff" => (
             ["get rid off", "get ride of", "get ride off"],
@@ -532,23 +502,11 @@ pub fn lint_group() -> LintGroup {
             "The official spelling is hyphenated.",
             "Checks for the correct official name of the African country."
         ),
-        "HadGone" => (
-            ["had went"],
-            ["had gone"],
-            "`Had gone` is the correct form.",
-            "Corrects `had went` to `had gone`."
-        ),
         "HadOf" => (
             ["had of"],
             ["had have", "had've"],
             "Did you mean `had have` or `had've`?",
             "Flags the unnecessary use of `of` after `had` and suggests the correct forms."
-        ),
-        "HadPassed" => (
-            ["had past"],
-            ["had passed"],
-            "Did you mean the verb `passed`?",
-            "Suggests `past` for `passed` in case a verb was intended."
         ),
         "HalfAnHour" => (
             ["half an our"],
@@ -561,66 +519,6 @@ pub fn lint_group() -> LintGroup {
             ["haphazard"],
             "Use `haphazard` for randomness or lack of organization.",
             "Corrects the eggcorn `half hazard` to `haphazard`, which properly means lacking organization or being random."
-        ),
-        "HasGone" => (
-            ["has went"],
-            ["has gone"],
-            "`Has gone` is the correct form.",
-            "Corrects `has went` to `has gone`."
-        ),
-        "HasPassed" => (
-            ["has past"],
-            ["has passed"],
-            "Did you mean the verb `passed`?",
-            "Suggests `past` for `passed` in case a verb was intended."
-        ),
-        "HaveGone" => (
-            ["have went"],
-            ["have gone"],
-            "`Have gone` is the correct form.",
-            "Corrects `have went` to `have gone`."
-        ),
-        "HavePassed" => (
-            ["have past"],
-            ["have passed"],
-            "Did you mean the verb `passed`?",
-            "Suggests `past` for `passed` in case a verb was intended."
-        ),
-        "HavingGone" => (
-            ["having went"],
-            ["having gone"],
-            "`Having gone` is the correct form.",
-            "Corrects `having went` to `having gone`."
-        ),
-        "HavingPassed" => (
-            ["having past"],
-            ["having passed"],
-            "Did you mean the verb `passed`?",
-            "Suggests `past` for `passed` in case a verb was intended."
-        ),
-        "HomedInOn" => (
-            ["honed in on"],
-            ["homed in on"],
-            "Use `home in on` rather than `hone in on`",
-            "Corrects `hone in on` to `home in on`."
-        ),
-        "HomeInOn" => (
-            ["hone in on"],
-            ["home in on"],
-            "Use `home in on` rather than `hone in on`",
-            "Corrects `hone in on` to `home in on`."
-        ),
-        "HomesInOn" => (
-            ["hones in on"],
-            ["homes in on"],
-            "Use `home in on` rather than `hone in on`",
-            "Corrects `hone in on` to `home in on`."
-        ),
-        "HomingInOn" => (
-            ["honing in on"],
-            ["homing in on"],
-            "Use `home in on` rather than `hone in on`",
-            "Corrects `hone in on` to `home in on`."
         ),
         "HumanBeings" => (
             ["human's beings", "humans beings"],
@@ -682,18 +580,6 @@ pub fn lint_group() -> LintGroup {
             "`In case` should be written as two words.",
             "Corrects `incase` to `in case`."
         ),
-        "InDetail" => (
-            ["in details"],
-            ["in detail"],
-            "Use singular `in detail` for referring to a detailed description.",
-            "Correct unidiomatic plural `in details` to `in detail`."
-        ),
-        "InMoreDetail" => (
-            ["in more details"],
-            ["in more detail"],
-            "Use singular `in more detail` for referring to a detailed description.",
-            "Correct unidiomatic plural `in more details` to `in more detail`."
-        ),
         "InNeedOf" => (
             ["in need for"],
             ["in need of"],
@@ -729,30 +615,6 @@ pub fn lint_group() -> LintGroup {
             ["in the"],
             "Did you mean `in the`?",
             "Detects and corrects a spacing error where `in the` is mistakenly written as `int he`. Proper spacing is essential for readability and grammatical correctness in common phrases."
-        ),
-        "InvestedIn" => (
-            ["invested into"],
-            ["invested in"],
-            "Traditionally `invest` uses the preposition `in`.",
-            "`Invest` is traditionally followed by 'in,' not `into.`"
-        ),
-        "InvestIn" => (
-            ["invest into"],
-            ["invest in"],
-            "Traditionally `invest` uses the preposition `in`.",
-            "`Invest` is traditionally followed by 'in,' not `into.`"
-        ),
-        "InvestingIn" => (
-            ["investing into"],
-            ["investing in"],
-            "Traditionally `invest` uses the preposition `in`.",
-            "`Invest` is traditionally followed by 'in,' not `into.`"
-        ),
-        "InvestsIn" => (
-            ["invests into"],
-            ["invests in"],
-            "Traditionally `invest` uses the preposition `in`.",
-            "`Invest` is traditionally followed by 'in,' not `into.`"
         ),
         "IsKnownFor" => (
             ["is know for"],
@@ -832,24 +694,6 @@ pub fn lint_group() -> LintGroup {
             "Retain `monumentous` for jocular effect. Otherwise `momentous` indicates great signifcance while `monumental` indicates imposing size.",
             "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage."
         ),
-        "MuchAdo" => (
-            ["much adieu"],
-            ["much ado"],
-            "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
-            "Corrects `adieu` to `ado`."
-        ),
-        "MuchWorse" => (
-            ["much worst"],
-            ["much worse"],
-            "Use `worse` for comparing. (`Worst` is for the extreme case)",
-            "Corrects `much worst` to `much worse` for proper comparative usage."
-        ),
-        "MutePoint" => (
-            ["mute point"],
-            ["moot point"],
-            "Did you mean `moot point`?",
-            "Ensures `moot point` is used instead of `mute point`, as `moot` means debatable or irrelevant."
-        ),
         "MyHouse" => (
             ["mu house"],
             ["my house"],
@@ -916,47 +760,11 @@ pub fn lint_group() -> LintGroup {
             "Use the correct phrase for acting spontaneously.",
             "Ensures the correct use of `on the spur of the moment`, avoiding nonstandard variations."
         ),
-        "OperativeSystem" => (
-            ["operative system"],
-            ["operating system"],
-            "Did you mean `operating system`?",
-            "Ensures `operating system` is used correctly instead of `operative system`."
-        ),
-        "OperativeSystems" => (
-            ["operative systems"],
-            ["operating systems"],
-            "Did you mean `operating systems`?",
-            "Ensures `operating systems` is used correctly instead of `operative systems`."
-        ),
         "PeaceOfMind" => (
             ["piece of mind"],
             ["peace of mind"],
             "The phrase is `peace of mind`, meaning `calm`. A `piece` is a `part` of something.",
             "Corrects `piece of mind` to `peace of mind`."
-        ),
-        "PiggyBag" => (
-            ["piggy bag"],
-            ["piggyback"],
-            "Did you mean `piggyback`?",
-            "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system."
-        ),
-        "PiggyBagged" => (
-            ["piggy bagged"],
-            ["piggybacked"],
-            "Did you mean `piggybacked`?",
-            "Corrects the eggcorn `piggy bagged` to `piggybacked`, the proper past tense form for riding on someone’s back or making use of an existing system."
-        ),
-        "PiggyBagging" => (
-            ["piggy bagging"],
-            ["piggybacking"],
-            "Did you mean `piggybacking`?",
-            "Corrects the eggcorn `piggy bagging` to `piggybacking`, the proper verb form for riding on someone’s back or leveraging an existing system."
-        ),
-        "PointIsMoot" => (
-            ["your point is mute"],
-            ["your point is moot"],
-            "Did you mean `your point is moot`?",
-            "Typo: `moot` (meaning debatable) is correct rather than `mute`."
         ),
         "PointsOfView" => (
             ["point of views"],
@@ -1027,12 +835,6 @@ pub fn lint_group() -> LintGroup {
             ["scantily clad"],
             "Use the correct phrase for minimal attire.",
             "Fixes `scandally clad` to `scantily clad`, ensuring clarity in describing minimal attire."
-        ),
-        "ServerSide" => (
-            ["server's side"],
-            ["server-side"],
-            "In client-server contexts, use `server-side` rather than `server's side`.",
-            "Corrects `server's side` to `server-side`, which is usual in `client-server contexts`."
         ),
         "SimpleGrammatical" => (
             ["simply grammatical"],
@@ -1121,12 +923,6 @@ pub fn lint_group() -> LintGroup {
         "ThatChallenged" => (
             ["the challenged"],
             ["that challenged"],
-            "Did you mean `that challenged`?",
-            "Changes `the challenged` to `that challenged` to fix the misspelling."
-        ),
-        "ThatChallenged" => (
-            ["the challenged"],
-            ["that challenged"],
             "Use `that challenged` for correct relative clause.",
             "Corrects `the challenged` to `that challenged` for proper relative clause usage."
         ),
@@ -1183,12 +979,6 @@ pub fn lint_group() -> LintGroup {
             ["trial and error"],
             "You misspelled `trial`.",
             "Corrects `trail` to `trial` in `trial and error`."
-        ),
-        "TurnForTheWorse" => (
-            ["turn for the worst"],
-            ["turn for the worse"],
-            "Use `turn for the worse` for a negative change in circumstances. Avoid the incorrect `turn for the worst`.",
-            "Corrects the nonstandard `turn for the worst` to the idiomatic `turn for the worse`, used to describe a situation that has deteriorated."
         ),
         "TurnItOff" => (
             ["turn it of", "turn i of"],
@@ -1281,23 +1071,11 @@ pub fn lint_group() -> LintGroup {
             "Use `worst` for referring to the worst possible scenario. (`Worse` is for comparing)",
             "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
         ),
-        "WorseThan" => (
-            ["worst than"],
-            ["worse than"],
-            "Use `worse` for comparing. (`Worst` is for the extreme case)",
-            "Corrects `worst than` to `worse than` for proper comparative usage."
-        ),
         "WorstCaseScenario" => (
             ["worst case scenario", "worst-case-scenario"],
             ["worst-case scenario"],
             "Hyphenate `worst-case`.",
             "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
-        ),
-        "WorstEver" => (
-            ["worse ever"],
-            ["worst ever"],
-            "Use `worst` for the extreme case. (`Worse` is for comparing)",
-            "Corrects `worse ever` to `worst ever` for proper comparative usage."
         ),
         "WroughtIron" => (
             ["rod iron", "rot iron", "rod-iron", "rot-iron"],

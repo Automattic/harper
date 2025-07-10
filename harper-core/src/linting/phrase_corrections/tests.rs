@@ -348,16 +348,6 @@ fn changes_of_tact_real_world() {
 // ChockFull
 // -none-
 
-// ClientSide
-#[test]
-fn correct_clients_side() {
-    assert_suggestion_result(
-        "I want to debug this server-side as I cannot find out why the connection is being refused from the client's side.",
-        lint_group(),
-        "I want to debug this server-side as I cannot find out why the connection is being refused from the client-side.",
-    );
-}
-
 // CondenseAllThe
 // -none-
 
@@ -537,17 +527,8 @@ fn expand_cuz() {
     );
 }
 
-// ExpandDependency
-// -none-
-
 // ExpandMinimum
 // -none
-
-// ExpandStandardInput
-// -none-
-
-// ExpandStandardOutput
-// -none-
 
 // ExpandWith
 // -none-
@@ -568,21 +549,6 @@ fn corrects_fair_bit() {
         "I've read through a fare bit of the ecosystem framework, but I am not clear on what is modified...",
         lint_group(),
         "I've read through a fair bit of the ecosystem framework, but I am not clear on what is modified...",
-    );
-}
-
-// FarWorse
-#[test]
-fn detect_far_worse_atomic() {
-    assert_suggestion_result("far worst", lint_group(), "far worse");
-}
-
-#[test]
-fn detect_far_worse_real_world() {
-    assert_suggestion_result(
-        "I mainly use Firefox (personal preference) and have noticed it has far worst performance than Chrome",
-        lint_group(),
-        "I mainly use Firefox (personal preference) and have noticed it has far worse performance than Chrome",
     );
 }
 
@@ -623,16 +589,6 @@ fn correct_for_while() {
 
 // Freezing
 // -none-
-
-// FurtherAdo
-#[test]
-fn corrects_further_ado() {
-    assert_suggestion_result(
-        "... but we finally hit a great spot, so without further adieu.",
-        lint_group(),
-        "... but we finally hit a great spot, so without further ado.",
-    );
-}
 
 // GetRidOf
 #[test]
@@ -780,117 +736,6 @@ fn test_half_an_hour() {
 // Haphazard
 // -none-
 
-// HaveGone
-#[test]
-fn correct_have_went() {
-    assert_suggestion_result(
-        "I have went into the btle.py file and added a print statement in _connect()",
-        lint_group(),
-        "I have gone into the btle.py file and added a print statement in _connect()",
-    );
-}
-
-#[test]
-fn correct_had_went() {
-    assert_suggestion_result(
-        "Not sure if TroLoos had went from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
-        lint_group(),
-        "Not sure if TroLoos had gone from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
-    );
-}
-
-#[test]
-fn correct_having_went() {
-    assert_suggestion_result(
-        "Having went through the setup guidelines and picking react starter, running npm run watch results in an error",
-        lint_group(),
-        "Having gone through the setup guidelines and picking react starter, running npm run watch results in an error",
-    );
-}
-
-#[test]
-fn correct_has_went() {
-    assert_suggestion_result(
-        "I would like to report that the package request which you are loading has went into maintenance mode.",
-        lint_group(),
-        "I would like to report that the package request which you are loading has gone into maintenance mode.",
-    );
-}
-
-// Have Passed
-#[test]
-fn correct_has_past() {
-    assert_suggestion_result(
-        "Track the amount of time that has past since a point in time.",
-        lint_group(),
-        "Track the amount of time that has passed since a point in time.",
-    );
-}
-
-#[test]
-fn correct_have_past() {
-    assert_suggestion_result(
-        "Another 14+ days have past, any updates on this?",
-        lint_group(),
-        "Another 14+ days have passed, any updates on this?",
-    );
-}
-
-#[test]
-fn correct_had_past() {
-    assert_suggestion_result(
-        "Few days had past, so im starting to thinks there is a problem in my local version.",
-        lint_group(),
-        "Few days had passed, so im starting to thinks there is a problem in my local version.",
-    );
-}
-
-#[test]
-fn correct_having_past() {
-    assert_suggestion_result(
-        "Return to computer, with enough time having past for the computer to go to full sleep.",
-        lint_group(),
-        "Return to computer, with enough time having passed for the computer to go to full sleep.",
-    );
-}
-
-// HomeInOn
-#[test]
-fn correct_hone_in_on() {
-    assert_suggestion_result(
-        "This way you can use an object detector algorithm to hone in on subjects and tell sam to only focus in certain areas when looking to extend ...",
-        lint_group(),
-        "This way you can use an object detector algorithm to home in on subjects and tell sam to only focus in certain areas when looking to extend ...",
-    );
-}
-
-#[test]
-fn correct_honing_in_on() {
-    assert_suggestion_result(
-        "I think I understand the syntax limitation you're honing in on.",
-        lint_group(),
-        "I think I understand the syntax limitation you're homing in on.",
-    );
-}
-
-#[test]
-fn correct_hones_in_on() {
-    assert_suggestion_result(
-        "[FEATURE] Add a magnet that hones in on mobs",
-        lint_group(),
-        "[FEATURE] Add a magnet that homes in on mobs",
-    );
-}
-
-#[test]
-fn correct_honed_in_on() {
-    assert_suggestion_result(
-        "But it took me quite a bit of faffing about checking things out before I honed in on the session as the problem and tried to dump out the ...",
-        lint_group(),
-        "But it took me quite a bit of faffing about checking things out before I homed in on the session as the problem and tried to dump out the ...",
-    );
-}
-
 // HumanBeings
 #[test]
 fn test_human_beings() {
@@ -981,35 +826,6 @@ fn test_in_a_while() {
 // InCase
 // -none-
 
-// InDetail
-fn in_detail_atomic() {
-    assert_suggestion_result("in details", lint_group(), "in detail");
-}
-
-#[test]
-fn in_detail_real_world() {
-    assert_suggestion_result(
-        "c++ - who can tell me \"*this pointer\" in details?",
-        lint_group(),
-        "c++ - who can tell me \"*this pointer\" in detail?",
-    )
-}
-
-// InMoreDetail
-#[test]
-fn in_more_detail_atomic() {
-    assert_suggestion_result("in more details", lint_group(), "in more detail");
-}
-
-#[test]
-fn in_more_detail_real_world() {
-    assert_suggestion_result(
-        "Document the interface in more details · Issue #3 · owlbarn ...",
-        lint_group(),
-        "Document the interface in more detail · Issue #3 · owlbarn ...",
-    );
-}
-
 // InNeedOf
 #[test]
 fn corrects_in_need_of() {
@@ -1066,43 +882,6 @@ fn test_intact_clean() {
 
 // InThe
 // -none-
-
-// InvestIn
-#[test]
-fn corrects_invest_into() {
-    assert_suggestion_result(
-        "which represents the amount of money they want to invest into a particular deal.",
-        lint_group(),
-        "which represents the amount of money they want to invest in a particular deal.",
-    );
-}
-
-#[test]
-fn corrects_investing_into() {
-    assert_suggestion_result(
-        "Taking dividends in cash (rather than automatically re-investing into the originating fund) can help alleviate the need for rebalancing.",
-        lint_group(),
-        "Taking dividends in cash (rather than automatically re-investing in the originating fund) can help alleviate the need for rebalancing.",
-    );
-}
-
-#[test]
-fn corrects_invested_into() {
-    assert_suggestion_result(
-        "it's all automatically invested into a collection of loans that match the criteria that ...",
-        lint_group(),
-        "it's all automatically invested in a collection of loans that match the criteria that ...",
-    );
-}
-
-#[test]
-fn corrects_invests_into() {
-    assert_suggestion_result(
-        "If a user invests into the protocol first using USDC but afterward changing to DAI, ...",
-        lint_group(),
-        "If a user invests in the protocol first using USDC but afterward changing to DAI, ...",
-    );
-}
 
 // IsKnownFor
 // -none-
@@ -1233,34 +1012,6 @@ fn detect_monumentous_real_world() {
         "I think that would be a monumentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
         lint_group(),
         "I think that would be a momentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
-    );
-}
-
-// MootPoint
-// -none-
-
-// MuchAdo
-#[test]
-fn corrects_much_ado() {
-    assert_suggestion_result(
-        "After much adieu this functionality is now available.",
-        lint_group(),
-        "After much ado this functionality is now available.",
-    );
-}
-
-// MuchWorse
-#[test]
-fn detect_much_worse_atomic() {
-    assert_suggestion_result("much worst", lint_group(), "much worse");
-}
-
-#[test]
-fn detect_much_worse_real_world() {
-    assert_suggestion_result(
-        "the generated image quality is much worst (actually nearly broken)",
-        lint_group(),
-        "the generated image quality is much worse (actually nearly broken)",
     );
 }
 
@@ -1419,25 +1170,6 @@ fn fix_in_the_spur_of_the_moment() {
     );
 }
 
-// OperatingSystem
-#[test]
-fn operative_system() {
-    assert_suggestion_result(
-        "COS is a operative system made with the COSMOS Kernel and written in C#, COS its literally the same than MS-DOS but written in C# and open-source.",
-        lint_group(),
-        "COS is a operating system made with the COSMOS Kernel and written in C#, COS its literally the same than MS-DOS but written in C# and open-source.",
-    );
-}
-
-#[test]
-fn operative_systems() {
-    assert_suggestion_result(
-        "My dotfiles for my operative systems and other configurations.",
-        lint_group(),
-        "My dotfiles for my operating systems and other configurations.",
-    );
-}
-
 // PeaceOfMind
 #[test]
 fn corrects_piece_of_mind() {
@@ -1446,15 +1178,6 @@ fn corrects_piece_of_mind() {
         lint_group(),
         "A Discord bot that gives you peace of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
     )
-}
-
-// Piggyback
-// -none-
-
-// PointIsMoot
-#[test]
-fn point_is_moot() {
-    assert_suggestion_result("Your point is mute.", lint_group(), "Your point is moot.");
 }
 
 // PointsOfView
@@ -1487,16 +1210,6 @@ fn corrects_points_of_view() {
 
 // ScantilyClad
 // -none-
-
-// ServerSide
-#[test]
-fn correct_servers_side() {
-    assert_suggestion_result(
-        "A client-server model where the client can execute commands in a terminal on the server's side",
-        lint_group(),
-        "A client-server model where the client can execute commands in a terminal on the server-side",
-    );
-}
 
 // SimpleGrammatical
 // -none-
@@ -1660,21 +1373,6 @@ fn correct_trail_and_error() {
         "It was produced through trail and error.",
         lint_group(),
         "It was produced through trial and error.",
-    );
-}
-
-// TurnForTheWorse
-#[test]
-fn detect_turn_for_the_worse_atomic() {
-    assert_suggestion_result("turn for the worst", lint_group(), "turn for the worse");
-}
-
-#[test]
-fn detect_turn_for_the_worse_real_world() {
-    assert_suggestion_result(
-        "Very surprised to see this repo take such a turn for the worst.",
-        lint_group(),
-        "Very surprised to see this repo take such a turn for the worse.",
     );
 }
 
@@ -1895,21 +1593,6 @@ fn detect_worse_and_worst_real_world() {
     );
 }
 
-// WorseThan
-#[test]
-fn detect_worse_than_atomic() {
-    assert_suggestion_result("worst than", lint_group(), "worse than");
-}
-
-#[test]
-fn detect_worse_than_real_world() {
-    assert_suggestion_result(
-        "Project real image - inversion quality is worst than in StyleGAN2",
-        lint_group(),
-        "Project real image - inversion quality is worse than in StyleGAN2",
-    );
-}
-
 // WorstCaseScenario
 #[test]
 fn correct_worse_case_space() {
@@ -1953,21 +1636,6 @@ fn correct_worst_case_two_hyphens() {
         "CAPD worst-case-scenario cloud simulator for naughty clouds.",
         lint_group(),
         "CAPD worst-case scenario cloud simulator for naughty clouds.",
-    );
-}
-
-// WorstEver
-#[test]
-fn detect_worst_ever_atomic() {
-    assert_suggestion_result("worse ever", lint_group(), "worst ever");
-}
-
-#[test]
-fn detect_worst_ever_real_world() {
-    assert_suggestion_result(
-        "The Bcl package family is one of the worse ever published by Microsoft.",
-        lint_group(),
-        "The Bcl package family is one of the worst ever published by Microsoft.",
     );
 }
 
