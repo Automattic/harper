@@ -1095,6 +1095,16 @@ fn corrects_in_need_of() {
 // InOneFellSwoop
 // -none-
 
+// Insensitive
+#[test]
+fn test_insensitive() {
+    assert_suggestion_result(
+        "We want to potentially make an unsensitive header",
+        lint_group(),
+        "We want to potentially make an insensitive header",
+    );
+}
+
 // InsteadOf
 #[test]
 fn test_instead_of() {
@@ -1634,6 +1644,16 @@ fn spacial_attention() {
 
 // StateOfTheArt
 // -none-
+
+// StatuteOfLimitations
+#[test]
+fn statute_of_limitations() {
+    assert_suggestion_result(
+        "Shouldn't there be a grandfathered-in or statue of limitations for posts before the original punishment?",
+        lint_group(),
+        "Shouldn't there be a grandfathered-in or statute of limitations for posts before the original punishment?",
+    );
+}
 
 // SufficeItToSay
 #[test]

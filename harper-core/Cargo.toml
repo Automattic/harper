@@ -1,6 +1,6 @@
 [package]
 name = "harper-core"
-version = "0.48.0"
+version = "0.49.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -26,12 +26,12 @@ unicode-script = "0.5.7"
 unicode-width = "0.2.1"
 levenshtein_automata = { version = "0.2.1", features = ["fst_automaton"] }
 cached = "0.55.1"
-lru = "0.15.0"
+lru = "0.16.0"
 foldhash = "0.1.5"
 strum_macros = "0.27.1"
 strum = "0.27.1"
 ammonia = "4.1.0"
-harper-brill = { path = "../harper-brill", version = "0.48.0" }
+harper-brill = { path = "../harper-brill", version = "0.49.0" }
 bitflags = { version = "2.9.1", features = ["serde"] }
 
 [dev-dependencies]

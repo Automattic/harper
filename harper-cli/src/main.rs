@@ -27,6 +27,9 @@ use serde::Serialize;
 mod input;
 use input::Input;
 
+mod annotate_tokens;
+use annotate_tokens::{Annotation, AnnotationType};
+
 /// A debugging tool for the Harper grammar checker.
 #[derive(Debug, Parser)]
 #[command(version, about)]
@@ -72,6 +75,15 @@ enum Args {
         /// Include newlines in the output
         #[arg(short, long)]
         include_newlines: bool,
+    },
+    /// Parse a provided document and annotate its tokens.
+    AnnotateTokens {
+        /// The text or file you wish to parse. If not provided, it will be read from standard
+        /// input.
+        input: Option<Input>,
+        /// How the tokens should be annotated.
+        #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
+        annotation_type: AnnotationType,
     },
     /// Get the metadata associated with a particular word.
     Metadata { word: String },
@@ -279,6 +291,35 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        Args::AnnotateTokens {
+            input,
+            annotation_type,
+        } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &dictionary)?;
+
+            let input_identifier = input.get_identifier();
+
+            let mut report_builder = Report::build(
+                ReportKind::Custom("AnnotateTokens", Color::Blue),
+                &*input_identifier,
+                0,
+            );
+
+            report_builder = report_builder.with_labels(Annotation::iter_labels_from_document(
+                annotation_type,
+                &doc,
+                &input_identifier,
+            ));
+
+            let report = report_builder.finish();
+            report.print((&*input_identifier, Source::from(source)))?;
+
+            Ok(())
+        }
         Args::Words => {
             let mut word_str = String::new();
 
@@ -363,7 +404,7 @@ fn main() -> anyhow::Result<()> {
                 let rune_words = format!("1\n{line}");
                 let dict = MutableDictionary::from_rune_files(
                     &rune_words,
-                    include_str!("../../harper-core/affixes.json"),
+                    include_str!("../../harper-core/annotations.json"),
                 )?;
 
                 println!("New, from you:");
@@ -456,7 +497,7 @@ fn main() -> anyhow::Result<()> {
             use serde_json::Value;
 
             let dict_path = dir.join("dictionary.dict");
-            let affixes_path = dir.join("affixes.json");
+            let affixes_path = dir.join("annotations.json");
 
             // Validate old and new flags are exactly one Unicode code point (Rust char)
             // And not characters used for the dictionary format
@@ -478,27 +519,27 @@ fn main() -> anyhow::Result<()> {
 
             // Load and parse affixes
             let affixes_string = fs::read_to_string(&affixes_path)
-                .map_err(|e| anyhow!("Failed to read affixes.json: {e}"))?;
+                .map_err(|e| anyhow!("Failed to read annotations.json: {e}"))?;
 
             let affixes_json: Value = serde_json::from_str(&affixes_string)
-                .map_err(|e| anyhow!("Failed to parse affixes.json: {e}"))?;
+                .map_err(|e| anyhow!("Failed to parse annotations.json: {e}"))?;
 
             // Get the nested "affixes" object
             let affixes_obj = &affixes_json
                 .get("affixes")
                 .and_then(Value::as_object)
-                .ok_or_else(|| anyhow!("affixes.json does not contain 'affixes' object"))?;
+                .ok_or_else(|| anyhow!("annotations.json does not contain 'affixes' object"))?;
 
             let properties_obj = &affixes_json
                 .get("properties")
                 .and_then(Value::as_object)
-                .ok_or_else(|| anyhow!("affixes.json does not contain 'properties' object"))?;
+                .ok_or_else(|| anyhow!("annotations.json does not contain 'properties' object"))?;
 
             // Validate old flag exists and get its description
             let old_entry = affixes_obj
                 .get(&old)
                 .or_else(|| properties_obj.get(&old))
-                .ok_or_else(|| anyhow!("Flag '{old}' not found in affixes.json"))?;
+                .ok_or_else(|| anyhow!("Flag '{old}' not found in annotations.json"))?;
 
             let description = old_entry
                 .get("#")
@@ -559,7 +600,7 @@ fn main() -> anyhow::Result<()> {
 
             // Verify that the updated affixes string is valid JSON
             serde_json::from_str::<Value>(&updated_affixes_string)
-                .map_err(|e| anyhow!("Failed to parse updated affixes.json: {e}"))?;
+                .map_err(|e| anyhow!("Failed to parse updated annotations.json: {e}"))?;
 
             // Write changes
             fs::write(&dict_path, updated_dict)

@@ -790,6 +790,12 @@ pub fn lint_group() -> LintGroup {
             "Use the modern single word `instead of` to indicate a replacement.",
             "Corrects the archaic or mistaken separation `in stead of` to `instead of` in everyday usage."
         ),
+        "Insensitive" => (
+            ["unsensitive"],
+            ["insensitive"],
+            "This word has a more standard, more common synonym.",
+            "Suggests the more standard and common synonym `insensitive`."
+        ),
         "Insurmountable" => (
             ["unsurmountable"],
             ["insurmountable"],
@@ -1165,6 +1171,12 @@ pub fn lint_group() -> LintGroup {
             ["state of the art"],
             "Did you mean `state of the art`?",
             "Detects incorrect usage of `state of art` and suggests `state of the art` as the correct phrase."
+        ),
+        "StatuteOfLimitations" => (
+            ["statue of limitations"],
+            ["statute of limitations"],
+            "A `statue` is a sculpture; in legal terms, the correct word is `statute`.",
+            "Corrects `statue of limitations` to `statute of limitations`."
         ),
         "SufficeItToSay" => (
             ["suffice to say"],

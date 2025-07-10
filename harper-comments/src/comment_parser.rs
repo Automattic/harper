@@ -47,6 +47,7 @@ impl CommentParser {
             "toml" => tree_sitter_toml_ng::LANGUAGE,
             "typescriptreact" => tree_sitter_typescript::LANGUAGE_TSX,
             "typescript" => tree_sitter_typescript::LANGUAGE_TYPESCRIPT,
+            "clojure" => tree_sitter_clojure::LANGUAGE,
             _ => return None,
         };
 
@@ -106,6 +107,7 @@ impl CommentParser {
             "toml" => "toml",
             "ts" => "typescript",
             "tsx" => "typescriptreact",
+            "clj" | "cljs" | "cljc" | "bb" => "clojure",
             _ => return None,
         })
     }
