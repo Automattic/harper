@@ -5,6 +5,7 @@ import RenderBox from './RenderBox';
 import {
 	getCMRoot,
 	getDraftRoot,
+	getGutenbergRoot,
 	getLexicalRoot,
 	getMediumRoot,
 	getNotionRoot,
@@ -140,6 +141,7 @@ export default class Highlights {
 			getQuillJsRoot,
 			getLexicalRoot,
 			getP2Root,
+			getGutenbergRoot,
 			getTrixRoot,
 		];
 
