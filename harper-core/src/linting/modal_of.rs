@@ -2,7 +2,7 @@ use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
 use crate::patterns::ModalVerb;
-use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
+use crate::{Lrc, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
