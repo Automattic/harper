@@ -438,19 +438,40 @@ registerlinter module name:
   sed -i "/insert_expr_rule!(ChockFull, true);/a \ \ \ \ insert_struct_rule!({{name}}, true);" "$D/lint_group.rs"
   just format
 
-# Print affixes and their descriptions from annotations.json
-printaffixes:
+# Print annotations and their descriptions from annotations.json
+alias printaffixes := printannotations
+
+printannotations:
   #! /usr/bin/env node
   const affixesData = require('{{justfile_directory()}}/harper-core/annotations.json');
-  const allAffixes = {
+  const allEntries = {
     ...affixesData.affixes || {},
     ...affixesData.properties || {}
   };
-  Object.entries(allAffixes).sort((a, b) => a[0].localeCompare(b[0])).forEach(([affix, fields]) => {
+  Object.entries(allEntries).sort((a, b) => a[0].localeCompare(b[0])).forEach(([flag, fields]) => {
     const description = fields['#'] || '';
-    description && console.log(affix + ': ' + description);
+    const comment = fields['//'] || null;
+    // console.log('❤️', flag, description, comment);
+    description && console.log(flag + ': ' + description + (comment ? '\t\t// ' + comment : ''));
   });
 
+  console.log('Available letters for new flags:', [...Array.from({length: 26}, (_, i) => 
+    [String.fromCharCode(65 + i), String.fromCharCode(97 + i)]
+  ).flat()].filter(letter => !Object.keys(allEntries).includes(letter)).sort().join(' '));
+  console.log('Available digits for new flags:', [...Array.from({length: 10}, (_, i) => 
+    String(i)
+  )].filter(digit => !Object.keys(allEntries).includes(digit)).sort().join(' '));
+  console.log('Available symbols for new flags:',
+    [...Array.from('!"#$%&\'()*+,-./:;<=>?@\[\\\]\^_`{|}~')]
+  .filter(symbol => !Object.keys(allEntries).includes(symbol)).sort().join(' '));
+  console.log('Available Latin-1 characters for new flags:'); 
+  [...Array.from({length: 256-160}, (_, i) => String.fromCharCode(160 + i))]
+    .filter(char => !Object.keys(allEntries).includes(char) && char.charCodeAt(0) !== 160 && char.charCodeAt(0) !== 173)
+    .sort()
+    .join(' ')
+    .match(/.{1,64}/g)
+    .forEach(line => console.log('  ' + line));
+    
 # Get the most recent changes to the curated dictionary. Includes an optional argument to specify the number of commits to look back. Defaults to 1.
 newest-dict-changes *numCommits:
   #! /usr/bin/env node
