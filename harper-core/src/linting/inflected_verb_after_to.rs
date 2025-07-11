@@ -1,6 +1,6 @@
-use crate::{Dictionary, Document, Span, TokenStringExt};
-
 use super::{Lint, LintKind, Linter, Suggestion};
+use crate::spell::Dictionary;
+use crate::{Document, Span, TokenStringExt};
 
 pub struct InflectedVerbAfterTo<T>
 where
@@ -129,10 +129,8 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
 #[cfg(test)]
 mod tests {
     use super::InflectedVerbAfterTo;
-    use crate::{
-        FstDictionary,
-        linting::tests::{assert_lint_count, assert_suggestion_result},
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::spell::FstDictionary;
 
     #[test]
     fn dont_flag_to_check_both_verb_and_noun() {

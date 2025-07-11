@@ -1,3 +1,5 @@
+//! Adds support for parsing various programming and markup languages through a unified trait: [`Parser`].
+
 mod collapse_identifiers;
 mod isolate_english;
 mod markdown;

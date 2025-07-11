@@ -61,8 +61,9 @@ mod tests {
     use quickcheck_macros::quickcheck;
 
     use super::IgnoredLints;
+    use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document, FstDictionary,
+        Dialect, Document,
         linting::{LintGroup, Linter},
     };
 

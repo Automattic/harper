@@ -9,8 +9,9 @@
 //! Note: This test will fail if the snapshot files are not up to date. This
 //! ensures that CI will fail if linters change their behavior.
 
+use harper_core::spell::FstDictionary;
 use harper_core::{
-    Dialect, Document, FstDictionary,
+    Dialect, Document,
     linting::{LintGroup, Linter},
 };
 

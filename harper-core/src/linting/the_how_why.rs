@@ -18,13 +18,13 @@ impl Default for TheHowWhy {
             .t_aco("the")
             .then_whitespace()
             .t_aco("how")
-            .if_not_then_step_one(SequenceExpr::default().then_whitespace().t_aco("to"));
+            .then_unless(SequenceExpr::default().then_whitespace().t_aco("to"));
 
         let the_who = SequenceExpr::default()
             .t_aco("the")
             .then_whitespace()
             .t_aco("who")
-            .if_not_then_step_one(
+            .then_unless(
                 SequenceExpr::default()
                     .then_whitespace()
                     .t_aco("'s")
