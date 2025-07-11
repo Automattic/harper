@@ -573,3 +573,45 @@ newest-dict-changes *numCommits:
       });
     });
   });
+
+# Suggest annotations for a potential new property annotation
+suggestannotation input:
+  #! /usr/bin/env node
+  const affixesData = require('{{justfile_directory()}}/harper-core/annotations.json');
+  const allEntries = {
+    ...affixesData.affixes || {},
+    ...affixesData.properties || {}
+  };
+  
+  // Get all used flags
+  const usedFlags = new Set(Object.keys(allEntries));
+  
+  // Process input string and check both cases
+  const input = '{{input}}';
+  const normalizedInput = input.replace(/\s/g, '');
+  const uniqueChars = [...new Set(normalizedInput.toUpperCase() + normalizedInput.toLowerCase())];
+  
+  console.log(`Checking input: "${input}"\n${'='.repeat(50)}`);
+  
+  // Check each character in input
+  const availableChars = [...new Set(uniqueChars)]
+    .filter(char => !usedFlags.has(char));
+  
+  if (availableChars.length > 0) {
+    console.log(`These characters of "${input}" are available to use for new annotations:`);
+    availableChars.forEach(char => console.log(`  '${char}' (${char.charCodeAt(0)})`));
+  } else {
+    const inputChars = new Set(normalizedInput.toLowerCase() + normalizedInput.toUpperCase());
+    const renamable = Object.entries(allEntries)
+      .filter(([flag, entry]) => entry.rename_ok && inputChars.has(flag))
+      .sort((a, b) => a[0].localeCompare(b[0]));
+    
+    if (renamable.length > 0) {
+      console.log(`None of the characters of "${input}" are available to use for new annotations, but these ones are OK to be moved to make way for new annotations:`);
+      renamable.forEach(([flag, entry]) => {
+        console.log(`  '${flag}': ${entry['#'] || 'No description'}${entry['//'] ? ` (${entry['//']})` : ''}`);
+      });
+    } else {
+      console.log(`None of the characters of "${input}" are available to use for new annotations, and none of them are OK to be moved to make way for new annotations.`);
+    }
+  }
