@@ -5,6 +5,7 @@ use super::lint_group;
 // 1:1 tests
 
 // Ado
+
 #[test]
 fn corrects_further_ado() {
     assert_suggestion_result(
@@ -23,7 +24,9 @@ fn corrects_much_ado() {
     );
 }
 
-// ClientSide
+// ClientOrServerSide
+
+// -client's side-
 #[test]
 fn correct_clients_side() {
     assert_suggestion_result(
@@ -33,7 +36,7 @@ fn correct_clients_side() {
     );
 }
 
-// ServerSide
+// -server's side-
 #[test]
 fn correct_servers_side() {
     assert_suggestion_result(
@@ -44,6 +47,7 @@ fn correct_servers_side() {
 }
 
 // DefiniteArticle
+
 #[test]
 fn corrects_definite_article() {
     assert_suggestion_result(
@@ -71,6 +75,9 @@ fn corrects_definite_articles_lowercase() {
         ".. definite articles -та /-ta/ and -те /-te/ (postfixed in Bulgarian).",
     );
 }
+
+// Discuss
+// -none-
 
 // ExpandDependency
 // -none-
@@ -125,6 +132,7 @@ fn detect_explanation_point_real_world() {
 }
 
 // HaveGone
+
 #[test]
 fn correct_have_went() {
     assert_suggestion_result(
@@ -161,7 +169,8 @@ fn correct_has_went() {
     );
 }
 
-// Have Passed
+// HavePassed
+
 #[test]
 fn correct_has_past() {
     assert_suggestion_result(
@@ -199,6 +208,7 @@ fn correct_having_past() {
 }
 
 // HomeInOn
+
 #[test]
 fn correct_hone_in_on() {
     assert_suggestion_result(
@@ -236,6 +246,8 @@ fn correct_honed_in_on() {
 }
 
 // InDetail
+
+// -in details-
 fn in_detail_atomic() {
     assert_suggestion_result("in details", lint_group(), "in detail");
 }
@@ -249,7 +261,7 @@ fn in_detail_real_world() {
     )
 }
 
-// InMoreDetail
+// -in more details-
 #[test]
 fn in_more_detail_atomic() {
     assert_suggestion_result("in more details", lint_group(), "in more detail");
@@ -265,6 +277,7 @@ fn in_more_detail_real_world() {
 }
 
 // InvestIn
+
 #[test]
 fn corrects_invest_into() {
     assert_suggestion_result(
@@ -302,15 +315,15 @@ fn corrects_invests_into() {
 }
 
 // MootPoint
-// -none-
 
-// PointIsMoot
+// -point is mute-
 #[test]
 fn point_is_moot() {
     assert_suggestion_result("Your point is mute.", lint_group(), "Your point is moot.");
 }
 
 // OperatingSystem
+
 #[test]
 fn operative_system() {
     assert_suggestion_result(
@@ -399,7 +412,108 @@ fn changes_of_tact_real_world() {
     );
 }
 
-// WhatItLooksLike
+// GetRidOf
+
+#[test]
+fn get_rid_off() {
+    assert_suggestion_result(
+        "Please bump axios version to get rid off npm warning #624",
+        lint_group(),
+        "Please bump axios version to get rid of npm warning #624",
+    );
+}
+
+#[test]
+fn gets_rid_off() {
+    assert_suggestion_result(
+        "Adding at as a runtime dependency gets rid off that error",
+        lint_group(),
+        "Adding at as a runtime dependency gets rid of that error",
+    );
+}
+
+#[test]
+fn getting_rid_off() {
+    assert_suggestion_result(
+        "getting rid off of all the complexity of the different accesses method of API service providers",
+        lint_group(),
+        "getting rid of of all the complexity of the different accesses method of API service providers",
+    );
+}
+
+#[test]
+fn got_rid_off() {
+    assert_suggestion_result(
+        "For now we got rid off circular deps in model tree structure and it's API.",
+        lint_group(),
+        "For now we got rid of circular dependencies in model tree structure and it's API.",
+    );
+}
+
+#[test]
+fn gotten_rid_off() {
+    assert_suggestion_result(
+        "The baX variable thingy I have gotten rid off, that was due to a bad character in the encryption key.",
+        lint_group(),
+        "The baX variable thingy I have gotten rid of, that was due to a bad character in the encryption key.",
+    );
+}
+
+#[test]
+fn get_ride_of() {
+    assert_suggestion_result(
+        "Get ride of \"WARNING Deprecated: markdown_github. Use gfm\"",
+        lint_group(),
+        "Get rid of \"WARNING Deprecated: markdown_github. Use gfm\"",
+    );
+}
+
+#[test]
+fn get_ride_off() {
+    assert_suggestion_result(
+        "This exact hack was what I trying to get ride off. ",
+        lint_group(),
+        "This exact hack was what I trying to get rid of. ",
+    );
+}
+
+#[test]
+fn getting_ride_of() {
+    assert_suggestion_result(
+        "If you have any idea how to fix this without getting ride of bootstrap I would be thankfull.",
+        lint_group(),
+        "If you have any idea how to fix this without getting rid of bootstrap I would be thankfull.",
+    );
+}
+
+#[test]
+fn gets_ride_of() {
+    assert_suggestion_result(
+        ".. gets ride of a central back-end/server and eliminates all the risks associated to it.",
+        lint_group(),
+        ".. gets rid of a central back-end/server and eliminates all the risks associated to it.",
+    );
+}
+
+#[test]
+fn gotten_ride_of() {
+    assert_suggestion_result(
+        "I have gotten ride of the react-table and everything works just fine.",
+        lint_group(),
+        "I have gotten rid of the react-table and everything works just fine.",
+    );
+}
+
+#[test]
+fn got_ride_of() {
+    assert_suggestion_result(
+        "I had to adjust the labels on the free version because you guys got ride of ...",
+        lint_group(),
+        "I had to adjust the labels on the free version because you guys got rid of ...",
+    );
+}
+
+// HowItLooksLike
 
 #[test]
 fn correct_how_it_looks_like_1() {
@@ -505,104 +619,25 @@ fn correct_how_it_looks_like_with_apostrophe() {
     );
 }
 
-// GetRidOf
+// RaiseTheQuestion
 
+// -raise the question-
 #[test]
-fn get_rid_off() {
+fn detect_raise_the_question() {
     assert_suggestion_result(
-        "Please bump axios version to get rid off npm warning #624",
+        "That would rise the question how to deal with syntax errors etc.",
         lint_group(),
-        "Please bump axios version to get rid of npm warning #624",
+        "That would raise the question how to deal with syntax errors etc.",
     );
 }
 
+// -raises the question-
 #[test]
-fn gets_rid_off() {
+fn detect_raises_the_question() {
     assert_suggestion_result(
-        "Adding at as a runtime dependency gets rid off that error",
+        "However, this rises the question as to whether this test is conceptually sound.",
         lint_group(),
-        "Adding at as a runtime dependency gets rid of that error",
-    );
-}
-
-#[test]
-fn getting_rid_off() {
-    assert_suggestion_result(
-        "getting rid off of all the complexity of the different accesses method of API service providers",
-        lint_group(),
-        "getting rid of of all the complexity of the different accesses method of API service providers",
-    );
-}
-
-#[test]
-fn got_rid_off() {
-    assert_suggestion_result(
-        "For now we got rid off circular deps in model tree structure and it's API.",
-        lint_group(),
-        "For now we got rid of circular dependencies in model tree structure and it's API.",
-    );
-}
-
-#[test]
-fn gotten_rid_off() {
-    assert_suggestion_result(
-        "The baX variable thingy I have gotten rid off, that was due to a bad character in the encryption key.",
-        lint_group(),
-        "The baX variable thingy I have gotten rid of, that was due to a bad character in the encryption key.",
-    );
-}
-
-#[test]
-fn get_ride_of() {
-    assert_suggestion_result(
-        "Get ride of \"WARNING Deprecated: markdown_github. Use gfm\"",
-        lint_group(),
-        "Get rid of \"WARNING Deprecated: markdown_github. Use gfm\"",
-    );
-}
-
-#[test]
-fn get_ride_off() {
-    assert_suggestion_result(
-        "This exact hack was what I trying to get ride off. ",
-        lint_group(),
-        "This exact hack was what I trying to get rid of. ",
-    );
-}
-
-#[test]
-fn getting_ride_of() {
-    assert_suggestion_result(
-        "If you have any idea how to fix this without getting ride of bootstrap I would be thankfull.",
-        lint_group(),
-        "If you have any idea how to fix this without getting rid of bootstrap I would be thankfull.",
-    );
-}
-
-#[test]
-fn gets_ride_of() {
-    assert_suggestion_result(
-        ".. gets ride of a central back-end/server and eliminates all the risks associated to it.",
-        lint_group(),
-        ".. gets rid of a central back-end/server and eliminates all the risks associated to it.",
-    );
-}
-
-#[test]
-fn gotten_ride_of() {
-    assert_suggestion_result(
-        "I have gotten ride of the react-table and everything works just fine.",
-        lint_group(),
-        "I have gotten rid of the react-table and everything works just fine.",
-    );
-}
-
-#[test]
-fn got_ride_of() {
-    assert_suggestion_result(
-        "I had to adjust the labels on the free version because you guys got ride of ...",
-        lint_group(),
-        "I had to adjust the labels on the free version because you guys got rid of ...",
+        "However, this raises the question as to whether this test is conceptually sound.",
     );
 }
 

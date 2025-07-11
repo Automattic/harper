@@ -229,6 +229,15 @@ pub fn lint_group() -> LintGroup {
             "Don't use both `how` and `like` together to express similarity.",
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
         ),
+        "RiseTheQuestion" => (
+            &[
+                (&["rise the question"], &["raise the question"]),
+                (&["rises the question"], &["raises the question"]),
+
+            ],
+            "Use `raise` instead of `rise` when referring to the act of asking a question.",
+            "Corrects `rise the question` to `raise the question`."
+        ),
         "WholeEntire" => (
             &[
                 (&["whole entire"], &["whole", "entire"]),

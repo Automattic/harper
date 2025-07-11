@@ -232,12 +232,6 @@ pub fn lint_group() -> LintGroup {
             "Use the hyphenated form for `case-sensitive`.",
             "Ensures `case-sensitive` is correctly hyphenated."
         ),
-        "ChockFull" => (
-            ["chock full"],
-            ["chock-full"],
-            "Use the hyphenated form for `chock-full`.",
-            "Ensures `chock-full` is correctly hyphenated."
-        ),
         "CondenseAllThe" => (
             ["all of the"],
             ["all the"],
@@ -471,11 +465,11 @@ pub fn lint_group() -> LintGroup {
             "`I` pairs with the bare verb `do`; the –s inflection `does` is reserved for third-person singular subjects.",
             "Corrects `I does` to `I do`."
         ),
-        "InAndOfItself" => (
+        "InOfItself" => (
             ["in of itself"],
-            ["in and of itself"],
-            "Use `in and of itself` for referring to something's inherent or intrinsic quality.",
-            "Corrects nonstandard `in of itself` to standard `in and of itself`."
+            ["in itself", "in and of itself"],
+            "Use `in itself` (more common) or `in and of itself` (more formal) to mean 'intrinsically'.",
+            "Corrects nonstandard `in of itself` to standard `in itself` or `in and of itself`."
         ),
         "InAnyWay" => (
             ["in anyway"],

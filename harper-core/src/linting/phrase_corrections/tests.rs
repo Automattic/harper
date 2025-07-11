@@ -237,9 +237,6 @@ fn correct_case_and_point_spaced() {
 // CaseSensitive
 // -none-
 
-// ChockFull
-// -none-
-
 // CondenseAllThe
 // -none-
 
@@ -276,9 +273,6 @@ fn does_not_flag_other_contexts() {
 
 // DayAndAge
 // -none
-
-// Discuss
-// -none-
 
 // DoNotWant
 #[test]
@@ -578,12 +572,12 @@ fn corrects_i_does() {
 // InAndOfItself
 #[test]
 fn detect_atomic_in_of_itself() {
-    assert_suggestion_result("in of itself", lint_group(), "in and of itself");
+    assert_top3_suggestion_result("in of itself", lint_group(), "in and of itself");
 }
 
 #[test]
 fn correct_real_world_in_of_itself() {
-    assert_suggestion_result(
+    assert_top3_suggestion_result(
         "This is not entirely unexpected in of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently...",
         lint_group(),
         "This is not entirely unexpected in and of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently...",
