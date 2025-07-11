@@ -1,7 +1,8 @@
 use std::sync::Arc;
 
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::{CharStringExt, Dictionary, Document, FstDictionary, Span, TokenKind, TokenStringExt};
+use crate::spell::{Dictionary, FstDictionary};
+use crate::{CharStringExt, Document, Span, TokenKind, TokenStringExt};
 
 /// Detect phrasal verbs written as compound nouns.
 pub struct PhrasalVerbAsCompoundNoun {

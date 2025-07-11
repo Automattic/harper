@@ -1,5 +1,6 @@
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::{Dialect, Document, FstDictionary};
+use harper_core::spell::FstDictionary;
+use harper_core::{Dialect, Document};
 use harper_typst::Typst;
 
 /// Creates a unit test checking that the linting of a document in

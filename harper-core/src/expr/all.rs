@@ -1,7 +1,8 @@
 use crate::{Span, Token, expr::Expr};
 
-/// A [`Step`] that consumes a list of expressions and only
-/// matches if all the child [`Expr`]s do.
+/// An [`Expr`] that matches against tokens if and only if all of its children do.
+/// This can be useful for situations where you have multiple expressions that represent a grammatical
+/// error, but you need _all_ of them to match to be certain.
 ///
 /// It will return the position of the farthest window.
 #[derive(Default)]

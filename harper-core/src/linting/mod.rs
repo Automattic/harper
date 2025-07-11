@@ -57,6 +57,7 @@ mod lint_group;
 mod lint_kind;
 mod long_sentences;
 mod map_phrase_linter;
+mod map_phrase_set_linter;
 mod merge_linters;
 mod merge_words;
 mod modal_of;
@@ -78,6 +79,7 @@ mod oxford_comma;
 mod oxymorons;
 mod phrasal_verb_as_compound_noun;
 mod phrase_corrections;
+mod phrase_set_corrections;
 mod pique_interest;
 mod possessive_noun;
 mod possessive_your;
@@ -85,6 +87,7 @@ mod pronoun_contraction;
 mod pronoun_inflection_be;
 mod pronoun_knew;
 mod proper_noun_capitalization_linters;
+mod redundant_additive_adverbs;
 mod regionalisms;
 mod repeated_words;
 mod save_to_safe;
@@ -161,6 +164,7 @@ pub use lint_group::{LintGroup, LintGroupConfig};
 pub use lint_kind::LintKind;
 pub use long_sentences::LongSentences;
 pub use map_phrase_linter::MapPhraseLinter;
+pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use merge_words::MergeWords;
 pub use modal_of::ModalOf;
 pub use most_number::MostNumber;
@@ -183,6 +187,7 @@ pub use possessive_noun::PossessiveNoun;
 pub use possessive_your::PossessiveYour;
 pub use pronoun_contraction::PronounContraction;
 pub use pronoun_inflection_be::PronounInflectionBe;
+pub use redundant_additive_adverbs::RedundantAdditiveAdverbs;
 pub use regionalisms::Regionalisms;
 pub use repeated_words::RepeatedWords;
 pub use save_to_safe::SaveToSafe;
@@ -215,7 +220,7 @@ use crate::{Document, LSend, render_markdown};
 
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
-/// Commonly implemented via [`PatternLinter`].
+/// Commonly implemented via [`ExprLinter`].
 ///
 /// See also: [`LintGroup`].
 pub trait Linter: LSend {
@@ -247,7 +252,8 @@ pub mod tests {
     use hashbrown::HashSet;
 
     use super::Linter;
-    use crate::{Document, FstDictionary, parsers::PlainEnglish};
+    use crate::spell::FstDictionary;
+    use crate::{Document, parsers::PlainEnglish};
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, mut linter: impl Linter) {

@@ -1,7 +1,8 @@
 use std::{borrow::Cow, io::Read, path::PathBuf};
 
+use harper_core::spell::Dictionary;
 use harper_core::{
-    Dictionary, Document,
+    Document,
     parsers::{MarkdownOptions, PlainEnglish},
 };
 
