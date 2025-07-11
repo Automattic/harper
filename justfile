@@ -451,7 +451,6 @@ printannotations:
   Object.entries(allEntries).sort((a, b) => a[0].localeCompare(b[0])).forEach(([flag, fields]) => {
     const description = fields['#'] || '';
     const comment = fields['//'] || null;
-    // console.log('❤️', flag, description, comment);
     description && console.log(flag + ': ' + description + (comment ? '\t\t// ' + comment : ''));
   });
 
