@@ -11,7 +11,7 @@ use super::{Lint, Linter};
 /// boundaries.
 #[blanket(derive(Box))]
 pub trait ExprLinter: LSend {
-    /// A simple getter for the pattern to be searched for.
+    /// A simple getter for the expression you want Harper to search for.
     fn expr(&self) -> &dyn Expr;
     /// If any portions of a [`Document`] match [`Self::expr`], they are passed through [`ExprLinter::match_to_lint`] to be
     /// transformed into a [`Lint`] for editor consumption.

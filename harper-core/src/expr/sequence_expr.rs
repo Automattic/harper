@@ -23,6 +23,13 @@ macro_rules! gen_then_from_is {
                 })
             }
 
+            #[doc = concat!("Adds an optional step matching a token where [`TokenKind::is_", stringify!($quality), "()`] returns true.")]
+            pub fn [< then_optional_$quality >] (self) -> Self{
+                self.then_optional(|tok: &Token, _source: &[char]| {
+                    tok.kind.[< is_$quality >]()
+                })
+            }
+
             #[doc = concat!("Adds a step matching one or more consecutive tokens where [`TokenKind::is_", stringify!($quality), "()`] returns true.")]
             pub fn [< then_one_or_more_$quality s >] (self) -> Self{
                 self.then_one_or_more(Box::new(|tok: &Token, _source: &[char]| {
