@@ -7,7 +7,7 @@
 > We   the People of the United States   , in      Order  to form  a   more      perfect  Union   ,
 # IPl+ D   NSg/V  P  D+  V/J+   NPrPl/V+ . NPr/J/P NSg/V+ P  NSg/V D/P NPr/I/V/J NSg/V/J+ NPr/V/J .
 > establish Justice , insure domestic Tranquility , provide for the common   defence   ,
-# V         NPr+    . V      NSg/J+   NSg         . V       C/P D+  NSg/V/J+ NSg/Comm+ .
+# V         NPr🅪+   . V      NSg/J+   NSg         . V       C/P D+  NSg/V/J+ NSg/Comm+ .
 > promote the general  Welfare , and secure the Blessings of Liberty to ourselves
 # NSg/V   D+  NSg/V/J+ NSg/V+  . V/C V/J    D   W?        P  NSg+    P  IPl+
 > and our Posterity , do     ordain and establish this    Constitution for the United
@@ -55,7 +55,7 @@
 > enemies thereof . But     Congress may    , by      a   vote  of two - thirds of each House  ,
 # NPl/V+  +       . NSg/C/P NPr/V+   NPr/VX . NSg/J/P D/P NSg/V P  NSg . NPl/V  P  D+   NPr/V+ .
 > remove such   disability .
-# NSg/V  NSg/I+ NSg+       .
+# NSg/V  NSg/I+ N🅪Sg+      .
 >
 #
 > The terms of Senators and Representatives shall end   at    noon  on  the 3 d      day  of
@@ -209,7 +209,7 @@
 > that          Purpose , they shall be     on  Oath  or    Affirmation . When    the President of the
 # NSg/I/C/Ddem+ NSg/V+  . IPl+ VX    NSg/VX J/P NSg/V NPr/C NSg         . NSg/I/C D   NSg/V     P  D+
 > United States   is tried , the Chief    Justice shall preside : And no     Person shall be
-# V/J+   NPrPl/V+ VL V/J   . D+  NSg/V/J+ NPr+    VX    V       . V/C NPr/P+ NSg/V+ VX    NSg/VX
+# V/J+   NPrPl/V+ VL V/J   . D+  NSg/V/J+ NPr🅪+   VX    V       . V/C NPr/P+ NSg/V+ VX    NSg/VX
 > convicted without the Concurrence of two thirds of the Members present .
 # V/J       C/P     D   NSg         P  NSg NPl/V  P  D+  NPl/V+  NSg/V/J .
 >
@@ -913,7 +913,7 @@
 > Senate and the Speaker of the House of Representatives his     written declaration
 # NPr+   V/C D   NSg/J   P  D   NPr/V P  NPl+            ISg/D$+ V/J     NSg+
 > that         no     inability exists , he       shall resume the powers  and duties of his     office
-# NSg/I/C/Ddem NPr/P+ NSg+      V      . NPr/ISg+ VX    NSg/V  D+  NPrPl/V V/C NPl    P  ISg/D$+ NSg/V+
+# NSg/I/C/Ddem NPr/P+ N🅪Sg+     V      . NPr/ISg+ VX    NSg/V  D+  NPrPl/V V/C NPl    P  ISg/D$+ NSg/V+
 > unless the Vice       President and a   majority of either the principal officers of
 # C      D+  NSg/V/J/P+ NSg/V+    V/C D/P NSg      P  I/C    D   NSg/J     NPl/V    P
 > the executive department or    of such  other    body   as    Congress may    by      law    provide ,
@@ -965,7 +965,7 @@
 > execute the Office of President of the United States   , and will   to the best     of
 # V       D   NSg/V  P  NSg/V     P  D+  V/J+   NPrPl/V+ . V/C NPr/VX P  D   NPr/VX/J P
 > my  Ability , preserve , protect and defend the Constitution of the United
-# D$+ NSg+    . NSg/V    . V       V/C NSg/V  D   NPr          P  D+  V/J+
+# D$+ N🅪Sg+   . NSg/V    . V       V/C NSg/V  D   NPr          P  D+  V/J+
 > States  . "
 # NPrPl/V . .
 >
@@ -1291,7 +1291,7 @@
 > A    Person charged in      any   State with Treason , Felony , or    other    Crime  , who    shall
 # D/P+ NSg/V+ V/J     NPr/J/P I/R/D NSg/V P    NSg     . NSg    . NPr/C NSg/V/J+ NSg/V+ . NPr/I+ VX
 > flee from Justice , and be     found in      another State  , shall on  Demand of the
-# V    P    NPr+    . V/C NSg/VX NSg/V NPr/J/P I/D+    NSg/V+ . VX    J/P NSg/V  P  D
+# V    P    NPr🅪+   . V/C NSg/VX NSg/V NPr/J/P I/D+    NSg/V+ . VX    J/P NSg/V  P  D
 > executive Authority of the State  from which he       fled , be     delivered up        , to be
 # NSg/J     NSg       P  D+  NSg/V+ P    I/C+  NPr/ISg+ J    . NSg/VX V/J       NSg/V/J/P . P  NSg/VX
 > removed to the State  having Jurisdiction of the Crime  .
