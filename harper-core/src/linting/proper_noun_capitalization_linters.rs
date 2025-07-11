@@ -4,8 +4,9 @@ use serde::{Deserialize, Serialize};
 
 use super::{ExprLinter, LintGroup};
 use super::{Lint, LintKind, Suggestion};
+use crate::Document;
 use crate::parsers::PlainEnglish;
-use crate::{Dictionary, Document};
+use crate::spell::Dictionary;
 use crate::{Token, TokenStringExt};
 use std::sync::Arc;
 
@@ -137,12 +138,9 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        FstDictionary,
-        linting::tests::{assert_lint_count, assert_suggestion_result},
-    };
-
     use super::lint_group;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::spell::FstDictionary;
 
     #[test]
     fn americas_lowercase() {

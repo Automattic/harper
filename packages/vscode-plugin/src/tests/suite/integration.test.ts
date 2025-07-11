@@ -35,15 +35,15 @@ describe('Integration >', () => {
 			await waitForDiagnosticsChange(markdownUri),
 			createExpectedDiagnostics(
 				{
-					message: 'Did you mean to repeat this word?',
-					range: createRange(2, 39, 2, 48),
-				},
-				{
 					message: 'Did you mean to spell `errorz` this way?',
 					range: createRange(2, 26, 2, 32),
 				},
 				{
-					message: 'Did you mean `realize`?',
+					message: 'Did you mean to repeat this word?',
+					range: createRange(2, 39, 2, 48),
+				},
+				{
+					message: 'Did you mean to spell `realise` this way?',
 					range: createRange(4, 26, 4, 33),
 				},
 			),
@@ -108,7 +108,7 @@ describe('Integration >', () => {
 					range: createRange(2, 26, 2, 32),
 				},
 				{
-					message: 'Did you mean `realize`?',
+					message: 'Did you mean to spell `realise` this way?',
 					range: createRange(4, 26, 4, 33),
 				},
 			),
@@ -131,12 +131,12 @@ describe('Integration >', () => {
 			),
 			createExpectedDiagnostics(
 				{
-					message: 'Did you mean to repeat this word?',
-					range: createRange(2, 39, 2, 48),
-				},
-				{
 					message: 'Did you mean to spell `errorz` this way?',
 					range: createRange(2, 26, 2, 32),
+				},
+				{
+					message: 'Did you mean to repeat this word?',
+					range: createRange(2, 39, 2, 48),
 				},
 			),
 		);

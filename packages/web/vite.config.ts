@@ -68,6 +68,10 @@ export default defineConfig({
 									to: '/docs/integrations/chrome-extension',
 								},
 								{
+									title: 'Firefox Extension',
+									to: '/docs/integrations/firefox-extension',
+								},
+								{
 									title: 'WordPress',
 									to: '/docs/integrations/wordpress',
 								},
@@ -198,6 +202,10 @@ export default defineConfig({
 									to: '/docs/contributors/faq',
 								},
 							],
+						},
+						{
+							title: 'Rust Reference',
+							to: 'https://docs.rs/harper-core/latest/harper_core/',
 						},
 						{
 							title: 'Rules',

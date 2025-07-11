@@ -67,8 +67,8 @@ Message: |
          |                    ^~ Did you mean to spell `NN` this way?
 Suggest:
   - Replace with: “Nun”
-  - Replace with: “N”
   - Replace with: “Non”
+  - Replace with: “N1”
 
 
 
@@ -162,6 +162,16 @@ Suggest:
   - Replace with: “Freeman”
   - Replace with: “Reembark”
   - Replace with: “Debank”
+
+
+
+Lint:    Miscellaneous (10 priority)
+Message: |
+      65 | the earlier Brown Corpus and LOB Corpus tag sets, though much smaller. In
+      66 | Europe, tag sets from the Eagles Guidelines see wide use and include versions
+         |                           ^~~~~~ Use an apostrophe and `s` to form a noun’s possessive.
+Suggest:
+  - Replace with: “Eagle's”
 
 
 
@@ -434,8 +444,8 @@ Message: |
          |                                           ^~~~~~~~ Did you mean to spell `analyses` this way?
      167 | probabilities, and other related data, and replicated his work for Greek, where
 Suggest:
-  - Replace with: “analysis”
   - Replace with: “analyzes”
+  - Replace with: “analysis”
   - Replace with: “analysts”
 
 
@@ -494,10 +504,12 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also
-         |                                                           ^~~~~ Did you mean `Welsh`?
+         |                                                           ^~~~~ Did you mean to spell `Welch` this way?
      202 | known as the forward-backward algorithm). Hidden Markov model and visible Markov
 Suggest:
   - Replace with: “Welsh”
+  - Replace with: “Belch”
+  - Replace with: “Walsh”
 
 
 
@@ -518,7 +530,7 @@ Message: |
          |                          ^~~ Did you mean to spell `SVM` this way?
 Suggest:
   - Replace with: “Sim”
-  - Replace with: “Sam”
+  - Replace with: “SAM”
   - Replace with: “SCM”
 
 

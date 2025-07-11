@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
@@ -16,13 +17,18 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    remove_overlaps, CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
-    MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
+    CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
 use harper_stats::Stats;
 use serde::Serialize;
+
+mod input;
+use input::Input;
+
+mod annotate_tokens;
+use annotate_tokens::{Annotation, AnnotationType};
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Debug, Parser)]
@@ -30,16 +36,21 @@ use serde::Serialize;
 enum Args {
     /// Lint a provided document.
     Lint {
-        /// The file you wish to grammar check.
-        file: PathBuf,
+        /// The text or file you wish to grammar check. If not provided, it will be read from
+        /// standard input.
+        input: Option<Input>,
         /// Whether to merely print out the number of errors encountered,
         /// without further details.
         #[arg(short, long)]
         count: bool,
         /// Restrict linting to only a specific set of rules.
         /// If omitted, `harper-cli` will run every rule.
-        #[arg(short, long, value_delimiter = ',')]
-        only_lint_with: Option<Vec<String>>,
+        #[arg(long, value_delimiter = ',')]
+        ignore: Option<Vec<String>>,
+        /// Restrict linting to only a specific set of rules.
+        /// If omitted, `harper-cli` will run every rule.
+        #[arg(long, value_delimiter = ',')]
+        only: Option<Vec<String>>,
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]
         dialect: Dialect,
@@ -52,16 +63,27 @@ enum Args {
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
-        /// The file you wish to parse.
-        file: PathBuf,
+        /// The text or file you wish to parse. If not provided, it will be read from standard
+        /// input.
+        input: Option<Input>,
     },
     /// Parse a provided document and show the spans of the detected tokens.
     Spans {
-        /// The file you wish to display the spans.
-        file: PathBuf,
+        /// The file or text for which you wish to display the spans. If not provided, it will be
+        /// read from standard input.
+        input: Option<Input>,
         /// Include newlines in the output
         #[arg(short, long)]
         include_newlines: bool,
+    },
+    /// Parse a provided document and annotate its tokens.
+    AnnotateTokens {
+        /// The text or file you wish to parse. If not provided, it will be read from standard
+        /// input.
+        input: Option<Input>,
+        /// How the tokens should be annotated.
+        #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
+        annotation_type: AnnotationType,
     },
     /// Get the metadata associated with a particular word.
     Metadata { word: String },
@@ -145,36 +167,51 @@ fn main() -> anyhow::Result<()> {
 
     match args {
         Args::Lint {
-            file,
+            input,
             count,
-            only_lint_with,
+            ignore,
+            only,
             dialect,
             user_dict_path,
             file_dict_path,
         } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
             let mut merged_dict = MergedDictionary::new();
             merged_dict.add_dictionary(dictionary);
 
+            // Attempt to load user dictionary.
             match load_dict(&user_dict_path) {
                 Ok(user_dict) => merged_dict.add_dictionary(Arc::new(user_dict)),
                 Err(err) => println!("{}: {}", user_dict_path.display(), err),
             }
 
-            let file_dict_path = file_dict_path.join(file_dict_name(&file));
-            match load_dict(&file_dict_path) {
-                Ok(file_dict) => merged_dict.add_dictionary(Arc::new(file_dict)),
-                Err(err) => println!("{}: {}", file_dict_path.display(), err),
+            if let Input::File(ref file) = input {
+                // Only attempt to load file dictionary if input is a file.
+                let file_dict_path = file_dict_path.join(file_dict_name(file));
+                match load_dict(&file_dict_path) {
+                    Ok(file_dict) => merged_dict.add_dictionary(Arc::new(file_dict)),
+                    Err(err) => println!("{}: {}", file_dict_path.display(), err),
+                }
             }
 
-            let (doc, source) = load_file(&file, markdown_options, &merged_dict)?;
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &merged_dict)?;
 
             let mut linter = LintGroup::new_curated(Arc::new(merged_dict), dialect);
 
-            if let Some(rules) = only_lint_with {
+            if let Some(rules) = only {
                 linter.set_all_rules_to(Some(false));
 
                 for rule in rules {
                     linter.config.set_rule_enabled(rule, true);
+                }
+            }
+
+            if let Some(rules) = ignore {
+                for rule in rules {
+                    linter.config.set_rule_enabled(rule, false);
                 }
             }
 
@@ -194,52 +231,57 @@ fn main() -> anyhow::Result<()> {
 
             let primary_color = Color::Magenta;
 
-            let filename = file
-                .file_name()
-                .map(|s| s.to_string_lossy().into())
-                .unwrap_or("<file>".to_string());
+            let input_identifier = input.get_identifier();
 
-            let mut report_builder = Report::build(ReportKind::Advice, &filename, 0);
+            let mut report_builder = Report::build(ReportKind::Advice, &input_identifier, 0);
 
             for lint in lints {
                 report_builder = report_builder.with_label(
-                    Label::new((&filename, lint.span.into()))
+                    Label::new((&input_identifier, lint.span.into()))
                         .with_message(lint.message)
                         .with_color(primary_color),
                 );
             }
 
             let report = report_builder.finish();
-            report.print((&filename, Source::from(source)))?;
+            report.print((&input_identifier, Source::from(source)))?;
 
             process::exit(1)
         }
-        Args::Parse { file } => {
-            let (doc, _) = load_file(&file, markdown_options, &dictionary)?;
+        Args::Parse { input } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, _) = input.load(markdown_options, &dictionary)?;
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
-                println!("{}", json);
+                println!("{json}");
             }
 
             Ok(())
         }
         Args::Spans {
-            file,
+            input,
             include_newlines,
         } => {
-            let (doc, source) = load_file(&file, markdown_options, &dictionary)?;
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &dictionary)?;
 
             let primary_color = Color::Blue;
             let secondary_color = Color::Magenta;
             let unlintable_color = Color::Red;
-            let filename = file
-                .file_name()
-                .map(|s| s.to_string_lossy().into())
-                .unwrap_or("<file>".to_string());
+            let input_identifier = input.get_identifier();
 
-            let mut report_builder =
-                Report::build(ReportKind::Custom("Spans", primary_color), &filename, 0);
+            let mut report_builder = Report::build(
+                ReportKind::Custom("Spans", primary_color),
+                &input_identifier,
+                0,
+            );
             let mut color = primary_color;
 
             for token in doc.tokens().filter(|t| {
@@ -247,7 +289,7 @@ fn main() -> anyhow::Result<()> {
                     || !matches!(t.kind, TokenKind::Newline(_) | TokenKind::ParagraphBreak)
             }) {
                 report_builder = report_builder.with_label(
-                    Label::new((&filename, token.span.into()))
+                    Label::new((&input_identifier, token.span.into()))
                         .with_message(format!("[{}, {})", token.span.start, token.span.end))
                         .with_color(if matches!(token.kind, TokenKind::Unlintable) {
                             unlintable_color
@@ -265,7 +307,36 @@ fn main() -> anyhow::Result<()> {
             }
 
             let report = report_builder.finish();
-            report.print((&filename, Source::from(source)))?;
+            report.print((&input_identifier, Source::from(source)))?;
+
+            Ok(())
+        }
+        Args::AnnotateTokens {
+            input,
+            annotation_type,
+        } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &dictionary)?;
+
+            let input_identifier = input.get_identifier();
+
+            let mut report_builder = Report::build(
+                ReportKind::Custom("AnnotateTokens", Color::Blue),
+                &*input_identifier,
+                0,
+            );
+
+            report_builder = report_builder.with_labels(Annotation::iter_labels_from_document(
+                annotation_type,
+                &doc,
+                &input_identifier,
+            ));
+
+            let report = report_builder.finish();
+            report.print((&*input_identifier, Source::from(source)))?;
 
             Ok(())
         }
@@ -276,7 +347,7 @@ fn main() -> anyhow::Result<()> {
                 word_str.clear();
                 word_str.extend(word);
 
-                println!("{:?}", word_str);
+                println!("{word_str:?}");
             }
 
             Ok(())
@@ -320,14 +391,10 @@ fn main() -> anyhow::Result<()> {
             let summary = match &entry_in_dict {
                 Some((dict_word, dict_annot)) => {
                     let mut status_summary = if dict_annot.is_empty() {
-                        format!(
-                            "'{}' is already in the dictionary but not annotated.",
-                            dict_word
-                        )
+                        format!("'{dict_word}' is already in the dictionary but not annotated.")
                     } else {
                         format!(
-                            "'{}' is already in the dictionary with annotation `{}`.",
-                            dict_word, dict_annot
+                            "'{dict_word}' is already in the dictionary with annotation `{dict_annot}`."
                         )
                     };
 
@@ -343,7 +410,7 @@ fn main() -> anyhow::Result<()> {
 
                     status_summary
                 }
-                None => format!("'{}' is not in the dictionary yet.", word),
+                None => format!("'{word}' is not in the dictionary yet."),
             };
 
             println!("{summary}");
@@ -357,7 +424,7 @@ fn main() -> anyhow::Result<()> {
                 let rune_words = format!("1\n{line}");
                 let dict = MutableDictionary::from_rune_files(
                     &rune_words,
-                    include_str!("../../harper-core/affixes.json"),
+                    include_str!("../../harper-core/annotations.json"),
                 )?;
 
                 println!("New, from you:");
@@ -465,7 +532,7 @@ fn main() -> anyhow::Result<()> {
             use serde_json::Value;
 
             let dict_path = dir.join("dictionary.dict");
-            let affixes_path = dir.join("affixes.json");
+            let affixes_path = dir.join("annotations.json");
 
             // Validate old and new flags are exactly one Unicode code point (Rust char)
             // And not characters used for the dictionary format
@@ -487,21 +554,27 @@ fn main() -> anyhow::Result<()> {
 
             // Load and parse affixes
             let affixes_string = fs::read_to_string(&affixes_path)
-                .map_err(|e| anyhow!("Failed to read affixes.json: {e}"))?;
+                .map_err(|e| anyhow!("Failed to read annotations.json: {e}"))?;
 
-            let mut affixes_json: Value = serde_json::from_str(&affixes_string)
-                .map_err(|e| anyhow!("Failed to parse affixes.json: {e}"))?;
+            let affixes_json: Value = serde_json::from_str(&affixes_string)
+                .map_err(|e| anyhow!("Failed to parse annotations.json: {e}"))?;
 
             // Get the nested "affixes" object
-            let affixes_obj = affixes_json
-                .get_mut("affixes")
-                .and_then(Value::as_object_mut)
-                .ok_or_else(|| anyhow!("affixes.json does not contain 'affixes' object"))?;
+            let affixes_obj = &affixes_json
+                .get("affixes")
+                .and_then(Value::as_object)
+                .ok_or_else(|| anyhow!("annotations.json does not contain 'affixes' object"))?;
+
+            let properties_obj = &affixes_json
+                .get("properties")
+                .and_then(Value::as_object)
+                .ok_or_else(|| anyhow!("annotations.json does not contain 'properties' object"))?;
 
             // Validate old flag exists and get its description
             let old_entry = affixes_obj
                 .get(&old)
-                .ok_or_else(|| anyhow!("Flag '{old}' not found in affixes.json"))?;
+                .or_else(|| properties_obj.get(&old))
+                .ok_or_else(|| anyhow!("Flag '{old}' not found in annotations.json"))?;
 
             let description = old_entry
                 .get("#")
@@ -511,7 +584,7 @@ fn main() -> anyhow::Result<()> {
             println!("Renaming flag '{old}' ({description})");
 
             // Validate new flag doesn't exist
-            if let Some(new_entry) = affixes_obj.get(&new) {
+            if let Some(new_entry) = affixes_obj.get(&new).or_else(|| properties_obj.get(&new)) {
                 let new_desc = new_entry
                     .get("#")
                     .and_then(Value::as_str)
@@ -562,7 +635,7 @@ fn main() -> anyhow::Result<()> {
 
             // Verify that the updated affixes string is valid JSON
             serde_json::from_str::<Value>(&updated_affixes_string)
-                .map_err(|e| anyhow!("Failed to parse updated affixes.json: {e}"))?;
+                .map_err(|e| anyhow!("Failed to parse updated annotations.json: {e}"))?;
 
             // Write changes
             fs::write(&dict_path, updated_dict)
@@ -619,9 +692,9 @@ fn main() -> anyhow::Result<()> {
 
             // Instead of moving `results` into the for loop, iterate over a reference to it
             for (normalized, originals) in &results {
-                println!("\nVariants for '{}':", normalized);
+                println!("\nVariants for '{normalized}':");
                 for original in originals {
-                    println!("  - {}", original);
+                    println!("  - {original}");
                 }
             }
 
@@ -694,11 +767,11 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
         .words_iter()
         .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
 
-    println!(" - {}", word);
+    println!(" - {word}");
 
     for child in children {
         let child_str: String = child.iter().collect();
-        println!(" - {}", child_str);
+        println!(" - {child_str}");
     }
 }
 

@@ -8,32 +8,38 @@ use serde::{Deserialize, Serialize};
 /// the existing categories.
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, Is, Default, Hash, PartialEq, Eq)]
 pub enum LintKind {
-    /// This should only be used by linters doing spellcheck on individual words.
-    Spelling,
     Capitalization,
-    Style,
-    Formatting,
-    Repetition,
     Enhancement,
-    Readability,
-    WordChoice,
-    Punctuation,
+    Formatting,
     #[default]
     Miscellaneous,
+    Punctuation,
+    Readability,
+    Redundancy,
+    Regionalism,
+    Repetition,
+    /// This should only be used by linters doing spellcheck on individual words.
+    Spelling,
+    Style,
+    Typo,
+    WordChoice,
 }
 
 impl LintKind {
     pub fn new_from_str(s: &str) -> Option<Self> {
         Some(match s {
-            "Spelling" => LintKind::Spelling,
             "Capitalization" => LintKind::Capitalization,
-            "Formatting" => LintKind::Formatting,
-            "Repetition" => LintKind::Repetition,
-            "Readability" => LintKind::Readability,
-            "Miscellaneous" => LintKind::Miscellaneous,
             "Enhancement" => LintKind::Enhancement,
-            "Word Choice" => LintKind::WordChoice,
+            "Formatting" => LintKind::Formatting,
+            "Miscellaneous" => LintKind::Miscellaneous,
+            "Readability" => LintKind::Readability,
+            "Redundancy" => LintKind::Redundancy,
+            "Regionalism" => LintKind::Regionalism,
+            "Repetition" => LintKind::Repetition,
+            "Spelling" => LintKind::Spelling,
             "Style" => LintKind::Style,
+            "Typo" => LintKind::Typo,
+            "Word Choice" => LintKind::WordChoice,
             _ => return None,
         })
     }
@@ -41,16 +47,19 @@ impl LintKind {
     /// Produce a string representation, which can be used as keys in a map or CSS variables.
     pub fn to_string_key(&self) -> String {
         match self {
-            LintKind::Spelling => "Spelling",
             LintKind::Capitalization => "Capitalization",
-            LintKind::Formatting => "Formatting",
-            LintKind::Repetition => "Repetition",
-            LintKind::Readability => "Readability",
-            LintKind::Miscellaneous => "Miscellaneous",
             LintKind::Enhancement => "Enhancement",
-            LintKind::WordChoice => "WordChoice",
-            LintKind::Style => "Style",
+            LintKind::Formatting => "Formatting",
+            LintKind::Miscellaneous => "Miscellaneous",
             LintKind::Punctuation => "Punctuation",
+            LintKind::Readability => "Readability",
+            LintKind::Redundancy => "Redundancy",
+            LintKind::Regionalism => "Regionalism",
+            LintKind::Repetition => "Repetition",
+            LintKind::Spelling => "Spelling",
+            LintKind::Style => "Style",
+            LintKind::Typo => "Typo",
+            LintKind::WordChoice => "WordChoice",
         }
         .to_owned()
     }
@@ -59,18 +68,21 @@ impl LintKind {
 impl Display for LintKind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s = match self {
-            LintKind::Spelling => "Spelling",
             LintKind::Capitalization => "Capitalization",
-            LintKind::Formatting => "Formatting",
-            LintKind::Repetition => "Repetition",
-            LintKind::Readability => "Readability",
-            LintKind::Miscellaneous => "Miscellaneous",
             LintKind::Enhancement => "Enhancement",
-            LintKind::WordChoice => "Word Choice",
-            LintKind::Style => "Style",
+            LintKind::Formatting => "Formatting",
+            LintKind::Miscellaneous => "Miscellaneous",
             LintKind::Punctuation => "Punctuation",
+            LintKind::Readability => "Readability",
+            LintKind::Redundancy => "Redundancy",
+            LintKind::Regionalism => "Regionalism",
+            LintKind::Repetition => "Repetition",
+            LintKind::Spelling => "Spelling",
+            LintKind::Style => "Style",
+            LintKind::Typo => "Typo",
+            LintKind::WordChoice => "Word Choice",
         };
 
-        write!(f, "{}", s)
+        write!(f, "{s}")
     }
 }

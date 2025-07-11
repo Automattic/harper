@@ -6,11 +6,8 @@ use smallvec::ToSmallVec;
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::spell::{
-    is_cksz_misspelling, is_er_misspelling, is_ll_misspelling, is_ou_misspelling,
-    suggest_correct_spelling,
-};
-use crate::{CharString, CharStringExt, Dialect, Dictionary, TokenStringExt};
+use crate::spell::{Dictionary, suggest_correct_spelling};
+use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
 
 pub struct SpellCheck<T>
 where
@@ -86,16 +83,6 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             };
 
             let mut possibilities = self.suggest_correct_spelling(word_chars);
-            if let Some(most_likely) = possibilities.first() {
-                // If the most likely suggestion is a common misspelling, ignore all others.
-                if is_ou_misspelling(most_likely, word_chars)
-                    || is_cksz_misspelling(most_likely, word_chars)
-                    || is_er_misspelling(most_likely, word_chars)
-                    || is_ll_misspelling(most_likely, word_chars)
-                {
-                    possibilities.truncate(1);
-                }
-            }
 
             // If the misspelled word is capitalized, capitalize the results too.
             if let Some(mis_f) = word_chars.first() {
@@ -142,14 +129,14 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
 #[cfg(test)]
 mod tests {
+    use super::SpellCheck;
+    use crate::spell::FstDictionary;
     use crate::{
-        Dialect, FstDictionary,
+        Dialect,
         linting::tests::{
             assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
         },
     };
-
-    use super::SpellCheck;
 
     // Capitalization tests
 
@@ -398,6 +385,24 @@ mod tests {
             "afterwards",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             0,
+        );
+    }
+
+    #[test]
+    fn corrects_hes() {
+        assert_suggestion_result(
+            "hes",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "he's",
+        );
+    }
+
+    #[test]
+    fn corrects_shes() {
+        assert_suggestion_result(
+            "shes",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "she's",
         );
     }
 }

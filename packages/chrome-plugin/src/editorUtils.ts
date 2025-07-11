@@ -21,6 +21,14 @@ export function getP2Root(el: HTMLElement): HTMLElement | null {
 	return findAncestor(el, (node: HTMLElement) => node.classList.contains('p2-editor'));
 }
 
+/** Determines if a given node is a child of a Gutenberg editor instance.
+ * If so, returns the root node of that instance. */
+export function getGutenbergRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) =>
+		node.classList.contains('block-editor-block-canvas'),
+	);
+}
+
 /** Determines if a given node is a child of a Lexical editor instance.
  * If so, returns the root node of that instance. */
 export function getLexicalRoot(el: HTMLElement): HTMLElement | null {
@@ -34,6 +42,12 @@ export function getLexicalRoot(el: HTMLElement): HTMLElement | null {
  * If so, returns the root node of that instance. */
 export function getSlateRoot(el: HTMLElement): HTMLElement | null {
 	return findAncestor(el, (node: HTMLElement) => node.getAttribute('data-slate-editor') == 'true');
+}
+
+/** Determines if a given node is a child of a Draft.js editor instance.
+ * If so, returns the root node of that instance. */
+export function getDraftRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.classList.contains('DraftEditor-root'));
 }
 
 /** Determines if a given node is a child of a Trix editor instance.
@@ -67,4 +81,16 @@ export function getMediumRoot(el: HTMLElement): HTMLElement | null {
  * If so, returns the root node of that instance. */
 export function getNotionRoot(el: HTMLElement): HTMLElement | null {
 	return document.getElementById('notion-app');
+}
+
+/** Determines if a given node is a child of a CodeMirror editor instance.
+ * If so, returns the root node of that instance. */
+export function getCMRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.classList.contains('cm-editor'));
+}
+
+/** Determines if a given node is a child of a ProseMirror editor instance.
+ * If so, returns the root node of that instance. */
+export function getPMRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.classList.contains('ProseMirror'));
 }

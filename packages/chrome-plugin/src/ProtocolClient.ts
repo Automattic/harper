@@ -3,8 +3,8 @@ import { LRUCache } from 'lru-cache';
 import type { UnpackedLint } from './unpackLint';
 
 export default class ProtocolClient {
-	private static readonly lintCache = new LRUCache<string, UnpackedLint[]>({
-		max: 500,
+	private static readonly lintCache = new LRUCache<string, Promise<any>>({
+		max: 5000,
 		ttl: 5_000,
 	});
 
@@ -14,11 +14,12 @@ export default class ProtocolClient {
 
 	public static async lint(text: string, domain: string): Promise<UnpackedLint[]> {
 		const key = this.cacheKey(text, domain);
-		const cached = this.lintCache.get(key);
-		if (cached) return cached;
-		const resp = await chrome.runtime.sendMessage({ kind: 'lint', text, domain });
-		this.lintCache.set(key, resp.lints);
-		return resp.lints;
+		let p = this.lintCache.get(key);
+		if (!p) {
+			p = chrome.runtime.sendMessage({ kind: 'lint', text, domain }).then((r) => r.lints);
+			this.lintCache.set(key, p);
+		}
+		return p;
 	}
 
 	public static async getLintConfig(): Promise<LintConfig> {
@@ -43,6 +44,7 @@ export default class ProtocolClient {
 	}
 
 	public static async getDomainEnabled(domain: string): Promise<boolean> {
+		this.lintCache.clear();
 		return (await chrome.runtime.sendMessage({ kind: 'getDomainStatus', domain })).enabled;
 	}
 
@@ -50,9 +52,27 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setDomainStatus', enabled, domain });
 	}
 
-	public static async addToUserDictionary(word: string): Promise<void> {
+	public static async getDefaultEnabled(): Promise<boolean> {
 		this.lintCache.clear();
-		await chrome.runtime.sendMessage({ kind: 'addToUserDictionary', word });
+		return (await chrome.runtime.sendMessage({ kind: 'getDefaultStatus' })).enabled;
+	}
+
+	public static async setDefaultEnabled(enabled: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setDefaultStatus', enabled });
+	}
+
+	public static async addToUserDictionary(words: string[]): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'addToUserDictionary', words });
+	}
+
+	public static async setUserDictionary(words: string[]): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'setUserDictionary', words });
+	}
+
+	public static async getUserDictionary(): Promise<string[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getUserDictionary' })).words;
 	}
 
 	public static async ignoreHash(hash: string): Promise<void> {

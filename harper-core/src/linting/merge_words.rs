@@ -2,9 +2,9 @@ use std::sync::Arc;
 
 use itertools::Itertools;
 
-use crate::{CharString, Dictionary, Document, FstDictionary, Span};
-
 use super::{Lint, LintKind, Linter, Suggestion};
+use crate::spell::{Dictionary, FstDictionary};
+use crate::{CharString, Document, Span};
 
 pub struct MergeWords {
     dict: Arc<FstDictionary>,

@@ -1,4 +1,5 @@
-use harper_core::{Masker, MutableDictionary};
+use harper_core::Masker;
+use harper_core::spell::MutableDictionary;
 use harper_tree_sitter::TreeSitterMasker;
 
 pub struct CommentMasker {

@@ -4,6 +4,12 @@ use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 use std::sync::Arc;
 
+use crate::config::Config;
+use crate::dictionary_io::{load_dict, save_dict};
+use crate::document_state::DocumentState;
+use crate::git_commit_parser::GitCommitParser;
+use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
+use crate::io_utils::fileify_path;
 use anyhow::{Context, Result, anyhow};
 use futures::future::join;
 use harper_comments::CommentParser;
@@ -11,12 +17,11 @@ use harper_core::linting::{LintGroup, LintGroupConfig};
 use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
-use harper_core::{
-    Dialect, Dictionary, Document, FstDictionary, IgnoredLints, MergedDictionary,
-    MutableDictionary, WordMetadata,
-};
+use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
+use harper_core::{Dialect, Document, IgnoredLints, WordMetadata};
 use harper_html::HtmlParser;
 use harper_literate_haskell::LiterateHaskellParser;
+use harper_stats::{Record, Stats};
 use harper_typst::Typst;
 use serde_json::Value;
 use tokio::sync::{Mutex, RwLock};
@@ -34,14 +39,6 @@ use tower_lsp_server::lsp_types::{
 };
 use tower_lsp_server::{Client, LanguageServer, UriExt};
 use tracing::{error, info, warn};
-
-use crate::config::Config;
-use crate::dictionary_io::{load_dict, save_dict};
-use crate::document_state::DocumentState;
-use crate::git_commit_parser::GitCommitParser;
-use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
-use crate::io_utils::fileify_path;
-use harper_stats::{Record, Stats};
 
 /// Return harper-ls version
 pub fn ls_version() -> &'static str {
@@ -207,7 +204,7 @@ impl Backend {
                 .ok_or_else(|| anyhow!("Unable to convert URL to file path."))?,
         )
         .await
-        .with_context(|| format!("Unable to read from file {:?}", uri))?;
+        .with_context(|| format!("Unable to read from file {uri:?}"))?;
 
         self.update_document(uri, &content, language_id).await
     }
@@ -656,7 +653,7 @@ impl LanguageServer for Backend {
             }
             "HarperOpen" => match open::that(&first) {
                 Ok(()) => {
-                    let message = format!(r#"Opened "{}""#, first);
+                    let message = format!(r#"Opened "{first}""#);
 
                     self.client.log_message(MessageType::INFO, &message).await;
 

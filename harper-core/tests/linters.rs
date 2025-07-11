@@ -1,4 +1,4 @@
-//! This test creats snapshots of the reports of all linters.
+//! This test creates snapshots of the reports of all linters.
 //!
 //! # Usage
 //!
@@ -9,8 +9,9 @@
 //! Note: This test will fail if the snapshot files are not up to date. This
 //! ensures that CI will fail if linters change their behavior.
 
+use harper_core::spell::FstDictionary;
 use harper_core::{
-    Dialect, Document, FstDictionary,
+    Dialect, Document,
     linting::{LintGroup, Linter},
 };
 
@@ -189,11 +190,16 @@ fn print_error(lines: &Lines, start: usize, end: usize, message: &str) -> String
 
 #[test]
 fn test_most_lints() {
-    snapshot::snapshot_all_text_files("linters", ".snap.yml", |source| {
+    snapshot::snapshot_all_text_files("linters", ".snap.yml", |source, dialect_override| {
         let dict = FstDictionary::curated();
         let document = Document::new_markdown_default(source, &dict);
 
-        let mut linter = LintGroup::new_curated(dict, Dialect::American);
+        let mut linter = LintGroup::new_curated(
+            dict,
+            dialect_override.unwrap_or_else(|| {
+                Dialect::try_guess_from_document(&document).unwrap_or(Dialect::American)
+            }),
+        );
 
         let mut lints = linter.lint(&document);
         lints.sort_by(|a, b| {
@@ -225,7 +231,7 @@ fn test_most_lints() {
             if !lint.suggestions.is_empty() {
                 out.push_str("Suggest:\n");
                 for suggestion in &lint.suggestions {
-                    out.push_str(&format!("  - {}\n", suggestion));
+                    out.push_str(&format!("  - {suggestion}\n"));
                 }
             }
 

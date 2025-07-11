@@ -11,6 +11,10 @@ pub struct FirstMatchOf {
 }
 
 impl FirstMatchOf {
+    pub fn new(exprs: Vec<Box<dyn Expr>>) -> Self {
+        Self { exprs }
+    }
+
     pub fn push(&mut self, expr: Box<dyn Expr>) {
         self.exprs.push(expr);
     }

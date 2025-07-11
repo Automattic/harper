@@ -106,7 +106,7 @@ impl ExprLinter for OpenCompounds {
                 phrase.chars().collect(),
                 span.get_content(source_chars),
             )],
-            message: format!("`{}` should be written as two words.", phrase),
+            message: format!("`{phrase}` should be written as two words."),
             priority: 31,
         })
     }

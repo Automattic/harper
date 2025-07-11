@@ -12,15 +12,16 @@ impl Pattern for NominalPhrase {
         loop {
             let tok = tokens.get(cursor)?;
 
-            if tok.kind.is_adjective() || tok.kind.is_determiner() {
-                let next = tokens.get(cursor + 1)?;
-
-                if !next.kind.is_whitespace() {
-                    return None;
+            if tok.kind.is_adjective()
+                || tok.kind.is_determiner()
+                || tok.kind.is_verb_progressive_form()
+            {
+                if let Some(next) = tokens.get(cursor + 1) {
+                    if next.kind.is_whitespace() {
+                        cursor += 2;
+                        continue;
+                    }
                 }
-
-                cursor += 2;
-                continue;
             }
 
             if tok.kind.is_nominal() {
@@ -111,5 +112,35 @@ mod tests {
             matches.to_strings(&doc),
             vec!["My favorite foods", "pizza", "sushi", "tacos", "burgers"]
         )
+    }
+
+    #[test]
+    fn simplest_way() {
+        let doc = Document::new_markdown_default_curated("a way");
+        assert!(
+            NominalPhrase
+                .matches(doc.get_tokens(), doc.get_source())
+                .is_some()
+        );
+    }
+
+    #[test]
+    fn progressive_way() {
+        let doc = Document::new_markdown_default_curated("a winning way");
+        assert!(
+            NominalPhrase
+                .matches(doc.get_tokens(), doc.get_source())
+                .is_some()
+        );
+    }
+
+    #[test]
+    fn perfect_way() {
+        let doc = Document::new_markdown_default_curated("a failed way");
+        assert!(
+            NominalPhrase
+                .matches(doc.get_tokens(), doc.get_source())
+                .is_some()
+        );
     }
 }

@@ -1,4 +1,5 @@
 import type { Span } from 'harper.js';
+import { isBoxInScreen } from './Box';
 
 /**
  * Turn a `NodeList` into a normal JavaScript array.
@@ -85,4 +86,28 @@ export function getRangeForTextSpan(target: Element, span: Span): Range | null {
 	}
 
 	return null;
+}
+
+/** Check if an element is visible to the user.
+ * It is coarse and meant for performance improvements, not precision.*/
+export function isVisible(node: Node): boolean {
+	try {
+		if (node instanceof Element) {
+			return node.checkVisibility();
+		}
+
+		const range = document.createRange();
+		range.selectNode(node);
+		const rects = range.getClientRects();
+
+		for (const rect of rects) {
+			if (isBoxInScreen(rect)) {
+				return true;
+			}
+		}
+	} catch (e) {
+		return false;
+	}
+
+	return false;
 }

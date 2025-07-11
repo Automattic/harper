@@ -3,7 +3,8 @@ use std::path::Path;
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::MarkdownOptions;
-use harper_core::{Dialect, Document, FstDictionary};
+use harper_core::spell::FstDictionary;
+use harper_core::{Dialect, Document};
 
 /// Creates a unit test checking that the linting of a source file in
 /// `language_support_sources` produces the expected number of lints.
@@ -42,7 +43,9 @@ macro_rules! create_test {
 
 create_test!(multiline_comments.cpp, 3);
 create_test!(multiline_comments.ts, 3);
+create_test!(multiline_comments.sol, 3);
 create_test!(clean.rs, 0);
+create_test!(clean.sol, 0);
 create_test!(jsdoc.ts, 4);
 create_test!(issue_96.lua, 0);
 create_test!(merged_lines.ts, 1);
@@ -56,10 +59,12 @@ create_test!(ignore_shebang_3.sh, 0);
 create_test!(ignore_shebang_4.sh, 1);
 create_test!(common.mill, 1);
 create_test!(basic_kotlin.kt, 0);
+create_test!(basic.clj, 12);
 
 // Checks that some comments are masked out
 create_test!(ignore_comments.rs, 1);
 create_test!(ignore_comments.c, 1);
+create_test!(ignore_comments.sol, 1);
 
 // These are to make sure nothing crashes.
 create_test!(empty.js, 0);

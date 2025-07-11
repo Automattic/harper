@@ -1,7 +1,11 @@
+import type { Lint } from 'harper.js';
+import { clone } from 'lodash-es';
+import { isBoxInScreen } from './Box';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import ProtocolClient from './ProtocolClient';
 import computeLintBoxes from './computeLintBoxes';
+import { isVisible } from './domUtils';
 
 /** Events on an input (any kind) that can trigger a re-render. */
 const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
@@ -12,8 +16,11 @@ const PAGE_EVENTS = ['resize', 'scroll'];
 export default class LintFramework {
 	private highlights: Highlights;
 	private popupHandler: PopupHandler;
-	private targets: Set<HTMLElement>;
+	private targets: Set<Node>;
 	private scrollableAncestors: Set<HTMLElement>;
+	private lintRequested = false;
+	private renderRequested = false;
+	private lastLints: { target: HTMLElement; lints: Lint[] }[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
@@ -23,6 +30,7 @@ export default class LintFramework {
 		this.popupHandler = new PopupHandler();
 		this.targets = new Set();
 		this.scrollableAncestors = new Set();
+		this.lastLints = [];
 
 		this.updateEventCallback = () => {
 			this.update();
@@ -31,7 +39,7 @@ export default class LintFramework {
 		const timeoutCallback = () => {
 			this.update();
 
-			setTimeout(timeoutCallback, 1000);
+			setTimeout(timeoutCallback, 100);
 		};
 
 		timeoutCallback();
@@ -39,36 +47,59 @@ export default class LintFramework {
 		this.attachWindowListeners();
 	}
 
-	async update() {
-		const boxes = [];
+	/** Returns the currents targets that are visible on-screen. */
+	onScreenTargets(): Node[] {
+		const onScreen = [];
 
 		for (const target of this.targets) {
-			let text: string | null = null;
-
-			if (!document.contains(target)) {
-				this.targets.delete(target);
-				continue;
+			if (isVisible(target)) {
+				onScreen.push(target);
 			}
-
-			if (target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement) {
-				text = target.value;
-			} else {
-				text = target.textContent;
-			}
-
-			if (text == null || text.length > 120000) {
-				continue;
-			}
-
-			const lints = await ProtocolClient.lint(text, window.location.hostname);
-			boxes.push(...lints.flatMap((l) => computeLintBoxes(target, l)));
 		}
 
-		this.highlights.renderLintBoxes(boxes);
-		this.popupHandler.updateLintBoxes(boxes);
+		return onScreen;
 	}
 
-	public async addTarget(target: HTMLElement) {
+	async update() {
+		this.requestRender();
+		this.requestLintUpdate();
+	}
+
+	async requestLintUpdate() {
+		if (this.lintRequested) {
+			return;
+		}
+
+		// Avoid duplicate requests in the queue
+		this.lintRequested = true;
+
+		const lintResults = await Promise.all(
+			this.onScreenTargets().map(async (target) => {
+				if (!document.contains(target)) {
+					this.targets.delete(target);
+					return { target: null as HTMLElement | null, lints: [] };
+				}
+
+				const text =
+					target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
+						? target.value
+						: target.textContent;
+
+				if (!text || text.length > 120000) {
+					return { target: null as HTMLElement | null, lints: [] };
+				}
+
+				const lints = await ProtocolClient.lint(text, window.location.hostname);
+				return { target: target as HTMLElement, lints };
+			}),
+		);
+
+		this.lastLints = lintResults;
+		this.lintRequested = false;
+		this.requestRender();
+	}
+
+	public async addTarget(target: Node) {
 		if (!this.targets.has(target)) {
 			this.targets.add(target);
 			this.update();
@@ -86,7 +117,7 @@ export default class LintFramework {
 		}
 	}
 
-	private attachTargetListeners(target: HTMLElement) {
+	private attachTargetListeners(target: Node) {
 		for (const event of INPUT_EVENTS) {
 			target.addEventListener(event, this.updateEventCallback);
 		}
@@ -105,7 +136,7 @@ export default class LintFramework {
 		for (const el of scrollableAncestors) {
 			if (!this.scrollableAncestors.has(el)) {
 				this.scrollableAncestors.add(el);
-				el.addEventListener('scroll', this.updateEventCallback);
+				el.addEventListener('scroll', this.updateEventCallback, { capture: true, passive: true });
 			}
 		}
 	}
@@ -127,13 +158,31 @@ export default class LintFramework {
 			window.removeEventListener(event, this.updateEventCallback);
 		}
 	}
+
+	private requestRender() {
+		if (this.renderRequested) {
+			return;
+		}
+
+		this.renderRequested = true;
+
+		requestAnimationFrame(() => {
+			const boxes = this.lastLints.flatMap(({ target, lints }) =>
+				target ? lints.flatMap((l) => computeLintBoxes(target, l)) : [],
+			);
+			this.highlights.renderLintBoxes(boxes);
+			this.popupHandler.updateLintBoxes(boxes);
+
+			this.renderRequested = false;
+		});
+	}
 }
 
 /**
  * Returns all scrollable ancestor elements of a given element,
  * ordered from nearest to furthest (ending with the page scroller).
  */
-function getScrollableAncestors(element: Element): Element[] {
+function getScrollableAncestors(element: Node): Element[] {
 	const scrollables: Element[] = [];
 	const root = document.scrollingElement || document.documentElement;
 	let parent = element.parentElement;
@@ -141,14 +190,9 @@ function getScrollableAncestors(element: Element): Element[] {
 	while (parent) {
 		const style = window.getComputedStyle(parent);
 		const { overflowY, overflowX } = style;
-		// Vertical scroll check: overflow-y is scrollable and content overflows
-		const canScrollY =
-			(overflowY.includes('auto') || overflowY.includes('scroll')) &&
-			parent.scrollHeight > parent.clientHeight;
-		// Horizontal scroll check: overflow-x is scrollable and content overflows
-		const canScrollX =
-			(overflowX.includes('auto') || overflowX.includes('scroll')) &&
-			parent.scrollWidth > parent.clientWidth;
+		const canScrollY = overflowY.includes('auto') || overflowY.includes('scroll');
+		const canScrollX = overflowX.includes('auto') || overflowX.includes('scroll');
+
 		if (canScrollY || canScrollX) {
 			scrollables.push(parent);
 		}

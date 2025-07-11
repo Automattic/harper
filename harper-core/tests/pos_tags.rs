@@ -46,7 +46,9 @@
 //!   - Conjunctions are denoted by `C`.
 //!   - Determiners are denoted by `D`.
 //!   - Prepositions are denoted by `P`.
-//!   - Dialects are denoted by `Am`, `Br`, `Ca`, or `Au`.
+//!   - Dialects are denoted by `Am`, `Br`, `Ca`, or `Au` for individual
+//!     dialects, or `NoAm` for North America (US and Canada)
+//!     or `Comm` for Commonwealth (UK, Australia, and Canada).
 //!   - Swear words are denoted by `B` (for bad).
 //!   - Noun phrase membership is denoted by `+`
 //!
@@ -62,7 +64,8 @@
 //! - All other token kinds are denoted by their variant name.
 use std::borrow::Cow;
 
-use harper_core::{Degree, Document, FstDictionary, TokenKind, WordMetadata};
+use harper_core::spell::FstDictionary;
+use harper_core::{Degree, Dialect, Document, TokenKind, WordMetadata};
 
 mod snapshot;
 
@@ -97,13 +100,37 @@ fn format_word_tag(word: &WordMetadata) -> String {
     if let Some(noun) = word.noun {
         let mut tag = String::from("N");
         add_bool(&mut tag, "Pr", noun.is_proper);
-        add_switch(&mut tag, noun.is_plural, "Pl", "Sg");
+        if word.is_mass_noun() {
+            add_switch(&mut tag, Some(word.is_countable_noun()), "🅪", "ᴹ");
+        }
+        match (
+            noun.is_singular.is_some_and(|sg| sg),
+            noun.is_plural.is_some_and(|pl| pl),
+        ) {
+            (true, false) => tag.push_str("Sg"),
+            (false, true) => tag.push_str("Pl"),
+            (true, true) => tag.push_str("SgPl"),
+            _ => {}
+        }
+        // Treat unmarked (neither singular nor plural) common nouns as singular
+        if noun.is_singular.is_none() && noun.is_plural.is_none() && noun.is_proper.is_none() {
+            tag.push_str("Sg");
+        }
         add_bool(&mut tag, "$", noun.is_possessive);
         add(&tag, &mut tags);
     }
     if let Some(pronoun) = word.pronoun {
         let mut tag = String::from("I");
-        add_switch(&mut tag, pronoun.is_plural, "Pl", "Sg");
+        add_bool(
+            &mut tag,
+            "Sg",
+            pronoun.is_singular.and_then(|sg| sg.then_some(true)),
+        );
+        add_bool(
+            &mut tag,
+            "Pl",
+            pronoun.is_plural.and_then(|pl| pl.then_some(true)),
+        );
         add_bool(&mut tag, "$", pronoun.is_possessive);
         add(&tag, &mut tags);
     }
@@ -130,25 +157,18 @@ fn format_word_tag(word: &WordMetadata) -> String {
     if let Some(_conj) = word.conjunction {
         add("C", &mut tags);
     }
-    if word.determiner {
-        add("D", &mut tags);
+    if let Some(determiner) = word.determiner {
+        let mut tag = String::from("D");
+        add_bool(&mut tag, "$", determiner.is_possessive);
+        add_bool(&mut tag, "dem", determiner.is_demonstrative);
+        add(&tag, &mut tags);
     }
     if word.preposition {
         add("P", &mut tags);
     }
 
-    word.dialects.iter().for_each(|d| {
-        if let Ok(dialect) = harper_core::Dialect::try_from(d) {
-            add(
-                match dialect {
-                    harper_core::Dialect::American => "Am",
-                    harper_core::Dialect::British => "Br",
-                    harper_core::Dialect::Canadian => "Ca",
-                    harper_core::Dialect::Australian => "Au",
-                },
-                &mut tags,
-            );
-        }
+    get_dialect_annotations(word).into_iter().for_each(|tag| {
+        add(tag, &mut tags);
     });
 
     add_switch(&mut tags, word.np_member, "+", "");
@@ -163,6 +183,45 @@ fn format_word_tag(word: &WordMetadata) -> String {
         tags
     }
 }
+
+/// Returns a vector of dialect annotation strings for the given word.
+/// Handles both individual dialects and special groupings (NoAm, Comm).
+fn get_dialect_annotations(word: &WordMetadata) -> Vec<&'static str> {
+    let mut annotations = Vec::new();
+    let mut north_america = false;
+    let mut commonwealth = false;
+
+    let en_au = word.dialects.is_dialect_enabled_strict(Dialect::Australian);
+    let en_ca = word.dialects.is_dialect_enabled_strict(Dialect::Canadian);
+    let en_gb = word.dialects.is_dialect_enabled_strict(Dialect::British);
+    let en_us = word.dialects.is_dialect_enabled_strict(Dialect::American);
+
+    // Dialect groups in alphabetical order
+    if en_gb && en_au && en_ca {
+        annotations.push("Comm");
+        commonwealth = true;
+    }
+    if en_us && en_ca {
+        annotations.push("NoAm");
+        north_america = true;
+    }
+    // Individual dialects in alphabetical order
+    if en_us && !north_america {
+        annotations.push("Am");
+    }
+    if en_au && !commonwealth {
+        annotations.push("Au");
+    }
+    if en_gb && !commonwealth {
+        annotations.push("Br");
+    }
+    if en_ca && !north_america && !commonwealth {
+        annotations.push("Ca");
+    }
+
+    annotations
+}
+
 fn format_tag(kind: &TokenKind) -> Cow<'static, str> {
     match kind {
         TokenKind::Word(word) => {
@@ -247,7 +306,7 @@ impl Formatter {
 
 #[test]
 fn test_pos_tagger() {
-    snapshot::snapshot_all_text_files("tagged", ".md", |source| {
+    snapshot::snapshot_all_text_files("tagged", ".md", |source, _| {
         let dict = FstDictionary::curated();
         let document = Document::new_markdown_default(source, &dict);
 

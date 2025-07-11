@@ -21,8 +21,7 @@ impl Linter for Spaces {
                         lint_kind: LintKind::Formatting,
                         suggestions: vec![Suggestion::ReplaceWith(vec![' '])],
                         message: format!(
-                            "There are {} spaces where there should be only one.",
-                            count
+                            "There are {count} spaces where there should be only one."
                         ),
                         priority: 15,
                     })

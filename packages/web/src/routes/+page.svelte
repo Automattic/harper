@@ -2,6 +2,7 @@
 import ChromeLogo from '$lib/ChromeLogo.svelte';
 import CodeLogo from '$lib/CodeLogo.svelte';
 import Editor from '$lib/Editor.svelte';
+import FirefoxLogo from '$lib/FirefoxLogo.svelte';
 import GitHubLogo from '$lib/GitHubLogo.svelte';
 import Graph from '$lib/Graph.svelte';
 import Logo from '$lib/Logo.svelte';
@@ -28,6 +29,13 @@ const headings = [
 	'Grammar Checking That Respects Your Privacy',
 	'Grammar Checking for Developers',
 ];
+
+/**
+ * @param {string} keyword
+ */
+function agentHas(keyword) {
+	return navigator.userAgent.toLowerCase().search(keyword.toLowerCase()) > -1;
+}
 </script>
 
 <div class="w-full flex flex-col items-center">
@@ -44,9 +52,17 @@ const headings = [
 		class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><GitHubLogo width="40px" height="40px" />GitHub</a
 	>
-	<a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-		><ChromeLogo width="40px" height="40px" />Chrome Extension</a
-	>
+
+  {#if agentHas("firefox")}
+	  <a href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	  	><FirefoxLogo width="40px" height="40px" />Firefox Extension</a
+	  >
+  {:else}
+	  <a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	  	><ChromeLogo width="40px" height="40px" />Chrome Extension</a
+	  >
+  {/if}
+
 	<a href="/docs/integrations/obsidian" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><ObsidianLogo width="40px" height="40px" />Obsidian Plugin</a
 	>
