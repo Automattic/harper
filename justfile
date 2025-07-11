@@ -509,3 +509,6 @@ newest-dict-changes *numCommits:
       });
     });
   });
+
+getnps a:
+  cargo run --bin harper-cli -- nominal-phrases "{{a}}"
