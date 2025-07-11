@@ -15,8 +15,8 @@ Message: |
          |       ^~~~~ Did you mean to spell `SCOTT` this way?
 Suggest:
   - Replace with: “Scot”
+  - Replace with: “Scots”
   - Replace with: “SCM's”
-  - Replace with: “SEO's”
 
 
 
@@ -3219,8 +3219,8 @@ Message: |
          |                             ^~~~~~~~ Did you mean to spell `gnawings` this way?
 Suggest:
   - Replace with: “gnawing”
+  - Replace with: “gearings”
   - Replace with: “gratings”
-  - Replace with: “drawings”
 
 
 

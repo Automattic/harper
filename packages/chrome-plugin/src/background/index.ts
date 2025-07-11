@@ -78,6 +78,7 @@ async function enableDefaultDomains() {
 		'localhost',
 		'writewithharper.com',
 		'prosemirror.net',
+		'draftjs.org',
 	];
 
 	for (const item of defaultEnabledDomains) {

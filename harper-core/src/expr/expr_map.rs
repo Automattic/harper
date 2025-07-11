@@ -6,13 +6,19 @@ use super::Expr;
 
 /// A map from an [`Expr`] to arbitrary data.
 ///
-/// When used as a [`Expr`] in and of itself, it simply iterates through
-/// all contained exprs, returning the first match found.
-/// You should not assume this search is deterministic.
+/// It has been a common pattern for rule authors to build a list of expressions that match a
+/// grammatical error.
+/// Then, depending on which expression was matched, a suggestion is chosen from another list.
 ///
-/// If you'd like to use this structure in a [`PatternLinter`](crate::linting::PatternLinter), you may want to provide
-/// the map as the search expr, then use a pattern lookup once more to determine
-/// the corresponding key.
+/// The [`ExprMap`] unifies these two lists into one.
+///
+/// A great example of this is the [`PronounInfectionBe`](crate::linting::PronounInflectionBe)
+/// rule.
+/// It builds a list of incorrect `PRONOUN + BE` combinations, alongside their corrections.
+///
+/// When used as a [`Expr`] in and of itself, it simply iterates through
+/// all contained expressions, returning the first match found.
+/// You should not assume this search is deterministic.
 pub struct ExprMap<T>
 where
     T: LSend,

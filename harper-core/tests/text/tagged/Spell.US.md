@@ -19,59 +19,59 @@
 >
 #
 > Afterwards .
-# R/Ca/Au/Br .
+# R/Comm     .
 >
 #
-> Centre          .
-# NSg/V/Ca/Au/Br+ .
+> Centre      .
+# NSg/V/Comm+ .
 >
 #
-> Labelled      .
-# V/J/Ca/Au/Br+ .
+> Labelled  .
+# V/J/Comm+ .
 >
 #
-> Flavour         .
-# NSg/V/Ca/Au/Br+ .
+> Flavour     .
+# NSg/V/Comm+ .
 >
 #
-> Favoured      .
-# V/J/Ca/Au/Br+ .
+> Favoured  .
+# V/J/Comm+ .
 >
 #
-> Honour          .
-# NSg/V/Ca/Au/Br+ .
+> Honour       .
+# N🅪Sg/V/Comm+ .
 >
 #
-> Grey              .
-# NPr/V/J/Ca/Au/Br+ .
+> Grey          .
+# NPr/V/J/Comm+ .
 >
 #
-> Quarrelled  .
-# V/Ca/Au/Br+ .
+> Quarrelled .
+# V/Comm+    .
 >
 #
-> Quarrelling     .
-# NSg/V/Ca/Au/Br+ .
+> Quarrelling  .
+# NᴹSg/V/Comm+ .
 >
 #
 > Recognised .
 # V/J/Au/Br+ .
 >
 #
-> Neighbour         .
-# NSg/V/J/Ca/Au/Br+ .
+> Neighbour     .
+# NSg/V/J/Comm+ .
 >
 #
 > Neighbouring .
-# V/Ca/Au/Br+  .
+# V/Comm+      .
 >
 #
-> Clamour         .
-# NSg/V/Ca/Au/Br+ .
+> Clamour     .
+# NSg/V/Comm+ .
 >
 #
-> Theatre       .
-# NSg/Ca/Au/Br+ .
+> Theatre    .
+# N🅪Sg/Comm+ .
 >
 #
 > Analyse .

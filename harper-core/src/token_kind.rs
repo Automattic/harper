@@ -4,9 +4,17 @@ use serde::{Deserialize, Serialize};
 
 use crate::{Number, Punctuation, Quote, TokenKind::Word, WordMetadata};
 
+/// Generate wrapper code to pass a function call to the inner [`WordMetadata`],  
+/// if the token is indeed a word, while also emitting method-level documentation.
 macro_rules! delegate_to_metadata {
     ($($method:ident),* $(,)?) => {
         $(
+            #[doc = concat!(
+                "Delegates to [`WordMetadata::",
+                stringify!($method),
+                "`] when this token is a word.\n\n",
+                "Returns `false` if the token is not a word."
+            )]
             pub fn $method(&self) -> bool {
                 let Word(Some(metadata)) = self else {
                     return false;
@@ -17,6 +25,10 @@ macro_rules! delegate_to_metadata {
     };
 }
 
+/// The parsed value of a [`Token`](crate::Token).
+/// Has a variety of queries available.
+/// If there is a query missing, it may be easy to implement by just calling the
+/// `delegate_to_metadata` macro.
 #[derive(Debug, Is, Clone, Serialize, Deserialize, Default, PartialOrd, Hash, Eq, PartialEq)]
 #[serde(tag = "kind", content = "value")]
 pub enum TokenKind {
@@ -56,8 +68,10 @@ impl TokenKind {
         is_plural_noun,
         is_non_plural_noun,
         is_countable_noun,
+        is_non_countable_noun,
         is_mass_noun,
         is_mass_noun_only,
+        is_non_mass_noun,
         is_singular_pronoun,
         is_plural_pronoun,
         is_non_plural_pronoun,
@@ -290,5 +304,26 @@ mod tests {
         let doc = Document::new_plain_english_curated("traffic");
         let tk = &doc.tokens().next().unwrap().kind;
         assert!(tk.is_mass_noun_only());
+    }
+
+    #[test]
+    fn equipment_is_mass_noun() {
+        let doc = Document::new_plain_english_curated("equipment");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_mass_noun());
+    }
+
+    #[test]
+    fn equipment_is_non_countable_noun() {
+        let doc = Document::new_plain_english_curated("equipment");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_non_countable_noun());
+    }
+
+    #[test]
+    fn equipment_isnt_countable_noun() {
+        let doc = Document::new_plain_english_curated("equipment");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(!tk.is_countable_noun());
     }
 }

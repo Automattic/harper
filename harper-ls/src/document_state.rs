@@ -2,9 +2,8 @@ use crate::config::{CodeActionConfig, DiagnosticSeverity};
 use crate::diagnostics::{lint_to_code_actions, lints_to_diagnostics};
 use crate::pos_conv::range_to_span;
 use harper_core::linting::{Lint, LintGroup, Linter};
-use harper_core::{
-    Document, IgnoredLints, MergedDictionary, MutableDictionary, TokenKind, remove_overlaps,
-};
+use harper_core::spell::{MergedDictionary, MutableDictionary};
+use harper_core::{Document, IgnoredLints, TokenKind, remove_overlaps};
 use harper_core::{Lrc, Token};
 use tower_lsp_server::lsp_types::{CodeActionOrCommand, Command, Diagnostic, Range, Uri};
 

@@ -1,7 +1,8 @@
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::{Dictionary, Token, TokenKind, TokenStringExt};
+use crate::spell::Dictionary;
+use crate::{Token, TokenKind, TokenStringExt};
 
 pub struct SentenceCapitalization<T>
 where
@@ -117,10 +118,9 @@ fn is_full_sentence(toks: &[Token]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::FstDictionary;
-
     use super::super::tests::assert_lint_count;
     use super::SentenceCapitalization;
+    use crate::spell::FstDictionary;
 
     #[test]
     fn catches_basic() {
