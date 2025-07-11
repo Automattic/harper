@@ -19,6 +19,7 @@ impl Word {
             case_sensitive: false,
         }
     }
+
     /// Matches the provided word, ignoring case.
     pub fn from_chars(word: &[char]) -> Self {
         Self {
