@@ -473,6 +473,18 @@ impl WordMetadata {
         }
     }
 
+    // Most mass nouns also have countable senses. Match those that are only mass nouns.
+    pub fn is_mass_noun_only(&self) -> bool {
+        if let Some(noun) = self.noun {
+            matches!(
+                (noun.is_countable, noun.is_mass),
+                (None | Some(false), Some(true))
+            )
+        } else {
+            false
+        }
+    }
+
     // Nominal metadata queries (noun + pronoun)
 
     /// Checks if the word is definitely nominal.
