@@ -107,9 +107,7 @@ impl ExprLinter for AdjectiveDoubleDegree {
 #[cfg(test)]
 mod tests {
     use super::AdjectiveDoubleDegree;
-    use crate::linting::tests::{
-        assert_good_and_bad_suggestions, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result};
 
     #[test]
     fn fix_double_regular_superlative() {
