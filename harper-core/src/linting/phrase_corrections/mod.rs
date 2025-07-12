@@ -675,6 +675,12 @@ pub fn lint_group() -> LintGroup {
             "Use the correct phrase for acting spontaneously.",
             "Ensures the correct use of `on the spur of the moment`, avoiding nonstandard variations."
         ),
+        "OnTopOf" => (
+            ["ontop of"],
+            ["on top of"],
+            "Did you mean `on top of`?",
+            "Corrects `ontop of` to `on top of`."
+        ),
         "PeaceOfMind" => (
             ["piece of mind"],
             ["peace of mind"],

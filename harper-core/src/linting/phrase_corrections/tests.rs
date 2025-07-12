@@ -966,6 +966,16 @@ fn fix_in_the_spur_of_the_moment() {
     );
 }
 
+// OnTopOf
+#[test]
+fn correct_on_top_of() {
+    assert_suggestion_result(
+        "Initcpio hooks for overlayfs ontop of root.",
+        lint_group(),
+        "Initcpio hooks for overlayfs on top of root.",
+    );
+}
+
 // PeaceOfMind
 #[test]
 fn corrects_piece_of_mind() {
