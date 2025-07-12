@@ -367,7 +367,7 @@
 > learn tag    probabilities . It       is , however , also possible to bootstrap using
 # NSg/V NSg/V+ NPl+          . NPr/ISg+ VL . C       . W?   NSg/J    P  NSg/V     V
 > " unsupervised " tagging . Unsupervised tagging techniques use   an  untagged corpus
-# . V/J          . NSg/V   . V/J          NSg/V   NPl+       NSg/V D/P ?        NSg
+# . V/J          . NSg/V   . V/J          NSg/V   NPl+       NSg/V D/P J        NSg
 > for their training data  and produce the tagset by       induction . That          is , they
 # C/P D$+   NSg/V+   N🅪Pl+ V/C NSg/V   D   NSg    NSg/J/P+ NSg       . NSg/I/C/Ddem+ VL . IPl+
 > observe patterns in      word   use   , and derive part    - of - speech categories themselves .
