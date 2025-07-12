@@ -30,7 +30,7 @@ impl ThenThan {
                             .t_ws()
                             .t_aco("then")
                             .t_ws()
-                            .if_not_then_step_one(Word::new("that")),
+                            .then_unless(Word::new("that")),
                     ),
                     // Positive form of adjective following "more" or "less"
                     Box::new(
@@ -43,7 +43,7 @@ impl ThenThan {
                             .t_ws()
                             .t_aco("then")
                             .t_ws()
-                            .if_not_then_step_one(Word::new("that")),
+                            .then_unless(Word::new("that")),
                     ),
                 ])),
                 // Exceptions to the rule.

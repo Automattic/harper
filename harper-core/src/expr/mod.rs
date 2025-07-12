@@ -1,3 +1,18 @@
+//! An `Expr` is a declarative way to express whether a certain set of tokens fulfill a criteria.
+//!
+//! For example, if we want to look for the word "that" followed by an adjective, we could build an
+//! expression to do so.
+//!
+//! The actual searching is done by another system (usually a part of the [lint framework](crate::linting::ExprLinter)).
+//! It iterates through a document, checking if each index matches the criteria.
+//!
+//! When supplied a specific position in a token stream, the technical job of an `Expr` is to determine the window of tokens (including the cursor itself) that fulfills whatever criteria the author desires.
+//!
+//! The goal of the `Expr` initiative is to make rules easier to _read_ as well as to write.
+//! Gone are the days of trying to manually parse the logic of another man's Rust code.
+//!
+//! See also: [`SequenceExpr`].
+
 mod all;
 mod anchor_end;
 mod anchor_start;
@@ -44,10 +59,6 @@ pub use word_expr_group::WordExprGroup;
 
 use crate::{Document, LSend, Span, Token};
 
-/// A common problem in Harper is that we need to identify tokens that fulfil certain criterion.
-/// An `Expr` is a way to express whether a certain set of tokens fulfil that criteria.
-/// When supplied a specific position in a token stream, the job of an `Expr` is to determine the window of tokens (including the cursor itself) that fulfils whatever criteria the author desires.
-/// It is then the job of another system to identify portions of documents that fulfil this criteria.
 pub trait Expr: LSend {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span>;
 }

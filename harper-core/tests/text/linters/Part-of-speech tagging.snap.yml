@@ -479,18 +479,6 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
-     186 | "unsupervised" tagging. Unsupervised tagging techniques use an untagged corpus
-         |                                                                ^~~~~~~~ Did you mean to spell `untagged` this way?
-     187 | for their training data and produce the tagset by induction. That is, they
-Suggest:
-  - Replace with: “untapped”
-  - Replace with: “untasted”
-  - Replace with: “unwaged”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      200 | Some current major algorithms for part-of-speech tagging include the Viterbi
          |                                                                      ^~~~~~~ Did you mean to spell `Viterbi` this way?
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also

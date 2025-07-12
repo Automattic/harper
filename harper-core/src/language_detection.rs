@@ -1,4 +1,7 @@
-use crate::{Dictionary, Document, Token, TokenKind};
+//! This module implements rudimentary, dictionary-based English language detection.
+
+use crate::spell::Dictionary;
+use crate::{Document, Token, TokenKind};
 
 /// Check if the contents of the document are likely intended to represent
 /// English.
@@ -51,7 +54,8 @@ pub fn is_likely_english(toks: &[Token], source: &[char], dict: &impl Dictionary
 #[cfg(test)]
 mod tests {
     use super::is_doc_likely_english;
-    use crate::{Document, FstDictionary};
+    use crate::Document;
+    use crate::spell::FstDictionary;
 
     fn assert_not_english(source: &'static str) {
         let dict = FstDictionary::curated();

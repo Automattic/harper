@@ -1,6 +1,6 @@
 use harper_brill::UPOS;
 
-use crate::Dictionary;
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::Token;
 use crate::expr::All;
 use crate::expr::Expr;
@@ -8,8 +8,7 @@ use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::patterns::UPOSSet;
 use crate::patterns::WordSet;
-
-use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::spell::Dictionary;
 
 pub struct PossessiveNoun<D> {
     expr: Box<dyn Expr>,
@@ -41,9 +40,9 @@ where
         let exceptions = SequenceExpr::default()
             .t_any()
             .t_any()
-            .if_not_then_step_one(WordSet::new(&["flags", "checks", "catches", "you"]))
+            .then_unless(WordSet::new(&["flags", "checks", "catches", "you"]))
             .t_any()
-            .if_not_then_step_one(WordSet::new(&["form", "go"]));
+            .then_unless(WordSet::new(&["form", "go"]));
 
         Self {
             expr: Box::new(All::new(vec![
@@ -106,10 +105,9 @@ where
 mod tests {
     use std::sync::Arc;
 
-    use crate::FstDictionary;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
-
     use super::PossessiveNoun;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::spell::FstDictionary;
 
     fn test_linter() -> PossessiveNoun<Arc<FstDictionary>> {
         PossessiveNoun::new(FstDictionary::curated())
