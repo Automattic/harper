@@ -479,7 +479,7 @@
 >
 #
 > “ I’m sure I’m not   Ada  , ” she  said , “ for her     hair    goes  in      such  long     ringlets , and
-# . W?  J    W?  NSg/C NPr+ . . ISg+ V/J  . . C/P ISg/D$+ N🅪Sg/V+ NSg/V NPr/J/P NSg/I NPr/V/J+ NPl/V    . V/C
+# . W?  J    W?  NSg/C NPr+ . . ISg+ V/J  . . C/P ISg/D$+ N🅪Sg/V+ NPl/V NPr/J/P NSg/I NPr/V/J+ NPl/V    . V/C
 > mine     doesn’t go      in      ringlets at    all       ; and I’m sure I    can’t be     Mabel , for I    know
 # NSg/I/V+ V       NSg/V/J NPr/J/P NPl/V    NSg/P NSg/I/J/C . V/C W?  J    ISg+ VX    NSg/VX NPr   . C/P ISg+ NSg/V
 > all       sorts of things , and she  , oh    ! she  knows such  a   very little  ! Besides , she’s
@@ -1411,7 +1411,7 @@
 >
 #
 > The first   thing she  heard was a   general chorus of “ There goes  Bill   ! ” then    the
-# D+  NSg/V/J NSg/V ISg+ V/J   V   D/P NSg/V/J NSg/V  P  . +     NSg/V NPr/V+ . . NSg/J/C D+
+# D+  NSg/V/J NSg/V ISg+ V/J   V   D/P NSg/V/J NSg/V  P  . +     NPl/V NPr/V+ . . NSg/J/C D+
 > Rabbit’s voice along — “ Catch him  , you   by      the hedge  ! ” then    silence , and then
 # NSg$+    NSg/V P     . . NSg/V ISg+ . ISgPl NSg/J/P D+  NSg/V+ . . NSg/J/C NSg/V+  . V/C NSg/J/C
 > another confusion of voices — “ Hold    up        his     head     — Brandy now       — Don’t choke him  — How   was
@@ -1427,7 +1427,7 @@
 > flustered to tell  you    — all       I    know  is , something comes at    me       like        a
 # V/J       P  NPr/V ISgPl+ . NSg/I/J/C ISg+ NSg/V VL . NSg/I/V/J NPl/V NSg/P NPr/ISg+ NSg/V/J/C/P D/P
 > Jack    - in      - the - box   , and up        I    goes  like        a   sky    - rocket ! ”
-# NPr/V/J . NPr/J/P . D   . NSg/V . V/C NSg/V/J/P ISg+ NSg/V NSg/V/J/C/P D/P NSg/V+ . NSg/V  . .
+# NPr/V/J . NPr/J/P . D   . NSg/V . V/C NSg/V/J/P ISg+ NPl/V NSg/V/J/C/P D/P NSg/V+ . NSg/V  . .
 >
 #
 > “ So        you    did , old   fellow ! ” said the others .
@@ -2347,7 +2347,7 @@
 > “ Oh    , please mind   what   you’re doing ! ” cried Alice , jumping up        and down      in      an
 # . NPr/V . V      NSg/V+ NSg/I+ W?     NSg/V . . V/J   NPr+  . V       NSg/V/J/P V/C NSg/V/J/P NPr/J/P D/P
 > agony of terror . “ Oh    , there goes  his     precious nose  ! ” as    an  unusually large
-# NSg   P  NSg+   . . NPr/V . +     NSg/V ISg/D$+ NSg/J+   NSg/V . . NSg/R D/P R         NSg/J
+# NSg   P  NSg+   . . NPr/V . +     NPl/V ISg/D$+ NSg/J+   NSg/V . . NSg/R D/P R         NSg/J
 > saucepan flew    close   by      it       , and very nearly carried it      off       .
 # NSg/V    NSg/V/J NSg/V/J NSg/J/P NPr/ISg+ . V/C J/R  R      V/J     NPr/ISg NSg/V/J/P .
 >
@@ -2967,7 +2967,7 @@
 > clock  . For instance , suppose it       were  nine o’clock in      the morning , just time      to
 # NSg/V+ . C/P NSg/V+   . V       NPr/ISg+ NSg/V NSg  W?      NPr/J/P D+  N🅪Sg/V+ . V/J  N🅪Sg/V/J+ P
 > begin lessons : you’d only  have   to whisper a   hint  to Time     , and round     goes  the
-# NSg/V NPl/V+  . W?    J/R/C NSg/VX P  NSg/V   D/P NSg/V P  N🅪Sg/V/J . V/C NSg/V/J/P NSg/V D+
+# NSg/V NPl/V+  . W?    J/R/C NSg/VX P  NSg/V   D/P NSg/V P  N🅪Sg/V/J . V/C NSg/V/J/P NPl/V D+
 > clock  in      a   twinkling ! Half       - past      one       , time     for dinner ! ”
 # NSg/V+ NPr/J/P D/P NSg/V/J   . NSg/V/J/P+ . NSg/V/J/P NSg/I/V/J . N🅪Sg/V/J C/P NSg/V  . .
 >
@@ -3015,7 +3015,7 @@
 >
 #
 > “ It       goes  on  , you    know  , ” the Hatter continued , “ in      this    way    : —
-# . NPr/ISg+ NSg/V J/P . ISgPl+ NSg/V . . D   NSg/V  V/J       . . NPr/J/P I/Ddem+ NSg/J+ . .
+# . NPr/ISg+ NPl/V J/P . ISgPl+ NSg/V . . D   NSg/V  V/J       . . NPr/J/P I/Ddem+ NSg/J+ . .
 >
 #
 > ‘          Up        above   the world  you    fly     , Like        a   tea     - tray  in      the sky    . Twinkle , twinkle — ’ ”
@@ -5035,7 +5035,7 @@
 >
 #
 > Alice had never been  in      a   court   of justice before , but     she  had read  about them
-# NPr+  V   R     NSg/V NPr/J/P D/P NSg/V/J P  NPr+    C/P    . NSg/C/P ISg+ V   NSg/V J/P   NSg/IPl+
+# NPr+  V   R     NSg/V NPr/J/P D/P NSg/V/J P  NPr🅪+   C/P    . NSg/C/P ISg+ V   NSg/V J/P   NSg/IPl+
 > in      books  , and she  was quite pleased to find  that         she  knew the name  of nearly
 # NPr/J/P NPl/V+ . V/C ISg+ V   NSg   V/J     P  NSg/V NSg/I/C/Ddem ISg+ V    D   NSg/V P  R
 > everything there . “ That’s the judge  , ” she  said to herself , “ because of his     great
@@ -5821,7 +5821,7 @@
 >
 #
 > “ But     , it       goes  on  ‘          they all       returned from him to you    , ’ ” said Alice .
-# . NSg/C/P . NPr/ISg+ NSg/V J/P Unlintable IPl+ NSg/I/J/C V/J      P    ISg P  ISgPl+ . . . V/J  NPr+  .
+# . NSg/C/P . NPr/ISg+ NPl/V J/P Unlintable IPl+ NSg/I/J/C V/J      P    ISg P  ISgPl+ . . . V/J  NPr+  .
 >
 #
 > “ Why   , there they are ! ” said the King     triumphantly , pointing to the tarts on  the

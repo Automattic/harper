@@ -108,7 +108,7 @@ impl ExprLinter for AdjectiveDoubleDegree {
 mod tests {
     use super::AdjectiveDoubleDegree;
     use crate::linting::tests::{
-        assert_good_and_bad_suggestions, assert_lint_count, assert_suggestion_result,
+        assert_good_and_bad_suggestions, assert_suggestion_result,
     };
 
     #[test]

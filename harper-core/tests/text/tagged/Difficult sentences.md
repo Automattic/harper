@@ -3,7 +3,7 @@
 >
 #
 > A   collection of difficult sentences to test  Harper's ability to correctly tag    unusual / uncommon but     correct  sentences .
-# D/P NSg        P  V/J       NPl/V     P  NSg/V NSg$     NSg+    P  R         NSg/V+ NSg/J   . NSg/V/J  NSg/C/P NSg/V/J+ NPl/V+    .
+# D/P NSg        P  V/J       NPl/V     P  NSg/V NSg$     N🅪Sg+   P  R         NSg/V+ NSg/J   . NSg/V/J  NSg/C/P NSg/V/J+ NPl/V+    .
 >
 #
 > Note   that         some   word   may    not   be     tagged correctly right    now        .
@@ -39,7 +39,7 @@
 > at    the bottom  of the page   ; sitting at    the table  ; at    church ; at    sea
 # NSg/P D   NSg/V/J P  D+  NPr/V+ . NSg/V/J NSg/P D+  NSg/V+ . NSg/P NPr/V+ . NSg/P NSg+
 > Target at    five miles  . Prepare torpedoes !
-# NSg/V  NSg/P NSg+ NPrPl+ . V       NSg/V     .
+# NSg/V  NSg/P NSg+ NPrPl+ . V       NPl/V     .
 > Look  out         ! UFO at    two o'clock !
 # NSg/V NSg/V/J/R/P . NSg NSg/P NSg W?      .
 > Don't pick  at    your food !
@@ -342,8 +342,8 @@
 # D+  V+      NPr🅪+ NPl/V P    # NPr/V/J+ P  # NSg/V+ .
 > Tickets are available from 17th July .
 # NPl/V+  V   J         P    #    NPr+ .
-> Rate   your pain   from 1 to 10 .
-# NSg/V+ D$+  NSg/V+ P    # P+ #  .
+> Rate   your pain    from 1 to 10 .
+# NSg/V+ D$+  N🅪Sg/V+ P    # P+ #  .
 > Start counting from 1 .
 # NSg/V V        P+   # .
 > You    can    study anything from math to literature .
