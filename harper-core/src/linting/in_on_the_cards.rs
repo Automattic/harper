@@ -1,6 +1,6 @@
 use crate::{
-    Dialect, Token,
-    expr::{Expr, FixedPhrase, LongestMatchOf, SequenceExpr},
+    Dialect,
+    expr::{Expr, FixedPhrase, LongestMatchOf, MatchInfo, SequenceExpr},
     linting::{LintKind, Suggestion},
     patterns::{InflectionOfBe, WordSet},
 };
@@ -43,7 +43,8 @@ impl ExprLinter for InOnTheCards {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let prep_span = toks[2].span;
         let prep = prep_span.get_content(src);
 

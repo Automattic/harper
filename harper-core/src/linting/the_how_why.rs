@@ -1,8 +1,9 @@
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::{
-    Token, TokenStringExt,
+    TokenStringExt,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
@@ -64,7 +65,8 @@ impl ExprLinter for TheHowWhy {
         &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let the_token_span = matched_tokens[0..2].span()?;
         let question_word_token = matched_tokens.get(2)?;
         let question_word = question_word_token.span.get_content(source);

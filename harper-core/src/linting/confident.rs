@@ -1,4 +1,5 @@
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{Token, patterns::Word};
@@ -32,7 +33,8 @@ impl ExprLinter for Confident {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, _source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let span = matched_tokens.last()?.span;
 
         Some(Lint {

@@ -1,8 +1,9 @@
 use crate::expr::Expr;
 use crate::expr::FixedPhrase;
 use crate::expr::LongestMatchOf;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
-use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
+use crate::{Lrc, TokenStringExt, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -42,7 +43,8 @@ impl ExprLinter for AmountsFor {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let content = toks.span()?.get_content_string(src).to_lowercase();
 
         if content.ends_with("amounts for") {

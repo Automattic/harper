@@ -1,10 +1,11 @@
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::expr::WordExprGroup;
 use hashbrown::HashMap;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::{Token, TokenStringExt};
+use crate::TokenStringExt;
 
 pub struct DotInitialisms {
     expr: Box<dyn Expr>,
@@ -39,7 +40,8 @@ impl ExprLinter for DotInitialisms {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let found_word_tok = matched_tokens.first()?;
         let found_word = found_word_tok.span.get_content_string(source);
 

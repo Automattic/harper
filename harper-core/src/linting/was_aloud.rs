@@ -1,7 +1,7 @@
 use super::{ExprLinter, Lint, LintKind};
-use crate::Token;
 use crate::TokenStringExt;
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
 use crate::patterns::WordSet;
@@ -28,7 +28,8 @@ impl ExprLinter for WasAloud {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let verb = matched_tokens[0].span.get_content_string(source);
 
         Some(Lint {

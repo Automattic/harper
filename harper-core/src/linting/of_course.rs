@@ -1,7 +1,7 @@
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::{
-    Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -29,7 +29,8 @@ impl ExprLinter for OfCourse {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched = match_info.matched_tokens;
         // Skip if the word before “of” is “kind” or “sort” → “kind of curse” is valid.
         if let Some(of_idx) = matched.first().map(|t| t.span.start) {
             if let Some(prev) = source.get(..of_idx).map(|src| {

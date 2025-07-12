@@ -1,6 +1,6 @@
 use crate::{
-    CharStringExt, Span, Token,
-    expr::{Expr, ReflexivePronoun, SequenceExpr},
+    CharStringExt, Span,
+    expr::{Expr, MatchInfo, ReflexivePronoun, SequenceExpr},
     linting::Suggestion,
     patterns::WordSet,
 };
@@ -38,7 +38,8 @@ impl ExprLinter for ShootOneselfInTheFoot {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let pron = &toks.get(2)?.span.get_content(src);
         let prep = &toks.get(4)?.span.get_content(src);
         let det = &toks.get(6)?.span.get_content(src);

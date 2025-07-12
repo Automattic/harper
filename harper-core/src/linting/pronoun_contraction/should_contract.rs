@@ -1,6 +1,7 @@
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
-use crate::{CharStringExt, Token, patterns::WordSet};
+use crate::{CharStringExt, patterns::WordSet};
 
 use crate::Lint;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
@@ -46,7 +47,8 @@ impl ExprLinter for ShouldContract {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let mistake = matched_tokens[0].span.get_content(source);
 
         Some(Lint {

@@ -1,8 +1,8 @@
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{
-    Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -40,7 +40,8 @@ impl ExprLinter for ElsePossessive {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, _src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let offender = toks.last()?;
         Some(Lint {
             span: offender.span,

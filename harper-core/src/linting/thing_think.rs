@@ -1,6 +1,5 @@
 use crate::{
-    Token,
-    expr::{Expr, FixedPhrase, LongestMatchOf, SequenceExpr},
+    expr::{Expr, FixedPhrase, LongestMatchOf, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -81,7 +80,8 @@ impl ExprLinter for ThingThink {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let thing_span = toks.last()?.span;
 
         Some(Lint {
