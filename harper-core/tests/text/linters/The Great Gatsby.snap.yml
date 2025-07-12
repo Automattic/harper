@@ -269,6 +269,15 @@ Message: |
 
 
 
+Lint:    WordChoice (126 priority)
+Message: |
+      84 | I told him. And as I walked on I was lonely no longer. I was a guide, a
+         |                                ^ Use the correct pronoun form after prepositions.
+Suggest:
+  - Replace with: “ME”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
       93 | down out of the young breath-giving air. I bought a dozen volumes on banking and
@@ -721,6 +730,15 @@ Suggest:
   - Replace with: “uninfected”
   - Replace with: “inflected”
   - Replace with: “noninflected”
+
+
+
+Lint:    WordChoice (126 priority)
+Message: |
+     541 | When we came in she held us silent for a moment with a lifted hand.
+         |                 ^~~ Use the correct pronoun form after prepositions.
+Suggest:
+  - Replace with: “her”
 
 
 
@@ -3999,6 +4017,16 @@ Message: |
 
 
 
+Lint:    WordChoice (126 priority)
+Message: |
+    2764 | face was smeared with tears, and when I came in she jumped up and began wiping
+         |                                                 ^~~ Use the correct pronoun form after prepositions.
+    2765 | at it with her handkerchief before a mirror. But there was a change in Gatsby
+Suggest:
+  - Replace with: “her”
+
+
+
 Lint:    WordChoice (63 priority)
 Message: |
     2775 | twinkle-bells of sunshine in the room, he smiled like a weather man, like an
@@ -4006,6 +4034,16 @@ Message: |
     2776 | ecstatic patron of recurrent light, and repeated the news to Daisy. “What do you
 Suggest:
   - Replace with: “weatherman”
+
+
+
+Lint:    WordChoice (126 priority)
+Message: |
+    2805 | I think he hardly knew what he was saying, for when I asked him what business he
+    2806 | was in he answered: ‘‘That’s my affair,” before he realized that it wasn’t an
+         |        ^~ Use the correct pronoun form after prepositions.
+Suggest:
+  - Replace with: “him”
 
 
 
@@ -4217,6 +4255,15 @@ Suggest:
   - Replace with: “pray”
   - Replace with: “prat”
   - Replace with: “pram”
+
+
+
+Lint:    WordChoice (126 priority)
+Message: |
+    2983 | As I went over to say good-by I saw that the expression of bewilderment had come
+         |                               ^ Use the correct pronoun form after prepositions.
+Suggest:
+  - Replace with: “ME”
 
 
 
@@ -5055,6 +5102,16 @@ Suggest:
   - Replace with: “coup”
   - Replace with: “coupe”
   - Replace with: “coups”
+
+
+
+Lint:    WordChoice (126 priority)
+Message: |
+    3815 | “Plenty of gas,” said Tom boisterously. He looked at the gauge. “And if it runs
+    3816 | out I can stop at a drug-store. You can buy anything at a drug-store nowadays.”
+         |     ^ Use the correct pronoun form after prepositions.
+Suggest:
+  - Replace with: “ME”
 
 
 
@@ -6129,6 +6186,15 @@ Message: |
 
 
 
+Lint:    WordChoice (126 priority)
+Message: |
+    4820 | “I can’t describe to you how surprised I was to find out I loved her, old sport.
+         |                                                          ^ Use the correct pronoun form after prepositions.
+Suggest:
+  - Replace with: “ME”
+
+
+
 Lint:    Formatting (63 priority)
 Message: |
     4822 | was in love with me too. She thought I knew a lot because I knew different
@@ -7128,6 +7194,16 @@ Suggest:
 
 
 
+Lint:    WordChoice (126 priority)
+Message: |
+    5521 | Legion and he used to stand high there. Right off he did some work for a client
+         |                                                   ^~ Use the correct pronoun form after prepositions.
+    5522 | of mine up to Albany. We were so thick like that in everything”—he held up two
+Suggest:
+  - Replace with: “him”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5552 | For a moment I thought he was going to suggest a “gonnegtion,” but he only
@@ -7530,6 +7606,26 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5746 | adapting itself to his restless eyes. Just as I slowed up to avoid overtaking
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
+
+
+
+Lint:    WordChoice (126 priority)
+Message: |
+    5764 | ready to leave, and when I sent down word that we weren’t in he tried to force
+         |                                                              ^~ Use the correct pronoun form after prepositions.
+    5765 | his way up-stairs. He was crazy enough to kill me if I hadn’t told him who owned
+Suggest:
+  - Replace with: “him”
+
+
+
+Lint:    WordChoice (126 priority)
+Message: |
+    5768 | coming to him. He threw dust into your eyes just like he did in Daisy’s, but he
+         |                                                       ^~ Use the correct pronoun form after prepositions.
+    5769 | was a tough one. He ran over Myrtle like you’d run over a dog and never even
+Suggest:
+  - Replace with: “him”
 
 
 

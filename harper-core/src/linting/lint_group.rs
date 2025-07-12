@@ -72,6 +72,7 @@ use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::possessive_noun::PossessiveNoun;
 use super::possessive_your::PossessiveYour;
+use super::pronoun_after_preposition::PronounAfterPreposition;
 use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
@@ -437,6 +438,7 @@ impl LintGroup {
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
         insert_expr_rule!(PossessiveYour, true);
+        insert_expr_rule!(PronounAfterPreposition, true);
         insert_struct_rule!(PronounContraction, true);
         insert_struct_rule!(PronounKnew, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);

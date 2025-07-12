@@ -112,8 +112,8 @@
 # NSg/V+     I/C+  D   NSg/V/J P  NSg/I NPr/J+ NPl+     VX    NSg/V/J P  D   NSg/J
 > number  of male   citizens twenty - one       years of age     in      such   State  . The actual
 # NSg/V/J P  NPr/J+ NPl+     NSg    . NSg/I/V/J NPl   P  N🅪Sg/V+ NPr/J/P NSg/I+ NSg/V+ . D   NSg/J
-> Enumeration shall be     made  within  three Years after the first   Meeting of the
-# N🅪Sg        VX    NSg/VX NSg/V NSg/J/P NSg   NPl+  J/P   D   NSg/V/J NSg/V   P  D
+> Enumeration shall be     made  within  three Years after   the first   Meeting of the
+# N🅪Sg        VX    NSg/VX NSg/V NSg/J/P NSg   NPl+  J/R/C/P D   NSg/V/J NSg/V   P  D
 > Congress of the United States   , and within  every subsequent Term    of ten  Years ,
 # NPr/V    P  D+  V/J+   NPrPl/V+ . V/C NSg/J/P D     NSg/J      NSg/V/J P  NSg+ NPl+  .
 > in      such  Manner as    they shall by      Law    direct . The Number  of Representatives shall
@@ -160,8 +160,8 @@
 # NPl          .
 >
 #
-> Immediately after they shall be     assembled in      Consequence of the first    Election ,
-# R           J/P   IPl+ VX    NSg/VX V/J       NPr/J/P NSg/V       P  D+  NSg/V/J+ NSg+     .
+> Immediately after   they shall be     assembled in      Consequence of the first    Election ,
+# R           J/R/C/P IPl+ VX    NSg/VX V/J       NPr/J/P NSg/V       P  D+  NSg/V/J+ NSg+     .
 > they shall be     divided as    equally as    may    be     into three Classes . The Seats of the
 # IPl+ VX    NSg/VX V/J     NSg/R R       NSg/R NPr/VX NSg/VX P    NSg   NPl/V+  . D   NPl/V P  D
 > Senators of the first    Class    shall be     vacated at    the Expiration of the second
@@ -347,7 +347,7 @@
 > Objections to that          House  in      which it       shall have   originated , who    shall enter the
 # NPl+       P  NSg/I/C/Ddem+ NPr/V+ NPr/J/P I/C+  NPr/ISg+ VX    NSg/VX V/J        . NPr/I+ VX    NSg/V D+
 > Objections at    large on  their Journal  , and proceed to reconsider it       . If    after
-# NPl        NSg/P NSg/J J/P D$+   NSg/V/J+ . V/C V       P  V          NPr/ISg+ . NSg/C J/P
+# NPl        NSg/P NSg/J J/P D$+   NSg/V/J+ . V/C V       P  V          NPr/ISg+ . NSg/C J/R/C/P
 > such  Reconsideration two thirds of that         House  shall agree to pass  the Bill   , it
 # NSg/I NSg             NSg NPl/V  P  NSg/I/C/Ddem NPr/V+ VX    V     P  NSg/V D+  NPr/V+ . NPr/ISg+
 > shall be     sent  , together with the Objections , to the other    House  , by      which it
@@ -362,8 +362,8 @@
 # C/P     D+  NPr/V+ VX    NSg/VX V/J     J/P D   NSg/V/J P  D+   NPr/V+ R+           . NSg/C
 > any    Bill   shall not   be     returned by      the President within  ten Days ( Sundays
 # I/R/D+ NPr/V+ VX    NSg/C NSg/VX V/J      NSg/J/P D+  NSg/V+    NSg/J/P NSg NPl  . NPl/V+
-> excepted ) after it       shall have   been  presented to him  , the Same shall be     a   Law   ,
-# V/J      . J/P   NPr/ISg+ VX    NSg/VX NSg/V V/J       P  ISg+ . D   I/J  VX    NSg/VX D/P NSg/V .
+> excepted ) after   it       shall have   been  presented to him  , the Same shall be     a   Law   ,
+# V/J      . J/R/C/P NPr/ISg+ VX    NSg/VX NSg/V V/J       P  ISg+ . D   I/J  VX    NSg/VX D/P NSg/V .
 > in      like        Manner as    if    he       had signed it      , unless the Congress by      their Adjournment
 # NPr/J/P NSg/V/J/C/P NSg+   NSg/R NSg/C NPr/ISg+ V   V/J    NPr/ISg . C      D   NPr/V    NSg/J/P D$+   NSg
 > prevent its     Return , in      which Case   it       shall not   be     a   Law    .
@@ -927,11 +927,11 @@
 > Congress shall decide the issue  , assembling within  forty - eight hours for that
 # NPr/V+   VX    V      D+  NSg/V+ . V          NSg/J/P NSg/J . NSg/J NPl   C/P NSg/I/C/Ddem+
 > purpose if    not   in      session . If    the Congress , within  twenty - one       days after
-# NSg/V+  NSg/C NSg/C NPr/J/P NSg/V+  . NSg/C D+  NPr/V+   . NSg/J/P NSg    . NSg/I/V/J NPl  J/P
+# NSg/V+  NSg/C NSg/C NPr/J/P NSg/V+  . NSg/C D+  NPr/V+   . NSg/J/P NSg    . NSg/I/V/J NPl  J/R/C/P
 > receipt of the latter written declaration , or    , if    Congress is not   in      session ,
 # NSg/V   P  D   NSg/J  V/J     NSg         . NPr/C . NSg/C NPr/V+   VL NSg/C NPr/J/P NSg/V+  .
-> within  twenty - one       days after Congress is required to assemble , determines by
-# NSg/J/P NSg    . NSg/I/V/J NPl  J/P   NPr/V+   VL V/J      P  V        . V          NSg/J/P
+> within  twenty - one       days after   Congress is required to assemble , determines by
+# NSg/J/P NSg    . NSg/I/V/J NPl  J/R/C/P NPr/V+   VL V/J      P  V        . V          NSg/J/P
 > two - thirds vote  of both Houses that         the President is unable  to discharge the
 # NSg . NPl/V  NSg/V P  I/C+ NPl/V+ NSg/I/C/Ddem D+  NSg/V+    VL NSg/V/J P  NSg/V     D+
 > powers  and duties of his     office , the Vice       President shall continue to discharge

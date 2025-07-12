@@ -1663,6 +1663,15 @@ Message: |
 
 
 
+Lint:    WordChoice (126 priority)
+Message: |
+    1658 | today. I think I may as well go in at once.” And in she went.
+         |                                                     ^~~ Use the correct pronoun form after prepositions.
+Suggest:
+  - Replace with: “her”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1663 | Then she went to work nibbling at the mushroom (she had kept a piece of it in
