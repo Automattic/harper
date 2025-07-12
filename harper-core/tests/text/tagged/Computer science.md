@@ -541,7 +541,7 @@
 > another ) and their fitness for a    specific application . Codes  are used for data
 # I/D+    . V/C D$+   NSg     C/P D/P+ NSg/J+   NSg+        . NPl/V+ V   V/J  C/P N🅪Pl+
 > compression , cryptography , error  detection and correction , and more      recently
-# NSg+        . NSg          . NSg/V+ NSg       V/C NSg+       . V/C NPr/I/V/J R
+# NSg+        . NSg          . NSg/V+ N🅪Sg      V/C NSg+       . V/C NPr/I/V/J R
 > also for network coding . Codes  are studied for the purpose of designing
 # W?   C/P NSg/V+  V+     . NPl/V+ V   V/J     C/P D   NSg/V   P  V
 > efficient and reliable data  transmission methods .
@@ -621,7 +621,7 @@
 > Computer graphics is the study of digital visual contents and involves the
 # NSg/V+   NPl      VL D   NSg/V P  NSg/J   NSg/J  NPl/V+   V/C V        D+
 > synthesis and manipulation of image  data  . The study  is connected to many      other
-# NSg       V/C NSg          P  NSg/V+ N🅪Pl+ . D+  NSg/V+ VL V/J       P  NSg/I/J/D NSg/V/J
+# NSg       V/C N🅪Sg         P  NSg/V+ N🅪Pl+ . D+  NSg/V+ VL V/J       P  NSg/I/J/D NSg/V/J
 > fields  in      computer science , including computer vision , image  processing , and
 # NPrPl/V NPr/J/P NSg/V+   NSg/V+  . V         NSg/V+   NSg/V+ . NSg/V+ V+         . V/C
 > computational geometry , and is heavily applied in      the fields  of special effects
@@ -666,8 +666,8 @@
 # V     NPl/V+    P  V       V/C NSg/V J+         NPl+     . D/P NPr/V/J N🅪Sg  P
 > scientific computing is simulation of various processes , including computational
 # J+         NSg/V+    VL NSg        P  J+      NPl/V+    . V         J
-> fluid  dynamics , physical , electrical , and electronic systems and circuits , as
-# NSg/J+ NSgPl+   . NSg/J    . NSg/J      . V/C J          NPl+    V/C NPl/V    . NSg/R
+> fluid   dynamics , physical , electrical , and electronic systems and circuits , as
+# N🅪Sg/J+ NSgPl+   . NSg/J    . NSg/J      . V/C J          NPl+    V/C NPl/V    . NSg/R
 > well    as    societies and social situations ( notably war    games  ) along with their
 # NSg/V/J NSg/R NPl+      V/C NSg/J  W?         . R       NSg/V+ NPl/V+ . P     P    D$+
 > habitats , among many       others . Modern computers enable optimization of such
