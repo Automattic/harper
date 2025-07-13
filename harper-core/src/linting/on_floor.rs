@@ -55,7 +55,7 @@ impl ExprLinter for OnFloor {
     }
 
     fn description(&self) -> &'static str {
-        "A rule that looks for incorrect uses of the preposition `in` or `at` when telling position inside a building. It suggests replacing it with `on the floor`."
+        "This rule identifies incorrect uses of the prepositions `in` or `at` when referring to locations inside a building and recommends using `on the floor` instead."
     }
 }
 
