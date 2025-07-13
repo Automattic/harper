@@ -1,6 +1,5 @@
 use crate::CharStringExt;
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
 use crate::patterns::WordSet;
 use crate::{
@@ -48,8 +47,7 @@ impl ExprLinter for OnFloor {
                 span.get_content(source),
             )],
             message: format!(
-                "Corrects `{}` to `on` when talking about position inside a building",
-                incorrect_preposition
+                "Corrects `{incorrect_preposition}` to `on` when talking about position inside a building",
             )
             .to_string(),
             priority: 63,
