@@ -1,3 +1,12 @@
+Lint:    Miscellaneous (10 priority)
+Message: |
+       3 | This documents tests that different forms/variations of swears are tagged as such.
+         |      ^~~~~~~~~ Use an apostrophe and `s` to form a noun’s possessive.
+Suggest:
+  - Replace with: “document's”
+
+
+
 Lint:    Miscellaneous (63 priority)
 Message: |
        7 | One turd, two turds.

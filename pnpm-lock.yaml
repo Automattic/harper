@@ -107,6 +107,9 @@ importers:
       http-server:
         specifier: ^14.1.1
         version: 14.1.1
+      playwright-webextext:
+        specifier: ^0.0.4
+        version: 0.0.4(@playwright/test@1.52.0)(playwright@1.52.0)
       prettier:
         specifier: ^3.1.0
         version: 3.5.3
@@ -1320,6 +1323,7 @@ packages:
 
   '@crxjs/vite-plugin@2.0.0-beta.32':
     resolution: {integrity: sha512-FnEZFrmi4zWG+qPzz658riLIN6TTSOq/M8uEBcENUKoV/UOVUaPrTBjN3aTNOd+tMB7PlqYknKHZYddz/plRdQ==}
+    deprecated: Beta versions are no longer maintained. Please upgrade to the stable 2.0.0 release
 
   '@csstools/css-parser-algorithms@3.0.4':
     resolution: {integrity: sha512-Up7rBoV77rv29d3uKHUIVubz1BTcgyUK72IvCQAbfbMv584xHcGKCKbWh7i8hPrRJ7qU4Y8IO3IY9m+iTB7P3A==}
@@ -8679,6 +8683,18 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  playwright-webextext@0.0.4:
+    resolution: {integrity: sha512-B5uIZSRtH6wi5HPhEwbEkZxEoAY5bUKCjqVW2qCsAYWQTQZ4ULOfsyglI+gfiohxrAzHT+mtkZMXZvHTtunsDg==}
+    engines: {node: '20'}
+    peerDependencies:
+      '@playwright/test': '>=1.0.0'
+      playwright: '>=1.0.0'
+    peerDependenciesMeta:
+      '@playwright/test':
+        optional: true
+      playwright:
+        optional: true
+
   playwright@1.52.0:
     resolution: {integrity: sha512-JAwMNMBlxJ2oD1kce4KPtMkDeKGHQstdpFPcPH3maElAXon/QZeTvtsfXmTMRyO9TslfoYOXkSsvao2nE1ilTw==}
     engines: {node: '>=18'}
@@ -10245,8 +10261,8 @@ packages:
   third-party-web@0.26.5:
     resolution: {integrity: sha512-tDuKQJUTfjvi9Fcrs1s6YAQAB9mzhTSbBZMfNgtWNmJlHuoFeXO6dzBFdGeCWRvYL50jQGK0jPsBZYxqZQJ2SA==}
 
-  third-party-web@0.26.6:
-    resolution: {integrity: sha512-GsjP92xycMK8qLTcQCacgzvffYzEqe29wyz3zdKVXlfRD5Kz1NatCTOZEeDaSd6uCZXvGd2CNVtQ89RNIhJWvA==}
+  third-party-web@0.27.0:
+    resolution: {integrity: sha512-h0JYX+dO2Zr3abCQpS6/uFjujaOjA1DyDzGQ41+oFn9VW/ARiq9g5ln7qEP9+BTzDpOMyIfsfj4OvfgXAsMUSA==}
 
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
@@ -14023,7 +14039,7 @@ snapshots:
 
   '@paulirish/trace_engine@0.0.44':
     dependencies:
-      third-party-web: 0.26.6
+      third-party-web: 0.27.0
 
   '@php-wasm/node-polyfills@0.6.16': {}
 
@@ -22367,6 +22383,11 @@ snapshots:
 
   playwright-core@1.52.0: {}
 
+  playwright-webextext@0.0.4(@playwright/test@1.52.0)(playwright@1.52.0):
+    optionalDependencies:
+      '@playwright/test': 1.52.0
+      playwright: 1.52.0
+
   playwright@1.52.0:
     dependencies:
       playwright-core: 1.52.0
@@ -24183,7 +24204,7 @@ snapshots:
 
   third-party-web@0.26.5: {}
 
-  third-party-web@0.26.6: {}
+  third-party-web@0.27.0: {}
 
   through@2.3.8: {}
 

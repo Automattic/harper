@@ -23,6 +23,7 @@ mod correct_number_suffix;
 mod currency_placement;
 mod dashes;
 mod despite_of;
+mod discourse_markers;
 mod dot_initialisms;
 mod ellipsis_length;
 mod else_possessive;
@@ -36,6 +37,7 @@ mod have_pronoun;
 mod hedging;
 mod hereby;
 mod hop_hope;
+mod hope_youre;
 mod how_to;
 mod hyphenate_number_day;
 mod in_on_the_cards;
@@ -54,12 +56,14 @@ mod lint_group;
 mod lint_kind;
 mod long_sentences;
 mod map_phrase_linter;
+mod map_phrase_set_linter;
 mod merge_linters;
 mod merge_words;
 mod modal_of;
 mod most_number;
 mod multiple_sequential_pronouns;
 mod nail_on_the_head;
+mod no_match_for;
 mod no_oxford_comma;
 mod nobody;
 mod nominal_wants;
@@ -75,12 +79,16 @@ mod oxford_comma;
 mod oxymorons;
 mod phrasal_verb_as_compound_noun;
 mod phrase_corrections;
+mod phrase_set_corrections;
 mod pique_interest;
+mod possessive_noun;
 mod possessive_your;
 mod pronoun_contraction;
 mod pronoun_inflection_be;
 mod pronoun_knew;
 mod proper_noun_capitalization_linters;
+mod redundant_additive_adverbs;
+mod regionalisms;
 mod repeated_words;
 mod save_to_safe;
 mod sentence_capitalization;
@@ -96,6 +104,7 @@ mod that_which;
 mod the_how_why;
 mod the_my;
 mod then_than;
+mod thing_think;
 mod throw_rubbish;
 mod touristic;
 mod unclosed_quotes;
@@ -127,6 +136,7 @@ pub use correct_number_suffix::CorrectNumberSuffix;
 pub use currency_placement::CurrencyPlacement;
 pub use dashes::Dashes;
 pub use despite_of::DespiteOf;
+pub use discourse_markers::DiscourseMarkers;
 pub use dot_initialisms::DotInitialisms;
 pub use ellipsis_length::EllipsisLength;
 pub use everyday::Everyday;
@@ -153,11 +163,13 @@ pub use lint_group::{LintGroup, LintGroupConfig};
 pub use lint_kind::LintKind;
 pub use long_sentences::LongSentences;
 pub use map_phrase_linter::MapPhraseLinter;
+pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use merge_words::MergeWords;
 pub use modal_of::ModalOf;
 pub use most_number::MostNumber;
 pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
 pub use nail_on_the_head::NailOnTheHead;
+pub use no_match_for::NoMatchFor;
 pub use no_oxford_comma::NoOxfordComma;
 pub use nobody::Nobody;
 pub use noun_instead_of_verb::NounInsteadOfVerb;
@@ -171,9 +183,12 @@ pub use oxford_comma::OxfordComma;
 pub use oxymorons::Oxymorons;
 pub use phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 pub use pique_interest::PiqueInterest;
+pub use possessive_noun::PossessiveNoun;
 pub use possessive_your::PossessiveYour;
 pub use pronoun_contraction::PronounContraction;
 pub use pronoun_inflection_be::PronounInflectionBe;
+pub use redundant_additive_adverbs::RedundantAdditiveAdverbs;
+pub use regionalisms::Regionalisms;
 pub use repeated_words::RepeatedWords;
 pub use save_to_safe::SaveToSafe;
 pub use sentence_capitalization::SentenceCapitalization;
@@ -189,6 +204,7 @@ pub use that_which::ThatWhich;
 pub use the_how_why::TheHowWhy;
 pub use the_my::TheMy;
 pub use then_than::ThenThan;
+pub use thing_think::ThingThink;
 pub use throw_rubbish::ThrowRubbish;
 pub use touristic::Touristic;
 pub use unclosed_quotes::UnclosedQuotes;
@@ -204,7 +220,7 @@ use crate::{Document, LSend, render_markdown};
 
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
-/// Commonly implemented via [`PatternLinter`].
+/// Commonly implemented via [`ExprLinter`].
 ///
 /// See also: [`LintGroup`].
 pub trait Linter: LSend {
@@ -236,7 +252,13 @@ pub mod tests {
     use hashbrown::HashSet;
 
     use super::Linter;
-    use crate::{Document, FstDictionary, parsers::PlainEnglish};
+    use crate::spell::FstDictionary;
+    use crate::{Document, parsers::PlainEnglish};
+
+    #[track_caller]
+    pub fn assert_no_lints(text: &str, mut linter: impl Linter) {
+        assert_lint_count(text, linter, 0);
+    }
 
     #[track_caller]
     pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {

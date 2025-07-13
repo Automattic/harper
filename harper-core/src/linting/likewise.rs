@@ -14,7 +14,7 @@ impl Default for Likewise {
 
         expr.add(SequenceExpr::aco("like").then_whitespace().t_aco("wise"));
         expr.add(
-            SequenceExpr::default().if_not_then_step_one(
+            SequenceExpr::default().then_unless(
                 SequenceExpr::default()
                     .then_anything()
                     .then_whitespace()

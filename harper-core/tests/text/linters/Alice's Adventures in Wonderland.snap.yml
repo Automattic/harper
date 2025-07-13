@@ -1523,6 +1523,15 @@ Suggest:
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+    1304 | I’m angry. Therefore I’m mad.”
+         |            ^~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1348 | like ears and the roof was thatched with fur. It was so large a house, that she
@@ -2701,6 +2710,15 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (10 priority)
+Message: |
+    2420 | “How the creatures order one about, and make one repeat lessons!” thought Alice;
+         |          ^~~~~~~~~ Use an apostrophe and `s` to form a noun’s possessive.
+Suggest:
+  - Replace with: “creature's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
@@ -2806,9 +2824,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Sop”
-  - Replace with: “Soho”
-  - Replace with: “Soto”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
+  - Replace with: “Soy”
 
 
 
@@ -2839,9 +2857,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Sop”
-  - Replace with: “Soho”
-  - Replace with: “Soto”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
+  - Replace with: “Soy”
 
 
 
@@ -2862,9 +2880,9 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
-  - Replace with: “Sop”
-  - Replace with: “Soho”
-  - Replace with: “Soto”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
+  - Replace with: “Soy”
 
 
 
@@ -2916,9 +2934,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Sop”
-  - Replace with: “Soho”
-  - Replace with: “Soto”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
+  - Replace with: “Soy”
 
 
 
@@ -2949,9 +2967,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Sop”
-  - Replace with: “Soho”
-  - Replace with: “Soto”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
+  - Replace with: “Soy”
 
 
 
@@ -2972,9 +2990,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
-  - Replace with: “Sop”
-  - Replace with: “Soho”
-  - Replace with: “Soto”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
+  - Replace with: “Soy”
 
 
 
@@ -3047,9 +3065,9 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Sop”
-  - Replace with: “Soho”
-  - Replace with: “Soto”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
+  - Replace with: “Soy”
 
 
 

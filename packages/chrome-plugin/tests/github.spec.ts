@@ -1,48 +1,18 @@
-import type { Locator, Page } from '@playwright/test';
-import type { Box } from '../src/Box';
-import { expect, test } from './fixtures';
-import { clickHarperHighlight, getHarperHighlights, replaceEditorContent } from './testUtils';
+import { test } from './fixtures';
+import {
+	assertHarperHighlightBoxes,
+	clickHarperHighlight,
+	getHarperHighlights,
+	getTextarea,
+	replaceEditorContent,
+	testBasicSuggestionTextarea,
+	testCanIgnoreTextareaSuggestion,
+} from './testUtils';
 
 const TEST_PAGE_URL = 'http://localhost:8081/github_textarea.html';
 
-/** Grab the first `<textarea />` on a page. */
-function getTextarea(page: Page): Locator {
-	return page.locator('textarea');
-}
-
-test('Can apply basic suggestion.', async ({ page }) => {
-	await page.goto(TEST_PAGE_URL);
-
-	const editor = getTextarea(page);
-	await replaceEditorContent(editor, 'This is an test');
-
-	await page.waitForTimeout(6000);
-
-	await clickHarperHighlight(page);
-	await page.getByTitle('Replace with "a"').click();
-
-	await page.waitForTimeout(3000);
-
-	expect(editor).toHaveValue('This is a test');
-});
-
-test('Can ignore suggestion.', async ({ page }) => {
-	await page.goto(TEST_PAGE_URL);
-
-	const editor = getTextarea(page);
-	await replaceEditorContent(editor, 'This is an test');
-
-	await page.waitForTimeout(6000);
-
-	await clickHarperHighlight(page);
-	await page.getByTitle('Ignore this lint').click();
-
-	await page.waitForTimeout(3000);
-
-	// Nothing should change.
-	expect(editor).toHaveValue('This is an test');
-	expect(await clickHarperHighlight(page)).toBe(false);
-});
+testBasicSuggestionTextarea(TEST_PAGE_URL);
+testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
 
 test('Wraps correctly', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);
@@ -61,12 +31,16 @@ test('Wraps correctly', async ({ page }) => {
 	]);
 });
 
-async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
-	const highlights = getHarperHighlights(page);
+test('Scrolls correctly', async ({ page }) => {
+	await page.goto(TEST_PAGE_URL);
 
-	expect(await highlights.count()).toBe(boxes.length);
+	const editor = getTextarea(page);
+	await replaceEditorContent(
+		editor,
+		'This is a test of the the Harper grammar checker, specifically if \n\n\n\n\n\n\n\n\n\n\n\n\nit scrolls beyo nd the height of the buffer.',
+	);
 
-	for (let i = 0; i < (await highlights.count()); i++) {
-		expect(await highlights.nth(i).boundingBox()).toStrictEqual(boxes[i]);
-	}
-}
+	await page.waitForTimeout(6000);
+
+	await assertHarperHighlightBoxes(page, [{ width: 58.828125, x: 117.40625, y: 161, height: 18 }]);
+});

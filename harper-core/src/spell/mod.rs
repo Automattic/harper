@@ -1,3 +1,6 @@
+//! Contains the relevant code for performing dictionary lookups and spellchecking (i.e. fuzzy
+//! dictionary lookups).
+
 use crate::{CharString, CharStringExt, WordMetadata};
 
 pub use self::dictionary::Dictionary;

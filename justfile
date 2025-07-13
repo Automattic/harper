@@ -131,7 +131,28 @@ test-chrome-plugin: build-chrome-plugin
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
   pnpm playwright install
-  pnpm test
+
+  # For environments without displays like CI servers or containers
+  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
+    xvfb-run --auto-servernum pnpm test --project chromium
+  else
+    pnpm test --project chromium
+  fi
+
+test-firefox-plugin: build-firefox-plugin
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  pnpm install
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+  pnpm playwright install
+  # For environments without displays like CI servers or containers
+  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
+    xvfb-run --auto-servernum pnpm test --project firefox
+  else
+    pnpm test --project firefox 
+  fi
+
 
 # Run VSCode plugin unit and integration tests.
 test-vscode:
@@ -268,7 +289,7 @@ dogfood:
   done
 
 # Test everything.
-test: test-harperjs test-vscode test-obsidian test-chrome-plugin
+test: test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
   cargo test
 
 # Use `harper-cli` to parse a provided file and print out the resulting tokens.
@@ -414,13 +435,13 @@ registerlinter module name:
 
   sed -i "/pub use an_a::AnA;/a pub use {{module}}::{{name}};" "$D/mod.rs"
   sed -i "/use super::an_a::AnA;/a use super::{{module}}::{{name}};" "$D/lint_group.rs"
-  sed -i "/insert_pattern_rule!(ChockFull, true);/a \ \ \ \ insert_struct_rule!({{name}}, true);" "$D/lint_group.rs"
+  sed -i "/insert_expr_rule!(ChockFull, true);/a \ \ \ \ insert_struct_rule!({{name}}, true);" "$D/lint_group.rs"
   just format
 
-# Print affixes and their descriptions from affixes.json
+# Print affixes and their descriptions from annotations.json
 printaffixes:
   #! /usr/bin/env node
-  const affixesData = require('{{justfile_directory()}}/harper-core/affixes.json');
+  const affixesData = require('{{justfile_directory()}}/harper-core/annotations.json');
   const allAffixes = {
     ...affixesData.affixes || {},
     ...affixesData.properties || {}
@@ -487,8 +508,8 @@ newest-dict-changes *numCommits:
       if (showDiff) console.log(`DIFFSTART\n${diffString}\nDIFFEND`);
 
       // uncomment first line to use in justfile, comment out second line to use standalone
-      const affixes = require('{{justfile_directory()}}/harper-core/affixes.json').affixes;
-      // const affixes = require('./harper-core/affixes.json').affixes;
+      const affixes = require('{{justfile_directory()}}/harper-core/annotations.json').affixes;
+      // const affixes = require('./harper-core/annotations.json').affixes;
 
       diffString.split("\n").forEach(line => {
         const match = line.match(/^(?:\[-(.*?)-\])?(?:\{\+(.*?)\+\})?$/);

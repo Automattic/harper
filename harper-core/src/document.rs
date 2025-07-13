@@ -9,10 +9,9 @@ use crate::expr::{Expr, ExprExt, LongestMatchOf, Repeating, SequenceExpr};
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
 use crate::patterns::WordSet;
 use crate::punctuation::Punctuation;
+use crate::spell::{Dictionary, FstDictionary};
 use crate::vec_ext::VecExt;
-use crate::{
-    Dictionary, FatStringToken, FatToken, FstDictionary, Lrc, Token, TokenKind, TokenStringExt,
-};
+use crate::{FatStringToken, FatToken, Lrc, Token, TokenKind, TokenStringExt};
 use crate::{OrdinalSuffix, Span};
 
 /// A document containing some amount of lexed and parsed English text.

@@ -642,9 +642,9 @@ Message: |
      182 | Newell and Herbert A. Simon argued in 1975,
          |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Aw”
+  - Replace with: “Av”
+  - Replace with: “A”
   - Replace with: “Ab”
-  - Replace with: “Ac”
 
 
 
@@ -773,8 +773,8 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Hi”
-  - Replace with: “Ha”
+  - Replace with: “Ht”
+  - Replace with: “H”
   - Replace with: “He”
 
 
@@ -969,6 +969,15 @@ Suggest:
   - Replace with: “Hi”
   - Replace with: “CI”
   - Replace with: “MCI”
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+     360 | maintenance. For example software testing, systems engineering, technical debt
+         |              ^~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+Suggest:
+  - Insert “,”
 
 
 
@@ -1185,6 +1194,26 @@ Suggest:
   - Replace with: “got”
   - Replace with: “goo”
   - Replace with: “gore”
+
+
+
+Lint:    Miscellaneous (10 priority)
+Message: |
+     489 |   feature of objects is that an object's procedures can access and often modify
+     490 |   the data fields of the object with which they are associated. Thus
+         |       ^~~~ Use an apostrophe and `s` to form a noun’s possessive.
+Suggest:
+  - Replace with: “data's”
+
+
+
+Lint:    Punctuation (31 priority)
+Message: |
+     490 |   the data fields of the object with which they are associated. Thus
+         |                                                                 ^~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+     491 |   object-oriented computer programs are made out of objects that interact with
+Suggest:
+  - Insert “,”
 
 
 

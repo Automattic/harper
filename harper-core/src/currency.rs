@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::Number;
 
+/// A national or international currency
 #[derive(Debug, Is, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Hash)]
 pub enum Currency {
     // $

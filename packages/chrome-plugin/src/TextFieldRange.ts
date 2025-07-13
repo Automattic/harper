@@ -57,10 +57,17 @@ export default class TextFieldRange {
 			'borderBottomWidth',
 			'borderLeftWidth',
 			'boxSizing',
+			'overflowX',
+			'overflowY',
 		];
 		propertiesToCopy.forEach((prop) => {
 			this.mirror!.style[prop] = computed[prop];
 		});
+
+		if (this.field instanceof HTMLTextAreaElement) {
+			this.mirror.style.overflowX = 'auto';
+			this.mirror.style.overflowY = 'auto';
+		}
 
 		// Compute the absolute position of the field.
 		const fieldRect = this.field.getBoundingClientRect();

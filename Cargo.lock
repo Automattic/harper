@@ -814,7 +814,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "0.46.0"
+version = "0.50.0"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -840,11 +840,13 @@ dependencies = [
  "hashbrown 0.15.4",
  "serde",
  "serde_json",
+ "strum",
+ "strum_macros",
 ]
 
 [[package]]
 name = "harper-comments"
-version = "0.46.0"
+version = "0.50.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -856,6 +858,7 @@ dependencies = [
  "tree-sitter-bash",
  "tree-sitter-c",
  "tree-sitter-c-sharp",
+ "tree-sitter-clojure",
  "tree-sitter-cmake",
  "tree-sitter-cpp",
  "tree-sitter-go",
@@ -878,7 +881,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.46.0"
+version = "0.50.0"
 dependencies = [
  "ammonia",
  "bitflags 2.9.1",
@@ -915,7 +918,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.46.0"
+version = "0.50.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -926,7 +929,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.46.0"
+version = "0.50.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -937,7 +940,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.46.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -965,7 +968,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "0.46.0"
+version = "0.50.0"
 dependencies = [
  "hashbrown 0.15.4",
  "is-macro",
@@ -979,7 +982,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.46.0"
+version = "0.50.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -990,7 +993,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.46.0"
+version = "0.50.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -1009,7 +1012,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.46.0"
+version = "0.50.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -1313,13 +1316,24 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "2.9.0"
+version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cea70ddb795996207ad57735b50c5982d8844f38ba9ee5f1aedcfb708a2aa11e"
+checksum = "fe4cd85333e22411419a0bcae1297d25e58c9443848b11dc6a86fefe8c78a661"
 dependencies = [
  "equivalent",
  "hashbrown 0.15.4",
  "serde",
+]
+
+[[package]]
+name = "io-uring"
+version = "0.7.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b86e202f00093dcba4275d4636b93ef9dd75d025ae560d2521b45ea28ab49013"
+dependencies = [
+ "bitflags 2.9.1",
+ "cfg-if",
+ "libc",
 ]
 
 [[package]]
@@ -1473,9 +1487,9 @@ checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
 
 [[package]]
 name = "lru"
-version = "0.14.0"
+version = "0.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9f8cc7106155f10bdf99a6f379688f543ad6596a415375b36a59a054ceda1198"
+checksum = "86ea4e65087ff52f3862caff188d489f1fab49a0cb09e01b2e3f1a617b10aaed"
 dependencies = [
  "hashbrown 0.15.4",
 ]
@@ -2043,9 +2057,9 @@ checksum = "2b15c43186be67a4fd63bee50d0303afffcef381492ebe2c5d87f324e1b8815c"
 
 [[package]]
 name = "reqwest"
-version = "0.12.20"
+version = "0.12.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eabf4c97d9130e2bf606614eb937e86edac8292eaa6f422f995d7e8de1eb1813"
+checksum = "cbc931937e6ca3a06e3b6c0aa7841849b160a90351d6ab467a8b9b9959767531"
 dependencies = [
  "base64",
  "bytes",
@@ -2512,15 +2526,17 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"
-version = "1.45.1"
+version = "1.46.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75ef51a33ef1da925cea3e4eb122833cb377c61439ca401b770f54902b806779"
+checksum = "0cc3a2344dafbe23a245241fe8b09735b521110d30fcefbbd5feb1797ca35d17"
 dependencies = [
  "backtrace",
  "bytes",
+ "io-uring",
  "libc",
  "mio",
  "pin-project-lite",
+ "slab",
  "socket2",
  "tokio-macros",
  "windows-sys 0.52.0",
@@ -2776,6 +2792,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "67f06accca7b45351758663b8215089e643d53bd9a660ce0349314263737fcb0"
 dependencies = [
  "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-clojure"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4004884cc509449a1d78fa3e1f02b4e953d0a8065984445304795e72e885338c"
+dependencies = [
+ "cc",
+ "tree-sitter",
  "tree-sitter-language",
 ]
 
