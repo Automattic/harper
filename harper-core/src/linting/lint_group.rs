@@ -431,9 +431,9 @@ impl LintGroup {
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
         insert_struct_rule!(OnFloor, true);
-        insert_pattern_rule!(OneAndTheSame, true);
-        insert_pattern_rule!(OpenTheLight, true);
-        insert_pattern_rule!(OutOfDate, true);
+        insert_expr_rule!(OneAndTheSame, true);
+        insert_expr_rule!(OpenTheLight, true);
+        insert_expr_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
