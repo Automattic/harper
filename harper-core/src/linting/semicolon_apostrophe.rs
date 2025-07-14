@@ -5,8 +5,7 @@ use crate::{
     patterns::WordSet,
 };
 
-const CONTRACTION_AND_POSSESSIVE_ENDINGS: [&'static str; 7] =
-    ["d", "ll", "m", "re", "s", "t", "ve"];
+const CONTRACTION_AND_POSSESSIVE_ENDINGS: [&str; 7] = ["d", "ll", "m", "re", "s", "t", "ve"];
 
 pub struct SemicolonApostrophe {
     expr: Box<dyn Expr>,
