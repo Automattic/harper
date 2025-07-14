@@ -41,7 +41,6 @@ pub use mask::{Mask, Masker};
 pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
 pub use span::Span;
-pub use spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 pub use sync::{LSend, Lrc};
 pub use title_case::{make_title_case, make_title_case_str};
 pub use token::Token;
@@ -85,8 +84,9 @@ pub fn remove_overlaps(lints: &mut Vec<Lint>) {
 
 #[cfg(test)]
 mod tests {
+    use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document, FstDictionary,
+        Dialect, Document,
         linting::{LintGroup, Linter},
         remove_overlaps,
     };

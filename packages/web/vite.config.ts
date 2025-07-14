@@ -204,6 +204,10 @@ export default defineConfig({
 							],
 						},
 						{
+							title: 'Rust Reference',
+							to: 'https://docs.rs/harper-core/latest/harper_core/',
+						},
+						{
 							title: 'Rules',
 							to: '/docs/rules',
 						},

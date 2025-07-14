@@ -16,18 +16,21 @@ pub struct SequenceExpr {
 macro_rules! gen_then_from_is {
     ($quality:ident) => {
         paste! {
+            #[doc = concat!("Adds a step matching a token where [`TokenKind::is_", stringify!($quality), "()`] returns true.")]
             pub fn [< then_$quality >] (self) -> Self{
                 self.then(|tok: &Token, _source: &[char]| {
                     tok.kind.[< is_$quality >]()
                 })
             }
 
+            #[doc = concat!("Adds a step matching one or more consecutive tokens where [`TokenKind::is_", stringify!($quality), "()`] returns true.")]
             pub fn [< then_one_or_more_$quality s >] (self) -> Self{
                 self.then_one_or_more(Box::new(|tok: &Token, _source: &[char]| {
                     tok.kind.[< is_$quality >]()
                 }))
             }
 
+            #[doc = concat!("Adds a step matching a token where [`TokenKind::is_", stringify!($quality), "()`] returns false.")]
             pub fn [< then_anything_but_$quality >] (self) -> Self{
                 self.then(|tok: &Token, _source: &[char]| {
                     if tok.kind.[< is_$quality >](){
@@ -71,6 +74,7 @@ impl Expr for SequenceExpr {
 }
 
 impl SequenceExpr {
+    /// Push an [expression](Expr) to the operation list.
     pub fn then(mut self, expr: impl Expr + 'static) -> Self {
         self.exprs.push(Box::new(expr));
         self
@@ -83,11 +87,13 @@ impl SequenceExpr {
     }
 
     /// Appends the steps in `other` onto the end of `self`.
-    pub fn then_expr(mut self, mut other: Self) -> Self {
+    /// This is more efficient than [`Self::then`] because it avoids pointer redirection.
+    pub fn then_seq(mut self, mut other: Self) -> Self {
         self.exprs.append(&mut other.exprs);
         self
     }
 
+    /// Push an [`IndefiniteArticle`] to the end of the operation list.
     pub fn then_indefinite_article(self) -> Self {
         self.then(IndefiniteArticle::default())
     }
@@ -102,6 +108,7 @@ impl SequenceExpr {
         Self::any_capitalization_of(word)
     }
 
+    /// Construct a new sequence with a [`Word`] at the beginning of the operation list.
     pub fn any_capitalization_of(word: &'static str) -> Self {
         Self::default().then_any_capitalization_of(word)
     }
@@ -141,48 +148,73 @@ impl SequenceExpr {
     }
 
     /// Create a new condition that will step one token forward if met.
-    pub fn if_not_then_step_one(self, condition: impl Expr + 'static) -> Self {
+    /// If the condition is _not_ met, the whole expression returns `None`.
+    ///
+    /// This can be used to build out exceptions to other rules.
+    ///
+    /// See [`UnlessStep`] for more info.
+    pub fn then_unless(self, condition: impl Expr + 'static) -> Self {
         self.then(UnlessStep::new(condition, |_tok: &Token, _src: &[char]| {
             true
         }))
     }
 
+    /// Match any single token.
+    ///
+    /// Shorthand for [`Self::then_anything`].
     pub fn t_any(self) -> Self {
         self.then_anything()
     }
 
+    /// Match any single token.
+    ///
+    /// See [`AnyPattern`] for more info.
     pub fn then_anything(self) -> Self {
         self.then(AnyPattern)
     }
 
-    gen_then_from_is!(nominal);
+    // POS - Nominals - Nouns
     gen_then_from_is!(noun);
-    gen_then_from_is!(possessive_nominal);
-    gen_then_from_is!(plural_nominal);
-    gen_then_from_is!(verb);
-    gen_then_from_is!(auxiliary_verb);
-    gen_then_from_is!(linking_verb);
-    gen_then_from_is!(pronoun);
-    gen_then_from_is!(punctuation);
-    gen_then_from_is!(conjunction);
-    gen_then_from_is!(comma);
-    gen_then_from_is!(period);
-    gen_then_from_is!(number);
-    gen_then_from_is!(case_separator);
-    gen_then_from_is!(adverb);
-    gen_then_from_is!(adjective);
-    gen_then_from_is!(apostrophe);
-    gen_then_from_is!(hyphen);
-    gen_then_from_is!(determiner);
     gen_then_from_is!(proper_noun);
-    gen_then_from_is!(preposition);
+
+    // POS - Nominals - Pronouns
+    gen_then_from_is!(pronoun);
     gen_then_from_is!(third_person_pronoun);
     gen_then_from_is!(third_person_singular_pronoun);
     gen_then_from_is!(third_person_plural_pronoun);
     gen_then_from_is!(first_person_singular_pronoun);
     gen_then_from_is!(first_person_plural_pronoun);
     gen_then_from_is!(second_person_pronoun);
+
+    // POS - Nominals
+    gen_then_from_is!(nominal);
+    gen_then_from_is!(possessive_nominal);
+    gen_then_from_is!(plural_nominal);
     gen_then_from_is!(non_plural_nominal);
+
+    // POS - Verbs
+    gen_then_from_is!(verb);
+    gen_then_from_is!(auxiliary_verb);
+    gen_then_from_is!(linking_verb);
+
+    // POS - Other
+    gen_then_from_is!(adverb);
+    gen_then_from_is!(adjective);
+    gen_then_from_is!(conjunction);
+    gen_then_from_is!(determiner);
+    gen_then_from_is!(preposition);
+
+    // Punctuation
+    gen_then_from_is!(punctuation);
+    gen_then_from_is!(apostrophe);
+    gen_then_from_is!(comma);
+    gen_then_from_is!(hyphen);
+    gen_then_from_is!(period);
+    gen_then_from_is!(semicolon);
+
+    // Other
+    gen_then_from_is!(number);
+    gen_then_from_is!(case_separator);
 }
 
 impl<S> From<S> for SequenceExpr

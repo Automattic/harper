@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
@@ -16,8 +17,7 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
-    MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata, remove_overlaps,
+    CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_pos_utils::{BrillChunker, BrillTagger};
@@ -45,8 +45,12 @@ enum Args {
         count: bool,
         /// Restrict linting to only a specific set of rules.
         /// If omitted, `harper-cli` will run every rule.
-        #[arg(short, long, value_delimiter = ',')]
-        only_lint_with: Option<Vec<String>>,
+        #[arg(long, value_delimiter = ',')]
+        ignore: Option<Vec<String>>,
+        /// Restrict linting to only a specific set of rules.
+        /// If omitted, `harper-cli` will run every rule.
+        #[arg(long, value_delimiter = ',')]
+        only: Option<Vec<String>>,
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]
         dialect: Dialect,
@@ -145,7 +149,8 @@ fn main() -> anyhow::Result<()> {
         Args::Lint {
             input,
             count,
-            only_lint_with,
+            ignore,
+            only,
             dialect,
             user_dict_path,
             file_dict_path,
@@ -176,11 +181,17 @@ fn main() -> anyhow::Result<()> {
 
             let mut linter = LintGroup::new_curated(Arc::new(merged_dict), dialect);
 
-            if let Some(rules) = only_lint_with {
+            if let Some(rules) = only {
                 linter.set_all_rules_to(Some(false));
 
                 for rule in rules {
                     linter.config.set_rule_enabled(rule, true);
+                }
+            }
+
+            if let Some(rules) = ignore {
+                for rule in rules {
+                    linter.config.set_rule_enabled(rule, false);
                 }
             }
 

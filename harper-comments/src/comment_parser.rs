@@ -1,11 +1,12 @@
 use std::path::Path;
 
+use crate::comment_parsers;
 use comment_parsers::{Go, JavaDoc, JsDoc, Solidity, Unit};
+use harper_core::Token;
 use harper_core::parsers::{self, MarkdownOptions, Parser};
-use harper_core::{MutableDictionary, Token};
+use harper_core::spell::MutableDictionary;
 use tree_sitter::Node;
 
-use crate::comment_parsers;
 use crate::masker::CommentMasker;
 
 pub struct CommentParser {

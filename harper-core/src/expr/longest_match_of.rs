@@ -1,6 +1,6 @@
 use crate::{Span, Token, expr::Expr};
 
-/// A [`Step`] that returns the farthest offset of the longest match in a list of expressions.
+/// An [`Expr`] that returns the farthest offset of the longest match in a list of expressions.
 #[derive(Default)]
 pub struct LongestMatchOf {
     exprs: Vec<Box<dyn Expr>>,

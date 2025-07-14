@@ -64,7 +64,8 @@
 //! - All other token kinds are denoted by their variant name.
 use std::borrow::Cow;
 
-use harper_core::{Degree, Dialect, Document, FstDictionary, TokenKind, WordMetadata};
+use harper_core::spell::FstDictionary;
+use harper_core::{Degree, Dialect, Document, TokenKind, WordMetadata};
 
 mod snapshot;
 

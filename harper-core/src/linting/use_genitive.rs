@@ -43,7 +43,7 @@ impl UseGenitive {
 
         // Add a prelude to remove false-positives.
         let full_pattern = SequenceExpr::default()
-            .if_not_then_step_one(LongestMatchOf::new(vec![
+            .then_unless(LongestMatchOf::new(vec![
                 Box::new(SequenceExpr::default().t_aco("is")),
                 Box::new(SequenceExpr::default().t_aco("were")),
                 Box::new(SequenceExpr::default().then_adjective()),

@@ -1,9 +1,9 @@
-//! [`Pattern`]s are one of the more powerful ways to query text inside Harper, especially for beginners.
+//! [`Pattern`]s are one of the more powerful ways to query text inside Harper, especially for beginners. They are a simplified abstraction over [`Expr`](crate::expr::Expr).
 //!
-//! Through the [`PatternLinter`](crate::linting::PatternLinter) trait, they make it much easier to
+//! Through the [`ExprLinter`](crate::linting::ExprLinter) trait, they make it much easier to
 //! build Harper [rules](crate::linting::Linter).
 //!
-//! See the page about [`SequencePattern`] for a concrete example of their use.
+//! See the page about [`SequenceExpr`](crate::expr::SequenceExpr) for a concrete example of their use.
 
 use crate::{Document, LSend, Span, Token};
 

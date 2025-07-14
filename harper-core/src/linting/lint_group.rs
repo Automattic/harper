@@ -81,6 +81,7 @@ use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
 use super::save_to_safe::SaveToSafe;
+use super::semicolon_apostrophe::SemicolonApostrophe;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::since_duration::SinceDuration;
@@ -107,9 +108,9 @@ use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, Oxf
 use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, initialisms, phrase_corrections};
+use crate::linting::{closed_compounds, initialisms, phrase_corrections, phrase_set_corrections};
+use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
-use crate::{Dictionary, MutableDictionary};
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
@@ -366,6 +367,7 @@ impl LintGroup {
         }
 
         out.merge_from(&mut phrase_corrections::lint_group());
+        out.merge_from(&mut phrase_set_corrections::lint_group());
         out.merge_from(&mut proper_noun_capitalization_linters::lint_group(
             dictionary.clone(),
         ));
@@ -443,6 +445,7 @@ impl LintGroup {
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);
+        insert_expr_rule!(SemicolonApostrophe, true);
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SomewhatSomething, true);
@@ -569,9 +572,9 @@ impl Linter for LintGroup {
 mod tests {
     use std::sync::Arc;
 
-    use crate::{Dialect, Document, FstDictionary, MutableDictionary, linting::Linter};
-
     use super::LintGroup;
+    use crate::spell::{FstDictionary, MutableDictionary};
+    use crate::{Dialect, Document, linting::Linter};
 
     #[test]
     fn can_get_all_descriptions() {

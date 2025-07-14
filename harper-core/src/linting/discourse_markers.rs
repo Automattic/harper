@@ -48,7 +48,7 @@ impl DiscourseMarkers {
             expr: SequenceExpr::default()
                 .then(phrases_expr)
                 .t_ws()
-                .if_not_then_step_one(UPOSSet::new(&[UPOS::ADJ, UPOS::ADV, UPOS::ADP])),
+                .then_unless(UPOSSet::new(&[UPOS::ADJ, UPOS::ADV, UPOS::ADP])),
         }
     }
 
