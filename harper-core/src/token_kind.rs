@@ -184,6 +184,10 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Comma))
     }
 
+    pub fn is_semicolon(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Semicolon))
+    }
+
     // Miscellaneous is-methods
 
     /// Checks whether a token is word-like--meaning it is more complex than punctuation and can

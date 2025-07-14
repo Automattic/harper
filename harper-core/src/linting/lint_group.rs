@@ -80,6 +80,7 @@ use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
 use super::save_to_safe::SaveToSafe;
+use super::semicolon_apostrophe::SemicolonApostrophe;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::since_duration::SinceDuration;
@@ -442,6 +443,7 @@ impl LintGroup {
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);
+        insert_expr_rule!(SemicolonApostrophe, true);
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SomewhatSomething, true);
