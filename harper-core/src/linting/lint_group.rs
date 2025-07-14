@@ -55,6 +55,7 @@ use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
 use super::merge_words::MergeWords;
+use super::missing_preposition::MissingPreposition;
 use super::modal_of::ModalOf;
 use super::most_number::MostNumber;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
@@ -390,6 +391,7 @@ impl LintGroup {
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
         insert_expr_rule!(DoubleModal, true);
+        insert_expr_rule!(MissingPreposition, true);
         insert_struct_rule!(DiscourseMarkers, true);
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(HavePronoun, true);

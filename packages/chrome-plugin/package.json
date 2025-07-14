@@ -3,7 +3,7 @@
 	"displayName": "chrome-plugin",
 	"version": "0.50.0",
 	"author": "no one",
-	"description": "A private grammar checker for 21st Century English",
+	"description": "The private grammar checker for 21st Century English",
 	"type": "module",
 	"license": "Apache-2.0",
 	"keywords": ["chrome-extension", "svelte", "vite", "create-chrome-ext"],

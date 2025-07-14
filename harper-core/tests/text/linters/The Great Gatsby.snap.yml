@@ -6969,6 +6969,13 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5405 | “We were close friends.”
+         |     ^~~~~ You may be missing a preposition here.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5412 | “If he’d of lived, he’d of been a great man. A man like James J. Hill. He’d of
