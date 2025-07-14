@@ -52,7 +52,7 @@ impl ExprLinter for DoubleModal {
 #[cfg(test)]
 mod tests {
     use super::DoubleModal;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn detects_might_could() {
@@ -106,6 +106,14 @@ mod tests {
             "We Must Should be consistent.",
             DoubleModal::default(),
             "We Must be consistent.",
+        );
+    }
+
+    #[test]
+    fn allows_will_need() {
+        assert_no_lints(
+            "You will need administrator or editor level access",
+            DoubleModal::default(),
         );
     }
 }
