@@ -2012,16 +2012,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-    1531 | puppyish, convivial way, girls were swooning backward playfully into men’s arms,
-    1532 | even into groups, knowing that some one would arrest their falls—but no one
-         |                                ^~~~~~~~ Did you mean the closed compound noun “someone”?
-Suggest:
-  - Replace with: “someone”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     1531 | puppyish, convivial way, girls were swooning backward playfully into men’s arms,
@@ -6545,16 +6535,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-    5181 | easier, surer way of finding out what he wanted to know. By half-past two he was
-    5182 | in West Egg, where he asked some one the way to Gatsby’s house. So by that time
-         |                             ^~~~~~~~ Did you mean the closed compound noun “someone”?
-Suggest:
-  - Replace with: “someone”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     5181 | easier, surer way of finding out what he wanted to know. By half-past two he was
@@ -7251,16 +7231,6 @@ Message: |
     5634 | over Gatsby’s books in the library one night three months before.
 Suggest:
   - Replace with: “marveling”
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-    5642 | message or a flower. Dimly I heard some one murmur “Blessed are the dead that
-         |                                    ^~~~~~~~ Did you mean the closed compound noun “someone”?
-    5643 | the rain falls on,” and then the owl-eyed man said “Amen to that,” in a brave
-Suggest:
-  - Replace with: “someone”
 
 
 

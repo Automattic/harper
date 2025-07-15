@@ -658,6 +658,14 @@
 				"determiner": {}
 			}
 		},
+		"q": {
+			"#": "quantifier property",
+			"metadata": {
+				"determiner": {
+					"is_quantifier": true
+				}
+			}
+		},
 		"R": {
 			"#": "adverb property",
 			"metadata": {

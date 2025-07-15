@@ -312,7 +312,7 @@ impl WordMetadata {
         // Singular and countable default to true, so their metadata queries are not generated.
         noun has proper, plural, mass, possessive.
         pronoun has personal, singular, plural, possessive, reflexive, subject, object.
-        determiner has demonstrative, possessive.
+        determiner has demonstrative, possessive, quantifier.
         verb has linking, auxiliary.
         conjunction has.
         adjective has.
@@ -522,6 +522,15 @@ impl WordMetadata {
         self.is_non_possessive_noun() || self.is_non_possessive_pronoun()
     }
 
+    // Determiner metadata queries
+
+    // Checks if the word is definitely a determiner and more specifically is labeled as (a) quantifier.
+    pub fn is_quantifier(&self) -> bool {
+        self.determiner.is_some()
+    }
+
+    // Other word metadata queries
+
     /// Checks whether a word is _definitely_ a swear.
     pub fn is_swear(&self) -> bool {
         matches!(self.swear, Some(true))
@@ -644,6 +653,7 @@ impl PronounData {
 pub struct DeterminerData {
     pub is_demonstrative: Option<bool>,
     pub is_possessive: Option<bool>,
+    pub is_quantifier: Option<bool>,
 }
 
 impl DeterminerData {
@@ -652,6 +662,7 @@ impl DeterminerData {
         Self {
             is_demonstrative: self.is_demonstrative.or(other.is_demonstrative),
             is_possessive: self.is_possessive.or(other.is_possessive),
+            is_quantifier: self.is_quantifier.or(other.is_quantifier),
         }
     }
 }
