@@ -12,7 +12,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"L": {
 			"#": "'-ment' suffix",
@@ -26,7 +27,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"E": {
 			"#": "'dis-' prefix",
@@ -40,7 +42,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"Y": {
 			"#": "'-ly' suffix",
@@ -287,7 +290,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"p": {
 			"#": "'-(i)ness' suffix",
@@ -311,10 +315,12 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"g": {
 			"#": "-'s possessive suffix; contraction of 'has' and 'is",
+			"//": "mnemonic: 'genitive' is a similar concept to 'possessive'",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -349,7 +355,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"B": {
 			"#": "'-able' suffix",
@@ -509,7 +516,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"f": {
 			"#": "'-ful' suffix",
@@ -561,7 +569,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"z": {
 			"#": "'-ings' suffix",
@@ -580,7 +589,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		}
 	},
 	"properties": {
@@ -621,6 +631,7 @@
 		},
 		"x": {
 			"#": "swear word property",
+			"//": "'xxx' used to be a placeholder for swear words",
 			"propagate": true,
 			"metadata": {
 				"swear": true
@@ -660,7 +671,8 @@
 			"#": "common word property",
 			"metadata": {
 				"common": true
-			}
+			},
+			"rename_ok": true
 		},
 		"P": {
 			"#": "preposition property",
@@ -750,6 +762,7 @@
 		},
 		".": {
 			"#": "singular pronoun property",
+			"//": "mnemonic: one dot",
 			"metadata": {
 				"pronoun": {
 					"is_singular": true
@@ -758,6 +771,7 @@
 		},
 		":": {
 			"#": "plural pronoun property",
+			"//": "mnemonic: multiple dots",
 			"metadata": {
 				"pronoun": {
 					"is_plural": true
@@ -778,17 +792,20 @@
 			"propagate": true,
 			"metadata": {
 				"dialects": "AMERICAN"
-			}
+			},
+			"rename_ok": true
 		},
 		"!": {
 			"#": "GB property",
 			"propagate": true,
 			"metadata": {
 				"dialects": "BRITISH"
-			}
+			},
+			"rename_ok": true
 		},
 		"@": {
 			"#": "CA property",
+			"//": "mnemonic: at symbol resembles an 'a' inside a 'C'",
 			"propagate": true,
 			"metadata": {
 				"dialects": "CANADIAN"
@@ -796,6 +813,7 @@
 		},
 		"_": {
 			"#": "AU property",
+			"//": "mnemonic: down under",
 			"propagate": true,
 			"metadata": {
 				"dialects": "AUSTRALIAN"
@@ -819,6 +837,7 @@
 		},
 		"5": {
 			"#": "possessive determiner property",
+			"//": "mnemonic: 5 looks like an 's'",
 			"metadata": {
 				"determiner": {
 					"is_possessive": true

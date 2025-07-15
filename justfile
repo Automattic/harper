@@ -438,19 +438,39 @@ registerlinter module name:
   sed -i "/insert_expr_rule!(ChockFull, true);/a \ \ \ \ insert_struct_rule!({{name}}, true);" "$D/lint_group.rs"
   just format
 
-# Print affixes and their descriptions from annotations.json
-printaffixes:
+# Print annotations and their descriptions from annotations.json
+alias printaffixes := printannotations
+
+printannotations:
   #! /usr/bin/env node
   const affixesData = require('{{justfile_directory()}}/harper-core/annotations.json');
-  const allAffixes = {
+  const allEntries = {
     ...affixesData.affixes || {},
     ...affixesData.properties || {}
   };
-  Object.entries(allAffixes).sort((a, b) => a[0].localeCompare(b[0])).forEach(([affix, fields]) => {
+  Object.entries(allEntries).sort((a, b) => a[0].localeCompare(b[0])).forEach(([flag, fields]) => {
     const description = fields['#'] || '';
-    description && console.log(affix + ': ' + description);
+    const comment = fields['//'] || null;
+    description && console.log(flag + ': ' + description + (comment ? '\t\t// ' + comment : ''));
   });
 
+  console.log('Available letters for new flags:', [...Array.from({length: 26}, (_, i) => 
+    [String.fromCharCode(65 + i), String.fromCharCode(97 + i)]
+  ).flat()].filter(letter => !Object.keys(allEntries).includes(letter)).sort().join(' '));
+  console.log('Available digits for new flags:', [...Array.from({length: 10}, (_, i) => 
+    String(i)
+  )].filter(digit => !Object.keys(allEntries).includes(digit)).sort().join(' '));
+  console.log('Available symbols for new flags:',
+    [...Array.from('!"#$%&\'()*+,-./:;<=>?@\[\\\]\^_`{|}~')]
+  .filter(symbol => !Object.keys(allEntries).includes(symbol)).sort().join(' '));
+  console.log('Available Latin-1 characters for new flags:'); 
+  [...Array.from({length: 256-160}, (_, i) => String.fromCharCode(160 + i))]
+    .filter(char => !Object.keys(allEntries).includes(char) && char.charCodeAt(0) !== 160 && char.charCodeAt(0) !== 173)
+    .sort()
+    .join(' ')
+    .match(/.{1,64}/g)
+    .forEach(line => console.log('  ' + line));
+    
 # Get the most recent changes to the curated dictionary. Includes an optional argument to specify the number of commits to look back. Defaults to 1.
 newest-dict-changes *numCommits:
   #! /usr/bin/env node
@@ -553,3 +573,45 @@ newest-dict-changes *numCommits:
       });
     });
   });
+
+# Suggest annotations for a potential new property annotation
+suggestannotation input:
+  #! /usr/bin/env node
+  const affixesData = require('{{justfile_directory()}}/harper-core/annotations.json');
+  const allEntries = {
+    ...affixesData.affixes || {},
+    ...affixesData.properties || {}
+  };
+  
+  // Get all used flags
+  const usedFlags = new Set(Object.keys(allEntries));
+  
+  // Process input string and check both cases
+  const input = '{{input}}';
+  const normalizedInput = input.replace(/\s/g, '');
+  const uniqueChars = [...new Set(normalizedInput.toUpperCase() + normalizedInput.toLowerCase())];
+  
+  console.log(`Checking input: "${input}"\n${'='.repeat(50)}`);
+  
+  // Check each character in input
+  const availableChars = [...new Set(uniqueChars)]
+    .filter(char => !usedFlags.has(char));
+  
+  if (availableChars.length > 0) {
+    console.log(`These characters of "${input}" are available to use for new annotations:`);
+    availableChars.forEach(char => console.log(`  '${char}' (${char.charCodeAt(0)})`));
+  } else {
+    const inputChars = new Set(normalizedInput.toLowerCase() + normalizedInput.toUpperCase());
+    const renamable = Object.entries(allEntries)
+      .filter(([flag, entry]) => entry.rename_ok && inputChars.has(flag))
+      .sort((a, b) => a[0].localeCompare(b[0]));
+    
+    if (renamable.length > 0) {
+      console.log(`None of the characters of "${input}" are available to use for new annotations, but these ones are OK to be moved to make way for new annotations:`);
+      renamable.forEach(([flag, entry]) => {
+        console.log(`  '${flag}': ${entry['#'] || 'No description'}${entry['//'] ? ` (${entry['//']})` : ''}`);
+      });
+    } else {
+      console.log(`None of the characters of "${input}" are available to use for new annotations, and none of them are OK to be moved to make way for new annotations.`);
+    }
+  }
