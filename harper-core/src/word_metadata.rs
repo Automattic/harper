@@ -510,6 +510,15 @@ impl WordMetadata {
         self.is_non_possessive_noun() || self.is_non_possessive_pronoun()
     }
 
+    // Determiner metadata queries
+
+    // Checks if the word is definitely a determiner and more specifically is labeled as (a) quantifier.
+    pub fn is_quantifier(&self) -> bool {
+        self.determiner.is_some()
+    }
+
+    // Other word metadata queries
+
     /// Checks whether a word is _definitely_ a swear.
     pub fn is_swear(&self) -> bool {
         matches!(self.swear, Some(true))

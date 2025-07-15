@@ -280,28 +280,20 @@ mod tests {
         assert!(
             dict.get_word_metadata_str("several")
                 .unwrap()
-                .is_quantifier_determiner()
+                .is_quantifier()
         );
     }
 
     #[test]
     fn few_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_word_metadata_str("few")
-                .unwrap()
-                .is_quantifier_determiner()
-        );
+        assert!(dict.get_word_metadata_str("few").unwrap().is_quantifier());
     }
 
     #[test]
     fn fewer_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_word_metadata_str("fewer")
-                .unwrap()
-                .is_quantifier_determiner()
-        );
+        assert!(dict.get_word_metadata_str("fewer").unwrap().is_quantifier());
     }
 
     #[test]
