@@ -2,7 +2,8 @@ use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
-use crate::{Lrc, TokenStringExt, patterns::WordSet};
+use crate::patterns::ModalVerb;
+use crate::{Lrc, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -16,15 +17,10 @@ impl Default for ModalOf {
         // Note 2. "had of" has trickier false positives and is less common anyway
         // "The only other report we've had of this kind of problem ..."
         // "The code I had of this used to work fine ..."
-        let modals = ["could", "might", "must", "should", "would"];
-        let mut words = WordSet::new(&modals);
-        modals.iter().for_each(|word| {
-            words.add(&format!("{word}n't"));
-        });
 
         let modal_of = Lrc::new(
             SequenceExpr::default()
-                .then(words)
+                .then(ModalVerb::default())
                 .then_whitespace()
                 .t_aco("of"),
         );
