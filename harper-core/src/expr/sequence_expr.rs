@@ -23,6 +23,13 @@ macro_rules! gen_then_from_is {
                 })
             }
 
+            #[doc = concat!("Adds an optional step matching a token where [`TokenKind::is_", stringify!($quality), "()`] returns true.")]
+            pub fn [< then_optional_$quality >] (self) -> Self{
+                self.then_optional(|tok: &Token, _source: &[char]| {
+                    tok.kind.[< is_$quality >]()
+                })
+            }
+
             #[doc = concat!("Adds a step matching one or more consecutive tokens where [`TokenKind::is_", stringify!($quality), "()`] returns true.")]
             pub fn [< then_one_or_more_$quality s >] (self) -> Self{
                 self.then_one_or_more(Box::new(|tok: &Token, _source: &[char]| {
@@ -173,34 +180,48 @@ impl SequenceExpr {
         self.then(AnyPattern)
     }
 
-    gen_then_from_is!(nominal);
+    // POS - Nominals - Nouns
     gen_then_from_is!(noun);
-    gen_then_from_is!(possessive_nominal);
-    gen_then_from_is!(plural_nominal);
-    gen_then_from_is!(verb);
-    gen_then_from_is!(auxiliary_verb);
-    gen_then_from_is!(linking_verb);
-    gen_then_from_is!(pronoun);
-    gen_then_from_is!(punctuation);
-    gen_then_from_is!(conjunction);
-    gen_then_from_is!(comma);
-    gen_then_from_is!(period);
-    gen_then_from_is!(number);
-    gen_then_from_is!(case_separator);
-    gen_then_from_is!(adverb);
-    gen_then_from_is!(adjective);
-    gen_then_from_is!(apostrophe);
-    gen_then_from_is!(hyphen);
-    gen_then_from_is!(determiner);
     gen_then_from_is!(proper_noun);
-    gen_then_from_is!(preposition);
+
+    // POS - Nominals - Pronouns
+    gen_then_from_is!(pronoun);
     gen_then_from_is!(third_person_pronoun);
     gen_then_from_is!(third_person_singular_pronoun);
     gen_then_from_is!(third_person_plural_pronoun);
     gen_then_from_is!(first_person_singular_pronoun);
     gen_then_from_is!(first_person_plural_pronoun);
     gen_then_from_is!(second_person_pronoun);
+
+    // POS - Nominals
+    gen_then_from_is!(nominal);
+    gen_then_from_is!(possessive_nominal);
+    gen_then_from_is!(plural_nominal);
     gen_then_from_is!(non_plural_nominal);
+
+    // POS - Verbs
+    gen_then_from_is!(verb);
+    gen_then_from_is!(auxiliary_verb);
+    gen_then_from_is!(linking_verb);
+
+    // POS - Other
+    gen_then_from_is!(adverb);
+    gen_then_from_is!(adjective);
+    gen_then_from_is!(conjunction);
+    gen_then_from_is!(determiner);
+    gen_then_from_is!(preposition);
+
+    // Punctuation
+    gen_then_from_is!(punctuation);
+    gen_then_from_is!(apostrophe);
+    gen_then_from_is!(comma);
+    gen_then_from_is!(hyphen);
+    gen_then_from_is!(period);
+    gen_then_from_is!(semicolon);
+
+    // Other
+    gen_then_from_is!(number);
+    gen_then_from_is!(case_separator);
 }
 
 impl<S> From<S> for SequenceExpr
