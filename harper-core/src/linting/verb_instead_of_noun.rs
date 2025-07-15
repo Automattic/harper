@@ -23,7 +23,6 @@ impl Default for VerbInsteadOfNoun {
             expr: Box::new(
                 SequenceExpr::default()
                     .then_adjective()
-                    // .then(|tok: &Token, _: &[char]| tok.kind.is_adjective() && !tok.kind.is_noun())
                     .then_whitespace()
                     .then(verbs.clone()),
             ),
