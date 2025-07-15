@@ -362,7 +362,7 @@ impl LintGroup {
         }
 
         /// Add an `ExprLinter` to the group, setting it to be enabled by default.
-        /// While you _can_ pass an `ExprLinter` to `insert_struct_rule`, using this micro instead
+        /// While you _can_ pass an `ExprLinter` to `insert_struct_rule`, using this macro instead
         /// will allow it to use more aggressive caching strategies.
         macro_rules! insert_expr_rule {
             ($rule:ident, $default_config:expr) => {
