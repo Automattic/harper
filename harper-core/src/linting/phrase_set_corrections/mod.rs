@@ -57,6 +57,16 @@ pub fn lint_group() -> LintGroup {
             "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
             "Corrects `adieu` to `ado`."
         ),
+        "ChampAtTheBit" => (
+            &[
+                ("chomp at the bit", "champ at the bit"),
+                ("chomped at the bit", "champed at the bit"),
+                ("chomping at the bit", "champing at the bit"),
+                ("chomps at the bit", "champs at the bit"),
+            ],
+            "The correct idiom is `champ at the bit`.",
+            "Corrects `chomp at the bit` to the idiom `champ at the bit`, which has an equestrian origin referring to the way an anxious horse grinds its teeth against the metal part of the bridle."
+        ),
         "ClientOrServerSide" => (
             &[
                 ("client's side", "client-side"),

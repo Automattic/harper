@@ -70,6 +70,7 @@ impl TokenKind {
         is_countable_noun,
         is_non_countable_noun,
         is_mass_noun,
+        is_mass_noun_only,
         is_non_mass_noun,
         is_singular_pronoun,
         is_plural_pronoun,
@@ -104,6 +105,8 @@ impl TokenKind {
         is_determiner,
         is_demonstrative_determiner,
         is_possessive_determiner,
+        is_quantifier,
+        is_non_quantifier_determiner,
 
         // Conjunction methods
         is_conjunction,
@@ -301,10 +304,10 @@ mod tests {
     }
 
     #[test]
-    fn traffic_is_mass_noun() {
+    fn traffic_is_mass_noun_only() {
         let doc = Document::new_plain_english_curated("traffic");
         let tk = &doc.tokens().next().unwrap().kind;
-        assert!(tk.is_mass_noun());
+        assert!(tk.is_mass_noun_only());
     }
 
     #[test]

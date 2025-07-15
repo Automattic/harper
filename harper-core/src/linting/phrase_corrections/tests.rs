@@ -1005,6 +1005,35 @@ fn corrects_points_of_view() {
 // RealTrouper
 // -none-
 
+// RedundantIIRC
+#[test]
+#[ignore = "The bug in replace_with_match_case erroneously generates `iiRC`."]
+fn correct_if_iirc_caps() {
+    assert_suggestion_result(
+        "This is due to the fact that if IIRC up to 2 processes mpirun will bind to core and then it will be socket.",
+        lint_group(),
+        "This is due to the fact that IIRC up to 2 processes mpirun will bind to core and then it will be socket.",
+    );
+}
+
+#[test]
+fn correct_if_iirc() {
+    assert_suggestion_result(
+        "if iirc getting it to work with the SQLite storage engine was turning into a whole project and we decided to punt it",
+        lint_group(),
+        "iirc getting it to work with the SQLite storage engine was turning into a whole project and we decided to punt it",
+    );
+}
+
+#[test]
+fn correct_iirc_correctly() {
+    assert_suggestion_result(
+        "IIRC correctly, someone on the Home Assistant forums went as far as discovering that RS-485 was being used.",
+        lint_group(),
+        "IIRC, someone on the Home Assistant forums went as far as discovering that RS-485 was being used.",
+    );
+}
+
 // RifeWith
 // -none-
 
