@@ -1,3 +1,4 @@
+use crate::Token;
 use crate::expr::Expr;
 use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
