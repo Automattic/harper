@@ -31,13 +31,11 @@ impl ExprLinter for LookingForwardTo {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], src: &[char]) -> Option<Lint> {
-        print!("matched_tokens: {}", matched_tokens.len());
         let span = matched_tokens.last()?.span;
         let verb = matched_tokens.last()?.span.get_content_string(src);
         if verb.ends_with("ing") {
             return None;
         }
-        let gerund_form: String;
 
         // TODO: create an utils function to handle the appending of -ing
         // to verbs, taking into account exceptions and irregular forms.
@@ -62,11 +60,13 @@ impl ExprLinter for LookingForwardTo {
         .cloned()
         .collect();
 
-        if verb.to_lowercase().ends_with('e') && !exception_word.contains(verb.as_str()) {
-            gerund_form = verb.trim_end_matches('e').to_string() + "ing";
-        } else {
-            gerund_form = format!("{verb}ing");
-        }
+        let gerund_form: String =
+            if verb.to_lowercase().ends_with('e') && !exception_word.contains(verb.as_str()) {
+                verb.trim_end_matches('e').to_string() + "ing"
+            } else {
+                format!("{verb}ing")
+            };
+
         println!("gerund_form: -{gerund_form}- -- verb: -{verb}-");
         Some(Lint {
             span,
