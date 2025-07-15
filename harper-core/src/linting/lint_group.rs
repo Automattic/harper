@@ -100,6 +100,7 @@ use super::throw_rubbish::ThrowRubbish;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
+use super::verb_instead_of_noun::VerbInsteadOfNoun;
 use super::very_unique::VeryUnique;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
@@ -469,6 +470,7 @@ impl LintGroup {
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UseGenitive, false);
+        insert_expr_rule!(VerbInsteadOfNoun, true);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(WasAloud, true);
         insert_expr_rule!(Whereas, true);

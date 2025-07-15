@@ -1977,7 +1977,7 @@
 > studies of him  . ” His     lips   moved silently for a    moment as    he       invented . “ ‘          George
 # NPl/V   P  ISg+ . . ISg/D$+ NPl/V+ V/J   R        C/P D/P+ NSg+   NSg/R NPr/ISg+ V/J+     . . Unlintable NPr+
 > B. Wilson at    the Gasoline Pump  , ’ or    something like        that         . ”
-# ?  NPr+   NSg/P D+  NSg/J+   NSg/V . . NPr/C NSg/I/V/J NSg/V/J/C/P NSg/I/C/Ddem . .
+# ?  NPr+   NSg/P D+  NᴹSg+    NSg/V . . NPr/C NSg/I/V/J NSg/V/J/C/P NSg/I/C/Ddem . .
 >
 #
 > Catherine leaned close   to me       and whispered in      my  ear      :
@@ -5283,7 +5283,7 @@
 >
 #
 > “ Does  the gasoline affect his     nose   ? ”
-# . NPl/V D   NSg/J    NSg/V  ISg/D$+ NSg/V+ . .
+# . NPl/V D   NᴹSg     NSg/V  ISg/D$+ NSg/V+ . .
 >
 #
 > “ I    don’t think so        , ” she  said innocently . “ Why   ? ”
@@ -7747,7 +7747,7 @@
 > while     in      silence . Then    as    Doctor T. J. Eckleburg’s faded eyes   came    into sight
 # NSg/V/C/P NPr/J/P NSg/V+  . NSg/J/C NSg/R NSg/V+ ?  ?  ?           J     NPl/V+ NSg/V/P P    NSg/V+
 > down      the road   , I    remembered Gatsby’s caution about gasoline .
-# NSg/V/J/P D+  NSg/J+ . ISg+ V/J        NSg$     NSg/V+  J/P   NSg/J+   .
+# NSg/V/J/P D+  NSg/J+ . ISg+ V/J        NSg$     NSg/V+  J/P   NᴹSg+    .
 >
 #
 > “ We’ve got enough to get   us       to town , ” said Tom    .

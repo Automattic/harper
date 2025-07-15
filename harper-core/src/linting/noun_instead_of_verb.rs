@@ -5,16 +5,7 @@ use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
-/// Common noun-verb pairs that are often confused
-const NOUN_VERB_PAIRS: &[(&str, &str)] = &[
-    ("advice", "advise"),
-    ("belief", "believe"),
-    ("breath", "breathe"),
-    ("effect", "affect"), // "Effect" is also a verb meaning "to bring about".
-    ("intent", "intend"),
-    // ("proof", "prove"),  // "Proof" is also a verb, a synonym of "proofread".
-    // Add more pairs here as needed
-];
+use super::noun_verb_pairs::NOUN_VERB_PAIRS;
 
 /// Pronouns that can come before verbs but not nouns
 const PRONOUNS: &[&str] = &["he", "I", "it", "she", "they", "we", "who", "you"];
