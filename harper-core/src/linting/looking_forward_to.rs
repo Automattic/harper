@@ -17,6 +17,7 @@ impl Default for LookingForwardTo {
         let pattern = SequenceExpr::default()
             .then(looking_forward_to)
             .t_ws()
+            // TODO: update the use the verb with progressive tense function later
             .then_verb();
 
         Self {
@@ -37,7 +38,7 @@ impl ExprLinter for LookingForwardTo {
             return None;
         }
 
-        // TODO: create an utils function to handle the appending of -ing
+        // TODO: create a util function to handle the appending of -ing
         // to verbs, taking into account exceptions and irregular forms.
         let exception_word: HashSet<&str> = [
             // Verbs ending in -ee
@@ -83,7 +84,7 @@ impl ExprLinter for LookingForwardTo {
     }
 
     fn description(&self) -> &'static str {
-        "This rule identifies instances where the phrase `looking forward to` is followed by a base form verb instead of the required gerund (verb + -ing form)."
+        "This rule identifies instances where the phrase `looking forward to` is followed by a base form verb instead of the required gerund (verb + `-ing` form)."
     }
 }
 
