@@ -12030,7 +12030,7 @@ alkalise/VdSG!_
 alkalize/VdSG
 alkaloid/NJSg
 alkyd/NgS
-all/~INCJg
+all/~INCJgDq
 allay/VNGdS
 allegation/~NgS
 allege/~VGdS
@@ -12667,7 +12667,7 @@ anvil/~NVgS
 anxiety/~NSg
 anxious/~JYp
 anxiousness/Ng
-any/~IRD            # removed `5` adjective. it's determiner/pronoun/adverb only
+any/~IRDq           # removed `5` adjective. it's determiner/pronoun/adverb only
 anybody/~ISg
 anyhow/~J
 anymore/~
@@ -15265,7 +15265,7 @@ botanist/~NSg
 botany/~Ng
 botch/VNd>SZGg
 botcher/Ng
-both/~IC
+both/~ICDq
 bother/~VNSgdG
 botheration/N
 bothered/~JVU
@@ -22260,7 +22260,7 @@ eBay/OVg
 eMusic/g
 eSIM/NgS
 ea/~N
-each/~D
+each/~Dq
 eager/~JVNpT>Y
 eagerness/Ng
 eagle/~NVgS
@@ -23482,7 +23482,7 @@ everglade/NSg
 evergreen/~JNVSg
 everlasting/~JNgYS
 evermore/~
-every/~D
+every/~Dq
 everybody/~Ig
 everyday/~JN
 everyone/~Ig
@@ -24394,7 +24394,8 @@ feudalistic/J
 fever/~NVSgd
 feverish/JYp
 feverishness/Ng
-few/~ITpg>
+few/~ITpgDq
+fewer/Dqc
 fewness/Ng
 fey/~JN
 fez/~Ng
@@ -31951,7 +31952,7 @@ litter/~NVJgd>SZG
 litterateur/NgS
 litterbug/NgS
 litterer/Ng
-little/~JINgT>p
+little/~JINgT>pDq
 littleness/Ng
 littoral/~JNSg
 liturgical/~JY
@@ -32758,7 +32759,7 @@ manumitted/V
 manumitting/V
 manure/~VNgGdS
 manuscript/~JNgS
-many/~IJgD
+many/~IJgDq
 map/~NVrS
 map's
 maple/~NSg
@@ -34284,7 +34285,7 @@ morbidity/Ng
 morbidness/Ng
 mordancy/Ng
 mordant/JNVSgY
-more/~IJNVS
+more/~IJNVSDq
 moreish/J
 morel/~NSg
 moreover/~
@@ -34334,7 +34335,7 @@ mosquitoes/~N9
 moss/~NVgS
 mossback/NSg
 mossy/JNT>
-most/~JINgY
+most/~JINgYDq
 mot/~NSg
 mote/NVKeXSvn
 mote's
@@ -34459,7 +34460,7 @@ mt/~JN
 mtg/N
 mtge/N
 mu/~NSg
-much/~JIgp
+much/~JIgpDq
 mucilage/Nmg
 mucilaginous/J
 muck/NmVgdSG
@@ -34562,7 +34563,7 @@ multiparty/J
 multiphonics/Ng
 multiplanetary/J
 multiplayer/~JNg
-multiple/~JNgS
+multiple/~JNgSDq
 multiplex/~JNVZGgd>S
 multiplexer/Ng
 multiplicand/NgS
@@ -43621,7 +43622,7 @@ seventieth/JNg
 seventieths/N
 seventy/~SgH
 sever/~VETGdS
-several/~JYD
+several/~JYDq
 severance/NSg
 severe/~JYp>
 severeness/Ng
@@ -45044,7 +45045,7 @@ somberness/Ng
 sombre/JNVpY!@_
 sombreness/Ng!@_
 sombrero/NgS
-some/~IRJ
+some/~IRJDq
 somebody/~INSg
 someday/~
 somehow/~
@@ -52472,7 +52473,7 @@ Golang/Sg           # programming language
 Goleman/Sg
 Gradle/Sg           # build tool
 Grafana/Sg
-Grammarly/Og         # grammar checker
+Grammarly/Og        # grammar checker
 Grandey/Sg
 GraphQL/Og
 Graphviz/Sg

@@ -104,6 +104,8 @@ impl TokenKind {
         is_determiner,
         is_demonstrative_determiner,
         is_possessive_determiner,
+        is_quantifier_determiner,
+        is_non_quantifier_determiner,
 
         // Conjunction methods
         is_conjunction,
