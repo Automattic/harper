@@ -4,7 +4,7 @@ use itertools::Itertools;
 use paste::paste;
 use serde::{Deserialize, Serialize};
 use strum::{EnumCount, VariantArray};
-use strum_macros::{Display, EnumCount, EnumString, VariantArray};
+use strum_macros::{Display, EnumString};
 
 use std::convert::TryFrom;
 
