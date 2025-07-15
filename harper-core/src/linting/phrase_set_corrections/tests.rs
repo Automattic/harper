@@ -131,6 +131,44 @@ fn detect_explanation_point_real_world() {
     );
 }
 
+// ExtendOrExtent
+
+#[test]
+fn correct_certain_extend() {
+    assert_suggestion_result(
+        "This is a PowerShell script to automate client pentests / checkups - at least to a certain extend.",
+        lint_group(),
+        "This is a PowerShell script to automate client pentests / checkups - at least to a certain extent.",
+    );
+}
+
+#[test]
+fn correct_to_the_extend() {
+    assert_suggestion_result(
+        "Our artifacts are carefully documented and well-structured to the extend that reuse is facilitated.",
+        lint_group(),
+        "Our artifacts are carefully documented and well-structured to the extent that reuse is facilitated.",
+    );
+}
+
+#[test]
+fn correct_to_some_extend() {
+    assert_suggestion_result(
+        "Hi, I'm new to Pydantic and to some extend python, and I have a question that I haven't been able to figure out from the Docs.",
+        lint_group(),
+        "Hi, I'm new to Pydantic and to some extent python, and I have a question that I haven't been able to figure out from the Docs.",
+    );
+}
+
+#[test]
+fn correct_to_an_extend() {
+    assert_suggestion_result(
+        "It mimics (to an extend) the way in which Chrome requests SSO cookies with the Windows 10 accounts extension.",
+        lint_group(),
+        "It mimics (to an extent) the way in which Chrome requests SSO cookies with the Windows 10 accounts extension.",
+    );
+}
+
 // HaveGone
 
 #[test]

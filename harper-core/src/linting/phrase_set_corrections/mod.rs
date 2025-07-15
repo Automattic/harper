@@ -117,6 +117,16 @@ pub fn lint_group() -> LintGroup {
             "The correct names for the `!` punctuation are `exclamation mark` and `exclamation point`.",
             "Corrects the eggcorn `explanation mark/point` to `exclamation mark/point`."
         ),
+        "ExtendOrExtent" => (
+            &[
+                ("a certain extend", "a certain extent"),
+                ("to an extend", "to an extent"),
+                ("to some extend", "to some extent"),
+                ("to the extend that", "to the extent that")
+            ],
+            "Use `extent` for the noun and `extend` for the verb.",
+            "Corrects `extend` to `extent` when the context is a noun."
+        ),
         "HaveGone" => (
             &[
                 ("had went", "had gone"),
