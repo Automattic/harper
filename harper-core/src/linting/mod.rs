@@ -111,6 +111,7 @@ mod throw_rubbish;
 mod touristic;
 mod unclosed_quotes;
 mod use_genitive;
+mod verb_instead_of_noun;
 mod very_unique;
 mod was_aloud;
 mod way_too_adjective;
@@ -118,6 +119,8 @@ mod whereas;
 mod widely_accepted;
 mod win_prize;
 mod wordpress_dotcom;
+
+pub mod noun_verb_pairs;
 
 pub use a_part::APart;
 pub use adjective_of_a::AdjectiveOfA;
@@ -214,6 +217,7 @@ pub use throw_rubbish::ThrowRubbish;
 pub use touristic::Touristic;
 pub use unclosed_quotes::UnclosedQuotes;
 pub use use_genitive::UseGenitive;
+pub use verb_instead_of_noun::VerbInsteadOfNoun;
 pub use very_unique::VeryUnique;
 pub use was_aloud::WasAloud;
 pub use way_too_adjective::WayTooAdjective;
