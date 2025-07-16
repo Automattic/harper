@@ -15,8 +15,8 @@ impl FirstMatchOf {
         Self { exprs }
     }
 
-    pub fn push(&mut self, expr: Box<dyn Expr>) {
-        self.exprs.push(expr);
+    pub fn add(&mut self, expr: impl Expr + 'static) {
+        self.exprs.push(Box::new(expr));
     }
 }
 

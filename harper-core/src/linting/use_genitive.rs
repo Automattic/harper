@@ -35,11 +35,9 @@ impl UseGenitive {
         for word in trigger_words {
             primary_pattern.add(
                 word,
-                Box::new(
-                    SequenceExpr::default()
-                        .then(Word::new_exact(word))
-                        .then(environment.clone()),
-                ),
+                SequenceExpr::default()
+                    .then(Word::new_exact(word))
+                    .then(environment.clone()),
             )
         }
 
