@@ -14,7 +14,7 @@ impl Default for HyphenateNumberDay {
             .then_number()
             .then_whitespace()
             .t_aco("day")
-            .then_either_longest(vec![
+            .then_longest_of(vec![
                 Box::new(
                     SequenceExpr::default()
                         .then_whitespace()

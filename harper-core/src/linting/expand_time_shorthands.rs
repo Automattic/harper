@@ -21,7 +21,7 @@ impl ExpandTimeShorthands {
             expr: Box::new(
                 SequenceExpr::default()
                     .then(ImpliesQuantity)
-                    .then_either_longest(vec![
+                    .then_longest_of(vec![
                         Box::new(SequenceExpr::default().then(hotwords.clone())),
                         Box::new(
                             SequenceExpr::default()

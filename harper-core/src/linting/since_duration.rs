@@ -36,7 +36,7 @@ impl Default for SinceDuration {
             SequenceExpr::default()
                 .then_any_capitalization_of("since")
                 .then_whitespace()
-                .then_either_longest(vec![
+                .then_longest_of(vec![
                     Box::new(SpelledNumberExpr),
                     Box::new(SequenceExpr::default().then_number()),
                 ])
