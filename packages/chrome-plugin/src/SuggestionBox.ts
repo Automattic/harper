@@ -5,6 +5,23 @@ import ProtocolClient from './ProtocolClient';
 import lintKindColor from './lintKindColor';
 import type { UnpackedSuggestion } from './unpackLint';
 
+var FocusHook = function(){}
+FocusHook.prototype.hook = function(node, propertyName, previousValue) {
+	if ((node as any).__harperAutofocused) {
+		return;
+	}
+
+	requestAnimationFrame(() => {
+		node.focus();
+		Object.defineProperty(node, '__harperAutofocused', {
+			value: true,
+			enumerable: false,
+			configurable: false,
+		});
+	});
+
+}
+
 function header(title: string, color: string): any {
 	return h(
 		'div',
@@ -25,6 +42,7 @@ function button(
 	extraStyle: { [key: string]: string },
 	onClick: (event: Event) => void,
 	description?: string,
+	extraProps: Record<string, unknown> = {},
 ): any {
 	const desc = description || label;
 	return h(
@@ -35,6 +53,7 @@ function button(
 			onclick: onClick,
 			title: desc,
 			'aria-label': desc,
+			...extraProps,
 		},
 		label,
 	);
@@ -66,10 +85,11 @@ function suggestions(
 	suggestions: UnpackedSuggestion[],
 	apply: (s: UnpackedSuggestion) => void,
 ): any {
-	return suggestions.map((s: UnpackedSuggestion) => {
+	return suggestions.map((s: UnpackedSuggestion, i: number) => {
 		const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
-		const desc = `Replace with \"${label}\"`;
-		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc);
+		const desc = `Replace with "${label}"`;
+		const props = i === 0 ? { hook: new FocusHook() } : {};
+		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc, props);
 	});
 }
 
