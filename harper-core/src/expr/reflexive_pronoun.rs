@@ -1,6 +1,6 @@
 use crate::{
     Span, Token,
-    expr::{Expr, LongestMatchOf},
+    expr::{Expr, FirstMatchOf},
     patterns::WordSet,
 };
 
@@ -53,7 +53,7 @@ impl ReflexivePronoun {
 impl Expr for ReflexivePronoun {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
         let good_pronouns = |token: &Token, _: &[char]| token.kind.is_reflexive_pronoun();
-        let mut expr = LongestMatchOf::new(vec![Box::new(good_pronouns)]);
+        let mut expr = FirstMatchOf::new(vec![Box::new(good_pronouns)]);
         if self.include_common_errors {
             expr.add(WordSet::new(BAD_REFLEXIVE_PRONOUNS));
         }

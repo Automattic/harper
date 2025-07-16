@@ -30,8 +30,8 @@ impl Default for AmInTheMorning {
         let ws_at_periods = FixedPhrase::from_phrase(" at night");
 
         let expr = SequenceExpr::default()
-            .then_either_longest(vec![Box::new(maybe_ws_am), Box::new(maybe_ws_pm)])
-            .then_either_longest(vec![Box::new(ws_in_periods), Box::new(ws_at_periods)]);
+            .then_either(vec![Box::new(maybe_ws_am), Box::new(maybe_ws_pm)])
+            .then_either(vec![Box::new(ws_in_periods), Box::new(ws_at_periods)]);
 
         Self {
             expr: Box::new(expr),

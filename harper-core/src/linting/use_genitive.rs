@@ -1,5 +1,5 @@
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
+use crate::expr::FirstMatchOf;
 use crate::expr::SequenceExpr;
 use crate::expr::WordExprGroup;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
@@ -43,7 +43,7 @@ impl UseGenitive {
 
         // Add a prelude to remove false-positives.
         let full_pattern = SequenceExpr::default()
-            .then_unless(LongestMatchOf::new(vec![
+            .then_unless(FirstMatchOf::new(vec![
                 Box::new(SequenceExpr::default().t_aco("is")),
                 Box::new(SequenceExpr::default().t_aco("were")),
                 Box::new(SequenceExpr::default().then_adjective()),

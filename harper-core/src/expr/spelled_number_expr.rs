@@ -53,7 +53,7 @@ impl Expr for SpelledNumberExpr {
 
         let tens_units_compounds = SequenceExpr::default()
             .then(WordSet::new(tens))
-            .then_either_longest(vec![
+            .then_either(vec![
                 Box::new(|t: &Token, _s: &[char]| t.kind.is_hyphen()),
                 Box::new(WhitespacePattern),
             ])
