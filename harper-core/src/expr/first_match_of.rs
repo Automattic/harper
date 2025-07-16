@@ -24,7 +24,6 @@ impl Expr for FirstMatchOf {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
         self.exprs
             .iter()
-            .filter_map(|p| p.run(cursor, tokens, source))
-            .next()
+            .find_map(|p| p.run(cursor, tokens, source))
     }
 }
