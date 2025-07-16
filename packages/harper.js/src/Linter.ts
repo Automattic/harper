@@ -1,7 +1,7 @@
 import type { Dialect, Lint, Suggestion } from 'harper-wasm';
-import type Summary from './Summary';
 import type { BinaryModule } from './binary';
 import type { LintConfig, LintOptions } from './main';
+import type Summary from './Summary';
 
 /** An interface for an object that can perform linting actions. */
 export default interface Linter {

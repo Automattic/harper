@@ -1,6 +1,7 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
 import {
 	type AddToUserDictionaryRequest,
+	createUnitResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
 	type GetDefaultStatusResponse,
@@ -22,9 +23,9 @@ import {
 	type SetDomainStatusRequest,
 	type SetUserDictionaryRequest,
 	type UnitResponse,
-	createUnitResponse,
 } from '../protocol';
 import unpackLint from '../unpackLint';
+
 console.log('background is running');
 
 chrome.runtime.onInstalled.addListener((details) => {

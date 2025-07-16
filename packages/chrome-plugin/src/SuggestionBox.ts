@@ -1,12 +1,13 @@
+/** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
 import h from 'virtual-dom/h';
 import bookDownSvg from '../assets/book-down.svg?raw';
 import type { IgnorableLintBox, LintBox } from './Box';
-import ProtocolClient from './ProtocolClient';
 import lintKindColor from './lintKindColor';
+import ProtocolClient from './ProtocolClient';
 import type { UnpackedSuggestion } from './unpackLint';
 
-var FocusHook = function(){}
-FocusHook.prototype.hook = function(node, propertyName, previousValue) {
+var FocusHook = function () {};
+FocusHook.prototype.hook = function (node, _propertyName, _previousValue) {
 	if ((node as any).__harperAutofocused) {
 		return;
 	}
@@ -19,8 +20,7 @@ FocusHook.prototype.hook = function(node, propertyName, previousValue) {
 			configurable: false,
 		});
 	});
-
-}
+};
 
 function header(title: string, color: string): any {
 	return h(

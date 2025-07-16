@@ -6,7 +6,12 @@
 	"description": "The private grammar checker for 21st Century English",
 	"type": "module",
 	"license": "Apache-2.0",
-	"keywords": ["chrome-extension", "svelte", "vite", "create-chrome-ext"],
+	"keywords": [
+		"chrome-extension",
+		"svelte",
+		"vite",
+		"create-chrome-ext"
+	],
 	"engines": {
 		"node": ">=14.18.0"
 	},

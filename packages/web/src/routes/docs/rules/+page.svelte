@@ -7,7 +7,7 @@ import {
 	TableHead,
 	TableHeadCell,
 } from 'flowbite-svelte';
-import { type LintConfig, LocalLinter, binary } from 'harper.js';
+import { binary, type LintConfig, LocalLinter } from 'harper.js';
 
 export const frontmatter = {
 	title: 'Rules',

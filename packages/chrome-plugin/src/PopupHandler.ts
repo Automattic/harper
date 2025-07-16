@@ -1,8 +1,8 @@
 import h from 'virtual-dom/h';
-import { type LintBox, closestBox, isPointInBox } from './Box';
+import { closestBox, isPointInBox, type LintBox } from './Box';
+import { getCaretPosition } from './editorUtils';
 import RenderBox from './RenderBox';
 import SuggestionBox from './SuggestionBox';
-import { getCaretPosition } from './editorUtils';
 
 type DoubleShiftHandler = () => void;
 

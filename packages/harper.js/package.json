@@ -40,5 +40,7 @@
 	"main": "dist/harper.js",
 	"types": "dist/harper.d.ts",
 	"sideEffects": false,
-	"files": ["dist"]
+	"files": [
+		"dist"
+	]
 }

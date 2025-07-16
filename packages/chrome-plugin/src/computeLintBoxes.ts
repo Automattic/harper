@@ -1,10 +1,10 @@
 import type { Span } from 'harper.js';
-import { type IgnorableLintBox, type LintBox, domRectToBox, isBottomEdgeInBox } from './Box';
-import ProtocolClient from './ProtocolClient';
-import TextFieldRange from './TextFieldRange';
+import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, type LintBox } from './Box';
 import { getRangeForTextSpan } from './domUtils';
 import { getLexicalRoot, getSlateRoot } from './editorUtils';
-import { type UnpackedLint, type UnpackedSuggestion, applySuggestion } from './unpackLint';
+import ProtocolClient from './ProtocolClient';
+import TextFieldRange from './TextFieldRange';
+import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
 
 function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement {
 	switch (el.tagName) {
