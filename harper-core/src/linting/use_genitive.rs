@@ -14,8 +14,10 @@ pub struct UseGenitive {
 impl UseGenitive {
     fn new() -> Self {
         // Define the environment in which the genitive case __should__ be used.
-        let environment = Lrc::new(SequenceExpr::default().then_whitespace().then(
-            LongestMatchOf::new(vec![
+        let environment = Lrc::new(
+            SequenceExpr::default()
+                .then_whitespace()
+                .then_either_longest(vec![
                     Box::new(
                         SequenceExpr::default()
                             .then_one_or_more_adjectives()
@@ -24,7 +26,7 @@ impl UseGenitive {
                     ),
                     Box::new(SequenceExpr::default().then_noun()),
                 ]),
-        ));
+        );
 
         let trigger_words = ["there", "they're"];
 

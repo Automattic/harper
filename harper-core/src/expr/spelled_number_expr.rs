@@ -53,10 +53,10 @@ impl Expr for SpelledNumberExpr {
 
         let tens_units_compounds = SequenceExpr::default()
             .then(WordSet::new(tens))
-            .then(LongestMatchOf::new(vec![
+            .then_either_longest(vec![
                 Box::new(|t: &Token, _s: &[char]| t.kind.is_hyphen()),
                 Box::new(WhitespacePattern),
-            ]))
+            ])
             .then(WordSet::new(units));
 
         let expr =
