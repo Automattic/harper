@@ -47,7 +47,6 @@ function footer(leftChildren: any, rightChildren: any) {
 }
 
 function addToDictionary(box: LintBox): any {
-	console.log(bookDownSvg);
 	return h(
 		'button',
 		{

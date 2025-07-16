@@ -1,6 +1,4 @@
 import type { Lint } from 'harper.js';
-import { clone } from 'lodash-es';
-import { isBoxInScreen } from './Box';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import ProtocolClient from './ProtocolClient';
