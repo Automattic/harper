@@ -115,6 +115,9 @@ impl SequenceExpr {
     }
 
     /// Pushes an expression that will match the longest of the provided expressions.
+    ///
+    /// If you don't need the longest match, prefer using the short-circuiting
+    /// [`Self::then_either()`] instead.
     pub fn then_either_longest(mut self, exprs: Vec<Box<dyn Expr>>) -> Self {
         self.exprs.push(Box::new(LongestMatchOf::new(exprs)));
         self
