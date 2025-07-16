@@ -436,7 +436,7 @@ impl LintGroup {
         insert_expr_rule!(NounInsteadOfVerb, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
-        insert_struct_rule!(OnFloor, true);
+        insert_expr_rule!(OnFloor, true);
         insert_expr_rule!(OneAndTheSame, true);
         insert_expr_rule!(OpenTheLight, true);
         insert_expr_rule!(OutOfDate, true);
