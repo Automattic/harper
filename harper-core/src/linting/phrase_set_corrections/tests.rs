@@ -1,4 +1,6 @@
-use crate::linting::tests::{assert_nth_suggestion_result, assert_suggestion_result};
+use crate::linting::tests::{
+    assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+};
 
 use super::lint_group;
 
@@ -779,6 +781,43 @@ fn detect_a_lot_worse_real_world() {
     );
 }
 
+// -become worst-
+#[test]
+fn fix_became_worst() {
+    assert_suggestion_result(
+        "The problem became worst lately.",
+        lint_group(),
+        "The problem became worse lately.",
+    );
+}
+
+#[test]
+fn fix_become_worst() {
+    assert_suggestion_result(
+        "But results seems stay at one place or become worst.",
+        lint_group(),
+        "But results seems stay at one place or become worse.",
+    );
+}
+
+#[test]
+fn fix_becomes_worst() {
+    assert_suggestion_result(
+        "This becomes worst if you have an x64 dll and an x86 dll that you don't have thier source codes and want to use them in same project!",
+        lint_group(),
+        "This becomes worse if you have an x64 dll and an x86 dll that you don't have thier source codes and want to use them in same project!",
+    );
+}
+
+#[test]
+fn fix_becoming_worst() {
+    assert_suggestion_result(
+        "France is becoming worst than the Five Eyes",
+        lint_group(),
+        "France is becoming worse than the Five Eyes",
+    );
+}
+
 // -far worse-
 #[test]
 fn detect_far_worse_atomic() {
@@ -791,6 +830,65 @@ fn detect_far_worse_real_world() {
         "I mainly use Firefox (personal preference) and have noticed it has far worst performance than Chrome",
         lint_group(),
         "I mainly use Firefox (personal preference) and have noticed it has far worse performance than Chrome",
+    );
+}
+
+// -get worst-
+#[test]
+fn fix_get_worse() {
+    assert_suggestion_result(
+        "and the problem appears to get worst with 2025.5.1 and 2025.5.2.",
+        lint_group(),
+        "and the problem appears to get worse with 2025.5.1 and 2025.5.2.",
+    );
+}
+
+#[test]
+fn fix_gets_worse() {
+    assert_suggestion_result(
+        "It just starts after about 15 minutes of work and gradually gets worst.",
+        lint_group(),
+        "It just starts after about 15 minutes of work and gradually gets worse.",
+    );
+}
+
+#[test]
+#[ignore = "This kind of false positive is probably too subtle to detect"]
+fn dont_flag_getting_worst() {
+    // Here "getting" probably belongs to "I am getting" rather than "getting worst".
+    // Which would not be an error but "I am getting the worst accuracy" would be better.
+    // TODO: Maybe a noun following "getting" is enough context?
+    assert_lint_count(
+        "I am getting worst accuracy on the same dataste and 3 different models.",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
+fn fix_getting_worst() {
+    assert_suggestion_result(
+        "But, as I said, it is getting worst...",
+        lint_group(),
+        "But, as I said, it is getting worse...",
+    );
+}
+
+#[test]
+fn fix_got_worst() {
+    assert_suggestion_result(
+        "typescript support got worst.",
+        lint_group(),
+        "typescript support got worse.",
+    );
+}
+
+#[test]
+fn fix_gotten_worst() {
+    assert_suggestion_result(
+        "Has Claude gotten worst?",
+        lint_group(),
+        "Has Claude gotten worse?",
     );
 }
 

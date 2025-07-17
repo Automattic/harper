@@ -870,6 +870,7 @@ fn detect_nerve_racking_no_hyphen() {
 // -none-
 
 // OfCourse
+// See also: tests in `of_course.rs` for "of curse/corse" → "of course" corrections
 #[test]
 fn off_course() {
     assert_suggestion_result(
@@ -885,6 +886,15 @@ fn o_course() {
         "Yes, o course we should do that.",
         lint_group(),
         "Yes, of course we should do that.",
+    );
+}
+
+#[test]
+fn ofcourse() {
+    assert_suggestion_result(
+        "Ofcourse, I like other languages.. uzulla has 183 repositories available.",
+        lint_group(),
+        "Of course, I like other languages.. uzulla has 183 repositories available.",
     );
 }
 

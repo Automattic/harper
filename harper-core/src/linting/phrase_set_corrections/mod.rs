@@ -271,7 +271,17 @@ pub fn lint_group() -> LintGroup {
             &[
                 // worst -> worse
                 (&["a lot worst", "alot worst"], &["a lot worse"]),
+
+                (&["become worst"], &["become worse"]),
+                (&["became worst"], &["became worse"]),
+                (&["becomes worst"], &["becomes worse"]),
+                (&["becoming worst"], &["becoming worse"]),
                 (&["far worst"], &["far worse"]),
+                (&["get worst"], &["get worse"]),
+                (&["gets worst"], &["gets worse"]),
+                (&["getting worst"], &["getting worse"]),
+                (&["got worst"], &["got worse"]),
+                (&["gotten worst"], &["gotten worse"]),
                 (&["much worst"], &["much worse"]),
                 (&["turn for the worst"], &["turn for the worse"]),
                 (&["worst and worst", "worse and worst", "worst and worse"], &["worse and worse"]),
