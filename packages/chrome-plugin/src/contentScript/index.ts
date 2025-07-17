@@ -1,7 +1,7 @@
 import '@webcomponents/custom-elements';
 import $ from 'jquery';
-import LintFramework from '../LintFramework';
 import { isVisible, leafNodes } from '../domUtils';
+import LintFramework from '../LintFramework';
 
 const fw = new LintFramework();
 

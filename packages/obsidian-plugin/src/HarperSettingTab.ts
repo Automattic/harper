@@ -2,10 +2,10 @@ import './index.js';
 import { Dialect } from 'harper.js';
 import { startCase } from 'lodash-es';
 import { type App, PluginSettingTab, Setting } from 'obsidian';
-import type State from './State.js';
-import type { Settings } from './State.js';
 import { dictToString, stringToDict } from './dictUtils';
 import type HarperPlugin from './index.js';
+import type State from './State.js';
+import type { Settings } from './State.js';
 
 export class HarperSettingTab extends PluginSettingTab {
 	private state: State;

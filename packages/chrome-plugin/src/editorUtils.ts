@@ -1,3 +1,6 @@
+import { type Box, domRectToBox } from './Box';
+import TextFieldRange from './TextFieldRange';
+
 export function findAncestor(
 	el: HTMLElement,
 	predicate: (el: HTMLElement) => boolean,
@@ -93,4 +96,36 @@ export function getCMRoot(el: HTMLElement): HTMLElement | null {
  * If so, returns the root node of that instance. */
 export function getPMRoot(el: HTMLElement): HTMLElement | null {
 	return findAncestor(el, (node: HTMLElement) => node.classList.contains('ProseMirror'));
+}
+
+export function getCaretPosition(): Box | null {
+	const active = document.activeElement;
+
+	if (
+		active instanceof HTMLTextAreaElement ||
+		(active instanceof HTMLInputElement && active.type === 'text')
+	) {
+		if (
+			active.selectionStart == null ||
+			active.selectionEnd == null ||
+			active.selectionStart !== active.selectionEnd
+		) {
+			return null;
+		}
+
+		const offset = active.selectionStart;
+		const tfRange = new TextFieldRange(active, offset, offset);
+		const rects = tfRange.getClientRects();
+		tfRange.detach();
+
+		return rects.length ? domRectToBox(rects[0]) : null;
+	}
+
+	const selection = window.getSelection();
+	if (!selection || selection.rangeCount === 0) return null;
+
+	const range = selection.getRangeAt(0);
+	if (!range.collapsed) return null;
+
+	return domRectToBox(range.getBoundingClientRect());
 }

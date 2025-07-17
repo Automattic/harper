@@ -1,5 +1,6 @@
 <script lang="ts">
 import IntersectionObserver from 'svelte-intersection-observer';
+
 let data = new Map<string, number>();
 data.set('Harper', 10);
 data.set('LanguageTool', 650);

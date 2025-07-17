@@ -3,7 +3,7 @@
 	"scripts": {
 		"check-dependency-version-consistency": "check-dependency-version-consistency",
 		"check": "biome check --diagnostic-level=error",
-		"format": "biome check --write . --unsafe"
+		"format": "biome check --write ."
 	},
 	"engines": {
 		"node": ">=22",
@@ -11,7 +11,7 @@
 	},
 	"devDependencies": {
 		"@babel/runtime": "catalog:",
-		"@biomejs/biome": "1.9.4",
+		"@biomejs/biome": "2.0.6",
 		"check-dependency-version-consistency": "^5.0.0",
 		"typescript": "catalog:"
 	},

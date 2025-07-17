@@ -1,11 +1,9 @@
 import type { Lint } from 'harper.js';
-import { clone } from 'lodash-es';
-import { isBoxInScreen } from './Box';
+import computeLintBoxes from './computeLintBoxes';
+import { isVisible } from './domUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import ProtocolClient from './ProtocolClient';
-import computeLintBoxes from './computeLintBoxes';
-import { isVisible } from './domUtils';
 
 /** Events on an input (any kind) that can trigger a re-render. */
 const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];

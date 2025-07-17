@@ -1,9 +1,26 @@
+/** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
 import h from 'virtual-dom/h';
 import bookDownSvg from '../assets/book-down.svg?raw';
 import type { IgnorableLintBox, LintBox } from './Box';
-import ProtocolClient from './ProtocolClient';
 import lintKindColor from './lintKindColor';
+import ProtocolClient from './ProtocolClient';
 import type { UnpackedSuggestion } from './unpackLint';
+
+var FocusHook = function () {};
+FocusHook.prototype.hook = function (node, _propertyName, _previousValue) {
+	if ((node as any).__harperAutofocused) {
+		return;
+	}
+
+	requestAnimationFrame(() => {
+		node.focus();
+		Object.defineProperty(node, '__harperAutofocused', {
+			value: true,
+			enumerable: false,
+			configurable: false,
+		});
+	});
+};
 
 function header(title: string, color: string): any {
 	return h(
@@ -25,6 +42,7 @@ function button(
 	extraStyle: { [key: string]: string },
 	onClick: (event: Event) => void,
 	description?: string,
+	extraProps: Record<string, unknown> = {},
 ): any {
 	const desc = description || label;
 	return h(
@@ -35,6 +53,7 @@ function button(
 			onclick: onClick,
 			title: desc,
 			'aria-label': desc,
+			...extraProps,
 		},
 		label,
 	);
@@ -47,7 +66,6 @@ function footer(leftChildren: any, rightChildren: any) {
 }
 
 function addToDictionary(box: LintBox): any {
-	console.log(bookDownSvg);
 	return h(
 		'button',
 		{
@@ -67,10 +85,11 @@ function suggestions(
 	suggestions: UnpackedSuggestion[],
 	apply: (s: UnpackedSuggestion) => void,
 ): any {
-	return suggestions.map((s: UnpackedSuggestion) => {
+	return suggestions.map((s: UnpackedSuggestion, i: number) => {
 		const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
-		const desc = `Replace with \"${label}\"`;
-		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc);
+		const desc = `Replace with "${label}"`;
+		const props = i === 0 ? { hook: new FocusHook() } : {};
+		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc, props);
 	});
 }
 

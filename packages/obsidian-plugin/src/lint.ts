@@ -1,4 +1,5 @@
 import {
+	combineConfig,
 	type EditorState,
 	type Extension,
 	Facet,
@@ -7,18 +8,17 @@ import {
 	StateField,
 	type Transaction,
 	type TransactionSpec,
-	combineConfig,
 } from '@codemirror/state';
 import {
 	Decoration,
 	type DecorationSet,
 	EditorView,
+	hoverTooltip,
+	logException,
 	type Tooltip,
 	ViewPlugin,
 	type ViewUpdate,
 	WidgetType,
-	hoverTooltip,
-	logException,
 } from '@codemirror/view';
 import elt from 'crelt';
 

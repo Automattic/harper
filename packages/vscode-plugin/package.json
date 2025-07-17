@@ -22,8 +22,14 @@
 	"engines": {
 		"vscode": "^1.96.2"
 	},
-	"categories": ["Other"],
-	"keywords": ["grammar", "spellcheck", "writing"],
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"grammar",
+		"spellcheck",
+		"writing"
+	],
 	"activationEvents": [
 		"onLanguage:c",
 		"onLanguage:cmake",
@@ -92,14 +98,24 @@
 				"harper.dialect": {
 					"scope": "resource",
 					"type": "string",
-					"enum": ["British", "American", "Canadian", "Australian"],
+					"enum": [
+						"British",
+						"American",
+						"Canadian",
+						"Australian"
+					],
 					"default": "American",
 					"description": "Set which dialect of English Harper should expect."
 				},
 				"harper.diagnosticSeverity": {
 					"scope": "resource",
 					"type": "string",
-					"enum": ["error", "hint", "information", "warning"],
+					"enum": [
+						"error",
+						"hint",
+						"information",
+						"warning"
+					],
 					"default": "information",
 					"description": "How severe do you want diagnostics to appear in the editor?"
 				},

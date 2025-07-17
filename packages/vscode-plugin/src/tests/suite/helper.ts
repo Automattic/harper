@@ -2,11 +2,11 @@ import type { Diagnostic, Extension } from 'vscode';
 
 import {
 	DiagnosticSeverity,
+	extensions,
+	languages,
 	Position,
 	Range,
 	Uri,
-	extensions,
-	languages,
 	window,
 	workspace,
 } from 'vscode';

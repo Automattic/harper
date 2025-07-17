@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Select, Textarea } from 'flowbite-svelte';
-import { WorkerLinter, binary } from 'harper.js';
+import { binary, WorkerLinter } from 'harper.js';
 import demoText from '../../../../../demo.md?raw';
 
 let isEnglish: boolean | null = null;

@@ -1,6 +1,6 @@
 import type { Extension } from '@codemirror/state';
 import type { LintConfig, Linter, Suggestion } from 'harper.js';
-import { type Dialect, LocalLinter, SuggestionKind, WorkerLinter, binaryInlined } from 'harper.js';
+import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { toArray } from 'lodash-es';
 import type { Workspace } from 'obsidian';
 import { linter } from './lint';
