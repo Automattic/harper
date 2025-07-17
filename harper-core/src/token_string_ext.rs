@@ -262,7 +262,7 @@ impl TokenStringExt for [Token] {
                     .position(|t| t.kind.is_sentence_terminator())
                     .map(|i| i + 1)
                     .unwrap_or(self.rem.len());
-                let tmp = core::mem::replace(&mut self.rem, &mut []);
+                let tmp = core::mem::take(&mut self.rem);
                 let (sent, rest) = tmp.split_at_mut(split);
                 self.rem = rest;
                 Some(sent)

@@ -15,7 +15,6 @@ use burn::{
 };
 use burn_ndarray::{NdArray, NdArrayDevice};
 use hashbrown::HashMap;
-use itertools::Itertools;
 use std::path::Path;
 
 const PAD_IDX: usize = 0;
@@ -152,6 +151,13 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     }
 }
 
+struct ExtractedSentences(
+    Vec<Vec<String>>,
+    Vec<Vec<Option<UPOS>>>,
+    Vec<Vec<bool>>,
+    HashMap<String, usize>,
+);
+
 #[cfg(feature = "training")]
 impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     pub fn train(
@@ -164,7 +170,8 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         device: B::Device,
     ) -> Self {
         println!("Preparing datasets...");
-        let (sents, tags, labs, vocab) = Self::extract_sents_from_files(training_files);
+        let ExtractedSentences(sents, tags, labs, vocab) =
+            Self::extract_sents_from_files(training_files);
 
         println!("Preparing model and training config...");
 
@@ -245,7 +252,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     }
 
     fn score_model(&self, model: &NpModel<B>, dataset: &impl AsRef<Path>) -> f32 {
-        let (sents, tags, labs, _) = Self::extract_sents_from_files(&[dataset]);
+        let ExtractedSentences(sents, tags, labs, _) = Self::extract_sents_from_files(&[dataset]);
 
         let mut total_tokens = 0;
         let mut total_correct: usize = 0;
@@ -268,14 +275,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         total_correct as f32 / total_tokens as f32
     }
 
-    fn extract_sents_from_files(
-        files: &[impl AsRef<Path>],
-    ) -> (
-        Vec<Vec<String>>,
-        Vec<Vec<Option<UPOS>>>,
-        Vec<Vec<bool>>,
-        HashMap<String, usize>,
-    ) {
+    fn extract_sents_from_files(files: &[impl AsRef<Path>]) -> ExtractedSentences {
         use super::np_extraction::locate_noun_phrases_in_sent;
         use crate::conllu_utils::iter_sentences_in_conllu;
 
@@ -313,7 +313,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
                         mask.push(prev_mask || original_mask[idx]);
                     } else {
                         toks.push(tok.form.clone());
-                        tags.push(tok.upos.map(|u| UPOS::from_conllu(u)).flatten());
+                        tags.push(tok.upos.and_then(UPOS::from_conllu));
                         mask.push(original_mask[idx]);
                     }
                 }
@@ -331,7 +331,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
             }
         }
 
-        (sents, sent_tags, labs, vocab)
+        ExtractedSentences(sents, sent_tags, labs, vocab)
     }
 }
 

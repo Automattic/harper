@@ -1,5 +1,6 @@
 use harper_pos_utils::BurnChunkerCpu;
 use lazy_static::lazy_static;
+use std::rc::Rc;
 use std::sync::Arc;
 
 pub use harper_pos_utils::{BrillChunker, BrillTagger, Chunker, FreqDict, Tagger, UPOS};
@@ -36,13 +37,13 @@ const BURN_CHUNKER_VOCAB: &[u8; 628010] = include_bytes!("../finished_chunker/vo
 const BURN_CHUNKER_BIN: &[u8; 2149176] = include_bytes!("../finished_chunker/model.mpk");
 
 thread_local! {
-    static BURN_CHUNKER: Arc<BurnChunkerCpu> = Arc::new(uncached_burn_chunker());
+    static BURN_CHUNKER: Rc<BurnChunkerCpu> = Rc::new(uncached_burn_chunker());
 }
 
 fn uncached_burn_chunker() -> BurnChunkerCpu {
     BurnChunkerCpu::load_from_bytes_cpu(BURN_CHUNKER_BIN, BURN_CHUNKER_VOCAB, 16, 0.3)
 }
 
-pub fn burn_chunker() -> Arc<BurnChunkerCpu> {
+pub fn burn_chunker() -> Rc<BurnChunkerCpu> {
     (BURN_CHUNKER).with(|c| c.clone())
 }
