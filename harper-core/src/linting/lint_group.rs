@@ -31,6 +31,7 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 use super::despite_of::DespiteOf;
 use super::discourse_markers::DiscourseMarkers;
 use super::dot_initialisms::DotInitialisms;
+use super::double_modal::DoubleModal;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
@@ -53,7 +54,9 @@ use super::less_worse::LessWorse;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
+use super::looking_forward_to::LookingForwardTo;
 use super::merge_words::MergeWords;
+use super::missing_preposition::MissingPreposition;
 use super::modal_of::ModalOf;
 use super::most_number::MostNumber;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
@@ -61,9 +64,11 @@ use super::nail_on_the_head::NailOnTheHead;
 use super::no_match_for::NoMatchFor;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
+use super::noun_countability::NounCountability;
 use super::noun_instead_of_verb::NounInsteadOfVerb;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
+use super::on_floor::OnFloor;
 use super::one_and_the_same::OneAndTheSame;
 use super::open_the_light::OpenTheLight;
 use super::out_of_date::OutOfDate;
@@ -80,6 +85,7 @@ use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
 use super::save_to_safe::SaveToSafe;
+use super::semicolon_apostrophe::SemicolonApostrophe;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::since_duration::SinceDuration;
@@ -96,6 +102,7 @@ use super::throw_rubbish::ThrowRubbish;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
+use super::very_unique::VeryUnique;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
 use super::whereas::Whereas;
@@ -348,6 +355,7 @@ impl LintGroup {
     pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) -> Self {
         let mut out = Self::empty();
 
+        /// Add a `Linter` to the group, setting it to be enabled by default.
         macro_rules! insert_struct_rule {
             ($rule:ident, $default_config:expr) => {
                 out.add(stringify!($rule), $rule::default());
@@ -356,6 +364,9 @@ impl LintGroup {
             };
         }
 
+        /// Add an `ExprLinter` to the group, setting it to be enabled by default.
+        /// While you _can_ pass an `ExprLinter` to `insert_struct_rule`, using this macro instead
+        /// will allow it to use more aggressive caching strategies.
         macro_rules! insert_expr_rule {
             ($rule:ident, $default_config:expr) => {
                 out.add_expr_linter(stringify!($rule), $rule::default());
@@ -386,6 +397,8 @@ impl LintGroup {
         insert_expr_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
+        insert_expr_rule!(DoubleModal, true);
+        insert_expr_rule!(MissingPreposition, true);
         insert_struct_rule!(DiscourseMarkers, true);
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(HavePronoun, true);
@@ -417,6 +430,7 @@ impl LintGroup {
         insert_struct_rule!(LetsConfusion, true);
         insert_expr_rule!(Likewise, true);
         insert_struct_rule!(LongSentences, true);
+        insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule!(MergeWords, true);
         insert_expr_rule!(ModalOf, true);
         insert_expr_rule!(MostNumber, true);
@@ -426,9 +440,11 @@ impl LintGroup {
         insert_struct_rule!(NominalWants, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
+        insert_expr_rule!(NounCountability, true);
         insert_expr_rule!(NounInsteadOfVerb, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
+        insert_expr_rule!(OnFloor, true);
         insert_expr_rule!(OneAndTheSame, true);
         insert_expr_rule!(OpenTheLight, true);
         insert_expr_rule!(OutOfDate, true);
@@ -442,6 +458,7 @@ impl LintGroup {
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);
+        insert_expr_rule!(SemicolonApostrophe, true);
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SomewhatSomething, true);
@@ -456,6 +473,7 @@ impl LintGroup {
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UseGenitive, false);
+        insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(WasAloud, true);
         insert_expr_rule!(Whereas, true);
         insert_expr_rule!(WidelyAccepted, true);

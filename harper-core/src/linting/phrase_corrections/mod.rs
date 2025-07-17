@@ -640,10 +640,11 @@ pub fn lint_group() -> LintGroup {
             "Corrects `no to` to `not to`, ensuring proper negation."
         ),
         "OfCourse" => (
-            ["off course", "o course"],
-            ["Of course"],
+            // See also: `of_course.rs` for "of curse/corse" → "of course" corrections
+            ["off course", "o course", "ofcourse"],
+            ["of course"],
             "Did you mean `of course`?",
-            "Detects the non‐idiomatic phrase `off course` and suggests the correct form `of course`."
+            "Detects the common mistake `off course` and suggests the correct form `of course`."
         ),
         "OffTheCuff" => (
             ["off the cuff"],
@@ -674,6 +675,12 @@ pub fn lint_group() -> LintGroup {
             ["on the spur of the moment"],
             "Use the correct phrase for acting spontaneously.",
             "Ensures the correct use of `on the spur of the moment`, avoiding nonstandard variations."
+        ),
+        "OnTopOf" => (
+            ["ontop of"],
+            ["on top of"],
+            "Did you mean `on top of`?",
+            "Corrects `ontop of` to `on top of`."
         ),
         "PeaceOfMind" => (
             ["piece of mind"],
@@ -726,6 +733,11 @@ pub fn lint_group() -> LintGroup {
             ["real trouper"],
             "Use the correct phrase for someone who perseveres.",
             "Ensures the correct use of `real trouper`, distinguishing it from `trooper`, which refers to a soldier or police officer."
+        ),
+        "RedundantIIRC" => (
+            ["if IIRC", "IIRC correctly"], ["IIRC"],
+            "`IIRC` already means 'if I recall correctly', so adding 'if' or 'correctly' is redundant.",
+            "Flags redundant use of 'if' or 'correctly' with 'IIRC', since 'IIRC' already stands for 'if I recall correctly'."
         ),
         "RifeWith" => (
             ["ripe with"],
@@ -957,6 +969,12 @@ pub fn lint_group() -> LintGroup {
             ["wrought iron"],
             "Prefer the standard term `wrought iron`.",
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
+        ),
+        "FromTheGetGo" => (
+            ["from the get go"],
+            ["from the get-go"],
+            "Use the hyphenated form: `from the get-go`.",
+            "Ensures `from the get-go` is correctly hyphenated, preserving the idiom’s meaning of ‘from the very beginning’."
         ),
     });
 

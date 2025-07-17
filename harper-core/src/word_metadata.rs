@@ -312,7 +312,7 @@ impl WordMetadata {
         // Singular and countable default to true, so their metadata queries are not generated.
         noun has proper, plural, mass, possessive.
         pronoun has personal, singular, plural, possessive, reflexive, subject, object.
-        determiner has demonstrative, possessive.
+        determiner has demonstrative, possessive, quantifier.
         verb has linking, auxiliary.
         conjunction has.
         adjective has.
@@ -473,6 +473,18 @@ impl WordMetadata {
         }
     }
 
+    // Most mass nouns also have countable senses. Match those that are only mass nouns.
+    pub fn is_mass_noun_only(&self) -> bool {
+        if let Some(noun) = self.noun {
+            matches!(
+                (noun.is_countable, noun.is_mass),
+                (None | Some(false), Some(true))
+            )
+        } else {
+            false
+        }
+    }
+
     // Nominal metadata queries (noun + pronoun)
 
     /// Checks if the word is definitely nominal.
@@ -509,6 +521,15 @@ impl WordMetadata {
     pub fn is_non_possessive_nominal(&self) -> bool {
         self.is_non_possessive_noun() || self.is_non_possessive_pronoun()
     }
+
+    // Determiner metadata queries
+
+    // Checks if the word is definitely a determiner and more specifically is labeled as (a) quantifier.
+    pub fn is_quantifier(&self) -> bool {
+        self.determiner.is_some()
+    }
+
+    // Other word metadata queries
 
     /// Checks whether a word is _definitely_ a swear.
     pub fn is_swear(&self) -> bool {
@@ -632,6 +653,7 @@ impl PronounData {
 pub struct DeterminerData {
     pub is_demonstrative: Option<bool>,
     pub is_possessive: Option<bool>,
+    pub is_quantifier: Option<bool>,
 }
 
 impl DeterminerData {
@@ -640,6 +662,7 @@ impl DeterminerData {
         Self {
             is_demonstrative: self.is_demonstrative.or(other.is_demonstrative),
             is_possessive: self.is_possessive.or(other.is_possessive),
+            is_quantifier: self.is_quantifier.or(other.is_quantifier),
         }
     }
 }

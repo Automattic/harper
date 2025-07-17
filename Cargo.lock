@@ -46,9 +46,9 @@ checksum = "683d7910e743518b0e34f1186f92494becacb047c7b6bf616c96772180fef923"
 
 [[package]]
 name = "ammonia"
-version = "4.1.0"
+version = "4.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3ada2ee439075a3e70b6992fce18ac4e407cd05aea9ca3f75d2c0b0c20bbb364"
+checksum = "d6b346764dd0814805de8abf899fe03065bcee69bb1a4771c785817e39f3978f"
 dependencies = [
  "cssparser",
  "html5ever",
@@ -703,9 +703,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.5.40"
+version = "4.5.41"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "40b6887a1d8685cebccf115538db5c0efe625ccac9696ad45c409d96566e910f"
+checksum = "be92d32e80243a54711e5d7ce823c35c41c9d929dc4ab58e1276f625841aadf9"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -713,9 +713,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.5.40"
+version = "4.5.41"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e0c66c08ce9f0c698cbce5c0279d0bb6ac936d8674174fe48f736533b964f59e"
+checksum = "707eab41e9622f9139419d573eca0900137718000c517d47da73045f54331c3d"
 dependencies = [
  "anstream",
  "anstyle",
@@ -725,9 +725,9 @@ dependencies = [
 
 [[package]]
 name = "clap_derive"
-version = "4.5.40"
+version = "4.5.41"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d2c7947ae4cc3d851207c1adb5b5e260ff0cca11446b1d6d1423788e442257ce"
+checksum = "ef4f52386a59ca4c860f7393bcf8abd8dfd91ecccc0f774635ff68e92eeef491"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -2106,7 +2106,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "0.50.0"
+version = "0.51.0"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -2138,7 +2138,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "0.50.0"
+version = "0.51.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2173,7 +2173,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.50.0"
+version = "0.51.0"
 dependencies = [
  "ammonia",
  "bitflags 2.9.1",
@@ -2210,7 +2210,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.50.0"
+version = "0.51.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2221,7 +2221,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.50.0"
+version = "0.51.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2232,7 +2232,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.50.0"
+version = "0.51.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2260,7 +2260,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "0.50.0"
+version = "0.51.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2278,7 +2278,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.50.0"
+version = "0.51.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2289,7 +2289,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.50.0"
+version = "0.51.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2308,7 +2308,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.50.0"
+version = "0.51.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -2386,12 +2386,11 @@ checksum = "dfa686283ad6dd069f105e5ab091b04c62850d3e4cf5d67debad1933f55023df"
 
 [[package]]
 name = "html5ever"
-version = "0.31.0"
+version = "0.35.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "953cbbe631aae7fc0a112702ad5d3aaf09da38beaf45ea84610d6e1c358f569c"
+checksum = "55d958c2f74b664487a2035fe1dadb032c48718a03b63f3ab0b8537db8549ed4"
 dependencies = [
  "log",
- "mac",
  "markup5ever",
  "match_token",
 ]
@@ -2960,9 +2959,9 @@ checksum = "3e2e65a1a2e43cfcb47a895c4c8b10d1f4a61097f9f254f183aee60cad9c651d"
 
 [[package]]
 name = "markup5ever"
-version = "0.16.1"
+version = "0.35.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d0a8096766c229e8c88a3900c9b44b7e06aa7f7343cc229158c3e58ef8f9973a"
+checksum = "311fe69c934650f8f19652b3946075f0fc41ad8757dbb68f1ca14e7900ecc1c3"
 dependencies = [
  "log",
  "tendril",
@@ -2971,9 +2970,9 @@ dependencies = [
 
 [[package]]
 name = "match_token"
-version = "0.1.0"
+version = "0.35.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "88a9689d8d44bf9964484516275f5cd4c9b59457a6940c1d5d0ecbb94510a36b"
+checksum = "ac84fd3f360fcc43dc5f5d186f02a94192761a080e8bc58621ad4d12296a58cf"
 dependencies = [
  "proc-macro2",
  "quote",

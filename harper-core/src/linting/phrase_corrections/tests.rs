@@ -870,6 +870,7 @@ fn detect_nerve_racking_no_hyphen() {
 // -none-
 
 // OfCourse
+// See also: tests in `of_course.rs` for "of curse/corse" → "of course" corrections
 #[test]
 fn off_course() {
     assert_suggestion_result(
@@ -885,6 +886,15 @@ fn o_course() {
         "Yes, o course we should do that.",
         lint_group(),
         "Yes, of course we should do that.",
+    );
+}
+
+#[test]
+fn ofcourse() {
+    assert_suggestion_result(
+        "Ofcourse, I like other languages.. uzulla has 183 repositories available.",
+        lint_group(),
+        "Of course, I like other languages.. uzulla has 183 repositories available.",
     );
 }
 
@@ -966,6 +976,16 @@ fn fix_in_the_spur_of_the_moment() {
     );
 }
 
+// OnTopOf
+#[test]
+fn correct_on_top_of() {
+    assert_suggestion_result(
+        "Initcpio hooks for overlayfs ontop of root.",
+        lint_group(),
+        "Initcpio hooks for overlayfs on top of root.",
+    );
+}
+
 // PeaceOfMind
 #[test]
 fn corrects_piece_of_mind() {
@@ -994,6 +1014,35 @@ fn corrects_points_of_view() {
 
 // RealTrouper
 // -none-
+
+// RedundantIIRC
+#[test]
+#[ignore = "The bug in replace_with_match_case erroneously generates `iiRC`."]
+fn correct_if_iirc_caps() {
+    assert_suggestion_result(
+        "This is due to the fact that if IIRC up to 2 processes mpirun will bind to core and then it will be socket.",
+        lint_group(),
+        "This is due to the fact that IIRC up to 2 processes mpirun will bind to core and then it will be socket.",
+    );
+}
+
+#[test]
+fn correct_if_iirc() {
+    assert_suggestion_result(
+        "if iirc getting it to work with the SQLite storage engine was turning into a whole project and we decided to punt it",
+        lint_group(),
+        "iirc getting it to work with the SQLite storage engine was turning into a whole project and we decided to punt it",
+    );
+}
+
+#[test]
+fn correct_iirc_correctly() {
+    assert_suggestion_result(
+        "IIRC correctly, someone on the Home Assistant forums went as far as discovering that RS-485 was being used.",
+        lint_group(),
+        "IIRC, someone on the Home Assistant forums went as far as discovering that RS-485 was being used.",
+    );
+}
 
 // RifeWith
 // -none-
