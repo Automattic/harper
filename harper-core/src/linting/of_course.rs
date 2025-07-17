@@ -1,3 +1,8 @@
+//! Corrects "of curse/corse" to "of course" while ignoring phrases like "kind of curse".
+//!
+//! See also:
+//! - `OfCourse` in `phrase_corrections` for "off course" / "o course" / "ofcourse" → "of course" corrections.
+
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{
