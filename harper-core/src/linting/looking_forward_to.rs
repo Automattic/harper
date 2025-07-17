@@ -1,8 +1,7 @@
 use hashbrown::HashSet;
 
 use crate::{
-    Token,
-    expr::{Expr, FixedPhrase, SequenceExpr},
+    expr::{Expr, FixedPhrase, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
@@ -31,7 +30,8 @@ impl ExprLinter for LookingForwardTo {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let span = matched_tokens.last()?.span;
         let verb = matched_tokens.last()?.span.get_content_string(src);
         if verb.ends_with("ing") {
