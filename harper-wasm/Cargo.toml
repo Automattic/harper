@@ -19,3 +19,4 @@ serde-wasm-bindgen = "0.6.5"
 serde_json = "1.0.140"
 serde = { version = "1.0.219", features = ["derive"] }
 harper-stats = { path = "../harper-stats", version = "0.50.0", features = ["js"] }
+getrandom = { version = "0.3.3", default-features = false, features = ["wasm_js"] }
