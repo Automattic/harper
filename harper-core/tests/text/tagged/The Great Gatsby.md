@@ -320,8 +320,8 @@
 # J/P D+  NSg/V/J+ NSg+  .
 >
 #
-> He       had changed since his     New      Haven years . Now       he       was a   sturdy straw   - haired man
-# NPr/ISg+ V   V/J     C/P   ISg/D$+ NSg/V/J+ NSg/V NPl+  . NPr/V/J/C NPr/ISg+ V   D/P NSg/J  NSg/V/J . V/J    NPr/V/J
+> He       had changed since his     New      Haven years . Now       he       was a   sturdy straw    - haired man
+# NPr/ISg+ V   V/J     C/P   ISg/D$+ NSg/V/J+ NSg/V NPl+  . NPr/V/J/C NPr/ISg+ V   D/P NSg/J  N🅪Sg/V/J . V/J    NPr/V/J
 > of thirty with a   rather  hard   mouth and a   supercilious manner . Two shining
 # P  NSg    P    D/P NPr/V/J N🅪Sg/J NSg/V V/C D/P J+           NSg+   . NSg V
 > arrogant eyes   had established dominance over      his     face   and gave him  the
@@ -1698,8 +1698,8 @@
 # . NPr+  V/J    NPr/V/JC . . V/C I/J/R/Dq P  D+  NPr/V/J+ NSg/V+  NPl       P  NPr/J+   . NPl+ .
 > Wilson was first   concerned with the dog      . A   reluctant elevator - boy   went  for a   box
 # NPr+   V   NSg/V/J V/J       P    D+  NSg/V/J+ . D/P J         NSg/V+   . NSg/V NSg/V C/P D/P NSg/V+
-> full    of straw   and some     milk    , to which he       added on  his     own      initiative a   tin      of
-# NSg/V/J P  NSg/V/J V/C I/J/R/Dq N🅪Sg/V+ . P  I/C+  NPr/ISg+ V/J   J/P ISg/D$+ NSg/V/J+ NSg/J+     D/P N🅪Sg/V/J P
+> full    of straw    and some     milk    , to which he       added on  his     own      initiative a   tin      of
+# NSg/V/J P  N🅪Sg/V/J V/C I/J/R/Dq N🅪Sg/V+ . P  I/C+  NPr/ISg+ V/J   J/P ISg/D$+ NSg/V/J+ NSg/J+     D/P N🅪Sg/V/J P
 > large , hard   dog      - biscuits — one       of which decomposed apathetically in      the saucer of
 # NSg/J . N🅪Sg/J NSg/V/J+ . NPl      . NSg/I/V/J P  I/C+  V/J        W?            NPr/J/P D   NSg/V  P
 > milk    all          afternoon . Meanwhile Tom    brought out         a   bottle of whiskey from a   locked
@@ -5488,8 +5488,8 @@
 # NSg+   C/P    . V/C +     V   D/P+ NSg/V+ NSg/I/C/Ddem+ W?   V/J    P  NSg/V/J NSg  NPl+  . NPl/V+
 > on  all          the neighboring cottages if    the owners would have   their roofs  thatched
 # J/P NSg/I/J/C/Dq D+  V/Am+       NPl/V+   NSg/C D+  NPl+   VX    NSg/VX D$+   NPl/V+ V/J
-> with straw    . Perhaps their refusal took the heart   out         of his     plan   to Found a
-# P    NSg/V/J+ . NSg     D$+   NSg+    V    D   N🅪Sg/V+ NSg/V/J/R/P P  ISg/D$+ NSg/V+ P  NSg/V D/P+
+> with straw     . Perhaps their refusal took the heart   out         of his     plan   to Found a
+# P    N🅪Sg/V/J+ . NSg     D$+   NSg+    V    D   N🅪Sg/V+ NSg/V/J/R/P P  ISg/D$+ NSg/V+ P  NSg/V D/P+
 > Family — he       went  into an   immediate decline . His     children sold  his     house  with the
 # NSg/J+ . NPr/ISg+ NSg/V P    D/P+ J+        NSg/V+  . ISg/D$+ NPl+     NSg/V ISg/D$+ NPr/V+ P    D
 > black   wreath still   on  the door   . Americans , while     willing , even    eager   , to be
@@ -7103,7 +7103,7 @@
 > summer . As    my  train  emerged from the tunnel into sunlight , only  the hot     whistles
 # NPr/V+ . NSg/R D$+ NSg/V+ V/J     P    D+  NSg/V+ P    NSg/V+   . J/R/C D   NSg/V/J NPl/V
 > of the National Biscuit Company broke   the simmering hush   at    noon   . The straw
-# P  D   NSg/J    NSg     NSg/V+  NSg/V/J D+  V+        NSg/V+ NSg/P NSg/V+ . D   NSg/V/J+
+# P  D   NSg/J    NSg     NSg/V+  NSg/V/J D+  V+        NSg/V+ NSg/P NSg/V+ . D   N🅪Sg/V/J+
 > seats of the car  hovered on  the edge  of combustion ; the woman  next    to me
 # NPl/V P  D+  NSg+ V/J     J/P D   NSg/V P  NSg        . D+  NSg/V+ NSg/J/P P  NPr/ISg+
 > perspired delicately for a   while     into her     white    shirtwaist , and then    , as    her
@@ -7158,8 +7158,8 @@
 #
 > He       set     down      the receiver and came    toward us       , glistening slightly , to take  our
 # NPr/ISg+ NPr/V/J NSg/V/J/P D+  NSg+     V/C NSg/V/P J/P    NPr/IPl+ . V          R        . P  NSg/V D$+
-> stiff   straw    hats   .
-# NSg/V/J NSg/V/J+ NPl/V+ .
+> stiff   straw     hats   .
+# NSg/V/J N🅪Sg/V/J+ NPl/V+ .
 >
 #
 > “ Madame expects you    in      the salon ! ” he       cried , needlessly indicating the
@@ -9595,7 +9595,7 @@
 > deliberately given     Daisy a   sense of security ; he       let   her     believe that         he       was a
 # R            NSg/V/J/P NPr+  D/P NSg/V P  NSg+     . NPr/ISg+ NSg/V ISg/D$+ V       NSg/I/C/Ddem NPr/ISg+ V   D/P
 > person from much       the same strata as    herself — that         he       was fully able    to take  care
-# NSg/V  P    NSg/I/J/Dq D   I/J  NSg    NSg/R ISg+    . NSg/I/C/Ddem NPr/ISg+ V   V     NSg/V/J P  NSg/V NSg/V
+# NSg/V  P    NSg/I/J/Dq D   I/J  NPl    NSg/R ISg+    . NSg/I/C/Ddem NPr/ISg+ V   V     NSg/V/J P  NSg/V NSg/V
 > of her     . As    a   matter    of fact , he       had no     such  facilities — he       had no     comfortable
 # P  ISg/D$+ . NSg/R D/P N🅪Sg/V/JC P  NSg+ . NPr/ISg+ V   NPr/P+ NSg/I NPl+       . NPr/ISg+ V   NPr/P+ NSg/J
 > family standing behind  him  , and he       was liable at    the whim  of an  impersonal
@@ -11645,7 +11645,7 @@
 > that         he       could  hardly fail    to grasp it       . He       did not   know  that         it       was already
 # NSg/I/C/Ddem NPr/ISg+ NSg/VX R      NSg/V/J P  NSg/V NPr/ISg+ . NPr/ISg+ V   NSg/C NSg/V NSg/I/C/Ddem NPr/ISg+ V   W?
 > behind  him  , somewhere back    in      that          vast  obscurity beyond the city , where the
-# NSg/J/P ISg+ . NSg       NSg/V/J NPr/J/P NSg/I/C/Ddem+ NSg/J NSg       NSg/P  D+  NSg+ . NSg/C D
+# NSg/J/P ISg+ . NSg       NSg/V/J NPr/J/P NSg/I/C/Ddem+ NSg/J NᴹSg      NSg/P  D+  NSg+ . NSg/C D
 > dark    fields  of the republic rolled on  under   the night   .
 # NSg/V/J NPrPl/V P  D+  NSg/V/J+ V/J    J/P NSg/J/P D+  N🅪Sg/V+ .
 >

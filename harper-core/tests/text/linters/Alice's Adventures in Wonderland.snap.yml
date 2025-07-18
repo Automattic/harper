@@ -2022,9 +2022,9 @@ Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |   ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “Tic”
   - Replace with: “T's”
   - Replace with: “This”
-  - Replace with: “Ti's”
 
 
 
@@ -2575,9 +2575,9 @@ Message: |
     2335 | “I don’t know where Dinn may be,” said the Mock Turtle, “but if you’ve seen them
          |                     ^~~~ Did you mean to spell `Dinn` this way?
 Suggest:
-  - Replace with: “Dine”
+  - Replace with: “Din”
+  - Replace with: “Ding”
   - Replace with: “Diann”
-  - Replace with: “Dina”
 
 
 
@@ -2702,9 +2702,9 @@ Message: |
     2418 | “Stand up and repeat ‘’Tis the voice of the sluggard,’” said the Gryphon.
          |                        ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “Tic”
   - Replace with: “T's”
   - Replace with: “This”
-  - Replace with: “Ti's”
 
 
 
@@ -2731,9 +2731,9 @@ Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
          |     ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “Tic”
   - Replace with: “T's”
   - Replace with: “This”
-  - Replace with: “Ti's”
 
 
 

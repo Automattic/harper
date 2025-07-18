@@ -271,7 +271,7 @@
 > " In      the U.S. , however , informatics is linked with applied computing , or
 # . NPr/J/P D+  ?    . C       . NᴹSg        VL V/J    P    V/J     NSg/V+    . NPr/C
 > computing in      the context of another domain . "
-# NSg/V+    NPr/J/P D   NᴹSg/V  P  I/D+    NSg+   . .
+# NSg/V+    NPr/J/P D   N🅪Sg/V  P  I/D+    NSg+   . .
 >
 #
 > A   folkloric quotation , often attributed to — but     almost certainly not   first
@@ -431,7 +431,7 @@
 > described them     as    the " rationalist paradigm " ( which treats computer science as    a
 # V/J       NSg/IPl+ NSg/R D   . NSg+        NSg+     . . I/C+  NPl/V+ NSg/V+   NSg/V   NSg/R D/P
 > branch of mathematics , which is prevalent in      theoretical computer science , and
-# NPr/V  P  NᴹSg+       . I/C+  VL NSg/J     NPr/J/P J+          NSg/V+   NSg/V+  . V/C
+# NPr/V  P  NᴹSg+       . I/C+  VL J         NPr/J/P J+          NSg/V+   NSg/V+  . V/C
 > mainly employs deductive reasoning ) , the " technocratic paradigm " ( which might     be
 # R      NPl/V   J         NSg/V     . . D   . J            NSg+     . . I/C+  NᴹSg/VX/J NSg/VX
 > found in      engineering approaches , most       prominently in      software engineering ) , and
@@ -635,7 +635,7 @@
 >
 #
 > Information can    take  the form  of images , sound   , video  or    other    multimedia . Bits
-# NᴹSg+       NPr/VX NSg/V D   NSg/V P  NPl/V  . NSg/V/J . N🅪Sg/V NPr/C NSg/V/J+ NSg/J+     . NPl/V
+# NᴹSg+       NPr/VX NSg/V D   NSg/V P  NPl/V  . NSg/V/J . N🅪Sg/V NPr/C NSg/V/J+ NᴹSg/J+    . NPl/V
 > of information can    be     streamed via    signals . Its     processing is the central notion
 # P  NᴹSg+       NPr/VX NSg/VX V/J      NSg/P+ NPl/V   . ISg/D$+ V+         VL D   NPr/J   NSg
 > of informatics , the European view  on  computing , which studies information
