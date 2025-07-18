@@ -970,6 +970,19 @@ pub fn lint_group() -> LintGroup {
             "Prefer the standard term `wrought iron`.",
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
         ),
+        "FromTheGetGo" => (
+            ["from the get go"],
+            ["from the get-go"],
+            "Use the hyphenated form: `from the get-go`.",
+            "Ensures `from the get-go` is correctly hyphenated, preserving the idiom’s meaning of ‘from the very beginning’."
+        ),
+        "Brainstorm" => (
+            ["brain storm"],
+            ["brainstorm"],
+            "Use the closed compound.",
+            "Ensures `brainstorm` is written as a closed compound word."
+
+        ),
     });
 
     group.set_all_rules_to(Some(true));

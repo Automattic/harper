@@ -1382,3 +1382,12 @@ fn corrects_rot_iron() {
 fn allows_wrought_iron() {
     assert_lint_count("She specialized in wrought iron artwork.", lint_group(), 0);
 }
+
+#[test]
+fn brain_storm() {
+    assert_suggestion_result(
+        "let's brain storm some ideas",
+        lint_group(),
+        "let's brainstorm some ideas",
+    );
+}
