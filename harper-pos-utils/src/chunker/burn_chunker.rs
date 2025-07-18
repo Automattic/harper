@@ -15,15 +15,12 @@ use burn::tensor::backend::AutodiffBackend;
 use burn::{
     module::Module,
     nn::{BiLstmConfig, EmbeddingConfig, LinearConfig},
-    optim::AdamConfig,
-    
     tensor::{Int, Tensor, backend::Backend},
 };
 use burn_ndarray::{NdArray, NdArrayDevice};
 use hashbrown::HashMap;
 use std::path::Path;
 
-const PAD_IDX: usize = 0;
 const UNK_IDX: usize = 1;
 
 #[derive(Module, Debug)]
@@ -111,13 +108,6 @@ impl<B: Backend> BurnChunker<B> {
         (word_tensor, tag_tensor)
     }
 
-    fn to_label(&self, labels: &[bool]) -> Tensor<B, 2> {
-        let ys: Vec<_> = labels.iter().map(|b| if *b { 1. } else { 0. }).collect();
-
-        Tensor::<B, 1, _>::from_data(TensorData::from(ys.as_slice()), &self.device)
-            .reshape([1, labels.len()])
-    }
-
     pub fn save_to(&self, dir: impl AsRef<Path>) {
         let dir = dir.as_ref();
         std::fs::create_dir_all(dir).unwrap();
@@ -157,6 +147,7 @@ impl<B: Backend> BurnChunker<B> {
     }
 }
 
+#[cfg(feature = "training")]
 struct ExtractedSentences(
     Vec<Vec<String>>,
     Vec<Vec<Option<UPOS>>>,
@@ -166,6 +157,13 @@ struct ExtractedSentences(
 
 #[cfg(feature = "training")]
 impl<B: Backend + AutodiffBackend> BurnChunker<B> {
+    fn to_label(&self, labels: &[bool]) -> Tensor<B, 2> {
+        let ys: Vec<_> = labels.iter().map(|b| if *b { 1. } else { 0. }).collect();
+
+        Tensor::<B, 1, _>::from_data(TensorData::from(ys.as_slice()), &self.device)
+            .reshape([1, labels.len()])
+    }
+
     pub fn train(
         training_files: &[impl AsRef<Path>],
         test_file: &impl AsRef<Path>,
@@ -182,7 +180,7 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         println!("Preparing model and training config...");
 
         let mut model = NpModel::<B>::new(vocab.len(), word_embed_dim, dropout, &device);
-        let opt_config = AdamConfig::new();
+        let opt_config = burn::optim::AdamConfig::new();
         let mut opt = opt_config.init();
 
         let util = BurnChunker {
@@ -286,7 +284,6 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         use crate::conllu_utils::iter_sentences_in_conllu;
 
         let mut vocab: HashMap<String, usize> = HashMap::new();
-        vocab.insert("<PAD>".into(), PAD_IDX);
         vocab.insert("<UNK>".into(), UNK_IDX);
 
         let mut sents: Vec<Vec<String>> = Vec::new();
