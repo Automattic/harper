@@ -1,6 +1,6 @@
 use crate::expr::Expr;
+use crate::expr::FirstMatchOf;
 use crate::expr::FixedPhrase;
-use crate::expr::LongestMatchOf;
 use crate::linting::{ExprLinter, Lint, LintKind};
 use crate::{Token, TokenStringExt};
 
@@ -18,7 +18,7 @@ impl Default for Hedging {
             .map(|s| Box::new(FixedPhrase::from_phrase(s)) as Box<dyn Expr>)
             .collect();
 
-        let expr = Box::new(LongestMatchOf::new(patterns));
+        let expr = Box::new(FirstMatchOf::new(patterns));
         Self { expr }
     }
 }

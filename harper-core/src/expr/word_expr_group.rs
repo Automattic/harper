@@ -17,24 +17,21 @@ where
 }
 
 impl WordExprGroup<FirstMatchOf> {
-    pub fn add(&mut self, word: &str, expr: Box<dyn Expr>) {
+    pub fn add(&mut self, word: &str, expr: impl Expr + 'static) {
         let chars = word.chars().collect();
 
         if let Some(group) = self.exprs.get_mut(&chars) {
-            group.push(expr);
+            group.add(expr);
         } else {
             let mut group = FirstMatchOf::default();
-            group.push(expr);
+            group.add(expr);
             self.exprs.insert(chars, group);
         }
     }
 
     /// Add a pattern that matches just a word on its own, without anything else required to match.
     pub fn add_word(&mut self, word: &'static str) {
-        self.add(
-            word,
-            Box::new(SequenceExpr::default().then_exact_word(word)),
-        );
+        self.add(word, SequenceExpr::default().then_exact_word(word));
     }
 }
 

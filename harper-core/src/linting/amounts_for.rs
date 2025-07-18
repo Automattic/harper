@@ -1,6 +1,6 @@
 use crate::expr::Expr;
+use crate::expr::FirstMatchOf;
 use crate::expr::FixedPhrase;
-use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
 use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
 
@@ -29,7 +29,7 @@ impl Default for AmountsFor {
             .then(Lrc::new(FixedPhrase::from_phrase("amount for")));
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
+            expr: Box::new(FirstMatchOf::new(vec![
                 Box::new(singular_pattern),
                 Box::new(plural_pattern),
             ])),

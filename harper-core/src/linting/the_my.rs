@@ -1,6 +1,6 @@
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
+use crate::expr::FirstMatchOf;
 use crate::expr::SequenceExpr;
 use crate::{
     CharStringExt, Token, TokenStringExt,
@@ -27,7 +27,7 @@ impl Default for TheMy {
             .then(the);
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
+            expr: Box::new(FirstMatchOf::new(vec![
                 Box::new(the_poss),
                 Box::new(poss_the),
             ])),

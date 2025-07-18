@@ -2,7 +2,8 @@ use paste::paste;
 
 use crate::{
     Span, Token, TokenKind,
-    patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word},
+    expr::{FirstMatchOf, LongestMatchOf},
+    patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
 
 use super::{Expr, Optional, Repeating, Step, UnlessStep};
@@ -93,6 +94,11 @@ impl SequenceExpr {
         Self::any_capitalization_of(word)
     }
 
+    /// Match any word from the given set of words, case-insensitive.
+    pub fn word_set(words: &'static [&'static str]) -> Self {
+        Self::default().then_word_set(words)
+    }
+
     // General builder methods
 
     /// Push an [expression](Expr) to the operation list.
@@ -107,11 +113,34 @@ impl SequenceExpr {
         self
     }
 
+    /// Pushes an expression that will match any of the provided expressions.
+    ///
+    /// If more than one of the provided expressions match, this function provides no guarantee
+    /// as to which match will end up being used. If you need to get the longest of multiple
+    /// matches, use [`Self::then_longest_of()`] instead.
+    pub fn then_any_of(mut self, exprs: Vec<Box<dyn Expr>>) -> Self {
+        self.exprs.push(Box::new(FirstMatchOf::new(exprs)));
+        self
+    }
+
+    /// Pushes an expression that will match the longest of the provided expressions.
+    ///
+    /// If you don't need the longest match, prefer using the short-circuiting
+    /// [`Self::then_any_of()`] instead.
+    pub fn then_longest_of(mut self, exprs: Vec<Box<dyn Expr>>) -> Self {
+        self.exprs.push(Box::new(LongestMatchOf::new(exprs)));
+        self
+    }
+
     /// Appends the steps in `other` onto the end of `self`.
     /// This is more efficient than [`Self::then`] because it avoids pointer redirection.
     pub fn then_seq(mut self, mut other: Self) -> Self {
         self.exprs.append(&mut other.exprs);
         self
+    }
+
+    pub fn then_word_set(self, words: &'static [&'static str]) -> Self {
+        self.then(WordSet::new(words))
     }
 
     /// Matches any token whose `Kind` exactly matches.
