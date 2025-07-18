@@ -11,7 +11,7 @@ RUN curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 COPY . .
 
 WORKDIR /usr/build/harper-wasm
-RUN wasm-pack build --release --target web
+RUN RUSTFLAGS='--cfg getrandom_backend="wasm_js"' wasm-pack build --target web
 
 FROM node:${NODE_VERSION} AS node-build
 

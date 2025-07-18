@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use harper_brill::{Chunker, Tagger, brill_chunker, brill_tagger};
+use harper_brill::{Chunker, Tagger, brill_tagger, burn_chunker};
 use paste::paste;
 
 use crate::expr::{Expr, ExprExt, LongestMatchOf, Repeating, SequenceExpr};
@@ -139,33 +139,36 @@ impl Document {
         self.condense_latin();
         self.match_quotes();
 
-        let token_strings: Vec<_> = self
-            .tokens
-            .iter()
-            .filter(|t| !t.kind.is_whitespace())
-            .map(|t| self.get_span_content_str(&t.span))
-            .collect();
+        let chunker = burn_chunker();
 
-        let token_tags = brill_tagger().tag_sentence(&token_strings);
-        let np_flags = brill_chunker().chunk_sentence(&token_strings, &token_tags);
+        for sent in self.tokens.iter_sentences_mut() {
+            let token_strings: Vec<_> = sent
+                .iter()
+                .filter(|t| !t.kind.is_whitespace())
+                .map(|t| t.span.get_content_string(&self.source))
+                .collect();
 
-        let mut i = 0;
+            let token_tags = brill_tagger().tag_sentence(&token_strings);
+            let np_flags = chunker.chunk_sentence(&token_strings, &token_tags);
 
-        // Annotate word metadata
-        for token in self.tokens.iter_mut() {
-            if let TokenKind::Word(meta) = &mut token.kind {
-                let word_source = token.span.get_content(&self.source);
-                let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
+            let mut i = 0;
 
-                if let Some(inner) = &mut found_meta {
-                    inner.pos_tag = token_tags[i];
-                    inner.np_member = Some(np_flags[i]);
+            // Annotate word metadata
+            for token in sent.iter_mut() {
+                if let TokenKind::Word(meta) = &mut token.kind {
+                    let word_source = token.span.get_content(&self.source);
+                    let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
+
+                    if let Some(inner) = &mut found_meta {
+                        inner.pos_tag = token_tags[i];
+                        inner.np_member = Some(np_flags[i]);
+                    }
+
+                    *meta = found_meta;
+                    i += 1;
+                } else if !token.kind.is_whitespace() {
+                    i += 1;
                 }
-
-                *meta = found_meta;
-                i += 1;
-            } else if !token.kind.is_whitespace() {
-                i += 1;
             }
         }
     }
@@ -684,6 +687,10 @@ impl TokenStringExt for Document {
 
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
         self.tokens.iter_sentences()
+    }
+
+    fn iter_sentences_mut(&mut self) -> impl Iterator<Item = &'_ mut [Token]> + '_ {
+        self.tokens.iter_sentences_mut()
     }
 }
 
