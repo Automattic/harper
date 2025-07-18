@@ -1,18 +1,22 @@
 use crate::{UPOS, chunker::Chunker};
 #[cfg(feature = "training")]
 use burn::backend::Autodiff;
+
+#[cfg(feature = "training")]
 use burn::nn::loss::{MseLoss, Reduction};
 use burn::nn::{Dropout, DropoutConfig};
+#[cfg(feature = "training")]
 use burn::optim::{GradientsParams, Optimizer};
 use burn::record::{FullPrecisionSettings, NamedMpkBytesRecorder, NamedMpkFileRecorder, Recorder};
 use burn::tensor::TensorData;
 #[cfg(feature = "training")]
 use burn::tensor::backend::AutodiffBackend;
-use burn::tensor::cast::ToElement;
+
 use burn::{
     module::Module,
     nn::{BiLstmConfig, EmbeddingConfig, LinearConfig},
     optim::AdamConfig,
+    
     tensor::{Int, Tensor, backend::Backend},
 };
 use burn_ndarray::{NdArray, NdArrayDevice};

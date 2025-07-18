@@ -20,7 +20,9 @@ use harper_core::{
     CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
 };
 use harper_literate_haskell::LiterateHaskellParser;
+#[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
+
 use harper_stats::Stats;
 use serde::Serialize;
 
@@ -100,6 +102,7 @@ enum Args {
         /// The document to mine words from.
         file: PathBuf,
     },
+    #[cfg(feature = "training")]
     TrainBrillTagger {
         #[arg(short, long, default_value = "1.0")]
         candidate_selection_chance: f32,
@@ -111,6 +114,7 @@ enum Args {
         #[arg(num_args = 1..)]
         datasets: Vec<PathBuf>,
     },
+    #[cfg(feature = "training")]
     TrainBrillChunker {
         #[arg(short, long, default_value = "1.0")]
         candidate_selection_chance: f32,
@@ -122,6 +126,7 @@ enum Args {
         #[arg(num_args = 1..)]
         datasets: Vec<PathBuf>,
     },
+    #[cfg(feature = "training")]
     TrainBurnChunker {
         #[arg(short, long)]
         lr: f64,
@@ -492,6 +497,7 @@ fn main() -> anyhow::Result<()> {
             println!("harper-core v{}", harper_core::core_version());
             Ok(())
         }
+        #[cfg(feature = "training")]
         Args::TrainBrillTagger {
             datasets: dataset,
             epochs,
@@ -503,6 +509,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        #[cfg(feature = "training")]
         Args::TrainBrillChunker {
             datasets,
             epochs,
@@ -513,6 +520,7 @@ fn main() -> anyhow::Result<()> {
             fs::write(output, serde_json::to_string_pretty(&chunker)?)?;
             Ok(())
         }
+        #[cfg(feature = "training")]
         Args::TrainBurnChunker {
             datasets,
             test_file,
