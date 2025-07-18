@@ -173,6 +173,8 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
         lr: f64,
         device: B::Device,
     ) -> Self {
+        use burn::tensor::cast::ToElement;
+
         println!("Preparing datasets...");
         let ExtractedSentences(sents, tags, labs, vocab) =
             Self::extract_sents_from_files(training_files);
