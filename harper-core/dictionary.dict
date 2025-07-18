@@ -1,4 +1,4 @@
-53300
+53400
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -1656,6 +1656,7 @@ CFO/NO              # financial officer
 CGI/NOV             # computer graphics interface; common gateway interface
 CIA/ONJg            # agency
 CID/NO
+CIS/Og              # commonwealth of independent states
 CLI/NgS             # command line interface
 CNBC/Og
 CNC/NVg             # computer numerical control
@@ -3726,7 +3727,7 @@ GFC/Ng              # global financial crisis
 GHQ/Ng
 GHz/
 GI/JNV
-GIF/NV              # file format
+GIF/NSg             # file format
 GIGO/
 GM/NOVJg            # car company
 GMAT/O              # global
@@ -3909,6 +3910,7 @@ Ghats/Og
 Ghazvanid/g
 Ghent/Og
 Ghibelline/Ng
+GiB
 Giacometti/g
 Giannini/Og
 Giauque/g
@@ -4218,7 +4220,8 @@ HSBC/Og
 HST/NO
 HT/NO
 HTML/Og
-HTTP/O
+HTTP/Ng
+HTTPS/Ng
 HUD/NOg
 HVAC/Ng
 Ha/NOg
@@ -9232,6 +9235,7 @@ Seychelles/Og
 Seyfert/Og
 Seymour/Og
 Sgt/N
+Shabbat/Og
 Shaanxi/Og
 Shackleton/Og
 Shaffer/Og
@@ -10475,6 +10479,7 @@ Vazquez/Og
 Veblen/Og
 Veda/OSg
 Vedanta/Og
+Vedic/J
 Vega/ONSg
 Vegas/ONg
 Vegemite/Og
@@ -12491,7 +12496,7 @@ annul/VLS
 annular/J
 annulled/~JV
 annulling/VN
-annulment/~NSg
+annulment/~NwSg
 annulus/N
 annunciation/~NSg
 anode/~NgS
@@ -12499,17 +12504,18 @@ anodise/VGdS!_
 anodize/VGdS
 anodyne/JNgS
 anoint/VGdLS
-anointment/Ng
+anointment/Nmg
 anomalous/~JY
 anomaly/~NSg
 anon/~NJS
 anonymity/~Ng
+anonymization/Nmg
 anonymize/Vd
 anonymous/~JY
 anopheles/Ng
 anorak/NgS
 anorectic/JNSg
-anorexia/Ng
+anorexia/Nmg
 anorexic/JNgS
 another/~ID
 ansatz/NSg
@@ -13449,6 +13455,7 @@ autocracy/NSg
 autocrat/NSg
 autocratic/~JQ
 autocross/NV
+autodetection/Nmg
 autodidact/NSg
 autofocus/NgVGdS
 autofocussed/V
@@ -13482,6 +13489,7 @@ autoplay/NVSgdG
 autopsy/~NVGdSg
 autoregressive/J
 autorun/NVGg
+autoselect/VGdS
 autostereogram/NgS
 autosuggestion/N
 autotagging/NmgS
@@ -14576,6 +14584,7 @@ bilirubin/N
 bilk/NVSZGd>
 bilker/Ng
 bill/~NVSBzGgd
+billabong/NgS
 billboard/~NVgS
 billet/NVGgdS
 billfold/NSg
@@ -16822,6 +16831,7 @@ centrifuge/~NVdSgG
 centripetal/JY
 centrism/Ng
 centrist/~JNgS
+centroid/NgS
 centurion/~NSg
 century/~NSg
 cephalic/J
@@ -20194,6 +20204,7 @@ dastardliness/Ng
 data/~Nw9g
 database/~NVSg
 dataset/~NgS
+datasheet/NgS
 datatype/N
 date/~NwVd>SgZGv
 datebook/NS
@@ -20409,16 +20420,16 @@ decreeing/VN
 decrement/NVGdS
 decrepit/J
 decrepitude/Ng
-decriminalisation/Ng!_
-decriminalization/Ng
+decriminalisation/Nmg!_
+decriminalization/Nmg
 decry/VGdS
 decrypt/VGdS
 decryption/N
 dedicate/~VJNrGdS
-dedication/~NSg
+dedication/~NwSg
 dedicator/NSg
 dedicatory/JN
-dedollarization/Ng
+dedollarization/Nmg
 dedollarize/VSdG
 deduce/~VGdS
 deducible/J
@@ -20426,6 +20437,7 @@ deduct/VGvd
 deductible/JNSg
 deduction/~NSg
 deductive/JY
+deduplication/Nmg
 deed/~NVGd
 deejay/NVgS
 deem/VNrSGd
@@ -23233,6 +23245,7 @@ equipment/~Nmg
 equipoise/NVg
 equipped/~JVUr
 equipping/~VNr
+equirectangular/J
 equitable/~Ji
 equitably/iR
 equitation/Ng
@@ -24043,7 +24056,7 @@ falconry/Ng
 fall/~VNgnGS
 fallacious/JY
 fallacy/~NSg
-fallback/NJV
+fallback/NgSJV
 fallibility/Nig
 fallible/Jp
 fallibleness/Nmg
@@ -25226,6 +25239,7 @@ forewent/V
 forewoman/Ng
 forewomen/9
 foreword/~NgS
+forex/Ng
 forfeit/~NVJGSgd
 forfeiture/~NSg
 forgather/VSdG
@@ -26145,6 +26159,7 @@ genus/~Ng
 geocache/NVdSG
 geocentric/JQ
 geochemistry/Ng
+geocode/VGdSNg
 geode/NSg
 geodesic/NJSg
 geodesy/Ng
@@ -26156,6 +26171,7 @@ geographer/~NSg
 geographic/~J
 geographical/~JNY
 geography/~NwSg
+geolocation/NwgS
 geologic/~J
 geological/~JY
 geologist/~NgS
@@ -27352,6 +27368,7 @@ handclasp/NgS
 handcraft/NVSgdG
 handcuff/NVgdGS
 handed/~JVp
+handedly/R
 handful/~NSg
 handgun/~NSg
 handheld/~JNgS
@@ -27393,15 +27410,16 @@ handwoven/J
 handwriting/~NmVg
 handwritten/~JV
 handy/~JNUT>
-handyman/NVg
-handymen/9
+handyman/N0g
+handymen/N9
+handywork/Nmg
 hang/~VNgd>zZGS
 hangar/~NVgS
 hangdog/NJV
 hanger/Ng
 hanging/~VJNg
-hangman/~Ng
-hangmen/9
+hangman/~N0g
+hangmen/N9
 hangnail/NgS
 hangout/NSg
 hangover/~NgS
@@ -32242,7 +32260,7 @@ lowboy/NgS
 lowbrow/JNSg
 lowdown/NJg
 lower/~JVGd
-lowercase/~NJVg
+lowercase/~NJVgSdG
 lowermost/J
 lowish/J
 lowland/~NSZg>
@@ -34538,13 +34556,14 @@ mullion/NVSgd
 multi/~N
 multibillion/J
 multibyte/J
-multicellular/JN
+multicellular/J
 multichannel/J
 multicolored/J
 multicoloured/J!@_
 multicore/J
 multicultural/~J
 multiculturalism/~Ng
+multidevice/J
 multidimensional/J
 multidisciplinary/~J
 multiethnic/J
@@ -35484,6 +35503,7 @@ noninfinite/JY
 noninflammatory/J
 noninflationary/J
 noninflected/J
+noninfringement/Nmg
 nonintellectual/JNgS
 noninterchangeable/J
 noninterference/Ng
@@ -36824,7 +36844,7 @@ overlap/~VNSg
 overlapped/~V
 overlapping/~VJN
 overlarge/J
-overlay/~VNGSg
+overlay/~VNGSgd
 overleaf/
 overleveraged/J
 overlie/V
@@ -37297,25 +37317,27 @@ paralyse/VdSG!_
 paralyses/NV
 paralysing/JVY!_
 paralysingly/R@
-paralysis/~Ng
+paralysis/~Nmg
 paralytic/NJSg
 paralyze/VdSG
 paralyzing/JVY
 param/NgS
 paramagnetic/J
-paramecia/N
-paramecium/Ng
+paramecia/N9
+paramecium/N0g
 paramedic/NgS
 paramedical/JNgS
 parameter/~NgS
+parameterisation/Nmg!_
 parameterise/Vd!_
+parameterization/Nmg
 parameterize/Vd
 parametric/~JN
 paramilitary/~NJSg
 paramount/~JN
 paramountcy/N
 paramour/NVSg
-paranoia/~Ng
+paranoia/~Nmg
 paranoiac/JNgS
 paranoid/~JNSg
 paranormal/~JN
@@ -37498,6 +37520,7 @@ passkey/NgS
 passphrase/NS
 passport/~NVgS
 password/~NVgS
+passwordless/J
 past/~NJPVrgS
 pasta/~NwSg
 paste/~NwVdSgG
@@ -39422,6 +39445,7 @@ prednisone/N
 predominance/Ng
 predominant/~JNY
 predominate/~VJYGdS
+predone/J
 preemie/NSg
 preeminence/Ng
 preeminent/~JY
@@ -39613,25 +39637,26 @@ pretender/~NVg
 pretense/NSXgn
 pretension/NVgdGS
 pretentious/~JUY
-pretentiousness/Ng
+pretentiousness/Nmg
 preterit/NJSg
 preterite/JNgS!@_
 preterm/JN
 preternatural/JY
 pretest/JNVdGS
 pretext/~NVgS
+pretrain/VGdS
 pretrial/JNS
 prettify/VGdS
 prettily/R
-prettiness/Ng
+prettiness/Nmg
 pretty/~JNVTGd>Sgp
 pretzel/NVgS
 prev/J!@_
 prevail/~VdGS
-prevalence/~Ng
-prevalent/~JN
+prevalence/~Nmg
+prevalent/~J
 prevaricate/VdSGnX
-prevarication/Ng
+prevarication/Nmg
 prevaricator/NSg
 prevent/~VdBSGv
 preventable/JNU
@@ -39777,11 +39802,11 @@ processor/~NSg
 proclamation/~NgS
 proclivity/NSg
 procrastinate/VdSGn
-procrastination/Ng
+procrastination/Nmg
 procrastinator/NgS
 procreate/Vv
 proctor/~NVGgdS
-procurement/~Ng
+procurement/~NwgS
 prod/~VNgS
 prodigal/~JNgYS
 prodigality/Ng
@@ -39791,7 +39816,7 @@ produce/~VNrZGd>S
 produce's
 producer/~Nrg
 producible/Jr
-production/~NrSg
+production/~NwrSg
 productise/VdSGn!_
 productive/~JUY
 productiveness/Nmg
@@ -40671,6 +40696,7 @@ radicalism/~Ng
 radicalization/Nge
 radicalize/VdSGe
 radicchio/Ng
+radices/N9
 radii/~N
 radio/~NwVgdGS
 radioactive/~JNY
@@ -40700,6 +40726,7 @@ radiotherapy/~Ng
 radish/NgS
 radium/~NVg
 radius/~NVg
+radix/N0gS
 radon/~Ng
 raffia/Ng
 raffish/JYp
@@ -46220,28 +46247,29 @@ strap's
 strapless/JNgS
 strapped/~VJU
 strapping/VJNg
-strata/~N
+strata/~N9
 stratagem/NSg
 strategic/~JS
 strategical/JY
 strategics/Ng
 strategist/~NSg
 strategize/VdSG
-strategy/~NSg
+strategy/~NwSg
 strati/N
-stratification/~Ng
+stratification/~Nmg
 stratify/VdSGn
 stratosphere/NSg
 stratospheric/J
-stratum/~Ng
+stratum/~N0g
 stratus/Ng
-straw/~NJVGSgd
+straw/~NwJVGSgd
 strawberry/~NwJVSg
 stray/~NVJGSgd
 streak/~NVgd>SZG
 streaker/Ng
 streaky/JT>
 stream/~NVgd>SZG
+streamable/J
 streamer/~Ng
 streamline/~NVdSG
 street/~NJVgS
@@ -46817,6 +46845,7 @@ supercritical/J
 superego/NgS
 supererogation/Ng
 supererogatory/J
+superfast/JR
 superficial/~JNY
 superficiality/Ng
 superfine/J
@@ -50120,12 +50149,13 @@ upland/~NJgS
 uplift/~VNzSgdG
 uplink/NgSVdG
 upload/~VNSdG
+uploader/NgS
 upmarket/~JV
 upmost/J
 upon/~P
 upped/V
 upper/~JNSg
-uppercase/JNVg
+uppercase/JNVgSdG
 upperclassman/Ng
 upperclassmen/9
 upperclasswoman/N
@@ -50419,6 +50449,7 @@ vaunt/VNSgdG
 vb/~N
 veal/NVg
 vector/~NVSGgd
+vectorization/Nmg
 vectorize/VdSG>
 veejay/NVSg
 veep/NgS
@@ -50526,6 +50557,7 @@ verifiable/~JU
 verifiably/RU
 verification/~Ng
 verified/~VJNU
+verifier/NgS
 verify/~VdSnG
 verily/R
 verisimilitude/Ng
@@ -52410,6 +52442,7 @@ BRICS/              # intergovernmental organization
 BYD/OgS             # Chinese automobile manufacturer
 Bachiyski/Sg
 Bezos/O             # Surname, Amazon founder
+Binance/Og
 Bing/Og             # Microsoft product
 BitKeeper/Ng        # version control
 BlasterHacks/Sg
@@ -52437,11 +52470,13 @@ CTE/NS
 Captcha/OSg
 ChatGPT/Og          # OpenAI product
 ClickHouse/g
+CloudFlare/Og
 Codeberg/Og         # GitHub alternative
 Colemak/NJg
 CommonMark/g
 CompUSA             # retailer
 Corretto/Sg
+Coursera/Og
 Crowdsignal/Og
 Cypher/ONg
 DATETIME/NgS        # dictionaries prefer: datetime
@@ -52459,9 +52494,13 @@ DRM/Ng              # digital rights management
 DSL/NSg             # domain-specific language
 DX/Ng               # developer experience
 DeepMind/Og
+Deno/Og
 DevOps/Sg
 DirectX/Og
+Docker/Og
+Dockerfile/NgS
 Dreamcast/OgS       # game console
+DuckDuckGo/Og       # search engine
 ECMA/Og             # European Computer Manufacturers Association
 EGR/                # exhaust gas recirculation
 EMR/NOSg
@@ -52489,10 +52528,12 @@ Foddy/Sg
 Frankl/Sg
 FreeBSD/Og          # operating system
 GLFW/Og
+GPIO/Ng             # general purpose input/output
 GPL/Og              # GNU General Public License
 GPT/NSg             # generative pre-trained transformer
 GPU/NS              # graphics processing unit
 GSM/OJ              # Global System for Mobile Communications
+GTK/O               # GIMP Toolkit
 Ganeti/Sg
 Gateron/Sg
 Gerber/Ng           # file format
@@ -52531,11 +52572,13 @@ JNI/Og              # Java Native Interface
 JS/Ng               # JavaScript
 JSDoc/Sg
 JSON/Og             # data format
+JSONP/Og
 JVM/Sg              # Java virtual machine
 Jacoco/Sg
 JavaDoc/Sg
 JavaScript/ONSg     # programming language
 Javadoc/Sg
+JetBrains
 Jetpack/Og
 Joomla/Sg
 Jupyter/Og
@@ -52571,6 +52614,7 @@ Loctite/Og          # product
 Logotherapy/Sg
 Longreads/Og
 Lua/Sg              # programming language
+MCP/Ng              # model context protocol
 MMX/Ng              # multimedia extension
 MPC/ONg
 MSB/NgS             # most significant bit/byte
@@ -52630,11 +52674,13 @@ OpenMetrics/Sg
 OpenPGP/Sg
 OpenSearch/Sg
 OpenZFS/Ng          # file system
+OSINT/Nmg
 P2/gS
 P2P/ONg
 PCH/Og              # highway
 PDP/NSg             # old computer
 PII/NSg
+PIO/NgS             # programmed I/O
 PKCS/Sg
 POSIX/Og            # unix standard
 PRQL/N
@@ -52676,6 +52722,7 @@ SLA/NSg
 SLOC/9              # source lines of code
 SNL/Og              # Saturday Night Live
 SQLAlchemy/N
+SSID/NgS
 SVG/ONs             # scalable vector graphics
 SVGA/N              # super VGA
 Sharman/OSg
@@ -52699,6 +52746,7 @@ TODO                # FIXME! elsewhere in Harper we refer to Todo and to-do
 TOML/Ng             # configuration file format
 TSMC/Og             # Taiwanese Semiconductor Manufacturing Company
 TSR/NgS             # terminate and stay resident
+TTS/Ng              # text-to-speech
 TUI/NOSg            # text user interface
 Tandy/Og            # surname, given name, old computer company
 TechCrunch/g
@@ -52738,9 +52786,12 @@ WASI/gS
 WASM/gS             # see WebAssembly
 WD40/Ng
 WIP/Ng              # work in progress
+WPA/Og
+WPA2/Og
 WSL/gO              # windows subsystem for linux
 Waymo/Og
 WebAssembly/g       # see WASM
+WebDAV/Og
 WebGPU/Sg
 WebKit/Og
 WebRTC/Og
@@ -52772,11 +52823,13 @@ autoconfiguration/Ng
 autoconfigure/VSdG
 backend/NSg         # dictionaries prefer: back end
 baz/~               # cf. foo, bar
+concat/VSdG
 config/NVSg         # not marked as a verb since "configed" and "configing" look wrong
 corpo/NgS
 decomp/NgSVdG       # decompile/decompilation
 dedup/Ng            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/NVSgdG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
+docstring/NSg
 dotfile/~NSg        # not well covered by dictionaries.
 eVTOL/NgS
 ext2/Ng             # file system
@@ -52785,6 +52838,7 @@ ext4/Ng             # file system
 falsy/J
 filesystem/~Sg      # dictionaries prefer: file system
 frontend/NSg        # dictionaries prefer: front end
+gen AI/Ng
 geofence/NgSVdG
 gRPC/OSg            # framework
 glymph/Sg           # !! please check and comment !!
@@ -52802,6 +52856,7 @@ npm/Og              # node package manager
 nullish/J
 olds/~              # common in phrasing such as "twenty year olds"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
+pastebin/NgS
 pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
 raytracer/N         # dictionaries prefer: ray tracer
 roadmap/NgS         # overtook "road map" c. 2000 but not in dictionaries yet
@@ -52849,6 +52904,7 @@ barn find/NgS
 beck and call/N
 bell-pull/NgS
 bench-warmer/NgS
+bit shift/NgSVGd
 black magic/Ng
 blow-up/JNgS
 blue-blooded/J
@@ -52861,6 +52917,7 @@ Bretton Woods/Og
 brute force/NgSVdG
 built-in/NgSJ
 built-up/J
+camel case/Nmg
 car bomb/NgS
 car-bomb/V
 carbon-intensive/J
@@ -52957,7 +53014,6 @@ grey wolves/9!@_
 ground-based/J
 GT R/N
 GT-R/NgS
-GTK/O               # GIMP Toolkit
 gung ho/J
 H-1B/NgS
 habeas corpus/N
@@ -53059,6 +53115,7 @@ mock up/V
 mock-up/NgS
 moon landing/NgS
 motor ship/NgS
+multi-platform/J
 multiple-choice/J
 nail biter/NgS
 NAND gate/NgS
@@ -53108,6 +53165,7 @@ out of date
 Pan Am/Ng           # old airline
 part of speech/Ng
 parts speech/9
+Pascal case/Nmg
 Pax Americana/Og
 peer review/NgSdG
 peer-reviewed/J
@@ -53347,6 +53405,3 @@ z-axis/Ng
 # And they will be reviewed
 # Word added using the `just addnoun` command will be added here
 
-handedly
-handyman
-handywork

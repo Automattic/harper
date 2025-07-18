@@ -431,7 +431,7 @@
 > described them     as    the " rationalist paradigm " ( which treats computer science as    a
 # V/J       NSg/IPl+ NSg/R D   . NSg+        NSg+     . . I/C+  NPl/V+ NSg/V+   NSg/V   NSg/R D/P
 > branch of mathematics , which is prevalent in      theoretical computer science , and
-# NPr/V  P  NᴹSg+       . I/C+  VL NSg/J     NPr/J/P J+          NSg/V+   NSg/V+  . V/C
+# NPr/V  P  NᴹSg+       . I/C+  VL J         NPr/J/P J+          NSg/V+   NSg/V+  . V/C
 > mainly employs deductive reasoning ) , the " technocratic paradigm " ( which might     be
 # R      NPl/V   J         NSg/V     . . D   . J            NSg+     . . I/C+  NᴹSg/VX/J NSg/VX
 > found in      engineering approaches , most       prominently in      software engineering ) , and
