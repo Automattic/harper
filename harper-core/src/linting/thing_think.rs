@@ -1,6 +1,6 @@
 use crate::{
     Token,
-    expr::{Expr, FixedPhrase, LongestMatchOf, SequenceExpr},
+    expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -13,7 +13,7 @@ pub struct ThingThink {
 impl Default for ThingThink {
     fn default() -> Self {
         let subject_pronouns = WordSet::new(&["I", "you", "we", "they"]);
-        let indefinite_pronouns = LongestMatchOf::new(vec![
+        let indefinite_pronouns = FirstMatchOf::new(vec![
             Box::new(WordSet::new(&[
                 "anybody",
                 "anyone",
@@ -23,7 +23,7 @@ impl Default for ThingThink {
             // "Any one thing", "every one thing", "any body thing" cause false positives.
             Box::new(FixedPhrase::from_phrase("every body")),
         ]);
-        let pronoun = LongestMatchOf::new(vec![
+        let pronoun = FirstMatchOf::new(vec![
             Box::new(subject_pronouns),
             Box::new(indefinite_pronouns),
         ]);
@@ -58,7 +58,7 @@ impl Default for ThingThink {
         let adverb_of_frequency =
             WordSet::new(&["always", "sometimes", "often", "usually", "never"]);
 
-        let pre_context = LongestMatchOf::new(vec![
+        let pre_context = FirstMatchOf::new(vec![
             Box::new(pronoun),
             Box::new(verb_to),
             Box::new(modal),

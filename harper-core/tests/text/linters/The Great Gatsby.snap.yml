@@ -7115,6 +7115,17 @@ Suggest:
 
 
 
+Lint:    WordChoice (31 priority)
+Message: |
+    5528 | “Now he’s dead,” I said after a moment. “You were his closest friend, so I know
+         |                                              ^~~~ Use the contraction or separate the words instead.
+    5529 | you'll want to come to his funeral this afternoon.”
+Suggest:
+  - Replace with: “we're”
+  - Replace with: “we are”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5552 | For a moment I thought he was going to suggest a “gonnegtion,” but he only

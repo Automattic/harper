@@ -35,6 +35,7 @@
 		"crelt": "^1.0.5",
 		"harper.js": "workspace:*",
 		"lodash-es": "^4.17.21",
+		"minimatch": "^10.0.3",
 		"tslib": "catalog:"
 	}
 }

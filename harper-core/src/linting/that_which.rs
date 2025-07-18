@@ -22,8 +22,8 @@ impl Default for ThatWhich {
                 .then_any_capitalization_of("that"),
         );
 
-        pattern.add("that", Box::new(matching_pattern.clone()));
-        pattern.add("That", Box::new(matching_pattern));
+        pattern.add("that", matching_pattern.clone());
+        pattern.add("That", matching_pattern);
 
         Self {
             expr: Box::new(pattern),

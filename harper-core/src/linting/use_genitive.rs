@@ -1,5 +1,5 @@
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
+use crate::expr::FirstMatchOf;
 use crate::expr::SequenceExpr;
 use crate::expr::WordExprGroup;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
@@ -14,8 +14,8 @@ pub struct UseGenitive {
 impl UseGenitive {
     fn new() -> Self {
         // Define the environment in which the genitive case __should__ be used.
-        let environment = Lrc::new(SequenceExpr::default().then_whitespace().then(
-            LongestMatchOf::new(vec![
+        let environment = Lrc::new(SequenceExpr::default().then_whitespace().then_longest_of(
+            vec![
                     Box::new(
                         SequenceExpr::default()
                             .then_one_or_more_adjectives()
@@ -23,7 +23,7 @@ impl UseGenitive {
                             .then_noun(),
                     ),
                     Box::new(SequenceExpr::default().then_noun()),
-                ]),
+                ],
         ));
 
         let trigger_words = ["there", "they're"];
@@ -33,17 +33,15 @@ impl UseGenitive {
         for word in trigger_words {
             primary_pattern.add(
                 word,
-                Box::new(
-                    SequenceExpr::default()
-                        .then(Word::new_exact(word))
-                        .then(environment.clone()),
-                ),
+                SequenceExpr::default()
+                    .then(Word::new_exact(word))
+                    .then(environment.clone()),
             )
         }
 
         // Add a prelude to remove false-positives.
         let full_pattern = SequenceExpr::default()
-            .then_unless(LongestMatchOf::new(vec![
+            .then_unless(FirstMatchOf::new(vec![
                 Box::new(SequenceExpr::default().t_aco("is")),
                 Box::new(SequenceExpr::default().t_aco("were")),
                 Box::new(SequenceExpr::default().then_adjective()),
