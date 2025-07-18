@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { dictToString, stringToDict } from './dictUtils';
+import { linesToString, stringToLines } from './textUtils';
 
 test('Dictionary values are reversible', () => {
 	const possibleDicts = [
@@ -66,8 +66,8 @@ test('Dictionary values are reversible', () => {
 	];
 
 	for (const set of possibleDicts) {
-		const text = dictToString(set);
-		const back = stringToDict(text);
+		const text = linesToString(set);
+		const back = stringToLines(text);
 
 		expect(back).toStrictEqual(set);
 	}
@@ -76,10 +76,10 @@ test('Dictionary values are reversible', () => {
 test('Can handle multiple newlines', () => {
 	const dictText = 'worda\n\nwordb';
 
-	expect(stringToDict(dictText)).toStrictEqual(['worda', 'wordb']);
+	expect(stringToLines(dictText)).toStrictEqual(['worda', 'wordb']);
 });
 
 test('Can handle carriage returns', () => {
 	const dictText = 'worda\r\n\r\nwordb\r\nwordc';
-	expect(stringToDict(dictText)).toStrictEqual(['worda', 'wordb', 'wordc']);
+	expect(stringToLines(dictText)).toStrictEqual(['worda', 'wordb', 'wordc']);
 });

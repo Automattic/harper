@@ -61,7 +61,7 @@
 > The fundamental concern of computer science is determining what  can    and cannot
 # D   NSg/J       NSg/V   P  NSg/V+   NSg/V+  VL V           NSg/I NPr/VX V/C NSg/V+
 > be      automated . The Turing Award  is generally recognized as    the highest
-# NSg/VX+ V/J+      . D+  NPr+   NSg/V+ VL R         V/J        NSg/R D   W?
+# NSg/VX+ V/J+      . D+  NPr+   NSg/V+ VL R         V/J        NSg/R D   JS
 > distinction in      computer science .
 # NSg         NPr/J/P NSg/V+   NSg/V+  .
 >
@@ -71,7 +71,7 @@
 >
 #
 > The earliest foundations of what   would become computer science predate the
-# D   W?       NPl         P  NSg/I+ VX    V      NSg/V+   NSg/V+  NSg/V   D
+# D   JS       NPl         P  NSg/I+ VX    V      NSg/V+   NSg/V+  NSg/V   D
 > invention of the modern digital computer . Machines for calculating fixed
 # NSg       P  D+  NSg/J+ NSg/J+  NSg/V+   . NPl/V    C/P V/J         V/J
 > numerical tasks  such  as    the abacus have   existed since antiquity , aiding in
@@ -92,8 +92,8 @@
 # NSg+       . V/J    D+  J+      ?        . NPr     NPr/VX NSg/VX V/J        D+  NSg/V/J+
 > computer scientist and information theorist , because of various reasons ,
 # NSg/V+   NSg       V/C NᴹSg+       NSg      . C/P     P  J+      NPl/V+  .
-> including the fact that          he       documented the binary number   system . In      1820 , Thomas
-# V         D+  NSg+ NSg/I/C/Ddem+ NPr/ISg+ V/J        D+  NSg/J+ NSg/V/J+ NSg+   . NPr/J/P #    . NPr+
+> including the fact that          he       documented the binary number    system . In      1820 , Thomas
+# V         D+  NSg+ NSg/I/C/Ddem+ NPr/ISg+ V/J        D+  NSg/J+ NSg/V/JC+ NSg+   . NPr/J/P #    . NPr+
 > de   Colmar launched the mechanical calculator industry [ note   1 ] when    he       invented
 # NPr+ ?      V/J      D+  NSg/J+     NSg+       N🅪Sg+    . NSg/V+ # . NSg/I/C NPr/ISg+ V/J
 > his     simplified arithmometer , the first   calculating machine strong enough and
@@ -125,7 +125,7 @@
 > to process statistical information ; eventually his     company became part    of IBM  .
 # P  NSg/V   J           NᴹSg+       . R          ISg/D$+ NSg/V+  V      NSg/V/J P  NPr+ .
 > Following Babbage , although unaware of his     earlier work   , Percy Ludgate in      1909
-# NSg/V/J/P NPr     . C        V/J     P  ISg/D$+ J       NSg/V+ . NPr+  ?       NPr/J/P #
+# NSg/V/J/P NPr     . C        V/J     P  ISg/D$+ JC      NSg/V+ . NPr+  ?       NPr/J/P #
 > published the 2nd of the only  two designs for mechanical analytical engines in
 # V/J       D   #   P  D   J/R/C NSg NPl/V   C/P NSg/J      J          NPl/V   NPr/J/P
 > history . In      1914 , the Spanish engineer Leonardo Torres Quevedo published his
@@ -145,7 +145,7 @@
 > commands could  be     typed and the results printed automatically . In      1937 , one
 # NPl/V+   NSg/VX NSg/VX V/J   V/C D+  NPl/V+  V/J+    W?            . NPr/J/P #    . NSg/I/V/J
 > hundred years after Babbage's impossible dream    , Howard Aiken convinced IBM  ,
-# NSg     NPl+  J/P   NSg$      NSg/J+     NSg/V/J+ . NPr+   NPr   V/J       NPr+ .
+# NSg     NPl+  JC/P  NSg$      NSg/J+     NSg/V/J+ . NPr+   NPr   V/J       NPr+ .
 > which was making all          kinds of punched card    equipment and was also in      the
 # I/C+  V   NSg/V  NSg/I/J/C/Dq NSg   P  V/J     N🅪Sg/V+ NᴹSg+     V/C V   W?   NPr/J/P D+
 > calculator business to develop his     giant  programmable calculator , the
@@ -162,8 +162,8 @@
 # V/P    D+  #d    . P    D   N🅪Sg        P  NSg/V/J V/C NPr/I/V/J/Dq J        NSg/V+
 > machines such  as    the Atanasoff – Berry   computer and ENIAC , the term     computer came
 # NPl/V+   NSg/I NSg/R D   ?         . NPr🅪/V+ NSg/V+   V/C ?     . D+  NSg/V/J+ NSg/V+   NSg/V/P
-> to refer   to the machines rather  than their human    predecessors . As    it       became
-# P  NSg/V/J P  D+  NPl/V+   NPr/V/J C/P  D$+   NSg/V/J+ NPl+         . NSg/R NPr/ISg+ V
+> to refer to the machines rather  than their human    predecessors . As    it       became
+# P  NSg/V P  D+  NPl/V+   NPr/V/J C/P  D$+   NSg/V/J+ NPl+         . NSg/R NPr/ISg+ V
 > clear   that         computers could  be     used for more         than just mathematical calculations ,
 # NSg/V/J NSg/I/C/Ddem NPl/V+    NSg/VX NSg/VX V/J  C/P NPr/I/V/J/Dq C/P  V/J  J+           +            .
 > the field of computer science broadened to study computation in      general  . In
@@ -226,16 +226,16 @@
 # NSg/V+ V/J      . I/J     NPl         P  NPr/V/J NPl+         V      D+  NSg/V/J+
 > computing science , to emphasize precisely that          difference . Danish scientist
 # NSg/V+    NSg/V+  . P  V         R         NSg/I/C/Ddem+ N🅪Sg/V+    . NPr/J  NSg+
-> Peter    Naur suggested the term     datalogy , to reflect the fact that         the scientific
-# NPr/V/J+ ?    V/J       D+  NSg/V/J+ ?        . P  V       D+  NSg  NSg/I/C/Ddem D+  J+
+> Peter     Naur suggested the term     datalogy , to reflect the fact that         the scientific
+# NPr/V/JC+ ?    V/J       D+  NSg/V/J+ ?        . P  V       D+  NSg  NSg/I/C/Ddem D+  J+
 > discipline revolves around data and data  treatment , while     not   necessarily
 # NSg/V+     NPl/V    J/P    N🅪Pl V/C N🅪Pl+ NSg+      . NSg/V/C/P NSg/C R
 > involving computers . The first   scientific institution to use   the term     was the
 # V         NPl/V+    . D   NSg/V/J J          NSg         P  NSg/V D+  NSg/V/J+ V   D
 > Department of Datalogy at    the University of Copenhagen , founded in      1969 , with
 # NSg        P  ?        NSg/P D   NSg        P  NPr+       . V/J     NPr/J/P #    . P
-> Peter    Naur being   the first   professor in      datalogy . The term     is used mainly in      the
-# NPr/V/J+ ?    NSg/V/C D   NSg/V/J NSg       NPr/J/P ?        . D+  NSg/V/J+ VL V/J  R      NPr/J/P D+
+> Peter     Naur being   the first   professor in      datalogy . The term     is used mainly in      the
+# NPr/V/JC+ ?    NSg/V/C D   NSg/V/J NSg       NPr/J/P ?        . D+  NSg/V/J+ VL V/J  R      NPr/J/P D+
 > Scandinavian countries . An   alternative term     , also proposed by      Naur , is data
 # NSg/J+       NPl+      . D/P+ NSg/J+      NSg/V/J+ . W?   V/J      NSg/J/P ?    . VL N🅪Pl+
 > science ; this    is now       used for a   multi - disciplinary field of data  analysis ,
@@ -244,14 +244,14 @@
 # V         NPl/V      V/C NPl/V+    .
 >
 #
-> In      the early   days of computing , a   number  of terms for the practitioners of the
-# NPr/J/P D   NSg/J/R NPl  P  NSg/V+    . D/P NSg/V/J P  NPl/V C/P D   NPl           P  D
+> In      the early   days of computing , a   number   of terms for the practitioners of the
+# NPr/J/P D   NSg/J/R NPl  P  NSg/V+    . D/P NSg/V/JC P  NPl/V C/P D   NPl           P  D
 > field of computing were  suggested ( albeit facetiously ) in      the Communications of
 # NSg/V P  NSg/V+    NSg/V V/J       . C      R           . NPr/J/P D   W?             P
 > the ACM — turingineer , turologist , flow   - charts - man     , applied meta  - mathematician ,
 # D   NSg . ?           . ?          . NSg/V+ . NPl/V  . NPr/V/J . V/J     NSg/J . NSg           .
 > and applied epistemologist . Three months later in      the same journal  , comptologist
-# V/C V/J+    ?              . NSg   NSg+   J     NPr/J/P D+  I/J+ NSg/V/J+ . ?
+# V/C V/J+    ?              . NSg   NSg+   JC    NPr/J/P D+  I/J+ NSg/V/J+ . ?
 > was suggested , followed next    year by       hypologist . The term     computics has also
 # V   V/J       . V/J      NSg/J/P NSg  NSg/J/P+ ?          . D+  NSg/V/J+ ?         V   +
 > been   suggested . In      Europe , terms  derived from contracted translations of the
@@ -299,7 +299,7 @@
 >
 #
 > Computer science is considered by      some      to have   a   much       closer relationship with
-# NSg/V+   NSg/V   VL V/J        NSg/J/P I/J/R/Dq+ P  NSg/VX D/P NSg/I/J/Dq NSg/J  NSg          P
+# NSg/V+   NSg/V   VL V/J        NSg/J/P I/J/R/Dq+ P  NSg/VX D/P NSg/I/J/Dq NSg/JC NSg          P
 > mathematics than many        scientific disciplines , with some      observers saying that
 # NᴹSg+       C/P  NSg/I/J/Dq+ J+         NPl/V+      . P    I/J/R/Dq+ NPl+      NSg/V  NSg/I/C/Ddem
 > computing is a   mathematical science . Early   computer science was strongly
@@ -420,12 +420,12 @@
 # NPl       P  NSg/V+   NSg/V+
 >
 #
-> A   number  of computer scientists have   argued for the distinction of three
-# D/P NSg/V/J P  NSg/V+   NPl+       NSg/VX V/J    C/P D   NSg         P  NSg
-> separate paradigms in      computer science . Peter    Wegner argued that         those   paradigms
-# NSg/V/J  NPl       NPr/J/P NSg/V+   NSg/V+  . NPr/V/J+ ?      V/J    NSg/I/C/Ddem I/Ddem+ NPl+
-> are science , technology , and mathematics . Peter    Denning's working group  argued
-# V   NSg/V   . N🅪Sg+      . V/C NᴹSg+       . NPr/V/J+ ?         V       NSg/V+ V/J
+> A   number   of computer scientists have   argued for the distinction of three
+# D/P NSg/V/JC P  NSg/V+   NPl+       NSg/VX V/J    C/P D   NSg         P  NSg
+> separate paradigms in      computer science . Peter     Wegner argued that         those   paradigms
+# NSg/V/J  NPl       NPr/J/P NSg/V+   NSg/V+  . NPr/V/JC+ ?      V/J    NSg/I/C/Ddem I/Ddem+ NPl+
+> are science , technology , and mathematics . Peter     Denning's working group  argued
+# V   NSg/V   . N🅪Sg+      . V/C NᴹSg+       . NPr/V/JC+ ?         V       NSg/V+ V/J
 > that         they are theory , abstraction ( modeling ) , and design . Amnon H. Eden
 # NSg/I/C/Ddem IPl+ V   NSg    . NSg         . NSg/V+   . . V/C NSg/V+ . ?     ?  NPr+
 > described them     as    the " rationalist paradigm " ( which treats computer science as    a
@@ -498,8 +498,8 @@
 # NSg    P  NSg
 >
 #
-> According to Peter    Denning , the fundamental question underlying computer science
-# V/J       P  NPr/V/J+ ?       . D+  NSg/J+      NSg/V+   NSg/V/J    NSg/V+   NSg/V+
+> According to Peter     Denning , the fundamental question underlying computer science
+# V/J       P  NPr/V/JC+ ?       . D+  NSg/J+      NSg/V+   NSg/V/J    NSg/V+   NSg/V+
 > is , " What   can    be     automated ? " Theory of computation is focused on  answering
 # VL . . NSg/I+ NPr/VX NSg/VX V/J       . . NSg    P  NSg         VL V/J     J/P V
 > fundamental questions about what   can    be     computed and what   amount of resources
@@ -598,8 +598,8 @@
 # C       . D   NSg/V/J NSg/V/J P  V     NSg/J  NPl/V+  NPl/V NSg/I/C/Ddem IPl+ V   R       J/R/C
 > used in      the development of high    - integrity and life   - critical systems , where
 # V/J  NPr/J/P D   N🅪Sg        P  NSg/V/J . NᴹSg      V/C NSg/V+ . NSg/J    NPl     . NSg/C
-> safety or    security is of utmost importance . Formal methods are best     described as
-# N🅪Sg/V NPr/C NSg+     VL P  NSg/J  NᴹSg+      . NSg/J  NPl/V+  V   NPr/VX/J V/J       NSg/R
+> safety or    security is of utmost importance . Formal methods are best      described as
+# N🅪Sg/V NPr/C NSg+     VL P  NSg/J  NᴹSg+      . NSg/J  NPl/V+  V   NPr/VX/JS V/J       NSg/R
 > the application of a   fairly broad variety of theoretical computer science
 # D   NSg         P  D/P R      NSg/J NSg     P  J           NSg/V+   NSg/V+
 > fundamentals , in      particular logic    calculi , formal languages , automata theory ,
@@ -641,15 +641,15 @@
 > of informatics , the European view  on  computing , which studies information
 # P  NᴹSg        . D   NSg/J    NSg/V J/P NSg/V+    . I/C+  NPl/V+  NᴹSg+
 > processing algorithms independently of the type  of information carrier – whether
-# V+         NPl+       R             P  D   NSg/V P  NᴹSg+       NPr/J+  . I/C
+# V+         NPl+       R             P  D   NSg/V P  NᴹSg+       NPr+    . I/C
 > it       is electrical , mechanical or     biological . This    field  plays important role in
 # NPr/ISg+ VL NSg/J      . NSg/J+     NPr/C+ NSg/J+     . I/Ddem+ NSg/V+ NPl/V J         NSg  NPr/J/P
 > information theory , telecommunications , information engineering and has
 # NᴹSg+       NSg+   . NPl+               . NᴹSg+       NSg/V+      V/C V
 > applications in      medical image  computing and speech  synthesis , among others . What
 # W?           NPr/J/P NSg/J   NSg/V+ NSg/V     V/C N🅪Sg/V+ NSg+      . P     NPl/V+ . NSg/I+
-> is the lower bound   on  the complexity of fast    Fourier transform algorithms ? is
-# VL D   V/J   NSg/V/J J/P D   NSg        P  NSg/V/J NPr     NSg/V     NPl+       . VL+
+> is the lower    bound   on  the complexity of fast    Fourier transform algorithms ? is
+# VL D   NSg/V/JC NSg/V/J J/P D   NSg        P  NSg/V/J NPr     NSg/V     NPl+       . VL+
 > one       of the unsolved problems in      theoretical computer science .
 # NSg/I/V/J P  D   V/J      NPl      NPr/J/P J+          NSg/V+   NSg/V+  .
 >
@@ -794,8 +794,8 @@
 #
 > Concurrency is a   property of systems in      which several computations are executing
 # NSg+        VL D/P NSg/V    P  NPl+    NPr/J/P I/C+  J/Dq    NPl          V   V
-> simultaneously , and potentially interacting with each other    . A   number  of
-# R              . V/C R           V           P    Dq+  NSg/V/J+ . D/P NSg/V/J P
+> simultaneously , and potentially interacting with each other    . A   number   of
+# R              . V/C R           V           P    Dq+  NSg/V/J+ . D/P NSg/V/JC P
 > mathematical models have   been  developed for general concurrent computation
 # J            NPl/V+ NSg/VX NSg/V V/J       C/P NSg/V/J NSg/J      NSg
 > including Petri nets   , process calculi and the parallel random  access machine
@@ -1038,10 +1038,10 @@
 # W?           V/C NSg/V+  NSg/J+   NᴹSg+    NPl/V+   .
 >
 #
-> Many        languages offer   support for multiple  paradigms , making the distinction more
-# NSg/I/J/Dq+ NPl/V     NSg/V/J NSg/V   C/P NSg/J/Dq+ NPl+      . NSg/V  D+  NSg+        NPr/I/V/J/Dq
-> a   matter   of style  than of technical capabilities .
-# D/P N🅪Sg/V/J P  NSg/V+ C/P  P  NSg/J+    NSg+         .
+> Many        languages offer    support for multiple  paradigms , making the distinction more
+# NSg/I/J/Dq+ NPl/V     NSg/V/JC NSg/V   C/P NSg/J/Dq+ NPl+      . NSg/V  D+  NSg+        NPr/I/V/J/Dq
+> a   matter    of style  than of technical capabilities .
+# D/P N🅪Sg/V/JC P  NSg/V+ C/P  P  NSg/J+    NSg+         .
 >
 #
 > Research
@@ -1055,10 +1055,10 @@
 > recent work   and  meet     . Unlike    in      most       other    academic fields   , in      computer science ,
 # NSg/J  NSg/V+ V/C+ NSg/V/J+ . NSg/V/J/P NPr/J/P NSg/I/J/Dq NSg/V/J+ NSg/J+   NPrPl/V+ . NPr/J/P NSg/V+   NSg/V+  .
 > the prestige of conference papers is greater than that         of journal  publications .
-# D   NSg/V/J  P  NSg/V+     NPl/V+ VL J       C/P  NSg/I/C/Ddem P  NSg/V/J+ NPl+         .
+# D   NSg/V/J  P  NSg/V+     NPl/V+ VL JC      C/P  NSg/I/C/Ddem P  NSg/V/J+ NPl+         .
 > One       proposed explanation for this    is the quick   development of this    relatively
 # NSg/I/V/J V/J      NSg         C/P I/Ddem+ VL D   NSg/V/J N🅪Sg        P  I/Ddem+ R
 > new      field  requires rapid review and distribution of results , a   task   better
-# NSg/V/J+ NSg/V+ NPl/V    NSg/J NSg/V  V/C NSg          P  NPl/V+  . D/P NSg/V+ NSg/VX/J
+# NSg/V/J+ NSg/V+ NPl/V    NSg/J NSg/V  V/C NSg          P  NPl/V+  . D/P NSg/V+ NSg/VX/JC
 > handled by      conferences than by      journals .
 # V/J     NSg/J/P NPl/V+      C/P  NSg/J/P NPl/V+   .

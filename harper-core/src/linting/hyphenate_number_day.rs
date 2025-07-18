@@ -1,5 +1,4 @@
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
 use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::patterns::NominalPhrase;
@@ -16,7 +15,7 @@ impl Default for HyphenateNumberDay {
             .then_number()
             .then_whitespace()
             .t_aco("day")
-            .then(LongestMatchOf::new(vec![
+            .then_longest_of(vec![
                 Box::new(
                     SequenceExpr::default()
                         .then_whitespace()
@@ -29,7 +28,7 @@ impl Default for HyphenateNumberDay {
                         .then_whitespace()
                         .then(NominalPhrase),
                 ),
-            ]));
+            ]);
 
         Self {
             expr: Box::new(pattern),

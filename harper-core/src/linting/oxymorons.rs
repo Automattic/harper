@@ -1,7 +1,7 @@
 use crate::TokenStringExt;
 use crate::expr::Expr;
+use crate::expr::FirstMatchOf;
 use crate::expr::FixedPhrase;
-use crate::expr::LongestMatchOf;
 use crate::expr::MatchInfo;
 use crate::linting::{ExprLinter, Lint, LintKind};
 
@@ -39,7 +39,7 @@ impl Oxymorons {
             .map(|s| Box::new(FixedPhrase::from_phrase(s)) as Box<dyn Expr>)
             .collect();
 
-        let expr = Box::new(LongestMatchOf::new(exprs));
+        let expr = Box::new(FirstMatchOf::new(exprs));
         Self { expr }
     }
 }

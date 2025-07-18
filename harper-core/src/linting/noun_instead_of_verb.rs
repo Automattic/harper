@@ -1,4 +1,5 @@
 use crate::expr::Expr;
+use crate::expr::FirstMatchOf;
 use crate::expr::LongestMatchOf;
 use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
@@ -56,7 +57,7 @@ pub struct NounInsteadOfVerb {
 
 impl Default for NounInsteadOfVerb {
     fn default() -> Self {
-        let pre_context = LongestMatchOf::new(vec![
+        let pre_context = FirstMatchOf::new(vec![
             Box::new(WordSet::new(PRONOUNS)),
             Box::new(WordSet::new(MODAL_VERBS_ETC)),
             Box::new(WordSet::new(ADVERBS)),

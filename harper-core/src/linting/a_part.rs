@@ -1,6 +1,6 @@
 use crate::expr::Expr;
+use crate::expr::FirstMatchOf;
 use crate::expr::FixedPhrase;
-use crate::expr::LongestMatchOf;
 use crate::expr::MatchInfo;
 use crate::{
     TokenStringExt,
@@ -13,7 +13,7 @@ pub struct APart {
 
 impl Default for APart {
     fn default() -> Self {
-        let pattern = LongestMatchOf::new(vec![
+        let pattern = FirstMatchOf::new(vec![
             Box::new(FixedPhrase::from_phrase("a part from")),
             Box::new(FixedPhrase::from_phrase("apart of")),
             Box::new(FixedPhrase::from_phrase("fall a part")),

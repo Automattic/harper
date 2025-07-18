@@ -1,6 +1,7 @@
 use crate::{
     Dialect,
-    expr::{Expr, FixedPhrase, LongestMatchOf, MatchInfo, SequenceExpr},
+    expr::MatchInfo,
+    expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
     linting::{LintKind, Suggestion},
     patterns::{InflectionOfBe, WordSet},
 };
@@ -19,7 +20,7 @@ impl InOnTheCards {
             _ => "on",
         };
 
-        let pre_context = LongestMatchOf::new(vec![
+        let pre_context = FirstMatchOf::new(vec![
             Box::new(InflectionOfBe::new()),
             Box::new(WordSet::new(&[
                 "isn't", "it's", "wasn't", "weren't", "not", "isnt", "its", "wasnt", "werent",

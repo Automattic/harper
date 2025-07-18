@@ -1,5 +1,5 @@
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
+use crate::expr::FirstMatchOf;
 use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::{
@@ -10,7 +10,7 @@ use crate::{
 /// Suggests removing `the` when followed by how/why/who/when/what,
 /// skipping cases like `how to` and `who's who`.
 pub struct TheHowWhy {
-    expr: LongestMatchOf,
+    expr: FirstMatchOf,
 }
 
 impl Default for TheHowWhy {
@@ -48,7 +48,7 @@ impl Default for TheHowWhy {
             .then_whitespace()
             .t_aco("what");
 
-        let expr = LongestMatchOf::new(vec![
+        let expr = FirstMatchOf::new(vec![
             Box::new(the_how),
             Box::new(the_who),
             Box::new(the_why),
