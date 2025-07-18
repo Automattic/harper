@@ -100,8 +100,9 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"T": {
-			"#": "'-(i)est' suffix",
+		"^": {
+			"#": "'-(i)est' superlative suffix",
+			"//": "mnemonic: the topmost is the best. see also 'u' which derives a superlative form",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -126,11 +127,23 @@
 					"condition": "[^ey]"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"if_base": {
+						"adjective": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Superlative"
+						}
+					}
+				}
+			],
 			"base_metadata": {}
 		},
 		">": {
-			"#": "'-(i)er' suffix",
+			"#": "'-(i)er' comparative suffix; agent suffix. see also 'c' which derives a comparative form",
+			"//": "mnemonic: greater than is better",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -157,8 +170,23 @@
 			],
 			"target": [
 				{
-					"metadata": {
+					"if_base": {
 						"adjective": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Comparative"
+						}
+					}
+				},
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"noun": {
+							"//": "TODO: agent noun: run -> runner"
+						}
 					}
 				}
 			],
@@ -714,14 +742,20 @@
 		},
 		"c": {
 			"#": "comparative property",
+			"//": "see also '>' which derives a comparative form",
 			"metadata": {
-				"adjective": {}
+				"adjective": {
+					"degree": "Comparative"
+				}
 			}
 		},
 		"u": {
 			"#": "superlative property",
+			"//": "see also '^' which derives a superlative form",
 			"metadata": {
-				"adjective": {}
+				"adjective": {
+					"degree": "Superlative"
+				}
 			}
 		},
 		"*": {

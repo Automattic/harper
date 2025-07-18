@@ -1,8 +1,9 @@
-import type { Extension } from '@codemirror/state';
+import type { Extension, StateField } from '@codemirror/state';
 import type { LintConfig, Linter, Suggestion } from 'harper.js';
 import { type Dialect, LocalLinter, SuggestionKind, WorkerLinter, binaryInlined } from 'harper.js';
 import { toArray } from 'lodash-es';
-import type { Workspace } from 'obsidian';
+import { minimatch } from 'minimatch';
+import type { MarkdownFileInfo, MarkdownView, Workspace } from 'obsidian';
 import { linter } from './lint';
 
 export type Settings = {
@@ -12,6 +13,7 @@ export type Settings = {
 	lintSettings: LintConfig;
 	userDictionary?: string[];
 	delay?: number;
+	ignoredGlobs?: string[];
 };
 
 const DEFAULT_DELAY = -1;
@@ -24,13 +26,20 @@ export default class State {
 	private delay: number;
 	private workspace: Workspace;
 	private onExtensionChange: () => void;
+	private ignoredGlobs?: string[];
+	private editorViewField?: StateField<MarkdownFileInfo>;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
 
 	/** @param saveDataCallback A callback which will be used to save data on disk.
-	 * @param onExtensionChange A callback this class will run when the extension array is modified. */
-	constructor(saveDataCallback: (data: any) => Promise<void>, onExtensionChange: () => void) {
+	 * @param onExtensionChange A callback this class will run when the extension array is modified.
+	 * @param editorViewField Needed to provide support for ignoring files based on path.*/
+	constructor(
+		saveDataCallback: (data: any) => Promise<void>,
+		onExtensionChange: () => void,
+		editorViewField?: StateField<MarkdownFileInfo>,
+	) {
 		this.harper = new WorkerLinter({ binary: binaryInlined });
 		this.delay = DEFAULT_DELAY;
 		this.saveData = saveDataCallback;
@@ -77,6 +86,7 @@ export default class State {
 		this.harper.setup();
 
 		this.delay = settings.delay ?? DEFAULT_DELAY;
+		this.ignoredGlobs = settings.ignoredGlobs;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
@@ -91,6 +101,22 @@ export default class State {
 	private constructEditorLinter(): Extension {
 		return linter(
 			async (view) => {
+				const ignoredGlobs = this.ignoredGlobs ?? [];
+
+				if (this.editorViewField != null) {
+					const mdView = view.state.field(this.editorViewField) as MarkdownView;
+					const file = mdView?.file;
+					const path = file?.path!;
+
+					if (path != null) {
+						for (const glob of ignoredGlobs) {
+							if (minimatch(path, glob)) {
+								return [];
+							}
+						}
+					}
+				}
+
 				const text = view.state.doc.sliceString(-1);
 				const chars = toArray(text);
 
@@ -191,6 +217,7 @@ export default class State {
 			userDictionary: await this.harper.exportWords(),
 			dialect: await this.harper.getDialect(),
 			delay: this.delay,
+			ignoredGlobs: this.ignoredGlobs,
 		};
 	}
 
