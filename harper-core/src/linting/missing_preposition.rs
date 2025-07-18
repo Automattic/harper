@@ -1,12 +1,13 @@
 use harper_brill::UPOS;
 
+use crate::TokenStringExt;
 use crate::expr::AnchorStart;
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::AnyPattern;
 use crate::patterns::UPOSSet;
-use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind};
 
@@ -45,7 +46,8 @@ impl ExprLinter for MissingPreposition {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, _source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         if matched_tokens.last()?.kind.is_upos(UPOS::ADP) {
             return None;
         }

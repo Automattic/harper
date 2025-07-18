@@ -1,7 +1,7 @@
-use crate::expr::Expr;
+use crate::expr::{Expr, MatchInfo};
 use itertools::Itertools;
 
-use crate::{Token, patterns::Word};
+use crate::patterns::Word;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -33,7 +33,8 @@ impl ExprLinter for InitialismLinter {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let tok = matched_tokens.first()?;
         let source = tok.span.get_content(source);
 

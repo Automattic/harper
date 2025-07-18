@@ -1,8 +1,8 @@
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{
-    Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, Word},
 };
@@ -32,7 +32,8 @@ impl ExprLinter for SaveToSafe {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let save_tok = &toks.get(2)?;
         let verb_tok = &toks.get(4)?;
         let verb = verb_tok.span.get_content_string(src).to_lowercase();
