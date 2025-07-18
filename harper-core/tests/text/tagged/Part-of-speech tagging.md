@@ -174,8 +174,8 @@
 # NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  NSg/V/J/P NPr/V/J+ NSg/V NSg/V+ .
 > made up        of 500 samples from randomly chosen   publications . Each sample is 2 , 000
 # V    NSg/V/J/P P  #   NPl/V+  P    R+       NᴹSg/V/J NPl+         . Dq+  NSg/V+ VL # . #
-> or    more         words  ( ending at    the first    sentence - end   after 2 , 000 words  , so        that         the
-# NPr/C NPr/I/V/J/Dq NPl/V+ . NSg/V  NSg/P D   NSg/V/J+ NSg/V+   . NSg/V JC/P  # . #   NPl/V+ . NSg/I/J/C NSg/I/C/Ddem D+
+> or    more         words  ( ending at    the first    sentence - end   after    2 , 000 words  , so        that         the
+# NPr/C NPr/I/V/J/Dq NPl/V+ . NSg/V  NSg/P D   NSg/V/J+ NSg/V+   . NSg/V JC/R/C/P # . #   NPl/V+ . NSg/I/J/C NSg/I/C/Ddem D+
 > corpus contains only  complete sentences ) .
 # NSg+   V        J/R/C NSg/V/J+ NPl/V+    . .
 >
