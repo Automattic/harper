@@ -1,7 +1,7 @@
 //! Contains the relevant code for performing dictionary lookups and spellchecking (i.e. fuzzy
 //! dictionary lookups).
 
-use crate::{CharString, CharStringExt, WordMetadata};
+use crate::{CharString, CharStringExt, LexemeMetadata};
 
 pub use self::dictionary::Dictionary;
 pub use self::fst_dictionary::FstDictionary;
@@ -21,7 +21,7 @@ mod word_map;
 pub struct FuzzyMatchResult<'a> {
     pub word: &'a [char],
     pub edit_distance: u8,
-    pub metadata: &'a WordMetadata,
+    pub metadata: &'a LexemeMetadata,
 }
 
 impl PartialOrd for FuzzyMatchResult<'_> {

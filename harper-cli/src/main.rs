@@ -17,7 +17,7 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
+    CharStringExt, Dialect, Document, LexemeMetadata, TokenKind, TokenStringExt, remove_overlaps,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_pos_utils::{BrillChunker, BrillTagger};
@@ -333,7 +333,7 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::Metadata { word } => {
-            let metadata = dictionary.get_word_metadata_str(&word);
+            let metadata = dictionary.get_lexeme_metadata_str(&word);
             let json = serde_json::to_string_pretty(&metadata).unwrap();
 
             println!("{json}");
@@ -730,7 +730,7 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
 
     let children = dictionary
         .words_iter()
-        .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
+        .filter(|e| dictionary.get_lexeme_metadata(e).unwrap().derived_from == Some(id));
 
     println!(" - {word}");
 
@@ -747,7 +747,7 @@ fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let mut dict = MutableDictionary::new();
     dict.extend_words(
         str.lines()
-            .map(|l| (l.chars().collect::<Vec<_>>(), WordMetadata::default())),
+            .map(|l| (l.chars().collect::<Vec<_>>(), LexemeMetadata::default())),
     );
 
     Ok(dict)
