@@ -11,6 +11,9 @@ use std::convert::TryFrom;
 use crate::spell::WordId;
 use crate::{Document, TokenKind, TokenStringExt};
 
+/// This represents a "lexeme" or "headword" which is case-folded but affix-expanded.
+/// So not only lemmata but also inflected forms are stored here, with "horn" and "horns" each
+/// having their own lexeme, but "Ivy" and "ivy" share the same lexeme.
 #[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Hash)]
 pub struct WordMetadata {
     pub noun: Option<NounData>,
@@ -25,6 +28,9 @@ pub struct WordMetadata {
     /// valid in all dialects of English.
     #[serde(default = "default_default")]
     pub dialects: DialectFlags,
+    /// Orthographic information: letter case, spaces, hyphens, etc.
+    #[serde(default = "OrthFlags::empty")]
+    pub orth_info: OrthFlags,
     /// Whether the word is a [determiner](https://en.wikipedia.org/wiki/English_determiners).
     pub determiner: Option<DeterminerData>,
     /// Whether the word is a [preposition](https://www.merriam-webster.com/dictionary/preposition).
@@ -120,6 +126,7 @@ impl WordMetadata {
             adverb: merge!(self.adverb, other.adverb),
             conjunction: merge!(self.conjunction, other.conjunction),
             dialects: self.dialects | other.dialects,
+            orth_info: self.orth_info | other.orth_info,
             swear: self.swear.or(other.swear),
             determiner: merge!(self.determiner, other.determiner),
             preposition: self.preposition || other.preposition,
@@ -564,6 +571,23 @@ impl WordMetadata {
         matches!(self.swear, Some(true))
     }
 
+    /// Orthographic queries
+    pub fn is_lowercase(&self) -> bool {
+        self.orth_info.contains(OrthFlags::LOWERCASE)
+    }
+    pub fn is_titlecase(&self) -> bool {
+        self.orth_info.contains(OrthFlags::TITLECASE)
+    }
+    pub fn is_allcaps(&self) -> bool {
+        self.orth_info.contains(OrthFlags::ALLCAPS)
+    }
+    pub fn is_lower_camel(&self) -> bool {
+        self.orth_info.contains(OrthFlags::LOWER_CAMEL)
+    }
+    pub fn is_upper_camel(&self) -> bool {
+        self.orth_info.contains(OrthFlags::UPPER_CAMEL)
+    }
+
     /// Same thing as [`Self::or`], except in-place rather than a clone.
     pub fn append(&mut self, other: &Self) -> &mut Self {
         *self = self.or(other);
@@ -613,8 +637,7 @@ impl VerbData {
 }
 
 // nouns can be both singular and plural: "aircraft", "biceps", "fish", "sheep"
-// TODO other noun properties may be worth adding:
-// TODO count vs mass; abstract
+// TODO other noun properties may be worth adding: abstract
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct NounData {
     pub is_proper: Option<bool>,
@@ -933,10 +956,59 @@ impl Default for DialectFlags {
     }
 }
 
+/// Orthography information.
+pub enum Orthography {
+    // Every char that is a letter is lowercase.
+    Lowercase = 1 << 0,
+    // First char is uppercase, the rest is lowercase (but multi-word?)
+    Titlecase = 1 << 1,
+    // Every char that is a letter is uppercase (including single-letter uppercase)
+    AllCaps = 1 << 2,
+    // Starts with a lowercase letter but also contains uppercase letters.
+    LowerCamel = 1 << 3,
+    // Starts with an uppercase letter but also contains lowercase letters. (Superset of Titlecase.)
+    UpperCamel = 1 << 4,
+    // Contains at least one space.
+    Multiword = 1 << 5,
+    // Contains at least one hyphen.
+    Hyphenated = 1 << 6,
+    // Contains an apostrophe, so it's a possessive or a contraction.
+    Apostrophe = 1 << 7,
+}
+
+/// The underlying type used for OrthographyFlags.
+/// At the time of writing, this is currently a `u8`. If we want to define more than 8 orthographic
+/// properties in the future, we will need to switch this to a larger type.
+type OrthographyFlagsUnderlyingType = u8;
+
+bitflags::bitflags! {
+    /// A collection of bit flags used to represent orthographic properties of a word.
+    ///
+    /// This is generally used to allow a word (or similar) to be tagged with multiple orthographic
+    /// properties.
+    #[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, PartialEq, PartialOrd, Serialize)]
+    pub struct OrthFlags: OrthographyFlagsUnderlyingType {
+        const LOWERCASE = Orthography::Lowercase as OrthographyFlagsUnderlyingType;
+        const TITLECASE = Orthography::Titlecase as OrthographyFlagsUnderlyingType;
+        const ALLCAPS = Orthography::AllCaps as OrthographyFlagsUnderlyingType;
+        const LOWER_CAMEL = Orthography::LowerCamel as OrthographyFlagsUnderlyingType;
+        const UPPER_CAMEL = Orthography::UpperCamel as OrthographyFlagsUnderlyingType;
+        const MULTIWORD = Orthography::Multiword as OrthographyFlagsUnderlyingType;
+        const HYPHENATED = Orthography::Hyphenated as OrthographyFlagsUnderlyingType;
+        const APOSTROPHE = Orthography::Apostrophe as OrthographyFlagsUnderlyingType;
+    }
+}
+impl Default for OrthFlags {
+    fn default() -> Self {
+        Self::empty()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::WordMetadata;
     use crate::spell::{Dictionary, FstDictionary};
+    use crate::word_metadata::OrthFlags;
 
     // Helper function to get word metadata from the curated dictionary
     fn md(word: &str) -> WordMetadata {
@@ -1622,5 +1694,52 @@ mod tests {
     #[test]
     fn equipment_isnt_countable_noun() {
         assert!(!md("equipment").is_countable_noun());
+    }
+
+    #[test]
+    fn australia_lexeme_is_titlecase_even_when_word_is_lowercase() {
+        assert!(md("australia").orth_info.contains(OrthFlags::TITLECASE));
+    }
+
+    #[test]
+    fn australia_lexeme_is_titlecase_even_when_word_is_all_caps() {
+        assert!(md("AUSTRALIA").orth_info.contains(OrthFlags::TITLECASE));
+    }
+
+    #[test]
+    fn australia_lexeme_is_titlecase_even_when_word_is_mixed_case() {
+        assert!(md("AuStrAlIA").orth_info.contains(OrthFlags::TITLECASE));
+    }
+
+    #[test]
+    fn db_and_kw_symbols_are_lower_camel_case() {
+        // dB, kW
+        assert!(md("db").orth_info.contains(OrthFlags::LOWER_CAMEL));
+    }
+
+    #[test]
+    fn am_is_lowercase_and_titlecase_and_all_caps() {
+        // am, Am, AM
+        let metadata = md("am");
+        assert!(metadata.orth_info.contains(OrthFlags::LOWERCASE));
+        assert!(metadata.orth_info.contains(OrthFlags::TITLECASE));
+        assert!(metadata.orth_info.contains(OrthFlags::ALLCAPS));
+    }
+
+    #[test]
+    fn reading_is_both_lowercase_and_titlecase() {
+        // Reading is a town in England
+        let metadata = md("reading");
+        assert!(metadata.orth_info.contains(OrthFlags::LOWERCASE));
+        assert!(metadata.orth_info.contains(OrthFlags::TITLECASE));
+    }
+
+    #[test]
+    fn ebay_and_esim_are_lower_camel() {
+        // eBay eSIM
+        let md1 = md("ebay");
+        assert!(md1.orth_info.contains(OrthFlags::LOWER_CAMEL));
+        let md2 = md("esim");
+        assert!(md2.orth_info.contains(OrthFlags::LOWER_CAMEL));
     }
 }

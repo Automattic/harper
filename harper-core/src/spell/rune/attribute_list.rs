@@ -13,6 +13,7 @@ use super::expansion::{
 };
 use super::word_list::MarkedWord;
 use crate::spell::WordId;
+use crate::word_metadata::OrthFlags;
 use crate::{CharString, Span, WordMetadata};
 
 #[derive(Debug, Clone)]
@@ -49,6 +50,9 @@ impl AttributeList {
     pub fn expand_marked_word(&self, word: MarkedWord, dest: &mut WordMap) {
         dest.reserve(word.attributes.len() + 1);
         let mut gifted_metadata = WordMetadata::default();
+
+        let orth_flags = check_orthography(&word);
+        gifted_metadata.orth_info = orth_flags;
 
         let mut conditional_expansion_metadata = Vec::new();
 
@@ -227,6 +231,111 @@ impl AttributeList {
 
         None
     }
+}
+
+/// Gather metadata about the orthography of a word.
+fn check_orthography(word: &MarkedWord) -> OrthFlags {
+    use crate::char_ext::CharExt;
+    use crate::word_metadata::OrthFlags;
+
+    let mut ortho_flags = OrthFlags::default();
+    let mut saw_letter = false;
+    let mut all_lower = true;
+    let mut all_upper = true;
+    let mut first_is_upper = false;
+    let mut first_is_lower = false;
+    let mut saw_upper_after_first = false;
+    let mut saw_lower_after_first = false;
+    let mut is_first_char = true;
+    let mut upper_to_lower = false;
+    let mut lower_to_upper = false;
+    let letter_count = word
+        .letters
+        .iter()
+        .filter(|c| c.is_english_lingual())
+        .count();
+
+    for &c in &word.letters {
+        // Multiword: contains at least one space
+        if c == ' ' {
+            ortho_flags |= OrthFlags::MULTIWORD;
+            continue;
+        }
+        // Hyphenated: contains at least one hyphen
+        if c == '-' {
+            ortho_flags |= OrthFlags::HYPHENATED;
+            continue;
+        }
+        // Apostrophe: contains at least one apostrophe (straight or curly)
+        if c == '\'' || c == '’' {
+            ortho_flags |= OrthFlags::APOSTROPHE;
+            continue;
+        }
+        // Only consider English letters for case flags
+        if !c.is_english_lingual() {
+            continue;
+        }
+        saw_letter = true;
+        if c.is_lowercase() {
+            all_upper = false;
+            if is_first_char {
+                first_is_lower = true;
+            } else {
+                saw_lower_after_first = true;
+                if upper_to_lower {
+                    lower_to_upper = true;
+                }
+                upper_to_lower = true;
+            }
+        } else if c.is_uppercase() {
+            all_lower = false;
+            if is_first_char {
+                first_is_upper = true;
+            } else {
+                saw_upper_after_first = true;
+                if lower_to_upper {
+                    upper_to_lower = true;
+                }
+                lower_to_upper = true;
+            }
+        } else {
+            // Non-cased char (e.g., numbers, symbols) - ignore for case flags
+            // Reset case tracking after non-letter character
+            first_is_upper = false;
+            first_is_lower = false;
+            upper_to_lower = false;
+            lower_to_upper = false;
+        }
+        is_first_char = false;
+    }
+
+    // Set case-related orthography flags
+    if saw_letter {
+        if all_lower {
+            ortho_flags |= OrthFlags::LOWERCASE;
+        }
+        if all_upper {
+            ortho_flags |= OrthFlags::ALLCAPS;
+        }
+        // Only mark as TITLECASE if more than one letter
+        if letter_count > 1 && first_is_upper && !saw_upper_after_first {
+            ortho_flags |= OrthFlags::TITLECASE;
+        }
+        // LowerCamel: first is lowercase and there's at least one uppercase character after it
+        // Note: This must come after Titlecase check to avoid marking Titlecase words as LowerCamel
+        // Example: "pH" is LowerCamel, but "Providence" is Titlecase
+        if first_is_lower && saw_upper_after_first {
+            ortho_flags |= OrthFlags::LOWER_CAMEL;
+        }
+        // UpperCamel: first is uppercase and there are both lowercase and uppercase characters after it
+        // Note: This must come after Titlecase check to avoid marking Titlecase words as UpperCamel
+        // Example: "CamelCase" is UpperCamel, but "Providence" is Titlecase
+        if first_is_upper && saw_lower_after_first && saw_upper_after_first {
+            ortho_flags |= OrthFlags::UPPER_CAMEL;
+        }
+    }
+
+    ortho_flags
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

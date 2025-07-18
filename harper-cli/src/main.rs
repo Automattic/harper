@@ -18,6 +18,7 @@ use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
     CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
+    word_metadata::OrthFlags,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_pos_utils::{BrillChunker, BrillTagger};
@@ -136,6 +137,9 @@ enum Args {
     /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
     /// As long as there's either an open or hyphenated spelling.
     Compounds,
+    /// Emit a decompressed, line-separated list of the words in Harper's dictionary
+    /// which occur in more than one lettercase variant.    
+    CaseVariants,
     /// Provided a sentence or phrase, emit a list of each noun phrase contained within.
     NominalPhrases { input: String },
 }
@@ -664,6 +668,33 @@ fn main() -> anyhow::Result<()> {
             }
 
             println!("\nFound {} compound word groups", results.len());
+            Ok(())
+        }
+        Args::CaseVariants => {
+            let case_bitmask = OrthFlags::LOWERCASE
+                | OrthFlags::TITLECASE
+                | OrthFlags::ALLCAPS
+                | OrthFlags::LOWER_CAMEL
+                | OrthFlags::UPPER_CAMEL;
+            let mut count = 0;
+            for word in dictionary.words_iter() {
+                if let Some(metadata) = dictionary.get_word_metadata(word) {
+                    let orth = metadata.orth_info;
+                    let bits = orth.bits() & case_bitmask.bits();
+                    // Is more than one flag set?
+                    if bits.wrapping_sub(1) & bits != 0 {
+                        // Mask out all bits except the case-related ones before printing
+                        let masked_orth =
+                            OrthFlags::from_bits_truncate(orth.bits() & case_bitmask.bits());
+                        println!(
+                            "{count} '{}' : {:?}",
+                            word.iter().collect::<String>(),
+                            masked_orth
+                        );
+                        count += 1;
+                    }
+                }
+            }
             Ok(())
         }
         Args::NominalPhrases { input } => {

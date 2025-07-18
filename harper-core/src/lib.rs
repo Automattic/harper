@@ -26,7 +26,7 @@ mod token;
 mod token_kind;
 mod token_string_ext;
 mod vec_ext;
-mod word_metadata;
+pub mod word_metadata;
 
 use render_markdown::render_markdown;
 use std::collections::VecDeque;
