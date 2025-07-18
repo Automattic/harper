@@ -11645,7 +11645,7 @@
 > that         he       could  hardly fail    to grasp it       . He       did not   know  that         it       was already
 # NSg/I/C/Ddem NPr/ISg+ NSg/VX R      NSg/V/J P  NSg/V NPr/ISg+ . NPr/ISg+ V   NSg/C NSg/V NSg/I/C/Ddem NPr/ISg+ V   W?
 > behind  him  , somewhere back    in      that          vast  obscurity beyond the city , where the
-# NSg/J/P ISg+ . NSg       NSg/V/J NPr/J/P NSg/I/C/Ddem+ NSg/J NSg       NSg/P  D+  NSg+ . NSg/C D
+# NSg/J/P ISg+ . NSg       NSg/V/J NPr/J/P NSg/I/C/Ddem+ NSg/J NᴹSg      NSg/P  D+  NSg+ . NSg/C D
 > dark    fields  of the republic rolled on  under   the night   .
 # NSg/V/J NPrPl/V P  D+  NSg/V/J+ V/J    J/P NSg/J/P D+  N🅪Sg/V+ .
 >

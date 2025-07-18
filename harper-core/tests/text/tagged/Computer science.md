@@ -271,7 +271,7 @@
 > " In      the U.S. , however , informatics is linked with applied computing , or
 # . NPr/J/P D+  ?    . C       . NᴹSg        VL V/J    P    V/J     NSg/V+    . NPr/C
 > computing in      the context of another domain . "
-# NSg/V+    NPr/J/P D   NᴹSg/V  P  I/D+    NSg+   . .
+# NSg/V+    NPr/J/P D   N🅪Sg/V  P  I/D+    NSg+   . .
 >
 #
 > A   folkloric quotation , often attributed to — but     almost certainly not   first
@@ -635,7 +635,7 @@
 >
 #
 > Information can    take  the form  of images , sound   , video  or    other    multimedia . Bits
-# NᴹSg+       NPr/VX NSg/V D   NSg/V P  NPl/V  . NSg/V/J . N🅪Sg/V NPr/C NSg/V/J+ NSg/J+     . NPl/V
+# NᴹSg+       NPr/VX NSg/V D   NSg/V P  NPl/V  . NSg/V/J . N🅪Sg/V NPr/C NSg/V/J+ NᴹSg/J+    . NPl/V
 > of information can    be     streamed via    signals . Its     processing is the central notion
 # P  NᴹSg+       NPr/VX NSg/VX V/J      NSg/P+ NPl/V   . ISg/D$+ V+         VL D   NPr/J   NSg
 > of informatics , the European view  on  computing , which studies information
