@@ -1348,7 +1348,7 @@ Bonnie/Og
 Bono/Og
 Booker/Og
 Boole/Og
-Boolean/JNg
+Boolean/JNgS
 Boone/Og
 Bootes/g
 Booth/Og
@@ -3952,7 +3952,7 @@ Giovanni/Og
 Giraudoux/g
 Giselle/Og
 Gish/Og
-GitHub/g
+GitHub/Og
 Giuliani/Og
 Giuseppe/g
 Giza/Og
@@ -11317,6 +11317,7 @@ accessibility/~Nig
 accessible/~Ji
 accessibly/iR
 accession/~NVgdGS
+accessor/NgS
 accessorise/VdSG!_
 accessorize/VdSG
 accessory/~JNSg
@@ -11532,6 +11533,7 @@ adenine/Ng
 adenocarcinoma/N
 adenoid/JNSg
 adenoidal/J
+adenosine/Ng
 adept/~JNgYpS
 adeptness/Ng
 adequacy/Nig
@@ -11836,7 +11838,7 @@ aggro/NJV
 aghast/J
 agile/~JNY
 agility/~Ng
-aging/~VNJg
+aging/~VNJg<@
 agitate/VXGndS
 agitation/~Ng
 agitator/NgS
@@ -13474,6 +13476,7 @@ automotive/~JN
 autonomic/~J
 autonomous/~JY
 autonomy/~Ng
+autophagic/J
 autopilot/NVSg
 autoplay/NVSgdG
 autopsy/~NVGdSg
@@ -14384,6 +14387,7 @@ bequeath/VdG
 bequeaths/V
 bequest/~NVgS
 berate/VGdS
+berberine/Ng
 bereave/VdSLG
 bereavement/~NgS
 bereft/VJ
@@ -14441,6 +14445,7 @@ bestseller/~NgS
 bestselling/~J
 bet/~NVPSg
 beta/~NJVSg
+betaine/NgS
 betake/VGS
 betaken/V
 betcha/
@@ -14648,6 +14653,7 @@ biopic/~NgS
 biopsy/~NVGdSg
 bioreactor/NS
 biorhythm/NgS
+bioscience/NgS
 biosensor/NS
 biosphere/~NSg
 biosynthesis/~N
@@ -15083,7 +15089,7 @@ bohemianism/Ng
 boil/~NVSzZGgd>
 boiler/~Ng
 boilermaker/NSg
-boilerplate/NJVg
+boilerplate/NwJVgS
 boing/~NVgSdG
 boink/VNGdS
 boisterous/JYp
@@ -15188,7 +15194,7 @@ bookstall/NS
 bookstore/~NgS
 bookworm/NSg
 bool/NgS
-boolean/~JN
+boolean/~JNgS
 boom/~VNSZGgd>
 boombox/NgS
 boomerang/~NVgdGS
@@ -18849,7 +18855,7 @@ contest/NgSVdG
 contestable/Ji
 contestant/~NgS
 contested/~JVU
-context/Nmg
+context/NwgS
 contextualisation/N!_
 contextualise/VdSG!_
 contextualization/N
@@ -20598,7 +20604,7 @@ demimondaine/NSg
 demimonde/Ng
 demise/~NVgGdS
 demitasse/NgS
-demo/~NVGgd         # only wiktionary calls this an adjective. doing so messes with 'adj of a' lint
+demo/~NVGgdS        # only wiktionary calls this an adjective. doing so messes with 'adj of a' lint
 democracy/~NSg
 democrat/~NgS
 democratic/~JNUQ
@@ -23154,6 +23160,7 @@ epidermal/J
 epidermic/J
 epidermis/~NgS
 epidural/JNS
+epigenome/NgS
 epiglottis/NgS
 epigram/NSg
 epigrammatic/J
@@ -30796,6 +30803,7 @@ keep/~VNg>SZG
 keeper/~Ng
 keeping/~NVg
 keepsake/NgS
+kefir/Nmg
 keg/NVSg
 kelp/NVg
 kelvin/~NSg
@@ -32396,6 +32404,7 @@ lysosomal/J
 lysosomes/N
 m/~JNVKrS
 mRNA/Ng
+mTOR                # mammalian target of rapamycin
 ma/~NSgH
 ma'am/NV
 mac/~NSGgd
@@ -34536,7 +34545,7 @@ multicoloured/J!@_
 multicore/J
 multicultural/~J
 multiculturalism/~Ng
-multidimensional/JN
+multidimensional/J
 multidisciplinary/~J
 multiethnic/J
 multifaceted/~JYp
@@ -34552,9 +34561,10 @@ multilanguage/J
 multilateral/~JNY
 multilayer/Jd
 multilevel/J
+multiline/J
 multilingual/~JN
 multilingualism/Ng
-multimedia/~NJg
+multimedia/~NmJg
 multimeter/NSg
 multimillionaire/NSg
 multinational/~JNSg
@@ -35094,6 +35104,7 @@ neurologist/~NSg
 neurology/~Ng
 neuron/~NgS
 neuronal/~J
+neuroplasticity/J
 neuropsychiatric/J
 neuroscience/~Ng
 neuroscientist/~NSg
@@ -35645,6 +35656,7 @@ noonday/Ng
 noontide/Ng
 noontime/Ng
 noose/NVSg
+nootropic/NgSJ
 nope/NV
 nor/~CN
 nor'easter/N
@@ -35942,14 +35954,15 @@ oboe/~NgS
 oboist/NgS
 obscene/~JV>YT
 obscenity/~NwSg
-obscurantism/Ng
+obscurantism/Nmg
 obscurantist/NJSg
 obscure/~JVd>SYTG
-obscurity/~NSg
+obscurity/~NmSg
 obsequies/N
 obsequious/JpY
-obsequiousness/Ng
+obsequiousness/Nmg
 obsequy/Ng
+observability/Nmg
 observably/R
 observance/~NgS
 observant/~JY
@@ -37345,11 +37358,12 @@ pardonably/UR
 pardoner/Ng
 pare/VS
 paregoric/NJg
+paren/NgS           # informal: parenthesis
 parent/~NVGgdS
 parentage/~Ng
 parental/~JN
 parentheses/~9
-parenthesis/Ng
+parenthesis/N0g
 parenthesise/V!_
 parenthesize/VdSG
 parenthetic/J
@@ -38171,6 +38185,7 @@ phaser/NgS
 phat/J
 pheasant/~NgS
 phenacetin/~Ng
+phenethylamine/Ng
 phenobarbital/Ng
 phenol/~Ng
 phenom/NgS
@@ -38959,6 +38974,7 @@ polyclinic/NSg
 polycystic/J
 polyester/~NJgS
 polyethylene/~Ng
+polyfill/VdSGNwg
 polygamist/NgS
 polygamous/~J
 polygamy/~Ng
@@ -39328,6 +39344,7 @@ prearrange/VLGdS
 prearrangement/Ng
 preassigned/J
 prebuild/VGS
+prebuilt/J
 precancel/VNSgdG
 precancerous/J
 precarious/~JpY
@@ -39409,6 +39426,7 @@ preemie/NSg
 preeminence/Ng
 preeminent/~JY
 preempt/VNGvSd
+preemptible/J
 preemption/~Ng
 preemptive/~JY
 preen/NVdSG
@@ -39512,6 +39530,7 @@ preposterous/JY
 prepped/V
 prepping/VNm
 preppy/JNT>Sg
+preprint/VdSGNg
 preprocess/VdSG
 prepubescence/Ng
 prepubescent/JNSg
@@ -40497,6 +40516,7 @@ quench/VNZGd>SB
 quenchable/JU
 quencher/Ng
 quenchless/J
+quercetin/Ng        # a flavonol
 querulous/JYp
 querulousness/Ng
 query/~NVdSgGB
@@ -41617,7 +41637,8 @@ resentful/~JYp
 resentfulness/Nmg
 resentment/~NgS
 reserpine/Ng
-reservation/~NgS
+reservation/ ~NgS
+resveratrol/Ng
 reserved/~VJUY
 reservedness/Nmg
 reservist/NSg
@@ -44304,6 +44325,7 @@ sirloin/NSg
 sirocco/NSg
 sirrah/N
 sirree/Ng
+sirtuin/NgS         # enzyme
 sis/~NIgS
 sisal/Ng
 sissified/JV
@@ -49475,6 +49497,7 @@ tyranny/~NSg
 tyrant/~NJVSg
 tyre/NVgS!_
 tyro/NgS
+tyrosine/Ng
 tzatziki/N
 ubiquitous/~JY
 ubiquity/Ng
@@ -50334,15 +50357,15 @@ vanquisher/Ng
 vantage/~NVSg
 vape/NVGdS
 vapid/JYp
-vapidity/Ng
-vapidness/Ng
+vapidity/Nmg
+vapidness/Nmg
 vapor/~NwVSg
 vaporisation/Ng!_
 vaporise/Vd>SZG!_
-vaporiser/Ng!_
-vaporization/Ng
+vaporiser/NgS!_
+vaporization/Nmg
 vaporize/Vd>SZG
-vaporizer/Ng
+vaporizer/NgS
 vaporous/J
 vaporware/Nmg<
 vapory/J<
@@ -50353,11 +50376,12 @@ var/~NS
 variability/~Nig
 variable/~JNiSg
 variably/iR
+variadic/JNgS
 variance/~NSg
 variant/~JNgS
 variate/NVnX
-variation/~Ng
-varicolored/J
+variation/~Nwg
+varicolored/J<
 varicoloured/J!@_
 varicose/J
 varied/~VJU
@@ -50555,6 +50579,7 @@ vessel/~NVgS
 vest/~NViLdGS
 vest's
 vestal/~JNgS
+vestibular/J
 vestibule/NVgS
 vestige/NSg
 vestigial/~JNY
@@ -52075,6 +52100,7 @@ xciv
 xcix
 xcvi
 xcvii
+xenohormesis/Nmg
 xenomorph/NgS
 xenon/~Nmg
 xenophobe/NgS
@@ -52363,6 +52389,7 @@ ASM/N               # assembly language - should "asm" be included as well/inste
 ASUS/Og
 ATF/Ng              # automatic transmission fluid
 AVC/Ng              # H.264 video format
+Airbnb/ONgS
 Akismet/Og
 Alexa/Og            # voice assistant
 Alexandre/OSg
@@ -52393,6 +52420,7 @@ BurpSuite/ONgS
 C++/OSg             # programming language
 CCP/OS              # Chinese Communist Party
 CDMA/NSg
+CDN/NSg             # content delivery network
 CEO/NSg             # chief executive officer
 CERN/Og             # intergovernmental organization
 CI/NSg              # continuous integration
@@ -52409,7 +52437,7 @@ CTE/NS
 Captcha/OSg
 ChatGPT/Og          # OpenAI product
 ClickHouse/g
-Codeberg/ONg        # GitHub alternative
+Codeberg/Og         # GitHub alternative
 Colemak/NJg
 CommonMark/g
 CompUSA             # retailer
@@ -52434,10 +52462,11 @@ DeepMind/Og
 DevOps/Sg
 DirectX/Og
 Dreamcast/OgS       # game console
+ECMA/Og             # European Computer Manufacturers Association
 EGR/                # exhaust gas recirculation
 EMR/NOSg
 EPUB/NOgS           # e-book format
-ESLint/Og
+ESLint/Og           # JavaScript linter
 EV/NSg              # electric vehicle
 EXIF                # metadata
 ElasticSearch/Sg
@@ -52481,10 +52510,13 @@ Graphviz/Sg
 Gravatar/Og
 HDR/J               # high dynamic range
 HQL/N
+HTML5
 Hasan/OSg           # surname, given name
 Hiera/Sg
 Holmdel/Sg
-IDA/Og              # reverse engineering
+Hugging Face/Og
+IDA/Og              # reverse engineering software
+IIFE/NgS            # immediately-invoked function expression
 IMAP/OSg            # internet message access protocol
 IMSI/N              # international mobile subscriber identity
 IPC/Ng              # interprocess communication
@@ -52494,6 +52526,7 @@ IPv4/OSg
 ISA/NOgS            # instruction set architecture; industry standard architecture
 IntelliJ/Sg
 IntelliSense/Og
+IoT/Ng              # internet of things
 JNI/Og              # Java Native Interface
 JS/Ng               # JavaScript
 JSDoc/Sg
@@ -52550,6 +52583,7 @@ Manilas/N
 Manilla/Og
 MapReduce/N
 Marchus/Sg
+Mbps                # megabits per second
 Murcielago/OSg
 Metasploit/ONgS
 Minecraft/Og
@@ -52572,6 +52606,7 @@ NPM/Sg
 NTP/N               # network time protocol
 NYTimes/Sg
 NYU/Og
+NaN/NgS
 Neo4J/ONg
 Neovim/g            # code editor
 NetBSD/Og           # operating system
@@ -52710,6 +52745,7 @@ WebGPU/Sg
 WebKit/Og
 WebRTC/Og
 WebSocket/Sg
+Webpack/Og
 WhatsApp/NOVgG      # messaging app
 Wikilink/gSN        # !! please check and comment !! elsewhere we have wikilink
 Wireguard/Sg
@@ -52746,6 +52782,7 @@ eVTOL/NgS
 ext2/Ng             # file system
 ext3/Ng             # file system
 ext4/Ng             # file system
+falsy/J
 filesystem/~Sg      # dictionaries prefer: file system
 frontend/NSg        # dictionaries prefer: front end
 geofence/NgSVdG
@@ -52762,6 +52799,7 @@ labriola/Sg         # !! please check and comment !! - should be uppercase surna
 manip/NgS           # gamer slang manipulation
 memecoin/NgS
 npm/Og              # node package manager
+nullish/J
 olds/~              # common in phrasing such as "twenty year olds"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
 pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
@@ -52919,6 +52957,7 @@ grey wolves/9!@_
 ground-based/J
 GT R/N
 GT-R/NgS
+GTK/O               # GIMP Toolkit
 gung ho/J
 H-1B/NgS
 habeas corpus/N
@@ -52989,6 +53028,7 @@ left over/V
 left-hand/J
 left-wing/J
 lesser-known/J
+line break/NgS
 live action/N
 load-bearing/J
 long-term/J
@@ -53199,6 +53239,7 @@ walkie-talkie/NgS
 Wall Streeter/NgS
 Wayback Machine/Og
 weapons-grade/J
+web app/NgS
 web dev/NgS
 web page/~NSg
 welch plug/NSg
