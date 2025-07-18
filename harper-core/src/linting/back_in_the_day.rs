@@ -24,7 +24,7 @@ impl Default for BackInTheDay {
             .then(phrase.clone())
             .then_whitespace()
             .then(exceptions.clone())
-            .or(phrase);
+            .or_longest(phrase);
 
         Self {
             expr: Box::new(pattern),

@@ -3,6 +3,7 @@
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
 mod a_part;
+mod adjective_double_degree;
 mod adjective_of_a;
 mod am_in_the_morning;
 mod amounts_for;
@@ -126,6 +127,7 @@ mod wordpress_dotcom;
 pub mod noun_verb_pairs;
 
 pub use a_part::APart;
+pub use adjective_double_degree::AdjectiveDoubleDegree;
 pub use adjective_of_a::AdjectiveOfA;
 pub use am_in_the_morning::AmInTheMorning;
 pub use amounts_for::AmountsFor;
