@@ -13,7 +13,7 @@ harper-stats = { path = "../harper-stats", version = "0.51.0" }
 dirs = "6.0.0"
 harper-literate-haskell = { path = "../harper-literate-haskell", version = "0.51.0" }
 harper-core = { path = "../harper-core", version = "0.51.0" }
-harper-pos-utils = { path = "../harper-pos-utils", version = "0.51.0", features = ["training"] }
+harper-pos-utils = { path = "../harper-pos-utils", version = "0.51.0" }
 harper-comments = { path = "../harper-comments", version = "0.51.0" }
 harper-typst = { path = "../harper-typst", version = "0.51.0" }
 hashbrown = "0.15.4"
@@ -24,3 +24,4 @@ strum_macros = "0.27.1"
 
 [features]
 default = []
+training = ["harper-pos-utils/training"]
