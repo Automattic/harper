@@ -312,7 +312,7 @@ impl WordMetadata {
         // Singular and countable default to true, so their metadata queries are not generated.
         noun has proper, plural, mass, possessive.
         pronoun has personal, singular, plural, possessive, reflexive, subject, object.
-        determiner has demonstrative, possessive.
+        determiner has demonstrative, possessive, quantifier.
         verb has linking, auxiliary.
         conjunction has.
         adjective has.
@@ -322,6 +322,10 @@ impl WordMetadata {
     // Manual metadata queries
 
     // Pronoun metadata queries
+
+    pub fn get_person(&self) -> Option<Person> {
+        self.pronoun.as_ref().and_then(|p| p.person)
+    }
 
     pub fn is_first_person_plural_pronoun(&self) -> bool {
         matches!(
@@ -473,6 +477,18 @@ impl WordMetadata {
         }
     }
 
+    // Most mass nouns also have countable senses. Match those that are only mass nouns.
+    pub fn is_mass_noun_only(&self) -> bool {
+        if let Some(noun) = self.noun {
+            matches!(
+                (noun.is_countable, noun.is_mass),
+                (None | Some(false), Some(true))
+            )
+        } else {
+            false
+        }
+    }
+
     // Nominal metadata queries (noun + pronoun)
 
     /// Checks if the word is definitely nominal.
@@ -509,6 +525,39 @@ impl WordMetadata {
     pub fn is_non_possessive_nominal(&self) -> bool {
         self.is_non_possessive_noun() || self.is_non_possessive_pronoun()
     }
+
+    // Adjective metadata queries
+
+    pub fn get_degree(&self) -> Option<Degree> {
+        self.adjective.as_ref().and_then(|a| a.degree)
+    }
+
+    pub fn is_comparative_adjective(&self) -> bool {
+        matches!(
+            self.adjective,
+            Some(AdjectiveData {
+                degree: Some(Degree::Comparative)
+            })
+        )
+    }
+
+    pub fn is_superlative_adjective(&self) -> bool {
+        matches!(
+            self.adjective,
+            Some(AdjectiveData {
+                degree: Some(Degree::Superlative)
+            })
+        )
+    }
+
+    // Determiner metadata queries
+
+    // Checks if the word is definitely a determiner and more specifically is labeled as (a) quantifier.
+    pub fn is_quantifier(&self) -> bool {
+        self.determiner.is_some()
+    }
+
+    // Non-POS queries
 
     /// Checks whether a word is _definitely_ a swear.
     pub fn is_swear(&self) -> bool {
@@ -632,6 +681,7 @@ impl PronounData {
 pub struct DeterminerData {
     pub is_demonstrative: Option<bool>,
     pub is_possessive: Option<bool>,
+    pub is_quantifier: Option<bool>,
 }
 
 impl DeterminerData {
@@ -640,6 +690,7 @@ impl DeterminerData {
         Self {
             is_demonstrative: self.is_demonstrative.or(other.is_demonstrative),
             is_possessive: self.is_possessive.or(other.is_possessive),
+            is_quantifier: self.is_quantifier.or(other.is_quantifier),
         }
     }
 }
@@ -1500,6 +1551,48 @@ mod tests {
         fn nonstandard_pronouns() {
             assert!(md("themself").pronoun.is_some());
             assert!(md("y'all'").pronoun.is_some());
+        }
+    }
+
+    mod adjective {
+        use crate::{Degree, word_metadata::tests::md};
+
+        // Getting degrees
+
+        #[test]
+        #[ignore = "not marked yet because it might not be reliable"]
+        fn big_is_positive() {
+            assert_eq!(md("big").get_degree(), Some(Degree::Positive));
+        }
+
+        #[test]
+        fn bigger_is_comparative() {
+            assert_eq!(md("bigger").get_degree(), Some(Degree::Comparative));
+        }
+
+        #[test]
+        fn biggest_is_superlative() {
+            assert_eq!(md("biggest").get_degree(), Some(Degree::Superlative));
+        }
+
+        #[test]
+        #[should_panic(expected = "Word 'bigly' not found in dictionary")]
+        fn bigly_is_not_an_adjective_form_we_track() {
+            assert_eq!(md("bigly").get_degree(), None);
+        }
+
+        // Calling is_ methods
+
+        // TODO: positive degree not implemented
+
+        #[test]
+        fn bigger_is_comparative_adjective() {
+            assert!(md("bigger").is_comparative_adjective());
+        }
+
+        #[test]
+        fn biggest_is_superlative_adjective() {
+            assert!(md("biggest").is_superlative_adjective());
         }
     }
 

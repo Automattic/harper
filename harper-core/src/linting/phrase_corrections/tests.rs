@@ -195,6 +195,30 @@ fn baited_breath() {
 // BeenThere
 // -none-
 
+// BeforeHand
+#[test]
+fn corrects_before_hand() {
+    assert_suggestion_result(
+        "Let me know before hand if you will attend.",
+        lint_group(),
+        "Let me know beforehand if you will attend.",
+    );
+}
+
+#[test]
+fn corrects_before_hand_hyphen() {
+    assert_suggestion_result(
+        "I prepared the documents before-hand.",
+        lint_group(),
+        "I prepared the documents beforehand.",
+    );
+}
+
+#[test]
+fn allows_beforehand() {
+    assert_lint_count("We finished the preparations beforehand.", lint_group(), 0);
+}
+
 // BestRegards
 // -none-
 
@@ -870,6 +894,7 @@ fn detect_nerve_racking_no_hyphen() {
 // -none-
 
 // OfCourse
+// See also: tests in `of_course.rs` for "of curse/corse" → "of course" corrections
 #[test]
 fn off_course() {
     assert_suggestion_result(
@@ -885,6 +910,15 @@ fn o_course() {
         "Yes, o course we should do that.",
         lint_group(),
         "Yes, of course we should do that.",
+    );
+}
+
+#[test]
+fn ofcourse() {
+    assert_suggestion_result(
+        "Ofcourse, I like other languages.. uzulla has 183 repositories available.",
+        lint_group(),
+        "Of course, I like other languages.. uzulla has 183 repositories available.",
     );
 }
 
@@ -1004,6 +1038,35 @@ fn corrects_points_of_view() {
 
 // RealTrouper
 // -none-
+
+// RedundantIIRC
+#[test]
+#[ignore = "The bug in replace_with_match_case erroneously generates `iiRC`."]
+fn correct_if_iirc_caps() {
+    assert_suggestion_result(
+        "This is due to the fact that if IIRC up to 2 processes mpirun will bind to core and then it will be socket.",
+        lint_group(),
+        "This is due to the fact that IIRC up to 2 processes mpirun will bind to core and then it will be socket.",
+    );
+}
+
+#[test]
+fn correct_if_iirc() {
+    assert_suggestion_result(
+        "if iirc getting it to work with the SQLite storage engine was turning into a whole project and we decided to punt it",
+        lint_group(),
+        "iirc getting it to work with the SQLite storage engine was turning into a whole project and we decided to punt it",
+    );
+}
+
+#[test]
+fn correct_iirc_correctly() {
+    assert_suggestion_result(
+        "IIRC correctly, someone on the Home Assistant forums went as far as discovering that RS-485 was being used.",
+        lint_group(),
+        "IIRC, someone on the Home Assistant forums went as far as discovering that RS-485 was being used.",
+    );
+}
 
 // RifeWith
 // -none-
@@ -1296,6 +1359,7 @@ fn thanks_a_lot_clean() {
     assert_lint_count("thanks a lot", lint_group(), 0);
 }
 
+// WroughtIron
 #[test]
 fn corrects_rod_iron() {
     assert_suggestion_result(
@@ -1317,27 +1381,4 @@ fn corrects_rot_iron() {
 #[test]
 fn allows_wrought_iron() {
     assert_lint_count("She specialized in wrought iron artwork.", lint_group(), 0);
-}
-
-#[test]
-fn corrects_before_hand() {
-    assert_suggestion_result(
-        "Let me know before hand if you will attend.",
-        lint_group(),
-        "Let me know beforehand if you will attend.",
-    );
-}
-
-#[test]
-fn corrects_before_hand_hyphen() {
-    assert_suggestion_result(
-        "I prepared the documents before-hand.",
-        lint_group(),
-        "I prepared the documents beforehand.",
-    );
-}
-
-#[test]
-fn allows_beforehand() {
-    assert_lint_count("We finished the preparations beforehand.", lint_group(), 0);
 }

@@ -67,8 +67,8 @@ Message: |
          |                    ^~ Did you mean to spell `NN` this way?
 Suggest:
   - Replace with: “Nun”
+  - Replace with: “N”
   - Replace with: “Non”
-  - Replace with: “N1”
 
 
 
@@ -251,6 +251,18 @@ Suggest:
   - Replace with: “sf”
   - Replace with: “sh”
   - Replace with: “so”
+
+
+
+Lint:    WordChoice (126 priority)
+Message: |
+     104 | other languages. Statistics derived by analyzing it formed the basis for most
+         |                                                                          ^~~~~
+     105 | later part-of-speech tagging systems, such as CLAWS and VOLSUNGA. However, by
+         | ~~~~~ The degree of the adverb conflicts with the degree of the adjective.
+Suggest:
+  - Replace with: “later”
+  - Replace with: “latest”
 
 
 

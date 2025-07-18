@@ -2012,16 +2012,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-    1531 | puppyish, convivial way, girls were swooning backward playfully into men’s arms,
-    1532 | even into groups, knowing that some one would arrest their falls—but no one
-         |                                ^~~~~~~~ Did you mean the closed compound noun “someone”?
-Suggest:
-  - Replace with: “someone”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     1531 | puppyish, convivial way, girls were swooning backward playfully into men’s arms,
@@ -6545,16 +6535,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-    5181 | easier, surer way of finding out what he wanted to know. By half-past two he was
-    5182 | in West Egg, where he asked some one the way to Gatsby’s house. So by that time
-         |                             ^~~~~~~~ Did you mean the closed compound noun “someone”?
-Suggest:
-  - Replace with: “someone”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     5181 | easier, surer way of finding out what he wanted to know. By half-past two he was
@@ -7135,6 +7115,17 @@ Suggest:
 
 
 
+Lint:    WordChoice (31 priority)
+Message: |
+    5528 | “Now he’s dead,” I said after a moment. “You were his closest friend, so I know
+         |                                              ^~~~ Use the contraction or separate the words instead.
+    5529 | you'll want to come to his funeral this afternoon.”
+Suggest:
+  - Replace with: “we're”
+  - Replace with: “we are”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5552 | For a moment I thought he was going to suggest a “gonnegtion,” but he only
@@ -7157,7 +7148,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (30 priority)
+Lint:    Agreement (30 priority)
 Message: |
     5575 | “He come out to see me two years ago and bought me the house I live in now. Of
     5576 | course we was broke up when he run off from home, but I see now there was a
@@ -7251,16 +7242,6 @@ Message: |
     5634 | over Gatsby’s books in the library one night three months before.
 Suggest:
   - Replace with: “marveling”
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-    5642 | message or a flower. Dimly I heard some one murmur “Blessed are the dead that
-         |                                    ^~~~~~~~ Did you mean the closed compound noun “someone”?
-    5643 | the rain falls on,” and then the owl-eyed man said “Amen to that,” in a brave
-Suggest:
-  - Replace with: “someone”
 
 
 

@@ -2,7 +2,7 @@ use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
 use crate::expr::All;
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
+use crate::expr::FirstMatchOf;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
@@ -17,7 +17,7 @@ impl ThenThan {
     pub fn new() -> Self {
         Self {
             expr: Box::new(All::new(vec![
-                Box::new(LongestMatchOf::new(vec![
+                Box::new(FirstMatchOf::new(vec![
                     // Comparative form of adjective
                     Box::new(
                         SequenceExpr::default()

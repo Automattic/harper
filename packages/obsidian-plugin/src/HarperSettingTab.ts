@@ -4,8 +4,8 @@ import { startCase } from 'lodash-es';
 import { type App, PluginSettingTab, Setting } from 'obsidian';
 import type State from './State.js';
 import type { Settings } from './State.js';
-import { dictToString, stringToDict } from './dictUtils';
 import type HarperPlugin from './index.js';
+import { linesToString, stringToLines } from './textUtils';
 
 export class HarperSettingTab extends PluginSettingTab {
 	private state: State;
@@ -78,9 +78,23 @@ export class HarperSettingTab extends PluginSettingTab {
 			)
 			.addTextArea((ta) => {
 				ta.inputEl.cols = 20;
-				ta.setValue(dictToString(this.settings.userDictionary ?? [''])).onChange(async (v) => {
-					const dict = stringToDict(v);
+				ta.setValue(linesToString(this.settings.userDictionary ?? [''])).onChange(async (v) => {
+					const dict = stringToLines(v);
 					this.settings.userDictionary = dict;
+					await this.state.initializeFromSettings(this.settings);
+				});
+			});
+
+		new Setting(containerEl)
+			.setName('Ignored Files')
+			.setDesc(
+				'Instruct Harper to ignore certain files in your vault. Accepts glob matches (`folder/**`, etc.)',
+			)
+			.addTextArea((ta) => {
+				ta.inputEl.cols = 20;
+				ta.setValue(linesToString(this.settings.ignoredGlobs ?? [''])).onChange(async (v) => {
+					const lines = stringToLines(v);
+					this.settings.ignoredGlobs = lines;
 					await this.state.initializeFromSettings(this.settings);
 				});
 			});

@@ -7,6 +7,7 @@ function createEphemeralState(): State {
 	return new State(
 		(_) => Promise.resolve(),
 		() => {},
+		undefined,
 	);
 }
 
