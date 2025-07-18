@@ -3,15 +3,15 @@
 >
 #
 > This    document contains example sentences with misspelled words  that          we   want  to test  the spell checker on  .
-# I/Ddem+ NSg/V    V        NSg/V+  NPl/V     P    V/J+       NPl/V+ NSg/I/C/Ddem+ IPl+ NSg/V P  NSg/V D   NSg/V NSg/V   J/P .
+# I/Ddem+ NSg/V+   V        NSg/V+  NPl/V+    P    V/J        NPl/V+ NSg/I/C/Ddem+ IPl+ NSg/V P  NSg/V D   NSg/V NSg/V   J/P .
 >
 #
 > Example Sentences
-# NSg/V+  NPl/V
+# NSg/V+  NPl/V+
 >
 #
-> My  favourite    color       is  blu .
-# D$+ NSg/V/J/Comm N🅪Sg/V/J/Am VL+ W?  .
+> My  favourite     color        is blu .
+# D$+ NSg/V/J/Comm+ N🅪Sg/V/J/Am+ VL W?  .
 > I    must  defend my  honour       !
 # ISg+ NSg/V NSg/V  D$+ N🅪Sg/V/Comm+ .
 > I    recognize that         you    recognise me       .

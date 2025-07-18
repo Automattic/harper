@@ -139,6 +139,8 @@ impl Document {
         self.condense_latin();
         self.match_quotes();
 
+        let chunker = burn_chunker();
+
         for sent in self.tokens.iter_sentences_mut() {
             let token_strings: Vec<_> = sent
                 .iter()
@@ -147,7 +149,7 @@ impl Document {
                 .collect();
 
             let token_tags = brill_tagger().tag_sentence(&token_strings);
-            let np_flags = burn_chunker().chunk_sentence(&token_strings, &token_tags);
+            let np_flags = chunker.chunk_sentence(&token_strings, &token_tags);
 
             let mut i = 0;
 
