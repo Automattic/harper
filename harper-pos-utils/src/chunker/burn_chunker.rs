@@ -1,10 +1,12 @@
 use crate::{UPOS, chunker::Chunker};
+#[cfg(feature = "training")]
 use burn::backend::Autodiff;
 use burn::nn::loss::{MseLoss, Reduction};
 use burn::nn::{Dropout, DropoutConfig};
 use burn::optim::{GradientsParams, Optimizer};
 use burn::record::{FullPrecisionSettings, NamedMpkBytesRecorder, NamedMpkFileRecorder, Recorder};
 use burn::tensor::TensorData;
+#[cfg(feature = "training")]
 use burn::tensor::backend::AutodiffBackend;
 use burn::tensor::cast::ToElement;
 use burn::{
@@ -76,7 +78,7 @@ pub struct BurnChunker<B: Backend> {
     device: B::Device,
 }
 
-impl<B: Backend + AutodiffBackend> BurnChunker<B> {
+impl<B: Backend> BurnChunker<B> {
     fn idx(&self, tok: &str) -> usize {
         *self.vocab.get(tok).unwrap_or(&UNK_IDX)
     }
@@ -335,7 +337,11 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     }
 }
 
-pub type BurnChunkerCpu = BurnChunker<Autodiff<NdArray>>;
+#[cfg(feature = "training")]
+pub type BurnChunkerCpu = BurnChunker<burn::backend::Autodiff<NdArray>>;
+
+#[cfg(not(feature = "training"))]
+pub type BurnChunkerCpu = BurnChunker<NdArray>;
 
 impl BurnChunkerCpu {
     pub fn load_from_bytes_cpu(
@@ -376,7 +382,7 @@ impl BurnChunkerCpu {
     }
 }
 
-impl<B: Backend + AutodiffBackend> Chunker for BurnChunker<B> {
+impl<B: Backend> Chunker for BurnChunker<B> {
     fn chunk_sentence(&self, sentence: &[String], tags: &[Option<UPOS>]) -> Vec<bool> {
         // Solves a divide-by-zero error in the linear layer.
         if sentence.is_empty() {
