@@ -782,6 +782,16 @@ fn let_along() {
     assert_suggestion_result("let along", lint_group(), "let alone");
 }
 
+// LikeAsIf
+#[test]
+fn correct_like_as_if() {
+    assert_top3_suggestion_result(
+        "And looks like as if linux-personality hasn't got any changes for 8 years.",
+        lint_group(),
+        "And looks as if linux-personality hasn't got any changes for 8 years.",
+    );
+}
+
 // LikeThePlague
 #[test]
 fn correct_like_a_plague() {

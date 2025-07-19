@@ -597,6 +597,12 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `let alone`?",
             "Changes `let along` to `let alone`."
         ),
+        "LikeAsIf" => (
+            ["like as if"],
+            ["like", "as if"],
+            "Avoid redundancy. Use either `like` or `as if`.",
+            "Corrects redundant `like as if` to `like` or `as if`."
+        ),
         "LikeThePlague" => (
             ["like a plague"],
             ["like the plague"],
