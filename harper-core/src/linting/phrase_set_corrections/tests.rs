@@ -718,6 +718,36 @@ fn detect_raises_the_question() {
     );
 }
 
+// -raising the question-
+#[test]
+fn detect_raising_the_question() {
+    assert_suggestion_result(
+        "as soon as a infoHash query is performed, a Torrent file is retried, rising the question of:",
+        lint_group(),
+        "as soon as a infoHash query is performed, a Torrent file is retried, raising the question of:",
+    );
+}
+
+// -rose the question-
+#[test]
+fn detect_rose_the_question() {
+    assert_suggestion_result(
+        "Here is an example that rose the question at first: What works.",
+        lint_group(),
+        "Here is an example that raised the question at first: What works.",
+    );
+}
+
+// -risen the question-
+#[test]
+fn detect_risen_the_question() {
+    assert_suggestion_result(
+        "That has risen the question in my mind if it is still possible to embed your own Flash player on Facebook today?",
+        lint_group(),
+        "That has raised the question in my mind if it is still possible to embed your own Flash player on Facebook today?",
+    );
+}
+
 // WholeEntire
 
 #[test]
