@@ -46,6 +46,12 @@ pub fn lint_group() -> LintGroup {
             "When describafterg a timeframe, use `a while`.",
             "Corrects the missing article after `after while` or `after awhile`, forming `after a while`."
         ),
+        "AheadAnd" => (
+            ["ahead an"],
+            ["ahead and"],
+            "Did you make a typo? Shouldn't it be `and`?",
+            "Corrects `an` to `and` after `ahead`."
+        ),
         "AllOfASudden" => (
             ["all of the sudden"],
             ["all of a sudden"],

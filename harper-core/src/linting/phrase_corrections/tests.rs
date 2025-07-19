@@ -25,6 +25,16 @@ fn correct_after_while() {
     );
 }
 
+// AheadAnd
+#[test]
+fn correct_ahead_and() {
+    assert_suggestion_result(
+        "If it's important, go ahead an open an issue.",
+        lint_group(),
+        "If it's important, go ahead and open an issue.",
+    );
+}
+
 // AllOfASudden
 #[test]
 fn corrects_all_of_a_sudden() {
