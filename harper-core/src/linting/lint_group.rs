@@ -66,7 +66,6 @@ use super::no_match_for::NoMatchFor;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::noun_countability::NounCountability;
-use super::noun_instead_of_verb::NounInsteadOfVerb;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
 use super::on_floor::OnFloor;
@@ -443,7 +442,6 @@ impl LintGroup {
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
         insert_expr_rule!(NounCountability, true);
-        insert_expr_rule!(NounInsteadOfVerb, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
         insert_expr_rule!(OnFloor, true);
