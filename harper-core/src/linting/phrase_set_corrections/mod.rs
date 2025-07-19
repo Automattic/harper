@@ -185,6 +185,16 @@ pub fn lint_group() -> LintGroup {
             "Traditionally `invest` uses the preposition `in`.",
             "`Invest` is traditionally followed by 'in,' not `into.`"
         ),
+        "MakeDoWith" => (
+            &[
+                ("make due with", "make do with"),
+                ("made due with", "made do with"),
+                ("makes due with", "makes do with"),
+                ("making due with", "making do with"),
+            ],
+            "Use `do` instead of `due` when referring to a resource scarcity.",
+            "Corrects `make due` to `make do` when followed by `with`."
+        ),
         "MootPoint" => (
             &[
                 ("mute point", "moot point"),
