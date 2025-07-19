@@ -1,11 +1,8 @@
-use crate::expr::Expr;
-use crate::expr::SequenceExpr;
-use crate::expr::{FirstMatchOf, LongestMatchOf};
-use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
+use crate::expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr};
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::{Lrc, Token, patterns::WordSet};
 
-use super::{ExprLinter, Lint, LintKind, Suggestion};
-
-use super::noun_verb_pairs::NOUN_VERB_PAIRS;
+use super::NOUN_VERB_PAIRS;
 
 /// Pronouns that can come before verbs but not nouns
 const PRONOUNS: &[&str] = &["he", "I", "it", "she", "they", "we", "who", "you"];
@@ -91,7 +88,6 @@ impl ExprLinter for NounInsteadOfVerb {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        eprintln!("🏃 '{}' 🏃", toks.span()?.get_content_string(src));
         // If we have the next word token, try to rule out compound nouns
         if toks.len() > 4 {
             let following_tok = &toks[4];

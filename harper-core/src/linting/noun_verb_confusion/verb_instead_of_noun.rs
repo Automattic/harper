@@ -5,7 +5,7 @@ use crate::{
     patterns::WordSet,
 };
 
-use super::noun_verb_pairs::NOUN_VERB_PAIRS;
+use super::NOUN_VERB_PAIRS;
 
 pub struct VerbInsteadOfNoun {
     expr: Box<dyn Expr>,
