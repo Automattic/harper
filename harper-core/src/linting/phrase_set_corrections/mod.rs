@@ -33,7 +33,6 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input_correction_multi_pairs:expr, $message:expr, $description:expr)),+ $(,)?
         }) => {
             $(
-                // eprintln!("💗 {:?}", $name);
                 $group.add_expr_linter(
                     $name,
                     Box::new(
@@ -253,7 +252,8 @@ pub fn lint_group() -> LintGroup {
             &[
                 (&["rise the question"], &["raise the question"]),
                 (&["rises the question"], &["raises the question"]),
-
+                (&["risen the question", "rose the question"], &["raised the question"]),
+                (&["rising the question"], &["rising the question"])
             ],
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`."
