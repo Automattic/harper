@@ -391,6 +391,44 @@ fn corrects_invests_into() {
     );
 }
 
+// MakeDoWith
+
+#[test]
+fn corrects_make_due_with() {
+    assert_suggestion_result(
+        "For now, I can make due with a bash script I have",
+        lint_group(),
+        "For now, I can make do with a bash script I have",
+    );
+}
+
+#[test]
+fn corrects_made_due_with() {
+    assert_suggestion_result(
+        "I made due with using actions.push for now but will try to do a codepen soon",
+        lint_group(),
+        "I made do with using actions.push for now but will try to do a codepen soon",
+    );
+}
+
+#[test]
+fn corrects_makes_due_with() {
+    assert_suggestion_result(
+        "but the code makes due with what is available",
+        lint_group(),
+        "but the code makes do with what is available",
+    );
+}
+
+#[test]
+fn corrects_making_due_with() {
+    assert_suggestion_result(
+        "I've been making due with the testMultiple script I wrote above.",
+        lint_group(),
+        "I've been making do with the testMultiple script I wrote above.",
+    );
+}
+
 // MootPoint
 
 // -point is mute-
