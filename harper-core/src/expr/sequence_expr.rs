@@ -56,7 +56,7 @@ impl Expr for SequenceExpr {
     /// Run the expression starting at an index, returning the total matched window.
     ///
     /// If any step returns `None`, the entire expression does as well.
-    fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         let mut window = Span::new_with_len(cursor, 0);
 
         for cur_expr in &self.exprs {

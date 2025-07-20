@@ -39,7 +39,7 @@ impl<E> Expr for WordExprGroup<E>
 where
     E: Expr,
 {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         let first = tokens.get(cursor)?;
         if !first.kind.is_word() {
             return None;

@@ -1,30 +1,45 @@
-use std::ops::Range;
+use std::{fmt::Display, marker::PhantomData, ops::Range};
 
 use serde::{Deserialize, Serialize};
 
-use crate::CharStringExt;
+use crate::Token;
 
-/// A window in a [`char`] sequence.
+/// A window in a [`T`] sequence.
 ///
 /// Although specific to `harper.js`, [this page may clear up any questions you have](https://writewithharper.com/docs/harperjs/spans).
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, Default, PartialEq, Eq)]
-pub struct Span {
+#[derive(Debug, Serialize, Deserialize, Default, PartialEq, Eq)]
+pub struct Span<T> {
     pub start: usize,
     pub end: usize,
+    span_type: PhantomData<T>,
 }
 
-impl Span {
+impl<T> Span<T> {
     pub fn new(start: usize, end: usize) -> Self {
         if start > end {
             panic!("{start} > {end}");
         }
-        Self { start, end }
+        Self {
+            start,
+            end,
+            span_type: PhantomData,
+        }
     }
 
     pub fn new_with_len(start: usize, len: usize) -> Self {
         Self {
             start,
             end: start + len,
+            span_type: PhantomData,
+        }
+    }
+
+    /// Creates an empty span.
+    pub fn empty() -> Self {
+        Self {
+            start: 0,
+            end: 0,
+            span_type: PhantomData,
         }
     }
 
@@ -48,7 +63,7 @@ impl Span {
 
     /// Get the associated content. Will return [`None`] if any aspect is
     /// invalid.
-    pub fn try_get_content<'a>(&self, source: &'a [char]) -> Option<&'a [char]> {
+    pub fn try_get_content<'a>(&self, source: &'a [T]) -> Option<&'a [T]> {
         if (self.start > self.end) || (self.start >= source.len()) || (self.end > source.len()) {
             if self.is_empty() {
                 return Some(&source[0..0]);
@@ -72,19 +87,11 @@ impl Span {
     }
 
     /// Get the associated content. Will panic if any aspect is invalid.
-    pub fn get_content<'a>(&self, source: &'a [char]) -> &'a [char] {
+    pub fn get_content<'a>(&self, source: &'a [T]) -> &'a [T] {
         match self.try_get_content(source) {
             Some(v) => v,
-            None => panic!(
-                "Could not get position {:?} within \"{}\"",
-                self,
-                source.to_string()
-            ),
+            None => panic!("Failed to get content for span."),
         }
-    }
-
-    pub fn get_content_string(&self, source: &[char]) -> String {
-        String::from_iter(self.get_content(source))
     }
 
     pub fn set_len(&mut self, length: usize) {
@@ -137,19 +144,51 @@ impl Span {
     }
 }
 
-impl From<Range<usize>> for Span {
+/// Additional functions for types that implement [`std::fmt::Debug`] and [`Display`].
+impl<T: Display + std::fmt::Debug> Span<T> {
+    /// Gets the content as a [`String`].
+    pub fn get_content_string(&self, source: &[T]) -> String {
+        if let Some(content) = self.try_get_content(source) {
+            content.iter().map(|t| t.to_string()).collect()
+        } else {
+            panic!("Could not get position {self:?} within \"{source:?}\"")
+        }
+    }
+}
+
+/// Functionality specific to [`Token`] spans.
+impl Span<Token> {
+    /// Converts the [`Span<Token>`] into a [`Span<char>`].
+    ///
+    /// This requires knowing the character spans of the tokens covered by this
+    /// [`Span<Token>`]. Because of this, a reference to the source token sequence used to create
+    /// this span is required.
+    pub fn to_char_span(&self, source_document_tokens: &[Token]) -> Span<char> {
+        if self.is_empty() {
+            Span::empty()
+        } else {
+            let target_tokens = &source_document_tokens[self.start..self.end];
+            Span::new(
+                target_tokens.first().unwrap().span.start,
+                target_tokens.last().unwrap().span.end,
+            )
+        }
+    }
+}
+
+impl<T> From<Range<usize>> for Span<T> {
     fn from(value: Range<usize>) -> Self {
         Self::new(value.start, value.end)
     }
 }
 
-impl From<Span> for Range<usize> {
-    fn from(value: Span) -> Self {
+impl<T> From<Span<T>> for Range<usize> {
+    fn from(value: Span<T>) -> Self {
         value.start..value.end
     }
 }
 
-impl IntoIterator for Span {
+impl<T> IntoIterator for Span<T> {
     type Item = usize;
 
     type IntoIter = Range<usize>;
@@ -159,28 +198,36 @@ impl IntoIterator for Span {
     }
 }
 
+impl<T> Clone for Span<T> {
+    // Note: manual implementation so we don't unnecessarily require `T` to impl `Clone`.
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl<T> Copy for Span<T> {}
+
 #[cfg(test)]
 mod tests {
-    use crate::Span;
+    type UntypedSpan = super::Span<()>;
 
     #[test]
     fn overlaps() {
-        assert!(Span::new(0, 5).overlaps_with(Span::new(3, 6)));
-        assert!(Span::new(0, 5).overlaps_with(Span::new(2, 3)));
-        assert!(Span::new(0, 5).overlaps_with(Span::new(4, 5)));
-        assert!(Span::new(0, 5).overlaps_with(Span::new(4, 4)));
+        assert!(UntypedSpan::new(0, 5).overlaps_with(UntypedSpan::new(3, 6)));
+        assert!(UntypedSpan::new(0, 5).overlaps_with(UntypedSpan::new(2, 3)));
+        assert!(UntypedSpan::new(0, 5).overlaps_with(UntypedSpan::new(4, 5)));
+        assert!(UntypedSpan::new(0, 5).overlaps_with(UntypedSpan::new(4, 4)));
 
-        assert!(!Span::new(0, 3).overlaps_with(Span::new(3, 5)));
+        assert!(!UntypedSpan::new(0, 3).overlaps_with(UntypedSpan::new(3, 5)));
     }
 
     #[test]
     fn expands_properly() {
-        let mut span = Span::new(2, 2);
+        let mut span = UntypedSpan::new(2, 2);
 
         span.expand_to_include(1);
-        assert_eq!(span, Span::new(1, 2));
+        assert_eq!(span, UntypedSpan::new(1, 2));
 
         span.expand_to_include(2);
-        assert_eq!(span, Span::new(1, 3));
+        assert_eq!(span, UntypedSpan::new(1, 3));
     }
 }

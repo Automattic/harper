@@ -53,7 +53,7 @@ pub trait TokenStringExt {
     fn first_non_whitespace(&self) -> Option<&Token>;
     /// Grab the span that represents the beginning of the first element and the
     /// end of the last element.
-    fn span(&self) -> Option<Span>;
+    fn span(&self) -> Option<Span<char>>;
 
     create_decl_for!(adjective);
     create_decl_for!(apostrophe);
@@ -140,7 +140,7 @@ impl TokenStringExt for [Token] {
         if w_idx < u_idx { Some(word) } else { None }
     }
 
-    fn span(&self) -> Option<Span> {
+    fn span(&self) -> Option<Span<char>> {
         let min_max = self
             .iter()
             .flat_map(|v| [v.span.start, v.span.end].into_iter())

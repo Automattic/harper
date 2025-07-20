@@ -18,7 +18,7 @@ impl Optional {
 }
 
 impl Expr for Optional {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         let res = self.inner.run(cursor, tokens, source);
 
         if res.is_none() {

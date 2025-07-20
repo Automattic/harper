@@ -6,7 +6,7 @@ use strum::IntoEnumIterator;
 /// Represents an annotation.
 pub(super) struct Annotation {
     /// The range the annotation covers in the source. For instance, this might be a single word.
-    span: Span,
+    span: Span<char>,
     /// The message displayed by the annotation.
     annotation_text: String,
     /// The color of the annotation.

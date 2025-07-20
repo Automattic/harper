@@ -62,7 +62,7 @@ impl TreeSitterMasker {
     /// Visits the children of a TreeSitter node, searching for comments.
     ///
     /// Returns the BYTE spans of the comment position.
-    fn extract_comments(&self, cursor: &mut TreeCursor, comments: &mut Vec<Span>) {
+    fn extract_comments(&self, cursor: &mut TreeCursor, comments: &mut Vec<Span<u8>>) {
         Self::visit_nodes(cursor, &mut |node: &Node| {
             if (self.node_condition)(node) {
                 comments.push(node.byte_range().into());
@@ -120,7 +120,7 @@ impl Masker for TreeSitterMasker {
 /// NOTE: Will sort the given slice by their [`Span::start`].
 ///
 /// If any spans overlap, it will merge them.
-fn byte_spans_to_char_spans(mut byte_spans: Vec<Span>, source: &str) -> Vec<Span> {
+fn byte_spans_to_char_spans(mut byte_spans: Vec<Span<u8>>, source: &str) -> Vec<Span<char>> {
     byte_spans.sort_unstable_by_key(|s| s.start);
 
     // merge overlapping spans
@@ -136,18 +136,20 @@ fn byte_spans_to_char_spans(mut byte_spans: Vec<Span>, source: &str) -> Vec<Span
         }
     }
 
-    let mut last_byte_pos = 0;
-    let mut last_char_pos = 0;
-    spans.iter_mut().for_each(|span| {
-        let byte_span = *span;
-
-        last_char_pos += source[last_byte_pos..byte_span.start].chars().count();
-        span.start = last_char_pos;
-
-        last_char_pos += source[byte_span.start..byte_span.end].chars().count();
-        span.end = last_char_pos;
-
-        last_byte_pos = byte_span.end;
-    });
+    // Convert byte spans to char spans.
     spans
+        .iter()
+        .scan((0, 0), |(last_byte_pos, last_char_pos), span| {
+            let byte_span = *span;
+
+            *last_char_pos += source[*last_byte_pos..byte_span.start].chars().count();
+            let start = *last_char_pos;
+
+            *last_char_pos += source[byte_span.start..byte_span.end].chars().count();
+            let end = *last_char_pos;
+
+            *last_byte_pos = byte_span.end;
+            Some(Span::new(start, end))
+        })
+        .collect()
 }

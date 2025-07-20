@@ -58,7 +58,7 @@ impl SimilarToPhrase {
 }
 
 impl Expr for SimilarToPhrase {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         if self.phrase.run(cursor, tokens, source).is_some() {
             return None;
         }
