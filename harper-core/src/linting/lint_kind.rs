@@ -20,6 +20,7 @@ pub enum LintKind {
     /// For suggesting improvements that enhance clarity or impact without fixing errors
     Enhancement,
     Formatting,
+    Grammar,
     /// For cases where a word is mistakenly used for a similar-sounding word with a different meaning
     /// (e.g., 'eluded to' instead of 'alluded to'). Unlike eggcorns, these don't create new meanings.
     Malapropism,
@@ -60,6 +61,7 @@ impl LintKind {
             "Eggcorn" => LintKind::Eggcorn,
             "Enhancement" => LintKind::Enhancement,
             "Formatting" => LintKind::Formatting,
+            "Grammar" => LintKind::Grammar,
             "Miscellaneous" => LintKind::Miscellaneous,
             "Readability" => LintKind::Readability,
             "Redundancy" => LintKind::Redundancy,
@@ -82,6 +84,7 @@ impl LintKind {
             LintKind::Eggcorn => "Eggcorn",
             LintKind::Enhancement => "Enhancement",
             LintKind::Formatting => "Formatting",
+            LintKind::Grammar => "Grammar",
             LintKind::Malapropism => "Malapropism",
             LintKind::Miscellaneous => "Miscellaneous",
             LintKind::Punctuation => "Punctuation",
@@ -108,6 +111,7 @@ impl Display for LintKind {
             LintKind::Eggcorn => "Eggcorn",
             LintKind::Enhancement => "Enhancement",
             LintKind::Formatting => "Formatting",
+            LintKind::Grammar => "Grammar",
             LintKind::Malapropism => "Malapropism",
             LintKind::Miscellaneous => "Miscellaneous",
             LintKind::Punctuation => "Punctuation",

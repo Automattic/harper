@@ -478,13 +478,15 @@ pub fn lint_group() -> LintGroup {
             ["Guinea Bissau"],
             ["Guinea-Bissau"],
             "The official spelling is hyphenated.",
-            "Checks for the correct official name of the African country."
+            "Checks for the correct official name of the African country.",
+            LintKind::Punctuation
         ),
         "HadOf" => (
             ["had of"],
             ["had have", "had've"],
             "Did you mean `had have` or `had've`?",
-            "Flags the unnecessary use of `of` after `had` and suggests the correct forms."
+            "Flags the unnecessary use of `of` after `had` and suggests the correct forms.",
+            LintKind::Grammar
         ),
         "HalfAnHour" => (
             ["half an our"],
@@ -504,181 +506,211 @@ pub fn lint_group() -> LintGroup {
             ["human's beings", "humans beings"],
             ["human beings"],
             "Use `human beings` to refer to people collectively.",
-            "Eliminates the incorrect possessive/plural usage like `human's beings` or `humans beings`."
+            "Eliminates the incorrect possessive/plural usage like `human's beings` or `humans beings`.",
+            LintKind::Grammar
         ),
         "HumanLife" => (
             ["human live"],
             ["human life"],
             "Did you mean `human life`?",
-            "Changes `human live` to `human life`."
+            "Changes `human live` to `human life`.",
+            LintKind::Typo
         ),
         "HungerPang" => (
             ["hunger pain"],
             ["hunger pang"],
             "Did you mean `hunger pang`?",
-            "Corrects `hunger pain` to `hunger pang`."
+            "Corrects `hunger pain` to `hunger pang`.",
+            LintKind::Eggcorn
         ),
         "IAm" => (
             ["I a m"],
             ["I am"],
             "Did you mean `I am`?",
-            "Fixes the incorrect spacing in `I a m` to properly form `I am`."
+            "Fixes the incorrect spacing in `I a m` to properly form `I am`.",
+            LintKind::Typo
         ),
         "IAmAgreement" => (
             ["I are"],
             ["I am"],
             "The first-person singular pronoun `I` requires the verb form `am`; `are` belongs to second-person or plural contexts.",
-            "Corrects `I are` to `I am`."
+            "Corrects `I are` to `I am`.",
+            LintKind::Agreement
         ),
         "IDo" => (
             ["I does"],
             ["I do"],
             "`I` pairs with the bare verb `do`; the –s inflection `does` is reserved for third-person singular subjects.",
-            "Corrects `I does` to `I do`."
+            "Corrects `I does` to `I do`.",
+            LintKind::Agreement
         ),
         "InOfItself" => (
             ["in of itself"],
             ["in itself", "in and of itself"],
             "Use `in itself` (more common) or `in and of itself` (more formal) to mean 'intrinsically'.",
-            "Corrects nonstandard `in of itself` to standard `in itself` or `in and of itself`."
+            "Corrects nonstandard `in of itself` to standard `in itself` or `in and of itself`.",
+            LintKind::Usage
         ),
         "InAnyWay" => (
             ["in anyway"],
             ["in any way"],
             "Use `in any way` for emphasizing a point.",
-            "Corrects ungrammatical `in anyway` to `in any way`."
+            "Corrects ungrammatical `in anyway` to `in any way`.",
+            LintKind::BoundaryError
         ),
         "InAWhile" => (
             ["in while"],
             ["in a while"],
             "When describing a timeframe, use `a while`.",
-            "Corrects the missing article in `in while` or `in awhile`, forming `in a while`."
+            "Corrects the missing article in `in while` or `in awhile`, forming `in a while`.",
+            LintKind::Grammar
         ),
         "InCase" => (
             ["incase"],
             ["in case"],
             "`In case` should be written as two words.",
-            "Corrects `incase` to `in case`."
+            "Corrects `incase` to `in case`.",
+            LintKind::BoundaryError
         ),
         "InNeedOf" => (
             ["in need for"],
             ["in need of"],
             "Use `in need of` for when something is required or necessary.",
-            "Corrects `in need for` to `in need of`."
+            "Corrects `in need for` to `in need of`.",
+            LintKind::Usage
         ),
         "InOneFellSwoop" => (
             ["in one foul swoop"],
             ["in one fell swoop"],
             "Use the correct phrase for something happening suddenly.",
-            "Corrects `in one foul swoop` to `in one fell swoop`, preserving the phrase’s original meaning of sudden and complete action."
+            "Corrects `in one foul swoop` to `in one fell swoop`, preserving the phrase’s original meaning of sudden and complete action.",
+            LintKind::Eggcorn
         ),
         "InsteadOf" => (
             ["in stead of"],
             ["instead of"],
             "Use the modern single word `instead of` to indicate a replacement.",
-            "Corrects the archaic or mistaken separation `in stead of` to `instead of` in everyday usage."
+            "Corrects the archaic or mistaken separation `in stead of` to `instead of` in everyday usage.",
+            LintKind::BoundaryError
         ),
         "Insensitive" => (
             ["unsensitive"],
             ["insensitive"],
             "This word has a more standard, more common synonym.",
-            "Suggests the more standard and common synonym `insensitive`."
+            "Suggests the more standard and common synonym `insensitive`.",
+            LintKind::WordChoice
         ),
         "Insurmountable" => (
             ["unsurmountable"],
             ["insurmountable"],
             "This word has a more standard, more common synonym.",
-            "Suggests the more standard and common synonym `insurmountable`."
+            "Suggests the more standard and common synonym `insurmountable`.",
+            LintKind::WordChoice
         ),
         "Intact" => (
             ["in tact"],
             ["intact"],
             "Use `intact` to mean undamaged or whole.",
-            "Prevents the erroneous spacing in `in tact`; `intact` is the single correct word."
+            "Prevents the erroneous spacing in `in tact`; `intact` is the single correct word.",
+            LintKind::BoundaryError
         ),
         "InThe" => (
             ["int he"],
             ["in the"],
             "Did you mean `in the`?",
-            "Detects and corrects a spacing error where `in the` is mistakenly written as `int he`. Proper spacing is essential for readability and grammatical correctness in common phrases."
+            "Detects and corrects a spacing error where `in the` is mistakenly written as `int he`. Proper spacing is essential for readability and grammatical correctness in common phrases.",
+            LintKind::Typo
         ),
         "IsKnownFor" => (
             ["is know for"],
             ["is known for"],
             "Did you mean `is known for`?",
-            "Typo: `known` is the correct past participle."
+            "Typo: `known` is the correct past participle.",
+            LintKind::Typo
         ),
         "ItCan" => (
             ["It cam"],
             ["It can"],
             "Did you mean `It can`?",
-            "Corrects the misspelling `It cam` to the proper phrase `It can`."
+            "Corrects the misspelling `It cam` to the proper phrase `It can`.",
+            LintKind::Typo
         ),
         "IveGotTo" => (
             ["I've go to"],
             ["I've got to"],
             "Use `I've got to` for necessity or obligation.",
-            "Corrects the slip `I've go to` to the idiomatic `I've got to`."
+            "Corrects the slip `I've go to` to the idiomatic `I've got to`.",
+            LintKind::Typo
         ),
         "JawDropping" => (
             ["jar-dropping"],
             ["jaw-dropping"],
             "Use the correct phrase for something astonishing.",
-            "Corrects `jar-dropping` to `jaw-dropping`, ensuring the intended meaning of something that causes amazement."
+            "Corrects `jar-dropping` to `jaw-dropping`, ensuring the intended meaning of something that causes amazement.",
+            LintKind::Eggcorn
         ),
         "JustDeserts" => (
             ["just desserts"],
             ["just deserts"],
             "Use the correct phrase for receiving what one deserves.",
             "Ensures `just deserts` is used correctly, preserving its meaning of receiving an appropriate outcome for one's actions."
+            // Spelling?
         ),
         "KindOf" => (
             ["kinda of"],
             ["kind of", "kinda"],
             "`Kinda` already means `kind of`, so `kinda of` is redundant.",
-            "Corrects `kinda of` to `kind of`."
+            "Corrects `kinda of` to `kind of`.",
+            LintKind::Redundancy
         ),
         "KindRegards" => (
             ["kid regards"],
             ["kind regards"],
             "Did you mean `kind regards`?",
-            "Changes `kid regards` to `kind regards`."
+            "Changes `kid regards` to `kind regards`.",
+            LintKind::Typo
         ),
         "LastButNotLeast" => (
             ["last but not the least", "last, but not the least", "last but, not least", "last but not last"],
             ["last but not least"],
             "Use the more idiomatic phrasing.",
-            "Corrects common errors in the phrase `last but not least`."
+            "Corrects common errors in the phrase `last but not least`.",
+            LintKind::Usage
         ),
         "LastDitch" => (
             ["last ditch", "last ditched", "last-ditched"],
             ["last-ditch"],
             "In this idiom, `ditch` is a noun and a hyphen is needed.",
-            "Corrects wrong variations of the idiomatic adjective `last-ditch`."
+            "Corrects wrong variations of the idiomatic adjective `last-ditch`.",
+            LintKind::Usage
         ),
         "LetAlone" => (
             ["let along"],
             ["let alone"],
             "Did you mean `let alone`?",
-            "Changes `let along` to `let alone`."
+            "Changes `let along` to `let alone`.",
+            LintKind::Typo
         ),
         "LikeThePlague" => (
             ["like a plague"],
             ["like the plague"],
             "`Things are avoided `like the plague` not `like a plague`.",
-            "Corrects `like a plague` to `like the plague`."
+            "Corrects `like a plague` to `like the plague`.",
+            LintKind::Usage
         ),
         "LowHangingFruit" => (
             ["low hanging fruit", "low hanging fruits", "low-hanging fruits"],
             ["low-hanging fruit"],
             "The standard form is `low-hanging fruit` with a hyphen and singular form.",
-            "Corrects non-standard variants of `low-hanging fruit`."
+            "Corrects non-standard variants of `low-hanging fruit`.",
+            LintKind::Usage
         ),
         "Monumentous" => (
             ["monumentous"],
             ["momentous", "monumental"],
             "Retain `monumentous` for jocular effect. Otherwise `momentous` indicates great signifcance while `monumental` indicates imposing size.",
             "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage."
+            // Vocabulary?
         ),
         "MorePreferable" => (
             ["more preferable"],
@@ -691,86 +723,101 @@ pub fn lint_group() -> LintGroup {
             ["mu house"],
             ["my house"],
             "Did you mean `my house`?",
-            "Fixes the typo `mu house` to `my house`."
+            "Fixes the typo `mu house` to `my house`.",
+            LintKind::Typo
         ),
         "NeedHelp" => (
             ["ned help"],
             ["need help"],
             "Did you mean `need help`?",
-            "Changes `ned help` to the correct `need help`."
+            "Changes `ned help` to the correct `need help`.",
+            LintKind::Typo
         ),
         "NerveRacking" => (
             ["nerve racking", "nerve wracking", "nerve wrecking", "nerve-wracking", "nerve-wrecking"],
             ["nerve-racking"],
             "Use `nerve-racking` for something that causes anxiety or tension.",
-            "Corrects common misspellings and missing hyphen in `nerve-racking`."
+            "Corrects common misspellings and missing hyphen in `nerve-racking`.",
+            LintKind::Eggcorn
         ),
         "NotIn" => (
             ["no in"],
             ["not in"],
             "Use `not in` for correct grammar.",
-            "Replaces `no in` with `not in`."
+            "Replaces `no in` with `not in`.",
+            LintKind::Typo
         ),
         "NotTo" => (
             ["no to"],
             ["not to"],
             "Did you mean `not to`?",
-            "Corrects `no to` to `not to`, ensuring proper negation."
+            "Corrects `no to` to `not to`, ensuring proper negation.",
+            LintKind::Typo
         ),
         "OfCourse" => (
             // See also: `of_course.rs` for "of curse/corse" → "of course" corrections
             ["off course", "o course", "ofcourse"],
             ["of course"],
             "Did you mean `of course`?",
-            "Detects the common mistake `off course` and suggests the correct form `of course`."
+            "Detects the common mistake `off course` and suggests the correct form `of course`.",
+            LintKind::Eggcorn
         ),
         "OffTheCuff" => (
             ["off the cuff"],
             ["off-the-cuff"],
             "Use the hyphenated form for `off-the-cuff`.",
-            "Ensures `off-the-cuff` is correctly hyphenated."
+            "Ensures `off-the-cuff` is correctly hyphenated.",
+            LintKind::Punctuation
         ),
         "OldWivesTale" => (
             ["old wise tale"],
             ["old wives' tale"],
             "Use the correct phrase for a superstition or myth.",
-            "Corrects `old wise tale` to `old wives' tale`, preserving the phrase’s meaning as an unfounded traditional belief."
+            "Corrects `old wise tale` to `old wives' tale`, preserving the phrase’s meaning as an unfounded traditional belief.",
+            LintKind::Eggcorn
         ),
         "OnceInAWhile" => (
             ["once a while", "once and a while"],
             ["once in a while"],
             "The correct idiom is `once in a while`.",
             "Corrects two common malapropisms of `once in a while`."
+            // "once and a while" is Eggcorn but "once a while" is maybe Usage?
         ),
         "OnSecondThought" => (
             ["on second though"],
             ["on second thought"],
             "Idiomatic expression: use `on second thought` instead of `on second though`",
-            "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration."
+            "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration.",
+            LintKind::Typo
         ),
         "OnTheSpurOfTheMoment" => (
             ["on the spurt of the moment", "at the spur of the moment", "in the spur of the moment"],
             ["on the spur of the moment"],
             "Use the correct phrase for acting spontaneously.",
-            "Ensures the correct use of `on the spur of the moment`, avoiding nonstandard variations."
+            "Ensures the correct use of `on the spur of the moment`, avoiding nonstandard variations.",
+            // "spurt" is Eggcorn, the others are probably Usage
+            LintKind::Eggcorn
         ),
         "OnTopOf" => (
             ["ontop of"],
             ["on top of"],
             "Did you mean `on top of`?",
-            "Corrects `ontop of` to `on top of`."
+            "Corrects `ontop of` to `on top of`.",
+            LintKind::BoundaryError
         ),
         "PeaceOfMind" => (
             ["piece of mind"],
             ["peace of mind"],
             "The phrase is `peace of mind`, meaning `calm`. A `piece` is a `part` of something.",
-            "Corrects `piece of mind` to `peace of mind`."
+            "Corrects `piece of mind` to `peace of mind`.",
+            LintKind::Eggcorn
         ),
         "PointsOfView" => (
             ["point of views"],
             ["points of view"],
             "The correct plural is `points of view`.",
-            "Corrects pluralizing the wrong noun in `point of view`."
+            "Corrects pluralizing the wrong noun in `point of view`.",
+            LintKind::Usage
         ),
         "PortAuPrince" => (
             // Note: this lint matches any case but cannot correct wrong case
@@ -781,7 +828,8 @@ pub fn lint_group() -> LintGroup {
             ["Port au Prince"],
             ["Port-au-Prince"],
             "The official spelling is hyphenated.",
-            "Checks for the correct official name of the capital of Haiti."
+            "Checks for the correct official name of the capital of Haiti.",
+            LintKind::Punctuation
         ),
         "PortoNovo" => (
             // Note: this lint matches any case but cannot correct wrong case
@@ -792,138 +840,162 @@ pub fn lint_group() -> LintGroup {
             ["Porto Novo"],
             ["Porto-Novo"],
             "The official spelling is hyphenated.",
-            "Checks for the correct official name of the capital of Benin."
+            "Checks for the correct official name of the capital of Benin.",
+            LintKind::Punctuation
         ),
         "PrayingMantis" => (
             ["preying mantis"],
             ["praying mantis"],
             "Use the insect's correct name.",
-            "Corrects `preying mantis` to `praying mantis`, ensuring accurate reference to the insect’s characteristic pose."
+            "Corrects `preying mantis` to `praying mantis`, ensuring accurate reference to the insect’s characteristic pose.",
+            LintKind::Eggcorn
         ),
         "RapidFire" => (
             ["rapid fire"],
             ["rapid-fire"],
             "It is more idiomatic to hypenate `rapid-fire`.",
-            "Checks to ensure writers hyphenate `rapid-fire`."
+            "Checks to ensure writers hyphenate `rapid-fire`.",
+            LintKind::Punctuation
         ),
         "RealTrouper" => (
             ["real trooper"],
             ["real trouper"],
             "Use the correct phrase for someone who perseveres.",
-            "Ensures the correct use of `real trouper`, distinguishing it from `trooper`, which refers to a soldier or police officer."
+            "Ensures the correct use of `real trouper`, distinguishing it from `trooper`, which refers to a soldier or police officer.",
+            LintKind::Eggcorn
         ),
         "RedundantIIRC" => (
             ["if IIRC", "IIRC correctly"], ["IIRC"],
             "`IIRC` already means 'if I recall correctly', so adding 'if' or 'correctly' is redundant.",
-            "Flags redundant use of 'if' or 'correctly' with 'IIRC', since 'IIRC' already stands for 'if I recall correctly'."
+            "Flags redundant use of 'if' or 'correctly' with 'IIRC', since 'IIRC' already stands for 'if I recall correctly'.",
+            LintKind::Redundancy
         ),
         "RifeWith" => (
             ["ripe with"],
             ["rife with"],
             "Use the correct phrase for something abundant.",
-            "Corrects `ripe with` to `rife with`, preserving the phrase’s meaning of being filled with something, often undesirable."
+            "Corrects `ripe with` to `rife with`, preserving the phrase’s meaning of being filled with something, often undesirable.",
+            LintKind::Eggcorn
         ),
         "RoadMap" => (
             ["roadmap"],
             ["road map"],
             "Did you mean `road map`?",
             "Detects when `roadmap` is used instead of `road map`, prompting the correct spacing."
+            // Usage? WordChoice? BoundaryError?
         ),
         "SameAs" => (
             ["same then"],
             ["same as"],
             "Did you mean `same as`?",
-            "Corrects the incorrect phrase `same then` to the standard `same as`."
+            "Corrects the incorrect phrase `same then` to the standard `same as`.",
+            LintKind::Grammar
         ),
         "ScantilyClad" => (
             ["scandally clad"],
             ["scantily clad"],
             "Use the correct phrase for minimal attire.",
-            "Fixes `scandally clad` to `scantily clad`, ensuring clarity in describing minimal attire."
+            "Fixes `scandally clad` to `scantily clad`, ensuring clarity in describing minimal attire.",
+            LintKind::Eggcorn
         ),
         "SimpleGrammatical" => (
             ["simply grammatical"],
             ["simple grammatical"],
             "Use `simple grammatical` for correct adjective usage.",
             "Corrects `simply grammatical` to `simple grammatical` for proper adjective usage."
+            // Typo? WordChoice? Usage?
         ),
         "SneakingSuspicion" => (
             ["sneaky suspicion"],
             ["sneaking suspicion"],
             "Did you mean `sneaking suspicion`?",
-            "Changes `sneaky suspicion` to `sneaking suspicion`."
+            "Changes `sneaky suspicion` to `sneaking suspicion`.",
+            LintKind::Eggcorn
         ),
         "SomebodyElses" => (
             ["somebody's else", "somebody's else's"],
             ["somebody else's"],
             "This should be `somebody else's`?",
-            "Corrects `somebody else's` when the `'s` is in the wrong place."
+            "Corrects `somebody else's` when the `'s` is in the wrong place.",
+            LintKind::Grammar
         ),
         "SomeOfThe" => (
             ["some the"],
             ["some of the"],
             "Add `of` to form the partitive phrase: `some of the`.",
             "Quantity words such as `some` normally take `of` before a definite article. Including `of` signals that you mean a subset of a larger set, preventing a momentary stumble in comprehension."
+            // Typo?
         ),
         "SoonerOrLater" => (
             ["sooner than later"],
             ["sooner rather than later", "sooner or later"],
             "Did you mean `sooner rather than later` or `sooner or later`?",
-            "Fixes the improper phrase `sooner than later` by suggesting standard alternatives."
+            "Fixes the improper phrase `sooner than later` by suggesting standard alternatives.",
+            LintKind::Usage
         ),
         "SpecialAttention" => (
             ["spacial attention"],
             ["special attention"],
             "Did you mean `special attention`?",
-            "Changes `spacial attention` to `special attention`."
+            "Changes `spacial attention` to `special attention`.",
+            // Eggcorn??
+            LintKind::Typo
         ),
         "SpokeTooSoon" => (
             ["spoke to soon"],
             ["spoke too soon"],
             "Use the adverb `too` instead.",
-            "Identifies common misuse of the preposition `to` in the phrase `spoke too soon`."
+            "Identifies common misuse of the preposition `to` in the phrase `spoke too soon`.",
+            LintKind::Grammar
         ),
         "Starving" => (
             ["very hungry", "really hungry", "extremely hungry"],
             ["starving"],
             "A more vivid adjective would better convey intense hunger.",
-            "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`"
+            "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`",
+            LintKind::Enhancement
         ),
         "StateOfTheArt" => (
             ["state of art"],
             ["state of the art"],
             "Did you mean `state of the art`?",
-            "Detects incorrect usage of `state of art` and suggests `state of the art` as the correct phrase."
+            "Detects incorrect usage of `state of art` and suggests `state of the art` as the correct phrase.",
+            LintKind::Usage
         ),
         "StatuteOfLimitations" => (
             ["statue of limitations"],
             ["statute of limitations"],
             "A `statue` is a sculpture; in legal terms, the correct word is `statute`.",
-            "Corrects `statue of limitations` to `statute of limitations`."
+            "Corrects `statue of limitations` to `statute of limitations`.",
+            LintKind::Eggcorn
         ),
         "SufficeItToSay" => (
             ["suffice to say"],
             ["suffice it to say"],
             "`Suffice it to say` is the more standard and more common variant.",
-            "Corrects `suffice to say` to `suffice it to say`."
+            "Corrects `suffice to say` to `suffice it to say`.",
+            LintKind::Usage
         ),
         "SupposedTo" => (
             ["suppose to"],
             ["supposed to"],
             "Did you mean `supposed to`?",
-            "Fixes `suppose to` to the correct `supposed to`."
+            "Fixes `suppose to` to the correct `supposed to`.",
+            LintKind::Usage
         ),
         "TakeItPersonally" => (
             ["take it personal"],
             ["take it personally"],
             "The more standard, less colloquial form is `take it personally`.",
-            "Corrects `take it personal` to `take it personally`."
+            "Corrects `take it personal` to `take it personally`.",
+            LintKind::Usage
         ),
         "ThanksALot" => (
             ["thanks lot", "thanks alot"],
             ["thanks a lot"],
             "Prefer the two-word expression `thanks a lot`.",
             "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers."
+            // "thanks lot" is either a Typo or a non-native speaker. "thanks alot" is a BoundaryError
         ),
         "ThatChallenged" => (
             ["the challenged"],
@@ -935,25 +1007,29 @@ pub fn lint_group() -> LintGroup {
             ["the this"],
             ["that this"],
             "Did you mean `that this`?",
-            "Fixes `the this` to the correct phrase `that this`."
+            "Fixes `the this` to the correct phrase `that this`.",
+            LintKind::Typo
         ),
         "TheAnother" => (
             ["the another"],
             ["the other", "another"],
             "Use `the other` or `another`, not both.",
-            "Corrects `the another`."
+            "Corrects `the another`.",
+            LintKind::Grammar
         ),
         "ThoughtProcess" => (
             ["though process"],
             ["thought process"],
             "Did you mean `thought process`?",
-            "Changes `though process` to `thought process`."
+            "Changes `though process` to `thought process`.",
+            LintKind::Typo
         ),
         "TickingTimeClock" => (
             ["ticking time clock"],
             ["ticking time bomb", "ticking clock"],
             "Use `ticking time bomb` for disastrous consequences, otherwise avoid redundancy with just `ticking clock`.",
-            "Corrects `ticking time clock` to `ticking time bomb` for idiomatic urgency or `ticking clock` otherwise."
+            "Corrects `ticking time clock` to `ticking time bomb` for idiomatic urgency or `ticking clock` otherwise.",
+            LintKind::Usage
         ),
         "ToDoHyphen" => (
             ["todo"],
@@ -965,31 +1041,36 @@ pub fn lint_group() -> LintGroup {
             ["to the manor born"],
             ["to the manner born"],
             "Use the correct phrase for being naturally suited to something.",
-            "Corrects `to the manor born` to `to the manner born`, ensuring the intended meaning of being naturally suited to a way of life."
+            "Corrects `to the manor born` to `to the manner born`, ensuring the intended meaning of being naturally suited to a way of life.",
+            LintKind::Eggcorn
         ),
         "Towards" => (
             ["to towards"],
             ["towards"],
             "Use `towards` without the preceding `to`.",
-            "Removes redundant `to` before `towards`."
+            "Removes redundant `to` before `towards`.",
+            LintKind::Redundancy
         ),
         "TrialAndError" => (
             ["trail and error"],
             ["trial and error"],
             "You misspelled `trial`.",
-            "Corrects `trail` to `trial` in `trial and error`."
+            "Corrects `trail` to `trial` in `trial and error`.",
+            LintKind::Typo
         ),
         "TurnItOff" => (
             ["turn it of", "turn i of"],
             ["turn it off"],
             "Did you mean `turn it off`?",
-            "Fixes the mistake in the phrase `turn it off`."
+            "Fixes the mistake in the phrase `turn it off`.",
+            LintKind::Typo
         ),
         "Unless" => (
             ["unless if"],
             ["unless", "except if", "except when"],
             "`Unless if` is not idiomatic English. `Unless`, `except if`, and `except when` express a condition that is true in all cases except one.",
-            "Corrects `unless if`."
+            "Corrects `unless if`.",
+            LintKind::Usage
         ),
         "WantBe" => (
             ["want be"],
@@ -1002,31 +1083,36 @@ pub fn lint_group() -> LintGroup {
             ["wave function"],
             "Did you mean `wave function`?",
             "Identifies the mistake of merging `wave` and `function` into one word. In quantum mechanics, a `wave function` (written as two words) describes the mathematical function that represents the quantum state of a particle or system. Correct usage is crucial for clear and accurate scientific communication."
+            // seems more like Orthography than WordBoundary
         ),
         "WellBeing" => (
             ["wellbeing"],
             ["well-being"],
             "Use the hyphenated form for `well-being`.",
-            "Ensures `well-being` is correctly hyphenated."
+            "Ensures `well-being` is correctly hyphenated.",
+            LintKind::Punctuation
         ),
         "WellKept" => (
             ["highly-kept", "highly kept"],
             // There may be other good alternatives such as closely-guarded or tightly-held
             ["well-kept"],
             "`Highly-kept` is not standard. To describe secrets, `well-kept` is the most used phrase.",
-            "Flags `highly-kept` and recommends `well-kept` as an alternative."
+            "Flags `highly-kept` and recommends `well-kept` as an alternative.",
+            LintKind::Usage
         ),
         "WhetYourAppetite" => (
             ["wet your appetite"],
             ["whet your appetite"],
             "Use the correct phrase for stimulating desire.",
-            "Ensures `whet your appetite` is used correctly, distinguishing it from the incorrect `wet` variation."
+            "Ensures `whet your appetite` is used correctly, distinguishing it from the incorrect `wet` variation.",
+            LintKind::Eggcorn
         ),
         "WillContain" => (
             ["will contains"],
             ["will contain"],
             "Did you mean `will contain`?",
-            "Incorrect verb form: `will` should be followed by the base form `contain`."
+            "Incorrect verb form: `will` should be followed by the base form `contain`.",
+            LintKind::Agreement
         ),
         // WorseOrWorst corrects wrong words. This corrects hyphenation.
         // The descriptions and messages differ between the two linters.
@@ -1034,13 +1120,15 @@ pub fn lint_group() -> LintGroup {
             ["worst case scenario", "worst-case-scenario"],
             ["worst-case scenario"],
             "Hyphenate `worst-case`.",
-            "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
+            "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`.",
+            LintKind::Punctuation
         ),
         "WroughtIron" => (
             ["rod iron", "rot iron", "rod-iron", "rot-iron"],
             ["wrought iron"],
             "Prefer the standard term `wrought iron`.",
-            "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
+            "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers.",
+            LintKind::Eggcorn
         ),
     });
 

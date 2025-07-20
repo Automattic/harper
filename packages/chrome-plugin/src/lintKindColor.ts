@@ -6,6 +6,7 @@ const LINT_KIND_COLORS = {
 	Eggcorn: '#FF8C00', // Dark orange
 	Enhancement: '#0EAD69', // Green
 	Formatting: '#7D3C98', // Amethyst purple
+	Grammar: '#9B59B6', // Medium purple
 	Malapropism: '#C71585', // Medium violet red
 	Miscellaneous: '#3BCEAC', // Turquoise
 	Punctuation: '#D4850F', // Dark orange
