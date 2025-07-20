@@ -1,4 +1,4 @@
-53400
+53500
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -8346,6 +8346,7 @@ Pythagoras/Og
 Pythagorean/NJg
 Pythias/Ng
 Python/ONg          # programming language
+Pythonic/J
 Q/NO
 QA/N
 QB/NO
@@ -12522,6 +12523,7 @@ anorexic/JNgS
 another/~ID
 ansatz/NSg
 ansatze/9
+ansible/NgS
 answer/~NVBgdGS
 answerable/JU
 answered/~JVU
@@ -12927,6 +12929,7 @@ architecture/~NgSr
 architrave/NSg
 archival/~JN
 archive/~NVdSgG
+archiver/NgS
 archivist/~NgS
 archness/Ng
 archway/NSg
@@ -13290,22 +13293,23 @@ atmospherics/Ng
 atoll/~NgS
 atom/~NSg
 atomic/~JNQ
-atomisation/NgS!_
+atomicity/Nmg
+atomisation/NwgS!_
 atomise/VZGd>S!_
-atomiser/Ng!_
+atomiser/NgS!_
 atomistic/J
-atomization/NgS!_
+atomization/NwgS!_
 atomize/VZGd>S
-atomizer/Ng
+atomizer/NgS
 atonal/JY
-atonality/Ng
+atonality/Nmg
 atone/VLGdS
-atonement/~Ng
+atonement/~Nmg
 atop/~P
-atria/N
+atria/N9
 atrial/~J
 atrioventricular/J
-atrium/~Ng
+atrium/~N0g
 atrocious/JpY
 atrociousness/Ng
 atrocity/NSg
@@ -13439,20 +13443,21 @@ authoritarianism/Ng
 authoritative/~JYp
 authoritativeness/Ng
 authority/~NSg
-authorization/~NgS
+authorization/~NwgS
 authorize/~VrGdS
 authorized/~JVU
 authorship/~Ng
-autism/~Ng
+autism/~Nmg
 autistic/~JN
 auto/~JNVgS
 autobahn/~NSg
 autobiographer/NSg
 autobiographic/J
 autobiographical/~JY
-autobiography/~NSg
+autobiography/~NwSg
 autoclave/NVJgS
 autocomplete/VNgS
+autocompletion/NwgS
 autocracy/NSg
 autocrat/NSg
 autocratic/~JQ
@@ -13673,6 +13678,7 @@ backpedalled/V!@_
 backpedalling/VN!@_
 backplane/Sg
 backport/VNdGSg
+backpropagation/NmSg
 backrest/NSg
 backronym/NSg
 backroom/NJS
@@ -14731,10 +14737,11 @@ bitchiness/Ng
 bitchy/Jp>^
 bitcoin/ONSg
 bite/~VN>SgZ
-biter/Ng
+biter/NgS
 biting/~VNJY
-bitmap/NS
+bitmap/NgS
 bitplane/NgS
+bitrate/NgS
 bitstream/Sg
 bitten/~V
 bitter/~JNVpg>Y^S
@@ -15746,7 +15753,7 @@ buffaloes/~N9V
 buffer/~NJVSgdG
 buffet/~NVSgdGz
 buffoon/NVSg
-buffoonery/Ng
+buffoonery/Nmg
 buffoonish/Jp
 bug/~NVeS
 bug's
@@ -15754,7 +15761,7 @@ bugaboo/NSg
 bugbear/NVSg
 bugged/VJe
 bugger/NVSgdG
-buggery/N
+buggery/Nm
 bugging/VNe
 buggy/~NJ>Sg^p
 bugle/~NVJd>SgZG
@@ -15762,6 +15769,7 @@ bugler/Ng
 build/~VNSg>ZGzrB
 builder/~Ng
 building/~NVg
+buildout/NwgS
 buildup/~NSg
 built/~JNVri
 builtin/JN
@@ -15823,7 +15831,7 @@ bumming/V
 bump/~NVgd>ZGS
 bumper/~NJVg
 bumph/N
-bumpiness/Ng
+bumpiness/Nmg
 bumpkin/NgS
 bumptious/JpY
 bumptiousness/Ng
@@ -15833,6 +15841,7 @@ bunch/~NVgdSG
 bunchy/J>^
 bunco/NVSgdG
 bundle/~NVdSgG
+bundler/NgS
 bung/NVJgdGS
 bungalow/~NgS
 bungee/NVSg
@@ -17081,7 +17090,7 @@ checklist/~NVgS
 checkmate/NVgGdS
 checkoff/NSg
 checkout/~NSg
-checkpoint/~NVSg
+checkpoint/~NSgVdG
 checkroom/NgS
 checksum/NV
 checkup/NgS
@@ -20441,6 +20450,7 @@ deduct/VGvd
 deductible/JNSg
 deduction/~NSg
 deductive/JY
+deduplicate/VdSG
 deduplication/Nmg
 deed/~NVGd
 deejay/NVgS
@@ -20680,14 +20690,16 @@ denim/~NwgS
 denitrification/N
 denizen/NVgS
 denominational/~J
+denormalization/Nmg
+denormalize/VGdS
 denotative/J
 denouement/NgS
 denounce/~VLdSG
 denouncement/NSg
 dense/~JNpY^>
-denseness/Ng
-densification/Ng
-density/~NSg
+denseness/Nmg
+densification/Nmg
+density/~NwSg
 dent/~NViSGgd
 dental/~JNY
 dentifrice/NSg
@@ -20733,6 +20745,7 @@ depletion/~Ng
 deplorably/R
 deplore/VBGdS
 deploy/~VNrLGdS
+deployable/J
 deployment/~Nrg
 deployments/~N
 deponent/JNgS
@@ -21662,9 +21675,10 @@ dogma/~NSg
 dogmatic/~JNQ
 dogmatism/Nmg
 dogmatist/NSg
-dognapper/N
+dognapper/NgS
+dogpile/NgS
 dogsbody/NVS
-dogsled/NVS
+dogsled/NVSg
 dogtrot/NVJgS
 dogtrotted/V
 dogtrotting/V
@@ -21672,11 +21686,11 @@ dogwood/~NgS
 doily/NSg
 doing/~VNUSg
 dojo/NgS
-doldrums/Ng
+doldrums/N9g
 dole/~VNWGdS
 dole's
 doleful/JYp
-dolefulness/Ng
+dolefulness/Nmg
 doll/~NgdGS
 dollar/~NSg
 dollarization/Ng
@@ -28890,6 +28904,7 @@ idealize/VdSG
 idealogue/NgS
 ideate/VdSGn
 idem/~I
+idempotency/Nmg
 idempotent/JN
 identical/~JNY
 identifiable/~JU
@@ -30218,6 +30233,7 @@ invite/~VNdSgG
 invited/~VJNU
 invitee/NSg
 inviting/~JVNY
+invokable/J
 invoke/~VdSG
 involuntariness/Nmg
 involuntary/~Jp
@@ -30394,7 +30410,7 @@ itemisation/Ng!_
 itemise/VGdS!_
 itemization/Ng
 itemize/VGdS
-iterable/J
+iterable/JNgS
 iterate/VNJrXGnvdS
 iteration/~Nrg
 iteratively/R
@@ -33747,6 +33763,7 @@ minima/~N
 minimal/~JNY
 minimalism/Ng
 minimalist/~JNgS
+minimalistic/J
 minimisation/Ng!_
 minimise/VdSG!_
 minimization/Ng
@@ -33844,6 +33861,7 @@ miscommunicate/VGdSnX
 misconceive/VGdS
 misconception/~NSg
 misconduct/~NVgdGS
+misconfiguration/NwgS
 misconstruction/NgS
 misconstrue/VGdS
 miscount/VNgdSG
@@ -34134,22 +34152,22 @@ mollycoddle/NVdSgG
 molt/VNgdn>SZG
 molten/JV!@_
 molter/Ng
-molybdenum/Ng
+molybdenum/Nmg
 mom/~NVSg<@
 moment/~NgS
-momenta/N
+momenta/N9
 momentarily/R
 momentariness/Nmg
 momentary/Jp
 momentous/JpY
 momentousness/Nmg
-momentum/~Ng
+momentum/~N0g
 mommy/~NVJSg<@
-monad/N
-monarch/~Ng
+monad/NgS
+monarch/~NgS
 monarchic/J
 monarchical/J
-monarchism/Ng
+monarchism/Nmg
 monarchist/~NgS
 monarchistic/J
 monarchs/~N
@@ -34597,24 +34615,26 @@ multilingualism/Ng
 multimedia/~NmJg
 multimeter/NSg
 multimillionaire/NSg
+multimodal/J
 multinational/~JNSg
 multipart/J
 multipartite
 multiparty/J
 multiphonics/Ng
 multiplanetary/J
+multiplatform/J
 multiplayer/~JNg
 multiple/~JNgSDq
 multiplex/~JNVZGgd>S
-multiplexer/Ng
+multiplexer/NgS
 multiplicand/NgS
 multiplication/~Ng
 multiplicative/~JN
 multiplicity/~NSg
-multiplier/~Ng
+multiplier/~NgS
 multiply/~VNnZGd>SX
 multipolarity/Ng
-multiprocessing/N
+multiprocessing/Nmg
 multiprocessor/NSg
 multipurpose/~J
 multiracial/JN
@@ -34624,6 +34644,7 @@ multistory/JN
 multisystem/J
 multitask/JVGS
 multitasking/VNg
+multithreading/Nmg
 multitude/~NSg
 multitudinous/J
 multivariate/JN
@@ -35516,6 +35537,7 @@ noninflationary/J
 noninflected/J
 noninfringement/Nmg
 nonintellectual/JNgS
+noninteractive/J
 noninterchangeable/J
 noninterference/Ng
 nonintervention/Ng
@@ -36296,11 +36318,11 @@ oozy/J^>
 op/~NVJSgdG
 opacity/Nwg
 opal/~NgS
-opalescence/Ng
+opalescence/Nmg
 opalescent/J
 opaqueness/Nmg
 opaque/~JNVpY^Gd>S
-opcode/NS
+opcode/NSg
 ope/~JVNS
 open/~JVNZ^Gzpgd>YSB
 opencast/J
@@ -36313,12 +36335,13 @@ opening/~VJNgS
 openness/~Nmg
 openwork/Ng
 opera/~NgS
+operability/Nmg
 operable/Ji
-operand/NS
+operand/NgS
 operate/~VdSGnvX
 operatic/~J
 operatically/R
-operation/~Nwg
+operation/~NwgS
 operational/~JY
 operationalize/VGdS
 operative/~JNSg
@@ -36360,13 +36383,14 @@ optician/NSg
 optics/~Ng
 optima/N9
 optimal/~JNY
-optimisation/NSg!_
+optimisation/NwSg!_
 optimise/Vd>SG!_
 optimism/~NSg
 optimist/NSg
 optimistic/~JQ
-optimization/~NgS
+optimization/~NwgS
 optimize/~Vd>SG
+optimizer/NgS
 optimum/~NJSg
 option/~NVSgdG
 optional/~JNY
@@ -38545,7 +38569,7 @@ pious/~JYp
 piousness/Ng
 pip/~NVSZGgd>
 pipe/~NVgS
-pipeline/~NVSg
+pipeline/~NVSgGd
 piper/~Ng
 pipette/NVSg
 pipework/N
@@ -39570,6 +39594,7 @@ prepping/VNm
 preppy/JN^>Sg
 preprint/VdSGNg
 preprocess/VdSG
+preprocessor/NSg
 prepubescence/Ng
 prepubescent/JNSg
 prepuce/NgS
@@ -40117,7 +40142,7 @@ prowler/Ng
 proximal/~J
 proximate/JN
 proximity/~Ng
-proxy/~JNVSgd
+proxy/~JNVSgdG
 prude/NJgS
 prudence/~Ng
 prudent/~JY
@@ -41051,6 +41076,7 @@ reballing/V
 rebar/NSg
 rebarred/V
 rebarring/V
+rebase/VGdS
 rebate/~NVg
 rebel/~NVgS
 rebellion/~NgS
@@ -41133,6 +41159,7 @@ recommender/NgS
 recompense/NVdSgG
 recompilation/NwgS
 recompile/VNSGd
+recomputation/Nmg
 recon/~NVS
 reconcile/~VGdSB
 reconciliation/~NS
@@ -41214,6 +41241,7 @@ redemptive/J
 redhead/NSgd
 redialling/V!_
 redirection/N
+redistribution/VGdSNg
 redistrict/VGd
 redivide/VGdS
 redline/NVgdG
@@ -41292,7 +41320,7 @@ refloat/VdGS
 reflow/VSGd
 reforge/VdSG
 reform/~NVgZ
-reformat/Vv
+reformat/VdSG
 reformatory/JNSg
 reformatting/VN
 reformed/~VJU
@@ -41662,6 +41690,8 @@ requite/VNd>SZG
 requited/VU
 requiter/Ng
 reradicalize/VdSG
+rerank/VGdS
+reranking/Nmg
 reread/VNSG
 rerecord/NVGdS
 rerunning/V
@@ -42213,6 +42243,7 @@ rollick/VSdG
 rollicking/VNJg
 rollmop/NS
 rolloff/NgS
+rollout/NgS
 rollover/~NVSg
 romaine/~NgS
 roman/~JNg
@@ -42693,24 +42724,27 @@ sandstorm/NSg
 sandwich/~NVJgdSG
 sandy/~JN>^p
 sane/~JiY^>
-saneness/Ng
+saneness/Nmg
 sang/~VNS
-sangfroid/Ng
-sangria/Ng
+sangfroid/Nmg
+sangria/Nmg
 sanguinary/JN
 sanguine/JNVY
+sanitaria/N9
 sanitarian/JNSg
-sanitarium/NSg
+sanitarium/N0Sg
 sanitary/~JNiU
-sanitation/~Ng
+sanitation/~Nmg
+sanitisation/Nmg
 sanitise/VZGd>S!_
-sanitize/VZGd>S
-sanity/~Nig
+sanitization/Nmg<
+sanitize/VZGd>S<
+sanity/~Nmig
 sank/~V
 sans/~PJN
 sanserif/NJ         # dictionaries prefer: sans serif
 sap/~NVSg
-sapience/Ng
+sapience/Nmg
 sapiens/~N
 sapient/JN
 sapless/J
@@ -46568,13 +46602,14 @@ subordination/~Nig
 suborn/VSGd
 subornation/Ng
 subpar/J
-subparagraph/NV
+subparagraph/NgSV
 subpart/N
 subplot/~NVgS
 subpoena/~NVGgdS
 subprime/JN
+subprocess/NgS
 subprofessional/JNSg
-subprogram/NS
+subprogram/NSg
 subquery/NVSGd
 subroutine/NSg
 subscribe/~VUrSdG
@@ -47075,21 +47110,22 @@ swallowtail/NgS
 swam/~V
 swami/~NSg
 swamp/~NVGSgd
-swampland/Ng
+swampland/NwgS
 swampy/~J>^
 swan/~NVgS
 swank/JNV^GSgd>
 swankily/R
-swankiness/Ng
+swankiness/Nmg
 swanky/JN>p^
 swanned/V
 swanning/V
 swansong/NS
 swap/~VNgS
+swappable/J
 swapped/~V
 swapping/~NVJ
 sward/NVSg
-swarf/Ng
+swarf/Nmg
 swarm/~NVGSgd
 swarthy/JN^>
 swash/NVJGgdS
@@ -47910,6 +47946,7 @@ terseness/Nmg
 tertiary/~JN
 tessellate/JVdSXGn
 tessellation/Ng
+tesseract/NgS
 test/~NVrKedGS
 test's/rWK
 testable/JeW
@@ -47917,11 +47954,11 @@ testament/~NVgS
 testamentary/J
 testate/JNS
 testator/NgS
-testatrices/9
-testatrix/Ng
+testatrices/N9
+testatrix/N0g
 tested/~VU
 tester/~NKSg
-testes/N
+testes/N9
 testicle/NgS
 testicular/J
 testifier/Ng
@@ -47931,7 +47968,7 @@ testimonial/~NJgS
 testimony/~NSg
 testiness/Ng
 testings/N
-testis/Ng
+testis/N0g
 testosterone/~Ng
 testy/Jp>^
 tetanus/Ng
@@ -48485,6 +48522,7 @@ toilsome/J
 toke/NVgGdS
 token/~NJVSg
 tokenism/Ng
+tokenization/Nmg
 tokenize/VdSG
 tokenizer/NgS
 told/~VrU
@@ -48549,6 +48587,7 @@ toolchain/NgS
 toolkit/~N
 toolless/J
 toolmaker/NgS
+toolshed/NgS
 tooltip/NgS
 toot/NVgd>ZGS
 tooter/Ng
@@ -49910,6 +49949,7 @@ ungrudging/JY
 unguarded/J
 unguent/NJSg
 ungulate/JNgS
+unhandled/J
 unhandy/J^
 unhappy/~JNV^
 unhealthful/J
@@ -50122,6 +50162,7 @@ untouchable/JNgS
 untoward/J
 untraveled/J!@_
 untrue/~J>^
+untrusted/J
 untrustworthy/J
 untruth/Ng
 unutterable/JN
@@ -50915,6 +50956,7 @@ voiceless/~JpY
 voicelessness/Ng
 voicemail/~NVSg
 void/~JNVgdSGB
+voilà
 voila/
 voile/Ng
 vol/~NS
@@ -52606,6 +52648,7 @@ JetBrains
 Jetpack/Og
 Joomla/Sg
 Jupyter/Og
+KDE/Og              # K Desktop Environment
 KSQL/N
 KVM/NSg             # keyboard-video-mouse
 Kagi/Sg
@@ -52730,6 +52773,7 @@ QUERTY/Sg           # !! mistake for QWERTY? !!
 QUIC/OSg
 Qin/OSg
 RDBMS/NOSg          # relational database management system
+REPL/NgS            # read evaluate print loop
 RFID/ONg            # radio frequency identification
 RISC/Ng             # cpu architecture
 RJ45/Ng             # ethernet connector
@@ -52747,6 +52791,7 @@ SDL/Og              # Simple DirectMedia Layer
 SIMD/NSg            # single instruction, multiple data
 SLA/NSg
 SLOC/9              # source lines of code
+SMTP                # Simple Mail Transfer Protocol
 SNL/Og              # Saturday Night Live
 SQLAlchemy/N
 SSID/NgS
@@ -52849,11 +52894,16 @@ archytas/Sg         # !! please check and comment !! we also have Archytas
 autoconfig/Ng
 autoconfiguration/Ng
 autoconfigure/VSdG
+autodifferentiation/Nmg
+autosave/VSdGNg
 backend/NSg         # dictionaries prefer: back end
 baz/~               # cf. foo, bar
+clickstream/NgS
 concat/VSdG
 config/NVSg         # not marked as a verb since "configed" and "configing" look wrong
 corpo/NgS
+datagram/NgS
+datetime/NgS
 decomp/NgSVdG       # decompile/decompilation
 dedup/Ng            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/NVSgdG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
@@ -52863,7 +52913,9 @@ eVTOL/NgS
 ext2/Ng             # file system
 ext3/Ng             # file system
 ext4/Ng             # file system
+failover/NgS
 falsy/J
+filepath/NgS
 filesystem/~Sg      # dictionaries prefer: file system
 frontend/NSg        # dictionaries prefer: front end
 gcd/Ng              # greatest common divisor
@@ -52875,10 +52927,13 @@ gzip/VS             # GNU compression utility
 gzipped/V
 gzipping/V
 hardcode/VGdS       # dictionaries prefer: hard code
+hoster/NgS
 hostname/NSg
 hotwire/VBG         # dictionaries prefer: hot-wire
+i18n/Nm             # internationalization
 jQuery/Og
 labriola/Sg         # !! please check and comment !! - should be uppercase surname?
+linkification/Nmg
 manip/NgS           # gamer slang manipulation
 memecoin/NgS
 npm/Og              # node package manager
@@ -52887,6 +52942,7 @@ olds/~              # common in phrasing such as "twenty year olds"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
 pastebin/NgS
 pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
+quadtree/NgS        # data structure
 quicksort/NgSVdG    # algo
 raytracer/N         # dictionaries prefer: ray tracer
 roadmap/NgS         # overtook "road map" c. 2000 but not in dictionaries yet
@@ -52902,6 +52958,7 @@ strat/NgS           # gamer slang strategy
 supersequence/NgS
 tagset/NgS
 trie/NgS            # data structure
+uptime/NwgS
 vid/NgS             # video
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
@@ -52958,6 +53015,7 @@ cash-strapped/J
 CD-ROM/NgS
 centre-left/J!@_
 centre-right/J!@_
+cheat sheet/NgS
 clear-sighted/J
 closed circuit/NgS
 closed-circuit/J
@@ -53129,6 +53187,7 @@ loosey-goosey/J
 low-budget/J
 low-cost/J
 low-end/J
+low fidelity/J
 low-income/J
 low-level/J
 low-maintenance/J
@@ -53354,7 +53413,10 @@ would-be/J
 write off/V
 write-off/NgS
 write-up/NgS
+x-axis/Ng
+y-axis/Ng
 year-over-year/J
+z-axis/Ng
 
 # Phrasal verbs. These help correct the error where people write "to login" instead of "to log in"
 # For this reason the most important ones to include are the ones that have a noun counterpart.
@@ -53391,7 +53453,6 @@ log off/V
 log on/V
 log out/V
 look up/V
-low fidelity/J
 meet up/V
 melt down/V
 pick up/V
@@ -53427,14 +53488,12 @@ turn around/V
 turn off/V
 turn out/V
 walk out/V
+warm up/V
 wash out/V
 white out/V
 wipe out/V
 work around/V
 work out/V
-x-axis/Ng
-y-axis/Ng
-z-axis/Ng
 
 # New entries may be added below this line
 # If you're not confident in using the affix annotations, add missing words here

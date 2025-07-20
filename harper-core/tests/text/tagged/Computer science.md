@@ -533,7 +533,7 @@
 > the quantification of information . This    was developed by      Claude Shannon to find
 # D   NSg            P  NᴹSg+       . I/Ddem+ V   V/J       NSg/J/P NPr+   NPr+    P  NSg/V
 > fundamental limits on  signal   processing operations such  as    compressing data and
-# NSg/J       NPl/V  J/P NSg/V/J+ V+         +          NSg/I NSg/R V           N🅪Pl V/C
+# NSg/J       NPl/V  J/P NSg/V/J+ V+         NPl+       NSg/I NSg/R V           N🅪Pl V/C
 > on  reliably storing and communicating data  . Coding theory is the study of the
 # J/P R        V       V/C V             N🅪Pl+ . V+     NSg+   VL D   NSg/V P  D
 > properties of codes ( systems for converting information from one       form   to
@@ -671,7 +671,7 @@
 > well    as    societies and social situations ( notably war    games  ) along with their
 # NSg/V/J NSg/R NPl+      V/C NSg/J  W?         . R       NSg/V+ NPl/V+ . P     P    D$+
 > habitats , among many        others . Modern computers enable optimization of such
-# NPl      . P     NSg/I/J/Dq+ NPl/V+ . NSg/J  NPl/V+    V      NSg          P  NSg/I
+# NPl      . P     NSg/I/J/Dq+ NPl/V+ . NSg/J  NPl/V+    V      N🅪Sg         P  NSg/I
 > designs as    complete aircraft . Notable in      electrical and electronic circuit
 # NPl/V   NSg/R NSg/V/J+ NSgPl+   . NSg/J   NPr/J/P NSg/J      V/C J          NSg/V+
 > design are SPICE  , as    well    as    software for physical realization of new     ( or

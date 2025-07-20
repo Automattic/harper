@@ -1319,7 +1319,7 @@
 > the ash     - gray       men swarm up        with leaden spades and stir  up        an   impenetrable cloud   ,
 # D   N🅪Sg/V+ . NPr/V/J/Am NSg NSg/V NSg/V/J/P P    W?     NPl/V  V/C NSg/V NSg/V/J/P D/P+ NSg/J+       N🅪Sg/V+ .
 > which screens their obscure operations from your sight  .
-# I/C+  NPl/V+  D$+   V/J     W?         P    D$+  NSg/V+ .
+# I/C+  NPl/V+  D$+   V/J     NPl        P    D$+  NSg/V+ .
 >
 #
 > But     above   the gray        land    and the spasms of bleak dust    which drift endlessly over

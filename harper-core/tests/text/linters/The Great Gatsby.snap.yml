@@ -14,9 +14,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |       ^~~~~ Did you mean to spell `SCOTT` this way?
 Suggest:
+  - Replace with: “Scott”
   - Replace with: “Scot”
   - Replace with: “Scots”
-  - Replace with: “SCM's”
 
 
 
@@ -2658,8 +2658,8 @@ Message: |
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
   - Replace with: “D”
-  - Replace with: “Dad”
-  - Replace with: “Dag”
+  - Replace with: “Dab”
+  - Replace with: “Dam”
 
 
 
@@ -2715,9 +2715,9 @@ Message: |
          |                                         ^~ Did you mean to spell `De` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
-  - Replace with: “Db”
   - Replace with: “Dd”
-  - Replace with: “Deb”
+  - Replace with: “Dew”
+  - Replace with: “Die”
 
 
 
