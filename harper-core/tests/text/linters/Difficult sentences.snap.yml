@@ -96,7 +96,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Typo (31 priority)
 Message: |
      243 | His parents got him an in with the company.
          |                     ^~~~~ Did you mean `and in`?
@@ -256,7 +256,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Redundancy (31 priority)
 Message: |
      343 | All of the responsibility is on him.
          | ^~~~~~~~~~ Consider simplifying to `all the`.

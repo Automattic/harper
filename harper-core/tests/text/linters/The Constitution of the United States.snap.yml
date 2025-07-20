@@ -238,7 +238,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Redundancy (31 priority)
 Message: |
      103 | The Senate shall chuse their other Officers, and also a President pro tempore,
          |                                              ^~~~~~~~ Consider using just `and`.

@@ -10,7 +10,7 @@ pub fn lint_group() -> LintGroup {
     // Each correction pair has a single bad form and a single correct form.
     macro_rules! add_1_to_1_mappings {
         ($group:expr, {
-            $($name:expr => ($input_correction_pairs:expr, $message:expr, $description:expr)),+ $(,)?
+            $($name:expr => ($input_correction_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
                 $group.add_expr_linter(
@@ -19,7 +19,8 @@ pub fn lint_group() -> LintGroup {
                         MapPhraseSetLinter::one_to_one(
                             $input_correction_pairs,
                             $message,
-                            $description
+                            $description,
+                            None$(.or(Some($lint_kind)))?,
                         ),
                     ),
                 );
@@ -30,17 +31,17 @@ pub fn lint_group() -> LintGroup {
     // Each correction pair has multiple bad forms and multiple correct forms.
     macro_rules! add_many_to_many_mappings {
         ($group:expr, {
-            $($name:expr => ($input_correction_multi_pairs:expr, $message:expr, $description:expr)),+ $(,)?
+            $($name:expr => ($input_correction_multi_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                // eprintln!("💗 {:?}", $name);
                 $group.add_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseSetLinter::many_to_many(
                             $input_correction_multi_pairs,
                             $message,
-                            $description
+                            $description,
+                            None$(.or(Some($lint_kind)))?,
                         ),
                     ),
                 );

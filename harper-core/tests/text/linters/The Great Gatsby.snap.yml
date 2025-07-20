@@ -46,7 +46,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Redundancy (31 priority)
 Message: |
       15 | consequence, I’m inclined to reserve all judgments, a habit that has opened up
       16 | many curious natures to me and also made me the victim of not a few veteran
@@ -746,7 +746,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      583 | here this summer. I think the home influence will be very good for her.”
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -1892,7 +1892,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
     1457 | “I thought you knew, old sport. I’m afraid I’m not a very good host.”
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -3859,7 +3859,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
     2594 | “Looks very good,” he remarked vaguely. “One of the papers said they thought the
          |        ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -4475,7 +4475,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
     3141 | “Very good roads around here.”
          |  ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
