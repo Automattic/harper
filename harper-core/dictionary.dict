@@ -3338,6 +3338,7 @@ Eugenie/Og
 Eugenio/g
 Eula/Og
 Euler/Og
+Eulerian/J
 Eumenides/Ng
 Eunice/Og
 Euphrates/Og
@@ -5656,6 +5657,7 @@ LGBTQ/JN
 LIFO/J
 LL/NJ
 LLB/Ng
+LLC/NgS             # limited liability company
 LLD/g
 LNG/N
 LOGO
@@ -11423,7 +11425,7 @@ acidulous/J
 acknowledge/~VdSG
 acknowledged/~JVU
 acknowledgement/NgS!@_
-acknowledgment/~NSg
+acknowledgment/~NSg<
 acme/NSg
 acne/Nmg
 acolyte/NgS
@@ -14497,6 +14499,7 @@ bewitchment/Ng
 bey/~NSg
 beyond/~PN
 bezel/NgS
+bezier/NgS
 bf/~N
 bhaji/N
 bi/~JNSg>Z
@@ -18620,6 +18623,7 @@ conformity/~Ng
 confrere/NgS
 confrontation/~NSg
 confrontational/~J
+confusable/JNSg
 confuse/~V>Z
 confused/~VJY
 confusing/~JVY
@@ -21487,9 +21491,12 @@ distaste/~NVSg
 distemper/NVg
 distention/NSg
 distil/VS!_
+distill/VS<
 distillate/NSgnX
-distillation/~Ng
+distillation/~NwgS
+distilled/VJ
 distillery/~NSg
+distilling/VJNm
 distinct/~JViY^vp
 distincter/J
 distinction/~NSg
@@ -28718,19 +28725,19 @@ hydrolock/NVgSGd
 hydrologist/NgS
 hydrology/~Ng
 hydrolyse/VdSG!_
-hydrolyses/NV
-hydrolysis/~Ng
+hydrolyses/N9V
+hydrolysis/~N0g
 hydrolyze/VdSG
 hydrometer/NSg
 hydrometry/Ng
 hydrophilic/J
-hydrophobia/Ng
+hydrophobia/Nmg
 hydrophobic/~J
 hydrophone/NSg
 hydroplane/VNGdSg
 hydroponic/JSQ
 hydroponics/Ng
-hydropower/~N
+hydropower/~Nmg
 hydrosphere/Ng
 hydrotherapy/Ng
 hydrothermal/J
@@ -28752,18 +28759,20 @@ hyperactive/J
 hyperactivity/~Ng
 hyperaggressive/J
 hyperbola/NSg
-hyperbole/~Ng
+hyerbolæ/N9
+hyerbolae/N9
+hyperbole/~N0g
 hyperbolic/~JQ
 hypercar/NgS
 hyperconservative/J
 hypercritical/JY
 hypercube/N
-hyperfixation/Ng
+hyperfixation/Nmg
 hyperglycemia/Ng
 hyperinflate/VNGdSn
 hyperlink/NVGSgd
 hypermarket/NS
-hypermedia/Ng
+hypermedia/Nmg
 hypernetwork/NSg
 hyperparathyroidism/N
 hyperplane/N
@@ -30853,12 +30862,12 @@ ketone/~NS
 kettle/~NVSg
 kettledrum/NSg
 key/~NJVSGgd
-keybinding/NS
 keyboard/~NVZGSgd>
 keyboarder/Ng
 keyboardist/~NSg
 keycap/NSg
 keychain/NgS
+keyframe/NgS
 keygen/NgS
 keyhole/~NVgS
 keymap/NSg
@@ -31332,7 +31341,7 @@ late/~JNY^>p
 latecomer/NgS
 latency/~Ng
 lateness/Ng
-latent/~JNY
+latent/~JNgSY
 lateral/~JNVgdYSG
 latest/~JNg
 latex/~Ng
@@ -37272,7 +37281,7 @@ paperhanger/NSg
 paperhanging/Ng
 paperless/J
 paperweight/NgS
-paperwork/~Ng
+paperwork/~Nmg
 papery/J
 papilla/Ng
 papillae/~9
@@ -37280,13 +37289,15 @@ papillary/~J
 papist/NJgS
 papoose/NgS
 pappy/JNSg
-paprika/~NJg
-papyri/~N
-papyrus/~Ng
+paprika/~NmJg
+papyri/~N9
+papyrus/~N0g
 par/~NJPVSZGgd>Bz
 para/~NJgS
 parable/~NVJgS
-parabola/NSg
+parabola/N0Sg
+parabolæ/N9
+parabolae/N9
 parabolic/~JN
 paracetamol/NS
 parachute/~NVdSgG
@@ -39370,6 +39381,7 @@ prearrangement/Ng
 preassigned/J
 prebuild/VGS
 prebuilt/J
+precalculate/VGdS
 precancel/VNSgdG
 precancerous/J
 precarious/~JpY
@@ -39697,6 +39709,7 @@ priggishness/Nmg
 prim/JVNZGd>Yp
 primacy/~Ng
 primal/~JNV
+primality/J
 primarily/~R
 primary/~JNVSgdG
 primate/~NgS
@@ -40573,6 +40586,7 @@ quicklime/NmVg
 quickness/Ng
 quicksand/NgS
 quicksilver/~NJVg
+quickstart/NgS
 quickstep/NVgS
 quid/NVgS
 quiescence/Ng
@@ -46467,6 +46481,7 @@ sub/~NVPSg
 subaltern/JNgS
 subaqua/J
 subarctic/~OJN
+subarray/NgS
 subarea/NgS
 subassembly/NgS
 subatomic/J
@@ -49087,6 +49102,7 @@ trifler/Ng
 trifocals/Ng
 trig/~JNVg
 trigger/~NVJgdSG
+triggerable/J
 triglyceride/NgS
 trigonometric/~J
 trigonometrical/J
@@ -49823,6 +49839,7 @@ underwrote/V
 undesirable/~JNgS
 undiagnosed/J
 undies/NVg
+undirected/J
 undiscouraged/J
 undisputedly/R
 undo/~VNJ
@@ -50204,6 +50221,7 @@ uptight/JN
 uptown/~NJg
 uptrend/NV
 upturn/NVGSgd
+upvote/NgSVdG
 upward/~NJSY
 upwind/JV
 uracil/Ng
@@ -51331,6 +51349,7 @@ webcam/~NVgS
 webcast/NVSgG
 webfeet/9
 webfoot/Ng
+webhook/NgS
 webinar/NSg
 webisode/NgS
 weblog/NgS
@@ -52001,7 +52020,7 @@ worksheet/NVgS
 workshop/~NVgS
 workshy/J
 worksite/NS
-workspace/N
+workspace/NgS
 workstation/~NgS
 worktable/NgS
 worktop/NS
@@ -52423,6 +52442,7 @@ ASM/N               # assembly language - should "asm" be included as well/inste
 ASUS/Og
 ATF/Ng              # automatic transmission fluid
 AVC/Ng              # H.264 video format
+AVL tree/NgS        # data structure
 Airbnb/ONgS
 Akismet/Og
 Alexa/Og            # voice assistant
@@ -52433,6 +52453,7 @@ AlphaFold/Og        # Google DeepMind project
 Ambien/NSg          # insomnia treatment
 Anker/Sg
 AngularJS/Og
+Anthropic/Og        # AI company
 Archytas/Sg         # !! please check and comment !! we also have archytas
 Automattic/Sg       # WordPress company
 Automattician/Sg
@@ -52561,6 +52582,7 @@ Hugging Face/Og
 IDA/Og              # reverse engineering software
 IIFE/NgS            # immediately-invoked function expression
 IMAP/OSg            # internet message access protocol
+IME/NgS             # input method editor
 IMSI/N              # international mobile subscriber identity
 IPC/Ng              # interprocess communication
 IPCC/Og
@@ -52598,6 +52620,7 @@ LIDAR/N             # FIXME! elsewhere we have LiDAR
 LLM/NgS             # large language model
 LLVM/Ng             # compiler system
 LOC/9               # source lines of code
+LRU                 # least recently used
 LSB/NgSO            # least significant bit/byte; Linux Standard Base
 LSP/NgS             # language server protocol
 LTE/NOJ             # long-term evolution
@@ -52619,6 +52642,7 @@ Lua/Sg              # programming language
 MCP/Ng              # model context protocol
 MMX/Ng              # multimedia extension
 MPC/ONg
+MRU                 # most recently used
 MSB/NgS             # most significant bit/byte
 MSE/NgS             # mean squared error
 MSNBC/Og            # media company
@@ -52668,6 +52692,7 @@ OAuth/g             # open authentication
 OCaml/gO            # programming language
 OG/NgS
 ORM/NOS             # object-relational mapping
+Ollama/Og           # AI tool
 OpenAI/Og
 OpenBSD/Og          # operating system
 OpenCV/Og
@@ -52728,6 +52753,7 @@ SSID/NgS
 SVG/ONs             # scalable vector graphics
 SVGA/N              # super VGA
 Sharman/OSg
+Shellsort/NgS       # algorithm
 Shibuya/Og
 Shinjuku/Og
 Shopify/Og          # company
@@ -52840,6 +52866,7 @@ ext4/Ng             # file system
 falsy/J
 filesystem/~Sg      # dictionaries prefer: file system
 frontend/NSg        # dictionaries prefer: front end
+gcd/Ng              # greatest common divisor
 gen AI/Ng
 geofence/NgSVdG
 gRPC/OSg            # framework
@@ -52860,6 +52887,7 @@ olds/~              # common in phrasing such as "twenty year olds"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
 pastebin/NgS
 pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
+quicksort/NgSVdG    # algo
 raytracer/N         # dictionaries prefer: ray tracer
 roadmap/NgS         # overtook "road map" c. 2000 but not in dictionaries yet
 royale/~NJSg        # !! please check and comment !! dictionaries only list noun sense type of custard
@@ -52871,7 +52899,9 @@ sioyek/Sg           # !! please check and comment !!
 stacktrace/SgN      # dictionaries prefer: stack trace
 standup/Sg          # dictionaries prefer: stand-up
 strat/NgS           # gamer slang strategy
+supersequence/NgS
 tagset/NgS
+trie/NgS            # data structure
 vid/NgS             # video
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
@@ -52906,6 +52936,7 @@ barn find/NgS
 beck and call/N
 bell-pull/NgS
 bench-warmer/NgS
+Bézier curve/NgS
 bit shift/NgSVGd
 black magic/Ng
 blow-up/JNgS
@@ -52975,6 +53006,7 @@ et al./~
 even-numbered/J
 ever-present/J
 ex-friend/NgS
+eye candy/Nmg
 face off/V
 face-off/NgS
 fact check/NS
@@ -53001,6 +53033,7 @@ front wheel/NgSJ
 full on/JR
 full-on/JR
 full-scale/J
+full screen/J
 full-time/JR
 go around/V
 go-around/NgS
@@ -53068,6 +53101,7 @@ jaw-droppingly/J
 jury-rig/VS
 jury-rigged/V
 jury-rigging/V
+key binding/NgS
 kick start/VSdG
 kick-starter/NgS
 knock-on effect/NgS

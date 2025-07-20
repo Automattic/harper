@@ -2399,9 +2399,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Re”
-  - Replace with: “R”
   - Replace with: “Rd”
+  - Replace with: “R”
+  - Replace with: “RC”
 
 
 
@@ -2623,8 +2623,8 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Gt”
-  - Replace with: “Go”
-  - Replace with: “Gr”
+  - Replace with: “Gm”
+  - Replace with: “GB”
 
 
 
@@ -2925,9 +2925,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “Lo”
   - Replace with: “Lb”
-  - Replace with: “Lg”
+  - Replace with: “La”
+  - Replace with: “LC”
 
 
 
