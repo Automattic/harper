@@ -681,10 +681,10 @@ pub fn lint_group() -> LintGroup {
             "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage."
         ),
         "MorePreferable" => (
-            ["more prefered"],
+            ["more preferable"],
             ["preferable"],
-            "Use `preferred` instead of `prefered`.",
-            "Corrects `prefered` to `preferred`.",
+            "Use just `preferable` instead of `more preferable`.",
+            "Corrects `more preferable` to `preferable`.",
             LintKind::Redundancy
         ),
         "MyHouse" => (
