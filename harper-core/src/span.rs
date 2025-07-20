@@ -9,12 +9,22 @@ use crate::Token;
 /// Although specific to `harper.js`, [this page may clear up any questions you have](https://writewithharper.com/docs/harperjs/spans).
 #[derive(Debug, Serialize, Deserialize, Default, PartialEq, Eq)]
 pub struct Span<T> {
+    /// The start index of the span.
     pub start: usize,
+    /// The end index of the span.
+    ///
+    /// Note that [`Span`] represents an exclusive range. This means that a `Span::new(0, 5)` will
+    /// cover the values `0, 1, 2, 3, 4`; it will not cover the `5`.
     pub end: usize,
     span_type: PhantomData<T>,
 }
 
 impl<T> Span<T> {
+    /// Creates a new [`Span`] with the provided start and end indices.
+    ///
+    /// # Panics
+    ///
+    /// This will panic if `start` is greater than `end`.
     pub fn new(start: usize, end: usize) -> Self {
         if start > end {
             panic!("{start} > {end}");
@@ -26,6 +36,7 @@ impl<T> Span<T> {
         }
     }
 
+    /// Creates a new [`Span`] from the provided start position and length.
     pub fn new_with_len(start: usize, len: usize) -> Self {
         Self {
             start,
@@ -34,7 +45,7 @@ impl<T> Span<T> {
         }
     }
 
-    /// Creates an empty span.
+    /// Creates an empty [`Span`].
     pub fn empty() -> Self {
         Self {
             start: 0,
@@ -43,20 +54,26 @@ impl<T> Span<T> {
         }
     }
 
+    /// The length of the [`Span`].
     pub fn len(&self) -> usize {
         self.end - self.start
     }
 
+    /// Checks whether the [`Span`] is empty.
+    ///
+    /// A [`Span`] is considered empty if it has a length of 0.
     pub fn is_empty(&self) -> bool {
         self.len() == 0
     }
 
+    /// Checks whether `idx` is within the range of the span.
     pub fn contains(&self, idx: usize) -> bool {
         assert!(self.start <= self.end);
 
         self.start <= idx && idx < self.end
     }
 
+    /// Checks whether this span's range overlaps with `other`.
     pub fn overlaps_with(&self, other: Self) -> bool {
         (self.start < other.end) && (other.start < self.end)
     }
@@ -94,29 +111,31 @@ impl<T> Span<T> {
         }
     }
 
+    /// Set the span's length.
     pub fn set_len(&mut self, length: usize) {
         self.end = self.start + length;
     }
 
+    /// Returns a copy of this [`Span`] with a new length.
     pub fn with_len(&self, length: usize) -> Self {
         let mut cloned = *self;
         cloned.set_len(length);
         cloned
     }
 
-    // Add an amount to both [`Self::start`] and [`Self::end`]
+    /// Add an amount to both [`Self::start`] and [`Self::end`]
     pub fn push_by(&mut self, by: usize) {
         self.start += by;
         self.end += by;
     }
 
-    // Subtract an amount to both [`Self::start`] and [`Self::end`]
+    /// Subtract an amount from both [`Self::start`] and [`Self::end`]
     pub fn pull_by(&mut self, by: usize) {
         self.start -= by;
         self.end -= by;
     }
 
-    // Add an amount to a copy of both [`Self::start`] and [`Self::end`]
+    /// Add an amount to a copy of both [`Self::start`] and [`Self::end`]
     pub fn pushed_by(&self, by: usize) -> Self {
         let mut clone = *self;
         clone.start += by;
@@ -124,7 +143,7 @@ impl<T> Span<T> {
         clone
     }
 
-    // Subtract an amount to a copy of both [`Self::start`] and [`Self::end`]
+    /// Subtract an amount to a copy of both [`Self::start`] and [`Self::end`]
     pub fn pulled_by(&self, by: usize) -> Option<Self> {
         if by > self.start {
             return None;
@@ -136,7 +155,7 @@ impl<T> Span<T> {
         Some(clone)
     }
 
-    // Add an amount a copy of both [`Self::start`] and [`Self::end`]
+    /// Add an amount to a copy of both [`Self::start`] and [`Self::end`]
     pub fn with_offset(&self, by: usize) -> Self {
         let mut clone = *self;
         clone.push_by(by);
@@ -146,7 +165,7 @@ impl<T> Span<T> {
 
 /// Additional functions for types that implement [`std::fmt::Debug`] and [`Display`].
 impl<T: Display + std::fmt::Debug> Span<T> {
-    /// Gets the content as a [`String`].
+    /// Gets the content of this [`Span<T>`] as a [`String`].
     pub fn get_content_string(&self, source: &[T]) -> String {
         if let Some(content) = self.try_get_content(source) {
             content.iter().map(|t| t.to_string()).collect()
@@ -177,12 +196,14 @@ impl Span<Token> {
 }
 
 impl<T> From<Range<usize>> for Span<T> {
+    /// Reinterprets the provided [`std::ops::Range`] as a [`Span`].
     fn from(value: Range<usize>) -> Self {
         Self::new(value.start, value.end)
     }
 }
 
 impl<T> From<Span<T>> for Range<usize> {
+    /// Converts the [`Span`] to an [`std::ops::Range`].
     fn from(value: Span<T>) -> Self {
         value.start..value.end
     }
@@ -193,6 +214,10 @@ impl<T> IntoIterator for Span<T> {
 
     type IntoIter = Range<usize>;
 
+    /// Converts the [`Span`] into an iterator that yields the indices covered by its range.
+    ///
+    /// Note that [`Span`] is half-open, meaning that the value [`Self::end`] will not be yielded
+    /// by this iterator: it will stop at the index immediately preceding [`Self::end`].
     fn into_iter(self) -> Self::IntoIter {
         self.start..self.end
     }
