@@ -208,7 +208,14 @@ impl<T> Copy for Span<T> {}
 
 #[cfg(test)]
 mod tests {
-    type UntypedSpan = super::Span<()>;
+    use crate::{
+        Document,
+        expr::{ExprExt, SequenceExpr},
+    };
+
+    use super::Span;
+
+    type UntypedSpan = Span<()>;
 
     #[test]
     fn overlaps() {
@@ -229,5 +236,29 @@ mod tests {
 
         span.expand_to_include(2);
         assert_eq!(span, UntypedSpan::new(1, 3));
+    }
+
+    #[test]
+    fn to_char_span_converts_correctly() {
+        let doc = Document::new_plain_english_curated("Hello world!");
+
+        // Empty span.
+        let token_span = Span::empty();
+        let converted = token_span.to_char_span(doc.get_tokens());
+        assert!(converted.is_empty());
+
+        // Span from `Expr`.
+        let token_span = SequenceExpr::default()
+            .then_any_word()
+            .t_ws()
+            .then_any_word()
+            .iter_matches_in_doc(&doc)
+            .next()
+            .unwrap();
+        let converted = token_span.to_char_span(doc.get_tokens());
+        assert_eq!(
+            converted.get_content_string(doc.get_source()),
+            "Hello world"
+        );
     }
 }
