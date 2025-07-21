@@ -1,5 +1,5 @@
 import { Dialect } from 'harper.js';
-import { type App, Menu, Notice, Plugin, type PluginManifest, editorViewField } from 'obsidian';
+import { type App, editorViewField, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg?raw';
 import packageJson from '../package.json';
 import { HarperSettingTab } from './HarperSettingTab';
