@@ -54,7 +54,6 @@ impl Default for Months {
         let year_or_day_of_month = SequenceExpr::default().then(|tok: &Token, _src: &[char]| {
             if let TokenKind::Number(number) = &tok.kind {
                 let v = number.value.into_inner() as u32;
-                // eprintln!("❤️ '{}'", v);
                 (1500..=2500).contains(&v) || (1..=31).contains(&v)
             } else {
                 false
@@ -91,8 +90,6 @@ impl ExprLinter for Months {
     }
 
     fn match_to_lint(&self, tokens: &[Token], src: &[char]) -> Option<Lint> {
-        // eprintln!("❤️ {:?}", tokens.span()?.get_content_string(src));
-
         // `find` which token is the month by seeing which tok's content (lowercased) is in ALL_MONTHS
         let month_tok = tokens.iter().find(|token| {
             let token_str = token.span.get_content_string(src);
