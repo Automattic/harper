@@ -6,6 +6,14 @@ use crate::Token;
 
 /// A window in a [`T`] sequence.
 ///
+/// Note that the range covered by a [`Span`] is end-exclusive, meaning that the end index is not
+/// included in the range covered by the [`Span`]. If you're familiar with the Rust range syntax,
+/// you could say the span covers the equivalent of `start..end`, *not* `start..=end`.
+///
+/// For a [`Span`] to be correct, its end index must be greater than or equal to its start
+/// index. Creating or using a [`Span`] which does not follow this rule may lead to unexpected
+/// behavior or panics.
+///
 /// Although specific to `harper.js`, [this page may clear up any questions you have](https://writewithharper.com/docs/harperjs/spans).
 #[derive(Debug, Serialize, Deserialize, Default, PartialEq, Eq)]
 pub struct Span<T> {
@@ -20,7 +28,7 @@ pub struct Span<T> {
 }
 
 impl<T> Span<T> {
-    /// Represents an empty [`Span`].
+    /// An empty [`Span`].
     pub const EMPTY: Self = Self {
         start: 0,
         end: 0,
