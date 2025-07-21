@@ -9,6 +9,7 @@ const LINT_KIND_COLORS = {
 	Grammar: '#9B59B6', // Medium purple
 	Malapropism: '#C71585', // Medium violet red
 	Miscellaneous: '#3BCEAC', // Turquoise
+	Nonstandard: '#008B8B', // Dark cyan
 	Punctuation: '#D4850F', // Dark orange
 	Readability: '#2E8B57', // Sea green
 	Redundancy: '#4682B4', // Steel blue

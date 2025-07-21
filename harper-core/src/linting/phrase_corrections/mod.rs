@@ -41,36 +41,36 @@ pub fn lint_group() -> LintGroup {
             // The message to be shown with the error.
             "The correct wording is `a couple more`, without the `of`.",
             // A description of the rule.
-            "Corrects `a couple of more` to `a couple more`."
-            // Redundancy? NonIdiomatic?
+            "Corrects `a couple of more` to `a couple more`.",
+            LintKind::Redundancy
         ),
         "AfterAWhile" => (
             ["after while"],
             ["after a while"],
             "When describafterg a timeframe, use `a while`.",
-            "Corrects the missing article after `after while` or `after awhile`, forming `after a while`."
-            // either/both NonIdiomatic and Typo?
+            "Corrects the missing article in `after while`, forming `after a while`.",
+            LintKind::Grammar
         ),
         "AllOfASudden" => (
             ["all of the sudden"],
             ["all of a sudden"],
             "The phrase is `all of a sudden`, meaning `unexpectedly`.",
-            "Corrects `all of the sudden` to `all of a sudden`."
-            // NonStandard?
+            "Corrects `all of the sudden` to `all of a sudden`.",
+            LintKind::Nonstandard
         ),
         "ALongTime" => (
             ["along time"],
             ["a long time"],
             "Use `a long time` for referring to a duration of time.",
-            "Corrects `along time` to `a long time`."
-            // WordChoice?
+            "Corrects `along time` to `a long time`.",
+            LintKind::Grammar
         ),
         "AlzheimersDisease" => (
             ["old-timers' disease"],
             ["Alzheimer’s disease"],
             "Use the correct medical term.",
-            "Fixes the common misnomer `old-timers' disease`, ensuring the correct medical term `Alzheimer’s disease` is used."
-            // Eggcorn?
+            "Fixes the common misnomer `old-timers' disease`, ensuring the correct medical term `Alzheimer’s disease` is used.",
+            LintKind::Eggcorn
         ),
         "AnAnother" => (
             ["an another", "a another"],
@@ -125,8 +125,8 @@ pub fn lint_group() -> LintGroup {
             ["as it so happens"],
             ["as it happens"],
             "Did you mean `as it happens`?",
-            "Corrects `as it so happens` to `as it happens`."
-            // Style?
+            "Corrects `as it so happens` to `as it happens`.",
+            LintKind::Usage
         ),
         "AsOfLate" => (
             ["as of lately"],
@@ -139,8 +139,8 @@ pub fn lint_group() -> LintGroup {
             ["aswell"],
             ["as well"],
             "`as well` should be written as two words.",
-            "Corrects `aswell` to `as well`."
-            // WordBoundary, BoundaryError? LexicalBoundary?
+            "Corrects `aswell` to `as well`.",
+            LintKind::BoundaryError
         ),
         "AtFaceValue" => (
             ["on face value"],
@@ -425,13 +425,13 @@ pub fn lint_group() -> LintGroup {
             ["for a long time"],
             "Use the standard phrase `for a long time` to indicate an extended duration.",
             "Eliminates the incorrect merging in `for along time`.",
-            LintKind::BoundaryError
+            LintKind::Grammar
         ),
         "ForAWhile" => (
             ["for while"],
             ["for a while"],
             "When describing a timeframe, use `a while`.",
-            "Corrects the missing article in `for while` or `for awhile`, forming `for a while`.",
+            "Corrects the missing article in `for while`, forming `for a while`.",
             LintKind::Typo
         ),
         "FreeRein" => (
@@ -562,7 +562,7 @@ pub fn lint_group() -> LintGroup {
             ["in while"],
             ["in a while"],
             "When describing a timeframe, use `a while`.",
-            "Corrects the missing article in `in while` or `in awhile`, forming `in a while`.",
+            "Corrects the missing article in `in while`, forming `in a while`.",
             LintKind::Grammar
         ),
         "InCase" => (
@@ -653,8 +653,8 @@ pub fn lint_group() -> LintGroup {
             ["just desserts"],
             ["just deserts"],
             "Use the correct phrase for receiving what one deserves.",
-            "Ensures `just deserts` is used correctly, preserving its meaning of receiving an appropriate outcome for one's actions."
-            // Spelling?
+            "Ensures `just deserts` is used correctly, preserving its meaning of receiving an appropriate outcome for one's actions.",
+            LintKind::Spelling
         ),
         "KindOf" => (
             ["kinda of"],
@@ -709,8 +709,8 @@ pub fn lint_group() -> LintGroup {
             ["monumentous"],
             ["momentous", "monumental"],
             "Retain `monumentous` for jocular effect. Otherwise `momentous` indicates great signifcance while `monumental` indicates imposing size.",
-            "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage."
-            // Vocabulary?
+            "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage.",
+            LintKind::Nonstandard
         ),
         "MorePreferable" => (
             ["more preferable"],
@@ -780,8 +780,8 @@ pub fn lint_group() -> LintGroup {
             ["once a while", "once and a while"],
             ["once in a while"],
             "The correct idiom is `once in a while`.",
-            "Corrects two common malapropisms of `once in a while`."
-            // "once and a while" is Eggcorn but "once a while" is maybe Usage?
+            "Corrects two common malapropisms of `once in a while`.",
+            LintKind::Usage
         ),
         "OnSecondThought" => (
             ["on second though"],
@@ -881,8 +881,8 @@ pub fn lint_group() -> LintGroup {
             ["roadmap"],
             ["road map"],
             "Did you mean `road map`?",
-            "Detects when `roadmap` is used instead of `road map`, prompting the correct spacing."
-            // Usage? WordChoice? BoundaryError?
+            "Detects when `roadmap` is used instead of `road map`, prompting the correct spacing.",
+            LintKind::WordChoice
         ),
         "SameAs" => (
             ["same then"],
@@ -902,8 +902,8 @@ pub fn lint_group() -> LintGroup {
             ["simply grammatical"],
             ["simple grammatical"],
             "Use `simple grammatical` for correct adjective usage.",
-            "Corrects `simply grammatical` to `simple grammatical` for proper adjective usage."
-            // Typo? WordChoice? Usage?
+            "Corrects `simply grammatical` to `simple grammatical` for proper adjective usage.",
+            LintKind::Usage
         ),
         "SneakingSuspicion" => (
             ["sneaky suspicion"],
@@ -923,8 +923,8 @@ pub fn lint_group() -> LintGroup {
             ["some the"],
             ["some of the"],
             "Add `of` to form the partitive phrase: `some of the`.",
-            "Quantity words such as `some` normally take `of` before a definite article. Including `of` signals that you mean a subset of a larger set, preventing a momentary stumble in comprehension."
-            // Typo?
+            "Quantity words such as `some` normally take `of` before a definite article. Including `of` signals that you mean a subset of a larger set, preventing a momentary stumble in comprehension.",
+            LintKind::Typo
         ),
         "SoonerOrLater" => (
             ["sooner than later"],
@@ -938,7 +938,6 @@ pub fn lint_group() -> LintGroup {
             ["special attention"],
             "Did you mean `special attention`?",
             "Changes `spacial attention` to `special attention`.",
-            // Eggcorn??
             LintKind::Typo
         ),
         "SpokeTooSoon" => (
@@ -994,8 +993,8 @@ pub fn lint_group() -> LintGroup {
             ["thanks lot", "thanks alot"],
             ["thanks a lot"],
             "Prefer the two-word expression `thanks a lot`.",
-            "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers."
-            // "thanks lot" is either a Typo or a non-native speaker. "thanks alot" is a BoundaryError
+            "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers.",
+            LintKind::Usage
         ),
         "ThatChallenged" => (
             ["the challenged"],
@@ -1082,8 +1081,8 @@ pub fn lint_group() -> LintGroup {
             ["wavefunction"],
             ["wave function"],
             "Did you mean `wave function`?",
-            "Identifies the mistake of merging `wave` and `function` into one word. In quantum mechanics, a `wave function` (written as two words) describes the mathematical function that represents the quantum state of a particle or system. Correct usage is crucial for clear and accurate scientific communication."
-            // seems more like Orthography than WordBoundary
+            "Identifies the mistake of merging `wave` and `function` into one word. In quantum mechanics, a `wave function` (written as two words) describes the mathematical function that represents the quantum state of a particle or system. Correct usage is crucial for clear and accurate scientific communication.",
+            LintKind::WordChoice
         ),
         "WellBeing" => (
             ["wellbeing"],

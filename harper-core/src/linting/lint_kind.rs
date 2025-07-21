@@ -27,22 +27,24 @@ pub enum LintKind {
     /// For any other lint that doesn't fit neatly into the other categories
     #[default]
     Miscellaneous,
+    Nonstandard,
     /// For issues with punctuation, including hyphenation in compound adjectives
     /// (e.g., "face first" vs. "face-first" when used before a noun)
     Punctuation,
     Readability,
-    /// For cases where words can be removed without changing the meaning
-    /// (e.g., "all of the" → "all the")
+    /// For cases where words duplicate meaning that's already expressed
+    /// (e.g., "basic fundamentals" → "fundamentals", "free gift" → "gift")
     Redundancy,
     /// For variations that are standard in some regions or dialects but not others
     Regionalism,
     Repetition,
+    /// When your brain doesn't know the right spelling.
     /// This should only be used by linters doing spellcheck on individual words.
     Spelling,
     /// For cases where multiple options are correct but one is preferred for style or clarity,
     /// such as expanding abbreviations in formal writing (e.g., 'min' → 'minimum')
     Style,
-    /// For simple typing errors where the intended word is clear
+    /// When your brain knows the right spelling but your fingers made a mistake.
     /// (e.g., 'can be seem' → 'can be seen')
     Typo,
     /// For conventional word usage and standard collocations
@@ -87,6 +89,7 @@ impl LintKind {
             LintKind::Grammar => "Grammar",
             LintKind::Malapropism => "Malapropism",
             LintKind::Miscellaneous => "Miscellaneous",
+            LintKind::Nonstandard => "Nonstandard",
             LintKind::Punctuation => "Punctuation",
             LintKind::Readability => "Readability",
             LintKind::Redundancy => "Redundancy",
@@ -114,6 +117,7 @@ impl Display for LintKind {
             LintKind::Grammar => "Grammar",
             LintKind::Malapropism => "Malapropism",
             LintKind::Miscellaneous => "Miscellaneous",
+            LintKind::Nonstandard => "Nonstandard",
             LintKind::Punctuation => "Punctuation",
             LintKind::Readability => "Readability",
             LintKind::Redundancy => "Redundancy",
