@@ -28,7 +28,7 @@ levenshtein_automata = { version = "0.2.1", features = ["fst_automaton"] }
 cached = "0.55.1"
 lru = "0.16.0"
 foldhash = "0.1.5"
-strum_macros = "0.27.1"
+strum_macros = "0.27.2"
 strum = "0.27.2"
 ammonia = "4.1.1"
 harper-brill = { path = "../harper-brill", version = "0.51.0" }
