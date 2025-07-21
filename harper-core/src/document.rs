@@ -583,17 +583,18 @@ impl Document {
             let c = &self.tokens[cursor];
             let d = self.get_token_offset(cursor, 1);
 
-            let is_ext_chunk = (a.map_or(true, |t| t.kind.is_whitespace()))
+            let is_ext_chunk = a.is_none_or(|t| t.kind.is_whitespace())
                 && b.kind.is_period()
                 && c.kind.is_word()
                 && c.span.len() <= 3
-                && d.map_or(true, |t| t.kind.is_whitespace())
-                    .then(|| {
-                        let ext_chars = c.span.get_content(&self.source);
-                        ext_chars.iter().all(|c| c.is_ascii_lowercase())
-                            || ext_chars.iter().all(|c| c.is_ascii_uppercase())
-                    })
-                    .unwrap_or(false);
+                && d.is_none_or(|t| t.kind.is_whitespace())
+                && if d.is_none_or(|t| t.kind.is_whitespace()) {
+                    let ext_chars = c.span.get_content(&self.source);
+                    ext_chars.iter().all(|c| c.is_ascii_lowercase())
+                        || ext_chars.iter().all(|c| c.is_ascii_uppercase())
+                } else {
+                    false
+                };
 
             if is_ext_chunk {
                 if ext_start.is_none() {
@@ -763,7 +764,7 @@ mod tests {
     use itertools::Itertools;
 
     use super::Document;
-    use crate::{Span, TokenKind, parsers::MarkdownOptions};
+    use crate::{Span, parsers::MarkdownOptions};
 
     fn assert_condensed_contractions(text: &str, final_tok_count: usize) {
         let document = Document::new_plain_english_curated(text);
