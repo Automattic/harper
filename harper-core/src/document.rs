@@ -617,14 +617,10 @@ impl Document {
 
             cursor += 1;
 
-            if cursor >= self.tokens.len()
-            /*- 1*/
-            {
+            if cursor >= self.tokens.len() {
                 break;
             }
         }
-
-        // TODO Do we need to handle a case where the extension is the last token?
 
         self.tokens.remove_indices(to_remove);
     }
