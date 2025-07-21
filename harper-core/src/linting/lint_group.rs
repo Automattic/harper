@@ -59,6 +59,7 @@ use super::looking_forward_to::LookingForwardTo;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
 use super::modal_of::ModalOf;
+use super::months::Months;
 use super::most_number::MostNumber;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
@@ -435,6 +436,7 @@ impl LintGroup {
         insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule!(MergeWords, true);
         insert_expr_rule!(ModalOf, true);
+        insert_expr_rule!(Months, true);
         insert_expr_rule!(MostNumber, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_expr_rule!(NoMatchFor, true);

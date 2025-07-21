@@ -51,6 +51,12 @@ pub fn lint_group() -> LintGroup {
             "Corrects the missing article in `after while`, forming `after a while`.",
             LintKind::Grammar
         ),
+        "AheadAnd" => (
+            ["ahead an"],
+            ["ahead and"],
+            "Did you make a typo? Shouldn't it be `and`?",
+            "Corrects `an` to `and` after `ahead`."
+        ),
         "AllOfASudden" => (
             ["all of the sudden"],
             ["all of a sudden"],
@@ -690,6 +696,12 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `let alone`?",
             "Changes `let along` to `let alone`.",
             LintKind::Typo
+        ),
+        "LikeAsIf" => (
+            ["like as if"],
+            ["like", "as if"],
+            "Avoid redundancy. Use either `like` or `as if`.",
+            "Corrects redundant `like as if` to `like` or `as if`."
         ),
         "LikeThePlague" => (
             ["like a plague"],

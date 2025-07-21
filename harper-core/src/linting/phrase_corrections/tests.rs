@@ -25,6 +25,16 @@ fn correct_after_while() {
     );
 }
 
+// AheadAnd
+#[test]
+fn correct_ahead_and() {
+    assert_suggestion_result(
+        "If it's important, go ahead an open an issue.",
+        lint_group(),
+        "If it's important, go ahead and open an issue.",
+    );
+}
+
 // AllOfASudden
 #[test]
 fn corrects_all_of_a_sudden() {
@@ -780,6 +790,16 @@ fn correct_last_ditch_space() {
 #[test]
 fn let_along() {
     assert_suggestion_result("let along", lint_group(), "let alone");
+}
+
+// LikeAsIf
+#[test]
+fn correct_like_as_if() {
+    assert_top3_suggestion_result(
+        "And looks like as if linux-personality hasn't got any changes for 8 years.",
+        lint_group(),
+        "And looks as if linux-personality hasn't got any changes for 8 years.",
+    );
 }
 
 // LikeThePlague

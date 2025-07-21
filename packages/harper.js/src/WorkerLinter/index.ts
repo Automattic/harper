@@ -1,7 +1,7 @@
 import type { Dialect, Lint, Suggestion } from 'harper-wasm';
+import type { BinaryModule, DeserializedRequest } from '../binary';
 import type Linter from '../Linter';
 import type { LinterInit } from '../Linter';
-import type { BinaryModule, DeserializedRequest } from '../binary';
 import type { LintConfig, LintOptions } from '../main';
 import Worker from './worker.ts?worker&inline';
 

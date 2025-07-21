@@ -41,9 +41,9 @@ Message: |
       11 | ## Article. I.
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
-  - Replace with: “Iv”
+  - Replace with: “Is”
+  - Replace with: “I”
   - Replace with: “IC”
-  - Replace with: “IE”
 
 
 
@@ -509,9 +509,9 @@ Message: |
      197 | be repassed by two thirds of the Senate and House of Representatives, according
          |    ^~~~~~~~ Did you mean to spell `repassed` this way?
 Suggest:
+  - Replace with: “rebased”
   - Replace with: “recessed”
   - Replace with: “rehashed”
-  - Replace with: “relapsed”
 
 
 

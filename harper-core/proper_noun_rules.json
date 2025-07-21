@@ -514,6 +514,7 @@
 	},
 	"NotablePlaces": {
 		"canonical": [
+			"Big Sur",
 			"Bretton Woods",
 			"Darien Gap",
 			"Des Moines",
@@ -532,7 +533,7 @@
 		"description": "Ensure proper capitalization of notable places that are significant regional centers, travel destinations, or have international importance."
 	},
 	"ProperNouns": {
-		"canonical": ["Gilded Age", "Pax Americana"],
+		"canonical": ["Bhagavad Gita", "Gilded Age", "Pax Americana"],
 		"description": "Ensure proper capitalization of proper nouns."
 	},
 	"CompaniesProductsAndTrademarks": {

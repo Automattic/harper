@@ -206,6 +206,16 @@ pub fn lint_group() -> LintGroup {
             "`Invest` is traditionally followed by 'in,' not `into.`",
             LintKind::Usage
         ),
+        "MakeDoWith" => (
+            &[
+                ("make due with", "make do with"),
+                ("made due with", "made do with"),
+                ("makes due with", "makes do with"),
+                ("making due with", "making do with"),
+            ],
+            "Use `do` instead of `due` when referring to a resource scarcity.",
+            "Corrects `make due` to `make do` when followed by `with`."
+        ),
         "MootPoint" => (
             &[
                 ("mute point", "moot point"),
@@ -280,7 +290,8 @@ pub fn lint_group() -> LintGroup {
             &[
                 (&["rise the question"], &["raise the question"]),
                 (&["rises the question"], &["raises the question"]),
-
+                (&["risen the question", "rose the question"], &["raised the question"]),
+                (&["rising the question"], &["raising the question"])
             ],
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",
