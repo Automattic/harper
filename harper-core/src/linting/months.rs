@@ -40,10 +40,12 @@ impl Default for Months {
         let only_months = WordSet::new(&only_months);
 
         let before_month_sense_only = WordSet::new(&[
-            // These words won't disambiguate months:
+            // Determiners.
+            // These words won't disambiguate months: "each", "this", "that"
             // "each may do as he likes"
             // "this may be the best month"
             "every",
+            // Prepositions.
             // Possible false positives:
             // "the first word at the beginning of the next may be fragmented"
             // "Next may be to offer all the color tables in some way"
