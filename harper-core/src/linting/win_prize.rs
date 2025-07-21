@@ -21,10 +21,12 @@ impl Default for WinPrize {
             .then_determiner()
             .then_whitespace()
             .then(miss.clone())
-            .or(SequenceExpr::default()
-                .then(verbs)
-                .then_whitespace()
-                .then(miss));
+            .or_longest(
+                SequenceExpr::default()
+                    .then(verbs)
+                    .then_whitespace()
+                    .then(miss),
+            );
 
         Self {
             expr: Box::new(pattern),

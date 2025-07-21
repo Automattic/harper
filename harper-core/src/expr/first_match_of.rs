@@ -15,8 +15,8 @@ impl FirstMatchOf {
         Self { exprs }
     }
 
-    pub fn push(&mut self, expr: Box<dyn Expr>) {
-        self.exprs.push(expr);
+    pub fn add(&mut self, expr: impl Expr + 'static) {
+        self.exprs.push(Box::new(expr));
     }
 }
 
@@ -24,7 +24,6 @@ impl Expr for FirstMatchOf {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
         self.exprs
             .iter()
-            .filter_map(|p| p.run(cursor, tokens, source))
-            .next()
+            .find_map(|p| p.run(cursor, tokens, source))
     }
 }

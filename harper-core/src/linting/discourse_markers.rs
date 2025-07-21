@@ -1,6 +1,6 @@
 use harper_brill::UPOS;
 
-use crate::expr::{Expr, FixedPhrase, LongestMatchOf, SequenceExpr};
+use crate::expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr};
 use crate::patterns::UPOSSet;
 use crate::{Document, Token, TokenStringExt};
 
@@ -37,7 +37,7 @@ impl DiscourseMarkers {
             "on the other hand",
         ];
 
-        let phrases_expr = LongestMatchOf::new(
+        let phrases_expr = FirstMatchOf::new(
             phrases
                 .iter()
                 .map(|text: &&str| Box::new(FixedPhrase::from_phrase(text)) as Box<dyn Expr>)

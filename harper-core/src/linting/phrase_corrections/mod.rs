@@ -46,6 +46,12 @@ pub fn lint_group() -> LintGroup {
             "When describafterg a timeframe, use `a while`.",
             "Corrects the missing article after `after while` or `after awhile`, forming `after a while`."
         ),
+        "AheadAnd" => (
+            ["ahead an"],
+            ["ahead and"],
+            "Did you make a typo? Shouldn't it be `and`?",
+            "Corrects `an` to `and` after `ahead`."
+        ),
         "AllOfASudden" => (
             ["all of the sudden"],
             ["all of a sudden"],
@@ -388,6 +394,12 @@ pub fn lint_group() -> LintGroup {
             "A more vivid adjective would better capture extreme cold.",
             "Encourages vivid writing by suggesting `freezing` instead of weaker expressions like `very cold.`"
         ),
+        "FromTheGetGo" => (
+            ["from the get go"],
+            ["from the get-go"],
+            "Use the hyphenated form: `from the get-go`.",
+            "Ensures `from the get-go` is correctly hyphenated, preserving the idiom’s meaning of ‘from the very beginning’."
+        ),
         "GildedAge" => (
             ["guilded age"],
             ["Gilded Age"],
@@ -590,6 +602,12 @@ pub fn lint_group() -> LintGroup {
             ["let alone"],
             "Did you mean `let alone`?",
             "Changes `let along` to `let alone`."
+        ),
+        "LikeAsIf" => (
+            ["like as if"],
+            ["like", "as if"],
+            "Avoid redundancy. Use either `like` or `as if`.",
+            "Corrects redundant `like as if` to `like` or `as if`."
         ),
         "LikeThePlague" => (
             ["like a plague"],
@@ -865,12 +883,6 @@ pub fn lint_group() -> LintGroup {
             "Use `the other` or `another`, not both.",
             "Corrects `the another`."
         ),
-        "ThereIsAny" => (
-            ["there any"],
-            ["there is any"],
-            "Insert `is` for correct grammar.",
-            "Replaces `there any` with `there is any`."
-        ),
         "ThoughtProcess" => (
             ["though process"],
             ["thought process"],
@@ -969,12 +981,6 @@ pub fn lint_group() -> LintGroup {
             ["wrought iron"],
             "Prefer the standard term `wrought iron`.",
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
-        ),
-        "FromTheGetGo" => (
-            ["from the get go"],
-            ["from the get-go"],
-            "Use the hyphenated form: `from the get-go`.",
-            "Ensures `from the get-go` is correctly hyphenated, preserving the idiom’s meaning of ‘from the very beginning’."
         ),
     });
 

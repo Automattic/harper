@@ -25,6 +25,16 @@ fn correct_after_while() {
     );
 }
 
+// AheadAnd
+#[test]
+fn correct_ahead_and() {
+    assert_suggestion_result(
+        "If it's important, go ahead an open an issue.",
+        lint_group(),
+        "If it's important, go ahead and open an issue.",
+    );
+}
+
 // AllOfASudden
 #[test]
 fn corrects_all_of_a_sudden() {
@@ -194,6 +204,30 @@ fn baited_breath() {
 
 // BeenThere
 // -none-
+
+// BeforeHand
+#[test]
+fn corrects_before_hand() {
+    assert_suggestion_result(
+        "Let me know before hand if you will attend.",
+        lint_group(),
+        "Let me know beforehand if you will attend.",
+    );
+}
+
+#[test]
+fn corrects_before_hand_hyphen() {
+    assert_suggestion_result(
+        "I prepared the documents before-hand.",
+        lint_group(),
+        "I prepared the documents beforehand.",
+    );
+}
+
+#[test]
+fn allows_beforehand() {
+    assert_lint_count("We finished the preparations beforehand.", lint_group(), 0);
+}
 
 // BestRegards
 // -none-
@@ -756,6 +790,16 @@ fn correct_last_ditch_space() {
 #[test]
 fn let_along() {
     assert_suggestion_result("let along", lint_group(), "let alone");
+}
+
+// LikeAsIf
+#[test]
+fn correct_like_as_if() {
+    assert_top3_suggestion_result(
+        "And looks like as if linux-personality hasn't got any changes for 8 years.",
+        lint_group(),
+        "And looks as if linux-personality hasn't got any changes for 8 years.",
+    );
 }
 
 // LikeThePlague
@@ -1335,6 +1379,7 @@ fn thanks_a_lot_clean() {
     assert_lint_count("thanks a lot", lint_group(), 0);
 }
 
+// WroughtIron
 #[test]
 fn corrects_rod_iron() {
     assert_suggestion_result(
@@ -1356,27 +1401,4 @@ fn corrects_rot_iron() {
 #[test]
 fn allows_wrought_iron() {
     assert_lint_count("She specialized in wrought iron artwork.", lint_group(), 0);
-}
-
-#[test]
-fn corrects_before_hand() {
-    assert_suggestion_result(
-        "Let me know before hand if you will attend.",
-        lint_group(),
-        "Let me know beforehand if you will attend.",
-    );
-}
-
-#[test]
-fn corrects_before_hand_hyphen() {
-    assert_suggestion_result(
-        "I prepared the documents before-hand.",
-        lint_group(),
-        "I prepared the documents beforehand.",
-    );
-}
-
-#[test]
-fn allows_beforehand() {
-    assert_lint_count("We finished the preparations beforehand.", lint_group(), 0);
 }

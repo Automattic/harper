@@ -1,5 +1,4 @@
 use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
 use std::sync::Arc;
 
@@ -19,21 +18,19 @@ impl ExpandTimeShorthands {
         ]));
 
         Self {
-            expr: Box::new(SequenceExpr::default().then(ImpliesQuantity).then(
-                LongestMatchOf::new(vec![
+            expr: Box::new(
+                SequenceExpr::default()
+                    .then(ImpliesQuantity)
+                    .then_longest_of(vec![
                         Box::new(SequenceExpr::default().then(hotwords.clone())),
                         Box::new(
                             SequenceExpr::default()
                                 .then_whitespace()
                                 .then(hotwords.clone()),
                         ),
-                        Box::new(
-                            SequenceExpr::default()
-                                .then_hyphen()
-                                .then(hotwords.clone()),
-                        ),
+                        Box::new(SequenceExpr::default().then_hyphen().then(hotwords.clone())),
                     ]),
-            )),
+            ),
         }
     }
 

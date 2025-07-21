@@ -24,7 +24,7 @@ impl Default for DotInitialisms {
                 .then_exact_word(target)
                 .then_punctuation();
 
-            patterns.add(target, Box::new(pattern));
+            patterns.add(target, pattern);
         }
 
         Self {

@@ -12,6 +12,7 @@ use lru::LruCache;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::a_part::APart;
+use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
@@ -58,6 +59,7 @@ use super::looking_forward_to::LookingForwardTo;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
 use super::modal_of::ModalOf;
+use super::months::Months;
 use super::most_number::MostNumber;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
@@ -385,6 +387,7 @@ impl LintGroup {
 
         // Add all the more complex rules to the group.
         insert_expr_rule!(APart, true);
+        insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
         insert_struct_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
@@ -433,6 +436,7 @@ impl LintGroup {
         insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule!(MergeWords, true);
         insert_expr_rule!(ModalOf, true);
+        insert_expr_rule!(Months, true);
         insert_expr_rule!(MostNumber, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_expr_rule!(NoMatchFor, true);

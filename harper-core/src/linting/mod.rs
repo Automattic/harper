@@ -3,6 +3,7 @@
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
 mod a_part;
+mod adjective_double_degree;
 mod adjective_of_a;
 mod am_in_the_morning;
 mod amounts_for;
@@ -63,6 +64,7 @@ mod merge_linters;
 mod merge_words;
 mod missing_preposition;
 mod modal_of;
+mod months;
 mod most_number;
 mod multiple_sequential_pronouns;
 mod nail_on_the_head;
@@ -123,6 +125,7 @@ mod win_prize;
 mod wordpress_dotcom;
 
 pub use a_part::APart;
+pub use adjective_double_degree::AdjectiveDoubleDegree;
 pub use adjective_of_a::AdjectiveOfA;
 pub use am_in_the_morning::AmInTheMorning;
 pub use amounts_for::AmountsFor;
@@ -175,6 +178,7 @@ pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use merge_words::MergeWords;
 pub use missing_preposition::MissingPreposition;
 pub use modal_of::ModalOf;
+pub use months::Months;
 pub use most_number::MostNumber;
 pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
 pub use nail_on_the_head::NailOnTheHead;

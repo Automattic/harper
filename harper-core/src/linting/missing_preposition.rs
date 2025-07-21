@@ -18,9 +18,11 @@ impl Default for MissingPreposition {
     fn default() -> Self {
         let expr = SequenceExpr::default()
             .then(
-                AnchorStart.or(SequenceExpr::default()
-                    .then(UPOSSet::new(&[UPOS::DET]))
-                    .t_ws()),
+                AnchorStart.or_longest(
+                    SequenceExpr::default()
+                        .then(UPOSSet::new(&[UPOS::DET]))
+                        .t_ws(),
+                ),
             )
             .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PRON, UPOS::PROPN]))
             .t_ws()
