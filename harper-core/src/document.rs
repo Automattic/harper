@@ -137,6 +137,7 @@ impl Document {
         self.condense_number_suffixes();
         self.condense_ellipsis();
         self.condense_latin();
+        self.condense_filename_extensions();
         self.match_quotes();
 
         let token_strings: Vec<_> = self
@@ -564,6 +565,70 @@ impl Document {
         self.tokens.remove_indices(to_remove);
     }
 
+    /// Condenses likely filename extensions down to single tokens.
+    fn condense_filename_extensions(&mut self) {
+        if self.tokens.len() < 2 {
+            return;
+        }
+
+        let mut to_remove = VecDeque::new();
+
+        let mut cursor = 1;
+
+        let mut ext_start = None;
+
+        loop {
+            let a = self.get_token_offset(cursor, -2);
+            let b = &self.tokens[cursor - 1];
+            let c = &self.tokens[cursor];
+            let d = self.get_token_offset(cursor, 1);
+
+            let is_ext_chunk = (a.map_or(true, |t| t.kind.is_whitespace()))
+                && b.kind.is_period()
+                && c.kind.is_word()
+                && c.span.len() <= 3
+                && d.map_or(true, |t| t.kind.is_whitespace())
+                    .then(|| {
+                        let ext_chars = c.span.get_content(&self.source);
+                        ext_chars.iter().all(|c| c.is_ascii_lowercase())
+                            || ext_chars.iter().all(|c| c.is_ascii_uppercase())
+                    })
+                    .unwrap_or(false);
+
+            if is_ext_chunk {
+                if ext_start.is_none() {
+                    ext_start = Some(cursor - 1);
+                    self.tokens[cursor - 1].kind = TokenKind::Unlintable;
+                } else {
+                    to_remove.push_back(cursor - 1);
+                }
+
+                to_remove.push_back(cursor);
+                cursor += 1;
+            } else {
+                if let Some(start) = ext_start {
+                    let end = self.tokens[cursor - 2].span.end;
+                    let start_tok: &mut Token = &mut self.tokens[start];
+                    start_tok.span.end = end;
+                }
+
+                ext_start = None;
+            }
+
+            cursor += 1;
+
+            if cursor >= self.tokens.len()
+            /*- 1*/
+            {
+                break;
+            }
+        }
+
+        // TODO Do we need to handle a case where the extension is the last token?
+
+        self.tokens.remove_indices(to_remove);
+    }
+
     fn uncached_ellipsis_pattern() -> Lrc<Repeating> {
         let period = SequenceExpr::default().then_period();
         Lrc::new(Repeating::new(Box::new(period), 2))
@@ -702,7 +767,7 @@ mod tests {
     use itertools::Itertools;
 
     use super::Document;
-    use crate::{Span, parsers::MarkdownOptions};
+    use crate::{Span, TokenKind, parsers::MarkdownOptions};
 
     fn assert_condensed_contractions(text: &str, final_tok_count: usize) {
         let document = Document::new_plain_english_curated(text);
@@ -871,5 +936,48 @@ mod tests {
         let tok = doc.get_next_word_from_offset(0, 1);
 
         assert!(tok.is_none());
+    }
+
+    #[test]
+    fn condenses_filename_extensions() {
+        let doc = Document::new_plain_english_curated(".c and .exe and .js");
+        assert!(doc.tokens[0].kind.is_unlintable());
+        assert!(doc.tokens[4].kind.is_unlintable());
+        assert!(doc.tokens[8].kind.is_unlintable());
+    }
+
+    #[test]
+    fn condense_filename_extension_ok_at_start_and_end() {
+        let doc = Document::new_plain_english_curated(".c and .EXE");
+        assert!(doc.tokens.len() == 5);
+        assert!(doc.tokens[0].kind.is_unlintable());
+        assert!(doc.tokens[4].kind.is_unlintable());
+    }
+
+    #[test]
+    fn doesnt_condense_filename_extensions_with_mixed_case() {
+        let doc = Document::new_plain_english_curated(".c and .Exe");
+        assert!(doc.tokens.len() == 6);
+        assert!(doc.tokens[0].kind.is_unlintable());
+        assert!(doc.tokens[4].kind.is_punctuation());
+        assert!(doc.tokens[5].kind.is_word());
+    }
+
+    #[test]
+    fn doesnt_condense_filename_extensions_with_non_letters() {
+        let doc = Document::new_plain_english_curated(".COM and .C0M");
+        assert!(doc.tokens.len() == 6);
+        assert!(doc.tokens[0].kind.is_unlintable());
+        assert!(doc.tokens[4].kind.is_punctuation());
+        assert!(doc.tokens[5].kind.is_word());
+    }
+
+    #[test]
+    fn doesnt_condense_filename_extensions_longer_than_three() {
+        let doc = Document::new_plain_english_curated(".dll and .dlls");
+        assert!(doc.tokens.len() == 6);
+        assert!(doc.tokens[0].kind.is_unlintable());
+        assert!(doc.tokens[4].kind.is_punctuation());
+        assert!(doc.tokens[5].kind.is_word());
     }
 }
