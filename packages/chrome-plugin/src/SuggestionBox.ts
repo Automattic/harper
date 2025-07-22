@@ -95,85 +95,93 @@ function suggestions(
 
 function styleTag() {
 	return h('style', { id: 'harper-suggestion-style' }, [
-		`code {
-      background-color: #e3eccf;
-      padding: 0.125rem;
-      border-radius: 0.25rem;
-    }
-
-    .harper-container {
-      max-width: 420px;
-      max-height: 400px;
-      overflow-y: auto;
-      background: #ffffff;
-      border: 1px solid #d0d7de;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(140, 149, 159, 0.3);
-      padding: 8px;
-      display: flex;
-      flex-direction: column;
-      z-index: 5000;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      pointer-events: auto;
-    }
-
-    .harper-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 20px;
-      color: #1f2328;
-      padding-bottom: 4px;
-      margin-bottom: 4px;
-      user-select: none;
-    }
-
-    .harper-body {
-      font-size: 14px;
-      line-height: 20px;
-      color: #57606a;
-    }
-
-    .harper-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      cursor: pointer;
-      border: none;
-      border-radius: 6px;
-      padding: 3px 6px;
-      min-height: 28px;
-      font-size: 13px;
-      font-weight: 600;
-      line-height: 20px;
-      transition: background 120ms ease, transform 80ms ease;
-    }
-
-    .harper-btn:hover {
-      filter: brightness(0.92);
-    }
-
-    .harper-btn:active {
-      transform: scale(0.97);
-    }
-
-    .harper-child-cont {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-
-    .harper-footer {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 2px;
-      gap: 16px;
-    }`,
+		`code{
+		  background-color:#e3eccf;
+		  padding:0.125rem;
+		  border-radius:0.25rem
+		}
+		.harper-container{
+		  max-width:420px;
+		  max-height:400px;
+		  overflow-y:auto;
+		  background:#ffffff;
+		  border:1px solid #d0d7de;
+		  border-radius:8px;
+		  box-shadow:0 4px 12px rgba(140,149,159,0.3);
+		  padding:8px;
+		  display:flex;
+		  flex-direction:column;
+		  z-index:5000;
+		  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+		  pointer-events:auto
+		}
+		.harper-header{
+		  display:flex;
+		  align-items:center;
+		  justify-content:space-between;
+		  font-weight:600;
+		  font-size:14px;
+		  line-height:20px;
+		  color:#1f2328;
+		  padding-bottom:4px;
+		  margin-bottom:4px;
+		  user-select:none
+		}
+		.harper-body{
+		  font-size:14px;
+		  line-height:20px;
+		  color:#57606a
+		}
+		.harper-btn{
+		  display:inline-flex;
+		  align-items:center;
+		  justify-content:center;
+		  gap:4px;
+		  cursor:pointer;
+		  border:none;
+		  border-radius:6px;
+		  padding:3px 6px;
+		  min-height:28px;
+		  font-size:13px;
+		  font-weight:600;
+		  line-height:20px;
+		  transition:background 120ms ease,transform 80ms ease
+		}
+		.harper-btn:hover{filter:brightness(0.92)}
+		.harper-btn:active{transform:scale(0.97)}
+		.harper-child-cont{
+		  display:flex;
+		  flex-wrap:wrap;
+		  justify-content:flex-end;
+		  gap:8px
+		}
+		.harper-footer{
+		  display:flex;
+		  flex-wrap:wrap;
+		  justify-content:space-between;
+		  padding:2px;
+		  gap:16px
+		}
+		@media (prefers-color-scheme:dark){
+		  code{background-color:#1f2d3d;color:#c9d1d9}
+		  .harper-container{
+		    background:#0d1117;
+		    border-color:#30363d;
+		    box-shadow:0 4px 12px rgba(1,4,9,0.85)
+		  }
+		  .harper-header{color:#e6edf3}
+		  .harper-body{color:#8b949e}
+		  .harper-btn{
+		    background:#21262d;
+		    color:#c9d1d9
+		  }
+		  .harper-btn:hover{filter:brightness(1.15)}
+		  .harper-btn[style*="background: #2DA44E"]{background:#238636}
+		  .harper-btn[style*="background: #e5e5e5"]{
+		    background:#4b4b4b;
+		    color:#ffffff
+		  }
+		}`,
 	]);
 }
 
