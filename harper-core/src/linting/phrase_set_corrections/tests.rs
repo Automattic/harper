@@ -429,6 +429,44 @@ fn corrects_making_due_with() {
     );
 }
 
+// MakeItSeem
+
+#[test]
+fn corrects_make_it_seems() {
+    assert_suggestion_result(
+        "but put it into unlisted list may make it seems like listed for GitHub",
+        lint_group(),
+        "but put it into unlisted list may make it seem like listed for GitHub",
+    );
+}
+
+#[test]
+fn corrects_made_it_seems() {
+    assert_suggestion_result(
+        "previous explanations made it seems like it would be n",
+        lint_group(),
+        "previous explanations made it seem like it would be n",
+    );
+}
+
+#[test]
+fn corrects_makes_it_seems() {
+    assert_suggestion_result(
+        "bundle gives an error that makes it seems like esbuild is trying to use lib/index.js from main",
+        lint_group(),
+        "bundle gives an error that makes it seem like esbuild is trying to use lib/index.js from main",
+    );
+}
+
+#[test]
+fn corrects_making_it_seems() {
+    assert_suggestion_result(
+        "Is it possible to teach the concept of assignment/reassignment at the very beginner stage instead of making it seems like constants?",
+        lint_group(),
+        "Is it possible to teach the concept of assignment/reassignment at the very beginner stage instead of making it seem like constants?",
+    );
+}
+
 // MootPoint
 
 // -point is mute-
