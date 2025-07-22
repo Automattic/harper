@@ -27,7 +27,7 @@ impl Default for PronounKnew {
                 return false;
             }
 
-            if tok.kind.is_possessive_determiner() {
+            if tok.kind.is_possessive_determiner() || !tok.kind.is_pronoun() {
                 return false;
             }
 
@@ -89,7 +89,7 @@ impl ExprLinter for PronounKnew {
 #[cfg(test)]
 mod tests {
     use super::PronounKnew;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn simple_pronoun_new() {
@@ -187,5 +187,10 @@ mod tests {
     #[test]
     fn flags_she_new_danger() {
         assert_lint_count("She new danger lurked nearby.", PronounKnew::default(), 1);
+    }
+
+    #[test]
+    fn allows_issue_1518() {
+        assert_no_lints("If you're new to GitHub, welcome.", PronounKnew::default());
     }
 }
