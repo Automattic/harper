@@ -63,7 +63,7 @@ let demoText =
         Harper will only enable itself automatically on sites we've tested before. 
         <br/>
         <br/>
-        If your site isn't on our list of supported sites, you can enable the Chrome extension anyway by opening the Harper extension popup and clicking the power button.
+        If you work somewhere that isn't on our list of supported sites, you can enable the Chrome extension anyway by opening the Harper extension popup and clicking the power button.
         <br/>
         <br/>
         Alternatively, <a href="/request-browser-support">let us know</a> which sites you want us to support and we'll add it as soon as we can.
