@@ -377,4 +377,12 @@ mod tests {
             CompoundNouns::default(),
         );
     }
+
+    #[test]
+    fn allow_issue_1298() {
+        assert_no_lints(
+            "A series of tests that cover all possible cases.",
+            CompoundNouns::default(),
+        );
+    }
 }
