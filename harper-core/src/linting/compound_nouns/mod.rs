@@ -369,4 +369,12 @@ mod tests {
             CompoundNouns::default(),
         );
     }
+
+    #[test]
+    fn allow_issue_1496() {
+        assert_no_lints(
+            "I am not able to respond to messages.",
+            CompoundNouns::default(),
+        );
+    }
 }
