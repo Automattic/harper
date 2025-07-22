@@ -21,7 +21,9 @@ impl Default for ShouldContract {
                 SequenceExpr::default()
                     .then(WordSet::new(&["your", "were"]))
                     .then_whitespace()
-                    .then(|tok: &Token, _: &[char]| tok.kind.is_non_quantifier_determiner())
+                    .then(|tok: &Token, _: &[char]| {
+                        tok.kind.is_non_quantifier_determiner() && !tok.kind.is_pronoun()
+                    })
                     .then_whitespace()
                     .then_adjective(),
             ),
