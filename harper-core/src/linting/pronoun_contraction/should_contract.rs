@@ -67,8 +67,10 @@ impl ExprLinter for ShouldContract {
 
 #[cfg(test)]
 mod tests {
+    use std::default;
+
     use super::ShouldContract;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn contracts_your_correctly() {
@@ -115,5 +117,11 @@ mod tests {
             ShouldContract::default(),
             0,
         );
+    }
+
+    #[test]
+    fn allow_issue_1508() {
+        assert_no_lints("Were any other toys fun?", ShouldContract::default());
+        assert_no_lints("You were his closest friend.", ShouldContract::default());
     }
 }
