@@ -207,7 +207,7 @@ Aida/Og
 Aiken/Og
 Aileen/Og
 Aimee/Og
-Ainu/NJOg           # ethnicity, language
+Ainu/NmJOg          # ethnicity, language
 Airedale/ONgS
 Aires/g
 Aisha/Og
@@ -1785,7 +1785,7 @@ Canopus/ONg
 Cantabrigian/JNg
 Canterbury/Og
 Canton/Og
-Cantonese/JNg
+Cantonese/JNmg
 Cantor/Og
 Cantrell/Og
 Cantu/Og
@@ -2097,7 +2097,7 @@ Chimu/g
 Chin/Og
 China/ONg
 Chinatown/NOg
-Chinese/JONg
+Chinese/JONmg
 Chinook/ONgS
 Chipewyan/NOg
 Chippendale/Og
@@ -2618,7 +2618,7 @@ Danial/Og
 Daniel/ONSg
 Danielle/Og
 Daniels/Og
-Danish/OJNg
+Danish/OJNmg
 Dannie/Og
 Danny/Og
 Danone/g
@@ -3004,7 +3004,7 @@ Dusseldorf/Og
 Dustbuster/g
 Dustin/Og
 Dusty/Og
-Dutch/JONVg
+Dutch/JONmVg
 Dutchman/NOg
 Dutchmen/9g
 Dutchwoman/N
@@ -3219,7 +3219,7 @@ Endymion/Og
 Eng/g
 Engels/Og
 England/Og
-English/JNOVg>S
+English/JNwOVg>S
 Englishman/Ng
 Englishmen/9g
 Englishwoman/Ng
@@ -3653,7 +3653,7 @@ Freemasonry/OSg
 Freetown/Og
 Freida/g
 Fremont/Og
-French/ONJVgS
+French/ONwJVgS
 Frenchman/Ng
 Frenchmen/9g
 Frenchwoman/Ng
@@ -3893,7 +3893,7 @@ Gerardo/g
 Gerber/Og
 Gere/Og
 Geritol/g
-German/NOJgS
+German/NwOJgS
 Germanic/OJNg
 Germany/Og
 Geronimo/Og
@@ -4594,6 +4594,7 @@ Hohenzollern/ONJg
 Hohhot/Og
 Hohokam/Og
 Hokkaido/ONg
+Hokkien/ONmg
 Hokusai/g
 Holbein/g
 Holcomb/Og
@@ -4953,7 +4954,7 @@ Isuzu/ONg           # car brand
 It/ON
 Itaipu/Og
 Ital/N
-Italian/JNSg
+Italian/JNwSg
 Italianate/JV
 Italy/Og
 Itasca/Og
@@ -5048,7 +5049,7 @@ January/OSg
 Janus/Og
 Jap/ONJVSg
 Japan/Og
-Japanese/JNOgS
+Japanese/JNwOgS
 Japura/g
 Jared/Og
 Jarlsberg/ONg
@@ -5561,7 +5562,7 @@ Koppel/g
 Koran/NOgS
 Koranic/J
 Korea/Og
-Korean/JONSg
+Korean/JONwSg
 Kornberg/g
 Kory/Og
 Korzybski/g
@@ -6322,7 +6323,7 @@ Malamud/Og
 Malaprop/g
 Malawi/Og
 Malawian/NJSg
-Malay/JNOgS
+Malay/JNwOgS
 Malaya/Og
 Malayalam/Og
 Malayan/NJOgS
@@ -6981,7 +6982,7 @@ Monet/Og
 MongoDB/g           # trademark
 Mongol/NJOSg
 Mongolia/Og
-Mongolian/JNSg
+Mongolian/JNwSg
 Mongolic/OJg
 Mongoloid/N
 Monica/Og
@@ -7476,7 +7477,7 @@ Northwest/Sg
 Norton/ONgS
 Norw
 Norway/ONg
-Norwegian/NJSg
+Norwegian/NwJSg
 Norwich/Og
 Nosferatu/Ng
 Nostradamus/ONg
@@ -9517,7 +9518,7 @@ Spam/Og
 Span/O
 Spanglish/O
 Spaniard/NSg
-Spanish/JONg
+Spanish/JONmg
 Sparks/Og
 Sparta/Og
 Spartacus/Og
@@ -9748,7 +9749,7 @@ Swed/On
 Swede/NSg
 Sweden/Og
 Swedenborg/Og
-Swedish/OJg
+Swedish/OmJg
 Sweeney/Og
 Sweet/Og
 Swift/Og
@@ -9970,7 +9971,7 @@ Th/NOg              # thorium
 Thackeray/Og
 Thad/Og
 Thaddeus/Og
-Thai/JNSg
+Thai/JNwSg
 Thailand/Og
 Thales/Og
 Thalia/Og
@@ -10546,7 +10547,7 @@ Vientiane/Og
 Vietcong/ONg
 Vietminh/Og
 Vietnam/ONg
-Vietnamese/JNOg
+Vietnamese/JNw09Og
 Vijayanagar/Og
 Vijayawada/Og
 Viking/NOgS
@@ -11382,7 +11383,7 @@ acculturation/Ng
 accumulate/~VJXGnvdS
 accumulation/~Ng
 accumulator/~NgS
-accuracy/~NigS
+accuracy/~NwigS
 accurate/~JiY
 accurateness/Ng
 accursed/JVp
@@ -11891,7 +11892,7 @@ ahchoo/
 ahead/~
 ahem/V
 ahoy/VN
-aid/~NVSgdG
+aid/~NwVSgdG
 aide/~NSg
 aided/~VU
 aigrette/NgS
@@ -12025,7 +12026,7 @@ alight/~VJGdS
 align/~VrLGdS
 aligned/~VJU
 aligner/NgS
-alignment/~NrgS
+alignment/~NwrgS
 alike/~JU
 aliment/NVgdSG
 alimentary/J
@@ -12967,7 +12968,7 @@ arisen/~V
 aristocracy/~NSg
 aristocrat/~NSg
 aristocratic/~JQ
-arithmetic/~NJg
+arithmetic/~NmJg
 arithmetical/JNY
 arithmetician/NgS
 ark/~NSg
@@ -16099,7 +16100,7 @@ cajole/VNZGLd>S
 cajolement/Ng
 cajoler/Ng
 cajolery/Ng
-cake/~NVdSgG
+cake/~NwVdSgG
 cakewalk/NVSg
 cal/~N
 calabash/NgS
@@ -18300,7 +18301,7 @@ communicable/Ji
 communicably/R
 communicant/NJgS
 communicate/~VGnvdSX
-communication/~Ng
+communication/~NwSg
 communicative/JU
 communicator/~NSg
 communion/~Ng
@@ -18449,7 +18450,7 @@ computerisation/Ng!_
 computerise/VGdS!_
 computerization/Ng
 computerize/VGdS
-computing/~NVg
+computing/~NmVg
 comrade/~NVSgY
 comradeship/Ng
 con/~VNJGSg
@@ -20848,7 +20849,7 @@ desiccation/Ng
 desiccator/NSg
 desiderata/N
 desideratum/Ng
-design/~NVrSdG
+design/~NwVrSdG
 designate/~JVdSGnX
 designation/~Ng
 designator/NSg
@@ -23797,7 +23798,7 @@ explainability/Ng
 explainable/J
 explained/~VU
 explainer/NgS
-explanation/~NgS
+explanation/~NwgS
 explanatory/~J
 expletive/JNgS
 explicable/Ji
@@ -24836,13 +24837,13 @@ flatworm/NSg
 flaunt/VNgdSG
 flaunting/VJNY
 flautist/NSg!@_
-flavor/~NVgdSGz<
+flavor/~NwVgdSGz<
 flavored/~JVU<
 flavorful/J<
 flavoring/NVg<
 flavorless/J<
 flavorsome/J<
-flavour/NVSgdzG!@_
+flavour/NwVSgdzG!@_
 flavoured/JVU!@_
 flavourful/J!@_
 flavouring/NVg!@_
@@ -27319,7 +27320,7 @@ halal/~JVg
 halberd/NSg
 halcyon/~NJ
 hale/~JNVi^Gd>S
-half/~NJVPg
+half/~N0wJVPg
 halfback/~NVSg
 halfcourt/
 halfhearted/JpY
@@ -31807,7 +31808,7 @@ lighthouse/~NgS
 lighting's
 lightly/~R
 lightness/~Ng
-lightning/~NJVgdS
+lightning/~NmJV
 lightproof/J
 lightsaber/NgS
 lightship/NgS
@@ -31904,7 +31905,7 @@ lingual/~JN
 linguine/Ng
 linguist/~NSg
 linguistic/~JSQ
-linguistics/~Ng
+linguistics/~Nmg
 liniment/NVSg
 lining/~NVg
 link/~NVgdSG
@@ -32583,7 +32584,7 @@ maidenhair/Ng
 maidenhead/~NSg
 maidenhood/Ng
 maidservant/NSg
-mail/~NVzgd>SZG
+mail/~NwVzgd>SZG
 mailbag/NSg
 mailbomb/NVGSd
 mailbox/~NgS
@@ -35637,7 +35638,7 @@ nonseasonal/J
 nonsectarian/JN
 nonsecular/J
 nonsegregated/J
-nonsense/~NVJg
+nonsense/~NmVJg
 nonsensical/~JY
 nonsensitive/J
 nonsequential/JY
@@ -37710,7 +37711,7 @@ payware/Nmg
 pct/~N
 pd/~
 pea/~NSg
-peace/~NVSg
+peace/~NwVSg
 peaceable/J
 peaceably/R
 peaceful/~JNpY
@@ -38451,7 +38452,7 @@ picturesqueness/Nmg
 piddle/NVgGdS
 piddly/J
 pidgin/~NgS
-pie/~NVSg
+pie/~NwVSg
 piebald/JNgS
 piece/~NVdSgG
 piecemeal/JVN
@@ -39230,7 +39231,7 @@ possibility/~NSg
 possible/~JNSg
 possibly/~R
 possum/~NVSg
-post/~NVPZGgd>Sz
+post/~NwVPZGgd>Sz
 postage/~Ng
 postal/~J
 postbag/NS
@@ -39917,7 +39918,7 @@ programme/NVBzd>SgZG
 programme/!_
 programmed/~VJre
 programmer/~NgS
-programming/~NVSg
+programming/~NmVg
 progress/~NVgdSGv
 progression/~NgS
 progressive/~JNpgYS
@@ -41703,6 +41704,8 @@ rescind/VSdG
 rescission/Ng
 rescue/~VNd>SgZG
 reseal/VB
+research/NmgVdGS
+researcher/NgS
 resemble/~VdSG
 resend/VNSGd
 resent/~VLSdG
@@ -43059,7 +43062,7 @@ schwa/NVgS
 sci/~N
 sciatic/JN
 sciatica/Ng
-science/~NVWgS
+science/~NwVWgS
 scientific/~JUQ
 scientism/Ng
 scientist/~NSg
@@ -43290,7 +43293,7 @@ seance/NVSg
 seaplane/~NSg
 seaport/~NgS
 sear/JVNGgdS
-search/~NVrZGgd>S
+search/~NVZGgd>S
 searchable/~JNU
 searcher/Nrg
 searching/~VJNmY
@@ -44819,7 +44822,7 @@ smokescreen/NSg
 smokestack/NSg
 smokey/~JN
 smokiness/Ng
-smoking/~VJNg
+smoking/~VJNmg
 smoky/~J>^p
 smolder/VNSGgd
 smooch/NVgdSG
@@ -46988,7 +46991,7 @@ supplicate/VGdS
 supplication/Ng
 supplier/~Ng
 supply/~VNZGd>SgXn
-support/~VNgd>SBZGv
+support/~VNwgd>SBZGv
 supportable/JUi
 supported/~JVU
 supporter/~Ng
@@ -51158,7 +51161,7 @@ wanted/~JVU
 wanton/~JNVgdYSpG
 wantonness/Ng
 wapiti/NgS
-war/~NVSg
+war/~NwVSg
 warble/VNgZGd>S
 warbler/~Ng
 warbonnet/NSg
@@ -51431,7 +51434,7 @@ weigh/~VNrGd
 weigh's
 weighbridge/NS
 weighs/~Vr
-weight/~NVgdSzG
+weight/~NwVgdSzG
 weighted/~VJU
 weightily/R
 weightiness/Ng
@@ -52127,7 +52130,7 @@ wrap's
 wraparound/JNSg
 wrapped/~VJU
 wrapper/~NSg
-wrapping/~NVgS
+wrapping/~NwVgS
 wrasse/NgS
 wrath/~NVJg
 wrathful/JY

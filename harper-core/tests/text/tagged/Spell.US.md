@@ -2,8 +2,8 @@
 # NSg/V
 >
 #
-> This    document contains a   list  of words  spelled correctly in      some     dialects of English  , but     not   American English  . This    is designed to test  the spelling suggestions we   give  for such   mistakes .
-# I/Ddem+ NSg/V    V        D/P NSg/V P  NPl/V+ V/J     R         NPr/J/P I/J/R/Dq NPl      P  NPr/V/J+ . NSg/C/P NSg/C NPr/J+   NPr/V/J+ . I/Ddem+ VL V/J      P  NSg/V D+  NSg/V+   NPl+        IPl+ NSg/V C/P NSg/I+ NPl/V+   .
+> This    document contains a   list  of words  spelled correctly in      some     dialects of English   , but     not   American English   . This    is designed to test  the spelling suggestions we   give  for such   mistakes .
+# I/Ddem+ NSg/V    V        D/P NSg/V P  NPl/V+ V/J     R         NPr/J/P I/J/R/Dq NPl      P  NPr🅪/V/J+ . NSg/C/P NSg/C NPr/J+   NPr🅪/V/J+ . I/Ddem+ VL V/J      P  NSg/V D+  NSg/V+   NPl+        IPl+ NSg/V C/P NSg/I+ NPl/V+   .
 >
 #
 > To achieve this   , the filename of this    file   contains `.US       , which will   tell  the snapshot generator to use   the American dialect , rather  than trying  to use   an  automatically detected dialect .
@@ -30,8 +30,8 @@
 # V/J/Comm+ .
 >
 #
-> Flavour     .
-# NSg/V/Comm+ .
+> Flavour      .
+# N🅪Sg/V/Comm+ .
 >
 #
 > Favoured  .
