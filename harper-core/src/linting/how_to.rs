@@ -40,6 +40,7 @@ impl Default for HowTo {
                     if tok.kind.is_auxiliary_verb()
                         || tok.kind.is_adjective()
                         || tok.kind.is_verb_progressive_form()
+                        || tok.kind.is_conjunction()
                     {
                         true
                     } else {
@@ -276,6 +277,14 @@ mod tests {
     fn issue_1492() {
         assert_no_lints(
             "I hope to provide some insight into correct HTML formatting, in addition to how authors can avoid these issues.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn allow_issue_1298() {
+        assert_no_lints(
+            "The story of how and why things came to this point.",
             HowTo::default(),
         );
     }
