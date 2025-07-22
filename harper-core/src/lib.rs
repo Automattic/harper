@@ -20,6 +20,7 @@ mod punctuation;
 mod render_markdown;
 mod span;
 pub mod spell;
+mod starts_with_vowel;
 mod sync;
 mod title_case;
 mod token;

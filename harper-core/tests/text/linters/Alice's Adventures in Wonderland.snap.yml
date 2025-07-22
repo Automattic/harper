@@ -274,6 +274,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     138 | finding it very nice, (it had, in fact, a sort of mixed flavour of cherry-tart,
+         |                                                         ^~~~~~~ Consider adding an article before this noun.
+     139 | custard, pine-apple, roast turkey, toffee, and hot buttered toast,) she very
+Suggest:
+  - Replace with: “a flavour”
+  - Replace with: “the flavour”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      146 | door into that lovely garden. First, however, she waited for a few minutes to
@@ -367,6 +378,18 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      183 | quite dull and stupid for life to go on in the common way.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 75 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     180 | she was quite surprised to find that she remained the same size: to be sure,
+     181 | this generally happens when one eats cake, but Alice had got so much into the
+         |                                      ^~~~ Consider adding an article before this noun.
+     182 | way of expecting nothing but out-of-the-way things to happen, that it seemed
+Suggest:
+  - Replace with: “a cake”
+  - Replace with: “the cake”
 
 
 
@@ -594,6 +617,16 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     317 | “Perhaps it doesn’t understand English,” thought Alice; “I daresay it’s a French
+         |                                ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an English”
+  - Replace with: “the English”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
@@ -652,6 +685,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      349 | worth a hundred pounds! He says it kills all the rats and—oh dear!” cried Alice
          | ~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 47 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     347 | and beg for its dinner, and all sorts of things—I can’t remember half of
+         |                                                                  ^~~~ Consider adding an article before this noun.
+     348 | them—and it belongs to a farmer, you know, and he says it’s so useful, it’s
+Suggest:
+  - Replace with: “a half”
+  - Replace with: “the half”
 
 
 
@@ -830,6 +874,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     412 | advisable to go with Edgar Atheling to meet William and offer him the crown.
+         |                                             ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a William”
+  - Replace with: “the William”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      445 | This question the Dodo could not answer without a great deal of thought, and it
@@ -887,6 +941,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     544 | hurried off at once: one old Magpie began wrapping itself up very carefully,
+         |                                           ^~~~~~~~ Consider adding an article before this noun.
+     545 | remarking, “I really must be getting home; the night-air doesn’t suit my
+Suggest:
+  - Replace with: “a wrapping”
+  - Replace with: “the wrapping”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
@@ -921,6 +986,16 @@ Message: |
 Suggest:
   - Replace with: “naturally”
   - Replace with: “maturely”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     570 | Very soon the Rabbit noticed Alice, as she went hunting about, and called out to
+         |                              ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an Alice”
+  - Replace with: “the Alice”
 
 
 
@@ -987,6 +1062,16 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     624 | When I used to read fairy-tales, I fancied that kind of thing never happened,
+         |                     ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a fairy”
+  - Replace with: “the fairy”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      643 | came a little pattering of feet on the stairs. Alice knew it was the Rabbit
@@ -1011,6 +1096,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     656 | shriek and a fall, and a crash of broken glass, from which she concluded that it
+         |                                          ^~~~~ Consider adding an article before this noun.
+     657 | was just possible it had fallen into a cucumber-frame, or something of the sort.
+Suggest:
+  - Replace with: “a glass”
+  - Replace with: “the glass”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
@@ -1022,12 +1118,33 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     679 | another snatch in the air. This time there were two little shrieks, and more
+     680 | sounds of broken glass. “What a number of cucumber-frames there must be!”
+         |                  ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a glass”
+  - Replace with: “the glass”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      688 | one; Bill’s got the other—Bill! fetch it here, lad!—Here, put ’em up at this
          |                                 ^~~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Fetch”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     689 | corner—No, tie ’em together first—they don’t reach half high enough yet—Oh!
+         |                                                    ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a half”
+  - Replace with: “the half”
 
 
 
@@ -1159,6 +1276,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     764 | over; and the moment she appeared on the other side, the puppy made another rush
+     765 | at the stick, and tumbled head over heels in its hurry to get hold of it; then
+         |                           ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a head”
+  - Replace with: “the head”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      777 | “And yet what a dear little puppy it was!” said Alice, as she leant against a
@@ -1214,6 +1342,17 @@ Message: |
          |          ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
 Suggest:
   - Replace with: “excellent”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     935 | “You’ll get used to it in time,” said the Caterpillar; and it put the hookah
+     936 | into its mouth and began smoking again.
+         |                          ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a smoking”
+  - Replace with: “the smoking”
 
 
 
@@ -1491,6 +1630,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1226 | up into a sort of knot, and then keep tight hold of its right ear and left foot,
+         |                                                                            ^~~~ Consider adding an article before this noun.
+    1227 | so as to prevent its undoing itself,) she carried it out into the open air. “If
+Suggest:
+  - Replace with: “a foot”
+  - Replace with: “the foot”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1235 | what was the matter with it. There could be no doubt that it had a very turn-up
@@ -1596,6 +1746,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1435 | say than his first remark, “It was the best butter, you know.”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1478 | “Perhaps not,” Alice cautiously replied: “but I know I have to beat time when I
+         |                                                                     ^~~~ Consider adding an article before this noun.
+    1479 | learn music.”
+Suggest:
+  - Replace with: “a time”
+  - Replace with: “the time”
 
 
 
@@ -1978,6 +2139,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1931 | The King’s argument was, that anything that had a head could be beheaded, and
+    1932 | that you weren’t to talk nonsense.
+         |                          ^~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a nonsense”
+  - Replace with: “the nonsense”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1944 | The Cat’s head began fading away the moment he was gone, and, by the time he had
@@ -2085,6 +2257,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2025 | appeared to them to be otherwise.’”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 67 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2038 | “A cheap sort of present!” thought Alice. “I’m glad they don’t give birthday
+         |                                                                     ^~~~~~~~ Consider adding an article before this noun.
+    2039 | presents like that!” But she did not venture to say it out loud.
+Suggest:
+  - Replace with: “a birthday”
+  - Replace with: “the birthday”
 
 
 
@@ -2776,6 +2959,28 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2460 | > (later editions continued as follows The Panther took pie-crust, and gravy,
+         |                                                         ^~~ Consider adding an article before this noun.
+    2461 | > and meat, While the Owl had the dish as its share of the treat. When the pie
+Suggest:
+  - Replace with: “a pie”
+  - Replace with: “the pie”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2463 | > spoon: While the Panther received knife and fork with a growl, And concluded
+         |                                     ^~~~~ Consider adding an article before this noun.
+    2464 | > the banquet—)
+Suggest:
+  - Replace with: “a knife”
+  - Replace with: “the knife”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2470 | “Yes, I think you’d better leave off,” said the Gryphon: and Alice was only too
@@ -3197,6 +3402,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2616 | for her.
          | ~~~~~~~~ This sentence is 62 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2625 | “Don’t talk nonsense,” said Alice more boldly: “you know you’re growing too.”
+         |             ^~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a nonsense”
+  - Replace with: “the nonsense”
 
 
 

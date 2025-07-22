@@ -1,3 +1,13 @@
+Lint:    Miscellaneous (0 priority)
+Message: |
+       3 | This document contains example sentences with misspelled words that we want to test the spell checker on.
+         |                        ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an example”
+  - Replace with: “the example”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
        7 | My favourite color is blu.

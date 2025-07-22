@@ -17,6 +17,11 @@ pub enum Suggestion {
 }
 
 impl Suggestion {
+    /// Construct a `Self::ReplaceWith` from a string.
+    pub fn replace_with_str(s: impl AsRef<str>) -> Self {
+        Self::ReplaceWith(s.as_ref().chars().collect())
+    }
+
     /// Variant of [`Self::replace_with_match_case`] that accepts a static string.
     pub fn replace_with_match_case_str(value: &'static str, template: &[char]) -> Self {
         Self::replace_with_match_case(value.chars().collect(), template)

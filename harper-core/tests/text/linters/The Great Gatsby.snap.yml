@@ -231,6 +231,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+      62 | seemed like the ragged edge of the universe—so I decided to go East and learn
+         |                                                                ^~~~ Consider adding an article before this noun.
+      63 | the bond business. Everybody I knew was in the bond business, so I supposed it
+Suggest:
+  - Replace with: “an East”
+  - Replace with: “the East”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
       69 | The practical thing was to find rooms in the city, but it was a warm season, and
@@ -266,6 +277,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       77 | electric stove.
          | ~~~~~~~~~~~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+      75 | for a few days until he ran away—and an old Dodge and a Finnish woman, who made
+      76 | my bed and cooked breakfast and muttered Finnish wisdom to herself over the
+         |                   ^~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a breakfast”
+  - Replace with: “the breakfast”
 
 
 
@@ -379,6 +401,28 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     121 | side, spanking new under a thin beard of raw ivy, and a marble swimming pool,
+         |                                                                         ^~~~ Consider adding an article before this noun.
+     122 | and more than forty acres of lawn and garden. It was Gatsby’s mansion. Or,
+Suggest:
+  - Replace with: “a pool”
+  - Replace with: “the pool”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     122 | and more than forty acres of lawn and garden. It was Gatsby’s mansion. Or,
+     123 | rather, as I didn’t know Mr. Gatsby, it was a mansion inhabited by a gentleman
+         |                          ^~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Mr”
+  - Replace with: “the Mr”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      124 | of that name. My own house was an eyesore, but it was a small eyesore, and it
@@ -399,6 +443,17 @@ Message: |
 Suggest:
   - Replace with: “Buchanan's”
   - Replace with: “Buchanan”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     131 | drove over there to have dinner with the Tom Buchanans. Daisy was my second
+     132 | cousin once removed, and I’d known Tom in college. And just after the war I
+         |                                    ^~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Tom”
+  - Replace with: “the Tom”
 
 
 
@@ -428,6 +483,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     139 | wealthy—even in college his freedom with money was a matter for reproach—but now
+     140 | he’d left Chicago and come East in a fashion that rather took your breath away:
+         |           ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Chicago”
+  - Replace with: “the Chicago”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      145 | particular reason, and then drifted here and there unrestfully wherever people
@@ -435,6 +501,17 @@ Message: |
      146 | played polo and were rich together. This was a permanent move, said Daisy over
 Suggest:
   - Replace with: “restfully”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     145 | particular reason, and then drifted here and there unrestfully wherever people
+     146 | played polo and were rich together. This was a permanent move, said Daisy over
+         |        ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a polo”
+  - Replace with: “the polo”
 
 
 
@@ -461,6 +538,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      157 | as though from the momentum of its run. The front was broken by a line of French
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 49 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     157 | as though from the momentum of its run. The front was broken by a line of French
+     158 | windows, glowing now with reflected gold and wide open to the warm windy
+         |                                     ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a gold”
+  - Replace with: “the gold”
 
 
 
@@ -533,6 +621,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     224 | the surname of the balancing girl was Baker. (I’ve heard it said that Daisy’s
+     225 | murmur was only to make people lean toward her; an irrelevant criticism that
+         |                         ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a people”
+  - Replace with: “the people”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      236 | speech is an arrangement of notes that will never be played again. Her face was
@@ -559,6 +658,36 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     284 | At this point Miss Baker said: “Absolutely!” with such suddenness that I
+         |                    ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     295 | “No, thanks,” said Miss Baker to the four cocktails just in from the pantry,
+         |                         ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     303 | I looked at Miss Baker, wondering what it was she “got done.” I enjoyed looking
+         |                  ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      322 | Slenderly, languidly, their hands set lightly on their hips, the two young women
@@ -568,12 +697,33 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     331 | “We ought to plan something,” yawned Miss Baker, sitting down at the table as if
+         |                                           ^~~~~ Consider adding an article before this noun.
+     332 | she were getting into bed.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      334 | “All right,” said Daisy. ‘‘What’ll we plan?” She turned to me helplessly: ‘‘What
          |                            ^~~~~~~ Did you mean `That'll`?
 Suggest:
   - Replace with: “That'll”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     352 | Sometimes she and Miss Baker talked at once, unobtrusively and with a bantering
+         |                        ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
 
 
 
@@ -609,6 +759,28 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     389 | “You ought to live in California—” began Miss Baker, but Tom interrupted her by
+         |                                               ^~~~~ Consider adding an article before this noun.
+     390 | shifting heavily in his chair.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     394 | me again. ‘‘—And we’ve produced all the things that go to make civilization—oh,
+         |                                                                ^~~~~~~~~~~~ Consider adding an article before this noun.
+     395 | science and art, and all that. Do you see?”
+Suggest:
+  - Replace with: “a civilization”
+  - Replace with: “the civilization”
+
+
+
 Lint:    Style (31 priority)
 Message: |
      394 | me again. ‘‘—And we’ve produced all the things that go to make civilization—oh,
@@ -616,6 +788,16 @@ Message: |
          | ^~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     411 | “Things went from bad to worse,” suggested Miss Baker.
+         |                                                 ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
 
 
 
@@ -642,6 +824,37 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     427 | rose. Doesn’t he?” She turned to Miss Baker for confirmation: “An absolute
+         |                                       ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     437 | subdued impassioned murmur was audible in the room beyond, and Miss Baker leaned
+         |                                                                     ^~~~~ Consider adding an article before this noun.
+     438 | forward unashamed, trying to hear. The murmur trembled on the verge of
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     447 | “You mean to say you don’t know?” said Miss Baker, honestly surprised. “I
+         |                                             ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      464 | “It couldn’t be helped!” cried Daisy with tense gayety.
@@ -650,6 +863,16 @@ Suggest:
   - Replace with: “gaiety”
   - Replace with: “gamely”
   - Replace with: “gamete”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     466 | She sat down, glanced searchingly at Miss Baker and then at me, and continued:
+         |                                           ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
 
 
 
@@ -700,6 +923,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     484 | The horses, needless to say, were not mentioned again. Tom and Miss Baker, with
+         |                                                                     ^~~~~ Consider adding an article before this noun.
+     485 | several feet of twilight between them, strolled back into the library, as if to
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      529 | the whole evening had been a trick of some sort to exact a contributary emotion
@@ -709,6 +943,17 @@ Suggest:
   - Replace with: “contributory”
   - Replace with: “contributor”
   - Replace with: “contributors”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     534 | Inside, the crimson room bloomed with light. Tom and Miss Baker sat at either
+         |                                                           ^~~~~ Consider adding an article before this noun.
+     535 | end of the long couch and she read aloud to him from the Saturday Evening
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
 
 
 
@@ -746,12 +991,44 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     572 | “Good night,” called Miss Baker from the stairs. “I haven’t heard a word.”
+         |                           ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
      583 | here this summer. I think the home influence will be very good for her.”
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
 Suggest:
   - Replace with: “excellent”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     601 | I said lightly that I had heard nothing at all, and a few minutes later I got up
+     602 | to go home. They came to the door with me and stood side by side in a cheerful
+         |       ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a home”
+  - Replace with: “the home”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     602 | to go home. They came to the door with me and stood side by side in a cheerful
+         |                                                     ^~~~ Consider adding an article before this noun.
+     603 | square of light. As I started my motor Daisy peremptorily called: “Wait!
+Suggest:
+  - Replace with: “a side”
+  - Replace with: “the side”
 
 
 
@@ -1178,6 +1455,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     848 | Several old copies of Town Tattle lay on the table together with a copy of
+     849 | “Simon Called Peter,” and some of the small scandal magazines of Broadway. Mrs.
+         |               ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Peter”
+  - Replace with: “the Peter”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      850 | Wilson was first concerned with the dog. A reluctant elevator-boy went for a box
@@ -1210,6 +1498,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      863 | distorted things, because it didn’t make any sense to me.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     861 | had both disappeared, so I sat down discreetly in the living-room and read a
+     862 | chapter of “Simon Called Peter”—either it was terrible stuff or the whiskey
+         |                          ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Peter”
+  - Replace with: “the Peter”
 
 
 
@@ -1342,6 +1641,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1039 | kept saying to me: ‘Lucille, that man’s ’way below you!’ But if I hadn’t met
+    1040 | Chester, he’d of got me sure.”
+         | ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Chester”
+  - Replace with: “the Chester”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     1062 | She pointed suddenly at me, and every one looked at me accusingly. I tried to
@@ -1403,6 +1713,16 @@ Message: |
 Suggest:
   - Replace with: “him”
   - Replace with: “I”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1118 | Mrs. Wilson stood face to face discussing, in impassioned voices, whether Mrs.
+         |                   ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a face”
+  - Replace with: “the face”
 
 
 
@@ -1713,6 +2033,28 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1259 | She held my hand impersonally, as a promise that she’d take care of me in a
+         |                                                             ^~~~ Consider adding an article before this noun.
+    1260 | minute, and gave ear to two girls in twin yellow dresses, who stopped at the
+Suggest:
+  - Replace with: “a care”
+  - Replace with: “the care”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1259 | She held my hand impersonally, as a promise that she’d take care of me in a
+    1260 | minute, and gave ear to two girls in twin yellow dresses, who stopped at the
+         |                  ^~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an ear”
+  - Replace with: “the ear”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1287 | and address—inside of a week I got a package from Croirier’s with a new evening
@@ -1768,6 +2110,28 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1347 | chance we tried an important-looking door, and walked into a high Gothic
+    1348 | library, panelled with carved English oak, and probably transported complete
+         |                               ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an English”
+  - Replace with: “the English”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1353 | at the shelves of books. As we entered he wheeled excitedly around and examined
+    1354 | Jordan from head to foot.
+         | ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Jordan”
+  - Replace with: “the Jordan”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1373 | Taking our scepticism for granted, he rushed to the bookcases and returned with
@@ -1811,6 +2175,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1376 | “See!” he cried triumphantly. “It’s a bona-fide piece of printed matter. It
+         |                                                                  ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a matter”
+  - Replace with: “the matter”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1377 | fooled me. This fella’s a regular Belasco. It’s a triumph. What thoroughness!
@@ -1830,6 +2204,16 @@ Suggest:
   - Replace with: “Bela's”
   - Replace with: “Belau's”
   - Replace with: “Basho”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1389 | “I was brought by a woman named Roosevelt,” he continued. “Mrs. Claud Roosevelt.
+         |                                 ^~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Roosevelt”
+  - Replace with: “the Roosevelt”
 
 
 
@@ -1921,6 +2305,16 @@ Message: |
          |                             ^~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1491 | A dim background started to take shape behind him, but at her next remark it
+         |                                  ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a shape”
+  - Replace with: “the shape”
 
 
 
@@ -2037,6 +2431,37 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1580 | The reluctance to go home was not confined to wayward men. The hall was at
+         |                      ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a home”
+  - Replace with: “the home”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1584 | “Whenever he sees I’m having a good time he wants to go home.”
+         |                                                         ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a home”
+  - Replace with: “the home”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1592 | “Well, we’re almost the last to-night,” said one of the men sheepishly. “The
+    1593 | orchestra left half an hour ago.”
+         |                ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a half”
+  - Replace with: “the half”
+
+
+
 Lint:    Formatting (63 priority)
 Message: |
     1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
@@ -2087,6 +2512,26 @@ Suggest:
   - Replace with: “coup”
   - Replace with: “coupe”
   - Replace with: “coups”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1676 | “Do you want to commit suicide?”
+         |                        ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a suicide”
+  - Replace with: “the suicide”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1683 | The shock that followed this declaration found voice in a sustained “Ah-h-h!” as
+         |                                                ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a voice”
+  - Replace with: “the voice”
 
 
 
@@ -2238,6 +2683,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1792 | smile turned to the world and yet satisfy the demands of her hard, jaunty body.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1823 | think of was how, when that certain girl played tennis, a faint mustache of
+         |                                                 ^~~~~~ Consider adding an article before this noun.
+    1824 | perspiration appeared on her upper lip. Nevertheless there was a vague
+Suggest:
+  - Replace with: “a tennis”
+  - Replace with: “the tennis”
 
 
 
@@ -3064,6 +3520,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
+    1897 | Claudia Hip, with a man reputed to be her chauffeur, and a prince of something,
+         | ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Claudia”
+  - Replace with: “the Claudia”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1911 | He was balancing himself on the dashboard of his car with that resourcefulness
@@ -3074,6 +3541,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1914 | nervous, sporadic games. This quality was continually breaking through his
          | ~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 44 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    1935 | And then came that disconcerting ride. We hadn’t reached West Egg Village before
+         |                                                          ^~~~ Consider adding an article before this noun.
+    1936 | Gatsby began leaving his elegant sentences unfinished and slapping himself
+Suggest:
+  - Replace with: “a West”
+  - Replace with: “the West”
 
 
 
@@ -3211,6 +3689,57 @@ Suggest:
   - Replace with: “gnawing”
   - Replace with: “gearings”
   - Replace with: “gratings”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2032 | “No, this afternoon. I happened to find out that you’re taking Miss Baker to
+         |                                                                     ^~~~~ Consider adding an article before this noun.
+    2033 | tea.”
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2035 | “Do you mean you’re in love with Miss Baker?”
+         |                                       ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2037 | “No, old sport, I’m not. But Miss Baker has kindly consented to speak to you
+         |                                   ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2041 | interested. I hadn’t asked Jordan to tea in order to discuss Mr. Jay Gatsby. I
+         |                            ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Jordan”
+  - Replace with: “the Jordan”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2041 | interested. I hadn’t asked Jordan to tea in order to discuss Mr. Jay Gatsby. I
+         |                                                              ^~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Mr”
+  - Replace with: “the Mr”
 
 
 
@@ -3470,6 +3999,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2174 | out frankly and tell me what you want. Why has it all got to come through Miss
+    2175 | Baker?”
+         | ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2181 | me with Mr. Wolfshiem at the table.
@@ -3521,6 +4061,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2204 | myself: ‘There’s the kind of man you’d like to take home and introduce to your
+         |                                                     ^~~~ Consider adding an article before this noun.
+    2205 | mother and sister.’” He paused. “I see you’re looking at my cuff buttons.”
+Suggest:
+  - Replace with: “a home”
+  - Replace with: “the home”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2218 | Mr. Wolfshiem drank his coffee with a jerk and got to his feet.
@@ -3567,6 +4118,16 @@ Message: |
          |                                                                      ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2267 | When he saw us Tom jumped up and took half a dozen steps in our direction.
+         |                                       ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a half”
+  - Replace with: “the half”
 
 
 
@@ -3624,6 +4185,16 @@ Suggest:
   - Replace with: “beau”
   - Replace with: “beaus”
   - Replace with: “beaut”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
+         |                                               ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Daisy”
+  - Replace with: “the Daisy”
 
 
 
@@ -3728,6 +4299,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2360 | But she didn’t say another word. We gave her spirits of ammonia and put ice on
+         |                                                                         ^~~ Consider adding an article before this noun.
+    2361 | her forehead and hooked her back into her dress, and half an hour later, when we
+Suggest:
+  - Replace with: “an ice”
+  - Replace with: “the ice”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2373 | week after I left Santa Barbara Tom ran into a wagon on the Ventura road one
@@ -3772,6 +4354,17 @@ Suggest:
   - Replace with: “Sheikh”
   - Replace with: “Sabik”
   - Replace with: “Seiko”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2416 | “He wants to know,” continued Jordan, “if you'll invite Daisy to your house some
+         |                                                         ^~~~~ Consider adding an article before this noun.
+    2417 | afternoon and then let him come over.”
+Suggest:
+  - Replace with: “a Daisy”
+  - Replace with: “the Daisy”
 
 
 
@@ -3828,6 +4421,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2505 | “I talked with Miss Baker,” I said after a moment. “I’m going to call up Daisy
+         |                     ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Baker”
+  - Replace with: “the Baker”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2555 | “You wouldn’t have to do any business with Wolfshiem.” Evidently he thought that
@@ -3856,6 +4459,26 @@ Suggest:
   - Replace with: “Cone”
   - Replace with: “Conley”
   - Replace with: “Corey”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2566 | “Don’t bring Tom,” I warned her.
+         |              ^~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Tom”
+  - Replace with: “the Tom”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2570 | “Don’t bring Tom.”
+         |              ^~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Tom”
+  - Replace with: “the Tom”
 
 
 
@@ -4043,6 +4666,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2843 | doing liver exercises on the floor. It was Mr. Klipspringer, the ‘‘boarder.” I
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    2841 | vivid with new flowers, through dressing-rooms and poolrooms, and bathrooms with
+    2842 | sunken baths—intruding into one chamber where a dishevelled man in pajamas was
+         |        ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a baths”
+  - Replace with: “the baths”
 
 
 
@@ -4304,6 +4938,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    3066 | for something to do on the day that Dan Cody’s yacht dropped anchor in the
+         |                                                              ^~~~~~ Consider adding an article before this noun.
+    3067 | shallows alongshore.
+Suggest:
+  - Replace with: “an anchor”
+  - Replace with: “the anchor”
+
+
+
 Lint:    WordChoice (63 priority)
 Message: |
     3073 | tried to separate him from his money. The none too savory ramifications by which
@@ -4386,6 +5031,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    3088 | He was employed in a vague personal capacity—while he remained with Cody he was
+    3089 | in turn steward, mate, skipper, secretary, and even jailor, for Dan Cody sober
+         |         ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a steward”
+  - Replace with: “the steward”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3089 | in turn steward, mate, skipper, secretary, and even jailor, for Dan Cody sober
@@ -4408,6 +5064,27 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3099 | and saloon. It was indirectly due to Cody that Gatsby drank so little. Sometimes
          | ~~~~~~~~~~~ This sentence is 44 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    3100 | in the course of gay parties women used to rub champagne into his hair; for
+         |                                                ^~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a champagne”
+  - Replace with: “the champagne”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    3100 | in the course of gay parties women used to rub champagne into his hair; for
+    3101 | himself he formed the habit of letting liquor alone.
+         |                                        ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a liquor”
+  - Replace with: “the liquor”
 
 
 
@@ -4534,6 +5211,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    3239 | merely grown used to it, grown to accept West Egg as a world complete in itself,
+         |                                          ^~~~ Consider adding an article before this noun.
+    3240 | with its own standards and its own great figures, second to nothing because it
+Suggest:
+  - Replace with: “a West”
+  - Replace with: “the West”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3254 | “I’m looking around. I’m having a marvellous—”
@@ -4572,6 +5260,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    3318 | A massive and lethargic woman, who had been urging Daisy to play golf with her
+         |                                                                  ^~~~ Consider adding an article before this noun.
+    3319 | at the local club to-morrow, spoke in Miss Baedeker’s defence:
+Suggest:
+  - Replace with: “a golf”
+  - Replace with: “the golf”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3319 | at the local club to-morrow, spoke in Miss Baedeker’s defence:
@@ -4580,6 +5279,16 @@ Suggest:
   - Replace with: “defense”
   - Replace with: “decency”
   - Replace with: “deface”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    3326 | “We heard you yelling, so I said to Doc Civet here: ‘There’s somebody that needs
+         |                                         ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Civet”
+  - Replace with: “the Civet”
 
 
 
@@ -4682,6 +5391,17 @@ Message: |
          |     ^~~~~~~~~~ Did you mean the closed compound noun “heartbeat”?
 Suggest:
   - Replace with: “heartbeat”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    3488 | somewhere a long time ago. For a moment a phrase tried to take shape in my mouth
+         |                                                                ^~~~~ Consider adding an article before this noun.
+    3489 | and my lips parted like a dumb man’s, as though there was more struggling upon
+Suggest:
+  - Replace with: “a shape”
+  - Replace with: “the shape”
 
 
 
@@ -4960,6 +5680,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
+         |                                         ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a powder”
+  - Replace with: “the powder”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
@@ -5109,6 +5839,16 @@ Suggest:
   - Replace with: “Excalibur's”
   - Replace with: “Vicksburg's”
   - Replace with: “Iceberg's”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    3915 | “I’ve been here too long. I want to get away. My wife and I want to go West.”
+         |                                                                        ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a West”
+  - Replace with: “the West”
 
 
 
@@ -5433,6 +6173,27 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4136 | “Wait a minute,” snapped Tom, “I want to ask Mr. Gatsby one more question.”
+         |                                              ^~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Mr”
+  - Replace with: “the Mr”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4147 | “Self-control!” repeated Tom incredulously. “I suppose the latest thing is to
+    4148 | sit back and let Mr. Nobody from Nowhere make love to your wife. Well, if that’s
+         |                  ^~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Mr”
+  - Replace with: “the Mr”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     4182 | was poor and she was tired of waiting for me. It was a terrible mistake, but in
@@ -5462,6 +6223,17 @@ Suggest:
   - Replace with: “your”
   - Replace with: “you're a”
   - Replace with: “you're an”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4207 | “You’re crazy!” he exploded. “I can’t speak about what happened five years ago,
+    4208 | because I didn’t know Daisy then—and I’ll be damned if I see how you got within
+         |                       ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Daisy”
+  - Replace with: “the Daisy”
 
 
 
@@ -5496,6 +6268,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4283 | “You don’t understand,” said Gatsby, with a touch of panic. “You’re not going to
+    4284 | take care of her any more.”
+         |      ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a care”
+  - Replace with: “the care”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4300 | “Who are you, anyhow?” broke out Tom. “You’re one of that bunch that hangs
@@ -5512,6 +6295,27 @@ Message: |
          |              ^~~~~~~~~ Did you mean `Bolshie`?
 Suggest:
   - Replace with: “Bolshie”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4307 | “He and this Wolfshiem bought up a lot of side-street drug-stores here and in
+    4308 | Chicago and sold grain alcohol over the counter. That’s one of his little
+         |                  ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a grain”
+  - Replace with: “the grain”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4316 | over in New Jersey. God! You ought to hear Walter on the subject of you.”
+         |                                            ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Walter”
+  - Replace with: “the Walter”
 
 
 
@@ -5571,6 +6375,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4360 | After a moment Tom got up and began wrapping the unopened bottle of whiskey in
+         |                                     ^~~~~~~~ Consider adding an article before this noun.
+    4361 | the towel.
+Suggest:
+  - Replace with: “a wrapping”
+  - Replace with: “the wrapping”
+
+
+
 Lint:    Formatting (63 priority)
 Message: |
     4373 | “No . . . I just remembered that to-day’s my birthday.”
@@ -5610,6 +6425,17 @@ Suggest:
   - Replace with: “asthma's”
   - Replace with: “airheads”
   - Replace with: “ashcans”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4393 | five, when he strolled over to the garage, and found George Wilson sick in his
+         |                                                      ^~~~~~ Consider adding an article before this noun.
+    4394 | office—really sick, pale as his own pale hair and shaking all over. Michaelis
+Suggest:
+  - Replace with: “a George”
+  - Replace with: “the George”
 
 
 
@@ -5921,6 +6747,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
+    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
+         | ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a half”
+  - Replace with: “the half”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
@@ -5975,6 +6812,17 @@ Suggest:
   - Replace with: “falter's”
   - Replace with: “feaster's”
   - Replace with: “fester's”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4528 | Some words of this conversation must have reached Wilson, swaying in the office
+    4529 | door, for suddenly a new theme found voice among his gasping cries:
+         |                                      ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a voice”
+  - Replace with: “the voice”
 
 
 
@@ -6091,6 +6939,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4781 | hint of bedrooms up-stairs more beautiful and cool than other bedrooms, of gay
+    4782 | and radiant activities taking place through its corridors, and of romances that
+         |                               ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a place”
+  - Replace with: “the place”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     4797 | pretenses. I don’t mean that he had traded on his phantom millions, but he had
@@ -6101,6 +6960,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4800 | of her. As a matter of fact, he had no such facilities—he had no comfortable
          | ~~~~~~~ This sentence is 47 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4799 | person from much the same strata as herself—that he was fully able to take care
+         |                                                                            ^~~~ Consider adding an article before this noun.
+    4800 | of her. As a matter of fact, he had no such facilities—he had no comfortable
+Suggest:
+  - Replace with: “a care”
+  - Replace with: “the care”
 
 
 
@@ -6142,6 +7012,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4840 | the divisional machine-guns. After the armistice he tried frantically to get
+    4841 | home, but some complication or misunderstanding sent him to Oxford instead. He
+         | ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a home”
+  - Replace with: “the home”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4850 | saxophones wailed the hopeless comment of the “Beale Street Blues” while a
@@ -6164,6 +7045,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4859 | tangled among dying orchids on the floor beside her bed. And all the time
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 52 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    4864 | That force took shape in the middle of spring with the arrival of Tom Buchanan.
+         |                 ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a shape”
+  - Replace with: “the shape”
 
 
 
@@ -6421,6 +7312,28 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5149 | “I spoke to her,” he muttered, after a long silence. “I told her she might fool
+    5150 | me but she couldn’t fool God. I took her to the window”—with an effort he got up
+         |                          ^~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a God”
+  - Replace with: “the God”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5152 | said ‘God knows what you’ve been doing, everything you’ve been doing. You may
+    5153 | fool me, but you can’t fool God!’”
+         |                             ^~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a God”
+  - Replace with: “the God”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5155 | Standing behind him, Michaelis saw with a shock that he was looking at the eyes
@@ -6501,6 +7414,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5171 | His movements—he was on foot all the time—were afterward traced to Port
+    5172 | Roosevelt and then to Gad’s Hill, where he bought a sandwich that he didn’t eat,
+         | ^~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Roosevelt”
+  - Replace with: “the Roosevelt”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5171 | His movements—he was on foot all the time—were afterward traced to Port
@@ -6545,6 +7469,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5185 | At two o’clock Gatsby put on his bathing-suit and left word with the butler that
+         |                                                        ^~~~ Consider adding an article before this noun.
+    5186 | if any one phoned word was to be brought to him at the pool. He stopped at the
+Suggest:
+  - Replace with: “a word”
+  - Replace with: “the word”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     5185 | At two o’clock Gatsby put on his bathing-suit and left word with the butler that
@@ -6555,6 +7490,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5189 | car wasn’t to be taken out under any circumstances—and this was strange, because
+    5190 | the front right fender needed repair.
+         |                               ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a repair”
+  - Replace with: “the repair”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     5197 | for it until four o’clock—until long after there was any one to give it to if it
@@ -6562,6 +7508,17 @@ Message: |
     5198 | came. I have an idea that Gatsby himself didn’t believe it would come, and
 Suggest:
   - Replace with: “anyone”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5202 | shivered as he found what a grotesque thing a rose is and how raw the sunlight
+    5203 | was upon the scarcely created grass. A new world, material without being real,
+         |                               ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a grass”
+  - Replace with: “the grass”
 
 
 
@@ -6696,6 +7653,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5260 | without hesitation. But she and Tom had gone away early that afternoon, and
+    5261 | taken baggage with them.
+         |       ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a baggage”
+  - Replace with: “the baggage”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5279 | Meyer Wolfshiem’s name wasn’t in the phone book. The butler gave me his office
@@ -6713,6 +7681,17 @@ Message: |
          | ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “Someone”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5301 | definitely that his parents were dead. But there was nothing—only the picture of
+    5302 | Dan Cody, a token of forgotten violence, staring down from the wall.
+         |                                ^~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a violence”
+  - Replace with: “the violence”
 
 
 
@@ -6789,6 +7768,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5329 | When the phone rang that afternoon and Long Distance said Chicago was calling I
+         |                                                           ^~~~~~~ Consider adding an article before this noun.
+    5330 | thought this would be Daisy at last. But the connection came through as a man’s
+Suggest:
+  - Replace with: “a Chicago”
+  - Replace with: “the Chicago”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5333 | “This is Slagle speaking . . .”
@@ -6846,6 +7836,16 @@ Message: |
          |                   ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Then”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
+         |                                                        ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Henry”
+  - Replace with: “the Henry”
 
 
 
@@ -7136,6 +8136,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5559 | drizzle. After changing my clothes I went next door and found Mr. Gatz walking
+         |                                                               ^~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Mr”
+  - Replace with: “the Mr”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5559 | drizzle. After changing my clothes I went next door and found Mr. Gatz walking
@@ -7309,6 +8319,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5666 | going to the Ordways’? the Herseys’? the Schultzes’?” and the long green tickets
          | ~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5664 | This-or-That’s and the chatter of frozen breath and the hands waving overhead as
+         |                                          ^~~~~~ Consider adding an article before this noun.
+    5665 | we caught sight of old acquaintances, and the matchings of invitations: “Are you
+Suggest:
+  - Replace with: “a breath”
+  - Replace with: “the breath”
 
 
 
@@ -7487,6 +8508,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5714 | leaf, her face the same brown tint as the fingerless glove on her knee. When I
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+    5712 | She was dressed to play golf, and I remember thinking she looked like a good
+         |                         ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a golf”
+  - Replace with: “the golf”
 
 
 

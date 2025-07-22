@@ -219,6 +219,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+      85 | Research on part-of-speech tagging has been closely tied to corpus linguistics.
+         |                                                                    ^~~~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a linguistics”
+  - Replace with: “the linguistics”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       86 | The first major corpus of English for computer analysis was the Brown Corpus
@@ -239,6 +249,17 @@ Suggest:
   - Replace with: “We”
   - Replace with: “WA”
   - Replace with: “WC”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+      88 | mid-1960s. It consists of about 1,000,000 words of running English prose text,
+         |                                                            ^~~~~~~ Consider adding an article before this noun.
+      89 | made up of 500 samples from randomly chosen publications. Each sample is 2,000
+Suggest:
+  - Replace with: “an English”
+  - Replace with: “the English”
 
 
 
@@ -317,6 +338,17 @@ Suggest:
   - Replace with: “Hams”
   - Replace with: “Ha's”
   - Replace with: “HMO's”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     138 | European group developed CLAWS, a tagging program that did exactly this and
+     139 | achieved accuracy in the 93–95% range.
+         |          ^~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an accuracy”
+  - Replace with: “the accuracy”
 
 
 
@@ -486,6 +518,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      179 | separate other pieces as well. Markov Models became the standard method for the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     184 | The methods already discussed involve working from a pre-existing corpus to
+     185 | learn tag probabilities. It is, however, also possible to bootstrap using
+         |       ^~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a tag”
+  - Replace with: “the tag”
 
 
 

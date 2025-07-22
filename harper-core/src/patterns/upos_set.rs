@@ -15,6 +15,11 @@ impl UPOSSet {
             allowed_tags: allowed.to_smallvec(),
         }
     }
+
+    /// Construct a new set with the tags needed to detect nominal words.
+    pub fn new_nominal() -> Self {
+        Self::new(&[UPOS::NOUN, UPOS::PROPN, UPOS::PRON])
+    }
 }
 
 impl Pattern for UPOSSet {

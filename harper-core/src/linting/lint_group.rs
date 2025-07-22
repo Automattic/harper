@@ -57,6 +57,7 @@ use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
 use super::looking_forward_to::LookingForwardTo;
 use super::merge_words::MergeWords;
+use super::missing_article::MissingArticle;
 use super::missing_preposition::MissingPreposition;
 use super::modal_of::ModalOf;
 use super::months::Months;
@@ -401,6 +402,7 @@ impl LintGroup {
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
         insert_expr_rule!(DoubleModal, true);
+        insert_expr_rule!(MissingArticle, true);
         insert_expr_rule!(MissingPreposition, true);
         insert_struct_rule!(DiscourseMarkers, true);
         insert_expr_rule!(WayTooAdjective, true);

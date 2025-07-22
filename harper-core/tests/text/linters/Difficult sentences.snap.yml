@@ -65,6 +65,27 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     123 | He looks better for having lost weight. (UK usage)
+         |                                 ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a weight”
+  - Replace with: “the weight”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     128 | Ten voted for, and three against. (with implied object)
+         |                                                 ^~~~~~ Consider adding an article before this noun.
+     129 | Make way for the president!
+Suggest:
+  - Replace with: “an object”
+  - Replace with: “the object”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      160 | to account for one's whereabouts.

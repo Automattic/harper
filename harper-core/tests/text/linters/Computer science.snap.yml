@@ -1,3 +1,24 @@
+Lint:    Miscellaneous (0 priority)
+Message: |
+      13 | Algorithms and data structures are central to computer science. The theory of
+         |                                                        ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a science”
+  - Replace with: “the science”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+      16 | security involve studying the means for secure communication and preventing
+         |                                                ^~~~~~~~~~~~~ Consider adding an article before this noun.
+      17 | security vulnerabilities. Computer graphics and computational geometry address
+Suggest:
+  - Replace with: “a communication”
+  - Replace with: “the communication”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       45 | Wilhelm Schickard designed and constructed the first working mechanical
@@ -75,6 +96,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       62 | published algorithm ever specifically tailored for implementation on a computer.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+      64 | to process statistical information; eventually his company became part of IBM.
+         |                                                                   ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a part”
+  - Replace with: “the part”
 
 
 
@@ -161,6 +192,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+      75 | hundred years after Babbage's impossible dream, Howard Aiken convinced IBM,
+         |                                                                        ^~~ Consider adding an article before this noun.
+      76 | which was making all kinds of punched card equipment and was also in the
+Suggest:
+  - Replace with: “an IBM”
+  - Replace with: “the IBM”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       77 | calculator business to develop his giant programmable calculator, the
@@ -204,6 +246,17 @@ Message: |
          | ~~~~~~~~~~ Ensure proper capitalization of major universities in the United States.
 Suggest:
   - Replace with: “Columbia University”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+      90 | forerunner of IBM's Research Division, which today operates research facilities
+         |                                                             ^~~~~~~~ Consider adding an article before this noun.
+      91 | around the world. Ultimately, the close relationship between IBM and Columbia
+Suggest:
+  - Replace with: “a research”
+  - Replace with: “the research”
 
 
 
@@ -510,6 +563,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     137 | "In the U.S., however, informatics is linked with applied computing, or
+         |                                                           ^~~~~~~~~ Consider adding an article before this noun.
+     138 | computing in the context of another domain."
+Suggest:
+  - Replace with: “a computing”
+  - Replace with: “the computing”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      140 | A folkloric quotation, often attributed to—but almost certainly not first
@@ -621,6 +685,16 @@ Suggest:
   - Replace with: “Parana's”
   - Replace with: “Parr's”
   - Replace with: “Patna's”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     172 | and with a numerical orientation consider alignment with computational science.
+         |                                           ^~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an alignment”
+  - Replace with: “the alignment”
 
 
 
@@ -949,6 +1023,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     338 | habitats, among many others. Modern computers enable optimization of such
+         |                                                      ^~~~~~~~~~~~ Consider adding an article before this noun.
+     339 | designs as complete aircraft. Notable in electrical and electronic circuit
+Suggest:
+  - Replace with: “an optimization”
+  - Replace with: “the optimization”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      346 | Human–computer interaction (HCI) is the field of study and research concerned
@@ -972,12 +1057,34 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     356 | fast to build. It is a systematic approach to software design, involving the
+         |                                                        ^~~~~~ Consider adding an article before this noun.
+     357 | application of engineering practices to software. Software engineering deals
+Suggest:
+  - Replace with: “a design”
+  - Replace with: “the design”
+
+
+
 Lint:    Punctuation (31 priority)
 Message: |
      360 | maintenance. For example software testing, systems engineering, technical debt
          |              ^~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     370 | drawing on areas of expertise such as applied mathematics, symbolic logic,
+         |                                               ^~~~~~~~~~~ Consider adding an article before this noun.
+     371 | semiotics, electrical engineering, philosophy of mind, neurophysiology, and
+Suggest:
+  - Replace with: “a mathematics”
+  - Replace with: “the mathematics”
 
 
 
@@ -988,6 +1095,17 @@ Message: |
      372 | social intelligence. AI is associated in the popular mind with robotic
 Suggest:
   - Replace with: “neurobiology”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     377 | although the Turing test is still used to assess computer output on the scale of
+         |                                                  ^~~~~~~~ Consider adding an article before this noun.
+     378 | human intelligence. But the automation of evaluative and predictive tasks has
+Suggest:
+  - Replace with: “a computer”
+  - Replace with: “the computer”
 
 
 
@@ -1010,6 +1128,16 @@ Suggest:
   - Replace with: “Pt”
   - Replace with: “P”
   - Replace with: “Pa”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     397 | #### Concurrent, parallel and distributed computing
+         |                                           ^~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a computing”
+  - Replace with: “the computing”
 
 
 
@@ -1197,6 +1325,16 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     469 |     goto (which means it is more elementary than structured programming).
+         |                                                             ^~~~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a programming”
+  - Replace with: “the programming”
+
+
+
 Lint:    Miscellaneous (10 priority)
 Message: |
      489 |   feature of objects is that an object's procedures can access and often modify
@@ -1214,6 +1352,37 @@ Message: |
      491 |   object-oriented computer programs are made out of objects that interact with
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     494 |   the unit of computer work, to design and implement integrated business
+         |                                                                 ^~~~~~~~ Consider adding an article before this noun.
+     495 |   applications and mission critical software programs.
+Suggest:
+  - Replace with: “a business”
+  - Replace with: “the business”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     497 | Many languages offer support for multiple paradigms, making the distinction more
+         |                      ^~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a support”
+  - Replace with: “the support”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     506 | One proposed explanation for this is the quick development of this relatively
+         |              ^~~~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an explanation”
+  - Replace with: “the explanation”
 
 
 

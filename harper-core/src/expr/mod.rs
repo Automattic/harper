@@ -150,6 +150,8 @@ where
 pub trait OwnedExprExt {
     fn or(self, other: impl Expr + 'static) -> FirstMatchOf;
     fn or_longest(self, other: impl Expr + 'static) -> LongestMatchOf;
+    fn and(self, other: impl Expr + 'static) -> All;
+    fn and_not(self, other: impl Expr + 'static) -> All;
 }
 
 impl<E> OwnedExprExt for E
@@ -166,5 +168,13 @@ where
     /// If you don't need the longest match, prefer using the short-circuiting [`Self::or()`] instead.
     fn or_longest(self, other: impl Expr + 'static) -> LongestMatchOf {
         LongestMatchOf::new(vec![Box::new(self), Box::new(other)])
+    }
+
+    fn and(self, other: impl Expr + 'static) -> All {
+        All::new(vec![Box::new(self), Box::new(other)])
+    }
+
+    fn and_not(self, other: impl Expr + 'static) -> All {
+        self.and(UnlessStep::new(other, |_: &Token, _: &[char]| true))
     }
 }

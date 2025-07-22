@@ -45,7 +45,7 @@ impl ExprLinter for Confident {
     }
 
     fn description(&self) -> &'static str {
-        "This linter detects instances where the noun `confidant` is incorrectly used in place of the adjective `confident`. `Confidant` refers to a trusted person, whereas `confident` describes certainty or self-assurance. The rule suggests replacing `confidant` with `confident` when used in an adjectival context."
+        "This linter detects instances where the noun `confidant` is incorrectly used in place of the adjective `confident`. `Confidant` refers to a trusted person, whereas `confident` describes some certainty or self-assurance. The rule suggests replacing `confidant` with `confident` when used in an adjectival context."
     }
 }
 

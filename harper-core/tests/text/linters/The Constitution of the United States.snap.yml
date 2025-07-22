@@ -81,6 +81,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+      28 | insurrection or rebellion against the same, or given aid or comfort to the
+         |                                                      ^~~ Consider adding an article before this noun.
+      29 | enemies thereof. But Congress may, by a vote of two-thirds of each House,
+Suggest:
+  - Replace with: “an aid”
+  - Replace with: “the aid”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
       38 | The House of Representatives shall be composed of Members
@@ -560,12 +571,52 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     207 | 1. To borrow Money on the credit of the United States;
+         |              ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Money”
+  - Replace with: “the Money”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     209 | 2. To regulate Commerce with foreign Nations, and among the several States, and
+         |                ^~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Commerce”
+  - Replace with: “the Commerce”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
      212 | 3. To establish an uniform Rule of Naturalization, and uniform Laws on the subject
          |                 ^~ Incorrect indefinite article.
 Suggest:
   - Replace with: “a”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     215 | 4. To coin Money, regulate the Value thereof, and of foreign Coin, and fix the
+         |            ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Money”
+  - Replace with: “the Money”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     221 | 6. To establish Post Offices and post Roads;
+         |                 ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Post”
+  - Replace with: “the Post”
 
 
 
@@ -587,6 +638,16 @@ Message: |
 Suggest:
   - Replace with: “Offenses”
   - Replace with: “Fences”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     232 | 10. To declare War, grant Letters of Marque and Reprisal, and make Rules concerning
+         |                ^~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a War”
+  - Replace with: “the War”
 
 
 
@@ -978,6 +1039,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      404 | acting as President during the remainder of such term.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 65 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     402 | holding the office of President, or acting as President, during the term within
+     403 | which this article becomes operative from holding the office of President or
+         |                            ^~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an operative”
+  - Replace with: “the operative”
 
 
 
