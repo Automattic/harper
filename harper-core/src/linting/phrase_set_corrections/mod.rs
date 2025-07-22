@@ -194,16 +194,6 @@ pub fn lint_group() -> LintGroup {
             "Use `do` instead of `due` when referring to a resource scarcity.",
             "Corrects `make due` to `make do` when followed by `with`."
         ),
-        "MakeItSeem" => (
-            &[
-                ("make it seems", "make it seem"),
-                ("made it seems", "made it seem"),
-                ("makes it seems", "makes it seem"),
-                ("making it seems", "making it seem"),
-            ],
-            "Don't inflect `seem` in `make it seem`.",
-            "Corrects `make it seems` to `make it seem`."
-        ),
         "MootPoint" => (
             &[
                 ("mute point", "moot point"),
@@ -267,6 +257,16 @@ pub fn lint_group() -> LintGroup {
             ],
             "Don't use both `how` and `like` together to express similarity.",
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
+        ),
+        "MakeItSeem" => (
+            &[
+                (&["make it seems"], &["make it seem"]),
+                (&["made it seems", "made it seemed"], &["made it seem"]),
+                (&["makes it seems"], &["makes it seem"]),
+                (&["making it seems"], &["making it seem"]),
+            ],
+            "Don't inflect `seem` in `make it seem`.",
+            "Corrects `make it seems` to `make it seem`."
         ),
         "RiseTheQuestion" => (
             &[
