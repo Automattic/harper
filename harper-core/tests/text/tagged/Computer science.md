@@ -275,7 +275,7 @@
 >
 #
 > A   folkloric quotation , often attributed to — but     almost certainly not   first
-# D/P J         NSg       . R     V/J        P  . NSg/C/P NSg    R         NSg/C NSg/V/J
+# D/P J         NSg       . R     V/J        P  . NSg/C/P R      R         NSg/C NSg/V/J
 > formulated by      — Edsger Dijkstra , states   that          " computer science is no    more         about
 # V/J        NSg/J/P . ?      NSg      . NPrPl/V+ NSg/I/C/Ddem+ . NSg/V+   N🅪Sg/V+ VL NPr/P NPr/I/V/J/Dq J/P
 > computers than astronomy is about telescopes . " [ note   3 ] The design and deployment
