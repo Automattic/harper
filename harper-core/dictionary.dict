@@ -48587,7 +48587,7 @@ tool's
 toolbar/~NSg
 toolbox/~NgS
 toolchain/NgS
-toolkit/~N
+toolkit/~NgS
 toolless/J
 toolmaker/NgS
 toolshed/NgS
@@ -52024,6 +52024,7 @@ wordily/R
 wordiness/Nmg
 wording/~NVSg
 wordless/JY
+wordlist/NgS
 wordplay/Nmg
 wordsmith/N0V
 wordsmiths/N9V
@@ -52535,6 +52536,8 @@ CRC/NgS             # cyclic redundancy check
 CRDT/NSg
 CRM/NOSg
 CTE/NS
+CTF/NSg             # capture the flag
+CVE/NSg             # Common Vulnerabilities and Exposures
 Captcha/OSg
 ChatGPT/Og          # OpenAI product
 ClickHouse/g
@@ -52934,6 +52937,7 @@ hoster/NgS
 hostname/NSg
 hotwire/VBG         # dictionaries prefer: hot-wire
 i18n/Nm             # internationalization
+infosec/NmG         # information security
 jQuery/Og
 labriola/Sg         # !! please check and comment !! - should be uppercase surname?
 linkification/Nmg
@@ -52944,6 +52948,7 @@ nullish/J
 olds/~              # common in phrasing such as "twenty year olds"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
 pastebin/NgS
+pentester/NSg       # penetration tester
 pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
 quadtree/NgS        # data structure
 quicksort/NgSVdG    # algo
@@ -53184,6 +53189,7 @@ lesser-known/J
 line break/NgS
 live action/N
 load-bearing/J
+lock picking/Nmg
 long-term/J
 longer-term/J>
 loosey-goosey/J
@@ -53267,6 +53273,7 @@ Pascal case/Nmg
 Pax Americana/Og
 peer review/NgSdG
 peer-reviewed/J
+pen test/NgS
 per capita/JR
 Petri dish/NgS
 petty bourgeois/Ng
@@ -53393,6 +53400,7 @@ walk through/V
 walk-through/J
 walkie-talkie/NgS
 Wall Streeter/NgS
+war game/NgS
 Wayback Machine/Og
 weapons-grade/J
 web app/NgS
@@ -53408,6 +53416,7 @@ well-respected/J
 well-timed/J
 well-trodden/J
 well-used/J
+white paper/NgS
 Wi-Fi/Ng
 wishy-washy/J
 working-class/NJgS
