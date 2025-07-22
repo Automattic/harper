@@ -1,7 +1,7 @@
 import { Span } from 'harper-wasm';
 import { expect, test } from 'vitest';
-import LocalLinter from './LocalLinter';
 import { binary } from './binary';
+import LocalLinter from './LocalLinter';
 
 test('works with strings', async () => {
 	const start = 'This is a string';

@@ -3,7 +3,7 @@ use crate::expr::FirstMatchOf;
 use crate::expr::LongestMatchOf;
 use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
-use crate::{Lrc, TokenStringExt, patterns::WordSet};
+use crate::{Lrc, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -103,7 +103,6 @@ impl ExprLinter for NounInsteadOfVerb {
 
     fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
         let toks = match_info.matched_tokens;
-        eprintln!("🏃 '{}' 🏃", toks.span()?.get_content_string(src));
         // If we have the next word token, try to rule out compound nouns
         if toks.len() > 4 {
             let following_tok = &toks[4];

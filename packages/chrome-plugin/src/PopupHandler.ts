@@ -1,7 +1,22 @@
 import h from 'virtual-dom/h';
-import { type LintBox, isPointInBox } from './Box';
+import { closestBox, isPointInBox, type LintBox } from './Box';
+import { getCaretPosition } from './editorUtils';
 import RenderBox from './RenderBox';
 import SuggestionBox from './SuggestionBox';
+
+type DoubleShiftHandler = () => void;
+
+function monitorDoubleShift(onDoubleShift: DoubleShiftHandler, interval = 300): () => void {
+	let lastTime = 0;
+	const handler = (e: KeyboardEvent) => {
+		if (e.key !== 'Shift') return;
+		const now = performance.now();
+		if (now - lastTime <= interval) onDoubleShift();
+		lastTime = now;
+	};
+	window.addEventListener('keydown', handler);
+	return () => window.removeEventListener('keydown', handler);
+}
 
 export default class PopupHandler {
 	private currentLintBoxes: LintBox[];
@@ -18,6 +33,22 @@ export default class PopupHandler {
 		this.pointerDownCallback = (e) => {
 			this.onPointerDown(e);
 		};
+
+		monitorDoubleShift(() => this.openClosestToCaret());
+	}
+
+	/** Tries to get the current caret position.
+	 * If successful, opens the popup closes to it. */
+	private openClosestToCaret() {
+		const caretPosition = getCaretPosition();
+
+		if (caretPosition != null) {
+			const closestIdx = closestBox(caretPosition, this.currentLintBoxes);
+
+			if (closestIdx >= 0) {
+				this.popupLint = closestIdx;
+			}
+		}
 	}
 
 	private onPointerDown(e: PointerEvent) {
