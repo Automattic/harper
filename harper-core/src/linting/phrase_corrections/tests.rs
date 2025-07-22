@@ -1418,6 +1418,6 @@ fn fixes_teh() {
     assert_suggestion_result(
         "I adore teh light of the moon.",
         lint_group(),
-        "I adore teh light of the moon.",
+        "I adore the light of the moon.",
     );
 }
