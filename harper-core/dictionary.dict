@@ -12659,8 +12659,8 @@ antisocial/JNY
 antispasmodic/JNgS
 antisubmarine/J
 antitank/J
-antitheses/9
-antithesis/~Ng
+antitheses/N9
+antithesis/~N0g
 antithetic/JN
 antithetical/JY
 antitoxin/NgS
@@ -14675,7 +14675,7 @@ biorhythm/NgS
 bioscience/NgS
 biosensor/NS
 biosphere/~NSg
-biosynthesis/~N
+biosynthesis/~Nm
 biosynthetic/J
 biotech/~N
 biotechnological/J
@@ -28836,8 +28836,8 @@ hypotenuse/NgS
 hypothalami/N
 hypothalamus/~Ng
 hypothermia/~Ng
-hypotheses/~9
-hypothesis/~Ng
+hypotheses/~N9
+hypothesis/~N0g
 hypothesise/V!_
 hypothesize/VdSG
 hypothetical/~JNYS
@@ -33458,8 +33458,8 @@ metastatic/J
 metatarsal/JNgS
 metatarsi/N
 metatarsus/Ng
-metatheses/9
-metathesis/Ng
+metatheses/N9
+metathesis/N0g
 metaverse/NgS
 mete/VNJgZGd>S
 metempsychoses/N
@@ -37422,7 +37422,7 @@ paren/NgS           # informal: parenthesis
 parent/~NVGgdS
 parentage/~Ng
 parental/~JN
-parentheses/~9
+parentheses/~N9
 parenthesis/N0g
 parenthesise/V!_
 parenthesize/VdSG
@@ -38365,7 +38365,7 @@ photostat/NVSg
 photostatic/J
 photostatted/V
 photostatting/V
-photosynthesis/~Ng
+photosynthesis/~Nmg
 photosynthesise/V!_
 photosynthesize/VGdS
 photosynthetic/J
@@ -40063,8 +40063,8 @@ prosper/~VGSd
 prosperity/~Ng
 prosperous/~JY
 prostate/~NJgS
-prostheses/9
-prosthesis/~Ng
+prostheses/N9
+prosthesis/~N0g
 prosthetic/~JNgSQ
 prostitute/~VJNgGndS
 prostitution/~Ng
@@ -47328,7 +47328,7 @@ syntactic/~J
 syntactical/JY
 syntax/~Ng
 syntheses/9
-synthesis/~Ng
+synthesis/~Nmg
 synthesise/V!_
 synthesize/~VZGd>S
 synthesizer/~Ng
@@ -48095,8 +48095,8 @@ thermostatic/JQ
 thesauri/N
 thesaurus/NgS
 these/~IDM
-theses/~9g
-thesis/~Ng
+theses/~N9
+thesis/~N0g
 thespian/JNSg
 theta/~NSg
 thew/NVgS

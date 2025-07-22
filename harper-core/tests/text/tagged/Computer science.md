@@ -621,7 +621,7 @@
 > Computer graphics is the study of digital visual contents and involves the
 # NSg/V+   NPl      VL D   NSg/V P  NSg/J   NSg/J  NPl/V+   V/C V        D+
 > synthesis and manipulation of image  data  . The study  is connected to many       other
-# NSg       V/C N🅪Sg         P  NSg/V+ N🅪Pl+ . D+  NSg/V+ VL V/J       P  NSg/I/J/Dq NSg/V/J
+# NᴹSg      V/C N🅪Sg         P  NSg/V+ N🅪Pl+ . D+  NSg/V+ VL V/J       P  NSg/I/J/Dq NSg/V/J
 > fields  in      computer science , including computer vision , image  processing , and
 # NPrPl/V NPr/J/P NSg/V+   N🅪Sg/V+ . V         NSg/V+   NSg/V+ . NSg/V+ V+         . V/C
 > computational geometry , and is heavily applied in      the fields  of special effects
@@ -647,7 +647,7 @@
 > information theory , telecommunications , information engineering and has
 # NᴹSg+       NSg+   . NPl+               . NᴹSg+       NSg/V+      V/C V
 > applications in      medical image  computing and speech  synthesis , among others . What
-# W?           NPr/J/P NSg/J   NSg/V+ NᴹSg/V    V/C N🅪Sg/V+ NSg+      . P     NPl/V+ . NSg/I+
+# W?           NPr/J/P NSg/J   NSg/V+ NᴹSg/V    V/C N🅪Sg/V+ NᴹSg+     . P     NPl/V+ . NSg/I+
 > is the lower    bound   on  the complexity of fast    Fourier transform algorithms ? is
 # VL D   NSg/V/JC NSg/V/J J/P D   NSg        P  NSg/V/J NPr     NSg/V     NPl+       . VL+
 > one       of the unsolved problems in      theoretical computer science .
