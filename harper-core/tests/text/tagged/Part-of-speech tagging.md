@@ -17,7 +17,7 @@
 > text  ( corpus ) as    corresponding to a   particular part    of speech  , based on  both   its
 # NSg/V . NSg+   . NSg/R NSg/V/J       P  D/P NSg/J      NSg/V/J P  N🅪Sg/V+ . V/J   J/P I/C/Dq ISg/D$+
 > definition and its     context . A   simplified form  of this    is commonly taught to
-# NSg        V/C ISg/D$+ NᴹSg/V+ . D/P V/J        NSg/V P  I/Ddem+ VL R        V      P
+# NSg        V/C ISg/D$+ N🅪Sg/V+ . D/P V/J        NSg/V P  I/Ddem+ VL R        V      P
 > school - age    children , in      the identification of words  as    nouns , verbs  , adjectives ,
 # NSg/V  . N🅪Sg/V NPl      . NPr/J/P D   NSg            P  NPl/V+ NSg/R NPl/V . NPl/V+ . NPl/V      .
 > adverbs , etc.
@@ -25,7 +25,7 @@
 >
 #
 > Once  performed by      hand   , POS  tagging is now       done    in      the context of computational
-# NSg/C V/J       NSg/J/P NSg/V+ . NSg+ NSg/V   VL NPr/V/J/C NSg/V/J NPr/J/P D   NᴹSg/V  P  J+
+# NSg/C V/J       NSg/J/P NSg/V+ . NSg+ NSg/V   VL NPr/V/J/C NSg/V/J NPr/J/P D   N🅪Sg/V  P  J+
 > linguistics , using algorithms which associate discrete terms  , as    well    as    hidden
 # NSg+        . V     NPl+       I/C+  NSg/V/J+  J        NPl/V+ . NSg/R NSg/V/J NSg/R V/J
 > parts of speech  , by      a   set     of descriptive tags   . POS  - tagging algorithms fall  into
@@ -61,13 +61,13 @@
 > Correct  grammatical tagging will   reflect that          " dogs   " is here    used as    a    verb   , not
 # NSg/V/J+ J           NSg/V   NPr/VX V       NSg/I/C/Ddem+ . NPl/V+ . VL NSg/J/R V/J  NSg/R D/P+ NSg/V+ . NSg/C
 > as    the more         common  plural noun   . Grammatical context is one       way    to determine
-# NSg/R D   NPr/I/V/J/Dq NSg/V/J NSg/J  NSg/V+ . J           NᴹSg/V+ VL NSg/I/V/J NSg/J+ P  V
+# NSg/R D   NPr/I/V/J/Dq NSg/V/J NSg/J  NSg/V+ . J           N🅪Sg/V+ VL NSg/I/V/J NSg/J+ P  V
 > this    ; semantic analysis can    also be     used to infer that          " sailor " and " hatch "
 # I/Ddem+ . NSg/J    N🅪Sg+    NPr/VX W?   NSg/VX V/J  P  V     NSg/I/C/Ddem+ . NSg+   . V/C . NSg/V .
 > implicate " dogs  " as    1 ) in      the nautical context and 2 ) an  action   applied to the
-# NSg/V     . NPl/V . NSg/R # . NPr/J/P D+  J+       NᴹSg/V+ V/C # . D/P NSg/V/J+ V/J     P  D
+# NSg/V     . NPl/V . NSg/R # . NPr/J/P D+  J+       N🅪Sg/V+ V/C # . D/P NSg/V/J+ V/J     P  D
 > object " hatch " ( in      this    context , " dogs   " is a   nautical term     meaning   " fastens ( a
-# NSg/V+ . NSg/V . . NPr/J/P I/Ddem+ NᴹSg/V+ . . NPl/V+ . VL D/P J        NSg/V/J+ N🅪Sg/V/J+ . V       . D/P
+# NSg/V+ . NSg/V . . NPr/J/P I/Ddem+ N🅪Sg/V+ . . NPl/V+ . VL D/P J        NSg/V/J+ N🅪Sg/V/J+ . V       . D/P
 > watertight door   ) securely " ) .
 # J          NSg/V+ . R        . . .
 >
@@ -221,7 +221,7 @@
 > part    of speech  cannot be     decided without understanding the semantics or    even    the
 # NSg/V/J P  N🅪Sg/V+ NSg/V  NSg/VX NSg/V/J C/P     NᴹSg/V/J+     D+  NPl       NPr/C NSg/V/J D
 > pragmatics of the context . This    is extremely expensive , especially because
-# NPl        P  D+  NᴹSg/V+ . I/Ddem+ VL R         J         . R          C/P
+# NPl        P  D+  N🅪Sg/V+ . I/Ddem+ VL R         J         . R          C/P
 > analyzing the higher  levels is much       harder when    multiple part    - of - speech
 # V         D+  NSg/JC+ NPl/V+ VL NSg/I/J/Dq JC     NSg/I/C NSg/J/Dq NSg/V/J . P  . N🅪Sg/V
 > possibilities must  be     considered for each word   .
