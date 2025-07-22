@@ -14,9 +14,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |       ^~~~~ Did you mean to spell `SCOTT` this way?
 Suggest:
+  - Replace with: “Scott”
   - Replace with: “Scot”
   - Replace with: “Scots”
-  - Replace with: “SCM's”
 
 
 
@@ -849,9 +849,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “To”
   - Replace with: “T”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -883,9 +883,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “To”
   - Replace with: “T”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -2399,9 +2399,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Re”
-  - Replace with: “R”
   - Replace with: “Rd”
+  - Replace with: “R”
+  - Replace with: “RC”
 
 
 
@@ -2410,7 +2410,7 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
+  - Replace with: “Pt”
   - Replace with: “P”
   - Replace with: “Pa”
 
@@ -2623,8 +2623,8 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Gt”
-  - Replace with: “Go”
-  - Replace with: “Gr”
+  - Replace with: “Gm”
+  - Replace with: “GB”
 
 
 
@@ -2658,8 +2658,8 @@ Message: |
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
   - Replace with: “D”
-  - Replace with: “Dad”
-  - Replace with: “Dag”
+  - Replace with: “Dab”
+  - Replace with: “Dam”
 
 
 
@@ -2715,9 +2715,9 @@ Message: |
          |                                         ^~ Did you mean to spell `De` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
-  - Replace with: “Db”
   - Replace with: “Dd”
-  - Replace with: “Deb”
+  - Replace with: “Dew”
+  - Replace with: “Die”
 
 
 
@@ -2925,9 +2925,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “Lo”
   - Replace with: “Lb”
-  - Replace with: “Lg”
+  - Replace with: “La”
+  - Replace with: “LC”
 
 
 
@@ -3047,7 +3047,7 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
+  - Replace with: “Pt”
   - Replace with: “P”
   - Replace with: “Pa”
 
@@ -5083,9 +5083,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “To”
   - Replace with: “T”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -5152,9 +5152,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “To”
   - Replace with: “T”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -6436,9 +6436,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “To”
   - Replace with: “T”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -6509,7 +6509,7 @@ Message: |
 Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gd's”
-  - Replace with: “Gag's”
+  - Replace with: “Gab's”
 
 
 
@@ -6521,7 +6521,7 @@ Message: |
 Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gd's”
-  - Replace with: “Gag's”
+  - Replace with: “Gab's”
 
 
 
@@ -6854,7 +6854,7 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
-  - Replace with: “Cu”
+  - Replace with: “Cw”
   - Replace with: “C”
   - Replace with: “Cc”
 

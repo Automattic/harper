@@ -1,6 +1,6 @@
 import { dispatch } from '@wordpress/data';
-import RichText from './RichText';
 import { getNodesFromQuerySelector, getRichTextContainers } from './domUtils';
+import RichText from './RichText';
 
 /**
  * Represents a Gutenberg block on-screen.

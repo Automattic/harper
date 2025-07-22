@@ -79,3 +79,24 @@ export function isBottomEdgeInBox(inner: Box, outer: Box): boolean {
 	const rightBottom: [number, number] = [inner.x + inner.width, inner.y + inner.height];
 	return isPointInBox(leftBottom, outer) && isPointInBox(rightBottom, outer);
 }
+
+export function closestBox(target: Box, boxes: Box[]): number {
+	const cx = target.x + target.width / 2;
+	const cy = target.y + target.height / 2;
+
+	let min = Number.POSITIVE_INFINITY;
+	let idx = -1;
+
+	for (let i = 0; i < boxes.length; i++) {
+		const b = boxes[i];
+		if (boxesOverlap(target, b)) return i;
+		const bx = b.x + b.width / 2;
+		const by = b.y + b.height / 2;
+		const dist = Math.hypot(bx - cx, by - cy);
+		if (dist < min) {
+			min = dist;
+			idx = i;
+		}
+	}
+	return idx;
+}

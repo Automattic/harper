@@ -1,6 +1,6 @@
 <script>
 import { Textarea } from 'flowbite-svelte';
-import { WorkerLinter, binary } from 'harper.js';
+import { binary, WorkerLinter } from 'harper.js';
 import { onMount } from 'svelte';
 import Typed from 'typed.js';
 

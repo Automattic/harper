@@ -46,6 +46,12 @@ pub fn lint_group() -> LintGroup {
             "When describafterg a timeframe, use `a while`.",
             "Corrects the missing article after `after while` or `after awhile`, forming `after a while`."
         ),
+        "AheadAnd" => (
+            ["ahead an"],
+            ["ahead and"],
+            "Did you make a typo? Shouldn't it be `and`?",
+            "Corrects `an` to `and` after `ahead`."
+        ),
         "AllOfASudden" => (
             ["all of the sudden"],
             ["all of a sudden"],
@@ -596,6 +602,12 @@ pub fn lint_group() -> LintGroup {
             ["let alone"],
             "Did you mean `let alone`?",
             "Changes `let along` to `let alone`."
+        ),
+        "LikeAsIf" => (
+            ["like as if"],
+            ["like", "as if"],
+            "Avoid redundancy. Use either `like` or `as if`.",
+            "Corrects redundant `like as if` to `like` or `as if`."
         ),
         "LikeThePlague" => (
             ["like a plague"],
