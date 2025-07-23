@@ -1118,3 +1118,93 @@ fn correct_worse_case_two_hyphens() {
         "In a worst-case scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
     );
 }
+
+// -make it worst-
+#[test]
+fn detect_make_it_worst_atomic() {
+    assert_suggestion_result(
+        "And if you try to access before that, CloudFront will cache the error and it'll make it worst.",
+        lint_group(),
+        "And if you try to access before that, CloudFront will cache the error and it'll make it worse.",
+    );
+}
+
+// -made it worst-
+#[test]
+fn detect_made_it_worst_atomic() {
+    assert_suggestion_result(
+        "However in couple of occasions the refresh made it worst and it showed commit differences that were already commited and pushed to origin.",
+        lint_group(),
+        "However in couple of occasions the refresh made it worse and it showed commit differences that were already commited and pushed to origin.",
+    );
+}
+
+// -makes it worst-
+#[test]
+fn detect_makes_it_worst_atomic() {
+    assert_suggestion_result(
+        "What makes it worst, is if I use the returned SHA to try and update the newly created file I get the same error I show below.",
+        lint_group(),
+        "What makes it worse, is if I use the returned SHA to try and update the newly created file I get the same error I show below.",
+    );
+}
+
+// -making it worst-
+#[test]
+fn detect_making_it_worst_atomic() {
+    assert_suggestion_result(
+        "PLease ai realled need help with this I think I'm making it worst.",
+        lint_group(),
+        "PLease ai realled need help with this I think I'm making it worse.",
+    );
+}
+
+// -make them worst-
+#[test]
+fn detect_make_them_worst_atomic() {
+    assert_suggestion_result(
+        "Not sure if this makes things clearer or make them worst.",
+        lint_group(),
+        "Not sure if this makes things clearer or make them worse.",
+    );
+}
+
+// -made them worst-
+#[test]
+fn detect_made_them_worst_atomic() {
+    assert_suggestion_result(
+        "if not outroght caused them / made them worst",
+        lint_group(),
+        "if not outroght caused them / made them worse",
+    );
+}
+
+// -makes them worst-
+#[test]
+fn detect_makes_them_worst_atomic() {
+    assert_suggestion_result(
+        "(tried ~14 different hyperparameter and data format combos), however, always just makes them worst, they go from \"slightly\" wrong to \"complete nonsense\".",
+        lint_group(),
+        "(tried ~14 different hyperparameter and data format combos), however, always just makes them worse, they go from \"slightly\" wrong to \"complete nonsense\".",
+    );
+}
+
+#[test]
+#[ignore = "This false positive is not handled yet"]
+fn dont_flag_makes_them_worst_case() {
+    assert_lint_count(
+        "Note 1: all hash tables has an Achilles heel that makes them worst case O(N)",
+        lint_group(),
+        0,
+    );
+}
+
+// -making them worst-
+#[test]
+fn detect_making_them_worst_atomic() {
+    assert_suggestion_result(
+        "As for the last part about Apple deliberately making them worst in order for us to buy the 3s",
+        lint_group(),
+        "As for the last part about Apple deliberately making them worse in order for us to buy the 3s",
+    );
+}
