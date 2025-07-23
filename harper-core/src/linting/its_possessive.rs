@@ -28,7 +28,9 @@ impl Default for ItsPossessive {
             .then(AnchorStart)
             .t_aco("it's")
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::ADJ, UPOS::NOUN, UPOS::PROPN]));
+            .then(UPOSSet::new(&[UPOS::ADJ, UPOS::NOUN, UPOS::PROPN]))
+            .t_ws()
+            .then_unless(UPOSSet::new(&[UPOS::PART]));
 
         Self {
             expr: Box::new(mid_sentence.or(start_of_sentence)),
@@ -63,7 +65,7 @@ impl ExprLinter for ItsPossessive {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     use super::ItsPossessive;
 
@@ -210,6 +212,19 @@ mod tests {
             "The report saved it's 9th revision.",
             ItsPossessive::default(),
             1,
+        );
+    }
+
+    #[test]
+    fn allows_hard_to_tell() {
+        assert_no_lints("It's hard to tell from here.", ItsPossessive::default());
+    }
+
+    #[test]
+    fn allows_illegible() {
+        assert_no_lints(
+            "When you write in cursive, its illegible",
+            ItsPossessive::default(),
         );
     }
 }
