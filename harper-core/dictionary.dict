@@ -2223,7 +2223,7 @@ Clorets/g
 Clorox/NVg
 Closure/g
 Clotho/Og
-Cloudflare/g
+Cloudflare/Og
 Clouseau/Og
 Clovis/Og
 Clyde/Og
@@ -10788,7 +10788,7 @@ Wiesenthal/g
 Wiggins/Og
 Wigner/Og
 Wii/Ng
-Wikileaks
+Wikileaks/O
 Wikipedia/ONVg
 Wiktionary/OgS
 Wilberforce/Og
@@ -52710,6 +52710,7 @@ MapReduce/N
 Marchus/Sg
 Mbps                # megabits per second
 Murcielago/OSg
+MediaWiki/Og        # the software Wikimedia runs on
 Metasploit/ONgS
 Minecraft/Og
 Minhaj/OSg
@@ -52887,6 +52888,7 @@ WebSocket/Sg
 Webpack/Og
 WhatsApp/NOVgG      # messaging app
 Wikilink/gSN        # !! please check and comment !! elsewhere we have wikilink
+Wikimedia/Og        # foundation that runs Wikipedia etc.
 Wireguard/Sg
 WooCommerce/Og
 XFS/Ng              # file system
