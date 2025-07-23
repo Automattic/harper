@@ -1,0 +1,215 @@
+use harper_brill::UPOS;
+
+use crate::Token;
+use crate::expr::AnchorStart;
+use crate::expr::Expr;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
+use crate::patterns::UPOSSet;
+
+use super::{ExprLinter, Lint, LintKind, Suggestion};
+
+pub struct ItsPossessive {
+    expr: Box<dyn Expr>,
+}
+
+impl Default for ItsPossessive {
+    fn default() -> Self {
+        let mid_sentence = SequenceExpr::default()
+            .then(UPOSSet::new(&[UPOS::VERB, UPOS::ADP]))
+            .t_ws()
+            .t_aco("it's")
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::ADJ, UPOS::NOUN, UPOS::PROPN]).or(
+                |tok: &Token, _: &[char]| tok.kind.as_number().is_some_and(|n| n.suffix.is_some()),
+            ));
+
+        let start_of_sentence = SequenceExpr::default()
+            .then(AnchorStart)
+            .t_aco("it's")
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::ADJ, UPOS::NOUN, UPOS::PROPN]));
+
+        Self {
+            expr: Box::new(mid_sentence.or(start_of_sentence)),
+        }
+    }
+}
+
+impl ExprLinter for ItsPossessive {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
+    }
+
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens[2].span;
+
+        Some(Lint {
+            span,
+            lint_kind: LintKind::Agreement,
+            suggestions: vec![Suggestion::replace_with_match_case_str(
+                "its",
+                span.get_content(source),
+            )],
+            message: "Prefer the possessive pronoun `its` here to denote ownership.".to_string(),
+            priority: 31,
+        })
+    }
+
+    fn description(&self) -> &'static str {
+        "In English, possessive pronouns never take an apostrophe. Use `its` to show ownership (e.g. “its texture”) and avoid confusing it with `it's`, which always means “it is” or “it has.”"
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+
+    use super::ItsPossessive;
+
+    #[test]
+    fn corrects_its_various() {
+        assert_suggestion_result(
+            "I like it's various colors.",
+            ItsPossessive::default(),
+            "I like its various colors.",
+        );
+    }
+
+    #[test]
+    fn engine_lost_its_compression() {
+        assert_lint_count(
+            "The engine lost it's compression.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn admired_sculpture_for_its_intricacy() {
+        assert_suggestion_result(
+            "I admired the sculpture for it's intricacy.",
+            ItsPossessive::default(),
+            "I admired the sculpture for its intricacy.",
+        );
+    }
+
+    #[test]
+    fn paris_is_known_for_its_architecture() {
+        assert_lint_count(
+            "Paris is known for it's architecture.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn plain_sentence_with_apostrophe_s() {
+        assert_lint_count("It's benefits are numerous.", ItsPossessive::default(), 1);
+    }
+
+    #[test]
+    fn device_reached_its_100th_cycle() {
+        assert_lint_count(
+            "The device reached it's 100th cycle.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn oddly_its_wheels_misaligned() {
+        assert_lint_count(
+            "Oddly, it's wheels were misaligned.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn leaking_oil_constant_issue() {
+        assert_lint_count("It's leaking oil constantly.", ItsPossessive::default(), 0);
+    }
+
+    #[test]
+    fn fiftyth_anniversary() {
+        assert_lint_count(
+            "The company celebrated it's 50th anniversary.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn second_attempt() {
+        assert_lint_count("He failed it's 2nd attempt.", ItsPossessive::default(), 1);
+    }
+
+    #[test]
+    fn third_iteration() {
+        assert_lint_count(
+            "The program finished it's 3rd iteration.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn tenth_milestone() {
+        assert_lint_count(
+            "They reached it's 10th milestone.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn seventh_chapter() {
+        assert_lint_count(
+            "The novel lost it's 7th chapter.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn fifth_version() {
+        assert_lint_count(
+            "Software updated to it's 5th version.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn eighth_floor() {
+        assert_lint_count(
+            "Elevator stopped at it's 8th floor.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn twelfth_episode() {
+        assert_lint_count(
+            "Series ended it's 12th episode.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn fourth_draft() {
+        assert_lint_count("He completed it's 4th draft.", ItsPossessive::default(), 1);
+    }
+
+    #[test]
+    fn ninth_revision() {
+        assert_lint_count(
+            "The report saved it's 9th revision.",
+            ItsPossessive::default(),
+            1,
+        );
+    }
+}

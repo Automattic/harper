@@ -3,6 +3,7 @@ use is_macro::Is;
 use itertools::Itertools;
 use paste::paste;
 use serde::{Deserialize, Serialize};
+use smallvec::SmallVec;
 use strum::{EnumCount, VariantArray};
 use strum_macros::{Display, EnumCount, EnumString, VariantArray};
 
@@ -99,6 +100,61 @@ macro_rules! generate_metadata_queries {
 }
 
 impl WordMetadata {
+    /// If there is only one possible interpretation of the metadata, infer its UPOS tag.
+    pub fn infer_pos_tag(&self) -> Option<UPOS> {
+        // If an explicit POS tag exists, return it immediately.
+        if let Some(pos) = self.pos_tag {
+            return Some(pos);
+        }
+
+        // Proper noun has highest priority
+        if self.is_proper_noun() {
+            return Some(UPOS::PROPN);
+        }
+
+        // Collect all possible POS tags from metadata
+        let mut candidates = SmallVec::<[UPOS; 14]>::with_capacity(14);
+        if self.is_pronoun() {
+            candidates.push(UPOS::PRON);
+        }
+        if self.is_noun() {
+            candidates.push(UPOS::NOUN);
+        }
+        if self.is_verb() {
+            // Distinguish auxiliary verbs
+            if let Some(data) = &self.verb {
+                if data.is_auxiliary == Some(true) {
+                    candidates.push(UPOS::AUX);
+                } else {
+                    candidates.push(UPOS::VERB);
+                }
+            } else {
+                candidates.push(UPOS::VERB);
+            }
+        }
+        if self.is_adjective() {
+            candidates.push(UPOS::ADJ);
+        }
+        if self.is_adverb() {
+            candidates.push(UPOS::ADV);
+        }
+        if self.is_conjunction() {
+            candidates.push(UPOS::CCONJ);
+        }
+        if self.is_determiner() {
+            candidates.push(UPOS::DET);
+        }
+        if self.preposition {
+            candidates.push(UPOS::ADP);
+        }
+
+        // Remove duplicates
+        candidates.sort();
+        candidates.dedup();
+
+        candidates.first().copied()
+    }
+
     /// Produce a copy of `self` with the known properties of `other` set.
     pub fn or(&self, other: &Self) -> Self {
         macro_rules! merge {
