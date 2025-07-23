@@ -62,6 +62,15 @@ impl ExprLinter for CompoundNounAfterDetAdj {
 
     fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
         let matched_tokens = match_info.matched_tokens;
+        if matched_tokens
+            .first()?
+            .span
+            .get_content(source)
+            .eq_ignore_ascii_case_str("that")
+        {
+            return None;
+        }
+
         let span = matched_tokens[2..].span()?;
         let orig = span.get_content(source);
         // If the pattern matched, this will not return `None`.

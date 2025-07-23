@@ -36,16 +36,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-      10 | “Whenever you feel like criticising any one,” he told me, “just remember that
-         |                                     ^~~~~~~ Did you mean the closed compound `anyone`?
-      11 | all the people in this world haven’t had the advantages that you’ve had.”
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Redundancy (31 priority)
 Message: |
       15 | consequence, I’m inclined to reserve all judgments, a habit that has opened up
@@ -4803,17 +4793,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    3568 | My commutation ticket came back to me with a dark stain from his hand. That any
-         |                                                                             ^~~~
-    3569 | one should care in this heat whose flushed lips he kissed, whose head made damp
-         | ~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3572 | . . . Through the hall of the Buchanans’ house blew a faint wind, carrying the
@@ -5023,17 +5002,6 @@ Message: |
          |                            ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    3754 | “Are we just going to go?” she objected. “Like this? Aren’t we going to let any
-         |                                                                             ^~~~
-    3755 | one smoke a cigarette first?”
-         | ~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
 
 
 
@@ -5433,16 +5401,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    4182 | was poor and she was tired of waiting for me. It was a terrible mistake, but in
-    4183 | her heart she never loved any one except me!”
-         |                           ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     4185 | At this point Jordan and I tried to go, but Tom and Gatsby insisted with
@@ -5629,16 +5587,6 @@ Message: |
          | ^~~~~~~~~ Did you mean `Michael`?
 Suggest:
   - Replace with: “Michael”
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    4405 | stared at the people and the cars that passed along the road. When any one spoke
-         |                                                                    ^~~~~~~ Did you mean the closed compound `anyone`?
-    4406 | to him he invariably laughed in an agreeable, colorless way. He was his wife’s
-Suggest:
-  - Replace with: “anyone”
 
 
 
@@ -6545,26 +6493,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    5185 | At two o’clock Gatsby put on his bathing-suit and left word with the butler that
-    5186 | if any one phoned word was to be brought to him at the pool. He stopped at the
-         |    ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    5197 | for it until four o’clock—until long after there was any one to give it to if it
-         |                                                      ^~~~~~~ Did you mean the closed compound `anyone`?
-    5198 | came. I have an idea that Gatsby himself didn’t believe it would come, and
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Formatting (63 priority)
 Message: |
     5204 | where poor ghosts, breathing dreams like air, drifted fortuitously about . . .
@@ -6601,16 +6529,6 @@ Message: |
     5209 | could only say that he hadn’t thought anything much about them. I drove from the
 Suggest:
   - Replace with: “proteges”
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    5210 | station directly to Gatsby’s house and my rushing anxiously up the front steps
-    5211 | was the first thing that alarmed any one. But they knew then, I firmly believe.
-         |                                  ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
 
 
 
@@ -7015,16 +6933,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    5466 | advice of an elevator boy, was marked “The Swastika Holding Company,” and at
-    5467 | first there didn’t seem to be any one inside. But when I’d shouted “hello”
-         |                               ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     5472 | “Nobody’s in,” she said. “Mr. Wolfshiem’s gone to Chicago.”
@@ -7112,17 +7020,6 @@ Suggest:
   - Replace with: “Oxford”
   - Replace with: “Osborn”
   - Replace with: “Osgood”
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-    5528 | “Now he’s dead,” I said after a moment. “You were his closest friend, so I know
-         |                                              ^~~~ Use the contraction or separate the words instead.
-    5529 | you'll want to come to his funeral this afternoon.”
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
 
 
 

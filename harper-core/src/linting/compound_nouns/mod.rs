@@ -30,7 +30,7 @@ merge_linters!(CompoundNouns => CompoundNounAfterDetAdj, CompoundNounBeforeAuxVe
 #[cfg(test)]
 mod tests {
     use super::CompoundNouns;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn web_cam() {
@@ -359,6 +359,30 @@ mod tests {
             "There's no massive damage to the rockers or anything that to me would indicate that like the whole front of the car was off",
             CompoundNouns::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn allow_issue_1553() {
+        assert_no_lints(
+            "I'm not sure if there's anyone else that may be interested in more fine-grained control, but as it stands, having the domain level toggle is sufficient for me.",
+            CompoundNouns::default(),
+        );
+    }
+
+    #[test]
+    fn allow_issue_1496() {
+        assert_no_lints(
+            "I am not able to respond to messages.",
+            CompoundNouns::default(),
+        );
+    }
+
+    #[test]
+    fn allow_issue_1298() {
+        assert_no_lints(
+            "A series of tests that cover all possible cases.",
+            CompoundNouns::default(),
         );
     }
 }

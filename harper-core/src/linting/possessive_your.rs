@@ -60,7 +60,7 @@ impl ExprLinter for PossessiveYour {
 #[cfg(test)]
 mod tests {
     use crate::linting::tests::{
-        assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
+        assert_lint_count, assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
     };
 
     use super::PossessiveYour;
@@ -127,6 +127,14 @@ mod tests {
             "I'm just showing you what's available and how to use it.",
             PossessiveYour::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn allows_issue_1583() {
+        assert_no_lints(
+            "Note that in a world with modules everywhere, you almost never need an IIFE",
+            PossessiveYour::default(),
         );
     }
 }
