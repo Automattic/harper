@@ -107,13 +107,13 @@ impl WordMetadata {
             return Some(pos);
         }
 
-        // Proper noun has highest priority
-        if self.is_proper_noun() {
-            return Some(UPOS::PROPN);
-        }
-
         // Collect all possible POS tags from metadata
         let mut candidates = SmallVec::<[UPOS; 14]>::with_capacity(14);
+
+        if self.is_proper_noun() {
+            candidates.push(UPOS::PROPN);
+        }
+
         if self.is_pronoun() {
             candidates.push(UPOS::PRON);
         }
@@ -152,7 +152,11 @@ impl WordMetadata {
         candidates.sort();
         candidates.dedup();
 
-        candidates.first().copied()
+        if candidates.len() == 1 {
+            candidates.first().copied()
+        } else {
+            None
+        }
     }
 
     /// Produce a copy of `self` with the known properties of `other` set.
