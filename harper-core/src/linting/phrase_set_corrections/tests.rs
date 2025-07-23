@@ -391,6 +391,15 @@ fn corrects_invests_into() {
     );
 }
 
+#[test]
+fn corrects_investment_into() {
+    assert_suggestion_result(
+        "A $10,000 investment into the fund made on February 28, 1997 would have grown to a value of $42,650 at the end of the 20-year period.",
+        lint_group(),
+        "A $10,000 investment in the fund made on February 28, 1997 would have grown to a value of $42,650 at the end of the 20-year period.",
+    );
+}
+
 // MakeDoWith
 
 #[test]

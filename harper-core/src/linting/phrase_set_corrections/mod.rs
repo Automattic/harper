@@ -197,10 +197,14 @@ pub fn lint_group() -> LintGroup {
         ),
         "InvestIn" => (
             &[
+                // Verb
                 ("invest into", "invest in"),
                 ("invested into", "invested in"),
                 ("investing into", "investing in"),
                 ("invests into", "invests in"),
+                // Noun
+                ("investment into", "investment in"),
+                // Note "investments into" can be correct in some contexts
             ],
             "Traditionally `invest` uses the preposition `in`.",
             "`Invest` is traditionally followed by 'in,' not `into.`",
