@@ -3,11 +3,9 @@ use std::sync::Arc;
 use harper_brill::UPOS;
 
 use crate::Token;
-use crate::TokenStringExt;
 use crate::expr::AnchorStart;
 use crate::expr::Expr;
 use crate::expr::ExprMap;
-use crate::expr::FirstMatchOf;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::UPOSSet;
