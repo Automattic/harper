@@ -319,9 +319,9 @@ Suggest:
 Lint:    Agreement (31 priority)
 Message: |
      426 | What's the time? – It's quarter to four in the afternoon (or 3:45 pm).
-         |                         ^~~~~~~ Prefer the possessive pronoun `its` here to denote ownership.
+         |                    ^~~~ Prefer the possessive pronoun `its` here to denote ownership.
 Suggest:
-  - Replace with: “its”
+  - Replace with: “Its”
 
 
 

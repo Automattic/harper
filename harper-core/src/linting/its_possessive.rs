@@ -1,20 +1,29 @@
+use std::sync::Arc;
+
 use harper_brill::UPOS;
 
 use crate::Token;
+use crate::TokenStringExt;
 use crate::expr::AnchorStart;
 use crate::expr::Expr;
+use crate::expr::ExprMap;
+use crate::expr::FirstMatchOf;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::UPOSSet;
+use crate::patterns::WordSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct ItsPossessive {
     expr: Box<dyn Expr>,
+    map: Arc<ExprMap<usize>>,
 }
 
 impl Default for ItsPossessive {
     fn default() -> Self {
+        let mut map = ExprMap::default();
+
         let mid_sentence = SequenceExpr::default()
             .then(UPOSSet::new(&[UPOS::VERB, UPOS::ADP]))
             .t_ws()
@@ -24,6 +33,8 @@ impl Default for ItsPossessive {
                 |tok: &Token, _: &[char]| tok.kind.as_number().is_some_and(|n| n.suffix.is_some()),
             ));
 
+        map.insert(mid_sentence, 2);
+
         let start_of_sentence = SequenceExpr::default()
             .then(AnchorStart)
             .t_aco("it's")
@@ -32,8 +43,19 @@ impl Default for ItsPossessive {
             .t_ws()
             .then_unless(UPOSSet::new(&[UPOS::PART]));
 
+        map.insert(start_of_sentence, 0);
+
+        let special = SequenceExpr::aco("it's")
+            .t_ws()
+            .then(WordSet::new(&["various", "many"]));
+
+        map.insert(special, 0);
+
+        let map = Arc::new(map);
+
         Self {
-            expr: Box::new(mid_sentence.or(start_of_sentence)),
+            expr: Box::new(map.clone()),
+            map,
         }
     }
 }
@@ -44,7 +66,8 @@ impl ExprLinter for ItsPossessive {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let span = matched_tokens[2].span;
+        let offending_idx = self.map.lookup(0, matched_tokens, source).unwrap();
+        let span = matched_tokens[*offending_idx].span;
 
         Some(Lint {
             span,
@@ -79,6 +102,15 @@ mod tests {
     }
 
     #[test]
+    fn fixes_inspiration() {
+        assert_suggestion_result(
+            "I would just put `Orthography` and it's various function implementations in their own `orthography.rs` file.",
+            ItsPossessive::default(),
+            "I would just put `Orthography` and its various function implementations in their own `orthography.rs` file.",
+        );
+    }
+
+    #[test]
     fn engine_lost_its_compression() {
         assert_lint_count(
             "The engine lost it's compression.",
@@ -107,7 +139,11 @@ mod tests {
 
     #[test]
     fn plain_sentence_with_apostrophe_s() {
-        assert_lint_count("It's benefits are numerous.", ItsPossessive::default(), 1);
+        assert_suggestion_result(
+            "It's benefits are numerous.",
+            ItsPossessive::default(),
+            "Its benefits are numerous.",
+        );
     }
 
     #[test]
