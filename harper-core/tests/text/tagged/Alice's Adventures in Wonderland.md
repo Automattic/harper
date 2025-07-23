@@ -267,7 +267,7 @@
 > bleeds ; and she  had never forgotten that          , if    you    drink  much       from a    bottle marked
 # NPl/V  . V/C ISg+ V   R     NSg/V/J   NSg/I/C/Ddem+ . NSg/C ISgPl+ NSg/V+ NSg/I/J/Dq P    D/P+ NSg/V+ V/J
 > “ poison , ” it       is almost certain to disagree with you   , sooner or     later .
-# . NSg/V+ . . NPr/ISg+ VL NSg    I/J     P  V        P    ISgPl . JC+    NPr/C+ JC    .
+# . NSg/V+ . . NPr/ISg+ VL R      I/J     P  V        P    ISgPl . JC+    NPr/C+ JC    .
 >
 #
 > However , this   bottle was not   marked “ poison , ” so        Alice ventured to taste   it       , and
@@ -381,7 +381,7 @@
 > the largest telescope that          ever was ! Good    - bye     , feet ! ” ( for when    she  looked down
 # D+  JS+     NSg/V+    NSg/I/C/Ddem+ J    V   . NPr/V/J . NSg/J/P . NPl+ . . . C/P NSg/I/C ISg+ V/J    NSg/V/J/P
 > at    her     feet , they seemed to be     almost out         of sight  , they were  getting so        far
-# NSg/P ISg/D$+ NPl+ . IPl+ V/J    P  NSg/VX NSg    NSg/V/J/R/P P  NSg/V+ . IPl+ NSg/V NSg/V   NSg/I/J/C NSg/V/J
+# NSg/P ISg/D$+ NPl+ . IPl+ V/J    P  NSg/VX R      NSg/V/J/R/P P  NSg/V+ . IPl+ NSg/V NSg/V   NSg/I/J/C NSg/V/J
 > off        ) . “ Oh    , my  poor     little      feet , I    wonder who    will   put   on  your shoes and
 # NSg/V/J/P+ . . . NPr/V . D$+ NSg/V/J+ NPr/I/J/Dq+ NPl+ . ISg+ NSg/V  NPr/I+ NPr/VX NSg/V J/P D$+  NPl/V V/C
 > stockings for you    now       , dears  ? I’m sure I    shan’t be     able    ! I    shall be     a   great deal
@@ -469,7 +469,7 @@
 > I’ve been  changed in      the night   ? Let   me       think : was I    the same when    I    got up        this
 # W?   NSg/V V/J     NPr/J/P D+  N🅪Sg/V+ . NSg/V NPr/ISg+ NSg/V . V   ISg+ D   I/J  NSg/I/C ISg+ V   NSg/V/J/P I/Ddem+
 > morning ? I    almost think I    can    remember feeling a    little      different . But     if    I’m
-# N🅪Sg/V+ . ISg+ NSg    NSg/V ISg+ NPr/VX NSg/V    NSg/V/J D/P+ NPr/I/J/Dq+ NSg/J+    . NSg/C/P NSg/C W?
+# N🅪Sg/V+ . ISg+ R      NSg/V ISg+ NPr/VX NSg/V    NSg/V/J D/P+ NPr/I/J/Dq+ NSg/J+    . NSg/C/P NSg/C W?
 > not   the same , the next     question is , Who   in      the world  am      I    ? Ah      , that’s the great
 # NSg/C D   I/J  . D+  NSg/J/P+ NSg/V+   VL . NPr/I NPr/J/P D+  NSg/V+ NPr/V/J ISg+ . NSg/I/V . NSg$   D   NSg/J
 > puzzle ! ” And she  began thinking over      all          the children she  knew that          were  of the
@@ -1243,7 +1243,7 @@
 > growing larger and smaller , and being   ordered about by      mice  and rabbits . I
 # NSg/V   JC     V/C NSg/JC  . V/C NSg/V/C V/J     J/P   NSg/J/P NSg/V V/C NPl/V+  . ISg+
 > almost wish  I    hadn’t gone  down      that         rabbit - hole  — and yet     — and yet     — it’s rather
-# NSg    NSg/V ISg+ V      V/J/P NSg/V/J/P NSg/I/C/Ddem NSg/V+ . NSg/V . V/C NSg/V/C . V/C NSg/V/C . W?   NPr/V/J
+# R      NSg/V ISg+ V      V/J/P NSg/V/J/P NSg/I/C/Ddem NSg/V+ . NSg/V . V/C NSg/V/C . V/C NSg/V/C . W?   NPr/V/J
 > curious , you    know  , this   sort  of life   ! I    do     wonder what   can    have   happened to me       !
 # J       . ISgPl+ NSg/V . I/Ddem NSg/V P  NSg/V+ . ISg+ NSg/VX NSg/V  NSg/I+ NPr/VX NSg/VX V/J      P  NPr/ISg+ .
 > When    I    used to read  fairy - tales , I    fancied that         kind  of thing  never happened ,
@@ -2703,7 +2703,7 @@
 > towards it       rather  timidly , saying to herself “ Suppose it       should be     raving  mad
 # P       NPr/ISg+ NPr/V/J R       . NSg/V  P  ISg+    . V       NPr/ISg+ VX     NSg/VX NSg/V/J NSg/V/J
 > after all          ! I    almost wish  I’d gone  to see   the Hatter instead ! ”
-# JC/P  NSg/I/J/C/Dq . ISg+ NSg    NSg/V W?  V/J/P P  NSg/V D   NSg/V  W?      . .
+# JC/P  NSg/I/J/C/Dq . ISg+ R      NSg/V W?  V/J/P P  NSg/V D   NSg/V  W?      . .
 >
 #
 > CHAPTER VII : A   Mad     Tea     - Party
@@ -2963,7 +2963,7 @@
 > “ Ah      ! that          accounts for it       , ” said the Hatter . “ He       won’t stand beating . Now       , if
 # . NSg/I/V . NSg/I/C/Ddem+ NPl/V    C/P NPr/ISg+ . . V/J  D+  NSg/V  . . NPr/ISg+ V     NSg/V NSg/V   . NPr/V/J/C . NSg/C
 > you    only  kept on  good    terms with him  , he’d do     almost anything you    liked with the
-# ISgPl+ J/R/C V    J/P NPr/V/J NPl/V P    ISg+ . W?   NSg/VX NSg    NSg/I/V+ ISgPl+ V/J   P    D+
+# ISgPl+ J/R/C V    J/P NPr/V/J NPl/V P    ISg+ . W?   NSg/VX R      NSg/I/V+ ISgPl+ V/J   P    D+
 > clock  . For instance , suppose it       were  nine o’clock in      the morning , just time      to
 # NSg/V+ . C/P NSg/V+   . V       NPr/ISg+ NSg/V NSg  W?      NPr/J/P D+  N🅪Sg/V+ . V/J  N🅪Sg/V/J+ P
 > begin lessons : you’d only  have   to whisper a   hint  to Time     , and round     goes  the

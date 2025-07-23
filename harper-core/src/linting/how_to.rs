@@ -4,6 +4,7 @@ use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
+use crate::patterns::UPOSSet;
 use crate::{
     Token, TokenStringExt,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
@@ -18,22 +19,28 @@ impl Default for HowTo {
     fn default() -> Self {
         let mut pattern = All::default();
 
-        let pos_pattern = SequenceExpr::default().t_aco("how").then_whitespace().then(
-            |tok: &Token, _: &[char]| {
+        let pos_pattern = SequenceExpr::default()
+            .then_anything()
+            .then_anything()
+            .t_aco("how")
+            .then_whitespace()
+            .then(|tok: &Token, _: &[char]| {
                 tok.kind.is_upos(UPOS::VERB)
                     || (tok.kind.is_verb() && tok.kind.is_likely_homograph())
-            },
-        );
+            });
         pattern.add(pos_pattern);
 
         let exceptions = SequenceExpr::default()
+            .then_unless(UPOSSet::new(&[UPOS::PART]))
             .then_anything()
             .then_anything()
-            .then(
+            .then_anything()
+            .then_unless(
                 InflectionOfBe::new().or(Box::new(|tok: &Token, src: &[char]| {
                     if tok.kind.is_auxiliary_verb()
                         || tok.kind.is_adjective()
                         || tok.kind.is_verb_progressive_form()
+                        || tok.kind.is_conjunction()
                     {
                         true
                     } else {
@@ -43,7 +50,7 @@ impl Default for HowTo {
                 })),
             );
 
-        pattern.add(SequenceExpr::default().then_unless(exceptions));
+        pattern.add(SequenceExpr::default().then(exceptions));
 
         Self {
             expr: Box::new(pattern),
@@ -57,7 +64,7 @@ impl ExprLinter for HowTo {
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
-        let span = toks[0..2].span()?;
+        let span = toks[2..4].span()?;
         let fix: Vec<char> = "to ".chars().collect();
 
         Some(Lint {
@@ -77,7 +84,7 @@ impl ExprLinter for HowTo {
 #[cfg(test)]
 mod tests {
     use super::HowTo;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn flags_missing_to() {
@@ -264,5 +271,21 @@ mod tests {
     #[test]
     fn allows_how_has() {
         assert_lint_count("How Has This Been Tested?", HowTo::default(), 0);
+    }
+
+    #[test]
+    fn issue_1492() {
+        assert_no_lints(
+            "I hope to provide some insight into correct HTML formatting, in addition to how authors can avoid these issues.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn allow_issue_1298() {
+        assert_no_lints(
+            "The story of how and why things came to this point.",
+            HowTo::default(),
+        );
     }
 }
