@@ -3054,7 +3054,7 @@ ET/N
 ETA/ONV             # estimated time of arrival
 ETD/N
 EU/ON
-EULA/NS             # end-user license agreement
+EULA/NgS            # end-user license agreement
 EUR/N
 EUV/N               # extreme ultraviolet
 Eakins/Og
@@ -7541,6 +7541,7 @@ OJ/NJ
 OK/NVJOSgdG         # US state (Oklahoma)
 OLED/Ng             # organic light-emitting diode
 OMB/Og
+OMG                 # exclamation
 OPEC/Og             # organization
 OR/CNO              # Oregon
 OS/OJNg
@@ -14917,6 +14918,7 @@ blockchain/NgS
 blocker/~NgS
 blockhead/~NVSg
 blockhouse/NgS
+blocklist/NVgdSG
 blog/~NVSg
 blogged/V
 blogger/~NgS
@@ -20006,10 +20008,10 @@ custodial/~J
 custodian/~NgS
 custodianship/Nmg
 custody/~Nmg
-custom/~NJVSZg>
+custom/~NJVSZg
 customarily/~R
 customary/~JNU
-customer/~Ng
+customer/~NgS
 customhouse/NSg
 customisation/NwgS!_
 customise/VdSG!_
@@ -21885,7 +21887,7 @@ downstate/NJg
 downstream/~JV
 downswing/NgS
 downtempo/NJ
-downtime/Ng
+downtime/NgS
 downtown/~JNg
 downtrend/NVgS
 downtrodden/JV
@@ -32097,6 +32099,7 @@ lock/~NVgd>SBZG
 lockdown/~NwgS
 locker/~Ng
 locket/NgS
+lockfile/NgS
 lockjaw/Ng
 lockout/~NgS
 locksmith/~Ng
@@ -48594,6 +48597,7 @@ toolchain/NgS
 toolkit/~NgS
 toolless/J
 toolmaker/NgS
+toolset/NgS
 toolshed/NgS
 tooltip/NgS
 toot/NVgd>ZGS
@@ -50079,6 +50083,7 @@ unpopular/~J
 unpowered/J
 unpractical/J
 unprecedented/~JY
+unpredicted/J
 unprofessional/JNY
 unpromising/JV
 unpropitious/J
@@ -52488,6 +52493,7 @@ ACM/Ng
 AGI/gS              # artificial general intelligence
 AMC/NOgS            # old car brand
 AOC/Og              # US politician Alexandria Ocasio-Cortez
+APFS/Og             # Apple file system
 ASM/N               # assembly language - should "asm" be included as well/instead?
 ASUS/Og
 ATF/Ng              # automatic transmission fluid
@@ -52808,6 +52814,7 @@ SMTP                # Simple Mail Transfer Protocol
 SNL/Og              # Saturday Night Live
 SQLAlchemy/N
 SSID/NgS
+SSL/Og              # Secure Sockets Layer
 SVG/ONs             # scalable vector graphics
 SVGA/N              # super VGA
 Sharman/OSg
@@ -53199,6 +53206,7 @@ left over/V
 left-hand/J
 left-wing/J
 lesser-known/J
+life cycle/NgS
 line break/NgS
 live action/N
 load-bearing/J
