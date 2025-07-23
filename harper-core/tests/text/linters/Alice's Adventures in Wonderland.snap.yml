@@ -90,7 +90,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
       57 | lessons in the schoolroom, and though this was not a very good opportunity for
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -331,7 +331,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      162 | sharply; “I advise you to leave off this minute!” She generally gave herself
      163 | very good advice, (though she very seldom followed it), and sometimes she
@@ -434,16 +434,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      230 | and the fan, and skurried away into the darkness as hard as he could go.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 56 words long.
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-     227 | I’ve kept her waiting!” Alice felt so desperate that she was ready to ask help
-     228 | of any one; so, when the Rabbit came near her, she began, in a low, timid voice,
-         |    ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
 
 
 
@@ -902,7 +892,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
      565 | of white kid gloves, and she very good-naturedly began hunting about for them,
@@ -1208,7 +1198,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      929 | “It is a very good height indeed!” said the Caterpillar angrily, rearing itself
          |          ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -1826,15 +1816,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1834 | a furious passion, and went stamping about, and shouting “Off with his head!” or
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    1840 | people here; the great wonder is, that there’s any one left alive!”
-         |                                                ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
 
 
 
@@ -3284,15 +3265,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2773 | gazing up into the roof of the court.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    2891 | “If any one of them can explain it,” said Alice, (she had grown so large in the
-         |     ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
 
 
 

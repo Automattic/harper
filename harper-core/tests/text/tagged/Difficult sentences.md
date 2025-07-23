@@ -62,8 +62,8 @@
 # ISg+ V   NSg/V/J NSg/P D$+   NPl/V+   .
 > men at    work   ; children at    play
 # NSg NSg/P NSg/V+ . NPl+     NSg/P NSg/V
-> The two  countries are at    war    .
-# D+  NSg+ NPl+      V   NSg/P NSg/V+ .
+> The two  countries are at    war     .
+# D+  NSg+ NPl+      V   NSg/P N🅪Sg/V+ .
 > She  is at    sixes and sevens with him  .
 # ISg+ VL NSg/P NPl   V/C NPl    P    ISg+ .
 >
@@ -236,14 +236,14 @@
 # NSg/C V      P  NSg/V D+  NPl/V+    R         VL NPr/I/V/J/Dq C/P  ISgPl+ NPr/VX NSg/V  . NSg/J/C I/Ddem+ NSg/V D   NPr/V C/P ISgPl+ .
 > This    is a   new     bell  for my  bicycle .
 # I/Ddem+ VL D/P NSg/V/J NPr/V C/P D$+ NSg/V+  .
-> The cake   is for Tom    and Helen's anniversary .
-# D+  NSg/V+ VL C/P NPr/V+ V/C NSg$    NSg+        .
+> The cake    is for Tom    and Helen's anniversary .
+# D+  N🅪Sg/V+ VL C/P NPr/V+ V/C NSg$    NSg+        .
 > This    medicine is for your cough  .
 # I/Ddem+ NSg/V+   VL C/P D$+  NSg/V+ .
 > He       wouldn't apologize ; and just for that          , she  refused to help  him  .
 # NPr/ISg+ VX       V         . V/C V/J  C/P NSg/I/C/Ddem+ . ISg+ V/J     P  NSg/V ISg+ .
-> He       looks better    for having lost weight . ( UK   usage )
-# NPr/ISg+ NPl/V NSg/VX/JC C/P V      V/J  NSg/V+ . . NPr+ N🅪Sg+ .
+> He       looks better    for having lost weight  . ( UK   usage )
+# NPr/ISg+ NPl/V NSg/VX/JC C/P V      V/J  N🅪Sg/V+ . . NPr+ N🅪Sg+ .
 > She  was the worse    for drink  .
 # ISg+ V   D   NSg/V/JC C/P NSg/V+ .
 > All          those  for the motion , raise your hands  .
@@ -434,16 +434,16 @@
 # NSg$ V   ISg/D$+ NSg/V+ NPr/J/P ISg/D$+ .
 > There has been  no    change in      his     condition .
 # +     V   NSg/V NPr/P N🅪Sg/V NPr/J/P ISg/D$+ NSg/V+    .
-> What   grade  did he       get   in      English  ?
-# NSg/I+ NSg/V+ V   NPr/ISg+ NSg/V NPr/J/P NPr/V/J+ .
+> What   grade  did he       get   in      English   ?
+# NSg/I+ NSg/V+ V   NPr/ISg+ NSg/V NPr/J/P NPr🅪/V/J+ .
 > Please pay     me       in      cash     — preferably in      tens and twenties .
 # V      NSg/V/J NPr/ISg+ NPr/J/P NPr/V/J+ . R          NPr/J/P W?   V/C NPl+     .
 > The deposit can    be     in      any    legal  tender  , even    in      gold      .
 # D+  NSg/V+  NPr/VX NSg/VX NPr/J/P I/R/Dq NSg/J+ NSg/V/J . NSg/V/J NPr/J/P NᴹSg/V/J+ .
 > Beethoven's " Symphony No     . 5 " in      C        minor   is among his     most        popular .
 # NSg$        . NSg+     NPr/P+ . # . NPr/J/P NPr/V/J+ NSg/V/J VL P     ISg/D$+ NSg/I/J/Dq+ NSg/J+  .
-> His     speech  was in      French  , but     was simultaneously translated into eight languages .
-# ISg/D$+ N🅪Sg/V+ V   NPr/J/P NPr/V/J . NSg/C/P V   R              V/J        P    NSg/J NPl/V+    .
+> His     speech  was in      French   , but     was simultaneously translated into eight languages .
+# ISg/D$+ N🅪Sg/V+ V   NPr/J/P NPr🅪/V/J . NSg/C/P V   R              V/J        P    NSg/J NPl/V+    .
 > When    you    write in      cursive , it's illegible .
 # NSg/I/C ISgPl+ NSg/V NPr/J/P NSg/J   . +    J+        .
 > Military letters should be     formal in      tone     , but     not   stilted .
@@ -545,15 +545,15 @@
 > He       seemed devoid of human    feelings .
 # NPr/ISg+ V/J    V/J    P  NSg/V/J+ +        .
 > The word   is believed to be     of Japanese origin .
-# D+  NSg/V+ VL V/J      P  NSg/VX P  NPr/J+   NSg+   .
+# D+  NSg/V+ VL V/J      P  NSg/VX P  NPr🅪/J+  NSg+   .
 > Jesus of Nazareth
 # NPr/V P  NPr+
 > The invention was born    of necessity .
 # D+  NSg+      V   NPr/V/J P  NSg+      .
 > It       is said that         she  died of a    broken heart   .
 # NPr/ISg+ VL V/J  NSg/I/C/Ddem ISg+ V/J  P  D/P+ V/J+   N🅪Sg/V+ .
-> What   a   lot   of nonsense !
-# NSg/I+ D/P NPr/V P  NSg/V/J+ .
+> What   a   lot   of nonsense  !
+# NSg/I+ D/P NPr/V P  NᴹSg/V/J+ .
 > I'll have   a   dozen of those   apples , please .
 # W?   NSg/VX D/P NSg   P  I/Ddem+ NPl    . V      .
 > Welcome to the historic town of Harwich .
@@ -568,8 +568,8 @@
 # I/Ddem+ N🅪Sg/Comm+ VL NSg/J   P  +         .
 > He       is a   friend  of mine     .
 # NPr/ISg+ VL D/P NPr/V/J P  NSg/I/V+ .
-> We   want  a   larger slice   of the cake   .
-# IPl+ NSg/V D/P JC     NSg/V/J P  D+  NSg/V+ .
+> We   want  a   larger slice   of the cake    .
+# IPl+ NSg/V D/P JC     NSg/V/J P  D+  N🅪Sg/V+ .
 > The owner of the nightclub was arrested .
 # D   NSg   P  D+  NSg/V+    V+  V/J      .
 > My  companion seemed affable and easy    of manner .
@@ -592,8 +592,8 @@
 #
 > All          the lights are on  , so        they must   be     home     .
 # NSg/I/J/C/Dq D+  NPl/V  V   J/P . NSg/I/J/C IPl+ NSg/V+ NSg/VX NSg/V/J+ .
-> We   had to ration our food because there was a   war    on  .
-# IPl+ V   P  NSg/V  D$+ NSg+ C/P     +     V   D/P NSg/V+ J/P .
+> We   had to ration our food because there was a   war     on  .
+# IPl+ V   P  NSg/V  D$+ NSg+ C/P     +     V   D/P N🅪Sg/V+ J/P .
 > Some     of the cast    went  down      with flu  , but     the show's still    on  .
 # I/J/R/Dq P  D   NSg/V/J NSg/V NSg/V/J/P P    NSg+ . NSg/C/P D   NSg$   NSg/V/J+ J/P .
 > That          TV   programme    that          you    wanted to watch is on  now       .
