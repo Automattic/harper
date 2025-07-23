@@ -56,6 +56,16 @@ Suggest:
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+      87 | Are you eating by Rabbi Fischer? (at the house of)
+      88 | By Chabad, it's different. (with, among)
+         |                 ^~~~~~~~~ Prefer the possessive pronoun `its` here to denote ownership.
+Suggest:
+  - Replace with: “its”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      100 | a by path; a by room (Out of the way, off to one side.)
@@ -71,6 +81,15 @@ Message: |
          | ^~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “To”
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+     176 | It's hard to tell from here.
+         |      ^~~~ Prefer the possessive pronoun `its` here to denote ownership.
+Suggest:
+  - Replace with: “its”
 
 
 
@@ -93,6 +112,15 @@ Suggest:
   - Replace with: “traveling”
   - Replace with: “travailing”
   - Replace with: “travelings”
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+     224 | When you write in cursive, it's illegible.
+         |                                 ^~~~~~~~~ Prefer the possessive pronoun `its` here to denote ownership.
+Suggest:
+  - Replace with: “its”
 
 
 
@@ -313,6 +341,15 @@ Suggest:
   - Replace with: “criticize”
   - Replace with: “criticism”
   - Replace with: “critic's”
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+     426 | What's the time? – It's quarter to four in the afternoon (or 3:45 pm).
+         |                         ^~~~~~~ Prefer the possessive pronoun `its` here to denote ownership.
+Suggest:
+  - Replace with: “its”
 
 
 
