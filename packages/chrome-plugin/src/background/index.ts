@@ -80,6 +80,7 @@ async function enableDefaultDomains() {
 		'writewithharper.com',
 		'prosemirror.net',
 		'draftjs.org',
+		'gitlab.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

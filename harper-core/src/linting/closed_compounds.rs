@@ -23,7 +23,6 @@ pub fn lint_group() -> LintGroup {
     add_compound_mappings!(group, {
         "Anybody"         => ("any body", "anybody"),
         "Anyhow"          => ("any how", "anyhow"),
-        "Anyone"          => ("any one", "anyone"),
         "Anywhere"        => ("any where", "anywhere"),
         "Backplane"       => ("back plane", "backplane"),
         "Desktop"         => ("desk top", "desktop"),
