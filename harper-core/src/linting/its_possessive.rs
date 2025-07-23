@@ -22,14 +22,21 @@ impl Default for ItsPossessive {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
+        let adj_term = SequenceExpr::default()
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::ADJ]));
+
         let mid_sentence = SequenceExpr::default()
             .then(UPOSSet::new(&[UPOS::VERB, UPOS::ADP]))
             .t_ws()
             .t_aco("it's")
+            .then_optional(adj_term)
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::ADJ, UPOS::NOUN, UPOS::PROPN]).or(
-                |tok: &Token, _: &[char]| tok.kind.as_number().is_some_and(|n| n.suffix.is_some()),
-            ));
+            .then(
+                UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]).or(|tok: &Token, _: &[char]| {
+                    tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
+                }),
+            );
 
         map.insert(mid_sentence, 2);
 
@@ -39,7 +46,7 @@ impl Default for ItsPossessive {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::ADJ, UPOS::NOUN, UPOS::PROPN]))
             .t_ws()
-            .then_unless(UPOSSet::new(&[UPOS::PART]));
+            .then_unless(UPOSSet::new(&[UPOS::PART, UPOS::NOUN, UPOS::PRON]));
 
         map.insert(start_of_sentence, 0);
 
@@ -258,6 +265,30 @@ mod tests {
     fn allows_illegible() {
         assert_no_lints(
             "When you write in cursive, its illegible",
+            ItsPossessive::default(),
+        );
+    }
+
+    #[test]
+    fn allows_good_practice() {
+        assert_no_lints(
+            "it's good practice to review the general settings",
+            ItsPossessive::default(),
+        );
+    }
+
+    #[test]
+    fn allows_understandable() {
+        assert_no_lints(
+            "It's understandable that you'd feel the weight of responsibility.",
+            ItsPossessive::default(),
+        );
+    }
+
+    #[test]
+    fn allows_insincere() {
+        assert_no_lints(
+            "But feel free to omit it if you feel it's insincere.",
             ItsPossessive::default(),
         );
     }
