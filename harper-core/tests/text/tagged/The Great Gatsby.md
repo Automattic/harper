@@ -421,7 +421,7 @@
 > if    she  were  balancing something on  it       which was quite likely to fall  . If    she  saw
 # NSg/C ISg+ NSg/V V         NSg/I/V/J J/P NPr/ISg+ I/C+  V   NSg   NSg/J  P  NSg/V . NSg/C ISg+ NSg/V
 > me       out         of the corner of her     eyes   she  gave no    hint  of it      — indeed , I    was almost
-# NPr/ISg+ NSg/V/J/R/P P  D   NSg/V  P  ISg/D$+ NPl/V+ ISg+ V    NPr/P NSg/V P  NPr/ISg . W?     . ISg+ V   NSg
+# NPr/ISg+ NSg/V/J/R/P P  D   NSg/V  P  ISg/D$+ NPl/V+ ISg+ V    NPr/P NSg/V P  NPr/ISg . W?     . ISg+ V   R
 > surprised into murmuring an  apology for having disturbed her     by      coming  in      .
 # V/J       P    NSg/V     D/P NSg     C/P V      V/J       ISg/D$+ NSg/J/P NSg/V/J NPr/J/P .
 >
@@ -453,13 +453,13 @@
 >
 #
 > At    any     rate  , Miss  Baker’s lips   fluttered , she  nodded at    me       almost imperceptibly ,
-# NSg/P I/R/Dq+ NSg/V . NSg/V NSg$    NPl/V+ V/J       . ISg+ V      NSg/P NPr/ISg+ NSg    R             .
+# NSg/P I/R/Dq+ NSg/V . NSg/V NSg$    NPl/V+ V/J       . ISg+ V      NSg/P NPr/ISg+ R      R             .
 > and then    quickly tipped her     head     back    again — the object she  was balancing had
 # V/C NSg/J/C R       V      ISg/D$+ NPr/V/J+ NSg/V/J P     . D+  NSg/V+ ISg+ V   V+        V
 > obviously tottered a   little     and given     her     something of a   fright   . Again a   sort  of
 # R         V/J      D/P NPr/I/J/Dq V/C NSg/V/J/P ISg/D$+ NSg/I/V/J P  D/P NSg/V/J+ . P     D/P NSg/V P
 > apology arose to my lips   . Almost any    exhibition of complete self       - sufficiency
-# NSg+    V     P  D$ NPl/V+ . NSg    I/R/Dq NSg        P  NSg/V/J  NSg/I/V/J+ . NSg
+# NSg+    V     P  D$ NPl/V+ . R      I/R/Dq NSg        P  NSg/V/J  NSg/I/V/J+ . NSg
 > draws a   stunned tribute from me       .
 # NPl/V D/P V/J     NSg/V   P    NPr/ISg+ .
 >
@@ -793,7 +793,7 @@
 > There was something pathetic in      his     concentration , as    if    his     complacency , more
 # +     V   NSg/I/V/J J        NPr/J/P ISg/D$+ NSg+          . NSg/R NSg/C ISg/D$+ NSg         . NPr/I/V/J/Dq
 > acute   than of old   , was not   enough to him  any    more          . When    , almost immediately , the
-# NSg/V/J C/P  P  NSg/J . V   NSg/C NSg/I  P  ISg+ I/R/Dq NPr/I/V/J/Dq+ . NSg/I/C . NSg    R           . D+
+# NSg/V/J C/P  P  NSg/J . V   NSg/C NSg/I  P  ISg+ I/R/Dq NPr/I/V/J/Dq+ . NSg/I/C . R      R           . D+
 > telephone rang inside  and the butler left    the porch Daisy seized upon the
 # NSg/V+    V    NSg/J/P V/C D   NPr/V  NPr/V/J D+  NSg+  NPr+  V/J    P    D+
 > momentary interruption and leaned toward me       .
@@ -919,7 +919,7 @@
 >
 #
 > Almost before I    had grasped her     meaning   there was the flutter of a    dress  and the
-# NSg    C/P    ISg+ V   V/J     ISg/D$+ N🅪Sg/V/J+ +     V   D   NSg/V   P  D/P+ NSg/V+ V/C D
+# R      C/P    ISg+ V   V/J     ISg/D$+ N🅪Sg/V/J+ +     V   D   NSg/V   P  D/P+ NSg/V+ V/C D
 > crunch of leather  boots  , and Tom   and Daisy were  back    at    the table  .
 # NSg/V  P  NSg/V/J+ NPl/V+ . V/C NPr/V V/C NPr+  NSg/V NSg/V/J NSg/P D+  NSg/V+ .
 >
@@ -1635,7 +1635,7 @@
 >
 #
 > We   drove over      to Fifth    Avenue , warm    and soft  , almost pastoral , on  the summer
-# IPl+ NSg/V NSg/V/J/P P  NSg/V/J+ NSg    . NSg/V/J V/C NSg/J . NSg    NSg/J    . J/P D+  NPr/V+
+# IPl+ NSg/V NSg/V/J/P P  NSg/V/J+ NSg    . NSg/V/J V/C NSg/J . R      NSg/J    . J/P D+  NPr/V+
 > Sunday afternoon . I    wouldn’t have   been  surprised to see   a   great flock of white
 # NSg/V+ N🅪Sg+     . ISg+ VX       NSg/VX NSg/V V/J       P  NSg/V D/P NSg/J NSg/V P  NPr/V/J
 > sheep  turn  the corner .
@@ -2071,7 +2071,7 @@
 >
 #
 > “ I    almost made a    mistake , too , ” she  declared vigorously . “ I    almost married a
-# . ISg+ NSg    V    D/P+ NSg/V+  . W?  . . ISg+ V/J+     R          . . ISg+ NSg    NSg/V/J D/P
+# . ISg+ R      V    D/P+ NSg/V+  . W?  . . ISg+ V/J+     R          . . ISg+ R      NSg/V/J D/P
 > little     kyke who’d been  after me       for years . I    knew he       was below me       . Everybody
 # NPr/I/J/Dq ?    W?    NSg/V JC/P  NPr/ISg+ C/P NPl+  . ISg+ V    NPr/ISg+ V   P     NPr/ISg+ . NSg/I+
 > kept saying to me       : ‘          Lucille , that          man’s      ’ way    below you    ! ’ But     if    I    hadn’t met
@@ -2215,7 +2215,7 @@
 >
 #
 > It       was nine o’clock — almost immediately afterward I    looked at    my  watch and found
-# NPr/ISg+ V   NSg  W?      . NSg    R           R/Am      ISg+ V/J    NSg/P D$+ NSg/V V/C NSg/V
+# NPr/ISg+ V   NSg  W?      . R      R           R/Am      ISg+ V/J    NSg/P D$+ NSg/V V/C NSg/V
 > it       was ten  . Mr   . McKee was asleep on  a   chair with his     fists  clenched in      his     lap      ,
 # NPr/ISg+ V+  NSg+ . NSg+ . NPr   V   J      J/P D/P NSg/V P    ISg/D$+ NPl/V+ V/J      NPr/J/P ISg/D$+ NSg/V/J+ .
 > like        a   photograph of a   man     of action   . Taking  out         my  handkerchief I    wiped from
@@ -2939,7 +2939,7 @@
 >
 #
 > Almost at    the moment when    Mr   . Gatsby identified himself a   butler hurried toward
-# NSg    NSg/P D   NSg+   NSg/I/C NSg+ . NPr    V/J        ISg+    D/P NPr/V  V/J     J/P
+# R      NSg/P D   NSg+   NSg/I/C NSg+ . NPr    V/J        ISg+    D/P NPr/V  V/J     J/P
 > him with the information that          Chicago was calling him  on  the wire   . He       excused
 # ISg P    D+  NᴹSg+       NSg/I/C/Ddem+ NPr+    V   NSg/V   ISg+ J/P D+  NSg/V+ . NPr/ISg+ V/J
 > himself with a   small    bow    that          included each of us       in      turn   .
@@ -3101,7 +3101,7 @@
 >
 #
 > I    was alone and it       was almost two . For some      time      confused and intriguing sounds
-# ISg+ V   J     V/C NPr/ISg+ V   NSg+   NSg . C/P I/J/R/Dq+ N🅪Sg/V/J+ V/J      V/C NSg/V/J    NPl/V
+# ISg+ V   J     V/C NPr/ISg+ V   R+     NSg . C/P I/J/R/Dq+ N🅪Sg/V/J+ V/J      V/C NSg/V/J    NPl/V
 > had issued from a   long    , many       - windowed room    which overhung the terrace . Eluding
 # V   V/J    P    D/P NPr/V/J . NSg/I/J/Dq . V/J      NSg/V/J I/C+  V/J      D+  NSg/V+  . V
 > Jordan’s undergraduate , who    was now       engaged in      an  obstetrical conversation with
@@ -3181,7 +3181,7 @@
 >
 #
 > “ Well    , we’re almost the last     to - night  , ” said one       of the men  sheepishly . “ The
-# . NSg/V/J . W?    NSg    D   NSg/V/J+ P  . N🅪Sg/V . . V/J  NSg/I/V/J P  D+  NSg+ R+         . . D+
+# . NSg/V/J . W?    R      D   NSg/V/J+ P  . N🅪Sg/V . . V/J  NSg/I/V/J P  D+  NSg+ R+         . . D+
 > orchestra left    half        an   hour ago  . ”
 # NSg+      NPr/V/J N🅪Sg/V/J/P+ D/P+ NSg+ J/P+ . .
 >
@@ -4255,7 +4255,7 @@
 > night   they shot     Rosy     Rosenthal there . It       was six of us       at    the table  , and Rosy
 # N🅪Sg/V+ IPl+ NSg/V/J+ NSg/V/J+ NPr+      W?    . NPr/ISg+ V   NSg P  NPr/IPl+ NSg/P D+  NSg/V+ . V/C NSg/V/J
 > had eat and drunk   a    lot    all          evening . When    it       was almost morning the waiter came
-# V   V   V/C NSg/V/J D/P+ NPr/V+ NSg/I/J/C/Dq N🅪Sg/V+ . NSg/I/C NPr/ISg+ V   NSg    N🅪Sg/V  D+  NSg/V+ NSg/V/P
+# V   V   V/C NSg/V/J D/P+ NPr/V+ NSg/I/J/C/Dq N🅪Sg/V+ . NSg/I/C NPr/ISg+ V   R      N🅪Sg/V  D+  NSg/V+ NSg/V/P
 > up        to him with a   funny look   and says  somebody wants to speak to him  outside    .
 # NSg/V/J/P P  ISg P    D/P NSg/J NSg/V+ V/C NPl/V NSg/I+   NPl/V P  NSg/V P  ISg+ NSg/V/J/P+ .
 > ‘          All          right   , ’ says  Rosy    , and begins to get   up        , and I    pulled him  down      in      his
@@ -5791,7 +5791,7 @@
 > that         light    had now       vanished forever . Compared to the great  distance that          had
 # NSg/I/C/Ddem NSg/V/J+ V   NPr/V/J/C V/J      NSg/J   . V/J      P  D+  NSg/J+ NSg/V+   NSg/I/C/Ddem+ V
 > separated him  from Daisy it       had seemed very near      to her     , almost touching  her     . It
-# V/J       ISg+ P    NPr+  NPr/ISg+ V   V/J    J/R  NSg/V/J/P P  ISg/D$+ . NSg    NSg/V/J/P ISg/D$+ . NPr/ISg+
+# V/J       ISg+ P    NPr+  NPr/ISg+ V   V/J    J/R  NSg/V/J/P P  ISg/D$+ . R      NSg/V/J/P ISg/D$+ . NPr/ISg+
 > had seemed as    close   as    a   star  to the moon   . Now       it       was again a   green   light   on  a
 # V   V/J    NSg/R NSg/V/J NSg/R D/P NSg/V P  D   NPr/V+ . NPr/V/J/C NPr/ISg+ V   P     D/P NPr/V/J NSg/V/J J/P D/P+
 > dock   . His     count of enchanted objects had diminished by      one        .
@@ -5967,7 +5967,7 @@
 > back    into Gatsby’s face   , as    though a    faint    doubt  had occurred to him  as    to the
 # NSg/V/J P    NSg$+    NSg/V+ . NSg/R V/C    D/P+ NSg/V/J+ NSg/V+ V   V        P  ISg+ NSg/R P  D
 > quality of his     present happiness . Almost five years ! There must  have   been
-# NSg/J   P  ISg/D$+ NSg/V/J NᴹSg+     . NSg    NSg  NPl+  . +     NSg/V NSg/VX NSg/V
+# NSg/J   P  ISg/D$+ NSg/V/J NᴹSg+     . R      NSg  NPl+  . +     NSg/V NSg/VX NSg/V
 > moments even    that          afternoon when    Daisy tumbled short     of his     dreams — not   through
 # NPl+    NSg/V/J NSg/I/C/Ddem+ N🅪Sg+     NSg/I/C NPr+  V/J     NPr/V/J/P P  ISg/D$+ NPl/V+ . NSg/C NSg/J/P
 > her     own      fault  , but     because of the colossal vitality of his     illusion . It       had gone
@@ -6315,7 +6315,7 @@
 >
 #
 > “ I    know  your wife     , ” continued Gatsby , almost aggressively .
-# . ISg+ NSg/V D$+  NSg/V/J+ . . V/J       NPr    . NSg+   R+           .
+# . ISg+ NSg/V D$+  NSg/V/J+ . . V/J       NPr    . R+     R+           .
 >
 #
 > “ That          so        ? ”
@@ -6663,7 +6663,7 @@
 > “ Anything I    hate   is to get   my  head     stuck   in      a    pool   , ” mumbled Miss   Baedeker .
 # . NSg/I/V+ ISg+ N🅪Sg/V VL P  NSg/V D$+ NPr/V/J+ NSg/V/J NPr/J/P D/P+ NSg/V+ . . V/J     NSg/V+ NPr      .
 > “ They almost drowned me       once  over      in      New      Jersey . ”
-# . IPl+ NSg    V/J     NPr/ISg+ NSg/C NSg/V/J/P NPr/J/P NSg/V/J+ NPr+   . .
+# . IPl+ R      V/J     NPr/ISg+ NSg/C NSg/V/J/P NPr/J/P NSg/V/J+ NPr+   . .
 >
 #
 > “ Then    you    ought    to leave it       alone , ” countered Doctor Civet .
@@ -6677,7 +6677,7 @@
 >
 #
 > It       was like        that          . Almost the last     thing  I    remember was standing with Daisy and
-# NPr/ISg+ V   NSg/V/J/C/P NSg/I/C/Ddem+ . NSg    D+  NSg/V/J+ NSg/V+ ISg+ NSg/V    V   NSg/V/J  P    NPr+  V/C
+# NPr/ISg+ V   NSg/V/J/C/P NSg/I/C/Ddem+ . R      D+  NSg/V/J+ NSg/V+ ISg+ NSg/V    V   NSg/V/J  P    NPr+  V/C
 > watching the moving   - picture director and his     Star   . They were  still   under   the
 # V        D   NSg/V/J+ . NSg/V   NSg      V/C ISg/D$+ NSg/V+ . IPl+ NSg/V NSg/V/J NSg/J/P D
 > white   - plum    tree  and their faces  were  touching  except for a   pale    , thin    ray   of
@@ -6977,7 +6977,7 @@
 > and my  lips   parted like        a    dumb man’s      , as    though there was more         struggling upon
 # V/C D$+ NPl/V+ V/J    NSg/V/J/C/P D/P+ V/J+ NPr$/I/V/J . NSg/R V/C    +     V   NPr/I/V/J/Dq V          P
 > them     than a   wisp  of startled air    . But     they made no     sound    , and what   I    had almost
-# NSg/IPl+ C/P  D/P NSg/V P  V/J+     NSg/V+ . NSg/C/P IPl+ V    NPr/P+ NSg/V/J+ . V/C NSg/I+ ISg+ V   NSg
+# NSg/IPl+ C/P  D/P NSg/V P  V/J+     NSg/V+ . NSg/C/P IPl+ V    NPr/P+ NSg/V/J+ . V/C NSg/I+ ISg+ V   R
 > remembered was uncommunicable forever .
 # V/J        V   ?              NSg/J+  .
 >
@@ -7099,7 +7099,7 @@
 >
 #
 > The next    day  was broiling , almost the last    , certainly the warmest , of the
-# D+  NSg/J/P NPr🅪 V   V        . NSg    D   NSg/V/J . R         D   JS      . P  D+
+# D+  NSg/J/P NPr🅪 V   V        . R      D   NSg/V/J . R         D   JS      . P  D+
 > summer . As    my  train  emerged from the tunnel into sunlight , only  the hot     whistles
 # NPr/V+ . NSg/R D$+ NSg/V+ V/J     P    D+  NSg/V+ P    NSg/V+   . J/R/C D   NSg/V/J NPl/V
 > of the National Biscuit Company broke   the simmering hush   at    noon   . The straw
@@ -7681,7 +7681,7 @@
 > “ You    think I’m pretty  dumb , don’t you    ? ” he       suggested . “ Perhaps I    am      , but     I    have
 # . ISgPl+ NSg/V W?  NSg/V/J V/J  . V     ISgPl+ . . NPr/ISg+ V/J+      . . NSg     ISg+ NPr/V/J . NSg/C/P ISg+ NSg/VX
 > a   — almost a    second   sight  , sometimes , that          tells me       what   to do     . Maybe   you    don’t
-# D/P . NSg    D/P+ NSg/V/J+ NSg/V+ . R         . NSg/I/C/Ddem+ NPl/V NPr/ISg+ NSg/I+ P  NSg/VX . NSg/J/R ISgPl+ V
+# D/P . R      D/P+ NSg/V/J+ NSg/V+ . R         . NSg/I/C/Ddem+ NPl/V NPr/ISg+ NSg/I+ P  NSg/VX . NSg/J/R ISgPl+ V
 > believe that          , but     science — — — ”
 # V       NSg/I/C/Ddem+ . NSg/C/P N🅪Sg/V+ . . . .
 >
@@ -10277,7 +10277,7 @@
 >
 #
 > This    was a   forlorn hope   — he       was almost sure that         Wilson had no     friend   : there was
-# I/Ddem+ V   D/P NSg/V/J NPr🅪/V . NPr/ISg+ V   NSg    J    NSg/I/C/Ddem NPr+   V   NPr/P+ NPr/V/J+ . +     V
+# I/Ddem+ V   D/P NSg/V/J NPr🅪/V . NPr/ISg+ V   R      J    NSg/I/C/Ddem NPr+   V   NPr/P+ NPr/V/J+ . +     V
 > not   enough of him  for his     wife     . He       was glad    a   little     later when    he       noticed a
 # NSg/C NSg/I  P  ISg+ C/P ISg/D$+ NSg/V/J+ . NPr/ISg+ V   NSg/V/J D/P NPr/I/J/Dq JC    NSg/I/C NPr/ISg+ V/J     D/P
 > change in      the room     , a   blue    quickening by      the window , and realized that          dawn
