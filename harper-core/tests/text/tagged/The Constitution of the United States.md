@@ -49,9 +49,9 @@
 > any     State  legislature , or    as    an  executive or    judicial officer of any     State  , to
 # I/R/Dq+ NSg/V+ NSg+        . NPr/C NSg/R D/P NSg/J     NPr/C NSg/J    NSg/V   P  I/R/Dq+ NSg/V+ . P
 > support the Constitution of the United States   , shall have   engaged in
-# NSg/V   D   NPr          P  D+  V/J+   NPrPl/V+ . VX    NSg/VX V/J     NPr/J/P
-> insurrection or    rebellion against the same , or    given     aid   or    comfort to the
-# NSg          NPr/C NSg       C/P     D   I/J  . NPr/C NSg/V/J/P NSg/V NPr/C NSg/V+  P  D+
+# N🅪Sg/V  D   NPr          P  D+  V/J+   NPrPl/V+ . VX    NSg/VX V/J     NPr/J/P
+> insurrection or    rebellion against the same , or    given     aid    or    comfort to the
+# NSg          NPr/C NSg       C/P     D   I/J  . NPr/C NSg/V/J/P N🅪Sg/V NPr/C NSg/V+  P  D+
 > enemies thereof . But     Congress may    , by      a   vote  of two - thirds of each House  ,
 # NPl/V+  +       . NSg/C/P NPr/V+   NPr/VX . NSg/J/P D/P NSg/V P  NSg . NPl/V  P  Dq+  NPr/V+ .
 > remove such   disability .
@@ -298,8 +298,8 @@
 # C/P D$+   NPl/V+   . P  NSg/VX V/J         NSg/J/P NSg/V+ . V/C V/J  NSg/V/J/R/P P  D   NPr      P
 > the United States   . They shall in      all          Cases  , except Treason , Felony and Breach
 # D+  V/J+   NPrPl/V+ . IPl+ VX    NPr/J/P NSg/I/J/C/Dq NPl/V+ . V/C/P  NSg     . NSg    V/C NSg/V
-> of the Peace  , be     privileged from Arrest during their Attendance at    the Session
-# P  D+  NPr/V+ . NSg/VX V/J        P    NSg/V+ V/P    D$+   NSg+       NSg/P D   NSg/V
+> of the Peace   , be     privileged from Arrest during their Attendance at    the Session
+# P  D+  NPr🅪/V+ . NSg/VX V/J        P    NSg/V+ V/P    D$+   NSg+       NSg/P D   NSg/V
 > of their respective Houses , and in      going   to and returning from the same ; and
 # P  D$+   J+         NPl/V+ . V/C NPr/J/P NSg/V/J P  V/C V         P    D   I/J  . V/C
 > for any    Speech or    Debate in      either House  , they shall not   be     questioned in      any
@@ -450,8 +450,8 @@
 #
 >
 #
-> To establish Post     Offices and post     Roads ;
-# P  V         NPr/V/P+ NPl/V   V/C NPr/V/P+ NPl+  .
+> To establish Post      Offices and post      Roads ;
+# P  V         NPr🅪/V/P+ NPl/V   V/C NPr🅪/V/P+ NPl+  .
 >
 #
 >
@@ -459,7 +459,7 @@
 >
 #
 > To promote the Progress of Science and useful Arts   , by      securing for limited
-# P  NSg/V   D   NSg/V    P  NSg/V+  V/C J+     NPl/V+ . NSg/J/P V        C/P NSg/V/J
+# P  NSg/V   D   NSg/V    P  N🅪Sg/V+ V/C J+     NPl/V+ . NSg/J/P V        C/P NSg/V/J
 > Times to Authors and Inventors the exclusive Right   to their respective Writings
 # NPl/V P  NPl/V   V/C NPl       D   NSg/J     NPr/V/J P  D$+   J          W?
 > and Discoveries ;
@@ -488,8 +488,8 @@
 #
 >
 #
-> To declare War   , grant  Letters of Marque and Reprisal , and make  Rules  concerning
-# P  V       NSg/V . NPr/V+ NPl/V   P  NSg    V/C NSg+     . V/C NSg/V NPl/V+ NSg/V/J/P
+> To declare War    , grant  Letters of Marque and Reprisal , and make  Rules  concerning
+# P  V       N🅪Sg/V . NPr/V+ NPl/V   P  NSg    V/C NSg+     . V/C NSg/V NPl/V+ NSg/V/J/P
 > Captures on  Land   and Water   ;
 # NPl/V    J/P NPr🅪/V V/C N🅪Sg/V+ .
 >
@@ -499,7 +499,7 @@
 >
 #
 > To raise and support Armies , but     no    Appropriation of Money  to that          Use   shall be
-# P  NSg/V V/C NSg/V+  NPl+   . NSg/C/P NPr/P NSg           P  N🅪Sg/J P  NSg/I/C/Ddem+ NSg/V VX    NSg/VX
+# P  NSg/V V/C N🅪Sg/V+ NPl+   . NSg/C/P NPr/P NSg           P  N🅪Sg/J P  NSg/I/C/Ddem+ NSg/V VX    NSg/VX
 > for a   longer Term    than two  Years ;
 # C/P D/P NSg/J  NSg/V/J C/P  NSg+ NPl+  .
 >
@@ -604,8 +604,8 @@
 # NPr/J/P NPl/V P  NSg       NPr/C NSg      D+  NSg/V/J+ N🅪Sg/V+ NPr/VX NSg/V   NPr/ISg+ .
 >
 #
-> No    Bill  of Attainder or    ex       post     facto Law    shall be      passed .
-# NPr/P NPr/V P  NSg       NPr/C NSg/V/J+ NPr/V/P+ ?     NSg/V+ VX+   NSg/VX+ V/J    .
+> No    Bill  of Attainder or    ex       post      facto Law    shall be      passed .
+# NPr/P NPr/V P  NSg       NPr/C NSg/V/J+ NPr🅪/V/P+ ?     NSg/V+ VX+   NSg/VX+ V/J    .
 >
 #
 > No     Capitation , or    other    direct , Tax     shall be     laid , unless in      Proportion to the
@@ -672,8 +672,8 @@
 # NSg/J         . NPr/V+ NPl/V   P  NSg    V/C NSg+     . NSg/V+ N🅪Sg/J+ . V    NPl/V P
 > Credit ; make  any     Thing  but     gold     and silver    Coin   a   Tender  in      Payment of Debts ;
 # NSg/V+ . NSg/V I/R/Dq+ NSg/V+ NSg/C/P NᴹSg/V/J V/C NᴹSg/V/J+ NSg/V+ D/P NSg/V/J NPr/J/P N🅪Sg    P  NPl+  .
-> pass  any    Bill  of Attainder , ex       post     facto Law    , or    Law    impairing the Obligation
-# NSg/V I/R/Dq NPr/V P  NSg       . NSg/V/J+ NPr/V/P+ ?     NSg/V+ . NPr/C NSg/V+ V         D   NSg
+> pass  any    Bill  of Attainder , ex       post      facto Law    , or    Law    impairing the Obligation
+# NSg/V I/R/Dq NPr/V P  NSg       . NSg/V/J+ NPr🅪/V/P+ ?     NSg/V+ . NPr/C NSg/V+ V         D   NSg
 > of Contracts , or    grant any    Title of Nobility .
 # P  NPl/V+    . NPr/C NPr/V I/R/Dq NSg/V P  NSg+     .
 >
@@ -694,10 +694,10 @@
 #
 > No    State shall , without the Consent of Congress , lay     any    Duty of Tonnage , keep
 # NPr/P NSg/V VX    . C/P     D   NSg/V   P  NPr/V+   . NSg/V/J I/R/Dq NSg  P  NSg+    . NSg/V
-> Troops , or    Ships of War    in      time     of Peace  , enter into any    Agreement or    Compact
-# NPl/V+ . NPr/C NPl/V P  NSg/V+ NPr/J/P N🅪Sg/V/J P  NPr/V+ . NSg/V P    I/R/Dq NSg       NPr/C NSg/V/J
-> with another State  , or    with a    foreign Power    , or    engage in      War    , unless actually
-# P    I/D+    NSg/V+ . NPr/C P    D/P+ NSg/J+  NSg/V/J+ . NPr/C V      NPr/J/P NSg/V+ . C      R
+> Troops , or    Ships of War     in      time     of Peace   , enter into any    Agreement or    Compact
+# NPl/V+ . NPr/C NPl/V P  N🅪Sg/V+ NPr/J/P N🅪Sg/V/J P  NPr🅪/V+ . NSg/V P    I/R/Dq NSg       NPr/C NSg/V/J
+> with another State  , or    with a    foreign Power    , or    engage in      War     , unless actually
+# P    I/D+    NSg/V+ . NPr/C P    D/P+ NSg/J+  NSg/V/J+ . NPr/C V      NPr/J/P N🅪Sg/V+ . C      R
 > invaded , or    in      such  imminent Danger     as    will   not   admit of delay    .
 # V/J     . NPr/C NPr/J/P NSg/I J        N🅪Sg/V/JC+ NSg/R NPr/VX NSg/C V     P  NSg/V/J+ .
 >
@@ -1046,10 +1046,10 @@
 # P  D$+   NSg/J/P+ NSg/V+  .
 >
 #
-> No    soldier shall , in      time     of peace  be     quartered in      any     house  , without the
-# NPr/P NSg/V/J VX    . NPr/J/P N🅪Sg/V/J P  NPr/V+ NSg/VX V/J       NPr/J/P I/R/Dq+ NPr/V+ . C/P     D
-> consent of the owner , nor   in      time     of war    , but     in      a   manner to be     prescribed by
-# NSg/V   P  D+  NSg+  . NSg/C NPr/J/P N🅪Sg/V/J P  NSg/V+ . NSg/C/P NPr/J/P D/P NSg    P  NSg/VX V/J        NSg/J/P
+> No    soldier shall , in      time     of peace   be     quartered in      any     house  , without the
+# NPr/P NSg/V/J VX    . NPr/J/P N🅪Sg/V/J P  NPr🅪/V+ NSg/VX V/J       NPr/J/P I/R/Dq+ NPr/V+ . C/P     D
+> consent of the owner , nor   in      time     of war     , but     in      a   manner to be     prescribed by
+# NSg/V   P  D+  NSg+  . NSg/C NPr/J/P N🅪Sg/V/J P  N🅪Sg/V+ . NSg/C/P NPr/J/P D/P NSg    P  NSg/VX V/J        NSg/J/P
 > law    .
 # NSg/V+ .
 >
@@ -1160,8 +1160,8 @@
 #
 > Treason against the United States   , shall consist only  in
 # NSg     C/P     D+  V/J+   NPrPl/V+ . VX    NSg/V   J/R/C NPr/J/P
-> levying War    against them     , or    in      adhering to their Enemies , giving them     Aid   and
-# V       NSg/V+ C/P     NSg/IPl+ . NPr/C NPr/J/P V        P  D$+   NPl/V+  . V      NSg/IPl+ NSg/V V/C
+> levying War     against them     , or    in      adhering to their Enemies , giving them     Aid    and
+# V       N🅪Sg/V+ C/P     NSg/IPl+ . NPr/C NPr/J/P V        P  D$+   NPl/V+  . V      NSg/IPl+ N🅪Sg/V V/C
 > Comfort . No     Person shall be     convicted of Treason unless on  the Testimony of two
 # NSg/V+  . NPr/P+ NSg/V+ VX    NSg/VX V/J       P  NSg     C      J/P D   NSg       P  NSg+
 > Witnesses to the same overt  Act    , or    on  Confession in      open     Court    .
@@ -1198,8 +1198,8 @@
 # C      J/P D/P NSg         NPr/C NSg        P  D/P NSg/J+ NSg/V/J+ . V/C/P  NPr/J/P NPl/V+ V
 > in      the land   or    naval forces , or    in      the militia , when    in      actual service in      time
 # NPr/J/P D+  NPr🅪/V NPr/C J+    NPl/V+ . NPr/C NPr/J/P D   NSg     . NSg/I/C NPr/J/P NSg/J  NSg/V   NPr/J/P N🅪Sg/V/J
-> of war   or    public  danger     ; nor   shall any     person be     subject for the same offense
-# P  NSg/V NPr/C NSg/V/J N🅪Sg/V/JC+ . NSg/C VX    I/R/Dq+ NSg/V  NSg/VX NSg/V/J C/P D+  I/J+ NSg
+> of war    or    public  danger     ; nor   shall any     person be     subject for the same offense
+# P  N🅪Sg/V NPr/C NSg/V/J N🅪Sg/V/JC+ . NSg/C VX    I/R/Dq+ NSg/V  NSg/VX NSg/V/J C/P D+  I/J+ NSg
 > to be     twice put   in      jeopardy of life  or    limb   ; nor   shall be     compelled in      any
 # P  NSg/VX W?    NSg/V NPr/J/P NSg/V    P  NSg/V NPr/C NSg/V+ . NSg/C VX    NSg/VX V/J       NPr/J/P I/R/Dq+
 > criminal case  to be     a   witness against himself , nor   be     deprived of life  ,
@@ -1366,8 +1366,8 @@
 # NPl/V    C/P NPl/V+   NPr/J/P V           NSg          NPr/C NSg+      . VX    NSg/C NSg/VX
 > questioned . But     neither the United States   nor   any     State  shall assume or    pay     any
 # V/J        . NSg/C/P I/C     D+  V/J+   NPrPl/V+ NSg/C I/R/Dq+ NSg/V+ VX    V      NPr/C NSg/V/J I/R/Dq
-> debt or    obligation incurred in      aid   of insurrection or    rebellion against the
-# N🅪Sg NPr/C NSg+       V        NPr/J/P NSg/V P  NSg          NPr/C NSg+      C/P     D+
+> debt or    obligation incurred in      aid    of insurrection or    rebellion against the
+# N🅪Sg NPr/C NSg+       V        NPr/J/P N🅪Sg/V P  NSg          NPr/C NSg+      C/P     D+
 > United States   , or    any    claim for the loss  or    emancipation of any     slave  ; but     all
 # V/J+   NPrPl/V+ . NPr/C I/R/Dq NSg/V C/P D+  NSg/V NPr/C NSg          P  I/R/Dq+ NSg/V+ . NSg/C/P NSg/I/J/C/Dq+
 > such   debts , obligations and claims shall be     held illegal and void     .
@@ -1433,7 +1433,7 @@
 > the United States  and of the several States   , shall be     bound   by      Oath  or
 # D+  V/J+   NPrPl/V V/C P  D+  J/Dq+   NPrPl/V+ . VX    NSg/VX NSg/V/J NSg/J/P NSg/V NPr/C
 > Affirmation , to support this    Constitution ; but     no     religious Test   shall ever be
-# NSg         . P  NSg/V   I/Ddem+ NPr+         . NSg/C/P NPr/P+ NSg/J     NSg/V+ VX    J    NSg/VX
+# NSg         . P  N🅪Sg/V  I/Ddem+ NPr+         . NSg/C/P NPr/P+ NSg/J     NSg/V+ VX    J    NSg/VX
 > required as    a   Qualification to any    Office or    public  Trust    under   the United
 # V/J      NSg/R D/P NSg           P  I/R/Dq NSg/V  NPr/C NSg/V/J N🅪Sg/V/J NSg/J/P D+  V/J+
 > States   .

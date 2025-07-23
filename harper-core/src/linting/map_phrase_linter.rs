@@ -12,6 +12,7 @@ pub struct MapPhraseLinter {
     expr: Box<dyn Expr>,
     correct_forms: Vec<String>,
     message: String,
+    lint_kind: LintKind,
 }
 
 impl MapPhraseLinter {
@@ -20,12 +21,14 @@ impl MapPhraseLinter {
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
         description: impl ToString,
+        lint_kind: Option<LintKind>,
     ) -> Self {
         Self {
             description: description.to_string(),
             expr,
             correct_forms: correct_forms.into_iter().map(|f| f.to_string()).collect(),
             message: message.to_string(),
+            lint_kind: lint_kind.unwrap_or(LintKind::Miscellaneous),
         }
     }
 
@@ -35,6 +38,7 @@ impl MapPhraseLinter {
             [phrase],
             format!("Did you mean the phrase `{phrase}`?"),
             format!("Looks for slight improper modifications to the phrase `{phrase}`."),
+            None,
         )
     }
 
@@ -43,6 +47,7 @@ impl MapPhraseLinter {
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
         description: impl ToString,
+        lint_kind: Option<LintKind>,
     ) -> Self {
         let patterns = LongestMatchOf::new(
             phrase
@@ -54,7 +59,13 @@ impl MapPhraseLinter {
                 .collect(),
         );
 
-        Self::new(Box::new(patterns), correct_forms, message, description)
+        Self::new(
+            Box::new(patterns),
+            correct_forms,
+            message,
+            description,
+            lint_kind,
+        )
     }
 
     pub fn new_fixed_phrase(
@@ -62,12 +73,14 @@ impl MapPhraseLinter {
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
         description: impl ToString,
+        lint_kind: Option<LintKind>,
     ) -> Self {
         Self::new(
             Box::new(FixedPhrase::from_phrase(phrase.as_ref())),
             correct_forms,
             message,
             description,
+            lint_kind,
         )
     }
 
@@ -82,7 +95,13 @@ impl MapPhraseLinter {
             correct_form.to_string()
         );
 
-        Self::new_fixed_phrase(phrase, [correct_form], message, description)
+        Self::new_fixed_phrase(
+            phrase,
+            [correct_form],
+            message,
+            description,
+            Some(LintKind::Miscellaneous),
+        )
     }
 }
 
@@ -98,7 +117,7 @@ impl ExprLinter for MapPhraseLinter {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::Miscellaneous,
+            lint_kind: self.lint_kind,
             suggestions: self
                 .correct_forms
                 .iter()

@@ -90,7 +90,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
       57 | lessons in the schoolroom, and though this was not a very good opportunity for
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -331,7 +331,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      162 | sharply; “I advise you to leave off this minute!” She generally gave herself
      163 | very good advice, (though she very seldom followed it), and sometimes she
@@ -902,7 +902,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
      565 | of white kid gloves, and she very good-naturedly began hunting about for them,
@@ -1208,7 +1208,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      929 | “It is a very good height indeed!” said the Caterpillar angrily, rearing itself
          |          ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`

@@ -207,7 +207,7 @@ Aida/Og
 Aiken/Og
 Aileen/Og
 Aimee/Og
-Ainu/NJOg           # ethnicity, language
+Ainu/NmJOg          # ethnicity, language
 Airedale/ONgS
 Aires/g
 Aisha/Og
@@ -1785,7 +1785,7 @@ Canopus/ONg
 Cantabrigian/JNg
 Canterbury/Og
 Canton/Og
-Cantonese/JNg
+Cantonese/JNmg
 Cantor/Og
 Cantrell/Og
 Cantu/Og
@@ -2097,7 +2097,7 @@ Chimu/g
 Chin/Og
 China/ONg
 Chinatown/NOg
-Chinese/JONg
+Chinese/JONmg
 Chinook/ONgS
 Chipewyan/NOg
 Chippendale/Og
@@ -2618,7 +2618,7 @@ Danial/Og
 Daniel/ONSg
 Danielle/Og
 Daniels/Og
-Danish/OJNg
+Danish/OJNmg
 Dannie/Og
 Danny/Og
 Danone/g
@@ -3004,7 +3004,7 @@ Dusseldorf/Og
 Dustbuster/g
 Dustin/Og
 Dusty/Og
-Dutch/JONVg
+Dutch/JONmVg
 Dutchman/NOg
 Dutchmen/9g
 Dutchwoman/N
@@ -3219,7 +3219,7 @@ Endymion/Og
 Eng/g
 Engels/Og
 England/Og
-English/JNOVg>S
+English/JNwOVg>S
 Englishman/Ng
 Englishmen/9g
 Englishwoman/Ng
@@ -3653,7 +3653,7 @@ Freemasonry/OSg
 Freetown/Og
 Freida/g
 Fremont/Og
-French/ONJVgS
+French/ONwJVgS
 Frenchman/Ng
 Frenchmen/9g
 Frenchwoman/Ng
@@ -3893,7 +3893,7 @@ Gerardo/g
 Gerber/Og
 Gere/Og
 Geritol/g
-German/NOJgS
+German/NwOJgS
 Germanic/OJNg
 Germany/Og
 Geronimo/Og
@@ -4594,6 +4594,7 @@ Hohenzollern/ONJg
 Hohhot/Og
 Hohokam/Og
 Hokkaido/ONg
+Hokkien/ONmg
 Hokusai/g
 Holbein/g
 Holcomb/Og
@@ -4953,7 +4954,7 @@ Isuzu/ONg           # car brand
 It/ON
 Itaipu/Og
 Ital/N
-Italian/JNSg
+Italian/JNwSg
 Italianate/JV
 Italy/Og
 Itasca/Og
@@ -5048,7 +5049,7 @@ January/OSg
 Janus/Og
 Jap/ONJVSg
 Japan/Og
-Japanese/JNOgS
+Japanese/JNwOgS
 Japura/g
 Jared/Og
 Jarlsberg/ONg
@@ -5561,7 +5562,7 @@ Koppel/g
 Koran/NOgS
 Koranic/J
 Korea/Og
-Korean/JONSg
+Korean/JONwSg
 Kornberg/g
 Kory/Og
 Korzybski/g
@@ -6322,7 +6323,7 @@ Malamud/Og
 Malaprop/g
 Malawi/Og
 Malawian/NJSg
-Malay/JNOgS
+Malay/JNwOgS
 Malaya/Og
 Malayalam/Og
 Malayan/NJOgS
@@ -6981,7 +6982,7 @@ Monet/Og
 MongoDB/g           # trademark
 Mongol/NJOSg
 Mongolia/Og
-Mongolian/JNSg
+Mongolian/JNwSg
 Mongolic/OJg
 Mongoloid/N
 Monica/Og
@@ -7476,7 +7477,7 @@ Northwest/Sg
 Norton/ONgS
 Norw
 Norway/ONg
-Norwegian/NJSg
+Norwegian/NwJSg
 Norwich/Og
 Nosferatu/Ng
 Nostradamus/ONg
@@ -9517,7 +9518,7 @@ Spam/Og
 Span/O
 Spanglish/O
 Spaniard/NSg
-Spanish/JONg
+Spanish/JONmg
 Sparks/Og
 Sparta/Og
 Spartacus/Og
@@ -9748,7 +9749,7 @@ Swed/On
 Swede/NSg
 Sweden/Og
 Swedenborg/Og
-Swedish/OJg
+Swedish/OmJg
 Sweeney/Og
 Sweet/Og
 Swift/Og
@@ -9970,7 +9971,7 @@ Th/NOg              # thorium
 Thackeray/Og
 Thad/Og
 Thaddeus/Og
-Thai/JNSg
+Thai/JNwSg
 Thailand/Og
 Thales/Og
 Thalia/Og
@@ -10546,7 +10547,7 @@ Vientiane/Og
 Vietcong/ONg
 Vietminh/Og
 Vietnam/ONg
-Vietnamese/JNOg
+Vietnamese/JNw09Og
 Vijayanagar/Og
 Vijayawada/Og
 Viking/NOgS
@@ -11382,7 +11383,7 @@ acculturation/Ng
 accumulate/~VJXGnvdS
 accumulation/~Ng
 accumulator/~NgS
-accuracy/~NigS
+accuracy/~NwigS
 accurate/~JiY
 accurateness/Ng
 accursed/JVp
@@ -11891,7 +11892,7 @@ ahchoo/
 ahead/~
 ahem/V
 ahoy/VN
-aid/~NVSgdG
+aid/~NwVSgdG
 aide/~NSg
 aided/~VU
 aigrette/NgS
@@ -12025,7 +12026,7 @@ alight/~VJGdS
 align/~VrLGdS
 aligned/~VJU
 aligner/NgS
-alignment/~NrgS
+alignment/~NwrgS
 alike/~JU
 aliment/NVgdSG
 alimentary/J
@@ -12658,8 +12659,8 @@ antisocial/JNY
 antispasmodic/JNgS
 antisubmarine/J
 antitank/J
-antitheses/9
-antithesis/~Ng
+antitheses/N9
+antithesis/~N0g
 antithetic/JN
 antithetical/JY
 antitoxin/NgS
@@ -12967,7 +12968,7 @@ arisen/~V
 aristocracy/~NSg
 aristocrat/~NSg
 aristocratic/~JQ
-arithmetic/~NJg
+arithmetic/~NmJg
 arithmetical/JNY
 arithmetician/NgS
 ark/~NSg
@@ -14674,7 +14675,7 @@ biorhythm/NgS
 bioscience/NgS
 biosensor/NS
 biosphere/~NSg
-biosynthesis/~N
+biosynthesis/~Nm
 biosynthetic/J
 biotech/~N
 biotechnological/J
@@ -16099,7 +16100,7 @@ cajole/VNZGLd>S
 cajolement/Ng
 cajoler/Ng
 cajolery/Ng
-cake/~NVdSgG
+cake/~NwVdSgG
 cakewalk/NVSg
 cal/~N
 calabash/NgS
@@ -18300,7 +18301,7 @@ communicable/Ji
 communicably/R
 communicant/NJgS
 communicate/~VGnvdSX
-communication/~Ng
+communication/~NwSg
 communicative/JU
 communicator/~NSg
 communion/~Ng
@@ -18449,7 +18450,7 @@ computerisation/Ng!_
 computerise/VGdS!_
 computerization/Ng
 computerize/VGdS
-computing/~NVg
+computing/~NmVg
 comrade/~NVSgY
 comradeship/Ng
 con/~VNJGSg
@@ -20848,7 +20849,7 @@ desiccation/Ng
 desiccator/NSg
 desiderata/N
 desideratum/Ng
-design/~NVrSdG
+design/~NwVrSdG
 designate/~JVdSGnX
 designation/~Ng
 designator/NSg
@@ -23797,7 +23798,7 @@ explainability/Ng
 explainable/J
 explained/~VU
 explainer/NgS
-explanation/~NgS
+explanation/~NwgS
 explanatory/~J
 expletive/JNgS
 explicable/Ji
@@ -24836,13 +24837,13 @@ flatworm/NSg
 flaunt/VNgdSG
 flaunting/VJNY
 flautist/NSg!@_
-flavor/~NVgdSGz<
+flavor/~NwVgdSGz<
 flavored/~JVU<
 flavorful/J<
 flavoring/NVg<
 flavorless/J<
 flavorsome/J<
-flavour/NVSgdzG!@_
+flavour/NwVSgdzG!@_
 flavoured/JVU!@_
 flavourful/J!@_
 flavouring/NVg!@_
@@ -26006,7 +26007,7 @@ gaslight/NVgSdG
 gasman/N
 gasmen/9
 gasohol/Ng
-gasoline/~NJg
+gasoline/~Nmg       # Wiktionary says it's also an adjective but other dictionaries don't
 gasometer/NS
 gasp/VNgdGS
 gassed/JVe
@@ -27319,7 +27320,7 @@ halal/~JVg
 halberd/NSg
 halcyon/~NJ
 hale/~JNVi^Gd>S
-half/~NJVPg
+half/~N0wJVPg
 halfback/~NVSg
 halfcourt/
 halfhearted/JpY
@@ -28835,8 +28836,8 @@ hypotenuse/NgS
 hypothalami/N
 hypothalamus/~Ng
 hypothermia/~Ng
-hypotheses/~9
-hypothesis/~Ng
+hypotheses/~N9
+hypothesis/~N0g
 hypothesise/V!_
 hypothesize/VdSG
 hypothetical/~JNYS
@@ -31807,7 +31808,7 @@ lighthouse/~NgS
 lighting's
 lightly/~R
 lightness/~Ng
-lightning/~NJVgdS
+lightning/~NmJV
 lightproof/J
 lightsaber/NgS
 lightship/NgS
@@ -31904,7 +31905,7 @@ lingual/~JN
 linguine/Ng
 linguist/~NSg
 linguistic/~JSQ
-linguistics/~Ng
+linguistics/~Nmg
 liniment/NVSg
 lining/~NVg
 link/~NVgdSG
@@ -32583,7 +32584,7 @@ maidenhair/Ng
 maidenhead/~NSg
 maidenhood/Ng
 maidservant/NSg
-mail/~NVzgd>SZG
+mail/~NwVzgd>SZG
 mailbag/NSg
 mailbomb/NVGSd
 mailbox/~NgS
@@ -33457,8 +33458,8 @@ metastatic/J
 metatarsal/JNgS
 metatarsi/N
 metatarsus/Ng
-metatheses/9
-metathesis/Ng
+metatheses/N9
+metathesis/N0g
 metaverse/NgS
 mete/VNJgZGd>S
 metempsychoses/N
@@ -35637,7 +35638,7 @@ nonseasonal/J
 nonsectarian/JN
 nonsecular/J
 nonsegregated/J
-nonsense/~NVJg
+nonsense/~NmVJg
 nonsensical/~JY
 nonsensitive/J
 nonsequential/JY
@@ -37421,7 +37422,7 @@ paren/NgS           # informal: parenthesis
 parent/~NVGgdS
 parentage/~Ng
 parental/~JN
-parentheses/~9
+parentheses/~N9
 parenthesis/N0g
 parenthesise/V!_
 parenthesize/VdSG
@@ -37710,7 +37711,7 @@ payware/Nmg
 pct/~N
 pd/~
 pea/~NSg
-peace/~NVSg
+peace/~NwVSg
 peaceable/J
 peaceably/R
 peaceful/~JNpY
@@ -38364,7 +38365,7 @@ photostat/NVSg
 photostatic/J
 photostatted/V
 photostatting/V
-photosynthesis/~Ng
+photosynthesis/~Nmg
 photosynthesise/V!_
 photosynthesize/VGdS
 photosynthetic/J
@@ -38451,7 +38452,7 @@ picturesqueness/Nmg
 piddle/NVgGdS
 piddly/J
 pidgin/~NgS
-pie/~NVSg
+pie/~NwVSg
 piebald/JNgS
 piece/~NVdSgG
 piecemeal/JVN
@@ -39230,7 +39231,7 @@ possibility/~NSg
 possible/~JNSg
 possibly/~R
 possum/~NVSg
-post/~NVPZGgd>Sz
+post/~NwVPZGgd>Sz
 postage/~Ng
 postal/~J
 postbag/NS
@@ -39917,7 +39918,7 @@ programme/NVBzd>SgZG
 programme/!_
 programmed/~VJre
 programmer/~NgS
-programming/~NVSg
+programming/~NmVg
 progress/~NVgdSGv
 progression/~NgS
 progressive/~JNpgYS
@@ -40062,8 +40063,8 @@ prosper/~VGSd
 prosperity/~Ng
 prosperous/~JY
 prostate/~NJgS
-prostheses/9
-prosthesis/~Ng
+prostheses/N9
+prosthesis/~N0g
 prosthetic/~JNgSQ
 prostitute/~VJNgGndS
 prostitution/~Ng
@@ -41703,6 +41704,8 @@ rescind/VSdG
 rescission/Ng
 rescue/~VNd>SgZG
 reseal/VB
+research/NmgVdGS
+researcher/NgS
 resemble/~VdSG
 resend/VNSGd
 resent/~VLSdG
@@ -43059,7 +43062,7 @@ schwa/NVgS
 sci/~N
 sciatic/JN
 sciatica/Ng
-science/~NVWgS
+science/~NwVWgS
 scientific/~JUQ
 scientism/Ng
 scientist/~NSg
@@ -43290,7 +43293,7 @@ seance/NVSg
 seaplane/~NSg
 seaport/~NgS
 sear/JVNGgdS
-search/~NVrZGgd>S
+search/~NVZGgd>S
 searchable/~JNU
 searcher/Nrg
 searching/~VJNmY
@@ -44819,7 +44822,7 @@ smokescreen/NSg
 smokestack/NSg
 smokey/~JN
 smokiness/Ng
-smoking/~VJNg
+smoking/~VJNmg
 smoky/~J>^p
 smolder/VNSGgd
 smooch/NVgdSG
@@ -46988,7 +46991,7 @@ supplicate/VGdS
 supplication/Ng
 supplier/~Ng
 supply/~VNZGd>SgXn
-support/~VNgd>SBZGv
+support/~VNwgd>SBZGv
 supportable/JUi
 supported/~JVU
 supporter/~Ng
@@ -47325,7 +47328,7 @@ syntactic/~J
 syntactical/JY
 syntax/~Ng
 syntheses/9
-synthesis/~Ng
+synthesis/~Nmg
 synthesise/V!_
 synthesize/~VZGd>S
 synthesizer/~Ng
@@ -48092,8 +48095,8 @@ thermostatic/JQ
 thesauri/N
 thesaurus/NgS
 these/~IDM
-theses/~9g
-thesis/~Ng
+theses/~N9
+thesis/~N0g
 thespian/JNSg
 theta/~NSg
 thew/NVgS
@@ -48584,7 +48587,7 @@ tool's
 toolbar/~NSg
 toolbox/~NgS
 toolchain/NgS
-toolkit/~N
+toolkit/~NgS
 toolless/J
 toolmaker/NgS
 toolshed/NgS
@@ -51158,7 +51161,7 @@ wanted/~JVU
 wanton/~JNVgdYSpG
 wantonness/Ng
 wapiti/NgS
-war/~NVSg
+war/~NwVSg
 warble/VNgZGd>S
 warbler/~Ng
 warbonnet/NSg
@@ -51431,7 +51434,7 @@ weigh/~VNrGd
 weigh's
 weighbridge/NS
 weighs/~Vr
-weight/~NVgdSzG
+weight/~NwVgdSzG
 weighted/~VJU
 weightily/R
 weightiness/Ng
@@ -52021,6 +52024,7 @@ wordily/R
 wordiness/Nmg
 wording/~NVSg
 wordless/JY
+wordlist/NgS
 wordplay/Nmg
 wordsmith/N0V
 wordsmiths/N9V
@@ -52127,7 +52131,7 @@ wrap's
 wraparound/JNSg
 wrapped/~VJU
 wrapper/~NSg
-wrapping/~NVgS
+wrapping/~NwVgS
 wrasse/NgS
 wrath/~NVJg
 wrathful/JY
@@ -52532,6 +52536,8 @@ CRC/NgS             # cyclic redundancy check
 CRDT/NSg
 CRM/NOSg
 CTE/NS
+CTF/NSg             # capture the flag
+CVE/NSg             # Common Vulnerabilities and Exposures
 Captcha/OSg
 ChatGPT/Og          # OpenAI product
 ClickHouse/g
@@ -52931,6 +52937,7 @@ hoster/NgS
 hostname/NSg
 hotwire/VBG         # dictionaries prefer: hot-wire
 i18n/Nm             # internationalization
+infosec/NmG         # information security
 jQuery/Og
 labriola/Sg         # !! please check and comment !! - should be uppercase surname?
 linkification/Nmg
@@ -52941,6 +52948,7 @@ nullish/J
 olds/~              # common in phrasing such as "twenty year olds"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
 pastebin/NgS
+pentester/NSg       # penetration tester
 pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
 quadtree/NgS        # data structure
 quicksort/NgSVdG    # algo
@@ -53181,6 +53189,7 @@ lesser-known/J
 line break/NgS
 live action/N
 load-bearing/J
+lock picking/Nmg
 long-term/J
 longer-term/J>
 loosey-goosey/J
@@ -53264,6 +53273,7 @@ Pascal case/Nmg
 Pax Americana/Og
 peer review/NgSdG
 peer-reviewed/J
+pen test/NgS
 per capita/JR
 Petri dish/NgS
 petty bourgeois/Ng
@@ -53390,6 +53400,7 @@ walk through/V
 walk-through/J
 walkie-talkie/NgS
 Wall Streeter/NgS
+war game/NgS
 Wayback Machine/Og
 weapons-grade/J
 web app/NgS
@@ -53405,6 +53416,7 @@ well-respected/J
 well-timed/J
 well-trodden/J
 well-used/J
+white paper/NgS
 Wi-Fi/Ng
 wishy-washy/J
 working-class/NJgS

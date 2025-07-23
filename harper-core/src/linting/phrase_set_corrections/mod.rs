@@ -1,3 +1,5 @@
+use crate::linting::LintKind;
+
 use super::{LintGroup, MapPhraseSetLinter};
 
 #[cfg(test)]
@@ -10,7 +12,7 @@ pub fn lint_group() -> LintGroup {
     // Each correction pair has a single bad form and a single correct form.
     macro_rules! add_1_to_1_mappings {
         ($group:expr, {
-            $($name:expr => ($input_correction_pairs:expr, $message:expr, $description:expr)),+ $(,)?
+            $($name:expr => ($input_correction_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
                 $group.add_expr_linter(
@@ -19,7 +21,8 @@ pub fn lint_group() -> LintGroup {
                         MapPhraseSetLinter::one_to_one(
                             $input_correction_pairs,
                             $message,
-                            $description
+                            $description,
+                            None$(.or(Some($lint_kind)))?,
                         ),
                     ),
                 );
@@ -30,7 +33,7 @@ pub fn lint_group() -> LintGroup {
     // Each correction pair has multiple bad forms and multiple correct forms.
     macro_rules! add_many_to_many_mappings {
         ($group:expr, {
-            $($name:expr => ($input_correction_multi_pairs:expr, $message:expr, $description:expr)),+ $(,)?
+            $($name:expr => ($input_correction_multi_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
                 $group.add_expr_linter(
@@ -39,7 +42,8 @@ pub fn lint_group() -> LintGroup {
                         MapPhraseSetLinter::many_to_many(
                             $input_correction_multi_pairs,
                             $message,
-                            $description
+                            $description,
+                            None$(.or(Some($lint_kind)))?,
                         ),
                     ),
                 );
@@ -54,7 +58,8 @@ pub fn lint_group() -> LintGroup {
                 ("much adieu", "much ado"),
             ],
             "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
-            "Corrects `adieu` to `ado`."
+            "Corrects `adieu` to `ado`.",
+            LintKind::Eggcorn
         ),
         "ChampAtTheBit" => (
             &[
@@ -64,7 +69,8 @@ pub fn lint_group() -> LintGroup {
                 ("chomps at the bit", "champs at the bit"),
             ],
             "The correct idiom is `champ at the bit`.",
-            "Corrects `chomp at the bit` to the idiom `champ at the bit`, which has an equestrian origin referring to the way an anxious horse grinds its teeth against the metal part of the bridle."
+            "Corrects `chomp at the bit` to the idiom `champ at the bit`, which has an equestrian origin referring to the way an anxious horse grinds its teeth against the metal part of the bridle.",
+            LintKind::Eggcorn
         ),
         "ClientOrServerSide" => (
             &[
@@ -72,7 +78,8 @@ pub fn lint_group() -> LintGroup {
                 ("server's side", "server-side"),
             ],
             "`Client-side` and `server-side` do not use an apostrophe.",
-            "Corrects extraneous apostrophe in `client's side` and `server's side`."
+            "Corrects extraneous apostrophe in `client's side` and `server's side`.",
+            LintKind::Punctuation
         ),
         "DefiniteArticle" => (
             &[
@@ -80,7 +87,8 @@ pub fn lint_group() -> LintGroup {
                 ("definitive articles", "definite articles")
             ],
             "The correct term for `the` is `definite article`.",
-            "The name of the word `the` is `definite article`."
+            "The name of the word `the` is `definite article`.",
+            LintKind::Usage
         ),
         "Discuss" => (
             &[
@@ -90,7 +98,9 @@ pub fn lint_group() -> LintGroup {
                 ("discussing about", "discussing"),
             ],
             "`About` is redundant",
-            "Removes unnecessary `about` after `discuss`."
+            "Removes unnecessary `about` after `discuss`.",
+            // or maybe Redundancy?
+            LintKind::Usage
         ),
         "ExpandArgument" => (
             &[
@@ -98,7 +108,8 @@ pub fn lint_group() -> LintGroup {
                 ("args", "arguments"),
             ],
             "Use `argument` instead of `arg`",
-            "Expands the abbreviation `arg` to the full word `argument` for clarity."
+            "Expands the abbreviation `arg` to the full word `argument` for clarity.",
+            LintKind::Style
         ),
         "ExpandDependencies" => (
             &[
@@ -106,7 +117,8 @@ pub fn lint_group() -> LintGroup {
                 ("dep", "dependency"),
             ],
             "Use `dependencies` instead of `deps`",
-            "Expands the abbreviation `deps` to the full word `dependencies` for clarity."
+            "Expands the abbreviation `deps` to the full word `dependencies` for clarity.",
+            LintKind::Style
         ),
         "ExpandStandardInputAndOutput" => (
             &[
@@ -115,7 +127,8 @@ pub fn lint_group() -> LintGroup {
                 ("stderr", "standard error"),
             ],
             "Use `standard input`, `standard output`, and `standard error` instead of `stdin`, `stdout`, and `stderr`",
-            "Expands the abbreviations `stdin`, `stdout`, and `stderr` to the full words `standard input`, etc. for clarity."
+            "Expands the abbreviations `stdin`, `stdout`, and `stderr` to the full words `standard input`, etc. for clarity.",
+            LintKind::Style
         ),
         "ExplanationMark" => (
             &[
@@ -124,7 +137,8 @@ pub fn lint_group() -> LintGroup {
                 ("explanation point", "exclamation point"),
             ],
             "The correct names for the `!` punctuation are `exclamation mark` and `exclamation point`.",
-            "Corrects the eggcorn `explanation mark/point` to `exclamation mark/point`."
+            "Corrects the eggcorn `explanation mark/point` to `exclamation mark/point`.",
+            LintKind::Usage
         ),
         "ExtendOrExtent" => (
             &[
@@ -134,7 +148,9 @@ pub fn lint_group() -> LintGroup {
                 ("to the extend that", "to the extent that")
             ],
             "Use `extent` for the noun and `extend` for the verb.",
-            "Corrects `extend` to `extent` when the context is a noun."
+            "Corrects `extend` to `extent` when the context is a noun.",
+            // ConfusedPair??
+            LintKind::WordChoice
         ),
         "HaveGone" => (
             &[
@@ -144,7 +160,8 @@ pub fn lint_group() -> LintGroup {
                 ("having went", "having gone"),
             ],
             "`Have gone` is the correct form.",
-            "Corrects `have went` to `have gone`."
+            "Corrects `have went` to `have gone`.",
+            LintKind::Grammar
         ),
         "HavePassed" => (
             &[
@@ -154,7 +171,9 @@ pub fn lint_group() -> LintGroup {
                 ("having past", "having passed"),
             ],
             "Did you mean the verb `passed`?",
-            "Suggests `past` for `passed` in case a verb was intended."
+            "Suggests `past` for `passed` in case a verb was intended.",
+            // ConfusedPair?
+            LintKind::WordChoice
         ),
         "HomeInOn" => (
             &[
@@ -164,7 +183,8 @@ pub fn lint_group() -> LintGroup {
                 ("honing in on", "homing in on"),
             ],
             "Use `home in on` rather than `hone in on`",
-            "Corrects `hone in on` to `home in on`."
+            "Corrects `hone in on` to `home in on`.",
+            LintKind::Eggcorn
         ),
         "InDetail" => (
             &[
@@ -172,7 +192,8 @@ pub fn lint_group() -> LintGroup {
                 ("in more details", "in more detail"),
             ],
             "Use singular `in detail` for referring to a detailed description.",
-            "Corrects unidiomatic plural `in details` to `in detail`."
+            "Corrects unidiomatic plural `in details` to `in detail`.",
+            LintKind::Usage
         ),
         "InvestIn" => (
             &[
@@ -182,7 +203,8 @@ pub fn lint_group() -> LintGroup {
                 ("invests into", "invests in"),
             ],
             "Traditionally `invest` uses the preposition `in`.",
-            "`Invest` is traditionally followed by 'in,' not `into.`"
+            "`Invest` is traditionally followed by 'in,' not `into.`",
+            LintKind::Usage
         ),
         "MakeDoWith" => (
             &[
@@ -200,7 +222,8 @@ pub fn lint_group() -> LintGroup {
                 ("point is mute", "point is moot"),
             ],
             "Use `moot` instead of `mute` when referring to a debatable or irrelevant point.",
-            "Corrects `mute` to `moot` in the phrase `moot point`."
+            "Corrects `mute` to `moot` in the phrase `moot point`.",
+            LintKind::Eggcorn
         ),
         "OperatingSystem" => (
             &[
@@ -208,7 +231,8 @@ pub fn lint_group() -> LintGroup {
                 ("operative systems", "operating systems"),
             ],
             "Did you mean `operating system`?",
-            "Ensures `operating system` is used correctly instead of `operative system`."
+            "Ensures `operating system` is used correctly instead of `operative system`.",
+            LintKind::Usage
         ),
         "Piggyback" => (
             &[
@@ -217,7 +241,8 @@ pub fn lint_group() -> LintGroup {
                 ("piggy bagging", "piggybacking"),
             ],
             "Did you mean `piggyback`?",
-            "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system."
+            "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
+            LintKind::Eggcorn
         ),
     });
 
@@ -235,7 +260,8 @@ pub fn lint_group() -> LintGroup {
                 (&["changing of tact", "changing of tacks", "changing of tacts"], &["changing of tack"])
             ],
             "A change in direction or approach is a change of `tack`. Not `tact` (or `tacks` or `tacts`).",
-            "Locates errors in the idioms `to change tack` and `change of tack` to convey the correct meaning of altering one's course or strategy."
+            "Locates errors in the idioms `to change tack` and `change of tack` to convey the correct meaning of altering one's course or strategy.",
+            LintKind::Eggcorn
         ),
         "GetRidOf" => (
             &[
@@ -246,7 +272,8 @@ pub fn lint_group() -> LintGroup {
                 (&["gotten rid off", "gotten ride of", "gotten ride off"], &["gotten rid of"]),
             ],
             "The idiom is `to get rid of`, not `off` or `ride`.",
-            "Corrects common misspellings of the idiom `get rid of`."
+            "Corrects common misspellings of the idiom `get rid of`.",
+            LintKind::Typo
         ),
         "HowItLooksLike" => (
             &[
@@ -256,7 +283,18 @@ pub fn lint_group() -> LintGroup {
                 (&["how they look like", "how they looks like"], &["how they look", "what they look like"]),
             ],
             "Don't use both `how` and `like` together to express similarity.",
-            "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`."
+            "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
+            LintKind::Grammar
+        ),
+        "MakeItSeem" => (
+            &[
+                (&["make it seems"], &["make it seem"]),
+                (&["made it seems", "made it seemed"], &["made it seem"]),
+                (&["makes it seems"], &["makes it seem"]),
+                (&["making it seems"], &["making it seem"]),
+            ],
+            "Don't inflect `seem` in `make it seem`.",
+            "Corrects `make it seems` to `make it seem`."
         ),
         "RiseTheQuestion" => (
             &[
@@ -266,7 +304,8 @@ pub fn lint_group() -> LintGroup {
                 (&["rising the question"], &["raising the question"])
             ],
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
-            "Corrects `rise the question` to `raise the question`."
+            "Corrects `rise the question` to `raise the question`.",
+            LintKind::Grammar
         ),
         "WholeEntire" => (
             &[
@@ -275,13 +314,13 @@ pub fn lint_group() -> LintGroup {
                 (&["a whole entire"], &["a whole", "an entire"]),
             ],
             "Avoid redundancy. Use either `whole` or `entire` for referring to the complete amount or extent.",
-            "Corrects the redundancy in `whole entire` to `whole` or `entire`."
+            "Corrects the redundancy in `whole entire` to `whole` or `entire`.",
+            LintKind::Redundancy
         ),
         "WorseOrWorst" => (
             &[
                 // worst -> worse
                 (&["a lot worst", "alot worst"], &["a lot worse"]),
-
                 (&["become worst"], &["become worse"]),
                 (&["became worst"], &["became worse"]),
                 (&["becomes worst"], &["becomes worse"]),
@@ -301,7 +340,8 @@ pub fn lint_group() -> LintGroup {
                 (&["worse ever"], &["worst ever"]),
             ],
             "`Worse` is for comparing and `worst` is for the extreme case.",
-            "Corrects `worse` and `worst` used in contexts where the other belongs."
+            "Corrects `worse` and `worst` used in contexts where the other belongs.",
+            LintKind::Agreement
         )
     });
 

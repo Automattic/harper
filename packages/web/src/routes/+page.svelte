@@ -23,8 +23,6 @@ window.addEventListener('resize', () => {
 let mobile = $derived(width < 640);
 
 const headings = [
-	'Grammar Checking That Fits into Your Workflow',
-	'Quality Grammar Checking, Straight and Simple',
 	'Grammar Checking Without the Cloud',
 	'Grammar Checking That Respects Your Privacy',
 	'Grammar Checking for Developers',
