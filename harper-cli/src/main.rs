@@ -18,6 +18,7 @@ use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
     CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
+    word_metadata_orthography::OrthFlags,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_pos_utils::{BrillChunker, BrillTagger};
@@ -136,6 +137,9 @@ enum Args {
     /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
     /// As long as there's either an open or hyphenated spelling.
     Compounds,
+    /// Emit a decompressed, line-separated list of the words in Harper's dictionary
+    /// which occur in more than one lettercase variant.    
+    CaseVariants,
     /// Provided a sentence or phrase, emit a list of each noun phrase contained within.
     NominalPhrases { input: String },
 }
@@ -664,6 +668,37 @@ fn main() -> anyhow::Result<()> {
             }
 
             println!("\nFound {} compound word groups", results.len());
+            Ok(())
+        }
+        Args::CaseVariants => {
+            let case_bitmask = OrthFlags::LOWERCASE
+                | OrthFlags::TITLECASE
+                | OrthFlags::ALLCAPS
+                | OrthFlags::LOWER_CAMEL
+                | OrthFlags::UPPER_CAMEL;
+            let mut processed_words = HashMap::new();
+            let mut longest_word = 0;
+            for word in dictionary.words_iter() {
+                if let Some(metadata) = dictionary.get_word_metadata(word) {
+                    let orth = metadata.orth_info;
+                    let bits = orth.bits() & case_bitmask.bits();
+
+                    if bits.count_ones() > 1 {
+                        longest_word = longest_word.max(word.len());
+                        // Mask out all bits except the case-related ones before printing
+                        processed_words.insert(
+                            word.to_string(),
+                            OrthFlags::from_bits_truncate(orth.bits() & case_bitmask.bits()),
+                        );
+                    }
+                }
+            }
+            let mut processed_words: Vec<_> = processed_words.into_iter().collect();
+            processed_words.sort_by_key(|(word, _)| word.clone());
+            let longest_num = (processed_words.len() - 1).to_string().len();
+            for (i, (word, orth)) in processed_words.iter().enumerate() {
+                println!("{i:>longest_num$} {word:<longest_word$} : {orth:?}");
+            }
             Ok(())
         }
         Args::NominalPhrases { input } => {

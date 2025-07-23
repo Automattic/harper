@@ -74,7 +74,7 @@ impl<T> Expr for ExprMap<T>
 where
     T: LSend,
 {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.rows
             .iter()
             .filter_map(|row| row.key.run(cursor, tokens, source))
