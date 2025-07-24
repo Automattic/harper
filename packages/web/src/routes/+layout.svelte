@@ -1,9 +1,9 @@
 <script lang="ts">
 import '../app.css';
-import AutomatticLogo from '$lib/AutomatticLogo.svelte';
-import GutterCenter from '$lib/GutterCenter.svelte';
 
 import { browser } from '$app/environment';
+import AutomatticLogo from '$lib/AutomatticLogo.svelte';
+import GutterCenter from '$lib/GutterCenter.svelte';
 import posthog from 'posthog-js';
 import { onMount } from 'svelte';
 
@@ -38,7 +38,7 @@ let displayName = names[Math.floor(Math.random() * names.length)];
 		</GutterCenter>
 	</div>
 
-	<div class="w-full flex flex-row justify-center">
+	<div class="w-full flex flex-row justify-center h-12">
 		<a href="https://automattic.com/">
 			<div class="flex items-center">
 				An

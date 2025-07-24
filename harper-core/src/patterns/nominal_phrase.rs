@@ -37,13 +37,13 @@ impl Pattern for NominalPhrase {
 mod tests {
     use super::super::DocPattern;
     use super::NominalPhrase;
-    use crate::{Document, Span, patterns::Pattern};
+    use crate::{Document, Span, Token, patterns::Pattern};
 
     trait SpanVecExt {
         fn to_strings(&self, doc: &Document) -> Vec<String>;
     }
 
-    impl SpanVecExt for Vec<Span> {
+    impl SpanVecExt for Vec<Span<Token>> {
         fn to_strings(&self, doc: &Document) -> Vec<String> {
             self.iter()
                 .map(|sp| {
@@ -104,7 +104,9 @@ mod tests {
         dbg!(matches.to_strings(&doc));
 
         for span in &matches {
-            let gc = span.get_content(doc.get_source());
+            let gc = span
+                .to_char_span(doc.get_tokens())
+                .get_content(doc.get_source());
             dbg!(gc);
         }
 

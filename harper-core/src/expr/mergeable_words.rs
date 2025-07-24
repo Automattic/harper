@@ -60,7 +60,7 @@ impl MergeableWords {
 }
 
 impl Expr for MergeableWords {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         let inner_match = self.inner.run(cursor, tokens, source)?;
 
         if inner_match.len() != 3 {

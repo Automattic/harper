@@ -12,7 +12,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"L": {
 			"#": "'-ment' suffix",
@@ -26,7 +27,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"E": {
 			"#": "'dis-' prefix",
@@ -40,7 +42,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"Y": {
 			"#": "'-ly' suffix",
@@ -97,8 +100,9 @@
 			"target": [],
 			"base_metadata": {}
 		},
-		"T": {
-			"#": "'-(i)est' suffix",
+		"^": {
+			"#": "'-(i)est' superlative suffix",
+			"//": "mnemonic: the topmost is the best. see also 'u' which marks a superlative form",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -123,11 +127,23 @@
 					"condition": "[^ey]"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"if_base": {
+						"adjective": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Superlative"
+						}
+					}
+				}
+			],
 			"base_metadata": {}
 		},
 		">": {
-			"#": "'-(i)er' suffix",
+			"#": "'-(i)er' comparative suffix; agent suffix. see also 'c' which marks a comparative form",
+			"//": "mnemonic: greater than is better",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -154,8 +170,23 @@
 			],
 			"target": [
 				{
-					"metadata": {
+					"if_base": {
 						"adjective": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Comparative"
+						}
+					}
+				},
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"noun": {
+							"//": "TODO: agent noun: run -> runner"
+						}
 					}
 				}
 			],
@@ -259,7 +290,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"p": {
 			"#": "'-(i)ness' suffix",
@@ -283,10 +315,12 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"g": {
 			"#": "-'s possessive suffix; contraction of 'has' and 'is",
+			"//": "mnemonic: 'genitive' is a similar concept to 'possessive'",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -321,7 +355,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"B": {
 			"#": "'-able' suffix",
@@ -481,7 +516,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"f": {
 			"#": "'-ful' suffix",
@@ -533,7 +569,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		},
 		"z": {
 			"#": "'-ings' suffix",
@@ -552,7 +589,8 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {}
+			"base_metadata": {},
+			"rename_ok": true
 		}
 	},
 	"properties": {
@@ -593,6 +631,7 @@
 		},
 		"x": {
 			"#": "swear word property",
+			"//": "'xxx' used to be a placeholder for swear words",
 			"propagate": true,
 			"metadata": {
 				"swear": true
@@ -632,7 +671,8 @@
 			"#": "common word property",
 			"metadata": {
 				"common": true
-			}
+			},
+			"rename_ok": true
 		},
 		"P": {
 			"#": "preposition property",
@@ -644,6 +684,14 @@
 			"#": "determiner property",
 			"metadata": {
 				"determiner": {}
+			}
+		},
+		"q": {
+			"#": "quantifier property",
+			"metadata": {
+				"determiner": {
+					"is_quantifier": true
+				}
 			}
 		},
 		"R": {
@@ -694,14 +742,20 @@
 		},
 		"c": {
 			"#": "comparative property",
+			"//": "see also '>' which derives a comparative form",
 			"metadata": {
-				"adjective": {}
+				"adjective": {
+					"degree": "Comparative"
+				}
 			}
 		},
 		"u": {
 			"#": "superlative property",
+			"//": "see also '^' which derives a superlative form",
 			"metadata": {
-				"adjective": {}
+				"adjective": {
+					"degree": "Superlative"
+				}
 			}
 		},
 		"*": {
@@ -716,6 +770,7 @@
 		},
 		".": {
 			"#": "singular pronoun property",
+			"//": "mnemonic: one dot",
 			"metadata": {
 				"pronoun": {
 					"is_singular": true
@@ -724,6 +779,7 @@
 		},
 		":": {
 			"#": "plural pronoun property",
+			"//": "mnemonic: multiple dots",
 			"metadata": {
 				"pronoun": {
 					"is_plural": true
@@ -744,17 +800,20 @@
 			"propagate": true,
 			"metadata": {
 				"dialects": "AMERICAN"
-			}
+			},
+			"rename_ok": true
 		},
 		"!": {
 			"#": "GB property",
 			"propagate": true,
 			"metadata": {
 				"dialects": "BRITISH"
-			}
+			},
+			"rename_ok": true
 		},
 		"@": {
 			"#": "CA property",
+			"//": "mnemonic: at symbol resembles an 'a' inside a 'C'",
 			"propagate": true,
 			"metadata": {
 				"dialects": "CANADIAN"
@@ -762,6 +821,7 @@
 		},
 		"_": {
 			"#": "AU property",
+			"//": "mnemonic: down under",
 			"propagate": true,
 			"metadata": {
 				"dialects": "AUSTRALIAN"
@@ -785,6 +845,7 @@
 		},
 		"5": {
 			"#": "possessive determiner property",
+			"//": "mnemonic: 5 looks like an 's'",
 			"metadata": {
 				"determiner": {
 					"is_possessive": true

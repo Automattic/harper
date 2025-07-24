@@ -2,7 +2,8 @@ use paste::paste;
 
 use crate::{
     Span, Token, TokenKind,
-    patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word},
+    expr::{FirstMatchOf, LongestMatchOf},
+    patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
 
 use super::{Expr, Optional, Repeating, Step, UnlessStep};
@@ -19,6 +20,13 @@ macro_rules! gen_then_from_is {
             #[doc = concat!("Adds a step matching a token where [`TokenKind::is_", stringify!($quality), "()`] returns true.")]
             pub fn [< then_$quality >] (self) -> Self{
                 self.then(|tok: &Token, _source: &[char]| {
+                    tok.kind.[< is_$quality >]()
+                })
+            }
+
+            #[doc = concat!("Adds an optional step matching a token where [`TokenKind::is_", stringify!($quality), "()`] returns true.")]
+            pub fn [< then_optional_$quality >] (self) -> Self{
+                self.then_optional(|tok: &Token, _source: &[char]| {
                     tok.kind.[< is_$quality >]()
                 })
             }
@@ -48,7 +56,7 @@ impl Expr for SequenceExpr {
     /// Run the expression starting at an index, returning the total matched window.
     ///
     /// If any step returns `None`, the entire expression does as well.
-    fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         let mut window = Span::new_with_len(cursor, 0);
 
         for cur_expr in &self.exprs {
@@ -74,6 +82,25 @@ impl Expr for SequenceExpr {
 }
 
 impl SequenceExpr {
+    // Constructor methods
+
+    /// Construct a new sequence with a [`Word`] at the beginning of the operation list.
+    pub fn any_capitalization_of(word: &'static str) -> Self {
+        Self::default().then_any_capitalization_of(word)
+    }
+
+    /// Shorthand for [`Self::any_capitalization_of`].
+    pub fn aco(word: &'static str) -> Self {
+        Self::any_capitalization_of(word)
+    }
+
+    /// Match any word from the given set of words, case-insensitive.
+    pub fn word_set(words: &'static [&'static str]) -> Self {
+        Self::default().then_word_set(words)
+    }
+
+    // General builder methods
+
     /// Push an [expression](Expr) to the operation list.
     pub fn then(mut self, expr: impl Expr + 'static) -> Self {
         self.exprs.push(Box::new(expr));
@@ -86,6 +113,25 @@ impl SequenceExpr {
         self
     }
 
+    /// Pushes an expression that will match any of the provided expressions.
+    ///
+    /// If more than one of the provided expressions match, this function provides no guarantee
+    /// as to which match will end up being used. If you need to get the longest of multiple
+    /// matches, use [`Self::then_longest_of()`] instead.
+    pub fn then_any_of(mut self, exprs: Vec<Box<dyn Expr>>) -> Self {
+        self.exprs.push(Box::new(FirstMatchOf::new(exprs)));
+        self
+    }
+
+    /// Pushes an expression that will match the longest of the provided expressions.
+    ///
+    /// If you don't need the longest match, prefer using the short-circuiting
+    /// [`Self::then_any_of()`] instead.
+    pub fn then_longest_of(mut self, exprs: Vec<Box<dyn Expr>>) -> Self {
+        self.exprs.push(Box::new(LongestMatchOf::new(exprs)));
+        self
+    }
+
     /// Appends the steps in `other` onto the end of `self`.
     /// This is more efficient than [`Self::then`] because it avoids pointer redirection.
     pub fn then_seq(mut self, mut other: Self) -> Self {
@@ -93,39 +139,8 @@ impl SequenceExpr {
         self
     }
 
-    /// Push an [`IndefiniteArticle`] to the end of the operation list.
-    pub fn then_indefinite_article(self) -> Self {
-        self.then(IndefiniteArticle::default())
-    }
-
-    /// Match examples of `word` case-sensitively.
-    pub fn then_exact_word(self, word: &'static str) -> Self {
-        self.then(Word::new_exact(word))
-    }
-
-    /// Shorthand for [`Self::any_capitalization_of`].
-    pub fn aco(word: &'static str) -> Self {
-        Self::any_capitalization_of(word)
-    }
-
-    /// Construct a new sequence with a [`Word`] at the beginning of the operation list.
-    pub fn any_capitalization_of(word: &'static str) -> Self {
-        Self::default().then_any_capitalization_of(word)
-    }
-
-    /// Shorthand for [`Self::then_any_capitalization_of`].
-    pub fn t_aco(self, word: &'static str) -> Self {
-        self.then_any_capitalization_of(word)
-    }
-
-    /// Match examples of `word` that have any capitalization.
-    pub fn then_any_capitalization_of(self, word: &'static str) -> Self {
-        self.then(Word::new(word))
-    }
-
-    /// Matches any word.
-    pub fn then_any_word(self) -> Self {
-        self.then(|tok: &Token, _source: &[char]| tok.kind.is_word())
+    pub fn then_word_set(self, words: &'static [&'static str]) -> Self {
+        self.then(WordSet::new(words))
     }
 
     /// Matches any token whose `Kind` exactly matches.
@@ -133,14 +148,14 @@ impl SequenceExpr {
         self.then(move |tok: &Token, _source: &[char]| tok.kind == kind)
     }
 
-    /// Shorthand for [`Self::then_whitespace`].
-    pub fn t_ws(self) -> Self {
-        self.then_whitespace()
-    }
-
     /// Match against one or more whitespace tokens.
     pub fn then_whitespace(self) -> Self {
         self.then(WhitespacePattern)
+    }
+
+    /// Shorthand for [`Self::then_whitespace`].
+    pub fn t_ws(self) -> Self {
+        self.then_whitespace()
     }
 
     pub fn then_one_or_more(self, expr: impl Expr + 'static) -> Self {
@@ -161,46 +176,104 @@ impl SequenceExpr {
 
     /// Match any single token.
     ///
-    /// Shorthand for [`Self::then_anything`].
-    pub fn t_any(self) -> Self {
-        self.then_anything()
-    }
-
-    /// Match any single token.
-    ///
     /// See [`AnyPattern`] for more info.
     pub fn then_anything(self) -> Self {
         self.then(AnyPattern)
     }
 
+    /// Match any single token.
+    ///
+    /// Shorthand for [`Self::then_anything`].
+    pub fn t_any(self) -> Self {
+        self.then_anything()
+    }
+
+    // Word matching methods
+
+    /// Matches any word.
+    pub fn then_any_word(self) -> Self {
+        self.then(|tok: &Token, _source: &[char]| tok.kind.is_word())
+    }
+
+    /// Match examples of `word` that have any capitalization.
+    pub fn then_any_capitalization_of(self, word: &'static str) -> Self {
+        self.then(Word::new(word))
+    }
+
+    /// Shorthand for [`Self::then_any_capitalization_of`].
+    pub fn t_aco(self, word: &'static str) -> Self {
+        self.then_any_capitalization_of(word)
+    }
+
+    /// Match examples of `word` case-sensitively.
+    pub fn then_exact_word(self, word: &'static str) -> Self {
+        self.then(Word::new_exact(word))
+    }
+
+    // Part-of-speech matching methods
+
+    // Nominals (nouns and pronouns)
+
     gen_then_from_is!(nominal);
-    gen_then_from_is!(noun);
-    gen_then_from_is!(possessive_nominal);
     gen_then_from_is!(plural_nominal);
-    gen_then_from_is!(verb);
-    gen_then_from_is!(auxiliary_verb);
-    gen_then_from_is!(linking_verb);
-    gen_then_from_is!(pronoun);
-    gen_then_from_is!(punctuation);
-    gen_then_from_is!(conjunction);
-    gen_then_from_is!(comma);
-    gen_then_from_is!(period);
-    gen_then_from_is!(number);
-    gen_then_from_is!(case_separator);
-    gen_then_from_is!(adverb);
-    gen_then_from_is!(adjective);
-    gen_then_from_is!(apostrophe);
-    gen_then_from_is!(hyphen);
-    gen_then_from_is!(determiner);
+    gen_then_from_is!(non_plural_nominal);
+    gen_then_from_is!(possessive_nominal);
+
+    // Nouns
+
+    gen_then_from_is!(noun);
     gen_then_from_is!(proper_noun);
-    gen_then_from_is!(preposition);
-    gen_then_from_is!(third_person_pronoun);
-    gen_then_from_is!(third_person_singular_pronoun);
-    gen_then_from_is!(third_person_plural_pronoun);
+    gen_then_from_is!(mass_noun_only);
+
+    // Pronouns
+
+    gen_then_from_is!(pronoun);
     gen_then_from_is!(first_person_singular_pronoun);
     gen_then_from_is!(first_person_plural_pronoun);
     gen_then_from_is!(second_person_pronoun);
-    gen_then_from_is!(non_plural_nominal);
+    gen_then_from_is!(third_person_pronoun);
+    gen_then_from_is!(third_person_singular_pronoun);
+    gen_then_from_is!(third_person_plural_pronoun);
+
+    // Verbs
+
+    // POS - Verbs
+    gen_then_from_is!(verb);
+    gen_then_from_is!(auxiliary_verb);
+    gen_then_from_is!(linking_verb);
+
+    // Adjectives and adverbs
+
+    gen_then_from_is!(adjective);
+    gen_then_from_is!(adverb);
+
+    // Determiners
+
+    gen_then_from_is!(determiner);
+
+    /// Push an [`IndefiniteArticle`] to the end of the operation list.
+    pub fn then_indefinite_article(self) -> Self {
+        self.then(IndefiniteArticle::default())
+    }
+
+    // Other parts of speech
+
+    gen_then_from_is!(conjunction);
+    gen_then_from_is!(preposition);
+
+    // Punctuation
+
+    gen_then_from_is!(punctuation);
+    gen_then_from_is!(apostrophe);
+    gen_then_from_is!(comma);
+    gen_then_from_is!(hyphen);
+    gen_then_from_is!(period);
+    gen_then_from_is!(semicolon);
+
+    // Other
+
+    gen_then_from_is!(number);
+    gen_then_from_is!(case_separator);
 }
 
 impl<S> From<S> for SequenceExpr

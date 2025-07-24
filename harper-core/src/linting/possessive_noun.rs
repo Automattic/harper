@@ -37,7 +37,7 @@ where
             .then_noun();
 
         let exceptions = SequenceExpr::default()
-            .t_any()
+            .then_unless(|tok: &Token, _: &[char]| tok.kind.is_demonstrative_determiner())
             .t_any()
             .then_unless(WordSet::new(&["flags", "checks", "catches", "you"]))
             .t_any()
@@ -397,5 +397,45 @@ mod tests {
     #[test]
     fn allows_birds_hurried() {
         assert_lint_count("The birds hurried off.", test_linter(), 0);
+    }
+
+    #[test]
+    #[ignore = "false positive issue 1582"]
+    fn allows_1582_harms_readability() {
+        assert_lint_count(
+            "This harms readability and maintainability.",
+            test_linter(),
+            0,
+        );
+    }
+
+    #[test]
+    #[ignore = "false positive issue 1582"]
+    fn allows_1582_imports_couples() {
+        assert_lint_count(
+            "Since using Webpack syntax in the imports couples the code to a module bundler",
+            test_linter(),
+            0,
+        );
+    }
+
+    #[test]
+    #[ignore = "false positive issue 1582"]
+    fn allows_1582_graphics_programmer() {
+        assert_lint_count(
+            "Are you a graphics programmer or Rust developer?",
+            test_linter(),
+            0,
+        );
+    }
+
+    #[test]
+    #[ignore = "false positive issue 1582"]
+    fn allows_1582_data_sources() {
+        assert_lint_count(
+            "these data sources can be queried using a full SQL dialect",
+            test_linter(),
+            0,
+        );
     }
 }

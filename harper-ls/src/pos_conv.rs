@@ -4,7 +4,7 @@
 use harper_core::Span;
 use tower_lsp_server::lsp_types::{Position, Range};
 
-pub fn span_to_range(source: &[char], span: Span) -> Range {
+pub fn span_to_range(source: &[char], span: Span<char>) -> Range {
     let start = index_to_position(source, span.start);
     let end = index_to_position(source, span.end);
 
@@ -76,7 +76,7 @@ fn position_to_index(source: &[char], position: Position) -> usize {
     (target_char_pointer as usize - source.as_ptr() as usize) / size_of::<char>()
 }
 
-pub fn range_to_span(source: &[char], range: Range) -> Span {
+pub fn range_to_span(source: &[char], range: Range) -> Span<char> {
     let start = position_to_index(source, range.start);
     let end = position_to_index(source, range.end);
 

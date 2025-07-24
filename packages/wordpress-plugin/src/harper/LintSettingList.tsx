@@ -1,7 +1,7 @@
 import { SearchControl } from '@wordpress/components';
 import React, { useState } from 'react';
-import LintSettingRow from './LintSettingRow';
 import { useLintDescriptions } from './LinterProvider';
+import LintSettingRow from './LintSettingRow';
 import useLintConfig, { useDefaultLintConfig } from './useLintConfig';
 
 export default function LintSettingList() {

@@ -96,7 +96,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Typo (31 priority)
 Message: |
      243 | His parents got him an in with the company.
          |                     ^~~~~ Did you mean `and in`?
@@ -256,7 +256,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Redundancy (31 priority)
 Message: |
      343 | All of the responsibility is on him.
          | ^~~~~~~~~~ Consider simplifying to `all the`.
@@ -316,12 +316,21 @@ Suggest:
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+     426 | What's the time? – It's quarter to four in the afternoon (or 3:45 pm).
+         |                    ^~~~ Prefer the possessive pronoun `its` here to denote ownership.
+Suggest:
+  - Replace with: “Its”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      443 | With their reputation on the line, they decided to fire their PR team.
          |                                                               ^~ Did you mean to spell `PR` this way?
 Suggest:
-  - Replace with: “Pro”
+  - Replace with: “Pry”
   - Replace with: “P”
   - Replace with: “Pa”
 

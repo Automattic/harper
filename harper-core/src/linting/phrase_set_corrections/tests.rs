@@ -1,4 +1,6 @@
-use crate::linting::tests::{assert_nth_suggestion_result, assert_suggestion_result};
+use crate::linting::tests::{
+    assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+};
 
 use super::lint_group;
 
@@ -21,6 +23,43 @@ fn corrects_much_ado() {
         "After much adieu this functionality is now available.",
         lint_group(),
         "After much ado this functionality is now available.",
+    );
+}
+
+// ChampAtTheBit
+#[test]
+fn correct_chomp_at_the_bit() {
+    assert_suggestion_result(
+        "so other than rolling back to older drivers i might have to chomp at the bit for a while longer yet",
+        lint_group(),
+        "so other than rolling back to older drivers i might have to champ at the bit for a while longer yet",
+    );
+}
+
+#[test]
+fn correct_chomped_at_the_bit() {
+    assert_suggestion_result(
+        "I chomped at the bit, frustrated by my urge to go faster, while my husband chafed at what I thought was a moderate pace.",
+        lint_group(),
+        "I champed at the bit, frustrated by my urge to go faster, while my husband chafed at what I thought was a moderate pace.",
+    );
+}
+
+#[test]
+fn correct_chomping_at_the_bit() {
+    assert_suggestion_result(
+        "Checking in to see when the Windows install will be ready. I am chomping at the bit!",
+        lint_group(),
+        "Checking in to see when the Windows install will be ready. I am champing at the bit!",
+    );
+}
+
+#[test]
+fn correct_chomps_at_the_bit() {
+    assert_suggestion_result(
+        "nobody chomps at the bit to make sure these are maintained, current, complete, and error free",
+        lint_group(),
+        "nobody champs at the bit to make sure these are maintained, current, complete, and error free",
     );
 }
 
@@ -128,6 +167,44 @@ fn detect_explanation_point_real_world() {
         "js and makes an offhand mention that you can disable inbuilt plugin with an explanation point (e.g. !error ).",
         lint_group(),
         "js and makes an offhand mention that you can disable inbuilt plugin with an exclamation point (e.g. !error ).",
+    );
+}
+
+// ExtendOrExtent
+
+#[test]
+fn correct_certain_extend() {
+    assert_suggestion_result(
+        "This is a PowerShell script to automate client pentests / checkups - at least to a certain extend.",
+        lint_group(),
+        "This is a PowerShell script to automate client pentests / checkups - at least to a certain extent.",
+    );
+}
+
+#[test]
+fn correct_to_the_extend() {
+    assert_suggestion_result(
+        "Our artifacts are carefully documented and well-structured to the extend that reuse is facilitated.",
+        lint_group(),
+        "Our artifacts are carefully documented and well-structured to the extent that reuse is facilitated.",
+    );
+}
+
+#[test]
+fn correct_to_some_extend() {
+    assert_suggestion_result(
+        "Hi, I'm new to Pydantic and to some extend python, and I have a question that I haven't been able to figure out from the Docs.",
+        lint_group(),
+        "Hi, I'm new to Pydantic and to some extent python, and I have a question that I haven't been able to figure out from the Docs.",
+    );
+}
+
+#[test]
+fn correct_to_an_extend() {
+    assert_suggestion_result(
+        "It mimics (to an extend) the way in which Chrome requests SSO cookies with the Windows 10 accounts extension.",
+        lint_group(),
+        "It mimics (to an extent) the way in which Chrome requests SSO cookies with the Windows 10 accounts extension.",
     );
 }
 
@@ -311,6 +388,53 @@ fn corrects_invests_into() {
         "If a user invests into the protocol first using USDC but afterward changing to DAI, ...",
         lint_group(),
         "If a user invests in the protocol first using USDC but afterward changing to DAI, ...",
+    );
+}
+
+#[test]
+fn corrects_investment_into() {
+    assert_suggestion_result(
+        "A $10,000 investment into the fund made on February 28, 1997 would have grown to a value of $42,650 at the end of the 20-year period.",
+        lint_group(),
+        "A $10,000 investment in the fund made on February 28, 1997 would have grown to a value of $42,650 at the end of the 20-year period.",
+    );
+}
+
+// MakeDoWith
+
+#[test]
+fn corrects_make_due_with() {
+    assert_suggestion_result(
+        "For now, I can make due with a bash script I have",
+        lint_group(),
+        "For now, I can make do with a bash script I have",
+    );
+}
+
+#[test]
+fn corrects_made_due_with() {
+    assert_suggestion_result(
+        "I made due with using actions.push for now but will try to do a codepen soon",
+        lint_group(),
+        "I made do with using actions.push for now but will try to do a codepen soon",
+    );
+}
+
+#[test]
+fn corrects_makes_due_with() {
+    assert_suggestion_result(
+        "but the code makes due with what is available",
+        lint_group(),
+        "but the code makes do with what is available",
+    );
+}
+
+#[test]
+fn corrects_making_due_with() {
+    assert_suggestion_result(
+        "I've been making due with the testMultiple script I wrote above.",
+        lint_group(),
+        "I've been making do with the testMultiple script I wrote above.",
     );
 }
 
@@ -619,6 +743,53 @@ fn correct_how_it_looks_like_with_apostrophe() {
     );
 }
 
+// MakeItSeem
+
+#[test]
+fn corrects_make_it_seems() {
+    assert_suggestion_result(
+        "but put it into unlisted list may make it seems like listed for GitHub",
+        lint_group(),
+        "but put it into unlisted list may make it seem like listed for GitHub",
+    );
+}
+
+#[test]
+fn corrects_made_it_seems() {
+    assert_suggestion_result(
+        "previous explanations made it seems like it would be n",
+        lint_group(),
+        "previous explanations made it seem like it would be n",
+    );
+}
+
+#[test]
+fn corrects_makes_it_seems() {
+    assert_suggestion_result(
+        "bundle gives an error that makes it seems like esbuild is trying to use lib/index.js from main",
+        lint_group(),
+        "bundle gives an error that makes it seem like esbuild is trying to use lib/index.js from main",
+    );
+}
+
+#[test]
+fn corrects_making_it_seems() {
+    assert_suggestion_result(
+        "Is it possible to teach the concept of assignment/reassignment at the very beginner stage instead of making it seems like constants?",
+        lint_group(),
+        "Is it possible to teach the concept of assignment/reassignment at the very beginner stage instead of making it seem like constants?",
+    );
+}
+
+#[test]
+fn corrects_made_it_seemed() {
+    assert_suggestion_result(
+        "The path made it seemed a bit \"internal\".",
+        lint_group(),
+        "The path made it seem a bit \"internal\".",
+    );
+}
+
 // RaiseTheQuestion
 
 // -raise the question-
@@ -638,6 +809,36 @@ fn detect_raises_the_question() {
         "However, this rises the question as to whether this test is conceptually sound.",
         lint_group(),
         "However, this raises the question as to whether this test is conceptually sound.",
+    );
+}
+
+// -raising the question-
+#[test]
+fn detect_raising_the_question() {
+    assert_suggestion_result(
+        "as soon as a infoHash query is performed, a Torrent file is retried, rising the question of:",
+        lint_group(),
+        "as soon as a infoHash query is performed, a Torrent file is retried, raising the question of:",
+    );
+}
+
+// -rose the question-
+#[test]
+fn detect_rose_the_question() {
+    assert_suggestion_result(
+        "Here is an example that rose the question at first: What works.",
+        lint_group(),
+        "Here is an example that raised the question at first: What works.",
+    );
+}
+
+// -risen the question-
+#[test]
+fn detect_risen_the_question() {
+    assert_suggestion_result(
+        "That has risen the question in my mind if it is still possible to embed your own Flash player on Facebook today?",
+        lint_group(),
+        "That has raised the question in my mind if it is still possible to embed your own Flash player on Facebook today?",
     );
 }
 
@@ -704,6 +905,43 @@ fn detect_a_lot_worse_real_world() {
     );
 }
 
+// -become worst-
+#[test]
+fn fix_became_worst() {
+    assert_suggestion_result(
+        "The problem became worst lately.",
+        lint_group(),
+        "The problem became worse lately.",
+    );
+}
+
+#[test]
+fn fix_become_worst() {
+    assert_suggestion_result(
+        "But results seems stay at one place or become worst.",
+        lint_group(),
+        "But results seems stay at one place or become worse.",
+    );
+}
+
+#[test]
+fn fix_becomes_worst() {
+    assert_suggestion_result(
+        "This becomes worst if you have an x64 dll and an x86 dll that you don't have thier source codes and want to use them in same project!",
+        lint_group(),
+        "This becomes worse if you have an x64 dll and an x86 dll that you don't have thier source codes and want to use them in same project!",
+    );
+}
+
+#[test]
+fn fix_becoming_worst() {
+    assert_suggestion_result(
+        "France is becoming worst than the Five Eyes",
+        lint_group(),
+        "France is becoming worse than the Five Eyes",
+    );
+}
+
 // -far worse-
 #[test]
 fn detect_far_worse_atomic() {
@@ -716,6 +954,65 @@ fn detect_far_worse_real_world() {
         "I mainly use Firefox (personal preference) and have noticed it has far worst performance than Chrome",
         lint_group(),
         "I mainly use Firefox (personal preference) and have noticed it has far worse performance than Chrome",
+    );
+}
+
+// -get worst-
+#[test]
+fn fix_get_worse() {
+    assert_suggestion_result(
+        "and the problem appears to get worst with 2025.5.1 and 2025.5.2.",
+        lint_group(),
+        "and the problem appears to get worse with 2025.5.1 and 2025.5.2.",
+    );
+}
+
+#[test]
+fn fix_gets_worse() {
+    assert_suggestion_result(
+        "It just starts after about 15 minutes of work and gradually gets worst.",
+        lint_group(),
+        "It just starts after about 15 minutes of work and gradually gets worse.",
+    );
+}
+
+#[test]
+#[ignore = "This kind of false positive is probably too subtle to detect"]
+fn dont_flag_getting_worst() {
+    // Here "getting" probably belongs to "I am getting" rather than "getting worst".
+    // Which would not be an error but "I am getting the worst accuracy" would be better.
+    // TODO: Maybe a noun following "getting" is enough context?
+    assert_lint_count(
+        "I am getting worst accuracy on the same dataste and 3 different models.",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
+fn fix_getting_worst() {
+    assert_suggestion_result(
+        "But, as I said, it is getting worst...",
+        lint_group(),
+        "But, as I said, it is getting worse...",
+    );
+}
+
+#[test]
+fn fix_got_worst() {
+    assert_suggestion_result(
+        "typescript support got worst.",
+        lint_group(),
+        "typescript support got worse.",
+    );
+}
+
+#[test]
+fn fix_gotten_worst() {
+    assert_suggestion_result(
+        "Has Claude gotten worst?",
+        lint_group(),
+        "Has Claude gotten worse?",
     );
 }
 
@@ -828,5 +1125,95 @@ fn correct_worse_case_two_hyphens() {
         "In a worse-case-scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
         lint_group(),
         "In a worst-case scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
+    );
+}
+
+// -make it worst-
+#[test]
+fn detect_make_it_worst_atomic() {
+    assert_suggestion_result(
+        "And if you try to access before that, CloudFront will cache the error and it'll make it worst.",
+        lint_group(),
+        "And if you try to access before that, CloudFront will cache the error and it'll make it worse.",
+    );
+}
+
+// -made it worst-
+#[test]
+fn detect_made_it_worst_atomic() {
+    assert_suggestion_result(
+        "However in couple of occasions the refresh made it worst and it showed commit differences that were already commited and pushed to origin.",
+        lint_group(),
+        "However in couple of occasions the refresh made it worse and it showed commit differences that were already commited and pushed to origin.",
+    );
+}
+
+// -makes it worst-
+#[test]
+fn detect_makes_it_worst_atomic() {
+    assert_suggestion_result(
+        "What makes it worst, is if I use the returned SHA to try and update the newly created file I get the same error I show below.",
+        lint_group(),
+        "What makes it worse, is if I use the returned SHA to try and update the newly created file I get the same error I show below.",
+    );
+}
+
+// -making it worst-
+#[test]
+fn detect_making_it_worst_atomic() {
+    assert_suggestion_result(
+        "PLease ai realled need help with this I think I'm making it worst.",
+        lint_group(),
+        "PLease ai realled need help with this I think I'm making it worse.",
+    );
+}
+
+// -make them worst-
+#[test]
+fn detect_make_them_worst_atomic() {
+    assert_suggestion_result(
+        "Not sure if this makes things clearer or make them worst.",
+        lint_group(),
+        "Not sure if this makes things clearer or make them worse.",
+    );
+}
+
+// -made them worst-
+#[test]
+fn detect_made_them_worst_atomic() {
+    assert_suggestion_result(
+        "if not outroght caused them / made them worst",
+        lint_group(),
+        "if not outroght caused them / made them worse",
+    );
+}
+
+// -makes them worst-
+#[test]
+fn detect_makes_them_worst_atomic() {
+    assert_suggestion_result(
+        "(tried ~14 different hyperparameter and data format combos), however, always just makes them worst, they go from \"slightly\" wrong to \"complete nonsense\".",
+        lint_group(),
+        "(tried ~14 different hyperparameter and data format combos), however, always just makes them worse, they go from \"slightly\" wrong to \"complete nonsense\".",
+    );
+}
+
+#[test]
+#[ignore = "This false positive is not handled yet"]
+fn dont_flag_makes_them_worst_case() {
+    assert_lint_count(
+        "Note 1: all hash tables has an Achilles heel that makes them worst case O(N)",
+        lint_group(),
+        0,
+    );
+}
+
+// -making them worst-
+#[test]
+fn detect_making_them_worst_atomic() {
+    assert_suggestion_result(
+        "As for the last part about Apple deliberately making them worst in order for us to buy the 3s",
+        lint_group(),
+        "As for the last part about Apple deliberately making them worse in order for us to buy the 3s",
     );
 }

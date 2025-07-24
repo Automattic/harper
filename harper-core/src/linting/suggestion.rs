@@ -53,7 +53,7 @@ impl Suggestion {
     }
 
     /// Apply a suggestion to a given text.
-    pub fn apply(&self, span: Span, source: &mut Vec<char>) {
+    pub fn apply(&self, span: Span<char>, source: &mut Vec<char>) {
         match self {
             Self::ReplaceWith(chars) => {
                 // Avoid allocation if possible

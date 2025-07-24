@@ -62,7 +62,7 @@ impl FixedPhrase {
 }
 
 impl Expr for FixedPhrase {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.inner.run(cursor, tokens, source)
     }
 }

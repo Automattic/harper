@@ -3,14 +3,19 @@ use is_macro::Is;
 use itertools::Itertools;
 use paste::paste;
 use serde::{Deserialize, Serialize};
+use smallvec::SmallVec;
 use strum::{EnumCount, VariantArray};
 use strum_macros::{Display, EnumCount, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
 use crate::spell::WordId;
+use crate::word_metadata_orthography::OrthFlags;
 use crate::{Document, TokenKind, TokenStringExt};
 
+/// This represents a "lexeme" or "headword" which is case-folded but affix-expanded.
+/// So not only lemmata but also inflected forms are stored here, with "horn" and "horns" each
+/// having their own lexeme, but "Ivy" and "ivy" share the same lexeme.
 #[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Hash)]
 pub struct WordMetadata {
     pub noun: Option<NounData>,
@@ -25,6 +30,9 @@ pub struct WordMetadata {
     /// valid in all dialects of English.
     #[serde(default = "default_default")]
     pub dialects: DialectFlags,
+    /// Orthographic information: letter case, spaces, hyphens, etc.
+    #[serde(default = "OrthFlags::empty")]
+    pub orth_info: OrthFlags,
     /// Whether the word is a [determiner](https://en.wikipedia.org/wiki/English_determiners).
     pub determiner: Option<DeterminerData>,
     /// Whether the word is a [preposition](https://www.merriam-webster.com/dictionary/preposition).
@@ -99,6 +107,65 @@ macro_rules! generate_metadata_queries {
 }
 
 impl WordMetadata {
+    /// If there is only one possible interpretation of the metadata, infer its UPOS tag.
+    pub fn infer_pos_tag(&self) -> Option<UPOS> {
+        // If an explicit POS tag exists, return it immediately.
+        if let Some(pos) = self.pos_tag {
+            return Some(pos);
+        }
+
+        // Collect all possible POS tags from metadata
+        let mut candidates = SmallVec::<[UPOS; 14]>::with_capacity(14);
+
+        if self.is_proper_noun() {
+            candidates.push(UPOS::PROPN);
+        }
+
+        if self.is_pronoun() {
+            candidates.push(UPOS::PRON);
+        }
+        if self.is_noun() {
+            candidates.push(UPOS::NOUN);
+        }
+        if self.is_verb() {
+            // Distinguish auxiliary verbs
+            if let Some(data) = &self.verb {
+                if data.is_auxiliary == Some(true) {
+                    candidates.push(UPOS::AUX);
+                } else {
+                    candidates.push(UPOS::VERB);
+                }
+            } else {
+                candidates.push(UPOS::VERB);
+            }
+        }
+        if self.is_adjective() {
+            candidates.push(UPOS::ADJ);
+        }
+        if self.is_adverb() {
+            candidates.push(UPOS::ADV);
+        }
+        if self.is_conjunction() {
+            candidates.push(UPOS::CCONJ);
+        }
+        if self.is_determiner() {
+            candidates.push(UPOS::DET);
+        }
+        if self.preposition {
+            candidates.push(UPOS::ADP);
+        }
+
+        // Remove duplicates
+        candidates.sort();
+        candidates.dedup();
+
+        if candidates.len() == 1 {
+            candidates.first().copied()
+        } else {
+            None
+        }
+    }
+
     /// Produce a copy of `self` with the known properties of `other` set.
     pub fn or(&self, other: &Self) -> Self {
         macro_rules! merge {
@@ -120,6 +187,7 @@ impl WordMetadata {
             adverb: merge!(self.adverb, other.adverb),
             conjunction: merge!(self.conjunction, other.conjunction),
             dialects: self.dialects | other.dialects,
+            orth_info: self.orth_info | other.orth_info,
             swear: self.swear.or(other.swear),
             determiner: merge!(self.determiner, other.determiner),
             preposition: self.preposition || other.preposition,
@@ -312,7 +380,7 @@ impl WordMetadata {
         // Singular and countable default to true, so their metadata queries are not generated.
         noun has proper, plural, mass, possessive.
         pronoun has personal, singular, plural, possessive, reflexive, subject, object.
-        determiner has demonstrative, possessive.
+        determiner has demonstrative, possessive, quantifier.
         verb has linking, auxiliary.
         conjunction has.
         adjective has.
@@ -322,6 +390,10 @@ impl WordMetadata {
     // Manual metadata queries
 
     // Pronoun metadata queries
+
+    pub fn get_person(&self) -> Option<Person> {
+        self.pronoun.as_ref().and_then(|p| p.person)
+    }
 
     pub fn is_first_person_plural_pronoun(&self) -> bool {
         matches!(
@@ -473,6 +545,18 @@ impl WordMetadata {
         }
     }
 
+    // Most mass nouns also have countable senses. Match those that are only mass nouns.
+    pub fn is_mass_noun_only(&self) -> bool {
+        if let Some(noun) = self.noun {
+            matches!(
+                (noun.is_countable, noun.is_mass),
+                (None | Some(false), Some(true))
+            )
+        } else {
+            false
+        }
+    }
+
     // Nominal metadata queries (noun + pronoun)
 
     /// Checks if the word is definitely nominal.
@@ -510,9 +594,110 @@ impl WordMetadata {
         self.is_non_possessive_noun() || self.is_non_possessive_pronoun()
     }
 
+    // Adjective metadata queries
+
+    pub fn get_degree(&self) -> Option<Degree> {
+        self.adjective.as_ref().and_then(|a| a.degree)
+    }
+
+    pub fn is_comparative_adjective(&self) -> bool {
+        matches!(
+            self.adjective,
+            Some(AdjectiveData {
+                degree: Some(Degree::Comparative)
+            })
+        )
+    }
+
+    pub fn is_superlative_adjective(&self) -> bool {
+        matches!(
+            self.adjective,
+            Some(AdjectiveData {
+                degree: Some(Degree::Superlative)
+            })
+        )
+    }
+
+    // Determiner metadata queries
+
+    // Checks if the word is definitely a determiner and more specifically is labeled as (a) quantifier.
+    pub fn is_quantifier(&self) -> bool {
+        self.determiner.is_some()
+    }
+
+    // Non-POS queries
+
     /// Checks whether a word is _definitely_ a swear.
     pub fn is_swear(&self) -> bool {
         matches!(self.swear, Some(true))
+    }
+
+    // Orthographic queries
+
+    /// Does the lexeme for this word cover an all-lowercase variant? (e.g., "hello")
+    ///
+    /// This returns true if all letters in the word are lowercase. Words containing
+    /// non-letter characters (like numbers or symbols) are only considered if all
+    /// letter characters are lowercase.
+    pub fn is_lowercase(&self) -> bool {
+        self.orth_info.contains(OrthFlags::LOWERCASE)
+    }
+    /// Does the lexeme for this word cover a titlecase variant? (e.g., "Hello")
+    ///
+    /// This returns true if the word is in titlecase form, which means:
+    /// - The first letter is uppercase
+    /// - All other letters are lowercase
+    /// - The word is at least 2 characters long
+    ///
+    /// Examples: "Hello", "World"
+    ///
+    /// Note: Words with internal capital letters (like "McDonald") or apostrophes (like "O'Reilly")
+    /// are not considered titlecase - they are classified as UPPER_CAMEL instead.
+    pub fn is_titlecase(&self) -> bool {
+        self.orth_info.contains(OrthFlags::TITLECASE)
+    }
+    /// Does the lexeme for this word cover an all-uppercase variant? (e.g., "HELLO")
+    ///
+    /// This returns true if all letters in the word are uppercase. Words containing
+    /// non-letter characters (like numbers or symbols) are only considered if all
+    /// letter characters are uppercase.
+    ///
+    /// Examples: "HELLO", "NASA", "I"
+    pub fn is_allcaps(&self) -> bool {
+        self.orth_info.contains(OrthFlags::ALLCAPS)
+    }
+    /// Does the lexeme for this word cover a lower camel case variant? (e.g., "helloWorld")
+    ///
+    /// This returns true if the word is in lower camel case, which means:
+    /// - The first letter is lowercase
+    /// - There is at least one uppercase letter after the first character
+    /// - The word must be at least 2 characters long
+    ///
+    /// Examples: "helloWorld", "getHTTPResponse", "eBay"
+    ///
+    /// Note: Single words that are all lowercase will return false.
+    /// Words starting with an uppercase letter will return false (those would be UpperCamel).
+    pub fn is_lower_camel(&self) -> bool {
+        self.orth_info.contains(OrthFlags::LOWER_CAMEL)
+    }
+    /// Does the lexeme for this word cover an upper camel case / pascal case variant? (e.g., "HelloWorld")
+    ///
+    /// This returns true if the word is in upper camel case (also known as Pascal case), which means:
+    /// - The first letter is uppercase
+    /// - There is at least one other uppercase letter after the first character
+    /// - There is at least one lowercase letter after the first uppercase letter
+    /// - The word must be at least 3 characters long
+    ///
+    /// Examples:
+    /// - "HelloWorld" (standard Pascal case)
+    /// - "McDonald" (name with internal caps)
+    /// - "O'Reilly" (name with apostrophe and internal caps)
+    /// - "HttpRequest" (initialism followed by word)
+    ///
+    /// Note: Single words that are titlecase (like "Hello") will return false.
+    /// Words that are all uppercase (like "NASA") will also return false.
+    pub fn is_upper_camel(&self) -> bool {
+        self.orth_info.contains(OrthFlags::UPPER_CAMEL)
     }
 
     /// Same thing as [`Self::or`], except in-place rather than a clone.
@@ -564,8 +749,7 @@ impl VerbData {
 }
 
 // nouns can be both singular and plural: "aircraft", "biceps", "fish", "sheep"
-// TODO other noun properties may be worth adding:
-// TODO count vs mass; abstract
+// TODO other noun properties may be worth adding: abstract
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct NounData {
     pub is_proper: Option<bool>,
@@ -632,6 +816,7 @@ impl PronounData {
 pub struct DeterminerData {
     pub is_demonstrative: Option<bool>,
     pub is_possessive: Option<bool>,
+    pub is_quantifier: Option<bool>,
 }
 
 impl DeterminerData {
@@ -640,6 +825,7 @@ impl DeterminerData {
         Self {
             is_demonstrative: self.is_demonstrative.or(other.is_demonstrative),
             is_possessive: self.is_possessive.or(other.is_possessive),
+            is_quantifier: self.is_quantifier.or(other.is_quantifier),
         }
     }
 }
@@ -883,12 +1069,12 @@ impl Default for DialectFlags {
 }
 
 #[cfg(test)]
-mod tests {
+pub mod tests {
     use crate::WordMetadata;
     use crate::spell::{Dictionary, FstDictionary};
 
     // Helper function to get word metadata from the curated dictionary
-    fn md(word: &str) -> WordMetadata {
+    pub fn md(word: &str) -> WordMetadata {
         FstDictionary::curated()
             .get_word_metadata_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
@@ -1500,6 +1686,48 @@ mod tests {
         fn nonstandard_pronouns() {
             assert!(md("themself").pronoun.is_some());
             assert!(md("y'all'").pronoun.is_some());
+        }
+    }
+
+    mod adjective {
+        use crate::{Degree, word_metadata::tests::md};
+
+        // Getting degrees
+
+        #[test]
+        #[ignore = "not marked yet because it might not be reliable"]
+        fn big_is_positive() {
+            assert_eq!(md("big").get_degree(), Some(Degree::Positive));
+        }
+
+        #[test]
+        fn bigger_is_comparative() {
+            assert_eq!(md("bigger").get_degree(), Some(Degree::Comparative));
+        }
+
+        #[test]
+        fn biggest_is_superlative() {
+            assert_eq!(md("biggest").get_degree(), Some(Degree::Superlative));
+        }
+
+        #[test]
+        #[should_panic(expected = "Word 'bigly' not found in dictionary")]
+        fn bigly_is_not_an_adjective_form_we_track() {
+            assert_eq!(md("bigly").get_degree(), None);
+        }
+
+        // Calling is_ methods
+
+        // TODO: positive degree not implemented
+
+        #[test]
+        fn bigger_is_comparative_adjective() {
+            assert!(md("bigger").is_comparative_adjective());
+        }
+
+        #[test]
+        fn biggest_is_superlative_adjective() {
+            assert!(md("biggest").is_superlative_adjective());
         }
     }
 

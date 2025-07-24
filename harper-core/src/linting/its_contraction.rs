@@ -33,12 +33,13 @@ impl Default for ItsContraction {
 
         let inverted = SequenceExpr::default().then_unless(exceptions);
 
-        let expr =
-            All::new(vec![Box::new(positive), Box::new(inverted)]).or(SequenceExpr::aco("its")
+        let expr = All::new(vec![Box::new(positive), Box::new(inverted)]).or_longest(
+            SequenceExpr::aco("its")
                 .t_ws()
                 .then_adjective()
                 .t_ws()
-                .t_aco("for"));
+                .t_aco("for"),
+        );
 
         Self {
             expr: Box::new(expr),

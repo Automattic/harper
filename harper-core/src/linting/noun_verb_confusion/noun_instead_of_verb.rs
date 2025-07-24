@@ -1,20 +1,8 @@
-use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
+use crate::expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr};
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::{Lrc, Token, patterns::WordSet};
 
-use super::{ExprLinter, Lint, LintKind, Suggestion};
-
-/// Common noun-verb pairs that are often confused
-const NOUN_VERB_PAIRS: &[(&str, &str)] = &[
-    ("advice", "advise"),
-    ("belief", "believe"),
-    ("breath", "breathe"),
-    ("effect", "affect"), // "Effect" is also a verb meaning "to bring about".
-    ("intent", "intend"),
-    // ("proof", "prove"),  // "Proof" is also a verb, a synonym of "proofread".
-    // Add more pairs here as needed
-];
+use super::NOUN_VERB_PAIRS;
 
 /// Pronouns that can come before verbs but not nouns
 const PRONOUNS: &[&str] = &["he", "I", "it", "she", "they", "we", "who", "you"];
@@ -55,7 +43,7 @@ pub struct NounInsteadOfVerb {
 
 impl Default for NounInsteadOfVerb {
     fn default() -> Self {
-        let pre_context = LongestMatchOf::new(vec![
+        let pre_context = FirstMatchOf::new(vec![
             Box::new(WordSet::new(PRONOUNS)),
             Box::new(WordSet::new(MODAL_VERBS_ETC)),
             Box::new(WordSet::new(ADVERBS)),
@@ -100,7 +88,6 @@ impl ExprLinter for NounInsteadOfVerb {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        eprintln!("🏃 '{}' 🏃", toks.span()?.get_content_string(src));
         // If we have the next word token, try to rule out compound nouns
         if toks.len() > 4 {
             let following_tok = &toks[4];

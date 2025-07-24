@@ -126,7 +126,7 @@ export class BinaryModule {
 
 		if (arg.to_json !== undefined) {
 			const json = arg.to_json();
-			let type: SerializableTypes | undefined = undefined;
+			let type: SerializableTypes | undefined;
 
 			if (arg instanceof Lint) {
 				type = 'Lint';

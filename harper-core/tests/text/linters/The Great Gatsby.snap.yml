@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Fa”
+  - Replace with: “Ff”
 
 
 
@@ -14,9 +14,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |       ^~~~~ Did you mean to spell `SCOTT` this way?
 Suggest:
+  - Replace with: “Scott”
   - Replace with: “Scot”
   - Replace with: “Scots”
-  - Replace with: “SCM's”
 
 
 
@@ -36,17 +36,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-      10 | “Whenever you feel like criticising any one,” he told me, “just remember that
-         |                                     ^~~~~~~ Did you mean the closed compound `anyone`?
-      11 | all the people in this world haven’t had the advantages that you’ve had.”
-Suggest:
-  - Replace with: “anyone”
-
-
-
-Lint:    Miscellaneous (31 priority)
+Lint:    Redundancy (31 priority)
 Message: |
       15 | consequence, I’m inclined to reserve all judgments, a habit that has opened up
       16 | many curious natures to me and also made me the victim of not a few veteran
@@ -746,7 +736,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      583 | here this summer. I think the home influence will be very good for her.”
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -849,7 +839,7 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “To”
+  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
 
@@ -883,7 +873,7 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “To”
+  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
 
@@ -1892,7 +1882,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
     1457 | “I thought you knew, old sport. I’m afraid I’m not a very good host.”
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -2009,16 +1999,6 @@ Suggest:
   - Replace with: “puppy's”
   - Replace with: “purplish”
   - Replace with: “uppish”
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-    1531 | puppyish, convivial way, girls were swooning backward playfully into men’s arms,
-    1532 | even into groups, knowing that some one would arrest their falls—but no one
-         |                                ^~~~~~~~ Did you mean the closed compound noun “someone”?
-Suggest:
-  - Replace with: “someone”
 
 
 
@@ -2409,9 +2389,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Re”
-  - Replace with: “R”
   - Replace with: “Rd”
+  - Replace with: “R”
+  - Replace with: “RC”
 
 
 
@@ -2420,7 +2400,7 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
+  - Replace with: “Pt”
   - Replace with: “P”
   - Replace with: “Pa”
 
@@ -2633,8 +2613,8 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Gt”
-  - Replace with: “Go”
-  - Replace with: “Gr”
+  - Replace with: “Gm”
+  - Replace with: “GB”
 
 
 
@@ -2669,7 +2649,7 @@ Message: |
 Suggest:
   - Replace with: “D”
   - Replace with: “Dad”
-  - Replace with: “Dag”
+  - Replace with: “Day”
 
 
 
@@ -2725,9 +2705,9 @@ Message: |
          |                                         ^~ Did you mean to spell `De` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
+  - Replace with: “D”
   - Replace with: “Db”
   - Replace with: “Dd”
-  - Replace with: “Deb”
 
 
 
@@ -2936,8 +2916,8 @@ Message: |
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
   - Replace with: “Lo”
-  - Replace with: “Lb”
-  - Replace with: “Lg”
+  - Replace with: “L”
+  - Replace with: “La”
 
 
 
@@ -3057,7 +3037,7 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
+  - Replace with: “Pt”
   - Replace with: “P”
   - Replace with: “Pa”
 
@@ -3869,7 +3849,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
     2594 | “Looks very good,” he remarked vaguely. “One of the papers said they thought the
          |        ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -4220,6 +4200,17 @@ Suggest:
 
 
 
+Lint:    WordChoice (54 priority)
+Message: |
+    2995 | of emotion. I think that voice held him most, with its fluctuating, feverish
+         |                                                    ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
+    2996 | warmth, because it couldn’t be over-dreamed—that voice was a deathless song.
+Suggest:
+  - Replace with: “it's”
+  - Replace with: “it has”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     3020 | short of being news. Contemporary legends such as the “underground pipe-line to
@@ -4485,7 +4476,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
     3141 | “Very good roads around here.”
          |  ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -4813,17 +4804,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    3568 | My commutation ticket came back to me with a dark stain from his hand. That any
-         |                                                                             ^~~~
-    3569 | one should care in this heat whose flushed lips he kissed, whose head made damp
-         | ~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3572 | . . . Through the hall of the Buchanans’ house blew a faint wind, carrying the
@@ -5036,17 +5016,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    3754 | “Are we just going to go?” she objected. “Like this? Aren’t we going to let any
-         |                                                                             ^~~~
-    3755 | one smoke a cigarette first?”
-         | ~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3809 | “Well, you take my coupé and let me drive your car to town.”
@@ -5093,7 +5062,7 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “To”
+  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
 
@@ -5162,7 +5131,7 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “To”
+  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
 
@@ -5443,16 +5412,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    4182 | was poor and she was tired of waiting for me. It was a terrible mistake, but in
-    4183 | her heart she never loved any one except me!”
-         |                           ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     4185 | At this point Jordan and I tried to go, but Tom and Gatsby insisted with
@@ -5639,16 +5598,6 @@ Message: |
          | ^~~~~~~~~ Did you mean `Michael`?
 Suggest:
   - Replace with: “Michael”
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    4405 | stared at the people and the cars that passed along the road. When any one spoke
-         |                                                                    ^~~~~~~ Did you mean the closed compound `anyone`?
-    4406 | to him he invariably laughed in an agreeable, colorless way. He was his wife’s
-Suggest:
-  - Replace with: “anyone”
 
 
 
@@ -6446,7 +6395,7 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “To”
+  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
 
@@ -6519,7 +6468,7 @@ Message: |
 Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gd's”
-  - Replace with: “Gag's”
+  - Replace with: “Gab's”
 
 
 
@@ -6531,7 +6480,7 @@ Message: |
 Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gd's”
-  - Replace with: “Gag's”
+  - Replace with: “Gab's”
 
 
 
@@ -6545,16 +6494,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-    5181 | easier, surer way of finding out what he wanted to know. By half-past two he was
-    5182 | in West Egg, where he asked some one the way to Gatsby’s house. So by that time
-         |                             ^~~~~~~~ Did you mean the closed compound noun “someone”?
-Suggest:
-  - Replace with: “someone”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     5181 | easier, surer way of finding out what he wanted to know. By half-past two he was
@@ -6562,26 +6501,6 @@ Message: |
          |                             ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    5185 | At two o’clock Gatsby put on his bathing-suit and left word with the butler that
-    5186 | if any one phoned word was to be brought to him at the pool. He stopped at the
-         |    ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    5197 | for it until four o’clock—until long after there was any one to give it to if it
-         |                                                      ^~~~~~~ Did you mean the closed compound `anyone`?
-    5198 | came. I have an idea that Gatsby himself didn’t believe it would come, and
-Suggest:
-  - Replace with: “anyone”
 
 
 
@@ -6621,16 +6540,6 @@ Message: |
     5209 | could only say that he hadn’t thought anything much about them. I drove from the
 Suggest:
   - Replace with: “proteges”
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    5210 | station directly to Gatsby’s house and my rushing anxiously up the front steps
-    5211 | was the first thing that alarmed any one. But they knew then, I firmly believe.
-         |                                  ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
 
 
 
@@ -6969,6 +6878,13 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5405 | “We were close friends.”
+         |     ^~~~~ You may be missing a preposition here.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5412 | “If he’d of lived, he’d of been a great man. A man like James J. Hill. He’d of
@@ -7015,7 +6931,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Fa”
+  - Replace with: “Ff”
 
 
 
@@ -7025,16 +6941,6 @@ Message: |
          |                                                               ^~~~~~~~~ Did you mean `Bolshie`?
 Suggest:
   - Replace with: “Bolshie”
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    5466 | advice of an elevator boy, was marked “The Swastika Holding Company,” and at
-    5467 | first there didn’t seem to be any one inside. But when I’d shouted “hello”
-         |                               ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
 
 
 
@@ -7150,7 +7056,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (30 priority)
+Lint:    Agreement (30 priority)
 Message: |
     5575 | “He come out to see me two years ago and bought me the house I live in now. Of
     5576 | course we was broke up when he run off from home, but I see now there was a
@@ -7244,16 +7150,6 @@ Message: |
     5634 | over Gatsby’s books in the library one night three months before.
 Suggest:
   - Replace with: “marveling”
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-    5642 | message or a flower. Dimly I heard some one murmur “Blessed are the dead that
-         |                                    ^~~~~~~~ Did you mean the closed compound noun “someone”?
-    5643 | the rain falls on,” and then the owl-eyed man said “Amen to that,” in a brave
-Suggest:
-  - Replace with: “someone”
 
 
 
@@ -7554,6 +7450,14 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5783 | them together, and let other people clean up the mess they had made. . . .
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5780 | entirely justified. It was all very careless and confused. They were careless
+         |                                                                 ^~~~~ You may be missing a preposition here.
+    5781 | people, Tom and Daisy—they smashed up things and creatures and then retreated
 
 
 

@@ -96,7 +96,7 @@ fn to_lower_word(word: &[char]) -> Cow<'_, [char]> {
 /// Matches with 99.71% and 99.77% of vowels and non-vowels in the
 /// Carnegie-Mellon University word -> pronunciation dataset.
 fn starts_with_vowel(word: &[char]) -> bool {
-    let is_likely_initialism = word.iter().all(|c| c.is_uppercase());
+    let is_likely_initialism = word.iter().all(|c| !c.is_alphabetic() || c.is_uppercase());
 
     if is_likely_initialism && !word.is_empty() {
         return matches!(
@@ -278,5 +278,15 @@ mod tests {
     #[test]
     fn allow_issue_751() {
         assert_lint_count("He got a 52% approval rating.", AnA, 0);
+    }
+
+    #[test]
+    fn allow_an_mp_and_an_mp3() {
+        assert_lint_count("an MP and an MP3?", AnA, 0);
+    }
+
+    #[test]
+    fn disallow_a_mp_and_a_mp3() {
+        assert_lint_count("a MP and a MP3?", AnA, 2);
     }
 }
