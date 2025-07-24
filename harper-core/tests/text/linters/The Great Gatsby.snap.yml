@@ -986,7 +986,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bk”
+  - Replace with: “Bi”
 
 
 
@@ -1314,7 +1314,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bk”
+  - Replace with: “Bi”
 
 
 
@@ -2488,7 +2488,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bk”
+  - Replace with: “Bi”
 
 
 
@@ -2658,8 +2658,8 @@ Message: |
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
   - Replace with: “D”
-  - Replace with: “Dab”
-  - Replace with: “Dam”
+  - Replace with: “Dad”
+  - Replace with: “Day”
 
 
 
@@ -2705,7 +2705,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bk”
+  - Replace with: “Bi”
 
 
 
@@ -2715,9 +2715,9 @@ Message: |
          |                                         ^~ Did you mean to spell `De` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
+  - Replace with: “D”
+  - Replace with: “Db”
   - Replace with: “Dd”
-  - Replace with: “Dew”
-  - Replace with: “Die”
 
 
 
@@ -3107,7 +3107,7 @@ Message: |
          |                                                                             ^~~~ Did you mean to spell `Bois` this way?
     1982 | de Boulogne.
 Suggest:
-  - Replace with: “Bogs”
+  - Replace with: “Boss”
   - Replace with: “Boris”
   - Replace with: “Bis”
 
@@ -6991,7 +6991,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bk”
+  - Replace with: “Bi”
 
 
 

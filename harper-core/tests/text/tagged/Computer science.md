@@ -52,8 +52,8 @@
 # NSg/J   . V       . NSg/V+   . NSg/V  . NSg/J+        NSg        . NSg/V    V/C
 > learning found in      humans and  animals . Within  artificial intelligence , computer
 # V+       NSg/V NPr/J/P NPl/V  V/C+ NPl+    . NSg/J/P J+         N🅪Sg+        . NSg/V+
-> vision aims  to understand and process image and video   data  , while     natural
-# NSg/V+ NPl/V P  V          V/C NSg/V+  NSg/V V/C N🅪Sg/V+ N🅪Pl+ . NSg/V/C/P NSg/J
+> vision  aims  to understand and process image and video   data  , while     natural
+# N🅪Sg/V+ NPl/V P  V          V/C NSg/V+  NSg/V V/C N🅪Sg/V+ N🅪Pl+ . NSg/V/C/P NSg/J
 > language processing aims  to understand and process textual and linguistic data  .
 # N🅪Sg/V+  V+         NPl/V P  V          V/C NSg/V+  J       V/C J+         N🅪Pl+ .
 >
@@ -77,7 +77,7 @@
 > numerical tasks  such  as    the abacus have   existed since antiquity , aiding in
 # J         NPl/V+ NSg/I NSg/R D   NSg    NSg/VX V/J     C/P   NSg+      . V      NPr/J/P
 > computations such  as    multiplication and division . Algorithms for performing
-# NPl          NSg/I NSg/R NSg            V/C NSg+     . NPl        C/P V
+# NPl          NSg/I NSg/R NᴹSg           V/C NSg+     . NPl        C/P V
 > computations have   existed since antiquity , even    before the development of
 # NPl          NSg/VX V/J     C/P   NSg+      . NSg/V/J C/P    D   N🅪Sg        P
 > sophisticated computing equipment .
@@ -507,7 +507,7 @@
 > are required to perform those   computations . In      an  effort to answer the first
 # V   V/J      P  V       I/Ddem+ NPl+         . NPr/J/P D/P NSg/V  P  NSg/V  D+  NSg/V/J+
 > question , computability theory examines which computational problems are
-# NSg/V+   . ?             NSg+   NPl/V    I/C+  J             NPl+     V
+# NSg/V+   . NᴹSg          NSg+   NPl/V    I/C+  J             NPl+     V
 > solvable on  various theoretical models of computation . The second   question is
 # J        J/P J       J           NPl/V  P+ NSg         . D+  NSg/V/J+ NSg/V+   VL
 > addressed by      computational complexity theory , which studies the time     and space
@@ -622,8 +622,8 @@
 # NSg/V+   NPl      VL D   NSg/V P  NSg/J   NSg/J  NPl/V+   V/C V        D+
 > synthesis and manipulation of image  data  . The study  is connected to many       other
 # NᴹSg      V/C N🅪Sg         P  NSg/V+ N🅪Pl+ . D+  NSg/V+ VL V/J       P  NSg/I/J/Dq NSg/V/J
-> fields  in      computer science , including computer vision , image  processing , and
-# NPrPl/V NPr/J/P NSg/V+   N🅪Sg/V+ . V         NSg/V+   NSg/V+ . NSg/V+ V+         . V/C
+> fields  in      computer science , including computer vision  , image  processing , and
+# NPrPl/V NPr/J/P NSg/V+   N🅪Sg/V+ . V         NSg/V+   N🅪Sg/V+ . NSg/V+ V+         . V/C
 > computational geometry , and is heavily applied in      the fields  of special effects
 # J+            N🅪Sg+    . V/C VL R       V/J     NPr/J/P D   NPrPl/V P  NSg/V/J NPl/V
 > and video   games  .
@@ -885,7 +885,7 @@
 >
 #
 > All          the information about any     computable problem can    be     represented using
-# NSg/I/J/C/Dq D   NᴹSg        J/P   I/R/Dq+ ?          NSg/J+  NPr/VX NSg/VX V/J         V
+# NSg/I/J/C/Dq D   NᴹSg        J/P   I/R/Dq+ J          NSg/J+  NPr/VX NSg/VX V/J         V
 > only  0 and 1 ( or    any    other   bistable pair   that          can    flip    - flop  between two
 # J/R/C # V/C # . NPr/C I/R/Dq NSg/V/J ?        NSg/V+ NSg/I/C/Ddem+ NPr/VX NSg/V/J . NSg/V NSg/P   NSg
 > easily distinguishable states   , such  as    " on  / off       " , " magnetized / de   - magnetized " ,

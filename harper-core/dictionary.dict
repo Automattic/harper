@@ -7764,6 +7764,7 @@ PCM/Ng
 PCMCIA/O            # standard
 PCP/Ng              # drug
 PD/NO
+PDA/NwSg            # personal digital assistant; public display of affection
 PDF/NS              # document format
 PDQ/
 PDT/ON
@@ -9959,6 +9960,7 @@ Testarossa/ONgS     # car model
 Tet/ONg
 Tethys/Og
 Tetons/NOg
+Tetris/Og
 Teuton/NJgS
 Teutonic/JNg
 Tevet/Og
@@ -18392,11 +18394,11 @@ complex/~JNVgSY
 complexion/~NVgdS
 complexional/J
 complexity/~NSg
-compliance/~Ng
+compliance/~Nmg
 compliant/~JY
 complicate/~VJGdS
 complicated/~JVY
-complication/~Ng
+complication/~NgS
 complicit/~J
 complicity/~Nmg
 compliment/~NVgdGS
@@ -18405,7 +18407,8 @@ comply/~VndSXG
 compo/~NS
 component/~NJSg
 comport/VNLSGd
-comportment/Ng
+comportment/Nmg
+composability/Nmg
 compose/~VrEeGSdB
 composedly/R
 composer/~NgS
@@ -18414,9 +18417,9 @@ composition/~Neg
 compositional/~J
 compositor/NSg
 compost/NVSGgd
-composure/NEg
+composure/NmEg
 compote/NSg
-compound/~NJVGgdBS
+compound/~NwJVGgdBS
 compounded/~JVU
 comprehend/~VSdG
 comprehensibility/Nig
@@ -18441,6 +18444,8 @@ compulsiveness/Ng
 compulsorily/R
 compulsory/~JNSg
 compunction/NSg
+computable/J
+computability/Nmg
 computation/~NSg
 computational/~JY
 compute/~VNrdSG
@@ -30477,6 +30482,7 @@ jangler/Ng
 janitor/~NSg
 janitorial/J
 jank/Ng
+jankiness/Nmg
 janky/J^>
 japan/~NVSg
 japanned/V
@@ -30485,13 +30491,13 @@ jape/NVgGdS
 jar/~NVSg
 jardiniere/NSg
 jarful/NgS
-jargon/~NVg
+jargon/~NmVg
 jarred/VJ
 jarring/JNVY
-jasmine/~NSg
+jasmine/~NwSg
 jasper/~NVg
 jato/NgS
-jaundice/NVdSgG
+jaundice/NmVdSgG
 jaunt/NVSGgd
 jauntily/R
 jauntiness/Ng
@@ -30599,6 +30605,7 @@ jinx/NVgdSG
 jit/VS
 jitney/~NSg
 jitted/V
+jitter/NgSVdG
 jitterbug/NVgS
 jitterbugged/V
 jitterbugger/Ng
@@ -34613,12 +34620,13 @@ multilayer/Jd
 multilevel/J
 multiline/J
 multilingual/~JN
-multilingualism/Ng
+multilingualism/Nmg
 multimedia/~NmJg
 multimeter/NSg
 multimillionaire/NSg
 multimodal/J
 multinational/~JNSg
+multiparadigm/J
 multipart/J
 multipartite
 multiparty/J
@@ -34630,7 +34638,7 @@ multiple/~JNgSDq
 multiplex/~JNVZGgd>S
 multiplexer/NgS
 multiplicand/NgS
-multiplication/~Ng
+multiplication/~Nmg
 multiplicative/~JN
 multiplicity/~NSg
 multiplier/~NgS
@@ -36018,6 +36026,7 @@ obsequious/JpY
 obsequiousness/Nmg
 obsequy/Ng
 observability/Nmg
+observable/JNgS
 observably/R
 observance/~NgS
 observant/~JY
@@ -39277,6 +39286,7 @@ postpartum/JN
 postpone/~VdSGL
 postponement/NwSg
 postprandial/J
+postprocess/VGdS
 postscript/~NVSg
 postseason/~NJSg
 postsynaptic/~J
@@ -47691,7 +47701,7 @@ teaspoon/NVSg
 teaspoonful/NSg
 teat/NgS
 teatime/NS
-tech/~NVg
+tech/~NmVg
 techie/NJS
 technetium/~Ng
 technical/~JNY
@@ -52557,6 +52567,7 @@ Cypher/ONg
 DATETIME/NgS        # dictionaries prefer: datetime
 DBMS/NOSg           # database management system
 DCT/NgS             # discrete cosine transform
+DDoS/Ng
 DEI
 DKIM/NSg
 DM'd/V              # direct message
@@ -52611,6 +52622,7 @@ GSM/OJ              # Global System for Mobile Communications
 GTK/O               # GIMP Toolkit
 Ganeti/Sg
 Gateron/Sg
+GeForce/Og
 Gerber/Ng           # file format
 Ghidra/Og           # reverse engineering
 GitLab/Sg           # GitHub alternative
@@ -52864,6 +52876,7 @@ Viktor/Sg
 VirtualBox/ONgS
 Vite/Sg
 Vue/gO              # framework
+Vulkan/Og
 WAL/ONSg
 WASI/gS
 WASM/gS             # see WebAssembly
@@ -52875,6 +52888,7 @@ WSL/gO              # windows subsystem for linux
 Waymo/Og
 WebAssembly/g       # see WASM
 WebDAV/Og
+WebGL/Og
 WebGPU/Sg
 WebKit/Og
 WebRTC/Og
@@ -52907,6 +52921,7 @@ autoconfigure/VSdG
 autodifferentiation/Nmg
 autosave/VSdGNg
 backend/NSg         # dictionaries prefer: back end
+backoff/NsG
 baz/~               # cf. foo, bar
 clickstream/NgS
 concat/VSdG
@@ -53053,6 +53068,8 @@ custom-made/J
 cut scene/NgS
 cutting edge/NgS
 cutting-edge/J
+data center/NgS!@_
+data center/NgS<
 day-to-day/JR
 de-extinct/VGd
 de-extinction/NgS
@@ -53290,6 +53307,7 @@ plan B/g
 play-by-play/JNgS
 post-Covid/J
 post-truth/NVg
+power-up/NgS
 pre-COVID/J
 pro-democracy/J
 quid pro quo/Ng
@@ -53442,6 +53460,7 @@ z-axis/Ng
 # For this reason the most important ones to include are the ones that have a noun counterpart.
 # Remember not to add any affixes since only the verb part at the start undergoes inflection.
 
+back off/V
 back up/V
 black out/V
 blast off/V
