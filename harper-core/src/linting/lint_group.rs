@@ -39,6 +39,7 @@ use super::everyday::Everyday;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
+use super::filler_words::FillerWords;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
 use super::have_pronoun::HavePronoun;
@@ -388,6 +389,7 @@ impl LintGroup {
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
+        // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
@@ -417,6 +419,7 @@ impl LintGroup {
         insert_struct_rule!(Everyday, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
+        insert_expr_rule!(FillerWords, true);
         insert_struct_rule!(FirstAidKit, true);
         insert_struct_rule!(ForNoun, true);
         insert_expr_rule!(HavePronoun, true);
