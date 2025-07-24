@@ -22,7 +22,7 @@ jobs:
       - name: Install `pandoc`
         run: sudo apt-get update && sudo apt-get install pandoc -y
       - name: Install `wasm-pack`
-        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+        run: cargo install wasm-pack
       - name: Build
         run: just build-wp 
       - name: Upload extension
