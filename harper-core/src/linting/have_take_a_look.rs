@@ -166,4 +166,13 @@ mod tests {
             "It only appeared after I was taking a look through the files.",
         );
     }
+
+    #[test]
+    fn correct_has_a_look() {
+        assert_suggestion_result(
+            "When Serializing messages the code in SchemaRegistrySerde has a look into the registry using the topic name.",
+            HaveTakeALook::new(Dialect::Canadian),
+            "When Serializing messages the code in SchemaRegistrySerde takes a look into the registry using the topic name.",
+        );
+    }
 }
