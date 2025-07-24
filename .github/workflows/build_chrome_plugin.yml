@@ -25,8 +25,9 @@ jobs:
         run: corepack enable
       - name: Install `pandoc`
         run: sudo apt-get update && sudo apt-get install pandoc -y
+      - uses: cargo-bins/cargo-binstall@main
       - name: Install `wasm-pack`
-        run: cargo install wasm-pack
+        run: cargo binstall wasm-pack
       - name: Build Chrome Plugin
         run: just build-chrome-plugin 
       - name: Build Firefox Plugin
