@@ -9795,6 +9795,7 @@ TLS/NO
 TM/N
 TN/ON               # US state (Tennessee)
 TNT/NOg
+TOC/NgS             # table of contents
 TOEFL/N
 TQM/N
 TTL
@@ -43197,12 +43198,12 @@ scribe's
 scrim/NVgS
 scrimmage/~NVgGdS
 scrimp/NVJSdG
-scrimshaw/VNgdGS
+scrimshaw/VNwgdGS
 scrip/NgS
 script/~NVWSgdGB
 scripted/~VJU
 scriptural/~J
-scripture/~NgS
+scripture/~NwgS
 scriptwriter/~NSg
 scrivener/NSg
 scrod/NVg
@@ -43210,26 +43211,27 @@ scrofula/Ng
 scrofulous/J
 scrog/NS
 scroll/~NVGSgd
+scrollable/J
 scroller/NgS
 scrooge/~NVgS
-scrota/N
+scrota/N9
 scrotal/J
-scrotum/Ng
+scrotum/N0g
 scrounge/VNd>SZG
 scrounger/Ng
 scroungy/J^>
-scrub/~JNVgS
+scrub/~JNwVgS
 scrubbed/VJ
 scrubber/NSg
 scrubbing/VN
 scrubby/JN>^
 scruff/~NVSg
 scruffily/R
-scruffiness/Ng
+scruffiness/Nmg
 scruffy/JN>p^
 scrum/~NVOS
-scrumhalf/N
-scrumhalves/9
+scrumhalf/N0
+scrumhalves/N9
 scrummage/NVS
 scrummed/V
 scrumming/V
@@ -43246,7 +43248,7 @@ scrutineer/NVS
 scrutinise/VGdS!_
 scrutinize/VGdS
 scrutiny/~NVg
-scuba/~NVgdSG
+scuba/~NwVgdSG
 scud/~JVNgS
 scudded/V
 scudding/VNJ
@@ -43260,8 +43262,8 @@ sculpt/~VNSGd
 sculptor/~NSg
 sculptress/NgS
 sculptural/~J
-sculpture/~NVdSgG
-scum/~NVgS
+sculpture/~NwVdSgG
+scum/~NmVgS
 scumbag/NgS
 scumble/NVSGd
 scummed/V
@@ -43270,12 +43272,12 @@ scummy/J^>
 scupper/NVgdGS
 scurf/Ng
 scurfy/J
-scurrility/Ng
+scurrility/Nmg
 scurrilous/JpY
-scurrilousness/Ng
+scurrilousness/Nmg
 scurry/VNGdSg
 scurvily/R
-scurvy/JN^>g
+scurvy/JNm^>g
 scutcheon/NSg
 scuttle/NVgGdS
 scuttlebutt/NVg
@@ -45239,26 +45241,27 @@ sopped/V
 sopping/JVN
 soppy/J>^
 soprano/~NVgS
-sorbet/NSg
+sorbet/NwSg
 sorcerer/~NgS
 sorceress/NgS
 sorcery/~Ng
 sordid/JpY
-sordidness/Ng
+sordidness/Nmg
 sore/~JNVgY^>Sp
 sorehead/NgS
-soreness/Ng
-sorghum/~Ng
+soreness/Nmg
+sorghum/~Nmg
 sorority/~NSg
-sorrel/~NJSg
+sorrel/~NwJSg
 sorrily/R
 sorriness/Ng
-sorrow/~NVSgdG
+sorrow/~NwVSgdG
 sorrowful/JYp
-sorrowfulness/Ng
+sorrowfulness/Nmg
 sorry/~JNV>^p
 sort/~NVWrSGdg
-sorta/
+sorta/              # 'sort of'
+sortable/J
 sorted/~VJU
 sorter/NSg
 sortie/NVdSg
@@ -52941,9 +52944,11 @@ autoconfiguration/Ng
 autoconfigure/VSdG
 autodifferentiation/Nmg
 autosave/VSdGNg
+awk/Og              # *nix tool
 backend/NSg         # dictionaries prefer: back end
 backoff/NsG
 baz/~               # cf. foo, bar
+blogpost/NgS
 clickstream/NgS
 concat/VSdG
 config/NVSg         # not marked as a verb since "configed" and "configing" look wrong
@@ -52978,6 +52983,7 @@ hostname/NSg
 hotwire/VBG         # dictionaries prefer: hot-wire
 i18n/Nm             # internationalization
 infosec/NmG         # information security
+inpaint/VGdS
 iPadOS/Og
 jQuery/Og
 labriola/Sg         # !! please check and comment !! - should be uppercase surname?
@@ -53001,6 +53007,7 @@ s.t./~              # !! please check and comment !!
 sRGB/Og             # colour space
 scatterplot/NVSgG   # dictionaries prefer: scatter plot
 scrollbar/NSg       # dictionaries prefer: scroll bar
+sed/Og              # *nix tool / language
 sioyek/Sg           # !! please check and comment !!
 stacktrace/SgN      # dictionaries prefer: stack trace
 standup/Sg          # dictionaries prefer: stand-up
@@ -53013,6 +53020,7 @@ vid/NgS             # video
 watchOS/Og
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
+z-buffer/NgS
 
 # Experimental multi-word entries
 # Harper may not recognize these as words in documents
@@ -53038,6 +53046,7 @@ anti-vaccine/J
 anti-vax/J
 anti-vaxxer/NgS
 avant-garde/NgJ
+back door/NgSVGd
 back to back/R
 back-to-back/J
 barn find/NgS
@@ -53342,6 +53351,7 @@ ray marching/Nmg
 ray tracer/NgS
 ray tracing/Nmg
 re-enable/VdSG
+read-only/J
 real time/Ng
 real-time/J
 real world/Ng

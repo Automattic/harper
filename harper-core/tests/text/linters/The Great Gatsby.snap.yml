@@ -839,9 +839,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -873,9 +873,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -1503,16 +1503,6 @@ Message: |
          | ~~~~ Ensure proper capitalization of notable places that are significant regional centers, travel destinations, or have international importance.
 Suggest:
   - Replace with: “New York”
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-    1172 | York—every Monday these same oranges and lemons left his back door in a pyramid
-         |                                                          ^~~~~~~~~ Did you mean the closed compound noun “backdoor”?
-    1173 | of pulpless halves. There was a machine in the kitchen which could extract the
-Suggest:
-  - Replace with: “backdoor”
 
 
 
@@ -4898,17 +4888,6 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3640 | “Bles-sed pre-cious,” she crooned, holding out her arms. “Come to your own
-         |       ^~~ Did you mean to spell `sed` this way?
-Suggest:
-  - Replace with: “sad”
-  - Replace with: “sea”
-  - Replace with: “sec”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3640 | “Bles-sed pre-cious,” she crooned, holding out her arms. “Come to your own
          |               ^~~~~ Did you mean to spell `cious` this way?
 Suggest:
   - Replace with: “pious”
@@ -4925,17 +4904,6 @@ Suggest:
   - Replace with: “bless”
   - Replace with: “bales”
   - Replace with: “bees”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
-         |           ^~~ Did you mean to spell `sed` this way?
-Suggest:
-  - Replace with: “sad”
-  - Replace with: “sea”
-  - Replace with: “sec”
 
 
 
@@ -5062,9 +5030,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -5131,9 +5099,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -5431,15 +5399,6 @@ Suggest:
   - Replace with: “your”
   - Replace with: “you're a”
   - Replace with: “you're an”
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-    4209 | a mile of her unless you brought the groceries to the back door. But all the
-         |                                                       ^~~~~~~~~ Did you mean the closed compound noun “backdoor”?
-Suggest:
-  - Replace with: “backdoor”
 
 
 
@@ -6395,9 +6354,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 

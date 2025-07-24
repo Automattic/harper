@@ -4227,9 +4227,9 @@
 > hear him  sighing as    if    his     heart   would break  . She  pitied him  deeply . “ What   is
 # V    ISg+ V       NSg/R NSg/C ISg/D$+ N🅪Sg/V+ VX    NSg/V+ . ISg+ V/J    ISg+ R+     . . NSg/I+ VL
 > his     sorrow ? ” she  asked the Gryphon , and the Gryphon answered , very nearly in      the
-# ISg/D$+ NSg/V  . . ISg+ V/J   D   ?       . V/C D   ?       V/J      . J/R  R      NPr/J/P D+
+# ISg/D$+ N🅪Sg/V . . ISg+ V/J   D   ?       . V/C D   ?       V/J      . J/R  R      NPr/J/P D+
 > same words  as    before , “ It’s all          his     fancy   , that          : he       hasn’t got no     sorrow , you
-# I/J+ NPl/V+ NSg/R C/P    . . W?   NSg/I/J/C/Dq ISg/D$+ NSg/V/J . NSg/I/C/Ddem+ . NPr/ISg+ V      V   NPr/P+ NSg/V  . ISgPl+
+# I/J+ NPl/V+ NSg/R C/P    . . W?   NSg/I/J/C/Dq ISg/D$+ NSg/V/J . NSg/I/C/Ddem+ . NPr/ISg+ V      V   NPr/P+ N🅪Sg/V . ISgPl+
 > know   . Come    on  ! ”
 # NSg/V+ . NSg/V/P J/P . .
 >

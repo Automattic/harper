@@ -7277,7 +7277,7 @@
 >
 #
 > “ Bles - sed pre     - cious , ” she  crooned , holding out         her     arms   . “ Come    to your own
-# . ?    . ?   NSg/V/P . ?     . . ISg+ V/J     . NSg/V   NSg/V/J/R/P ISg/D$+ NPl/V+ . . NSg/V/P P  D$+  NSg/V/J+
+# . ?    . NPr NSg/V/P . ?     . . ISg+ V/J     . NSg/V   NSg/V/J/R/P ISg/D$+ NPl/V+ . . NSg/V/P P  D$+  NSg/V/J+
 > mother   that          loves you   . ”
 # NSg/V/J+ NSg/I/C/Ddem+ NPl/V ISgPl . .
 >
@@ -7289,7 +7289,7 @@
 >
 #
 > “ The bles - sed pre     - cious ! Did mother   get   powder  on  your old    yellowy hair    ? Stand
-# . D   ?    . ?   NSg/V/P . ?     . V   NSg/V/J+ NSg/V N🅪Sg/V+ J/P D$+  NSg/J+ J       N🅪Sg/V+ . NSg/V
+# . D   ?    . NPr NSg/V/P . ?     . V   NSg/V/J+ NSg/V N🅪Sg/V+ J/P D$+  NSg/J+ J       N🅪Sg/V+ . NSg/V
 > up        now       , and say   — How   - de   - do     . ”
 # NSg/V/J/P NPr/V/J/C . V/C NSg/V . NSg/C . NPr+ . NSg/VX . .
 >
