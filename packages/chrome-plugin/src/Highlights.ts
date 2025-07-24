@@ -1,3 +1,4 @@
+import { render } from 'svelte/server';
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import { isBoxInScreen, type LintBox } from './Box';
@@ -39,7 +40,20 @@ export default class Highlights {
 			}
 
 			const value = sourceToBoxes.get(box.source);
-			const icr = getInitialContainingRect(renderBox.getShadowHost());
+			let icr = getInitialContainingRect(renderBox.getShadowHost());
+
+			const cpa = renderBox.getShadowHost().offsetParent?.getBoundingClientRect();
+
+			if (cpa != null) {
+				if (icr == null) {
+					icr = cpa;
+				} else {
+					icr.x += cpa.x;
+					icr.y += cpa.x;
+					icr.width += cpa.width;
+					icr.height += cpa.height;
+				}
+			}
 
 			if (value == null) {
 				sourceToBoxes.set(box.source, { boxes: [box], icr });
@@ -60,13 +74,11 @@ export default class Highlights {
 				const hostStyle = host.style;
 
 				hostStyle.contain = 'layout';
-				hostStyle.position = 'fixed';
+				hostStyle.position = 'absolute';
 				hostStyle.top = '0px';
 				hostStyle.left = '0px';
 				hostStyle.transform = `translate(${-icr.x}px, ${-icr.y}px)`;
-				hostStyle.width = '100vw';
-				hostStyle.height = '100vh';
-				hostStyle.zIndex = '100';
+				hostStyle.inset = '0';
 				hostStyle.pointerEvents = 'none';
 			}
 
@@ -108,7 +120,6 @@ export default class Highlights {
 						width: `${box.width}px`,
 						height: `${box.height}px`,
 						pointerEvents: 'none',
-						zIndex: 10,
 						borderBottom: `2px solid ${lintKindColor(box.lint.lint_kind)}`,
 						backgroundColor: `${lintKindColor(box.lint.lint_kind)}22`,
 					},
