@@ -69,8 +69,6 @@ impl ExprLinter for ShouldContract {
 
 #[cfg(test)]
 mod tests {
-    use std::default;
-
     use super::ShouldContract;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
