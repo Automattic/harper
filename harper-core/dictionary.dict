@@ -12379,12 +12379,12 @@ ancestry/~NSg
 anchor/~NVgdGS
 anchorage/~NgS
 anchorite/NgS
-anchorman/Ng
-anchormen/9
-anchorpeople/9
+anchorman/N0g
+anchormen/N9
+anchorpeople/N9
 anchorperson/NSg
-anchorwoman/Ng
-anchorwomen/9
+anchorwoman/N0g
+anchorwomen/N9
 anchovy/NSg
 ancient/~JNSpg>Y^
 ancientness/Ng
@@ -12418,8 +12418,8 @@ angelfish/N9gS09    # singular and plural, also has a plural in -s
 angelic/~J
 angelica/~Ng
 angelical/JY
-anger/~NVGgdS
-angina/~Ng
+anger/~NmVGgdS
+angina/~Nmg
 angiomyolipoma/NSg
 angioplasty/NSg
 angiosperm/NSg
@@ -15942,10 +15942,10 @@ busily/R
 business/~NwJgS
 businesslike/J
 businessman/~Ng
-businessmen/~9
-businessperson/NSg
-businesswoman/~Ng
-businesswomen/9
+businessmen/~N9
+businessperson/N0Sg
+businesswoman/~N0g
+businesswomen/N9
 busing/VNg
 busk/VNd>ZGS
 buskin/NSg
@@ -16190,12 +16190,12 @@ camelhair/N
 camellia/NgS
 cameo/~NVgS
 camera/~NgS
-cameraman/~Ng
-cameramen/9
-camerapeople/9
-cameraperson/N
-camerawoman/Ng
-camerawomen/9
+cameraman/~N0g
+cameramen/N9
+camerapeople/N9
+cameraperson/N0
+camerawoman/N0g
+camerawomen/N9
 camerawork/N
 camiknickers/N
 camisole/NVSg
@@ -16760,19 +16760,19 @@ ceilidh/NV
 ceilidhs/NV
 ceiling/~NVgS
 celandine/Ng
-celeb/NS
+celeb/NgS
 celebrant/NSg
 celebrate/~VdSGnX
 celebration/~Ng
 celebrator/NSg
 celebratory/~J
-celebrity/~NSg
+celebrity/~NwSg
 celeriac/N
 celerity/Ng
 celery/~Ng
 celesta/NgS
 celestial/~JNY
-celibacy/Ng
+celibacy/Nmg
 celibate/JNVgS
 cell/~NVSgd
 cellar/~NVgS
@@ -16907,9 +16907,9 @@ chairlift/NgS
 chairman/~NVg
 chairmanship/~NSg
 chairmen/~9
-chairperson/~NSg
-chairwoman/~Ng
-chairwomen/9
+chairperson/~N0Sg
+chairwoman/~N0g
+chairwomen/N9
 chaise/NgS
 chalcedony/Ng
 chalet/~NgS
@@ -18660,10 +18660,10 @@ congregationalism/Ng
 congregationalist/~JNgS
 congress/~NVgS
 congressional/~JY
-congressman/~Ng
-congressmen/~9
-congresspeople/9
-congressperson/NgS
+congressman/~N0g
+congressmen/~N9
+congresspeople/N9
+congressperson/N0gS
 congresswoman/~Ng
 congresswomen/9
 congruence/~Ng
@@ -19290,9 +19290,9 @@ councillor/NSg!@_
 councilman/~Ng
 councilmen/9
 councilor/~NgS
-councilperson/NSg
-councilwoman/Ng
-councilwomen/9
+councilperson/N0Sg
+councilwoman/N0g
+councilwomen/N9
 counsel/~NVzgdGS
 counselled/V!@_
 counselling/NV!@_
@@ -21756,6 +21756,7 @@ doomer/NgS
 doomsayer/NgS
 doomsday/~NJg
 doomster/NS
+doona/NgS_
 door/~NViS
 door's
 doorbell/NVgS
@@ -22247,7 +22248,7 @@ dutiable/JN
 dutiful/JYp
 dutifulness/Ng
 duty/~NSg
-duvet/NSg
+duvet/NSg!
 dwarf/~NJVSGgd
 dwarfish/J
 dwarfism/Ng
@@ -38531,6 +38532,7 @@ pincushion/NVgS
 pine/~NVrGdS
 pine's
 pineapple/~NgS
+pinecone/NgS
 pinewood/~NS
 piney/~J
 pinfeather/NSg
@@ -43552,7 +43554,7 @@ sensationalise/VGdS!_
 sensationalism/Ng
 sensationalist/JNgS
 sensationalize/VGdS
-sense/~NVgGdS
+sense/~NwVgGdS
 sensei/NgS
 senseless/JpY
 senselessness/Ng
@@ -43968,6 +43970,7 @@ shipmate/NSg
 shipment/~Nrg
 shipments/~N
 shipowner/NgS
+shippable/J
 shipped/~JVr
 shipper/NSg
 shipping/~NVg
@@ -44243,7 +44246,7 @@ sifted/JVU
 sifter/Ng
 sigh/~VNGgd
 sighs/NV
-sight/~NVGgdSz
+sight/~NwVGgdSz
 sighting/~NVg
 sightless/J
 sightly/JU^>
@@ -44791,7 +44794,7 @@ smashup/NSg
 smattering/NVgS
 smear/~VNSgdG
 smeary/J>^
-smell/~NVSgdG
+smell/~NwVSgdG
 smelliness/Ng
 smelly/JN>p^
 smelt/NVSgd>ZG
@@ -45611,7 +45614,7 @@ spoken/~JVU
 spokesman/~N0g
 spokesmen/N9
 spokespeople/N9
-spokesperson/~NgS
+spokesperson/~N0gS
 spokeswoman/~Ng
 spokeswomen/9
 spoliation/Neg
@@ -45644,11 +45647,11 @@ sporting/~VJNY
 sportive/JNY
 sportscast/Ng>ZGS
 sportscaster/~Ng
-sportsman/~Ng
+sportsman/~N0g
 sportsmanlike/JU
 sportsmanship/~Ng
-sportsmen/~9
-sportspeople/~9
+sportsmen/~N9
+sportspeople/~N9
 sportsperson/N
 sportswear/~Ng
 sportswoman/Ng
@@ -48441,16 +48444,16 @@ tiramisu/NgS
 tire/~VNrGdS
 tire's
 tired/~VJp>Y^
-tiredness/Ng
+tiredness/Nmg
 tireless/~JYp
 tirelessness/Ng
 tiresome/JpY
 tiresomeness/Ng
-tissue/~NVSg
+tissue/~NwVSg
 tit/~NVSg
 titan/~NSg
 titanic/~J
-titanium/~Ng
+titanium/~Nmg
 titbit/NSg!_
 titch/NVS
 titchy/J
@@ -48754,7 +48757,7 @@ townsfolk/Ng
 township/~NgS
 townsman/Ng
 townsmen/9
-townspeople/~9g
+townspeople/~N9g
 townswoman/Ng
 townswomen/9
 towpath/Ng
@@ -48805,7 +48808,7 @@ tradeoff/NSg
 trader/~Ng
 tradesman/Ng
 tradesmen/9
-tradespeople/9g
+tradespeople/N9g
 tradeswoman/Ng
 tradeswomen/9
 tradie/NgS
@@ -50868,7 +50871,7 @@ vise/NVregGdS
 visibility/~Nig
 visible/~Ji
 visibly/~iR
-vision/~NVKGdSg
+vision/~NwVKGdSg
 visionary/~JNSg
 visit/~VNrSGd
 visit's
@@ -51096,9 +51099,9 @@ waistline/NgS
 wait/~VNgdGS
 waiter/~NVg
 waiting/~VNg
-waitperson/NgS
+waitperson/N0gS
 waitress/~NVgS
-waitstaff/Ng
+waitstaff/Nmg
 waive/~VNd>SZG
 waiver/~NVg
 wake/~VNgGzdS
@@ -51379,7 +51382,7 @@ weatherization/Ng
 weatherize/VdSG
 weatherman/Ng
 weathermen/9
-weatherperson/NgS
+weatherperson/N0gS
 weatherproof/JVGSd
 weatherstrip/NVS
 weatherstripped/V
@@ -52508,6 +52511,7 @@ BCD/Ng              # binary coded decimal
 BCPL/Ng             # old programming language
 BLM/Ng
 BRICS/              # intergovernmental organization
+BSP/NSg             # data structure
 BYD/OgS             # Chinese automobile manufacturer
 Bachiyski/Sg
 Bezos/O             # Surname, Amazon founder
@@ -52938,6 +52942,7 @@ hostname/NSg
 hotwire/VBG         # dictionaries prefer: hot-wire
 i18n/Nm             # internationalization
 infosec/NmG         # information security
+iPadOS/Og
 jQuery/Og
 labriola/Sg         # !! please check and comment !! - should be uppercase surname?
 linkification/Nmg
@@ -52968,6 +52973,7 @@ tagset/NgS
 trie/NgS            # data structure
 uptime/NwgS
 vid/NgS             # video
+watchOS/Og
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
 
@@ -53125,6 +53131,7 @@ half-life/Ng
 half-lives/9
 ham-fisted/J
 hand-drawn/J
+hand-me-down/JNgS
 hands-off/J
 happy-go-lucky/J
 hard code/VSdG
@@ -53373,6 +53380,7 @@ time-consuming/JY
 time frame/NgS
 time-honored/J<
 time-honoured/J!@_
+time-share/NgSVdG
 tit for tat/N
 tit-for-tat/J
 tl;dr/
