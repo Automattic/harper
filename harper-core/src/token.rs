@@ -6,13 +6,13 @@ use crate::{FatToken, Span, TokenKind};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Default)]
 pub struct Token {
     /// The characters the token represents.
-    pub span: Span,
+    pub span: Span<char>,
     /// The parsed value.
     pub kind: TokenKind,
 }
 
 impl Token {
-    pub fn new(span: Span, kind: TokenKind) -> Self {
+    pub fn new(span: Span<char>, kind: TokenKind) -> Self {
         Self { span, kind }
     }
 

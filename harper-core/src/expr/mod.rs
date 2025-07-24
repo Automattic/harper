@@ -60,14 +60,14 @@ pub use word_expr_group::WordExprGroup;
 use crate::{Document, LSend, Span, Token};
 
 pub trait Expr: LSend {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span>;
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>>;
 }
 
 impl<S> Expr for S
 where
     S: Step + ?Sized,
 {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.step(tokens, cursor, source).map(|s| {
             if s >= 0 {
                 Span::new_with_len(cursor, s as usize)
@@ -82,7 +82,7 @@ impl<E> Expr for Arc<E>
 where
     E: Expr,
 {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.as_ref().run(cursor, tokens, source)
     }
 }
@@ -92,7 +92,7 @@ impl<E> Expr for Rc<E>
 where
     E: Expr,
 {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.as_ref().run(cursor, tokens, source)
     }
 }
@@ -112,9 +112,12 @@ pub trait ExprExt {
         &'a self,
         tokens: &'a [Token],
         source: &'a [char],
-    ) -> Box<dyn Iterator<Item = Span> + 'a>;
+    ) -> Box<dyn Iterator<Item = Span<Token>> + 'a>;
 
-    fn iter_matches_in_doc<'a>(&'a self, doc: &'a Document) -> Box<dyn Iterator<Item = Span> + 'a>;
+    fn iter_matches_in_doc<'a>(
+        &'a self,
+        doc: &'a Document,
+    ) -> Box<dyn Iterator<Item = Span<Token>> + 'a>;
 }
 
 impl<E: ?Sized> ExprExt for E
@@ -125,7 +128,7 @@ where
         &'a self,
         tokens: &'a [Token],
         source: &'a [char],
-    ) -> Box<(dyn Iterator<Item = Span> + 'a)> {
+    ) -> Box<(dyn Iterator<Item = Span<Token>> + 'a)> {
         let mut last_end = 0usize;
 
         Box::new((0..tokens.len()).filter_map(move |i| {
@@ -142,7 +145,7 @@ where
     fn iter_matches_in_doc<'a>(
         &'a self,
         doc: &'a Document,
-    ) -> Box<(dyn Iterator<Item = Span> + 'a)> {
+    ) -> Box<(dyn Iterator<Item = Span<Token>> + 'a)> {
         Box::new(self.iter_matches(doc.get_tokens(), doc.get_source()))
     }
 }

@@ -437,16 +437,6 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-     227 | I’ve kept her waiting!” Alice felt so desperate that she was ready to ask help
-     228 | of any one; so, when the Rabbit came near her, she began, in a low, timid voice,
-         |    ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      229 | “If you please, sir—” The Rabbit started violently, dropped the white kid gloves
@@ -1829,15 +1819,6 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    1840 | people here; the great wonder is, that there’s any one left alive!”
-         |                                                ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1842 | She was looking about for some way of escape, and wondering whether she could
@@ -2831,9 +2812,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
-  - Replace with: “Sou”
-  - Replace with: “Soy”
+  - Replace with: “Solo”
+  - Replace with: “Son”
+  - Replace with: “Sow”
 
 
 
@@ -2864,9 +2845,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
-  - Replace with: “Sou”
-  - Replace with: “Soy”
+  - Replace with: “Solo”
+  - Replace with: “Son”
+  - Replace with: “Sow”
 
 
 
@@ -2887,9 +2868,9 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
-  - Replace with: “Soon”
-  - Replace with: “Sou”
-  - Replace with: “Soy”
+  - Replace with: “Solo”
+  - Replace with: “Son”
+  - Replace with: “Sow”
 
 
 
@@ -2941,9 +2922,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
-  - Replace with: “Sou”
-  - Replace with: “Soy”
+  - Replace with: “Solo”
+  - Replace with: “Son”
+  - Replace with: “Sow”
 
 
 
@@ -2974,9 +2955,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
-  - Replace with: “Sou”
-  - Replace with: “Soy”
+  - Replace with: “Solo”
+  - Replace with: “Son”
+  - Replace with: “Sow”
 
 
 
@@ -2997,9 +2978,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
-  - Replace with: “Soon”
-  - Replace with: “Sou”
-  - Replace with: “Soy”
+  - Replace with: “Solo”
+  - Replace with: “Son”
+  - Replace with: “Sow”
 
 
 
@@ -3072,9 +3053,9 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
-  - Replace with: “Sou”
-  - Replace with: “Soy”
+  - Replace with: “Solo”
+  - Replace with: “Son”
+  - Replace with: “Sow”
 
 
 
@@ -3284,15 +3265,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2773 | gazing up into the roof of the court.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    2891 | “If any one of them can explain it,” said Alice, (she had grown so large in the
-         |     ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
 
 
 

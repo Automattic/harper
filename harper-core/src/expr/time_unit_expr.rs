@@ -15,7 +15,7 @@ use super::Expr;
 pub struct TimeUnitExpr;
 
 impl Expr for TimeUnitExpr {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         if tokens.is_empty() {
             return None;
         }

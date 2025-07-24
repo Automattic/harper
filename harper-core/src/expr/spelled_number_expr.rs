@@ -9,7 +9,7 @@ use super::{Expr, SequenceExpr};
 pub struct SpelledNumberExpr;
 
 impl Expr for SpelledNumberExpr {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         if tokens.is_empty() {
             return None;
         }
@@ -70,13 +70,13 @@ impl Expr for SpelledNumberExpr {
 mod tests {
     use super::SpelledNumberExpr;
     use crate::expr::ExprExt;
-    use crate::{Document, Span};
+    use crate::{Document, Span, Token};
 
     trait SpanVecExt {
         fn to_strings(&self, doc: &Document) -> Vec<String>;
     }
 
-    impl SpanVecExt for Vec<Span> {
+    impl SpanVecExt for Vec<Span<Token>> {
         fn to_strings(&self, doc: &Document) -> Vec<String> {
             self.iter()
                 .map(|sp| {

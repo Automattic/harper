@@ -1141,6 +1141,13 @@ pub fn lint_group() -> LintGroup {
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers.",
             LintKind::Eggcorn
         ),
+        "The" => (
+            ["teh"],
+            ["the"],
+            "Did you mean the definite article?",
+            "Fixes especially common misspellings of the word `the`",
+            LintKind::Typo
+        )
     });
 
     group.set_all_rules_to(Some(true));

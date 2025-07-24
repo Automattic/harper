@@ -275,7 +275,7 @@
 >
 #
 > A   folkloric quotation , often attributed to — but     almost certainly not   first
-# D/P J         NSg       . R     V/J        P  . NSg/C/P NSg    R         NSg/C NSg/V/J
+# D/P J         NSg       . R     V/J        P  . NSg/C/P R      R         NSg/C NSg/V/J
 > formulated by      — Edsger Dijkstra , states   that          " computer science is no    more         about
 # V/J        NSg/J/P . ?      NSg      . NPrPl/V+ NSg/I/C/Ddem+ . NSg/V+   N🅪Sg/V+ VL NPr/P NPr/I/V/J/Dq J/P
 > computers than astronomy is about telescopes . " [ note   3 ] The design and deployment
@@ -673,7 +673,7 @@
 > habitats , among many        others . Modern computers enable optimization of such
 # NPl      . P     NSg/I/J/Dq+ NPl/V+ . NSg/J  NPl/V+    V      N🅪Sg         P  NSg/I
 > designs as    complete aircraft . Notable in      electrical and electronic circuit
-# NPl/V   NSg/R NSg/V/J+ NSgPl+   . NSg/J   NPr/J/P NSg/J      V/C J          NSg/V+
+# NPl/V   NSg/R NSg/V/J+ NSgPl+   . J       NPr/J/P NSg/J      V/C J          NSg/V+
 > design  are SPICE  , as    well    as    software for physical realization of new     ( or
 # N🅪Sg/V+ V   N🅪Sg/V . NSg/R NSg/V/J NSg/R NᴹSg     C/P NSg/J    NSg/NoAm    P  NSg/V/J . NPr/C
 > modified ) designs . The latter includes essential design  software for integrated

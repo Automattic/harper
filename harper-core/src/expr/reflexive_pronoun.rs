@@ -51,7 +51,7 @@ impl ReflexivePronoun {
 }
 
 impl Expr for ReflexivePronoun {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         let good_pronouns = |token: &Token, _: &[char]| token.kind.is_reflexive_pronoun();
         let mut expr = FirstMatchOf::new(vec![Box::new(good_pronouns)]);
         if self.include_common_errors {

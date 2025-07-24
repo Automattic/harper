@@ -1,4 +1,4 @@
-53500
+53600
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -2223,7 +2223,7 @@ Clorets/g
 Clorox/NVg
 Closure/g
 Clotho/Og
-Cloudflare/g
+Cloudflare/Og
 Clouseau/Og
 Clovis/Og
 Clyde/Og
@@ -3054,7 +3054,7 @@ ET/N
 ETA/ONV             # estimated time of arrival
 ETD/N
 EU/ON
-EULA/NS             # end-user license agreement
+EULA/NgS            # end-user license agreement
 EUR/N
 EUV/N               # extreme ultraviolet
 Eakins/Og
@@ -7541,6 +7541,7 @@ OJ/NJ
 OK/NVJOSgdG         # US state (Oklahoma)
 OLED/Ng             # organic light-emitting diode
 OMB/Og
+OMG                 # exclamation
 OPEC/Og             # organization
 OR/CNO              # Oregon
 OS/OJNg
@@ -10425,7 +10426,7 @@ VIP/NSg
 VISTA
 VJ/NVO
 VLF/Ng
-VM/NgS
+VM/NgS              # virtual machine
 VMS/g               # operating system
 VOA/ON              # voice of america
 VP/NO               # vice president
@@ -10790,7 +10791,7 @@ Wiesenthal/g
 Wiggins/Og
 Wigner/Og
 Wii/Ng
-Wikileaks
+Wikileaks/O
 Wikipedia/ONVg
 Wiktionary/OgS
 Wilberforce/Og
@@ -12102,7 +12103,7 @@ almanac/~NSg
 almighty/~J
 almond/~NJgS
 almoner/NSg
-almost/~N
+almost/~R
 alms/~Ng
 almshouse/NgS
 aloe/NSg
@@ -14919,6 +14920,7 @@ blockchain/NgS
 blocker/~NgS
 blockhead/~NVSg
 blockhouse/NgS
+blocklist/NVgdSG
 blog/~NVSg
 blogged/V
 blogger/~NgS
@@ -17043,7 +17045,8 @@ chartreuse/NJg
 charwoman/Ng
 charwomen/9
 chary/J^>p
-chase/~NVgZGd>S
+chase/~NVgZGd>
+chases/~V
 chaser/~Ng
 chasm/NgS
 chassis/~Ng09       # singular and plural
@@ -20011,10 +20014,10 @@ custodial/~J
 custodian/~NgS
 custodianship/Nmg
 custody/~Nmg
-custom/~NJVSZg>
+custom/~NJVSZg
 customarily/~R
 customary/~JNU
-customer/~Ng
+customer/~NgS
 customhouse/NSg
 customisation/NwgS!_
 customise/VdSG!_
@@ -21891,7 +21894,7 @@ downstate/NJg
 downstream/~JV
 downswing/NgS
 downtempo/NJ
-downtime/Ng
+downtime/NgS
 downtown/~JNg
 downtrend/NVgS
 downtrodden/JV
@@ -22748,6 +22751,7 @@ embassy/~NSg
 embattled/JV
 embed/~VNS
 embedded/~VJ
+embedder/NgS
 embedding/~NSgV
 embellish/VLGdS>
 embellishment/NSg
@@ -28795,6 +28799,7 @@ hyperlink/NVGSgd
 hypermarket/NS
 hypermedia/Nmg
 hypernetwork/NSg
+hyperparameter/NsG
 hyperparathyroidism/N
 hyperplane/N
 hypersensitive/Jp
@@ -31609,7 +31614,8 @@ leisureliness/Ng
 leisurewear/Ng
 leitmotif/NgS
 leitmotiv/NgS
-lemma/~NS
+lemma/~N0S
+lemmata/N9
 lemme/zG
 lemming/Ng
 lemon/~NwJVSg
@@ -32103,6 +32109,7 @@ lock/~NVgd>SBZG
 lockdown/~NwgS
 locker/~Ng
 locket/NgS
+lockfile/NgS
 lockjaw/Ng
 lockout/~NgS
 locksmith/~Ng
@@ -34606,6 +34613,7 @@ multidimensional/J
 multidisciplinary/~J
 multiethnic/J
 multifaceted/~JYp
+multifactor/J
 multifamily/JN
 multifarious/JpY
 multifariousness/Nmg
@@ -35766,7 +35774,7 @@ nostrum/NgS
 nosy/JNV>p^
 not/~CNB
 notability/~NSg
-notable/~JNSg
+notable/~J
 notably/~R
 notarial/J
 notarisation/N!_
@@ -47139,6 +47147,7 @@ swansong/NS
 swap/~VNgS
 swappable/J
 swapped/~V
+swapper/NgS
 swapping/~NVJ
 sward/NVSg
 swarf/Nmg
@@ -48603,6 +48612,7 @@ toolchain/NgS
 toolkit/~NgS
 toolless/J
 toolmaker/NgS
+toolset/NgS
 toolshed/NgS
 tooltip/NgS
 toot/NVgd>ZGS
@@ -50088,6 +50098,7 @@ unpopular/~J
 unpowered/J
 unpractical/J
 unprecedented/~JY
+unpredicted/J
 unprofessional/JNY
 unpromising/JV
 unpropitious/J
@@ -52497,6 +52508,7 @@ ACM/Ng
 AGI/gS              # artificial general intelligence
 AMC/NOgS            # old car brand
 AOC/Og              # US politician Alexandria Ocasio-Cortez
+APFS/Og             # Apple file system
 ASM/N               # assembly language - should "asm" be included as well/instead?
 ASUS/Og
 ATF/Ng              # automatic transmission fluid
@@ -52570,6 +52582,7 @@ DCT/NgS             # discrete cosine transform
 DDoS/Ng
 DEI
 DKIM/NSg
+DLL/NgS             # dynamic link library
 DM'd/V              # direct message
 DM/NSgV
 DMed/V
@@ -52604,6 +52617,7 @@ Exynos/OJg          # Samsung SoC series.
 FAT32/Ng            # file system
 FIDO/NOSg
 FIFA/Ng             # football/soccer association
+FOV/Ng              # field of view
 FPGA/NSg            # field-programmable gate array
 FPM/Sg
 FSD/Ng              # full self-driving
@@ -52720,6 +52734,7 @@ MapReduce/N
 Marchus/Sg
 Mbps                # megabits per second
 Murcielago/OSg
+MediaWiki/Og        # the software Wikimedia runs on
 Metasploit/ONgS
 Minecraft/Og
 Minhaj/OSg
@@ -52817,6 +52832,7 @@ SMTP                # Simple Mail Transfer Protocol
 SNL/Og              # Saturday Night Live
 SQLAlchemy/N
 SSID/NgS
+SSL/Og              # Secure Sockets Layer
 SVG/ONs             # scalable vector graphics
 SVGA/N              # super VGA
 Sharman/OSg
@@ -52848,6 +52864,7 @@ TechCrunch/g
 Tencent/Og
 ThinkPad/OSg        # pc brand
 TikTok/Sg
+TLS/Og              # Transport Layer Security
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
 Toronado/OgS        # car brand
 Tree-sitter/gO      # parsing
@@ -52857,8 +52874,10 @@ TrueNAS/Sg
 Tumblr/Og
 Typst/Sg
 UDP/NOSg            # internet protocol
+UEFI/Og             # Unified Extensible Firmware Interface
 ULA/NgS             # uncommitted logic array
 URI/NSg             # uniform resource identifier
+UUID/NgS            # universal unique identifier
 UX/Ng               # user experience
 VAG/Og              # car company
 VARCHAR/NgS
@@ -52896,6 +52915,7 @@ WebSocket/Sg
 Webpack/Og
 WhatsApp/NOVgG      # messaging app
 Wikilink/gSN        # !! please check and comment !! elsewhere we have wikilink
+Wikimedia/Og        # foundation that runs Wikipedia etc.
 Wireguard/Sg
 WooCommerce/Og
 XFS/Ng              # file system
@@ -52914,6 +52934,7 @@ Zuckerberg/OgS      # surname, Facebook founder
 a11n/N
 a12s/9
 a8c/Sg
+antimalware/Nmg
 archytas/Sg         # !! please check and comment !! we also have Archytas
 autoconfig/Ng
 autoconfiguration/Ng
@@ -52973,6 +52994,7 @@ pre/~PNV            # !! please check and comment !! dictionaries only list pref
 quadtree/NgS        # data structure
 quicksort/NgSVdG    # algo
 raytracer/N         # dictionaries prefer: ray tracer
+reranker/NgS
 roadmap/NgS         # overtook "road map" c. 2000 but not in dictionaries yet
 royale/~NJSg        # !! please check and comment !! dictionaries only list noun sense type of custard
 s.t./~              # !! please check and comment !!
@@ -53210,6 +53232,7 @@ left over/V
 left-hand/J
 left-wing/J
 lesser-known/J
+life cycle/NgS
 line break/NgS
 live action/N
 load-bearing/J
@@ -53326,6 +53349,7 @@ real-world/J
 red-eye/Ng
 red wolf/Ng
 red wolves/9
+reparse point/NgS
 right-hand/J
 right-wing/J
 road map/NgS        # standard in all dictionaries but overtaken by "roadmap" c. 2000

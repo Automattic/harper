@@ -41,10 +41,10 @@ pub trait Pattern: LSend {
 }
 
 pub trait PatternExt {
-    fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span>;
+    fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span<Token>>;
 
     /// Search through all tokens to locate all non-overlapping pattern matches.
-    fn find_all_matches(&self, tokens: &[Token], source: &[char]) -> Vec<Span> {
+    fn find_all_matches(&self, tokens: &[Token], source: &[char]) -> Vec<Span<Token>> {
         self.iter_matches(tokens, source).collect()
     }
 }
@@ -53,7 +53,7 @@ impl<P> PatternExt for P
 where
     P: Pattern + ?Sized,
 {
-    fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span> {
+    fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span<Token>> {
         MatchIter::new(self, tokens, source)
     }
 }
@@ -81,7 +81,7 @@ impl<P> Iterator for MatchIter<'_, '_, '_, P>
 where
     P: Pattern + ?Sized,
 {
-    type Item = Span;
+    type Item = Span<Token>;
 
     fn next(&mut self) -> Option<Self::Item> {
         while self.index < self.tokens.len() {
@@ -124,11 +124,11 @@ impl<F: LSend + Fn(&Token, &[char]) -> bool> SingleTokenPattern for F {
 }
 
 pub trait DocPattern {
-    fn find_all_matches_in_doc(&self, document: &Document) -> Vec<Span>;
+    fn find_all_matches_in_doc(&self, document: &Document) -> Vec<Span<Token>>;
 }
 
 impl<P: PatternExt> DocPattern for P {
-    fn find_all_matches_in_doc(&self, document: &Document) -> Vec<Span> {
+    fn find_all_matches_in_doc(&self, document: &Document) -> Vec<Span<Token>> {
         self.find_all_matches(document.get_tokens(), document.get_source())
     }
 }
