@@ -29,7 +29,7 @@ export default class Highlights {
 
 	public renderLintBoxes(boxes: LintBox[]) {
 		// Sort the lint boxes based on their source, so we can render them all together.
-		const sourceToBoxes: Map<HTMLElement, { boxes: LintBox[]; icr: DOMRect | null }> = new Map();
+		const sourceToBoxes: Map<HTMLElement, { boxes: LintBox[]; cpa: DOMRect | null }> = new Map();
 
 		for (const box of boxes) {
 			let renderBox = this.renderBoxes.get(box.source);
@@ -40,44 +40,44 @@ export default class Highlights {
 			}
 
 			const value = sourceToBoxes.get(box.source);
-			let icr = getInitialContainingRect(renderBox.getShadowHost());
+			const icr = getInitialContainingRect(renderBox.getShadowHost());
 
-			const cpa = renderBox.getShadowHost().offsetParent?.getBoundingClientRect();
+			const parent = renderBox.getShadowHost().offsetParent;
+			let cpa = null;
 
-			if (cpa != null) {
-				if (icr == null) {
-					icr = cpa;
-				} else {
-					icr.x += cpa.x;
-					icr.y += cpa.x;
-					icr.width += cpa.width;
-					icr.height += cpa.height;
+			if (parent != null && parent != document.body) {
+				cpa = parent.getBoundingClientRect();
+			}
+
+			if (cpa == null) {
+				if (icr != null) {
+					cpa = icr;
 				}
 			}
 
 			if (value == null) {
-				sourceToBoxes.set(box.source, { boxes: [box], icr });
+				sourceToBoxes.set(box.source, { boxes: [box], cpa });
 			} else {
-				sourceToBoxes.set(box.source, { boxes: [...value.boxes, box], icr });
+				sourceToBoxes.set(box.source, { boxes: [...value.boxes, box], cpa });
 			}
 		}
 
 		const updated = new Set();
 
-		for (const [source, { boxes, icr }] of sourceToBoxes.entries()) {
+		for (const [source, { boxes, cpa }] of sourceToBoxes.entries()) {
 			const renderBox = this.renderBoxes.get(source)!;
 
 			const host = renderBox.getShadowHost();
 			host.id = 'harper-highlight-host';
 
-			if (icr != null) {
+			if (cpa != null) {
 				const hostStyle = host.style;
 
 				hostStyle.contain = 'layout';
 				hostStyle.position = 'absolute';
 				hostStyle.top = '0px';
 				hostStyle.left = '0px';
-				hostStyle.transform = `translate(${-icr.x}px, ${-icr.y}px)`;
+				hostStyle.transform = `translate(${-cpa.x}px, ${-cpa.y}px)`;
 				hostStyle.inset = '0';
 				hostStyle.pointerEvents = 'none';
 			}
@@ -95,7 +95,7 @@ export default class Highlights {
 		this.pruneDetachedSources();
 	}
 
-	/** Remove render boxes for sources that aren't attached any longer. */
+	/** Remove the render boxes for sources that aren't attached any longer. */
 	private pruneDetachedSources() {
 		for (const [source, box] of this.renderBoxes.entries()) {
 			if (!document.contains(source)) {
