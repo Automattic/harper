@@ -4985,6 +4985,16 @@ Suggest:
 
 
 
+Lint:    Regionalism (63 priority)
+Message: |
+    3690 | “Come outside,” he suggested to Gatsby, “I’d like you to have a look at the
+         |                                                          ^~~~ American English prefers `take a look` over `have a look`.
+    3691 | place.”
+Suggest:
+  - Replace with: “take”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3709 | We had luncheon in the dining-room, darkened too against the heat, and drank

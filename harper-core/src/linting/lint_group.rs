@@ -42,6 +42,7 @@ use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
 use super::have_pronoun::HavePronoun;
+use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
@@ -386,6 +387,7 @@ impl LintGroup {
         out.merge_from(&mut initialisms::lint_group());
 
         // Add all the more complex rules to the group.
+        // Please maintain alphabetical order.
         insert_expr_rule!(APart, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
@@ -400,13 +402,6 @@ impl LintGroup {
         insert_expr_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
-        insert_struct_rule!(ItsPossessive, true);
-        insert_expr_rule!(DoubleModal, true);
-        insert_expr_rule!(MissingPreposition, true);
-        insert_struct_rule!(DiscourseMarkers, true);
-        insert_expr_rule!(WayTooAdjective, true);
-        insert_expr_rule!(HavePronoun, true);
-        insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(Confident, true);
@@ -414,7 +409,9 @@ impl LintGroup {
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
         insert_expr_rule!(DespiteOf, true);
+        insert_struct_rule!(DiscourseMarkers, true);
         insert_expr_rule!(DotInitialisms, true);
+        insert_expr_rule!(DoubleModal, true);
         insert_struct_rule!(EllipsisLength, true);
         insert_struct_rule!(ElsePossessive, true);
         insert_struct_rule!(Everyday, true);
@@ -422,13 +419,14 @@ impl LintGroup {
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_struct_rule!(FirstAidKit, true);
         insert_struct_rule!(ForNoun, true);
+        insert_expr_rule!(HavePronoun, true);
         insert_expr_rule!(Hedging, true);
         insert_expr_rule!(Hereby, true);
-        insert_expr_rule!(OpenCompounds, true);
         insert_struct_rule!(HopHope, true);
         insert_struct_rule!(HowTo, true);
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_struct_rule!(ItsContraction, true);
+        insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_struct_rule!(LetsConfusion, true);
@@ -436,20 +434,22 @@ impl LintGroup {
         insert_struct_rule!(LongSentences, true);
         insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule!(MergeWords, true);
+        insert_expr_rule!(MissingPreposition, true);
         insert_expr_rule!(ModalOf, true);
         insert_expr_rule!(Months, true);
         insert_expr_rule!(MostNumber, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
-        insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NailOnTheHead, true);
-        insert_struct_rule!(NominalWants, true);
+        insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
+        insert_struct_rule!(NominalWants, true);
         insert_expr_rule!(NounCountability, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
         insert_expr_rule!(OnFloor, true);
         insert_expr_rule!(OneAndTheSame, true);
+        insert_expr_rule!(OpenCompounds, true);
         insert_expr_rule!(OpenTheLight, true);
         insert_expr_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
@@ -458,13 +458,14 @@ impl LintGroup {
         insert_expr_rule!(PiqueInterest, true);
         insert_expr_rule!(PossessiveYour, true);
         insert_struct_rule!(PronounContraction, true);
+        insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(PronounKnew, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);
         insert_expr_rule!(SemicolonApostrophe, true);
-        insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
+        insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(SomewhatSomething, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
@@ -479,9 +480,9 @@ impl LintGroup {
         insert_expr_rule!(UseGenitive, false);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(WasAloud, true);
+        insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(Whereas, true);
         insert_expr_rule!(WidelyAccepted, true);
-        insert_struct_rule!(WidelyAccepted, true);
         insert_expr_rule!(WinPrize, true);
         insert_struct_rule!(WordPressDotcom, true);
 
@@ -508,6 +509,9 @@ impl LintGroup {
 
         out.add("Regionalisms", Regionalisms::new(dialect));
         out.config.set_rule_enabled("Regionalisms", true);
+
+        out.add("HaveTakeALook", HaveTakeALook::new(dialect));
+        out.config.set_rule_enabled("HaveTakeALook", true);
 
         out
     }
