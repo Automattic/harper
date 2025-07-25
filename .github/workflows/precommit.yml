@@ -31,7 +31,7 @@ jobs:
         uses: Swatinem/rust-cache@v2.7.8
       - uses: cargo-bins/cargo-binstall@main
       - name: Install `wasm-pack`
-        run: cargo binstall wasm-pack
+        run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo hack`
         run: cargo binstall cargo-hack
       - name: Run `cargo-hack`
