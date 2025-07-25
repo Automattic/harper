@@ -85,14 +85,11 @@ impl<T> Span<T> {
     /// Get the associated content. Will return [`None`] if any aspect is
     /// invalid.
     pub fn try_get_content<'a>(&self, source: &'a [T]) -> Option<&'a [T]> {
-        if (self.start > self.end) || (self.start >= source.len()) || (self.end > source.len()) {
-            if self.is_empty() {
-                return Some(&source[0..0]);
-            }
-            return None;
+        if self.is_empty() {
+            Some(&source[0..0])
+        } else {
+            source.get(self.start..self.end)
         }
-
-        Some(&source[self.start..self.end])
     }
 
     /// Expand the span by either modifying [`Self::start`] or [`Self::end`] to include the target
