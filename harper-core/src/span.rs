@@ -82,7 +82,7 @@ impl<T> Span<T> {
         (self.start < other.end) && (other.start < self.end)
     }
 
-    /// Get the associated content. Will return [`None`] if any aspect is
+    /// Get the associated content. Will return [`None`] if the span is non-empty and any aspect is
     /// invalid.
     pub fn try_get_content<'a>(&self, source: &'a [T]) -> Option<&'a [T]> {
         if self.is_empty() {
