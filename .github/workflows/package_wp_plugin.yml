@@ -25,7 +25,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install pandoc -y
       - uses: cargo-bins/cargo-binstall@main
       - name: Install `wasm-pack`
-        run: cargo binstall wasm-pack
+        run: cargo binstall wasm-pack --force --no-confirm
       - name: Precommit
         run: just build-wp 
       - name: Upload extension
