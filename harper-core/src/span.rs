@@ -74,8 +74,6 @@ impl<T> Span<T> {
 
     /// Checks whether `idx` is within the range of the span.
     pub fn contains(&self, idx: usize) -> bool {
-        assert!(self.start <= self.end);
-
         self.start <= idx && idx < self.end
     }
 
