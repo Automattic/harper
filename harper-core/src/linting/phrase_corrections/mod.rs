@@ -1154,7 +1154,13 @@ pub fn lint_group() -> LintGroup {
             "Did you mean the definite article?",
             "Fixes especially common misspellings of the word `the`",
             LintKind::Typo
-        )
+        ),
+        "AsIs" => (
+            ["as is"],
+            ["as-is"],
+            "Use the hyphenated form for `as-is`.",
+            "Hyphenate `as-is` when it functions as a compound adjective (e.g., “an as-is sale”) to signal that the two words act together to modify the noun and that the item is offered exactly in its present condition."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
