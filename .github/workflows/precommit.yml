@@ -29,10 +29,12 @@ jobs:
         run: sudo apt-get update && sudo apt-get install pandoc -y
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2.7.8
+      - uses: cargo-bins/cargo-binstall@main
       - name: Install `wasm-pack`
-        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
-      - uses: taiki-e/install-action@cargo-hack
-      - name: Install `cargo-hack`
+        run: cargo binstall wasm-pack
+      - name: Install `cargo hack`
+        run: cargo binstall cargo-hack
+      - name: Run `cargo-hack`
         run: cargo hack check --each-feature
       - name: Precommit
         run: just precommit
