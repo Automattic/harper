@@ -1,6 +1,6 @@
 use crate::{
-    Lrc, Token, TokenStringExt,
-    expr::{Expr, SequenceExpr},
+    Lrc, TokenStringExt,
+    expr::{Expr, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -34,7 +34,8 @@ impl ExprLinter for FillerWords {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, _src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         // A filler is unlikely to be completely on its own, so check for and remove with whitespace either before or after.
         Some(Lint {
             span: toks.span()?,

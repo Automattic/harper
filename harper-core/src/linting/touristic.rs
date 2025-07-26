@@ -1,6 +1,6 @@
 use crate::{
-    Token, TokenStringExt,
-    expr::{Expr, LongestMatchOf, SequenceExpr},
+    TokenStringExt,
+    expr::{Expr, LongestMatchOf, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
@@ -93,7 +93,8 @@ impl ExprLinter for Touristic {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let tok_span_content_string = toks.span()?.get_content_string(src);
         let tok_span_content_string = tok_span_content_string.to_lowercase();
 

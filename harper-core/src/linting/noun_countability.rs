@@ -1,6 +1,6 @@
 use crate::{
-    Lrc, Span, Token, TokenStringExt,
-    expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr},
+    Lrc, Span, TokenStringExt,
+    expr::{Expr, FirstMatchOf, LongestMatchOf, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{IndefiniteArticle, WordSet},
 };
@@ -63,7 +63,8 @@ impl ExprLinter for NounCountability {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let toks_chars = toks.span()?.get_content(src);
 
         // 3 tokens means the phrase was at the end of a chunk/sentence.

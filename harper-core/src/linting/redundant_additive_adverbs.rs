@@ -1,6 +1,6 @@
 use crate::{
-    Lrc, Token, TokenStringExt,
-    expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
+    Lrc, TokenStringExt,
+    expr::{Expr, FirstMatchOf, FixedPhrase, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -39,7 +39,8 @@ impl ExprLinter for RedundantAdditiveAdverbs {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let phrase_string = toks.span()?.get_content_string(src).to_lowercase();
 
         // Rule out `also too` as in `This is also too slow`.

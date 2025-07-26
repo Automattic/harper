@@ -1,6 +1,6 @@
 use crate::{
-    Lrc, Token,
-    expr::{Expr, SequenceExpr},
+    Lrc,
+    expr::{Expr, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -35,7 +35,8 @@ impl ExprLinter for VerbInsteadOfNoun {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let adj_tok = &toks.first()?;
         let verb_tok = &toks.last()?;
 
