@@ -31,7 +31,7 @@ impl Default for NounCountability {
         ]);
 
         // A determiner or quantifier followed by a mass noun
-        let det_quant_stuff = Lrc::new(
+        let detquant_mass = Lrc::new(
             SequenceExpr::default()
                 .then(FirstMatchOf::new(vec![
                     Box::new(IndefiniteArticle::default()),
@@ -41,9 +41,15 @@ impl Default for NounCountability {
                 .then_mass_noun_only(),
         );
 
-        let det_qant_stuff_following_context = Lrc::new(
+        let detauant_mass_then_hyphen = Lrc::new(
             SequenceExpr::default()
-                .then(det_quant_stuff.clone())
+                .then(detquant_mass.clone())
+                .then_hyphen(),
+        );
+
+        let detquant_mass_following_context = Lrc::new(
+            SequenceExpr::default()
+                .then(detquant_mass.clone())
                 .then_whitespace()
                 // If we don't get the word, this won't be the longest match
                 .then_any_word(),
@@ -51,8 +57,9 @@ impl Default for NounCountability {
 
         Self {
             expr: Box::new(LongestMatchOf::new(vec![
-                Box::new(det_quant_stuff),
-                Box::new(det_qant_stuff_following_context),
+                Box::new(detquant_mass),
+                Box::new(detauant_mass_then_hyphen),
+                Box::new(detquant_mass_following_context),
             ])),
         }
     }
@@ -66,6 +73,10 @@ impl ExprLinter for NounCountability {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let toks_chars = toks.span()?.get_content(src);
 
+        // 4 tokens means the phrase was followed by a hyphen
+        if toks.len() == 4 {
+            return None;
+        }
         // 3 tokens means the phrase was at the end of a chunk/sentence.
         // 5 tokens means the phrase was in the middle of a chunk/sentence.
         // If it's in the middle then we check if the next word token is a noun or OOV.
@@ -451,6 +462,15 @@ mod tests {
     fn dont_flag_fewer_in_compound_noun() {
         assert_lint_count(
             "Additionally, less traffic leads to fewer traffic jams, resulting in a more fluent, thus more efficient, trip.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_mass_noun_part_of_hyphenated_compound() {
+        assert_lint_count(
+            "Internally, we have a hardware-in-the-loop Jenkins test suite that builds and unit tests the various processes.",
             NounCountability::default(),
             0,
         );
