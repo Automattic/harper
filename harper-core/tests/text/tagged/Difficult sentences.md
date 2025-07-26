@@ -302,8 +302,8 @@
 # C/P NSg/I/J/C/Dq+ ISg/D$+ J+        NSg+      . NPr/ISg+ V      V    J/R+ NPr/V/J+ .
 > And now       for a   slap     - up        meal  !
 # V/C NPr/V/J/C C/P D/P NSg/V/J+ . NSg/V/J/P NSg/V .
-> Go      scuba diving   ? For one        thing  , I    can't even     swim  .
-# NSg/V/J NSg/V NSg/V/J+ . C/P NSg/I/V/J+ NSg/V+ . ISg+ VX    NSg/V/J+ NSg/V .
+> Go      scuba  diving   ? For one        thing  , I    can't even     swim  .
+# NSg/V/J N🅪Sg/V NSg/V/J+ . C/P NSg/I/V/J+ NSg/V+ . ISg+ VX    NSg/V/J+ NSg/V .
 > For another , we   don't have   any     equipment .
 # C/P I/D+    . IPl+ V     NSg/VX I/R/Dq+ NᴹSg+     .
 > He       is named for his     grandfather .
@@ -420,8 +420,8 @@
 # D+  NPl/V+ NSg/V/J NSg/V/J/P NPr/J/P NPl/V+ .
 > Arrange the chairs in      a    circle .
 # NSg/V   D+  NPl/V+ NPr/J/P D/P+ NSg/V+ .
-> He       stalked away in      anger  .
-# NPr/ISg+ V/J+    V/J  NPr/J/P NSg/V+ .
+> He       stalked away in      anger   .
+# NPr/ISg+ V/J+    V/J  NPr/J/P NᴹSg/V+ .
 > John is in      a   coma .
 # NPr+ VL NPr/J/P D/P NSg+ .
 > My  fruit   trees  are in      bud   .
@@ -789,7 +789,7 @@
 > He       asked me       what   to do     .
 # NPr/ISg+ V/J   NPr/ISg+ NSg/I+ P+ NSg/VX .
 > I    have   places to go      and people to see   .
-# ISg+ NSg/VX NPl/V+ P  NSg/V/J V/C NSg/V+ P+ NSg/V .
+# ISg+ NSg/VX NPl/V+ P  NSg/V/J V/C NPl/V+ P+ NSg/V .
 > To err is  human    .
 # P  V+  VL+ NSg/V/J+ .
 > Who    am      I    to criticise ? I've done    worse     things myself .
@@ -834,8 +834,8 @@
 # IPl+ NSg/V       I/Ddem+ NPl/V+ P  D/P J/R  NSg/V/J NSg/V     .
 > This    gauge  is accurate to a    second   .
 # I/Ddem+ NSg/V+ VL J        P  D/P+ NSg/V/J+ .
-> There's a   lot   of sense to what   he       says   .
-# W?      D/P NPr/V P  NSg/V P  NSg/I+ NPr/ISg+ NPl/V+ .
+> There's a   lot   of sense  to what   he       says   .
+# W?      D/P NPr/V P  N🅪Sg/V P  NSg/I+ NPr/ISg+ NPl/V+ .
 > The name   has a   nice    ring  to it       .
 # D+  NSg/V+ V   D/P NPr/V/J NSg/V P  NPr/ISg+ .
 > There are 100 pence to the pound  .
@@ -881,7 +881,7 @@
 > With a    heavy    sigh  , she  looked around the empty    room     .
 # P    D/P+ NSg/V/J+ NSg/V . ISg+ V/J    J/P    D+  NSg/V/J+ NSg/V/J+ .
 > Four people were  injured , with one       of them     in      critical condition .
-# NSg  NSg/V+ NSg/V V/J     . P    NSg/I/V/J P  NSg/IPl+ NPr/J/P NSg/J+   NSg/V+    .
+# NSg  NPl/V+ NSg/V V/J     . P    NSg/I/V/J P  NSg/IPl+ NPr/J/P NSg/J+   NSg/V+    .
 > With their reputation on  the line   , they decided to fire     their PR   team   .
 # P    D$+   NSg+       J/P D+  NSg/V+ . IPl+ NSg/V/J P  N🅪Sg/V/J D$+   NSg+ NSg/V+ .
 > We   are with you    all          the way    .
@@ -911,7 +911,7 @@
 > It       was small   and bumpy , with a   tinge of orange    .
 # NPr/ISg+ V   NPr/V/J V/C J     . P    D/P NSg/V P  NPr🅪/V/J+ .
 > There are lots  of people with no    homes after the wildfire .
-# +     V   NPl/V P  NSg/V  P    NPr/P NPl/V JC/P  D+  NSg+     .
+# +     V   NPl/V P  NPl/V  P    NPr/P NPl/V JC/P  D+  NSg+     .
 > Speak with confidence .
 # NSg/V P    NSg+       .
 > He       spoke with sadness in      his     voice  .

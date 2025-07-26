@@ -16,15 +16,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-      49 | The stream runs by our back door.
-         |                        ^~~~~~~~~ Did you mean the closed compound noun “backdoor”?
-Suggest:
-  - Replace with: “backdoor”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
       56 | He was protected by his body armour.

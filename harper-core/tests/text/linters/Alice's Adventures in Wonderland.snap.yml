@@ -2005,7 +2005,7 @@ Message: |
 Suggest:
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
+  - Replace with: “Ti's”
 
 
 
@@ -2685,7 +2685,7 @@ Message: |
 Suggest:
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
+  - Replace with: “Ti's”
 
 
 
@@ -2714,7 +2714,7 @@ Message: |
 Suggest:
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
+  - Replace with: “Ti's”
 
 
 
@@ -2812,9 +2812,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Solo”
   - Replace with: “Son”
-  - Replace with: “Sow”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
 
 
 
@@ -2845,9 +2845,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Solo”
   - Replace with: “Son”
-  - Replace with: “Sow”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
 
 
 
@@ -2868,9 +2868,9 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
-  - Replace with: “Solo”
   - Replace with: “Son”
-  - Replace with: “Sow”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
 
 
 
@@ -2922,9 +2922,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Solo”
   - Replace with: “Son”
-  - Replace with: “Sow”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
 
 
 
@@ -2955,9 +2955,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Solo”
   - Replace with: “Son”
-  - Replace with: “Sow”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
 
 
 
@@ -2978,9 +2978,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
-  - Replace with: “Solo”
   - Replace with: “Son”
-  - Replace with: “Sow”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
 
 
 
@@ -3053,9 +3053,9 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Solo”
   - Replace with: “Son”
-  - Replace with: “Sow”
+  - Replace with: “Soon”
+  - Replace with: “Sou”
 
 
 

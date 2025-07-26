@@ -409,6 +409,16 @@ fn detect_ever_present_real_world() {
     );
 }
 
+// EveryTime
+#[test]
+fn fix_everytime() {
+    assert_suggestion_result(
+        "Init tool everytime a file in a directory is modified",
+        lint_group(),
+        "Init tool every time a file in a directory is modified",
+    );
+}
+
 // Excellent
 #[test]
 fn excellent_clean() {

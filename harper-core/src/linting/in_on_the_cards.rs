@@ -1,5 +1,5 @@
 use crate::{
-    Dialect,
+    CharStringExt, Dialect,
     expr::MatchInfo,
     expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
     linting::{LintKind, Suggestion},
@@ -10,6 +10,7 @@ use super::{ExprLinter, Lint};
 
 pub struct InOnTheCards {
     expr: Box<dyn Expr>,
+    dialect: Dialect,
 }
 
 impl InOnTheCards {
@@ -35,6 +36,7 @@ impl InOnTheCards {
 
         Self {
             expr: Box::new(expr),
+            dialect,
         }
     }
 }
@@ -49,21 +51,25 @@ impl ExprLinter for InOnTheCards {
         let prep_span = toks[2].span;
         let prep = prep_span.get_content(src);
 
-        let sugg = Suggestion::ReplaceWith(
-            [
-                match prep[0] {
-                    'i' => 'o',
-                    'o' => 'i',
-                    'I' => 'O',
-                    'O' => 'I',
-                    _ => return None,
-                },
-                prep[1],
-            ]
-            .to_vec(),
-        );
+        let new_prep = [
+            match prep[0] {
+                'i' => 'o',
+                'o' => 'i',
+                'I' => 'O',
+                'O' => 'I',
+                _ => return None,
+            },
+            prep[1],
+        ];
 
-        let message = "Corrects either `in the cards` or `on the cards` to the other, depending on the dialect.".into();
+        let sugg = Suggestion::ReplaceWith(new_prep.to_vec());
+
+        let message = format!(
+            "Use `{} the cards` instead of `{} the cards` in {} English.",
+            new_prep.to_string(),
+            prep.to_string(),
+            self.dialect,
+        );
 
         Some(Lint {
             span: prep_span,

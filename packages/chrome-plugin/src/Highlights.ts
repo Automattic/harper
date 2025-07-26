@@ -1,3 +1,4 @@
+import { render } from 'svelte/server';
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import { isBoxInScreen, type LintBox } from './Box';
@@ -28,7 +29,7 @@ export default class Highlights {
 
 	public renderLintBoxes(boxes: LintBox[]) {
 		// Sort the lint boxes based on their source, so we can render them all together.
-		const sourceToBoxes: Map<HTMLElement, { boxes: LintBox[]; icr: DOMRect | null }> = new Map();
+		const sourceToBoxes: Map<HTMLElement, { boxes: LintBox[]; cpa: DOMRect | null }> = new Map();
 
 		for (const box of boxes) {
 			let renderBox = this.renderBoxes.get(box.source);
@@ -41,32 +42,43 @@ export default class Highlights {
 			const value = sourceToBoxes.get(box.source);
 			const icr = getInitialContainingRect(renderBox.getShadowHost());
 
+			const parent = renderBox.getShadowHost().offsetParent;
+			let cpa = null;
+
+			if (parent != null && parent != document.body) {
+				cpa = parent.getBoundingClientRect();
+			}
+
+			if (cpa == null) {
+				if (icr != null) {
+					cpa = icr;
+				}
+			}
+
 			if (value == null) {
-				sourceToBoxes.set(box.source, { boxes: [box], icr });
+				sourceToBoxes.set(box.source, { boxes: [box], cpa });
 			} else {
-				sourceToBoxes.set(box.source, { boxes: [...value.boxes, box], icr });
+				sourceToBoxes.set(box.source, { boxes: [...value.boxes, box], cpa });
 			}
 		}
 
 		const updated = new Set();
 
-		for (const [source, { boxes, icr }] of sourceToBoxes.entries()) {
+		for (const [source, { boxes, cpa }] of sourceToBoxes.entries()) {
 			const renderBox = this.renderBoxes.get(source)!;
 
 			const host = renderBox.getShadowHost();
 			host.id = 'harper-highlight-host';
 
-			if (icr != null) {
+			if (cpa != null) {
 				const hostStyle = host.style;
 
 				hostStyle.contain = 'layout';
-				hostStyle.position = 'fixed';
+				hostStyle.position = 'absolute';
 				hostStyle.top = '0px';
 				hostStyle.left = '0px';
-				hostStyle.transform = `translate(${-icr.x}px, ${-icr.y}px)`;
-				hostStyle.width = '100vw';
-				hostStyle.height = '100vh';
-				hostStyle.zIndex = '100';
+				hostStyle.transform = `translate(${-cpa.x}px, ${-cpa.y}px)`;
+				hostStyle.inset = '0';
 				hostStyle.pointerEvents = 'none';
 			}
 
@@ -83,7 +95,7 @@ export default class Highlights {
 		this.pruneDetachedSources();
 	}
 
-	/** Remove render boxes for sources that aren't attached any longer. */
+	/** Remove the render boxes for sources that aren't attached any longer. */
 	private pruneDetachedSources() {
 		for (const [source, box] of this.renderBoxes.entries()) {
 			if (!document.contains(source)) {
@@ -108,7 +120,6 @@ export default class Highlights {
 						width: `${box.width}px`,
 						height: `${box.height}px`,
 						pointerEvents: 'none',
-						zIndex: 10,
 						borderBottom: `2px solid ${lintKindColor(box.lint.lint_kind)}`,
 						backgroundColor: `${lintKindColor(box.lint.lint_kind)}22`,
 					},
