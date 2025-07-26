@@ -237,14 +237,18 @@ impl SequenceExpr {
 
     // Verbs
 
-    // POS - Verbs
     gen_then_from_is!(verb);
     gen_then_from_is!(auxiliary_verb);
     gen_then_from_is!(linking_verb);
 
-    // Adjectives and adverbs
+    // Adjectives
 
     gen_then_from_is!(adjective);
+    gen_then_from_is!(positive_adjective);
+    gen_then_from_is!(comparative_adjective);
+
+    // Adverbs
+
     gen_then_from_is!(adverb);
 
     // Determiners
@@ -274,6 +278,7 @@ impl SequenceExpr {
 
     gen_then_from_is!(number);
     gen_then_from_is!(case_separator);
+    gen_then_from_is!(likely_homograph);
 }
 
 impl<S> From<S> for SequenceExpr
