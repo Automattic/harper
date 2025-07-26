@@ -188,8 +188,8 @@
 # W?   NSg/V NSg/J/P J/P D$+ NSg/J+ NSg/V/J P    NSg/V+ .
 > We're right   near      the lifeguard station . Come    by      before you    leave  .
 # W?    NPr/V/J NSg/V/J/P D+  NSg+      NSg/V+  . NSg/V/P NSg/J/P C/P    ISgPl+ NSg/V+ .
-> The women spent much       time     after harvest putting jams   by      for winter and spring .
-# D+  NPl+  V/J   NSg/I/J/Dq N🅪Sg/V/J JC/P  NSg/V+  NSg/V   NPl/V+ NSg/J/P C/P NSg/V  V/C NSg/V+ .
+> The women spent much       time     after    harvest putting jams   by      for winter and spring .
+# D+  NPl+  V/J   NSg/I/J/Dq N🅪Sg/V/J JC/R/C/P NSg/V+  NSg/V   NPl/V+ NSg/J/P C/P NSg/V  V/C NSg/V+ .
 >
 #
 > Adjective
@@ -281,7 +281,7 @@
 > It       is unreasonable for our boss     to withhold our wages  .
 # NPr/ISg+ VL J            C/P D$+ NSg/V/J+ P  NSg/V    D$+ NPl/V+ .
 > I    don't think it's a   good    idea for you    and me       to meet    ever again .
-# ISg+ V     NSg/V +    D/P NPr/V/J NSg  C/P ISgPl+ V/C NPr/ISg+ P  NSg/V/J J+   P     .
+# ISg+ V     NSg/V +    D/P NPr/V/J NSg  C/P ISgPl+ V/C NPr/ISg+ P  NSg/V/J J+   R     .
 > I    am      aiming for completion by      the end   of business Thursday .
 # ISg+ NPr/V/J V      C/P NSg+       NSg/J/P D   NSg/V P  N🅪Sg/J+  NSg+     .
 > He's going   for his     doctorate .
@@ -578,8 +578,8 @@
 # W?   NSg/C NSg/I/C/Ddem NSg/V/J P  D/P+ NSg/V/J+ .
 > I’ve not   taken her     out         of a   goodly long     while      .
 # W?   NSg/C V/J   ISg/D$+ NSg/V/J/R/P P  D/P J/R    NPr/V/J+ NSg/V/C/P+ .
-> After a   delay   of three hours , the plane    finally took off       .
-# JC/P  D/P NSg/V/J P  NSg+  NPl+  . D+  NSg/V/J+ R       V    NSg/V/J/P .
+> After    a   delay   of three hours , the plane    finally took off       .
+# JC/R/C/P D/P NSg/V/J P  NSg+  NPl+  . D+  NSg/V/J+ R       V    NSg/V/J/P .
 >
 #
 > On
@@ -684,8 +684,8 @@
 # J/P D/P+ NSg/V+ . J/P D/P+ NSg/V+ . J/P D/P+ NSg/V/J+ . J/P D/P+ NSg/V+ . J/P D/P NSg/V+ .
 > All          of the responsibility is on  him  .
 # NSg/I/J/C/Dq P  D+  N🅪Sg+          VL J/P ISg+ .
-> I    put   a   bet     on  the winning  horse  .
-# ISg+ NSg/V D/P NSg/V/P J/P D+  NSg/V/J+ NSg/V+ .
+> I    put   a   bet   on  the winning  horse  .
+# ISg+ NSg/V D/P NSg/V J/P D+  NSg/V/J+ NSg/V+ .
 > tug   on  the rope   ; push  hard   on  the door   .
 # NSg/V J/P D+  NSg/V+ . NSg/V N🅪Sg/J J/P D+  NSg/V+ .
 > I    stubbed my  toe    on  an   old    tree   stump  .
@@ -698,8 +698,8 @@
 # P  NSg/V J/P D/P NSg/V  NPr/C+ NSg/V/J+ .
 > A   table  can't stand on  two  legs   .
 # D/P NSg/V+ VX    NSg/V J/P NSg+ NPl/V+ .
-> After resting on  his     elbows , he       stood on  his     toes   , then    walked on  his     heels  .
-# JC/P  V+      J/P ISg/D$+ NPl/V+ . NPr/ISg+ V     J/P ISg/D$+ NPl/V+ . NSg/J/C V/J    J/P ISg/D$+ NPl/V+ .
+> After    resting on  his     elbows , he       stood on  his     toes   , then    walked on  his     heels  .
+# JC/R/C/P V+      J/P ISg/D$+ NPl/V+ . NPr/ISg+ V     J/P ISg/D$+ NPl/V+ . NSg/J/C V/J    J/P ISg/D$+ NPl/V+ .
 > The Tories are on  twenty - five percent in      this    constituency .
 # D   NPl    V   J/P NSg    . NSg  NSg     NPr/J/P I/Ddem+ NSg+         .
 > The blue     team   are on  six points and the red   team  on  five .
@@ -713,7 +713,7 @@
 > Can    I    see   you    on  a   different day   ?
 # NPr/VX ISg+ NSg/V ISgPl+ J/P D/P NSg/J     NPr🅪+ .
 > Smith  scored again on  twelve minutes , doubling Mudchester Rovers ' lead     .
-# NPr/V+ V/J    P     J/P NSg+   NPl/V+  . V        ?          W?     . N🅪Sg/V/J .
+# NPr/V+ V/J    R     J/P NSg+   NPl/V+  . V        ?          W?     . N🅪Sg/V/J .
 > I    was reading a   book  on  history .
 # ISg+ V   NPr/V   D/P NSg/V J/P N🅪Sg+   .
 > The city hosted the World  Summit on  the Information Society
@@ -910,8 +910,8 @@
 # P    NSg/I . I+    N🅪Sg/J+ . ISg+ NSg/VX NSg/I/J NPr/V/J P  NSg/V NPl/V+    . P+   . .
 > It       was small   and bumpy , with a   tinge of orange    .
 # NPr/ISg+ V   NPr/V/J V/C J     . P    D/P NSg/V P  NPr🅪/V/J+ .
-> There are lots  of people with no    homes after the wildfire .
-# +     V   NPl/V P  NPl/V  P    NPr/P NPl/V JC/P  D+  NSg+     .
+> There are lots  of people with no    homes after    the wildfire .
+# +     V   NPl/V P  NPl/V  P    NPr/P NPl/V JC/R/C/P D+  NSg+     .
 > Speak with confidence .
 # NSg/V P    NSg+       .
 > He       spoke with sadness in      his     voice  .
