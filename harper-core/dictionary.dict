@@ -11424,6 +11424,7 @@ achromatic/J
 achy/J^>
 acid/~JNSgY
 acidic/~J
+acidification/Nmg
 acidify/VGdS
 acidity/~Ng
 acidosis/Ng
@@ -32193,7 +32194,7 @@ long/~JNVKdS^G
 long's
 longboat/NgS
 longbow/NgS
-longer/~JN
+longer/~JcN
 longevity/~Ng
 longhair/~NJgS
 longhand/Ng
@@ -33385,6 +33386,7 @@ merganser/~NgS
 merge/~VNd>SZG
 merger/~Ng
 meridian/~JNVgS
+meridional/JNgS
 meringue/NVgS
 merino/NgS
 merit/~NVeSg
@@ -38108,6 +38110,7 @@ persiflage/Ng
 persimmon/NSg
 persist/~VSGd
 persistence/~Ng
+persistency/Ng      # uncommon variant
 persistent/~JY
 persnickety/J
 person/~NVUgS
@@ -39474,6 +39477,7 @@ precompute/VGdSB
 preconceive/VGdS
 preconception/NJSg
 precondition/NVgdGS
+preconfigure/VGdS
 precook/VGSd
 precool/VGSd
 precursor/~NJSg
@@ -46639,6 +46643,7 @@ subparagraph/NgSV
 subpart/N
 subplot/~NVgS
 subpoena/~NVGgdS
+subpolar/J
 subprime/JN
 subprocess/NgS
 subprofessional/JNSg
@@ -49593,7 +49598,7 @@ typical/~JNUY
 typicality/Ng
 typification/Ng
 typify/VnGdS
-typing/~NVg
+typing/~NwVgS
 typist/NSg
 typo/~NVgS
 typographer/NSg
@@ -53380,6 +53385,8 @@ right-hand/J
 right-wing/J
 road map/NgS        # standard in all dictionaries but overtaken by "roadmap" c. 2000
 rock face/NgS
+run time/NwgS
+run-time/J
 run-up/NgS
 same sex/Ng
 same-sex/J
