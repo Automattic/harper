@@ -851,7 +851,7 @@
 > “ I    love   to see   you    at    my  table  , Nick   . You    remind me      of a   — of a    rose     , an   absolute
 # . ISg+ NPr🅪/V P  NSg/V ISgPl+ NSg/P D$+ NSg/V+ . NPr/V+ . ISgPl+ NSg/V  NPr/ISg P  D/P . P  D/P+ NPr/V/J+ . D/P+ NSg/J+
 > rose     . Doesn’t he       ? ” She  turned to Miss  Baker for confirmation : “ An  absolute
-# NPr/V/J+ . V       NPr/ISg+ . . ISg+ V/J    P  NSg/V NPr+  C/P NSg+         . . D/P NSg/J
+# NPr/V/J+ . V       NPr/ISg+ . . ISg+ V/J    P  NSg/V NPr+  C/P N🅪Sg+        . . D/P NSg/J
 > rose     ? ”
 # NPr/V/J+ . .
 >
@@ -2623,7 +2623,7 @@
 >
 #
 > One       of the men  nodded in      confirmation .
-# NSg/I/V/J P  D+  NSg+ V      NPr/J/P NSg+         .
+# NSg/I/V/J P  D+  NSg+ V      NPr/J/P N🅪Sg+        .
 >
 #
 > “ I    heard that         from a    man      who    knew all          about him  , grew up        with him  in      Germany , ”
