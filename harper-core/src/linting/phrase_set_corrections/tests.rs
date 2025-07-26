@@ -166,6 +166,61 @@ fn corrects_definite_articles_lowercase() {
 // Discuss
 // -none-
 
+// DoesOrDose
+#[test]
+fn corrects_dose_not() {
+    assert_suggestion_result(
+        "It dose not run windows ?",
+        lint_group(),
+        "It does not run windows ?",
+    );
+}
+
+#[test]
+fn corrects_dose_it() {
+    assert_suggestion_result(
+        "dose it support zh_cn ？",
+        lint_group(),
+        "does it support zh_cn ？",
+    );
+}
+
+#[test]
+fn corrects_it_dose() {
+    assert_suggestion_result(
+        "it dose work without WEBP enabled",
+        lint_group(),
+        "it does work without WEBP enabled",
+    );
+}
+
+#[test]
+fn corrects_someone_dose() {
+    assert_suggestion_result(
+        "Hopefully someone dose, I'm not good at C programing....",
+        lint_group(),
+        "Hopefully someone does, I'm not good at C programing....",
+    );
+}
+
+#[test]
+fn corrects_she_does() {
+    assert_suggestion_result(
+        "we wont agree on everything she dose thats what a real person would feel like",
+        lint_group(),
+        "we wont agree on everything she does thats what a real person would feel like",
+    );
+}
+
+#[test]
+fn corrects_he_does() {
+    assert_suggestion_result(
+        "This validate each and every field of your from with nice dotted red color warring for the user, incase he dose some mistakes.",
+        lint_group(),
+        "This validate each and every field of your from with nice dotted red color warring for the user, incase he does some mistakes.",
+    );
+}
+
 // ExpandDependency
 // -none-
 
