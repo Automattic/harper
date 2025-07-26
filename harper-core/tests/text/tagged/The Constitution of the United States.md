@@ -501,7 +501,7 @@
 > To raise and support Armies , but     no    Appropriation of Money  to that          Use   shall be
 # P  NSg/V V/C N🅪Sg/V+ NPl+   . NSg/C/P NPr/P NSg           P  N🅪Sg/J P  NSg/I/C/Ddem+ NSg/V VX    NSg/VX
 > for a   longer Term    than two  Years ;
-# C/P D/P NSg/J  NSg/V/J C/P  NSg+ NPl+  .
+# C/P D/P NSg/JC NSg/V/J C/P  NSg+ NPl+  .
 >
 #
 >
