@@ -155,13 +155,6 @@ impl<T> Span<T> {
         clone.end -= by;
         Some(clone)
     }
-
-    /// Add an amount to a copy of both [`Self::start`] and [`Self::end`]
-    pub fn with_offset(&self, by: usize) -> Self {
-        let mut clone = *self;
-        clone.push_by(by);
-        clone
-    }
 }
 
 /// Additional functions for types that implement [`std::fmt::Debug`] and [`Display`].
