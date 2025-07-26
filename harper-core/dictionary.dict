@@ -18600,7 +18600,7 @@ conferred/~V
 conferrer/NgS
 conferring/~VN
 confessed/~VJY
-confession/~NSg
+confession/~NwSg
 confessional/~JNSg
 confessor/~NgS
 confetti/NVg
@@ -18613,21 +18613,22 @@ confidential/~JY
 confidentiality/~Ng
 confider/Ng
 confiding/VJNY
-configuration/~NS
+configurability/Ngm
+configuration/~NwgS
 configure/~VBr
 confined/~VJU
-confinement/~NgS
+confinement/~NwgS
 confirm/~VrSdG
-confirmation/~NrSg
+confirmation/~NwrSg
 confirmatory/J
 confirmed/~VJU
 confiscate/VJdSGnX
-confiscation/~Ng
+confiscation/~Nmg
 confiscator/NSg
 confiscatory/J
-conflagration/NgS
+conflagration/NwgS
 conflate/VJNXdSGn
-conflation/Ng
+conflation/Nmg
 conflict/~NVSGgd
 conflictive/J
 confluence/~NgS
@@ -28463,6 +28464,7 @@ hospitality/~Ng
 hospitalization/~NSg
 hospitalize/VdSG
 host/~NVgdSG
+hostable/J
 hostage/~NVgS
 hostel/~NVZGgd>S
 hosteler/Ng
@@ -30864,6 +30866,7 @@ keeping/~NVg
 keepsake/NgS
 kefir/Nmg
 keg/NVSg
+kegel/NgS
 kelp/NVg
 kelvin/~NSg
 ken/~VNSg
@@ -32142,6 +32145,7 @@ logarithm/~NSg
 logarithmic/~J
 logbook/NSg
 loge/NgS
+logfile/NgS
 logged/~V
 logger/~NSg
 loggerhead/NSg
@@ -34635,6 +34639,7 @@ multimeter/NSg
 multimillionaire/NSg
 multimodal/J
 multinational/~JNSg
+multipage/J
 multiparadigm/J
 multipart/J
 multipartite
@@ -39548,6 +39553,7 @@ prehistoric/~J
 prehistorical/JY
 prehistory/~Nmg
 prehuman/JN
+preinstallation/Nmg
 preinstalled/V
 prejudge/VGdS
 prejudgement/NgS!_
@@ -52512,6 +52518,7 @@ AGI/gS              # artificial general intelligence
 AMC/NOgS            # old car brand
 AOC/Og              # US politician Alexandria Ocasio-Cortez
 APFS/Og             # Apple file system
+ARM64/Og            # see also AArch64
 ASM/N               # assembly language - should "asm" be included as well/instead?
 ASUS/Og
 ATF/Ng              # automatic transmission fluid
@@ -52529,6 +52536,7 @@ Anker/Sg
 AngularJS/Og
 Anthropic/Og        # AI company
 Archytas/Sg         # !! please check and comment !! we also have archytas
+AArch64/Og          # see also ARM64
 Automattic/Sg       # WordPress company
 Automattician/Sg
 B2B/J               # business-to-business
@@ -52720,6 +52728,7 @@ LinkedIn/Og
 Loctite/Og          # product
 Logotherapy/Sg
 Longreads/Og
+LoRA/NwSg           # low-rank adaptation
 Lua/Sg              # programming language
 MCP/Ng              # model context protocol
 MMX/Ng              # multimedia extension
@@ -52908,6 +52917,7 @@ WPA/Og
 WPA2/Og
 WSL/gO              # windows subsystem for linux
 Waymo/Og
+WeChat/Og
 WebAssembly/g       # see WASM
 WebDAV/Og
 WebGL/Og
@@ -52924,6 +52934,7 @@ WooCommerce/Og
 XFS/Ng              # file system
 XLR/Ng              # connector
 Xbox/NOgS
+Xcode/Og            # Apple IDE
 Xorg/ONgS
 Y2K/g               # year 2000
 YAML/OSg            # markup language
@@ -52938,6 +52949,7 @@ a11n/N
 a12s/9
 a8c/Sg
 antimalware/Nmg
+arXiv/Og            # research archive
 archytas/Sg         # !! please check and comment !! we also have Archytas
 autoconfig/Ng
 autoconfiguration/Ng
@@ -52971,6 +52983,7 @@ filesystem/~Sg      # dictionaries prefer: file system
 frontend/NSg        # dictionaries prefer: front end
 gcd/Ng              # greatest common divisor
 gen AI/Ng
+geodata/Nwg
 geofence/NgSVdG
 gRPC/OSg            # framework
 glymph/Sg           # !! please check and comment !!
@@ -53017,6 +53030,7 @@ tagset/NgS
 trie/NgS            # data structure
 uptime/NwgS
 vid/NgS             # video
+waitlist/NgS
 watchOS/Og
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
@@ -53079,6 +53093,7 @@ cheat sheet/NgS
 clear-sighted/J
 closed circuit/NgS
 closed-circuit/J
+code name/NgS
 code point/NSg      # Unicode code point
 color code/NVgdSG<
 color coded/J<
@@ -53119,6 +53134,7 @@ drop-in/NgSJ
 e-book/NgS
 each other/I
 easy peasy/J
+eco-friendly/J
 editor in chief/N
 end user/NgS
 energy-efficient/J
