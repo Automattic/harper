@@ -24,11 +24,11 @@
 //!
 //! ## Tags
 //!
-//! Tags are assigned based on the [`TokenKind`] and [`WordMetadata`] of a
+//! Tags are assigned based on the [`TokenKind`] and [`LexemeMetadata`] of a
 //! token.
 //!
 //! - The tag of [`TokenKind::Word`] variants depends on their
-//!   [`WordMetadata`]. If they don't have any metadata, they are denoted by `?`.
+//!   [`LexemeMetadata`]. If they don't have any metadata, they are denoted by `?`.
 //!   Otherwise, the tag is constructed as follows:
 //!
 //!   - Nouns are denoted by `N`.
@@ -65,11 +65,11 @@
 use std::borrow::Cow;
 
 use harper_core::spell::FstDictionary;
-use harper_core::{Degree, Dialect, Document, TokenKind, WordMetadata};
+use harper_core::{Degree, Dialect, Document, LexemeMetadata, TokenKind};
 
 mod snapshot;
 
-fn format_word_tag(word: &WordMetadata) -> String {
+fn format_word_tag(word: &LexemeMetadata) -> String {
     // These tags are inspired by the Penn Treebank POS tagset
     let mut tags = String::new();
     fn add(t: &str, tags: &mut String) {
@@ -187,7 +187,7 @@ fn format_word_tag(word: &WordMetadata) -> String {
 
 /// Returns a vector of dialect annotation strings for the given word.
 /// Handles both individual dialects and special groupings (NoAm, Comm).
-fn get_dialect_annotations(word: &WordMetadata) -> Vec<&'static str> {
+fn get_dialect_annotations(word: &LexemeMetadata) -> Vec<&'static str> {
     let mut annotations = Vec::new();
     let mut north_america = false;
     let mut commonwealth = false;

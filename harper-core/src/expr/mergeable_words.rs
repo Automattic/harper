@@ -2,9 +2,9 @@ use std::sync::Arc;
 
 use super::{Expr, SequenceExpr, SpaceOrHyphen};
 use crate::spell::{Dictionary, FstDictionary};
-use crate::{CharString, Span, Token, WordMetadata};
+use crate::{CharString, LexemeMetadata, Span, Token};
 
-type PredicateFn = dyn Fn(Option<&WordMetadata>, Option<&WordMetadata>) -> bool + Send + Sync;
+type PredicateFn = dyn Fn(Option<&LexemeMetadata>, Option<&LexemeMetadata>) -> bool + Send + Sync;
 
 /// A [`Expr`] that identifies adjacent words that could potentially be merged into a single word.
 ///
@@ -18,7 +18,10 @@ pub struct MergeableWords {
 
 impl MergeableWords {
     pub fn new(
-        predicate: impl Fn(Option<&WordMetadata>, Option<&WordMetadata>) -> bool + Send + Sync + 'static,
+        predicate: impl Fn(Option<&LexemeMetadata>, Option<&LexemeMetadata>) -> bool
+        + Send
+        + Sync
+        + 'static,
     ) -> Self {
         Self {
             inner: SequenceExpr::default()
@@ -45,11 +48,11 @@ impl MergeableWords {
         let mut compound = a_chars.clone();
         compound.push(' ');
         compound.extend_from_slice(&b_chars);
-        let meta_open = self.dict.get_word_metadata(&compound);
+        let meta_open = self.dict.get_lexeme_metadata(&compound);
 
         // Then check if the closed compound exists in the dictionary
         compound.remove(a_chars.len());
-        let meta_closed = self.dict.get_word_metadata(&compound);
+        let meta_closed = self.dict.get_lexeme_metadata(&compound);
 
         if (self.predicate)(meta_closed, meta_open) {
             return Some(compound);
@@ -81,9 +84,9 @@ impl Expr for MergeableWords {
 #[cfg(test)]
 mod tests {
     use super::MergeableWords;
-    use crate::{Document, WordMetadata};
+    use crate::{Document, LexemeMetadata};
 
-    fn predicate(meta_closed: Option<&WordMetadata>, meta_open: Option<&WordMetadata>) -> bool {
+    fn predicate(meta_closed: Option<&LexemeMetadata>, meta_open: Option<&LexemeMetadata>) -> bool {
         meta_open.is_none() && meta_closed.is_some_and(|m| m.is_noun() && !m.is_proper_noun())
     }
 

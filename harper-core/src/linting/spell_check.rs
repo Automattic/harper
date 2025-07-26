@@ -47,7 +47,7 @@ impl<T: Dictionary> SpellCheck<T> {
                     .filter(|v| {
                         // ignore entries outside the configured dialect
                         self.dictionary
-                            .get_word_metadata(v)
+                            .get_lexeme_metadata(v)
                             .unwrap()
                             .dialects
                             .is_dialect_enabled(self.dialect)
