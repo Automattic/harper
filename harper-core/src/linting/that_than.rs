@@ -1,5 +1,7 @@
 use crate::{
-    expr::{All, Expr, FirstMatchOf, SequenceExpr}, linting::{ExprLinter, Lint, LintKind, Suggestion}, Token, TokenStringExt
+    Token, TokenStringExt,
+    expr::{All, Expr, FirstMatchOf, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct ThatThan {
@@ -17,13 +19,19 @@ impl Default for ThatThan {
             .t_ws()
             .then_positive_adjective()
             .t_ws()
-            .t_aco("that");        
+            .t_aco("that");
 
         let exceptioner = SequenceExpr::default()
-            .t_any().t_any().then_likely_homograph();
+            .t_any()
+            .t_any()
+            .then_likely_homograph();
 
         let more_exception = SequenceExpr::default()
-            .t_any().t_any().t_any().t_any().t_aco("that");
+            .t_any()
+            .t_any()
+            .t_any()
+            .t_any()
+            .t_aco("that");
 
         let er_that = Box::new(All::new(vec![
             Box::new(comparativer_that),
@@ -35,10 +43,7 @@ impl Default for ThatThan {
             Box::new(more_exception),
         ]));
 
-        let expr = FirstMatchOf::new(vec![
-            er_that,
-            more_that,
-        ]);
+        let expr = FirstMatchOf::new(vec![er_that, more_that]);
 
         Self {
             expr: Box::new(expr),
@@ -69,7 +74,7 @@ impl ExprLinter for ThatThan {
                 )],
                 message: "This looks like a comparison that should use the word `than` instead of `that`.".to_string(),
                 priority: 31,
-            })
+            });
         }
 
         // adjer _ that
@@ -79,7 +84,7 @@ impl ExprLinter for ThatThan {
             .span()?
             .get_content_string(src);
         let that_tok = toks.last()?;
-        eprintln!("❤️ '{}'", comparative_then_whitespace_str);
+        eprintln!("❤️ '{comparative_then_whitespace_str}'");
 
         Some(Lint {
             span: that_tok.span,
