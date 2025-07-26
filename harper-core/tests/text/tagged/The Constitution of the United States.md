@@ -501,7 +501,7 @@
 > To raise and support Armies , but     no    Appropriation of Money  to that          Use   shall be
 # P  NSg/V V/C N🅪Sg/V+ NPl+   . NSg/C/P NPr/P NSg           P  N🅪Sg/J P  NSg/I/C/Ddem+ NSg/V VX    NSg/VX
 > for a   longer Term    than two  Years ;
-# C/P D/P NSg/J  NSg/V/J C/P  NSg+ NPl+  .
+# C/P D/P NSg/JC NSg/V/J C/P  NSg+ NPl+  .
 >
 #
 >
@@ -877,7 +877,7 @@
 > Whenever there is a   vacancy in      the office of the Vice       President , the President
 # C        +     VL D/P NSg     NPr/J/P D   NSg/V  P  D+  NSg/V/J/P+ NSg/V+    . D+  NSg/V+
 > shall nominate a   Vice       President who    shall take  office upon confirmation by      a
-# VX    V/J      D/P NSg/V/J/P+ NSg/V+    NPr/I+ VX    NSg/V NSg/V+ P    NSg+         NSg/J/P D/P
+# VX    V/J      D/P NSg/V/J/P+ NSg/V+    NPr/I+ VX    NSg/V NSg/V+ P    N🅪Sg+        NSg/J/P D/P
 > majority vote  of both   Houses of Congress .
 # NSg+     NSg/V P  I/C/Dq NPl/V  P  NPr/V    .
 >
@@ -1165,7 +1165,7 @@
 > Comfort . No     Person shall be     convicted of Treason unless on  the Testimony of two
 # NSg/V+  . NPr/P+ NSg/V+ VX    NSg/VX V/J       P  NSg     C      J/P D   NSg       P  NSg+
 > Witnesses to the same overt  Act    , or    on  Confession in      open     Court    .
-# NPl/V+    P  D   I/J  NSg/J+ NPr/V+ . NPr/C J/P NSg+       NPr/J/P NSg/V/J+ NSg/V/J+ .
+# NPl/V+    P  D   I/J  NSg/J+ NPr/V+ . NPr/C J/P N🅪Sg+      NPr/J/P NSg/V/J+ NSg/V/J+ .
 >
 #
 > The Congress shall have   Power    to declare the Punishment of Treason , but     no

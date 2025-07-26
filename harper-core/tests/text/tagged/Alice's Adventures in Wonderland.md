@@ -181,7 +181,7 @@
 > it       say   , as    it       turned a    corner , “ Oh    my  ears   and whiskers , how   late  it’s getting ! ”
 # NPr/ISg+ NSg/V . NSg/R NPr/ISg+ V/J    D/P+ NSg/V+ . . NPr/V D$+ NPl/V+ V/C W?       . NSg/C NSg/J W?   NSg/V   . .
 > She  was close   behind  it       when    she  turned the corner , but     the Rabbit was no    longer
-# ISg+ V   NSg/V/J NSg/J/P NPr/ISg+ NSg/I/C ISg+ V/J    D+  NSg/V+ . NSg/C/P D+  NSg/V+ V   NPr/P NSg/J
+# ISg+ V   NSg/V/J NSg/J/P NPr/ISg+ NSg/I/C ISg+ V/J    D+  NSg/V+ . NSg/C/P D+  NSg/V+ V   NPr/P NSg/JC
 > to be     seen  : she  found herself in      a   long    , low      hall , which was lit     up        by      a   row   of
 # P  NSg/VX NSg/V . ISg+ NSg/V ISg+    NPr/J/P D/P NPr/V/J . NSg/V/J+ NPr+ . I/C+  V   NSg/V/J NSg/V/J/P NSg/J/P D/P NSg/V P
 > lamps  hanging from the roof   .
@@ -1365,7 +1365,7 @@
 > window , I    only  wish  they could  ! I’m sure I    don’t want  to stay    in      here    any
 # NSg/V+ . ISg+ J/R/C NSg/V IPl+ NSg/VX . W?  J    ISg+ V     NSg/V P  NSg/V/J NPr/J/P NSg/J/R I/R/Dq+
 > longer ! ”
-# NSg/J  . .
+# NSg/JC . .
 >
 #
 > She  waited for some     time      without hearing  anything more         : at    last    came    a   rumbling
@@ -4065,7 +4065,7 @@
 >
 #
 > “ Pray don’t trouble yourself to say   it       any    longer than that         , ” said Alice .
-# . V    V     NSg/V+  ISg+     P  NSg/V NPr/ISg+ I/R/Dq NSg/J  C/P  NSg/I/C/Ddem . . V/J  NPr+  .
+# . V    V     NSg/V+  ISg+     P  NSg/V NPr/ISg+ I/R/Dq NSg/JC C/P  NSg/I/C/Ddem . . V/J  NPr+  .
 >
 #
 > “ Oh    , don’t talk  about trouble ! ” said the Duchess . “ I    make  you    a   present of
