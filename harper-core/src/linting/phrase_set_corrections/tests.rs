@@ -167,6 +167,8 @@ fn corrects_definite_articles_lowercase() {
 // -none-
 
 // DoesOrDose
+
+// -does not-
 #[test]
 fn corrects_dose_not() {
     assert_suggestion_result(
@@ -176,7 +178,9 @@ fn corrects_dose_not() {
     );
 }
 
+// -dose it true positive-
 #[test]
+#[ignore = "due to false positives this can't be fixed yet"]
 fn corrects_dose_it() {
     assert_suggestion_result(
         "dose it support zh_cn ？",
@@ -185,21 +189,90 @@ fn corrects_dose_it() {
     );
 }
 
+// -dose it- noun false positives
+
+// it should be noted that (in an excessive dose) (it might have an opposite effect)
 #[test]
-fn corrects_it_dose() {
-    assert_suggestion_result(
-        "it dose work without WEBP enabled",
+#[ignore = "would be a false positive in a naive implementation"]
+fn dont_flag_excessive_dose_it_might() {
+    assert_lint_count(
+        "it should be noted that in an excessive dose it might have an opposite effect",
         lint_group(),
-        "it does work without WEBP enabled",
+        0,
     );
 }
 
+// When the person receives (a prescribed second dose) (it is not counted ttwice)
 #[test]
-fn corrects_someone_dose() {
-    assert_suggestion_result(
-        "Hopefully someone dose, I'm not good at C programing....",
+#[ignore = "would be a false positive in a naive implementation"]
+fn dont_flag_second_dose_it_is_not() {
+    assert_lint_count(
+        "When the person receives a prescribed second dose it is not counted ttwice",
         lint_group(),
-        "Hopefully someone does, I'm not good at C programing....",
+        0,
+    );
+}
+
+// (At that small a dose) (it was pleasent).
+#[test]
+#[ignore = "would be a false positive in a naive implementation"]
+fn dont_flag_a_dose_it_was() {
+    assert_lint_count("At that small a dose it was pleasent.", lint_group(), 0);
+}
+
+// I do not know (what dose) (it takes) to trip out, but I don't think I could stay awake to find out.
+#[test]
+#[ignore = "would be a false positive in a naive implementation"]
+fn dont_flag_what_dose_it_takes() {
+    assert_lint_count(
+        "I do not know what dose it takes to trip out, but I don't think I could stay awake to find out.",
+        lint_group(),
+        0,
+    );
+}
+
+// -dose it- verb false positives
+
+// And then I have to re-add the salts back to it to dose it back up to drinkable.
+#[test]
+#[ignore = "would be a false positive in a naive implementation"]
+fn dont_flag_to_dose_it() {
+    assert_lint_count(
+        "And then I have to re-add the salts back to it to dose it back up to drinkable.",
+        lint_group(),
+        0,
+    );
+}
+
+// So my conclusion is: don't dose it too high or it actually is dangerous and not pleasant at all
+#[test]
+#[ignore = "would be a false positive in a naive implementation"]
+fn dont_flag_dont_dose_it_too_high() {
+    assert_lint_count(
+        "So my conclusion is: don't dose it too high or it actually is dangerous and not pleasant at all",
+        lint_group(),
+        0,
+    );
+}
+
+// the only solution the other hopefully-dominant-reasonable-adult-human mind can find, is to dose it off, hoping the drowsiness can keep the fear at bay
+#[test]
+#[ignore = "would be a false positive in a naive implementation"]
+fn dont_flag_to_dose_it_off() {
+    assert_lint_count(
+        "the only solution the other hopefully-dominant-reasonable-adult-human mind can find, is to dose it off, hoping the drowsiness can keep the fear at bay",
+        lint_group(),
+        0,
+    );
+}
+
+// -he/she/it does-
+#[test]
+fn corrects_he_does() {
+    assert_suggestion_result(
+        "This validate each and every field of your from with nice dotted red color warring for the user, incase he dose some mistakes.",
+        lint_group(),
+        "This validate each and every field of your from with nice dotted red color warring for the user, incase he does some mistakes.",
     );
 }
 
@@ -212,12 +285,23 @@ fn corrects_she_does() {
     );
 }
 
+// -it does-
 #[test]
-fn corrects_he_does() {
+fn corrects_it_dose() {
     assert_suggestion_result(
-        "This validate each and every field of your from with nice dotted red color warring for the user, incase he dose some mistakes.",
+        "it dose work without WEBP enabled",
         lint_group(),
-        "This validate each and every field of your from with nice dotted red color warring for the user, incase he does some mistakes.",
+        "it does work without WEBP enabled",
+    );
+}
+
+// -someone does-
+#[test]
+fn corrects_someone_dose() {
+    assert_suggestion_result(
+        "Hopefully someone dose, I'm not good at C programing....",
+        lint_group(),
+        "Hopefully someone does, I'm not good at C programing....",
     );
 }
 

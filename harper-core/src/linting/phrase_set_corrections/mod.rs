@@ -124,8 +124,6 @@ pub fn lint_group() -> LintGroup {
                 ("it dose", "it does"),
                 ("she dose", "she does"),
                 ("someone dose", "someone does"),
-                // Pronouns, question
-                ("dose it", "does it"),
             ],
             "It looks like you meant `does`.",
             "Corrects the typo `dose` to `does`.",
