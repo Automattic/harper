@@ -131,8 +131,8 @@ pub fn lint_group() -> LintGroup {
                 ("who dose", "who does"),
                 ("why dose", "why does"),
             ],
-            "It looks like you meant `does`.",
-            "Corrects the typo `dose` to `does`.",
+            "This may be a typo for `does`.",
+            "Tries to correct typos of `dose` to `does`.",
             LintKind::Typo
         ),
         "ExpandArgument" => (

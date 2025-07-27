@@ -316,6 +316,16 @@ fn corrects_how_dose() {
 }
 
 #[test]
+#[ignore = "false positive not yet detected"]
+fn dont_fix_how_dose_false_positive() {
+    assert_lint_count(
+        "Work in progress exploration of how dose modifications throughout a trial can also induce bias in the exposure-response relationships.",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
 fn corrects_when_dose() {
     assert_suggestion_result(
         "When dose reusebale variable sync between device? #2634",
@@ -325,11 +335,31 @@ fn corrects_when_dose() {
 }
 
 #[test]
+#[ignore = "false positive not yet detected"]
+fn dont_fix_when_dose_false_positive() {
+    assert_lint_count(
+        "Should we remove the dose when dose has been applied",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
 fn corrects_where_dose() {
     assert_suggestion_result(
         "where dose the password store?",
         lint_group(),
         "where does the password store?",
+    );
+}
+
+#[test]
+#[ignore = "false positive not yet detected"]
+fn dont_fix_where_dose_false_positive() {
+    assert_lint_count(
+        "added some better error handling for the weird case where dose files have no dose...",
+        lint_group(),
+        0,
     );
 }
 
@@ -350,6 +380,8 @@ fn corrects_why_dose() {
         "why does the path is random ?",
     );
 }
+
+// Note: no false positive detected for 'why does'. Only true positives.
 
 // ExpandDependency
 // -none-
