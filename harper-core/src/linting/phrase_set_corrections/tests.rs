@@ -305,6 +305,52 @@ fn corrects_someone_dose() {
     );
 }
 
+// -interrogatives-
+#[test]
+fn corrects_how_dose() {
+    assert_suggestion_result(
+        "How dose qsv-copy works?",
+        lint_group(),
+        "How does qsv-copy works?",
+    );
+}
+
+#[test]
+fn corrects_when_dose() {
+    assert_suggestion_result(
+        "When dose reusebale variable sync between device? #2634",
+        lint_group(),
+        "When does reusebale variable sync between device? #2634",
+    );
+}
+
+#[test]
+fn corrects_where_dose() {
+    assert_suggestion_result(
+        "where dose the password store?",
+        lint_group(),
+        "where does the password store?",
+    );
+}
+
+#[test]
+fn corrects_who_dose() {
+    assert_suggestion_result(
+        "Who dose knows the problem?",
+        lint_group(),
+        "Who does knows the problem?",
+    );
+}
+
+#[test]
+fn corrects_why_dose() {
+    assert_suggestion_result(
+        "why dose the path is random ?",
+        lint_group(),
+        "why does the path is random ?",
+    );
+}
+
 // ExpandDependency
 // -none-
 

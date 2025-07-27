@@ -119,11 +119,17 @@ pub fn lint_group() -> LintGroup {
             &[
                 // Negatives
                 ("dose not", "does not"),
-                // Pronouns, statement
+                // Pronouns
                 ("he dose", "he does"),
                 ("it dose", "it does"),
                 ("she dose", "she does"),
                 ("someone dose", "someone does"),
+                // Interrogatives
+                ("how dose", "how does"),
+                ("when dose", "when does"),
+                ("where dose", "where does"),
+                ("who dose", "who does"),
+                ("why dose", "why does"),
             ],
             "It looks like you meant `does`.",
             "Corrects the typo `dose` to `does`.",
