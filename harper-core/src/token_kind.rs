@@ -158,6 +158,14 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::CloseSquare))
     }
 
+    pub fn is_open_round(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::OpenRound))
+    }
+
+    pub fn is_close_round(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::CloseRound))
+    }
+
     pub fn is_pipe(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Pipe))
     }
