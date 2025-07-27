@@ -22,7 +22,6 @@ impl Default for ThatThan {
             .t_ws()
             .t_aco("that")
             .t_ws()
-            // .then_any_word();
             .then(|tok: &Token, src: &[char]| {
                 if !tok.kind.is_word() {
                     return false;
