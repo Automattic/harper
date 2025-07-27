@@ -16,19 +16,13 @@ impl Default for ThatThan {
                     return false;
                 }
                 let adj_lower = tok.span.get_content_string(src).to_lowercase();
-                let is_better_or_later = adj_lower == "better" || adj_lower == "later";
-                !is_better_or_later
+                adj_lower != "better" && adj_lower != "later"
             })
             .t_ws()
             .t_aco("that")
             .t_ws()
             .then(|tok: &Token, src: &[char]| {
-                if !tok.kind.is_word() {
-                    return false;
-                }
-                let adj_lower = tok.span.get_content_string(src).to_lowercase();
-                let is_way = adj_lower == "way";
-                !is_way
+                tok.kind.is_word() && tok.span.get_content_string(src).to_lowercase() != "way"
             });
 
         Self {
