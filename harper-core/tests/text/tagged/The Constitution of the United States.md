@@ -1170,8 +1170,8 @@
 #
 > The Congress shall have   Power    to declare the Punishment of Treason , but     no
 # D+  NPr/V+   VX    NSg/VX NSg/V/J+ P  V       D   N🅪Sg       P  NSg     . NSg/C/P NPr/P
-> Attainder of Treason shall work   Corruption of Blood  , or    Forfeiture except
-# NSg       P  NSg     VX    NSg/V+ NSg        P  NSg/V+ . NPr/C NSg        V/C/P
+> Attainder of Treason shall work   Corruption of Blood   , or    Forfeiture except
+# NSg       P  NSg     VX    NSg/V+ NSg        P  NᴹSg/V+ . NPr/C NSg        V/C/P
 > during the Life  of the Person attainted .
 # V/P    D   NSg/V P  D+  NSg/V+ ?         .
 >
@@ -1220,8 +1220,8 @@
 # V/J         NSg/J/P NSg/V+ . V/C P  NSg/VX V/J      P  D   NSg/V  V/C NSg/V/C P  D
 > accusation ; to be     confronted with the witnesses against him  ; to have   compulsory
 # NSg        . P  NSg/VX V/J        P    D+  NPl/V+    C/P     ISg+ . P  NSg/VX NSg/J
-> process for obtaining witnesses in      his     favor     , and to have   the assistance of
-# NSg/V   C/P V         NPl/V+    NPr/J/P ISg/D$+ NSg/V/Am+ . V/C P  NSg/VX D   NSg        P
+> process for obtaining witnesses in      his     favor      , and to have   the assistance of
+# NSg/V   C/P V         NPl/V+    NPr/J/P ISg/D$+ N🅪Sg/V/Am+ . V/C P  NSg/VX D   NSg        P
 > counsel for his     defense   .
 # NSg/V   C/P ISg/D$+ NSg/V/Am+ .
 >
@@ -1277,7 +1277,7 @@
 > due   process of law    ; nor   deny to any    person within  its     jurisdiction the equal
 # NSg/J NSg/V   P  NSg/V+ . NSg/C V    P  I/R/Dq NSg/V  NSg/J/P ISg/D$+ NSg          D   NSg/V/J
 > protection of the laws   .
-# NSg        P  D+  NPl/V+ .
+# N🅪Sg       P  D+  NPl/V+ .
 >
 #
 > The right   of citizens of the United States   , who    are eighteen years of age    or
