@@ -7873,7 +7873,7 @@
 > world  , and the shock    had made him  physically sick     . I    stared at    him  and then    at
 # NSg/V+ . V/C D+  NSg/V/J+ V   V    ISg+ R+         NSg/V/J+ . ISg+ V/J    NSg/P ISg+ V/C NSg/J/C NSg/P
 > Tom    , who    had made a   parallel discovery less    than an   hour before — and it       occurred
-# NPr/V+ . NPr/I+ V   V    D/P NSg/V/J  NSg+      V/J/C/P C/P  D/P+ NSg+ C/P    . V/C NPr/ISg+ V
+# NPr/V+ . NPr/I+ V   V    D/P NSg/V/J  N🅪Sg+     V/J/C/P C/P  D/P+ NSg+ C/P    . V/C NPr/ISg+ V
 > to me       that         there was no    difference between men  , in      intelligence or    race  , so
 # P  NPr/ISg+ NSg/I/C/Ddem +     V   NPr/P N🅪Sg/V     NSg/P   NSg+ . NPr/J/P N🅪Sg         NPr/C NSg/V . NSg/I/J/C
 > profound as    the difference between the sick    and the well    . Wilson was so        sick

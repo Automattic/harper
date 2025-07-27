@@ -15250,6 +15250,7 @@ bootless/J
 bootlicker/NSg
 bootstrap/NVgS
 bootstrapped/V
+bootstrapper/NgS
 bootstrapping/VN
 bootup/NgS
 booty/~NSg
@@ -18637,10 +18638,10 @@ confluent/JN
 conform/~VZB
 conformable/JU
 conformal/~J
-conformance/~Ng
-conformism/Ng
+conformance/~Nmg
+conformism/Nmg
 conformist/~NJSg
-conformity/~Ng
+conformity/~Nmg
 confrere/NgS
 confrontation/~NSg
 confrontational/~J
@@ -18656,7 +18657,7 @@ congealment/Ng
 conger/NSg
 congeries/Ng
 congest/NVSdGv
-congestion/~Ng
+congestion/~Nmg
 conglomerate/~NJVdSXgGn
 conglomeration/Ng
 congrats/Ng
@@ -19741,6 +19742,7 @@ crosscurrent/NgS
 crosscut/NVSg
 crosscutting/VN
 crosser/NJ
+crossfade/VdSGNg
 crossfire/~NgS
 crosshair/NSg
 crosshatch/NVGdS
@@ -21337,33 +21339,34 @@ disclose/~VNdSG
 disclosed/~VJU
 disco/~NVgG
 discography/~NSg
-discoloration/NS
-discolouration/NS!_
+discoloration/NwS
+discolouration/NwS!_
 discombobulate/VdSGn
-discombobulation/Ng
+discombobulation/Nmg
 discomfit/VJdG
 discomfiture/Ng
 discommode/VdG
 disconcerting/JY
 disconnected/~VJpY
-disconnectedness/Ng
+disconnectedness/Nmg
 disconsolate/JNY
-discordance/Ng
+discordance/Nmg
 discordant/JY
 discotheque/NSg
 discourage/~VNLGdS
-discouragement/NSg
+discouragement/NwSg
 discouraging/VJNY
 discover/~VrSdG
+discoverability/Ng
 discovered/~VU
 discoverer/~NgS
-discovery/~NrSg
+discovery/~NwrSg
 discreet/~Jp>Y^
-discreetness/Ng
+discreetness/Nmg
 discrepancy/~NSg
 discrepant/JN
 discrete/~JpYn
-discreteness/Ng
+discreteness/Nmg
 discretion/~Nig
 discretionary/~J
 discretisation/Ng!_
@@ -21371,7 +21374,7 @@ discretization/Ng
 discriminant/NJ
 discriminate/~VJGndSY
 discriminating/~JVU
-discrimination/~Ng
+discrimination/~Nmg
 discriminator/NgS
 discriminatory/~J
 discursiveness/Ng
@@ -36708,6 +36711,7 @@ outreach/~NVgdSG
 outrider/NgS
 outrigger/NSg
 outright/~JV
+outro/NgS
 outrun/VNS
 outrunning/V
 outscore/VGdS
@@ -53296,6 +53300,7 @@ mock up/V
 mock-up/NgS
 moon landing/NgS
 motor ship/NgS
+mouse wheel/NgS
 multi-platform/J
 multiple-choice/J
 nail biter/NgS
