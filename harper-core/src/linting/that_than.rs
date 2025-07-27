@@ -1,6 +1,6 @@
 use crate::{
-    Token, TokenStringExt,
-    expr::{All, Expr, FirstMatchOf, SequenceExpr},
+    Token,
+    expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
@@ -10,43 +10,30 @@ pub struct ThatThan {
 
 impl Default for ThatThan {
     fn default() -> Self {
-        let comparativer_that = SequenceExpr::default()
-            .then_comparative_adjective()
+        let adjective_er_that_nextword = SequenceExpr::default()
+            .then(|tok: &Token, src: &[char]| {
+                if !tok.kind.is_comparative_adjective() {
+                    return false;
+                }
+                let adj_lower = tok.span.get_content_string(src).to_lowercase();
+                let is_better_or_later = adj_lower == "better" || adj_lower == "later";
+                !is_better_or_later
+            })
             .t_ws()
-            .t_aco("that");
-
-        let more_or_less_positive_that = SequenceExpr::word_set(&["more", "less"])
+            .t_aco("that")
             .t_ws()
-            .then_positive_adjective()
-            .t_ws()
-            .t_aco("that");
-
-        let exceptioner = SequenceExpr::default()
-            .t_any()
-            .t_any()
-            .then_likely_homograph();
-
-        let more_exception = SequenceExpr::default()
-            .t_any()
-            .t_any()
-            .t_any()
-            .t_any()
-            .t_aco("that");
-
-        let er_that = Box::new(All::new(vec![
-            Box::new(comparativer_that),
-            Box::new(exceptioner),
-        ]));
-
-        let more_that = Box::new(All::new(vec![
-            Box::new(more_or_less_positive_that),
-            Box::new(more_exception),
-        ]));
-
-        let expr = FirstMatchOf::new(vec![er_that, more_that]);
+            // .then_any_word();
+            .then(|tok: &Token, src: &[char]| {
+                if !tok.kind.is_word() {
+                    return false;
+                }
+                let adj_lower = tok.span.get_content_string(src).to_lowercase();
+                let is_way = adj_lower == "way";
+                !is_way
+            });
 
         Self {
-            expr: Box::new(expr),
+            expr: Box::new(adjective_er_that_nextword),
         }
     }
 }
@@ -57,34 +44,11 @@ impl ExprLinter for ThatThan {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        if toks.len() != 3 && toks.len() != 5 {
+        if toks.len() != 5 {
             return None;
         }
-        if toks.len() == 5 {
-            // more _ adj _ that
-            let more_or_less_tok = toks.first()?;
-            let that_tok = toks.last()?;
 
-            return Some(Lint {
-                span: that_tok.span,
-                lint_kind: LintKind::Typo,
-                suggestions: vec![Suggestion::replace_with_match_case_str(
-                    "than",
-                    that_tok.span.get_content(src),
-                )],
-                message: "This looks like a comparison that should use the word `than` instead of `that`.".to_string(),
-                priority: 31,
-            });
-        }
-
-        // adjer _ that
-
-        let comparative_then_whitespace_toks = &toks[..2];
-        let comparative_then_whitespace_str = comparative_then_whitespace_toks
-            .span()?
-            .get_content_string(src);
-        let that_tok = toks.last()?;
-        eprintln!("❤️ '{comparative_then_whitespace_str}'");
+        let that_tok = &toks[2];
 
         Some(Lint {
             span: that_tok.span,
@@ -93,9 +57,8 @@ impl ExprLinter for ThatThan {
                 "than",
                 that_tok.span.get_content(src),
             )],
-            message:
-                "This looks like a comparison that should use the word `than` instead of `that`."
-                    .to_string(),
+            message: "This looks like a comparison that should use `than` rather than `that`."
+                .to_string(),
             priority: 31,
         })
     }
@@ -133,7 +96,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "false positive that can probably be fixed"]
     fn dont_flag_easier_that_way() {
         assert_lint_count(
             "Given svelte now has signals, it might actually be easier that way.",
@@ -143,7 +105,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "false positive might be difficult to fix"]
     fn dont_flag_better_that() {
         assert_lint_count(
             "So I am wondering if its better that I run SCENIC+ once on the integrated dataset or 3 times on the individual datasets",
@@ -153,6 +114,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "not handled because 'better' results in false positives"]
     fn fix_better_that() {
         assert_suggestion_result(
             "Examples of how different cards perform far better that others.",
@@ -171,7 +133,8 @@ mod tests {
     }
 
     #[test]
-    fn fix_bigger_that() {
+    #[ignore = "not handled because 'bigger' results in false positives"]
+    fn cant_flag_bigger_that() {
         assert_suggestion_result(
             "Enable bigger that 1024*768 window for world builder.",
             ThatThan::default(),
@@ -189,6 +152,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "'less that' also occurs in false positives"]
     fn fix_less_that() {
         assert_suggestion_result(
             "Collector Not collecting metrics if the collection interval is less that the metric generation interval.",
@@ -216,7 +180,7 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "false positive that can probably be fixed"]
+
     fn dont_fix_faster_that_way() {
         assert_lint_count(
             "You will get an answer quicker that way!",
@@ -237,7 +201,6 @@ mod tests {
     // more/less adj that
 
     #[test]
-    #[ignore = "false positive that might be difficult to fix"]
     fn dont_flag_more_explicit_that() {
         assert_lint_count(
             "make it more explicit that those files are auto ...",
@@ -247,12 +210,31 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "false positive that might be difficult to fix"]
     fn dont_flag_more_clear_that() {
         assert_lint_count(
             "Make it more clear that users need to download the VS tooling installer for .NET Core in VS.",
             ThatThan::default(),
             0,
         );
+    }
+
+    // False positives from The Great Gatsby
+
+    #[test]
+    fn dont_flag_i_gathered_later_that() {
+        assert_lint_count(
+            "and I gathered later that he was a photographer",
+            ThatThan::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_its_better_that() {
+        assert_lint_count(
+            "It’s better that the shock should all come at once.",
+            ThatThan::default(),
+            0,
+        )
     }
 }

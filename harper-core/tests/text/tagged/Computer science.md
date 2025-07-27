@@ -145,7 +145,7 @@
 > commands could  be     typed and the results printed automatically . In      1937 , one
 # NPl/V+   NSg/VX NSg/VX V/J   V/C D+  NPl/V+  V/J+    W?            . NPr/J/P #    . NSg/I/V/J
 > hundred years after Babbage's impossible dream    , Howard Aiken convinced IBM  ,
-# NSg     NPl+  JC/P  NSg$      NSg/J+     NSg/V/J+ . NPr+   NPr   V/J       NPr+ .
+# NSg     NPl+  P     NSg$      NSg/J+     NSg/V/J+ . NPr+   NPr   V/J       NPr+ .
 > which was making all          kinds of punched card    equipment and was also in      the
 # I/C+  V   NSg/V  NSg/I/J/C/Dq NSg   P  V/J     N🅪Sg/V+ NᴹSg+     V/C V   W?   NPr/J/P D+
 > calculator business to develop his     giant  programmable calculator , the

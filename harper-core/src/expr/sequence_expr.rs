@@ -139,6 +139,7 @@ impl SequenceExpr {
         self
     }
 
+    /// Pushes an expression that will match any word from the given set of words, case-insensitive.
     pub fn then_word_set(self, words: &'static [&'static str]) -> Self {
         self.then(WordSet::new(words))
     }
