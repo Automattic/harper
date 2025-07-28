@@ -1,5 +1,11 @@
 import type { Span } from 'harper.js';
-import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, type LintBox, shrinkBoxToFit } from './Box';
+import {
+	domRectToBox,
+	type IgnorableLintBox,
+	isBottomEdgeInBox,
+	type LintBox,
+	shrinkBoxToFit,
+} from './Box';
 import { getRangeForTextSpan } from './domUtils';
 import { getLexicalRoot, getSlateRoot } from './editorUtils';
 import ProtocolClient from './ProtocolClient';
@@ -51,7 +57,7 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): I
 				continue;
 			}
 
-      const shrunkBox = shrinkBoxToFit(targetRect, elBox);
+			const shrunkBox = shrinkBoxToFit(targetRect, elBox);
 
 			boxes.push({
 				x: shrunkBox.x,
