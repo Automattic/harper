@@ -16,7 +16,6 @@ use crate::{
     linting::{Lint, LintKind, Suggestion},
 };
 
-use super::ExprLinter;
 use super::Linter;
 
 pub struct ItsContraction {
