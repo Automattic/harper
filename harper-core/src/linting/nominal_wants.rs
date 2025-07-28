@@ -1,3 +1,5 @@
+use harper_brill::UPOS;
+
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{
@@ -14,7 +16,7 @@ pub struct NominalWants {
 impl Default for NominalWants {
     fn default() -> Self {
         fn is_applicable_pronoun(tok: &Token, src: &[char]) -> bool {
-            if tok.kind.is_pronoun() {
+            if tok.kind.is_pronoun() && tok.kind.is_upos(UPOS::PRON) {
                 let pron = tok.span.get_content_string(src).to_lowercase();
                 // "That" can act as two kinds of pronoun: demonstrative and relative.
                 // As a demonstrative pronoun, it's third person singular.
@@ -33,6 +35,7 @@ impl Default for NominalWants {
                     // "it" is both subject and object. Subject before "wants", object before "want".
                     && pron != "it"
                     && pron != "them"
+                    && pron != "who"
             } else {
                 false
             }
@@ -42,9 +45,8 @@ impl Default for NominalWants {
         let pattern = SequenceExpr::default()
             .then(is_applicable_pronoun)
             .then_whitespace()
-            .then(miss)
-            .t_any()
-            .then_anything_but_preposition();
+            .then(miss);
+
         Self {
             expr: Box::new(pattern),
         }
@@ -58,7 +60,7 @@ impl ExprLinter for NominalWants {
 
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
         let subject = toks.first()?;
-        let offender = &toks[toks.len() - 3];
+        let offender = &toks.last()?;
 
         let plural = subject.kind.is_plural_nominal();
 
