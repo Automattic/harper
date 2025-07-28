@@ -1070,8 +1070,8 @@ impl Default for DialectFlags {
 
 #[cfg(test)]
 pub mod tests {
-    use crate::spell::{Dictionary, FstDictionary};
     use crate::WordMetadata;
+    use crate::spell::{Dictionary, FstDictionary};
 
     // Helper function to get word metadata from the curated dictionary
     pub fn md(word: &str) -> WordMetadata {
@@ -1690,7 +1690,7 @@ pub mod tests {
     }
 
     mod adjective {
-        use crate::{word_metadata::tests::md, Degree};
+        use crate::{Degree, word_metadata::tests::md};
 
         // Getting degrees
 

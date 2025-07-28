@@ -1,13 +1,12 @@
 use lru::LruCache;
-use std::collections::hash_map::DefaultHasher;
-use std::hash::{Hash, Hasher};
+use std::hash::Hash;
 use std::num::NonZeroUsize;
-use std::sync::{Mutex, RwLock};
+use std::sync::Mutex;
 
 use super::Chunker;
 use crate::UPOS;
 
-/// Wraps any chunker implementation to add a LRU Cache.
+/// Wraps any chunker implementation to add an LRU Cache.
 /// Useful for incremental lints.
 pub struct CachedChunker<C: Chunker> {
     inner: C,
