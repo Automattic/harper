@@ -165,16 +165,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (10 priority)
-Message: |
-      65 | the earlier Brown Corpus and LOB Corpus tag sets, though much smaller. In
-      66 | Europe, tag sets from the Eagles Guidelines see wide use and include versions
-         |                           ^~~~~~ Use an apostrophe and `s` to form a noun’s possessive.
-Suggest:
-  - Replace with: “Eagle's”
-
-
-
 Lint:    WordChoice (63 priority)
 Message: |
       73 | cross-language differences. The tag sets for heavily inflected languages such as
