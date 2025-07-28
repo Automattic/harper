@@ -1,5 +1,5 @@
 use crate::{
-    Token,
+    CharStringExt, Token,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
@@ -15,14 +15,14 @@ impl Default for ThatThan {
                 if !tok.kind.is_comparative_adjective() {
                     return false;
                 }
-                let adj_lower = tok.span.get_content_string(src).to_lowercase();
-                adj_lower != "better" && adj_lower != "later"
+                let adj = tok.span.get_content(src);
+                !adj.eq_ignore_ascii_case_str("better") && !adj.eq_ignore_ascii_case_str("later")
             })
             .t_ws()
             .t_aco("that")
             .t_ws()
             .then(|tok: &Token, src: &[char]| {
-                tok.kind.is_word() && tok.span.get_content_string(src).to_lowercase() != "way"
+                tok.kind.is_word() && !tok.span.get_content(src).eq_ignore_ascii_case_str("way")
             });
 
         Self {
