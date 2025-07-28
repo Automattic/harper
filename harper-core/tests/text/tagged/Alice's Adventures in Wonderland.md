@@ -7,7 +7,7 @@
 >
 #
 > THE MILLENNIUM FULCRUM EDITION 3.0
-# D+  NSg+       NSg     NSg+    #
+# D   NSg+       NSg     NSg+    #
 >
 #
 > CHAPTER I    : Down      the Rabbit - Hole
@@ -17,7 +17,7 @@
 > Alice was beginning to get   very tired of sitting by      her     sister on  the bank   , and
 # NPr+  V   NSg/V/J   P  NSg/V J/R  V/J   P  NSg/V/J NSg/J/P ISg/D$+ NSg/V+ J/P D+  NSg/V+ . V/C
 > of having nothing  to do     : once  or    twice she  had peeped into the book   her     sister
-# P  V      NSg/I/J+ P  NSg/VX . NSg/C NPr/C W?    ISg+ V   V/J    P    D   NSg/V+ ISg/D$+ NSg/V+
+# P  V      NSg/I/J+ P  NSg/VX . NSg/C NPr/C W?    ISg+ V   V/J    P    D+  NSg/V+ ISg/D$+ NSg/V+
 > was reading , but     it       had no    pictures or    conversations in      it       , “ and what   is the use
 # V   NPr/V   . NSg/C/P NPr/ISg+ V   NPr/P NPl/V    NPr/C NPl/V+        NPr/J/P NPr/ISg+ . . V/C NSg/I+ VL D   NSg/V
 > of a   book   , ” thought Alice “ without pictures or    conversations ? ”
@@ -27,17 +27,17 @@
 > So        she  was considering in      her     own      mind   ( as    well    as    she  could  , for the hot      day
 # NSg/I/J/C ISg+ V   V           NPr/J/P ISg/D$+ NSg/V/J+ NSg/V+ . NSg/R NSg/V/J NSg/R ISg+ NSg/VX . C/P D+  NSg/V/J+ NPr🅪+
 > made her     feel    very sleepy and stupid ) , whether the pleasure of making a
-# V    ISg/D$+ NSg/I/V J/R  NSg/J  V/C NSg/J  . . I/C     D   NSg/V    P  NSg/V  D/P
+# V    ISg/D$+ NSg/I/V J/R  NSg/J  V/C NSg/J  . . I/C     D   NSg/V    P  NSg/V  D/P+
 > daisy - chain  would be     worth   the trouble of getting up        and picking the daisies ,
 # NPr+  . NSg/V+ VX    NSg/VX NSg/V/J D   NSg/V   P  NSg/V   NSg/V/J/P V/C V       D   NPl     .
 > when    suddenly a   White   Rabbit with pink     eyes   ran   close   by      her     .
-# NSg/I/C R        D/P NPr/V/J NSg/V  P    N🅪Sg/V/J NPl/V+ NSg/V NSg/V/J NSg/J/P ISg/D$+ .
+# NSg/I/C R        D/P NPr/V/J NSg/V+ P    N🅪Sg/V/J NPl/V+ NSg/V NSg/V/J NSg/J/P ISg/D$+ .
 >
 #
 > There was nothing  so        very remarkable in      that          ; nor   did Alice think it       so        very
 # +     V   NSg/I/J+ NSg/I/J/C J/R  W?         NPr/J/P NSg/I/C/Ddem+ . NSg/C V   NPr+  NSg/V NPr/ISg+ NSg/I/J/C J/R
 > much       out         of the way    to hear the Rabbit say   to itself , “ Oh    dear    ! Oh    dear    ! I    shall
-# NSg/I/J/Dq NSg/V/J/R/P P  D   NSg/J+ P  V    D+  NSg/V+ NSg/V P  ISg+   . . NPr/V NSg/V/J . NPr/V NSg/V/J . ISg+ VX
+# NSg/I/J/Dq NSg/V/J/R/P P  D+  NSg/J+ P  V    D+  NSg/V+ NSg/V P  ISg+   . . NPr/V NSg/V/J . NPr/V NSg/V/J . ISg+ VX
 > be     late  ! ” ( when    she  thought it       over      afterwards , it       occurred to her     that         she
 # NSg/VX NSg/J . . . NSg/I/C ISg+ NSg/V   NPr/ISg+ NSg/V/J/P R/Comm     . NPr/ISg+ V        P  ISg/D$+ NSg/I/C/Ddem ISg+
 > ought    to have   wondered at    this    , but     at    the time      it       all          seemed quite natural ) ;
@@ -62,8 +62,8 @@
 # NSg/V+ ISg+ V   P  NSg/V NSg/V/J/R/P P     .
 >
 #
-> The rabbit - hole  went  straight on  like        a   tunnel for some      way    , and then    dipped
-# D   NSg/V+ . NSg/V NSg/V NSg/V/J  J/P NSg/V/J/C/P D/P NSg/V+ C/P I/J/R/Dq+ NSg/J+ . V/C NSg/J/C V/J
+> The rabbit - hole   went  straight on  like        a   tunnel for some      way    , and then    dipped
+# D+  NSg/V+ . NSg/V+ NSg/V NSg/V/J  J/P NSg/V/J/C/P D/P NSg/V  C/P I/J/R/Dq+ NSg/J+ . V/C NSg/J/C V/J
 > suddenly down      , so        suddenly that         Alice had not   a   moment to think about stopping
 # R        NSg/V/J/P . NSg/I/J/C R        NSg/I/C/Ddem NPr+  V   NSg/C D/P NSg    P  NSg/V J/P   NSg/V
 > herself before she  found herself falling down      a   very deep  well    .
@@ -76,16 +76,16 @@
 # N🅪Sg/V/J+ NSg/R ISg+ NSg/V NSg/V/J/P P  NSg/V J/P   ISg/D$+ V/C P  NSg/V  NSg/I+ V   NSg/V/J P  V
 > next    . First   , she  tried to look  down      and make  out         what   she  was coming  to , but     it
 # NSg/J/P . NSg/V/J . ISg+ V/J   P  NSg/V NSg/V/J/P V/C NSg/V NSg/V/J/R/P NSg/I+ ISg+ V   NSg/V/J P  . NSg/C/P NPr/ISg+
-> was too dark    to see   anything ; then    she  looked at    the sides  of the well    , and
-# V   W?  NSg/V/J P  NSg/V NSg/I/V+ . NSg/J/C ISg+ V/J    NSg/P D   NPl/V+ P  D   NSg/V/J . V/C
+> was too dark    to see   anything ; then    she  looked at    the sides of the well    , and
+# V   W?  NSg/V/J P  NSg/V NSg/I/V+ . NSg/J/C ISg+ V/J    NSg/P D   NPl/V P  D   NSg/V/J . V/C
 > noticed that         they were  filled with cupboards and book   - shelves ; here    and there
 # V/J     NSg/I/C/Ddem IPl+ NSg/V V/J    P    NPl/V     V/C NSg/V+ . NPl/V+  . NSg/J/R V/C +
-> she  saw   maps  and pictures hung    upon pegs  . She  took down      a   jar    from one       of the
-# ISg+ NSg/V NPl/V V/C NPl/V+   NPr/V/J P    NPl/V . ISg+ V    NSg/V/J/P D/P NSg/V+ P    NSg/I/V/J P  D+
+> she  saw   maps  and pictures hung    upon pegs  . She  took down      a    jar    from one       of the
+# ISg+ NSg/V NPl/V V/C NPl/V+   NPr/V/J P    NPl/V . ISg+ V    NSg/V/J/P D/P+ NSg/V+ P    NSg/I/V/J P  D+
 > shelves as    she  passed ; it       was labelled “ ORANGE   MARMALADE ” , but     to her     great
-# NPl/V+  NSg/R ISg+ V/J    . NPr/ISg+ V   V/J/Comm . NPr🅪/V/J NᴹSg/V    . . NSg/C/P P  ISg/D$+ NSg/J+
-> disappointment it       was empty   : she  did not   like        to drop  the jar    for fear  of
-# NSg+           NPr/ISg+ V   NSg/V/J . ISg+ V   NSg/C NSg/V/J/C/P P  NSg/V D   NSg/V+ C/P NSg/V P
+# NPl/V+  NSg/R ISg+ V/J    . NPr/ISg+ V   V/J/Comm . NPr🅪/V/J NᴹSg/V    . . NSg/C/P P  ISg/D$+ NSg/J
+> disappointment it       was empty   : she  did not   like        to drop  the jar    for fear   of
+# NSg+           NPr/ISg+ V   NSg/V/J . ISg+ V   NSg/C NSg/V/J/C/P P  NSg/V D   NSg/V+ C/P NSg/V+ P
 > killing somebody underneath , so        managed to put   it       into one       of the cupboards as
 # NSg/V/J NSg/I+   NSg/J/P    . NSg/I/J/C V/J     P  NSg/V NPr/ISg+ P    NSg/I/V/J P  D   NPl/V     NSg/R
 > she  fell    past      it       .
@@ -94,8 +94,8 @@
 #
 > “ Well    ! ” thought Alice to herself , “ after such  a    fall   as    this    , I    shall think
 # . NSg/V/J . . NSg/V   NPr+  P  ISg+    . . J/P   NSg/I D/P+ NSg/V+ NSg/R I/Ddem+ . ISg+ VX    NSg/V
-> nothing of tumbling down      stairs ! How   brave   they’ll all          think me       at    home     ! Why   , I
-# NSg/I/J P  NSg/V    NSg/V/J/P NPl+   . NSg/C NSg/V/J W?      NSg/I/J/C/Dq NSg/V NPr/ISg+ NSg/P NSg/V/J+ . NSg/V . ISg+
+> nothing  of tumbling down      stairs ! How   brave   they’ll all          think me       at    home     ! Why   , I
+# NSg/I/J+ P  NSg/V    NSg/V/J/P NPl+   . NSg/C NSg/V/J W?      NSg/I/J/C/Dq NSg/V NPr/ISg+ NSg/P NSg/V/J+ . NSg/V . ISg+
 > wouldn’t say   anything about it       , even    if    I    fell    off       the top     of the house  ! ” ( Which
 # VX       NSg/V NSg/I/V+ J/P   NPr/ISg+ . NSg/V/J NSg/C ISg+ NSg/V/J NSg/V/J/P D   NSg/V/J P  D   NPr/V+ . . . I/C+
 > was very likely true    . )
@@ -107,11 +107,11 @@
 > I’ve fallen by      this   time      ? ” she  said aloud . “ I    must  be     getting somewhere near      the
 # W?   W?     NSg/J/P I/Ddem N🅪Sg/V/J+ . . ISg+ V/J  J     . . ISg+ NSg/V NSg/VX NSg/V   NSg       NSg/V/J/P D
 > centre     of the earth  . Let   me       see   : that          would be     four thousand miles  down      , I
-# NSg/V/Comm P  D+  NPr/V+ . NSg/V NPr/ISg+ NSg/V . NSg/I/C/Ddem+ VX    NSg/VX NSg  NSg+     NPrPl+ NSg/V/J/P . ISg+
+# NSg/V/Comm P  D+  NPr/V+ . NSg/V NPr/ISg+ NSg/V . NSg/I/C/Ddem+ VX    NSg/VX NSg+ NSg+     NPrPl+ NSg/V/J/P . ISg+
 > think — ” ( for , you    see   , Alice had learnt several things of this    sort   in      her
 # NSg/V . . . C/P . ISgPl+ NSg/V . NPr+  V   V      J/Dq    NPl/V  P  I/Ddem+ NSg/V+ NPr/J/P ISg/D$+
 > lessons in      the schoolroom , and though this    was not   a   very good    opportunity for
-# NPl/V+  NPr/J/P D   NSg        . V/C V/C    I/Ddem+ V   NSg/C D/P J/R  NPr/V/J NSg         C/P
+# NPl/V+  NPr/J/P D   NSg        . V/C V/C    I/Ddem+ V   NSg/C D/P J/R  NPr/V/J NSg+        C/P
 > showing off       her     knowledge , as    there was no    one        to listen to her     , still   it       was
 # NSg/V+  NSg/V/J/P ISg/D$+ NᴹSg+     . NSg/R +     V   NPr/P NSg/I/V/J+ P  NSg/V  P  ISg/D$+ . NSg/V/J NPr/ISg+ V
 > good    practice to say   it       over      ) “ — yes   , that’s about the right   distance — but     then    I
@@ -122,8 +122,8 @@
 # V   . NPr/C NSg+      I/C    . NSg/C/P NSg/V   IPl+ NSg/V NPr/V/J NSg/J NPl/V P  NSg/V . .
 >
 #
-> Presently she  began again . “ I    wonder if    I    shall fall  right   through the earth  !
-# R         ISg+ V     P     . . ISg+ NSg/V  NSg/C ISg+ VX    NSg/V NPr/V/J NSg/J/P D+  NPr/V+ .
+> Presently she  began again . “ I    wonder if    I    shall fall   right   through the earth  !
+# R         ISg+ V     P     . . ISg+ NSg/V  NSg/C ISg+ VX    NSg/V+ NPr/V/J NSg/J/P D+  NPr/V+ .
 > How   funny it’ll seem to come    out         among the people that          walk  with their heads
 # NSg/C NSg/J W?    V    P  NSg/V/P NSg/V/J/R/P P     D   NSg/V+ NSg/I/C/Ddem+ NSg/V P    D$+   NPl/V+
 > downward ! The Antipathies , I    think — ” ( she  was rather  glad    there was no    one
@@ -157,7 +157,7 @@
 > to herself , in      a   dreamy sort  of way    , “ Do     cats   eat bats  ? Do     cats   eat bats  ? ” and
 # P  ISg+    . NPr/J/P D/P J      NSg/V P  NSg/J+ . . NSg/VX NPl/V+ V   NPl/V . NSg/VX NPl/V+ V   NPl/V . . V/C
 > sometimes , “ Do     bats  eat cats   ? ” for , you    see   , as    she  couldn’t answer either
-# R         . . NSg/VX NPl/V V   NPl/V+ . . C/P . ISgPl+ NSg/V . NSg/R ISg+ V        NSg/V  I/C
+# R         . . NSg/VX NPl/V V   NPl/V+ . . C/P . ISgPl+ NSg/V . NSg/R ISg+ V        NSg/V+ I/C
 > question , it       didn’t much       matter   which way    she  put   it       . She  felt    that         she  was
 # NSg/V+   . NPr/ISg+ V      NSg/I/J/Dq N🅪Sg/V/J I/C+  NSg/J+ ISg+ NSg/V NPr/ISg+ . ISg+ NSg/V/J NSg/I/C/Ddem ISg+ V
 > dozing off       , and had just begun to dream   that         she  was walking hand   in      hand   with
@@ -175,15 +175,15 @@
 > looked up        , but     it       was all          dark    overhead ; before her     was another long    passage ,
 # V/J    NSg/V/J/P . NSg/C/P NPr/ISg+ V   NSg/I/J/C/Dq NSg/V/J NSg/J/P  . C/P    ISg/D$+ V   I/D     NPr/V/J NSg/V/J .
 > and the White    Rabbit was still   in      sight  , hurrying down      it       . There was not   a
-# V/C D+  NPr/V/J+ NSg/V+ V   NSg/V/J NPr/J/P NSg/V+ . V        NSg/V/J/P NPr/ISg+ . +     V   NSg/C D/P+
-> moment to be     lost : away went  Alice like        the wind   , and was just in      time     to hear
-# NSg+   P  NSg/VX V/J  . V/J  NSg/V NPr+  NSg/V/J/C/P D+  NSg/V+ . V/C V   V/J  NPr/J/P N🅪Sg/V/J P  V
+# V/C D+  NPr/V/J+ NSg/V+ V   NSg/V/J NPr/J/P NSg/V+ . V        NSg/V/J/P NPr/ISg+ . +     V   NSg/C D/P
+> moment to be     lost : away went  Alice like        the wind   , and was just in      time      to hear
+# NSg+   P  NSg/VX V/J  . V/J  NSg/V NPr+  NSg/V/J/C/P D+  NSg/V+ . V/C V   V/J  NPr/J/P N🅪Sg/V/J+ P  V
 > it       say   , as    it       turned a    corner   , “ Oh    my  ears   and whiskers , how   late  it’s getting ! ”
 # NPr/ISg+ NSg/V . NSg/R NPr/ISg+ V/J    D/P+ NSg/V/J+ . . NPr/V D$+ NPl/V+ V/C W?       . NSg/C NSg/J W?   NSg/V   . .
 > She  was close   behind  it       when    she  turned the corner   , but     the Rabbit was no    longer
 # ISg+ V   NSg/V/J NSg/J/P NPr/ISg+ NSg/I/C ISg+ V/J    D+  NSg/V/J+ . NSg/C/P D+  NSg/V+ V   NPr/P NSg/J
-> to be     seen  : she  found herself in      a   long    , low     hall , which was lit     up        by      a   row   of
-# P  NSg/VX NSg/V . ISg+ NSg/V ISg+    NPr/J/P D/P NPr/V/J . NSg/V/J NPr  . I/C+  V   NSg/V/J NSg/V/J/P NSg/J/P D/P NSg/V P
+> to be     seen  : she  found herself in      a   long    , low      hall , which was lit     up        by      a   row   of
+# P  NSg/VX NSg/V . ISg+ NSg/V ISg+    NPr/J/P D/P NPr/V/J . NSg/V/J+ NPr+ . I/C+  V   NSg/V/J NSg/V/J/P NSg/J/P D/P NSg/V P
 > lamps  hanging from the roof   .
 # NPl/V+ NSg/V/J P    D+  NSg/V+ .
 >
@@ -196,8 +196,8 @@
 # V/J    R     NSg/V/J/P D   NSg/V/J . NSg/V/J   NSg/C ISg+ V   J    P  NSg/V NSg/V/J/R/P P     .
 >
 #
-> Suddenly she  came    upon a   little     three - legged  table  , all          made of solid  glass   ;
-# R        ISg+ NSg/V/P P    D/P NPr/I/J/Dq NSg   . NSg/V/J NSg/V+ . NSg/I/J/C/Dq V    P  NSg/J+ NPr🅪/V+ .
+> Suddenly she  came    upon a   little     three - legged  table  , all          made of solid glass   ;
+# R        ISg+ NSg/V/P P    D/P NPr/I/J/Dq NSg   . NSg/V/J NSg/V+ . NSg/I/J/C/Dq V    P  NSg/J NPr🅪/V+ .
 > there was nothing  on  it       except a   tiny  golden  key     , and Alice’s first    thought was
 # +     V   NSg/I/J+ J/P NPr/ISg+ V/C/P  D/P NSg/J NPr/V/J NPr/V/J . V/C NSg$    NSg/V/J+ NSg/V+  V
 > that         it       might     belong to one       of the doors of the hall ; but     , alas ! either the
@@ -216,8 +216,8 @@
 #
 > Alice opened the door   and found that         it       led     into a    small    passage  , not   much
 # NPr+  V/J    D+  NSg/V+ V/C NSg/V NSg/I/C/Ddem NPr/ISg+ NSg/V/J P    D/P+ NPr/V/J+ NSg/V/J+ . NSg/C NSg/I/J/Dq
-> larger than a   rat    - hole  : she  knelt down      and looked along the passage  into the
-# J      C/P  D/P NSg/V+ . NSg/V . ISg+ V     NSg/V/J/P V/C V/J    P     D   NSg/V/J+ P    D
+> larger than a   rat    - hole   : she  knelt down      and looked along the passage  into the
+# J      C/P  D/P NSg/V+ . NSg/V+ . ISg+ V     NSg/V/J/P V/C V/J    P     D   NSg/V/J+ P    D
 > loveliest garden   you    ever saw   . How   she  longed to get   out         of that          dark     hall , and
 # W?        NSg/V/J+ ISgPl+ J    NSg/V . NSg/C ISg+ V/J    P  NSg/V NSg/V/J/R/P P  NSg/I/C/Ddem+ NSg/V/J+ NPr+ . V/C
 > wander about among those  beds  of bright   flowers  and those  cool    fountains , but
@@ -229,7 +229,7 @@
 > shoulders . Oh    , how   I    wish  I    could  shut    up        like        a    telescope ! I    think I    could  , if
 # NPl/V+    . NPr/V . NSg/C ISg+ NSg/V ISg+ NSg/VX NSg/V/J NSg/V/J/P NSg/V/J/C/P D/P+ NSg/V+    . ISg+ NSg/V ISg+ NSg/VX . NSg/C
 > I    only  knew how   to begin . ” For , you    see   , so        many       out         - of - the - way   things had
-# ISg+ J/R/C V    NSg/C P  NSg/V . . C/P . ISgPl+ NSg/V . NSg/I/J/C NSg/I/J/Dq NSg/V/J/R/P . P  . D   . NSg/J NPl/V  V
+# ISg+ J/R/C V    NSg/C P  NSg/V . . C/P . ISgPl+ NSg/V . NSg/I/J/C NSg/I/J/Dq NSg/V/J/R/P . P  . D   . NSg/J NPl/V+ V
 > happened lately , that         Alice had begun to think that         very few       things indeed were
 # V/J      R      . NSg/I/C/Ddem NPr+  V   V     P  NSg/V NSg/I/C/Ddem J/R  NSg/I/Dq+ NPl/V+ W?     NSg/V
 > really impossible .
@@ -260,8 +260,8 @@
 # NPl+     NPr/I+ V   V   V/J   . V/C V/J   NSg/V/J/P NSg/J/P NSg/V/J NPl/V  V/C NSg/V/J NSg/J
 > things , all          because they would not   remember the simple  rules  their friends had
 # NPl/V+ . NSg/I/J/C/Dq C/P     IPl+ VX    NSg/C NSg/V    D   NSg/V/J NPl/V+ D$+   NPl/V+  V
-> taught them     : such  as    , that         a   red   - hot      poker    will   burn  you    if    you    hold    it       too
-# V      NSg/IPl+ . NSg/I NSg/R . NSg/I/C/Ddem D/P NSg/J . NSg/V/J+ NSg/V/J+ NPr/VX NSg/V ISgPl+ NSg/C ISgPl+ NSg/V/J NPr/ISg+ W?
+> taught them     : such  as    , that         a   red   - hot     poker    will   burn  you    if    you    hold    it       too
+# V      NSg/IPl+ . NSg/I NSg/R . NSg/I/C/Ddem D/P NSg/J . NSg/V/J NSg/V/J+ NPr/VX NSg/V ISgPl+ NSg/C ISgPl+ NSg/V/J NPr/ISg+ W?
 > long    ; and that         if    you    cut     your finger very deeply with a   knife  , it       usually
 # NPr/V/J . V/C NSg/I/C/Ddem NSg/C ISgPl+ NSg/V/J D$+  NSg/V+ J/R  R      P    D/P NSg/V+ . NPr/ISg+ R
 > bleeds ; and she  had never forgotten that          , if    you    drink  much       from a   bottle marked
@@ -274,8 +274,8 @@
 # C       . I/Ddem+ NSg/V+ V   NSg/C V/J    . NSg/V+ . . NSg/I/J/C NPr+  V/J      P  NSg/V/J NPr/ISg+ . V/C
 > finding it       very nice    , ( it       had , in      fact , a   sort  of mixed flavour    of cherry  - tart    ,
 # NSg/V   NPr/ISg+ J/R  NPr/V/J . . NPr/ISg+ V   . NPr/J/P NSg+ . D/P NSg/V P  V/J   NSg/V/Comm P  NPr🅪/J+ . NSg/V/J .
-> custard , pine  - apple , roast    turkey  , toffee , and hot     buttered toast  , ) she  very
-# N🅪Sg    . NSg/V . NPr🅪  . NSg/V/J+ NPr🅪/J+ . NSg/V  . V/C NSg/V/J V/J      NSg/V+ . . ISg+ J/R
+> custard , pine  - apple , roast   turkey  , toffee , and hot     buttered toast  , ) she  very
+# N🅪Sg    . NSg/V . NPr🅪+ . NSg/V/J NPr🅪/J+ . NSg/V  . V/C NSg/V/J V/J      NSg/V+ . . ISg+ J/R
 > soon finished it       off       .
 # J/R  V/J      NPr/ISg+ NSg/V/J/P .
 >
@@ -285,11 +285,11 @@
 >
 #
 > And so        it       was indeed : she  was now       only  ten inches high    , and her     face   brightened
-# V/C NSg/I/J/C NPr/ISg+ V   W?     . ISg+ V   NPr/V/J/C J/R/C NSg NPl/V  NSg/V/J . V/C ISg/D$+ NSg/V+ V/J
+# V/C NSg/I/J/C NPr/ISg+ V   W?     . ISg+ V   NPr/V/J/C J/R/C NSg NPl/V+ NSg/V/J . V/C ISg/D$+ NSg/V+ V/J
 > up        at    the thought that         she  was now       the right   size   for going   through the little
 # NSg/V/J/P NSg/P D   NSg/V   NSg/I/C/Ddem ISg+ V   NPr/V/J/C D   NPr/V/J NSg/V+ C/P NSg/V/J NSg/J/P D   NPr/I/J/Dq
-> door   into that         lovely garden   . First   , however , she  waited for a   few       minutes to
-# NSg/V+ P    NSg/I/C/Ddem NSg/J  NSg/V/J+ . NSg/V/J . C       . ISg+ V/J    C/P D/P NSg/I/Dq+ NPl/V+  P
+> door   into that         lovely garden   . First   , however , she  waited for a    few       minutes to
+# NSg/V+ P    NSg/I/C/Ddem NSg/J  NSg/V/J+ . NSg/V/J . C       . ISg+ V/J    C/P D/P+ NSg/I/Dq+ NPl/V+  P
 > see   if    she  was going   to shrink any    further : she  felt    a   little     nervous about
 # NSg/V NSg/C ISg+ V   NSg/V/J P  NSg/V  I/R/Dq V/J     . ISg+ NSg/V/J D/P NPr/I/J/Dq J       J/P
 > this    ; “ for it       might     end    , you    know  , ” said Alice to herself , “ in      my  going   out
@@ -297,17 +297,17 @@
 > altogether , like        a    candle . I    wonder what   I    should be     like        then    ? ” And she  tried
 # NSg        . NSg/V/J/C/P D/P+ NSg/V+ . ISg+ NSg/V  NSg/I+ ISg+ VX     NSg/VX NSg/V/J/C/P NSg/J/C . . V/C ISg+ V/J
 > to fancy   what   the flame   of a    candle is like        after the candle is blown out         , for
-# P  NSg/V/J NSg/I+ D   NSg/V/J P  D/P+ NSg/V+ VL NSg/V/J/C/P J/P   D+  NSg/V  VL V/J   NSg/V/J/R/P . C/P
-> she  could  not   remember ever having seen  such  a    thing  .
-# ISg+ NSg/VX NSg/C NSg/V    J    V      NSg/V NSg/I D/P+ NSg/V+ .
+# P  NSg/V/J NSg/I+ D   NSg/V/J P  D/P+ NSg/V+ VL NSg/V/J/C/P J/P   D+  NSg/V+ VL V/J   NSg/V/J/R/P . C/P
+> she  could  not   remember ever having seen  such   a    thing  .
+# ISg+ NSg/VX NSg/C NSg/V    J    V      NSg/V NSg/I+ D/P+ NSg/V+ .
 >
 #
 > After a    while      , finding that         nothing  more         happened , she  decided on  going   into the
 # J/P   D/P+ NSg/V/C/P+ . NSg/V   NSg/I/C/Ddem NSg/I/J+ NPr/I/V/J/Dq V/J      . ISg+ NSg/V/J J/P NSg/V/J P    D+
-> garden   at    once  ; but     , alas for poor    Alice ! when    she  got to the door   , she  found
-# NSg/V/J+ NSg/P NSg/C . NSg/C/P . NPl  C/P NSg/V/J NPr+  . NSg/I/C ISg+ V   P  D+  NSg/V+ . ISg+ NSg/V
+> garden   at    once  ; but     , alas for poor     Alice ! when    she  got to the door   , she  found
+# NSg/V/J+ NSg/P NSg/C . NSg/C/P . NPl  C/P NSg/V/J+ NPr+  . NSg/I/C ISg+ V   P  D+  NSg/V+ . ISg+ NSg/V
 > she  had forgotten the little     golden  key     , and when    she  went  back    to the table  for
-# ISg+ V   NSg/V/J   D   NPr/I/J/Dq NPr/V/J NPr/V/J . V/C NSg/I/C ISg+ NSg/V NSg/V/J P  D   NSg/V+ C/P
+# ISg+ V   NSg/V/J   D   NPr/I/J/Dq NPr/V/J NPr/V/J . V/C NSg/I/C ISg+ NSg/V NSg/V/J P  D+  NSg/V+ C/P
 > it       , she  found she  could  not   possibly reach it       : she  could  see   it       quite plainly
 # NPr/ISg+ . ISg+ NSg/V ISg+ NSg/VX NSg/C R        NSg/V NPr/ISg+ . ISg+ NSg/VX NSg/V NPr/ISg+ NSg   R
 > through the glass   , and she  tried her     best     to climb up        one       of the legs  of the
@@ -326,8 +326,8 @@
 # J/R  NPr/V/J+ NᴹSg+  . . V/C    ISg+ J/R  R      V/J      NPr/ISg+ . . V/C R         ISg+
 > scolded herself so        severely as    to bring tears  into her     eyes   ; and once  she
 # V/J     ISg+    NSg/I/J/C R        NSg/R P  V     NPl/V+ P    ISg/D$+ NPl/V+ . V/C NSg/C ISg+
-> remembered trying  to box   her     own     ears   for having cheated herself in      a   game    of
-# V/J        NSg/V/J P  NSg/V ISg/D$+ NSg/V/J NPl/V+ C/P V      V/J     ISg+    NPr/J/P D/P NSg/V/J P
+> remembered trying  to box   her     own     ears   for having cheated herself in      a   game     of
+# V/J        NSg/V/J P  NSg/V ISg/D$+ NSg/V/J NPl/V+ C/P V      V/J     ISg+    NPr/J/P D/P NSg/V/J+ P
 > croquet she  was playing against herself , for this   curious child  was very fond    of
 # NSg/V   ISg+ V   V       C/P     ISg+    . C/P I/Ddem J       NSg/V+ V   J/R  NSg/V/J P
 > pretending to be     two people . “ But     it’s no    use   now       , ” thought poor    Alice , “ to
@@ -340,8 +340,8 @@
 #
 > Soon her     eye    fell    on  a    little      glass   box    that          was lying   under   the table  : she
 # J/R  ISg/D$+ NSg/V+ NSg/V/J J/P D/P+ NPr/I/J/Dq+ NPr🅪/V+ NSg/V+ NSg/I/C/Ddem+ V   NSg/V/J NSg/J/P D+  NSg/V+ . ISg+
-> opened it       , and found in      it       a   very small   cake  , on  which the words  “ EAT ME       ” were
-# V/J    NPr/ISg+ . V/C NSg/V NPr/J/P NPr/ISg+ D/P J/R  NPr/V/J NSg/V . J/P I/C+  D+  NPl/V+ . V   NPr/ISg+ . NSg/V
+> opened it       , and found in      it       a   very small    cake   , on  which the words  “ EAT ME       ” were
+# V/J    NPr/ISg+ . V/C NSg/V NPr/J/P NPr/ISg+ D/P J/R  NPr/V/J+ NSg/V+ . J/P I/C+  D+  NPl/V+ . V   NPr/ISg+ . NSg/V
 > beautifully marked in      currants . “ Well    , I’ll eat it       , ” said Alice , “ and if    it
 # R           V/J    NPr/J/P NPl      . . NSg/V/J . W?   V   NPr/ISg+ . . V/J  NPr+  . . V/C NSg/C NPr/ISg+
 > makes me       grow larger , I    can    reach the key     ; and if    it       makes me       grow smaller , I
@@ -362,8 +362,8 @@
 # I/Ddem R         V       NSg/I/C NSg/I/V/J V    NSg/V+ . NSg/C/P NPr+  V   V   NSg/I/J/C NSg/I/J/Dq P    D
 > way   of expecting nothing  but     out         - of - the - way   things to happen , that         it       seemed
 # NSg/J P  V         NSg/I/J+ NSg/C/P NSg/V/J/R/P . P  . D   . NSg/J NPl/V  P  V      . NSg/I/C/Ddem NPr/ISg+ V/J
-> quite dull and stupid for life  to go      on  in      the common   way    .
-# NSg   V/J  V/C NSg/J  C/P NSg/V P  NSg/V/J J/P NPr/J/P D+  NSg/V/J+ NSg/J+ .
+> quite dull and stupid for life   to go      on  in      the common   way    .
+# NSg   V/J  V/C NSg/J  C/P NSg/V+ P  NSg/V/J J/P NPr/J/P D+  NSg/V/J+ NSg/J+ .
 >
 #
 > So        she  set     to work  , and very soon finished off       the cake   .
@@ -384,8 +384,8 @@
 # NSg/P ISg/D$+ NPl+ . IPl+ V/J    P  NSg/VX NSg    NSg/V/J/R/P P  NSg/V+ . IPl+ NSg/V NSg/V   NSg/I/J/C NSg/V/J
 > off       ) . “ Oh    , my  poor     little      feet , I    wonder who    will   put   on  your shoes and
 # NSg/V/J/P . . . NPr/V . D$+ NSg/V/J+ NPr/I/J/Dq+ NPl+ . ISg+ NSg/V  NPr/I+ NPr/VX NSg/V J/P D$+  NPl/V V/C
-> stockings for you    now       , dears  ? I’m sure I    shan’t be     able    ! I    shall be     a   great deal
-# NPl/V+    C/P ISgPl+ NPr/V/J/C . NPl/V+ . W?  J    ISg+ V      NSg/VX NSg/V/J . ISg+ VX    NSg/VX D/P NSg/J NSg/V/J
+> stockings for you    now       , dears  ? I’m sure I    shan’t be     able    ! I    shall be     a    great  deal
+# NPl/V+    C/P ISgPl+ NPr/V/J/C . NPl/V+ . W?  J    ISg+ V      NSg/VX NSg/V/J . ISg+ VX    NSg/VX D/P+ NSg/J+ NSg/V/J+
 > too far     off       to trouble myself about you    : you    must  manage the best      way    you
 # W?  NSg/V/J NSg/V/J/P P  NSg/V   ISg+   J/P   ISgPl+ . ISgPl+ NSg/V NSg/V  D+  NPr/VX/J+ NSg/J+ ISgPl+
 > can    ; — but     I    must  be     kind  to them     , ” thought Alice , “ or    perhaps they won’t walk  the
@@ -400,8 +400,8 @@
 # V/C ISg+ NSg/V J/P NSg/V    P  ISg+    NSg/C ISg+ VX    NSg/V  NPr/ISg+ . . IPl+ NSg/V NSg/V/J NSg/J/P
 > the carrier , ” she  thought ; “ and how   funny it’ll seem , sending presents to one’s
 # D+  NPr/J+  . . ISg+ NSg/V   . . V/C NSg/C NSg/J W?    V    . V       NPl/V+   P  NSg$
-> own      feet ! And how   odd    the directions will   look  !
-# NSg/V/J+ NPl+ . V/C NSg/C NSg/J+ D+  NSg+       NPr/VX NSg/V .
+> own     feet ! And how   odd    the directions will   look  !
+# NSg/V/J NPl+ . V/C NSg/C NSg/J+ D+  NSg+       NPr/VX NSg/V .
 >
 #
 > Alice’s Right    Foot   , Esq . , Hearthrug , near      the Fender  , ( with Alice’s love   ) .
@@ -415,15 +415,15 @@
 > Just then    her     head     struck against the roof  of the hall : in      fact she  was now       more
 # V/J  NSg/J/C ISg/D$+ NPr/V/J+ V      C/P     D   NSg/V P  D+  NPr+ . NPr/J/P NSg+ ISg+ V   NPr/V/J/C NPr/I/V/J/Dq
 > than nine feet high    , and she  at    once  took up        the little     golden  key     and hurried
-# C/P  NSg  NPl+ NSg/V/J . V/C ISg+ NSg/P NSg/C V    NSg/V/J/P D   NPr/I/J/Dq NPr/V/J NPr/V/J V/C V/J
+# C/P  NSg+ NPl+ NSg/V/J . V/C ISg+ NSg/P NSg/C V    NSg/V/J/P D   NPr/I/J/Dq NPr/V/J NPr/V/J V/C V/J
 > off       to the garden   door   .
 # NSg/V/J/P P  D+  NSg/V/J+ NSg/V+ .
 >
 #
 > Poor     Alice ! It       was as    much       as    she  could  do     , lying   down      on  one        side     , to look
 # NSg/V/J+ NPr+  . NPr/ISg+ V   NSg/R NSg/I/J/Dq NSg/R ISg+ NSg/VX NSg/VX . NSg/V/J NSg/V/J/P J/P NSg/I/V/J+ NSg/V/J+ . P  NSg/V
-> through into the garden  with one        eye    ; but     to get   through was more         hopeless than
-# NSg/J/P P    D   NSg/V/J P    NSg/I/V/J+ NSg/V+ . NSg/C/P P  NSg/V NSg/J/P V   NPr/I/V/J/Dq J        C/P
+> through into the garden   with one        eye    ; but     to get   through was more         hopeless than
+# NSg/J/P P    D   NSg/V/J+ P    NSg/I/V/J+ NSg/V+ . NSg/C/P P  NSg/V NSg/J/P V   NPr/I/V/J/Dq J        C/P
 > ever : she  sat     down      and began to cry   again .
 # J    . ISg+ NSg/V/J NSg/V/J/P V/C V     P  NSg/V P     .
 >
@@ -441,21 +441,21 @@
 >
 #
 > After a    time      she  heard a   little     pattering of feet in      the distance , and she
-# J/P   D/P+ N🅪Sg/V/J+ ISg+ V/J   D/P NPr/I/J/Dq V         P  NPl+ NPr/J/P D   NSg/V+   . V/C ISg+
-> hastily dried her     eyes   to see   what   was coming  . It       was the White    Rabbit
-# R       V/J   ISg/D$+ NPl/V+ P  NSg/V NSg/I+ V   NSg/V/J . NPr/ISg+ V   D   NPr/V/J+ NSg/V
-> returning , splendidly dressed , with a   pair  of white    kid    gloves in      one       hand   and a
-# V         . R          V/J     . P    D/P NSg/V P  NPr/V/J+ NSg/V+ NPl/V+ NPr/J/P NSg/I/V/J NSg/V+ V/C D/P+
+# J/P   D/P+ N🅪Sg/V/J+ ISg+ V/J   D/P NPr/I/J/Dq V         P  NPl  NPr/J/P D   NSg/V+   . V/C ISg+
+> hastily dried her     eyes   to see   what   was coming  . It       was the White   Rabbit
+# R       V/J   ISg/D$+ NPl/V+ P  NSg/V NSg/I+ V   NSg/V/J . NPr/ISg+ V   D   NPr/V/J NSg/V
+> returning , splendidly dressed , with a   pair  of white    kid    gloves in      one       hand  and a
+# V         . R          V/J     . P    D/P NSg/V P  NPr/V/J+ NSg/V+ NPl/V+ NPr/J/P NSg/I/V/J NSg/V V/C D/P+
 > large  fan    in      the other   : he       came    trotting along in      a    great  hurry  , muttering to
 # NSg/J+ NSg/V+ NPr/J/P D   NSg/V/J . NPr/ISg+ NSg/V/P NSg/V/J  P     NPr/J/P D/P+ NSg/J+ NSg/V+ . NSg/V     P
 > himself as    he       came    , “ Oh    ! the Duchess , the Duchess ! Oh    ! won’t she  be     savage   if
 # ISg+    NSg/R NPr/ISg+ NSg/V/P . . NPr/V . D   NSg/V   . D   NSg/V   . NPr/V . V     ISg+ NSg/VX NPr/V/J+ NSg/C
 > I’ve kept her     waiting ! ” Alice felt    so        desperate that         she  was ready   to ask   help
 # W?   V    ISg/D$+ NSg/V   . . NPr+  NSg/V/J NSg/I/J/C NSg/J     NSg/I/C/Ddem ISg+ V   NSg/V/J P  NSg/V NSg/V
-> of any     one        ; so        , when    the Rabbit came    near      her     , she  began , in      a   low     , timid voice ,
-# P  I/R/Dq+ NSg/I/V/J+ . NSg/I/J/C . NSg/I/C D+  NSg/V+ NSg/V/P NSg/V/J/P ISg/D$+ . ISg+ V     . NPr/J/P D/P NSg/V/J . J     NSg/V .
-> “ If    you    please , sir    — ” The Rabbit started violently , dropped the white   kid    gloves
-# . NSg/C ISgPl+ V      . NPr/V+ . . D+  NSg/V+ V/J     R         . V/J     D   NPr/V/J NSg/V+ NPl/V
+> of any     one        ; so        , when    the Rabbit came    near      her     , she  began , in      a   low     , timid voice  ,
+# P  I/R/Dq+ NSg/I/V/J+ . NSg/I/J/C . NSg/I/C D+  NSg/V+ NSg/V/P NSg/V/J/P ISg/D$+ . ISg+ V     . NPr/J/P D/P NSg/V/J . J+    NSg/V+ .
+> “ If    you    please , sir    — ” The Rabbit started violently , dropped the white    kid    gloves
+# . NSg/C ISgPl+ V      . NPr/V+ . . D+  NSg/V+ V/J     R         . V/J     D+  NPr/V/J+ NSg/V+ NPl/V
 > and the fan    , and skurried away into the darkness as    hard    as    he       could  go      .
 # V/C D+  NSg/V+ . V/C ?        V/J  P    D   NSg+     NSg/R NSg/V/J NSg/R NPr/ISg+ NSg/VX NSg/V/J .
 >
@@ -472,10 +472,10 @@
 # N🅪Sg/V+ . ISg+ NSg    NSg/V ISg+ NPr/VX NSg/V    NSg/V/J D/P NPr/I/J/Dq NSg/J     . NSg/C/P NSg/C W?
 > not   the same , the next    question is , Who    in      the world  am      I    ? Ah      , that’s the great
 # NSg/C D   I/J  . D   NSg/J/P NSg/V+   VL . NPr/I+ NPr/J/P D   NSg/V+ NPr/V/J ISg+ . NSg/I/V . NSg$   D   NSg/J
-> puzzle ! ” And she  began thinking over      all          the children she  knew that          were  of the
-# NSg/V  . . V/C ISg+ V     V        NSg/V/J/P NSg/I/J/C/Dq D+  NPl+     ISg+ V    NSg/I/C/Ddem+ NSg/V P  D
-> same age    as    herself , to see   if    she  could  have   been  changed for any    of them     .
-# I/J  N🅪Sg/V NSg/R ISg+    . P  NSg/V NSg/C ISg+ NSg/VX NSg/VX NSg/V V/J     C/P I/R/Dq P  NSg/IPl+ .
+> puzzle ! ” And she  began thinking over      all           the children she  knew that          were  of the
+# NSg/V  . . V/C ISg+ V     V        NSg/V/J/P NSg/I/J/C/Dq+ D+  NPl+     ISg+ V    NSg/I/C/Ddem+ NSg/V P  D+
+> same age     as    herself , to see   if    she  could  have   been  changed for any    of them     .
+# I/J+ N🅪Sg/V+ NSg/R ISg+    . P  NSg/V NSg/C ISg+ NSg/VX NSg/VX NSg/V V/J     C/P I/R/Dq P  NSg/IPl+ .
 >
 #
 > “ I’m sure I’m not   Ada  , ” she  said , “ for her     hair    goes  in      such  long    ringlets , and
@@ -487,7 +487,7 @@
 > she  , and I’m I    , and — oh    dear    , how   puzzling it       all          is ! I’ll try     if    I    know  all          the
 # ISg+ . V/C W?  ISg+ . V/C . NPr/V NSg/V/J . NSg/C V        NPr/ISg+ NSg/I/J/C/Dq VL . W?   NSg/V/J NSg/C ISg+ NSg/V NSg/I/J/C/Dq D
 > things I    used to know  . Let   me       see   : four times  five is  twelve , and four times  six
-# NPl/V+ ISg+ V/J  P  NSg/V . NSg/V NPr/ISg+ NSg/V . NSg+ NPl/V+ NSg+ VL+ NSg    . V/C NSg+ NPl/V+ NSg+
+# NPl/V+ ISg+ V/J  P  NSg/V . NSg/V NPr/ISg+ NSg/V . NSg  NPl/V+ NSg  VL+ NSg    . V/C NSg+ NPl/V+ NSg
 > is  thirteen , and four times  seven is  — oh    dear    ! I    shall never get   to twenty at
 # VL+ NSg      . V/C NSg+ NPl/V+ NSg+  VL+ . NPr/V NSg/V/J . ISg+ VX    R     NSg/V P  NSg    NSg/P
 > that          rate   ! However , the Multiplication Table  doesn’t signify : let’s try
@@ -504,8 +504,8 @@
 # V/C NSg/V/J . V/C D   NPl/V+ V   NSg/C NSg/V/P D   I/J  NSg/R IPl+ V/J  P  NSg/VX . .
 >
 #
-> “ How   doth the little      crocodile Improve his     shining tail     , And pour  the waters
-# . NSg/C W?   D+  NPr/I/J/Dq+ NSg/V+    V       ISg/D$+ V       NSg/V/J+ . V/C NSg/V D   NPrPl/V
+> “ How   doth the little     crocodile Improve his     shining tail     , And pour  the waters
+# . NSg/C W?   D+  NPr/I/J/Dq NSg/V+    V       ISg/D$+ V       NSg/V/J+ . V/C NSg/V D   NPrPl/V
 > of the Nile On  every golden  scale  !
 # P  D   NPr+ J/P Dq    NPr/V/J NSg/V+ .
 >
@@ -540,8 +540,8 @@
 #
 > As    she  said this    she  looked down      at    her     hands  , and was surprised to see   that         she
 # NSg/R ISg+ V/J  I/Ddem+ ISg+ V/J    NSg/V/J/P NSg/P ISg/D$+ NPl/V+ . V/C V   V/J       P  NSg/V NSg/I/C/Ddem ISg+
-> had put   on  one       of the Rabbit’s little      white   kid    gloves while     she  was talking .
-# V   NSg/V J/P NSg/I/V/J P  D   NSg$     NPr/I/J/Dq+ NPr/V/J NSg/V+ NPl/V+ NSg/V/C/P ISg+ V   V       .
+> had put   on  one       of the Rabbit’s little     white   kid    gloves while     she  was talking .
+# V   NSg/V J/P NSg/I/V/J P  D   NSg$     NPr/I/J/Dq NPr/V/J NSg/V+ NPl/V+ NSg/V/C/P ISg+ V   V       .
 > “ How   can    I    have   done    that          ? ” she  thought . “ I    must  be     growing small   again . ” She
 # . NSg/C NPr/VX ISg+ NSg/VX NSg/V/J NSg/I/C/Ddem+ . . ISg+ NSg/V   . . ISg+ NSg/V NSg/VX NSg/V   NPr/V/J P     . . ISg+
 > got up        and went  to the table  to measure herself by      it       , and found that          , as    nearly
@@ -549,13 +549,13 @@
 > as    she  could  guess , she  was now       about two  feet high    , and was going   on  shrinking
 # NSg/R ISg+ NSg/VX NSg/V . ISg+ V   NPr/V/J/C J/P   NSg+ NPl+ NSg/V/J . V/C V   NSg/V/J J/P V
 > rapidly : she  soon found out         that         the cause   of this    was the fan   she  was holding ,
-# R       . ISg+ J/R  NSg/V NSg/V/J/R/P NSg/I/C/Ddem D   NSg/V/C P  I/Ddem+ V   D   NSg/V ISg+ V   NSg/V   .
+# R       . ISg+ J/R  NSg/V NSg/V/J/R/P NSg/I/C/Ddem D   NSg/V/C P  I/Ddem+ V   D+  NSg/V ISg+ V   NSg/V   .
 > and she  dropped it       hastily , just in      time      to avoid shrinking away altogether .
 # V/C ISg+ V/J     NPr/ISg+ R       . V/J  NPr/J/P N🅪Sg/V/J+ P  V     V         V/J  NSg        .
 >
 #
-> “ That          was a   narrow  escape ! ” said Alice , a   good    deal    frightened at    the sudden
-# . NSg/I/C/Ddem+ V   D/P NSg/V/J NSg/V  . . V/J  NPr+  . D/P NPr/V/J NSg/V/J V/J        NSg/P D+  NSg/J+
+> “ That          was a   narrow  escape ! ” said Alice , a    good     deal     frightened at    the sudden
+# . NSg/I/C/Ddem+ V   D/P NSg/V/J NSg/V  . . V/J  NPr+  . D/P+ NPr/V/J+ NSg/V/J+ V/J        NSg/P D+  NSg/J+
 > change  , but     very glad    to find  herself still   in      existence ; “ and now       for the
 # N🅪Sg/V+ . NSg/C/P J/R  NSg/V/J P  NSg/V ISg+    NSg/V/J NPr/J/P NSg+      . . V/C NPr/V/J/C C/P D+
 > garden   ! ” and she  ran   with all           speed   back    to the little      door   : but     , alas ! the
@@ -572,8 +572,8 @@
 #
 > As    she  said these   words  her     foot   slipped , and in      another moment , splash ! she  was
 # NSg/R ISg+ V/J  I/Ddem+ NPl/V+ ISg/D$+ NSg/V+ V/J     . V/C NPr/J/P I/D+    NSg+   . NSg/V+ . ISg+ V
-> up        to her     chin  in      salt     water   . Her     first    idea was that         she  had somehow fallen
-# NSg/V/J/P P  ISg/D$+ NPr/V NPr/J/P NPr/V/J+ N🅪Sg/V+ . ISg/D$+ NSg/V/J+ NSg+ V   NSg/I/C/Ddem ISg+ V   W?      W?
+> up        to her     chin   in      salt     water   . Her     first    idea was that         she  had somehow fallen
+# NSg/V/J/P P  ISg/D$+ NPr/V+ NPr/J/P NPr/V/J+ N🅪Sg/V+ . ISg/D$+ NSg/V/J+ NSg+ V   NSg/I/C/Ddem ISg+ V   W?      W?
 > into the sea  , “ and in      that         case   I    can    go      back    by      railway , ” she  said to herself .
 # P    D+  NSg+ . . V/C NPr/J/P NSg/I/C/Ddem NPr/V+ ISg+ NPr/VX NSg/V/J NSg/V/J NSg/J/P NSg+    . . ISg+ V/J  P  ISg+    .
 > ( Alice had been  to the seaside once  in      her     life   , and had come    to the general
@@ -594,8 +594,8 @@
 # . ISg+ NSg/V ISg+ V      V/J   NSg/I/J/C NSg/I/J/Dq . . V/J  NPr+  . NSg/R ISg+ V    J/P   . NSg/V/J P  NSg/V
 > her     way    out         . “ I    shall be     punished for it       now       , I    suppose , by      being   drowned in      my
 # ISg/D$+ NSg/J+ NSg/V/J/R/P . . ISg+ VX    NSg/VX V/J      C/P NPr/ISg+ NPr/V/J/C . ISg+ V       . NSg/J/P NSg/V/C V/J     NPr/J/P D$+
-> own      tears  ! That          will   be     a   queer   thing , to be     sure ! However , everything is queer
-# NSg/V/J+ NPl/V+ . NSg/I/C/Ddem+ NPr/VX NSg/VX D/P NSg/V/J NSg/V . P  NSg/VX J    . C       . NSg/I/V+   VL NSg/V/J
+> own      tears  ! That          will   be     a   queer    thing  , to be     sure ! However , everything is queer
+# NSg/V/J+ NPl/V+ . NSg/I/C/Ddem+ NPr/VX NSg/VX D/P NSg/V/J+ NSg/V+ . P  NSg/VX J    . C       . NSg/I/V+   VL NSg/V/J
 > to - day   . ”
 # P  . NPr🅪+ . .
 >
@@ -610,8 +610,8 @@
 # J/R  V    NSg/V/J/R/P NSg/I/C/Ddem NPr/ISg+ V   J/R/C D/P NSg/V+ NSg/I/C/Ddem+ V   V/J     NPr/J/P NSg/V/J/C/P ISg+    .
 >
 #
-> “ Would it       be     of any    use   , now       , ” thought Alice , “ to speak to this    mouse  ?
-# . VX    NPr/ISg+ NSg/VX P  I/R/Dq NSg/V . NPr/V/J/C . . NSg/V   NPr+  . . P  NSg/V P  I/Ddem+ NSg/V+ .
+> “ Would it       be     of any     use    , now       , ” thought Alice , “ to speak to this    mouse  ?
+# . VX    NPr/ISg+ NSg/VX P  I/R/Dq+ NSg/V+ . NPr/V/J/C . . NSg/V   NPr+  . . P  NSg/V P  I/Ddem+ NSg/V+ .
 > Everything is so        out         - of - the - way   down      here    , that         I    should think very likely it
 # NSg/I/V+   VL NSg/I/J/C NSg/V/J/R/P . P  . D   . NSg/J NSg/V/J/P NSg/J/R . NSg/I/C/Ddem ISg+ VX     NSg/V J/R  NSg/J  NPr/ISg+
 > can    talk  : at    any     rate   , there’s no     harm   in      trying  . ” So        she  began : “ O       Mouse  , do
@@ -626,8 +626,8 @@
 # NSg$      NPr/J NSg/V+  . . D/P NSg/V+ . P  D/P NSg/V+ . P  D/P NSg/V+ . D/P NSg/V+ . NPr/J/P NSg/V+ . . . D+
 > Mouse  looked at    her     rather  inquisitively , and seemed to her     to wink  with one       of
 # NSg/V+ V/J    NSg/P ISg/D$+ NPr/V/J R             . V/C V/J    P  ISg/D$+ P  NSg/V P    NSg/I/V/J P
-> its     little      eyes   , but     it       said nothing  .
-# ISg/D$+ NPr/I/J/Dq+ NPl/V+ . NSg/C/P NPr/ISg+ V/J  NSg/I/J+ .
+> its     little     eyes   , but     it       said nothing  .
+# ISg/D$+ NPr/I/J/Dq NPl/V+ . NSg/C/P NPr/ISg+ V/J  NSg/I/J+ .
 >
 #
 > “ Perhaps it       doesn’t understand English  , ” thought Alice ; “ I    daresay it’s a   French
@@ -635,7 +635,7 @@
 > mouse  , come    over      with William the Conqueror . ” ( For , with all          her     knowledge of
 # NSg/V+ . NSg/V/P NSg/V/J/P P    NPr+    D   NSg       . . . C/P . P    NSg/I/J/C/Dq ISg/D$+ NᴹSg      P
 > history , Alice had no    very clear    notion how   long    ago anything had happened . ) So
-# N🅪Sg+   . NPr+  V   NPr/P J/R  NSg/V/J+ NSg    NSg/C NPr/V/J J/P NSg/I/V+ V   V/J      . . NSg/I/J/C
+# N🅪Sg+   . NPr+  V   NPr/P J/R  NSg/V/J+ NSg+   NSg/C NPr/V/J J/P NSg/I/V+ V   V/J      . . NSg/I/J/C
 > she  began again : “ Où est  ma     chatte ? ” which was the first   sentence in      her     French
 # ISg+ V     P     . . ?  NPr+ NPr/J+ ?      . . I/C+  V   D   NSg/V/J NSg/V    NPr/J/P ISg/D$+ NPr/V/J
 > lesson - book   . The Mouse  gave a    sudden leap     out         of the water   , and seemed to quiver
@@ -646,8 +646,8 @@
 # ISg+ V   NSg/V/J D   NSg/V/J NSg$     +        . . ISg+ NSg   V      ISgPl+ V      NSg/V/J/C/P NPl/V+ . .
 >
 #
-> “ Not   like        cats   ! ” cried the Mouse  , in      a   shrill  , passionate voice . “ Would you    like
-# . NSg/C NSg/V/J/C/P NPl/V+ . . V/J   D+  NSg/V+ . NPr/J/P D/P NSg/V/J . NSg/V/J    NSg/V . . VX    ISgPl+ NSg/V/J/C/P
+> “ Not   like        cats   ! ” cried the Mouse  , in      a   shrill  , passionate voice  . “ Would you    like
+# . NSg/C NSg/V/J/C/P NPl/V+ . . V/J   D+  NSg/V+ . NPr/J/P D/P NSg/V/J . NSg/V/J+   NSg/V+ . . VX    ISgPl+ NSg/V/J/C/P
 > cats   if    you    were  me       ? ”
 # NPl/V+ NSg/C ISgPl+ NSg/V NPr/ISg+ . .
 >
@@ -677,13 +677,13 @@
 > if    I    would talk  on  such  a    subject  ! Our family always hated cats   : nasty , low     ,
 # NSg/C ISg+ VX    NSg/V J/P NSg/I D/P+ NSg/V/J+ . D$+ NSg/J+ R      V/J   NPl/V+ . NSg/J . NSg/V/J .
 > vulgar things ! Don’t let   me       hear the name   again ! ”
-# NSg/J  NPl/V+ . V     NSg/V NPr/ISg+ V    D+  NSg/V+ P     . .
+# NSg/J  NPl/V+ . V     NSg/V NPr/ISg+ V    D   NSg/V+ P     . .
 >
 #
 > “ I    won’t indeed ! ” said Alice , in      a   great hurry  to change the subject of
 # . ISg+ V     W?     . . V/J  NPr+  . NPr/J/P D/P NSg/J NSg/V+ P  N🅪Sg/V D   NSg/V/J P
 > conversation . “ Are you    — are you    fond    — of — of dogs   ? ” The Mouse  did not   answer , so
-# NSg/V+       . . V   ISgPl+ . V   ISgPl+ NSg/V/J . P  . P  NPl/V+ . . D   NSg/V+ V   NSg/C NSg/V+ . NSg/I/J/C
+# NSg/V+       . . V   ISgPl+ . V   ISgPl+ NSg/V/J . P  . P  NPl/V+ . . D+  NSg/V+ V   NSg/C NSg/V+ . NSg/I/J/C
 > Alice went  on  eagerly : “ There is such  a   nice    little     dog      near      our house  I    should
 # NPr+  NSg/V J/P R       . . +     VL NSg/I D/P NPr/V/J NPr/I/J/Dq NSg/V/J+ NSg/V/J/P D$+ NPr/V+ ISg+ VX
 > like        to show  you    ! A   little     bright  - eyed terrier , you    know  , with oh    , such  long
@@ -694,8 +694,8 @@
 # V/C NSg/V C/P ISg/D$+ NSg/V+ . V/C NSg/I/J/C/Dq NPl/V P  NPl/V+ . ISg+ VX    NSg/V    NSg/V/J/P P
 > them     — and it       belongs to a   farmer , you    know  , and he       says  it’s so        useful , it’s
 # NSg/IPl+ . V/C NPr/ISg+ V       P  D/P NPr/J+ . ISgPl+ NSg/V . V/C NPr/ISg+ NPl/V W?   NSg/I/J/C J      . W?
-> worth   a   hundred pounds ! He       says  it       kills all          the rats   and — oh    dear    ! ” cried Alice
-# NSg/V/J D/P NSg+    NPl/V+ . NPr/ISg+ NPl/V NPr/ISg+ NPl/V NSg/I/J/C/Dq D+  NPl/V+ V/C . NPr/V NSg/V/J . . V/J   NPr+
+> worth   a   hundred pounds ! He       says  it       kills all           the rats   and — oh    dear    ! ” cried Alice
+# NSg/V/J D/P NSg     NPl/V+ . NPr/ISg+ NPl/V NPr/ISg+ NPl/V NSg/I/J/C/Dq+ D+  NPl/V+ V/C . NPr/V NSg/V/J . . V/J   NPr+
 > in      a   sorrowful tone     , “ I’m afraid I’ve offended it       again ! ” For the Mouse  was
 # NPr/J/P D/P J         NSg/I/V+ . . W?  J      W?   V/J      NPr/ISg+ P     . . C/P D+  NSg/V+ V
 > swimming away from her     as    hard    as    it       could  go      , and making quite a   commotion in
@@ -706,8 +706,8 @@
 #
 > So        she  called softly after it       , “ Mouse  dear    ! Do     come    back    again , and we   won’t
 # NSg/I/J/C ISg+ V/J    R      J/P   NPr/ISg+ . . NSg/V+ NSg/V/J . NSg/VX NSg/V/P NSg/V/J P     . V/C IPl+ V
-> talk  about cats  or    dogs   either , if    you    don’t like        them     ! ” When    the Mouse  heard
-# NSg/V J/P   NPl/V NPr/C NPl/V+ I/C    . NSg/C ISgPl+ V     NSg/V/J/C/P NSg/IPl+ . . NSg/I/C D+  NSg/V+ V/J
+> talk  about cats   or    dogs   either , if    you    don’t like        them     ! ” When    the Mouse  heard
+# NSg/V J/P   NPl/V+ NPr/C NPl/V+ I/C    . NSg/C ISgPl+ V     NSg/V/J/C/P NSg/IPl+ . . NSg/I/C D+  NSg/V+ V/J
 > this    , it       turned round     and swam slowly back    to her     : its     face   was quite pale    ( with
 # I/Ddem+ . NPr/ISg+ V/J    NSg/V/J/P V/C V    R      NSg/V/J P  ISg/D$+ . ISg/D$+ NSg/V+ V   NSg   NSg/V/J . P
 > passion , Alice thought ) , and it       said in      a    low      trembling voice  , “ Let   us       get   to
@@ -723,17 +723,17 @@
 > and animals that          had fallen into it       : there were  a    Duck   and a   Dodo , a   Lory and an
 # V/C NPl+    NSg/I/C/Ddem+ V   W?     P    NPr/ISg+ . +     NSg/V D/P+ NSg/V+ V/C D/P NSg  . D/P ?    V/C D/P
 > Eaglet , and several other   curious creatures . Alice led     the way    , and the whole
-# NSg    . V/C J/Dq    NSg/V/J J       NPl+      . NPr+  NSg/V/J D+  NSg/J+ . V/C D   NSg/J
+# NSg    . V/C J/Dq    NSg/V/J J       NPl+      . NPr+  NSg/V/J D+  NSg/J+ . V/C D+  NSg/J+
 > party    swam to the shore  .
 # NSg/V/J+ V    P  D+  NSg/V+ .
 >
 #
 > CHAPTER III : A   Caucus - Race  and a    Long     Tale
-# NSg/V   W?  . D/P NSg/V+ . NSg/V V/C D/P+ NPr/V/J+ NSg/V+
+# NSg/V+  W?  . D/P NSg/V+ . NSg/V V/C D/P+ NPr/V/J+ NSg/V+
 >
 #
-> They were  indeed a   queer   - looking party    that          assembled on  the bank   — the birds with
-# IPl+ NSg/V W?     D/P NSg/V/J . V       NSg/V/J+ NSg/I/C/Ddem+ V/J       J/P D+  NSg/V+ . D   NPl/V P
+> They were  indeed a   queer   - looking party    that          assembled on  the bank  — the birds with
+# IPl+ NSg/V W?     D/P NSg/V/J . V       NSg/V/J+ NSg/I/C/Ddem+ V/J       J/P D   NSg/V . D   NPl/V P
 > draggled feathers , the animals with their fur        clinging close   to them     , and all
 # ?        NPl/V+   . D   NPl+    P    D$+   NSg/V/C/P+ V        NSg/V/J P  NSg/IPl+ . V/C NSg/I/J/C/Dq
 > dripping wet     , cross      , and uncomfortable .
@@ -741,13 +741,13 @@
 >
 #
 > The first   question of course was , how   to get   dry     again : they had a   consultation
-# D   NSg/V/J NSg/V    P  NSg/V+ V   . NSg/C P  NSg/V NSg/V/J P     . IPl+ V   D/P NSg
+# D   NSg/V/J NSg/V    P  NSg/V+ V   . NSg/C P  NSg/V NSg/V/J P     . IPl+ V   D/P NSg+
 > about this    , and after a    few       minutes it       seemed quite natural to Alice to find
 # J/P   I/Ddem+ . V/C J/P   D/P+ NSg/I/Dq+ NPl/V+  NPr/ISg+ V/J    NSg   NSg/J   P  NPr+  P  NSg/V
 > herself talking familiarly with them     , as    if    she  had known them     all          her     life   .
 # ISg+    V       R          P    NSg/IPl+ . NSg/R NSg/C ISg+ V   V/J   NSg/IPl+ NSg/I/J/C/Dq ISg/D$+ NSg/V+ .
-> Indeed , she  had quite a    long     argument with the Lory , who    at    last    turned sulky ,
-# W?     . ISg+ V   NSg   D/P+ NPr/V/J+ NSg/V+   P    D   ?    . NPr/I+ NSg/P NSg/V/J V/J    NSg/J .
+> Indeed , she  had quite a   long    argument with the Lory , who    at    last    turned sulky ,
+# W?     . ISg+ V   NSg   D/P NPr/V/J NSg/V    P    D   ?    . NPr/I+ NSg/P NSg/V/J V/J    NSg/J .
 > and would only  say   , “ I    am      older than you    , and must  know  better   ; ” and this   Alice
 # V/C VX    J/R/C NSg/V . . ISg+ NPr/V/J J     C/P  ISgPl+ . V/C NSg/V NSg/V NSg/VX/J . . V/C I/Ddem NPr+
 > would not   allow without knowing   how   old   it       was , and , as    the Lory positively
@@ -756,8 +756,8 @@
 # V/J     P  NPr/V ISg/D$+ N🅪Sg/V+ . +     V   NPr/P NPr/I/V/J/Dq P  NSg/VX V/J  .
 >
 #
-> At    last     the Mouse  , who    seemed to be     a   person of authority among them     , called
-# NSg/P NSg/V/J+ D+  NSg/V+ . NPr/I+ V/J    P  NSg/VX D/P NSg/V  P  NSg+      P     NSg/IPl+ . V/J
+> At    last    the Mouse  , who    seemed to be     a   person of authority among them     , called
+# NSg/P NSg/V/J D+  NSg/V+ . NPr/I+ V/J    P  NSg/VX D/P NSg/V  P  NSg+      P     NSg/IPl+ . V/J
 > out         , “ Sit   down      , all          of you    , and listen to me       ! I’ll soon make  you    dry     enough ! ”
 # NSg/V/J/R/P . . NSg/V NSg/V/J/P . NSg/I/J/C/Dq P  ISgPl+ . V/C NSg/V  P  NPr/ISg+ . W?   J/R  NSg/V ISgPl+ NSg/V/J NSg/I  . .
 > They all          sat     down      at    once  , in      a    large  ring   , with the Mouse  in      the middle  . Alice
@@ -768,8 +768,8 @@
 # NSg/J NSg/C ISg+ V   NSg/C NSg/V NSg/V/J J/R  J/R  .
 >
 #
-> “ Ahem ! ” said the Mouse with an   important air    , “ are you    all          ready   ? This    is the
-# . V    . . V/J  D   NSg/V P    D/P+ J+        NSg/V+ . . V   ISgPl+ NSg/I/J/C/Dq NSg/V/J . I/Ddem+ VL D
+> “ Ahem ! ” said the Mouse  with an   important air    , “ are you    all          ready   ? This    is the
+# . V    . . V/J  D   NSg/V+ P    D/P+ J+        NSg/V+ . . V   ISgPl+ NSg/I/J/C/Dq NSg/V/J . I/Ddem+ VL D
 > driest thing I    know  . Silence all          round     , if    you    please ! ‘          William the Conqueror ,
 # W?     NSg/V ISg+ NSg/V . NSg/V+  NSg/I/J/C/Dq NSg/V/J/P . NSg/C ISgPl+ V      . Unlintable NPr+    D   NSg       .
 > whose cause    was favoured by      the pope   , was soon submitted to by      the English  , who
@@ -871,7 +871,7 @@
 >
 #
 > First   it       marked out         a   race   - course , in      a   sort  of circle , ( “ the exact shape
-# NSg/V/J NPr/ISg+ V/J    NSg/V/J/R/P D/P NSg/V+ . NSg/V  . NPr/J/P D/P NSg/V P  NSg/V+ . . . D   V/J   NSg/V
+# NSg/V/J NPr/ISg+ V/J    NSg/V/J/R/P D/P NSg/V+ . NSg/V+ . NPr/J/P D/P NSg/V P  NSg/V+ . . . D+  V/J+  NSg/V+
 > doesn’t matter    , ” it       said , ) and then    all          the party    were  placed along the course ,
 # V       N🅪Sg/V/J+ . . NPr/ISg+ V/J  . . V/C NSg/J/C NSg/I/J/C/Dq D   NSg/V/J+ NSg/V V/J    P     D   NSg/V+ .
 > here    and there . There was no    “ One        , two , three , and away , ” but     they began running
@@ -881,7 +881,7 @@
 > when    the race   was over      . However , when    they had been  running   half       an   hour or    so        ,
 # NSg/I/C D+  NSg/V+ V   NSg/V/J/P . C       . NSg/I/C IPl+ V   NSg/V NSg/V/J/P NSg/V/J/P+ D/P+ NSg+ NPr/C NSg/I/J/C .
 > and were  quite dry     again , the Dodo suddenly called out         “ The race   is over      ! ” and
-# V/C NSg/V NSg   NSg/V/J P     . D   NSg  R        V/J    NSg/V/J/R/P . D+  NSg/V+ VL NSg/V/J/P . . V/C
+# V/C NSg/V NSg   NSg/V/J P     . D   NSg  R        V/J    NSg/V/J/R/P . D   NSg/V+ VL NSg/V/J/P . . V/C
 > they all          crowded round     it       , panting , and asking , “ But     who    has won     ? ”
 # IPl+ NSg/I/J/C/Dq V/J     NSg/V/J/P NPr/ISg+ . V       . V/C V      . . NSg/C/P NPr/I+ V   NSgPl/V . .
 >
@@ -914,8 +914,8 @@
 # NPr+  V   NPr/P+ NSg+ NSg/I+ P  NSg/VX . V/C NPr/J/P NSg/V+  ISg+ NSg/V ISg/D$+ NSg/V+ NPr/J/P ISg/D$+ NSg/V/J+ . V/C
 > pulled out         a   box   of comfits , ( luckily the salt     water   had not   got into it       ) , and
 # V/J    NSg/V/J/R/P D/P NSg/V P  NPl/V   . . R       D   NPr/V/J+ N🅪Sg/V+ V   NSg/C V   P    NPr/ISg+ . . V/C
-> handed them     round     as    prizes . There was exactly one       a   - piece , all          round     .
-# V/J    NSg/IPl+ NSg/V/J/P NSg/R NPl/V+ . +     V   R       NSg/I/V/J D/P . NSg/V . NSg/I/J/C/Dq NSg/V/J/P .
+> handed them     round     as    prizes . There was exactly one       a   - piece  , all          round     .
+# V/J    NSg/IPl+ NSg/V/J/P NSg/R NPl/V+ . +     V   R       NSg/I/V/J D/P . NSg/V+ . NSg/I/J/C/Dq NSg/V/J/P .
 >
 #
 > “ But     she  must  have   a    prize    herself , you    know  , ” said the Mouse  .
@@ -939,9 +939,9 @@
 > Then    they all          crowded round     her     once  more         , while     the Dodo solemnly presented the
 # NSg/J/C IPl+ NSg/I/J/C/Dq V/J     NSg/V/J/P ISg/D$+ NSg/C NPr/I/V/J/Dq . NSg/V/C/P D   NSg  R        V/J       D
 > thimble , saying “ We   beg   your acceptance of this   elegant thimble ; ” and , when    it
-# NSg/V   . NSg/V  . IPl+ NSg/V D$+  NSg+       P  I/Ddem NSg/J   NSg/V   . . V/C . NSg/I/C NPr/ISg+
-> had finished this   short     speech  , they all           cheered .
-# V   V/J      I/Ddem NPr/V/J/P N🅪Sg/V+ . IPl+ NSg/I/J/C/Dq+ V/J+    .
+# NSg/V   . NSg/V  . IPl+ NSg/V D$+  NSg        P  I/Ddem NSg/J   NSg/V   . . V/C . NSg/I/C NPr/ISg+
+> had finished this   short     speech  , they all          cheered .
+# V   V/J      I/Ddem NPr/V/J/P N🅪Sg/V+ . IPl+ NSg/I/J/C/Dq V/J+    .
 >
 #
 > Alice thought the whole  thing  very absurd , but     they all          looked so        grave   that         she
@@ -958,8 +958,8 @@
 # D   NSg/J NPl/V+ V/J        NSg/I/C/Ddem IPl+ NSg/VX NSg/C NSg/V/J I+     . V/C D   NPr/V/J NPl/V+
 > choked and had to be     patted on  the back    . However , it       was over      at    last    , and they
 # V/J    V/C V   P  NSg/VX V      J/P D   NSg/V/J . C       . NPr/ISg+ V   NSg/V/J/P NSg/P NSg/V/J . V/C IPl+
-> sat     down      again in      a    ring   , and begged the Mouse to tell  them     something  more         .
-# NSg/V/J NSg/V/J/P P     NPr/J/P D/P+ NSg/V+ . V/C V      D   NSg/V P  NPr/V NSg/IPl+ NSg/I/V/J+ NPr/I/V/J/Dq .
+> sat     down      again in      a    ring   , and begged the Mouse  to tell  them     something  more         .
+# NSg/V/J NSg/V/J/P P     NPr/J/P D/P+ NSg/V+ . V/C V      D+  NSg/V+ P  NPr/V NSg/IPl+ NSg/I/V/J+ NPr/I/V/J/Dq .
 >
 #
 > “ You    promised to tell  me       your history , you    know  , ” said Alice , “ and why   it       is you
@@ -978,8 +978,8 @@
 # . NPr/ISg+ VL D/P NPr/V/J NSg/V/J . R         . . V/J  NPr+  . V       NSg/V/J/P P    NSg/V  NSg/P D
 > Mouse’s tail     ; “ but     why   do     you    call  it       sad     ? ” And she  kept on  puzzling about it
 # NSg$    NSg/V/J+ . . NSg/C/P NSg/V NSg/VX ISgPl+ NSg/V NPr/ISg+ NSg/V/J . . V/C ISg+ V    J/P V        J/P   NPr/ISg+
-> while     the Mouse  was speaking , so        that         her     idea of the tale   was something like
-# NSg/V/C/P D+  NSg/V+ V   V        . NSg/I/J/C NSg/I/C/Ddem ISg/D$+ NSg  P  D+  NSg/V+ V   NSg/I/V/J NSg/V/J/C/P
+> while     the Mouse  was speaking , so        that         her     idea of the tale   was something  like
+# NSg/V/C/P D+  NSg/V+ V   V        . NSg/I/J/C NSg/I/C/Ddem ISg/D$+ NSg  P  D+  NSg/V+ V   NSg/I/V/J+ NSg/V/J/C/P
 > this    : —
 # I/Ddem+ . .
 >
@@ -1001,7 +1001,7 @@
 > Said the mouse  to the cur   , ‘          Such  a   trial    , dear    sir    , With no    jury    or    judge  ,
 # V/J  D+  NSg/V+ P  D   NSg/J . Unlintable NSg/I D/P NSg/V/J+ . NSg/V/J NPr/V+ . P    NPr/P NSg/V/J NPr/C NSg/V+ .
 > would be     wasting our breath   . ’ ‘          I’ll be     judge  , I’ll be     jury     , ’ Said cunning old
-# VX    NSg/VX V       D$+ NSg/V/J+ . . Unlintable W?   NSg/VX NSg/V+ . W?   NSg/VX NSg/V/J+ . . V/J  NSg/J+  NSg/J+
+# VX    NSg/VX V       D$+ NSg/V/J+ . . Unlintable W?   NSg/VX NSg/V+ . W?   NSg/VX NSg/V/J+ . . V/J  NSg/J   NSg/J
 > Fury : ‘          I’ll try     the whole cause   , and condemn you    to death . ’ ”
 # NSg+ . Unlintable W?   NSg/V/J D   NSg/J NSg/V/C . V/C V       ISgPl+ P  NPr🅪  . . .
 >
@@ -1114,8 +1114,8 @@
 # NSg/V+ . V/C V   NSg/V/J NSg/V/J P  NSg/V  ISg/D$+ NSg/V+ .
 >
 #
-> CHAPTER IV    : The Rabbit Sends in      a    Little      Bill
-# NSg/V+  NSg/J . D+  NSg/V+ NPl/V NPr/J/P D/P+ NPr/I/J/Dq+ NPr/V+
+> CHAPTER IV     : The Rabbit Sends in      a    Little      Bill
+# NSg/V+  NSg/J+ . D+  NSg/V+ NPl/V NPr/J/P D/P+ NPr/I/J/Dq+ NPr/V+
 >
 #
 > It       was the White   Rabbit , trotting slowly back    again , and looking anxiously about
@@ -1126,8 +1126,8 @@
 # . D   NSg/V   . D   NSg/V   . NPr/V D$+ NSg/V/J+ NPl/V+ . NPr/V D$+ NSg/V/C/P+ V/C W?       . W?     NSg/V
 > me       executed , as    sure as    ferrets are ferrets ! Where can    I    have   dropped them     , I
 # NPr/ISg+ V/J      . NSg/R J    NSg/R NPl/V   V   NPl/V   . NSg/C NPr/VX ISg+ NSg/VX V/J     NSg/IPl+ . ISg+
-> wonder ? ” Alice guessed in      a    moment that          it       was looking for the fan   and the pair
-# NSg/V  . . NPr+  V/J     NPr/J/P D/P+ NSg+   NSg/I/C/Ddem+ NPr/ISg+ V   V       C/P D   NSg/V V/C D   NSg/V
+> wonder ? ” Alice guessed in      a    moment that          it       was looking for the fan    and the pair
+# NSg/V  . . NPr+  V/J     NPr/J/P D/P+ NSg+   NSg/I/C/Ddem+ NPr/ISg+ V   V       C/P D+  NSg/V+ V/C D   NSg/V
 > of white    kid    gloves , and she  very good    - naturedly began hunting about for them     ,
 # P  NPr/V/J+ NSg/V+ NPl/V+ . V/C ISg+ J/R  NPr/V/J . ?         V     NᴹSg/V  J/P   C/P NSg/IPl+ .
 > but     they were  nowhere to be     seen  — everything seemed to have   changed since her
@@ -1140,8 +1140,8 @@
 #
 > Very soon the Rabbit noticed Alice , as    she  went  hunting about , and called out         to
 # J/R  J/R  D+  NSg/V+ V/J     NPr+  . NSg/R ISg+ NSg/V NᴹSg/V  J/P   . V/C V/J    NSg/V/J/R/P P
-> her     in      an  angry tone     , “ Why   , Mary Ann    , what   are you    doing out         here    ? Run   home     this
-# ISg/D$+ NPr/J/P D/P V/J+  NSg/I/V+ . . NSg/V . NPr+ NPr/J+ . NSg/I+ V   ISgPl+ NSg/V NSg/V/J/R/P NSg/J/R . NSg/V NSg/V/J+ I/Ddem+
+> her     in      an   angry tone     , “ Why   , Mary Ann    , what   are you    doing out         here    ? Run   home     this
+# ISg/D$+ NPr/J/P D/P+ V/J+  NSg/I/V+ . . NSg/V . NPr+ NPr/J+ . NSg/I+ V   ISgPl+ NSg/V NSg/V/J/R/P NSg/J/R . NSg/V NSg/V/J+ I/Ddem+
 > moment , and fetch me       a   pair  of gloves and a    fan    ! Quick   , now       ! ” And Alice was so
 # NSg+   . V/C NSg/V NPr/ISg+ D/P NSg/V P  NPl/V  V/C D/P+ NSg/V+ . NSg/V/J . NPr/V/J/C . . V/C NPr+  V   NSg/I/J/C
 > much       frightened that         she  ran   off       at    once  in      the direction it       pointed to , without
@@ -1156,8 +1156,8 @@
 # W?    NSg/VX NSg/I/C NPr/ISg+ NPl/V NSg/V/J/R/P NPr/I+ ISg+ NPr/V/J . NSg/C/P W?  NSg/VX/J NSg/V ISg+ ISg/D$+ NSg/V V/C
 > gloves — that          is , if    I    can    find  them     . ” As    she  said this    , she  came    upon a    neat
 # NPl/V+ . NSg/I/C/Ddem+ VL . NSg/C ISg+ NPr/VX NSg/V NSg/IPl+ . . NSg/R ISg+ V/J  I/Ddem+ . ISg+ NSg/V/P P    D/P+ NSg/J+
-> little      house  , on  the door  of which was a   bright  brass    plate with the name  “ W.
-# NPr/I/J/Dq+ NPr/V+ . J/P D   NSg/V P  I/C+  V   D/P NPr/V/J N🅪Sg/V/J NSg/V P    D   NSg/V . ?
+> little      house  , on  the door  of which was a   bright  brass    plate with the name   “ W.
+# NPr/I/J/Dq+ NPr/V+ . J/P D   NSg/V P  I/C+  V   D/P NPr/V/J N🅪Sg/V/J NSg/V P    D+  NSg/V+ . ?
 > RABBIT , ” engraved upon it       . She  went  in      without knocking , and hurried upstairs ,
 # NSg/V+ . . V/J      P    NPr/ISg+ . ISg+ NSg/V NPr/J/P C/P     V        . V/C V/J     NSg/J    .
 > in      great  fear   lest she  should meet    the real   Mary Ann    , and be     turned out         of the
@@ -1172,8 +1172,8 @@
 # ISg+ V       ?        NSg/VX V       NPr/ISg+ J/P NPl/V+   NSg/J/P . . V/C ISg+ V     V        D
 > sort  of thing  that          would happen : “ ‘          Miss  Alice ! Come    here    directly , and get   ready
 # NSg/V P  NSg/V+ NSg/I/C/Ddem+ VX    V      . . Unlintable NSg/V NPr+  . NSg/V/P NSg/J/R R/C      . V/C NSg/V NSg/V/J
-> for your walk   ! ’ ‘          Coming  in      a   minute   , nurse  ! But     I’ve got to see   that         the mouse
-# C/P D$+  NSg/V+ . . Unlintable NSg/V/J NPr/J/P D/P NSg/V/J+ . NSg/V+ . NSg/C/P W?   V   P  NSg/V NSg/I/C/Ddem D   NSg/V+
+> for your walk   ! ’ ‘          Coming  in      a    minute   , nurse  ! But     I’ve got to see   that         the mouse
+# C/P D$+  NSg/V+ . . Unlintable NSg/V/J NPr/J/P D/P+ NSg/V/J+ . NSg/V+ . NSg/C/P W?   V   P  NSg/V NSg/I/C/Ddem D   NSg/V+
 > doesn’t get   out         . ’ Only  I    don’t think , ” Alice went  on  , “ that          they’d let   Dinah
 # V       NSg/V NSg/V/J/R/P . . J/R/C ISg+ V     NSg/V . . NPr+  NSg/V J/P . . NSg/I/C/Ddem+ W?     NSg/V NPr
 > stop  in      the house  if    it       began ordering people about like        that          ! ”
@@ -1188,8 +1188,8 @@
 # NSg/V+ NPl/V+ . ISg+ V    NSg/V/J/P D   NSg/V+ V/C D/P NSg/V P  D   NPl/V+ . V/C V   V/J  NSg/V/J P
 > leave the room     , when    her     eye    fell    upon a   little     bottle that          stood near      the
 # NSg/V D   NSg/V/J+ . NSg/I/C ISg/D$+ NSg/V+ NSg/V/J P    D/P NPr/I/J/Dq NSg/V+ NSg/I/C/Ddem+ V     NSg/V/J/P D
-> looking - glass   . There was no     label  this   time     with the words “ DRINK  ME       , ” but
-# V+      . NPr🅪/V+ . +     V   NPr/P+ NSg/V+ I/Ddem N🅪Sg/V/J P    D   NPl/V . NSg/V+ NPr/ISg+ . . NSg/C/P
+> looking - glass   . There was no     label  this   time      with the words  “ DRINK  ME       , ” but
+# V+      . NPr🅪/V+ . +     V   NPr/P+ NSg/V+ I/Ddem N🅪Sg/V/J+ P    D+  NPl/V+ . NSg/V+ NPr/ISg+ . . NSg/C/P
 > nevertheless she  uncorked it       and put   it       to her     lips   . “ I    know  something
 # W?           ISg+ V/J      NPr/ISg+ V/C NSg/V NPr/ISg+ P  ISg/D$+ NPl/V+ . . ISg+ NSg/V NSg/I/V/J+
 > interesting is sure to happen , ” she  said to herself , “ whenever I    eat or    drink
@@ -1248,8 +1248,8 @@
 # J       . ISgPl+ NSg/V . I/Ddem NSg/V P  NSg/V+ . ISg+ NSg/VX NSg/V  NSg/I+ NPr/VX NSg/VX V/J      P  NPr/ISg+ .
 > When    I    used to read  fairy  - tales  , I    fancied that         kind  of thing  never happened ,
 # NSg/I/C ISg+ V/J  P  NSg/V NSg/J+ . NPl/V+ . ISg+ V/J     NSg/I/C/Ddem NSg/J P  NSg/V+ R     V/J      .
-> and now       here    I    am      in      the middle  of one       ! There ought    to be     a   book  written about
-# V/C NPr/V/J/C NSg/J/R ISg+ NPr/V/J NPr/J/P D   NSg/V/J P  NSg/I/V/J . +     NSg/I/VX P  NSg/VX D/P NSg/V V/J     J/P
+> and now       here    I    am      in      the middle  of one       ! There ought    to be     a   book   written about
+# V/C NPr/V/J/C NSg/J/R ISg+ NPr/V/J NPr/J/P D   NSg/V/J P  NSg/I/V/J . +     NSg/I/VX P  NSg/VX D/P NSg/V+ V/J     J/P
 > me       , that         there ought    ! And when    I    grow up        , I’ll write one       — but     I’m grown up        now       , ”
 # NPr/ISg+ . NSg/I/C/Ddem +     NSg/I/VX . V/C NSg/I/C ISg+ V    NSg/V/J/P . W?   NSg/V NSg/I/V/J . NSg/C/P W?  V/J   NSg/V/J/P NPr/V/J/C . .
 > she  added in      a   sorrowful tone     ; “ at    least there’s no    room     to grow up        any    more
@@ -1285,13 +1285,13 @@
 > “ Mary Ann    ! Mary Ann    ! ” said the voice  . “ Fetch me       my  gloves this    moment ! ” Then
 # . NPr+ NPr/J+ . NPr+ NPr/J+ . . V/J  D+  NSg/V+ . . NSg/V NPr/ISg+ D$+ NPl/V  I/Ddem+ NSg+   . . NSg/J/C
 > came    a   little     pattering of feet on  the stairs . Alice knew it       was the Rabbit
-# NSg/V/P D/P NPr/I/J/Dq V         P  NPl+ J/P D   NPl+   . NPr+  V    NPr/ISg+ V   D   NSg/V
+# NSg/V/P D/P NPr/I/J/Dq V         P  NPl  J/P D   NPl+   . NPr+  V    NPr/ISg+ V   D   NSg/V
 > coming  to look  for her     , and she  trembled till      she  shook   the house  , quite
 # NSg/V/J P  NSg/V C/P ISg/D$+ . V/C ISg+ V/J      NSg/V/C/P ISg+ NSg/V/J D+  NPr/V+ . NSg
-> forgetting that         she  was now       about a   thousand times  as    large as    the Rabbit , and
-# NSg/V      NSg/I/C/Ddem ISg+ V   NPr/V/J/C J/P   D/P NSg+     NPl/V+ NSg/R NSg/J NSg/R D+  NSg/V+ . V/C
-> had no     reason  to be     afraid of it       .
-# V   NPr/P+ N🅪Sg/V+ P  NSg/VX J      P  NPr/ISg+ .
+> forgetting that         she  was now       about a    thousand times  as    large as    the Rabbit , and
+# NSg/V      NSg/I/C/Ddem ISg+ V   NPr/V/J/C J/P   D/P+ NSg+     NPl/V+ NSg/R NSg/J NSg/R D+  NSg/V+ . V/C
+> had no    reason  to be     afraid of it       .
+# V   NPr/P N🅪Sg/V+ P  NSg/VX J      P  NPr/ISg+ .
 >
 #
 > Presently the Rabbit came    up        to the door   , and tried to open    it       ; but     , as    the door
@@ -1316,8 +1316,8 @@
 # V   V/J  NSg/J    NPr/ISg+ V   W?     P    D/P N🅪Sg+    . NSg/V+ . NPr/C NSg/I/V/J P  D   NSg/V+ .
 >
 #
-> Next    came    an  angry voice  — the Rabbit’s — “ Pat      ! Pat      ! Where are you    ? ” And then    a
-# NSg/J/P NSg/V/P D/P V/J+  NSg/V+ . D   NSg$     . . NPr/V/J+ . NPr/V/J+ . NSg/C V   ISgPl+ . . V/C NSg/J/C D/P+
+> Next    came    an   angry voice  — the Rabbit’s — “ Pat      ! Pat      ! Where are you    ? ” And then    a
+# NSg/J/P NSg/V/P D/P+ V/J+  NSg/V+ . D   NSg$     . . NPr/V/J+ . NPr/V/J+ . NSg/C V   ISgPl+ . . V/C NSg/J/C D/P+
 > voice  she  had never heard before , “ Sure then    I’m here    ! Digging for apples , yer
 # NSg/V+ ISg+ V   R     V/J   C/P    . . J    NSg/J/C W?  NSg/J/R . NSg/V   C/P NPl    . J+
 > honour       ! ”
@@ -1370,8 +1370,8 @@
 #
 > She  waited for some     time      without hearing  anything more         : at    last    came    a   rumbling
 # ISg+ V/J    C/P I/J/R/Dq N🅪Sg/V/J+ C/P     NSg/V/J+ NSg/I/V+ NPr/I/V/J/Dq . NSg/P NSg/V/J NSg/V/P D/P N🅪Sg/V/J
-> of little     cartwheels , and the sound   of a   good    many        voices all          talking together :
-# P  NPr/I/J/Dq NPl/V      . V/C D   NSg/V/J P  D/P NPr/V/J NSg/I/J/Dq+ NPl/V+ NSg/I/J/C/Dq V       J        .
+> of little     cartwheels , and the sound   of a   good    many       voices all          talking together :
+# P  NPr/I/J/Dq NPl/V      . V/C D   NSg/V/J P  D/P NPr/V/J NSg/I/J/Dq NPl/V+ NSg/I/J/C/Dq V       J        .
 > she  made out         the words  : “ Where’s the other   ladder ? — Why   , I    hadn’t to bring but
 # ISg+ V    NSg/V/J/R/P D   NPl/V+ . . NSg$    D   NSg/V/J NSg/V+ . . NSg/V . ISg+ V      P  V     NSg/C/P
 > one       ; Bill’s got the other   — Bill   ! fetch it       here    , lad ! — Here    , put   ’ em       up        at    this
@@ -1380,10 +1380,10 @@
 # NSg/V/J+ . NPr/P . NSg/V+ . NSg/I/J+ J        NSg/V/J . IPl+ V     NSg/V NSg/V/J/P+ NSg/V/J NSg/I  NSg/V/C . NPr/V .
 > they’ll do     well    enough ; don’t be     particular — Here    , Bill   ! catch hold    of this
 # W?      NSg/VX NSg/V/J NSg/I  . V     NSg/VX NSg/J      . NSg/J/R . NPr/V+ . NSg/V NSg/V/J P  I/Ddem+
-> rope   — Will   the roof   bear     ? — Mind  that         loose    slate    — Oh    , it’s coming  down      ! Heads
-# NSg/V+ . NPr/VX D+  NSg/V+ NSg/V/J+ . . NSg/V NSg/I/C/Ddem NSg/V/J+ NSg/V/J+ . NPr/V . W?   NSg/V/J NSg/V/J/P . NPl/V+
-> below ! ” ( a    loud   crash    ) — “ Now       , who    did that          ? — It       was Bill  , I    fancy   — Who’s to go      down
-# P     . . . D/P+ NSg/J+ NSg/V/J+ . . . NPr/V/J/C . NPr/I+ V   NSg/I/C/Ddem+ . . NPr/ISg+ V   NPr/V . ISg+ NSg/V/J . NSg$  P  NSg/V/J NSg/V/J/P
+> rope   — Will   the roof   bear     ? — Mind   that         loose    slate    — Oh    , it’s coming  down      ! Heads
+# NSg/V+ . NPr/VX D+  NSg/V+ NSg/V/J+ . . NSg/V+ NSg/I/C/Ddem NSg/V/J+ NSg/V/J+ . NPr/V . W?   NSg/V/J NSg/V/J/P . NPl/V+
+> below ! ” ( a    loud   crash    ) — “ Now       , who    did that          ? — It       was Bill   , I    fancy   — Who’s to go      down
+# P     . . . D/P+ NSg/J+ NSg/V/J+ . . . NPr/V/J/C . NPr/I+ V   NSg/I/C/Ddem+ . . NPr/ISg+ V   NPr/V+ . ISg+ NSg/V/J . NSg$  P  NSg/V/J NSg/V/J/P
 > the chimney ? — Nay     , I    shan’t ! You    do     it       ! — That         I    won’t , then    ! — Bill’s to go
 # D   NSg/V+  . . NSg/V/J . ISg+ V      . ISgPl+ NSg/VX NPr/ISg+ . . NSg/I/C/Ddem ISg+ V     . NSg/J/C . . NSg$   P  NSg/V/J
 > down      — Here    , Bill   ! the master   says  you’re to go      down      the chimney ! ”
@@ -1392,8 +1392,8 @@
 #
 > “ Oh    ! So        Bill’s got to come    down      the chimney , has he       ? ” said Alice to herself .
 # . NPr/V . NSg/I/J/C NSg$   V   P  NSg/V/P NSg/V/J/P D   NSg/V+  . V   NPr/ISg+ . . V/J  NPr+  P  ISg+    .
-> “ Shy     , they seem to put   everything upon Bill   ! I    wouldn’t be     in      Bill’s place for a
-# . NSg/V/J . IPl+ V    P  NSg/V NSg/I/V+   P    NPr/V+ . ISg+ VX       NSg/VX NPr/J/P NSg$   NSg/V C/P D/P
+> “ Shy     , they seem to put   everything upon Bill   ! I    wouldn’t be     in      Bill’s place  for a
+# . NSg/V/J . IPl+ V    P  NSg/V NSg/I/V+   P    NPr/V+ . ISg+ VX       NSg/VX NPr/J/P NSg$   NSg/V+ C/P D/P
 > good    deal     : this   fireplace is narrow  , to be     sure ; but     I    think I    can    kick  a
 # NPr/V/J NSg/V/J+ . I/Ddem NSg+      VL NSg/V/J . P  NSg/VX J    . NSg/C/P ISg+ NSg/V ISg+ NPr/VX NSg/V D/P
 > little     ! ”
@@ -1451,7 +1451,7 @@
 >
 #
 > “ A   barrowful of what   ? ” thought Alice ; but     she  had not   long    to doubt , for the
-# . D/P ?         P  NSg/I+ . . NSg/V   NPr+  . NSg/C/P ISg+ V   NSg/C NPr/V/J P  NSg/V . C/P D+
+# . D/P ?         P  NSg/I+ . . NSg/V   NPr+  . NSg/C/P ISg+ V   NSg/C NPr/V/J P  NSg/V . C/P D
 > next     moment a   shower  of little      pebbles came    rattling in      at    the window , and some
 # NSg/J/P+ NSg+   D/P NSg/V/J P  NPr/I/J/Dq+ NPl/V+  NSg/V/P V        NPr/J/P NSg/P D+  NSg/V+ . V/C I/J/R/Dq
 > of them     hit     her     in      the face   . “ I’ll put   a   stop   to this    , ” she  said to herself , and
@@ -1463,7 +1463,7 @@
 >
 #
 > Alice noticed with some     surprise that         the pebbles were  all          turning into little
-# NPr+  V/J     P    I/J/R/Dq NSg/V    NSg/I/C/Ddem D+  NPl/V+  NSg/V NSg/I/J/C/Dq NSg/V   P    NPr/I/J/Dq+
+# NPr+  V/J     P    I/J/R/Dq NSg/V+   NSg/I/C/Ddem D+  NPl/V+  NSg/V NSg/I/J/C/Dq NSg/V   P    NPr/I/J/Dq+
 > cakes  as    they lay     on  the floor  , and a    bright   idea came    into her     head     . “ If    I    eat
 # NPl/V+ NSg/R IPl+ NSg/V/J J/P D+  NSg/V+ . V/C D/P+ NPr/V/J+ NSg+ NSg/V/P P    ISg/D$+ NPr/V/J+ . . NSg/C ISg+ V
 > one       of these   cakes  , ” she  thought , “ it’s sure to make  some     change  in      my  size   ; and
@@ -1482,8 +1482,8 @@
 # NSg/V   NSg/V/J/P . D   NSg/V/J NPr/I/J/Dq NSg    . NPr/V+ . V   NPr/J/P D   NSg/V/J . NSg/V/C V    NSg/V/J/P
 > by      two guinea - pigs   , who    were  giving it       something  out         of a   bottle . They all          made
 # NSg/J/P NSg NPr+   . NPl/V+ . NPr/I+ NSg/V V      NPr/ISg+ NSg/I/V/J+ NSg/V/J/R/P P  D/P NSg/V+ . IPl+ NSg/I/J/C/Dq V
-> a   rush    at    Alice the moment she  appeared ; but     she  ran   off       as    hard    as    she  could  ,
-# D/P NPr/V/J NSg/P NPr+  D+  NSg+   ISg+ V/J      . NSg/C/P ISg+ NSg/V NSg/V/J/P NSg/R NSg/V/J NSg/R ISg+ NSg/VX .
+> a   rush     at    Alice the moment she  appeared ; but     she  ran   off       as    hard    as    she  could  ,
+# D/P NPr/V/J+ NSg/P NPr+  D+  NSg+   ISg+ V/J      . NSg/C/P ISg+ NSg/V NSg/V/J/P NSg/R NSg/V/J NSg/R ISg+ NSg/VX .
 > and soon found herself safe    in      a    thick    wood     .
 # V/C J/R  NSg/V ISg+    NSg/V/J NPr/J/P D/P+ NSg/V/J+ NPr/V/J+ .
 >
@@ -1492,14 +1492,14 @@
 # . D+  NSg/V/J+ NSg/V+ W?   V   P  NSg/VX . . V/J  NPr+  P  ISg+    . NSg/R ISg+ V/J      J/P
 > in      the wood     , “ is to grow to my  right   size   again ; and the second  thing  is to find
 # NPr/J/P D   NPr/V/J+ . . VL P  V    P  D$+ NPr/V/J NSg/V+ P     . V/C D   NSg/V/J NSg/V+ VL P  NSg/V
-> my  way    into that         lovely garden   . I    think that          will   be     the best     plan  . ”
-# D$+ NSg/J+ P    NSg/I/C/Ddem NSg/J  NSg/V/J+ . ISg+ NSg/V NSg/I/C/Ddem+ NPr/VX NSg/VX D   NPr/VX/J NSg/V . .
+> my  way    into that         lovely garden   . I    think that          will   be     the best      plan   . ”
+# D$+ NSg/J+ P    NSg/I/C/Ddem NSg/J  NSg/V/J+ . ISg+ NSg/V NSg/I/C/Ddem+ NPr/VX NSg/VX D+  NPr/VX/J+ NSg/V+ . .
 >
 #
 > It       sounded an   excellent plan   , no     doubt  , and very neatly and simply arranged ; the
 # NPr/ISg+ V/J     D/P+ J+        NSg/V+ . NPr/P+ NSg/V+ . V/C J/R  R      V/C R      V/J      . D+
 > only   difficulty was , that         she  had not   the smallest idea how   to set     about it       ; and
-# J/R/C+ N🅪Sg+      V   . NSg/I/C/Ddem ISg+ V   NSg/C D   W?       NSg  NSg/C P  NPr/V/J J/P   NPr/ISg+ . V/C
+# J/R/C+ N🅪Sg+      V   . NSg/I/C/Ddem ISg+ V   NSg/C D+  W?       NSg  NSg/C P  NPr/V/J J/P   NPr/ISg+ . V/C
 > while     she  was peering about anxiously among the trees  , a   little     sharp   bark   just
 # NSg/V/C/P ISg+ V   V       J/P   R         P     D   NPl/V+ . D/P NPr/I/J/Dq NPr/V/J NSg/V+ V/J
 > over      her     head     made her     look  up        in      a   great hurry  .
@@ -1514,8 +1514,8 @@
 # D/P NSg/V/J NSg/I/V+ . V/C ISg+ V/J   NSg/V/J P  NSg/V   P  NPr/ISg+ . NSg/C/P ISg+ V   R
 > frightened all          the time      at    the thought that         it       might     be     hungry , in      which case   it
 # V/J        NSg/I/J/C/Dq D   N🅪Sg/V/J+ NSg/P D   NSg/V   NSg/I/C/Ddem NPr/ISg+ NᴹSg/VX/J NSg/VX J      . NPr/J/P I/C+  NPr/V+ NPr/ISg+
-> would be     very likely to eat her     up        in      spite   of all          her     coaxing .
-# VX    NSg/VX J/R  NSg/J  P  V   ISg/D$+ NSg/V/J/P NPr/J/P NSg/V/P P  NSg/I/J/C/Dq ISg/D$+ NSg/V/J .
+> would be     very likely to eat her     up        in      spite    of all          her     coaxing .
+# VX    NSg/VX J/R  NSg/J  P  V   ISg/D$+ NSg/V/J/P NPr/J/P NSg/V/P+ P  NSg/I/J/C/Dq ISg/D$+ NSg/V/J .
 >
 #
 > Hardly knowing   what   she  did , she  picked up        a   little     bit   of stick    , and held it
@@ -1530,8 +1530,8 @@
 # NSg/V/J/P . V/C D   NSg+   ISg+ V/J      J/P D   NSg/V/J NSg/V/J+ . D   NSg/V+ V    I/D     NPr/V/J+
 > at    the stick    , and tumbled head     over      heels  in      its     hurry  to get   hold    of it       ; then
 # NSg/P D   NSg/V/J+ . V/C V/J     NPr/V/J+ NSg/V/J/P NPl/V+ NPr/J/P ISg/D$+ NSg/V+ P  NSg/V NSg/V/J P  NPr/ISg+ . NSg/J/C
-> Alice , thinking it       was very like        having a   game    of play  with a   cart   - horse  , and
-# NPr+  . V        NPr/ISg+ V   J/R  NSg/V/J/C/P V      D/P NSg/V/J P  NSg/V P    D/P NSg/V+ . NSg/V+ . V/C
+> Alice , thinking it       was very like        having a   game     of play  with a   cart   - horse  , and
+# NPr+  . V        NPr/ISg+ V   J/R  NSg/V/J/C/P V      D/P NSg/V/J+ P  NSg/V P    D/P NSg/V+ . NSg/V+ . V/C
 > expecting every moment to be     trampled under   its     feet , ran   round     the thistle
 # V         Dq    NSg+   P  NSg/VX V/J      NSg/J/P ISg/D$+ NPl+ . NSg/V NSg/V/J/P D   NSg
 > again ; then    the puppy  began a   series of short     charges at    the stick    , running   a
@@ -1544,8 +1544,8 @@
 # NSg/V/J NSg/V/J/R/P P  ISg/D$+ NSg/V+ . V/C ISg/D$+ NSg/J+ NPl/V+ NSg/V/J/P+ NSg/V/J .
 >
 #
-> This   seemed to Alice a   good    opportunity for making her     escape ; so        she  set     off       at
-# I/Ddem V/J    P  NPr+  D/P NPr/V/J NSg+        C/P NSg/V  ISg/D$+ NSg/V  . NSg/I/J/C ISg+ NPr/V/J NSg/V/J/P NSg/P
+> This   seemed to Alice a    good     opportunity for making her     escape ; so        she  set     off       at
+# I/Ddem V/J    P  NPr+  D/P+ NPr/V/J+ NSg+        C/P NSg/V  ISg/D$+ NSg/V  . NSg/I/J/C ISg+ NPr/V/J NSg/V/J/P NSg/P
 > once  , and ran   till      she  was quite tired and out         of breath   , and till      the puppy’s
 # NSg/C . V/C NSg/V NSg/V/C/P ISg+ V   NSg   V/J   V/C NSg/V/J/R/P P  NSg/V/J+ . V/C NSg/V/C/P D   NSg$
 > bark   sounded quite faint   in      the distance .
@@ -1568,10 +1568,10 @@
 #
 > The great  question certainly was , what   ? Alice looked all          round     her     at    the
 # D+  NSg/J+ NSg/V+   R         V   . NSg/I+ . NPr+  V/J    NSg/I/J/C/Dq NSg/V/J/P ISg/D$+ NSg/P D
-> flowers and the blades of grass  , but     she  did not   see   anything that          looked like
-# NPrPl/V V/C D   NPl/V  P  NPr/V+ . NSg/C/P ISg+ V   NSg/C NSg/V NSg/I/V+ NSg/I/C/Ddem+ V/J    NSg/V/J/C/P
-> the right   thing to eat or    drink  under   the circumstances . There was a   large
-# D   NPr/V/J NSg/V P  V   NPr/C NSg/V+ NSg/J/P D+  NPl/V+        . +     V   D/P NSg/J
+> flowers  and the blades of grass  , but     she  did not   see   anything that          looked like
+# NPrPl/V+ V/C D   NPl/V  P  NPr/V+ . NSg/C/P ISg+ V   NSg/C NSg/V NSg/I/V+ NSg/I/C/Ddem+ V/J    NSg/V/J/C/P
+> the right   thing  to eat or    drink  under   the circumstances . There was a   large
+# D   NPr/V/J NSg/V+ P  V   NPr/C NSg/V+ NSg/J/P D+  NPl/V+        . +     V   D/P NSg/J
 > mushroom growing near      her     , about the same height as    herself ; and when    she  had
 # NᴹSg/V/J NSg/V   NSg/V/J/P ISg/D$+ . J/P   D   I/J  N🅪Sg+  NSg/R ISg+    . V/C NSg/I/C ISg+ V
 > looked under   it       , and on  both   sides of it       , and behind  it       , it       occurred to her     that
@@ -1580,8 +1580,8 @@
 # ISg+ NᴹSg/VX/J NSg/R NSg/V/J NSg/V V/C NSg/V NSg/I+ V   J/P D   NSg/V/J P  NPr/ISg+ .
 >
 #
-> She  stretched herself up        on  tiptoe   , and peeped over      the edge   of the mushroom ,
-# ISg+ V/J       ISg+    NSg/V/J/P J/P NSg/V/J+ . V/C V/J    NSg/V/J/P D   NSg/V+ P  D   NᴹSg/V/J .
+> She  stretched herself up        on  tiptoe   , and peeped over      the edge  of the mushroom ,
+# ISg+ V/J       ISg+    NSg/V/J/P J/P NSg/V/J+ . V/C V/J    NSg/V/J/P D   NSg/V P  D   NᴹSg/V/J .
 > and her     eyes   immediately met those  of a   large blue    caterpillar , that          was sitting
 # V/C ISg/D$+ NPl/V+ R           V   I/Ddem P  D/P NSg/J NSg/V/J NSg/V       . NSg/I/C/Ddem+ V   NSg/V/J
 > on  the top      with its     arms   folded , quietly smoking a   long    hookah , and taking  not
@@ -1632,8 +1632,8 @@
 #
 > “ I’m afraid I    can’t put   it       more         clearly , ” Alice replied very politely , “ for I
 # . W?  J      ISg+ VX    NSg/V NPr/ISg+ NPr/I/V/J/Dq R       . . NPr+  V/J     J/R  R        . . C/P ISg+
-> can’t understand it       myself to begin with ; and being   so        many       different sizes in      a
-# VX    V          NPr/ISg+ ISg+   P  NSg/V P    . V/C NSg/V/C NSg/I/J/C NSg/I/J/Dq NSg/J     NPl/V NPr/J/P D/P
+> can’t understand it       myself to begin with ; and being   so        many       different sizes  in      a
+# VX    V          NPr/ISg+ ISg+   P  NSg/V P    . V/C NSg/V/C NSg/I/J/C NSg/I/J/Dq NSg/J     NPl/V+ NPr/J/P D/P
 > day   is very confusing . ”
 # NPr🅪+ VL J/R  V/J       . .
 >
@@ -1666,8 +1666,8 @@
 #
 > Which brought them     back    again to the beginning of the conversation . Alice felt    a
 # I/C+  V       NSg/IPl+ NSg/V/J P     P  D   NSg/V/J   P  D+  NSg/V+       . NPr+  NSg/V/J D/P+
-> little      irritated at    the Caterpillar’s making such  very short      remarks , and she
-# NPr/I/J/Dq+ V/J+      NSg/P D   NSg$          NSg/V  NSg/I J/R  NPr/V/J/P+ NPl/V+  . V/C ISg+
+> little      irritated at    the Caterpillar’s making such  very short     remarks , and she
+# NPr/I/J/Dq+ V/J+      NSg/P D   NSg$          NSg/V  NSg/I J/R  NPr/V/J/P NPl/V+  . V/C ISg+
 > drew  herself up        and said , very gravely , “ I    think , you    ought    to tell  me       who    you
 # NPr/V ISg+    NSg/V/J/P V/C V/J  . J/R  R       . . ISg+ NSg/V . ISgPl+ NSg/I/VX P  NPr/V NPr/ISg+ NPr/I+ ISgPl+
 > are , first   . ”
@@ -1679,7 +1679,7 @@
 >
 #
 > Here    was another puzzling question ; and as    Alice could  not   think of any     good
-# NSg/J/R V   I/D     V        NSg/V    . V/C NSg/R NPr+  NSg/VX NSg/C NSg/V P  I/R/Dq+ NPr/V/J+
+# NSg/J/R V   I/D+    V+       NSg/V+   . V/C NSg/R NPr+  NSg/VX NSg/C NSg/V P  I/R/Dq+ NPr/V/J+
 > reason  , and as    the Caterpillar seemed to be     in      a   very unpleasant state of mind   ,
 # N🅪Sg/V+ . V/C NSg/R D   NSg/V       V/J    P  NSg/VX NPr/J/P D/P J/R  NSg/J      NSg/V P  NSg/V+ .
 > she  turned away .
@@ -1766,18 +1766,18 @@
 # D   N🅪Sg/V P  NSg/I/C/Ddem+ . .
 >
 #
-> “ In      my  youth , ” said the sage    , as    he       shook   his     grey          locks  , “ I    kept all          my  limbs
-# . NPr/J/P D$+ NSg+  . . V/J  D   NSg/V/J . NSg/R NPr/ISg+ NSg/V/J ISg/D$+ NPr/V/J/Comm+ NPl/V+ . . ISg+ V    NSg/I/J/C/Dq D$+ NPl/V+
-> very supple By      the use    of this   ointment — one       shilling the box    — Allow me       to sell
-# J/R  V/J    NSg/J/P D   NSg/V+ P  I/Ddem N🅪Sg     . NSg/I/V/J NSg/V    D   NSg/V+ . V     NPr/ISg+ P  NSg/V
+> “ In      my  youth , ” said the sage    , as    he       shook   his     grey          locks  , “ I    kept all           my  limbs
+# . NPr/J/P D$+ NSg+  . . V/J  D   NSg/V/J . NSg/R NPr/ISg+ NSg/V/J ISg/D$+ NPr/V/J/Comm+ NPl/V+ . . ISg+ V    NSg/I/J/C/Dq+ D$+ NPl/V+
+> very supple By      the use   of this   ointment — one       shilling the box    — Allow me       to sell
+# J/R  V/J    NSg/J/P D   NSg/V P  I/Ddem N🅪Sg     . NSg/I/V/J NSg/V    D   NSg/V+ . V     NPr/ISg+ P  NSg/V
 > you    a   couple   ? ”
 # ISgPl+ D/P NSg/V/J+ . .
 >
 #
 > “ You    are old   , ” said the youth , “ and your jaws   are too weak For anything
 # . ISgPl+ V   NSg/J . . V/J  D+  NSg+  . . V/C D$+  NPl/V+ V   W?  J    C/P NSg/I/V+
-> tougher than suet ; Yet     you    finished the goose  , with the bones and the beak   —
-# J       C/P  NSg  . NSg/V/C ISgPl+ V/J      D   NSg/V+ . P    D   NPl/V V/C D   NSg/V+ .
+> tougher than suet ; Yet     you    finished the goose  , with the bones  and the beak   —
+# J       C/P  NSg  . NSg/V/C ISgPl+ V/J      D   NSg/V+ . P    D   NPl/V+ V/C D   NSg/V+ .
 > Pray , how   did you    manage to do     it       ? ”
 # V    . NSg/C V   ISgPl+ NSg/V  P  NSg/VX NPr/ISg+ . .
 >
@@ -1800,8 +1800,8 @@
 #
 > “ I    have   answered three questions , and that          is enough , ” Said his     father ; “ don’t
 # . ISg+ NSg/VX V/J      NSg+  NPl/V+    . V/C NSg/I/C/Ddem+ VL NSg/I  . . V/J  ISg/D$+ NPr/V+ . . V
-> give  yourself airs  ! Do     you    think I    can    listen all           day   to such   stuff   ? Be     off       ,
-# NSg/V ISg+     NPl/V . NSg/VX ISgPl+ NSg/V ISg+ NPr/VX NSg/V  NSg/I/J/C/Dq+ NPr🅪+ P  NSg/I+ NᴹSg/V+ . NSg/VX NSg/V/J/P .
+> give  yourself airs  ! Do     you    think I    can    listen all          day   to such   stuff   ? Be     off       ,
+# NSg/V ISg+     NPl/V . NSg/VX ISgPl+ NSg/V ISg+ NPr/VX NSg/V  NSg/I/J/C/Dq NPr🅪+ P  NSg/I+ NᴹSg/V+ . NSg/VX NSg/V/J/P .
 > or    I’ll kick   you    down      stairs ! ”
 # NPr/C W?   NSg/V+ ISgPl+ NSg/V/J/P NPl+   . .
 >
@@ -1817,7 +1817,7 @@
 >
 #
 > “ It       is wrong   from beginning to end   , ” said the Caterpillar decidedly , and there
-# . NPr/ISg+ VL NSg/V/J P    NSg/V/J   P  NSg/V . . V/J  D   NSg/V       R         . V/C +
+# . NPr/ISg+ VL NSg/V/J P    NSg/V/J+  P  NSg/V . . V/J  D   NSg/V       R         . V/C +
 > was silence for some     minutes .
 # V   NSg/V+  C/P I/J/R/Dq NPl/V+  .
 >
@@ -1856,8 +1856,8 @@
 # NPr+  . . NSg   NPl/V+ VL NSg/I D/P J        N🅪Sg+  P  NSg/VX . .
 >
 #
-> “ It       is a   very good    height indeed ! ” said the Caterpillar angrily , rearing itself
-# . NPr/ISg+ VL D/P J/R  NPr/V/J N🅪Sg   W?     . . V/J  D   NSg/V       R       . V+      ISg+
+> “ It       is a   very good     height indeed ! ” said the Caterpillar angrily , rearing itself
+# . NPr/ISg+ VL D/P J/R  NPr/V/J+ N🅪Sg+  W?     . . V/J  D   NSg/V       R       . V+      ISg+
 > upright as    it       spoke ( it       was exactly three inches high    ) .
 # NSg/V/J NSg/R NPr/ISg+ NSg/V . NPr/ISg+ V   R       NSg   NPl/V+ NSg/V/J . .
 >
@@ -1880,8 +1880,8 @@
 # NSg D   NSg/V       V    D   NSg    NSg/V/J/R/P P  ISg/D$+ NSg/V+ V/C V/J    NSg/C NPr/C W?    .
 > and shook   itself . Then    it       got down      off       the mushroom , and crawled away in      the
 # V/C NSg/V/J ISg+   . NSg/J/C NPr/ISg+ V   NSg/V/J/P NSg/V/J/P D   NᴹSg/V/J . V/C V/J     V/J  NPr/J/P D
-> grass  , merely remarking as    it       went  , “ One        side     will   make  you    grow taller , and the
-# NPr/V+ . R      V         NSg/R NPr/ISg+ NSg/V . . NSg/I/V/J+ NSg/V/J+ NPr/VX NSg/V ISgPl+ V    J      . V/C D
+> grass  , merely remarking as    it       went  , “ One       side     will   make  you    grow taller , and the
+# NPr/V+ . R      V         NSg/R NPr/ISg+ NSg/V . . NSg/I/V/J NSg/V/J+ NPr/VX NSg/V ISgPl+ V    J      . V/C D
 > other   side     will   make  you    grow shorter . ”
 # NSg/V/J NSg/V/J+ NPr/VX NSg/V ISgPl+ V    J       . .
 >
@@ -1900,8 +1900,8 @@
 # NPr+  V/J      V       R            NSg/P D   NᴹSg/V/J C/P D/P NSg/V/J+ . NSg/V/J P  NSg/V
 > out         which were  the two sides of it       ; and as    it       was perfectly round     , she  found
 # NSg/V/J/R/P I/C+  NSg/V D   NSg NPl/V P  NPr/ISg+ . V/C NSg/R NPr/ISg+ V   R         NSg/V/J/P . ISg+ NSg/V
-> this   a   very difficult question . However , at    last     she  stretched her     arms   round     it
-# I/Ddem D/P J/R  V/J       NSg/V+   . C       . NSg/P NSg/V/J+ ISg+ V/J       ISg/D$+ NPl/V+ NSg/V/J/P NPr/ISg+
+> this   a   very difficult question . However , at    last    she  stretched her     arms   round     it
+# I/Ddem D/P J/R  V/J       NSg/V+   . C       . NSg/P NSg/V/J ISg+ V/J       ISg/D$+ NPl/V+ NSg/V/J/P NPr/ISg+
 > as    far     as    they would go      , and broke   off       a   bit   of the edge   with each hand   .
 # NSg/R NSg/V/J NSg/R IPl+ VX    NSg/V/J . V/C NSg/V/J NSg/V/J/P D/P NSg/V P  D   NSg/V+ P    Dq+  NSg/V+ .
 >
@@ -1920,16 +1920,16 @@
 # +     V   NPr/P N🅪Sg/V/J+ P  NSg/VX V/J  . NSg/R ISg+ V   V         R       . NSg/I/J/C ISg+ NPr/V/J P  NSg/V
 > at    once  to eat some     of the other    bit    . Her     chin   was pressed so        closely against
 # NSg/P NSg/C P  V   I/J/R/Dq P  D+  NSg/V/J+ NSg/V+ . ISg/D$+ NPr/V+ V   V/J     NSg/I/J/C R       C/P
-> her     foot   , that         there was hardly room    to open    her     mouth  ; but     she  did it       at    last    ,
-# ISg/D$+ NSg/V+ . NSg/I/C/Ddem +     V   R      NSg/V/J P  NSg/V/J ISg/D$+ NSg/V+ . NSg/C/P ISg+ V   NPr/ISg+ NSg/P NSg/V/J .
+> her     foot   , that         there was hardly room     to open    her     mouth  ; but     she  did it       at    last    ,
+# ISg/D$+ NSg/V+ . NSg/I/C/Ddem +     V   R      NSg/V/J+ P  NSg/V/J ISg/D$+ NSg/V+ . NSg/C/P ISg+ V   NPr/ISg+ NSg/P NSg/V/J .
 > and managed to swallow a   morsel of the lefthand bit    .
 # V/C V/J     P  NSg/V   D/P NSg/V  P  D   ?        NSg/V+ .
 >
 #
 > “ Come    , my  head’s free    at    last    ! ” said Alice in      a   tone    of delight  , which changed
 # . NSg/V/P . D$+ NSg$   NSg/V/J NSg/P NSg/V/J . . V/J  NPr+  NPr/J/P D/P NSg/I/V P  NSg/V/J+ . I/C+  V/J
-> into alarm in      another moment , when    she  found that         her     shoulders were  nowhere to
-# P    NSg/V NPr/J/P I/D+    NSg+   . NSg/I/C ISg+ NSg/V NSg/I/C/Ddem ISg/D$+ NPl/V+    NSg/V NSg/J   P
+> into alarm  in      another moment , when    she  found that         her     shoulders were  nowhere to
+# P    NSg/V+ NPr/J/P I/D+    NSg+   . NSg/I/C ISg+ NSg/V NSg/I/C/Ddem ISg/D$+ NPl/V+    NSg/V NSg/J   P
 > be     found : all          she  could  see   , when    she  looked down      , was an  immense length of
 # NSg/VX NSg/V . NSg/I/J/C/Dq ISg+ NSg/VX NSg/V . NSg/I/C ISg+ V/J    NSg/V/J/P . V   D/P NSg/J   N🅪Sg/V P
 > neck   , which seemed to rise  like        a    stalk  out         of a   sea of green    leaves that          lay
@@ -1951,7 +1951,7 @@
 > As    there seemed to be     no    chance  of getting her     hands  up        to her     head     , she  tried
 # NSg/R +     V/J    P  NSg/VX NPr/P NPr/V/J P  NSg/V   ISg/D$+ NPl/V+ NSg/V/J/P P  ISg/D$+ NPr/V/J+ . ISg+ V/J
 > to get   her     head     down      to them     , and was delighted to find  that         her     neck   would bend
-# P  NSg/V ISg/D$+ NPr/V/J+ NSg/V/J/P P  NSg/IPl+ . V/C V   V/J       P  NSg/V NSg/I/C/Ddem ISg/D$+ NSg/V+ VX    NPr/V
+# P  NSg/V ISg/D$+ NPr/V/J+ NSg/V/J/P P  NSg/IPl+ . V/C V   V/J       P  NSg/V NSg/I/C/Ddem ISg/D$+ NSg/V+ VX    NPr/V+
 > about easily in      any     direction , like        a    serpent . She  had just succeeded in      curving
 # J/P   R      NPr/J/P I/R/Dq+ NSg+      . NSg/V/J/C/P D/P+ NSg/V+  . ISg+ V   V/J  V/J       NPr/J/P V+
 > it       down      into a   graceful zigzag  , and was going   to dive  in      among the leaves , which
@@ -1973,15 +1973,15 @@
 >
 #
 > “ Serpent , I    say   again ! ” repeated the Pigeon , but     in      a   more         subdued tone    , and
-# . NSg/V+  . ISg+ NSg/V P     . . V/J      D+  NSg/V+ . NSg/C/P NPr/J/P D/P NPr/I/V/J/Dq V/J     NSg/I/V . V/C
-> added with a    kind   of sob   , “ I’ve tried every way    , and nothing  seems to suit
-# V/J   P    D/P+ NSg/J+ P  NSg/V . . W?   V/J   Dq    NSg/J+ . V/C NSg/I/J+ V     P  NSg/V
+# . NSg/V+  . ISg+ NSg/V P     . . V/J      D+  NSg/V+ . NSg/C/P NPr/J/P D/P NPr/I/V/J/Dq V/J+    NSg/I/V . V/C
+> added with a   kind   of sob   , “ I’ve tried every way    , and nothing  seems to suit
+# V/J   P    D/P NSg/J+ P  NSg/V . . W?   V/J   Dq    NSg/J+ . V/C NSg/I/J+ V     P  NSg/V
 > them     ! ”
 # NSg/IPl+ . .
 >
 #
 > “ I    haven’t the least idea what   you’re talking about , ” said Alice .
-# . ISg+ V       D+  NSg/J NSg+ NSg/I+ W?     V       J/P   . . V/J  NPr+  .
+# . ISg+ V       D   NSg/J NSg+ NSg/I+ W?     V       J/P   . . V/J  NPr+  .
 >
 #
 > “ I’ve tried the roots of trees  , and I’ve tried banks    , and I’ve tried hedges , ”
@@ -2007,7 +2007,7 @@
 >
 #
 > “ I’m very sorry   you’ve been  annoyed , ” said Alice , who    was beginning to see   its
-# . W?  J/R  NSg/V/J W?     NSg/V V/J     . . V/J  NPr+  . NPr/I+ V   NSg/V/J   P  NSg/V ISg/D$+
+# . W?  J/R  NSg/V/J W?     NSg/V V/J     . . V/J  NPr+  . NPr/I+ V   NSg/V/J+  P  NSg/V ISg/D$+
 > meaning   .
 # N🅪Sg/V/J+ .
 >
@@ -2037,11 +2037,11 @@
 >
 #
 > “ A    likely story  indeed ! ” said the Pigeon in      a   tone    of the deepest contempt .
-# . D/P+ NSg/J+ NSg/V+ W?     . . V/J  D   NSg/V  NPr/J/P D/P NSg/I/V P  D+  +       NSg+     .
+# . D/P+ NSg/J+ NSg/V+ W?     . . V/J  D+  NSg/V+ NPr/J/P D/P NSg/I/V P  D+  +       NSg+     .
 > “ I’ve seen  a   good    many       little     girls  in      my  time      , but     never one       with such  a   neck
 # . W?   NSg/V D/P NPr/V/J NSg/I/J/Dq NPr/I/J/Dq NPl/V+ NPr/J/P D$+ N🅪Sg/V/J+ . NSg/C/P R     NSg/I/V/J P    NSg/I D/P NSg/V+
-> as    that          ! No    , no    ! You’re a   serpent ; and there’s no    use   denying it       . I    suppose
-# NSg/R NSg/I/C/Ddem+ . NPr/P . NPr/P . W?     D/P NSg/V+  . V/C W?      NPr/P NSg/V V       NPr/ISg+ . ISg+ V
+> as    that          ! No    , no    ! You’re a    serpent ; and there’s no    use   denying it       . I    suppose
+# NSg/R NSg/I/C/Ddem+ . NPr/P . NPr/P . W?     D/P+ NSg/V+  . V/C W?      NPr/P NSg/V V       NPr/ISg+ . ISg+ V
 > you’ll be     telling me       next    that         you    never tasted an  egg     ! ”
 # W?     NSg/VX NSg/V/J NPr/ISg+ NSg/J/P NSg/I/C/Ddem ISgPl+ R     V/J    D/P N🅪Sg/V+ . .
 >
@@ -2068,8 +2068,8 @@
 # NSg/V NPr/C D/P NSg/V+  . .
 >
 #
-> “ It       matters a   good    deal     to me       , ” said Alice hastily ; “ but     I’m not   looking for
-# . NPr/ISg+ NPl/V   D/P NPr/V/J NSg/V/J+ P  NPr/ISg+ . . V/J  NPr+  R       . . NSg/C/P W?  NSg/C V       C/P
+> “ It       matters a    good     deal     to me       , ” said Alice hastily ; “ but     I’m not   looking for
+# . NPr/ISg+ NPl/V   D/P+ NPr/V/J+ NSg/V/J+ P  NPr/ISg+ . . V/J  NPr+  R       . . NSg/C/P W?  NSg/C V       C/P
 > eggs   , as    it       happens ; and if    I    was , I    shouldn’t want  yours : I    don’t like        them
 # NPl/V+ . NSg/R NPr/ISg+ V       . V/C NSg/C ISg+ V   . ISg+ V         NSg/V I+    . ISg+ V     NSg/V/J/C/P NSg/IPl+
 > raw     . ”
@@ -2077,7 +2077,7 @@
 >
 #
 > “ Well    , be     off       , then    ! ” said the Pigeon in      a    sulky  tone     , as    it       settled down      again
-# . NSg/V/J . NSg/VX NSg/V/J/P . NSg/J/C . . V/J  D   NSg/V  NPr/J/P D/P+ NSg/J+ NSg/I/V+ . NSg/R NPr/ISg+ V/J     NSg/V/J/P P
+# . NSg/V/J . NSg/VX NSg/V/J/P . NSg/J/C . . V/J  D   NSg/V+ NPr/J/P D/P+ NSg/J+ NSg/I/V+ . NSg/R NPr/ISg+ V/J     NSg/V/J/P P
 > into its     nest   . Alice crouched down      among the trees  as    well    as    she  could  , for her
 # P    ISg/D$+ NSg/V+ . NPr+  V/J      NSg/V/J/P P     D+  NPl/V+ NSg/R NSg/V/J NSg/R ISg+ NSg/VX . C/P ISg/D$+
 > neck   kept getting entangled among the branches , and every now       and then    she  had
@@ -2088,24 +2088,24 @@
 # NPl/V  P  NᴹSg/V/J NPr/J/P ISg/D$+ NPl/V+ . V/C ISg+ NPr/V/J P  NSg/V J/R  R         . V
 > first   at    one       and then    at    the other   , and growing sometimes taller and sometimes
 # NSg/V/J NSg/P NSg/I/V/J V/C NSg/J/C NSg/P D   NSg/V/J . V/C NSg/V   R         J      V/C R
-> shorter , until she  had succeeded in      bringing herself down      to her     usual  height .
-# J       . C/P   ISg+ V   V/J       NPr/J/P V        ISg+    NSg/V/J/P P  ISg/D$+ NSg/J+ N🅪Sg+  .
+> shorter , until she  had succeeded in      bringing herself down      to her     usual height .
+# J       . C/P   ISg+ V   V/J       NPr/J/P V        ISg+    NSg/V/J/P P  ISg/D$+ NSg/J N🅪Sg+  .
 >
 #
 > It       was so        long    since she  had been  anything near      the right    size   , that         it       felt
-# NPr/ISg+ V   NSg/I/J/C NPr/V/J C/P   ISg+ V   NSg/V NSg/I/V  NSg/V/J/P D+  NPr/V/J+ NSg/V+ . NSg/I/C/Ddem NPr/ISg+ NSg/V/J
+# NPr/ISg+ V   NSg/I/J/C NPr/V/J C/P   ISg+ V   NSg/V NSg/I/V+ NSg/V/J/P D+  NPr/V/J+ NSg/V+ . NSg/I/C/Ddem NPr/ISg+ NSg/V/J
 > quite strange at    first   ; but     she  got used to it       in      a    few       minutes , and began
 # NSg   NSg/V/J NSg/P NSg/V/J . NSg/C/P ISg+ V   V/J  P  NPr/ISg+ NPr/J/P D/P+ NSg/I/Dq+ NPl/V+  . V/C V
 > talking to herself , as    usual . “ Come    , there’s half       my  plan   done    now       ! How   puzzling
 # V       P  ISg+    . NSg/R NSg/J . . NSg/V/P . W?      NSg/V/J/P+ D$+ NSg/V+ NSg/V/J NPr/V/J/C . NSg/C V
-> all          these   changes are ! I’m never sure what   I’m going   to be     , from one       minute   to
-# NSg/I/J/C/Dq I/Ddem+ NPl/V+  V   . W?  R     J    NSg/I+ W?  NSg/V/J P  NSg/VX . P    NSg/I/V/J NSg/V/J+ P
+> all           these   changes are ! I’m never sure what   I’m going   to be     , from one       minute   to
+# NSg/I/J/C/Dq+ I/Ddem+ NPl/V+  V   . W?  R     J    NSg/I+ W?  NSg/V/J P  NSg/VX . P    NSg/I/V/J NSg/V/J+ P
 > another ! However , I’ve got back    to my  right   size   : the next    thing  is , to get   into
 # I/D     . C       . W?   V   NSg/V/J P  D$+ NPr/V/J NSg/V+ . D   NSg/J/P NSg/V+ VL . P  NSg/V P
 > that         beautiful garden   — how   is that          to be     done    , I    wonder ? ” As    she  said this    , she
 # NSg/I/C/Ddem NSg/J     NSg/V/J+ . NSg/C VL NSg/I/C/Ddem+ P  NSg/VX NSg/V/J . ISg+ NSg/V  . . NSg/R ISg+ V/J  I/Ddem+ . ISg+
-> came    suddenly upon an  open    place  , with a    little      house  in      it       about four feet
-# NSg/V/P R        P    D/P NSg/V/J NSg/V+ . P    D/P+ NPr/I/J/Dq+ NPr/V+ NPr/J/P NPr/ISg+ J/P   NSg+ NPl+
+> came    suddenly upon an   open     place  , with a   little     house  in      it       about four feet
+# NSg/V/P R        P    D/P+ NSg/V/J+ NSg/V+ . P    D/P NPr/I/J/Dq NPr/V+ NPr/J/P NPr/ISg+ J/P   NSg+ NPl+
 > high    . “ Whoever lives there , ” thought Alice , “ it’ll never do     to come    upon them
 # NSg/V/J . . I+      V+    W?    . . NSg/V   NPr+  . . W?    R     NSg/VX P  NSg/V/P P    NSg/IPl+
 > this   size   : why   , I    should frighten them     out         of their wits  ! ” So        she  began nibbling
@@ -2117,7 +2117,7 @@
 >
 #
 > CHAPTER VI  : Pig   and Pepper
-# NSg/V   NPr . NSg/V V/C NSg/V+
+# NSg/V+  NPr . NSg/V V/C NSg/V+
 >
 #
 > For a    minute   or    two she  stood looking at    the house  , and wondering what   to do
@@ -2134,8 +2134,8 @@
 # NSg/V+ . V/C NSg/J NPl/V+ NSg/V/J/C/P D/P NSg/V . V/C I/C/Dq NPl     . NPr+  V/J     . V   V/J
 > hair    that          curled all          over      their heads  . She  felt    very curious to know  what   it       was
 # N🅪Sg/V+ NSg/I/C/Ddem+ V/J    NSg/I/J/C/Dq NSg/V/J/P D$+   NPl/V+ . ISg+ NSg/V/J J/R  J       P  NSg/V NSg/I+ NPr/ISg+ V
-> all          about , and crept a   little     way    out         of the wood     to listen .
-# NSg/I/J/C/Dq J/P   . V/C V     D/P NPr/I/J/Dq NSg/J+ NSg/V/J/R/P P  D+  NPr/V/J+ P  NSg/V  .
+> all          about , and crept a   little      way    out         of the wood     to listen .
+# NSg/I/J/C/Dq J/P   . V/C V     D/P NPr/I/J/Dq+ NSg/J+ NSg/V/J/R/P P  D+  NPr/V/J+ P  NSg/V  .
 >
 #
 > The Fish      - Footman began by      producing from under   his     arm     a   great letter , nearly as
@@ -2143,7 +2143,7 @@
 > large as    himself , and this   he       handed over      to the other   , saying , in      a   solemn
 # NSg/J NSg/R ISg+    . V/C I/Ddem NPr/ISg+ V/J    NSg/V/J/P P  D   NSg/V/J . NSg/V  . NPr/J/P D/P J
 > tone     , “ For the Duchess . An  invitation from the Queen    to play  croquet . ” The
-# NSg/I/V+ . . C/P D   NSg/V   . D/P NSg+       P    D   NPr/V/J+ P  NSg/V NSg/V   . . D
+# NSg/I/V+ . . C/P D   NSg/V   . D/P NSg+       P    D+  NPr/V/J+ P  NSg/V NSg/V   . . D
 > Frog  - Footman repeated , in      the same solemn tone     , only  changing the order of the
 # NSg/V . NSg     V/J      . NPr/J/P D   I/J  J      NSg/I/V+ . J/R/C NSg/V    D   NSg/V P  D
 > words  a   little     , “ From the Queen    . An   invitation for the Duchess to play  croquet . ”
@@ -2154,10 +2154,10 @@
 # NSg/J/C IPl+ I/C/Dq V/J   NSg/V/J . V/C D$+   NPl/V V   V/J       J        .
 >
 #
-> Alice laughed so        much       at    this    , that         she  had to run   back    into the wood     for fear
-# NPr+  V/J     NSg/I/J/C NSg/I/J/Dq NSg/P I/Ddem+ . NSg/I/C/Ddem ISg+ V   P  NSg/V NSg/V/J P    D   NPr/V/J+ C/P NSg/V
+> Alice laughed so        much       at    this    , that         she  had to run   back    into the wood    for fear
+# NPr+  V/J     NSg/I/J/C NSg/I/J/Dq NSg/P I/Ddem+ . NSg/I/C/Ddem ISg+ V   P  NSg/V NSg/V/J P    D   NPr/V/J C/P NSg/V
 > of their hearing  her     ; and when    she  next    peeped out         the Fish      - Footman was gone  ,
-# P  D$+   NSg/V/J+ ISg/D$+ . V/C NSg/I/C ISg+ NSg/J/P V/J    NSg/V/J/R/P D   N🅪SgPl/V+ . NSg     V   V/J/P .
+# P  D$+   NSg/V/J+ ISg/D$+ . V/C NSg/I/C ISg+ NSg/J/P V/J    NSg/V/J/R/P D+  N🅪SgPl/V+ . NSg     V   V/J/P .
 > and the other   was sitting on  the ground   near      the door   , staring stupidly up        into
 # V/C D   NSg/V/J V   NSg/V/J J/P D   NSg/V/J+ NSg/V/J/P D   NSg/V+ . V       R        NSg/V/J/P P
 > the sky    .
@@ -2192,8 +2192,8 @@
 # V         P  ISg/D$+ . . NSg/C IPl+ V   D   NSg/V+ NSg/P   NPr/IPl+ . C/P NSg/V+   . NSg/C ISgPl+ NSg/V
 > inside  , you    might     knock , and I    could  let   you    out         , you    know  . ” He       was looking up
 # NSg/J/P . ISgPl+ NᴹSg/VX/J NSg/V . V/C ISg+ NSg/VX NSg/V ISgPl+ NSg/V/J/R/P . ISgPl+ NSg/V . . NPr/ISg+ V   V       NSg/V/J/P
-> into the sky    all          the time      he       was speaking , and this    Alice thought decidedly
-# P    D+  NSg/V+ NSg/I/J/C/Dq D+  N🅪Sg/V/J+ NPr/ISg+ V   V        . V/C I/Ddem+ NPr+  NSg/V   R
+> into the sky    all           the time      he       was speaking , and this    Alice thought decidedly
+# P    D+  NSg/V+ NSg/I/J/C/Dq+ D+  N🅪Sg/V/J+ NPr/ISg+ V   V        . V/C I/Ddem+ NPr+  NSg/V   R
 > uncivil . “ But     perhaps he       can’t help  it       , ” she  said to herself ; “ his     eyes   are so
 # J       . . NSg/C/P NSg     NPr/ISg+ VX    NSg/V NPr/ISg+ . . ISg+ V/J  P  ISg+    . . ISg/D$+ NPl/V+ V   NSg/I/J/C
 > very nearly at    the top     of his     head     . But     at    any     rate   he       might     answer
@@ -2224,14 +2224,14 @@
 # . NSg/C NPr/V/J ISg+ P  NSg/V NPr/J/P . . V/J   NPr+  P     . NPr/J/P D/P+ J+     NSg/I/V+ .
 >
 #
-> “ Are you    to get   in      at    all          ? ” said the Footman . “ That’s the first    question , you
-# . V   ISgPl+ P  NSg/V NPr/J/P NSg/P NSg/I/J/C/Dq . . V/J  D   NSg     . . NSg$   D+  NSg/V/J+ NSg/V+   . ISgPl+
+> “ Are you    to get   in      at    all          ? ” said the Footman . “ That’s the first   question , you
+# . V   ISgPl+ P  NSg/V NPr/J/P NSg/P NSg/I/J/C/Dq . . V/J  D   NSg     . . NSg$   D+  NSg/V/J NSg/V+   . ISgPl+
 > know  . ”
 # NSg/V . .
 >
 #
-> It       was , no    doubt : only  Alice did not   like        to be     told so        . “ It’s really dreadful , ”
-# NPr/ISg+ V   . NPr/P NSg/V . J/R/C NPr+  V   NSg/C NSg/V/J/C/P P  NSg/VX V    NSg/I/J/C . . W?   R      NSg/J    . .
+> It       was , no    doubt  : only  Alice did not   like        to be     told so        . “ It’s really dreadful , ”
+# NPr/ISg+ V   . NPr/P NSg/V+ . J/R/C NPr+  V   NSg/C NSg/V/J/C/P P  NSg/VX V    NSg/I/J/C . . W?   R      NSg/J    . .
 > she  muttered to herself , “ the way    all          the creatures argue . It’s enough to drive
 # ISg+ V/J      P  ISg+    . . D   NSg/J+ NSg/I/J/C/Dq D   NPl+      V     . W?   NSg/I  P  NSg/V
 > one       crazy ! ”
@@ -2279,7 +2279,7 @@
 > occasionally ; and as    for the baby     , it       was sneezing and howling alternately
 # R            . V/C NSg/R C/P D   NSg/V/J+ . NPr/ISg+ V   V        V/C V       R
 > without a   moment’s pause  . The only  things in      the kitchen that          did not   sneeze ,
-# C/P     D/P NSg$     NSg/V+ . D   J/R/C NPl/V  NPr/J/P D+  NSg/V+  NSg/I/C/Ddem+ V   NSg/C NSg/V  .
+# C/P     D/P NSg$     NSg/V+ . D   J/R/C NPl/V+ NPr/J/P D+  NSg/V+  NSg/I/C/Ddem+ V   NSg/C NSg/V  .
 > were  the cook   , and a    large  cat      which was sitting on  the hearth and grinning from
 # NSg/V D+  NPr/V+ . V/C D/P+ NSg/J+ NSg/V/J+ I/C+  V   NSg/V/J J/P D   NSg    V/C NSg/V    P
 > ear      to ear     .
@@ -2298,8 +2298,8 @@
 # . W?   D/P NPr      NSg/V/J+ . . V/J  D   NSg/V   . . V/C NSg$   NSg/V . NSg/V+ . .
 >
 #
-> She  said the last    word  with such  sudden violence that          Alice quite jumped ; but
-# ISg+ V/J  D   NSg/V/J NSg/V P    NSg/I NSg/J+ NSg/V+   NSg/I/C/Ddem+ NPr+  NSg   V/J    . NSg/C/P
+> She  said the last    word  with such   sudden violence that          Alice quite jumped ; but
+# ISg+ V/J  D   NSg/V/J NSg/V P    NSg/I+ NSg/J+ NSg/V+   NSg/I/C/Ddem+ NPr+  NSg   V/J    . NSg/C/P
 > she  saw   in      another moment that          it       was addressed to the baby     , and not   to her     , so
 # ISg+ NSg/V NPr/J/P I/D+    NSg+   NSg/I/C/Ddem+ NPr/ISg+ V   V/J       P  D+  NSg/V/J+ . V/C NSg/C P  ISg/D$+ . NSg/I/J/C
 > she  took courage , and went  on  again : —
@@ -2337,7 +2337,7 @@
 > fire      - irons  came    first   ; then    followed a   shower  of saucepans , plates , and dishes .
 # N🅪Sg/V/J+ . NPl/V+ NSg/V/P NSg/V/J . NSg/J/C V/J      D/P NSg/V/J P  NPl/V     . NPl/V+ . V/C NPl/V+ .
 > The Duchess took no    notice of them     even    when    they hit     her     ; and the baby     was
-# D   NSg/V   V    NPr/P NSg/V  P  NSg/IPl+ NSg/V/J NSg/I/C IPl+ NSg/V/J ISg/D$+ . V/C D+  NSg/V/J+ V
+# D   NSg/V   V    NPr/P NSg/V  P  NSg/IPl+ NSg/V/J NSg/I/C IPl+ NSg/V/J ISg/D$+ . V/C D   NSg/V/J+ V
 > howling so        much       already , that         it       was quite impossible to say   whether the blows
 # V       NSg/I/J/C NSg/I/J/Dq W?      . NSg/I/C/Ddem NPr/ISg+ V   NSg   NSg/J      P  NSg/V I/C     D   NPl/V
 > hurt    it       or    not   .
@@ -2353,13 +2353,13 @@
 >
 #
 > “ If    everybody minded their own      business , ” the Duchess said in      a   hoarse  growl ,
-# . NSg/C NSg/I+    V/J    D$+   NSg/V/J+ N🅪Sg/J+  . . D   NSg/V   V/J  NPr/J/P D/P NSg/V/J NSg/V .
+# . NSg/C NSg/I+    V/J+   D$+   NSg/V/J+ N🅪Sg/J+  . . D   NSg/V   V/J  NPr/J/P D/P NSg/V/J NSg/V .
 > “ the world  would go      round     a   deal     faster than it       does  . ”
 # . D   NSg/V+ VX    NSg/V/J NSg/V/J/P D/P NSg/V/J+ J      C/P  NPr/ISg+ NPl/V . .
 >
 #
-> “ Which would not   be     an  advantage , ” said Alice , who    felt    very glad    to get   an
-# . I/C+  VX    NSg/C NSg/VX D/P NSg/V     . . V/J  NPr+  . NPr/I+ NSg/V/J J/R  NSg/V/J P  NSg/V D/P
+> “ Which would not   be     an   advantage , ” said Alice , who    felt    very glad    to get   an
+# . I/C+  VX    NSg/C NSg/VX D/P+ NSg/V+    . . V/J  NPr+  . NPr/I+ NSg/V/J J/R  NSg/V/J P  NSg/V D/P
 > opportunity of showing off       a   little     of her     knowledge . “ Just think of what   work
 # NSg         P  NSg/V   NSg/V/J/P D/P NPr/I/J/Dq P  ISg/D$+ NᴹSg+     . . V/J  NSg/V P  NSg/I+ NSg/V+
 > it       would make  with the day  and night   ! You    see   the earth  takes twenty - four hours
@@ -2375,7 +2375,7 @@
 > Alice glanced rather  anxiously at    the cook   , to see   if    she  meant to take  the
 # NPr+  V/J     NPr/V/J R         NSg/P D+  NPr/V+ . P  NSg/V NSg/C ISg+ V     P  NSg/V D+
 > hint   ; but     the cook   was busily stirring the soup   , and seemed not   to be     listening ,
-# NSg/V+ . NSg/C/P D+  NPr/V+ V   R      NSg/V/J  D   NSg/V+ . V/C V/J    NSg/C P  NSg/VX V         .
+# NSg/V+ . NSg/C/P D+  NPr/V+ V   R      NSg/V/J  D+  NSg/V+ . V/C V/J    NSg/C P  NSg/VX V         .
 > so        she  went  on  again : “ Twenty - four hours , I    think ; or    is it       twelve ? I    — ”
 # NSg/I/J/C ISg+ NSg/V J/P P     . . NSg    . NSg  NPl+  . ISg+ NSg/V . NPr/C VL NPr/ISg+ NSg    . ISg+ . .
 >
@@ -2427,17 +2427,17 @@
 > “ Here    ! you    may    nurse it       a    bit    , if    you    like        ! ” the Duchess said to Alice , flinging
 # . NSg/J/R . ISgPl+ NPr/VX NSg/V NPr/ISg+ D/P+ NSg/V+ . NSg/C ISgPl+ NSg/V/J/C/P . . D   NSg/V   V/J  P  NPr+  . V
 > the baby     at    her     as    she  spoke . “ I    must  go      and get   ready   to play  croquet with the
-# D   NSg/V/J+ NSg/P ISg/D$+ NSg/R ISg+ NSg/V . . ISg+ NSg/V NSg/V/J V/C NSg/V NSg/V/J P  NSg/V NSg/V   P    D
+# D   NSg/V/J+ NSg/P ISg/D$+ NSg/R ISg+ NSg/V . . ISg+ NSg/V NSg/V/J V/C NSg/V NSg/V/J P  NSg/V NSg/V   P    D+
 > Queen    , ” and she  hurried out         of the room     . The cook  threw a   frying - pan     after her
 # NPr/V/J+ . . V/C ISg+ V/J     NSg/V/J/R/P P  D   NSg/V/J+ . D   NPr/V V     D/P V      . NPr/V/J J/P   ISg/D$+
 > as    she  went  out         , but     it       just missed her     .
 # NSg/R ISg+ NSg/V NSg/V/J/R/P . NSg/C/P NPr/ISg+ V/J  V/J    ISg/D$+ .
 >
 #
-> Alice caught the baby     with some      difficulty , as    it       was a   queer   - shaped little
-# NPr+  V/J    D   NSg/V/J+ P    I/J/R/Dq+ N🅪Sg+      . NSg/R NPr/ISg+ V   D/P NSg/V/J . V/J    NPr/I/J/Dq+
+> Alice caught the baby    with some      difficulty , as    it       was a   queer   - shaped little
+# NPr+  V/J    D   NSg/V/J P    I/J/R/Dq+ N🅪Sg+      . NSg/R NPr/ISg+ V   D/P NSg/V/J . V/J    NPr/I/J/Dq+
 > creature , and held out         its     arms  and legs   in      all           directions , “ just like        a
-# NSg      . V/C V    NSg/V/J/R/P ISg/D$+ NPl/V V/C NPl/V+ NPr/J/P NSg/I/J/C/Dq+ NSg+       . . V/J  NSg/V/J/C/P D/P
+# NSg+     . V/C V    NSg/V/J/R/P ISg/D$+ NPl/V V/C NPl/V+ NPr/J/P NSg/I/J/C/Dq+ NSg+       . . V/J  NSg/V/J/C/P D/P
 > star   - fish      , ” thought Alice . The poor     little      thing  was snorting like        a
 # NSg/V+ . N🅪SgPl/V+ . . NSg/V   NPr+  . D+  NSg/V/J+ NPr/I/J/Dq+ NSg/V+ V   V        NSg/V/J/C/P D/P
 > steam     - engine when    she  caught it       , and kept doubling itself up        and straightening
@@ -2459,7 +2459,7 @@
 > in      a   day   or    two : wouldn’t it       be     murder  to leave it       behind  ? ” She  said the last
 # NPr/J/P D/P NPr🅪+ NPr/C NSg . VX       NPr/ISg+ NSg/VX N🅪Sg/V+ P  NSg/V NPr/ISg+ NSg/J/P . . ISg+ V/J  D+  NSg/V/J+
 > words  out         loud  , and the little      thing  grunted in      reply  ( it       had left    off       sneezing
-# NPl/V+ NSg/V/J/R/P NSg/J . V/C D   NPr/I/J/Dq+ NSg/V+ V/J     NPr/J/P NSg/V+ . NPr/ISg+ V   NPr/V/J NSg/V/J/P V
+# NPl/V+ NSg/V/J/R/P NSg/J . V/C D+  NPr/I/J/Dq+ NSg/V+ V/J     NPr/J/P NSg/V+ . NPr/ISg+ V   NPr/V/J NSg/V/J/P V
 > by      this   time      ) . “ Don’t grunt  , ” said Alice ; “ that’s not   at    all          a   proper way   of
 # NSg/J/P I/Ddem N🅪Sg/V/J+ . . . V     NSg/V+ . . V/J  NPr+  . . NSg$   NSg/C NSg/P NSg/I/J/C/Dq D/P NSg/J  NSg/J P
 > expressing yourself . ”
@@ -2510,8 +2510,8 @@
 # V    D/P R          NSg/V/J+ NSg/V+ . NSg/C/P NPr/ISg+ NPl/V NPr/V/J D/P V/J      NSg/V+ . ISg+ NSg/V . . V/C
 > she  began thinking over      other    children she  knew , who    might     do     very well    as    pigs   ,
 # ISg+ V     V        NSg/V/J/P NSg/V/J+ NPl+     ISg+ V    . NPr/I+ NᴹSg/VX/J NSg/VX J/R  NSg/V/J NSg/R NPl/V+ .
-> and was just saying to herself , “ if    one       only  knew the right   way   to change them     — ”
-# V/C V   V/J  NSg/V  P  ISg+    . . NSg/C NSg/I/V/J J/R/C V    D   NPr/V/J NSg/J P  N🅪Sg/V NSg/IPl+ . .
+> and was just saying to herself , “ if    one       only  knew the right   way    to change them     — ”
+# V/C V   V/J  NSg/V  P  ISg+    . . NSg/C NSg/I/V/J J/R/C V    D   NPr/V/J NSg/J+ P  N🅪Sg/V NSg/IPl+ . .
 > when    she  was a   little     startled by      seeing    the Cheshire Cat      sitting on  a   bough of
 # NSg/I/C ISg+ V   D/P NPr/I/J/Dq V/J      NSg/J/P NSg/V/J/C D   NPr      NSg/V/J+ NSg/V/J J/P D/P NSg   P
 > a   tree   a   few      yards  off       .
@@ -2677,7 +2677,7 @@
 >
 #
 > “ All          right   , ” said the Cat      ; and this    time      it       vanished quite slowly , beginning
-# . NSg/I/J/C/Dq NPr/V/J . . V/J  D+  NSg/V/J+ . V/C I/Ddem+ N🅪Sg/V/J+ NPr/ISg+ V/J      NSg   R      . NSg/V/J
+# . NSg/I/J/C/Dq NPr/V/J . . V/J  D+  NSg/V/J+ . V/C I/Ddem+ N🅪Sg/V/J+ NPr/ISg+ V/J      NSg   R      . NSg/V/J+
 > with the end   of the tail     , and ending with the grin   , which remained some      time
 # P    D   NSg/V P  D+  NSg/V/J+ . V/C NSg/V  P    D+  NSg/V+ . I/C+  V/J      I/J/R/Dq+ N🅪Sg/V/J+
 > after the rest  of it       had gone  .
@@ -2692,10 +2692,10 @@
 #
 > She  had not   gone  much       farther before she  came    in      sight of the house of the March
 # ISg+ V   NSg/C V/J/P NSg/I/J/Dq V/J     C/P    ISg+ NSg/V/P NPr/J/P NSg/V P  D   NPr/V P  D+  NPr/V+
-> Hare     : she  thought it       must  be     the right   house , because the chimneys were  shaped
-# NSg/V/J+ . ISg+ NSg/V   NPr/ISg+ NSg/V NSg/VX D   NPr/V/J NPr/V . C/P     D+  NPl/V+   NSg/V V/J
-> like        ears  and the roof   was thatched with fur        . It       was so        large a   house , that         she
-# NSg/V/J/C/P NPl/V V/C D+  NSg/V+ V   V/J      P    NSg/V/C/P+ . NPr/ISg+ V   NSg/I/J/C NSg/J D/P NPr/V . NSg/I/C/Ddem ISg+
+> Hare     : she  thought it       must  be     the right    house  , because the chimneys were  shaped
+# NSg/V/J+ . ISg+ NSg/V   NPr/ISg+ NSg/V NSg/VX D+  NPr/V/J+ NPr/V+ . C/P     D+  NPl/V+   NSg/V V/J
+> like        ears  and the roof   was thatched with fur        . It       was so        large a   house  , that         she
+# NSg/V/J/C/P NPl/V V/C D+  NSg/V+ V   V/J      P    NSg/V/C/P+ . NPr/ISg+ V   NSg/I/J/C NSg/J D/P NPr/V+ . NSg/I/C/Ddem ISg+
 > did not   like        to go      nearer till      she  had nibbled some     more         of the lefthand bit    of
 # V   NSg/C NSg/V/J/C/P P  NSg/V/J J      NSg/V/C/P ISg+ V   V/J     I/J/R/Dq NPr/I/V/J/Dq P  D   ?        NSg/V+ P
 > mushroom , and raised herself to about two feet high    : even    then    she  walked up
@@ -2803,19 +2803,19 @@
 > “ I    do     , ” Alice hastily replied ; “ at    least — at    least I    mean    what   I    say   — that’s the
 # . ISg+ NSg/VX . . NPr+  R       V/J     . . NSg/P NSg/J . NSg/P NSg/J ISg+ NSg/V/J NSg/I+ ISg+ NSg/V . NSg$   D+
 > same thing  , you    know  . ”
-# I/J+ NSg/V+ . ISgPl+ NSg/V . .
+# I/J  NSg/V+ . ISgPl+ NSg/V . .
 >
 #
 > “ Not   the same thing  a    bit    ! ” said the Hatter . “ You    might     just as    well    say   that          ‘          I
 # . NSg/C D+  I/J+ NSg/V+ D/P+ NSg/V+ . . V/J  D   NSg/V  . . ISgPl+ NᴹSg/VX/J V/J  NSg/R NSg/V/J NSg/V NSg/I/C/Ddem+ Unlintable ISg+
-> see   what   I    eat ’ is the same thing as    ‘          I    eat what   I    see   ’ ! ”
-# NSg/V NSg/I+ ISg+ V   . VL D   I/J  NSg/V NSg/R Unlintable ISg+ V   NSg/I+ ISg+ NSg/V . . .
+> see   what   I    eat ’ is the same thing  as    ‘          I    eat what   I    see   ’ ! ”
+# NSg/V NSg/I+ ISg+ V   . VL D+  I/J+ NSg/V+ NSg/R Unlintable ISg+ V   NSg/I+ ISg+ NSg/V . . .
 >
 #
 > “ You    might     just as    well    say   , ” added the March  Hare     , “ that          ‘          I    like        what   I    get   ’ is
 # . ISgPl+ NᴹSg/VX/J V/J  NSg/R NSg/V/J NSg/V . . V/J   D+  NPr/V+ NSg/V/J+ . . NSg/I/C/Ddem+ Unlintable ISg+ NSg/V/J/C/P NSg/I+ ISg+ NSg/V . VL
-> the same thing as    ‘          I    get   what   I    like        ’ ! ”
-# D+  I/J  NSg/V NSg/R Unlintable ISg+ NSg/V NSg/I+ ISg+ NSg/V/J/C/P . . .
+> the same thing  as    ‘          I    get   what   I    like        ’ ! ”
+# D+  I/J+ NSg/V+ NSg/R Unlintable ISg+ NSg/V NSg/I+ ISg+ NSg/V/J/C/P . . .
 >
 #
 > “ You    might     just as    well    say   , ” added the Dormouse , who    seemed to be     talking in
@@ -2849,7 +2849,7 @@
 >
 #
 > “ Two  days wrong   ! ” sighed the Hatter . “ I    told you    butter   wouldn’t suit   the
-# . NSg+ NPl+ NSg/V/J . . V/J    D   NSg/V  . . ISg+ V    ISgPl+ NSg/V/J+ VX       NSg/V+ D+
+# . NSg+ NPl+ NSg/V/J . . V/J    D   NSg/V  . . ISg+ V    ISgPl+ NSg/V/J+ VX       NSg/V+ D
 > works  ! ” he       added looking angrily at    the March  Hare     .
 # NPl/V+ . . NPr/ISg+ V/J   V       R       NSg/P D+  NPr/V+ NSg/V/J+ .
 >
@@ -2925,7 +2925,7 @@
 >
 #
 > “ I    haven’t the slightest idea , ” said the Hatter .
-# . ISg+ V       D   W?        NSg+ . . V/J  D   NSg/V  .
+# . ISg+ V       D+  W?        NSg+ . . V/J  D   NSg/V  .
 >
 #
 > “ Nor   I    , ” said the March  Hare     .
@@ -2960,8 +2960,8 @@
 # NSg/V N🅪Sg/V/J+ . .
 >
 #
-> “ Ah      ! that         accounts for it       , ” said the Hatter . “ He       won’t stand beating . Now       , if
-# . NSg/I/V . NSg/I/C/Ddem NPl/V+   C/P NPr/ISg+ . . V/J  D   NSg/V  . . NPr/ISg+ V     NSg/V NSg/V   . NPr/V/J/C . NSg/C
+> “ Ah      ! that          accounts for it       , ” said the Hatter . “ He       won’t stand beating . Now       , if
+# . NSg/I/V . NSg/I/C/Ddem+ NPl/V+   C/P NPr/ISg+ . . V/J  D   NSg/V  . . NPr/ISg+ V     NSg/V NSg/V   . NPr/V/J/C . NSg/C
 > you    only  kept on  good    terms  with him  , he’d do     almost anything you    liked with the
 # ISgPl+ J/R/C V    J/P NPr/V/J NPl/V+ P    ISg+ . W?   NSg/VX NSg    NSg/I/V+ ISgPl+ V/J   P    D
 > clock  . For instance , suppose it       were  nine o’clock in      the morning , just time      to
@@ -2993,7 +2993,7 @@
 >
 #
 > The Hatter shook   his     head     mournfully . “ Not   I    ! ” he       replied . “ We   quarrelled last
-# D   NSg/V  NSg/V/J ISg/D$+ NPr/V/J+ R          . . NSg/C ISg+ . . NPr/ISg+ V/J     . . IPl+ V/Comm     NSg/V/J+
+# D   NSg/V  NSg/V/J ISg/D$+ NPr/V/J+ R          . . NSg/C ISg+ . . NPr/ISg+ V/J     . . IPl+ V/Comm     NSg/V/J
 > March  — just before he       went  mad     , you    know  — ” ( pointing with his     tea     spoon  at    the
 # NPr/V+ . V/J  C/P    NPr/ISg+ NSg/V NSg/V/J . ISgPl+ NSg/V . . . V        P    ISg/D$+ N🅪Sg/V+ NSg/V+ NSg/P D
 > March  Hare     , ) “ — it       was at    the great concert given     by      the Queen   of Hearts , and I
@@ -3002,8 +3002,8 @@
 # V   P  NSg/V/J
 >
 #
-> ‘          Twinkle , twinkle , little      bat    ! How   I    wonder what   you’re at    ! ’
-# Unlintable NSg/V   . NSg/V   . NPr/I/J/Dq+ NSg/V+ . NSg/C ISg+ NSg/V  NSg/I+ W?     NSg/P . .
+> ‘          Twinkle , twinkle , little     bat    ! How   I    wonder what   you’re at    ! ’
+# Unlintable NSg/V   . NSg/V   . NPr/I/J/Dq NSg/V+ . NSg/C ISg+ NSg/V  NSg/I+ W?     NSg/P . .
 >
 #
 > You    know  the song  , perhaps ? ”
@@ -3115,7 +3115,7 @@
 >
 #
 > “ What   did they live on  ? ” said Alice , who    always took a   great interest in
-# . NSg/I+ V   IPl+ V/J  J/P . . V/J  NPr+  . NPr/I+ R      V    D/P NSg/J NSg/V+   NPr/J/P
+# . NSg/I+ V   IPl+ V/J  J/P . . V/J  NPr+  . NPr/I+ R      V    D/P NSg/J NSg/V    NPr/J/P
 > questions of eating and drinking .
 # NPl/V     P  V+     V/C V        .
 >
@@ -3180,10 +3180,10 @@
 # V   D/P NSg/V   . NSg/V/J . .
 >
 #
-> “ There’s no    such   thing  ! ” Alice was beginning very angrily , but     the Hatter and
-# . W?      NPr/P NSg/I+ NSg/V+ . . NPr+  V   NSg/V/J   J/R  R       . NSg/C/P D   NSg/V  V/C
+> “ There’s no     such  thing  ! ” Alice was beginning very angrily , but     the Hatter and
+# . W?      NPr/P+ NSg/I NSg/V+ . . NPr+  V   NSg/V/J+  J/R  R       . NSg/C/P D   NSg/V  V/C
 > the March  Hare     went  “ Sh ! sh ! ” and the Dormouse sulkily remarked , “ If    you    can’t
-# D+  NPr/V+ NSg/V/J+ NSg/V . W? . W? . . V/C D   NSg      R       V/J      . . NSg/C ISgPl+ VX
+# D   NPr/V+ NSg/V/J+ NSg/V . W? . W? . . V/C D   NSg      R       V/J      . . NSg/C ISgPl+ VX
 > be     civil , you’d better   finish the story  for yourself . ”
 # NSg/VX J     . W?    NSg/VX/J NSg/V  D   NSg/V+ C/P ISg+     . .
 >
@@ -3213,7 +3213,7 @@
 >
 #
 > He       moved on  as    he       spoke , and the Dormouse followed him  : the March  Hare     moved
-# NPr/ISg+ V/J   J/P NSg/R NPr/ISg+ NSg/V . V/C D   NSg      V/J      ISg+ . D+  NPr/V+ NSg/V/J+ V/J
+# NPr/ISg+ V/J   J/P NSg/R NPr/ISg+ NSg/V . V/C D   NSg      V/J      ISg+ . D   NPr/V+ NSg/V/J+ V/J
 > into the Dormouse’s place  , and Alice rather  unwillingly took the place of the
 # P    D   NSg$       NSg/V+ . V/C NPr+  NPr/V/J R           V    D   NSg/V P  D
 > March  Hare     . The Hatter was the only  one        who    got any    advantage from the change  :
@@ -3246,8 +3246,8 @@
 # . P  NSg/V+ IPl+ NSg/V . . V/J  D   NSg      . . . NSg/V/J NPr/J/P . .
 >
 #
-> This    answer so        confused poor    Alice , that         she  let   the Dormouse go      on  for some
-# I/Ddem+ NSg/V+ NSg/I/J/C V/J      NSg/V/J NPr+  . NSg/I/C/Ddem ISg+ NSg/V D   NSg      NSg/V/J J/P C/P I/J/R/Dq
+> This    answer so        confused poor     Alice , that         she  let   the Dormouse go      on  for some
+# I/Ddem+ NSg/V+ NSg/I/J/C V/J+     NSg/V/J+ NPr+  . NSg/I/C/Ddem ISg+ NSg/V D   NSg      NSg/V/J J/P C/P I/J/R/Dq
 > time      without interrupting it       .
 # N🅪Sg/V/J+ C/P     V            NPr/ISg+ .
 >
@@ -3281,7 +3281,7 @@
 > and muchness — you    know  you    say   things are “ much       of a   muchness ” — did you    ever see
 # V/C W?       . ISgPl+ NSg/V ISgPl+ NSg/V NPl/V+ V   . NSg/I/J/Dq P  D/P W?       . . V   ISgPl+ J    NSg/V
 > such  a   thing  as    a   drawing of a   muchness ? ”
-# NSg/I D/P NSg/V+ NSg/R D/P NSg/V+  P  D/P W?       . .
+# NSg/I D/P NSg/V+ NSg/R D/P NSg/V   P  D/P W?       . .
 >
 #
 > “ Really , now       you    ask   me       , ” said Alice , very much       confused , “ I    don’t think — ”
@@ -3338,12 +3338,12 @@
 # NSg/V+  W?   . D   NSg$    NSg/V   . NSg/V/J+
 >
 #
-> A   large rose     - tree   stood near      the entrance of the garden   : the roses  growing on  it
-# D/P NSg/J NPr/V/J+ . NSg/V+ V     NSg/V/J/P D   NSg/V    P  D+  NSg/V/J+ . D+  NPl/V+ NSg/V   J/P NPr/ISg+
+> A   large rose     - tree  stood near      the entrance of the garden   : the roses  growing on  it
+# D/P NSg/J NPr/V/J+ . NSg/V V     NSg/V/J/P D   NSg/V    P  D+  NSg/V/J+ . D+  NPl/V+ NSg/V   J/P NPr/ISg+
 > were  white   , but     there were  three gardeners at    it       , busily painting them     red   .
-# NSg/V NPr/V/J . NSg/C/P +     NSg/V NSg   +         NSg/P NPr/ISg+ . R      N🅪Sg/V+  NSg/IPl+ NSg/J .
-> Alice thought this   a   very curious thing , and she  went  nearer to watch them     , and
-# NPr+  NSg/V   I/Ddem D/P J/R  J       NSg/V . V/C ISg+ NSg/V J      P  NSg/V NSg/IPl+ . V/C
+# NSg/V NPr/V/J . NSg/C/P +     NSg/V NSg+  +         NSg/P NPr/ISg+ . R      N🅪Sg/V+  NSg/IPl+ NSg/J .
+> Alice thought this   a   very curious thing  , and she  went  nearer to watch them     , and
+# NPr+  NSg/V   I/Ddem D/P J/R  J+      NSg/V+ . V/C ISg+ NSg/V J      P  NSg/V NSg/IPl+ . V/C
 > just as    she  came    up        to them     she  heard one       of them     say   , “ Look  out         now       , Five !
 # V/J  NSg/R ISg+ NSg/V/P NSg/V/J/P P  NSg/IPl+ ISg+ V/J   NSg/I/V/J P  NSg/IPl+ NSg/V . . NSg/V NSg/V/J/R/P NPr/V/J/C . NSg  .
 > Don’t go      splashing paint   over      me       like        that          ! ”
@@ -3391,7 +3391,7 @@
 >
 #
 > “ Would you    tell  me       , ” said Alice , a   little     timidly , “ why   you    are painting those
-# . VX    ISgPl+ NPr/V NPr/ISg+ . . V/J  NPr+  . D/P NPr/I/J/Dq R       . . NSg/V ISgPl+ V   N🅪Sg/V   I/Ddem+
+# . VX    ISgPl+ NPr/V NPr/ISg+ . . V/J  NPr+  . D/P NPr/I/J/Dq R       . . NSg/V ISgPl+ V   N🅪Sg/V   I/Ddem
 > roses  ? ”
 # NPl/V+ . .
 >
@@ -3400,8 +3400,8 @@
 # NSg  V/C NSg   V/J  NSg/I/J+ . NSg/C/P V/J    NSg/P NSg . NSg V     NPr/J/P D/P+ NSg/V/J+ NSg/V+ . . NSg/V
 > the fact is , you    see   , Miss  , this   here    ought    to have   been  a   red   rose    - tree   , and we
 # D+  NSg+ VL . ISgPl+ NSg/V . NSg/V . I/Ddem NSg/J/R NSg/I/VX P  NSg/VX NSg/V D/P NSg/J NPr/V/J . NSg/V+ . V/C IPl+
-> put   a   white   one       in      by      mistake ; and if    the Queen    was to find  it       out         , we   should
-# NSg/V D/P NPr/V/J NSg/I/V/J NPr/J/P NSg/J/P NSg/V+  . V/C NSg/C D+  NPr/V/J+ V   P  NSg/V NPr/ISg+ NSg/V/J/R/P . IPl+ VX
+> put   a   white   one        in      by      mistake ; and if    the Queen    was to find  it       out         , we   should
+# NSg/V D/P NPr/V/J NSg/I/V/J+ NPr/J/P NSg/J/P NSg/V+  . V/C NSg/C D+  NPr/V/J+ V   P  NSg/V NPr/ISg+ NSg/V/J/R/P . IPl+ VX
 > all          have   our heads  cut     off       , you    know  . So        you    see   , Miss  , we’re doing our best     ,
 # NSg/I/J/C/Dq NSg/VX D$+ NPl/V+ NSg/V/J NSg/V/J/P . ISgPl+ NSg/V . NSg/I/J/C ISgPl+ NSg/V . NSg/V . W?    NSg/V D$+ NPr/VX/J .
 > afore she  comes , to — ” At    this   moment Five , who    had been  anxiously looking across
@@ -3414,26 +3414,26 @@
 # NPr+  V/J    NSg/V/J/P . NSg/V/J P  NSg/V D+  NPr/V/J+ .
 >
 #
-> First   came    ten soldiers carrying clubs  ; these   were  all          shaped like        the three
-# NSg/V/J NSg/V/P NSg NPl/V+   V        NPl/V+ . I/Ddem+ NSg/V NSg/I/J/C/Dq V/J    NSg/V/J/C/P D+  NSg+
+> First   came    ten  soldiers carrying clubs  ; these   were  all          shaped like        the three
+# NSg/V/J NSg/V/P NSg+ NPl/V+   V        NPl/V+ . I/Ddem+ NSg/V NSg/I/J/C/Dq V/J    NSg/V/J/C/P D+  NSg+
 > gardeners , oblong  and flat    , with their hands and feet at    the corners : next    the
 # +         . NSg/V/J V/C NSg/V/J . P    D$+   NPl/V V/C NPl+ NSg/P D   +       . NSg/J/P D
 > ten courtiers ; these   were  ornamented all          over       with diamonds , and walked two and
 # NSg NPl       . I/Ddem+ NSg/V V/J        NSg/I/J/C/Dq NSg/V/J/P+ P    NPl/V    . V/C V/J    NSg V/C
-> two , as    the soldiers did . After these   came    the royal  children ; there were  ten of
-# NSg . NSg/R D   NPl/V+   V   . J/P   I/Ddem+ NSg/V/P D+  NPr/J+ NPl+     . +     NSg/V NSg P
+> two , as    the soldiers did . After these  came    the royal  children ; there were  ten of
+# NSg . NSg/R D   NPl/V+   V   . J/P   I/Ddem NSg/V/P D+  NPr/J+ NPl+     . +     NSg/V NSg P
 > them     , and the little      dears  came    jumping merrily along hand   in      hand   , in      couples :
 # NSg/IPl+ . V/C D+  NPr/I/J/Dq+ NPl/V+ NSg/V/P V       R       P     NSg/V+ NPr/J/P NSg/V+ . NPr/J/P NPl/V+  .
 > they were  all          ornamented with hearts . Next    came    the guests , mostly Kings  and
-# IPl+ NSg/V NSg/I/J/C/Dq V/J        P    NPl/V+ . NSg/J/P NSg/V/P D   NPl/V+ . R      NPl/V+ V/C
+# IPl+ NSg/V NSg/I/J/C/Dq V/J        P    NPl/V+ . NSg/J/P NSg/V/P D+  NPl/V+ . R      NPl/V+ V/C
 > Queens  , and among them     Alice recognised the White   Rabbit : it       was talking in      a
 # NPrPl/V . V/C P     NSg/IPl+ NPr+  V/J/Au/Br  D   NPr/V/J NSg/V+ . NPr/ISg+ V   V       NPr/J/P D/P
 > hurried nervous manner , smiling at    everything that          was said , and went  by      without
-# V/J+    J       NSg+   . NSg/V/J NSg/P NSg/I/V+   NSg/I/C/Ddem+ V   V/J  . V/C NSg/V NSg/J/P C/P
+# V/J+    J+      NSg+   . NSg/V/J NSg/P NSg/I/V+   NSg/I/C/Ddem+ V   V/J  . V/C NSg/V NSg/J/P C/P
 > noticing her     . Then    followed the Knave of Hearts , carrying the King’s crown    on  a
 # V        ISg/D$+ . NSg/J/C V/J      D   NSg   P  NPl/V+ . V        D   NSg$   NSg/V/J+ J/P D/P
 > crimson velvet   cushion ; and , last    of all          this   grand procession , came    THE KING
-# NSg/V/J NSg/V/J+ NSg/V+  . V/C . NSg/V/J P  NSg/I/J/C/Dq I/Ddem NSg/J NSg/V+     . NSg/V/P D   NPr/V/J
+# NSg/V/J NSg/V/J+ NSg/V+  . V/C . NSg/V/J P  NSg/I/J/C/Dq I/Ddem NSg/J NSg/V+     . NSg/V/P D   NPr/V/J+
 > AND QUEEN    OF HEARTS .
 # V/C NPr/V/J+ P  NPl/V+ .
 >
@@ -3477,9 +3477,9 @@
 > lying   round     the rose     - tree   ; for , you    see   , as    they were  lying   on  their faces  , and
 # NSg/V/J NSg/V/J/P D   NPr/V/J+ . NSg/V+ . C/P . ISgPl+ NSg/V . NSg/R IPl+ NSg/V NSg/V/J J/P D$+   NPl/V+ . V/C
 > the pattern  on  their backs  was the same as    the rest  of the pack   , she  could  not
-# D   NSg/V/J+ J/P D$+   NPl/V+ V   D   I/J  NSg/R D   NSg/V P  D+  NSg/V+ . ISg+ NSg/VX NSg/C
+# D+  NSg/V/J+ J/P D$+   NPl/V+ V   D   I/J  NSg/R D   NSg/V P  D+  NSg/V+ . ISg+ NSg/VX NSg/C
 > tell  whether they were  gardeners , or    soldiers , or    courtiers , or    three of her     own
-# NPr/V I/C     IPl+ NSg/V W?        . NPr/C NPl/V+   . NPr/C NPl       . NPr/C NSg   P  ISg/D$+ NSg/V/J+
+# NPr/V I/C     IPl+ NSg/V W?        . NPr/C NPl/V+   . NPr/C NPl       . NPr/C NSg   P  ISg/D$+ NSg/V/J
 > children .
 # NPl+     .
 >
@@ -3497,7 +3497,7 @@
 >
 #
 > “ Nonsense ! ” said Alice , very loudly and decidedly , and the Queen    was silent .
-# . NSg/V/J+ . . V/J  NPr+  . J/R  R      V/C R         . V/C D+  NPr/V/J+ V   NSg/J  .
+# . NSg/V/J+ . . V/J  NPr+  . J/R  R      V/C R         . V/C D   NPr/V/J+ V   NSg/J  .
 >
 #
 > The King     laid his     hand   upon her     arm      , and timidly said “ Consider , my  dear    : she  is
@@ -3514,8 +3514,8 @@
 # D   NSg   V   NSg/I/J/C . J/R  R         . P    NSg/I/V/J NSg/V+ .
 >
 #
-> “ Get   up        ! ” said the Queen    , in      a   shrill  , loud  voice , and the three gardeners
-# . NSg/V NSg/V/J/P . . V/J  D+  NPr/V/J+ . NPr/J/P D/P NSg/V/J . NSg/J NSg/V . V/C D+  NSg+  +
+> “ Get   up        ! ” said the Queen    , in      a   shrill  , loud  voice  , and the three gardeners
+# . NSg/V NSg/V/J/P . . V/J  D+  NPr/V/J+ . NPr/J/P D/P NSg/V/J . NSg/J NSg/V+ . V/C D+  NSg+  +
 > instantly jumped up        , and began bowing to the King     , the Queen    , the royal
 # R         V/J    NSg/V/J/P . V/C V     V      P  D   NPr/V/J+ . D   NPr/V/J+ . D   NPr/J
 > children , and everybody else    .
@@ -3525,11 +3525,11 @@
 > “ Leave off       that          ! ” screamed the Queen    . “ You    make  me       giddy   . ” And then    , turning to
 # . NSg/V NSg/V/J/P NSg/I/C/Ddem+ . . V/J      D+  NPr/V/J+ . . ISgPl+ NSg/V NPr/ISg+ NSg/V/J . . V/C NSg/J/C . NSg/V   P
 > the rose     - tree   , she  went  on  , “ What   have   you    been  doing here    ? ”
-# D   NPr/V/J+ . NSg/V+ . ISg+ NSg/V J/P . . NSg/I+ NSg/VX ISgPl+ NSg/V NSg/V NSg/J/R . .
+# D+  NPr/V/J+ . NSg/V+ . ISg+ NSg/V J/P . . NSg/I+ NSg/VX ISgPl+ NSg/V NSg/V NSg/J/R . .
 >
 #
-> “ May    it       please your Majesty , ” said Two , in      a   very humble  tone    , going   down      on  one
-# . NPr/VX NPr/ISg+ V      D$+  NSg/I+  . . V/J  NSg . NPr/J/P D/P J/R  NSg/V/J NSg/I/V . NSg/V/J NSg/V/J/P J/P NSg/I/V/J+
+> “ May    it       please your Majesty , ” said Two , in      a   very humble  tone     , going   down      on  one
+# . NPr/VX NPr/ISg+ V      D$+  NSg/I+  . . V/J  NSg . NPr/J/P D/P J/R  NSg/V/J NSg/I/V+ . NSg/V/J NSg/V/J/P J/P NSg/I/V/J+
 > knee   as    he       spoke , “ we   were  trying  — ”
 # NSg/V+ NSg/R NPr/ISg+ NSg/V . . IPl+ NSg/V NSg/V/J . .
 >
@@ -3539,11 +3539,11 @@
 > their heads  ! ” and the procession moved on  , three of the soldiers remaining
 # D$+   NPl/V+ . . V/C D+  NSg/V+     V/J   J/P . NSg   P  D+  NPl/V+   V
 > behind  to execute the unfortunate gardeners , who    ran   to Alice for protection .
-# NSg/J/P P  V       D+  NSg/J+      +         . NPr/I+ NSg/V P  NPr+  C/P NSg+       .
+# NSg/J/P P  V       D+  NSg/J+      +         . NPr/I+ NSg/V P  NPr   C/P NSg+       .
 >
 #
 > “ You    shan’t be     beheaded ! ” said Alice , and she  put   them     into a   large flower - pot
-# . ISgPl+ V      NSg/VX V/J      . . V/J  NPr+  . V/C ISg+ NSg/V NSg/IPl+ P    D/P NSg/J NSg/V+ . NSg/V
+# . ISgPl+ V      NSg/VX V/J      . . V/J  NPr+  . V/C ISg+ NSg/V NSg/IPl+ P    D/P NSg/J NSg/V+ . NSg/V+
 > that          stood near      . The three soldiers wandered about for a    minute   or    two , looking
 # NSg/I/C/Ddem+ V     NSg/V/J/P . D+  NSg+  NPl/V+   V/J      J/P   C/P D/P+ NSg/V/J+ NPr/C NSg . V
 > for them     , and then    quietly marched off       after the others .
@@ -3555,7 +3555,7 @@
 >
 #
 > “ Their heads  are gone  , if    it       please your Majesty ! ” the soldiers shouted in
-# . D$+   NPl/V+ V   V/J/P . NSg/C NPr/ISg+ V      D$+  NSg/I+  . . D   NPl/V+   V/J     NPr/J/P
+# . D$+   NPl/V+ V   V/J/P . NSg/C NPr/ISg+ V      D$+  NSg/I+  . . D+  NPl/V+   V/J     NPr/J/P
 > reply  .
 # NSg/V+ .
 >
@@ -3580,8 +3580,8 @@
 # J/R  NSg/I/J/Dq NSg/I+ VX    V      NSg/J/P .
 >
 #
-> “ It’s — it’s a   very fine     day   ! ” said a   timid voice  at    her     side     . She  was walking by
-# . W?   . W?   D/P J/R  NSg/V/J+ NPr🅪+ . . V/J  D/P J     NSg/V+ NSg/P ISg/D$+ NSg/V/J+ . ISg+ V   NSg/V/J NSg/J/P
+> “ It’s — it’s a   very fine    day   ! ” said a    timid voice  at    her     side     . She  was walking by
+# . W?   . W?   D/P J/R  NSg/V/J NPr🅪+ . . V/J  D/P+ J+    NSg/V+ NSg/P ISg/D$+ NSg/V/J+ . ISg+ V   NSg/V/J NSg/J/P
 > the White    Rabbit , who    was peeping anxiously into her     face   .
 # D+  NPr/V/J+ NSg/V+ . NPr/I+ V   V       R         P    ISg/D$+ NSg/V+ .
 >
@@ -3615,19 +3615,19 @@
 > “ She  boxed the Queen’s ears   — ” the Rabbit began . Alice gave a   little     scream of
 # . ISg+ V/J   D   NSg$    NPl/V+ . . D   NSg/V+ V     . NPr+  V    D/P NPr/I/J/Dq NSg/V  P
 > laughter . “ Oh    , hush   ! ” the Rabbit whispered in      a    frightened tone     . “ The Queen    will
-# NSg+     . . NPr/V . NSg/V+ . . D   NSg/V  V/J       NPr/J/P D/P+ V/J        NSg/I/V+ . . D+  NPr/V/J+ NPr/VX
+# NSg+     . . NPr/V . NSg/V+ . . D+  NSg/V+ V/J       NPr/J/P D/P+ V/J        NSg/I/V+ . . D+  NPr/V/J+ NPr/VX
 > hear you    ! You    see   , she  came    rather  late  , and the Queen    said — ”
 # V    ISgPl+ . ISgPl+ NSg/V . ISg+ NSg/V/P NPr/V/J NSg/J . V/C D+  NPr/V/J+ V/J  . .
 >
 #
 > “ Get   to your places ! ” shouted the Queen    in      a   voice of thunder , and people began
-# . NSg/V P  D$+  NPl/V+ . . V/J     D   NPr/V/J+ NPr/J/P D/P NSg/V P  NSg/V+  . V/C NSg/V+ V
+# . NSg/V P  D$+  NPl/V+ . . V/J     D+  NPr/V/J+ NPr/J/P D/P NSg/V P  NSg/V+  . V/C NSg/V+ V
 > running   about in      all           directions , tumbling up        against each other   ; however , they
 # NSg/V/J/P J/P   NPr/J/P NSg/I/J/C/Dq+ NSg+       . NSg/V    NSg/V/J/P C/P     Dq   NSg/V/J . C       . IPl+
 > got settled down      in      a    minute   or    two , and the game     began . Alice thought she  had
 # V   V/J     NSg/V/J/P NPr/J/P D/P+ NSg/V/J+ NPr/C NSg . V/C D+  NSg/V/J+ V     . NPr+  NSg/V   ISg+ V
-> never seen  such  a   curious croquet - ground   in      her     life   ; it       was all          ridges and
-# R     NSg/V NSg/I D/P J       NSg/V   . NSg/V/J+ NPr/J/P ISg/D$+ NSg/V+ . NPr/ISg+ V   NSg/I/J/C/Dq NPl/V  V/C
+> never seen  such  a   curious croquet - ground  in      her     life   ; it       was all          ridges and
+# R     NSg/V NSg/I D/P J       NSg/V   . NSg/V/J NPr/J/P ISg/D$+ NSg/V+ . NPr/ISg+ V   NSg/I/J/C/Dq NPl/V  V/C
 > furrows ; the balls  were  live hedgehogs , the mallets live flamingoes , and the
 # NPl/V   . D   NPl/V+ NSg/V V/J  NPl/V     . D   NPl/V   V/J  ?          . V/C D
 > soldiers had to double  themselves up        and to stand on  their hands and feet , to
@@ -3678,8 +3678,8 @@
 # P    D+  NPr/V/J+ . NSg/C/P ISg+ V    NSg/I/C/Ddem NPr/ISg+ NᴹSg/VX/J V      I/R/Dq+ NSg/V/J+ . . V/C NSg/J/C . .
 > thought she  , “ what   would become of me       ? They’re dreadfully fond    of beheading
 # NSg/V   ISg+ . . NSg/I+ VX    V      P  NPr/ISg+ . W?      R          NSg/V/J P  NSg
-> people here    ; the great  wonder is , that          there’s any    one        left    alive ! ”
-# NSg/V+ NSg/J/R . D   NSg/J+ NSg/V+ VL . NSg/I/C/Ddem+ W?      I/R/Dq NSg/I/V/J+ NPr/V/J W?    . .
+> people here    ; the great wonder is , that          there’s any    one        left    alive ! ”
+# NSg/V+ NSg/J/R . D   NSg/J NSg/V+ VL . NSg/I/C/Ddem+ W?      I/R/Dq NSg/I/V/J+ NPr/V/J W?    . .
 >
 #
 > She  was looking about for some     way   of escape , and wondering whether she  could
@@ -3716,8 +3716,8 @@
 #
 > “ I    don’t think they play  at    all          fairly , ” Alice began , in      rather  a   complaining
 # . ISg+ V     NSg/V IPl+ NSg/V NSg/P NSg/I/J/C/Dq R+     . . NPr+  V     . NPr/J/P NPr/V/J D/P V
-> tone     , “ and they all           quarrel so        dreadfully one       can’t hear oneself speak — and they
-# NSg/I/V+ . . V/C IPl+ NSg/I/J/C/Dq+ NSg/V+  NSg/I/J/C R          NSg/I/V/J VX    V    I+      NSg/V . V/C IPl+
+> tone     , “ and they all          quarrel so        dreadfully one       can’t hear oneself speak — and they
+# NSg/I/V+ . . V/C IPl+ NSg/I/J/C/Dq NSg/V+  NSg/I/J/C R          NSg/I/V/J VX    V    I+      NSg/V . V/C IPl+
 > don’t seem to have   any    rules  in      particular ; at    least , if    there are , nobody
 # V     V    P  NSg/VX I/R/Dq NPl/V+ NPr/J/P NSg/J      . NSg/P NSg/J . NSg/C +     V   . NSg/I+
 > attends to them     — and you’ve no    idea how   confusing it       is all          the things being
@@ -3730,8 +3730,8 @@
 # V/J  NPr/V/J/C . J/R/C NPr/ISg+ NSg/V V/J  NSg/I/C NPr/ISg+ NSg/V NSg/I/V+ NSg/V/J . .
 >
 #
-> “ How   do     you    like        the Queen    ? ” said the Cat     in      a    low      voice  .
-# . NSg/C NSg/VX ISgPl+ NSg/V/J/C/P D+  NPr/V/J+ . . V/J  D   NSg/V/J NPr/J/P D/P+ NSg/V/J+ NSg/V+ .
+> “ How   do     you    like        the Queen    ? ” said the Cat      in      a    low      voice  .
+# . NSg/C NSg/VX ISgPl+ NSg/V/J/C/P D+  NPr/V/J+ . . V/J  D   NSg/V/J+ NPr/J/P D/P+ NSg/V/J+ NSg/V+ .
 >
 #
 > “ Not   at    all          , ” said Alice : “ she’s so        extremely — ” Just then    she  noticed that         the
@@ -3748,8 +3748,8 @@
 #
 > “ Who    are you    talking to ? ” said the King     , going   up        to Alice , and looking at    the
 # . NPr/I+ V   ISgPl+ V       P  . . V/J  D+  NPr/V/J+ . NSg/V/J NSg/V/J/P P  NPr+  . V/C V       NSg/P D
-> Cat’s head    with great  curiosity .
-# NSg$  NPr/V/J P    NSg/J+ NSg+      .
+> Cat’s head    with great curiosity .
+# NSg$  NPr/V/J P    NSg/J NSg+      .
 >
 #
 > “ It’s a   friend  of mine     — a   Cheshire Cat      , ” said Alice : “ allow me       to introduce it       . ”
@@ -3786,8 +3786,8 @@
 # V/J     . .
 >
 #
-> The Queen    had only  one       way   of settling all          difficulties , great or    small   . “ Off
-# D+  NPr/V/J+ V   J/R/C NSg/I/V/J NSg/J P  V        NSg/I/J/C/Dq NPl+         . NSg/J NPr/C NPr/V/J . . NSg/V/J/P
+> The Queen    had only  one       way   of settling all           difficulties , great or    small   . “ Off
+# D+  NPr/V/J+ V   J/R/C NSg/I/V/J NSg/J P  V        NSg/I/J/C/Dq+ NPl+         . NSg/J NPr/C NPr/V/J . . NSg/V/J/P
 > with his     head     ! ” she  said , without even    looking round     .
 # P    ISg/D$+ NPr/V/J+ . . ISg+ V/J  . C/P     NSg/V/J V       NSg/V/J/P .
 >
@@ -3804,16 +3804,16 @@
 # W?      V/J   ISg/D$+ NSg/V+   NSg   P  D+  NPl+    P  NSg/VX V/J      C/P V      V/J
 > their turns , and she  did not   like        the look  of things at    all          , as    the game     was in
 # D$+   NPl/V . V/C ISg+ V   NSg/C NSg/V/J/C/P D   NSg/V P  NPl/V+ NSg/P NSg/I/J/C/Dq . NSg/R D+  NSg/V/J+ V   NPr/J/P
-> such  confusion that          she  never knew whether it       was her     turn  or    not   . So        she  went
-# NSg/I NSg/V     NSg/I/C/Ddem+ ISg+ R     V    I/C     NPr/ISg+ V   ISg/D$+ NSg/V NPr/C NSg/C . NSg/I/J/C ISg+ NSg/V
+> such   confusion that          she  never knew whether it       was her     turn  or    not   . So        she  went
+# NSg/I+ NSg/V+    NSg/I/C/Ddem+ ISg+ R     V    I/C     NPr/ISg+ V   ISg/D$+ NSg/V NPr/C NSg/C . NSg/I/J/C ISg+ NSg/V
 > in      search of her     hedgehog .
 # NPr/J/P NSg/V  P  ISg/D$+ NSg/V+   .
 >
 #
-> The hedgehog was engaged in      a   fight with another hedgehog , which seemed to Alice
-# D+  NSg/V+   V   V/J     NPr/J/P D/P NSg/V P    I/D+    NSg/V+   . I/C+  V/J    P  NPr+
+> The hedgehog was engaged in      a   fight  with another hedgehog , which seemed to Alice
+# D+  NSg/V+   V   V/J     NPr/J/P D/P NSg/V+ P    I/D+    NSg/V+   . I/C+  V/J    P  NPr+
 > an   excellent opportunity for croqueting one       of them     with the other   : the only
-# D/P+ J+        NSg+        C/P ?          NSg/I/V/J P  NSg/IPl+ P    D   NSg/V/J . D   J/R/C+
+# D/P+ J+        NSg+        C/P ?          NSg/I/V/J P  NSg/IPl+ P    D   NSg/V/J . D   J/R/C
 > difficulty was , that         her     flamingo was gone  across to the other   side    of the
 # N🅪Sg+      V   . NSg/I/C/Ddem ISg/D$+ NSg/J    V   V/J/P NSg/P  P  D   NSg/V/J NSg/V/J P  D
 > garden   , where Alice could  see   it       trying  in      a   helpless sort  of way    to fly     up        into
@@ -3823,7 +3823,7 @@
 >
 #
 > By      the time      she  had caught the flamingo and brought it       back    , the fight  was over      ,
-# NSg/J/P D+  N🅪Sg/V/J+ ISg+ V   V/J    D   NSg/J    V/C V       NPr/ISg+ NSg/V/J . D+  NSg/V+ V   NSg/V/J/P .
+# NSg/J/P D+  N🅪Sg/V/J+ ISg+ V   V/J    D   NSg/J    V/C V       NPr/ISg+ NSg/V/J . D   NSg/V+ V   NSg/V/J/P .
 > and both   the hedgehogs were  out         of sight  : “ but     it       doesn’t matter    much       , ” thought
 # V/C I/C/Dq D   NPl/V     NSg/V NSg/V/J/R/P P  NSg/V+ . . NSg/C/P NPr/ISg+ V       N🅪Sg/V/J+ NSg/I/J/Dq . . NSg/V
 > Alice , “ as    all          the arches are gone  from this   side    of the ground   . ” So        she  tucked
@@ -3900,18 +3900,18 @@
 # NSg/V+  W? . D   NSg/V/J NSg$     NSg/V+
 >
 #
-> “ You    can’t think how   glad    I    am      to see   you    again , you    dear     old    thing  ! ” said the
-# . ISgPl+ VX    NSg/V NSg/C NSg/V/J ISg+ NPr/V/J P  NSg/V ISgPl+ P     . ISgPl+ NSg/V/J+ NSg/J+ NSg/V+ . . V/J  D
+> “ You    can’t think how   glad    I    am      to see   you    again , you    dear    old   thing  ! ” said the
+# . ISgPl+ VX    NSg/V NSg/C NSg/V/J ISg+ NPr/V/J P  NSg/V ISgPl+ P     . ISgPl+ NSg/V/J NSg/J NSg/V+ . . V/J  D
 > Duchess , as    she  tucked her     arm      affectionately into Alice’s , and they walked off
 # NSg/V   . NSg/R ISg+ V/J    ISg/D$+ NSg/V/J+ R              P    NSg$    . V/C IPl+ V/J    NSg/V/J/P
 > together .
 # J        .
 >
 #
-> Alice was very glad    to find  her     in      such  a    pleasant temper   , and thought to
-# NPr+  V   J/R  NSg/V/J P  NSg/V ISg/D$+ NPr/J/P NSg/I D/P+ NSg/J+   NSg/V/J+ . V/C NSg/V   P
+> Alice was very glad    to find  her     in      such   a    pleasant temper   , and thought to
+# NPr+  V   J/R  NSg/V/J P  NSg/V ISg/D$+ NPr/J/P NSg/I+ D/P+ NSg/J+   NSg/V/J+ . V/C NSg/V   P
 > herself that          perhaps it       was only  the pepper that          had made her     so        savage   when
-# ISg+    NSg/I/C/Ddem+ NSg     NPr/ISg+ V   J/R/C D   NSg/V  NSg/I/C/Ddem+ V   V    ISg/D$+ NSg/I/J/C NPr/V/J+ NSg/I/C
+# ISg+    NSg/I/C/Ddem+ NSg     NPr/ISg+ V   J/R/C D+  NSg/V+ NSg/I/C/Ddem+ V   V    ISg/D$+ NSg/I/J/C NPr/V/J+ NSg/I/C
 > they met in      the kitchen .
 # IPl+ V   NPr/J/P D+  NSg/V+  .
 >
@@ -3975,7 +3975,7 @@
 >
 #
 > “ Somebody said , ” Alice whispered , “ that          it’s done    by      everybody minding their own
-# . NSg/I+   V/J  . . NPr+  V/J       . . NSg/I/C/Ddem+ W?   NSg/V/J NSg/J/P NSg/I+    V       D$+   NSg/V/J+
+# . NSg/I+   V/J  . . NPr+  V/J       . . NSg/I/C/Ddem+ W?   NSg/V/J NSg/J/P NSg/I+    V       D$+   NSg/V/J
 > business ! ”
 # N🅪Sg/J+  . .
 >
@@ -4000,8 +4000,8 @@
 # P  D$+  NSg/J    . VX    ISg+ NSg/V/J D+  NSg/V+     . .
 >
 #
-> “ He       might     bite  , ” Alice cautiously replied , not   feeling at    all          anxious to have
-# . NPr/ISg+ NᴹSg/VX/J NSg/V . . NPr+  R          V/J     . NSg/C NSg/V/J NSg/P NSg/I/J/C/Dq J+      P  NSg/VX
+> “ He       might     bite  , ” Alice cautiously replied , not   feeling at    all           anxious to have
+# . NPr/ISg+ NᴹSg/VX/J NSg/V . . NPr+  R          V/J     . NSg/C NSg/V/J NSg/P NSg/I/J/C/Dq+ J+      P  NSg/VX
 > the experiment tried .
 # D+  NSg/V+     V/J   .
 >
@@ -4077,7 +4077,7 @@
 > “ A   cheap   sort  of present ! ” thought Alice . “ I’m glad    they don’t give  birthday
 # . D/P NSg/V/J NSg/V P  NSg/V/J . . NSg/V   NPr+  . . W?  NSg/V/J IPl+ V     NSg/V NSg/V+
 > presents like        that          ! ” But     she  did not   venture to say   it       out         loud  .
-# NPl/V+   NSg/V/J/C/P NSg/I/C/Ddem+ . . NSg/C/P ISg+ V   NSg/C NSg/V   P  NSg/V NPr/ISg+ NSg/V/J/R/P NSg/J .
+# NPl/V+   NSg/V/J/C/P NSg/I/C/Ddem+ . . NSg/C/P ISg+ V   NSg/C NSg/V+  P  NSg/V NPr/ISg+ NSg/V/J/R/P NSg/J .
 >
 #
 > “ Thinking again ? ” the Duchess asked , with another dig   of her     sharp   little     chin   .
@@ -4134,8 +4134,8 @@
 # NPr/V/J+ R      V         NSg/I/C/Ddem D/P NSg$     NSg/V/J+ VX    NSg/V/J NSg/IPl+ D$+   V+    .
 >
 #
-> All          the time      they were  playing the Queen    never left    off       quarrelling with the
-# NSg/I/J/C/Dq D+  N🅪Sg/V/J+ IPl+ NSg/V V       D+  NPr/V/J+ R     NPr/V/J NSg/V/J/P NᴹSg/V/Comm P    D
+> All           the time      they were  playing the Queen    never left    off       quarrelling with the
+# NSg/I/J/C/Dq+ D+  N🅪Sg/V/J+ IPl+ NSg/V V       D+  NPr/V/J+ R     NPr/V/J NSg/V/J/P NᴹSg/V/Comm P    D
 > other   players , and shouting “ Off       with his     head     ! ” or    “ Off       with her     head     ! ” Those
 # NSg/V/J NPl+    . V/C V+       . NSg/V/J/P P    ISg/D$+ NPr/V/J+ . . NPr/C . NSg/V/J/P P    ISg/D$+ NPr/V/J+ . . I/Ddem+
 > whom she  sentenced were  taken into custody by      the soldiers , who   of course had to
@@ -4154,8 +4154,8 @@
 # D+  NSg/V/J+ NSg/V+ NSg/V/C . .
 >
 #
-> “ No    , ” said Alice . “ I    don’t even    know  what   a   Mock     Turtle is . ”
-# . NPr/P . . V/J  NPr+  . . ISg+ V     NSg/V/J NSg/V NSg/I+ D/P NSg/V/J+ NSg/V+ VL . .
+> “ No    , ” said Alice . “ I    don’t even    know  what   a   Mock    Turtle is . ”
+# . NPr/P . . V/J  NPr+  . . ISg+ V     NSg/V/J NSg/V NSg/I+ D/P NSg/V/J NSg/V+ VL . .
 >
 #
 > “ It’s the thing  Mock     Turtle Soup   is made from , ” said the Queen    .
@@ -4172,8 +4172,8 @@
 #
 > As    they walked off       together , Alice heard the King     say   in      a    low      voice  , to the
 # NSg/R IPl+ V/J    NSg/V/J/P J        . NPr+  V/J   D+  NPr/V/J+ NSg/V NPr/J/P D/P+ NSg/V/J+ NSg/V+ . P  D+
-> company generally , “ You    are all          pardoned . ” “ Come    , that’s a    good     thing  ! ” she  said
-# NSg/V+  R         . . ISgPl+ V   NSg/I/J/C/Dq V/J      . . . NSg/V/P . NSg$   D/P+ NPr/V/J+ NSg/V+ . . ISg+ V/J
+> company generally , “ You    are all          pardoned . ” “ Come    , that’s a    good    thing  ! ” she  said
+# NSg/V+  R         . . ISgPl+ V   NSg/I/J/C/Dq V/J      . . . NSg/V/P . NSg$   D/P+ NPr/V/J NSg/V+ . . ISg+ V/J
 > to herself , for she  had felt    quite unhappy at    the number  of executions the Queen
 # P  ISg+    . C/P ISg+ V   NSg/V/J NSg   NSg/V/J NSg/P D   NSg/V/J P  +          D+  NPr/V/J+
 > had ordered .
@@ -4191,7 +4191,7 @@
 > leaving Alice alone with the Gryphon . Alice did not   quite like        the look  of the
 # V       NPr+  J     P    D   ?       . NPr+  V   NSg/C NSg   NSg/V/J/C/P D   NSg/V P  D+
 > creature , but     on  the whole she  thought it       would be     quite as    safe    to stay    with it
-# NSg+     . NSg/C/P J/P D   NSg/J ISg+ NSg/V   NPr/ISg+ VX    NSg/VX NSg   NSg/R NSg/V/J P  NSg/V/J P    NPr/ISg+
+# NSg+     . NSg/C/P J/P D+  NSg/J ISg+ NSg/V   NPr/ISg+ VX    NSg/VX NSg   NSg/R NSg/V/J P  NSg/V/J P    NPr/ISg+
 > as    to go      after that         savage   Queen    : so        she  waited .
 # NSg/R P  NSg/V/J J/P   NSg/I/C/Ddem NPr/V/J+ NPr/V/J+ . NSg/I/J/C ISg+ V/J    .
 >
@@ -4216,12 +4216,12 @@
 #
 > “ Everybody says  ‘          come    on  ! ’ here    , ” thought Alice , as    she  went  slowly after it       : “ I
 # . NSg/I+    NPl/V Unlintable NSg/V/P J/P . . NSg/J/R . . NSg/V   NPr+  . NSg/R ISg+ NSg/V R      J/P   NPr/ISg+ . . ISg+
-> never was so        ordered about in      all          my  life   , never ! ”
-# R     V   NSg/I/J/C V/J     J/P   NPr/J/P NSg/I/J/C/Dq D$+ NSg/V+ . R     . .
+> never was so        ordered about in      all           my  life   , never ! ”
+# R     V   NSg/I/J/C V/J     J/P   NPr/J/P NSg/I/J/C/Dq+ D$+ NSg/V+ . R     . .
 >
 #
 > They had not   gone  far     before they saw   the Mock    Turtle in      the distance , sitting
-# IPl+ V   NSg/C V/J/P NSg/V/J C/P    IPl+ NSg/V D   NSg/V/J NSg/V  NPr/J/P D+  NSg/V+   . NSg/V/J
+# IPl+ V   NSg/C V/J/P NSg/V/J C/P    IPl+ NSg/V D   NSg/V/J NSg/V+ NPr/J/P D+  NSg/V+   . NSg/V/J
 > sad     and lonely on  a   little     ledge of rock    , and , as    they came    nearer , Alice could
 # NSg/V/J V/C J/R    J/P D/P NPr/I/J/Dq NSg/V P  NPr🅪/V+ . V/C . NSg/R IPl+ NSg/V/P J      . NPr+  NSg/VX
 > hear him  sighing as    if    his     heart   would break  . She  pitied him  deeply . “ What   is
@@ -4264,10 +4264,10 @@
 # . NSg/C . . V/J  D+  NSg/V/J+ NSg/V+ NSg/P NSg/V/J . P    D/P NSg/J NSg/V . . ISg+ V   D/P NSg/J NSg/V  . .
 >
 #
-> These   words  were  followed by      a   very long    silence , broken only  by      an   occasional
-# I/Ddem+ NPl/V+ NSg/V V/J      NSg/J/P D/P J/R  NPr/V/J NSg/V   . V/J    J/R/C NSg/J/P D/P+ NSg/J+
+> These   words  were  followed by      a   very long     silence , broken only  by      an  occasional
+# I/Ddem+ NPl/V+ NSg/V V/J      NSg/J/P D/P J/R  NPr/V/J+ NSg/V+  . V/J    J/R/C NSg/J/P D/P NSg/J
 > exclamation of “ Hjckrrh ! ” from the Gryphon , and the constant heavy   sobbing of
-# NSg+        P  . ?       . . P    D   ?       . V/C D   NSg/J    NSg/V/J NSg/V/J P
+# NSg         P  . ?       . . P    D   ?       . V/C D   NSg/J    NSg/V/J NSg/V/J P
 > the Mock    Turtle . Alice was very nearly getting up        and saying , “ Thank you    , sir    ,
 # D   NSg/V/J NSg/V+ . NPr+  V   J/R  R      NSg/V   NSg/V/J/P V/C NSg/V  . . NSg/V ISgPl+ . NPr/V+ .
 > for your interesting story  , ” but     she  could  not   help  thinking there must  be     more
@@ -4294,8 +4294,8 @@
 # . R      ISgPl+ V   J/R  V/J  . .
 >
 #
-> “ You    ought    to be     ashamed of yourself for asking such  a    simple   question , ” added
-# . ISgPl+ NSg/I/VX P  NSg/VX V/J     P  ISg+     C/P V      NSg/I D/P+ NSg/V/J+ NSg/V+   . . V/J
+> “ You    ought    to be     ashamed of yourself for asking such   a    simple   question , ” added
+# . ISgPl+ NSg/I/VX P  NSg/VX V/J     P  ISg+     C/P V      NSg/I+ D/P+ NSg/V/J+ NSg/V+   . . V/J
 > the Gryphon ; and then    they both   sat     silent and looked at    poor    Alice , who    felt
 # D   ?       . V/C NSg/J/C IPl+ I/C/Dq NSg/V/J NSg/J  V/C V/J    NSg/P NSg/V/J NPr+  . NPr/I+ NSg/V/J
 > ready   to sink  into the earth  . At    last    the Gryphon said to the Mock    Turtle ,
@@ -4352,8 +4352,8 @@
 #
 > “ Ah      ! then    yours wasn’t a   really good    school , ” said the Mock    Turtle in      a   tone    of
 # . NSg/I/V . NSg/J/C I+    V      D/P R      NPr/V/J NSg/V+ . . V/J  D   NSg/V/J NSg/V+ NPr/J/P D/P NSg/I/V P
-> great  relief . “ Now       at    ours they had at    the end   of the bill   , ‘          French  , music     , and
-# NSg/J+ NSg/J+ . . NPr/V/J/C NSg/P I+   IPl+ V   NSg/P D   NSg/V P  D+  NPr/V+ . Unlintable NPr/V/J . N🅪Sg/V/J+ . V/C
+> great relief . “ Now       at    ours they had at    the end   of the bill   , ‘          French  , music     , and
+# NSg/J NSg/J+ . . NPr/V/J/C NSg/P I+   IPl+ V   NSg/P D   NSg/V P  D+  NPr/V+ . Unlintable NPr/V/J . N🅪Sg/V/J+ . V/C
 > washing — extra . ’ ”
 # NSg/V   . NSg/J . . .
 >
@@ -4364,8 +4364,8 @@
 # NSg+ . .
 >
 #
-> “ I    couldn’t afford to learn it       . ” said the Mock    Turtle with a   sigh  . “ I    only  took
-# . ISg+ V        V      P  NSg/V NPr/ISg+ . . V/J  D   NSg/V/J NSg/V+ P    D/P NSg/V . . ISg+ J/R/C V
+> “ I    couldn’t afford to learn it       . ” said the Mock     Turtle with a   sigh  . “ I    only  took
+# . ISg+ V        V      P  NSg/V NPr/ISg+ . . V/J  D+  NSg/V/J+ NSg/V+ P    D/P NSg/V . . ISg+ J/R/C V
 > the regular course . ”
 # D+  NSg/J+  NSg/V+ . .
 >
@@ -4377,7 +4377,7 @@
 > “ Reeling and Writhing , of course , to begin with , ” the Mock    Turtle replied ; “ and
 # . V       V/C V+       . P  NSg/V+ . P  NSg/V P    . . D   NSg/V/J NSg/V+ V/J     . . V/C
 > then    the different branches of Arithmetic — Ambition , Distraction , Uglification ,
-# NSg/J/C D   NSg/J     NPl/V    P  NSg/J      . NSg/V    . NSg/V+      . ?            .
+# NSg/J/C D   NSg/J     NPl/V    P  NSg/J      . NSg/V+   . NSg/V+      . ?            .
 > and Derision . ”
 # V/C N🅪Sg     . .
 >
@@ -4402,28 +4402,28 @@
 # D/P NSg       . .
 >
 #
-> Alice did not   feel    encouraged to ask   any    more         questions about it       , so        she  turned
-# NPr+  V   NSg/C NSg/I/V V/J        P  NSg/V I/R/Dq NPr/I/V/J/Dq NPl/V+    J/P   NPr/ISg+ . NSg/I/J/C ISg+ V/J
+> Alice did not   feel    encouraged to ask   any     more          questions about it       , so        she  turned
+# NPr+  V   NSg/C NSg/I/V V/J        P  NSg/V I/R/Dq+ NPr/I/V/J/Dq+ NPl/V+    J/P   NPr/ISg+ . NSg/I/J/C ISg+ V/J
 > to the Mock     Turtle , and said “ What   else    had you    to learn ? ”
 # P  D+  NSg/V/J+ NSg/V+ . V/C V/J  . NSg/I+ NSg/J/C V   ISgPl+ P  NSg/V . .
 >
 #
 > “ Well    , there was Mystery , ” the Mock     Turtle replied , counting off       the subjects on
-# . NSg/V/J . +     V   NSg+    . . D+  NSg/V/J+ NSg/V+ V/J     . V        NSg/V/J/P D   NPl/V+   J/P
+# . NSg/V/J . +     V   NSg+    . . D+  NSg/V/J+ NSg/V+ V/J     . V        NSg/V/J/P D+  NPl/V+   J/P
 > his     flappers , “ — Mystery , ancient and modern , with Seaography : then    Drawling — the
 # ISg/D$+ NPl      . . . NSg+    . NSg/J   V/C NSg/J  . P    ?          . NSg/J/C V        . D
 > Drawling - master   was an  old   conger - eel   , that          used to come    once  a   week   : he       taught
 # V        . NPr/V/J+ V   D/P NSg/J NSg    . NSg/V . NSg/I/C/Ddem+ V/J  P  NSg/V/P NSg/C D/P NSg/J+ . NPr/ISg+ V
 > us       Drawling , Stretching , and Fainting in      Coils  . ”
-# NPr/IPl+ V        . V          . V/C V        NPr/J/P NPl/V+ . .
+# NPr/IPl+ V        . V          . V/C V+       NPr/J/P NPl/V+ . .
 >
 #
 > “ What   was that          like        ? ” said Alice .
 # . NSg/I+ V   NSg/I/C/Ddem+ NSg/V/J/C/P . . V/J  NPr+  .
 >
 #
-> “ Well    , I    can’t show  it       you    myself , ” the Mock     Turtle said : “ I’m too stiff   . And
-# . NSg/V/J . ISg+ VX    NSg/V NPr/ISg+ ISgPl+ ISg+   . . D+  NSg/V/J+ NSg/V+ V/J  . . W?  W?  NSg/V/J . V/C
+> “ Well    , I    can’t show  it       you    myself , ” the Mock    Turtle said : “ I’m too stiff   . And
+# . NSg/V/J . ISg+ VX    NSg/V NPr/ISg+ ISgPl+ ISg+   . . D   NSg/V/J NSg/V+ V/J  . . W?  W?  NSg/V/J . V/C
 > the Gryphon never learnt it       . ”
 # D   ?       R     V      NPr/ISg+ . .
 >
@@ -4446,14 +4446,14 @@
 # NPl+      V   D$+   NPl/V+ NPr/J/P D$+   NPl/V+ .
 >
 #
-> “ And how   many        hours a    day   did you    do     lessons ? ” said Alice , in      a   hurry  to change
-# . V/C NSg/C NSg/I/J/Dq+ NPl+  D/P+ NPr🅪+ V   ISgPl+ NSg/VX NPl/V+  . . V/J  NPr+  . NPr/J/P D/P NSg/V+ P  N🅪Sg/V
+> “ And how   many        hours a    day   did you    do     lessons ? ” said Alice , in      a    hurry  to change
+# . V/C NSg/C NSg/I/J/Dq+ NPl+  D/P+ NPr🅪+ V   ISgPl+ NSg/VX NPl/V+  . . V/J  NPr+  . NPr/J/P D/P+ NSg/V+ P  N🅪Sg/V
 > the subject  .
 # D+  NSg/V/J+ .
 >
 #
-> “ Ten hours the first    day   , ” said the Mock     Turtle : “ nine the next    , and so        on  . ”
-# . NSg NPl+  D+  NSg/V/J+ NPr🅪+ . . V/J  D+  NSg/V/J+ NSg/V+ . . NSg  D   NSg/J/P . V/C NSg/I/J/C J/P . .
+> “ Ten  hours the first    day   , ” said the Mock     Turtle : “ nine the next    , and so        on  . ”
+# . NSg+ NPl+  D+  NSg/V/J+ NPr🅪+ . . V/J  D+  NSg/V/J+ NSg/V+ . . NSg  D   NSg/J/P . V/C NSg/I/J/C J/P . .
 >
 #
 > “ What   a    curious plan   ! ” exclaimed Alice .
@@ -4482,20 +4482,20 @@
 #
 > “ That’s enough about lessons , ” the Gryphon interrupted in      a   very decided tone     :
 # . NSg$   NSg/I  J/P   NPl/V+  . . D   ?       V/J         NPr/J/P D/P J/R  NSg/V/J NSg/I/V+ .
-> “ tell  her     something about the games  now       . ”
-# . NPr/V ISg/D$+ NSg/I/V/J J/P   D   NPl/V+ NPr/V/J/C . .
+> “ tell  her     something  about the games  now       . ”
+# . NPr/V ISg/D$+ NSg/I/V/J+ J/P   D   NPl/V+ NPr/V/J/C . .
 >
 #
-> CHAPTER X     : The Lobster  Quadrille
-# NSg/V+  NPr/J . D+  NSg/V/J+ NSg/V/J
+> CHAPTER X      : The Lobster  Quadrille
+# NSg/V+  NPr/J+ . D+  NSg/V/J+ NSg/V/J
 >
 #
 > The Mock     Turtle sighed deeply , and drew  the back    of one       flapper across his     eyes   .
 # D+  NSg/V/J+ NSg/V+ V/J    R      . V/C NPr/V D   NSg/V/J P  NSg/I/V/J NSg     NSg/P  ISg/D$+ NPl/V+ .
 > He       looked at    Alice , and tried to speak , but     for a    minute   or    two sobs  choked his
 # NPr/ISg+ V/J    NSg/P NPr+  . V/C V/J   P  NSg/V . NSg/C/P C/P D/P+ NSg/V/J+ NPr/C NSg NPl/V V/J    ISg/D$+
-> voice  . “ Same as    if    he       had a   bone      in      his     throat , ” said the Gryphon : and it       set     to
-# NSg/V+ . . I/J  NSg/R NSg/C NPr/ISg+ V   D/P N🅪Sg/V/J+ NPr/J/P ISg/D$+ NSg/V+ . . V/J  D   ?       . V/C NPr/ISg+ NPr/V/J P
+> voice  . “ Same as    if    he       had a    bone      in      his     throat , ” said the Gryphon : and it       set     to
+# NSg/V+ . . I/J  NSg/R NSg/C NPr/ISg+ V   D/P+ N🅪Sg/V/J+ NPr/J/P ISg/D$+ NSg/V+ . . V/J  D   ?       . V/C NPr/ISg+ NPr/V/J P
 > work  shaking him  and punching him  in      the back    . At    last    the Mock     Turtle recovered
 # NSg/V V       ISg+ V/C V        ISg+ NPr/J/P D   NSg/V/J . NSg/P NSg/V/J D+  NSg/V/J+ NSg/V+ V/J
 > his     voice  , and , with tears  running   down      his     cheeks , he       went  on  again : —
@@ -4580,8 +4580,8 @@
 # NSg/P NPr+  .
 >
 #
-> “ It       must  be     a   very pretty  dance , ” said Alice timidly .
-# . NPr/ISg+ NSg/V NSg/VX D/P J/R  NSg/V/J NSg/V . . V/J  NPr+  R       .
+> “ It       must  be     a   very pretty  dance  , ” said Alice timidly .
+# . NPr/ISg+ NSg/V NSg/VX D/P J/R  NSg/V/J NSg/V+ . . V/J  NPr+  R       .
 >
 #
 > “ Would you    like        to see   a   little     of it       ? ” said the Mock     Turtle .
@@ -4592,8 +4592,8 @@
 # . J/R  NSg/I/J/Dq W?     . . V/J  NPr+  .
 >
 #
-> “ Come    , let’s try     the first   figure ! ” said the Mock    Turtle to the Gryphon . “ We   can
-# . NSg/V/P . NSg$  NSg/V/J D   NSg/V/J NSg/V+ . . V/J  D   NSg/V/J NSg/V+ P  D   ?       . . IPl+ NPr/VX
+> “ Come    , let’s try     the first   figure ! ” said the Mock     Turtle to the Gryphon . “ We   can
+# . NSg/V/P . NSg$  NSg/V/J D   NSg/V/J NSg/V+ . . V/J  D+  NSg/V/J+ NSg/V+ P  D   ?       . . IPl+ NPr/VX
 > do     without lobsters , you    know  . Which shall sing    ? ”
 # NSg/VX C/P     NPl/V    . ISgPl+ NSg/V . I/C+  VX    NSg/V/J . .
 >
@@ -4614,8 +4614,8 @@
 # . NPr/VX ISgPl+ NSg/V D/P NPr/I/J/Dq J      . . V/J  D/P+ NSg/V+  P  D/P NSg/V . . W?      D/P
 > porpoise close   behind  us       , and he’s treading on  my  tail     . See   how   eagerly the
 # NSg/V+   NSg/V/J NSg/J/P NPr/IPl+ . V/C NSg$ V        J/P D$+ NSg/V/J+ . NSg/V NSg/C R       D
-> lobsters and the turtles all           advance  ! They are waiting on  the shingle — will   you
-# NPl/V    V/C D   NPl/V   NSg/I/J/C/Dq+ NSg/V/J+ . IPl+ V   NSg/V   J/P D   NSg/V   . NPr/VX ISgPl+
+> lobsters and the turtles all          advance  ! They are waiting on  the shingle — will   you
+# NPl/V    V/C D   NPl/V   NSg/I/J/C/Dq NSg/V/J+ . IPl+ V   NSg/V   J/P D   NSg/V   . NPr/VX ISgPl+
 > come    and join  the dance  ? Will   you    , won’t you    , will   you    , won’t you    , will   you
 # NSg/V/P V/C NSg/V D   NSg/V+ . NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+
 > join  the dance  ? Will   you    , won’t you    , will   you    , won’t you    , won’t you    join  the
@@ -4674,8 +4674,8 @@
 # NSg/I/J/C R     . P  NSg/V+ ISgPl+ NSg/V NSg/I+ W?      NSg/V/J/C/P . .
 >
 #
-> “ I    believe so        , ” Alice replied thoughtfully . “ They have   their tails in      their
-# . ISg+ V       NSg/I/J/C . . NPr+  V/J     R            . . IPl+ NSg/VX D$+   NPl/V NPr/J/P D$+
+> “ I    believe so        , ” Alice replied thoughtfully . “ They have   their tails  in      their
+# . ISg+ V       NSg/I/J/C . . NPr+  V/J     R            . . IPl+ NSg/VX D$+   NPl/V+ NPr/J/P D$+
 > mouths — and they’re all          over      crumbs . ”
 # NSg/V+ . V/C W?      NSg/I/J/C/Dq NSg/V/J/P NPl/V+ . .
 >
@@ -4708,8 +4708,8 @@
 #
 > “ I    can    tell  you    more         than that          , if    you    like        , ” said the Gryphon . “ Do     you    know  why
 # . ISg+ NPr/VX NPr/V ISgPl+ NPr/I/V/J/Dq C/P  NSg/I/C/Ddem+ . NSg/C ISgPl+ NSg/V/J/C/P . . V/J  D   ?       . . NSg/VX ISgPl+ NSg/V NSg/V
-> it’s called a   whiting ? ”
-# W?   V/J    D/P NSg/V+  . .
+> it’s called a    whiting ? ”
+# W?   V/J    D/P+ NSg/V+  . .
 >
 #
 > “ I    never thought about it       , ” said Alice . “ Why   ? ”
@@ -4814,10 +4814,10 @@
 # V   NSg/I/J/C NSg/V/J P  ISg/D$+ . NSg/I/V/J J/P Dq+  NSg/V/J+ . V/C V/J    D$+   NPl/V V/C NSg/V+ NSg/I/J/C J/R
 > wide  , but     she  gained courage as    she  went  on  . Her     listeners were  perfectly quiet
 # NSg/J . NSg/C/P ISg+ V/J    NSg/V+  NSg/R ISg+ NSg/V J/P . ISg/D$+ +         NSg/V R         NSg/V/J
-> till      she  got to the part    about her     repeating “ You    are old   , Father William , ” to
-# NSg/V/C/P ISg+ V   P  D   NSg/V/J J/P   ISg/D$+ NSg/V/J   . ISgPl+ V   NSg/J . NPr/V+ NPr+    . . P
+> till      she  got to the part     about her     repeating “ You    are old   , Father William , ” to
+# NSg/V/C/P ISg+ V   P  D+  NSg/V/J+ J/P   ISg/D$+ NSg/V/J   . ISgPl+ V   NSg/J . NPr/V+ NPr+    . . P
 > the Caterpillar , and the words  all          coming  different , and then    the Mock    Turtle
-# D   NSg/V       . V/C D+  NPl/V+ NSg/I/J/C/Dq NSg/V/J NSg/J     . V/C NSg/J/C D   NSg/V/J NSg/V+
+# D   NSg/V       . V/C D   NPl/V+ NSg/I/J/C/Dq NSg/V/J NSg/J     . V/C NSg/J/C D   NSg/V/J NSg/V+
 > drew  a   long    breath   , and said “ That’s very curious . ”
 # NPr/V D/P NPr/V/J NSg/V/J+ . V/C V/J  . NSg$   J/R  J       . .
 >
@@ -4834,8 +4834,8 @@
 # ?       NSg/R NSg/C NPr/ISg+ NSg/V   NPr/ISg+ V   I/J/R/Dq NSg/J P  NSg+      NSg/V/J/P NPr+  .
 >
 #
-> “ Stand up        and repeat ‘          ’ Tis the voice  of the sluggard , ’ ” said the Gryphon .
-# . NSg/V NSg/V/J/P V/C NSg/V  Unlintable . ?   D   NSg/V+ P  D   NSg      . . . V/J  D   ?       .
+> “ Stand up        and repeat ‘          ’ Tis the voice of the sluggard , ’ ” said the Gryphon .
+# . NSg/V NSg/V/J/P V/C NSg/V  Unlintable . ?   D   NSg/V P  D   NSg      . . . V/J  D   ?       .
 >
 #
 > “ How   the creatures order  one       about , and make  one       repeat lessons ! ” thought Alice ;
@@ -4852,8 +4852,8 @@
 # . . ?   D   NSg/V P  D+  NSg/V/J+ . ISg+ V/J   ISg+ V       . . ISgPl+ NSg/VX V/J   NPr/ISg+ W?
 > brown   , I    must  sugar  my  hair    . ” As    a   duck   with its     eyelids , so        he       with his     nose
 # NPr/V/J . ISg+ NSg/V N🅪Sg/V D$+ N🅪Sg/V+ . . NSg/R D/P NSg/V+ P    ISg/D$+ NPl+    . NSg/I/J/C NPr/ISg+ P    ISg/D$+ NSg/V+
-> Trims his     belt  and his     buttons , and turns out         his     toes   . ”
-# NPl/V ISg/D$+ NSg/V V/C ISg/D$+ NPl/V+  . V/C NPl/V NSg/V/J/R/P ISg/D$+ NPl/V+ . .
+> Trims his     belt   and his     buttons , and turns out         his     toes   . ”
+# NPl/V ISg/D$+ NSg/V+ V/C ISg/D$+ NPl/V+  . V/C NPl/V NSg/V/J/R/P ISg/D$+ NPl/V+ . .
 >
 #
 > ( later editions continued as    follows When    the sands  are all          dry     , he       is gay     as
@@ -4895,7 +4895,7 @@
 >
 #
 > “ It’s the first   position in      dancing . ” Alice said ; but     was dreadfully puzzled by
-# . W?   D   NSg/V/J NSg/V+   NPr/J/P NSg/V   . . NPr+  V/J  . NSg/C/P V   R          V/J     NSg/J/P
+# . W?   D+  NSg/V/J NSg/V+   NPr/J/P NSg/V   . . NPr+  V/J  . NSg/C/P V   R          V/J     NSg/J/P
 > the whole thing  , and longed to change the subject  .
 # D   NSg/J NSg/V+ . V/C V/J    P  N🅪Sg/V D   NSg/V/J+ .
 >
@@ -4930,8 +4930,8 @@
 # D   NSg/V+  . .
 >
 #
-> “ What   is the use   of repeating all          that          stuff   , ” the Mock     Turtle interrupted , “ if
-# . NSg/I+ VL D   NSg/V P  NSg/V/J   NSg/I/J/C/Dq NSg/I/C/Ddem+ NᴹSg/V+ . . D+  NSg/V/J+ NSg/V+ V/J         . . NSg/C
+> “ What   is the use   of repeating all           that          stuff   , ” the Mock     Turtle interrupted , “ if
+# . NSg/I+ VL D   NSg/V P  NSg/V/J   NSg/I/J/C/Dq+ NSg/I/C/Ddem+ NᴹSg/V+ . . D+  NSg/V/J+ NSg/V+ V/J         . . NSg/C
 > you    don’t explain it       as    you    go      on  ? It’s by      far     the most       confusing thing  I    ever
 # ISgPl+ V     V       NPr/ISg+ NSg/R ISgPl+ NSg/V/J J/P . W?   NSg/J/P NSg/V/J D   NSg/I/J/Dq V/J       NSg/V+ ISg+ J
 > heard ! ”
@@ -4946,8 +4946,8 @@
 #
 > “ Shall we   try     another figure of the Lobster  Quadrille ? ” the Gryphon went  on  . “ Or
 # . VX    IPl+ NSg/V/J I/D     NSg/V  P  D+  NSg/V/J+ NSg/V/J   . . D   ?       NSg/V J/P . . NPr/C
-> would you    like        the Mock    Turtle to sing    you    a    song  ? ”
-# VX    ISgPl+ NSg/V/J/C/P D   NSg/V/J NSg/V  P  NSg/V/J ISgPl+ D/P+ N🅪Sg+ . .
+> would you    like        the Mock     Turtle to sing    you    a    song  ? ”
+# VX    ISgPl+ NSg/V/J/C/P D+  NSg/V/J+ NSg/V+ P  NSg/V/J ISgPl+ D/P+ N🅪Sg+ . .
 >
 #
 > “ Oh    , a    song  , please , if    the Mock     Turtle would be     so        kind   , ” Alice replied , so
@@ -4970,12 +4970,12 @@
 # NPl      VX    NSg/C NSg/V . NSg/V P  D+  N🅪Sg/V+ . NSg/J+    NSg/V+ . NSg/V P  D+
 > evening , beautiful Soup   ! Beau   — ootiful Soo — oop ! Beau   — ootiful Soo — oop ! Soo — oop
 # N🅪Sg/V+ . NSg/J+    NSg/V+ . NPr/V+ . ?       ?   . ?   . NPr/V+ . ?       ?   . ?   . ?   . ?
-> of the e      — e      — evening , Beautiful , beautiful Soup   !
-# P  D   NPr/I+ . NPr/I+ . N🅪Sg/V+ . NSg/J     . NSg/J     NSg/V+ .
+> of the e      — e     — evening , Beautiful , beautiful Soup   !
+# P  D   NPr/I+ . NPr/I . N🅪Sg/V+ . NSg/J     . NSg/J     NSg/V+ .
 >
 #
-> “ Beautiful Soup   ! Who    cares for fish     , Game     , or    any     other    dish   ? Who    would not
-# . NSg/J+    NSg/V+ . NPr/I+ NPl/V C/P N🅪SgPl/V . NSg/V/J+ . NPr/C I/R/Dq+ NSg/V/J+ NSg/V+ . NPr/I+ VX    NSg/C
+> “ Beautiful Soup   ! Who    cares for fish      , Game     , or    any     other    dish   ? Who    would not
+# . NSg/J+    NSg/V+ . NPr/I+ NPl/V C/P N🅪SgPl/V+ . NSg/V/J+ . NPr/C I/R/Dq+ NSg/V/J+ NSg/V+ . NPr/I+ VX    NSg/C
 > give  all          else    for two  p          ennyworth only  of beautiful Soup   ? Pennyworth only  of
 # NSg/V NSg/I/J/C/Dq NSg/J/C C/P NSg+ NPr/V/J/P+ ?         J/R/C P  NSg/J     NSg/V+ . NSg        J/R/C P
 > beautiful Soup   ? Beau   — ootiful Soo — oop ! Beau   — ootiful Soo — oop ! Soo — oop of the
@@ -5039,7 +5039,7 @@
 > in      books  , and she  was quite pleased to find  that         she  knew the name  of nearly
 # NPr/J/P NPl/V+ . V/C ISg+ V   NSg   V/J     P  NSg/V NSg/I/C/Ddem ISg+ V    D   NSg/V P  R
 > everything there . “ That’s the judge  , ” she  said to herself , “ because of his     great
-# NSg/I/V+   W?    . . NSg$   D+  NSg/V+ . . ISg+ V/J  P  ISg+    . . C/P     P  ISg/D$+ NSg/J+
+# NSg/I/V+   W?    . . NSg$   D+  NSg/V+ . . ISg+ V/J  P  ISg+    . . C/P     P  ISg/D$+ NSg/J
 > wig    . ”
 # NSg/V+ . .
 >
@@ -5056,10 +5056,10 @@
 # . V/C NSg$   D   NSg/V/J+ . NSg/V+ . . NSg/V   NPr+  . . V/C I/Ddem NSg    NPl+      . . . ISg+ V
 > obliged to say   “ creatures , ” you    see   , because some     of them     were  animals , and some
 # V/J     P  NSg/V . NPl+      . . ISgPl+ NSg/V . C/P     I/J/R/Dq P  NSg/IPl+ NSg/V NPl+    . V/C I/J/R/Dq+
-> were  birds  , ) “ I    suppose they are the jurors . ” She  said this    last     word   two or
-# NSg/V NPl/V+ . . . ISg+ V       IPl+ V   D   NPl    . . ISg+ V/J  I/Ddem+ NSg/V/J+ NSg/V+ NSg NPr/C
-> three times over      to herself , being   rather  proud of it       : for she  thought , and
-# NSg   NPl/V NSg/V/J/P P  ISg+    . NSg/V/C NPr/V/J J     P  NPr/ISg+ . C/P ISg+ NSg/V+  . V/C
+> were  birds  , ) “ I    suppose they are the jurors . ” She  said this    last    word   two or
+# NSg/V NPl/V+ . . . ISg+ V       IPl+ V   D   NPl    . . ISg+ V/J  I/Ddem+ NSg/V/J NSg/V+ NSg NPr/C
+> three times  over      to herself , being   rather  proud of it       : for she  thought , and
+# NSg+  NPl/V+ NSg/V/J/P P  ISg+    . NSg/V/C NPr/V/J J     P  NPr/ISg+ . C/P ISg+ NSg/V+  . V/C
 > rightly too , that          very few      little     girls of her     age     knew the meaning  of it       at
 # R       W?  . NSg/I/C/Ddem+ J/R  NSg/I/Dq NPr/I/J/Dq NPl/V P  ISg/D$+ N🅪Sg/V+ V    D   N🅪Sg/V/J P  NPr/ISg+ NSg/P
 > all          . However , “ jury     - men  ” would have   done    just as    well    .
@@ -5083,7 +5083,7 @@
 > “ Stupid things ! ” Alice began in      a   loud  , indignant voice  , but     she  stopped
 # . NSg/J+ NPl/V+ . . NPr+  V     NPr/J/P D/P NSg/J . J         NSg/V+ . NSg/C/P ISg+ V/J
 > hastily , for the White   Rabbit cried out         , “ Silence in      the court    ! ” and the King
-# R       . C/P D   NPr/V/J NSg/V+ V/J   NSg/V/J/R/P . . NSg/V   NPr/J/P D   NSg/V/J+ . . V/C D+  NPr/V/J+
+# R       . C/P D   NPr/V/J NSg/V+ V/J   NSg/V/J/R/P . . NSg/V+  NPr/J/P D   NSg/V/J+ . . V/C D+  NPr/V/J+
 > put   on  his     spectacles and looked anxiously round     , to make  out         who    was talking .
 # NSg/V J/P ISg/D$+ NPl        V/C V/J    R         NSg/V/J/P . P  NSg/V NSg/V/J/R/P NPr/I+ V   V       .
 >
@@ -5144,8 +5144,8 @@
 #
 > “ Call  the first    witness , ” said the King     ; and the White    Rabbit blew    three blasts
 # . NSg/V D+  NSg/V/J+ NSg/V+  . . V/J  D+  NPr/V/J+ . V/C D+  NPr/V/J+ NSg/V+ NSg/V/J NSg   NPl/V
-> on  the trumpet , and called out         , “ First    witness ! ”
-# J/P D   NSg/V+  . V/C V/J    NSg/V/J/R/P . . NSg/V/J+ NSg/V+  . .
+> on  the trumpet , and called out         , “ First   witness ! ”
+# J/P D   NSg/V+  . V/C V/J    NSg/V/J/R/P . . NSg/V/J NSg/V+  . .
 >
 #
 > The first    witness was the Hatter . He       came    in      with a   teacup in      one       hand   and a
@@ -5215,7 +5215,7 @@
 >
 #
 > This    did not   seem to encourage the witness at    all          : he       kept shifting from one
-# I/Ddem+ V   NSg/C V    P  V         D+  NSg/V+  NSg/P NSg/I/J/C/Dq . NPr/ISg+ V    V+       P    NSg/I/V/J
+# I/Ddem+ V   NSg/C V    P  V         D+  NSg/V+  NSg/P NSg/I/J/C/Dq . NPr/ISg+ V    V+       P    NSg/I/V/J+
 > foot   to the other   , looking uneasily at    the Queen    , and in      his     confusion he       bit   a
 # NSg/V+ P  D   NSg/V/J . V       R        NSg/P D   NPr/V/J+ . V/C NPr/J/P ISg/D$+ NSg/V+    NPr/ISg+ NSg/V D/P
 > large piece  out         of his     teacup instead of the bread  - and - butter   .
@@ -5223,13 +5223,13 @@
 >
 #
 > Just at    this    moment Alice felt    a   very curious sensation , which puzzled her     a
-# V/J  NSg/P I/Ddem+ NSg+   NPr+  NSg/V/J D/P J/R  J       NSg       . I/C+  V/J     ISg/D$+ D/P+
+# V/J  NSg/P I/Ddem+ NSg+   NPr+  NSg/V/J D/P J/R  J+      NSg+      . I/C+  V/J     ISg/D$+ D/P+
 > good     deal     until she  made out         what   it       was : she  was beginning to grow larger
 # NPr/V/J+ NSg/V/J+ C/P   ISg+ V    NSg/V/J/R/P NSg/I+ NPr/ISg+ V   . ISg+ V   NSg/V/J   P  V    J
 > again , and she  thought at    first   she  would get   up        and leave the court    ; but     on
 # P     . V/C ISg+ NSg/V   NSg/P NSg/V/J ISg+ VX    NSg/V NSg/V/J/P V/C NSg/V D+  NSg/V/J+ . NSg/C/P J/P
 > second   thoughts she  decided to remain where she  was as    long    as    there was room
-# NSg/V/J+ NPl/V+   ISg+ NSg/V/J P  NSg/V  NSg/C ISg+ V   NSg/R NPr/V/J NSg/R +     V   NSg/V/J
+# NSg/V/J+ NPl/V+   ISg+ NSg/V/J P  NSg/V  NSg/C ISg+ V   NSg/R NPr/V/J NSg/R +     V   NSg/V/J+
 > for her     .
 # C/P ISg/D$+ .
 >
@@ -5260,8 +5260,8 @@
 # NSg/V/J P  D   NSg/V/J+ .
 >
 #
-> All          this    time      the Queen    had never left    off       staring at    the Hatter , and , just as
-# NSg/I/J/C/Dq I/Ddem+ N🅪Sg/V/J+ D+  NPr/V/J+ V   R     NPr/V/J NSg/V/J/P V       NSg/P D   NSg/V  . V/C . V/J  NSg/R
+> All           this    time      the Queen    had never left    off       staring at    the Hatter , and , just as
+# NSg/I/J/C/Dq+ I/Ddem+ N🅪Sg/V/J+ D+  NPr/V/J+ V   R     NPr/V/J NSg/V/J/P V       NSg/P D   NSg/V  . V/C . V/J  NSg/R
 > the Dormouse crossed the court    , she  said to one       of the officers of the court    ,
 # D   NSg      V/J     D   NSg/V/J+ . ISg+ V/J  P  NSg/I/V/J P  D   NPl/V    P  D   NSg/V/J+ .
 > “ Bring me       the list  of the singers in      the last    concert ! ” on  which the wretched
@@ -5276,8 +5276,8 @@
 # I/C     W?     J       NPr/C NSg/C . .
 >
 #
-> “ I’m a   poor    man      , your Majesty , ” the Hatter began , in      a   trembling voice  , “ — and I
-# . W?  D/P NSg/V/J NPr/V/J+ . D$+  NSg/I+  . . D   NSg/V  V     . NPr/J/P D/P V         NSg/V+ . . . V/C ISg+
+> “ I’m a    poor    man      , your Majesty , ” the Hatter began , in      a   trembling voice  , “ — and I
+# . W?  D/P+ NSg/V/J NPr/V/J+ . D$+  NSg/I+  . . D   NSg/V  V     . NPr/J/P D/P V         NSg/V+ . . . V/C ISg+
 > hadn’t begun my  tea     — not   above   a   week   or    so        — and what   with the bread  - and - butter
 # V      V     D$+ N🅪Sg/V+ . NSg/C NSg/J/P D/P NSg/J+ NPr/C NSg/I/J/C . V/C NSg/I+ P    D   NSg/V+ . V/C . NSg/V/J+
 > getting so        thin    — and the twinkling of the tea     — ”
@@ -5298,8 +5298,8 @@
 # C/P D/P NSg   . NSg/V/J J/P . .
 >
 #
-> “ I’m a   poor    man      , ” the Hatter went  on  , “ and most       things twinkled after that          — only
-# . W?  D/P NSg/V/J NPr/V/J+ . . D   NSg/V  NSg/V J/P . . V/C NSg/I/J/Dq NPl/V+ V/J      J/P   NSg/I/C/Ddem+ . J/R/C
+> “ I’m a    poor    man      , ” the Hatter went  on  , “ and most       things twinkled after that          — only
+# . W?  D/P+ NSg/V/J NPr/V/J+ . . D   NSg/V  NSg/V J/P . . V/C NSg/I/J/Dq NPl/V+ V/J      J/P   NSg/I/C/Ddem+ . J/R/C
 > the March  Hare     said — ”
 # D   NPr/V+ NSg/V/J+ V/J  . .
 >
@@ -5346,20 +5346,20 @@
 #
 > The miserable Hatter dropped his     teacup and bread  - and - butter   , and went  down      on
 # D   W?        NSg/V  V/J     ISg/D$+ NSg/J  V/C NSg/V+ . V/C . NSg/V/J+ . V/C NSg/V NSg/V/J/P J/P
-> one       knee   . “ I’m a   poor    man      , your Majesty , ” he       began .
-# NSg/I/V/J NSg/V+ . . W?  D/P NSg/V/J NPr/V/J+ . D$+  NSg/I+  . . NPr/ISg+ V     .
+> one       knee   . “ I’m a    poor    man      , your Majesty , ” he       began .
+# NSg/I/V/J NSg/V+ . . W?  D/P+ NSg/V/J NPr/V/J+ . D$+  NSg/I+  . . NPr/ISg+ V     .
 >
 #
-> “ You’re a   very poor     speaker , ” said the King     .
-# . W?     D/P J/R  NSg/V/J+ NSg/J+  . . V/J  D   NPr/V/J+ .
+> “ You’re a   very poor    speaker , ” said the King     .
+# . W?     D/P J/R  NSg/V/J NSg/J+  . . V/J  D   NPr/V/J+ .
 >
 #
 > Here    one       of the guinea - pigs   cheered , and was immediately suppressed by      the
-# NSg/J/R NSg/I/V/J P  D   NPr+   . NPl/V+ V/J     . V/C V   R           V/J        NSg/J/P D
+# NSg/J/R NSg/I/V/J P  D+  NPr+   . NPl/V+ V/J     . V/C V   R           V/J        NSg/J/P D
 > officers of the court    . ( As    that          is rather  a   hard    word  , I    will   just explain to
 # NPl/V    P  D+  NSg/V/J+ . . NSg/R NSg/I/C/Ddem+ VL NPr/V/J D/P NSg/V/J NSg/V . ISg+ NPr/VX V/J  V       P
 > you    how   it       was done    . They had a    large  canvas bag    , which tied up        at    the mouth
-# ISgPl+ NSg/C NPr/ISg+ V   NSg/V/J . IPl+ V   D/P+ NSg/J+ NSg/V+ NSg/V+ . I/C+  V/J  NSg/V/J/P NSg/P D   NSg/V
+# ISgPl+ NSg/C NPr/ISg+ V   NSg/V/J . IPl+ V   D/P+ NSg/J+ NSg/V+ NSg/V+ . I/C+  V/J  NSg/V/J/P NSg/P D   NSg/V+
 > with strings : into this    they slipped the guinea - pig   , head     first   , and then    sat
 # P    NPl/V+  . P    I/Ddem+ IPl+ V/J     D   NPr+   . NSg/V . NPr/V/J+ NSg/V/J . V/C NSg/J/C NSg/V/J
 > upon it       . )
@@ -5369,7 +5369,7 @@
 > “ I’m glad    I’ve seen  that          done    , ” thought Alice . “ I’ve so        often read  in      the
 # . W?  NSg/V/J W?   NSg/V NSg/I/C/Ddem+ NSg/V/J . . NSg/V   NPr+  . . W?   NSg/I/J/C R     NSg/V NPr/J/P D
 > newspapers , at    the end   of trials , “ There was some     attempts at    applause , which
-# NPl/V+     . NSg/P D   NSg/V P  NPl/V+ . . +     V   I/J/R/Dq NPl/V    NSg/P NSg+     . I/C+
+# NPl/V+     . NSg/P D   NSg/V P  NPl/V+ . . +     V   I/J/R/Dq NPl/V+   NSg/P NSg+     . I/C+
 > was immediately suppressed by      the officers of the court    , ” and I    never understood
 # V   R           V/J        NSg/J/P D   NPl/V    P  D   NSg/V/J+ . . V/C ISg+ R     V/J
 > what   it       meant till      now       . ”
@@ -5388,8 +5388,8 @@
 # . NSg/J/C ISgPl+ NPr/VX NSg/V NSg/V/J/P . . D+  NPr/V/J+ V/J     .
 >
 #
-> Here    the other   guinea - pig   cheered , and was suppressed .
-# NSg/J/R D   NSg/V/J NPr+   . NSg/V V/J     . V/C V   V/J        .
+> Here    the other   guinea - pig    cheered , and was suppressed .
+# NSg/J/R D   NSg/V/J NPr+   . NSg/V+ V/J     . V/C V   V/J        .
 >
 #
 > “ Come    , that          finished the guinea - pigs   ! ” thought Alice . “ Now       we   shall get   on
@@ -5423,9 +5423,9 @@
 > The next     witness was the Duchess’s cook  . She  carried the pepper - box   in      her     hand   ,
 # D+  NSg/J/P+ NSg/V+  V   D   NSg$      NPr/V . ISg+ V/J     D   NSg/V+ . NSg/V NPr/J/P ISg/D$+ NSg/V+ .
 > and Alice guessed who    it       was , even    before she  got into the court    , by      the way    the
-# V/C NPr+  V/J     NPr/I+ NPr/ISg+ V   . NSg/V/J C/P    ISg+ V   P    D+  NSg/V/J+ . NSg/J/P D   NSg/J+ D
+# V/C NPr+  V/J     NPr/I+ NPr/ISg+ V   . NSg/V/J C/P    ISg+ V   P    D+  NSg/V/J+ . NSg/J/P D+  NSg/J+ D
 > people near      the door   began sneezing all          at    once  .
-# NSg/V  NSg/V/J/P D+  NSg/V+ V     V        NSg/I/J/C/Dq NSg/P NSg/C .
+# NSg/V+ NSg/V/J/P D+  NSg/V+ V     V        NSg/I/J/C/Dq NSg/P NSg/C .
 >
 #
 > “ Give  your evidence , ” said the King     .
@@ -5465,7 +5465,7 @@
 >
 #
 > For some      minutes the whole  court    was in      confusion , getting the Dormouse turned
-# C/P I/J/R/Dq+ NPl/V+  D+  NSg/J+ NSg/V/J+ V   NPr/J/P NSg/V     . NSg/V   D   NSg      V/J
+# C/P I/J/R/Dq+ NPl/V+  D+  NSg/J+ NSg/V/J+ V   NPr/J/P NSg/V+    . NSg/V   D   NSg      V/J
 > out         , and , by      the time      they had settled down      again , the cook   had disappeared .
 # NSg/V/J/R/P . V/C . NSg/J/P D   N🅪Sg/V/J+ IPl+ V   V/J     NSg/V/J/P P     . D   NPr/V+ V   V/J         .
 >
@@ -5484,8 +5484,8 @@
 # P  NSg/V NSg/I+ D   NSg/J/P NSg/V+  VX    NSg/VX NSg/V/J/C/P . . . C/P IPl+ V       V   NSg/I/J/Dq NᴹSg/V+
 > yet     , ” she  said to herself . Imagine her     surprise , when    the White    Rabbit read  out         ,
 # NSg/V/C . . ISg+ V/J  P  ISg+    . NSg/V   ISg/D$+ NSg/V+   . NSg/I/C D+  NPr/V/J+ NSg/V+ NSg/V NSg/V/J/R/P .
-> at    the top     of his     shrill  little      voice  , the name  “ Alice ! ”
-# NSg/P D   NSg/V/J P  ISg/D$+ NSg/V/J NPr/I/J/Dq+ NSg/V+ . D   NSg/V . NPr+  . .
+> at    the top     of his     shrill  little      voice  , the name   “ Alice ! ”
+# NSg/P D   NSg/V/J P  ISg/D$+ NSg/V/J NPr/I/J/Dq+ NSg/V+ . D+  NSg/V+ . NPr+  . .
 >
 #
 > CHAPTER XII : Alice’s Evidence
@@ -5493,7 +5493,7 @@
 >
 #
 > “ Here    ! ” cried Alice , quite forgetting in      the flurry of the moment how   large she
-# . NSg/J/R . . V/J   NPr+  . NSg   NSg/V      NPr/J/P D   NSg/V  P  D+  NSg+   NSg/C NSg/J ISg+
+# . NSg/J/R . . V/J   NPr+  . NSg   NSg/V      NPr/J/P D   NSg/V  P  D   NSg+   NSg/C NSg/J ISg+
 > had grown in      the last    few      minutes , and she  jumped up        in      such  a   hurry  that          she
 # V   V/J   NPr/J/P D   NSg/V/J NSg/I/Dq NPl/V+  . V/C ISg+ V/J    NSg/V/J/P NPr/J/P NSg/I D/P NSg/V+ NSg/I/C/Ddem+ ISg+
 > tipped over      the jury     - box   with the edge  of her     skirt , upsetting all          the jurymen
@@ -5536,8 +5536,8 @@
 # VX    NSg/VX NSg   NSg/R NSg/I/J/Dq NSg/V NPr/J/P D+  NSg/V/J+ NSg/I/V/J+ NSg/J+ NSg/V/J/P NSg/R D   NSg/V/J . .
 >
 #
-> As    soon as    the jury     had a   little      recovered from the shock   of being   upset   , and
-# NSg/R J/R  NSg/R D+  NSg/V/J+ V   D/P NPr/I/J/Dq+ V/J+      P    D   NSg/V/J P  NSg/V/C NSg/V/J . V/C
+> As    soon as    the jury     had a   little     recovered from the shock   of being   upset   , and
+# NSg/R J/R  NSg/R D+  NSg/V/J+ V   D/P NPr/I/J/Dq V/J+      P    D   NSg/V/J P  NSg/V/C NSg/V/J . V/C
 > their slates and pencils had been  found and handed back    to them     , they set     to
 # D$+   NPl/V  V/C NPl/V+  V   NSg/V NSg/V V/C V/J    NSg/V/J P  NSg/IPl+ . IPl+ NPr/V/J P
 > work  very diligently to write out         a   history of the accident , all          except the
@@ -5598,8 +5598,8 @@
 # NSg/P I/Ddem+ NSg+   D+  NPr/V/J+ . NPr/I+ V   NSg/V C/P I/J/R/Dq+ N🅪Sg/V/J+ R      NSg/V   NPr/J/P ISg/D$+
 > note   - book   , cackled out         “ Silence ! ” and read  out         from his     book   , “ Rule   Forty - two .
 # NSg/V+ . NSg/V+ . V/J     NSg/V/J/R/P . NSg/V+  . . V/C NSg/V NSg/V/J/R/P P    ISg/D$+ NSg/V+ . . NSg/V+ NSg/J . NSg .
-> All          persons more         than a    mile high    to leave the court    . ”
-# NSg/I/J/C/Dq NPl/V+  NPr/I/V/J/Dq C/P  D/P+ NSg+ NSg/V/J P  NSg/V D+  NSg/V/J+ . .
+> All           persons more         than a    mile high    to leave the court    . ”
+# NSg/I/J/C/Dq+ NPl/V+  NPr/I/V/J/Dq C/P  D/P+ NSg+ NSg/V/J P  NSg/V D+  NSg/V/J+ . .
 >
 #
 > Everybody looked at    Alice .
@@ -5734,8 +5734,8 @@
 # NSg/V+ . NSg/J/C NSg/V . .
 >
 #
-> These   were  the verses the White    Rabbit read  : —
-# I/Ddem+ NSg/V D   NPl/V  D+  NPr/V/J+ NSg/V+ NSg/V . .
+> These   were  the verses the White   Rabbit read  : —
+# I/Ddem+ NSg/V D   NPl/V  D   NPr/V/J NSg/V+ NSg/V . .
 >
 #
 > “ They told me       you    had been  to her     , And mentioned me       to him  : She  gave me       a    good
@@ -5753,11 +5753,11 @@
 > I    gave her     one       , they gave him  two , You    gave us       three or    more         ; They all
 # ISg+ V    ISg/D$+ NSg/I/V/J . IPl+ V    ISg+ NSg . ISgPl+ V    NPr/IPl+ NSg   NPr/C NPr/I/V/J/Dq . IPl+ NSg/I/J/C/Dq
 > returned from him  to you    , Though they were  mine     before .
-# V/J      P    ISg+ P  ISgPl+ . V/C    IPl+ NSg/V NSg/I/V+ C/P    .
+# V/J+     P    ISg+ P  ISgPl+ . V/C    IPl+ NSg/V NSg/I/V+ C/P    .
 >
 #
-> If    I    or    she  should chance  to be     Involved in      this    affair , He       trusts to you    to
-# NSg/C ISg+ NPr/C ISg+ VX     NPr/V/J P  NSg/VX V/J      NPr/J/P I/Ddem+ NSg+   . NPr/ISg+ NPl/V  P  ISgPl+ P
+> If    I    or    she  should chance   to be     Involved in      this    affair , He       trusts to you    to
+# NSg/C ISg+ NPr/C ISg+ VX     NPr/V/J+ P  NSg/VX V/J      NPr/J/P I/Ddem+ NSg+   . NPr/ISg+ NPl/V  P  ISgPl+ P
 > set     them     free    , Exactly as    we   were  .
 # NPr/V/J NSg/IPl+ NSg/V/J . R       NSg/R IPl+ NSg/V .
 >
@@ -5798,8 +5798,8 @@
 # . NSg/C W?      NPr/P N🅪Sg/V/J+ NPr/J/P NPr/ISg+ . . V/J  D   NPr/V/J+ . . NSg/I/C/Ddem+ NPl/V D/P NSg/V P  NSg/V+  .
 > you    know  , as    we   needn’t try     to find  any    . And yet     I    don’t know  , ” he       went  on  ,
 # ISgPl+ NSg/V . NSg/R IPl+ VX      NSg/V/J P  NSg/V I/R/Dq . V/C NSg/V/C ISg+ V     NSg/V . . NPr/ISg+ NSg/V J/P .
-> spreading out         the verses on  his     knee   , and looking at    them     with one        eye    ; “ I    seem
-# V         NSg/V/J/R/P D   NPl/V  J/P ISg/D$+ NSg/V+ . V/C V       NSg/P NSg/IPl+ P    NSg/I/V/J+ NSg/V+ . . ISg+ V
+> spreading out         the verses on  his     knee   , and looking at    them     with one       eye    ; “ I    seem
+# V         NSg/V/J/R/P D   NPl/V  J/P ISg/D$+ NSg/V+ . V/C V       NSg/P NSg/IPl+ P    NSg/I/V/J NSg/V+ . . ISg+ V
 > to see   some     meaning   in      them     , after all          . “ — said I    could  not   swim  — ” you    can’t
 # P  NSg/V I/J/R/Dq N🅪Sg/V/J+ NPr/J/P NSg/IPl+ . J/P   NSg/I/J/C/Dq . . . V/J  ISg+ NSg/VX NSg/C NSg/V . . ISgPl+ VX
 > swim  , can    you    ? ” he       added , turning to the Knave .
@@ -5834,8 +5834,8 @@
 #
 > “ Never ! ” said the Queen    furiously , throwing an  inkstand at    the Lizard as    she
 # . R     . . V/J  D+  NPr/V/J+ R         . V        D/P NSg      NSg/P D   NSg    NSg/R ISg+
-> spoke . ( The unfortunate little      Bill   had left    off       writing on  his     slate   with one
-# NSg/V . . D+  NSg/J+      NPr/I/J/Dq+ NPr/V+ V   NPr/V/J NSg/V/J/P NSg/V   J/P ISg/D$+ NSg/V/J P    NSg/I/V/J+
+> spoke . ( The unfortunate little      Bill   had left    off       writing on  his     slate    with one
+# NSg/V . . D+  NSg/J+      NPr/I/J/Dq+ NPr/V+ V   NPr/V/J NSg/V/J/P NSg/V   J/P ISg/D$+ NSg/V/J+ P    NSg/I/V/J+
 > finger , as    he       found it       made no     mark   ; but     he       now       hastily began again , using the
 # NSg/V+ . NSg/R NPr/ISg+ NSg/V NPr/ISg+ V    NPr/P+ NPr/V+ . NSg/C/P NPr/ISg+ NPr/V/J/C R       V     P     . V     D+
 > ink     , that          was trickling down      his     face   , as    long    as    it       lasted . )
@@ -5878,16 +5878,16 @@
 # . NSg/V/J/P P    ISg/D$+ NPr/V/J+ . . D+  NPr/V/J+ V/J     NSg/P D   NSg/V/J P  ISg/D$+ NSg/V+ . NSg/I+ V/J   .
 >
 #
-> “ Who    cares for you    ? ” said Alice , ( she  had grown to her     full    size   by      this    time      . )
-# . NPr/I+ NPl/V C/P ISgPl+ . . V/J  NPr+  . . ISg+ V   V/J   P  ISg/D$+ NSg/V/J NSg/V+ NSg/J/P I/Ddem+ N🅪Sg/V/J+ . .
+> “ Who    cares for you    ? ” said Alice , ( she  had grown to her     full     size   by      this    time      . )
+# . NPr/I+ NPl/V C/P ISgPl+ . . V/J  NPr+  . . ISg+ V   V/J   P  ISg/D$+ NSg/V/J+ NSg/V+ NSg/J/P I/Ddem+ N🅪Sg/V/J+ . .
 > “ You’re nothing  but     a   pack  of cards  ! ”
 # . W?     NSg/I/J+ NSg/C/P D/P NSg/V P  NPl/V+ . .
 >
 #
 > At    this    the whole  pack   rose    up        into the air    , and came    flying  down      upon her     : she
 # NSg/P I/Ddem+ D+  NSg/J+ NSg/V+ NPr/V/J NSg/V/J/P P    D+  NSg/V+ . V/C NSg/V/P NSg/V/J NSg/V/J/P P    ISg/D$+ . ISg+
-> gave a   little     scream , half      of fright  and half      of anger  , and tried to beat    them
-# V    D/P NPr/I/J/Dq NSg/V  . NSg/V/J/P P  NSg/V/J V/C NSg/V/J/P P  NSg/V+ . V/C V/J   P  NSg/V/J NSg/IPl+
+> gave a    little      scream , half      of fright  and half      of anger  , and tried to beat    them
+# V    D/P+ NPr/I/J/Dq+ NSg/V+ . NSg/V/J/P P  NSg/V/J V/C NSg/V/J/P P  NSg/V+ . V/C V/J   P  NSg/V/J NSg/IPl+
 > off       , and found herself lying   on  the bank   , with her     head     in      the lap     of her
 # NSg/V/J/P . V/C NSg/V ISg+    NSg/V/J J/P D   NSg/V+ . P    ISg/D$+ NPr/V/J+ NPr/J/P D   NSg/V/J P  ISg/D$+
 > sister , who    was gently brushing away some     dead    leaves that          had fluttered down
@@ -5916,8 +5916,8 @@
 #
 > But     her     sister sat     still   just as    she  left    her     , leaning her     head     on  her     hand   ,
 # NSg/C/P ISg/D$+ NSg/V+ NSg/V/J NSg/V/J V/J  NSg/R ISg+ NPr/V/J ISg/D$+ . NSg/V   ISg/D$+ NPr/V/J+ J/P ISg/D$+ NSg/V+ .
-> watching the setting  sun    , and thinking of little     Alice and all          her     wonderful
-# V        D+  NSg/V/J+ NPr/V+ . V/C V        P  NPr/I/J/Dq NPr+  V/C NSg/I/J/C/Dq ISg/D$+ J+
+> watching the setting  sun    , and thinking of little      Alice and all           her     wonderful
+# V        D+  NSg/V/J+ NPr/V+ . V/C V        P  NPr/I/J/Dq+ NPr+  V/C NSg/I/J/C/Dq+ ISg/D$+ J+
 > Adventures , till      she  too began dreaming after a    fashion , and this    was her
 # NPl/V+     . NSg/V/C/P ISg+ W?  V     V+       J/P   D/P+ NSg/V+  . V/C I/Ddem+ V   ISg/D$+
 > dream    : —
@@ -5942,8 +5942,8 @@
 # D+  NPr/V/J+ NPr/V+ V/J     NSg/P ISg/D$+ NPl+ NSg/R D   NPr/V/J NSg/V+ V/J     NSg/J/P . D   V/J
 > Mouse  splashed his     way    through the neighbouring pool   — she  could  hear the rattle
 # NSg/V+ V/J      ISg/D$+ NSg/J+ NSg/J/P D   V/Comm       NSg/V+ . ISg+ NSg/VX V    D   NSg/V
-> of the teacups as    the March  Hare    and his     friends shared their never - ending meal   ,
-# P  D   NPl     NSg/R D   NPr/V+ NSg/V/J V/C ISg/D$+ NPl/V+  V/J    D$+   R     . NSg/V  NSg/V+ .
+> of the teacups as    the March  Hare     and his     friends shared their never - ending meal   ,
+# P  D   NPl     NSg/R D   NPr/V+ NSg/V/J+ V/C ISg/D$+ NPl/V+  V/J    D$+   R     . NSg/V  NSg/V+ .
 > and the shrill  voice of the Queen    ordering off       her     unfortunate guests to
 # V/C D   NSg/V/J NSg/V P  D   NPr/V/J+ V+       NSg/V/J/P ISg/D$+ NSg/J       NPl/V+ P
 > execution — once  more         the pig    - baby     was sneezing on  the Duchess’s knee   , while

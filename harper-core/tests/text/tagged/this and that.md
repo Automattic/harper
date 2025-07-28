@@ -50,10 +50,10 @@
 # I/Ddem+ NSg/V+  NSg/V/J .
 >
 #
-> That          could  be     a   solution .
-# NSg/I/C/Ddem+ NSg/VX NSg/VX D/P NSg      .
-> Find  all           candidates that          could  be     a   solution .
-# NSg/V NSg/I/J/C/Dq+ NPl/V+     NSg/I/C/Ddem+ NSg/VX NSg/VX D/P NSg      .
+> That          could  be     a    solution .
+# NSg/I/C/Ddem+ NSg/VX NSg/VX D/P+ NSg+     .
+> Find  all           candidates that          could  be     a    solution .
+# NSg/V NSg/I/J/C/Dq+ NPl/V+     NSg/I/C/Ddem+ NSg/VX NSg/VX D/P+ NSg+     .
 >
 #
 > This    is all          that         I    have   .

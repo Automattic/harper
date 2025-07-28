@@ -33,15 +33,15 @@ pub fn brill_chunker() -> Arc<BrillChunker> {
     (*BRILL_CHUNKER).clone()
 }
 
-const BURN_CHUNKER_VOCAB: &[u8; 628010] = include_bytes!("../finished_chunker/vocab.json");
-const BURN_CHUNKER_BIN: &[u8; 2149176] = include_bytes!("../finished_chunker/model.mpk");
+const BURN_CHUNKER_VOCAB: &[u8; 529111] = include_bytes!("../finished_chunker/vocab.json");
+const BURN_CHUNKER_BIN: &[u8; 806312] = include_bytes!("../finished_chunker/model.mpk");
 
 thread_local! {
     static BURN_CHUNKER: Rc<BurnChunkerCpu> =  Rc::new(uncached_burn_chunker()) ;
 }
 
 fn uncached_burn_chunker() -> BurnChunkerCpu {
-    BurnChunkerCpu::load_from_bytes_cpu(BURN_CHUNKER_BIN, BURN_CHUNKER_VOCAB, 16, 0.3)
+    BurnChunkerCpu::load_from_bytes_cpu(BURN_CHUNKER_BIN, BURN_CHUNKER_VOCAB, 6, 0.3)
 }
 
 pub fn burn_chunker() -> Rc<BurnChunkerCpu> {
