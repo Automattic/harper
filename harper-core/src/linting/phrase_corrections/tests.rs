@@ -25,6 +25,16 @@ fn correct_after_while() {
     );
 }
 
+// AheadAnd
+#[test]
+fn correct_ahead_and() {
+    assert_suggestion_result(
+        "If it's important, go ahead an open an issue.",
+        lint_group(),
+        "If it's important, go ahead and open an issue.",
+    );
+}
+
 // AllOfASudden
 #[test]
 fn corrects_all_of_a_sudden() {
@@ -194,6 +204,30 @@ fn baited_breath() {
 
 // BeenThere
 // -none-
+
+// BeforeHand
+#[test]
+fn corrects_before_hand() {
+    assert_suggestion_result(
+        "Let me know before hand if you will attend.",
+        lint_group(),
+        "Let me know beforehand if you will attend.",
+    );
+}
+
+#[test]
+fn corrects_before_hand_hyphen() {
+    assert_suggestion_result(
+        "I prepared the documents before-hand.",
+        lint_group(),
+        "I prepared the documents beforehand.",
+    );
+}
+
+#[test]
+fn allows_beforehand() {
+    assert_lint_count("We finished the preparations beforehand.", lint_group(), 0);
+}
 
 // BestRegards
 // -none-
@@ -375,6 +409,16 @@ fn detect_ever_present_real_world() {
     );
 }
 
+// EveryTime
+#[test]
+fn fix_everytime() {
+    assert_suggestion_result(
+        "Init tool everytime a file in a directory is modified",
+        lint_group(),
+        "Init tool every time a file in a directory is modified",
+    );
+}
+
 // Excellent
 #[test]
 fn excellent_clean() {
@@ -548,16 +592,6 @@ fn hunger_pain() {
 
 // IAm
 // -none-
-
-// IAmAgreement
-#[test]
-fn corrects_i_are() {
-    assert_suggestion_result(
-        "I are really happy about this release.",
-        lint_group(),
-        "I am really happy about this release.",
-    );
-}
 
 // IDo
 #[test]
@@ -758,6 +792,16 @@ fn let_along() {
     assert_suggestion_result("let along", lint_group(), "let alone");
 }
 
+// LikeAsIf
+#[test]
+fn correct_like_as_if() {
+    assert_top3_suggestion_result(
+        "And looks like as if linux-personality hasn't got any changes for 8 years.",
+        lint_group(),
+        "And looks as if linux-personality hasn't got any changes for 8 years.",
+    );
+}
+
 // LikeThePlague
 #[test]
 fn correct_like_a_plague() {
@@ -808,6 +852,16 @@ fn detect_monumentous_real_world() {
         "I think that would be a monumentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
         lint_group(),
         "I think that would be a momentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
+    );
+}
+
+// MorePreferable
+#[test]
+fn correct_more_preferable() {
+    assert_suggestion_result(
+        "Is it more preferable to use process.env.variable or env.parsed.variable?",
+        lint_group(),
+        "Is it preferable to use process.env.variable or env.parsed.variable?",
     );
 }
 
@@ -1335,6 +1389,7 @@ fn thanks_a_lot_clean() {
     assert_lint_count("thanks a lot", lint_group(), 0);
 }
 
+// WroughtIron
 #[test]
 fn corrects_rod_iron() {
     assert_suggestion_result(
@@ -1359,24 +1414,10 @@ fn allows_wrought_iron() {
 }
 
 #[test]
-fn corrects_before_hand() {
+fn fixes_teh() {
     assert_suggestion_result(
-        "Let me know before hand if you will attend.",
+        "I adore teh light of the moon.",
         lint_group(),
-        "Let me know beforehand if you will attend.",
+        "I adore the light of the moon.",
     );
-}
-
-#[test]
-fn corrects_before_hand_hyphen() {
-    assert_suggestion_result(
-        "I prepared the documents before-hand.",
-        lint_group(),
-        "I prepared the documents beforehand.",
-    );
-}
-
-#[test]
-fn allows_beforehand() {
-    assert_lint_count("We finished the preparations beforehand.", lint_group(), 0);
 }

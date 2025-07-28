@@ -90,7 +90,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
       57 | lessons in the schoolroom, and though this was not a very good opportunity for
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -331,7 +331,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      162 | sharply; “I advise you to leave off this minute!” She generally gave herself
      163 | very good advice, (though she very seldom followed it), and sometimes she
@@ -434,16 +434,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      230 | and the fan, and skurried away into the darkness as hard as he could go.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 56 words long.
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-     227 | I’ve kept her waiting!” Alice felt so desperate that she was ready to ask help
-     228 | of any one; so, when the Rabbit came near her, she began, in a low, timid voice,
-         |    ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
 
 
 
@@ -683,9 +673,9 @@ Message: |
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
      363 | Eaglet, and several other curious creatures. Alice led the way, and the whole
 Suggest:
-  - Replace with: “Lora”
   - Replace with: “Lori”
   - Replace with: “Gory”
+  - Replace with: “Dory”
 
 
 
@@ -731,9 +721,9 @@ Message: |
          |                                                ^~~~ Did you mean to spell `Lory` this way?
      376 | and would only say, “I am older than you, and must know better;” and this Alice
 Suggest:
-  - Replace with: “Lora”
   - Replace with: “Lori”
   - Replace with: “Gory”
+  - Replace with: “Dory”
 
 
 
@@ -743,9 +733,9 @@ Message: |
          |                                                             ^~~~ Did you mean to spell `Lory` this way?
      378 | refused to tell its age, there was no more to be said.
 Suggest:
-  - Replace with: “Lora”
   - Replace with: “Lori”
   - Replace with: “Gory”
+  - Replace with: “Dory”
 
 
 
@@ -772,9 +762,9 @@ Message: |
      392 | “Ugh!” said the Lory, with a shiver.
          |                 ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
-  - Replace with: “Lora”
   - Replace with: “Lori”
   - Replace with: “Gory”
+  - Replace with: “Dory”
 
 
 
@@ -783,9 +773,9 @@ Message: |
      397 | “Not I!” said the Lory hastily.
          |                   ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
-  - Replace with: “Lora”
   - Replace with: “Lori”
   - Replace with: “Gory”
+  - Replace with: “Dory”
 
 
 
@@ -870,9 +860,9 @@ Message: |
          |                                            ^~~~ Did you mean to spell `Lory` this way?
      528 | sight; and an old Crab took the opportunity of saying to her daughter “Ah, my
 Suggest:
-  - Replace with: “Lora”
   - Replace with: “Lori”
   - Replace with: “Gory”
+  - Replace with: “Dory”
 
 
 
@@ -881,9 +871,9 @@ Message: |
      536 | “And who is Dinah, if I might venture to ask the question?” said the Lory.
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
-  - Replace with: “Lora”
   - Replace with: “Lori”
   - Replace with: “Gory”
+  - Replace with: “Dory”
 
 
 
@@ -902,7 +892,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
      565 | of white kid gloves, and she very good-naturedly began hunting about for them,
@@ -1208,7 +1198,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Enhancement (31 priority)
 Message: |
      929 | “It is a very good height indeed!” said the Caterpillar angrily, rearing itself
          |          ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
@@ -1829,15 +1819,6 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    1840 | people here; the great wonder is, that there’s any one left alive!”
-         |                                                ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1842 | She was looking about for some way of escape, and wondering whether she could
@@ -2022,8 +2003,8 @@ Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |   ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
   - Replace with: “Ti's”
 
 
@@ -2575,9 +2556,9 @@ Message: |
     2335 | “I don’t know where Dinn may be,” said the Mock Turtle, “but if you’ve seen them
          |                     ^~~~ Did you mean to spell `Dinn` this way?
 Suggest:
-  - Replace with: “Dine”
+  - Replace with: “Din”
+  - Replace with: “Ding”
   - Replace with: “Diann”
-  - Replace with: “Dina”
 
 
 
@@ -2702,8 +2683,8 @@ Message: |
     2418 | “Stand up and repeat ‘’Tis the voice of the sluggard,’” said the Gryphon.
          |                        ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
   - Replace with: “Ti's”
 
 
@@ -2731,8 +2712,8 @@ Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
          |     ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
   - Replace with: “Ti's”
 
 
@@ -2831,9 +2812,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
+  - Replace with: “Son”
   - Replace with: “Soon”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2864,9 +2845,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
+  - Replace with: “Son”
   - Replace with: “Soon”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2887,9 +2868,9 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
+  - Replace with: “Son”
   - Replace with: “Soon”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2941,9 +2922,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
+  - Replace with: “Son”
   - Replace with: “Soon”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2974,9 +2955,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
+  - Replace with: “Son”
   - Replace with: “Soon”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2997,9 +2978,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
+  - Replace with: “Son”
   - Replace with: “Soon”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -3072,9 +3053,9 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
+  - Replace with: “Son”
   - Replace with: “Soon”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -3284,15 +3265,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2773 | gazing up into the roof of the court.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    2891 | “If any one of them can explain it,” said Alice, (she had grown so large in the
-         |     ^~~~~~~ Did you mean the closed compound `anyone`?
-Suggest:
-  - Replace with: “anyone”
 
 
 

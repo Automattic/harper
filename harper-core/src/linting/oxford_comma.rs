@@ -17,7 +17,7 @@ impl Default for OxfordComma {
                 .then_determiner()
                 .then_whitespace()
                 .then_nominal()
-                .or(SequenceExpr::default().then_nominal()),
+                .or_longest(SequenceExpr::default().then_nominal()),
         );
 
         let item_chunk = SequenceExpr::default()

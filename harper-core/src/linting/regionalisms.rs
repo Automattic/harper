@@ -25,6 +25,8 @@ use CanFlag::*;
 #[derive(PartialEq)]
 enum Concept {
     AubergineEggplant,
+    // BiscuitCookie - biscuit names different foods in UK/Aus vs US; cookie has other meanings
+    // BiscuitCracker - cracker also has other meanings
     BumBagFannyPack,
     BurglarizeBurgle,
     CampervanRv,
@@ -35,6 +37,7 @@ enum Concept {
     ChipsCrisps,
     CilantroCoriander,
     DiaperNappy,
+    DoonaDuvet,
     DummyPacifier,
     FaucetTap,
     FlashlightTorch,
@@ -164,10 +167,22 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: DiaperNappy,
     },
     Term {
+        term: "doona",
+        flag: Flag,
+        dialects: &[Australian],
+        concept: DoonaDuvet,
+    },
+    Term {
         term: "dummy",
         flag: HasOtherMeanings,
         dialects: &[Australian],
         concept: DummyPacifier,
+    },
+    Term {
+        term: "duvet",
+        flag: Flag,
+        dialects: &[Australian],
+        concept: DoonaDuvet,
     },
     Term {
         term: "eggplant",

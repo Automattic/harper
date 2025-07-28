@@ -41,9 +41,9 @@ Message: |
       11 | ## Article. I.
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
-  - Replace with: “Iv”
+  - Replace with: “Is”
+  - Replace with: “I”
   - Replace with: “IC”
-  - Replace with: “IE”
 
 
 
@@ -238,7 +238,7 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    Redundancy (31 priority)
 Message: |
      103 | The Senate shall chuse their other Officers, and also a President pro tempore,
          |                                              ^~~~~~~~ Consider using just `and`.
@@ -509,9 +509,9 @@ Message: |
      197 | be repassed by two thirds of the Senate and House of Representatives, according
          |    ^~~~~~~~ Did you mean to spell `repassed` this way?
 Suggest:
+  - Replace with: “rebased”
   - Replace with: “recessed”
   - Replace with: “rehashed”
-  - Replace with: “relapsed”
 
 
 
@@ -772,6 +772,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      316 | of the Congress.
          | ~~~~~~~~~~~~~~~~ This sentence is 73 words long.
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+     312 | on Imports or Exports, except what may be absolutely necessary for executing
+     313 | it's inspection Laws: and the net Produce of all Duties and Imposts, laid by
+         | ^~~~ Prefer the possessive pronoun `its` here to denote ownership.
+Suggest:
+  - Replace with: “its”
 
 
 

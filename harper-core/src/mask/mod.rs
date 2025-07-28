@@ -19,11 +19,11 @@ pub struct Mask {
     // Right now, there aren't any use-cases where we can't treat this as a stack.
     //
     // Assumed that no elements overlap and exist in sorted order.
-    pub(self) allowed: Vec<Span>,
+    pub(self) allowed: Vec<Span<char>>,
 }
 
-impl FromIterator<Span> for Mask {
-    fn from_iter<T: IntoIterator<Item = Span>>(iter: T) -> Self {
+impl FromIterator<Span<char>> for Mask {
+    fn from_iter<T: IntoIterator<Item = Span<char>>>(iter: T) -> Self {
         let allowed = iter
             .into_iter()
             .sorted_by_key(|span| span.start)
@@ -49,12 +49,12 @@ impl Mask {
     pub fn iter_allowed<'a>(
         &'a self,
         source: &'a [char],
-    ) -> impl Iterator<Item = (Span, &'a [char])> {
+    ) -> impl Iterator<Item = (Span<char>, &'a [char])> {
         self.allowed.iter().map(|s| (*s, s.get_content(source)))
     }
 
     /// Mark a span of the text as allowed.
-    pub fn push_allowed(&mut self, allowed: Span) {
+    pub fn push_allowed(&mut self, allowed: Span<char>) {
         if let Some(last) = self.allowed.last_mut() {
             assert!(
                 allowed.start >= last.end,

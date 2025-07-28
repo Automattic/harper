@@ -1,6 +1,6 @@
 {
 	"name": "harper.js",
-	"version": "0.51.0",
+	"version": "0.53.0",
 	"license": "Apache-2.0",
 	"author": "Elijah Potter",
 	"description": "The grammar checker that respects your privacy.",
@@ -40,5 +40,7 @@
 	"main": "dist/harper.js",
 	"types": "dist/harper.d.ts",
 	"sideEffects": false,
-	"files": ["dist"]
+	"files": [
+		"dist"
+	]
 }

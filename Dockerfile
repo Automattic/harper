@@ -6,7 +6,7 @@ RUN rustup toolchain install
 RUN mkdir -p /usr/build/
 WORKDIR /usr/build/
 
-RUN curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+RUN cargo install wasm-pack
 
 COPY . .
 

@@ -1,8 +1,7 @@
 <script lang="ts">
 import CheckMark from '$lib/CheckMark.svelte';
 import Underlines from '$lib/Underlines.svelte';
-import { Card } from 'flowbite-svelte';
-import { Button } from 'flowbite-svelte';
+import { Button, Card } from 'flowbite-svelte';
 import { type Lint, SuggestionKind, type WorkerLinter } from 'harper.js';
 import { fly } from 'svelte/transition';
 import demo from '../../../../demo.md?raw';

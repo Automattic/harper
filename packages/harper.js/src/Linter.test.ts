@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
+import { binary } from './binary';
 import LocalLinter from './LocalLinter';
 import WorkerLinter from './WorkerLinter';
-import { binary } from './binary';
 
 const linters = {
 	WorkerLinter: WorkerLinter,
