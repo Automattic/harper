@@ -211,14 +211,14 @@ checksum = "d71b6127be86fdcfddb610f7182ac57211d4b18a3e9c82eb2d17662f2227ad6a"
 
 [[package]]
 name = "cached"
-version = "0.55.1"
+version = "0.56.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b0839c297f8783316fcca9d90344424e968395413f0662a5481f79c6648bbc14"
+checksum = "801927ee168e17809ab8901d9f01f700cd7d8d6a6527997fee44e4b0327a253c"
 dependencies = [
  "ahash",
  "cached_proc_macro",
  "cached_proc_macro_types",
- "hashbrown 0.14.5",
+ "hashbrown 0.15.4",
  "once_cell",
  "thiserror 2.0.12",
  "web-time",
@@ -226,9 +226,9 @@ dependencies = [
 
 [[package]]
 name = "cached_proc_macro"
-version = "0.24.0"
+version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "673992d934f0711b68ebb3e1b79cdc4be31634b37c98f26867ced0438ca5c603"
+checksum = "9225bdcf4e4a9a4c08bf16607908eb2fbf746828d5e0b5e019726dbf6571f201"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -374,9 +374,9 @@ checksum = "773648b94d0e5d620f64f280777445740e61fe701025087ec8b57f45c791888b"
 
 [[package]]
 name = "criterion"
-version = "0.6.0"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3bf7af66b0989381bd0be551bd7cc91912a655a58c6918420c9527b1fd8b4679"
+checksum = "e1c047a62b0cc3e145fa84415a3191f628e980b194c2755aa12300a4e6cbd928"
 dependencies = [
  "anes",
  "cast",
@@ -395,12 +395,12 @@ dependencies = [
 
 [[package]]
 name = "criterion-plot"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6b50826342786a51a89e2da3a28f1c32b06e387201bc2d19791f622c673706b1"
+checksum = "9b1bcc0dc7dfae599d84ad0b1a55f80cde8af3725da8313b528da95ef783e338"
 dependencies = [
  "cast",
- "itertools 0.10.5",
+ "itertools 0.13.0",
 ]
 
 [[package]]
@@ -814,7 +814,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "0.53.0"
+version = "0.54.0"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -846,7 +846,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "0.53.0"
+version = "0.54.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -881,7 +881,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.53.0"
+version = "0.54.0"
 dependencies = [
  "ammonia",
  "bitflags 2.9.1",
@@ -918,7 +918,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.53.0"
+version = "0.54.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -929,7 +929,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.53.0"
+version = "0.54.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -940,7 +940,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.53.0"
+version = "0.54.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -968,7 +968,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "0.53.0"
+version = "0.54.0"
 dependencies = [
  "hashbrown 0.15.4",
  "is-macro",
@@ -982,7 +982,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.53.0"
+version = "0.54.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -993,7 +993,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.53.0"
+version = "0.54.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -1012,7 +1012,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.53.0"
+version = "0.54.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -1042,10 +1042,6 @@ name = "hashbrown"
 version = "0.14.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e5274423e17b7c9fc20b6e7e208532f9b19825d82dfd615708b70edd83df41f1"
-dependencies = [
- "ahash",
- "allocator-api2",
-]
 
 [[package]]
 name = "hashbrown"
@@ -1170,7 +1166,7 @@ dependencies = [
  "libc",
  "percent-encoding",
  "pin-project-lite",
- "socket2",
+ "socket2 0.5.10",
  "tokio",
  "tower-service",
  "tracing",
@@ -1387,15 +1383,6 @@ name = "is_terminal_polyfill"
 version = "1.70.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7943c866cc5cd64cbc25b2e01621d07fa8eb2a1a23160ee81ce38704e97b8ecf"
-
-[[package]]
-name = "itertools"
-version = "0.10.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b0fd2260e829bddf4cb6ea802289de2f86d6a7a690192fbe91b3f46e0f2c8473"
-dependencies = [
- "either",
-]
 
 [[package]]
 name = "itertools"
@@ -1856,7 +1843,7 @@ dependencies = [
  "quinn-udp",
  "rustc-hash",
  "rustls",
- "socket2",
+ "socket2 0.5.10",
  "thiserror 2.0.12",
  "tokio",
  "tracing",
@@ -1893,7 +1880,7 @@ dependencies = [
  "cfg_aliases",
  "libc",
  "once_cell",
- "socket2",
+ "socket2 0.5.10",
  "tracing",
  "windows-sys 0.59.0",
 ]
@@ -2324,6 +2311,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "socket2"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "233504af464074f9d066d7b5416c5f9b894a5862a6506e306f7b816cdd6f1807"
+dependencies = [
+ "libc",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
 name = "stable_deref_trait"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2524,9 +2521,9 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"
-version = "1.46.1"
+version = "1.47.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0cc3a2344dafbe23a245241fe8b09735b521110d30fcefbbd5feb1797ca35d17"
+checksum = "43864ed400b6043a4757a25c7a64a8efde741aed79a056a2fb348a406701bb35"
 dependencies = [
  "backtrace",
  "bytes",
@@ -2535,9 +2532,9 @@ dependencies = [
  "mio",
  "pin-project-lite",
  "slab",
- "socket2",
+ "socket2 0.6.0",
  "tokio-macros",
- "windows-sys 0.52.0",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -2962,9 +2959,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-solidity"
-version = "1.2.11"
+version = "1.2.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "316bcbf903cd09a781734f4127ef21341e810cf85f89b0b96fffab48d55fd672"
+checksum = "92f0b44ef36f0779873ec118f2cbad31cfc18d6ae7ba48ce75d5ce09870884d1"
 dependencies = [
  "cc",
  "tree-sitter-language",

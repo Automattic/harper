@@ -512,8 +512,8 @@
 # NPr/J/P NSg/J/P NSg/V+  . Unlintable NPr/J/P NSg/J/P NSg/V+   . Unlintable NPr/J/P P  D   ?      P  ISg/D$+ NSg/V+
 > He       is very in      with the Joneses .
 # NPr/ISg+ VL J/R  NPr/J/P P    D+  NPl/V+  .
-> I    need    to keep  in      with the neighbours  in      case   I    ever need    a   favour     from them     .
-# ISg+ N🅪Sg/VX P  NSg/V NPr/J/P P    D+  NPl/V/Comm+ NPr/J/P NPr/V+ ISg+ J    N🅪Sg/VX D/P NSg/V/Comm P    NSg/IPl+ .
+> I    need    to keep  in      with the neighbours  in      case   I    ever need    a   favour      from them     .
+# ISg+ N🅪Sg/VX P  NSg/V NPr/J/P P    D+  NPl/V/Comm+ NPr/J/P NPr/V+ ISg+ J    N🅪Sg/VX D/P N🅪Sg/V/Comm P    NSg/IPl+ .
 > I    think that          bird     fancies you    . You're in      there , mate  !
 # ISg+ NSg/V NSg/I/C/Ddem+ NPr/V/J+ NPl/V   ISgPl+ . W?     NPr/J/P W?    . NSg/V .
 > I'm three drinks in      right    now        .
@@ -717,7 +717,7 @@
 > I    was reading a   book  on  history .
 # ISg+ V   NPr/V   D/P NSg/V J/P N🅪Sg+   .
 > The city hosted the World  Summit on  the Information Society
-# D+  NSg+ V/J    D+  NSg/V+ NSg/V  J/P D+  NᴹSg+       NSg+
+# D+  NSg+ V/J    D+  NSg/V+ NSg/V  J/P D+  NᴹSg+       N🅪Sg+
 > I    have   no    opinion on  this    subject  .
 # ISg+ NSg/VX NPr/P NSg     J/P I/Ddem+ NSg/V/J+ .
 > I    saw   it       on  television .
@@ -818,8 +818,8 @@
 # D+  NSg+    NSg/V/J P  D+  NSg/V/J+ .
 > I    gave the book   to him  .
 # ISg+ V    D+  NSg/V+ P  ISg+ .
-> His     face   was beaten to a    pulp     .
-# ISg/D$+ NSg/V+ V   V/J    P  D/P+ NSg/V/J+ .
+> His     face   was beaten to a    pulp      .
+# ISg/D$+ NSg/V+ V   V/J    P  D/P+ N🅪Sg/V/J+ .
 > I    sang  my  baby     to sleep  .
 # ISg+ NPr/V D$+ NSg/V/J+ P+ N🅪Sg/V .
 > Whisk the mixture to a    smooth   consistency .
@@ -888,8 +888,8 @@
 # IPl+ V   P    ISgPl+ NSg/I/J/C/Dq D+  NSg/J+ .
 > There are a   number   of problems with your plan   .
 # +     V   D/P NSg/V/JC P  NPl      P    D$+  NSg/V+ .
-> What  on  Earth  is wrong   with my  keyboard ?
-# NSg/I J/P NPr/V+ VL NSg/V/J P    D$+ NSg/V+   .
+> What  on  Earth   is wrong   with my  keyboard ?
+# NSg/I J/P NPrᴹ/V+ VL NSg/V/J P    D$+ NSg/V+   .
 > He       was pleased with the outcome .
 # NPr/ISg+ V   V/J     P    D+  NSg+    .
 > I’m upset   with my  father .
