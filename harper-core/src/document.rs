@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use harper_brill::{brill_tagger, burn_chunker, Chunker, Tagger};
+use harper_brill::{Chunker, Tagger, brill_tagger, burn_chunker};
 use paste::paste;
 
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
@@ -141,6 +141,7 @@ impl Document {
         self.match_quotes();
 
         let chunker = burn_chunker();
+        let tagger = brill_tagger();
 
         for sent in self.tokens.iter_sentences_mut() {
             let token_strings: Vec<_> = sent
@@ -149,7 +150,7 @@ impl Document {
                 .map(|t| t.span.get_content_string(&self.source))
                 .collect();
 
-            let token_tags = brill_tagger().tag_sentence(&token_strings);
+            let token_tags = tagger.tag_sentence(&token_strings);
             let np_flags = chunker.chunk_sentence(&token_strings, &token_tags);
 
             let mut i = 0;
@@ -768,7 +769,7 @@ mod tests {
     use itertools::Itertools;
 
     use super::Document;
-    use crate::{parsers::MarkdownOptions, Span};
+    use crate::{Span, parsers::MarkdownOptions};
 
     fn assert_condensed_contractions(text: &str, final_tok_count: usize) {
         let document = Document::new_plain_english_curated(text);
