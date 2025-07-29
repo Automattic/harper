@@ -74,8 +74,6 @@ impl<T> Span<T> {
 
     /// Checks whether `idx` is within the range of the span.
     pub fn contains(&self, idx: usize) -> bool {
-        assert!(self.start <= self.end);
-
         self.start <= idx && idx < self.end
     }
 
@@ -84,17 +82,14 @@ impl<T> Span<T> {
         (self.start < other.end) && (other.start < self.end)
     }
 
-    /// Get the associated content. Will return [`None`] if any aspect is
+    /// Get the associated content. Will return [`None`] if the span is non-empty and any aspect is
     /// invalid.
     pub fn try_get_content<'a>(&self, source: &'a [T]) -> Option<&'a [T]> {
-        if (self.start > self.end) || (self.start >= source.len()) || (self.end > source.len()) {
-            if self.is_empty() {
-                return Some(&source[0..0]);
-            }
-            return None;
+        if self.is_empty() {
+            Some(&source[0..0])
+        } else {
+            source.get(self.start..self.end)
         }
-
-        Some(&source[self.start..self.end])
     }
 
     /// Expand the span by either modifying [`Self::start`] or [`Self::end`] to include the target
@@ -159,13 +154,6 @@ impl<T> Span<T> {
         clone.start -= by;
         clone.end -= by;
         Some(clone)
-    }
-
-    /// Add an amount to a copy of both [`Self::start`] and [`Self::end`]
-    pub fn with_offset(&self, by: usize) -> Self {
-        let mut clone = *self;
-        clone.push_by(by);
-        clone
     }
 }
 
