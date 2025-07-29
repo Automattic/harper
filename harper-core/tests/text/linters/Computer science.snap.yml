@@ -504,9 +504,9 @@ Message: |
      137 | "In the U.S., however, informatics is linked with applied computing, or
          |         ^~~~ Did you mean to spell `U.S.` this way?
 Suggest:
+  - Replace with: “P.S.”
   - Replace with: “UBS”
   - Replace with: “USA”
-  - Replace with: “USB”
 
 
 

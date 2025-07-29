@@ -20,7 +20,7 @@ impl Default for MissingPreposition {
             .then(
                 AnchorStart.or_longest(
                     SequenceExpr::default()
-                        .then(UPOSSet::new(&[UPOS::DET]))
+                        .then_non_quantifier_determiner()
                         .t_ws(),
                 ),
             )
@@ -135,6 +135,14 @@ mod tests {
     fn allows_terrible_stuff() {
         assert_no_lints(
             "Either it was terrible stuff or the whiskey distorted things.",
+            MissingPreposition::default(),
+        );
+    }
+
+    #[test]
+    fn allows_issue_1585() {
+        assert_no_lints(
+            "Each agent has specific tools and tasks orchestrated through a crew workflow.",
             MissingPreposition::default(),
         );
     }

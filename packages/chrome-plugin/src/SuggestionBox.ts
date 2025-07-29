@@ -162,6 +162,16 @@ function styleTag() {
 		  padding:2px;
 		  gap:16px
 		}
+
+    .fade-in {
+      animation: fadeIn 100ms ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
 		@media (prefers-color-scheme:dark){
 		  code{background-color:#1f2d3d;color:#c9d1d9}
 		  .harper-container{
@@ -210,7 +220,7 @@ export default function SuggestionBox(box: IgnorableLintBox, close: () => void) 
 		left: `${left}px`,
 	};
 
-	return h('div', { className: 'harper-container', style: positionStyle }, [
+	return h('div', { className: 'harper-container fade-in', style: positionStyle }, [
 		styleTag(),
 		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind)),
 		body(box.lint.message_html),

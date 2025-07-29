@@ -27,9 +27,9 @@
 > problems that          can    be     solved using them     . The fields  of cryptography and computer
 # NPl+     NSg/I/C/Ddem+ NPr/VX NSg/VX V/J    V     NSg/IPl+ . D   NPrPl/V P  NSg          V/C NSg/V+
 > security involve studying the means for secure communication and preventing
-# NSg+     V       V        D   NPl/V C/P V/J    N🅪Sg+         V/C V
+# NᴹSg+    V       V        D   NPl/V C/P V/J    N🅪Sg+         V/C V
 > security vulnerabilities . Computer graphics and computational geometry address
-# NSg+     NSg+            . NSg/V+   NPl+     V/C J             N🅪Sg+    NSg/V+
+# NᴹSg+    NSg+            . NSg/V+   NPl+     V/C J             N🅪Sg+    NSg/V+
 > the generation of images . Programming language theory considers different ways
 # D   NSg        P  NPl/V+ . NᴹSg/V+     N🅪Sg/V+  NSg+   V         NSg/J     NPl
 > to describe computational processes , and database theory concerns the management
@@ -145,7 +145,7 @@
 > commands could  be     typed and the results printed automatically . In      1937 , one
 # NPl/V+   NSg/VX NSg/VX V/J   V/C D+  NPl/V+  V/J+    W?            . NPr/J/P #    . NSg/I/V/J
 > hundred years after Babbage's impossible dream    , Howard Aiken convinced IBM  ,
-# NSg     NPl+  JC/P  NSg$      NSg/J+     NSg/V/J+ . NPr+   NPr   V/J       NPr+ .
+# NSg     NPl+  P     NSg$      NSg/J+     NSg/V/J+ . NPr+   NPr   V/J       NPr+ .
 > which was making all          kinds of punched card    equipment and was also in      the
 # I/C+  V   NSg/V  NSg/I/J/C/Dq NSg   P  V/J     N🅪Sg/V+ NᴹSg+     V/C V   W?   NPr/J/P D+
 > calculator business to develop his     giant  programmable calculator , the
@@ -354,8 +354,8 @@
 # NSg          P  NSg/V+   N🅪Sg/V
 >
 #
-> Despite the word   science in      its     name   , there is debate over      whether or    not
-# NSg/V/P D+  NSg/V+ N🅪Sg/V  NPr/J/P ISg/D$+ NSg/V+ . +     VL NSg/V+ NSg/V/J/P I/C     NPr/C NSg/C
+> Despite the word   science in      its     name   , there is debate  over      whether or    not
+# NSg/V/P D+  NSg/V+ N🅪Sg/V  NPr/J/P ISg/D$+ NSg/V+ . +     VL N🅪Sg/V+ NSg/V/J/P I/C     NPr/C NSg/C
 > computer science is a   discipline of science , mathematics , or    engineering . Allen
 # NSg/V    N🅪Sg/V+ VL D/P NSg/V      P  N🅪Sg/V  . NᴹSg+       . NPr/C NSg/V+      . NPr+
 > Newell and Herbert A. Simon argued in      1975 ,
@@ -487,7 +487,7 @@
 > Theoretical computer science is mathematical and abstract in      spirit , but     it
 # J+          NSg/V+   N🅪Sg/V  VL J            V/C NSg/V/J  NPr/J/P NSg/V+ . NSg/C/P NPr/ISg+
 > derives its     motivation from practical and everyday computation . It       aims  to
-# NPl/V   ISg/D$+ NSg+       P    NSg/J     V/C NSg/J+   NSg+        . NPr/ISg+ NPl/V P
+# NPl/V   ISg/D$+ N🅪Sg+      P    NSg/J     V/C NSg/J+   NSg+        . NPr/ISg+ NPl/V P
 > understand the nature of computation and , as    a   consequence of this
 # V          D   NSg/V  P  NSg         V/C . NSg/R D/P NSg/V       P  I/Ddem+
 > understanding , provide more         efficient methodologies .
@@ -589,7 +589,7 @@
 > design  . They form  an  important theoretical underpinning for software
 # N🅪Sg/V+ . IPl+ NSg/V D/P J         J           NSg/V        C/P NᴹSg+
 > engineering , especially where safety or    security is  involved . Formal methods are
-# NSg/V+      . R          NSg/C N🅪Sg/V NPr/C NSg+     VL+ V/J      . NSg/J  NPl/V+  V
+# NSg/V+      . R          NSg/C N🅪Sg/V NPr/C NᴹSg+    VL+ V/J      . NSg/J  NPl/V+  V
 > a   useful adjunct to software testing since they help  avoid errors and can    also
 # D/P J      NSg/V/J P  NᴹSg     V+      C/P   IPl+ NSg/V V     NPl/V+ V/C NPr/VX W?
 > give  a   framework for testing . For industrial use    , tool   support is required .
@@ -599,7 +599,7 @@
 > used in      the development of high    - integrity and life    - critical systems , where
 # V/J  NPr/J/P D   N🅪Sg        P  NSg/V/J . NᴹSg      V/C N🅪Sg/V+ . NSg/J    NPl     . NSg/C
 > safety or    security is of utmost importance . Formal methods are best      described as
-# N🅪Sg/V NPr/C NSg+     VL P  NSg/J  NᴹSg+      . NSg/J  NPl/V+  V   NPr/VX/JS V/J       NSg/R
+# N🅪Sg/V NPr/C NᴹSg+    VL P  NSg/J  NᴹSg+      . NSg/J  NPl/V+  V   NPr/VX/JS V/J       NSg/R
 > the application of a   fairly broad variety of theoretical computer science
 # D   NSg         P  D/P R      NSg/J NSg     P  J           NSg/V+   N🅪Sg/V+
 > fundamentals , in      particular logic    calculi , formal languages , automata theory ,
@@ -821,13 +821,13 @@
 >
 #
 > Computer security and cryptography
-# NSg/V+   NSg      V/C NSg
+# NSg/V+   NᴹSg     V/C NSg
 >
 #
 > Computer security is a   branch of computer technology with the objective of
-# NSg/V+   NSg      VL D/P NPr/V  P  NSg/V+   N🅪Sg       P    D   NSg/J     P
+# NSg/V+   NᴹSg     VL D/P NPr/V  P  NSg/V+   N🅪Sg       P    D   NSg/J     P
 > protecting information from unauthorized access , disruption , or    modification
-# V          NᴹSg        P    V/J+         NSg/V+ . NSg+       . NPr/C NSg+
+# V          NᴹSg        P    V/J+         NSg/V+ . N🅪Sg+      . NPr/C NSg+
 > while     maintaining the accessibility and usability of the system for its     intended
 # NSg/V/C/P V           D+  NSg           V/C NᴹSg      P  D   NSg    C/P ISg/D$+ NSg/V/J+
 > users .
@@ -843,7 +843,7 @@
 > include symmetric and asymmetric encryption , digital signatures , cryptographic
 # NSg/V   J         V/C J+         NSg        . NSg/J+  NPl+       . J
 > hash   functions , key     - agreement protocols , blockchain , zero    - knowledge proofs , and
-# NSg/V+ NPl/V+    . NPr/V/J . NSg       NPl/V     . NSg        . NSg/V/J . NᴹSg      NPl/V  . V/C
+# NSg/V+ NPl/V+    . NPr/V/J . N🅪Sg      NPl/V     . NSg        . NSg/V/J . NᴹSg      NPl/V  . V/C
 > garbled circuits .
 # V/J+    NPl/V+   .
 >
