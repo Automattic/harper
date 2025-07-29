@@ -14,8 +14,8 @@ export type Settings = {
 	userDictionary?: string[];
 	delay?: number;
 	ignoredGlobs?: string[];
-  /** An undefined value should be treated the same as `true`. */
-  showUpdateNotification?: boolean
+	/** An undefined value should be treated the same as `true`. */
+	showUpdateNotification?: boolean;
 };
 
 const DEFAULT_DELAY = -1;
@@ -30,7 +30,7 @@ export default class State {
 	private onExtensionChange: () => void;
 	private ignoredGlobs?: string[];
 	private editorViewField?: StateField<MarkdownFileInfo>;
-  private showUpdateNotification: boolean;
+	private showUpdateNotification: boolean;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -90,7 +90,7 @@ export default class State {
 
 		this.delay = settings.delay ?? DEFAULT_DELAY;
 		this.ignoredGlobs = settings.ignoredGlobs;
-    this.showUpdateNotification = settings.showUpdateNotification ?? true;
+		this.showUpdateNotification = settings.showUpdateNotification ?? true;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
@@ -222,7 +222,7 @@ export default class State {
 			dialect: await this.harper.getDialect(),
 			delay: this.delay,
 			ignoredGlobs: this.ignoredGlobs,
-      showUpdateNotification: this.showUpdateNotification
+			showUpdateNotification: this.showUpdateNotification,
 		};
 	}
 

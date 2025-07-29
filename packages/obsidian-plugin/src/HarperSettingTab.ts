@@ -115,17 +115,12 @@ export class HarperSettingTab extends PluginSettingTab {
 					});
 			});
 
-
-		new Setting(containerEl)
-			.setName('Get Notified of Harper Updates')
-			.addToggle((toggle) => {
-			toggle	
-					.setValue(this.settings.showUpdateNotification ?? true)
-					.onChange(async (value) => {
-						this.settings.showUpdateNotification = value;
-						await this.state.initializeFromSettings(this.settings);
-					});
+		new Setting(containerEl).setName('Get Notified of Harper Updates').addToggle((toggle) => {
+			toggle.setValue(this.settings.showUpdateNotification ?? true).onChange(async (value) => {
+				this.settings.showUpdateNotification = value;
+				await this.state.initializeFromSettings(this.settings);
 			});
+		});
 
 		new Setting(containerEl).setName('The Danger Zone').addButton((button) => {
 			button
