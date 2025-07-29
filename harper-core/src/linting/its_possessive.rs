@@ -48,6 +48,7 @@ impl Default for ItsPossessive {
             .t_ws()
             .then_unless(UPOSSet::new(&[
                 UPOS::PART,
+                UPOS::ADP,
                 UPOS::NOUN,
                 UPOS::PRON,
                 UPOS::SCONJ,
@@ -310,6 +311,14 @@ mod tests {
     fn allows_many_times_harder() {
         assert_no_lints(
             "It's many times harder to do this than that.",
+            ItsPossessive::default(),
+        );
+    }
+
+    #[test]
+    fn allow_issue_1658() {
+        assert_no_lints(
+            "It's kind of a nuisance, but it will work.",
             ItsPossessive::default(),
         );
     }
