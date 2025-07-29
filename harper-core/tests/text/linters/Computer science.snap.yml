@@ -504,9 +504,9 @@ Message: |
      137 | "In the U.S., however, informatics is linked with applied computing, or
          |         ^~~~ Did you mean to spell `U.S.` this way?
 Suggest:
+  - Replace with: “P.S.”
   - Replace with: “UBS”
   - Replace with: “USA”
-  - Replace with: “USB”
 
 
 
@@ -1170,16 +1170,6 @@ Suggest:
   - Replace with: “got”
   - Replace with: “goo”
   - Replace with: “gore”
-
-
-
-Lint:    Miscellaneous (10 priority)
-Message: |
-     489 |   feature of objects is that an object's procedures can access and often modify
-     490 |   the data fields of the object with which they are associated. Thus
-         |       ^~~~ Use an apostrophe and `s` to form a noun’s possessive.
-Suggest:
-  - Replace with: “data's”
 
 
 

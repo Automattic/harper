@@ -98,6 +98,7 @@ use super::somewhat_something::SomewhatSomething;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
+use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
@@ -474,6 +475,7 @@ impl LintGroup {
         insert_expr_rule!(SomewhatSomething, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
+        insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);
         insert_struct_rule!(TheMy, true);
@@ -510,7 +512,7 @@ impl LintGroup {
         out.config.set_rule_enabled("SentenceCapitalization", true);
 
         out.add("PossessiveNoun", PossessiveNoun::new(dictionary.clone()));
-        out.config.set_rule_enabled("PossessiveNoun", true);
+        out.config.set_rule_enabled("PossessiveNoun", false);
 
         out.add("Regionalisms", Regionalisms::new(dialect));
         out.config.set_rule_enabled("Regionalisms", true);
@@ -600,8 +602,26 @@ mod tests {
     use std::sync::Arc;
 
     use super::LintGroup;
+    use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::{Dialect, Document, linting::Linter};
+
+    fn test_group() -> LintGroup {
+        LintGroup::new_curated(Arc::new(MutableDictionary::curated()), Dialect::American)
+    }
+
+    #[test]
+    fn clean_interjection() {
+        assert_no_lints(
+            "Although I only saw the need to interject once, I still saw it.",
+            test_group(),
+        );
+    }
+
+    #[test]
+    fn clean_consensus() {
+        assert_no_lints("But there is less consensus on this.", test_group());
+    }
 
     #[test]
     fn can_get_all_descriptions() {

@@ -1,5 +1,6 @@
 use harper_brill::UPOS;
 
+use crate::Document;
 use crate::TokenStringExt;
 use crate::expr::All;
 use crate::expr::Expr;
@@ -11,9 +12,11 @@ use crate::patterns::Pattern;
 use crate::patterns::UPOSSet;
 use crate::patterns::WordSet;
 use crate::{
-    Document, Token,
-    linting::{Lint, LintKind, Linter, Suggestion},
+    Token,
+    linting::{Lint, LintKind, Suggestion},
 };
+
+use super::Linter;
 
 pub struct ItsContraction {
     expr: Box<dyn Expr>,
@@ -24,7 +27,7 @@ impl Default for ItsContraction {
         let positive = SequenceExpr::default()
             .t_aco("its")
             .then_whitespace()
-            .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::DET]));
+            .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::DET]).or(WordSet::new(&["because"])));
 
         let exceptions = SequenceExpr::default()
             .then_anything()
@@ -196,6 +199,15 @@ mod tests {
             "I think of its exploding marvelous spectacular output.",
             ItsContraction::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn because() {
+        assert_suggestion_result(
+            "Its because they don't want to.",
+            ItsContraction::default(),
+            "It's because they don't want to.",
         );
     }
 }

@@ -99,6 +99,7 @@ impl TokenKind {
         is_adjective,
         is_comparative_adjective,
         is_superlative_adjective,
+        is_positive_adjective,
 
         // Adverb methods
         is_adverb,
