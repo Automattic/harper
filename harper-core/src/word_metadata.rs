@@ -618,6 +618,20 @@ impl WordMetadata {
         )
     }
 
+    // Degree::Positive is the default if degree is not marked in the dictionary.
+    pub fn is_positive_adjective(&self) -> bool {
+        match self.adjective {
+            Some(AdjectiveData {
+                degree: Some(Degree::Positive),
+            }) => true,
+            Some(AdjectiveData { degree: None }) => true,
+            Some(AdjectiveData {
+                degree: Some(degree),
+            }) => !matches!(degree, Degree::Comparative | Degree::Superlative),
+            _ => false,
+        }
+    }
+
     // Determiner metadata queries
 
     // Checks if the word is definitely a determiner and more specifically is labeled as (a) quantifier.

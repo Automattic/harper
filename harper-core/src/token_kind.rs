@@ -99,6 +99,7 @@ impl TokenKind {
         is_adjective,
         is_comparative_adjective,
         is_superlative_adjective,
+        is_positive_adjective,
 
         // Adverb methods
         is_adverb,
@@ -156,6 +157,14 @@ impl TokenKind {
 
     pub fn is_close_square(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::CloseSquare))
+    }
+
+    pub fn is_open_round(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::OpenRound))
+    }
+
+    pub fn is_close_round(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::CloseRound))
     }
 
     pub fn is_pipe(&self) -> bool {
