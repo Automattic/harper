@@ -183,7 +183,7 @@
 > The Brown   Corpus was painstakingly " tagged " with part    - of - speech markers over
 # D+  NPr/V/J NSg    V   R             . V/J    . P    NSg/V/J . P  . N🅪Sg/V NPl/V   NSg/V/J/P
 > many        years . A    first    approximation was done    with a   program by      Greene and Rubin ,
-# NSg/I/J/Dq+ NPl+  . D/P+ NSg/V/J+ NSg+          V   NSg/V/J P    D/P NPr/V   NSg/J/P NPr    V/C NPr   .
+# NSg/I/J/Dq+ NPl+  . D/P+ NSg/V/J+ N🅪Sg+         V   NSg/V/J P    D/P NPr/V   NSg/J/P NPr    V/C NPr   .
 > which consisted of a   huge handmade list  of what   categories could  co       - occur at
 # I/C+  V/J       P  D/P J    NSg/J    NSg/V P  NSg/I+ NPl+       NSg/VX NPr/I/V+ . V     NSg/P+
 > all          . For example , article then    noun   can    occur , but     article then    verb   ( arguably )
@@ -341,7 +341,7 @@
 > sophisticated algorithms that          integrated part    of speech  choice with many       higher
 # V/J           NPl+       NSg/I/C/Ddem+ V/J        NSg/V/J P  N🅪Sg/V+ NSg/J  P    NSg/I/J/Dq NSg/JC
 > levels of linguistic analysis : syntax , morphology , semantics , and so         on  . CLAWS ,
-# NPl/V  P  J          N🅪Sg+    . NSg+   . NSg+       . NPl+      . V/C NSg/I/J/C+ J/P . NPl/V .
+# NPl/V  P  J          N🅪Sg+    . NSg+   . NᴹSg+      . NPl+      . V/C NSg/I/J/C+ J/P . NPl/V .
 > DeRose's and Church's methods did fail    for some     of the known cases  where
 # ?        V/C NSg$     NPl/V+  V   NSg/V/J C/P I/J/R/Dq P  D+  V/J+  NPl/V+ NSg/C
 > semantics is required , but     those   proved negligibly rare     . This    convinced many       in

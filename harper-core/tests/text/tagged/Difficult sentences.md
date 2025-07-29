@@ -239,7 +239,7 @@
 > The cake    is for Tom    and Helen's anniversary .
 # D+  N🅪Sg/V+ VL C/P NPr/V+ V/C NSg$    NSg+        .
 > This    medicine is for your cough  .
-# I/Ddem+ NSg/V+   VL C/P D$+  NSg/V+ .
+# I/Ddem+ N🅪Sg/V+  VL C/P D$+  NSg/V+ .
 > He       wouldn't apologize ; and just for that          , she  refused to help  him  .
 # NPr/ISg+ VX       V         . V/C V/J  C/P NSg/I/C/Ddem+ . ISg+ V/J     P  NSg/V ISg+ .
 > He       looks better    for having lost weight  . ( UK   usage )
@@ -446,8 +446,8 @@
 # ISg/D$+ N🅪Sg/V+ V   NPr/J/P NPr🅪/V/J . NSg/C/P V   R              V/J        P    NSg/J NPl/V+    .
 > When    you    write in      cursive , it's illegible .
 # NSg/I/C ISgPl+ NSg/V NPr/J/P NSg/J   . +    J+        .
-> Military letters should be     formal in      tone     , but     not   stilted .
-# NSg/J    NPl/V+  VX     NSg/VX NSg/J  NPr/J/P NSg/I/V+ . NSg/C/P NSg/C V/J     .
+> Military letters should be     formal in      tone      , but     not   stilted .
+# NSg/J    NPl/V+  VX     NSg/VX NSg/J  NPr/J/P N🅪Sg/I/V+ . NSg/C/P NSg/C V/J     .
 >
 #
 > Verb
@@ -759,7 +759,7 @@
 > You've been  on  these   antidepressants far     too long     .
 # W?     NSg/V J/P I/Ddem+ NPl             NSg/V/J +   NPr/V/J+ .
 > I    depended on  them     for  assistance .
-# ISg+ V/J      J/P NSg/IPl+ C/P+ NSg+       .
+# ISg+ V/J      J/P NSg/IPl+ C/P+ NᴹSg+      .
 > He       will   promise on  certain conditions .
 # NPr/ISg+ NPr/VX NSg/V   J/P I/J+    NPl/V+     .
 > A   curse on  him  !

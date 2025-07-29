@@ -43,7 +43,7 @@
 > systems , networks and embedded systems investigate the principles and design
 # NPl     . NPl/V+   V/C V/J      NPl+    V           D   NPl/V      V/C N🅪Sg/V+
 > behind  complex  systems . Computer architecture describes the construction of
-# NSg/J/P NSg/V/J+ NPl+    . NSg/V+   NSg+         V         D   NSg          P
+# NSg/J/P NSg/V/J+ NPl+    . NSg/V+   NᴹSg+        V         D   NSg          P
 > computer components and computer - operated equipment . Artificial intelligence and
 # NSg/V+   NPl        V/C NSg/V+   . V/J      NᴹSg      . J          N🅪Sg         V/C
 > machine learning aim    to synthesize goal   - orientated processes such  as
@@ -279,7 +279,7 @@
 > formulated by      — Edsger Dijkstra , states   that          " computer science is no    more         about
 # V/J        NSg/J/P . ?      NSg      . NPrPl/V+ NSg/I/C/Ddem+ . NSg/V+   N🅪Sg/V+ VL NPr/P NPr/I/V/J/Dq J/P
 > computers than astronomy is about telescopes . " [ note   3 ] The design and deployment
-# NPl/V+    C/P  NSg+      VL J/P+  NPl/V      . . . NSg/V+ # . D+  N🅪Sg/V V/C NSg
+# NPl/V+    C/P  NᴹSg+     VL J/P+  NPl/V      . . . NSg/V+ # . D+  N🅪Sg/V V/C NSg
 > of computers and computer systems is generally considered the province of
 # P  NPl/V     V/C NSg/V+   NPl+    VL R         V/J        D   NSg      P
 > disciplines other   than computer science . For example , the study of computer
@@ -365,7 +365,7 @@
 > Computer science is an  empirical discipline . We   would have   called it       an
 # NSg/V+   N🅪Sg/V  VL D/P NSg/J+    NSg/V+     . IPl+ VX    NSg/VX V/J    NPr/ISg+ D/P+
 > experimental science , but     like        astronomy , economics , and geology , some     of its
-# NSg/J+       N🅪Sg/V+ . NSg/C/P NSg/V/J/C/P NSg       . NSg+      . V/C NSg     . I/J/R/Dq P  ISg/D$+
+# NSg/J+       N🅪Sg/V+ . NSg/C/P NSg/V/J/C/P NᴹSg      . NSg+      . V/C NSg     . I/J/R/Dq P  ISg/D$+
 > unique forms of observation and experience do     not   fit     a   narrow  stereotype of
 # NSg/J  NPl/V P  NSg         V/C NSg/V+     NSg/VX NSg/C NSg/V/J D/P NSg/V/J NSg/V      P
 > the experimental method . Nonetheless , they are experiments . Each new      machine
@@ -461,13 +461,13 @@
 > Computing Sciences Accreditation Board  — which is made up        of representatives of
 # NᴹSg/V+   NPl/V+   N🅪Sg          NSg/V+ . I/C+  VL V    NSg/V/J/P P  NPl             P
 > the Association for Computing Machinery ( ACM ) , and the IEEE Computer Society
-# D+  NSg         C/P NᴹSg/V+   NᴹSg+     . NSg . . V/C D+  NPr+ NSg/V+   N🅪Sg+
+# D+  N🅪Sg        C/P NᴹSg/V+   NᴹSg+     . NSg . . V/C D+  NPr+ NSg/V+   N🅪Sg+
 > ( IEEE CS    ) — identifies four areas that          it       considers crucial to the discipline of
 # . NPr  NPl/V . . V          NSg  NPl+  NSg/I/C/Ddem+ NPr/ISg+ V         J       P  D   NSg/V      P
 > computer science : theory of computation , algorithms and data  structures ,
 # NSg/V+   N🅪Sg/V+ . NSg    P  NSg         . NPl        V/C N🅪Pl+ NPl/V+     .
 > programming methodology and languages , and computer elements and  architecture .
-# NᴹSg/V+     NSg         V/C NPl/V+    . V/C NSg/V+   NPl/V    V/C+ NSg+         .
+# NᴹSg/V+     NSg         V/C NPl/V+    . V/C NSg/V+   NPl/V    V/C+ NᴹSg+        .
 > In      addition to these   four areas , CSAB also identifies fields   such  as    software
 # NPr/J/P NSg      P  I/Ddem+ NSg  NPl+  . ?    W?   V          NPrPl/V+ NSg/I NSg/R NᴹSg+
 > engineering , artificial intelligence , computer networking and communication ,
@@ -565,7 +565,7 @@
 > Programming language theory is a   branch of computer science that          deals with the
 # NᴹSg/V+     N🅪Sg/V   NSg+   VL D/P NPr/V  P  NSg/V+   N🅪Sg/V+ NSg/I/C/Ddem+ NPl/V P    D+
 > design  , implementation , analysis , characterization , and classification of
-# N🅪Sg/V+ . NSg+           . N🅪Sg+    . NSg              . V/C NSg            P
+# N🅪Sg/V+ . NSg+           . N🅪Sg+    . NSg              . V/C N🅪Sg           P
 > programming languages and their individual features . It       falls  within  the
 # NᴹSg/V+     NPl/V     V/C D$+   NSg/J+     NPl/V+   . NPr/ISg+ NPl/V+ NSg/J/P D
 > discipline of computer science , both   depending on  and affecting mathematics ,
@@ -596,8 +596,8 @@
 # NSg/V D/P NSg       C/P V+      . C/P NSg/J+     NSg/V+ . NSg/V+ N🅪Sg/V+ VL V/J      .
 > However , the high    cost    of using formal methods means that         they are usually only
 # C       . D   NSg/V/J NSg/V/J P  V     NSg/J  NPl/V+  NPl/V NSg/I/C/Ddem IPl+ V   R       J/R/C
-> used in      the development of high    - integrity and life   - critical systems , where
-# V/J  NPr/J/P D   N🅪Sg        P  NSg/V/J . NᴹSg      V/C NSg/V+ . NSg/J    NPl     . NSg/C
+> used in      the development of high    - integrity and life    - critical systems , where
+# V/J  NPr/J/P D   N🅪Sg        P  NSg/V/J . NᴹSg      V/C N🅪Sg/V+ . NSg/J    NPl     . NSg/C
 > safety or    security is of utmost importance . Formal methods are best      described as
 # N🅪Sg/V NPr/C NSg+     VL P  NSg/J  NᴹSg+      . NSg/J  NPl/V+  V   NPr/VX/JS V/J       NSg/R
 > the application of a   fairly broad variety of theoretical computer science
@@ -765,11 +765,11 @@
 >
 #
 > Computer architecture and microarchitecture
-# NSg/V+   NSg          V/C NSg
+# NSg/V+   NᴹSg         V/C NSg
 >
 #
 > Computer architecture , or    digital computer organization , is the conceptual
-# NSg/V+   NSg          . NPr/C NSg/J   NSg/V+   NSg+         . VL D   J
+# NSg/V+   NᴹSg         . NPr/C NSg/J   NSg/V+   NSg+         . VL D   J
 > design  and fundamental operational structure of a    computer system . It       focuses
 # N🅪Sg/V+ V/C NSg/J       J           NSg/V     P  D/P+ NSg/V+   NSg+   . NPr/ISg+ NPl/V
 > largely on  the way    by      which the central processing unit performs internally and
@@ -781,7 +781,7 @@
 > microcontrollers , personal computers to supercomputers and embedded systems . The
 # NPl              . NSg/J    NPl/V     P  NPl            V/C V/J      NPl+    . D
 > term     " architecture " in      computer literature can    be     traced to the work  of Lyle R.
-# NSg/V/J+ . NSg          . NPr/J/P NSg/V+   NSg+       NPr/VX NSg/VX V/J    P  D   NSg/V P  NPr  ?
+# NSg/V/J+ . NᴹSg         . NPr/J/P NSg/V+   NSg+       NPr/VX NSg/VX V/J    P  D   NSg/V P  NPr  ?
 > Johnson and Frederick P. Brooks  Jr     . , members of the Machine Organization
 # NPr     V/C NPr+      ?  NPrPl/V NSg/J+ . . NPl/V   P  D+  NSg/V+  NSg+
 > department in      IBM's main    research center  in      1959 .
@@ -834,8 +834,8 @@
 # NPl+  .
 >
 #
-> Historical cryptography is the art   of writing and deciphering secret   messages .
-# NSg/J+     NSg          VL D   NPr/V P  NSg/V+  V/C V           NSg/V/J+ NPl/V+   .
+> Historical cryptography is the art    of writing and deciphering secret   messages .
+# NSg/J+     NSg          VL D   NPr🅪/V P  NSg/V+  V/C V           NSg/V/J+ NPl/V+   .
 > Modern cryptography is the scientific study of problems relating to distributed
 # NSg/J  NSg          VL D   J          NSg/V P  NPl+     V        P  V/J
 > computations that          can     be      attacked . Technologies studied in      modern cryptography

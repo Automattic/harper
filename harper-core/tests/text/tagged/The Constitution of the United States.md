@@ -135,7 +135,7 @@
 > When    vacancies happen in      the Representation from any     State  , the Executive
 # NSg/I/C NPl       V      NPr/J/P D+  NSg+           P    I/R/Dq+ NSg/V+ . D+  NSg/J+
 > Authority thereof shall issue  Writs of Election to fill  such   Vacancies .
-# NSg+      W?      VX    NSg/V+ NPl/V P  NSg+     P  NSg/V NSg/I+ NPl+      .
+# N🅪Sg+     W?      VX    NSg/V+ NPl/V P  NSg+     P  NSg/V NSg/I+ NPl+      .
 >
 #
 > The House of Representatives shall chuse their Speaker and other    Officers ; and
@@ -173,7 +173,7 @@
 > chosen   every second  Year ; and when    vacancies happen in      the representation of
 # NᴹSg/V/J Dq+   NSg/V/J NSg+ . V/C NSg/I/C NPl       V      NPr/J/P D   NSg            P
 > any    State in      the Senate , the executive authority of such  State  shall issue
-# I/R/Dq NSg/V NPr/J/P D+  NPr+   . D   NSg/J     NSg       P  NSg/I NSg/V+ VX    NSg/V+
+# I/R/Dq NSg/V NPr/J/P D+  NPr+   . D   NSg/J     N🅪Sg      P  NSg/I NSg/V+ VX    NSg/V+
 > writs of election to fill  such  vacancies : Provided , That         the legislature of any
 # NPl/V P  NSg+     P  NSg/V NSg/I NPl       . V/J/C    . NSg/I/C/Ddem D   NSg         P  I/R/Dq+
 > State  may    empower the executive thereof to make  temporary appointments until
@@ -311,7 +311,7 @@
 > No     Senator or    Representative shall , during the Time     for which he       was elected ,
 # NPr/P+ NSg+    NPr/C NSg/J+         VX    . V/P    D   N🅪Sg/V/J C/P I/C+  NPr/ISg+ V   NSg/V/J .
 > be     appointed to any    civil Office under   the Authority of the United States   ,
-# NSg/VX V/J       P  I/R/Dq J     NSg/V  NSg/J/P D   NSg       P  D+  V/J+   NPrPl/V+ .
+# NSg/VX V/J       P  I/R/Dq J     NSg/V  NSg/J/P D   N🅪Sg      P  D+  V/J+   NPrPl/V+ .
 > which shall have   been  created , or    the Emoluments whereof shall have   been
 # I/C+  VX    NSg/VX NSg/V V/J     . NPr/C D   NPl        C       VX    NSg/VX NSg/V
 > encreased during such  time      ; and no     Person holding any    Office under   the United
@@ -541,7 +541,7 @@
 > States   , reserving to the States   respectively , the Appointment of the Officers ,
 # NPrPl/V+ . V         P  D+  NPrPl/V+ R            . D   NSg         P  D+  NPl/V+   .
 > and the Authority of training the Militia according to the discipline
-# V/C D   NSg       P  NSg/V+   D   NSg     V/J       P  D+  NSg/V+
+# V/C D   N🅪Sg      P  NSg/V+   D   NSg     V/J       P  D+  NSg/V+
 > prescribed by      Congress ;
 # V/J        NSg/J/P NPr/V+   .
 >
@@ -557,7 +557,7 @@
 > the Acceptance of Congress , become the Seat  of the Government of the United
 # D   NSg        P  NPr/V+   . V      D   NSg/V P  D   NSg        P  D+  V/J+
 > States   , and to exercise like        Authority over      all           Places purchased by      the Consent
-# NPrPl/V+ . V/C P  NSg/V    NSg/V/J/C/P NSg+      NSg/V/J/P NSg/I/J/C/Dq+ NPl/V+ V/J       NSg/J/P D   NSg/V
+# NPrPl/V+ . V/C P  NSg/V    NSg/V/J/C/P N🅪Sg+     NSg/V/J/P NSg/I/J/C/Dq+ NPl/V+ V/J       NSg/J/P D   NSg/V
 > of the Legislature of the State  in      which the Same shall be     , for the Erection of
 # P  D   NSg         P  D+  NSg/V+ NPr/J/P I/C+  D   I/J  VX    NSg/VX . C/P D   NSg      P
 > Forts , Magazines , Arsenals , dock   - Yards , and other   needful Buildings ; — And
@@ -1067,7 +1067,7 @@
 > convene both   Houses , or    either of them     , and in      Case  of Disagreement between
 # V       I/C/Dq NPl/V  . NPr/C I/C    P  NSg/IPl+ . V/C NPr/J/P NPr/V P  NSg+         NSg/P
 > them     , with Respect to the Time     of Adjournment , he       may    adjourn them     to such  Time
-# NSg/IPl+ . P    NSg/V   P  D   N🅪Sg/V/J P  NSg         . NPr/ISg+ NPr/VX V       NSg/IPl+ P  NSg/I N🅪Sg/V/J+
+# NSg/IPl+ . P    NᴹSg/V  P  D   N🅪Sg/V/J P  NSg         . NPr/ISg+ NPr/VX V       NSg/IPl+ P  NSg/I N🅪Sg/V/J+
 > as    he       shall think proper ; he       shall receive Ambassadors and other   public
 # NSg/R NPr/ISg+ VX    NSg/V NSg/J  . NPr/ISg+ VX    NSg/V   NPl+        V/C NSg/V/J NSg/V/J
 > Ministers ; he       shall take  Care   that         the Laws   be     faithfully executed , and shall
@@ -1119,7 +1119,7 @@
 > Equity , arising under   this    Constitution , the Laws  of the United States   , and
 # NSg+   . V       NSg/J/P I/Ddem+ NPr+         . D   NPl/V P  D+  V/J+   NPrPl/V+ . V/C
 > Treaties made , or    which shall be     made , under   their Authority ; — to all           Cases
-# NPl/V+   V    . NPr/C I/C+  VX    NSg/VX V    . NSg/J/P D$+   NSg+      . . P  NSg/I/J/C/Dq+ NPl/V+
+# NPl/V+   V    . NPr/C I/C+  VX    NSg/VX V    . NSg/J/P D$+   N🅪Sg+     . . P  NSg/I/J/C/Dq+ NPl/V+
 > affecting Ambassadors , other   public  Ministers and Consuls ; — to all          Cases of
 # V/J       NPl+        . NSg/V/J NSg/V/J NPl/V+    V/C NPl     . . P  NSg/I/J/C/Dq NPl/V P
 > admiralty and maritime Jurisdiction ; — to Controversies to which the United
@@ -1172,8 +1172,8 @@
 # D+  NPr/V+   VX    NSg/VX NSg/V/J+ P  V       D   N🅪Sg       P  NSg     . NSg/C/P NPr/P
 > Attainder of Treason shall work   Corruption of Blood   , or    Forfeiture except
 # NSg       P  NSg     VX    NSg/V+ NSg        P  NᴹSg/V+ . NPr/C NSg        V/C/P
-> during the Life  of the Person attainted .
-# V/P    D   NSg/V P  D+  NSg/V+ ?         .
+> during the Life   of the Person attainted .
+# V/P    D   N🅪Sg/V P  D+  NSg/V+ ?         .
 >
 #
 > Section . 4 .
@@ -1200,10 +1200,10 @@
 # NPr/J/P D+  NPr🅪/V NPr/C J+    NPl/V+ . NPr/C NPr/J/P D   NSg     . NSg/I/C NPr/J/P NSg/J  NSg/V   NPr/J/P N🅪Sg/V/J
 > of war    or    public  danger     ; nor   shall any     person be     subject for the same offense
 # P  N🅪Sg/V NPr/C NSg/V/J N🅪Sg/V/JC+ . NSg/C VX    I/R/Dq+ NSg/V  NSg/VX NSg/V/J C/P D+  I/J+ NSg
-> to be     twice put   in      jeopardy of life  or    limb   ; nor   shall be     compelled in      any
-# P  NSg/VX W?    NSg/V NPr/J/P NSg/V    P  NSg/V NPr/C NSg/V+ . NSg/C VX    NSg/VX V/J       NPr/J/P I/R/Dq+
-> criminal case  to be     a   witness against himself , nor   be     deprived of life  ,
-# NSg/J    NPr/V P  NSg/VX D/P NSg/V   C/P     ISg+    . NSg/C NSg/VX V/J      P  NSg/V .
+> to be     twice put   in      jeopardy of life   or    limb   ; nor   shall be     compelled in      any
+# P  NSg/VX W?    NSg/V NPr/J/P NSg/V    P  N🅪Sg/V NPr/C NSg/V+ . NSg/C VX    NSg/VX V/J       NPr/J/P I/R/Dq+
+> criminal case  to be     a   witness against himself , nor   be     deprived of life   ,
+# NSg/J    NPr/V P  NSg/VX D/P NSg/V   C/P     ISg+    . NSg/C NSg/VX V/J      P  N🅪Sg/V .
 > liberty , or    property , without due   process of law    ; nor   shall private property be
 # NSg+    . NPr/C NSg/V+   . C/P     NSg/J NSg/V   P  NSg/V+ . NSg/C VX    NSg/V/J NSg/V+   NSg/VX
 > taken for public   use    , without just compensation .
@@ -1221,7 +1221,7 @@
 > accusation ; to be     confronted with the witnesses against him  ; to have   compulsory
 # NSg        . P  NSg/VX V/J        P    D+  NPl/V+    C/P     ISg+ . P  NSg/VX NSg/J
 > process for obtaining witnesses in      his     favor      , and to have   the assistance of
-# NSg/V   C/P V         NPl/V+    NPr/J/P ISg/D$+ N🅪Sg/V/Am+ . V/C P  NSg/VX D   NSg        P
+# NSg/V   C/P V         NPl/V+    NPr/J/P ISg/D$+ N🅪Sg/V/Am+ . V/C P  NSg/VX D   NᴹSg       P
 > counsel for his     defense   .
 # NSg/V   C/P ISg/D$+ NSg/V/Am+ .
 >
@@ -1272,8 +1272,8 @@
 # D+  NSg/V+ C       IPl+ NSg/V/J+ . NPr/P+ NSg/V+ VX    NSg/V NPr/C V       I/R/Dq+ NSg/V+ I/C+
 > shall abridge the privileges or    immunities of citizens of the United States   ;
 # VX    V       D+  NPl/V      NPr/C ?          P  NPl      P  D+  V/J+   NPrPl/V+ .
-> nor   shall any    State deprive any    person of life  , liberty , or    property , without
-# NSg/C VX    I/R/Dq NSg/V V       I/R/Dq NSg/V  P  NSg/V . NSg+    . NPr/C NSg/V+   . C/P
+> nor   shall any    State deprive any    person of life   , liberty , or    property , without
+# NSg/C VX    I/R/Dq NSg/V V       I/R/Dq NSg/V  P  N🅪Sg/V . NSg+    . NPr/C NSg/V+   . C/P
 > due   process of law    ; nor   deny to any    person within  its     jurisdiction the equal
 # NSg/J NSg/V   P  NSg/V+ . NSg/C V    P  I/R/Dq NSg/V  NSg/J/P ISg/D$+ NSg          D   NSg/V/J
 > protection of the laws   .
@@ -1293,7 +1293,7 @@
 > flee from Justice , and be     found in      another State  , shall on  Demand of the
 # V    P    NPr🅪+   . V/C NSg/VX NSg/V NPr/J/P I/D+    NSg/V+ . VX    J/P NSg/V  P  D
 > executive Authority of the State  from which he       fled , be     delivered up        , to be
-# NSg/J     NSg       P  D+  NSg/V+ P    I/C+  NPr/ISg+ J    . NSg/VX V/J       NSg/V/J/P . P  NSg/VX
+# NSg/J     N🅪Sg      P  D+  NSg/V+ P    I/C+  NPr/ISg+ J    . NSg/VX V/J       NSg/V/J/P . P  NSg/VX
 > removed to the State  having Jurisdiction of the Crime  .
 # V/J     P  D+  NSg/V+ V      NSg          P  D+  NSg/V+ .
 >
@@ -1419,7 +1419,7 @@
 > Pursuance thereof ; and all           Treaties made , or    which shall be     made , under   the
 # NSg       W?      . V/C NSg/I/J/C/Dq+ NPl/V+   V    . NPr/C I/C+  VX    NSg/VX V    . NSg/J/P D
 > Authority of the United States   , shall be     the supreme Law   of the Land    ; and the
-# NSg       P  D+  V/J+   NPrPl/V+ . VX    NSg/VX D   NSg/V/J NSg/V P  D+  NPr🅪/V+ . V/C D+
+# N🅪Sg      P  D+  V/J+   NPrPl/V+ . VX    NSg/VX D   NSg/V/J NSg/V P  D+  NPr🅪/V+ . V/C D+
 > Judges   in      every State  shall be     bound   thereby , any    Thing in      the Constitution or
 # NPrPl/V+ NPr/J/P Dq+   NSg/V+ VX    NSg/VX NSg/V/J W?      . I/R/Dq NSg/V NPr/J/P D+  NPr          NPr/C
 > Laws  of any    State to the Contrary notwithstanding .
