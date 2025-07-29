@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.53.0",
+	"version": "0.54.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -1800,7 +1800,7 @@
 				"harper.linters.PossessiveNoun": {
 					"scope": "resource",
 					"type": "boolean",
-					"default": true,
+					"default": false,
 					"description": "Use an apostrophe and `s` to form a noun’s possessive."
 				},
 				"harper.linters.PossessiveYour": {

@@ -100,3 +100,11 @@ export function closestBox(target: Box, boxes: Box[]): number {
 	}
 	return idx;
 }
+
+export function shrinkBoxToFit(inner: Box, outer: Box): Box {
+	const nx = Math.max(inner.x, outer.x);
+	const ny = Math.max(inner.y, outer.y);
+	const rx = Math.min(inner.x + inner.width, outer.x + outer.width);
+	const by = Math.min(inner.y + inner.height, outer.y + outer.height);
+	return { x: nx, y: ny, width: Math.max(0, rx - nx), height: Math.max(0, by - ny) };
+}

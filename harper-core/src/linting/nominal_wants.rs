@@ -1,3 +1,5 @@
+use harper_brill::UPOS;
+
 use crate::expr::Expr;
 use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
@@ -15,7 +17,7 @@ pub struct NominalWants {
 impl Default for NominalWants {
     fn default() -> Self {
         fn is_applicable_pronoun(tok: &Token, src: &[char]) -> bool {
-            if tok.kind.is_pronoun() {
+            if tok.kind.is_pronoun() && tok.kind.is_upos(UPOS::PRON) {
                 let pron = tok.span.get_content_string(src).to_lowercase();
                 // "That" can act as two kinds of pronoun: demonstrative and relative.
                 // As a demonstrative pronoun, it's third person singular.
@@ -34,6 +36,7 @@ impl Default for NominalWants {
                     // "it" is both subject and object. Subject before "wants", object before "want".
                     && pron != "it"
                     && pron != "them"
+                    && pron != "who"
             } else {
                 false
             }
@@ -44,6 +47,7 @@ impl Default for NominalWants {
             .then(is_applicable_pronoun)
             .then_whitespace()
             .then(miss);
+
         Self {
             expr: Box::new(pattern),
         }
@@ -58,7 +62,7 @@ impl ExprLinter for NominalWants {
     fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
         let toks = match_info.matched_tokens;
         let subject = toks.first()?;
-        let offender = toks.last()?;
+        let offender = &toks.last()?;
 
         let plural = subject.kind.is_plural_nominal();
 
@@ -101,7 +105,7 @@ impl ExprLinter for NominalWants {
 #[cfg(test)]
 mod tests {
     use super::NominalWants;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn fixes_he_wonts() {
@@ -298,5 +302,13 @@ mod tests {
     #[test]
     fn ignores_correct_usage_help_them() {
         assert_lint_count("And help them want to do it.", NominalWants::default(), 0)
+    }
+
+    #[test]
+    fn allows_want_to() {
+        assert_no_lints(
+            "Harper is a grammar checker for people who want to write fast.",
+            NominalWants::default(),
+        );
     }
 }

@@ -33,7 +33,7 @@ jobs:
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo hack`
-        run: cargo binstall cargo-hack
+        run: cargo binstall cargo-hack --force --no-confirm
       - name: Run `cargo-hack`
         run: cargo hack check --each-feature
       - name: Precommit

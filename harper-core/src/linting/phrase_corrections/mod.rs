@@ -543,13 +543,6 @@ pub fn lint_group() -> LintGroup {
             "Fixes the incorrect spacing in `I a m` to properly form `I am`.",
             LintKind::Typo
         ),
-        "IAmAgreement" => (
-            ["I are"],
-            ["I am"],
-            "The first-person singular pronoun `I` requires the verb form `am`; `are` belongs to second-person or plural contexts.",
-            "Corrects `I are` to `I am`.",
-            LintKind::Agreement
-        ),
         "IDo" => (
             ["I does"],
             ["I do"],
