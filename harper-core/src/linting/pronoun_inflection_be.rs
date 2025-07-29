@@ -7,6 +7,7 @@ use crate::expr::AnchorStart;
 use crate::expr::ExprMap;
 use crate::expr::MatchInfo;
 use crate::expr::{Expr, SequenceExpr};
+use crate::patterns::NominalPhrase;
 use crate::patterns::UPOSSet;
 
 use super::Suggestion;
@@ -31,35 +32,55 @@ impl PronounInflectionBe {
             .then_third_person_singular_pronoun()
             .then_optional(mod_term.clone())
             .t_ws()
-            .t_aco("are");
+            .t_aco("are")
+            .t_any()
+            .then_unless(NominalPhrase);
         map.insert(are, "is");
+
+        let are_at_start = SequenceExpr::default()
+            .then(AnchorStart)
+            .then_third_person_singular_pronoun()
+            .then_optional(mod_term.clone())
+            .t_ws()
+            .t_aco("are")
+            .t_any()
+            .t_any();
+        map.insert(are_at_start, "is");
 
         let arent = SequenceExpr::default()
             .then_third_person_singular_pronoun()
             .then_optional(mod_term.clone())
             .t_ws()
-            .t_aco("aren't");
+            .t_aco("aren't")
+            .t_any()
+            .t_any();
         map.insert(arent, "isn't");
 
         let is = SequenceExpr::default()
             .then_third_person_plural_pronoun()
             .then_optional(mod_term.clone())
             .t_ws()
-            .t_aco("is");
+            .t_aco("is")
+            .t_any()
+            .t_any();
         map.insert(is, "are");
 
         let isnt = SequenceExpr::default()
             .then_third_person_plural_pronoun()
             .then_optional(mod_term.clone())
             .t_ws()
-            .t_aco("isn't");
+            .t_aco("isn't")
+            .t_any()
+            .t_any();
         map.insert(isnt, "aren't");
 
         let was = SequenceExpr::default()
             .then(|tok: &Token, _: &[char]| tok.kind.is_first_person_plural_pronoun())
             .then_optional(mod_term.clone())
             .t_ws()
-            .t_aco("was");
+            .t_aco("was")
+            .t_any()
+            .t_any();
         map.insert(was, "were");
 
         // Special case for second and third-person
@@ -70,7 +91,9 @@ impl PronounInflectionBe {
             })
             .then_optional(mod_term.clone())
             .t_ws()
-            .t_aco("was");
+            .t_aco("was")
+            .t_any()
+            .t_any();
         map.insert(was_third, "were");
 
         let were = SequenceExpr::default()
@@ -81,7 +104,10 @@ impl PronounInflectionBe {
             })
             .then_optional(mod_term.clone())
             .t_ws()
-            .t_aco("were");
+            .t_aco("were")
+            .t_any()
+            .t_any();
+
         map.insert(were, "was");
 
         let map = Lrc::new(map);
@@ -110,8 +136,8 @@ impl ExprLinter for PronounInflectionBe {
 
     fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
         let matched_tokens = match_info.matched_tokens;
-        let span = matched_tokens.last()?.span;
-
+        let span = matched_tokens.get(matched_tokens.len() - 3)?.span;
+        
         // Determine the correct inflection of "be".
         let correct = self.map.lookup(0, matched_tokens, source)?;
 
@@ -136,7 +162,7 @@ impl ExprLinter for PronounInflectionBe {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     use super::PronounInflectionBe;
 
@@ -376,6 +402,14 @@ mod tests {
             "because he are tired.",
             PronounInflectionBe::default(),
             "because he is tired.",
+        );
+    }
+
+    #[test]
+    fn allow_behind_him() {
+        assert_no_lints(
+            "Behind him are new shadows.",
+            PronounInflectionBe::default(),
         );
     }
 }

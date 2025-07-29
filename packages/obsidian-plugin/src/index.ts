@@ -19,18 +19,22 @@ async function getLatestVersion(): Promise<string> {
 	return response.text();
 }
 
-export async function logVersionInfo(): Promise<void> {
+export async function logVersionInfo(showNotification: boolean): Promise<void> {
 	try {
 		const latest = await getLatestVersion();
 		console.info(`Latest available Harper version: ${latest}`);
+
+		if (latest != `v${packageJson.version}` && showNotification) {
+			setTimeout(() => {
+				new Notice('A newer version of Harper is available.');
+			}, 5000);
+		}
 	} catch (err) {
 		console.error(`Unable to obtain latest version: ${err}`);
 	}
 
 	console.info(`Current version: ${packageJson.version}`);
 }
-
-logVersionInfo();
 
 export default class HarperPlugin extends Plugin {
 	private state: State;
@@ -59,6 +63,8 @@ export default class HarperPlugin extends Plugin {
 		this.state.enableEditorLinter();
 
 		this.addSettingTab(new HarperSettingTab(this.app, this, this.state));
+
+		await logVersionInfo((await this.state.getSettings()).showUpdateNotification ?? true);
 	}
 
 	private getDialectStatus(dialectNum: Dialect): string {

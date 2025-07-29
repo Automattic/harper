@@ -33,7 +33,7 @@
 >
 #
 > Caesar was at    Rome ; a    climate treaty was signed at    Kyoto in      1997 .
-# NPr+   V   NSg/P NPr+ . D/P+ NSg/V+  NSg/V+ V   V/J    NSg/P NPr+  NPr/J/P #    .
+# NPr+   V   NSg/P NPr+ . D/P+ N🅪Sg/V+ NSg/V+ V   V/J    NSg/P NPr+  NPr/J/P #    .
 > I    was at    Jim’s house  at    the corner of Fourth  Street  and  Vine .
 # ISg+ V   NSg/P NSg$  NPr/V+ NSg/P D   NSg/V  P  NPr/V/J NSg/V/J V/C+ NSg+ .
 > at    the bottom  of the page   ; sitting at    the table  ; at    church ; at    sea
@@ -168,8 +168,8 @@
 # D+  NSg/V/J+ V   J/P   # NSg/V+ NSg/J/P # NSg/V+ .
 > The bricks used to build the wall   measured 10 by      20 by      30 cm   .
 # D+  NPl/V+ V/J  P  NSg/V D+  NPr/V+ V/J      #  NSg/J/P #  NSg/J/P #  NSg+ .
-> She's a   lovely little      filly , by      Big      Lad , out         of Damsel in      Distress .
-# W?    D/P NSg/J  NPr/I/J/Dq+ NSg   . NSg/J/P NSg/V/J+ NSg . NSg/V/J/R/P P  NSg    NPr/J/P NSg/V+   .
+> She's a   lovely little      filly , by      Big    Lad , out         of Damsel in      Distress .
+# W?    D/P NSg/J  NPr/I/J/Dq+ NSg   . NSg/J/P NSg/J+ NSg . NSg/V/J/R/P P  NSg    NPr/J/P NSg/V+   .
 > Are you    eating by      Rabbi Fischer ? ( at    the house of )
 # V   ISgPl+ V      NSg/J/P NSg+  NPr+    . . NSg/P D   NPr/V P  .
 > By      Chabad , it's different . ( with , among )
@@ -189,7 +189,7 @@
 > We're right   near      the lifeguard station . Come    by      before you    leave  .
 # W?    NPr/V/J NSg/V/J/P D+  NSg+      NSg/V+  . NSg/V/P NSg/J/P C/P    ISgPl+ NSg/V+ .
 > The women spent much       time     after harvest putting jams   by      for winter and spring .
-# D+  NPl+  V/J   NSg/I/J/Dq N🅪Sg/V/J JC/P  NSg/V+  NSg/V   NPl/V+ NSg/J/P C/P NSg/V  V/C NSg/V+ .
+# D+  NPl+  V/J   NSg/I/J/Dq N🅪Sg/V/J P     NSg/V+  NSg/V   NPl/V+ NSg/J/P C/P NSg/V  V/C NSg/V+ .
 >
 #
 > Adjective
@@ -246,8 +246,8 @@
 # NPr/ISg+ NPl/V NSg/VX/JC C/P V      V/J  N🅪Sg/V+ . . NPr+ N🅪Sg+ .
 > She  was the worse    for drink  .
 # ISg+ V   D   NSg/V/JC C/P NSg/V+ .
-> All          those  for the motion , raise your hands  .
-# NSg/I/J/C/Dq I/Ddem C/P D+  NSg/V+ . NSg/V D$+  NPl/V+ .
+> All          those  for the motion  , raise your hands  .
+# NSg/I/J/C/Dq I/Ddem C/P D+  N🅪Sg/V+ . NSg/V D$+  NPl/V+ .
 > Who's for ice     - cream    ?
 # NSg$  C/P NPr🅪/V+ . N🅪Sg/V/J .
 > I'm for going   by      train
@@ -426,8 +426,8 @@
 # NPr+ VL NPr/J/P D/P NSg+ .
 > My  fruit   trees  are in      bud   .
 # D$+ N🅪Sg/V+ NPl/V+ V   NPr/J/P NPr/V .
-> The company is in      profit  .
-# D+  NSg/V+  VL NPr/J/P NSg/V/J .
+> The company is in      profit   .
+# D+  NSg/V+  VL NPr/J/P N🅪Sg/V/J .
 > You've got a   friend  in      me       .
 # W?     V   D/P NPr/V/J NPr/J/P NPr/ISg+ .
 > He's met his     match  in      her     .
@@ -574,12 +574,12 @@
 # D   NSg   P  D+  NSg/V+    V+  V/J      .
 > My  companion seemed affable and easy    of manner .
 # D$+ NSg/V+    V/J    J       V/C NSg/V/J P  NSg+   .
-> It's not   that         big     of a    deal     .
-# W?   NSg/C NSg/I/C/Ddem NSg/V/J P  D/P+ NSg/V/J+ .
+> It's not   that         big   of a    deal     .
+# W?   NSg/C NSg/I/C/Ddem NSg/J P  D/P+ NSg/V/J+ .
 > I’ve not   taken her     out         of a   goodly long     while      .
 # W?   NSg/C V/J   ISg/D$+ NSg/V/J/R/P P  D/P J/R    NPr/V/J+ NSg/V/C/P+ .
 > After a   delay   of three hours , the plane    finally took off       .
-# JC/P  D/P NSg/V/J P  NSg+  NPl+  . D+  NSg/V/J+ R       V    NSg/V/J/P .
+# P     D/P NSg/V/J P  NSg+  NPl+  . D+  NSg/V/J+ R       V    NSg/V/J/P .
 >
 #
 > On
@@ -699,7 +699,7 @@
 > A   table  can't stand on  two  legs   .
 # D/P NSg/V+ VX    NSg/V J/P NSg+ NPl/V+ .
 > After resting on  his     elbows , he       stood on  his     toes   , then    walked on  his     heels  .
-# JC/P  V+      J/P ISg/D$+ NPl/V+ . NPr/ISg+ V     J/P ISg/D$+ NPl/V+ . NSg/J/C V/J    J/P ISg/D$+ NPl/V+ .
+# P     V+      J/P ISg/D$+ NPl/V+ . NPr/ISg+ V     J/P ISg/D$+ NPl/V+ . NSg/J/C V/J    J/P ISg/D$+ NPl/V+ .
 > The Tories are on  twenty - five percent in      this    constituency .
 # D   NPl    V   J/P NSg    . NSg  NSg     NPr/J/P I/Ddem+ NSg+         .
 > The blue     team   are on  six points and the red   team  on  five .
@@ -911,9 +911,9 @@
 > It       was small   and bumpy , with a   tinge of orange    .
 # NPr/ISg+ V   NPr/V/J V/C J     . P    D/P NSg/V P  NPr🅪/V/J+ .
 > There are lots  of people with no    homes after the wildfire .
-# +     V   NPl/V P  NPl/V  P    NPr/P NPl/V JC/P  D+  NSg+     .
+# +     V   NPl/V P  NPl/V  P    NPr/P NPl/V P     D+  NSg+     .
 > Speak with confidence .
-# NSg/V P    NSg+       .
+# NSg/V P    NᴹSg+      .
 > He       spoke with sadness in      his     voice  .
 # NPr/ISg+ NSg/V P    NSg+    NPr/J/P ISg/D$+ NSg/V+ .
 > The sailors were  infected with malaria .
