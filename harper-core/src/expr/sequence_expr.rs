@@ -250,6 +250,9 @@ impl SequenceExpr {
     // Determiners
 
     gen_then_from_is!(determiner);
+    gen_then_from_is!(demonstrative_determiner);
+    gen_then_from_is!(quantifier);
+    gen_then_from_is!(non_quantifier_determiner);
 
     /// Push an [`IndefiniteArticle`] to the end of the operation list.
     pub fn then_indefinite_article(self) -> Self {
