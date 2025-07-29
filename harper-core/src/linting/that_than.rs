@@ -1,5 +1,7 @@
 use crate::{
-    expr::{Expr, MatchInfo, SequenceExpr}, linting::{ExprLinter, Lint, LintKind, Suggestion}, CharStringExt, Token
+    CharStringExt, Token,
+    expr::{Expr, MatchInfo, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct ThatThan {

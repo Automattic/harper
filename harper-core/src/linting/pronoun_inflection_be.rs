@@ -137,7 +137,7 @@ impl ExprLinter for PronounInflectionBe {
     fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
         let matched_tokens = match_info.matched_tokens;
         let span = matched_tokens.get(matched_tokens.len() - 3)?.span;
-        
+
         // Determine the correct inflection of "be".
         let correct = self.map.lookup(0, matched_tokens, source)?;
 
