@@ -27,9 +27,9 @@
 > problems that          can    be     solved using them     . The fields  of cryptography and computer
 # NPl+     NSg/I/C/Ddem+ NPr/VX NSg/VX V/J    V     NSg/IPl+ . D   NPrPl/V P  NSg          V/C NSg/V+
 > security involve studying the means for secure communication and preventing
-# NSg+     V       V        D   NPl/V C/P V/J    N🅪Sg+         V/C V
+# NᴹSg+    V       V        D   NPl/V C/P V/J    N🅪Sg+         V/C V
 > security vulnerabilities . Computer graphics and computational geometry address
-# NSg+     NSg+            . NSg/V+   NPl+     V/C J             N🅪Sg+    NSg/V+
+# NᴹSg+    NSg+            . NSg/V+   NPl+     V/C J             N🅪Sg+    NSg/V+
 > the generation of images . Programming language theory considers different ways
 # D   NSg        P  NPl/V+ . NᴹSg/V+     N🅪Sg/V+  NSg+   V         NSg/J     NPl
 > to describe computational processes , and database theory concerns the management
@@ -279,7 +279,7 @@
 > formulated by      — Edsger Dijkstra , states   that          " computer science is no    more         about
 # V/J        NSg/J/P . ?      NSg      . NPrPl/V+ NSg/I/C/Ddem+ . NSg/V+   N🅪Sg/V+ VL NPr/P NPr/I/V/J/Dq J/P
 > computers than astronomy is about telescopes . " [ note   3 ] The design and deployment
-# NPl/V+    C/P  NSg+      VL J/P+  NPl/V      . . . NSg/V+ # . D+  N🅪Sg/V V/C NSg
+# NPl/V+    C/P  N🅪Sg+     VL J/P+  NPl/V      . . . NSg/V+ # . D+  N🅪Sg/V V/C NSg
 > of computers and computer systems is generally considered the province of
 # P  NPl/V     V/C NSg/V+   NPl+    VL R         V/J        D   NSg      P
 > disciplines other   than computer science . For example , the study of computer
@@ -354,8 +354,8 @@
 # NSg          P  NSg/V+   N🅪Sg/V
 >
 #
-> Despite the word   science in      its     name   , there is debate over      whether or    not
-# NSg/V/P D+  NSg/V+ N🅪Sg/V  NPr/J/P ISg/D$+ NSg/V+ . +     VL NSg/V+ NSg/V/J/P I/C     NPr/C NSg/C
+> Despite the word   science in      its     name   , there is debate  over      whether or    not
+# NSg/V/P D+  NSg/V+ N🅪Sg/V  NPr/J/P ISg/D$+ NSg/V+ . +     VL N🅪Sg/V+ NSg/V/J/P I/C     NPr/C NSg/C
 > computer science is a   discipline of science , mathematics , or    engineering . Allen
 # NSg/V    N🅪Sg/V+ VL D/P NSg/V      P  N🅪Sg/V  . NᴹSg+       . NPr/C NSg/V+      . NPr+
 > Newell and Herbert A. Simon argued in      1975 ,
@@ -365,7 +365,7 @@
 > Computer science is an  empirical discipline . We   would have   called it       an
 # NSg/V+   N🅪Sg/V  VL D/P NSg/J+    NSg/V+     . IPl+ VX    NSg/VX V/J    NPr/ISg+ D/P+
 > experimental science , but     like        astronomy , economics , and geology , some     of its
-# NSg/J+       N🅪Sg/V+ . NSg/C/P NSg/V/J/C/P NSg       . NSg+      . V/C NSg     . I/J/R/Dq P  ISg/D$+
+# NSg/J+       N🅪Sg/V+ . NSg/C/P NSg/V/J/C/P N🅪Sg      . NSg+      . V/C NSg     . I/J/R/Dq P  ISg/D$+
 > unique forms of observation and experience do     not   fit     a   narrow  stereotype of
 # NSg/J  NPl/V P  NSg         V/C NSg/V+     NSg/VX NSg/C NSg/V/J D/P NSg/V/J NSg/V      P
 > the experimental method . Nonetheless , they are experiments . Each new      machine
@@ -487,7 +487,7 @@
 > Theoretical computer science is mathematical and abstract in      spirit , but     it
 # J+          NSg/V+   N🅪Sg/V  VL J            V/C NSg/V/J  NPr/J/P NSg/V+ . NSg/C/P NPr/ISg+
 > derives its     motivation from practical and everyday computation . It       aims  to
-# NPl/V   ISg/D$+ NSg+       P    NSg/J     V/C NSg/J+   NSg+        . NPr/ISg+ NPl/V P
+# NPl/V   ISg/D$+ N🅪Sg+      P    NSg/J     V/C NSg/J+   NSg+        . NPr/ISg+ NPl/V P
 > understand the nature of computation and , as    a   consequence of this
 # V          D   NSg/V  P  NSg         V/C . NSg/R D/P NSg/V       P  I/Ddem+
 > understanding , provide more         efficient methodologies .
@@ -589,7 +589,7 @@
 > design  . They form  an  important theoretical underpinning for software
 # N🅪Sg/V+ . IPl+ NSg/V D/P J         J           NSg/V        C/P NᴹSg+
 > engineering , especially where safety or    security is  involved . Formal methods are
-# NSg/V+      . R          NSg/C N🅪Sg/V NPr/C NSg+     VL+ V/J      . NSg/J  NPl/V+  V
+# NSg/V+      . R          NSg/C N🅪Sg/V NPr/C NᴹSg+    VL+ V/J      . NSg/J  NPl/V+  V
 > a   useful adjunct to software testing since they help  avoid errors and can    also
 # D/P J      NSg/V/J P  NᴹSg     V+      C/P   IPl+ NSg/V V     NPl/V+ V/C NPr/VX W?
 > give  a   framework for testing . For industrial use    , tool   support is required .
@@ -599,7 +599,7 @@
 > used in      the development of high    - integrity and life   - critical systems , where
 # V/J  NPr/J/P D   N🅪Sg        P  NSg/V/J . NᴹSg      V/C NSg/V+ . NSg/J    NPl     . NSg/C
 > safety or    security is of utmost importance . Formal methods are best      described as
-# N🅪Sg/V NPr/C NSg+     VL P  NSg/J  NᴹSg+      . NSg/J  NPl/V+  V   NPr/VX/JS V/J       NSg/R
+# N🅪Sg/V NPr/C NᴹSg+    VL P  NSg/J  NᴹSg+      . NSg/J  NPl/V+  V   NPr/VX/JS V/J       NSg/R
 > the application of a   fairly broad variety of theoretical computer science
 # D   NSg         P  D/P R      NSg/J NSg     P  J           NSg/V+   N🅪Sg/V+
 > fundamentals , in      particular logic    calculi , formal languages , automata theory ,
@@ -821,13 +821,13 @@
 >
 #
 > Computer security and cryptography
-# NSg/V+   NSg      V/C NSg
+# NSg/V+   NᴹSg     V/C NSg
 >
 #
 > Computer security is a   branch of computer technology with the objective of
-# NSg/V+   NSg      VL D/P NPr/V  P  NSg/V+   N🅪Sg       P    D   NSg/J     P
+# NSg/V+   NᴹSg     VL D/P NPr/V  P  NSg/V+   N🅪Sg       P    D   NSg/J     P
 > protecting information from unauthorized access , disruption , or    modification
-# V          NᴹSg        P    V/J+         NSg/V+ . NSg+       . NPr/C NSg+
+# V          NᴹSg        P    V/J+         NSg/V+ . N🅪Sg+      . NPr/C NSg+
 > while     maintaining the accessibility and usability of the system for its     intended
 # NSg/V/C/P V           D+  NSg           V/C NᴹSg      P  D   NSg    C/P ISg/D$+ NSg/V/J+
 > users .
@@ -843,7 +843,7 @@
 > include symmetric and asymmetric encryption , digital signatures , cryptographic
 # NSg/V   J         V/C J+         NSg        . NSg/J+  NPl+       . J
 > hash   functions , key     - agreement protocols , blockchain , zero    - knowledge proofs , and
-# NSg/V+ NPl/V+    . NPr/V/J . NSg       NPl/V     . NSg        . NSg/V/J . NᴹSg      NPl/V  . V/C
+# NSg/V+ NPl/V+    . NPr/V/J . N🅪Sg      NPl/V     . NSg        . NSg/V/J . NᴹSg      NPl/V  . V/C
 > garbled circuits .
 # V/J+    NPl/V+   .
 >

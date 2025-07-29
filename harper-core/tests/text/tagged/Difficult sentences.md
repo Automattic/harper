@@ -33,7 +33,7 @@
 >
 #
 > Caesar was at    Rome ; a    climate treaty was signed at    Kyoto in      1997 .
-# NPr+   V   NSg/P NPr+ . D/P+ NSg/V+  NSg/V+ V   V/J    NSg/P NPr+  NPr/J/P #    .
+# NPr+   V   NSg/P NPr+ . D/P+ N🅪Sg/V+ NSg/V+ V   V/J    NSg/P NPr+  NPr/J/P #    .
 > I    was at    Jim’s house  at    the corner of Fourth  Street  and  Vine .
 # ISg+ V   NSg/P NSg$  NPr/V+ NSg/P D   NSg/V  P  NPr/V/J NSg/V/J V/C+ NSg+ .
 > at    the bottom  of the page   ; sitting at    the table  ; at    church ; at    sea
@@ -246,8 +246,8 @@
 # NPr/ISg+ NPl/V NSg/VX/JC C/P V      V/J  N🅪Sg/V+ . . NPr+ N🅪Sg+ .
 > She  was the worse    for drink  .
 # ISg+ V   D   NSg/V/JC C/P NSg/V+ .
-> All          those  for the motion , raise your hands  .
-# NSg/I/J/C/Dq I/Ddem C/P D+  NSg/V+ . NSg/V D$+  NPl/V+ .
+> All          those  for the motion  , raise your hands  .
+# NSg/I/J/C/Dq I/Ddem C/P D+  N🅪Sg/V+ . NSg/V D$+  NPl/V+ .
 > Who's for ice     - cream    ?
 # NSg$  C/P NPr🅪/V+ . N🅪Sg/V/J .
 > I'm for going   by      train
@@ -426,8 +426,8 @@
 # NPr+ VL NPr/J/P D/P NSg+ .
 > My  fruit   trees  are in      bud   .
 # D$+ N🅪Sg/V+ NPl/V+ V   NPr/J/P NPr/V .
-> The company is in      profit  .
-# D+  NSg/V+  VL NPr/J/P NSg/V/J .
+> The company is in      profit   .
+# D+  NSg/V+  VL NPr/J/P N🅪Sg/V/J .
 > You've got a   friend  in      me       .
 # W?     V   D/P NPr/V/J NPr/J/P NPr/ISg+ .
 > He's met his     match  in      her     .
@@ -913,7 +913,7 @@
 > There are lots  of people with no    homes after the wildfire .
 # +     V   NPl/V P  NPl/V  P    NPr/P NPl/V P     D+  NSg+     .
 > Speak with confidence .
-# NSg/V P    NSg+       .
+# NSg/V P    NᴹSg+      .
 > He       spoke with sadness in      his     voice  .
 # NPr/ISg+ NSg/V P    NSg+    NPr/J/P ISg/D$+ NSg/V+ .
 > The sailors were  infected with malaria .

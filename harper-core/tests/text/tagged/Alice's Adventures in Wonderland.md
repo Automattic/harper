@@ -747,7 +747,7 @@
 > herself talking familiarly with them     , as    if    she  had known them     all          her     life   .
 # ISg+    V       R          P    NSg/IPl+ . NSg/R NSg/C ISg+ V   V/J   NSg/IPl+ NSg/I/J/C/Dq ISg/D$+ NSg/V+ .
 > Indeed , she  had quite a   long    argument with the Lory , who   at    last    turned sulky ,
-# W?     . ISg+ V   NSg   D/P NPr/V/J NSg/V    P    D   ?    . NPr/I NSg/P NSg/V/J V/J    NSg/J .
+# W?     . ISg+ V   NSg   D/P NPr/V/J N🅪Sg/V   P    D   ?    . NPr/I NSg/P NSg/V/J V/J    NSg/J .
 > and would only  say   , “ I    am      older than you    , and must  know  better    ; ” and this    Alice
 # V/C VX    J/R/C NSg/V . . ISg+ NPr/V/J JC    C/P  ISgPl+ . V/C NSg/V NSg/V NSg/VX/JC . . V/C I/Ddem+ NPr+
 > would not   allow without knowing   how   old   it       was , and , as    the Lory positively
@@ -1221,7 +1221,7 @@
 > door   , and the other    arm      curled round     her    head     . Still   she  went  on  growing , and ,
 # NSg/V+ . V/C D+  NSg/V/J+ NSg/V/J+ V/J    NSg/V/J/P ISg/D$ NPr/V/J+ . NSg/V/J ISg+ NSg/V J/P NSg/V   . V/C .
 > as    a    last     resource , she  put   one       arm      out         of the window , and one       foot   up        the
-# NSg/R D/P+ NSg/V/J+ NSg/V+   . ISg+ NSg/V NSg/I/V/J NSg/V/J+ NSg/V/J/R/P P  D+  NSg/V+ . V/C NSg/I/V/J NSg/V+ NSg/V/J/P D+
+# NSg/R D/P+ NSg/V/J+ N🅪Sg/V+  . ISg+ NSg/V NSg/I/V/J NSg/V/J+ NSg/V/J/R/P P  D+  NSg/V+ . V/C NSg/I/V/J NSg/V+ NSg/V/J/P D+
 > chimney , and said to herself “ Now       I    can    do     no     more         , whatever happens . What   will
 # NSg/V+  . V/C V/J  P  ISg+    . NPr/V/J/C ISg+ NPr/VX NSg/VX NPr/P+ NPr/I/V/J/Dq . NSg/I/J+ V+      . NSg/I+ NPr/VX
 > become of me      ? ”
@@ -1846,8 +1846,8 @@
 # V/C ISg+ NSg/V/J NSg/I/C/Ddem ISg+ V   NSg/V/J ISg/D$+ NSg/V/JC+ .
 >
 #
-> “ Are you    content  now       ? ” said the Caterpillar .
-# . V   ISgPl+ NSg/V/J+ NPr/V/J/C . . V/J  D   NSg/V+      .
+> “ Are you    content   now       ? ” said the Caterpillar .
+# . V   ISgPl+ N🅪Sg/V/J+ NPr/V/J/C . . V/J  D   NSg/V+      .
 >
 #
 > “ Well    , I    should like        to be     a   little     larger , sir    , if    you    wouldn’t mind   , ” said
@@ -3853,7 +3853,7 @@
 >
 #
 > The executioner’s argument was , that         you    couldn’t cut     off       a    head     unless there
-# D+  NSg$+         NSg/V    V   . NSg/I/C/Ddem ISgPl+ V        NSg/V/J NSg/V/J/P D/P+ NPr/V/J+ C      +
+# D+  NSg$+         N🅪Sg/V   V   . NSg/I/C/Ddem ISgPl+ V        NSg/V/J NSg/V/J/P D/P+ NPr/V/J+ C      +
 > was a   body  to cut     it      off       from : that         he       had never had to do     such  a    thing  before ,
 # V   D/P NSg/V P  NSg/V/J NPr/ISg NSg/V/J/P P    . NSg/I/C/Ddem NPr/ISg+ V   R     V   P  NSg/VX NSg/I D/P+ NSg/V+ C/P    .
 > and he       wasn’t going   to begin at    his     time     of life   .
@@ -3861,13 +3861,13 @@
 >
 #
 > The King’s argument was , that         anything that          had a    head     could  be     beheaded , and
-# D+  NSg$+  NSg/V    V   . NSg/I/C/Ddem NSg/I/V+ NSg/I/C/Ddem+ V   D/P+ NPr/V/J+ NSg/VX NSg/VX V/J      . V/C
+# D+  NSg$+  N🅪Sg/V   V   . NSg/I/C/Ddem NSg/I/V+ NSg/I/C/Ddem+ V   D/P+ NPr/V/J+ NSg/VX NSg/VX V/J      . V/C
 > that         you    weren’t to talk   nonsense  .
 # NSg/I/C/Ddem ISgPl+ V       P  N🅪Sg/V NᴹSg/V/J+ .
 >
 #
 > The Queen’s argument was , that         if    something wasn’t done    about it       in      less    than no
-# D+  NSg$+   NSg/V    V   . NSg/I/C/Ddem NSg/C NSg/I/V/J V      NSg/V/J J/P   NPr/ISg+ NPr/J/P V/J/C/P C/P  NPr/P+
+# D+  NSg$+   N🅪Sg/V   V   . NSg/I/C/Ddem NSg/C NSg/I/V/J V      NSg/V/J J/P   NPr/ISg+ NPr/J/P V/J/C/P C/P  NPr/P+
 > time      she’d have   everybody executed , all           round      . ( It       was this    last    remark that          had
 # N🅪Sg/V/J+ W?    NSg/VX NSg/I+    V/J      . NSg/I/J/C/Dq+ NSg/V/J/P+ . . NPr/ISg+ V   I/Ddem+ NSg/V/J NSg/V  NSg/I/C/Ddem+ V
 > made the whole  party    look  so        grave    and  anxious . )

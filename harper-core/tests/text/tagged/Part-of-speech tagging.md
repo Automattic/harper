@@ -14,8 +14,8 @@
 # NPr/J/P NSg+   NᴹSg        . NSg/V/J . P  . N🅪Sg/V NSg/V   . NSg+ NSg/V   NPr/C NSg+ NSg/V   NPr/C
 > POST      ) , also called grammatical tagging is the process of marking up        a   word  in      a
 # NPr🅪/V/P+ . . W?   V/J    J           NSg/V   VL D   NSg/V   P  NSg/V   NSg/V/J/P D/P NSg/V NPr/J/P D/P
-> text  ( corpus ) as    corresponding to a   particular part    of speech  , based on  both   its
-# NSg/V . NSg+   . NSg/R NSg/V/J       P  D/P NSg/J      NSg/V/J P  N🅪Sg/V+ . V/J   J/P I/C/Dq ISg/D$+
+> text   ( corpus ) as    corresponding to a   particular part    of speech  , based on  both   its
+# N🅪Sg/V . NSg+   . NSg/R NSg/V/J       P  D/P NSg/J      NSg/V/J P  N🅪Sg/V+ . V/J   J/P I/C/Dq ISg/D$+
 > definition and its     context . A   simplified form  of this    is commonly taught to
 # NSg        V/C ISg/D$+ N🅪Sg/V+ . D/P V/J        NSg/V P  I/Ddem+ VL R        V      P
 > school - age    children , in      the identification of words  as    nouns , verbs  , adjectives ,
@@ -170,8 +170,8 @@
 # D   NSg/V/J NPr/V/J NSg    P  NPr🅪/V/J+ C/P NSg/V+   N🅪Sg+    V   D   NPr/V/J NSg
 > developed at    Brown   University by      Henry Kučera and W. Nelson Francis , in      the
 # V/J       NSg/P NPr/V/J NSg        NSg/J/P NPr+  ?      V/C ?  NPr+   NPr+    . NPr/J/P D
-> mid      - 1960s . It       consists of about 1 , 000 , 000 words of running   English   prose text   ,
-# NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  NSg/V/J/P NPr🅪/V/J+ NSg/V NSg/V+ .
+> mid      - 1960s . It       consists of about 1 , 000 , 000 words of running   English   prose text    ,
+# NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  NSg/V/J/P NPr🅪/V/J+ NSg/V N🅪Sg/V+ .
 > made up        of 500 samples from randomly chosen   publications . Each sample is 2 , 000
 # V    NSg/V/J/P P  #   NPl/V+  P    R+       NᴹSg/V/J NPl+         . Dq+  NSg/V+ VL # . #
 > or    more         words  ( ending at    the first    sentence - end   after 2 , 000 words  , so        that         the
