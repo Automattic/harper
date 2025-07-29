@@ -30,7 +30,7 @@ export default class State {
 	private onExtensionChange: () => void;
 	private ignoredGlobs?: string[];
 	private editorViewField?: StateField<MarkdownFileInfo>;
-	private showUpdateNotification: boolean;
+	private showUpdateNotification?: boolean;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -90,7 +90,7 @@ export default class State {
 
 		this.delay = settings.delay ?? DEFAULT_DELAY;
 		this.ignoredGlobs = settings.ignoredGlobs;
-		this.showUpdateNotification = settings.showUpdateNotification ?? true;
+		this.showUpdateNotification = settings.showUpdateNotification;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
