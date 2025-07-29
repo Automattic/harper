@@ -1,7 +1,5 @@
 use crate::{
-    CharStringExt, Token,
-    expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    expr::{Expr, MatchInfo, SequenceExpr}, linting::{ExprLinter, Lint, LintKind, Suggestion}, CharStringExt, Token
 };
 
 pub struct ThatThan {
@@ -36,7 +34,8 @@ impl ExprLinter for ThatThan {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         if toks.len() != 5 {
             return None;
         }
