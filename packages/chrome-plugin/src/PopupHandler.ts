@@ -11,7 +11,8 @@ function monitorDoubleShift(onDoubleShift: DoubleShiftHandler, interval = 300): 
 	const handler = (e: KeyboardEvent) => {
 		if (e.key !== 'Shift') return;
 		const now = performance.now();
-		if (now - lastTime <= interval) onDoubleShift();
+		const diff = now - lastTime;
+		if (diff <= interval && diff > 10) onDoubleShift();
 		lastTime = now;
 	};
 	window.addEventListener('keydown', handler);

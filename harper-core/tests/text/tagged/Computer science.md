@@ -294,8 +294,8 @@
 # NSg/P   D   J+      NSg/V+   . J       NPl/V       . NSg/V+   N🅪Sg/V+ NᴹSg/V+  W?
 > often intersects other    disciplines , such  as    cognitive science , linguistics ,
 # R     V+         NSg/V/J+ NPl/V+      . NSg/I NSg/R NSg/J+    N🅪Sg/V+ . NᴹSg+       .
-> mathematics , physics , biology , Earth  science , statistics , philosophy , and logic    .
-# NᴹSg+       . NPl/V+  . NSg+    . NPr/V+ N🅪Sg/V+ . NPl/V+     . NSg/V+     . V/C NSg/V/J+ .
+> mathematics , physics , biology , Earth   science , statistics , philosophy , and logic    .
+# NᴹSg+       . NPl/V+  . NSg+    . NPrᴹ/V+ N🅪Sg/V+ . NPl/V+     . NSg/V+     . V/C NSg/V/J+ .
 >
 #
 > Computer science is considered by      some      to have   a   much       closer relationship with
@@ -461,7 +461,7 @@
 > Computing Sciences Accreditation Board  — which is made up        of representatives of
 # NᴹSg/V+   NPl/V+   N🅪Sg          NSg/V+ . I/C+  VL V    NSg/V/J/P P  NPl             P
 > the Association for Computing Machinery ( ACM ) , and the IEEE Computer Society
-# D+  NSg         C/P NᴹSg/V+   NᴹSg+     . NSg . . V/C D+  NPr+ NSg/V+   NSg+
+# D+  NSg         C/P NᴹSg/V+   NᴹSg+     . NSg . . V/C D+  NPr+ NSg/V+   N🅪Sg+
 > ( IEEE CS    ) — identifies four areas that          it       considers crucial to the discipline of
 # . NPr  NPl/V . . V          NSg  NPl+  NSg/I/C/Ddem+ NPr/ISg+ V         J       P  D   NSg/V      P
 > computer science : theory of computation , algorithms and data  structures ,

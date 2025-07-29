@@ -1173,16 +1173,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (10 priority)
-Message: |
-     489 |   feature of objects is that an object's procedures can access and often modify
-     490 |   the data fields of the object with which they are associated. Thus
-         |       ^~~~ Use an apostrophe and `s` to form a noun’s possessive.
-Suggest:
-  - Replace with: “data's”
-
-
-
 Lint:    Punctuation (31 priority)
 Message: |
      490 |   the data fields of the object with which they are associated. Thus

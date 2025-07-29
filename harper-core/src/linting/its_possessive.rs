@@ -46,13 +46,18 @@ impl Default for ItsPossessive {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::ADJ, UPOS::NOUN, UPOS::PROPN]))
             .t_ws()
-            .then_unless(UPOSSet::new(&[UPOS::PART, UPOS::NOUN, UPOS::PRON]));
+            .then_unless(UPOSSet::new(&[
+                UPOS::PART,
+                UPOS::NOUN,
+                UPOS::PRON,
+                UPOS::SCONJ,
+            ]));
 
         map.insert(start_of_sentence, 0);
 
         let special = SequenceExpr::aco("it's")
             .t_ws()
-            .then(WordSet::new(&["various", "many"]));
+            .then(WordSet::new(&["various"]));
 
         map.insert(special, 0);
 
@@ -289,6 +294,22 @@ mod tests {
     fn allows_insincere() {
         assert_no_lints(
             "But feel free to omit it if you feel it's insincere.",
+            ItsPossessive::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_possible() {
+        assert_no_lints(
+            "It's possible that a record was improperly handled. ",
+            ItsPossessive::default(),
+        );
+    }
+
+    #[test]
+    fn allows_many_times_harder() {
+        assert_no_lints(
+            "It's many times harder to do this than that.",
             ItsPossessive::default(),
         );
     }

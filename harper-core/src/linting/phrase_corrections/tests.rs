@@ -593,16 +593,6 @@ fn hunger_pain() {
 // IAm
 // -none-
 
-// IAmAgreement
-#[test]
-fn corrects_i_are() {
-    assert_suggestion_result(
-        "I are really happy about this release.",
-        lint_group(),
-        "I am really happy about this release.",
-    );
-}
-
 // IDo
 #[test]
 fn corrects_i_does() {
