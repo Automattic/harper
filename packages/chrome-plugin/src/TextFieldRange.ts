@@ -1,3 +1,5 @@
+import { boxesOverlap, domRectToBox } from './Box';
+
 /** A version of the `Range` object that works for `<textarea />` and `<input />` elements. */
 export default class TextFieldRange {
 	field: HTMLTextAreaElement | HTMLInputElement;
@@ -35,26 +37,6 @@ export default class TextFieldRange {
 		this.mirror = document.createElement('div');
 		this.mirror.id = 'textfield-mirror';
 
-		// Compute the absolute position of the field.
-		const fieldRect = this.field.getBoundingClientRect();
-		const scrollTop = window.scrollY || document.documentElement.scrollTop;
-		const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-
-		// Position the mirror exactly over the field.
-		Object.assign(this.mirror.style, {
-			top: `${fieldRect.top + scrollTop}px`,
-			left: `${fieldRect.left + scrollLeft}px`,
-			width: `${fieldRect.width}px`,
-			// Optionally, you might copy the height—useful if you need an exact overlay.
-			// height: `${fieldRect.height}px`,
-			// For a textarea, use "pre-wrap" (so line-breaks are preserved); for a single‑line input, use "pre"
-			whiteSpace: this.field.tagName.toLowerCase() === 'textarea' ? 'pre-wrap' : 'pre',
-			wordWrap: 'break-word',
-			visibility: 'hidden',
-			position: 'absolute',
-			pointerEvents: 'none',
-		});
-
 		// Copy necessary computed styles from the field (affecting text layout)
 		const computed: CSSStyleDeclaration = window.getComputedStyle(this.field);
 		// The properties below help ensure the mirror text has the same layout as the actual text.
@@ -80,12 +62,43 @@ export default class TextFieldRange {
 			this.mirror!.style[prop] = computed[prop];
 		});
 
+		// Compute the absolute position of the field.
+		const fieldRect = this.field.getBoundingClientRect();
+		const scrollTop = window.scrollY || document.documentElement.scrollTop;
+		const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+
+		console.log(fieldRect);
+
+		// Position the mirror exactly over the field.
+		Object.assign(this.mirror.style, {
+			top: `${fieldRect.top + scrollTop}px`,
+			left: `${fieldRect.left + scrollLeft}px`,
+			width: `${fieldRect.width}px`,
+			height: `${fieldRect.height}px`,
+			overflow: 'scroll',
+			// For a textarea, use "pre-wrap" (so line-breaks are preserved); for a single‑line input, use "pre"
+			whiteSpace: this.field.tagName.toLowerCase() === 'textarea' ? 'pre-wrap' : 'pre',
+			wordWrap: 'break-word',
+			visibility: 'hidden',
+			position: 'absolute',
+			pointerEvents: 'none',
+		});
+
 		// Create the text node that will mirror the field's text.
 		this.mirrorTextNode = document.createTextNode('');
 		this.mirror.appendChild(this.mirrorTextNode);
 
+		// Needed for the scroll to work.
+		this._updateMirrorText();
+
 		// Append the mirror element to the document body.
 		document.body.appendChild(this.mirror);
+
+		this.mirror.scrollTo({
+			top: this.field.scrollTop,
+			left: this.field.scrollLeft,
+			behavior: 'instant',
+		});
 	}
 
 	/**
@@ -107,7 +120,26 @@ export default class TextFieldRange {
 		range.setStart(this.mirrorTextNode, this.startOffset);
 		range.setEnd(this.mirrorTextNode, this.endOffset);
 
-		return Array.from(range.getClientRects());
+		let arr = Array.from(range.getClientRects());
+
+		const fieldBox = domRectToBox(this.field.getBoundingClientRect());
+
+		// Filter out rectangles that should be hidden
+		arr = arr.filter((rect) => {
+			const box = domRectToBox(rect);
+			return boxesOverlap(box, fieldBox);
+		});
+
+		return arr;
+	}
+
+	getBoundingClientRect(): DOMRect | null {
+		this._updateMirrorText();
+		if (this.mirror == null) {
+			return null;
+		}
+
+		return this.mirror.getBoundingClientRect();
 	}
 
 	/**
