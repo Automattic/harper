@@ -14,16 +14,7 @@ impl Default for FewUnitsOfTimeAgo {
     fn default() -> Self {
         let units = TimeUnitExpr;
 
-        let start = SequenceExpr::default()
-            .then(|tok: &Token, src: &[char]| {
-                if tok.kind.is_word() {
-                    let chars = tok.span.get_content(src);
-                    chars != ['a'] && chars != ['A']
-                } else {
-                    true
-                }
-            })
-            .t_ws();
+        let start = SequenceExpr::default().then_word_except(&["a"]).t_ws();
 
         let expr = Lrc::new(
             SequenceExpr::default()

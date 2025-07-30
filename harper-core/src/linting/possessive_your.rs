@@ -1,4 +1,5 @@
 use crate::Token;
+use crate::TokenKind;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 
@@ -10,16 +11,13 @@ pub struct PossessiveYour {
 
 impl Default for PossessiveYour {
     fn default() -> Self {
-        let pattern =
-            SequenceExpr::aco("you")
-                .then_whitespace()
-                .then(|tok: &Token, source: &[char]| {
-                    if tok.kind.is_nominal() && !tok.kind.is_likely_homograph() {
-                        let word = tok.span.get_content_string(source).to_lowercase();
-                        return !matches!(word.as_str(), "guys" | "what's");
-                    }
-                    false
-                });
+        let pattern = SequenceExpr::aco("you")
+            .then_whitespace()
+            .then_kind_is_but_is_not_except(
+                TokenKind::is_nominal,
+                TokenKind::is_likely_homograph,
+                &["guys", "what's"],
+            );
 
         Self {
             expr: Box::new(pattern),
