@@ -23,6 +23,7 @@ const FALSE_POSITIVES: &[&str] = &[
     // (using .kind.is_likely_homograph() here is too strict)
     "back",
     "bit",
+    "borderline",
     "bottom",
     "chance",
     "clockwork",
@@ -34,18 +35,22 @@ const FALSE_POSITIVES: &[&str] = &[
     "head",
     "kind",
     "left",
+    "light",
     "meaning",
     "middle",
+    "multiple",
     "one",
     "part",
     "potential",
     "precision",
+    "red",
     // for "rid" I removed the `5` flag in `dictionary.dict``
     "shadow",
     "side",
     "short",
     "something",
     "sound",
+    "top",
 ];
 
 fn is_false_positive(chars: &[char]) -> bool {
@@ -508,5 +513,38 @@ mod tests {
             AdjectiveOfA,
             0,
         );
+    }
+
+    #[test]
+    fn dont_flag_borderline_of() {
+        assert_lint_count(
+            "it's very very on the borderline of a rock pop ballad",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_light() {
+        assert_lint_count("The light of a star.", AdjectiveOfA, 0);
+    }
+
+    #[test]
+    fn dont_flag_multiple() {
+        assert_lint_count(
+            "The image needs to be a multiple of a certain size.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_red() {
+        assert_lint_count("The red of a drop of blood.", AdjectiveOfA, 0);
+    }
+
+    #[test]
+    fn dont_flag_top() {
+        assert_lint_count("The top of a hill.", AdjectiveOfA, 0);
     }
 }

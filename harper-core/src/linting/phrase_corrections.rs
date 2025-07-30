@@ -743,6 +743,13 @@ pub fn lint_group() -> LintGroup {
             "Use `worse` for comparing. (`Worst` is for the extreme case)",
             "Corrects `worst and worst` to `worse and worse` for proper comparative usage."
         ),
+        "WorseCaseScenario" => (
+            ["worse case scenario", "worse-case scenario", "worse-case-scenario",
+             "worst case scenario",                        "worst-case-scenario"],
+            ["worst-case scenario"],
+            "Use `worst` for referring to the worst possible scenario. (`Worse` is for comparing)",
+            "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
+        ),
         "WorseThan" => (
             ["worst than"],
             ["worse than"],
@@ -1049,6 +1056,30 @@ pub fn lint_group() -> LintGroup {
             ["as well"],
             "`as well` should be written as two words.",
             "Corrects `aswell` to `as well`."
+        ),
+        "HasPassed" => (
+            ["has past"],
+            ["has passed"],
+            "Did you mean the verb `passed`?",
+            "Suggests `past` for `passed` in case a verb was intended."
+        ),
+        "HavePassed" => (
+            ["have past"],
+            ["have passed"],
+            "Did you mean the verb `passed`?",
+            "Suggests `past` for `passed` in case a verb was intended."
+        ),
+        "HadPassed" => (
+            ["had past"],
+            ["had passed"],
+            "Did you mean the verb `passed`?",
+            "Suggests `past` for `passed` in case a verb was intended."
+        ),
+        "HavingPassed" => (
+            ["having past"],
+            ["having passed"],
+            "Did you mean the verb `passed`?",
+            "Suggests `past` for `passed` in case a verb was intended."
         ),
     });
 
@@ -2132,6 +2163,87 @@ mod tests {
             "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
             lint_group(),
             "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
+        );
+    }
+
+    #[test]
+    fn correct_has_past() {
+        assert_suggestion_result(
+            "Track the amount of time that has past since a point in time.",
+            lint_group(),
+            "Track the amount of time that has passed since a point in time.",
+        );
+    }
+
+    #[test]
+    fn correct_have_past() {
+        assert_suggestion_result(
+            "Another 14+ days have past, any updates on this?",
+            lint_group(),
+            "Another 14+ days have passed, any updates on this?",
+        );
+    }
+
+    #[test]
+    fn correct_had_past() {
+        assert_suggestion_result(
+            "Few days had past, so im starting to thinks there is a problem in my local version.",
+            lint_group(),
+            "Few days had passed, so im starting to thinks there is a problem in my local version.",
+        );
+    }
+
+    #[test]
+    fn correct_having_past() {
+        assert_suggestion_result(
+            "Return to computer, with enough time having past for the computer to go to full sleep.",
+            lint_group(),
+            "Return to computer, with enough time having passed for the computer to go to full sleep.",
+        );
+    }
+
+    #[test]
+    fn correct_worse_case_space() {
+        assert_suggestion_result(
+            "In the worse case scenario, remote code execution could be achieved.",
+            lint_group(),
+            "In the worst-case scenario, remote code execution could be achieved.",
+        );
+    }
+
+    #[test]
+    fn correct_worse_case_hyphen() {
+        assert_suggestion_result(
+            "Basically I want my pods to get the original client IP address... or at least have X-Forwarded-For header, in a worse-case scenario.",
+            lint_group(),
+            "Basically I want my pods to get the original client IP address... or at least have X-Forwarded-For header, in a worst-case scenario.",
+        );
+    }
+
+    #[test]
+    fn correct_worse_case_two_hyphens() {
+        assert_suggestion_result(
+            "In a worse-case-scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
+            lint_group(),
+            "In a worst-case scenario, the scenario class code and the results being analysed, become out of sync, and so the wrong labels are applied.",
+        );
+    }
+
+    #[test]
+    fn correct_worst_case_space() {
+        assert_suggestion_result(
+            "The worst case scenario can be calculated without looking at streams of data.",
+            lint_group(),
+            "The worst-case scenario can be calculated without looking at streams of data.",
+        );
+    }
+
+    #[test]
+    fn correct_worst_case_two_hyphens() {
+        assert_suggestion_result(
+            "CAPD worst-case-scenario cloud simulator for naughty clouds.",
+            lint_group(),
+            "CAPD worst-case scenario cloud simulator for naughty clouds.",
         );
     }
 }

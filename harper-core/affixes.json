@@ -509,7 +509,7 @@
 			"base_metadata": {}
 		},
 		"1": {
-			"#": "singular noun property",
+			"#": "(singular) noun property",
 			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
@@ -534,6 +534,7 @@
 		},
 		"3": {
 			"#": "linking verb property",
+			"//": "see also m: auxiliary verb property",
 			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
@@ -748,6 +749,7 @@
 		},
 		"m": {
 			"#": "auxiliary verb property",
+			"//": "see also 3: linking verb property",
 			"kind": "property",
 			"cross_product": true,
 			"replacements": [],
@@ -786,6 +788,16 @@
 			"target_metadata": {},
 			"base_metadata": {
 				"dialect": "Canadian"
+			}
+		},
+		"_": {
+			"#": "AU property",
+			"kind": "property",
+			"cross_product": true,
+			"replacements": [],
+			"target_metadata": {},
+			"base_metadata": {
+				"dialect": "Australian"
 			}
 		}
 	}
