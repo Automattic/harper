@@ -111,9 +111,9 @@ mod tests {
             "Maybe downstream packaging folks could advice what would be least worse option.",
             LessWorse::default(),
             &[
-                &"Maybe downstream packaging folks could advice what would be least worst option.",
-                &"Maybe downstream packaging folks could advice what would be least bad option.",
-                &"Maybe downstream packaging folks could advice what would be less bad option.",
+                "Maybe downstream packaging folks could advice what would be least worst option.",
+                "Maybe downstream packaging folks could advice what would be least bad option.",
+                "Maybe downstream packaging folks could advice what would be less bad option.",
             ],
             &[],
         );
@@ -125,8 +125,8 @@ mod tests {
             "async-dropper is probably the least-worst ad-hoc AsyncDrop implementation you've seen.",
             LessWorse::default(),
             &[
-                &"async-dropper is probably the least worst ad-hoc AsyncDrop implementation you've seen.",
-                &"async-dropper is probably the least bad ad-hoc AsyncDrop implementation you've seen.",
+                "async-dropper is probably the least worst ad-hoc AsyncDrop implementation you've seen.",
+                "async-dropper is probably the least bad ad-hoc AsyncDrop implementation you've seen.",
             ],
             &[],
         );
@@ -147,8 +147,8 @@ mod tests {
             "May be the less worst choice for some little playlists.",
             LessWorse::default(),
             &[
-                &"May be the less bad choice for some little playlists.",
-                &"May be the least bad choice for some little playlists.",
+                "May be the less bad choice for some little playlists.",
+                "May be the least bad choice for some little playlists.",
             ],
             &[],
         );

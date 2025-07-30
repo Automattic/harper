@@ -10,6 +10,11 @@ export function getLexicalEditor(page: Page): Locator {
 	return page.locator('[data-lexical-editor="true"]');
 }
 
+/** Locate the ProseMirror editor on the page.  */
+export function getProseMirrorEditor(page: Page): Locator {
+	return page.locator('.ProseMirror');
+}
+
 /** Replace the content of a text editor. */
 export async function replaceEditorContent(editorEl: Locator, text: string) {
 	await editorEl.selectText();

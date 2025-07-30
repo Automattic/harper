@@ -90,7 +90,7 @@ impl ExprLinter for ExpandTimeShorthands {
             span: offending_span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::ReplaceWith(replacement_chars)],
-            message: format!("Did you mean `{}`?", replacement),
+            message: format!("Did you mean `{replacement}`?"),
             priority: 31,
         })
     }
