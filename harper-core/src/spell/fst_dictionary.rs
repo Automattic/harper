@@ -219,8 +219,7 @@ mod tests {
     use itertools::Itertools;
 
     use crate::CharStringExt;
-    use crate::Dictionary;
-    use crate::WordId;
+    use crate::spell::{Dictionary, WordId};
 
     use super::FstDictionary;
 

@@ -12,7 +12,8 @@ use super::expansion::{
     Expansion, HumanReadableExpansion,
 };
 use super::word_list::MarkedWord;
-use crate::{CharString, Span, WordId, WordMetadata};
+use crate::spell::WordId;
+use crate::{CharString, Span, WordMetadata};
 
 #[derive(Debug, Clone)]
 pub struct AttributeList {

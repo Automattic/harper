@@ -16,18 +16,21 @@ pub struct SequenceExpr {
 macro_rules! gen_then_from_is {
     ($quality:ident) => {
         paste! {
+            #[doc = concat!("Adds a step matching a token where [`TokenKind::is_", stringify!($quality), "()`] returns true.")]
             pub fn [< then_$quality >] (self) -> Self{
                 self.then(|tok: &Token, _source: &[char]| {
                     tok.kind.[< is_$quality >]()
                 })
             }
 
+            #[doc = concat!("Adds a step matching one or more consecutive tokens where [`TokenKind::is_", stringify!($quality), "()`] returns true.")]
             pub fn [< then_one_or_more_$quality s >] (self) -> Self{
                 self.then_one_or_more(Box::new(|tok: &Token, _source: &[char]| {
                     tok.kind.[< is_$quality >]()
                 }))
             }
 
+            #[doc = concat!("Adds a step matching a token where [`TokenKind::is_", stringify!($quality), "()`] returns false.")]
             pub fn [< then_anything_but_$quality >] (self) -> Self{
                 self.then(|tok: &Token, _source: &[char]| {
                     if tok.kind.[< is_$quality >](){
@@ -71,6 +74,7 @@ impl Expr for SequenceExpr {
 }
 
 impl SequenceExpr {
+    /// Push an [expression](Expr) to the operation list.
     pub fn then(mut self, expr: impl Expr + 'static) -> Self {
         self.exprs.push(Box::new(expr));
         self
@@ -83,11 +87,13 @@ impl SequenceExpr {
     }
 
     /// Appends the steps in `other` onto the end of `self`.
-    pub fn then_expr(mut self, mut other: Self) -> Self {
+    /// This is more efficient than [`Self::then`] because it avoids pointer redirection.
+    pub fn then_seq(mut self, mut other: Self) -> Self {
         self.exprs.append(&mut other.exprs);
         self
     }
 
+    /// Push an [`IndefiniteArticle`] to the end of the operation list.
     pub fn then_indefinite_article(self) -> Self {
         self.then(IndefiniteArticle::default())
     }
@@ -102,6 +108,7 @@ impl SequenceExpr {
         Self::any_capitalization_of(word)
     }
 
+    /// Construct a new sequence with a [`Word`] at the beginning of the operation list.
     pub fn any_capitalization_of(word: &'static str) -> Self {
         Self::default().then_any_capitalization_of(word)
     }
@@ -141,16 +148,27 @@ impl SequenceExpr {
     }
 
     /// Create a new condition that will step one token forward if met.
-    pub fn if_not_then_step_one(self, condition: impl Expr + 'static) -> Self {
+    /// If the condition is _not_ met, the whole expression returns `None`.
+    ///
+    /// This can be used to build out exceptions to other rules.
+    ///
+    /// See [`UnlessStep`] for more info.
+    pub fn then_unless(self, condition: impl Expr + 'static) -> Self {
         self.then(UnlessStep::new(condition, |_tok: &Token, _src: &[char]| {
             true
         }))
     }
 
+    /// Match any single token.
+    ///
+    /// Shorthand for [`Self::then_anything`].
     pub fn t_any(self) -> Self {
         self.then_anything()
     }
 
+    /// Match any single token.
+    ///
+    /// See [`AnyPattern`] for more info.
     pub fn then_anything(self) -> Self {
         self.then(AnyPattern)
     }

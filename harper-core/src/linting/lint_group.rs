@@ -107,8 +107,8 @@ use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{closed_compounds, initialisms, phrase_corrections};
+use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
-use crate::{Dictionary, MutableDictionary};
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
@@ -567,9 +567,9 @@ impl Linter for LintGroup {
 mod tests {
     use std::sync::Arc;
 
-    use crate::{Dialect, Document, FstDictionary, MutableDictionary, linting::Linter};
-
     use super::LintGroup;
+    use crate::spell::{FstDictionary, MutableDictionary};
+    use crate::{Dialect, Document, linting::Linter};
 
     #[test]
     fn can_get_all_descriptions() {

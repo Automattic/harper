@@ -11,7 +11,8 @@ use strum_macros::{Display, EnumCount, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
-use crate::{Document, TokenKind, TokenStringExt, WordId};
+use crate::spell::WordId;
+use crate::{Document, TokenKind, TokenStringExt};
 
 #[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct WordMetadata {
@@ -659,6 +660,7 @@ impl PronounData {
     }
 }
 
+/// Additional metadata for determiners
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct DeterminerData {
     pub is_demonstrative: Option<bool>,
@@ -675,9 +677,9 @@ impl DeterminerData {
     }
 }
 
-// Degree is a property of adjectives: positive is not inflected
-// Comparative is inflected with -er or comes after the word "more"
-// Superlative is inflected with -est or comes after the word "most"
+/// Degree is a property of adjectives: positive is not inflected
+/// Comparative is inflected with -er or comes after the word "more"
+/// Superlative is inflected with -est or comes after the word "most"
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
 pub enum Degree {
     Positive,
@@ -685,9 +687,9 @@ pub enum Degree {
     Superlative,
 }
 
-// Some adjectives are not comparable so don't have -er or -est forms and can't be used with "more" or "most".
-// Some adjectives can only be used "attributively" (before a noun); some only predicatively (after "is" etc.).
-// In old grammars words like the articles and determiners are classified as adjectives but behave differently.
+/// Some adjectives are not comparable so don't have -er or -est forms and can't be used with "more" or "most".
+/// Some adjectives can only be used "attributively" (before a noun); some only predicatively (after "is" etc.).
+/// In old grammars words like the articles and determiners are classified as adjectives but behave differently.
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct AdjectiveData {
     pub degree: Option<Degree>,
@@ -702,9 +704,9 @@ impl AdjectiveData {
     }
 }
 
-// Adverb can be a "junk drawer" category for words which don't fit the other major categories.
-// The typical adverbs are "adverbs of manner", those derived from adjectives in -ly
-// other adverbs (time, place, etc) should probably not be considered adverbs for Harper's purposes
+/// Adverb can be a "junk drawer" category for words which don't fit the other major categories.
+/// The typical adverbs are "adverbs of manner", those derived from adjectives in -ly
+/// other adverbs (time, place, etc) should probably not be considered adverbs for Harper's purposes
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct AdverbData {}
 
@@ -726,6 +728,10 @@ impl ConjunctionData {
 }
 
 /// A regional dialect.
+///
+/// Note: these have bit-shifted values so that they can ergonomically integrate with
+/// `DialectFlags`. Each value here must have a unique bit index inside
+/// `DialectsUnderlyingType`.
 #[derive(
     Debug,
     Clone,
@@ -742,9 +748,6 @@ impl ConjunctionData {
     VariantArray,
 )]
 pub enum Dialect {
-    // Note: these have bit-shifted values so that they can ergonomically integrate with
-    // `DialectFlags`. Each value here must have a unique bit index inside
-    // `DialectsUnderlyingType`.
     American = 1 << 0,
     Canadian = 1 << 1,
     Australian = 1 << 2,
@@ -914,7 +917,8 @@ impl Default for DialectFlags {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Dictionary, FstDictionary, WordMetadata};
+    use crate::WordMetadata;
+    use crate::spell::{Dictionary, FstDictionary};
 
     // Helper function to get word metadata from the curated dictionary
     fn md(word: &str) -> WordMetadata {

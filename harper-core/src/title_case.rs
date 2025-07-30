@@ -6,7 +6,8 @@ use crate::TokenKind;
 use hashbrown::HashSet;
 use lazy_static::lazy_static;
 
-use crate::{CharStringExt, Dictionary, Document, TokenStringExt, parsers::Parser};
+use crate::spell::Dictionary;
+use crate::{CharStringExt, Document, TokenStringExt, parsers::Parser};
 
 /// A helper function for [`make_title_case`] that uses Strings instead of char buffers.
 pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &impl Dictionary) -> String {
@@ -105,15 +106,12 @@ fn should_capitalize_token(tok: &Token, source: &[char], dict: &impl Dictionary)
 
 #[cfg(test)]
 mod tests {
-
     use quickcheck::TestResult;
     use quickcheck_macros::quickcheck;
 
     use super::make_title_case_str;
-    use crate::{
-        FstDictionary,
-        parsers::{Markdown, PlainEnglish},
-    };
+    use crate::parsers::{Markdown, PlainEnglish};
+    use crate::spell::FstDictionary;
 
     #[test]
     fn normal() {
