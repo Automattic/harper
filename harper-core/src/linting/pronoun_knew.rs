@@ -8,15 +8,30 @@ pub struct PronounKnew {
     pattern: Box<dyn crate::patterns::Pattern>,
 }
 
+trait PronounKnewExt {
+    fn then_pronoun(self) -> Self;
+}
+
 impl Default for PronounKnew {
     fn default() -> Self {
+        // The pronoun that would occur before a verb would be a subject pronoun.
+        // But "its" commonly occurs before "new" and is a possessive pronoun. (Much more commonly a determiner)
+        // Since "his" and "her" are possessive and object pronouns respectively, we ignore them too.
+        let pronoun_pattern = |tok: &Token, source: &[char]| {
+            if tok.kind.is_pronoun() {
+                let pronorm = tok.span.get_content_string(source).to_lowercase();
+                return pronorm != "its" && pronorm != "his" && pronorm != "her";
+            }
+            false
+        };
+
         let pronoun_then_new = SequencePattern::default()
-            .then_pronoun()
+            .then(pronoun_pattern)
             .then_whitespace()
             .then_any_capitalization_of("new");
 
         let pronoun_adverb_then_new = SequencePattern::default()
-            .then_pronoun()
+            .then(pronoun_pattern)
             .then_whitespace()
             .then(WordSet::new(&["always", "never", "also", "often"]))
             .then_whitespace()
@@ -91,5 +106,24 @@ mod tests {
     #[test]
     fn does_not_flag_other_context() {
         assert_lint_count("They called it \"new\".", PronounKnew::default(), 0);
+    }
+
+    #[test]
+    fn does_not_flag_with_its() {
+        assert_lint_count(
+            "In 2015, the US was paying on average around 2% for its new issuance bonds.",
+            PronounKnew::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn does_not_flag_with_his() {
+        assert_lint_count("His new car is fast.", PronounKnew::default(), 0);
+    }
+
+    #[test]
+    fn does_not_flag_with_her() {
+        assert_lint_count("Her new car is fast.", PronounKnew::default(), 0);
     }
 }

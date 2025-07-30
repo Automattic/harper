@@ -2202,15 +2202,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-    2061 | “Let’s go on with the game,” the Queen said to Alice; and Alice was too much
-         |        ^~~~~ The possessive noun implies ownership of the closed compound noun “goon”.
-Suggest:
-  - Replace with: “goon”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     2064 | The other guests had taken advantage of the Queen’s absence, and were resting in

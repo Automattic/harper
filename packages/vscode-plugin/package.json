@@ -37,6 +37,7 @@
 		"onLanguage:java",
 		"onLanguage:javascript",
 		"onLanguage:javascriptreact",
+		"onLanguage:kotlin",
 		"onLanguage:literate haskell",
 		"onLanguage:lua",
 		"onLanguage:markdown",
