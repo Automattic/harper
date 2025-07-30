@@ -315,4 +315,78 @@ mod tests {
             "Abandonware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
         );
     }
+
+    #[test]
+    fn afterwards_not_us() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
+        );
+    }
+
+    #[test]
+    fn afterward_is_us() {
+        assert_lint_count(
+            "afterward",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            0,
+        );
+    }
+
+    #[test]
+    fn afterward_not_au() {
+        assert_lint_count(
+            "afterward",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            1,
+        );
+    }
+
+    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
+    #[test]
+    fn afterwards_is_au() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            0,
+        );
+    }
+
+    #[test]
+    fn afterward_not_ca() {
+        assert_lint_count(
+            "afterward",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+            1,
+        );
+    }
+
+    #[ignore = "Dialect Metadata field currently only allows a single dialect"]
+    #[test]
+    fn afterwards_is_ca() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian),
+            0,
+        );
+    }
+
+    #[test]
+    fn afterward_not_uk() {
+        assert_lint_count(
+            "afterward",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            1,
+        );
+    }
+
+    #[test]
+    fn afterwards_is_uk() {
+        assert_lint_count(
+            "afterwards",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            0,
+        );
+    }
 }

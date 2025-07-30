@@ -67,7 +67,7 @@
 >
 #
 > History
-# NSg/V
+# NSg
 >
 #
 > The earliest foundations of  what  would  become computer science predate the
@@ -129,7 +129,7 @@
 > published the 2nd of  the only two designs for mechanical analytical engines in
 # V/J       D   #   V/P D   W?   NSg NPl     C/P NSg/J      J          NPl     NPrSg/V/J/P
 > history . In          1914 , the Spanish engineer Leonardo Torres Quevedo published his
-# NSg/V   . NPrSg/V/J/P #    . D   NPrSg/J NSg/V    NPrSg    NPr    ?       V/J       ISg/D
+# NSg     . NPrSg/V/J/P #    . D   NPrSg/J NSg/V    NPrSg    NPr    ?       V/J       ISg/D
 > Essays on  Automatics , and designed , inspired by      Babbage , a   theoretical
 # NPl    J/P NPl        . V/C W?       . V/J      NSg/J/P NPr     . D/P J
 > electromechanical calculating machine which was to be     controlled by      a   read  - only

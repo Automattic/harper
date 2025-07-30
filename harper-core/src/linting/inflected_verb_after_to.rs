@@ -44,36 +44,82 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
                 continue;
             }
 
-            let mut check_stem = |stem: &[char]| {
+            let check_stem = |stem: &[char]| {
                 if let Some(metadata) = self.dictionary.get_word_metadata(stem) {
                     if metadata.is_verb() && !metadata.is_noun() {
-                        lints.push(Lint {
-                            span: Span::new(prep.span.start, word.span.end),
-                            lint_kind: LintKind::WordChoice,
-                            message: "The base form of the verb is needed here.".to_string(),
-                            suggestions: vec![Suggestion::ReplaceWith(
-                                prep_to
-                                    .iter()
-                                    .chain([' '].iter())
-                                    .chain(stem.iter())
-                                    .copied()
-                                    .collect(),
-                            )],
-                            ..Default::default()
-                        });
+                        return true;
                     }
                 }
+                false
+            };
+
+            let mut lint_from_stem = |stem: &[char]| {
+                lints.push(Lint {
+                    span: Span::new(prep.span.start, word.span.end),
+                    lint_kind: LintKind::WordChoice,
+                    message: "The base form of the verb is needed here.".to_string(),
+                    suggestions: vec![Suggestion::ReplaceWith(
+                        prep_to
+                            .iter()
+                            .chain([' '].iter())
+                            .chain(stem.iter())
+                            .copied()
+                            .collect(),
+                    )],
+                    ..Default::default()
+                });
+            };
+
+            #[derive(PartialEq)]
+            enum ToVerbExpects {
+                ExpectsInfinitive,
+                ExpectsNominal,
+            }
+
+            use ToVerbExpects::*;
+
+            let ed_specific_heuristics = || {
+                if let Some(prev) = document.get_next_word_from_offset(pi, -1) {
+                    let prev_chars = document.get_span_content(&prev.span);
+                    if let Some(metadata) = self.dictionary.get_word_metadata(prev_chars) {
+                        // adj: "able" to expects an infinitive verb
+                        // verb: have/had/has/having to expects an infinitive verb
+                        if metadata.is_adjective() || metadata.is_verb() {
+                            return ToVerbExpects::ExpectsInfinitive;
+                        }
+                    }
+                } else {
+                    // Assume a chunk beginning with "to" and a verb in -ed should expect an infinitive verb
+                    return ToVerbExpects::ExpectsInfinitive;
+                }
+                // Default assumption is that "to" is a preposition so a noun etc. should come after it
+                ToVerbExpects::ExpectsNominal
             };
 
             if chars.ends_with(&['e', 'd']) {
-                check_stem(&chars[..chars.len() - 2]);
-                check_stem(&chars[..chars.len() - 1]);
+                let ed = check_stem(&chars[..chars.len() - 2]);
+                if ed && ed_specific_heuristics() == ExpectsInfinitive {
+                    lint_from_stem(&chars[..chars.len() - 2]);
+                };
+                let d = check_stem(&chars[..chars.len() - 1]);
+                // Add -d specific heuristics when needed
+                if d {
+                    lint_from_stem(&chars[..chars.len() - 1]);
+                };
             }
             if chars.ends_with(&['e', 's']) {
-                check_stem(&chars[..chars.len() - 2]);
+                let es = check_stem(&chars[..chars.len() - 2]);
+                // Add -es specific heuristics when needed
+                if es {
+                    lint_from_stem(&chars[..chars.len() - 2]);
+                };
             }
             if chars.ends_with(&['s']) {
-                check_stem(&chars[..chars.len() - 1]);
+                let s = check_stem(&chars[..chars.len() - 1]);
+                // Add -s specific heuristics when needed
+                if s {
+                    lint_from_stem(&chars[..chars.len() - 1]);
+                };
             }
         }
         lints
@@ -238,10 +284,21 @@ mod tests {
 
     #[test]
     fn correct_feign_ed() {
+        // adj "able" before "to" works with "to", making "to" part of an infinitive verb
         assert_suggestion_result(
             "I was able to feigned ignorance.",
             InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
             "I was able to feign ignorance.",
+        );
+    }
+
+    #[test]
+    fn issue_241() {
+        // Hypothesis: when before "to" is not an adj, assume "to" is a preposition
+        assert_lint_count(
+            "Comparison to Expected Results",
+            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            0,
         );
     }
 }
