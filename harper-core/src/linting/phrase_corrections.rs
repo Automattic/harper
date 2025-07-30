@@ -1260,7 +1260,19 @@ pub fn lint_group() -> LintGroup {
             ["points of view"],
             "The correct plural is `points of view`.",
             "Corrects pluralizing the wrong noun in `point of view`."
-        )
+        ),
+        "Insurmountable" => (
+            ["unsurmountable"],
+            ["insurmountable"],
+            "This word has a more standard, more common synonym.",
+            "Suggests the more standard and common synonym `insurmountable`."
+        ),
+        "Brutality" => (
+            ["brutalness"],
+            ["brutality"],
+            "This word has a more standard, more common synonym.",
+            "Suggests the more standard and common synonym `brutality`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2743,6 +2755,24 @@ mod tests {
             "This will produce a huge amount of raw data, representing the region in multiple point of views.",
             lint_group(),
             "This will produce a huge amount of raw data, representing the region in multiple points of view.",
+        )
+    }
+
+    #[test]
+    fn corrects_brutalness() {
+        assert_suggestion_result(
+            "the mildness and brutalness of the story rises.",
+            lint_group(),
+            "the mildness and brutality of the story rises.",
+        )
+    }
+
+    #[test]
+    fn corrects_unsurmountable() {
+        assert_suggestion_result(
+            "That being said, if you find upgrading to newer versions to be unsurmountable, please open an issue.",
+            lint_group(),
+            "That being said, if you find upgrading to newer versions to be insurmountable, please open an issue.",
         )
     }
 }
