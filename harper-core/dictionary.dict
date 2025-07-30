@@ -4037,6 +4037,7 @@ Goodwill/NOg
 Goodwin/Og
 Goodyear/Og
 Google/OVg
+Googler/NSg
 Goolagong/g
 Gopher/O
 Gorbachev/Og
@@ -11424,6 +11425,7 @@ achromatic/J
 achy/J^>
 acid/~JNSgY
 acidic/~J
+acidification/Nmg
 acidify/VGdS
 acidity/~Ng
 acidosis/Ng
@@ -12672,7 +12674,7 @@ antitrust/~J
 antivenin/NgS
 antivenom/N
 antiviral/~JNgS
-antivirus/N
+antivirus/NgS
 antivivisectionist/NJgS
 antiwar/J
 antler/NgdS
@@ -13711,20 +13713,21 @@ backstreet/~JNS
 backstretch/NgS
 backstroke/~NVgGdS
 backtalk/NVg
+backtick/NgS
 backtrace/NgSVdG
 backtrack/NVSdG
 backup/~NJgS
 backward/~JNpSY
-backwardness/Ng
-backwash/NVg
+backwardness/Nmg
+backwash/NmVg
 backwater/NVSg
 backway/NgS
 backwoods/NJg
-backwoodsman/Ng
+backwoodsman/N0g
 backwoodsmen/N9
 backyard/~NSg
-bacon/~Ng
-bacteria/~Ng
+bacon/~Nmg
+bacteria/~N9g
 bacterial/~J
 bactericidal/JNY
 bactericide/NwSg
@@ -13732,7 +13735,7 @@ bacteriologic/J
 bacteriological/J
 bacteriologist/NSg
 bacteriology/Ng
-bacterium/~Ng
+bacterium/~N0g
 bad/~JNVgYp
 badass/NgSJ
 badder/Jc
@@ -13743,25 +13746,25 @@ badge/~NVgZ>S
 badger/~NVGgd
 badinage/NVg
 badlands/~Ng
-badman/Ng
-badmen/9
-badminton/~Ng
+badman/N0g
+badmen/N9
+badminton/~Nmg
 badmouth/VGd
 badmouths/V
-badness/Ng
+badness/Nmg
 baffle/VNgZGd>SL
-bafflement/Ng
+bafflement/Nmg
 baffler/Ng
 bafflingly/R
 bag/~NVSg
 bagatelle/NVSg
 bagel/NVgS
 bagful/NgS
-baggage/~Ng
+baggage/~Nmg
 bagged/VJ
 baggie/Ng
 baggily/R
-bagginess/Ng
+bagginess/Nmg
 bagging/VN
 baggy/JNp^>S
 bagpipe/NVgZ>S
@@ -13774,8 +13777,8 @@ bailey/~NS
 bailiff/~NS
 bailiwick/NgS
 bailout/~NSg
-bailsman/Ng
-bailsmen/9
+bailsman/N0g
+bailsmen/N9
 bairn/NVgS
 bait/~NVJSGgd
 baize/NVg
@@ -13784,37 +13787,37 @@ baked/~VJU
 baker/~NgS
 bakery/~NSg
 bakeshop/NgS
-baklava/Ng
+baklava/Nmg
 baksheesh/NVg
 balaclava/NgS
 balalaika/NgS
-balance/~NVUdSG
+balance/~NwVUdSG
 balance's
 balancer/Sg
 balboa/~NSg
 balcony/~NSg
 bald/~JNVS^Gpd>Y
-balderdash/NVg
+balderdash/NmVg
 baldfaced/J
-baldness/Ng
+baldness/Nmg
 baldric/NSg
 baldy/~NS
 bale/~NVd>SgZG
-baleen/Ng
+baleen/Nmg
 baleful/JpY
-balefulness/Ng
+balefulness/Nmg
 baler/Ng
 balk/NVSGgd
 balky/J>^
 ball/~NVSGgd
 ballad/~NVSg
 balladeer/NVgS
-balladry/Ng
-ballast/~NVGSgd
+balladry/Nmg
+ballast/~NwVGSgd
 ballcock/NgS
 baller/NgS
 ballerina/~NSg
-ballet/~NVSg
+ballet/~NwVSg
 balletic/J
 ballgame/NgS
 ballgirl/NS
@@ -14127,7 +14130,7 @@ beachfront/JN
 beachgoer/NgS
 beachhead/~NgS
 beachside/NgSJ
-beachwear/Ng
+beachwear/Nmg
 beacon/~NVSg
 bead/~NVSGgd
 beading/VNg
@@ -14230,7 +14233,7 @@ bee/~NV>SgZGz
 beebread/Ng
 beech/~NgS
 beechnut/NgS
-beef/~NVJSGgd
+beef/~NwVJSGgd
 beefburger/NSg
 beefcake/NgS
 beefiness/Ng
@@ -14933,7 +14936,7 @@ blond/~JNVp^g>S
 blonde/~NJVgS
 blondish/J
 blondness/Ng
-blood/~NVGgdS
+blood/~NmVGgdS
 bloodbath/Ng
 bloodbaths/N
 bloodcurdling/J
@@ -15249,6 +15252,7 @@ bootless/J
 bootlicker/NSg
 bootstrap/NVgS
 bootstrapped/V
+bootstrapper/NgS
 bootstrapping/VN
 bootup/NgS
 booty/~NSg
@@ -15627,7 +15631,7 @@ broadsheet/~NJSg
 broadside/~NVgGdS
 broadsword/NVSg
 brocade/NVdSgG
-broccoli/~Ng
+broccoli/~Nmg
 brochette/NSg
 brochure/~NgS
 brogan/NSg
@@ -15929,7 +15933,7 @@ busboy/NSg
 busby/~NSg
 bused/V
 busgirl/NgS
-bush/~NVJgdSGz
+bush/~NwVJgdSGz
 bushcraft/Nmg
 bushel/NVSGgd
 bushelled/V!@_
@@ -16033,7 +16037,7 @@ cabala's
 caballero/~NgS
 cabana/~NSg
 cabaret/~NSg
-cabbage/~NVgS
+cabbage/~NwVgS
 cabbed/V
 cabbing/VN
 cabby/NSg
@@ -16044,7 +16048,7 @@ cabinetmaker/NgS
 cabinetmaking/Ng
 cabinetry/Ng
 cabinetwork/Ng
-cable/~NVgGdS
+cable/~NwVgGdS
 cablecast/NVJGgS
 cablegram/NVgS
 cabochon/NSg
@@ -16544,7 +16548,7 @@ cartage/Ng
 cartel/~NgS
 carter/~Ng
 carthorse/NSg
-cartilage/~NSg
+cartilage/~NwSg
 cartilaginous/J
 cartload/NSg
 cartographer/~NSg
@@ -16702,7 +16706,7 @@ caucus/~NVgdSG
 caudal/~JNY
 caught/~JVU
 cauldron/~NgS
-cauliflower/~NVSg
+cauliflower/~NwVSg
 caulk/NVZGgd>S
 caulker/Ng
 causal/~JNY
@@ -17099,13 +17103,13 @@ checkoff/NSg
 checkout/~NSg
 checkpoint/~NSgVdG
 checkroom/NgS
-checksum/NV
+checksum/NgSVdG
 checkup/NgS
 cheddar/NVg
 cheek/~NVGgdS
 cheekbone/NSg
 cheekily/R
-cheekiness/Ng
+cheekiness/Nmg
 cheeky/J^p>
 cheep/VNGgdS
 cheer/~NVZGgd>S
@@ -17113,16 +17117,16 @@ cheerer/Ng
 cheerful/~JYp
 cheerfuller/Jc
 cheerfullest/Ju
-cheerfulness/Ng
+cheerfulness/Nmg
 cheerily/R
-cheeriness/Ng
+cheeriness/Nmg
 cheerio/NgS
 cheerleader/~NSg
 cheerleading/~V
 cheerless/JpY
-cheerlessness/Ng
+cheerlessness/Nmg
 cheery/J^p>
-cheese/~NVgGdS
+cheese/~NwVgGdS
 cheeseboard/NS
 cheeseburger/NSg
 cheesecake/NSg
@@ -17630,7 +17634,7 @@ clavicle/NgS
 clavier/NgS
 claw/~NVeSGd
 claw's
-clay/~NVg
+clay/~NmVg
 clayey/J
 clayier/J
 clayiest/J
@@ -18047,7 +18051,7 @@ collaborationist/N
 collaborative/~JNY
 collaborator/~NgS
 collage/~NVSg
-collagen/~N
+collagen/~Nmg
 collapse/~VNgGdS
 collapsible/~JN
 collar/~NVSgdG
@@ -18600,7 +18604,7 @@ conferred/~V
 conferrer/NgS
 conferring/~VN
 confessed/~VJY
-confession/~NSg
+confession/~NwSg
 confessional/~JNSg
 confessor/~NgS
 confetti/NVg
@@ -18613,21 +18617,22 @@ confidential/~JY
 confidentiality/~Ng
 confider/Ng
 confiding/VJNY
-configuration/~NS
+configurability/Ngm
+configuration/~NwgS
 configure/~VBr
 confined/~VJU
-confinement/~NgS
+confinement/~NwgS
 confirm/~VrSdG
-confirmation/~NrSg
+confirmation/~NwrSg
 confirmatory/J
 confirmed/~VJU
 confiscate/VJdSGnX
-confiscation/~Ng
+confiscation/~Nmg
 confiscator/NSg
 confiscatory/J
-conflagration/NgS
+conflagration/NwgS
 conflate/VJNXdSGn
-conflation/Ng
+conflation/Nmg
 conflict/~NVSGgd
 conflictive/J
 confluence/~NgS
@@ -18635,10 +18640,10 @@ confluent/JN
 conform/~VZB
 conformable/JU
 conformal/~J
-conformance/~Ng
-conformism/Ng
+conformance/~Nmg
+conformism/Nmg
 conformist/~NJSg
-conformity/~Ng
+conformity/~Nmg
 confrere/NgS
 confrontation/~NSg
 confrontational/~J
@@ -18654,7 +18659,7 @@ congealment/Ng
 conger/NSg
 congeries/Ng
 congest/NVSdGv
-congestion/~Ng
+congestion/~Nmg
 conglomerate/~NJVdSXgGn
 conglomeration/Ng
 congrats/Ng
@@ -19739,6 +19744,7 @@ crosscurrent/NgS
 crosscut/NVSg
 crosscutting/VN
 crosser/NJ
+crossfade/VdSGNg
 crossfire/~NgS
 crosshair/NSg
 crosshatch/NVGdS
@@ -21335,33 +21341,34 @@ disclose/~VNdSG
 disclosed/~VJU
 disco/~NVgG
 discography/~NSg
-discoloration/NS
-discolouration/NS!_
+discoloration/NwS
+discolouration/NwS!_
 discombobulate/VdSGn
-discombobulation/Ng
+discombobulation/Nmg
 discomfit/VJdG
 discomfiture/Ng
 discommode/VdG
 disconcerting/JY
 disconnected/~VJpY
-disconnectedness/Ng
+disconnectedness/Nmg
 disconsolate/JNY
-discordance/Ng
+discordance/Nmg
 discordant/JY
 discotheque/NSg
 discourage/~VNLGdS
-discouragement/NSg
+discouragement/NwSg
 discouraging/VJNY
 discover/~VrSdG
+discoverability/Ng
 discovered/~VU
 discoverer/~NgS
-discovery/~NrSg
+discovery/~NwrSg
 discreet/~Jp>Y^
-discreetness/Ng
+discreetness/Nmg
 discrepancy/~NSg
 discrepant/JN
 discrete/~JpYn
-discreteness/Ng
+discreteness/Nmg
 discretion/~Nig
 discretionary/~J
 discretisation/Ng!_
@@ -21369,7 +21376,7 @@ discretization/Ng
 discriminant/NJ
 discriminate/~VJGndSY
 discriminating/~JVU
-discrimination/~Ng
+discrimination/~Nmg
 discriminator/NgS
 discriminatory/~J
 discursiveness/Ng
@@ -22340,7 +22347,7 @@ earplug/NVSg
 earring/NSg
 earshot/Ng
 earsplitting/J
-earth/~ONVUdG
+earth/~ONmVUdG
 earth's
 earthbound/J
 earthen/~JV
@@ -22879,7 +22886,7 @@ enable/~Vd>SZG
 enabler/Ng
 enact/~VrSLdG
 enactment/~NrSg
-enamel/~NVzSZGgd>
+enamel/~NwVzSZGgd>
 enameler/Ng
 enamelled/JV!@_
 enameller/NSg!@_
@@ -23816,22 +23823,23 @@ explicable/Ji
 explicate/VJXGndS
 explication/Ng
 explicit/~JNpY
-explicitness/Ng
+explicitness/Nmg
 explode/~VGdS
 exploder/NgS
 exploit/~NVZGBgd>S
+exploitability/Nmg
 exploitation/~Ng
 exploitative/~J
 exploited/~VU
 exploiter/NVg
-exploration/~NgS
+exploration/~NwgS
 exploratory/~JN
 explore/~VNZGd>S
 explored/~VU
 explorer/~Ng
 explosion/~NSg
-explosive/~JNSpgY
-explosiveness/Ng
+explosive/~JwNSpgY
+explosiveness/Nmg
 expo/~NgS
 exponent/~NgS
 exponential/~JNYgS
@@ -23978,7 +23986,7 @@ eyelash/NgS
 eyeless/J
 eyelet/NVSg
 eyelid/~NSg
-eyeliner/NgS
+eyeliner/NwgS
 eyeopener/NgS
 eyeopening/J
 eyepiece/NgS
@@ -23988,14 +23996,14 @@ eyestrain/Ng
 eyeteeth/N9
 eyetooth/N0g
 eyewash/NVg
-eyewear/Ng
+eyewear/Nmg
 eyewitness/~NVgS
 f/~Neirv^>
 fMRI/N
 fa/~NPg
 fab/~JNgSV
 fable/~NVdSg
-fabric/~NVSg
+fabric/~NwVSg
 fabricate/VdSGnX
 fabrication/~Ng
 fabricator/NSg
@@ -24254,18 +24262,18 @@ fauvist/JNSg
 faux/~J
 fave/JNVS
 favicon/~NSg
-favor/~NVESgdG<
+favor/~NwVESgdG<
 favorability/NgU<
 favorable/~JU<
 favorably/~UR<
 favorite/~JNVSg<
-favoritism/Ng<
-favour/NVESgdG!@_
+favoritism/Nmg<
+favour/NwVESgdG!@_
 favourability/NgU!@_
 favourable/JNU!@_
 favourably/RU!@_
 favourite/JNVgS!@_
-favouritism/Ng!@_
+favouritism/Nmg!@_
 fawn/NJVgd>ZGS
 fawner/Ng
 fax/~NVGgdS
@@ -24566,10 +24574,10 @@ fill's
 filled/~JVU
 filler/~NgS
 fillet/NVgdGS
-filling/~VJNSg
+filling/~VJNwSg
 fillip/NVgdGS
 filly/~NSg
-film/~NVgdGS
+film/~NwVgdGS
 filminess/Ng
 filmmaker/~NSg
 filmmaking/Ng
@@ -24818,7 +24826,7 @@ flask/NVSg
 flat/~JNVgYpS
 flatbed/NJVSg
 flatboat/NSg
-flatbread/N
+flatbread/Nmg
 flatcar/NSg
 flatfeet/9
 flatfish/N09gS      # singular and plural, also has a plural in -s
@@ -25058,7 +25066,7 @@ flyway/NSg
 flyweight/~NwSg
 flywheel/~NgS
 foal/~NVgdGS
-foam/~NmVgdGS
+foam/~NwVgdGS
 foaminess/Ng
 foamy/JN>^p
 fob/NVJSg
@@ -25070,7 +25078,7 @@ focus's
 focused/~JVU
 fodder/~NVSg
 foe/~JNSg
-fog/~NVeS
+fog/~NwVeS
 fog's
 fogbound/J
 fogey/NSg!@_
@@ -25164,7 +25172,7 @@ footslogging/V
 footsore/J
 footstep/NgS
 footstool/NSg
-footwear/~Ng
+footwear/~Nmg
 footwell/NgS
 footwork/~Ng
 footy/NJ
@@ -26671,7 +26679,7 @@ goshawk/NgS
 gosling/~NSg
 gospel/~NVgS
 gossamer/NJg
-gossip/~NVgd>ZGS
+gossip/~NwVgd>ZGS
 gossiper/Ng
 gossipy/J
 got/~V
@@ -26804,7 +26812,7 @@ grapnel/NVgS
 grapple/VNgGdS
 grappler/NgS
 grasp/~VNSgdBG
-grass/~NVgdSG
+grass/~NwVgdSG
 grasshopper/~NVgS
 grassland/~NwgS
 grassroots/~J
@@ -27157,7 +27165,7 @@ gunning/VN
 gunny/Ng
 gunnysack/NgS
 gunpoint/~Ng
-gunpowder/~NVg
+gunpowder/~NmVg
 gunrunner/NgS
 gunrunning/Ng
 gunship/NgS
@@ -27628,7 +27636,7 @@ hawkish/Jp
 hawkishness/Ng
 hawser/NSg
 hawthorn/~NgS
-hay/~NVGSgd
+hay/~NmVGSgd
 haycock/NSg
 hayloft/NSg
 haymaker/NS
@@ -27761,7 +27769,7 @@ heartthrob/NgS
 heartwarming/J
 heartwood/~Ng
 hearty/JN>Sgp^
-heat/~NVrdGS
+heat/~NmVrdGS
 heat's
 heated/~VJU
 heatedly/R
@@ -28099,10 +28107,10 @@ hint/~NVgd>ZGS
 hinter/Ng
 hinterland/~NSg
 hip/~NVJSpg
-hipbath
-hipbaths
+hipbath/N0
+hipbaths/N9
 hipbone/NgS
-hiphuggers/N
+hiphuggers/N9
 hipness/Ng
 hipped/JV
 hipper/NJc
@@ -28463,6 +28471,7 @@ hospitality/~Ng
 hospitalization/~NSg
 hospitalize/VdSG
 host/~NVgdSG
+hostable/J
 hostage/~NVgS
 hostel/~NVZGgd>S
 hosteler/Ng
@@ -28668,7 +28677,7 @@ hundredth/~JNg
 hundredths/N
 hundredweight/NSg
 hung/~VJ
-hunger/~NVSgdG
+hunger/~NmVSgdG
 hungover/J
 hungrily/R
 hungriness/Nmg
@@ -28963,7 +28972,7 @@ igloo/NSg
 igneous/~J
 ignitable/J
 ignite/~VrGdS
-ignition/~NgS
+ignition/~NwgS
 ignoble/JV
 ignobly/R
 ignominious/JY
@@ -30864,6 +30873,7 @@ keeping/~NVg
 keepsake/NgS
 kefir/Nmg
 keg/NVSg
+kegel/NgS
 kelp/NVg
 kelvin/~NSg
 ken/~VNSg
@@ -31084,7 +31094,7 @@ knit/~VNgS
 knitted/JV
 knitter/NSg
 knitting/~VNg
-knitwear/Ng
+knitwear/Nmg
 knives/~9V
 knob/~NVgS
 knobbly/J
@@ -31231,7 +31241,7 @@ lakeside/~NJ
 lam/~VNSg
 lama/~NgS
 lamasery/NSg
-lamb/~NVgdSG
+lamb/~NwVgdSG
 lambada/NgS
 lambaste/VGdS
 lambda/~NSg
@@ -31516,7 +31526,7 @@ leash/NVUdSG
 leash's
 least/~NJg
 leastwise/
-leather/~NJVgS
+leather/~NwJVgS
 leatherette/Ng
 leatherman/Ng
 leatherneck/NgS
@@ -31612,7 +31622,7 @@ legwork/Ng
 lei/~NSg
 leisure/~NdgY
 leisureliness/Ng
-leisurewear/Ng
+leisurewear/Nmg
 leitmotif/NgS
 leitmotiv/NgS
 lemma/~N0S
@@ -31677,7 +31687,7 @@ letterhead/NgS
 lettering/~VNg
 letterpress/Ng
 letting/~VNS
-lettuce/~NgS
+lettuce/~NwgS
 letup/NSg
 leucine/N
 leucotomy/NS
@@ -31954,7 +31964,7 @@ lippy/JN
 lipread/VG>S
 lipreader/Ng
 lipreading/NVg
-lipstick/~NVgdSG
+lipstick/~NwVgdSG
 liq/
 liquefaction/~Ng
 liquefy/VdSG
@@ -32142,6 +32152,7 @@ logarithm/~NSg
 logarithmic/~J
 logbook/NSg
 loge/NgS
+logfile/NgS
 logged/~V
 logger/~NSg
 loggerhead/NSg
@@ -32189,7 +32200,7 @@ long/~JNVKdS^G
 long's
 longboat/NgS
 longbow/NgS
-longer/~JN
+longer/~JcN
 longevity/~Ng
 longhair/~NJgS
 longhand/Ng
@@ -32643,7 +32654,7 @@ make's/r
 makeover/~NgS
 maker/~NSg
 makeshift/~NJSg
-makeup/~NVgS
+makeup/~NwVgS
 makeweight/NS
 making/~NVgS
 makings/Ng
@@ -32951,7 +32962,7 @@ marvellous/JY!@_
 marvelous/~JY
 marzipan/NVg
 masc/~JN
-mascara/NVGgdS
+mascara/NwVGgdS
 mascot/~NVgS
 masculine/~JNSg
 masculinity/~Ng
@@ -33023,7 +33034,7 @@ matchstick/NgS
 matchup/NgS
 matchwood/Ng
 mate/~NVgS
-material/~JNVSgY
+material/~JNwVSgY
 materialisation/Ng!_
 materialise/VdSG!_
 materialism/~Ng
@@ -33301,7 +33312,7 @@ memorialise/VdSG!_
 memorialize/VdSG
 memorisation/Nmg!_
 memorise/VdSG!_
-memorization/Ng
+memorization/Nmg
 memorize/VdSG
 memory/~NwSg
 memsahib/NS
@@ -33340,7 +33351,7 @@ menstruate/VJGndS
 menstruation/Ng
 mensurable/J
 mensuration/Ng
-menswear/Ng
+menswear/Nmg
 mental/~JNY
 mentalist/JNSg
 mentality/~NSg
@@ -33381,6 +33392,7 @@ merganser/~NgS
 merge/~VNd>SZG
 merger/~Ng
 meridian/~JNVgS
+meridional/JNgS
 meringue/NVgS
 merino/NgS
 merit/~NVeSg
@@ -33445,7 +33457,7 @@ metacarpi/N
 metacarpus/Ng
 metacognition/Ng
 metadata/~Nm
-metal/~NJVSgd
+metal/~NwJVSgd
 metalanguage/NgS
 metalled/JV!@_
 metallic/~JN
@@ -34142,7 +34154,7 @@ moisturizer/Ng
 mojo/~Ng
 molar/~NJSg
 molasses/NVg
-mold/~NVgd>zSZG
+mold/~NwVgd>zSZG
 moldboard/NSg
 molder/NVGgd
 moldiness/Ng
@@ -34406,7 +34418,7 @@ mosh/VNdSG
 mosque/~NgS
 mosquito/~N0Vg
 mosquitoes/~N9
-moss/~NVgS
+moss/~NwVgS
 mossback/NSg
 mossy/JN^>
 most/~JINgYDq
@@ -34469,7 +34481,7 @@ mottle/VNGdS
 motto/~N0Vg
 mottoes/N9
 moue/NgS
-mould/NVzSZGgd>!@_
+mould/NwVzSZGgd>!@_
 moulder/VNgdG!@_
 moulding/VNg!@_
 mouldy/J^>!@_
@@ -34635,6 +34647,7 @@ multimeter/NSg
 multimillionaire/NSg
 multimodal/J
 multinational/~JNSg
+multipage/J
 multiparadigm/J
 multipart/J
 multipartite
@@ -34785,7 +34798,7 @@ mutt/~NgS
 mutter/NVZGzgd>S
 mutterer/Ng
 muttering/VNg
-mutton/~NJg
+mutton/~NmJg
 muttonchops/Ng
 muttony/J
 mutual/~JNY
@@ -35305,7 +35318,7 @@ nightstick/NSg
 nighttime/~NJg
 nightwatchman/N
 nightwatchmen/9
-nightwear/Ng
+nightwear/Nmg
 nihilism/Ng
 nihilist/NgS
 nihilistic/J
@@ -36701,6 +36714,7 @@ outreach/~NVgdSG
 outrider/NgS
 outrigger/NSg
 outright/~JV
+outro/NgS
 outrun/VNS
 outrunning/V
 outscore/VGdS
@@ -38103,6 +38117,7 @@ persiflage/Ng
 persimmon/NSg
 persist/~VSGd
 persistence/~Ng
+persistency/Ng      # uncommon variant
 persistent/~JY
 persnickety/J
 person/~NVUgS
@@ -39308,7 +39323,7 @@ postwar/~J
 postwoman/N
 postwomen/9
 posy/NSg
-pot/~NVeSg
+pot/~NwVeSg
 potability/Ng
 potable/~JNSg
 potash/NmVg
@@ -39469,6 +39484,7 @@ precompute/VGdSB
 preconceive/VGdS
 preconception/NJSg
 precondition/NVgdGS
+preconfigure/VGdS
 precook/VGSd
 precool/VGSd
 precursor/~NJSg
@@ -39548,6 +39564,7 @@ prehistoric/~J
 prehistorical/JY
 prehistory/~Nmg
 prehuman/JN
+preinstallation/Nmg
 preinstalled/V
 prejudge/VGdS
 prejudgement/NgS!_
@@ -39625,6 +39642,7 @@ prequel/~NgS
 prerecord/VGSd
 preregister/VSGd
 preregistration/NJg
+prerelease/JNgS
 prerequisite/~JNgS
 prerogative/~NJSg
 pres/~NV
@@ -39670,8 +39688,8 @@ pressed/~VJU
 presser/NgS
 pressie/NS
 pressing/~JNVSgY
-pressman/Ng
-pressmen/9
+pressman/N0g
+pressmen/N9
 pressure/~NVdSgG
 pressurisation/Ng!_
 pressurise/VeGdS!_
@@ -39846,8 +39864,8 @@ probity/Ng
 problem/~NJgS
 problematic/~JNU
 problematical/JY
-probosces/N
-proboscis/NgS
+probosces/N9
+proboscis/N0gS
 procaine/Ng
 procedural/~JNY
 procedure/~NSg
@@ -40098,7 +40116,7 @@ protean/JN
 protect/~VGvSd
 protectant/NSg
 protected/~JVU
-protection/~NSg
+protection/~NwSg
 protectionism/~Ng
 protectionist/JNgS
 protective/~JNpY
@@ -40107,7 +40125,7 @@ protector/~NgS
 protectorate/~NgS
 protege/NSg
 protegee/NS
-protein/~NSg
+protein/~NwSg
 protestant/~JNS
 protestation/NgS
 protocol/~NVgS
@@ -40311,7 +40329,7 @@ pullout/NgS
 pullover/NSg
 pullup/NSg
 pulmonary/~J
-pulp/~NVJGgdS
+pulp/~NwVJGgdS
 pulpiness/Ng
 pulpit/~NSg
 pulpwood/Ng
@@ -40830,11 +40848,11 @@ railway/~NSg
 railwayman/Ng
 railwaymen/9
 raiment/Ng
-rain/~NVGgdS
+rain/~NwVGgdS
 rainbow/~NJVSg
 raincoat/NSg
 raindrop/NSg
-rainfall/~NSg
+rainfall/~NwSg
 rainforest/~Sg
 rainmaker/~NSg
 rainmaking/Ng
@@ -41432,7 +41450,7 @@ regulator/~NgS
 regulatory/~J
 regurgitate/VNdSGn
 regurgitation/Ng
-rehab/~NVgS
+rehab/~NwVgS
 rehabbed/V
 rehabbing/V
 rehabilitate/~VGnvdS
@@ -41973,7 +41991,7 @@ revocable/J
 revoke/~VNdSG
 revolt/~VNGd
 revolting/~VNJY
-revolution/~NSg
+revolution/~NwSg
 revolutionarily/J
 revolutionary/~JNSg
 revolutionise/VdSG!_
@@ -42350,7 +42368,7 @@ rotundity/Ng
 rotundness/Nmg
 rouble/NSg!@_
 roue/NgS
-rouge/~JNVdSgG
+rouge/~JNwVdSgG
 rough/~JNVgdn>YX^Gp
 roughage/Ng
 roughcast/NVJ
@@ -42738,12 +42756,12 @@ sandhog/NVSg
 sandiness/Ng
 sandlot/NSg
 sandlotter/NgS
-sandman/~Ng
-sandmen/9
-sandpaper/NVGgdS
+sandman/~N0g
+sandmen/N9
+sandpaper/NmVGgdS
 sandpiper/~NgS
 sandpit/NS
-sandstone/~Ng
+sandstone/~Nmg
 sandstorm/NSg
 sandwich/~NVJgdSG
 sandy/~JN>^p
@@ -42856,7 +42874,7 @@ sauna/NVgdSG
 saunter/VNgdGS
 saurian/NJ
 sauropod/NSg
-sausage/~NVgS
+sausage/~NwVgS
 saute/VgS
 sauteed/V
 sauteing/V
@@ -43506,7 +43524,7 @@ semanticist/NgS
 semantics/~Ng
 semaphore/NVdSgG
 semblance/NrSg
-semen/~Ng
+semen/~Nmg
 semester/~NSg
 semi/~NgS
 semiannual/JNY
@@ -44066,7 +44084,7 @@ shoplifter/Ng
 shoplifting/NVg
 shoppe/NgZGd>S
 shopper/Ng
-shopping/~VNg
+shopping/~VNmg
 shoptalk/Ng
 shopworn/J
 shore/~NVgGdS
@@ -44520,7 +44538,7 @@ skimp/VJNSdG
 skimpily/R
 skimpiness/Ng
 skimpy/JN>^p
-skin/~NVgS
+skin/~NwVgS
 skincare/Ng
 skinflint/NgS
 skinful/N
@@ -44649,7 +44667,7 @@ sleepover/NSg
 sleepwalk/VZGSd>
 sleepwalker/Ng
 sleepwalking/NVg
-sleepwear/Ng
+sleepwear/Nmg
 sleepy/~JN>p^
 sleepyhead/NgS
 sleet/NmVSgdG
@@ -44881,7 +44899,7 @@ snail/~NVSgdG
 snake/~NVdSgG
 snakebite/NgS
 snakelike/J
-snakeskin/NJ
+snakeskin/NmJ
 snaky/J>^
 snap/~NVJUS
 snap's
@@ -44889,12 +44907,14 @@ snapdragon/NSg
 snapped/~VU
 snapper/~NVgS
 snappily/R
-snappiness/Ng
+snappiness/Nmg
 snapping/~VNU
 snappish/JYp
 snappishness/Ng
 snappy/J^>p
 snapshot/~NVSg
+snapshotted/V
+snapshotting/V
 snare/~NVdSgG
 snarf/VSdG
 snark/NVS
@@ -44908,9 +44928,9 @@ snatcher/Ng
 snazzily/R
 snazzy/J^>
 sneak/~NVJSgd>ZG
-sneaker/Ng
+sneaker/NgS
 sneakily/R
-sneakiness/Ng
+sneakiness/Nmg
 sneaking/NJVY
 sneaky/~JN^>p
 sneer/VNSzgdG
@@ -44941,21 +44961,21 @@ snivelled/VJ!@_
 sniveller/NSg!@_
 snivelling/VN!@_
 snob/NgS
-snobbery/Ng
+snobbery/Nmg
 snobbish/JpY
-snobbishness/Ng
+snobbishness/Nmg
 snobby/J>^
 snog/VNS
 snogged/V
 snogging/V
 snood/NVSg
-snooker/~NVgdSG
+snooker/~NmVgdSG
 snoop/~VNSgd>ZG
 snooper/Ng
 snoopy/J^>
 snoot/NVSg
 snootily/R
-snootiness/Ng
+snootiness/Nmg
 snooty/Jp^>
 snooze/VNdSgG
 snore/VNd>SgZG
@@ -44967,9 +44987,9 @@ snorkelled/V!@_
 snorkelling/NV!@_
 snort/NVSgd>ZG
 snorter/Ng
-snot/NVgS
+snot/NwVgS
 snottily/R
-snottiness/Ng
+snottiness/Nmg
 snotty/JN^p>
 snout/~NVSg
 snow/~NwVgdGS
@@ -44990,8 +45010,8 @@ snowflake/~NVSg
 snowiness/Ng
 snowline/N
 snowmaking/Ng
-snowman/Ng
-snowmen/9
+snowman/N0g
+snowmen/N9
 snowmobile/NVdSgG
 snowplough/NVg!_
 snowploughs/N!_
@@ -45022,7 +45042,7 @@ snugness/Ng
 so/~CJIN
 soak/VNgdGSz
 soaking/~VNJg
-soap/~NVgdGS
+soap/~NwVgdGS
 soapbox/~NVgS
 soapiness/Ng
 soapstone/NVg
@@ -45033,34 +45053,34 @@ sob/NVSg
 sobbed/V
 sobbing/VNJY
 sober/~JVSd>Yp^G
-soberness/Ng
-sobriety/Nig
+soberness/Nmg
+sobriety/Nmig
 sobriquet/NSg
 soc/~N
 soccer/~NVg
-sociability/Ng
+sociability/Nmg
 sociable/JNSg
 sociably/R
 social/~JNSgY
 socialisation/Nmg!_
 socialise/VdSG!_
-socialism/~Ng
+socialism/~Nmg
 socialist/~JNSg
 socialistic/J
 socialite/~NSg
 socialization/~Nmg
 socialize/VdSG
 societal/~J
-society/~NSg
+society/~NwSg
 sociocultural/J
 socioeconomic/~JQ
 sociological/~JY
 sociologist/~NSg
-sociology/~Ng
+sociology/~Nmg
 sociopath/Ng
 sociopathic/J
 sociopaths/N
-sociopathy/NgS
+sociopathy/NwgS
 sociopolitical/J
 sock/~NVJgdGS
 socket/~NVSgd
@@ -45070,11 +45090,11 @@ soda/~NwgS
 sodded/V
 sodden/JVY
 sodding/VJ
-sodium/~Ng
+sodium/~Nmg
 sodomise/VGdS!_
 sodomite/NgS
 sodomize/VGdS
-sodomy/~Ng
+sodomy/~Nmg
 soever/
 sofa/NVgS
 soft/~JNn>YX^p
@@ -45674,7 +45694,7 @@ sportsmanship/~Ng
 sportsmen/~N9
 sportspeople/~N9
 sportsperson/N
-sportswear/~Ng
+sportswear/~Nmg
 sportswoman/Ng
 sportswomen/9
 sportswriter/~NSg
@@ -46258,7 +46278,7 @@ stopper/NVGSgd
 stopping/~VNU
 stopple/NVdSgG
 stopwatch/NgS
-storage/~NVg
+storage/~NmVg
 store/~NVrdSG
 store's
 storefront/~NgS
@@ -46618,6 +46638,7 @@ submit/~VrS
 submitted/~Vr
 submitter/N
 submitting/~VNr
+submodule/NgS
 subnet/NgSV
 subnode/NSg
 subnormal/JN
@@ -46633,6 +46654,7 @@ subparagraph/NgSV
 subpart/N
 subplot/~NVgS
 subpoena/~NVGgdS
+subpolar/J
 subprime/JN
 subprocess/NgS
 subprofessional/JNSg
@@ -47174,7 +47196,7 @@ swayed/~VJU
 swear/~VNJZGS>
 swearer/Ng
 swearword/NgS
-sweat/~NVZGSgd>
+sweat/~NwVZGSgd>
 sweatband/NgS
 sweater/~NVg
 sweatpants/Ng
@@ -47222,7 +47244,7 @@ swimmer/~NSg
 swimming/~NVg
 swimmingly/R
 swimsuit/NSg
-swimwear/~N
+swimwear/~Nmg
 swindle/~VNd>SgZG
 swindler/Ng
 swine/~NSg
@@ -47480,7 +47502,7 @@ talent/~NwSgd
 talented/~JU
 tali/N
 talisman/~NVgS
-talk/~VNZGgd>S
+talk/~VNwZGgd>S
 talkative/JpY
 talkativeness/Ng
 talker/Ng
@@ -47556,7 +47578,7 @@ tantra/~Ng
 tantrum/NVSg
 tap/~NVSZGgd>
 tapas/N
-tape/~NVgS
+tape/~NwVgS
 tapeline/NgS
 taper/~NVJgdG
 tapestry/~NVSg
@@ -49116,7 +49138,8 @@ trestle/~NgS
 trews/N
 trey/~NgS
 triad/~NSg
-triage/NVgd
+triage/NmVgd
+triager
 trial/~NJVrSg
 trialed/V
 trialing/VN
@@ -49125,11 +49148,11 @@ trialling/VN!@_
 triangle/~NSg
 triangular/~JY
 triangulate/VJGndS
-triangulation/~Ng
+triangulation/~Nmg
 triathlete/NS
 triathlon/NSg
 tribal/~JN
-tribalism/Ng
+tribalism/Nmg
 tribe/~NVSg
 tribesman/Ng
 tribesmen/~9
@@ -49587,7 +49610,7 @@ typical/~JNUY
 typicality/Ng
 typification/Ng
 typify/VnGdS
-typing/~NVg
+typing/~NwVgS
 typist/NSg
 typo/~NVgS
 typographer/NSg
@@ -49733,6 +49756,7 @@ uncomplicated/VJ
 uncomprehending/JY
 uncompromising/~JY
 unconditional/~JNY
+unconfigured/J
 uncongenial/J
 unconscionable/J
 unconscionably/R
@@ -49894,7 +49918,7 @@ undervaluation/Ng
 undervalue/VNdSG
 underwater/~JNV
 underway/~N
-underwear/~Ng
+underwear/~Nmg
 underweight/JNVg
 underwent/~V
 underwhelm/VdGS
@@ -51876,7 +51900,7 @@ winy/J>^
 wipe/~VNgZGd>S
 wipeout/NgS
 wiper/Ng
-wire/~NVrGdS
+wire/~NwVrGdS
 wire's
 wired/~JVS
 wirehair/NgS
@@ -52512,6 +52536,8 @@ AGI/gS              # artificial general intelligence
 AMC/NOgS            # old car brand
 AOC/Og              # US politician Alexandria Ocasio-Cortez
 APFS/Og             # Apple file system
+ARM64/Og            # see also AArch64
+ASLR/Ng             # Address Space Layout Randomization
 ASM/N               # assembly language - should "asm" be included as well/instead?
 ASUS/Og
 ATF/Ng              # automatic transmission fluid
@@ -52529,6 +52555,7 @@ Anker/Sg
 AngularJS/Og
 Anthropic/Og        # AI company
 Archytas/Sg         # !! please check and comment !! we also have archytas
+AArch64/Og          # see also ARM64
 Automattic/Sg       # WordPress company
 Automattician/Sg
 B2B/J               # business-to-business
@@ -52721,6 +52748,7 @@ LinkedIn/Og
 Loctite/Og          # product
 Logotherapy/Sg
 Longreads/Og
+LoRA/NwSg           # low-rank adaptation
 Lua/Sg              # programming language
 MCP/Ng              # model context protocol
 MMX/Ng              # multimedia extension
@@ -52909,6 +52937,7 @@ WPA/Og
 WPA2/Og
 WSL/gO              # windows subsystem for linux
 Waymo/Og
+WeChat/Og
 WebAssembly/g       # see WASM
 WebDAV/Og
 WebGL/Og
@@ -52925,6 +52954,7 @@ WooCommerce/Og
 XFS/Ng              # file system
 XLR/Ng              # connector
 Xbox/NOgS
+Xcode/Og            # Apple IDE
 Xorg/ONgS
 Y2K/g               # year 2000
 YAML/OSg            # markup language
@@ -52939,6 +52969,7 @@ a11n/N
 a12s/9
 a8c/Sg
 antimalware/Nmg
+arXiv/Og            # research archive
 archytas/Sg         # !! please check and comment !! we also have Archytas
 autoconfig/Ng
 autoconfiguration/Ng
@@ -52972,6 +53003,7 @@ filesystem/~Sg      # dictionaries prefer: file system
 frontend/NSg        # dictionaries prefer: front end
 gcd/Ng              # greatest common divisor
 gen AI/Ng
+geodata/Nwg
 geofence/NgSVdG
 gRPC/OSg            # framework
 glymph/Sg           # !! please check and comment !!
@@ -53018,6 +53050,7 @@ tagset/NgS
 trie/NgS            # data structure
 uptime/NwgS
 vid/NgS             # video
+waitlist/NgS
 watchOS/Og
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
@@ -53061,6 +53094,7 @@ blow-up/JNgS
 blue-blooded/J
 blue-collar/J
 bona fide/RJ
+boot camp/Nmg
 boot loader/NgS
 break out/V
 breaks out/V
@@ -53080,6 +53114,7 @@ cheat sheet/NgS
 clear-sighted/J
 closed circuit/NgS
 closed-circuit/J
+code name/NgS
 code point/NSg      # Unicode code point
 color code/NVgdSG<
 color coded/J<
@@ -53120,6 +53155,7 @@ drop-in/NgSJ
 e-book/NgS
 each other/I
 easy peasy/J
+eco-friendly/J
 editor in chief/N
 end user/NgS
 energy-efficient/J
@@ -53276,6 +53312,7 @@ mock up/V
 mock-up/NgS
 moon landing/NgS
 motor ship/NgS
+mouse wheel/NgS
 multi-platform/J
 multiple-choice/J
 nail biter/NgS
@@ -53365,6 +53402,8 @@ right-hand/J
 right-wing/J
 road map/NgS        # standard in all dictionaries but overtaken by "roadmap" c. 2000
 rock face/NgS
+run time/NwgS
+run-time/J
 run-up/NgS
 same sex/Ng
 same-sex/J

@@ -501,7 +501,7 @@
 > To raise and support Armies , but     no    Appropriation of Money  to that          Use   shall be
 # P  NSg/V V/C N🅪Sg/V+ NPl+   . NSg/C/P NPr/P NSg           P  N🅪Sg/J P  NSg/I/C/Ddem+ NSg/V VX    NSg/VX
 > for a   longer Term    than two  Years ;
-# C/P D/P NSg/J  NSg/V/J C/P  NSg+ NPl+  .
+# C/P D/P NSg/JC NSg/V/J C/P  NSg+ NPl+  .
 >
 #
 >
@@ -877,7 +877,7 @@
 > Whenever there is a   vacancy in      the office of the Vice       President , the President
 # C        +     VL D/P NSg     NPr/J/P D   NSg/V  P  D+  NSg/V/J/P+ NSg/V+    . D+  NSg/V+
 > shall nominate a   Vice       President who    shall take  office upon confirmation by      a
-# VX    V/J      D/P NSg/V/J/P+ NSg/V+    NPr/I+ VX    NSg/V NSg/V+ P    NSg+         NSg/J/P D/P
+# VX    V/J      D/P NSg/V/J/P+ NSg/V+    NPr/I+ VX    NSg/V NSg/V+ P    N🅪Sg+        NSg/J/P D/P
 > majority vote  of both   Houses of Congress .
 # NSg+     NSg/V P  I/C/Dq NPl/V  P  NPr/V    .
 >
@@ -1165,13 +1165,13 @@
 > Comfort . No     Person shall be     convicted of Treason unless on  the Testimony of two
 # NSg/V+  . NPr/P+ NSg/V+ VX    NSg/VX V/J       P  NSg     C      J/P D   NSg       P  NSg+
 > Witnesses to the same overt  Act    , or    on  Confession in      open     Court    .
-# NPl/V+    P  D   I/J  NSg/J+ NPr/V+ . NPr/C J/P NSg+       NPr/J/P NSg/V/J+ NSg/V/J+ .
+# NPl/V+    P  D   I/J  NSg/J+ NPr/V+ . NPr/C J/P N🅪Sg+      NPr/J/P NSg/V/J+ NSg/V/J+ .
 >
 #
 > The Congress shall have   Power    to declare the Punishment of Treason , but     no
 # D+  NPr/V+   VX    NSg/VX NSg/V/J+ P  V       D   N🅪Sg       P  NSg     . NSg/C/P NPr/P
-> Attainder of Treason shall work   Corruption of Blood  , or    Forfeiture except
-# NSg       P  NSg     VX    NSg/V+ NSg        P  NSg/V+ . NPr/C NSg        V/C/P
+> Attainder of Treason shall work   Corruption of Blood   , or    Forfeiture except
+# NSg       P  NSg     VX    NSg/V+ NSg        P  NᴹSg/V+ . NPr/C NSg        V/C/P
 > during the Life  of the Person attainted .
 # V/P    D   NSg/V P  D+  NSg/V+ ?         .
 >
@@ -1220,8 +1220,8 @@
 # V/J         NSg/J/P NSg/V+ . V/C P  NSg/VX V/J      P  D   NSg/V  V/C NSg/V/C P  D
 > accusation ; to be     confronted with the witnesses against him  ; to have   compulsory
 # NSg        . P  NSg/VX V/J        P    D+  NPl/V+    C/P     ISg+ . P  NSg/VX NSg/J
-> process for obtaining witnesses in      his     favor     , and to have   the assistance of
-# NSg/V   C/P V         NPl/V+    NPr/J/P ISg/D$+ NSg/V/Am+ . V/C P  NSg/VX D   NSg        P
+> process for obtaining witnesses in      his     favor      , and to have   the assistance of
+# NSg/V   C/P V         NPl/V+    NPr/J/P ISg/D$+ N🅪Sg/V/Am+ . V/C P  NSg/VX D   NSg        P
 > counsel for his     defense   .
 # NSg/V   C/P ISg/D$+ NSg/V/Am+ .
 >
@@ -1277,7 +1277,7 @@
 > due   process of law    ; nor   deny to any    person within  its     jurisdiction the equal
 # NSg/J NSg/V   P  NSg/V+ . NSg/C V    P  I/R/Dq NSg/V  NSg/J/P ISg/D$+ NSg          D   NSg/V/J
 > protection of the laws   .
-# NSg        P  D+  NPl/V+ .
+# N🅪Sg       P  D+  NPl/V+ .
 >
 #
 > The right   of citizens of the United States   , who    are eighteen years of age    or
