@@ -1,7 +1,6 @@
 use std::hash::{DefaultHasher, Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
-use std::hash::{Hash, Hasher};
 
 use crate::{
     Document, FatToken,

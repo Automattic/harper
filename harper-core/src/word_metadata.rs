@@ -46,7 +46,7 @@ impl Hash for WordMetadata {
         self.adverb.hash(state);
         self.conjunction.hash(state);
         self.swear.hash(state);
-        self.dialect.hash(state);
+        self.dialects.hash(state);
         self.determiner.hash(state);
         self.preposition.hash(state);
         self.common.hash(state);
