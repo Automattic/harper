@@ -14,8 +14,10 @@ impl Default for PossessiveYour {
         let pattern =
             SequencePattern::aco("you")
                 .then_whitespace()
-                .then(|tok: &Token, _source: &[char]| {
-                    tok.kind.is_nominal() && !tok.kind.is_likely_homograph()
+                .then(|tok: &Token, source: &[char]| {
+                    tok.kind.is_nominal()
+                        && !tok.kind.is_likely_homograph()
+                        && tok.span.get_content(source) != ['g', 'u', 'y', 's']
                 });
 
         Self {
@@ -70,6 +72,15 @@ mod tests {
     fn allow_intro_page() {
         assert_lint_count(
             "You can try out an editor that uses Harper under-the-hood here.",
+            PossessiveYour::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allow_you_guys() {
+        assert_lint_count(
+            "I mean I'm pretty sure you guys can't do anything with this stuff.",
             PossessiveYour::default(),
             0,
         );

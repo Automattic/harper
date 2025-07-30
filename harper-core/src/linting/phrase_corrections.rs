@@ -923,6 +923,31 @@ pub fn lint_group() -> LintGroup {
             "Use `without` instead of `w/o`",
             "Expands the abbreviation `w/o` to the full word `without` for clarity."
         ),
+        "WellKept" => (
+            ["highly-kept", "highly kept"],
+            // There may be other good alternatives such as closely-guarded or tightly-held
+            ["well-kept"],
+            "`Highly-kept` is not standard. To describe secrets, `well-kept` is the most used phrase.",
+            "Flags `highly-kept` and recommends `well-kept` as an alternative."
+        ),
+        "ExpandBecause" => (
+            ["cuz"],
+            ["because"],
+            "Use `because` instead of informal `cuz`",
+            "Expands the informal abbreviation `cuz` to the full word `because` for formality."
+        ),
+        "AtFaceValue" => (
+            ["on face value"],
+            ["at face value"],
+            "`at face value is more idiomatic and more common.",
+            "Corrects `on face value` to the more usual `at face value`."
+        ),
+        "TrialAndError" => (
+            ["trail and error"],
+            ["trial and error"],
+            "You misspelled `trial`.",
+            "Corrects `trail` to `trial` in `trial and error`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -1753,6 +1778,51 @@ mod tests {
             "Another possible cause is simply that the application does not have file creation permissions on the another machine.",
             lint_group(),
             "Another possible cause is simply that the application does not have file creation permissions on the other machine.",
+        );
+    }
+
+    #[test]
+    fn correct_highly_kept_space() {
+        assert_suggestion_result(
+            "I assure you that frequency/angle dependence is a highly kept secret.",
+            lint_group(),
+            "I assure you that frequency/angle dependence is a well-kept secret.",
+        );
+    }
+
+    #[test]
+    fn expand_cuz() {
+        assert_suggestion_result(
+            "Stick around cuz I got a surprise for you at the end.",
+            lint_group(),
+            "Stick around because I got a surprise for you at the end.",
+        );
+    }
+
+    #[test]
+    fn correct_highly_kept_no_hyphen() {
+        assert_suggestion_result(
+            "Well, Kushina's giving birth was already a highly-kept secret so it makes sense to operate with only the completely necessary personnel.",
+            lint_group(),
+            "Well, Kushina's giving birth was already a well-kept secret so it makes sense to operate with only the completely necessary personnel.",
+        );
+    }
+
+    #[test]
+    fn correct_on_face_value() {
+        assert_suggestion_result(
+            "Obviously what you want is possible and on face value it's a trivial change on our end.",
+            lint_group(),
+            "Obviously what you want is possible and at face value it's a trivial change on our end.",
+        );
+    }
+
+    #[test]
+    fn correct_trail_and_error() {
+        assert_suggestion_result(
+            "It was produced through trail and error.",
+            lint_group(),
+            "It was produced through trial and error.",
         );
     }
 }

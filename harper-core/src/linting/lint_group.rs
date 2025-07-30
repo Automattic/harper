@@ -315,7 +315,6 @@ impl LintGroup {
         insert_pattern_rule!(PossessiveYour, true);
         insert_struct_rule!(SpelledNumbers, false);
         insert_struct_rule!(AnA, true);
-        insert_struct_rule!(SentenceCapitalization, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_struct_rule!(LongSentences, true);
         insert_struct_rule!(RepeatedWords, true);
@@ -361,6 +360,12 @@ impl LintGroup {
             Box::new(InflectedVerbAfterTo::new(dictionary.clone(), dialect)),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
+
+        out.add(
+            "SentenceCapitalization",
+            Box::new(SentenceCapitalization::new(dictionary.clone(), dialect)),
+        );
+        out.config.set_rule_enabled("SentenceCapitalization", true);
 
         out
     }

@@ -1,4 +1,4 @@
-52430
+52500
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -3674,11 +3674,12 @@ Fuentes/2M
 Fugger/M
 Fuji/2M
 Fujian/25M
-Fujitsu/M
+Fujitsu/M           # Disinhibited
 Fujiwara/2M
 Fujiyama/2M
 Fukuoka/2M
-Fukuyama/2M
+Fukuyama/2M         # francis -
+Fukuyaman/5
 Fulani/2M
 Fulbright/2M
 Fuller/2M
@@ -4946,7 +4947,7 @@ JCS/2
 JD/12
 JDM
 JFK/214M
-JIT/1MS
+JIT/1MS4DG          # cf. jit
 JP/12
 JPEG/214
 JV/1
@@ -10220,7 +10221,7 @@ Tyree/2M
 Tyrolean/51
 Tyrone/21M
 Tyson/2M
-U/15+2M
+U/M                 # removed `1`noun `5`adj. `2`proper noun `+`prep., was interfering with linter heuristics. I only know this as an abbreviation for university
 UAE/2M              # United Arab Emirates
 UAR/2
 UAW/2
@@ -10240,7 +10241,7 @@ UPC/1
 UPI/21M
 UPS/142M
 URL/1S
-US/215M
+US/2M
 USA/21M
 USAF/2
 USAID/2M            # agency
@@ -10938,7 +10939,7 @@ Yorktown/2M
 Yoruba/12M
 Yosemite/2M
 Yossarian/M
-YouTube/214M
+YouTube/214MG
 YouTuber/1SM
 Young/2M
 Youngstown/2M
@@ -14528,6 +14529,7 @@ biohazard/1MS
 bioethics/~1M
 biofeedback/1M
 biofilm/1MS
+bioinformatics/1M
 biog/1
 biographer/~1SM
 biographic/5
@@ -15620,7 +15622,7 @@ buffer/~154SMDG
 buffet/~14SMDGJ
 buffoon/14SM
 buffoonery/1M
-buffoonish/5
+buffoonish/5P
 bug/~14CS
 bug's
 bugaboo/1SM
@@ -17595,7 +17597,7 @@ cloister/~14SMDG
 cloistral/5
 clomp/14SDG
 clonal/5
-clone/~14DSMG
+clone/~14DSMGB
 clonidine/1
 clonk/14SMDG
 clop/14MS
@@ -18457,6 +18459,7 @@ conflagration/1MS
 conflate/451XDSGN
 conflation/1M
 conflict/~14SGMD
+conflictive/5
 confluence/~1MS
 confluent/51
 conform/~4ZB
@@ -18814,7 +18817,7 @@ conventionality/1UM
 conventionalize/4GDS
 conventioneer/1S
 convergence/~1MS
-convergent/~51
+convergent/~51Y
 conversant/51
 conversation/~14MS
 conversational/~5Y
@@ -21203,6 +21206,7 @@ disinfection/1M
 disinform/4SDG
 disinterested/~5PY
 disinterestedness/1M
+disinhibit/4SDG
 disjointed/~5YP
 disjointedness/1M
 disjunctive/51
@@ -22837,8 +22841,8 @@ enrich/~4DSLG
 enrichment/~1M
 enrol/4SL!@
 enroll/~4DLSG
-enrolled/4!@
-enrolling/41!@
+enrolled/4
+enrolling/41
 enrollment/~1MS
 enrolment/1SM!@
 ensconce/4DSG
@@ -23198,12 +23202,14 @@ ethnic/~51SMQ
 ethnicity/~1MS
 ethnocentric/5
 ethnocentrism/1M
+ethnocultural/5
 ethnographer/1S
 ethnographic/~5Q
 ethnography/~1
 ethnological/5Y
 ethnologist/1SM
 ethnology/~1M
+ethnonationalism/1M
 ethological/5
 ethologist/1MS
 ethology/1M
@@ -26576,10 +26582,10 @@ gravitation/~1M
 gravitational/~5
 gravity/~1M
 gravy/~14SM
-gray/~541MDRTGSP
-graybeard/1SM
-grayish/5
-grayness/1M
+gray/~541MDRTGSP<
+graybeard/1SM<
+grayish/5<
+grayness/1M<
 graze/14DRSMZG
 grazer/1M
 grease/~14DRSMZG
@@ -28689,6 +28695,7 @@ illegibly/j
 illegitimacy/~1M
 illegitimate/~514Y
 illiberal/51Y
+illiberalism/1M
 illiberality/1M
 illicit/~51YP
 illicitness/1M
@@ -30289,6 +30296,9 @@ jinn/1
 jinni/1M
 jinrikisha/1SM
 jinx/14MDSG
+jit/4S
+jitted/4
+jitting/4
 jitney/~1SM
 jitterbug/14MS
 jitterbugged/4
@@ -32143,7 +32153,7 @@ maceration/1M
 mach/~M
 machete/14SM
 machinate/4GNDSX
-machination/1M
+machination/1MS
 machine/~14DSMGB
 machinery/~1M
 machinist/1MS
@@ -34561,7 +34571,7 @@ nation/~1MS
 national/~51MYS
 nationalisation/1SM!
 nationalise/4CDSG!
-nationalism/~1M
+nationalism/~1MS
 nationalist/~51SM
 nationalistic/~5Q
 nationality/~1SM
@@ -35692,7 +35702,7 @@ obtuseness/1M
 obverse/~51SM
 obviate/415DSGN
 obviation/1M
-obvious/~5PY
+obvious/~5PYU
 obviousness/1M
 ocarina/1MS
 occasion/~14GMDS
@@ -35849,6 +35859,7 @@ oink/14MDSG
 ointment/~1SM
 okapi/1SM
 okay/~145MSG
+okayish/5
 okra/1MS
 old/~51TMNRP
 oldie/1SM
@@ -35894,7 +35905,7 @@ omniscient/51
 omnivore/1MS
 omnivorous/~5PY
 omnivorousness/1M
-on/~5+4
+on/~5+              # verb sense is nonstandard dialectal and interferes with linter heuristics
 onboard/~5j4SDG
 once/~71M
 oncogene/1SM
@@ -40863,7 +40874,7 @@ reflate/4XDSGN
 reflationary/5
 reflect/~4GVSD
 reflection/~1MS
-reflective/~5Y
+reflective/~5YP
 reflectivity/~1
 reflector/~1MS
 reflexive/~51SMY
@@ -43810,7 +43821,7 @@ silky/~51TRP
 sill/~15MS
 silliness/1M
 silly/~51TRSMP
-silo/~14MS
+silo/~14MSDG
 silovik/1MS
 siloviki/9
 silt/~14GMDS
@@ -47041,6 +47052,7 @@ taro/~1MS
 tarot/~1MS
 tarp/14MS
 tarpaulin/14MS
+tarpit/1MS
 tarpon/1MS
 tarragon/1SM
 tarred/4
@@ -47732,7 +47744,7 @@ thuggery/1M
 thuggish/5
 thulium/1M
 thumb/~14SMDG
-thumbnail/~14SM
+thumbnail/~14SMDG
 thumbprint/1SM
 thumbscrew/1SM
 thumbtack/14SM
@@ -49037,7 +49049,7 @@ tyrant/~154SM
 tyre/14MS!
 tyro/1MS
 tzatziki/1
-u/~185S
+# u/~185S           # probably left over from hunspell, causes havoc with linter heuristics
 ubiquitous/~5Y
 ubiquity/1M
 udder/1SM
@@ -49341,6 +49353,7 @@ unemployed/~5M
 unending/5
 unenterprising/5
 unequal/~51DY
+unerase/4SDG
 unerring/5Y
 unessential/5
 unevaluated/5
@@ -51890,6 +51903,7 @@ Anker/SM
 Archytas/SM             # !! please check and comment !! we also have archytas
 Automattic/SM           # WordPress company
 Automattician/SM
+BLM/1M
 BRICS/                  # intergovernmental organization
 BYD/2MS                 # Chinese automobile manufacturer
 Bachiyski/SM
@@ -52073,6 +52087,7 @@ RDBMS/12SM          # relational database management system
 RISC/1M             # cpu architecture
 RFID/21M            # radio frequency identification
 RPC/21SM            # remote procedure call
+RPG/1MS             # role-playing game
 RTX/1SM
 Raytheon/2M
 Reddit/2M
@@ -52088,6 +52103,7 @@ SVGA/1              # super VGA
 Sharman/2SM
 Shibuya/2M
 Shinjuku/2M
+Shopify/2M          # company
 Simplenote/2M
 Sioyek/M1
 Siri/2M             # voice assistant
@@ -52157,8 +52173,10 @@ archytas/SM         # !! please check and comment !! we also have Archytas
 backend/1SM         # dictionaries prefer: back end
 baz/~               # cf. foo, bar
 config/14SM         # not marked as a verb since "configed" and "configing" look wrong
+corpo/1MS
 dedup/1M            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/14SMDG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
+DEI
 dotfile/~1SM        # not well covered by dictionaries.
 filesystem/~SM      # dictionaries prefer: file system
 frontend/1SM        # dictionaries prefer: front end
@@ -52172,6 +52190,7 @@ hotwire/4BG         # dictionaries prefer: hot-wire
 labriola/SM         # !! please check and comment !! - should be uppercase surname?
 memecoin/1MS
 Molex/12MS          # Molex connector
+NMI/1MS             # non-maskable interrupt
 npm/2M              # node package manager
 olds/~              # common in phrasing such as "twenty year olds"
 pandoc/SM           # !! please check and comment !! elsewhere we have Pandoc
@@ -52188,6 +52207,7 @@ scrollbar/1SM       # dictionaries prefer: scroll bar
 sioyek/SM           # !! please check and comment !!
 stacktrace/SM1      # dictionaries prefer: stack trace
 standup/SM          # dictionaries prefer: stand-up
+ULA/1MS             # uncommitted logic array
 vid/1MS             # video
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
@@ -52221,6 +52241,7 @@ car bomb/1MS
 car-bomb/4
 centre-left/5!@
 centre-right/5!@
+clear-sighted/5
 command line/1MS
 cost cutting/1M
 cost-effective/5
@@ -52229,11 +52250,15 @@ cross section/1MS
 cross-threaded/5
 cutting edge/1MS
 cutting-edge/5
+de-extinct/4GD
+di-extinction/1MS
 de facto/51M
 death knell/1MS
 deja vu/1
 déjà vu/1
 die hard/4
+dire wolf/1M
+dire wolves/9
 door to door/j
 door-to-door/S
 double-decker/5
@@ -52260,7 +52285,11 @@ full on/5j
 full-on/5j
 full-scale/5
 gold-plated/5
+gray wolf/1M<
+gray wolves/9<
 Greco-Roman/5
+grey wolf/1M!@
+grey wolves/9!@
 ground-based/5
 gung ho/5
 H-1B/1MS
@@ -52335,6 +52364,8 @@ once-in-a-lifetime/5
 one-handed/5
 one-man/5
 one-off/5
+one shot/1
+one-shot/514
 one-tenth/1
 one-to-one/15
 one-way/5
@@ -52344,13 +52375,18 @@ OS X/2M             # before macOS
 out-and-out/5
 Pan Am/1M           # old airline
 Pax Americana/2M
+peer review/1MSDG
+peer-reviewed/5
 per capita/5j
+Petri dish/1MS
 pick-me-up/1MS
 plan B/M
 pre-COVID/5
 quid pro quo/1M
 post-truth/14M
 rack-mounted/5
+red wolf/1M
+red wolves/9
 right-hand/5
 right-wing/5
 run-up/1MS
@@ -52359,6 +52395,7 @@ sea lane/1MS
 self-driving/1M5
 self-fund/4SDG
 self-obsessed/5
+self-tapping/5
 shark-infested/5
 short-lived/5
 short-term/5j
@@ -52418,6 +52455,7 @@ well-received/5
 well-respected/5
 well-used/5
 Wi-Fi/1M
+wishy-washy/5
 working-class/15MS
 write off/4
 write-off/1MS

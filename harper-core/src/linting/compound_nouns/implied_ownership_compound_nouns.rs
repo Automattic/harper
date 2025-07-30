@@ -37,6 +37,12 @@ impl PatternLinter for ImpliedOwnershipCompoundNouns {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        // "Let's" can technically be a possessive noun (of a lease, or a let in tennis, etc.)
+        // but in practice it's almost always a contraction of "let us" before a verb.
+        let possessive = matched_tokens[0].span.get_content(source);
+        if possessive == ['l', 'e', 't', '\'', 's'] || possessive == ['L', 'e', 't', '\'', 's'] {
+            return None;
+        }
         let span = matched_tokens[2..].span()?;
         // If the pattern matched, this will not return `None`.
         let word =
@@ -57,5 +63,20 @@ impl PatternLinter for ImpliedOwnershipCompoundNouns {
 
     fn description(&self) -> &str {
         "Detects split compound nouns following a possessive noun and suggests merging them."
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::ImpliedOwnershipCompoundNouns;
+    use crate::linting::tests::assert_lint_count;
+
+    #[test]
+    fn does_not_flag_lets() {
+        assert_lint_count(
+            "Let's check out this article.",
+            ImpliedOwnershipCompoundNouns::default(),
+            0,
+        );
     }
 }
