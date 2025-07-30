@@ -320,9 +320,9 @@ export default class HarperPlugin extends Plugin {
 						severity: 'error',
 						title: lint.lint_kind_pretty(),
 						renderMessage: (view) => {
-							const node = document.createElement('span');
+							const node = document.createElement('template');
 							node.innerHTML = lint.message_html();
-							return node;
+							return node.content;
 						},
 						ignore: async () => {
 							await this.harper.ignoreLint(text, lint);
