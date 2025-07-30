@@ -1,5 +1,5 @@
 use crate::{
-    Span, Token, TokenStringExt,
+    Token,
     linting::{Lint, LintKind, PatternLinter, Suggestion},
     patterns::{Pattern, SequencePattern, WordSet},
 };
