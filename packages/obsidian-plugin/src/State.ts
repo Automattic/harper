@@ -1,6 +1,6 @@
 import type { Extension, StateField } from '@codemirror/state';
 import type { LintConfig, Linter, Suggestion } from 'harper.js';
-import { type Dialect, LocalLinter, SuggestionKind, WorkerLinter, binaryInlined } from 'harper.js';
+import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { toArray } from 'lodash-es';
 import { minimatch } from 'minimatch';
 import type { MarkdownFileInfo, MarkdownView, Workspace } from 'obsidian';

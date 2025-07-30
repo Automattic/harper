@@ -1,5 +1,6 @@
 <script lang="ts">
 import { Textarea } from 'flowbite-svelte';
+
 let demoText =
 	'Ths is an text box you can type in.\n\nany other site on the web will work the the same!';
 </script>
@@ -50,6 +51,30 @@ let demoText =
           class="w-full rounded-lg border border-base-300 focus:ring-4 focus:ring-primary/30 transition text-xl!"
         />
       </div>
+
+
+      <h2 class="text-center text-3xl mb-4 font-bold max-w-3xl mx-auto">
+        Nothing is Happening?
+      </h2>
+
+
+    <div class="flex flex-row">
+      <p class="text-left text-lg sm:text-xl mb-4 max-w-3xl mx-auto">
+        Harper will only enable itself automatically on sites we've tested before. 
+        <br/>
+        <br/>
+        If you work somewhere that isn't on our list of supported sites, you can enable the Chrome extension anyway by opening the Harper extension popup and clicking the power button.
+        <br/>
+        <br/>
+        Alternatively, <a href="/request-browser-support">let us know</a> which sites you want us to support and we'll add it as soon as we can.
+      </p>
+
+      <img
+        src="/images/chrome_extension_popup.png"
+        alt="The Chrome extension’s popup page"
+        class="max-w-full h-auto object-contain"
+      />
+    <div>
 
     </section>
   </div>

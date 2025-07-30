@@ -1,7 +1,6 @@
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
-import { type LintBox, isBoxInScreen } from './Box';
-import RenderBox from './RenderBox';
+import { isBoxInScreen, type LintBox } from './Box';
 import {
 	getCMRoot,
 	getDraftRoot,
@@ -17,6 +16,7 @@ import {
 	getTrixRoot,
 } from './editorUtils';
 import lintKindColor from './lintKindColor';
+import RenderBox from './RenderBox';
 
 /** A class that renders highlights to a page and nothing else. Uses a virtual DOM to minimize jitter. */
 export default class Highlights {

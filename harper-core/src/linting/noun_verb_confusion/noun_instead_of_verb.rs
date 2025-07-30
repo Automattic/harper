@@ -1,20 +1,8 @@
-use crate::expr::Expr;
-use crate::expr::SequenceExpr;
-use crate::expr::{FirstMatchOf, LongestMatchOf};
+use crate::expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr};
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{Lrc, Token, patterns::WordSet};
 
-use super::{ExprLinter, Lint, LintKind, Suggestion};
-
-/// Common noun-verb pairs that are often confused
-const NOUN_VERB_PAIRS: &[(&str, &str)] = &[
-    ("advice", "advise"),
-    ("belief", "believe"),
-    ("breath", "breathe"),
-    ("effect", "affect"), // "Effect" is also a verb meaning "to bring about".
-    ("intent", "intend"),
-    // ("proof", "prove"),  // "Proof" is also a verb, a synonym of "proofread".
-    // Add more pairs here as needed
-];
+use super::NOUN_VERB_PAIRS;
 
 /// Pronouns that can come before verbs but not nouns
 const PRONOUNS: &[&str] = &["he", "I", "it", "she", "they", "we", "who", "you"];

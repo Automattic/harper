@@ -68,9 +68,9 @@ impl ExprLinter for NounCountability {
 
         // 3 tokens means the phrase was at the end of a chunk/sentence.
         // 5 tokens means the phrase was in the middle of a chunk/sentence.
-        // If it's in the middle then we check if the next word token is a noun.
+        // If it's in the middle then we check if the next word token is a noun or OOV.
         // Since the last token of our phrase is the mass noun, this would make it part of a compound noun.
-        if toks.len() == 5 && toks.last()?.kind.is_noun() {
+        if toks.len() == 5 && (toks.last()?.kind.is_noun() || toks.last()?.kind.is_oov()) {
             return None;
         }
 

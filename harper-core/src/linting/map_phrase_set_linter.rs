@@ -12,6 +12,7 @@ pub struct MapPhraseSetLinter<'a> {
     wrong_forms_to_correct_forms: &'a [(&'a str, &'a str)],
     multi_wrong_forms_to_multi_correct_forms: &'a [(&'a [&'a str], &'a [&'a str])],
     message: String,
+    lint_kind: LintKind,
 }
 
 impl<'a> MapPhraseSetLinter<'a> {
@@ -19,6 +20,7 @@ impl<'a> MapPhraseSetLinter<'a> {
         wrong_forms_to_correct_forms: &'a [(&'a str, &'a str)],
         message: impl ToString,
         description: impl ToString,
+        lint_kind: Option<LintKind>,
     ) -> Self {
         let expr = Box::new(LongestMatchOf::new(
             wrong_forms_to_correct_forms
@@ -36,6 +38,7 @@ impl<'a> MapPhraseSetLinter<'a> {
             wrong_forms_to_correct_forms,
             multi_wrong_forms_to_multi_correct_forms: &[],
             message: message.to_string(),
+            lint_kind: lint_kind.unwrap_or(LintKind::Miscellaneous),
         }
     }
 
@@ -43,6 +46,7 @@ impl<'a> MapPhraseSetLinter<'a> {
         multi_wrong_forms_to_multi_correct_forms: &'a [(&'a [&'a str], &'a [&'a str])],
         message: impl ToString,
         description: impl ToString,
+        lint_kind: Option<LintKind>,
     ) -> Self {
         let mut lmo = LongestMatchOf::new(Vec::new());
         for (wrong_forms, _correct_forms) in multi_wrong_forms_to_multi_correct_forms {
@@ -58,6 +62,7 @@ impl<'a> MapPhraseSetLinter<'a> {
             wrong_forms_to_correct_forms: &[],
             multi_wrong_forms_to_multi_correct_forms,
             message: message.to_string(),
+            lint_kind: lint_kind.unwrap_or(LintKind::Miscellaneous),
         }
     }
 }
@@ -106,7 +111,7 @@ impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::Miscellaneous,
+            lint_kind: self.lint_kind,
             suggestions,
             message: self.message.to_string(),
             priority: 31,

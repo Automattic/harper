@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
@@ -7,25 +7,26 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"include": ["packages/**/*", "**/*.json"],
-		"ignore": [
-			"test-results",
-			"node_modules",
-			"dist",
-			"target",
-			"build",
-			"temp",
-			"*.zip",
-			"**/*.rs",
-			"harper-wasm/pkg",
-			".vscode-test",
-			".svelte-kit",
-			".sveltepress",
-			"packages/obsidian-plugin/main.js",
-			"pnpm-lock.yaml",
-			"package-lock.json",
-			"playwright-report",
-			"yarn.lock"
+		"includes": [
+			"**/packages/**/*",
+			"**/*.json",
+			"!**/test-results",
+			"!**/node_modules",
+			"!**/dist",
+			"!**/target",
+			"!**/build",
+			"!**/temp",
+			"!**/*.zip",
+			"!**/*.rs",
+			"!**/harper-wasm/pkg",
+			"!**/.vscode-test",
+			"!**/.svelte-kit",
+			"!**/.sveltepress",
+			"!**/packages/obsidian-plugin/main.js",
+			"!**/pnpm-lock.yaml",
+			"!**/package-lock.json",
+			"!**/playwright-report",
+			"!**/yarn.lock"
 		]
 	},
 	"formatter": {
@@ -34,8 +35,12 @@
 		"indentStyle": "tab",
 		"useEditorconfig": true
 	},
-	"organizeImports": {
-		"enabled": true
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
 	},
 	"linter": {
 		"enabled": true,
@@ -52,19 +57,29 @@
 				"useGenericFontNames": "warn"
 			},
 			"correctness": {
-				"useExhaustiveDependencies": "off"
+				"useExhaustiveDependencies": "off",
+				"noUnusedVariables": "off"
 			},
 			"style": {
 				"noParameterAssign": "off",
-				"noArguments": "off",
 				"noNonNullAssertion": "off",
 				"noUselessElse": "off",
-				"useNodejsImportProtocol": "off"
+				"useNodejsImportProtocol": "off",
+				"useAsConstAssertion": "error",
+				"useDefaultParameterLast": "error",
+				"useEnumInitializers": "error",
+				"useSelfClosingElements": "error",
+				"useSingleVarDeclarator": "error",
+				"noUnusedTemplateLiteral": "error",
+				"useNumberNamespace": "error",
+				"noInferrableTypes": "error"
 			},
 			"complexity": {
 				"noForEach": "off",
 				"noStaticOnlyClass": "off",
-				"noThisInStatic": "off"
+				"noThisInStatic": "off",
+				"noArguments": "off",
+				"noUselessFragments": "off"
 			}
 		}
 	},
@@ -75,7 +90,7 @@
 	},
 	"overrides": [
 		{
-			"include": ["*.svelte", "*.astro", "*.vue"],
+			"includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
 			"linter": {
 				"rules": {
 					"style": {
