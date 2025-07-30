@@ -1130,12 +1130,6 @@ pub fn lint_group() -> LintGroup {
             "The more standard, less colloquial form is `take it personally`.",
             "Corrects `take it personal` to `take it personally`."
         ),
-        "TakeItSeriously" => (
-            ["take it serious"],
-            ["take it seriously"],
-            "Did you mean `take it seriously`?",
-            "Ensures the correct use of the adverb `seriously` instead of the adjective `serious` in phrases like `take it seriously`."
-        ),
         "ThatChallenged" => (
             ["the challenged"],
             ["that challenged"],

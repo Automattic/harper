@@ -47,6 +47,7 @@
 //!   - Determiners are denoted by `D`.
 //!   - Prepositions are denoted by `P`.
 //!   - Dialects are denoted by `Am`, `Br`, `Ca`, or `Au`.
+//!   - Swear words are denoted by `B` (for bad).
 //!   - Noun phrase membership is denoted by `+`
 //!
 //!   The tagger supports uncertainty, so a single word can be e.g. both a
@@ -68,12 +69,12 @@ mod snapshot;
 fn format_word_tag(word: &WordMetadata) -> String {
     // These tags are inspired by the Penn Treebank POS tagset
     let mut tags = String::new();
-    let mut add = |t: &str| {
+    fn add(t: &str, tags: &mut String) {
         if !tags.is_empty() {
             tags.push('/');
         }
         tags.push_str(t);
-    };
+    }
 
     fn add_bool(tag: &mut String, name: &str, value: Option<bool>) {
         if let Some(value) = value {
@@ -98,19 +99,19 @@ fn format_word_tag(word: &WordMetadata) -> String {
         add_bool(&mut tag, "Pr", noun.is_proper);
         add_switch(&mut tag, noun.is_plural, "Pl", "Sg");
         add_bool(&mut tag, "$", noun.is_possessive);
-        add(&tag);
+        add(&tag, &mut tags);
     }
     if let Some(pronoun) = word.pronoun {
         let mut tag = String::from("I");
         add_switch(&mut tag, pronoun.is_plural, "Pl", "Sg");
         add_bool(&mut tag, "$", pronoun.is_possessive);
-        add(&tag);
+        add(&tag, &mut tags);
     }
     if let Some(verb) = word.verb {
         let mut tag = String::from("V");
         add_bool(&mut tag, "L", verb.is_linking);
         add_bool(&mut tag, "X", verb.is_auxiliary);
-        add(&tag);
+        add(&tag, &mut tags);
     }
     if let Some(adjective) = word.adjective {
         let mut tag = String::from("J");
@@ -121,33 +122,40 @@ fn format_word_tag(word: &WordMetadata) -> String {
                 Degree::Positive => "P",
             });
         }
-        add(&tag);
+        add(&tag, &mut tags);
     }
     if let Some(_adverb) = word.adverb {
-        add("R");
+        add("R", &mut tags);
     }
     if let Some(_conj) = word.conjunction {
-        add("C");
+        add("C", &mut tags);
     }
     if word.determiner {
-        add("D");
+        add("D", &mut tags);
     }
     if word.preposition {
-        add("P");
+        add("P", &mut tags);
     }
 
     word.dialects.iter().for_each(|d| {
         if let Ok(dialect) = harper_core::Dialect::try_from(d) {
-            add(match dialect {
-                harper_core::Dialect::American => "Am",
-                harper_core::Dialect::British => "Br",
-                harper_core::Dialect::Canadian => "Ca",
-                harper_core::Dialect::Australian => "Au",
-            });
+            add(
+                match dialect {
+                    harper_core::Dialect::American => "Am",
+                    harper_core::Dialect::British => "Br",
+                    harper_core::Dialect::Canadian => "Ca",
+                    harper_core::Dialect::Australian => "Au",
+                },
+                &mut tags,
+            );
         }
     });
 
     add_switch(&mut tags, word.np_member, "+", "");
+
+    if word.swear == Some(true) {
+        add("B", &mut tags);
+    }
 
     if tags.is_empty() {
         String::from("W?")

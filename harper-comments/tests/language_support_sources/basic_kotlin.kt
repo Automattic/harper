@@ -6,7 +6,7 @@
 //  1. Defines a sealed algebraic hierarchy to represent the discrete states of a task
 //     transmogrifying through a rudimentary scheduler.
 //  2. Employs a type-safe builder DSL to assemble a cohort of Task objects succinctly.
-//  3. Utilises coroutines and the structured-concurrency discipline to execute tasks
+//  3. Utilizes coroutines and the structured-concurrency discipline to execute tasks
 //     concomitantly while preserving deterministic shutdown semantics.
 // *************************************************************************************************
 

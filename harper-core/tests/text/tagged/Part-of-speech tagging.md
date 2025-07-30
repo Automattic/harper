@@ -326,8 +326,8 @@
 # NPrSg/V/J+ NSg    . D/P NSg/J  NSg         P  NSg/V/J NPl+          NSg/VX NSg/V   D/P N/I/J
 > larger corpus ) . Both methods achieved an  accuracy of over      95 % . DeRose's 1990
 # J      NSg+   . . I/C  NPl/V+  V/J      D/P NSg      P  NSg/V/J/P #  . . ?        #
-> dissertation at    Brown     University included analyses of the specific error  types  ,
-# NSg+         NSg/P NPrSg/V/J NSg+       V/J      NSg/V    P  D+  NSg/J+   NSg/V+ NPl/V+ .
+> dissertation at    Brown     University included analyses    of the specific error  types  ,
+# NSg+         NSg/P NPrSg/V/J NSg+       V/J      NSg/V/Au/Br P  D+  NSg/J+   NSg/V+ NPl/V+ .
 > probabilities , and other    related data , and replicated his    work  for Greek     , where
 # NPl+          . V/C NSg/V/J+ J+      NSg+ . V/C V/J        ISg/D+ NSg/V C/P NPrSg/V/J . NSg/C
 > it         proved similarly effective .
