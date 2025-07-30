@@ -26,9 +26,8 @@ impl Default for CompoundNounAfterDetAdj {
                 let Some(Some(meta)) = tok.kind.as_word() else {
                     return false;
                 };
-                meta.determiner
-                    || (meta.is_adjective()
-                        && tok.span.get_content_string(src).to_lowercase() != "go")
+                meta.is_determiner()
+                    || (meta.is_adjective() && *tok.span.get_content(src).to_lower() != ['g', 'o'])
             })
             .t_ws()
             .then(is_content_word)

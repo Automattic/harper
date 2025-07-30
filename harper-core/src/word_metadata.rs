@@ -26,8 +26,7 @@ pub struct WordMetadata {
     #[serde(default = "default_default")]
     pub dialects: DialectFlags,
     /// Whether the word is a [determiner](https://en.wikipedia.org/wiki/English_determiners).
-    #[serde(default = "default_false")]
-    pub determiner: bool,
+    pub determiner: Option<DeterminerData>,
     /// Whether the word is a [preposition](https://www.merriam-webster.com/dictionary/preposition).
     #[serde(default = "default_false")]
     pub preposition: bool,
@@ -82,7 +81,7 @@ macro_rules! generate_metadata_queries {
     ($($category:ident has $($sub:ident),*).*) => {
         paste! {
             pub fn is_likely_homograph(&self) -> bool {
-                [self.determiner, self.preposition, $(
+                [self.is_determiner(), self.preposition, $(
                     self.[< is_ $category >](),
                 )*].iter().map(|b| *b as u8).sum::<u8>() > 1
             }
@@ -145,7 +144,7 @@ impl WordMetadata {
             conjunction: merge!(self.conjunction, other.conjunction),
             dialects: self.dialects | other.dialects,
             swear: self.swear.or(other.swear),
-            determiner: self.determiner || other.determiner,
+            determiner: merge!(self.determiner, other.determiner),
             preposition: self.preposition || other.preposition,
             common: self.common || other.common,
             derived_from: match (&self.derived_from, &other.derived_from) {
@@ -192,7 +191,7 @@ impl WordMetadata {
                 self.adjective = None;
                 self.adverb = None;
                 self.conjunction = None;
-                self.determiner = false;
+                self.determiner = None;
                 self.preposition = false;
             }
             PROPN => {
@@ -214,7 +213,7 @@ impl WordMetadata {
                 self.adjective = None;
                 self.adverb = None;
                 self.conjunction = None;
-                self.determiner = false;
+                self.determiner = None;
                 self.preposition = false;
             }
             PRON => {
@@ -227,7 +226,7 @@ impl WordMetadata {
                 self.adjective = None;
                 self.adverb = None;
                 self.conjunction = None;
-                self.determiner = false;
+                self.determiner = None;
                 self.preposition = false;
             }
             VERB => {
@@ -248,7 +247,7 @@ impl WordMetadata {
                 self.adjective = None;
                 self.adverb = None;
                 self.conjunction = None;
-                self.determiner = false;
+                self.determiner = None;
                 self.preposition = false;
             }
             AUX => {
@@ -269,7 +268,7 @@ impl WordMetadata {
                 self.adjective = None;
                 self.adverb = None;
                 self.conjunction = None;
-                self.determiner = false;
+                self.determiner = None;
                 self.preposition = false;
             }
             ADJ => {
@@ -282,7 +281,7 @@ impl WordMetadata {
                 self.verb = None;
                 self.adverb = None;
                 self.conjunction = None;
-                self.determiner = false;
+                self.determiner = None;
                 self.preposition = false;
             }
             ADV => {
@@ -295,7 +294,7 @@ impl WordMetadata {
                 self.verb = None;
                 self.adjective = None;
                 self.conjunction = None;
-                self.determiner = false;
+                self.determiner = None;
                 self.preposition = false;
             }
             ADP => {
@@ -305,7 +304,7 @@ impl WordMetadata {
                 self.adjective = None;
                 self.adverb = None;
                 self.conjunction = None;
-                self.determiner = false;
+                self.determiner = None;
                 self.preposition = true;
             }
             DET => {
@@ -316,7 +315,7 @@ impl WordMetadata {
                 self.adverb = None;
                 self.conjunction = None;
                 self.preposition = false;
-                self.determiner = true;
+                self.determiner = Some(DeterminerData::default());
             }
             CCONJ | SCONJ => {
                 if self.conjunction.is_none() {
@@ -328,7 +327,7 @@ impl WordMetadata {
                 self.verb = None;
                 self.adjective = None;
                 self.adverb = None;
-                self.determiner = false;
+                self.determiner = None;
                 self.preposition = false;
             }
             _ => {}
@@ -338,6 +337,7 @@ impl WordMetadata {
     generate_metadata_queries!(
         noun has proper, plural, possessive.
         pronoun has plural, possessive, reflexive.
+        determiner has demonstrative, possessive.
         verb has linking, auxiliary.
         conjunction has.
         adjective has.
@@ -564,6 +564,22 @@ impl PronounData {
             is_reflexive: self.is_reflexive.or(other.is_reflexive),
             person: self.person.or(other.person),
             case: self.case.or(other.case),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
+pub struct DeterminerData {
+    pub is_demonstrative: Option<bool>,
+    pub is_possessive: Option<bool>,
+}
+
+impl DeterminerData {
+    /// Produce a copy of `self` with the known properties of `other` set.
+    pub fn or(&self, other: &Self) -> Self {
+        Self {
+            is_demonstrative: self.is_demonstrative.or(other.is_demonstrative),
+            is_possessive: self.is_possessive.or(other.is_possessive),
         }
     }
 }

@@ -39,13 +39,18 @@ let demoText =
         Give It a Whirl!
       </h2>
 
-        <div class="md:col-span-2 relative">
-          <Textarea
-            rows={10}
-            bind:value={demoText}
-            class="w-full rounded-lg border border-base-300 focus:ring-4 focus:ring-primary/30 transition text-xl!"
-          />
-        </div>
+      <h3 class="text-center text-xl mb-4 max-w-xl mx-auto">
+        It may take a moment for the engine to start...
+      </h3>
+
+      <div class="md:col-span-2 relative">
+        <Textarea
+          rows={10}
+          bind:value={demoText}
+          class="w-full rounded-lg border border-base-300 focus:ring-4 focus:ring-primary/30 transition text-xl!"
+        />
+      </div>
+
     </section>
   </div>
 </div>

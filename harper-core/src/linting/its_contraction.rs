@@ -21,7 +21,7 @@ impl Default for ItsContraction {
         let positive = SequenceExpr::default()
             .t_aco("its")
             .then_whitespace()
-            .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX]));
+            .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::DET]));
 
         let exceptions = SequenceExpr::default()
             .then_anything()
@@ -127,6 +127,15 @@ mod tests {
             "Launch each task within its own child coroutine.",
             ItsContraction::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn issue_381() {
+        assert_suggestion_result(
+            "Its a nice day.",
+            ItsContraction::default(),
+            "It's a nice day.",
         );
     }
 }
