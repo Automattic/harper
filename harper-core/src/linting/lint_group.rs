@@ -68,6 +68,7 @@ use super::noun_countability::NounCountability;
 use super::noun_instead_of_verb::NounInsteadOfVerb;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
+use super::on_floor::OnFloor;
 use super::one_and_the_same::OneAndTheSame;
 use super::open_the_light::OpenTheLight;
 use super::out_of_date::OutOfDate;
@@ -443,6 +444,7 @@ impl LintGroup {
         insert_expr_rule!(NounInsteadOfVerb, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
+        insert_expr_rule!(OnFloor, true);
         insert_expr_rule!(OneAndTheSame, true);
         insert_expr_rule!(OpenTheLight, true);
         insert_expr_rule!(OutOfDate, true);
