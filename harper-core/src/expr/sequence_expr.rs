@@ -5,7 +5,7 @@ use crate::{
     patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word},
 };
 
-use super::{Expr, Repeating, Step, UnlessStep};
+use super::{Expr, Optional, Repeating, Step, UnlessStep};
 
 #[derive(Default)]
 pub struct SequenceExpr {
@@ -52,7 +52,7 @@ impl Expr for SequenceExpr {
             let out = cur_expr.run(cursor, tokens, source)?;
 
             window.expand_to_include(out.start);
-            window.expand_to_include(out.end - 1);
+            window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
 
             if out.start < cursor {
                 cursor = out.start;
@@ -66,8 +66,14 @@ impl Expr for SequenceExpr {
 }
 
 impl SequenceExpr {
-    pub fn then(mut self, window: impl Expr + 'static) -> Self {
-        self.exprs.push(Box::new(window));
+    pub fn then(mut self, expr: impl Expr + 'static) -> Self {
+        self.exprs.push(Box::new(expr));
+        self
+    }
+
+    /// Pushes an expression that could move the cursor to the sequence, but does not require it.
+    pub fn then_optional(mut self, expr: impl Expr + 'static) -> Self {
+        self.exprs.push(Box::new(Optional::new(expr)));
         self
     }
 
@@ -165,6 +171,12 @@ impl SequenceExpr {
     gen_then_from_is!(determiner);
     gen_then_from_is!(proper_noun);
     gen_then_from_is!(preposition);
+    gen_then_from_is!(third_person_pronoun);
+    gen_then_from_is!(third_person_singular_pronoun);
+    gen_then_from_is!(third_person_plural_pronoun);
+    gen_then_from_is!(first_person_singular_pronoun);
+    gen_then_from_is!(first_person_plural_pronoun);
+    gen_then_from_is!(second_person_pronoun);
     gen_then_from_is!(non_plural_nominal);
 }
 

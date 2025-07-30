@@ -965,10 +965,10 @@ pub fn lint_group() -> LintGroup {
             "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration."
         ),
         "OnTheSpurOfTheMoment" => (
-            ["on the spurt of the moment"],
+            ["on the spurt of the moment", "at the spur of the moment", "in the spur of the moment"],
             ["on the spur of the moment"],
             "Use the correct phrase for acting spontaneously.",
-            "Ensures the correct use of `on the spur of the moment`, avoiding confusion with the incorrect `spurt` variation."
+            "Ensures the correct use of `on the spur of the moment`, avoiding nonstandard variations."
         ),
         "OperativeSystem" => (
             ["operative system"],

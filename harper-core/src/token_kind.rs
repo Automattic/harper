@@ -410,6 +410,62 @@ impl TokenKind {
         metadata.is_non_plural_pronoun()
     }
 
+    pub fn is_second_person_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return true;
+        };
+
+        metadata.is_second_person_pronoun()
+    }
+
+    pub fn is_third_person_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return true;
+        };
+
+        metadata.is_third_person_pronoun()
+    }
+
+    pub fn is_first_person_singular_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return true;
+        };
+
+        metadata.is_first_person_singular_pronoun()
+    }
+
+    pub fn is_first_person_plural_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return true;
+        };
+
+        metadata.is_first_person_plural_pronoun()
+    }
+
+    pub fn is_third_person_singular_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return true;
+        };
+
+        metadata.is_third_person_singular_pronoun()
+    }
+
+    pub fn is_third_person_plural_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return true;
+        };
+
+        metadata.is_third_person_plural_pronoun()
+    }
+
+    pub fn is_object_pronoun(&self) -> bool {
+        let TokenKind::Word(Some(metadata)) = self else {
+            return true;
+        };
+
+        metadata.is_object_pronoun()
+    }
+
     pub fn is_common_word(&self) -> bool {
         let TokenKind::Word(Some(metadata)) = self else {
             return true;

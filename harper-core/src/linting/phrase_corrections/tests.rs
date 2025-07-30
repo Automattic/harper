@@ -1457,7 +1457,29 @@ fn on_second_thought_no_false_positive() {
 }
 
 // OnTheSpurOfTheMoment
-// -none-
+fn fix_on_the_spurt_of_the_moment() {
+    assert_suggestion_result(
+        "Quite often in the spurt of the moment, someone will say something which they think is witty.",
+        lint_group(),
+        "Quite often on the spur of the moment, someone will say something which they think is witty.",
+    );
+}
+
+fn fix_at_the_spur_of_the_moment() {
+    assert_suggestion_result(
+        "but at the spur of the moment, I'd say that ansible-lint should work exactly like ansible",
+        lint_group(),
+        "but on the spur of the moment, I'd say that ansible-lint should work exactly like ansible",
+    );
+}
+
+fn fix_in_the_spur_of_the_moment() {
+    assert_suggestion_result(
+        "an assortment of things I started yesterday in the spur of the moment",
+        lint_group(),
+        "an assortment of things I started yesterday on the spur of the moment",
+    );
+}
 
 // OperatingSystem
 #[test]

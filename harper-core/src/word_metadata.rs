@@ -337,13 +337,77 @@ impl WordMetadata {
 
     generate_metadata_queries!(
         noun has proper, plural, possessive.
-        pronoun has personal, singular, plural, possessive, reflexive.
+        pronoun has personal, singular, plural, possessive, reflexive, object.
         determiner has demonstrative, possessive.
         verb has linking, auxiliary.
         conjunction has.
         adjective has.
         adverb has
     );
+
+    pub fn is_first_person_plural_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::First),
+                is_plural: Some(true),
+                ..
+            })
+        )
+    }
+
+    pub fn is_first_person_singular_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::First),
+                is_singular: Some(true),
+                ..
+            })
+        )
+    }
+
+    pub fn is_third_person_plural_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Third),
+                is_plural: Some(true),
+                ..
+            })
+        )
+    }
+
+    pub fn is_third_person_singular_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Third),
+                is_singular: Some(true),
+                ..
+            })
+        )
+    }
+
+    pub fn is_third_person_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Third),
+                ..
+            })
+        )
+    }
+
+    pub fn is_second_person_pronoun(&self) -> bool {
+        matches!(
+            self.pronoun,
+            Some(PronounData {
+                person: Some(Person::Second),
+                ..
+            })
+        )
+    }
 
     pub fn is_verb_lemma(&self) -> bool {
         matches!(
