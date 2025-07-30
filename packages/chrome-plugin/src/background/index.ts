@@ -53,6 +53,10 @@ async function enableDefaultDomains() {
 		'outlook.live.com',
 		'www.reddit.com',
 		'www.linkedin.com',
+		'bsky.app',
+		'pootlewriter.com',
+		'www.tumblr.com',
+		'dayone.me',
 	];
 
 	for (const item of defaultEnabledDomains) {
