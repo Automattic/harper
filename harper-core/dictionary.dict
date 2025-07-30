@@ -3400,6 +3400,7 @@ FDA/2
 FDIC/2M
 FDR/21M
 FEMA/2M
+FFT/1MS             # fast Fourier transform
 FHA/2M
 FICA/2M
 FIFO/1
@@ -5637,6 +5638,7 @@ LDC/1
 LED/1MS
 LG/12M
 LGB/51
+LGPL/12             # GNU Lesser General Public License
 LGBT/51
 LGBTQ/51
 LIFO/5
@@ -6186,7 +6188,8 @@ MO/215
 MOOC/1
 MOSFET/1MS          # transistor
 MP/125M             # military police; member of parliament
-MP3/1SM
+MP3/1SM             # audio format
+MP4/1SM             # audio/video format
 MPEG/21
 MRI/14M             # magnetic resonance imaging
 MS/12M
@@ -7510,6 +7513,7 @@ O'Rourke/2M
 O'Toole/2M
 OAS/12M
 OB/15
+OBD/1MS             # on-board diagnostics
 OCR/214             # optical character recognition
 OD/14SM
 OE/2154
@@ -8389,7 +8393,7 @@ REM/1SM
 RF/12
 RFC/21S
 RFD/512
-RGB
+RGB                 # colour model
 RI/21
 RIF/14
 RIFA/2M
@@ -12127,7 +12131,7 @@ altruistic/5Q
 alum/~14SM
 alumina/1M
 aluminium/1M!_
-aluminum/~1M@
+aluminum/~1M@<
 alumna/1M
 alumnae/9
 alumni/~9
@@ -13662,6 +13666,7 @@ backstreet/~51S
 backstretch/1MS
 backstroke/~14MGDS
 backtalk/14M
+backtrace/1MS4DG
 backtrack/14SDG
 backup/~15MS
 backward/~51PSY
@@ -16933,7 +16938,7 @@ chapped/54
 chapping/4
 chappy/15S
 chapstick/1MS
-chapter/~14SM
+chapter/~14SMDG
 char/~41SM
 charabanc/14MS
 character/~14MS
@@ -19837,6 +19842,7 @@ cumbrous/5
 cumin/1M
 cummerbund/1MS
 cumming/~4
+cumulate/4SDG
 cumulative/~5Y
 cumuli/1
 cumulonimbi/1
@@ -20343,6 +20349,7 @@ decolletage/1SM
 decollete/5
 decompilation/1MS
 decompile/4SDG
+decompiler/1MS
 decongestant/1MS
 deconstructionism/1
 decor/1MS
@@ -21788,7 +21795,7 @@ downrank/4SDG
 downright/~5
 downriver/~5
 downsample/SMG
-downscale/54
+downscale/54SDG
 downshift/14SGD
 downside/~1MS
 downsize/4GDS
@@ -21947,7 +21954,8 @@ dripper/1MS
 dripping/~14SM
 drippy/5TR
 drivability/1M
-drive/~41RSMZGB
+drivable/5U
+drive/~41RSMZG
 drivel/14SZGMDR
 driveler/1M
 drivelled/4!@_
@@ -41512,6 +41520,7 @@ rerunning/4
 resale/1MSB
 resample/4GDS
 resat/4
+rescale/4SDG
 rescind/4SDG
 rescission/1M
 rescue/~41DRSMZG
@@ -45207,7 +45216,7 @@ specif/
 specifiable/5
 specific/~51MSQ
 specification/~1M
-specificity/~1M
+specificity/~1MS
 specified/~54U
 specify/~4XNZDRSG
 specimen/~1SM
@@ -45827,6 +45836,7 @@ steerage/1M
 steering/~41M
 steersman/1M
 steersmen/9
+steganography/1M
 stegosauri/1
 stegosaurus/1MS
 stein/~1SM
@@ -47598,7 +47608,7 @@ temperature/~1SM
 tempest/~14SM
 tempestuous/5YP
 tempestuousness/1M
-template/~14S
+template/~1M4SDG
 template's
 temple/~14SM
 tempo/~1SM
@@ -48440,6 +48450,7 @@ torpid/51Y
 torpidity/1M
 torpor/1M
 torque/~14MGDS
+torquey/5
 torrent/~154SM
 torrential/5
 torrid/5YP
@@ -48561,6 +48572,7 @@ trabecule/1
 trace/~14JDRSMZG
 traceability/1
 traceable/5U
+traceback/1MS
 tracer/~1M
 tracery/1SM
 trachea/1M
@@ -48668,6 +48680,8 @@ transcendent/~51
 transcendental/~15Y
 transcendentalism/1M
 transcendentalist/1SM
+transcode/4GDS1M
+transcoder/1MS
 transcontinental/~51
 transcribe/~4ZGDRS
 transcriber/1M
@@ -50009,7 +50023,7 @@ uproar/~14SM
 uproarious/5Y
 uproot/41GSD
 upsample/SMG
-upscale/~54
+upscale/~54SDG
 upset/~514SM
 upsetting/~415
 upshot/1SM
@@ -51947,7 +51961,7 @@ wunderkind/1S
 wurst/1SM
 wuss/14MS
 wussy/51RSMT
-x/~57
+x/~                 # removed `5` and `7` adjective and `conjunction`
 x64/1M
 x86/~1M
 xci
@@ -52000,6 +52014,7 @@ xylem/1M
 xylene/1
 xylophone/14SM
 xylophonist/1MS
+y
 y'all/84
 ya/~81
 yacht/~14SMDG
@@ -52234,12 +52249,15 @@ zymurgy/1M
 0s/~9               # not sure how well "words" starting with numbers are handled
 1s/~9               # not sure how well "words" starting with numbers are handled
 3D/5                # not sure how well "words" starting with numbers are handled
+AAC/1M              # audio format
 ACM/1M
 AGI/MS              # artificial general intelligence
 AMC/12MS            # old car brand
 AOC/2M              # US politician Alexandria Ocasio-Cortez
+ASM/1               # assembly language - should "asm" be included as well/instead?
 ASUS/2M
 ATF/1M              # automatic transmission fluid
+AVC/1M              # H.264 video format
 Akismet/2M
 Alexa/2M            # voice assistant
 Alexandre/2SM
@@ -52262,6 +52280,7 @@ Bezos/2             # Surname, Amazon founder
 Bing/2M             # Microsoft product
 BitKeeper/1M        # version control
 BlasterHacks/SM
+Boxster/12MS        # car model
 BurpSuite/21MS
 C++/2SM             # programming language
 CCP/2S              # Chinese Communist Party
@@ -52271,6 +52290,7 @@ CI/1SM              # continuous integration
 CISC/1M             # cpu architecture
 CMOS/1              # microchip process
 CMake/SM            # build tool
+CMYK                # colour model
 CQL/1
 CRC/1MS             # cyclic redundancy check
 CRDT/1SM
@@ -52286,6 +52306,7 @@ Crowdsignal/2M
 Cypher/21M
 DATETIME/1MS        # dictionaries prefer: datetime
 DBMS/12SM           # database management system
+DCT/1MS             # discrete cosine transform
 DEI
 DKIM/1SM
 DM/1MS4             # direct message
@@ -52303,6 +52324,7 @@ DirectX/2M
 Dreamcast/2MS       # game console
 EGR/                # exhaust gas recirculation
 EMR/12SM
+EPUB/12MS           # e-book format
 ESLint/2M
 EV/1SM              # electric vehicle
 ElasticSearch/SM
@@ -52322,6 +52344,7 @@ FireWire/MS         # trademark
 Firestore/M
 Foddy/SM
 Frankl/SM
+FreeBSD/2M          # operating system
 GLFW/2M
 GPL/2M              # GNU General Public License
 GPT/1SM             # generative pre-trained transformer
@@ -52376,8 +52399,11 @@ LEGO/1SM            # official trademark form of Lego
 LIDAR/1             # FIXME! elsewhere we have LiDAR
 LLM/1MS             # large language model
 LLVM/1M             # compiler system
+LOC/9               # source lines of code
+LSB/1MS2            # least significant bit/byte; Linux Standard Base
 LSP/1MS             # language server protocol
 LTS/1SM
+LUT/1MS             # lookup table
 LVM/SM
 Labriola/2SM
 LanguageTool/M      # grammar checker
@@ -52393,6 +52419,8 @@ Longreads/2M
 Lua/SM              # programming language
 MMX/1M              # multimedia extension
 MPC/21M
+MSB/1MS             # most significant bit/byte
+MSE/1MS             # mean squared error
 MSNBC/2M            # media company
 MSVC                # Microsoft Visual C++
 MTA/1SM
@@ -52419,10 +52447,12 @@ NLP/M
 NMI/1MS             # non-maskable interrupt
 NPC/SM
 NPM/SM
+NTP/1               # network time protocol
 NYTimes/SM
 NYU/2M
 Neo4J/21M
 Neovim/M            # code editor
+NetBSD/2M           # operating system
 Netlify/M2          # cloud
 Nikolay/SM
 NixOS/M2
@@ -52435,6 +52465,8 @@ OAuth/M             # open authentication
 OCaml/M2            # programming language
 OG/1MS
 ORM/12S             # object-relational mapping
+OpenAI/2M
+OpenBSD/2M          # operating system
 OpenGL/SM           # open graphics library
 OpenMetrics/SM
 OpenPGP/SM
@@ -52445,6 +52477,7 @@ PCH/2M              # highway
 PDP/1SM             # old computer
 PII/1SM
 PKCS/SM
+POSIX/2M            # unix standard
 PRQL/1
 PTSD/1SM            # post-traumatic stress disorder
 PWA/21SM
@@ -52478,6 +52511,7 @@ SDK/1SM             # software development kit
 SDL/2M              # Simple DirectMedia Layer
 SIMD/1SM            # single instruction, multiple data
 SLA/1SM
+SLOC/9              # source lines of code
 SNL/2M              # Saturday Night Live
 SQLAlchemy/1
 SVG/21s             # scalable vector graphics
@@ -52498,6 +52532,7 @@ Subversion/1M       # version control
 Svelte/2M           # js framework
 Systemd/SM          # Linux system software
 TCP/52SM            # internet protocol
+TL;DR               # internet slang
 TODO                # FIXME! elsewhere in Harper we refer to Todo and to-do
 TOML/1M             # configuration file format
 TSMC/2M             # Taiwanese Semiconductor Manufacturing Company
@@ -52580,6 +52615,7 @@ dotfile/~1SM        # not well covered by dictionaries.
 eVTOL/1MS
 filesystem/~SM      # dictionaries prefer: file system
 frontend/1SM        # dictionaries prefer: front end
+geofence/1MS4DG
 gRPC/2SM            # framework
 glymph/SM           # !! please check and comment !!
 gzip/4S             # GNU compression utility
@@ -52599,6 +52635,7 @@ raytracer/1         # dictionaries prefer: ray tracer
 roadmap/1MS         # overtook "road map" c. 2000 but not in dictionaries yet
 royale/~15SM        # !! please check and comment !! dictionaries only list noun sense type of custard
 s.t./~              # !! please check and comment !!
+sRGB/2M             # colour space
 scatterplot/14SMG   # dictionaries prefer: scatter plot
 scrollbar/1SM       # dictionaries prefer: scroll bar
 sioyek/SM           # !! please check and comment !!
@@ -52652,6 +52689,7 @@ built-in/1MS5
 built-up/5
 car bomb/1MS
 car-bomb/4
+carbon-intensive/5
 cash-strapped/5
 CD-ROM/1MS
 centre-left/5!@_
@@ -52891,6 +52929,8 @@ rack-mounted/5
 re-enable/4DSG
 real time/1M
 real-time/5
+real world/1M
+real-world/5
 red-eye/1M
 red wolf/1M
 red wolves/9
@@ -53088,6 +53128,9 @@ white out/4
 wipe out/4
 work around/4
 work out/4
+x-axis/1M
+y-axis/1M
+z-axis/1M
 
 # New entries may be added below this line
 # If you're not confident in using the affix annotations, add missing words here

@@ -167,9 +167,9 @@ Message: |
       78 | ASCC/Harvard Mark I, based on Babbage's Analytical Engine, which itself used
          | ^~~~ Did you mean to spell `ASCC` this way?
 Suggest:
+  - Replace with: “AAC”
   - Replace with: “ABC”
   - Replace with: “ABCs”
-  - Replace with: “ACL”
 
 
 
@@ -654,7 +654,7 @@ Message: |
      182 | Newell and Herbert A. Simon argued in 1975,
          |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Av”
+  - Replace with: “Aw”
   - Replace with: “Ab”
   - Replace with: “Ac”
 
@@ -785,7 +785,7 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Hp”
+  - Replace with: “Hi”
   - Replace with: “H”
   - Replace with: “He”
 
@@ -1010,7 +1010,7 @@ Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
+  - Replace with: “Pt”
   - Replace with: “P”
   - Replace with: “Pa”
 

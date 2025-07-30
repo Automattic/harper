@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “F”
   - Replace with: “Ff”
-  - Replace with: “Fr”
+  - Replace with: “Fl”
 
 
 
@@ -14,9 +14,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |       ^~~~~ Did you mean to spell `SCOTT` this way?
 Suggest:
+  - Replace with: “Scot”
+  - Replace with: “SCM's”
   - Replace with: “SEO's”
-  - Replace with: “Alcott”
-  - Replace with: “Lott”
 
 
 
@@ -847,7 +847,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -858,7 +858,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -881,7 +881,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -892,7 +892,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -981,7 +981,7 @@ Message: |
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bi”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -1094,9 +1094,9 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “Dd”
   - Replace with: “D”
   - Replace with: “Db”
+  - Replace with: “Dc”
 
 
 
@@ -1265,7 +1265,7 @@ Message: |
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bi”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -2288,7 +2288,7 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
+  - Replace with: “Pt”
   - Replace with: “P”
   - Replace with: “Pa”
 
@@ -2365,7 +2365,7 @@ Message: |
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bi”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -2376,7 +2376,7 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Av”
+  - Replace with: “Aw”
   - Replace with: “Ab”
   - Replace with: “Ac”
 
@@ -2500,9 +2500,9 @@ Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
+  - Replace with: “Gt”
   - Replace with: “Go”
   - Replace with: “Gr”
-  - Replace with: “Gs”
 
 
 
@@ -2535,7 +2535,7 @@ Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
-  - Replace with: “Dab”
+  - Replace with: “D”
   - Replace with: “Dad”
   - Replace with: “Dam”
 
@@ -2582,7 +2582,7 @@ Message: |
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bi”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -2803,9 +2803,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “Lb”
-  - Replace with: “L”
+  - Replace with: “Lo”
   - Replace with: “La”
+  - Replace with: “Ll”
 
 
 
@@ -2925,7 +2925,7 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
+  - Replace with: “Pt”
   - Replace with: “P”
   - Replace with: “Pa”
 
@@ -4917,7 +4917,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -4928,7 +4928,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -4986,7 +4986,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -4997,7 +4997,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -6174,7 +6174,7 @@ Message: |
 Suggest:
   - Replace with: “H'm”
   - Replace with: “Ha”
-  - Replace with: “Hem”
+  - Replace with: “Ham”
 
 
 
@@ -6225,7 +6225,7 @@ Message: |
 Suggest:
   - Replace with: “To”
   - Replace with: “T”
-  - Replace with: “Ta”
+  - Replace with: “Tb”
 
 
 
@@ -6236,7 +6236,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -6574,7 +6574,7 @@ Message: |
 Suggest:
   - Replace with: “Cw”
   - Replace with: “C”
-  - Replace with: “Ca”
+  - Replace with: “Cc”
 
 
 
@@ -6674,7 +6674,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -6701,7 +6701,7 @@ Message: |
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bi”
+  - Replace with: “Be”
   - Replace with: “Bk”
 
 
@@ -6713,7 +6713,7 @@ Message: |
 Suggest:
   - Replace with: “F”
   - Replace with: “Ff”
-  - Replace with: “Fr”
+  - Replace with: “Fl”
 
 
 

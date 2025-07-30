@@ -3,6 +3,20 @@ import '../app.css';
 import AutomatticLogo from '$lib/AutomatticLogo.svelte';
 import GutterCenter from '$lib/GutterCenter.svelte';
 
+import { browser } from '$app/environment';
+import posthog from 'posthog-js';
+import { onMount } from 'svelte';
+
+onMount(() => {
+	if (browser) {
+		posthog.init('phc_ghFPi5nkwgxTGU9VEHflX8QCXlfrdxFD4skfb6lpH4y', {
+			api_host: 'https://us.i.posthog.com',
+			persistence: 'sessionStorage',
+			person_profiles: 'always',
+		});
+	}
+});
+
 let names = ['Grammar Guru', 'Grammar Checker', 'Grammar Savior'];
 let displayName = names[Math.floor(Math.random() * names.length)];
 </script>

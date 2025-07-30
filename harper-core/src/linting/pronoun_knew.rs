@@ -18,11 +18,13 @@ impl Default for PronounKnew {
         // But "its" commonly occurs before "new" and is a possessive pronoun. (Much more commonly a determiner)
         // Since "his" and "her" are possessive and object pronouns respectively, we ignore them too.
         let pronoun_pattern = |tok: &Token, source: &[char]| {
-            if tok.kind.is_pronoun() {
-                let pronorm = tok.span.get_content_string(source).to_lowercase();
-                return pronorm != "its" && pronorm != "his" && pronorm != "her";
+            if !tok.kind.is_pronoun() {
+                return false;
             }
-            false
+
+            let pronorm = tok.span.get_content_string(source).to_lowercase();
+            let excluded = ["its", "his", "her", "every", "something", "nothing"];
+            !excluded.contains(&&*pronorm)
         };
 
         let pronoun_then_new = SequencePattern::default()
@@ -125,5 +127,10 @@ mod tests {
     #[test]
     fn does_not_flag_with_her() {
         assert_lint_count("Her new car is fast.", PronounKnew::default(), 0);
+    }
+
+    #[test]
+    fn does_not_flag_with_nothing_1298() {
+        assert_lint_count("This is nothing new.", PronounKnew::default(), 0);
     }
 }
