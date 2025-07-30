@@ -23,6 +23,12 @@ import {
 import unpackLint from '../unpackLint';
 console.log('background is running');
 
+chrome.runtime.onInstalled.addListener((details) => {
+	if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
+		chrome.runtime.setUninstallURL('https://writewithharper.com/uninstall-browser-extension');
+	}
+});
+
 let linter: LocalLinter;
 
 getDialect().then(setDialect);

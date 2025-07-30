@@ -1066,6 +1066,17 @@ Suggest:
 
 
 
+Lint:    WordChoice (31 priority)
+Message: |
+     731 | nerves of her body were continually smouldering. She smiled slowly and, walking
+     732 | through her husband as if he were a ghost, shook hands with Tom, looking him
+         |                              ^~~~ Use the contraction or separate the words instead.
+Suggest:
+  - Replace with: “we're”
+  - Replace with: “we are”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      756 | “Terrible place, isn’t it,” said Tom, exchanging a frown with Doctor Eckleburg.
