@@ -13,7 +13,7 @@ pub fn lint_group() -> LintGroup {
                 $group.add_pattern_linter(
                     $name,
                     Box::new(
-                        MapPhraseLinter::new_exact_phrases(
+                        MapPhraseLinter::new_fixed_phrases(
                             $input,
                             $corrections,
                             $hint,
@@ -28,7 +28,7 @@ pub fn lint_group() -> LintGroup {
     add_exact_mappings!(group, {
         // The name of the rule
         "ChangeTack" => (
-            // The exact phrase(s) to look for.
+            // The phrase(s) to look for.
             ["change tact", "change tacks", "change tacts"],
             // The corrections to provide.
             ["change tack"],
@@ -1277,6 +1277,12 @@ pub fn lint_group() -> LintGroup {
             ["brutality"],
             "This word has a more standard, more common synonym.",
             "Suggests the more standard and common synonym `brutality`."
+        ),
+        "InNeedOf" => (
+            ["in need for"],
+            ["in need of"],
+            "Use `in need of` for when something is required or necessary.",
+            "Corrects `in need for` to `in need of`."
         ),
         "PeaceOfMind" => (
             ["piece of mind"],
@@ -2785,6 +2791,15 @@ mod tests {
             lint_group(),
             "That being said, if you find upgrading to newer versions to be insurmountable, please open an issue.",
         )
+    }
+
+    #[test]
+    fn corrects_in_need_of() {
+        assert_suggestion_result(
+            "In need for a native control for map symbols (map legend) #5203.",
+            lint_group(),
+            "In need of a native control for map symbols (map legend) #5203.",
+        );
     }
 
     #[test]

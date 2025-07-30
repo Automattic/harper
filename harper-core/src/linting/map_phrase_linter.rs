@@ -1,6 +1,6 @@
 use super::{Lint, LintKind, PatternLinter};
 use crate::linting::Suggestion;
-use crate::patterns::{EitherPattern, ExactPhrase, Pattern, SimilarToPhrase};
+use crate::patterns::{EitherPattern, FixedPhrase, Pattern, SimilarToPhrase};
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseLinter {
@@ -34,7 +34,7 @@ impl MapPhraseLinter {
         )
     }
 
-    pub fn new_exact_phrases(
+    pub fn new_fixed_phrases(
         phrase: impl IntoIterator<Item = impl AsRef<str>>,
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
@@ -44,7 +44,7 @@ impl MapPhraseLinter {
             phrase
                 .into_iter()
                 .map(|p| {
-                    let pattern: Box<dyn Pattern> = Box::new(ExactPhrase::from_phrase(p.as_ref()));
+                    let pattern: Box<dyn Pattern> = Box::new(FixedPhrase::from_phrase(p.as_ref()));
                     pattern
                 })
                 .collect(),
@@ -53,14 +53,14 @@ impl MapPhraseLinter {
         Self::new(Box::new(patterns), correct_forms, message, description)
     }
 
-    pub fn new_exact_phrase(
+    pub fn new_fixed_phrase(
         phrase: impl AsRef<str>,
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
         description: impl ToString,
     ) -> Self {
         Self::new(
-            Box::new(ExactPhrase::from_phrase(phrase.as_ref())),
+            Box::new(FixedPhrase::from_phrase(phrase.as_ref())),
             correct_forms,
             message,
             description,
@@ -78,7 +78,7 @@ impl MapPhraseLinter {
             correct_form.to_string()
         );
 
-        Self::new_exact_phrase(phrase, [correct_form], message, description)
+        Self::new_fixed_phrase(phrase, [correct_form], message, description)
     }
 }
 
