@@ -259,7 +259,7 @@
 > expression " automatic information " ( e.g. " informazione automatica " in        Italian )
 # NSg+       . NSg/J     NSg+        . . NSg  . ?            ?          . NPrSg/J/P NSg/J   .
 > or      " information and mathematics " are often used , e.g. informatique ( French     ) ,
-# NPrSg/C . NSg         V/C NSg+        . V   J     V/J  . NSg  ?            . NPrSg/V/J+ . .
+# NPrSg/C . NSg         V/C NSg+        . V   R     V/J  . NSg  ?            . NPrSg/V/J+ . .
 > Informatik ( German   ) , informatica ( Italian , Dutch     ) , informática ( Spanish ,
 # ?          . NPrSg/J+ . . ?           . NSg/J   . NPrSg/V/J . . ?           . NPrSg/J .
 > Portuguese ) , informatika ( Slavic languages and Hungarian ) or      pliroforiki
@@ -275,7 +275,7 @@
 >
 #
 > A   folkloric quotation , often attributed to — but     almost certainly not   first
-# D/P J         NSg       . J     V/J        P  . NSg/C/P NSg    R         NSg/C NSg/V/J
+# D/P J         NSg       . R     V/J        P  . NSg/C/P NSg    R         NSg/C NSg/V/J
 > formulated by      — Edsger Dijkstra , states   that        " computer science is no      more        about
 # V/J        NSg/J/P . ?      N        . NPrSg/V+ N/I/C/Ddem+ . NSg/V+   NSg/V+  VL NPrSg/P NPrSg/I/V/J J/P
 > computers than astronomy is about telescopes . " [ note   3 ] The design and deployment
@@ -287,13 +287,13 @@
 > hardware is usually considered part    of computer engineering , while     the study of
 # NSg+     VL R       V/J        NSg/V/J P  NSg/V+   NSg/V+      . NSg/V/C/P D   NSg/V P
 > commercial computer systems and their deployment is often called information
-# NSg/J      NSg/V+   NPl     V/C D$+   NSg+       VL J     V/J    NSg+
+# NSg/J      NSg/V+   NPl     V/C D$+   NSg+       VL R     V/J    NSg+
 > technology or      information systems . However , there has been  exchange of ideas
 # NSg        NPrSg/C NSg         NPl+    . C       . +     V   NSg/V NSg/V    P  NPl+
 > between the various computer - related disciplines . Computer science research also
 # NSg/P   D   J+      NSg/V+   . J       NPl/V       . NSg/V+   NSg/V+  NSg/V+   W?
 > often intersects other    disciplines , such  as    cognitive science , linguistics ,
-# J     V+         NSg/V/J+ NPl/V+      . NSg/I NSg/R NSg/J+    NSg/V+  . NSg+        .
+# R     V+         NSg/V/J+ NPl/V+      . NSg/I NSg/R NSg/J+    NSg/V+  . NSg+        .
 > mathematics , physics , biology , Earth    science , statistics , philosophy , and logic    .
 # NSg+        . NSg/V+  . NSg+    . NPrSg/V+ NSg/V+  . NPl/V+     . NSg/V+     . V/C NSg/V/J+ .
 >
@@ -1017,11 +1017,11 @@
 > Object - oriented programming , a   programming paradigm based on  the concept of
 # NSg/V+ . V/J      NSg/V       . D/P NSg/V+      NSg+     V/J   J/P D   NSg/V   P
 > " objects " , which may      contain data , in        the form  of fields   , often known   as
-# . NPl/V+  . . I/C+  NPrSg/VX V       NSg  . NPrSg/J/P D   NSg/V P  NPrPl/V+ . J     NSg/V/J NSg/R
+# . NPl/V+  . . I/C+  NPrSg/VX V       NSg  . NPrSg/J/P D   NSg/V P  NPrPl/V+ . R     NSg/V/J NSg/R
 > attributes ; and code   , in        the form  of procedures , often known   as    methods . A
-# NPl/V+     . V/C NSg/V+ . NPrSg/J/P D   NSg/V P  NPl+       . J     NSg/V/J NSg/R NPl/V+  . D/P
+# NPl/V+     . V/C NSg/V+ . NPrSg/J/P D   NSg/V P  NPl+       . R     NSg/V/J NSg/R NPl/V+  . D/P
 > feature of objects is that       an   object's procedures can      access and often modify
-# NSg/V   P  NPl/V+  VL N/I/C/Ddem D/P+ N$+      NPl+       NPrSg/VX NSg/V  V/C J     V
+# NSg/V   P  NPl/V+  VL N/I/C/Ddem D/P+ N$+      NPl+       NPrSg/VX NSg/V  V/C R     V
 > the data fields  of the object with which they are associated . Thus
 # D   NSg+ NPrPl/V P  D+  NSg/V+ P    I/C+  IPl+ V   V/J        . NSg
 > object - oriented computer programs are made  out         of objects that        interact with

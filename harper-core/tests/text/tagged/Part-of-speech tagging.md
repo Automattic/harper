@@ -113,7 +113,7 @@
 > morphosyntactic descriptor in        the case    of morphologically rich      languages is
 # ?               NSg        NPrSg/J/P D   NPrSg/V P  ?               NPrSg/V/J NPl/V+    VL
 > commonly expressed using very short        mnemonics , such  as    Ncmsan for Category = Noun   ,
-# R        V/J       V     J    NPrSg/V/J/P+ NPl       . NSg/I NSg/R ?      C/P NSg      . NSg/V+ .
+# R        V/J       V     J/R  NPrSg/V/J/P+ NPl       . NSg/I NSg/R ?      C/P NSg      . NSg/V+ .
 > Type  = common  , Gender  = masculine , Number  = singular , Case    = accusative , Animate
 # NSg/V . NSg/V/J . NSg/V/J . NSg/J     . NSg/V/J . NSg/J    . NPrSg/V . NSg/J      . V/J
 > = no      .
@@ -143,15 +143,15 @@
 > cross        - language differences . The tag    sets  for heavily inflected languages such  as
 # NPrSg/V/J/P+ . NSg/V+   NSg/V       . D+  NSg/V+ NPl/V C/P R       V/J       NPl/V+    NSg/I NSg/R
 > Greek     and Latin   can      be     very large ; tagging words  in        agglutinative languages such
-# NPrSg/V/J V/C NPrSg/J NPrSg/VX NSg/VX J    NSg/J . NSg/V   NPl/V+ NPrSg/J/P ?             NPl/V+    NSg/I
+# NPrSg/V/J V/C NPrSg/J NPrSg/VX NSg/VX J/R  NSg/J . NSg/V   NPl/V+ NPrSg/J/P ?             NPl/V+    NSg/I
 > as    Inuit   languages may      be     virtually impossible . At    the other    extreme , Petrov et
 # NSg/R NPrSg/J NPl/V+    NPrSg/VX NSg/VX R+        NSg/J+     . NSg/P D+  NSg/V/J+ NSg/J   . ?      ?
 > al. have   proposed a   " universal " tag    set       , with 12 categories ( for example , no
 # ?   NSg/VX V/J      D/P . NSg/J     . NSg/V+ NPrSg/V/J . P    #  NPl        . C/P NSg/V+  . NPrSg/P
 > subtypes of nouns , verbs  , punctuation , and so        on   ) . Whether a   very small     set       of
-# NPl      P  NPl/V . NPl/V+ . NSg+        . V/C NSg/I/J/C J/P+ . . I/C     D/P J    NPrSg/V/J NPrSg/V/J P
+# NPl      P  NPl/V . NPl/V+ . NSg+        . V/C NSg/I/J/C J/P+ . . I/C     D/P J/R  NPrSg/V/J NPrSg/V/J P
 > very broad tags  or      a   much  larger set       of more        precise ones   is preferable , depends
-# J    NSg/J NPl/V NPrSg/C D/P N/I/J J      NPrSg/V/J P  NPrSg/I/V/J V/J     NPl/V+ VL W?         . NPl/V
+# J/R  NSg/J NPl/V NPrSg/C D/P N/I/J J      NPrSg/V/J P  NPrSg/I/V/J V/J     NPl/V+ VL W?         . NPl/V
 > on  the purpose at    hand   . Automatic tagging is easier on  smaller tag    - sets   .
 # J/P D+  NSg/V   NSg/P NSg/V+ . NSg/J     NSg/V   VL J      J/P J       NSg/V+ . NPl/V+ .
 >
@@ -257,7 +257,7 @@
 > but     triples or      even    larger sequences . So        , for example , if    you've just seen  a
 # NSg/C/P NPl/V   NPrSg/C NSg/V/J J      NPl/V+    . NSg/I/J/C . C/P NSg/V+  . NSg/C W?     V/J  NSg/V D/P
 > noun  followed by      a    verb   , the next     item   may      be     very likely a   preposition ,
-# NSg/V V/J      NSg/J/P D/P+ NSg/V+ . D+  NSg/J/P+ NSg/V+ NPrSg/VX NSg/VX J    NSg/J  D/P NSg/V       .
+# NSg/V V/J      NSg/J/P D/P+ NSg/V+ . D+  NSg/J/P+ NSg/V+ NPrSg/VX NSg/VX J/R  NSg/J  D/P NSg/V       .
 > article , or      noun   , but     much  less    likely another verb  .
 # NSg/V+  . NPrSg/C NSg/V+ . NSg/C/P N/I/J V/J/C/P NSg/J+ I/D     NSg/V .
 >
@@ -337,7 +337,7 @@
 > These   findings were  surprisingly disruptive to the field of natural language
 # I/Ddem+ NSg      NSg/V R            J          P  D   NSg/V P  NSg/J+  NSg/V+
 > processing . The accuracy reported was higher than the typical accuracy of very
-# V+         . D+  NSg+     V/J      V   J      C/P  D   NSg/J   NSg      P  J
+# V+         . D+  NSg+     V/J      V   J      C/P  D   NSg/J   NSg      P  J/R
 > sophisticated algorithms that        integrated part    of speech choice with many    higher
 # V/J           NPl+       N/I/C/Ddem+ V/J        NSg/V/J P  NSg/V+ NSg/J  P    N/I/J/D J
 > levels of linguistic analysis : syntax , morphology , semantics , and so         on  . CLAWS ,
@@ -375,7 +375,7 @@
 > For example , statistics readily reveal that        " the " , " a   " , and " an  " occur in
 # C/P NSg/V+  . NPl/V+     R       NSg/V  N/I/C/Ddem+ . D   . . . D/P . . V/C . D/P . V     NPrSg/J/P
 > similar contexts , while     " eat   " occurs in        very different ones   . With sufficient
-# NSg/J+  NPl/V+   . NSg/V/C/P . NSg/V . V      NPrSg/J/P J    NSg/J+    NPl/V+ . P    J+
+# NSg/J+  NPl/V+   . NSg/V/C/P . NSg/V . V      NPrSg/J/P J/R  NSg/J+    NPl/V+ . P    J+
 > iteration , similarity classes of words  emerge that        are remarkably similar to
 # NSg       . NSg        NPl/V   P  NPl/V+ NSg/V  N/I/C/Ddem+ V   R          NSg/J   P
 > those   human   linguists would  expect ; and the differences themselves sometimes

@@ -90,6 +90,7 @@ mod the_how_why;
 mod the_my;
 mod then_than;
 mod throw_rubbish;
+mod touristic;
 mod unclosed_quotes;
 mod use_genitive;
 mod was_aloud;
@@ -174,6 +175,7 @@ pub use the_how_why::TheHowWhy;
 pub use the_my::TheMy;
 pub use then_than::ThenThan;
 pub use throw_rubbish::ThrowRubbish;
+pub use touristic::Touristic;
 pub use unclosed_quotes::UnclosedQuotes;
 pub use use_genitive::UseGenitive;
 pub use was_aloud::WasAloud;
@@ -299,10 +301,114 @@ pub mod tests {
                 [2]: \"{second}\""
             ),
             // I think it's not possible for more than one suggestion to be correct
-            (true, true, false) => unreachable!(),
-            (true, false, true) => unreachable!(),
-            (false, true, true) => unreachable!(),
-            (true, true, true) => unreachable!(),
+            _ => {}
+        }
+    }
+
+    /// Asserts that none of the suggestions from the linter match the given text.
+    #[track_caller]
+    pub fn assert_not_in_suggestion_result(
+        text: &str,
+        mut linter: impl Linter,
+        bad_suggestion: &str,
+    ) {
+        let test = Document::new_markdown_default_curated(text);
+        let lints = linter.lint(&test);
+
+        for (i, lint) in lints.iter().enumerate() {
+            for (j, suggestion) in lint.suggestions.iter().enumerate() {
+                let mut text_chars: Vec<char> = text.chars().collect();
+                suggestion.apply(lint.span, &mut text_chars);
+                let suggestion_text: String = text_chars.into_iter().collect();
+
+                if suggestion_text == bad_suggestion {
+                    panic!(
+                        "Found undesired suggestion at lint[{}].suggestions[{}]:\n\
+                        Expected to not find suggestion: \"{}\"\n\
+                        But found: \"{}\"",
+                        i, j, bad_suggestion, suggestion_text
+                    );
+                }
+            }
+        }
+    }
+
+    /// Asserts both that the given text matches the expected good suggestions and that none of the
+    /// suggestions are in the bad suggestions list.
+    #[track_caller]
+    pub fn assert_good_and_bad_suggestions(
+        text: &str,
+        mut linter: impl Linter,
+        good: &[&str],
+        bad: &[&str],
+    ) {
+        let test = Document::new_markdown_default_curated(text);
+        let lints = linter.lint(&test);
+
+        let mut unseen_good: std::collections::HashSet<_> = good.iter().cloned().collect();
+        let mut found_bad = Vec::new();
+        let mut found_good = Vec::new();
+
+        for (i, lint) in lints.into_iter().enumerate() {
+            for (j, suggestion) in lint.suggestions.into_iter().enumerate() {
+                let mut text_chars: Vec<char> = text.chars().collect();
+                suggestion.apply(lint.span, &mut text_chars);
+                let suggestion_text: String = text_chars.into_iter().collect();
+
+                // Check for bad suggestions
+                if bad.contains(&&*suggestion_text) {
+                    found_bad.push((i, j, suggestion_text.clone()));
+                    eprintln!(
+                        "  ❌ Found bad suggestion at lint[{}].suggestions[{}]: \"{}\"",
+                        i, j, suggestion_text
+                    );
+                }
+                // Check for good suggestions
+                else if good.contains(&&*suggestion_text) {
+                    found_good.push((i, j, suggestion_text.clone()));
+                    eprintln!(
+                        "  ✅ Found good suggestion at lint[{}].suggestions[{}]: \"{}\"",
+                        i, j, suggestion_text
+                    );
+                    unseen_good.remove(suggestion_text.as_str());
+                }
+            }
+        }
+
+        // Print summary
+        if !found_bad.is_empty() || !unseen_good.is_empty() {
+            eprintln!("\n=== Test Summary ===");
+
+            // In the summary section, change these loops:
+            if !found_bad.is_empty() {
+                eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
+                for (i, j, text) in &found_bad {
+                    eprintln!("  - lint[{}].suggestions[{}]: \"{}\"", i, j, text);
+                }
+            }
+
+            // And for the good suggestions:
+            if !unseen_good.is_empty() {
+                eprintln!(
+                    "\n❌ Missing {} expected good suggestions:",
+                    unseen_good.len()
+                );
+                for text in &unseen_good {
+                    eprintln!("  - \"{}\"", text);
+                }
+            }
+
+            eprintln!("\n✅ Found {} good suggestions", found_good.len());
+            eprintln!("==================\n");
+
+            if !found_bad.is_empty() || !unseen_good.is_empty() {
+                panic!("Test failed - see error output above");
+            }
+        } else {
+            eprintln!(
+                "\n✅ All {} good suggestions found, no bad suggestions\n",
+                found_good.len()
+            );
         }
     }
 

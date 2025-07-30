@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.43.0",
+	"version": "0.44.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -182,6 +182,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Fixes the common misnomer `old-timers' disease`, ensuring the correct medical term `Alzheimer’s disease` is used."
+				},
+				"harper.linters.AmInTheMorning": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Finds redundant am/pm indicators used together with time periods such as 'in the morning' or 'at night'."
 				},
 				"harper.linters.AmazonNames": {
 					"scope": "resource",
@@ -1131,6 +1137,18 @@
 					"default": true,
 					"description": "Fixes the incorrect spacing in `I a m` to properly form `I am`."
 				},
+				"harper.linters.IAmAgreement": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `I are` to `I am`."
+				},
+				"harper.linters.IDo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `I does` to `I do`."
+				},
 				"harper.linters.InAWhile": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1911,6 +1929,12 @@
 					"default": true,
 					"description": "Corrects `server's side` to `server-side`, which is usual in `client-server contexts`."
 				},
+				"harper.linters.ShootOneselfInTheFoot": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects non-standard variants of 'shoot oneself in the foot'."
+				},
 				"harper.linters.SimpleGrammatical": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2031,12 +2055,6 @@
 					"default": true,
 					"description": "Corrects `take it personal` to `take it personally`."
 				},
-				"harper.linters.TakeItSeriously": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Ensures the correct use of the adverb `seriously` instead of the adjective `serious` in phrases like `take it seriously`."
-				},
 				"harper.linters.TalkToYouLater": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2139,6 +2157,12 @@
 					"default": true,
 					"description": "Corrects `to the manor born` to `to the manner born`, ensuring the intended meaning of being naturally suited to a way of life."
 				},
+				"harper.linters.Touristic": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests replacing the uncommon word `touristic` with `tourist`, `tourism`, and/or `touristy`."
+				},
 				"harper.linters.Towards": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2197,7 +2221,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects `unless if` to `unless`."
+					"description": "Corrects `unless if`."
 				},
 				"harper.linters.Upset": {
 					"scope": "resource",
@@ -2324,12 +2348,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures correct capitalization of WordPress.com. This rule verifies that the official stylization of WordPress.com is used when referring to the hosting provider."
-				},
-				"harper.linters.WorldWarII": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Ensures `World War II` is correctly capitalized."
 				},
 				"harper.linters.Worldwide": {
 					"scope": "resource",
