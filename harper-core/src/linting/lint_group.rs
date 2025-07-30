@@ -50,6 +50,7 @@ use super::hyphenate_number_day::HyphenateNumberDay;
 use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::its_contraction::ItsContraction;
+use super::its_possessive::ItsPossessive;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::lets_confusion::LetsConfusion;
@@ -399,6 +400,7 @@ impl LintGroup {
         insert_expr_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
+        insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(DoubleModal, true);
         insert_expr_rule!(MissingPreposition, true);
         insert_struct_rule!(DiscourseMarkers, true);

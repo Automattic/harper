@@ -775,6 +775,16 @@ Message: |
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+     312 | on Imports or Exports, except what may be absolutely necessary for executing
+     313 | it's inspection Laws: and the net Produce of all Duties and Imposts, laid by
+         | ^~~~ Prefer the possessive pronoun `its` here to denote ownership.
+Suggest:
+  - Replace with: “its”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      315 | United States; and all such Laws shall be subject to the Revision and Controul

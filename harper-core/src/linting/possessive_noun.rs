@@ -37,7 +37,7 @@ where
             .then_noun();
 
         let exceptions = SequenceExpr::default()
-            .t_any()
+            .then_unless(|tok: &Token, _: &[char]| tok.kind.is_demonstrative_determiner())
             .t_any()
             .then_unless(WordSet::new(&["flags", "checks", "catches", "you"]))
             .t_any()

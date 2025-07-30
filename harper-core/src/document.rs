@@ -159,7 +159,7 @@ impl Document {
                 let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
 
                 if let Some(inner) = &mut found_meta {
-                    inner.pos_tag = token_tags[i];
+                    inner.pos_tag = token_tags[i].or_else(|| inner.infer_pos_tag());
                     inner.np_member = Some(np_flags[i]);
                 }
 

@@ -4200,6 +4200,17 @@ Suggest:
 
 
 
+Lint:    WordChoice (54 priority)
+Message: |
+    2995 | of emotion. I think that voice held him most, with its fluctuating, feverish
+         |                                                    ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
+    2996 | warmth, because it couldn’t be over-dreamed—that voice was a deathless song.
+Suggest:
+  - Replace with: “it's”
+  - Replace with: “it has”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     3020 | short of being news. Contemporary legends such as the “underground pipe-line to
@@ -7439,6 +7450,14 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5783 | them together, and let other people clean up the mess they had made. . . .
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Miscellaneous (31 priority)
+Message: |
+    5780 | entirely justified. It was all very careless and confused. They were careless
+         |                                                                 ^~~~~ You may be missing a preposition here.
+    5781 | people, Tom and Daisy—they smashed up things and creatures and then retreated
 
 
 
