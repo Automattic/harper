@@ -30,7 +30,7 @@ lru = "0.16.0"
 foldhash = "0.1.5"
 strum_macros = "0.27.1"
 strum = "0.27.1"
-ammonia = "4.1.0"
+ammonia = "4.1.1"
 harper-brill = { path = "../harper-brill", version = "0.50.0" }
 bitflags = { version = "2.9.1", features = ["serde"] }
 
