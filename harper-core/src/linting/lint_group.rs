@@ -44,6 +44,7 @@ use super::linking_verbs::LinkingVerbs;
 use super::long_sentences::LongSentences;
 use super::merge_words::MergeWords;
 use super::modal_of::ModalOf;
+use super::most_number::MostNumber;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
 use super::nobody::Nobody;
@@ -364,6 +365,7 @@ impl LintGroup {
         insert_struct_rule!(LongSentences, true);
         insert_struct_rule!(MergeWords, true);
         insert_pattern_rule!(ModalOf, true);
+        insert_pattern_rule!(MostNumber, true);
         insert_pattern_rule!(MultipleSequentialPronouns, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_pattern_rule!(Nobody, true);

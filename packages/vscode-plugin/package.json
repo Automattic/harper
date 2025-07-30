@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.35.0",
+	"version": "0.36.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -1321,6 +1321,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage."
+				},
+				"harper.linters.MostNumber": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `most number` and `most amount`"
 				},
 				"harper.linters.MuchAdo": {
 					"scope": "resource",
