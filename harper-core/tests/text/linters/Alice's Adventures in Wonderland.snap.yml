@@ -48,7 +48,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
       21 | be late!” (when she thought it over afterwards, it occurred to her that she
-         |                                     ^~~~~~~~~~ Did you mean to spell “afterwards” this way?
+         |                                     ^~~~~~~~~~ Did you mean to spell `afterwards` this way?
       22 | ought to have wondered at this, but at the time it all seemed quite natural);
 Suggest:
   - Replace with: “afterward”
@@ -88,7 +88,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
       43 | shelves as she passed; it was labelled “ORANGE MARMALADE”, but to her great
-         |                               ^~~~~~~~ Did you mean to spell “labelled” this way?
+         |                               ^~~~~~~~ Did you mean to spell `labelled` this way?
 Suggest:
   - Replace with: “labeled”
   - Replace with: “labeler”
@@ -100,7 +100,7 @@ Lint:    Spelling (63 priority)
 Message: |
       54 | I’ve fallen by this time?” she said aloud. “I must be getting somewhere near the
       55 | centre of the earth. Let me see: that would be four thousand miles down, I
-         | ^~~~~~ Did you mean to spell “centre” this way?
+         | ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “centred”
   - Replace with: “centres”
@@ -148,7 +148,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
-         |                                                   ^~~~~~~ Did you mean to spell “curtsey” this way?
+         |                                                   ^~~~~~~ Did you mean to spell `curtsey` this way?
       69 | curtseying as you’re falling through the air! Do you think you could manage it?)
 Suggest:
   - Replace with: “curtsy”
@@ -161,7 +161,7 @@ Lint:    Spelling (63 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
       69 | curtseying as you’re falling through the air! Do you think you could manage it?)
-         | ^~~~~~~~~~ Did you mean “curtsying”?
+         | ^~~~~~~~~~ Did you mean `curtsying`?
 Suggest:
   - Replace with: “curtsying”
 
@@ -170,7 +170,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       74 | again. “Dinah’ll miss me very much to-night, I should think!” (Dinah was the
-         |         ^~~~~~~~ Did you mean to spell “Dinah’ll” this way?
+         |         ^~~~~~~~ Did you mean to spell `Dinah’ll` this way?
 Suggest:
   - Replace with: “Dinah's”
   - Replace with: “Dina's”
@@ -322,7 +322,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      138 | finding it very nice, (it had, in fact, a sort of mixed flavour of cherry-tart,
-         |                                                         ^~~~~~~ Did you mean to spell “flavour” this way?
+         |                                                         ^~~~~~~ Did you mean to spell `flavour` this way?
      139 | custard, pine-apple, roast turkey, toffee, and hot buttered toast,) she very
 Suggest:
   - Replace with: “flavor”
@@ -440,7 +440,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      189 | “Curiouser and curiouser!” cried Alice (she was so much surprised, that for the
-         |  ^~~~~~~~~ Did you mean to spell “Curiouser” this way?
+         |  ^~~~~~~~~ Did you mean to spell `Curiouser` this way?
 Suggest:
   - Replace with: “Curious”
   - Replace with: “Carouser”
@@ -451,7 +451,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      189 | “Curiouser and curiouser!” cried Alice (she was so much surprised, that for the
-         |                ^~~~~~~~~ Did you mean to spell “curiouser” this way?
+         |                ^~~~~~~~~ Did you mean to spell `curiouser` this way?
 Suggest:
   - Replace with: “curious”
   - Replace with: “carouser”
@@ -499,7 +499,7 @@ Lint:    Spelling (63 priority)
 Message: |
      229 | “If you please, sir—” The Rabbit started violently, dropped the white kid gloves
      230 | and the fan, and skurried away into the darkness as hard as he could go.
-         |                  ^~~~~~~~ Did you mean to spell “skurried” this way?
+         |                  ^~~~~~~~ Did you mean to spell `skurried` this way?
 Suggest:
   - Replace with: “scurried”
   - Replace with: “spurred”
@@ -523,8 +523,9 @@ Message: |
      250 | try and say ‘How doth the little—’” and she crossed her hands on her lap as if
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      251 | she were saying lessons, and began to repeat it, but her voice sounded hoarse
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 47 words long.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      252 | and strange, and the words did not come the same as they used to do:—
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 47 words long.
 
 
 
@@ -625,7 +626,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
-         |                   ^~ Did you mean to spell “Où” this way?
+         |                   ^~ Did you mean to spell `Où` this way?
 Suggest:
   - Replace with: “Os”
   - Replace with: “O”
@@ -636,7 +637,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
-         |                      ^~~ Did you mean to spell “est” this way?
+         |                      ^~~ Did you mean to spell `est` this way?
 Suggest:
   - Replace with: “east”
   - Replace with: “eat”
@@ -647,7 +648,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
-         |                             ^~~~~~ Did you mean to spell “chatte” this way?
+         |                             ^~~~~~ Did you mean to spell `chatte` this way?
 Suggest:
   - Replace with: “chatty”
   - Replace with: “chaste”
@@ -701,7 +702,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      362 | and animals that had fallen into it: there were a Duck and a Dodo, a Lory and an
-         |                                                                      ^~~~ Did you mean to spell “Lory” this way?
+         |                                                                      ^~~~ Did you mean to spell `Lory` this way?
      363 | Eaglet, and several other curious creatures. Alice led the way, and the whole
 Suggest:
   - Replace with: “Lora”
@@ -714,7 +715,7 @@ Lint:    Spelling (63 priority)
 Message: |
      368 | They were indeed a queer-looking party that assembled on the bank—the birds with
      369 | draggled feathers, the animals with their fur clinging close to them, and all
-         | ^~~~~~~~ Did you mean to spell “draggled” this way?
+         | ^~~~~~~~ Did you mean to spell `draggled` this way?
 Suggest:
   - Replace with: “dragged”
   - Replace with: “drugged”
@@ -749,7 +750,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      375 | Indeed, she had quite a long argument with the Lory, who at last turned sulky,
-         |                                                ^~~~ Did you mean to spell “Lory” this way?
+         |                                                ^~~~ Did you mean to spell `Lory` this way?
      376 | and would only say, “I am older than you, and must know better;” and this Alice
 Suggest:
   - Replace with: “Lora”
@@ -761,7 +762,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      377 | would not allow without knowing how old it was, and, as the Lory positively
-         |                                                             ^~~~ Did you mean to spell “Lory” this way?
+         |                                                             ^~~~ Did you mean to spell `Lory` this way?
      378 | refused to tell its age, there was no more to be said.
 Suggest:
   - Replace with: “Lora”
@@ -773,7 +774,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      390 | Edwin and Morcar, the earls of Mercia and Northumbria—’”
-         |           ^~~~~~ Did you mean to spell “Morcar” this way?
+         |           ^~~~~~ Did you mean to spell `Morcar` this way?
 Suggest:
   - Replace with: “Mortar”
   - Replace with: “Molnar”
@@ -784,14 +785,14 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      390 | Edwin and Morcar, the earls of Mercia and Northumbria—’”
-         |                                           ^~~~~~~~~~~ Did you mean to spell “Northumbria” this way?
+         |                                           ^~~~~~~~~~~ Did you mean to spell `Northumbria` this way?
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
      392 | “Ugh!” said the Lory, with a shiver.
-         |                 ^~~~ Did you mean to spell “Lory” this way?
+         |                 ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
   - Replace with: “Lora”
   - Replace with: “Lori”
@@ -802,7 +803,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      397 | “Not I!” said the Lory hastily.
-         |                   ^~~~ Did you mean to spell “Lory” this way?
+         |                   ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
   - Replace with: “Lora”
   - Replace with: “Lori”
@@ -813,7 +814,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      399 | “I thought you did,” said the Mouse. “—I proceed. ‘Edwin and Morcar, the earls
-         |                                                              ^~~~~~ Did you mean to spell “Morcar” this way?
+         |                                                              ^~~~~~ Did you mean to spell `Morcar` this way?
      400 | of Mercia and Northumbria, declared for him: and even Stigand, the patriotic
 Suggest:
   - Replace with: “Mortar”
@@ -826,14 +827,14 @@ Lint:    Spelling (63 priority)
 Message: |
      399 | “I thought you did,” said the Mouse. “—I proceed. ‘Edwin and Morcar, the earls
      400 | of Mercia and Northumbria, declared for him: and even Stigand, the patriotic
-         |               ^~~~~~~~~~~ Did you mean to spell “Northumbria” this way?
+         |               ^~~~~~~~~~~ Did you mean to spell `Northumbria` this way?
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
      400 | of Mercia and Northumbria, declared for him: and even Stigand, the patriotic
-         |                                                       ^~~~~~~ Did you mean “Brigand”?
+         |                                                       ^~~~~~~ Did you mean `Brigand`?
      401 | archbishop of Canterbury, found it advisable—’”
 Suggest:
   - Replace with: “Brigand”
@@ -844,7 +845,7 @@ Lint:    Spelling (63 priority)
 Message: |
      411 | The Mouse did not notice this question, but hurriedly went on, “‘—found it
      412 | advisable to go with Edgar Atheling to meet William and offer him the crown.
-         |                            ^~~~~~~~ Did you mean to spell “Atheling” this way?
+         |                            ^~~~~~~~ Did you mean to spell `Atheling` this way?
 Suggest:
   - Replace with: “Steeling”
   - Replace with: “Theming”
@@ -878,7 +879,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      527 | “What a pity it wouldn’t stay!” sighed the Lory, as soon as it was quite out of
-         |                                            ^~~~ Did you mean to spell “Lory” this way?
+         |                                            ^~~~ Did you mean to spell `Lory` this way?
      528 | sight; and an old Crab took the opportunity of saying to her daughter “Ah, my
 Suggest:
   - Replace with: “Lora”
@@ -890,7 +891,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      536 | “And who is Dinah, if I might venture to ask the question?” said the Lory.
-         |                                                                      ^~~~ Did you mean to spell “Lory” this way?
+         |                                                                      ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
   - Replace with: “Lora”
   - Replace with: “Lori”
@@ -927,7 +928,7 @@ Lint:    Spelling (63 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
      565 | of white kid gloves, and she very good-naturedly began hunting about for them,
-         |                                        ^~~~~~~~~ Did you mean to spell “naturedly” this way?
+         |                                        ^~~~~~~~~ Did you mean to spell `naturedly` this way?
      566 | but they were nowhere to be seen—everything seemed to have changed since her
 Suggest:
   - Replace with: “naturally”
@@ -938,7 +939,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      579 | little house, on the door of which was a bright brass plate with the name “W.
-         |                                                                            ^~ Did you mean to spell “W.” this way?
+         |                                                                            ^~ Did you mean to spell `W.` this way?
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
@@ -959,7 +960,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      585 | I suppose Dinah’ll be sending me on messages next!” And she began fancying the
-         |           ^~~~~~~~ Did you mean to spell “Dinah’ll” this way?
+         |           ^~~~~~~~ Did you mean to spell `Dinah’ll` this way?
 Suggest:
   - Replace with: “Dinah's”
   - Replace with: “Dina's”
@@ -1036,7 +1037,7 @@ Lint:    Spelling (63 priority)
 Message: |
      660 | voice she had never heard before, “Sure then I’m here! Digging for apples, yer
      661 | honour!”
-         | ^~~~~~ Did you mean to spell “honour” this way?
+         | ^~~~~~ Did you mean to spell `honour` this way?
 Suggest:
   - Replace with: “honor”
   - Replace with: “honours”
@@ -1047,7 +1048,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
-         |                         ^~~~~~ Did you mean to spell “honour” this way?
+         |                         ^~~~~~ Did you mean to spell `honour` this way?
 Suggest:
   - Replace with: “honor”
   - Replace with: “honours”
@@ -1058,7 +1059,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
-         |                                                     ^~~~~ Did you mean to spell “arrum” this way?
+         |                                                     ^~~~~ Did you mean to spell `arrum` this way?
 Suggest:
   - Replace with: “arum”
   - Replace with: “album”
@@ -1069,7 +1070,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      672 | “Sure, it does, yer honour: but it’s an arm for all that.”
-         |                     ^~~~~~ Did you mean to spell “honour” this way?
+         |                     ^~~~~~ Did you mean to spell `honour` this way?
 Suggest:
   - Replace with: “honor”
   - Replace with: “honours”
@@ -1080,7 +1081,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      677 | then; such as, “Sure, I don’t like it, yer honour, at all, at all!” “Do as I
-         |                                            ^~~~~~ Did you mean to spell “honour” this way?
+         |                                            ^~~~~~ Did you mean to spell `honour` this way?
 Suggest:
   - Replace with: “honor”
   - Replace with: “honours”
@@ -1175,7 +1176,7 @@ Lint:    Spelling (63 priority)
 Message: |
      723 | minute or two, they began moving about again, and Alice heard the Rabbit say, “A
      724 | barrowful will do, to begin with.”
-         | ^~~~~~~~~ Did you mean “sorrowful”?
+         | ^~~~~~~~~ Did you mean `sorrowful`?
 Suggest:
   - Replace with: “sorrowful”
 
@@ -1184,7 +1185,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      726 | “A barrowful of what?” thought Alice; but she had not long to doubt, for the
-         |    ^~~~~~~~~ Did you mean “sorrowful”?
+         |    ^~~~~~~~~ Did you mean `sorrowful`?
 Suggest:
   - Replace with: “sorrowful”
 
@@ -1248,7 +1249,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      777 | “And yet what a dear little puppy it was!” said Alice, as she leant against a
-         |                                                               ^~~~~ Did you mean to spell “leant” this way?
+         |                                                               ^~~~~ Did you mean to spell `leant` this way?
      778 | buttercup to rest herself, and fanned herself with one of the leaves: “I should
 Suggest:
   - Replace with: “lean”
@@ -1297,7 +1298,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      884 | > “In my youth,” said the sage, as he shook his grey locks, “I kept all my limbs
-         |                                                 ^~~~ Did you mean to spell “grey” this way?
+         |                                                 ^~~~ Did you mean to spell `grey` this way?
      885 | > very supple By the use of this ointment—one shilling the box— Allow me to sell
 Suggest:
   - Replace with: “gray”
@@ -1330,7 +1331,7 @@ Lint:    Spelling (63 priority)
 Message: |
      961 | her foot, that there was hardly room to open her mouth; but she did it at last,
      962 | and managed to swallow a morsel of the lefthand bit.
-         |                                        ^~~~~~~~ Did you mean “leftward”?
+         |                                        ^~~~~~~~ Did you mean `leftward`?
 Suggest:
   - Replace with: “leftward”
 
@@ -1447,7 +1448,7 @@ Lint:    Spelling (63 priority)
 Message: |
     1055 | this size: why, I should frighten them out of their wits!” So she began nibbling
     1056 | at the righthand bit again, and did not venture to go near the house till she
-         |        ^~~~~~~~~ Did you mean to spell “righthand” this way?
+         |        ^~~~~~~~~ Did you mean to spell `righthand` this way?
 Suggest:
   - Replace with: “right-hand”
   - Replace with: “rightward”
@@ -1619,7 +1620,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     1260 | The Cat only grinned when it saw Alice. It looked good-natured, she thought:
-         |                                                        ^~~~~~~ Did you mean to spell “natured” this way?
+         |                                                        ^~~~~~~ Did you mean to spell `natured` this way?
 Suggest:
   - Replace with: “nature”
   - Replace with: “natures”
@@ -1645,7 +1646,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     1349 | did not like to go nearer till she had nibbled some more of the lefthand bit of
-         |                                                                 ^~~~~~~~ Did you mean “leftward”?
+         |                                                                 ^~~~~~~~ Did you mean `leftward`?
     1350 | mushroom, and raised herself to about two feet high: even then she walked up
 Suggest:
   - Replace with: “leftward”
@@ -1698,7 +1699,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1497 | The Hatter shook his head mournfully. “Not I!” he replied. “We quarrelled last
-         |                                                                ^~~~~~~~~~ Did you mean to spell “quarrelled” this way?
+         |                                                                ^~~~~~~~~~ Did you mean to spell `quarrelled` this way?
     1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
 Suggest:
   - Replace with: “quarreled”
@@ -1731,7 +1732,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
-         |                                           ^~~~~ Did you mean to spell “Lacie” this way?
+         |                                           ^~~~~ Did you mean to spell `Lacie` this way?
 Suggest:
   - Replace with: “Lace”
   - Replace with: “Lacier”
@@ -1742,7 +1743,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
-         |                                                      ^~~~~~ Did you mean to spell “Tillie” this way?
+         |                                                      ^~~~~~ Did you mean to spell `Tillie` this way?
 Suggest:
   - Replace with: “Billie”
   - Replace with: “Lillie”
@@ -1823,7 +1824,7 @@ Lint:    Spelling (63 priority)
 Message: |
     1702 | all have our heads cut off, you know. So you see, Miss, we’re doing our best,
     1703 | afore she comes, to—” At this moment Five, who had been anxiously looking across
-         | ^~~~~ Did you mean to spell “afore” this way?
+         | ^~~~~ Did you mean to spell `afore` this way?
 Suggest:
   - Replace with: “adore”
   - Replace with: “afire”
@@ -1848,7 +1849,7 @@ Lint:    Spelling (63 priority)
 Message: |
     1713 | they were all ornamented with hearts. Next came the guests, mostly Kings and
     1714 | Queens, and among them Alice recognised the White Rabbit: it was talking in a
-         |                              ^~~~~~~~~~ Did you mean to spell “recognised” this way?
+         |                              ^~~~~~~~~~ Did you mean to spell `recognised` this way?
 Suggest:
   - Replace with: “recognized”
   - Replace with: “recogniser”
@@ -1902,7 +1903,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     1815 | furrows; the balls were live hedgehogs, the mallets live flamingoes, and the
-         |                                                          ^~~~~~~~~~ Did you mean to spell “flamingoes” this way?
+         |                                                          ^~~~~~~~~~ Did you mean to spell `flamingoes` this way?
     1816 | soldiers had to double themselves up and to stand on their hands and feet, to
 Suggest:
   - Replace with: “flamingo's”
@@ -1954,7 +1955,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     1832 | The players all played at once without waiting for turns, quarrelling all the
-         |                                                           ^~~~~~~~~~~ Did you mean “quarreling”?
+         |                                                           ^~~~~~~~~~~ Did you mean `quarreling`?
     1833 | while, and fighting for the hedgehogs; and in a very short time the Queen was in
 Suggest:
   - Replace with: “quarreling”
@@ -1998,7 +1999,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     1863 | at the other end of the ground—and I should have croqueted the Queen’s hedgehog
-         |                                                  ^~~~~~~~~ Did you mean to spell “croqueted” this way?
+         |                                                  ^~~~~~~~~ Did you mean to spell `croqueted` this way?
     1864 | just now, only it ran away when it saw mine coming!”
 Suggest:
   - Replace with: “croquet's”
@@ -2048,7 +2049,7 @@ Lint:    Spelling (63 priority)
 Message: |
     1906 | The hedgehog was engaged in a fight with another hedgehog, which seemed to Alice
     1907 | an excellent opportunity for croqueting one of them with the other: the only
-         |                              ^~~~~~~~~~ Did you mean to spell “croqueting” this way?
+         |                              ^~~~~~~~~~ Did you mean to spell `croqueting` this way?
 Suggest:
   - Replace with: “coquetting”
   - Replace with: “crocheting”
@@ -2133,7 +2134,7 @@ Lint:    Spelling (63 priority)
 Message: |
     1962 | pleased at having found out a new kind of rule, “and vinegar that makes them
     1963 | sour—and camomile that makes them bitter—and—and barley-sugar and such things
-         |          ^~~~~~~~ Did you mean to spell “camomile” this way?
+         |          ^~~~~~~~ Did you mean to spell `camomile` this way?
 Suggest:
   - Replace with: “chamomile”
   - Replace with: “chamomiles”
@@ -2143,7 +2144,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
-         |   ^~~ Did you mean to spell “Tis” this way?
+         |   ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “T's”
   - Replace with: “This”
@@ -2154,7 +2155,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
-         |                                                              ^~~ Did you mean to spell “tis” this way?
+         |                                                              ^~~ Did you mean to spell `tis` this way?
     1986 | love, that makes the world go round!’”
 Suggest:
   - Replace with: “this”
@@ -2166,7 +2167,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
-         |                                                                         ^~~ Did you mean to spell “tis” this way?
+         |                                                                         ^~~ Did you mean to spell `tis` this way?
     1986 | love, that makes the world go round!’”
 Suggest:
   - Replace with: “this”
@@ -2178,7 +2179,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2004 | “Very true,” said the Duchess: “flamingoes and mustard both bite. And the moral
-         |                                 ^~~~~~~~~~ Did you mean to spell “flamingoes” this way?
+         |                                 ^~~~~~~~~~ Did you mean to spell `flamingoes` this way?
 Suggest:
   - Replace with: “flamingo's”
   - Replace with: “flamingos”
@@ -2215,7 +2216,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2048 | But here, to Alice’s great surprise, the Duchess’s voice died away, even in the
     2049 | middle of her favourite word ‘moral,’ and the arm that was linked into hers
-         |               ^~~~~~~~~ Did you mean to spell “favourite” this way?
+         |               ^~~~~~~~~ Did you mean to spell `favourite` this way?
 Suggest:
   - Replace with: “favorite”
   - Replace with: “favourites”
@@ -2246,7 +2247,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     2068 | All the time they were playing the Queen never left off quarrelling with the
-         |                                                         ^~~~~~~~~~~ Did you mean “quarreling”?
+         |                                                         ^~~~~~~~~~~ Did you mean `quarreling`?
     2069 | other players, and shouting “Off with his head!” or “Off with her head!” Those
 Suggest:
   - Replace with: “quarreling”
@@ -2271,7 +2272,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     2091 | They very soon came upon a Gryphon, lying fast asleep in the sun. (If you don’t
-         |                            ^~~~~~~ Did you mean “Krypton”?
+         |                            ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2281,7 +2282,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2091 | They very soon came upon a Gryphon, lying fast asleep in the sun. (If you don’t
     2092 | know what a Gryphon is, look at the picture.) “Up, lazy thing!” said the Queen,
-         |             ^~~~~~~ Did you mean “Krypton”?
+         |             ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2291,7 +2292,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2094 | must go back and see after some executions I have ordered;” and she walked off,
     2095 | leaving Alice alone with the Gryphon. Alice did not quite like the look of the
-         |                              ^~~~~~~ Did you mean “Krypton”?
+         |                              ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2300,7 +2301,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2099 | The Gryphon sat up and rubbed its eyes: then it watched the Queen till she was
-         |     ^~~~~~~ Did you mean “Krypton”?
+         |     ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2309,7 +2310,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2100 | out of sight: then it chuckled. “What fun!” said the Gryphon, half to itself,
-         |                                                      ^~~~~~~ Did you mean “Krypton”?
+         |                                                      ^~~~~~~ Did you mean `Krypton`?
     2101 | half to Alice.
 Suggest:
   - Replace with: “Krypton”
@@ -2319,7 +2320,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2105 | “Why, she,” said the Gryphon. “It’s all her fancy, that: they never executes
-         |                      ^~~~~~~ Did you mean “Krypton”?
+         |                      ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2328,7 +2329,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2114 | his sorrow?” she asked the Gryphon, and the Gryphon answered, very nearly in the
-         |                            ^~~~~~~ Did you mean “Krypton”?
+         |                            ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2337,7 +2338,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2114 | his sorrow?” she asked the Gryphon, and the Gryphon answered, very nearly in the
-         |                                             ^~~~~~~ Did you mean “Krypton”?
+         |                                             ^~~~~~~ Did you mean `Krypton`?
     2115 | same words as before, “It’s all his fancy, that: he hasn’t got no sorrow, you
 Suggest:
   - Replace with: “Krypton”
@@ -2347,7 +2348,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2121 | “This here young lady,” said the Gryphon, “she wants for to know your history,
-         |                                  ^~~~~~~ Did you mean “Krypton”?
+         |                                  ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2357,7 +2358,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2133 | These words were followed by a very long silence, broken only by an occasional
     2134 | exclamation of “Hjckrrh!” from the Gryphon, and the constant heavy sobbing of
-         |                 ^~~~~~~ Did you mean to spell “Hjckrrh” this way?
+         |                 ^~~~~~~ Did you mean to spell `Hjckrrh` this way?
 Suggest:
   - Replace with: “Hacker”
   - Replace with: “Hackish”
@@ -2368,7 +2369,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2134 | exclamation of “Hjckrrh!” from the Gryphon, and the constant heavy sobbing of
-         |                                    ^~~~~~~ Did you mean “Krypton”?
+         |                                    ^~~~~~~ Did you mean `Krypton`?
     2135 | the Mock Turtle. Alice was very nearly getting up and saying, “Thank you, sir,
 Suggest:
   - Replace with: “Krypton”
@@ -2379,7 +2380,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2148 | “You ought to be ashamed of yourself for asking such a simple question,” added
     2149 | the Gryphon; and then they both sat silent and looked at poor Alice, who felt
-         |     ^~~~~~~ Did you mean “Krypton”?
+         |     ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2388,7 +2389,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2150 | ready to sink into the earth. At last the Gryphon said to the Mock Turtle,
-         |                                           ^~~~~~~ Did you mean “Krypton”?
+         |                                           ^~~~~~~ Did you mean `Krypton`?
     2151 | “Drive on, old fellow! Don’t be all day about it!” and he went on in these
 Suggest:
   - Replace with: “Krypton”
@@ -2398,7 +2399,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2160 | “Hold your tongue!” added the Gryphon, before Alice could speak again. The Mock
-         |                               ^~~~~~~ Did you mean “Krypton”?
+         |                               ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2426,7 +2427,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2189 | then the different branches of Arithmetic—Ambition, Distraction, Uglification,
-         |                                                                  ^~~~~~~~~~~~ Did you mean “Vilification”?
+         |                                                                  ^~~~~~~~~~~~ Did you mean `Vilification`?
     2190 | and Derision.”
 Suggest:
   - Replace with: “Vilification”
@@ -2436,7 +2437,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2192 | “I never heard of ‘Uglification,’” Alice ventured to say. “What is it?”
-         |                    ^~~~~~~~~~~~ Did you mean “Vilification”?
+         |                    ^~~~~~~~~~~~ Did you mean `Vilification`?
 Suggest:
   - Replace with: “Vilification”
 
@@ -2445,7 +2446,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2194 | The Gryphon lifted up both its paws in surprise. “What! Never heard of
-         |     ^~~~~~~ Did you mean “Krypton”?
+         |     ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2455,7 +2456,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2194 | The Gryphon lifted up both its paws in surprise. “What! Never heard of
     2195 | uglifying!” it exclaimed. “You know what to beautify is, I suppose?”
-         | ^~~~~~~~~ Did you mean to spell “uglifying” this way?
+         | ^~~~~~~~~ Did you mean to spell `uglifying` this way?
 Suggest:
   - Replace with: “unifying”
   - Replace with: “uplifting”
@@ -2466,7 +2467,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2199 | “Well, then,” the Gryphon went on, “if you don’t know what to uglify is, you are
-         |                   ^~~~~~~ Did you mean “Krypton”?
+         |                   ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2475,7 +2476,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2199 | “Well, then,” the Gryphon went on, “if you don’t know what to uglify is, you are
-         |                                                               ^~~~~~ Did you mean to spell “uglify” this way?
+         |                                                               ^~~~~~ Did you mean to spell `uglify` this way?
     2200 | a simpleton.”
 Suggest:
   - Replace with: “ugly”
@@ -2510,7 +2511,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2206 | his flappers, “—Mystery, ancient and modern, with Seaography: then Drawling—the
-         |                                                   ^~~~~~~~~~ Did you mean to spell “Seaography” this way?
+         |                                                   ^~~~~~~~~~ Did you mean to spell `Seaography` this way?
 Suggest:
   - Replace with: “Demography”
   - Replace with: “Geography”
@@ -2533,7 +2534,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2212 | “Well, I can’t show it you myself,” the Mock Turtle said: “I’m too stiff. And
     2213 | the Gryphon never learnt it.”
-         |     ^~~~~~~ Did you mean “Krypton”?
+         |     ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2542,7 +2543,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2215 | “Hadn’t time,” said the Gryphon: “I went to the Classics master, though. He was
-         |                         ^~~~~~~ Did you mean “Krypton”?
+         |                         ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2551,7 +2552,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2221 | “So he did, so he did,” said the Gryphon, sighing in his turn; and both
-         |                                  ^~~~~~~ Did you mean “Krypton”?
+         |                                  ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2560,7 +2561,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2231 | “That’s the reason they’re called lessons,” the Gryphon remarked: “because they
-         |                                                 ^~~~~~~ Did you mean “Krypton”?
+         |                                                 ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2569,7 +2570,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2241 | “That’s enough about lessons,” the Gryphon interrupted in a very decided tone:
-         |                                    ^~~~~~~ Did you mean “Krypton”?
+         |                                    ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2578,7 +2579,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2248 | voice. “Same as if he had a bone in his throat,” said the Gryphon: and it set to
-         |                                                           ^~~~~~~ Did you mean “Krypton”?
+         |                                                           ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2600,7 +2601,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     2259 | “Why,” said the Gryphon, “you first form into a line along the sea-shore—”
-         |                 ^~~~~~~ Did you mean “Krypton”?
+         |                 ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2609,7 +2610,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2264 | “That generally takes some time,” interrupted the Gryphon.
-         |                                                   ^~~~~~~ Did you mean “Krypton”?
+         |                                                   ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2618,7 +2619,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2268 | “Each with a lobster as a partner!” cried the Gryphon.
-         |                                               ^~~~~~~ Did you mean “Krypton”?
+         |                                               ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2627,7 +2628,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2272 | “—change lobsters, and retire in same order,” continued the Gryphon.
-         |                                                             ^~~~~~~ Did you mean “Krypton”?
+         |                                                             ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2636,7 +2637,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2276 | “The lobsters!” shouted the Gryphon, with a bound into the air.
-         |                             ^~~~~~~ Did you mean “Krypton”?
+         |                             ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2645,7 +2646,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2280 | “Swim after them!” screamed the Gryphon.
-         |                                 ^~~~~~~ Did you mean “Krypton”?
+         |                                 ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2654,7 +2655,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2284 | “Change lobsters again!” yelled the Gryphon at the top of its voice.
-         |                                     ^~~~~~~ Did you mean “Krypton”?
+         |                                     ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2676,7 +2677,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     2297 | “Come, let’s try the first figure!” said the Mock Turtle to the Gryphon. “We can
-         |                                                                 ^~~~~~~ Did you mean “Krypton”?
+         |                                                                 ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2685,7 +2686,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2300 | “Oh, you sing,” said the Gryphon. “I’ve forgotten the words.”
-         |                          ^~~~~~~ Did you mean “Krypton”?
+         |                          ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2704,7 +2705,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2303 | treading on her toes when they passed too close, and waving their forepaws to
-         |                                                                   ^~~~~~~~ Did you mean to spell “forepaws” this way?
+         |                                                                   ^~~~~~~~ Did you mean to spell `forepaws` this way?
     2304 | mark the time, while the Mock Turtle sang this, very slowly and sadly:—
 Suggest:
   - Replace with: “foreparts”
@@ -2716,7 +2717,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2333 | “Yes,” said Alice, “I’ve often seen them at dinn—” she checked herself hastily.
-         |                                             ^~~~ Did you mean to spell “dinn” this way?
+         |                                             ^~~~ Did you mean to spell `dinn` this way?
 Suggest:
   - Replace with: “din”
   - Replace with: “dine”
@@ -2727,7 +2728,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2335 | “I don’t know where Dinn may be,” said the Mock Turtle, “but if you’ve seen them
-         |                     ^~~~ Did you mean to spell “Dinn” this way?
+         |                     ^~~~ Did you mean to spell `Dinn` this way?
 Suggest:
   - Replace with: “Dine”
   - Replace with: “Diann”
@@ -2739,7 +2740,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2343 | here the Mock Turtle yawned and shut his eyes.—“Tell her about the reason and
     2344 | all that,” he said to the Gryphon.
-         |                           ^~~~~~~ Did you mean “Krypton”?
+         |                           ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2748,7 +2749,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2346 | “The reason is,” said the Gryphon, “that they would go with the lobsters to the
-         |                           ^~~~~~~ Did you mean “Krypton”?
+         |                           ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2757,7 +2758,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2354 | “I can tell you more than that, if you like,” said the Gryphon. “Do you know why
-         |                                                        ^~~~~~~ Did you mean “Krypton”?
+         |                                                        ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2766,7 +2767,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2359 | “It does the boots and shoes,” the Gryphon replied very solemnly.
-         |                                    ^~~~~~~ Did you mean “Krypton”?
+         |                                    ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2775,7 +2776,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2364 | “Why, what are your shoes done with?” said the Gryphon. “I mean, what makes them
-         |                                                ^~~~~~~ Did you mean “Krypton”?
+         |                                                ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2784,7 +2785,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2370 | “Boots and shoes under the sea,” the Gryphon went on in a deep voice, “are done
-         |                                      ^~~~~~~ Did you mean “Krypton”?
+         |                                      ^~~~~~~ Did you mean `Krypton`?
     2371 | with a whiting. Now you know.”
 Suggest:
   - Replace with: “Krypton”
@@ -2794,7 +2795,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2375 | “Soles and eels, of course,” the Gryphon replied rather impatiently: “any shrimp
-         |                                  ^~~~~~~ Did you mean “Krypton”?
+         |                                  ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2804,7 +2805,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2392 | “I mean what I say,” the Mock Turtle replied in an offended tone. And the
     2393 | Gryphon added “Come, let’s hear some of your adventures.”
-         | ^~~~~~~ Did you mean “Krypton”?
+         | ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2813,7 +2814,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2401 | “No, no! The adventures first,” said the Gryphon in an impatient tone:
-         |                                          ^~~~~~~ Did you mean “Krypton”?
+         |                                          ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2835,7 +2836,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     2412 | “It’s all about as curious as it can be,” said the Gryphon.
-         |                                                    ^~~~~~~ Did you mean “Krypton”?
+         |                                                    ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2845,7 +2846,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2415 | to hear her try and repeat something now. Tell her to begin.” He looked at the
     2416 | Gryphon as if he thought it had some kind of authority over Alice.
-         | ^~~~~~~ Did you mean “Krypton”?
+         | ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2854,7 +2855,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2418 | “Stand up and repeat ‘’Tis the voice of the sluggard,’” said the Gryphon.
-         |                        ^~~ Did you mean to spell “Tis” this way?
+         |                        ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “T's”
   - Replace with: “This”
@@ -2865,7 +2866,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2418 | “Stand up and repeat ‘’Tis the voice of the sluggard,’” said the Gryphon.
-         |                                                                  ^~~~~~~ Did you mean “Krypton”?
+         |                                                                  ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2874,7 +2875,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
-         |     ^~~ Did you mean to spell “Tis” this way?
+         |     ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “T's”
   - Replace with: “This”
@@ -2897,7 +2898,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     2433 | “That’s different from what I used to say when I was a child,” said the Gryphon.
-         |                                                                         ^~~~~~~ Did you mean “Krypton”?
+         |                                                                         ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2906,7 +2907,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2443 | “She can’t explain it,” said the Gryphon hastily. “Go on with the next verse.”
-         |                                  ^~~~~~~ Did you mean “Krypton”?
+         |                                  ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2915,7 +2916,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2451 | “Go on with the next verse,” the Gryphon repeated impatiently: “it begins ‘I
-         |                                  ^~~~~~~ Did you mean “Krypton”?
+         |                                  ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2924,7 +2925,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2470 | “Yes, I think you’d better leave off,” said the Gryphon: and Alice was only too
-         |                                                 ^~~~~~~ Did you mean “Krypton”?
+         |                                                 ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2933,7 +2934,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2473 | “Shall we try another figure of the Lobster Quadrille?” the Gryphon went on. “Or
-         |                                                             ^~~~~~~ Did you mean “Krypton”?
+         |                                                             ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2943,7 +2944,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2476 | “Oh, a song, please, if the Mock Turtle would be so kind,” Alice replied, so
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
-         |                  ^~~~~~~ Did you mean “Krypton”?
+         |                  ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -2952,7 +2953,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
-         |                                                            ^~ Did you mean to spell “Hm” this way?
+         |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
   - Replace with: “H”
   - Replace with: “Ham”
@@ -2963,7 +2964,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
-         |                                 ^~~~~~~ Did you mean to spell “ootiful” this way?
+         |                                 ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
   - Replace with: “dutiful”
   - Replace with: “pitiful”
@@ -2974,7 +2975,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
-         |                                         ^~~ Did you mean to spell “Soo” this way?
+         |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
   - Replace with: “Son”
   - Replace with: “Soho”
@@ -2985,7 +2986,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
-         |                                             ^~~ Did you mean to spell “oop” this way?
+         |                                             ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
   - Replace with: “op”
@@ -2996,7 +2997,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
-         |                                                       ^~~~~~~ Did you mean to spell “ootiful” this way?
+         |                                                       ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
   - Replace with: “dutiful”
   - Replace with: “pitiful”
@@ -3007,7 +3008,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
-         |                                                               ^~~ Did you mean to spell “Soo” this way?
+         |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
   - Replace with: “Son”
   - Replace with: “Soho”
@@ -3018,7 +3019,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
-         |                                                                   ^~~ Did you mean to spell “oop” this way?
+         |                                                                   ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
   - Replace with: “op”
@@ -3029,7 +3030,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
-         |                                                                        ^~~ Did you mean to spell “Soo” this way?
+         |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
   - Replace with: “Son”
@@ -3041,7 +3042,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
-         |                                                                            ^~~ Did you mean to spell “oop” this way?
+         |                                                                            ^~~ Did you mean to spell `oop` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
   - Replace with: “oops”
@@ -3064,7 +3065,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2488 | > “Beautiful Soup! Who cares for fish, Game, or any other dish? Who would not
     2489 | > give all else for two p ennyworth only of beautiful Soup? Pennyworth only of
-         |                           ^~~~~~~~~ Did you mean “pennyworth”?
+         |                           ^~~~~~~~~ Did you mean `pennyworth`?
 Suggest:
   - Replace with: “pennyworth”
 
@@ -3073,7 +3074,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-         |                        ^~~~~~~ Did you mean to spell “ootiful” this way?
+         |                        ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
   - Replace with: “dutiful”
   - Replace with: “pitiful”
@@ -3084,7 +3085,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-         |                                ^~~ Did you mean to spell “Soo” this way?
+         |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
   - Replace with: “Son”
   - Replace with: “Soho”
@@ -3095,7 +3096,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-         |                                    ^~~ Did you mean to spell “oop” this way?
+         |                                    ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
   - Replace with: “op”
@@ -3106,7 +3107,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-         |                                              ^~~~~~~ Did you mean to spell “ootiful” this way?
+         |                                              ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
   - Replace with: “dutiful”
   - Replace with: “pitiful”
@@ -3117,7 +3118,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-         |                                                      ^~~ Did you mean to spell “Soo” this way?
+         |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
   - Replace with: “Son”
   - Replace with: “Soho”
@@ -3128,7 +3129,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-         |                                                          ^~~ Did you mean to spell “oop” this way?
+         |                                                          ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
   - Replace with: “op”
@@ -3139,7 +3140,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-         |                                                               ^~~ Did you mean to spell “Soo” this way?
+         |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
   - Replace with: “Son”
@@ -3151,7 +3152,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-         |                                                                   ^~~ Did you mean to spell “oop” this way?
+         |                                                                   ^~~ Did you mean to spell `oop` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
   - Replace with: “oops”
@@ -3164,7 +3165,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
-         |                           ^~~~~~ Did you mean to spell “beauti” this way?
+         |                           ^~~~~~ Did you mean to spell `beauti` this way?
 Suggest:
   - Replace with: “beauty”
   - Replace with: “beaut”
@@ -3176,7 +3177,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
-         |                                  ^~~ Did you mean to spell “FUL” this way?
+         |                                  ^~~ Did you mean to spell `FUL` this way?
 Suggest:
   - Replace with: “FUD”
   - Replace with: “F's”
@@ -3187,7 +3188,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2493 | “Chorus again!” cried the Gryphon, and the Mock Turtle had just begun to repeat
-         |                           ^~~~~~~ Did you mean “Krypton”?
+         |                           ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -3196,7 +3197,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2496 | “Come on!” cried the Gryphon, and, taking Alice by the hand, it hurried off,
-         |                      ^~~~~~~ Did you mean “Krypton”?
+         |                      ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -3205,7 +3206,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2499 | “What trial is it?” Alice panted as she ran; but the Gryphon only answered “Come
-         |                                                      ^~~~~~~ Did you mean “Krypton”?
+         |                                                      ^~~~~~~ Did you mean `Krypton`?
     2500 | on!” and ran the faster, while more and more faintly came, carried on the breeze
 Suggest:
   - Replace with: “Krypton”
@@ -3215,7 +3216,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
-         |    ^~~ Did you mean to spell “Soo” this way?
+         |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
   - Replace with: “Son”
   - Replace with: “Soho”
@@ -3226,7 +3227,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
-         |        ^~~ Did you mean to spell “oop” this way?
+         |        ^~~ Did you mean to spell `oop` this way?
 Suggest:
   - Replace with: “oops”
   - Replace with: “op”
@@ -3277,7 +3278,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2534 | The twelve jurors were all writing very busily on slates. “What are they doing?”
     2535 | Alice whispered to the Gryphon. “They can’t have anything to put down yet,
-         |                        ^~~~~~~ Did you mean “Krypton”?
+         |                        ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
 
@@ -3286,7 +3287,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2538 | “They’re putting down their names,” the Gryphon whispered in reply, “for fear
-         |                                         ^~~~~~~ Did you mean “Krypton”?
+         |                                         ^~~~~~~ Did you mean `Krypton`?
     2539 | they should forget them before the end of the trial.”
 Suggest:
   - Replace with: “Krypton”
@@ -3297,7 +3298,7 @@ Lint:    Spelling (63 priority)
 Message: |
     2547 | even make out that one of them didn’t know how to spell “stupid,” and that he
     2548 | had to ask his neighbour to tell him. “A nice muddle their slates’ll be in
-         |                ^~~~~~~~~ Did you mean to spell “neighbour” this way?
+         |                ^~~~~~~~~ Did you mean to spell `neighbour` this way?
 Suggest:
   - Replace with: “neighbor”
   - Replace with: “neighbours”
@@ -3308,7 +3309,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2548 | had to ask his neighbour to tell him. “A nice muddle their slates’ll be in
-         |                                                            ^~~~~~~~~ Did you mean to spell “slates’ll” this way?
+         |                                                            ^~~~~~~~~ Did you mean to spell `slates’ll` this way?
     2549 | before the trial’s over!” thought Alice.
 Suggest:
   - Replace with: “slate's”
@@ -3373,8 +3374,9 @@ Message: |
     2639 | “I’m a poor man, your Majesty,” the Hatter began, in a trembling voice, “—and I
          |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2640 | hadn’t begun my tea—not above a week or so—and what with the bread-and-butter
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2641 | getting so thin—and the twinkling of the tea—”
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
 
 
 
@@ -3448,8 +3450,9 @@ Message: |
     2907 | “All right, so far,” said the King, and he went on muttering over the verses to
          |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2908 | himself: “‘We know it to be true—’ that’s the jury, of course—‘I gave her one,
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2909 | they gave him two—’ why, that must be what he did with the tarts, you know—”
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
 
 
 
@@ -3467,7 +3470,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     2929 | “No, no!” said the Queen. “Sentence first—verdict afterwards.”
-         |                                                   ^~~~~~~~~~ Did you mean to spell “afterwards” this way?
+         |                                                   ^~~~~~~~~~ Did you mean to spell `afterwards` this way?
 Suggest:
   - Replace with: “afterward”
   - Replace with: “afterwords”
@@ -3528,8 +3531,9 @@ Message: |
     2961 | watching the setting sun, and thinking of little Alice and all her wonderful
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2962 | Adventures, till she too began dreaming after a fashion, and this was her
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2963 | dream:—
+         | ~~~~~~~ This sentence is 43 words long.
 
 
 
@@ -3576,7 +3580,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     2977 | plates and dishes crashed around it—once more the shriek of the Gryphon, the
-         |                                                                 ^~~~~~~ Did you mean “Krypton”?
+         |                                                                 ^~~~~~~ Did you mean `Krypton`?
     2978 | squeaking of the Lizard’s slate-pencil, and the choking of the suppressed
 Suggest:
   - Replace with: “Krypton”
@@ -3609,7 +3613,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     2987 | the sneeze of the baby, the shriek of the Gryphon, and all the other queer
-         |                                           ^~~~~~~ Did you mean “Krypton”?
+         |                                           ^~~~~~~ Did you mean `Krypton`?
     2988 | noises, would change (she knew) to the confused clamour of the busy
 Suggest:
   - Replace with: “Krypton”
@@ -3619,7 +3623,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2988 | noises, would change (she knew) to the confused clamour of the busy
-         |                                                 ^~~~~~~ Did you mean to spell “clamour” this way?
+         |                                                 ^~~~~~~ Did you mean to spell `clamour` this way?
     2989 | farm-yard—while the lowing of the cattle in the distance would take the place of
 Suggest:
   - Replace with: “clamor”

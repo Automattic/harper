@@ -16,6 +16,7 @@ mod number;
 pub mod parsers;
 pub mod patterns;
 mod punctuation;
+mod render_markdown;
 mod span;
 pub mod spell;
 mod sync;
@@ -26,6 +27,7 @@ mod token_string_ext;
 mod vec_ext;
 mod word_metadata;
 
+use render_markdown::render_markdown;
 use std::collections::VecDeque;
 
 pub use char_string::{CharString, CharStringExt};

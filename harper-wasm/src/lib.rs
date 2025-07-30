@@ -152,9 +152,32 @@ impl Linter {
         document.to_string()
     }
 
-    /// Get a JSON map containing the descriptions of all the linting rules.
+    /// Get a JSON map containing the descriptions of all the linting rules, formatted as HTML.
+    pub fn get_lint_descriptions_html_as_json(&self) -> String {
+        serde_json::to_string(&self.lint_group.all_descriptions_html()).unwrap()
+    }
+
+    /// Get a Record containing the descriptions of all the linting rules, formatted as HTML.
+    pub fn get_lint_descriptions_html_as_object(&self) -> JsValue {
+        let serializer = Serializer::json_compatible();
+        self.lint_group
+            .all_descriptions_html()
+            .serialize(&serializer)
+            .unwrap()
+    }
+
+    /// Get a JSON map containing the descriptions of all the linting rules, formatted as Markdown.
     pub fn get_lint_descriptions_as_json(&self) -> String {
         serde_json::to_string(&self.lint_group.all_descriptions()).unwrap()
+    }
+
+    /// Get a Record containing the descriptions of all the linting rules, formatted as Markdown.
+    pub fn get_lint_descriptions_as_object(&self) -> JsValue {
+        let serializer = Serializer::json_compatible();
+        self.lint_group
+            .all_descriptions()
+            .serialize(&serializer)
+            .unwrap()
     }
 
     pub fn get_lint_config_as_json(&self) -> String {
@@ -180,15 +203,6 @@ impl Linter {
         operable_copy
             .summarize()
             .serialize(&Serializer::json_compatible())
-            .unwrap()
-    }
-
-    /// Get a Record containing the descriptions of all the linting rules.
-    pub fn get_lint_descriptions_as_object(&self) -> JsValue {
-        let serializer = Serializer::json_compatible();
-        self.lint_group
-            .all_descriptions()
-            .serialize(&serializer)
             .unwrap()
     }
 
@@ -452,6 +466,11 @@ impl Lint {
     /// Get a description of the error.
     pub fn message(&self) -> String {
         self.inner.message.clone()
+    }
+
+    /// Get a description of the error as HTML.
+    pub fn message_html(&self) -> String {
+        self.inner.message_html()
     }
 }
 

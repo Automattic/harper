@@ -14,7 +14,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
        8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
-         |                                                ^~~ Did you mean to spell “POS” this way?
+         |                                                ^~~ Did you mean to spell `POS` this way?
        9 | POST), also called grammatical tagging is the process of marking up a word in a
 Suggest:
   - Replace with: “PBS”
@@ -26,7 +26,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
        8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
-         |                                                               ^~~ Did you mean to spell “PoS” this way?
+         |                                                               ^~~ Did you mean to spell `PoS` this way?
        9 | POST), also called grammatical tagging is the process of marking up a word in a
 Suggest:
   - Replace with: “Poe”
@@ -38,7 +38,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       15 | Once performed by hand, POS tagging is now done in the context of computational
-         |                         ^~~ Did you mean to spell “POS” this way?
+         |                         ^~~ Did you mean to spell `POS` this way?
 Suggest:
   - Replace with: “PBS”
   - Replace with: “PMS”
@@ -49,7 +49,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       17 | parts of speech, by a set of descriptive tags. POS-tagging algorithms fall into
-         |                                                ^~~ Did you mean to spell “POS” this way?
+         |                                                ^~~ Did you mean to spell `POS` this way?
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
 Suggest:
   - Replace with: “PBS”
@@ -61,7 +61,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
-         |                                                    ^~ Did you mean to spell “E.” this way?
+         |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
   - Replace with: “E”
   - Replace with: “Ea”
@@ -72,7 +72,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
-         |                                                       ^~~~~~~ Did you mean to spell “Brill's” this way?
+         |                                                       ^~~~~~~ Did you mean to spell `Brill's` this way?
       19 | first and most widely used English POS-taggers, employs rule-based algorithms.
 Suggest:
   - Replace with: “Brillo's”
@@ -85,7 +85,7 @@ Lint:    Spelling (63 priority)
 Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
       19 | first and most widely used English POS-taggers, employs rule-based algorithms.
-         |                                    ^~~ Did you mean to spell “POS” this way?
+         |                                    ^~~ Did you mean to spell `POS` this way?
 Suggest:
   - Replace with: “PBS”
   - Replace with: “PMS”
@@ -111,7 +111,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
-         |                    ^~ Did you mean to spell “NN” this way?
+         |                    ^~ Did you mean to spell `NN` this way?
 Suggest:
   - Replace with: “Nun”
   - Replace with: “Non”
@@ -122,7 +122,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
-         |                                                  ^~~ Did you mean to spell “NNS” this way?
+         |                                                  ^~~ Did you mean to spell `NNS` this way?
       50 | for singular proper nouns (see the POS tags used in the Brown Corpus). Other
 Suggest:
   - Replace with: “NBS”
@@ -134,7 +134,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
-         |                                                                               ^~ Did you mean to spell “NP” this way?
+         |                                                                               ^~ Did you mean to spell `NP` this way?
       50 | for singular proper nouns (see the POS tags used in the Brown Corpus). Other
 Suggest:
   - Replace with: “N”
@@ -147,7 +147,7 @@ Lint:    Spelling (63 priority)
 Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
       50 | for singular proper nouns (see the POS tags used in the Brown Corpus). Other
-         |                                    ^~~ Did you mean to spell “POS” this way?
+         |                                    ^~~ Did you mean to spell `POS` this way?
 Suggest:
   - Replace with: “PBS”
   - Replace with: “PMS”
@@ -159,7 +159,7 @@ Lint:    Spelling (63 priority)
 Message: |
       55 | 150 separate parts of speech for English. Work on stochastic methods for tagging
       56 | Koine Greek (DeRose 1990) has used over 1,000 parts of speech and found that
-         | ^~~~~ Did you mean to spell “Koine” this way?
+         | ^~~~~ Did you mean to spell `Koine` this way?
 Suggest:
   - Replace with: “Kine”
   - Replace with: “Kline”
@@ -171,7 +171,7 @@ Lint:    Spelling (63 priority)
 Message: |
       55 | 150 separate parts of speech for English. Work on stochastic methods for tagging
       56 | Koine Greek (DeRose 1990) has used over 1,000 parts of speech and found that
-         |              ^~~~~~ Did you mean to spell “DeRose” this way?
+         |              ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
   - Replace with: “Defoe”
@@ -183,7 +183,7 @@ Lint:    Spelling (63 priority)
 Message: |
       57 | about as many words were ambiguous in that language as in English. A
       58 | morphosyntactic descriptor in the case of morphologically rich languages is
-         | ^~~~~~~~~~~~~~~ Did you mean to spell “morphosyntactic” this way?
+         | ^~~~~~~~~~~~~~~ Did you mean to spell `morphosyntactic` this way?
 Suggest:
   - Replace with: “morphosyntax's”
   - Replace with: “morphosyntax”
@@ -193,7 +193,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       58 | morphosyntactic descriptor in the case of morphologically rich languages is
-         |                                           ^~~~~~~~~~~~~~~ Did you mean “morphological”?
+         |                                           ^~~~~~~~~~~~~~~ Did you mean `morphological`?
       59 | commonly expressed using very short mnemonics, such as Ncmsan for Category=Noun,
 Suggest:
   - Replace with: “morphological”
@@ -203,7 +203,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       59 | commonly expressed using very short mnemonics, such as Ncmsan for Category=Noun,
-         |                                                        ^~~~~~ Did you mean to spell “Ncmsan” this way?
+         |                                                        ^~~~~~ Did you mean to spell `Ncmsan` this way?
       60 | Type = common, Gender = masculine, Number = singular, Case = accusative, Animate
 Suggest:
   - Replace with: “Nissan”
@@ -215,7 +215,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       63 | The most popular "tag set" for POS tagging for American English is probably the
-         |                                ^~~ Did you mean to spell “POS” this way?
+         |                                ^~~ Did you mean to spell `POS` this way?
 Suggest:
   - Replace with: “PBS”
   - Replace with: “PMS”
@@ -227,7 +227,7 @@ Lint:    Spelling (63 priority)
 Message: |
       63 | The most popular "tag set" for POS tagging for American English is probably the
       64 | Penn tag set, developed in the Penn Treebank project. It is largely similar to
-         |                                     ^~~~~~~~ Did you mean to spell “Treebank” this way?
+         |                                     ^~~~~~~~ Did you mean to spell `Treebank` this way?
 Suggest:
   - Replace with: “Freeman”
   - Replace with: “Reembark”
@@ -238,7 +238,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       69 | POS tagging work has been done in a variety of languages, and the set of POS
-         | ^~~ Did you mean to spell “POS” this way?
+         | ^~~ Did you mean to spell `POS` this way?
 Suggest:
   - Replace with: “PBS”
   - Replace with: “PMS”
@@ -249,7 +249,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       69 | POS tagging work has been done in a variety of languages, and the set of POS
-         |                                                                          ^~~ Did you mean to spell “POS” this way?
+         |                                                                          ^~~ Did you mean to spell `POS` this way?
       70 | tags used varies greatly with language. Tags usually are designed to include
 Suggest:
   - Replace with: “PBS”
@@ -261,7 +261,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       74 | Greek and Latin can be very large; tagging words in agglutinative languages such
-         |                                                     ^~~~~~~~~~~~~ Did you mean to spell “agglutinative” this way?
+         |                                                     ^~~~~~~~~~~~~ Did you mean to spell `agglutinative` this way?
       75 | as Inuit languages may be virtually impossible. At the other extreme, Petrov et
 Suggest:
   - Replace with: “agglutinate”
@@ -273,7 +273,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       75 | as Inuit languages may be virtually impossible. At the other extreme, Petrov et
-         |                                                                       ^~~~~~ Did you mean to spell “Petrov” this way?
+         |                                                                       ^~~~~~ Did you mean to spell `Petrov` this way?
       76 | al. have proposed a "universal" tag set, with 12 categories (for example, no
 Suggest:
   - Replace with: “Petrol”
@@ -287,7 +287,7 @@ Message: |
       75 | as Inuit languages may be virtually impossible. At the other extreme, Petrov et
          |                                                                              ^~~
       76 | al. have proposed a "universal" tag set, with 12 categories (for example, no
-         | ~~~ Did you mean “et al.”?
+         | ~~~ Did you mean `et al.`?
 Suggest:
   - Replace with: “et al.”
 
@@ -297,7 +297,7 @@ Lint:    Spelling (63 priority)
 Message: |
       86 | The first major corpus of English for computer analysis was the Brown Corpus
       87 | developed at Brown University by Henry Kučera and W. Nelson Francis, in the
-         |                                        ^~~~~~ Did you mean to spell “Kučera” this way?
+         |                                        ^~~~~~ Did you mean to spell `Kučera` this way?
 Suggest:
   - Replace with: “Kara”
   - Replace with: “Kendra”
@@ -308,7 +308,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       87 | developed at Brown University by Henry Kučera and W. Nelson Francis, in the
-         |                                                   ^~ Did you mean to spell “W.” this way?
+         |                                                   ^~ Did you mean to spell `W.` this way?
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
@@ -319,7 +319,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       98 | and corrected by hand, and later users sent in errata so that by the late 70s
-         |                                                                             ^ Did you mean to spell “s” this way?
+         |                                                                             ^ Did you mean to spell `s` this way?
       99 | the tagging was nearly perfect (allowing for some cases on which even human
 Suggest:
   - Replace with: “sf”
@@ -331,7 +331,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      105 | later part-of-speech tagging systems, such as CLAWS and VOLSUNGA. However, by
-         |                                                         ^~~~~~~~ Did you mean to spell “VOLSUNGA” this way?
+         |                                                         ^~~~~~~~ Did you mean to spell `VOLSUNGA` this way?
 
 
 
@@ -351,7 +351,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      119 | In the mid-1980s, researchers in Europe began to use hidden Markov models (HMMs)
-         |                                                                            ^~~~ Did you mean to spell “HMMs” this way?
+         |                                                                            ^~~~ Did you mean to spell `HMMs` this way?
      120 | to disambiguate parts of speech, when working to tag the Lancaster-Oslo-Bergen
 Suggest:
   - Replace with: “Hams”
@@ -363,7 +363,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      121 | Corpus of British English. HMMs involve counting cases (such as from the Brown
-         |                            ^~~~ Did you mean to spell “HMMs” this way?
+         |                            ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
   - Replace with: “Hams”
   - Replace with: “Ha's”
@@ -374,7 +374,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      129 | More advanced ("higher-order") HMMs learn the probabilities not only of pairs
-         |                                ^~~~ Did you mean to spell “HMMs” this way?
+         |                                ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
   - Replace with: “Hams”
   - Replace with: “Ha's”
@@ -400,7 +400,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      141 | Eugene Charniak points out in Statistical techniques for natural language
-         |        ^~~~~~~~ Did you mean to spell “Charniak” this way?
+         |        ^~~~~~~~ Did you mean to spell `Charniak` this way?
 Suggest:
   - Replace with: “Carnap”
   - Replace with: “Chadian”
@@ -434,7 +434,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      153 | HMMs underlie the functioning of stochastic taggers and are used in various
-         | ^~~~ Did you mean to spell “HMMs” this way?
+         | ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
   - Replace with: “Hams”
   - Replace with: “Ha's”
@@ -445,7 +445,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      159 | In 1987, Steven DeRose and Kenneth W. Church independently developed dynamic
-         |                 ^~~~~~ Did you mean to spell “DeRose” this way?
+         |                 ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
   - Replace with: “Defoe”
@@ -456,7 +456,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      159 | In 1987, Steven DeRose and Kenneth W. Church independently developed dynamic
-         |                                    ^~ Did you mean to spell “W.” this way?
+         |                                    ^~ Did you mean to spell `W.` this way?
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
@@ -468,7 +468,7 @@ Lint:    Spelling (63 priority)
 Message: |
      160 | programming algorithms to solve the same problem in vastly less time. Their
      161 | methods were similar to the Viterbi algorithm known for some time in other
-         |                             ^~~~~~~ Did you mean to spell “Viterbi” this way?
+         |                             ^~~~~~~ Did you mean to spell `Viterbi` this way?
 Suggest:
   - Replace with: “Vite's”
   - Replace with: “Verdi”
@@ -479,7 +479,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      162 | fields. DeRose used a table of pairs, while Church used a table of triples and a
-         |         ^~~~~~ Did you mean to spell “DeRose” this way?
+         |         ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
   - Replace with: “Defoe”
@@ -503,7 +503,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      165 | larger corpus). Both methods achieved an accuracy of over 95%. DeRose's 1990
-         |                                                                ^~~~~~~~ Did you mean to spell “DeRose's” this way?
+         |                                                                ^~~~~~~~ Did you mean to spell `DeRose's` this way?
      166 | dissertation at Brown University included analyses of the specific error types,
 Suggest:
   - Replace with: “Defoe's”
@@ -516,7 +516,7 @@ Lint:    Spelling (63 priority)
 Message: |
      173 | levels of linguistic analysis: syntax, morphology, semantics, and so on. CLAWS,
      174 | DeRose's and Church's methods did fail for some of the known cases where
-         | ^~~~~~~~ Did you mean to spell “DeRose's” this way?
+         | ^~~~~~~~ Did you mean to spell `DeRose's` this way?
 Suggest:
   - Replace with: “Defoe's”
   - Replace with: “Denise's”
@@ -542,7 +542,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      186 | "unsupervised" tagging. Unsupervised tagging techniques use an untagged corpus
-         |                                                                ^~~~~~~~ Did you mean to spell “untagged” this way?
+         |                                                                ^~~~~~~~ Did you mean to spell `untagged` this way?
      187 | for their training data and produce the tagset by induction. That is, they
 Suggest:
   - Replace with: “untapped”
@@ -555,7 +555,7 @@ Lint:    Spelling (63 priority)
 Message: |
      186 | "unsupervised" tagging. Unsupervised tagging techniques use an untagged corpus
      187 | for their training data and produce the tagset by induction. That is, they
-         |                                         ^~~~~~ Did you mean to spell “tagset” this way?
+         |                                         ^~~~~~ Did you mean to spell `tagset` this way?
 Suggest:
   - Replace with: “tablet”
   - Replace with: “tagged”
@@ -566,7 +566,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      200 | Some current major algorithms for part-of-speech tagging include the Viterbi
-         |                                                                      ^~~~~~~ Did you mean to spell “Viterbi” this way?
+         |                                                                      ^~~~~~~ Did you mean to spell `Viterbi` this way?
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also
 Suggest:
   - Replace with: “Vite's”
@@ -578,7 +578,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also
-         |                                                           ^~~~~ Did you mean to spell “Welch” this way?
+         |                                                           ^~~~~ Did you mean to spell `Welch` this way?
      202 | known as the forward-backward algorithm). Hidden Markov model and visible Markov
 Suggest:
   - Replace with: “Welsh”
@@ -590,7 +590,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      203 | model taggers can both be implemented using the Viterbi algorithm. The
-         |                                                 ^~~~~~~ Did you mean to spell “Viterbi” this way?
+         |                                                 ^~~~~~~ Did you mean to spell `Viterbi` this way?
 Suggest:
   - Replace with: “Vite's”
   - Replace with: “Verdi”
@@ -601,7 +601,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      207 | Many machine learning methods have also been applied to the problem of POS
-         |                                                                        ^~~ Did you mean to spell “POS” this way?
+         |                                                                        ^~~ Did you mean to spell `POS` this way?
      208 | tagging. Methods such as SVM, maximum entropy classifier, perceptron, and
 Suggest:
   - Replace with: “PBS”
@@ -613,7 +613,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      208 | tagging. Methods such as SVM, maximum entropy classifier, perceptron, and
-         |                          ^~~ Did you mean to spell “SVM” this way?
+         |                          ^~~ Did you mean to spell `SVM` this way?
 Suggest:
   - Replace with: “Sim”
   - Replace with: “Sam”
@@ -624,7 +624,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      213 | Wiki. This comparison uses the Penn tag set on some of the Penn Treebank data,
-         |                                                                 ^~~~~~~~ Did you mean to spell “Treebank” this way?
+         |                                                                 ^~~~~~~~ Did you mean to spell `Treebank` this way?
      214 | so the results are directly comparable. However, many significant taggers are
 Suggest:
   - Replace with: “Freeman”

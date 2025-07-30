@@ -1,7 +1,7 @@
 Lint:    Spelling (63 priority)
 Message: |
       45 | Wilhelm Schickard designed and constructed the first working mechanical
-         |         ^~~~~~~~~ Did you mean “Schick”?
+         |         ^~~~~~~~~ Did you mean `Schick`?
 Suggest:
   - Replace with: “Schick”
 
@@ -10,7 +10,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       46 | calculator in 1623. In 1673, Gottfried Leibniz demonstrated a digital mechanical
-         |                              ^~~~~~~~~ Did you mean to spell “Gottfried” this way?
+         |                              ^~~~~~~~~ Did you mean to spell `Gottfried` this way?
 Suggest:
   - Replace with: “Lotteries”
   - Replace with: “Notified”
@@ -22,7 +22,7 @@ Lint:    Spelling (63 priority)
 Message: |
       46 | calculator in 1623. In 1673, Gottfried Leibniz demonstrated a digital mechanical
       47 | calculator, called the Stepped Reckoner. Leibniz may be considered the first
-         |                                ^~~~~~~~ Did you mean to spell “Reckoner” this way?
+         |                                ^~~~~~~~ Did you mean to spell `Reckoner` this way?
 Suggest:
   - Replace with: “Rickover”
   - Replace with: “Reckoned”
@@ -34,7 +34,7 @@ Lint:    Spelling (63 priority)
 Message: |
       49 | including the fact that he documented the binary number system. In 1820, Thomas
       50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
-         | ^~ Did you mean to spell “de” this way?
+         | ^~ Did you mean to spell `de` this way?
 Suggest:
   - Replace with: “d”
   - Replace with: “db”
@@ -46,7 +46,7 @@ Lint:    Spelling (63 priority)
 Message: |
       49 | including the fact that he documented the binary number system. In 1820, Thomas
       50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
-         |    ^~~~~~ Did you mean to spell “Colmar” this way?
+         |    ^~~~~~ Did you mean to spell `Colmar` this way?
 Suggest:
   - Replace with: “Collar”
   - Replace with: “Colemak”
@@ -58,7 +58,7 @@ Lint:    Spelling (63 priority)
 Message: |
       50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
       51 | his simplified arithmometer, the first calculating machine strong enough and
-         |                ^~~~~~~~~~~~ Did you mean to spell “arithmometer” this way?
+         |                ^~~~~~~~~~~~ Did you mean to spell `arithmometer` this way?
 Suggest:
   - Replace with: “arithmetic”
   - Replace with: “anemometer”
@@ -81,7 +81,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
       65 | Following Babbage, although unaware of his earlier work, Percy Ludgate in 1909
-         |                                                                ^~~~~~~ Did you mean to spell “Ludgate” this way?
+         |                                                                ^~~~~~~ Did you mean to spell `Ludgate` this way?
       66 | published the 2nd of the only two designs for mechanical analytical engines in
 Suggest:
   - Replace with: “Luddite”
@@ -92,7 +92,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       67 | history. In 1914, the Spanish engineer Leonardo Torres Quevedo published his
-         |                                                        ^~~~~~~ Did you mean “Acevedo”?
+         |                                                        ^~~~~~~ Did you mean `Acevedo`?
       68 | Essays on Automatics, and designed, inspired by Babbage, a theoretical
 Suggest:
   - Replace with: “Acevedo”
@@ -103,14 +103,14 @@ Lint:    Spelling (63 priority)
 Message: |
       68 | Essays on Automatics, and designed, inspired by Babbage, a theoretical
       69 | electromechanical calculating machine which was to be controlled by a read-only
-         | ^~~~~~~~~~~~~~~~~ Did you mean to spell “electromechanical” this way?
+         | ^~~~~~~~~~~~~~~~~ Did you mean to spell `electromechanical` this way?
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
       71 | 1920, to celebrate the 100th anniversary of the invention of the arithmometer,
-         |                                                                  ^~~~~~~~~~~~ Did you mean to spell “arithmometer” this way?
+         |                                                                  ^~~~~~~~~~~~ Did you mean to spell `arithmometer` this way?
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
 Suggest:
   - Replace with: “arithmetic”
@@ -122,7 +122,7 @@ Lint:    Spelling (63 priority)
 Message: |
       71 | 1920, to celebrate the 100th anniversary of the invention of the arithmometer,
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
-         |                               ^~~~~~~~~~~~~~~~~ Did you mean to spell “Electromechanical” this way?
+         |                               ^~~~~~~~~~~~~~~~~ Did you mean to spell `Electromechanical` this way?
       73 | demonstrated the feasibility of an electromechanical analytical engine, on which
 
 
@@ -130,7 +130,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
-         |                                                 ^~~~~~~~~~~~ Did you mean to spell “Arithmometer” this way?
+         |                                                 ^~~~~~~~~~~~ Did you mean to spell `Arithmometer` this way?
       73 | demonstrated the feasibility of an electromechanical analytical engine, on which
 
 
@@ -139,7 +139,7 @@ Lint:    Spelling (63 priority)
 Message: |
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
       73 | demonstrated the feasibility of an electromechanical analytical engine, on which
-         |                                    ^~~~~~~~~~~~~~~~~ Did you mean to spell “electromechanical” this way?
+         |                                    ^~~~~~~~~~~~~~~~~ Did you mean to spell `electromechanical` this way?
       74 | commands could be typed and the results printed automatically. In 1937, one
 
 
@@ -165,7 +165,7 @@ Lint:    Spelling (63 priority)
 Message: |
       77 | calculator business to develop his giant programmable calculator, the
       78 | ASCC/Harvard Mark I, based on Babbage's Analytical Engine, which itself used
-         | ^~~~ Did you mean to spell “ASCC” this way?
+         | ^~~~ Did you mean to spell `ASCC` this way?
 Suggest:
   - Replace with: “ABC”
   - Replace with: “ABCs”
@@ -177,7 +177,7 @@ Lint:    Spelling (63 priority)
 Message: |
       82 | During the 1940s, with the development of new and more powerful computing
       83 | machines such as the Atanasoff–Berry computer and ENIAC, the term computer came
-         |                      ^~~~~~~~~ Did you mean “Standoff”?
+         |                      ^~~~~~~~~ Did you mean `Standoff`?
 Suggest:
   - Replace with: “Standoff”
 
@@ -186,7 +186,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       83 | machines such as the Atanasoff–Berry computer and ENIAC, the term computer came
-         |                                                   ^~~~~ Did you mean to spell “ENIAC” this way?
+         |                                                   ^~~~~ Did you mean to spell `ENIAC` this way?
       84 | to refer to the machines rather than their human predecessors. As it became
 Suggest:
   - Replace with: “ENE's”
@@ -233,7 +233,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      105 | article in Communications of the ACM, in which Louis Fein argues for the
-         |                                                      ^~~~ Did you mean to spell “Fein” this way?
+         |                                                      ^~~~ Did you mean to spell `Fein` this way?
      106 | creation of a Graduate School in Computer Sciences analogous to the creation of
 Suggest:
   - Replace with: “Fern”
@@ -255,7 +255,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      110 | and those of others such as numerical analyst George Forsythe, were rewarded:
-         |                                                      ^~~~~~~~ Did you mean to spell “Forsythe” this way?
+         |                                                      ^~~~~~~~ Did you mean to spell `Forsythe` this way?
 Suggest:
   - Replace with: “Forster”
   - Replace with: “Forsythia”
@@ -267,7 +267,7 @@ Lint:    Spelling (63 priority)
 Message: |
      115 | computing science, to emphasize precisely that difference. Danish scientist
      116 | Peter Naur suggested the term datalogy, to reflect the fact that the scientific
-         |       ^~~~ Did you mean to spell “Naur” this way?
+         |       ^~~~ Did you mean to spell `Naur` this way?
 Suggest:
   - Replace with: “Nauru”
   - Replace with: “Nair”
@@ -279,7 +279,7 @@ Lint:    Spelling (63 priority)
 Message: |
      115 | computing science, to emphasize precisely that difference. Danish scientist
      116 | Peter Naur suggested the term datalogy, to reflect the fact that the scientific
-         |                               ^~~~~~~~ Did you mean to spell “datalogy” this way?
+         |                               ^~~~~~~~ Did you mean to spell `datalogy` this way?
 Suggest:
   - Replace with: “analogy”
   - Replace with: “catalog”
@@ -291,7 +291,7 @@ Lint:    Spelling (63 priority)
 Message: |
      118 | involving computers. The first scientific institution to use the term was the
      119 | Department of Datalogy at the University of Copenhagen, founded in 1969, with
-         |               ^~~~~~~~ Did you mean to spell “Datalogy” this way?
+         |               ^~~~~~~~ Did you mean to spell `Datalogy` this way?
 Suggest:
   - Replace with: “Analogy”
   - Replace with: “Catalog”
@@ -303,7 +303,7 @@ Lint:    Spelling (63 priority)
 Message: |
      119 | Department of Datalogy at the University of Copenhagen, founded in 1969, with
      120 | Peter Naur being the first professor in datalogy. The term is used mainly in the
-         |       ^~~~ Did you mean to spell “Naur” this way?
+         |       ^~~~ Did you mean to spell `Naur` this way?
 Suggest:
   - Replace with: “Nauru”
   - Replace with: “Nair”
@@ -315,7 +315,7 @@ Lint:    Spelling (63 priority)
 Message: |
      119 | Department of Datalogy at the University of Copenhagen, founded in 1969, with
      120 | Peter Naur being the first professor in datalogy. The term is used mainly in the
-         |                                         ^~~~~~~~ Did you mean to spell “datalogy” this way?
+         |                                         ^~~~~~~~ Did you mean to spell `datalogy` this way?
 Suggest:
   - Replace with: “analogy”
   - Replace with: “catalog”
@@ -326,7 +326,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      121 | Scandinavian countries. An alternative term, also proposed by Naur, is data
-         |                                                               ^~~~ Did you mean to spell “Naur” this way?
+         |                                                               ^~~~ Did you mean to spell `Naur` this way?
      122 | science; this is now used for a multi-disciplinary field of data analysis,
 Suggest:
   - Replace with: “Nauru”
@@ -339,7 +339,7 @@ Lint:    Spelling (63 priority)
 Message: |
      126 | field of computing were suggested (albeit facetiously) in the Communications of
      127 | the ACM—turingineer, turologist, flow-charts-man, applied meta-mathematician,
-         |         ^~~~~~~~~~~ Did you mean to spell “turingineer” this way?
+         |         ^~~~~~~~~~~ Did you mean to spell `turingineer` this way?
 Suggest:
   - Replace with: “engineer”
   - Replace with: “springier”
@@ -351,7 +351,7 @@ Lint:    Spelling (63 priority)
 Message: |
      126 | field of computing were suggested (albeit facetiously) in the Communications of
      127 | the ACM—turingineer, turologist, flow-charts-man, applied meta-mathematician,
-         |                      ^~~~~~~~~~ Did you mean to spell “turologist” this way?
+         |                      ^~~~~~~~~~ Did you mean to spell `turologist` this way?
 Suggest:
   - Replace with: “urologist”
   - Replace with: “theologist”
@@ -363,7 +363,7 @@ Lint:    Spelling (63 priority)
 Message: |
      127 | the ACM—turingineer, turologist, flow-charts-man, applied meta-mathematician,
      128 | and applied epistemologist. Three months later in the same journal, comptologist
-         |             ^~~~~~~~~~~~~~ Did you mean to spell “epistemologist” this way?
+         |             ^~~~~~~~~~~~~~ Did you mean to spell `epistemologist` this way?
 Suggest:
   - Replace with: “epistemological”
   - Replace with: “epistemology”
@@ -374,7 +374,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      128 | and applied epistemologist. Three months later in the same journal, comptologist
-         |                                                                     ^~~~~~~~~~~~ Did you mean “cosmetologist”?
+         |                                                                     ^~~~~~~~~~~~ Did you mean `cosmetologist`?
      129 | was suggested, followed next year by hypologist. The term computics has also
 Suggest:
   - Replace with: “cosmetologist”
@@ -385,7 +385,7 @@ Lint:    Spelling (63 priority)
 Message: |
      128 | and applied epistemologist. Three months later in the same journal, comptologist
      129 | was suggested, followed next year by hypologist. The term computics has also
-         |                                      ^~~~~~~~~~ Did you mean to spell “hypologist” this way?
+         |                                      ^~~~~~~~~~ Did you mean to spell `hypologist` this way?
 Suggest:
   - Replace with: “horologist”
   - Replace with: “hydrologist”
@@ -396,7 +396,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      129 | was suggested, followed next year by hypologist. The term computics has also
-         |                                                           ^~~~~~~~~ Did you mean to spell “computics” this way?
+         |                                                           ^~~~~~~~~ Did you mean to spell `computics` this way?
      130 | been suggested. In Europe, terms derived from contracted translations of the
 Suggest:
   - Replace with: “computers”
@@ -425,7 +425,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
-         |                                           ^~~~~~~~~~~~ Did you mean “information”?
+         |                                           ^~~~~~~~~~~~ Did you mean `information`?
      132 | or "information and mathematics" are often used, e.g. informatique (French),
 Suggest:
   - Replace with: “information”
@@ -435,7 +435,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
-         |                                                        ^~~~~~~~~~ Did you mean to spell “automatica” this way?
+         |                                                        ^~~~~~~~~~ Did you mean to spell `automatica` this way?
      132 | or "information and mathematics" are often used, e.g. informatique (French),
 Suggest:
   - Replace with: “automatic”
@@ -447,7 +447,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      132 | or "information and mathematics" are often used, e.g. informatique (French),
-         |                                                       ^~~~~~~~~~~~ Did you mean “informative”?
+         |                                                       ^~~~~~~~~~~~ Did you mean `informative`?
      133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
 Suggest:
   - Replace with: “informative”
@@ -458,7 +458,7 @@ Lint:    Spelling (63 priority)
 Message: |
      132 | or "information and mathematics" are often used, e.g. informatique (French),
      133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
-         | ^~~~~~~~~~ Did you mean to spell “Informatik” this way?
+         | ^~~~~~~~~~ Did you mean to spell `Informatik` this way?
 Suggest:
   - Replace with: “Informatics”
   - Replace with: “Information”
@@ -470,7 +470,7 @@ Lint:    Spelling (63 priority)
 Message: |
      132 | or "information and mathematics" are often used, e.g. informatique (French),
      133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
-         |                      ^~~~~~~~~~~ Did you mean to spell “informatica” this way?
+         |                      ^~~~~~~~~~~ Did you mean to spell `informatica` this way?
 Suggest:
   - Replace with: “informatics”
   - Replace with: “information”
@@ -481,7 +481,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
-         |                                                    ^~~~~~~~~~~ Did you mean “informatics”?
+         |                                                    ^~~~~~~~~~~ Did you mean `informatics`?
      134 | Portuguese), informatika (Slavic languages and Hungarian) or pliroforiki
 Suggest:
   - Replace with: “informatics”
@@ -492,7 +492,7 @@ Lint:    Spelling (63 priority)
 Message: |
      133 | Informatik (German), informatica (Italian, Dutch), informática (Spanish,
      134 | Portuguese), informatika (Slavic languages and Hungarian) or pliroforiki
-         |              ^~~~~~~~~~~ Did you mean to spell “informatika” this way?
+         |              ^~~~~~~~~~~ Did you mean to spell `informatika` this way?
 Suggest:
   - Replace with: “informatics”
   - Replace with: “information”
@@ -503,7 +503,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      134 | Portuguese), informatika (Slavic languages and Hungarian) or pliroforiki
-         |                                                              ^~~~~~~~~~~ Did you mean to spell “pliroforiki” this way?
+         |                                                              ^~~~~~~~~~~ Did you mean to spell `pliroforiki` this way?
      135 | (πληροφορική, which means informatics) in Greek. Similar words have also been
 
 
@@ -511,7 +511,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      137 | "In the U.S., however, informatics is linked with applied computing, or
-         |         ^~~~ Did you mean to spell “U.S.” this way?
+         |         ^~~~ Did you mean to spell `U.S.` this way?
 Suggest:
   - Replace with: “UBS”
   - Replace with: “USA”
@@ -523,7 +523,7 @@ Lint:    Spelling (63 priority)
 Message: |
      140 | A folkloric quotation, often attributed to—but almost certainly not first
      141 | formulated by—Edsger Dijkstra, states that "computer science is no more about
-         |               ^~~~~~ Did you mean to spell “Edsger” this way?
+         |               ^~~~~~ Did you mean to spell `Edsger` this way?
 Suggest:
   - Replace with: “Edger”
   - Replace with: “Easter”
@@ -549,7 +549,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
-         |                                                       ^~~~~ Did you mean to spell “Gödel” this way?
+         |                                                       ^~~~~ Did you mean to spell `Gödel` this way?
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
 Suggest:
   - Replace with: “Godel”
@@ -562,7 +562,7 @@ Lint:    Spelling (63 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
-         | ^~~ Did you mean to spell “von” this way?
+         | ^~~ Did you mean to spell `von` this way?
 Suggest:
   - Replace with: “van”
   - Replace with: “vol”
@@ -574,7 +574,7 @@ Lint:    Spelling (63 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
-         |     ^~~~~~~ Did you mean to spell “Neumann” this way?
+         |     ^~~~~~~ Did you mean to spell `Neumann` this way?
 Suggest:
   - Replace with: “Newman”
   - Replace with: “Newman's”
@@ -586,7 +586,7 @@ Lint:    Spelling (63 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
-         |              ^~~~~ Did you mean to spell “Rózsa” this way?
+         |              ^~~~~ Did you mean to spell `Rózsa` this way?
 Suggest:
   - Replace with: “Rosa”
   - Replace with: “R's”
@@ -598,7 +598,7 @@ Lint:    Spelling (63 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
-         |                    ^~~~~ Did you mean to spell “Péter” this way?
+         |                    ^~~~~ Did you mean to spell `Péter` this way?
 Suggest:
   - Replace with: “Peter”
   - Replace with: “Patel”
@@ -636,7 +636,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      162 | "software engineering" means, and how computer science is defined. David Parnas,
-         |                                                                          ^~~~~~ Did you mean to spell “Parnas” this way?
+         |                                                                          ^~~~~~ Did you mean to spell `Parnas` this way?
      163 | taking a cue from the relationship between other engineering and science
 Suggest:
   - Replace with: “Parana's”
@@ -649,7 +649,7 @@ Lint:    Spelling (63 priority)
 Message: |
      181 | computer science is a discipline of science, mathematics, or engineering. Allen
      182 | Newell and Herbert A. Simon argued in 1975,
-         | ^~~~~~ Did you mean to spell “Newell” this way?
+         | ^~~~~~ Did you mean to spell `Newell` this way?
 Suggest:
   - Replace with: “Newels”
   - Replace with: “Jewell”
@@ -661,7 +661,7 @@ Lint:    Spelling (63 priority)
 Message: |
      181 | computer science is a discipline of science, mathematics, or engineering. Allen
      182 | Newell and Herbert A. Simon argued in 1975,
-         |                    ^~ Did you mean to spell “A.” this way?
+         |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
   - Replace with: “Ax”
   - Replace with: “A”
@@ -702,7 +702,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
-         |                     ^~~~~~ Did you mean to spell “Edsger” this way?
+         |                     ^~~~~~ Did you mean to spell `Edsger` this way?
 Suggest:
   - Replace with: “Edger”
   - Replace with: “Easter”
@@ -713,7 +713,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
-         |                            ^~ Did you mean to spell “W.” this way?
+         |                            ^~ Did you mean to spell `W.` this way?
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
@@ -724,7 +724,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      207 | Computer scientists Edsger W. Dijkstra and Tony Hoare regard instructions for
-         |                                                 ^~~~~ Did you mean to spell “Hoare” this way?
+         |                                                 ^~~~~ Did you mean to spell `Hoare` this way?
      208 | computer programs as mathematical sentences and interpret formal semantics for
 Suggest:
   - Replace with: “Hare”
@@ -736,7 +736,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      214 | separate paradigms in computer science. Peter Wegner argued that those paradigms
-         |                                               ^~~~~~ Did you mean to spell “Wegner” this way?
+         |                                               ^~~~~~ Did you mean to spell `Wegner` this way?
      215 | are science, technology, and mathematics. Peter Denning's working group argued
 Suggest:
   - Replace with: “Wagner”
@@ -748,7 +748,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      215 | are science, technology, and mathematics. Peter Denning's working group argued
-         |                                                 ^~~~~~~~~ Did you mean to spell “Denning's” this way?
+         |                                                 ^~~~~~~~~ Did you mean to spell `Denning's` this way?
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
 Suggest:
   - Replace with: “Deming's”
@@ -760,7 +760,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
-         |                                                           ^~~~~ Did you mean to spell “Amnon” this way?
+         |                                                           ^~~~~ Did you mean to spell `Amnon` this way?
 Suggest:
   - Replace with: “Amnion”
   - Replace with: “Anon”
@@ -792,7 +792,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
-         |                                                                 ^~ Did you mean to spell “H.” this way?
+         |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
   - Replace with: “Hi”
   - Replace with: “H”
@@ -803,7 +803,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      231 | implementing computing systems in hardware and software. CSAB, formerly called
-         |                                                          ^~~~ Did you mean to spell “CSAB” this way?
+         |                                                          ^~~~ Did you mean to spell `CSAB` this way?
      232 | Computing Sciences Accreditation Board—which is made up of representatives of
 Suggest:
   - Replace with: “Cab”
@@ -857,7 +857,7 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      237 | In addition to these four areas, CSAB also identifies fields such as software
-         |                                  ^~~~ Did you mean to spell “CSAB” this way?
+         |                                  ^~~~ Did you mean to spell `CSAB` this way?
 Suggest:
   - Replace with: “Cab”
   - Replace with: “CAI”
@@ -868,7 +868,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      252 | According to Peter Denning, the fundamental question underlying computer science
-         |                    ^~~~~~~ Did you mean to spell “Denning” this way?
+         |                    ^~~~~~~ Did you mean to spell `Denning` this way?
 Suggest:
   - Replace with: “Denying”
   - Replace with: “Donning”
@@ -880,7 +880,7 @@ Lint:    Spelling (63 priority)
 Message: |
      255 | are required to perform those computations. In an effort to answer the first
      256 | question, computability theory examines which computational problems are
-         |           ^~~~~~~~~~~~~ Did you mean to spell “computability” this way?
+         |           ^~~~~~~~~~~~~ Did you mean to spell `computability` this way?
 Suggest:
   - Replace with: “compatibility”
   - Replace with: “comparability”
@@ -890,7 +890,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
-         |                ^~ Did you mean to spell “NP” this way?
+         |                ^~ Did you mean to spell `NP` this way?
 Suggest:
   - Replace with: “N”
   - Replace with: “Nap”
@@ -973,7 +973,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      346 | Human–computer interaction (HCI) is the field of study and research concerned
-         |                             ^~~ Did you mean to spell “HCI” this way?
+         |                             ^~~ Did you mean to spell `HCI` this way?
 Suggest:
   - Replace with: “Hi”
   - Replace with: “CI”
@@ -984,7 +984,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      348 | interaction between humans and computer interfaces. HCI has several subfields
-         |                                                     ^~~ Did you mean to spell “HCI” this way?
+         |                                                     ^~~ Did you mean to spell `HCI` this way?
      349 | that focus on the relationship between emotions, social behavior and brain
 Suggest:
   - Replace with: “Hi”
@@ -996,7 +996,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      371 | semiotics, electrical engineering, philosophy of mind, neurophysiology, and
-         |                                                        ^~~~~~~~~~~~~~~ Did you mean “neurobiology”?
+         |                                                        ^~~~~~~~~~~~~~~ Did you mean `neurobiology`?
      372 | social intelligence. AI is associated in the popular mind with robotic
 Suggest:
   - Replace with: “neurobiology”
@@ -1006,7 +1006,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
-         |                                                                              ^~ Did you mean to spell “R.” this way?
+         |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
   - Replace with: “Rm”
   - Replace with: “R”
@@ -1017,7 +1017,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
-         |                       ^~ Did you mean to spell “P.” this way?
+         |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
   - Replace with: “Pt”
   - Replace with: “Pa”
@@ -1029,7 +1029,7 @@ Lint:    Spelling (63 priority)
 Message: |
      401 | mathematical models have been developed for general concurrent computation
      402 | including Petri nets, process calculi and the parallel random access machine
-         |           ^~~~~ Did you mean to spell “Petri” this way?
+         |           ^~~~~ Did you mean to spell `Petri` this way?
 Suggest:
   - Replace with: “Petra”
   - Replace with: “Patti”
@@ -1059,7 +1059,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      436 | The philosopher of computing Bill Rapaport noted three Great Insights of
-         |                                   ^~~~~~~~ Did you mean to spell “Rapaport” this way?
+         |                                   ^~~~~~~~ Did you mean to spell `Rapaport` this way?
      437 | Computer Science:
 Suggest:
   - Replace with: “Rapport”
@@ -1070,7 +1070,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      439 | - Gottfried Wilhelm Leibniz's, George Boole's, Alan Turing's, Claude Shannon's,
-         |   ^~~~~~~~~ Did you mean to spell “Gottfried” this way?
+         |   ^~~~~~~~~ Did you mean to spell `Gottfried` this way?
 Suggest:
   - Replace with: “Lotteries”
   - Replace with: “Notified”
@@ -1082,7 +1082,7 @@ Lint:    Spelling (63 priority)
 Message: |
      441 |   deal with in order to represent "anything".[note 4]
      442 |   > All the information about any computable problem can be represented using
-         |                                   ^~~~~~~~~~ Did you mean to spell “computable” this way?
+         |                                   ^~~~~~~~~~ Did you mean to spell `computable` this way?
      443 |   > only 0 and 1 (or any other bistable pair that can flip-flop between two
 Suggest:
   - Replace with: “commutable”
@@ -1095,7 +1095,7 @@ Lint:    Spelling (63 priority)
 Message: |
      442 |   > All the information about any computable problem can be represented using
      443 |   > only 0 and 1 (or any other bistable pair that can flip-flop between two
-         |                                ^~~~~~~~ Did you mean to spell “bistable” this way?
+         |                                ^~~~~~~~ Did you mean to spell `bistable` this way?
 Suggest:
   - Replace with: “beatable”
   - Replace with: “biddable”
@@ -1106,7 +1106,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
-         |                                                                  ^~ Did you mean to spell “de” this way?
+         |                                                                  ^~ Did you mean to spell `de` this way?
      445 |   > "high-voltage/low-voltage", etc.).
 Suggest:
   - Replace with: “d”
@@ -1127,7 +1127,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
-         |   ^~~~~~~ Did you mean to spell “Corrado” this way?
+         |   ^~~~~~~ Did you mean to spell `Corrado` this way?
 Suggest:
   - Replace with: “Colorado”
   - Replace with: “Conrad”
@@ -1138,7 +1138,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
-         |           ^~~~ Did you mean to spell “Böhm” this way?
+         |           ^~~~ Did you mean to spell `Böhm` this way?
 Suggest:
   - Replace with: “Baum”
   - Replace with: “Bohr”
@@ -1149,7 +1149,7 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
-         |                             ^~~~~~~~~~ Did you mean to spell “Jacopini's” this way?
+         |                             ^~~~~~~~~~ Did you mean to spell `Jacopini's` this way?
 Suggest:
   - Replace with: “Jacobin's”
   - Replace with: “Jacobi's”
@@ -1178,7 +1178,7 @@ Lint:    Spelling (63 priority)
 Message: |
      467 |   - repetition: WHILE such-and-such is the case, DO this. The three rules of
      468 |     Boehm's and Jacopini's insight can be further simplified with the use of
-         |     ^~~~~~~ Did you mean to spell “Boehm's” this way?
+         |     ^~~~~~~ Did you mean to spell `Boehm's` this way?
 Suggest:
   - Replace with: “Boer's”
   - Replace with: “Bohr's”
@@ -1190,7 +1190,7 @@ Lint:    Spelling (63 priority)
 Message: |
      467 |   - repetition: WHILE such-and-such is the case, DO this. The three rules of
      468 |     Boehm's and Jacopini's insight can be further simplified with the use of
-         |                 ^~~~~~~~~~ Did you mean to spell “Jacopini's” this way?
+         |                 ^~~~~~~~~~ Did you mean to spell `Jacopini's` this way?
 Suggest:
   - Replace with: “Jacobin's”
   - Replace with: “Jacobi's”
@@ -1201,7 +1201,7 @@ Lint:    Spelling (63 priority)
 Message: |
      468 |     Boehm's and Jacopini's insight can be further simplified with the use of
      469 |     goto (which means it is more elementary than structured programming).
-         |     ^~~~ Did you mean to spell “goto” this way?
+         |     ^~~~ Did you mean to spell `goto` this way?
 Suggest:
   - Replace with: “got”
   - Replace with: “goo”

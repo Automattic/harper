@@ -132,6 +132,14 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(descriptions).toBeTypeOf('object');
 	});
 
+	test(`${linterName} can get rule descriptions in HTML.`, async () => {
+		const linter = new Linter({ binary });
+
+		const descriptions = await linter.getLintDescriptionsHTML();
+
+		expect(descriptions).toBeTypeOf('object');
+	});
+
 	test(`${linterName} rule descriptions are not empty`, async () => {
 		const linter = new Linter({ binary });
 
