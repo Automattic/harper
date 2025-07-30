@@ -27,7 +27,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
       21 | be late!” (when she thought it over afterwards, it occurred to her that she
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       22 | ought to have wondered at this, but at the time it all seemed quite natural);
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       23 | but when the Rabbit actually took a watch out of its waistcoat-pocket, and
@@ -60,7 +60,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       39 | next. First, she tried to look down and make out what she was coming to, but it
-         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       40 | was too dark to see anything; then she looked at the sides of the well, and
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       41 | noticed that they were filled with cupboards and book-shelves; here and there
@@ -73,7 +73,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
       42 | she saw maps and pictures hung upon pegs. She took down a jar from one of the
-         |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       43 | shelves as she passed; it was labelled “ORANGE MARMALADE”, but to her great
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       44 | disappointment it was empty: she did not like to drop the jar for fear of
@@ -111,7 +111,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
       55 | centre of the earth. Let me see: that would be four thousand miles down, I
-         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       56 | think—” (for, you see, Alice had learnt several things of this sort in her
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       57 | lessons in the schoolroom, and though this was not a very good opportunity for
@@ -243,7 +243,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      104 | open any of them. However, on the second time round, she came upon a low curtain
-         |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      105 | she had not noticed before, and behind it was a little door about fifteen inches
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      106 | high: she tried the little golden key in the lock, and to her great delight it
@@ -256,7 +256,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      111 | loveliest garden you ever saw. How she longed to get out of that dark hall, and
-         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      112 | wander about among those beds of bright flowers and those cool fountains, but
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      113 | she could not even get her head through the doorway; “and even if my head would
@@ -288,7 +288,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      128 | to do that in a hurry. “No, I’ll look first,” she said, “and see whether it’s
-         |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      129 | marked ‘poison’ or not”; for she had read several nice little histories about
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      130 | children who had got burnt, and eaten up by wild beasts and other unpleasant
@@ -334,7 +334,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      146 | door into that lovely garden. First, however, she waited for a few minutes to
-         |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      147 | see if she was going to shrink any further: she felt a little nervous about
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      148 | this; “for it might end, you know,” said Alice to herself, “in my going out
@@ -354,10 +354,20 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+     154 | garden at once; but, alas for poor Alice! when she got to the door, she found
+         |                                           ^ This sentence does not start with a capital letter
+     155 | she had forgotten the little golden key, and when she went back to the table for
+Suggest:
+  - Replace with: “W”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      154 | garden at once; but, alas for poor Alice! when she got to the door, she found
-         |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      155 | she had forgotten the little golden key, and when she went back to the table for
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      156 | it, she found she could not possibly reach it: she could see it quite plainly
@@ -371,20 +381,10 @@ Message: |
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-     154 | garden at once; but, alas for poor Alice! when she got to the door, she found
-         |                                           ^ This sentence does not start with a capital letter
-     155 | she had forgotten the little golden key, and when she went back to the table for
-Suggest:
-  - Replace with: “W”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      162 | sharply; “I advise you to leave off this minute!” She generally gave herself
-         |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
      163 | very good advice, (though she very seldom followed it), and sometimes she
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      164 | scolded herself so severely as to bring tears into her eyes; and once she
@@ -411,7 +411,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      173 | beautifully marked in currants. “Well, I’ll eat it,” said Alice, “and if it
-         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      174 | makes me grow larger, I can reach the key; and if it makes me grow smaller, I
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      175 | can creep under the door; so either way I’ll get into the garden, and I don’t
@@ -424,9 +424,8 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      178 | She ate a little bit, and said anxiously to herself, “Which way? Which way?”,
-         |                                                                            ^~~
      179 | holding her hand on the top of her head to feel which way it was growing, and
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      180 | she was quite surprised to find that she remained the same size: to be sure,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      181 | this generally happens when one eats cake, but Alice had got so much into the
@@ -463,7 +462,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      194 | stockings for you now, dears? I’m sure I shan’t be able! I shall be a great deal
-         |                                                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                          ^~~~~~~~~~~~~~~~~~~~~~~~
      195 | too far off to trouble myself about you: you must manage the best way you
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      196 | can;—but I must be kind to them,” thought Alice, “or perhaps they won’t walk the
@@ -486,7 +485,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      227 | I’ve kept her waiting!” Alice felt so desperate that she was ready to ask help
-         |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      228 | of any one; so, when the Rabbit came near her, she began, in a low, timid voice,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      229 | “If you please, sir—” The Rabbit started violently, dropped the white kid gloves
@@ -520,7 +519,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      249 | Rome—no, that’s all wrong, I’m certain! I must have been changed for Mabel! I’ll
-         |                                                                            ^~~~~~
+         |                                                                             ^~~~~
      250 | try and say ‘How doth the little—’” and she crossed her hands on her lap as if
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      251 | she were saying lessons, and began to repeat it, but her voice sounded hoarse
@@ -532,7 +531,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      260 | “I’m sure those are not the right words,” said poor Alice, and her eyes filled
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      261 | with tears again as she went on, “I must be Mabel after all, and I shall have to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      262 | go and live in that poky little house, and have next to no toys to play with,
@@ -554,7 +553,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      273 | “How can I have done that?” she thought. “I must be growing small again.” She
-         |                                                                         ^~~~~~
+         |                                                                           ^~~~
      274 | got up and went to the table to measure herself by it, and found that, as nearly
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      275 | as she could guess, she was now about two feet high, and was going on shrinking
@@ -588,10 +587,8 @@ Suggest:
 
 Lint:    Readability (127 priority)
 Message: |
-     289 | into the sea, “and in that case I can go back by railway,” she said to herself.
-         |                                                                                ^
      290 | (Alice had been to the seaside once in her life, and had come to the general
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      291 | conclusion, that wherever you go to on the English coast you find a number of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      292 | bathing machines in the sea, some children digging in the sand with wooden
@@ -617,7 +614,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      311 | Mouse!” (Alice thought this must be the right way of speaking to a mouse: she
-         |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      312 | had never done such a thing before, but she remembered having seen in her
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      313 | brother’s Latin Grammar, “A mouse—of a mouse—to a mouse—a mouse—O mouse!”) The
@@ -661,7 +658,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      330 | cats if you could only see her. She is such a dear quiet thing,” Alice went on,
-         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      331 | half to herself, as she swam lazily about in the pool, “and she sits purring so
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      332 | nicely by the fire, licking her paws and washing her face—and she is such a nice
@@ -676,7 +673,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      346 | curly brown hair! And it’ll fetch things when you throw them, and it’ll sit up
-         |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      347 | and beg for its dinner, and all sorts of things—I can’t remember half of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      348 | them—and it belongs to a farmer, you know, and he says it’s so useful, it’s
@@ -689,7 +686,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      355 | talk about cats or dogs either, if you don’t like them!” When the Mouse heard
-         |                                                        ^~~~~~~~~~~~~~~~~~~~~~~
+         |                                                          ^~~~~~~~~~~~~~~~~~~~~
      356 | this, it turned round and swam slowly back to her: its face was quite pale (with
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      357 | passion, Alice thought), and it said in a low trembling voice, “Let us get to
@@ -738,10 +735,8 @@ Message: |
 
 Lint:    Readability (127 priority)
 Message: |
-     374 | herself talking familiarly with them, as if she had known them all her life.
-         |                                                                             ^
      375 | Indeed, she had quite a long argument with the Lory, who at last turned sulky,
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      376 | and would only say, “I am older than you, and must know better;” and this Alice
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      377 | would not allow without knowing how old it was, and, as the Lory positively
@@ -906,7 +901,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
-         |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      565 | of white kid gloves, and she very good-naturedly began hunting about for them,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      566 | but they were nowhere to be seen—everything seemed to have changed since her
@@ -990,7 +985,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      607 | Alas! it was too late to wish that! She went on growing, and growing, and very
-         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      608 | soon had to kneel down on the floor: in another minute there was not even room
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      609 | for this, and she tried the effect of lying down with one elbow against the
@@ -1016,7 +1011,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      643 | came a little pattering of feet on the stairs. Alice knew it was the Rabbit
-         |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      644 | coming to look for her, and she trembled till she shook the house, quite
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      645 | forgetting that she was now about a thousand times as large as the Rabbit, and
@@ -1029,7 +1024,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      655 | snatch in the air. She did not get hold of anything, but she heard a little
-         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      656 | shriek and a fall, and a crash of broken glass, from which she concluded that it
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      657 | was just possible it had fallen into a cucumber-frame, or something of the sort.
@@ -1211,7 +1206,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      755 | stretching out one paw, trying to touch her. “Poor little thing!” said Alice, in
-         |                                                                 ^~~~~~~~~~~~~~~~~
+         |                                                                   ^~~~~~~~~~~~~~~
      756 | a coaxing tone, and she tried hard to whistle to it; but she was terribly
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      757 | frightened all the time at the thought that it might be hungry, in which case it
@@ -1265,7 +1260,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      786 | the right thing to eat or drink under the circumstances. There was a large
-         |                                                         ^~~~~~~~~~~~~~~~~~~
+         |                                                          ^~~~~~~~~~~~~~~~~~
      787 | mushroom growing near her, about the same height as herself; and when she had
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      788 | looked under it, and on both sides of it, and behind it, it occurred to her that
@@ -1291,7 +1286,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      822 | “Well, perhaps you haven’t found it so yet,” said Alice; “but when you have to
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      823 | turn into a chrysalis—you will some day, you know—and then after that into a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      824 | butterfly, I should think you’ll feel it a little queer, won’t you?”
@@ -1344,7 +1339,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
      964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
-         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      965 | into alarm in another moment, when she found that her shoulders were nowhere to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      966 | be found: all she could see, when she looked down, was an immense length of
@@ -1380,7 +1375,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
      977 | about easily in any direction, like a serpent. She had just succeeded in curving
-         |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      978 | it down into a graceful zigzag, and was going to dive in among the leaves, which
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      979 | she found to be nothing but the tops of the trees under which she had been
@@ -1405,7 +1400,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1007 | “And just as I’d taken the highest tree in the wood,” continued the Pigeon,
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1008 | raising its voice to a shriek, “and just as I was thinking I should be free of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1009 | them at last, they must needs come wriggling down from the sky! Ugh, Serpent!”
@@ -1438,7 +1433,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1042 | to stop and untwist it. After a while she remembered that she still held the
-         |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1043 | pieces of mushroom in her hands, and she set to work very carefully, nibbling
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1044 | first at one and then at the other, and growing sometimes taller and sometimes
@@ -1503,7 +1498,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1165 | well to introduce some other subject of conversation. While she was trying to
-         |                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                       ^~~~~~~~~~~~~~~~~~~~~~~~
     1166 | fix on one, the cook took the cauldron of soup off the fire, and at once set to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1167 | work throwing everything within her reach at the Duchess and the baby—the
@@ -1572,7 +1567,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1220 | star-fish,” thought Alice. The poor little thing was snorting like a
-         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1221 | steam-engine when she caught it, and kept doubling itself up and straightening
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1222 | itself out again, so that altogether, for the first minute or two, it was as
@@ -1596,7 +1591,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1235 | what was the matter with it. There could be no doubt that it had a very turn-up
-         |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1236 | nose, much more like a snout than a real nose; also its eyes were getting
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1237 | extremely small for a baby: altogether Alice did not like the look of the thing
@@ -1609,7 +1604,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1254 | made a dreadfully ugly child: but it makes rather a handsome pig, I think.” And
-         |                                                                           ^~~~~~
+         |                                                                             ^~~~
     1255 | she began thinking over other children she knew, who might do very well as pigs,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1256 | and was just saying to herself, “if one only knew the right way to change them—”
@@ -1635,7 +1630,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1348 | like ears and the roof was thatched with fur. It was so large a house, that she
-         |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1349 | did not like to go nearer till she had nibbled some more of the lefthand bit of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1350 | mushroom, and raised herself to about two feet high: even then she walked up
@@ -1787,10 +1782,8 @@ Message: |
 
 Lint:    Readability (127 priority)
 Message: |
-    1662 | taking the little golden key, and unlocking the door that led into the garden.
-         |                                                                               ^
     1663 | Then she went to work nibbling at the mushroom (she had kept a piece of it in
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1664 | her pocket) till she was about a foot high: then she walked down the little
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1665 | passage: and then—she found herself at last in the beautiful garden, among the
@@ -1816,7 +1809,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1699 | Five and Seven said nothing, but looked at Two. Two began in a low voice, “Why
-         |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1700 | the fact is, you see, Miss, this here ought to have been a red rose-tree, and we
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1701 | put a white one in by mistake; and if the Queen was to find it out, we should
@@ -1879,7 +1872,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1737 | “And who are these?” said the Queen, pointing to the three gardeners who were
-         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1738 | lying round the rose-tree; for, you see, as they were lying on their faces, and
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1739 | the pattern on their backs was the same as the rest of the pack, she could not
@@ -1894,7 +1887,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1813 | got settled down in a minute or two, and the game began. Alice thought she had
-         |                                                         ^~~~~~~~~~~~~~~~~~~~~~~
+         |                                                          ^~~~~~~~~~~~~~~~~~~~~~
     1814 | never seen such a curious croquet-ground in her life; it was all ridges and
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1815 | furrows; the balls were live hedgehogs, the mallets live flamingoes, and the
@@ -1986,7 +1979,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1858 | “I don’t think they play at all fairly,” Alice began, in rather a complaining
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1859 | tone, “and they all quarrel so dreadfully one can’t hear oneself speak—and they
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1860 | don’t seem to have any rules in particular; at least, if there are, nobody
@@ -2026,7 +2019,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     1900 | she heard the Queen’s voice in the distance, screaming with passion. She had
-         |                                                                     ^~~~~~~~~
+         |                                                                      ^~~~~~~~
     1901 | already heard her sentence three of the players to be executed for having missed
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1902 | their turns, and she did not like the look of things at all, as the game was in
@@ -2124,7 +2117,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     1960 | “I won’t have any pepper in my kitchen at all. Soup does very well without—Maybe
-         |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1961 | it’s always pepper that makes people hot-tempered,” she went on, very much
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1962 | pleased at having found out a new kind of rule, “and vinegar that makes them
@@ -2206,7 +2199,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2021 | “I quite agree with you,” said the Duchess; “and the moral of that is—‘Be what
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2022 | you would seem to be’—or if you’d like it put more simply—‘Never imagine
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2023 | yourself not to be otherwise than what it might appear to others that what you
@@ -2263,7 +2256,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2069 | other players, and shouting “Off with his head!” or “Off with her head!” Those
-         |                                                                        ^~~~~~~~
+         |                                                                          ^~~~~~
     2070 | whom she sentenced were taken into custody by the soldiers, who of course had to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2071 | leave off being arches to do this, so that by the end of half an hour or so
@@ -2494,7 +2487,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2205 | “Well, there was Mystery,” the Mock Turtle replied, counting off the subjects on
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2206 | his flappers, “—Mystery, ancient and modern, with Seaography: then Drawling—the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2207 | Drawling-master was an old conger-eel, that used to come once a week: he taught
@@ -2594,7 +2587,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2252 | “You may not have lived much under the sea—” (“I haven’t,” said Alice)—“and
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2253 | perhaps you were never even introduced to a lobster—” (Alice began to say “I
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2254 | once tasted—” but checked herself hastily, and said “No, never”) “—so you can
@@ -2670,7 +2663,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2286 | “Back to land again, and that’s all the first figure,” said the Mock Turtle,
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2287 | suddenly dropping his voice; and the two creatures, who had been jumping about
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2288 | like mad things all this time, sat down again very sadly and quietly, and looked
@@ -2829,7 +2822,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2407 | wide, but she gained courage as she went on. Her listeners were perfectly quiet
-         |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2408 | till she got to the part about her repeating “You are old, Father William,” to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2409 | the Caterpillar, and the words all coming different, and then the Mock Turtle
@@ -2893,7 +2886,7 @@ Lint:    Readability (127 priority)
 Message: |
     2428 | >
     2429 | > (later editions continued as follows When the sands are all dry, he is gay as
-         |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2430 | > a lark, And will talk in contemptuous tones of the Shark, But, when the tide
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2431 | > rises and sharks are around, His voice has a timid and tremulous sound.)
@@ -3259,7 +3252,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     2511 | with a trumpet in one hand, and a scroll of parchment in the other. In the very
-         |                                                                    ^~~~~~~~~~~~~
+         |                                                                     ^~~~~~~~~~~~
     2512 | middle of the court was a table, with a large dish of tarts upon it: they looked
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2513 | so good, that it made Alice quite hungry to look at them—“I wish they’d get the
@@ -3326,7 +3319,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2553 | opportunity of taking it away. She did it so quickly that the poor little juror
-         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2554 | (it was Bill, the Lizard) could not make out at all what had become of it; so,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2555 | after hunting all about for it, he was obliged to write with one finger for the
@@ -3378,7 +3371,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     2639 | “I’m a poor man, your Majesty,” the Hatter began, in a trembling voice, “—and I
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2640 | hadn’t begun my tea—not above a week or so—and what with the bread-and-butter
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
     2641 | getting so thin—and the twinkling of the tea—”
@@ -3397,7 +3390,7 @@ Suggest:
 Lint:    Readability (127 priority)
 Message: |
     2722 | “Well, if I must, I must,” the King said, with a melancholy air, and, after
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2723 | folding his arms and frowning at the cook till his eyes were nearly out of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2724 | sight, he said in a deep voice, “What are tarts made of?”
@@ -3408,7 +3401,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     2747 | “Here!” cried Alice, quite forgetting in the flurry of the moment how large she
-         |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2748 | had grown in the last few minutes, and she jumped up in such a hurry that she
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2749 | tipped over the jury-box with the edge of her skirt, upsetting all the jurymen
@@ -3425,7 +3418,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     2754 | “Oh, I beg your pardon!” she exclaimed in a tone of great dismay, and began
-         |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2755 | picking them up again as quickly as she could, for the accident of the goldfish
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2756 | kept running in her head, and she had a vague sort of idea that they must be
@@ -3453,7 +3446,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     2907 | “All right, so far,” said the King, and he went on muttering over the verses to
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2908 | himself: “‘We know it to be true—’ that’s the jury, of course—‘I gave her one,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
     2909 | they gave him two—’ why, that must be what he did with the tarts, you know—”
@@ -3463,7 +3456,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     2918 | spoke. (The unfortunate little Bill had left off writing on his slate with one
-         |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2919 | finger, as he found it made no mark; but he now hastily began again, using the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2920 | ink, that was trickling down his face, as long as it lasted.)
@@ -3500,7 +3493,7 @@ Message: |
 Lint:    Readability (127 priority)
 Message: |
     2951 | “Oh, I’ve had such a curious dream!” said Alice, and she told her sister, as
-         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2952 | well as she could remember them, all these strange Adventures of hers that you
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2953 | have just been reading about; and when she had finished, her sister kissed her,
