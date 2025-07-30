@@ -62,6 +62,9 @@ export async function testBasicSuggestionTextarea(testPageUrl: string) {
 	test('Can apply basic suggestion.', async ({ page }) => {
 		await page.goto(testPageUrl);
 
+		await page.waitForTimeout(2000);
+		await page.reload();
+
 		const editor = getTextarea(page);
 		await replaceEditorContent(editor, 'This is an test');
 
@@ -79,6 +82,9 @@ export async function testBasicSuggestionTextarea(testPageUrl: string) {
 export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
 	test('Can ignore suggestion.', async ({ page }) => {
 		await page.goto(testPageUrl);
+
+		await page.waitForTimeout(2000);
+		await page.reload();
 
 		const editor = getTextarea(page);
 		await replaceEditorContent(editor, 'This is an test');

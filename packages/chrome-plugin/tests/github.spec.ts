@@ -17,6 +17,9 @@ testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
 test('Wraps correctly', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);
 
+	await page.waitForTimeout(2000);
+	await page.reload();
+
 	const editor = getTextarea(page);
 	await replaceEditorContent(
 		editor,
@@ -33,6 +36,9 @@ test('Wraps correctly', async ({ page }) => {
 
 test('Scrolls correctly', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);
+
+	await page.waitForTimeout(2000);
+	await page.reload();
 
 	const editor = getTextarea(page);
 	await replaceEditorContent(
