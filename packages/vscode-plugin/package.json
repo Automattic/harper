@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.51.0",
+	"version": "0.52.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -149,6 +149,12 @@
 					"default": true,
 					"description": "Finds and corrects common mistakes between 'a part' and 'apart'"
 				},
+				"harper.linters.AdjectiveDoubleDegree": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Finds adjectives that are used as double degrees (e.g. `more prettier`)."
+				},
 				"harper.linters.AdjectiveOfA": {
 					"scope": "resource",
 					"type": "boolean",
@@ -166,6 +172,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the missing article after `after while` or `after awhile`, forming `after a while`."
+				},
+				"harper.linters.AheadAnd": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `an` to `and` after `ahead`."
 				},
 				"harper.linters.AllOfASudden": {
 					"scope": "resource",
@@ -496,6 +508,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `case-sensitive` is correctly hyphenated."
+				},
+				"harper.linters.ChampAtTheBit": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `chomp at the bit` to the idiom `champ at the bit`, which has an equestrian origin referring to the way an anxious horse grinds its teeth against the metal part of the bridle."
 				},
 				"harper.linters.ChangeTack": {
 					"scope": "resource",
@@ -1277,6 +1295,12 @@
 					"default": true,
 					"description": "It's often hard to determine where the subject should go with the word `let`. This rule attempts to find common errors with redundancy and contractions that may lead to confusion for readers."
 				},
+				"harper.linters.LikeAsIf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects redundant `like as if` to `like` or `as if`."
+				},
 				"harper.linters.LikeThePlague": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1295,11 +1319,23 @@
 					"default": true,
 					"description": "This rule looks for run-on sentences, which can make your work harder to grok."
 				},
+				"harper.linters.LookingForwardTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule identifies instances where the phrase `looking forward to` is followed by a base form verb instead of the required gerund (verb + `-ing` form)."
+				},
 				"harper.linters.LowHangingFruit": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects non-standard variants of `low-hanging fruit`."
+				},
+				"harper.linters.MakeDoWith": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `make due` to `make do` when followed by `with`."
 				},
 				"harper.linters.Malaysia": {
 					"scope": "resource",
@@ -1366,6 +1402,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Detects `of` mistakenly used with `would`, `could`, `should`, etc."
+				},
+				"harper.linters.Months": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects months written with a lowercase first letter."
 				},
 				"harper.linters.Monumentous": {
 					"scope": "resource",
@@ -1545,7 +1587,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Detects the non‐idiomatic phrase `off course` and suggests the correct form `of course`."
+					"description": "Detects the common mistake `off course` and suggests the correct form `of course`."
 				},
 				"harper.linters.OffTheCuff": {
 					"scope": "resource",
@@ -1564,6 +1606,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `old wise tale` to `old wives' tale`, preserving the phrase’s meaning as an unfounded traditional belief."
+				},
+				"harper.linters.OnFloor": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule identifies incorrect uses of the prepositions `in` or `at` when referring to locations inside a building and recommends using `on the floor` instead."
 				},
 				"harper.linters.OnSecondThought": {
 					"scope": "resource",
@@ -2038,12 +2086,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the misuse of `then` to `than`."
-				},
-				"harper.linters.ThereIsAny": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Replaces `there any` with `there is any`."
 				},
 				"harper.linters.Therefore": {
 					"scope": "resource",

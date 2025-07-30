@@ -391,6 +391,44 @@ fn corrects_invests_into() {
     );
 }
 
+// MakeDoWith
+
+#[test]
+fn corrects_make_due_with() {
+    assert_suggestion_result(
+        "For now, I can make due with a bash script I have",
+        lint_group(),
+        "For now, I can make do with a bash script I have",
+    );
+}
+
+#[test]
+fn corrects_made_due_with() {
+    assert_suggestion_result(
+        "I made due with using actions.push for now but will try to do a codepen soon",
+        lint_group(),
+        "I made do with using actions.push for now but will try to do a codepen soon",
+    );
+}
+
+#[test]
+fn corrects_makes_due_with() {
+    assert_suggestion_result(
+        "but the code makes due with what is available",
+        lint_group(),
+        "but the code makes do with what is available",
+    );
+}
+
+#[test]
+fn corrects_making_due_with() {
+    assert_suggestion_result(
+        "I've been making due with the testMultiple script I wrote above.",
+        lint_group(),
+        "I've been making do with the testMultiple script I wrote above.",
+    );
+}
+
 // MootPoint
 
 // -point is mute-
@@ -715,6 +753,36 @@ fn detect_raises_the_question() {
         "However, this rises the question as to whether this test is conceptually sound.",
         lint_group(),
         "However, this raises the question as to whether this test is conceptually sound.",
+    );
+}
+
+// -raising the question-
+#[test]
+fn detect_raising_the_question() {
+    assert_suggestion_result(
+        "as soon as a infoHash query is performed, a Torrent file is retried, rising the question of:",
+        lint_group(),
+        "as soon as a infoHash query is performed, a Torrent file is retried, raising the question of:",
+    );
+}
+
+// -rose the question-
+#[test]
+fn detect_rose_the_question() {
+    assert_suggestion_result(
+        "Here is an example that rose the question at first: What works.",
+        lint_group(),
+        "Here is an example that raised the question at first: What works.",
+    );
+}
+
+// -risen the question-
+#[test]
+fn detect_risen_the_question() {
+    assert_suggestion_result(
+        "That has risen the question in my mind if it is still possible to embed your own Flash player on Facebook today?",
+        lint_group(),
+        "That has raised the question in my mind if it is still possible to embed your own Flash player on Facebook today?",
     );
 }
 
