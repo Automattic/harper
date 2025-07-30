@@ -27,6 +27,9 @@ use serde::Serialize;
 mod input;
 use input::Input;
 
+mod annotate_tokens;
+use annotate_tokens::{Annotation, AnnotationType};
+
 /// A debugging tool for the Harper grammar checker.
 #[derive(Debug, Parser)]
 #[command(version, about)]
@@ -68,6 +71,15 @@ enum Args {
         /// Include newlines in the output
         #[arg(short, long)]
         include_newlines: bool,
+    },
+    /// Parse a provided document and annotate its tokens.
+    AnnotateTokens {
+        /// The text or file you wish to parse. If not provided, it will be read from standard
+        /// input.
+        input: Option<Input>,
+        /// How the tokens should be annotated.
+        #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
+        annotation_type: AnnotationType,
     },
     /// Get the metadata associated with a particular word.
     Metadata { word: String },
@@ -267,6 +279,35 @@ fn main() -> anyhow::Result<()> {
 
             let report = report_builder.finish();
             report.print((&input_identifier, Source::from(source)))?;
+
+            Ok(())
+        }
+        Args::AnnotateTokens {
+            input,
+            annotation_type,
+        } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &dictionary)?;
+
+            let input_identifier = input.get_identifier();
+
+            let mut report_builder = Report::build(
+                ReportKind::Custom("AnnotateTokens", Color::Blue),
+                &*input_identifier,
+                0,
+            );
+
+            report_builder = report_builder.with_labels(Annotation::iter_labels_from_document(
+                annotation_type,
+                &doc,
+                &input_identifier,
+            ));
+
+            let report = report_builder.finish();
+            report.print((&*input_identifier, Source::from(source)))?;
 
             Ok(())
         }
