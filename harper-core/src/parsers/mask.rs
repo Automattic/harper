@@ -32,7 +32,7 @@ where
 
         let mut tokens: Vec<Token> = Vec::new();
 
-        let mut last_allowed: Option<Span> = None;
+        let mut last_allowed: Option<Span<char>> = None;
 
         for (span, content) in mask.iter_allowed(source) {
             // Check for a line break separating the current chunk from the preceding one.

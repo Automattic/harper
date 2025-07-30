@@ -21,8 +21,8 @@ impl All {
 }
 
 impl Expr for All {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
-        let mut longest: Option<Span> = None;
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
+        let mut longest: Option<Span<Token>> = None;
 
         for expr in self.children.iter() {
             let window = expr.run(cursor, tokens, source)?;

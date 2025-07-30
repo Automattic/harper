@@ -31,7 +31,7 @@ impl Document {
     /// Locate all the tokens that intersect a provided span.
     ///
     /// Desperately needs optimization.
-    pub fn token_indices_intersecting(&self, span: Span) -> Vec<usize> {
+    pub fn token_indices_intersecting(&self, span: Span<char>) -> Vec<usize> {
         self.tokens()
             .enumerate()
             .filter_map(|(idx, tok)| tok.span.overlaps_with(span).then_some(idx))
@@ -41,7 +41,7 @@ impl Document {
     /// Locate all the tokens that intersect a provided span and convert them to [`FatToken`]s.
     ///
     /// Desperately needs optimization.
-    pub fn fat_tokens_intersecting(&self, span: Span) -> Vec<FatToken> {
+    pub fn fat_tokens_intersecting(&self, span: Span<char>) -> Vec<FatToken> {
         let indices = self.token_indices_intersecting(span);
 
         indices
@@ -314,19 +314,16 @@ impl Document {
         self.fat_tokens().map(|t| t.into())
     }
 
-    pub fn get_span_content(&self, span: &Span) -> &[char] {
+    pub fn get_span_content(&self, span: &Span<char>) -> &[char] {
         span.get_content(&self.source)
     }
 
-    pub fn get_span_content_str(&self, span: &Span) -> String {
+    pub fn get_span_content_str(&self, span: &Span<char>) -> String {
         String::from_iter(self.get_span_content(span))
     }
 
     pub fn get_full_string(&self) -> String {
-        self.get_span_content_str(&Span {
-            start: 0,
-            end: self.source.len(),
-        })
+        self.get_span_content_str(&Span::new(0, self.source.len()))
     }
 
     pub fn get_full_content(&self) -> &[char] {
@@ -724,7 +721,7 @@ impl TokenStringExt for Document {
         self.tokens.first_non_whitespace()
     }
 
-    fn span(&self) -> Option<Span> {
+    fn span(&self) -> Option<Span<char>> {
         self.tokens.span()
     }
 

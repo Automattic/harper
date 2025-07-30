@@ -531,18 +531,18 @@ impl Span {
     }
 
     pub fn len(&self) -> usize {
-        Into::<harper_core::Span>::into(*self).len()
+        Into::<harper_core::Span<char>>::into(*self).len()
     }
 }
 
-impl From<Span> for harper_core::Span {
+impl From<Span> for harper_core::Span<char> {
     fn from(value: Span) -> Self {
         harper_core::Span::new(value.start, value.end)
     }
 }
 
-impl From<harper_core::Span> for Span {
-    fn from(value: harper_core::Span) -> Self {
+impl From<harper_core::Span<char>> for Span {
+    fn from(value: harper_core::Span<char>) -> Self {
         Span::new(value.start, value.end)
     }
 }

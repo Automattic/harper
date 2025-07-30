@@ -21,7 +21,7 @@ impl FirstMatchOf {
 }
 
 impl Expr for FirstMatchOf {
-    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.exprs
             .iter()
             .find_map(|p| p.run(cursor, tokens, source))

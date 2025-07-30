@@ -11,7 +11,7 @@ use super::{LintKind, Suggestion};
 pub struct Lint {
     /// The location in the source text the error lies.
     /// Important for automatic lint resolution through [`Self::suggestions`].
-    pub span: Span,
+    pub span: Span<char>,
     /// The general category the lint belongs to.
     /// Mostly used for UI elements in integrations.
     pub lint_kind: LintKind,
