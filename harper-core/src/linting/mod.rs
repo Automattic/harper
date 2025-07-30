@@ -25,6 +25,7 @@ mod dashes;
 mod despite_of;
 mod discourse_markers;
 mod dot_initialisms;
+mod double_modal;
 mod ellipsis_length;
 mod else_possessive;
 mod everyday;
@@ -59,6 +60,7 @@ mod map_phrase_linter;
 mod map_phrase_set_linter;
 mod merge_linters;
 mod merge_words;
+mod missing_preposition;
 mod modal_of;
 mod most_number;
 mod multiple_sequential_pronouns;
@@ -139,6 +141,7 @@ pub use dashes::Dashes;
 pub use despite_of::DespiteOf;
 pub use discourse_markers::DiscourseMarkers;
 pub use dot_initialisms::DotInitialisms;
+pub use double_modal::DoubleModal;
 pub use ellipsis_length::EllipsisLength;
 pub use everyday::Everyday;
 pub use expand_time_shorthands::ExpandTimeShorthands;
@@ -166,6 +169,7 @@ pub use long_sentences::LongSentences;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use merge_words::MergeWords;
+pub use missing_preposition::MissingPreposition;
 pub use modal_of::ModalOf;
 pub use most_number::MostNumber;
 pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
@@ -258,7 +262,7 @@ pub mod tests {
     use crate::{Document, parsers::PlainEnglish};
 
     #[track_caller]
-    pub fn assert_no_lints(text: &str, mut linter: impl Linter) {
+    pub fn assert_no_lints(text: &str, linter: impl Linter) {
         assert_lint_count(text, linter, 0);
     }
 

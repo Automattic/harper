@@ -3,12 +3,12 @@ use super::SingleTokenPattern;
 use crate::{CharString, Token};
 
 /// Matches a predefined word.
-///
-/// Note that any capitalization of the contained word will result in a match.
 #[derive(Clone)]
 pub struct Word {
+    /// The word to match.
     word: CharString,
-    exact: bool,
+    /// Determines whether the match is case-sensitive.
+    case_sensitive: bool,
 }
 
 impl Word {
@@ -16,27 +16,31 @@ impl Word {
     pub fn new(word: &'static str) -> Self {
         Self {
             word: word.chars().collect(),
-            exact: false,
+            case_sensitive: false,
         }
     }
+
     /// Matches the provided word, ignoring case.
     pub fn from_chars(word: &[char]) -> Self {
         Self {
             word: word.iter().copied().collect(),
-            exact: false,
+            case_sensitive: false,
         }
     }
 
     /// Matches the provided word, ignoring case.
     pub fn from_char_string(word: CharString) -> Self {
-        Self { word, exact: false }
+        Self {
+            word,
+            case_sensitive: false,
+        }
     }
 
     /// Matches the provided word, case-sensitive.
     pub fn new_exact(word: &'static str) -> Self {
         Self {
             word: word.chars().collect(),
-            exact: true,
+            case_sensitive: true,
         }
     }
 }
@@ -51,7 +55,7 @@ impl SingleTokenPattern for Word {
         }
 
         let chars = token.span.get_content(source);
-        if self.exact {
+        if self.case_sensitive {
             chars == self.word.as_slice()
         } else {
             chars

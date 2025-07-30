@@ -733,6 +733,11 @@ pub fn lint_group() -> LintGroup {
             "Use the correct phrase for someone who perseveres.",
             "Ensures the correct use of `real trouper`, distinguishing it from `trooper`, which refers to a soldier or police officer."
         ),
+        "RedundantIIRC" => (
+            ["if IIRC", "IIRC correctly"], ["IIRC"],
+            "`IIRC` already means 'if I recall correctly', so adding 'if' or 'correctly' is redundant.",
+            "Flags redundant use of 'if' or 'correctly' with 'IIRC', since 'IIRC' already stands for 'if I recall correctly'."
+        ),
         "RifeWith" => (
             ["ripe with"],
             ["rife with"],
@@ -963,6 +968,12 @@ pub fn lint_group() -> LintGroup {
             ["wrought iron"],
             "Prefer the standard term `wrought iron`.",
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
+        ),
+        "FromTheGetGo" => (
+            ["from the get go"],
+            ["from the get-go"],
+            "Use the hyphenated form: `from the get-go`.",
+            "Ensures `from the get-go` is correctly hyphenated, preserving the idiom’s meaning of ‘from the very beginning’."
         ),
     });
 
