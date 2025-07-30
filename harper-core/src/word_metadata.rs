@@ -555,6 +555,62 @@ impl WordMetadata {
     }
 }
 
+impl PartialOrd for WordMetadata {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        // Compare each field in order until we find a difference
+        match self.noun.partial_cmp(&other.noun) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        match self.pronoun.partial_cmp(&other.pronoun) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        match self.verb.partial_cmp(&other.verb) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        match self.adjective.partial_cmp(&other.adjective) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        match self.adverb.partial_cmp(&other.adverb) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        match self.conjunction.partial_cmp(&other.conjunction) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        match self.swear.partial_cmp(&other.swear) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        match self.dialects.partial_cmp(&other.dialects) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        match self.determiner.partial_cmp(&other.determiner) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        match self.preposition.partial_cmp(&other.preposition) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        match self.common.partial_cmp(&other.common) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        // Skip derived_from as HashSet doesn't implement PartialOrd
+        match self.np_member.partial_cmp(&other.np_member) {
+            Some(std::cmp::Ordering::Equal) => {}
+            non_eq => return non_eq,
+        }
+        self.pos_tag.partial_cmp(&other.pos_tag)
+    }
+}
+
 // These verb forms are morphological variations, distinct from TAM (Tense-Aspect-Mood)
 // Each form can be used in various TAM combinations:
 // - Lemma form (infinitive, citation form, dictionary form)
