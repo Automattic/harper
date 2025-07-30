@@ -78,6 +78,7 @@ use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::then_than::ThenThan;
+use super::throw_rubbish::ThrowRubbish;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
 use super::was_aloud::WasAloud;
@@ -404,6 +405,7 @@ impl LintGroup {
         insert_pattern_rule!(TheHowWhy, true);
         insert_struct_rule!(TheMy, true);
         insert_pattern_rule!(ThenThan, true);
+        insert_struct_rule!(ThrowRubbish, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_pattern_rule!(UseGenitive, false);
         insert_pattern_rule!(WasAloud, true);

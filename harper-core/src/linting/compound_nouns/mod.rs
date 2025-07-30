@@ -3,7 +3,7 @@ mod compound_noun_after_possessive;
 mod compound_noun_before_aux_verb;
 
 use super::{Lint, LintKind, Suggestion, merge_linters::merge_linters};
-use crate::{Lrc, Token, patterns::SplitCompoundWord};
+use crate::{Token, WordMetadata};
 
 // Helper function to check if a token is a content word (not a function word)
 pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
@@ -21,10 +21,8 @@ pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
         && !meta.is_auxiliary_verb()
 }
 
-pub(crate) fn create_split_pattern() -> Lrc<SplitCompoundWord> {
-    Lrc::new(SplitCompoundWord::new(|meta| {
-        meta.is_noun() && !meta.is_proper_noun()
-    }))
+pub(crate) fn predicate(closed: Option<&WordMetadata>, open: Option<&WordMetadata>) -> bool {
+    open.is_none() && closed.is_some_and(|m| m.is_noun() && !m.is_proper_noun())
 }
 
 use compound_noun_after_det_adj::CompoundNounAfterDetAdj;
