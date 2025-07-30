@@ -921,7 +921,7 @@
 > overcome with happiness
 # NSg/V    P    NᴹSg+
 > green   with envy   ; flushed with success
-# NPr/V/J P    NSg/V+ . V/J     P    NSg+
+# NPr/V/J P    NSg/V+ . V/J     P    N🅪Sg+
 > She  was with Acme for twenty years before retiring last     fall   .
 # ISg+ V   P    NSg  C/P NSg    NPl+  C/P    V        NSg/V/J+ NSg/V+ .
 > With your kind  of body   size   , you    shouldn’t be     eating pizza at    all           .

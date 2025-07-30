@@ -430,8 +430,8 @@
 #
 >
 #
-> To coin  Money  , regulate the Value  thereof , and of foreign Coin   , and fix   the
-# P  NSg/V N🅪Sg/J . V        D+  NSg/V+ W?      . V/C P  NSg/J+  NSg/V+ . V/C NSg/V D
+> To coin  Money  , regulate the Value   thereof , and of foreign Coin   , and fix   the
+# P  NSg/V N🅪Sg/J . V        D+  N🅪Sg/V+ W?      . V/C P  NSg/J+  NSg/V+ . V/C NSg/V D
 > Standard of Weights and Measures ;
 # NSg/J    P  NPl/V   V/C NPl/V+   .
 >
@@ -657,7 +657,7 @@
 > President , or    for Senator or    Representative in      Congress , shall not   be     denied or
 # NSg/V+    . NPr/C C/P NSg     NPr/C NSg/J+         NPr/J/P NPr/V+   . VX    NSg/C NSg/VX V/J    NPr/C
 > abridged by      the United States  or    any    State by      reason of failure to pay     any     poll
-# V/J      NSg/J/P D+  V/J+   NPrPl/V NPr/C I/R/Dq NSg/V NSg/J/P N🅪Sg/V P  NSg+    P  NSg/V/J I/R/Dq+ NSg/V/J+
+# V/J      NSg/J/P D+  V/J+   NPrPl/V NPr/C I/R/Dq NSg/V NSg/J/P N🅪Sg/V P  N🅪Sg+   P  NSg/V/J I/R/Dq+ NSg/V/J+
 > tax    or    other    tax     .
 # N🅪Sg/V NPr/C NSg/V/J+ N🅪Sg/V+ .
 >
@@ -1226,8 +1226,8 @@
 # NSg/V   C/P ISg/D$+ N🅪Sg/V/Am+ .
 >
 #
-> In      suits at    common   law    , where the value  in      controversy shall exceed twenty
-# NPr/J/P NPl/V NSg/P NSg/V/J+ NSg/V+ . NSg/C D+  NSg/V+ NPr/J/P NSg+        VX    V      NSg
+> In      suits at    common   law    , where the value   in      controversy shall exceed twenty
+# NPr/J/P NPl/V NSg/P NSg/V/J+ NSg/V+ . NSg/C D+  N🅪Sg/V+ NPr/J/P NSg+        VX    V      NSg
 > dollars , the right   of trial    by      jury     shall be     preserved , and no    fact tried by      a
 # NPl+    . D   NPr/V/J P  NSg/V/J+ NSg/J/P NSg/V/J+ VX    NSg/VX V/J       . V/C NPr/P NSg+ V/J   NSg/J/P D/P+
 > jury     , shall be     otherwise reexamined in      any    court   of the United States   , than

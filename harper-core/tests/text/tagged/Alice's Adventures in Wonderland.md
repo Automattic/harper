@@ -30,8 +30,8 @@
 # V    ISg/D$+ NSg/I/V J/R  NSg/J  V/C NSg/J+ . . I/C     D   NSg/V    P  NSg/V  D/P
 > daisy - chain would be     worth   the trouble of getting up        and picking the daisies ,
 # NPr+  . NSg/V VX    NSg/VX NSg/V/J D   NSg/V   P  NSg/V   NSg/V/J/P V/C V       D   NPl     .
-> when    suddenly a   White   Rabbit with pink     eyes   ran   close    by      her     .
-# NSg/I/C R        D/P NPr/V/J NSg/V  P    N🅪Sg/V/J NPl/V+ NSg/V NSg/V/J+ NSg/J/P ISg/D$+ .
+> when    suddenly a   White    Rabbit with pink     eyes   ran   close    by      her     .
+# NSg/I/C R        D/P NPr🅪/V/J NSg/V  P    N🅪Sg/V/J NPl/V+ NSg/V NSg/V/J+ NSg/J/P ISg/D$+ .
 >
 #
 > There was nothing so        very remarkable in      that          ; nor   did Alice think it       so        very
@@ -174,8 +174,8 @@
 # NPr+  V   NSg/C D/P NSg/V+ NSg/V/J . V/C ISg+ V/J    NSg/V/J/P J/P P  ISg/D$+ NPl+ NPr/J/P D/P+ NSg+   . ISg+
 > looked up        , but     it       was all          dark    overhead ; before her     was another long    passage ,
 # V/J    NSg/V/J/P . NSg/C/P NPr/ISg+ V   NSg/I/J/C/Dq NSg/V/J NSg/J/P  . C/P    ISg/D$+ V   I/D     NPr/V/J NSg/V/J .
-> and the White    Rabbit was still   in      sight   , hurrying down      it       . There was not   a
-# V/C D+  NPr/V/J+ NSg/V+ V   NSg/V/J NPr/J/P N🅪Sg/V+ . V        NSg/V/J/P NPr/ISg+ . +     V   NSg/C D/P
+> and the White     Rabbit was still   in      sight   , hurrying down      it       . There was not   a
+# V/C D+  NPr🅪/V/J+ NSg/V+ V   NSg/V/J NPr/J/P N🅪Sg/V+ . V        NSg/V/J/P NPr/ISg+ . +     V   NSg/C D/P
 > moment to be     lost : away went  Alice like        the wind   , and was just in      time      to hear
 # NSg    P  NSg/VX V/J  . V/J  NSg/V NPr+  NSg/V/J/C/P D+  NSg/V+ . V/C V   V/J  NPr/J/P N🅪Sg/V/J+ P  V
 > it       say   , as    it       turned a    corner , “ Oh    my  ears   and whiskers , how   late  it’s getting ! ”
@@ -442,10 +442,10 @@
 #
 > After a    time      she  heard a   little     pattering of feet in      the distance , and she
 # P     D/P+ N🅪Sg/V/J+ ISg+ V/J   D/P NPr/I/J/Dq V         P  NPl+ NPr/J/P D+  NSg/V+   . V/C ISg+
-> hastily dried her     eyes   to see   what   was coming  . It       was the White   Rabbit
-# R       V/J   ISg/D$+ NPl/V+ P  NSg/V NSg/I+ V+  NSg/V/J . NPr/ISg+ V   D   NPr/V/J NSg/V
-> returning , splendidly dressed , with a   pair  of white   kid    gloves in      one       hand   and a
-# V         . R          V/J     . P    D/P NSg/V P  NPr/V/J NSg/V+ NPl/V  NPr/J/P NSg/I/V/J NSg/V+ V/C D/P
+> hastily dried her     eyes   to see   what   was coming  . It       was the White    Rabbit
+# R       V/J   ISg/D$+ NPl/V+ P  NSg/V NSg/I+ V+  NSg/V/J . NPr/ISg+ V   D   NPr🅪/V/J NSg/V
+> returning , splendidly dressed , with a   pair  of white    kid    gloves in      one       hand   and a
+# V         . R          V/J     . P    D/P NSg/V P  NPr🅪/V/J NSg/V+ NPl/V  NPr/J/P NSg/I/V/J NSg/V+ V/C D/P
 > large fan   in      the other   : he       came    trotting along in      a    great  hurry  , muttering to
 # NSg/J NSg/V NPr/J/P D   NSg/V/J . NPr/ISg+ NSg/V/P NSg/V/J  P     NPr/J/P D/P+ NSg/J+ NSg/V+ . NSg/V     P
 > himself as    he       came    , “ Oh    ! the Duchess , the Duchess ! Oh    ! won’t she  be     savage   if
@@ -454,8 +454,8 @@
 # W?   V    ISg/D$ NSg/V   . . NPr+  NSg/V/J NSg/I/J/C NSg/J     NSg/I/C/Ddem ISg+ V   NSg/V/J P  NSg/V NSg/V
 > of any     one        ; so        , when    the Rabbit came    near      her     , she  began , in      a   low     , timid voice  ,
 # P  I/R/Dq+ NSg/I/V/J+ . NSg/I/J/C . NSg/I/C D+  NSg/V+ NSg/V/P NSg/V/J/P ISg/D$+ . ISg+ V     . NPr/J/P D/P NSg/V/J . J+    NSg/V+ .
-> “ If    you    please , sir    — ” The Rabbit started violently , dropped the white    kid    gloves
-# . NSg/C ISgPl+ V      . NPr/V+ . . D+  NSg/V+ V/J     R         . V/J     D+  NPr/V/J+ NSg/V+ NPl/V
+> “ If    you    please , sir    — ” The Rabbit started violently , dropped the white     kid    gloves
+# . NSg/C ISgPl+ V      . NPr/V+ . . D+  NSg/V+ V/J     R         . V/J     D+  NPr🅪/V/J+ NSg/V+ NPl/V
 > and the fan    , and skurried away into the darkness as    hard   as    he       could   go      .
 # V/C D+  NSg/V+ . V/C ?        V/J  P    D+  NSg+     NSg/R N🅪Sg/J NSg/R NPr/ISg+ NSg/VX+ NSg/V/J .
 >
@@ -540,8 +540,8 @@
 #
 > As     she  said this    she  looked down      at    her     hands  , and was surprised to see   that         she
 # NSg/R+ ISg+ V/J  I/Ddem+ ISg+ V/J    NSg/V/J/P NSg/P ISg/D$+ NPl/V+ . V/C V   V/J       P  NSg/V NSg/I/C/Ddem ISg+
-> had put   on  one       of the Rabbit’s little     white   kid    gloves while     she  was talking .
-# V   NSg/V J/P NSg/I/V/J P  D   NSg$     NPr/I/J/Dq NPr/V/J NSg/V+ NPl/V+ NSg/V/C/P ISg+ V+  V       .
+> had put   on  one       of the Rabbit’s little     white    kid    gloves while     she  was talking .
+# V   NSg/V J/P NSg/I/V/J P  D   NSg$     NPr/I/J/Dq NPr🅪/V/J NSg/V+ NPl/V+ NSg/V/C/P ISg+ V+  V       .
 > “ How   can    I    have   done    that          ? ” she  thought . “ I    must  be     growing small    again . ” She
 # . NSg/C NPr/VX ISg+ NSg/VX NSg/V/J NSg/I/C/Ddem+ . . ISg+ NSg/V+  . . ISg+ NSg/V NSg/VX NSg/V   NPr/V/J+ P+    . . ISg+
 > got up        and went  to the table  to measure herself by      it       , and found that          , as    nearly
@@ -1118,8 +1118,8 @@
 # NSg/V+  NSg/J . D+  NSg/V+ NPl/V NPr/J/P D/P NPr/I/J/Dq+ NPr/V
 >
 #
-> It       was the White   Rabbit , trotting slowly back    again , and looking anxiously about
-# NPr/ISg+ V   D   NPr/V/J NSg/V  . NSg/V/J  R      NSg/V/J P     . V/C V       R         J/P
+> It       was the White    Rabbit , trotting slowly back    again , and looking anxiously about
+# NPr/ISg+ V   D   NPr🅪/V/J NSg/V  . NSg/V/J  R      NSg/V/J P     . V/C V       R         J/P
 > as    it       went  , as    if    it       had lost something  ; and she  heard it       muttering to itself
 # NSg/R NPr/ISg+ NSg/V . NSg/R NSg/C NPr/ISg+ V   V/J  NSg/I/V/J+ . V/C ISg+ V/J   NPr/ISg+ NSg/V     P  ISg+
 > “ The Duchess ! The Duchess ! Oh    my  dear     paws   ! Oh    my  fur        and whiskers ! She’ll get
@@ -1128,8 +1128,8 @@
 # NPr/ISg+ V/J      . NSg/R J    NSg/R NPl/V   V   NPl/V   . NSg/C NPr/VX ISg+ NSg/VX V/J     NSg/IPl+ . ISg+
 > wonder ? ” Alice guessed in      a    moment that          it       was looking for the fan    and the pair
 # N🅪Sg/V . . NPr+  V/J     NPr/J/P D/P+ NSg+   NSg/I/C/Ddem+ NPr/ISg+ V   V       C/P D+  NSg/V+ V/C D   NSg/V
-> of white    kid    gloves , and she  very good    - naturedly began hunting about for them     ,
-# P  NPr/V/J+ NSg/V+ NPl/V+ . V/C ISg+ J/R  NPr/V/J . ?         V     NᴹSg/V  J/P   C/P NSg/IPl+ .
+> of white     kid    gloves , and she  very good    - naturedly began hunting about for them     ,
+# P  NPr🅪/V/J+ NSg/V+ NPl/V+ . V/C ISg+ J/R  NPr/V/J . ?         V     NᴹSg/V  J/P   C/P NSg/IPl+ .
 > but     they were  nowhere to be     seen  — everything seemed to have   changed since her
 # NSg/C/P IPl+ NSg/V NSg/J   P  NSg/VX NSg/V . NSg/I/V+   V/J    P  NSg/VX V/J     C/P   ISg/D$+
 > swim  in      the pool   , and the great  hall , with the glass   table and the little      door   ,
@@ -1183,7 +1183,7 @@
 > By      this    time      she  had found her     way    into a   tidy    little     room    with a   table in      the
 # NSg/J/P I/Ddem+ N🅪Sg/V/J+ ISg+ V   NSg/V ISg/D$+ NSg/J+ P    D/P NSg/V/J NPr/I/J/Dq NSg/V/J P    D/P NSg/V NPr/J/P D+
 > window , and on  it       ( as    she  had hoped ) a    fan    and two or    three pairs of tiny  white
-# NSg/V+ . V/C J/P NPr/ISg+ . NSg/R ISg+ V   V/J   . D/P+ NSg/V+ V/C NSg NPr/C NSg   NPl/V P  NSg/J NPr/V/J
+# NSg/V+ . V/C J/P NPr/ISg+ . NSg/R ISg+ V   V/J   . D/P+ NSg/V+ V/C NSg NPr/C NSg   NPl/V P  NSg/J NPr🅪/V/J
 > kid    gloves : she  took up        the fan    and a   pair  of the gloves , and was just going   to
 # NSg/V+ NPl/V+ . ISg+ V    NSg/V/J/P D+  NSg/V+ V/C D/P NSg/V P  D+  NPl/V+ . V/C V   V/J  NSg/V/J P
 > leave the room     , when    her     eye    fell    upon a   little      bottle that          stood near      the
@@ -1299,7 +1299,7 @@
 > opened inwards , and Alice’s elbow  was pressed hard   against it       , that          attempt
 # V/J    NPl     . V/C NSg$    NSg/V+ V   V/J     N🅪Sg/J C/P     NPr/ISg+ . NSg/I/C/Ddem+ NSg/V+
 > proved a    failure . Alice heard it       say   to itself “ Then    I’ll go      round     and get   in      at
-# V/J    D/P+ NSg+    . NPr+  V/J   NPr/ISg+ NSg/V P  ISg+   . NSg/J/C W?   NSg/V/J NSg/V/J/P V/C NSg/V NPr/J/P NSg/P
+# V/J    D/P+ N🅪Sg+   . NPr+  V/J   NPr/ISg+ NSg/V P  ISg+   . NSg/J/C W?   NSg/V/J NSg/V/J/P V/C NSg/V NPr/J/P NSg/P
 > the window . ”
 # D+  NSg/V+ . .
 >
@@ -1744,8 +1744,8 @@
 #
 > “ You    are old   , Father William , ” the young    man      said , “ And your hair    has become
 # . ISgPl+ V   NSg/J . NPr/V+ NPr+    . . D+  NPr/V/J+ NPr/V/J+ V/J  . . V/C D$+  N🅪Sg/V+ V   V
-> very white   ; And yet     you    incessantly stand on  your head     — Do     you   think , at    your
-# J/R  NPr/V/J . V/C NSg/V/C ISgPl+ R           NSg/V J/P D$+  NPr/V/J+ . NSg/VX ISgPl NSg/V . NSg/P D$+
+> very white    ; And yet     you    incessantly stand on  your head     — Do     you   think , at    your
+# J/R  NPr🅪/V/J . V/C NSg/V/C ISgPl+ R           NSg/V J/P D$+  NPr/V/J+ . NSg/VX ISgPl NSg/V . NSg/P D$+
 > age     , it       is right   ? ”
 # N🅪Sg/V+ . NPr/ISg+ VL NPr/V/J . .
 >
@@ -3340,8 +3340,8 @@
 #
 > A   large rose    - tree  stood near      the entrance of the garden   : the roses  growing on  it
 # D/P NSg/J NPr/V/J . NSg/V V     NSg/V/J/P D   NSg/V    P  D+  NSg/V/J+ . D+  NPl/V+ NSg/V   J/P NPr/ISg+
-> were  white   , but     there were  three gardeners at    it       , busily painting them     red    .
-# NSg/V NPr/V/J . NSg/C/P +     NSg/V NSg   +         NSg/P NPr/ISg+ . R      N🅪Sg/V+  NSg/IPl+ NSg/J+ .
+> were  white    , but     there were  three gardeners at    it       , busily painting them     red    .
+# NSg/V NPr🅪/V/J . NSg/C/P +     NSg/V NSg   +         NSg/P NPr/ISg+ . R      N🅪Sg/V+  NSg/IPl+ NSg/J+ .
 > Alice thought this   a   very curious thing , and she  went  nearer to watch them     , and
 # NPr+  NSg/V   I/Ddem D/P J/R  J       NSg/V . V/C ISg+ NSg/V NSg/JC P  NSg/V NSg/IPl+ . V/C
 > just as    she  came    up        to them     she  heard one       of them     say   , “ Look  out         now       , Five !
@@ -3400,8 +3400,8 @@
 # NSg  V/C NSg   V/J  NSg/I/J+ . NSg/C/P V/J    NSg/P+ NSg . NSg V     NPr/J/P D/P+ NSg/V/J+ NSg/V+ . . NSg/V
 > the fact is , you    see   , Miss  , this    here    ought    to have   been  a   red   rose     - tree  , and we
 # D+  NSg+ VL . ISgPl+ NSg/V . NSg/V . I/Ddem+ NSg/J/R NSg/I/VX P  NSg/VX NSg/V D/P NSg/J NPr/V/J+ . NSg/V . V/C IPl+
-> put   a   white   one       in      by      mistake ; and if    the Queen    was to find  it       out         , we   should
-# NSg/V D/P NPr/V/J NSg/I/V/J NPr/J/P NSg/J/P NSg/V+  . V/C NSg/C D+  NPr/V/J+ V   P  NSg/V NPr/ISg+ NSg/V/J/R/P . IPl+ VX
+> put   a   white    one       in      by      mistake ; and if    the Queen    was to find  it       out         , we   should
+# NSg/V D/P NPr🅪/V/J NSg/I/V/J NPr/J/P NSg/J/P NSg/V+  . V/C NSg/C D+  NPr/V/J+ V   P  NSg/V NPr/ISg+ NSg/V/J/R/P . IPl+ VX
 > all          have   our heads  cut     off       , you   know   . So        you    see   , Miss  , we’re doing our best      ,
 # NSg/I/J/C/Dq NSg/VX D$+ NPl/V+ NSg/V/J NSg/V/J/P . ISgPl NSg/V+ . NSg/I/J/C ISgPl+ NSg/V . NSg/V . W?    NSg/V D$+ NPr/VX/JS .
 > afore she  comes , to — ” At    this    moment Five , who    had been  anxiously looking across
@@ -3426,8 +3426,8 @@
 # NSg/IPl+ . V/C D+  NPr/I/J/Dq+ NPl/V+ NSg/V/P V       R       P     NSg/V+ NPr/J/P NSg/V+ . NPr/J/P NPl/V+  .
 > they were  all          ornamented with hearts . Next    came    the guests , mostly Kings  and
 # IPl+ NSg/V NSg/I/J/C/Dq V/J        P    NPl/V+ . NSg/J/P NSg/V/P D+  NPl/V+ . R      NPl/V+ V/C
-> Queens  , and among them     Alice recognised the White    Rabbit : it       was talking in      a
-# NPrPl/V . V/C P     NSg/IPl+ NPr+  V/J/Au/Br  D+  NPr/V/J+ NSg/V+ . NPr/ISg+ V   V       NPr/J/P D/P+
+> Queens  , and among them     Alice recognised the White     Rabbit : it       was talking in      a
+# NPrPl/V . V/C P     NSg/IPl+ NPr+  V/J/Au/Br  D+  NPr🅪/V/J+ NSg/V+ . NPr/ISg+ V   V       NPr/J/P D/P+
 > hurried nervous manner , smiling at    everything that          was said , and went  by      without
 # V/J+    J+      NSg+   . NSg/V/J NSg/P NSg/I/V+   NSg/I/C/Ddem+ V   V/J  . V/C NSg/V NSg/J/P C/P+
 > noticing her     . Then    followed the Knave of Hearts , carrying the King’s crown    on  a
@@ -3582,8 +3582,8 @@
 #
 > “ It’s — it’s a   very fine    day  ! ” said a   timid voice at    her     side     . She  was walking by
 # . W?   . W?   D/P J/R  NSg/V/J NPr🅪 . . V/J  D/P J     NSg/V NSg/P ISg/D$+ NSg/V/J+ . ISg+ V   NSg/V/J NSg/J/P
-> the White    Rabbit , who    was peeping anxiously into her     face   .
-# D+  NPr/V/J+ NSg/V+ . NPr/I+ V   V       R         P    ISg/D$+ NSg/V+ .
+> the White     Rabbit , who    was peeping anxiously into her     face   .
+# D+  NPr🅪/V/J+ NSg/V+ . NPr/I+ V   V       R         P    ISg/D$+ NSg/V+ .
 >
 #
 > “ Very , ” said Alice : “ — where’s the Duchess ? ”
@@ -4808,8 +4808,8 @@
 #
 > So        Alice began telling them     her     adventures from the time      when    she  first   saw   the
 # NSg/I/J/C NPr   V     NSg/V/J NSg/IPl+ ISg/D$+ NPl/V+     P    D+  N🅪Sg/V/J+ NSg/I/C ISg+ NSg/V/J NSg/V D+
-> White    Rabbit . She  was a   little     nervous about it       just at    first   , the two  creatures
-# NPr/V/J+ NSg/V+ . ISg+ V   D/P NPr/I/J/Dq J       J/P   NPr/ISg+ V/J  NSg/P NSg/V/J . D+  NSg+ NPl+
+> White     Rabbit . She  was a   little     nervous about it       just at    first   , the two  creatures
+# NPr🅪/V/J+ NSg/V+ . ISg+ V   D/P NPr/I/J/Dq J       J/P   NPr/ISg+ V/J  NSg/P NSg/V/J . D+  NSg+ NPl+
 > got so        close   to her     , one       on  each side     , and opened their eyes  and mouths so        very
 # V   NSg/I/J/C NSg/V/J P  ISg/D$+ . NSg/I/V/J J/P Dq+  NSg/V/J+ . V/C V/J    D$+   NPl/V V/C NSg/V+ NSg/I/J/C J/R
 > wide  , but     she  gained courage as    she  went   on  . Her     listeners were  perfectly quiet
@@ -5018,8 +5018,8 @@
 # D/P NSg/J NSg/V+ V/J       J/P   NSg/IPl+ . NSg/I/J/C/Dq NPl/V P  NPr/I/J/Dq NPl/V V/C NPl/V+ . NSg/R NSg/V/J
 > as    the whole pack  of cards  : the Knave was standing before them     , in      chains , with
 # NSg/R D   NSg/J NSg/V P  NPl/V+ . D   NSg   V   NSg/V/J  C/P    NSg/IPl+ . NPr/J/P NPl/V+ . P
-> a   soldier on  each side     to guard  him  ; and near      the King     was the White   Rabbit ,
-# D/P NSg/V/J J/P Dq+  NSg/V/J+ P  NSg/V+ ISg+ . V/C NSg/V/J/P D+  NPr/V/J+ V   D   NPr/V/J NSg/V  .
+> a   soldier on  each side     to guard  him  ; and near      the King     was the White    Rabbit ,
+# D/P NSg/V/J J/P Dq+  NSg/V/J+ P  NSg/V+ ISg+ . V/C NSg/V/J/P D+  NPr/V/J+ V   D   NPr🅪/V/J NSg/V  .
 > with a   trumpet in      one        hand   , and a   scroll of parchment in      the other    . In      the very
 # P    D/P NSg/V   NPr/J/P NSg/I/V/J+ NSg/V+ . V/C D/P NSg/V  P  NSg+      NPr/J/P D   NSg/V/J+ . NPr/J/P D   J/R
 > middle  of the court    was a   table , with a   large dish  of tarts upon it       : they looked
@@ -5082,8 +5082,8 @@
 #
 > “ Stupid things ! ” Alice began in      a   loud  , indignant voice  , but     she  stopped
 # . NSg/J  NPl/V  . . NPr+  V     NPr/J/P D/P NSg/J . J         NSg/V+ . NSg/C/P ISg+ V/J
-> hastily , for the White    Rabbit cried out         , “ Silence in      the court    ! ” and the King
-# R       . C/P D+  NPr/V/J+ NSg/V+ V/J   NSg/V/J/R/P . . NSg/V   NPr/J/P D+  NSg/V/J+ . . V/C D+  NPr/V/J+
+> hastily , for the White     Rabbit cried out         , “ Silence in      the court    ! ” and the King
+# R       . C/P D+  NPr🅪/V/J+ NSg/V+ V/J   NSg/V/J/R/P . . NSg/V   NPr/J/P D+  NSg/V/J+ . . V/C D+  NPr/V/J+
 > put   on  his     spectacles and looked anxiously round     , to make  out         who    was talking .
 # NSg/V J/P ISg/D$+ NPl        V/C V/J    R         NSg/V/J/P . P  NSg/V NSg/V/J/R/P NPr/I+ V+  V       .
 >
@@ -5120,8 +5120,8 @@
 # . NSg/V+ . NSg/V D   NSg        . . V/J  D   NPr/V/J+ .
 >
 #
-> On  this   the White    Rabbit blew    three blasts on  the trumpet , and then    unrolled the
-# J/P I/Ddem D+  NPr/V/J+ NSg/V+ NSg/V/J NSg   NPl/V  J/P D+  NSg/V+  . V/C NSg/J/C V/J      D+
+> On  this   the White     Rabbit blew    three blasts on  the trumpet , and then    unrolled the
+# J/P I/Ddem D+  NPr🅪/V/J+ NSg/V+ NSg/V/J NSg   NPl/V  J/P D+  NSg/V+  . V/C NSg/J/C V/J      D+
 > parchment scroll , and read  as    follows : —
 # NSg+      NSg/V  . V/C NSg/V NSg/R NPl/V   . .
 >
@@ -5142,8 +5142,8 @@
 # NSg/V/P C/P    NSg/I/C/Ddem+ . .
 >
 #
-> “ Call  the first    witness , ” said the King     ; and the White    Rabbit blew    three blasts
-# . NSg/V D+  NSg/V/J+ NSg/V+  . . V/J  D+  NPr/V/J+ . V/C D+  NPr/V/J+ NSg/V+ NSg/V/J NSg   NPl/V
+> “ Call  the first    witness , ” said the King     ; and the White     Rabbit blew    three blasts
+# . NSg/V D+  NSg/V/J+ NSg/V+  . . V/J  D+  NPr/V/J+ . V/C D+  NPr🅪/V/J+ NSg/V+ NSg/V/J NSg   NPl/V
 > on  the trumpet , and called out         , “ First   witness ! ”
 # J/P D+  NSg/V+  . V/C V/J    NSg/V/J/R/P . . NSg/V/J NSg/V+  . .
 >
@@ -5436,8 +5436,8 @@
 # . V      . . V/J  D   NPr/V+ .
 >
 #
-> The King    looked anxiously at    the White    Rabbit , who    said in      a    low      voice  , “ Your
-# D+  NPr/V/J V/J    R         NSg/P D+  NPr/V/J+ NSg/V+ . NPr/I+ V/J  NPr/J/P D/P+ NSg/V/J+ NSg/V+ . . D$+
+> The King    looked anxiously at    the White     Rabbit , who    said in      a    low      voice  , “ Your
+# D+  NPr/V/J V/J    R         NSg/P D+  NPr🅪/V/J+ NSg/V+ . NPr/I+ V/J  NPr/J/P D/P+ NSg/V/J+ NSg/V+ . . D$+
 > Majesty must  cross      - examine this    witness . ”
 # NSg/I+  NSg/V NPr/V/J/P+ . NSg/V   I/Ddem+ NSg/V+  . .
 >
@@ -5478,12 +5478,12 @@
 # NPr/V/J/P+ . NSg/V   D+  NSg/J/P+ NSg/V+  . NPr/ISg+ NSg   NPl/V D$+ NSg+     NSg/V+ . .
 >
 #
-> Alice watched the White    Rabbit as    he       fumbled over      the list   , feeling very curious
-# NPr+  V/J     D+  NPr/V/J+ NSg/V+ NSg/R NPr/ISg+ V/J     NSg/V/J/P D+  NSg/V+ . NSg/V/J J/R  J
+> Alice watched the White     Rabbit as    he       fumbled over      the list   , feeling very curious
+# NPr+  V/J     D+  NPr🅪/V/J+ NSg/V+ NSg/R NPr/ISg+ V/J     NSg/V/J/P D+  NSg/V+ . NSg/V/J J/R  J
 > to see   what   the next     witness would be     like        , “ — for they haven’t got much       evidence
 # P  NSg/V NSg/I+ D+  NSg/J/P+ NSg/V+  VX    NSg/VX NSg/V/J/C/P . . . C/P IPl+ V       V   NSg/I/J/Dq NᴹSg/V+
-> yet     , ” she  said to herself . Imagine her     surprise , when    the White    Rabbit read  out         ,
-# NSg/V/C . . ISg+ V/J  P  ISg+    . NSg/V   ISg/D$+ NSg/V+   . NSg/I/C D+  NPr/V/J+ NSg/V+ NSg/V NSg/V/J/R/P .
+> yet     , ” she  said to herself . Imagine her     surprise , when    the White     Rabbit read  out         ,
+# NSg/V/C . . ISg+ V/J  P  ISg+    . NSg/V   ISg/D$+ NSg/V+   . NSg/I/C D+  NPr🅪/V/J+ NSg/V+ NSg/V NSg/V/J/R/P .
 > at    the top     of his     shrill   little      voice  , the name   “ Alice ! ”
 # NSg/P D   NSg/V/J P  ISg/D$+ NSg/V/J+ NPr/I/J/Dq+ NSg/V+ . D+  NSg/V+ . NPr+  . .
 >
@@ -5566,8 +5566,8 @@
 #
 > “ That’s very important , ” the King     said , turning to the jury     . They were  just
 # . NSg$   J/R  J         . . D+  NPr/V/J+ V/J  . NSg/V   P  D+  NSg/V/J+ . IPl+ NSg/V V/J
-> beginning to write this    down      on  their slates , when    the White    Rabbit interrupted :
-# NSg/V/J+  P  NSg/V I/Ddem+ NSg/V/J/P J/P D$+   NPl/V  . NSg/I/C D+  NPr/V/J+ NSg/V+ V/J         .
+> beginning to write this    down      on  their slates , when    the White     Rabbit interrupted :
+# NSg/V/J+  P  NSg/V I/Ddem+ NSg/V/J/P J/P D$+   NPl/V  . NSg/I/C D+  NPr🅪/V/J+ NSg/V+ V/J         .
 > “ Unimportant , your Majesty means , of course , ” he       said in      a   very respectful tone     ,
 # . J           . D$+  NSg/I+  NPl/V . P  NSg/V+ . . NPr/ISg+ V/J  NPr/J/P D/P J/R  J          N🅪Sg/I/V .
 > but     frowning and making faces  at    him  as    he       spoke  .
@@ -5638,8 +5638,8 @@
 # NPr/ISg+ V/J  P  D+  NSg/V/J+ . NPr/J/P D/P NSg/V/J . V         NSg/V+ .
 >
 #
-> “ There’s more         evidence to come    yet     , please your Majesty , ” said the White    Rabbit ,
-# . W?      NPr/I/V/J/Dq NᴹSg/V   P  NSg/V/P NSg/V/C . V      D$+  NSg/I+  . . V/J  D+  NPr/V/J+ NSg/V+ .
+> “ There’s more         evidence to come    yet     , please your Majesty , ” said the White     Rabbit ,
+# . W?      NPr/I/V/J/Dq NᴹSg/V   P  NSg/V/P NSg/V/C . V      D$+  NSg/I+  . . V/J  D+  NPr🅪/V/J+ NSg/V+ .
 > jumping up        in      a   great hurry  ; “ this    paper     has just been  picked up        . ”
 # V       NSg/V/J/P NPr/J/P D/P NSg/J NSg/V+ . . I/Ddem+ N🅪Sg/V/J+ V   V/J  NSg/V V/J    NSg/V/J/P . .
 >
@@ -5648,8 +5648,8 @@
 # . NSg$   NPr/J/P NPr/ISg+ . . V/J  D   NPr/V/J+ .
 >
 #
-> “ I    haven’t opened it       yet     , ” said the White    Rabbit , “ but     it       seems to be     a   letter ,
-# . ISg+ V       V/J    NPr/ISg+ NSg/V/C . . V/J  D+  NPr/V/J+ NSg/V  . . NSg/C/P NPr/ISg+ V     P  NSg/VX D/P NSg/V  .
+> “ I    haven’t opened it       yet     , ” said the White     Rabbit , “ but     it       seems to be     a   letter ,
+# . ISg+ V       V/J    NPr/ISg+ NSg/V/C . . V/J  D+  NPr🅪/V/J+ NSg/V  . . NSg/C/P NPr/ISg+ V     P  NSg/VX D/P NSg/V  .
 > written by      the prisoner to — to somebody . ”
 # V/J     NSg/J/P D+  NSg+     P  . P  NSg/I    . .
 >
@@ -5664,8 +5664,8 @@
 # . NPr/I+ VL NPr/ISg+ V/J      P  . . V/J  NSg/I/V/J P  D   NPl+    .
 >
 #
-> “ It       isn’t directed at    all          , ” said the White    Rabbit ; “ in      fact , there’s nothing
-# . NPr/ISg+ NSg/V V/J      NSg/P NSg/I/J/C/Dq . . V/J  D+  NPr/V/J+ NSg/V+ . . NPr/J/P NSg+ . W?      NSg/I/J
+> “ It       isn’t directed at    all          , ” said the White     Rabbit ; “ in      fact , there’s nothing
+# . NPr/ISg+ NSg/V V/J      NSg/P NSg/I/J/C/Dq . . V/J  D+  NPr🅪/V/J+ NSg/V+ . . NPr/J/P NSg+ . W?      NSg/I/J
 > written on  the outside   . ” He       unfolded the paper     as    he       spoke , and added “ It       isn’t
 # V/J     J/P D   NSg/V/J/P . . NPr/ISg+ V/J      D+  N🅪Sg/V/J+ NSg/R NPr/ISg+ NSg/V . V/C V/J   . NPr/ISg+ NSg/V
 > a   letter , after all          : it’s a   set     of verses . ”
@@ -5676,8 +5676,8 @@
 # . V   IPl+ NPr/J/P D   NSg$       NᴹSg/V      . . V/J   I/D     P  D   NPl+    .
 >
 #
-> “ No     , they’re not   , ” said the White    Rabbit , “ and that’s the queerest thing  about
-# . NPr/P+ . W?      NSg/C . . V/J  D+  NPr/V/J+ NSg/V  . . V/C NSg$   D+  JS+      NSg/V+ J/P
+> “ No     , they’re not   , ” said the White     Rabbit , “ and that’s the queerest thing  about
+# . NPr/P+ . W?      NSg/C . . V/J  D+  NPr🅪/V/J+ NSg/V  . . V/C NSg$   D+  JS+      NSg/V+ J/P
 > it       . ” ( The jury    all          looked puzzled . )
 # NPr/ISg+ . . . D+  NSg/V/J NSg/I/J/C/Dq V/J+   V/J     . .
 >
@@ -5722,8 +5722,8 @@
 # . NSg/V NSg/IPl . . V/J  D   NPr/V/J+ .
 >
 #
-> The White   Rabbit put   on  his     spectacles . “ Where shall I   begin , please your
-# D+  NPr/V/J NSg/V  NSg/V J/P ISg/D$+ NPl+       . . NSg/C VX    ISg NSg/V . V      D$+
+> The White    Rabbit put   on  his     spectacles . “ Where shall I   begin , please your
+# D+  NPr🅪/V/J NSg/V  NSg/V J/P ISg/D$+ NPl+       . . NSg/C VX    ISg NSg/V . V      D$+
 > Majesty ? ” he       asked .
 # NSg/I+  . . NPr/ISg+ V/J+  .
 >
@@ -5734,8 +5734,8 @@
 # NSg/V+ . NSg/J/C+ NSg/V . .
 >
 #
-> These   were  the verses the White    Rabbit read  : —
-# I/Ddem+ NSg/V D   NPl/V  D+  NPr/V/J+ NSg/V+ NSg/V . .
+> These   were  the verses the White     Rabbit read  : —
+# I/Ddem+ NSg/V D   NPl/V  D+  NPr🅪/V/J+ NSg/V+ NSg/V . .
 >
 #
 > “ They told me       you    had been  to her    , And mentioned me       to him  : She  gave me       a    good
@@ -5938,8 +5938,8 @@
 # W?    P    D   NSg/V/J NPl       P  ISg/D$+ NPr/I/J/Dq+ NSg$     NSg/V/J+ .
 >
 #
-> The long    grass  rustled at    her     feet as    the White    Rabbit hurried by      — the frightened
-# D+  NPr/V/J NPr🅪/V V/J     NSg/P ISg/D$+ NPl+ NSg/R D+  NPr/V/J+ NSg/V+ V/J     NSg/J/P . D+  V/J+
+> The long    grass  rustled at    her     feet as    the White     Rabbit hurried by      — the frightened
+# D+  NPr/V/J NPr🅪/V V/J     NSg/P ISg/D$+ NPl+ NSg/R D+  NPr🅪/V/J+ NSg/V+ V/J     NSg/J/P . D+  V/J+
 > Mouse  splashed his     way    through the neighbouring pool   — she  could  hear the rattle
 # NSg/V+ V/J      ISg/D$+ NSg/J+ NSg/J/P D+  V/Comm+      NSg/V+ . ISg+ NSg/VX V    D   NSg/V
 > of the teacups as    the March  Hare    and his     friends shared their never - ending meal  ,

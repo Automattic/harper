@@ -897,7 +897,7 @@ Baidu/OVg
 Baikal/Og
 Bailey/ONg
 Baird/Og
-Bakelite/Ng
+Bakelite/Nmg
 Baker/ONg
 Bakersfield/Og
 Baku/Og
@@ -6108,7 +6108,7 @@ Lucile/Og
 Lucille/Og
 Lucinda/Og
 Lucio/g
-Lucite/OSg
+Lucite/OmSg
 Lucius/Og
 Lucknow/Og
 Lucretia/Og
@@ -6534,7 +6534,7 @@ Maseru/Og
 Mashhad/Og
 Mason/ONgS
 Masonic/Jg
-Masonite/Ng
+Masonite/Nmg
 Mass/NOgS
 Massachusetts/Og
 Massasoit/g
@@ -8992,7 +8992,7 @@ Samoset/g
 Samoyed/Ng
 Sampson/Og
 Samson/Og
-Samsonite/g
+Samsonite/Og
 Samsung/ONg
 Samuel/Og
 Samuelson/Og
@@ -10495,7 +10495,7 @@ Vedanta/Og
 Vedic/J
 Vega/ONSg
 Vegas/ONg
-Vegemite/Og
+Vegemite/Omg
 Vela/Og
 Velasquez/Og
 Velazquez/Og
@@ -10777,7 +10777,7 @@ Whipple/ONg
 Whirlpool/g
 Whistler/Og
 Whitaker/Og
-White/OJNSg
+White/OJNwSg
 Whitefield/Og
 Whitehall/Og
 Whitehead/ONg
@@ -13785,7 +13785,7 @@ bailout/~NSg
 bailsman/N0g
 bailsmen/N9
 bairn/NVgS
-bait/~NVJSGgd
+bait/~NwVJSGgd
 baize/NVg
 bake/~VNd>SgZG
 baked/~VJU
@@ -14748,7 +14748,7 @@ bitch/~NVGgdS
 bitchily/R
 bitchiness/Ng
 bitchy/Jp>^
-bitcoin/ONSg
+bitcoin/ONwSg
 bite/~VN>SgZ
 biter/NgS
 biting/~VNJY
@@ -16130,7 +16130,7 @@ calcification/Ng
 calcify/VGndS
 calcimine/NVdSgG
 calcine/VNdSG
-calcite/Ng
+calcite/Nmg
 calcium/~Ng
 calculable/Ji
 calculate/~VrGnvdSX
@@ -16797,10 +16797,10 @@ cello/~NgS
 cellophane/NVg
 cellphone/~NVgS
 cellular/~JNSg
-cellulite/Ng
+cellulite/Nmg
 cellulitis/N
-celluloid/Ng
-cellulose/~NJg
+celluloid/Nmg
+cellulose/~NmJg
 cement/~NwVgd>ZGS
 cementer/Ng
 cementum/Ng
@@ -18426,7 +18426,7 @@ composability/Nmg
 compose/~VrEeGSdB
 composedly/R
 composer/~NgS
-composite/~JNVgYGnXdS
+composite/~JNwVgYGnXdS
 composition/~Neg
 compositional/~J
 compositor/NSg
@@ -19118,7 +19118,7 @@ cordage/Ng
 cordial/~JNSgY
 cordiality/Ng
 cordillera/~NgS
-cordite/Ng
+cordite/Nmg
 cordless/JN
 cordon/~NVSgdG
 cordovan/NJg
@@ -20556,6 +20556,7 @@ defoliant/NSg
 defoliate/VJdSGn
 defoliation/Ng
 defoliator/NgS
+deformable/J
 deformity/~NSg
 defraud/~Vd>ZGS
 defrauder/Ng
@@ -24076,7 +24077,7 @@ faience/Ng
 fail/~VNJdGzS
 failing/~VNPg
 faille/Ng
-failure/~NSg
+failure/~NwSg
 fain/JV>^
 faint/~JNVSgd>Y^Gp
 fainthearted/J
@@ -41100,8 +41101,8 @@ realize/~VdSBGU<@
 realized/~VU<@
 reallocation/NwgS
 realm/~NgS
-realness/Ng
-realpolitik/Ng
+realness/Nmg
+realpolitik/Nmg
 realtor/NgS
 realty/~Ng
 ream/NVZGgd>S
@@ -46759,7 +46760,7 @@ subway/~NVgS
 subwoofer/NgS
 subzero/J
 succeed/~VGdS
-success/~NvgS
+success/~NwvgS
 successful/~JUY
 succession/~NSg
 successive/~JY
@@ -50488,7 +50489,7 @@ valour/Nmg!@_
 valuable/~JNgS
 valuate/VdSG
 valuation/~NergS
-value/~NVerGSd
+value/~NwVerGSd
 value's
 valueless/J
 valuer/NSg
@@ -51468,6 +51469,7 @@ weblog/NgS
 webmaster/NSg
 webmistress/NgS
 website/~NSg
+webstore/NgS
 wed/~VrS
 wedded/JVr
 wedder/N
@@ -51684,7 +51686,7 @@ whistle/~NVgZGd>S
 whistleblower/~NgS
 whistler/~Ng
 whit/~NPgdn>SX^Gz
-white/~JNVSpg
+white/~JNwVSpg
 whitebait/NV
 whiteboard/NVS
 whitecap/NSg
@@ -52762,7 +52764,7 @@ Lenovo/Og           # computer manufacturer
 Levenshtein/g       # surname, mathematician
 LiDAR/N             # FIXME! elsewhere we have LIDAR
 LinkedIn/Og
-Loctite/Og          # product
+Loctite/Omg         # product
 Logotherapy/Sg
 Longreads/Og
 LoRA/NwSg           # low-rank adaptation
@@ -52973,6 +52975,7 @@ Wireguard/Sg
 WooCommerce/Og
 XFS/Ng              # file system
 XLR/Ng              # connector
+XPath/Og            # XML path language
 Xbox/NOgS
 Xcode/Og            # Apple IDE
 Xorg/ONgS
@@ -53051,6 +53054,7 @@ pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
 pastebin/NgS
 pentester/NSg       # penetration tester
 pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
+preshared/J
 quadtree/NgS        # data structure
 quicksort/NgSVdG    # algo
 raytracer/N         # dictionaries prefer: ray tracer
@@ -53199,6 +53203,7 @@ far right/NgS
 far-right/J
 fast track/NgSVdG
 feature-length/J
+file size/NgS
 fine-tune/VSdG
 first-hand/R
 first person/Ng
@@ -53418,6 +53423,7 @@ ray tracer/NgS
 ray tracing/Nmg
 re-enable/VdSG
 read-only/J
+real estate/Nmg
 real time/Ng
 real-time/J
 real world/Ng
@@ -53456,6 +53462,7 @@ shoulder-to-shoulder/R
 shout-out/NS
 sign on/V
 sign-on/NgS
+sign-up/NgS
 single-handedly/R
 six-footer/NgS
 six-pack/NgS
@@ -53487,6 +53494,7 @@ sussed out/V
 susses out/V
 sussing out/V
 ta-da
+tai chi/Nmg
 take-home/JNgS
 tax-exempt/J
 tech-savvy/J
