@@ -1006,7 +1006,7 @@ pub fn lint_group() -> LintGroup {
         "SufficeItToSay" => (
             ["suffice to say"],
             ["suffice it to say"],
-            "`Suffice it to say` is more standard and more common variant.",
+            "`Suffice it to say` is the more standard and more common variant.",
             "Corrects `suffice to say` to `suffice it to say`."
         ),
         "LikeThePlague" => (
@@ -1272,6 +1272,12 @@ pub fn lint_group() -> LintGroup {
             ["brutality"],
             "This word has a more standard, more common synonym.",
             "Suggests the more standard and common synonym `brutality`."
+        ),
+        "PeaceOfMind" => (
+            ["piece of mind"],
+            ["peace of mind"],
+            "The phrase is `peace of mind`, meaning `calm`. A `piece` is a `part` of something.",
+            "Corrects `piece of mind` to `peace of mind`."
         ),
     });
 
@@ -2773,6 +2779,15 @@ mod tests {
             "That being said, if you find upgrading to newer versions to be unsurmountable, please open an issue.",
             lint_group(),
             "That being said, if you find upgrading to newer versions to be insurmountable, please open an issue.",
+        )
+    }
+
+    #[test]
+    fn corrects_piece_of_mind() {
+        assert_suggestion_result(
+            "A Discord bot that gives you piece of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
+            lint_group(),
+            "A Discord bot that gives you peace of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
         )
     }
 }
