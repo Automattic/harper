@@ -23,7 +23,7 @@ smallvec = { version = "1.15.1", features = ["serde"] }
 thiserror = "2.0.12"
 unicode-blocks = "0.1.9"
 unicode-script = "0.5.7"
-unicode-width = "0.2.0"
+unicode-width = "0.2.1"
 levenshtein_automata = { version = "0.2.1", features = ["fst_automaton"] }
 cached = "0.55.1"
 lru = "0.14.0"
