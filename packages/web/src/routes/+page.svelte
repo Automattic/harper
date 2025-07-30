@@ -6,6 +6,7 @@ import Graph from '$lib/Graph.svelte';
 import Logo from '$lib/Logo.svelte';
 import ObsidianLogo from '$lib/ObsidianLogo.svelte';
 import Section from '$lib/Section.svelte';
+import TypewriterHeading from '$lib/TypewriterHeading.svelte';
 
 export const frontmatter = {
 	home: false,
@@ -18,13 +19,21 @@ window.addEventListener('resize', () => {
 });
 
 let mobile = $derived(width < 640);
+
+const headings = [
+	'Grammar Checking That Fits into Your Workflow',
+	'Quality Grammar Checking, Straight and Simple',
+	'Grammar Checking Without the Cloud',
+	'Grammar Checking That Respects Your Privacy',
+	'Grammar Checking for Developers',
+];
 </script>
 
 <div class="w-full flex flex-col items-center">
 	<Logo width="200px" />
 </div>
 <h1 class="font-bold text-center">Hi. I’m Harper.</h1>
-<h2 class="text-center">The Grammar Checker for Developers</h2>
+<TypewriterHeading items={headings} />
 
 <div
 	class="md:flex md:flex-row grid grid-cols-2 items-center justify-evenly mt-5 transition-all place-items-center"

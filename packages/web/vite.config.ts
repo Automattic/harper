@@ -21,7 +21,7 @@ export default defineConfig({
 				editLink: 'https://github.com/automattic/harper/edit/master/packages/web/src/routes/:route',
 				logo: '/circle-logo.png',
 				github: 'https://github.com/automattic/harper',
-				discord: 'https://discord.gg/JBqcAaKrzQ',
+				discord: 'https://discord.gg/invite/JBqcAaKrzQ',
 				themeColor: {
 					primary: '#818eae',
 					dark: '#355280',

@@ -1008,6 +1008,48 @@ pub fn lint_group() -> LintGroup {
             "`Suffice it to say` is more standard and more common variant.",
             "Corrects `suffice to say` to `suffice it to say`."
         ),
+        "LikeThePlague" => (
+            ["like a plague"],
+            ["like the plague"],
+            "`Things are avoided `like the plague` not `like a plague`.",
+            "Corrects `like a plague` to `like the plague`."
+        ),
+        "HaveGone" => (
+            ["have went"],
+            ["have gone"],
+            "`Have gone` is the correct form.",
+            "Corrects `have went` to `have gone`."
+        ),
+        "HadGone" => (
+            ["had went"],
+            ["had gone"],
+            "`Had gone` is the correct form.",
+            "Corrects `had went` to `had gone`."
+        ),
+        "HavingGone" => (
+            ["having went"],
+            ["having gone"],
+            "`Having gone` is the correct form.",
+            "Corrects `having went` to `having gone`."
+        ),
+        "HasGone" => (
+            ["has went"],
+            ["has gone"],
+            "`Has gone` is the correct form.",
+            "Corrects `has went` to `has gone`."
+        ),
+        "CaseInPoint" => (
+            ["case and point"],
+            ["case in point"],
+            "`Case in point` is the correct form of the phrase.",
+            "Corrects `case and point` to `case in point`."
+        ),
+        "AsWell" => (
+            ["aswell"],
+            ["as well"],
+            "`as well` should be written as two words.",
+            "Corrects `aswell` to `as well`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2027,6 +2069,69 @@ mod tests {
             "Build flutter releases in github actions for production only android for while.",
             lint_group(),
             "Build flutter releases in github actions for production only android for a while.",
+        );
+    }
+
+    #[test]
+    fn correct_like_a_plague() {
+        assert_suggestion_result(
+            "Below is the worst example of them all (avoid such coding like a plague):",
+            lint_group(),
+            "Below is the worst example of them all (avoid such coding like the plague):",
+        );
+    }
+
+    #[test]
+    fn correct_have_went() {
+        assert_suggestion_result(
+            "I have went into the btle.py file and added a print statement in _connect()",
+            lint_group(),
+            "I have gone into the btle.py file and added a print statement in _connect()",
+        );
+    }
+
+    #[test]
+    fn correct_had_went() {
+        assert_suggestion_result(
+            "Not sure if TroLoos had went from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
+            lint_group(),
+            "Not sure if TroLoos had gone from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
+        );
+    }
+
+    #[test]
+    fn correct_having_went() {
+        assert_suggestion_result(
+            "Having went through the setup guidelines and picking react starter, running npm run watch results in an error",
+            lint_group(),
+            "Having gone through the setup guidelines and picking react starter, running npm run watch results in an error",
+        );
+    }
+
+    #[test]
+    fn correct_has_went() {
+        assert_suggestion_result(
+            "I would like to report that the package request which you are loading has went into maintenance mode.",
+            lint_group(),
+            "I would like to report that the package request which you are loading has gone into maintenance mode.",
+        );
+    }
+
+    #[test]
+    fn correct_case_and_point_spaced() {
+        assert_suggestion_result(
+            "They are just not as high of a priority as other tasks that user's are requesting for, a case and point is I have never ran into this issue.",
+            lint_group(),
+            "They are just not as high of a priority as other tasks that user's are requesting for, a case in point is I have never ran into this issue.",
+        );
+    }
+
+    #[test]
+    fn correct_aswell() {
+        assert_suggestion_result(
+            "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
+            lint_group(),
+            "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
         );
     }
 }

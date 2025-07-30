@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper",
 	"description": "The grammar checker for developers",
-	"version": "0.28.0",
+	"version": "0.29.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -146,6 +146,12 @@
 					"default": true,
 					"description": "This rule looks for sequences of words of the form `adjective of a`."
 				},
+				"harper.linters.AfterAWhile": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the missing article after `after while` or `after awhile`, forming `after a while`."
+				},
 				"harper.linters.AlzheimersDisease": {
 					"scope": "resource",
 					"type": "boolean",
@@ -235,6 +241,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects nonstandard `as early back as` to `as far back as`."
+				},
+				"harper.linters.AtFaceValue": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `on face value` to the more usual `at face value`."
 				},
 				"harper.linters.Australia": {
 					"scope": "resource",
@@ -416,6 +428,12 @@
 					"default": true,
 					"description": "Fix common comma errors such as no space after, erroneous space before, etc., Asian commas instead of English commas, etc."
 				},
+				"harper.linters.CompaniesProductsAndTrademarks": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Ensure proper capitalization of companies, products, and trademarks."
+				},
 				"harper.linters.CompoundNouns": {
 					"scope": "resource",
 					"type": "boolean",
@@ -457,6 +475,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the eggcorn `damp squid` to `damp squib`, ensuring the intended meaning of a failed or underwhelming outcome."
+				},
+				"harper.linters.Dashes": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Rather than outright using an em dash or en dash, authors often use a sequence of hyphens, expecting them to be condensed.\nThis rule does so."
 				},
 				"harper.linters.DayAndAge": {
 					"scope": "resource",
@@ -548,11 +572,65 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `everywhere`."
 				},
+				"harper.linters.Excellent": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Provides a stronger word choice by replacing `very good` with `excellent` for clarity and emphasis."
+				},
+				"harper.linters.ExpandBecause": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the informal abbreviation `cuz` to the full word `because` for formality."
+				},
+				"harper.linters.ExpandDependencies": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `deps` to the full word `dependencies` for clarity."
+				},
+				"harper.linters.ExpandDependency": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `dep` to the full word `dependency` for clarity."
+				},
+				"harper.linters.ExpandMinimum": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `min` to the full word `minimum` for clarity."
+				},
+				"harper.linters.ExpandStandardInput": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `stdin` to `standard input` for clarity."
+				},
+				"harper.linters.ExpandStandardOutput": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `stdout` to `standard output` for clarity."
+				},
 				"harper.linters.ExpandTimeShorthands": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Expands time-related abbreviations (`hr`, `hrs`, `min`, `mins`, `sec`, `secs`, `ms`, `msec`, `msecs`) to their full forms (`hour`, `hours`, `minute`, `minutes`, `second`, `seconds`, `millisecond`, `milliseconds`)."
+				},
+				"harper.linters.ExpandWith": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `w/` to the full word `with` for clarity."
+				},
+				"harper.linters.ExpandWithout": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `w/o` to the full word `without` for clarity."
 				},
 				"harper.linters.Expatriate": {
 					"scope": "resource",
@@ -613,6 +691,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Eliminates the incorrect merging in `for along time`."
+				},
+				"harper.linters.ForAWhile": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the missing article in `for while` or `for awhile`, forming `for a while`."
 				},
 				"harper.linters.ForAllIntentsAndPurposes": {
 					"scope": "resource",
@@ -728,6 +812,30 @@
 					"default": true,
 					"description": "When referring to holidays, make sure to treat them as a proper noun."
 				},
+				"harper.linters.HomeInOn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `hone in on` to `home in on`."
+				},
+				"harper.linters.HomedInOn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `hone in on` to `home in on`."
+				},
+				"harper.linters.HomesInOn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `hone in on` to `home in on`."
+				},
+				"harper.linters.HomingInOn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `hone in on` to `home in on`."
+				},
 				"harper.linters.HopHope": {
 					"scope": "resource",
 					"type": "boolean",
@@ -805,12 +913,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `in one foul swoop` to `in one fell swoop`, preserving the phrase’s original meaning of sudden and complete action."
-				},
-				"harper.linters.InQuiteAWhile": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `in quite awhile` => `in quite a while` by inserting the missing article."
 				},
 				"harper.linters.InThe": {
 					"scope": "resource",
@@ -961,12 +1063,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "When referring to the states of Malaysia and their capitals, make sure to treat them as a proper noun."
-				},
-				"harper.linters.Matcher": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "A collection of curated rules. A catch-all that will be removed in the future."
 				},
 				"harper.linters.MergeWords": {
 					"scope": "resource",
@@ -1166,6 +1262,12 @@
 					"default": true,
 					"description": "Corrects `old wise tale` to `old wives' tale`, preserving the phrase’s meaning as an unfounded traditional belief."
 				},
+				"harper.linters.OnSecondThought": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration."
+				},
 				"harper.linters.OnTheSpurOfTheMoment": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1250,12 +1352,6 @@
 					"default": true,
 					"description": "Detects incorrect usage of `peak` or `peek` when the intended word is `pique`, as in the phrase `you've peaked my interest`."
 				},
-				"harper.linters.PluralConjugate": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": false,
-					"description": "Make sure you use the correct conjugation of the verb \"to be\" in plural contexts."
-				},
 				"harper.linters.PocketCastsNames": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1315,6 +1411,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensure proper capitalization of proper nouns."
+				},
+				"harper.linters.QuiteAWhile": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `quite awhile` => `quite a while` by inserting the missing article."
 				},
 				"harper.linters.RealTrouper": {
 					"scope": "resource",
@@ -1442,6 +1544,12 @@
 					"default": true,
 					"description": "Detects incorrect usage of `state of art` and suggests `state of the art` as the correct phrase."
 				},
+				"harper.linters.SufficeItToSay": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `suffice to say` to `suffice it to say`."
+				},
 				"harper.linters.SupposedTo": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1453,12 +1561,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures the correct use of the adverb `seriously` instead of the adjective `serious` in phrases like `take it seriously`."
-				},
-				"harper.linters.TerminatingConjunctions": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Subordinating conjunctions are words that create a grammatical space for another idea or clause. As such, they should never appear at the end of a clause."
 				},
 				"harper.linters.ThatChallenged": {
 					"scope": "resource",
@@ -1483,6 +1585,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `the another`."
+				},
+				"harper.linters.TheHowWhy": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Removes the extra `the` from expressions like `the how`, skipping `how to` and `who's who`."
 				},
 				"harper.linters.ThenThan": {
 					"scope": "resource",
@@ -1532,6 +1640,12 @@
 					"default": true,
 					"description": "Removes redundant `to` before `towards`."
 				},
+				"harper.linters.TrialAndError": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `trail` to `trial` in `trial and error`."
+				},
 				"harper.linters.TumblrNames": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1573,6 +1687,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "When referring to national or international organizations, make sure to treat them as a proper noun."
+				},
+				"harper.linters.Unless": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `unless if` to `unless`."
 				},
 				"harper.linters.Upset": {
 					"scope": "resource",
@@ -1616,6 +1736,12 @@
 					"default": true,
 					"description": "Ensures `well-being` is correctly hyphenated."
 				},
+				"harper.linters.WellKept": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags `highly-kept` and recommends `well-kept` as an alternative."
+				},
 				"harper.linters.Whereas": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1639,6 +1765,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the redundancy in `whole entire` to `whole` or `entire`."
+				},
+				"harper.linters.WidelyAccepted": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags `wide accepted`, `wide acceptable`, or `wide used` and recommends switching `wide` to the adverb `widely`."
 				},
 				"harper.linters.Widespread": {
 					"scope": "resource",
@@ -1687,12 +1819,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `worse ever` to `worst ever` for proper comparative usage."
-				},
-				"harper.linters.WrongQuotes": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": false,
-					"description": "The key on the keyboard often used as a quotation mark is actually a double-apostrophe. Use the correct character."
 				}
 			}
 		}

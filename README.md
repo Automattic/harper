@@ -52,7 +52,7 @@ Just make sure to read [our contribution guidelines first.](https://github.com/a
   - [Emacs](https://writewithharper.com/docs/integrations/emacs)
   - [Zed](https://writewithharper.com/docs/integrations/zed)
 - [`harper.js` Documentation](https://writewithharper.com/docs/harperjs/introduction)
-- [Official Discord Server](https://discord.com/JBqcAaKrzQ)
+- [Official Discord Server](https://discord.com/invite/JBqcAaKrzQ)
 
 ## Huge Thanks
 

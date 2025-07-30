@@ -11,12 +11,14 @@ const FALSE_POSITIVES: &[&str] = &[
     "emblematic",
     "equivalent",
     "full",
+    "fun",
     "inside",
-    "up",
-    // "more" is tricky but it often seems correct and idiomatic.
     "more",
     "much",
+    "off",
     "out",
+    "shy",
+    "up",
     // The word is used more as a noun in this context.
     // (using .kind.is_likely_homograph() here is too strict)
     "back",
@@ -474,6 +476,35 @@ mod tests {
     fn dont_flag_eighth() {
         assert_lint_count(
             "It's about an eighth of an inch or whatever",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_shy() {
+        assert_lint_count(
+            "... or just shy of a third of the country's total trade deficit.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_fun() {
+        assert_lint_count(
+            "Remember that $4,000 Hermes horse bag I was making fun of a little while ago.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_off() {
+        // Can be an adjective in e.g. "The TV is off".
+        // This should be in a different lint that handles based on/off/off of.
+        assert_lint_count(
+            "can't identify a person based off of an IP from 10 years ago",
             AdjectiveOfA,
             0,
         );
