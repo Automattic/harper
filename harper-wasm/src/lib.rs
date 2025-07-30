@@ -8,8 +8,8 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Parser, PlainEnglish};
 use harper_core::{
-    CharString, Dictionary, Document, FstDictionary, IgnoredLints, Lrc, MergedDictionary,
-    MutableDictionary, WordMetadata, remove_overlaps,
+    CharString, Dictionary, Document, FstDictionary, IgnoredLints, LintContext, Lrc,
+    MergedDictionary, MutableDictionary, WordMetadata, remove_overlaps,
 };
 use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};
@@ -229,6 +229,25 @@ impl Linter {
         );
 
         self.ignored_lints.ignore_lint(&lint.inner, &document);
+    }
+
+    /// Add a specific context hash to the ignored lints list.
+    pub fn ignore_hash(&mut self, hash: u64) {
+        self.ignored_lints.ignore_hash(hash);
+    }
+
+    /// Compute the context hash of a given lint.
+    pub fn context_hash(&self, source_text: String, lint: &Lint) -> u64 {
+        let source: Vec<_> = source_text.chars().collect();
+
+        let document = Document::new_from_vec(
+            source.into(),
+            &lint.language.create_parser(),
+            &self.dictionary,
+        );
+
+        let ctx = LintContext::from_lint(&lint.inner, &document);
+        ctx.default_hash()
     }
 
     /// Perform the configured linting on the provided text.

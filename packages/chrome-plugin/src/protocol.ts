@@ -10,7 +10,8 @@ export type Request =
 	| GetDialectRequest
 	| SetDomainStatusRequest
 	| GetDomainStatusRequest
-	| AddToUserDictionaryRequest;
+	| AddToUserDictionaryRequest
+	| IgnoreLintRequest;
 
 export type Response =
 	| LintResponse
@@ -88,6 +89,11 @@ export type SetDomainStatusRequest = {
 export type AddToUserDictionaryRequest = {
 	kind: 'addToUserDictionary';
 	word: string;
+};
+
+export type IgnoreLintRequest = {
+	kind: 'ignoreLint';
+	contextHash: string;
 };
 
 /** Similar to returning void. */
