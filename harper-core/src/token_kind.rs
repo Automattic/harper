@@ -386,28 +386,28 @@ impl TokenKind {
         metadata.is_linking_verb()
     }
 
-    pub fn is_not_plural_nominal(&self) -> bool {
+    pub fn is_non_plural_nominal(&self) -> bool {
         let TokenKind::Word(Some(metadata)) = self else {
             return true;
         };
 
-        metadata.is_not_plural_noun() || metadata.is_not_plural_pronoun()
+        metadata.is_non_plural_noun() || metadata.is_non_plural_pronoun()
     }
 
-    pub fn is_not_plural_noun(&self) -> bool {
+    pub fn is_non_plural_noun(&self) -> bool {
         let TokenKind::Word(Some(metadata)) = self else {
             return true;
         };
 
-        metadata.is_not_plural_noun()
+        metadata.is_non_plural_noun()
     }
 
-    pub fn is_not_plural_pronoun(&self) -> bool {
+    pub fn is_non_plural_pronoun(&self) -> bool {
         let TokenKind::Word(Some(metadata)) = self else {
             return true;
         };
 
-        metadata.is_not_plural_pronoun()
+        metadata.is_non_plural_pronoun()
     }
 
     pub fn is_common_word(&self) -> bool {
