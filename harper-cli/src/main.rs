@@ -36,7 +36,7 @@ enum Args {
         count: bool,
         /// Restrict linting to only a specific set of rules.
         /// If omitted, `harper-cli` will run every rule.
-        #[arg(short, long)]
+        #[arg(short, long, value_delimiter = ',')]
         only_lint_with: Option<Vec<String>>,
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]

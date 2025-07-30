@@ -1,0 +1,34 @@
+name: Build Chrome Plugin 
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+  merge_group:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install `pandoc`
+        run: sudo apt-get update && sudo apt-get install pandoc -y
+      - name: Install `wasm-pack`
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - name: Build
+        run: just build-chrome-plugin 
+      - name: Upload extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: harper-chrome-plugin.zip
+          path: "packages/chrome-plugin/package/harper-chrome-plugin.zip"

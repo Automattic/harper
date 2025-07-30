@@ -165,11 +165,15 @@ mod tests {
         );
     }
 
-    // -ing forms can act as nouns, current heuristics cannot distinguish
-    // #[test]
-    // fn flag_to_checking() {
-    //     assert_lint_count("to checking", InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American), 1);
-    // }
+    #[test]
+    #[ignore = "-ing forms can act as nouns, current heuristics cannot distinguish"]
+    fn flag_to_checking() {
+        assert_lint_count(
+            "to checking",
+            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            1,
+        );
+    }
 
     #[test]
     fn dont_flag_check_ed() {
@@ -198,15 +202,15 @@ mod tests {
         );
     }
 
-    // can't check yet. 'capture' is noun as well as verb. "to nouns" is good English. we can't disambiguate verbs from nouns.
-    // #[test]
-    // fn check_993_suggestions() {
-    //     assert_suggestion_result(
-    //         "A location-agnostic structure that attempts to captures the context and content that a Lint occurred.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-    //         "A location-agnostic structure that attempts to capture the context and content that a Lint occurred.",
-    //     );
-    // }
+    #[test]
+    #[ignore = "can't check yet. 'capture' is noun as well as verb. \"to nouns\" is good English. we can't disambiguate verbs from nouns."]
+    fn check_993_suggestions() {
+        assert_suggestion_result(
+            "A location-agnostic structure that attempts to captures the context and content that a Lint occurred.",
+            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "A location-agnostic structure that attempts to capture the context and content that a Lint occurred.",
+        );
+    }
 
     #[test]
     fn dont_flag_embarrass_not_in_dictionary() {
@@ -226,15 +230,15 @@ mod tests {
         );
     }
 
-    // can't check yet. 'catch' is noun as well as verb. "to nouns" is good English. we can't disambiguate verbs from nouns.
-    // #[test]
-    // fn corrects_es_ending() {
-    //     assert_suggestion_result(
-    //         "I need it to catches every exception.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-    //         "I need it to catch every exception.",
-    //     );
-    // }
+    #[test]
+    #[ignore = "can't check yet. 'catch' is noun as well as verb. 'to nouns' is good English. we can't disambiguate verbs from nouns."]
+    fn corrects_es_ending() {
+        assert_suggestion_result(
+            "I need it to catches every exception.",
+            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "I need it to catch every exception.",
+        );
+    }
 
     #[test]
     fn corrects_ed_ending() {
@@ -263,15 +267,15 @@ mod tests {
         );
     }
 
-    // can't check yet. surprisingly, 'explore' is noun as well as verb. "to nouns" is good English. we can't disambiguate verbs from nouns.
-    // #[test]
-    // fn corrects_explor_ed() {
-    //     assert_suggestion_result(
-    //         "I went to explored distant galaxies.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-    //         "I went to explore distant galaxies.",
-    //     );
-    // }
+    #[test]
+    #[ignore = "can't check yet. surprisingly, 'explore' is noun as well as verb. 'to nouns' is good English. we can't disambiguate verbs from nouns."]
+    fn corrects_explor_ed() {
+        assert_suggestion_result(
+            "I went to explored distant galaxies.",
+            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            "I went to explore distant galaxies.",
+        );
+    }
 
     #[test]
     fn cant_flag_express_ed_also_noun() {

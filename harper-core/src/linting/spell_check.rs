@@ -268,14 +268,15 @@ mod tests {
         );
     }
 
-    // #[test]
-    // fn australian_labour_vs_labor() {
-    //     assert_lint_count(
-    //         "In Australia we write 'labour' but the political party is the 'Labor Party'.",
-    //         SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
-    //         0,
-    //     )
-    // }
+    #[test]
+    #[ignore = "This test is broken due to the metadata dialect field not being a collection"]
+    fn australian_labour_vs_labor() {
+        assert_lint_count(
+            "In Australia we write 'labour' but the political party is the 'Labor Party'.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Australian),
+            0,
+        )
+    }
 
     #[test]
     fn australian_words_flagged_for_american_english() {
