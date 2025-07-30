@@ -739,17 +739,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     592 | “Did you give Nick a little heart to heart talk on the veranda?” demanded Tom
-         |                                                        ^~~~~~~ Did you mean to spell `veranda` this way?
-Suggest:
-  - Replace with: “verandas”
-  - Replace with: “veranda's”
-  - Replace with: “Miranda”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      628 | Already it was deep summer on roadhouse roofs and in front of wayside garages,
@@ -1717,17 +1706,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    1346 | couldn’t find him from the top of the steps, and he wasn’t on the veranda. On a
-         |                                                                   ^~~~~~~ Did you mean to spell `veranda` this way?
-Suggest:
-  - Replace with: “verandas”
-  - Replace with: “veranda's”
-  - Replace with: “Miranda”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     1347 | chance we tried an important-looking door, and walked into a high Gothic
     1348 | library, panelled with carved English oak, and probably transported complete
          |          ^~~~~~~~ Did you mean `paneled`?
@@ -2420,9 +2398,9 @@ Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |                            ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
+  - Replace with: “So”
   - Replace with: “Sq”
+  - Replace with: “St”
 
 
 
@@ -2523,9 +2501,9 @@ Message: |
     1868 | Excellence, and Eckhaust and Clyde Cohen and Don S. Schwartze (the son) and
          |                                                  ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
+  - Replace with: “So”
   - Replace with: “Sq”
+  - Replace with: “St”
 
 
 
@@ -2567,9 +2545,9 @@ Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
-  - Replace with: “Gt”
   - Replace with: “Go”
   - Replace with: “Gr”
+  - Replace with: “Gs”
 
 
 
@@ -2812,9 +2790,9 @@ Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |             ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
+  - Replace with: “So”
   - Replace with: “Sq”
+  - Replace with: “St”
 
 
 
@@ -2871,8 +2849,8 @@ Message: |
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
   - Replace with: “Lo”
-  - Replace with: “La”
-  - Replace with: “Ll”
+  - Replace with: “Lb”
+  - Replace with: “Lg”
 
 
 
@@ -4934,17 +4912,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    3693 | I went with them out to the veranda. On the green Sound, stagnant in the heat,
-         |                             ^~~~~~~ Did you mean to spell `veranda` this way?
-Suggest:
-  - Replace with: “verandas”
-  - Replace with: “veranda's”
-  - Replace with: “Miranda”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     3709 | We had luncheon in the dining-room, darkened too against the heat, and drank
     3710 | down nervous gayety with the cold ale.
          |              ^~~~~~ Did you mean to spell `gayety` this way?
@@ -5279,18 +5246,6 @@ Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
   - Replace with: “Biro's”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    4066 | “That was his cousin. I knew his whole family history before he left. He gave me
-    4067 | an aluminum putter that I use to-day.”
-         |    ^~~~~~~~ Did you mean to spell `aluminum` this way?
-Suggest:
-  - Replace with: “aluminum's”
-  - Replace with: “alumnus”
-  - Replace with: “alumina”
 
 
 
@@ -6001,18 +5956,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    4703 | I walked back along the border of the lawn, traversed the gravel softly, and
-    4704 | tiptoed up the veranda steps. The drawing-room curtains were open, and I saw
-         |                ^~~~~~~ Did you mean to spell `veranda` this way?
-Suggest:
-  - Replace with: “verandas”
-  - Replace with: “veranda's”
-  - Replace with: “Miranda”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     4739 | Toward dawn I heard a taxi go up Gatsby’s drive, and immediately I jumped out of
@@ -6348,7 +6291,7 @@ Message: |
 Suggest:
   - Replace with: “H”
   - Replace with: “Ham”
-  - Replace with: “He”
+  - Replace with: “Hem”
 
 
 

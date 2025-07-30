@@ -1278,6 +1278,12 @@ pub fn lint_group() -> LintGroup {
             "This word has a more standard, more common synonym.",
             "Suggests the more standard and common synonym `brutality`."
         ),
+        "KindOf" => (
+            ["kinda of"],
+            ["kind of", "kinda"],
+            "`Kinda` already means `kind of`, so `kinda of` is redundant.",
+            "Corrects `kinda of` to `kind of`."
+        ),
         "InNeedOf" => (
             ["in need for"],
             ["in need of"],
@@ -2797,6 +2803,15 @@ mod tests {
             lint_group(),
             "That being said, if you find upgrading to newer versions to be insurmountable, please open an issue.",
         )
+    }
+
+    #[test]
+    fn corrects_kinda_of() {
+        assert_suggestion_result(
+            "Some kinda of Sync issue only with 0.79.1",
+            lint_group(),
+            "Some kind of Sync issue only with 0.79.1",
+        );
     }
 
     #[test]
