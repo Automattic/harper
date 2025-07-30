@@ -31,6 +31,7 @@ use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
 use super::expand_time_shorthands::ExpandTimeShorthands;
+use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
 use super::hedging::Hedging;
@@ -90,7 +91,7 @@ use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, Oxf
 use super::{Lint, PatternLinter};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, phrase_corrections};
+use crate::linting::{closed_compounds, initialisms, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
 
@@ -336,6 +337,7 @@ impl LintGroup {
             dictionary.clone(),
         ));
         out.merge_from(&mut closed_compounds::lint_group());
+        out.merge_from(&mut initialisms::lint_group());
 
         // Add all the more complex rules to the group.
         insert_pattern_rule!(APart, true);
@@ -360,6 +362,7 @@ impl LintGroup {
         insert_struct_rule!(ElsePossessive, true);
         insert_struct_rule!(Everyday, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
+        insert_pattern_rule!(FewUnitsOfTimeAgo, true);
         insert_struct_rule!(FirstAidKit, true);
         insert_struct_rule!(ForNoun, true);
         insert_pattern_rule!(Hedging, true);

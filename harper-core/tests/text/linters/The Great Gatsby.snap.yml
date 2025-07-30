@@ -5,16 +5,18 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Ff”
+  - Replace with: “Fa”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
        3 | BY F. SCOTT FITZGERALD
-         |       ^~~~~ Did you mean `SCART`?
+         |       ^~~~~ Did you mean to spell `SCOTT` this way?
 Suggest:
-  - Replace with: “SCART”
+  - Replace with: “Scot”
+  - Replace with: “SCM's”
+  - Replace with: “SEO's”
 
 
 
@@ -970,7 +972,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bk”
 
 
 
@@ -1275,7 +1277,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bk”
 
 
 
@@ -2333,7 +2335,7 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
+  - Replace with: “Pp”
   - Replace with: “P”
   - Replace with: “Pa”
 
@@ -2411,7 +2413,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bk”
 
 
 
@@ -2545,9 +2547,9 @@ Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
+  - Replace with: “Gt”
   - Replace with: “Go”
   - Replace with: “Gr”
-  - Replace with: “Gs”
 
 
 
@@ -2628,7 +2630,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bk”
 
 
 
@@ -2970,7 +2972,7 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
+  - Replace with: “Pp”
   - Replace with: “P”
   - Replace with: “Pa”
 
@@ -6291,7 +6293,7 @@ Message: |
 Suggest:
   - Replace with: “H”
   - Replace with: “Ham”
-  - Replace with: “Hem”
+  - Replace with: “He”
 
 
 
@@ -6413,7 +6415,7 @@ Message: |
 Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gd's”
-  - Replace with: “Gab's”
+  - Replace with: “Gag's”
 
 
 
@@ -6425,7 +6427,7 @@ Message: |
 Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gd's”
-  - Replace with: “Gab's”
+  - Replace with: “Gag's”
 
 
 
@@ -6888,7 +6890,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bk”
 
 
 
@@ -6899,7 +6901,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Ff”
+  - Replace with: “Fa”
 
 
 
@@ -7328,9 +7330,9 @@ Message: |
     5692 | figures in my more fantastic dreams. I see it as a night scene by El Greco: a
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
-  - Replace with: “E”
   - Replace with: “Ea”
-  - Replace with: “Em”
+  - Replace with: “Ed”
+  - Replace with: “En”
 
 
 

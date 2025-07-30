@@ -8,7 +8,9 @@ use anyhow::{Context, Result, anyhow};
 use futures::future::join;
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, LintGroupConfig};
-use harper_core::parsers::{CollapseIdentifiers, IsolateEnglish, Markdown, Parser, PlainEnglish};
+use harper_core::parsers::{
+    CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
+};
 use harper_core::{
     Dialect, Dictionary, Document, FstDictionary, IgnoredLints, MergedDictionary,
     MutableDictionary, WordMetadata,
@@ -337,6 +339,7 @@ impl Backend {
             "html" => Some(Box::new(HtmlParser::default())),
             "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "typst" => Some(Box::new(Typst)),
+            "org" => Some(Box::new(OrgMode)),
             _ => None,
         };
 

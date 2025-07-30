@@ -1,6 +1,6 @@
 use crate::{
     Lrc, Token, TokenStringExt,
-    patterns::{EitherPattern, Pattern, SequencePattern, SpelledNumberPattern, WordSet},
+    patterns::{LongestMatchOf, Pattern, SequencePattern, SpelledNumberPattern, WordSet},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -35,7 +35,7 @@ impl Default for SinceDuration {
             SequencePattern::default()
                 .then_any_capitalization_of("since")
                 .then_whitespace()
-                .then(EitherPattern::new(vec![
+                .then(LongestMatchOf::new(vec![
                     Box::new(SpelledNumberPattern),
                     Box::new(SequencePattern::default().then_number()),
                 ]))
@@ -49,7 +49,7 @@ impl Default for SinceDuration {
             .then_any_capitalization_of("ago");
 
         Self {
-            pattern: Box::new(EitherPattern::new(vec![
+            pattern: Box::new(LongestMatchOf::new(vec![
                 Box::new(pattern_without_ago),
                 Box::new(pattern_with_ago),
             ])),

@@ -1,7 +1,7 @@
 use crate::{
     Token,
     linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{EitherPattern, SequencePattern, WordSet},
+    patterns::{LongestMatchOf, SequencePattern, WordSet},
 };
 
 pub struct PronounKnew {
@@ -39,7 +39,7 @@ impl Default for PronounKnew {
             .then_whitespace()
             .then_any_capitalization_of("new");
 
-        let combined_pattern = EitherPattern::new(vec![
+        let combined_pattern = LongestMatchOf::new(vec![
             Box::new(pronoun_then_new),
             Box::new(pronoun_adverb_then_new),
         ]);

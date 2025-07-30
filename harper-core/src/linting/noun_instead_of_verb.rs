@@ -1,6 +1,6 @@
 use crate::{
     Lrc, Token, TokenStringExt,
-    patterns::{EitherPattern, Pattern, SequencePattern, WordSet},
+    patterns::{LongestMatchOf, Pattern, SequencePattern, WordSet},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -55,7 +55,7 @@ pub struct NounInsteadOfVerb {
 
 impl Default for NounInsteadOfVerb {
     fn default() -> Self {
-        let pre_context = EitherPattern::new(vec![
+        let pre_context = LongestMatchOf::new(vec![
             Box::new(WordSet::new(PRONOUNS)),
             Box::new(WordSet::new(MODAL_VERBS_ETC)),
             Box::new(WordSet::new(ADVERBS)),
@@ -85,7 +85,7 @@ impl Default for NounInsteadOfVerb {
             .then_any_word();
 
         Self {
-            pattern: Box::new(EitherPattern::new(vec![
+            pattern: Box::new(LongestMatchOf::new(vec![
                 Box::new(pattern_followed_by_punctuation),
                 Box::new(pattern_followed_by_word),
                 Box::new(basic_pattern),

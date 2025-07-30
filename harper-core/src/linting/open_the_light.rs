@@ -1,7 +1,7 @@
 use crate::{
     Lrc, Token, TokenStringExt,
     linting::{LintKind, Suggestion},
-    patterns::{EitherPattern, Pattern, SequencePattern, WordSet},
+    patterns::{LongestMatchOf, Pattern, SequencePattern, WordSet},
 };
 
 use super::{Lint, PatternLinter};
@@ -45,7 +45,7 @@ impl Default for OpenTheLight {
             .t_ws()
             .then_noun();
 
-        let pattern = Box::new(EitherPattern::new(vec![
+        let pattern = Box::new(LongestMatchOf::new(vec![
             Box::new(open_the_device),
             Box::new(open_the_device_then_noun),
         ]));

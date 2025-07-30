@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use crate::{CharString, Dictionary, FstDictionary, Token, WordMetadata};
 
-use super::{EitherPattern, Pattern, SequencePattern, WhitespacePattern};
+use super::{LongestMatchOf, Pattern, SequencePattern, WhitespacePattern};
 
 type PredicateFn = dyn Fn(Option<&WordMetadata>, Option<&WordMetadata>) -> bool + Send + Sync;
 
@@ -23,7 +23,7 @@ impl MergeableWords {
         Self {
             inner: SequencePattern::default()
                 .then_any_word()
-                .then(EitherPattern::new(vec![
+                .then(LongestMatchOf::new(vec![
                     Box::new(WhitespacePattern),
                     Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
                 ]))
@@ -103,7 +103,7 @@ mod tests {
 
     #[test]
     fn does_not_merge_open_compound_in_dict() {
-        // straight away is not in the dictionary, but straightaway is
+        // straight away is in the dictionary, and straightaway is
         let doc = Document::new_plain_english_curated("straight away");
         let a = doc.tokens().nth(0).unwrap();
         let b = doc.tokens().nth(2).unwrap();

@@ -4,11 +4,11 @@ use super::Pattern;
 
 /// A pattern that returns the value of the longest match in a list.
 #[derive(Default)]
-pub struct EitherPattern {
+pub struct LongestMatchOf {
     patterns: Vec<Box<dyn Pattern>>,
 }
 
-impl EitherPattern {
+impl LongestMatchOf {
     pub fn new(patterns: Vec<Box<dyn Pattern>>) -> Self {
         Self { patterns }
     }
@@ -18,7 +18,7 @@ impl EitherPattern {
     }
 }
 
-impl Pattern for EitherPattern {
+impl Pattern for LongestMatchOf {
     fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         let mut longest = None;
 

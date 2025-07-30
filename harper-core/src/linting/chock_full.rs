@@ -1,6 +1,6 @@
 use crate::{
     Token, TokenStringExt,
-    patterns::{EitherPattern, Pattern, SequencePattern, WhitespacePattern, WordSet},
+    patterns::{LongestMatchOf, Pattern, SequencePattern, WhitespacePattern, WordSet},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -15,7 +15,7 @@ impl Default for ChockFull {
             pattern: Box::new(
                 SequencePattern::default()
                     .then(WordSet::new(&["chalk", "choke"]))
-                    .then(EitherPattern::new(vec![
+                    .then(LongestMatchOf::new(vec![
                         Box::new(WhitespacePattern),
                         Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
                     ]))

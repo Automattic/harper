@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.41.0",
+	"version": "0.42.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -267,6 +267,12 @@
 					"default": true,
 					"description": "When referring to Apple products and services, make sure to treat them as proper nouns."
 				},
+				"harper.linters.AsFarAsIKnow": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
+				},
 				"harper.linters.AsFarBackAs": {
 					"scope": "resource",
 					"type": "boolean",
@@ -278,6 +284,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `as of lately` to `as of late`."
+				},
+				"harper.linters.AsSoonAsPossible": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
 				},
 				"harper.linters.AsWell": {
 					"scope": "resource",
@@ -363,6 +375,12 @@
 					"default": true,
 					"description": "Changes `baited breath` to the correct `bated breath`."
 				},
+				"harper.linters.BeRightBack": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
+				},
 				"harper.linters.BeckAndCall": {
 					"scope": "resource",
 					"type": "boolean",
@@ -404,6 +422,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Incorrect preposition: `by accident` is the idiomatic expression."
+				},
+				"harper.linters.ByTheWay": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
 				},
 				"harper.linters.CanBeSeen": {
 					"scope": "resource",
@@ -819,6 +843,12 @@
 					"default": true,
 					"description": "Ensures the correct use of `fetal position`, avoiding confusion with `feeble position`, which is not a standard phrase."
 				},
+				"harper.linters.FewUnitsOfTimeAgo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects some expressions using `few` where `a few` is correct."
+				},
 				"harper.linters.FirstAidKit": {
 					"scope": "resource",
 					"type": "boolean",
@@ -848,6 +878,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the archaic or mistaken `fro` to `for` when followed by a noun."
+				},
+				"harper.linters.ForYourInformation": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
 				},
 				"harper.linters.FreeRein": {
 					"scope": "resource",
@@ -1125,6 +1161,18 @@
 					"default": true,
 					"description": "Correct unidiomatic plural `in more details` to `in more detail`."
 				},
+				"harper.linters.InMyHumbleOpinion": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
+				},
+				"harper.linters.InMyOpinion": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
+				},
 				"harper.linters.InNeedOf": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1256,6 +1304,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `just deserts` is used correctly, preserving its meaning of receiving an appropriate outcome for one's actions."
+				},
+				"harper.linters.KindOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `kinda of` to `kind of`."
 				},
 				"harper.linters.KindRegards": {
 					"scope": "resource",
@@ -1479,6 +1533,12 @@
 					"default": true,
 					"description": "Corrects common misspellings and missing hyphen in `nerve-racking`."
 				},
+				"harper.linters.NeverMind": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
+				},
 				"harper.linters.NoOxfordComma": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1568,6 +1628,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `off-the-cuff` is correctly hyphenated."
+				},
+				"harper.linters.OhMyGod": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
 				},
 				"harper.linters.OldWivesTale": {
 					"scope": "resource",
@@ -1857,6 +1923,12 @@
 					"default": true,
 					"description": "Changes `sneaky suspicion` to `sneaking suspicion`."
 				},
+				"harper.linters.SomeOfThe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Quantity words such as `some` normally take `of` before a definite article. Including `of` signals that you mean a subset of a larger set, preventing a momentary stumble in comprehension."
+				},
 				"harper.linters.Somebody": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1959,6 +2031,12 @@
 					"default": true,
 					"description": "Ensures the correct use of the adverb `seriously` instead of the adjective `serious` in phrases like `take it seriously`."
 				},
+				"harper.linters.TalkToYouLater": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
+				},
 				"harper.linters.ThatChallenged": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2036,6 +2114,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `ticking time clock` to `ticking time bomb` for idiomatic urgency or `ticking clock` otherwise."
+				},
+				"harper.linters.ToBeHonest": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
 				},
 				"harper.linters.ToDoHyphen": {
 					"scope": "resource",

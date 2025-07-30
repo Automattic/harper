@@ -1,4 +1,4 @@
-use super::{EitherPattern, Pattern, SequencePattern, WhitespacePattern, WordSet};
+use super::{LongestMatchOf, Pattern, SequencePattern, WhitespacePattern, WordSet};
 use crate::Token;
 
 /// Matches spelled-out numbers from one to ninety-nine
@@ -50,13 +50,13 @@ impl Pattern for SpelledNumberPattern {
 
         let tens_units_compounds = SequencePattern::default()
             .then(WordSet::new(tens))
-            .then(EitherPattern::new(vec![
+            .then(LongestMatchOf::new(vec![
                 Box::new(|t: &Token, _s: &[char]| t.kind.is_hyphen()),
                 Box::new(WhitespacePattern),
             ]))
             .then(WordSet::new(units));
 
-        let pat = EitherPattern::new(vec![Box::new(single_words), Box::new(tens_units_compounds)]);
+        let pat = LongestMatchOf::new(vec![Box::new(single_words), Box::new(tens_units_compounds)]);
 
         pat.matches(tokens, source)
     }

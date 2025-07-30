@@ -773,8 +773,8 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Ht”
-  - Replace with: “H”
+  - Replace with: “Hi”
+  - Replace with: “Ha”
   - Replace with: “He”
 
 
@@ -998,7 +998,7 @@ Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
+  - Replace with: “Pp”
   - Replace with: “P”
   - Replace with: “Pa”
 

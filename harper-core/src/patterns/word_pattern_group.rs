@@ -1,6 +1,6 @@
 use hashbrown::HashMap;
 
-use super::naive_pattern_group::NaivePatternGroup;
+use super::first_match_of::FirstMatchOf;
 use super::{Pattern, SequencePattern};
 use crate::CharString;
 
@@ -14,14 +14,14 @@ where
     patterns: HashMap<CharString, P>,
 }
 
-impl WordPatternGroup<NaivePatternGroup> {
+impl WordPatternGroup<FirstMatchOf> {
     pub fn add(&mut self, word: &str, pat: Box<dyn Pattern>) {
         let chars = word.chars().collect();
 
         if let Some(group) = self.patterns.get_mut(&chars) {
             group.push(pat);
         } else {
-            let mut group = NaivePatternGroup::default();
+            let mut group = FirstMatchOf::default();
             group.push(pat);
             self.patterns.insert(chars, group);
         }

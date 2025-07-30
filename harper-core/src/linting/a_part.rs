@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
     linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{EitherPattern, FixedPhrase, Pattern},
+    patterns::{FixedPhrase, LongestMatchOf, Pattern},
 };
 
 pub struct APart {
@@ -10,7 +10,7 @@ pub struct APart {
 
 impl Default for APart {
     fn default() -> Self {
-        let pattern = EitherPattern::new(vec![
+        let pattern = LongestMatchOf::new(vec![
             Box::new(FixedPhrase::from_phrase("a part from")),
             Box::new(FixedPhrase::from_phrase("apart of")),
             Box::new(FixedPhrase::from_phrase("fall a part")),

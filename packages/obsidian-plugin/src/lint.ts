@@ -58,6 +58,8 @@ export interface Diagnostic {
 export interface Action {
 	/// The label to show to the user. Should be relatively short.
 	name: string;
+	/// The value to pass the title property of the button.
+	title: string;
 	/// The function to call when the user activates this action. Is
 	/// given the diagnostic's _current_ position, which may have
 	/// changed since the creation of the diagnostic, due to editing.
@@ -391,37 +393,41 @@ function renderDiagnostic(view: EditorView, diagnostic: Diagnostic, inPanel: boo
 			{ class: 'cm-diagnosticText' },
 			diagnostic.renderMessage ? diagnostic.renderMessage(view) : diagnostic.message,
 		),
-		diagnostic.actions?.map((action, i) => {
-			let fired = false;
-			const click = (e: Event) => {
-				e.preventDefault();
-				if (fired) return;
-				fired = true;
-				const found = findDiagnostic(view.state.field(lintState).diagnostics, diagnostic);
-				if (found) action.apply(view, found.from, found.to);
-			};
-			const { name } = action;
-			const keyIndex = keys[i] ? name.indexOf(keys[i]) : -1;
-			const nameElt =
-				keyIndex < 0
-					? name
-					: [
-							name.slice(0, keyIndex),
-							elt('u', name.slice(keyIndex, keyIndex + 1)),
-							name.slice(keyIndex + 1),
-						];
-			return elt(
-				'button',
-				{
-					type: 'button',
-					class: 'cm-diagnosticAction',
-					onclick: click,
-					onmousedown: click,
-					'aria-label': ` Action: ${name}${keyIndex < 0 ? '' : ` (access key "${keys[i]})"`}.`,
-				},
-				nameElt,
-			);
-		}),
+		elt(
+			'span',
+			{ class: 'cm-diagnosticActionCont' },
+			diagnostic.actions?.map((action, i) => {
+				let fired = false;
+				const click = (e: Event) => {
+					e.preventDefault();
+					if (fired) return;
+					fired = true;
+					const found = findDiagnostic(view.state.field(lintState).diagnostics, diagnostic);
+					if (found) action.apply(view, found.from, found.to);
+				};
+				const { name, title } = action;
+				const keyIndex = keys[i] ? name.indexOf(keys[i]) : -1;
+				const nameElt =
+					keyIndex < 0
+						? name
+						: [
+								name.slice(0, keyIndex),
+								elt('u', name.slice(keyIndex, keyIndex + 1)),
+								name.slice(keyIndex + 1),
+							];
+				return elt(
+					'button',
+					{
+						type: 'button',
+						class: 'cm-diagnosticAction',
+						onclick: click,
+						onmousedown: click,
+						'aria-label': ` ${title}${keyIndex < 0 ? '' : ` (access key "${keys[i]})"`}.`,
+					},
+					nameElt,
+				);
+			}),
+		),
 		diagnostic.ignore &&
 			elt(
 				'div',
@@ -499,6 +505,15 @@ const baseTheme = EditorView.baseTheme({
 		padding: '0.25rem',
 	},
 
+	'.cm-diagnosticActionCont': {
+		display: 'flex',
+		flexWrap: 'wrap',
+		justifyContent: 'flex-start',
+		alignItems: 'flex-start',
+		alignContent: 'flex-start',
+		gap: 'var(--size-4-2)',
+	},
+
 	'.cm-diagnosticAction': {
 		font: 'inherit',
 		border: 'none',
@@ -511,7 +526,6 @@ const baseTheme = EditorView.baseTheme({
 		fontSize: 'var(--font-ui-small)',
 		borderRadius: 'var(--radius-s)',
 		whiteSpace: 'nowrap',
-		width: '100%',
 	},
 
 	'.cm-tooltip': {
