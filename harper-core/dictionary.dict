@@ -20474,7 +20474,7 @@ demimondaine/1SM
 demimonde/1M
 demise/~14MGDS
 demitasse/1MS
-demo/~154GMD
+demo/~14GMD         # only wiktionary calls this an adjective. doing so messes with 'adj of a' lint
 democracy/~1SM
 democrat/~1MS
 democratic/~51UQ

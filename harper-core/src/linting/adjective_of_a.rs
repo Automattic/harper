@@ -12,6 +12,7 @@ const FALSE_POSITIVES: &[&str] = &[
     "equivalent",
     "full",
     "inside",
+    "up",
     // "more" is tricky but it often seems correct and idiomatic.
     "more",
     "much",
@@ -22,8 +23,10 @@ const FALSE_POSITIVES: &[&str] = &[
     "bit",
     "bottom",
     "chance",
+    "clockwork",
     "derivative",
     "dream",
+    "eighth",
     "front",
     "half",
     "head",
@@ -444,6 +447,33 @@ mod tests {
     fn dont_flag_equivalent() {
         assert_lint_count(
             "Rust's equivalent of a switch statement is a match expression",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_clockwork() {
+        assert_lint_count(
+            "so something's wrong in this clockwork of a thing and I'm not going to bother taking this apart",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_up() {
+        assert_lint_count(
+            "Yeah gas is made up of a bunch of teenytiny particles all moving around.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_eighth() {
+        assert_lint_count(
+            "It's about an eighth of an inch or whatever",
             AdjectiveOfA,
             0,
         );
