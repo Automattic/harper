@@ -54,6 +54,7 @@ use super::less_worse::LessWorse;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
+use super::looking_forward_to::LookingForwardTo;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
 use super::modal_of::ModalOf;
@@ -428,6 +429,7 @@ impl LintGroup {
         insert_struct_rule!(LetsConfusion, true);
         insert_expr_rule!(Likewise, true);
         insert_struct_rule!(LongSentences, true);
+        insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule!(MergeWords, true);
         insert_expr_rule!(ModalOf, true);
         insert_expr_rule!(MostNumber, true);

@@ -24,6 +24,43 @@ fn corrects_much_ado() {
     );
 }
 
+// ChampAtTheBit
+#[test]
+fn correct_chomp_at_the_bit() {
+    assert_suggestion_result(
+        "so other than rolling back to older drivers i might have to chomp at the bit for a while longer yet",
+        lint_group(),
+        "so other than rolling back to older drivers i might have to champ at the bit for a while longer yet",
+    );
+}
+
+#[test]
+fn correct_chomped_at_the_bit() {
+    assert_suggestion_result(
+        "I chomped at the bit, frustrated by my urge to go faster, while my husband chafed at what I thought was a moderate pace.",
+        lint_group(),
+        "I champed at the bit, frustrated by my urge to go faster, while my husband chafed at what I thought was a moderate pace.",
+    );
+}
+
+#[test]
+fn correct_chomping_at_the_bit() {
+    assert_suggestion_result(
+        "Checking in to see when the Windows install will be ready. I am chomping at the bit!",
+        lint_group(),
+        "Checking in to see when the Windows install will be ready. I am champing at the bit!",
+    );
+}
+
+#[test]
+fn correct_chomps_at_the_bit() {
+    assert_suggestion_result(
+        "nobody chomps at the bit to make sure these are maintained, current, complete, and error free",
+        lint_group(),
+        "nobody champs at the bit to make sure these are maintained, current, complete, and error free",
+    );
+}
+
 // ClientOrServerSide
 
 // -client's side-

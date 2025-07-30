@@ -640,10 +640,11 @@ pub fn lint_group() -> LintGroup {
             "Corrects `no to` to `not to`, ensuring proper negation."
         ),
         "OfCourse" => (
-            ["off course", "o course"],
-            ["Of course"],
+            // See also: `of_course.rs` for "of curse/corse" → "of course" corrections
+            ["off course", "o course", "ofcourse"],
+            ["of course"],
             "Did you mean `of course`?",
-            "Detects the non‐idiomatic phrase `off course` and suggests the correct form `of course`."
+            "Detects the common mistake `off course` and suggests the correct form `of course`."
         ),
         "OffTheCuff" => (
             ["off the cuff"],
