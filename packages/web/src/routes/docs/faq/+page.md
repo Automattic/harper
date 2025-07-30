@@ -36,6 +36,14 @@ For `harper.js` and those that use it under the hood like our Obsidian plugin, w
 
 See [this blog post](https://elijahpotter.dev/articles/naming_harper).
 
-## What Do I Do If my Question Isn't Here?
+## Do I Need a GPU?
+
+No.
+
+Harper runs on-device, no matter what.
+There are no special hardware requirements.
+No GPU, no additional memory, no fuss.
+
+## What Do I Do If My Question Isn't Here?
 
 You can join our [Discord](https://discord.gg/invite/JBqcAaKrzQ) and ask your questions there or you can start a discussion over at [GitHub](https://github.com/Automattic/harper/discussions).
