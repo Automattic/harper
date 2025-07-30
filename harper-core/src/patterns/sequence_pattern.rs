@@ -232,4 +232,15 @@ mod tests {
             doc.get_tokens().len()
         );
     }
+
+    #[test]
+    fn match_t_aco_and_t_ws() {
+        let pat = SequencePattern::aco("foo").t_ws().t_aco("bar");
+        let doc = Document::new_plain_english_curated("foo\nBAR");
+
+        assert_eq!(
+            pat.matches(doc.get_tokens(), doc.get_source()),
+            doc.get_tokens().len()
+        );
+    }
 }
