@@ -298,7 +298,7 @@ fn main() -> anyhow::Result<()> {
                         .collect();
 
                     if !derived_words.is_empty() {
-                        println!("derived_from: {:?}", derived_words);
+                        println!("derived_from: {derived_words:?}");
                     }
                 }
             }
