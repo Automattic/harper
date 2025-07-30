@@ -1,7 +1,7 @@
 use crate::{
     Lrc, Token, TokenStringExt,
     linting::Linter,
-    patterns::{OwnedPatternExt, Pattern, SequencePattern, WordSet},
+    patterns::{OwnedPatternExt, Pattern, PatternExt, SequencePattern, WordSet},
 };
 
 use super::{super::Lint, LintKind, Suggestion};
@@ -58,7 +58,7 @@ impl Linter for OxfordComma {
     fn lint(&mut self, document: &crate::Document) -> Vec<crate::linting::Lint> {
         let mut lints = Vec::new();
         for sentence in document.iter_sentences() {
-            let mut tok_cursor = 0;
+            let mut skip = 0;
 
             let mut words = sentence
                 .iter_words()
@@ -67,33 +67,21 @@ impl Linter for OxfordComma {
 
             if let (Some(first), Some(second)) = (words.next(), words.next()) {
                 if first.preposition && second.is_likely_homograph() {
-                    tok_cursor = sentence
+                    skip = sentence
                         .iter()
                         .position(|t| t.kind.is_comma())
                         .unwrap_or(sentence.iter().len())
                 }
             }
 
-            loop {
-                if tok_cursor >= sentence.len() {
-                    break;
-                }
+            let sentence = &sentence[skip..];
 
-                let match_len = self
-                    .pattern
-                    .matches(&sentence[tok_cursor..], document.get_source());
-
-                if let Some(match_len) = match_len {
-                    let lint = self.match_to_lint(
-                        &sentence[tok_cursor..tok_cursor + match_len.get()],
-                        document.get_source(),
-                    );
-
-                    lints.extend(lint);
-                    tok_cursor += match_len.get();
-                } else {
-                    tok_cursor += 1;
-                }
+            for match_span in self.pattern.iter_matches(sentence, document.get_source()) {
+                let lint = self.match_to_lint(
+                    &sentence[match_span.start..match_span.end],
+                    document.get_source(),
+                );
+                lints.extend(lint);
             }
         }
 

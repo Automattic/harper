@@ -157,6 +157,16 @@ impl WordMetadata {
         adverb has
     );
 
+    pub fn is_present_tense_verb(&self) -> bool {
+        matches!(
+            self.verb,
+            Some(VerbData {
+                tense: Some(Tense::Present),
+                ..
+            })
+        )
+    }
+
     /// Checks if the word is definitely nominalpro.
     pub fn is_nominal(&self) -> bool {
         self.noun.is_some() || self.pronoun.is_some()
@@ -249,8 +259,8 @@ impl WordMetadata {
 // TODO future shares a form with present/infinitive
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
 pub enum Tense {
-    // Past,
-    // Present,
+    Past,
+    Present,
     // Future,
 }
 

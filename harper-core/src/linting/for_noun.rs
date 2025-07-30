@@ -1,6 +1,6 @@
 use crate::{
     Token,
-    patterns::{AnyCapitalization, NominalPhrase, OwnedPatternExt, Pattern, SequencePattern},
+    patterns::{NominalPhrase, OwnedPatternExt, Pattern, SequencePattern, Word},
 };
 
 use super::{Lint, LintKind, PatternLinter, Suggestion};
@@ -13,7 +13,7 @@ impl Default for ForNoun {
     fn default() -> Self {
         let pattern = SequencePattern::aco("fro")
             .then_whitespace()
-            .then(NominalPhrase.or(Box::new(AnyCapitalization::of("sure"))));
+            .then(NominalPhrase.or(Box::new(Word::new("sure"))));
 
         Self {
             pattern: Box::new(pattern),

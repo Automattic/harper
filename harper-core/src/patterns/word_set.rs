@@ -1,14 +1,12 @@
-use std::num::NonZeroUsize;
-
 use super::Pattern;
 use smallvec::SmallVec;
 
 use crate::{CharString, Token};
 
-// A [`Pattern`] that matches against any of a set of provided words.
-// For small sets of short words, it doesn't allocate.
-//
-// Note that any capitalization of the contained words will result in a match.
+/// A [`Pattern`] that matches against any of a set of provided words.
+/// For small sets of short words, it doesn't allocate.
+///
+/// Note that any capitalization of the contained words will result in a match.
 #[derive(Debug, Default, Clone)]
 pub struct WordSet {
     words: SmallVec<[CharString; 4]>,
@@ -40,7 +38,7 @@ impl WordSet {
 }
 
 impl Pattern for WordSet {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         let tok = tokens.first()?;
         if !tok.kind.is_word() {
             return None;
@@ -59,7 +57,7 @@ impl Pattern for WordSet {
                 .all(|(a, b)| a.eq_ignore_ascii_case(b));
 
             if partial_match {
-                return NonZeroUsize::new(1);
+                return Some(1);
             }
         }
 

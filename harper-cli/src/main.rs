@@ -78,6 +78,8 @@ enum Args {
     },
     /// Get the word associated with a particular word id.
     WordFromId { hash: u64 },
+    /// Print harper-core version.
+    CoreVersion,
 }
 
 fn main() -> anyhow::Result<()> {
@@ -381,6 +383,10 @@ fn main() -> anyhow::Result<()> {
         Args::WordFromId { hash } => {
             let id = WordId::from_hash(hash);
             println!("{:?}", dictionary.get_word_from_id(&id));
+            Ok(())
+        }
+        Args::CoreVersion => {
+            println!("harper-core v{}", harper_core::core_version());
             Ok(())
         }
     }

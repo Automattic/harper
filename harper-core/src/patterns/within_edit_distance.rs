@@ -1,5 +1,4 @@
 use std::cell::RefCell;
-use std::num::NonZeroUsize;
 
 use super::Pattern;
 use crate::{CharString, CharStringExt, Token};
@@ -33,7 +32,7 @@ thread_local! {
 }
 
 impl Pattern for WithinEditDistance {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
         let first = tokens.first()?;
         if !first.kind.is_word() {
             return None;
@@ -48,7 +47,11 @@ impl Pattern for WithinEditDistance {
                 buffer_a,
                 buffer_b,
             );
-            NonZeroUsize::new(if distance <= self.max_edit_dist { 1 } else { 0 })
+            if distance <= self.max_edit_dist {
+                Some(1)
+            } else {
+                None
+            }
         })
     }
 }

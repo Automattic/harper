@@ -1,7 +1,7 @@
 use crate::{
     Token,
     linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{AnyCapitalization, Pattern, SequencePattern, WordSet},
+    patterns::{Pattern, SequencePattern, Word, WordSet},
 };
 
 pub struct WidelyAccepted {
@@ -11,7 +11,7 @@ pub struct WidelyAccepted {
 impl Default for WidelyAccepted {
     fn default() -> Self {
         let pattern = SequencePattern::default()
-            .then(AnyCapitalization::new("wide".chars().collect()))
+            .then(Word::new("wide"))
             .then_whitespace()
             .then(WordSet::new(&["accepted", "acceptable", "used"]));
 

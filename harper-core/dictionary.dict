@@ -12486,7 +12486,7 @@ anorak/1MS
 anorectic/51SM
 anorexia/1M
 anorexic/51MS
-another/~8
+another/~8-
 answer/~14BMDGS
 answerable/5U
 answered/~54U
@@ -13653,7 +13653,7 @@ backstretch/1MS
 backstroke/~14MGDS
 backtalk/14M
 backtrack/14SDG
-backup/~154MS
+backup/~15MS
 backward/~51PSY
 backwardness/1M
 backwash/14M
@@ -17564,7 +17564,7 @@ cleanly/5UTPRj
 cleanness/1UM
 cleanse/41ZGDRS
 cleanser/1M
-cleanup/~14MS
+cleanup/~1MS
 clear/~541JPTGMDRYS
 clearance/~1SM
 clearheaded/5
@@ -40027,11 +40027,11 @@ publicist/~1MS
 publicity/~1M
 publicize/4GDS
 publicly/~j
-publish/~4AGDS
+publish/~4AGDSU
 publishable/5U
 published/~45U
 publisher/~1MS
-publishing/~14M
+publishing/~14MU
 puce/15M
 puck/~14ZMRS
 pucker/41MDG
@@ -52867,8 +52867,62 @@ write-off/1MS
 write-up/1MS
 year-over-year/5
 
+# Phrasal verbs. These help correct the error where people write "to login" instead of "to log in"
+# For this reason the most important ones to include are the ones that have a noun counterpart.
+# Remember not to add any affixes since only the verb part at the start undergoes inflection.
+
+back up/4
+break up/4
+carry out/4
+check in/4
+check out/4
+clean up/4
+come back/4
+cut back/4
+cut off/4
+cut over/4
+fail over/4
+fall back/4
+fight back/4
+fix up/4
+hand out/4
+hang out/4
+hook up/4
+knock out/4
+lock down/4
+log in/4
+log on/4
+log off/4
+log out/4
+look up/4
+meet up/4
+melt down/4
+pick up/4
+push back/4
+roll back/4
+roll out/4
+roll over/4
+run away/4
+set up/4
+show off/4
+shut down/4
+shut off/4
+sign in/4
+sign off/4
+sign out/4
+sign up/4
+slow down/4
+splash down/4
+start out/4
+start up/4
+take down/4
+turn out/4
+work around/4
+work out/4
+
 # New entries may be added below this line
 # If you're not confident in using the affix annotations, add missing words here
 # And they will be reviewed
 # Word added using the `just addnoun` command will be added here
 
+Yoast/M2

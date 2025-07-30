@@ -54,7 +54,7 @@ impl PatternLinter for Dashes {
     }
 
     fn description(&self) -> &'static str {
-        "Rather than outright using an em dash or en dash, authors often use a sequence of hyphens, expecting them to be condensed.\nThis rule does so."
+        "Rather than outright using an em dash or en dash, authors often use a sequence of hyphens, expecting them to be condensed. Use two hyphens to denote an en dash and three to denote an em dash."
     }
 }
 
