@@ -109,28 +109,20 @@ export default class Highlights {
 			return el.parentElement.parentElement;
 		}
 
-		const scr = getShredditComposerRoot(el);
+		const queries = [
+			getNotionRoot,
+			getMediumRoot,
+			getShredditComposerRoot,
+			getQuillJsRoot,
+			getLexicalRoot,
+			getTrixRoot,
+		];
 
-		if (scr != null) {
-			return scr.parentElement;
-		}
-
-		const qr = getQuillJsRoot(el);
-
-		if (qr != null) {
-			return qr.parentElement;
-		}
-
-		const lexicalRoot = getLexicalRoot(el);
-
-		if (lexicalRoot != null) {
-			return lexicalRoot.parentElement;
-		}
-
-		const trixRoot = getTrixRoot(el);
-
-		if (trixRoot != null) {
-			return trixRoot.parentElement;
+		for (const query of queries) {
+			const root = query(el);
+			if (root != null) {
+				return root.parentElement;
+			}
 		}
 
 		return el.parentElement;
@@ -192,6 +184,21 @@ function getShredditComposerRoot(el: HTMLElement): HTMLElement | null {
  * If so, returns the root node of that instance. */
 function getQuillJsRoot(el: HTMLElement): HTMLElement | null {
 	return findAncestor(el, (node: HTMLElement) => node.classList.contains('ql-container'));
+}
+
+/** Determines if a given node is a child of a Medium.com editor instance.
+ * If so, returns the root node of that instance. */
+function getMediumRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(
+		el,
+		(node: HTMLElement) => node.nodeName == 'MAIN' && location.hostname == 'medium.com',
+	);
+}
+
+/** Determines if a given node is a child of a Notion editor instance.
+ * If so, returns the root node of that instance. */
+function getNotionRoot(el: HTMLElement): HTMLElement | null {
+	return document.getElementById('notion-app');
 }
 
 /**

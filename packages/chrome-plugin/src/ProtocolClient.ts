@@ -2,10 +2,23 @@ import type { Dialect, LintConfig } from 'harper.js';
 import { LRUCache } from 'lru-cache';
 import type { UnpackedLint } from './unpackLint';
 
-/** A wrapper around Chrome's messaging protocol for communicating with the background worker. */
 export default class ProtocolClient {
+	private static readonly lintCache = new LRUCache<string, UnpackedLint[]>({
+		max: 500,
+		ttl: 5_000,
+	});
+
+	private static cacheKey(text: string, domain: string): string {
+		return `${domain}:${text}`;
+	}
+
 	public static async lint(text: string, domain: string): Promise<UnpackedLint[]> {
-		return (await chrome.runtime.sendMessage({ kind: 'lint', text, domain })).lints;
+		const key = this.cacheKey(text, domain);
+		const cached = this.lintCache.get(key);
+		if (cached) return cached;
+		const resp = await chrome.runtime.sendMessage({ kind: 'lint', text, domain });
+		this.lintCache.set(key, resp.lints);
+		return resp.lints;
 	}
 
 	public static async getLintConfig(): Promise<LintConfig> {
@@ -13,6 +26,7 @@ export default class ProtocolClient {
 	}
 
 	public static async setLintConfig(lintConfig: LintConfig): Promise<void> {
+		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'setConfig', config: lintConfig });
 	}
 
@@ -29,9 +43,7 @@ export default class ProtocolClient {
 	}
 
 	public static async getDomainEnabled(domain: string): Promise<boolean> {
-		const resp = await chrome.runtime.sendMessage({ kind: 'getDomainStatus', domain });
-
-		return resp.enabled;
+		return (await chrome.runtime.sendMessage({ kind: 'getDomainStatus', domain })).enabled;
 	}
 
 	public static async setDomainEnabled(domain: string, enabled: boolean): Promise<void> {
@@ -39,6 +51,7 @@ export default class ProtocolClient {
 	}
 
 	public static async addToUserDictionary(word: string): Promise<void> {
+		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'addToUserDictionary', word });
 	}
 }

@@ -10,8 +10,8 @@
 # Unlintable NSg/V/J . P  . NSg/V  NSg/V
 >
 #
-> In          corpus linguistics , part    - of - speech tagging ( POS tagging or      PoS tagging or
-# NPrSg/V/J/P NSg    NSg         . NSg/V/J . P  . NSg/V  NSg/V   . NSg NSg/V   NPrSg/C NSg NSg/V   NPrSg/C
+> In        corpus linguistics , part    - of - speech tagging ( POS tagging or      PoS tagging or
+# NPrSg/J/P NSg    NSg         . NSg/V/J . P  . NSg/V  NSg/V   . NSg NSg/V   NPrSg/C NSg NSg/V   NPrSg/C
 > POST      ) , also called grammatical tagging is the process of marking up        a   word in a
 # NPrSg/V/P . . W?   V/J    J           NSg/V   VL D   NSg     P  NSg/V   NSg/V/J/P D/P NSg  P  D/P
 > text ( corpus ) as    corresponding to a   particular part    of speech , based on  both its
@@ -46,8 +46,8 @@
 # NPl   P  NSg/V  . C/P     I/J/R NPl/V NPrSg/VX V         NPrSg/I/V/J C/P  NSg/I/V/J NSg/V/J P  NSg/V
 > at        different times , and because some  parts of speech are complex . This is not
 # NSg/I/V/P NSg/J     NPl/V . V/C C/P     I/J/R NPl/V P  NSg/V  V   NSg/V/J . I/D  VL NSg/C
-> rare    — in          natural languages ( as    opposed to many    artificial languages ) , a   large
-# NSg/V/J . NPrSg/V/J/P NSg/J   NPl/V     . NSg/R V/J     P  N/I/J/D J          NPl/V     . . D/P NSg/J
+> rare    — in        natural languages ( as    opposed to many    artificial languages ) , a   large
+# NSg/V/J . NPrSg/J/P NSg/J   NPl/V     . NSg/R V/J     P  N/I/J/D J          NPl/V     . . D/P NSg/J
 > percentage of word  - forms are ambiguous . For example , even    " dogs  " , which is
 # NSg        P  NSg/V . NPl/V V   J         . C/P NSg/V   . NSg/V/J . NPl/V . . I/C   VL
 > usually thought of as    just a   plural noun  , can      also be     a   verb :
@@ -76,8 +76,8 @@
 # NSg/V NPl/V
 >
 #
-> Schools commonly teach that    there are 9 parts of speech in          English   : noun  , verb  ,
-# NPl/V   J/R      NSg/V N/I/C/D W?    V   # NPl/V P  NSg/V  NPrSg/V/J/P NPrSg/V/J . NSg/V . NSg/V .
+> Schools commonly teach that    there are 9 parts of speech in        English   : noun  , verb  ,
+# NPl/V   J/R      NSg/V N/I/C/D W?    V   # NPl/V P  NSg/V  NPrSg/J/P NPrSg/V/J . NSg/V . NSg/V .
 > article , adjective , preposition , pronoun , adverb , conjunction , and interjection .
 # NSg/V   . NSg/V/J   . NSg/V       . NSg/V   . NSg/V  . NSg/V       . V/C NSg          .
 > However , there are clearly many    more        categories and sub     - categories . For nouns ,
@@ -88,8 +88,8 @@
 # NPl/V     NPl/V V   W?   V/J    C/P D     . NPrSg/V . . NSg  NSg/R NSg/V/J . NSg/V  .
 > etc. ) , grammatical gender  , and so        on  ; while     verbs are marked for tense   , aspect ,
 # W?   . . J           NSg/V/J . V/C NSg/I/J/C J/P . NSg/V/C/P NPl/V V   V/J    C/P NSg/V/J . NSg/V  .
-> and other   things . In          some  tagging systems , different inflections of the same
-# V/C NSg/V/J NPl/V  . NPrSg/V/J/P I/J/R NSg/V   NPl     . NSg/J     NPl         P  D   I/J
+> and other   things . In        some  tagging systems , different inflections of the same
+# V/C NSg/V/J NPl/V  . NPrSg/J/P I/J/R NSg/V   NPl     . NSg/J     NPl         P  D   I/J
 > root    word  will     get   different parts of speech , resulting in a   large number  of
 # NPrSg/V NSg/V NPrSg/VX NSg/V NSg/J     NPl/V P  NSg/V  . V         P  D/P NSg/J NSg/V/J P
 > tags  . For example , NN for singular common  nouns , NNS for plural common  nouns , NP
@@ -102,14 +102,14 @@
 # NSg/V/J N/I  NSg/R NPl/V    NSg/I    NSg/J       P    NSg/V/J . P  . NSg/V  .
 >
 #
-> In          part    - of - speech tagging by      computer , it        is typical to distinguish from 50 to
-# NPrSg/V/J/P NSg/V/J . P  . NSg/V  NSg/V   NSg/J/P NSg/V    . NPrSg/ISg VL NSg/J   P  V           P    #  P
+> In        part    - of - speech tagging by      computer , it        is typical to distinguish from 50 to
+# NPrSg/J/P NSg/V/J . P  . NSg/V  NSg/V   NSg/J/P NSg/V    . NPrSg/ISg VL NSg/J   P  V           P    #  P
 > 150 separate parts of speech for English   . Work  on  stochastic methods for tagging
 # #   NSg/V/J  NPl/V P  NSg/V  C/P NPrSg/V/J . NSg/V J/P J          NPl/V   C/P NSg/V
 > Koine Greek     ( DeRose 1990 ) has used over      1 , 000 parts of speech and found that
 # ?     NPrSg/V/J . ?      #    . V   V/J  NSg/V/J/P # . #   NPl/V P  NSg/V  V/C NSg/V N/I/C/D
-> about as    many    words were  ambiguous in that    language as    in          English   . A
-# J/P   NSg/R N/I/J/D NPl/V NSg/V J         P  N/I/C/D NSg/V    NSg/R NPrSg/V/J/P NPrSg/V/J . D/P
+> about as    many    words were  ambiguous in that    language as    in        English   . A
+# J/P   NSg/R N/I/J/D NPl/V NSg/V J         P  N/I/C/D NSg/V    NSg/R NPrSg/J/P NPrSg/V/J . D/P
 > morphosyntactic descriptor in the case  of morphologically rich      languages is
 # ?               NSg        P  D   NPrSg P  ?               NPrSg/V/J NPl/V     VL
 > commonly expressed using very short       mnemonics , such  as    Ncmsan for Category = Noun  ,
@@ -125,7 +125,7 @@
 > Penn tag   set       , developed in the Penn Treebank project . It        is largely similar to
 # NPr  NSg/V NPrSg/V/J . V/J       P  D   NPr  ?        NSg/V   . NPrSg/ISg VL J/R     NSg/J   P
 > the earlier Brown     Corpus and LOB   Corpus tag   sets  , though much  smaller . In
-# D   J       NPrSg/V/J NSg    V/C NSg/V NSg    NSg/V NPl/V . V/C    N/I/J J       . NPrSg/V/J/P
+# D   J       NPrSg/V/J NSg    V/C NSg/V NSg    NSg/V NPl/V . V/C    N/I/J J       . NPrSg/J/P
 > Europe , tag   sets  from the Eagles Guidelines see   wide  use   and include versions
 # NPr    . NSg/V NPl/V P    D   NPl    NPl        NSg/V NSg/J NSg/V V/C NSg/V   NPl/V
 > for multiple languages .
@@ -138,12 +138,12 @@
 # NPl/V V/J  NPl/V  J/R     P    NSg/V    . NPl/V J/R     V   V/J      P  NSg/V
 > overt morphological distinctions , although this leads to inconsistencies such  as
 # NSg/J J             NPl          . C        I/D  NPl/V P  NPl             NSg/I NSg/R
-> case    - marking for pronouns but     not   nouns in          English   , and much  larger
-# NPrSg/V . NSg/V   C/P NPl/V    NSg/C/P NSg/C NPl/V NPrSg/V/J/P NPrSg/V/J . V/C N/I/J J
+> case    - marking for pronouns but     not   nouns in        English   , and much  larger
+# NPrSg/V . NSg/V   C/P NPl/V    NSg/C/P NSg/C NPl/V NPrSg/J/P NPrSg/V/J . V/C N/I/J J
 > cross       - language differences . The tag sets  for heavily inflected languages such  as
 # NPrSg/V/J/P . NSg/V    NSg/V       . D   NSg NPl/V C/P R       V/J       NPl/V     NSg/I NSg/R
-> Greek     and Latin   can      be     very large ; tagging words in          agglutinative languages such
-# NPrSg/V/J V/C NPrSg/J NPrSg/VX NSg/VX J    NSg/J . NSg/V   NPl/V NPrSg/V/J/P ?             NPl/V     NSg/I
+> Greek     and Latin   can      be     very large ; tagging words in        agglutinative languages such
+# NPrSg/V/J V/C NPrSg/J NPrSg/VX NSg/VX J    NSg/J . NSg/V   NPl/V NPrSg/J/P ?             NPl/V     NSg/I
 > as    Inuit   languages may      be     virtually impossible . At the other extreme , Petrov et
 # NSg/R NPrSg/J NPl/V     NPrSg/VX NSg/VX J/R       NSg/J      . P  D   NSg/J NSg/J   . ?      ?
 > al. have   proposed a   " universal " tag   set       , with 12 categories ( for example , no
@@ -190,8 +190,8 @@
 # NSg/I/J/C . C/P NSg/V   . NSg/V   NSg/J/C NSg/V NPrSg/VX V     . NSg/C/P NSg/V   NSg/J/C NSg/V . R        .
 > cannot . The program got about 70 % correct . Its   results were  repeatedly reviewed
 # NSg/V  . D   NPrSg   V   J/P   #  . NSg/V/J . ISg/D NPl     NSg/V J/R        V/J
-> and corrected by      hand  , and later users sent  in          errata so        that    by the late  70 s
-# V/C V/J       NSg/J/P NSg/V . V/C J     NPl   NSg/V NPrSg/V/J/P NSg    NSg/I/J/C N/I/C/D P  D   NSg/J #  ?
+> and corrected by      hand  , and later users sent  in        errata so        that    by the late  70 s
+# V/C V/J       NSg/J/P NSg/V . V/C J     NPl   NSg/V NPrSg/J/P NSg    NSg/I/J/C N/I/C/D P  D   NSg/J #  ?
 > the tagging was nearly perfect ( allowing for some  cases on  which even    human
 # D   NSg     V   J/R    NSg/V/J . V        C/P I/J/R NPl/V J/P I/C   NSg/V/J NSg/V/J
 > speakers might    not   agree ) .
@@ -232,8 +232,8 @@
 # NSg/V P  V/J    NPr    NPl/V
 >
 #
-> In the mid     - 1980s , researchers in          Europe began to use   hidden Markov models ( HMMs )
-# P  D   NSg/J/P . #d    . W?          NPrSg/V/J/P NPr    V     P  NSg/V V/J    NPr    NPl/V  . ?    .
+> In the mid     - 1980s , researchers in        Europe began to use   hidden Markov models ( HMMs )
+# P  D   NSg/J/P . #d    . W?          NPrSg/J/P NPr    V     P  NSg/V V/J    NPr    NPl/V  . ?    .
 > to disambiguate parts of speech , when    working to tag   the Lancaster - Oslo - Bergen
 # P  V            NPl/V P  NSg/V  . NSg/I/C V       P  NSg/V D   NPr       . NPr  . NPr
 > Corpus of British English   . HMMs involve counting cases ( such  as    from the Brown
@@ -244,8 +244,8 @@
 # NSg/V   . NSg/C W?     NSg/V D/P NSg     NSg/I NSg/R . D   . . NSg     D   NSg/J/P NSg/V VL D/P
 > noun 40 % of the time , an  adjective 40 % , and a   number 20 % . Knowing   this , a
 # NSg  #  . P  D   NSg  . D/P NSg/J     #  . . V/C D/P NSg/J  #  . . NSg/V/J/P I/D  . D/P
-> program can      decide that    " can      " in          " the can   " is far     more        likely to be     a   noun than
-# NPrSg   NPrSg/VX V      N/I/C/D . NPrSg/VX . NPrSg/V/J/P . D   NPrSg . VL NSg/V/J NPrSg/I/V/J NSg/J  P  NSg/VX D/P NSg  C/P
+> program can      decide that    " can      " in        " the can   " is far     more        likely to be     a   noun than
+# NPrSg   NPrSg/VX V      N/I/C/D . NPrSg/VX . NPrSg/J/P . D   NPrSg . VL NSg/V/J NPrSg/I/V/J NSg/J  P  NSg/VX D/P NSg  C/P
 > a   verb or      a   modal . The same method can      , of course , be     used to benefit from
 # D/P NSg  NPrSg/C D/P NSg/J . D   I/J  NSg/V  NPrSg/VX . P  NSg/V  . NSg/VX V/J  P  NSg/V   P
 > knowledge about the following words .
@@ -268,16 +268,16 @@
 # C       . NPrSg/ISg VL NSg/V/J P  V         D     NSg         V/C P  NSg/V  D/P NSg/J
 > probability to each one       , by      multiplying together the probabilities of each
 # NSg         P  D    NSg/I/V/J . NSg/J/P V           J        D   NPl           P  D
-> choice in          turn  . The combination with the highest probability is then    chosen . The
-# NSg/J  NPrSg/V/J/P NSg/V . D   NSg         P    D   W?      NSg         VL NSg/J/C V/J    . D
+> choice in        turn  . The combination with the highest probability is then    chosen . The
+# NSg/J  NPrSg/J/P NSg/V . D   NSg         P    D   W?      NSg         VL NSg/J/C V/J    . D
 > European group developed CLAWS , a   tagging program that    did exactly this and
 # NSg/J    NSg/V V/J       NPl/V . D/P NSg     NPrSg/V N/I/C/D V   J/R     I/D  V/C
 > achieved accuracy in the 93 – 95 % range .
 # V/J      NSg      P  D   #  . #  . NSg/V .
 >
 #
-> Eugene Charniak points out         in          Statistical techniques for natural language
-# NPr    ?        NPl/V  NSg/V/J/R/P NPrSg/V/J/P J           NPl        C/P NSg/J   NSg/V
+> Eugene Charniak points out         in        Statistical techniques for natural language
+# NPr    ?        NPl/V  NSg/V/J/R/P NPrSg/J/P J           NPl        C/P NSg/J   NSg/V
 > parsing ( 1997 ) that    merely assigning the most    common  tag   to each known   word  and
 # V       . #    . N/I/C/D J/R    V         D   NSg/I/J NSg/V/J NSg/V P  D    NSg/V/J NSg/V V/C
 > the tag " proper noun  " to all       unknowns will     approach 90 % accuracy because many
@@ -300,8 +300,8 @@
 # . NSg/V/J . N/I/C/D NPrSg/VX V         NSg/R N/I/J/D NSg/R # V/J      NPl/V P  NSg/V  .
 >
 #
-> HMMs underlie the functioning of stochastic taggers and are used in          various
-# ?    V        D   N/J         P  J          NPl     V/C V   V/J  NPrSg/V/J/P J
+> HMMs underlie the functioning of stochastic taggers and are used in        various
+# ?    V        D   N/J         P  J          NPl     V/C V   V/J  NPrSg/J/P J
 > algorithms one       of the most    widely used being   the bi    - directional inference
 # NPl        NSg/I/V/J P  D   NSg/I/J J/R    V/J  NSg/V/C D   NSg/J . NSg/J       NSg
 > algorithm .
@@ -314,10 +314,10 @@
 #
 > In 1987 , Steven DeRose and Kenneth W. Church  independently developed dynamic
 # P  #    . NPr    ?      V/C NPr     ?  NPrSg/V J/R           V/J       NSg/J
-> programming algorithms to solve the same problem in          vastly less    time  . Their
-# NSg/V       NPl        P  NSg/V D   I/J  NSg/J   NPrSg/V/J/P J/R    V/J/C/P NSg/V . D
-> methods were  similar to the Viterbi algorithm known   for some  time  in          other
-# NPl     NSg/V NSg/J   P  D   ?       NSg       NSg/V/J C/P I/J/R NSg/V NPrSg/V/J/P NSg/V/J
+> programming algorithms to solve the same problem in        vastly less    time  . Their
+# NSg/V       NPl        P  NSg/V D   I/J  NSg/J   NPrSg/J/P J/R    V/J/C/P NSg/V . D
+> methods were  similar to the Viterbi algorithm known   for some  time  in        other
+# NPl     NSg/V NSg/J   P  D   ?       NSg       NSg/V/J C/P I/J/R NSg/V NPrSg/J/P NSg/V/J
 > fields  . DeRose used a   table of pairs , while     Church  used a   table of triples and a
 # NPrPl/V . ?      V/J  D/P NSg   P  NPl/V . NSg/V/C/P NPrSg/V V/J  D/P NSg   P  NPl/V   V/C D/P
 > method of estimating the values for triples that    were  rare    or      nonexistent in the
@@ -348,8 +348,8 @@
 # NSg       VL V/J      . NSg/C/P I/D   V/J    R          NSg/V/J . I/D  V/J       N/I/J/D P
 > the field that    part    - of - speech tagging could  usefully be     separated from the other
 # D   NSg   N/I/C/D NSg/V/J . P  . NSg/V  NSg/V   NSg/VX J/R      NSg/VX V/J       P    D   NSg/J
-> levels of processing ; this , in          turn  , simplified the theory and practice of
-# NPl/V  P  V          . I/D  . NPrSg/V/J/P NSg/V . V/J        D   NSg    V/C NSg/V    P
+> levels of processing ; this , in        turn  , simplified the theory and practice of
+# NPl/V  P  V          . I/D  . NPrSg/J/P NSg/V . V/J        D   NSg    V/C NSg/V    P
 > computerized language analysis and encouraged researchers to find  ways to
 # V/J          NSg/V    NSg      V/C V/J        W?          P  NSg/V NPl  P
 > separate other   pieces as    well    . Markov Models became the standard method for the
@@ -370,12 +370,12 @@
 # . V/J          . NSg/V   . V/J          NSg/V   NPl        NSg/V D/P ?        NSg
 > for their training data and produce the tagset by      induction . That    is , they
 # C/P D     NSg      NSg  V/C NSg/V   D   NSg    NSg/J/P NSg       . N/I/C/D VL . IPl
-> observe patterns in          word  use   , and derive part    - of - speech categories themselves .
-# NSg/V   NPl/V    NPrSg/V/J/P NSg/V NSg/V . V/C NSg/V  NSg/V/J . P  . NSg/V  NPl        I          .
+> observe patterns in        word  use   , and derive part    - of - speech categories themselves .
+# NSg/V   NPl/V    NPrSg/J/P NSg/V NSg/V . V/C NSg/V  NSg/V/J . P  . NSg/V  NPl        I          .
 > For example , statistics readily reveal that    " the " , " a   " , and " an  " occur in
-# C/P NSg/V   . NPl/V      R       NSg/V  N/I/C/D . D   . . . D/P . . V/C . D/P . V     NPrSg/V/J/P
-> similar contexts , while     " eat   " occurs in          very different ones  . With sufficient
-# NSg/J   NPl/V    . NSg/V/C/P . NSg/V . V      NPrSg/V/J/P J    NSg/J     NPl/V . P    J
+# C/P NSg/V   . NPl/V      R       NSg/V  N/I/C/D . D   . . . D/P . . V/C . D/P . V     NPrSg/J/P
+> similar contexts , while     " eat   " occurs in        very different ones  . With sufficient
+# NSg/J   NPl/V    . NSg/V/C/P . NSg/V . V      NPrSg/J/P J    NSg/J     NPl/V . P    J
 > iteration , similarity classes of words emerge that    are remarkably similar to
 # NSg       . NSg        NPl/V   P  NPl/V NSg/V  N/I/C/D V   R          NSg/J   P
 > those human   linguists would  expect ; and the differences themselves sometimes
@@ -424,8 +424,8 @@
 # NSg/V . I/D  NSg        NPl/V D   NPr  NSg/V NPrSg/V/J J/P I/J/R P  D   NPr  ?        NSg  .
 > so        the results are directly comparable . However , many    significant taggers are
 # NSg/I/J/C D   NPl     V   R/C      NSg/J      . C       . N/I/J/D NSg/J       NPl     V
-> not   included ( perhaps because of the labor    involved in          reconfiguring them for
-# NSg/C V/J      . NSg     C/P     P  D   NPrSg/Am V/J      NPrSg/V/J/P V             N/I  C/P
+> not   included ( perhaps because of the labor    involved in        reconfiguring them for
+# NSg/C V/J      . NSg     C/P     P  D   NPrSg/Am V/J      NPrSg/J/P V             N/I  C/P
 > this particular dataset ) . Thus , it        should not   be     assumed that    the results
 # I/D  NSg/J      NSg     . . NSg  . NPrSg/ISg VX     NSg/C NSg/VX V/J     N/I/C/D D   NPl
 > reported here    are the best    that    can      be     achieved with a   given   approach ; nor   even
