@@ -52628,6 +52628,7 @@ Famicom/NOgS        # game console
 FireWire/gS         # trademark
 Firestore/g
 Foddy/Sg
+Forgejo/gO          # programming forge / git host
 Frankl/Sg
 FreeBSD/Og          # operating system
 GLFW/Og
@@ -53572,4 +53573,3 @@ work out/V
 # If you're not confident in using the affix annotations, add missing words here
 # And they will be reviewed
 # Word added using the `just addnoun` command will be added here
-
