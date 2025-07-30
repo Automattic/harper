@@ -43,6 +43,7 @@ Additionally, you can also configure things like which linters to use or how you
 ```elisp title=init.el
 (setq-default eglot-workspace-configuration
               '(:harper-ls (:userDictPath ""
+                            :workspaceDictPath ""
                             :fileDictPath ""
                             :linters (:SpellCheck t
                                       :SpelledNumbers :json-false
