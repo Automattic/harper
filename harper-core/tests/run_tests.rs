@@ -85,7 +85,7 @@ create_test!(pr_452.md, 2, Dialect::American);
 create_test!(hex_basic_clean.md, 0, Dialect::American);
 create_test!(hex_basic_dirty.md, 1, Dialect::American);
 create_test!(misc_closed_compound_clean.md, 0, Dialect::American);
-create_test!(yogurt_british_clean.md, 0, Dialect::British);
+create_test!(yogurt_british_clean.md, 1, Dialect::British);
 
 // Make sure it doesn't panic
 create_test!(lukas_homework.md, 3, Dialect::American);

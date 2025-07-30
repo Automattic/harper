@@ -459,6 +459,15 @@ Message: |
 Lint:    Capitalization (31 priority)
 Message: |
      226 | himself as he came, “Oh! the Duchess, the Duchess! Oh! won’t she be savage if
+         |                          ^~~ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “The”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     226 | himself as he came, “Oh! the Duchess, the Duchess! Oh! won’t she be savage if
          |                                                        ^~~~~ This sentence does not start with a capital letter
      227 | I’ve kept her waiting!” Alice felt so desperate that she was ready to ask help
 Suggest:
