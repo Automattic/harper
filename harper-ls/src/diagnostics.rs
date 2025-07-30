@@ -97,6 +97,12 @@ pub fn lint_to_code_actions<'a>(
         )));
 
         results.push(CodeActionOrCommand::Command(Command::new(
+            format!("Add \"{orig}\" to the workspace dictionary."),
+            "HarperAddToWSDict".to_string(),
+            Some(vec![orig.clone().into(), uri.to_string().into()]),
+        )));
+
+        results.push(CodeActionOrCommand::Command(Command::new(
             format!("Add \"{orig}\" to the file dictionary."),
             "HarperAddToFileDict".to_string(),
             Some(vec![orig.into(), uri.to_string().into()]),
