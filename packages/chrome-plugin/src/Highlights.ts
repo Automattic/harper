@@ -1,7 +1,6 @@
-import { render } from 'svelte/server';
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
-import { isBoxInScreen, type LintBox } from './Box';
+import type { LintBox } from './Box';
 import {
 	getCMRoot,
 	getDraftRoot,
