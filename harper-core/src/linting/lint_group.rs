@@ -330,18 +330,12 @@ impl LintGroup {
         insert_pattern_rule!(APart, true);
         insert_struct_rule!(AdjectiveOfA, true);
         insert_struct_rule!(AnA, true);
+        insert_pattern_rule!(AskNoPreposition, true);
         insert_struct_rule!(AvoidCurses, true);
         insert_pattern_rule!(BackInTheDay, true);
         insert_pattern_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_pattern_rule!(ChockFull, true);
-        insert_struct_rule!(SaveToSafe, true);
-        insert_struct_rule!(NailOnTheHead, true);
-        insert_struct_rule!(NominalWants, true);
-        insert_struct_rule!(ElsePossessive, true);
-        insert_pattern_rule!(WinPrize, true);
-        insert_pattern_rule!(AskNoPreposition, true);
-        insert_pattern_rule!(ItsContraction, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_pattern_rule!(Confident, true);
@@ -351,6 +345,7 @@ impl LintGroup {
         insert_pattern_rule!(DespiteOf, true);
         insert_pattern_rule!(DotInitialisms, true);
         insert_struct_rule!(EllipsisLength, true);
+        insert_struct_rule!(ElsePossessive, true);
         insert_pattern_rule!(ExpandTimeShorthands, true);
         insert_struct_rule!(FirstAidKit, true);
         insert_struct_rule!(ForNoun, true);
@@ -360,6 +355,7 @@ impl LintGroup {
         insert_struct_rule!(HopHope, true);
         insert_struct_rule!(HowTo, true);
         insert_pattern_rule!(HyphenateNumberDay, true);
+        insert_pattern_rule!(ItsContraction, true);
         insert_pattern_rule!(LeftRightHand, true);
         insert_struct_rule!(LetsConfusion, true);
         insert_pattern_rule!(Likewise, true);
@@ -369,6 +365,8 @@ impl LintGroup {
         insert_pattern_rule!(ModalOf, true);
         insert_pattern_rule!(MostNumber, true);
         insert_pattern_rule!(MultipleSequentialPronouns, true);
+        insert_struct_rule!(NailOnTheHead, true);
+        insert_struct_rule!(NominalWants, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_pattern_rule!(Nobody, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
@@ -383,12 +381,12 @@ impl LintGroup {
         insert_struct_rule!(PronounContraction, true);
         insert_struct_rule!(PronounKnew, true);
         insert_struct_rule!(RepeatedWords, true);
+        insert_struct_rule!(SaveToSafe, true);
         insert_pattern_rule!(SomewhatSomething, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
         insert_pattern_rule!(ThatWhich, true);
         insert_pattern_rule!(TheHowWhy, true);
-        insert_struct_rule!(TheHowWhy, true);
         insert_struct_rule!(TheMy, true);
         insert_pattern_rule!(ThenThan, true);
         insert_struct_rule!(UnclosedQuotes, true);
@@ -397,6 +395,7 @@ impl LintGroup {
         insert_pattern_rule!(Whereas, true);
         insert_pattern_rule!(WidelyAccepted, true);
         insert_struct_rule!(WidelyAccepted, true);
+        insert_pattern_rule!(WinPrize, true);
         insert_struct_rule!(WordPressDotcom, true);
 
         out.add(

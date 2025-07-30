@@ -1655,9 +1655,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      721 | done in Convention by the Unanimous Consent of the States present the
-         | ^ This sentence does not start with a capital letter
+         | ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “D”
+  - Replace with: “Done”
 
 
 

@@ -1,18 +1,18 @@
 Lint:    Capitalization (31 priority)
 Message: |
       20 | at the bottom of the page; sitting at the table; at church; at sea
-         | ^ This sentence does not start with a capital letter
+         | ^~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “A”
+  - Replace with: “At”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
       32 | men at work; children at play
-         | ^ This sentence does not start with a capital letter
+         | ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “M”
+  - Replace with: “Men”
 
 
 
@@ -37,9 +37,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
       76 | sold by the yard; cheaper if bought by the gross
-         | ^ This sentence does not start with a capital letter
+         | ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “S”
+  - Replace with: “Sold”
 
 
 
@@ -66,9 +66,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      160 | to account for one's whereabouts.
-         | ^ This sentence does not start with a capital letter
+         | ^~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “To”
 
 
 
@@ -104,9 +104,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      254 | the in train (incoming train)
-         | ^ This sentence does not start with a capital letter
+         | ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “The”
 
 
 
@@ -194,18 +194,18 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      316 | turn the television on
-         | ^ This sentence does not start with a capital letter
+         | ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “Turn”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
      322 | and so on.
-         | ^ This sentence does not start with a capital letter
+         | ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “A”
+  - Replace with: “And”
 
 
 
@@ -221,18 +221,18 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      345 | tug on the rope; push hard on the door.
-         | ^ This sentence does not start with a capital letter
+         | ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “Tug”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
      349 | to play on a violin or piano.
-         | ^ This sentence does not start with a capital letter
+         | ^~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “To”
 
 
 
@@ -279,27 +279,27 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      449 | slain with robbers.
-         | ^ This sentence does not start with a capital letter
+         | ^~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “S”
+  - Replace with: “Slain”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
      450 | cut with a knife
-         | ^ This sentence does not start with a capital letter
+         | ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “C”
+  - Replace with: “Cut”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
      461 | overcome with happiness
-         | ^ This sentence does not start with a capital letter
+         | ^~~~~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “O”
+  - Replace with: “Overcome”
 
 
 

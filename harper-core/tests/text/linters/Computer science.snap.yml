@@ -892,9 +892,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
-         |                    ^ This sentence does not start with a capital letter
+         |                    ^~~~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “P”
+  - Replace with: “Problem”
 
 
 
@@ -945,10 +945,10 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      327 | is the lower bound on the complexity of fast Fourier transform algorithms? is
-         |                                                                            ^ This sentence does not start with a capital letter
+         |                                                                            ^~ This sentence does not start with a capital letter
      328 | one of the unsolved problems in theoretical computer science.
 Suggest:
-  - Replace with: “I”
+  - Replace with: “Is”
 
 
 
@@ -1109,9 +1109,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      456 |   - print 1 at current location.
-         |     ^ This sentence does not start with a capital letter
+         |     ^~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “P”
+  - Replace with: “Print”
 
 
 
@@ -1150,18 +1150,18 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      466 |   - selection: IF such-and-such is the case, THEN do this, ELSE do that;
-         |     ^ This sentence does not start with a capital letter
+         |     ^~~~~~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “S”
+  - Replace with: “Selection”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
      467 |   - repetition: WHILE such-and-such is the case, DO this. The three rules of
-         |     ^ This sentence does not start with a capital letter
+         |     ^~~~~~~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “R”
+  - Replace with: “Repetition”
 
 
 

@@ -177,19 +177,19 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
       84 | ever eat a bat?” when suddenly, thump! thump! down she came upon a heap of
-         |                                        ^ This sentence does not start with a capital letter
+         |                                        ^~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “Thump”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
       84 | ever eat a bat?” when suddenly, thump! thump! down she came upon a heap of
-         |                                               ^ This sentence does not start with a capital letter
+         |                                               ^~~~ This sentence does not start with a capital letter
       85 | sticks and dry leaves, and the fall was over.
 Suggest:
-  - Replace with: “D”
+  - Replace with: “Down”
 
 
 
@@ -229,10 +229,10 @@ Message: |
 Lint:    Capitalization (31 priority)
 Message: |
      102 | that it might belong to one of the doors of the hall; but, alas! either the
-         |                                                                  ^ This sentence does not start with a capital letter
+         |                                                                  ^~~~~~ This sentence does not start with a capital letter
      103 | locks were too large, or the key was too small, but at any rate it would not
 Suggest:
-  - Replace with: “E”
+  - Replace with: “Either”
 
 
 
@@ -341,10 +341,10 @@ Message: |
 Lint:    Capitalization (31 priority)
 Message: |
      154 | garden at once; but, alas for poor Alice! when she got to the door, she found
-         |                                           ^ This sentence does not start with a capital letter
+         |                                           ^~~~ This sentence does not start with a capital letter
      155 | she had forgotten the little golden key, and when she went back to the table for
 Suggest:
-  - Replace with: “W”
+  - Replace with: “When”
 
 
 
@@ -459,10 +459,10 @@ Message: |
 Lint:    Capitalization (31 priority)
 Message: |
      226 | himself as he came, “Oh! the Duchess, the Duchess! Oh! won’t she be savage if
-         |                                                        ^ This sentence does not start with a capital letter
+         |                                                        ^~~~~ This sentence does not start with a capital letter
      227 | I’ve kept her waiting!” Alice felt so desperate that she was ready to ask help
 Suggest:
-  - Replace with: “W”
+  - Replace with: “Won’t”
 
 
 
@@ -501,9 +501,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      243 | all sorts of things, and she, oh! she knows such a very little! Besides, she’s
-         |                                   ^ This sentence does not start with a capital letter
+         |                                   ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “S”
+  - Replace with: “She”
 
 
 
@@ -536,9 +536,9 @@ Message: |
 Lint:    Capitalization (31 priority)
 Message: |
      263 | and oh! ever so many lessons to learn! No, I’ve made up my mind about it; if I’m
-         |         ^ This sentence does not start with a capital letter
+         |         ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “E”
+  - Replace with: “Ever”
 
 
 
@@ -560,20 +560,20 @@ Message: |
 Lint:    Capitalization (31 priority)
 Message: |
      281 | garden!” and she ran with all speed back to the little door: but, alas! the
-         |                                                                         ^ This sentence does not start with a capital letter
+         |                                                                         ^~~ This sentence does not start with a capital letter
      282 | little door was shut again, and the little golden key was lying on the glass
 Suggest:
-  - Replace with: “T”
+  - Replace with: “The”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
      287 | As she said these words her foot slipped, and in another moment, splash! she was
-         |                                                                          ^ This sentence does not start with a capital letter
+         |                                                                          ^~~ This sentence does not start with a capital letter
      288 | up to her chin in salt water. Her first idea was that she had somehow fallen
 Suggest:
-  - Replace with: “S”
+  - Replace with: “She”
 
 
 
@@ -1075,28 +1075,28 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      688 | one; Bill’s got the other—Bill! fetch it here, lad!—Here, put ’em up at this
-         |                                 ^ This sentence does not start with a capital letter
+         |                                 ^~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “F”
+  - Replace with: “Fetch”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
      690 | they’ll do well enough; don’t be particular—Here, Bill! catch hold of this
-         | ^ This sentence does not start with a capital letter
+         | ^~~~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “They’ll”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
      690 | they’ll do well enough; don’t be particular—Here, Bill! catch hold of this
-         |                                                         ^ This sentence does not start with a capital letter
+         |                                                         ^~~~~ This sentence does not start with a capital letter
      691 | rope—Will the roof bear?—Mind that loose slate—Oh, it’s coming down! Heads
 Suggest:
-  - Replace with: “C”
+  - Replace with: “Catch”
 
 
 
@@ -1123,9 +1123,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
      694 | down—Here, Bill! the master says you’re to go down the chimney!”
-         |                  ^ This sentence does not start with a capital letter
+         |                  ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “The”
 
 
 
@@ -1507,45 +1507,45 @@ Message: |
 Lint:    Capitalization (31 priority)
 Message: |
     1200 | > “Wow! wow! wow!”
-         |         ^ This sentence does not start with a capital letter
+         |         ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “W”
+  - Replace with: “Wow”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
     1200 | > “Wow! wow! wow!”
-         |              ^ This sentence does not start with a capital letter
+         |              ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “W”
+  - Replace with: “Wow”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
     1211 | > “Wow! wow! wow!”
-         |         ^ This sentence does not start with a capital letter
+         |         ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “W”
+  - Replace with: “Wow”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
     1211 | > “Wow! wow! wow!”
-         |              ^ This sentence does not start with a capital letter
+         |              ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “W”
+  - Replace with: “Wow”
 
 
 
 Lint:    Capitalization (31 priority)
 Message: |
     1213 | “Here! you may nurse it a bit, if you like!” the Duchess said to Alice, flinging
-         |        ^ This sentence does not start with a capital letter
+         |        ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “Y”
+  - Replace with: “You”
 
 
 
@@ -1675,9 +1675,9 @@ Message: |
 Lint:    Capitalization (31 priority)
 Message: |
     1481 | “Ah! that accounts for it,” said the Hatter. “He won’t stand beating. Now, if
-         |      ^ This sentence does not start with a capital letter
+         |      ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “That”
 
 
 
@@ -2367,9 +2367,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     2176 | “Ah! then yours wasn’t a really good school,” said the Mock Turtle in a tone of
-         |      ^ This sentence does not start with a capital letter
+         |      ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “Then”
 
 
 

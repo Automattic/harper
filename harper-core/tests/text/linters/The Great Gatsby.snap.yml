@@ -1967,9 +1967,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
-         |               ^ This sentence does not start with a capital letter
+         |               ^~~~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “S”
+  - Replace with: “Simply”
 
 
 
@@ -3735,9 +3735,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     2603 | “Of course, of course! They’re fine!” and he added hollowly, “. . . old sport.”
-         |                                                                     ^ This sentence does not start with a capital letter
+         |                                                                     ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “O”
+  - Replace with: “Old”
 
 
 
@@ -4420,9 +4420,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
-         |                      ^ This sentence does not start with a capital letter
+         |                      ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “A”
+  - Replace with: “And”
 
 
 
@@ -4717,9 +4717,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     3607 | all . . . and as for your bothering me about it at lunch time, I won’t stand
-         |           ^ This sentence does not start with a capital letter
+         |           ^~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “A”
+  - Replace with: “And”
 
 
 
@@ -6334,9 +6334,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     5205 | like that ashen, fantastic figure gliding toward him through the amorphous
-         | ^ This sentence does not start with a capital letter
+         | ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “L”
+  - Replace with: “Like”
 
 
 
@@ -6561,9 +6561,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     5350 | exclamation . . . then a quick squawk as the connection was broken.
-         |                   ^ This sentence does not start with a capital letter
+         |                   ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “Then”
 
 
 
@@ -6918,9 +6918,9 @@ Suggest:
 Lint:    Capitalization (31 priority)
 Message: |
     5653 | “Go on!” He started. “Why, my God! they used to go there by the hundreds.”
-         |                                    ^ This sentence does not start with a capital letter
+         |                                    ^~~~ This sentence does not start with a capital letter
 Suggest:
-  - Replace with: “T”
+  - Replace with: “They”
 
 
 
