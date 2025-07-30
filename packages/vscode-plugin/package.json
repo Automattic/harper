@@ -55,6 +55,15 @@
 	],
 	"main": "./build/extension.js",
 	"contributes": {
+		"icons": {
+			"harper-logo": {
+				"description": "Harper logo",
+				"default": {
+					"fontPath": "media/harper.woff",
+					"fontCharacter": "\\e900"
+				}
+			}
+		},
 		"commands": [
 			{
 				"command": "harper.languageserver.restart",
