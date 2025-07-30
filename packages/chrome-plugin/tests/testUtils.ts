@@ -1,4 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
+import type { Box } from '../src/Box';
+import { expect, test } from './fixtures';
 
 /** Locate the [`Slate`](https://www.slatejs.org/examples/richtext) editor on the page.  */
 export function getSlateEditor(page: Page): Locator {
@@ -37,7 +39,7 @@ export async function clickHarperHighlight(page: Page): Promise<boolean> {
 		return false;
 	}
 
-	const box = await highlights.boundingBox();
+	const box = await highlights.first().boundingBox();
 
 	if (box == null) {
 		return false;
@@ -49,4 +51,74 @@ export async function clickHarperHighlight(page: Page): Promise<boolean> {
 
 	await page.mouse.click(cx, cy);
 	return true;
+}
+
+/** Grab the first `<textarea />` on a page. */
+export function getTextarea(page: Page): Locator {
+	return page.locator('textarea');
+}
+
+export async function testBasicSuggestionTextarea(testPageUrl: string) {
+	test('Can apply basic suggestion.', async ({ page }) => {
+		await page.goto(testPageUrl);
+
+		const editor = getTextarea(page);
+		await replaceEditorContent(editor, 'This is an test');
+
+		await page.waitForTimeout(6000);
+
+		await clickHarperHighlight(page);
+		await page.getByTitle('Replace with "a"').click();
+
+		await page.waitForTimeout(3000);
+
+		expect(editor).toHaveValue('This is a test');
+	});
+}
+
+export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
+	test('Can ignore suggestion.', async ({ page }) => {
+		await page.goto(testPageUrl);
+
+		const editor = getTextarea(page);
+		await replaceEditorContent(editor, 'This is an test');
+
+		await page.waitForTimeout(6000);
+
+		await clickHarperHighlight(page);
+		await page.getByTitle('Ignore this lint').click();
+
+		await page.waitForTimeout(3000);
+
+		// Nothing should change.
+		expect(editor).toHaveValue('This is an test');
+		expect(await clickHarperHighlight(page)).toBe(false);
+	});
+}
+
+export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
+	const highlights = getHarperHighlights(page);
+	expect(await highlights.count()).toBe(boxes.length);
+
+	for (let i = 0; i < (await highlights.count()); i++) {
+		const box = await highlights.nth(i).boundingBox();
+
+		console.log(`Expected: ${JSON.stringify(boxes[i])}`);
+		console.log(`Got: ${JSON.stringify(box)}`);
+
+		assertBoxesClose(box, boxes[i]);
+	}
+}
+
+/** An assertion that checks to ensure that two boxes are _approximately_ equal.
+ * Leaves wiggle room for floating point error. */
+export function assertBoxesClose(a: Box, b: Box) {
+	assertClose(a.x, b.x);
+	assertClose(a.y, b.y);
+	assertClose(a.width, b.width);
+	assertClose(a.height, b.height);
+}
+
+function assertClose(actual: number, expected: number) {
+	expect(Math.abs(actual - expected)).toBeLessThanOrEqual(9);
 }

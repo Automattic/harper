@@ -17,54 +17,58 @@ function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement
 }
 
 export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): IgnorableLintBox[] {
-	let range: Range | TextFieldRange | null = null;
-	let text: string | null = null;
+	try {
+		let range: Range | TextFieldRange | null = null;
+		let text: string | null = null;
 
-	if (isFormEl(el)) {
-		range = new TextFieldRange(el, lint.span.start, lint.span.end);
-		text = el.value;
-	} else {
-		range = getRangeForTextSpan(el, lint.span as Span);
-	}
-
-	const targetRects = range.getClientRects();
-	const elBox = domRectToBox(range.getBoundingClientRect());
-	range.detach();
-
-	const boxes: IgnorableLintBox[] = [];
-
-	let source: HTMLElement | null = null;
-
-	if (el.tagName == undefined) {
-		source = el.parentElement;
-	} else {
-		source = el;
-	}
-
-	if (source == null) {
-		return [];
-	}
-
-	for (const targetRect of targetRects) {
-		if (!isBottomEdgeInBox(targetRect, elBox)) {
-			continue;
+		if (isFormEl(el)) {
+			range = new TextFieldRange(el, lint.span.start, lint.span.end);
+			text = el.value;
+		} else {
+			range = getRangeForTextSpan(el, lint.span as Span);
 		}
 
-		boxes.push({
-			x: targetRect.x,
-			y: targetRect.y,
-			width: targetRect.width,
-			height: targetRect.height,
-			lint,
-			source,
-			applySuggestion: (sug: UnpackedSuggestion) => {
-				replaceValue(el, applySuggestion(el.value ?? el.textContent, lint.span, sug));
-			},
-			ignoreLint: () => ProtocolClient.ignoreHash(lint.context_hash),
-		});
-	}
+		const targetRects = range.getClientRects();
+		const elBox = domRectToBox(range.getBoundingClientRect());
+		range.detach();
 
-	return boxes;
+		const boxes: IgnorableLintBox[] = [];
+
+		let source: HTMLElement | null = null;
+
+		if (el.tagName == undefined) {
+			source = el.parentElement;
+		} else {
+			source = el;
+		}
+
+		if (source == null) {
+			return [];
+		}
+
+		for (const targetRect of targetRects) {
+			if (!isBottomEdgeInBox(targetRect, elBox)) {
+				continue;
+			}
+
+			boxes.push({
+				x: targetRect.x,
+				y: targetRect.y,
+				width: targetRect.width,
+				height: targetRect.height,
+				lint,
+				source,
+				applySuggestion: (sug: UnpackedSuggestion) => {
+					replaceValue(el, applySuggestion(el.value ?? el.textContent, lint.span, sug));
+				},
+				ignoreLint: () => ProtocolClient.ignoreHash(lint.context_hash),
+			});
+		}
+		return boxes;
+	} catch (e) {
+		// If there's an error, it's likely because the element no longer exists
+		return [];
+	}
 }
 
 function replaceValue(el: HTMLElement, value: string) {
