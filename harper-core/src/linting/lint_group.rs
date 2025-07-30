@@ -67,6 +67,7 @@ use super::proper_noun_capitalization_linters;
 use super::repeated_words::RepeatedWords;
 use super::save_to_safe::SaveToSafe;
 use super::sentence_capitalization::SentenceCapitalization;
+use super::since_duration::SinceDuration;
 use super::somewhat_something::SomewhatSomething;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
@@ -391,6 +392,7 @@ impl LintGroup {
         insert_struct_rule!(PronounKnew, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);
+        insert_pattern_rule!(SinceDuration, true);
         insert_pattern_rule!(SomewhatSomething, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);

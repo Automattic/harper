@@ -3,9 +3,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |    ^~ Did you mean to spell `F.` this way?
 Suggest:
+  - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Ff”
-  - Replace with: “Fl”
+  - Replace with: “Fa”
 
 
 
@@ -2424,7 +2424,7 @@ Message: |
 Suggest:
   - Replace with: “Sf”
   - Replace with: “Sh”
-  - Replace with: “So”
+  - Replace with: “Sq”
 
 
 
@@ -2527,7 +2527,7 @@ Message: |
 Suggest:
   - Replace with: “Sf”
   - Replace with: “Sh”
-  - Replace with: “So”
+  - Replace with: “Sq”
 
 
 
@@ -2816,7 +2816,7 @@ Message: |
 Suggest:
   - Replace with: “Sf”
   - Replace with: “Sh”
-  - Replace with: “So”
+  - Replace with: “Sq”
 
 
 
@@ -6817,7 +6817,7 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
-  - Replace with: “Cw”
+  - Replace with: “Cu”
   - Replace with: “C”
   - Replace with: “Cc”
 
@@ -6956,9 +6956,9 @@ Message: |
     5455 | and I’m sort of helpless without them. My address is care of B. F.———”
          |                                                                 ^~ Did you mean to spell `F.` this way?
 Suggest:
+  - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Ff”
-  - Replace with: “Fl”
+  - Replace with: “Fa”
 
 
 

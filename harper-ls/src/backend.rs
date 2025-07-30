@@ -24,10 +24,10 @@ use tower_lsp_server::lsp_types::{
     CodeActionOrCommand, CodeActionParams, CodeActionProviderCapability, CodeActionResponse,
     ConfigurationItem, Diagnostic, DidChangeConfigurationParams, DidChangeTextDocumentParams,
     DidChangeWatchedFilesParams, DidChangeWatchedFilesRegistrationOptions,
-    DidCloseTextDocumentParams, DidOpenTextDocumentParams, DidSaveTextDocumentParams,
-    ExecuteCommandOptions, ExecuteCommandParams, FileChangeType, FileSystemWatcher, GlobPattern,
-    InitializeParams, InitializeResult, InitializedParams, MessageType, PublishDiagnosticsParams,
-    Range, Registration, ServerCapabilities, TextDocumentSyncCapability, TextDocumentSyncKind,
+    DidCloseTextDocumentParams, DidOpenTextDocumentParams, ExecuteCommandOptions,
+    ExecuteCommandParams, FileChangeType, FileSystemWatcher, GlobPattern, InitializeParams,
+    InitializeResult, InitializedParams, MessageType, PublishDiagnosticsParams, Range,
+    Registration, ServerCapabilities, TextDocumentSyncCapability, TextDocumentSyncKind,
     TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Uri, WatchKind,
 };
 use tower_lsp_server::{Client, LanguageServer, UriExt};
@@ -478,15 +478,6 @@ impl LanguageServer for Backend {
         {
             warn!("Unable to register watch file capability: {}", err);
         }
-    }
-
-    async fn did_save(&self, params: DidSaveTextDocumentParams) {
-        self.update_document_from_file(&params.text_document.uri, None)
-            .await
-            .map_err(|err| error!("{err}"))
-            .err();
-
-        self.publish_diagnostics(&params.text_document.uri).await;
     }
 
     async fn did_open(&self, params: DidOpenTextDocumentParams) {
