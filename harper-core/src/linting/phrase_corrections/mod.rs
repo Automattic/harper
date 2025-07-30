@@ -1222,9 +1222,9 @@ pub fn lint_group() -> LintGroup {
         ),
         "Unless" => (
             ["unless if"],
-            ["unless"],
-            "Use `unless` on its own.",
-            "Corrects `unless if` to `unless`."
+            ["unless", "except if", "except when"],
+            "`Unless if` is not idiomatic English. `Unless`, `except if`, and `except when` express a condition that is true in all cases except one.",
+            "Corrects `unless if`."
         ),
         "WantBe" => (
             ["want be"],

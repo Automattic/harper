@@ -72,7 +72,9 @@ function replaceValue(el: HTMLElement, value: string) {
 	const lexicalRoot = getLexicalRoot(el);
 
 	if (isFormEl(el)) {
+		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
 		el.value = value;
+		el.dispatchEvent(new InputEvent('input', { bubbles: true }));
 	} else if (slateRoot != null || lexicalRoot != null) {
 		replaceValueSpecial(el, value);
 	} else {

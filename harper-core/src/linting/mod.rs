@@ -4,6 +4,7 @@
 
 mod a_part;
 mod adjective_of_a;
+mod am_in_the_morning;
 mod amounts_for;
 mod an_a;
 mod ask_no_preposition;
@@ -99,6 +100,7 @@ mod wordpress_dotcom;
 
 pub use a_part::APart;
 pub use adjective_of_a::AdjectiveOfA;
+pub use am_in_the_morning::AmInTheMorning;
 pub use amounts_for::AmountsFor;
 pub use an_a::AnA;
 pub use ask_no_preposition::AskNoPreposition;
