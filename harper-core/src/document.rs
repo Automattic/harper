@@ -5,7 +5,7 @@ use std::fmt::Display;
 use harper_brill::{Chunker, Tagger, brill_chunker, brill_tagger};
 use paste::paste;
 
-use crate::expr::{Expr, ExprExt, LongestMatchOf, Repeating, SequenceExpr};
+use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
 use crate::patterns::WordSet;
 use crate::punctuation::Punctuation;
@@ -436,11 +436,11 @@ impl Document {
     }
 
     thread_local! {
-        static LATIN_EXPR: Lrc<LongestMatchOf> = Document::uncached_latin_expr();
+        static LATIN_EXPR: Lrc<FirstMatchOf> = Document::uncached_latin_expr();
     }
 
-    fn uncached_latin_expr() -> Lrc<LongestMatchOf> {
-        Lrc::new(LongestMatchOf::new(vec![
+    fn uncached_latin_expr() -> Lrc<FirstMatchOf> {
+        Lrc::new(FirstMatchOf::new(vec![
             Box::new(
                 SequenceExpr::default()
                     .then(WordSet::new(&["etc", "vs"]))

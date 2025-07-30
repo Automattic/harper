@@ -388,6 +388,12 @@ pub fn lint_group() -> LintGroup {
             "A more vivid adjective would better capture extreme cold.",
             "Encourages vivid writing by suggesting `freezing` instead of weaker expressions like `very cold.`"
         ),
+        "FromTheGetGo" => (
+            ["from the get go"],
+            ["from the get-go"],
+            "Use the hyphenated form: `from the get-go`.",
+            "Ensures `from the get-go` is correctly hyphenated, preserving the idiom’s meaning of ‘from the very beginning’."
+        ),
         "GildedAge" => (
             ["guilded age"],
             ["Gilded Age"],
@@ -865,12 +871,6 @@ pub fn lint_group() -> LintGroup {
             "Use `the other` or `another`, not both.",
             "Corrects `the another`."
         ),
-        "ThereIsAny" => (
-            ["there any"],
-            ["there is any"],
-            "Insert `is` for correct grammar.",
-            "Replaces `there any` with `there is any`."
-        ),
         "ThoughtProcess" => (
             ["though process"],
             ["thought process"],
@@ -969,12 +969,6 @@ pub fn lint_group() -> LintGroup {
             ["wrought iron"],
             "Prefer the standard term `wrought iron`.",
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
-        ),
-        "FromTheGetGo" => (
-            ["from the get go"],
-            ["from the get-go"],
-            "Use the hyphenated form: `from the get-go`.",
-            "Ensures `from the get-go` is correctly hyphenated, preserving the idiom’s meaning of ‘from the very beginning’."
         ),
     });
 
