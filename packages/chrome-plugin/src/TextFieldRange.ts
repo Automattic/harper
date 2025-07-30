@@ -57,6 +57,8 @@ export default class TextFieldRange {
 			'borderBottomWidth',
 			'borderLeftWidth',
 			'boxSizing',
+			'overflowX',
+			'overflowY',
 		];
 		propertiesToCopy.forEach((prop) => {
 			this.mirror!.style[prop] = computed[prop];
