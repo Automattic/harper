@@ -2368,6 +2368,7 @@ Cordilleras/M
 Cordoba/2M
 Corey/2M
 Corfu/2M
+Corg/21M            # company
 Corina/2M
 Corine/M
 Corinne/2M
@@ -7344,7 +7345,8 @@ Nevsky/M
 Newark/2M
 Newburgh/2M
 Newcastle/2M
-Newfoundland/21MRS
+Newfoundland/21MS
+Newfoundlander/1SM
 Newman/2M
 Newport/2M
 Newsweek/M
@@ -11546,6 +11548,7 @@ adjunct/~154MS
 adjuration/1MS
 adjure/4GDS
 adjust/~4AGDSL
+adjustability/1M
 adjustable/~51
 adjuster/1SM
 adjustment/~1AMS
@@ -12039,7 +12042,7 @@ alligator/~14MS
 alliterate/4DSXGNV
 alliteration/1M
 alliterative/5Y
-allocate/~4ADSGNYC
+allocate/~4ADSGNYCB
 allocation/~1AM
 allocations/~1
 allocator/1C
@@ -12660,7 +12663,7 @@ anywise/
 aorta/1MS
 aortic/~5
 apace/
-apart/~51
+apart/~5            # removed `1` noun, probably imported from Wiktionary's misspelling sense!
 apartheid/~14M
 apartment/~1MS
 apathetic/5Q
@@ -17305,6 +17308,7 @@ chromatin/~1M
 chromatography/~1
 chrome/~14MGDS
 chromium/~1M
+chromoly/1M
 chromosomal/~5
 chromosome/~1MS
 chronic/~51Q
@@ -17396,6 +17400,7 @@ circa/~+
 circadian/5
 circle/~14MGDS
 circlet/1MS
+circlip/1MS
 circuit/~14MDGS
 circuital/5
 circuitous/5YP
@@ -18645,6 +18650,7 @@ conquered/~4U
 conqueror/~1MS
 conquest/~14AM
 conquistador/~1SM
+conrod/1MS
 cons/~14DSG
 consanguineous/5
 consanguinity/1M
@@ -27219,6 +27225,7 @@ halcyon/~15
 hale/~514ITGDRS
 half/~154+M
 halfback/~14SM
+halfcourt/
 halfhearted/5PY
 halfheartedness/1M
 halfpence/1
@@ -28663,6 +28670,7 @@ hyperaggressive/5
 hyperbola/1SM
 hyperbole/~1M
 hyperbolic/~5Q
+hypercar/1MS
 hyperconservative/5
 hypercritical/5Y
 hypercube/1
@@ -32053,6 +32061,7 @@ longing/~41MYS
 longish/5
 longitude/~1MS
 longitudinal/~51Y
+longnose/5
 longshoreman/1M
 longshoremen/9
 longsighted/5
@@ -33538,7 +33547,7 @@ milky/~5RTP
 mill/~14MDRSZGJ
 millage/1M
 millennia/~1
-millennial/51M
+millennial/51MS
 millennium/~1MS
 miller/~1M
 millet/~1M
@@ -34515,7 +34524,8 @@ mummify/4GNDS
 mummy/~14SM         # "mother" sense is UK/AU, "mummified" sense is universal
 mumps/14M
 mun/~418
-munch/~41GDSR
+munch/~41GDS
+muncher/1MS
 munchie/1S
 munchies/1M
 munchkin/1SM
@@ -37568,6 +37578,7 @@ peal/~14AMDSG
 peanut/~14MS
 pear/~1MYS
 pearl/~14SGMD
+pearlescent/5
 pearly/15RT
 peasant/~15SM
 peasantry/~1M
@@ -40901,6 +40912,7 @@ rebirth/~14M
 reboard/4GDS
 reboil/4SDG
 rebox/4SDG
+rebuckle/4SDG
 rebuild/~41SG
 rebuke/14DSMG
 rebuking/41Y
@@ -40974,6 +40986,7 @@ recon/~14S
 reconcile/~4GDSB
 reconciliation/~1S
 recondite/514SM
+reconditioner/1MS
 reconfiguration/1
 reconfigure/4GDS
 reconfigure/4D
@@ -46706,6 +46719,7 @@ superior/~51MS
 superiority/~1M
 superlative/~15SMY
 superlinear/5Y
+supermajority/1MS
 superman/~1M
 supermarket/~1SM
 supermassive/5
@@ -50092,6 +50106,7 @@ utensil/1SM
 uteri/1
 uterine/~51
 uterus/~1M
+util/1MS
 utilisation/1M!_
 utilise/4GBDS!_
 utilitarian/~51MS
@@ -52257,6 +52272,7 @@ CISC/1M             # cpu architecture
 CMOS/1              # microchip process
 CMake/SM            # build tool
 CQL/1
+CRC/1MS             # cyclic redundancy check
 CRDT/1SM
 CRM/12SM
 CTE/1S
@@ -52599,6 +52615,7 @@ wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
 # But it will be able to include them in suggestions
 
 a lot
+ad-free/5
 ad nauseam/j
 add-on/1MS
 air-conditioned/5
@@ -52626,6 +52643,7 @@ blow-up/51MS
 blue-blooded/5
 blue-collar/5
 bona fide/j5
+boot loader/1MS
 break out/4
 breaks out/4
 Bretton Woods/2M
@@ -52672,6 +52690,8 @@ dire wolves/9
 door to door/j
 door-to-door/S
 double-decker/5
+drop in/4
+drop-in/1MS5
 e-book/1MS
 easy peasy/5
 editor in chief/1
@@ -52681,6 +52701,8 @@ et al./~
 even-numbered/5
 ever-present/5
 ex-friend/1MS
+face off/4
+face-off/1MS
 fact check/1S
 fact-check/4SDG
 fact-checking/1M
@@ -52718,6 +52740,7 @@ H-1B/1MS
 habeas corpus/1
 half cent/1MS
 half-cocked/5
+half court/1M
 half-life/1M
 half-lives/9
 ham-fisted/5
@@ -52736,6 +52759,7 @@ hi-tech/15
 high definition/1M
 high frequency/1MS
 high-frequency/5
+high-grade/5
 high-level/5
 high-paying/5
 high-pitched/5
@@ -52751,6 +52775,7 @@ hissy fit/1MS
 holy moley
 holy moly
 home school/1MS4DG
+how come/j
 Humpty Dumpty/2M
 ice cream/1MS
 in-depth/5
@@ -52817,6 +52842,7 @@ not-for-profit/51MS
 object-oriented/5
 odd-numbered/5
 of course/j
+off-grid/5
 off-limits/5
 off-ramp/1MS
 off-road/1MS
@@ -52824,6 +52850,7 @@ off-roader/1MS
 off-roading/1M
 off-the-books/5
 okey-dokey/1MS
+old-fashioned/51
 old-timey/5
 Old World/2M
 old-world/5
@@ -52896,6 +52923,7 @@ shout-out/1S
 sign on/4
 sign-on/1MS
 single-handedly/j
+six-footer/1MS
 six-pack/1MS
 so-called/5
 socio-political/5
@@ -52914,6 +52942,8 @@ stand-up/51
 standard-bearer/1MS
 stay behind/4
 stay-behind/1MS
+straight up/j
+straight-up/5
 surface-to-air/5
 suss out/4
 sussed out/4
@@ -53018,6 +53048,7 @@ log off/4
 log on/4
 log out/4
 look up/4
+low fidelity/5
 meet up/4
 melt down/4
 pick up/4

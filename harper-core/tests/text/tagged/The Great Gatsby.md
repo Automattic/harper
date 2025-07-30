@@ -315,7 +315,7 @@
 > windows , glowing now         with reflected gold    and wide  open    to the warm  windy
 # NPrPl/V . NSg/V/J NPrSg/V/J/C P    V/J       NSg/V/J V/C NSg/J NSg/V/J P  D   NSg/J NSg/J
 > afternoon , and Tom     Buchanan in        riding clothes was standing with his   legs apart
-# NSg       . V/C NPrSg/V NPr      NPrSg/J/P NSg/V  NPl/V   V   NSg/V/J  P    ISg/D NPl  NSg/J
+# NSg       . V/C NPrSg/V NPr      NPrSg/J/P NSg/V  NPl/V   V   NSg/V/J  P    ISg/D NPl  J
 > on the front porch .
 # P  D   NSg/J NSg   .
 >
@@ -2013,7 +2013,7 @@
 > “ You see   , ” cried Catherine triumphantly . She lowered her   voice again . “ It’s
 # . IPl NSg/V . . V/J   NPr       J/R          . ISg V/J     I/J/D NSg/V P     . . W?
 > really his   wife that’s keeping them apart . She’s a   Catholic , and they don’t
-# J/R    ISg/D NSg  N$     NSg/V   N/I  NSg/J . W?    D/P NSg/J    . V/C IPl  V
+# J/R    ISg/D NSg  N$     NSg/V   N/I  J     . W?    D/P NSg/J    . V/C IPl  V
 > believe in        divorce . ”
 # V       NPrSg/J/P NSg/V   . .
 >
@@ -3461,7 +3461,7 @@
 > Reading over      what  I   have   written so        far     , I   see   I   have   given     the impression that
 # NPrSg/V NSg/V/J/P NSg/I ISg NSg/VX V/J     NSg/I/J/C NSg/V/J . ISg NSg/V ISg NSg/VX NSg/V/J/P D   NSg        N/I/C/D
 > the events of three nights several weeks apart were  all       that    absorbed me        . On the
-# D   NPl    P  NSg   NPl/V  J/D     NPrPl NSg/J NSg/V NSg/I/J/C N/I/C/D V/J      NPrSg/ISg . P  D
+# D   NPl    P  NSg   NPl/V  J/D     NPrPl J     NSg/V NSg/I/J/C N/I/C/D V/J      NPrSg/ISg . P  D
 > contrary , they were  merely casual events in a   crowded summer  , and , until much
 # NSg/J    . IPl  NSg/V J/R    NSg/J  NPl/V  P  D/P J       NPrSg/V . V/C . C/P   N/I/J
 > later , they absorbed me        infinitely less    than my personal affairs .
@@ -7869,7 +7869,7 @@
 > there before I   realized that    so        far     his   suspicions hadn’t alighted on  Tom     . He
 # W?    C/P    ISg V/J      N/I/C/D NSg/I/J/C NSg/V/J ISg/D NPl        V      V/J      J/P NPrSg/V . NPr/ISg
 > had discovered that    Myrtle had some  sort  of life  apart from him in another
-# V   V/J        N/I/C/D NPrSg  V   I/J/R NSg/V P  NSg/V NSg/J P    I   P  I/D
+# V   V/J        N/I/C/D NPrSg  V   I/J/R NSg/V P  NSg/V J     P    I   P  I/D
 > world , and the shock had made  him physically sick    . I   stared at        him and then    at
 # NSg/V . V/C D   NSg/J V   NSg/V I   J/R        NSg/V/J . ISg V/J    NSg/I/V/P I   V/C NSg/J/C NSg/I/V/P
 > Tom     , who     had made  a   parallel discovery less    than an  hour before — and it        occurred

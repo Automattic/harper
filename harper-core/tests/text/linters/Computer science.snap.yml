@@ -243,16 +243,6 @@ Suggest:
 
 
 
-Lint:    Style (63 priority)
-Message: |
-     108 | management science, the subject is applied and interdisciplinary in nature,
-     109 | while having the characteristics typical of an academic discipline. His efforts,
-         |                                  ^~~~~~~~~~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “typical an”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      110 | and those of others such as numerical analyst George Forsythe, were rewarded:
@@ -1009,9 +999,9 @@ Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
          |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Rm”
   - Replace with: “Re”
-  - Replace with: “RC”
+  - Replace with: “R”
+  - Replace with: “Rd”
 
 
 

@@ -573,16 +573,6 @@ Suggest:
 
 
 
-Lint:    Style (63 priority)
-Message: |
-     345 | do it. That’s what I get for marrying a brute of a man, a great, big, hulking
-         |                                         ^~~~~~~~~~ The word `of` is not needed here.
-     346 | physical specimen of a—”’
-Suggest:
-  - Replace with: “brute a”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      352 | Sometimes she and Miss Baker talked at once, unobtrusively and with a bantering
@@ -1015,6 +1005,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      706 | door of an office, wiping his hands on a piece of waste. He was a blond,
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Style (63 priority)
+Message: |
+     703 | dust-covered wreck of a Ford which crouched in a dim corner. It had occurred to
+     704 | me that this shadow of a garage must be a blind, and that sumptuous and romantic
+         |              ^~~~~~~~~~~ The word `of` is not needed here.
+Suggest:
+  - Replace with: “shadow a”
 
 
 
@@ -2277,9 +2277,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Rm”
   - Replace with: “Re”
-  - Replace with: “RC”
+  - Replace with: “R”
+  - Replace with: “Rd”
 
 
 
@@ -4408,19 +4408,6 @@ Suggest:
 
 
 
-Lint:    Style (63 priority)
-Message: |
-    3263 | “Perhaps you know that lady,” Gatsby indicated a gorgeous, scarcely human orchid
-         |                                                                           ^~~~~~~
-    3264 | of a woman who sat in state under a white-plum tree. Tom and Daisy stared, with
-         | ~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “orchid
-a”
-  - Replace with: “orchid a”
-
-
-
 Lint:    Formatting (63 priority)
 Message: |
     3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
@@ -4968,15 +4955,6 @@ Suggest:
 
 
 
-Lint:    Style (63 priority)
-Message: |
-    3923 | The coupé flashed by us with a flurry of dust and the flash of a waving hand.
-         |                                                       ^~~~~~~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “flash a”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     3937 | world, and the shock had made him physically sick. I stared at him and then at
@@ -5425,15 +5403,6 @@ Suggest:
 
 
 
-Lint:    Style (63 priority)
-Message: |
-    4375 | I was thirty. Before me stretched the portentous, menacing road of a new decade.
-         |                                                            ^~~~~~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “road a”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4377 | It was seven o’clock when we got into the coupé with him and started for Long
@@ -5564,15 +5533,6 @@ Message: |
          |                                  ^~~~~~~~~ Did you mean `Wilson`?
 Suggest:
   - Replace with: “Wilson”
-
-
-
-Lint:    Style (63 priority)
-Message: |
-    4450 | I became aware now of a hollow, wailing sound which issued incessantly from the
-         |                ^~~~~~~~ The word `of` is not needed here.
-Suggest:
-  - Replace with: “now a”
 
 
 
@@ -7177,16 +7137,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5714 | leaf, her face the same brown tint as the fingerless glove on her knee. When I
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
-
-
-
-Lint:    Style (63 priority)
-Message: |
-    5713 | illustration, her chin raised a little jauntily, her hair the color of an autumn
-         |                                                               ^~~~~~~~~~~ The word `of` is not needed here.
-    5714 | leaf, her face the same brown tint as the fingerless glove on her knee. When I
-Suggest:
-  - Replace with: “color an”
 
 
 

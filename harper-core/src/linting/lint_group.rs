@@ -11,6 +11,7 @@ use hashbrown::HashMap;
 use lru::LruCache;
 use serde::{Deserialize, Serialize};
 
+use super::a_part::APart;
 use super::adjective_of_a::AdjectiveOfA;
 use super::an_a::AnA;
 use super::ask_no_preposition::AskNoPreposition;
@@ -326,6 +327,7 @@ impl LintGroup {
         out.merge_from(&mut closed_compounds::lint_group());
 
         // Add all the more complex rules to the group.
+        insert_pattern_rule!(APart, true);
         insert_struct_rule!(AdjectiveOfA, true);
         insert_struct_rule!(AnA, true);
         insert_struct_rule!(AvoidCurses, true);
