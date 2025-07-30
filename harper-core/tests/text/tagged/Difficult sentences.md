@@ -359,7 +359,7 @@
 > I’ve been  doing this    from pickney .
 # W?   NSg/V NSg/V I/Ddem+ P+   ?       .
 > Your opinions differ  from mine     .
-# D$+  +        NSg/V/J P    NSg/I/V+ .
+# D$+  NPl+     NSg/V/J P    NSg/I/V+ .
 > He       knows right    from wrong   .
 # NPr/ISg+ NPl/V NPr/V/J+ P    NSg/V/J .
 >
@@ -719,7 +719,7 @@
 > The city hosted the World  Summit on  the Information Society
 # D+  NSg+ V/J    D+  NSg/V+ NSg/V  J/P D+  NSg+        NSg+
 > I    have   no    opinion on  this    subject  .
-# ISg+ NSg/VX NPr/P NSg/V   J/P I/Ddem+ NSg/V/J+ .
+# ISg+ NSg/VX NPr/P NSg     J/P I/Ddem+ NSg/V/J+ .
 > I    saw   it       on  television .
 # ISg+ NSg/V NPr/ISg+ J/P NSg/V+     .
 > Can't you    see   I'm on  the phone  ?
@@ -733,7 +733,7 @@
 > They planned an  attack  on  London .
 # IPl+ V/J     D/P NSg/V/J J/P NPr+   .
 > The soldiers mutinied and turned their guns   on  their officers .
-# D+  NPl/V+   V/J      V/C V/J    D$+   NPl/V+ J/P D$+   +        .
+# D+  NPl/V+   V/J      V/C V/J    D$+   NPl/V+ J/P D$+   NPl/V+   .
 > Her     words  made  a   lasting  impression on  my  mind   .
 # ISg/D$+ NPl/V+ NSg/V D/P NSg/V/J+ NSg/V      J/P D$+ NSg/V+ .
 > What   will   be     the effect on  morale ?

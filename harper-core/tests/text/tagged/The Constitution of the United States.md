@@ -99,7 +99,7 @@
 > choice of electors for President and Vice       President of the United States   ,
 # NSg/J  P  NPl      C/P NSg/V     V/C NSg/V/J/P+ NSg/V     P  D+  V/J+   NPrPl/V+ .
 > Representatives in      Congress , the Executive and Judicial officers of a    State  , or
-# NPl             NPr/J/P NPr/V+   . D   NSg/J     V/C NSg/J    W?       P  D/P+ NSg/V+ . NPr/C
+# NPl             NPr/J/P NPr/V+   . D   NSg/J     V/C NSg/J    NPl/V    P  D/P+ NSg/V+ . NPr/C
 > the members of the Legislature thereof , is denied to any   of the male
 # D   NPl/V   P  D+  NSg+        W?      . VL V/J    P  I/R/D P  D   NPr/J+
 > inhabitants of such   State  , being    twenty - one       years of age    , and citizens of the
@@ -139,7 +139,7 @@
 >
 #
 > The House of Representatives shall chuse their Speaker and other    Officers ; and
-# D   NPr/V P  NPl+            VX    ?     D$+   NSg/J   V/C NSg/V/J+ +        . V/C
+# D   NPr/V P  NPl+            VX    ?     D$+   NSg/J   V/C NSg/V/J+ NPl/V+   . V/C
 > shall have   the sole    Power   of Impeachment .
 # VX    NSg/VX D   NSg/V/J NSg/V/J P  NSg+        .
 >
@@ -197,7 +197,7 @@
 >
 #
 > The Senate shall chuse their other    Officers , and also a    President pro     tempore ,
-# D+  NPr+   VX    ?     D$+   NSg/V/J+ +        . V/C W?   D/P+ NSg/V+    NSg/J/P ?       .
+# D+  NPr+   VX    ?     D$+   NSg/V/J+ NPl/V+   . V/C W?   D/P+ NSg/V+    NSg/J/P ?       .
 > in      the Absence of the Vice       President , or    when    he       shall exercise the Office of
 # NPr/J/P D   NSg     P  D+  NSg/V/J/P+ NSg/V+    . NPr/C NSg/I/C NPr/ISg+ VX    NSg/V    D   NSg/V  P
 > President of the United States   .
@@ -539,7 +539,7 @@
 > governing such  Part    of them     as    may    be     employed in      the Service of the United
 # V         NSg/I NSg/V/J P  NSg/IPl+ NSg/R NPr/VX NSg/VX V/J      NPr/J/P D   NSg/V   P  D+  V/J+
 > States   , reserving to the States   respectively , the Appointment of the Officers ,
-# NPrPl/V+ . V         P  D+  NPrPl/V+ R            . D   NSg         P  D+  +        .
+# NPrPl/V+ . V         P  D+  NPrPl/V+ R            . D   NSg         P  D+  NPl/V+   .
 > and the Authority of training the Militia according to the discipline
 # V/C D   NSg       P  NSg/V+   D   NSg     V/J       P  D+  NSg/V+
 > prescribed by      Congress ;
@@ -895,7 +895,7 @@
 >
 #
 > Whenever the Vice       President and a   majority of either the principal officers of
-# C        D   NSg/V/J/P+ NSg/V+    V/C D/P NSg      P  I/C    D   NSg/J     W?       P
+# C        D   NSg/V/J/P+ NSg/V+    V/C D/P NSg      P  I/C    D   NSg/J     NPl/V    P
 > the executive departments or    of such  other    body   as    Congress may    by      law    provide ,
 # D+  NSg/J+    NPl         NPr/C P  NSg/I NSg/V/J+ NSg/V+ NSg/R NPr/V+   NPr/VX NSg/J/P NSg/V+ V       .
 > transmit to the President pro     tempore of the Senate and the Speaker of the
@@ -915,7 +915,7 @@
 > that         no     inability exists , he       shall resume the powers  and duties of his     office
 # NSg/I/C/Ddem NPr/P+ NSg+      V      . NPr/ISg+ VX    NSg/V  D+  NPrPl/V V/C NPl    P  ISg/D$+ NSg/V+
 > unless the Vice       President and a   majority of either the principal officers of
-# C      D+  NSg/V/J/P+ NSg/V+    V/C D/P NSg      P  I/C    D   NSg/J     W?       P
+# C      D+  NSg/V/J/P+ NSg/V+    V/C D/P NSg      P  I/C    D   NSg/J     NPl/V    P
 > the executive department or    of such  other    body   as    Congress may    by      law    provide ,
 # D+  NSg/J+    NSg        NPr/C P  NSg/I NSg/V/J+ NSg/V+ NSg/R NPr/V+   NPr/VX NSg/J/P NSg/V+ V       .
 > transmit within  four days to the President pro     tempore of the Senate and the
@@ -1007,7 +1007,7 @@
 > of the United States   , and of the Militia of the several States   , when    called
 # P  D+  V/J+   NPrPl/V+ . V/C P  D   NSg     P  D+  J/D+    NPrPl/V+ . NSg/I/C V/J
 > into the actual Service of the United States   ; he       may    require the Opinion , in
-# P    D   NSg/J  NSg/V   P  D+  V/J+   NPrPl/V+ . NPr/ISg+ NPr/VX NSg/V   D+  NSg/V+  . NPr/J/P
+# P    D   NSg/J  NSg/V   P  D+  V/J+   NPrPl/V+ . NPr/ISg+ NPr/VX NSg/V   D+  NSg+    . NPr/J/P
 > writing , of the principal Officer in      each of the executive Departments , upon
 # NSg/V   . P  D   NSg/J     NSg/V/J NPr/J/P D    P  D+  NSg/J+    NPl+        . P
 > any   Subject  relating to the Duties of their respective Offices , and he       shall
@@ -1027,11 +1027,11 @@
 > Ambassadors , other   public  Ministers and Consuls , Judges  of the supreme  Court    ,
 # NPl         . NSg/V/J NSg/V/J NPl/V+    V/C NPl     . NPrPl/V P  D+  NSg/V/J+ NSg/V/J+ .
 > and all       other   Officers of the United States   , whose Appointments are not   herein
-# V/C NSg/I/J/C NSg/V/J W?       P  D+  V/J+   NPrPl/V+ . I+    NPl+         V   NSg/C W?
+# V/C NSg/I/J/C NSg/V/J NPl/V    P  D+  V/J+   NPrPl/V+ . I+    NPl+         V   NSg/C W?
 > otherwise provided for , and which shall be     established by      Law    : but     the Congress
 # J         V/J/C    C/P . V/C I/C+  VX    NSg/VX V/J         NSg/J/P NSg/V+ . NSg/C/P D+  NPr/V+
 > may    by      Law    vest  the Appointment of such  inferior Officers , as    they think
-# NPr/VX NSg/J/P NSg/V+ NSg/V D   NSg         P  NSg/I NSg/J+   +        . NSg/R IPl+ NSg/V
+# NPr/VX NSg/J/P NSg/V+ NSg/V D   NSg         P  NSg/I NSg/J+   NPl/V+   . NSg/R IPl+ NSg/V
 > proper , in      the President alone , in      the Courts of Law    , or    in      the Heads of
 # NSg/J  . NPr/J/P D+  NSg/V+    J     . NPr/J/P D   NPl/V  P  NSg/V+ . NPr/C NPr/J/P D   NPl/V P
 > Departments .
@@ -1073,7 +1073,7 @@
 > Ministers ; he       shall take  Care   that         the Laws   be     faithfully executed , and shall
 # NPl/V+    . NPr/ISg+ VX    NSg/V NSg/V+ NSg/I/C/Ddem D+  NPl/V+ NSg/VX R          V/J      . V/C VX
 > Commission all       the Officers of the United States   .
-# NSg/V      NSg/I/J/C D   W?       P  D+  V/J+   NPrPl/V+ .
+# NSg/V      NSg/I/J/C D   NPl/V    P  D+  V/J+   NPrPl/V+ .
 >
 #
 > Section . 4 .
@@ -1081,7 +1081,7 @@
 >
 #
 > The President , Vice       President and all       civil Officers of the
-# D+  NSg/V+    . NSg/V/J/P+ NSg/V+    V/C NSg/I/J/C J     W?       P  D+
+# D+  NSg/V+    . NSg/V/J/P+ NSg/V+    V/C NSg/I/J/C J     NPl/V    P  D+
 > United States   , shall be     removed from Office on  Impeachment for , and Conviction
 # V/J+   NPrPl/V+ . VX    NSg/VX V/J     P    NSg/V+ J/P NSg         C/P . V/C NSg
 > of , Treason , Bribery , or    other   high    Crimes and  Misdemeanors .
@@ -1429,7 +1429,7 @@
 > The Senators and Representatives before mentioned , and the Members of the
 # D   NPl+     V/C NPl+            C/P    V/J       . V/C D   NPl/V   P  D+
 > several State  Legislatures , and all       executive and judicial Officers , both of
-# J/D+    NSg/V+ NPl          . V/C NSg/I/J/C NSg/J     V/C NSg/J+   +        . I/C  P
+# J/D+    NSg/V+ NPl          . V/C NSg/I/J/C NSg/J     V/C NSg/J+   NPl/V+   . I/C  P
 > the United States  and of the several States   , shall be     bound   by      Oath  or
 # D+  V/J+   NPrPl/V V/C P  D+  J/D+    NPrPl/V+ . VX    NSg/VX NSg/V/J NSg/J/P NSg/V NPr/C
 > Affirmation , to support this    Constitution ; but     no     religious Test   shall ever be
