@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use crate::{Token, TokenKind};
 
 use super::Pattern;
@@ -36,12 +38,12 @@ impl ImpliesQuantity {
 }
 
 impl Pattern for ImpliesQuantity {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        if Self::implies_plurality(tokens, source).is_some() {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        NonZeroUsize::new(if Self::implies_plurality(tokens, source).is_some() {
             1
         } else {
             0
-        }
+        })
     }
 }
 

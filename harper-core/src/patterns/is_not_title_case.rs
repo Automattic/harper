@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use crate::{Dictionary, Token, TokenStringExt, make_title_case};
 
 use super::Pattern;
@@ -16,18 +18,17 @@ impl<D: Dictionary> IsNotTitleCase<D> {
 }
 
 impl<D: Dictionary> Pattern for IsNotTitleCase<D> {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        let inner_match = self.inner.matches(tokens, source);
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        let inner_match = self.inner.matches(tokens, source)?;
 
-        if inner_match == 0 {
-            return 0;
-        }
-
-        let matched_chars = tokens[0..inner_match].span().unwrap().get_content(source);
-        if make_title_case(&tokens[0..inner_match], source, &self.dict) != matched_chars {
-            inner_match
+        let matched_chars = tokens[0..inner_match.get()]
+            .span()
+            .unwrap()
+            .get_content(source);
+        if make_title_case(&tokens[0..inner_match.get()], source, &self.dict) != matched_chars {
+            Some(inner_match)
         } else {
-            0
+            None
         }
     }
 }

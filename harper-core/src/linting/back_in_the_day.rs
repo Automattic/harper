@@ -36,7 +36,7 @@ impl PatternLinter for BackInTheDay {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         if let Some(tail) = matched_tokens.get(8..) {
-            if self.exceptions.matches(tail, source) != 0 {
+            if self.exceptions.matches(tail, source).is_some() {
                 return None;
             }
         }

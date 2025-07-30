@@ -44,7 +44,7 @@ impl Default for ItIs {
                     if !meta.is_adjective() {
                         return false;
                     }
-                    if exceptions.matches(&[tok.clone()], src) > 0 {
+                    if exceptions.matches(&[tok.clone()], src).is_some() {
                         return false;
                     }
                     true

@@ -1,3 +1,5 @@
+use std::num::NonZeroUsize;
+
 use crate::LSend;
 use crate::Token;
 
@@ -54,7 +56,7 @@ where
         for row in &self.rows {
             let len = row.key.matches(tokens, source);
 
-            if len != 0 {
+            if len.is_some() {
                 return Some(&row.element);
             }
         }
@@ -67,15 +69,10 @@ impl<T> Pattern for PatternMap<T>
 where
     T: LSend,
 {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        for row in &self.rows {
-            let len = row.key.matches(tokens, source);
-
-            if len != 0 {
-                return len;
-            }
-        }
-
-        0
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<NonZeroUsize> {
+        self.rows
+            .iter()
+            .filter_map(|row| row.key.matches(tokens, source))
+            .next()
     }
 }
