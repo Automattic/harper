@@ -43,6 +43,7 @@ use super::filler_words::FillerWords;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
 use super::have_pronoun::HavePronoun;
+use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
@@ -387,6 +388,7 @@ impl LintGroup {
         out.merge_from(&mut initialisms::lint_group());
 
         // Add all the more complex rules to the group.
+        // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
@@ -484,7 +486,6 @@ impl LintGroup {
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(Whereas, true);
         insert_expr_rule!(WidelyAccepted, true);
-        insert_struct_rule!(WidelyAccepted, true);
         insert_expr_rule!(WinPrize, true);
         insert_struct_rule!(WordPressDotcom, true);
 
@@ -511,6 +512,9 @@ impl LintGroup {
 
         out.add("Regionalisms", Regionalisms::new(dialect));
         out.config.set_rule_enabled("Regionalisms", true);
+
+        out.add("HaveTakeALook", HaveTakeALook::new(dialect));
+        out.config.set_rule_enabled("HaveTakeALook", true);
 
         out
     }

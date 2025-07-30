@@ -125,7 +125,7 @@
 > Presently she  began again . “ I    wonder if    I    shall fall  right   through the earth  !
 # R         ISg+ V     P     . . ISg+ NSg/V  NSg/C ISg+ VX    NSg/V NPr/V/J NSg/J/P D+  NPr/V+ .
 > How   funny it’ll seem to come    out         among the people that          walk  with their heads
-# NSg/C NSg/J W?    V    P  NSg/V/P NSg/V/J/R/P P     D+  NSg/V+ NSg/I/C/Ddem+ NSg/V P    D$+   NPl/V+
+# NSg/C NSg/J W?    V    P  NSg/V/P NSg/V/J/R/P P     D+  NPl/V+ NSg/I/C/Ddem+ NSg/V P    D$+   NPl/V+
 > downward ! The Antipathies , I    think — ” ( she  was rather  glad    there was no     one
 # J        . D   NPl         . ISg+ NSg/V . . . ISg+ V   NPr/V/J NSg/V/J W?    V   NPr/P+ NSg/I/V/J+
 > listening , this    time      , as    it       didn’t sound    at    all          the right    word   ) “ — but     I    shall
@@ -241,7 +241,7 @@
 > table  , half        hoping she  might     find  another key     on  it       , or    at    any    rate   a   book  of
 # NSg/V+ . N🅪Sg/V/J/P+ V      ISg+ NᴹSg/VX/J NSg/V I/D     NPr/V/J J/P NPr/ISg+ . NPr/C NSg/P I/R/Dq NSg/V+ D/P NSg/V P
 > rules for shutting people up        like        telescopes : this    time      she  found a   little
-# NPl/V C/P NSg/V    NSg/V+ NSg/V/J/P NSg/V/J/C/P NPl/V      . I/Ddem+ N🅪Sg/V/J+ ISg+ NSg/V D/P NPr/I/J/Dq
+# NPl/V C/P NSg/V    NPl/V+ NSg/V/J/P NSg/V/J/C/P NPl/V      . I/Ddem+ N🅪Sg/V/J+ ISg+ NSg/V D/P NPr/I/J/Dq
 > bottle on  it       , ( “ which certainly was not   here    before , ” said Alice , ) and round     the
 # NSg/V  J/P NPr/ISg+ . . . I/C+  R         V   NSg/C NSg/J/R C/P    . . V/J  NPr   . . V/C NSg/V/J/P D
 > neck  of the bottle was a   paper    label  , with the words  “ DRINK  ME       , ” beautifully
@@ -331,9 +331,9 @@
 > croquet she  was playing against herself , for this    curious child  was very fond    of
 # NSg/V   ISg+ V   V       C/P     ISg+    . C/P I/Ddem+ J+      NSg/V+ V   J/R  NSg/V/J P
 > pretending to be     two  people . “ But     it’s no     use   now       , ” thought poor     Alice , “ to
-# V          P  NSg/VX NSg+ NSg/V+ . . NSg/C/P W?   NPr/P+ NSg/V NPr/V/J/C . . NSg/V   NSg/V/J+ NPr+  . . P
+# V          P  NSg/VX NSg+ NPl/V+ . . NSg/C/P W?   NPr/P+ NSg/V NPr/V/J/C . . NSg/V   NSg/V/J+ NPr+  . . P
 > pretend to be     two  people ! Why   , there’s hardly enough of me       left    to make  one
-# NSg/V/J P  NSg/VX NSg+ NSg/V+ . NSg/V . W?      R      NSg/I  P  NPr/ISg+ NPr/V/J P  NSg/V NSg/I/V/J
+# NSg/V/J P  NSg/VX NSg+ NPl/V+ . NSg/V . W?      R      NSg/I  P  NPr/ISg+ NPr/V/J P  NSg/V NSg/I/V/J
 > respectable person ! ”
 # NSg/J       NSg/V+ . .
 >
@@ -1177,7 +1177,7 @@
 > doesn’t get    out         . ’ Only  I    don’t think , ” Alice went  on  , “ that          they’d let   Dinah
 # V       NSg/V+ NSg/V/J/R/P . . J/R/C ISg+ V     NSg/V . . NPr+  NSg/V J/P . . NSg/I/C/Ddem+ W?     NSg/V NPr
 > stop  in      the house  if    it       began ordering people about like        that          ! ”
-# NSg/V NPr/J/P D+  NPr/V+ NSg/C NPr/ISg+ V     V        NSg/V+ J/P   NSg/V/J/C/P NSg/I/C/Ddem+ . .
+# NSg/V NPr/J/P D+  NPr/V+ NSg/C NPr/ISg+ V     V        NPl/V+ J/P   NSg/V/J/C/P NSg/I/C/Ddem+ . .
 >
 #
 > By      this    time      she  had found her     way    into a   tidy    little     room    with a   table in      the
@@ -2559,7 +2559,7 @@
 > Alice felt    that         this    could  not   be     denied , so        she  tried another question . “ What
 # NPr+  NSg/V/J NSg/I/C/Ddem I/Ddem+ NSg/VX NSg/C NSg/VX V/J    . NSg/I/J/C ISg+ V/J   I/D+    NSg/V+   . . NSg/I+
 > sort  of people live about here    ? ”
-# NSg/V P  NSg/V+ V/J  J/P   NSg/J/R . .
+# NSg/V P  NPl/V+ V/J  J/P   NSg/J/R . .
 >
 #
 > “ In      that          direction , ” the Cat      said , waving its     right   paw   round     , “ lives a   Hatter :
@@ -2571,7 +2571,7 @@
 >
 #
 > “ But     I    don’t want  to go      among mad      people , ” Alice remarked .
-# . NSg/C/P ISg+ V     NSg/V P  NSg/V/J P     NSg/V/J+ NSg/V+ . . NPr+  V/J+     .
+# . NSg/C/P ISg+ V     NSg/V P  NSg/V/J P     NSg/V/J+ NPl/V+ . . NPr+  V/J+     .
 >
 #
 > “ Oh    , you    can’t help  that          , ” said the Cat      : “ we’re all           mad      here     . I’m mad      . You’re
@@ -3445,7 +3445,7 @@
 > processions ; “ and besides , what   would be     the use   of a    procession , ” thought she  ,
 # NPl         . . V/C W?      . NSg/I+ VX    NSg/VX D   NSg/V P  D/P+ NSg/V+     . . NSg/V   ISg+ .
 > “ if    people had all           to lie   down      upon their faces  , so        that         they couldn’t see   it       ? ”
-# . NSg/C NSg/V+ V   NSg/I/J/C/Dq+ P  NPr/V NSg/V/J/P P    D$+   NPl/V+ . NSg/I/J/C NSg/I/C/Ddem IPl+ V        NSg/V NPr/ISg+ . .
+# . NSg/C NPl/V+ V   NSg/I/J/C/Dq+ P  NPr/V NSg/V/J/P P    D$+   NPl/V+ . NSg/I/J/C NSg/I/C/Ddem IPl+ V        NSg/V NPr/ISg+ . .
 > So        she  stood still   where she  was , and  waited .
 # NSg/I/J/C ISg+ V     NSg/V/J NSg/C ISg+ V   . V/C+ V/J    .
 >
@@ -3621,7 +3621,7 @@
 >
 #
 > “ Get   to your places ! ” shouted the Queen    in      a   voice of thunder , and people began
-# . NSg/V P  D$+  NPl/V+ . . V/J     D+  NPr/V/J+ NPr/J/P D/P NSg/V P  NSg/V+  . V/C NSg/V+ V
+# . NSg/V P  D$+  NPl/V+ . . V/J     D+  NPr/V/J+ NPr/J/P D/P NSg/V P  NSg/V+  . V/C NPl/V+ V
 > running   about in      all           directions , tumbling up        against each other   ; however , they
 # NSg/V/J/P J/P   NPr/J/P NSg/I/J/C/Dq+ NSg+       . NSg/V    NSg/V/J/P C/P     Dq   NSg/V/J . C       . IPl+
 > got settled down      in      a   minute  or    two , and the game     began . Alice thought she  had
@@ -3679,7 +3679,7 @@
 > thought she  , “ what   would become of me       ? They’re dreadfully fond    of beheading
 # NSg/V   ISg+ . . NSg/I+ VX    V      P  NPr/ISg+ . W?      R          NSg/V/J P  NSg
 > people here    ; the great  wonder is , that          there’s any     one        left    alive ! ”
-# NSg/V+ NSg/J/R . D+  NSg/J+ NSg/V+ VL . NSg/I/C/Ddem+ W?      I/R/Dq+ NSg/I/V/J+ NPr/V/J W?    . .
+# NPl/V+ NSg/J/R . D+  NSg/J+ NSg/V+ VL . NSg/I/C/Ddem+ W?      I/R/Dq+ NSg/I/V/J+ NPr/V/J W?    . .
 >
 #
 > She  was looking about for some     way   of escape , and wondering whether she  could
@@ -3921,13 +3921,13 @@
 > “ I    won’t have   any    pepper in      my  kitchen at    all           . Soup   does  very well    without — Maybe
 # . ISg+ V     NSg/VX I/R/Dq NSg/V  NPr/J/P D$+ NSg/V+  NSg/P NSg/I/J/C/Dq+ . NSg/V+ NPl/V J/R  NSg/V/J C/P     . NSg/J/R
 > it’s always pepper that          makes people hot     - tempered , ” she  went  on  , very much
-# W?   R      NSg/V  NSg/I/C/Ddem+ NPl/V NSg/V+ NSg/V/J . V/J      . . ISg+ NSg/V J/P . J/R  NSg/I/J/Dq
+# W?   R      NSg/V  NSg/I/C/Ddem+ NPl/V NPl/V+ NSg/V/J . V/J      . . ISg+ NSg/V J/P . J/R  NSg/I/J/Dq
 > pleased at    having found out         a   new     kind  of rule  , “ and vinegar that          makes them
 # V/J     NSg/P V      NSg/V NSg/V/J/R/P D/P NSg/V/J NSg/J P  NSg/V . . V/C NSg/V+  NSg/I/C/Ddem+ NPl/V NSg/IPl+
 > sour    — and camomile that          makes them     bitter  — and — and barley - sugar  and such  things
 # NSg/V/J . V/C ?        NSg/I/C/Ddem+ NPl/V NSg/IPl+ NSg/V/J . V/C . V/C NSg    . N🅪Sg/V V/C NSg/I NPl/V+
 > that          make  children sweet    - tempered . I    only  wish  people knew that          : then    they
-# NSg/I/C/Ddem+ NSg/V NPl+     NPr/V/J+ . V/J      . ISg+ J/R/C NSg/V NSg/V+ V    NSg/I/C/Ddem+ . NSg/J/C IPl+
+# NSg/I/C/Ddem+ NSg/V NPl+     NPr/V/J+ . V/J      . ISg+ J/R/C NSg/V NPl/V+ V    NSg/I/C/Ddem+ . NSg/J/C IPl+
 > wouldn’t be     so        stingy about it       , you    know  — ”
 # VX       NSg/VX NSg/I/J/C J      J/P   NPr/ISg+ . ISgPl+ NSg/V . .
 >
@@ -5425,7 +5425,7 @@
 > and Alice guessed who    it       was , even    before she  got into the court    , by      the way    the
 # V/C NPr+  V/J     NPr/I+ NPr/ISg+ V   . NSg/V/J C/P    ISg+ V   P    D+  NSg/V/J+ . NSg/J/P D+  NSg/J+ D
 > people near      the door   began sneezing all          at    once   .
-# NSg/V  NSg/V/J/P D+  NSg/V+ V     V        NSg/I/J/C/Dq NSg/P NSg/C+ .
+# NPl/V  NSg/V/J/P D+  NSg/V+ V     V        NSg/I/J/C/Dq NSg/P NSg/C+ .
 >
 #
 > “ Give  your evidence , ” said the King     .

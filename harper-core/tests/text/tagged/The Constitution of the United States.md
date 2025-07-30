@@ -5,7 +5,7 @@
 >
 #
 > We   the People of the United States   , in      Order  to form  a   more         perfect  Union   ,
-# IPl+ D   NSg/V  P  D+  V/J+   NPrPl/V+ . NPr/J/P NSg/V+ P  NSg/V D/P NPr/I/V/J/Dq NSg/V/J+ NPr/V/J .
+# IPl+ D   NPl/V  P  D+  V/J+   NPrPl/V+ . NPr/J/P NSg/V+ P  NSg/V D/P NPr/I/V/J/Dq NSg/V/J+ NPr/V/J .
 > establish Justice , insure domestic Tranquility , provide for the common   defence   ,
 # V         NPr🅪+   . V      NSg/J+   NSg         . V       C/P D+  NSg/V/J+ NSg/Comm+ .
 > promote the general  Welfare , and secure the Blessings of Liberty to ourselves
@@ -33,7 +33,7 @@
 > religion , or    prohibiting the free     exercise thereof ; or    abridging the freedom of
 # NSg/V+   . NPr/C V           D+  NSg/V/J+ NSg/V+   W?      . NPr/C V         D   N🅪Sg    P
 > speech  , or    of the press  ; or    the right   of the people peaceably to assemble , and
-# N🅪Sg/V+ . NPr/C P  D+  NSg/V+ . NPr/C D   NPr/V/J P  D+  NSg/V+ R         P  V        . V/C
+# N🅪Sg/V+ . NPr/C P  D+  NSg/V+ . NPr/C D   NPr/V/J P  D+  NPl/V+ R         P  V        . V/C
 > to petition the government for a   redress of grievances .
 # P  NSg/V    D   NSg        C/P D/P NSg/V   P  NPl+       .
 >
@@ -73,7 +73,7 @@
 > The House of Representatives shall be     composed of Members
 # D   NPr/V P  NPl+            VX    NSg/VX V/J      P  NPl/V+
 > chosen   every second  Year by      the People of the several States   , and the Electors
-# NᴹSg/V/J Dq+   NSg/V/J NSg  NSg/J/P D   NSg/V  P  D+  J/Dq+   NPrPl/V+ . V/C D   NPl
+# NᴹSg/V/J Dq+   NSg/V/J NSg  NSg/J/P D   NPl/V  P  D+  J/Dq+   NPrPl/V+ . V/C D   NPl
 > in      each State  shall have   the Qualifications requisite for Electors of the most
 # NPr/J/P Dq+  NSg/V+ VX    NSg/VX D+  +              NSg/J     C/P NPl      P  D   NSg/I/J/Dq
 > numerous Branch of the State  Legislature .
@@ -151,7 +151,7 @@
 > The Senate of the United States   shall be     composed of two
 # D   NPr    P  D+  V/J+   NPrPl/V+ VX    NSg/VX V/J      P  NSg+
 > Senators from each State  , elected by      the people thereof , for six years ; and
-# NPl+     P    Dq+  NSg/V+ . NSg/V/J NSg/J/P D+  NSg/V+ W?      . C/P NSg NPl+  . V/C
+# NPl+     P    Dq+  NSg/V+ . NSg/V/J NSg/J/P D+  NPl/V+ W?      . C/P NSg NPl+  . V/C
 > each Senator shall have   one        vote   . The electors in      each State  shall have   the
 # Dq+  NSg+    VX    NSg/VX NSg/I/V/J+ NSg/V+ . D   NPl      NPr/J/P Dq+  NSg/V+ VX    NSg/VX D+
 > qualifications requisite for electors of the most       numerous branch of the State
@@ -179,7 +179,7 @@
 > State  may    empower the executive thereof to make  temporary appointments until
 # NSg/V+ NPr/VX V       D   NSg/J     W?      P  NSg/V NSg/J     NPl+         C/P
 > the people fill  the vacancies by      election as    the legislature may     direct .
-# D+  NSg/V+ NSg/V D   NPl       NSg/J/P NSg+     NSg/R D+  NSg+        NPr/VX+ V/J    .
+# D+  NPl/V+ NSg/V D   NPl       NSg/J/P NSg+     NSg/R D+  NSg+        NPr/VX+ V/J    .
 >
 #
 > No     Person shall be     a    Senator who    shall not   have   attained to the Age    of thirty
@@ -1181,7 +1181,7 @@
 >
 #
 > The right   of the people to be     secure in      their persons , houses ,
-# D   NPr/V/J P  D+  NSg/V+ P  NSg/VX V/J    NPr/J/P D$+   NPl/V+  . NPl/V+ .
+# D   NPr/V/J P  D+  NPl/V+ P  NSg/VX V/J    NPr/J/P D$+   NPl/V+  . NPl/V+ .
 > papers , and effects , against unreasonable searches and seizures , shall not   be
 # NPl/V+ . V/C NPl/V+  . C/P     J            NPl/V    V/C NPl/V+   . VX    NSg/C NSg/VX
 > violated , and no     warrants shall issue , but     upon probable cause   , supported by
@@ -1443,7 +1443,7 @@
 > A   well    regulated militia , being   necessary to the security of a    free     state  , the
 # D/P NSg/V/J V/J       NSg     . NSg/V/C NSg/J     P  D   NSg      P  D/P+ NSg/V/J+ NSg/V+ . D
 > right   of the people to keep  and bear     arms   , shall not   be     infringed .
-# NPr/V/J P  D+  NSg/V+ P  NSg/V V/C NSg/V/J+ NPl/V+ . VX    NSg/C NSg/VX V/J       .
+# NPr/V/J P  D+  NPl/V+ P  NSg/V V/C NSg/V/J+ NPl/V+ . VX    NSg/C NSg/VX V/J       .
 >
 #
 > Section . 1 .
@@ -1453,7 +1453,7 @@
 > The enumeration in      the Constitution , of certain rights , shall
 # D   N🅪Sg        NPr/J/P D   NPr+         . P  I/J+    NPl/V+ . VX
 > not   be     construed to deny or    disparage others retained by      the people .
-# NSg/C NSg/VX V/J       P  V    NPr/C NSg/V     NPl/V+ V/J      NSg/J/P D+  NSg/V+ .
+# NSg/C NSg/VX V/J       P  V    NPr/C NSg/V     NPl/V+ V/J      NSg/J/P D+  NPl/V+ .
 >
 #
 > The powers  not   delegated to the United States   by      the Constitution , nor
@@ -1461,7 +1461,7 @@
 > prohibited by      it      to the states   , are reserved to the states   respectively , or    to
 # V/J        NSg/J/P NPr/ISg P  D+  NPrPl/V+ . V   V/J      P  D+  NPrPl/V+ R            . NPr/C P
 > the people .
-# D+  NSg/V+ .
+# D+  NPl/V+ .
 >
 #
 > Article . VII  .

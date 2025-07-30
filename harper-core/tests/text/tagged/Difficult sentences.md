@@ -789,7 +789,7 @@
 > He       asked me       what   to do     .
 # NPr/ISg+ V/J   NPr/ISg+ NSg/I+ P+ NSg/VX .
 > I    have   places to go      and people to see   .
-# ISg+ NSg/VX NPl/V+ P  NSg/V/J V/C NSg/V+ P+ NSg/V .
+# ISg+ NSg/VX NPl/V+ P  NSg/V/J V/C NPl/V+ P+ NSg/V .
 > To err is  human    .
 # P  V+  VL+ NSg/V/J+ .
 > Who    am      I    to criticise ? I've done    worse     things myself .
@@ -881,7 +881,7 @@
 > With a    heavy    sigh  , she  looked around the empty    room     .
 # P    D/P+ NSg/V/J+ NSg/V . ISg+ V/J    J/P    D+  NSg/V/J+ NSg/V/J+ .
 > Four people were  injured , with one       of them     in      critical condition .
-# NSg  NSg/V+ NSg/V V/J     . P    NSg/I/V/J P  NSg/IPl+ NPr/J/P NSg/J+   NSg/V+    .
+# NSg  NPl/V+ NSg/V V/J     . P    NSg/I/V/J P  NSg/IPl+ NPr/J/P NSg/J+   NSg/V+    .
 > With their reputation on  the line   , they decided to fire     their PR   team   .
 # P    D$+   NSg+       J/P D+  NSg/V+ . IPl+ NSg/V/J P  N🅪Sg/V/J D$+   NSg+ NSg/V+ .
 > We   are with you    all          the way    .
@@ -911,7 +911,7 @@
 > It       was small   and bumpy , with a   tinge of orange    .
 # NPr/ISg+ V   NPr/V/J V/C J     . P    D/P NSg/V P  NPr🅪/V/J+ .
 > There are lots  of people with no    homes after the wildfire .
-# +     V   NPl/V P  NSg/V  P    NPr/P NPl/V JC/P  D+  NSg+     .
+# +     V   NPl/V P  NPl/V  P    NPr/P NPl/V JC/P  D+  NSg+     .
 > Speak with confidence .
 # NSg/V P    NSg+       .
 > He       spoke with sadness in      his     voice  .
