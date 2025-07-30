@@ -464,8 +464,8 @@
 #
 > Suddenly a   strange man     walked in      .
 # R        D/P NSg/V/J NPr/V/J V/J+   NPr/J/P .
-> Would  you    like        that          to take  away or    eat   in      ?
-# NSg/VX ISgPl+ NSg/V/J/C/P NSg/I/C/Ddem+ P  NSg/V V/J  NPr/C NSg/V NPr/J/P .
+> Would  you    like        that          to take  away or    eat in      ?
+# NSg/VX ISgPl+ NSg/V/J/C/P NSg/I/C/Ddem+ P  NSg/V V/J  NPr/C V   NPr/J/P .
 > He       ran   to the edge  of the swimming pool   and dived in      .
 # NPr/ISg+ NSg/V P  D   NSg/V P  D+  NSg/V+   NSg/V+ V/C V/J+  NPr/J/P .
 > They flew    in      from London last     night  .

@@ -30443,6 +30443,26 @@
 					}
 				}
 			}
+		},
+		{
+			"from": "NOUN",
+			"to": "VERB",
+			"criteria": {
+				"Combined": {
+					"a": {
+						"WordIs": {
+							"relative": -1,
+							"word": "you"
+						}
+					},
+					"b": {
+						"WordIs": {
+							"relative": 0,
+							"word": "plan"
+						}
+					}
+				}
+			}
 		}
 	]
 }
