@@ -444,13 +444,13 @@ impl LintGroup {
 
         out.add(
             "InflectedVerbAfterTo",
-            InflectedVerbAfterTo::new(dictionary.clone(), dialect),
+            InflectedVerbAfterTo::new(dictionary.clone()),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
 
         out.add(
             "SentenceCapitalization",
-            SentenceCapitalization::new(dictionary.clone(), dialect),
+            SentenceCapitalization::new(dictionary.clone()),
         );
         out.config.set_rule_enabled("SentenceCapitalization", true);
 

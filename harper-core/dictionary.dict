@@ -11616,6 +11616,7 @@ adoring/VJNY
 adorn/VNJLGdS
 adorned/~VJU
 adornment/NgS
+adposition/Ng
 adrenal/~JNgS
 adrenalin's
 adrenaline/~Ng
@@ -52390,7 +52391,6 @@ DBMS/NOSg           # database management system
 DCT/NgS             # discrete cosine transform
 DEI
 DKIM/NSg
-DM/NgSV             
 DM'd/V              # direct message
 DM/NSgV
 DMed/V
@@ -52517,7 +52517,7 @@ Manilas/N
 Manilla/Og
 MapReduce/N
 Marchus/Sg
-Mercielago/NSg
+Murcielago/OSg
 Metasploit/ONgS
 Minecraft/Og
 Minhaj/OSg
@@ -52526,7 +52526,6 @@ Mockito/Sg
 Molex/NOgS          # Molex connector
 Mullenweg/g
 Munin/Sg
-Mercielago/OSg
 N.S.A./OSg          # FIXME! elsewhere we have NSA
 N1/Og
 N2/Og

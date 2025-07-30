@@ -14,21 +14,59 @@ const BAD_REFLEXIVE_PRONOUNS: &[&str] = &[
     "themself",
 ];
 
-#[derive(Default)]
-pub struct ReflexivePronoun;
+/// Matches reflexive pronouns with configurable strictness.
+///
+/// By default, only matches standard English reflexive pronouns. Use `with_common_errors()` to include
+/// frequently encountered non-standard forms like "hisself" or "theirself".
+pub struct ReflexivePronoun {
+    include_common_errors: bool,
+}
+
+impl Default for ReflexivePronoun {
+    fn default() -> Self {
+        Self::standard()
+    }
+}
+
+impl ReflexivePronoun {
+    /// Creates a matcher for standard English reflexive pronouns.
+    ///
+    /// Matches only the correct forms: "myself", "yourself", "himself", "herself", "itself",
+    /// "ourselves", "yourselves", and "themselves".
+    pub fn standard() -> Self {
+        Self {
+            include_common_errors: false,
+        }
+    }
+
+    /// Creates a matcher that includes non-standard but commonly used reflexive pronouns.
+    ///
+    /// In addition to standard forms, matches common errors like "hisself", "theirself",
+    /// and other non-standard forms that are frequently seen in user-generated content.
+    pub fn with_common_errors() -> Self {
+        Self {
+            include_common_errors: true,
+        }
+    }
+}
 
 impl Expr for ReflexivePronoun {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span> {
         let good_pronouns = |token: &Token, _: &[char]| token.kind.is_reflexive_pronoun();
-        let bad_pronouns = WordSet::new(BAD_REFLEXIVE_PRONOUNS);
-        let expr = LongestMatchOf::new(vec![Box::new(good_pronouns), Box::new(bad_pronouns)]);
+        let mut expr = LongestMatchOf::new(vec![Box::new(good_pronouns)]);
+        if self.include_common_errors {
+            expr.add(WordSet::new(BAD_REFLEXIVE_PRONOUNS));
+        }
         expr.run(cursor, tokens, source)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::{Document, TokenKind, expr::reflexive_pronoun::BAD_REFLEXIVE_PRONOUNS};
+    use crate::{
+        Document, TokenKind,
+        expr::{ExprExt, ReflexivePronoun, reflexive_pronoun::BAD_REFLEXIVE_PRONOUNS},
+    };
 
     // These are considered grammatically correct, or are at least in `dictionary.dict`.
     // The tests below check if this changes so we can update this `Expr`
@@ -95,5 +133,48 @@ mod tests {
         test_pronoun("weselves");
         test_pronoun("usself");
         test_pronoun("usselves");
+    }
+
+    #[test]
+    fn ensure_standard_ctor_includes_myself() {
+        let doc =
+            Document::new_plain_english_curated("If you want something done, do it yourself.");
+        let rp = ReflexivePronoun::standard();
+        let matches = rp.iter_matches_in_doc(&doc);
+        assert_eq!(matches.count(), 1);
+    }
+
+    #[test]
+    fn ensure_default_ctor_includes_myself() {
+        let doc = Document::new_plain_english_curated(
+            "I wanted a reflexive pronoun module, so I wrote one myself.",
+        );
+        let rp = ReflexivePronoun::default();
+        let matches = rp.iter_matches_in_doc(&doc);
+        assert_eq!(matches.count(), 1);
+    }
+
+    #[test]
+    fn ensure_with_common_errors_includes_hisself() {
+        let doc = Document::new_plain_english_curated("He teached hisself English.");
+        let rp = ReflexivePronoun::with_common_errors();
+        let matches = rp.iter_matches_in_doc(&doc);
+        assert_eq!(matches.count(), 1);
+    }
+
+    #[test]
+    fn ensure_standard_ctor_excludes_hisself() {
+        let doc = Document::new_plain_english_curated("Was he pleased with hisself?");
+        let rp = ReflexivePronoun::standard();
+        let matches = rp.iter_matches_in_doc(&doc);
+        assert_eq!(matches.count(), 0);
+    }
+
+    #[test]
+    fn ensure_default_ctor_excludes_theirself() {
+        let doc = Document::new_plain_english_curated("They look at theirself in the mirror.");
+        let rp = ReflexivePronoun::default();
+        let matches = rp.iter_matches_in_doc(&doc);
+        assert_eq!(matches.count(), 0);
     }
 }
