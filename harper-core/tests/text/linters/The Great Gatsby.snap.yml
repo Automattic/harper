@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Fa”
+  - Replace with: “Ff”
 
 
 
@@ -2648,8 +2648,8 @@ Message: |
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
   - Replace with: “D”
-  - Replace with: “Dab”
-  - Replace with: “Dam”
+  - Replace with: “Dad”
+  - Replace with: “Day”
 
 
 
@@ -2705,9 +2705,9 @@ Message: |
          |                                         ^~ Did you mean to spell `De` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
+  - Replace with: “D”
+  - Replace with: “Db”
   - Replace with: “Dd”
-  - Replace with: “Dew”
-  - Replace with: “Die”
 
 
 
@@ -2915,9 +2915,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “Lb”
+  - Replace with: “Lo”
+  - Replace with: “L”
   - Replace with: “La”
-  - Replace with: “LC”
 
 
 
@@ -6931,7 +6931,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Fa”
+  - Replace with: “Ff”
 
 
 

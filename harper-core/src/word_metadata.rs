@@ -13,8 +13,12 @@ use strum_macros::{Display, EnumCount, EnumString, VariantArray};
 use std::convert::TryFrom;
 
 use crate::spell::WordId;
+use crate::word_metadata_orthography::OrthFlags;
 use crate::{Document, TokenKind, TokenStringExt};
 
+/// This represents a "lexeme" or "headword" which is case-folded but affix-expanded.
+/// So not only lemmata but also inflected forms are stored here, with "horn" and "horns" each
+/// having their own lexeme, but "Ivy" and "ivy" share the same lexeme.
 #[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct WordMetadata {
     pub noun: Option<NounData>,
@@ -29,6 +33,9 @@ pub struct WordMetadata {
     /// valid in all dialects of English.
     #[serde(default = "default_default")]
     pub dialects: DialectFlags,
+    /// Orthographic information: letter case, spaces, hyphens, etc.
+    #[serde(default = "OrthFlags::empty")]
+    pub orth_info: OrthFlags,
     /// Whether the word is a [determiner](https://en.wikipedia.org/wiki/English_determiners).
     pub determiner: Option<DeterminerData>,
     /// Whether the word is a [preposition](https://www.merriam-webster.com/dictionary/preposition).
@@ -204,6 +211,7 @@ impl WordMetadata {
             adverb: merge!(self.adverb, other.adverb),
             conjunction: merge!(self.conjunction, other.conjunction),
             dialects: self.dialects | other.dialects,
+            orth_info: self.orth_info | other.orth_info,
             swear: self.swear.or(other.swear),
             determiner: merge!(self.determiner, other.determiner),
             preposition: self.preposition || other.preposition,
@@ -657,6 +665,74 @@ impl WordMetadata {
         matches!(self.swear, Some(true))
     }
 
+    // Orthographic queries
+
+    /// Does the lexeme for this word cover an all-lowercase variant? (e.g., "hello")
+    ///
+    /// This returns true if all letters in the word are lowercase. Words containing
+    /// non-letter characters (like numbers or symbols) are only considered if all
+    /// letter characters are lowercase.
+    pub fn is_lowercase(&self) -> bool {
+        self.orth_info.contains(OrthFlags::LOWERCASE)
+    }
+    /// Does the lexeme for this word cover a titlecase variant? (e.g., "Hello")
+    ///
+    /// This returns true if the word is in titlecase form, which means:
+    /// - The first letter is uppercase
+    /// - All other letters are lowercase
+    /// - The word is at least 2 characters long
+    ///
+    /// Examples: "Hello", "World"
+    ///
+    /// Note: Words with internal capital letters (like "McDonald") or apostrophes (like "O'Reilly")
+    /// are not considered titlecase - they are classified as UPPER_CAMEL instead.
+    pub fn is_titlecase(&self) -> bool {
+        self.orth_info.contains(OrthFlags::TITLECASE)
+    }
+    /// Does the lexeme for this word cover an all-uppercase variant? (e.g., "HELLO")
+    ///
+    /// This returns true if all letters in the word are uppercase. Words containing
+    /// non-letter characters (like numbers or symbols) are only considered if all
+    /// letter characters are uppercase.
+    ///
+    /// Examples: "HELLO", "NASA", "I"
+    pub fn is_allcaps(&self) -> bool {
+        self.orth_info.contains(OrthFlags::ALLCAPS)
+    }
+    /// Does the lexeme for this word cover a lower camel case variant? (e.g., "helloWorld")
+    ///
+    /// This returns true if the word is in lower camel case, which means:
+    /// - The first letter is lowercase
+    /// - There is at least one uppercase letter after the first character
+    /// - The word must be at least 2 characters long
+    ///
+    /// Examples: "helloWorld", "getHTTPResponse", "eBay"
+    ///
+    /// Note: Single words that are all lowercase will return false.
+    /// Words starting with an uppercase letter will return false (those would be UpperCamel).
+    pub fn is_lower_camel(&self) -> bool {
+        self.orth_info.contains(OrthFlags::LOWER_CAMEL)
+    }
+    /// Does the lexeme for this word cover an upper camel case / pascal case variant? (e.g., "HelloWorld")
+    ///
+    /// This returns true if the word is in upper camel case (also known as Pascal case), which means:
+    /// - The first letter is uppercase
+    /// - There is at least one other uppercase letter after the first character
+    /// - There is at least one lowercase letter after the first uppercase letter
+    /// - The word must be at least 3 characters long
+    ///
+    /// Examples:
+    /// - "HelloWorld" (standard Pascal case)
+    /// - "McDonald" (name with internal caps)
+    /// - "O'Reilly" (name with apostrophe and internal caps)
+    /// - "HttpRequest" (initialism followed by word)
+    ///
+    /// Note: Single words that are titlecase (like "Hello") will return false.
+    /// Words that are all uppercase (like "NASA") will also return false.
+    pub fn is_upper_camel(&self) -> bool {
+        self.orth_info.contains(OrthFlags::UPPER_CAMEL)
+    }
+
     /// Same thing as [`Self::or`], except in-place rather than a clone.
     pub fn append(&mut self, other: &Self) -> &mut Self {
         *self = self.or(other);
@@ -762,8 +838,7 @@ impl VerbData {
 }
 
 // nouns can be both singular and plural: "aircraft", "biceps", "fish", "sheep"
-// TODO other noun properties may be worth adding:
-// TODO count vs mass; abstract
+// TODO other noun properties may be worth adding: abstract
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct NounData {
     pub is_proper: Option<bool>,
@@ -1083,12 +1158,12 @@ impl Default for DialectFlags {
 }
 
 #[cfg(test)]
-mod tests {
+pub mod tests {
     use crate::WordMetadata;
     use crate::spell::{Dictionary, FstDictionary};
 
     // Helper function to get word metadata from the curated dictionary
-    fn md(word: &str) -> WordMetadata {
+    pub fn md(word: &str) -> WordMetadata {
         FstDictionary::curated()
             .get_word_metadata_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
