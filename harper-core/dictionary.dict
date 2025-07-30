@@ -1,4 +1,4 @@
-52550
+52580
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -1029,6 +1029,7 @@ Baywatch/M
 Be/MH
 Beach/2M
 Beadle/2M
+Beamer/1MS          # nickname for BMW
 Bean/2M
 Beard/2M
 Beardmore/2M
@@ -1448,6 +1449,7 @@ Brennan/2M
 Brenner/2M
 Brent/2M
 Brenton/2M
+Bresenham/2M
 Brest/2M
 Bret/2M
 Breton/125M
@@ -2063,6 +2065,7 @@ Chester/21M
 Chesterfield/21M
 Chesterton/2M
 Chevalier/M
+Chev/12MS
 Cheviot/1M
 Chevrolet/12MS
 Chevron/2M
@@ -7729,6 +7732,7 @@ PHP/12M             # programming language
 PIN/1               # personal identification number
 PJ's
 PLA/2M              # china's army
+PLC/1MS             # public limited company; programmable logic controller
 PLO/21M             # organization
 PM/14SMDG           # prime minister; private message
 PMS/1245M
@@ -9253,7 +9257,7 @@ Sheri/2M
 Sheridan/2M
 Sherlock/24M
 Sherman/21M
-Sherpa/12M
+Sherpa/12MS         # ethnicity, language, surname
 Sherri/2M
 Sherrie/M
 Sherry/2M
@@ -10235,6 +10239,7 @@ Tyson/2M
 U/M                 # removed `1`noun `5`adj. `2`proper noun `+`prep., was interfering with linter heuristics. I only know this as an abbreviation for university
 UAE/2M              # United Arab Emirates
 UAR/2
+UART/1MS            # electronics
 UAW/2
 UBS/2M
 UCLA/2M             # university
@@ -14634,6 +14639,7 @@ bite/~41RSMZ
 biter/1M
 biting/~415Y
 bitmap/1S
+bitplane/1MS
 bitstream/SM
 bitten/~4
 bitter/~514PMRYTS
@@ -14784,6 +14790,7 @@ blithe/5PYTR
 blitheness/1M
 blither/415G
 blithesome/5
+blitter/1MS
 blitz/~14GMDS
 blitzkrieg/1MS
 blivet/1S
@@ -16500,7 +16507,7 @@ catalyse/4GDS!
 catalyses/14
 catalysis/~1M
 catalyst/~1MS
-catalytic/~5M
+catalytic/~5
 catalyze/4GDS
 catamaran/1SM
 catapult/~14GMDS
@@ -17129,6 +17136,7 @@ chipper/514MS
 chippie/1
 chipping/~41S
 chippy/154S
+chipset/1MS
 chirography/1M
 chiropodist/1MS
 chiropody/1M
@@ -17985,6 +17993,7 @@ coloration/~1EM<
 coloratura/15MS<
 colorblind/5P<
 colorblindness/1M<
+colorburst/1M<
 colored/~514U<
 colored's/<
 coloreds/1<
@@ -18009,6 +18018,7 @@ colourant/1SM!@
 colouration/1EM!
 colourblind/5P!@
 colourblindness/1M!@
+colourburst/1M!@
 coloured/514U!@
 coloureds/1!@
 colourfast/5P!@
@@ -20279,6 +20289,8 @@ dedicate/~451AGDS
 dedication/~1SM
 dedicator/1SM
 dedicatory/51
+dedollarization/1M
+dedollarize/4SDG
 deduce/~4GDS
 deducible/5
 deduct/4GVD
@@ -21873,6 +21885,7 @@ droop/415GSMD
 droopiness/1M
 droopy/5TPR
 drop/~14MS
+dropbox/1MS
 dropkick/~14MS
 droplet/1SM
 dropout/1SM
@@ -25926,6 +25939,7 @@ genitals/~1M
 genitive/~51MS
 genitourinary/5
 genius/~15MSP
+genlock/1MS4DG
 genned/4
 genning/4
 genocidal/~5
@@ -27578,6 +27592,7 @@ hegira/1SM
 heifer/1SM
 height/~1XSMN
 heighten/4DG
+heightwise/5j
 heinous/5YP
 heinousness/1M
 heir/~14MS
@@ -33106,6 +33121,7 @@ mesomorph/1M
 mesomorphs/1
 meson/1SM
 mesosphere/1SM
+mesothelioma/1M
 mesquite/1SM
 mess/~14MDSG
 message/~14MGDS
@@ -33496,6 +33512,7 @@ minstrelsy/1M
 mint/~145MDRSZG
 mintage/1M
 minter/1M
+minterm/1MS
 minty/5RTP
 minuend/1MS
 minuet/~14SM
@@ -38374,6 +38391,7 @@ plastic/~15SM
 plasticise/4DSG!
 plasticity/~1M
 plasticize/4DSG
+plasticked/5
 plasticky/5
 plastique/1
 plat/~145XGMDNS
@@ -40294,7 +40312,7 @@ quoit/14SMDG
 quondam/5
 quorate/15I
 quorum/~1SM
-quot/B
+quot/B              # !! is this due to HTML entity &quot;?
 quota/~1SM
 quotability/1M
 quotation/~1SM
@@ -40302,8 +40320,8 @@ quote/~14UDSG
 quote's
 quotidian/51
 quotient/~1SM
-qwerty/5
-r/~4S
+qwerty/5            # dictionaries prefer QWERTY
+r/~4S               # !! 'r' is a verb??
 rabbet/14GMDS
 rabbi/~1SM
 rabbinate/1M
@@ -41226,6 +41244,9 @@ replicator/1S
 repo/~14SM
 repoliticise/4DSG!
 repoliticize/4DSG
+repop/14MS
+repopped/4D
+repopping/4G
 report/1MS4DGR
 reportage/1M
 reported/~4Y
@@ -41624,6 +41645,7 @@ riderless/5
 ridership/~1M
 ridge/~14MGDS
 ridgepole/1SM
+ridgetop/1MS
 ridgy/5
 ridicule/~415MGDS
 ridiculous/~5YP
@@ -41825,6 +41847,7 @@ rollerskating/14M
 rollick/4SDG
 rollicking/415M
 rollmop/1S
+rolloff/1MS
 rollover/~14SM
 romaine/~1MS
 roman/~51M
@@ -42320,7 +42343,7 @@ sanitize/4ZGDRS
 sanity/~1IM
 sank/~4
 sans/~+51
-sanserif/15
+sanserif/15         # dictionaries prefer: sans serif
 sap/~14SM
 sapience/1M
 sapiens/~1
@@ -42764,7 +42787,8 @@ scrod/14M
 scrofula/1M
 scrofulous/5
 scrog/1S
-scroll/~14GSMDR
+scroll/~14GSMD
+scroller/1MS
 scrooge/~14MS
 scrota/1
 scrotal/5
@@ -46349,16 +46373,18 @@ summarization/1MS
 summarize/~4GDS
 summarizer/1MS
 summary/~51SM
-summat/8
+summat/
 summation/~1FMS
 summed/~4
 summer/~14MDSG
 summerhouse/1SM
 summertime/~1M
 summery/51
-summing/~418
-summit/~148MS
+summing/~41
+summit/~14MSDG
 summitry/1M
+summitted/4
+summitting/4
 summon/~41DRSZG
 summoner/1M
 summons/~14GMDS
@@ -48691,6 +48717,7 @@ trinitrotoluene/1M
 trinity/~1SM
 trinket/14SM
 trio/~1MS
+triode/1MS
 trip/~145MYS
 tripartite/~5
 tripe/~1M
@@ -49383,6 +49410,7 @@ underwrote/4
 undesirable/~51MS
 undiagnosed/5
 undies/14M
+undisputedly/j
 undo/~415
 undoubted/5Y
 undramatic/5
@@ -49563,6 +49591,7 @@ unpin/4S
 unpleasing/5
 unpolitical/5
 unpopular/~5
+unpowered/5
 unpractical/5
 unprecedented/~5Y
 unprofessional/51Y
@@ -50590,6 +50619,7 @@ walkies/1
 walking/~451M
 walkout/14SM
 walkover/1MS
+walkthrough/1MS
 walkway/~1SM
 wall/~14MDGS
 wallaby/~1SM
@@ -51944,6 +51974,7 @@ zymurgy/1M
 3D/5                    # not sure how well "words" starting with numbers are handled
 ACM/1M
 AGI/MS                  # artificial general intelligence
+AMC/12MS                # old car brand
 AOC/2M                  # US politician Alexandria Ocasio-Cortez
 Akismet/2M
 Alexa/2M                # voice assistant
@@ -51956,6 +51987,7 @@ Archytas/SM             # !! please check and comment !! we also have archytas
 ATF/1M                  # automatic transmission fluid
 Automattic/SM           # WordPress company
 Automattician/SM
+BCPL/1M                 # old programming language
 BLM/1M
 BRICS/                  # intergovernmental organization
 BYD/2MS                 # Chinese automobile manufacturer
@@ -52074,6 +52106,7 @@ Lenovo/2M           # computer manufacturer
 Levenshtein/M       # surname, mathematician
 LiDAR/1             # FIXME! elsewhere we have LIDAR
 LinkedIn/2M
+Loctite/2M          # product
 Logotherapy/SM
 Longreads/2M
 Lua/SM              # programming language
@@ -52249,6 +52282,7 @@ memecoin/1MS
 Molex/12MS          # Molex connector
 NMI/1MS             # non-maskable interrupt
 npm/2M              # node package manager
+OG/1MS
 olds/~              # common in phrasing such as "twenty year olds"
 pandoc/SM           # !! please check and comment !! elsewhere we have Pandoc
 pre/~+14            # !! please check and comment !! dictionaries only list prefix pre-
@@ -52267,9 +52301,10 @@ stacktrace/SM1      # dictionaries prefer: stack trace
 standup/SM          # dictionaries prefer: stand-up
 Subversion/1M       # version control
 ULA/1MS             # uncommitted logic array
+VFD/1MS             # vacuum fluorescent display
 VCS/1M              # version control system
 vid/1MS             # video
-WD40/1M
+WD40/1M             
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
 
@@ -52281,7 +52316,9 @@ ad nauseam/j
 add-on/1MS
 air-cooled/5
 all-new/5
+all-nighter/1MS
 all-woman/5
+anarcho-punk/15MS
 anti-Semitic/5
 anti-Semite/1MS
 anti-Semitism/1M
@@ -52293,6 +52330,7 @@ back to back/j
 back-to-back/5
 beck and call/1
 bench-warmer/1MS
+blue-blooded/5
 blue-collar/5
 boot up/4
 break out/4
@@ -52301,9 +52339,14 @@ built-in/1MS5
 built-up/5
 car bomb/1MS
 car-bomb/4
+CD-ROM/1MS
 centre-left/5!@
 centre-right/5!@
 clear-sighted/5
+color code/14MDSG<
+color coded/5<
+colour code/14MDSG!@
+colour coded/5!@
 command line/1MS
 cost cutting/1M
 cost-effective/5
@@ -52359,6 +52402,7 @@ ground-based/5
 gung ho/5
 H-1B/1MS
 habeas corpus/1
+half-cocked/5
 half-life/1M
 half-lives/9
 ham-fisted/5
@@ -52396,6 +52440,7 @@ knock-on effect/1MS
 kung fu/1M
 laid-back/5
 large-scale/5
+last-ditch/5
 lead off/1M4
 lead-up/1MS
 left-wing/5
@@ -52460,11 +52505,14 @@ pre-COVID/5
 quid pro quo/1M
 post-truth/14M
 rack-mounted/5
+real time/1M
+real-time/5
 red wolf/1M
 red wolves/9
 right-hand/5
 right-wing/5
 run-up/1MS
+sans serif/1M5
 sci-fi/1M
 sea lane/1MS
 self-driving/1M5
@@ -52472,6 +52520,8 @@ self-fund/4SDG
 self-obsessed/5
 self-tapping/5
 shark-infested/5
+short circuit/1MS4SDG
+short-circuit/3SDG
 short-lived/5
 short-term/5j
 shoulder to shoulder/j
@@ -52517,11 +52567,15 @@ trade-in/1MS
 two-thirds/1
 type checking/1M
 type-check/4SDG
+type-in/1MS
 uh-huh
 uh-oh
 un-American/5
 user-friendly/5
 UTF-8/1M
+von Neumann/2
+walk through/4
+walk-through/5
 walkie-talkie/1MS
 Wayback Machine/2M
 weapons-grade/5
