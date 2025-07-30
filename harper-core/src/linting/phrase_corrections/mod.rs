@@ -790,6 +790,12 @@ pub fn lint_group() -> LintGroup {
             "Use the modern single word `instead of` to indicate a replacement.",
             "Corrects the archaic or mistaken separation `in stead of` to `instead of` in everyday usage."
         ),
+        "Insensitive" => (
+            ["unsensitive"],
+            ["insensitive"],
+            "This word has a more standard, more common synonym.",
+            "Suggests the more standard and common synonym `insensitive`."
+        ),
         "Insurmountable" => (
             ["unsurmountable"],
             ["insurmountable"],

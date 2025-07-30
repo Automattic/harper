@@ -1095,6 +1095,16 @@ fn corrects_in_need_of() {
 // InOneFellSwoop
 // -none-
 
+// Insensitive
+#[test]
+fn test_insensitive() {
+    assert_suggestion_result(
+        "We want to potentially make an unsensitive header",
+        lint_group(),
+        "We want to potentially make an insensitive header",
+    );
+}
+
 // InsteadOf
 #[test]
 fn test_instead_of() {
