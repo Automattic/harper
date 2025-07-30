@@ -53,7 +53,8 @@
 		"onLanguage:toml",
 		"onLanguage:typescript",
 		"onLanguage:typescriptreact",
-		"onLanguage:typst"
+		"onLanguage:typst",
+		"onLanguage:clojure"
 	],
 	"main": "./build/extension.js",
 	"contributes": {

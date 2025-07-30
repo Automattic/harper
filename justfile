@@ -289,7 +289,7 @@ dogfood:
   done
 
 # Test everything.
-test: test-harperjs test-vscode test-obsidian test-chrome-plugin
+test: test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
   cargo test
 
 # Use `harper-cli` to parse a provided file and print out the resulting tokens.
