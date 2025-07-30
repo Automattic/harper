@@ -102,7 +102,17 @@ build-chrome-plugin: build-harperjs
   cd "{{justfile_directory()}}/packages/chrome-plugin"
 
   pnpm install 
-  pnpm zip
+  pnpm zip-for-chrome
+
+# Build the Firefox extension.
+build-firefox-plugin: build-harperjs
+  #! /bin/bash
+  set -eo pipefail
+  
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+
+  pnpm install 
+  pnpm zip-for-firefox
 
 test-chrome-plugin: build-chrome-plugin
   #!/bin/bash
@@ -225,7 +235,7 @@ check: check-rust build-web
 setup: build-harperjs test-harperjs test-vscode build-web build-wp build-obsidian build-chrome-plugin
 
 # Perform full format and type checking, build all projects and run all tests. Run this before pushing your code.
-precommit: check test build-harperjs build-obsidian build-web build-wp build-chrome-plugin
+precommit: check test build-harperjs build-obsidian build-web build-wp build-firefox-plugin build-chrome-plugin 
   #! /bin/bash
   set -eo pipefail
 

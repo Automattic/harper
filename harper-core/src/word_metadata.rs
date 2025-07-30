@@ -337,7 +337,7 @@ impl WordMetadata {
 
     generate_metadata_queries!(
         noun has proper, plural, possessive.
-        pronoun has plural, possessive.
+        pronoun has plural, possessive, reflexive.
         verb has linking, auxiliary.
         conjunction has.
         adjective has.
@@ -384,7 +384,7 @@ impl WordMetadata {
         )
     }
 
-    /// Checks if the word is definitely nominalpro.
+    /// Checks if the word is definitely nominal.
     pub fn is_nominal(&self) -> bool {
         self.noun.is_some() || self.pronoun.is_some()
     }
@@ -550,6 +550,7 @@ pub enum Case {
 pub struct PronounData {
     pub is_plural: Option<bool>,
     pub is_possessive: Option<bool>,
+    pub is_reflexive: Option<bool>,
     pub person: Option<Person>,
     pub case: Option<Case>,
 }
@@ -560,6 +561,7 @@ impl PronounData {
         Self {
             is_plural: self.is_plural.or(other.is_plural),
             is_possessive: self.is_possessive.or(other.is_possessive),
+            is_reflexive: self.is_reflexive.or(other.is_reflexive),
             person: self.person.or(other.person),
             case: self.case.or(other.case),
         }
