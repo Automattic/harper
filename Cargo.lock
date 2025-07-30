@@ -814,7 +814,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "0.45.0"
+version = "0.46.0"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -844,7 +844,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "0.45.0"
+version = "0.46.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -878,7 +878,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.45.0"
+version = "0.46.0"
 dependencies = [
  "ammonia",
  "bitflags 2.9.1",
@@ -915,7 +915,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.45.0"
+version = "0.46.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -926,7 +926,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.45.0"
+version = "0.46.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -937,7 +937,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.45.0"
+version = "0.46.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -965,7 +965,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "0.45.0"
+version = "0.46.0"
 dependencies = [
  "hashbrown 0.15.4",
  "is-macro",
@@ -979,7 +979,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.45.0"
+version = "0.46.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -990,7 +990,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.45.0"
+version = "0.46.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -1009,7 +1009,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.45.0"
+version = "0.46.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -1313,9 +1313,9 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "2.9.0"
+version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cea70ddb795996207ad57735b50c5982d8844f38ba9ee5f1aedcfb708a2aa11e"
+checksum = "fe4cd85333e22411419a0bcae1297d25e58c9443848b11dc6a86fefe8c78a661"
 dependencies = [
  "equivalent",
  "hashbrown 0.15.4",
@@ -1473,9 +1473,9 @@ checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
 
 [[package]]
 name = "lru"
-version = "0.14.0"
+version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9f8cc7106155f10bdf99a6f379688f543ad6596a415375b36a59a054ceda1198"
+checksum = "0281c2e25e62316a5c9d98f2d2e9e95a37841afdaf4383c177dbb5c1dfab0568"
 dependencies = [
  "hashbrown 0.15.4",
 ]

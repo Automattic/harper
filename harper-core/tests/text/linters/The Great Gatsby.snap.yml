@@ -7549,16 +7549,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (54 priority)
-Message: |
-    5814 | green breast of the new world. Its vanished trees, the trees that had made way
-         |                                ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
-Suggest:
-  - Replace with: “It's”
-  - Replace with: “It has”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     5814 | green breast of the new world. Its vanished trees, the trees that had made way

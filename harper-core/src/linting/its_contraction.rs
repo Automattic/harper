@@ -1,7 +1,9 @@
 use harper_brill::UPOS;
 
+use crate::TokenStringExt;
 use crate::expr::All;
 use crate::expr::Expr;
+use crate::expr::ExprExt;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::NominalPhrase;
@@ -9,8 +11,8 @@ use crate::patterns::Pattern;
 use crate::patterns::UPOSSet;
 use crate::patterns::WordSet;
 use crate::{
-    Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    Document, Token,
+    linting::{Lint, LintKind, Linter, Suggestion},
 };
 
 pub struct ItsContraction {
@@ -44,16 +46,35 @@ impl Default for ItsContraction {
     }
 }
 
-impl ExprLinter for ItsContraction {
-    fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+impl Linter for ItsContraction {
+    fn lint(&mut self, document: &Document) -> Vec<Lint> {
+        let mut lints = Vec::new();
+        let source = document.get_source();
+
+        for chunk in document.iter_chunks() {
+            lints.extend(
+                self.expr
+                    .iter_matches(chunk, source)
+                    .filter_map(|match_span| {
+                        self.match_to_lint(&chunk[match_span.start..], source)
+                    }),
+            );
+        }
+
+        lints
     }
 
+    fn description(&self) -> &str {
+        "Detects the possessive `its` before `had`, `been`, or `got` and offers `it's` or `it has`."
+    }
+}
+
+impl ItsContraction {
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
         let offender = toks.first()?;
         let offender_chars = offender.span.get_content(source);
 
-        if !toks.get(2)?.kind.is_upos(UPOS::AUX)
+        if toks.get(2)?.kind.is_upos(UPOS::VERB)
             && NominalPhrase.matches(&toks[2..], source).is_some()
         {
             return None;
@@ -70,10 +91,6 @@ impl ExprLinter for ItsContraction {
                 .to_owned(),
             priority: 54,
         })
-    }
-
-    fn description(&self) -> &str {
-        "Detects the possessive `its` before `had`, `been`, or `got` and offers `it's` or `it has`."
     }
 }
 
@@ -151,6 +168,33 @@ mod tests {
             "Its a nice day.",
             ItsContraction::default(),
             "It's a nice day.",
+        );
+    }
+
+    #[test]
+    fn ignore_nominal_progressive() {
+        assert_lint_count(
+            "The class preserves its existing properties.",
+            ItsContraction::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_nominal_perfect() {
+        assert_lint_count(
+            "The robot followed its predetermined route.",
+            ItsContraction::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_nominal_long() {
+        assert_lint_count(
+            "I think of its exploding marvelous spectacular output.",
+            ItsContraction::default(),
+            0,
         );
     }
 }

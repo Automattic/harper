@@ -44,6 +44,7 @@ use super::hereby::Hereby;
 use super::hop_hope::HopHope;
 use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
+use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::its_contraction::ItsContraction;
 use super::left_right_hand::LeftRightHand;
@@ -402,7 +403,7 @@ impl LintGroup {
         insert_struct_rule!(HopHope, true);
         insert_struct_rule!(HowTo, true);
         insert_pattern_rule!(HyphenateNumberDay, true);
-        insert_pattern_rule!(ItsContraction, true);
+        insert_struct_rule!(ItsContraction, true);
         insert_pattern_rule!(LeftRightHand, true);
         insert_pattern_rule!(LessWorse, true);
         insert_struct_rule!(LetsConfusion, true);
@@ -459,6 +460,9 @@ impl LintGroup {
             InflectedVerbAfterTo::new(dictionary.clone()),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
+
+        out.add("InOnTheCards", InOnTheCards::new(dialect));
+        out.config.set_rule_enabled("InOnTheCards", true);
 
         out.add(
             "SentenceCapitalization",
