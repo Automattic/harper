@@ -8,7 +8,7 @@ pub fn lint_group() -> LintGroup {
     macro_rules! add_initialism_mappings {
         ($group:expr, { $($name:expr => ($initialism:expr, $expanded:expr)),+ $(,)? }) => {
             $(
-                $group.add_pattern_linter(
+                $group.add_expr_linter(
                     $name,
                     Box::new(InitialismLinter::new($initialism, $expanded)),
                 );

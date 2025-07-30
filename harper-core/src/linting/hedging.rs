@@ -1,29 +1,31 @@
-use crate::linting::{Lint, LintKind, PatternLinter};
-use crate::patterns::{FixedPhrase, LongestMatchOf, Pattern};
+use crate::expr::Expr;
+use crate::expr::FixedPhrase;
+use crate::expr::LongestMatchOf;
+use crate::linting::{ExprLinter, Lint, LintKind};
 use crate::{Token, TokenStringExt};
 
 /// A linter that detects hedging language.
 pub struct Hedging {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for Hedging {
     fn default() -> Self {
         let phrases = vec!["I would argue that", ", so to speak", "to a certain degree"];
 
-        let patterns: Vec<Box<dyn Pattern>> = phrases
+        let patterns: Vec<Box<dyn Expr>> = phrases
             .into_iter()
-            .map(|s| Box::new(FixedPhrase::from_phrase(s)) as Box<dyn Pattern>)
+            .map(|s| Box::new(FixedPhrase::from_phrase(s)) as Box<dyn Expr>)
             .collect();
 
-        let pattern = Box::new(LongestMatchOf::new(patterns));
-        Self { pattern }
+        let expr = Box::new(LongestMatchOf::new(patterns));
+        Self { expr }
     }
 }
 
-impl PatternLinter for Hedging {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for Hedging {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {

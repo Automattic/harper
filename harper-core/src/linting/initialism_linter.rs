@@ -1,16 +1,14 @@
+use crate::expr::Expr;
 use itertools::Itertools;
 
-use crate::{
-    Token,
-    patterns::{Pattern, Word},
-};
+use crate::{Token, patterns::Word};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 /// A struct that can be composed to expand initialisms, respecting the capitalization of each
 /// item.
 pub struct InitialismLinter {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
     /// The lowercase-normalized expansion of the initialism.
     expansion_lower: Vec<Vec<char>>,
 }
@@ -24,15 +22,15 @@ impl InitialismLinter {
             .collect();
 
         Self {
-            pattern: Box::new(Word::from_char_string(initialism.chars().collect())),
+            expr: Box::new(Word::from_char_string(initialism.chars().collect())),
             expansion_lower,
         }
     }
 }
 
-impl PatternLinter for InitialismLinter {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for InitialismLinter {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -76,6 +74,4 @@ impl PatternLinter for InitialismLinter {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::InitialismLinter;
-}
+mod tests {}

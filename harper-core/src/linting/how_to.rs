@@ -1,24 +1,28 @@
+use crate::expr::All;
+use crate::expr::Expr;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
 use crate::{
     Token, TokenStringExt,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{All, InflectionOfBe, Invert, OwnedPatternExt, Pattern, SequencePattern},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::InflectionOfBe,
 };
 
 pub struct HowTo {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for HowTo {
     fn default() -> Self {
         let mut pattern = All::default();
 
-        let pos_pattern = SequencePattern::default()
+        let pos_pattern = SequenceExpr::default()
             .t_aco("how")
             .then_whitespace()
             .then_verb();
-        pattern.add(Box::new(pos_pattern));
+        pattern.add(pos_pattern);
 
-        let exceptions = SequencePattern::default()
+        let exceptions = SequenceExpr::default()
             .then_anything()
             .then_anything()
             .then(
@@ -35,17 +39,17 @@ impl Default for HowTo {
                 })),
             );
 
-        pattern.add(Box::new(Invert::new(exceptions)));
+        pattern.add(SequenceExpr::default().if_not_then_step_one(exceptions));
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for HowTo {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for HowTo {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

@@ -1,11 +1,12 @@
-use super::{Lint, LintKind, PatternLinter, Suggestion};
-use crate::{
-    Lrc, Punctuation, Token, TokenKind, TokenStringExt,
-    patterns::{All, LongestMatchOf, Pattern, SequencePattern, Word},
-};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::expr::All;
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::{Lrc, Punctuation, Token, TokenKind, TokenStringExt, patterns::Word};
 
 pub struct Everyday {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 // TODO .is_present_tense_verb() is currently broken
@@ -31,30 +32,28 @@ fn is_unknown_word(tok: &Token) -> bool {
 impl Default for Everyday {
     fn default() -> Self {
         let everyday = Word::new("everyday");
-        let every_day = Lrc::new(
-            SequencePattern::default()
-                .t_aco("every")
-                .t_ws()
-                .t_aco("day"),
-        );
+        let every_day = Lrc::new(SequenceExpr::default().t_aco("every").t_ws().t_aco("day"));
 
-        let everyday_bad_after = All::new(vec![
-            Box::new(
-                SequencePattern::default()
-                    .then(everyday.clone())
-                    .t_ws()
-                    .then_any_word(),
-            ),
-            Box::new(SequencePattern::default().t_any().t_any().then(
-                |tok: &Token, src: &[char]| {
-                    !tok.kind.is_noun() && !is_unknown_word(tok) && !is_progressive_form(tok, src)
-                },
-            )),
-        ]);
+        let everyday_bad_after =
+            All::new(vec![
+                Box::new(
+                    SequenceExpr::default()
+                        .then(everyday.clone())
+                        .t_ws()
+                        .then_any_word(),
+                ),
+                Box::new(SequenceExpr::default().t_any().t_any().then(
+                    |tok: &Token, src: &[char]| {
+                        !tok.kind.is_noun()
+                            && !is_unknown_word(tok)
+                            && !is_progressive_form(tok, src)
+                    },
+                )),
+            ]);
 
         let bad_before_every_day = All::new(vec![
             Box::new(
-                SequencePattern::default()
+                SequenceExpr::default()
                     .then_any_word()
                     .t_ws()
                     .then(every_day.clone()),
@@ -68,7 +67,7 @@ impl Default for Everyday {
         // (why does) everyday feel the (same ?)
         let everyday_ambiverb_after_then_noun = All::new(vec![
             Box::new(
-                SequencePattern::default()
+                SequenceExpr::default()
                     .then(everyday.clone())
                     .t_ws()
                     .then_any_word()
@@ -76,7 +75,7 @@ impl Default for Everyday {
                     .then_any_word(),
             ),
             Box::new(
-                SequencePattern::default()
+                SequenceExpr::default()
                     .t_any()
                     .t_any()
                     .then(|tok: &Token, _src: &[char]| tok.kind.is_noun() && tok.kind.is_verb())
@@ -88,12 +87,12 @@ impl Default for Everyday {
         // (Do you actually improve if you draw) everyday?
         let everyday_punctuation_after = All::new(vec![
             Box::new(
-                SequencePattern::default()
+                SequenceExpr::default()
                     .then(everyday.clone())
                     .then_punctuation(),
             ),
             Box::new(
-                SequencePattern::default()
+                SequenceExpr::default()
                     .t_any()
                     .then(|tok: &Token, _src: &[char]| {
                         matches!(
@@ -109,14 +108,14 @@ impl Default for Everyday {
         // (However, the message goes far beyond) every day things.
         let every_day_noun_after_then_punctuation = All::new(vec![
             Box::new(
-                SequencePattern::default()
+                SequenceExpr::default()
                     .then(every_day.clone())
                     .t_ws()
                     .then_noun()
                     .then_punctuation(),
             ),
             Box::new(
-                SequencePattern::default()
+                SequenceExpr::default()
                     .t_any()
                     .t_any()
                     .t_any()
@@ -156,7 +155,7 @@ impl Default for Everyday {
         // verb, past form: "I coded every day" / "I learned everyday phrases"
 
         Self {
-            pattern: Box::new(LongestMatchOf::new(vec![
+            expr: Box::new(LongestMatchOf::new(vec![
                 Box::new(everyday_bad_after),
                 Box::new(bad_before_every_day),
                 Box::new(everyday_ambiverb_after_then_noun),
@@ -167,9 +166,9 @@ impl Default for Everyday {
     }
 }
 
-impl PatternLinter for Everyday {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for Everyday {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

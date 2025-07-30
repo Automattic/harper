@@ -1,19 +1,22 @@
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use crate::{
     Token, TokenStringExt,
-    patterns::{LongestMatchOf, Pattern, SequencePattern, WhitespacePattern, WordSet},
+    patterns::{WhitespacePattern, WordSet},
 };
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct ChockFull {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ChockFull {
     fn default() -> Self {
         Self {
-            pattern: Box::new(
-                SequencePattern::default()
+            expr: Box::new(
+                SequenceExpr::default()
                     .then(WordSet::new(&["chalk", "choke"]))
                     .then(LongestMatchOf::new(vec![
                         Box::new(WhitespacePattern),
@@ -25,9 +28,9 @@ impl Default for ChockFull {
     }
 }
 
-impl PatternLinter for ChockFull {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ChockFull {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_toks: &[Token], source: &[char]) -> Option<Lint> {

@@ -1,31 +1,30 @@
-use crate::{
-    Token,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::Token;
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct SomewhatSomething {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for SomewhatSomething {
     fn default() -> Self {
-        let pattern = SequencePattern::aco("somewhat")
+        let pattern = SequenceExpr::aco("somewhat")
             .then_whitespace()
             .t_aco("of")
             .then_whitespace()
             .t_aco("a");
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for SomewhatSomething {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for SomewhatSomething {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

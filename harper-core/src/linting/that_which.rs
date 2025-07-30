@@ -1,22 +1,22 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::expr::WordExprGroup;
 use itertools::Itertools;
 
-use crate::{
-    Lrc, Token, TokenStringExt,
-    patterns::{Pattern, SequencePattern, WordPatternGroup},
-};
+use crate::{Lrc, Token, TokenStringExt};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct ThatWhich {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ThatWhich {
     fn default() -> Self {
-        let mut pattern = WordPatternGroup::default();
+        let mut pattern = WordExprGroup::default();
 
         let matching_pattern = Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then_any_capitalization_of("that")
                 .then_whitespace()
                 .then_any_capitalization_of("that"),
@@ -26,14 +26,14 @@ impl Default for ThatWhich {
         pattern.add("That", Box::new(matching_pattern));
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for ThatWhich {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ThatWhich {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

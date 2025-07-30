@@ -1,13 +1,16 @@
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use crate::{
     Lrc, Token, TokenStringExt,
     linting::{LintKind, Suggestion},
-    patterns::{LongestMatchOf, Pattern, SequencePattern, WordSet},
+    patterns::WordSet,
 };
 
-use super::{Lint, PatternLinter};
+use super::{ExprLinter, Lint};
 
 pub struct OpenTheLight {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for OpenTheLight {
@@ -32,7 +35,7 @@ impl Default for OpenTheLight {
         ];
 
         let open_the_device = Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then(WordSet::new(TO_OPEN))
                 .t_ws()
                 .then_determiner()
@@ -40,23 +43,23 @@ impl Default for OpenTheLight {
                 .then(WordSet::new(DEVICES)),
         );
 
-        let open_the_device_then_noun = SequencePattern::default()
+        let open_the_device_then_noun = SequenceExpr::default()
             .then(open_the_device.clone())
             .t_ws()
             .then_noun();
 
-        let pattern = Box::new(LongestMatchOf::new(vec![
+        let expr = Box::new(LongestMatchOf::new(vec![
             Box::new(open_the_device),
             Box::new(open_the_device_then_noun),
         ]));
 
-        Self { pattern }
+        Self { expr }
     }
 }
 
-impl PatternLinter for OpenTheLight {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for OpenTheLight {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

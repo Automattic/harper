@@ -1,28 +1,28 @@
-use crate::{
-    Token,
-    patterns::{LongestMatchOf, NominalPhrase, Pattern, SequencePattern},
-};
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::{Token, patterns::NominalPhrase};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct HyphenateNumberDay {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for HyphenateNumberDay {
     fn default() -> Self {
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then_number()
             .then_whitespace()
             .t_aco("day")
             .then(LongestMatchOf::new(vec![
                 Box::new(
-                    SequencePattern::default()
+                    SequenceExpr::default()
                         .then_whitespace()
                         .then(NominalPhrase),
                 ),
                 Box::new(
-                    SequencePattern::default()
+                    SequenceExpr::default()
                         .then_hyphen()
                         .then_adjective()
                         .then_whitespace()
@@ -31,14 +31,14 @@ impl Default for HyphenateNumberDay {
             ]));
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for HyphenateNumberDay {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for HyphenateNumberDay {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {

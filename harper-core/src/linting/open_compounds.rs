@@ -1,13 +1,13 @@
-use crate::{
-    Lrc, Token,
-    patterns::{LongestMatchOf, Pattern, SequencePattern, WordSet},
-};
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::{Lrc, Token, patterns::WordSet};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 use hashbrown::HashMap;
 
 pub struct OpenCompounds {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
     compound_to_phrase: HashMap<String, String>,
 }
 
@@ -37,23 +37,23 @@ impl Default for OpenCompounds {
         for compound in compound_to_phrase.keys().cloned().collect::<Vec<_>>() {
             compound_wordset.add(&compound);
         }
-        let compound = Lrc::new(SequencePattern::default().then(compound_wordset));
+        let compound = Lrc::new(SequenceExpr::default().then(compound_wordset));
 
-        let with_prev = SequencePattern::default()
+        let with_prev = SequenceExpr::default()
             .then_anything()
             .then(compound.clone());
 
-        let with_next = SequencePattern::default()
+        let with_next = SequenceExpr::default()
             .then(compound.clone())
             .then_anything();
 
-        let with_prev_and_next = SequencePattern::default()
+        let with_prev_and_next = SequenceExpr::default()
             .then_anything()
             .then(compound.clone())
             .then_anything();
 
         Self {
-            pattern: Box::new(LongestMatchOf::new(vec![
+            expr: Box::new(LongestMatchOf::new(vec![
                 Box::new(with_prev_and_next),
                 Box::new(with_prev),
                 Box::new(with_next),
@@ -64,9 +64,9 @@ impl Default for OpenCompounds {
     }
 }
 
-impl PatternLinter for OpenCompounds {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for OpenCompounds {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_toks: &[Token], source_chars: &[char]) -> Option<Lint> {

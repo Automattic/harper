@@ -31,6 +31,7 @@ use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
 use super::expand_time_shorthands::ExpandTimeShorthands;
+use super::expr_linter::run_on_chunk;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
@@ -44,7 +45,6 @@ use super::its_contraction::ItsContraction;
 use super::left_right_hand::LeftRightHand;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
-use super::linking_verbs::LinkingVerbs;
 use super::long_sentences::LongSentences;
 use super::merge_words::MergeWords;
 use super::modal_of::ModalOf;
@@ -60,7 +60,6 @@ use super::one_and_the_same::OneAndTheSame;
 use super::open_the_light::OpenTheLight;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
-use super::pattern_linter::run_on_chunk;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::possessive_your::PossessiveYour;
@@ -88,7 +87,7 @@ use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
-use super::{Lint, PatternLinter};
+use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{closed_compounds, initialisms, phrase_corrections};
@@ -191,14 +190,14 @@ pub struct LintGroup {
     /// We use a binary map here so the ordering is stable.
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
-    pattern_linters: BTreeMap<String, Box<dyn PatternLinter>>,
-    /// Since [`PatternLinter`]s operate on a chunk-basis, we can store a
+    expr_linters: BTreeMap<String, Box<dyn ExprLinter>>,
+    /// Since [`ExprLinter`]s operate on a chunk-basis, we can store a
     /// mapping of `Chunk -> Lint` and only re-run the pattern linters
     /// when a chunk changes.
     ///
     /// Since the pattern linter results also depend on the config, we hash it and pass it as part
     /// of the key.
-    chunk_pattern_cache: LruCache<(CharString, u64), Vec<Lint>>,
+    chunk_expr_cache: LruCache<(CharString, u64), Vec<Lint>>,
     hasher_builder: RandomState,
 }
 
@@ -207,15 +206,15 @@ impl LintGroup {
         Self {
             config: LintGroupConfig::default(),
             linters: BTreeMap::new(),
-            pattern_linters: BTreeMap::new(),
-            chunk_pattern_cache: LruCache::new(NonZero::new(10000).unwrap()),
+            expr_linters: BTreeMap::new(),
+            chunk_expr_cache: LruCache::new(NonZero::new(10000).unwrap()),
             hasher_builder: RandomState::default(),
         }
     }
 
     /// Check if the group already contains a linter with a given name.
     pub fn contains_key(&self, name: impl AsRef<str>) -> bool {
-        self.linters.contains_key(name.as_ref()) || self.pattern_linters.contains_key(name.as_ref())
+        self.linters.contains_key(name.as_ref()) || self.expr_linters.contains_key(name.as_ref())
     }
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
@@ -230,20 +229,20 @@ impl LintGroup {
         }
     }
 
-    /// Add a [`PatternLinter`] to the group, returning whether the operation was successful.
+    /// Add a [`ExprLinter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     ///
     /// This function is not significantly different from [`Self::add`], but allows us to take
-    /// advantage of some properties of [`PatternLinter`]s for cache optimization.
-    pub fn add_pattern_linter(
+    /// advantage of some properties of [`ExprLinter`]s for cache optimization.
+    pub fn add_expr_linter(
         &mut self,
         name: impl AsRef<str>,
-        linter: impl PatternLinter + 'static,
+        linter: impl ExprLinter + 'static,
     ) -> bool {
         if self.contains_key(&name) {
             false
         } else {
-            self.pattern_linters
+            self.expr_linters
                 .insert(name.as_ref().to_string(), Box::new(linter));
             true
         }
@@ -257,14 +256,14 @@ impl LintGroup {
         let other_linters = std::mem::take(&mut other.linters);
         self.linters.extend(other_linters);
 
-        let other_pattern_linters = std::mem::take(&mut other.pattern_linters);
-        self.pattern_linters.extend(other_pattern_linters);
+        let other_pattern_linters = std::mem::take(&mut other.expr_linters);
+        self.expr_linters.extend(other_pattern_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
         self.linters
             .keys()
-            .chain(self.pattern_linters.keys())
+            .chain(self.expr_linters.keys())
             .map(|v| v.as_str())
     }
 
@@ -287,9 +286,9 @@ impl LintGroup {
             .iter()
             .map(|(key, value)| (key.as_str(), value.description()))
             .chain(
-                self.pattern_linters
+                self.expr_linters
                     .iter()
-                    .map(|(key, value)| (key.as_str(), PatternLinter::description(value))),
+                    .map(|(key, value)| (key.as_str(), ExprLinter::description(value))),
             )
             .collect()
     }
@@ -300,7 +299,7 @@ impl LintGroup {
             .iter()
             .map(|(key, value)| (key.as_str(), value.description_html()))
             .chain(
-                self.pattern_linters
+                self.expr_linters
                     .iter()
                     .map(|(key, value)| (key.as_str(), value.description_html())),
             )
@@ -326,7 +325,7 @@ impl LintGroup {
 
         macro_rules! insert_pattern_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add_pattern_linter(stringify!($rule), $rule::default());
+                out.add_expr_linter(stringify!($rule), $rule::default());
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -375,7 +374,6 @@ impl LintGroup {
         insert_pattern_rule!(LeftRightHand, true);
         insert_struct_rule!(LetsConfusion, true);
         insert_pattern_rule!(Likewise, true);
-        insert_struct_rule!(LinkingVerbs, false);
         insert_struct_rule!(LongSentences, true);
         insert_struct_rule!(MergeWords, true);
         insert_pattern_rule!(ModalOf, true);
@@ -474,12 +472,12 @@ impl Linter for LintGroup {
             let config_hash = self.hasher_builder.hash_one(&self.config);
             let key = (chunk_chars.into(), config_hash);
 
-            let mut chunk_results = if let Some(hit) = self.chunk_pattern_cache.get(&key) {
+            let mut chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&key) {
                 hit.clone()
             } else {
                 let mut pattern_lints = Vec::new();
 
-                for (key, linter) in &mut self.pattern_linters {
+                for (key, linter) in &mut self.expr_linters {
                     if self.config.is_rule_enabled(key) {
                         pattern_lints.extend(run_on_chunk(linter, chunk, document.get_source()));
                     }
@@ -490,7 +488,7 @@ impl Linter for LintGroup {
                     lint.span.pull_by(chunk_span.start);
                 }
 
-                self.chunk_pattern_cache.put(key, pattern_lints.clone());
+                self.chunk_expr_cache.put(key, pattern_lints.clone());
                 pattern_lints
             };
 

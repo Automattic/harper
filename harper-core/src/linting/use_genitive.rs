@@ -1,61 +1,65 @@
-use crate::linting::{LintKind, PatternLinter, Suggestion};
-use crate::patterns::{Invert, LongestMatchOf, Pattern, SequencePattern, WordPatternGroup};
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::expr::WordExprGroup;
+use crate::linting::{ExprLinter, LintKind, Suggestion};
+use crate::patterns::Word;
 use crate::{Lint, Lrc, Token};
 
 // Looks for places where the genitive case _isn't_ being used, and should be.
 pub struct UseGenitive {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl UseGenitive {
     fn new() -> Self {
         // Define the environment in which the genitive case __should__ be used.
-        let environment = Lrc::new(SequencePattern::default().then_whitespace().then(
+        let environment = Lrc::new(SequenceExpr::default().then_whitespace().then(
             LongestMatchOf::new(vec![
                     Box::new(
-                        SequencePattern::default()
+                        SequenceExpr::default()
                             .then_one_or_more_adjectives()
                             .then_whitespace()
                             .then_noun(),
                     ),
-                    Box::new(SequencePattern::default().then_noun()),
+                    Box::new(SequenceExpr::default().then_noun()),
                 ]),
         ));
 
         let trigger_words = ["there", "they're"];
 
-        let mut primary_pattern = WordPatternGroup::default();
+        let mut primary_pattern = WordExprGroup::default();
 
         for word in trigger_words {
             primary_pattern.add(
                 word,
                 Box::new(
-                    SequencePattern::default()
-                        .then_exact_word(word)
+                    SequenceExpr::default()
+                        .then(Word::new_exact(word))
                         .then(environment.clone()),
                 ),
             )
         }
 
         // Add a prelude to remove false-positives.
-        let full_pattern = SequencePattern::default()
-            .then(Invert::new(LongestMatchOf::new(vec![
-                Box::new(SequencePattern::default().t_aco("is")),
-                Box::new(SequencePattern::default().t_aco("were")),
-                Box::new(SequencePattern::default().then_adjective()),
-            ])))
+        let full_pattern = SequenceExpr::default()
+            .if_not_then_step_one(LongestMatchOf::new(vec![
+                Box::new(SequenceExpr::default().t_aco("is")),
+                Box::new(SequenceExpr::default().t_aco("were")),
+                Box::new(SequenceExpr::default().then_adjective()),
+            ]))
             .then_whitespace()
             .then(primary_pattern);
 
         Self {
-            pattern: Box::new(full_pattern),
+            expr: Box::new(full_pattern),
         }
     }
 }
 
-impl PatternLinter for UseGenitive {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for UseGenitive {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {

@@ -1,9 +1,9 @@
-use crate::{
-    Lrc, Token, TokenStringExt,
-    patterns::{LongestMatchOf, Pattern, SequencePattern, WordSet},
-};
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 /// Common noun-verb pairs that are often confused
 const NOUN_VERB_PAIRS: &[(&str, &str)] = &[
@@ -50,7 +50,7 @@ const MODAL_VERBS_ETC: &[&str] = &[
 
 /// Linter that corrects common noun/verb confusions
 pub struct NounInsteadOfVerb {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for NounInsteadOfVerb {
@@ -69,23 +69,23 @@ impl Default for NounInsteadOfVerb {
         ));
 
         let basic_pattern = Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then(pre_context)
                 .then_whitespace()
                 .then(nouns.clone()),
         );
 
-        let pattern_followed_by_punctuation = SequencePattern::default()
+        let pattern_followed_by_punctuation = SequenceExpr::default()
             .then(basic_pattern.clone())
             .then_punctuation();
 
-        let pattern_followed_by_word = SequencePattern::default()
+        let pattern_followed_by_word = SequenceExpr::default()
             .then(basic_pattern.clone())
             .then_whitespace()
             .then_any_word();
 
         Self {
-            pattern: Box::new(LongestMatchOf::new(vec![
+            expr: Box::new(LongestMatchOf::new(vec![
                 Box::new(pattern_followed_by_punctuation),
                 Box::new(pattern_followed_by_word),
                 Box::new(basic_pattern),
@@ -94,9 +94,9 @@ impl Default for NounInsteadOfVerb {
     }
 }
 
-impl PatternLinter for NounInsteadOfVerb {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for NounInsteadOfVerb {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

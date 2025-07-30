@@ -1,53 +1,53 @@
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use crate::{
     Token, TokenStringExt,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Invert, LongestMatchOf, Pattern, SequencePattern},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 /// Suggests removing `the` when followed by how/why/who/when/what,
 /// skipping cases like `how to` and `who's who`.
 pub struct TheHowWhy {
-    pattern: LongestMatchOf,
+    expr: LongestMatchOf,
 }
 
 impl Default for TheHowWhy {
     fn default() -> Self {
-        let the_how = SequencePattern::default()
+        let the_how = SequenceExpr::default()
             .t_aco("the")
             .then_whitespace()
             .t_aco("how")
-            .then(Invert::new(
-                SequencePattern::default().then_whitespace().t_aco("to"),
-            ));
+            .if_not_then_step_one(SequenceExpr::default().then_whitespace().t_aco("to"));
 
-        let the_who = SequencePattern::default()
+        let the_who = SequenceExpr::default()
             .t_aco("the")
             .then_whitespace()
             .t_aco("who")
-            .then(Invert::new(
-                SequencePattern::default()
+            .if_not_then_step_one(
+                SequenceExpr::default()
                     .then_whitespace()
                     .t_aco("'s")
                     .then_whitespace()
                     .t_aco("who"),
-            ));
+            );
 
-        let the_why = SequencePattern::default()
+        let the_why = SequenceExpr::default()
             .t_aco("the")
             .then_whitespace()
             .t_aco("why");
 
-        let the_when = SequencePattern::default()
+        let the_when = SequenceExpr::default()
             .t_aco("the")
             .then_whitespace()
             .t_aco("when");
 
-        let the_what = SequencePattern::default()
+        let the_what = SequenceExpr::default()
             .t_aco("the")
             .then_whitespace()
             .t_aco("what");
 
-        let pattern = LongestMatchOf::new(vec![
+        let expr = LongestMatchOf::new(vec![
             Box::new(the_how),
             Box::new(the_who),
             Box::new(the_why),
@@ -55,13 +55,13 @@ impl Default for TheHowWhy {
             Box::new(the_what),
         ]);
 
-        Self { pattern }
+        Self { expr }
     }
 }
 
-impl PatternLinter for TheHowWhy {
-    fn pattern(&self) -> &dyn Pattern {
-        &self.pattern
+impl ExprLinter for TheHowWhy {
+    fn expr(&self) -> &dyn Expr {
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

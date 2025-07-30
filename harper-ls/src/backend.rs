@@ -105,6 +105,14 @@ impl Backend {
     }
 
     async fn load_ignored_lints(&self, uri: &Uri) -> Result<IgnoredLints> {
+        // VS Code's unsaved documents have "untitled" scheme
+        if uri
+            .scheme()
+            .is_some_and(|scheme| scheme.eq_lowercase("untitled"))
+        {
+            return Ok(IgnoredLints::new());
+        }
+
         Ok(load_ignored_lints(
             self.get_ignored_lints_path(uri)
                 .await

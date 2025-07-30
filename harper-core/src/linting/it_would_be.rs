@@ -1,11 +1,14 @@
+use crate::expr::Expr;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{OwnedPatternExt, Pattern, SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
 };
 
 pub struct ItWouldBe {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ItWouldBe {
@@ -29,7 +32,7 @@ impl Default for ItWouldBe {
         ]);
 
         let branch = |has_not: bool, has_adj: bool| {
-            let mut p = SequencePattern::default()
+            let mut p = SequenceExpr::default()
                 .then(head_verbs.clone())
                 .then_whitespace()
                 .t_aco("i") // the mistaken pronoun
@@ -55,14 +58,14 @@ impl Default for ItWouldBe {
             .or(branch(true, true));
 
         Self {
-            pattern: Box::new(combined),
+            expr: Box::new(combined),
         }
     }
 }
 
-impl PatternLinter for ItWouldBe {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ItWouldBe {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

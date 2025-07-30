@@ -1,18 +1,17 @@
-use crate::{
-    Token,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::Token;
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct PossessiveYour {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for PossessiveYour {
     fn default() -> Self {
         let pattern =
-            SequencePattern::aco("you")
+            SequenceExpr::aco("you")
                 .then_whitespace()
                 .then(|tok: &Token, source: &[char]| {
                     if tok.kind.is_nominal() && !tok.kind.is_likely_homograph() {
@@ -23,14 +22,14 @@ impl Default for PossessiveYour {
                 });
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for PossessiveYour {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for PossessiveYour {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

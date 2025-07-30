@@ -1,17 +1,19 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Pattern, SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
 };
 
 pub struct NailOnTheHead {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for NailOnTheHead {
     fn default() -> Self {
         let mis = WordSet::new(&["hat", "had", "hit", "hid"]);
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .t_aco("nail")
             .then_whitespace()
             .t_aco("on")
@@ -20,14 +22,14 @@ impl Default for NailOnTheHead {
             .then_whitespace()
             .then(mis);
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for NailOnTheHead {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for NailOnTheHead {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

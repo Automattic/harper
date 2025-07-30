@@ -1,16 +1,18 @@
-use super::super::{Lint, LintKind, PatternLinter};
+use super::super::{ExprLinter, Lint, LintKind};
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
-use crate::patterns::{Pattern, SequencePattern, WordSet};
+use crate::patterns::WordSet;
 use crate::{CharString, CharStringExt};
 use crate::{Token, char_string::char_string};
 
 pub struct ToHop {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ToHop {
     fn default() -> Self {
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(WordSet::new(&["hoping", "hoped", "hope"]))
             .then_whitespace()
             .t_aco("on")
@@ -20,7 +22,7 @@ impl Default for ToHop {
             .then(WordSet::new(&["airplane", "plane", "bus", "call", "train"]));
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
@@ -36,9 +38,9 @@ impl ToHop {
     }
 }
 
-impl PatternLinter for ToHop {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ToHop {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

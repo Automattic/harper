@@ -1,11 +1,13 @@
+use crate::expr::SequenceExpr;
+use crate::expr::{Expr, OwnedExprExt};
 use crate::{
     Lrc, Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{OwnedPatternExt, Pattern, SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
 };
 
 pub struct WinPrize {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for WinPrize {
@@ -13,26 +15,26 @@ impl Default for WinPrize {
         let verbs = Lrc::new(WordSet::new(&["win", "wins", "won", "winning"]));
         let miss = Lrc::new(WordSet::new(&["price", "prices", "prise", "prises"]));
 
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(verbs.clone())
             .then_whitespace()
             .then_determiner()
             .then_whitespace()
             .then(miss.clone())
-            .or(SequencePattern::default()
+            .or(SequenceExpr::default()
                 .then(verbs)
                 .then_whitespace()
                 .then(miss));
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for WinPrize {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for WinPrize {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -11,7 +11,7 @@ macro_rules! create_decl_for {
 
             fn [< last_ $thing _index >](&self) -> Option<usize>;
 
-            fn [<iter_ $thing _indices>](&self) -> impl Iterator<Item = usize> + '_;
+            fn [<iter_ $thing _indices>](&self) -> impl DoubleEndedIterator<Item = usize> + '_;
 
             fn [<iter_ $thing s>](&self) -> impl Iterator<Item = &Token> + '_;
         }
@@ -33,7 +33,7 @@ macro_rules! create_fns_for {
                 self.iter().rev().position(|v| v.kind.[<is_ $thing>]()).map(|i| self.len() - i - 1)
             }
 
-            fn [<iter_ $thing _indices>](&self) -> impl Iterator<Item = usize> + '_ {
+            fn [<iter_ $thing _indices>](&self) -> impl DoubleEndedIterator<Item = usize> + '_ {
                 self.iter()
                     .enumerate()
                     .filter(|(_, t)| t.kind.[<is_ $thing>]())
