@@ -58,37 +58,11 @@
 //! - [`TokenKind::Space`], [`TokenKind::Newline`], and
 //!   [`TokenKind::ParagraphBreak`] are ignored.
 //! - All other token kinds are denoted by their variant name.
-use std::{borrow::Cow, path::PathBuf};
+use std::borrow::Cow;
 
 use harper_core::{Degree, Document, FstDictionary, TokenKind, WordMetadata};
 
-fn get_tests_dir() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests")
-}
-fn get_text_dir() -> PathBuf {
-    get_tests_dir().join("text")
-}
-fn get_snapshot_dir() -> PathBuf {
-    get_tests_dir().join("text/tagged")
-}
-fn get_text_files() -> Vec<PathBuf> {
-    let mut files = vec![];
-    for entry in std::fs::read_dir(get_text_dir())
-        .unwrap()
-        .filter_map(|f| f.ok())
-        .filter(|f| f.metadata().unwrap().is_file())
-    {
-        let path = entry.path();
-        let ext = path
-            .extension()
-            .map(|e| e.to_string_lossy().to_string())
-            .unwrap_or_default();
-        if matches!(ext.as_str(), "txt" | "md") {
-            files.push(entry.path());
-        }
-    }
-    files
-}
+mod snapshot;
 
 fn format_word_tag(word: &WordMetadata) -> String {
     // These tags are inspired by the Penn Treebank POS tagset
@@ -258,70 +232,31 @@ impl Formatter {
     }
 }
 
-fn tag_text(source: &str) -> String {
-    let dict = FstDictionary::curated();
-    let document = Document::new_markdown_default(&source.replace("\r\n", "\n"), &dict);
-
-    let mut formatter = Formatter::new();
-    for token in document.fat_string_tokens() {
-        match token.kind {
-            TokenKind::Space(_) => { /* ignore */ }
-            TokenKind::ParagraphBreak => {
-                formatter.new_line();
-                formatter.new_line();
-            }
-            TokenKind::Newline(_) => {
-                formatter.new_line();
-            }
-            kind => {
-                let text = &token.content;
-                let tag = format_tag(&kind);
-                formatter.add(text, &tag);
-            }
-        }
-    }
-
-    formatter.finish()
-}
-
-fn tag_file(path: &PathBuf) -> Result<(), Box<dyn std::error::Error>> {
-    let source = std::fs::read_to_string(path)?.replace("\r\n", "\n");
-    let tagged = tag_text(source.trim_end());
-
-    // compare with snapshot
-    let snapshot_name = path.file_stem().unwrap().to_string_lossy().to_string() + ".md";
-    let snapshot_file = get_snapshot_dir().join(snapshot_name);
-    let has_snapshot = snapshot_file.exists();
-    if has_snapshot {
-        let snapshot = std::fs::read_to_string(&snapshot_file)?;
-        if tagged == snapshot {
-            return Ok(());
-        }
-    }
-
-    // write snapshot
-    std::fs::create_dir_all(get_snapshot_dir())?;
-    std::fs::write(snapshot_file, tagged)?;
-
-    Err(if has_snapshot {
-        "Snapshot mismatches!"
-    } else {
-        "No snapshot!"
-    }
-    .into())
-}
-
 #[test]
 fn test_pos_tagger() {
-    let mut errors = 0;
-    for file in get_text_files() {
-        println!("Processing {}", file.display());
-        if let Err(e) = tag_file(&file) {
-            eprintln!("Error processing {}: {}", file.display(), e);
-            errors += 1;
+    snapshot::snapshot_all_text_files("tagged", ".md", |source| {
+        let dict = FstDictionary::curated();
+        let document = Document::new_markdown_default(source, &dict);
+
+        let mut formatter = Formatter::new();
+        for token in document.fat_string_tokens() {
+            match token.kind {
+                TokenKind::Space(_) => { /* ignore */ }
+                TokenKind::ParagraphBreak => {
+                    formatter.new_line();
+                    formatter.new_line();
+                }
+                TokenKind::Newline(_) => {
+                    formatter.new_line();
+                }
+                kind => {
+                    let text = &token.content;
+                    let tag = format_tag(&kind);
+                    formatter.add(text, &tag);
+                }
+            }
         }
-    }
-    if errors > 0 {
-        panic!("{} errors occurred while processing files", errors);
-    }
+
+        formatter.finish()
+    });
 }

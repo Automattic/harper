@@ -38,12 +38,29 @@ mod tests {
     use super::NominalPhrase;
     use crate::{Document, Span, patterns::Pattern};
 
+    trait SpanVecExt {
+        fn to_strings(&self, doc: &Document) -> Vec<String>;
+    }
+
+    impl SpanVecExt for Vec<Span> {
+        fn to_strings(&self, doc: &Document) -> Vec<String> {
+            self.iter()
+                .map(|sp| {
+                    doc.get_tokens()[sp.start..sp.end]
+                        .iter()
+                        .map(|tok| doc.get_span_content_str(&tok.span))
+                        .collect::<String>()
+                })
+                .collect()
+        }
+    }
+
     #[test]
     fn simple_apple() {
         let doc = Document::new_markdown_default_curated("A red apple");
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 
-        assert_eq!(matches, vec![Span::new(0, 5)])
+        assert_eq!(matches.to_strings(&doc), vec!["A red apple"])
     }
 
     #[test]
@@ -51,7 +68,7 @@ mod tests {
         let doc = Document::new_markdown_default_curated("A red apple with a long stem");
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 
-        assert_eq!(matches, vec![Span::new(0, 5), Span::new(8, 13)])
+        assert_eq!(matches.to_strings(&doc), vec!["A red apple", "a long stem"])
     }
 
     #[test]
@@ -60,8 +77,8 @@ mod tests {
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 
         assert_eq!(
-            matches,
-            vec![Span::new(0, 3), Span::new(5, 8), Span::new(11, 14)]
+            matches.to_strings(&doc),
+            vec!["An apple", "a banana", "a pear"]
         )
     }
 
@@ -83,16 +100,16 @@ mod tests {
         let matches = NominalPhrase.find_all_matches_in_doc(&doc);
 
         dbg!(&matches);
+        dbg!(matches.to_strings(&doc));
+
+        for span in &matches {
+            let gc = span.get_content(doc.get_source());
+            dbg!(gc);
+        }
 
         assert_eq!(
-            matches,
-            vec![
-                Span::new(0, 5),
-                Span::new(8, 9),
-                Span::new(11, 12),
-                Span::new(14, 15),
-                Span::new(18, 19)
-            ]
+            matches.to_strings(&doc),
+            vec!["My favorite foods", "pizza", "sushi", "tacos", "burgers"]
         )
     }
 }
