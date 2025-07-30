@@ -1,4 +1,3 @@
-import { memoize } from 'lodash-es';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import ProtocolClient from './ProtocolClient';
@@ -93,7 +92,7 @@ export default class LintFramework {
 		}
 
 		const observer = new MutationObserver(this.updateEventCallback);
-		const config = { attributes: true, childList: true, subtree: true, characterData: true };
+		const config = { subtree: true, characterData: true };
 
 		if (target.tagName == undefined) {
 			observer.observe(target.parentElement!, config);
@@ -144,10 +143,12 @@ function getScrollableAncestors(element: Element): Element[] {
 		const { overflowY, overflowX } = style;
 		// Vertical scroll check: overflow-y is scrollable and content overflows
 		const canScrollY =
-			(overflowY === 'auto' || overflowY === 'scroll') && parent.scrollHeight > parent.clientHeight;
+			(overflowY.includes('auto') || overflowY.includes('scroll')) &&
+			parent.scrollHeight > parent.clientHeight;
 		// Horizontal scroll check: overflow-x is scrollable and content overflows
 		const canScrollX =
-			(overflowX === 'auto' || overflowX === 'scroll') && parent.scrollWidth > parent.clientWidth;
+			(overflowX.includes('auto') || overflowX.includes('scroll')) &&
+			parent.scrollWidth > parent.clientWidth;
 		if (canScrollY || canScrollX) {
 			scrollables.push(parent);
 		}

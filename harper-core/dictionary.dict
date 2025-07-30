@@ -1,4 +1,4 @@
-53000
+53200
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -2799,6 +2799,7 @@ Dhaulagiri/M
 Di/2SM
 DiCaprio/2M
 DiMaggio/M
+Diablo/1MS          # car model
 Diaghilev/M
 Dial/2M
 Diana/21M
@@ -3742,6 +3743,7 @@ GST/1M              # goods and services tax
 GT/1MS              # grand touring/tourer
 GTE/2M
 GTO/1SM
+GTR/1MS
 GTS/1SM
 GU/1
 GUI/21M
@@ -4705,6 +4707,8 @@ Hunter/2M
 Huntington/2M
 Huntley/2M
 Huntsville/2M
+Huracán/2SM
+Huracan/2SM
 Hurd/2M
 Hurley/2M
 Huron/12M
@@ -12265,7 +12269,7 @@ amphetamine/~1SM
 amphibian/~51MS
 amphibious/~5Y
 amphitheater/~1SM
-amphitheatre/1SM!@@_
+amphitheatre/1SM!@_
 amphora/~1M
 amphorae/1
 ampicillin/1
@@ -13433,13 +13437,17 @@ autocrat/1SM
 autocratic/~5Q
 autocross/14
 autodidact/1SM
+autofocus/1M4GDS
+autofocussed/4
+autofocusses/4
+autofocussing/4
 autogenerate/4SGD
 autograph/~154MDG
 autographs/14
 autoimmune/~5
 autoimmunity/1M
 autoload/4SDG
-automagical/5
+automagical/5Y
 automaker/~1SM
 automata/~1SM
 automate/4GNDS
@@ -13462,6 +13470,7 @@ autoregressive/5
 autorun/14GM
 autostereogram/1MS
 autosuggestion/1
+autothysis/1M
 autoworker/1MS
 autumn/~14SM
 autumnal/5
@@ -13635,8 +13644,8 @@ backpack/~14ZGMDRS
 backpacker/1M
 backpacking/41M
 backpedal/41SDG
-backpedalled/4!@@_
-backpedalling/41!@@_
+backpedalled/4!@_
+backpedalling/41!@_
 backplane/SM
 backport/41DGSM
 backrest/1SM
@@ -14158,7 +14167,7 @@ bedding/14M
 bedeck/4GSD
 bedevil/4LGDS
 bedevilled/4!@_
-bedevilling/41!@@_
+bedevilling/41!@_
 bedevilment/1M
 bedfellow/1SM
 bedhead/1S
@@ -14273,7 +14282,7 @@ beige/~15M
 being/~417M
 bejewel/4SDG
 bejewelled/45!@_
-bejewelling/4!@@_
+bejewelling/4!@_
 belabor/4SDG
 belabour/4GSD!@_
 belated/45Y
@@ -18818,6 +18827,7 @@ contentiousness/1M
 contently/j
 contentment/1EM
 conterminous/5Y
+contest/1MS4DG
 contestable/5I
 contestant/~1MS
 contested/~54U
@@ -25585,6 +25595,7 @@ fruity/51TPR
 frump/14SM
 frumpish/5
 frumpy/5TR
+frunk/1MS
 frustrate/45GNXDS
 frustrating/~54Y
 frustration/~1M
@@ -26227,7 +26238,7 @@ gill/~14MS
 gillie/14S
 gillion/1S
 gilt/~154MS
-gimbals/1M
+gimbal/1MS
 gimcrack/514SM
 gimcrackery/1M
 gimlet/14GSMD
@@ -26550,9 +26561,6 @@ goose/~14DSMG
 gooseberry/1SM
 goosebumps/1M
 gooseneck/1MS
-goosestep/4S
-goosestepped/4
-goosestepping/4
 goosy/51MS
 gopher/~1SM
 gore/~14MGDS
@@ -28038,7 +28046,7 @@ historiography/~1M
 history/~1SM        # removed `4` verb sense is obsolte and interferes with heuristics
 histrionic/5SQ
 histrionics/1M
-hit/~4158SM
+hit/~415SM          # removed `8` pronoun sense is dialectal and interferes with heuristics
 hitch/~14UDSG
 hitch's
 hitcher/1MS
@@ -28148,7 +28156,7 @@ homebrew/1SM4DG
 homebuilt/5
 homecoming/~1SM
 homecooked/5
-homegrown/~5
+homegrown/~51MS
 homeland/~1MS
 homeless/~51MP
 homelessness/~1M
@@ -29064,7 +29072,7 @@ imperialism/~1M
 imperialist/~51SM
 imperialistic/5Q
 imperil/4GSLD
-imperilled/4!@@_
+imperilled/4!@_
 imperilling/41!@_
 imperilment/1M
 imperious/5PY
@@ -29959,6 +29967,7 @@ internationalize/4DSG
 internecine/5
 internee/1SM
 internet/~214
+internetwork/1MS4DG
 internist/1MS
 internment/~1M
 internship/~1MS
@@ -30685,6 +30694,7 @@ justifiably/Uj
 justification/~1M
 justified/~54U
 justify/~4XGDSN
+justifyingly/j
 justness/1M
 jut/41SM
 jute/~1M
@@ -31584,6 +31594,7 @@ levy/~41DRSMZG
 lewd/514RYPT
 lewdness/1M
 lex/~41MSDG
+lexeme/1MS
 lexer/1S
 lexical/~5
 lexicographer/1MS
@@ -31855,6 +31866,7 @@ lissom/5!_
 lissome/5
 list/~14MDNSJXG
 listed/~45U
+listeme/1MS
 listen/~41BMDRZG
 listener/~1M
 listeria/1
@@ -33714,6 +33726,7 @@ misapprehend/4GSD
 misapprehension/1MS
 misappropriate/4XDSGN
 misappropriation/~1M
+misbalance/4GDS
 misbegotten/541
 misbehave/4GDS
 misbehavior/1M
@@ -33977,6 +33990,7 @@ modish/5YP
 modishness/1M
 modular/~5
 modularisation/1!_
+modularity/1M
 modularization/1
 modulate/4CGNDS
 modulation/~1CM
@@ -34960,6 +34974,7 @@ neoconservative/~15SM
 neoconsolativism/1M
 neocortex/1
 neodymium/1M
+neofascist/51MS
 neoliberal/51SM
 neoliberalism/1M
 neolithic/~5
@@ -35211,7 +35226,7 @@ nitrocellulose/1M
 nitrogen/~1M
 nitrogenous/5
 nitroglycerin/1M
-nitroglycerine/1M!@@_
+nitroglycerine/1M!@_
 nitrous/~1M
 nitwit/1MS
 nix/~14GMDS
@@ -36049,6 +36064,7 @@ offish/5
 offline/~54
 offload/41SDG
 offprint/14SM
+offscreen/5j
 offset/~145MS
 offsetting/41
 offshoot/~1MS
@@ -39760,7 +39776,7 @@ prognosticator/1MS
 progovernment/5
 program/~14CAS
 programmable/~51MS
-programmatic/5
+programmatic/5Q
 programme/14BJDRSMZG!_
 programmed/~45AC
 programmer/~1MS
@@ -40367,6 +40383,7 @@ qualifier/~1SM
 qualify/~41EGXNDS
 qualitative/~51Y
 quality/~15SM
+qualitywise/j
 qualm/14MS
 qualmish/5
 quandary/1SM
@@ -41009,6 +41026,7 @@ reconnoiter/41DGS
 reconnoitre/41GDS!@_
 reconstruct/~4V
 reconstructed/~45U
+recontest/4SDG
 recorded/~45U
 recorder/~1MS
 recording/~41MS
@@ -41114,6 +41132,7 @@ reeve/~14G
 reexecute/4SDG
 reexport/41SDG
 ref/~14SZM
+refabricate/4GDS
 refactor/14DS
 refactoring/~14MS
 refashion/4DGS
@@ -41501,6 +41520,7 @@ repugnant/5
 repulsion/~1M
 repulsive/~5YP
 repulsiveness/1M
+repunch/4SDG
 repurchase/41GDS
 repurposing/41M
 reputability/1M
@@ -42137,6 +42157,7 @@ rotgut/1M
 rotisserie/14SM
 rotogravure/1MS
 rotor/~1SM
+rotoscope/1M4SDG
 rototiller/1MS
 rotted/54
 rotten/~5TPRY
@@ -43807,6 +43828,7 @@ shirtwaist/1MS
 shirty/5
 shit/~154SM6
 shitcoin/1MS6
+shite/1MS54DG6!
 shitfaced/56
 shitfest/1MS6
 shithead/1S6
@@ -45680,9 +45702,10 @@ stamina/~19M
 stammer/41ZGMDRS
 stammerer/1M
 stammering/14Y
-stamp/~14SMDRZG
+stamp/~14SMDRZ
 stampede/~14MGDS
 stamper/1M
+stamping/1MS
 stance/~14ISM
 stanch/541TGDRS
 stanchion/14SM
@@ -46405,6 +46428,7 @@ submit/~4AS
 submitted/~4A
 submitter/1
 submitting/~41A
+subnet/1MS4
 subnode/1SM
 subnormal/51
 suboptimal/5
@@ -46486,7 +46510,7 @@ subtly/~j
 subtopic/1SM
 subtotal/145SGMD
 subtotalled/4!@_
-subtotalling/4!@@_
+subtotalling/4!@_
 subtract/4GSD
 subtraction/~1SM
 subtrahend/1SM
@@ -46530,6 +46554,7 @@ suck/~14MDRZGS
 sucker/~14GMD
 suckle/14DSJG
 suckling/14M
+sucky/5
 sucrose/~1M
 suction/~14SMDG
 sudden/~51PY
@@ -47753,7 +47778,7 @@ terseness/1M
 tertiary/~51
 tessellate/54DSXGN
 tessellation/1M
-test/~14AKFCDGS
+test/~14AKCDGS
 test's/AFK
 testable/5CF
 testament/~14MS
@@ -49070,8 +49095,8 @@ trout/~14SM
 trove/1SM
 trow/41DSG
 trowel/14MDSG
-trowelled/4!@@_
-trowelling/4!@@_
+trowelled/4!@_
+trowelling/4!@_
 troy/~5S
 truancy/1M
 truant/514GMDS
@@ -49245,7 +49270,7 @@ turquoise/~15SM
 turret/~1SMD
 turtle/~14SMDG
 turtledove/1SM
-turtleneck/1SMD
+turtleneck/1SMD4G
 tush/~14MS
 tusk/~14MDS
 tussle/14DSMG
@@ -49619,6 +49644,7 @@ underpinned/4
 underpinning/41MS
 underplay/14DGS
 underpopulated/5
+underpower/4SDG
 underprepared/5
 underprivileged/~51
 underproduction/1M
@@ -50001,6 +50027,7 @@ upholstery/~1M
 upkeep/~14M
 upland/~15MS
 uplift/~41JSMDG
+uplink/1MS4DG
 upload/~41SDG
 upmarket/~54
 upmost/5
@@ -50913,6 +50940,7 @@ wallflower/14MS
 wallop/14MDSJG
 walloping/514M
 wallow/415MDSG
+wallowy/5
 wallpaper/~14SMDG
 wally/~154S
 walnut/~15MS
@@ -50978,6 +51006,7 @@ warmth/~1M
 warn/~4JDGS
 warning/~41M
 warp/~14MDGS
+warpage/1M
 warpaint/1
 warpath/1M
 warpaths/1
@@ -52287,6 +52316,7 @@ Bing/2M             # Microsoft product
 BitKeeper/1M        # version control
 BlasterHacks/SM
 Boxster/12MS        # car model
+Brembo/2MS          # brake company
 BurpSuite/21MS
 C++/2SM             # programming language
 CCP/2S              # Chinese Communist Party
@@ -52443,6 +52473,7 @@ Mockito/SM
 Molex/12MS          # Molex connector
 Mullenweg/M
 Munin/SM
+Mercielago/2SM
 N.S.A./2SM          # FIXME! elsewhere we have NSA
 N1/2M
 N2/2M
@@ -52505,6 +52536,7 @@ Qin/2SM
 RDBMS/12SM          # relational database management system
 RFID/21M            # radio frequency identification
 RISC/1M             # cpu architecture
+RJ45/1M             # ethernet connector
 RPC/21SM            # remote procedure call
 RPG/1MS             # role-playing game
 RTX/1SM
@@ -52568,6 +52600,7 @@ VFD/1MS             # vacuum fluorescent display
 VMware/21MS
 VPN/1SM             # virtual private network
 VR/2M
+VS Code/2M
 Vaadin/SM
 VaultPress/2M
 Vercel/M2           # cloud
@@ -52669,6 +52702,7 @@ all-rounder/1MS
 all-woman/5
 alma mater/1M
 anarcho-punk/15MS
+AND gate/1MS
 anti-Semite/1MS
 anti-Semitic/5
 anti-Semitism/1M
@@ -52682,6 +52716,7 @@ barn find/1MS
 beck and call/1
 bell-pull/1MS
 bench-warmer/1MS
+black magic/1M
 blow-up/51MS
 blue-blooded/5
 blue-collar/5
@@ -52712,6 +52747,7 @@ company-wide        # in Cambridge and OED dictionaries
 cost cutting/1M
 cost-effective/5
 cotter pin/1MS
+cross-border/5j
 cross section/1MS
 cross-threaded/5
 cul-de-sac/1MS
@@ -52755,6 +52791,7 @@ far right/1MS
 far-right/5
 fast track/1MS4DG
 feature-length/5
+fine-tune/4SDG
 first-hand/j
 first person/1M
 first-person/5
@@ -52763,6 +52800,7 @@ first-time/5
 flash point/1MS
 forward-thinking/5
 four-speed/1MS
+free-form/15
 front-line/5
 front man/1M
 front wheel/1MS5
@@ -52773,12 +52811,17 @@ full-time/5j
 go around/4
 go-around/1MS
 gold-plated/5
+goose-step/4S
+goose-stepped/4
+goose-stepping/4
 gray wolf/1M<
 gray wolves/9<
 Greco-Roman/5
 grey wolf/1M!@_
 grey wolves/9!@_
 ground-based/5
+GT R/1
+GT-R/1MS
 gung ho/5
 H-1B/1MS
 habeas corpus/1
@@ -52795,6 +52838,7 @@ hard code/4SDG
 hard-pressed/5
 hard right/1M
 hard-right/5
+hard-wire/4SDG
 head-scratcher/1MS
 heat-resistant/5
 heavy-duty/5
@@ -52818,6 +52862,7 @@ higher-up/1MS
 hissy fit/1MS
 holy moley
 holy moly
+home-grown/5
 home school/1MS4DG
 how come/j
 Humpty Dumpty/2M
@@ -52842,6 +52887,8 @@ last minute/15
 last-minute/5
 lead off/1M4
 lead-up/1MS
+leave over/4
+left over/4
 left-hand/5
 left-wing/5
 lesser-known/5
@@ -52877,11 +52924,13 @@ moon landing/1MS
 motor ship/1MS
 multiple-choice/5
 nail biter/1MS
+NAND gate/1MS
 nano-farad/1MS
 neo-Nazi/15SM
 neo-Nazism/1M
 no-op/1MS           # no operation
 non-Western/5
+NOR gate/1MS
 not-for-profit/51MS
 object-oriented/5
 odd-numbered/5
@@ -52910,6 +52959,7 @@ one-to-one/15
 one-way/5
 open source/1M
 open-source/54SDG
+OR gate/1MS
 OS X/2M             # before macOS
 out-and-out/5
 out of date
@@ -52926,6 +52976,7 @@ petty bourgeoisie/1M
 pick-me-up/1MS
 plan B/M
 play-by-play/51MS
+post-Covid/5
 post-truth/14M
 pre-COVID/5
 pro-democracy/5

@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.38.0",
+	"version": "0.39.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -177,6 +177,12 @@
 					"default": true,
 					"description": "When referring to North, Central, and South America, make sure to treat them as a proper noun."
 				},
+				"harper.linters.AmountsFor": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `amounts for` to either `amounts to` or `accounts for`"
+				},
 				"harper.linters.AnA": {
 					"scope": "resource",
 					"type": "boolean",
@@ -231,6 +237,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `anyhow`."
 				},
+				"harper.linters.Anyone": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `anyone`."
+				},
 				"harper.linters.Anywhere": {
 					"scope": "resource",
 					"type": "boolean",
@@ -248,6 +260,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects nonstandard `as early back as` to `as far back as`."
+				},
+				"harper.linters.AsOfLate": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `as of lately` to `as of late`."
 				},
 				"harper.linters.AsWell": {
 					"scope": "resource",
@@ -638,6 +656,24 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`."
+				},
+				"harper.linters.Everybody": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `everybody`."
+				},
+				"harper.linters.Everyday": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule tries to sort out confusing the adjective `everyday` and the adverb `every day`."
+				},
+				"harper.linters.Everyone": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `everyone`."
 				},
 				"harper.linters.Everywhere": {
 					"scope": "resource",
@@ -1467,6 +1503,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `notwithstanding`."
 				},
+				"harper.linters.Nowhere": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `nowhere`."
+				},
 				"harper.linters.NumberSuffixCapitalization": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1623,6 +1665,12 @@
 					"default": true,
 					"description": "Typo: `moot` (meaning debatable) is correct rather than `mute`."
 				},
+				"harper.linters.PointsOfView": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects pluralizing the wrong noun in `point of view`."
+				},
 				"harper.linters.PortAuPrince": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1676,6 +1724,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensure proper capitalization of proper nouns."
+				},
+				"harper.linters.RapidFire": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks to ensure writers hyphenate `rapid-fire`."
 				},
 				"harper.linters.RealTrouper": {
 					"scope": "resource",
@@ -1760,6 +1814,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `somehow`."
+				},
+				"harper.linters.Someone": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `someone`."
 				},
 				"harper.linters.SomewhatSomething": {
 					"scope": "resource",
