@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.42.0",
+	"version": "0.43.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -170,6 +170,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the missing article after `after while` or `after awhile`, forming `after a while`."
+				},
+				"harper.linters.AllOfASudden": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `all of the sudden` to `all of a sudden`."
 				},
 				"harper.linters.AlzheimersDisease": {
 					"scope": "resource",
@@ -1371,17 +1377,17 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `likewise`."
 				},
-				"harper.linters.LinkingVerbs": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": false,
-					"description": "Linking verbs connect nouns to other ideas. Make sure you do not accidentally link words that aren't nouns."
-				},
 				"harper.linters.LongSentences": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "This rule looks for run-on sentences, which can make your work harder to grok."
+				},
+				"harper.linters.LowHangingFruit": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects non-standard variants of `low-hanging fruit`."
 				},
 				"harper.linters.Malaysia": {
 					"scope": "resource",
