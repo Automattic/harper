@@ -18,14 +18,14 @@ pub enum DiagnosticSeverity {
 
 impl DiagnosticSeverity {
     /// Converts `self` to the equivalent LSP type.
-    pub fn to_lsp(self) -> tower_lsp::lsp_types::DiagnosticSeverity {
+    pub fn to_lsp(self) -> tower_lsp_server::lsp_types::DiagnosticSeverity {
         match self {
-            DiagnosticSeverity::Error => tower_lsp::lsp_types::DiagnosticSeverity::ERROR,
-            DiagnosticSeverity::Warning => tower_lsp::lsp_types::DiagnosticSeverity::WARNING,
+            DiagnosticSeverity::Error => tower_lsp_server::lsp_types::DiagnosticSeverity::ERROR,
+            DiagnosticSeverity::Warning => tower_lsp_server::lsp_types::DiagnosticSeverity::WARNING,
             DiagnosticSeverity::Information => {
-                tower_lsp::lsp_types::DiagnosticSeverity::INFORMATION
+                tower_lsp_server::lsp_types::DiagnosticSeverity::INFORMATION
             }
-            DiagnosticSeverity::Hint => tower_lsp::lsp_types::DiagnosticSeverity::HINT,
+            DiagnosticSeverity::Hint => tower_lsp_server::lsp_types::DiagnosticSeverity::HINT,
         }
     }
 }
