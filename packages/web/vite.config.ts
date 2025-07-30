@@ -156,6 +156,10 @@ export default defineConfig({
 									to: '/docs/contributors/wordpress',
 								},
 								{
+									title: 'Obsidian',
+									to: '/docs/contributors/obsidian',
+								},
+								{
 									title: 'Reviewing Pull Requests',
 									to: '/docs/contributors/review',
 								},

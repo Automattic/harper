@@ -150,6 +150,11 @@ impl SequencePattern {
         self
     }
 
+    /// Shorthand for [`Self::then_whitespace`].
+    pub fn t_ws(self) -> Self {
+        self.then_whitespace()
+    }
+
     /// Match against one or more whitespace tokens.
     pub fn then_whitespace(mut self) -> Self {
         self.token_patterns.push(Box::new(WhitespacePattern));
