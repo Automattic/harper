@@ -137,6 +137,15 @@ Suggest:
 
 
 
+Lint:    Style (63 priority)
+Message: |
+     277 | It is said that she died of a broken heart.
+         |                     ^~~~~~~~~ The word `of` is not needed here.
+Suggest:
+  - Replace with: “died a”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      280 | Welcome to the historic town of Harwich.

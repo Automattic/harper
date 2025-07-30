@@ -516,6 +516,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+     243 | all sorts of things, and she, oh! she knows such a very little! Besides, she’s
+         |                                   ^ This sentence does not start with a capital letter
+Suggest:
+  - Replace with: “S”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      249 | Rome—no, that’s all wrong, I’m certain! I must have been changed for Mabel! I’ll
@@ -1715,17 +1724,6 @@ Message: |
     1499 | March Hare,) “—it was at the great concert given by the Queen of Hearts, and I
 Suggest:
   - Replace with: “teaspoon”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    1545 | feeble voice: “I heard every word you fellows were saying.”
-         |                                   ^~~ The possessive version of this word is more common in this context.
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
 
 
 

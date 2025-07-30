@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.33.0",
+	"version": "0.34.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -1435,6 +1435,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects two common malapropisms of `once in a while`."
+				},
+				"harper.linters.OneAndTheSame": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This linter flags instances of the nonstandard phrase `one in the same`. The correct, more accepted form is `one and the same`"
 				},
 				"harper.linters.OperativeSystem": {
 					"scope": "resource",

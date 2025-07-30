@@ -316,6 +316,16 @@ Suggest:
 
 
 
+Lint:    Style (63 priority)
+Message: |
+      94 | many years. A first approximation was done with a program by Greene and Rubin,
+      95 | which consisted of a huge handmade list of what categories could co-occur at
+         |       ^~~~~~~~~~~~~~ The word `of` is not needed here.
+Suggest:
+  - Replace with: “consisted a”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       98 | and corrected by hand, and later users sent in errata so that by the late 70s
