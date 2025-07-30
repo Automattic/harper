@@ -323,7 +323,7 @@ bump-versions: update-vscode-linters
 
   cargo ws version --no-git-push --no-git-tag --force '*'
 
-  HARPER_VERSION=$(tq --file harper-core/Cargo.toml .package.version)
+  HARPER_VERSION=$(tq --raw --file harper-core/Cargo.toml .package.version)
 
   cd "{{justfile_directory()}}/packages/harper.js"
 
