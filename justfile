@@ -37,6 +37,14 @@ test-harperjs: build-harperjs
   cd "{{justfile_directory()}}/packages/harper.js/examples/commonjs-simple"
   pnpm start
 
+test-obsidian: build-obsidian
+  #!/bin/bash
+  set -eo pipefail
+
+  pnpm install
+  cd "{{justfile_directory()}}/packages/obsidian-plugin"
+  pnpm test
+
 dev-wp: build-harperjs
   #! /bin/bash
 
@@ -232,7 +240,7 @@ dogfood:
   done
 
 # Test everything.
-test: test-vscode test-harperjs
+test: test-vscode test-harperjs test-obsidian
   cargo test
 
 # Use `harper-cli` to parse a provided file and print out the resulting tokens.

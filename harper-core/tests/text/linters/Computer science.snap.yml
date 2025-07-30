@@ -664,9 +664,9 @@ Message: |
      182 | Newell and Herbert A. Simon argued in 1975,
          |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Ax”
-  - Replace with: “A”
+  - Replace with: “Av”
   - Replace with: “Ab”
+  - Replace with: “Ac”
 
 
 
@@ -795,7 +795,7 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Hi”
+  - Replace with: “Hp”
   - Replace with: “H”
   - Replace with: “He”
 
@@ -1010,8 +1010,8 @@ Message: |
          |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
   - Replace with: “Rm”
-  - Replace with: “R”
   - Replace with: “Re”
+  - Replace with: “RC”
 
 
 
@@ -1021,8 +1021,8 @@ Message: |
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
   - Replace with: “Pp”
-  - Replace with: “Pg”
-  - Replace with: “Pi”
+  - Replace with: “P”
+  - Replace with: “Pa”
 
 
 

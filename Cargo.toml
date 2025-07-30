@@ -10,4 +10,6 @@ opt-level = 1
 codegen-units = 1
 lto = true
 opt-level = 3
-strip = true
+# Stripping binaries triggers a bug in `wasm-opt`.
+# Disable it for now.
+# strip = true

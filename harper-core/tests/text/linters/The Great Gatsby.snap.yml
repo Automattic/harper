@@ -3,7 +3,7 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |    ^~ Did you mean to spell `F.` this way?
 Suggest:
-  - Replace with: “Fa”
+  - Replace with: “F”
   - Replace with: “Ff”
   - Replace with: “Fr”
 
@@ -875,7 +875,7 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                         ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -909,7 +909,7 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -1000,7 +1000,7 @@ Message: |
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
   - Replace with: “Bk”
 
 
@@ -1103,9 +1103,9 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “Dc”
   - Replace with: “Dd”
-  - Replace with: “Do”
+  - Replace with: “D”
+  - Replace with: “Db”
 
 
 
@@ -1274,7 +1274,7 @@ Message: |
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
   - Replace with: “Bk”
 
 
@@ -2036,7 +2036,7 @@ Message: |
 Suggest:
   - Replace with: “W12's”
   - Replace with: “WAL's”
-  - Replace with: “WNW's”
+  - Replace with: “WIP's”
 
 
 
@@ -2287,8 +2287,8 @@ Message: |
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
   - Replace with: “Rm”
-  - Replace with: “R”
   - Replace with: “Re”
+  - Replace with: “RC”
 
 
 
@@ -2298,8 +2298,8 @@ Message: |
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
   - Replace with: “Pp”
-  - Replace with: “Pg”
-  - Replace with: “Pi”
+  - Replace with: “P”
+  - Replace with: “Pa”
 
 
 
@@ -2363,8 +2363,8 @@ Message: |
          |                            ^~ Did you mean to spell `S.` this way?
 Suggest:
   - Replace with: “Sf”
+  - Replace with: “Sh”
   - Replace with: “So”
-  - Replace with: “Sq”
 
 
 
@@ -2374,7 +2374,7 @@ Message: |
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
   - Replace with: “Bk”
 
 
@@ -2385,9 +2385,9 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Ax”
-  - Replace with: “A”
+  - Replace with: “Av”
   - Replace with: “Ab”
+  - Replace with: “Ac”
 
 
 
@@ -2466,8 +2466,8 @@ Message: |
          |                                                  ^~ Did you mean to spell `S.` this way?
 Suggest:
   - Replace with: “Sf”
+  - Replace with: “Sh”
   - Replace with: “So”
-  - Replace with: “Sq”
 
 
 
@@ -2509,9 +2509,9 @@ Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
-  - Replace with: “Gt”
-  - Replace with: “G”
+  - Replace with: “Go”
   - Replace with: “Gr”
+  - Replace with: “Gs”
 
 
 
@@ -2546,7 +2546,7 @@ Message: |
 Suggest:
   - Replace with: “Dab”
   - Replace with: “Dad”
-  - Replace with: “Dag”
+  - Replace with: “Dam”
 
 
 
@@ -2591,7 +2591,7 @@ Message: |
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
   - Replace with: “Bk”
 
 
@@ -2602,7 +2602,7 @@ Message: |
          |                                         ^~ Did you mean to spell `De` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
-  - Replace with: “Dc”
+  - Replace with: “Db”
   - Replace with: “Dd”
   - Replace with: “Deb”
 
@@ -2755,8 +2755,8 @@ Message: |
          |             ^~ Did you mean to spell `S.` this way?
 Suggest:
   - Replace with: “Sf”
+  - Replace with: “Sh”
   - Replace with: “So”
-  - Replace with: “Sq”
 
 
 
@@ -2812,9 +2812,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “Lg”
+  - Replace with: “Lb”
+  - Replace with: “L”
   - Replace with: “La”
-  - Replace with: “LC”
 
 
 
@@ -2935,8 +2935,8 @@ Message: |
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
   - Replace with: “Pp”
-  - Replace with: “Pg”
-  - Replace with: “Pi”
+  - Replace with: “P”
+  - Replace with: “Pa”
 
 
 
@@ -4957,7 +4957,7 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                     ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -5035,7 +5035,7 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                       ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -6239,9 +6239,9 @@ Message: |
     5122 | ghost of a superior “Hm!”
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H”
-  - Replace with: “Ham”
-  - Replace with: “He”
+  - Replace with: “H'm”
+  - Replace with: “Ha”
+  - Replace with: “Hem”
 
 
 
@@ -6301,7 +6301,7 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -6739,7 +6739,7 @@ Message: |
     5412 | “If he’d of lived, he’d of been a great man. A man like James J. Hill. He’d of
          |                                                               ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jr”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -6768,7 +6768,7 @@ Message: |
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
   - Replace with: “Bk”
 
 
@@ -6778,7 +6778,7 @@ Message: |
     5455 | and I’m sort of helpless without them. My address is care of B. F.———”
          |                                                                 ^~ Did you mean to spell `F.` this way?
 Suggest:
-  - Replace with: “Fa”
+  - Replace with: “F”
   - Replace with: “Ff”
   - Replace with: “Fr”
 
@@ -7171,7 +7171,7 @@ Message: |
 Suggest:
   - Replace with: “Ea”
   - Replace with: “Ed”
-  - Replace with: “Eel”
+  - Replace with: “En”
 
 
 

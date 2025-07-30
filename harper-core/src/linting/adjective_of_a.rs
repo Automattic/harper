@@ -43,6 +43,7 @@ const FALSE_POSITIVES: &[&str] = &[
     "multiple",
     "one",
     "part",
+    "perspective",
     "potential",
     "precision",
     "red",
@@ -54,6 +55,7 @@ const FALSE_POSITIVES: &[&str] = &[
     "something",
     "sound",
     "top",
+    "waste",
 ];
 
 fn is_false_positive(chars: &[char]) -> bool {
@@ -564,6 +566,15 @@ mod tests {
     fn dont_flag_illustrative() {
         assert_lint_count(
             "Yet, the fact that they clearly give a one-sided account of most of their case studies is illustrative of a bias.",
+            AdjectiveOfA,
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_perspective() {
+        assert_lint_count(
+            "I always assess software by looking at it from the perspective of a new user.",
             AdjectiveOfA,
             0,
         );

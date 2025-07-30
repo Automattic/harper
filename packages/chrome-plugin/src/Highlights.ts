@@ -5,6 +5,15 @@ import h from 'virtual-dom/h';
 import patch from 'virtual-dom/patch';
 import { type LintBox, isBoxInScreen } from './Box';
 import RenderBox from './RenderBox';
+import {
+	getLexicalRoot,
+	getMediumRoot,
+	getNotionRoot,
+	getQuillJsRoot,
+	getShredditComposerRoot,
+	getSlateRoot,
+	getTrixRoot,
+} from './editorUtils';
 import lintKindColor from './lintKindColor';
 
 /** A class that renders highlights to a page and nothing else. Uses a virtual DOM to minimize jitter. */
@@ -141,71 +150,6 @@ function getInitialContainingRect(el: HTMLElement): DOMRect | null {
 	}
 
 	return null;
-}
-
-function findAncestor(
-	el: HTMLElement,
-	predicate: (el: HTMLElement) => boolean,
-): HTMLElement | null {
-	let node = el.parentElement;
-
-	while (node != null) {
-		if (predicate(node)) {
-			return node;
-		}
-
-		node = node.parentElement;
-	}
-
-	return null;
-}
-
-/** Determines if a given node is a child of a Lexical editor instance.
- * If so, returns the root node of that instance. */
-function getLexicalRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(
-		el,
-		(node: HTMLElement) => node.getAttribute('data-lexical-editor') == 'true',
-	);
-}
-
-/** Determines if a given node is a child of a Trix editor instance.
- * If so, returns the root node of that instance. */
-function getTrixRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.nodeName == 'TRIX-EDITOR');
-}
-
-/** Determines if a given node is a child of a Reddit composer instance.
- * If so, returns the root node of that instance. */
-function getShredditComposerRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.nodeName == 'SHREDDIT-COMPOSER');
-}
-
-/** Determines if a given node is a child of a Quill.js editor instance.
- * If so, returns the root node of that instance. */
-function getQuillJsRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.classList.contains('ql-container'));
-}
-
-/** Determines if a given node is a child of a Slate editor instance.
- * If so, returns the root node of that instance. */
-function getSlateRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.getAttribute('data-slate-editor') == 'true');
-}
-
-/** Determines if a given node is a child of a Medium.com editor instance.
- * If so, returns the root node of that instance. */
-function getMediumRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(
-		el,
-		(node: HTMLElement) => node.nodeName == 'MAIN' && location.hostname == 'medium.com',
-	);
-}
-
-/** Determines if a given node is a child of a Notion editor instance.
- * If so, returns the root node of that instance. */
-function getNotionRoot(el: HTMLElement): HTMLElement | null {
-	return document.getElementById('notion-app');
 }
 
 /**
