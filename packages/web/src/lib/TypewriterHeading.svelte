@@ -26,13 +26,4 @@ onMount(() => {
 onDestroy(() => typed?.destroy());
 </script>
 
-<h2 class="typed-heading text-center"><span bind:this={el}></span></h2>
-
-<style>
-	/* All styles are scoped to this component */
-	.typed-heading {
-		font-size: 2rem;
-		font-weight: 600;
-		white-space: nowrap;
-	}
-</style>
+<h2 class="text-center text-lg md:text-2xl lg:text-4xl"><span bind:this={el}></span></h2>

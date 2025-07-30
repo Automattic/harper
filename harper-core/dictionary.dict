@@ -1,4 +1,4 @@
-52700
+52720
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -16,6 +16,7 @@ ABI/1MS             # application binary interface, cf. API
 ABM/21SM
 ABS/12
 AC/152M
+ACL/1MS             # anterior cruciate ligament
 ACLU/2M
 ACT/21
 ACTH/1M
@@ -56,14 +57,14 @@ ARC/125
 ASAP/               # as soon as possible
 ASCII/2SM
 ASIO/2M             # agency
-ASML/2M             # company
 ASL/2M              # American Sign Language
+ASML/2M             # company
 ASPCA/2
 AST/1MS             # abstract syntax tree
 ATM/1MS             # automated teller machine
 ATP/21M
-ATX/1M              # old motherboard std
 ATV/21              # all-terrain vehicle
+ATX/1M              # old motherboard std
 AV/512
 AVI/2               # media format
 AWACS/1M
@@ -844,8 +845,8 @@ BITNET/2
 BJJ/1M
 BLT/1SM
 BM/124M
-BMX/1MS
 BMW/214MS
+BMX/1MS
 BO/124
 BP/215M
 BPOE/2
@@ -1663,12 +1664,12 @@ CNCing/14           # present, gerund
 CNN/21M             # media company
 CNS/1M
 CO/214M
-CO₂/1
 COBOL/2SM           # programming language
 COD/21
 COL/21
 COLA/12
 COVID/1             # virus
+CO₂/1
 CPA/1M
 CPI/12M
 CPO/1
@@ -2067,8 +2068,8 @@ Cheshire/2M
 Chester/21M
 Chesterfield/21M
 Chesterton/2M
-Chevalier/M
 Chev/12MS
+Chevalier/M
 Cheviot/1M
 Chevrolet/12MS
 Chevron/2M
@@ -2105,9 +2106,9 @@ Chirico/2M
 Chiron/2M
 Chisholm/2M
 Chisinau/2M
+Chișinău/2M
 Chittagong/2M
 Chivas/M
-Chișinău/2M
 Chloe/2M
 Choctaw/251SM
 Chomsky/2M
@@ -4485,8 +4486,8 @@ Hershel/2M
 Hershey/2M
 Hertz/21M
 Hertzsprung/2M
-Herzegovina/2M
 Herz/2M             # company
+Herzegovina/2M
 Herzl/2M
 Heshvan/2M
 Hesiod/2M
@@ -6157,6 +6158,7 @@ MBA/1M
 MC/142
 MCI/21M
 MD/215M
+MD5/1M
 MDF/1M              # medium-density fiberboard
 MDT/12
 ME/21
@@ -6174,6 +6176,7 @@ MIT/2M              # a university
 MLK/2M              # Martin Luther King
 MM/12
 MMA/1M              # mixed martial arts
+MMU/1MS             # memory management unit
 MN/21
 MO/215
 MOOC/1
@@ -8427,6 +8430,7 @@ Ramayana/2M
 Rambo/21M
 Ramirez/2M
 Ramiro/M
+Rammstein/2M        # band
 Ramon/M
 Ramona/2M
 Ramos/2M
@@ -8434,7 +8438,6 @@ Ramsay/2M
 Ramses/2M
 Ramsey/2M
 Ramstein/2M         # air base
-Rammstein/2M        # band
 Rand/12M
 Randal/2M
 Randall/2M
@@ -8873,10 +8876,10 @@ SVN/2M              # version control
 SW/2154M
 SWAK/
 SWAT/1
+SaaS/1M             # software as a service
 Saab/21M            # car brand
 Saar/2M
 Saarinen/M
-SaaS/1M             # software as a service
 Saatchi/2M
 Sabbath/1M
 Sabbaths/1
@@ -12525,6 +12528,7 @@ antiabortion/5
 antiabortionist/1MS
 antiaircraft/51
 antibacterial/51MS
+antiballistic/5
 antibiotic/~15MS
 antibody/~1SM
 antic/514MS
@@ -12872,7 +12876,7 @@ architect/~14SMDG
 architectonic/51S
 architectonics/1M
 architectural/~5Y
-architecture/~1MS
+architecture/~1MSA
 architrave/1SM
 archival/~51
 archive/~14DSMG
@@ -13857,6 +13861,7 @@ barbie/~1S
 barbiturate/1SM
 barbwire/1M
 barcarole/1SM
+barcode/1MS
 bard/~14SM
 bardic/~51
 bare/~514DRSPYG
@@ -14561,17 +14566,17 @@ biochemistry/~1M
 biodegradability/1M
 biodegrade/4DSGB
 biodiversity/~1M
-biohazard/1MS
 bioethics/~1M
 biofeedback/1M
 biofilm/1MS
-bioinformatics/1M
 biog/1
 biographer/~1SM
 biographic/5
 biographical/~5Y
 biography/~14SM
 biohazard/1MS
+biohazard/1MS
+bioinformatics/1M
 biol/1
 biologic/51
 biological/~51Y
@@ -15461,6 +15466,7 @@ bricklayer/1MS
 bricklaying/1M
 brickwork/~1M
 brickyard/~1S
+bricolage/1M
 bridal/~15SM
 bride/~14SM
 bridegroom/~1SM
@@ -16723,10 +16729,10 @@ centerfold/1MS
 centerpiece/~1MS
 centigrade/51
 centigram/1SM
-centiliter/1MS
+centiliter/1MS<
 centilitre/1MS!@
 centime/1SM
-centimeter/1MS
+centimeter/1MS<
 centimetre/1MS!@
 centipede/1SM
 central/~51SMY
@@ -17154,6 +17160,7 @@ chinwag/14S
 chip/~14SM
 chipboard/1
 chipmaker/1MS
+chipmaking/1M
 chipmunk/14SM
 chipolata/1S
 chipped/45
@@ -17428,6 +17435,7 @@ civilise/4GDS!
 civilised/45U!
 civility/~1ISM
 civilization/~12MS
+civilizational/5
 civilize/4GDS
 civilized/~54U
 civvies/1M
@@ -17526,9 +17534,9 @@ claw/~14CSGD
 claw's
 clay/~14M
 clayey/5
-claymation/1M
 clayier/5
 clayiest/5
+claymation/1M
 clean/~514BJPZTGDRYS
 cleaner/~15M
 cleaning/~41M
@@ -17595,6 +17603,7 @@ climatologist/1SM
 climatology/1M
 climax/~14MDSG
 climb/~41SMDRZGB
+climbdown/1MS
 climber/~14M
 climbing/~145M
 clime/14SM
@@ -17714,7 +17723,7 @@ clumsy/~51TRP
 clung/45
 clunk/14SMDRZG
 clunker/1M
-clunky/5TR
+clunky/5TRP
 cluster/~14MDSG
 clutch/~415GMDS
 clutter/~14UDSG
@@ -19144,7 +19153,7 @@ costume/~14MZGDRS
 costumer/1M
 costumier/1S
 costumiers/1!@
-cosy/514RSMTP!
+cosy/514RSMTPU!
 cot/~1SM
 cotangent/1MS
 cote/~14MS
@@ -19203,8 +19212,8 @@ counterbalance/14MGDS
 counterblast/1S
 counterclaim/14GSMD
 counterclockwise/~5
-counterculture/~1SM
 countercultural/5Y
+counterculture/~1SM
 countered/~4
 counterespionage/1M
 counterexample/1S
@@ -19353,7 +19362,7 @@ cozen/4SDG
 cozenage/1M
 cozily/j
 coziness/1M
-cozy/514RSMTP
+cozy/514RSMTPU
 cpd/~1
 cpl/~1
 cps/~1
@@ -20252,14 +20261,14 @@ decidable/5U
 decide/~4BZGDRS
 decided/~451Y
 deciduous/~5
-deciliter/1MS
+deciliter/1MS<
 decilitre/1MS!@
 decimal/~154SM
 decimalisation/1!
 decimalization/1
 decimate/41DSGN
 decimation/1M
-decimeter/1MS
+decimeter/1MS<
 decimetre/1MS!@
 decipherable/5UI
 decision/~14IM
@@ -21264,9 +21273,9 @@ disillusionment/~1M
 disinfectant/51MS
 disinfection/1M
 disinform/4SDG
+disinhibit/4SDG
 disinterested/~5PY
 disinterestedness/1M
-disinhibit/4SDG
 disjointed/~5YP
 disjointedness/1M
 disjunctive/51
@@ -21752,6 +21761,7 @@ dowry/~14SM
 dowse/41DRSZG
 dowser/1M
 doxology/1SM
+doxx/4DSG
 doyen/1SM
 doyenne/1MS
 doz/1XGDNS
@@ -22144,9 +22154,9 @@ dystopia/1
 dystopian/~5
 dz/14
 e/~18FDST
-e.g./~1
 e'en/
 e'er/
+e.g./~1
 eBay/24M
 eMusic/M
 eSIM/1MS
@@ -22444,9 +22454,10 @@ elderberry/1SM
 eldercare/1M
 eldest/~51
 eldritch/~5
-elect/~145ASDGV
+elect/~145ASGV
 elect's
 electable/51
+elected/451MS
 election/~1AMS
 electioneer/4DGS
 elective/~51MS
@@ -22503,7 +22514,7 @@ elegiacal/5
 elegy/~1SM
 elem/1
 element/~14MS
-elemental/~51Y
+elemental/~51YMS
 elementary/~51
 elephant/~1SM
 elephantiasis/1M
@@ -23621,8 +23632,8 @@ experiencing/~41
 experiential/~5
 experiment/~14MDRSZG
 experimental/~51Y
-experimentation/~1M
 experimentalist/1MS
+experimentation/~1M
 experimenter/1M
 expert/~51SPMY
 expertise/~14M
@@ -26116,7 +26127,7 @@ gigaflop/1MS
 gigagram/1S
 gigahertz/1M
 gigajoule/1S
-gigameter/1S
+gigameter/1S<
 gigametre/1S!@
 gigantic/~5Q
 gigapascal/1S
@@ -27227,6 +27238,7 @@ handmaiden/1M
 handout/15SM
 handover/~1S
 handpick/4GDS
+handpiece/1MS
 handprint/1SM
 handrail/1MS
 handsaw/1SM
@@ -27593,7 +27605,7 @@ heckling/41M
 hectare/~1SM
 hectic/51Q
 hectogram/1SM
-hectometer/1MS
+hectometer/1MS<
 hectometre/1MS!@
 hector/~14SMDG
 hedge/~14DRSMZG
@@ -27702,6 +27714,7 @@ henchman/~1M
 henchmen/~9
 henna/154SMDG
 henpeck/41GSD
+hentai/1MS
 hep/~154
 heparin/1M
 hepatic/~51
@@ -27792,6 +27805,7 @@ heterodox/5
 heterodoxy/1M
 heterogeneity/1M
 heterogeneous/~5Y
+heteronormative/5
 heterosexual/~51MYS
 heterosexuality/1M
 heuristic/51MSQ
@@ -28122,14 +28136,14 @@ honeysuckle/1SM
 honk/41MDRSZG
 honker/1M
 honky/~1SM
-honor/~14ESGMDB
-honorableness/1M
-honorably/Ej
+honor/~14ESGMDB<
+honorableness/1M<
+honorably/Ej<
 honorarily/j
 honorarium/1MS
 honorary/~51
-honoree/1SM
-honorer/1SM
+honoree/1SM<
+honorer/1SM<
 honorific/~15MS
 honour/14EMDSBG!@
 honourableness/1M!@
@@ -29516,7 +29530,7 @@ initiative/~51SM
 initiator/~1MS
 initiatory/51
 initio
-inject/~4SDG
+inject/~4SDGB
 injection/~1SM
 injector/1SM
 injunctive/15
@@ -29922,6 +29936,7 @@ intimation/1M
 intimidate/~4GNDS
 intimidating/~45YU
 intimidation/~1M
+intimidator/1MS
 intonation/~1SM
 intoxicant/15SM
 intoxicate/45DSGN
@@ -30375,15 +30390,15 @@ jinni/1M
 jinrikisha/1SM
 jinx/14MDSG
 jit/4S
-jitted/4
-jitting/4
 jitney/~1SM
+jitted/4
 jitterbug/14MS
 jitterbugged/4
 jitterbugger/1M
 jitterbugging/4
 jitters/14M
 jittery/5RT
+jitting/4
 jive/~41MGDS
 job/~14SM
 jobbed/4
@@ -30719,9 +30734,9 @@ kilocycle/1SM
 kilogram/~1SM
 kilohertz/1M
 kilojoule/1S
-kiloliter/1MS
+kiloliter/1MS<
 kilolitre/1MS!@
-kilometer/~1MS
+kilometer/~1MS<
 kilometre/1MS!@
 kilonewton/1S
 kilopascal/1S
@@ -32219,6 +32234,7 @@ mRNA/1M
 ma/~1SMH
 ma'am/14
 mac/~1SGMD
+macOS/2SM
 macabre/~5
 macadam/14M
 macadamia/1SM
@@ -32243,7 +32259,6 @@ macho/~51M
 mackerel/~1SM
 mackinaw/1SM
 mackintosh/~1MS
-macOS/2SM
 macrame/14M
 macro/~51SM
 macroaggregate/1M
@@ -32836,10 +32851,10 @@ maxillary/~51
 maxim/~1SM
 maxima/~1
 maximal/~51Y
-maximisation/1M!
-maximise/4GDS!
 maximalism/1M
 maximalist/15MS
+maximisation/1M!
+maximise/4GDS!
 maximization/1M
 maximize/~4GDS
 maximum/~15SM
@@ -32986,7 +33001,7 @@ megalomania/1M
 megalomaniac/15SM
 megalomaniacal/5
 megalopolis/~1MS
-megameter/1S
+megameter/1S<
 megametre/1S!@
 megapascal/1S
 megaphone/14DSMG
@@ -33316,7 +33331,7 @@ micromanage/4ZGDRSL
 micromanagement/1M
 micromanager/1M
 micrometeorite/1SM
-micrometer/1MS
+micrometer/1MS<
 micrometre/1MS!@
 micron/~1MS
 microorganism/1MS
@@ -33442,9 +33457,9 @@ milliamp/1MS
 milliard/MS
 millibar/1MS
 milligram/1MS
-milliliter/1MS
+milliliter/1MS<
 millilitre/1MS!@
-millimeter/~1MS
+millimeter/~1MS<
 millimetre/1MS!@
 milliner/14MS
 millinery/1M
@@ -34161,6 +34176,7 @@ motherhood/~1M
 motherland/~1MS
 motherless/5
 motherliness/1M
+motherload/1MS
 mothership/1MS
 moths/~14
 motif/~1SM
@@ -34493,6 +34509,7 @@ mutate/4XGNVDS
 mutation/~1M
 mutational/5
 mute/~514MYTGDRSPB
+mutedness/1M
 muteness/1M
 mutilate/45DSGNX
 mutilation/~1MS
@@ -34595,7 +34612,7 @@ nanny/~14SM
 nanobot/1S
 nanocurie/1MS
 nanogram/1SM
-nanometer/1S
+nanometer/1S<
 nanometre/1S!@
 nanoprocessor/1SM
 nanosecond/1SM
@@ -34651,6 +34668,7 @@ nasturtium/1SM
 nasty/~51PTR
 natal/~5
 natalism/1KM
+natalist/1SM
 natch/1
 nation/~1MS
 national/~51MYS
@@ -35703,10 +35721,10 @@ objectionably/j
 objectivation/1M
 objective/~51SMYP
 objectiveness/1M
-objectivize/4DSG
 objectivism/~1M
 objectivity/~1M
 objectivization/1M
+objectivize/4DSG
 objector/~1MS
 objurgate/4XGNDS
 objurgation/1M
@@ -38493,6 +38511,7 @@ plea/~14MS
 plead/~4DRZGSJ
 pleader/1M
 pleading/~145MY
+pleasance/1M
 pleasant/~51UTYP
 pleasanter/5
 pleasantness/1UM
@@ -39336,7 +39355,7 @@ preshrink/4GS
 preshrunk/4
 preside/~4GDS
 presidency/~1SM
-president/~154MS
+president/~14MS     # removed `5` adj. sense archaic, interferes with heuristics
 presidential/~5
 presidium/~1M
 presort/4DGS
@@ -39664,6 +39683,7 @@ promptness/1M
 promulgate/4GNDS
 promulgation/~1M
 promulgator/1MS
+pronatalist/1MS5
 prone/~54P
 proneness/1M
 prong/~14MDS
@@ -40842,6 +40862,7 @@ reconcile/~4GDSB
 reconciliation/~1S
 recondite/514SM
 reconfiguration/1
+reconfigure/4GDS
 reconfigure/4D
 reconnaissance/~1MS
 reconnoiter/41DGS
@@ -41240,6 +41261,7 @@ rentier/1MS
 renunciation/~1SM
 reopen/~4SDG
 reorg/14MDSG
+reorientate/4GDSN
 rep/~14SM
 repaint/41GDS
 repair/~41BZR
@@ -41300,7 +41322,7 @@ reportage/1M
 reported/~4Y
 reportorial/5
 reposeful/5
-reposition/41
+reposition/41DGS
 repository/~1SM
 repost/14DGMS
 reprehend/4DGS
@@ -41526,6 +41548,7 @@ retrace/41GDS
 retract/~41DBG
 retractile/5
 retraction/~1S
+retrade/4SDG
 retrain/41DGS
 retread/41D
 retrenchment/1MS
@@ -42533,8 +42556,8 @@ scaffold/~14SMG
 scaffolding/~14M
 scag/14S
 scagged/4
-scalable/5U
 scalability/1
+scalable/5U
 scalar/~51S
 scalawag/1MS
 scald/415MDSG
@@ -43009,10 +43032,11 @@ sectary/1SM
 section/~14AESM
 sectional/~51MS
 sectionalism/1M
-sectioned/4
+sectioned/41
 sectioning/41
 sector/~1ESM
 sectoral/5
+sectored/5
 secular/~51
 secularisation/1M!
 secularise/4DSG!
@@ -45081,6 +45105,8 @@ speeding/~451M
 speedo/1MS
 speedometer/1MS
 speedrun/14MS
+speedrunner/1MS
+speedrunning/1M
 speedster/1SM
 speedup/1MS
 speedway/~1SM
@@ -45569,7 +45595,7 @@ stat/~514MS
 state/~14DRSMYGNLX
 statecraft/~1M
 stated/~45U
-stateful/5Y
+stateful/5YP
 statehood/~1M
 statehouse/1MS
 stateless/5P
@@ -46120,12 +46146,12 @@ style/~14ADSG
 style's
 stylesheet/1SM
 styli/1
+stylisation/SM!
+stylise/4DSG!
 stylise/4DSG!
 stylish/~5PY
 stylishness/1M
 stylist/~1SM
-stylisation/SM!
-stylise/4DSG!
 stylistic/~5SQ
 stylization/SM
 stylize/4DSG
@@ -46142,6 +46168,7 @@ subaltern/51MS
 subaqua/5
 subarctic/~251
 subarea/1MS
+subassembly/1MS
 subatomic/5
 subbasement/1SM
 subbed/4
@@ -47342,6 +47369,7 @@ tektite/1SM
 tel/~1
 telecast/~41SZGMR
 telecaster/1M
+telecom/1MS
 telecommunication/~1MS
 telecommunications/~1M
 telecommute/41ZGDRS
@@ -48073,6 +48101,7 @@ titleholder/1MS
 titlist/1MS
 titmice/9
 titmouse/1M
+titration/1MS
 titter/41SGMD
 tittle/14SM
 titty/1S
@@ -49304,6 +49333,7 @@ uncontrollably/j
 uncontroversial/~5
 uncool/5
 uncooperative/5
+uncorrupted/5
 uncouth/5Y
 uncredited/5
 uncrewed/5
@@ -49487,6 +49517,7 @@ unequal/~51DY
 unerase/4SDG
 unerring/5Y
 unessential/5
+unevacuated/5
 unevaluated/5
 uneven/~54Y
 unexceptionably/j
@@ -49698,6 +49729,7 @@ unshorn/5
 unsightliness/1M
 unsightly/5PT
 unskillful/5Y!@
+unskippable/5
 unsmiling/5
 unsociable/51
 unsocial/5
@@ -49724,6 +49756,7 @@ unsuspecting/~5Y
 unsustainable/5Y
 unsymmetrical/5
 untactful/5
+untaxed/5
 unterminated/5
 unthinkably/j
 unthinking/54Y
@@ -52031,6 +52064,7 @@ ACM/1M
 AGI/MS                  # artificial general intelligence
 AMC/12MS                # old car brand
 AOC/2M                  # US politician Alexandria Ocasio-Cortez
+ATF/1M                  # automatic transmission fluid
 Akismet/2M
 Alexa/2M                # voice assistant
 Alexandre/2SM
@@ -52039,7 +52073,6 @@ AlphaFold/2M            # Google DeepMind project
 Ambien/1SM              # insomnia treatment
 Anker/SM
 Archytas/SM             # !! please check and comment !! we also have archytas
-ATF/1M                  # automatic transmission fluid
 Automattic/SM           # WordPress company
 Automattician/SM
 BCPL/1M                 # old programming language
@@ -52049,6 +52082,7 @@ BYD/2MS                 # Chinese automobile manufacturer
 Bachiyski/SM
 Bezos/2                 # Surname, Amazon founder
 Bing/2M                 # Microsoft product
+BitKeeper/1M        # version control
 BlasterHacks/SM
 BurpSuite/21MS
 C++/2SM                 # programming language
@@ -52057,8 +52091,8 @@ CEO/1SM                 # chief executive officer
 CERN/2M                 # intergovernmental organization
 CI/1SM                  # continuous integration
 CISC/1M                 # cpu architecture
-CMake/SM                # build tool
 CMOS/1                  # microchip process
+CMake/SM                # build tool
 CQL/1
 CRDT/1SM
 CRM/12SM
@@ -52073,6 +52107,7 @@ Crowdsignal/2M
 Cypher/21M
 DATETIME/1MS            # dictionaries prefer: datetime
 DBMS/12SM               # database management system
+DEI
 DKIM/1SM
 DM/1MS4                 # direct message
 DM'd/4
@@ -52086,11 +52121,11 @@ DevOps/SM
 Dreamcast/2MS           # game console
 EGR/                    # exhaust gas recirculation
 EMR/12SM
+ESLint/2M
 EV/1SM                  # electric vehicle
 ElasticSearch/SM
 Elon/2M
 Erdoğan/2M              # surname, Turkish politician
-ESLint/2M
 Ethereum/2M             # digital currency
 Evo/2MS                 # car model
 Expedia/2M
@@ -52099,8 +52134,9 @@ FIFA/1M                 # football/soccer association
 FPGA/1SM                # field-programmable gate array
 FPM/SM
 FSD/1M                  # full self-driving
-Firestore/M
+Famicom/12MS        # game console
 FireWire/MS             # trademark
+Firestore/M
 Foddy/SM
 Frankl/SM
 GLFW/2M
@@ -52144,8 +52180,8 @@ KSQL/1
 Kagi/SM
 Kahneman/SM
 KanBan/M1
-Kia/21MS            # automobile brand
 KiCad/2M            # software
+Kia/21MS            # automobile brand
 Kubernetes/2SM
 LADAR
 LEGO/1SM            # official trademark form of Lego
@@ -52179,6 +52215,7 @@ Minecraft/2M
 Minhaj/2SM
 Minix/2M            # old hobby operating system
 Mockito/SM
+Molex/12MS          # Molex connector
 Mullenweg/M
 Munin/SM
 N.S.A./2SM          # FIXME! elsewhere we have NSA
@@ -52188,6 +52225,7 @@ N3/2M
 N4/2M
 N5/2M
 NLP/M
+NMI/1MS             # non-maskable interrupt
 NPC/SM
 NPM/SM
 NYTimes/SM
@@ -52201,6 +52239,7 @@ NumPy/21M
 Nvidia/2M           # FIXME! elsewhere we have NVIDIA
 O'Reilly/2SM
 OAuth/M             # open authentication
+OG/1MS
 ORM/12S             # object-relational mapping
 OpenGL/SM           # open graphics library
 OpenMetrics/SM
@@ -52223,12 +52262,16 @@ Postfix/SM
 PowerShell/SM       # Microsoft product
 PromQL/SM
 PyTorch/M2          # framework
+Q1
+Q2
+Q3
+Q4
 QUERTY/SM           # !! mistake for QWERTY? !!
 QUIC/2SM
 Qin/2SM
 RDBMS/12SM          # relational database management system
-RISC/1M             # cpu architecture
 RFID/21M            # radio frequency identification
+RISC/1M             # cpu architecture
 RPC/21SM            # remote procedure call
 RPG/1MS             # role-playing game
 RTX/1SM
@@ -52236,6 +52279,7 @@ Raytheon/2M
 Reddit/2M
 Rivian/SM           # ev company
 Roumania/2M         # pre-WWII spelling
+SCM/1M              # source code management
 SDK/1SM             # software development kit
 SIMD/1SM            # single instruction, multiple data
 SLA/1SM
@@ -52254,6 +52298,7 @@ Snapchat/SM
 Soros/2M            # financier George Soros
 Spotify/2M
 Stellantis/2M       # car company
+Subversion/1M       # version control
 Svelte/2M           # js framework
 Systemd/SM          # Linux system software
 TCP/52SM            # internet protocol
@@ -52273,9 +52318,12 @@ TrueNAS/SM
 Tumblr/2M
 Typst/SM
 UDP/12SM
+ULA/1MS             # uncommitted logic array
 URI/1SM             # uniform resource identifier
 VAG/2M              # car company
 VARCHAR/1MS
+VCS/1M              # version control system
+VFD/1MS             # vacuum fluorescent display
 VMware/21MS
 VPN/1SM             # virtual private network
 VR/2M
@@ -52288,6 +52336,7 @@ Vite/SM
 WAL/21SM
 WASI/MS
 WASM/MS             # see WebAssembly
+WD40/1M
 Waymo/2M
 WebAssembly/M       # see WASM
 WebGPU/SM
@@ -52298,8 +52347,8 @@ WhatsApp/124MG      # messaging app
 Wikilink/MS1        # !! please check and comment !! elsewhere we have wikilink
 Wireguard/SM
 WooCommerce/2M
-Xbox/12MS
 XLR/1M              # connector
+Xbox/12MS
 Xorg/21MS
 Y2K/M               # year 2000
 YAML/2SM            # markup language
@@ -52314,14 +52363,11 @@ a8c/SM
 archytas/SM         # !! please check and comment !! we also have Archytas
 backend/1SM         # dictionaries prefer: back end
 baz/~               # cf. foo, bar
-BitKeeper/1M        # version control
 config/14SM         # not marked as a verb since "configed" and "configing" look wrong
 corpo/1MS
 dedup/1M            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/14SMDG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
-DEI
 dotfile/~1SM        # not well covered by dictionaries.
-Famicom/12MS        # game console
 filesystem/~SM      # dictionaries prefer: file system
 frontend/1SM        # dictionaries prefer: front end
 gRPC/2SM            # framework
@@ -52332,33 +52378,22 @@ gzipping/4
 hardcode/4GDS       # dictionaries prefer: hard code
 hotwire/4BG         # dictionaries prefer: hot-wire
 labriola/SM         # !! please check and comment !! - should be uppercase surname?
+manip/1MS           # gamer slang manipulation
 memecoin/1MS
-Molex/12MS          # Molex connector
-NMI/1MS             # non-maskable interrupt
 npm/2M              # node package manager
-OG/1MS
 olds/~              # common in phrasing such as "twenty year olds"
 pandoc/SM           # !! please check and comment !! elsewhere we have Pandoc
 pre/~+14            # !! please check and comment !! dictionaries only list prefix pre-
-Q1
-Q2
-Q3
-Q4
 raytracer/1         # dictionaries prefer: ray tracer
 royale/~15SM        # !! please check and comment !! dictionaries only list noun sense type of custard
-SCM/1M              # source code management
 s.t./~              # !! please check and comment !!
 scatterplot/14SMG   # dictionaries prefer: scatter plot
 scrollbar/1SM       # dictionaries prefer: scroll bar
 sioyek/SM           # !! please check and comment !!
 stacktrace/SM1      # dictionaries prefer: stack trace
 standup/SM          # dictionaries prefer: stand-up
-Subversion/1M       # version control
-ULA/1MS             # uncommitted logic array
-VFD/1MS             # vacuum fluorescent display
-VCS/1M              # version control system
+strat/1MS           # gamer slang strategy
 vid/1MS             # video
-WD40/1M             
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
 
@@ -52372,9 +52407,10 @@ air-cooled/5
 all-new/5
 all-nighter/1MS
 all-woman/5
+alma mater/1M
 anarcho-punk/15MS
-anti-Semitic/5
 anti-Semite/1MS
+anti-Semitic/5
 anti-Semitism/1M
 anti-vaccine/5
 anti-vax/5
@@ -52409,10 +52445,11 @@ cotter pin/1MS
 cross section/1MS
 cross-threaded/5
 custom-made/5
+cut scene/1MS
 cutting edge/1MS
 cutting-edge/5
 de-extinct/4GD
-di-extinction/1MS
+de-extinction/1MS
 de facto/51M
 death knell/1MS
 deja vu/1
@@ -52470,17 +52507,18 @@ hard code/4SDG
 hard-pressed/5
 hard right/1M
 hard-right/5
+head-scratcher/1MS
 heavy-duty/5
 heavy-handed/5
 hi-tech/15
 high definition/1M
-high-quality/5
 high frequency/1MS
 high-frequency/5
 high-level/5
 high-paying/5
 high-pitched/5
 high-profile/5
+high-quality/5
 high-ranking/5
 high-res/5
 high-rise/1MS
@@ -52505,6 +52543,7 @@ last-ditch/5
 lead off/1M4
 lead-up/1MS
 left-wing/5
+lesser-known/5
 live action/1
 load-bearing/5
 long-term/5
@@ -52533,6 +52572,8 @@ nail biter/1MS
 neo-Nazi/15SM
 no-op/1MS           # no operation
 non-Western/5
+not-for-profit/51MS
+object-oriented/5
 odd-numbered/5
 of course/j
 off-limits/5
@@ -52557,6 +52598,7 @@ open source/1M
 open-source/54SDG
 OS X/2M             # before macOS
 out-and-out/5
+out of date
 Pan Am/1M           # old airline
 Pax Americana/2M
 peer review/1MSDG
@@ -52567,10 +52609,12 @@ petty bourgeois/1M
 petty bourgeoisie/1M
 pick-me-up/1MS
 plan B/M
-pre-COVID/5
-quid pro quo/1M
 post-truth/14M
+pre-COVID/5
+pro-democracy/5
+quid pro quo/1M
 rack-mounted/5
+re-enable/4DSG
 real time/1M
 real-time/5
 red-eye/1M
@@ -52579,6 +52623,8 @@ red wolves/9
 right-hand/5
 right-wing/5
 run-up/1MS
+same sex/1M
+same-sex/5
 sans serif/1M5
 sci-fi/1M
 sea lane/1MS
@@ -52605,11 +52651,12 @@ so-called/5
 socio-political/5
 solid-state/5
 sound wave/1MS
+space bar/1MS
 spot on/5
 spring-load/4SDG
 Stack Exchange/2M
-stack overflow/1SM
 Stack Overflow/2M
+stack overflow/1SM
 stand down/4
 stand-down/1MS
 stand-up/51
@@ -52630,6 +52677,8 @@ thought out/4
 thought-out/5
 thought-provoking/5
 time-consuming/5Y
+time-honored/5<
+time-honoured/5!@
 tit for tat/1
 tit-for-tat/5
 tl;dr/
@@ -52639,8 +52688,8 @@ top-end/5
 trade in/4
 trade-in/1MS
 two-thirds/1
-type checking/1M
 type-check/4SDG
+type checking/1M
 type-in/1MS
 U-turn/14MSDG
 uh-huh
@@ -52653,11 +52702,13 @@ von Neumann/2
 walk through/4
 walk-through/5
 walkie-talkie/1MS
+Wall Streeter/1MS
 Wayback Machine/2M
 weapons-grade/5
 web dev/1MS
 web page/~1SM
 welch plug/1SM
+well-adjusted/5
 well-known/5
 well-made/5
 well-received/5
