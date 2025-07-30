@@ -1019,11 +1019,11 @@
 >
 #
 > He       shall have   Power   , by      and with the Advice and Consent of the Senate , to make
-# NPr/ISg+ VX    NSg/VX NSg/V/J . NSg/J/P V/C P    D+  NSg/V  V/C NSg/V   P  D+  NPr+   . P  NSg/V
+# NPr/ISg+ VX    NSg/VX NSg/V/J . NSg/J/P V/C P    D+  NSg    V/C NSg/V   P  D+  NPr+   . P  NSg/V
 > Treaties , provided two thirds of the Senators present concur ; and he       shall
 # NPl/V+   . V/J/C    NSg NPl/V  P  D+  NPl+     NSg/V/J V+     . V/C NPr/ISg+ VX
 > nominate , and by      and with the Advice and Consent of the Senate , shall appoint
-# V/J      . V/C NSg/J/P V/C P    D+  NSg/V  V/C NSg/V   P  D+  NPr+   . VX    V
+# V/J      . V/C NSg/J/P V/C P    D+  NSg    V/C NSg/V   P  D+  NPr+   . VX    V
 > Ambassadors , other   public  Ministers and Consuls , Judges  of the supreme  Court    ,
 # NPl         . NSg/V/J NSg/V/J NPl/V+    V/C NPl     . NPrPl/V P  D+  NSg/V/J+ NSg/V/J+ .
 > and all       other   Officers of the United States   , whose Appointments are not   herein

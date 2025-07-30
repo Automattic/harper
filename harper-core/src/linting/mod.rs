@@ -23,6 +23,7 @@ mod correct_number_suffix;
 mod currency_placement;
 mod dashes;
 mod despite_of;
+mod discourse_markers;
 mod dot_initialisms;
 mod ellipsis_length;
 mod else_possessive;
@@ -36,6 +37,7 @@ mod have_pronoun;
 mod hedging;
 mod hereby;
 mod hop_hope;
+mod hope_youre;
 mod how_to;
 mod hyphenate_number_day;
 mod in_on_the_cards;
@@ -81,6 +83,7 @@ mod pronoun_contraction;
 mod pronoun_inflection_be;
 mod pronoun_knew;
 mod proper_noun_capitalization_linters;
+mod regionalisms;
 mod repeated_words;
 mod save_to_safe;
 mod sentence_capitalization;
@@ -128,6 +131,7 @@ pub use correct_number_suffix::CorrectNumberSuffix;
 pub use currency_placement::CurrencyPlacement;
 pub use dashes::Dashes;
 pub use despite_of::DespiteOf;
+pub use discourse_markers::DiscourseMarkers;
 pub use dot_initialisms::DotInitialisms;
 pub use ellipsis_length::EllipsisLength;
 pub use everyday::Everyday;
@@ -175,6 +179,7 @@ pub use pique_interest::PiqueInterest;
 pub use possessive_your::PossessiveYour;
 pub use pronoun_contraction::PronounContraction;
 pub use pronoun_inflection_be::PronounInflectionBe;
+pub use regionalisms::Regionalisms;
 pub use repeated_words::RepeatedWords;
 pub use save_to_safe::SaveToSafe;
 pub use sentence_capitalization::SentenceCapitalization;
@@ -239,6 +244,11 @@ pub mod tests {
 
     use super::Linter;
     use crate::{Document, FstDictionary, parsers::PlainEnglish};
+
+    #[track_caller]
+    pub fn assert_no_lints(text: &str, mut linter: impl Linter) {
+        assert_lint_count(text, linter, 0);
+    }
 
     #[track_caller]
     pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {
