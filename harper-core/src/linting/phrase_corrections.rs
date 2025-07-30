@@ -1290,6 +1290,12 @@ pub fn lint_group() -> LintGroup {
             "The phrase is `peace of mind`, meaning `calm`. A `piece` is a `part` of something.",
             "Corrects `piece of mind` to `peace of mind`."
         ),
+        "ACoupleMore" => (
+            ["a couple of more"],
+            ["a couple more"],
+            "The correct wording is `a couple more`, without the `of`.",
+            "Corrects `a couple of more` to `a couple more`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2808,6 +2814,15 @@ mod tests {
             "A Discord bot that gives you piece of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
             lint_group(),
             "A Discord bot that gives you peace of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
+        )
+    }
+
+    #[test]
+    fn corrects_a_couple_of_more() {
+        assert_suggestion_result(
+            "There are a couple of more rules that could be added, how can I contribute?",
+            lint_group(),
+            "There are a couple more rules that could be added, how can I contribute?",
         )
     }
 }

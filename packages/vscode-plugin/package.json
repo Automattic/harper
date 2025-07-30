@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.40.0",
+	"version": "0.41.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -128,6 +128,12 @@
 					"scope": "resource",
 					"type": "string",
 					"description": "Optional path to a global dictionary file to use."
+				},
+				"harper.linters.ACoupleMore": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `a couple of more` to `a couple more`."
 				},
 				"harper.linters.ALongTime": {
 					"scope": "resource",
@@ -1119,6 +1125,12 @@
 					"default": true,
 					"description": "Correct unidiomatic plural `in more details` to `in more detail`."
 				},
+				"harper.linters.InNeedOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `in need for` to `in need of`."
+				},
 				"harper.linters.InOneFellSwoop": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1521,6 +1533,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `notwithstanding`."
 				},
+				"harper.linters.NounInsteadOfVerb": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects nouns used instead of verbs when the two are related."
+				},
 				"harper.linters.Nowhere": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1587,6 +1605,12 @@
 					"default": true,
 					"description": "Corrects compound words that should be written as two words."
 				},
+				"harper.linters.OpenTheLight": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects using `open` instead of `turn on` or `switch on`"
+				},
 				"harper.linters.OperativeSystem": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1640,6 +1664,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags oxymoronic phrases (e.g. `amateur expert`, `increasingly less`, etc.)."
+				},
+				"harper.linters.PeaceOfMind": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `piece of mind` to `peace of mind`."
 				},
 				"harper.linters.PhrasalVerbAsCompoundNoun": {
 					"scope": "resource",
@@ -1995,6 +2025,12 @@
 					"default": true,
 					"description": "Changes `though process` to `thought process`."
 				},
+				"harper.linters.ThrowRubbish": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for throwing rubbish rather than throwing it away."
+				},
 				"harper.linters.TickingTimeClock": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2228,6 +2264,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `worst than` to `worse than` for proper comparative usage."
+				},
+				"harper.linters.WorstCaseScenario": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
 				},
 				"harper.linters.WorstEver": {
 					"scope": "resource",
