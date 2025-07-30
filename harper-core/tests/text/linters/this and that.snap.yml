@@ -1,9 +1,0 @@
-Lint:    Spelling (63 priority)
-Message: |
-       2 | As such, disambiguating them is necessary.
-         |          ^~~~~~~~~~~~~~ Did you mean `disambiguation`?
-Suggest:
-  - Replace with: “disambiguation”
-
-
-

@@ -1,7 +1,7 @@
 use crate::{
-    Token,
+    Lrc, Token,
     linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Pattern, SequencePattern, WordSet},
+    patterns::{OwnedPatternExt, Pattern, SequencePattern, WordSet},
 };
 
 pub struct WinPrize {
@@ -10,15 +10,19 @@ pub struct WinPrize {
 
 impl Default for WinPrize {
     fn default() -> Self {
-        let verbs = WordSet::new(&["win", "wins", "won", "winning"]);
-        let miss = WordSet::new(&["price", "prices", "prise", "prises"]);
+        let verbs = Lrc::new(WordSet::new(&["win", "wins", "won", "winning"]));
+        let miss = Lrc::new(WordSet::new(&["price", "prices", "prise", "prises"]));
 
         let pattern = SequencePattern::default()
-            .then(verbs)
+            .then(verbs.clone())
             .then_whitespace()
             .then_determiner()
             .then_whitespace()
-            .then(miss);
+            .then(miss.clone())
+            .or(SequencePattern::default()
+                .then(verbs)
+                .then_whitespace()
+                .then(miss));
 
         Self {
             pattern: Box::new(pattern),
@@ -104,5 +108,10 @@ mod tests {
             WinPrize::default(),
             0,
         );
+    }
+
+    #[test]
+    fn fix_no_det() {
+        assert_suggestion_result("I won prices!", WinPrize::default(), "I won prizes!");
     }
 }

@@ -2,6 +2,7 @@ use crate::{
     Token,
     linting::{Lint, LintKind, PatternLinter, Suggestion},
     patterns::{Pattern, SequencePattern, WordSet},
+    word_metadata::Person,
 };
 
 pub struct NominalWants {
@@ -10,9 +11,9 @@ pub struct NominalWants {
 
 impl Default for NominalWants {
     fn default() -> Self {
-        let miss = WordSet::new(&["wont", "wonts"]);
+        let miss = WordSet::new(&["wont", "wonts", "want", "wants"]);
         let pattern = SequencePattern::default()
-            .then_nominal()
+            .then_pronoun()
             .then_whitespace()
             .then(miss);
         Self {
@@ -26,19 +27,45 @@ impl PatternLinter for NominalWants {
         self.pattern.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
+        let subject = toks.first()?;
         let offender = toks.last()?;
+
+        let plural = subject.kind.is_plural_nominal();
+
+        let person = subject
+            .kind
+            .as_word()
+            .unwrap()
+            .clone()
+            .unwrap()
+            .pronoun
+            .and_then(|p| p.person)
+            .unwrap_or(Person::Third);
+
+        let replacement = if person == Person::Third {
+            if plural { "want" } else { "wants" }
+        } else {
+            "want"
+        };
+
+        let replacement_chars: Vec<char> = replacement.chars().collect();
+
+        if offender.span.get_content(source) == replacement_chars.as_slice() {
+            return None;
+        }
+
         Some(Lint {
             span: offender.span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::ReplaceWith("wants".chars().collect())],
-            message: "Did you mean `wants`?".to_owned(),
+            suggestions: vec![Suggestion::ReplaceWith(replacement_chars)],
+            message: format!("Did you mean `{replacement}`?"),
             priority: 55,
         })
     }
 
     fn description(&self) -> &str {
-        "Replaces the typo `wont`/`wonts` after a nominal."
+        "Ensures you use the correct `want` / `wants` after a nominal."
     }
 }
 
@@ -75,7 +102,35 @@ mod tests {
     }
 
     #[test]
-    fn ignores_correct_usage() {
+    fn fixes_i_wont() {
+        assert_suggestion_result(
+            "I wonts to leave early.",
+            NominalWants::default(),
+            "I want to leave early.",
+        );
+    }
+
+    #[test]
+    fn allows_you_want() {
+        assert_lint_count("What size do you want to be?", NominalWants::default(), 0);
+    }
+
+    #[test]
+    fn fixes_you_wants() {
+        assert_suggestion_result(
+            "What do you wants?",
+            NominalWants::default(),
+            "What do you want?",
+        );
+    }
+
+    #[test]
+    fn ignores_correct_usage_they() {
+        assert_lint_count("They want to help.", NominalWants::default(), 0);
+    }
+
+    #[test]
+    fn ignores_correct_usage_he() {
         assert_lint_count("He wants to help.", NominalWants::default(), 0);
     }
 }

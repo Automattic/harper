@@ -32,6 +32,7 @@ mod hyphenate_number_day;
 mod inflected_verb_after_to;
 mod it_is;
 mod it_would_be;
+mod its_contraction;
 mod left_right_hand;
 mod lets_confusion;
 mod likewise;
@@ -65,6 +66,7 @@ mod pronoun_contraction;
 mod pronoun_knew;
 mod proper_noun_capitalization_linters;
 mod repeated_words;
+mod save_to_safe;
 mod sentence_capitalization;
 mod somewhat_something;
 mod spaces;
@@ -108,6 +110,7 @@ pub use hop_hope::HopHope;
 pub use how_to::HowTo;
 pub use hyphenate_number_day::HyphenateNumberDay;
 pub use inflected_verb_after_to::InflectedVerbAfterTo;
+pub use its_contraction::ItsContraction;
 pub use left_right_hand::LeftRightHand;
 pub use lets_confusion::LetsConfusion;
 pub use likewise::Likewise;
@@ -135,6 +138,7 @@ pub use pique_interest::PiqueInterest;
 pub use possessive_your::PossessiveYour;
 pub use pronoun_contraction::PronounContraction;
 pub use repeated_words::RepeatedWords;
+pub use save_to_safe::SaveToSafe;
 pub use sentence_capitalization::SentenceCapitalization;
 pub use somewhat_something::SomewhatSomething;
 pub use spaces::Spaces;
@@ -283,8 +287,6 @@ mod tests {
         let mut iter_count = 0;
 
         loop {
-            iter_count += 1;
-
             let test = Document::new_from_vec(
                 text_chars.clone().into(),
                 &PlainEnglish,
@@ -304,6 +306,8 @@ mod tests {
             } else {
                 break;
             }
+
+            iter_count += 1;
 
             if iter_count == 100 {
                 break;

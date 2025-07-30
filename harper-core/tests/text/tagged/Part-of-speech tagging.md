@@ -11,7 +11,7 @@
 >
 #
 > In          corpus linguistics , part    - of - speech tagging ( POS tagging or      PoS tagging or
-# NPrSg/V/J/P NSg    NSg         . NSg/V/J . P  . NSg/V  NSg/V   . ?   NSg/V   NPrSg/C ?   NSg/V   NPrSg/C
+# NPrSg/V/J/P NSg    NSg         . NSg/V/J . P  . NSg/V  NSg/V   . NSg NSg/V   NPrSg/C NSg NSg/V   NPrSg/C
 > POST      ) , also called grammatical tagging is the process of marking up        a   word in a
 # NPrSg/V/P . . W?   V/J    J           NSg/V   VL D   NSg     P  NSg/V   NSg/V/J/P D/P NSg  P  D/P
 > text ( corpus ) as    corresponding to a   particular part    of speech , based on  both its
@@ -25,15 +25,15 @@
 >
 #
 > Once  performed by      hand  , POS tagging is now         done    in the context of computational
-# NSg/C V/J       NSg/J/P NSg/V . ?   NSg/V   VL NPrSg/V/J/C NSg/V/J P  D   NSg     P  J
+# NSg/C V/J       NSg/J/P NSg/V . NSg NSg/V   VL NPrSg/V/J/C NSg/V/J P  D   NSg     P  J
 > linguistics , using algorithms which associate discrete terms , as    well    as    hidden
 # NSg         . V     NPl        I/C   NSg/V/J   J        NPl/V . NSg/R NSg/V/J NSg/R V/J
 > parts of speech , by a   set     of descriptive tags  . POS - tagging algorithms fall  into
-# NPl/V P  NSg/V  . P  D/P NPrSg/J P  NSg/J       NPl/V . ?   . NSg/V   NPl        NSg/V P
+# NPl/V P  NSg/V  . P  D/P NPrSg/J P  NSg/J       NPl/V . NSg . NSg/V   NPl        NSg/V P
 > two distinctive groups : rule  - based and stochastic . E. Brill's tagger , one       of the
 # NSg NSg/J       NPl/V  . NSg/V . V/J   V/C J          . ?  ?       NSg    . NSg/I/V/J P  D
 > first and most    widely used English   POS - taggers , employs rule  - based algorithms .
-# NSg/J V/C NSg/I/J J/R    V/J  NPrSg/V/J ?   . NPl     . NPl/V   NSg/V . V/J   NPl        .
+# NSg/J V/C NSg/I/J J/R    V/J  NPrSg/V/J NSg . NPl     . NPl/V   NSg/V . V/J   NPl        .
 >
 #
 > Principle
@@ -95,7 +95,7 @@
 > tags  . For example , NN for singular common  nouns , NNS for plural common  nouns , NP
 # NPl/V . C/P NSg/V   . ?  C/P NSg/J    NSg/V/J NPl/V . ?   C/P NSg/J  NSg/V/J NPl/V . NPrSg
 > for singular proper nouns ( see   the POS tags  used in the Brown   Corpus ) . Other
-# C/P NSg/J    NSg/J  NPl/V . NSg/V D   ?   NPl/V V/J  P  D   NPrSg/J NSg    . . NSg/V/J
+# C/P NSg/J    NSg/J  NPl/V . NSg/V D   NSg NPl/V V/J  P  D   NPrSg/J NSg    . . NSg/V/J
 > tagging systems use   a   smaller number  of tags  and ignore fine    differences or
 # NSg/V   NPl     NSg/V D/P J       NSg/V/J P  NPl/V V/C V      NSg/V/J NSg/V       NPrSg/C
 > model   them as    features somewhat independent from part    - of - speech .
@@ -121,7 +121,7 @@
 >
 #
 > The most    popular " tag   set       " for POS tagging for American English   is probably the
-# D   NSg/I/J NSg/J   . NSg/V NPrSg/V/J . C/P ?   NSg/V   C/P NPrSg/J  NPrSg/V/J VL R        D
+# D   NSg/I/J NSg/J   . NSg/V NPrSg/V/J . C/P NSg NSg/V   C/P NPrSg/J  NPrSg/V/J VL R        D
 > Penn tag   set       , developed in the Penn Treebank project . It        is largely similar to
 # NPr  NSg/V NPrSg/V/J . V/J       P  D   NPr  ?        NSg/V   . NPrSg/ISg VL J/R     NSg/J   P
 > the earlier Brown     Corpus and LOB   Corpus tag   sets  , though much  smaller . In
@@ -133,7 +133,7 @@
 >
 #
 > POS tagging work  has been  done    in a   variety of languages , and the set     of POS
-# ?   NSg/V   NSg/V V   NSg/V NSg/V/J P  D/P NSg     P  NPl/V     . V/C D   NPrSg/J P  ?
+# NSg NSg/V   NSg/V V   NSg/V NSg/V/J P  D/P NSg     P  NPl/V     . V/C D   NPrSg/J P  NSg
 > tags  used varies greatly with language . Tags  usually are designed to include
 # NPl/V V/J  NPl/V  J/R     P    NSg/V    . NPl/V J/R     V   V/J      P  NSg/V
 > overt morphological distinctions , although this leads to inconsistencies such  as
@@ -369,7 +369,7 @@
 > " unsupervised " tagging . Unsupervised tagging techniques use   an  untagged corpus
 # . V/J          . NSg/V   . V/J          NSg/V   NPl        NSg/V D/P ?        NSg
 > for their training data and produce the tagset by      induction . That    is , they
-# C/P D     NSg      NSg  V/C NSg/V   D   ?      NSg/J/P NSg       . N/I/C/D VL . IPl
+# C/P D     NSg      NSg  V/C NSg/V   D   NSg    NSg/J/P NSg       . N/I/C/D VL . IPl
 > observe patterns in          word  use   , and derive part    - of - speech categories themselves .
 # NSg/V   NPl/V    NPrSg/V/J/P NSg/V NSg/V . V/C NSg/V  NSg/V/J . P  . NSg/V  NPl        I          .
 > For example , statistics readily reveal that    " the " , " a   " , and " an  " occur in
@@ -409,7 +409,7 @@
 >
 #
 > Many    machine learning methods have   also been  applied to the problem of POS
-# N/I/J/D NSg/V   V        NPl/V   NSg/VX W?   NSg/V V/J     P  D   NSg/J   P  ?
+# N/I/J/D NSg/V   V        NPl/V   NSg/VX W?   NSg/V V/J     P  D   NSg/J   P  NSg
 > tagging . Methods such  as    SVM , maximum entropy classifier , perceptron , and
 # NSg/V   . NPl/V   NSg/I NSg/R ?   . NSg/J   NSg     NSg        . N          . V/C
 > nearest - neighbor have   all       been  tried , and most    can      achieve accuracy above
