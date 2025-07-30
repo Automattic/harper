@@ -16,12 +16,10 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
        6 | establish Justice, insure domestic Tranquility, provide for the common defence,
-         |                                                                        ^~~~~~~ Did you mean to spell `defence` this way?
+         |                                                                        ^~~~~~~ Did you mean `defense`?
        7 | promote the general Welfare, and secure the Blessings of Liberty to ourselves
 Suggest:
   - Replace with: “defense”
-  - Replace with: “decency”
-  - Replace with: “deface”
 
 
 
@@ -531,12 +529,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      203 | Imposts and Excises, to pay the Debts and provide for the common Defence and
-         |                                                                  ^~~~~~~ Did you mean to spell `Defence` this way?
+         |                                                                  ^~~~~~~ Did you mean `Defense`?
      204 | general Welfare of the United States; but all Duties, Imposts and Excises shall
 Suggest:
   - Replace with: “Defense”
-  - Replace with: “Fence”
-  - Replace with: “Terence”
 
 
 
@@ -1464,11 +1460,9 @@ Lint:    Spelling (63 priority)
 Message: |
      627 | States, or any place subject to their jurisdiction. No Person held to Service
      628 | or Labour in one State, under the Laws thereof, escaping into another, shall,
-         |    ^~~~~~ Did you mean to spell `Labour` this way?
+         |    ^~~~~~ Did you mean `Labor`?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Labours”
-  - Replace with: “About”
 
 
 
@@ -1476,11 +1470,9 @@ Lint:    Spelling (63 priority)
 Message: |
      629 | in Consequence of any Law or Regulation therein, be discharged from such
      630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
-         |            ^~~~~~ Did you mean to spell `Labour` this way?
+         |            ^~~~~~ Did you mean `Labor`?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Labours”
-  - Replace with: “About”
 
 
 
@@ -1488,11 +1480,9 @@ Lint:    Spelling (63 priority)
 Message: |
      630 | Service or Labour, but shall be delivered up on Claim of the Party to whom such
      631 | Service or Labour may be due.
-         |            ^~~~~~ Did you mean to spell `Labour` this way?
+         |            ^~~~~~ Did you mean `Labor`?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Labours”
-  - Replace with: “About”
 
 
 
@@ -1655,11 +1645,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      714 | first Page, The Word "Thirty" being partly written on an Erazure in the
-         |                                                          ^~~~~~~ Did you mean to spell `Erazure` this way?
+         |                                                          ^~~~~~~ Did you mean `Erasure`?
      715 | fifteenth Line of the first Page. The Words "is tried" being interlined between
 Suggest:
   - Replace with: “Erasure”
-  - Replace with: “Azure”
 
 
 

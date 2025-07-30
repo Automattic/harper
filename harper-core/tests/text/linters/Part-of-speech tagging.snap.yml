@@ -588,12 +588,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also
-         |                                                           ^~~~~ Did you mean to spell `Welch` this way?
+         |                                                           ^~~~~ Did you mean `Welsh`?
      202 | known as the forward-backward algorithm). Hidden Markov model and visible Markov
 Suggest:
   - Replace with: “Welsh”
-  - Replace with: “Belch”
-  - Replace with: “Walsh”
 
 
 

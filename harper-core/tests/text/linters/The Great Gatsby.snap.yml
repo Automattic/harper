@@ -203,12 +203,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       61 | restless. Instead of being the warm centre of the world, the Middle West now
-         |                                     ^~~~~~ Did you mean to spell `centre` this way?
+         |                                     ^~~~~~ Did you mean `center`?
       62 | seemed like the ragged edge of the universe—so I decided to go East and learn
 Suggest:
-  - Replace with: “centred”
-  - Replace with: “centres”
-  - Replace with: “censure”
+  - Replace with: “center”
 
 
 
@@ -341,12 +339,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
-         |                                          ^~~~~ Did you mean to spell `Ville` this way?
+         |                                          ^~~~~ Did you mean `Vile`?
      121 | side, spanking new under a thin beard of raw ivy, and a marble swimming pool,
 Suggest:
   - Replace with: “Vile”
-  - Replace with: “Villa”
-  - Replace with: “Lille”
 
 
 
@@ -687,11 +683,9 @@ Lint:    Spelling (63 priority)
 Message: |
      479 | thinking, but I doubt if even Miss Baker, who seemed to have mastered a certain
      480 | hardy scepticism, was able utterly to put this fifth guest’s shrill metallic
-         |       ^~~~~~~~~~ Did you mean to spell `scepticism` this way?
+         |       ^~~~~~~~~~ Did you mean `skepticism`?
 Suggest:
   - Replace with: “skepticism”
-  - Replace with: “sceptic's”
-  - Replace with: “scepticism's”
 
 
 
@@ -1226,11 +1220,9 @@ Lint:    Spelling (63 priority)
 Message: |
      923 | “I should change the light,” he said after a moment. “I’d like to bring out the
      924 | modelling of the features. And I’d try to get hold of all the back hair.”
-         | ^~~~~~~~~ Did you mean to spell `modelling` this way?
+         | ^~~~~~~~~ Did you mean `modeling`?
 Suggest:
   - Replace with: “modeling”
-  - Replace with: “modellings”
-  - Replace with: “modelling's”
 
 
 
@@ -1506,7 +1498,7 @@ Message: |
 Suggest:
   - Replace with: “hers”
   - Replace with: “ho's”
-  - Replace with: “hobs”
+  - Replace with: “hours”
 
 
 
@@ -1604,12 +1596,10 @@ Lint:    Spelling (63 priority)
 Message: |
     1202 | confident girls who weave here and there among the stouter and more stable,
     1203 | become for a sharp, joyous moment the centre of a group, and then, excited with
-         |                                       ^~~~~~ Did you mean to spell `centre` this way?
+         |                                       ^~~~~~ Did you mean `center`?
     1204 | triumph, glide on through the sea-change of faces and voices and color under the
 Suggest:
-  - Replace with: “centred”
-  - Replace with: “centres”
-  - Replace with: “censure”
+  - Replace with: “center”
 
 
 
@@ -1710,22 +1700,18 @@ Lint:    Spelling (63 priority)
 Message: |
     1347 | chance we tried an important-looking door, and walked into a high Gothic
     1348 | library, panelled with carved English oak, and probably transported complete
-         |          ^~~~~~~~ Did you mean to spell `panelled` this way?
+         |          ^~~~~~~~ Did you mean `paneled`?
 Suggest:
   - Replace with: “paneled”
-  - Replace with: “palled”
-  - Replace with: “Janelle”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     1373 | Taking our scepticism for granted, he rushed to the bookcases and returned with
-         |            ^~~~~~~~~~ Did you mean to spell `scepticism` this way?
+         |            ^~~~~~~~~~ Did you mean `skepticism`?
 Suggest:
   - Replace with: “skepticism”
-  - Replace with: “sceptic's”
-  - Replace with: “scepticism's”
 
 
 
@@ -2116,12 +2102,10 @@ Lint:    Spelling (63 priority)
 Message: |
     1764 | Again at eight o’clock, when the dark lanes of the Forties were lined five deep
     1765 | with throbbing taxicabs, bound for the theatre district, I felt a sinking in my
-         |                                        ^~~~~~~ Did you mean to spell `theatre` this way?
+         |                                        ^~~~~~~ Did you mean `theater`?
     1766 | heart. Forms leaned together in the taxis as they waited, and voices sang, and
 Suggest:
-  - Replace with: “theatres”
   - Replace with: “theater”
-  - Replace with: “theatre's”
 
 
 
@@ -3087,11 +3071,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2011 | “Major Jay Gatsby,” I read, “For Valour Extraordinary.”
-         |                                  ^~~~~~ Did you mean to spell `Valour` this way?
+         |                                  ^~~~~~ Did you mean `Valor`?
 Suggest:
   - Replace with: “Valor”
-  - Replace with: “Valium”
-  - Replace with: “Valois”
 
 
 
@@ -3154,11 +3136,9 @@ Lint:    Spelling (63 priority)
 Message: |
     2076 | Europe, and I was glad that the sight of Gatsby’s splendid car was included in
     2077 | their sombre holiday. As we crossed Blackwell’s Island a limousine passed us,
-         |       ^~~~~~ Did you mean to spell `sombre` this way?
+         |       ^~~~~~ Did you mean `somber`?
 Suggest:
-  - Replace with: “hombre”
   - Replace with: “somber”
-  - Replace with: “some”
 
 
 
@@ -3691,12 +3671,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2455 | hard, limited person, who dealt in universal scepticism, and who leaned back
-         |                                              ^~~~~~~~~~ Did you mean to spell `scepticism` this way?
+         |                                              ^~~~~~~~~~ Did you mean `skepticism`?
     2456 | jauntily just within the circle of my arm. A phrase began to beat in my ears
 Suggest:
   - Replace with: “skepticism”
-  - Replace with: “sceptic's”
-  - Replace with: “scepticism's”
 
 
 
@@ -4433,10 +4411,9 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     3254 | “I’m looking around. I’m having a marvellous—”
-         |                                   ^~~~~~~~~~ Did you mean to spell `marvellous` this way?
+         |                                   ^~~~~~~~~~ Did you mean `marvelous`?
 Suggest:
   - Replace with: “marvelous”
-  - Replace with: “marvellously”
 
 
 
@@ -4485,11 +4462,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3319 | at the local club to-morrow, spoke in Miss Baedeker’s defence:
-         |                                                       ^~~~~~~ Did you mean to spell `defence` this way?
+         |                                                       ^~~~~~~ Did you mean `defense`?
 Suggest:
   - Replace with: “defense”
-  - Replace with: “decency”
-  - Replace with: “deface”
 
 
 
@@ -4745,11 +4720,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3599 | Gatsby stood in the centre of the crimson carpet and gazed around with
-         |                     ^~~~~~ Did you mean to spell `centre` this way?
+         |                     ^~~~~~ Did you mean `center`?
 Suggest:
-  - Replace with: “centred”
-  - Replace with: “centres”
-  - Replace with: “censure”
+  - Replace with: “center”
 
 
 
@@ -5128,12 +5101,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3975 | could invent a protest the coupé came to a stop, and Daisy signalled us to draw
-         |                                                            ^~~~~~~~~ Did you mean to spell `signalled` this way?
+         |                                                            ^~~~~~~~~ Did you mean `signaled`?
     3976 | up alongside.
 Suggest:
   - Replace with: “signaled”
-  - Replace with: “signaler”
-  - Replace with: “signalised”
 
 
 

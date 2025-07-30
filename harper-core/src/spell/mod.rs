@@ -27,6 +27,162 @@ impl PartialOrd for FuzzyMatchResult<'_> {
     }
 }
 
+/// Returns whether the two words are the same, expect that one is written
+/// with 'ou' and the other with 'o'.
+///
+/// E.g. "color" and "colour"
+pub(crate) fn is_ou_misspelling(a: &[char], b: &[char]) -> bool {
+    if a.len().abs_diff(b.len()) != 1 {
+        return false;
+    }
+
+    let mut a_iter = a.iter();
+    let mut b_iter = b.iter();
+
+    loop {
+        match (
+            a_iter.next().map(char::to_ascii_lowercase),
+            b_iter.next().map(char::to_ascii_lowercase),
+        ) {
+            (Some('o'), Some('o')) => {
+                let mut a_next = a_iter.next().map(char::to_ascii_lowercase);
+                let mut b_next = b_iter.next().map(char::to_ascii_lowercase);
+                if a_next != b_next {
+                    if a_next == Some('u') {
+                        a_next = a_iter.next().map(char::to_ascii_lowercase);
+                    } else if b_next == Some('u') {
+                        b_next = b_iter.next().map(char::to_ascii_lowercase);
+                    }
+
+                    if a_next != b_next {
+                        return false;
+                    }
+                }
+            }
+            (Some(a_char), Some(b_char)) => {
+                if !a_char.eq_ignore_ascii_case(&b_char) {
+                    return false;
+                }
+            }
+            (None, None) => return true,
+            _ => return false,
+        }
+    }
+}
+
+/// Returns whether the two words are the same, expect for a single confusion of:
+///
+/// - `s` and `z`. E.g."realize" and "realise"
+/// - `s` and `c`. E.g. "defense" and "defence"
+/// - `k` and `c`. E.g. "skepticism" and "scepticism"
+pub(crate) fn is_cksz_misspelling(a: &[char], b: &[char]) -> bool {
+    if a.len() != b.len() {
+        return false;
+    }
+    if a.is_empty() {
+        return true;
+    }
+
+    // the first character must be the same
+    if !a[0].eq_ignore_ascii_case(&b[0]) {
+        return false;
+    }
+
+    let mut found = false;
+    for (a_char, b_char) in a.iter().copied().zip(b.iter().copied()) {
+        let a_char = a_char.to_ascii_lowercase();
+        let b_char = b_char.to_ascii_lowercase();
+
+        if a_char != b_char {
+            if (a_char == 's' && b_char == 'z')
+                || (a_char == 'z' && b_char == 's')
+                || (a_char == 's' && b_char == 'c')
+                || (a_char == 'c' && b_char == 's')
+                || (a_char == 'k' && b_char == 'c')
+                || (a_char == 'c' && b_char == 'k')
+            {
+                if found {
+                    return false;
+                }
+                found = true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    found
+}
+
+/// Returns whether the two words are the same, expect that one is written
+/// with '-er' and the other with '-re'.
+///
+/// E.g. "meter" and "metre"
+pub(crate) fn is_er_misspelling(a: &[char], b: &[char]) -> bool {
+    if a.len() != b.len() || a.len() <= 4 {
+        return false;
+    }
+
+    let len = a.len();
+    let a_suffix = [&a[len - 2], &a[len - 1]].map(char::to_ascii_lowercase);
+    let b_suffix = [&b[len - 2], &b[len - 1]].map(char::to_ascii_lowercase);
+
+    if a_suffix == ['r', 'e'] && b_suffix == ['e', 'r']
+        || a_suffix == ['e', 'r'] && b_suffix == ['r', 'e']
+    {
+        return a[0..len - 2]
+            .iter()
+            .copied()
+            .zip(b[0..len - 2].iter().copied())
+            .all(|(a_char, b_char)| a_char.eq_ignore_ascii_case(&b_char));
+    }
+
+    false
+}
+
+/// Returns whether the two words are the same, expect that one is written
+/// with 'll' and the other with 'l'.
+///
+/// E.g. "traveller" and "traveler"
+pub(crate) fn is_ll_misspelling(a: &[char], b: &[char]) -> bool {
+    if a.len().abs_diff(b.len()) != 1 {
+        return false;
+    }
+
+    let mut a_iter = a.iter();
+    let mut b_iter = b.iter();
+
+    loop {
+        match (
+            a_iter.next().map(char::to_ascii_lowercase),
+            b_iter.next().map(char::to_ascii_lowercase),
+        ) {
+            (Some('l'), Some('l')) => {
+                let mut a_next = a_iter.next().map(char::to_ascii_lowercase);
+                let mut b_next = b_iter.next().map(char::to_ascii_lowercase);
+                if a_next != b_next {
+                    if a_next == Some('l') {
+                        a_next = a_iter.next().map(char::to_ascii_lowercase);
+                    } else if b_next == Some('l') {
+                        b_next = b_iter.next().map(char::to_ascii_lowercase);
+                    }
+
+                    if a_next != b_next {
+                        return false;
+                    }
+                }
+            }
+            (Some(a_char), Some(b_char)) => {
+                if !a_char.eq_ignore_ascii_case(&b_char) {
+                    return false;
+                }
+            }
+            (None, None) => return true,
+            _ => return false,
+        }
+    }
+}
+
 /// Scores a possible spelling suggestion based on possible relevance to the user.
 ///
 /// Lower = better.
@@ -51,7 +207,7 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
         score -= 5;
     }
 
-    // For turning words into contractions.
+    // Boost common words.
     if sug.metadata.common {
         score -= 5;
     }
@@ -59,6 +215,18 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
     // For turning words into contractions.
     if sug.word.iter().filter(|c| **c == '\'').count() == 1 {
         score -= 5;
+    }
+
+    // Detect dialect-specific variations
+    if sug.edit_distance == 1
+        && (is_cksz_misspelling(misspelled_word, sug.word)
+            || is_ou_misspelling(misspelled_word, sug.word)
+            || is_ll_misspelling(misspelled_word, sug.word))
+    {
+        score -= 5;
+    }
+    if sug.edit_distance == 2 && is_er_misspelling(misspelled_word, sug.word) {
+        score -= 15;
     }
 
     score

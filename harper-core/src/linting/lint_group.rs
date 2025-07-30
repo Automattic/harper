@@ -79,6 +79,7 @@ use super::wordpress_dotcom::WordPressDotcom;
 use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
 use super::{Lint, PatternLinter};
 use crate::linting::dashes::Dashes;
+use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{closed_compounds, phrase_corrections};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 use crate::{Dictionary, MutableDictionary};
@@ -348,6 +349,7 @@ impl LintGroup {
         insert_struct_rule!(ForNoun, true);
         insert_pattern_rule!(Hedging, true);
         insert_pattern_rule!(Hereby, true);
+        insert_pattern_rule!(OpenCompounds, true);
         insert_struct_rule!(HopHope, true);
         insert_struct_rule!(HowTo, true);
         insert_pattern_rule!(HyphenateNumberDay, true);

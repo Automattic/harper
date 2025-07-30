@@ -88,11 +88,9 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
       43 | shelves as she passed; it was labelled “ORANGE MARMALADE”, but to her great
-         |                               ^~~~~~~~ Did you mean to spell `labelled` this way?
+         |                               ^~~~~~~~ Did you mean `labeled`?
 Suggest:
   - Replace with: “labeled”
-  - Replace with: “labeler”
-  - Replace with: “labelless”
 
 
 
@@ -100,11 +98,9 @@ Lint:    Spelling (63 priority)
 Message: |
       54 | I’ve fallen by this time?” she said aloud. “I must be getting somewhere near the
       55 | centre of the earth. Let me see: that would be four thousand miles down, I
-         | ^~~~~~ Did you mean to spell `centre` this way?
+         | ^~~~~~ Did you mean `center`?
 Suggest:
-  - Replace with: “centred”
-  - Replace with: “centres”
-  - Replace with: “censure”
+  - Replace with: “center”
 
 
 
@@ -322,12 +318,10 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      138 | finding it very nice, (it had, in fact, a sort of mixed flavour of cherry-tart,
-         |                                                         ^~~~~~~ Did you mean to spell `flavour` this way?
+         |                                                         ^~~~~~~ Did you mean `flavor`?
      139 | custard, pine-apple, roast turkey, toffee, and hot buttered toast,) she very
 Suggest:
   - Replace with: “flavor”
-  - Replace with: “flavours”
-  - Replace with: “favor”
 
 
 
@@ -499,11 +493,9 @@ Lint:    Spelling (63 priority)
 Message: |
      229 | “If you please, sir—” The Rabbit started violently, dropped the white kid gloves
      230 | and the fan, and skurried away into the darkness as hard as he could go.
-         |                  ^~~~~~~~ Did you mean to spell `skurried` this way?
+         |                  ^~~~~~~~ Did you mean `scurried`?
 Suggest:
   - Replace with: “scurried”
-  - Replace with: “spurred”
-  - Replace with: “scurries”
 
 
 
@@ -1046,22 +1038,18 @@ Lint:    Spelling (63 priority)
 Message: |
      660 | voice she had never heard before, “Sure then I’m here! Digging for apples, yer
      661 | honour!”
-         | ^~~~~~ Did you mean to spell `honour` this way?
+         | ^~~~~~ Did you mean `honor`?
 Suggest:
   - Replace with: “honor”
-  - Replace with: “honours”
-  - Replace with: “honour's”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
-         |                         ^~~~~~ Did you mean to spell `honour` this way?
+         |                         ^~~~~~ Did you mean `honor`?
 Suggest:
   - Replace with: “honor”
-  - Replace with: “honours”
-  - Replace with: “honour's”
 
 
 
@@ -1079,22 +1067,18 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      672 | “Sure, it does, yer honour: but it’s an arm for all that.”
-         |                     ^~~~~~ Did you mean to spell `honour` this way?
+         |                     ^~~~~~ Did you mean `honor`?
 Suggest:
   - Replace with: “honor”
-  - Replace with: “honours”
-  - Replace with: “honour's”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
      677 | then; such as, “Sure, I don’t like it, yer honour, at all, at all!” “Do as I
-         |                                            ^~~~~~ Did you mean to spell `honour` this way?
+         |                                            ^~~~~~ Did you mean `honor`?
 Suggest:
   - Replace with: “honor”
-  - Replace with: “honours”
-  - Replace with: “honour's”
 
 
 
@@ -1708,12 +1692,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1497 | The Hatter shook his head mournfully. “Not I!” he replied. “We quarrelled last
-         |                                                                ^~~~~~~~~~ Did you mean to spell `quarrelled` this way?
+         |                                                                ^~~~~~~~~~ Did you mean `quarreled`?
     1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
 Suggest:
   - Replace with: “quarreled”
-  - Replace with: “quarreler”
-  - Replace with: “quarrellers”
 
 
 
@@ -1847,11 +1829,9 @@ Lint:    Spelling (63 priority)
 Message: |
     1713 | they were all ornamented with hearts. Next came the guests, mostly Kings and
     1714 | Queens, and among them Alice recognised the White Rabbit: it was talking in a
-         |                              ^~~~~~~~~~ Did you mean to spell `recognised` this way?
+         |                              ^~~~~~~~~~ Did you mean `recognized`?
 Suggest:
   - Replace with: “recognized”
-  - Replace with: “recogniser”
-  - Replace with: “recognises”
 
 
 
@@ -2158,7 +2138,7 @@ Message: |
 Suggest:
   - Replace with: “this”
   - Replace with: “ti's”
-  - Replace with: “tbs”
+  - Replace with: “tic”
 
 
 
@@ -2170,7 +2150,7 @@ Message: |
 Suggest:
   - Replace with: “this”
   - Replace with: “ti's”
-  - Replace with: “tbs”
+  - Replace with: “tic”
 
 
 
@@ -2214,11 +2194,9 @@ Lint:    Spelling (63 priority)
 Message: |
     2048 | But here, to Alice’s great surprise, the Duchess’s voice died away, even in the
     2049 | middle of her favourite word ‘moral,’ and the arm that was linked into hers
-         |               ^~~~~~~~~ Did you mean to spell `favourite` this way?
+         |               ^~~~~~~~~ Did you mean `favorite`?
 Suggest:
   - Replace with: “favorite”
-  - Replace with: “favourites”
-  - Replace with: “favourite's”
 
 
 
@@ -3296,11 +3274,9 @@ Lint:    Spelling (63 priority)
 Message: |
     2547 | even make out that one of them didn’t know how to spell “stupid,” and that he
     2548 | had to ask his neighbour to tell him. “A nice muddle their slates’ll be in
-         |                ^~~~~~~~~ Did you mean to spell `neighbour` this way?
+         |                ^~~~~~~~~ Did you mean `neighbor`?
 Suggest:
   - Replace with: “neighbor”
-  - Replace with: “neighbours”
-  - Replace with: “neighbour's”
 
 
 
@@ -3621,12 +3597,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2988 | noises, would change (she knew) to the confused clamour of the busy
-         |                                                 ^~~~~~~ Did you mean to spell `clamour` this way?
+         |                                                 ^~~~~~~ Did you mean `clamor`?
     2989 | farm-yard—while the lowing of the cattle in the distance would take the place of
 Suggest:
   - Replace with: “clamor”
-  - Replace with: “clamours”
-  - Replace with: “glamour”
 
 
 
