@@ -1412,3 +1412,12 @@ fn corrects_rot_iron() {
 fn allows_wrought_iron() {
     assert_lint_count("She specialized in wrought iron artwork.", lint_group(), 0);
 }
+
+#[test]
+fn fixes_teh() {
+    assert_suggestion_result(
+        "I adore teh light of the moon.",
+        lint_group(),
+        "I adore the light of the moon.",
+    );
+}
