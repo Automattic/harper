@@ -302,8 +302,8 @@
 # C/P NSg/I/J/C/Dq+ ISg/D$+ J+        NSg+      . NPr/ISg+ V      V    J/R+ NPr/V/J+ .
 > And now       for a   slap     - up        meal  !
 # V/C NPr/V/J/C C/P D/P NSg/V/J+ . NSg/V/J/P NSg/V .
-> Go      scuba diving   ? For one        thing  , I    can't even     swim  .
-# NSg/V/J NSg/V NSg/V/J+ . C/P NSg/I/V/J+ NSg/V+ . ISg+ VX    NSg/V/J+ NSg/V .
+> Go      scuba  diving   ? For one        thing  , I    can't even     swim  .
+# NSg/V/J N🅪Sg/V NSg/V/J+ . C/P NSg/I/V/J+ NSg/V+ . ISg+ VX    NSg/V/J+ NSg/V .
 > For another , we   don't have   any     equipment .
 # C/P I/D+    . IPl+ V     NSg/VX I/R/Dq+ NᴹSg+     .
 > He       is named for his     grandfather .
@@ -420,8 +420,8 @@
 # D+  NPl/V+ NSg/V/J NSg/V/J/P NPr/J/P NPl/V+ .
 > Arrange the chairs in      a    circle .
 # NSg/V   D+  NPl/V+ NPr/J/P D/P+ NSg/V+ .
-> He       stalked away in      anger  .
-# NPr/ISg+ V/J+    V/J  NPr/J/P NSg/V+ .
+> He       stalked away in      anger   .
+# NPr/ISg+ V/J+    V/J  NPr/J/P NᴹSg/V+ .
 > John is in      a   coma .
 # NPr+ VL NPr/J/P D/P NSg+ .
 > My  fruit   trees  are in      bud   .
@@ -834,8 +834,8 @@
 # IPl+ NSg/V       I/Ddem+ NPl/V+ P  D/P J/R  NSg/V/J NSg/V     .
 > This    gauge  is accurate to a    second   .
 # I/Ddem+ NSg/V+ VL J        P  D/P+ NSg/V/J+ .
-> There's a   lot   of sense to what   he       says   .
-# W?      D/P NPr/V P  NSg/V P  NSg/I+ NPr/ISg+ NPl/V+ .
+> There's a   lot   of sense  to what   he       says   .
+# W?      D/P NPr/V P  N🅪Sg/V P  NSg/I+ NPr/ISg+ NPl/V+ .
 > The name   has a   nice    ring  to it       .
 # D+  NSg/V+ V   D/P NPr/V/J NSg/V P  NPr/ISg+ .
 > There are 100 pence to the pound  .

@@ -85,6 +85,54 @@ fn correct_servers_side() {
     );
 }
 
+// ConfirmThat
+
+#[test]
+fn correct_conform_that() {
+    assert_suggestion_result(
+        "the WCAG requires every view of the page to conform that we move this",
+        lint_group(),
+        "the WCAG requires every view of the page to confirm that we move this",
+    );
+}
+
+#[test]
+fn corrects_conformed_that() {
+    assert_suggestion_result(
+        "I have conformed that works now.",
+        lint_group(),
+        "I have confirmed that works now.",
+    );
+}
+
+#[test]
+fn corrects_conforms_that() {
+    assert_suggestion_result(
+        "I conformed that with the correct configuration, this is working correctly.",
+        lint_group(),
+        "I confirmed that with the correct configuration, this is working correctly.",
+    );
+}
+
+#[test]
+#[ignore = "False positive not yet handled."]
+fn dont_flag_conforming_that() {
+    assert_lint_count(
+        "is there any example of a case that isn't fully conforming that is supported today?",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
+fn corrects_conforming_that() {
+    assert_suggestion_result(
+        "Thanks for conforming that this issue is fixed in the latest version.",
+        lint_group(),
+        "Thanks for confirming that this issue is fixed in the latest version.",
+    );
+}
+
 // DefiniteArticle
 
 #[test]

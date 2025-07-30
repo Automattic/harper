@@ -7765,6 +7765,7 @@ PCM/Ng
 PCMCIA/O            # standard
 PCP/Ng              # drug
 PD/NO
+PDA/NwSg            # personal digital assistant; public display of affection
 PDF/NS              # document format
 PDQ/
 PDT/ON
@@ -9794,6 +9795,7 @@ TLS/NO
 TM/N
 TN/ON               # US state (Tennessee)
 TNT/NOg
+TOC/NgS             # table of contents
 TOEFL/N
 TQM/N
 TTL
@@ -9960,6 +9962,7 @@ Testarossa/ONgS     # car model
 Tet/ONg
 Tethys/Og
 Tetons/NOg
+Tetris/Og
 Teuton/NJgS
 Teutonic/JNg
 Tevet/Og
@@ -12380,12 +12383,12 @@ ancestry/~NSg
 anchor/~NVgdGS
 anchorage/~NgS
 anchorite/NgS
-anchorman/Ng
-anchormen/9
-anchorpeople/9
+anchorman/N0g
+anchormen/N9
+anchorpeople/N9
 anchorperson/NSg
-anchorwoman/Ng
-anchorwomen/9
+anchorwoman/N0g
+anchorwomen/N9
 anchovy/NSg
 ancient/~JNSpg>Y^
 ancientness/Ng
@@ -12419,8 +12422,8 @@ angelfish/N9gS09    # singular and plural, also has a plural in -s
 angelic/~J
 angelica/~Ng
 angelical/JY
-anger/~NVGgdS
-angina/~Ng
+anger/~NmVGgdS
+angina/~Nmg
 angiomyolipoma/NSg
 angioplasty/NSg
 angiosperm/NSg
@@ -15944,10 +15947,10 @@ busily/R
 business/~NwJgS
 businesslike/J
 businessman/~Ng
-businessmen/~9
-businessperson/NSg
-businesswoman/~Ng
-businesswomen/9
+businessmen/~N9
+businessperson/N0Sg
+businesswoman/~N0g
+businesswomen/N9
 busing/VNg
 busk/VNd>ZGS
 buskin/NSg
@@ -16192,12 +16195,12 @@ camelhair/N
 camellia/NgS
 cameo/~NVgS
 camera/~NgS
-cameraman/~Ng
-cameramen/9
-camerapeople/9
-cameraperson/N
-camerawoman/Ng
-camerawomen/9
+cameraman/~N0g
+cameramen/N9
+camerapeople/N9
+cameraperson/N0
+camerawoman/N0g
+camerawomen/N9
 camerawork/N
 camiknickers/N
 camisole/NVSg
@@ -16762,19 +16765,19 @@ ceilidh/NV
 ceilidhs/NV
 ceiling/~NVgS
 celandine/Ng
-celeb/NS
+celeb/NgS
 celebrant/NSg
 celebrate/~VdSGnX
 celebration/~Ng
 celebrator/NSg
 celebratory/~J
-celebrity/~NSg
+celebrity/~NwSg
 celeriac/N
 celerity/Ng
 celery/~Ng
 celesta/NgS
 celestial/~JNY
-celibacy/Ng
+celibacy/Nmg
 celibate/JNVgS
 cell/~NVSgd
 cellar/~NVgS
@@ -16909,9 +16912,9 @@ chairlift/NgS
 chairman/~NVg
 chairmanship/~NSg
 chairmen/~9
-chairperson/~NSg
-chairwoman/~Ng
-chairwomen/9
+chairperson/~N0Sg
+chairwoman/~N0g
+chairwomen/N9
 chaise/NgS
 chalcedony/Ng
 chalet/~NgS
@@ -18395,11 +18398,11 @@ complex/~JNVgSY
 complexion/~NVgdS
 complexional/J
 complexity/~NSg
-compliance/~Ng
+compliance/~Nmg
 compliant/~JY
 complicate/~VJGdS
 complicated/~JVY
-complication/~Ng
+complication/~NgS
 complicit/~J
 complicity/~Nmg
 compliment/~NVgdGS
@@ -18408,7 +18411,8 @@ comply/~VndSXG
 compo/~NS
 component/~NJSg
 comport/VNLSGd
-comportment/Ng
+comportment/Nmg
+composability/Nmg
 compose/~VrEeGSdB
 composedly/R
 composer/~NgS
@@ -18417,9 +18421,9 @@ composition/~Neg
 compositional/~J
 compositor/NSg
 compost/NVSGgd
-composure/NEg
+composure/NmEg
 compote/NSg
-compound/~NJVGgdBS
+compound/~NwJVGgdBS
 compounded/~JVU
 comprehend/~VSdG
 comprehensibility/Nig
@@ -18444,6 +18448,8 @@ compulsiveness/Ng
 compulsorily/R
 compulsory/~JNSg
 compunction/NSg
+computable/J
+computability/Nmg
 computation/~NSg
 computational/~JY
 compute/~VNrdSG
@@ -18663,10 +18669,10 @@ congregationalism/Ng
 congregationalist/~JNgS
 congress/~NVgS
 congressional/~JY
-congressman/~Ng
-congressmen/~9
-congresspeople/9
-congressperson/NgS
+congressman/~N0g
+congressmen/~N9
+congresspeople/N9
+congressperson/N0gS
 congresswoman/~Ng
 congresswomen/9
 congruence/~Ng
@@ -19293,9 +19299,9 @@ councillor/NSg!@_
 councilman/~Ng
 councilmen/9
 councilor/~NgS
-councilperson/NSg
-councilwoman/Ng
-councilwomen/9
+councilperson/N0Sg
+councilwoman/N0g
+councilwomen/N9
 counsel/~NVzgdGS
 counselled/V!@_
 counselling/NV!@_
@@ -21759,6 +21765,7 @@ doomer/NgS
 doomsayer/NgS
 doomsday/~NJg
 doomster/NS
+doona/NgS_
 door/~NViS
 door's
 doorbell/NVgS
@@ -22250,7 +22257,7 @@ dutiable/JN
 dutiful/JYp
 dutifulness/Ng
 duty/~NSg
-duvet/NSg
+duvet/NSg!
 dwarf/~NJVSGgd
 dwarfish/J
 dwarfism/Ng
@@ -30481,6 +30488,7 @@ jangler/Ng
 janitor/~NSg
 janitorial/J
 jank/Ng
+jankiness/Nmg
 janky/J^>
 japan/~NVSg
 japanned/V
@@ -30489,13 +30497,13 @@ jape/NVgGdS
 jar/~NVSg
 jardiniere/NSg
 jarful/NgS
-jargon/~NVg
+jargon/~NmVg
 jarred/VJ
 jarring/JNVY
-jasmine/~NSg
+jasmine/~NwSg
 jasper/~NVg
 jato/NgS
-jaundice/NVdSgG
+jaundice/NmVdSgG
 jaunt/NVSGgd
 jauntily/R
 jauntiness/Ng
@@ -30603,6 +30611,7 @@ jinx/NVgdSG
 jit/VS
 jitney/~NSg
 jitted/V
+jitter/NgSVdG
 jitterbug/NVgS
 jitterbugged/V
 jitterbugger/Ng
@@ -34620,12 +34629,13 @@ multilayer/Jd
 multilevel/J
 multiline/J
 multilingual/~JN
-multilingualism/Ng
+multilingualism/Nmg
 multimedia/~NmJg
 multimeter/NSg
 multimillionaire/NSg
 multimodal/J
 multinational/~JNSg
+multiparadigm/J
 multipart/J
 multipartite
 multiparty/J
@@ -34637,7 +34647,7 @@ multiple/~JNgSDq
 multiplex/~JNVZGgd>S
 multiplexer/NgS
 multiplicand/NgS
-multiplication/~Ng
+multiplication/~Nmg
 multiplicative/~JN
 multiplicity/~NSg
 multiplier/~NgS
@@ -36025,6 +36035,7 @@ obsequious/JpY
 obsequiousness/Nmg
 obsequy/Ng
 observability/Nmg
+observable/JNgS
 observably/R
 observance/~NgS
 observant/~JY
@@ -38539,6 +38550,7 @@ pincushion/NVgS
 pine/~NVrGdS
 pine's
 pineapple/~NgS
+pinecone/NgS
 pinewood/~NS
 piney/~J
 pinfeather/NSg
@@ -39283,6 +39295,7 @@ postpartum/JN
 postpone/~VdSGL
 postponement/NwSg
 postprandial/J
+postprocess/VGdS
 postscript/~NVSg
 postseason/~NJSg
 postsynaptic/~J
@@ -43185,12 +43198,12 @@ scribe's
 scrim/NVgS
 scrimmage/~NVgGdS
 scrimp/NVJSdG
-scrimshaw/VNgdGS
+scrimshaw/VNwgdGS
 scrip/NgS
 script/~NVWSgdGB
 scripted/~VJU
 scriptural/~J
-scripture/~NgS
+scripture/~NwgS
 scriptwriter/~NSg
 scrivener/NSg
 scrod/NVg
@@ -43198,26 +43211,27 @@ scrofula/Ng
 scrofulous/J
 scrog/NS
 scroll/~NVGSgd
+scrollable/J
 scroller/NgS
 scrooge/~NVgS
-scrota/N
+scrota/N9
 scrotal/J
-scrotum/Ng
+scrotum/N0g
 scrounge/VNd>SZG
 scrounger/Ng
 scroungy/J^>
-scrub/~JNVgS
+scrub/~JNwVgS
 scrubbed/VJ
 scrubber/NSg
 scrubbing/VN
 scrubby/JN>^
 scruff/~NVSg
 scruffily/R
-scruffiness/Ng
+scruffiness/Nmg
 scruffy/JN>p^
 scrum/~NVOS
-scrumhalf/N
-scrumhalves/9
+scrumhalf/N0
+scrumhalves/N9
 scrummage/NVS
 scrummed/V
 scrumming/V
@@ -43234,7 +43248,7 @@ scrutineer/NVS
 scrutinise/VGdS!_
 scrutinize/VGdS
 scrutiny/~NVg
-scuba/~NVgdSG
+scuba/~NwVgdSG
 scud/~JVNgS
 scudded/V
 scudding/VNJ
@@ -43248,8 +43262,8 @@ sculpt/~VNSGd
 sculptor/~NSg
 sculptress/NgS
 sculptural/~J
-sculpture/~NVdSgG
-scum/~NVgS
+sculpture/~NwVdSgG
+scum/~NmVgS
 scumbag/NgS
 scumble/NVSGd
 scummed/V
@@ -43258,12 +43272,12 @@ scummy/J^>
 scupper/NVgdGS
 scurf/Ng
 scurfy/J
-scurrility/Ng
+scurrility/Nmg
 scurrilous/JpY
-scurrilousness/Ng
+scurrilousness/Nmg
 scurry/VNGdSg
 scurvily/R
-scurvy/JN^>g
+scurvy/JNm^>g
 scutcheon/NSg
 scuttle/NVgGdS
 scuttlebutt/NVg
@@ -43560,7 +43574,7 @@ sensationalise/VGdS!_
 sensationalism/Ng
 sensationalist/JNgS
 sensationalize/VGdS
-sense/~NVgGdS
+sense/~NwVgGdS
 sensei/NgS
 senseless/JpY
 senselessness/Ng
@@ -43976,6 +43990,7 @@ shipmate/NSg
 shipment/~Nrg
 shipments/~N
 shipowner/NgS
+shippable/J
 shipped/~JVr
 shipper/NSg
 shipping/~NVg
@@ -44251,7 +44266,7 @@ sifted/JVU
 sifter/Ng
 sigh/~VNGgd
 sighs/NV
-sight/~NVGgdSz
+sight/~NwVGgdSz
 sighting/~NVg
 sightless/J
 sightly/JU^>
@@ -44799,7 +44814,7 @@ smashup/NSg
 smattering/NVgS
 smear/~VNSgdG
 smeary/J>^
-smell/~NVSgdG
+smell/~NwVSgdG
 smelliness/Ng
 smelly/JN>p^
 smelt/NVSgd>ZG
@@ -45226,26 +45241,27 @@ sopped/V
 sopping/JVN
 soppy/J>^
 soprano/~NVgS
-sorbet/NSg
+sorbet/NwSg
 sorcerer/~NgS
 sorceress/NgS
 sorcery/~Ng
 sordid/JpY
-sordidness/Ng
+sordidness/Nmg
 sore/~JNVgY^>Sp
 sorehead/NgS
-soreness/Ng
-sorghum/~Ng
+soreness/Nmg
+sorghum/~Nmg
 sorority/~NSg
-sorrel/~NJSg
+sorrel/~NwJSg
 sorrily/R
 sorriness/Ng
-sorrow/~NVSgdG
+sorrow/~NwVSgdG
 sorrowful/JYp
-sorrowfulness/Ng
+sorrowfulness/Nmg
 sorry/~JNV>^p
 sort/~NVWrSGdg
-sorta/
+sorta/              # 'sort of'
+sortable/J
 sorted/~VJU
 sorter/NSg
 sortie/NVdSg
@@ -45619,7 +45635,7 @@ spoken/~JVU
 spokesman/~N0g
 spokesmen/N9
 spokespeople/N9
-spokesperson/~NgS
+spokesperson/~N0gS
 spokeswoman/~Ng
 spokeswomen/9
 spoliation/Neg
@@ -45652,11 +45668,11 @@ sporting/~VJNY
 sportive/JNY
 sportscast/Ng>ZGS
 sportscaster/~Ng
-sportsman/~Ng
+sportsman/~N0g
 sportsmanlike/JU
 sportsmanship/~Ng
-sportsmen/~9
-sportspeople/~9
+sportsmen/~N9
+sportspeople/~N9
 sportsperson/N
 sportswear/~Ng
 sportswoman/Ng
@@ -47697,7 +47713,7 @@ teaspoon/NVSg
 teaspoonful/NSg
 teat/NgS
 teatime/NS
-tech/~NVg
+tech/~NmVg
 techie/NJS
 technetium/~Ng
 technical/~JNY
@@ -48450,16 +48466,16 @@ tiramisu/NgS
 tire/~VNrGdS
 tire's
 tired/~VJp>Y^
-tiredness/Ng
+tiredness/Nmg
 tireless/~JYp
 tirelessness/Ng
 tiresome/JpY
 tiresomeness/Ng
-tissue/~NVSg
+tissue/~NwVSg
 tit/~NVSg
 titan/~NSg
 titanic/~J
-titanium/~Ng
+titanium/~Nmg
 titbit/NSg!_
 titch/NVS
 titchy/J
@@ -48764,7 +48780,7 @@ townsfolk/Ng
 township/~NgS
 townsman/Ng
 townsmen/9
-townspeople/~9g
+townspeople/~N9g
 townswoman/Ng
 townswomen/9
 towpath/Ng
@@ -48815,7 +48831,7 @@ tradeoff/NSg
 trader/~Ng
 tradesman/Ng
 tradesmen/9
-tradespeople/9g
+tradespeople/N9g
 tradeswoman/Ng
 tradeswomen/9
 tradie/NgS
@@ -50879,7 +50895,7 @@ vise/NVregGdS
 visibility/~Nig
 visible/~Ji
 visibly/~iR
-vision/~NVKGdSg
+vision/~NwVKGdSg
 visionary/~JNSg
 visit/~VNrSGd
 visit's
@@ -51107,9 +51123,9 @@ waistline/NgS
 wait/~VNgdGS
 waiter/~NVg
 waiting/~VNg
-waitperson/NgS
+waitperson/N0gS
 waitress/~NVgS
-waitstaff/Ng
+waitstaff/Nmg
 waive/~VNd>SZG
 waiver/~NVg
 wake/~VNgGzdS
@@ -51390,7 +51406,7 @@ weatherization/Ng
 weatherize/VdSG
 weatherman/Ng
 weathermen/9
-weatherperson/NgS
+weatherperson/N0gS
 weatherproof/JVGSd
 weatherstrip/NVS
 weatherstripped/V
@@ -52520,6 +52536,7 @@ BCD/Ng              # binary coded decimal
 BCPL/Ng             # old programming language
 BLM/Ng
 BRICS/              # intergovernmental organization
+BSP/NSg             # data structure
 BYD/OgS             # Chinese automobile manufacturer
 Bachiyski/Sg
 Bezos/O             # Surname, Amazon founder
@@ -52565,6 +52582,7 @@ Cypher/ONg
 DATETIME/NgS        # dictionaries prefer: datetime
 DBMS/NOSg           # database management system
 DCT/NgS             # discrete cosine transform
+DDoS/Ng
 DEI
 DKIM/NSg
 DLL/NgS             # dynamic link library
@@ -52621,6 +52639,7 @@ GSM/OJ              # Global System for Mobile Communications
 GTK/O               # GIMP Toolkit
 Ganeti/Sg
 Gateron/Sg
+GeForce/Og
 Gerber/Ng           # file format
 Ghidra/Og           # reverse engineering
 GitLab/Sg           # GitHub alternative
@@ -52879,6 +52898,7 @@ Viktor/Sg
 VirtualBox/ONgS
 Vite/Sg
 Vue/gO              # framework
+Vulkan/Og
 WAL/ONSg
 WASI/gS
 WASM/gS             # see WebAssembly
@@ -52890,6 +52910,7 @@ WSL/gO              # windows subsystem for linux
 Waymo/Og
 WebAssembly/g       # see WASM
 WebDAV/Og
+WebGL/Og
 WebGPU/Sg
 WebKit/Og
 WebRTC/Og
@@ -52923,8 +52944,11 @@ autoconfiguration/Ng
 autoconfigure/VSdG
 autodifferentiation/Nmg
 autosave/VSdGNg
+awk/Og              # *nix tool
 backend/NSg         # dictionaries prefer: back end
+backoff/NsG
 baz/~               # cf. foo, bar
+blogpost/NgS
 clickstream/NgS
 concat/VSdG
 config/NVSg         # not marked as a verb since "configed" and "configing" look wrong
@@ -52959,6 +52983,8 @@ hostname/NSg
 hotwire/VBG         # dictionaries prefer: hot-wire
 i18n/Nm             # internationalization
 infosec/NmG         # information security
+inpaint/VGdS
+iPadOS/Og
 jQuery/Og
 labriola/Sg         # !! please check and comment !! - should be uppercase surname?
 linkification/Nmg
@@ -52981,6 +53007,7 @@ s.t./~              # !! please check and comment !!
 sRGB/Og             # colour space
 scatterplot/NVSgG   # dictionaries prefer: scatter plot
 scrollbar/NSg       # dictionaries prefer: scroll bar
+sed/Og              # *nix tool / language
 sioyek/Sg           # !! please check and comment !!
 stacktrace/SgN      # dictionaries prefer: stack trace
 standup/Sg          # dictionaries prefer: stand-up
@@ -52990,8 +53017,10 @@ tagset/NgS
 trie/NgS            # data structure
 uptime/NwgS
 vid/NgS             # video
+watchOS/Og
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
+z-buffer/NgS
 
 # Experimental multi-word entries
 # Harper may not recognize these as words in documents
@@ -53017,6 +53046,7 @@ anti-vaccine/J
 anti-vax/J
 anti-vaxxer/NgS
 avant-garde/NgJ
+back door/NgSVGd
 back to back/R
 back-to-back/J
 barn find/NgS
@@ -53069,6 +53099,8 @@ custom-made/J
 cut scene/NgS
 cutting edge/NgS
 cutting-edge/J
+data center/NgS!@_
+data center/NgS<
 day-to-day/JR
 de-extinct/VGd
 de-extinction/NgS
@@ -53147,6 +53179,7 @@ half-life/Ng
 half-lives/9
 ham-fisted/J
 hand-drawn/J
+hand-me-down/JNgS
 hands-off/J
 happy-go-lucky/J
 hard code/VSdG
@@ -53306,6 +53339,7 @@ plan B/g
 play-by-play/JNgS
 post-Covid/J
 post-truth/NVg
+power-up/NgS
 pre-COVID/J
 pro-democracy/J
 quid pro quo/Ng
@@ -53317,6 +53351,7 @@ ray marching/Nmg
 ray tracer/NgS
 ray tracing/Nmg
 re-enable/VdSG
+read-only/J
 real time/Ng
 real-time/J
 real world/Ng
@@ -53397,6 +53432,7 @@ time-consuming/JY
 time frame/NgS
 time-honored/J<
 time-honoured/J!@_
+time-share/NgSVdG
 tit for tat/N
 tit-for-tat/J
 tl;dr/
@@ -53458,6 +53494,7 @@ z-axis/Ng
 # For this reason the most important ones to include are the ones that have a noun counterpart.
 # Remember not to add any affixes since only the verb part at the start undergoes inflection.
 
+back off/V
 back up/V
 black out/V
 blast off/V

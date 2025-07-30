@@ -857,17 +857,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-     255 | are required to perform those computations. In an effort to answer the first
-     256 | question, computability theory examines which computational problems are
-         |           ^~~~~~~~~~~~~ Did you mean to spell `computability` this way?
-Suggest:
-  - Replace with: “compatibility”
-  - Replace with: “comparability”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
          |                ^~ Did you mean to spell `NP` this way?
 Suggest:
@@ -1063,19 +1052,6 @@ Suggest:
   - Replace with: “Lotteries”
   - Replace with: “Notified”
   - Replace with: “Pottered”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     441 |   deal with in order to represent "anything".[note 4]
-     442 |   > All the information about any computable problem can be represented using
-         |                                   ^~~~~~~~~~ Did you mean to spell `computable` this way?
-     443 |   > only 0 and 1 (or any other bistable pair that can flip-flop between two
-Suggest:
-  - Replace with: “commutable”
-  - Replace with: “comparable”
-  - Replace with: “compatible”
 
 
 

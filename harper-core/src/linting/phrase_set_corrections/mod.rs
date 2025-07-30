@@ -81,6 +81,19 @@ pub fn lint_group() -> LintGroup {
             "Corrects extraneous apostrophe in `client's side` and `server's side`.",
             LintKind::Punctuation
         ),
+        "ConfirmThat" => (
+            &[
+                ("conform that", "confirm that"),
+                ("conformed that", "confirmed that"),
+                ("conforms that", "confirms that"),
+                // Note: false positives in this inflection:
+                // "is there any example of a case that isn't fully conforming that is supported today?"
+                ("conforming that", "confirming that"),
+            ],
+            "Did you mean `confirm` rather than `conform`?",
+            "Corrects `conform` typos to `confirm`.",
+            LintKind::Typo
+        ),
         "DefiniteArticle" => (
             &[
                 ("definitive article", "definite article"),

@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.52.0",
+	"version": "0.53.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -187,7 +187,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects the missing article after `after while` or `after awhile`, forming `after a while`."
+					"description": "Corrects the missing article in `after while`, forming `after a while`."
 				},
 				"harper.linters.AheadAnd": {
 					"scope": "resource",
@@ -296,12 +296,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `anyhow`."
-				},
-				"harper.linters.Anyone": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Looks for incorrect spacing inside the closed compound `anyone`."
 				},
 				"harper.linters.Anywhere": {
 					"scope": "resource",
@@ -585,6 +579,12 @@
 					"default": true,
 					"description": "This linter detects instances where the noun `confidant` is incorrectly used in place of the adjective `confident`. `Confidant` refers to a trusted person, whereas `confident` describes certainty or self-assurance. The rule suggests replacing `confidant` with `confident` when used in an adjectival context."
 				},
+				"harper.linters.ConfirmThat": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `conform` typos to `confirm`."
+				},
 				"harper.linters.CorrectNumberSuffix": {
 					"scope": "resource",
 					"type": "boolean",
@@ -729,6 +729,12 @@
 					"default": true,
 					"description": "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`."
 				},
+				"harper.linters.EveryTime": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `everytime` to `every time`."
+				},
 				"harper.linters.Everybody": {
 					"scope": "resource",
 					"type": "boolean",
@@ -861,6 +867,12 @@
 					"default": true,
 					"description": "Corrects some expressions using `few` where `a few` is correct."
 				},
+				"harper.linters.FillerWords": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Removes filler words."
+				},
 				"harper.linters.FirstAidKit": {
 					"scope": "resource",
 					"type": "boolean",
@@ -877,7 +889,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects the missing article in `for while` or `for awhile`, forming `for a while`."
+					"description": "Corrects the missing article in `for while`, forming `for a while`."
 				},
 				"harper.linters.ForAllIntentsAndPurposes": {
 					"scope": "resource",
@@ -987,6 +999,12 @@
 					"default": true,
 					"description": "Flags questions that begin with `has` followed by a pronoun that requires `have`, such as `Has we …` or `Has I …`, and suggests the correct auxiliary."
 				},
+				"harper.linters.HaveTakeALook": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects either `have a look` or `take a look` to the other, depending on the dialect."
+				},
 				"harper.linters.Hedging": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1087,7 +1105,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects the missing article in `in while` or `in awhile`, forming `in a while`."
+					"description": "Corrects the missing article in `in while`, forming `in a while`."
 				},
 				"harper.linters.InAnyWay": {
 					"scope": "resource",
@@ -1221,6 +1239,12 @@
 					"default": true,
 					"description": "Detects the possessive `its` before `had`, `been`, or `got` and offers `it's` or `it has`."
 				},
+				"harper.linters.ItsPossessive": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "In English, possessive pronouns never take an apostrophe. Use `its` to show ownership (e.g. “its texture”) and avoid confusing it with `it's`, which always means “it is” or “it has.”"
+				},
 				"harper.linters.Itself": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1353,6 +1377,12 @@
 					"default": true,
 					"description": "Corrects `make due` to `make do` when followed by `with`."
 				},
+				"harper.linters.MakeItSeem": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `make it seems` to `make it seem`."
+				},
 				"harper.linters.Malaysia": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1436,6 +1466,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `mute` to `moot` in the phrase `moot point`."
+				},
+				"harper.linters.MorePreferable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `more preferable` to `preferable`."
 				},
 				"harper.linters.MostNumber": {
 					"scope": "resource",
@@ -1574,12 +1610,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Correct mass nouns that are preceded by the wrong determiners or quantifiers."
-				},
-				"harper.linters.NounInsteadOfVerb": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects nouns used instead of verbs when the two are related."
 				},
 				"harper.linters.Nowhere": {
 					"scope": "resource",
@@ -2078,6 +2108,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Repeating the word \"that\" is often redundant. The phrase `that which` is easier to read."
+				},
+				"harper.linters.The": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Fixes especially common misspellings of the word `the`"
 				},
 				"harper.linters.TheAnother": {
 					"scope": "resource",

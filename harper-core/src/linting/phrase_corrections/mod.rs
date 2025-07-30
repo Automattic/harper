@@ -342,6 +342,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`.",
             LintKind::Punctuation
         ),
+        "EveryTime" => (
+            ["everytime"],
+            ["every time"],
+            "`Everytime` as a single word is proscribed. Use `every time` instead.",
+            "Corrects `everytime` to `every time`.",
+            LintKind::Usage
+        ),
         "Excellent" => (
             ["very good"],
             ["excellent"],
