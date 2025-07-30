@@ -17,7 +17,7 @@
 > computation , and information theory ) to applied disciplines ( including the
 # NSg         . V/C NᴹSg+       NSg+   . P  V/J     NPl/V+      . V         D+
 > design and implementation of hardware and software ) .
-# NSg/V  V/C NSg            P  NSg      V/C NSg+     . .
+# NSg/V  V/C NSg            P  NᴹSg     V/C NᴹSg+    . .
 >
 #
 > Algorithms and data  structures are central to computer science . The theory of
@@ -37,9 +37,9 @@
 > of repositories of data  . Human   – computer interaction investigates the interfaces
 # P  NPl          P  N🅪Pl+ . NSg/V/J . NSg/V+   NSg+        V            D   NPl/V
 > through which humans and computers interact , and software engineering focuses on
-# NSg/J/P I/C+  NPl/V  V/C NPl/V+    NSg/V    . V/C NSg+     NSg/V+      NPl/V   J/P
+# NSg/J/P I/C+  NPl/V  V/C NPl/V+    NSg/V    . V/C NᴹSg+    NSg/V+      NPl/V   J/P
 > the design and principles behind  developing software . Areas such  as    operating
-# D   NSg/V  V/C NPl/V+     NSg/J/P V          NSg+     . NPl+  NSg/I NSg/R V
+# D   NSg/V  V/C NPl/V+     NSg/J/P V          NᴹSg+    . NPl+  NSg/I NSg/R V
 > systems , networks and embedded systems investigate the principles and design
 # NPl     . NPl/V+   V/C V/J      NPl+    V           D   NPl/V      V/C NSg/V+
 > behind  complex  systems . Computer architecture describes the construction of
@@ -67,11 +67,11 @@
 >
 #
 > History
-# NSg
+# N🅪Sg
 >
 #
-> The earliest foundations of what   would  become computer science predate the
-# D   W?       NPl         P  NSg/I+ NSg/VX V      NSg/V+   NSg/V+  NSg/V   D
+> The earliest foundations of what   would become computer science predate the
+# D   W?       NPl         P  NSg/I+ VX    V      NSg/V+   NSg/V+  NSg/V   D
 > invention of the modern digital computer . Machines for calculating fixed
 # NSg       P  D+  NSg/J+ NSg/J+  NSg/V+   . NPl/V    C/P V/J         V/J
 > numerical tasks  such  as    the abacus have   existed since antiquity , aiding in
@@ -129,7 +129,7 @@
 > published the 2nd of the only  two designs for mechanical analytical engines in
 # V/J       D   #   P  D   J/R/C NSg NPl/V   C/P NSg/J      J          NPl/V   NPr/J/P
 > history . In      1914 , the Spanish engineer Leonardo Torres Quevedo published his
-# NSg+    . NPr/J/P #    . D+  NPr/J+  NSg/V+   NPr+     NPr    ?       V/J       ISg/D$+
+# N🅪Sg+   . NPr/J/P #    . D+  NPr/J+  NSg/V+   NPr+     NPr    ?       V/J       ISg/D$+
 > Essays on  Automatics , and designed , inspired by      Babbage , a   theoretical
 # NPl/V+ J/P NPl        . V/C V/J      . V/J      NSg/J/P NPr     . D/P J
 > electromechanical calculating machine which was to be     controlled by      a   read   - only
@@ -285,11 +285,11 @@
 > disciplines other   than computer science . For example , the study of computer
 # NPl/V       NSg/V/J C/P  NSg/V+   NSg/V+  . C/P NSg/V+  . D   NSg/V P  NSg/V+
 > hardware is usually considered part    of computer engineering , while     the study of
-# NSg+     VL R       V/J        NSg/V/J P  NSg/V+   NSg/V+      . NSg/V/C/P D   NSg/V P
+# NᴹSg+    VL R       V/J        NSg/V/J P  NSg/V+   NSg/V+      . NSg/V/C/P D   NSg/V P
 > commercial computer systems and their deployment is often called information
 # NSg/J      NSg/V+   NPl     V/C D$+   NSg+       VL R     V/J    NᴹSg+
 > technology or    information systems . However , there has been  exchange of ideas
-# NSg        NPr/C NᴹSg        NPl+    . C       . +     V   NSg/V NSg/V    P  NPl+
+# N🅪Sg       NPr/C NᴹSg        NPl+    . C       . +     V   NSg/V NSg/V    P  NPl+
 > between the various computer - related disciplines . Computer science research also
 # NSg/P   D   J+      NSg/V+   . J       NPl/V       . NSg/V+   NSg/V+  NSg/V+   W?
 > often intersects other    disciplines , such  as    cognitive science , linguistics ,
@@ -315,11 +315,11 @@
 >
 #
 > The relationship between computer science and software engineering is a
-# D+  NSg          NSg/P   NSg/V+   NSg/V   V/C NSg+     NSg/V+      VL D/P
+# D+  NSg          NSg/P   NSg/V+   NSg/V   V/C NᴹSg+    NSg/V+      VL D/P
 > contentious issue  , which is further muddied by      disputes over      what   the term
 # J           NSg/V+ . I/C+  VL V/J     V/J     NSg/J/P NPl/V+   NSg/V/J/P NSg/I+ D   NSg/V/J+
 > " software engineering " means , and how   computer science is  defined . David Parnas ,
-# . NSg+     NSg/V+      . NPl/V . V/C NSg/C NSg/V+   NSg/V+  VL+ V/J     . NPr+  ?      .
+# . NᴹSg+    NSg/V+      . NPl/V . V/C NSg/C NSg/V+   NSg/V+  VL+ V/J     . NPr+  ?      .
 > taking  a   cue   from the relationship between other   engineering and science
 # NSg/V/J D/P NSg/V P    D+  NSg+         NSg/P   NSg/V/J NSg/V       V/C NSg/V+
 > disciplines , has claimed that         the principal focus of computer science is
@@ -327,7 +327,7 @@
 > studying the properties of computation in      general , while     the principal focus of
 # V        D   NPl/V      P  NSg         NPr/J/P NSg/V/J . NSg/V/C/P D   NSg/J     NSg/V P
 > software engineering is the design of specific computations to achieve practical
-# NSg+     NSg/V+      VL D   NSg/V  P  NSg/J    NPl          P  V       NSg/J+
+# NᴹSg+    NSg/V+      VL D   NSg/V  P  NSg/J    NPl          P  V       NSg/J+
 > goals  , making the two separate but     complementary disciplines .
 # NPl/V+ . NSg/V  D   NSg NSg/V/J  NSg/C/P NSg/J+        NPl/V+      .
 >
@@ -362,8 +362,8 @@
 # ?      V/C NPr+    ?  NPr+  V/J    NPr/J/P #    .
 >
 #
-> Computer science is an  empirical discipline . We   would  have   called it       an
-# NSg/V+   NSg/V   VL D/P NSg/J+    NSg/V+     . IPl+ NSg/VX NSg/VX V/J    NPr/ISg+ D/P+
+> Computer science is an  empirical discipline . We   would have   called it       an
+# NSg/V+   NSg/V   VL D/P NSg/J+    NSg/V+     . IPl+ VX    NSg/VX V/J    NPr/ISg+ D/P+
 > experimental science , but     like        astronomy , economics , and geology , some     of its
 # NSg/J+       NSg/V+  . NSg/C/P NSg/V/J/C/P NSg       . NSg+      . V/C NSg     . I/J/R/Dq P  ISg/D$+
 > unique forms of observation and experience do     not   fit     a   narrow  stereotype of
@@ -425,7 +425,7 @@
 > separate paradigms in      computer science . Peter    Wegner argued that         those   paradigms
 # NSg/V/J  NPl       NPr/J/P NSg/V+   NSg/V+  . NPr/V/J+ ?      V/J    NSg/I/C/Ddem I/Ddem+ NPl+
 > are science , technology , and mathematics . Peter    Denning's working group  argued
-# V   NSg/V   . NSg+       . V/C NᴹSg+       . NPr/V/J+ ?         V       NSg/V+ V/J
+# V   NSg/V   . N🅪Sg+      . V/C NᴹSg+       . NPr/V/J+ ?         V       NSg/V+ V/J
 > that         they are theory , abstraction ( modeling ) , and design . Amnon H. Eden
 # NSg/I/C/Ddem IPl+ V   NSg    . NSg         . NSg/V+   . . V/C NSg/V+ . ?     ?  NPr+
 > described them     as    the " rationalist paradigm " ( which treats computer science as    a
@@ -435,7 +435,7 @@
 > mainly employs deductive reasoning ) , the " technocratic paradigm " ( which might     be
 # R      NPl/V   J         NSg/V     . . D   . J            NSg+     . . I/C+  NᴹSg/VX/J NSg/VX
 > found in      engineering approaches , most       prominently in      software engineering ) , and
-# NSg/V NPr/J/P NSg/V+      NPl/V+     . NSg/I/J/Dq R           NPr/J/P NSg+     NSg/V+      . . V/C
+# NSg/V NPr/J/P NSg/V+      NPl/V+     . NSg/I/J/Dq R           NPr/J/P NᴹSg+    NSg/V+      . . V/C
 > the " scientific paradigm " ( which approaches computer - related artifacts from the
 # D   . J          NSg+     . . I/C+  NPl/V+     NSg/V+   . J       NPl       P    D
 > empirical perspective of natural sciences , identifiable in      some     branches of
@@ -444,8 +444,8 @@
 # J+         N🅪Sg+        . . NSg/V+   NSg/V+  NPl/V   J/P NPl/V+  V/J      NPr/J/P
 > design , specification , programming , verification , implementation and testing of
 # NSg/V  . NSg+          . NSg/V+      . NSg          . NSg            V/C V       P
-> human   - made  computing systems .
-# NSg/V/J . NSg/V NSg/V+    NPl+    .
+> human   - made computing systems .
+# NSg/V/J . V    NSg/V+    NPl+    .
 >
 #
 > Fields
@@ -457,9 +457,9 @@
 > studies of algorithms and the limits of computation to the practical issues of
 # NPl/V   P  NPl+       V/C D   NPl/V  P  NSg         P  D   NSg/J     NPl/V  P
 > implementing computing systems in      hardware and software . CSAB , formerly called
-# V            NSg/V+    NPl     NPr/J/P NSg      V/C NSg+     . ?    . R        V/J
-> Computing Sciences Accreditation Board  — which is made  up        of representatives of
-# NSg/V+    NPl/V+   NSg           NSg/V+ . I/C+  VL NSg/V NSg/V/J/P P  NPl             P
+# V            NSg/V+    NPl     NPr/J/P NᴹSg     V/C NᴹSg+    . ?    . R        V/J
+> Computing Sciences Accreditation Board  — which is made up        of representatives of
+# NSg/V+    NPl/V+   N🅪Sg          NSg/V+ . I/C+  VL V    NSg/V/J/P P  NPl             P
 > the Association for Computing Machinery ( ACM ) , and the IEEE Computer Society
 # D+  NSg         C/P NSg/V+    NᴹSg+     . NSg . . V/C D+  NPr+ NSg/V+   NSg+
 > ( IEEE CS    ) — identifies four areas that          it       considers crucial to the discipline of
@@ -469,7 +469,7 @@
 > programming methodology and languages , and computer elements and  architecture .
 # NSg/V+      NSg         V/C NPl/V+    . V/C NSg/V+   NPl/V    V/C+ NSg+         .
 > In      addition to these   four areas , CSAB also identifies fields   such  as    software
-# NPr/J/P NSg      P  I/Ddem+ NSg  NPl+  . ?    W?   V          NPrPl/V+ NSg/I NSg/R NSg+
+# NPr/J/P NSg      P  I/Ddem+ NSg  NPl+  . ?    W?   V          NPrPl/V+ NSg/I NSg/R NᴹSg+
 > engineering , artificial intelligence , computer networking and communication ,
 # NSg/V+      . J+         N🅪Sg+        . NSg/V+   NᴹSg/V     V/C NSg+          .
 > database systems , parallel computation , distributed computation , human   – computer
@@ -571,7 +571,7 @@
 > discipline of computer science , both   depending on  and affecting mathematics ,
 # NSg/V      P  NSg/V+   NSg/V+  . I/C/Dq V         J/P V/C V/J       NᴹSg+       .
 > software engineering , and linguistics . It       is an  active research area  , with
-# NSg+     NSg/V+      . V/C NSg+        . NPr/ISg+ VL D/P NSg/J  NSg/V+   N🅪Sg+ . P
+# NᴹSg+    NSg/V+      . V/C NSg+        . NPr/ISg+ VL D/P NSg/J  NSg/V+   N🅪Sg+ . P
 > numerous dedicated academic journals .
 # J        V/J+      NSg/J+   NPl/V+   .
 >
@@ -579,19 +579,19 @@
 > Formal methods are a   particular kind  of mathematically based technique for the
 # NSg/J+ NPl/V   V   D/P NSg/J      NSg/J P  R              V/J   NSg       C/P D+
 > specification , development and verification of software and hardware systems .
-# NSg           . N🅪Sg        V/C NSg          P  NSg      V/C NSg+     NPl+    .
+# NSg           . N🅪Sg        V/C NSg          P  NᴹSg     V/C NᴹSg+    NPl+    .
 > The use   of formal methods for software and hardware design is motivated by      the
-# D   NSg/V P  NSg/J  NPl/V   C/P NSg      V/C NSg+     NSg/V+ VL V/J       NSg/J/P D+
+# D   NSg/V P  NSg/J  NPl/V   C/P NᴹSg     V/C NᴹSg+    NSg/V+ VL V/J       NSg/J/P D+
 > expectation that          , as    in      other    engineering disciplines , performing appropriate
 # NSg+        NSg/I/C/Ddem+ . NSg/R NPr/J/P NSg/V/J+ NSg/V+      NPl/V+      . V          V/J
 > mathematical analysis can    contribute to the reliability and robustness of a
 # J            N🅪Sg+    NPr/VX NSg/V      P  D+  NSg         V/C NSg        P  D/P+
 > design . They form  an  important theoretical underpinning for software
-# NSg/V+ . IPl+ NSg/V D/P J         J           NSg/V        C/P NSg+
+# NSg/V+ . IPl+ NSg/V D/P J         J           NSg/V        C/P NᴹSg+
 > engineering , especially where safety or    security is  involved . Formal methods are
 # NSg/V+      . R          NSg/C N🅪Sg/V NPr/C NSg+     VL+ V/J      . NSg/J  NPl/V+  V
 > a   useful adjunct to software testing since they help  avoid errors and can    also
-# D/P J      NSg/V/J P  NSg      V+      C/P   IPl+ NSg/V V     NPl/V+ V/C NPr/VX W?
+# D/P J      NSg/V/J P  NᴹSg     V+      C/P   IPl+ NSg/V V     NPl/V+ V/C NPr/VX W?
 > give  a   framework for testing . For industrial use    , tool   support is required .
 # NSg/V D/P NSg       C/P V+      . C/P NSg/J+     NSg/V+ . NSg/V+ NSg/V+  VL V/J      .
 > However , the high    cost    of using formal methods means that         they are usually only
@@ -607,7 +607,7 @@
 > and program semantics , but     also type   systems and algebraic data  types  to
 # V/C NPr/V+  NPl+      . NSg/C/P W?   NSg/V+ NPl+    V/C J         N🅪Pl+ NPl/V+ P
 > problems in      software and hardware specification and verification .
-# NPl      NPr/J/P NSg      V/C NSg+     NSg           V/C NSg+         .
+# NPl      NPr/J/P NᴹSg     V/C NᴹSg+    NSg           V/C NSg+         .
 >
 #
 > Applied computer science
@@ -675,9 +675,9 @@
 > designs as    complete aircraft . Notable in      electrical and electronic circuit
 # NPl/V   NSg/R NSg/V/J+ NSgPl+   . NSg/J   NPr/J/P NSg/J      V/C J          NSg/V+
 > design are SPICE  , as    well    as    software for physical realization of new     ( or
-# NSg/V+ V   N🅪Sg/V . NSg/R NSg/V/J NSg/R NSg      C/P NSg/J    NSg/NoAm    P  NSg/V/J . NPr/C
+# NSg/V+ V   N🅪Sg/V . NSg/R NSg/V/J NSg/R NᴹSg     C/P NSg/J    NSg/NoAm    P  NSg/V/J . NPr/C
 > modified ) designs . The latter includes essential design software for integrated
-# NSg/V/J  . NPl/V+  . D   NSg/J  NPl/V    NSg/J     NSg/V+ NSg      C/P V/J+
+# NSg/V/J  . NPl/V+  . D   NSg/J  NPl/V    NSg/J     NSg/V+ NᴹSg     C/P V/J+
 > circuits .
 # NPl/V+   .
 >
@@ -699,25 +699,25 @@
 >
 #
 > Software engineering
-# NSg+     NSg/V
+# NᴹSg+    NSg/V
 >
 #
 > Software engineering is the study of designing , implementing , and modifying the
-# NSg+     NSg/V       VL D   NSg/V P  V         . V            . V/C V         D+
+# NᴹSg+    NSg/V       VL D   NSg/V P  V         . V            . V/C V         D+
 > software in      order  to ensure it       is of high    quality , affordable , maintainable , and
-# NSg+     NPr/J/P NSg/V+ P  V      NPr/ISg+ VL P  NSg/V/J NSg/J+  . W?         . J            . V/C
+# NᴹSg+    NPr/J/P NSg/V+ P  V      NPr/ISg+ VL P  NSg/V/J NSg/J+  . W?         . J            . V/C
 > fast     to build . It       is a   systematic approach to software design , involving the
-# NSg/V/J+ P+ NSg/V . NPr/ISg+ VL D/P J          NSg/V    P  NSg      NSg/V+ . V         D
+# NSg/V/J+ P+ NSg/V . NPr/ISg+ VL D/P J          NSg/V    P  NᴹSg     NSg/V+ . V         D
 > application of engineering practices to software . Software engineering deals
-# NSg         P  NSg/V+      NPl/V+    P+ NSg      . NSg+     NSg/V+      NPl/V
+# NSg         P  NSg/V+      NPl/V+    P+ NᴹSg     . NᴹSg+    NSg/V+      NPl/V
 > with the organizing and analyzing of software — it       does  not   just deal    with the
-# P    D   V          V/C V         P  NSg+     . NPr/ISg+ NPl/V NSg/C V/J  NSg/V/J P    D+
+# P    D   V          V/C V         P  NᴹSg+    . NPr/ISg+ NPl/V NSg/C V/J  NSg/V/J P    D+
 > creation or    manufacture of new      software , but     its     internal arrangement and
-# NSg      NPr/C NSg/V       P  NSg/V/J+ NSg+     . NSg/C/P ISg/D$+ J        NSg         V/C+
+# NSg      NPr/C NSg/V       P  NSg/V/J+ NᴹSg+    . NSg/C/P ISg/D$+ J        NSg         V/C+
 > maintenance . For example software testing , systems engineering , technical debt
-# NSg+        . C/P NSg/V+  NSg+     V+      . NPl+    NSg/V+      . NSg/J     N🅪Sg
+# NSg+        . C/P NSg/V+  NᴹSg+    V+      . NPl+    NSg/V+      . NSg/J     N🅪Sg
 > and software development processes .
-# V/C NSg+     N🅪Sg+       NPl/V+    .
+# V/C NᴹSg+    N🅪Sg+       NPl/V+    .
 >
 #
 > Artificial intelligence
@@ -743,7 +743,7 @@
 > development , but     the main    field of practical application has been  as    an  embedded
 # N🅪Sg+       . NSg/C/P D   NSg/V/J NSg/V P  NSg/J     NSg+        V   NSg/V NSg/R D/P V/J
 > component in      areas of software development , which require computational
-# NSg/J+    NPr/J/P NPl   P  NSg+     N🅪Sg+       . I/C+  NSg/V   J+
+# NSg/J+    NPr/J/P NPl   P  NᴹSg+    N🅪Sg+       . I/C+  NSg/V   J+
 > understanding . The starting point  in      the late   1940s was Alan Turing's question
 # NᴹSg/V/J+     . D+  V+       NSg/V+ NPr/J/P D+  NSg/J+ #d    V   NPr  NSg$     NSg/V+
 > " Can    computers think ? " , and the question remains effectively unanswered ,
@@ -777,7 +777,7 @@
 > accesses addresses in      memory . Computer engineers study  computational logic   and
 # NPl/V    NPl/V+    NPr/J/P N🅪Sg+  . NSg/V+   NPl/V+    NSg/V+ J             NSg/V/J V/C
 > design of computer hardware , from individual processor components ,
-# NSg/V  P  NSg/V+   NSg+     . P    NSg/J+     NSg+      NPl+       .
+# NSg/V  P  NSg/V+   NᴹSg+    . P    NSg/J+     NSg+      NPl+       .
 > microcontrollers , personal computers to supercomputers and embedded systems . The
 # NPl              . NSg/J    NPl/V     P  NPl            V/C V/J      NPl+    . D
 > term     " architecture " in      computer literature can    be     traced to the work  of Lyle R.
@@ -802,8 +802,8 @@
 # V         ?     NPl/V+ . NSg/V+  NSg     V/C D   NSg/V/J  NSg/V/J NSg/V+ NSg/V
 > model    . When    multiple computers are connected in      a    network while     using
 # NSg/V/J+ . NSg/I/C NSg/J/Dq NPl/V+    V   V/J       NPr/J/P D/P+ NSg/V+  NSg/V/C/P V
-> concurrency , this    is known   as    a    distributed system . Computers within  that
-# NSg         . I/Ddem+ VL NSg/V/J NSg/R D/P+ V/J+        NSg+   . NPl/V     NSg/J/P NSg/I/C/Ddem+
+> concurrency , this    is known as    a    distributed system . Computers within  that
+# NSg         . I/Ddem+ VL V/J   NSg/R D/P+ V/J+        NSg+   . NPl/V     NSg/J/P NSg/I/C/Ddem+
 > distributed system have   their own     private  memory , and information can    be
 # V/J         NSg+   NSg/VX D$+   NSg/V/J NSg/V/J+ N🅪Sg+  . V/C NᴹSg+       NPr/VX NSg/VX
 > exchanged to achieve common   goals  .
@@ -825,7 +825,7 @@
 >
 #
 > Computer security is a   branch of computer technology with the objective of
-# NSg/V+   NSg      VL D/P NPr/V  P  NSg/V+   NSg        P    D   NSg/J     P
+# NSg/V+   NSg      VL D/P NPr/V  P  NSg/V+   N🅪Sg       P    D   NSg/J     P
 > protecting information from unauthorized access , disruption , or    modification
 # V          NᴹSg        P    V/J+         NSg/V+ . NSg+       . NPr/C NSg+
 > while     maintaining the accessibility and usability of the system for its     intended
@@ -1016,16 +1016,16 @@
 #
 > Object - oriented programming , a   programming paradigm based on  the concept of
 # NSg/V+ . V/J      NSg/V       . D/P NSg/V+      NSg+     V/J   J/P D   NSg/V   P
-> " objects " , which may    contain data , in      the form  of fields   , often known   as
-# . NPl/V+  . . I/C+  NPr/VX V       N🅪Pl . NPr/J/P D   NSg/V P  NPrPl/V+ . R     NSg/V/J NSg/R
-> attributes ; and code    , in      the form  of procedures , often known   as    methods . A
-# NPl/V+     . V/C N🅪Sg/V+ . NPr/J/P D   NSg/V P  NPl+       . R     NSg/V/J NSg/R NPl/V+  . D/P
+> " objects " , which may    contain data , in      the form  of fields   , often known as
+# . NPl/V+  . . I/C+  NPr/VX V       N🅪Pl . NPr/J/P D   NSg/V P  NPrPl/V+ . R     V/J   NSg/R
+> attributes ; and code    , in      the form  of procedures , often known as    methods . A
+# NPl/V+     . V/C N🅪Sg/V+ . NPr/J/P D   NSg/V P  NPl+       . R     V/J   NSg/R NPl/V+  . D/P
 > feature of objects is that         an   object's procedures can    access and often modify
 # NSg/V   P  NPl/V+  VL NSg/I/C/Ddem D/P+ NSg$+    NPl+       NPr/VX NSg/V  V/C R     V
 > the data  fields  of the object with which they are associated . Thus
 # D   N🅪Pl+ NPrPl/V P  D+  NSg/V+ P    I/C+  IPl+ V   V/J        . NSg
-> object - oriented computer programs are made  out         of objects that          interact with
-# NSg/V+ . V/J      NSg/V    NPl/V+   V   NSg/V NSg/V/J/R/P P+ NPl/V+  NSg/I/C/Ddem+ NSg/V    P
+> object - oriented computer programs are made out         of objects that          interact with
+# NSg/V+ . V/J      NSg/V    NPl/V+   V   V    NSg/V/J/R/P P+ NPl/V+  NSg/I/C/Ddem+ NSg/V    P
 > one       another .
 # NSg/I/V/J I/D     .
 >
@@ -1035,7 +1035,7 @@
 > the unit of computer work   , to design and implement integrated business
 # D   NSg  P  NSg/V+   NSg/V+ . P  NSg/V  V/C NSg/V     V/J        N🅪Sg/J+
 > applications and mission critical software programs .
-# W?           V/C NSg/V+  NSg/J+   NSg+     NPl/V+   .
+# W?           V/C NSg/V+  NSg/J+   NᴹSg+    NPl/V+   .
 >
 #
 > Many        languages offer   support for multiple  paradigms , making the distinction more

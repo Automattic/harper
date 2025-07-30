@@ -114,8 +114,8 @@
 # +     V   D/P NSg/V NSg/J/P D   NPl/V  C/P D/P #  . NSg/V/J NSg/V+ .
 > I    was aghast by      what   I    saw    .
 # ISg+ V   J      NSg/J/P NSg/I+ ISg+ NSg/V+ .
-> There are many       well    - known   plays by      William Shakespeare .
-# +     V   NSg/I/J/Dq NSg/V/J . NSg/V/J NPl/V NSg/J/P NPr+    NPr/V+      .
+> There are many       well    - known plays by      William Shakespeare .
+# +     V   NSg/I/J/Dq NSg/V/J . V/J   NPl/V NSg/J/P NPr+    NPr/V+      .
 > I    avoided the guards by      moving  only  when    they weren't looking .
 # ISg+ V/J     D+  NPl/V+ NSg/J/P NSg/V/J J/R/C NSg/I/C IPl+ V+      V       .
 > By      Pythagoras ' theorem , we   can    calculate the length of the hypotenuse .
@@ -402,16 +402,16 @@
 # NPr/V/J+ NPl/V+ NPr/J/P D+  NPr/V/J+ NSg/J+ NSg/J+ .
 > Will   you    be     able    to finish this    in      a    week   ?
 # NPr/VX ISgPl+ NSg/VX NSg/V/J P  NSg/V  I/Ddem+ NPr/J/P D/P+ NSg/J+ .
-> They said they would  call  us       in      a   week   .
-# IPl+ V/J  IPl+ NSg/VX NSg/V NPr/IPl+ NPr/J/P D/P NSg/J+ .
+> They said they would call  us       in      a   week   .
+# IPl+ V/J  IPl+ VX    NSg/V NPr/IPl+ NPr/J/P D/P NSg/J+ .
 > Less    water   gets  in      your boots this    way    .
 # V/J/C/P N🅪Sg/V+ NPl/V NPr/J/P D$+  NPl/V I/Ddem+ NSg/J+ .
 > She  stood there looking in      the window longingly .
 # ISg+ V     W?    V       NPr/J/P D+  NSg/V+ R+        .
 > In      replacing the faucet washers , he       felt    he       was making his     contribution to the environment .
 # NPr/J/P V         D   NSg    W?      . NPr/ISg+ NSg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D+  NSg+        .
-> In      trying  to make  amends , she  actually made  matters worse    .
-# NPr/J/P NSg/V/J P  NSg/V NPl/V  . ISg+ R        NSg/V NPl/V+  NSg/V/J+ .
+> In      trying  to make  amends , she  actually made matters worse    .
+# NPr/J/P NSg/V/J P  NSg/V NPl/V  . ISg+ R        V    NPl/V+  NSg/V/J+ .
 > My  aim    in      travelling   there was to find  my  missing friend   .
 # D$+ NSg/V+ NPr/J/P NSg/V/J/Comm +     V   P  NSg/V D$+ V       NPr/V/J+ .
 > My  fat       rolls around in      folds  .
@@ -464,8 +464,8 @@
 #
 > Suddenly a   strange man     walked in      .
 # R        D/P NSg/V/J NPr/V/J V/J+   NPr/J/P .
-> Would  you    like        that          to take  away or    eat in      ?
-# NSg/VX ISgPl+ NSg/V/J/C/P NSg/I/C/Ddem+ P  NSg/V V/J  NPr/C V   NPr/J/P .
+> Would you    like        that          to take  away or    eat in      ?
+# VX    ISgPl+ NSg/V/J/C/P NSg/I/C/Ddem+ P  NSg/V V/J  NPr/C V   NPr/J/P .
 > He       ran   to the edge  of the swimming pool   and dived in      .
 # NPr/ISg+ NSg/V P  D   NSg/V P  D+  NSg/V+   NSg/V+ V/C V/J+  NPr/J/P .
 > They flew    in      from London last     night   .
@@ -715,7 +715,7 @@
 > Smith  scored again on  twelve minutes , doubling Mudchester Rovers ' lead     .
 # NPr/V+ V/J    P     J/P NSg+   NPl/V+  . V        ?          W?     . N🅪Sg/V/J .
 > I    was reading a   book  on  history .
-# ISg+ V   NPr/V   D/P NSg/V J/P NSg+    .
+# ISg+ V   NPr/V   D/P NSg/V J/P N🅪Sg+   .
 > The city hosted the World  Summit on  the Information Society
 # D+  NSg+ V/J    D+  NSg/V+ NSg/V  J/P D+  NᴹSg+       NSg+
 > I    have   no    opinion on  this    subject  .
@@ -734,8 +734,8 @@
 # IPl+ V/J     D/P NSg/V/J J/P NPr+   .
 > The soldiers mutinied and turned their guns   on  their officers .
 # D+  NPl/V+   V/J      V/C V/J    D$+   NPl/V+ J/P D$+   NPl/V+   .
-> Her     words  made  a   lasting  impression on  my  mind   .
-# ISg/D$+ NPl/V+ NSg/V D/P NSg/V/J+ NSg/V      J/P D$+ NSg/V+ .
+> Her     words  made a   lasting  impression on  my  mind   .
+# ISg/D$+ NPl/V+ V    D/P NSg/V/J+ NSg/V      J/P D$+ NSg/V+ .
 > What   will   be     the effect on  morale ?
 # NSg/I+ NPr/VX NSg/VX D   NSg/V  J/P NSg+   .
 > I    haven't got any    money  on  me       .
@@ -824,8 +824,8 @@
 # ISg+ NPr/V D$+ NSg/V/J+ P+ N🅪Sg/V .
 > Whisk the mixture to a    smooth   consistency .
 # NSg/V D+  NSg+    P  D/P+ NSg/V/J+ NSg+        .
-> He       made  several bad     - taste   jokes to groans from the audience .
-# NPr/ISg+ NSg/V J/Dq    NSg/V/J . NSg/V/J NPl/V P  NPl/V  P    D+  NSg+     .
+> He       made several bad     - taste   jokes to groans from the audience .
+# NPr/ISg+ V    J/Dq    NSg/V/J . NSg/V/J NPl/V P  NPl/V  P    D+  NSg+     .
 > I    tried complaining , but     it       was to no     effect .
 # ISg+ V/J   V           . NSg/C/P NPr/ISg+ V   P  NPr/P+ NSg/V+ .
 > It       was to a   large  extent true     .

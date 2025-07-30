@@ -149,7 +149,7 @@
 > al. have   proposed a   " universal " tag    set     , with 12 categories ( for example , no
 # ?   NSg/VX V/J      D/P . NSg/J     . NSg/V+ NPr/V/J . P    #  NPl        . C/P NSg/V+  . NPr/P
 > subtypes of nouns , verbs  , punctuation , and so        on   ) . Whether a   very small   set     of
-# NPl      P  NPl/V . NPl/V+ . NSg+        . V/C NSg/I/J/C J/P+ . . I/C     D/P J/R  NPr/V/J NPr/V/J P
+# NPl      P  NPl/V . NPl/V+ . NᴹSg+       . V/C NSg/I/J/C J/P+ . . I/C     D/P J/R  NPr/V/J NPr/V/J P
 > very broad tags  or    a   much       larger set     of more         precise ones   is preferable , depends
 # J/R  NSg/J NPl/V NPr/C D/P NSg/I/J/Dq J      NPr/V/J P  NPr/I/V/J/Dq V/J     NPl/V+ VL W?         . NPl/V
 > on  the purpose at    hand   . Automatic tagging is easier on  smaller tag    - sets   .
@@ -157,7 +157,7 @@
 >
 #
 > History
-# NSg
+# N🅪Sg
 >
 #
 > The Brown    Corpus
@@ -172,8 +172,8 @@
 # V/J       NSg/P NPr/V/J NSg        NSg/J/P NPr+  ?      V/C ?  NPr+   NPr+    . NPr/J/P D
 > mid      - 1960s . It       consists of about 1 , 000 , 000 words of running   English  prose text   ,
 # NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  NSg/V/J/P NPr/V/J+ NSg/V NSg/V+ .
-> made  up        of 500 samples from randomly chosen   publications . Each sample is 2 , 000
-# NSg/V NSg/V/J/P P  #   NPl/V+  P    R+       NᴹSg/V/J NPl+         . Dq+  NSg/V+ VL # . #
+> made up        of 500 samples from randomly chosen   publications . Each sample is 2 , 000
+# V    NSg/V/J/P P  #   NPl/V+  P    R+       NᴹSg/V/J NPl+         . Dq+  NSg/V+ VL # . #
 > or    more         words  ( ending at    the first    sentence - end   after 2 , 000 words  , so        that         the
 # NPr/C NPr/I/V/J/Dq NPl/V+ . NSg/V  NSg/P D   NSg/V/J+ NSg/V+   . NSg/V J/P   # . #   NPl/V+ . NSg/I/J/C NSg/I/C/Ddem D+
 > corpus contains only  complete sentences ) .
@@ -278,8 +278,8 @@
 #
 > Eugene Charniak points out         in      Statistical techniques for natural language
 # NPr+   ?        NPl/V+ NSg/V/J/R/P NPr/J/P J           NPl        C/P NSg/J   N🅪Sg/V+
-> parsing ( 1997 ) that          merely assigning the most       common  tag   to each known   word  and
-# V       . #    . NSg/I/C/Ddem+ R      V         D   NSg/I/J/Dq NSg/V/J NSg/V P  Dq+  NSg/V/J NSg/V V/C
+> parsing ( 1997 ) that          merely assigning the most       common  tag   to each known word  and
+# V       . #    . NSg/I/C/Ddem+ R      V         D   NSg/I/J/Dq NSg/V/J NSg/V P  Dq+  V/J   NSg/V V/C
 > the tag    " proper noun  " to all           unknowns will   approach 90 % accuracy because many
 # D   NSg/V+ . NSg/J  NSg/V . P  NSg/I/J/C/Dq+ NPl/V+   NPr/VX NSg/V    #  . NSg+     C/P     NSg/I/J/Dq+
 > words  are unambiguous , and many        others only  rarely represent their less    - common
@@ -316,14 +316,14 @@
 # NPr/J/P #    . NPr+   ?      V/C NPr+    ?  NPr/V+ R             V/J       NSg/J
 > programming algorithms to solve the same problem in      vastly less    time      . Their
 # NSg/V+      NPl+       P  NSg/V D   I/J  NSg/J   NPr/J/P R      V/J/C/P N🅪Sg/V/J+ . D$+
-> methods were  similar to the Viterbi algorithm known   for some     time      in      other
-# NPl/V+  NSg/V NSg/J   P  D   ?       NSg       NSg/V/J C/P I/J/R/Dq N🅪Sg/V/J+ NPr/J/P NSg/V/J+
+> methods were  similar to the Viterbi algorithm known for some     time      in      other
+# NPl/V+  NSg/V NSg/J   P  D   ?       NSg       V/J   C/P I/J/R/Dq N🅪Sg/V/J+ NPr/J/P NSg/V/J+
 > fields   . DeRose used a   table of pairs  , while     Church used a   table of triples and a
 # NPrPl/V+ . ?      V/J  D/P NSg/V P  NPl/V+ . NSg/V/C/P NPr/V+ V/J  D/P NSg/V P  NPl/V   V/C D/P
 > method of estimating the values for triples that          were  rare    or    nonexistent in      the
 # NSg/V  P  V          D   NPl/V  C/P NPl/V   NSg/I/C/Ddem+ NSg/V NSg/V/J NPr/C NSg/J       NPr/J/P D+
-> Brown    Corpus ( an  actual measurement of triple  probabilities would  require a   much
-# NPr/V/J+ NSg    . D/P NSg/J  NSg         P  NSg/V/J NPl+          NSg/VX NSg/V   D/P NSg/I/J/Dq
+> Brown    Corpus ( an  actual measurement of triple  probabilities would require a   much
+# NPr/V/J+ NSg    . D/P NSg/J  NSg         P  NSg/V/J NPl+          VX    NSg/V   D/P NSg/I/J/Dq
 > larger corpus ) . Both   methods achieved an  accuracy of over      95 % . DeRose's 1990
 # J      NSg+   . . I/C/Dq NPl/V+  V/J      D/P NSg      P  NSg/V/J/P #  . . ?        #
 > dissertation at    Brown   University included analyses    of the specific error  types  ,
@@ -342,8 +342,8 @@
 # V/J           NPl+       NSg/I/C/Ddem+ V/J        NSg/V/J P  N🅪Sg/V+ NSg/J  P    NSg/I/J/Dq J
 > levels of linguistic analysis : syntax , morphology , semantics , and so         on  . CLAWS ,
 # NPl/V  P  J          N🅪Sg+    . NSg+   . NSg+       . NPl+      . V/C NSg/I/J/C+ J/P . NPl/V .
-> DeRose's and Church's methods did fail    for some     of the known    cases  where
-# ?        V/C NSg$     NPl/V+  V   NSg/V/J C/P I/J/R/Dq P  D+  NSg/V/J+ NPl/V+ NSg/C
+> DeRose's and Church's methods did fail    for some     of the known cases  where
+# ?        V/C NSg$     NPl/V+  V   NSg/V/J C/P I/J/R/Dq P  D+  V/J+  NPl/V+ NSg/C
 > semantics is required , but     those   proved negligibly rare     . This    convinced many       in
 # NPl+      VL V/J      . NSg/C/P I/Ddem+ V/J    R+         NSg/V/J+ . I/Ddem+ V/J       NSg/I/J/Dq NPr/J/P
 > the field  that          part    - of - speech tagging could  usefully be     separated from the other
@@ -378,8 +378,8 @@
 # NSg/J+  NPl/V+   . NSg/V/C/P . V   . V      NPr/J/P J/R  NSg/J+    NPl/V+ . P    J+
 > iteration , similarity classes of words  emerge that          are remarkably similar to
 # NSg       . NSg        NPl/V   P  NPl/V+ NSg/V  NSg/I/C/Ddem+ V   R          NSg/J   P
-> those   human   linguists would  expect ; and the differences themselves sometimes
-# I/Ddem+ NSg/V/J NPl+      NSg/VX V      . V/C D+  NSg/V+      IPl+       R
+> those   human   linguists would expect ; and the differences themselves sometimes
+# I/Ddem+ NSg/V/J NPl+      VX    V      . V/C D+  NSg/V+      IPl+       R
 > suggest valuable new      insights .
 # V       NSg/J+   NSg/V/J+ NPl+     .
 >
@@ -398,8 +398,8 @@
 # I/J/R/Dq+ NSg/J   NPr/V/J NPl        C/P NSg/V/J . P  . N🅪Sg/V NSg/V   NSg/V   D   ?
 > algorithm , Brill tagger , Constraint Grammar , and the Baum - Welch algorithm ( also
 # NSg       . NSg/J NSg    . NSg+       NSg/V+  . V/C D   NPr  . ?     NSg       . W?
-> known   as    the forward - backward algorithm ) . Hidden Markov model    and visible Markov
-# NSg/V/J NSg/R D   NSg/V/J . NSg/J    NSg+      . . V/J    NPr    NSg/V/J+ V/C J       NPr
+> known as    the forward - backward algorithm ) . Hidden Markov model    and visible Markov
+# V/J   NSg/R D   NSg/V/J . NSg/J    NSg+      . . V/J    NPr    NSg/V/J+ V/C J       NPr
 > model    taggers can    both   be     implemented using the Viterbi algorithm . The
 # NSg/V/J+ NPl     NPr/VX I/C/Dq NSg/VX V/J         V     D+  ?       NSg       . D
 > rule   - based Brill tagger is unusual in      that         it       learns a   set     of rule   patterns , and
