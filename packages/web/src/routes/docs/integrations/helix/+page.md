@@ -44,6 +44,7 @@ userDictPath = ""
 fileDictPath = ""
 diagnosticSeverity = "hint"
 isolateEnglish = false
+dialect = "American"
 
 [language-server.harper-ls.config.harper-ls.linters]
 SpellCheck = true
@@ -70,6 +71,17 @@ This example only contains some of the available linters, check out our [rules p
 :::
 
 For more information on what each of these configs do, you can head over to the [configuration section](./language-server#Configuration) of our `harper-ls` documentation.
+
+## Common Config Changes
+
+Programmers often find certain rules have too much of a hair-trigger.
+The below config is a simple cut-and-paste that gives you much fewer false-positives.
+
+```toml title=languages.toml
+[language-server.harper-ls.config.harper-ls.linters]
+SpellCheck = false
+SentenceCapitalization = false
+```
 
 ## Additional Links
 

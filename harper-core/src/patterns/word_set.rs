@@ -21,6 +21,10 @@ impl WordSet {
         }
     }
 
+    pub fn contains(&self, word: &str) -> bool {
+        self.words.contains(&word.chars().collect())
+    }
+
     /// Create a new word set that matches against any word in the provided list.
     pub fn new(words: &[&'static str]) -> Self {
         let mut set = Self::default();

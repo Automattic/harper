@@ -39,8 +39,16 @@ export default defineConfig({
 				sidebar: {
 					'/docs/': [
 						{
-							title: 'About',
-							to: '/docs/about',
+							items: [
+								{
+									title: 'About',
+									to: '/docs/about',
+								},
+								{
+									title: 'FAQ',
+									to: '/docs/faq',
+								},
+							],
 						},
 						{
 							title: 'Integrations',
@@ -160,10 +168,6 @@ export default defineConfig({
 									to: '/docs/contributors/faq',
 								},
 							],
-						},
-						{
-							title: 'FAQ',
-							to: '/docs/faq',
 						},
 						{
 							title: 'Rules',

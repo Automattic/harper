@@ -5,12 +5,12 @@ use super::Pattern;
 
 /// A map from [`Pattern`] to arbitrary data.
 ///
-/// When used as a [`Pattern`] in of itself, it simply iterates through
+/// When used as a [`Pattern`] in and of itself, it simply iterates through
 /// all contained patterns, returning the first match found.
 /// You should not assume this search is deterministic.
 ///
 /// If you'd like to use this structure in a [`PatternLinter`](crate::linting::PatternLinter), you may want to provide
-/// the map as the search pattern, then use a pattern look-up once more to determine
+/// the map as the search pattern, then use a pattern lookup once more to determine
 /// the corresponding key.
 pub struct PatternMap<T>
 where
@@ -49,7 +49,7 @@ where
         });
     }
 
-    /// Lookup the corresponding value for the given map.
+    /// Look up the corresponding value for the given map.
     pub fn lookup(&self, tokens: &[Token], source: &[char]) -> Option<&T> {
         for row in &self.rows {
             let len = row.key.matches(tokens, source);

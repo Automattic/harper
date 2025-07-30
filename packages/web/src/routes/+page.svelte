@@ -81,16 +81,18 @@ let mobile = $derived(width < 640);
 <Section swapped={!mobile}>
 	<span slot="title">Native Everywhere</span>
 	<span slot="subtitle"
-		>Harper is both available as a <a
-			href="https://writewithharper.com/docs/integrations/language-server">language server</a
-		>, and through WebAssembly, so you can get fantastic grammar checking anywhere you work.
+		>Harper is available as a <a
+			href="/docs/integrations/language-server">language server</a
+		>, <a href="/docs/harperjs/introduction">JavaScript library</a
+		> through WebAssembly, and <a
+		href="https://crates.io/crates/harper-core">Rust crate</a
+		>, so you can get fantastic grammar checking anywhere you work.
 		<br /><br /> That said, we take extra care to make sure the
-		<a href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
+		<a href="/docs/integrations/visual-studio-code"
 			>Visual Studio Code</a
-		>, Neovim,
-		<a href="https://github.com/Stef16Robbe/harper_zed">Zed</a>
+		>, <a href="/docs/integrations/neovim">Neovim</a>,
 		and
-		<a href="/docs/integrations/obsidian">Obsidian</a> integration is amazing.
+		<a href="/docs/integrations/obsidian">Obsidian</a> integrations are amazing.
 	</span>
 
 	<img

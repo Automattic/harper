@@ -20,7 +20,7 @@
 		"url": "https://github.com/automattic/harper/issues"
 	},
 	"engines": {
-		"vscode": "^1.89.0"
+		"vscode": "^1.99.0"
 	},
 	"categories": ["Other"],
 	"keywords": ["grammar", "spellcheck", "writing"],
@@ -1708,7 +1708,7 @@
 	"devDependencies": {
 		"@types/jasmine": "^5.1.7",
 		"@types/node": "catalog:",
-		"@types/vscode": "^1.89.0",
+		"@types/vscode": "^1.99.0",
 		"@vscode/test-electron": "^2.3.9",
 		"@vscode/vsce": "^3.3.0",
 		"esbuild": "^0.25.0",

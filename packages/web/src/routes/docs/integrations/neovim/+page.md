@@ -46,7 +46,8 @@ require('lspconfig').harper_ls.setup {
         IgnoreLinkTitle = false
       },
       diagnosticSeverity = "hint",
-      isolateEnglish = false
+      isolateEnglish = false,
+      dialect: "American"
     }
   }
 }

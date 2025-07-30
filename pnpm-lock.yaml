@@ -169,8 +169,8 @@ importers:
         specifier: 'catalog:'
         version: 22.13.10
       '@types/vscode':
-        specifier: ^1.89.0
-        version: 1.98.0
+        specifier: ^1.99.0
+        version: 1.99.0
       '@vscode/test-electron':
         specifier: ^2.3.9
         version: 2.4.1
@@ -3033,8 +3033,8 @@ packages:
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
-  '@types/vscode@1.98.0':
-    resolution: {integrity: sha512-+KuiWhpbKBaG2egF+51KjbGWatTH5BbmWQjSLMDCssb4xF8FJnW4nGH4nuAdOOfMbpD0QlHtI+C3tPq+DoKElg==}
+  '@types/vscode@1.99.0':
+    resolution: {integrity: sha512-30sjmas1hQ0gVbX68LAWlm/YYlEqUErunPJJKLpEl+xhK0mKn+jyzlCOpsdTwfkZfPy4U6CDkmygBLC3AB8W9Q==}
 
   '@types/webpack-sources@3.2.3':
     resolution: {integrity: sha512-4nZOdMwSPHZ4pTEZzSp0AsTM4K7Qmu40UKW4tJDiOVs20UzYF9l+qUe4s0ftfN0pin06n+5cWWDJXH+sbhAiDw==}
@@ -14073,7 +14073,7 @@ snapshots:
 
   '@types/unist@3.0.3': {}
 
-  '@types/vscode@1.98.0': {}
+  '@types/vscode@1.99.0': {}
 
   '@types/webpack-sources@3.2.3':
     dependencies:
