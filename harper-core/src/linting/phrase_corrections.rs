@@ -1218,7 +1218,25 @@ pub fn lint_group() -> LintGroup {
             ["definite articles"],
             "The correct term for `the` is `definite article`.",
             "The name of the word `the` is `definite article`."
-        )
+        ),
+        "FurtherAdo" => (
+            ["further adieu"],
+            ["further ado"],
+            "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
+            "Corrects `adieu` to `ado`."
+        ),
+        "MuchAdo" => (
+            ["much adieu"],
+            ["much ado"],
+            "Don't confuse the French/German `adieu`, meaning `farewell`, with the English `ado`, meaning `fuss`.",
+            "Corrects `adieu` to `ado`."
+        ),
+        "FairBit" => (
+            ["fare bit"],
+            ["fair bit"],
+            "A `decent amount` is a `fair bit`. `Fare` is the price of a ticket.",
+            "Corrects malapropisms of `a fair bit`."
+        ),
     });
 
     group.set_all_rules_to(Some(true));
@@ -2647,6 +2665,33 @@ mod tests {
             ".. definitive articles -та /-ta/ and -те /-te/ (postfixed in Bulgarian).",
             lint_group(),
             ".. definite articles -та /-ta/ and -те /-te/ (postfixed in Bulgarian).",
+        );
+    }
+
+    #[test]
+    fn corrects_further_ado() {
+        assert_suggestion_result(
+            "... but we finally hit a great spot, so without further adieu.",
+            lint_group(),
+            "... but we finally hit a great spot, so without further ado.",
+        );
+    }
+
+    #[test]
+    fn corrects_much_ado() {
+        assert_suggestion_result(
+            "After much adieu this functionality is now available.",
+            lint_group(),
+            "After much ado this functionality is now available.",
+        );
+    }
+
+    #[test]
+    fn corrects_fair_bit() {
+        assert_suggestion_result(
+            "I've read through a fare bit of the ecosystem framework, but I am not clear on what is modified...",
+            lint_group(),
+            "I've read through a fair bit of the ecosystem framework, but I am not clear on what is modified...",
         );
     }
 }

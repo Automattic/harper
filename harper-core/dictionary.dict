@@ -9635,7 +9635,6 @@ Studebaker/2M
 Stuttgart/21M
 Stuyvesant/M
 Stygian/51M
-Styrofoam/SM
 Styron/2M
 Styx/2M
 Suarez/2M
@@ -14069,6 +14068,7 @@ beachcomber/1SM
 beachfront/51
 beachgoer/1MS
 beachhead/~1MS
+beachside/1MS5
 beachwear/1M
 beacon/~14SM
 bead/~14SGMD
@@ -15703,7 +15703,7 @@ bugged/45C
 bugger/14SMDG
 buggery/1
 bugging/41C
-buggy/~15RSMT
+buggy/~15RSMTP
 bugle/~145DRSMZG
 bugler/1M
 build/~41SMRZGJAB
@@ -18297,7 +18297,7 @@ competitive/~5PY
 competitiveness/~1M
 competitor/~1SM
 compilation/~1SM
-compile/~41DRSZG
+compile/~41DRSZGB
 compiler/~1M
 complacence/1M
 complacency/1M
@@ -20328,6 +20328,8 @@ declivity/1SM
 decoherence/1
 decolletage/1SM
 decollete/5
+decompilation/1MS
+decompile/4SDG
 decongestant/1MS
 deconstructionism/1
 decor/1MS
@@ -21176,7 +21178,7 @@ dire/~5YTR
 direct/~54ASDGVT
 directer/51
 direction/~1IM
-directional/~51Y
+directional/~5Y1MS
 directionality/1M
 directionless/5
 directions/~1
@@ -22490,7 +22492,7 @@ elderberry/1SM
 eldercare/1M
 eldest/~51
 eldritch/~5
-elect/~145ASGV
+elect/~145SGV
 elect's
 electable/51
 elected/451MS
@@ -26919,6 +26921,7 @@ gruff/541TPRY
 gruffness/1M
 grumble/14DRSMZGJ
 grumbler/1M
+grumbly/5
 grump/14SM
 grumpily/j
 grumpiness/1M
@@ -29607,7 +29610,7 @@ inkstand/1SM
 inkwell/1MS
 inky/5RTP
 inland/~51M
-inline/~541
+inline/~541MSDG
 inmate/~1SM
 inmost/51
 inn/~14SGMRJ
@@ -36036,6 +36039,7 @@ oil/~14SGMD
 oilcan/1S
 oilcloth/1M
 oilcloths/1
+oiler/1MS
 oilfield/1S
 oiliness/1M
 oilman/1M
@@ -41059,6 +41063,7 @@ reefer/1M
 reek/~14GMDS
 reel/~14UGDS
 reel's
+reelect/4DSG
 reentrant/5
 reeve/~14G
 reexecute/4SDG
@@ -41271,6 +41276,7 @@ religiosity/1
 religious/~51MYP
 religiousness/1M
 reline/41DSG
+relink/4DSG
 relinquish/~4LDSG
 relinquishment/1M
 reliquary/~1SM
@@ -43798,6 +43804,7 @@ shopaholic/1MS
 shopfitter/1S
 shopfitting/1
 shopfront/1S
+shophouse/1MS
 shopkeeper/1MS
 shoplift/14DRZGS
 shoplifter/1M
@@ -43851,6 +43858,7 @@ shovel/~14MDSG
 shovelful/1SM
 shovelled/4!@_
 shovelling/41!@_
+shovelware/1M
 show/~41JZGMDRS
 showbiz/~1M
 showboat/14MDGS
@@ -46265,6 +46273,7 @@ stylus/~1MS
 stymie/14MDS
 stymieing/4
 styptic/51SM
+styrofoam/1SM
 suasion/1EM
 suave/51RYTP
 suaveness/1M
@@ -49787,6 +49796,8 @@ unobservant/5
 unobtanium/1M
 unoffensive/5
 unofficial/~5Y
+unopen/5
+unoptimized/45
 unoriginal/51
 unpause/4DSG
 unpayable/5
@@ -52248,6 +52259,7 @@ DRM/1M              # digital rights management
 DSL/1SM             # domain-specific language
 DeepMind/2M
 DevOps/SM
+DirectX/2M
 Dreamcast/2MS       # game console
 EGR/                # exhaust gas recirculation
 EMR/12SM
@@ -52276,6 +52288,7 @@ GPU/1S              # graphics processing unit
 Ganeti/SM
 Gateron/SM
 Gerber/1M           # file format
+Ghidra/2M           # reverse engineering
 GitLab/SM           # GitHub alternative
 Gmail/214SM
 Golang/SM           # programming language
@@ -52291,6 +52304,7 @@ Harper/SM           # surname; grammar checker
 Hasan/2SM           # surname, given name
 Hiera/SM
 Holmdel/SM
+IDA/2M              # reverse engineering
 IMAP/2SM            # internet message access protocol
 IPC/1M              # interprocess communication
 IPCC/2M
@@ -52337,6 +52351,7 @@ Lua/SM              # programming language
 MMX/1M              # multimedia extension
 MPC/21M
 MSNBC/2M            # media company
+MSVC                # Microsoft Visual C++
 MTA/1SM
 MacBook/2SM         # Apple product
 Manilas/1
@@ -52417,6 +52432,7 @@ Rivian/SM           # ev company
 Roumania/2M         # pre-WWII spelling
 SCM/1M              # source code management
 SDK/1SM             # software development kit
+SDL/2M              # Simple DirectMedia Layer
 SIMD/1SM            # single instruction, multiple data
 SLA/1SM
 SNL/2M              # Saturday Night Live
@@ -52452,6 +52468,7 @@ TikTok/SM
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
 Toronado/2MS        # car brand
 Tree-sitter/M2      # parsing
+Trinitron/12MS      # CRT
 Trocla/SM
 TrueNAS/SM
 Tumblr/2M
@@ -52511,6 +52528,7 @@ backend/1SM         # dictionaries prefer: back end
 baz/~               # cf. foo, bar
 config/14SM         # not marked as a verb since "configed" and "configing" look wrong
 corpo/1MS
+decomp/1MS4DG       # decompile/decompilation
 dedup/1M            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/14SMDG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
 dotfile/~1SM        # not well covered by dictionaries.
@@ -52545,7 +52563,6 @@ tagset/1MS
 vid/1MS             # video
 whitespace/~1SM     # dictionaries prefer: white space
 wikilink/~1SM       # !! please check and comment !! elsewhere we have Wikilink
-handedly
 
 # Experimental multi-word entries
 # Harper may not recognize these as words in documents
@@ -52554,9 +52571,11 @@ handedly
 a lot
 ad nauseam/j
 add-on/1MS
+air-conditioned/5
 air-cooled/5
 all-new/5
 all-nighter/1MS
+all-rounder/1MS
 all-woman/5
 alma mater/1M
 anarcho-punk/15MS
@@ -52580,6 +52599,7 @@ bona fide/j5
 break out/4
 breaks out/4
 Bretton Woods/2M
+brute force/1MS4DG
 built-in/1MS5
 built-up/5
 car bomb/1MS
@@ -52642,6 +52662,7 @@ forward-thinking/5
 four-speed/1MS
 front-line/5
 front man/1M
+front wheel/1MS5
 full on/5j
 full-on/5j
 full-scale/5
@@ -52713,6 +52734,7 @@ last minute/15
 last-minute/5
 lead off/1M4
 lead-up/1MS
+left-hand/5
 left-wing/5
 lesser-known/5
 live action/1
@@ -52742,6 +52764,7 @@ mind game/1MS
 mock up/4
 mock-up/1MS
 moon landing/1MS
+motor ship/1MS
 multiple-choice/5
 nail biter/1MS
 nano-farad/1MS
@@ -52992,3 +53015,4 @@ work out/4
 # And they will be reviewed
 # Word added using the `just addnoun` command will be added here
 
+handedly

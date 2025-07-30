@@ -1324,8 +1324,9 @@ Lint:    Spelling (63 priority)
 Message: |
      961 | her foot, that there was hardly room to open her mouth; but she did it at last,
      962 | and managed to swallow a morsel of the lefthand bit.
-         |                                        ^~~~~~~~ Did you mean `leftward`?
+         |                                        ^~~~~~~~ Did you mean to spell `lefthand` this way?
 Suggest:
+  - Replace with: “left-hand”
   - Replace with: “leftward”
 
 
@@ -1639,9 +1640,10 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     1349 | did not like to go nearer till she had nibbled some more of the lefthand bit of
-         |                                                                 ^~~~~~~~ Did you mean `leftward`?
+         |                                                                 ^~~~~~~~ Did you mean to spell `lefthand` this way?
     1350 | mushroom, and raised herself to about two feet high: even then she walked up
 Suggest:
+  - Replace with: “left-hand”
   - Replace with: “leftward”
 
 
@@ -2953,7 +2955,7 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Son”
+  - Replace with: “Sop”
   - Replace with: “Soho”
   - Replace with: “Soto”
 
@@ -2986,7 +2988,7 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Son”
+  - Replace with: “Sop”
   - Replace with: “Soho”
   - Replace with: “Soto”
 
@@ -3009,7 +3011,7 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
-  - Replace with: “Son”
+  - Replace with: “Sop”
   - Replace with: “Soho”
   - Replace with: “Soto”
 
@@ -3063,7 +3065,7 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Son”
+  - Replace with: “Sop”
   - Replace with: “Soho”
   - Replace with: “Soto”
 
@@ -3096,7 +3098,7 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Son”
+  - Replace with: “Sop”
   - Replace with: “Soho”
   - Replace with: “Soto”
 
@@ -3119,7 +3121,7 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
-  - Replace with: “Son”
+  - Replace with: “Sop”
   - Replace with: “Soho”
   - Replace with: “Soto”
 
@@ -3194,7 +3196,7 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Son”
+  - Replace with: “Sop”
   - Replace with: “Soho”
   - Replace with: “Soto”
 
