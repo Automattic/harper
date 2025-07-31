@@ -54,8 +54,8 @@
 # ISg+ V/J     NSg/P D+  J+      NSg/J  .
 > At    my  request , they agreed to move  us       to another hotel .
 # NSg/P D$+ NSg/V+  . IPl+ V/J    P  NSg/V NPr/IPl+ P  I/D+    NSg+  .
-> He       jumped at    the sudden noise  .
-# NPr/ISg+ V/J    NSg/P D+  NSg/J+ NSg/V+ .
+> He       jumped at    the sudden noise   .
+# NPr/ISg+ V/J    NSg/P D+  NSg/J+ N🅪Sg/V+ .
 > We   laughed at    the joke   .
 # IPl+ V/J     NSg/P D+  NSg/V+ .
 > She  was mad     at    their comments .
@@ -436,8 +436,8 @@
 # +     V   NSg/V NPr/P N🅪Sg/V NPr/J/P ISg/D$+ NSg/V+    .
 > What   grade  did he       get   in      English   ?
 # NSg/I+ NSg/V+ V   NPr/ISg+ NSg/V NPr/J/P NPr🅪/V/J+ .
-> Please pay     me       in      cash     — preferably in      tens and twenties .
-# V      NSg/V/J NPr/ISg+ NPr/J/P NPr/V/J+ . R          NPr/J/P W?   V/C NPl+     .
+> Please pay     me       in      cash      — preferably in      tens and twenties .
+# V      NSg/V/J NPr/ISg+ NPr/J/P NPrᴹ/V/J+ . R          NPr/J/P W?   V/C NPl+     .
 > The deposit can    be     in      any    legal  tender  , even    in      gold      .
 # D+  NSg/V+  NPr/VX NSg/VX NPr/J/P I/R/Dq NSg/J+ NSg/V/J . NSg/V/J NPr/J/P NᴹSg/V/J+ .
 > Beethoven's " Symphony No     . 5 " in      C        minor   is among his     most        popular .
@@ -549,7 +549,7 @@
 > Jesus of Nazareth
 # NPr/V P  NPr+
 > The invention was born    of necessity .
-# D+  NSg+      V   NPr/V/J P  NSg+      .
+# D+  N🅪Sg+     V   NPr/V/J P  NSg+      .
 > It       is said that         she  died of a    broken heart   .
 # NPr/ISg+ VL V/J  NSg/I/C/Ddem ISg+ V/J  P  D/P+ V/J+   N🅪Sg/V+ .
 > What   a   lot   of nonsense  !
@@ -823,7 +823,7 @@
 > I    sang  my  baby     to sleep  .
 # ISg+ NPr/V D$+ NSg/V/J+ P+ N🅪Sg/V .
 > Whisk the mixture to a    smooth   consistency .
-# NSg/V D+  NSg+    P  D/P+ NSg/V/J+ NSg+        .
+# NSg/V D+  N🅪Sg+   P  D/P+ NSg/V/J+ NSg+        .
 > He       made several bad     - taste   jokes to groans from the audience .
 # NPr/ISg+ V    J/Dq    NSg/V/J . NSg/V/J NPl/V P  NPl/V  P    D+  NSg+     .
 > I    tried complaining , but     it       was to no     effect .
@@ -900,8 +900,8 @@
 # NSg/V/J P    D/P+ NSg/V+
 > I    water  my  plants with this    watering can     . This    is the watering can    I    water  my  plants with .
 # ISg+ N🅪Sg/V D$+ NPl/V+ P    I/Ddem+ V+       NPr/VX+ . I/Ddem+ VL D   V        NPr/VX ISg+ N🅪Sg/V D$+ NPl/V+ P+   .
-> Find  what   you    want  instantly with our search engine .
-# NSg/V NSg/I+ ISgPl+ NSg/V R         P    D$+ NSg/V+ NSg/V+ .
+> Find  what   you    want  instantly with our search  engine .
+# NSg/V NSg/I+ ISgPl+ NSg/V R         P    D$+ N🅪Sg/V+ NSg/V+ .
 > They dismissed the meeting with a   wave  of their hand   .
 # IPl+ V/J       D+  NSg/V+  P    D/P NSg/V P  D$+   NSg/V+ .
 > Speak with a   confident voice  .

@@ -73,7 +73,7 @@
 > The earliest foundations of what   would become computer science predate the
 # D   JS       NPl         P  NSg/I+ VX    V      NSg/V+   N🅪Sg/V+ NSg/V   D
 > invention of the modern digital computer . Machines for calculating fixed
-# NSg       P  D+  NSg/J+ NSg/J+  NSg/V+   . NPl/V    C/P V/J         V/J
+# N🅪Sg      P  D+  NSg/J+ NSg/J+  NSg/V+   . NPl/V    C/P V/J         V/J
 > numerical tasks  such  as    the abacus have   existed since antiquity , aiding in
 # J         NPl/V+ NSg/I NSg/R D   NSg    NSg/VX V/J     C/P   NSg+      . V      NPr/J/P
 > computations such  as    multiplication and division . Algorithms for performing
@@ -137,7 +137,7 @@
 > program . The paper     also introduced the idea of floating - point  arithmetic . In
 # NPr/V   . D+  N🅪Sg/V/J+ W?   V/J        D   NSg  P  V+       . NSg/V+ NᴹSg/J+    . NPr/J/P
 > 1920 , to celebrate the 100th anniversary of the invention of the arithmometer ,
-# #    . P  V         D   #     NSg         P  D   NSg       P  D   ?            .
+# #    . P  V         D   #     NSg         P  D   N🅪Sg      P  D   ?            .
 > Torres presented in      Paris the Electromechanical Arithmometer , a    prototype that
 # NPr    V/J       NPr/J/P NPr+  D   ?                 ?            . D/P+ NSg/V+    NSg/I/C/Ddem+
 > demonstrated the feasibility of an  electromechanical analytical engine , on  which
@@ -367,7 +367,7 @@
 > experimental science , but     like        astronomy , economics , and geology , some     of its
 # NSg/J+       N🅪Sg/V+ . NSg/C/P NSg/V/J/C/P NᴹSg      . NSg+      . V/C NSg     . I/J/R/Dq P  ISg/D$+
 > unique forms of observation and experience do     not   fit     a   narrow  stereotype of
-# NSg/J  NPl/V P  NSg         V/C NSg/V+     NSg/VX NSg/C NSg/V/J D/P NSg/V/J NSg/V      P
+# NSg/J  NPl/V P  N🅪Sg        V/C NSg/V+     NSg/VX NSg/C NSg/V/J D/P NSg/V/J NSg/V      P
 > the experimental method . Nonetheless , they are experiments . Each new      machine
 # D+  NSg/J        NSg/V+ . W?          . IPl+ V   NPl/V+      . Dq+  NSg/V/J+ NSg/V+
 > that          is built   is an  experiment . Actually constructing the machine poses  a
@@ -397,7 +397,7 @@
 > science observes what   is possible to exist and while     scientists discover laws
 # N🅪Sg/V+ NPl/V    NSg/I+ VL NSg/J    P  V     V/C NSg/V/C/P NPl+       NSg/V/J  NPl/V+
 > from observation , no     proper laws   have   been  found in      computer science and it       is
-# P    NSg+        . NPr/P+ NSg/J  NPl/V+ NSg/VX NSg/V NSg/V NPr/J/P NSg/V+   N🅪Sg/V  V/C NPr/ISg+ VL
+# P    N🅪Sg+       . NPr/P+ NSg/J  NPl/V+ NSg/VX NSg/V NSg/V NPr/J/P NSg/V+   N🅪Sg/V  V/C NPr/ISg+ VL
 > instead concerned with creating phenomena .
 # W?      V/J       P    V        NSg+      .
 >
@@ -458,8 +458,8 @@
 # NPl/V   P  NPl+       V/C D   NPl/V  P  NSg         P  D   NSg/J     NPl/V  P
 > implementing computing systems in      hardware and software . CSAB , formerly called
 # V            NᴹSg/V+   NPl     NPr/J/P NᴹSg     V/C NᴹSg+    . ?    . R        V/J
-> Computing Sciences Accreditation Board  — which is made up        of representatives of
-# NᴹSg/V+   NPl/V+   N🅪Sg          NSg/V+ . I/C+  VL V    NSg/V/J/P P  NPl             P
+> Computing Sciences Accreditation Board   — which is made up        of representatives of
+# NᴹSg/V+   NPl/V+   N🅪Sg          N🅪Sg/V+ . I/C+  VL V    NSg/V/J/P P  NPl             P
 > the Association for Computing Machinery ( ACM ) , and the IEEE Computer Society
 # D+  N🅪Sg        C/P NᴹSg/V+   NᴹSg+     . NSg . . V/C D+  NPr+ NSg/V+   N🅪Sg+
 > ( IEEE CS    ) — identifies four areas that          it       considers crucial to the discipline of
@@ -565,7 +565,7 @@
 > Programming language theory is a   branch of computer science that          deals with the
 # NᴹSg/V+     N🅪Sg/V   NSg+   VL D/P NPr/V  P  NSg/V+   N🅪Sg/V+ NSg/I/C/Ddem+ NPl/V P    D+
 > design  , implementation , analysis , characterization , and classification of
-# N🅪Sg/V+ . NSg+           . N🅪Sg+    . NSg              . V/C N🅪Sg           P
+# N🅪Sg/V+ . NSg+           . N🅪Sg+    . N🅪Sg             . V/C N🅪Sg           P
 > programming languages and their individual features . It       falls  within  the
 # NᴹSg/V+     NPl/V     V/C D$+   NSg/J+     NPl/V+   . NPr/ISg+ NPl/V+ NSg/J/P D
 > discipline of computer science , both   depending on  and affecting mathematics ,
@@ -665,7 +665,7 @@
 > using computers to analyze and solve scientific problems . A   major   usage of
 # V     NPl/V+    P  V       V/C NSg/V J+         NPl+     . D/P NPr/V/J N🅪Sg  P
 > scientific computing is simulation of various processes , including computational
-# J+         NᴹSg/V+   VL NSg        P  J+      NPl/V+    . V         J
+# J+         NᴹSg/V+   VL N🅪Sg       P  J+      NPl/V+    . V         J
 > fluid   dynamics , physical , electrical , and electronic systems and circuits , as
 # N🅪Sg/J+ NSgPl+   . NSg/J    . NSg/J      . V/C J          NPl+    V/C NPl/V    . NSg/R
 > well    as    societies and social situations ( notably war     games  ) along with their
@@ -856,8 +856,8 @@
 # D/P+ NSg/V+   VL NSg/V/J  P  V        . NSg/V+ . V/C NSg/V    NSg/J NPl/V   P  N🅪Pl+
 > easily . Digital databases are managed using database management systems to
 # R+     . NSg/J   NPl/V+    V   V/J     V     NSg/V+   NSg+       NPl+    P
-> store , create , maintain , and search data  , through database models and query
-# NSg/V . V/J    . V        . V/C NSg/V+ N🅪Pl+ . NSg/J/P NSg/V+   NPl/V  V/C NSg/V+
+> store , create , maintain , and search  data  , through database models and query
+# NSg/V . V/J    . V        . V/C N🅪Sg/V+ N🅪Pl+ . NSg/J/P NSg/V+   NPl/V  V/C NSg/V+
 > languages . Data  mining is a   process of discovering patterns in      large  data  sets   .
 # NPl/V+    . N🅪Pl+ NSg/V+ VL D/P NSg/V   P  V           NPl/V+   NPr/J/P NSg/J+ N🅪Pl+ NPl/V+ .
 >
