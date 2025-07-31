@@ -34,7 +34,7 @@ AFC/ONg
 AFDC/O
 AFN/ON
 AFT/O
-AI/NOSg             # artificial intelligence
+AI/NwOSg            # artificial intelligence
 AIDS/NJg            # disease
 AK/ON               # US state (Alaska)
 AKP/Og              # political party
@@ -11519,6 +11519,7 @@ acupuncture/NVg
 acupuncturist/NSg
 acute/~JNVpgY^>S
 acuteness/Ng
+acyclic/J
 acyclovir/Ng
 acyl/N
 ad/~NPSg
@@ -11913,7 +11914,7 @@ aim/~NVSgdG
 aimless/JYp
 aimlessness/Ng
 ain't/V
-air/~NVSgdzG
+air/~NwVSgdzG
 airbag/~NgS
 airbase/~NSg
 airbed/NS
@@ -11922,10 +11923,10 @@ airborne/~JN
 airbox/NSg
 airbrush/NVgdSG
 airbus/~NgS
-aircon/Ng
+aircon/Nmg
 aircraft/~N09g      # singular and plural
-aircraftman/N
-aircraftmen/9
+aircraftman/N0
+aircraftmen/N9
 aircrew/~NS
 airdrome/NS
 airdrop/NVSg
@@ -11933,14 +11934,14 @@ airdropped/VJ
 airdropping/V
 airfare/NSg
 airfield/~NSg
-airflow/~Ng
+airflow/~Nmg
 airfoil/NSg
 airframe/NSg
-airfreight/NVg
+airfreight/NmVg
 airguns/N
 airhead/NSg
 airily/R
-airiness/Ng
+airiness/Nmg
 airing/~VNg
 airless/Jp
 airlessness/Ng
@@ -12040,12 +12041,12 @@ alignment/~NwrgS
 alike/~JU
 aliment/NVgdSG
 alimentary/J
-alimony/Ng
+alimony/Nmg
 aliveness/Ng
 aliyah/~NVg
 aliyahs/N
-alkali/~Ng
-alkalies/N
+alkali/~N0wg
+alkalies/N9
 alkaline/~JN
 alkalinity/Ng
 alkalise/VdSG!_
@@ -12201,18 +12202,18 @@ ambassadorship/NgS
 ambassadress/NgS
 amber/~NJVg
 ambergris/Ng
-ambiance/NgS
+ambiance/NmgS
 ambidexterity/Ng
 ambidextrous/JY
-ambience/NgS!@_
+ambience/NmgS!@_
 ambient/~JN
 ambiguity/~NSg
 ambiguous/~JUY
 ambit/N
-ambition/~NVgS
+ambition/~NwVgS
 ambitious/~JYp
 ambitiousness/Ng
-ambivalence/Ng
+ambivalence/Nmg
 ambivalent/~JY
 amble/NVgZGd>S
 ambler/~Ng
@@ -13404,6 +13405,7 @@ audiovisuals/Ng
 audit/~NVGgdS
 audition/~NVSgdG
 auditor/~NgS
+auditoria/N9
 auditorium/~NSg
 auditory/~JN
 auger/~NVgS
@@ -13491,7 +13493,7 @@ automaker/~NSg
 automata/~NSg
 automate/VGndS
 automatic/~JNSgQ
-automation/~Ng
+automation/~Nmg
 automatise/VGdS!_
 automatism/Ng
 automatize/VGdS
@@ -14323,7 +14325,7 @@ beholder/Ng
 behoove/VdSG
 behove/VGdS!_
 beige/~NJg
-being/~VNCg
+being/~VNwCg
 bejewel/VSdG
 bejewelled/VJ!@_
 bejewelling/V!@_
@@ -14335,9 +14337,9 @@ belch/VNGgdS
 beleaguer/VGSd
 belfry/~NSg
 belie/VdS
-belief/~NEUg
-beliefs/~N
-believability/Ng
+belief/~Nw0EUg
+beliefs/~N9
+believability/Nmg
 believable/~JU
 believably/UR
 believe/~VEd>SZG
@@ -14784,7 +14786,7 @@ blabber/VNdGS
 blabbermouth/Ng
 blabbermouths/N
 blabbing/VN
-black/~JNVpX^Ggdn>YS
+black/~JNwVpX^Ggdn>YS
 blackamoor/NgS
 blackball/NVSGgd
 blackberry/~NwVGSg
@@ -15000,7 +15002,7 @@ blowzy/J>^
 blubber/NwVGSgd
 blubbery/J
 bludgeon/NVgdGS
-blue/~JNVd>Spg^G
+blue/~JNwVd>Spg^G
 bluebell/~NgS
 blueberry/~NwJVSg
 bluebird/~NgS
@@ -15262,7 +15264,7 @@ bootstrapper/NgS
 bootstrapping/VN
 bootup/NgS
 booty/~NSg
-booze/NVgZGd>S
+booze/NmVgZGd>S
 boozer/Ng
 boozy/J^>
 bop/~NVSg
@@ -15473,7 +15475,7 @@ bravo/~NVSg
 bravura/NJSg
 brawl/~NVSd>ZGg
 brawler/Ng
-brawn/NVg
+brawn/NmVg
 brawniness/Ng
 brawny/J>^p
 bray/~VNdGSg
@@ -15483,7 +15485,7 @@ brazenness/Ng
 brazer/Ng
 brazier/~NSg
 breach/~NVGgdS
-bread/~NVGgdHS
+bread/~NwVGgdHS
 breadbasket/NSg
 breadboard/NVSg
 breadbox/NgS
@@ -15495,11 +15497,11 @@ breadths/N
 breadwinner/NSg
 break/~VNBgZG>S
 breakable/JNgS
-breakage/NgS
+breakage/Nmg
 breakaway/~JNgS
 breakdown/~NgS
 breaker/~Ng
-breakfast/~NVgdGS
+breakfast/~NwVgdGS
 breakfront/NgS
 breakneck/JN
 breakout/~NJgS
@@ -15524,7 +15526,7 @@ breathe/~V
 breather/Ng
 breathing/~NVg
 breathless/JpY
-breathlessness/Ng
+breathlessness/Nmg
 breaths/N
 breathtaking/JY
 breathy/J>^
@@ -15552,23 +15554,23 @@ brewpub/NSg
 briar/NSg!_
 bribe/~NVd>SgZG
 briber/Ng
-bribery/~Ng
-brick/~NJVSgdG
+bribery/~Nmg
+brick/~NwJVSgdG
 brickbat/NVSg
 brickie/NS
 bricklayer/NgS
-bricklaying/Ng
-brickwork/~Ng
+bricklaying/Nmg
+brickwork/~Nmg
 brickyard/~NS
 bricolage/Ng
 bridal/~NJSg
 bride/~NVSg
 bridegroom/~NSg
 bridesmaid/NVgS
-bridge/~NVdSgG
+bridge/~NwVdSgG
 bridgeable/JU
 bridgehead/~NSg
-bridgework/Ng
+bridgework/Nmg
 bridle/~NVdSgG
 bridled/VJU
 bridleway/NS
@@ -15653,9 +15655,9 @@ brokerage/~NgS
 broligarchy/Ng
 brolly/NS
 bromance/NgS
-bromide/~NSg
+bromide/~NwSg
 bromidic/J
-bromine/~Ng
+bromine/~Nmg
 bronc/NSg
 bronchi/N
 bronchial/J
@@ -15689,7 +15691,7 @@ brought/~V
 brouhaha/NSg
 brow/~NVgS
 browbeat/VSnG
-brown/~NJVSgd>p^G
+brown/~NwJVSgd>p^G
 brownfield/NJ
 brownie/NwgS
 brownish/~J
@@ -15751,10 +15753,10 @@ buckshot/Ng
 buckskin/NJgS
 buckteeth/N9
 bucktooth/N0gd
-buckwheat/~Ng
+buckwheat/~Nmg
 buckyball/NSg
 bucolic/JNgSQ
-bud/~NVSg
+bud/~NwVSg
 budded/VJ
 budding/~JNVS
 buddy/~NIVJSg
@@ -18412,7 +18414,7 @@ compliance/~Nmg
 compliant/~JY
 complicate/~VJGdS
 complicated/~JVY
-complication/~NgS
+complication/~NwgS
 complicit/~J
 complicity/~Nmg
 compliment/~NVgdGS
@@ -18740,7 +18742,7 @@ conscienceless/J
 conscientious/~JpY
 conscientiousness/Ng
 conscious/~JNUYp
-consciousness/~NUg
+consciousness/~NmUg
 consciousnesses/N
 conscription/~Ng
 consecrate/VJrdSGn
@@ -19137,7 +19139,7 @@ corker/~NSg
 corkscrew/NJVSgdG
 corm/NgS
 cormorant/~NJSg
-corn/~NVgd>ZGS
+corn/~NwVgd>ZGS
 cornball/NJgS
 cornbread/Ng
 corncob/NVgS
@@ -20062,7 +20064,7 @@ cutup/NSg
 cutworm/NgS
 cw/~
 cwt/N
-cyan/~NJg
+cyan/~NmJg
 cyanide/~NVg
 cyanobacteria/~N
 cyanosis/Ng
@@ -20220,7 +20222,7 @@ dark/~JNVpX^gn>Y
 darken/~VZGd>
 darkener/Ng
 darkie/NS
-darkness/~Ng
+darkness/~Nmg
 darkroom/NgS
 darling/~NJgS
 darn/~JVNSZGgd>
@@ -20879,7 +20881,7 @@ designator/NSg
 desirability/~NUg
 desirableness/Ng
 desirably/UR
-desire/~VNB
+desire/~VwNB
 desired/~VJU
 desirous/J
 desist/~VSdG
@@ -21134,7 +21136,7 @@ didst/V
 die/~VN0dSg
 diehard/NgSJ
 dielectric/~NJgS
-diereses/N
+diereses/N9
 dieresis/Ng
 diesel/~NVSgdG
 diet/~NwJVgd>ZGS
@@ -21257,7 +21259,7 @@ dingy/JNV>p^
 dink/NVJ>
 dinky/JN>Sg^
 dinned/V
-dinner/~NVSgdG
+dinner/~NwVSgdG
 dinnertime/Ng
 dinnerware/Nmg
 dinning/VN
@@ -21744,7 +21746,7 @@ domestication/~NwgS
 domesticity/Nmg
 domicile/NVdSgG
 domiciliary/NJ
-dominance/~Ng
+dominance/~Nmg
 dominant/~NJSgY
 dominate/~VJNdSGn
 domination/~NwgS
@@ -21877,7 +21879,7 @@ dowel/~NVSgdG
 dowelled/V!@_
 dowelling/VN!@_
 dower/~NVSgdG
-down/~PJVNgd>ZGS
+down/~PJVNwgd>ZGS
 downbeat/NJSg
 downcast/JNV
 downdraft/NgS
@@ -22812,7 +22814,7 @@ emcee/NVdSg
 emceeing/V
 emend/VSdG
 emendation/NgS
-emerald/~NJVgS
+emerald/~NwJVgS
 emerge/~VNrdSG
 emergence/~Nrg
 emergency/~NSg
@@ -23860,7 +23862,7 @@ exportation/Ng
 exporter/~Ng
 expose/~VdSgG
 exposed/~JVU
-exposition/~NSg
+exposition/~NwSg
 expositor/NSg
 expository/~J
 expostulate/VGnXdS
@@ -23871,7 +23873,7 @@ expounder/Ng
 express/~JNVGvgdSY
 expressed/~VJU
 expressible/Ji
-expression/~NSg
+expression/~NwSg
 expressionism/~Ng
 expressionist/~JNSg
 expressionistic/J
@@ -24137,7 +24139,7 @@ familiarise/VGdS!_
 familiarity/~NUg
 familiarization/Ng
 familiarize/VGdS
-family/~NJSg
+family/~NwJSg
 famine/~NSg
 famish/VdSG
 famous/~JViY
@@ -25834,7 +25836,7 @@ fusibility/Ng
 fusible/JN
 fusilier/NSg
 fusillade/NVgS
-fusion/~NViWKSg
+fusion/~NwViWKSg
 fuss/NVgdSG
 fussbudget/NgS
 fussily/R
@@ -26746,21 +26748,21 @@ graded/~VJU
 grader/Ng
 gradient/~NJgS
 gradual/~JNpY
-gradualism/Ng
-gradualness/Ng
+gradualism/Nmg
+gradualness/Nmg
 graduate/~NJVXgGndS
 graduation/~Ng
-graffiti/~NV
-graffito/Ng
+graffiti/~N9mV
+graffito/N0g
 graft/~NVSgd>ZG
 grafter/Ng
 graham/~NS
 grail/~N
-grain/~NViSgd
+grain/~NwViSgd
 graininess/Ng
 grainy/Jp^>
 gram/~NOVKgS
-grammar/~NVgS
+grammar/~NwVgS
 grammarian/~NSg
 grammatical/~JUY
 gramophone/~NgS
@@ -26862,7 +26864,7 @@ gravitation/~Nmg
 gravitational/~J
 gravity/~Ng
 gravy/~NwVSg
-gray/~JVNgd>^GSp<
+gray/~JVNwgd>^GSp<
 graybeard/NSg<
 grayish/J<
 grayness/Ng<
@@ -26883,7 +26885,7 @@ greed/~NVg
 greedily/R
 greediness/Ng
 greedy/~Jp^>
-green/~JNVGpSgd>Y^
+green/~JNwVGpSgd>Y^
 greenback/NgS
 greenbelt/NgS
 greenery/Ng
@@ -26913,7 +26915,7 @@ grep/OVS
 grepped/V
 grepping/V
 grew/~Vr
-grey/JVNpgd>^GS!@_
+grey/JVNwpgd>^GS!@_
 greyhound/~NVSg
 greyish/J!@_
 greyness/Ng!@_
@@ -29017,17 +29019,17 @@ illicit/~JNYp
 illicitness/Ng
 illimitable/J
 illiquid/J
-illiteracy/Ng
+illiteracy/Nmg
 illiterate/~JNgYS
 illness/~NgS
 illogical/JY
 illogicality/Ng
 illuminate/~VNJGnXdS
 illuminating/~JVY
-illumination/~Ng
+illumination/~Nmg
 illumine/VdSBG
 illus/~v
-illusion/~NEgS
+illusion/~NwEgS
 illusionist/NSg
 illusory/~J
 illustrate/~VGnvXdS
@@ -31831,7 +31833,7 @@ ligament/~NgS
 ligate/VGndS
 ligation/Ng
 ligature/NVgGdS
-light/~NVJerS^Gd
+light/~NwVJerS^Gd
 light's/e
 lighted/~VJU
 lighten/~VSd>ZG
@@ -31871,7 +31873,7 @@ likenesses/N
 liker/NJ
 likewise/~
 liking/~VNg
-lilac/~NJSg
+lilac/~NwJSg
 lilliputian/NJ
 lilo/~NS
 lilt/VNgdSG
@@ -32020,7 +32022,7 @@ literariness/Nmg
 literary/~Jp
 literate/~JNSgY
 literati/Ng
-literature/~Ng
+literature/~Nmg
 lithe/JVN>pY^
 litheness/Nmg
 lithesome/J
@@ -32398,9 +32400,9 @@ lumbermen/9
 lumberyard/NSg
 lumen/~N
 luminary/NSg
-luminescence/Ng
+luminescence/Nmg
 luminescent/J
-luminosity/~Ng
+luminosity/~Nmg
 luminous/~JY
 lummox/NgS
 lump/~NVgdnSG
@@ -32412,7 +32414,7 @@ lumpy/J^>p
 lunacy/NSg
 lunar/~JN
 lunatic/~NJSg
-lunch/~NVGgdS
+lunch/~NwVGgdS
 lunchbox/NS
 luncheon/~NVSg
 luncheonette/NSg
@@ -32561,11 +32563,11 @@ mafioso/NgS
 mag/~NVSg
 magazine/~NSg
 mage/~NgS
-magenta/~NJg
+magenta/~NmJg
 maggot/~NVJgS
 maggoty/J
 magi/~Ng
-magic/~NJVSg
+magic/~NwJVSg
 magical/~JY
 magician/~NSg
 magicked/V
@@ -32921,9 +32923,9 @@ marketplace/~NSg
 marking/~NVSg
 markka/Ng
 markkaa/N
-marksman/~Ng
+marksman/~N0g
 marksmanship/~Ng
-marksmen/9
+marksmen/N9
 markup/~NwgS
 marl/NVg
 marlin/~NgS
@@ -32932,11 +32934,11 @@ marmalade/~NmVg
 marmoreal/J
 marmoset/NSg
 marmot/NgS
-maroon/~NJVgdGS
+maroon/~NmJVgdGS
 marque/~NgS
 marquee/~NJVSg
 marquess/~NgS
-marquetry/Ng
+marquetry/Nmg
 marquis/~NgS
 marquise/Ng
 marquisette/Ng
@@ -33102,7 +33104,7 @@ maul/NVgd>SZG
 mauler/Ng
 maunder/VNSdG
 mausoleum/~NSg
-mauve/NJg
+mauve/NmJg
 maven/NSg
 maverick/~JNVSg
 maw/~NSg
@@ -35135,7 +35137,7 @@ neoliberal/JNSg
 neoliberalism/Ng
 neolithic/~J
 neologism/~NwSg
-neon/~NJg
+neon/~NmJg
 neonatal/~J
 neonate/NgS
 neophilia/Nm
@@ -35372,7 +35374,7 @@ niter/Ng
 nitpick/VSZGd>
 nitpicker/Ng
 nitpicking/Ng
-nitrate/~NVdSgGn
+nitrate/~NwVdSgGn
 nitration/Ng
 nitre/Ng!@_
 nitric/~JN
@@ -35380,10 +35382,10 @@ nitrification/Ng
 nitrite/NSg
 nitro/~NJ
 nitrocellulose/Ng
-nitrogen/~Ng
+nitrogen/~Nmg
 nitrogenous/J
-nitroglycerin/Ng
-nitroglycerine/Ng!@_
+nitroglycerin/Nmg
+nitroglycerine/Nmg!@_
 nitrous/~Ng
 nitwit/NgS
 nix/~NVGgdS
@@ -36287,7 +36289,7 @@ oligarchs/N9
 oligarchy/NSg
 oligonucleotide/NS
 oligopoly/NSg
-olive/~NJSg
+olive/~NwJSg
 om/~NVSgnX
 ombudsman/~N0g
 ombudsmen/N9
@@ -36363,7 +36365,7 @@ ooze/NVgGdS
 oozy/J^>
 op/~NVJSgdG
 opacity/Nwg
-opal/~NgS
+opal/~NwgS
 opalescence/Nmg
 opalescent/J
 opaqueness/Nmg
@@ -37962,7 +37964,7 @@ peony/NSg
 people/~N9VgGdS
 pep/~VNSg
 pepped/V
-pepper/~NVGgdS
+pepper/~NwVGgdS
 peppercorn/NSg
 peppermint/~NwSg
 pepperoni/NwgS
@@ -37981,7 +37983,7 @@ percale/NgS
 perceive/~VBGdS
 perceived/~JVU
 percent/~NgS
-percentage/~NSg
+percentage/~NwSg
 percentile/NSg
 perceptible/JN
 perceptibly/R
@@ -38024,12 +38026,12 @@ perforate/VJGnXdS
 perforation/NwSg
 perforce/V
 perform/~VSd>ZG
-performance/~NSg
+performance/~NwSg
 performant/J
 performative/JNY
 performed/~VU
 performer/~Ng
-perfume/~NVd>SgZG
+perfume/~NwVd>SgZG
 perfumer/Ng
 perfumery/NSg
 perfunctorily/R
@@ -38912,7 +38914,7 @@ plugged/~VU
 plugging/~VNU
 plughole/NS
 plugin/NSg
-plum/~NJVGgdS
+plum/~NwJVGgdS
 plumage/~Nmg
 plumb/~NJVgd>SZGz
 plumbed/VU
@@ -40438,7 +40440,7 @@ purity/~Ng
 purl/NVGgdS
 purlieu/NSg
 purloin/VSGd
-purple/~NJVg^>S
+purple/~NwJVg^>S
 purplish/~J
 purport/VNSgdG
 purported/~JVY
@@ -40614,7 +40616,7 @@ quarterstaves/N
 quartet/~NSg
 quartile/NS
 quarto/~NgS
-quartz/~Ng
+quartz/~Nmg
 quasar/~NgS
 quash/VGdS
 quasi/~J
@@ -40670,10 +40672,10 @@ quickstep/NVgS
 quid/NVgS
 quiescence/Ng
 quiescent/JY
-quiet/~JVNSgdn>YX^Gp
+quiet/~JVNwSgdn>YX^Gp
 quieten/VdG
 quietism/N
-quietness/Ng
+quietness/Nmg
 quietude/NiEg
 quietus/NgS
 quiff/NVS
@@ -41076,7 +41078,7 @@ reactionary/~JNSg
 reactively/R
 reactivity/~N
 read/~VNZGg>BzS
-readability/~NSg
+readability/~Nmg
 reader/~Ng
 readership/~NSg
 readily/~R
@@ -41273,7 +41275,7 @@ recuse/VdSG
 recut/VS
 recutting/V
 recycle/VSdG>B
-red/~JNpSg
+red/~JNwpSg
 redact/VSdGU
 redaction/NgS
 redactor/NSg
@@ -42062,7 +42064,7 @@ rhubarb/NJVgS
 rhyme/~NVgZGd>S
 rhymer/Ng
 rhymester/NgS
-rhythm/~NVSg
+rhythm/~NwVSg
 rhythmic/~J
 rhythmical/JY
 rial/NgS
@@ -42186,7 +42188,7 @@ riser/~Ng
 risibility/Ng
 risible/J
 rising/~VNJPg
-risk/~NVGgdS
+risk/~NwVGgdS
 riskily/R
 riskiness/Ng
 risky/~J>p^
@@ -42459,7 +42461,7 @@ rubicund/J
 rubidium/~Ng
 ruble/NSg
 rubric/NJVSg
-ruby/~NJV>Sg^
+ruby/~NwJV>Sg^
 ruched/JV
 ruck/NVdGS
 rucksack/NgS
@@ -42702,7 +42704,7 @@ salmonellae/9
 salon/~NgS
 saloon/~NSg
 salsa/~NVgS
-salt/~NJVe^GdS
+salt/~NwJVe^GdS
 salt's
 saltbox/NgS
 saltcellar/NSg
@@ -42808,7 +42810,7 @@ sapless/J
 sapling/NgS
 sapped/V
 sapper/NS
-sapphire/~NJSg
+sapphire/~NwJSg
 sappiness/Ng
 sapping/VN
 sappy/Jp>^
@@ -42946,7 +42948,7 @@ scalable/JU
 scalar/~JNS
 scalawag/NgS
 scald/VNJgdSG
-scale/~NVeGdS
+scale/~NwVeGdS
 scale's
 scaleless/J
 scalene/JN
@@ -44496,7 +44498,7 @@ sixtieth/JNg
 sixtieths/N
 sixty/~SgH
 sizable/~J
-size/~NVrGdS
+size/~NwVrGdS
 size's
 sizeable/J!_
 sizer/N
@@ -46373,7 +46375,7 @@ stratify/VdSGn
 stratosphere/NSg
 stratospheric/J
 stratum/~N0g
-stratus/Ng
+stratus/N0g
 straw/~NwJVGSgd
 strawberry/~NwJVSg
 stray/~NVJGSgd
@@ -46390,10 +46392,10 @@ streetlamp/NS
 streetlight/NSg
 streetwalker/NSg
 streetwise/J
-strength/~NVg
+strength/~Nw0Vg
 strengthen/~VrGdS
 strengthener/NgS
-strengths/~NV
+strengths/~N9V
 strenuous/~JpY
 strenuousness/Ng
 strep/Ng
@@ -46478,7 +46480,7 @@ struct/NgS
 structural/~JNY
 structuralism/N
 structuralist/JNS
-structure/~NVrGdS
+structure/~NwVrGdS
 structure's
 structured/~JVU
 strudel/~NSg
@@ -46783,7 +46785,7 @@ sucker/~NVGgd
 suckle/NVdSzG
 suckling/NVg
 sucky/J
-sucrose/~Ng
+sucrose/~Nmg
 suction/~NVSgdG
 sudden/~JNpY
 suddenness/Ng
@@ -46819,7 +46821,7 @@ sugary/J>^
 suggest/~VGvSd>
 suggestibility/Ng
 suggestible/J
-suggestion/~NSg
+suggestion/~NwSg
 suggestive/~JYp
 suggestiveness/Ng
 suicidal/~JN
@@ -47388,7 +47390,7 @@ synoptic/~J
 synovial/~J
 syntactic/~J
 syntactical/JY
-syntax/~Ng
+syntax/~Nmg
 syntheses/9
 synthesis/~Nmg
 synthesise/V!_
@@ -47757,7 +47759,7 @@ technical/~JNY
 technicality/NSg
 technician/~NSg
 technicolor/~JN
-technique/~NSg
+technique/~NwSg
 techno/~Nmg
 technobabble/N
 technocracy/NSg
@@ -48618,7 +48620,7 @@ tomcat/~NVgS
 tome/~NgS
 tomfoolery/NSg
 tomographic/J
-tomography/~Ng
+tomography/~Nmg
 tomorrow/~NgS
 tomtit/NgS
 ton/~NSg
@@ -48763,7 +48765,7 @@ totter/VNZGgd>S
 totterer/Ng
 totting/VN
 toucan/NgS
-touch/~VNrGgdS
+touch/~VNwrGgdS
 touchdown/~NSg
 touche/Bz
 touched/~JVU
@@ -48888,7 +48890,7 @@ tragedienne/NgS
 tragedy/~NSg
 tragic/~JN
 tragically/~R
-tragicomedy/NSg
+tragicomedy/NwSg
 tragicomic/J
 trail/~VNZGSgd>
 trailblazer/NgS
@@ -48898,10 +48900,10 @@ train/~NVZGSgd>B
 trained/~JVU
 trainee/~NSg
 trainer/~Ng
-training/~VNg
+training/~VNmg
 trainload/NgS
-trainman/Ng
-trainmen/9g
+trainman/N0g
+trainmen/N9g
 trainspotter/NS
 trainspotting/~N
 traipse/VNdSgG
@@ -51416,7 +51418,7 @@ weakener/Ng
 weakfish/N09gS      # singular and plural, also has a plural in -s
 weakish/J
 weakling/NJSg
-weakness/~NgS
+weakness/~NwgS
 weal/NVgHS
 wealth/~Ng
 wealthiness/Ng
@@ -52099,7 +52101,7 @@ wordsmith/N0V
 wordsmiths/N9V
 wordy/J^p>
 wore/~V
-work/~NVrdzSG
+work/~NwVrdzSG
 work's
 workable/~JU
 workaday/JN
@@ -52915,6 +52917,7 @@ TUI/NOSg            # text user interface
 Tandy/Og            # surname, given name, old computer company
 TechCrunch/g
 Tencent/Og
+TensorFlow/Og
 ThinkPad/OSg        # pc brand
 TikTok/Sg
 TLS/Og              # Transport Layer Security

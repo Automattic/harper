@@ -102,8 +102,8 @@
 # NPl             NPr/J/P NPr/V+   . D   NSg/J     V/C NSg/J    NPl/V    P  D/P+ NSg/V+ . NPr/C
 > the members of the Legislature thereof , is denied to any    of the male
 # D   NPl/V   P  D+  NSg+        W?      . VL V/J    P  I/R/Dq P  D   NPr/J+
-> inhabitants of such   State  , being    twenty - one       years of age     , and citizens of the
-# NPl         P  NSg/I+ NSg/V+ . NSg/V/C+ NSg    . NSg/I/V/J NPl   P  N🅪Sg/V+ . V/C NPl      P  D+
+> inhabitants of such   State  , being     twenty - one       years of age     , and citizens of the
+# NPl         P  NSg/I+ NSg/V+ . N🅪Sg/V/C+ NSg    . NSg/I/V/J NPl   P  N🅪Sg/V+ . V/C NPl      P  D+
 > United States   , or    in      any     way    abridged , except for participation in      rebellion ,
 # V/J+   NPrPl/V+ . NPr/C NPr/J/P I/R/Dq+ NSg/J+ V/J      . V/C/P  C/P NᴹSg+         NPr/J/P NSg+      .
 > or    other    crime   , the basis of representation therein shall be     reduced in      the
@@ -277,7 +277,7 @@
 > Secrecy ; and the Yeas and Nays  of the Members of either House  on  any     question
 # NᴹSg    . V/C D   NPl  V/C NPl/V P  D   NPl/V   P  I/C    NPr/V+ J/P I/R/Dq+ NSg/V+
 > shall , at    the Desire of one       fifth   of those   Present , be     entered on  the Journal  .
-# VX    . NSg/P D   NSg/V  P  NSg/I/V/J NSg/V/J P  I/Ddem+ NSg/V/J . NSg/VX V/J     J/P D+  NSg/V/J+ .
+# VX    . NSg/P D   N🅪Sg/V P  NSg/I/V/J NSg/V/J P  I/Ddem+ NSg/V/J . NSg/VX V/J     J/P D+  NSg/V/J+ .
 >
 #
 > Neither House , during the Session of Congress , shall , without the Consent of
@@ -376,8 +376,8 @@
 # NPr/V P  NPl+            NPr/VX NSg/VX NSg/J     . V/C/P  J/P D/P NSg/V    P  NSg         .
 > shall be     presented to the President of the United States   ; and before the Same
 # VX    NSg/VX V/J       P  D   NSg/V     P  D+  V/J+   NPrPl/V+ . V/C C/P    D   I/J
-> shall take  Effect , shall be     approved by      him  , or    being   disapproved by      him  , shall
-# VX    NSg/V NSg/V  . VX    NSg/VX V/J      NSg/J/P ISg+ . NPr/C NSg/V/C V/J         NSg/J/P ISg+ . VX
+> shall take  Effect , shall be     approved by      him  , or    being    disapproved by      him  , shall
+# VX    NSg/V NSg/V  . VX    NSg/VX V/J      NSg/J/P ISg+ . NPr/C N🅪Sg/V/C V/J         NSg/J/P ISg+ . VX
 > be     repassed by      two thirds of the Senate and House of Representatives , according
 # NSg/VX ?        NSg/J/P NSg NPl/V  P  D+  NPr    V/C NPr/V P  NPl+            . V/J
 > to the Rules and Limitations prescribed in      the Case  of a    Bill   .
@@ -541,7 +541,7 @@
 > States   , reserving to the States   respectively , the Appointment of the Officers ,
 # NPrPl/V+ . V         P  D+  NPrPl/V+ R            . D   NSg         P  D+  NPl/V+   .
 > and the Authority of training the Militia according to the discipline
-# V/C D   N🅪Sg      P  NSg/V+   D   NSg     V/J       P  D+  NSg/V+
+# V/C D   N🅪Sg      P  NᴹSg/V+  D   NSg     V/J       P  D+  NSg/V+
 > prescribed by      Congress ;
 # V/J        NSg/J/P NPr/V+   .
 >
@@ -1085,7 +1085,7 @@
 > United States   , shall be     removed from Office on  Impeachment for , and Conviction
 # V/J+   NPrPl/V+ . VX    NSg/VX V/J     P    NSg/V+ J/P N🅪Sg        C/P . V/C NSg
 > of , Treason , Bribery , or    other   high    Crimes and  Misdemeanors .
-# P  . NSg     . NSg     . NPr/C NSg/V/J NSg/V/J NPl/V+ V/C+ NPl+         .
+# P  . NSg     . NᴹSg    . NPr/C NSg/V/J NSg/V/J NPl/V+ V/C+ NPl+         .
 >
 #
 > Article . III .
@@ -1170,8 +1170,8 @@
 #
 > The Congress shall have   Power    to declare the Punishment of Treason , but     no
 # D+  NPr/V+   VX    NSg/VX NSg/V/J+ P  V       D   N🅪Sg       P  NSg     . NSg/C/P NPr/P
-> Attainder of Treason shall work   Corruption of Blood   , or    Forfeiture except
-# NSg       P  NSg     VX    NSg/V+ NSg        P  NᴹSg/V+ . NPr/C NSg        V/C/P
+> Attainder of Treason shall work    Corruption of Blood   , or    Forfeiture except
+# NSg       P  NSg     VX    N🅪Sg/V+ NSg        P  NᴹSg/V+ . NPr/C NSg        V/C/P
 > during the Life   of the Person attainted .
 # V/P    D   N🅪Sg/V P  D+  NSg/V+ ?         .
 >
@@ -1440,8 +1440,8 @@
 # NPrPl/V+ .
 >
 #
-> A   well    regulated militia , being   necessary to the security of a    free     state  , the
-# D/P NSg/V/J V/J       NSg     . NSg/V/C NSg/J     P  D   NᴹSg     P  D/P+ NSg/V/J+ NSg/V+ . D
+> A   well    regulated militia , being    necessary to the security of a    free     state  , the
+# D/P NSg/V/J V/J       NSg     . N🅪Sg/V/C NSg/J     P  D   NᴹSg     P  D/P+ NSg/V/J+ NSg/V+ . D
 > right   of the people to keep  and bear     arms   , shall not   be     infringed .
 # NPr/V/J P  D+  NPl/V+ P  NSg/V V/C NSg/V/J+ NPl/V+ . VX    NSg/C NSg/VX V/J       .
 >
@@ -1474,16 +1474,16 @@
 # NSg           P  I/Ddem+ NPr          NSg/P   D+  NPrPl/V+ NSg/I/J/C V         D   I/J  .
 >
 #
-> The Word  " the " , being   interlined between the seventh and eight Lines of the
-# D   NSg/V . D   . . NSg/V/C V/J        NSg/P   D   NSg/J   V/C NSg/J NPl/V P  D+
-> first    Page   , The Word   " Thirty " being   partly written on  an  Erazure in      the
-# NSg/V/J+ NPr/V+ . D   NSg/V+ . NSg    . NSg/V/C W?     V/J     J/P D/P ?       NPr/J/P D
-> fifteenth Line  of the first    Page   . The Words  " is tried " being   interlined between
-# NSg/J+    NSg/V P  D+  NSg/V/J+ NPr/V+ . D   NPl/V+ . VL V/J   . NSg/V/C V/J        NSg/P
+> The Word  " the " , being    interlined between the seventh and eight Lines of the
+# D   NSg/V . D   . . N🅪Sg/V/C V/J        NSg/P   D   NSg/J   V/C NSg/J NPl/V P  D+
+> first    Page   , The Word   " Thirty " being    partly written on  an  Erazure in      the
+# NSg/V/J+ NPr/V+ . D   NSg/V+ . NSg    . N🅪Sg/V/C W?     V/J     J/P D/P ?       NPr/J/P D
+> fifteenth Line  of the first    Page   . The Words  " is tried " being    interlined between
+# NSg/J+    NSg/V P  D+  NSg/V/J+ NPr/V+ . D   NPl/V+ . VL V/J   . N🅪Sg/V/C V/J        NSg/P
 > the thirty second  and thirty third   Lines of the first   Page  and the Word   " the "
 # D   NSg    NSg/V/J V/C NSg    NSg/V/J NPl/V P  D   NSg/V/J NPr/V V/C D   NSg/V+ . D   .
-> being   interlined between the forty third   and forty fourth  Lines of the second
-# NSg/V/C V/J        NSg/P   D   NSg/J NSg/V/J V/C NSg/J NPr/V/J NPl/V P  D+  NSg/V/J+
+> being    interlined between the forty third   and forty fourth  Lines of the second
+# N🅪Sg/V/C V/J        NSg/P   D   NSg/J NSg/V/J V/C NSg/J NPr/V/J NPl/V P  D+  NSg/V/J+
 > Page   .
 # NPr/V+ .
 >
