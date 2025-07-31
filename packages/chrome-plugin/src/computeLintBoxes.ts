@@ -1,13 +1,7 @@
 import type { Span } from 'harper.js';
-import {
-	domRectToBox,
-	type IgnorableLintBox,
-	isBottomEdgeInBox,
-	type LintBox,
-	shrinkBoxToFit,
-} from './Box';
+import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
 import { getRangeForTextSpan } from './domUtils';
-import { getLexicalEditable, getLexicalRoot, getSlateRoot } from './editorUtils';
+import { getLexicalEditable, getSlateRoot } from './editorUtils';
 import ProtocolClient from './ProtocolClient';
 import TextFieldRange from './TextFieldRange';
 import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
