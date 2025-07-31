@@ -211,6 +211,9 @@ impl SequenceExpr {
         self.then(Word::new_exact(word))
     }
 
+    // Out-of-vocabulary word. (Words not in the dictionary)
+    gen_then_from_is!(oov);
+
     // Part-of-speech matching methods
 
     // Nominals (nouns and pronouns)
