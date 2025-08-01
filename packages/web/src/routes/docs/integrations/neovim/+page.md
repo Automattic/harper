@@ -25,6 +25,7 @@ require('lspconfig').harper_ls.setup {
   settings = {
     ["harper-ls"] = {
       userDictPath = "",
+      workspaceDictPath = "",
       fileDictPath = "",
       linters = {
         SpellCheck = true,

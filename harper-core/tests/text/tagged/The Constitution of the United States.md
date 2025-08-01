@@ -550,14 +550,14 @@
 #
 >
 #
-> To exercise exclusive Legislation in      all           Cases  whatsoever , over      such  District
-# P  NSg/V    NSg/J     NSg+        NPr/J/P NSg/I/J/C/Dq+ NPl/V+ I          . NSg/V/J/P NSg/I NSg/V/J+
+> To exercise exclusive Legislation in      all           Cases  whatsoever , over    such  District
+# P  NSg/V    NSg/J     NSg+        NPr/J/P NSg/I/J/C/Dq+ NPl/V+ I          . NSg/J/P NSg/I NSg/V/J+
 > ( not   exceeding ten  Miles  square  ) as    may    , by      Cession of particular States   , and
 # . NSg/C NSg/V/J   NSg+ NPrPl+ NSg/V/J . NSg/R NPr/VX . NSg/J/P NSg     P  NSg/J      NPrPl/V+ . V/C
 > the Acceptance of Congress , become the Seat  of the Government of the United
 # D   NSg        P  NPr/V+   . V      D   NSg/V P  D   NSg        P  D   V/J
-> States   , and to exercise like        Authority over      all          Places purchased by      the Consent
-# NPrPl/V+ . V/C P  NSg/V    NSg/V/J/C/P NSg+      NSg/V/J/P NSg/I/J/C/Dq NPl/V+ V/J       NSg/J/P D   NSg/V
+> States   , and to exercise like        Authority over    all          Places purchased by      the Consent
+# NPrPl/V+ . V/C P  NSg/V    NSg/V/J/C/P NSg+      NSg/J/P NSg/I/J/C/Dq NPl/V+ V/J       NSg/J/P D   NSg/V
 > of the Legislature of the State  in      which the Same shall be     , for the Erection of
 # P  D   NSg         P  D   NSg/V+ NPr/J/P I/C+  D   I/J  VX    NSg/VX . C/P D   NSg      P
 > Forts , Magazines , Arsenals , dock   - Yards  , and other   needful Buildings ; — And
@@ -626,8 +626,8 @@
 #
 > No     Preference shall be     given     by      any    Regulation of Commerce or    Revenue to the
 # NPr/P+ NSg/V+     VX    NSg/VX NSg/V/J/P NSg/J/P I/R/Dq N🅪Sg/J     P  NᴹSg/V   NPr/C NSg+    P  D
-> Ports of one       State  over      those  of another : nor   shall Vessels bound   to , or    from ,
-# NPl/V P  NSg/I/V/J NSg/V+ NSg/V/J/P I/Ddem P  I/D     . NSg/C VX    NPl/V+  NSg/V/J P  . NPr/C P    .
+> Ports of one       State  over    those  of another : nor   shall Vessels bound   to , or    from ,
+# NPl/V P  NSg/I/V/J NSg/V+ NSg/J/P I/Ddem P  I/D     . NSg/C VX    NPl/V+  NSg/V/J P  . NPr/C P    .
 > one        State  , be     obliged to enter , clear   , or    pay     Duties in      another .
 # NSg/I/V/J+ NSg/V+ . NSg/VX V/J     P  NSg/V . NSg/V/J . NPr/C NSg/V/J NPl+   NPr/J/P I/D     .
 >
@@ -1184,8 +1184,8 @@
 # D   NPr/V/J P  D+  NPl/V+ P  NSg/VX V/J    NPr/J/P D$+   NPl/V+  . NPl/V+ .
 > papers , and effects , against unreasonable searches and seizures , shall not   be
 # NPl/V+ . V/C NPl/V+  . C/P     J            NPl/V    V/C NPl/V+   . VX    NSg/C NSg/VX
-> violated , and no    warrants shall issue  , but     upon probable cause   , supported by
-# V/J      . V/C NPr/P NPl/V+   VX    NSg/V+ . NSg/C/P P    NSg/J    NSg/V/C . V/J       NSg/J/P
+> violated , and no    warrants shall issue  , but     upon probable cause    , supported by
+# V/J      . V/C NPr/P NPl/V+   VX    NSg/V+ . NSg/C/P P    NSg/J    N🅪Sg/V/C . V/J       NSg/J/P
 > oath   or    affirmation , and particularly describing the place  to be     searched , and
 # NSg/V+ NPr/C NSg         . V/C R            V          D   NSg/V+ P  NSg/VX V/J      . V/C
 > the persons or    things to be     seized .
@@ -1216,8 +1216,8 @@
 # NSg/V/J NSg/V/J+ . NSg/J/P D/P J         NSg/V/J P  D   NSg/V+ V/C NSg/V/J+ C       D   N🅪Sg/V+
 > shall have   been  committed , which district shall have   been  previously
 # VX    NSg/VX NSg/V V/J       . I/C+  NSg/V/J+ VX    NSg/VX NSg/V R
-> ascertained by      law    , and to be     informed of the nature and cause   of the
-# V/J         NSg/J/P NSg/V+ . V/C P  NSg/VX V/J      P  D   NSg/V+ V/C NSg/V/C P  D
+> ascertained by      law    , and to be     informed of the nature and cause    of the
+# V/J         NSg/J/P NSg/V+ . V/C P  NSg/VX V/J      P  D   NSg/V+ V/C N🅪Sg/V/C P  D
 > accusation ; to be     confronted with the witnesses against him  ; to have   compulsory
 # NSg        . P  NSg/VX V/J        P    D   NPl/V+    C/P     ISg+ . P  NSg/VX NSg/J
 > process for obtaining witnesses in      his     favor      , and to have   the assistance of

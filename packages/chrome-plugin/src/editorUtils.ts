@@ -18,6 +18,25 @@ export function findAncestor(
 	return null;
 }
 
+export function findChild(
+	el: HTMLElement,
+	predicate: (el: HTMLElement) => boolean,
+): HTMLElement | null {
+	const queue: HTMLElement[] = Array.from(el.children) as HTMLElement[];
+
+	while (queue.length > 0) {
+		const node = queue.shift() as HTMLElement;
+
+		if (predicate(node)) {
+			return node;
+		}
+
+		queue.push(...(Array.from(node.children) as HTMLElement[]));
+	}
+
+	return null;
+}
+
 /** Determines if a given node is a child of a P2 editor instance.
  * If so, returns the root node of that instance. */
 export function getP2Root(el: HTMLElement): HTMLElement | null {
@@ -39,6 +58,16 @@ export function getLexicalRoot(el: HTMLElement): HTMLElement | null {
 		el,
 		(node: HTMLElement) => node.getAttribute('data-lexical-editor') == 'true',
 	);
+}
+
+export function getLexicalEditable(el: HTMLElement): HTMLElement | null {
+	const lexical = getLexicalRoot(el);
+
+	if (lexical == null) {
+		return null;
+	}
+
+	return findChild(lexical, (node: HTMLElement) => node.getAttribute('contenteditable') == 'true');
 }
 
 /** Determines if a given node is a child of a Slate.js editor instance.

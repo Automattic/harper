@@ -47,6 +47,7 @@ getDialect().then(setDialect);
 
 async function enableDefaultDomains() {
 	const defaultEnabledDomains = [
+		'old.reddit.com',
 		'chatgpt.com',
 		'www.perplexity.ai',
 		'textarea.online',
