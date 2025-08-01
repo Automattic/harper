@@ -21,7 +21,9 @@ use harper_core::{
     word_metadata_orthography::OrthFlags,
 };
 use harper_literate_haskell::LiterateHaskellParser;
-use harper_pos_utils::{BrillChunker, BrillTagger};
+#[cfg(feature = "training")]
+use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
+
 use harper_stats::Stats;
 use serde::Serialize;
 
@@ -101,6 +103,7 @@ enum Args {
         /// The document to mine words from.
         file: PathBuf,
     },
+    #[cfg(feature = "training")]
     TrainBrillTagger {
         #[arg(short, long, default_value = "1.0")]
         candidate_selection_chance: f32,
@@ -112,6 +115,7 @@ enum Args {
         #[arg(num_args = 1..)]
         datasets: Vec<PathBuf>,
     },
+    #[cfg(feature = "training")]
     TrainBrillChunker {
         #[arg(short, long, default_value = "1.0")]
         candidate_selection_chance: f32,
@@ -120,6 +124,27 @@ enum Args {
         /// The number of epochs (and patch rules) to train.
         epochs: usize,
         /// Path to a `.conllu` dataset to train on.
+        #[arg(num_args = 1..)]
+        datasets: Vec<PathBuf>,
+    },
+    #[cfg(feature = "training")]
+    TrainBurnChunker {
+        #[arg(short, long)]
+        lr: f64,
+        // The number of embedding dimensions
+        #[arg(long)]
+        dim: usize,
+        /// The path to write the final  model file to.
+        #[arg(short, long)]
+        output: PathBuf,
+        /// The number of epochs to train.
+        #[arg(short, long)]
+        epochs: usize,
+        /// The dropout probability
+        #[arg(long)]
+        dropout: f32,
+        #[arg(short, long)]
+        test_file: PathBuf,
         #[arg(num_args = 1..)]
         datasets: Vec<PathBuf>,
     },
@@ -476,6 +501,7 @@ fn main() -> anyhow::Result<()> {
             println!("harper-core v{}", harper_core::core_version());
             Ok(())
         }
+        #[cfg(feature = "training")]
         Args::TrainBrillTagger {
             datasets: dataset,
             epochs,
@@ -487,6 +513,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        #[cfg(feature = "training")]
         Args::TrainBrillChunker {
             datasets,
             epochs,
@@ -495,6 +522,22 @@ fn main() -> anyhow::Result<()> {
         } => {
             let chunker = BrillChunker::train(&datasets, epochs, candidate_selection_chance);
             fs::write(output, serde_json::to_string_pretty(&chunker)?)?;
+            Ok(())
+        }
+        #[cfg(feature = "training")]
+        Args::TrainBurnChunker {
+            datasets,
+            test_file,
+            epochs,
+            dropout,
+            output,
+            lr,
+            dim: embed_dim,
+        } => {
+            let chunker =
+                BurnChunkerCpu::train_cpu(&datasets, &test_file, embed_dim, dropout, epochs, lr);
+            chunker.save_to(output);
+
             Ok(())
         }
         Args::RenameFlag { old, new, dir } => {
