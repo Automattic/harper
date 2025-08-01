@@ -1,9 +1,10 @@
 use crate::expr::Expr;
 use crate::expr::FixedPhrase;
+use crate::expr::MatchInfo;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{
-    Lrc, Token, TokenStringExt,
+    Lrc, TokenStringExt,
     patterns::{Pattern, WordSet},
 };
 
@@ -38,7 +39,8 @@ impl ExprLinter for BackInTheDay {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         if let Some(tail) = matched_tokens.get(8..) {
             if self.exceptions.matches(tail, source).is_some() {
                 return None;

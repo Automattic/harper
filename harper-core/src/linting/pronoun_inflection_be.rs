@@ -1,6 +1,6 @@
 use harper_brill::UPOS;
 
-use crate::expr::{All, AnchorStart, Expr, ExprMap, SequenceExpr};
+use crate::expr::{All, AnchorStart, Expr, ExprMap, MatchInfo, SequenceExpr};
 use crate::patterns::{NominalPhrase, UPOSSet};
 use crate::{Lrc, Token, TokenKind};
 
@@ -129,7 +129,8 @@ impl ExprLinter for PronounInflectionBe {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let span = matched_tokens.get(matched_tokens.len() - 3)?.span;
 
         // Determine the correct inflection of "be".
