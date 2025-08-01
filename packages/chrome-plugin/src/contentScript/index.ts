@@ -2,8 +2,17 @@ import '@webcomponents/custom-elements';
 import $ from 'jquery';
 import { isVisible, leafNodes } from '../domUtils';
 import LintFramework from '../LintFramework';
+import ProtocolClient from '../ProtocolClient';
 
 const fw = new LintFramework();
+
+const keepAliveCallback = () => {
+	ProtocolClient.lint('', 'example.com');
+
+	setTimeout(keepAliveCallback, 400);
+};
+
+keepAliveCallback();
 
 function scan() {
 	$('textarea:visible').each(function () {
