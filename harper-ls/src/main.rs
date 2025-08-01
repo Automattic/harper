@@ -39,7 +39,7 @@ struct Args {
 
 // Setting worker threads to four means the process will use about five threads total
 // This is because worker threads do not include blocking threads
-#[tokio::main(worker_threads = 4)]
+#[tokio::main(worker_threads = 1)]
 async fn main() -> anyhow::Result<()> {
     let subscriber = FmtSubscriber::builder()
         .map_writer(move |_| stderr)

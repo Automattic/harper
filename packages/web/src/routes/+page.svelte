@@ -8,7 +8,6 @@ import Graph from '$lib/Graph.svelte';
 import Logo from '$lib/Logo.svelte';
 import ObsidianLogo from '$lib/ObsidianLogo.svelte';
 import Section from '$lib/Section.svelte';
-import TypewriterHeading from '$lib/TypewriterHeading.svelte';
 
 export const frontmatter = {
 	home: false,
@@ -22,12 +21,6 @@ window.addEventListener('resize', () => {
 
 let mobile = $derived(width < 640);
 
-const headings = [
-	'Grammar Checking Without the Cloud',
-	'Grammar Checking That Respects Your Privacy',
-	'Grammar Checking for Developers',
-];
-
 /**
  * @param {string} keyword
  */
@@ -40,7 +33,7 @@ function agentHas(keyword) {
 	<Logo width="200px" />
 </div>
 <h1 class="font-bold text-center">Hi. I’m Harper.</h1>
-<TypewriterHeading items={headings} />
+<h2 class="text-center text-lg md:text-2xl lg:text-4xl">The Grammar Checker That Respects Your Privacy</h2>
 
 <div
 	class="md:flex md:flex-row grid grid-cols-2 items-center justify-evenly mt-5 transition-all place-items-center"

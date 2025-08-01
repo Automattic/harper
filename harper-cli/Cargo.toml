@@ -24,3 +24,4 @@ strum_macros = "0.27.2"
 
 [features]
 default = []
+training = ["harper-pos-utils/training"]
