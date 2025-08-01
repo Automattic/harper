@@ -289,7 +289,7 @@ impl SequenceExpr {
                     .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
         })
     }
-    
+
     // Out-of-vocabulary word. (Words not in the dictionary)
     gen_then_from_is!(oov);
 
