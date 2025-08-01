@@ -1,13 +1,7 @@
 import type { Span } from 'harper.js';
-import {
-	domRectToBox,
-	type IgnorableLintBox,
-	isBottomEdgeInBox,
-	type LintBox,
-	shrinkBoxToFit,
-} from './Box';
+import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
 import { getRangeForTextSpan } from './domUtils';
-import { getLexicalRoot, getSlateRoot } from './editorUtils';
+import { getLexicalEditable, getSlateRoot } from './editorUtils';
 import ProtocolClient from './ProtocolClient';
 import TextFieldRange from './TextFieldRange';
 import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
@@ -81,7 +75,7 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): I
 
 function replaceValue(el: HTMLElement, value: string) {
 	const slateRoot = getSlateRoot(el);
-	const lexicalRoot = getLexicalRoot(el);
+	const lexicalRoot = getLexicalEditable(el);
 
 	if (isFormEl(el)) {
 		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
