@@ -3,10 +3,11 @@ format:
   cargo fmt  
   pnpm format
 
-# Build the WebAssembly for a specific target (usually either `web` or `bundler`)
+# Build the WebAssembly module
 build-wasm:
-  cd "{{justfile_directory()}}/harper-wasm" && wasm-pack build --target web
-
+  #!/usr/bin/env bash
+  cd "{{justfile_directory()}}/harper-wasm"
+  RUSTFLAGS='--cfg getrandom_backend="wasm_js"' wasm-pack build --target web
 
 # Build `harper.js` with all size optimizations available.
 build-harperjs: build-wasm 
@@ -589,6 +590,9 @@ newest-dict-changes *numCommits:
       });
     });
   });
+
+getnps a:
+  cargo run --bin harper-cli -- nominal-phrases "{{a}}"
 
 # Suggest annotations for a potential new property annotation
 suggestannotation input:
