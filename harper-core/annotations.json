@@ -469,7 +469,9 @@
 						"verb": {}
 					},
 					"metadata": {
-						"verb": {}
+						"verb": {
+							"verb_form": "PastForm"
+						}
 					}
 				}
 			],
