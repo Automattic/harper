@@ -115,6 +115,26 @@ pub fn lint_group() -> LintGroup {
             // or maybe Redundancy?
             LintKind::Usage
         ),
+        "DoesOrDose" => (
+            &[
+                // Negatives
+                ("dose not", "does not"),
+                // Pronouns
+                ("he dose", "he does"),
+                ("it dose", "it does"),
+                ("she dose", "she does"),
+                ("someone dose", "someone does"),
+                // Interrogatives
+                ("how dose", "how does"),
+                ("when dose", "when does"),
+                ("where dose", "where does"),
+                ("who dose", "who does"),
+                ("why dose", "why does"),
+            ],
+            "This may be a typo for `does`.",
+            "Tries to correct typos of `dose` to `does`.",
+            LintKind::Typo
+        ),
         "ExpandArgument" => (
             &[
                 ("arg", "argument"),

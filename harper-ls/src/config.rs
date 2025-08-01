@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use anyhow::{Result, bail};
 use dirs::{config_dir, data_local_dir};
@@ -65,6 +65,7 @@ impl CodeActionConfig {
 pub struct Config {
     pub user_dict_path: PathBuf,
     pub file_dict_path: PathBuf,
+    pub workspace_dict_path: PathBuf,
     pub ignored_lints_path: PathBuf,
     pub stats_path: PathBuf,
     pub lint_config: LintGroupConfig,
@@ -79,7 +80,7 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn from_lsp_config(value: Value) -> Result<Self> {
+    pub fn from_lsp_config(workspace_root: &Path, value: Value) -> Result<Self> {
         let mut base = Config::default();
 
         let Value::Object(value) = value else {
@@ -97,7 +98,7 @@ impl Config {
 
             let path = v.as_str().unwrap();
             if !path.is_empty() {
-                base.user_dict_path = path.try_resolve()?.to_path_buf();
+                base.user_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             }
         }
 
@@ -108,8 +109,24 @@ impl Config {
 
             let path = v.as_str().unwrap();
             if !path.is_empty() {
-                base.file_dict_path = path.try_resolve()?.to_path_buf();
+                base.file_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             }
+        }
+
+        if let Some(v) = value.get("workspaceDictPath") {
+            if !v.is_string() {
+                bail!("workspaceDict path must be a string.");
+            }
+            let path = v.as_str().unwrap();
+            if !path.is_empty() {
+                base.workspace_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
+            }
+        } else {
+            // Resolve the default path in the project root
+            base.workspace_dict_path = base
+                .workspace_dict_path
+                .try_resolve_in(workspace_root)?
+                .to_path_buf();
         }
 
         if let Some(v) = value.get("ignoredLintsPath") {
@@ -119,13 +136,13 @@ impl Config {
 
             let path = v.as_str().unwrap();
             if !path.is_empty() {
-                base.ignored_lints_path = path.try_resolve()?.to_path_buf();
+                base.ignored_lints_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             }
         }
 
         if let Some(v) = value.get("statsPath") {
             if let Value::String(path) = v {
-                base.file_dict_path = path.try_resolve()?.to_path_buf();
+                base.file_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             } else {
                 bail!("fileDict path must be a string.");
             }
@@ -176,6 +193,7 @@ impl Default for Config {
             file_dict_path: data_local_dir()
                 .unwrap()
                 .join("harper-ls/file_dictionaries/"),
+            workspace_dict_path: ".harper-dictionary.txt".into(),
             ignored_lints_path: data_local_dir().unwrap().join("harper-ls/ignored_lints/"),
             stats_path: data_local_dir().unwrap().join("harper-ls/stats.txt"),
             lint_config: LintGroupConfig::default(),

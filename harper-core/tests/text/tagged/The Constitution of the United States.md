@@ -1184,8 +1184,8 @@
 # D   NPr/V/J P  D+  NPl/V+ P  NSg/VX V/J    NPr/J/P D$+   NPl/V+  . NPl/V+ .
 > papers , and effects , against unreasonable searches and seizures , shall not   be
 # NPl/V+ . V/C NPl/V+  . C/P     J            NPl/V    V/C NPl/V+   . VX    NSg/C NSg/VX
-> violated , and no    warrants shall issue  , but     upon probable cause   , supported by
-# V/J      . V/C NPr/P NPl/V+   VX    NSg/V+ . NSg/C/P P    NSg/J    NSg/V/C . V/J       NSg/J/P
+> violated , and no    warrants shall issue  , but     upon probable cause    , supported by
+# V/J      . V/C NPr/P NPl/V+   VX    NSg/V+ . NSg/C/P P    NSg/J    N🅪Sg/V/C . V/J       NSg/J/P
 > oath   or    affirmation , and particularly describing the place  to be     searched , and
 # NSg/V+ NPr/C NSg         . V/C R            V          D   NSg/V+ P  NSg/VX V/J      . V/C
 > the persons or    things to be     seized .
@@ -1216,8 +1216,8 @@
 # NSg/V/J NSg/V/J+ . NSg/J/P D/P J         NSg/V/J P  D   NSg/V+ V/C NSg/V/J+ C       D   N🅪Sg/V+
 > shall have   been  committed , which district shall have   been  previously
 # VX    NSg/VX NSg/V V/J       . I/C+  NSg/V/J+ VX    NSg/VX NSg/V R
-> ascertained by      law    , and to be     informed of the nature and cause   of the
-# V/J         NSg/J/P NSg/V+ . V/C P  NSg/VX V/J      P  D   NSg/V+ V/C NSg/V/C P  D
+> ascertained by      law    , and to be     informed of the nature and cause    of the
+# V/J         NSg/J/P NSg/V+ . V/C P  NSg/VX V/J      P  D   NSg/V+ V/C N🅪Sg/V/C P  D
 > accusation ; to be     confronted with the witnesses against him  ; to have   compulsory
 # NSg        . P  NSg/VX V/J        P    D   NPl/V+    C/P     ISg+ . P  NSg/VX NSg/J
 > process for obtaining witnesses in      his     favor      , and to have   the assistance of
