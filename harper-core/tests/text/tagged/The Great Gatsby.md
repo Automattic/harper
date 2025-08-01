@@ -91,7 +91,7 @@
 > wake  of his     dreams that          temporarily closed out         my  interest in      the abortive
 # NPr/V P  ISg/D$+ NPl/V+ NSg/I/C/Ddem+ R           V/J    NSg/V/J/R/P D$+ NSg/V+   NPr/J/P D   NSg/V/J
 > sorrows and short     - winded elations of men  .
-# NPl/V+  V/C NPr/V/J/P . V/J    ?        P  NSg+ .
+# NPl/V+  V/C NPr/V/J/P . V/J    NPl      P  NSg+ .
 >
 #
 > My  family have   been  prominent , well    - to - do     people in      this   Middle  Western city for
@@ -2753,7 +2753,7 @@
 > fooled me       . This   fella’s a   regular Belasco . It’s a    triumph . What   thoroughness !
 # V/J    NPr/ISg+ . I/Ddem ?       D/P NSg/J   ?       . W?   D/P+ NSg/V+  . NSg/I+ NSg          .
 > What   realism ! Knew when    to stop  , too — didn’t cut     the pages  . But     what   do     you    want  ?
-# NSg/I+ NSg+    . V    NSg/I/C P  NSg/V . W?  . V      NSg/V/J D   NPl/V+ . NSg/C/P NSg/I+ NSg/VX ISgPl+ NSg/V .
+# NSg/I+ NᴹSg+   . V    NSg/I/C P  NSg/V . W?  . V      NSg/V/J D   NPl/V+ . NSg/C/P NSg/I+ NSg/VX ISgPl+ NSg/V .
 > What   do     you    expect ? ”
 # NSg/I+ NSg/VX ISgPl+ V      . .
 >
@@ -4033,7 +4033,7 @@
 > through which were  visible a   host  of spires . There was Gatsby , looking a   little     ,
 # NSg/J/P I/C+  NSg/V J       D/P NSg/V P  NPl/V+ . +     V   NPr    . V       D/P NPr/I/J/Dq .
 > not   much       , younger — with a   cricket bat    in      his     hand   .
-# NSg/C NSg/I/J/Dq . NSg/JC  . P    D/P NSg/V   NSg/V+ NPr/J/P ISg/D$+ NSg/V+ .
+# NSg/C NSg/I/J/Dq . NSg/JC  . P    D/P N🅪Sg/V  NSg/V+ NPr/J/P ISg/D$+ NSg/V+ .
 >
 #
 > Then    it       was all          true    . I    saw   the skins of tigers flaming in      his     palace on  the
@@ -6111,9 +6111,9 @@
 > some     vivid scene  with an  oblivious embrace . For a    while      these  reveries provided
 # I/J/R/Dq NSg/J NSg/V+ P    D/P J         NSg/V+  . C/P D/P+ NSg/V/C/P+ I/Ddem NPl/V    V/J/C
 > an  outlet for his     imagination ; they were  a   satisfactory hint  of the unreality of
-# D/P NSg+   C/P ISg/D$+ NSg+        . IPl+ NSg/V D/P NSg/J        NSg/V P  D   NSg       P
+# D/P NSg+   C/P ISg/D$+ NSg+        . IPl+ NSg/V D/P NSg/J        NSg/V P  D   N🅪Sg      P
 > reality , a   promise that         the rock   of the world  was founded securely on  a   fairy’s
-# NSg+    . D/P NSg/V+  NSg/I/C/Ddem D   NPr🅪/V P  D   NSg/V+ V   V/J     R        J/P D/P NSg$
+# N🅪Sg+   . D/P NSg/V+  NSg/I/C/Ddem D   NPr🅪/V P  D   NSg/V+ V   V/J     R        J/P D/P NSg$
 > wing   .
 # NSg/V+ .
 >
@@ -7747,7 +7747,7 @@
 > while     in      silence . Then    as    Doctor T. J. Eckleburg’s faded eyes   came    into sight
 # NSg/V/C/P NPr/J/P NSg/V+  . NSg/J/C NSg/R NSg/V+ ?  ?  ?           J     NPl/V+ NSg/V/P P    N🅪Sg/V+
 > down      the road   , I    remembered Gatsby’s caution about gasoline .
-# NSg/V/J/P D   NSg/J+ . ISg+ V/J        NSg$     NSg/V+  J/P   NᴹSg     .
+# NSg/V/J/P D   NSg/J+ . ISg+ V/J        NSg$     N🅪Sg/V+ J/P   NᴹSg     .
 >
 #
 > “ We’ve got enough to get   us       to town , ” said Tom    .
@@ -8276,8 +8276,8 @@
 # . NSg/V/J J/P . . NPr    V/J  R        .
 >
 #
-> “ What   kind  of a    row    are you    trying  to cause   in      my  house  anyhow ? ”
-# . NSg/I+ NSg/J P  D/P+ NSg/V+ V   ISgPl+ NSg/V/J P  NSg/V/C NPr/J/P D$+ NPr/V+ J      . .
+> “ What   kind  of a    row    are you    trying  to cause    in      my  house  anyhow ? ”
+# . NSg/I+ NSg/J P  D/P+ NSg/V+ V   ISgPl+ NSg/V/J P  N🅪Sg/V/C NPr/J/P D$+ NPr/V+ J      . .
 >
 #
 > They were  out         in      the open    at    last    and Gatsby was content   .
@@ -9473,7 +9473,7 @@
 > I    couldn’t sleep   all          night   ; a   fog     - horn   was groaning incessantly on  the Sound    ,
 # ISg+ V        N🅪Sg/V+ NSg/I/J/C/Dq N🅪Sg/V+ . D/P N🅪Sg/V+ . NPr/V+ V   V        R           J/P D   NSg/V/J+ .
 > and I    tossed half        - sick    between grotesque reality and savage   , frightening dreams .
-# V/C ISg+ V/J    N🅪Sg/V/J/P+ . NSg/V/J NSg/P   NSg/J     NSg     V/C NPr/V/J+ . V/J         NPl/V+ .
+# V/C ISg+ V/J    N🅪Sg/V/J/P+ . NSg/V/J NSg/P   NSg/J     N🅪Sg    V/C NPr/V/J+ . V/J         NPl/V+ .
 > Toward dawn   I    heard a    taxi   go      up        Gatsby’s drive , and immediately I    jumped out         of
 # J/P    NPr/V+ ISg+ V/J   D/P+ NSg/V+ NSg/V/J NSg/V/J/P NSg$     NSg/V . V/C R           ISg+ V/J    NSg/V/J/R/P P
 > bed      and began to dress — I    felt    that         I    had something  to tell  him  , something  to
