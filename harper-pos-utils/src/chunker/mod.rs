@@ -1,11 +1,15 @@
 use crate::UPOS;
 
 mod brill_chunker;
+mod burn_chunker;
+mod cached_chunker;
 #[cfg(feature = "training")]
 mod np_extraction;
 mod upos_freq_dict;
 
 pub use brill_chunker::BrillChunker;
+pub use burn_chunker::{BurnChunker, BurnChunkerCpu};
+pub use cached_chunker::CachedChunker;
 pub use upos_freq_dict::UPOSFreqDict;
 
 /// An implementer of this trait is capable of identifying the noun phrases in a provided sentence.

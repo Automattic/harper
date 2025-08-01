@@ -99,6 +99,10 @@ pub trait TokenStringExt {
     /// Get an iterator over token slices that represent the individual
     /// sentences in a document.
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
+
+    /// Get an iterator over mutable token slices that represent the individual
+    /// sentences in a document.
+    fn iter_sentences_mut(&mut self) -> impl Iterator<Item = &'_ mut [Token]> + '_;
 }
 
 impl TokenStringExt for [Token] {
@@ -238,5 +242,33 @@ impl TokenStringExt for [Token] {
         };
 
         first_sentence.into_iter().chain(rest).chain(last_sentence)
+    }
+
+    fn iter_sentences_mut(&mut self) -> impl Iterator<Item = &mut [Token]> + '_ {
+        struct SentIter<'a> {
+            rem: &'a mut [Token],
+        }
+
+        impl<'a> Iterator for SentIter<'a> {
+            type Item = &'a mut [Token];
+
+            fn next(&mut self) -> Option<Self::Item> {
+                if self.rem.is_empty() {
+                    return None;
+                }
+                let split = self
+                    .rem
+                    .iter()
+                    .position(|t| t.kind.is_sentence_terminator())
+                    .map(|i| i + 1)
+                    .unwrap_or(self.rem.len());
+                let tmp = core::mem::take(&mut self.rem);
+                let (sent, rest) = tmp.split_at_mut(split);
+                self.rem = rest;
+                Some(sent)
+            }
+        }
+
+        SentIter { rem: self }
     }
 }
