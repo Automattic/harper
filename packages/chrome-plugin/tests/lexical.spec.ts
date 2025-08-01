@@ -1,5 +1,10 @@
 import { expect, test } from './fixtures';
-import { clickHarperHighlight, getLexicalEditor, replaceEditorContent } from './testUtils';
+import {
+	clickHarperHighlight,
+	getLexicalEditor,
+	randomString,
+	replaceEditorContent,
+} from './testUtils';
 
 const TEST_PAGE_URL = 'https://playground.lexical.dev/';
 
@@ -27,7 +32,8 @@ test('Can ignore suggestion.', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);
 	const lexical = getLexicalEditor(page);
 
-	await replaceEditorContent(lexical, 'This is an test.');
+	const cacheSalt = randomString(5);
+	await replaceEditorContent(lexical, cacheSalt);
 
 	await page.waitForTimeout(3000);
 
@@ -37,6 +43,6 @@ test('Can ignore suggestion.', async ({ page }) => {
 	await page.waitForTimeout(3000);
 
 	// Nothing should change.
-	expect(lexical).toContainText('This is an test');
+	expect(lexical).toContainText(cacheSalt);
 	expect(await clickHarperHighlight(page)).toBe(false);
 });

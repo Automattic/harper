@@ -2,6 +2,15 @@ import type { Locator, Page } from '@playwright/test';
 import type { Box } from '../src/Box';
 import { expect, test } from './fixtures';
 
+export function randomString(length: number): string {
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	let result = '';
+	for (let i = 0; i < length; i++) {
+		result += chars.charAt(Math.floor(Math.random() * chars.length));
+	}
+	return result;
+}
+
 /** Locate the [`Slate`](https://www.slatejs.org/examples/richtext) editor on the page.  */
 export function getSlateEditor(page: Page): Locator {
 	return page.locator('[data-slate-editor="true"]');
@@ -59,8 +68,11 @@ export function getTextarea(page: Page): Locator {
 }
 
 export async function testBasicSuggestionTextarea(testPageUrl: string) {
-	test('Can apply basic suggestion.', async ({ page }) => {
+	test('Can apply basic suggestion.', async ({ page, context }) => {
 		await page.goto(testPageUrl);
+
+		await page.waitForTimeout(2000);
+		await page.reload();
 
 		const editor = getTextarea(page);
 		await replaceEditorContent(editor, 'This is an test');
@@ -80,8 +92,13 @@ export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
 	test('Can ignore suggestion.', async ({ page }) => {
 		await page.goto(testPageUrl);
 
+		await page.waitForTimeout(2000);
+		await page.reload();
+
 		const editor = getTextarea(page);
-		await replaceEditorContent(editor, 'This is an test');
+
+		const cacheSalt = randomString(5);
+		await replaceEditorContent(editor, cacheSalt);
 
 		await page.waitForTimeout(6000);
 
@@ -91,7 +108,7 @@ export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
 		await page.waitForTimeout(3000);
 
 		// Nothing should change.
-		expect(editor).toHaveValue('This is an test');
+		expect(editor).toHaveValue(cacheSalt);
 		expect(await clickHarperHighlight(page)).toBe(false);
 	});
 }

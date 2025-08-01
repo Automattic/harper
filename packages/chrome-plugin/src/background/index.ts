@@ -35,15 +35,15 @@ chrome.runtime.onInstalled.addListener((details) => {
 	}
 });
 
-let linter: LocalLinter;
-
-getDialect().then(setDialect);
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	handleRequest(request).then(sendResponse);
 
 	return true;
 });
+
+let linter: LocalLinter;
+
+getDialect().then(setDialect);
 
 async function enableDefaultDomains() {
 	const defaultEnabledDomains = [
@@ -93,6 +93,8 @@ async function enableDefaultDomains() {
 enableDefaultDomains();
 
 function handleRequest(message: Request): Promise<Response> {
+	console.log(`Handling ${message.kind} request`);
+
 	switch (message.kind) {
 		case 'lint':
 			return handleLint(message);
