@@ -1,4 +1,4 @@
-53600
+53700
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -16714,10 +16714,10 @@ cauliflower/~NwVSg
 caulk/NVZGgd>S
 caulker/Ng
 causal/~JNY
-causality/~NSg
+causality/~Nmg
 causation/~Ng
 causative/~JN
-cause/~NVCgZGd>S
+cause/~NwVCgZGd>S
 causeless/J
 causer/Ng
 causerie/NSg
@@ -16728,7 +16728,7 @@ cauterisation/Ng!_
 cauterise/VGdS!_
 cauterization/Ng
 cauterize/VGdS
-caution/~NVSgdG
+caution/~NwVSgdG
 cautionary/~J
 cautious/~JiY
 cautiousness/Ng
@@ -19657,19 +19657,21 @@ crewelwork/Ng
 crewman/Ng
 crewmen/~N9
 crib/~NVgS
-cribbage/Ng
+cribbage/Nmg
 cribbed/VJ
 cribber/NgS
 cribbing/VN
 crick/~NVSgdG
-cricket/~NVg>SZG
+cricket/~NwVg>SZG
 cricketer/~Ng
 crier/Ng
 crikey/
 crime/~NwVSg
 criminal/~JNgYS
+criminalisation/Nmg!_
 criminalise/VeGdS!_
 criminality/Ng
+criminalization/Nmg
 criminalize/VeGdS
 criminologist/NgS
 criminology/~Ng
@@ -22610,7 +22612,7 @@ elasticity/~Ng
 elasticize/VdSG
 elate/VJdSGn
 elated/JVY
-elation/Nmg
+elation/NwgS
 elbow/~NVSgdG
 elbowroom/Ng
 elder/~JNVSgY
@@ -22851,10 +22853,10 @@ empanelling/V@
 empathetic/JQ
 empathise/VdSG!_
 empathize/VdSG
-empathy/~Ng
+empathy/~Nmg
 emperor/~NgS
-emphases/9
-emphasis/~Ng
+emphases/N9
+emphasis/~N0g
 emphasise/VrGdS!_
 emphasize/~VrGdSe
 emphatic/~JNUQ
@@ -22870,8 +22872,8 @@ employ's
 employable/JNU
 employee/~NSg
 employer/~NSg
-employment/~NUrg
-employments/N
+employment/~N0wUrg
+employments/N9
 emporium/NSg
 empower/~VSdGL
 empowerment/~Ng
@@ -23835,7 +23837,7 @@ explode/~VGdS
 exploder/NgS
 exploit/~NVZGBgd>S
 exploitability/Nmg
-exploitation/~Ng
+exploitation/~Nmg
 exploitative/~J
 exploited/~VU
 exploiter/NVg
@@ -25083,7 +25085,7 @@ focal/~JNY
 focus/~NVrdSG
 focus's
 focused/~JVU
-fodder/~NVSg
+fodder/~NmVSg
 foe/~JNSg
 fog/~NwVeS
 fog's
@@ -34160,6 +34162,7 @@ moisturise/VZGd>S!_
 moisturiser/Ng!_
 moisturize/VZGd>S
 moisturizer/Ng
+mojito/NwgS
 mojo/~Ng
 molar/~NJSg
 molasses/NVg
@@ -39669,6 +39672,7 @@ prescript/NJSvgd
 prescription/~NJSg
 prescriptive/JY
 preseason/~NVSg
+preselct/VGdS
 presence/~NVSg
 present/~JNVLgd>YZGSB
 presentably/R
@@ -41072,7 +41076,7 @@ reactionary/~JNSg
 reactively/R
 reactivity/~N
 read/~VNZGg>BzS
-readability/~NSg
+readability/~Nmg
 reader/~Ng
 readership/~NSg
 readily/~R
@@ -41082,16 +41086,16 @@ readme/NgS
 readmitted/V
 readout/NSg
 ready/~JVNd>S^Gp
-reafforestation/N
+reafforestation/Nm
 real/~JN^g>YpS
 realisation/NSg!_
 realise/VdSBG!_
 realised/VU!_
-realism/~Ng
+realism/~Nmg
 realist/~NJSg
 realistic/~JUQ
-realities/~N
-reality/~NUg
+realities/~N9
+reality/~Nw0Ug
 realization/~NgS<@
 realize/~VdSBGU<@
 realized/~VU<@
@@ -41425,7 +41429,7 @@ regimental/~J
 regimentation/Ng
 region/~NSg
 regional/~JNY
-regionalism/NgS
+regionalism/NwgS
 register/~NVGgdS
 registered/~VJU
 registrant/~NgS
@@ -50176,6 +50180,7 @@ unsee/VS
 unseeing/JY
 unseemly/J^
 unseen/~JVNg
+unselect/VGdS
 unsentimental/J
 unset/JV
 unshakable/J
@@ -53091,6 +53096,7 @@ anti-vaccine/J
 anti-vax/J
 anti-vaxxer/NgS
 avant-garde/NgJ
+B-52/NgS
 back door/NgSVGd
 back to back/R
 back-to-back/J
@@ -53505,6 +53511,7 @@ U-turn/NVgSdG
 uh-huh
 uh-oh
 un-American/J
+use case/NgS
 user-friendly/J
 UTF-16/Ng
 UTF-32/Ng

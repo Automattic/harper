@@ -147,6 +147,11 @@
 					"type": "string",
 					"description": "Optional path to a global dictionary file to use."
 				},
+				"harper.workspaceDictPath": {
+					"scope": "resource",
+					"type": "string",
+					"description": "Optional path to a workspace-local dictionary file to use."
+				},
 				"harper.linters.ACoupleMore": {
 					"scope": "resource",
 					"type": "boolean",

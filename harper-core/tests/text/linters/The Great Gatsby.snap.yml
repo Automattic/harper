@@ -161,18 +161,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-      46 | wake of his dreams that temporarily closed out my interest in the abortive
-      47 | sorrows and short-winded elations of men.
-         |                          ^~~~~~~~ Did you mean to spell `elations` this way?
-Suggest:
-  - Replace with: “elation's”
-  - Replace with: “elation”
-  - Replace with: “relations”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
       50 | three generations. The Carraways are something of a clan, and we have a

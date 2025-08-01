@@ -548,8 +548,8 @@
 # V   NSg/V/J/P V/C NSg/V P  D+  NSg/V+ P  NSg/V   ISg+    NSg/J/P NPr/ISg+ . V/C NSg/V NSg/I/C/Ddem+ . NSg/R R
 > as    she  could  guess , she  was now       about two  feet high    , and was going   on  shrinking
 # NSg/R ISg+ NSg/VX NSg/V . ISg+ V   NPr/V/J/C J/P   NSg+ NPl+ NSg/V/J . V/C V   NSg/V/J J/P V
-> rapidly : she  soon found out         that         the cause   of this    was the fan   she  was holding ,
-# R       . ISg+ J/R  NSg/V NSg/V/J/R/P NSg/I/C/Ddem D   NSg/V/C P  I/Ddem+ V   D+  NSg/V ISg+ V   NSg/V   .
+> rapidly : she  soon found out         that         the cause    of this    was the fan   she  was holding ,
+# R       . ISg+ J/R  NSg/V NSg/V/J/R/P NSg/I/C/Ddem D   N🅪Sg/V/C P  I/Ddem+ V   D+  NSg/V ISg+ V   NSg/V   .
 > and she  dropped it       hastily , just in      time      to avoid shrinking away altogether .
 # V/C ISg+ V/J     NPr/ISg+ R       . V/J  NPr/J/P N🅪Sg/V/J+ P  V     V         V/J  NSg        .
 >
@@ -772,8 +772,8 @@
 # . V    . . V/J  D   NSg/V+ P    D/P+ J+        NSg/V+ . . V   ISgPl+ NSg/I/J/C/Dq NSg/V/J . I/Ddem+ VL D
 > driest thing I    know  . Silence all          round     , if    you    please ! ‘          William the Conqueror ,
 # JS     NSg/V ISg+ NSg/V . NSg/V+  NSg/I/J/C/Dq NSg/V/J/P . NSg/C ISgPl+ V      . Unlintable NPr+    D   NSg       .
-> whose cause    was favoured by      the pope   , was soon submitted to by      the English   , who
-# I+    NSg/V/C+ V   V/J/Comm NSg/J/P D   NPr/V+ . V   J/R  V         P  NSg/J/P D   NPr🅪/V/J+ . NPr/I+
+> whose cause     was favoured by      the pope   , was soon submitted to by      the English   , who
+# I+    N🅪Sg/V/C+ V   V/J/Comm NSg/J/P D   NPr/V+ . V   J/R  V         P  NSg/J/P D   NPr🅪/V/J+ . NPr/I+
 > wanted leaders , and had been  of late  much       accustomed to usurpation and conquest .
 # V/J    +       . V/C V   NSg/V P  NSg/J NSg/I/J/Dq V/J        P  NSg        V/C NSg/V+   .
 > Edwin and Morcar , the earls of Mercia and Northumbria — ’ ”
@@ -1002,8 +1002,8 @@
 # V/J  D+  NSg/V+ P  D   NSg/J . Unlintable NSg/I D/P NSg/V/J+ . NSg/V/J NPr/V+ . P    NPr/P NSg/V/J NPr/C NSg/V+ .
 > would be     wasting our breath   . ’ ‘          I’ll be     judge  , I’ll be     jury     , ’ Said cunning old
 # VX    NSg/VX V       D$+ NSg/V/J+ . . Unlintable W?   NSg/VX NSg/V+ . W?   NSg/VX NSg/V/J+ . . V/J  NSg/J   NSg/J
-> Fury : ‘          I’ll try     the whole cause   , and condemn you    to death . ’ ”
-# NSg+ . Unlintable W?   NSg/V/J D   NSg/J NSg/V/C . V/C V       ISgPl+ P  NPr🅪  . . .
+> Fury : ‘          I’ll try     the whole cause    , and condemn you    to death . ’ ”
+# NSg+ . Unlintable W?   NSg/V/J D   NSg/J N🅪Sg/V/C . V/C V       ISgPl+ P  NPr🅪  . . .
 >
 #
 > “ You    are not   attending ! ” said the Mouse  to Alice severely . “ What   are you
@@ -5963,7 +5963,7 @@
 > she  knew she  had but     to open    them     again , and all          would change to dull
 # ISg+ V    ISg+ V   NSg/C/P P  NSg/V/J NSg/IPl+ P     . V/C NSg/I/J/C/Dq VX    N🅪Sg/V P  V/J+
 > reality — the grass   would be     only  rustling in      the wind   , and the pool   rippling to
-# NSg+    . D+  NPr🅪/V+ VX    NSg/VX J/R/C V        NPr/J/P D   NSg/V+ . V/C D   NSg/V+ V        P
+# N🅪Sg+   . D+  NPr🅪/V+ VX    NSg/VX J/R/C V        NPr/J/P D   NSg/V+ . V/C D   NSg/V+ V        P
 > the waving of the reeds — the rattling teacups would change  to tinkling
 # D   V      P  D   NPl+  . D   V        NPl     VX    N🅪Sg/V+ P  V
 > sheep  - bells , and the Queen’s shrill  cries to the voice of the shepherd boy    — and
