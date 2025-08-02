@@ -3782,6 +3782,7 @@ Galaxy/O
 Galbraith/Og
 Gale/Og
 Galen/Og
+Galician/JNwgS
 Galibi/Og
 Galilean/JNOSg
 Galilee/Og
@@ -13493,7 +13494,7 @@ automaker/~NSg
 automata/~NSg
 automate/VGndS
 automatic/~JNSgQ
-automation/~Nmg
+automation/~NwgS
 automatise/VGdS!_
 automatism/Ng
 automatize/VGdS
@@ -16918,6 +16919,7 @@ chaffinch/NgS
 chagrin/~NVJGSgd
 chain/~NVUGdS
 chain's
+chainable/J
 chainsaw/~NVgdGS
 chair/~NVGgdS
 chairlift/NgS
@@ -18135,6 +18137,7 @@ colony/~NVSg
 colophon/NSg
 color/~NwJVrEGdS<
 color's/<
+colorable/J<
 colorant/NSg<
 coloration/~NEg<
 coloratura/NJgS<
@@ -18161,6 +18164,7 @@ colossus/~Ng
 colostomy/NSg
 colostrum/Ng
 colour/~NwJVrEGdS!@_
+colourable/J!@_
 colourant/NSg!@_
 colouration/NEg!_
 colourblind/Jp!@_
@@ -18196,6 +18200,7 @@ combatant/~NJSg
 combativeness/Ng
 combed/JVU
 comber/Ng
+combinable/J
 combination/~NwSg
 combinator/NgS
 combinatoric/J
@@ -20411,18 +20416,18 @@ decimation/Ng
 decimeter/NgS<
 decimetre/NgS!@_
 decipherable/JUi
-decision/~NVig
-decisions/~NV
+decision/~N0Vig
+decisions/~N9V
 decisive/~JipY
 decisiveness/Nig
 deck/~NVSGgd
-deckchair/NS
+deckchair/NgS
 deckhand/NVSg
 deckle/NVS
 declamation/NgS
 declamatory/J
 declaration/~NgS
-declarative/~JN
+declarative/~JNY
 declarator/NgS
 declaratory/J
 declare/~Vd>SZGB
@@ -22774,6 +22779,7 @@ embarrassment/~NSg
 embassy/~NSg
 embattled/JV
 embed/~VNS
+embeddable/J
 embedded/~VJ
 embedder/NgS
 embedding/~NSgV
@@ -34635,7 +34641,9 @@ multibillion/J
 multibyte/J
 multicellular/J
 multichannel/J
-multicolored/J
+multicolor/Nm<
+multicolored/J<
+multicolour/Nm!@_
 multicoloured/J!@_
 multicore/J
 multicultural/~J
@@ -38915,6 +38923,7 @@ pluckiness/Ng
 plucky/J>p^
 plug/~NVUS
 plug's
+pluggable/J
 plugged/~VU
 plugging/~VNU
 plughole/NS
@@ -41810,6 +41819,8 @@ resistless/J
 resistor/~NgS
 resit/VNS
 resitting/NV
+resizable/J<
+resizeable/J!
 reskilling/V
 reskin/VNS
 reskinned/VJ
@@ -42542,7 +42553,7 @@ runny/J>^
 runoff/~NSg
 runout/NgS
 runt/NgS
-runtime/~JN
+runtime/~JNgS
 runty/J>^
 runway/~NSg
 rupee/~NSg
@@ -49778,6 +49789,7 @@ uncompelling/J
 uncomplaining/JY
 uncomplicated/VJ
 uncomprehending/JY
+uncompress/VGdS
 uncompromising/~JY
 unconditional/~JNY
 unconfigured/J
@@ -50048,9 +50060,10 @@ uniformity/~Ng
 unify/~VrGdSn
 unignorable/J
 unilateral/~JY
-unilateralism/N
+unilateralism/Nm
 unimportant/~J
 unimpressive/J
+uninflected/J
 uninformative/J
 uninhibited/JY
 uninsurable/J
@@ -52719,6 +52732,7 @@ Hasan/OSg           # surname, given name
 Hiera/Sg
 Holmdel/Sg
 Hugging Face/Og
+ID3                 # audio metadata
 IDA/Og              # reverse engineering software
 IFRS/Og             # International Financial Reporting Standards
 IIFE/NgS            # immediately-invoked function expression
@@ -52739,6 +52753,7 @@ JSDoc/Sg
 JSON/Og             # data format
 JSONP/Og
 JVM/Sg              # Java virtual machine
+JWT/Ng              # JSON Web Token
 Jacoco/Sg
 JavaDoc/Sg
 JavaScript/ONSg     # programming language
@@ -52757,6 +52772,7 @@ KiCad/Og            # software
 Kia/ONgS            # automobile brand
 Kubernetes/OSg
 LADAR
+LDAP/Og             # Lightweight Directory Access Protocol 
 LEGO/NSg            # official trademark form of Lego
 LIDAR/N             # FIXME! elsewhere we have LiDAR
 LLM/NgS             # large language model
@@ -52836,12 +52852,14 @@ O'Reilly/OSg
 OAuth/g             # open authentication
 OCaml/gO            # programming language
 OG/NgS
+OOP/Nmg
 ORM/NOS             # object-relational mapping
 Ollama/Og           # AI tool
 OpenAI/Og
 OpenBSD/Og          # operating system
 OpenCV/Og
 OpenGL/Sg           # open graphics library
+OpenID/Og
 OpenMetrics/Sg
 OpenPGP/Sg
 OpenSearch/Sg
@@ -53022,6 +53040,7 @@ blogpost/NgS
 clickstream/NgS
 concat/VSdG
 config/NVSg         # not marked as a verb since "configed" and "configing" look wrong
+configurator/NgS
 corpo/NgS
 datagram/NgS
 datetime/NgS
@@ -53034,7 +53053,7 @@ eVTOL/NgS
 ext2/Ng             # file system
 ext3/Ng             # file system
 ext4/Ng             # file system
-failover/NgS
+failover/NwgS
 falsy/J
 filepath/NgS
 filesystem/~Sg      # dictionaries prefer: file system
@@ -53054,6 +53073,7 @@ hoster/NgS
 hostname/NSg
 hotwire/VBG         # dictionaries prefer: hot-wire
 i18n/Nm             # internationalization
+iframe/NgS
 infosec/NmG         # information security
 inpaint/VGdS
 iPadOS/Og
@@ -53142,7 +53162,8 @@ boot loader/NgS
 break out/V
 breaks out/V
 Bretton Woods/Og
-brute force/NgSVdG
+brute force/NwgSVdG
+bubble tea/NwgS
 built-in/NgSJ
 built-up/J
 camel case/Nmg
@@ -53327,7 +53348,8 @@ left-wing/J
 lesser-known/J
 life cycle/NgS
 line break/NgS
-live action/N
+lip gloss/NwgS
+live action/Nmg
 load-bearing/J
 lock picking/Nmg
 lock screen/NgS
