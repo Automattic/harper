@@ -36042,6 +36042,7 @@ obligatorily/R
 obligatory/~J
 oblige/VEGdS
 obliging/JVNY
+obligor/NgS
 oblique/~JNVSgYp
 obliqueness/Nmg
 obliquity/Ng
@@ -51177,6 +51178,7 @@ waiting/~VNg
 waitperson/N0gS
 waitress/~NVgS
 waitstaff/Nmg
+waivable/J
 waive/~VNd>SZG
 waiver/~NVg
 wake/~VNgGzdS
@@ -52718,6 +52720,7 @@ Hiera/Sg
 Holmdel/Sg
 Hugging Face/Og
 IDA/Og              # reverse engineering software
+IFRS/Og             # International Financial Reporting Standards
 IIFE/NgS            # immediately-invoked function expression
 IMAP/OSg            # internet message access protocol
 IME/NgS             # input method editor
@@ -53146,6 +53149,7 @@ camel case/Nmg
 car bomb/NgS
 car-bomb/V
 carbon-intensive/J
+cash flow/NgS
 cash-strapped/J
 CD-ROM/NgS
 centre-left/J!@_
