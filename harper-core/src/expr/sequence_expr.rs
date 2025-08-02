@@ -1,7 +1,7 @@
 use paste::paste;
 
 use crate::{
-    Span, Token, TokenKind,
+    CharStringExt, Span, Token, TokenKind,
     expr::{FirstMatchOf, LongestMatchOf},
     patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
@@ -211,6 +211,85 @@ impl SequenceExpr {
         self.then(Word::new_exact(word))
     }
 
+    /// Match any word except the ones in `words`.
+    pub fn then_word_except(self, words: &'static [&'static str]) -> Self {
+        self.then(move |tok: &Token, src: &[char]| {
+            !tok.kind.is_word()
+                || !words
+                    .iter()
+                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+        })
+    }
+
+    /// Match a token of a given kind which is not in the list of words.
+    pub fn then_kind_except<F>(self, pred: F, words: &'static [&'static str]) -> Self
+    where
+        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, src: &[char]| {
+            pred(&tok.kind)
+                && !words
+                    .iter()
+                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+        })
+    }
+
+    /// Adds a step matching a token where both token kind predicates return true.
+    pub fn then_kind_both<F1, F2>(self, pred1: F1, pred2: F2) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, _source: &[char]| pred1(&tok.kind) && pred2(&tok.kind))
+    }
+
+    /// Adds a step matching a token where either of the two token kind predicates returns true.
+    pub fn then_kind_either<F1, F2>(self, pred1: F1, pred2: F2) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, _source: &[char]| pred1(&tok.kind) || pred2(&tok.kind))
+    }
+
+    /// Adds a step matching a token where any of the token kind predicates returns true.
+    pub fn then_kind_any<F>(self, preds: &'static [F]) -> Self
+    where
+        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, _source: &[char]| preds.iter().any(|pred| pred(&tok.kind)))
+    }
+
+    /// Adds a step matching a token where the first token kind predicate returns true and the second returns false.
+    pub fn then_kind_is_but_is_not<F1, F2>(self, pred1: F1, pred2: F2) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, _source: &[char]| pred1(&tok.kind) && !pred2(&tok.kind))
+    }
+
+    /// Adds a step matching a token where the first token kind predicate returns true and the second returns false,
+    /// and the token is not in the list of words.
+    pub fn then_kind_is_but_is_not_except<F1, F2>(
+        self,
+        pred1: F1,
+        pred2: F2,
+        words: &'static [&'static str],
+    ) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, src: &[char]| {
+            pred1(&tok.kind)
+                && !pred2(&tok.kind)
+                && !words
+                    .iter()
+                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+        })
+    }
+
     // Out-of-vocabulary word. (Words not in the dictionary)
     gen_then_from_is!(oov);
 
@@ -296,5 +375,41 @@ where
         Self {
             exprs: vec![Box::new(step)],
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{
+        Document, TokenKind,
+        expr::{ExprExt, SequenceExpr},
+        linting::tests::SpanVecExt,
+    };
+
+    #[test]
+    fn test_kind_both() {
+        let noun_and_verb =
+            SequenceExpr::default().then_kind_both(TokenKind::is_noun, TokenKind::is_verb);
+        let doc = Document::new_plain_english_curated("Use a good example.");
+        let matches = noun_and_verb.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["Use", "good", "example"]);
+    }
+
+    #[test]
+    fn test_adjective_or_determiner() {
+        let expr = SequenceExpr::default()
+            .then_kind_either(TokenKind::is_adjective, TokenKind::is_determiner);
+        let doc = Document::new_plain_english_curated("Use a good example.");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["a", "good"]);
+    }
+
+    #[test]
+    fn test_noun_but_not_adjective() {
+        let expr = SequenceExpr::default()
+            .then_kind_is_but_is_not(TokenKind::is_noun, TokenKind::is_adjective);
+        let doc = Document::new_plain_english_curated("Use a good example.");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["Use", "example"]);
     }
 }

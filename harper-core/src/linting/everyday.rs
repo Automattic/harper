@@ -78,7 +78,7 @@ impl Default for Everyday {
                 SequenceExpr::default()
                     .t_any()
                     .t_any()
-                    .then(|tok: &Token, _src: &[char]| tok.kind.is_noun() && tok.kind.is_verb())
+                    .then_kind_both(TokenKind::is_noun, TokenKind::is_verb)
                     .t_any()
                     .then_determiner(),
             ),

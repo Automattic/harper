@@ -1,3 +1,4 @@
+use crate::TokenKind;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{CharStringExt, Token, patterns::WordSet};
@@ -21,9 +22,10 @@ impl Default for ShouldContract {
                 SequenceExpr::default()
                     .then(WordSet::new(&["your", "were"]))
                     .then_whitespace()
-                    .then(|tok: &Token, _: &[char]| {
-                        tok.kind.is_non_quantifier_determiner() && !tok.kind.is_pronoun()
-                    })
+                    .then_kind_is_but_is_not(
+                        TokenKind::is_non_quantifier_determiner,
+                        TokenKind::is_pronoun,
+                    )
                     .then_whitespace()
                     .then_adjective(),
             ),

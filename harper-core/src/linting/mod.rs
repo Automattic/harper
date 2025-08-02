@@ -277,11 +277,29 @@ where
 
 #[cfg(test)]
 pub mod tests {
+    use crate::{Document, Span, Token, parsers::PlainEnglish};
     use hashbrown::HashSet;
+
+    /// Extension trait for converting spans of tokens back to their original text
+    pub trait SpanVecExt {
+        fn to_strings(&self, doc: &Document) -> Vec<String>;
+    }
+
+    impl SpanVecExt for Vec<Span<Token>> {
+        fn to_strings(&self, doc: &Document) -> Vec<String> {
+            self.iter()
+                .map(|sp| {
+                    doc.get_tokens()[sp.start..sp.end]
+                        .iter()
+                        .map(|tok| doc.get_span_content_str(&tok.span))
+                        .collect::<String>()
+                })
+                .collect()
+        }
+    }
 
     use super::Linter;
     use crate::spell::FstDictionary;
-    use crate::{Document, parsers::PlainEnglish};
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, linter: impl Linter) {
