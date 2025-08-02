@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Ff”
+  - Replace with: “Fl”
 
 
 
@@ -2604,8 +2604,8 @@ Message: |
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
   - Replace with: “D”
+  - Replace with: “Dab”
   - Replace with: “Dad”
-  - Replace with: “Dag”
 
 
 
@@ -2662,8 +2662,8 @@ Message: |
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
   - Replace with: “D”
+  - Replace with: “Db”
   - Replace with: “Dc”
-  - Replace with: “Dd”
 
 
 
@@ -6866,7 +6866,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Ff”
+  - Replace with: “Fl”
 
 
 

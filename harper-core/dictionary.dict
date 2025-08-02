@@ -11533,10 +11533,11 @@ adaptation/~NgS
 adapter/~Ng
 adaption/~NS
 adaptor/NgS!_
+adblocker/NgS
 add/~VNSd>BZG
 addend/NVgS
-addenda/N
-addendum/Ng
+addenda/N9
+addendum/N0g
 adder/~Ng
 addict/~NVGvgdS
 addiction/~NSg
@@ -28824,23 +28825,24 @@ hyperbolic/~JQ
 hypercar/NgS
 hyperconservative/J
 hypercritical/JY
-hypercube/N
+hypercube/NgS
 hyperfixation/Nmg
 hyperglycemia/Ng
 hyperinflate/VNGdSn
 hyperlink/NVGSgd
-hypermarket/NS
+hypermarket/NgS
 hypermedia/Nmg
 hypernetwork/NSg
 hyperparameter/NsG
 hyperparathyroidism/N
 hyperplane/N
+hyperscale/J
 hypersensitive/Jp
 hypersensitiveness/Ng
 hypersensitivity/~NSg
 hypersexualise/VSdG!_
 hypersexualize/VSdG
-hyperspace/NVS
+hyperspace/NmVS
 hypertension/~Ng
 hypertensive/JNSg
 hypertext/Ng
@@ -32056,12 +32058,12 @@ litterateur/NgS
 litterbug/NgS
 litterer/Ng
 little/~JINg^>pDq
-littleness/Ng
+littleness/Nmg
 littoral/~JNSg
 liturgical/~JY
 liturgist/NSg
-liturgy/~NSg
-livability/Ng
+liturgy/~NwSg
+livability/Nmg
 livable/JU
 live/~VJr^GdSB
 liveable/J!_
@@ -32070,6 +32072,7 @@ liveliness/Ng
 livelong/JNS
 lively/~JNp>^
 liven/VSGd
+liveness/NwgS
 liver/~NwJS
 liver's
 liveried/VJ
@@ -36449,6 +36452,7 @@ optimise/Vd>SG!_
 optimism/~NSg
 optimist/NSg
 optimistic/~JQ
+optimizable/J
 optimization/~NwgS
 optimize/~Vd>SG
 optimizer/NgS
@@ -41234,6 +41238,7 @@ recompile/VNSGd
 recomputation/Nmg
 recon/~NVS
 reconcile/~VGdSB
+reconciler/NgS
 reconciliation/~NS
 recondite/JNVSg
 reconditioner/NgS
@@ -41501,6 +41506,7 @@ reimagine/VSdG
 reimagined/VJ
 reimburse/VBdSGL
 reimbursement/NgS
+reimplementation/NmgS
 rein/~NVGd
 reindeer/~NVg
 reinforce/~VLGdS
@@ -52654,6 +52660,7 @@ DBMS/NOSg           # database management system
 DCT/NgS             # discrete cosine transform
 DDoS/Ng
 DEI
+DFA/NgS
 DKIM/NSg
 DLL/NgS             # dynamic link library
 DM'd/V              # direct message
@@ -52726,6 +52733,8 @@ GraphQL/Og
 Graphviz/Sg
 Gravatar/Og
 HDR/J               # high dynamic range
+HEIC/ONgS           # High Efficiency Image Container
+HEIF/ONgS           # High Efficiency Image Format
 HQL/N
 HTML5
 Hasan/OSg           # surname, given name
@@ -52830,6 +52839,7 @@ N2/Og
 N3/Og
 N4/Og
 N5/Og
+NFA/NgS
 NLP/g
 NMI/NgS             # non-maskable interrupt
 NPC/Sg
@@ -53078,6 +53088,7 @@ infosec/NmG         # information security
 inpaint/VGdS
 iPadOS/Og
 jQuery/Og
+keyserver/NgS
 labriola/Sg         # !! please check and comment !! - should be uppercase surname?
 linkification/Nmg
 manip/NgS           # gamer slang manipulation
@@ -53095,6 +53106,7 @@ quicksort/NgSVdG    # algo
 raytracer/N         # dictionaries prefer: ray tracer
 reranker/NgS
 roadmap/NgS         # overtook "road map" c. 2000 but not in dictionaries yet
+roguelike/NgS
 royale/~NJSg        # !! please check and comment !! dictionaries only list noun sense type of custard
 s.t./~              # !! please check and comment !!
 sRGB/Og             # colour space
@@ -53260,6 +53272,7 @@ full-on/JR
 full-scale/J
 full screen/J
 full-time/JR
+Game Boy/OgS
 go around/V
 go-around/NgS
 gold-plated/J
@@ -53285,6 +53298,7 @@ half-lives/9
 ham-fisted/J
 hand-drawn/J
 hand-me-down/JNgS
+hand-off/NwSg
 hands-off/J
 happy-go-lucky/J
 hard code/VSdG
@@ -53648,6 +53662,7 @@ log out/V
 look up/V
 meet up/V
 melt down/V
+pay out/V
 pick up/V
 plug in/V
 push back/V
