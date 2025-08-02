@@ -17,8 +17,8 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
-    word_metadata_orthography::OrthFlags,
+    CharStringExt, Dialect, Document, LexemeMetadata, TokenKind, TokenStringExt,
+    lexeme_metadata_orthography::OrthFlags, remove_overlaps,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 #[cfg(feature = "training")]
@@ -362,7 +362,7 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::Metadata { word } => {
-            let metadata = dictionary.get_word_metadata_str(&word);
+            let metadata = dictionary.get_lexeme_metadata_str(&word);
             let json = serde_json::to_string_pretty(&metadata).unwrap();
 
             println!("{json}");
@@ -722,7 +722,7 @@ fn main() -> anyhow::Result<()> {
             let mut processed_words = HashMap::new();
             let mut longest_word = 0;
             for word in dictionary.words_iter() {
-                if let Some(metadata) = dictionary.get_word_metadata(word) {
+                if let Some(metadata) = dictionary.get_lexeme_metadata(word) {
                     let orth = metadata.orth_info;
                     let bits = orth.bits() & case_bitmask.bits();
 
@@ -808,7 +808,7 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
 
     let children = dictionary
         .words_iter()
-        .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
+        .filter(|e| dictionary.get_lexeme_metadata(e).unwrap().derived_from == Some(id));
 
     println!(" - {word}");
 
@@ -825,7 +825,7 @@ fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let mut dict = MutableDictionary::new();
     dict.extend_words(
         str.lines()
-            .map(|l| (l.chars().collect::<Vec<_>>(), WordMetadata::default())),
+            .map(|l| (l.chars().collect::<Vec<_>>(), LexemeMetadata::default())),
     );
 
     Ok(dict)
