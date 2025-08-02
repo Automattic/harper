@@ -41,9 +41,9 @@ Message: |
       11 | ## Article. I.
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
-  - Replace with: “Is”
-  - Replace with: “I”
+  - Replace with: “In”
   - Replace with: “IC”
+  - Replace with: “IE”
 
 
 
