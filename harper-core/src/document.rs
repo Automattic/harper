@@ -155,11 +155,11 @@ impl Document {
 
             let mut i = 0;
 
-            // Annotate word metadata
+            // Annotate lexeme metadata
             for token in sent.iter_mut() {
                 if let TokenKind::Word(meta) = &mut token.kind {
                     let word_source = token.span.get_content(&self.source);
-                    let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
+                    let mut found_meta = dictionary.get_lexeme_metadata(word_source).cloned();
 
                     if let Some(inner) = &mut found_meta {
                         inner.pos_tag = token_tags[i].or_else(|| inner.infer_pos_tag());

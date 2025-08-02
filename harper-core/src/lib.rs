@@ -10,6 +10,8 @@ pub mod expr;
 mod fat_token;
 mod ignored_lints;
 pub mod language_detection;
+mod lexeme_metadata;
+pub mod lexeme_metadata_orthography;
 mod lexing;
 pub mod linting;
 mod mask;
@@ -26,8 +28,6 @@ mod token;
 mod token_kind;
 mod token_string_ext;
 mod vec_ext;
-pub mod word_metadata;
-pub mod word_metadata_orthography;
 
 use render_markdown::render_markdown;
 use std::collections::VecDeque;
@@ -37,6 +37,10 @@ pub use currency::Currency;
 pub use document::Document;
 pub use fat_token::{FatStringToken, FatToken};
 pub use ignored_lints::{IgnoredLints, LintContext};
+pub use lexeme_metadata::{
+    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, LexemeMetadata, NounData,
+    PronounData, VerbData, VerbForm,
+};
 use linting::Lint;
 pub use mask::{Mask, Masker};
 pub use number::{Number, OrdinalSuffix};
@@ -48,10 +52,6 @@ pub use token::Token;
 pub use token_kind::TokenKind;
 pub use token_string_ext::TokenStringExt;
 pub use vec_ext::VecExt;
-pub use word_metadata::{
-    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, NounData, PronounData, VerbData,
-    VerbForm, WordMetadata,
-};
 
 /// Return harper-core version
 pub fn core_version() -> &'static str {
