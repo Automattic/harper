@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Token,
+    Token, TokenKind,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
@@ -11,21 +11,14 @@ pub struct ThatThan {
 impl Default for ThatThan {
     fn default() -> Self {
         let adjective_er_that_nextword = SequenceExpr::default()
-            .then(|tok: &Token, src: &[char]| {
-                if !tok.kind.is_comparative_adjective() {
-                    return false;
-                }
-                let adj = tok.span.get_content(src);
-                !&["better", "later", "number"]
-                    .iter()
-                    .any(|&s| adj.eq_ignore_ascii_case_str(s))
-            })
+            .then_kind_except(
+                TokenKind::is_comparative_adjective,
+                &["better", "later", "number"],
+            )
             .t_ws()
             .t_aco("that")
             .t_ws()
-            .then(|tok: &Token, src: &[char]| {
-                tok.kind.is_word() && !tok.span.get_content(src).eq_ignore_ascii_case_str("way")
-            });
+            .then_word_except(&["way"]);
 
         Self {
             expr: Box::new(adjective_er_that_nextword),

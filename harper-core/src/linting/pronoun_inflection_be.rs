@@ -1,13 +1,8 @@
 use harper_brill::UPOS;
 
-use crate::Lrc;
-use crate::Token;
-use crate::expr::All;
-use crate::expr::AnchorStart;
-use crate::expr::ExprMap;
-use crate::expr::{Expr, SequenceExpr};
-use crate::patterns::NominalPhrase;
-use crate::patterns::UPOSSet;
+use crate::expr::{All, AnchorStart, Expr, ExprMap, SequenceExpr};
+use crate::patterns::{NominalPhrase, UPOSSet};
+use crate::{Lrc, Token, TokenKind};
 
 use super::Suggestion;
 use super::{ExprLinter, Lint, LintKind};
@@ -74,7 +69,7 @@ impl PronounInflectionBe {
         map.insert(isnt, "aren't");
 
         let was = SequenceExpr::default()
-            .then(|tok: &Token, _: &[char]| tok.kind.is_first_person_plural_pronoun())
+            .then_first_person_plural_pronoun()
             .then_optional(mod_term.clone())
             .t_ws()
             .t_aco("was")
@@ -85,9 +80,10 @@ impl PronounInflectionBe {
         // Special case for second and third-person
         let was_third = SequenceExpr::default()
             .then(AnchorStart)
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_third_person_plural_pronoun() || tok.kind.is_second_person_pronoun()
-            })
+            .then_kind_either(
+                TokenKind::is_third_person_plural_pronoun,
+                TokenKind::is_second_person_pronoun,
+            )
             .then_optional(mod_term.clone())
             .t_ws()
             .t_aco("was")
@@ -97,10 +93,10 @@ impl PronounInflectionBe {
 
         let were = SequenceExpr::default()
             .then(AnchorStart)
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_first_person_singular_pronoun()
-                    || tok.kind.is_third_person_singular_pronoun()
-            })
+            .then_kind_either(
+                TokenKind::is_first_person_singular_pronoun,
+                TokenKind::is_third_person_singular_pronoun,
+            )
             .then_optional(mod_term.clone())
             .t_ws()
             .t_aco("were")

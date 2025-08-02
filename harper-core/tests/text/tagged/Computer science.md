@@ -316,8 +316,8 @@
 #
 > The relationship between computer science and software engineering is a
 # D   NSg          NSg/P   NSg/V+   N🅪Sg/V  V/C NᴹSg+    NSg/V+      VL D/P
-> contentious issue , which is further muddied by      disputes over      what   the term
-# J           NSg/V . I/C+  VL V/J     V/J     NSg/J/P NPl/V+   NSg/V/J/P NSg/I+ D   NSg/V/J+
+> contentious issue , which is further muddied by      disputes over    what   the term
+# J           NSg/V . I/C+  VL V/J     V/J     NSg/J/P NPl/V+   NSg/J/P NSg/I+ D   NSg/V/J+
 > " software engineering " means , and how   computer science is defined . David Parnas ,
 # . NᴹSg+    NSg/V+      . NPl/V . V/C NSg/C NSg/V+   N🅪Sg/V+ VL V/J     . NPr+  ?      .
 > taking  a   cue    from the relationship between other   engineering and science
@@ -354,8 +354,8 @@
 # NSg          P  NSg/V+   N🅪Sg/V+
 >
 #
-> Despite the word   science in      its     name   , there is debate  over      whether or    not
-# NSg/V/P D+  NSg/V+ N🅪Sg/V+ NPr/J/P ISg/D$+ NSg/V+ . +     VL N🅪Sg/V+ NSg/V/J/P I/C     NPr/C NSg/C
+> Despite the word   science in      its     name   , there is debate  over    whether or    not
+# NSg/V/P D+  NSg/V+ N🅪Sg/V+ NPr/J/P ISg/D$+ NSg/V+ . +     VL N🅪Sg/V+ NSg/J/P I/C     NPr/C NSg/C
 > computer science is a   discipline of science , mathematics , or    engineering . Allen
 # NSg/V+   N🅪Sg/V+ VL D/P NSg/V      P  N🅪Sg/V+ . NᴹSg+       . NPr/C NSg/V+      . NPr+
 > Newell and Herbert A. Simon argued in      1975 ,

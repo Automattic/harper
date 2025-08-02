@@ -69,25 +69,9 @@ impl Expr for SpelledNumberExpr {
 #[cfg(test)]
 mod tests {
     use super::SpelledNumberExpr;
+    use crate::Document;
     use crate::expr::ExprExt;
-    use crate::{Document, Span, Token};
-
-    trait SpanVecExt {
-        fn to_strings(&self, doc: &Document) -> Vec<String>;
-    }
-
-    impl SpanVecExt for Vec<Span<Token>> {
-        fn to_strings(&self, doc: &Document) -> Vec<String> {
-            self.iter()
-                .map(|sp| {
-                    doc.get_tokens()[sp.start..sp.end]
-                        .iter()
-                        .map(|tok| doc.get_span_content_str(&tok.span))
-                        .collect::<String>()
-                })
-                .collect()
-        }
-    }
+    use crate::linting::tests::SpanVecExt;
 
     #[test]
     fn matches_single_digit() {

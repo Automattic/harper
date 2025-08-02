@@ -106,8 +106,8 @@
 # NPr/J/P NSg/V/J+ . P  . N🅪Sg/V+ NSg/V   NSg/J/P NSg/V+   . NPr/ISg+ VL NSg/J   P  V           P    #  P
 > 150 separate parts of speech for English   . Work  on  stochastic methods for tagging
 # #   NSg/V/J  NPl/V P  N🅪Sg/V C/P NPr🅪/V/J+ . NSg/V J/P J          NPl/V+  C/P NSg/V
-> Koine Greek   ( DeRose 1990 ) has used over      1 , 000 parts of speech  and found that
-# ?     NPr/V/J . ?      #    . V   V/J  NSg/V/J/P # . #   NPl/V P  N🅪Sg/V+ V/C NSg/V NSg/I/C/Ddem
+> Koine Greek   ( DeRose 1990 ) has used over    1 , 000 parts of speech  and found that
+# ?     NPr/V/J . ?      #    . V   V/J  NSg/J/P # . #   NPl/V P  N🅪Sg/V+ V/C NSg/V NSg/I/C/Ddem
 > about as    many       words  were  ambiguous in      that         language as    in      English   . A
 # J/P   NSg/R NSg/I/J/Dq NPl/V+ NSg/V J         NPr/J/P NSg/I/C/Ddem N🅪Sg/V+  NSg/R NPr/J/P NPr🅪/V/J+ . D/P
 > morphosyntactic descriptor in      the case  of morphologically rich    languages is
@@ -181,7 +181,7 @@
 >
 #
 > The Brown    Corpus was painstakingly " tagged " with part     - of - speech  markers over
-# D+  NPr/V/J+ NSg+   V   R             . V/J    . P    NSg/V/J+ . P  . N🅪Sg/V+ NPl/V   NSg/V/J/P
+# D+  NPr/V/J+ NSg+   V   R             . V/J    . P    NSg/V/J+ . P  . N🅪Sg/V+ NPl/V   NSg/J/P
 > many        years . A    first    approximation was done    with a    program by      Greene and Rubin ,
 # NSg/I/J/Dq+ NPl+  . D/P+ NSg/V/J+ NSg+          V   NSg/V/J P    D/P+ NPr/V+  NSg/J/P NPr    V/C NPr   .
 > which consisted of a   huge handmade list  of what   categories could  co       - occur at
@@ -324,8 +324,8 @@
 # NSg/V  P  V          D   NPl/V+ C/P NPl/V   NSg/I/C/Ddem+ NSg/V NSg/V/J NPr/C NSg/J       NPr/J/P D
 > Brown   Corpus ( an  actual measurement of triple  probabilities would require a   much
 # NPr/V/J NSg+   . D/P NSg/J  NSg         P  NSg/V/J NPl+          VX    NSg/V   D/P NSg/I/J/Dq
-> larger corpus ) . Both   methods achieved an  accuracy of over      95 % . DeRose's 1990
-# JC     NSg+   . . I/C/Dq NPl/V+  V/J      D/P N🅪Sg+    P  NSg/V/J/P #  . . ?        #
+> larger corpus ) . Both   methods achieved an  accuracy of over    95 % . DeRose's 1990
+# JC     NSg+   . . I/C/Dq NPl/V+  V/J      D/P N🅪Sg+    P  NSg/J/P #  . . ?        #
 > dissertation at    Brown   University included analyses    of the specific error  types  ,
 # NSg+         NSg/P NPr/V/J NSg+       V/J      NPl/V/Au/Br P  D   NSg/J    NSg/V+ NPl/V+ .
 > probabilities , and other   related data  , and replicated his     work   for Greek   , where

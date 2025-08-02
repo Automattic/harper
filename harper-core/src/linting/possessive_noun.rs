@@ -1,13 +1,10 @@
 use harper_brill::UPOS;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::Token;
-use crate::expr::All;
-use crate::expr::Expr;
-use crate::expr::SequenceExpr;
-use crate::patterns::UPOSSet;
-use crate::patterns::WordSet;
+use crate::expr::{All, Expr, SequenceExpr};
+use crate::patterns::{UPOSSet, WordSet};
 use crate::spell::Dictionary;
+use crate::{Token, TokenKind};
 
 pub struct PossessiveNoun<D> {
     expr: Box<dyn Expr>,
@@ -22,9 +19,7 @@ where
         let expr = SequenceExpr::default()
             .then(UPOSSet::new(&[UPOS::DET, UPOS::PROPN]))
             .t_ws()
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_plural_nominal() && !tok.kind.is_singular_nominal()
-            })
+            .then_kind_is_but_is_not(TokenKind::is_plural_nominal, TokenKind::is_singular_nominal)
             .t_ws()
             .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]))
             .then_optional(SequenceExpr::default().t_any().t_any());

@@ -1,5 +1,6 @@
 use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
+use crate::TokenKind;
 use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::FirstMatchOf;
@@ -36,9 +37,7 @@ impl ThenThan {
                         SequenceExpr::default()
                             .then(WordSet::new(&["more", "less"]))
                             .t_ws()
-                            .then(|tok: &Token, _source: &[char]| {
-                                tok.kind.is_adjective() || tok.kind.is_adverb()
-                            })
+                            .then_kind_either(TokenKind::is_adjective, TokenKind::is_adverb)
                             .t_ws()
                             .t_aco("then")
                             .t_ws()

@@ -550,14 +550,14 @@
 #
 >
 #
-> To exercise exclusive Legislation in      all           Cases  whatsoever , over      such  District
-# P  NSg/V    NSg/J     NSg+        NPr/J/P NSg/I/J/C/Dq+ NPl/V+ I          . NSg/V/J/P NSg/I NSg/V/J+
+> To exercise exclusive Legislation in      all           Cases  whatsoever , over    such  District
+# P  NSg/V    NSg/J     NSg+        NPr/J/P NSg/I/J/C/Dq+ NPl/V+ I          . NSg/J/P NSg/I NSg/V/J+
 > ( not   exceeding ten  Miles  square  ) as    may    , by      Cession of particular States   , and
 # . NSg/C NSg/V/J   NSg+ NPrPl+ NSg/V/J . NSg/R NPr/VX . NSg/J/P NSg     P  NSg/J      NPrPl/V+ . V/C
 > the Acceptance of Congress , become the Seat  of the Government of the United
 # D   NSg        P  NPr/V+   . V      D   NSg/V P  D   NSg        P  D   V/J
-> States   , and to exercise like        Authority over      all          Places purchased by      the Consent
-# NPrPl/V+ . V/C P  NSg/V    NSg/V/J/C/P NSg+      NSg/V/J/P NSg/I/J/C/Dq NPl/V+ V/J       NSg/J/P D   NSg/V
+> States   , and to exercise like        Authority over    all          Places purchased by      the Consent
+# NPrPl/V+ . V/C P  NSg/V    NSg/V/J/C/P NSg+      NSg/J/P NSg/I/J/C/Dq NPl/V+ V/J       NSg/J/P D   NSg/V
 > of the Legislature of the State  in      which the Same shall be     , for the Erection of
 # P  D   NSg         P  D   NSg/V+ NPr/J/P I/C+  D   I/J  VX    NSg/VX . C/P D   NSg      P
 > Forts , Magazines , Arsenals , dock   - Yards  , and other   needful Buildings ; — And
@@ -626,8 +626,8 @@
 #
 > No     Preference shall be     given     by      any    Regulation of Commerce or    Revenue to the
 # NPr/P+ NSg/V+     VX    NSg/VX NSg/V/J/P NSg/J/P I/R/Dq N🅪Sg/J     P  NᴹSg/V   NPr/C NSg+    P  D
-> Ports of one       State  over      those  of another : nor   shall Vessels bound   to , or    from ,
-# NPl/V P  NSg/I/V/J NSg/V+ NSg/V/J/P I/Ddem P  I/D     . NSg/C VX    NPl/V+  NSg/V/J P  . NPr/C P    .
+> Ports of one       State  over    those  of another : nor   shall Vessels bound   to , or    from ,
+# NPl/V P  NSg/I/V/J NSg/V+ NSg/J/P I/Ddem P  I/D     . NSg/C VX    NPl/V+  NSg/V/J P  . NPr/C P    .
 > one        State  , be     obliged to enter , clear   , or    pay     Duties in      another .
 # NSg/I/V/J+ NSg/V+ . NSg/VX V/J     P  NSg/V . NSg/V/J . NPr/C NSg/V/J NPl+   NPr/J/P I/D     .
 >

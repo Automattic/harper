@@ -268,8 +268,8 @@
 # NᴹSg/V+ V/J    ISg/D$+ NSg/V/J C/P NPl/V+ .
 > I've lived here    for three years .
 # W?   V/J   NSg/J/R C/P NSg   NPl+  .
-> They fought for days over      a    silly  pencil .
-# IPl+ V      C/P NPl+ NSg/V/J/P D/P+ NSg/J+ NSg/V+ .
+> They fought for days over    a    silly  pencil .
+# IPl+ V      C/P NPl+ NSg/J/P D/P+ NSg/J+ NSg/V+ .
 > The store  is closed for the day   .
 # D+  NSg/V+ VL V/J    C/P D+  NPr🅪+ .
 > I    can    see   for miles  .
@@ -386,8 +386,8 @@
 # IPl+ V   NPr/J/P D+  NSg/V+ NSg/V/J+ .
 > Her     plane    is in      the air    .
 # ISg/D$+ NSg/V/J+ VL NPr/J/P D+  NSg/V+ .
-> I    glanced over      at    the pretty  girl   in      the red    dress  .
-# ISg+ V/J     NSg/V/J/P NSg/P D+  NSg/V/J NSg/V+ NPr/J/P D+  NSg/J+ NSg/V+ .
+> I    glanced over    at    the pretty  girl   in      the red    dress  .
+# ISg+ V/J     NSg/J/P NSg/P D+  NSg/V/J NSg/V+ NPr/J/P D+  NSg/J+ NSg/V+ .
 > There wasn't much       of interest in      her     speech  .
 # +     V      NSg/I/J/Dq P  NSg/V+   NPr/J/P ISg/D$+ N🅪Sg/V+ .
 > He       hasn't got an  original idea in      him  .
@@ -416,8 +416,8 @@
 # D$+ NSg/V+ NPr/J/P NSg/V/J/Comm +     V   P  NSg/V D$+ V       NPr/V/J+ .
 > My  fat      rolls  around in      folds  .
 # D$+ N🅪Sg/V/J NPl/V+ J/P    NPr/J/P NPl/V+ .
-> The planes flew    over      in      waves  .
-# D+  NPl/V+ NSg/V/J NSg/V/J/P NPr/J/P NPl/V+ .
+> The planes flew    over    in      waves  .
+# D+  NPl/V+ NSg/V/J NSg/J/P NPr/J/P NPl/V+ .
 > Arrange the chairs in      a    circle .
 # NSg/V   D   NPl/V+ NPr/J/P D/P+ NSg/V+ .
 > He       stalked away in      anger   .
@@ -605,7 +605,7 @@
 > Mike   just threw coffee    onto Paul's lap      . It's on  now       .
 # NPr/V+ V/J  V     N🅪Sg/V/J+ J/P  NSg$   NSg/V/J+ . +    J/P NPr/V/J/C .
 > England need    a   hundred runs  , with twenty - five overs remaining . Game     on  !
-# NPr+    N🅪Sg/VX D/P NSg     NPl/V . P    NSg    . NSg  NPl/V V         . NSg/V/J+ J/P .
+# NPr+    N🅪Sg/VX D/P NSg     NPl/V . P    NSg    . NSg  NPl   V         . NSg/V/J+ J/P .
 > Your feet will   soon warm    up        once  your socks  are on  .
 # D$+  NPl+ NPr/VX J/R  NSg/V/J NSg/V/J/P NSg/C D$+  NPl/V+ V   J/P .
 > I    was trying  to drink out         of the bottle while     the top      was still   on  !
