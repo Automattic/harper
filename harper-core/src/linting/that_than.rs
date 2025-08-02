@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Token,
+    Token, TokenKind,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
@@ -11,19 +11,14 @@ pub struct ThatThan {
 impl Default for ThatThan {
     fn default() -> Self {
         let adjective_er_that_nextword = SequenceExpr::default()
-            .then(|tok: &Token, src: &[char]| {
-                if !tok.kind.is_comparative_adjective() {
-                    return false;
-                }
-                let adj = tok.span.get_content(src);
-                !adj.eq_ignore_ascii_case_str("better") && !adj.eq_ignore_ascii_case_str("later")
-            })
+            .then_kind_except(
+                TokenKind::is_comparative_adjective,
+                &["better", "later", "number"],
+            )
             .t_ws()
             .t_aco("that")
             .t_ws()
-            .then(|tok: &Token, src: &[char]| {
-                tok.kind.is_word() && !tok.span.get_content(src).eq_ignore_ascii_case_str("way")
-            });
+            .then_word_except(&["way"]);
 
         Self {
             expr: Box::new(adjective_er_that_nextword),
@@ -226,6 +221,15 @@ mod tests {
     fn dont_flag_its_better_that() {
         assert_lint_count(
             "It’s better that the shock should all come at once.",
+            ThatThan::default(),
+            0,
+        )
+    }
+
+    #[test]
+    fn dont_flag_number_that_1663() {
+        assert_lint_count(
+            " 455 │ `MAJOR.MINOR.PATCH` version number that increments with:",
             ThatThan::default(),
             0,
         )

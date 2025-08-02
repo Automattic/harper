@@ -47,7 +47,7 @@ pub fn lint_group() -> LintGroup {
         "AfterAWhile" => (
             ["after while"],
             ["after a while"],
-            "When describafterg a timeframe, use `a while`.",
+            "When describing a timeframe, use `a while`.",
             "Corrects the missing article in `after while`, forming `after a while`.",
             LintKind::Grammar
         ),

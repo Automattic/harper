@@ -23,11 +23,9 @@ impl Default for CompoundNounAfterDetAdj {
     fn default() -> Self {
         let context_expr = SequenceExpr::default()
             .then(|tok: &Token, src: &[char]| {
-                let Some(Some(meta)) = tok.kind.as_word() else {
-                    return false;
-                };
-                meta.is_determiner()
-                    || (meta.is_adjective() && *tok.span.get_content(src).to_lower() != ['g', 'o'])
+                tok.kind.is_determiner()
+                    || (tok.kind.is_adjective()
+                        && *tok.span.get_content(src).to_lower() != ['g', 'o'])
             })
             .t_ws()
             .then(is_content_word)

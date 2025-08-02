@@ -64,6 +64,7 @@ mod long_sentences;
 mod looking_forward_to;
 mod map_phrase_linter;
 mod map_phrase_set_linter;
+mod mass_plurals;
 mod merge_linters;
 mod merge_words;
 mod missing_preposition;
@@ -184,6 +185,7 @@ pub use long_sentences::LongSentences;
 pub use looking_forward_to::LookingForwardTo;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
+pub use mass_plurals::MassPlurals;
 pub use merge_words::MergeWords;
 pub use missing_preposition::MissingPreposition;
 pub use modal_of::ModalOf;
@@ -275,11 +277,29 @@ where
 
 #[cfg(test)]
 pub mod tests {
+    use crate::{Document, Span, Token, parsers::PlainEnglish};
     use hashbrown::HashSet;
+
+    /// Extension trait for converting spans of tokens back to their original text
+    pub trait SpanVecExt {
+        fn to_strings(&self, doc: &Document) -> Vec<String>;
+    }
+
+    impl SpanVecExt for Vec<Span<Token>> {
+        fn to_strings(&self, doc: &Document) -> Vec<String> {
+            self.iter()
+                .map(|sp| {
+                    doc.get_tokens()[sp.start..sp.end]
+                        .iter()
+                        .map(|tok| doc.get_span_content_str(&tok.span))
+                        .collect::<String>()
+                })
+                .collect()
+        }
+    }
 
     use super::Linter;
     use crate::spell::FstDictionary;
-    use crate::{Document, parsers::PlainEnglish};
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, linter: impl Linter) {

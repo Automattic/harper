@@ -1,3 +1,4 @@
+use crate::TokenKind;
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
@@ -27,24 +28,22 @@ impl Default for NoContractionWithVerb {
 
         // Match verbs that are only verbs (not also nouns/adjectives) and not in -ing form
         let non_ing_verb = SequenceExpr::default().then(|tok: &Token, _src: &[char]| {
-            let Some(Some(meta)) = tok.kind.as_word() else {
-                return false;
-            };
-            meta.is_verb()
-                && !meta.is_noun()
-                && !meta.is_adjective()
-                && !meta.is_verb_progressive_form()
+            tok.kind.is_verb()
+                && !tok.kind.is_noun()
+                && !tok.kind.is_adjective()
+                && !tok.kind.is_verb_progressive_form()
         });
 
         // Ambiguous word is a verb determined by heuristic of following word's part of speech
         // Tests the next two words after "let".
         let verb_due_to_following_pos = SequenceExpr::default()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_verb())
+            .then_verb()
             .then_whitespace()
-            .then(|tok: &Token, _source: &[char]| {
-                // The 3rd word after let/lets and a verb
-                tok.kind.is_determiner() || tok.kind.is_pronoun() || tok.kind.is_conjunction()
-            });
+            .then_kind_any(&[
+                TokenKind::is_determiner,
+                TokenKind::is_pronoun,
+                TokenKind::is_conjunction,
+            ] as &[_]);
 
         let let_then_verb = let_ws.then(LongestMatchOf::new(vec![
             Box::new(non_ing_verb),

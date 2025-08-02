@@ -11,7 +11,7 @@ RUN cargo install wasm-pack
 COPY . .
 
 WORKDIR /usr/build/harper-wasm
-RUN wasm-pack build --release --target web
+RUN RUSTFLAGS='--cfg getrandom_backend="wasm_js"' wasm-pack build --target web
 
 FROM node:${NODE_VERSION} AS node-build
 

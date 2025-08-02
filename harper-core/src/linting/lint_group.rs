@@ -119,7 +119,9 @@ use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, Oxf
 use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, initialisms, phrase_corrections, phrase_set_corrections};
+use crate::linting::{
+    MassPlurals, closed_compounds, initialisms, phrase_corrections, phrase_set_corrections,
+};
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 
@@ -519,6 +521,9 @@ impl LintGroup {
 
         out.add("HaveTakeALook", HaveTakeALook::new(dialect));
         out.config.set_rule_enabled("HaveTakeALook", true);
+
+        out.add("MassPlurals", MassPlurals::new(dictionary.clone()));
+        out.config.set_rule_enabled("MassPlurals", true);
 
         out
     }

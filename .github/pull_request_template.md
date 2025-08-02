@@ -1,5 +1,6 @@
 # Issues 
 <!-- Link any relevant GitHub issues here. -->
+<!-- If this PR resolves the issue(s), write closes/fixes/resolves before the issue number(s) (e.g. Fixes #____, closes #____). -->
 
 # Description
 <!-- Please include a summary of the change. -->

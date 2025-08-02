@@ -28,7 +28,12 @@ const clientOptions: LanguageClientOptions = {
 		},
 		executeCommand(command, args, next) {
 			if (
-				['HarperAddToUserDict', 'HarperAddToFileDict', 'HarperIgnoreLint'].includes(command) &&
+				[
+					'HarperAddToUserDict',
+					'HarperAddToWSDict',
+					'HarperAddToFileDict',
+					'HarperIgnoreLint',
+				].includes(command) &&
 				args.find((a) => typeof a === 'string' && a.startsWith('untitled:'))
 			) {
 				window
