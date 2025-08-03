@@ -947,7 +947,7 @@ Baptiste/Og
 Barabbas/Og
 Barack/OJg
 Barbadian/NJSg
-Barbados/OVg
+Barbados/Og
 Barbara/Og
 Barbarella/g
 Barbarossa/Og
@@ -3723,6 +3723,7 @@ GATT/Og
 GB/NOg
 GCC/Og
 GDP/Ng              # gross domestic product
+GDPR/O              # General Data Protection Regulation
 GE/ONJg
 GED/N
 GFC/Ng              # global financial crisis
@@ -13783,6 +13784,7 @@ bail/~NVSBGgd
 bailey/~NS
 bailiff/~NS
 bailiwick/NgS
+bailment/NgS
 bailout/~NSg
 bailsman/N0g
 bailsmen/N9
@@ -20832,7 +20834,7 @@ dermatologist/NSg
 dermatology/~Ng
 dermis/~Ng
 derogate/VJdSGn
-derogation/Ng
+derogation/NgS
 derogatorily/R
 derogatory/~JN
 derrick/~NVSg
@@ -34640,6 +34642,7 @@ multicoloured/J!@_
 multicore/J
 multicultural/~J
 multiculturalism/~Ng
+multicurrency/J
 multidevice/J
 multidimensional/J
 multidisciplinary/~J
@@ -46637,6 +46640,7 @@ subjunctive/~JNSg
 sublease/NVgGdS
 sublet/VNSg
 subletting/VN
+sublicense/NgSVdG
 sublieutenant/NS
 sublimate/VNGndS
 sublimation/~Ng
@@ -48970,6 +48974,7 @@ transect/VNdSG
 transept/~NgS
 transfer/~VNgBS
 transferal/NgS
+transferee/NgS
 transference/Ng
 transferred/~V
 transferring/~VN
@@ -52658,7 +52663,9 @@ Docker/Og
 Dockerfile/NgS
 Dreamcast/OgS       # game console
 DuckDuckGo/Og       # search engine
+EBITDA/N            # earnings before interest, taxes, depreciation, and amortization
 ECMA/Og             # European Computer Manufacturers Association
+EEA/O               # European Economic Area
 EGR/                # exhaust gas recirculation
 EMR/NOSg
 EPUB/NOgS           # e-book format
@@ -52717,6 +52724,7 @@ Hasan/OSg           # surname, given name
 Hiera/Sg
 Holmdel/Sg
 Hugging Face/Og
+IBAN/NgS            # International Bank Account Number
 IDA/Og              # reverse engineering software
 IIFE/NgS            # immediately-invoked function expression
 IMAP/OSg            # internet message access protocol
@@ -52755,6 +52763,7 @@ Kia/ONgS            # automobile brand
 Kubernetes/OSg
 LADAR
 LEGO/NSg            # official trademark form of Lego
+LIBOR/N             # London Interbank Offered Rate
 LIDAR/N             # FIXME! elsewhere we have LiDAR
 LLM/NgS             # large language model
 LLVM/Ng             # compiler system
@@ -52915,7 +52924,10 @@ Stellantis/Og       # car company
 Subversion/Ng       # version control
 Svelte/Og           # js framework
 Systemd/Sg          # Linux system software
+TARGET2/O           # RTGS system for the Eurozone
 TCP/JOSg            # internet protocol
+TEU/O               # Treaty on the European Union
+TFEU/O              # Treaty on the Functioning of the European Union
 TL;DR               # internet slang
 TODO                # FIXME! elsewhere in Harper we refer to Todo and to-do
 TOML/Ng             # configuration file format
@@ -53182,6 +53194,8 @@ day-to-day/JR
 de-extinct/VGd
 de-extinction/NgS
 de facto/JNg
+de jure/RJ
+de minimis/J
 death knell/NgS
 déjà vu/Nmg
 deja vu/Nmg
@@ -53297,7 +53311,10 @@ Humpty Dumpty/Og
 ice cream/NmgS
 in-depth/J
 in-memory/J
+in personam/J
 in situ/JR
+inter alia/R
+ipso facto/RJ
 jaw-droppingly/J
 jury-rig/VS
 jury-rigged/V
@@ -53359,6 +53376,7 @@ motor ship/NgS
 mouse wheel/NgS
 multi-platform/J
 multiple-choice/J
+mutatis mutandis/R
 nail biter/NgS
 NAND gate/NgS
 nano-farad/NgS
@@ -53406,6 +53424,7 @@ OS X/Og             # before macOS
 out-and-out/J
 out of date
 Pan Am/Ng           # old airline
+pari passu/RJ
 part of speech/Ng
 parts speech/9
 Pascal case/Nmg
@@ -53413,7 +53432,10 @@ Pax Americana/Og
 peer review/NgSdG
 peer-reviewed/J
 pen test/NgS
+per annum
 per capita/JR
+per diem/JNgS
+per se/JR
 Petri dish/NgS
 petty bourgeois/Ng
 petty bourgeoisie/Ng
@@ -53425,7 +53447,9 @@ post-Soviet/J
 post-truth/NmVg
 power-up/NgS
 pre-COVID/J
+prima facie/RJ
 pro-democracy/J
+pro rata/R
 quid pro quo/Ng
 quote unquote/JR
 rack-mounted/J
@@ -53501,6 +53525,7 @@ stay-behind/NgS
 straight up/R
 straight-up/J
 straight away/R     # see also `straightaway` n. & adj.
+sui generis/JRN
 surface-to-air/J
 suss out/V
 sussed out/V
@@ -53545,6 +53570,7 @@ user-friendly/J
 UTF-16/Ng
 UTF-32/Ng
 UTF-8/Ng
+vis-à-vis/P
 voice-over/NgS
 von Neumann/O
 walk through/V
