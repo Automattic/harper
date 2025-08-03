@@ -827,9 +827,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
+  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
-  - Replace with: “Ti”
 
 
 
@@ -861,9 +861,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
+  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
-  - Replace with: “Ti”
 
 
 
@@ -5018,9 +5018,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
+  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
-  - Replace with: “Ti”
 
 
 
@@ -5087,9 +5087,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
+  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
-  - Replace with: “Ti”
 
 
 
@@ -6342,9 +6342,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
+  - Replace with: “Tr”
   - Replace with: “T”
   - Replace with: “Tb”
-  - Replace with: “Ti”
 
 
 
@@ -7307,9 +7307,9 @@ Message: |
     5692 | figures in my more fantastic dreams. I see it as a night scene by El Greco: a
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
+  - Replace with: “E”
   - Replace with: “Ea”
-  - Replace with: “Ed”
-  - Replace with: “En”
+  - Replace with: “Elm”
 
 
 
