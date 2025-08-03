@@ -11,7 +11,7 @@
 >
 #
 > Computer science is the study of computation , information , and automation .
-# NSg/V+   N🅪Sg/V+ VL D   NSg/V P  NSg         . NᴹSg+       . V/C NᴹSg       .
+# NSg/V+   N🅪Sg/V+ VL D   NSg/V P  NSg         . NᴹSg+       . V/C N🅪Sg       .
 > Computer science spans theoretical disciplines ( such  as    algorithms , theory of
 # NSg/V+   N🅪Sg/V+ NPl/V J           NPl/V+      . NSg/I NSg/R NPl+       . NSg    P
 > computation , and information theory ) to applied disciplines ( including the
@@ -751,7 +751,7 @@
 > although the Turing test   is still   used to assess computer output on  the scale  of
 # C        D   NPr    NSg/V+ VL NSg/V/J V/J  P  V      NSg/V+   NSg/V+ J/P D   N🅪Sg/V P
 > human   intelligence . But     the automation of evaluative and predictive tasks  has
-# NSg/V/J N🅪Sg+        . NSg/C/P D   NᴹSg       P  W?         V/C W?         NPl/V+ V
+# NSg/V/J N🅪Sg+        . NSg/C/P D   N🅪Sg       P  W?         V/C W?         NPl/V+ V
 > been  increasingly successful as    a   substitute for human   monitoring and
 # NSg/V R            J          NSg/R D/P NSg/V+     C/P NSg/V/J V          V/C
 > intervention in      domains of computer application involving complex real  - world

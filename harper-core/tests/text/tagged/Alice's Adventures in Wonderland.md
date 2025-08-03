@@ -4968,8 +4968,8 @@
 # . NSg/J+    NSg/V+ . NSg/I/J/C NPr/V/J V/C NPr🅪/V/J . NSg/V   NPr/J/P D/P NSg/V/J NSg    . NPr/I+ C/P NSg/I
 > dainties would not   stoop ? Soup  of the evening , beautiful Soup   ! Soup  of the
 # NPl      VX    NSg/C NSg/V . NSg/V P  D+  N🅪Sg/V+ . NSg/J+    NSg/V+ . NSg/V P  D+
-> evening , beautiful Soup   ! Beau   — ootiful Soo — oop ! Beau   — ootiful Soo — oop ! Soo — oop
-# N🅪Sg/V+ . NSg/J+    NSg/V+ . NPr/V+ . ?       ?   . ?   . NPr/V+ . ?       ?   . ?   . ?   . ?
+> evening , beautiful Soup   ! Beau   — ootiful Soo — oop  ! Beau   — ootiful Soo — oop  ! Soo — oop
+# N🅪Sg/V+ . NSg/J+    NSg/V+ . NPr/V+ . ?       ?   . NᴹSg . NPr/V+ . ?       ?   . NᴹSg . ?   . NᴹSg
 > of the e      — e     — evening , Beautiful , beautiful Soup   !
 # P  D   NPr/I+ . NPr/I . N🅪Sg/V+ . NSg/J     . NSg/J     NSg/V+ .
 >
@@ -4978,8 +4978,8 @@
 # . NSg/J+    NSg/V+ . NPr/I+ NPl/V C/P N🅪SgPl/V+ . NSg/V/J+ . NPr/C I/R/Dq+ NSg/V/J+ NSg/V+ . NPr/I+ VX    NSg/C
 > give  all          else    for two  p          ennyworth only  of beautiful Soup   ? Pennyworth only  of
 # NSg/V NSg/I/J/C/Dq NSg/J/C C/P NSg+ NPr/V/J/P+ ?         J/R/C P  NSg/J     NSg/V+ . NSg        J/R/C P
-> beautiful Soup   ? Beau   — ootiful Soo — oop ! Beau   — ootiful Soo — oop ! Soo — oop of the
-# NSg/J     NSg/V+ . NPr/V+ . ?       ?   . ?   . NPr/V+ . ?       ?   . ?   . ?   . ?   P  D
+> beautiful Soup   ? Beau   — ootiful Soo — oop  ! Beau   — ootiful Soo — oop  ! Soo — oop  of the
+# NSg/J     NSg/V+ . NPr/V+ . ?       ?   . NᴹSg . NPr/V+ . ?       ?   . NᴹSg . ?   . NᴹSg P  D
 > e      — e      — evening , Beautiful , beauti — FUL SOUP   ! ”
 # NPr/I+ . NPr/I+ . N🅪Sg/V+ . NSg/J     . ?      . ?   NSg/V+ . .
 >
@@ -5004,8 +5004,8 @@
 # NSg/I/C/Ddem+ V/J      NSg/IPl+ . D   NSg/J      NPl/V+ . .
 >
 #
-> “ Soo — oop of the e      — e      — evening , Beautiful , beautiful Soup   ! ”
-# . ?   . ?   P  D   NPr/I+ . NPr/I+ . N🅪Sg/V+ . NSg/J     . NSg/J     NSg/V+ . .
+> “ Soo — oop  of the e      — e      — evening , Beautiful , beautiful Soup   ! ”
+# . ?   . NᴹSg P  D   NPr/I+ . NPr/I+ . N🅪Sg/V+ . NSg/J     . NSg/J     NSg/V+ . .
 >
 #
 > CHAPTER XI  : Who    Stole the Tarts ?

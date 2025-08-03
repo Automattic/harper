@@ -1069,7 +1069,7 @@
 > end   of the long     couch  and she  read  aloud to him  from the Saturday Evening
 # NSg/V P  D+  NPr/V/J+ NSg/V+ V/C ISg+ NSg/V J     P  ISg+ P    D+  NSg/V+   N🅪Sg/V+
 > Post      — the words  , murmurous and uninflected , running   together in      a   soothing tune   .
-# NPr🅪/V/P+ . D+  NPl/V+ . J         V/C ?           . NSg/V/J/P J        NPr/J/P D/P NSg/V/J  NSg/V+ .
+# NPr🅪/V/P+ . D+  NPl/V+ . J         V/C J           . NSg/V/J/P J        NPr/J/P D/P NSg/V/J  NSg/V+ .
 > The lamp   - light     , bright  on  his     boots  and dull on  the autumn - leaf  yellow  of her
 # D   NSg/V+ . N🅪Sg/V/J+ . NPr/V/J J/P ISg/D$+ NPl/V+ V/C V/J  J/P D   NPr/V+ . NSg/V NSg/V/J P  ISg/D$+
 > hair    , glinted along the paper     as    she  turned a   page   with a   flutter of slender
@@ -10647,7 +10647,7 @@
 >
 #
 > and then    hasty addenda beneath :
-# V/C NSg/J/C J     NSg     P       .
+# V/C NSg/J/C J     NPl     P       .
 >
 #
 > Let   me       know  about the funeral etc do     not   know  his     family  at    all          .

@@ -1,4 +1,4 @@
-53700
+53750
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -3783,6 +3783,7 @@ Galaxy/O
 Galbraith/Og
 Gale/Og
 Galen/Og
+Galician/JNwgS
 Galibi/Og
 Galilean/JNOSg
 Galilee/Og
@@ -11533,10 +11534,11 @@ adaptation/~NgS
 adapter/~Ng
 adaption/~NS
 adaptor/NgS!_
+adblocker/NgS
 add/~VNSd>BZG
 addend/NVgS
-addenda/N
-addendum/Ng
+addenda/N9
+addendum/N0g
 adder/~Ng
 addict/~NVGvgdS
 addiction/~NSg
@@ -13494,7 +13496,7 @@ automaker/~NSg
 automata/~NSg
 automate/VGndS
 automatic/~JNSgQ
-automation/~Nmg
+automation/~NwgS
 automatise/VGdS!_
 automatism/Ng
 automatize/VGdS
@@ -16920,6 +16922,7 @@ chaffinch/NgS
 chagrin/~NVJGSgd
 chain/~NVUGdS
 chain's
+chainable/J
 chainsaw/~NVgdGS
 chair/~NVGgdS
 chairlift/NgS
@@ -18137,6 +18140,7 @@ colony/~NVSg
 colophon/NSg
 color/~NwJVrEGdS<
 color's/<
+colorable/J<
 colorant/NSg<
 coloration/~NEg<
 coloratura/NJgS<
@@ -18163,6 +18167,7 @@ colossus/~Ng
 colostomy/NSg
 colostrum/Ng
 colour/~NwJVrEGdS!@_
+colourable/J!@_
 colourant/NSg!@_
 colouration/NEg!_
 colourblind/Jp!@_
@@ -18198,6 +18203,7 @@ combatant/~NJSg
 combativeness/Ng
 combed/JVU
 comber/Ng
+combinable/J
 combination/~NwSg
 combinator/NgS
 combinatoric/J
@@ -20413,18 +20419,18 @@ decimation/Ng
 decimeter/NgS<
 decimetre/NgS!@_
 decipherable/JUi
-decision/~NVig
-decisions/~NV
+decision/~N0Vig
+decisions/~N9V
 decisive/~JipY
 decisiveness/Nig
 deck/~NVSGgd
-deckchair/NS
+deckchair/NgS
 deckhand/NVSg
 deckle/NVS
 declamation/NgS
 declamatory/J
 declaration/~NgS
-declarative/~JN
+declarative/~JNY
 declarator/NgS
 declaratory/J
 declare/~Vd>SZGB
@@ -22776,6 +22782,7 @@ embarrassment/~NSg
 embassy/~NSg
 embattled/JV
 embed/~VNS
+embeddable/J
 embedded/~VJ
 embedder/NgS
 embedding/~NSgV
@@ -28820,23 +28827,24 @@ hyperbolic/~JQ
 hypercar/NgS
 hyperconservative/J
 hypercritical/JY
-hypercube/N
+hypercube/NgS
 hyperfixation/Nmg
 hyperglycemia/Ng
 hyperinflate/VNGdSn
 hyperlink/NVGSgd
-hypermarket/NS
+hypermarket/NgS
 hypermedia/Nmg
 hypernetwork/NSg
 hyperparameter/NsG
 hyperparathyroidism/N
 hyperplane/N
+hyperscale/J
 hypersensitive/Jp
 hypersensitiveness/Ng
 hypersensitivity/~NSg
 hypersexualise/VSdG!_
 hypersexualize/VSdG
-hyperspace/NVS
+hyperspace/NmVS
 hypertension/~Ng
 hypertensive/JNSg
 hypertext/Ng
@@ -32052,12 +32060,12 @@ litterateur/NgS
 litterbug/NgS
 litterer/Ng
 little/~JINg^>pDq
-littleness/Ng
+littleness/Nmg
 littoral/~JNSg
 liturgical/~JY
 liturgist/NSg
-liturgy/~NSg
-livability/Ng
+liturgy/~NwSg
+livability/Nmg
 livable/JU
 live/~VJr^GdSB
 liveable/J!_
@@ -32066,6 +32074,7 @@ liveliness/Ng
 livelong/JNS
 lively/~JNp>^
 liven/VSGd
+liveness/NwgS
 liver/~NwJS
 liver's
 liveried/VJ
@@ -34637,7 +34646,9 @@ multibillion/J
 multibyte/J
 multicellular/J
 multichannel/J
-multicolored/J
+multicolor/Nm<
+multicolored/J<
+multicolour/Nm!@_
 multicoloured/J!@_
 multicore/J
 multicultural/~J
@@ -36045,6 +36056,7 @@ obligatorily/R
 obligatory/~J
 oblige/VEGdS
 obliging/JVNY
+obligor/NgS
 oblique/~JNVSgYp
 obliqueness/Nmg
 obliquity/Ng
@@ -36443,6 +36455,7 @@ optimise/Vd>SG!_
 optimism/~NSg
 optimist/NSg
 optimistic/~JQ
+optimizable/J
 optimization/~NwgS
 optimize/~Vd>SG
 optimizer/NgS
@@ -38917,6 +38930,7 @@ pluckiness/Ng
 plucky/J>p^
 plug/~NVUS
 plug's
+pluggable/J
 plugged/~VU
 plugging/~VNU
 plughole/NS
@@ -41227,6 +41241,7 @@ recompile/VNSGd
 recomputation/Nmg
 recon/~NVS
 reconcile/~VGdSB
+reconciler/NgS
 reconciliation/~NS
 recondite/JNVSg
 reconditioner/NgS
@@ -41494,6 +41509,7 @@ reimagine/VSdG
 reimagined/VJ
 reimburse/VBdSGL
 reimbursement/NgS
+reimplementation/NmgS
 rein/~NVGd
 reindeer/~NVg
 reinforce/~VLGdS
@@ -41812,6 +41828,8 @@ resistless/J
 resistor/~NgS
 resit/VNS
 resitting/NV
+resizable/J<
+resizeable/J!
 reskilling/V
 reskin/VNS
 reskinned/VJ
@@ -42544,7 +42562,7 @@ runny/J>^
 runoff/~NSg
 runout/NgS
 runt/NgS
-runtime/~JN
+runtime/~JNgS
 runty/J>^
 runway/~NSg
 rupee/~NSg
@@ -49782,6 +49800,7 @@ uncompelling/J
 uncomplaining/JY
 uncomplicated/VJ
 uncomprehending/JY
+uncompress/VGdS
 uncompromising/~JY
 unconditional/~JNY
 unconfigured/J
@@ -50052,9 +50071,10 @@ uniformity/~Ng
 unify/~VrGdSn
 unignorable/J
 unilateral/~JY
-unilateralism/N
+unilateralism/Nm
 unimportant/~J
 unimpressive/J
+uninflected/J
 uninformative/J
 uninhibited/JY
 uninsurable/J
@@ -51182,6 +51202,7 @@ waiting/~VNg
 waitperson/N0gS
 waitress/~NVgS
 waitstaff/Nmg
+waivable/J
 waive/~VNd>SZG
 waiver/~NVg
 wake/~VNgGzdS
@@ -52644,6 +52665,7 @@ DBMS/NOSg           # database management system
 DCT/NgS             # discrete cosine transform
 DDoS/Ng
 DEI
+DFA/NgS
 DKIM/NSg
 DLL/NgS             # dynamic link library
 DM'd/V              # direct message
@@ -52718,6 +52740,8 @@ GraphQL/Og
 Graphviz/Sg
 Gravatar/Og
 HDR/J               # high dynamic range
+HEIC/ONgS           # High Efficiency Image Container
+HEIF/ONgS           # High Efficiency Image Format
 HQL/N
 HTML5
 Hasan/OSg           # surname, given name
@@ -52725,7 +52749,9 @@ Hiera/Sg
 Holmdel/Sg
 Hugging Face/Og
 IBAN/NgS            # International Bank Account Number
+ID3                 # audio metadata
 IDA/Og              # reverse engineering software
+IFRS/Og             # International Financial Reporting Standards
 IIFE/NgS            # immediately-invoked function expression
 IMAP/OSg            # internet message access protocol
 IME/NgS             # input method editor
@@ -52744,6 +52770,7 @@ JSDoc/Sg
 JSON/Og             # data format
 JSONP/Og
 JVM/Sg              # Java virtual machine
+JWT/Ng              # JSON Web Token
 Jacoco/Sg
 JavaDoc/Sg
 JavaScript/ONSg     # programming language
@@ -52762,6 +52789,7 @@ KiCad/Og            # software
 Kia/ONgS            # automobile brand
 Kubernetes/OSg
 LADAR
+LDAP/Og             # Lightweight Directory Access Protocol 
 LEGO/NSg            # official trademark form of Lego
 LIBOR/N             # London Interbank Offered Rate
 LIDAR/N             # FIXME! elsewhere we have LiDAR
@@ -52820,6 +52848,7 @@ N2/Og
 N3/Og
 N4/Og
 N5/Og
+NFA/NgS
 NLP/g
 NMI/NgS             # non-maskable interrupt
 NPC/Sg
@@ -52842,12 +52871,14 @@ O'Reilly/OSg
 OAuth/g             # open authentication
 OCaml/gO            # programming language
 OG/NgS
+OOP/Nmg
 ORM/NOS             # object-relational mapping
 Ollama/Og           # AI tool
 OpenAI/Og
 OpenBSD/Og          # operating system
 OpenCV/Og
 OpenGL/Sg           # open graphics library
+OpenID/Og
 OpenMetrics/Sg
 OpenPGP/Sg
 OpenSearch/Sg
@@ -53031,6 +53062,7 @@ blogpost/NgS
 clickstream/NgS
 concat/VSdG
 config/NVSg         # not marked as a verb since "configed" and "configing" look wrong
+configurator/NgS
 corpo/NgS
 datagram/NgS
 datetime/NgS
@@ -53043,7 +53075,7 @@ eVTOL/NgS
 ext2/Ng             # file system
 ext3/Ng             # file system
 ext4/Ng             # file system
-failover/NgS
+failover/NwgS
 falsy/J
 filepath/NgS
 filesystem/~Sg      # dictionaries prefer: file system
@@ -53063,10 +53095,12 @@ hoster/NgS
 hostname/NSg
 hotwire/VBG         # dictionaries prefer: hot-wire
 i18n/Nm             # internationalization
+iframe/NgS
 infosec/NmG         # information security
 inpaint/VGdS
 iPadOS/Og
 jQuery/Og
+keyserver/NgS
 labriola/Sg         # !! please check and comment !! - should be uppercase surname?
 linkification/Nmg
 manip/NgS           # gamer slang manipulation
@@ -53084,6 +53118,7 @@ quicksort/NgSVdG    # algo
 raytracer/N         # dictionaries prefer: ray tracer
 reranker/NgS
 roadmap/NgS         # overtook "road map" c. 2000 but not in dictionaries yet
+roguelike/NgS
 royale/~NJSg        # !! please check and comment !! dictionaries only list noun sense type of custard
 s.t./~              # !! please check and comment !!
 sRGB/Og             # colour space
@@ -53151,13 +53186,15 @@ boot loader/NgS
 break out/V
 breaks out/V
 Bretton Woods/Og
-brute force/NgSVdG
+brute force/NwgSVdG
+bubble tea/NwgS
 built-in/NgSJ
 built-up/J
 camel case/Nmg
 car bomb/NgS
 car-bomb/V
 carbon-intensive/J
+cash flow/NgS
 cash-strapped/J
 CD-ROM/NgS
 centre-left/J!@_
@@ -53249,6 +53286,7 @@ full-on/JR
 full-scale/J
 full screen/J
 full-time/JR
+Game Boy/OgS
 go around/V
 go-around/NgS
 gold-plated/J
@@ -53274,6 +53312,7 @@ half-lives/9
 ham-fisted/J
 hand-drawn/J
 hand-me-down/JNgS
+hand-off/NwSg
 hands-off/J
 happy-go-lucky/J
 hard code/VSdG
@@ -53340,7 +53379,8 @@ left-wing/J
 lesser-known/J
 life cycle/NgS
 line break/NgS
-live action/N
+lip gloss/NwgS
+live action/Nmg
 load-bearing/J
 lock picking/Nmg
 lock screen/NgS
@@ -53648,6 +53688,7 @@ log out/V
 look up/V
 meet up/V
 melt down/V
+pay out/V
 pick up/V
 plug in/V
 push back/V
