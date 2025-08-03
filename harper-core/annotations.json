@@ -879,6 +879,50 @@
 					"is_mass": true
 				}
 			}
+		},
+		"b": {
+			"#": "verb lemma form property",
+			"//": "mnemonic: 'b' for 'base form'",
+			"metadata": {
+				"verb": {
+					"verb_form": "LemmaForm"
+				}
+			}
+		},
+		"t": {
+			"#": "verb preterite / simple past form property",
+			"metadata": {
+				"verb": {
+					"verb_form": "PreteriteForm"
+				}
+			}
+		},
+		"d": {
+			"#": "verb past participle form property",
+			"//": "mnemonic: 'd' as in 'done', past participle of 'do'",
+			"metadata": {
+				"verb": {
+					"verb_form": "PastParticipleForm"
+				}
+			}
+		},
+		"6": {
+			"#": "verb progressive form property",
+			"//": "mnemonic: '6' looks like 'g' in 'ing'",
+			"metadata": {
+				"verb": {
+					"verb_form": "ProgressiveForm"
+				}
+			}
+		},
+		"T": {
+			"#": "verb third person singular present form property",
+			"//": "mnemonic: 'T' for 'Third'",
+			"metadata": {
+				"verb": {
+					"verb_form": "ThirdPersonSingularPresentForm"
+				}
+			}
 		}
 	}
 }

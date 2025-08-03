@@ -738,9 +738,17 @@ impl WordMetadata {
 // 3. Future is always expressed through auxiliary verbs (e.g., "will sleep", "going to sleep")
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
 pub enum VerbForm {
+    /// The uninflected verb form: "walk", "eat"
     LemmaForm,
+    /// The past form for regular verbs: "walked"
     PastForm,
+    /// The simple past form for irregular verbs: "ate"
+    SimplePastForm,
+    /// The past participle form for irregular verbs: "eaten"
+    PastParticipleForm,
+    /// The progressive/continuous/gerund/present participle form: "walking", "eating"
     ProgressiveForm,
+    /// The third person singular present form: "walks", "eats"
     ThirdPersonSingularPresentForm,
 }
 
