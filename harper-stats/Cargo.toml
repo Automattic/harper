@@ -11,7 +11,7 @@ repository = "https://github.com/automattic/harper"
 serde = { version = "1.0.217", features = ["derive"] }
 harper-core = { path = "../harper-core", version = "0.54.0", features = ["concurrent"] }
 uuid = { version = "1.17.0", features = ["serde", "v4"] }
-serde_json = "1.0.141"
+serde_json = "1.0.142"
 chrono = "0.4.41"
 
 [features]
