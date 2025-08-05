@@ -18,7 +18,7 @@ impl Linter for NoFrenchSpaces {
                         span: space.span,
                         lint_kind: LintKind::Formatting,
                         suggestions: vec![Suggestion::ReplaceWith(vec![' '])],
-                        message: format!("French spaces are generally not recommended."),
+                        message: "French spaces are generally not recommended.".to_owned(),
                         priority: 15,
                     })
                 }
