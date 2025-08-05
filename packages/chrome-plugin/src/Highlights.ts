@@ -4,6 +4,7 @@ import type { LintBox } from './Box';
 import {
 	getCMRoot,
 	getDraftRoot,
+	getGhostRoot,
 	getGutenbergRoot,
 	getLexicalRoot,
 	getMediumRoot,
@@ -141,6 +142,7 @@ export default class Highlights {
 		}
 
 		const queries = [
+			getGhostRoot,
 			getDraftRoot,
 			getPMRoot,
 			getCMRoot,
