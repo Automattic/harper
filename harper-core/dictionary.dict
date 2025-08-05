@@ -30944,6 +30944,7 @@ keynoter/Ng
 keypad/NSg
 keypunch/NVZGgd>S
 keypuncher/Ng
+keyring/NgS
 keystone/~NVgS
 keystroke/NVSg
 keyway/NSg
@@ -34657,6 +34658,7 @@ multicurrency/J
 multidevice/J
 multidimensional/J
 multidisciplinary/~J
+multidomain/J
 multiethnic/J
 multifaceted/~JYp
 multifactor/J
@@ -37679,6 +37681,7 @@ pathetic/~J
 pathetically/R
 pathfinder/~NSg
 pathless/J
+pathname/NgS
 pathogen/~NSg
 pathogenic/~J
 pathological/~JY
@@ -40643,6 +40646,7 @@ quartz/~Nmg
 quasar/~NgS
 quash/VGdS
 quasi/~J
+quaternion/NgS
 quatrain/NgS
 quaver/NVgdSG
 quavery/J
@@ -52749,11 +52753,12 @@ Hiera/Sg
 Holmdel/Sg
 Hugging Face/Og
 IBAN/NgS            # International Bank Account Number
+ICMP/Og             # internet control message protocol
 ID3                 # audio metadata
 IDA/Og              # reverse engineering software
 IFRS/Og             # International Financial Reporting Standards
 IIFE/NgS            # immediately-invoked function expression
-IMAP/OSg            # internet message access protocol
+IMAP/Sg             # internet message access protocol
 IME/NgS             # input method editor
 IMSI/N              # international mobile subscriber identity
 IPC/Ng              # interprocess communication
@@ -53081,6 +53086,7 @@ filepath/NgS
 filesystem/~Sg      # dictionaries prefer: file system
 freemium/J
 frontend/NSg        # dictionaries prefer: front end
+fuser/NgS
 gcd/Ng              # greatest common divisor
 gen AI/Ng
 geodata/Nwg
@@ -53212,7 +53218,8 @@ colour code/NVgdSG!@_
 colour coded/J!@_
 command line/NgS
 company-wide        # in Cambridge and OED dictionaries
-cost cutting/Ng
+controlflow/Nmg
+cost cutting/Nmg
 cost-effective/J
 cotter pin/NgS
 cross-border/JR
@@ -53490,6 +53497,7 @@ pre-COVID/J
 prima facie/RJ
 pro-democracy/J
 pro rata/R
+public key/NgS
 quid pro quo/Ng
 quote unquote/JR
 rack-mounted/J
