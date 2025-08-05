@@ -10,7 +10,13 @@ impl Linter for Spaces {
         let mut output = Vec::new();
 
         for sentence in document.iter_sentences() {
-            for space in sentence.iter_spaces() {
+            for space_idx in sentence.iter_space_indices() {
+                if space_idx == 0 {
+                    continue;
+                }
+
+                let space = &sentence[space_idx];
+
                 let TokenKind::Space(count) = space.kind else {
                     panic!("The space iterator should only return spaces.")
                 };
@@ -69,7 +75,7 @@ impl Linter for Spaces {
 #[cfg(test)]
 mod tests {
     use super::Spaces;
-    use crate::linting::tests::assert_lint_count;
+    use crate::linting::tests::{assert_lint_count, assert_no_lints};
 
     #[test]
     fn detects_space_before_period() {
@@ -83,5 +89,13 @@ mod tests {
         let source = "There isn't a space at the end of this sentence.";
 
         assert_lint_count(source, Spaces, 0)
+    }
+
+    #[test]
+    fn ignores_french_spacing() {
+        assert_no_lints(
+            "This is a short sentence.  This is another short sentence.",
+            Spaces,
+        );
     }
 }
