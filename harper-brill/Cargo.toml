@@ -1,19 +1,19 @@
 [package]
 name = "harper-brill"
-version = "0.54.0"
+version = "0.55.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
 repository = "https://github.com/automattic/harper"
 
 [dependencies]
-harper-pos-utils = { path = "../harper-pos-utils/", version = "0.54.0" }
+harper-pos-utils = { path = "../harper-pos-utils/", version = "0.55.0" }
 lazy_static = "1.5.0"
 rs-conllu = "0.3.0"
 serde = "1.0.219"
-serde_json = "1.0.141"
+serde_json = "1.0.142"
 
 [build-dependencies]
 rs-conllu = "0.3.0"
 serde = "1.0.219"
-serde_json = "1.0.141"
+serde_json = "1.0.142"

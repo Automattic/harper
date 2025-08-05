@@ -1,6 +1,6 @@
 [package]
 name = "harper-core"
-version = "0.54.0"
+version = "0.55.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -18,7 +18,7 @@ ordered-float = { version = "5.0.0", features = ["serde"] }
 paste = "1.0.14"
 pulldown-cmark = "0.13.0"
 serde = { version = "1.0.219", features = ["derive"] }
-serde_json = "1.0.141"
+serde_json = "1.0.142"
 smallvec = { version = "1.15.1", features = ["serde"] }
 thiserror = "2.0.12"
 unicode-blocks = "0.1.9"
@@ -31,7 +31,7 @@ foldhash = "0.1.5"
 strum_macros = "0.27.2"
 strum = "0.27.2"
 ammonia = "4.1.1"
-harper-brill = { path = "../harper-brill", version = "0.54.0" }
+harper-brill = { path = "../harper-brill", version = "0.55.0" }
 bitflags = { version = "2.9.1", features = ["serde"] }
 
 [dev-dependencies]

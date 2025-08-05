@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.54.0",
+	"version": "0.55.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -680,6 +680,12 @@
 					"default": true,
 					"description": "In English, negation still requires the complete verb form (“want”), so avoid truncating it to “wan.”"
 				},
+				"harper.linters.DoesOrDose": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Tries to correct typos of `dose` to `does`."
+				},
 				"harper.linters.DotInitialisms": {
 					"scope": "resource",
 					"type": "boolean",
@@ -925,6 +931,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Encourages vivid writing by suggesting `freezing` instead of weaker expressions like `very cold.`"
+				},
+				"harper.linters.FriendOfMe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects wrong pronoun usage in constructions like `a friend of me`."
 				},
 				"harper.linters.FromTheGetGo": {
 					"scope": "resource",
@@ -1393,6 +1405,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "When referring to the states of Malaysia and their capitals, make sure to treat them as a proper noun."
+				},
+				"harper.linters.MassPlurals": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for plural forms of mass nouns that have no plural."
 				},
 				"harper.linters.MergeWords": {
 					"scope": "resource",
@@ -2101,6 +2119,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `the challenged` to `that challenged` for proper relative clause usage."
+				},
+				"harper.linters.ThatThan": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the typo `that` to `than` in comparisons."
 				},
 				"harper.linters.ThatThis": {
 					"scope": "resource",
