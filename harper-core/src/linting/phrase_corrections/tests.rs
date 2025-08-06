@@ -412,7 +412,11 @@ fn detect_ever_present_real_world() {
 // EverSince
 #[test]
 fn detect_ever_since() {
-    assert_suggestion_result("einstein been real quiet every since this dropped", lint_group(), "einstein been real quiet ever since this dropped");
+    assert_suggestion_result(
+        "einstein been real quiet every since this dropped",
+        lint_group(),
+        "einstein been real quiet ever since this dropped",
+    );
 }
 
 // EveryTime
