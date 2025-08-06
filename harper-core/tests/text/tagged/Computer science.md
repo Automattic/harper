@@ -251,7 +251,7 @@
 > the ACM — turingineer , turologist , flow   - charts - man      , applied meta  - mathematician ,
 # D   NSg . ?           . ?          . NSg/V+ . NPl/V+ . NPr/V/J+ . V/J     NSg/J . NSg+          .
 > and applied epistemologist . Three months later in      the same journal  , comptologist
-# V/C V/J     ?              . NSg+  NSg+   JC    NPr/J/P D+  I/J+ NSg/V/J+ . ?
+# V/C V/J     ?              . NSg+  NPl+   JC    NPr/J/P D+  I/J+ NSg/V/J+ . ?
 > was suggested , followed next    year by      hypologist . The term     computics has also
 # V   V/J       . V/J      NSg/J/P NSg+ NSg/J/P ?          . D+  NSg/V/J+ ?         V   W?
 > been  suggested . In      Europe , terms  derived from contracted translations of the

@@ -3775,7 +3775,7 @@
 > names  — Jaqueline , I    think , or    else    Consuela , or    Gloria or    Judy or    June , and their
 # NPl/V+ . ?         . ISg+ NSg/V . NPr/C NSg/J/C ?        . NPr/C NPr    NPr/C NPr  NPr/C NPr+ . V/C D$+
 > last    names  were  either the melodious names of flowers and months or    the sterner
-# NSg/V/J NPl/V+ NSg/V I/C    D   J         NPl/V P  NPrPl/V V/C NSg+   NPr/C D   NSg/JC
+# NSg/V/J NPl/V+ NSg/V I/C    D   J         NPl/V P  NPrPl/V V/C NPl+   NPr/C D   NSg/JC
 > ones  of the great American capitalists whose cousins , if    pressed , they would
 # NPl/V P  D   NSg/J NPr/J    NPl         I+    NPl/V+  . NSg/C V/J     . IPl+ VX
 > confess themselves to be     .
@@ -4725,7 +4725,7 @@
 > over    . Next     day   at    five o’clock she  married Tom    Buchanan without so        much       as    a
 # NSg/J/P . NSg/J/P+ NPr🅪+ NSg/P NSg  W?      ISg+ NSg/V/J NPr/V+ NPr+     C/P     NSg/I/J/C NSg/I/J/Dq NSg/R D/P
 > shiver , and started off       on  a   three months ’ trip     to the South    Seas .
-# NSg/V  . V/C V/J     NSg/V/J/P J/P D/P NSg   NSg+   . NSg/V/J+ P  D   NPr/V/J+ NPl+ .
+# NSg/V  . V/C V/J     NSg/V/J/P J/P D/P NSg   NPl+   . NSg/V/J+ P  D   NPr/V/J+ NPl+ .
 >
 #
 > I    saw   them     in      Santa Barbara when    they came    back    , and I    thought I’d never seen  a
@@ -6119,7 +6119,7 @@
 >
 #
 > An  instinct toward his     future glory  had led     him  , some      months before , to the
-# D/P NSg/J+   J/P    ISg/D$+ NSg/J+ NSg/V+ V   NSg/V/J ISg+ . I/J/R/Dq+ NSg+   C/P    . P  D
+# D/P NSg/J+   J/P    ISg/D$+ NSg/J+ NSg/V+ V   NSg/V/J ISg+ . I/J/R/Dq+ NPl+   C/P    . P  D
 > small   Lutheran College of St     . Olaf’s in      northern Minnesota . He       stayed there two
 # NPr/V/J NSg/J    NSg     P  NPr/V+ . NSg$   NPr/J/P NSg/J+   NPr+      . NPr/ISg+ V/J    +     NSg+
 > weeks  , dismayed at    its     ferocious indifference to the drums of his     destiny , to
@@ -8235,7 +8235,7 @@
 >
 #
 > “ It       was in      nineteen - nineteen , I    only  stayed five months . That’s why   I    can’t
-# . NPr/ISg+ V   NPr/J/P NSg      . NSg      . ISg+ J/R/C V/J    NSg+ NSg+   . NSg$   NSg/V ISg+ VX
+# . NPr/ISg+ V   NPr/J/P NSg      . NSg      . ISg+ J/R/C V/J    NSg+ NPl+   . NSg$   NSg/V ISg+ VX
 > really call  myself an  Oxford man      . ”
 # R      NSg/V ISg+   D/P NPr+   NPr/V/J+ . .
 >
@@ -9409,7 +9409,7 @@
 > that         the room     was empty   . Crossing the porch where we   had dined that         June night
 # NSg/I/C/Ddem D+  NSg/V/J+ V   NSg/V/J . NSg/V/J  D+  NSg+  NSg/C IPl+ V   V/J   NSg/I/C/Ddem NPr+ N🅪Sg/V+
 > three months before , I    came    to a   small   rectangle of light     which I    guessed was
-# NSg+  NSg+   C/P    . ISg+ NSg/V/P P  D/P NPr/V/J NSg/J     P  N🅪Sg/V/J+ I/C+  ISg+ V/J     V
+# NSg+  NPl+   C/P    . ISg+ NSg/V/P P  D/P NPr/V/J NSg/J     P  N🅪Sg/V/J+ I/C+  ISg+ V/J     V
 > the pantry window . The blind   was drawn , but     I    found a   rift   at    the sill   .
 # D+  NSg+   NSg/V+ . D   NSg/V/J V   V/J   . NSg/C/P ISg+ NSg/V D/P NSg/V+ NSg/P D+  NSg/J+ .
 >
@@ -9919,7 +9919,7 @@
 > suit   made a   bright  spot    of color        against the white     steps  , and I    thought of the
 # NSg/V+ V    D/P NPr/V/J NSg/V/J P  N🅪Sg/V/J/Am+ C/P     D+  NPr🅪/V/J+ NPl/V+ . V/C ISg+ NSg/V   P  D+
 > night   when    I    first   came    to his     ancestral home     , three months before . The lawn   and
-# N🅪Sg/V+ NSg/I/C ISg+ NSg/V/J NSg/V/P P  ISg/D$+ NSg/J+    NSg/V/J+ . NSg+  NSg+   C/P    . D+  NSg/V+ V/C
+# N🅪Sg/V+ NSg/I/C ISg+ NSg/V/J NSg/V/P P  ISg/D$+ NSg/J+    NSg/V/J+ . NSg+  NPl+   C/P    . D+  NSg/V+ V/C
 > drive had been  crowded with the faces of those   who    guessed at    his     corruption — and
 # NSg/V V   NSg/V V/J     P    D   NPl/V P  I/Ddem+ NPr/I+ V/J     NSg/P ISg/D$+ NSg+       . V/C
 > he       had stood on  those   steps  , concealing his     incorruptible dream    , as    he       waved
@@ -10083,7 +10083,7 @@
 > of finding out         whom the yellow   car  belonged to , and then    he       blurted out         that         a
 # P  NSg/V   NSg/V/J/R/P I+   D+  NSg/V/J+ NSg+ V/J      P  . V/C NSg/J/C NPr/ISg+ V/J     NSg/V/J/R/P NSg/I/C/Ddem D/P
 > couple  of months ago his     wife     had come    from the city with her     face   bruised and
-# NSg/V/J P  NSg+   J/P ISg/D$+ NSg/V/J+ V   NSg/V/P P    D   NSg+ P    ISg/D$+ NSg/V+ V/J     V/C
+# NSg/V/J P  NPl+   J/P ISg/D$+ NSg/V/J+ V   NSg/V/P P    D   NSg+ P    ISg/D$+ NSg/V+ V/J     V/C
 > her     nose   swollen .
 # ISg/D$+ NSg/V+ V/J     .
 >
@@ -11263,7 +11263,7 @@
 > looked around . It       was the man     with owl    - eyed glasses whom I    had found marvelling
 # V/J    J/P    . NPr/ISg+ V   D   NPr/V/J P    NSg/V+ . V/J+ NPl/V+  I+   ISg+ V   NSg/V NSg/V/Comm
 > over    Gatsby’s books  in      the library one        night   three months before .
-# NSg/J/P NSg$     NPl/V+ NPr/J/P D   NSg+    NSg/I/V/J+ N🅪Sg/V+ NSg+  NSg+   C/P    .
+# NSg/J/P NSg$     NPl/V+ NPr/J/P D   NSg+    NSg/I/V/J+ N🅪Sg/V+ NSg+  NPl+   C/P    .
 >
 #
 > I'd never seen  him  since then    . I    don’t know  how   he       knew about the funeral , or
