@@ -18,7 +18,7 @@ use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-use harper_core::{Dialect, Document, IgnoredLints, WordMetadata};
+use harper_core::{Dialect, Document, IgnoredLints, LexemeMetadata};
 use harper_html::HtmlParser;
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_stats::{Record, Stats};
@@ -653,7 +653,7 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_user_dictionary().await;
-                dict.append_word(word, WordMetadata::default());
+                dict.append_word(word, LexemeMetadata::default());
                 self.save_user_dictionary(dict)
                     .await
                     .map_err(|err| error!("{err}"))
@@ -674,7 +674,7 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_workspace_dictionary().await;
-                dict.append_word(word, WordMetadata::default());
+                dict.append_word(word, LexemeMetadata::default());
                 self.save_workspace_dictionary(dict)
                     .await
                     .map_err(|err| error!("{err}"))
@@ -704,7 +704,7 @@ impl LanguageServer for Backend {
                         return Ok(None);
                     }
                 };
-                dict.append_word(word, WordMetadata::default());
+                dict.append_word(word, LexemeMetadata::default());
 
                 self.save_file_dictionary(&file_uri, dict)
                     .await
