@@ -94,9 +94,14 @@ impl SequenceExpr {
         Self::any_capitalization_of(word)
     }
 
-    /// Match any word from the given set of words, case-insensitive.
+    /// Construct a new sequence with a [`WordSet`] at the beginning of the operation list.
     pub fn word_set(words: &'static [&'static str]) -> Self {
         Self::default().then_word_set(words)
+    }
+
+    /// Construct a new sequence with a [`WhitespacePattern`] at the beginning of the operation list.
+    pub fn whitespace() -> Self {
+        Self::default().then_whitespace()
     }
 
     // General builder methods
