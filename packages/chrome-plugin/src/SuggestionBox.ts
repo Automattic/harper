@@ -260,19 +260,27 @@ export default function SuggestionBox(box: IgnorableLintBox, close: () => void) 
 		left: `${left}px`,
 	};
 
-	return h('div', { className: 'harper-container fade-in', style: positionStyle, 'harper-close-on-escape': new CloseOnEscapeHook(close) }, [
-		styleTag(),
-		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind), close),
-		body(box.lint.message_html),
-		footer(
-			suggestions(box.lint.suggestions, (v) => {
-				box.applySuggestion(v);
-				close();
-			}),
-			[
-				box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
-				ignoreLint(box.ignoreLint),
-			],
-		),
-	]);
+	return h(
+		'div',
+		{
+			className: 'harper-container fade-in',
+			style: positionStyle,
+			'harper-close-on-escape': new CloseOnEscapeHook(close),
+		},
+		[
+			styleTag(),
+			header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind), close),
+			body(box.lint.message_html),
+			footer(
+				suggestions(box.lint.suggestions, (v) => {
+					box.applySuggestion(v);
+					close();
+				}),
+				[
+					box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
+					ignoreLint(box.ignoreLint),
+				],
+			),
+		],
+	);
 }

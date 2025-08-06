@@ -51,7 +51,6 @@ test('Scrolls correctly', async ({ page }) => {
 	await page.waitForTimeout(6000);
 
 	await assertHarperHighlightBoxes(page, [{ height: 19, width: 56, x: 97.953125, y: 63 }]);
-	
 });
 
 test('Can dismiss with escape key', async ({ page }) => {
