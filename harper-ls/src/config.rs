@@ -83,6 +83,9 @@ impl Config {
     pub fn from_lsp_config(workspace_root: &Path, value: Value) -> Result<Self> {
         let mut base = Config::default();
 
+        let workspace_root = workspace_root.canonicalize()?;
+        let workspace_root = workspace_root.as_path();
+
         let Value::Object(value) = value else {
             bail!("Settings must be an object.");
         };
