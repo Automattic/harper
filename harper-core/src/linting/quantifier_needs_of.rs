@@ -1,6 +1,6 @@
+use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
-use crate::patterns::{UPOSSet, WordSet};
-use crate::{Token, TokenStringExt};
+use crate::patterns::WordSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -110,6 +110,15 @@ mod tests {
             "A couple centuries ago...",
             QuantifierNeedsOf::default(),
             "A couple of centuries ago...",
+        );
+    }
+
+    #[test]
+    fn fixes_a_couple_people() {
+        assert_suggestion_result(
+            "I saw a couple people walk by a few minutes ago.",
+            QuantifierNeedsOf::default(),
+            "I saw a couple of people walk by a few minutes ago.",
         );
     }
 }
