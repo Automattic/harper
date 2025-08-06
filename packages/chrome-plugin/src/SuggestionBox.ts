@@ -22,6 +22,29 @@ FocusHook.prototype.hook = function (node, _propertyName, _previousValue) {
 	});
 };
 
+/** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
+var CloseOnEscapeHook = function (onClose: () => void) {
+	this.onClose = onClose;
+};
+
+CloseOnEscapeHook.prototype.hook = function (this: { onClose: () => void }, node: HTMLElement) {
+	const handler = (e: KeyboardEvent) => {
+		if (e.key === 'Escape') {
+			this.onClose();
+		}
+	};
+	window.addEventListener('keydown', handler);
+	(node as any).__harperCloseOnEscapeHandler = handler;
+};
+
+CloseOnEscapeHook.prototype.unhook = function (this: any, node: HTMLElement) {
+	const handler = (node as any).__harperCloseOnEscapeHandler;
+	if (handler) {
+		window.removeEventListener('keydown', handler);
+		delete (node as any).__harperCloseOnEscapeHandler;
+	}
+};
+
 function header(title: string, color: string, onClose: () => void): any {
 	const closeButton = h(
 		'button',
@@ -237,7 +260,7 @@ export default function SuggestionBox(box: IgnorableLintBox, close: () => void) 
 		left: `${left}px`,
 	};
 
-	return h('div', { className: 'harper-container fade-in', style: positionStyle }, [
+	return h('div', { className: 'harper-container fade-in', style: positionStyle, 'harper-close-on-escape': new CloseOnEscapeHook(close) }, [
 		styleTag(),
 		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind), close),
 		body(box.lint.message_html),
