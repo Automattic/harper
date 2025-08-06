@@ -51,6 +51,14 @@ impl PronounInflectionBe {
         map.insert(arent, "isn't");
 
         let is = SequenceExpr::default()
+            .then(|tok: &Token, _: &[char]| {
+                tok.kind
+                    .as_word()
+                    .as_ref()
+                    .and_then(|m| m.as_ref().and_then(|m| m.np_member))
+                    .unwrap_or_default()
+            })
+            .then_whitespace()
             .then_third_person_plural_pronoun()
             .then_optional(mod_term.clone())
             .t_ws()
@@ -58,6 +66,16 @@ impl PronounInflectionBe {
             .t_any()
             .t_any();
         map.insert(is, "are");
+
+        let is_at_start = SequenceExpr::default()
+            .then(AnchorStart)
+            .then_third_person_plural_pronoun()
+            .then_optional(mod_term.clone())
+            .t_ws()
+            .t_aco("is")
+            .t_any()
+            .t_any();
+        map.insert(is_at_start, "are");
 
         let isnt = SequenceExpr::default()
             .then_third_person_plural_pronoun()
@@ -403,6 +421,14 @@ mod tests {
     fn allow_behind_him() {
         assert_no_lints(
             "Behind him are new shadows.",
+            PronounInflectionBe::default(),
+        );
+    }
+
+    #[test]
+    fn issue_1682() {
+        assert_no_lints(
+            "Understanding them is significant",
             PronounInflectionBe::default(),
         );
     }
