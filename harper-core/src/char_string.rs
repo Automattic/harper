@@ -9,10 +9,10 @@ pub type CharString = SmallVec<[char; 16]>;
 /// Extensions to character sequences that make them easier to wrangle.
 pub trait CharStringExt {
     /// Convert all characters to lowercase, returning a new owned vector if any changes were made.
-    fn to_lower(&self) -> Cow<[char]>;
+    fn to_lower(&self) -> Cow<'_, [char]>;
 
     /// Normalize the character sequence according to the dictionary's standard character set.
-    fn normalized(&self) -> Cow<[char]>;
+    fn normalized(&self) -> Cow<'_, [char]>;
 
     /// Convert the character sequence to a String.
     fn to_string(&self) -> String;
@@ -35,7 +35,7 @@ pub trait CharStringExt {
 }
 
 impl CharStringExt for [char] {
-    fn to_lower(&self) -> Cow<[char]> {
+    fn to_lower(&self) -> Cow<'_, [char]> {
         if self.iter().all(|c| c.is_lowercase()) {
             return Cow::Borrowed(self);
         }
@@ -53,7 +53,7 @@ impl CharStringExt for [char] {
 
     /// Convert a given character sequence to the standard character set
     /// the dictionary is in.
-    fn normalized(&self) -> Cow<[char]> {
+    fn normalized(&self) -> Cow<'_, [char]> {
         if self.as_ref().iter().any(|c| char_to_normalized(*c) != *c) {
             Cow::Owned(
                 self.as_ref()
