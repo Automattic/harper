@@ -179,10 +179,10 @@ impl Config {
             base.max_file_length = serde_json::from_value(v.clone())?;
         }
 
-        if let Some(v) = value.get("markdown") {
-            if let Some(v) = v.get("IgnoreLinkTitle") {
-                base.markdown_options.ignore_link_title = serde_json::from_value(v.clone())?;
-            }
+        if let Some(v) = value.get("markdown")
+            && let Some(v) = v.get("IgnoreLinkTitle")
+        {
+            base.markdown_options.ignore_link_title = serde_json::from_value(v.clone())?;
         }
 
         Ok(base)

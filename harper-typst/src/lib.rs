@@ -62,12 +62,12 @@ fn convert_parbreaks<'a>(buf: &'a mut Vec<SyntaxNode>, exprs: &'a [Expr]) -> Vec
     let mut last_element: Option<Expr> = None;
     for ((i, expr), (_, next_expr)) in exprs.iter().enumerate().tuple_windows() {
         let mut current_expr = *expr;
-        if let Some(last_element) = last_element {
-            if should_parbreak(last_element, *expr, *next_expr) {
-                let pbreak = typst_syntax::ast::Parbreak::from_untyped(&buf[i])
-                    .expect("Unable to convert expression to Parbreak");
-                current_expr = Expr::Parbreak(pbreak);
-            }
+        if let Some(last_element) = last_element
+            && should_parbreak(last_element, *expr, *next_expr)
+        {
+            let pbreak = typst_syntax::ast::Parbreak::from_untyped(&buf[i])
+                .expect("Unable to convert expression to Parbreak");
+            current_expr = Expr::Parbreak(pbreak);
         }
         res.push(current_expr);
         last_element = Some(*expr)
