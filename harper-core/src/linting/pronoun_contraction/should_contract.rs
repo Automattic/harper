@@ -5,8 +5,7 @@ use crate::expr::AnchorStart;
 use crate::expr::Expr;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
-use crate::patterns::AnyPattern;
-use crate::{CharStringExt, Token, patterns::WordSet};
+use crate::{Token, patterns::WordSet};
 
 use crate::Lint;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
