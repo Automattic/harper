@@ -1048,17 +1048,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-     731 | nerves of her body were continually smouldering. She smiled slowly and, walking
-     732 | through her husband as if he were a ghost, shook hands with Tom, looking him
-         |                              ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      756 | “Terrible place, isn’t it,” said Tom, exchanging a frown with Doctor Eckleburg.
@@ -1323,17 +1312,6 @@ Message: |
          |                   ^~~~~~~ Did you mean to repeat this word?
 Suggest:
   - Replace with: “was”
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-    1077 | janitor and sent him for some celebrated sandwiches, which were a complete
-         |                                                            ^~~~ Use the contraction or separate the words instead.
-    1078 | supper in themselves. I wanted to get out and walk eastward toward the park
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
 
 
 
@@ -3721,16 +3699,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-    2447 | “When I said you were a particular friend of Tom’s, he started to abandon the
-         |                  ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2455 | hard, limited person, who dealt in universal scepticism, and who leaned back
@@ -4251,16 +4219,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-    3057 | an outlet for his imagination; they were a satisfactory hint of the unreality of
-         |                                     ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
-
-
-
 Lint:    WordChoice (63 priority)
 Message: |
     3073 | tried to separate him from his money. The none too savory ramifications by which
@@ -4400,16 +4358,6 @@ Message: |
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-    3123 | They were a party of three on horseback—Tom and a man named Sloane and a pretty
-         |      ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
-
-
-
 Lint:    Repetition (127 priority)
 Message: |
     3135 | uneasy anyhow until he had given them something, realizing in a vague way that
@@ -4462,17 +4410,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3238 | air, a pervading harshness that hadn’t been there before. Or perhaps I had
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-    3235 | in my memory from Gatsby’s other parties that summer. There were the same
-         |                                                             ^~~~ Use the contraction or separate the words instead.
-    3236 | people, or at least the same sort of people, the same profusion of champagne,
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
 
 
 
