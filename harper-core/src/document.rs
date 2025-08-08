@@ -651,11 +651,12 @@ impl Document {
                     .eq_ignore_ascii_case_chars(&['t', 'l'])
                 && simicolon.kind.is_semicolon()
                 && dr.kind.is_word()
-                && dr.span.len() == 2
+                && dr.span.len() >= 2
+                && dr.span.len() <= 3
                 && dr
                     .span
                     .get_content(&self.source)
-                    .eq_ignore_ascii_case_chars(&['d', 'r']);
+                    .eq_any_ignore_ascii_case_chars(&[&['d', 'r'], &['d', 'r', 's']]);
 
             if is_tldr_chunk {
                 // Update the first token to be the full "tl;dr" as a word
@@ -1049,7 +1050,7 @@ mod tests {
     }
 
     #[test]
-    fn condesne_tldr_uppercase() {
+    fn condense_tldr_uppercase() {
         let doc = Document::new_plain_english_curated("TL;DR");
         assert!(doc.tokens.len() == 1);
         assert!(doc.tokens[0].kind.is_word());
@@ -1075,5 +1076,26 @@ mod tests {
         let doc = Document::new_plain_english_curated("TL;Dr");
         assert!(doc.tokens.len() == 1);
         assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn condense_tldr_pural() {
+        let doc = Document::new_plain_english_curated(
+            "managing the flow between components to produce relevant TL;DRs of current news articles",
+        );
+        // no token is a punctuation token - only words with whitespace between
+        assert!(
+            doc.tokens
+                .iter()
+                .all(|t| t.kind.is_word() || t.kind.is_whitespace())
+        );
+        // one of the word tokens contains a ';' character
+        let tldrs = doc
+            .tokens
+            .iter()
+            .filter(|t| t.span.get_content(&doc.source).contains(&';'))
+            .collect_vec();
+        assert!(tldrs.len() == 1);
+        assert!(tldrs[0].span.get_content_string(&doc.source) == "TL;DRs");
     }
 }
