@@ -2,6 +2,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::{Lrc, Punctuation, Token, TokenKind, TokenStringExt, patterns::Word};
 
@@ -171,7 +172,8 @@ impl ExprLinter for Everyday {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         // Helper functions make the match tables more compact and readable.
         let norm = |i: usize| toks[i].span.get_content_string(src).to_lowercase();
         let isws = |i: usize| toks[i].kind.is_whitespace();

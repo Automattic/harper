@@ -1,6 +1,6 @@
 use crate::{
-    Token, TokenStringExt,
-    expr::{Expr, SequenceExpr},
+    TokenStringExt,
+    expr::{Expr, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -29,7 +29,8 @@ impl ExprLinter for SemicolonApostrophe {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let whole_span = toks.span()?;
         let base = &toks.first()?;
         let ending = &toks.last()?;
