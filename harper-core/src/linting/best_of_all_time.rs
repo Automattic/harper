@@ -25,7 +25,7 @@ impl Default for BestOfAllTime {
             .then_any_of(vec![
                 Box::new(inflection_superlative),
                 Box::new(most_superlative),
-                Box::new(fave)
+                Box::new(fave),
             ])
             .then_one_or_more(SequenceExpr::default().then(WhitespacePattern).then_noun())
             .then_fixed_phrase(" of all times");
