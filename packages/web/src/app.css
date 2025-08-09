@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+	body {
+		@apply bg-white text-black dark:bg-gray-900 dark:text-white;
+	}
+
 	ul {
 		@apply list-disc pl-4;
 	}
@@ -12,35 +16,31 @@
 	}
 
 	h1 {
-		@apply text-5xl py-4;
+		@apply text-4xl font-extrabold tracking-tight lg:text-5xl py-4;
 	}
 
 	h2 {
-		@apply text-3xl sm:text-3xl lg:text-4xl py-4;
+		@apply text-3xl font-semibold tracking-tight py-4;
 	}
 
 	h3 {
-		@apply text-xl sm:text-xl lg:text-2xl py-4;
+		@apply text-2xl font-semibold tracking-tight py-4;
 	}
 
 	h4 {
-		@apply font-bold;
+		@apply text-xl font-semibold tracking-tight;
 	}
 
 	p {
-		@apply lg:text-base md:text-lg xl:text-lg py-4;
-	}
-
-	* {
-		@apply dark:text-white text-black;
+		@apply leading-7 [&:not(:first-child)]:mt-6;
 	}
 
 	a {
-		@apply underline;
+		@apply underline-offset-4 underline;
 	}
 
 	blockquote {
-		@apply pl-4;
+		@apply mt-6 border-l-2 border-gray-200 pl-6 italic dark:border-gray-700;
 	}
 }
 

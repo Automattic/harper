@@ -1,6 +1,7 @@
 import { test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
+	clickHarperHighlight,
 	getTextarea,
 	replaceEditorContent,
 	testBasicSuggestionTextarea,
@@ -50,4 +51,24 @@ test('Scrolls correctly', async ({ page }) => {
 	await page.waitForTimeout(6000);
 
 	await assertHarperHighlightBoxes(page, [{ height: 19, width: 56, x: 97.953125, y: 63 }]);
+});
+
+test('Can dismiss with escape key', async ({ page }) => {
+	await page.goto(TEST_PAGE_URL);
+
+	const editor = getTextarea(page);
+	await replaceEditorContent(
+		editor,
+		'This is a test of the Harper grammar checker, specifically   if it is wrapped around a line weirdl y',
+	);
+
+	await page.waitForTimeout(6000);
+
+	await clickHarperHighlight(page);
+
+	await page.locator('.harper-container').waitFor({ state: 'visible' });
+
+	await page.keyboard.press('Escape');
+
+	await page.locator('.harper-container').waitFor({ state: 'hidden' });
 });

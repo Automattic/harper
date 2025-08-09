@@ -1,11 +1,9 @@
-use crate::TokenKind;
-use crate::expr::Expr;
-use crate::expr::MatchInfo;
-use crate::expr::SequenceExpr;
-use crate::{CharStringExt, patterns::WordSet};
+use std::sync::Arc;
 
-use crate::Lint;
+use crate::expr::{AnchorStart, Expr, MatchInfo, OwnedExprExt, SequenceExpr};
 use crate::linting::{ExprLinter, LintKind, Suggestion};
+use crate::patterns::WordSet;
+use crate::{Lint, TokenKind};
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -18,31 +16,42 @@ pub struct ShouldContract {
 
 impl Default for ShouldContract {
     fn default() -> Self {
+        let cap = Arc::new(
+            SequenceExpr::default()
+                .then(WordSet::new(&["your", "were"]))
+                .then_whitespace()
+                .then_kind_is_but_is_not(
+                    TokenKind::is_non_quantifier_determiner,
+                    TokenKind::is_pronoun,
+                )
+                .then_whitespace()
+                .then_adjective(),
+        );
+
+        let start = SequenceExpr::default().then(AnchorStart).then(cap.clone());
+        let mid = SequenceExpr::default()
+            .then_unless(WordSet::new(&["what"]))
+            .t_ws()
+            .then(cap);
+
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then(WordSet::new(&["your", "were"]))
-                    .then_whitespace()
-                    .then_kind_is_but_is_not(
-                        TokenKind::is_non_quantifier_determiner,
-                        TokenKind::is_pronoun,
-                    )
-                    .then_whitespace()
-                    .then_adjective(),
-            ),
+            expr: Box::new(start.or(mid)),
         }
     }
 }
 
 impl ShouldContract {
-    fn mistake_to_correct(mistake: &str) -> impl Iterator<Item = Vec<char>> {
-        match mistake.to_lowercase().as_str() {
+    fn mistake_to_correct(mistake: &str) -> Option<Vec<Vec<char>>> {
+        let words = match mistake.to_lowercase().as_str() {
             "your" => vec!["you're", "you are"],
             "were" => vec!["we're", "we are"],
-            _ => panic!("The pattern in this linter should make a fall-through impossible."),
+            _ => return None,
         }
         .into_iter()
         .map(|v| v.chars().collect())
+        .collect();
+
+        Some(words)
     }
 }
 
@@ -53,13 +62,30 @@ impl ExprLinter for ShouldContract {
 
     fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
         let matched_tokens = match_info.matched_tokens;
-        let mistake = matched_tokens[0].span.get_content(source);
+        // Locate the mistake
+        let possible_mistakes = [matched_tokens[0].span, matched_tokens[1].span];
+
+        let mut correct = None;
+        let mut span = None;
+
+        for p_mist in possible_mistakes {
+            let mistake = p_mist.get_content_string(source);
+            let correct_cand = Self::mistake_to_correct(&mistake);
+            if correct_cand.is_some() {
+                correct = correct_cand;
+                span = Some(p_mist);
+            }
+        }
+
+        let correct = correct?;
+        let span = span?;
 
         Some(Lint {
-            span: matched_tokens[0].span,
+            span,
             lint_kind: LintKind::WordChoice,
-            suggestions: Self::mistake_to_correct(&mistake.to_lower().to_string())
-                .map(|v| Suggestion::replace_with_match_case(v, mistake))
+            suggestions: correct
+                .into_iter()
+                .map(|v| Suggestion::replace_with_match_case(v, span.get_content(source)))
                 .collect(),
             message: "Use the contraction or separate the words instead.".to_string(),
             priority: 31,
@@ -127,5 +153,10 @@ mod tests {
     fn allow_issue_1508() {
         assert_no_lints("Were any other toys fun?", ShouldContract::default());
         assert_no_lints("You were his closest friend.", ShouldContract::default());
+    }
+
+    #[test]
+    fn allows_issue_1673() {
+        assert_no_lints("What were the action items?", ShouldContract::default());
     }
 }

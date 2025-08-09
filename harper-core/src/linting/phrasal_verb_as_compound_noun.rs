@@ -153,10 +153,10 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                 // If the compound is part of a list of nouns, it's probably not a verb.
                 if prev_tok.kind.is_conjunction() {
                     let maybe_prev_tok_2 = document.get_next_word_from_offset(i, -3);
-                    if let Some(prev_tok_2) = maybe_prev_tok_2 {
-                        if prev_tok_2.kind.is_noun() {
-                            continue;
-                        }
+                    if let Some(prev_tok_2) = maybe_prev_tok_2
+                        && prev_tok_2.kind.is_noun()
+                    {
+                        continue;
                     }
                 }
 

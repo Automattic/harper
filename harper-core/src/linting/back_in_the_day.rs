@@ -41,10 +41,10 @@ impl ExprLinter for BackInTheDay {
 
     fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
         let matched_tokens = match_info.matched_tokens;
-        if let Some(tail) = matched_tokens.get(8..) {
-            if self.exceptions.matches(tail, source).is_some() {
-                return None;
-            }
+        if let Some(tail) = matched_tokens.get(8..)
+            && self.exceptions.matches(tail, source).is_some()
+        {
+            return None;
         }
 
         let span = matched_tokens.span()?;

@@ -1,56 +1,58 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<script type="module">
-			// We can import `harper.js` using native ECMAScript syntax.
-			// TODO: Update to the latest version.
-			import { WorkerLinter } from 'https://unpkg.com/harper.js@0.13.0/dist/harper.js';
 
-			// Since we are working in the browser, we can use either `WorkerLinter`, which doesn't block the event loop, or `LocalLinter`, which does.
-			let linter = new WorkerLinter();
+<head>
+  <meta charset="utf-8" />
+  <script type="module">
+    // We can import `harper.js` using native ECMAScript syntax.
+    // TODO: Update to the latest version.
+    import {WorkerLinter, binaryInlined} from 'https://unpkg.com/harper.js@0.54.0/dist/harper.js';
 
-			// Every time the `<textarea/>` received an input, we process it and update our list.
-			async function onInput(e) {
-				let lints = await linter.lint(e.target.value);
+    // Since we are working in the browser, we can use either `WorkerLinter`, which doesn't block the event loop, or `LocalLinter`, which does.
+    let linter = new WorkerLinter({binary: binaryInlined});
 
-				let list = document.getElementById('errorlist');
-				// Clear previous results
-				list.innerHTML = '';
+    // Every time the `<textarea/>` received an input, we process it and update our list.
+    async function onInput(e) {
+      let lints = await linter.lint(e.target.value);
 
-				for (let lint of lints) {
-					let item = document.createElement('LI');
-					var text = document.createTextNode(lint.message());
-					item.appendChild(text);
-					list.appendChild(item);
-				}
-			}
+      let list = document.getElementById('errorlist');
+      // Clear previous results
+      list.innerHTML = '';
 
-			let inputField = document.getElementById('maininput');
-			inputField.addEventListener('input', onInput);
-			onInput({ target: inputField });
-		</script>
+      for (let lint of lints) {
+        let item = document.createElement('LI');
+        var text = document.createTextNode(lint.message());
+        item.appendChild(text);
+        list.appendChild(item);
+      }
+    }
 
-		<!--Make the page look good using SimpleCSS-->
-		<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-	</head>
+    let inputField = document.getElementById('maininput');
+    inputField.addEventListener('input', onInput);
+    onInput({target: inputField});
+  </script>
 
-	<body>
-		<h1>Demo</h1>
+  <!--Make the page look good using SimpleCSS-->
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+</head>
 
-		<p>
-			This page is a simple example of using <code>harper.js</code> on a plain HTML page with a CDN.
-			It isn't pretty, but it demonstrates the fundamentals of using Harper. Start typing in the
-			text box below to start getting suggestions right in your browser.
-		</p>
+<body>
+  <h1>Demo</h1>
 
-		<!--This is an intentional mistake to highlight the technology.-->
-		<textarea id="maininput">This is an test</textarea>
+  <p>
+    This page is a simple example of using <code>harper.js</code> on a plain HTML page with a CDN.
+    It isn't pretty, but it demonstrates the fundamentals of using Harper. Start typing in the
+    text box below to start getting suggestions right in your browser.
+  </p>
 
-		<h2>Errors</h2>
+  <!--This is an intentional mistake to highlight the technology.-->
+  <textarea id="maininput">This is an test</textarea>
 
-		<ul id="errorlist">
-			Loading...
-		</ul>
-	</body>
+  <h2>Errors</h2>
+
+  <ul id="errorlist">
+    Loading...
+  </ul>
+</body>
+
 </html>
