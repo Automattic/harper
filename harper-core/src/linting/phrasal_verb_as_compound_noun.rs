@@ -169,7 +169,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             // If the compound noun is followed by another noun, check for larger compound nouns.
             if let Some(next_tok) = maybe_next_tok.filter(|tok| tok.kind.is_noun()) {
                 if match nountok_lower {
-                    ['b', 'a', 'c', 'k', 'u', 'p'] => &["file", "location"],
+                    ['b', 'a', 'c', 'k', 'u', 'p'] => &["file", "images", "location", "snapshots"],
                     _ => &[] as &[&str],
                 }
                 .contains(
@@ -447,6 +447,79 @@ mod tests {
     fn dont_flag_backup_location() {
         assert_lint_count(
             "Backup location: `%APPDATA%\\Cursor\\User\\globalStorage\\backups`",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_plan() {
+        assert_lint_count(
+            "Every backup plan is unique, based on your risk assessment.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_program() {
+        assert_lint_count(
+            "restic is a backup program that is fast, efficient and secure",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_solution_or_backup_problems() {
+        assert_lint_count(
+            "NPBackup is a multiparadigm backup solution which tries to solve two major backup problems",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_utilities_backup_system_or_backup_snapshots() {
+        assert_lint_count(
+            "GitHub Enterprise Server Backup Utilities is a backup system you install on a separate host, which takes backup snapshots",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_images() {
+        assert_lint_count(
+            "This App creates and stores backup images of your Nextcloud.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn fix_backup_individual_apps() {
+        assert_suggestion_result(
+            "It requires root and allows you to backup individual apps and their data.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "It requires root and allows you to back up individual apps and their data.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_strategy() {
+        assert_lint_count(
+            "This is for you if you want to quickly set up a backup strategy without much fuss.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    // Helm Backup Plugin.
+    #[test]
+    fn dont_flag_helm_backup_plugin() {
+        assert_lint_count(
+            "Helm Backup Plugin.",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
