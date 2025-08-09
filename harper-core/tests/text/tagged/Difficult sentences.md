@@ -281,7 +281,7 @@
 > It       is unreasonable for our boss     to withhold our wages  .
 # NPr/ISg+ VL J            C/P D$+ NSg/V/J+ P  NSg/V    D$+ NPl/V+ .
 > I    don't think it's a   good    idea for you    and me       to meet    ever again .
-# ISg+ V     NSg/V +    D/P NPr/V/J NSg+ C/P ISgPl+ V/C NPr/ISg+ P  NSg/V/J J    P     .
+# ISg+ V     NSg/V +    D/P NPr/V/J NSg+ C/P ISgPl+ V/C NPr/ISg+ P  NSg/V/J J    R     .
 > I    am      aiming for completion by      the end   of business Thursday .
 # ISg+ NPr/V/J V      C/P NSg+       NSg/J/P D   NSg/V P  N🅪Sg/J+  NSg+     .
 > He's going   for his     doctorate .
@@ -684,8 +684,8 @@
 # J/P D/P+ NSg/V+ . J/P D/P+ NSg/V+ . J/P D/P+ NSg/V/J+ . J/P D/P+ NSg/V+ . J/P D/P+ NSg/V+ .
 > All          of the responsibility is on  him  .
 # NSg/I/J/C/Dq P  D+  N🅪Sg+          VL J/P ISg+ .
-> I    put   a    bet      on  the winning horse  .
-# ISg+ NSg/V D/P+ NSg/V/P+ J/P D+  NSg/V/J NSg/V+ .
+> I    put   a    bet    on  the winning horse  .
+# ISg+ NSg/V D/P+ NSg/V+ J/P D+  NSg/V/J NSg/V+ .
 > tug    on  the rope   ; push  hard   on  the door   .
 # NSg/V+ J/P D+  NSg/V+ . NSg/V N🅪Sg/J J/P D+  NSg/V+ .
 > I    stubbed my  toe    on  an  old   tree   stump .
@@ -713,7 +713,7 @@
 > Can    I    see   you    on  a    different day   ?
 # NPr/VX ISg+ NSg/V ISgPl+ J/P D/P+ NSg/J+    NPr🅪+ .
 > Smith  scored again on  twelve minutes , doubling Mudchester Rovers ' lead     .
-# NPr/V+ V/J    P     J/P NSg+   NPl/V+  . V        ?          W?     . N🅪Sg/V/J .
+# NPr/V+ V/J    R     J/P NSg+   NPl/V+  . V        ?          W?     . N🅪Sg/V/J .
 > I    was reading a   book  on  history .
 # ISg+ V   NPr/V   D/P NSg/V J/P N🅪Sg+   .
 > The city hosted the World  Summit on  the Information Society
