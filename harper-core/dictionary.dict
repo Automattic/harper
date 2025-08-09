@@ -10874,6 +10874,7 @@ Wobegon/g
 Wodehouse/Og
 Wolf/Og
 Wolfe/Og
+Wolfenstein/Og
 Wolff/Og
 Wolfgang/Og
 Wollongong/Og
@@ -13475,6 +13476,7 @@ autobiography/~NwSg
 autoclave/NVJgS
 autocomplete/VNgS
 autocompletion/NwgS
+autocorrect/VGdSNg
 autocracy/NSg
 autocrat/NSg
 autocratic/~JQ
@@ -25748,7 +25750,8 @@ fulfilment/Ng!_
 full/~JNVgd>Z^GSp
 fullback/~NgS
 fuller/~JNVg
-fullness/Ng
+fullness/Nmg
+fulltext/NwgS
 fully/~V
 fulminate/VNdSXGn
 fulmination/Ng
@@ -30942,6 +30945,7 @@ keymap/NSg
 keynote/~NVgZGd>S
 keynoter/Ng
 keypad/NSg
+keypoint/NgS
 keypunch/NVZGgd>S
 keypuncher/Ng
 keyring/NgS
@@ -33597,6 +33601,7 @@ microcomputer/~NgS
 microcontroller/NgS
 microcosm/NgS
 microcosmic/J
+microdata/Nmg
 microdot/NVSg
 microeconomic/JQS
 microelectronic/JNS
@@ -39659,7 +39664,7 @@ prepared/~JVUp
 preparedness/~NUg
 prepay/VGSL
 prepayment/NgS
-prepend/VN
+prepend/VdSGN
 preponderance/NSg
 preponderant/JY
 preponderate/VGdS
@@ -47586,6 +47591,7 @@ tan/~NJVSg
 tanager/NgS
 tanbark/Ng
 tandem/~NJVSg
+tandoor/NgS
 tandoori/JNg
 tang/~NVgS
 tangelo/NgS
@@ -49998,6 +50004,7 @@ unease/NVg
 uneasy/~J^
 uneatable/J
 uneconomic/J
+uneditable/J
 unelected/J
 unemployed/~Jg
 unencrypted/J
@@ -50013,6 +50020,7 @@ uneven/~JVY
 unexceptionably/R
 unexcited/J
 unexciting/J
+unexpanded/J
 unexpected/~JNYp
 unexpectedness/Ng
 unexplainable/J
@@ -50260,6 +50268,9 @@ unsustainable/JY
 unsymmetrical/J
 untactful/J
 untagged/J
+untar/VbS
+untarred/VtT
+untarring/V6
 untaxed/J
 unterminated/J
 unthinkably/R
@@ -50270,6 +50281,7 @@ untimely/~J^
 untiring/JY
 untouchable/JNgS
 untoward/J
+untracked/J
 untraveled/J!@_
 untrue/~J>^
 untrusted/J
@@ -53129,6 +53141,7 @@ royale/~NJSg        # !! please check and comment !! dictionaries only list noun
 s.t./~              # !! please check and comment !!
 sRGB/Og             # colour space
 scatterplot/NVSgG   # dictionaries prefer: scatter plot
+screencast/VdSG
 scrollbar/NSg       # dictionaries prefer: scroll bar
 sed/Og              # *nix tool / language
 singleplayer/J
