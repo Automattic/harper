@@ -1,6 +1,6 @@
+use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
 use crate::patterns::WhitespacePattern;
-use crate::Token;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
