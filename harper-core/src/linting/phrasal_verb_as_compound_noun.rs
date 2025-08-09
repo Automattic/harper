@@ -166,6 +166,22 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                 }
             }
 
+            // If the compound noun is followed by another noun, check for larger compound nouns.
+            if let Some(next_tok) = maybe_next_tok.filter(|tok| tok.kind.is_noun()) {
+                if match nountok_lower {
+                    ['b', 'a', 'c', 'k', 'u', 'p'] => &["file", "location"],
+                    _ => &[] as &[&str],
+                }
+                .contains(
+                    &next_tok
+                        .span
+                        .get_content_string(document.get_source())
+                        .as_ref(),
+                ) {
+                    continue;
+                }
+            }
+
             let message = match confidence {
                 Confidence::DefinitelyVerb => {
                     "This word should be a phrasal verb, not a compound noun."
@@ -422,6 +438,15 @@ mod tests {
     fn false_positive_issue_1495() {
         assert_lint_count(
             "Color schemes are available by using the Style Settings plugin.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_location() {
+        assert_lint_count(
+            "Backup location: `%APPDATA%\\Cursor\\User\\globalStorage\\backups`",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
