@@ -100,8 +100,6 @@ impl ItsContraction {
 
 #[cfg(test)]
 mod tests {
-    use std::default;
-
     use super::ItsContraction;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
