@@ -167,19 +167,22 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             }
 
             // If the compound noun is followed by another noun, check for larger compound nouns.
-            if let Some(next_tok) = maybe_next_tok.filter(|tok| tok.kind.is_noun()) {
-                if match nountok_lower {
-                    ['b', 'a', 'c', 'k', 'u', 'p'] => &["file", "images", "location", "snapshots"],
-                    _ => &[] as &[&str],
+            if let Some(next_tok) = maybe_next_tok.filter(|tok| tok.kind.is_noun())
+                && match nountok_lower {
+                    ['b', 'a', 'c', 'k', 'u', 'p'] => {
+                        &["file", "images", "location", "snapshots"][..]
+                    }
+                    ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function"][..],
+                    _ => &[],
                 }
                 .contains(
                     &next_tok
                         .span
                         .get_content_string(document.get_source())
                         .as_ref(),
-                ) {
-                    continue;
-                }
+                )
+            {
+                continue;
             }
 
             let message = match confidence {
@@ -520,6 +523,16 @@ mod tests {
     fn dont_flag_helm_backup_plugin() {
         assert_lint_count(
             "Helm Backup Plugin.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    // By the time the `setTimeout` callback function was invoked
+    #[test]
+    fn dont_flag_callback_function() {
+        assert_lint_count(
+            "By the time the `setTimeout` callback function was invoked",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
