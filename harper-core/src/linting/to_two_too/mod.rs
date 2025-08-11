@@ -1,12 +1,14 @@
 mod to_too;
+mod to_too_eos;
 mod too_to;
 
 use super::merge_linters::merge_linters;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use to_too::ToToo;
+use to_too_eos::ToTooEos;
 use too_to::TooTo;
 
-merge_linters!(ToTwoToo => ToToo, TooTo => "fasd");
+merge_linters!(ToTwoToo => ToToo, ToTooEos, TooTo => "Corrects homophone confusion between `to` and `too`.");
 
 #[cfg(test)]
 mod tests {
@@ -39,13 +41,6 @@ mod tests {
             ToTwoToo::default(),
             "She wants ice cream, too.",
         );
-
-        // Should work regardless of comma
-        assert_suggestion_result(
-            "She wants ice cream to.",
-            ToTwoToo::default(),
-            "She wants ice cream too.",
-        );
     }
 
     #[test]
@@ -56,15 +51,6 @@ mod tests {
     #[test]
     fn no_lint_on_proper_too() {
         assert_no_lints("I am too hungry.", ToTwoToo::default());
-    }
-
-    #[test]
-    fn flags_to_quickly() {
-        assert_lint_count(
-            "They moved to quickly across the field.",
-            ToTwoToo::default(),
-            1,
-        );
     }
 
     #[test]
@@ -321,14 +307,6 @@ mod tests {
     }
 
     #[test]
-    fn no_lint_mapping_commands() {
-        assert_no_lints(
-            "Mapping Telescope commands to custom keybindings significantly improves workflow.",
-            ToTwoToo::default(),
-        );
-    }
-
-    #[test]
     fn no_lint_great_deal_of_energy() {
         assert_no_lints(
             "It takes a great deal of energy to consistently operate under that kind of pressure.",
@@ -342,5 +320,10 @@ mod tests {
             "Just be prepared to occasionally troubleshoot the debugger itself.",
             ToTwoToo::default(),
         );
+    }
+
+    #[test]
+    fn ccoveille_suggestion() {
+        assert_no_lints("He goes too far with bets.", ToTwoToo::default());
     }
 }

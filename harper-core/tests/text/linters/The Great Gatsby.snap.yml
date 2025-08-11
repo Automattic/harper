@@ -597,6 +597,24 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+     411 | “Things went from bad to worse,” suggested Miss Baker.
+         |                       ^~ Use `too` (with two `o`’s) when indicating excess or addition.
+Suggest:
+  - Replace with: “too”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     413 | “Yes. Things went from bad to worse, until finally he had to give up his
+         |                            ^~ Use `too` (with two `o`’s) when indicating excess or addition.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      416 | For a moment the last sunshine fell with romantic affection upon her glowing
@@ -1698,6 +1716,16 @@ Suggest:
   - Replace with: “skeptically”
   - Replace with: “scenically”
   - Replace with: “ascetically”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    1331 | escort, a persistent undergraduate given to violent innuendo, and obviously
+         |                                          ^~ Use `too` (with two `o`’s) when indicating excess or addition.
+    1332 | under the impression that sooner or later Jordan was going to yield him up her
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -3793,6 +3821,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    2557 | was wrong. He waited a moment longer, hoping I’d begin a conversation, but I was
+    2558 | too absorbed to be responsive, so he went unwillingly home.
+         | ^~~ Use the infinitive marker `to` here instead of the adverb `too`, which indicates excess degree.
+Suggest:
+  - Replace with: “to”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2561 | sleep as I entered my front door. So I don’t know whether or not Gatsby went to
@@ -4304,6 +4342,15 @@ Suggest:
   - Replace with: “Ga's”
   - Replace with: “Gaea's”
   - Replace with: “Gael's”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    3079 | To young Gatz, resting on his oars and looking up at the railed deck, that yacht
+         | ^~ Use `too` (with two `o`’s) when indicating excess or addition.
+Suggest:
+  - Replace with: “Too”
 
 
 

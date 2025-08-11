@@ -1,9 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::Token;
-use crate::expr::AnchorEnd;
 use crate::expr::Expr;
-use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::AnyPattern;
 use crate::patterns::UPOSSet;
@@ -18,17 +16,13 @@ impl Default for ToToo {
     fn default() -> Self {
         let most = SequenceExpr::aco("to")
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::ADJ, UPOS::ADV]))
+            .then(UPOSSet::new(&[UPOS::ADJ]))
             .then_optional(AnyPattern)
             .then_optional(AnyPattern)
             .then_optional(AnyPattern)
             .then_optional(AnyPattern)
             .then_optional(AnyPattern)
-            .then_optional(AnyPattern)
-            .or(SequenceExpr::default()
-                .t_aco("to")
-                .then(AnchorEnd)
-                .then(|tok: &Token, _: &[char]| tok.kind.is_sentence_terminator()));
+            .then_optional(AnyPattern);
 
         Self {
             expr: Box::new(most),
@@ -56,7 +50,7 @@ impl ExprLinter for ToToo {
                 {
                     break;
                 }
-                if tok.kind.is_np_member() {
+                if tok.kind.is_np_member() || tok.kind.is_unlintable() {
                     return None;
                 }
             }
@@ -77,7 +71,7 @@ impl ExprLinter for ToToo {
                 "too".chars().collect(),
                 original,
             )],
-            message: "Use `too` (with two o’s) when indicating excess or addition.".to_owned(),
+            message: "Use `too` (with two `o`’s) when indicating excess or addition.".to_owned(),
             priority: 31,
         })
     }
