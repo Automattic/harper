@@ -141,7 +141,7 @@ impl Dictionary for MutableDictionary {
         word: &[char],
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult> {
+    ) -> Vec<FuzzyMatchResult<'_>> {
         let misspelled_charslice = word.normalized();
         let misspelled_charslice_lower = misspelled_charslice.to_lower();
 
@@ -196,7 +196,7 @@ impl Dictionary for MutableDictionary {
         word: &str,
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult> {
+    ) -> Vec<FuzzyMatchResult<'_>> {
         let word: Vec<_> = word.chars().collect();
         self.fuzzy_match(&word, max_distance, max_results)
     }
@@ -216,10 +216,10 @@ impl Dictionary for MutableDictionary {
     fn contains_exact_word(&self, word: &[char]) -> bool {
         let normalized = word.normalized();
 
-        if let Some(found) = self.word_map.get_with_chars(normalized.as_ref()) {
-            if found.canonical_spelling.as_ref() == normalized.as_ref() {
-                return true;
-            }
+        if let Some(found) = self.word_map.get_with_chars(normalized.as_ref())
+            && found.canonical_spelling.as_ref() == normalized.as_ref()
+        {
+            return true;
         }
 
         false

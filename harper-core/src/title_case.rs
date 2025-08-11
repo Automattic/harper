@@ -38,18 +38,18 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
     let mut output = toks.span().unwrap().get_content(source).to_vec();
 
     while let Some((index, word)) = word_likes.next() {
-        if let Some(Some(metadata)) = word.kind.as_word() {
-            if metadata.is_proper_noun() {
-                // Replace it with the dictionary entry verbatim.
-                let orig_text = word.span.get_content(source);
+        if let Some(Some(metadata)) = word.kind.as_word()
+            && metadata.is_proper_noun()
+        {
+            // Replace it with the dictionary entry verbatim.
+            let orig_text = word.span.get_content(source);
 
-                if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
-                    // It should match the dictionary verbatim
-                    output[word.span.start - start_index..word.span.end - start_index]
-                        .iter_mut()
-                        .enumerate()
-                        .for_each(|(idx, c)| *c = correct_caps[idx]);
-                }
+            if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
+                // It should match the dictionary verbatim
+                output[word.span.start - start_index..word.span.end - start_index]
+                    .iter_mut()
+                    .enumerate()
+                    .for_each(|(idx, c)| *c = correct_caps[idx]);
             }
         };
 

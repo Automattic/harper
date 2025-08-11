@@ -32,7 +32,7 @@ impl Input {
     /// Gets a human-readable identifier for the input. For example, this can be a filename, or
     /// simply the string `"<input>"`.
     #[must_use]
-    pub(super) fn get_identifier(&self) -> Cow<str> {
+    pub(super) fn get_identifier(&self) -> Cow<'_, str> {
         match self {
             Input::File(file) => file
                 .file_name()

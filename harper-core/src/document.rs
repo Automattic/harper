@@ -178,10 +178,10 @@ impl Document {
     /// Convert all sets of newlines greater than 2 to paragraph breaks.
     fn newlines_to_breaks(&mut self) {
         for token in &mut self.tokens {
-            if let TokenKind::Newline(n) = token.kind {
-                if n >= 2 {
-                    token.kind = TokenKind::ParagraphBreak;
-                }
+            if let TokenKind::Newline(n) = token.kind
+                && n >= 2
+            {
+                token.kind = TokenKind::ParagraphBreak;
             }
         }
     }
@@ -380,13 +380,12 @@ impl Document {
 
             // TODO: Allow spaces between `a` and `b`
 
-            if let (TokenKind::Number(..), TokenKind::Word(..)) = (&a.kind, &b.kind) {
-                if let Some(found_suffix) =
+            if let (TokenKind::Number(..), TokenKind::Word(..)) = (&a.kind, &b.kind)
+                && let Some(found_suffix) =
                     OrdinalSuffix::from_chars(self.get_span_content(&b.span))
-                {
-                    self.tokens[idx].kind.as_mut_number().unwrap().suffix = Some(found_suffix);
-                    replace_starts.push(idx);
-                }
+            {
+                self.tokens[idx].kind.as_mut_number().unwrap().suffix = Some(found_suffix);
+                replace_starts.push(idx);
             }
         }
 

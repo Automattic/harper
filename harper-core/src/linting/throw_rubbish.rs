@@ -64,12 +64,11 @@ impl Linter for ThrowRubbish {
                     if JUNK.contains(token_str.as_str()) {
                         // Check if this is being used as a qualifier for another noun
                         // by looking at the next token after any whitespace
-                        if let Some(next_token) = document.get_next_word_from_offset(chunk_i, 1) {
-                            if next_token.kind.is_noun()
-                                && !is_progressive_verb_form(document, next_token)
-                            {
-                                continue; // Skip if it's being used as an adjective
-                            }
+                        if let Some(next_token) = document.get_next_word_from_offset(chunk_i, 1)
+                            && next_token.kind.is_noun()
+                            && !is_progressive_verb_form(document, next_token)
+                        {
+                            continue; // Skip if it's being used as an adjective
                         }
                         junk_seen = true;
                         last_i = Some(chunk_i);
