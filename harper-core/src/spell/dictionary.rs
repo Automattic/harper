@@ -23,14 +23,14 @@ pub trait Dictionary: Send + Sync {
         word: &[char],
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult>;
+    ) -> Vec<FuzzyMatchResult<'_>>;
     /// Gets best fuzzy match from dictionary
     fn fuzzy_match_str(
         &self,
         word: &str,
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult>;
+    ) -> Vec<FuzzyMatchResult<'_>>;
     fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]>;
     /// Get the associated [`WordMetadata`] for any capitalization of a given word.
     fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata>;

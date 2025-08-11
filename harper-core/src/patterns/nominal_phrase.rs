@@ -12,16 +12,14 @@ impl Pattern for NominalPhrase {
         loop {
             let tok = tokens.get(cursor)?;
 
-            if tok.kind.is_adjective()
+            if (tok.kind.is_adjective()
                 || tok.kind.is_determiner()
-                || tok.kind.is_verb_progressive_form()
+                || tok.kind.is_verb_progressive_form())
+                && let Some(next) = tokens.get(cursor + 1)
+                && next.kind.is_whitespace()
             {
-                if let Some(next) = tokens.get(cursor + 1) {
-                    if next.kind.is_whitespace() {
-                        cursor += 2;
-                        continue;
-                    }
-                }
+                cursor += 2;
+                continue;
             }
 
             if tok.kind.is_nominal() {

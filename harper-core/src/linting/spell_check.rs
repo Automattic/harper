@@ -73,23 +73,22 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
         for word in document.iter_words() {
             let word_chars = document.get_span_content(&word.span);
 
-            if let Some(metadata) = word.kind.as_word().unwrap() {
-                if metadata.dialects.is_dialect_enabled(self.dialect)
-                    && (self.dictionary.contains_exact_word(word_chars)
-                        || self.dictionary.contains_exact_word(&word_chars.to_lower()))
-                {
-                    continue;
-                }
+            if let Some(metadata) = word.kind.as_word().unwrap()
+                && metadata.dialects.is_dialect_enabled(self.dialect)
+                && (self.dictionary.contains_exact_word(word_chars)
+                    || self.dictionary.contains_exact_word(&word_chars.to_lower()))
+            {
+                continue;
             };
 
             let mut possibilities = self.suggest_correct_spelling(word_chars);
 
             // If the misspelled word is capitalized, capitalize the results too.
-            if let Some(mis_f) = word_chars.first() {
-                if mis_f.is_uppercase() {
-                    for sug_f in possibilities.iter_mut().filter_map(|w| w.first_mut()) {
-                        *sug_f = sug_f.to_uppercase().next().unwrap();
-                    }
+            if let Some(mis_f) = word_chars.first()
+                && mis_f.is_uppercase()
+            {
+                for sug_f in possibilities.iter_mut().filter_map(|w| w.first_mut()) {
+                    *sug_f = sug_f.to_uppercase().next().unwrap();
                 }
             }
 

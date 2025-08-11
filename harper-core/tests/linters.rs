@@ -29,7 +29,7 @@ struct Lines<'a> {
     offsets: Vec<usize>,
 }
 impl Lines<'_> {
-    fn new(source: &str) -> Lines {
+    fn new(source: &str) -> Lines<'_> {
         let lines: Vec<&str> = source.split('\n').collect();
         let offsets: Vec<usize> = lines
             .iter()

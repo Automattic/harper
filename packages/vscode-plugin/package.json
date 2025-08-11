@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.55.0",
+	"version": "0.56.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -739,6 +739,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`."
+				},
+				"harper.linters.EverSince": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `every since` to `ever since`."
 				},
 				"harper.linters.EveryTime": {
 					"scope": "resource",
@@ -1568,6 +1574,12 @@
 					"default": true,
 					"description": "Expands an initialism."
 				},
+				"harper.linters.NoFrenchSpaces": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Stops users from accidentally inserting French spaces."
+				},
 				"harper.linters.NoMatchFor": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1873,6 +1885,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensure proper capitalization of proper nouns."
+				},
+				"harper.linters.QuantifierNeedsOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects missing `of` after the quantifier “a couple” when it precedes a plural noun"
 				},
 				"harper.linters.RapidFire": {
 					"scope": "resource",

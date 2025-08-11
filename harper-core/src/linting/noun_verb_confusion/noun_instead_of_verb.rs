@@ -1,6 +1,7 @@
 use crate::expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr};
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::{Lrc, Token, patterns::WordSet};
+use crate::patterns::Word;
+use crate::{CharStringExt, Lrc, Token, patterns::WordSet};
 
 use super::NOUN_VERB_PAIRS;
 
@@ -47,6 +48,7 @@ impl Default for NounInsteadOfVerb {
             Box::new(WordSet::new(PRONOUNS)),
             Box::new(WordSet::new(MODAL_VERBS_ETC)),
             Box::new(WordSet::new(ADVERBS)),
+            Box::new(Word::new("to")),
         ]);
 
         let nouns = Lrc::new(WordSet::new(
@@ -88,6 +90,8 @@ impl ExprLinter for NounInsteadOfVerb {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+        let prev_tok = &toks[0];
+
         // If we have the next word token, try to rule out compound nouns
         if toks.len() > 4 {
             let following_tok = &toks[4];
@@ -102,6 +106,27 @@ impl ExprLinter for NounInsteadOfVerb {
                     return None;
                 }
             }
+
+            // If the previous word is "to", use the following word to disambiguate
+            if prev_tok
+                .span
+                .get_content(src)
+                .eq_ignore_ascii_case_chars(&['t', 'o'])
+                && !following_tok.kind.is_determiner()
+            {
+                return None;
+            }
+        }
+
+        // If we don't have the next word token, don't continue if the previous token is "to"
+        // since "to" is a preposition and an infinitive marker and there's not enough context to disambiguate.
+        if toks.len() <= 4
+            && prev_tok
+                .span
+                .get_content(src)
+                .eq_ignore_ascii_case_chars(&['t', 'o'])
+        {
+            return None;
         }
 
         let noun_tok = &toks[2];
@@ -402,6 +427,89 @@ mod tests {
             "There's a warning reported for this code, saying that it may intent to use non-imported symbol",
             NounInsteadOfVerb::default(),
             "There's a warning reported for this code, saying that it may intend to use non-imported symbol",
+        );
+    }
+
+    // tests for preceding "to"
+
+    #[test]
+    fn fix_to_emphasis_the() {
+        assert_suggestion_result(
+            "This one could be used in a dialog to emphasis the surprise.",
+            NounInsteadOfVerb::default(),
+            "This one could be used in a dialog to emphasize the surprise.",
+        );
+    }
+
+    #[test]
+    fn allow_to_emphasis_at_end() {
+        assert_lint_count(
+            "Changes literal underscores to emphasis",
+            NounInsteadOfVerb::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allow_to_effect_noun() {
+        assert_lint_count(
+            "or it may be desired to effect substitutions",
+            NounInsteadOfVerb::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allow_to_intent_adjective() {
+        assert_lint_count(
+            "Cleanup passing statistics to intent aware iterator",
+            NounInsteadOfVerb::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn fix_to_effect_the() {
+        assert_suggestion_result(
+            "I cant seem to get my additional rules to effect the honeypot",
+            NounInsteadOfVerb::default(),
+            "I cant seem to get my additional rules to affect the honeypot",
+        );
+    }
+
+    #[test]
+    fn fix_to_advice_a_class() {
+        assert_suggestion_result(
+            "How to advice a class that have been intercepted by another javaagent",
+            NounInsteadOfVerb::default(),
+            "How to advise a class that have been intercepted by another javaagent",
+        );
+    }
+
+    #[test]
+    fn fix_to_breath_some() {
+        assert_suggestion_result(
+            "You go to the balcony to breath some fresh air and look down at the things outside.",
+            NounInsteadOfVerb::default(),
+            "You go to the balcony to breathe some fresh air and look down at the things outside.",
+        );
+    }
+
+    #[test]
+    fn fix_to_emphasis_a() {
+        assert_suggestion_result(
+            "we'd like to emphasis a few points below",
+            NounInsteadOfVerb::default(),
+            "we'd like to emphasize a few points below",
+        );
+    }
+
+    #[test]
+    fn fix_to_advice_their() {
+        assert_suggestion_result(
+            "People who are managing this situation tend to advice their users to lock+unlock their screen",
+            NounInsteadOfVerb::default(),
+            "People who are managing this situation tend to advise their users to lock+unlock their screen",
         );
     }
 }

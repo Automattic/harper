@@ -1,6 +1,6 @@
 [package]
 name = "harper-core"
-version = "0.55.0"
+version = "0.56.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -31,7 +31,7 @@ foldhash = "0.1.5"
 strum_macros = "0.27.2"
 strum = "0.27.2"
 ammonia = "4.1.1"
-harper-brill = { path = "../harper-brill", version = "0.55.0" }
+harper-brill = { path = "../harper-brill", version = "0.56.0" }
 bitflags = { version = "2.9.1", features = ["serde"] }
 
 [dev-dependencies]
