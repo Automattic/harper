@@ -129,11 +129,11 @@ impl Dictionary for FstDictionary {
     }
 
     fn fuzzy_match(
-        &self,
+        &'_ self,
         word: &[char],
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult> {
+    ) -> Vec<FuzzyMatchResult<'_>> {
         let misspelled_word_charslice = word.normalized();
         let misspelled_word_string = misspelled_word_charslice.to_string();
 
@@ -177,11 +177,11 @@ impl Dictionary for FstDictionary {
     }
 
     fn fuzzy_match_str(
-        &self,
+        &'_ self,
         word: &str,
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult> {
+    ) -> Vec<FuzzyMatchResult<'_>> {
         self.fuzzy_match(
             word.chars().collect::<Vec<_>>().as_slice(),
             max_distance,

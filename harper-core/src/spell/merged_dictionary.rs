@@ -123,11 +123,11 @@ impl Dictionary for MergedDictionary {
     }
 
     fn fuzzy_match(
-        &self,
+        &'_ self,
         word: &[char],
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult> {
+    ) -> Vec<FuzzyMatchResult<'_>> {
         self.children
             .iter()
             .flat_map(|d| d.fuzzy_match(word, max_distance, max_results))
@@ -137,11 +137,11 @@ impl Dictionary for MergedDictionary {
     }
 
     fn fuzzy_match_str(
-        &self,
+        &'_ self,
         word: &str,
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult> {
+    ) -> Vec<FuzzyMatchResult<'_>> {
         self.children
             .iter()
             .flat_map(|d| d.fuzzy_match_str(word, max_distance, max_results))

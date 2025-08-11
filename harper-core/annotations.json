@@ -425,7 +425,7 @@
 					},
 					"metadata": {
 						"verb": {
-							"verb_form": "ThirdPersonSingularPresentForm"
+							"verb_form": "THIRD_PERSON_SINGULAR"
 						}
 					}
 				}
@@ -433,7 +433,7 @@
 			"base_metadata": {}
 		},
 		"d": {
-			"#": "'-(e)d' suffix",
+			"#": "'-(e)d' suffix; verb past",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -461,7 +461,9 @@
 			"target": [
 				{
 					"metadata": {
-						"adjective": {}
+						"adjective": {
+							"degree": "Positive"
+						}
 					}
 				},
 				{
@@ -470,7 +472,7 @@
 					},
 					"metadata": {
 						"verb": {
-							"verb_form": "PastForm"
+							"verb_form": "PAST"
 						}
 					}
 				}
@@ -497,7 +499,7 @@
 				{
 					"metadata": {
 						"verb": {
-							"verb_form": "ProgressiveForm"
+							"verb_form": "PROGRESSIVE"
 						},
 						"noun": null,
 						"adjective": null
@@ -885,7 +887,7 @@
 			"//": "mnemonic: 'b' for 'base form'",
 			"metadata": {
 				"verb": {
-					"verb_form": "LemmaForm"
+					"verb_form": "LEMMA"
 				}
 			}
 		},
@@ -893,16 +895,15 @@
 			"#": "verb preterite / simple past form property",
 			"metadata": {
 				"verb": {
-					"verb_form": "PreteriteForm"
+					"verb_form": "PRETERITE"
 				}
 			}
 		},
-		"d": {
+		"T": {
 			"#": "verb past participle form property",
-			"//": "mnemonic: 'd' as in 'done', past participle of 'do'",
 			"metadata": {
 				"verb": {
-					"verb_form": "PastParticipleForm"
+					"verb_form": "PAST_PARTICIPLE"
 				}
 			}
 		},
@@ -911,16 +912,15 @@
 			"//": "mnemonic: '6' looks like 'g' in 'ing'",
 			"metadata": {
 				"verb": {
-					"verb_form": "ProgressiveForm"
+					"verb_form": "PROGRESSIVE"
 				}
 			}
 		},
-		"T": {
+		"h": {
 			"#": "verb third person singular present form property",
-			"//": "mnemonic: 'T' for 'Third'",
 			"metadata": {
 				"verb": {
-					"verb_form": "ThirdPersonSingularPresentForm"
+					"verb_form": "THIRD_PERSON_SINGULAR"
 				}
 			}
 		}
