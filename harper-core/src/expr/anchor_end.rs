@@ -28,8 +28,10 @@ impl Step for AnchorEnd {
 
 #[cfg(test)]
 mod tests {
-    use crate::expr::ExprExt;
-    use crate::{Document, Span};
+    use crate::expr::{Expr, ExprExt, SequenceExpr};
+    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::{ExprLinter, Lint, Suggestion};
+    use crate::{Document, Span, Token, TokenStringExt};
 
     use super::AnchorEnd;
 
@@ -47,5 +49,48 @@ mod tests {
         let matches: Vec<_> = AnchorEnd.iter_matches_in_doc(&document).collect();
 
         assert_eq!(matches, vec![])
+    }
+
+    pub struct End {
+        expr: Box<dyn Expr>,
+    }
+
+    impl Default for End {
+        fn default() -> Self {
+            Self {
+                expr: Box::new(SequenceExpr::default().then_any_word().then(AnchorEnd)),
+                // expr: Box::new(SequenceExpr::default().then(AnchorEnd).then_any_word()),
+            }
+        }
+    }
+
+    impl ExprLinter for End {
+        fn expr(&self) -> &dyn Expr {
+            self.expr.as_ref()
+        }
+
+        fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
+            // eprintln!("❤️ AnchorEnd: {:?}", toks.span()?.get_content_string(src));
+            Some(Lint {
+                span: toks[0].span,
+                suggestions: vec![Suggestion::ReplaceWith(
+                    "END".chars().collect(),
+                )],
+                ..Default::default()
+            })
+        }
+
+        fn description(&self) -> &str {
+            "Testing `AnchorEnd`."
+        }
+    }
+
+    #[test]
+    fn flags_single_token() {
+        assert_suggestion_result(
+            "Hello, World! One two three four five.",
+            End::default(),
+            "Hello, END! One two three four END.",
+        );
     }
 }

@@ -18,8 +18,10 @@ impl Step for AnchorStart {
 
 #[cfg(test)]
 mod tests {
-    use crate::expr::ExprExt;
-    use crate::{Document, Span};
+    use crate::expr::{Expr, ExprExt, SequenceExpr};
+    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::{ExprLinter, Lint, Suggestion};
+    use crate::{Document, Span, Token, TokenStringExt};
 
     use super::AnchorStart;
 
@@ -37,5 +39,47 @@ mod tests {
         let matches: Vec<_> = AnchorStart.iter_matches_in_doc(&document).collect();
 
         assert_eq!(matches, vec![])
+    }
+
+    pub struct Start {
+        expr: Box<dyn Expr>,
+    }
+
+    impl Default for Start {
+        fn default() -> Self {
+            Self {
+                expr: Box::new(SequenceExpr::default().then(AnchorStart).then_any_word()),
+            }
+        }
+    }
+
+    impl ExprLinter for Start {
+        fn expr(&self) -> &dyn Expr {
+            self.expr.as_ref()
+        }
+
+        fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
+            // eprintln!("💚 AnchorStart: {:?}", toks.span()?.get_content_string(src));
+            Some(Lint {
+                span: toks[0].span,
+                suggestions: vec![Suggestion::ReplaceWith(
+                    "START".chars().collect()
+                )],
+                ..Default::default()
+            })
+        }
+
+        fn description(&self) -> &str {
+            "Testing `AnchorStart`."
+        }
+    }
+
+    #[test]
+    fn flags_single_token() {
+        assert_suggestion_result(
+            "Hello, world! One two three four five.",
+            Start::default(),
+            "START, world! START two three four five.",
+        );
     }
 }
