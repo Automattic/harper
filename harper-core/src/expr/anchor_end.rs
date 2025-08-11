@@ -1,4 +1,4 @@
-use crate::Token;
+use crate::{Token, TokenStringExt};
 
 use super::Step;
 
@@ -10,6 +10,7 @@ pub struct AnchorEnd;
 
 impl Step for AnchorEnd {
     fn step(&self, tokens: &[Token], cursor: usize, _source: &[char]) -> Option<isize> {
+        eprintln!("🍊 '{}'", tokens.span()?.get_content_string(_source));
         if tokens
             .iter()
             .enumerate()
@@ -19,8 +20,10 @@ impl Step for AnchorEnd {
             .next()
             == Some(cursor)
         {
+            eprintln!("🍊🍊 Some(0)");
             Some(0)
         } else {
+            eprintln!("🍊🍊 None");
             None
         }
     }
