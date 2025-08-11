@@ -8,7 +8,7 @@ repository = "https://github.com/automattic/harper"
 [dependencies]
 anyhow = "1.0.98"
 ariadne = "0.4.1"
-clap = { version = "4.5.42", features = ["derive", "string"] }
+clap = { version = "4.5.43", features = ["derive", "string"] }
 harper-stats = { path = "../harper-stats", version = "0.56.0" }
 dirs = "6.0.0"
 harper-literate-haskell = { path = "../harper-literate-haskell", version = "0.56.0" }
