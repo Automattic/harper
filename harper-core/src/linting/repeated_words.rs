@@ -42,6 +42,15 @@ impl Linter for RepeatedWords {
                 let word_a = document.get_span_content(&tok_a.span);
                 let word_b = document.get_span_content(&tok_b.span);
 
+                let prev_tok = document.get_token_offset(idx_a, -1);
+                let next_tok = document.get_token_offset(*idx_b, 1);
+
+                if prev_tok.is_some_and(|t| t.kind.is_hyphen())
+                    || next_tok.is_some_and(|t| t.kind.is_hyphen())
+                {
+                    continue;
+                }
+
                 if (tok_a.kind.is_preposition()
                     || tok_a.kind.is_conjunction()
                     || !tok_a.kind.is_likely_homograph()
@@ -151,5 +160,19 @@ mod tests {
             RepeatedWords::default(),
             "he is as hard as nails",
         );
+    }
+
+    #[test]
+    fn dont_flag_first_hyphenated() {
+        assert_lint_count(
+            "The driver-facing camera and microphone are only logged if you explicitly opt-in in settings.",
+            RepeatedWords::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_hyphenated_either_side() {
+        assert_lint_count("foo-foo foo bar bar-bar", RepeatedWords::default(), 0);
     }
 }

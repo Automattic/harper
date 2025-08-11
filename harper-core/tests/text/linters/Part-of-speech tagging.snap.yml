@@ -30,7 +30,7 @@ Message: |
 Suggest:
   - Replace with: “E”
   - Replace with: “Ea”
-  - Replace with: “Eh”
+  - Replace with: “Ed”
 
 
 
@@ -282,8 +282,8 @@ Message: |
          |                                                                            ^~~~ Did you mean to spell `HMMs` this way?
      120 | to disambiguate parts of speech, when working to tag the Lancaster-Oslo-Bergen
 Suggest:
+  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
 
 
@@ -293,8 +293,8 @@ Message: |
      121 | Corpus of British English. HMMs involve counting cases (such as from the Brown
          |                            ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
+  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
 
 
@@ -304,8 +304,8 @@ Message: |
      129 | More advanced ("higher-order") HMMs learn the probabilities not only of pairs
          |                                ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
+  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
 
 
@@ -364,8 +364,8 @@ Message: |
      153 | HMMs underlie the functioning of stochastic taggers and are used in various
          | ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
+  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
 
 

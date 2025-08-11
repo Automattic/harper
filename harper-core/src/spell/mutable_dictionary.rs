@@ -216,10 +216,10 @@ impl Dictionary for MutableDictionary {
     fn contains_exact_word(&self, word: &[char]) -> bool {
         let normalized = word.normalized();
 
-        if let Some(found) = self.word_map.get_with_chars(normalized.as_ref()) {
-            if found.canonical_spelling.as_ref() == normalized.as_ref() {
-                return true;
-            }
+        if let Some(found) = self.word_map.get_with_chars(normalized.as_ref())
+            && found.canonical_spelling.as_ref() == normalized.as_ref()
+        {
+            return true;
         }
 
         false

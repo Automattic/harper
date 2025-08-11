@@ -45,7 +45,7 @@ impl Default for HowTo {
                         true
                     } else {
                         let normed = tok.span.get_content_string(src).to_ascii_lowercase();
-                        normed == "did" || normed == "come"
+                        normed == "did" || normed == "come" || normed == "does"
                     }
                 })),
             );
@@ -279,6 +279,8 @@ mod tests {
             "I hope to provide some insight into correct HTML formatting, in addition to how authors can avoid these issues.",
             HowTo::default(),
         );
+
+        assert_no_lints("But how does something like this...", HowTo::default());
     }
 
     #[test]

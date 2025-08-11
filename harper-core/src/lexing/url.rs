@@ -56,10 +56,10 @@ fn lex_ip_schemepart(source: &[char]) -> Option<usize> {
 
 fn lex_login(source: &[char]) -> Option<usize> {
     let hostport_start = if let Some(cred_end) = source.iter().position(|c| *c == '@') {
-        if let Some(pass_beg) = source[0..cred_end].iter().position(|c| *c == ':') {
-            if !is_uchar_plus_string(&source[pass_beg + 1..cred_end]) {
-                return None;
-            }
+        if let Some(pass_beg) = source[0..cred_end].iter().position(|c| *c == ':')
+            && !is_uchar_plus_string(&source[pass_beg + 1..cred_end])
+        {
+            return None;
         }
 
         // Check username

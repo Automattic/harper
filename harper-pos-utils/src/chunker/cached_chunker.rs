@@ -28,10 +28,10 @@ impl<C: Chunker> Chunker for CachedChunker<C> {
 
         // Attempt a cache hit.
         // We put this in the block so `read` gets dropped as early as possible.
-        if let Ok(mut read) = self.cache.try_lock() {
-            if let Some(result) = read.get(&key) {
-                return result.clone();
-            }
+        if let Ok(mut read) = self.cache.try_lock()
+            && let Some(result) = read.get(&key)
+        {
+            return result.clone();
         };
 
         // We don't want to hold the lock since it may take a while to run the chunker.

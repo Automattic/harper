@@ -1,9 +1,0 @@
-Lint:    Agreement (30 priority)
-Message: |
-       2 | As such, disambiguating them is necessary.
-         |                              ^~ Make the verb agree with its subject.
-Suggest:
-  - Replace with: “are”
-
-
-

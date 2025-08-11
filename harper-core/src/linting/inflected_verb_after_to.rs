@@ -41,10 +41,11 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
             }
 
             let check_stem = |stem: &[char]| {
-                if let Some(metadata) = self.dictionary.get_word_metadata(stem) {
-                    if metadata.is_verb() && !metadata.is_noun() {
-                        return true;
-                    }
+                if let Some(metadata) = self.dictionary.get_word_metadata(stem)
+                    && metadata.is_verb()
+                    && !metadata.is_noun()
+                {
+                    return true;
                 }
                 false
             };
