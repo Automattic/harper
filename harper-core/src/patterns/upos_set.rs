@@ -1,10 +1,12 @@
 use harper_brill::UPOS;
+use serde::{Deserialize, Serialize};
 use smallvec::{SmallVec, ToSmallVec};
 
 use crate::Token;
 
 use super::Pattern;
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct UPOSSet {
     allowed_tags: SmallVec<[UPOS; 10]>,
 }
