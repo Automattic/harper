@@ -58,8 +58,9 @@ mod tests {
     impl Default for End {
         fn default() -> Self {
             Self {
-                expr: Box::new(SequenceExpr::default().then_any_word().then(AnchorEnd)),
-                // expr: Box::new(SequenceExpr::default().then(AnchorEnd).then_any_word()),
+                expr: Box::new(SequenceExpr::default().then_any_word().then(AnchorEnd)), // Only replaces the very first word
+                // expr: Box::new(SequenceExpr::default().then(AnchorEnd).then_any_word()), // Doesn't match anything!
+                // expr: Box::new(SequenceExpr::default().then(AnchorEnd)), // Doesn't match anything!
             }
         }
     }
@@ -70,12 +71,10 @@ mod tests {
         }
 
         fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
-            // eprintln!("❤️ AnchorEnd: {:?}", toks.span()?.get_content_string(src));
+            // eprintln!("❤️ AnchorEnd: {:?}", toks.span()?.get_content_string(_src));
             Some(Lint {
                 span: toks[0].span,
-                suggestions: vec![Suggestion::ReplaceWith(
-                    "END".chars().collect(),
-                )],
+                suggestions: vec![Suggestion::ReplaceWith("END".chars().collect())],
                 ..Default::default()
             })
         }

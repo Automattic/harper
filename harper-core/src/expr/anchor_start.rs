@@ -62,9 +62,7 @@ mod tests {
             // eprintln!("💚 AnchorStart: {:?}", toks.span()?.get_content_string(src));
             Some(Lint {
                 span: toks[0].span,
-                suggestions: vec![Suggestion::ReplaceWith(
-                    "START".chars().collect()
-                )],
+                suggestions: vec![Suggestion::ReplaceWith("START".chars().collect())],
                 ..Default::default()
             })
         }
