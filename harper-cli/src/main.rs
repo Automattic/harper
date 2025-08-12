@@ -370,17 +370,17 @@ fn main() -> anyhow::Result<()> {
             println!("{json}");
 
             // iterate through any and all derived_from and resolve the word from each wordid
-            if let Some(metadata) = dictionary.get_word_metadata_str(&word) {
-                if let Some(derived_from) = &metadata.derived_from {
-                    let derived_words: Vec<String> = derived_from
-                        .iter()
-                        .filter_map(|wordid| dictionary.get_word_from_id(wordid))
-                        .map(|word| word.iter().collect())
-                        .collect();
+            if let Some(metadata) = dictionary.get_word_metadata_str(&word)
+                && let Some(derived_from) = &metadata.derived_from
+            {
+                let derived_words: Vec<String> = derived_from
+                    .iter()
+                    .filter_map(|wordid| dictionary.get_word_from_id(wordid))
+                    .map(|word| word.iter().collect())
+                    .collect();
 
-                    if !derived_words.is_empty() {
-                        println!("derived_from: {derived_words:?}");
-                    }
+                if !derived_words.is_empty() {
+                    println!("derived_from: {derived_words:?}");
                 }
             }
 
