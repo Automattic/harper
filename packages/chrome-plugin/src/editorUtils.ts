@@ -70,6 +70,12 @@ export function getLexicalEditable(el: HTMLElement): HTMLElement | null {
 	return findChild(lexical, (node: HTMLElement) => node.getAttribute('contenteditable') == 'true');
 }
 
+/** Determines if a given node is a child of a Ghost editor instance.
+ * If so, returns the root node of that instance. */
+export function getGhostRoot(el: HTMLElement): HTMLElement | null {
+	return findAncestor(el, (node: HTMLElement) => node.classList.contains('gh-editor'));
+}
+
 /** Determines if a given node is a child of a Slate.js editor instance.
  * If so, returns the root node of that instance. */
 export function getSlateRoot(el: HTMLElement): HTMLElement | null {

@@ -11,7 +11,7 @@ use crate::patterns::WordSet;
 use crate::punctuation::Punctuation;
 use crate::spell::{Dictionary, FstDictionary};
 use crate::vec_ext::VecExt;
-use crate::{FatStringToken, FatToken, Lrc, Token, TokenKind, TokenStringExt};
+use crate::{CharStringExt, FatStringToken, FatToken, Lrc, Token, TokenKind, TokenStringExt};
 use crate::{OrdinalSuffix, Span};
 
 /// A document containing some amount of lexed and parsed English text.
@@ -138,6 +138,7 @@ impl Document {
         self.condense_ellipsis();
         self.condense_latin();
         self.condense_filename_extensions();
+        self.condense_tldr();
         self.match_quotes();
 
         let chunker = burn_chunker();
@@ -178,10 +179,10 @@ impl Document {
     /// Convert all sets of newlines greater than 2 to paragraph breaks.
     fn newlines_to_breaks(&mut self) {
         for token in &mut self.tokens {
-            if let TokenKind::Newline(n) = token.kind {
-                if n >= 2 {
-                    token.kind = TokenKind::ParagraphBreak;
-                }
+            if let TokenKind::Newline(n) = token.kind
+                && n >= 2
+            {
+                token.kind = TokenKind::ParagraphBreak;
             }
         }
     }
@@ -380,13 +381,12 @@ impl Document {
 
             // TODO: Allow spaces between `a` and `b`
 
-            if let (TokenKind::Number(..), TokenKind::Word(..)) = (&a.kind, &b.kind) {
-                if let Some(found_suffix) =
+            if let (TokenKind::Number(..), TokenKind::Word(..)) = (&a.kind, &b.kind)
+                && let Some(found_suffix) =
                     OrdinalSuffix::from_chars(self.get_span_content(&b.span))
-                {
-                    self.tokens[idx].kind.as_mut_number().unwrap().suffix = Some(found_suffix);
-                    replace_starts.push(idx);
-                }
+            {
+                self.tokens[idx].kind.as_mut_number().unwrap().suffix = Some(found_suffix);
+                replace_starts.push(idx);
             }
         }
 
@@ -625,6 +625,59 @@ impl Document {
             }
         }
 
+        self.tokens.remove_indices(to_remove);
+    }
+
+    /// Condenses "tl;dr" down to a single word token.
+    fn condense_tldr(&mut self) {
+        if self.tokens.len() < 3 {
+            return;
+        }
+
+        let mut to_remove = VecDeque::new();
+        let mut cursor = 2;
+
+        loop {
+            let tl = &self.tokens[cursor - 2];
+            let simicolon = &self.tokens[cursor - 1];
+            let dr = &self.tokens[cursor];
+
+            let is_tldr_chunk = tl.kind.is_word()
+                && tl.span.len() == 2
+                && tl
+                    .span
+                    .get_content(&self.source)
+                    .eq_ignore_ascii_case_chars(&['t', 'l'])
+                && simicolon.kind.is_semicolon()
+                && dr.kind.is_word()
+                && dr.span.len() >= 2
+                && dr.span.len() <= 3
+                && dr
+                    .span
+                    .get_content(&self.source)
+                    .eq_any_ignore_ascii_case_chars(&[&['d', 'r'], &['d', 'r', 's']]);
+
+            if is_tldr_chunk {
+                // Update the first token to be the full "tl;dr" as a word
+                self.tokens[cursor - 2].span = Span::new(
+                    self.tokens[cursor - 2].span.start,
+                    self.tokens[cursor].span.end,
+                );
+
+                // Mark the semicolon and "dr" tokens for removal
+                to_remove.push_back(cursor - 1);
+                to_remove.push_back(cursor);
+            }
+
+            // Skip ahead since we've processed these tokens
+            cursor += 1;
+
+            if cursor >= self.tokens.len() {
+                break;
+            }
+        }
+
+        // Remove the marked tokens in reverse order to maintain correct indices
         self.tokens.remove_indices(to_remove);
     }
 
@@ -993,5 +1046,55 @@ mod tests {
         assert!(doc.tokens[21].kind.is_open_round());
         assert!(doc.tokens[22].kind.is_unlintable());
         assert!(doc.tokens[23].kind.is_close_round());
+    }
+
+    #[test]
+    fn condense_tldr_uppercase() {
+        let doc = Document::new_plain_english_curated("TL;DR");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
+        assert!(doc.tokens[0].span.len() == 5);
+    }
+
+    #[test]
+    fn condense_tldr_lowercase() {
+        let doc = Document::new_plain_english_curated("tl;dr");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn condense_tldr_mixed_case_1() {
+        let doc = Document::new_plain_english_curated("tl;DR");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn condense_tldr_mixed_case_2() {
+        let doc = Document::new_plain_english_curated("TL;Dr");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn condense_tldr_pural() {
+        let doc = Document::new_plain_english_curated(
+            "managing the flow between components to produce relevant TL;DRs of current news articles",
+        );
+        // no token is a punctuation token - only words with whitespace between
+        assert!(
+            doc.tokens
+                .iter()
+                .all(|t| t.kind.is_word() || t.kind.is_whitespace())
+        );
+        // one of the word tokens contains a ';' character
+        let tldrs = doc
+            .tokens
+            .iter()
+            .filter(|t| t.span.get_content(&doc.source).contains(&';'))
+            .collect_vec();
+        assert!(tldrs.len() == 1);
+        assert!(tldrs[0].span.get_content_string(&doc.source) == "TL;DRs");
     }
 }

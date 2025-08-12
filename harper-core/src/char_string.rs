@@ -9,10 +9,10 @@ pub type CharString = SmallVec<[char; 16]>;
 /// Extensions to character sequences that make them easier to wrangle.
 pub trait CharStringExt {
     /// Convert all characters to lowercase, returning a new owned vector if any changes were made.
-    fn to_lower(&self) -> Cow<[char]>;
+    fn to_lower(&self) -> Cow<'_, [char]>;
 
     /// Normalize the character sequence according to the dictionary's standard character set.
-    fn normalized(&self) -> Cow<[char]>;
+    fn normalized(&self) -> Cow<'_, [char]>;
 
     /// Convert the character sequence to a String.
     fn to_string(&self) -> String;
@@ -25,6 +25,10 @@ pub trait CharStringExt {
     /// Only normalizes the left side to lowercase and avoids allocations.
     fn eq_ignore_ascii_case_str(&self, other: &str) -> bool;
 
+    /// Case-insensitive comparison with any of a list of character slices, assuming the right-hand side is lowercase ASCII.
+    /// Only normalizes the left side to lowercase and avoids allocations.
+    fn eq_any_ignore_ascii_case_chars(&self, others: &[&[char]]) -> bool;
+
     /// Case-insensitive check if the string ends with the given ASCII suffix.
     /// The suffix is assumed to be lowercase.
     fn ends_with_ignore_ascii_case_chars(&self, suffix: &[char]) -> bool;
@@ -35,7 +39,7 @@ pub trait CharStringExt {
 }
 
 impl CharStringExt for [char] {
-    fn to_lower(&self) -> Cow<[char]> {
+    fn to_lower(&self) -> Cow<'_, [char]> {
         if self.iter().all(|c| c.is_lowercase()) {
             return Cow::Borrowed(self);
         }
@@ -53,7 +57,7 @@ impl CharStringExt for [char] {
 
     /// Convert a given character sequence to the standard character set
     /// the dictionary is in.
-    fn normalized(&self) -> Cow<[char]> {
+    fn normalized(&self) -> Cow<'_, [char]> {
         if self.as_ref().iter().any(|c| char_to_normalized(*c) != *c) {
             Cow::Owned(
                 self.as_ref()
@@ -81,6 +85,12 @@ impl CharStringExt for [char] {
                 .iter()
                 .zip(other.iter())
                 .all(|(a, b)| a.to_ascii_lowercase() == *b)
+    }
+
+    fn eq_any_ignore_ascii_case_chars(&self, others: &[&[char]]) -> bool {
+        others
+            .iter()
+            .any(|chars| self.eq_ignore_ascii_case_chars(chars))
     }
 
     fn ends_with_ignore_ascii_case_str(&self, suffix: &str) -> bool {

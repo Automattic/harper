@@ -42,8 +42,8 @@
 # N🅪Sg/V/Comm+ .
 >
 #
-> Grey         .
-# NPr/V/J/Comm .
+> Grey          .
+# NPr🅪/V/J/Comm .
 >
 #
 > Quarrelled .

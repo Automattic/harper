@@ -13,8 +13,8 @@ pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
 
     tok.span.len() > 1
         && (meta.is_noun() || meta.is_adjective() || meta.is_verb() || meta.is_adverb())
-        && !meta.is_determiner()
-        && (!meta.preposition || *tok.span.get_content(src).to_lower() == ['b', 'a', 'r'])
+        && !(meta.is_determiner() || meta.is_conjunction())
+        && (!meta.preposition || tok.span.get_content(src).eq_ignore_ascii_case_str("bar"))
 }
 
 pub(crate) fn predicate(closed: Option<&WordMetadata>, open: Option<&WordMetadata>) -> bool {
@@ -382,6 +382,14 @@ mod tests {
     fn allow_issue_1298() {
         assert_no_lints(
             "A series of tests that cover all possible cases.",
+            CompoundNouns::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_project_or() {
+        assert_no_lints(
+            "You can star or watch this project or follow author to get release notifications in time.",
             CompoundNouns::default(),
         );
     }

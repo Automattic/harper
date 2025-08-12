@@ -94,12 +94,12 @@ impl Markdown {
                 }
             }
 
-            if let Some(open_bracket_idx) = open_bracket {
-                if let Some(close_bracket_idx) = close_bracket {
-                    to_remove.extend(open_bracket_idx..=pipe_idx);
-                    to_remove.push_back(close_bracket_idx);
-                    to_remove.push_back(close_bracket_idx + 1);
-                }
+            if let Some(open_bracket_idx) = open_bracket
+                && let Some(close_bracket_idx) = close_bracket
+            {
+                to_remove.extend(open_bracket_idx..=pipe_idx);
+                to_remove.push_back(close_bracket_idx);
+                to_remove.push_back(close_bracket_idx + 1);
             }
         }
 

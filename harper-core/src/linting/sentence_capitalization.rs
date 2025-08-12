@@ -49,41 +49,42 @@ impl<T: Dictionary> Linter for SentenceCapitalization<T> {
 
                     let word_chars = document.get_span_content(&first_word.span);
 
-                    if let Some(first_char) = word_chars.first() {
-                        if first_char.is_alphabetic() && !first_char.is_uppercase() {
-                            if let Some(canonical_spelling) =
-                                self.dictionary.get_correct_capitalization_of(word_chars)
-                            {
-                                // Skip if it's a proper noun or contains uppercase letters before a separator
-                                if first_word.kind.is_proper_noun() {
-                                    continue;
-                                }
-
-                                // Check for uppercase letters in the rest of the word before any separators
-                                if canonical_spelling
-                                    .iter()
-                                    .skip(1)
-                                    .take_while(|&c| !c.is_whitespace() && *c != '-' && *c != '\'')
-                                    .any(|&c| c.is_uppercase())
-                                {
-                                    continue;
-                                }
+                    if let Some(first_char) = word_chars.first()
+                        && first_char.is_alphabetic()
+                        && !first_char.is_uppercase()
+                    {
+                        if let Some(canonical_spelling) =
+                            self.dictionary.get_correct_capitalization_of(word_chars)
+                        {
+                            // Skip if it's a proper noun or contains uppercase letters before a separator
+                            if first_word.kind.is_proper_noun() {
+                                continue;
                             }
 
-                            let target_span = first_word.span;
-                            let mut replacement_chars =
-                                document.get_span_content(&target_span).to_vec();
-                            replacement_chars[0] = replacement_chars[0].to_ascii_uppercase();
-
-                            lints.push(Lint {
-                                span: target_span,
-                                lint_kind: LintKind::Capitalization,
-                                suggestions: vec![Suggestion::ReplaceWith(replacement_chars)],
-                                priority: 31,
-                                message: "This sentence does not start with a capital letter"
-                                    .to_string(),
-                            });
+                            // Check for uppercase letters in the rest of the word before any separators
+                            if canonical_spelling
+                                .iter()
+                                .skip(1)
+                                .take_while(|&c| !c.is_whitespace() && *c != '-' && *c != '\'')
+                                .any(|&c| c.is_uppercase())
+                            {
+                                continue;
+                            }
                         }
+
+                        let target_span = first_word.span;
+                        let mut replacement_chars =
+                            document.get_span_content(&target_span).to_vec();
+                        replacement_chars[0] = replacement_chars[0].to_ascii_uppercase();
+
+                        lints.push(Lint {
+                            span: target_span,
+                            lint_kind: LintKind::Capitalization,
+                            suggestions: vec![Suggestion::ReplaceWith(replacement_chars)],
+                            priority: 31,
+                            message: "This sentence does not start with a capital letter"
+                                .to_string(),
+                        });
                     }
                 }
             }
