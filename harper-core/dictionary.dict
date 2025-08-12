@@ -1,4 +1,4 @@
-53750
+53800
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -10361,7 +10361,7 @@ Ulysses/Og
 Umbriel/Og
 Underwood/NOg
 Ungava/Og
-Unicode/ONg
+Unicode/ONmg
 Unilever/g
 Union/NOSg
 Unionist
@@ -10874,6 +10874,7 @@ Wobegon/g
 Wodehouse/Og
 Wolf/Og
 Wolfe/Og
+Wolfenstein/Og
 Wolff/Og
 Wolfgang/Og
 Wollongong/Og
@@ -13475,6 +13476,7 @@ autobiography/~NwSg
 autoclave/NVJgS
 autocomplete/VNgS
 autocompletion/NwgS
+autocorrect/VGdSNg
 autocracy/NSg
 autocrat/NSg
 autocratic/~JQ
@@ -15879,6 +15881,7 @@ bunkum/Ng
 bunny/~NJSg
 bunt/~NVgdGSz
 bunting/~NVg
+bunyip/NgS          # Australian mythological creature
 buoy/~NVgdGS
 buoyancy/~Ng
 buoyant/JY
@@ -21160,6 +21163,7 @@ differ/~VNdG
 difference/~NwVig
 differences/~NV
 different/~JNiY
+differentiability/Ng
 differentiable/~J
 differential/~JNSg
 differentiate/~VNdSGn
@@ -25748,7 +25752,8 @@ fulfilment/Ng!_
 full/~JNVgd>Z^GSp
 fullback/~NgS
 fuller/~JNVg
-fullness/Ng
+fullness/Nmg
+fulltext/NwgS
 fully/~V
 fulminate/VNdSXGn
 fulmination/Ng
@@ -28835,7 +28840,7 @@ hyperlink/NVGSgd
 hypermarket/NgS
 hypermedia/Nmg
 hypernetwork/NSg
-hyperparameter/NsG
+hyperparameter/NgS
 hyperparathyroidism/N
 hyperplane/N
 hyperscale/J
@@ -30282,7 +30287,7 @@ invite/~VNdSgG
 invited/~VJNU
 invitee/NSg
 inviting/~JVNY
-invokable/J
+invocable/J
 invoke/~VdSG
 involuntariness/Nmg
 involuntary/~Jp
@@ -30942,6 +30947,7 @@ keymap/NSg
 keynote/~NVgZGd>S
 keynoter/Ng
 keypad/NSg
+keypoint/NgS
 keypunch/NVZGgd>S
 keypuncher/Ng
 keyring/NgS
@@ -33330,6 +33336,8 @@ meme/~NVgS
 memento/~NgS
 memo/~NVgS
 memoir/~NgS
+memoization/Nmg
+memoize/VGdS
 memorabilia/~Nmg
 memorability/Ng
 memorable/~JNU
@@ -33597,6 +33605,7 @@ microcomputer/~NgS
 microcontroller/NgS
 microcosm/NgS
 microcosmic/J
+microdata/Nmg
 microdot/NVSg
 microeconomic/JQS
 microelectronic/JNS
@@ -33631,6 +33640,7 @@ microsecond/NgS
 microservice/NSg
 microstate/NgS
 microsurgery/Ng
+microtask/NgS
 microtransaction/NSg
 microvascular/J
 microwave/~NVdSgGB
@@ -39659,7 +39669,7 @@ prepared/~JVUp
 preparedness/~NUg
 prepay/VGSL
 prepayment/NgS
-prepend/VN
+prepend/VdSGN
 preponderance/NSg
 preponderant/JY
 preponderate/VGdS
@@ -41374,6 +41384,7 @@ refer/~VNB
 referee/~NVdSg
 refereeing/VN
 reference/~NVgGdS
+referenceable/J
 referendum/~NgS
 referent/NSg
 referential/~J
@@ -41697,6 +41708,10 @@ repetitiveness/Ng
 rephotograph/VdG
 replace/VSdG
 replaceable/~JN
+replacer/NgS
+replan/VS
+replanned/V
+replanning/V
 replant/VNGSd
 replayable/J
 replenish/~VLGdS
@@ -46641,6 +46656,7 @@ subdue/~VdSG
 subeditor/NS
 subfamily/~NSg
 subfield/NgS
+subflow/NSg
 subfolder/NgS
 subframe/NgS
 subfreezing/J
@@ -47586,6 +47602,7 @@ tan/~NJVSg
 tanager/NgS
 tanbark/Ng
 tandem/~NJVSg
+tandoor/NgS
 tandoori/JNg
 tang/~NVgS
 tangelo/NgS
@@ -48048,6 +48065,7 @@ tessellation/Ng
 tesseract/NgS
 test/~NVrKedGS
 test's/rWK
+testability/Nmg
 testable/JeW
 testament/~NVgS
 testamentary/J
@@ -49998,6 +50016,7 @@ unease/NVg
 uneasy/~J^
 uneatable/J
 uneconomic/J
+uneditable/J
 unelected/J
 unemployed/~Jg
 unencrypted/J
@@ -50013,6 +50032,7 @@ uneven/~JVY
 unexceptionably/R
 unexcited/J
 unexciting/J
+unexpanded/J
 unexpected/~JNYp
 unexpectedness/Ng
 unexplainable/J
@@ -50260,6 +50280,9 @@ unsustainable/JY
 unsymmetrical/J
 untactful/J
 untagged/J
+untar/VbS
+untarred/VtT
+untarring/V6
 untaxed/J
 unterminated/J
 unthinkably/R
@@ -50270,6 +50293,7 @@ untimely/~J^
 untiring/JY
 untouchable/JNgS
 untoward/J
+untracked/J
 untraveled/J!@_
 untrue/~J>^
 untrusted/J
@@ -52476,6 +52500,7 @@ youthful/~JYp
 youthfulness/Ng
 youths/~9
 yow/N
+yowie/NgS           # Australian mythological creature
 yowl/NVgdSG
 yr/~NS
 ytterbium/Ng
@@ -52620,6 +52645,7 @@ B2B/J               # business-to-business
 BCD/Ng              # binary coded decimal
 BCPL/Ng             # old programming language
 BLM/Ng
+BOM/NSg             # Byte Order Mark
 BRICS/              # intergovernmental organization
 BSP/NSg             # data structure
 BYD/OgS             # Chinese automobile manufacturer
@@ -52643,6 +52669,7 @@ CI/NSg              # continuous integration
 CISC/Ng             # cpu architecture
 CMOS/N              # microchip process
 CMake/Sg            # build tool
+CMS/NSg             # content management system
 CMYK                # colour model
 CORS                # web: cross-origin resource sharing
 CQL/N
@@ -52853,6 +52880,7 @@ N2/Og
 N3/Og
 N4/Og
 N5/Og
+NAT/Ng              # network address translation/translator
 NFA/NgS
 NLP/g
 NMI/NgS             # non-maskable interrupt
@@ -53104,6 +53132,7 @@ i18n/Nm             # internationalization
 iframe/NgS
 infosec/NmG         # information security
 inpaint/VGdS
+invokable/J         # not in most dictionaries, used in computing
 iPadOS/Og
 jQuery/Og
 keyserver/NgS
@@ -53117,6 +53146,7 @@ olds/~              # common in phrasing such as "twenty year olds"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
 pastebin/NgS
 pentester/NSg       # penetration tester
+postfix/NgSVdG
 pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
 preshared/J
 quadtree/NgS        # data structure
@@ -53129,6 +53159,7 @@ royale/~NJSg        # !! please check and comment !! dictionaries only list noun
 s.t./~              # !! please check and comment !!
 sRGB/Og             # colour space
 scatterplot/NVSgG   # dictionaries prefer: scatter plot
+screencast/VdSG
 scrollbar/NSg       # dictionaries prefer: scroll bar
 sed/Og              # *nix tool / language
 singleplayer/J
@@ -53139,6 +53170,7 @@ strat/NgS           # gamer slang strategy
 supersequence/NgS
 tagset/NgS
 trie/NgS            # data structure
+truthy/J
 uptime/NwgS
 vid/NgS             # video
 waitlist/NgS
@@ -53196,6 +53228,7 @@ brute force/NwgSVdG
 bubble tea/NwgS
 built-in/NgSJ
 built-up/J
+call stack/NgS
 camel case/Nmg
 car bomb/NgS
 car-bomb/V
@@ -53274,6 +53307,7 @@ far right/NgS
 far-right/J
 fast track/NgSVdG
 feature-length/J
+file sharing/Nmg
 file size/NgS
 fine-tune/VSdG
 first-hand/R
@@ -53534,6 +53568,7 @@ self-awareness/Ng
 self-deception/Ng
 self-driving/NgJ
 self-fund/VSdG
+self-hosted/J
 self-indulgent/J
 self-obsessed/J
 self-tapping/J
@@ -53628,6 +53663,7 @@ Wall Streeter/NgS
 war game/NgS
 Wayback Machine/Og
 weapons-grade/J
+web API/NgS
 web app/NgS
 web dev/NgS
 web page/~NSg
