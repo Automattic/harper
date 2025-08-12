@@ -1,4 +1,3 @@
-use crate::Token;
 use crate::expr::{Expr, MatchInfo, SequenceExpr};
 use crate::patterns::WhitespacePattern;
 
