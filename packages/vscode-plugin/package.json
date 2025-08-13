@@ -119,6 +119,11 @@
 					"default": "information",
 					"description": "How severe do you want diagnostics to appear in the editor?"
 				},
+				"harper.excludePatterns": {
+					"scope": "resource",
+					"type": "array",
+					"description": "A set of globs to ignore. If a file matches any of the globs, it will not be linted."
+				},
 				"harper.fileDictPath": {
 					"scope": "resource",
 					"type": "string",
