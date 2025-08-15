@@ -50,7 +50,9 @@ Open `Preferences > Package Settings > LSP > Settings` and add the `harper-ls` c
           },
           "diagnosticSeverity": "hint",
           "isolateEnglish": false,
-          "dialect": "American"
+          "dialect": "American",
+          "maxFileLength": 120000,
+          "ignoredLintsPath": []
         }
       }
     }

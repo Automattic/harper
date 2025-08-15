@@ -49,7 +49,8 @@ require('lspconfig').harper_ls.setup {
       diagnosticSeverity = "hint",
       isolateEnglish = false,
       dialect = "American",
-      maxFileLength = 120000
+      maxFileLength = 120000,
+      ignoredLintsPath = {}
     }
   }
 }
