@@ -2266,7 +2266,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -2298,7 +2298,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2333,7 +2333,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "ammonia",
  "bitflags 2.9.1",
@@ -2370,7 +2370,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2381,7 +2381,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2392,7 +2392,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2420,7 +2420,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2439,7 +2439,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2450,7 +2450,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2469,7 +2469,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -4370,9 +4370,9 @@ checksum = "56199f7ddabf13fe5074ce809e7d3f42b42ae711800501b5b16ea82ad029c39d"
 
 [[package]]
 name = "slab"
-version = "0.4.10"
+version = "0.4.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "04dc19736151f35336d325007ac991178d504a119863a2fcb3758cdb5e52c50d"
+checksum = "7a2ae44ef20feb57a68b23d846850f861394c2e02dc425a50098ae8c90267589"
 
 [[package]]
 name = "slotmap"
