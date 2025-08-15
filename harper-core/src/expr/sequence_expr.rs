@@ -300,6 +300,8 @@ impl SequenceExpr {
         })
     }
 
+    gen_then_from_is!(sentence_terminator);
+
     // Out-of-vocabulary word. (Words not in the dictionary)
     gen_then_from_is!(oov);
 

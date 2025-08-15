@@ -900,6 +900,16 @@ Message: |
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+     313 | synthesis and manipulation of image data. The study is connected to many other
+         |                                                                  ^~ Use `too` (with two `o`’s) when indicating excess or addition.
+     314 | fields in computer science, including computer vision, image processing, and
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Style (31 priority)
 Message: |
      320 | Information can take the form of images, sound, video or other multimedia. Bits
