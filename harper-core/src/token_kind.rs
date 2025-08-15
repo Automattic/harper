@@ -2,7 +2,9 @@ use harper_brill::UPOS;
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
 
-use crate::{Number, Punctuation, Quote, TokenKind::Word, WordMetadata};
+use crate::TokenKind::Word;
+use crate::{Number, Punctuation, Quote, WordMetadata};
+use std::hash::{Hash, Hasher};
 
 /// Generate wrapper code to pass a function call to the inner [`WordMetadata`],  
 /// if the token is indeed a word, while also emitting method-level documentation.
@@ -29,7 +31,7 @@ macro_rules! delegate_to_metadata {
 /// Has a variety of queries available.
 /// If there is a query missing, it may be easy to implement by just calling the
 /// `delegate_to_metadata` macro.
-#[derive(Debug, Is, Clone, Serialize, Deserialize, Default, PartialOrd, Hash, Eq, PartialEq)]
+#[derive(Debug, Is, Clone, Serialize, Deserialize, Default, PartialOrd, Eq, PartialEq)]
 #[serde(tag = "kind", content = "value")]
 pub enum TokenKind {
     /// `None` if the word does not exist in the dictionary.
@@ -50,6 +52,49 @@ pub enum TokenKind {
     Unlintable,
     ParagraphBreak,
     Regexish,
+}
+
+impl Hash for TokenKind {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        match self {
+            TokenKind::Word(metadata) => {
+                metadata.hash(state);
+            }
+            TokenKind::Punctuation(punct) => {
+                punct.hash(state);
+            }
+            TokenKind::Decade => {
+                0.hash(state);
+            }
+            TokenKind::Number(number) => {
+                number.hash(state);
+            }
+            TokenKind::Space(space) => {
+                space.hash(state);
+            }
+            TokenKind::Newline(newline) => {
+                newline.hash(state);
+            }
+            TokenKind::EmailAddress => {
+                0.hash(state);
+            }
+            TokenKind::Url => {
+                0.hash(state);
+            }
+            TokenKind::Hostname => {
+                0.hash(state);
+            }
+            TokenKind::Unlintable => {
+                0.hash(state);
+            }
+            TokenKind::ParagraphBreak => {
+                0.hash(state);
+            }
+            TokenKind::Regexish => {
+                0.hash(state);
+            }
+        }
+    }
 }
 
 impl TokenKind {
