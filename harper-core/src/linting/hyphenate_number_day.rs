@@ -1,44 +1,43 @@
-use crate::{
-    Token,
-    patterns::{EitherPattern, NominalPhrase, Pattern, SequencePattern},
-};
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::{Token, patterns::NominalPhrase};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct HyphenateNumberDay {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for HyphenateNumberDay {
     fn default() -> Self {
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then_number()
             .then_whitespace()
             .t_aco("day")
-            .then(EitherPattern::new(vec![
+            .then_longest_of(vec![
                 Box::new(
-                    SequencePattern::default()
+                    SequenceExpr::default()
                         .then_whitespace()
                         .then(NominalPhrase),
                 ),
                 Box::new(
-                    SequencePattern::default()
+                    SequenceExpr::default()
                         .then_hyphen()
                         .then_adjective()
                         .then_whitespace()
                         .then(NominalPhrase),
                 ),
-            ]));
+            ]);
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for HyphenateNumberDay {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for HyphenateNumberDay {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
@@ -49,10 +48,7 @@ impl PatternLinter for HyphenateNumberDay {
             span: space.span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::ReplaceWith(vec!['-'])],
-            message: format!(
-                "Use a hyphen in `{}-day` when forming an adjectival compound.",
-                number
-            ),
+            message: format!("Use a hyphen in `{number}-day` when forming an adjectival compound."),
             priority: 31,
         })
     }

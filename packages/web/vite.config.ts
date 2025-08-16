@@ -21,7 +21,7 @@ export default defineConfig({
 				editLink: 'https://github.com/automattic/harper/edit/master/packages/web/src/routes/:route',
 				logo: '/circle-logo.png',
 				github: 'https://github.com/automattic/harper',
-				discord: 'https://discord.gg/JBqcAaKrzQ',
+				discord: 'https://discord.gg/invite/JBqcAaKrzQ',
 				themeColor: {
 					primary: '#818eae',
 					dark: '#355280',
@@ -32,15 +32,29 @@ export default defineConfig({
 				},
 				navbar: [
 					{ title: 'Documentation', to: '/docs/about' },
-					{ title: 'Visual Studio Code', to: '/docs/integrations/visual-studio-code' },
+					{
+						title: 'Visual Studio Code',
+						to: 'https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper',
+					},
 					{ title: 'Obsidian', to: '/docs/integrations/obsidian' },
-					{ title: 'harper.js', to: '/docs/harperjs/introduction' },
+					{
+						title: 'Chrome Extension',
+						to: 'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb',
+					},
 				],
 				sidebar: {
 					'/docs/': [
 						{
-							title: 'About',
-							to: '/docs/about',
+							items: [
+								{
+									title: 'About',
+									to: '/docs/about',
+								},
+								{
+									title: 'FAQ',
+									to: '/docs/faq',
+								},
+							],
 						},
 						{
 							title: 'Integrations',
@@ -48,6 +62,14 @@ export default defineConfig({
 								{
 									title: 'Obsidian',
 									to: '/docs/integrations/obsidian',
+								},
+								{
+									title: 'Chrome Extension',
+									to: '/docs/integrations/chrome-extension',
+								},
+								{
+									title: 'Firefox Extension',
+									to: '/docs/integrations/firefox-extension',
 								},
 								{
 									title: 'WordPress',
@@ -76,6 +98,10 @@ export default defineConfig({
 								{
 									title: 'Zed',
 									to: '/docs/integrations/zed',
+								},
+								{
+									title: 'Sublime Text',
+									to: '/docs/integrations/sublime-text',
 								},
 							],
 						},
@@ -136,6 +162,10 @@ export default defineConfig({
 									to: '/docs/contributors/dictionary',
 								},
 								{
+									title: 'Test Suite',
+									to: '/docs/contributors/tests',
+								},
+								{
 									title: 'Author a Rule',
 									to: '/docs/contributors/author-a-rule',
 								},
@@ -144,8 +174,16 @@ export default defineConfig({
 									to: '/docs/contributors/visual-studio-code',
 								},
 								{
+									title: 'Chrome Extension',
+									to: '/docs/contributors/chrome-extension',
+								},
+								{
 									title: 'WordPress',
 									to: '/docs/contributors/wordpress',
+								},
+								{
+									title: 'Obsidian',
+									to: '/docs/contributors/obsidian',
 								},
 								{
 									title: 'Reviewing Pull Requests',
@@ -156,14 +194,18 @@ export default defineConfig({
 									to: '/docs/contributors/local-stats',
 								},
 								{
+									title: 'Brill Tagging',
+									to: '/docs/contributors/brill',
+								},
+								{
 									title: 'FAQ',
 									to: '/docs/contributors/faq',
 								},
 							],
 						},
 						{
-							title: 'FAQ',
-							to: '/docs/faq',
+							title: 'Rust Reference',
+							to: 'https://docs.rs/harper-core/latest/harper_core/',
 						},
 						{
 							title: 'Rules',

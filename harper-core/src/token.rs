@@ -2,14 +2,17 @@ use serde::{Deserialize, Serialize};
 
 use crate::{FatToken, Span, TokenKind};
 
+/// Represents a semantic, parsed component of a [`Document`](crate::Document).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Default)]
 pub struct Token {
-    pub span: Span,
+    /// The characters the token represents.
+    pub span: Span<char>,
+    /// The parsed value.
     pub kind: TokenKind,
 }
 
 impl Token {
-    pub fn new(span: Span, kind: TokenKind) -> Self {
+    pub fn new(span: Span<char>, kind: TokenKind) -> Self {
         Self { span, kind }
     }
 

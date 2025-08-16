@@ -1,4 +1,4 @@
-import { type Linter, WorkerLinter, binaryInlined } from 'harper.js';
+import { binaryInlined, type Linter, WorkerLinter } from 'harper.js';
 import React, {
 	createContext,
 	type ReactNode,

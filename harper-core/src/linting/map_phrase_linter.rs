@@ -1,27 +1,33 @@
-use super::{Lint, LintKind, PatternLinter};
+use super::{ExprLinter, Lint, LintKind};
+use crate::expr::Expr;
+use crate::expr::FixedPhrase;
+use crate::expr::LongestMatchOf;
+use crate::expr::SimilarToPhrase;
 use crate::linting::Suggestion;
-use crate::patterns::{EitherPattern, ExactPhrase, Pattern, SimilarToPhrase};
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseLinter {
     description: String,
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
     correct_forms: Vec<String>,
     message: String,
+    lint_kind: LintKind,
 }
 
 impl MapPhraseLinter {
     pub fn new(
-        pattern: Box<dyn Pattern>,
+        expr: Box<dyn Expr>,
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
         description: impl ToString,
+        lint_kind: Option<LintKind>,
     ) -> Self {
         Self {
             description: description.to_string(),
-            pattern,
+            expr,
             correct_forms: correct_forms.into_iter().map(|f| f.to_string()).collect(),
             message: message.to_string(),
+            lint_kind: lint_kind.unwrap_or(LintKind::Miscellaneous),
         }
     }
 
@@ -31,39 +37,49 @@ impl MapPhraseLinter {
             [phrase],
             format!("Did you mean the phrase `{phrase}`?"),
             format!("Looks for slight improper modifications to the phrase `{phrase}`."),
+            None,
         )
     }
 
-    pub fn new_exact_phrases(
+    pub fn new_fixed_phrases(
         phrase: impl IntoIterator<Item = impl AsRef<str>>,
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
         description: impl ToString,
+        lint_kind: Option<LintKind>,
     ) -> Self {
-        let patterns = EitherPattern::new(
+        let patterns = LongestMatchOf::new(
             phrase
                 .into_iter()
                 .map(|p| {
-                    let pattern: Box<dyn Pattern> = Box::new(ExactPhrase::from_phrase(p.as_ref()));
-                    pattern
+                    let expr: Box<dyn Expr> = Box::new(FixedPhrase::from_phrase(p.as_ref()));
+                    expr
                 })
                 .collect(),
         );
 
-        Self::new(Box::new(patterns), correct_forms, message, description)
+        Self::new(
+            Box::new(patterns),
+            correct_forms,
+            message,
+            description,
+            lint_kind,
+        )
     }
 
-    pub fn new_exact_phrase(
+    pub fn new_fixed_phrase(
         phrase: impl AsRef<str>,
         correct_forms: impl IntoIterator<Item = impl ToString>,
         message: impl ToString,
         description: impl ToString,
+        lint_kind: Option<LintKind>,
     ) -> Self {
         Self::new(
-            Box::new(ExactPhrase::from_phrase(phrase.as_ref())),
+            Box::new(FixedPhrase::from_phrase(phrase.as_ref())),
             correct_forms,
             message,
             description,
+            lint_kind,
         )
     }
 
@@ -78,13 +94,19 @@ impl MapPhraseLinter {
             correct_form.to_string()
         );
 
-        Self::new_exact_phrase(phrase, [correct_form], message, description)
+        Self::new_fixed_phrase(
+            phrase,
+            [correct_form],
+            message,
+            description,
+            Some(LintKind::Miscellaneous),
+        )
     }
 }
 
-impl PatternLinter for MapPhraseLinter {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for MapPhraseLinter {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -93,7 +115,7 @@ impl PatternLinter for MapPhraseLinter {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::Miscellaneous,
+            lint_kind: self.lint_kind,
             suggestions: self
                 .correct_forms
                 .iter()

@@ -1,21 +1,21 @@
 use crate::Token;
 
-use super::{Pattern, SequencePattern, WordSet};
+use super::{SingleTokenPattern, WordSet};
 
 pub struct IndefiniteArticle {
-    inner: SequencePattern,
+    inner: WordSet,
 }
 
 impl Default for IndefiniteArticle {
     fn default() -> Self {
         Self {
-            inner: SequencePattern::default().then(WordSet::new(&["a", "an"])),
+            inner: WordSet::new(&["a", "an"]),
         }
     }
 }
 
-impl Pattern for IndefiniteArticle {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        self.inner.matches(tokens, source)
+impl SingleTokenPattern for IndefiniteArticle {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        self.inner.matches_token(token, source)
     }
 }

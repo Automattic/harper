@@ -1,31 +1,31 @@
-use crate::{
-    Lrc, Token, TokenStringExt,
-    linting::Linter,
-    patterns::{OwnedPatternExt, Pattern, SequencePattern, WordSet},
-};
+use crate::expr::Expr;
+use crate::expr::ExprExt;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
+use crate::{Lrc, Token, TokenStringExt, linting::Linter, patterns::WordSet};
 
 use super::{super::Lint, LintKind, Suggestion};
 
 pub struct OxfordComma {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for OxfordComma {
     fn default() -> Self {
         let item = Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then_determiner()
                 .then_whitespace()
                 .then_nominal()
-                .or(Box::new(SequencePattern::default().then_nominal())),
+                .or_longest(SequenceExpr::default().then_nominal()),
         );
 
-        let item_chunk = SequencePattern::default()
+        let item_chunk = SequenceExpr::default()
             .then(item.clone())
             .then_comma()
             .then_whitespace();
 
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then_one_or_more(item_chunk)
             .then(item.clone())
             .then_whitespace()
@@ -34,7 +34,7 @@ impl Default for OxfordComma {
             .then(item.clone());
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
@@ -58,42 +58,31 @@ impl Linter for OxfordComma {
     fn lint(&mut self, document: &crate::Document) -> Vec<crate::linting::Lint> {
         let mut lints = Vec::new();
         for sentence in document.iter_sentences() {
-            let mut tok_cursor = 0;
+            let mut skip = 0;
 
             let mut words = sentence
                 .iter_words()
                 .filter_map(|v| v.kind.as_word())
                 .flatten();
 
-            if let (Some(first), Some(second)) = (words.next(), words.next()) {
-                if first.preposition && second.is_likely_homograph() {
-                    tok_cursor = sentence
-                        .iter()
-                        .position(|t| t.kind.is_comma())
-                        .unwrap_or(sentence.iter().len())
-                }
+            if let (Some(first), Some(second)) = (words.next(), words.next())
+                && first.preposition
+                && second.is_likely_homograph()
+            {
+                skip = sentence
+                    .iter()
+                    .position(|t| t.kind.is_comma())
+                    .unwrap_or(sentence.iter().len())
             }
 
-            loop {
-                if tok_cursor >= sentence.len() {
-                    break;
-                }
+            let sentence = &sentence[skip..];
 
-                let match_len = self
-                    .pattern
-                    .matches(&sentence[tok_cursor..], document.get_source());
-
-                if match_len != 0 {
-                    let lint = self.match_to_lint(
-                        &sentence[tok_cursor..tok_cursor + match_len],
-                        document.get_source(),
-                    );
-
-                    lints.extend(lint);
-                    tok_cursor += match_len;
-                } else {
-                    tok_cursor += 1;
-                }
+            for match_span in self.expr.iter_matches(sentence, document.get_source()) {
+                let lint = self.match_to_lint(
+                    &sentence[match_span.start..match_span.end],
+                    document.get_source(),
+                );
+                lints.extend(lint);
             }
         }
 

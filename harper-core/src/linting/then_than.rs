@@ -1,34 +1,68 @@
-use super::{Lint, LintKind, PatternLinter};
+use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
+use crate::TokenKind;
+use crate::expr::All;
+use crate::expr::Expr;
+use crate::expr::FirstMatchOf;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
-use crate::patterns::{
-    All, AnyCapitalization, Invert, OwnedPatternExt, Pattern, SequencePattern, WordSet,
-};
+use crate::patterns::{Invert, Word, WordSet};
 
-#[doc = "Corrects the misuse of `then` to `than`."]
+/// Corrects the misuse of `then` to `than`.
 pub struct ThenThan {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl ThenThan {
     pub fn new() -> Self {
         Self {
-            pattern: Box::new(All::new(vec![
-                Box::new(
-                    SequencePattern::default()
-                        .then(WordSet::new(&["better", "other"]).or(Box::new(
-                            |tok: &Token, _source: &[char]| tok.kind.is_adjective(),
-                        )))
-                        .then_whitespace()
-                        .then_any_capitalization_of("then")
-                        .then_whitespace()
-                        .then(Invert::new(AnyCapitalization::of("that"))),
-                ),
-                // Denotes exceptions to the rule.
+            expr: Box::new(All::new(vec![
+                Box::new(FirstMatchOf::new(vec![
+                    // Comparative form of adjective
+                    Box::new(
+                        SequenceExpr::default()
+                            .then(Word::new("other").or(Box::new(
+                                |tok: &Token, source: &[char]| {
+                                    is_comparative_adjective(tok, source)
+                                },
+                            )))
+                            .t_ws()
+                            .t_aco("then")
+                            .t_ws()
+                            .then_unless(Word::new("that")),
+                    ),
+                    // Positive form of adjective following "more" or "less"
+                    Box::new(
+                        SequenceExpr::default()
+                            .then(WordSet::new(&["more", "less"]))
+                            .t_ws()
+                            .then_kind_either(TokenKind::is_adjective, TokenKind::is_adverb)
+                            .t_ws()
+                            .t_aco("then")
+                            .t_ws()
+                            .then_unless(Word::new("that")),
+                    ),
+                ])),
+                // Exceptions to the rule.
                 Box::new(Invert::new(WordSet::new(&["back", "this", "so", "but"]))),
             ])),
         }
     }
+}
+
+// TODO: This can be simplified or eliminated when the adjective improvements make it into the affix system.
+fn is_comparative_adjective(tok: &Token, source: &[char]) -> bool {
+    (tok.kind.is_adjective() || tok.kind.is_adverb())
+        .then(|| tok.span.get_content(source))
+        .is_some_and(|src| {
+            // Regular comparative form?
+            src.ends_with(&['e', 'r'])
+                // Irregular comparatives.
+                || src == ['l', 'e', 's', 's']
+                || src == ['m', 'o', 'r', 'e']
+                || src == ['w', 'o', 'r', 's', 'e']
+        })
 }
 
 impl Default for ThenThan {
@@ -37,12 +71,13 @@ impl Default for ThenThan {
     }
 }
 
-impl PatternLinter for ThenThan {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ThenThan {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let span = matched_tokens[2].span;
+        // For both "stupider then X" and "more stupid then X", "then" is 3rd last token.
+        let span = matched_tokens[matched_tokens.len() - 3].span;
         let offending_text = span.get_content(source);
 
         Some(Lint {
@@ -330,6 +365,42 @@ mod tests {
             "We submitted the patch more recently then last week, so they should have it already.",
             ThenThan::default(),
             "We submitted the patch more recently than last week, so they should have it already.",
+        );
+    }
+
+    #[test]
+    fn allows_well_then() {
+        assert_lint_count(
+            "Well then we're just going to raise all of these taxes",
+            ThenThan::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allows_nervous_then() {
+        assert_lint_count(
+            "I think both of us were getting nervous then because the system would have automatically aborted.",
+            ThenThan::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn flags_stupider_then_and_more_and_less_stupid_then() {
+        assert_lint_count(
+            "He was stupider then her but she was more stupid then some. Then again he was less stupid then some too.",
+            ThenThan::default(),
+            3,
+        );
+    }
+
+    #[test]
+    fn patch_worse_then() {
+        assert_suggestion_result(
+            "He was worse then her at writing code.",
+            ThenThan::default(),
+            "He was worse than her at writing code.",
         );
     }
 }

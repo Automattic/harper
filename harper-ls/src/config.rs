@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use anyhow::{Result, bail};
 use dirs::{config_dir, data_local_dir};
@@ -18,14 +18,14 @@ pub enum DiagnosticSeverity {
 
 impl DiagnosticSeverity {
     /// Converts `self` to the equivalent LSP type.
-    pub fn to_lsp(self) -> tower_lsp::lsp_types::DiagnosticSeverity {
+    pub fn to_lsp(self) -> tower_lsp_server::lsp_types::DiagnosticSeverity {
         match self {
-            DiagnosticSeverity::Error => tower_lsp::lsp_types::DiagnosticSeverity::ERROR,
-            DiagnosticSeverity::Warning => tower_lsp::lsp_types::DiagnosticSeverity::WARNING,
+            DiagnosticSeverity::Error => tower_lsp_server::lsp_types::DiagnosticSeverity::ERROR,
+            DiagnosticSeverity::Warning => tower_lsp_server::lsp_types::DiagnosticSeverity::WARNING,
             DiagnosticSeverity::Information => {
-                tower_lsp::lsp_types::DiagnosticSeverity::INFORMATION
+                tower_lsp_server::lsp_types::DiagnosticSeverity::INFORMATION
             }
-            DiagnosticSeverity::Hint => tower_lsp::lsp_types::DiagnosticSeverity::HINT,
+            DiagnosticSeverity::Hint => tower_lsp_server::lsp_types::DiagnosticSeverity::HINT,
         }
     }
 }
@@ -65,6 +65,8 @@ impl CodeActionConfig {
 pub struct Config {
     pub user_dict_path: PathBuf,
     pub file_dict_path: PathBuf,
+    pub workspace_dict_path: PathBuf,
+    pub ignored_lints_path: PathBuf,
     pub stats_path: PathBuf,
     pub lint_config: LintGroupConfig,
     pub diagnostic_severity: DiagnosticSeverity,
@@ -72,11 +74,17 @@ pub struct Config {
     pub isolate_english: bool,
     pub markdown_options: MarkdownOptions,
     pub dialect: Dialect,
+    /// Maximum length (in bytes) a file can have before it's skipped.
+    /// Above this limit, the file will not be linted.
+    pub max_file_length: usize,
 }
 
 impl Config {
-    pub fn from_lsp_config(value: Value) -> Result<Self> {
+    pub fn from_lsp_config(workspace_root: &Path, value: Value) -> Result<Self> {
         let mut base = Config::default();
+
+        let workspace_root = workspace_root.canonicalize()?;
+        let workspace_root = workspace_root.as_path();
 
         let Value::Object(value) = value else {
             bail!("Settings must be an object.");
@@ -93,7 +101,7 @@ impl Config {
 
             let path = v.as_str().unwrap();
             if !path.is_empty() {
-                base.user_dict_path = path.try_resolve()?.to_path_buf();
+                base.user_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             }
         }
 
@@ -104,13 +112,40 @@ impl Config {
 
             let path = v.as_str().unwrap();
             if !path.is_empty() {
-                base.file_dict_path = path.try_resolve()?.to_path_buf();
+                base.file_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
+            }
+        }
+
+        if let Some(v) = value.get("workspaceDictPath") {
+            if !v.is_string() {
+                bail!("workspaceDict path must be a string.");
+            }
+            let path = v.as_str().unwrap();
+            if !path.is_empty() {
+                base.workspace_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
+            }
+        } else {
+            // Resolve the default path in the project root
+            base.workspace_dict_path = base
+                .workspace_dict_path
+                .try_resolve_in(workspace_root)?
+                .to_path_buf();
+        }
+
+        if let Some(v) = value.get("ignoredLintsPath") {
+            if !v.is_string() {
+                bail!("ignoredLintsPath path must be a string.");
+            }
+
+            let path = v.as_str().unwrap();
+            if !path.is_empty() {
+                base.ignored_lints_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             }
         }
 
         if let Some(v) = value.get("statsPath") {
             if let Value::String(path) = v {
-                base.file_dict_path = path.try_resolve()?.to_path_buf();
+                base.file_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             } else {
                 bail!("fileDict path must be a string.");
             }
@@ -140,10 +175,14 @@ impl Config {
             }
         }
 
-        if let Some(v) = value.get("markdown") {
-            if let Some(v) = v.get("IgnoreLinkTitle") {
-                base.markdown_options.ignore_link_title = serde_json::from_value(v.clone())?;
-            }
+        if let Some(v) = value.get("maxFileLength") {
+            base.max_file_length = serde_json::from_value(v.clone())?;
+        }
+
+        if let Some(v) = value.get("markdown")
+            && let Some(v) = v.get("IgnoreLinkTitle")
+        {
+            base.markdown_options.ignore_link_title = serde_json::from_value(v.clone())?;
         }
 
         Ok(base)
@@ -157,6 +196,8 @@ impl Default for Config {
             file_dict_path: data_local_dir()
                 .unwrap()
                 .join("harper-ls/file_dictionaries/"),
+            workspace_dict_path: ".harper-dictionary.txt".into(),
+            ignored_lints_path: data_local_dir().unwrap().join("harper-ls/ignored_lints/"),
             stats_path: data_local_dir().unwrap().join("harper-ls/stats.txt"),
             lint_config: LintGroupConfig::default(),
             diagnostic_severity: DiagnosticSeverity::Hint,
@@ -164,6 +205,7 @@ impl Default for Config {
             isolate_english: false,
             markdown_options: MarkdownOptions::default(),
             dialect: Dialect::American,
+            max_file_length: 120_000,
         }
     }
 }

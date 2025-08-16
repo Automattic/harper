@@ -20,10 +20,7 @@ macro_rules! def_token {
         let end_char_loc = start.push_to(range.end).char;
 
         Some(vec![Token {
-            span: harper_core::Span {
-                start: start.char,
-                end: end_char_loc,
-            },
+            span: harper_core::Span::new(start.char, end_char_loc),
             kind: $kind,
         }])
     }};

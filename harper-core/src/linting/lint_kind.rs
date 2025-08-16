@@ -8,32 +8,71 @@ use serde::{Deserialize, Serialize};
 /// the existing categories.
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, Is, Default, Hash, PartialEq, Eq)]
 pub enum LintKind {
-    /// This should only be used by linters doing spellcheck on individual words.
-    Spelling,
+    Agreement,
+    /// For errors where words are joined or split at the wrong boundaries
+    /// (e.g., "each and everyone" vs. "each and every one")
+    BoundaryError,
     Capitalization,
-    Style,
-    Formatting,
-    Repetition,
+    /// For cases where a word or phrase is misused for a similar-sounding word or phrase,
+    /// where the incorrect version makes logical sense (e.g., 'egg corn' for 'acorn',
+    /// 'on mass' for 'en masse').
+    Eggcorn,
+    /// For suggesting improvements that enhance clarity or impact without fixing errors
     Enhancement,
-    Readability,
-    WordChoice,
+    Formatting,
+    Grammar,
+    /// For cases where a word is mistakenly used for a similar-sounding word with a different meaning
+    /// (e.g., 'eluded to' instead of 'alluded to'). Unlike eggcorns, these don't create new meanings.
+    Malapropism,
+    /// For any other lint that doesn't fit neatly into the other categories
     #[default]
     Miscellaneous,
+    Nonstandard,
+    /// For issues with punctuation, including hyphenation in compound adjectives
+    /// (e.g., "face first" vs. "face-first" when used before a noun)
     Punctuation,
+    Readability,
+    /// For cases where words duplicate meaning that's already expressed
+    /// (e.g., "basic fundamentals" → "fundamentals", "free gift" → "gift")
+    Redundancy,
+    /// For variations that are standard in some regions or dialects but not others
+    Regionalism,
+    Repetition,
+    /// When your brain doesn't know the right spelling.
+    /// This should only be used by linters doing spellcheck on individual words.
+    Spelling,
+    /// For cases where multiple options are correct but one is preferred for style or clarity,
+    /// such as expanding abbreviations in formal writing (e.g., 'min' → 'minimum')
+    Style,
+    /// When your brain knows the right spelling but your fingers made a mistake.
+    /// (e.g., 'can be seem' → 'can be seen')
+    Typo,
+    /// For conventional word usage and standard collocations
+    /// (e.g., 'by accident' vs. 'on accident' in standard English)
+    Usage,
+    /// For choosing between different words or phrases in a given context
+    WordChoice,
 }
 
 impl LintKind {
     pub fn new_from_str(s: &str) -> Option<Self> {
         Some(match s {
-            "Spelling" => LintKind::Spelling,
+            "Agreement" => LintKind::Agreement,
+            "BoundaryError" => LintKind::BoundaryError,
             "Capitalization" => LintKind::Capitalization,
-            "Formatting" => LintKind::Formatting,
-            "Repetition" => LintKind::Repetition,
-            "Readability" => LintKind::Readability,
-            "Miscellaneous" => LintKind::Miscellaneous,
+            "Eggcorn" => LintKind::Eggcorn,
             "Enhancement" => LintKind::Enhancement,
-            "Word Choice" => LintKind::WordChoice,
+            "Formatting" => LintKind::Formatting,
+            "Grammar" => LintKind::Grammar,
+            "Miscellaneous" => LintKind::Miscellaneous,
+            "Readability" => LintKind::Readability,
+            "Redundancy" => LintKind::Redundancy,
+            "Regionalism" => LintKind::Regionalism,
+            "Repetition" => LintKind::Repetition,
+            "Spelling" => LintKind::Spelling,
             "Style" => LintKind::Style,
+            "Typo" => LintKind::Typo,
+            "Word Choice" => LintKind::WordChoice,
             _ => return None,
         })
     }
@@ -41,16 +80,26 @@ impl LintKind {
     /// Produce a string representation, which can be used as keys in a map or CSS variables.
     pub fn to_string_key(&self) -> String {
         match self {
-            LintKind::Spelling => "Spelling",
+            LintKind::Agreement => "Agreement",
+            LintKind::BoundaryError => "BoundaryError",
             LintKind::Capitalization => "Capitalization",
-            LintKind::Formatting => "Formatting",
-            LintKind::Repetition => "Repetition",
-            LintKind::Readability => "Readability",
-            LintKind::Miscellaneous => "Miscellaneous",
+            LintKind::Eggcorn => "Eggcorn",
             LintKind::Enhancement => "Enhancement",
-            LintKind::WordChoice => "WordChoice",
-            LintKind::Style => "Style",
+            LintKind::Formatting => "Formatting",
+            LintKind::Grammar => "Grammar",
+            LintKind::Malapropism => "Malapropism",
+            LintKind::Miscellaneous => "Miscellaneous",
+            LintKind::Nonstandard => "Nonstandard",
             LintKind::Punctuation => "Punctuation",
+            LintKind::Readability => "Readability",
+            LintKind::Redundancy => "Redundancy",
+            LintKind::Regionalism => "Regionalism",
+            LintKind::Repetition => "Repetition",
+            LintKind::Spelling => "Spelling",
+            LintKind::Style => "Style",
+            LintKind::Typo => "Typo",
+            LintKind::Usage => "Usage",
+            LintKind::WordChoice => "WordChoice",
         }
         .to_owned()
     }
@@ -59,18 +108,28 @@ impl LintKind {
 impl Display for LintKind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s = match self {
-            LintKind::Spelling => "Spelling",
+            LintKind::Agreement => "Agreement",
+            LintKind::BoundaryError => "BoundaryError",
             LintKind::Capitalization => "Capitalization",
-            LintKind::Formatting => "Formatting",
-            LintKind::Repetition => "Repetition",
-            LintKind::Readability => "Readability",
-            LintKind::Miscellaneous => "Miscellaneous",
+            LintKind::Eggcorn => "Eggcorn",
             LintKind::Enhancement => "Enhancement",
-            LintKind::WordChoice => "Word Choice",
-            LintKind::Style => "Style",
+            LintKind::Formatting => "Formatting",
+            LintKind::Grammar => "Grammar",
+            LintKind::Malapropism => "Malapropism",
+            LintKind::Miscellaneous => "Miscellaneous",
+            LintKind::Nonstandard => "Nonstandard",
             LintKind::Punctuation => "Punctuation",
+            LintKind::Readability => "Readability",
+            LintKind::Redundancy => "Redundancy",
+            LintKind::Regionalism => "Regionalism",
+            LintKind::Repetition => "Repetition",
+            LintKind::Spelling => "Spelling",
+            LintKind::Style => "Style",
+            LintKind::Typo => "Typo",
+            LintKind::Usage => "Usage",
+            LintKind::WordChoice => "Word Choice",
         };
 
-        write!(f, "{}", s)
+        write!(f, "{s}")
     }
 }

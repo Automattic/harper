@@ -1,8 +1,8 @@
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::{Document, NumberSuffix, Span, TokenKind};
+use crate::{Document, OrdinalSuffix, Span, TokenKind};
 use crate::{Number, TokenStringExt};
 
-/// Detect and warn that the sentence is too long.
+/// Detect incorrect number suffix (e.g. "2st").
 #[derive(Debug, Clone, Copy, Default)]
 pub struct CorrectNumberSuffix;
 
@@ -20,19 +20,16 @@ impl Linter for CorrectNumberSuffix {
                 suffix: Some(suffix),
                 ..
             }) = number_tok.kind
+                && let Some(correct_suffix) = OrdinalSuffix::correct_suffix_for(value)
+                && suffix != correct_suffix
             {
-                if let Some(correct_suffix) = NumberSuffix::correct_suffix_for(value) {
-                    if suffix != correct_suffix {
-                        output.push(Lint {
-                            span: suffix_span,
-                            lint_kind: LintKind::Miscellaneous,
-                            message: "This number needs a different suffix to sound right."
-                                .to_string(),
-                            suggestions: vec![Suggestion::ReplaceWith(correct_suffix.to_chars())],
-                            ..Default::default()
-                        })
-                    }
-                }
+                output.push(Lint {
+                    span: suffix_span,
+                    lint_kind: LintKind::Miscellaneous,
+                    message: "This number needs a different suffix to sound right.".to_string(),
+                    suggestions: vec![Suggestion::ReplaceWith(correct_suffix.to_chars())],
+                    ..Default::default()
+                })
             }
         }
 

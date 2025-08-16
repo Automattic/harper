@@ -16,11 +16,11 @@ impl Invert {
 }
 
 impl Pattern for Invert {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> usize {
-        if self.inner.matches(tokens, source) != 0 {
-            0
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
+        if self.inner.matches(tokens, source).is_some() {
+            None
         } else {
-            1
+            Some(1)
         }
     }
 }

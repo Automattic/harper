@@ -1,26 +1,37 @@
 #![doc = include_str!("../README.md")]
 
-use std::collections::{BTreeMap, HashMap};
+use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
+use hashbrown::HashMap;
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 use std::{fs, process};
 
-use anyhow::format_err;
+use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::parsers::{Markdown, MarkdownOptions};
+use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    remove_overlaps, CharStringExt, Dialect, Dictionary, Document, FstDictionary, MergedDictionary,
-    MutableDictionary, TokenKind, TokenStringExt, WordId, WordMetadata,
+    CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
+    word_metadata_orthography::OrthFlags,
 };
 use harper_literate_haskell::LiterateHaskellParser;
+#[cfg(feature = "training")]
+use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
+
 use harper_stats::Stats;
 use serde::Serialize;
+
+mod input;
+use input::Input;
+
+mod annotate_tokens;
+use annotate_tokens::{Annotation, AnnotationType};
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Debug, Parser)]
@@ -28,16 +39,21 @@ use serde::Serialize;
 enum Args {
     /// Lint a provided document.
     Lint {
-        /// The file you wish to grammar check.
-        file: PathBuf,
+        /// The text or file you wish to grammar check. If not provided, it will be read from
+        /// standard input.
+        input: Option<Input>,
         /// Whether to merely print out the number of errors encountered,
         /// without further details.
         #[arg(short, long)]
         count: bool,
         /// Restrict linting to only a specific set of rules.
         /// If omitted, `harper-cli` will run every rule.
-        #[arg(short, long)]
-        only_lint_with: Option<Vec<String>>,
+        #[arg(long, value_delimiter = ',')]
+        ignore: Option<Vec<String>>,
+        /// Restrict linting to only a specific set of rules.
+        /// If omitted, `harper-cli` will run every rule.
+        #[arg(long, value_delimiter = ',')]
+        only: Option<Vec<String>>,
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]
         dialect: Dialect,
@@ -50,16 +66,27 @@ enum Args {
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
-        /// The file you wish to parse.
-        file: PathBuf,
+        /// The text or file you wish to parse. If not provided, it will be read from standard
+        /// input.
+        input: Option<Input>,
     },
     /// Parse a provided document and show the spans of the detected tokens.
     Spans {
-        /// The file you wish to display the spans.
-        file: PathBuf,
+        /// The file or text for which you wish to display the spans. If not provided, it will be
+        /// read from standard input.
+        input: Option<Input>,
         /// Include newlines in the output
         #[arg(short, long)]
         include_newlines: bool,
+    },
+    /// Parse a provided document and annotate its tokens.
+    AnnotateTokens {
+        /// The text or file you wish to parse. If not provided, it will be read from standard
+        /// input.
+        input: Option<Input>,
+        /// How the tokens should be annotated.
+        #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
+        annotation_type: AnnotationType,
     },
     /// Get the metadata associated with a particular word.
     Metadata { word: String },
@@ -76,6 +103,70 @@ enum Args {
         /// The document to mine words from.
         file: PathBuf,
     },
+    #[cfg(feature = "training")]
+    TrainBrillTagger {
+        #[arg(short, long, default_value = "1.0")]
+        candidate_selection_chance: f32,
+        /// The path to write the final JSON model file to.
+        output: PathBuf,
+        /// The number of epochs (and patch rules) to train.
+        epochs: usize,
+        /// Path to a `.conllu` dataset to train on.
+        #[arg(num_args = 1..)]
+        datasets: Vec<PathBuf>,
+    },
+    #[cfg(feature = "training")]
+    TrainBrillChunker {
+        #[arg(short, long, default_value = "1.0")]
+        candidate_selection_chance: f32,
+        /// The path to write the final JSON model file to.
+        output: PathBuf,
+        /// The number of epochs (and patch rules) to train.
+        epochs: usize,
+        /// Path to a `.conllu` dataset to train on.
+        #[arg(num_args = 1..)]
+        datasets: Vec<PathBuf>,
+    },
+    #[cfg(feature = "training")]
+    TrainBurnChunker {
+        #[arg(short, long)]
+        lr: f64,
+        // The number of embedding dimensions
+        #[arg(long)]
+        dim: usize,
+        /// The path to write the final  model file to.
+        #[arg(short, long)]
+        output: PathBuf,
+        /// The number of epochs to train.
+        #[arg(short, long)]
+        epochs: usize,
+        /// The dropout probability
+        #[arg(long)]
+        dropout: f32,
+        #[arg(short, long)]
+        test_file: PathBuf,
+        #[arg(num_args = 1..)]
+        datasets: Vec<PathBuf>,
+    },
+    /// Print harper-core version.
+    CoreVersion,
+    /// Rename a flag in the dictionary and affixes.
+    RenameFlag {
+        /// The old flag.
+        old: String,
+        /// The new flag.
+        new: String,
+        /// The directory containing the dictionary and affixes.
+        dir: PathBuf,
+    },
+    /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
+    /// As long as there's either an open or hyphenated spelling.
+    Compounds,
+    /// Emit a decompressed, line-separated list of the words in Harper's dictionary
+    /// which occur in more than one lettercase variant.    
+    CaseVariants,
+    /// Provided a sentence or phrase, emit a list of each noun phrase contained within.
+    NominalPhrases { input: String },
 }
 
 fn main() -> anyhow::Result<()> {
@@ -85,36 +176,51 @@ fn main() -> anyhow::Result<()> {
 
     match args {
         Args::Lint {
-            file,
+            input,
             count,
-            only_lint_with,
+            ignore,
+            only,
             dialect,
             user_dict_path,
             file_dict_path,
         } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
             let mut merged_dict = MergedDictionary::new();
             merged_dict.add_dictionary(dictionary);
 
+            // Attempt to load user dictionary.
             match load_dict(&user_dict_path) {
                 Ok(user_dict) => merged_dict.add_dictionary(Arc::new(user_dict)),
                 Err(err) => println!("{}: {}", user_dict_path.display(), err),
             }
 
-            let file_dict_path = file_dict_path.join(file_dict_name(&file));
-            match load_dict(&file_dict_path) {
-                Ok(file_dict) => merged_dict.add_dictionary(Arc::new(file_dict)),
-                Err(err) => println!("{}: {}", file_dict_path.display(), err),
+            if let Input::File(ref file) = input {
+                // Only attempt to load file dictionary if input is a file.
+                let file_dict_path = file_dict_path.join(file_dict_name(file));
+                match load_dict(&file_dict_path) {
+                    Ok(file_dict) => merged_dict.add_dictionary(Arc::new(file_dict)),
+                    Err(err) => println!("{}: {}", file_dict_path.display(), err),
+                }
             }
 
-            let (doc, source) = load_file(&file, markdown_options, &merged_dict)?;
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &merged_dict)?;
 
             let mut linter = LintGroup::new_curated(Arc::new(merged_dict), dialect);
 
-            if let Some(rules) = only_lint_with {
+            if let Some(rules) = only {
                 linter.set_all_rules_to(Some(false));
 
                 for rule in rules {
                     linter.config.set_rule_enabled(rule, true);
+                }
+            }
+
+            if let Some(rules) = ignore {
+                for rule in rules {
+                    linter.config.set_rule_enabled(rule, false);
                 }
             }
 
@@ -134,52 +240,57 @@ fn main() -> anyhow::Result<()> {
 
             let primary_color = Color::Magenta;
 
-            let filename = file
-                .file_name()
-                .map(|s| s.to_string_lossy().into())
-                .unwrap_or("<file>".to_string());
+            let input_identifier = input.get_identifier();
 
-            let mut report_builder = Report::build(ReportKind::Advice, &filename, 0);
+            let mut report_builder = Report::build(ReportKind::Advice, &input_identifier, 0);
 
             for lint in lints {
                 report_builder = report_builder.with_label(
-                    Label::new((&filename, lint.span.into()))
+                    Label::new((&input_identifier, lint.span.into()))
                         .with_message(lint.message)
                         .with_color(primary_color),
                 );
             }
 
             let report = report_builder.finish();
-            report.print((&filename, Source::from(source)))?;
+            report.print((&input_identifier, Source::from(source)))?;
 
             process::exit(1)
         }
-        Args::Parse { file } => {
-            let (doc, _) = load_file(&file, markdown_options, &dictionary)?;
+        Args::Parse { input } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, _) = input.load(markdown_options, &dictionary)?;
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
-                println!("{}", json);
+                println!("{json}");
             }
 
             Ok(())
         }
         Args::Spans {
-            file,
+            input,
             include_newlines,
         } => {
-            let (doc, source) = load_file(&file, markdown_options, &dictionary)?;
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &dictionary)?;
 
             let primary_color = Color::Blue;
             let secondary_color = Color::Magenta;
             let unlintable_color = Color::Red;
-            let filename = file
-                .file_name()
-                .map(|s| s.to_string_lossy().into())
-                .unwrap_or("<file>".to_string());
+            let input_identifier = input.get_identifier();
 
-            let mut report_builder =
-                Report::build(ReportKind::Custom("Spans", primary_color), &filename, 0);
+            let mut report_builder = Report::build(
+                ReportKind::Custom("Spans", primary_color),
+                &input_identifier,
+                0,
+            );
             let mut color = primary_color;
 
             for token in doc.tokens().filter(|t| {
@@ -187,7 +298,7 @@ fn main() -> anyhow::Result<()> {
                     || !matches!(t.kind, TokenKind::Newline(_) | TokenKind::ParagraphBreak)
             }) {
                 report_builder = report_builder.with_label(
-                    Label::new((&filename, token.span.into()))
+                    Label::new((&input_identifier, token.span.into()))
                         .with_message(format!("[{}, {})", token.span.start, token.span.end))
                         .with_color(if matches!(token.kind, TokenKind::Unlintable) {
                             unlintable_color
@@ -205,7 +316,36 @@ fn main() -> anyhow::Result<()> {
             }
 
             let report = report_builder.finish();
-            report.print((&filename, Source::from(source)))?;
+            report.print((&input_identifier, Source::from(source)))?;
+
+            Ok(())
+        }
+        Args::AnnotateTokens {
+            input,
+            annotation_type,
+        } => {
+            // Try to read from standard input if `input` was not provided.
+            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+
+            // Load the file/text.
+            let (doc, source) = input.load(markdown_options, &dictionary)?;
+
+            let input_identifier = input.get_identifier();
+
+            let mut report_builder = Report::build(
+                ReportKind::Custom("AnnotateTokens", Color::Blue),
+                &*input_identifier,
+                0,
+            );
+
+            report_builder = report_builder.with_labels(Annotation::iter_labels_from_document(
+                annotation_type,
+                &doc,
+                &input_identifier,
+            ));
+
+            let report = report_builder.finish();
+            report.print((&*input_identifier, Source::from(source)))?;
 
             Ok(())
         }
@@ -216,7 +356,7 @@ fn main() -> anyhow::Result<()> {
                 word_str.clear();
                 word_str.extend(word);
 
-                println!("{:?}", word_str);
+                println!("{word_str:?}");
             }
 
             Ok(())
@@ -260,14 +400,10 @@ fn main() -> anyhow::Result<()> {
             let summary = match &entry_in_dict {
                 Some((dict_word, dict_annot)) => {
                     let mut status_summary = if dict_annot.is_empty() {
-                        format!(
-                            "'{}' is already in the dictionary but not annotated.",
-                            dict_word
-                        )
+                        format!("'{dict_word}' is already in the dictionary but not annotated.")
                     } else {
                         format!(
-                            "'{}' is already in the dictionary with annotation `{}`.",
-                            dict_word, dict_annot
+                            "'{dict_word}' is already in the dictionary with annotation `{dict_annot}`."
                         )
                     };
 
@@ -283,7 +419,7 @@ fn main() -> anyhow::Result<()> {
 
                     status_summary
                 }
-                None => format!("'{}' is not in the dictionary yet.", word),
+                None => format!("'{word}' is not in the dictionary yet."),
             };
 
             println!("{summary}");
@@ -297,7 +433,7 @@ fn main() -> anyhow::Result<()> {
                 let rune_words = format!("1\n{line}");
                 let dict = MutableDictionary::from_rune_files(
                     &rune_words,
-                    include_str!("../../harper-core/affixes.json"),
+                    include_str!("../../harper-core/annotations.json"),
                 )?;
 
                 println!("New, from you:");
@@ -361,6 +497,265 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        Args::CoreVersion => {
+            println!("harper-core v{}", harper_core::core_version());
+            Ok(())
+        }
+        #[cfg(feature = "training")]
+        Args::TrainBrillTagger {
+            datasets: dataset,
+            epochs,
+            output,
+            candidate_selection_chance,
+        } => {
+            let tagger = BrillTagger::train(&dataset, epochs, candidate_selection_chance);
+            fs::write(output, serde_json::to_string_pretty(&tagger)?)?;
+
+            Ok(())
+        }
+        #[cfg(feature = "training")]
+        Args::TrainBrillChunker {
+            datasets,
+            epochs,
+            output,
+            candidate_selection_chance,
+        } => {
+            let chunker = BrillChunker::train(&datasets, epochs, candidate_selection_chance);
+            fs::write(output, serde_json::to_string_pretty(&chunker)?)?;
+            Ok(())
+        }
+        #[cfg(feature = "training")]
+        Args::TrainBurnChunker {
+            datasets,
+            test_file,
+            epochs,
+            dropout,
+            output,
+            lr,
+            dim: embed_dim,
+        } => {
+            let chunker =
+                BurnChunkerCpu::train_cpu(&datasets, &test_file, embed_dim, dropout, epochs, lr);
+            chunker.save_to(output);
+
+            Ok(())
+        }
+        Args::RenameFlag { old, new, dir } => {
+            use serde_json::Value;
+
+            let dict_path = dir.join("dictionary.dict");
+            let affixes_path = dir.join("annotations.json");
+
+            // Validate old and new flags are exactly one Unicode code point (Rust char)
+            // And not characters used for the dictionary format
+            const BAD_CHARS: [char; 3] = ['/', '#', ' '];
+
+            // Then use it like this:
+            if old.chars().count() != 1 || BAD_CHARS.iter().any(|&c| old.contains(c)) {
+                return Err(anyhow!(
+                    "Flags must be one Unicode code point, not / or # or space. Old flag '{old}' is {}",
+                    old.chars().count()
+                ));
+            }
+            if new.chars().count() != 1 || BAD_CHARS.iter().any(|&c| new.contains(c)) {
+                return Err(anyhow!(
+                    "Flags must be one Unicode code point, not / or # or space. New flag '{new}' is {}",
+                    new.chars().count()
+                ));
+            }
+
+            // Load and parse affixes
+            let affixes_string = fs::read_to_string(&affixes_path)
+                .map_err(|e| anyhow!("Failed to read annotations.json: {e}"))?;
+
+            let affixes_json: Value = serde_json::from_str(&affixes_string)
+                .map_err(|e| anyhow!("Failed to parse annotations.json: {e}"))?;
+
+            // Get the nested "affixes" object
+            let affixes_obj = &affixes_json
+                .get("affixes")
+                .and_then(Value::as_object)
+                .ok_or_else(|| anyhow!("annotations.json does not contain 'affixes' object"))?;
+
+            let properties_obj = &affixes_json
+                .get("properties")
+                .and_then(Value::as_object)
+                .ok_or_else(|| anyhow!("annotations.json does not contain 'properties' object"))?;
+
+            // Validate old flag exists and get its description
+            let old_entry = affixes_obj
+                .get(&old)
+                .or_else(|| properties_obj.get(&old))
+                .ok_or_else(|| anyhow!("Flag '{old}' not found in annotations.json"))?;
+
+            let description = old_entry
+                .get("#")
+                .and_then(Value::as_str)
+                .unwrap_or("(no description)");
+
+            println!("Renaming flag '{old}' ({description})");
+
+            // Validate new flag doesn't exist
+            if let Some(new_entry) = affixes_obj.get(&new).or_else(|| properties_obj.get(&new)) {
+                let new_desc = new_entry
+                    .get("#")
+                    .and_then(Value::as_str)
+                    .unwrap_or("(no description)");
+                return Err(anyhow!(
+                    "Cannot rename to '{new}': flag already exists and is used for: {new_desc}"
+                ));
+            }
+
+            // Create backups
+            let backup_dict = format!("{}.bak", dict_path.display());
+            let backup_affixes = format!("{}.bak", affixes_path.display());
+            fs::copy(&dict_path, &backup_dict)
+                .map_err(|e| anyhow!("Failed to create dictionary backup: {e}"))?;
+            fs::copy(&affixes_path, &backup_affixes)
+                .map_err(|e| anyhow!("Failed to create affixes backup: {e}"))?;
+
+            // Update dictionary with proper comment and whitespace handling
+            let dict_content = fs::read_to_string(&dict_path)
+                .map_err(|e| anyhow!("Failed to read dictionary: {e}"))?;
+
+            let updated_dict = dict_content
+                .lines()
+                .map(|line| {
+                    if line.is_empty() || line.starts_with('#') {
+                        return line.to_string();
+                    }
+
+                    let hash_pos = line.find('#').unwrap_or(line.len());
+                    let (entry_part, comment_part) = line.split_at(hash_pos);
+
+                    let slash_pos = entry_part.find('/').unwrap_or(entry_part.len());
+                    let (lexeme, annotation) = entry_part.split_at(slash_pos);
+
+                    format!(
+                        "{}{}{}",
+                        lexeme,
+                        annotation.replace(&old, &new),
+                        comment_part
+                    )
+                })
+                .collect::<Vec<_>>()
+                .join("\n");
+
+            // Update affixes (text-based replacement with context awareness)
+            let updated_affixes_string =
+                affixes_string.replace(&format!("\"{}\":", &old), &format!("\"{}\":", &new));
+
+            // Verify that the updated affixes string is valid JSON
+            serde_json::from_str::<Value>(&updated_affixes_string)
+                .map_err(|e| anyhow!("Failed to parse updated annotations.json: {e}"))?;
+
+            // Write changes
+            fs::write(&dict_path, updated_dict)
+                .map_err(|e| anyhow!("Failed to write updated dictionary: {e}"))?;
+            fs::write(&affixes_path, updated_affixes_string)
+                .map_err(|e| anyhow!("Failed to write updated affixes: {e}"))?;
+
+            println!("Successfully renamed flag '{old}' to '{new}'");
+            println!("  Description: {description}");
+            println!("  Backups created at:\n    {backup_dict}\n    {backup_affixes}");
+
+            Ok(())
+        }
+        Args::Compounds => {
+            let mut compound_map: HashMap<String, Vec<String>> = HashMap::new();
+
+            // First pass: process open and hyphenated compounds
+            for word in dictionary.words_iter() {
+                if !word.contains(&' ') && !word.contains(&'-') {
+                    continue;
+                }
+
+                let normalized_key: String = word
+                    .iter()
+                    .filter(|&&c| c != ' ' && c != '-')
+                    .collect::<String>()
+                    .to_lowercase();
+
+                let word_str = word.iter().collect::<String>();
+                compound_map
+                    .entry(normalized_key)
+                    .or_default()
+                    .push(word_str);
+            }
+
+            // Second pass: process closed compounds
+            for word in dictionary.words_iter() {
+                if word.contains(&' ') || word.contains(&'-') {
+                    continue;
+                }
+
+                let normalized_key: String = word.iter().collect::<String>().to_lowercase();
+                if let Some(variants) = compound_map.get_mut(&normalized_key) {
+                    variants.push(word.iter().collect());
+                }
+            }
+
+            // Process and print results
+            let mut results: Vec<_> = compound_map
+                .into_iter()
+                .filter(|(_, v)| v.len() > 1)
+                .collect();
+            results.sort_by_key(|(k, _)| k.clone());
+
+            // Instead of moving `results` into the for loop, iterate over a reference to it
+            for (normalized, originals) in &results {
+                println!("\nVariants for '{normalized}':");
+                for original in originals {
+                    println!("  - {original}");
+                }
+            }
+
+            println!("\nFound {} compound word groups", results.len());
+            Ok(())
+        }
+        Args::CaseVariants => {
+            let case_bitmask = OrthFlags::LOWERCASE
+                | OrthFlags::TITLECASE
+                | OrthFlags::ALLCAPS
+                | OrthFlags::LOWER_CAMEL
+                | OrthFlags::UPPER_CAMEL;
+            let mut processed_words = HashMap::new();
+            let mut longest_word = 0;
+            for word in dictionary.words_iter() {
+                if let Some(metadata) = dictionary.get_word_metadata(word) {
+                    let orth = metadata.orth_info;
+                    let bits = orth.bits() & case_bitmask.bits();
+
+                    if bits.count_ones() > 1 {
+                        longest_word = longest_word.max(word.len());
+                        // Mask out all bits except the case-related ones before printing
+                        processed_words.insert(
+                            word.to_string(),
+                            OrthFlags::from_bits_truncate(orth.bits() & case_bitmask.bits()),
+                        );
+                    }
+                }
+            }
+            let mut processed_words: Vec<_> = processed_words.into_iter().collect();
+            processed_words.sort_by_key(|(word, _)| word.clone());
+            let longest_num = (processed_words.len() - 1).to_string().len();
+            for (i, (word, orth)) in processed_words.iter().enumerate() {
+                println!("{i:>longest_num$} {word:<longest_word$} : {orth:?}");
+            }
+            Ok(())
+        }
+        Args::NominalPhrases { input } => {
+            let doc = Document::new_markdown_default_curated(&input);
+
+            for phrase in doc.iter_nominal_phrases() {
+                let s =
+                    doc.get_span_content_str(&phrase.span().ok_or(anyhow!("Unable to get span"))?);
+
+                println!("{s}");
+            }
+
+            Ok(())
+        }
     }
 }
 
@@ -371,19 +766,28 @@ fn load_file(
 ) -> anyhow::Result<(Document, String)> {
     let source = std::fs::read_to_string(file)?;
 
-    let parser: Box<dyn harper_core::parsers::Parser> =
-        match file.extension().map(|v| v.to_str().unwrap()) {
-            Some("md") => Box::new(Markdown::default()),
-            Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
-                MarkdownOptions::default(),
-            )),
-            Some("typ") => Box::new(harper_typst::Typst),
-            _ => Box::new(
-                CommentParser::new_from_filename(file, markdown_options)
-                    .map(Box::new)
-                    .ok_or(format_err!("Could not detect language ID."))?,
-            ),
-        };
+    let parser: Box<dyn harper_core::parsers::Parser> = match file
+        .extension()
+        .map(|v| v.to_str().unwrap())
+    {
+        Some("md") => Box::new(Markdown::default()),
+
+        Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
+            MarkdownOptions::default(),
+        )),
+        Some("org") => Box::new(OrgMode),
+        Some("typ") => Box::new(harper_typst::Typst),
+        _ => {
+            if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {
+                Box::new(comment_parser)
+            } else {
+                println!(
+                    "Warning: could not detect language ID; falling back to PlainEnglish parser."
+                );
+                Box::new(PlainEnglish)
+            }
+        }
+    };
 
     Ok((Document::new(&source, &parser, dictionary), source))
 }
@@ -406,11 +810,11 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
         .words_iter()
         .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
 
-    println!(" - {}", word);
+    println!(" - {word}");
 
     for child in children {
         let child_str: String = child.iter().collect();
-        println!(" - {}", child_str);
+        println!(" - {child_str}");
     }
 }
 

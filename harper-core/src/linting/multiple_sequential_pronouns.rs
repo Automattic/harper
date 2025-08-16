@@ -1,17 +1,18 @@
 use super::Suggestion;
-use super::pattern_linter::PatternLinter;
+use super::expr_linter::ExprLinter;
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::linting::LintKind;
-use crate::patterns::{Pattern, SequencePattern, WordSet};
+use crate::patterns::WordSet;
 use crate::{CharStringExt, Lint, Lrc, Token, TokenStringExt};
-use hashbrown::HashSet;
 
 /// Linter that checks if multiple pronouns are being used right after each
 /// other. This is a common mistake to make during the revision process.
 pub struct MultipleSequentialPronouns {
-    pattern: Box<dyn Pattern>,
-    subject_pronouns: HashSet<&'static str>,
-    object_pronouns: HashSet<&'static str>,
-    possessive_adjectives: HashSet<&'static str>,
+    expr: Box<dyn Expr>,
+    subject_pronouns: Lrc<WordSet>,
+    object_pronouns: Lrc<WordSet>,
+    possessive_adjectives: Lrc<WordSet>,
 }
 
 impl MultipleSequentialPronouns {
@@ -19,7 +20,7 @@ impl MultipleSequentialPronouns {
         // Some words occur in multiple positions in the paradigm
         // but this is a set, so it doesn't matter and is much clearer
         let pronouns = Lrc::new(WordSet::new(&[
-            "I", "you", "he", "she", "it", // subject case, singular
+            "i", "you", "he", "she", "it", // subject case, singular
             "me", "you", "him", "her", "it", // object case, singular
             "we", "you", "they", // subject case, plural
             "us", "you", "them", // object case, plural
@@ -30,27 +31,27 @@ impl MultipleSequentialPronouns {
         ]));
 
         // TODO: temporary sets of pronouns - remove when WordMetadata has this info
-        let subject_pronouns = HashSet::from([
-            "I", "you", "he", "she", "it", // subject case, singular
+        let subject_pronouns = Lrc::new(WordSet::new(&[
+            "i", "you", "he", "she", "it", // subject case, singular
             "we", "you", "they", // subject case, plural
-        ]);
+        ]));
 
-        let object_pronouns = HashSet::from([
+        let object_pronouns = Lrc::new(WordSet::new(&[
             "me", "you", "him", "her", "it", // object case, singular
             "us", "you", "them", // object case, plural
-        ]);
+        ]));
 
-        let possessive_adjectives = HashSet::from([
+        let possessive_adjectives = Lrc::new(WordSet::new(&[
             "my", "your", "his", "her", "its", // possessive adjectives, singular
             "our", "your", "their", // possessive adjectives, plural
-        ]);
+        ]));
 
         Self {
-            pattern: Box::new(
-                SequencePattern::default()
+            expr: Box::new(
+                SequenceExpr::default()
                     .then(pronouns.clone())
                     .then_one_or_more(
-                        SequencePattern::default()
+                        SequenceExpr::default()
                             .then_whitespace()
                             .then(pronouns.clone()),
                     ),
@@ -74,16 +75,17 @@ impl MultipleSequentialPronouns {
     }
 }
 
-impl PatternLinter for MultipleSequentialPronouns {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for MultipleSequentialPronouns {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let mut suggestions = Vec::new();
 
         if matched_tokens.len() == 3 {
-            let first_word = matched_tokens[0].span.get_content(source).to_string();
+            let first_word_raw = matched_tokens[0].span.get_content(source).to_string();
+            let first_word = first_word_raw.to_ascii_lowercase();
             let second_word = matched_tokens[2].span.get_content(source).to_string();
             // Bug 578: "I can lend you my car" - if 1st is object and second is possessive adjective, don't lint
             if self.is_object_pronoun(&first_word) && self.is_possessive_adjective(&second_word) {
@@ -91,6 +93,16 @@ impl PatternLinter for MultipleSequentialPronouns {
             }
             // Bug 724: "One told me they were able to begin reading" - if 1st is object ans second is subject, don't lint
             if self.is_object_pronoun(&first_word) && self.is_subject_pronoun(&second_word) {
+                return None;
+            }
+
+            // US is a qualifier meaning American, so uppercase after a possessive is OK.
+            if self.is_possessive_adjective(&first_word) && second_word == "US" {
+                return None;
+            }
+
+            // The same applies to uppercase before a subject pronoun
+            if first_word_raw == "US" && self.is_subject_pronoun(&second_word) {
                 return None;
             }
 
@@ -181,6 +193,42 @@ mod tests {
     fn dont_flag_724() {
         assert_lint_count(
             "One told me they were able to begin reading.",
+            MultipleSequentialPronouns::new(),
+            0,
+        )
+    }
+
+    #[test]
+    fn dont_flag_us() {
+        assert_lint_count(
+            "Take the plunge and pull plug from their US tech.",
+            MultipleSequentialPronouns::new(),
+            0,
+        )
+    }
+
+    #[test]
+    fn dont_flag_my_us_your_us() {
+        assert_lint_count(
+            "My US passport looks different from your US passport.",
+            MultipleSequentialPronouns::new(),
+            0,
+        )
+    }
+
+    #[test]
+    fn dont_flag_subject_after_usa() {
+        assert_lint_count(
+            "And if it’s manufactured in the US it may have more automation.",
+            MultipleSequentialPronouns::new(),
+            0,
+        )
+    }
+
+    #[test]
+    fn dont_flag_case_insensitive_cost_him_his_life() {
+        assert_lint_count(
+            "to the point where it very well likely cost Him his life",
             MultipleSequentialPronouns::new(),
             0,
         )

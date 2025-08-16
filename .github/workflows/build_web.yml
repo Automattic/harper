@@ -25,4 +25,7 @@ jobs:
           layers: false
           containerfiles: |
             Dockerfile
-          build-args: NODE_VERSION=${{ steps.nodenv.outputs.node-version }}-slim
+          build-args: |
+            NODE_VERSION=${{ steps.nodenv.outputs.node-version }}-slim
+          extra-args: |
+            --ulimit nofile=65536:65536

@@ -34,7 +34,7 @@ mod tests {
         json!({
             "affixes": {
                 "A": {
-                    "suffix": false,
+                    "kind": "prefix",
                     "cross_product": true,
                     "replacements": [
                       {
@@ -43,14 +43,11 @@ mod tests {
                         "condition": "."
                       }
                     ],
-                    "adds_metadata": {
-                      "kind": null,
-                      "tense": null
-                    },
-                    "gifts_metadata": {}
+                    "target": [],
+                    "base_metadata": {}
                 },
                 "B": {
-                    "suffix": true,
+                    "kind": "suffix",
                     "cross_product": true,
                     "replacements": [
                       {
@@ -64,13 +61,17 @@ mod tests {
                         "condition": "y"
                       }
                     ],
-                    "adds_metadata": {
-                      "kind": null,
-                      "tense": null
-                    },
-                    "gifts_metadata": {}
+                    "target": [
+                        {
+                            "metadata": {
+                                "noun": {}
+                            }
+                        }
+                    ],
+                    "base_metadata": {}
                 }
-            }
+            },
+            "properties": {}
         })
     });
 
@@ -151,7 +152,7 @@ mod tests {
             &json!({
                 "affixes": {
                     "S": {
-                        "suffix": true,
+                        "kind": "suffix",
                         "cross_product": true,
                         "replacements": [
                           {
@@ -170,17 +171,21 @@ mod tests {
                             "condition": "[^sxzhy]"
                           }
                         ],
-                        "adds_metadata": {
-                            "noun": {
-                                "is_plural": true
+                        "target": [
+                            {
+                                "metadata": {
+                                    "noun": {
+                                        "is_plural": true
+                                    }
+                                }
                             }
-                        },
-                        "gifts_metadata": {
+                        ],
+                        "base_metadata": {
                             "noun": {}
                         }
                     },
                     "M": {
-                        "suffix": true,
+                        "kind": "suffix",
                         "cross_product": true,
                         "replacements": [
                           {
@@ -189,10 +194,11 @@ mod tests {
                             "condition": "."
                           }
                         ],
-                        "adds_metadata": {},
-                        "gifts_metadata": {}
+                        "target": [],
+                        "base_metadata": {}
                     }
-                }
+                },
+                "properties": {}
             })
             .to_string(),
         )

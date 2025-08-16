@@ -1,4 +1,5 @@
-use harper_core::{Masker, MutableDictionary};
+use harper_core::Masker;
+use harper_core::spell::MutableDictionary;
 use harper_tree_sitter::TreeSitterMasker;
 
 pub struct CommentMasker {
@@ -21,10 +22,10 @@ impl CommentMasker {
             Box::new(|text| {
                 text.contains("spellchecker:ignore")
                     || text.contains("spellchecker: ignore")
+                    || text.contains("spell-checker:ignore")
+                    || text.contains("spell-checker: ignore")
                     || text.contains("spellcheck:ignore")
                     || text.contains("spellcheck: ignore")
-                    || text.contains("cspell:ignore")
-                    || text.contains("cspell: ignore")
                     || text.contains("harper:ignore")
                     || text.contains("harper: ignore")
                     || text.starts_with("#!")

@@ -1,12 +1,13 @@
-use crate::{
-    Lrc, Token, TokenStringExt,
-    patterns::{EitherPattern, Pattern, SequencePattern, WordSet},
-};
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::patterns::ModalVerb;
+use crate::{Lrc, Token, TokenStringExt};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct ModalOf {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ModalOf {
@@ -15,48 +16,39 @@ impl Default for ModalOf {
         // Note 2. "had of" has trickier false positives and is less common anyway
         // "The only other report we've had of this kind of problem ..."
         // "The code I had of this used to work fine ..."
-        let modals = ["could", "might", "must", "should", "would"];
-        let mut words = WordSet::new(&modals);
-        modals.iter().for_each(|word| {
-            words.add(&format!("{}n't", word));
-        });
 
         let modal_of = Lrc::new(
-            SequencePattern::default()
-                .then(words)
+            SequenceExpr::default()
+                .then(ModalVerb::default())
                 .then_whitespace()
-                .then_exact_word("of"),
+                .t_aco("of"),
         );
 
-        let ws_course = Lrc::new(
-            SequencePattern::default()
-                .then_whitespace()
-                .then_exact_word("course"),
-        );
+        let ws_course = Lrc::new(SequenceExpr::default().then_whitespace().t_aco("course"));
 
         let modal_of_course = Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then(modal_of.clone())
                 .then(ws_course.clone()),
         );
 
         let anyword_might_of = Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then_any_word()
                 .then_whitespace()
-                .then_exact_word("might")
+                .t_aco("might")
                 .then_whitespace()
-                .then_exact_word("of"),
+                .t_aco("of"),
         );
 
         let anyword_might_of_course = Lrc::new(
-            SequencePattern::default()
+            SequenceExpr::default()
                 .then(anyword_might_of.clone())
                 .then(ws_course.clone()),
         );
 
         Self {
-            pattern: Box::new(EitherPattern::new(vec![
+            expr: Box::new(LongestMatchOf::new(vec![
                 Box::new(anyword_might_of_course),
                 Box::new(modal_of_course),
                 Box::new(anyword_might_of),
@@ -66,9 +58,9 @@ impl Default for ModalOf {
     }
 }
 
-impl PatternLinter for ModalOf {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ModalOf {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_toks: &[Token], source_chars: &[char]) -> Option<Lint> {
@@ -292,5 +284,19 @@ mod tests {
     #[test]
     fn doesnt_catch_to_take_on_the_full_might_of_nato() {
         assert_lint_count("To take on the full might of NATO.", ModalOf::default(), 0);
+    }
+
+    #[test]
+    fn doesnt_catch_mixed_case_of_course() {
+        assert_lint_count(
+            "... for now you could of Course put ...",
+            ModalOf::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn catches_mixed_case_could_of_put() {
+        assert_lint_count("... for now you could of Put ...", ModalOf::default(), 1);
     }
 }

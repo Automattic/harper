@@ -9,17 +9,19 @@ If this happens to you, please open a PR to get them in.
 PR [#343](https://github.com/Automattic/harper/pull/343) is a practical example of the ideas described here.
 
 There are two files you need to worry about.
-[`harper-core/dictionary.dict`](https://github.com/Automattic/harper/blob/master/harper-core/dictionary.dict) and [`harper-core/affixes.json`](https://github.com/Automattic/harper/blob/master/harper-core/affixes.json).
+[`harper-core/dictionary.dict`](https://github.com/Automattic/harper/blob/master/harper-core/dictionary.dict) and [`harper-core/annotations.json`](https://github.com/Automattic/harper/blob/master/harper-core/annotations.json) (formerly `affixes.json`).
 The first is a list of words, tagged with modifiers defined in the second.
 
 For example, all words, such as "move", tagged with `L`, will be expanded to two dictionary entries, "move" and "movement".
-In `affixes.json`, this expansion rule looks like this:
+In `annotations.json`, this expansion rule looks like this:
 
-```js title=affixes.json
+```js title=annotations.json
 {
 	"L": {
+		// A description of the rule.
+		"#": "'-ment' suffix",
         // Denotes that the area of interest is at the _end_ of the base word.
-		"suffix": true,
+		"kind": "suffix",
         // Declare that it is OK to use the result of the expansion with other expansions.
 		"cross_product": true,
         // The actual replacement rules that result in an expansion.
@@ -33,19 +35,17 @@ In `affixes.json`, this expansion rule looks like this:
 			}
 		],
         // The word metadata that should be applied to the expanded word.
-		"adds_metadata": {},
+		"target": {},
         // The word metadata that should be applied to the base word.
-		"gifts_metadata": {}
+		"base_metadata": {}
 	}
 }
 ```
 
 Those familiar with `hunspell` might notice some similarities with their dictionary format.
-The main differences are the [metadata fields.](https://docs.rs/harper-core/latest/harper_core/struct.WordMetadata.html)
+The main differences are the [metadata fields.](https://docs.rs/harper-core/latest/harper_core/word_metadata/struct.WordMetadata.html)
 
-Most words in `dictionary.dict` have simple rules applied to them that result in no expansion, but apply metadata through the `gifts_metadata`.
-Those particular rules are done automatically.
-When adding words to the dictionary, just worry about expansions, not metadata.
+There is a separate section, `properties` that is specifically for special rules that add only metadata to the words they're applied to.
 
 ## Adding Nouns
 

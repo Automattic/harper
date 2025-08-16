@@ -1,20 +1,22 @@
+use crate::expr::ExprExt;
+use crate::expr::SequenceExpr;
 use crate::{
     Document, Token, TokenStringExt,
-    patterns::{NominalPhrase, Pattern, SequencePattern, WordSet},
+    patterns::{NominalPhrase, WordSet},
 };
 
 use super::{Lint, LintKind, Linter, Suggestion};
 
 pub struct NoOxfordComma {
-    pattern: SequencePattern,
+    expr: SequenceExpr,
 }
 
 impl NoOxfordComma {
     pub fn new() -> Self {
         Self {
-            pattern: {
+            expr: {
                 let this = {
-                    let this = SequencePattern::default();
+                    let this = SequenceExpr::default();
                     this.then(NominalPhrase)
                 }
                 .then_comma()
@@ -52,28 +54,12 @@ impl Linter for NoOxfordComma {
         let mut lints = Vec::new();
 
         for sentence in document.iter_sentences() {
-            let mut tok_cursor = 0;
-
-            loop {
-                if tok_cursor >= sentence.len() {
-                    break;
-                }
-
-                let match_len = self
-                    .pattern
-                    .matches(&sentence[tok_cursor..], document.get_source());
-
-                if match_len != 0 {
-                    let lint = self.match_to_lint(
-                        &sentence[tok_cursor..tok_cursor + match_len],
-                        document.get_source(),
-                    );
-
-                    lints.extend(lint);
-                    tok_cursor += match_len;
-                } else {
-                    tok_cursor += 1;
-                }
+            for match_span in self.expr.iter_matches(sentence, document.get_source()) {
+                let lint = self.match_to_lint(
+                    &sentence[match_span.start..match_span.end],
+                    document.get_source(),
+                );
+                lints.extend(lint);
             }
         }
 

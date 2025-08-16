@@ -11,7 +11,7 @@ macro_rules! create_decl_for {
 
             fn [< last_ $thing _index >](&self) -> Option<usize>;
 
-            fn [<iter_ $thing _indices>](&self) -> impl Iterator<Item = usize> + '_;
+            fn [<iter_ $thing _indices>](&self) -> impl DoubleEndedIterator<Item = usize> + '_;
 
             fn [<iter_ $thing s>](&self) -> impl Iterator<Item = &Token> + '_;
         }
@@ -33,7 +33,7 @@ macro_rules! create_fns_for {
                 self.iter().rev().position(|v| v.kind.[<is_ $thing>]()).map(|i| self.len() - i - 1)
             }
 
-            fn [<iter_ $thing _indices>](&self) -> impl Iterator<Item = usize> + '_ {
+            fn [<iter_ $thing _indices>](&self) -> impl DoubleEndedIterator<Item = usize> + '_ {
                 self.iter()
                     .enumerate()
                     .filter(|(_, t)| t.kind.[<is_ $thing>]())
@@ -53,30 +53,31 @@ pub trait TokenStringExt {
     fn first_non_whitespace(&self) -> Option<&Token>;
     /// Grab the span that represents the beginning of the first element and the
     /// end of the last element.
-    fn span(&self) -> Option<Span>;
+    fn span(&self) -> Option<Span<char>>;
 
-    create_decl_for!(word);
-    create_decl_for!(word_like);
-    create_decl_for!(conjunction);
-    create_decl_for!(space);
+    create_decl_for!(adjective);
     create_decl_for!(apostrophe);
-    create_decl_for!(pipe);
-    create_decl_for!(quote);
-    create_decl_for!(number);
     create_decl_for!(at);
+    create_decl_for!(comma);
+    create_decl_for!(conjunction);
+    create_decl_for!(chunk_terminator);
+    create_decl_for!(currency);
     create_decl_for!(ellipsis);
     create_decl_for!(hostname);
-    create_decl_for!(unlintable);
-    create_decl_for!(sentence_terminator);
-    create_decl_for!(paragraph_break);
-    create_decl_for!(chunk_terminator);
-    create_decl_for!(punctuation);
-    create_decl_for!(currency);
     create_decl_for!(likely_homograph);
-    create_decl_for!(comma);
-    create_decl_for!(adjective);
-    create_decl_for!(verb);
+    create_decl_for!(number);
+    create_decl_for!(noun);
+    create_decl_for!(paragraph_break);
+    create_decl_for!(pipe);
     create_decl_for!(preposition);
+    create_decl_for!(punctuation);
+    create_decl_for!(quote);
+    create_decl_for!(sentence_terminator);
+    create_decl_for!(space);
+    create_decl_for!(unlintable);
+    create_decl_for!(verb);
+    create_decl_for!(word);
+    create_decl_for!(word_like);
 
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_;
     fn iter_linking_verbs(&self) -> impl Iterator<Item = &Token> + '_;
@@ -98,31 +99,36 @@ pub trait TokenStringExt {
     /// Get an iterator over token slices that represent the individual
     /// sentences in a document.
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
+
+    /// Get an iterator over mutable token slices that represent the individual
+    /// sentences in a document.
+    fn iter_sentences_mut(&mut self) -> impl Iterator<Item = &'_ mut [Token]> + '_;
 }
 
 impl TokenStringExt for [Token] {
-    create_fns_for!(word);
-    create_fns_for!(word_like);
-    create_fns_for!(hostname);
-    create_fns_for!(conjunction);
-    create_fns_for!(space);
-    create_fns_for!(apostrophe);
-    create_fns_for!(pipe);
-    create_fns_for!(quote);
-    create_fns_for!(number);
-    create_fns_for!(at);
-    create_fns_for!(punctuation);
-    create_fns_for!(ellipsis);
-    create_fns_for!(unlintable);
-    create_fns_for!(sentence_terminator);
-    create_fns_for!(paragraph_break);
-    create_fns_for!(chunk_terminator);
-    create_fns_for!(currency);
-    create_fns_for!(likely_homograph);
-    create_fns_for!(comma);
     create_fns_for!(adjective);
-    create_fns_for!(verb);
+    create_fns_for!(apostrophe);
+    create_fns_for!(at);
+    create_fns_for!(chunk_terminator);
+    create_fns_for!(comma);
+    create_fns_for!(conjunction);
+    create_fns_for!(currency);
+    create_fns_for!(ellipsis);
+    create_fns_for!(hostname);
+    create_fns_for!(likely_homograph);
+    create_fns_for!(noun);
+    create_fns_for!(number);
+    create_fns_for!(paragraph_break);
+    create_fns_for!(pipe);
     create_fns_for!(preposition);
+    create_fns_for!(punctuation);
+    create_fns_for!(quote);
+    create_fns_for!(sentence_terminator);
+    create_fns_for!(space);
+    create_fns_for!(unlintable);
+    create_fns_for!(verb);
+    create_fns_for!(word_like);
+    create_fns_for!(word);
 
     fn first_non_whitespace(&self) -> Option<&Token> {
         self.iter().find(|t| !t.kind.is_whitespace())
@@ -138,7 +144,7 @@ impl TokenStringExt for [Token] {
         if w_idx < u_idx { Some(word) } else { None }
     }
 
-    fn span(&self) -> Option<Span> {
+    fn span(&self) -> Option<Span<char>> {
         let min_max = self
             .iter()
             .flat_map(|v| [v.span.start, v.span.end].into_iter())
@@ -236,5 +242,33 @@ impl TokenStringExt for [Token] {
         };
 
         first_sentence.into_iter().chain(rest).chain(last_sentence)
+    }
+
+    fn iter_sentences_mut(&mut self) -> impl Iterator<Item = &mut [Token]> + '_ {
+        struct SentIter<'a> {
+            rem: &'a mut [Token],
+        }
+
+        impl<'a> Iterator for SentIter<'a> {
+            type Item = &'a mut [Token];
+
+            fn next(&mut self) -> Option<Self::Item> {
+                if self.rem.is_empty() {
+                    return None;
+                }
+                let split = self
+                    .rem
+                    .iter()
+                    .position(|t| t.kind.is_sentence_terminator())
+                    .map(|i| i + 1)
+                    .unwrap_or(self.rem.len());
+                let tmp = core::mem::take(&mut self.rem);
+                let (sent, rest) = tmp.split_at_mut(split);
+                self.rem = rest;
+                Some(sent)
+            }
+        }
+
+        SentIter { rem: self }
     }
 }

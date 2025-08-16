@@ -1,7 +1,21 @@
 <script lang="ts">
 import '../app.css';
+
+import { browser } from '$app/environment';
 import AutomatticLogo from '$lib/AutomatticLogo.svelte';
 import GutterCenter from '$lib/GutterCenter.svelte';
+import posthog from 'posthog-js';
+import { onMount } from 'svelte';
+
+onMount(() => {
+	if (browser) {
+		posthog.init('phc_ghFPi5nkwgxTGU9VEHflX8QCXlfrdxFD4skfb6lpH4y', {
+			api_host: 'https://us.i.posthog.com',
+			persistence: 'sessionStorage',
+			person_profiles: 'always',
+		});
+	}
+});
 
 let names = ['Grammar Guru', 'Grammar Checker', 'Grammar Savior'];
 let displayName = names[Math.floor(Math.random() * names.length)];
@@ -24,7 +38,7 @@ let displayName = names[Math.floor(Math.random() * names.length)];
 		</GutterCenter>
 	</div>
 
-	<div class="w-full flex flex-row justify-center">
+	<div class="w-full flex flex-row justify-center h-12">
 		<a href="https://automattic.com/">
 			<div class="flex items-center">
 				An

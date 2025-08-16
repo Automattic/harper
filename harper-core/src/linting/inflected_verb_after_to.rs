@@ -1,21 +1,17 @@
-use crate::{Dialect, Dictionary, Document, Span, TokenStringExt};
-
 use super::{Lint, LintKind, Linter, Suggestion};
+use crate::spell::Dictionary;
+use crate::{Document, Span, TokenStringExt};
 
 pub struct InflectedVerbAfterTo<T>
 where
     T: Dictionary,
 {
     dictionary: T,
-    dialect: Dialect,
 }
 
 impl<T: Dictionary> InflectedVerbAfterTo<T> {
-    pub fn new(dictionary: T, dialect: Dialect) -> Self {
-        Self {
-            dictionary,
-            dialect,
-        }
+    pub fn new(dictionary: T) -> Self {
+        Self { dictionary }
     }
 }
 
@@ -39,57 +35,89 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
             }
 
             let chars = document.get_span_content(&word.span);
-            let (len, form) = match word.kind {
-                _ if word.kind.is_verb() => match chars {
-                    // breaks the Laravel test at "prior to deploying the application"
-                    // [.., 'i', 'n', 'g'] => (3, "continuous"),
-                    // TODO: needs to handle both -d and -ed (smile-d, frown-ed)
-                    [.., 'e', 'd'] => (2, "past"),
-                    // TODO: needs to handle both -s and -es (throw-s, catch-es)
-                    [.., 's'] => (1, "3rd person singular present"),
-                    _ => continue,
-                },
-                // 3ps pres. verbs currently get wrong metadata from the affix engine!
-                _ if word.kind.is_plural_noun() => match chars {
-                    // TODO: as above, needs to handle both -s and -es
-                    [.., 's'] => (1, "3rd person singular present"), // can use "plural" here for debugging
-                    _ => continue,
-                },
-                _ => continue,
-            };
-            let stem = chars[..chars.len() - len].to_vec();
-            // let dbg_word: String = chars.iter().collect::<String>();
-            // let dbg_stem: String = stem.iter().collect();
-            let Some(md) = self.dictionary.get_word_metadata(&stem) else {
-                // eprintln!(">>>> '{}': Stem '{}' not found", dbg_word, dbg_stem);
-                continue;
-            };
-            if !md.is_verb() {
-                // eprintln!(">>>> '{}': Stem '{}' is not a verb", dbg_word, dbg_stem);
-                continue;
-            }
-            if word.kind.is_plural_noun() && md.is_noun() {
-                // eprintln!(
-                //     ">>>> '{}' is a plural noun. But '{}' is a noun",
-                //     dbg_word, dbg_stem
-                // );
+
+            if chars.len() < 4 {
                 continue;
             }
 
-            lints.push(Lint {
-                span: Span::new(prep.span.start, word.span.end),
-                lint_kind: LintKind::WordChoice,
-                message: format!("This verb seems to be in the {} form.", form).to_string(),
-                suggestions: vec![Suggestion::ReplaceWith(
-                    prep_to
-                        .iter()
-                        .chain([' '].iter())
-                        .chain(stem.iter())
-                        .copied()
-                        .collect(),
-                )],
-                ..Default::default()
-            });
+            let check_stem = |stem: &[char]| {
+                if let Some(metadata) = self.dictionary.get_word_metadata(stem)
+                    && metadata.is_verb()
+                    && !metadata.is_noun()
+                {
+                    return true;
+                }
+                false
+            };
+
+            let mut lint_from_stem = |stem: &[char]| {
+                lints.push(Lint {
+                    span: Span::new(prep.span.start, word.span.end),
+                    lint_kind: LintKind::WordChoice,
+                    message: "The base form of the verb is needed here.".to_string(),
+                    suggestions: vec![Suggestion::ReplaceWith(
+                        prep_to
+                            .iter()
+                            .chain([' '].iter())
+                            .chain(stem.iter())
+                            .copied()
+                            .collect(),
+                    )],
+                    ..Default::default()
+                });
+            };
+
+            #[derive(PartialEq)]
+            enum ToVerbExpects {
+                ExpectsInfinitive,
+                ExpectsNominal,
+            }
+
+            use ToVerbExpects::*;
+
+            let ed_specific_heuristics = || {
+                if let Some(prev) = document.get_next_word_from_offset(pi, -1) {
+                    let prev_chars = document.get_span_content(&prev.span);
+                    if let Some(metadata) = self.dictionary.get_word_metadata(prev_chars) {
+                        // adj: "able" to expects an infinitive verb
+                        // verb: have/had/has/having to expects an infinitive verb
+                        if metadata.is_adjective() || metadata.is_verb() {
+                            return ToVerbExpects::ExpectsInfinitive;
+                        }
+                    }
+                } else {
+                    // Assume a chunk beginning with "to" and a verb in -ed should expect an infinitive verb
+                    return ToVerbExpects::ExpectsInfinitive;
+                }
+                // Default assumption is that "to" is a preposition so a noun etc. should come after it
+                ToVerbExpects::ExpectsNominal
+            };
+
+            if chars.ends_with(&['e', 'd']) {
+                let ed = check_stem(&chars[..chars.len() - 2]);
+                if ed && ed_specific_heuristics() == ExpectsInfinitive {
+                    lint_from_stem(&chars[..chars.len() - 2]);
+                };
+                let d = check_stem(&chars[..chars.len() - 1]);
+                // Add -d specific heuristics when needed
+                if d {
+                    lint_from_stem(&chars[..chars.len() - 1]);
+                };
+            }
+            if chars.ends_with(&['e', 's']) {
+                let es = check_stem(&chars[..chars.len() - 2]);
+                // Add -es specific heuristics when needed
+                if es {
+                    lint_from_stem(&chars[..chars.len() - 2]);
+                };
+            }
+            if chars.ends_with(&['s']) {
+                let s = check_stem(&chars[..chars.len() - 1]);
+                // Add -s specific heuristics when needed
+                if s {
+                    lint_from_stem(&chars[..chars.len() - 1]);
+                };
+            }
         }
         lints
     }
@@ -102,16 +130,14 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
 #[cfg(test)]
 mod tests {
     use super::InflectedVerbAfterTo;
-    use crate::{
-        Dialect, FstDictionary,
-        linting::tests::{assert_lint_count, assert_suggestion_result},
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::spell::FstDictionary;
 
     #[test]
     fn dont_flag_to_check_both_verb_and_noun() {
         assert_lint_count(
             "to check",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
             0,
         );
     }
@@ -120,7 +146,7 @@ mod tests {
     fn dont_flag_to_checks_both_verb_and_noun() {
         assert_lint_count(
             "to checks",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
             0,
         );
     }
@@ -129,23 +155,27 @@ mod tests {
     fn dont_flag_to_cheques_not_a_verb() {
         assert_lint_count(
             "to cheques",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
             0,
         );
     }
 
-    // -ing forms can act as nouns, current heuristics cannot distinguish
-    // #[test]
-    // fn flag_to_checking() {
-    //     assert_lint_count("to checking", InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American), 1);
-    // }
+    #[test]
+    #[ignore = "-ing forms can act as nouns, current heuristics cannot distinguish"]
+    fn flag_to_checking() {
+        assert_lint_count(
+            "to checking",
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
+            1,
+        );
+    }
 
     #[test]
-    fn flag_check_ed() {
+    fn dont_flag_check_ed() {
         assert_lint_count(
             "to checked",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-            1,
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
+            0,
         );
     }
 
@@ -153,7 +183,7 @@ mod tests {
     fn dont_flag_noun_belief_s() {
         assert_lint_count(
             "to beliefs",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
             0,
         );
     }
@@ -162,25 +192,26 @@ mod tests {
     fn dont_flag_noun_meat_s() {
         assert_lint_count(
             "to meats",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
             0,
         );
     }
 
-    // #[test]
-    // fn check_993_suggestions() {
-    //     assert_suggestion_result(
-    //         "A location-agnostic structure that attempts to captures the context and content that a Lint occurred.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-    //         "A location-agnostic structure that attempts to capture the context and content that a Lint occurred.",
-    //     );
-    // }
+    #[test]
+    #[ignore = "can't check yet. 'capture' is noun as well as verb. \"to nouns\" is good English. we can't disambiguate verbs from nouns."]
+    fn check_993_suggestions() {
+        assert_suggestion_result(
+            "A location-agnostic structure that attempts to captures the context and content that a Lint occurred.",
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
+            "A location-agnostic structure that attempts to capture the context and content that a Lint occurred.",
+        );
+    }
 
     #[test]
     fn dont_flag_embarrass_not_in_dictionary() {
         assert_lint_count(
             "Second I'm going to embarrass you for a.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
             0,
         );
     }
@@ -189,75 +220,84 @@ mod tests {
     fn corrects_exist_s() {
         assert_suggestion_result(
             "A valid solution is expected to exists.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
             "A valid solution is expected to exist.",
         );
     }
 
-    // TODO: possible once we can check both catche_s and catch_es
-    // #[test]
-    // fn corrects_es_ending() {
-    //     assert_suggestion_result(
-    //         "I need it to catches every exception.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-    //         "I need it to catch every exception.",
-    //     );
-    // }
+    #[test]
+    #[ignore = "can't check yet. 'catch' is noun as well as verb. 'to nouns' is good English. we can't disambiguate verbs from nouns."]
+    fn corrects_es_ending() {
+        assert_suggestion_result(
+            "I need it to catches every exception.",
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
+            "I need it to catch every exception.",
+        );
+    }
 
-    // TODO: dict has expand with D flag but expanded is not granted verb status
-    // #[test]
-    // fn corrects_ed_ending() {
-    //     assert_suggestion_result(
-    //         "I had to expanded my horizon.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-    //         "I had to expand my horizon.",
-    //     );
-    // }
+    #[test]
+    fn corrects_ed_ending() {
+        assert_suggestion_result(
+            "I had to expanded my horizon.",
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
+            "I had to expand my horizon.",
+        );
+    }
 
-    // TODO: possible once we can check both expir_ed and expire_d
-    // #[test]
-    // fn flags_expire_d() {
-    //     assert_lint_count(
-    //         "I didn't know it was going to expired.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-    //         1,
-    //     );
-    // }
+    #[test]
+    fn flags_expire_d() {
+        assert_lint_count(
+            "I didn't know it was going to expired.",
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
+            1,
+        );
+    }
 
     #[test]
     fn corrects_explain_ed() {
         assert_suggestion_result(
             "To explained the rules to the team.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
             "To explain the rules to the team.",
         );
     }
 
-    // TODO: possible once we can check both explor_ed and explore_d
-    // #[test]
-    // fn corrects_explor_ed() {
-    //     assert_suggestion_result(
-    //         "I went to explored distant galaxies.",
-    //         InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
-    //         "I went to explore distant galaxies.",
-    //     );
-    // }
+    #[test]
+    #[ignore = "can't check yet. surprisingly, 'explore' is noun as well as verb. 'to nouns' is good English. we can't disambiguate verbs from nouns."]
+    fn corrects_explor_ed() {
+        assert_suggestion_result(
+            "I went to explored distant galaxies.",
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
+            "I went to explore distant galaxies.",
+        );
+    }
 
     #[test]
     fn cant_flag_express_ed_also_noun() {
         assert_lint_count(
             "I failed to clearly expressed my point.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
             0,
         );
     }
 
     #[test]
     fn correct_feign_ed() {
+        // adj "able" before "to" works with "to", making "to" part of an infinitive verb
         assert_suggestion_result(
             "I was able to feigned ignorance.",
-            InflectedVerbAfterTo::new(FstDictionary::curated(), Dialect::American),
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
             "I was able to feign ignorance.",
+        );
+    }
+
+    #[test]
+    fn issue_241() {
+        // Hypothesis: when before "to" is not an adj, assume "to" is a preposition
+        assert_lint_count(
+            "Comparison to Expected Results",
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
+            0,
         );
     }
 }

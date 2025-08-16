@@ -1,8 +1,7 @@
 <script lang="ts">
 import CheckMark from '$lib/CheckMark.svelte';
 import Underlines from '$lib/Underlines.svelte';
-import { Card } from 'flowbite-svelte';
-import { Button } from 'flowbite-svelte';
+import { Button, Card } from 'flowbite-svelte';
 import { type Lint, SuggestionKind, type WorkerLinter } from 'harper.js';
 import { fly } from 'svelte/transition';
 import demo from '../../../../demo.md?raw';
@@ -98,7 +97,7 @@ $: superSmall = (w ?? 1024) < 550;
 							class="transition-all overflow-hidden flex flex-col justify-evenly"
 							style={`height: ${focused === i ? `calc(55px * ${lint.suggestion_count() + 1})` : '0px'}`}
 						>
-							<p style="height: 50px" class="text-left text-sm p-0">{lint.message()}</p>
+							<p style="height: 50px" class="text-left text-sm p-0">{@html lint.message_html().replaceAll('<p>', "").replaceAll('<p />', "")}</p>
 							{#each lint.suggestions() as suggestion}
 								<div class="w-full p-[4px]">
 									<Button
@@ -131,7 +130,7 @@ $: superSmall = (w ?? 1024) < 550;
 		>
 			<div class={superSmall ? 'hidden' : ''}>
 				<h1 class={`font-bold p-0 text-base`}>{lints[focused].lint_kind_pretty()}</h1>
-				<p class={`p-0 text-sm`}>{lints[focused].message()}</p>
+				<p class={`p-0 text-sm`}>{@html lints[focused].message_html().replaceAll('<p>', "").replaceAll('<p />', "")}</p>
 			</div>
 			<div class="flex flex-row">
 				{#each lints[focused].suggestions() as suggestion}

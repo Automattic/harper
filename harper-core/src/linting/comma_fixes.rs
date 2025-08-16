@@ -111,7 +111,7 @@ impl Linter for CommaFixes {
     }
 
     fn description(&self) -> &'static str {
-        "Fix common comma errors such as no space after, erroneous space before, etc, Asian commas instead of English commas, etc."
+        "Fix common comma errors such as no space after, erroneous space before, etc., Asian commas instead of English commas, etc."
     }
 }
 

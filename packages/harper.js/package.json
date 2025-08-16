@@ -1,9 +1,9 @@
 {
 	"name": "harper.js",
-	"version": "0.27.0",
+	"version": "0.57.0",
 	"license": "Apache-2.0",
 	"author": "Elijah Potter",
-	"description": "The grammar checker for developers.",
+	"description": "The grammar checker that respects your privacy.",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/automattic/harper.git",
@@ -40,5 +40,7 @@
 	"main": "dist/harper.js",
 	"types": "dist/harper.d.ts",
 	"sideEffects": false,
-	"files": ["dist"]
+	"files": [
+		"dist"
+	]
 }

@@ -33,7 +33,7 @@ fn uncached_inner_new() -> Arc<MutableDictionary> {
     Arc::new(
         MutableDictionary::from_rune_files(
             include_str!("../../dictionary.dict"),
-            include_str!("../../affixes.json"),
+            include_str!("../../annotations.json"),
         )
         .expect("Curated dictionary should be valid."),
     )
@@ -141,7 +141,7 @@ impl Dictionary for MutableDictionary {
         word: &[char],
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult> {
+    ) -> Vec<FuzzyMatchResult<'_>> {
         let misspelled_charslice = word.normalized();
         let misspelled_charslice_lower = misspelled_charslice.to_lower();
 
@@ -196,7 +196,7 @@ impl Dictionary for MutableDictionary {
         word: &str,
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult> {
+    ) -> Vec<FuzzyMatchResult<'_>> {
         let word: Vec<_> = word.chars().collect();
         self.fuzzy_match(&word, max_distance, max_results)
     }
@@ -216,10 +216,10 @@ impl Dictionary for MutableDictionary {
     fn contains_exact_word(&self, word: &[char]) -> bool {
         let normalized = word.normalized();
 
-        if let Some(found) = self.word_map.get_with_chars(normalized.as_ref()) {
-            if found.canonical_spelling.as_ref() == normalized.as_ref() {
-                return true;
-            }
+        if let Some(found) = self.word_map.get_with_chars(normalized.as_ref())
+            && found.canonical_spelling.as_ref() == normalized.as_ref()
+        {
+            return true;
         }
 
         false
@@ -252,7 +252,7 @@ mod tests {
     use hashbrown::HashSet;
     use itertools::Itertools;
 
-    use crate::{Dictionary, MutableDictionary};
+    use crate::spell::{Dictionary, MutableDictionary};
 
     #[test]
     fn curated_contains_no_duplicates() {
@@ -267,15 +267,34 @@ mod tests {
         assert!(dict.contains_word_str("This"));
     }
 
-    // TODO "this" is a determiner when used similarly to "the"
-    // TODO but when used alone it's a "demonstrative pronoun"
-    // TODO Harper previously wrongly classified it as a noun
-    // #[test]
-    // fn this_is_determiner() {
-    //     let dict = MutableDictionary::curated();
-    //     assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
-    //     assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
-    // }
+    #[test]
+    fn this_is_determiner() {
+        let dict = MutableDictionary::curated();
+        assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
+        assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
+    }
+
+    #[test]
+    fn several_is_quantifier() {
+        let dict = MutableDictionary::curated();
+        assert!(
+            dict.get_word_metadata_str("several")
+                .unwrap()
+                .is_quantifier()
+        );
+    }
+
+    #[test]
+    fn few_is_quantifier() {
+        let dict = MutableDictionary::curated();
+        assert!(dict.get_word_metadata_str("few").unwrap().is_quantifier());
+    }
+
+    #[test]
+    fn fewer_is_quantifier() {
+        let dict = MutableDictionary::curated();
+        assert!(dict.get_word_metadata_str("fewer").unwrap().is_quantifier());
+    }
 
     #[test]
     fn than_is_conjunction() {
@@ -376,7 +395,7 @@ mod tests {
 
     #[test]
     fn are_merged_attrs_same_as_spread_attrs() {
-        let curated_attr_list = include_str!("../../affixes.json");
+        let curated_attr_list = include_str!("../../annotations.json");
 
         let merged = MutableDictionary::from_rune_files("1\nblork/DGS", curated_attr_list).unwrap();
         let spread =
@@ -386,5 +405,12 @@ mod tests {
             merged.word_map.into_iter().collect::<HashSet<_>>(),
             spread.word_map.into_iter().collect::<HashSet<_>>()
         );
+    }
+
+    #[test]
+    fn apart_is_not_noun() {
+        let dict = MutableDictionary::curated();
+
+        assert!(!dict.get_word_metadata_str("apart").unwrap().is_noun());
     }
 }

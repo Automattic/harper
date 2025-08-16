@@ -4,8 +4,9 @@ use std::sync::Arc;
 use itertools::Itertools;
 
 use super::Parser;
-use crate::patterns::{PatternExt, SequencePattern};
-use crate::{Dictionary, Lrc, Span, Token, TokenKind, VecExt};
+use crate::expr::{ExprExt, SequenceExpr};
+use crate::spell::Dictionary;
+use crate::{Lrc, Span, Token, TokenKind, VecExt};
 
 /// A parser that wraps any other parser to collapse token strings that match
 /// the pattern `word_word` or `word-word`.
@@ -24,9 +25,9 @@ impl CollapseIdentifiers {
 }
 
 thread_local! {
-    static WORD_OR_NUMBER: Lrc<SequencePattern> = Lrc::new(SequencePattern::default()
+    static WORD_OR_NUMBER: Lrc<SequenceExpr> = Lrc::new(SequenceExpr::default()
                 .then_any_word()
-                .then_one_or_more(SequencePattern::default()
+                .then_one_or_more(SequenceExpr::default()
         .then_case_separator()
         .then_any_word()));
 }
@@ -39,7 +40,8 @@ impl Parser for CollapseIdentifiers {
 
         for tok_span in WORD_OR_NUMBER
             .with(|v| v.clone())
-            .find_all_matches(&tokens, source)
+            .iter_matches(&tokens, source)
+            .collect::<Vec<_>>()
         {
             let start_tok = &tokens[tok_span.start];
             let end_tok = &tokens[tok_span.end - 1];
@@ -59,12 +61,12 @@ impl Parser for CollapseIdentifiers {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+    use crate::spell::{FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
-        FstDictionary, MergedDictionary, MutableDictionary, WordMetadata,
+        WordMetadata,
         parsers::{PlainEnglish, StrParser},
     };
-
-    use super::*;
 
     #[test]
     fn matches_kebab() {
@@ -73,8 +75,8 @@ mod tests {
         assert_eq!(
             WORD_OR_NUMBER
                 .with(|v| v.clone())
-                .find_all_matches(&PlainEnglish.parse(&source), &source)
-                .len(),
+                .iter_matches(&PlainEnglish.parse(&source), &source)
+                .count(),
             1
         );
     }

@@ -35,7 +35,8 @@ export type SerializableTypes =
 	| 'Lint'
 	| 'Span'
 	| 'Array'
-	| 'undefined';
+	| 'undefined'
+	| 'bigint';
 
 /** Serializable argument to a procedure to be run on the web worker. */
 export interface RequestArg {
@@ -119,11 +120,13 @@ export class BinaryModule {
 			case 'boolean':
 			case 'undefined':
 				return { json: JSON.stringify(arg), type: argType };
+			case 'bigint':
+				return { json: arg.toString(), type: argType };
 		}
 
 		if (arg.to_json !== undefined) {
 			const json = arg.to_json();
-			let type: SerializableTypes | undefined = undefined;
+			let type: SerializableTypes | undefined;
 
 			if (arg instanceof Lint) {
 				type = 'Lint';
@@ -158,6 +161,8 @@ export class BinaryModule {
 		const { Lint, Span, Suggestion } = await this.inner;
 
 		switch (requestArg.type) {
+			case 'bigint':
+				return BigInt(requestArg.json);
 			case 'undefined':
 				return undefined;
 			case 'boolean':

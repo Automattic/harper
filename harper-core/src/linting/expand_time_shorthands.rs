@@ -1,12 +1,14 @@
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use std::sync::Arc;
 
-use super::{Lint, LintKind, PatternLinter};
+use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
 use crate::linting::Suggestion;
-use crate::patterns::{EitherPattern, ImpliesQuantity, Pattern, SequencePattern, WordSet};
+use crate::patterns::{ImpliesQuantity, WordSet};
 
 pub struct ExpandTimeShorthands {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl ExpandTimeShorthands {
@@ -16,21 +18,19 @@ impl ExpandTimeShorthands {
         ]));
 
         Self {
-            pattern: Box::new(SequencePattern::default().then(ImpliesQuantity).then(
-                EitherPattern::new(vec![
-                        Box::new(SequencePattern::default().then(hotwords.clone())),
+            expr: Box::new(
+                SequenceExpr::default()
+                    .then(ImpliesQuantity)
+                    .then_longest_of(vec![
+                        Box::new(SequenceExpr::default().then(hotwords.clone())),
                         Box::new(
-                            SequencePattern::default()
+                            SequenceExpr::default()
                                 .then_whitespace()
                                 .then(hotwords.clone()),
                         ),
-                        Box::new(
-                            SequencePattern::default()
-                                .then_hyphen()
-                                .then(hotwords.clone()),
-                        ),
+                        Box::new(SequenceExpr::default().then_hyphen().then(hotwords.clone())),
                     ]),
-            )),
+            ),
         }
     }
 
@@ -56,14 +56,14 @@ impl Default for ExpandTimeShorthands {
     }
 }
 
-impl PatternLinter for ExpandTimeShorthands {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ExpandTimeShorthands {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let offending_span = matched_tokens.last()?.span;
-        let implies_plural = ImpliesQuantity::implies_plurality(matched_tokens, source);
+        let implies_plural = ImpliesQuantity::implies_plurality(matched_tokens.first()?, source);
 
         let offending_text = offending_span.get_content(source);
 
@@ -87,7 +87,7 @@ impl PatternLinter for ExpandTimeShorthands {
             span: offending_span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::ReplaceWith(replacement_chars)],
-            message: format!("Did you mean `{}`?", replacement),
+            message: format!("Did you mean `{replacement}`?"),
             priority: 31,
         })
     }
