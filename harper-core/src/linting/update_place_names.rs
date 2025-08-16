@@ -103,23 +103,23 @@ impl<'a> ExprLinter for UpdatePlaceNames<'a> {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let old_name = toks.span()?.get_content_string(src);
-        let (year, new_name) = self
-            .place_name_mappings
-            .iter()
-            .find_map(|((year, new_name), old_names)| {
-                old_names
-                    .iter()
-                    .any(|n| n == &old_name)
-                    .then_some((year, *new_name))
-            })?;
-        
+        let (year, new_name) =
+            self.place_name_mappings
+                .iter()
+                .find_map(|((year, new_name), old_names)| {
+                    old_names
+                        .iter()
+                        .any(|n| n == &old_name)
+                        .then_some((year, *new_name))
+                })?;
+
         let suggestions = vec![Suggestion::ReplaceWith(new_name.chars().collect())];
-        
+
         let message = match year {
             1.. => format!("This place has been officially known as '{new_name}' since {year}"),
             _ => format!("This place is now officially known as '{new_name}'"),
         };
-    
+
         Some(Lint {
             span: toks.span()?,
             lint_kind: LintKind::WordChoice,
