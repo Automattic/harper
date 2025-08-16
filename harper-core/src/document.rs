@@ -699,15 +699,13 @@ impl Document {
 
             let is_r_and_d_chunk = r.kind.is_word()
                 && r.span.len() == 1
-                && r
-                    .span
+                && r.span
                     .get_content(&self.source)
                     .eq_ignore_ascii_case_chars(&['r'])
                 && and.kind.is_ampersand()
                 && d.kind.is_word()
                 && d.span.len() == 1
-                && d
-                    .span
+                && d.span
                     .get_content(&self.source)
                     .eq_ignore_ascii_case_chars(&['d']);
 
