@@ -207,6 +207,10 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Semicolon))
     }
 
+    pub fn is_ampersand(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Ampersand))
+    }
+
     // Miscellaneous is-methods
 
     /// Checks whether a token is word-like--meaning it is more complex than punctuation and can
