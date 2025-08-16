@@ -139,6 +139,7 @@ impl Document {
         self.condense_latin();
         self.condense_filename_extensions();
         self.condense_tldr();
+        self.condense_r_ampersand_d();
         self.match_quotes();
 
         let chunker = burn_chunker();
@@ -681,6 +682,59 @@ impl Document {
         self.tokens.remove_indices(to_remove);
     }
 
+    /// Condenses "R&D" down to a single word token.
+    fn condense_r_ampersand_d(&mut self) {
+        if self.tokens.len() < 3 {
+            return;
+        }
+
+        let mut to_remove = VecDeque::new();
+        // The number of tokens we look at, minus 1
+        let mut cursor = 2;
+
+        loop {
+            let r = &self.tokens[cursor - 2];
+            let and = &self.tokens[cursor - 1];
+            let d = &self.tokens[cursor];
+
+            let is_r_and_d_chunk = r.kind.is_word()
+                && r.span.len() == 1
+                && r
+                    .span
+                    .get_content(&self.source)
+                    .eq_ignore_ascii_case_chars(&['r'])
+                && and.kind.is_ampersand()
+                && d.kind.is_word()
+                && d.span.len() == 1
+                && d
+                    .span
+                    .get_content(&self.source)
+                    .eq_ignore_ascii_case_chars(&['d']);
+
+            if is_r_and_d_chunk {
+                // Update the first token to be the full "R&D" as a word
+                self.tokens[cursor - 2].span = Span::new(
+                    self.tokens[cursor - 2].span.start,
+                    self.tokens[cursor].span.end,
+                );
+
+                // Mark the ampersand and "d" tokens for removal
+                to_remove.push_back(cursor - 1);
+                to_remove.push_back(cursor);
+            }
+
+            // Skip ahead since we've processed these tokens
+            cursor += 1;
+
+            if cursor >= self.tokens.len() {
+                break;
+            }
+        }
+
+        // Remove the marked tokens in reverse order to maintain correct indices
+        self.tokens.remove_indices(to_remove);
+    }
+
     fn uncached_ellipsis_pattern() -> Lrc<Repeating> {
         let period = SequenceExpr::default().then_period();
         Lrc::new(Repeating::new(Box::new(period), 2))
@@ -1096,5 +1150,37 @@ mod tests {
             .collect_vec();
         assert!(tldrs.len() == 1);
         assert!(tldrs[0].span.get_content_string(&doc.source) == "TL;DRs");
+    }
+
+    #[test]
+    fn condense_r_and_d_caps() {
+        let doc = Document::new_plain_english_curated("R&D");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn condense_r_and_d_mixed_case() {
+        let doc = Document::new_plain_english_curated("R&d");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn condense_r_and_d_lowercase() {
+        let doc = Document::new_plain_english_curated("r&d");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn dont_condense_r_and_d_with_spaces() {
+        let doc = Document::new_plain_english_curated("R & D");
+        assert!(doc.tokens.len() == 5);
+        assert!(doc.tokens[0].kind.is_word());
+        assert!(doc.tokens[1].kind.is_whitespace());
+        assert!(doc.tokens[2].kind.is_ampersand());
+        assert!(doc.tokens[3].kind.is_whitespace());
+        assert!(doc.tokens[4].kind.is_word());
     }
 }
