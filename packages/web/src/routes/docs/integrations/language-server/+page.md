@@ -124,7 +124,7 @@ We _do_ take pull requests or issues for adding words to the static dictionary. 
 | ---------------------- | ---------------------------------------------------------- | ---------------------------------------------- |
 | Quick Fixes            | Suggests fixes for the selected error                      | `Replace with: "contained"`                    |
 | `HarperIgnoreLint`     | Ignores the selected error for the duration of the session | `Ignore Harper error.`                         |
-| `HarperAddToUserDict`  | Adds the selected word to the user dictionary              | `Add "containes" to the global dictionary.`    |
+| `HarperAddToUserDict`  | Adds the selected word to the user dictionary              | `Add "containes" to the user dictionary.`      |
 | `HarperAddToWSDict`    | Adds the selected word to the workspace dictionary         | `Add "containes" to the workspace dictionary.` |
 | `HarperAddToFileDict`  | Adds the selected word to a file-local dictionary          | `Add "containes" to the file dictionary.`      |
 
