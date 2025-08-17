@@ -28732,6 +28732,7 @@ hurler/~Ng
 hurling/~NVg
 hurrah/NVGgd
 hurrahs/NV
+hurray/NgSVGd
 hurricane/~NVgS
 hurried/JVUY
 hurry/~NVdSgG
@@ -29654,6 +29655,7 @@ infectiousness/Nmg
 infelicitous/J
 infer/VdSG
 inference/~NSg
+inferencing/Nmg
 inferential/J
 inferior/~JNgS
 inferiority/Ng
@@ -30950,6 +30952,7 @@ keynote/~NVgZGd>S
 keynoter/Ng
 keypad/NSg
 keypoint/NgS
+keypress/NSg
 keypunch/NVZGgd>S
 keypuncher/Ng
 keyring/NgS
@@ -30961,8 +30964,8 @@ kg/~
 khaki/~NJSg
 khan/~NgS
 kibble/VNdSgG
-kibbutz/~NgS
-kibbutzim/N
+kibbutz/~N0gS
+kibbutzim/N9
 kibitz/VZGd>S
 kibitzer/Ng
 kibosh/NVg
@@ -42007,6 +42010,7 @@ retrovirus/NgS
 retsina/Ng
 returnable/JNSg
 returnee/NSg
+reusability/Nmg
 rev/~VNZvg
 revamping/NVg
 revanchist/JNSg
@@ -50152,6 +50156,7 @@ unknowable/JNg
 unknown/~JNVSg
 unleaded/JVNg
 unless/~C
+unlicense/VGdS
 unlike/~JPNVpB
 unlikely/~JN^
 unlink/NgVSdG
@@ -51255,7 +51260,8 @@ walkies/N
 walking/~VJNg
 walkout/NVSg
 walkover/NgS
-walkthrough/NgS
+walkthrough/N0g
+walkthroughs/N9
 walkway/~NSg
 wall/~NVgdGS
 wallaby/~NSg
@@ -53337,6 +53343,7 @@ first-time/J
 flash point/NgS
 forward-thinking/J
 four-speed/NgS
+frame rate/NgS
 free-form/NJ
 front-line/J
 front man/Ng
