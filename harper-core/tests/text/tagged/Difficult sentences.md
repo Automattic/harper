@@ -408,8 +408,8 @@
 # V/J/C/P N🅪Sg/V+ NPl/V NPr/J/P D$+  NPl/V I/Ddem+ NSg/J+ .
 > She  stood there looking in      the window longingly .
 # ISg+ V     W?    V       NPr/J/P D+  NSg/V+ R         .
-> In      replacing the faucet washers , he       felt    he       was making his     contribution to the environment .
-# NPr/J/P V         D   NSg    W?      . NPr/ISg+ NSg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D   NSg+        .
+> In      replacing the faucet washers , he       felt     he       was making his     contribution to the environment .
+# NPr/J/P V         D   NSg    W?      . NPr/ISg+ N🅪Sg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D   NSg+        .
 > In      trying  to make  amends , she  actually made matters worse    .
 # NPr/J/P NSg/V/J P  NSg/V NPl/V  . ISg+ R        V    NPl/V+  NSg/V/JC .
 > My  aim    in      travelling   there was to find  my  missing friend   .

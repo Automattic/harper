@@ -3736,9 +3736,9 @@ Message: |
     2492 | some of the rooms. Let’s go to Coney Island, old sport. In my car.”
          |                                ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
-  - Replace with: “Cone”
   - Replace with: “Conley”
   - Replace with: “Corey”
+  - Replace with: “Coley”
 
 
 
@@ -3767,9 +3767,9 @@ Message: |
     2562 | Coney Island, or for how many hours he “glanced into rooms” while his house
          | ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
-  - Replace with: “Cone”
   - Replace with: “Conley”
   - Replace with: “Corey”
+  - Replace with: “Coley”
 
 
 

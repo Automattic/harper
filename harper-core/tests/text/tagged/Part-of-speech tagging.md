@@ -153,7 +153,7 @@
 > very broad tags   or    a   much       larger set     of more         precise ones   is preferable , depends
 # J/R  NSg/J NPl/V+ NPr/C D/P NSg/I/J/Dq JC     NPr/V/J P  NPr/I/V/J/Dq V/J+    NPl/V+ VL W?         . NPl/V
 > on  the purpose at    hand   . Automatic tagging is easier on  smaller tag    - sets  .
-# J/P D   NSg/V+  NSg/P NSg/V+ . NSg/J     NSg/V   VL NSg/JC J/P NSg/JC  NSg/V+ . NPl/V .
+# J/P D   N🅪Sg/V+ NSg/P NSg/V+ . NSg/J     NSg/V   VL NSg/JC J/P NSg/JC  NSg/V+ . NPl/V .
 >
 #
 > History

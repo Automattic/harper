@@ -543,7 +543,7 @@
 > compression , cryptography , error  detection and correction , and more         recently
 # NSg+        . NSg          . NSg/V+ N🅪Sg      V/C NSg+       . V/C NPr/I/V/J/Dq R
 > also for network coding . Codes  are studied for the purpose of designing
-# W?   C/P NSg/V+  V+     . NPl/V+ V   V/J     C/P D   NSg/V   P  V
+# W?   C/P NSg/V+  V+     . NPl/V+ V   V/J     C/P D   N🅪Sg/V  P  V
 > efficient and reliable data  transmission methods .
 # NSg/J     V/C NSg/J+   N🅪Pl+ NSg+         NPl/V+  .
 >
@@ -769,7 +769,7 @@
 >
 #
 > Computer architecture , or    digital computer organization , is the conceptual
-# NSg/V+   NᴹSg+        . NPr/C NSg/J+  NSg/V+   NSg+         . VL D   J
+# NSg/V+   NᴹSg+        . NPr/C NSg/J+  NSg/V+   N🅪Sg+        . VL D   J
 > design  and fundamental operational structure of a    computer system . It       focuses
 # N🅪Sg/V+ V/C NSg/J       J           N🅪Sg/V    P  D/P+ NSg/V+   NSg+   . NPr/ISg+ NPl/V
 > largely on  the way    by      which the central processing unit performs internally and
@@ -783,7 +783,7 @@
 > term    " architecture " in      computer literature can    be     traced to the work   of Lyle R.
 # NSg/V/J . NᴹSg+        . NPr/J/P NSg/V+   NᴹSg+      NPr/VX NSg/VX V/J    P  D   N🅪Sg/V P  NPr  ?
 > Johnson and Frederick P. Brooks  Jr     . , members of the Machine Organization
-# NPr     V/C NPr+      ?  NPrPl/V NSg/J+ . . NPl/V   P  D+  NSg/V+  NSg+
+# NPr     V/C NPr+      ?  NPrPl/V NSg/J+ . . NPl/V   P  D+  NSg/V+  N🅪Sg+
 > department in      IBM's main     research center   in      1959 .
 # NSg+       NPr/J/P NSg$  NSg/V/J+ NᴹSg/V+  NSg/V/J+ NPr/J/P #    .
 >
