@@ -537,7 +537,6 @@ mod tests {
         );
     }
 
-    // Low-Latency HLS is a recently standardized variant of the protocol that allows to greatly reduce playback latency.
     #[test]
     fn dont_flag_playback_latency() {
         assert_lint_count(
