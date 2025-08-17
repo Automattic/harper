@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.56.0",
+	"version": "0.57.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -451,6 +451,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "`Beforehand` functions as a fixed adverb meaning ‘in advance’; writing it as two words or with a hyphen is nonstandard and can jar readers."
+				},
+				"harper.linters.BestOfAllTime": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for nonstandard `of all times` in superlatives instead of singular `time`"
 				},
 				"harper.linters.BestRegards": {
 					"scope": "resource",
