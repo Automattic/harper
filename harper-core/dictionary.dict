@@ -18967,6 +18967,7 @@ contrariness/Ng
 contrariwise/
 contrary/~JNVpSg
 contrast/~NVgdGS
+contrastive/J
 contravene/VGdS
 contravention/NSg
 contretemps/Ng
@@ -27430,6 +27431,7 @@ hand's
 handbag/NVSg
 handball/~NwVgS
 handbarrow/NSg
+handbasket/NgS
 handbill/NgS
 handbook/~NgS
 handbrake/~NVS
@@ -41781,7 +41783,8 @@ reputation/~NgS
 reputational/J
 repute/NVdSgGB
 reputed/~VJY
-request/~VNGd>
+request/~VNGdS
+requester/NgS
 requiem/~NSg
 require/~VLdG
 requirement/~NgS
@@ -41978,6 +41981,7 @@ retractile/J
 retraction/~NS
 retrade/VSdG
 retrain/VNdGS
+retransmission/NwgS
 retread/VNd
 retrenchment/NgS
 retribution/~NgS
@@ -41985,7 +41989,7 @@ retributive/J
 retrieval/~NSg
 retrieve/~VNd>SgZGB
 retriever/Ng
-retro/~JNgS
+retro/~JNmgS
 retroactive/~JY
 retrofire/NVJGdS
 retrofit/~VNSg
@@ -49968,7 +49972,7 @@ underspent/V
 understaff/VSdG
 understand/~VSGBz
 understandably/~R
-understanding/~NmJVgY
+understanding/~NwJVgY
 understate/VdSLG
 understatement/NSg
 understood/~JV
@@ -52656,11 +52660,13 @@ Binance/Og
 Bing/Og             # Microsoft product
 BitKeeper/Ng        # version control
 BlasterHacks/Sg
+Bluesky/Og
 Boxster/NOgS        # car model
 Brembo/OgS          # brake company
 Btrfs/Ng            # file system
 BurpSuite/ONgS
 C++/OSg             # programming language
+CAPTCHA/NgS
 CCP/OS              # Chinese Communist Party
 CDMA/NSg
 CDN/NSg             # content delivery network
@@ -52736,6 +52742,7 @@ Expedia/Og
 Exynos/OJg          # Samsung SoC series.
 FAT32/Ng            # file system
 FFI/Ng              # foreign function interface
+FFmpeg/Og
 FIDO/NOSg
 FIFA/Ng             # football/soccer association
 FOV/Ng              # field of view
@@ -52958,6 +52965,7 @@ RPG/NgS             # role-playing game
 RTX/NSg
 Raytheon/Og
 ReactJS/Og
+Red Hat/Og
 Reddit/Og
 Rivian/Sg           # ev company
 Roumania/Og         # pre-WWII spelling
@@ -53142,6 +53150,7 @@ labriola/Sg         # !! please check and comment !! - should be uppercase surna
 linkification/Nmg
 manip/NgS           # gamer slang manipulation
 memecoin/NgS
+multicast/JVSdG
 npm/Og              # node package manager
 nullish/J
 olds/~              # common in phrasing such as "twenty year olds"
@@ -53154,10 +53163,13 @@ preshared/J
 quadtree/NgS        # data structure
 quicksort/NgSVdG    # algo
 raytracer/N         # dictionaries prefer: ray tracer
+redump/VdGS
+remux/VdGS
 reranker/NgS
 roadmap/NgS         # overtook "road map" c. 2000 but not in dictionaries yet
 roguelike/NgS
 royale/~NJSg        # !! please check and comment !! dictionaries only list noun sense type of custard
+runahead/NgS
 s.t./~              # !! please check and comment !!
 sRGB/Og             # colour space
 scatterplot/NVSgG   # dictionaries prefer: scatter plot
@@ -53170,10 +53182,14 @@ sioyek/Sg           # !! please check and comment !!
 stacktrace/SgN      # dictionaries prefer: stack trace
 standup/Sg          # dictionaries prefer: stand-up
 strat/NgS           # gamer slang strategy
+subchannel/NgS
 supersequence/NgS
 tagset/NgS
+terraform/VGdS
+timespan/NgS
 trie/NgS            # data structure
 truthy/J
+unicast/JVSdG
 uptime/NwgS
 vid/NgS             # video
 waitlist/NgS
@@ -53365,6 +53381,7 @@ hard right/Ng
 hard-right/J
 hard-wire/VSdG
 head-scratcher/NgS
+head unit/NgS
 heat-resistant/J
 heavy-duty/J
 heavy-handed/J
@@ -53422,6 +53439,7 @@ left-hand/J
 left-wing/J
 lesser-known/J
 life cycle/NgS
+light gun/NgS
 line break/NgS
 lip gloss/NwgS
 live action/Nmg
@@ -53665,6 +53683,7 @@ walk-through/J
 walkie-talkie/NgS
 Wall Streeter/NgS
 war game/NgS
+warm-up/NgS
 Wayback Machine/Og
 weapons-grade/J
 web API/NgS

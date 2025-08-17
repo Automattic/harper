@@ -491,7 +491,7 @@
 > understand the nature of computation and , as    a   consequence of this
 # V          D   NSg/V  P  NSg         V/C . NSg/R D/P NSg/V       P  I/Ddem
 > understanding , provide more         efficient methodologies .
-# NᴹSg/V/J+     . V       NPr/I/V/J/Dq NSg/J     NPl           .
+# N🅪Sg/V/J+     . V       NPr/I/V/J/Dq NSg/J     NPl           .
 >
 #
 > Theory of computation
@@ -745,7 +745,7 @@
 > component in      areas of software development , which require computational
 # NSg/J     NPr/J/P NPl   P  NᴹSg+    N🅪Sg+       . I/C+  NSg/V   J+
 > understanding . The starting point  in      the late   1940s was Alan Turing's question
-# NᴹSg/V/J+     . D   V        NSg/V+ NPr/J/P D+  NSg/J+ #d    V   NPr  NSg$     NSg/V+
+# N🅪Sg/V/J+     . D   V        NSg/V+ NPr/J/P D+  NSg/J+ #d    V   NPr  NSg$     NSg/V+
 > " Can    computers think ? " , and the question remains effectively unanswered ,
 # . NPr/VX NPl/V+    NSg/V . . . V/C D+  NSg/V+   NPl/V   R           V/J        .
 > although the Turing test   is still   used to assess computer output on  the scale  of

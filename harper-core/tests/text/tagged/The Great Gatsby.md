@@ -3647,7 +3647,7 @@
 > perspiration appeared on  her     upper  lip    . Nevertheless there was a    vague
 # NSg+         V/J      J/P ISg/D$+ NSg/J+ NSg/V+ . W?           +     V   D/P+ NSg/V/J+
 > understanding that          had to be     tactfully broken off       before I    was free    .
-# NᴹSg/V/J+     NSg/I/C/Ddem+ V   P  NSg/VX R         V/J    NSg/V/J/P C/P    ISg+ V   NSg/V/J .
+# N🅪Sg/V/J+     NSg/I/C/Ddem+ V   P  NSg/VX R         V/J    NSg/V/J/P C/P    ISg+ V   NSg/V/J .
 >
 #
 > Every one       suspects himself of at    least one       of the cardinal virtues , and this    is
@@ -9913,7 +9913,7 @@
 > because I    disapproved of him  from beginning to end   . First   he       nodded politely ,
 # C/P     ISg+ V/J         P  ISg+ P    NSg/V/J+  P  NSg/V . NSg/V/J NPr/ISg+ V      R        .
 > and then    his     face   broke   into that         radiant and understanding smile  , as    if    we’d
-# V/C NSg/J/C ISg/D$+ NSg/V+ NSg/V/J P    NSg/I/C/Ddem NSg/J   V/C NᴹSg/V/J+     NSg/V+ . NSg/R NSg/C W?
+# V/C NSg/J/C ISg/D$+ NSg/V+ NSg/V/J P    NSg/I/C/Ddem NSg/J   V/C N🅪Sg/V/J+     NSg/V+ . NSg/R NSg/C W?
 > been  in      ecstatic cahoots on  that         fact all          the time      . His     gorgeous pink     rag   of a
 # NSg/V NPr/J/P NSg/J    NPl/V   J/P NSg/I/C/Ddem NSg+ NSg/I/J/C/Dq D   N🅪Sg/V/J+ . ISg/D$+ J        N🅪Sg/V/J NSg/V P  D/P+
 > suit   made a   bright  spot    of color        against the white     steps  , and I    thought of the
