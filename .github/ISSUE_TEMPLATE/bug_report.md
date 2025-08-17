@@ -24,7 +24,7 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Platform**
-What platform has the issue? Is it in Obsidian, Neovim, or Visual Studio Code? Something else?
+What platform has the issue? Is it in Obsidian, Neovim, Visual Studio Code, Chrome, or Firefox? Something else?
 
 **Additional context**
 Add any other context about the problem here.
