@@ -173,6 +173,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                         &["file", "images", "location", "snapshots"][..]
                     }
                     ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function"][..],
+                    ['p', 'l', 'a', 'y', 'b', 'a', 'c', 'k'] => &["latency"][..],
                     _ => &[],
                 }
                 .contains(
@@ -518,7 +519,6 @@ mod tests {
         );
     }
 
-    // Helm Backup Plugin.
     #[test]
     fn dont_flag_helm_backup_plugin() {
         assert_lint_count(
@@ -528,11 +528,20 @@ mod tests {
         );
     }
 
-    // By the time the `setTimeout` callback function was invoked
     #[test]
     fn dont_flag_callback_function() {
         assert_lint_count(
             "By the time the `setTimeout` callback function was invoked",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    // Low-Latency HLS is a recently standardized variant of the protocol that allows to greatly reduce playback latency.
+    #[test]
+    fn dont_flag_playback_latency() {
+        assert_lint_count(
+            "Low-Latency HLS is a recently standardized variant of the protocol that allows to greatly reduce playback latency.",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
