@@ -21,6 +21,12 @@ impl WordSet {
         }
     }
 
+    pub fn add_chars(&mut self, chars: &[char]) {
+        if !self.words.iter().any(|i| i.as_ref() == chars) {
+            self.words.push(chars.into());
+        }
+    }
+
     pub fn contains(&self, word: &str) -> bool {
         self.words.contains(&word.chars().collect())
     }

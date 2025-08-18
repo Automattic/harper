@@ -1,6 +1,6 @@
 [package]
 name = "harper-core"
-version = "0.56.0"
+version = "0.57.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -10,7 +10,7 @@ repository = "https://github.com/automattic/harper"
 [dependencies]
 blanket = "0.4.0"
 fst = "0.4.7"
-hashbrown = { version = "0.15.4", features = ["serde"] }
+hashbrown = { version = "0.15.5", features = ["serde"] }
 is-macro = "0.3.6"
 itertools = "0.14.0"
 lazy_static = "1.5.0"
@@ -31,7 +31,7 @@ foldhash = "0.1.5"
 strum_macros = "0.27.2"
 strum = "0.27.2"
 ammonia = "4.1.1"
-harper-brill = { path = "../harper-brill", version = "0.56.0" }
+harper-brill = { path = "../harper-brill", version = "0.57.0" }
 bitflags = { version = "2.9.1", features = ["serde"] }
 
 [dev-dependencies]

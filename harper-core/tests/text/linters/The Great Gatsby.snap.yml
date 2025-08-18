@@ -970,7 +970,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bf”
 
 
 
@@ -1063,17 +1063,6 @@ Suggest:
   - Replace with: “smoldering”
   - Replace with: “shouldering”
   - Replace with: “soldering”
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-     731 | nerves of her body were continually smouldering. She smiled slowly and, walking
-     732 | through her husband as if he were a ghost, shook hands with Tom, looking him
-         |                              ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
 
 
 
@@ -1298,7 +1287,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bf”
 
 
 
@@ -1344,17 +1333,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-    1077 | janitor and sent him for some celebrated sandwiches, which were a complete
-         |                                                            ^~~~ Use the contraction or separate the words instead.
-    1078 | supper in themselves. I wanted to get out and walk eastward toward the park
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1078 | supper in themselves. I wanted to get out and walk eastward toward the park
@@ -1395,9 +1373,9 @@ Message: |
     1122 | Daisy! Dai———”
          |        ^~~ Did you mean to spell `Dai` this way?
 Suggest:
-  - Replace with: “Day”
-  - Replace with: “Dad”
   - Replace with: “Dais”
+  - Replace with: “Dab”
+  - Replace with: “Dad”
 
 
 
@@ -2462,7 +2440,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bf”
 
 
 
@@ -2472,7 +2450,7 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Ax”
+  - Replace with: “Aw”
   - Replace with: “Ab”
   - Replace with: “Ac”
 
@@ -2679,7 +2657,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bf”
 
 
 
@@ -3749,16 +3727,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-    2447 | “When I said you were a particular friend of Tom’s, he started to abandon the
-         |                  ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2455 | hard, limited person, who dealt in universal scepticism, and who leaned back
@@ -4224,8 +4192,8 @@ Message: |
     3024 | a source of satisfaction to James Gatz of North Dakota, isn’t easy to say.
          |                                   ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -4235,8 +4203,8 @@ Message: |
     3026 | James Gatz—that was really, or at least legally, his name. He had changed it at
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -4259,8 +4227,8 @@ Message: |
     3029 | on Lake Superior. It was James Gatz who had been loafing along the beach that
          |                                ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -4286,16 +4254,6 @@ Suggest:
   - Replace with: “absorption”
   - Replace with: “abortion”
   - Replace with: “adsorption”
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-    3057 | an outlet for his imagination; they were a satisfactory hint of the unreality of
-         |                                     ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
 
 
 
@@ -4359,8 +4317,8 @@ Message: |
     3079 | To young Gatz, resting on his oars and looking up at the railed deck, that yacht
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -4447,16 +4405,6 @@ Message: |
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-    3123 | They were a party of three on horseback—Tom and a man named Sloane and a pretty
-         |      ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
-
-
-
 Lint:    Repetition (127 priority)
 Message: |
     3135 | uneasy anyhow until he had given them something, realizing in a vague way that
@@ -4509,17 +4457,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3238 | air, a pervading harshness that hadn’t been there before. Or perhaps I had
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-    3235 | in my memory from Gatsby’s other parties that summer. There were the same
-         |                                                             ^~~~ Use the contraction or separate the words instead.
-    3236 | people, or at least the same sort of people, the same profusion of champagne,
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
 
 
 
@@ -4903,8 +4840,8 @@ Message: |
     3640 | “Bles-sed pre-cious,” she crooned, holding out her arms. “Come to your own
          |  ^~~~ Did you mean to spell `Bles` this way?
 Suggest:
-  - Replace with: “B's”
-  - Replace with: “BB's”
+  - Replace with: “Bales”
+  - Replace with: “Bees”
   - Replace with: “BC's”
 
 
@@ -6776,7 +6713,7 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
-  - Replace with: “Cu”
+  - Replace with: “Co”
   - Replace with: “C”
   - Replace with: “Cc”
 
@@ -6788,8 +6725,8 @@ Message: |
          |                                                                 ^~~~ Did you mean to spell `Gatz` this way?
     5353 | from a town in Minnesota. It said only that the sender was leaving immediately
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -6819,8 +6756,8 @@ Message: |
     5385 | After a little while Mr. Gatz opened the door and came out, his mouth ajar, his
          |                          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -6854,8 +6791,8 @@ Message: |
     5396 | “Gatz is my name.”
          |  ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -6865,8 +6802,8 @@ Message: |
     5398 | “—Mr. Gatz. I thought you might want to take the body West.”
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -6913,7 +6850,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bf”
 
 
 
@@ -7043,8 +6980,8 @@ Message: |
          |                                                                   ^~~~ Did you mean to spell `Gatz` this way?
     5560 | up and down excitedly in the hall. His pride in his son and in his son’s
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -7120,8 +7057,8 @@ Message: |
     5629 | then Mr. Gatz and the minister and I in the limousine, and a little later four
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 

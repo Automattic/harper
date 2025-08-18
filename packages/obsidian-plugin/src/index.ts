@@ -1,6 +1,7 @@
 import { Dialect } from 'harper.js';
 import { type App, editorViewField, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg?raw';
+import logoSvgDisabled from '../logo-disabled.svg?raw';
 import packageJson from '../package.json';
 import { HarperSettingTab } from './HarperSettingTab';
 import State from './State';
@@ -39,6 +40,7 @@ export async function logVersionInfo(showNotification: boolean): Promise<void> {
 export default class HarperPlugin extends Plugin {
 	private state: State;
 	private dialectSpan: HTMLSpanElement | null = null;
+	private logo: HTMLSpanElement | null = null;
 
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
@@ -94,6 +96,7 @@ export default class HarperPlugin extends Plugin {
 		const logo = document.createElement('span');
 		logo.style.width = '24px';
 		logo.innerHTML = logoSvg;
+		this.logo = logo;
 		button.appendChild(logo);
 
 		const dialect = document.createElement('span');
@@ -114,6 +117,7 @@ export default class HarperPlugin extends Plugin {
 					.setIcon('documents')
 					.onClick(() => {
 						this.state.toggleAutoLint();
+						this.updateStatusBar();
 					}),
 			);
 
@@ -127,13 +131,21 @@ export default class HarperPlugin extends Plugin {
 		this.addCommand({
 			id: 'harper-toggle-auto-lint',
 			name: 'Toggle automatic grammar checking',
-			callback: () => this.state.toggleAutoLint(),
+			callback: () => {
+				this.state.toggleAutoLint();
+				this.updateStatusBar();
+			},
 		});
 	}
 
-	public updateStatusBar(dialect: Dialect) {
-		if (this.dialectSpan != null) {
-			this.dialectSpan.innerHTML = this.getDialectStatus(dialect);
+	public updateStatusBar(dialect?: Dialect) {
+		if (this.logo != null) {
+			this.logo.innerHTML = this.state.hasEditorLinter() ? logoSvg : logoSvgDisabled;
+		}
+		if (typeof dialect !== 'undefined') {
+			if (this.dialectSpan != null) {
+				this.dialectSpan.innerHTML = this.getDialectStatus(dialect);
+			}
 		}
 	}
 }

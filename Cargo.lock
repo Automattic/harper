@@ -302,7 +302,7 @@ dependencies = [
  "burn-common",
  "burn-tensor",
  "derive-new",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "log",
  "num-traits",
  "portable-atomic",
@@ -349,7 +349,7 @@ dependencies = [
  "derive-new",
  "flate2",
  "half",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "log",
  "num-traits",
  "portable-atomic-util",
@@ -377,7 +377,7 @@ dependencies = [
  "derive-new",
  "futures-lite",
  "half",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "log",
  "num-traits",
  "rand 0.9.2",
@@ -459,7 +459,7 @@ dependencies = [
  "burn-tensor",
  "derive-new",
  "half",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "log",
  "serde",
  "spin",
@@ -472,7 +472,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bf45587016162b5ec6764dd4b79ee43c85d1d04bb4850fccce97fe672c4e6fbb"
 dependencies = [
  "burn-tensor",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "portable-atomic-util",
  "serde",
 ]
@@ -527,7 +527,7 @@ dependencies = [
  "burn-common",
  "burn-ir",
  "burn-tensor",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "log",
  "spin",
 ]
@@ -544,7 +544,7 @@ dependencies = [
  "cubecl",
  "derive-new",
  "half",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "num-traits",
  "rand 0.9.2",
  "rand_distr",
@@ -622,7 +622,7 @@ dependencies = [
  "ahash",
  "cached_proc_macro",
  "cached_proc_macro_types",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "once_cell",
  "thiserror 2.0.12",
  "web-time",
@@ -738,9 +738,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.5.42"
+version = "4.5.43"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ed87a9d530bb41a67537289bafcac159cb3ee28460e0a4571123d2a778a6a882"
+checksum = "50fd97c9dc2399518aa331917ac6f274280ec5eb34e555dd291899745c48ec6f"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -748,9 +748,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.5.42"
+version = "4.5.43"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "64f4f3f3c77c94aff3c7e9aac9a2ca1974a5adf392a8bb751e827d6d127ab966"
+checksum = "c35b5830294e1fa0462034af85cc95225a4cb07092c088c55bda3147cfcd8f65"
 dependencies = [
  "anstream",
  "anstyle",
@@ -1012,7 +1012,7 @@ dependencies = [
  "embassy-time",
  "futures-lite",
  "half",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "log",
  "num-traits",
  "portable-atomic",
@@ -1058,7 +1058,7 @@ dependencies = [
  "derive-new",
  "derive_more 2.0.1",
  "half",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "log",
  "num-traits",
  "paste",
@@ -1140,7 +1140,7 @@ dependencies = [
  "float-ord",
  "fnv",
  "half",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "num-traits",
  "portable-atomic",
  "serde",
@@ -1237,7 +1237,7 @@ dependencies = [
  "derive-new",
  "dirs 6.0.0",
  "foldhash",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "log",
  "md5",
  "serde",
@@ -1276,7 +1276,7 @@ dependencies = [
  "derive-new",
  "derive_more 2.0.1",
  "half",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "log",
  "wgpu",
 ]
@@ -2237,7 +2237,7 @@ checksum = "b89c83349105e3732062a895becfc71a8f921bb71ecbbdd8ff99263e3b53a0ca"
 dependencies = [
  "bitflags 2.9.1",
  "gpu-descriptor-types",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
 ]
 
 [[package]]
@@ -2266,7 +2266,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -2289,7 +2289,7 @@ dependencies = [
  "harper-pos-utils",
  "harper-stats",
  "harper-typst",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "serde",
  "serde_json",
  "strum 0.27.2",
@@ -2298,7 +2298,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2333,7 +2333,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "ammonia",
  "bitflags 2.9.1",
@@ -2343,7 +2343,7 @@ dependencies = [
  "foldhash",
  "fst",
  "harper-brill",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "is-macro",
  "itertools 0.14.0",
  "lazy_static",
@@ -2370,7 +2370,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2381,7 +2381,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2392,7 +2392,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2420,11 +2420,11 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "burn",
  "burn-ndarray",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "is-macro",
  "itertools 0.14.0",
  "lru",
@@ -2439,7 +2439,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2450,7 +2450,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2469,7 +2469,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.56.0"
+version = "0.57.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -2512,9 +2512,9 @@ checksum = "e5274423e17b7c9fc20b6e7e208532f9b19825d82dfd615708b70edd83df41f1"
 
 [[package]]
 name = "hashbrown"
-version = "0.15.4"
+version = "0.15.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5971ac85611da7067dbfcabef3c70ebb5606018acd9e2a3903a0da507521e0d5"
+checksum = "9229cfe53dfd69f0609a49f65461bd93001ea1ef889cd5529dd176593f5338a1"
 dependencies = [
  "allocator-api2",
  "equivalent",
@@ -2795,7 +2795,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fe4cd85333e22411419a0bcae1297d25e58c9443848b11dc6a86fefe8c78a661"
 dependencies = [
  "equivalent",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "serde",
 ]
 
@@ -3007,7 +3007,7 @@ version = "0.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "86ea4e65087ff52f3862caff188d489f1fab49a0cb09e01b2e3f1a617b10aaed"
 dependencies = [
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
 ]
 
 [[package]]
@@ -3187,7 +3187,7 @@ dependencies = [
  "cfg_aliases",
  "codespan-reporting",
  "half",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "hexf-parse",
  "indexmap",
  "log",
@@ -4370,9 +4370,9 @@ checksum = "56199f7ddabf13fe5074ce809e7d3f42b42ae711800501b5b16ea82ad029c39d"
 
 [[package]]
 name = "slab"
-version = "0.4.10"
+version = "0.4.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "04dc19736151f35336d325007ac991178d504a119863a2fcb3758cdb5e52c50d"
+checksum = "7a2ae44ef20feb57a68b23d846850f861394c2e02dc425a50098ae8c90267589"
 
 [[package]]
 name = "slotmap"
@@ -4935,9 +4935,9 @@ checksum = "121c2a6cda46980bb0fcd1647ffaf6cd3fc79a013de288782836f6df9c48780e"
 
 [[package]]
 name = "tower-lsp-server"
-version = "0.22.0"
+version = "0.22.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "76cd168c085174eafa7492a519715f2d59436dc28cdfd9d13a5b864246899db9"
+checksum = "88f3f8ec0dcfdda4d908bad2882fe0f89cf2b606e78d16491323e918dfa95765"
 dependencies = [
  "bytes",
  "dashmap",
@@ -5253,9 +5253,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-solidity"
-version = "1.2.12"
+version = "1.2.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "92f0b44ef36f0779873ec118f2cbad31cfc18d6ae7ba48ce75d5ce09870884d1"
+checksum = "4eacf8875b70879f0cb670c60b233ad0b68752d9e1474e6c3ef168eea8a90b25"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -5659,7 +5659,7 @@ dependencies = [
  "bitflags 2.9.1",
  "cfg_aliases",
  "document-features",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "js-sys",
  "log",
  "naga",
@@ -5689,7 +5689,7 @@ dependencies = [
  "bitflags 2.9.1",
  "cfg_aliases",
  "document-features",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "indexmap",
  "log",
  "naga",
@@ -5756,7 +5756,7 @@ dependencies = [
  "gpu-alloc",
  "gpu-allocator",
  "gpu-descriptor",
- "hashbrown 0.15.4",
+ "hashbrown 0.15.5",
  "js-sys",
  "khronos-egl",
  "libc",
