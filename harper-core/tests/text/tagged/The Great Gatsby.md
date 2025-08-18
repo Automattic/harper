@@ -6198,8 +6198,8 @@
 # V/C NSg+   . NPr/ISg+ V   R          NSg/J P  NPr  NSg/I/C/Ddem+ NPr    NSg/V NSg/I/J/C NPr/I/J/Dq . R
 > in      the course of gay      parties women used to rub   champagne into his     hair    ; for
 # NPr/J/P D   NSg/V  P  NPr/V/J+ NPl/V+  NPl+  V/J  P  NSg/V N🅪Sg/V/J+ P    ISg/D$+ N🅪Sg/V+ . C/P
-> himself he       formed the habit of letting liquor alone .
-# ISg+    NPr/ISg+ V/J    D   NSg/V P  NSg/V   NSg/V+ J     .
+> himself he       formed the habit of letting liquor  alone .
+# ISg+    NPr/ISg+ V/J    D   NSg/V P  NSg/V   N🅪Sg/V+ J     .
 >
 #
 > And it       was from Cody that         he       inherited money   — a   legacy of twenty - five thousand
@@ -10046,8 +10046,8 @@
 # IPl+ V   N🅪Sg+      NPr/J/P V        D   NSg/V+ . NPr+      . ISg+ NSg/V NSg/VX V/J    ISg/D$+
 > rule   against drinking that          night   , for when    she  arrived she  was stupid with
 # NSg/V+ C/P     V        NSg/I/C/Ddem+ N🅪Sg/V+ . C/P NSg/I/C ISg+ V/J     ISg+ V   NSg/J  P
-> liquor and unable  to understand that         the ambulance had already gone  to Flushing .
-# NSg/V+ V/C NSg/V/J P  V          NSg/I/C/Ddem D+  NSg/V+    V   W?      V/J/P P  V        .
+> liquor  and unable  to understand that         the ambulance had already gone  to Flushing .
+# N🅪Sg/V+ V/C NSg/V/J P  V          NSg/I/C/Ddem D+  NSg/V+    V   W?      V/J/P P  V        .
 > When    they convinced her     of this    , she  immediately fainted , as    if    that          was the
 # NSg/I/C IPl+ V/J       ISg/D$+ P  I/Ddem+ . ISg+ R           V/J     . NSg/R NSg/C NSg/I/C/Ddem+ V   D
 > intolerable part    of the affair . Some     one       , kind   or    curious , took her     in      his     car
@@ -10920,8 +10920,8 @@
 # V/J     NSg/I/C/Ddem NPr/ISg+ V   V   NSg/I+ NPr/ISg+ V/J      . C       . NSg/I/C/Ddem+ V   D$+ NSg/V+ . C/P NPr/ISg+ V
 > one       of those  who    used to sneer most       bitterly at    Gatsby on  the courage of
 # NSg/I/V/J P  I/Ddem NPr/I+ V/J  P  NSg/V NSg/I/J/Dq R        NSg/P NPr    J/P D   NSg/V   P
-> Gatsby’s liquor , and I    should have   known better    than to call  him  .
-# NSg$     NSg/V+ . V/C ISg+ VX     NSg/VX V/J   NSg/VX/JC C/P  P  NSg/V ISg+ .
+> Gatsby’s liquor  , and I    should have   known better    than to call  him  .
+# NSg$     N🅪Sg/V+ . V/C ISg+ VX     NSg/VX V/J   NSg/VX/JC C/P  P  NSg/V ISg+ .
 >
 #
 > The morning of the funeral I    went  up        to New      York to see   Meyer Wolfshiem ; I

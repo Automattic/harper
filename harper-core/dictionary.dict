@@ -1667,6 +1667,7 @@ CNS/Ng
 CO/ONVg             # US state (Colorado)
 COBOL/OSg           # programming language
 COD/ON
+COFF/ONg            # common object file format
 COL/ON
 COLA/NO
 COVID/N             # virus
@@ -17949,7 +17950,7 @@ codding/VJ
 coddle/VNdSG
 code/~NwVeZGd>S
 code's
-codebase/NS
+codebase/NgS
 codec/NgS
 codefendant/NSg
 codeine/Nmg
@@ -18269,6 +18270,7 @@ commendatory/JN
 commensurable/J
 commensurate/JViY
 comment/~NVGSgd
+commentariat/NSg
 commentary/~NwSg
 commentate/VdSG
 commentator/~NSg
@@ -25878,6 +25880,7 @@ futurology/Ng
 futz/NVdSG
 fuzz/~NVgdSG
 fuzzball/NS
+fuzzer/NSg
 fuzzily/R
 fuzziness/Ng
 fuzzy/~JNp^>S
@@ -26559,7 +26562,8 @@ glycerine/Ng!@_
 glycerol/~Ng
 glycogen/~Ng
 glycol/~N
-glyph/N
+glyph/N0
+glyphs/N9
 gm/~N
 gnarl/NVJSgdG
 gnarly/J^>
@@ -31094,6 +31098,7 @@ kleptocratic/J
 kleptomania/Ng
 kleptomaniac/NSg
 kludge/NVGdS
+kludgy/J
 kluge/~NVdS
 klutz/NgS
 klutziness/Ng
@@ -32004,18 +32009,18 @@ lipstick/~NwVgdSG
 liq/
 liquefaction/~Ng
 liquefy/VdSG
-liqueur/NVSg
+liqueur/NwVSg
 liquid/~NwJgS
 liquidate/VJXGndS
 liquidation/~Nmg
 liquidator/NgS
 liquidise/VZGd>S!_
-liquidiser/Ng!_
+liquidiser/Nwg!_
 liquidity/~Nmg
 liquidize/VZGd>S
-liquidizer/Ng
-liquor/~NVgdGS
-liquorice/Ng!_
+liquidizer/Nwg
+liquor/~NwVgdGS
+liquorice/Nmg!_
 lira/~N0g
 lire/~N9
 lisle/~Ng
@@ -32028,6 +32033,7 @@ listed/~VJU
 listeme/NgS
 listen/~VNBgd>ZG
 listener/~Ng
+lister/NgS
 listeria/N
 listing/~JVNg
 listless/JYp
@@ -32037,7 +32043,7 @@ litany/NSg
 litchi/NgS
 lite/~JNV
 liter/~Ng
-literacy/~Ng
+literacy/~Nmg
 literal/~JNSgYp
 literalness/Nmg
 literariness/Nmg
@@ -32048,20 +32054,20 @@ literature/~Nmg
 lithe/JVN>pY^
 litheness/Nmg
 lithesome/J
-lithium/~Ng
+lithium/~Nmg
 lithograph/NVgd>ZG
 lithographer/Ng
 lithographic/JQ
 lithographs/NV
-lithography/~Ng
+lithography/~Nmg
 lithosphere/NSg
 litigant/NJSg
 litigate/VdSGn>r
-litigation/~Ng
+litigation/~Nmg
 litigator/NgS
 litigious/Jp
-litigiousness/Ng
-litmus/Ng
+litigiousness/Nmg
+litmus/Nmg
 litotes/Ng
 litre/NSg!@_
 litter/~NVJgd>SZG
@@ -34726,6 +34732,7 @@ multitasking/VNg
 multithreading/Nmg
 multitude/~NSg
 multitudinous/J
+multiuser/J
 multivariate/JN
 multiverse/~NSg
 multivitamin/NJgS
@@ -41028,6 +41035,8 @@ rasp/NVGgdS
 raspberry/~NwJVSg
 raspy/J>^
 raster/~NV
+rasterise/VSdG!_
+rasterize/VSdG
 rasterization/NwgS
 rat/~NVSg
 ratatouille/Ng
@@ -48106,22 +48115,23 @@ text/~NwVWgS
 textbased/J
 textbook/~NJSg
 texted/V
-textile/~NJgS
-texting/VN
+textile/~NwJgS
+texting/VNm
 textual/~JWY
+textualization/NwgS
 textural/J
 texture/~NVgGdS
-thalami/N
-thalamus/Ng
-thalidomide/Ng
-thallium/Ng
+thalami/N9
+thalamus/N0g
+thalidomide/Nmg
+thallium/Nmg
 than/~CP
 thane/NSg
 thank/~NVSdG
 thankful/JYp
-thankfulness/Ng
+thankfulness/Nmg
 thankless/JpY
-thanklessness/Ng
+thanklessness/Nmg
 thanksgiving/~NSg
 that/~CIgDM
 that'd/
@@ -50096,7 +50106,7 @@ unidirectional/JN
 unification/~NwSrg
 unifier/NgS
 uniform/~NJVSgdYG
-uniformity/~Ng
+uniformity/~Nmg
 unify/~VrGdSn
 unignorable/J
 unilateral/~JY
@@ -50106,6 +50116,7 @@ unimpressive/J
 uninflected/J
 uninformative/J
 uninhibited/JY
+uninstallation/NSg
 uninsurable/J
 uninsured/JN
 unintelligent/J
@@ -50120,7 +50131,7 @@ union/~NVJrSg
 unionism/Nmg
 unionist/~JNgS
 unique/~JNY^>p
-uniqueness/~Ng
+uniqueness/~Nmg
 unironic/JQ
 unisex/JNg
 unison/~Ng
@@ -50315,6 +50326,7 @@ unwelcome/~JVG
 unwell/J
 unwieldiness/Ng
 unwieldy/~J^>p
+unwinder/NSg
 unwise/J>Y^
 unworried/J
 unworthy/~JN^
@@ -52740,6 +52752,7 @@ Ethereum/Og         # digital currency
 Evo/OgS             # car model
 Expedia/Og
 Exynos/OJg          # Samsung SoC series.
+FAANG/NSg           # Facebook, Amazon, Apple, Netflix, Google
 FAT32/Ng            # file system
 FFI/Ng              # foreign function interface
 FFmpeg/Og
@@ -52756,9 +52769,13 @@ Foddy/Sg
 Forgejo/gO          # programming forge / git host
 Frankl/Sg
 FreeBSD/Og          # operating system
+FreeType/ONg        # typography library
 GLFW/Og
 GPIO/Ng             # general purpose input/output
 GPL/Og              # GNU General Public License
+GPLv1/Og
+GPLv2/Og
+GPLv3/Og
 GPT/NSg             # generative pre-trained transformer
 GPU/NS              # graphics processing unit
 GSM/OJ              # Global System for Mobile Communications
@@ -52903,6 +52920,7 @@ Neo4J/ONg
 Neovim/g            # code editor
 NetBSD/Og           # operating system
 Netlify/gO          # cloud
+Next.js/ONg         # framework
 Nikolay/Sg
 NixOS/gO
 NoSQL/N
@@ -52952,6 +52970,7 @@ Q1
 Q2
 Q3
 Q4
+QQ/NSg              # instant messaging app
 QUERTY/Sg           # !! mistake for QWERTY? !!
 QUIC/OSg
 Qin/OSg
@@ -53505,7 +53524,7 @@ Old World/Og
 old-world/J
 on-off/J
 once-in-a-lifetime/J
-one another/I
+one another/Ig
 one-handed/J
 one-man/J
 one-off/J
@@ -53638,6 +53657,7 @@ susses out/V
 sussing out/V
 ta-da
 tai chi/Nmg
+Tailwind CSS/ONg    # framework
 take-home/JNgS
 tax-exempt/J
 tech-savvy/J
