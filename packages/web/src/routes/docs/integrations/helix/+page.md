@@ -47,6 +47,7 @@ diagnosticSeverity = "hint"
 isolateEnglish = false
 dialect = "American"
 maxFileLength = 120000
+ignoredLintsPath = []
 
 [language-server.harper-ls.config.harper-ls.linters]
 SpellCheck = true

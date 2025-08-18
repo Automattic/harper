@@ -61,7 +61,8 @@ Additionally, you can also configure things like which linters to use or how you
                             :diagnosticSeverity "hint"
                             :isolateEnglish :json-false
                             :dialect "American"
-                            :maxFileLength 120000)))
+                            :maxFileLength 120000
+                            :ignoredLintsPath [])))
 ```
 
 :::note

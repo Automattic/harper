@@ -104,8 +104,8 @@
 # W?    NSg/V NSg/I+  NSg/J/P D   NSg/V P  NPr/V+ .
 > We   will   send  it       by      the first   week  of July .
 # IPl+ NPr/VX NSg/V NPr/ISg+ NSg/J/P D   NSg/V/J NSg/J P  NPr+ .
-> The matter     was decided by      the chairman .
-# D+  N🅪Sg/V/JC+ V   NSg/V/J NSg/J/P D+  NSg/V+   .
+> The matter  was decided by      the chairman .
+# D+  N🅪Sg/V+ V   NSg/V/J NSg/J/P D+  NSg/V+   .
 > The boat   was swamped by      the water   .
 # D+  NSg/V+ V   V/J     NSg/J/P D+  N🅪Sg/V+ .
 > He       was protected by      his     body   armour      .
@@ -408,8 +408,8 @@
 # V/J/C/P N🅪Sg/V+ NPl/V NPr/J/P D$+  NPl/V I/Ddem+ NSg/J+ .
 > She  stood there looking in      the window longingly .
 # ISg+ V     W?    V       NPr/J/P D+  NSg/V+ R         .
-> In      replacing the faucet washers , he       felt    he       was making his     contribution to the environment .
-# NPr/J/P V         D   NSg    W?      . NPr/ISg+ NSg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D   NSg+        .
+> In      replacing the faucet washers , he       felt     he       was making his     contribution to the environment .
+# NPr/J/P V         D   NSg    W?      . NPr/ISg+ N🅪Sg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D   NSg+        .
 > In      trying  to make  amends , she  actually made matters worse    .
 # NPr/J/P NSg/V/J P  NSg/V NPl/V  . ISg+ R        V    NPl/V+  NSg/V/JC .
 > My  aim    in      travelling   there was to find  my  missing friend   .
