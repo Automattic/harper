@@ -80,7 +80,7 @@ If none of the previous installation methods are available to you, we also provi
 
 ### User Dictionary
 
-Each user of `harper-ls` has their own dictionary, which by default, is located at the following paths on each operating system:
+Each user of `harper-ls` has their own dictionary, created on-demand the first time that a word is added to it, which by default, is located at the following paths on each operating system:
 
 | Operating System |                                                                                Location |
 | :--------------- | --------------------------------------------------------------------------------------: |
@@ -124,7 +124,7 @@ We _do_ take pull requests or issues for adding words to the static dictionary. 
 | ---------------------- | ---------------------------------------------------------- | ---------------------------------------------- |
 | Quick Fixes            | Suggests fixes for the selected error                      | `Replace with: "contained"`                    |
 | `HarperIgnoreLint`     | Ignores the selected error for the duration of the session | `Ignore Harper error.`                         |
-| `HarperAddToUserDict`  | Adds the selected word to the user dictionary              | `Add "containes" to the global dictionary.`    |
+| `HarperAddToUserDict`  | Adds the selected word to the user dictionary              | `Add "containes" to the user dictionary.`      |
 | `HarperAddToWSDict`    | Adds the selected word to the workspace dictionary         | `Add "containes" to the workspace dictionary.` |
 | `HarperAddToFileDict`  | Adds the selected word to a file-local dictionary          | `Add "containes" to the file dictionary.`      |
 
@@ -261,6 +261,7 @@ These configs are under the `markdown` key:
 | `isolateEnglish`     | `boolean`                                               | `false`       | In documents that are a mixture of English and another language, only lint English text. This feature is incredibly new and unstable. Do not expect it to work perfectly. |
 | `dialect`            | `"American"`, `"British"`, `"Australian"`, `"Canadian"` | `"American"`  | Set the dialect of English Harper should expect.                                                                                                                          |
 | `maxFileLength`      | `number`                                                | `120000`      | Maximum length of file to be linted (in bytes). If a file is larger/longer than this, it will not be linted.                                                              |
+| `excludePatterns`    | `array`                                                 | `[]`          | A set of globs to ignore. If a file matches any of the globs, it will not be linted.                                                                                      |
 
 ## Supported Languages
 

@@ -1,8 +1,5 @@
-use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::expr::SpelledNumberExpr;
-use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
+use crate::expr::{DurationExpr, Expr, LongestMatchOf, SequenceExpr};
+use crate::{Lrc, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -27,21 +24,11 @@ pub struct SinceDuration {
 
 impl Default for SinceDuration {
     fn default() -> Self {
-        let units = WordSet::new(&[
-            "minute", "minutes", "hour", "hours", "day", "days", "week", "weeks", "month",
-            "months", "year", "years",
-        ]);
-
         let pattern_without_ago = Lrc::new(
             SequenceExpr::default()
                 .then_any_capitalization_of("since")
                 .then_whitespace()
-                .then_longest_of(vec![
-                    Box::new(SpelledNumberExpr),
-                    Box::new(SequenceExpr::default().then_number()),
-                ])
-                .then_whitespace()
-                .then(units),
+                .then(DurationExpr),
         );
 
         let pattern_with_ago = SequenceExpr::default()
