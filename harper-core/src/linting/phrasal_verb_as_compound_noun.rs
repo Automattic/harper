@@ -174,6 +174,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                     }
                     ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function"][..],
                     ['p', 'l', 'a', 'y', 'b', 'a', 'c', 'k'] => &["latency"][..],
+                    ['w', 'o', 'r', 'k', 'o', 'u', 't'] => &["constraints", "preference"][..],
                     _ => &[],
                 }
                 .contains(
@@ -541,6 +542,24 @@ mod tests {
     fn dont_flag_playback_latency() {
         assert_lint_count(
             "Low-Latency HLS is a recently standardized variant of the protocol that allows to greatly reduce playback latency.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_workout_constraints() {
+        assert_lint_count(
+            "Workout constraints",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_workout_preference() {
+        assert_lint_count(
+            "Workout preference",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
