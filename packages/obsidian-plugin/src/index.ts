@@ -7,11 +7,7 @@ import { HarperSettingTab } from './HarperSettingTab';
 import State from './State';
 
 async function getLatestVersion(): Promise<string> {
-	const response = await fetch('https://writewithharper.com/latestversion', {
-		headers: {
-			'Harper-Version': packageJson.version,
-		},
-	});
+	const response = await fetch('https://writewithharper.com/latestversion');
 
 	if (!response.ok) {
 		throw new Error(`HTTP error! status: ${response.status}`);
