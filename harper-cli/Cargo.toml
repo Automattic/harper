@@ -6,7 +6,7 @@ publish = false
 repository = "https://github.com/automattic/harper"
 
 [dependencies]
-anyhow = "1.0.98"
+anyhow = "1.0.99"
 ariadne = "0.4.1"
 clap = { version = "4.5.43", features = ["derive", "string"] }
 harper-stats = { path = "../harper-stats", version = "0.57.0" }
