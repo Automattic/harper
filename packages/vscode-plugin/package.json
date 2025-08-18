@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.57.0",
+	"version": "0.58.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -119,6 +119,11 @@
 					"default": "information",
 					"description": "How severe do you want diagnostics to appear in the editor?"
 				},
+				"harper.excludePatterns": {
+					"scope": "resource",
+					"type": "array",
+					"description": "A set of globs to ignore. If a file matches any of the globs, it will not be linted."
+				},
 				"harper.fileDictPath": {
 					"scope": "resource",
 					"type": "string",
@@ -145,7 +150,7 @@
 				"harper.userDictPath": {
 					"scope": "resource",
 					"type": "string",
-					"description": "Optional path to a global dictionary file to use."
+					"description": "Optional path to a user dictionary file to use."
 				},
 				"harper.workspaceDictPath": {
 					"scope": "resource",
