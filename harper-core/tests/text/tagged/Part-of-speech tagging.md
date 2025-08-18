@@ -153,7 +153,7 @@
 > very broad tags   or    a   much       larger set     of more         precise ones   is preferable , depends
 # J/R  NSg/J NPl/V+ NPr/C D/P NSg/I/J/Dq JC     NPr/V/J P  NPr/I/V/J/Dq V/J+    NPl/V+ VL W?         . NPl/V
 > on  the purpose at    hand   . Automatic tagging is easier on  smaller tag    - sets  .
-# J/P D   NSg/V+  NSg/P NSg/V+ . NSg/J     NSg/V   VL NSg/JC J/P NSg/JC  NSg/V+ . NPl/V .
+# J/P D   N🅪Sg/V+ NSg/P NSg/V+ . NSg/J     NSg/V   VL NSg/JC J/P NSg/JC  NSg/V+ . NPl/V .
 >
 #
 > History
@@ -219,7 +219,7 @@
 > natural language processing , because there are certain cases  where the correct
 # NSg/J   N🅪Sg/V+  V+         . C/P     +     V   I/J     NPl/V+ NSg/C D   NSg/V/J
 > part    of speech  cannot be     decided without understanding the semantics or    even    the
-# NSg/V/J P  N🅪Sg/V+ NSg/V  NSg/VX NSg/V/J C/P     NᴹSg/V/J+     D   NPl+      NPr/C NSg/V/J D
+# NSg/V/J P  N🅪Sg/V+ NSg/V  NSg/VX NSg/V/J C/P     N🅪Sg/V/J+     D   NPl+      NPr/C NSg/V/J D
 > pragmatics of the context . This    is extremely expensive , especially because
 # NPl        P  D   N🅪Sg/V+ . I/Ddem+ VL R         J         . R          C/P
 > analyzing the higher  levels is much       harder when    multiple part    - of - speech

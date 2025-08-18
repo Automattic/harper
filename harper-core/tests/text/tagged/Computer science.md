@@ -491,7 +491,7 @@
 > understand the nature of computation and , as    a   consequence of this
 # V          D   NSg/V  P  NSg         V/C . NSg/R D/P NSg/V       P  I/Ddem
 > understanding , provide more         efficient methodologies .
-# NᴹSg/V/J+     . V       NPr/I/V/J/Dq NSg/J     NPl           .
+# N🅪Sg/V/J+     . V       NPr/I/V/J/Dq NSg/J     NPl           .
 >
 #
 > Theory of computation
@@ -543,7 +543,7 @@
 > compression , cryptography , error  detection and correction , and more         recently
 # NSg+        . NSg          . NSg/V+ N🅪Sg      V/C NSg+       . V/C NPr/I/V/J/Dq R
 > also for network coding . Codes  are studied for the purpose of designing
-# W?   C/P NSg/V+  V+     . NPl/V+ V   V/J     C/P D   NSg/V   P  V
+# W?   C/P NSg/V+  V+     . NPl/V+ V   V/J     C/P D   N🅪Sg/V  P  V
 > efficient and reliable data  transmission methods .
 # NSg/J     V/C NSg/J+   N🅪Pl+ NSg+         NPl/V+  .
 >
@@ -745,7 +745,7 @@
 > component in      areas of software development , which require computational
 # NSg/J     NPr/J/P NPl   P  NᴹSg+    N🅪Sg+       . I/C+  NSg/V   J+
 > understanding . The starting point  in      the late   1940s was Alan Turing's question
-# NᴹSg/V/J+     . D   V        NSg/V+ NPr/J/P D+  NSg/J+ #d    V   NPr  NSg$     NSg/V+
+# N🅪Sg/V/J+     . D   V        NSg/V+ NPr/J/P D+  NSg/J+ #d    V   NPr  NSg$     NSg/V+
 > " Can    computers think ? " , and the question remains effectively unanswered ,
 # . NPr/VX NPl/V+    NSg/V . . . V/C D+  NSg/V+   NPl/V   R           V/J        .
 > although the Turing test   is still   used to assess computer output on  the scale  of
@@ -769,7 +769,7 @@
 >
 #
 > Computer architecture , or    digital computer organization , is the conceptual
-# NSg/V+   NᴹSg+        . NPr/C NSg/J+  NSg/V+   NSg+         . VL D   J
+# NSg/V+   NᴹSg+        . NPr/C NSg/J+  NSg/V+   N🅪Sg+        . VL D   J
 > design  and fundamental operational structure of a    computer system . It       focuses
 # N🅪Sg/V+ V/C NSg/J       J           N🅪Sg/V    P  D/P+ NSg/V+   NSg+   . NPr/ISg+ NPl/V
 > largely on  the way    by      which the central processing unit performs internally and
@@ -783,7 +783,7 @@
 > term    " architecture " in      computer literature can    be     traced to the work   of Lyle R.
 # NSg/V/J . NᴹSg+        . NPr/J/P NSg/V+   NᴹSg+      NPr/VX NSg/VX V/J    P  D   N🅪Sg/V P  NPr  ?
 > Johnson and Frederick P. Brooks  Jr     . , members of the Machine Organization
-# NPr     V/C NPr+      ?  NPrPl/V NSg/J+ . . NPl/V   P  D+  NSg/V+  NSg+
+# NPr     V/C NPr+      ?  NPrPl/V NSg/J+ . . NPl/V   P  D+  NSg/V+  N🅪Sg+
 > department in      IBM's main     research center   in      1959 .
 # NSg+       NPr/J/P NSg$  NSg/V/J+ NᴹSg/V+  NSg/V/J+ NPr/J/P #    .
 >
@@ -1040,8 +1040,8 @@
 #
 > Many        languages offer    support for multiple  paradigms , making the distinction more
 # NSg/I/J/Dq+ NPl/V+    NSg/V/JC N🅪Sg/V  C/P NSg/J/Dq+ NPl+      . NSg/V  D+  NSg+        NPr/I/V/J/Dq
-> a   matter    of style  than of technical capabilities .
-# D/P N🅪Sg/V/JC P  NSg/V+ C/P  P  NSg/J+    NSg+         .
+> a   matter of style  than of technical capabilities .
+# D/P N🅪Sg/V P  NSg/V+ C/P  P  NSg/J+    NSg+         .
 >
 #
 > Research
