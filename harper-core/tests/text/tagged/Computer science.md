@@ -1040,8 +1040,8 @@
 #
 > Many        languages offer    support for multiple  paradigms , making the distinction more
 # NSg/I/J/Dq+ NPl/V+    NSg/V/JC N🅪Sg/V  C/P NSg/J/Dq+ NPl+      . NSg/V  D+  NSg+        NPr/I/V/J/Dq
-> a   matter    of style  than of technical capabilities .
-# D/P N🅪Sg/V/JC P  NSg/V+ C/P  P  NSg/J+    NSg+         .
+> a   matter of style  than of technical capabilities .
+# D/P N🅪Sg/V P  NSg/V+ C/P  P  NSg/J+    NSg+         .
 >
 #
 > Research

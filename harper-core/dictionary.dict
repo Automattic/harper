@@ -1,4 +1,4 @@
-53800
+53850
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -815,7 +815,7 @@ Ayala/Og
 Ayers/Og
 Aymara/NOg
 Ayrshire/ONg
-Ayurveda/Ng
+Ayurveda/NwgS
 Ayutthaya/Og
 Ayyubid/JNg
 Azana/g
@@ -4228,7 +4228,7 @@ HT/NO
 HTML/Og
 HTTP/Ng
 HTTPS/Ng
-HUD/NOg
+HUD/NOgS
 HVAC/Ng
 Ha/NOg
 Haas/Og
@@ -13297,6 +13297,7 @@ atheistic/~J
 atherosclerosis/Nmg
 atherosclerotic/J
 athirst/J
+athleisure/Nmg
 athlete/~NgS
 athletic/~JNSQ
 athleticism/Nmg
@@ -17609,6 +17610,7 @@ claptrap/Nmg
 claque/NgS
 claret/NmJVgS
 clarification/~Ng
+clarifier/NgS
 clarify/~VXdSnG
 clarinet/~NSg
 clarinetist/~NSg
@@ -18211,6 +18213,7 @@ combinable/J
 combination/~NwSg
 combinator/NgS
 combinatoric/J
+combinatorics/Nm
 combine/~VNrdSG
 combine's
 combined/~JVNU
@@ -26058,6 +26061,7 @@ gash/NJVgdSG
 gasholder/NS
 gasket/NVSg
 gaslight/NVgSdG
+gaslighter/NgS
 gasman/N
 gasmen/9
 gasohol/Ng
@@ -26557,6 +26561,7 @@ glutting/VN
 glutton/JNVgS
 gluttonous/JY
 gluttony/Ng
+glycemic/J
 glycerin/Ng
 glycerine/Ng!@_
 glycerol/~Ng
@@ -26575,6 +26580,7 @@ gnocchi/N
 gnome/~NSg
 gnomic/~J
 gnomish/J
+gnomist/NgS
 gnu/~NSg
 go/~VN0Jzg>HZG
 goad/NVgdGS
@@ -32211,6 +32217,7 @@ logician/NgS
 login/NVSg
 logistic/~JNS
 logistical/~JY
+logistician/NgS
 logistics/~Ng
 logit/NgS
 logjam/NVSg
@@ -32287,7 +32294,7 @@ loosen/~VUGSd
 looseness/Nmg
 loot/~NVgd>SZG
 looter/Ng
-looting/~NVg
+looting/~NmVg
 lop/~VNS
 lope/~VNgGdS
 lopped/V
@@ -32296,19 +32303,20 @@ lopsided/JYp
 lopsidedness/Nmg
 loquacious/JpY
 loquaciousness/Nmg
-loquacity/Ng
+loquacity/Nmg
 lord/~NVgdYSG
 lordliness/Nmg
 lordly/J^p>
 lordship/~NSg
-lore/~NVg
+lore/~NmVg
+lorebook/NgS
 lorgnette/NSg
 loris/NgS
 lorn/JV
 lorry/~NVSg
 lose/~VNZG>Sz
 loser/~Ng
-losing/~VJNg
+losing/~VJNmg
 loss/~NwVgS
 lossless/~J
 lossy/J>^
@@ -33118,7 +33126,7 @@ matrimony/Nmg
 matrix/~N0g
 matron/~NgYS
 matt/JNVS!_
-matte/~NJd>SgZG
+matte/~NJdSgZG
 matter/~NwSVgdG
 matting/NVg
 mattock/NVSg
@@ -40630,19 +40638,19 @@ qualmish/J
 quandary/NSg
 quango/NS
 quant/NgS           # quantitative analyst
-quanta/~N
+quanta/~N9
 quantifiable/JN
 quantification/~Ng
 quantifier/~Ng
 quantify/~Vnd>SZG
-quantisation/N!_
+quantisation/NgS!_
 quantise/V!_
 quantitation/N
 quantitative/~JY
 quantity/~NSg
-quantization/~N
+quantization/~NgS
 quantize/VSdG
-quantum/~NJg
+quantum/~N0Jg
 quarantine/~NVOgGdS
 quark/~NgS
 quarrel/~NVSZGgd>
@@ -40705,6 +40713,7 @@ questioning/~NJVgY
 questionnaire/~NVSg
 queue/~NVedS
 queue's
+queueing/VN
 queuing/VN
 quibble/NVd>SgZG
 quibbler/Ng
@@ -44923,34 +44932,35 @@ smidgen/NgS
 smilax/Ng
 smile/~NVdSgG
 smiley/~JNSg
-smiling/~JNVY
+smiling/~JNmVY
 smirch/NVGgdS
 smirk/NVJSgdG
 smite/VNSG
 smith/~NVg
 smithereens/Ng
+smithery/NgS
 smiths/~NV
 smithy/NVSg
 smitten/JV
 smock/NJVSgdG
-smocking/NVg
+smocking/NmVg
 smog/NVgS
 smoggy/J>^
 smoke/~NwVd>SgZG
 smokehouse/NgS
 smokeless/J
-smoker/~Ng
+smoker/~NgS
 smokescreen/NSg
 smokestack/NSg
 smokey/~JN
-smokiness/Ng
+smokiness/Nmg
 smoking/~VJNmg
 smoky/~J>^p
 smolder/VNSGgd
 smooch/NVgdSG
 smoochy/J
 smooth/~JNVpd>Y^G
-smoothie/NgS
+smoothie/NwgS
 smoothness/Ng
 smooths/NV
 smorgasbord/NSg
@@ -44965,10 +44975,10 @@ smuggest/Ju
 smuggle/~VZGd>S
 smuggler/~Ng
 smuggling/~VNg
-smugness/Ng
+smugness/Nmg
 smurf/NVS
-smut/NVgS
-smuttiness/Ng
+smut/NwVgS
+smuttiness/Nmg
 smutty/JV^>p
 snack/~NVSgdG
 snaffle/NVdSgG
@@ -44991,7 +45001,7 @@ snappily/R
 snappiness/Nmg
 snapping/~VNU
 snappish/JYp
-snappishness/Ng
+snappishness/Nmg
 snappy/J^>p
 snapshot/~NVSg
 snapshotted/V
@@ -46792,6 +46802,7 @@ subsume/VdSG
 subsumption/N
 subsurface/~NJg
 subsystem/~NSg
+subtask/NSg
 subteen/JNSg
 subtenancy/Ng
 subtenant/NVSg
@@ -52841,6 +52852,7 @@ JavaScript/ONSg     # programming language
 Javadoc/Sg
 JetBrains
 Jetpack/Og
+Jira/Og             # issue tracker
 Joomla/Sg
 Jupyter/Og
 KDE/Og              # K Desktop Environment
@@ -52980,6 +52992,8 @@ QQ/NSg              # instant messaging app
 QUERTY/Sg           # !! mistake for QWERTY? !!
 QUIC/OSg
 Qin/OSg
+QoS/Nmg             # quality of service
+Quora/Og            # Q&A platform
 RDBMS/NOSg          # relational database management system
 REPL/NgS            # read evaluate print loop
 RFID/ONg            # radio frequency identification
@@ -52990,6 +53004,7 @@ RPG/NgS             # role-playing game
 RTX/NSg
 Raytheon/Og
 ReactJS/Og
+React Native/Og     # framework
 Red Hat/Og
 Reddit/Og
 Rivian/Sg           # ev company
@@ -53015,13 +53030,16 @@ Shopify/Og          # company
 Simplenote/Og
 Sioyek/gN
 Siri/Og             # voice assistant
+Skia/Og             # 2d graphics library
 Snapchat/Sg
 SolidJS/gO          # ui lib
 Soros/Og            # financier George Soros
+SpaceX/Og
 Spotify/Og
 Stellantis/Og       # car company
 Subversion/Ng       # version control
 Svelte/Og           # js framework
+SwiftUI/Og          # framework
 Systemd/Sg          # Linux system software
 TARGET2/O           # RTGS system for the Eurozone
 TCP/JOSg            # internet protocol
@@ -53084,6 +53102,7 @@ WSL/gO              # windows subsystem for linux
 Waymo/Og
 WeChat/Og
 WebAssembly/g       # see WASM
+Webpack/Og
 WebDAV/Og
 WebGL/Og
 WebGPU/Sg
@@ -53121,6 +53140,7 @@ autoconfig/Ng
 autoconfiguration/Ng
 autoconfigure/VSdG
 autodifferentiation/Nmg
+autoprefixer/NgS
 autosave/VSdGNg
 awk/Og              # *nix tool
 backend/NSg         # dictionaries prefer: back end
@@ -53160,6 +53180,7 @@ gzip/VS             # GNU compression utility
 gzipped/V
 gzipping/V
 hardcode/VGdS       # dictionaries prefer: hard code
+heapsort
 hoster/NgS
 hostname/NSg
 hotwire/VBG         # dictionaries prefer: hot-wire
@@ -53175,6 +53196,7 @@ labriola/Sg         # !! please check and comment !! - should be uppercase surna
 linkification/Nmg
 manip/NgS           # gamer slang manipulation
 memecoin/NgS
+mergesort
 multicast/JVSdG
 npm/Og              # node package manager
 nullish/J
@@ -53371,6 +53393,7 @@ full on/JR
 full-on/JR
 full-scale/J
 full screen/J
+full-stack/J
 full-time/JR
 Game Boy/OgS
 go around/V
@@ -53721,6 +53744,7 @@ web server/NgS
 welch plug/NSg
 well-adjusted/J
 well-balanced/J
+well-being/Nmg
 well-established/J
 well-known/J
 well-made/J

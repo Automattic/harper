@@ -46,8 +46,8 @@
 # D   NSg/V/J  NPrPl       P  NPr/V/J NSg+ . NPr/C NSg/P NSg/J D   NPl/V+ NPr/J/P I/C+  IPl+
 > express them     , are usually plagiaristic and marred by      obvious suppressions .
 # NSg/V/J NSg/IPl+ . V   R       ?            V/C V/J    NSg/J/P J       ?            .
-> Reserving judgments is a   matter    of infinite hope    . I    am      still   a   little     afraid of
-# V         NPl+      VL D/P N🅪Sg/V/JC P  NSg/J    NPr🅪/V+ . ISg+ NPr/V/J NSg/V/J D/P NPr/I/J/Dq J      P
+> Reserving judgments is a   matter of infinite hope    . I    am      still   a   little     afraid of
+# V         NPl+      VL D/P N🅪Sg/V P  NSg/J    NPr🅪/V+ . ISg+ NPr/V/J NSg/V/J D/P NPr/I/J/Dq J      P
 > missing something  if    I    forget that          , as    my  father snobbishly suggested , and I
 # V       NSg/I/V/J+ NSg/C ISg+ V      NSg/I/C/Ddem+ . NSg/R D$+ NPr/V+ R          V/J       . V/C ISg+
 > snobbishly repeat , a   sense  of the fundamental decencies is parcelled out
@@ -202,8 +202,8 @@
 # NPr/I/V/J/Dq R            V/J    NSg/P P    D/P NSg/V/J NSg/V+ . P     NSg/I/J/C/Dq .
 >
 #
-> It       was a   matter    of chance   that          I    should have   rented a    house  in      one       of the
-# NPr/ISg+ V   D/P N🅪Sg/V/JC P  NPr/V/J+ NSg/I/C/Ddem+ ISg+ VX     NSg/VX V/J    D/P+ NPr/V+ NPr/J/P NSg/I/V/J P  D
+> It       was a   matter of chance   that          I    should have   rented a    house  in      one       of the
+# NPr/ISg+ V   D/P N🅪Sg/V P  NPr/V/J+ NSg/I/C/Ddem+ ISg+ VX     NSg/VX V/J    D/P+ NPr/V+ NPr/J/P NSg/I/V/J P  D
 > strangest communities in      North    America . It       was on  that          slender riotous island
 # JS        NPl         NPr/J/P NPr/V/J+ NPr+    . NPr/ISg+ V   J/P NSg/I/C/Ddem+ J       J       NSg/V+
 > which extends itself due   east  of New     York — and where there are , among other
@@ -274,8 +274,8 @@
 # NSg/I/V/J P  I/Ddem+ NSg+ NPr/I+ NSg/V NSg/I D/P+ NSg/V/J+ NSg/V/J+ NSg+       NSg/P NSg    . NSg/I/V/J NSg/I/C/Ddem
 > everything afterward savors of anti    - climax . His     family  were  enormously
 # NSg/I/V+   R/Am      NPl/V  P  NSg/J/P . NSg/V  . ISg/D$+ N🅪Sg/J+ NSg/V R
-> wealthy — even    in      college his     freedom with money   was a   matter    for reproach — but     now
-# NSg/J   . NSg/V/J NPr/J/P NSg+    ISg/D$+ N🅪Sg    P    N🅪Sg/J+ V   D/P N🅪Sg/V/JC C/P NSg/V    . NSg/C/P NPr/V/J/C
+> wealthy — even    in      college his     freedom with money   was a   matter for reproach — but     now
+# NSg/J   . NSg/V/J NPr/J/P NSg+    ISg/D$+ N🅪Sg    P    N🅪Sg/J+ V   D/P N🅪Sg/V C/P NSg/V    . NSg/C/P NPr/V/J/C
 > he’d left    Chicago and come    East   in      a   fashion that          rather  took your breath    away :
 # W?   NPr/V/J NPr+    V/C NSg/V/P NPr/J+ NPr/J/P D/P N🅪Sg/V+ NSg/I/C/Ddem+ NPr/V/J V    D$+  N🅪Sg/V/J+ V/J  .
 > for instance , he’d brought down       a   string of polo  ponies from Lake   Forest . It       was
@@ -2720,8 +2720,8 @@
 # NPr/ISg+ V/J   ISg/D$+ NSg/V+ J/P    D   NSg/V+ . NPl/V+  .
 >
 #
-> “ About that          . As    a   matter    of fact you    needn’t bother to ascertain . I    ascertained .
-# . J/P   NSg/I/C/Ddem+ . NSg/R D/P N🅪Sg/V/JC P  NSg+ ISgPl+ VX      NSg/V  P  V         . ISg+ V/J         .
+> “ About that          . As    a   matter of fact you    needn’t bother to ascertain . I    ascertained .
+# . J/P   NSg/I/C/Ddem+ . NSg/R D/P N🅪Sg/V P  NSg+ ISgPl+ VX      NSg/V  P  V         . ISg+ V/J         .
 > They’re real  . ”
 # W?      NSg/J . .
 >
@@ -2736,8 +2736,8 @@
 #
 > “ Absolutely real  — have   pages  and everything . I    thought they’d be     a   nice    durable
 # . R          NSg/J . NSg/VX NPl/V+ V/C NSg/I/V+   . ISg+ NSg/V   W?     NSg/VX D/P NPr/V/J NSg/J
-> cardboard . Matter    of fact , they’re absolutely real  . Pages  and — Here    ! Lemme show
-# NᴹSg/J+   . N🅪Sg/V/JC P  NSg+ . W?      R          NSg/J . NPl/V+ V/C . NSg/J/R . W?    NSg/V
+> cardboard . Matter of fact , they’re absolutely real  . Pages  and — Here    ! Lemme show
+# NᴹSg/J+   . N🅪Sg/V P  NSg+ . W?      R          NSg/J . NPl/V+ V/C . NSg/J/R . W?    NSg/V
 > you    . ”
 # ISgPl+ . .
 >
@@ -2748,8 +2748,8 @@
 # N🅪Sg/V+ NSg/I/V/J P  D   . ?        NPl/V+   . .
 >
 #
-> “ See   ! ” he       cried triumphantly . “ It’s a   bona - fide piece of printed matter     . It
-# . NSg/V . . NPr/ISg+ V/J   R            . . W?   D/P ?    . ?    NSg/V P  V/J     N🅪Sg/V/JC+ . NPr/ISg+
+> “ See   ! ” he       cried triumphantly . “ It’s a   bona - fide piece of printed matter  . It
+# . NSg/V . . NPr/ISg+ V/J   R            . . W?   D/P ?    . ?    NSg/V P  V/J     N🅪Sg/V+ . NPr/ISg+
 > fooled me       . This   fella’s a   regular Belasco . It’s a    triumph . What   thoroughness !
 # V/J    NPr/ISg+ . I/Ddem ?       D/P NSg/J   ?       . W?   D/P+ NSg/V+  . NSg/I+ NSg          .
 > What   realism ! Knew when    to stop  , too — didn’t cut     the pages  . But     what   do     you    want  ?
@@ -3330,8 +3330,8 @@
 # . NSg/C/P NSg/C V   NPr/ISg+ V      . V   ISgPl+ NSg/V P    D+  NPr/V+ . .
 >
 #
-> “ Don’t ask   me       , ” said Owl    Eyes   , washing his     hands of the whole matter     . “ I    know
-# . V     NSg/V NPr/ISg+ . . V/J  NSg/V+ NPl/V+ . NSg/V   ISg/D$+ NPl/V P  D   NSg/J N🅪Sg/V/JC+ . . ISg+ NSg/V
+> “ Don’t ask   me       , ” said Owl    Eyes   , washing his     hands of the whole matter  . “ I    know
+# . V     NSg/V NPr/ISg+ . . V/J  NSg/V+ NPl/V+ . NSg/V   ISg/D$+ NPl/V P  D   NSg/J N🅪Sg/V+ . . ISg+ NSg/V
 > very little     about driving — next    to nothing  . It       happened , and that’s all          I    know  . ”
 # J/R  NPr/I/J/Dq J/P   V       . NSg/J/P P  NSg/I/J+ . NPr/ISg+ V/J      . V/C NSg$   NSg/I/J/C/Dq ISg+ NSg/V . .
 >
@@ -3382,8 +3382,8 @@
 # NPr/J/P D   NSg+   .
 >
 #
-> “ Wha’s matter     ? ” he       inquired calmly . “ Did we   run   outa gas      ? ”
-# . ?     N🅪Sg/V/JC+ . . NPr/ISg+ V/J      R      . . V   IPl+ NSg/V ?    NSg/V/J+ . .
+> “ Wha’s matter  ? ” he       inquired calmly . “ Did we   run   outa gas      ? ”
+# . ?     N🅪Sg/V+ . . NPr/ISg+ V/J      R      . . V   IPl+ NSg/V ?    NSg/V/J+ . .
 >
 #
 > “ Look  ! ”
@@ -4072,12 +4072,12 @@
 #
 > “ No    , old    sport  , I’m not   . But     Miss  Baker has kindly consented to speak to you
 # . NPr/P . NSg/J+ NSg/V+ . W?  NSg/C . NSg/C/P NSg/V NPr+  V   J/R    V/J       P  NSg/V P  ISgPl+
-> about this    matter     . ”
-# J/P   I/Ddem+ N🅪Sg/V/JC+ . .
+> about this    matter  . ”
+# J/P   I/Ddem+ N🅪Sg/V+ . .
 >
 #
-> I    hadn’t the faintest idea what   “ this   matter     ” was , but     I    was more         annoyed than
-# ISg+ V      D   JS       NSg+ NSg/I+ . I/Ddem N🅪Sg/V/JC+ . V   . NSg/C/P ISg+ V   NPr/I/V/J/Dq V/J     C/P
+> I    hadn’t the faintest idea what   “ this   matter  ” was , but     I    was more         annoyed than
+# ISg+ V      D   JS       NSg+ NSg/I+ . I/Ddem N🅪Sg/V+ . V   . NSg/C/P ISg+ V   NPr/I/V/J/Dq V/J     C/P
 > interested . I    hadn’t asked Jordan to tea    in      order  to discuss Mr   . Jay  Gatsby . I
 # V/J        . ISg+ V      V/J   NPr+   P  N🅪Sg/V NPr/J/P NSg/V+ P  NSg/V   NSg+ . NPr+ NPr    . ISg+
 > was sure the request would be     something  utterly fantastic , and for a    moment I
@@ -4686,8 +4686,8 @@
 # NPr/ISg+ . .
 >
 #
-> “ What’s the matter     , Daisy ? ”
-# . NSg$   D   N🅪Sg/V/JC+ . NPr+  . .
+> “ What’s the matter  , Daisy ? ”
+# . NSg$   D   N🅪Sg/V+ . NPr+  . .
 >
 #
 > I    was scared , I    can    tell  you    ; I’d never seen  a   girl   like        that          before .
@@ -5382,8 +5382,8 @@
 # ISg+ NSg/V IPl+ NSg/I/J/C/Dq V/J      C/P D/P+ NSg+   NSg/I/C/Ddem+ NPr/ISg+ V   V/J     NPr/J/P NPl/V+ J/P D+  NSg/V+ .
 >
 #
-> “ We   haven’t met for many       years , ” said Daisy , her     voice  as    matter     - of - fact as    it
-# . IPl+ V       V   C/P NSg/I/J/Dq NPl+  . . V/J  NPr+  . ISg/D$+ NSg/V+ NSg/R N🅪Sg/V/JC+ . P  . NSg+ NSg/R NPr/ISg+
+> “ We   haven’t met for many       years , ” said Daisy , her     voice  as    matter  - of - fact as    it
+# . IPl+ V       V   C/P NSg/I/J/Dq NPl+  . . V/J  NPr+  . ISg/D$+ NSg/V+ NSg/R N🅪Sg/V+ . P  . NSg+ NSg/R NPr/ISg+
 > could  ever be     .
 # NSg/VX J    NSg/VX .
 >
@@ -5430,8 +5430,8 @@
 # NPr/V+ . . NPr/J/P D/P+ +         NSg/J+ .
 >
 #
-> “ What’s the matter     ? ”
-# . NSg$   D+  N🅪Sg/V/JC+ . .
+> “ What’s the matter  ? ”
+# . NSg$   D+  N🅪Sg/V+ . .
 >
 #
 > “ This    is a   terrible mistake , ” he       said , shaking his     head     from side     to side    , ‘          ‘          a
@@ -7490,8 +7490,8 @@
 # NPr/ISg+ V   NSg/V/J/P . ISg/D$+ NPl/V+ NSg/V/J NSg/V    NSg/P   NPr    V/C ISg/D$+ NSg/V/J+ . NPr/P NSg/I/V/J V/J   .
 >
 #
-> “ Come    on  ! ” His     temper    cracked a   little     . “ What’s the matter     , anyhow ? If    we’re
-# . NSg/V/P J/P . . ISg/D$+ NSg/V/JC+ V/J     D/P NPr/I/J/Dq . . NSg$   D+  N🅪Sg/V/JC+ . J      . NSg/C W?
+> “ Come    on  ! ” His     temper    cracked a   little     . “ What’s the matter  , anyhow ? If    we’re
+# . NSg/V/P J/P . . ISg/D$+ NSg/V/JC+ V/J     D/P NPr/I/J/Dq . . NSg$   D+  N🅪Sg/V+ . J      . NSg/C W?
 > going   to town , let’s start . ”
 # NSg/V/J P  NSg  . NSg$  NSg/V . .
 >
@@ -7778,8 +7778,8 @@
 # . W?  NSg/V/J . . V/J  NPr+   C/P     NSg/V/J . . NSg/V NSg/V/J NSg/I/J/C/Dq+ NPr🅪+ . .
 >
 #
-> “ What’s the matter     ? ”
-# . NSg$   D+  N🅪Sg/V/JC+ . .
+> “ What’s the matter  ? ”
+# . NSg$   D+  N🅪Sg/V+ . .
 >
 #
 > “ I’m all          run   down       . ”
@@ -8258,8 +8258,8 @@
 # NSg/V/J  NPr+  NPr/J/P ISg+ NSg/I/C/Ddem+ W?  V/J         C/P    .
 >
 #
-> Daisy rose    , smiling faintly , and went  to the table  .
-# NPr+  NPr/V/J . NSg/V/J R       . V/C NSg/V P  D+  NSg/V+ .
+> Daisy rose    , smiling  faintly , and went  to the table  .
+# NPr+  NPr/V/J . NᴹSg/V/J R       . V/C NSg/V P  D+  NSg/V+ .
 >
 #
 > “ Open    the whiskey , Tom    , ” she  ordered , ‘          ‘          and I'll make  you    a   mint    julep . Then    you
@@ -8450,8 +8450,8 @@
 # NPr    V/J    NSg/J/P V/C V     P      ISg/D$+ .
 >
 #
-> “ Daisy , that’s all          over    now       , ” he       said earnestly . “ It       doesn’t matter     any    more         .
-# . NPr+  . NSg$   NSg/I/J/C/Dq NSg/J/P NPr/V/J/C . . NPr/ISg+ V/J  R         . . NPr/ISg+ V       N🅪Sg/V/JC+ I/R/Dq NPr/I/V/J/Dq .
+> “ Daisy , that’s all          over    now       , ” he       said earnestly . “ It       doesn’t matter  any    more         .
+# . NPr+  . NSg$   NSg/I/J/C/Dq NSg/J/P NPr/V/J/C . . NPr/ISg+ V/J  R         . . NPr/ISg+ V       N🅪Sg/V+ I/R/Dq NPr/I/V/J/Dq .
 > Just tell  him  the truth   — that         you    never loved him  — and it’s all           wiped out
 # V/J  NPr/V ISg+ D+  N🅪Sg/V+ . NSg/I/C/Ddem ISgPl+ R     V/J   ISg+ . V/C W?   NSg/I/J/C/Dq+ V/J+  NSg/V/J/R/P
 > forever . ”
@@ -9596,8 +9596,8 @@
 # R            NSg/V/J/P NPr+  D/P N🅪Sg/V P  NᴹSg+    . NPr/ISg+ NSg/V ISg/D$+ V       NSg/I/C/Ddem NPr/ISg+ V   D/P
 > person from much       the same strata as    herself — that         he       was fully able    to take  care
 # NSg/V+ P    NSg/I/J/Dq D   I/J  NPl    NSg/R ISg+    . NSg/I/C/Ddem NPr/ISg+ V   V     NSg/V/J P  NSg/V N🅪Sg/V
-> of her     . As    a   matter    of fact , he       had no     such   facilities — he       had no     comfortable
-# P  ISg/D$+ . NSg/R D/P N🅪Sg/V/JC P  NSg+ . NPr/ISg+ V   NPr/P+ NSg/I+ NPl+       . NPr/ISg+ V   NPr/P+ NSg/J+
+> of her     . As    a   matter of fact , he       had no     such   facilities — he       had no     comfortable
+# P  ISg/D$+ . NSg/R D/P N🅪Sg/V P  NSg+ . NPr/ISg+ V   NPr/P+ NSg/I+ NPl+       . NPr/ISg+ V   NPr/P+ NSg/J+
 > family  standing behind  him  , and he       was liable at    the whim  of an  impersonal
 # N🅪Sg/J+ NSg/V/J  NSg/J/P ISg+ . V/C NPr/ISg+ V   J      NSg/P D   NSg/V P  D/P NSg/J
 > government to be     blown anywhere about the world  .
@@ -10886,8 +10886,8 @@
 # . NSg/V D/P+ NSg/V/J+ . . ISg+ V/J         . . NSg/C J/P   NSg/V  W?     NSg/V/P . .
 >
 #
-> “ Well    , the fact is — the truth  of the matter     is that          I’m staying with some     people
-# . NSg/V/J . D+  NSg+ VL . D   N🅪Sg/V P  D+  N🅪Sg/V/JC+ VL NSg/I/C/Ddem+ W?  V       P    I/J/R/Dq NPl/V+
+> “ Well    , the fact is — the truth  of the matter  is that          I’m staying with some     people
+# . NSg/V/J . D+  NSg+ VL . D   N🅪Sg/V P  D+  N🅪Sg/V+ VL NSg/I/C/Ddem+ W?  V       P    I/J/R/Dq NPl/V+
 > up        here    in      Greenwich , and they rather  expect me       to be     with them     tomorrow . In
 # NSg/V/J/P NSg/J/R NPr/J/P NPr+      . V/C IPl+ NPr/V/J V      NPr/ISg+ P  NSg/VX P    NSg/IPl+ NSg+     . NPr/J/P
 > fact , there’s a   sort  of picnic or    something  . Of course I’ll do     my  very best      to
@@ -11083,7 +11083,7 @@
 > “ When    a    man      gets  killed I    never like        to get   mixed up        in      it       in      any     way    . I    keep
 # . NSg/I/C D/P+ NPr/V/J+ NPl/V V/J    ISg+ R     NSg/V/J/C/P P  NSg/V V/J   NSg/V/J/P NPr/J/P NPr/ISg+ NPr/J/P I/R/Dq+ NSg/J+ . ISg+ NSg/V
 > out         . When    I    was a   young   man     it       was different — if    a   friend  of mine     died , no     matter
-# NSg/V/J/R/P . NSg/I/C ISg+ V   D/P NPr/V/J NPr/V/J NPr/ISg+ V   NSg/J     . NSg/C D/P NPr/V/J P  NSg/I/V+ V/J  . NPr/P+ N🅪Sg/V/JC+
+# NSg/V/J/R/P . NSg/I/C ISg+ V   D/P NPr/V/J NPr/V/J NPr/ISg+ V   NSg/J     . NSg/C D/P NPr/V/J P  NSg/I/V+ V/J  . NPr/P+ N🅪Sg/V+
 > how   , I    stuck   with them     to the end    . You    may    think that’s sentimental , but     I    mean
 # NSg/C . ISg+ NSg/V/J P    NSg/IPl+ P  D+  NSg/V+ . ISgPl+ NPr/VX NSg/V NSg$   J           . NSg/C/P ISg+ NSg/V/J
 > it       — to the bitter  end    . ”
@@ -11494,8 +11494,8 @@
 # NPr/ISg+ NSg/V NPr/ISg+ V/C V/J    NSg/V/J . NSg/V   NSg/V/J/R/P ISg/D$+ NSg/V+ .
 >
 #
-> “ What’s the matter     , Nick   ? Do     you    object to shaking hands  with me       ? ”
-# . NSg$   D   N🅪Sg/V/JC+ . NPr/V+ . NSg/VX ISgPl+ NSg/V+ P  V       NPl/V+ P    NPr/ISg+ . .
+> “ What’s the matter  , Nick   ? Do     you    object to shaking hands  with me       ? ”
+# . NSg$   D   N🅪Sg/V+ . NPr/V+ . NSg/VX ISgPl+ NSg/V+ P  V       NPl/V+ P    NPr/ISg+ . .
 >
 #
 > “ Yes   . You    know  what   I    think of you    . ”
@@ -11504,8 +11504,8 @@
 #
 > “ You're crazy , Nick   , ” he       said quickly . “ Crazy as    hell   . I    don’t know  what’s the
 # . +      NSg/J . NPr/V+ . . NPr/ISg+ V/J  R       . . NSg/J NSg/R NPr/V+ . ISg+ V     NSg/V NSg$   D
-> matter     with you    . ”
-# N🅪Sg/V/JC+ P    ISgPl+ . .
+> matter  with you    . ”
+# N🅪Sg/V+ P    ISgPl+ . .
 >
 #
 > “ Tom    , ” I    inquired , “ what   did you    say   to Wilson that          afternoon ? ”
@@ -11652,8 +11652,8 @@
 #
 > Gatsby believed in      the green    light     , the orgastic future that          year by      year
 # NPr    V/J      NPr/J/P D   NPr🅪/V/J N🅪Sg/V/J+ . D   ?        NSg/J+ NSg/I/C/Ddem+ NSg  NSg/J/P NSg+
-> recedes before us       . It       eluded us       then    , but     that’s no     matter     — to - morrow we   will   run
-# V       C/P    NPr/IPl+ . NPr/ISg+ V/J    NPr/IPl+ NSg/J/C . NSg/C/P NSg$   NPr/P+ N🅪Sg/V/JC+ . P  . NPr/V  IPl+ NPr/VX NSg/V
+> recedes before us       . It       eluded us       then    , but     that’s no     matter  — to - morrow we   will   run
+# V       C/P    NPr/IPl+ . NPr/ISg+ V/J    NPr/IPl+ NSg/J/C . NSg/C/P NSg$   NPr/P+ N🅪Sg/V+ . P  . NPr/V  IPl+ NPr/VX NSg/V
 > faster , stretch out         our arms   farther . . . . And one        fine     morning — — —
 # NSg/JC . NSg/V+  NSg/V/J/R/P D$+ NPl/V+ V/J     . . . . V/C NSg/I/V/J+ NSg/V/J+ N🅪Sg/V+ . . .
 >

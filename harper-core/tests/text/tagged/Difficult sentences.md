@@ -104,8 +104,8 @@
 # W?    NSg/V NSg/I+  NSg/J/P D   NSg/V P  NPr/V+ .
 > We   will   send  it       by      the first   week  of July .
 # IPl+ NPr/VX NSg/V NPr/ISg+ NSg/J/P D   NSg/V/J NSg/J P  NPr+ .
-> The matter     was decided by      the chairman .
-# D+  N🅪Sg/V/JC+ V   NSg/V/J NSg/J/P D+  NSg/V+   .
+> The matter  was decided by      the chairman .
+# D+  N🅪Sg/V+ V   NSg/V/J NSg/J/P D+  NSg/V+   .
 > The boat   was swamped by      the water   .
 # D+  NSg/V+ V   V/J     NSg/J/P D+  N🅪Sg/V+ .
 > He       was protected by      his     body   armour      .
