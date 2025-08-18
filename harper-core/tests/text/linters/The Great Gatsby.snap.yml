@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Fl”
+  - Replace with: “Ff”
 
 
 
@@ -815,8 +815,8 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Tr”
   - Replace with: “T”
+  - Replace with: “Ta”
   - Replace with: “Tb”
 
 
@@ -827,7 +827,7 @@ Message: |
          |                                                         ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jr”
-  - Replace with: “Jg”
+  - Replace with: “J”
   - Replace with: “JD”
 
 
@@ -849,8 +849,8 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Tr”
   - Replace with: “T”
+  - Replace with: “Ta”
   - Replace with: “Tb”
 
 
@@ -861,7 +861,7 @@ Message: |
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jr”
-  - Replace with: “Jg”
+  - Replace with: “J”
   - Replace with: “JD”
 
 
@@ -951,8 +951,8 @@ Message: |
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Be”
   - Replace with: “Bf”
+  - Replace with: “Bi”
 
 
 
@@ -1076,9 +1076,9 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
+  - Replace with: “Do”
   - Replace with: “D”
   - Replace with: “Db”
-  - Replace with: “Dc”
 
 
 
@@ -1268,8 +1268,8 @@ Message: |
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Be”
   - Replace with: “Bf”
+  - Replace with: “Bi”
 
 
 
@@ -2411,8 +2411,8 @@ Message: |
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Be”
   - Replace with: “Bf”
+  - Replace with: “Bi”
 
 
 
@@ -2547,8 +2547,8 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Gt”
-  - Replace with: “Gm”
-  - Replace with: “GB”
+  - Replace with: “G”
+  - Replace with: “Gr”
 
 
 
@@ -2628,8 +2628,8 @@ Message: |
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Be”
   - Replace with: “Bf”
+  - Replace with: “Bi”
 
 
 
@@ -2639,9 +2639,9 @@ Message: |
          |                                         ^~ Did you mean to spell `De` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
-  - Replace with: “D”
   - Replace with: “Db”
   - Replace with: “Dc”
+  - Replace with: “Def”
 
 
 
@@ -2849,9 +2849,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “Lo”
   - Replace with: “L”
   - Replace with: “La”
+  - Replace with: “Lb”
 
 
 
@@ -3736,9 +3736,9 @@ Message: |
     2492 | some of the rooms. Let’s go to Coney Island, old sport. In my car.”
          |                                ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
-  - Replace with: “Cone”
   - Replace with: “Conley”
   - Replace with: “Corey”
+  - Replace with: “Coley”
 
 
 
@@ -3767,9 +3767,9 @@ Message: |
     2562 | Coney Island, or for how many hours he “glanced into rooms” while his house
          | ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
-  - Replace with: “Cone”
   - Replace with: “Conley”
   - Replace with: “Corey”
+  - Replace with: “Coley”
 
 
 
@@ -4954,8 +4954,8 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Tr”
   - Replace with: “T”
+  - Replace with: “Ta”
   - Replace with: “Tb”
 
 
@@ -4966,7 +4966,7 @@ Message: |
          |                                     ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jr”
-  - Replace with: “Jg”
+  - Replace with: “J”
   - Replace with: “JD”
 
 
@@ -5023,8 +5023,8 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Tr”
   - Replace with: “T”
+  - Replace with: “Ta”
   - Replace with: “Tb”
 
 
@@ -5035,7 +5035,7 @@ Message: |
          |                                                       ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jr”
-  - Replace with: “Jg”
+  - Replace with: “J”
   - Replace with: “JD”
 
 
@@ -6228,8 +6228,8 @@ Message: |
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
   - Replace with: “H”
-  - Replace with: “Ham”
-  - Replace with: “He”
+  - Replace with: “H'm”
+  - Replace with: “Ha”
 
 
 
@@ -6278,8 +6278,8 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Tr”
   - Replace with: “T”
+  - Replace with: “Ta”
   - Replace with: “Tb”
 
 
@@ -6290,7 +6290,7 @@ Message: |
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jr”
-  - Replace with: “Jg”
+  - Replace with: “J”
   - Replace with: “JD”
 
 
@@ -6666,8 +6666,8 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
-  - Replace with: “Co”
   - Replace with: “C”
+  - Replace with: “Ca”
   - Replace with: “Cc”
 
 
@@ -6774,7 +6774,7 @@ Message: |
          |                                                               ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jr”
-  - Replace with: “Jg”
+  - Replace with: “J”
   - Replace with: “JD”
 
 
@@ -6802,8 +6802,8 @@ Message: |
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
-  - Replace with: “Be”
   - Replace with: “Bf”
+  - Replace with: “Bi”
 
 
 
@@ -6814,7 +6814,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Fl”
+  - Replace with: “Ff”
 
 
 

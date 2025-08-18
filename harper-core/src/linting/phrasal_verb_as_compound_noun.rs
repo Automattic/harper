@@ -173,12 +173,16 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                         &["file", "images", "location", "snapshots"][..]
                     }
                     ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function"][..],
+                    ['p', 'l', 'a', 'y', 'b', 'a', 'c', 'k'] => &["latency"][..],
+                    ['r', 'o', 'l', 'l', 'o', 'u', 't'] => &["status"][..],
+                    ['w', 'o', 'r', 'k', 'o', 'u', 't'] => &["constraints", "preference"][..],
                     _ => &[],
                 }
                 .contains(
                     &next_tok
                         .span
                         .get_content_string(document.get_source())
+                        .to_lowercase()
                         .as_ref(),
                 )
             {
@@ -518,7 +522,6 @@ mod tests {
         );
     }
 
-    // Helm Backup Plugin.
     #[test]
     fn dont_flag_helm_backup_plugin() {
         assert_lint_count(
@@ -528,11 +531,46 @@ mod tests {
         );
     }
 
-    // By the time the `setTimeout` callback function was invoked
     #[test]
     fn dont_flag_callback_function() {
         assert_lint_count(
             "By the time the `setTimeout` callback function was invoked",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_playback_latency() {
+        assert_lint_count(
+            "Low-Latency HLS is a recently standardized variant of the protocol that allows to greatly reduce playback latency.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_workout_constraints() {
+        assert_lint_count(
+            "Workout constraints",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_workout_preference() {
+        assert_lint_count(
+            "Workout preference",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_rollout_status() {
+        assert_lint_count(
+            "Rollout Status of Latest Image Release",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );

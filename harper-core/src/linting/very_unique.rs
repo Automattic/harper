@@ -55,7 +55,7 @@ impl ExprLinter for VeryUnique {
             span: very_unique_span,
             lint_kind: LintKind::WordChoice,
             suggestions,
-            message: "`Unique` is an absolute, so consider using `unique` alone or a more precise adjective such as `special`, `rare`, or `unusual`.".to_string(),
+            message: "`Unique` is absolute, so consider using `unique` alone or a more precise adjective such as `special`, `rare`, or `unusual`.".to_string(),
             priority: 57,
         })
     }
