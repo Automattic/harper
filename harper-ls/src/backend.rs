@@ -209,7 +209,7 @@ impl Backend {
         );
 
         let mut global_dictionary =
-            global_dictionary.context("Unable to load the global dictionary.")?;
+            global_dictionary.context("Unable to load the user dictionary.")?;
         global_dictionary.add_dictionary(Arc::new(
             file_dictionary.context("Unable to load the file dictionary.")?,
         ));
