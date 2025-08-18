@@ -207,7 +207,7 @@
 > The Senate shall have   the sole     Power    to try     all          Impeachments . When    sitting for
 # D+  NPr+   VX    NSg/VX D+  NSg/V/J+ NSg/V/J+ P  NSg/V/J NSg/I/J/C/Dq NPl          . NSg/I/C NSg/V/J C/P
 > that          Purpose , they shall be     on  Oath   or    Affirmation . When    the President of the
-# NSg/I/C/Ddem+ NSg/V+  . IPl+ VX    NSg/VX J/P NSg/V+ NPr/C NSg         . NSg/I/C D   NSg/V     P  D+
+# NSg/I/C/Ddem+ N🅪Sg/V+ . IPl+ VX    NSg/VX J/P NSg/V+ NPr/C NSg         . NSg/I/C D   NSg/V     P  D+
 > United States   is tried , the Chief    Justice shall preside : And no     Person shall be
 # V/J    NPrPl/V+ VL V/J   . D+  NSg/V/J+ NPr🅪+   VX    V       . V/C NPr/P+ NSg/V+ VX    NSg/VX
 > convicted without the Concurrence of two thirds of the Members present .
@@ -771,7 +771,7 @@
 > taken by      states   , the representation from each state  having one        vote   ; a   quorum
 # V/J   NSg/J/P NPrPl/V+ . D   NSg            P    Dq+  NSg/V+ V      NSg/I/V/J+ NSg/V+ . D/P NSg
 > for this   purpose shall consist of a   member or    members from two - thirds of the
-# C/P I/Ddem NSg/V+  VX    NSg/V   P  D/P NSg/V  NPr/C NPl/V+  P    NSg . NPl/V  P  D
+# C/P I/Ddem N🅪Sg/V+ VX    NSg/V   P  D/P NSg/V  NPr/C NPl/V+  P    NSg . NPl/V  P  D
 > states   , and a   majority of all          the states   shall be     necessary to a   choice . [ If    ,
 # NPrPl/V+ . V/C D/P NSg      P  NSg/I/J/C/Dq D   NPrPl/V+ VX    NSg/VX NSg/J     P  D/P NSg/J+ . . NSg/C .
 > at    the time      fixed for the beginning of the term    of the President , the President
@@ -811,7 +811,7 @@
 > on  the list   , the Senate shall choose  the Vice       - President ; a   quorum for the
 # J/P D   NSg/V+ . D   NPr+   VX    NSg/V/C D   NSg/V/J/P+ . NSg/V+    . D/P NSg    C/P D
 > purpose shall consist of two - thirds of the whole number   of Senators , and a
-# NSg/V+  VX    NSg/V   P  NSg . NPl/V  P  D   NSg/J NSg/V/JC P  NPl+     . V/C D/P
+# N🅪Sg/V+ VX    NSg/V   P  NSg . NPl/V  P  D   NSg/J NSg/V/JC P  NPl+     . V/C D/P
 > majority of the whole number    shall be     necessary to a   choice . But     no     person
 # NSg      P  D   NSg/J NSg/V/JC+ VX    NSg/VX NSg/J     P  D/P NSg/J+ . NSg/C/P NPr/P+ NSg/V+
 > constitutionally ineligible to the office of President shall be     eligible to
@@ -927,7 +927,7 @@
 > Congress shall decide the issue  , assembling within  forty - eight hours for that
 # NPr/V+   VX    V      D   NSg/V+ . V          NSg/J/P NSg/J . NSg/J NPl+  C/P NSg/I/C/Ddem
 > purpose if    not   in      session . If    the Congress , within  twenty - one       days after
-# NSg/V+  NSg/C NSg/C NPr/J/P NSg/V+  . NSg/C D+  NPr/V+   . NSg/J/P NSg    . NSg/I/V/J NPl  P
+# N🅪Sg/V+ NSg/C NSg/C NPr/J/P NSg/V+  . NSg/C D+  NPr/V+   . NSg/J/P NSg    . NSg/I/V/J NPl  P
 > receipt of the latter written declaration , or    , if    Congress is not   in      session ,
 # NSg/V   P  D+  NSg/J+ V/J     NSg+        . NPr/C . NSg/C NPr/V+   VL NSg/C NPr/J/P NSg/V+  .
 > within  twenty - one       days after Congress is required to assemble , determines by
