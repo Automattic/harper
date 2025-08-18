@@ -174,6 +174,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                     }
                     ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function"][..],
                     ['p', 'l', 'a', 'y', 'b', 'a', 'c', 'k'] => &["latency"][..],
+                    ['r', 'o', 'l', 'l', 'o', 'u', 't'] => &["status"][..],
                     ['w', 'o', 'r', 'k', 'o', 'u', 't'] => &["constraints", "preference"][..],
                     _ => &[],
                 }
@@ -181,6 +182,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                     &next_tok
                         .span
                         .get_content_string(document.get_source())
+                        .to_lowercase()
                         .as_ref(),
                 )
             {
@@ -560,6 +562,15 @@ mod tests {
     fn dont_flag_workout_preference() {
         assert_lint_count(
             "Workout preference",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_rollout_status() {
+        assert_lint_count(
+            "Rollout Status of Latest Image Release",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
