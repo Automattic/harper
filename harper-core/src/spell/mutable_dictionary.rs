@@ -34,9 +34,8 @@ fn uncached_inner_new() -> Arc<MutableDictionary> {
         include_str!("../../dictionary.dict"),
         include_str!("../../annotations.json"),
     )
-    .map_err(|e| format!("Failed to load curated dictionary: {}\nThis is likely due to a problem with the dictionary files.\n\nError details: {}", if cfg!(test) { "(running in test mode)" } else { "" }, e))
     .map(Arc::new)
-    .unwrap()
+    .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
 }
 
 lazy_static! {

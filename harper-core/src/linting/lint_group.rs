@@ -615,7 +615,7 @@ mod tests {
     use std::sync::Arc;
 
     use super::LintGroup;
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::{Dialect, Document, linting::Linter};
 
@@ -651,20 +651,18 @@ mod tests {
     }
 
     #[test]
-    fn fix_low_hanging_fruit_msg() {
-        assert_suggestion_result(
+    fn dont_flag_low_hanging_fruit_msg() {
+        assert_no_lints(
             "The standard form is low-hanging fruit with a hyphen and singular form.",
             test_group(),
-            "The standard form is low-hanging fruit with a hyphen and singular form.",
         );
     }
 
     #[test]
-    fn fix_low_hanging_fruit_desc() {
-        assert_suggestion_result(
+    fn dont_flag_low_hanging_fruit_desc() {
+        assert_no_lints(
             "Corrects non-standard variants of low-hanging fruit.",
             test_group(),
-            "Corrects non-standard variants of low-hanging fruit.",
         );
     }
 

@@ -37,20 +37,9 @@ impl AttributeList {
 
     pub fn parse(source: &str) -> Result<Self, Error> {
         let human_readable: Result<HumanReadableAttributeList, _> = serde_json::from_str(source);
-
-        match human_readable {
-            Ok(parsed) => parsed.into_normal(),
-            Err(e) => {
-                let error_msg = format!(
-                    "Failed to parse JSON: {}\nError occurred at line: {}, column: {}",
-                    e,
-                    e.line(),
-                    e.column()
-                );
-                eprintln!("{error_msg}");
-                Err(Error::MalformedJSON)
-            }
-        }
+        human_readable
+            .map_err(Error::from)
+            .and_then(|parsed| parsed.into_normal())
     }
 
     /// Expand [`MarkedWord`] into a list of full words, including itself.
