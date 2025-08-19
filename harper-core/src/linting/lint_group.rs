@@ -496,7 +496,7 @@ impl LintGroup {
         insert_struct_rule!(ThrowRubbish, true);
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
-        insert_struct_rule!(UpdatePlaceNames, true);
+        insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(UseGenitive, false);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(WasAloud, true);
