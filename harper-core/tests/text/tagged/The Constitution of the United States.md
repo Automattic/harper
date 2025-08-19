@@ -75,7 +75,7 @@
 > chosen   every second   Year by      the People of the several States   , and the Electors
 # NᴹSg/V/J Dq+   NSg/V/J+ NSg+ NSg/J/P D   NPl/V  P  D+  J/Dq+   NPrPl/V+ . V/C D   NPl
 > in      each State  shall have   the Qualifications requisite for Electors of the most
-# NPr/J/P Dq   NSg/V+ VX    NSg/VX D   +              NSg/J+    C/P NPl      P  D   NSg/I/J/Dq
+# NPr/J/P Dq   NSg/V+ VX    NSg/VX D   +              NSg/J+    C/P NPl      P  D   NSg/I/J/R/Dq
 > numerous Branch of the State  Legislature .
 # J        NPr/V  P  D   NSg/V+ NSg+        .
 >
@@ -154,8 +154,8 @@
 # NPl+     P    Dq+  NSg/V+ . NSg/V/J NSg/J/P D+  NPl/V+ W?      . C/P NSg NPl+  . V/C
 > each Senator shall have   one       vote   . The electors in      each State  shall have   the
 # Dq   NSg+    VX    NSg/VX NSg/I/V/J NSg/V+ . D   NPl      NPr/J/P Dq   NSg/V+ VX    NSg/VX D
-> qualifications requisite for electors of the most       numerous branch of the State
-# +              NSg/J+    C/P NPl      P  D   NSg/I/J/Dq J        NPr/V  P  D   NSg/V+
+> qualifications requisite for electors of the most         numerous branch of the State
+# +              NSg/J+    C/P NPl      P  D   NSg/I/J/R/Dq J        NPr/V  P  D   NSg/V+
 > legislatures .
 # NPl          .
 >
