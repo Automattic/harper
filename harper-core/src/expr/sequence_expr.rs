@@ -95,8 +95,8 @@ impl SequenceExpr {
     }
 
     /// Match the first of multiple expressions.
-    pub fn any_of(self, exprs: Vec<Box<dyn Expr>>) -> Self {
-        self.then_any_of(exprs)
+    pub fn any_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+        Self::default().then_any_of(exprs)
     }
 
     /// Match any word from the given set of words, case-insensitive.
@@ -294,6 +294,24 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             pred1(&tok.kind)
                 && !pred2(&tok.kind)
+                && !words
+                    .iter()
+                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+        })
+    }
+
+    /// Adds a step matching a token where any of the token kind predicates returns true,
+    /// and the token is not in the list of words.
+    pub fn then_kind_any_except<F>(
+        self,
+        preds: &'static [F],
+        words: &'static [&'static str],
+    ) -> Self
+    where
+        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, src: &[char]| {
+            preds.iter().any(|pred| pred(&tok.kind))
                 && !words
                     .iter()
                     .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
