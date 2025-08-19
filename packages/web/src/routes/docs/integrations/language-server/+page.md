@@ -304,3 +304,7 @@ These configs are under the `markdown` key:
 
 Want your language added?
 Let us know by [commenting on this issue](https://github.com/Automattic/harper/issues/79).
+
+## Skipping the Version Check
+
+By default, on startup, `harper-ls` briefly connects to <https://writewithharper.com> to get the latest Harper version, printing it alongside the current Harper version. This happens to make debugging via logs easier when we don't have access to the full system. This action does not log or store anything about the user. However, if this makes you feel uncomfortable or if you simply want to forgo the version check, you can pass `--skip-version-check` when starting `harper-ls` to skip it, like so: `harper-ls --skip-version-check`.
