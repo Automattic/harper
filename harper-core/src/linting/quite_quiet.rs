@@ -1,4 +1,4 @@
-use crate::expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr};
+use crate::expr::{Expr, FirstMatchOf, SequenceExpr};
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{Token, TokenKind, TokenStringExt};
 
@@ -12,7 +12,8 @@ impl Default for QuiteQuiet {
             expr: Box::new(FirstMatchOf::new(vec![
                 Box::new(
                     SequenceExpr::default()
-                        .then(FixedPhrase::from_phrase("quiet "))
+                        .t_aco("quiet")
+                        .t_ws()
                         .then_kind_any_except(
                             &[TokenKind::is_adjective, TokenKind::is_adverb] as &[_],
                             &["here", "up"],
@@ -21,7 +22,8 @@ impl Default for QuiteQuiet {
                 Box::new(
                     SequenceExpr::default()
                         .then_kind_except(TokenKind::is_adverb, &["never"])
-                        .then(FixedPhrase::from_phrase(" quite")),
+                        .t_ws()
+                        .t_aco("quite"),
                 ),
             ])),
         }
