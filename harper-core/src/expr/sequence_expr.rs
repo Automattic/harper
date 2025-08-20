@@ -300,8 +300,11 @@ impl SequenceExpr {
         })
     }
 
+    // Word property matching methods
+
     // Out-of-vocabulary word. (Words not in the dictionary)
     gen_then_from_is!(oov);
+    gen_then_from_is!(swear);
 
     // Part-of-speech matching methods
 
