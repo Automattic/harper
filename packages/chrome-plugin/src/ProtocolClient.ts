@@ -88,4 +88,9 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'ignoreLint', contextHash: hash });
 		this.lintCache.clear();
 	}
+
+	public static async openOptions(): Promise<void> {
+		// Use background to open options to support content scripts reliably
+		await chrome.runtime.sendMessage({ kind: 'openOptions' });
+	}
 }

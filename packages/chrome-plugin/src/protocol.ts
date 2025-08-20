@@ -17,7 +17,8 @@ export type Request =
 	| IgnoreLintRequest
 	| GetUserDictionaryRequest
 	| GetActivationKeyRequest
-	| SetActivationKeyRequest;
+	| SetActivationKeyRequest
+	| OpenOptionsRequest;
 
 export type Response =
 	| LintResponse
@@ -161,4 +162,8 @@ export type GetActivationKeyResponse = {
 export type SetActivationKeyRequest = {
 	kind: 'setActivationKey';
 	key: ActivationKey;
+};
+
+export type OpenOptionsRequest = {
+	kind: 'openOptions';
 };

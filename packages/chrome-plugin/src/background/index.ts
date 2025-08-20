@@ -133,6 +133,9 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetActivationKey();
 		case 'setActivationKey':
 			return handleSetActivationKey(message);
+		case 'openOptions':
+			chrome.runtime.openOptionsPage();
+			return createUnitResponse();
 	}
 }
 
