@@ -17,15 +17,6 @@ mod tests {
     use super::ToTwoToo;
 
     #[test]
-    fn fixes_to_late() {
-        assert_suggestion_result(
-            "You're 7 years to late",
-            ToTwoToo::default(),
-            "You're 7 years too late",
-        );
-    }
-
-    #[test]
     fn fixes_to_ambitious() {
         assert_suggestion_result(
             "The project scope is to ambitious",

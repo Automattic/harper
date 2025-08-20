@@ -1,31 +1,62 @@
+use std::sync::Arc;
+
 use harper_brill::UPOS;
+use serde::de::SeqAccess;
 
 use crate::Token;
+use crate::expr::All;
 use crate::expr::Expr;
+use crate::expr::ExprMap;
+use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
-use crate::patterns::AnyPattern;
 use crate::patterns::UPOSSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct ToToo {
     expr: Box<dyn Expr>,
+    map: Arc<ExprMap<usize>>,
 }
 
 impl Default for ToToo {
     fn default() -> Self {
-        let most = SequenceExpr::aco("to")
+        let mut map = ExprMap::default();
+
+        let a = SequenceExpr::default()
+            .t_aco("to")
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::ADJ]))
-            .then_optional(AnyPattern)
-            .then_optional(AnyPattern)
-            .then_optional(AnyPattern)
-            .then_optional(AnyPattern)
-            .then_optional(AnyPattern)
-            .then_optional(AnyPattern);
+            .then(UPOSSet::new(&[
+                UPOS::ADV,
+                UPOS::PUNCT,
+                UPOS::ADP,
+                UPOS::VERB,
+                UPOS::SYM,
+                UPOS::PART,
+                UPOS::ADJ,
+            ]));
+
+        map.insert(a, 1);
+
+        let b = SequenceExpr::default()
+            .t_aco("to")
+            .t_ws()
+            .then(UPOSSet::new(&[
+                UPOS::SCONJ,
+                UPOS::PUNCT,
+                UPOS::PART,
+                UPOS::PROPN,
+                UPOS::ADV,
+                UPOS::ADJ,
+                UPOS::ADP,
+            ]));
+
+        map.insert(b, 1);
+
+        let map = Arc::new(map);
 
         Self {
-            expr: Box::new(most),
+            expr: Box::new(map.clone()),
+            map,
         }
     }
 }
@@ -36,7 +67,14 @@ impl ExprLinter for ToToo {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let to_tok = matched_tokens.first()?;
+        let idx = self.map.lookup(0, matched_tokens, source)?;
+
+        let to_tok = &matched_tokens[*idx];
+
+        if !(to_tok.kind.is_upos(UPOS::ADP) || to_tok.kind.is_upos(UPOS::PART)) {
+            return None;
+        }
+
         let span = to_tok.span;
         let original = span.get_content(source);
 
