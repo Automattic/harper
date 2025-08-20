@@ -15,7 +15,9 @@ export type Request =
 	| AddToUserDictionaryRequest
 	| SetUserDictionaryRequest
 	| IgnoreLintRequest
-	| GetUserDictionaryRequest;
+	| GetUserDictionaryRequest
+	| GetActivationKeyRequest
+	| SetActivationKeyRequest;
 
 export type Response =
 	| LintResponse
@@ -25,7 +27,8 @@ export type Response =
 	| GetDialectResponse
 	| GetDomainStatusResponse
 	| GetDefaultStatusResponse
-	| GetUserDictionaryResponse;
+	| GetUserDictionaryResponse
+	| GetActivationKeyResponse;
 
 export type LintRequest = {
 	kind: 'lint';
@@ -138,3 +141,24 @@ export type UnitResponse = {
 export function createUnitResponse(): UnitResponse {
 	return { kind: 'unit' };
 }
+
+export enum ActivationKey {
+	Off = 'off',
+	Shift = 'shift',
+	Control = 'control',
+}
+
+
+export type GetActivationKeyRequest = {
+	kind: 'getActivationKey';
+};
+
+export type GetActivationKeyResponse = {
+	kind: 'getActivationKey';
+	key: ActivationKey;
+};
+
+export type SetActivationKeyRequest = {
+	kind: 'setActivationKey';
+	key: ActivationKey;
+};
