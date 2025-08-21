@@ -110,7 +110,15 @@ impl ExprLinter for BadWords {
             // shitless
             (
                 "shitload",
-                &["sh*tload", "crapload", "shedload", "load", "tons", "pile"],
+                &[
+                    "sh*tload",
+                    "crapload",
+                    "shedload",
+                    "shirtload",
+                    "load",
+                    "tons",
+                    "pile",
+                ],
             ),
             (
                 "shitloads",
@@ -118,6 +126,7 @@ impl ExprLinter for BadWords {
                     "sh*tloads",
                     "craploads",
                     "shedloads",
+                    "shirtloads",
                     "loads",
                     "tons",
                     "piles",
