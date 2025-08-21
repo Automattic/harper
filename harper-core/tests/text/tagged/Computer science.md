@@ -162,8 +162,8 @@
 # V/P    D+  #d    . P    D   N🅪Sg        P  NSg/V/J V/C NPr/I/V/J/Dq J        NᴹSg/Vg+
 > machines such  as    the Atanasoff – Berry   computer and ENIAC , the term     computer came
 # NPl/V3   NSg/I NSg/R D   ?         . NPr🅪/V+ NSg/V+   V/C ?     . D   NSg/V/J+ NSg/V+   NSg/VPt/P
-> to refer to the machines rather  than their human   predecessors . As    it       became
-# P  NSg/V P  D   NPl/V3+  NPr/V/J C/P  D$+   NSg/V/J NPl+         . NSg/R NPr/ISg+ VPtPp
+> to refer to the machines rather    than their human   predecessors . As    it       became
+# P  NSg/V P  D   NPl/V3+  NPr/V/J/R C/P  D$+   NSg/V/J NPl+         . NSg/R NPr/ISg+ VPtPp
 > clear   that         computers could  be      used     for more         than just mathematical calculations ,
 # NSg/V/J NSg/I/C/Ddem NPl/V3+   NSg/VX NSg/VXL VPPtPp/J C/P NPr/I/V/J/Dq C/P  V/J  J+           +            .
 > the field of computer science broadened to study computation in      general . In
@@ -298,8 +298,8 @@
 # NᴹSg+       . NPl/V3+ . NSg+    . NPrᴹ/V+ N🅪Sg/V+ . NPl/V3+    . NSg/V+     . V/C NSg/V/J+ .
 >
 #
-> Computer science is  considered by      some     to have   a   much       closer relationship with
-# NSg/V+   N🅪Sg/V+ VL3 VP/J       NSg/J/P I/J/R/Dq P  NSg/VX D/P NSg/I/J/Dq NSg/JC NSg          P
+> Computer science is  considered by      some     to have   a   much         closer relationship with
+# NSg/V+   N🅪Sg/V+ VL3 VP/J       NSg/J/P I/J/R/Dq P  NSg/VX D/P NSg/I/J/R/Dq NSg/JC NSg          P
 > mathematics than many        scientific disciplines , with some      observers saying that
 # NᴹSg+       C/P  NSg/I/J/Dq+ J+         NPl/V3+     . P    I/J/R/Dq+ NPl+      NSg/Vg NSg/I/C/Ddem
 > computing is  a   mathematical science . Early    computer science was strongly
@@ -434,8 +434,8 @@
 # NPr/V  P  NᴹSg+       . I/C+  VL3 J         NPr/J/P J           NSg/V+   N🅪Sg/V+ . V/C
 > mainly employs deductive reasoning ) , the " technocratic paradigm " ( which might     be
 # R      NPl/V3  J         NSg/Vg    . . D   . J            NSg+     . . I/C+  NᴹSg/VX/J NSg/VXL
-> found in      engineering approaches , most       prominently in      software engineering ) , and
-# NSg/V NPr/J/P NSg/Vg+     NPl/V3+    . NSg/I/J/Dq R           NPr/J/P NᴹSg+    NSg/Vg+     . . V/C
+> found in      engineering approaches , most         prominently in      software engineering ) , and
+# NSg/V NPr/J/P NSg/Vg+     NPl/V3+    . NSg/I/J/R/Dq R           NPr/J/P NᴹSg+    NSg/Vg+     . . V/C
 > the " scientific paradigm " ( which approaches computer - related artifacts from the
 # D   . J          NSg+     . . I/C+  NPl/V3+    NSg/V+   . J       NPl+      P    D
 > empirical perspective of natural sciences , identifiable in      some     branches of
@@ -1004,8 +1004,8 @@
 #
 > Imperative programming , a    programming paradigm that          uses   statements that
 # NSg/J+     NᴹSg/Vg+    . D/P+ NᴹSg/Vg+    NSg+     NSg/I/C/Ddem+ NPl/V3 NPl/V3+    NSg/I/C/Ddem+
-> change a   program's state  . In      much       the same way    that         the imperative mood in
-# N🅪Sg/V D/P NSg$      NSg/V+ . NPr/J/P NSg/I/J/Dq D   I/J  NSg/J+ NSg/I/C/Ddem D   NSg/J      NSg  NPr/J/P
+> change a   program's state  . In      much         the same way    that         the imperative mood in
+# N🅪Sg/V D/P NSg$      NSg/V+ . NPr/J/P NSg/I/J/R/Dq D   I/J  NSg/J+ NSg/I/C/Ddem D   NSg/J      NSg  NPr/J/P
 > natural languages expresses commands , an   imperative program consists of
 # NSg/J+  NPl/V3+   NPl/V3    NPl/V3+  . D/P+ NSg/J+     NPr/V+  NPl/V3   P
 > commands for the computer to perform . Imperative programming focuses on
@@ -1052,8 +1052,8 @@
 # NPl/V3+     V   J         NPl/V3 C/P NSg/V+   N🅪Sg/V+ NᴹSg/V+  . V/P    I/Ddem+
 > conferences , researchers from the public  and private sectors present their
 # NPl/V3+     . NPl+        P    D   NSg/V/J V/C NSg/V/J NPl+    NSg/V/J D$+
-> recent work    and meet    . Unlike    in      most       other   academic fields    , in      computer science ,
-# NSg/J+ N🅪Sg/V+ V/C NSg/V/J . NSg/V/J/P NPr/J/P NSg/I/J/Dq NSg/V/J NSg/J+   NPrPl/V3+ . NPr/J/P NSg/V+   N🅪Sg/V+ .
+> recent work    and meet    . Unlike    in      most         other   academic fields    , in      computer science ,
+# NSg/J+ N🅪Sg/V+ V/C NSg/V/J . NSg/V/J/P NPr/J/P NSg/I/J/R/Dq NSg/V/J NSg/J+   NPrPl/V3+ . NPr/J/P NSg/V+   N🅪Sg/V+ .
 > the prestige of conference papers  is  greater than that         of journal  publications .
 # D   NSg/V/J  P  NSg/V+     NPl/V3+ VL3 JC      C/P  NSg/I/C/Ddem P  NSg/V/J+ NPl+         .
 > One       proposed explanation for this    is  the quick   development of this   relatively

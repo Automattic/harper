@@ -95,8 +95,8 @@ impl SequenceExpr {
     }
 
     /// Match the first of multiple expressions.
-    pub fn any_of(self, exprs: Vec<Box<dyn Expr>>) -> Self {
-        self.then_any_of(exprs)
+    pub fn any_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+        Self::default().then_any_of(exprs)
     }
 
     /// Match any word from the given set of words, case-insensitive.
