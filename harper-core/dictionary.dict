@@ -680,7 +680,7 @@ Ashe/Og
 Asheville/Og
 Ashgabat/O
 Ashikaga/Og
-Ashkenazim/Ng
+Ashkenazim/N9g
 Ashkhabad/Og
 Ashlee/Og
 Ashley/Og
@@ -4348,7 +4348,7 @@ Hartman/Og
 Harvard/Og
 Harvey/Og
 Hasbro/g
-Hasidim/Ng
+Hasidim/N9g
 Haskell/Og
 Hastings/Og
 Hatfield/Og
@@ -16103,6 +16103,7 @@ caducei/N
 caduceus/Ng
 caesium/Ng!_
 caesura/NSg
+café/NSg
 cafe/~NSg
 cafeteria/~NgS
 cafetiere/NS
@@ -17174,9 +17175,9 @@ cherish/VdSG
 cheroot/NgS
 cherry/~NwJSg
 chert/Ng
-cherub/NgS
+cherub/N0gS
 cherubic/J
-cherubim/N
+cherubim/N9
 chervil/Ng
 chess/~Ng
 chessboard/NgS
@@ -22302,6 +22303,7 @@ duvet/NSg!
 dwarf/~NJVSGgd
 dwarfish/J
 dwarfism/Ng
+dwarves/N9
 dweeb/NSg
 dwell/~NVSzZG>
 dweller/Ng
@@ -22309,8 +22311,8 @@ dwelling/~NVg
 dwelt/Vi
 dwindle/VdSG
 dyadic/~JN
-dybbuk/NSg
-dybbukim/N
+dybbuk/N0Sg
+dybbukim/N9
 dye/~NwVd>SgZG
 dyeing/~VNr
 dyer/~Ng
@@ -33604,7 +33606,7 @@ miaow/NVSGgd!_
 miasma/NgS
 mic/~NVS
 mica/~Ng
-mice/~NV
+mice/~N9V
 mick/~NJS
 mickey/~NVgS
 micro/~JNVSg
@@ -33616,10 +33618,13 @@ microbiological/J
 microbiologist/NgS
 microbiology/~Ng
 microbiome/NSg
+microblog/NgSV
+microblogged/V
+microblogging/NgV
 microbrewery/NSg
 microchip/NVgS
 microcircuit/NSg
-microcode/NV
+microcode/NmgV
 microcomputer/~NgS
 microcontroller/NgS
 microcosm/NgS
@@ -33846,7 +33851,7 @@ minicomputer/~NSg
 minifloppies/N
 minify/VGdS
 minim/NSg
-minima/~N
+minima/~N9
 minimal/~JNY
 minimalism/Ng
 minimalist/~JNgS
@@ -33855,7 +33860,7 @@ minimisation/Ng!_
 minimise/VdSG!_
 minimization/Ng
 minimize/~VdSG
-minimum/~NJgS
+minimum/~N0JgS
 mining/~NVg
 minion/NJg
 miniseries/~Ng
@@ -49775,6 +49780,7 @@ ultraviolet/~JNg
 ululate/VdSGnX
 ululation/Ng
 um/~V
+umami/Nmg
 umbel/NSg
 umber/~NJVg
 umbilical/JNgS
@@ -52231,6 +52237,7 @@ workroom/NgS
 works/~NVg
 worksheet/NVgS
 workshop/~NVgS
+workshopper/NgS
 workshy/J
 worksite/NS
 workspace/NgS
@@ -52669,6 +52676,7 @@ AliExpress/Og
 AlphaFold/Og        # Google DeepMind project
 Ambien/NSg          # insomnia treatment
 Anker/Sg
+Anki/Og             # flashcard app
 AngularJS/Og
 Anthropic/Og        # AI company
 Archytas/Sg         # !! please check and comment !! we also have archytas
@@ -52883,6 +52891,7 @@ Labriola/OSg
 LanguageTool/g      # grammar checker
 Laravel/g
 Lato/ONg
+LeetCode/Og         # programming contest
 Lenovo/Og           # computer manufacturer
 Levenshtein/g       # surname, mathematician
 LiDAR/N             # FIXME! elsewhere we have LIDAR
@@ -53060,6 +53069,7 @@ ThinkPad/OSg        # pc brand
 TikTok/Sg
 TLS/Og              # Transport Layer Security
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
+Topcoder/Og         # programming contest
 Toronado/OgS        # car brand
 Tree-sitter/gO      # parsing
 Trinitron/NOgS      # CRT
