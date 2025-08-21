@@ -149,7 +149,6 @@ export enum ActivationKey {
 	Control = 'control',
 }
 
-
 export type GetActivationKeyRequest = {
 	kind: 'getActivationKey';
 };

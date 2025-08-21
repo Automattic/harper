@@ -2,8 +2,8 @@
 import { Button, Checkbox, Input, Select, Toggle } from 'flowbite-svelte';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
-import { ActivationKey } from '../protocol';
 import ProtocolClient from '../ProtocolClient';
+import { ActivationKey } from '../protocol';
 
 let lintConfig: LintConfig = $state({});
 let lintDescriptions: Record<string, string> = $state({});

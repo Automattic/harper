@@ -1,8 +1,8 @@
 import h from 'virtual-dom/h';
 import { closestBox, isPointInBox, type LintBox } from './Box';
 import { getCaretPosition } from './editorUtils';
-import { ActivationKey } from './protocol';
 import ProtocolClient from './ProtocolClient';
+import { ActivationKey } from './protocol';
 import RenderBox from './RenderBox';
 import SuggestionBox from './SuggestionBox';
 
@@ -58,10 +58,7 @@ export default class PopupHandler {
 
 		ProtocolClient.getActivationKey().then((key) => {
 			if (key !== ActivationKey.Off) {
-				this.activationKeyListener = monitorActivationKey(
-					() => this.openClosestToCaret(),
-					key,
-				);
+				this.activationKeyListener = monitorActivationKey(() => this.openClosestToCaret(), key);
 			}
 		});
 	}

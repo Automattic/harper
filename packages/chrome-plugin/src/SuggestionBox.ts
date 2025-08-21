@@ -46,41 +46,41 @@ CloseOnEscapeHook.prototype.unhook = function (this: any, node: HTMLElement) {
 };
 
 function header(title: string, color: string, onClose: () => void): any {
-    const closeButton = h(
-        'button',
-        {
-            className: 'harper-close-btn',
-            onclick: onClose,
-            title: 'Close',
-            'aria-label': 'Close',
-        },
-        '×',
-    );
+	const closeButton = h(
+		'button',
+		{
+			className: 'harper-close-btn',
+			onclick: onClose,
+			title: 'Close',
+			'aria-label': 'Close',
+		},
+		'×',
+	);
 
-    const settingsButton = h(
-        'button',
-        {
-            className: 'harper-gear-btn',
-            onclick: () => {
-                ProtocolClient.openOptions();
-            },
-            title: 'Settings',
-            'aria-label': 'Settings',
-        },
-        '⚙',
-    );
+	const settingsButton = h(
+		'button',
+		{
+			className: 'harper-gear-btn',
+			onclick: () => {
+				ProtocolClient.openOptions();
+			},
+			title: 'Settings',
+			'aria-label': 'Settings',
+		},
+		'⚙',
+	);
 
-    const controls = h('div', { className: 'harper-controls' }, [settingsButton, closeButton]);
-    const titleEl = h('span', {}, title);
+	const controls = h('div', { className: 'harper-controls' }, [settingsButton, closeButton]);
+	const titleEl = h('span', {}, title);
 
-    return h(
-        'div',
-        {
-            className: 'harper-header',
-            style: { borderBottom: `2px solid ${color}` },
-        },
-        [titleEl, controls],
-    );
+	return h(
+		'div',
+		{
+			className: 'harper-header',
+			style: { borderBottom: `2px solid ${color}` },
+		},
+		[titleEl, controls],
+	);
 }
 
 function body(message_html: string): any {
