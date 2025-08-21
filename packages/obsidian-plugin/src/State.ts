@@ -53,7 +53,7 @@ export default class State {
 		}
 
 		const defaultConfig = await this.harper.getDefaultLintConfig();
-		for (const [key, value] of Object.entries(defaultConfig)) {
+		for (const key of Object.keys(defaultConfig)) {
 			if (settings.lintSettings[key] == undefined) {
 				settings.lintSettings[key] = null;
 			}

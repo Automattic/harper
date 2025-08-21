@@ -1,18 +1,23 @@
 import './index.js';
 import { Dialect } from 'harper.js';
 import { startCase } from 'lodash-es';
-import { type App, PluginSettingTab, Setting, Notice } from 'obsidian';
+import type { ButtonComponent } from 'obsidian';
+import { type App, Notice, PluginSettingTab, Setting } from 'obsidian';
 import type HarperPlugin from './index.js';
 import type State from './State.js';
 import type { Settings } from './State.js';
 import { linesToString, stringToLines } from './textUtils';
+
+const LintSettingId = 'HarperLintSettings';
 
 export class HarperSettingTab extends PluginSettingTab {
 	private state: State;
 	private settings: Settings;
 	private descriptionsHTML: Record<string, string>;
 	private defaultLintConfig: Record<string, boolean>;
+	private currentRuleSearchQuery = '';
 	private plugin: HarperPlugin;
+	private toggleAllButton?: ButtonComponent;
 
 	constructor(app: App, plugin: HarperPlugin, state: State) {
 		super(app, plugin);
@@ -33,6 +38,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	updateSettings() {
 		this.state.getSettings().then((v) => {
 			this.settings = v;
+			this.updateToggleAllRulesButton();
 		});
 	}
 
@@ -45,6 +51,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	updateDefaults() {
 		this.state.getDefaultLintConfig().then((v) => {
 			this.defaultLintConfig = v as unknown as Record<string, boolean>;
+			this.updateToggleAllRulesButton();
 		});
 	}
 
@@ -138,36 +145,85 @@ export class HarperSettingTab extends PluginSettingTab {
 			.setDesc('Search for a specific Harper rule.')
 			.addSearch((search) => {
 				search.setPlaceholder('Search for a rule...').onChange((query) => {
-					this.renderLintSettingsToId(query, 'HarperLintSettings');
+					this.currentRuleSearchQuery = query;
+					this.renderLintSettingsToId(query, LintSettingId);
 				});
 			});
 
 		// Global reset for rule overrides
-			new Setting(containerEl).setName('Reset Rules to Defaults').addButton((button) => {
-				button
-					.setButtonText('Reset All to Defaults')
-					.onClick(async () => {
-						const confirmed = confirm('Reset all rule overrides to their defaults? This cannot be undone.');
-						if (!confirmed) return;
-						for (const key of Object.keys(this.settings.lintSettings)) {
-							this.settings.lintSettings[key] = null;
-						}
-						await this.state.initializeFromSettings(this.settings);
-						this.renderLintSettingsToId('', 'HarperLintSettings');
-						new Notice('Harper rules reset to defaults');
-					})
-					.setWarning();
+		new Setting(containerEl).setName('Reset Rules to Defaults').addButton((button) => {
+			button
+				.setButtonText('Reset All to Defaults')
+				.onClick(async () => {
+					const confirmed = confirm(
+						'Reset all rule overrides to their defaults? This cannot be undone.',
+					);
+					if (!confirmed) return;
+					for (const key of Object.keys(this.settings.lintSettings)) {
+						this.settings.lintSettings[key] = null;
+					}
+					this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
+					this.updateToggleAllRulesButton();
+					await this.state.initializeFromSettings(this.settings);
+					new Notice('Harper rules reset to defaults');
+				})
+				.setWarning();
+		});
+
+		// Single bulk toggle button: If any rules are enabled, turn all off; otherwise turn all on.
+		new Setting(containerEl).setName('Toggle All Rules').addButton((button) => {
+			this.toggleAllButton = button;
+			this.updateToggleAllRulesButton();
+			button.onClick(async () => {
+				// Ensure defaults are available for effective-state computation
+				if (!this.defaultLintConfig) {
+					this.defaultLintConfig = (await this.state.getDefaultLintConfig()) as unknown as Record<
+						string,
+						boolean
+					>;
+				}
+
+				const anyEnabledNow = this.areAnyRulesEnabled();
+				const action = anyEnabledNow ? 'Disable' : 'Enable';
+				const confirmed = confirm(`${action} all rules? This will override individual settings.`);
+				if (!confirmed) return;
+
+				for (const key of Object.keys(this.settings.lintSettings)) {
+					this.settings.lintSettings[key] = !anyEnabledNow;
+				}
+
+				this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
+				this.updateToggleAllRulesButton();
+				await this.state.initializeFromSettings(this.settings);
+				new Notice(`All Harper rules ${anyEnabledNow ? 'disabled' : 'enabled'}`);
 			});
+		});
 
 		const lintSettings = document.createElement('DIV');
-		lintSettings.id = 'HarperLintSettings';
+		lintSettings.id = LintSettingId;
 		containerEl.appendChild(lintSettings);
 
 		// Ensure default config is loaded before initial render so values reflect defaults.
 		this.state.getDefaultLintConfig().then((v) => {
 			this.defaultLintConfig = v as unknown as Record<string, boolean>;
-			this.renderLintSettings('', lintSettings);
+			this.renderLintSettings(this.currentRuleSearchQuery, lintSettings);
 		});
+	}
+
+	private areAnyRulesEnabled(): boolean {
+		for (const key of Object.keys(this.settings.lintSettings)) {
+			const v = this.settings.lintSettings[key] as boolean | null | undefined;
+			const def = this.defaultLintConfig?.[key];
+			const effective = v === null || v === undefined ? def : v;
+			if (effective) return true;
+		}
+		return false;
+	}
+
+	private updateToggleAllRulesButton() {
+		if (!this.toggleAllButton) return;
+		const anyEnabled = this.areAnyRulesEnabled();
+		this.toggleAllButton.setButtonText(anyEnabled ? 'Disable All Rules' : 'Enable All Rules');
 	}
 
 	renderLintSettingsToId(searchQuery: string, id: string) {
@@ -199,28 +255,29 @@ export class HarperSettingTab extends PluginSettingTab {
 			template.innerHTML = descriptionHTML;
 			fragment.appendChild(template.content);
 
-				// Determine default for this rule (if available)
-				const defaultVal = this.defaultLintConfig?.[setting];
+			// Determine default for this rule (if available)
+			const defaultVal = this.defaultLintConfig?.[setting];
 
-				new Setting(containerEl)
-					.setName(startCase(setting))
-					.setDesc(fragment)
-					.addDropdown((dropdown) => {
-						const effective: boolean | undefined = value === null ? defaultVal : (value ?? undefined);
-						const usingDefault = value === null;
-						const onLabel = usingDefault && defaultVal === true ? 'On (default)' : 'On';
-						const offLabel = usingDefault && defaultVal === false ? 'Off (default)' : 'Off';
-						dropdown
-							.addOption('enable', onLabel)
-							.addOption('disable', offLabel)
-							.setValue(effective ? 'enable' : 'disable')
-							.onChange(async (v) => {
-								this.settings.lintSettings[setting] = v === 'enable';
-								await this.state.initializeFromSettings(this.settings);
-								// Re-render to update labels (remove "(default)" once overridden)
-								this.renderLintSettingsToId('', 'HarperLintSettings');
-							});
-					});
+			new Setting(containerEl)
+				.setName(startCase(setting))
+				.setDesc(fragment)
+				.addDropdown((dropdown) => {
+					const effective: boolean | undefined = value === null ? defaultVal : (value ?? undefined);
+					const usingDefault = value === null;
+					const onLabel = usingDefault && defaultVal === true ? 'On (default)' : 'On';
+					const offLabel = usingDefault && defaultVal === false ? 'Off (default)' : 'Off';
+					dropdown
+						.addOption('enable', onLabel)
+						.addOption('disable', offLabel)
+						.setValue(effective ? 'enable' : 'disable')
+						.onChange(async (v) => {
+							this.settings.lintSettings[setting] = v === 'enable';
+							await this.state.initializeFromSettings(this.settings);
+							// Re-render to update labels (remove "(default)" once overridden)
+							this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
+							this.updateToggleAllRulesButton();
+						});
+				});
 		}
 	}
 }
