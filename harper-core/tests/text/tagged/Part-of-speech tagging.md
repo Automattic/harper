@@ -89,7 +89,7 @@
 > etc. ) , grammatical gender   , and so        on  ; while     verbs  are marked for tense   , aspect ,
 # +    . . J+          NSg/V/J+ . V/C NSg/I/J/C J/P . NSg/V/C/P NPl/V+ V   V/J    C/P NSg/V/J . NSg/V+ .
 > and other    things . In      some     tagging systems , different inflections of the same
-# V/C NSg/V/J+ NPl/V+ . NPr/J/P I/J/R/Dq NSg/V   NPl+    . NSg/J     NPl         P  D   I/J
+# V/C NSg/V/J+ NPl+   . NPr/J/P I/J/R/Dq NSg/V   NPl+    . NSg/J     NPl         P  D   I/J
 > root   word   will   get   different parts of speech  , resulting in      a   large number   of
 # NPr/V+ NSg/V+ NPr/VX NSg/V NSg/J     NPl/V P  N🅪Sg/V+ . V         NPr/J/P D/P NSg/J NSg/V/JC P
 > tags   . For example , NN for singular common  nouns , NNS for plural common  nouns , NP
