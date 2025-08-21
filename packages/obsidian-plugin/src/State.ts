@@ -254,6 +254,21 @@ export default class State {
 		return await this.harper.getDefaultLintConfig();
 	}
 
+	/** Effective config: merges defaults with overrides (null/undefined uses default). */
+	public async getEffectiveLintConfig(): Promise<Record<string, boolean>> {
+		const defaults = (await this.getDefaultLintConfig()) as Record<string, boolean>;
+		const overrides = (await this.getSettings()).lintSettings as Record<
+			string,
+			boolean | null | undefined
+		>;
+		const effective: Record<string, boolean> = {};
+		for (const key of Object.keys(defaults)) {
+			const v = overrides[key];
+			effective[key] = v === null || v === undefined ? defaults[key] : Boolean(v);
+		}
+		return effective;
+	}
+
 	/** Determine if any rules are effectively enabled, considering defaults. */
 	public async areAnyRulesEnabled(): Promise<boolean> {
 		const settings = await this.getSettings();

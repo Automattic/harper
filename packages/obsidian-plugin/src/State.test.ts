@@ -133,3 +133,27 @@ test('setAllRulesEnabled toggles all rules on and off', async () => {
 		expect(settings.lintSettings[key]).toBe(false);
 	}
 });
+
+test('getEffectiveLintConfig matches defaults after reset', async () => {
+	const state = createEphemeralState();
+	await state.resetAllRulesToDefaults();
+	const effective = await state.getEffectiveLintConfig();
+	const defaults = (await state.getDefaultLintConfig()) as Record<string, boolean>;
+	expect(Object.keys(effective).sort()).toStrictEqual(Object.keys(defaults).sort());
+	for (const k of Object.keys(defaults)) {
+		expect(effective[k]).toBe(defaults[k]);
+	}
+});
+
+test('getEffectiveLintConfig reflects explicit overrides', async () => {
+	const state = createEphemeralState();
+	const settings = await state.getSettings();
+	for (const key of Object.keys(settings.lintSettings)) {
+		settings.lintSettings[key] = true;
+	}
+	await state.initializeFromSettings(settings);
+	const effective = await state.getEffectiveLintConfig();
+	for (const k of Object.keys(effective)) {
+		expect(effective[k]).toBe(true);
+	}
+});

@@ -203,7 +203,7 @@ export class HarperSettingTab extends PluginSettingTab {
 		// Ensure default config is loaded before initial render so values reflect defaults.
 		this.state.getDefaultLintConfig().then((v) => {
 			this.defaultLintConfig = v as unknown as Record<string, boolean>;
-			this.renderLintSettings(this.currentRuleSearchQuery, lintSettings);
+			this.renderLintSettingsToId(this.currentRuleSearchQuery, lintSettings.id);
 		});
 	}
 
@@ -213,12 +213,18 @@ export class HarperSettingTab extends PluginSettingTab {
 		this.toggleAllButton.setButtonText(anyEnabled ? 'Disable All Rules' : 'Enable All Rules');
 	}
 
-	renderLintSettingsToId(searchQuery: string, id: string) {
+	async renderLintSettingsToId(searchQuery: string, id: string) {
 		const el = document.getElementById(id);
-		this.renderLintSettings(searchQuery, el!);
+		if (!el) return;
+		const effective = await this.state.getEffectiveLintConfig();
+		this.renderLintSettings(searchQuery, el, effective);
 	}
 
-	renderLintSettings(searchQuery: string, containerEl: HTMLElement) {
+	private renderLintSettings(
+		searchQuery: string,
+		containerEl: HTMLElement,
+		effectiveConfig: Record<string, boolean>,
+	) {
 		containerEl.innerHTML = '';
 
 		const queryLower = searchQuery.toLowerCase();
@@ -249,7 +255,7 @@ export class HarperSettingTab extends PluginSettingTab {
 				.setName(startCase(setting))
 				.setDesc(fragment)
 				.addDropdown((dropdown) => {
-					const effective: boolean | undefined = value === null ? defaultVal : (value ?? undefined);
+					const effective: boolean | undefined = effectiveConfig[setting];
 					const usingDefault = value === null;
 					const onLabel = usingDefault && defaultVal === true ? 'On (default)' : 'On';
 					const offLabel = usingDefault && defaultVal === false ? 'Off (default)' : 'Off';
