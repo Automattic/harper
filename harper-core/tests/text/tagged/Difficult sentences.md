@@ -10,8 +10,8 @@
 # NSg/V+ NSg/I/C/Ddem I/J/R/Dq+ NSg/V+ NPr/VX NSg/C NSg/VX V/J    R         NPr/V/J NPr/V/J/C .
 >
 #
-> Most       example sentences are taken from https://en.wiktionary.org/. License : CC     BY      - SA       4.0 .
-# NSg/I/J/Dq NSg/V+  NPl/V+    V   V/J   P    Url                         NSg/V+  . NSg/V+ NSg/J/P . NPr/V/J+ #   .
+> Most         example sentences are taken from https://en.wiktionary.org/. License : CC     BY      - SA       4.0 .
+# NSg/I/J/R/Dq NSg/V+  NPl/V+    V   V/J   P    Url                         NSg/V+  . NSg/V+ NSg/J/P . NPr/V/J+ #   .
 >
 #
 > A
@@ -188,8 +188,8 @@
 # W?   NSg/V NSg/J/P J/P D$+ NSg/J+ NSg/V/J P    N🅪Sg/V+ .
 > We're right   near      the lifeguard station . Come    by      before you    leave .
 # W?    NPr/V/J NSg/V/J/P D   NSg+      NSg/V+  . NSg/V/P NSg/J/P C/P    ISgPl+ NSg/V .
-> The women spent much       time      after harvest putting jams   by      for winter and spring .
-# D+  NPl+  V/J   NSg/I/J/Dq N🅪Sg/V/J+ P     NSg/V+  NSg/V   NPl/V+ NSg/J/P C/P NSg/V  V/C NSg/V+ .
+> The women spent much         time      after harvest putting jams   by      for winter and spring .
+# D+  NPl+  V/J   NSg/I/J/R/Dq N🅪Sg/V/J+ P     NSg/V+  NSg/V   NPl/V+ NSg/J/P C/P NSg/V  V/C NSg/V+ .
 >
 #
 > Adjective
@@ -386,10 +386,10 @@
 # IPl+ V   NPr/J/P D+  NSg/V+ NSg/V/J+ .
 > Her     plane    is in      the air     .
 # ISg/D$+ NSg/V/J+ VL NPr/J/P D+  N🅪Sg/V+ .
-> I    glanced over    at    the pretty  girl   in      the red     dress  .
-# ISg+ V/J     NSg/J/P NSg/P D+  NSg/V/J NSg/V+ NPr/J/P D+  N🅪Sg/J+ NSg/V+ .
-> There wasn't much       of interest in      her     speech  .
-# +     V      NSg/I/J/Dq P  NSg/V+   NPr/J/P ISg/D$+ N🅪Sg/V+ .
+> I    glanced over    at    the pretty    girl   in      the red     dress  .
+# ISg+ V/J     NSg/J/P NSg/P D+  NSg/V/J/R NSg/V+ NPr/J/P D+  N🅪Sg/J+ NSg/V+ .
+> There wasn't much         of interest in      her     speech  .
+# +     V      NSg/I/J/R/Dq P  NSg/V+   NPr/J/P ISg/D$+ N🅪Sg/V+ .
 > He       hasn't got an  original idea in      him  .
 # NPr/ISg+ V      V   D/P NSg/J    NSg+ NPr/J/P ISg+ .
 > You    are one       in      a   million .
@@ -440,8 +440,8 @@
 # V      NSg/V/J NPr/ISg+ NPr/J/P NPrᴹ/V/J+ . R          NPr/J/P W?   V/C NPl+     .
 > The deposit can    be     in      any    legal tender  , even    in      gold      .
 # D+  NSg/V+  NPr/VX NSg/VX NPr/J/P I/R/Dq NSg/J NSg/V/J . NSg/V/J NPr/J/P NᴹSg/V/J+ .
-> Beethoven's " Symphony No    . 5 " in      C        minor   is among his     most       popular .
-# NSg$        . NSg+     NPr/P . # . NPr/J/P NPr/V/J+ NSg/V/J VL P     ISg/D$+ NSg/I/J/Dq NSg/J   .
+> Beethoven's " Symphony No    . 5 " in      C        minor   is among his     most         popular .
+# NSg$        . NSg+     NPr/P . # . NPr/J/P NPr/V/J+ NSg/V/J VL P     ISg/D$+ NSg/I/J/R/Dq NSg/J   .
 > His     speech  was in      French   , but     was simultaneously translated into eight  languages .
 # ISg/D$+ N🅪Sg/V+ V   NPr/J/P NPr🅪/V/J . NSg/C/P V   R              V/J        P    NSg/J+ NPl/V+    .
 > When    you    write in      cursive , it's illegible .
