@@ -151,53 +151,63 @@ export class HarperSettingTab extends PluginSettingTab {
 			});
 
 		// Global reset for rule overrides
-		new Setting(containerEl).setName('Reset Rules to Defaults').addButton((button) => {
-			button
-				.setButtonText('Reset All to Defaults')
-				.onClick(async () => {
-					const confirmed = confirm(
-						'Reset all rule overrides to their defaults? This cannot be undone.',
-					);
-					if (!confirmed) return;
-					for (const key of Object.keys(this.settings.lintSettings)) {
-						this.settings.lintSettings[key] = null;
+		new Setting(containerEl)
+			.setName('Reset Rules to Defaults')
+			.setDesc(
+				'Restore all rule overrides back to their default values. This does not affect other settings.',
+			)
+			.addButton((button) => {
+				button
+					.setButtonText('Reset All to Defaults')
+					.onClick(async () => {
+						const confirmed = confirm(
+							'Reset all rule overrides to their defaults? This cannot be undone.',
+						);
+						if (!confirmed) return;
+						for (const key of Object.keys(this.settings.lintSettings)) {
+							this.settings.lintSettings[key] = null;
+						}
+						this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
+						this.updateToggleAllRulesButton();
+						await this.state.initializeFromSettings(this.settings);
+						new Notice('Harper rules reset to defaults');
+					})
+					.setWarning();
+			});
+
+		// Single bulk toggle button: If any rules are enabled, turn all off; otherwise turn all on.
+		new Setting(containerEl)
+			.setName('Toggle All Rules')
+			.setDesc(
+				'Enable or disable all rules in bulk. Overrides individual rule settings until changed again.',
+			)
+			.addButton((button) => {
+				this.toggleAllButton = button;
+				this.updateToggleAllRulesButton();
+				button.setWarning().onClick(async () => {
+					// Ensure defaults are available for effective-state computation
+					if (!this.defaultLintConfig) {
+						this.defaultLintConfig = (await this.state.getDefaultLintConfig()) as unknown as Record<
+							string,
+							boolean
+						>;
 					}
+
+					const anyEnabledNow = this.areAnyRulesEnabled();
+					const action = anyEnabledNow ? 'Disable' : 'Enable';
+					const confirmed = confirm(`${action} all rules? This will override individual settings.`);
+					if (!confirmed) return;
+
+					for (const key of Object.keys(this.settings.lintSettings)) {
+						this.settings.lintSettings[key] = !anyEnabledNow;
+					}
+
 					this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 					this.updateToggleAllRulesButton();
 					await this.state.initializeFromSettings(this.settings);
-					new Notice('Harper rules reset to defaults');
-				})
-				.setWarning();
-		});
-
-		// Single bulk toggle button: If any rules are enabled, turn all off; otherwise turn all on.
-		new Setting(containerEl).setName('Toggle All Rules').addButton((button) => {
-			this.toggleAllButton = button;
-			this.updateToggleAllRulesButton();
-			button.onClick(async () => {
-				// Ensure defaults are available for effective-state computation
-				if (!this.defaultLintConfig) {
-					this.defaultLintConfig = (await this.state.getDefaultLintConfig()) as unknown as Record<
-						string,
-						boolean
-					>;
-				}
-
-				const anyEnabledNow = this.areAnyRulesEnabled();
-				const action = anyEnabledNow ? 'Disable' : 'Enable';
-				const confirmed = confirm(`${action} all rules? This will override individual settings.`);
-				if (!confirmed) return;
-
-				for (const key of Object.keys(this.settings.lintSettings)) {
-					this.settings.lintSettings[key] = !anyEnabledNow;
-				}
-
-				this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
-				this.updateToggleAllRulesButton();
-				await this.state.initializeFromSettings(this.settings);
-				new Notice(`All Harper rules ${anyEnabledNow ? 'disabled' : 'enabled'}`);
+					new Notice(`All Harper rules ${anyEnabledNow ? 'disabled' : 'enabled'}`);
+				});
 			});
-		});
 
 		const lintSettings = document.createElement('DIV');
 		lintSettings.id = LintSettingId;
