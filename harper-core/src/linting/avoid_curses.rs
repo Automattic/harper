@@ -48,6 +48,7 @@ impl ExprLinter for AvoidCurses {
 
         // Define offensive words and their possible replacements
         const WORDS: &[(&str, &[&str])] = &[
+            ("apeshit", &["crazy", "mad", "insane", "wild"]),
             (
                 "arse",
                 &["bum", "buttocks", "backside", "bottom", "rump", "posterior"],
@@ -106,29 +107,27 @@ impl ExprLinter for AvoidCurses {
                 &["pee-pees", "willies", "penises", "phalluses", "members"],
             ),
             // cocksucker
-            ("crap", &["poo", "poop", "feces", "dung"]),
-            ("craps", &["poos", "poops", "feces", "dung"]),
-            ("crapped", &["pooed", "pooped"]),
-            ("crapping", &["pooing", "pooping"]),
             ("cunt", &["vagina"]),
             ("cunts", &["vaginas"]),
-            ("crapload", &["shedload"]),
             ("dick", &["pee-pee", "penis"]),
             ("dicks", &["pee-pees", "penises"]),
-            // dickhead
+            ("dickhead", &["jerk", "idiot"]),
+            ("dichheads", &["jerks", "idiots"]),
+            // dipshit
             ("dumbass", &["idiot", "fool"]),
             ("dumbasses", &["idiots", "fools"]),
             ("fart", &["gas", "wind", "break wind"]),
             ("farts", &["gas", "wind", "breaks wind"]),
             ("farted", &["broke wind", "broken wind"]),
             ("farting", &["breaking wind"]),
-            ("fuck", &["fudge", "screw"]),
+            ("fuck", &["fudge", "screw", "damn", "hoot"]),
             ("fucks", &["screws"]),
             ("fucked", &["screwed"]),
             ("fucking", &["screwing"]),
-            // fucker
+            ("fucker", &["jerk"]),
+            ("fuckers", &["jerks"]),
             // fuckhead
-            // horseshit
+            ("horseshit", &["nonsense"]),
             // mindfuck
             // motherfucker
             // nigga
@@ -139,7 +138,10 @@ impl ExprLinter for AvoidCurses {
             ("pissing", &["peeing", "urinating"]),
             ("pisser", &["toilet", "bathroom", "restroom", "washroom"]),
             // pissy
-            ("shit", &["poo", "poop", "feces", "dung"]),
+            (
+                "shit",
+                &["crap", "poo", "poop", "feces", "dung", "damn", "hoot"],
+            ),
             ("shits", &["craps", "poos", "poops"]),
             ("shitted", &["crapped", "pooed", "pooped"]),
             ("shitting", &["crapping", "pooing", "pooping"]),
@@ -147,7 +149,7 @@ impl ExprLinter for AvoidCurses {
             // shitfaced
             // shitfest
             // shithead
-            // shitless
+            ("shitless", &["witless"]),
             (
                 "shitload",
                 &["crapload", "shedload", "shirtload", "load", "tons", "pile"],
@@ -164,13 +166,13 @@ impl ExprLinter for AvoidCurses {
                 ],
             ),
             // shitpost
-            ("shitty", &["shirty", "crappy"]),
-            ("shittier", &["shirtier", "crappier"]),
-            ("shittiest", &["shirtiest", "crappiest"]),
+            ("shitty", &["shirty", "crappy", "inferior"]),
+            ("shittier", &["crappier", "shirtier"]),
+            ("shittiest", &["crappiest", "shirtiest"]),
             ("tit", &["boob", "breast"]),
             ("tits", &["boobs", "breasts"]),
             ("titty", &["boob", "breast"]),
-            ("titty", &["boob", "breast"]),
+            ("titties", &["boobs", "breasts"]),
             ("turd", &["poo", "poop", "feces", "dung"]),
             ("turds", &["poos", "poops", "feces", "dung"]),
             ("twat", &["vagina"]),
@@ -187,7 +189,7 @@ impl ExprLinter for AvoidCurses {
             .flat_map(|(m, censored)| {
                 let mut replacements = Vec::new();
 
-                // Add all-asterisk version for the morpheme only
+                // Add all-asterisk version for the censored morpheme only
                 let asterisked = "*".repeat(m.len());
                 let asterisked_word = bad_word_norm.replace(m, &asterisked);
                 replacements.push(asterisked_word);
@@ -239,7 +241,7 @@ impl ExprLinter for AvoidCurses {
     }
 
     fn description(&self) -> &'static str {
-        "Replaces bad words with nicer synonyms"
+        "Flags offensive language and offers various ways to censor or replace with euphemisms."
     }
 }
 
@@ -259,17 +261,17 @@ mod tests {
 
     #[test]
     fn fix_shit() {
-        assert_top3_suggestion_result("shit", AvoidCurses::default(), "poo")
+        assert_top3_suggestion_result("shit", AvoidCurses::default(), "crap")
     }
 
     #[test]
     fn fix_shit_titlecase() {
-        assert_top3_suggestion_result("Shit", AvoidCurses::default(), "Poo")
+        assert_top3_suggestion_result("Shit", AvoidCurses::default(), "Crap")
     }
 
     #[test]
     fn fix_shit_allcaps() {
-        assert_top3_suggestion_result("SHIT", AvoidCurses::default(), "POO")
+        assert_top3_suggestion_result("SHIT", AvoidCurses::default(), "CRAP")
     }
 
     #[test]
