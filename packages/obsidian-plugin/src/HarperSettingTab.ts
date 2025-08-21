@@ -164,12 +164,10 @@ export class HarperSettingTab extends PluginSettingTab {
 							'Reset all rule overrides to their defaults? This cannot be undone.',
 						);
 						if (!confirmed) return;
-						for (const key of Object.keys(this.settings.lintSettings)) {
-							this.settings.lintSettings[key] = null;
-						}
+						await this.state.resetAllRulesToDefaults();
+						this.settings = await this.state.getSettings();
 						this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 						this.updateToggleAllRulesButton();
-						await this.state.initializeFromSettings(this.settings);
 						new Notice('Harper rules reset to defaults');
 					})
 					.setWarning();
@@ -185,26 +183,15 @@ export class HarperSettingTab extends PluginSettingTab {
 				this.toggleAllButton = button;
 				this.updateToggleAllRulesButton();
 				button.setWarning().onClick(async () => {
-					// Ensure defaults are available for effective-state computation
-					if (!this.defaultLintConfig) {
-						this.defaultLintConfig = (await this.state.getDefaultLintConfig()) as unknown as Record<
-							string,
-							boolean
-						>;
-					}
-
-					const anyEnabledNow = this.areAnyRulesEnabled();
+					const anyEnabledNow = await this.state.areAnyRulesEnabled();
 					const action = anyEnabledNow ? 'Disable' : 'Enable';
 					const confirmed = confirm(`${action} all rules? This will override individual settings.`);
 					if (!confirmed) return;
 
-					for (const key of Object.keys(this.settings.lintSettings)) {
-						this.settings.lintSettings[key] = !anyEnabledNow;
-					}
-
+					await this.state.setAllRulesEnabled(!anyEnabledNow);
+					this.settings = await this.state.getSettings();
 					this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 					this.updateToggleAllRulesButton();
-					await this.state.initializeFromSettings(this.settings);
 					new Notice(`All Harper rules ${anyEnabledNow ? 'disabled' : 'enabled'}`);
 				});
 			});
@@ -220,19 +207,9 @@ export class HarperSettingTab extends PluginSettingTab {
 		});
 	}
 
-	private areAnyRulesEnabled(): boolean {
-		for (const key of Object.keys(this.settings.lintSettings)) {
-			const v = this.settings.lintSettings[key] as boolean | null | undefined;
-			const def = this.defaultLintConfig?.[key];
-			const effective = v === null || v === undefined ? def : v;
-			if (effective) return true;
-		}
-		return false;
-	}
-
-	private updateToggleAllRulesButton() {
+	private async updateToggleAllRulesButton() {
 		if (!this.toggleAllButton) return;
-		const anyEnabled = this.areAnyRulesEnabled();
+		const anyEnabled = await this.state.areAnyRulesEnabled();
 		this.toggleAllButton.setButtonText(anyEnabled ? 'Disable All Rules' : 'Enable All Rules');
 	}
 

@@ -100,3 +100,36 @@ test('Can be initialized with incomplete lint settings and retain default state.
 
 	expect(await state.getSettings()).toStrictEqual(defaultSettings);
 });
+
+test('resetAllRulesToDefaults sets all overrides to null', async () => {
+	const state = createEphemeralState();
+
+	// Start with all enabled, then reset
+	let settings = await state.getSettings();
+	for (const key of Object.keys(settings.lintSettings)) {
+		settings.lintSettings[key] = true;
+	}
+	await state.initializeFromSettings(settings);
+
+	await state.resetAllRulesToDefaults();
+	settings = await state.getSettings();
+	for (const key of Object.keys(settings.lintSettings)) {
+		expect(settings.lintSettings[key]).toBeNull();
+	}
+});
+
+test('setAllRulesEnabled toggles all rules on and off', async () => {
+	const state = createEphemeralState();
+
+	await state.setAllRulesEnabled(true);
+	let settings = await state.getSettings();
+	for (const key of Object.keys(settings.lintSettings)) {
+		expect(settings.lintSettings[key]).toBe(true);
+	}
+
+	await state.setAllRulesEnabled(false);
+	settings = await state.getSettings();
+	for (const key of Object.keys(settings.lintSettings)) {
+		expect(settings.lintSettings[key]).toBe(false);
+	}
+});

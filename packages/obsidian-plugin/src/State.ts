@@ -221,6 +221,30 @@ export default class State {
 		};
 	}
 
+	/**
+	 * Reset all lint rule overrides back to their defaults (null).
+	 * Persists and reinitializes state to apply changes.
+	 */
+	public async resetAllRulesToDefaults(): Promise<void> {
+		const settings = await this.getSettings();
+		for (const key of Object.keys(settings.lintSettings)) {
+			settings.lintSettings[key] = null;
+		}
+		await this.initializeFromSettings(settings);
+	}
+
+	/**
+	 * Enable or disable all lint rules in bulk by setting explicit values.
+	 * This overrides individual rule settings until changed again.
+	 */
+	public async setAllRulesEnabled(enabled: boolean): Promise<void> {
+		const settings = await this.getSettings();
+		for (const key of Object.keys(settings.lintSettings)) {
+			settings.lintSettings[key] = enabled;
+		}
+		await this.initializeFromSettings(settings);
+	}
+
 	public async getDescriptionHTML(): Promise<Record<string, string>> {
 		return await this.harper.getLintDescriptionsHTML();
 	}
@@ -228,6 +252,19 @@ export default class State {
 	/** Expose the default lint configuration for UI rendering. */
 	public async getDefaultLintConfig(): Promise<LintConfig> {
 		return await this.harper.getDefaultLintConfig();
+	}
+
+	/** Determine if any rules are effectively enabled, considering defaults. */
+	public async areAnyRulesEnabled(): Promise<boolean> {
+		const settings = await this.getSettings();
+		const defaults = await this.getDefaultLintConfig();
+		for (const key of Object.keys(settings.lintSettings)) {
+			const v = settings.lintSettings[key] as boolean | null | undefined;
+			const def = (defaults as Record<string, boolean | undefined>)[key];
+			const effective = v === null || v === undefined ? def : v;
+			if (effective) return true;
+		}
+		return false;
 	}
 
 	/** Get a reference to the CM editor extensions.
