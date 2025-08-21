@@ -1,7 +1,7 @@
 import './index.js';
 import { Dialect } from 'harper.js';
 import { startCase } from 'lodash-es';
-import { type App, PluginSettingTab, Setting } from 'obsidian';
+import { type App, PluginSettingTab, Setting, Notice } from 'obsidian';
 import type HarperPlugin from './index.js';
 import type State from './State.js';
 import type { Settings } from './State.js';
@@ -11,6 +11,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	private state: State;
 	private settings: Settings;
 	private descriptionsHTML: Record<string, string>;
+	private defaultLintConfig: Record<string, boolean>;
 	private plugin: HarperPlugin;
 
 	constructor(app: App, plugin: HarperPlugin, state: State) {
@@ -22,6 +23,7 @@ export class HarperSettingTab extends PluginSettingTab {
 		const update = () => {
 			this.updateDescriptions();
 			this.updateSettings();
+			this.updateDefaults();
 			setTimeout(update, 1000);
 		};
 
@@ -37,6 +39,12 @@ export class HarperSettingTab extends PluginSettingTab {
 	updateDescriptions() {
 		this.state.getDescriptionHTML().then((v) => {
 			this.descriptionsHTML = v;
+		});
+	}
+
+	updateDefaults() {
+		this.state.getDefaultLintConfig().then((v) => {
+			this.defaultLintConfig = v as unknown as Record<string, boolean>;
 		});
 	}
 
@@ -134,11 +142,32 @@ export class HarperSettingTab extends PluginSettingTab {
 				});
 			});
 
+		// Global reset for rule overrides
+			new Setting(containerEl).setName('Reset Rules to Defaults').addButton((button) => {
+				button
+					.setButtonText('Reset All to Defaults')
+					.onClick(async () => {
+						const confirmed = confirm('Reset all rule overrides to their defaults? This cannot be undone.');
+						if (!confirmed) return;
+						for (const key of Object.keys(this.settings.lintSettings)) {
+							this.settings.lintSettings[key] = null;
+						}
+						await this.state.initializeFromSettings(this.settings);
+						this.renderLintSettingsToId('', 'HarperLintSettings');
+						new Notice('Harper rules reset to defaults');
+					})
+					.setWarning();
+			});
+
 		const lintSettings = document.createElement('DIV');
 		lintSettings.id = 'HarperLintSettings';
 		containerEl.appendChild(lintSettings);
 
-		this.renderLintSettings('', lintSettings);
+		// Ensure default config is loaded before initial render so values reflect defaults.
+		this.state.getDefaultLintConfig().then((v) => {
+			this.defaultLintConfig = v as unknown as Record<string, boolean>;
+			this.renderLintSettings('', lintSettings);
+		});
 	}
 
 	renderLintSettingsToId(searchQuery: string, id: string) {
@@ -170,44 +199,31 @@ export class HarperSettingTab extends PluginSettingTab {
 			template.innerHTML = descriptionHTML;
 			fragment.appendChild(template.content);
 
-			new Setting(containerEl)
-				.setName(startCase(setting))
-				.setDesc(fragment)
-				.addDropdown((dropdown) =>
-					dropdown
-						.addOption('default', 'Default')
-						.addOption('enable', 'On')
-						.addOption('disable', 'Off')
-						.setValue(valueToString(value))
-						.onChange(async (value) => {
-							this.settings.lintSettings[setting] = stringToValue(value);
-							await this.state.initializeFromSettings(this.settings);
-						}),
-				);
+				// Determine default for this rule (if available)
+				const defaultVal = this.defaultLintConfig?.[setting];
+
+				new Setting(containerEl)
+					.setName(startCase(setting))
+					.setDesc(fragment)
+					.addDropdown((dropdown) => {
+						const effective: boolean | undefined = value === null ? defaultVal : (value ?? undefined);
+						const usingDefault = value === null;
+						const onLabel = usingDefault && defaultVal === true ? 'On (default)' : 'On';
+						const offLabel = usingDefault && defaultVal === false ? 'Off (default)' : 'Off';
+						dropdown
+							.addOption('enable', onLabel)
+							.addOption('disable', offLabel)
+							.setValue(effective ? 'enable' : 'disable')
+							.onChange(async (v) => {
+								this.settings.lintSettings[setting] = v === 'enable';
+								await this.state.initializeFromSettings(this.settings);
+								// Re-render to update labels (remove "(default)" once overridden)
+								this.renderLintSettingsToId('', 'HarperLintSettings');
+							});
+					});
 		}
 	}
 }
 
-function valueToString(value: boolean | null): string {
-	switch (value) {
-		case true:
-			return 'enable';
-		case false:
-			return 'disable';
-		case null:
-			return 'default';
-	}
-}
-
-function stringToValue(str: string): boolean | null {
-	switch (str) {
-		case 'enable':
-			return true;
-		case 'disable':
-			return false;
-		case 'default':
-			return null;
-	}
-
-	throw 'Fell through case';
-}
+// Note: dropdowns present only On/Off. When using defaults (unset),
+// the matching option label includes "(default)".

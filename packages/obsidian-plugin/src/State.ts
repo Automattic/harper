@@ -225,6 +225,11 @@ export default class State {
 		return await this.harper.getLintDescriptionsHTML();
 	}
 
+	/** Expose the default lint configuration for UI rendering. */
+	public async getDefaultLintConfig(): Promise<LintConfig> {
+		return await this.harper.getDefaultLintConfig();
+	}
+
 	/** Get a reference to the CM editor extensions.
 	 * Do not mutate the returned value, except via methods on this class. */
 	public getCMEditorExtensions(): Extension[] {
