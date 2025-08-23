@@ -211,6 +211,10 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Ampersand))
     }
 
+    pub fn is_slash(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::ForwardSlash))
+    }
+
     // Miscellaneous is-methods
 
     /// Checks whether a token is word-like--meaning it is more complex than punctuation and can
