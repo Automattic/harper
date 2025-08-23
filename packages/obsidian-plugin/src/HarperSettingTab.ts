@@ -87,6 +87,18 @@ export class HarperSettingTab extends PluginSettingTab {
 		});
 
 		new Setting(containerEl)
+			.setName('Restore Active Status')
+			.setDesc(
+				'Whether to restore the Harper active/inactive status between sessions.',
+			)
+			.addToggle((toggle) =>
+				toggle.setValue(this.settings.lintEnabledRestore).onChange(async (value) => {
+					this.settings.lintEnabledRestore = value;
+					await this.state.initializeFromSettings(this.settings);
+				}),
+			);
+
+		new Setting(containerEl)
 			.setName('Personal Dictionary')
 			.setDesc(
 				'Make edits to your personal dictionary. Add names, places, or terms you use often. Each line should contain its own word.',
@@ -126,9 +138,9 @@ export class HarperSettingTab extends PluginSettingTab {
 					.setValue(this.settings.delay ?? -1)
 					.onChange(async (value) => {
 						this.settings.delay = value;
-						await this.state.initializeFromSettings(this.settings);
-					});
+				await this.state.initializeFromSettings(this.settings);
 			});
+		});
 
 		new Setting(containerEl).setName('The Danger Zone').addButton((button) => {
 			button
