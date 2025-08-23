@@ -138,9 +138,9 @@ export class HarperSettingTab extends PluginSettingTab {
 					.setValue(this.settings.delay ?? -1)
 					.onChange(async (value) => {
 						this.settings.delay = value;
-				await this.state.initializeFromSettings(this.settings);
+						await this.state.initializeFromSettings(this.settings);
+					});
 			});
-		});
 
 		new Setting(containerEl).setName('The Danger Zone').addButton((button) => {
 			button
