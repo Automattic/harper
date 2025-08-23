@@ -53,11 +53,11 @@ export default class State {
 
 	public async initializeFromSettings(settings: Settings | null) {
 		if (settings == null) {
-			settings = { 
-				useWebWorker: true
-				, lintEnabled: true
-				, lintEnabledRestore: false
-				, lintSettings: {} 
+			settings = {
+				useWebWorker: true,
+				lintEnabled: true,
+				lintEnabledRestore: false,
+				lintSettings: {},
 			};
 		}
 
@@ -307,7 +307,7 @@ export default class State {
 			this.editorExtensions.push(this.constructEditorLinter());
 			this.lintEnabled = true;
 			this.onExtensionChange();
-			if(reinit) this.reinitialize();
+			if (reinit) this.reinitialize();
 			console.log('Enabled');
 		}
 	}
@@ -319,7 +319,7 @@ export default class State {
 		}
 		this.lintEnabled = false;
 		this.onExtensionChange();
-		if(reinit) this.reinitialize();
+		if (reinit) this.reinitialize();
 		console.log('Disabled');
 	}
 

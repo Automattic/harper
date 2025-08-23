@@ -88,9 +88,7 @@ export class HarperSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Restore Active Status')
-			.setDesc(
-				'Whether to restore the Harper active/inactive status between sessions.',
-			)
+			.setDesc('Whether to restore the Harper active/inactive status between sessions.')
 			.addToggle((toggle) =>
 				toggle.setValue(this.settings.lintEnabledRestore).onChange(async (value) => {
 					this.settings.lintEnabledRestore = value;
