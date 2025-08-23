@@ -747,12 +747,41 @@ impl Document {
 
     // Condenses "ampersand pairs" such as "R&D" or "Q&A" into single tokens.
     fn condense_ampersand_pairs(&mut self) {
-        self.condense_delimited_pairs(|kind| kind.is_ampersand(), &[('r', 'd'), ('q', 'a')]);
+        self.condense_delimited_pairs(
+            |kind| kind.is_ampersand(),
+            &[
+                ('b', 'b'), // bed & breakfast
+                ('b', 'w'), // black & white
+                ('g', 't'), // gin & tonic
+                ('k', 'r'), // Kernighan & Ritchie
+                ('q', 'a'), // question & answer
+                ('r', 'b'), // rhythm & blues
+                ('r', 'd'), // research & development
+                ('r', 'r'), // rest & relaxation
+                ('s', 'p'), // Standard & Poor's
+            ],
+        );
     }
 
     // Condenses "slash pairs" such as "I/O" into single tokens.
     fn condense_slash_pairs(&mut self) {
-        self.condense_delimited_pairs(|kind| kind.is_slash(), &[('i', 'o')]);
+        self.condense_delimited_pairs(
+            |kind| kind.is_slash(),
+            &[
+                ('a', 'c'), // aircon; alternating current
+                ('b', 'w'), // black and white
+                ('c', 'o'), // care of
+                ('d', 'c'), // direct current
+                ('d', 'l'), // download
+                ('i', 'o'), // input/output
+                ('j', 'k'), // just kidding
+                ('n', 'a'), // not applicable
+                ('r', 'c'), // radio control
+                ('s', 'n'), // serial number
+                ('y', 'n'), // yes/no
+                ('y', 'o'), // years old
+            ],
+        );
     }
 
     fn uncached_ellipsis_pattern() -> Lrc<Repeating> {
