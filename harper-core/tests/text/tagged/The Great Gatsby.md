@@ -1357,7 +1357,7 @@
 > The fact that          he       had one        was insisted upon wherever he       was known . His
 # D+  NSg+ NSg/I/C/Ddem+ NPr/ISg+ V   NSg/I/V/J+ V   V/J      P    C        NPr/ISg+ V   V/J   . ISg/D$+
 > acquaintances resented the fact that          he       turned up        in      popular cafés with her     and ,
-# NPl+          V/J      D+  NSg+ NSg/I/C/Ddem+ NPr/ISg+ V/J    NSg/V/J/P NPr/J/P NSg/J   ?     P    ISg/D$+ V/C .
+# NPl+          V/J      D+  NSg+ NSg/I/C/Ddem+ NPr/ISg+ V/J    NSg/V/J/P NPr/J/P NSg/J   NPl   P    ISg/D$+ V/C .
 > leaving her     at    a   table  , sauntered about , chatting with whomsoever he       knew .
 # V       ISg/D$+ NSg/P D/P NSg/V+ . V/J       J/P   . NSg/V    P    I          NPr/ISg+ V    .
 > Though I    was curious to see   her     , I    had no     desire  to meet    her     — but     I    did . I    went
