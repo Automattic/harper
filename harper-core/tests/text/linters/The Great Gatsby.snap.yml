@@ -902,18 +902,6 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
-     680 | acquaintances resented the fact that he turned up in popular cafés with her and,
-         |                                                              ^~~~~ Did you mean to spell `cafés` this way?
-     681 | leaving her at a table, sauntered about, chatting with whomsoever he knew.
-Suggest:
-  - Replace with: “caffs”
-  - Replace with: “cafes”
-  - Replace with: “cafe's”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      683 | up to New York with Tom on the train one afternoon, and when we stopped by the
      684 | ashheaps he jumped to his feet and, taking hold of my elbow, literally forced me
          | ^~~~~~~~ Did you mean to spell `ashheaps` this way?
@@ -7243,9 +7231,9 @@ Message: |
     5692 | figures in my more fantastic dreams. I see it as a night scene by El Greco: a
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
+  - Replace with: “Ell”
   - Replace with: “E”
   - Replace with: “Ea”
-  - Replace with: “Elm”
 
 
 

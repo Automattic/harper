@@ -34347,7 +34347,7 @@ monopolizer/Ng
 monopoly/~NSg
 monorail/~NgS
 monorepo/NSg
-monospace/J
+monospace/JVSdG
 monosyllabic/JN
 monosyllable/NgS
 monotheism/Ng
@@ -52766,6 +52766,7 @@ ECMA/Og             # European Computer Manufacturers Association
 EEA/O               # European Economic Area
 EGR/                # exhaust gas recirculation
 EMR/NOSg
+EOF/NgS             # end of file
 EPUB/NOgS           # e-book format
 ESLint/Og           # JavaScript linter
 EV/NSg              # electric vehicle
@@ -53607,6 +53608,7 @@ play-by-play/JNgS
 post-Covid/J
 post-Soviet/J
 post-truth/NmVg
+power line/NgS
 power-up/NgS
 pre-COVID/J
 prima facie/RJ
