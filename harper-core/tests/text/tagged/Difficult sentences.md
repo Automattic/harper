@@ -128,8 +128,8 @@
 # NSg/J/P . NSg/J/R . ISg+ NPl/V . NPr/P . .
 > The electricity was cut     off       , so        we   had to read  by      candlelight .
 # D+  NᴹSg+       V   NSg/V/J NSg/V/J/P . NSg/I/J/C IPl+ V   P  NSg/V NSg/J/P NSg         .
-> By      the power    vested in      me       , I    now       pronounce you    man     and wife     .
-# NSg/J/P D+  NSg/V/J+ V/J    NPr/J/P NPr/ISg+ . ISg+ NPr/V/J/C NSg/V     ISgPl+ NPr/V/J V/C NSg/V/J+ .
+> By      the power     vested in      me       , I    now       pronounce you    man     and wife     .
+# NSg/J/P D+  N🅪Sg/V/J+ V/J    NPr/J/P NPr/ISg+ . ISg+ NPr/V/J/C NSg/V     ISgPl+ NPr/V/J V/C NSg/V/J+ .
 > By      Jove ! I    think she's got it       !
 # NSg/J/P NPr+ . ISg+ NSg/V W?    V   NPr/ISg+ .
 > By      all           that          is holy    , I'll put   an  end    to this    .
@@ -427,13 +427,13 @@
 > My  fruit   trees  are in      bud     .
 # D$+ N🅪Sg/V+ NPl/V+ V   NPr/J/P NPr🅪/V+ .
 > The company is in      profit    .
-# D+  NSg/V+  VL NPr/J/P N🅪Sg/V/J+ .
+# D+  N🅪Sg/V+ VL NPr/J/P N🅪Sg/V/J+ .
 > You've got a   friend   in      me       .
 # W?     V   D/P NPr/V/J+ NPr/J/P NPr/ISg+ .
 > He's met his     match  in      her     .
 # NSg$ V   ISg/D$+ NSg/V+ NPr/J/P ISg/D$+ .
 > There has been  no    change in      his     condition .
-# +     V   NSg/V NPr/P N🅪Sg/V NPr/J/P ISg/D$+ NSg/V+    .
+# +     V   NSg/V NPr/P N🅪Sg/V NPr/J/P ISg/D$+ N🅪Sg/V+   .
 > What   grade  did he       get   in      English   ?
 # NSg/I+ NSg/V+ V   NPr/ISg+ NSg/V NPr/J/P NPr🅪/V/J+ .
 > Please pay     me       in      cash      — preferably in      tens and twenties .
@@ -483,7 +483,7 @@
 >
 #
 > His     parents got him  an  in      with the company .
-# ISg/D$+ NPl/V+  V   ISg+ D/P NPr/J/P P    D+  NSg/V+  .
+# ISg/D$+ NPl/V+  V   ISg+ D/P NPr/J/P P    D+  N🅪Sg/V+ .
 >
 #
 > Adjective
@@ -509,7 +509,7 @@
 > You    can't get   round     the headland when    the tide's in      .
 # ISgPl+ VX    NSg/V NSg/V/J/P D   NSg      NSg/I/C D   NSg$   NPr/J/P .
 > in      by      descent ;            in      by      purchase ;            in      of the seisin of her     husband
-# NPr/J/P NSg/J/P NSg/V+  . Unlintable NPr/J/P NSg/J/P NSg/V+   . Unlintable NPr/J/P P  D   ?      P  ISg/D$+ NSg/V+
+# NPr/J/P NSg/J/P N🅪Sg/V+ . Unlintable NPr/J/P NSg/J/P NSg/V+   . Unlintable NPr/J/P P  D   ?      P  ISg/D$+ NSg/V+
 > He       is very in      with the Joneses .
 # NPr/ISg+ VL J/R  NPr/J/P P    D   NPl/V   .
 > I    need    to keep  in      with the neighbours  in      case   I    ever need    a    favour       from them     .
@@ -814,8 +814,8 @@
 # IPl+ V   NSg/V/J P  D+  NSg/V+ .
 > The water   came    right   to the top     of this    wall   .
 # D+  N🅪Sg/V+ NSg/V/P NPr/V/J P  D   NSg/V/J P  I/Ddem+ NPr/V+ .
-> The coconut fell    to the ground   .
-# D+  NSg+    NSg/V/J P  D+  NSg/V/J+ .
+> The coconut fell    to the ground    .
+# D+  NSg+    NSg/V/J P  D+  N🅪Sg/V/J+ .
 > I    gave the book   to him  .
 # ISg+ V    D+  NSg/V+ P  ISg+ .
 > His     face   was beaten to a   pulp     .
@@ -842,12 +842,12 @@
 # +     V   #   NSg   P  D+  NPr/V+ .
 > It       takes 2 to 4 weeks  to process typical applications .
 # NPr/ISg+ NPl/V # P  # NPrPl+ P  NSg/V   NSg/J+  +            .
-> Three to the power   of two  is  nine .
-# NSg   P  D   NSg/V/J P  NSg+ VL+ NSg  .
+> Three to the power    of two  is  nine .
+# NSg   P  D   N🅪Sg/V/J P  NSg+ VL+ NSg  .
 > Three to the second  is nine .
 # NSg   P  D   NSg/V/J VL NSg  .
-> Three squared or    three to the second   power    is nine .
-# NSg   V/J     NPr/C NSg   P  D+  NSg/V/J+ NSg/V/J+ VL NSg  .
+> Three squared or    three to the second   power     is nine .
+# NSg   V/J     NPr/C NSg   P  D+  NSg/V/J+ N🅪Sg/V/J+ VL NSg  .
 > What's the time      ? – It's quarter  to four in      the afternoon ( or    3 : 45 pm     ) .
 # NSg$   D+  N🅪Sg/V/J+ . . +    NSg/V/J+ P  NSg  NPr/J/P D+  N🅪Sg+     . NPr/C # . #  NSg/V+ . .
 >
@@ -881,7 +881,7 @@
 > With a   heavy   sigh  , she  looked around the empty    room     .
 # P    D/P NSg/V/J NSg/V . ISg+ V/J    J/P    D+  NSg/V/J+ NSg/V/J+ .
 > Four people were  injured , with one       of them     in      critical condition .
-# NSg+ NPl/V+ NSg/V V/J     . P    NSg/I/V/J P  NSg/IPl+ NPr/J/P NSg/J+   NSg/V+    .
+# NSg+ NPl/V+ NSg/V V/J     . P    NSg/I/V/J P  NSg/IPl+ NPr/J/P NSg/J+   N🅪Sg/V+   .
 > With their reputation on  the line   , they decided to fire     their PR   team   .
 # P    D$+   NSg+       J/P D+  NSg/V+ . IPl+ NSg/V/J P  N🅪Sg/V/J D$+   NSg+ NSg/V+ .
 > We   are with you    all          the way    .

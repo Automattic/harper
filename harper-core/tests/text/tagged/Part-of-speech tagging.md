@@ -170,8 +170,8 @@
 # D   NSg/V/J NPr/V/J NSg    P  NPr🅪/V/J C/P NSg/V+   N🅪Sg+    V   D   NPr🅪/V/J NSg
 > developed at    Brown    University by      Henry Kučera and W. Nelson Francis , in      the
 # V/J       NSg/P NPr🅪/V/J NSg+       NSg/J/P NPr+  ?      V/C ?  NPr+   NPr+    . NPr/J/P D
-> mid      - 1960s . It       consists of about 1 , 000 , 000 words of running   English   prose text    ,
-# NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  NSg/V/J/P NPr🅪/V/J+ NSg/V N🅪Sg/V+ .
+> mid      - 1960s . It       consists of about 1 , 000 , 000 words of running   English   prose  text    ,
+# NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  NSg/V/J/P NPr🅪/V/J+ NᴹSg/V N🅪Sg/V+ .
 > made up        of 500 samples from randomly chosen   publications . Each sample is 2 , 000
 # V    NSg/V/J/P P  #   NPl/V+  P    R        NᴹSg/V/J NPl+         . Dq+  NSg/V+ VL # . #
 > or    more         words  ( ending at    the first   sentence - end    after 2 , 000 words  , so        that         the
@@ -272,8 +272,8 @@
 # NSg/J+ NPr/J/P NSg/V . D   N🅪Sg        P    D+  JS+     NSg+        VL NSg/J/C NᴹSg/V/J . D+
 > European group  developed CLAWS  , a   tagging program that          did exactly this   and
 # NSg/J+   NSg/V+ V/J       NPl/V+ . D/P NSg/V   NPr/V+  NSg/I/C/Ddem+ V   R       I/Ddem V/C
-> achieved accuracy in      the 93 – 95 % range  .
-# V/J      N🅪Sg+    NPr/J/P D   #  . #  . NSg/V+ .
+> achieved accuracy in      the 93 – 95 % range   .
+# V/J      N🅪Sg+    NPr/J/P D   #  . #  . N🅪Sg/V+ .
 >
 #
 > Eugene Charniak points out         in      Statistical techniques for natural language
@@ -369,7 +369,7 @@
 > " unsupervised " tagging . Unsupervised tagging techniques use   an  untagged corpus
 # . V/J          . NSg/V   . V/J          NSg/V   NPl+       NSg/V D/P J        NSg+
 > for their training data  and produce the tagset by      induction . That          is , they
-# C/P D$+   NᴹSg/V+  N🅪Pl+ V/C NSg/V   D   NSg    NSg/J/P NSg       . NSg/I/C/Ddem+ VL . IPl+
+# C/P D$+   NᴹSg/V+  N🅪Pl+ V/C NᴹSg/V  D   NSg    NSg/J/P NSg       . NSg/I/C/Ddem+ VL . IPl+
 > observe patterns in      word   use   , and derive part     - of - speech  categories themselves .
 # NSg/V   NPl/V+   NPr/J/P NSg/V+ NSg/V . V/C NSg/V  NSg/V/J+ . P  . N🅪Sg/V+ NPl+       IPl+       .
 > For example , statistics readily reveal that          " the " , " a   " , and " an  " occur in
@@ -405,7 +405,7 @@
 > rule   - based Brill tagger is unusual in      that         it       learns a   set     of rule   patterns , and
 # NSg/V+ . V/J   NSg/J NSg    VL NSg/J   NPr/J/P NSg/I/C/Ddem NPr/ISg+ NPl/V  D/P NPr/V/J P  NSg/V+ NPl/V+   . V/C
 > then    applies those  patterns rather  than optimizing a   statistical quantity .
-# NSg/J/C V       I/Ddem NPl/V+   NPr/V/J C/P  V          D/P J           NSg+     .
+# NSg/J/C V       I/Ddem NPl/V+   NPr/V/J C/P  V          D/P J           N🅪Sg+    .
 >
 #
 > Many        machine learning methods have   also been  applied to the problem of POS

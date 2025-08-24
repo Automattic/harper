@@ -113,7 +113,7 @@
 > card    system derived from the Jacquard loom  " making it       infinitely
 # N🅪Sg/V+ NSg+   V/J     P    D   NPr      NSg/V . NSg/V  NPr/ISg+ R
 > programmable . [ note   2 ] In      1843 , during the translation of a   French   article on  the
-# NSg/J        . . NSg/V+ # . NPr/J/P #    . V/P    D   NSg         P  D/P NPr🅪/V/J NSg/V+  J/P D
+# NSg/J        . . NSg/V+ # . NPr/J/P #    . V/P    D   N🅪Sg        P  D/P NPr🅪/V/J NSg/V+  J/P D
 > Analytical Engine , Ada  Lovelace wrote , in      one       of the many       notes  she  included , an
 # J          NSg/V+ . NPr+ NPr      V     . NPr/J/P NSg/I/V/J P  D   NSg/I/J/Dq NPl/V+ ISg+ V/J      . D/P
 > algorithm to compute the Bernoulli numbers  , which is considered to be     the first
@@ -123,7 +123,7 @@
 > Around 1885 , Herman Hollerith invented the tabulator , which used punched cards
 # J/P    #    . NPr+   NPr       V/J      D   NSg       . I/C+  V/J  V/J     NPl/V+
 > to process statistical information ; eventually his     company became part    of IBM  .
-# P  NSg/V   J           NᴹSg+       . R          ISg/D$+ NSg/V+  V      NSg/V/J P  NPr+ .
+# P  NSg/V   J           NᴹSg+       . R          ISg/D$+ N🅪Sg/V+ V      NSg/V/J P  NPr+ .
 > Following Babbage , although unaware of his     earlier work    , Percy Ludgate in      1909
 # NSg/V/J/P NPr     . C        V/J     P  ISg/D$+ JC      N🅪Sg/V+ . NPr+  ?       NPr/J/P #
 > published the 2nd of the only  two designs for mechanical analytical engines in
@@ -255,7 +255,7 @@
 > was suggested , followed next    year by      hypologist . The term     computics has also
 # V   V/J       . V/J      NSg/J/P NSg+ NSg/J/P ?          . D+  NSg/V/J+ ?         V   W?
 > been  suggested . In      Europe , terms  derived from contracted translations of the
-# NSg/V V/J       . NPr/J/P NPr+   . NPl/V+ V/J     P    V/J        W?           P  D+
+# NSg/V V/J       . NPr/J/P NPr+   . NPl/V+ V/J     P    V/J        NPl          P  D+
 > expression " automatic information " ( e.g. " informazione automatica " in      Italian )
 # N🅪Sg+      . NSg/J+    NᴹSg+       . . NSg  . ?            ?          . NPr/J/P N🅪Sg/J  .
 > or    " information and mathematics " are often used , e.g. informatique ( French   ) ,
@@ -452,8 +452,8 @@
 # NPrPl/V+
 >
 #
-> As    a    discipline , computer science spans a   range of topics from theoretical
-# NSg/R D/P+ NSg/V+     . NSg/V+   N🅪Sg/V+ NPl/V D/P NSg/V P  NPl+   P    J
+> As    a    discipline , computer science spans a   range  of topics from theoretical
+# NSg/R D/P+ NSg/V+     . NSg/V+   N🅪Sg/V+ NPl/V D/P N🅪Sg/V P  NPl+   P    J
 > studies of algorithms and the limits of computation to the practical issues of
 # NPl/V   P  NPl+       V/C D   NPl/V  P  NSg         P  D   NSg/J     NPl/V  P
 > implementing computing systems in      hardware and software . CSAB , formerly called
@@ -545,7 +545,7 @@
 > also for network coding . Codes  are studied for the purpose of designing
 # W?   C/P NSg/V+  V+     . NPl/V+ V   V/J     C/P D   N🅪Sg/V  P  V
 > efficient and reliable data  transmission methods .
-# NSg/J     V/C NSg/J+   N🅪Pl+ NSg+         NPl/V+  .
+# NSg/J     V/C NSg/J+   N🅪Pl+ N🅪Sg+        NPl/V+  .
 >
 #
 > Data  structures and algorithms
@@ -594,8 +594,8 @@
 # D/P J      NSg/V/J P  NᴹSg     V+      C/P   IPl+ NSg/V V     NPl/V+ V/C NPr/VX W?
 > give  a   framework for testing . For industrial use    , tool   support is required .
 # NSg/V D/P NSg       C/P V+      . C/P NSg/J      NSg/V+ . NSg/V+ N🅪Sg/V+ VL V/J      .
-> However , the high    cost    of using formal methods means that         they are usually only
-# C       . D   NSg/V/J NSg/V/J P  V     NSg/J+ NPl/V+  NPl/V NSg/I/C/Ddem IPl+ V   R       J/R/C
+> However , the high    cost     of using formal methods means that         they are usually only
+# C       . D   NSg/V/J N🅪Sg/V/J P  V     NSg/J+ NPl/V+  NPl/V NSg/I/C/Ddem IPl+ V   R       J/R/C
 > used in      the development of high    - integrity and life    - critical systems , where
 # V/J  NPr/J/P D   N🅪Sg        P  NSg/V/J . NᴹSg      V/C N🅪Sg/V+ . NSg/J    NPl     . NSg/C
 > safety or    security is of utmost importance . Formal methods are best      described as
@@ -630,12 +630,12 @@
 # V/C N🅪Sg/V+ NPl/V+ .
 >
 #
-> Image and sound    processing
-# NSg/V V/C NSg/V/J+ V+
+> Image and sound     processing
+# NSg/V V/C N🅪Sg/V/J+ V+
 >
 #
-> Information can    take  the form  of images , sound    , video   or    other   multimedia . Bits
-# NᴹSg+       NPr/VX NSg/V D   NSg/V P  NPl/V+ . NSg/V/J+ . N🅪Sg/V+ NPr/C NSg/V/J NᴹSg/J     . NPl/V
+> Information can    take  the form  of images , sound     , video   or    other   multimedia . Bits
+# NᴹSg+       NPr/VX NSg/V D   NSg/V P  NPl/V+ . N🅪Sg/V/J+ . N🅪Sg/V+ NPr/C NSg/V/J NᴹSg/J     . NPl/V
 > of information can    be     streamed via   signals . Its     processing is the central notion
 # P  NᴹSg+       NPr/VX NSg/VX V/J      NSg/P NPl/V   . ISg/D$+ V+         VL D   NPr/J   NSg
 > of informatics , the European view   on  computing , which studies information
@@ -793,7 +793,7 @@
 >
 #
 > Concurrency is a   property of systems in      which several computations are executing
-# NSg         VL D/P NSg/V    P  NPl+    NPr/J/P I/C+  J/Dq    NPl          V   V
+# N🅪Sg        VL D/P NSg/V    P  NPl+    NPr/J/P I/C+  J/Dq    NPl          V   V
 > simultaneously , and potentially interacting with each other   . A   number   of
 # R              . V/C R           V           P    Dq   NSg/V/J . D/P NSg/V/JC P
 > mathematical models have   been  developed for general concurrent computation
@@ -803,7 +803,7 @@
 > model    . When    multiple  computers are connected in      a    network while     using
 # NSg/V/J+ . NSg/I/C NSg/J/Dq+ NPl/V+    V   V/J       NPr/J/P D/P+ NSg/V+  NSg/V/C/P V
 > concurrency , this    is known as    a   distributed system . Computers within  that
-# NSg         . I/Ddem+ VL V/J   NSg/R D/P V/J+        NSg+   . NPl/V     NSg/J/P NSg/I/C/Ddem+
+# N🅪Sg        . I/Ddem+ VL V/J   NSg/R D/P V/J+        NSg+   . NPl/V     NSg/J/P NSg/I/C/Ddem+
 > distributed system have   their own      private  memory , and information can    be
 # V/J         NSg+   NSg/VX D$+   NSg/V/J+ NSg/V/J+ N🅪Sg+  . V/C NᴹSg+       NPr/VX NSg/VX
 > exchanged to achieve common   goals  .
@@ -1050,8 +1050,8 @@
 #
 > Conferences are important events for computer science research . During these
 # NPl/V+      V   J         NPl/V  C/P NSg/V+   N🅪Sg/V+ NᴹSg/V+  . V/P    I/Ddem+
-> conferences , researchers from the public  and private sectors present their
-# NPl/V+      . NPl+        P    D   NSg/V/J V/C NSg/V/J NPl+    NSg/V/J D$+
+> conferences , researchers from the public   and private sectors present their
+# NPl/V+      . NPl+        P    D   NᴹSg/V/J V/C NSg/V/J NPl+    NSg/V/J D$+
 > recent work    and meet    . Unlike    in      most       other   academic fields   , in      computer science ,
 # NSg/J+ N🅪Sg/V+ V/C NSg/V/J . NSg/V/J/P NPr/J/P NSg/I/J/Dq NSg/V/J NSg/J+   NPrPl/V+ . NPr/J/P NSg/V+   N🅪Sg/V+ .
 > the prestige of conference papers is greater than that         of journal  publications .
