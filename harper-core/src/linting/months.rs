@@ -1,6 +1,6 @@
 use crate::{
     Lrc, Token, TokenKind,
-    expr::{Expr, FirstMatchOf, SequenceExpr},
+    expr::{Expr, FirstMatchOf, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -91,7 +91,8 @@ impl ExprLinter for Months {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, tokens: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let tokens = match_info.matched_tokens;
         // `find` which token is the month by seeing which tok's content (lowercased) is in ALL_MONTHS
         let month_tok = tokens.iter().find(|token| {
             let token_str = token.span.get_content_string(src);

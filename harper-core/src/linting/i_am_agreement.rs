@@ -1,6 +1,6 @@
 use crate::{
     Lrc, Token, TokenStringExt,
-    expr::{AnchorStart, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
+    expr::{AnchorStart, Expr, FirstMatchOf, FixedPhrase, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 pub struct IAmAgreement {
@@ -38,7 +38,8 @@ impl ExprLinter for IAmAgreement {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let toks = &toks[toks.len() - 3..];
         Some(Lint {
             span: toks.span()?,

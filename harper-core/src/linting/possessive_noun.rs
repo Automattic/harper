@@ -1,7 +1,7 @@
 use harper_brill::UPOS;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::expr::{All, Expr, SequenceExpr};
+use crate::expr::{All, Expr, MatchInfo, SequenceExpr};
 use crate::patterns::{UPOSSet, WordSet};
 use crate::spell::Dictionary;
 use crate::{Token, TokenKind};
@@ -57,7 +57,8 @@ where
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, _source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let last_kind = &matched_tokens.last()?.kind;
 
         if last_kind.is_upos(UPOS::ADV) {
