@@ -520,8 +520,8 @@ Message: |
          |                          ^~~ Did you mean to spell `SVM` this way?
 Suggest:
   - Replace with: “Sim”
-  - Replace with: “SAM”
   - Replace with: “SCM”
+  - Replace with: “SVG”
 
 
 

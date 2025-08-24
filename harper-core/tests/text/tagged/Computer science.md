@@ -443,7 +443,7 @@
 > artificial intelligence ) . Computer science focuses on  methods involved in
 # J          N🅪Sg+        . . NSg/V+   N🅪Sg/V+ NPl/V   J/P NPl/V+  V/J      NPr/J/P
 > design  , specification , programming , verification , implementation and testing of
-# N🅪Sg/V+ . NSg+          . NᴹSg/V      . NSg+         . NSg            V/C V       P
+# N🅪Sg/V+ . NSg+          . NᴹSg/V      . N🅪Sg+        . NSg            V/C V       P
 > human   - made computing systems .
 # NSg/V/J . V    NᴹSg/V+   NPl+    .
 >
@@ -579,7 +579,7 @@
 > Formal methods are a   particular kind  of mathematically based technique for the
 # NSg/J+ NPl/V+  V   D/P NSg/J      NSg/J P  R              V/J   N🅪Sg+     C/P D+
 > specification , development and verification of software and hardware systems .
-# NSg+          . N🅪Sg        V/C NSg          P  NᴹSg     V/C NᴹSg+    NPl+    .
+# NSg+          . N🅪Sg        V/C N🅪Sg         P  NᴹSg     V/C NᴹSg+    NPl+    .
 > The use   of formal methods for software and hardware design  is motivated by      the
 # D   NSg/V P  NSg/J  NPl/V   C/P NᴹSg     V/C NᴹSg+    N🅪Sg/V+ VL V/J       NSg/J/P D+
 > expectation that          , as    in      other    engineering disciplines , performing appropriate
@@ -607,7 +607,7 @@
 > and program semantics , but     also type   systems and algebraic data  types  to
 # V/C NPr/V+  NPl+      . NSg/C/P W?   NSg/V+ NPl     V/C J         N🅪Pl+ NPl/V+ P
 > problems in      software and hardware specification and verification .
-# NPl      NPr/J/P NᴹSg     V/C NᴹSg+    NSg           V/C NSg+         .
+# NPl      NPr/J/P NᴹSg     V/C NᴹSg+    NSg           V/C N🅪Sg+        .
 >
 #
 > Applied computer science
@@ -841,7 +841,7 @@
 > computations that          can    be     attacked . Technologies studied in      modern cryptography
 # NPl          NSg/I/C/Ddem+ NPr/VX NSg/VX V/J      . NPl+         V/J     NPr/J/P NSg/J  NSg
 > include symmetric and asymmetric encryption , digital signatures , cryptographic
-# NSg/V   J         V/C J          NSg        . NSg/J   NPl+       . J
+# NSg/V   J         V/C J          N🅪Sg       . NSg/J   NPl+       . J
 > hash   functions , key     - agreement protocols , blockchain , zero    - knowledge proofs , and
 # NSg/V+ NPl/V+    . NPr/V/J . N🅪Sg+     NPl/V     . NSg        . NSg/V/J . NᴹSg+     NPl/V  . V/C
 > garbled circuits .

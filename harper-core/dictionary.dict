@@ -211,7 +211,7 @@ Ainu/NmJOg          # ethnicity, language
 Airedale/ONgS
 Aires/g
 Aisha/Og
-Ajax/Og
+Ajax/Og             # should we also include AJAX?
 Akbar/Og
 Akhmatova/g
 Akihito/g
@@ -4313,6 +4313,7 @@ Hanson/Og
 Hanuka/O
 Hanukkah/Og
 Hanukkahs/O
+Hanzi/N09g
 Hapsburg/ONg
 Harare/Og
 Harbin/Og
@@ -8985,6 +8986,7 @@ Salvadorian/NJgS
 Salvatore/Og
 Salween/Og
 Salyut/Ng
+Sam/Og
 Samaritan/NJOgS
 Samarkand/Og
 Sammie/NOg
@@ -13283,6 +13285,7 @@ asymptotic/~JQ
 async/J             # abbreviation of "asynchronous"
 asynchronicity/Nmg
 asynchronous/~JY
+asynchrony/Nmg
 at/~PN              # removed `4` an `8` obscure verb and obsolete dialectal pronoun
 atavism/Nmg
 atavist/NSg
@@ -15706,6 +15709,7 @@ brownish/~J
 brownness/Ng
 brownout/NSg
 brownstone/~NgS
+browsable/J
 browse/~VNd>SgZG
 browser/~Ng
 brr/
@@ -17158,6 +17162,7 @@ cheetahs/N
 chef/~NVSg
 chem/~NJ
 chemical/~JNSgY
+cheminformatics/Nmg
 chemise/NgS
 chemist/~NgS
 chemistry/~Nmg
@@ -22971,11 +22976,10 @@ encroachment/~NSg
 encrust/VdGS
 encrustation/NSg
 encrypt/VdGS
-encryption/~N
+encryption/~NwgS
 encumber/VEGSd
 encumbered/JVU
 encumbrance/NVgS
-ency
 encyclical/~NJSg
 encyclopaedia/NSg!_
 encyclopaedic/J!_
@@ -23844,7 +23848,7 @@ expertness/Ng
 expiate/VGndS
 expiation/Ng
 expiatory/J
-expiration/~Nwg
+expiration/~NwgS
 expire/~VdSG
 expired/~VJU
 expiry/~Ng
@@ -26410,7 +26414,7 @@ giro/~NVS
 girt/NVJgdGS
 girth/NwVgS
 girths/N
-gist/NVg
+gist/NVgS
 git/~NVOS
 gite/NS
 give/~VNZGz>S
@@ -28848,6 +28852,7 @@ hypercar/NgS
 hyperconservative/J
 hypercritical/JY
 hypercube/NgS
+hyperfast/J
 hyperfixation/Nmg
 hyperglycemia/Ng
 hyperinflate/VNGdSn
@@ -34088,6 +34093,7 @@ mistress/~NVgS
 mistrial/NgS
 mistrust/NVgdSG
 mistrustful/JY
+mistune/NgSVdG
 misty/~Jp>^
 mistype/VGSd
 misunderstand/VSGz
@@ -34743,6 +34749,7 @@ multistage/J
 multistep/J
 multistory/JN
 multisystem/J
+multitab/J
 multitask/JVGS
 multitasking/VNg
 multithreading/Nmg
@@ -35235,8 +35242,8 @@ netiquette/NS
 netizen/NgS
 netted/~V
 netter/NS
-netting/~NVg
-nettle/NVgGdS
+netting/~NmVg
+nettle/NwVgGdS
 nettlesome/J
 network/~NVSGgd
 networking/~VNmg
@@ -35247,11 +35254,12 @@ neurasthenia/Ng
 neurasthenic/JNgS
 neuritic/JNgS
 neuritis/Ng
+neuroimaging/Nmg
 neurobiologist/NSg
-neurobiology/Ng
-neurodegeneration/Ng
+neurobiology/Nmg
+neurodegeneration/Nmg
 neurodiverse/J
-neurodiversity/Ng
+neurodiversity/Nmg
 neurological/~JY
 neurologist/~NSg
 neurology/~Ng
@@ -39627,6 +39635,7 @@ preferred/~VJN
 preferring/~VN
 prefigure/VNGdS
 prefix/~NVgdSG
+preflight/JNgSVdG
 preform/NVGSd
 preformative/NJ!@_
 prefrontal/JN
@@ -41581,17 +41590,18 @@ relational/~J
 relationship/~NgS
 relative/~JNgYS
 relativism/Nmg
-relativist/NS
+relativist/NgS
 relativistic/~J
 relativity/~Nmg
 relativize/VdSG>
 relax/~Vd>SZG
-relaxant/NgS
+relaxant/NwgS
 relaxation/~Nmg
 relaxer/Ng
 relay/~NVd
 release/~NVB
 released/~VU
+releaser/NgS
 relegate/VNJGndS
 relent/NVJSGd
 relentless/~JpY
@@ -43918,6 +43928,7 @@ shagging/VNJ
 shaggy/~J^p>
 shah/~Ng
 shahs/N
+shakable/J
 shake/~VNgZG>S
 shakedown/NJSg
 shaken/~VJNU
@@ -48525,7 +48536,9 @@ timescale/~NS
 timeserver/NSg
 timeserving/NJg
 timeshare/NSg
+timesheet/NgS
 timestamp/NVSgd
+timestep/NSg
 timetable/~NVdSgG
 timeworn/J
 timezone/~NgS<
@@ -49229,11 +49242,11 @@ trencherman/Ng
 trenchermen/9
 trend/~NVGSgd
 trendily/R
-trendiness/Ng
+trendiness/Nmg
 trendsetter/NS
 trendsetting/J
 trendy/~JN>Sgp^
-trepidation/Ng
+trepidation/Nmg
 trespass/~NVgd>SZG
 trespasser/Ng
 tress/NVEgS
@@ -49242,7 +49255,7 @@ trews/N
 trey/~NgS
 triad/~NSg
 triage/NmVgd
-triager
+triager/NSg
 trial/~NJVrSg
 trialed/V
 trialing/VN
@@ -50778,18 +50791,18 @@ verbatim/~JN
 verbena/NSg
 verbiage/NgS
 verbose/~JY
-verbosity/Ng
+verbosity/Nmg
 verboten/J
 verdant/JY
 verdict/~NSg
 verdigris/NVGgdS
-verdure/NVg
+verdure/NmVg
 verge/~NVWdSG
 verge's
 verger/NgS
 verifiable/~JU
 verifiably/RU
-verification/~Ng
+verification/~NwgS
 verified/~VJNU
 verifier/NgS
 verify/~VdSnG
@@ -50798,40 +50811,40 @@ verisimilitude/Ng
 veritable/~J
 veritably/R
 verity/~NSg
-vermicelli/Ng
+vermicelli/Nmg
 vermiculite/Ng
 vermiform/J
-vermilion/~NJVg
-vermin/Ng
+vermilion/~NmJVg
+vermin/Nmg
 verminous/J
-vermouth/Ng
-vernacular/~NJgS
+vermouth/NwgS
+vernacular/~NwJgS
 vernal/J
 vernier/NSg
 veronica/~NVg
-verruca/NSg
+verruca/N0Sg
 verrucae/9
 versa/~
 versatile/~J
-versatility/~Ng
+versatility/~Nmg
 verse/~NVrWnGgSdX
 versed/~JVU
-versification/Ng
+versification/Nmg
 versifier/Ng
 versify/VZGnd>S
 version/~NVrWigS
 versioned/JV
-versioning/~N
+versioning/~Nmg
 verso/~NSg
 versus/~PV
 vert/~NJVr
-vertebra/~Ng
-vertebrae/~9
+vertebra/~N0g
+vertebrae/~N9
 vertebral/~JN
 vertebrate/~JNigS
-vertex/~NgS
+vertex/~N0gS
 vertical/~JNgYS
-vertices/~9
+vertices/~N9
 vertiginous/J
 vertigo/~Nmg
 verve/~Ng
@@ -52695,7 +52708,8 @@ Bachiyski/Sg
 Bezos/O             # Surname, Amazon founder
 Binance/Og
 Bing/Og             # Microsoft product
-BitKeeper/Ng        # version control
+Bitbucket/Og        # GitHub alternative
+BitKeeper/Og        # version control
 BlasterHacks/Sg
 Bluesky/Og
 Boxster/NOgS        # car model
@@ -52711,6 +52725,7 @@ CEO/NSg             # chief executive officer
 CERN/Og             # intergovernmental organization
 CI/NSg              # continuous integration
 CISC/Ng             # cpu architecture
+CLR/Og              # common language runtime
 CMOS/N              # microchip process
 CMake/Sg            # build tool
 CMS/NSg             # content management system
@@ -52754,6 +52769,7 @@ DRM/Ng              # digital rights management
 DSL/NSg             # domain-specific language
 DX/Ng               # developer experience
 DeepMind/Og
+DeepSeek/Og         # AI company
 Deno/Og
 DevOps/Sg
 DirectX/Og
@@ -52797,6 +52813,7 @@ Frankl/Sg
 FreeBSD/Og          # operating system
 FreeType/ONg        # typography library
 GLFW/Og
+GPG/Og              # GNU Privacy Guard
 GPIO/Ng             # general purpose input/output
 GPL/Og              # GNU General Public License
 GPLv1/Og
@@ -52844,6 +52861,7 @@ IPC/Ng              # interprocess communication
 IPCC/Og
 IPS/J               # in-plane switching (screen technology)
 IPv4/OSg
+IPv6/OSg
 ISA/NOgS            # instruction set architecture; industry standard architecture
 IntelliJ/Sg
 IntelliSense/Og
@@ -53022,9 +53040,14 @@ Roumania/Og         # pre-WWII spelling
 SCM/Ng              # source code management
 SDK/NSg             # software development kit
 SDL/Og              # Simple DirectMedia Layer
+SHA/ONg             # Secure Hash Algorithm
 SIMD/NSg            # single instruction, multiple data
 SLA/NSg
 SLOC/9              # source lines of code
+SMS/N0g
+SMSed/V
+SMSes/N9
+SMSing/V
 SMTP                # Simple Mail Transfer Protocol
 SNL/Og              # Saturday Night Live
 SQLAlchemy/N
@@ -53208,6 +53231,7 @@ linkification/Nmg
 manip/NgS           # gamer slang manipulation
 memecoin/NgS
 mergesort
+microframework/NgS
 multicast/JVSdG
 npm/Og              # node package manager
 nullish/J
@@ -53242,6 +53266,7 @@ standup/Sg          # dictionaries prefer: stand-up
 strat/NgS           # gamer slang strategy
 subchannel/NgS
 supersequence/NgS
+subkey/NgS
 tagset/NgS
 terraform/VGdS
 timespan/NgS
@@ -53344,6 +53369,8 @@ cutting edge/Ng
 cutting-edge/J
 data center/NgS!@_
 data center/NgS<
+data point/NgS
+data
 day-to-day/JR
 de-extinct/VGd
 de-extinction/NgS
@@ -53363,6 +53390,7 @@ double-decker/J
 drop in/V
 drop-in/NgSJ
 e-book/NgS
+e-commerce/Nmg
 each other/I
 easy peasy/J
 eco-friendly/J
@@ -53527,6 +53555,7 @@ man child/Ng
 man-made/J
 Mar-a-Lago/Og
 Mercedes-Benz/Og
+meta tag/NgS
 middle-sized/J
 mind-blowing/J
 mind-boggling/JY!@_
@@ -53544,6 +53573,7 @@ NAND gate/NgS
 nano-farad/NgS
 neo-Nazi/NJSg
 neo-Nazism/Ng
+no-code/JNmg
 no-op/NgS           # no operation
 non-Western/J
 NOR gate/NgS
@@ -53618,7 +53648,8 @@ public key/NgS
 quid pro quo/Ng
 quote unquote/JR
 rack-mounted/J
-ray casting/Nmg
+rate limit/NgS
+rate-ray casting/Nmg
 ray marcher/NgS
 ray marching/Nmg
 ray tracer/NgS
@@ -53646,6 +53677,7 @@ same-sex/J
 sans serif/NgJ
 sci-fi/Ng
 sea lane/NgS
+seat belt/NgS
 second-degree/J
 self-awareness/Ng
 self-deception/Ng

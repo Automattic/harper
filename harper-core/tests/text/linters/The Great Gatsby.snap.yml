@@ -1343,9 +1343,9 @@ Message: |
     1122 | Daisy! Dai———”
          |        ^~~ Did you mean to spell `Dai` this way?
 Suggest:
-  - Replace with: “Dais”
-  - Replace with: “Dab”
+  - Replace with: “Day”
   - Replace with: “Dad”
+  - Replace with: “Dais”
 
 
 
@@ -2322,9 +2322,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
+  - Replace with: “Pp”
   - Replace with: “Pa”
+  - Replace with: “Pd”
 
 
 
@@ -2410,9 +2410,9 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Aw”
-  - Replace with: “Ab”
-  - Replace with: “Ac”
+  - Replace with: “Ax”
+  - Replace with: “A”
+  - Replace with: “Ah”
 
 
 
@@ -2570,8 +2570,8 @@ Message: |
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
   - Replace with: “D”
-  - Replace with: “Dab”
   - Replace with: “Dad”
+  - Replace with: “Dam”
 
 
 
@@ -2959,9 +2959,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
+  - Replace with: “Pp”
   - Replace with: “Pa”
+  - Replace with: “Pd”
 
 
 
@@ -6215,9 +6215,9 @@ Message: |
     5122 | ghost of a superior “Hm!”
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H”
   - Replace with: “H'm”
   - Replace with: “Ha”
+  - Replace with: “Ham”
 
 
 
@@ -6654,9 +6654,9 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
+  - Replace with: “Cu”
   - Replace with: “C”
   - Replace with: “Ca”
-  - Replace with: “Cc”
 
 
 
