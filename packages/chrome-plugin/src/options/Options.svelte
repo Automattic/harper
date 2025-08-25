@@ -3,6 +3,7 @@ import { Button, Checkbox, Input, Select, Toggle } from 'flowbite-svelte';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
+import { ActivationKey } from '../protocol';
 
 let lintConfig: LintConfig = $state({});
 let lintDescriptions: Record<string, string> = $state({});
@@ -10,6 +11,7 @@ let searchQuery = $state('');
 let searchQueryLower = $derived(searchQuery.toLowerCase());
 let dialect = $state(Dialect.American);
 let defaultEnabled = $state(false);
+let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
 
 $effect(() => {
@@ -22,6 +24,10 @@ $effect(() => {
 
 $effect(() => {
 	ProtocolClient.setDefaultEnabled(defaultEnabled);
+});
+
+$effect(() => {
+	ProtocolClient.setActivationKey(activationKey);
 });
 
 $effect(() => {
@@ -43,6 +49,10 @@ ProtocolClient.getDialect().then((d) => {
 
 ProtocolClient.getDefaultEnabled().then((d) => {
 	defaultEnabled = d;
+});
+
+ProtocolClient.getActivationKey().then((d) => {
+	activationKey = d;
 });
 
 ProtocolClient.getUserDictionary().then((d) => {
@@ -119,6 +129,20 @@ export function dictToString(values: string[]): string {
             <span class="font-light">Can make some apps behave abnormally.</span>
           </div>
           <input type="checkbox" bind:checked={defaultEnabled}/>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="font-medium">Activation Key</span>
+            <span class="font-light">If you're finding that you're accidentally triggering Harper.</span>
+          </div>
+          <Select size="sm" color="primary" class="w-44" bind:value={activationKey}>
+            <option value={ActivationKey.Shift}>Double Shift</option>
+            <option value={ActivationKey.Control}>Double Control</option>
+            <option value={ActivationKey.Off}>Off</option>
+          </Select>
         </div>
       </div>
 
