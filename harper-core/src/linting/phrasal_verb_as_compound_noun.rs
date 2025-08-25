@@ -160,6 +160,16 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                     }
                 }
 
+                // If the previous word is (only) a preposition, this word is surely a noun
+                if prev_tok.kind.is_preposition()
+                    && !prev_tok
+                        .span
+                        .get_content(document.get_source())
+                        .eq_ignore_ascii_case_str("to")
+                {
+                    continue;
+                }
+
                 // If the previous word is OOV, those are most commonly nouns
                 if prev_tok.kind.is_oov() {
                     continue;
@@ -574,5 +584,14 @@ mod tests {
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
+    }
+
+    #[test]
+    fn font_flag_with_plugin() {
+        assert_lint_count(
+            "**Xcode** (8.0+, otherwise [with plugin](https://github.com/robertvojta/LigatureXcodePlugin))",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        )
     }
 }
