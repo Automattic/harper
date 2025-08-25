@@ -1269,6 +1269,16 @@ fn suggests_ticking_clock() {
 // ToDoHyphen
 // -none-
 
+// ToGreatLengths
+#[test]
+fn correct_to_great_lengths() {
+    assert_suggestion_result(
+        "Bloomberg's sponsored paid for content goes through great lengths to market Nvidia's products and in particular its AI products that we've frequently criticized.",
+        lint_group(),
+        "Bloomberg's sponsored paid for content goes to great lengths to market Nvidia's products and in particular its AI products that we've frequently criticized.",
+    );
+}
+
 // ToTheMannerBorn
 // -none-
 
