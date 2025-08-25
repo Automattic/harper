@@ -88,17 +88,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      24 | express them, are usually plagiaristic and marred by obvious suppressions.
-         |                                                              ^~~~~~~~~~~~ Did you mean to spell `suppressions` this way?
-Suggest:
-  - Replace with: “suppression's”
-  - Replace with: “suppression”
-  - Replace with: “suppressors”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       27 | snobbishly repeat, a sense of the fundamental decencies is parcelled out
          |                                                            ^~~~~~~~~ Did you mean `parceled`?
       28 | unequally at birth.

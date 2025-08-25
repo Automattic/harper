@@ -97,7 +97,7 @@
 > excluding Indians not   taxed . But     when    the right    to vote  at    any    election for the
 # V         NPl+    NSg/C V/J   . NSg/C/P NSg/I/C D+  NPr/V/J+ P  NSg/V NSg/P I/R/Dq NSg+     C/P D
 > choice of electors for President and Vice       President of the United States   ,
-# NSg/J  P  NPl      C/P NSg/V     V/C NSg/V/J/P+ NSg/V     P  D   V/J    NPrPl/V+ .
+# N🅪Sg/J P  NPl      C/P NSg/V     V/C NSg/V/J/P+ NSg/V     P  D   V/J    NPrPl/V+ .
 > Representatives in      Congress , the Executive and Judicial officers of a   State   , or
 # NPl+            NPr/J/P NPr/V+   . D   NSg/J     V/C NSg/J    NPl/V    P  D/P N🅪Sg/V+ . NPr/C
 > the members of the Legislature thereof , is denied to any    of the male
@@ -772,8 +772,8 @@
 # V/J   NSg/J/P NPrPl/V+ . D   NSg            P    Dq+  N🅪Sg/V+ V      NSg/I/V/J+ NSg/V+ . D/P NSg
 > for this   purpose shall consist of a   member or    members from two - thirds of the
 # C/P I/Ddem N🅪Sg/V+ VX    NSg/V   P  D/P NSg/V  NPr/C NPl/V+  P    NSg . NPl/V  P  D
-> states   , and a   majority of all          the states   shall be     necessary to a   choice . [ If    ,
-# NPrPl/V+ . V/C D/P NSg      P  NSg/I/J/C/Dq D   NPrPl/V+ VX    NSg/VX NSg/J     P  D/P NSg/J+ . . NSg/C .
+> states   , and a   majority of all          the states   shall be     necessary to a   choice  . [ If    ,
+# NPrPl/V+ . V/C D/P NSg      P  NSg/I/J/C/Dq D   NPrPl/V+ VX    NSg/VX NSg/J     P  D/P N🅪Sg/J+ . . NSg/C .
 > at    the time      fixed for the beginning of the term    of the President , the President
 # NSg/P D+  N🅪Sg/V/J+ V/J   C/P D   NSg/V/J   P  D   NSg/V/J P  D+  NSg/V+    . D+  NSg/V+
 > elect   shall have   died , the Vice       President elect   shall become President . If    a
@@ -796,12 +796,12 @@
 # NSg/VX Hostname      NPr/V+   NPr/VX NSg/J/P N🅪Sg/V+ V       C/P D   NPr🅪/V P  D   NPr🅪  P  I/R/Dq
 > of the persons from whom the House of Representatives may    choose  a   President
 # P  D   NPl/V+  P    I+   D   NPr/V P  NPl+            NPr/VX NSg/V/C D/P NSg/V+
-> whenever the right   of choice shall have   devolved upon them     , and for the case   of
-# C        D   NPr/V/J P  NSg/J+ VX    NSg/VX V/J      P    NSg/IPl+ . V/C C/P D   NPr🅪/V P
+> whenever the right   of choice  shall have   devolved upon them     , and for the case   of
+# C        D   NPr/V/J P  N🅪Sg/J+ VX    NSg/VX V/J      P    NSg/IPl+ . V/C C/P D   NPr🅪/V P
 > the death of any    of the persons from whom the Senate may    choose  a   Vice
 # D   NPr🅪  P  I/R/Dq P  D   NPl/V+  P    I+   D   NPr+   NPr/VX NSg/V/C D/P NSg/V/J/P+
-> President whenever the right   of choice shall have   devolved upon them     . ] The
-# NSg/V+    C        D   NPr/V/J P  NSg/J+ VX    NSg/VX V/J      P    NSg/IPl+ . . D+
+> President whenever the right   of choice  shall have   devolved upon them     . ] The
+# NSg/V+    C        D   NPr/V/J P  N🅪Sg/J+ VX    NSg/VX V/J      P    NSg/IPl+ . . D+
 > person having the greatest number    of votes  as    Vice       - President , shall be     the
 # NSg/V+ V      D   JS       N🅪Sg/V/JC P  NPl/V+ NSg/R NSg/V/J/P+ . NSg/V+    . VX    NSg/VX D
 > Vice       - President , if    such   number     be     a   majority of the whole number    of Electors
@@ -812,8 +812,8 @@
 # J/P D   NSg/V+ . D   NPr+   VX    NSg/V/C D   NSg/V/J/P+ . NSg/V+    . D/P NSg    C/P D
 > purpose shall consist of two - thirds of the whole number    of Senators , and a
 # N🅪Sg/V+ VX    NSg/V   P  NSg . NPl/V  P  D   NSg/J N🅪Sg/V/JC P  NPl+     . V/C D/P
-> majority of the whole number     shall be     necessary to a   choice . But     no     person
-# NSg      P  D   NSg/J N🅪Sg/V/JC+ VX    NSg/VX NSg/J     P  D/P NSg/J+ . NSg/C/P NPr/P+ NSg/V+
+> majority of the whole number     shall be     necessary to a   choice  . But     no     person
+# NSg      P  D   NSg/J N🅪Sg/V/JC+ VX    NSg/VX NSg/J     P  D/P N🅪Sg/J+ . NSg/C/P NPr/P+ NSg/V+
 > constitutionally ineligible to the office of President shall be     eligible to
 # R                NSg/J      P  D   NSg/V  P  NSg/V+    VX    NSg/VX NSg/J    P
 > that         of Vice       - President of the United States   .
@@ -1333,7 +1333,7 @@
 > The Congress shall have   Power     to dispose of and make  all          needful Rules and
 # D+  NPr/V+   VX    NSg/VX N🅪Sg/V/J+ P  NSg/V   P  V/C NSg/V NSg/I/J/C/Dq NSg/J   NPl/V V/C
 > Regulations respecting the Territory or    other   Property belonging to the United
-# NPl+        V          D   NSg+      NPr/C NSg/V/J NSg/V+   NSg/V     P  D   V/J
+# NPl+        V          D   N🅪Sg+     NPr/C NSg/V/J NSg/V+   NSg/V     P  D   V/J
 > States   ; and nothing  in      this   Constitution shall be     so        construed as    to Prejudice
 # NPrPl/V+ . V/C NSg/I/J+ NPr/J/P I/Ddem NPr+         VX    NSg/VX NSg/I/J/C V/J       NSg/R P  NSg/V/J+
 > any    Claims of the United States   , or    of any    particular State   .
@@ -1507,7 +1507,7 @@
 >
 #
 > The transportation or    importation into any    State   , Territory , or
-# D+  NᴹSg+          NPr/C N🅪Sg        P    I/R/Dq N🅪Sg/V+ . NSg+      . NPr/C
+# D+  NᴹSg+          NPr/C N🅪Sg        P    I/R/Dq N🅪Sg/V+ . N🅪Sg+     . NPr/C
 > possession of the United States   for delivery or    use   therein of intoxicating
 # NSg/V      P  D   V/J    NPrPl/V+ C/P NSg/V/J+ NPr/C NSg/V W?      P  V
 > liquors , in      violation of the laws   thereof , is hereby prohibited .

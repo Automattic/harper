@@ -64,8 +64,8 @@
 # NSg/R D   NPr/I/V/J/Dq NSg/V/J NSg/J  NSg/V+ . J+          N🅪Sg/V+ VL NSg/I/V/J NSg/J P  V
 > this    ; semantic analysis can    also be     used to infer that          " sailor " and " hatch "
 # I/Ddem+ . NSg/J+   N🅪Sg+    NPr/VX W?   NSg/VX V/J  P  V     NSg/I/C/Ddem+ . NSg+   . V/C . NSg/V .
-> implicate " dogs   " as    1 ) in      the nautical context and 2 ) an  action   applied to the
-# NSg/V     . NPl/V+ . NSg/R # . NPr/J/P D   J        N🅪Sg/V+ V/C # . D/P NSg/V/J+ V/J     P  D
+> implicate " dogs   " as    1 ) in      the nautical context and 2 ) an  action    applied to the
+# NSg/V     . NPl/V+ . NSg/R # . NPr/J/P D   J        N🅪Sg/V+ V/C # . D/P N🅪Sg/V/J+ V/J     P  D
 > object " hatch " ( in      this   context , " dogs   " is a   nautical term     meaning   " fastens ( a
 # NSg/V+ . NSg/V . . NPr/J/P I/Ddem N🅪Sg/V+ . . NPl/V+ . VL D/P J        NSg/V/J+ N🅪Sg/V/J+ . V       . D/P
 > watertight door   ) securely " ) .
@@ -170,8 +170,8 @@
 # D   NSg/V/J NPr/V/J NSg    P  NPr🅪/V/J C/P NSg/V+   N🅪Sg+    V   D   NPr🅪/V/J NSg
 > developed at    Brown    University by      Henry Kučera and W. Nelson Francis , in      the
 # V/J       NSg/P NPr🅪/V/J NSg+       NSg/J/P NPr+  ?      V/C ?  NPr+   NPr+    . NPr/J/P D
-> mid      - 1960s . It       consists of about 1 , 000 , 000 words of running   English   prose  text    ,
-# NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  NSg/V/J/P NPr🅪/V/J+ NᴹSg/V N🅪Sg/V+ .
+> mid      - 1960s . It       consists of about 1 , 000 , 000 words of running    English   prose  text    ,
+# NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  NᴹSg/V/J/P NPr🅪/V/J+ NᴹSg/V N🅪Sg/V+ .
 > made up        of 500 samples from randomly chosen   publications . Each sample is 2 , 000
 # V    NSg/V/J/P P  #   NPl/V+  P    R        NᴹSg/V/J NPl+         . Dq+  NSg/V+ VL # . #
 > or    more         words  ( ending at    the first   sentence - end    after 2 , 000 words  , so        that         the
@@ -268,8 +268,8 @@
 # C       . NPr/ISg+ VL NSg/V/J P  V         Dq+   N🅪Sg+       V/C P  NSg/V  D/P NSg/J
 > probability to each one        , by      multiplying together the probabilities of each
 # NSg+        P  Dq   NSg/I/V/J+ . NSg/J/P V           J        D   NPl           P  Dq
-> choice in      turn  . The combination with the highest probability is then    chosen   . The
-# NSg/J+ NPr/J/P NSg/V . D   N🅪Sg        P    D+  JS+     NSg+        VL NSg/J/C NᴹSg/V/J . D+
+> choice  in      turn  . The combination with the highest probability is then    chosen   . The
+# N🅪Sg/J+ NPr/J/P NSg/V . D   N🅪Sg        P    D+  JS+     NSg+        VL NSg/J/C NᴹSg/V/J . D+
 > European group  developed CLAWS  , a   tagging program that          did exactly this   and
 # NSg/J+   NSg/V+ V/J       NPl/V+ . D/P NSg/V   NPr/V+  NSg/I/C/Ddem+ V   R       I/Ddem V/C
 > achieved accuracy in      the 93 – 95 % range   .
@@ -338,8 +338,8 @@
 # I/Ddem+ NSg+     NSg/V R            J          P  D   NSg/V P  NSg/J+  N🅪Sg/V+
 > processing . The accuracy reported was higher than the typical accuracy of very
 # V+         . D+  N🅪Sg+    V/J      V   NSg/JC C/P  D   NSg/J   N🅪Sg     P  J/R
-> sophisticated algorithms that          integrated part    of speech  choice with many       higher
-# V/J+          NPl+       NSg/I/C/Ddem+ V/J        NSg/V/J P  N🅪Sg/V+ NSg/J+ P    NSg/I/J/Dq NSg/JC
+> sophisticated algorithms that          integrated part    of speech  choice  with many       higher
+# V/J+          NPl+       NSg/I/C/Ddem+ V/J        NSg/V/J P  N🅪Sg/V+ N🅪Sg/J+ P    NSg/I/J/Dq NSg/JC
 > levels of linguistic analysis : syntax , morphology , semantics , and so        on  . CLAWS  ,
 # NPl/V  P  J          N🅪Sg     . NᴹSg+  . NᴹSg+      . NPl+      . V/C NSg/I/J/C J/P . NPl/V+ .
 > DeRose's and Church's methods did fail    for some     of the known cases  where
@@ -349,7 +349,7 @@
 > the field  that          part     - of - speech  tagging could  usefully be     separated from the other
 # D+  NSg/V+ NSg/I/C/Ddem+ NSg/V/J+ . P  . N🅪Sg/V+ NSg/V   NSg/VX R        NSg/VX V/J       P    D   NSg/V/J
 > levels of processing ; this    , in      turn  , simplified the theory and practice of
-# NPl/V  P  V+         . I/Ddem+ . NPr/J/P NSg/V . V/J        D   NSg    V/C NSg/V    P
+# NPl/V  P  V+         . I/Ddem+ . NPr/J/P NSg/V . V/J        D   N🅪Sg   V/C NSg/V    P
 > computerized language analysis and encouraged researchers to find  ways to
 # V/J          N🅪Sg/V+  N🅪Sg+    V/C V/J        NPl+        P  NSg/V NPl+ P
 > separate other   pieces as    well    . Markov Models became the standard method for the

@@ -3,7 +3,7 @@
 >
 #
 > A   collection of difficult sentences to test  Harper's ability to correctly tag    unusual / uncommon but     correct sentences .
-# D/P NSg        P  V/J       NPl/V+    P  NSg/V NSg$     N🅪Sg+   P  R         NSg/V+ NSg/J   . NSg/V/J  NSg/C/P NSg/V/J NPl/V+    .
+# D/P N🅪Sg       P  V/J       NPl/V+    P  NSg/V NSg$     N🅪Sg+   P  R         NSg/V+ NSg/J   . NSg/V/J  NSg/C/P NSg/V/J NPl/V+    .
 >
 #
 > Note   that         some      word   may    not   be     tagged correctly right   now       .
@@ -409,7 +409,7 @@
 > She  stood there looking in      the window longingly .
 # ISg+ V     W?    V       NPr/J/P D+  NSg/V+ R         .
 > In      replacing the faucet washers , he       felt     he       was making his     contribution to the environment .
-# NPr/J/P V         D   NSg    W?      . NPr/ISg+ N🅪Sg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D   NSg+        .
+# NPr/J/P V         D   NSg    W?      . NPr/ISg+ N🅪Sg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D   N🅪Sg+       .
 > In      trying  to make  amends , she  actually made matters worse    .
 # NPr/J/P NSg/V/J P  NSg/V NPl/V  . ISg+ R        V    NPl/V+  NSg/V/JC .
 > My  aim    in      travelling   there was to find  my  missing friend   .
@@ -742,8 +742,8 @@
 # ISg+ V       V   I/R/Dq N🅪Sg/J+ J/P NPr/ISg+ .
 > On  Jack's entry , William got up        to leave .
 # J/P NSg$   NSg+  . NPr+    V   NSg/V/J/P P  NSg/V .
-> On  the addition of ammonia , a    chemical reaction begins .
-# J/P D   NSg      P  NSg+    . D/P+ NSg/J+   NSg/V/J+ NPl/V  .
+> On  the addition of ammonia , a    chemical reaction  begins .
+# J/P D   NSg      P  NSg+    . D/P+ NSg/J+   N🅪Sg/V/J+ NPl/V  .
 > The drinks are on  me       tonight , boys   .
 # D+  NPl/V+ V   J/P NPr/ISg+ NSg+    . NPl/V+ .
 > The meal   is on  the house  .
