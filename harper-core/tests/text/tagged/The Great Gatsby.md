@@ -7105,7 +7105,7 @@
 > of the National Biscuit Company broke   the simmering hush   at    noon   . The straw
 # P  D   NSg/J    NSg     N🅪Sg/V+ NSg/V/J D   V         NSg/V+ NSg/P NSg/V+ . D   N🅪Sg/V/J+
 > seats of the car  hovered on  the edge  of combustion ; the woman  next    to me
-# NPl/V P  D+  NSg+ V/J     J/P D   NSg/V P  NSg        . D   NSg/V+ NSg/J/P P  NPr/ISg+
+# NPl/V P  D+  NSg+ V/J     J/P D   NSg/V P  Nᴹ         . D   NSg/V+ NSg/J/P P  NPr/ISg+
 > perspired delicately for a   while      into her     white    shirtwaist , and then    , as    her
 # V/J       R          C/P D/P NSg/V/C/P+ P    ISg/D$+ NPr🅪/V/J NSg        . V/C NSg/J/C . NSg/R ISg/D$+
 > newspaper dampened under   her     fingers , lapsed despairingly into deep  heat  with a

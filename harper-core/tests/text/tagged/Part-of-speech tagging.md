@@ -19,7 +19,7 @@
 > definition and its     context . A   simplified form  of this    is commonly taught to
 # NSg        V/C ISg/D$+ N🅪Sg/V+ . D/P V/J        NSg/V P  I/Ddem+ VL R        V      P
 > school - age     children , in      the identification of words  as    nouns , verbs  , adjectives ,
-# NSg/V  . N🅪Sg/V+ NPl+     . NPr/J/P D   NSg            P  NPl/V+ NSg/R NPl/V . NPl/V+ . NPl/V      .
+# NSg/V  . N🅪Sg/V+ NPl+     . NPr/J/P D   Nᴹ             P  NPl/V+ NSg/R NPl/V . NPl/V+ . NPl/V      .
 > adverbs , etc.
 # NPl/V   . +
 >
