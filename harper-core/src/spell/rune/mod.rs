@@ -81,7 +81,7 @@ mod tests {
 
         let mut expanded = WordMap::default();
 
-        attributes.expand_marked_words(words, &mut expanded);
+        attributes.expand_annotated_words(words, &mut expanded);
 
         let expanded: HashSet<String> = expanded
             .into_iter()
@@ -127,7 +127,7 @@ mod tests {
 
         let mut expanded = WordMap::default();
 
-        attributes.expand_marked_words(words, &mut expanded);
+        attributes.expand_annotated_words(words, &mut expanded);
         let expanded: HashSet<String> = expanded
             .into_iter()
             .map(|v| v.canonical_spelling.to_string())
@@ -206,7 +206,7 @@ mod tests {
 
         let mut expanded = WordMap::default();
 
-        attributes.expand_marked_words(words, &mut expanded);
+        attributes.expand_annotated_words(words, &mut expanded);
 
         let giant_data = expanded.get_with_str("giant").unwrap();
         assert!(giant_data.metadata.is_noun());
