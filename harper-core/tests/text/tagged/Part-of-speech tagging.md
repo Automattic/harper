@@ -11,7 +11,7 @@
 >
 #
 > In      corpus linguistics , part     - of - speech  tagging ( POS  tagging or    PoS  tagging or
-# NPr/J/P NSg+   NᴹSg+       . NSg/V/J+ . P  . N🅪Sg/V+ NSg/V   . NSg+ NSg/V   NPr/C NSg+ NSg/V   NPr/C
+# NPr/J/P NSg+   Nᴹ+         . NSg/V/J+ . P  . N🅪Sg/V+ NSg/V   . NSg+ NSg/V   NPr/C NSg+ NSg/V   NPr/C
 > POST      ) , also called grammatical tagging is the process of marking up        a   word   in      a
 # NPr🅪/V/P+ . . W?   V/J    J           NSg/V   VL D   NSg/V   P  NSg/V   NSg/V/J/P D/P NSg/V+ NPr/J/P D/P
 > text    ( corpus ) as    corresponding to a   particular part    of speech  , based on  both   its
@@ -27,7 +27,7 @@
 > Once  performed by      hand   , POS  tagging is now       done    in      the context of computational
 # NSg/C V/J       NSg/J/P NSg/V+ . NSg+ NSg/V   VL NPr/V/J/C NSg/V/J NPr/J/P D   N🅪Sg/V  P  J
 > linguistics , using algorithms which associate discrete terms  , as    well    as    hidden
-# NᴹSg+       . V     NPl+       I/C+  NSg/V/J+  J        NPl/V+ . NSg/R NSg/V/J NSg/R V/J
+# Nᴹ+         . V     NPl+       I/C+  NSg/V/J+  J        NPl/V+ . NSg/R NSg/V/J NSg/R V/J
 > parts of speech  , by      a   set     of descriptive tags   . POS  - tagging algorithms fall   into
 # NPl/V P  N🅪Sg/V+ . NSg/J/P D/P NPr/V/J P  NSg/J       NPl/V+ . NSg+ . NSg/V   NPl+       NSg/V+ P
 > two distinctive groups : rule   - based and stochastic . E. Brill's tagger , one       of the
@@ -149,7 +149,7 @@
 > al. have   proposed a   " universal " tag    set     , with 12 categories ( for example , no
 # ?   NSg/VX V/J      D/P . NSg/J     . NSg/V+ NPr/V/J . P    #  NPl+       . C/P NSg/V+  . NPr/P
 > subtypes of nouns , verbs  , punctuation , and so        on  ) . Whether a   very small   set     of
-# NPl      P  NPl/V . NPl/V+ . NᴹSg+       . V/C NSg/I/J/C J/P . . I/C     D/P J/R  NPr/V/J NPr/V/J P
+# NPl      P  NPl/V . NPl/V+ . Nᴹ+         . V/C NSg/I/J/C J/P . . I/C     D/P J/R  NPr/V/J NPr/V/J P
 > very broad tags   or    a   much       larger set     of more         precise ones   is preferable , depends
 # J/R  NSg/J NPl/V+ NPr/C D/P NSg/I/J/Dq JC     NPr/V/J P  NPr/I/V/J/Dq V/J+    NPl/V+ VL W?         . NPl/V
 > on  the purpose at    hand   . Automatic tagging is easier on  smaller tag    - sets  .
@@ -165,15 +165,15 @@
 >
 #
 > Research on  part     - of - speech  tagging has been  closely tied to corpus linguistics .
-# NᴹSg/V   J/P NSg/V/J+ . P  . N🅪Sg/V+ NSg/V   V   NSg/V R       V/J  P  NSg    NᴹSg+       .
+# Nᴹ/V     J/P NSg/V/J+ . P  . N🅪Sg/V+ NSg/V   V   NSg/V R       V/J  P  NSg    Nᴹ+         .
 > The first   major   corpus of English  for computer analysis was the Brown    Corpus
 # D   NSg/V/J NPr/V/J NSg    P  NPr🅪/V/J C/P NSg/V+   N🅪Sg+    V   D   NPr🅪/V/J NSg
 > developed at    Brown    University by      Henry Kučera and W. Nelson Francis , in      the
 # V/J       NSg/P NPr🅪/V/J NSg+       NSg/J/P NPr+  ?      V/C ?  NPr+   NPr+    . NPr/J/P D
-> mid      - 1960s . It       consists of about 1 , 000 , 000 words of running    English   prose  text    ,
-# NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  NᴹSg/V/J/P NPr🅪/V/J+ NᴹSg/V N🅪Sg/V+ .
-> made up        of 500 samples from randomly chosen   publications . Each sample is 2 , 000
-# V    NSg/V/J/P P  #   NPl/V+  P    R        NᴹSg/V/J NPl+         . Dq+  NSg/V+ VL # . #
+> mid      - 1960s . It       consists of about 1 , 000 , 000 words of running  English   prose text    ,
+# NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  Nᴹ/V/J/P NPr🅪/V/J+ Nᴹ/V  N🅪Sg/V+ .
+> made up        of 500 samples from randomly chosen publications . Each sample is 2 , 000
+# V    NSg/V/J/P P  #   NPl/V+  P    R        Nᴹ/V/J NPl+         . Dq+  NSg/V+ VL # . #
 > or    more         words  ( ending at    the first   sentence - end    after 2 , 000 words  , so        that         the
 # NPr/C NPr/I/V/J/Dq NPl/V+ . NSg/V  NSg/P D   NSg/V/J NSg/V+   . NSg/V+ P     # . #   NPl/V+ . NSg/I/J/C NSg/I/C/Ddem D
 > corpus contains only  complete sentences ) .
@@ -194,8 +194,8 @@
 # V/C V/J       NSg/J/P NSg/V+ . V/C JC    NPl+  NSg/V NPr/J/P NSg    NSg/I/J/C NSg/I/C/Ddem+ NSg/J/P D   NSg/J #  ?
 > the tagging was nearly perfect ( allowing for some     cases  on  which even    human
 # D   NSg/V   V   R      NSg/V/J . V        C/P I/J/R/Dq NPl/V+ J/P I/C+  NSg/V/J NSg/V/J+
-> speakers might     not   agree ) .
-# +        NᴹSg/VX/J NSg/C V     . .
+> speakers might   not   agree ) .
+# +        Nᴹ/VX/J NSg/C V     . .
 >
 #
 > This    corpus has been  used for innumerable studies of word   - frequency and of
@@ -249,7 +249,7 @@
 > a    verb   or    a   modal . The same method can    , of course , be     used to benefit from
 # D/P+ NSg/V+ NPr/C D/P NSg/J . D+  I/J+ NSg/V+ NPr/VX . P  NSg/V+ . NSg/VX V/J  P  NSg/V   P
 > knowledge about the following words  .
-# NᴹSg+     J/P   D+  NSg/V/J/P NPl/V+ .
+# Nᴹ+       J/P   D+  NSg/V/J/P NPl/V+ .
 >
 #
 > More         advanced ( " higher - order " ) HMMs learn the probabilities not   only  of pairs
@@ -268,8 +268,8 @@
 # C       . NPr/ISg+ VL NSg/V/J P  V         Dq+   N🅪Sg+       V/C P  NSg/V  D/P NSg/J
 > probability to each one        , by      multiplying together the probabilities of each
 # NSg+        P  Dq   NSg/I/V/J+ . NSg/J/P V           J        D   NPl           P  Dq
-> choice  in      turn  . The combination with the highest probability is then    chosen   . The
-# N🅪Sg/J+ NPr/J/P NSg/V . D   N🅪Sg        P    D+  JS+     NSg+        VL NSg/J/C NᴹSg/V/J . D+
+> choice  in      turn  . The combination with the highest probability is then    chosen . The
+# N🅪Sg/J+ NPr/J/P NSg/V . D   N🅪Sg        P    D+  JS+     NSg+        VL NSg/J/C Nᴹ/V/J . D+
 > European group  developed CLAWS  , a   tagging program that          did exactly this   and
 # NSg/J+   NSg/V+ V/J       NPl/V+ . D/P NSg/V   NPr/V+  NSg/I/C/Ddem+ V   R       I/Ddem V/C
 > achieved accuracy in      the 93 – 95 % range   .
@@ -309,13 +309,13 @@
 >
 #
 > Dynamic programming methods
-# NSg/J+  NᴹSg/V+     NPl/V+
+# NSg/J+  Nᴹ/V+       NPl/V+
 >
 #
 > In      1987 , Steven DeRose and Kenneth W. Church  independently developed dynamic
 # NPr/J/P #    . NPr+   ?      V/C NPr+    ?  NPr🅪/V+ R             V/J       NSg/J
 > programming algorithms to solve the same problem in      vastly less    time      . Their
-# NᴹSg/V+     NPl+       P  NSg/V D   I/J  NSg/J+  NPr/J/P R      V/J/C/P N🅪Sg/V/J+ . D$+
+# Nᴹ/V+       NPl+       P  NSg/V D   I/J  NSg/J+  NPr/J/P R      V/J/C/P N🅪Sg/V/J+ . D$+
 > methods were  similar to the Viterbi algorithm known for some     time      in      other
 # NPl/V+  NSg/V NSg/J   P  D   ?       NSg       V/J   C/P I/J/R/Dq N🅪Sg/V/J+ NPr/J/P NSg/V/J
 > fields   . DeRose used a   table of pairs  , while     Church  used a   table of triples and a
@@ -341,7 +341,7 @@
 > sophisticated algorithms that          integrated part    of speech  choice  with many       higher
 # V/J+          NPl+       NSg/I/C/Ddem+ V/J        NSg/V/J P  N🅪Sg/V+ N🅪Sg/J+ P    NSg/I/J/Dq NSg/JC
 > levels of linguistic analysis : syntax , morphology , semantics , and so        on  . CLAWS  ,
-# NPl/V  P  J          N🅪Sg     . NᴹSg+  . NᴹSg+      . NPl+      . V/C NSg/I/J/C J/P . NPl/V+ .
+# NPl/V  P  J          N🅪Sg     . Nᴹ+    . Nᴹ+        . NPl+      . V/C NSg/I/J/C J/P . NPl/V+ .
 > DeRose's and Church's methods did fail    for some     of the known cases  where
 # ?        V/C NSg$     NPl/V+  V   NSg/V/J C/P I/J/R/Dq P  D   V/J   NPl/V+ NSg/C
 > semantics is required , but     those  proved negligibly rare    . This   convinced many       in
@@ -369,7 +369,7 @@
 > " unsupervised " tagging . Unsupervised tagging techniques use   an  untagged corpus
 # . V/J          . NSg/V   . V/J          NSg/V   NPl+       NSg/V D/P J        NSg+
 > for their training data  and produce the tagset by      induction . That          is , they
-# C/P D$+   NᴹSg/V+  N🅪Pl+ V/C NᴹSg/V  D   NSg    NSg/J/P NSg       . NSg/I/C/Ddem+ VL . IPl+
+# C/P D$+   Nᴹ/V+    N🅪Pl+ V/C Nᴹ/V    D   NSg    NSg/J/P NSg       . NSg/I/C/Ddem+ VL . IPl+
 > observe patterns in      word   use   , and derive part     - of - speech  categories themselves .
 # NSg/V   NPl/V+   NPr/J/P NSg/V+ NSg/V . V/C NSg/V  NSg/V/J+ . P  . N🅪Sg/V+ NPl+       IPl+       .
 > For example , statistics readily reveal that          " the " , " a   " , and " an  " occur in

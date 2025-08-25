@@ -45,7 +45,7 @@
 > Don't pick  at    your food !
 # V     NSg/V NSg/P D$+  NSg+ .
 > My  cat      keeps scratching at    the furniture .
-# D$+ NSg/V/J+ NPl/V V          NSg/P D+  NᴹSg+     .
+# D$+ NSg/V/J+ NPl/V V          NSg/P D+  Nᴹ+       .
 > I    was working at    the problem all           day   .
 # ISg+ V   V       NSg/P D+  NSg/J+  NSg/I/J/C/Dq+ NPr🅪+ .
 > He       shouted at    her     .
@@ -127,7 +127,7 @@
 > By      ' maybe   ' she  means ' no    ' .
 # NSg/J/P . NSg/J/R . ISg+ NPl/V . NPr/P . .
 > The electricity was cut     off       , so        we   had to read  by      candlelight .
-# D+  NᴹSg+       V   NSg/V/J NSg/V/J/P . NSg/I/J/C IPl+ V   P  NSg/V NSg/J/P NSg         .
+# D+  Nᴹ+         V   NSg/V/J NSg/V/J/P . NSg/I/J/C IPl+ V   P  NSg/V NSg/J/P NSg         .
 > By      the power     vested in      me       , I    now       pronounce you    man     and wife     .
 # NSg/J/P D+  N🅪Sg/V/J+ V/J    NPr/J/P NPr/ISg+ . ISg+ NPr/V/J/C NSg/V     ISgPl+ NPr/V/J V/C NSg/V/J+ .
 > By      Jove ! I    think she's got it       !
@@ -155,7 +155,7 @@
 > He       sits  listening to the radio   by      the hour .
 # NPr/ISg+ NPl/V V         P  D+  N🅪Sg/V+ NSg/J/P D+  NSg+ .
 > His     health was deteriorating by      the day   .
-# ISg/D$+ NᴹSg+  V   V             NSg/J/P D+  NPr🅪+ .
+# ISg/D$+ Nᴹ+    V   V             NSg/J/P D+  NPr🅪+ .
 > The pickers are paid by      the bushel .
 # D   W?      V   V/J  NSg/J/P D   NSg/V  .
 > He       cheated by      his     own      admission .
@@ -264,8 +264,8 @@
 # V       C/P NPr/V/J+ .
 > They swept the area for enemy  operatives .
 # IPl+ V/J   D   N🅪Sg C/P NSg/V+ NPl+       .
-> Police  combed his     flat    for clues  .
-# NᴹSg/V+ V/J    ISg/D$+ NSg/V/J C/P NPl/V+ .
+> Police combed his     flat    for clues  .
+# Nᴹ/V+  V/J    ISg/D$+ NSg/V/J C/P NPl/V+ .
 > I've lived here    for three years .
 # W?   V/J   NSg/J/R C/P NSg   NPl+  .
 > They fought for days over    a    silly  pencil .
@@ -305,7 +305,7 @@
 > Go      scuba  diving   ? For one        thing  , I    can't even    swim  .
 # NSg/V/J N🅪Sg/V NSg/V/J+ . C/P NSg/I/V/J+ NSg/V+ . ISg+ VX    NSg/V/J NSg/V .
 > For another , we   don't have   any    equipment .
-# C/P I/D     . IPl+ V     NSg/VX I/R/Dq NᴹSg+     .
+# C/P I/D     . IPl+ V     NSg/VX I/R/Dq Nᴹ+       .
 > He       is named for his     grandfather .
 # NPr/ISg+ VL V/J   C/P ISg/D$+ NSg/V/J+    .
 > He       totally screwed up        that          project . Now       he's surely for the sack  .
@@ -328,8 +328,8 @@
 # NPr+ VL P    NSg/V/J+ NPr+    .
 > I    got a   letter from my  brother  .
 # ISg+ V   D/P NSg/V+ P    D$+ NSg/V/J+ .
-> You    can't get   all          your news    from the Internet .
-# ISgPl+ VX    NSg/V NSg/I/J/C/Dq D$+  NᴹPl/V+ P    D   NPr/V+   .
+> You    can't get   all          your news  from the Internet .
+# ISgPl+ VX    NSg/V NSg/I/J/C/Dq D$+  Nᴹ/V+ P    D   NPr/V+   .
 > He       had books  piled from floor  to ceiling .
 # NPr/ISg+ V   NPl/V+ V/J   P    NSg/V+ P  NSg/V   .
 > He       departed yesterday from Chicago .
@@ -347,7 +347,7 @@
 > Start counting from 1 .
 # NSg/V V        P    # .
 > You    can    study anything from math to literature .
-# ISgPl+ NPr/VX NSg/V NSg/I/V+ P    +    P  NᴹSg       .
+# ISgPl+ NPr/VX NSg/V NSg/I/V+ P    +    P  Nᴹ         .
 > It's hard   to tell  from here    .
 # +    N🅪Sg/J P  NPr/V P    NSg/J/R .
 > Try     to see   it       from his     point of view   .
@@ -420,8 +420,8 @@
 # D+  NPl/V+ NSg/V/J NSg/J/P NPr/J/P NPl/V+ .
 > Arrange the chairs in      a    circle .
 # NSg/V   D   NPl/V+ NPr/J/P D/P+ NSg/V+ .
-> He       stalked away in      anger   .
-# NPr/ISg+ V/J     V/J  NPr/J/P NᴹSg/V+ .
+> He       stalked away in      anger .
+# NPr/ISg+ V/J     V/J  NPr/J/P Nᴹ/V+ .
 > John is in      a   coma .
 # NPr+ VL NPr/J/P D/P NSg  .
 > My  fruit   trees  are in      bud     .
@@ -438,8 +438,8 @@
 # NSg/I+ NSg/V+ V   NPr/ISg+ NSg/V NPr/J/P NPr🅪/V/J+ .
 > Please pay     me       in      cash      — preferably in      tens and twenties .
 # V      NSg/V/J NPr/ISg+ NPr/J/P NPrᴹ/V/J+ . R          NPr/J/P W?   V/C NPl+     .
-> The deposit can    be     in      any    legal tender  , even    in      gold      .
-# D+  NSg/V+  NPr/VX NSg/VX NPr/J/P I/R/Dq NSg/J NSg/V/J . NSg/V/J NPr/J/P NᴹSg/V/J+ .
+> The deposit can    be     in      any    legal tender  , even    in      gold    .
+# D+  NSg/V+  NPr/VX NSg/VX NPr/J/P I/R/Dq NSg/J NSg/V/J . NSg/V/J NPr/J/P Nᴹ/V/J+ .
 > Beethoven's " Symphony No    . 5 " in      C        minor   is among his     most       popular .
 # NSg$        . NSg+     NPr/P . # . NPr/J/P NPr/V/J+ NSg/V/J VL P     ISg/D$+ NSg/I/J/Dq NSg/J   .
 > His     speech  was in      French   , but     was simultaneously translated into eight  languages .
@@ -552,8 +552,8 @@
 # D+  N🅪Sg+     V   NPr/V/J P  NSg+      .
 > It       is said that         she  died of a    broken heart   .
 # NPr/ISg+ VL V/J  NSg/I/C/Ddem ISg+ V/J  P  D/P+ V/J    N🅪Sg/V+ .
-> What   a   lot   of nonsense  !
-# NSg/I+ D/P NPr/V P  NᴹSg/V/J+ .
+> What   a   lot   of nonsense !
+# NSg/I+ D/P NPr/V P  Nᴹ/V/J+  .
 > I'll have   a   dozen of those  apples , please .
 # W?   NSg/VX D/P NSg   P  I/Ddem NPl    . V      .
 > Welcome to the historic town of Harwich .
@@ -717,7 +717,7 @@
 > I    was reading a   book  on  history .
 # ISg+ V   NPr/V   D/P NSg/V J/P N🅪Sg+   .
 > The city hosted the World  Summit on  the Information Society
-# D+  NSg+ V/J    D+  NSg/V+ NSg/V+ J/P D+  NᴹSg+       N🅪Sg+
+# D+  NSg+ V/J    D+  NSg/V+ NSg/V+ J/P D+  Nᴹ+         N🅪Sg+
 > I    have   no    opinion on  this    subject  .
 # ISg+ NSg/VX NPr/P NSg+    J/P I/Ddem+ NSg/V/J+ .
 > I    saw   it       on  television .
@@ -759,7 +759,7 @@
 > You've been  on  these  antidepressants far     too long    .
 # W?     NSg/V J/P I/Ddem NPl             NSg/V/J W?  NPr/V/J .
 > I    depended on  them     for assistance .
-# ISg+ V/J      J/P NSg/IPl+ C/P NᴹSg+      .
+# ISg+ V/J      J/P NSg/IPl+ C/P Nᴹ+        .
 > He       will   promise on  certain conditions .
 # NPr/ISg+ NPr/VX NSg/V   J/P I/J+    NPl/V+     .
 > A    curse  on  him  !
@@ -913,13 +913,13 @@
 > There are lots  of people with no     homes  after the wildfire .
 # +     V   NPl/V P  NPl/V+ P    NPr/P+ NPl/V+ P     D   NSg      .
 > Speak with confidence .
-# NSg/V P    NᴹSg+      .
+# NSg/V P    Nᴹ+        .
 > He       spoke with sadness in      his     voice  .
 # NPr/ISg+ NSg/V P    NSg+    NPr/J/P ISg/D$+ NSg/V+ .
 > The sailors were  infected with malaria .
 # D+  NPl+    NSg/V NSg/V/J  P    NSg+    .
 > overcome with happiness
-# NSg/V    P    NᴹSg+
+# NSg/V    P    Nᴹ+
 > green    with envy   ; flushed with success
 # NPr🅪/V/J P    NSg/V+ . V/J     P    N🅪Sg+
 > She  was with Acme for twenty years before retiring last    fall   .
