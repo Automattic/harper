@@ -653,6 +653,22 @@ mod tests {
     }
 
     #[test]
+    fn dont_flag_low_hanging_fruit_msg() {
+        assert_no_lints(
+            "The standard form is low-hanging fruit with a hyphen and singular form.",
+            test_group(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_low_hanging_fruit_desc() {
+        assert_no_lints(
+            "Corrects non-standard variants of low-hanging fruit.",
+            test_group(),
+        );
+    }
+
+    #[test]
     fn lint_descriptions_are_clean() {
         let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
         let pairs: Vec<_> = group
