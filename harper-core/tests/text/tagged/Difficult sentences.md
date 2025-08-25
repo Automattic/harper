@@ -302,8 +302,8 @@
 # C/P NSg/I/J/C/Dq+ ISg/D$+ J+        NSg+      . NPr/ISg+ V      V    J/R  NPr/V/J .
 > And now       for a    slap     - up        meal   !
 # V/C NPr/V/J/C C/P D/P+ NSg/V/J+ . NSg/V/J/P NSg/V+ .
-> Go      scuba  diving   ? For one        thing  , I    can't even    swim  .
-# NSg/V/J N🅪Sg/V NSg/V/J+ . C/P NSg/I/V/J+ NSg/V+ . ISg+ VX    NSg/V/J NSg/V .
+> Go      scuba  diving   ? For one        thing , I    can't even    swim  .
+# NSg/V/J N🅪Sg/V NSg/V/J+ . C/P NSg/I/V/J+ NSg+  . ISg+ VX    NSg/V/J NSg/V .
 > For another , we   don't have   any    equipment .
 # C/P I/D     . IPl+ V     NSg/VX I/R/Dq NᴹSg+     .
 > He       is named for his     grandfather .
@@ -639,7 +639,7 @@
 > Drive on  past       the railway station .
 # NSg/V J/P NSg/V/J/P+ D+  NSg+    NSg/V+  .
 > From now       on  things are going   to be     different .
-# P    NPr/V/J/C J/P NPl/V+ V   NSg/V/J P  NSg/VX NSg/J     .
+# P    NPr/V/J/C J/P NPl+   V   NSg/V/J P  NSg/VX NSg/J     .
 > and so        on  .
 # V/C NSg/I/J/C J/P .
 > He       rambled on  and on  .
@@ -793,7 +793,7 @@
 > To err is human   .
 # P  V   VL NSg/V/J .
 > Who    am      I    to criticise ? I've done    worse     things myself .
-# NPr/I+ NPr/V/J ISg+ P  V/Au/Br   . W?   NSg/V/J NSg/V/JC+ NPl/V+ ISg+   .
+# NPr/I+ NPr/V/J ISg+ P  V/Au/Br   . W?   NSg/V/J NSg/V/JC+ NPl+   ISg+   .
 > Precisely to get   away from you    was why   I    did what   I    did .
 # R         P  NSg/V V/J  P    ISgPl+ V   NSg/V ISg+ V   NSg/I+ ISg+ V   .
 > I    need    some     more         books  to read  and friends to go      partying with .
