@@ -84,20 +84,20 @@
 # C       . +     V   R       NSg/I/J/Dq+ NPr/I/V/J/Dq+ NPl+       V/C NSg/V/P . NPl+       . C/P NPl/V .
 > the plural , possessive , and singular forms  can    be     distinguished . In      many
 # D   NSg/J  . NSg/J      . V/C NSg/J    NPl/V+ NPr/VX NSg/VX V/J           . NPr/J/P NSg/I/J/Dq+
-> languages words  are also marked for their " case   " ( role as    subject  , object ,
-# NPl/V+    NPl/V+ V   W?   V/J    C/P D$+   . NPr/V+ . . NSg  NSg/R NSg/V/J+ . NSg/V+ .
-> etc. ) , grammatical gender   , and so        on  ; while     verbs  are marked for tense   , aspect ,
-# +    . . J+          NSg/V/J+ . V/C NSg/I/J/C J/P . NSg/V/C/P NPl/V+ V   V/J    C/P NSg/V/J . NSg/V+ .
+> languages words  are also marked for their " case    " ( role as    subject  , object ,
+# NPl/V+    NPl/V+ V   W?   V/J    C/P D$+   . NPr🅪/V+ . . NSg  NSg/R NSg/V/J+ . NSg/V+ .
+> etc. ) , grammatical gender    , and so        on  ; while     verbs  are marked for tense   , aspect ,
+# +    . . J+          N🅪Sg/V/J+ . V/C NSg/I/J/C J/P . NSg/V/C/P NPl/V+ V   V/J    C/P NSg/V/J . NSg/V+ .
 > and other    things . In      some     tagging systems , different inflections of the same
 # V/C NSg/V/J+ NPl/V+ . NPr/J/P I/J/R/Dq NSg/V   NPl+    . NSg/J     NPl         P  D   I/J
-> root   word   will   get   different parts of speech  , resulting in      a   large number   of
-# NPr/V+ NSg/V+ NPr/VX NSg/V NSg/J     NPl/V P  N🅪Sg/V+ . V         NPr/J/P D/P NSg/J NSg/V/JC P
+> root   word   will   get   different parts of speech  , resulting in      a   large number    of
+# NPr/V+ NSg/V+ NPr/VX NSg/V NSg/J     NPl/V P  N🅪Sg/V+ . V         NPr/J/P D/P NSg/J N🅪Sg/V/JC P
 > tags   . For example , NN for singular common  nouns , NNS for plural common  nouns , NP
 # NPl/V+ . C/P NSg/V+  . ?  C/P NSg/J    NSg/V/J NPl/V . ?   C/P NSg/J  NSg/V/J NPl/V . NPr
 > for singular proper nouns ( see   the POS  tags   used in      the Brown    Corpus ) . Other
 # C/P NSg/J    NSg/J  NPl/V . NSg/V D   NSg+ NPl/V+ V/J  NPr/J/P D   NPr🅪/V/J NSg+   . . NSg/V/J
-> tagging systems use   a   smaller number   of tags   and ignore fine    differences or
-# NSg/V   NPl+    NSg/V D/P NSg/JC  NSg/V/JC P  NPl/V+ V/C V      NSg/V/J NSg/V       NPr/C
+> tagging systems use   a   smaller number    of tags   and ignore fine    differences or
+# NSg/V   NPl+    NSg/V D/P NSg/JC  N🅪Sg/V/JC P  NPl/V+ V/C V      NSg/V/J NSg/V       NPr/C
 > model    them     as    features somewhat independent from part     - of - speech  .
 # NSg/V/J+ NSg/IPl+ NSg/R NPl/V+   NSg/I    NSg/J       P    NSg/V/J+ . P  . N🅪Sg/V+ .
 >
@@ -110,12 +110,12 @@
 # ?     NPr/V/J . ?      #    . V   V/J  NSg/J/P # . #   NPl/V P  N🅪Sg/V+ V/C NSg/V NSg/I/C/Ddem
 > about as    many       words  were  ambiguous in      that         language as    in      English   . A
 # J/P   NSg/R NSg/I/J/Dq NPl/V+ NSg/V J         NPr/J/P NSg/I/C/Ddem N🅪Sg/V+  NSg/R NPr/J/P NPr🅪/V/J+ . D/P
-> morphosyntactic descriptor in      the case  of morphologically rich    languages is
-# ?               NSg        NPr/J/P D   NPr/V P  ?               NPr/V/J NPl/V+    VL
+> morphosyntactic descriptor in      the case   of morphologically rich    languages is
+# ?               NSg        NPr/J/P D   NPr🅪/V P  ?               NPr/V/J NPl/V+    VL
 > commonly expressed using very short     mnemonics , such  as    Ncmsan for Category = Noun   ,
 # R        V/J       V     J/R  NPr/V/J/P NPl       . NSg/I NSg/R ?      C/P NSg+     . NSg/V+ .
-> Type   = common  , Gender   = masculine , Number    = singular , Case   = accusative , Animate
-# NSg/V+ . NSg/V/J . NSg/V/J+ . NSg/J     . NSg/V/JC+ . NSg/J    . NPr/V+ . NSg/J      . V/J
+> Type   = common  , Gender    = masculine , Number     = singular , Case    = accusative , Animate
+# NSg/V+ . NSg/V/J . N🅪Sg/V/J+ . NSg/J     . N🅪Sg/V/JC+ . NSg/J    . NPr🅪/V+ . NSg/J      . V/J
 > = no    .
 # . NPr/P .
 >
@@ -138,8 +138,8 @@
 # NPl/V+ V/J  NPl/V  R       P    N🅪Sg/V+  . NPl/V+ R       V   V/J      P  NSg/V
 > overt  morphological distinctions , although this   leads to inconsistencies such  as
 # NSg/J+ J+            NPl+         . C        I/Ddem NPl/V P  NPl             NSg/I NSg/R
-> case   - marking for pronouns but     not   nouns in      English   , and much       larger
-# NPr/V+ . NSg/V   C/P NPl/V    NSg/C/P NSg/C NPl/V NPr/J/P NPr🅪/V/J+ . V/C NSg/I/J/Dq JC
+> case    - marking for pronouns but     not   nouns in      English   , and much       larger
+# NPr🅪/V+ . NSg/V   C/P NPl/V    NSg/C/P NSg/C NPl/V NPr/J/P NPr🅪/V/J+ . V/C NSg/I/J/Dq JC
 > cross      - language differences . The tag    sets  for heavily inflected languages such  as
 # NPr/V/J/P+ . N🅪Sg/V+  NSg/V+      . D+  NSg/V+ NPl/V C/P R       V/J       NPl/V+    NSg/I NSg/R
 > Greek   and Latin can    be     very large ; tagging words  in      agglutinative languages such
@@ -242,8 +242,8 @@
 # NSg+   . V/C NSg/V  D/P NSg/V P  D   NPl           P  I/J     NPl/V+    . C/P
 > example , once  you've seen  an  article such  as    ' the ' , perhaps the next    word   is a
 # NSg/V+  . NSg/C W?     NSg/V D/P NSg/V+  NSg/I NSg/R . D   . . NSg     D   NSg/J/P NSg/V+ VL D/P
-> noun   40 % of the time      , an  adjective 40 % , and a   number    20 % . Knowing   this    , a
-# NSg/V+ #  . P  D   N🅪Sg/V/J+ . D/P NSg/V/J+  #  . . V/C D/P NSg/V/JC+ #  . . NSg/V/J/P I/Ddem+ . D/P+
+> noun   40 % of the time      , an  adjective 40 % , and a   number     20 % . Knowing   this    , a
+# NSg/V+ #  . P  D   N🅪Sg/V/J+ . D/P NSg/V/J+  #  . . V/C D/P N🅪Sg/V/JC+ #  . . NSg/V/J/P I/Ddem+ . D/P+
 > program can    decide that          " can    " in      " the can    " is far     more         likely to be     a   noun  than
 # NPr/V+  NPr/VX V      NSg/I/C/Ddem+ . NPr/VX . NPr/J/P . D+  NPr/VX . VL NSg/V/J NPr/I/V/J/Dq NSg/J  P  NSg/VX D/P NSg/V C/P
 > a    verb   or    a   modal . The same method can    , of course , be     used to benefit from
@@ -294,8 +294,8 @@
 # J         C/P   NPr/ISg+ V/J        NSg/I/J/C/Dq NPl+          . NPr/ISg+ R         V   P  NSg/V  P
 > backup methods when    there were  simply too many       options ( the Brown     Corpus
 # NSg/J  NPl/V+  NSg/I/C +     NSg/V R      W?  NSg/I/J/Dq NPl/V   . D+  NPr🅪/V/J+ NSg+
-> contains a   case   with 17 ambiguous words in      a    row    , and there are words  such  as
-# V        D/P NPr/V+ P    #  J         NPl/V NPr/J/P D/P+ NSg/V+ . V/C +     V   NPl/V+ NSg/I NSg/R
+> contains a   case    with 17 ambiguous words in      a    row    , and there are words  such  as
+# V        D/P NPr🅪/V+ P    #  J         NPl/V NPr/J/P D/P+ NSg/V+ . V/C +     V   NPl/V+ NSg/I NSg/R
 > " still   " that          can    represent as    many       as    7 distinct parts of speech  .
 # . NSg/V/J . NSg/I/C/Ddem+ NPr/VX V         NSg/R NSg/I/J/Dq NSg/R # V/J      NPl/V P  N🅪Sg/V+ .
 >
@@ -312,14 +312,14 @@
 # NSg/J+  NᴹSg/V+     NPl/V+
 >
 #
-> In      1987 , Steven DeRose and Kenneth W. Church independently developed dynamic
-# NPr/J/P #    . NPr+   ?      V/C NPr+    ?  NPr/V+ R             V/J       NSg/J
+> In      1987 , Steven DeRose and Kenneth W. Church  independently developed dynamic
+# NPr/J/P #    . NPr+   ?      V/C NPr+    ?  NPr🅪/V+ R             V/J       NSg/J
 > programming algorithms to solve the same problem in      vastly less    time      . Their
 # NᴹSg/V+     NPl+       P  NSg/V D   I/J  NSg/J+  NPr/J/P R      V/J/C/P N🅪Sg/V/J+ . D$+
 > methods were  similar to the Viterbi algorithm known for some     time      in      other
 # NPl/V+  NSg/V NSg/J   P  D   ?       NSg       V/J   C/P I/J/R/Dq N🅪Sg/V/J+ NPr/J/P NSg/V/J
-> fields   . DeRose used a   table of pairs  , while     Church used a   table of triples and a
-# NPrPl/V+ . ?      V/J  D/P NSg/V P  NPl/V+ . NSg/V/C/P NPr/V+ V/J  D/P NSg/V P  NPl/V   V/C D/P
+> fields   . DeRose used a   table of pairs  , while     Church  used a   table of triples and a
+# NPrPl/V+ . ?      V/J  D/P NSg/V P  NPl/V+ . NSg/V/C/P NPr🅪/V+ V/J  D/P NSg/V P  NPl/V   V/C D/P
 > method of estimating the values for triples that          were  rare    or    nonexistent in      the
 # NSg/V  P  V          D   NPl/V+ C/P NPl/V   NSg/I/C/Ddem+ NSg/V NSg/V/J NPr/C NSg/J       NPr/J/P D
 > Brown    Corpus ( an  actual measurement of triple  probabilities would require a   much
@@ -377,7 +377,7 @@
 > similar contexts , while     " eat " occurs in      very different ones   . With sufficient
 # NSg/J+  NPl/V+   . NSg/V/C/P . V   . V      NPr/J/P J/R  NSg/J+    NPl/V+ . P    J
 > iteration , similarity classes of words  emerge that          are remarkably similar to
-# NSg       . NSg        NPl/V   P  NPl/V+ NSg/V  NSg/I/C/Ddem+ V   R          NSg/J   P
+# N🅪Sg      . NSg        NPl/V   P  NPl/V+ NSg/V  NSg/I/C/Ddem+ V   R          NSg/J   P
 > those  human   linguists would expect ; and the differences themselves sometimes
 # I/Ddem NSg/V/J NPl+      VX    V      . V/C D   NSg/V+      IPl+       R
 > suggest valuable new     insights .

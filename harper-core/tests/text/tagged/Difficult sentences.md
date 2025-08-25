@@ -36,8 +36,8 @@
 # NPr    V   NSg/P NPr+ . D/P N🅪Sg/V+ NSg/V+ V   V/J    NSg/P NPr+  NPr/J/P #    .
 > I    was at    Jim’s house  at    the corner of Fourth  Street  and Vine .
 # ISg+ V   NSg/P NSg$  NPr/V+ NSg/P D   NSg/V  P  NPr/V/J NSg/V/J V/C NSg+ .
-> at    the bottom  of the page   ; sitting at    the table  ; at    church ; at    sea
-# NSg/P D   NSg/V/J P  D+  NPr/V+ . NSg/V/J NSg/P D+  NSg/V+ . NSg/P NPr/V+ . NSg/P NSg+
+> at    the bottom  of the page   ; sitting at    the table  ; at    church  ; at    sea
+# NSg/P D   NSg/V/J P  D+  NPr/V+ . NSg/V/J NSg/P D+  NSg/V+ . NSg/P NPr🅪/V+ . NSg/P NSg+
 > Target at    five miles  . Prepare torpedoes !
 # NSg/V+ NSg/P NSg+ NPrPl+ . V       NPl/V     .
 > Look  out         ! UFO at    two o'clock !
@@ -512,8 +512,8 @@
 # NPr/J/P NSg/J/P N🅪Sg/V+ . Unlintable NPr/J/P NSg/J/P NSg/V+   . Unlintable NPr/J/P P  D   ?      P  ISg/D$+ NSg/V+
 > He       is very in      with the Joneses .
 # NPr/ISg+ VL J/R  NPr/J/P P    D   NPl/V   .
-> I    need    to keep  in      with the neighbours  in      case   I    ever need    a    favour       from them     .
-# ISg+ N🅪Sg/VX P  NSg/V NPr/J/P P    D   NPl/V/Comm+ NPr/J/P NPr/V+ ISg+ J    N🅪Sg/VX D/P+ N🅪Sg/V/Comm+ P    NSg/IPl+ .
+> I    need    to keep  in      with the neighbours  in      case    I    ever need    a    favour       from them     .
+# ISg+ N🅪Sg/VX P  NSg/V NPr/J/P P    D   NPl/V/Comm+ NPr/J/P NPr🅪/V+ ISg+ J    N🅪Sg/VX D/P+ N🅪Sg/V/Comm+ P    NSg/IPl+ .
 > I    think that          bird     fancies you    . You're in      there , mate  !
 # ISg+ NSg/V NSg/I/C/Ddem+ NPr/V/J+ NPl/V   ISgPl+ . +      NPr/J/P W?    . NSg/V .
 > I'm three drinks in      right   now       .
@@ -886,8 +886,8 @@
 # P    D$+   NSg+       J/P D+  NSg/V+ . IPl+ NSg/V/J P  N🅪Sg/V/J D$+   NSg+ NSg/V+ .
 > We   are with you    all          the way    .
 # IPl+ V   P    ISgPl+ NSg/I/J/C/Dq D+  NSg/J+ .
-> There are a   number   of problems with your plan  .
-# +     V   D/P NSg/V/JC P  NPl+     P    D$+  NSg/V .
+> There are a   number    of problems with your plan  .
+# +     V   D/P N🅪Sg/V/JC P  NPl+     P    D$+  NSg/V .
 > What   on  Earth   is wrong   with my  keyboard ?
 # NSg/I+ J/P NPrᴹ/V+ VL NSg/V/J P    D$+ NSg/V+   .
 > He       was pleased with the outcome .

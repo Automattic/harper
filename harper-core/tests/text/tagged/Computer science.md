@@ -92,8 +92,8 @@
 # NSg+       . V/J    D   J       ?        . NPr     NPr/VX NSg/VX V/J        D   NSg/V/J
 > computer scientist and information theorist , because of various reasons ,
 # NSg/V+   NSg       V/C NᴹSg+       NSg      . C/P     P  J       NPl/V+  .
-> including the fact that          he       documented the binary number    system . In      1820 , Thomas
-# V         D   NSg+ NSg/I/C/Ddem+ NPr/ISg+ V/J        D   NSg/J+ NSg/V/JC+ NSg+   . NPr/J/P #    . NPr+
+> including the fact that          he       documented the binary number     system . In      1820 , Thomas
+# V         D   NSg+ NSg/I/C/Ddem+ NPr/ISg+ V/J        D   NSg/J+ N🅪Sg/V/JC+ NSg+   . NPr/J/P #    . NPr+
 > de   Colmar launched the mechanical calculator industry [ note   1 ] when    he       invented
 # NPr+ ?      V/J      D   NSg/J      NSg+       N🅪Sg+    . NSg/V+ # . NSg/I/C NPr/ISg+ V/J
 > his     simplified arithmometer , the first   calculating machine strong enough and
@@ -244,8 +244,8 @@
 # V         NPl/V      V/C NPl/V+    .
 >
 #
-> In      the early   days of computing , a   number   of terms  for the practitioners of the
-# NPr/J/P D   NSg/J/R NPl  P  NᴹSg/V+   . D/P NSg/V/JC P  NPl/V+ C/P D   NPl           P  D
+> In      the early   days of computing , a   number    of terms  for the practitioners of the
+# NPr/J/P D   NSg/J/R NPl  P  NᴹSg/V+   . D/P N🅪Sg/V/JC P  NPl/V+ C/P D   NPl           P  D
 > field of computing were  suggested ( albeit facetiously ) in      the Communications of
 # NSg/V P  NᴹSg/V+   NSg/V V/J       . C      R           . NPr/J/P D   NPl            P
 > the ACM — turingineer , turologist , flow   - charts - man      , applied meta  - mathematician ,
@@ -306,8 +306,8 @@
 # NᴹSg/V+   VL D/P J            N🅪Sg/V  . NSg/J/R+ NSg/V+   N🅪Sg/V+ V   R
 > influenced by      the work   of mathematicians such  as    Kurt Gödel , Alan Turing , John
 # V/J        NSg/J/P D   N🅪Sg/V P  NPl+           NSg/I NSg/R NPr  NPr   . NPr+ NPr    . NPr+
-> von Neumann , Rózsa Péter and Alonzo Church and there continues to be     a   useful
-# ?   ?       . ?     ?     V/C NPr    NPr/V+ V/C +     NPl/V     P  NSg/VX D/P J
+> von Neumann , Rózsa Péter and Alonzo Church  and there continues to be     a   useful
+# ?   ?       . ?     ?     V/C NPr    NPr🅪/V+ V/C +     NPl/V     P  NSg/VX D/P J
 > interchange of ideas between the two fields   in      areas such  as    mathematical logic    ,
 # NSg/V       P  NPl+  NSg/P   D   NSg NPrPl/V+ NPr/J/P NPl+  NSg/I NSg/R J            NSg/V/J+ .
 > category theory , domain theory , and algebra .
@@ -420,8 +420,8 @@
 # NPl       P  NSg/V+   N🅪Sg/V+
 >
 #
-> A   number   of computer scientists have   argued for the distinction of three
-# D/P NSg/V/JC P  NSg/V+   NPl+       NSg/VX V/J    C/P D   NSg         P  NSg
+> A   number    of computer scientists have   argued for the distinction of three
+# D/P N🅪Sg/V/JC P  NSg/V+   NPl+       NSg/VX V/J    C/P D   NSg         P  NSg
 > separate paradigms in      computer science . Peter     Wegner argued that         those  paradigms
 # NSg/V/J  NPl       NPr/J/P NSg/V+   N🅪Sg/V+ . NPr/V/JC+ ?      V/J    NSg/I/C/Ddem I/Ddem NPl+
 > are science , technology , and mathematics . Peter     Denning's working group  argued
@@ -794,8 +794,8 @@
 #
 > Concurrency is a   property of systems in      which several computations are executing
 # N🅪Sg        VL D/P NSg/V    P  NPl+    NPr/J/P I/C+  J/Dq    NPl          V   V
-> simultaneously , and potentially interacting with each other   . A   number   of
-# R              . V/C R           V           P    Dq   NSg/V/J . D/P NSg/V/JC P
+> simultaneously , and potentially interacting with each other   . A   number    of
+# R              . V/C R           V           P    Dq   NSg/V/J . D/P N🅪Sg/V/JC P
 > mathematical models have   been  developed for general concurrent computation
 # J+           NPl/V+ NSg/VX NSg/V V/J       C/P NSg/V/J NSg/J      NSg
 > including Petri nets  , process calculi and the parallel random  access machine
@@ -960,12 +960,12 @@
 # NSg/V+   . NSg/V/J NSg/VX I/Ddem+ . NSg/J/C NSg/VX NSg/I/C/Ddem+ .
 >
 #
-> selection : IF    such  - and - such  is the case  , THEN    do     this    , ELSE    do     that          ;
-# NSg+      . NSg/C NSg/I . V/C . NSg/I VL D   NPr/V . NSg/J/C NSg/VX I/Ddem+ . NSg/J/C NSg/VX NSg/I/C/Ddem+ .
+> selection : IF    such  - and - such  is the case   , THEN    do     this    , ELSE    do     that          ;
+# NSg+      . NSg/C NSg/I . V/C . NSg/I VL D   NPr🅪/V . NSg/J/C NSg/VX I/Ddem+ . NSg/J/C NSg/VX NSg/I/C/Ddem+ .
 >
 #
-> repetition : WHILE     such  - and - such  is the case  , DO     this    . The three rules of
-# NSg/V+     . NSg/V/C/P NSg/I . V/C . NSg/I VL D   NPr/V . NSg/VX I/Ddem+ . D   NSg   NPl/V P
+> repetition : WHILE     such  - and - such  is the case   , DO     this    . The three rules of
+# NSg/V+     . NSg/V/C/P NSg/I . V/C . NSg/I VL D   NPr🅪/V . NSg/VX I/Ddem+ . D   NSg   NPl/V P
 > Boehm's and Jacopini's insight can    be     further simplified with the use    of
 # ?       V/C ?          NSg+    NPr/VX NSg/VX V/J     V/J        P    D   NSg/V+ P
 > goto ( which means it       is more         elementary than structured programming ) .
@@ -994,8 +994,8 @@
 # NSg/J+     NᴹSg/V+     . D/P NSg/V P  NSg/V+   D   N🅪Sg/V    V/C NPl/V    P
 > computer programs that          treats computation as    the evaluation of mathematical
 # NSg/V+   NPl/V+   NSg/I/C/Ddem+ NPl/V+ NSg         NSg/R D   NSg        P  J
-> functions and avoids state  and mutable data  . It       is a   declarative programming
-# NPl/V+    V/C V      NSg/V+ V/C W?      N🅪Pl+ . NPr/ISg+ VL D/P NSg/J       NᴹSg/V+
+> functions and avoids state   and mutable data  . It       is a   declarative programming
+# NPl/V+    V/C V      N🅪Sg/V+ V/C W?      N🅪Pl+ . NPr/ISg+ VL D/P NSg/J       NᴹSg/V+
 > paradigm , which means programming is done    with expressions or    declarations
 # NSg+     . I/C+  NPl/V NᴹSg/V+     VL NSg/V/J P    NPl         NPr/C NPl+
 > instead of statements .
@@ -1004,8 +1004,8 @@
 #
 > Imperative programming , a    programming paradigm that          uses  statements that
 # NSg/J+     NᴹSg/V+     . D/P+ NᴹSg/V+     NSg+     NSg/I/C/Ddem+ NPl/V NPl/V+     NSg/I/C/Ddem+
-> change a   program's state  . In      much       the same way    that         the imperative mood in
-# N🅪Sg/V D/P NSg$      NSg/V+ . NPr/J/P NSg/I/J/Dq D   I/J  NSg/J+ NSg/I/C/Ddem D   NSg/J      NSg  NPr/J/P
+> change a   program's state   . In      much       the same way    that         the imperative mood in
+# N🅪Sg/V D/P NSg$      N🅪Sg/V+ . NPr/J/P NSg/I/J/Dq D   I/J  NSg/J+ NSg/I/C/Ddem D   NSg/J      NSg  NPr/J/P
 > natural languages expresses commands , an   imperative program consists of
 # NSg/J+  NPl/V+    NPl/V     NPl/V+   . D/P+ NSg/J+     NPr/V+  NPl/V    P
 > commands for the computer to perform . Imperative programming focuses on
