@@ -642,9 +642,9 @@ Message: |
      182 | Newell and Herbert A. Simon argued in 1975,
          |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Aw”
-  - Replace with: “Ab”
-  - Replace with: “Ac”
+  - Replace with: “Ax”
+  - Replace with: “A”
+  - Replace with: “Ah”
 
 
 
@@ -773,9 +773,9 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Ht”
-  - Replace with: “H”
+  - Replace with: “Hr”
   - Replace with: “He”
+  - Replace with: “Hf”
 
 
 
@@ -996,9 +996,9 @@ Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
+  - Replace with: “Pp”
   - Replace with: “Pa”
+  - Replace with: “Pd”
 
 
 

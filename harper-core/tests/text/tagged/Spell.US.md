@@ -51,7 +51,7 @@
 >
 #
 > Quarrelling .
-# NᴹSg/V/Comm .
+# Nᴹ/V/Comm   .
 >
 #
 > Recognised .

@@ -2781,9 +2781,9 @@ Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H”
   - Replace with: “H'm”
   - Replace with: “Ha”
+  - Replace with: “Ham”
 
 
 
@@ -2803,9 +2803,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2836,9 +2836,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2859,9 +2859,9 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2913,9 +2913,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2946,9 +2946,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2969,9 +2969,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -3044,9 +3044,9 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
