@@ -1,17 +1,23 @@
 import './index.js';
 import { Dialect } from 'harper.js';
 import { startCase } from 'lodash-es';
-import { type App, PluginSettingTab, Setting } from 'obsidian';
+import type { ButtonComponent } from 'obsidian';
+import { type App, Notice, PluginSettingTab, Setting } from 'obsidian';
 import type HarperPlugin from './index.js';
 import type State from './State.js';
 import type { Settings } from './State.js';
 import { linesToString, stringToLines } from './textUtils';
 
+const LintSettingId = 'HarperLintSettings';
+
 export class HarperSettingTab extends PluginSettingTab {
 	private state: State;
 	private settings: Settings;
 	private descriptionsHTML: Record<string, string>;
+	private defaultLintConfig: Record<string, boolean>;
+	private currentRuleSearchQuery = '';
 	private plugin: HarperPlugin;
+	private toggleAllButton?: ButtonComponent;
 
 	constructor(app: App, plugin: HarperPlugin, state: State) {
 		super(app, plugin);
@@ -22,6 +28,7 @@ export class HarperSettingTab extends PluginSettingTab {
 		const update = () => {
 			this.updateDescriptions();
 			this.updateSettings();
+			this.updateDefaults();
 			setTimeout(update, 1000);
 		};
 
@@ -31,12 +38,20 @@ export class HarperSettingTab extends PluginSettingTab {
 	updateSettings() {
 		this.state.getSettings().then((v) => {
 			this.settings = v;
+			this.updateToggleAllRulesButton();
 		});
 	}
 
 	updateDescriptions() {
 		this.state.getDescriptionHTML().then((v) => {
 			this.descriptionsHTML = v;
+		});
+	}
+
+	updateDefaults() {
+		this.state.getDefaultLintConfig().then((v) => {
+			this.defaultLintConfig = v as unknown as Record<string, boolean>;
+			this.updateToggleAllRulesButton();
 		});
 	}
 
@@ -130,23 +145,86 @@ export class HarperSettingTab extends PluginSettingTab {
 			.setDesc('Search for a specific Harper rule.')
 			.addSearch((search) => {
 				search.setPlaceholder('Search for a rule...').onChange((query) => {
-					this.renderLintSettingsToId(query, 'HarperLintSettings');
+					this.currentRuleSearchQuery = query;
+					this.renderLintSettingsToId(query, LintSettingId);
+				});
+			});
+
+		// Global reset for rule overrides
+		new Setting(containerEl)
+			.setName('Reset Rules to Defaults')
+			.setDesc(
+				'Restore all rule overrides back to their default values. This does not affect other settings.',
+			)
+			.addButton((button) => {
+				button
+					.setButtonText('Reset All to Defaults')
+					.onClick(async () => {
+						const confirmed = confirm(
+							'Reset all rule overrides to their defaults? This cannot be undone.',
+						);
+						if (!confirmed) return;
+						await this.state.resetAllRulesToDefaults();
+						this.settings = await this.state.getSettings();
+						this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
+						this.updateToggleAllRulesButton();
+						new Notice('Harper rules reset to defaults');
+					})
+					.setWarning();
+			});
+
+		// Single bulk toggle button: If any rules are enabled, turn all off; otherwise turn all on.
+		new Setting(containerEl)
+			.setName('Toggle All Rules')
+			.setDesc(
+				'Enable or disable all rules in bulk. Overrides individual rule settings until changed again.',
+			)
+			.addButton((button) => {
+				this.toggleAllButton = button;
+				this.updateToggleAllRulesButton();
+				button.setWarning().onClick(async () => {
+					const anyEnabledNow = await this.state.areAnyRulesEnabled();
+					const action = anyEnabledNow ? 'Disable' : 'Enable';
+					const confirmed = confirm(`${action} all rules? This will override individual settings.`);
+					if (!confirmed) return;
+
+					await this.state.setAllRulesEnabled(!anyEnabledNow);
+					this.settings = await this.state.getSettings();
+					this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
+					this.updateToggleAllRulesButton();
+					new Notice(`All Harper rules ${anyEnabledNow ? 'disabled' : 'enabled'}`);
 				});
 			});
 
 		const lintSettings = document.createElement('DIV');
-		lintSettings.id = 'HarperLintSettings';
+		lintSettings.id = LintSettingId;
 		containerEl.appendChild(lintSettings);
 
-		this.renderLintSettings('', lintSettings);
+		// Ensure default config is loaded before initial render so values reflect defaults.
+		this.state.getDefaultLintConfig().then((v) => {
+			this.defaultLintConfig = v as unknown as Record<string, boolean>;
+			this.renderLintSettingsToId(this.currentRuleSearchQuery, lintSettings.id);
+		});
 	}
 
-	renderLintSettingsToId(searchQuery: string, id: string) {
+	private async updateToggleAllRulesButton() {
+		if (!this.toggleAllButton) return;
+		const anyEnabled = await this.state.areAnyRulesEnabled();
+		this.toggleAllButton.setButtonText(anyEnabled ? 'Disable All Rules' : 'Enable All Rules');
+	}
+
+	async renderLintSettingsToId(searchQuery: string, id: string) {
 		const el = document.getElementById(id);
-		this.renderLintSettings(searchQuery, el!);
+		if (!el) return;
+		const effective = await this.state.getEffectiveLintConfig();
+		this.renderLintSettings(searchQuery, el, effective);
 	}
 
-	renderLintSettings(searchQuery: string, containerEl: HTMLElement) {
+	private renderLintSettings(
+		searchQuery: string,
+		containerEl: HTMLElement,
+		effectiveConfig: Record<string, boolean>,
+	) {
 		containerEl.innerHTML = '';
 
 		const queryLower = searchQuery.toLowerCase();
@@ -170,44 +248,32 @@ export class HarperSettingTab extends PluginSettingTab {
 			template.innerHTML = descriptionHTML;
 			fragment.appendChild(template.content);
 
+			// Determine default for this rule (if available)
+			const defaultVal = this.defaultLintConfig?.[setting];
+
 			new Setting(containerEl)
 				.setName(startCase(setting))
 				.setDesc(fragment)
-				.addDropdown((dropdown) =>
+				.addDropdown((dropdown) => {
+					const effective: boolean | undefined = effectiveConfig[setting];
+					const usingDefault = value === null;
+					const onLabel = usingDefault && defaultVal === true ? 'On (default)' : 'On';
+					const offLabel = usingDefault && defaultVal === false ? 'Off (default)' : 'Off';
 					dropdown
-						.addOption('default', 'Default')
-						.addOption('enable', 'On')
-						.addOption('disable', 'Off')
-						.setValue(valueToString(value))
-						.onChange(async (value) => {
-							this.settings.lintSettings[setting] = stringToValue(value);
+						.addOption('enable', onLabel)
+						.addOption('disable', offLabel)
+						.setValue(effective ? 'enable' : 'disable')
+						.onChange(async (v) => {
+							this.settings.lintSettings[setting] = v === 'enable';
 							await this.state.initializeFromSettings(this.settings);
-						}),
-				);
+							// Re-render to update labels (remove "(default)" once overridden)
+							this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
+							this.updateToggleAllRulesButton();
+						});
+				});
 		}
 	}
 }
 
-function valueToString(value: boolean | null): string {
-	switch (value) {
-		case true:
-			return 'enable';
-		case false:
-			return 'disable';
-		case null:
-			return 'default';
-	}
-}
-
-function stringToValue(str: string): boolean | null {
-	switch (str) {
-		case 'enable':
-			return true;
-		case 'disable':
-			return false;
-		case 'default':
-			return null;
-	}
-
-	throw 'Fell through case';
-}
+// Note: dropdowns present only On/Off. When using defaults (unset),
+// the matching option label includes "(default)".

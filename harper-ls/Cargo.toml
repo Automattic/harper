@@ -1,6 +1,6 @@
 [package]
 name = "harper-ls"
-version = "0.58.0"
+version = "0.59.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -8,12 +8,12 @@ readme = "README.md"
 repository = "https://github.com/automattic/harper"
 
 [dependencies]
-harper-stats = { path = "../harper-stats", version = "0.58.0" }
-harper-literate-haskell = { path = "../harper-literate-haskell", version = "0.58.0" }
-harper-core = { path = "../harper-core", version = "0.58.0", features = ["concurrent"] }
-harper-comments = { path = "../harper-comments", version = "0.58.0" }
-harper-typst = { path = "../harper-typst", version = "0.58.0" }
-harper-html = { path = "../harper-html", version = "0.58.0" }
+harper-stats = { path = "../harper-stats", version = "0.59.0" }
+harper-literate-haskell = { path = "../harper-literate-haskell", version = "0.59.0" }
+harper-core = { path = "../harper-core", version = "0.59.0", features = ["concurrent"] }
+harper-comments = { path = "../harper-comments", version = "0.59.0" }
+harper-typst = { path = "../harper-typst", version = "0.59.0" }
+harper-html = { path = "../harper-html", version = "0.59.0" }
 tower-lsp-server = "0.22.1"
 tokio = { version = "1.47.1", features = ["fs", "rt", "rt-multi-thread", "macros", "io-std", "io-util", "net"] }
 clap = { version = "4.5.43", features = ["derive"] }
@@ -29,7 +29,6 @@ open = "5.3.0"
 futures = "0.3.31"
 serde = { version = "1.0.219", features = ["derive"] }
 indexmap = { version = "2.10.0", features = ["serde"] }
-reqwest = { version = "0.12.23", features = ["rustls-tls"], default-features = false }
 globset = "0.4.16"
 
 [features]

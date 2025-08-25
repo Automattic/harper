@@ -1,5 +1,6 @@
 import type { Dialect, LintConfig } from 'harper.js';
 import { LRUCache } from 'lru-cache';
+import type { ActivationKey } from './protocol';
 import type { UnpackedLint } from './unpackLint';
 
 export default class ProtocolClient {
@@ -61,6 +62,14 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setDefaultStatus', enabled });
 	}
 
+	public static async getActivationKey(): Promise<ActivationKey> {
+		return (await chrome.runtime.sendMessage({ kind: 'getActivationKey' })).key;
+	}
+
+	public static async setActivationKey(key: ActivationKey): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setActivationKey', key });
+	}
+
 	public static async addToUserDictionary(words: string[]): Promise<void> {
 		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'addToUserDictionary', words });
@@ -78,5 +87,10 @@ export default class ProtocolClient {
 	public static async ignoreHash(hash: string): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'ignoreLint', contextHash: hash });
 		this.lintCache.clear();
+	}
+
+	public static async openOptions(): Promise<void> {
+		// Use background to open options to support content scripts reliably
+		await chrome.runtime.sendMessage({ kind: 'openOptions' });
 	}
 }

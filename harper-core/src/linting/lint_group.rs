@@ -99,6 +99,7 @@ use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::since_duration::SinceDuration;
 use super::somewhat_something::SomewhatSomething;
+use super::sought_after::SoughtAfter;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
@@ -483,6 +484,7 @@ impl LintGroup {
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(SomewhatSomething, true);
+        insert_expr_rule!(SoughtAfter, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
         insert_expr_rule!(ThatThan, true);
