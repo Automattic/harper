@@ -177,6 +177,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                         &["file", "images", "location", "snapshots"][..]
                     }
                     ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function"][..],
+                    ['l', 'a', 'y', 'o', 'u', 't'] => &["estimation"][..],
                     ['p', 'l', 'a', 'y', 'b', 'a', 'c', 'k'] => &["latency"][..],
                     ['r', 'o', 'l', 'l', 'o', 'u', 't'] => &["status"][..],
                     ['w', 'o', 'r', 'k', 'o', 'u', 't'] => &["constraints", "preference"][..],
@@ -629,6 +630,15 @@ mod tests {
     fn dont_flag_in_noun_list_without_space_after_comma() {
         assert_lint_count(
             "shape, memory space,and layout of data",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_layout_estimation() {
+        assert_lint_count(
+            "Layout estimation focuses on predicting architectural elements, i.e., walls, doors, and windows, within an indoor scene.",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );
