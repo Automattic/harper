@@ -381,6 +381,7 @@ pub fn lint_group() -> LintGroup {
                 (&["worst and worst", "worse and worst", "worst and worse"], &["worse and worse"]),
                 (&["worst than"], &["worse than"]),
                 // worse -> worst
+                (&["at worse"], &["at worst"]),
                 (&["worse case scenario", "worse-case scenario", "worse-case-scenario"], &["worst-case scenario"]),
                 (&["worse ever"], &["worst ever"]),
             ],

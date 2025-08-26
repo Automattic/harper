@@ -88,17 +88,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      24 | express them, are usually plagiaristic and marred by obvious suppressions.
-         |                                                              ^~~~~~~~~~~~ Did you mean to spell `suppressions` this way?
-Suggest:
-  - Replace with: “suppression's”
-  - Replace with: “suppression”
-  - Replace with: “suppressors”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       27 | snobbishly repeat, a sense of the fundamental decencies is parcelled out
          |                                                            ^~~~~~~~~ Did you mean `parceled`?
       28 | unequally at birth.
@@ -902,18 +891,6 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
-     680 | acquaintances resented the fact that he turned up in popular cafés with her and,
-         |                                                              ^~~~~ Did you mean to spell `cafés` this way?
-     681 | leaving her at a table, sauntered about, chatting with whomsoever he knew.
-Suggest:
-  - Replace with: “caffs”
-  - Replace with: “cafes”
-  - Replace with: “cafe's”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      683 | up to New York with Tom on the train one afternoon, and when we stopped by the
      684 | ashheaps he jumped to his feet and, taking hold of my elbow, literally forced me
          | ^~~~~~~~ Did you mean to spell `ashheaps` this way?
@@ -951,8 +928,8 @@ Message: |
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “Be”
   - Replace with: “Bf”
-  - Replace with: “Bi”
 
 
 
@@ -1268,8 +1245,8 @@ Message: |
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “Be”
   - Replace with: “Bf”
-  - Replace with: “Bi”
 
 
 
@@ -1355,9 +1332,9 @@ Message: |
     1122 | Daisy! Dai———”
          |        ^~~ Did you mean to spell `Dai` this way?
 Suggest:
-  - Replace with: “Dais”
-  - Replace with: “Dab”
+  - Replace with: “Day”
   - Replace with: “Dad”
+  - Replace with: “Dais”
 
 
 
@@ -2334,9 +2311,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
+  - Replace with: “Pp”
   - Replace with: “Pa”
+  - Replace with: “Pd”
 
 
 
@@ -2411,8 +2388,8 @@ Message: |
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “Be”
   - Replace with: “Bf”
-  - Replace with: “Bi”
 
 
 
@@ -2422,9 +2399,9 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Aw”
-  - Replace with: “Ab”
-  - Replace with: “Ac”
+  - Replace with: “Ax”
+  - Replace with: “A”
+  - Replace with: “Ah”
 
 
 
@@ -2582,8 +2559,8 @@ Message: |
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
   - Replace with: “D”
-  - Replace with: “Dab”
   - Replace with: “Dad”
+  - Replace with: “Dam”
 
 
 
@@ -2628,8 +2605,8 @@ Message: |
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “Be”
   - Replace with: “Bf”
-  - Replace with: “Bi”
 
 
 
@@ -2971,9 +2948,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
+  - Replace with: “Pp”
   - Replace with: “Pa”
+  - Replace with: “Pd”
 
 
 
@@ -6227,9 +6204,9 @@ Message: |
     5122 | ghost of a superior “Hm!”
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H”
   - Replace with: “H'm”
   - Replace with: “Ha”
+  - Replace with: “Ham”
 
 
 
@@ -6666,9 +6643,9 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
+  - Replace with: “Cu”
   - Replace with: “C”
   - Replace with: “Ca”
-  - Replace with: “Cc”
 
 
 
@@ -6802,8 +6779,8 @@ Message: |
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “Be”
   - Replace with: “Bf”
-  - Replace with: “Bi”
 
 
 
@@ -7243,9 +7220,9 @@ Message: |
     5692 | figures in my more fantastic dreams. I see it as a night scene by El Greco: a
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
+  - Replace with: “Ell”
   - Replace with: “E”
   - Replace with: “Ea”
-  - Replace with: “Elm”
 
 
 

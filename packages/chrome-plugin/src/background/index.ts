@@ -1,7 +1,10 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
 import {
+	ActivationKey,
 	type AddToUserDictionaryRequest,
 	createUnitResponse,
+	type GetActivationKeyRequest,
+	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
 	type GetDefaultStatusResponse,
@@ -17,6 +20,7 @@ import {
 	type LintResponse,
 	type Request,
 	type Response,
+	type SetActivationKeyRequest,
 	type SetConfigRequest,
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
@@ -125,6 +129,13 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetUserDictionary();
 		case 'setUserDictionary':
 			return handleSetUserDictionary(message);
+		case 'getActivationKey':
+			return handleGetActivationKey();
+		case 'setActivationKey':
+			return handleSetActivationKey(message);
+		case 'openOptions':
+			chrome.runtime.openOptionsPage();
+			return createUnitResponse();
 	}
 }
 
@@ -220,6 +231,21 @@ async function handleGetUserDictionary(): Promise<GetUserDictionaryResponse> {
 	return { kind: 'getUserDictionary', words: dict };
 }
 
+async function handleGetActivationKey(): Promise<GetActivationKeyResponse> {
+	const key = await getActivationKey();
+
+	return { kind: 'getActivationKey', key };
+}
+
+async function handleSetActivationKey(req: SetActivationKeyRequest): Promise<UnitResponse> {
+	if (!Object.values(ActivationKey).includes(req.key)) {
+		throw new Error(`Invalid activation key: ${req.key}`);
+	}
+	await setActivationKey(req.key);
+
+	return createUnitResponse();
+}
+
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
 async function setLintConfig(lintConfig: LintConfig): Promise<void> {
 	await linter.setLintConfig(lintConfig);
@@ -255,6 +281,15 @@ async function getIgnoredLints(): Promise<string> {
 async function getDialect(): Promise<Dialect> {
 	const resp = await chrome.storage.local.get({ dialect: Dialect.American });
 	return resp.dialect;
+}
+
+async function getActivationKey(): Promise<ActivationKey> {
+	const resp = await chrome.storage.local.get({ activationKey: ActivationKey.Off });
+	return resp.activationKey;
+}
+
+async function setActivationKey(key: ActivationKey) {
+	await chrome.storage.local.set({ activationKey: key });
 }
 
 function initializeLinter(dialect: Dialect) {
