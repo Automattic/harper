@@ -150,14 +150,8 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                     continue;
                 }
 
-                // If the compound is part of a list of nouns, it's probably not a verb.
-                if prev_tok.kind.is_conjunction() {
-                    let maybe_prev_tok_2 = document.get_next_word_from_offset(i, -3);
-                    if let Some(prev_tok_2) = maybe_prev_tok_2
-                        && prev_tok_2.kind.is_noun()
-                    {
-                        continue;
-                    }
+                if is_part_of_noun_list(document, i) {
+                    continue;
                 }
 
                 // If the previous word is (only) a preposition, this word is surely a noun
@@ -222,6 +216,33 @@ impl Linter for PhrasalVerbAsCompoundNoun {
 
     fn description(&self) -> &str {
         "This rule looks for phrasal verbs written as compound nouns."
+    }
+}
+
+/// Checks if the current token is part of a list of nouns
+fn is_part_of_noun_list(document: &Document, current_index: usize) -> bool {
+    // Check for a conjunction before the current word (-1 is whitespace, -2 is the conjunction)
+    if !matches!(
+        document.get_next_word_from_offset(current_index, -1),
+        Some(tok) if tok.kind.is_conjunction()
+    ) {
+        return false;
+    }
+
+    // Check the token sequence before the conjunction
+    match document.get_token_offset(current_index, -3) {
+        // A comma without the space, assume we're in a list of nouns.
+        Some(tok) if tok.kind.is_comma() => true,
+
+        // Whitespace. If the token before that is a noun or a comma, assume we're in a list of nouns.
+        Some(ws) if ws.kind.is_whitespace() => {
+            document
+                .get_token_offset(current_index, -4)
+                // `noun and` or `, and`
+                .is_some_and(|tok| tok.kind.is_noun() || tok.kind.is_comma())
+        }
+
+        _ => false,
     }
 }
 
@@ -593,5 +614,23 @@ mod tests {
             PhrasalVerbAsCompoundNoun::default(),
             0,
         )
+    }
+
+    #[test]
+    fn dont_flag_and_layout_of_data() {
+        assert_lint_count(
+            "shape, memory space, and layout of data, while performing the complicated indexing for the user",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_in_noun_list_without_space_after_comma() {
+        assert_lint_count(
+            "shape, memory space,and layout of data",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
     }
 }
