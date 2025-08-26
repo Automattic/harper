@@ -16,7 +16,7 @@ pub enum Error {
     UnexpectedEndOfLine,
     #[error("Received malformed JSON at line {line}, column {column}: {message}")]
     MalformedJSON {
-        message: &'static str,
+        message: String,
         line: usize,
         column: usize,
     },
@@ -27,7 +27,7 @@ pub enum Error {
 impl From<SerdeJsonError> for Error {
     fn from(e: SerdeJsonError) -> Self {
         Error::MalformedJSON {
-            message: Box::leak(e.to_string().into_boxed_str()),
+            message: e.to_string(),
             line: e.line(),
             column: e.column(),
         }
