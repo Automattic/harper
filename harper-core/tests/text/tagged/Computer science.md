@@ -737,7 +737,7 @@
 > drawing on  areas of expertise such  as    applied mathematics , symbolic logic    ,
 # NSg/V   J/P NPl   P  Nᴹ/V+     NSg/I NSg/R V/J     Nᴹ+         . J        NSg/V/J+ .
 > semiotics , electrical engineering , philosophy of mind   , neurophysiology , and
-# NSg       . NSg/J      NSg/V+      . N🅪Sg/V     P  NSg/V+ . ?               . V/C
+# Nᴹ        . NSg/J      NSg/V+      . N🅪Sg/V     P  NSg/V+ . ?               . V/C
 > social intelligence . AI    is associated in      the popular mind   with robotic
 # NSg/J  N🅪Sg+        . NPr🅪+ VL V/J        NPr/J/P D   NSg/J   NSg/V+ P    J+
 > development , but     the main    field of practical application has been  as    an  embedded

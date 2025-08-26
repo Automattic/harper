@@ -928,8 +928,8 @@ Message: |
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “Be”
   - Replace with: “Bf”
-  - Replace with: “Bi”
 
 
 
@@ -1245,8 +1245,8 @@ Message: |
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “Be”
   - Replace with: “Bf”
-  - Replace with: “Bi”
 
 
 
@@ -2388,8 +2388,8 @@ Message: |
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “Be”
   - Replace with: “Bf”
-  - Replace with: “Bi”
 
 
 
@@ -2605,8 +2605,8 @@ Message: |
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “Be”
   - Replace with: “Bf”
-  - Replace with: “Bi”
 
 
 
@@ -6779,8 +6779,8 @@ Message: |
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “Be”
   - Replace with: “Bf”
-  - Replace with: “Bi”
 
 
 

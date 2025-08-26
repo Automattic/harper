@@ -2301,7 +2301,7 @@
 >
 #
 > “ Beauty   and the Beast    . . . Loneliness . . . Old    Grocery Horse  . . . Brook’n
-# . N🅪Sg/V/J V/C D+  NSg/V/J+ . . . NSg        . . . NSg/J+ NSg/V+  NSg/V+ . . . ?
+# . N🅪Sg/V/J V/C D+  NSg/V/J+ . . . Nᴹ         . . . NSg/J+ NSg/V+  NSg/V+ . . . ?
 > Bridge  . . . ” Then    I    was lying   half        asleep in      the cold  lower    level   of the
 # N🅪Sg/V+ . . . . NSg/J/C ISg+ V   NSg/V/J N🅪Sg/V/J/P+ J      NPr/J/P D   NSg/J NSg/V/JC NSg/V/J P  D+
 > Pennsylvania Station , staring at    the morning Tribune , and waiting for the four
@@ -3515,7 +3515,7 @@
 > turned and smiled back    at    me       before they faded through a    door   into warm
 # V/J    V/C V/J    NSg/V/J NSg/P NPr/ISg+ C/P    IPl+ J     NSg/J/P D/P+ NSg/V+ P    NSg/V/J+
 > darkness . At    the enchanted metropolitan twilight I    felt     a   haunting loneliness
-# Nᴹ+      . NSg/P D   V/J       NSg/J+       NSg/V/J+ ISg+ N🅪Sg/V/J D/P NSg/V/J  NSg
+# Nᴹ+      . NSg/P D   V/J       NSg/J+       NSg/V/J+ ISg+ N🅪Sg/V/J D/P NSg/V/J  Nᴹ
 > sometimes , and felt     it       in      others — poor    young   clerks who    loitered in      front   of
 # R         . V/C N🅪Sg/V/J NPr/ISg+ NPr/J/P NPl/V+ . NSg/V/J NPr/V/J NPl/V+ NPr/I+ V/J      NPr/J/P NSg/V/J P
 > windows  waiting until it       was time     for a   solitary restaurant dinner  — young   clerks
@@ -8761,7 +8761,7 @@
 > all           their tragic arguments fade    with the city lights behind  . Thirty — the promise
 # NSg/I/J/C/Dq+ D$+   NSg/J+ NPl/V+    NSg/V/J P    D+  NSg+ NPl/V+ NSg/J/P . NSg    . D   NSg/V
 > of a   decade of loneliness , a   thinning list  of single  men  to know  , a   thinning
-# P  D/P NSg    P  NSg        . D/P NSg/V/J  NSg/V P  NSg/V/J NSg+ P  NSg/V . D/P NSg/V/J
+# P  D/P NSg    P  Nᴹ         . D/P NSg/V/J  NSg/V P  NSg/V/J NSg+ P  NSg/V . D/P NSg/V/J
 > brief   - case   of enthusiasm , thinning hair    . But     there was Jordan beside me       , who    ,
 # NSg/V/J . NPr🅪/V P  NSg+       . NSg/V/J  N🅪Sg/V+ . NSg/C/P +     V   NPr+   P      NPr/ISg+ . NPr/I+ .
 > unlike    Daisy , was too wise    ever to carry well    - forgotten dreams from age     to age    .
@@ -9561,7 +9561,7 @@
 > hint  of bedrooms up        - stairs more         beautiful and cool    than other    bedrooms , of gay
 # NSg/V P  NPl+     NSg/V/J/P . NPl+   NPr/I/V/J/Dq NSg/J     V/C NSg/V/J C/P  NSg/V/J+ NPl+     . P  NPr/V/J
 > and radiant activities taking  place   through its     corridors , and of romances that
-# V/C NSg/J+  NSg+       NSg/V/J N🅪Sg/V+ NSg/J/P ISg/D$+ NPl+      . V/C P  NPl/V    NSg/I/C/Ddem+
+# V/C NSg/J+  NPl+       NSg/V/J N🅪Sg/V+ NSg/J/P ISg/D$+ NPl+      . V/C P  NPl/V    NSg/I/C/Ddem+
 > were  not   musty   and laid away already in      lavender but     fresh   and breathing and
 # NSg/V NSg/C NSg/V/J V/C V/J  V/J  W?      NPr/J/P Nᴹ/V/J   NSg/C/P NSg/V/J V/C NSg/V     V/C
 > redolent of this   year’s shining motor    - cars and of dances whose flowers  were

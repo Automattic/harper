@@ -11480,31 +11480,31 @@ acrimony/Nmg
 acrobat/~NVgS
 acrobatic/~JS
 acrobatically/R
-acrobatics/Ng
+acrobatics/Nmg
 acronym/~NVgS
-acrophobia/Ng
+acrophobia/Nmg
 acropolis/~NgS
 across/~PN
 acrostic/NJSg
-acrylamide/N
+acrylamide/Nmg
 acrylic/~JNgS
 act/~NVrSdGv
 act's
 acting/~JVNmg
-actinium/Ng
+actinium/Nmg
 action/~NwJVrSg
 actionable/~JN
 actioner/NgS
 activate/~ViernGSd
-activation/~Nierg
+activation/~NwiergS
 activator/NgS
 active/~JNiKY
 active's
-activeness/Ng
-actives/N
-activism/~Ng
+activeness/Nmg
+actives/N9
+activism/~Nmg
 activist/~NJgS
-activities/~N
+activities/~N9
 activity/~Nig
 actor/~NrgS
 actress/~NgS
@@ -11512,22 +11512,22 @@ actual/~JNY
 actualisation/Ng!_
 actualise/VGdS!_
 actuality/~NSg
-actualization/Ng
+actualization/Nmg
 actualize/VGdS
 actuarial/J
 actuary/NSg
 actuate/VGndS
-actuation/Ng
+actuation/Nmg
 actuator/NSg
-acuity/~Ng
-acumen/~Ng
-acupressure/Ng
+acuity/~Nmg
+acumen/~Nmg
+acupressure/Nmg
 acupuncture/NVg
 acupuncturist/NSg
 acute/~JNVpgY^>S
-acuteness/Ng
+acuteness/Nmg
 acyclic/J
-acyclovir/Ng
+acyclovir/Nmg
 acyl/N
 ad/~NPSg
 adage/NgS
@@ -11901,6 +11901,7 @@ agricultural/~JNY
 agriculturalist/NgS
 agriculture/~Ng
 agriculturist/NJgS
+agroclimate/NwgS
 agronomic/J
 agronomist/NgS
 agronomy/Ng
@@ -32246,8 +32247,8 @@ logout/NSg
 logrolling/NVg
 logy/JN>^
 loin/~NgS
-loincloth/Ng
-loincloths/N
+loincloth/N0g
+loincloths/N9
 loiter/VNZGSd>
 loiterer/Ng
 loitering/VNg
@@ -32260,7 +32261,7 @@ lollygag/VNS
 lollygagged/V
 lollygagging/V
 lone/~JYZ>
-loneliness/~Ng
+loneliness/~Nmg
 lonely/~Jp^>
 loner/~Ng
 lonesome/~JNYp
@@ -32271,8 +32272,9 @@ longboat/NgS
 longbow/NgS
 longer/~JcN
 longevity/~Ng
+longform/J
 longhair/~NJgS
-longhand/Ng
+longhand/Nmg
 longhorn/NgS
 longhouse/NS
 longing/~VNgYS
@@ -32280,19 +32282,19 @@ longish/J
 longitude/~NgS
 longitudinal/~JNY
 longnose/J
-longshoreman/Ng
-longshoremen/9
+longshoreman/N0g
+longshoremen/N9
 longsighted/J
 longstanding/~J
 longtime/~J
 longueur/NSg
 longways/
 loo/~NV
-loofah/NVg
-loofahs/NV
+loofah/N0Vg
+loofahs/N9V
 look/~VNgd>SZG
 lookalike/NgS
-looker/Ng
+looker/NgS
 lookout/~NgS
 lookup/~NVS
 loom/~NVgdSG
@@ -32331,7 +32333,7 @@ loris/NgS
 lorn/JV
 lorry/~NVSg
 lose/~VNZG>Sz
-loser/~Ng
+loser/~NgS
 losing/~VJNmg
 loss/~NwVgS
 lossless/~J
@@ -32345,12 +32347,12 @@ lotus/~NgS
 louche/JNV
 loud/~JN>Y^p
 loudhailer/NSg
-loudmouth/Ngd
-loudmouths/N
+loudmouth/N0gd
+loudmouths/N9
 loudness/Ng
 loudspeaker/~NgS
-lough/~N
-loughs/N
+lough/~N0
+loughs/N9
 lounge/~VNgZGd>S
 lounger/Ng
 lour/VNdSG
@@ -32371,7 +32373,7 @@ lovechild/Ng
 loved/~VJU
 loveless/J
 loveliness/Nmg
-lovelorn/JN
+lovelorn/JNm
 lovely/~JN>Sg^p
 lovemaking/Nmg
 lover/~Ng
@@ -32385,7 +32387,7 @@ lowboy/NgS
 lowbrow/JNSg
 lowdown/NJg
 lower/~JVGd
-lowercase/~NJVgSdG
+lowercase/~NwJVgSdG
 lowermost/J
 lowish/J
 lowland/~NSZg>
@@ -43665,16 +43667,17 @@ seminarian/NSg
 seminary/~NJSg
 semiofficial/J
 semiotic/JS
-semiotics/~Ng
+semiotics/~Nmg
 semipermeable/J
 semiprecious/J
 semiprivate/J
 semipro/JNS
 semiprofessional/JNSg
-semiquaver/NS
+semiquaver/NgS
 semiretired/J
 semiskilled/J
 semisolid/JN
+semistructured/J
 semisweet/J
 semitone/NSg
 semitrailer/NgS
@@ -43850,6 +43853,7 @@ serving's
 servings/N
 servitor/NgS
 servitude/~Ng
+servlet/NgS
 servo/NVgS
 servomechanism/NSg
 servomotor/NgS
@@ -46383,7 +46387,7 @@ stood/~V
 stooge/NVgS
 stool/~NVSg
 stoop/NVGSgd
-stop/~NVUS
+stop/~NVUSg
 stop's
 stopcock/NVSg
 stopgap/NJVSg
@@ -52710,6 +52714,7 @@ Archytas/Sg         # !! please check and comment !! we also have archytas
 AArch64/Og          # see also ARM64
 Automattic/Sg       # WordPress company
 Automattician/Sg
+B&B/Ng
 B2B/J               # business-to-business
 BCD/Ng              # binary coded decimal
 BCPL/Ng             # old programming language
@@ -53289,6 +53294,8 @@ timespan/NgS
 trie/NgS            # data structure
 truthy/J
 unicast/JVSdG
+upsert/VdSGNg       # database operation: update or insert
+upsertion/NgS       # database operation: update or insert
 uptime/NwgS
 vid/NgS             # video
 waitlist/NgS
@@ -53384,9 +53391,8 @@ cut scene/NgS
 cutting edge/Ng
 cutting-edge/J
 data center/NgS!@_
-data center/NgS<
+data centre/NgS<
 data point/NgS
-data
 day-to-day/JR
 de-extinct/VGd
 de-extinction/NwgS
@@ -53662,6 +53668,7 @@ prima facie/RJ
 pro-democracy/J
 pro rata/R
 public key/NgS
+Q&A/Ng
 quid pro quo/Ng
 quote unquote/JR
 rack-mounted/J
