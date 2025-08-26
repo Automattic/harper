@@ -1055,6 +1055,12 @@ pub fn lint_group() -> LintGroup {
             "Hyphenate `to-do`.",
             "Ensures `to-do` is correctly hyphenated."
         ),
+        "ToGreatLengths" => (
+            ["through great lengths"],
+            ["to great lengths"],
+            "Did you mean `to great lengths`?",
+            "Corrects `through great lengths` to `to great lengths`."
+        ),
         "ToTheMannerBorn" => (
             ["to the manor born"],
             ["to the manner born"],

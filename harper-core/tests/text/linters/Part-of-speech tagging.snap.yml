@@ -28,7 +28,7 @@ Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
-  - Replace with: “En”
+  - Replace with: “Em”
   - Replace with: “E”
   - Replace with: “Ea”
 
@@ -520,8 +520,8 @@ Message: |
          |                          ^~~ Did you mean to spell `SVM` this way?
 Suggest:
   - Replace with: “Sim”
-  - Replace with: “SAM”
   - Replace with: “SCM”
+  - Replace with: “SVG”
 
 
 

@@ -24,6 +24,7 @@ pub struct Span<T> {
     /// Note that [`Span`] represents an exclusive range. This means that a `Span::new(0, 5)` will
     /// cover the values `0, 1, 2, 3, 4`; it will not cover the `5`.
     pub end: usize,
+    #[serde(skip)]
     span_type: PhantomData<T>,
 }
 

@@ -1,18 +1,24 @@
 import h from 'virtual-dom/h';
 import { closestBox, isPointInBox, type LintBox } from './Box';
 import { getCaretPosition } from './editorUtils';
+import ProtocolClient from './ProtocolClient';
+import { ActivationKey } from './protocol';
 import RenderBox from './RenderBox';
 import SuggestionBox from './SuggestionBox';
 
-type DoubleShiftHandler = () => void;
+type ActivationHandler = () => void;
 
-function monitorDoubleShift(onDoubleShift: DoubleShiftHandler, interval = 300): () => void {
+function monitorActivationKey(
+	onActivation: ActivationHandler,
+	key: string,
+	interval = 300,
+): () => void {
 	let lastTime = 0;
 	const handler = (e: KeyboardEvent) => {
-		if (e.key !== 'Shift') return;
+		if (e.key.toLowerCase() !== key.toLowerCase()) return;
 		const now = performance.now();
 		const diff = now - lastTime;
-		if (diff <= interval && diff > 10) onDoubleShift();
+		if (diff <= interval && diff > 10) onActivation();
 		lastTime = now;
 	};
 	window.addEventListener('keydown', handler);
@@ -24,6 +30,7 @@ export default class PopupHandler {
 	private popupLint: number | undefined;
 	private renderBox: RenderBox;
 	private pointerDownCallback: (e: PointerEvent) => void;
+	private activationKeyListener: (() => void) | undefined;
 
 	constructor() {
 		this.currentLintBoxes = [];
@@ -35,7 +42,25 @@ export default class PopupHandler {
 			this.onPointerDown(e);
 		};
 
-		monitorDoubleShift(() => this.openClosestToCaret());
+		this.updateActivationKeyListener();
+
+		chrome.storage.onChanged.addListener((changes) => {
+			if (changes.activationKey) {
+				this.updateActivationKeyListener();
+			}
+		});
+	}
+
+	private updateActivationKeyListener() {
+		if (this.activationKeyListener) {
+			this.activationKeyListener();
+		}
+
+		ProtocolClient.getActivationKey().then((key) => {
+			if (key !== ActivationKey.Off) {
+				this.activationKeyListener = monitorActivationKey(() => this.openClosestToCaret(), key);
+			}
+		});
 	}
 
 	/** Tries to get the current caret position.
