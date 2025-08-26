@@ -12948,7 +12948,7 @@ architect/~NVSgdG
 architectonic/JNS
 architectonics/Ng
 architectural/~JY
-architecture/~NmgSr
+architecture/~NwgSr
 architrave/NSg
 archival/~JN
 archive/~NVdSgG
@@ -13699,22 +13699,23 @@ backlog/~NVgS
 backlogged/VJ
 backlogging/V
 backpack/~NVZGgd>S
-backpacker/Ng
+backpacker/NgS
 backpacking/VNmg
 backpedal/VNSdG
 backpedalled/V!@_
 backpedalling/VN!@_
-backplane/Sg
+backplane/NSg
 backport/VNdGSg
+backpressure/Nmg
 backpropagation/NmSg
 backrest/NSg
 backronym/NSg
-backroom/NJS
+backroom/NJSg
 backscratching/VNg
 backseat/NVSg
 backside/NJSg
 backslapper/NSg
-backslapping/VNg
+backslapping/VNmg
 backslash/~NVgS
 backslid/V
 backslide/VN>SZG
@@ -16264,10 +16265,11 @@ canalize/VGdS
 canape/NgS
 canard/NgS
 canary/~NJVSg
-canasta/Ng
+canasta/Nmg
 cancan/NVgS
 cancel/~VNd>SZG
-canceler/Ng
+canceler/NgS
+cancellable/J
 cancellation/~NSg
 cancelled/VJ!@_
 canceller/NSg!@_
@@ -33668,6 +33670,7 @@ micrometer/NgS<
 micrometre/NgS!@_
 micron/~NgS
 microorganism/NgS
+micropayment/NgS
 microphone/~NVSg
 microplastic/NwSg
 microplastics/N9
@@ -43994,7 +43997,7 @@ shapelessness/Ng
 shapeliness/Ng
 shapely/Jp^>
 shapeshift/VdSG
-shard/~NVgSG
+shard/~NVgSGd
 share/~NVgZGd>Sr
 shareable/JN
 sharecrop/VS
@@ -53212,6 +53215,7 @@ datetime/NgS
 decomp/NgSVdG       # decompile/decompilation
 dedup/Ng            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/NVSgdG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
+diarization/NmgS    # used in voice recognition
 docstring/NSg
 dotfile/~NSg        # not well covered by dictionaries.
 eVTOL/NgS
@@ -53250,6 +53254,7 @@ keyserver/NgS
 labriola/Sg         # !! please check and comment !! - should be uppercase surname?
 linkification/Nmg
 manip/NgS           # gamer slang manipulation
+megatron/NgS
 memecoin/NgS
 mergesort
 microframework/NgS
@@ -53549,6 +53554,7 @@ left-hand/J
 left-wing/J
 lesser-known/J
 life cycle/NgS
+life science/NgS
 light gun/NgS
 line break/NgS
 lip gloss/NwgS

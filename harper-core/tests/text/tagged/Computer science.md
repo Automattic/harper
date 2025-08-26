@@ -43,7 +43,7 @@
 > systems , networks and embedded systems investigate the principles and design
 # NPl+    . NPl/V+   V/C V/J      NPl+    V           D   NPl/V      V/C N🅪Sg/V+
 > behind  complex  systems . Computer architecture describes the construction of
-# NSg/J/P NSg/V/J+ NPl+    . NSg/V+   Nᴹ+          V         D   NSg          P
+# NSg/J/P NSg/V/J+ NPl+    . NSg/V+   N🅪Sg+        V         D   NSg          P
 > computer components and computer - operated equipment . Artificial intelligence and
 # NSg/V+   NPl        V/C NSg/V+   . V/J      Nᴹ+       . J          N🅪Sg         V/C
 > machine learning aim   to synthesize goal   - orientated processes such  as
@@ -467,7 +467,7 @@
 > computer science : theory of computation , algorithms and data  structures ,
 # NSg/V+   N🅪Sg/V+ . N🅪Sg   P  NSg         . NPl        V/C N🅪Pl+ NPl/V+     .
 > programming methodology and languages , and computer elements and architecture .
-# Nᴹ/V+       NSg         V/C NPl/V+    . V/C NSg/V+   NPl/V    V/C Nᴹ+          .
+# Nᴹ/V+       NSg         V/C NPl/V+    . V/C NSg/V+   NPl/V    V/C N🅪Sg+        .
 > In      addition to these   four areas , CSAB also identifies fields   such  as    software
 # NPr/J/P NSg+     P  I/Ddem+ NSg+ NPl+  . ?    W?   V          NPrPl/V+ NSg/I NSg/R Nᴹ+
 > engineering , artificial intelligence , computer networking and communication ,
@@ -765,11 +765,11 @@
 >
 #
 > Computer architecture and microarchitecture
-# NSg/V+   Nᴹ+          V/C NSg
+# NSg/V+   N🅪Sg+        V/C NSg
 >
 #
 > Computer architecture , or    digital computer organization , is the conceptual
-# NSg/V+   Nᴹ+          . NPr/C NSg/J+  NSg/V+   N🅪Sg+        . VL D   J
+# NSg/V+   N🅪Sg+        . NPr/C NSg/J+  NSg/V+   N🅪Sg+        . VL D   J
 > design  and fundamental operational structure of a    computer system . It       focuses
 # N🅪Sg/V+ V/C NSg/J       J           N🅪Sg/V    P  D/P+ NSg/V+   NSg+   . NPr/ISg+ NPl/V
 > largely on  the way    by      which the central processing unit performs internally and
@@ -781,7 +781,7 @@
 > microcontrollers , personal computers to supercomputers and embedded systems . The
 # NPl              . NSg/J    NPl/V+    P  NPl            V/C V/J      NPl+    . D
 > term    " architecture " in      computer literature can    be     traced to the work   of Lyle R.
-# NSg/V/J . Nᴹ+          . NPr/J/P NSg/V+   Nᴹ+        NPr/VX NSg/VX V/J    P  D   N🅪Sg/V P  NPr  ?
+# NSg/V/J . N🅪Sg+        . NPr/J/P NSg/V+   Nᴹ+        NPr/VX NSg/VX V/J    P  D   N🅪Sg/V P  NPr  ?
 > Johnson and Frederick P. Brooks  Jr     . , members of the Machine Organization
 # NPr     V/C NPr+      ?  NPrPl/V NSg/J+ . . NPl/V   P  D+  NSg/V+  N🅪Sg+
 > department in      IBM's main     research center   in      1959 .
