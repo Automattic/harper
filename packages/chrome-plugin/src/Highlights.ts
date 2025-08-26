@@ -45,7 +45,7 @@ export default class Highlights {
 			const parent = renderBox.getShadowHost().offsetParent;
 			let cpa = null;
 
-			if (parent != null && parent != document.body) {
+			if (parent != null && parent != document.body && parent.shadowRoot == null) {
 				cpa = parent.getBoundingClientRect();
 			}
 

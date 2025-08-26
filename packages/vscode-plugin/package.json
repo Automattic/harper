@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.58.0",
+	"version": "0.59.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -2064,6 +2064,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Fixes the improper phrase `sooner than later` by suggesting standard alternatives."
+				},
+				"harper.linters.SoughtAfter": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Correct `sort after` to `sought after`"
 				},
 				"harper.linters.Spaces": {
 					"scope": "resource",

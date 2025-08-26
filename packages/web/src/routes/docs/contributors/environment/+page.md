@@ -11,7 +11,7 @@ For Nix users, we provide a [Nix development shell](#Nix-development-shell) to s
 - `pnpm`
 - `node`
 - `grep`
-- [`wasm-pack`](https://rustwasm.github.io/wasm-pack/installer/)
+- [`wasm-pack`](https://drager.github.io/wasm-pack/installer/)
 - `zip`
 - `pandoc`
 - [`cargo-hack`](https://github.com/taiki-e/cargo-hack?tab=readme-ov-file#installation)
