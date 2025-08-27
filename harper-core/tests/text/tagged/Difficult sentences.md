@@ -61,7 +61,7 @@
 > She  was mad     at    their comments .
 # ISg+ V   NSg/V/J NSg/P D$+   NPl/V+   .
 > men at    work    ; children at    play
-# NSg NSg/P N🅪Sg/V+ . NPl+     NSg/P NSg/V
+# NSg NSg/P N🅪Sg/V+ . NPl+     NSg/P N🅪Sg/V
 > The two  countries are at    war     .
 # D+  NSg+ NPl+      V   NSg/P N🅪Sg/V+ .
 > She  is at    sixes and sevens with him  .
@@ -312,8 +312,8 @@
 # NPr/ISg+ R       V/J     NSg/V/J/P NSg/I/C/Ddem+ NSg/V+  . NPr/V/J/C NSg$ R      C/P D   NSg/V .
 > In      term    of base     hits  , Jones  was three for four on  the day
 # NPr/J/P NSg/V/J P  NSg/V/J+ NPl/V . NPr/V+ V   NSg   C/P NSg  J/P D+  NPr🅪+
-> At    close   of play  , England were  305 for 3 .
-# NSg/P NSg/V/J P  NSg/V . NPr+    NSg/V #   C/P # .
+> At    close   of play   , England were  305 for 3 .
+# NSg/P NSg/V/J P  N🅪Sg/V . NPr+    NSg/V #   C/P # .
 > He       took the swing  shift  for he       could  get   more         overtime .
 # NPr/ISg+ V    D+  NSg/V+ NSg/V+ C/P NPr/ISg+ NSg/VX NSg/V NPr/I/V/J/Dq NSg/V    .
 > to account for one's whereabouts .
@@ -612,8 +612,8 @@
 # ISg+ V   NSg/V/J P  NSg/V NSg/V/J/R/P P  D+  NSg/V+ NSg/V/C/P D+  NSg/V/J+ V   NSg/V/J J/P .
 > Climbing up        that          steep    ridge  isn't on  . We'll have   to find  another route  .
 # NSg/V/J  NSg/V/J/P NSg/I/C/Ddem+ NSg/V/J+ NSg/V+ NSg/V J/P . W?    NSg/VX P  NSg/V I/D     NSg/V+ .
-> He'd like        to play  the red    next    to the black    spot     , but     that         shot     isn't on  .
-# W?   NSg/V/J/C/P P  NSg/V D   N🅪Sg/J NSg/J/P P  D   N🅪Sg/V/J NSg/V/J+ . NSg/C/P NSg/I/C/Ddem NSg/V/J+ NSg/V J/P .
+> He'd like        to play   the red    next    to the black    spot     , but     that         shot     isn't on  .
+# W?   NSg/V/J/C/P P  N🅪Sg/V D   N🅪Sg/J NSg/J/P P  D   N🅪Sg/V/J NSg/V/J+ . NSg/C/P NSg/I/C/Ddem NSg/V/J+ NSg/V J/P .
 > The captain moved two fielders to the on  side     .
 # D+  NSg/V+  V/J   NSg W?       P  D   J/P NSg/V/J+ .
 > Ponsonby - Smythe hit     a   thumping on  drive .
@@ -694,8 +694,8 @@
 # ISg+ V/J    D$+ NSg+       J/P D+  NSg/V+ NSg/V  .
 > The rope   snagged on  a   branch .
 # D+  NSg/V+ V/J     J/P D/P NPr/V+ .
-> to play  on  a   violin or    piano    .
-# P  NSg/V J/P D/P NSg/V  NPr/C NSg/V/J+ .
+> to play   on  a   violin or    piano    .
+# P  N🅪Sg/V J/P D/P NSg/V  NPr/C NSg/V/J+ .
 > A    table  can't stand on  two legs   .
 # D/P+ NSg/V+ VX    NSg/V J/P NSg NPl/V+ .
 > After resting on  his     elbows , he       stood on  his     toes   , then    walked on  his     heels  .
@@ -743,7 +743,7 @@
 > On  Jack's entry , William got up        to leave .
 # J/P NSg$   NSg+  . NPr+    V   NSg/V/J/P P  NSg/V .
 > On  the addition of ammonia , a    chemical reaction  begins .
-# J/P D   NSg      P  NSg+    . D/P+ NSg/J+   N🅪Sg/V/J+ NPl/V  .
+# J/P D   NSg      P  Nᴹ+     . D/P+ NSg/J+   N🅪Sg/V/J+ NPl/V  .
 > The drinks are on  me       tonight , boys   .
 # D+  NPl/V+ V   J/P NPr/ISg+ NSg+    . NPl/V+ .
 > The meal   is on  the house  .

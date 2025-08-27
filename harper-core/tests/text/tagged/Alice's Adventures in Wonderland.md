@@ -520,8 +520,8 @@
 # . W?  J    I/Ddem+ V   NSg/C D   NPr/V/J NPl/V+ . . V/J  NSg/V/J NPr+  . V/C ISg/D$+ NPl/V+ V/J
 > with tears  again as    she  went  on  , “ I    must  be     Mabel after all          , and I    shall have   to
 # P    NPl/V+ P     NSg/R ISg+ NSg/V J/P . . ISg+ NSg/V NSg/VX NPr   P     NSg/I/J/C/Dq . V/C ISg+ VX    NSg/VX P
-> go      and live in      that         poky  little     house  , and have   next    to no    toys   to play  with ,
-# NSg/V/J V/C V/J  NPr/J/P NSg/I/C/Ddem NSg/J NPr/I/J/Dq NPr/V+ . V/C NSg/VX NSg/J/P P  NPr/P NPl/V+ P  NSg/V P    .
+> go      and live in      that         poky  little     house  , and have   next    to no    toys   to play   with ,
+# NSg/V/J V/C V/J  NPr/J/P NSg/I/C/Ddem NSg/J NPr/I/J/Dq NPr/V+ . V/C NSg/VX NSg/J/P P  NPr/P NPl/V+ P  N🅪Sg/V P    .
 > and oh    ! ever so        many       lessons to learn ! No    , I’ve made up        my  mind   about it       ; if    I’m
 # V/C NPr/V . J    NSg/I/J/C NSg/I/J/Dq NPl/V+  P  NSg/V . NPr/P . W?   V    NSg/V/J/P D$+ NSg/V+ J/P   NPr/ISg+ . NSg/C W?
 > Mabel , I’ll stay    down       here    ! It’ll be     no    use   their putting their heads  down       and
@@ -1530,8 +1530,8 @@
 # NSg/J/P . V/C D   NSg+   ISg+ V/J      J/P D   NSg/V/J NSg/V/J+ . D   NSg/V+ V    I/D     NPr/V/J+
 > at    the stick    , and tumbled head     over    heels  in      its     hurry  to get   hold    of it       ; then
 # NSg/P D   NSg/V/J+ . V/C V/J     NPr/V/J+ NSg/J/P NPl/V+ NPr/J/P ISg/D$+ NSg/V+ P  NSg/V NSg/V/J P  NPr/ISg+ . NSg/J/C
-> Alice , thinking it       was very like        having a   game     of play  with a   cart   - horse  , and
-# NPr+  . V        NPr/ISg+ V   J/R  NSg/V/J/C/P V      D/P NSg/V/J+ P  NSg/V P    D/P NSg/V+ . NSg/V+ . V/C
+> Alice , thinking it       was very like        having a   game     of play   with a   cart   - horse  , and
+# NPr+  . V        NPr/ISg+ V   J/R  NSg/V/J/C/P V      D/P NSg/V/J+ P  N🅪Sg/V P    D/P NSg/V+ . NSg/V+ . V/C
 > expecting every moment to be     trampled under   its     feet , ran   round     the thistle
 # V         Dq    NSg+   P  NSg/VX V/J      NSg/J/P ISg/D$+ NPl+ . NSg/V NSg/V/J/P D   NSg
 > again ; then    the puppy  began a   series of short     charges at    the stick    , running  a
@@ -2142,12 +2142,12 @@
 # D+  N🅪SgPl/V+ . NSg     V     NSg/J/P V         P    NSg/J/P ISg/D$+ NSg/V/J D/P NSg/J NSg/V+ . R      NSg/R
 > large as    himself , and this   he       handed over    to the other   , saying , in      a   solemn
 # NSg/J NSg/R ISg+    . V/C I/Ddem NPr/ISg+ V/J    NSg/J/P P  D   NSg/V/J . NSg/V  . NPr/J/P D/P J
-> tone      , “ For the Duchess . An  invitation from the Queen    to play  croquet . ” The
-# N🅪Sg/I/V+ . . C/P D   NSg/V   . D/P NSg+       P    D+  NPr/V/J+ P  NSg/V NSg/V   . . D
+> tone      , “ For the Duchess . An  invitation from the Queen    to play   croquet . ” The
+# N🅪Sg/I/V+ . . C/P D   NSg/V   . D/P NSg+       P    D+  NPr/V/J+ P  N🅪Sg/V NSg/V   . . D
 > Frog  - Footman repeated , in      the same solemn tone      , only  changing the order of the
 # NSg/V . NSg     V/J      . NPr/J/P D   I/J  J      N🅪Sg/I/V+ . J/R/C NSg/V    D   NSg/V P  D
-> words  a   little     , “ From the Queen    . An   invitation for the Duchess to play  croquet . ”
-# NPl/V+ D/P NPr/I/J/Dq . . P    D   NPr/V/J+ . D/P+ NSg+       C/P D   NSg/V   P  NSg/V NSg/V   . .
+> words  a   little     , “ From the Queen    . An   invitation for the Duchess to play   croquet . ”
+# NPl/V+ D/P NPr/I/J/Dq . . P    D   NPr/V/J+ . D/P+ NSg+       C/P D   NSg/V   P  N🅪Sg/V NSg/V   . .
 >
 #
 > Then    they both   bowed low     , and their curls got entangled together .
@@ -2426,8 +2426,8 @@
 #
 > “ Here    ! you    may    nurse it       a    bit    , if    you    like        ! ” the Duchess said to Alice , flinging
 # . NSg/J/R . ISgPl+ NPr/VX NSg/V NPr/ISg+ D/P+ NSg/V+ . NSg/C ISgPl+ NSg/V/J/C/P . . D   NSg/V   V/J  P  NPr+  . V
-> the baby     at    her     as    she  spoke . “ I    must  go      and get   ready   to play  croquet with the
-# D   NSg/V/J+ NSg/P ISg/D$+ NSg/R ISg+ NSg/V . . ISg+ NSg/V NSg/V/J V/C NSg/V NSg/V/J P  NSg/V NSg/V   P    D+
+> the baby     at    her     as    she  spoke . “ I    must  go      and get   ready   to play   croquet with the
+# D   NSg/V/J+ NSg/P ISg/D$+ NSg/R ISg+ NSg/V . . ISg+ NSg/V NSg/V/J V/C NSg/V NSg/V/J P  N🅪Sg/V NSg/V   P    D+
 > Queen    , ” and she  hurried out         of the room     . The cook  threw a   frying - pan     after her
 # NPr/V/J+ . . V/C ISg+ V/J     NSg/V/J/R/P P  D   NSg/V/J+ . D   NPr/V V     D/P V      . NPr/V/J P     ISg/D$+
 > as    she  went  out         , but     it       just missed her     .
@@ -2614,8 +2614,8 @@
 # . ISg+ NSg/V NPr/ISg+ V       . NSg/C V        . . V/J  NPr+  .
 >
 #
-> “ Call  it       what   you    like        , ” said the Cat      . “ Do     you    play  croquet with the Queen
-# . NSg/V NPr/ISg+ NSg/I+ ISgPl+ NSg/V/J/C/P . . V/J  D+  NSg/V/J+ . . NSg/VX ISgPl+ NSg/V NSg/V   P    D   NPr/V/J+
+> “ Call  it       what   you    like        , ” said the Cat      . “ Do     you    play   croquet with the Queen
+# . NSg/V NPr/ISg+ NSg/I+ ISgPl+ NSg/V/J/C/P . . V/J  D+  NSg/V/J+ . . NSg/VX ISgPl+ N🅪Sg/V NSg/V   P    D   NPr/V/J+
 > to - day   ? ”
 # P  . NPr🅪+ . .
 >
@@ -3121,7 +3121,7 @@
 >
 #
 > “ They lived on  treacle , ” said the Dormouse , after thinking a   minute   or    two .
-# . IPl+ V/J   J/P NSg/V   . . V/J  D   NSg      . P     V        D/P NSg/V/J+ NPr/C NSg .
+# . IPl+ V/J   J/P Nᴹ/V    . . V/J  D   NSg      . P     V        D/P NSg/V/J+ NPr/C NSg .
 >
 #
 > “ They couldn’t have   done    that          , you    know  , ” Alice gently remarked ; “ they’d have
@@ -3177,7 +3177,7 @@
 > The Dormouse again took a   minute   or    two to think about it       , and then    said , “ It
 # D   NSg      P     V    D/P NSg/V/J+ NPr/C NSg P  NSg/V J/P   NPr/ISg+ . V/C NSg/J/C V/J  . . NPr/ISg+
 > was a   treacle - well    . ”
-# V   D/P NSg/V   . NSg/V/J . .
+# V   D/P Nᴹ/V    . NSg/V/J . .
 >
 #
 > “ There’s no     such  thing  ! ” Alice was beginning very angrily , but     the Hatter and
@@ -3205,7 +3205,7 @@
 >
 #
 > “ Treacle , ” said the Dormouse , without considering at    all          this   time      .
-# . NSg/V   . . V/J  D   NSg      . C/P     V           NSg/P NSg/I/J/C/Dq I/Ddem N🅪Sg/V/J+ .
+# . Nᴹ/V    . . V/J  D   NSg      . C/P     V           NSg/P NSg/I/J/C/Dq I/Ddem N🅪Sg/V/J+ .
 >
 #
 > “ I    want  a    clean    cup    , ” interrupted the Hatter : “ let’s all          move  one       place   on  . ”
@@ -3227,13 +3227,13 @@
 > Alice did not   wish  to offend the Dormouse again , so        she  began very cautiously :
 # NPr+  V   NSg/C NSg/V P  V      D   NSg      P     . NSg/I/J/C ISg+ V     J/R  R          .
 > “ But     I    don’t understand . Where did they draw  the treacle from ? ”
-# . NSg/C/P ISg+ V     V          . NSg/C V   IPl+ NSg/V D   NSg/V   P    . .
+# . NSg/C/P ISg+ V     V          . NSg/C V   IPl+ NSg/V D   Nᴹ/V    P    . .
 >
 #
 > “ You    can    draw  water  out         of a    water   - well    , ” said the Hatter ; “ so        I    should think
 # . ISgPl+ NPr/VX NSg/V N🅪Sg/V NSg/V/J/R/P P  D/P+ N🅪Sg/V+ . NSg/V/J . . V/J  D   NSg/V  . . NSg/I/J/C ISg+ VX     NSg/V
 > you    could  draw  treacle out         of a   treacle - well    — eh  , stupid ? ”
-# ISgPl+ NSg/VX NSg/V NSg/V   NSg/V/J/R/P P  D/P NSg/V   . NSg/V/J . V/J . NSg/J  . .
+# ISgPl+ NSg/VX NSg/V Nᴹ/V    NSg/V/J/R/P P  D/P Nᴹ/V    . NSg/V/J . V/J . NSg/J  . .
 >
 #
 > “ But     they were  in      the well    , ” Alice said to the Dormouse , not   choosing to notice
@@ -3560,8 +3560,8 @@
 # NSg/V+ .
 >
 #
-> “ That’s right   ! ” shouted the Queen    . “ Can    you    play  croquet ? ”
-# . NSg$   NPr/V/J . . V/J     D+  NPr/V/J+ . . NPr/VX ISgPl+ NSg/V NSg/V   . .
+> “ That’s right   ! ” shouted the Queen    . “ Can    you    play   croquet ? ”
+# . NSg$   NPr/V/J . . V/J     D+  NPr/V/J+ . . NPr/VX ISgPl+ N🅪Sg/V NSg/V   . .
 >
 #
 > The soldiers were  silent , and looked at    Alice , as    the question was evidently
@@ -3714,8 +3714,8 @@
 # V/J      .
 >
 #
-> “ I    don’t think they play  at    all          fairly , ” Alice began , in      rather    a   complaining
-# . ISg+ V     NSg/V IPl+ NSg/V NSg/P NSg/I/J/C/Dq R+     . . NPr+  V     . NPr/J/P NPr/V/J/R D/P V
+> “ I    don’t think they play   at    all          fairly , ” Alice began , in      rather    a   complaining
+# . ISg+ V     NSg/V IPl+ N🅪Sg/V NSg/P NSg/I/J/C/Dq R+     . . NPr+  V     . NPr/J/P NPr/V/J/R D/P V
 > tone      , “ and they all          quarrel so        dreadfully one       can’t hear oneself speak — and they
 # N🅪Sg/I/V+ . . V/C IPl+ NSg/I/J/C/Dq NSg/V+  NSg/I/J/C R          NSg/I/V/J VX    V    I+      NSg/V . V/C IPl+
 > don’t seem to have   any    rules  in      particular ; at    least , if    there are , nobody
@@ -4409,9 +4409,9 @@
 >
 #
 > “ Well    , there was Mystery , ” the Mock     Turtle replied , counting off       the subjects on
-# . NSg/V/J . +     V   NSg+    . . D+  NSg/V/J+ NSg/V+ V/J     . V        NSg/V/J/P D+  NPl/V+   J/P
+# . NSg/V/J . +     V   N🅪Sg+   . . D+  NSg/V/J+ NSg/V+ V/J     . V        NSg/V/J/P D+  NPl/V+   J/P
 > his     flappers , “ — Mystery , ancient and modern , with Seaography : then    Drawling — the
-# ISg/D$+ NPl      . . . NSg+    . NSg/J   V/C NSg/J  . P    ?          . NSg/J/C V        . D
+# ISg/D$+ NPl      . . . N🅪Sg+   . NSg/J   V/C NSg/J  . P    ?          . NSg/J/C V        . D
 > Drawling - master   was an  old   conger - eel   , that          used to come    once  a   week   : he       taught
 # V        . NPr/V/J+ V   D/P NSg/J NSg    . NSg/V . NSg/I/C/Ddem+ V/J  P  NSg/V/P NSg/C D/P NSg/J+ . NPr/ISg+ V
 > us       Drawling , Stretching , and Fainting in      Coils  . ”
@@ -4512,8 +4512,8 @@
 # NSg/VX NPr/P NSg+ NSg/I+ D/P J          NSg/V+ D/P NSg/V/J+ NSg/V/J   VL . .
 >
 #
-> “ No    , indeed , ” said Alice . “ What   sort  of a    dance  is it       ? ”
-# . NPr/P . W?     . . V/J  NPr+  . . NSg/I+ NSg/V P  D/P+ NSg/V+ VL NPr/ISg+ . .
+> “ No    , indeed , ” said Alice . “ What   sort  of a    dance   is it       ? ”
+# . NPr/P . W?     . . V/J  NPr+  . . NSg/I+ NSg/V P  D/P+ N🅪Sg/V+ VL NPr/ISg+ . .
 >
 #
 > “ Why   , ” said the Gryphon , “ you    first   form   into a   line   along the sea  - shore  — ”
@@ -4580,8 +4580,8 @@
 # NSg/P NPr+  .
 >
 #
-> “ It       must  be     a   very pretty    dance  , ” said Alice timidly .
-# . NPr/ISg+ NSg/V NSg/VX D/P J/R  NSg/V/J/R NSg/V+ . . V/J  NPr+  R       .
+> “ It       must  be     a   very pretty    dance   , ” said Alice timidly .
+# . NPr/ISg+ NSg/V NSg/VX D/P J/R  NSg/V/J/R N🅪Sg/V+ . . V/J  NPr+  R       .
 >
 #
 > “ Would you    like        to see   a   little     of it       ? ” said the Mock     Turtle .
@@ -4616,12 +4616,12 @@
 # NSg/V+   NSg/V/J NSg/J/P NPr/IPl+ . V/C NSg$ V        J/P D$+ NSg/V/J+ . NSg/V NSg/C R       D
 > lobsters and the turtles all          advance  ! They are waiting on  the shingle — will   you
 # NPl/V    V/C D   NPl/V   NSg/I/J/C/Dq NSg/V/J+ . IPl+ V   NSg/V   J/P D   NSg/V   . NPr/VX ISgPl+
-> come    and join  the dance  ? Will   you    , won’t you    , will   you    , won’t you    , will   you
-# NSg/V/P V/C NSg/V D   NSg/V+ . NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+
-> join  the dance  ? Will   you    , won’t you    , will   you    , won’t you    , won’t you    join  the
-# NSg/V D   NSg/V+ . NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+ . V     ISgPl+ . V     ISgPl+ NSg/V D
-> dance  ?
-# NSg/V+ .
+> come    and join  the dance   ? Will   you    , won’t you    , will   you    , won’t you    , will   you
+# NSg/V/P V/C NSg/V D   N🅪Sg/V+ . NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+
+> join  the dance   ? Will   you    , won’t you    , will   you    , won’t you    , won’t you    join  the
+# NSg/V D   N🅪Sg/V+ . NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+ . V     ISgPl+ . V     ISgPl+ NSg/V D
+> dance   ?
+# N🅪Sg/V+ .
 >
 #
 > “ You    can    really have   no     notion how   delightful it       will   be     When    they take  us       up
@@ -4630,28 +4630,28 @@
 # V/C NSg/V NPr/IPl+ . P    D   NPl/V    . NSg/V/J/R/P P  NSg . . NSg/C/P D   NSg/V V/J     . W?  NSg/V/J .
 > too far     ! ” and gave a   look  askance — Said he       thanked the whiting kindly , but     he
 # W?  NSg/V/J . . V/C V    D/P NSg/V V/J     . V/J  NPr/ISg+ V/J     D   NSg/V+  J/R    . NSg/C/P NPr/ISg+
-> would not   join  the dance  . Would not   , could  not   , would not   , could  not   , would
-# VX    NSg/C NSg/V D   NSg/V+ . VX    NSg/C . NSg/VX NSg/C . VX    NSg/C . NSg/VX NSg/C . VX
-> not   join  the dance  . Would not   , could  not   , would not   , could  not   , could  not   join
-# NSg/C NSg/V D+  NSg/V+ . VX    NSg/C . NSg/VX NSg/C . VX    NSg/C . NSg/VX NSg/C . NSg/VX NSg/C NSg/V
-> the dance  .
-# D+  NSg/V+ .
+> would not   join  the dance   . Would not   , could  not   , would not   , could  not   , would
+# VX    NSg/C NSg/V D   N🅪Sg/V+ . VX    NSg/C . NSg/VX NSg/C . VX    NSg/C . NSg/VX NSg/C . VX
+> not   join  the dance   . Would not   , could  not   , would not   , could  not   , could  not   join
+# NSg/C NSg/V D+  N🅪Sg/V+ . VX    NSg/C . NSg/VX NSg/C . VX    NSg/C . NSg/VX NSg/C . NSg/VX NSg/C NSg/V
+> the dance   .
+# D+  N🅪Sg/V+ .
 >
 #
 > “ What   matters it       how   far     we   go      ? ” his     scaly  friend   replied . “ There is another
 # . NSg/I+ NPl/V+  NPr/ISg+ NSg/C NSg/V/J IPl+ NSg/V/J . . ISg/D$+ NSg/J+ NPr/V/J+ V/J     . . +     VL I/D+
 > shore  , you    know  , upon the other    side     . The further off       from England the nearer
 # NSg/V+ . ISgPl+ NSg/V . P    D+  NSg/V/J+ NSg/V/J+ . D   V/J     NSg/V/J/P P    NPr+    D   NSg/JC
-> is to France — Then    turn  not   pale    , beloved snail , but     come    and join  the dance  .
-# VL P  NPr+   . NSg/J/C NSg/V NSg/C NSg/V/J . NSg/V/J NSg/V . NSg/C/P NSg/V/P V/C NSg/V D   NSg/V+ .
-> Will   you    , won’t you    , will   you    , won’t you    , will   you    join  the dance  ? Will   you    ,
-# NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+ NSg/V D   NSg/V+ . NPr/VX ISgPl+ .
-> won’t you    , will   you    , won’t you    , won’t you    join  the dance  ? ”
-# V     ISgPl+ . NPr/VX ISgPl+ . V     ISgPl+ . V     ISgPl+ NSg/V D   NSg/V+ . .
+> is to France — Then    turn  not   pale    , beloved snail , but     come    and join  the dance   .
+# VL P  NPr+   . NSg/J/C NSg/V NSg/C NSg/V/J . NSg/V/J NSg/V . NSg/C/P NSg/V/P V/C NSg/V D   N🅪Sg/V+ .
+> Will   you    , won’t you    , will   you    , won’t you    , will   you    join  the dance   ? Will   you    ,
+# NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+ . V     ISgPl+ . NPr/VX ISgPl+ NSg/V D   N🅪Sg/V+ . NPr/VX ISgPl+ .
+> won’t you    , will   you    , won’t you    , won’t you    join  the dance   ? ”
+# V     ISgPl+ . NPr/VX ISgPl+ . V     ISgPl+ . V     ISgPl+ NSg/V D   N🅪Sg/V+ . .
 >
 #
-> “ Thank you    , it’s a   very interesting dance  to watch , ” said Alice , feeling very
-# . NSg/V ISgPl+ . W?   D/P J/R  V/J         NSg/V+ P  NSg/V . . V/J  NPr+  . NSg/V/J J/R
+> “ Thank you    , it’s a   very interesting dance   to watch , ” said Alice , feeling very
+# . NSg/V ISgPl+ . W?   D/P J/R  V/J         N🅪Sg/V+ P  NSg/V . . V/J  NPr+  . NSg/V/J J/R
 > glad    that         it       was over    at    last    : “ and I    do     so        like        that         curious song about the
 # NSg/V/J NSg/I/C/Ddem NPr/ISg+ V   NSg/J/P NSg/P NSg/V/J . . V/C ISg+ NSg/VX NSg/I/J/C NSg/V/J/C/P NSg/I/C/Ddem J       N🅪Sg J/P   D
 > whiting ! ”
@@ -4692,8 +4692,8 @@
 #
 > “ The reason  is , ” said the Gryphon , “ that         they would go      with the lobsters to the
 # . D+  N🅪Sg/V+ VL . . V/J  D   ?       . . NSg/I/C/Ddem IPl+ VX    NSg/V/J P    D   NPl/V    P  D
-> dance  . So        they got thrown out         to sea . So        they had to fall  a    long     way    . So        they
-# NSg/V+ . NSg/I/J/C IPl+ V   V/J    NSg/V/J/R/P P  NSg . NSg/I/J/C IPl+ V   P  NSg/V D/P+ NPr/V/J+ NSg/J+ . NSg/I/J/C IPl+
+> dance   . So        they got thrown out         to sea . So        they had to fall  a    long     way    . So        they
+# N🅪Sg/V+ . NSg/I/J/C IPl+ V   V/J    NSg/V/J/R/P P  NSg . NSg/I/J/C IPl+ V   P  NSg/V D/P+ NPr/V/J+ NSg/J+ . NSg/I/J/C IPl+
 > got their tails  fast    in      their mouths . So        they couldn’t get   them     out         again .
 # V   D$+   NPl/V+ NSg/V/J NPr/J/P D$+   NPl/V+ . NSg/I/J/C IPl+ V        NSg/V NSg/IPl+ NSg/V/J/R/P P     .
 > That’s all          . ”
@@ -5455,7 +5455,7 @@
 >
 #
 > “ Treacle , ” said a   sleepy voice  behind  her     .
-# . NSg/V   . . V/J  D/P NSg/J  NSg/V+ NSg/J/P ISg/D$+ .
+# . Nᴹ/V    . . V/J  D/P NSg/J  NSg/V+ NSg/J/P ISg/D$+ .
 >
 #
 > “ Collar that          Dormouse , ” the Queen    shrieked out         . “ Behead that          Dormouse ! Turn  that

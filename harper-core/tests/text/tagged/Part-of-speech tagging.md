@@ -79,7 +79,7 @@
 > Schools commonly teach that         there are 9 parts of speech in      English  : noun   , verb   ,
 # NPl/V+  R        NSg/V NSg/I/C/Ddem +     V   # NPl/V P  N🅪Sg/V NPr/J/P NPr🅪/V/J . NSg/V+ . NSg/V+ .
 > article , adjective , preposition , pronoun , adverb , conjunction , and interjection .
-# NSg/V+  . NSg/V/J+  . NSg/V       . NSg/V+  . NSg/V+ . NSg/V+      . V/C NSg+         .
+# NSg/V+  . NSg/V/J+  . NSg/V       . NSg/V+  . NSg/V+ . NSg/V+      . V/C N🅪Sg+        .
 > However , there are clearly many        more          categories and sub     - categories . For nouns ,
 # C       . +     V   R       NSg/I/J/Dq+ NPr/I/V/J/Dq+ NPl+       V/C NSg/V/P . NPl+       . C/P NPl/V .
 > the plural , possessive , and singular forms  can    be     distinguished . In      many
@@ -424,8 +424,8 @@
 # NSg/V+ . I/Ddem+ NSg+       NPl/V D+  NPr+ NSg/V+ NPr/V/J J/P I/J/R/Dq P  D   NPr+ ?        N🅪Pl+ .
 > so        the results are directly comparable . However , many       significant taggers are
 # NSg/I/J/C D   NPl/V+  V   R/C      NSg/J      . C       . NSg/I/J/Dq NSg/J       NPl     V
-> not   included ( perhaps because of the labor        involved in      reconfiguring them     for
-# NSg/C V/J      . NSg/R   C/P     P  D   NPr/V/Am/Au+ V/J      NPr/J/P V             NSg/IPl+ C/P
+> not   included ( perhaps because of the labor         involved in      reconfiguring them     for
+# NSg/C V/J      . NSg/R   C/P     P  D   NPr🅪/V/Am/Au+ V/J      NPr/J/P V             NSg/IPl+ C/P
 > this   particular dataset ) . Thus , it       should not   be     assumed that         the results
 # I/Ddem NSg/J      NSg     . . NSg  . NPr/ISg+ VX     NSg/C NSg/VX V/J     NSg/I/C/Ddem D+  NPl/V+
 > reported here    are the best      that          can    be     achieved with a    given      approach ; nor   even

@@ -25,7 +25,7 @@
 > computation concerns abstract models of computation and general classes of
 # NSg         NSg/V+   NSg/V/J  NPl/V  P  NSg         V/C NSg/V/J NPl/V   P
 > problems that          can    be     solved using them     . The fields  of cryptography and computer
-# NPl+     NSg/I/C/Ddem+ NPr/VX NSg/VX V/J    V     NSg/IPl+ . D   NPrPl/V P  NSg          V/C NSg/V+
+# NPl+     NSg/I/C/Ddem+ NPr/VX NSg/VX V/J    V     NSg/IPl+ . D   NPrPl/V P  Nᴹ           V/C NSg/V+
 > security involve studying the means for secure communication and preventing
 # Nᴹ+      V       V        D   NPl/V C/P V/J    N🅪Sg+         V/C V
 > security vulnerabilities . Computer graphics and computational geometry address
@@ -199,7 +199,7 @@
 >
 #
 > Etymology and scope
-# NSg       V/C NSg/V+
+# N🅪Sg      V/C NSg/V+
 >
 #
 > Although first   proposed in      1956 , the term    " computer science " appears in      a   1959
@@ -229,7 +229,7 @@
 > Peter     Naur suggested the term     datalogy , to reflect the fact that         the scientific
 # NPr/V/JC+ ?    V/J       D   NSg/V/J+ ?        . P  V       D   NSg+ NSg/I/C/Ddem D   J
 > discipline revolves around data and data  treatment , while     not   necessarily
-# NSg/V+     NPl/V    J/P    N🅪Pl V/C N🅪Pl+ NSg+      . NSg/V/C/P NSg/C R
+# NSg/V+     NPl/V    J/P    N🅪Pl V/C N🅪Pl+ N🅪Sg+     . NSg/V/C/P NSg/C R
 > involving computers . The first   scientific institution to use   the term     was the
 # V         NPl/V+    . D   NSg/V/J J          NSg+        P  NSg/V D+  NSg/V/J+ V   D
 > Department of Datalogy at    the University of Copenhagen , founded in      1969 , with
@@ -541,7 +541,7 @@
 > another ) and their fitness for a    specific application . Codes  are used for data
 # I/D     . V/C D$+   NSg     C/P D/P+ NSg/J+   NSg+        . NPl/V+ V   V/J  C/P N🅪Pl+
 > compression , cryptography , error  detection and correction , and more         recently
-# NSg+        . NSg          . NSg/V+ N🅪Sg      V/C NSg+       . V/C NPr/I/V/J/Dq R
+# NSg+        . Nᴹ           . NSg/V+ N🅪Sg      V/C NSg+       . V/C NPr/I/V/J/Dq R
 > also for network coding . Codes  are studied for the purpose of designing
 # W?   C/P NSg/V+  V+     . NPl/V+ V   V/J     C/P D   N🅪Sg/V  P  V
 > efficient and reliable data  transmission methods .
@@ -821,7 +821,7 @@
 >
 #
 > Computer security and cryptography
-# NSg/V+   Nᴹ+      V/C NSg
+# NSg/V+   Nᴹ+      V/C Nᴹ
 >
 #
 > Computer security is a   branch of computer technology with the objective of
@@ -835,11 +835,11 @@
 >
 #
 > Historical cryptography is the art    of writing and deciphering secret  messages .
-# NSg/J      NSg          VL D   NPr🅪/V P  NSg/V   V/C V           NSg/V/J NPl/V+   .
+# NSg/J      Nᴹ           VL D   NPr🅪/V P  NSg/V   V/C V           NSg/V/J NPl/V+   .
 > Modern cryptography is the scientific study of problems relating to distributed
-# NSg/J  NSg          VL D   J          NSg/V P  NPl+     V        P  V/J
+# NSg/J  Nᴹ           VL D   J          NSg/V P  NPl+     V        P  V/J
 > computations that          can    be     attacked . Technologies studied in      modern cryptography
-# NPl          NSg/I/C/Ddem+ NPr/VX NSg/VX V/J      . NPl+         V/J     NPr/J/P NSg/J  NSg
+# NPl          NSg/I/C/Ddem+ NPr/VX NSg/VX V/J      . NPl+         V/J     NPr/J/P NSg/J  Nᴹ
 > include symmetric and asymmetric encryption , digital signatures , cryptographic
 # NSg/V   J         V/C J          N🅪Sg       . NSg/J   NPl+       . J
 > hash   functions , key     - agreement protocols , blockchain , zero    - knowledge proofs , and
@@ -991,9 +991,9 @@
 >
 #
 > Functional programming , a   style of building the structure and elements of
-# NSg/J+     Nᴹ/V+       . D/P NSg/V P  NSg/V+   D   N🅪Sg/V    V/C NPl/V    P
+# NSg/J+     Nᴹ/V+       . D/P NSg/V P  N🅪Sg/V+  D   N🅪Sg/V    V/C NPl/V    P
 > computer programs that          treats computation as    the evaluation of mathematical
-# NSg/V+   NPl/V+   NSg/I/C/Ddem+ NPl/V+ NSg         NSg/R D   NSg        P  J
+# NSg/V+   NPl/V+   NSg/I/C/Ddem+ NPl/V+ NSg         NSg/R D   N🅪Sg       P  J
 > functions and avoids state   and mutable data  . It       is a   declarative programming
 # NPl/V+    V/C V      N🅪Sg/V+ V/C W?      N🅪Pl+ . NPr/ISg+ VL D/P NSg/J       Nᴹ/V+
 > paradigm , which means programming is done    with expressions or    declarations

@@ -281,7 +281,7 @@
 >
 #
 > Neither House  , during the Session of Congress , shall , without the Consent of
-# I/C     NPr/V+ . V/P    D   NSg/V   P  NPr/V+   . VX    . C/P     D   NSg/V   P
+# I/C     NPr/V+ . V/P    D   NSg/V   P  NPr/V+   . VX    . C/P     D   N🅪Sg/V  P
 > the other   , adjourn for more         than three days , nor   to any    other   Place   than that
 # D   NSg/V/J . V       C/P NPr/I/V/J/Dq C/P  NSg   NPl+ . NSg/C P  I/R/Dq NSg/V/J N🅪Sg/V+ C/P  NSg/I/C/Ddem+
 > in      which the two Houses shall be     sitting .
@@ -557,11 +557,11 @@
 > the Acceptance of Congress , become the Seat  of the Government of the United
 # D   NSg        P  NPr/V+   . V      D   NSg/V P  D   NSg        P  D   V/J
 > States   , and to exercise like        Authority over    all          Places purchased by      the Consent
-# NPrPl/V+ . V/C P  NSg/V    NSg/V/J/C/P N🅪Sg+     NSg/J/P NSg/I/J/C/Dq NPl/V+ V/J       NSg/J/P D   NSg/V
+# NPrPl/V+ . V/C P  NSg/V    NSg/V/J/C/P N🅪Sg+     NSg/J/P NSg/I/J/C/Dq NPl/V+ V/J       NSg/J/P D   N🅪Sg/V
 > of the Legislature of the State   in      which the Same shall be     , for the Erection of
 # P  D   NSg         P  D   N🅪Sg/V+ NPr/J/P I/C+  D   I/J  VX    NSg/VX . C/P D   NSg      P
 > Forts , Magazines , Arsenals , dock   - Yards  , and other   needful Buildings ; — And
-# NPl/V . NPl+      . NPl+     . NSg/V+ . NPl/V+ . V/C NSg/V/J NSg/J   +         . . V/C
+# NPl/V . NPl+      . NPl+     . NSg/V+ . NPl/V+ . V/C NSg/V/J NSg/J   NPl/V+    . . V/C
 >
 #
 >
@@ -643,7 +643,7 @@
 > No    Title  of Nobility shall be     granted by      the United States   : And no    Person
 # NPr/P NSg/V+ P  NSg      VX    NSg/VX V/J     NSg/J/P D   V/J    NPrPl/V+ . V/C NPr/P NSg/V+
 > holding any    Office of Profit    or    Trust    under   them     , shall , without the Consent of
-# NSg/V   I/R/Dq NSg/V  P  N🅪Sg/V/J+ NPr/C N🅪Sg/V/J NSg/J/P NSg/IPl+ . VX    . C/P     D   NSg/V   P
+# NSg/V   I/R/Dq NSg/V  P  N🅪Sg/V/J+ NPr/C N🅪Sg/V/J NSg/J/P NSg/IPl+ . VX    . C/P     D   N🅪Sg/V  P
 > the Congress , accept  of any    present , Emolument , Office , or    Title  , of any    kind
 # D   NPr/V+   . NSg/V/J P  I/R/Dq NSg/V/J . NSg       . NSg/V+ . NPr/C NSg/V+ . P  I/R/Dq NSg/J+
 > whatever , from any    King     , Prince   , or    foreign State   .
@@ -679,7 +679,7 @@
 >
 #
 > No     State   shall , without the Consent of the Congress , lay     any    Imposts or    Duties
-# NPr/P+ N🅪Sg/V+ VX    . C/P     D   NSg/V   P  D+  NPr/V+   . NSg/V/J I/R/Dq NPl     NPr/C NPl+
+# NPr/P+ N🅪Sg/V+ VX    . C/P     D   N🅪Sg/V  P  D+  NPr/V+   . NSg/V/J I/R/Dq NPl     NPr/C NPl+
 > on  Imports or    Exports , except what   may    be     absolutely necessary for executing
 # J/P NPl/V   NPr/C NPl/V+  . V/C/P  NSg/I+ NPr/VX NSg/VX R          NSg/J     C/P V
 > it's inspection Laws   : and the net      Produce of all          Duties and Imposts , laid by
@@ -693,7 +693,7 @@
 >
 #
 > No     State   shall , without the Consent of Congress , lay     any    Duty of Tonnage , keep
-# NPr/P+ N🅪Sg/V+ VX    . C/P     D   NSg/V   P  NPr/V+   . NSg/V/J I/R/Dq NSg  P  NSg+    . NSg/V
+# NPr/P+ N🅪Sg/V+ VX    . C/P     D   N🅪Sg/V  P  NPr/V+   . NSg/V/J I/R/Dq NSg  P  NSg+    . NSg/V
 > Troops , or    Ships of War     in      time     of Peace   , enter into any    Agreement or    Compact
 # NPl/V+ . NPr/C NPl/V P  N🅪Sg/V+ NPr/J/P N🅪Sg/V/J P  NPr🅪/V+ . NSg/V P    I/R/Dq N🅪Sg+     NPr/C NSg/V/J
 > with another State   , or    with a    foreign Power     , or    engage in      War     , unless actually
@@ -1019,11 +1019,11 @@
 >
 #
 > He       shall have   Power     , by      and with the Advice and Consent of the Senate , to make
-# NPr/ISg+ VX    NSg/VX N🅪Sg/V/J+ . NSg/J/P V/C P    D+  Nᴹ+    V/C NSg/V   P  D+  NPr+   . P  NSg/V
+# NPr/ISg+ VX    NSg/VX N🅪Sg/V/J+ . NSg/J/P V/C P    D+  Nᴹ+    V/C N🅪Sg/V  P  D+  NPr+   . P  NSg/V
 > Treaties , provided two thirds of the Senators present  concur ; and he       shall
 # NPl/V+   . V/J/C    NSg NPl/V  P  D+  NPl+     NSg/V/J+ V+     . V/C NPr/ISg+ VX
 > nominate , and by      and with the Advice and Consent of the Senate , shall appoint
-# V/J      . V/C NSg/J/P V/C P    D   Nᴹ+    V/C NSg/V   P  D   NPr+   . VX    V
+# V/J      . V/C NSg/J/P V/C P    D   Nᴹ+    V/C N🅪Sg/V  P  D   NPr+   . VX    V
 > Ambassadors , other   public Ministers and Consuls , Judges  of the supreme Court    ,
 # NPl+        . NSg/V/J Nᴹ/V/J NPl/V+    V/C NPl     . NPrPl/V P  D   NSg/V/J NSg/V/J+ .
 > and all          other   Officers of the United States   , whose Appointments are not   herein
@@ -1049,7 +1049,7 @@
 > No     soldier  shall , in      time     of peace   be     quartered in      any     house  , without the
 # NPr/P+ NSg/V/J+ VX    . NPr/J/P N🅪Sg/V/J P  NPr🅪/V+ NSg/VX V/J       NPr/J/P I/R/Dq+ NPr/V+ . C/P     D
 > consent of the owner , nor   in      time     of war     , but     in      a    manner to be     prescribed by
-# NSg/V   P  D+  NSg+  . NSg/C NPr/J/P N🅪Sg/V/J P  N🅪Sg/V+ . NSg/C/P NPr/J/P D/P+ NSg+   P  NSg/VX V/J        NSg/J/P
+# N🅪Sg/V  P  D+  NSg+  . NSg/C NPr/J/P N🅪Sg/V/J P  N🅪Sg/V+ . NSg/C/P NPr/J/P D/P+ NSg+   P  NSg/VX V/J        NSg/J/P
 > law     .
 # N🅪Sg/V+ .
 >
@@ -1073,7 +1073,7 @@
 > Ministers ; he       shall take  Care    that         the Laws   be     faithfully executed , and shall
 # NPl/V+    . NPr/ISg+ VX    NSg/V N🅪Sg/V+ NSg/I/C/Ddem D   NPl/V+ NSg/VX R          V/J      . V/C VX
 > Commission all          the Officers of the United States   .
-# NSg/V      NSg/I/J/C/Dq D   NPl/V    P  D   V/J    NPrPl/V+ .
+# N🅪Sg/V     NSg/I/J/C/Dq D   NPl/V    P  D   V/J    NPrPl/V+ .
 >
 #
 > Section . 4 .
@@ -1304,14 +1304,14 @@
 # C       D   NSg/V/J+ VX    NSg/VX NSg/V W?   V/J       . VX    V     NSg/J/P D   V/J
 > States   , or    any    place   subject  to their jurisdiction . No     Person held to Service
 # NPrPl/V+ . NPr/C I/R/Dq N🅪Sg/V+ NSg/V/J+ P  D$+   NSg+         . NPr/P+ NSg/V+ V    P  NSg/V
-> or    Labour      in      one        State   , under   the Laws   thereof , escaping into another , shall ,
-# NPr/C NPr/V/Comm+ NPr/J/P NSg/I/V/J+ N🅪Sg/V+ . NSg/J/P D+  NPl/V+ W?      . V        P    I/D     . VX    .
+> or    Labour       in      one        State   , under   the Laws   thereof , escaping into another , shall ,
+# NPr/C NPr🅪/V/Comm+ NPr/J/P NSg/I/V/J+ N🅪Sg/V+ . NSg/J/P D+  NPl/V+ W?      . V        P    I/D     . VX    .
 > in      Consequence of any    Law    or    Regulation therein , be     discharged from such
 # NPr/J/P NSg/V       P  I/R/Dq N🅪Sg/V NPr/C N🅪Sg/J+    W?      . NSg/VX V/J        P    NSg/I
-> Service or    Labour      , but     shall be     delivered up        on  Claim of the Party    to whom such
-# NSg/V   NPr/C NPr/V/Comm+ . NSg/C/P VX    NSg/VX V/J       NSg/V/J/P J/P NSg/V P  D   NSg/V/J+ P  I+   NSg/I
-> Service or    Labour      may    be     due   .
-# NSg/V   NPr/C NPr/V/Comm+ NPr/VX NSg/VX NSg/J .
+> Service or    Labour       , but     shall be     delivered up        on  Claim of the Party    to whom such
+# NSg/V   NPr/C NPr🅪/V/Comm+ . NSg/C/P VX    NSg/VX V/J       NSg/V/J/P J/P NSg/V P  D   NSg/V/J+ P  I+   NSg/I
+> Service or    Labour       may    be     due   .
+# NSg/V   NPr/C NPr🅪/V/Comm+ NPr/VX NSg/VX NSg/J .
 >
 #
 > Section . 3 .
@@ -1325,7 +1325,7 @@
 > State   ; nor   any     State   be     formed by      the Junction of two or    more         States   , or    Parts
 # N🅪Sg/V+ . NSg/C I/R/Dq+ N🅪Sg/V+ NSg/VX V/J    NSg/J/P D   NSg/V    P  NSg NPr/C NPr/I/V/J/Dq NPrPl/V+ . NPr/C NPl/V
 > of States   , without the Consent of the Legislatures of the States   concerned as
-# P  NPrPl/V+ . C/P     D   NSg/V   P  D   NPl          P  D   NPrPl/V+ V/J       NSg/R
+# P  NPrPl/V+ . C/P     D   N🅪Sg/V  P  D   NPl          P  D   NPrPl/V+ V/J       NSg/R
 > well    as    of the Congress .
 # NSg/V/J NSg/R P  D   NPr/V+   .
 >
@@ -1333,7 +1333,7 @@
 > The Congress shall have   Power     to dispose of and make  all          needful Rules and
 # D+  NPr/V+   VX    NSg/VX N🅪Sg/V/J+ P  NSg/V   P  V/C NSg/V NSg/I/J/C/Dq NSg/J   NPl/V V/C
 > Regulations respecting the Territory or    other   Property belonging to the United
-# NPl+        V          D   N🅪Sg+     NPr/C NSg/V/J NSg/V+   NSg/V     P  D   V/J
+# NPl+        V          D   N🅪Sg+     NPr/C NSg/V/J NSg/V+   N🅪Sg/V    P  D   V/J
 > States   ; and nothing  in      this   Constitution shall be     so        construed as    to Prejudice
 # NPrPl/V+ . V/C NSg/I/J+ NPr/J/P I/Ddem NPr+         VX    NSg/VX NSg/I/J/C V/J       NSg/R P  NSg/V/J+
 > any    Claims of the United States   , or    of any    particular State   .
@@ -1399,7 +1399,7 @@
 > fourth  Clauses in      the Ninth   Section of the first   Article ; and that         no    State   ,
 # NPr/V/J NPl/V+  NPr/J/P D   NSg/V/J NSg/V   P  D   NSg/V/J NSg/V+  . V/C NSg/I/C/Ddem NPr/P N🅪Sg/V+ .
 > without its     Consent , shall be     deprived of its     equal   Suffrage in      the Senate .
-# C/P     ISg/D$+ NSg/V   . VX    NSg/VX V/J      P  ISg/D$+ NSg/V/J NSg+     NPr/J/P D   NPr+   .
+# C/P     ISg/D$+ N🅪Sg/V  . VX    NSg/VX V/J      P  ISg/D$+ NSg/V/J NSg+     NPr/J/P D   NPr+   .
 >
 #
 > Article . VI  .
@@ -1489,7 +1489,7 @@
 >
 #
 > done    in      Convention by      the Unanimous Consent of the States   present the
-# NSg/V/J NPr/J/P NSg+       NSg/J/P D   J         NSg/V   P  D+  NPrPl/V+ NSg/V/J D
+# NSg/V/J NPr/J/P NSg+       NSg/J/P D   J         N🅪Sg/V  P  D+  NPrPl/V+ NSg/V/J D
 > Seventeenth Day  of September in      the Year of our Lord     one       thousand seven hundred
 # NSg/J       NPr🅪 P  NPr+      NPr/J/P D   NSg  P  D$+ NPr/V/J+ NSg/I/V/J NSg      NSg   NSg
 > and Eighty seven and of the Independence of the United States  of America the
@@ -1509,6 +1509,6 @@
 > The transportation or    importation into any    State   , Territory , or
 # D+  Nᴹ+            NPr/C N🅪Sg        P    I/R/Dq N🅪Sg/V+ . N🅪Sg+     . NPr/C
 > possession of the United States   for delivery or    use   therein of intoxicating
-# NSg/V      P  D   V/J    NPrPl/V+ C/P NSg/V/J+ NPr/C NSg/V W?      P  V
+# N🅪Sg/V     P  D   V/J    NPrPl/V+ C/P NSg/V/J+ NPr/C NSg/V W?      P  V
 > liquors , in      violation of the laws   thereof , is hereby prohibited .
 # NPl/V   . NPr/J/P NSg       P  D   NPl/V+ W?      . VL W?     V/J        .
