@@ -100,21 +100,19 @@ export function dictToString(values: string[]): string {
 async function exportEnabledDomainsCSV() {
 	try {
 		const enabledDomains = await ProtocolClient.getEnabledDomains();
-		const header = 'domain\n';
-		const rows = enabledDomains.map((d) => `${d}\n`).join('');
-		const csv = header + rows;
+		const json = JSON.stringify(enabledDomains, null, 2);
 
-		const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+		const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.href = url;
-		a.download = 'enabled-domains.csv';
+		a.download = 'enabled-domains.json';
 		document.body.appendChild(a);
 		a.click();
 		a.remove();
 		URL.revokeObjectURL(url);
 	} catch (e) {
-		console.error('Failed to export enabled domains CSV:', e);
+		console.error('Failed to export enabled domains JSON:', e);
 	}
 }
 
@@ -159,9 +157,9 @@ async function exportEnabledDomainsCSV() {
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
             <span class="font-medium">Export Enabled Domains</span>
-            <span class="font-light">Downloads a CSV of domains explicitly enabled.</span>
+            <span class="font-light">Downloads JSON of domains explicitly enabled.</span>
           </div>
-          <Button size="sm" color="light" on:click={exportEnabledDomainsCSV}>Export CSV</Button>
+          <Button size="sm" color="light" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
         </div>
       </div>
 
