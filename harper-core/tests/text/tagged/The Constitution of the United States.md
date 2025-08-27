@@ -4,8 +4,8 @@
 # Unlintable D   NPr+         P  D   V/J    NPrPl/V+ P  NPr+
 >
 #
-> We   the People of the United States   , in      Order  to form  a   more         perfect  Union    ,
-# IPl+ D   NPl/V  P  D+  V/J    NPrPl/V+ . NPr/J/P NSg/V+ P  NSg/V D/P NPr/I/V/J/Dq NSg/V/J+ NPr/V/J+ .
+> We   the People of the United States   , in      Order  to form  a   more           perfect  Union    ,
+# IPl+ D   NPl/V  P  D+  V/J    NPrPl/V+ . NPr/J/P NSg/V+ P  NSg/V D/P NPr/I/V/J/R/Dq NSg/V/J+ NPr/V/J+ .
 > establish Justice , insure domestic Tranquility , provide for the common  defence    ,
 # V         NPr🅪+   . V      NSg/J    NSg         . V       C/P D   NSg/V/J N🅪Sg/Comm+ .
 > promote the general Welfare , and secure the Blessings of Liberty to ourselves
@@ -282,8 +282,8 @@
 #
 > Neither House  , during the Session of Congress , shall , without the Consent of
 # I/C     NPr/V+ . V/P    D   NSg/V   P  NPr/V+   . VX    . C/P     D   NSg/V   P
-> the other   , adjourn for more         than three days , nor   to any    other   Place   than that
-# D   NSg/V/J . V       C/P NPr/I/V/J/Dq C/P  NSg   NPl+ . NSg/C P  I/R/Dq NSg/V/J N🅪Sg/V+ C/P  NSg/I/C/Ddem+
+> the other   , adjourn for more           than three days , nor   to any    other   Place   than that
+# D   NSg/V/J . V       C/P NPr/I/V/J/R/Dq C/P  NSg   NPl+ . NSg/C P  I/R/Dq NSg/V/J N🅪Sg/V+ C/P  NSg/I/C/Ddem+
 > in      which the two Houses shall be     sitting .
 # NPr/J/P I/C+  D   NSg NPl/V+ VX    NSg/VX NSg/V/J .
 >
@@ -844,14 +844,14 @@
 # NSg/V NSg      NPl+  D/P NSg/J+   NSg/J/P D   V/J    NPrPl/V+ .
 >
 #
-> No     person shall be     elected to the office of the President more         than twice , and
-# NPr/P+ NSg/V+ VX    NSg/VX NSg/V/J P  D   NSg/V  P  D+  NSg/V+    NPr/I/V/J/Dq C/P  W?    . V/C
+> No     person shall be     elected to the office of the President more           than twice , and
+# NPr/P+ NSg/V+ VX    NSg/VX NSg/V/J P  D   NSg/V  P  D+  NSg/V+    NPr/I/V/J/R/Dq C/P  W?    . V/C
 > no     person who    has held the office of President , or    acted as    President , for more
-# NPr/P+ NSg/V+ NPr/I+ V   V    D   NSg/V  P  NSg/V+    . NPr/C V/J   NSg/R NSg/V+    . C/P NPr/I/V/J/Dq
+# NPr/P+ NSg/V+ NPr/I+ V   V    D   NSg/V  P  NSg/V+    . NPr/C V/J   NSg/R NSg/V+    . C/P NPr/I/V/J/R/Dq
 > than two years of a    term     to which some      other    person was elected President shall
 # C/P  NSg NPl   P  D/P+ NSg/V/J+ P  I/C+  I/J/R/Dq+ NSg/V/J+ NSg/V+ V   NSg/V/J NSg/V+    VX
-> be     elected to the office of the President more         than once  . But     this    article
-# NSg/VX NSg/V/J P  D   NSg/V  P  D+  NSg/V+    NPr/I/V/J/Dq C/P  NSg/C . NSg/C/P I/Ddem+ NSg/V+
+> be     elected to the office of the President more           than once  . But     this    article
+# NSg/VX NSg/V/J P  D   NSg/V  P  D+  NSg/V+    NPr/I/V/J/R/Dq C/P  NSg/C . NSg/C/P I/Ddem+ NSg/V+
 > shall not   apply to any     person holding the office of President when    this    article
 # VX    NSg/C V/J   P  I/R/Dq+ NSg/V+ NSg/V   D   NSg/V  P  NSg/V+    NSg/I/C I/Ddem+ NSg/V+
 > was proposed by      the Congress , and shall not   prevent any     person who    may    be
@@ -984,8 +984,8 @@
 # D/P N🅪Sg/V/JC P  NPl      P  NSg/V     V/C NSg/V/J/P+ NSg/V+    NSg/V/J P  D   NSg/J N🅪Sg/V/JC
 > of Senators and Representatives in      Congress to which the District would be
 # P  NPl+     V/C NPl+            NPr/J/P NPr/V+   P  I/C+  D   NSg/V/J+ VX    NSg/VX
-> entitled if    it       were  a   State   , but     in      no    event  more         than the least populous
-# V/J      NSg/C NPr/ISg+ NSg/V D/P N🅪Sg/V+ . NSg/C/P NPr/J/P NPr/P NSg/V+ NPr/I/V/J/Dq C/P  D   NSg/J J
+> entitled if    it       were  a   State   , but     in      no    event  more           than the least populous
+# V/J      NSg/C NPr/ISg+ NSg/V D/P N🅪Sg/V+ . NSg/C/P NPr/J/P NPr/P NSg/V+ NPr/I/V/J/R/Dq C/P  D   NSg/J J
 > State   ; they shall be     in      addition to those  appointed by      the States   , but     they
 # N🅪Sg/V+ . IPl+ VX    NSg/VX NPr/J/P NSg+     P  I/Ddem V/J+      NSg/J/P D   NPrPl/V+ . NSg/C/P IPl+
 > shall be     considered , for the purposes of the election of President and Vice
@@ -1124,8 +1124,8 @@
 # V/J       NPl+        . NSg/V/J+ Nᴹ/V/J+ NPl/V+    V/C NPl     . . P  NSg/I/J/C/Dq NPl/V P
 > admiralty and maritime Jurisdiction ; — to Controversies to which the United
 # NPr       V/C J        NSg+         . . P  NPl           P  I/C+  D   V/J
-> States   shall be     a   Party    ; — to Controversies between two or    more         States   ; — between
-# NPrPl/V+ VX    NSg/VX D/P NSg/V/J+ . . P  NPl           NSg/P   NSg NPr/C NPr/I/V/J/Dq NPrPl/V+ . . NSg/P
+> States   shall be     a   Party    ; — to Controversies between two or    more           States   ; — between
+# NPrPl/V+ VX    NSg/VX D/P NSg/V/J+ . . P  NPl           NSg/P   NSg NPr/C NPr/I/V/J/R/Dq NPrPl/V+ . . NSg/P
 > Citizens of different States   , — between Citizens of the same State   claiming
 # NPl      P  NSg/J     NPrPl/V+ . . NSg/P   NPl      P  D   I/J  N🅪Sg/V+ V
 > Lands  under   Grants of different States   .
@@ -1322,8 +1322,8 @@
 # NSg/V/J+ NPrPl/V+ NPr/VX NSg/VX V/J      NSg/J/P D+  NPr/V+   P    I/Ddem+ NPr/V/J+ . NSg/C/P
 > no     new      State   shall be     formed or    erected within  the Jurisdiction of any     other
 # NPr/P+ NSg/V/J+ N🅪Sg/V+ VX    NSg/VX V/J    NPr/C V/J     NSg/J/P D   NSg          P  I/R/Dq+ NSg/V/J+
-> State   ; nor   any     State   be     formed by      the Junction of two or    more         States   , or    Parts
-# N🅪Sg/V+ . NSg/C I/R/Dq+ N🅪Sg/V+ NSg/VX V/J    NSg/J/P D   NSg/V    P  NSg NPr/C NPr/I/V/J/Dq NPrPl/V+ . NPr/C NPl/V
+> State   ; nor   any     State   be     formed by      the Junction of two or    more           States   , or    Parts
+# N🅪Sg/V+ . NSg/C I/R/Dq+ N🅪Sg/V+ NSg/VX V/J    NSg/J/P D   NSg/V    P  NSg NPr/C NPr/I/V/J/R/Dq NPrPl/V+ . NPr/C NPl/V
 > of States   , without the Consent of the Legislatures of the States   concerned as
 # P  NPrPl/V+ . C/P     D   NSg/V   P  D   NPl          P  D   NPrPl/V+ V/J       NSg/R
 > well    as    of the Congress .
