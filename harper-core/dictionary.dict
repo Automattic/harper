@@ -13674,7 +13674,6 @@ backcloths/N
 backcomb/VNdSG
 backcountry/Ng
 backdate/VNGdS
-backdoor/NV
 backdrop/~NVgS
 backer/~NJg
 backfield/NSg
@@ -15794,6 +15793,7 @@ bug/~NVeS
 bug's
 bugaboo/NSg
 bugbear/NVSg
+bugfix/NgS
 bugged/VJe
 bugger/NVSgdG
 buggery/Nm
@@ -20276,6 +20276,7 @@ data/~Nw9g
 database/~NVSg
 dataset/~NgS
 datasheet/NgS
+datasource/NgS
 datatype/N
 date/~NwVd>SgZGv
 datebook/NS
@@ -33656,15 +33657,16 @@ microfarad/NgS
 microfiber/NgS
 microfiche/NVg
 microfilm/~NVGgdS
-microfinance/N
-microfloppies/N
+microfinance/Nmg
+microfloppies/N9
 microgram/NgS
 microgroove/NSg
+microkernel/NgS
 microlight/NgS
 microloan/NgS
 micromanage/VZGd>SL
-micromanagement/Ng
-micromanager/Ng
+micromanagement/Nmg
+micromanager/NgS
 micrometeorite/NSg
 micrometer/NgS<
 micrometre/NgS!@_
@@ -49407,6 +49409,7 @@ trod/VNrU
 trodden/JVr
 troglodyte/NSg
 troika/NgS
+trojan/NgSAVdG
 troll/~NVSGgd
 trolley/~NVSg
 trolleybus/~NgS
@@ -53264,7 +53267,9 @@ nullish/J
 olds/~              # common in phrasing such as "twenty year olds"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
 pastebin/NgS
+pentest/VSdG
 pentester/NSg       # penetration tester
+pentesting/NmgV
 postfix/NgSVdG
 pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
 preshared/J
@@ -53381,7 +53386,7 @@ colour code/NVgdSG!@_
 colour coded/J!@_
 command line/NgS
 company-wide        # in Cambridge and OED dictionaries
-controlflow/Nmg
+control flow/Nmg
 cost cutting/Nmg
 cost-effective/J
 cotter pin/NgS
