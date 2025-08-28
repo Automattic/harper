@@ -231,9 +231,6 @@ impl SequenceExpr {
         })
     }
 
-    // Out-of-vocabulary word. (Words not in the dictionary)
-    gen_then_from_is!(oov);
-
     // Token kind matching methods
 
     /// Match a token of a given kind which is not in the list of words.
@@ -347,6 +344,11 @@ impl SequenceExpr {
                     .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
         })
     }
+    // Word property matching methods
+
+    // Out-of-vocabulary word. (Words not in the dictionary)
+    gen_then_from_is!(oov);
+    gen_then_from_is!(swear);
 
     // Part-of-speech matching methods
 

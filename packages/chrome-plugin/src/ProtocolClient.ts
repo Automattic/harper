@@ -58,6 +58,10 @@ export default class ProtocolClient {
 		return (await chrome.runtime.sendMessage({ kind: 'getDefaultStatus' })).enabled;
 	}
 
+	public static async getEnabledDomains(): Promise<string[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getEnabledDomains' })).domains;
+	}
+
 	public static async setDefaultEnabled(enabled: boolean): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setDefaultStatus', enabled });
 	}

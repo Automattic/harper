@@ -1365,6 +1365,16 @@ fn detect_worse_and_worst_real_world() {
     );
 }
 
+// -at worst-
+#[test]
+fn detect_at_worst_atomic() {
+    assert_suggestion_result(
+        "Partial moving of core objects to interpreter state is incorrect at best, unsafe at worse.",
+        lint_group(),
+        "Partial moving of core objects to interpreter state is incorrect at best, unsafe at worst.",
+    );
+}
+
 // -worst case scenario-
 #[test]
 fn correct_worse_case_space() {

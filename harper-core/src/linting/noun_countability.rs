@@ -114,6 +114,12 @@ impl ExprLinter for NounCountability {
             ("luggage", "both" | "many" | "multiple" | "several") => {
                 &[ReplaceNounWith("suitcases"), ReplaceNounWith("bags")]
             }
+            ("punctuation", "a" | "an" | "another" | "each" | "every" | "one") => {
+                &[ReplaceNounWith("punctuation mark")]
+            }
+            ("punctuation", "both" | "many" | "multiple" | "several") => {
+                &[ReplaceNounWith("punctuation marks")]
+            }
             ("software", "a") => &[
                 ReplaceNounWith("program"),
                 ReplaceNounWith("software package"),
@@ -136,18 +142,14 @@ impl ExprLinter for NounCountability {
             _ => &[],
         };
 
-        let no_piece = matches!(noun.as_str(), "traffic");
+        let no_piece = matches!(noun.as_str(), "punctuation" | "traffic");
 
         let basic_corrections: &'static [Correction] = match (dq.as_str(), no_piece) {
             ("a" | "an", true) => &[DropDQ, ReplaceDQWith("some")],
             ("a" | "an", false) => &[DropDQ, ReplaceDQWith("some"), ReplaceDQWith("a piece of")],
-            ("another" | "each" | "every" | "one", true) => {
-                return None; // No good suggestions for these with traffic
-            }
+            ("another" | "each" | "every" | "one", true) => &[],
             ("another" | "each" | "every" | "one", false) => &[InsertBetween("piece of")],
-            ("both" | "multiple" | "several", true) => {
-                return None; // No good suggestions for these with traffic
-            }
+            ("both" | "multiple" | "several", true) => &[],
             ("both" | "multiple" | "several", false) => &[InsertBetween("pieces of")],
             ("few", true) => &[ReplaceDQWith("little")],
             ("few", false) => &[ReplaceDQWith("little"), InsertBetween("pieces of")],
@@ -159,7 +161,7 @@ impl ExprLinter for NounCountability {
                 ReplaceDQWith("a lot of"),
                 InsertBetween("pieces of"),
             ],
-            _ => return None,
+            _ => &[],
         };
 
         let mut suggestions = Vec::new();
@@ -473,6 +475,15 @@ mod tests {
             "Internally, we have a hardware-in-the-loop Jenkins test suite that builds and unit tests the various processes.",
             NounCountability::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn corrects_punctuation() {
+        assert_top3_suggestion_result(
+            "Not in this form because it currently works with one punctuation with one letter either side.",
+            NounCountability::default(),
+            "Not in this form because it currently works with one punctuation mark with one letter either side.",
         );
     }
 }
