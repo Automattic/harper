@@ -37,6 +37,7 @@ use super::double_modal::DoubleModal;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
+use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
@@ -408,14 +409,12 @@ impl LintGroup {
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(AskNoPreposition, true);
-        insert_struct_rule!(AvoidCurses, true);
+        insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
-        insert_expr_rule!(QuantifierNeedsOf, true);
-        insert_struct_rule!(NoFrenchSpaces, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(Confident, true);
@@ -429,6 +428,7 @@ impl LintGroup {
         insert_struct_rule!(EllipsisLength, true);
         insert_struct_rule!(ElsePossessive, true);
         insert_struct_rule!(Everyday, true);
+        insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_expr_rule!(FillerWords, true);
@@ -457,6 +457,7 @@ impl LintGroup {
         insert_expr_rule!(MostNumber, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_struct_rule!(NailOnTheHead, true);
+        insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
@@ -477,6 +478,7 @@ impl LintGroup {
         insert_struct_rule!(PronounContraction, true);
         insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(PronounKnew, true);
+        insert_expr_rule!(QuantifierNeedsOf, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);
