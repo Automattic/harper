@@ -1,6 +1,6 @@
 use crate::{
     CharStringExt, Token, TokenStringExt,
-    expr::{Expr, SequenceExpr},
+    expr::{Expr, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
@@ -25,7 +25,8 @@ impl ExprLinter for AdjectiveDoubleDegree {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let phrase_span = toks.span()?;
         let phrase_chars = phrase_span.get_content(src);
 

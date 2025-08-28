@@ -1,5 +1,5 @@
-use crate::expr::{DurationExpr, Expr, LongestMatchOf, SequenceExpr};
-use crate::{Lrc, Token, TokenStringExt};
+use crate::expr::{DurationExpr, Expr, LongestMatchOf, MatchInfo, SequenceExpr};
+use crate::{Lrc, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -50,7 +50,8 @@ impl ExprLinter for SinceDuration {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let last = toks.last()?;
         if last.span.get_content_string(src).to_lowercase() == "ago" {
             return None;

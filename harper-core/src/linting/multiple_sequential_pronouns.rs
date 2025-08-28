@@ -1,10 +1,11 @@
 use super::Suggestion;
 use super::expr_linter::ExprLinter;
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::linting::LintKind;
 use crate::patterns::WordSet;
-use crate::{CharStringExt, Lint, Lrc, Token, TokenStringExt};
+use crate::{CharStringExt, Lint, Lrc, TokenStringExt};
 
 /// Linter that checks if multiple pronouns are being used right after each
 /// other. This is a common mistake to make during the revision process.
@@ -80,7 +81,8 @@ impl ExprLinter for MultipleSequentialPronouns {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let mut suggestions = Vec::new();
 
         if matched_tokens.len() == 3 {

@@ -1,6 +1,6 @@
 use crate::{
-    Dialect, Token,
-    expr::{Expr, FixedPhrase, SequenceExpr},
+    Dialect,
+    expr::{Expr, FixedPhrase, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -35,7 +35,8 @@ impl ExprLinter for HaveTakeALook {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let light_verb_tok = toks.first().unwrap();
         let light_verb_str = light_verb_tok.span.get_content_string(src);
         let light_verb = light_verb_str.to_ascii_lowercase();

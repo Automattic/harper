@@ -1,6 +1,5 @@
 use crate::{
-    Token,
-    expr::{Expr, SequenceExpr},
+    expr::{Expr, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
@@ -27,7 +26,8 @@ impl ExprLinter for FriendOfMe {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let obj_pron_tok = toks.last()?;
         let obj_pron_str = obj_pron_tok.span.get_content_string(src);
 

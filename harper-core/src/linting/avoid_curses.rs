@@ -1,5 +1,4 @@
-use crate::Token;
-use crate::expr::{Expr, SequenceExpr};
+use crate::expr::{Expr, MatchInfo, SequenceExpr};
 use crate::linting::{LintKind, Suggestion};
 
 use super::{ExprLinter, Lint};
@@ -21,7 +20,8 @@ impl ExprLinter for AvoidCurses {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         if toks.len() != 1 {
             return None;
         }

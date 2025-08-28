@@ -2,7 +2,7 @@ use hashbrown::HashSet;
 
 use crate::{
     CharStringExt, Token, TokenStringExt,
-    expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
+    expr::{All, Expr, FirstMatchOf, FixedPhrase, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind},
     spell::Dictionary,
 };
@@ -56,7 +56,8 @@ where
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let mistake_toks = toks;
 
         let mut legit_words_found: HashSet<Box<[char]>> = HashSet::new();
