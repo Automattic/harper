@@ -2,15 +2,15 @@ use super::Error;
 use crate::CharString;
 
 #[derive(Debug, Clone)]
-pub struct MarkedWord {
+pub struct AnnotatedWord {
     pub letters: CharString,
-    pub attributes: Vec<char>,
+    pub annotations: Vec<char>,
 }
 
 /// Parse a Rune word list
 ///
 /// Returns [`None`] if the given string is invalid.
-pub fn parse_word_list(source: &str) -> Result<Vec<MarkedWord>, Error> {
+pub fn parse_word_list(source: &str) -> Result<Vec<AnnotatedWord>, Error> {
     let mut lines = source.lines();
 
     let approx_item_count = lines
@@ -44,9 +44,9 @@ pub fn parse_word_list(source: &str) -> Result<Vec<MarkedWord>, Error> {
             attr = None;
         }
 
-        words.push(MarkedWord {
+        words.push(AnnotatedWord {
             letters: word.chars().collect(),
-            attributes: attr.unwrap_or_default().chars().collect(),
+            annotations: attr.unwrap_or_default().chars().collect(),
         })
     }
 
@@ -62,7 +62,7 @@ mod tests {
     fn can_parse_test_file() {
         let list = parse_word_list(TEST_WORD_LIST).unwrap();
 
-        assert_eq!(list.last().unwrap().attributes.len(), 0);
+        assert_eq!(list.last().unwrap().annotations.len(), 0);
         assert_eq!(list.len(), 4);
     }
 }

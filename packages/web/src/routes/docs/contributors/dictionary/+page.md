@@ -34,16 +34,16 @@ In `annotations.json`, this expansion rule looks like this:
 				"condition": "."
 			}
 		],
-        // The word metadata that should be applied to the expanded word.
+        // The metadata that should be applied to the expanded word.
 		"target": {},
-        // The word metadata that should be applied to the base word.
+        // The metadata that should be applied to the base word.
 		"base_metadata": {}
 	}
 }
 ```
 
 Those familiar with `hunspell` might notice some similarities with their dictionary format.
-The main differences are the [metadata fields.](https://docs.rs/harper-core/latest/harper_core/word_metadata/struct.WordMetadata.html)
+The main differences are the [metadata fields.](https://docs.rs/harper-core/latest/harper_core/lexeme_metadata/struct.LexemeMetadata.html)
 
 There is a separate section, `properties` that is specifically for special rules that add only metadata to the words they're applied to.
 
