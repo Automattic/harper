@@ -113,6 +113,7 @@ use super::thing_think::ThingThink;
 use super::throw_rubbish::ThrowRubbish;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
+use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
 use super::very_unique::VeryUnique;
 use super::was_aloud::WasAloud;
@@ -396,6 +397,7 @@ impl LintGroup {
         ));
         out.merge_from(&mut closed_compounds::lint_group());
         out.merge_from(&mut initialisms::lint_group());
+        // out.merge_from(&mut update_place_names::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -498,6 +500,7 @@ impl LintGroup {
         insert_struct_rule!(ThrowRubbish, true);
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
+        insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(UseGenitive, false);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(WasAloud, true);
