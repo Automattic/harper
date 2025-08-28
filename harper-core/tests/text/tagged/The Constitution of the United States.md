@@ -670,8 +670,8 @@
 # NPr/P+ N🅪Sg/V+ VX    NSg/V P    I/R/Dq NSg/V+ . NSg/V+   . NPr/C
 > Confederation ; grant  Letters of Marque and Reprisal ; coin   Money   ; emit Bills of
 # NSg/J         . NPr/V+ NPl/V   P  NSg    V/C NSg+     . NSg/V+ N🅪Sg/J+ . V    NPl/V P
-> Credit ; make  any    Thing  but     gold   and silver  Coin   a   Tender  in      Payment of Debts ;
-# NSg/V+ . NSg/V I/R/Dq NSg/V+ NSg/C/P Nᴹ/V/J V/C Nᴹ/V/J+ NSg/V+ D/P NSg/V/J NPr/J/P N🅪Sg    P  NPl+  .
+> Credit ; make  any    Thing but     gold   and silver  Coin   a   Tender  in      Payment of Debts ;
+# NSg/V+ . NSg/V I/R/Dq NSg+  NSg/C/P Nᴹ/V/J V/C Nᴹ/V/J+ NSg/V+ D/P NSg/V/J NPr/J/P N🅪Sg    P  NPl+  .
 > pass  any    Bill  of Attainder , ex       post      facto Law     , or    Law     impairing the Obligation
 # NSg/V I/R/Dq NPr/V P  NSg       . NSg/V/J+ NPr🅪/V/P+ ?     N🅪Sg/V+ . NPr/C N🅪Sg/V+ V         D   NSg
 > of Contracts , or    grant any    Title  of Nobility .
@@ -1189,7 +1189,7 @@
 > oath   or    affirmation , and particularly describing the place   to be     searched , and
 # NSg/V+ NPr/C NSg         . V/C R            V          D   N🅪Sg/V+ P  NSg/VX V/J      . V/C
 > the persons or    things to be     seized .
-# D   NPl/V+  NPr/C NPl/V+ P  NSg/VX V/J    .
+# D   NPl/V+  NPr/C NPl+   P  NSg/VX V/J    .
 >
 #
 > No     person shall be     held to answer for a    capital , or    otherwise infamous crime   ,
@@ -1420,8 +1420,8 @@
 # NSg       W?      . V/C NSg/I/J/C/Dq NPl/V+   V    . NPr/C I/C+  VX    NSg/VX V    . NSg/J/P D
 > Authority of the United States   , shall be     the supreme Law    of the Land    ; and the
 # N🅪Sg      P  D   V/J    NPrPl/V+ . VX    NSg/VX D   NSg/V/J N🅪Sg/V P  D   NPr🅪/V+ . V/C D
-> Judges   in      every State   shall be     bound   thereby , any    Thing  in      the Constitution or
-# NPrPl/V+ NPr/J/P Dq    N🅪Sg/V+ VX    NSg/VX NSg/V/J W?      . I/R/Dq NSg/V+ NPr/J/P D   NPr+         NPr/C
+> Judges   in      every State   shall be     bound   thereby , any    Thing in      the Constitution or
+# NPrPl/V+ NPr/J/P Dq    N🅪Sg/V+ VX    NSg/VX NSg/V/J W?      . I/R/Dq NSg+  NPr/J/P D   NPr+         NPr/C
 > Laws  of any    State   to the Contrary notwithstanding .
 # NPl/V P  I/R/Dq N🅪Sg/V+ P  D   NSg/V/J+ C/P             .
 >
