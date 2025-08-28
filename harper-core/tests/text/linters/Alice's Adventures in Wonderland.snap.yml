@@ -1888,17 +1888,6 @@ Suggest:
 
 
 
-Lint:    Agreement (31 priority)
-Message: |
-    1887 | “A cat may look at a king,” said Alice. “I’ve read that in some book, but I
-         |                    ^~~~~~ `king` is a mass noun.
-Suggest:
-  - Replace with: “king”
-  - Replace with: “some king”
-  - Replace with: “a piece of king”
-
-
-
 Lint:    Style (31 priority)
 Message: |
     1894 | The Queen had only one way of settling all difficulties, great or small. “Off

@@ -646,8 +646,8 @@
 # Nᴹ/V/J  I/R/Dq NSg/V  P  N🅪Sg/V/J+ NPr/C N🅪Sg/V/J NSg/J/P NSg/IPl+ . VX    . C/P     D   NSg/V   P
 > the Congress , accept  of any    present , Emolument , Office , or    Title  , of any    kind
 # D   NPr/V+   . NSg/V/J P  I/R/Dq NSg/V/J . NSg       . NSg/V+ . NPr/C NSg/V+ . P  I/R/Dq NSg/J+
-> whatever , from any    King      , Prince   , or    foreign State   .
-# NSg/I/J+ . P    I/R/Dq NPrᴹ/V/J+ . NPr/V/J+ . NPr/C NSg/J   N🅪Sg/V+ .
+> whatever , from any    King     , Prince   , or    foreign State   .
+# NSg/I/J+ . P    I/R/Dq NPr/V/J+ . NPr/V/J+ . NPr/C NSg/J   N🅪Sg/V+ .
 >
 #
 > The right   of citizens of the United States   to vote  in      any    primary or    other

@@ -3433,7 +3433,7 @@
 > noticing her     . Then    followed the Knave of Hearts , carrying the King’s crown    on  a
 # Nᴹ/V/J   ISg/D$+ . NSg/J/C V/J      D   NSg   P  NPl/V+ . Nᴹ/V/J   D   NSg$   NSg/V/J+ J/P D/P
 > crimson velvet  cushion ; and , last    of all          this   grand procession , came    THE KING
-# NSg/V/J Nᴹ/V/J+ NSg/V+  . V/C . NSg/V/J P  NSg/I/J/C/Dq I/Ddem NSg/J NSg/V+     . NSg/V/P D   NPrᴹ/V/J+
+# NSg/V/J Nᴹ/V/J+ NSg/V+  . V/C . NSg/V/J P  NSg/I/J/C/Dq I/Ddem NSg/J NSg/V+     . NSg/V/P D   NPr/V/J+
 > AND QUEEN    OF HEARTS .
 # V/C NPr/V/J+ P  NPl/V+ .
 >
@@ -3500,8 +3500,8 @@
 # . Nᴹ/V/J+  . . V/J  NPr+  . J/R  R      V/C R         . V/C D   NPr/V/J+ V   NSg/J  .
 >
 #
-> The King      laid his     hand   upon her     arm      , and timidly said “ Consider , my  dear    : she  is
-# D+  NPrᴹ/V/J+ V/J  ISg/D$+ NSg/V+ P    ISg/D$+ NSg/V/J+ . V/C R       V/J  . V        . D$+ NSg/V/J . ISg+ VL
+> The King     laid his     hand   upon her     arm      , and timidly said “ Consider , my  dear    : she  is
+# D+  NPr/V/J+ V/J  ISg/D$+ NSg/V+ P    ISg/D$+ NSg/V/J+ . V/C R       V/J  . V        . D$+ NSg/V/J . ISg+ VL
 > only  a   child  ! ”
 # J/R/C D/P NSg/V+ . .
 >
@@ -3516,8 +3516,8 @@
 #
 > “ Get   up        ! ” said the Queen    , in      a   shrill  , loud  voice  , and the three gardeners
 # . NSg/V NSg/V/J/P . . V/J  D+  NPr/V/J+ . NPr/J/P D/P NSg/V/J . NSg/J NSg/V+ . V/C D+  NSg+  +
-> instantly jumped up        , and began bowing to the King      , the Queen    , the royal
-# R         V/J    NSg/V/J/P . V/C V     Nᴹ/V/J P  D   NPrᴹ/V/J+ . D   NPr/V/J+ . D   NPr/J
+> instantly jumped up        , and began bowing to the King     , the Queen    , the royal
+# R         V/J    NSg/V/J/P . V/C V     Nᴹ/V/J P  D   NPr/V/J+ . D   NPr/V/J+ . D   NPr/J
 > children , and everybody else    .
 # NPl+     . V/C NSg/I+    NSg/J/C .
 >
@@ -3746,8 +3746,8 @@
 # D+  NPr/V/J+ V/J    V/C V/J    J/P .
 >
 #
-> “ Who    are you    talking to ? ” said the King      , going  up        to Alice , and looking at    the
-# . NPr/I+ V   ISgPl+ Nᴹ/V/J  P  . . V/J  D+  NPrᴹ/V/J+ . Nᴹ/V/J NSg/V/J/P P  NPr+  . V/C Nᴹ/V/J  NSg/P D
+> “ Who    are you    talking to ? ” said the King     , going  up        to Alice , and looking at    the
+# . NPr/I+ V   ISgPl+ Nᴹ/V/J  P  . . V/J  D+  NPr/V/J+ . Nᴹ/V/J NSg/V/J/P P  NPr+  . V/C Nᴹ/V/J  NSg/P D
 > Cat’s head    with great curiosity .
 # NSg$  NPr/V/J P    NSg/J NSg+      .
 >
@@ -3756,8 +3756,8 @@
 # . W?   D/P NPr/V/J P  NSg/I/V+ . D/P NPr      NSg/V/J+ . . V/J  NPr+  . . V     NPr/ISg+ P  V         NPr/ISg+ . .
 >
 #
-> “ I    don’t like        the look  of it       at    all          , ” said the King      : “ however , it       may    kiss  my
-# . ISg+ V     NSg/V/J/C/P D   NSg/V P  NPr/ISg+ NSg/P NSg/I/J/C/Dq . . V/J  D   NPrᴹ/V/J+ . . C       . NPr/ISg+ NPr/VX NSg/V D$+
+> “ I    don’t like        the look  of it       at    all          , ” said the King     : “ however , it       may    kiss  my
+# . ISg+ V     NSg/V/J/C/P D   NSg/V P  NPr/ISg+ NSg/P NSg/I/J/C/Dq . . V/J  D   NPr/V/J+ . . C       . NPr/ISg+ NPr/VX NSg/V D$+
 > hand   if    it       likes . ”
 # NSg/V+ NSg/C NPr/ISg+ NPl/V . .
 >
@@ -3766,20 +3766,20 @@
 # . W?  NPr/V/J/R NSg/C . . D   NSg/V/J+ V/J      .
 >
 #
-> “ Don’t be     impertinent , ” said the King      , “ and don’t look  at    me       like        that          ! ” He       got
-# . V     NSg/VX NSg/J       . . V/J  D   NPrᴹ/V/J+ . . V/C V     NSg/V NSg/P NPr/ISg+ NSg/V/J/C/P NSg/I/C/Ddem+ . . NPr/ISg+ V
+> “ Don’t be     impertinent , ” said the King     , “ and don’t look  at    me       like        that          ! ” He       got
+# . V     NSg/VX NSg/J       . . V/J  D   NPr/V/J+ . . V/C V     NSg/V NSg/P NPr/ISg+ NSg/V/J/C/P NSg/I/C/Ddem+ . . NPr/ISg+ V
 > behind  Alice as    he       spoke .
 # NSg/J/P NPr+  NSg/R NPr/ISg+ NSg/V .
 >
 #
-> “ A    cat      may    look  at    a    king      , ” said Alice . “ I’ve read  that         in      some     book   , but     I
-# . D/P+ NSg/V/J+ NPr/VX NSg/V NSg/P D/P+ NPrᴹ/V/J+ . . V/J  NPr+  . . W?   NSg/V NSg/I/C/Ddem NPr/J/P I/J/R/Dq NSg/V+ . NSg/C/P ISg+
+> “ A    cat      may    look  at    a    king     , ” said Alice . “ I’ve read  that         in      some     book   , but     I
+# . D/P+ NSg/V/J+ NPr/VX NSg/V NSg/P D/P+ NPr/V/J+ . . V/J  NPr+  . . W?   NSg/V NSg/I/C/Ddem NPr/J/P I/J/R/Dq NSg/V+ . NSg/C/P ISg+
 > don’t remember where . ”
 # V     NSg/V    NSg/C . .
 >
 #
-> “ Well    , it       must  be     removed , ” said the King      very decidedly , and he       called the
-# . NSg/V/J . NPr/ISg+ NSg/V NSg/VX V/J     . . V/J  D+  NPrᴹ/V/J+ J/R  R         . V/C NPr/ISg+ V/J    D
+> “ Well    , it       must  be     removed , ” said the King     very decidedly , and he       called the
+# . NSg/V/J . NPr/ISg+ NSg/V NSg/VX V/J     . . V/J  D+  NPr/V/J+ J/R  R         . V/C NPr/ISg+ V/J    D
 > Queen    , who    was passing at    the moment , “ My  dear    ! I    wish  you    would have   this    cat
 # NPr/V/J+ . NPr/I+ V   Nᴹ/V/J  NSg/P D   NSg+   . . D$+ NSg/V/J . ISg+ NSg/V ISgPl+ VX    NSg/VX I/Ddem+ NSg/V/J+
 > removed ! ”
@@ -3792,8 +3792,8 @@
 # P    ISg/D$+ NPr/V/J+ . . ISg+ V/J  . C/P     NSg/V/J Nᴹ/V/J  NSg/V/J/P .
 >
 #
-> “ I’ll fetch the executioner myself , ” said the King      eagerly , and he       hurried off       .
-# . W?   NSg/V D   NSg         ISg+   . . V/J  D   NPrᴹ/V/J+ R       . V/C NPr/ISg+ V/J     NSg/V/J/P .
+> “ I’ll fetch the executioner myself , ” said the King     eagerly , and he       hurried off       .
+# . W?   NSg/V D   NSg         ISg+   . . V/J  D   NPr/V/J+ R       . V/C NPr/ISg+ V/J     NSg/V/J/P .
 >
 #
 > Alice thought she  might   as    well    go      back    , and see   how   the game     was going  on  , as
@@ -3838,8 +3838,8 @@
 # NSg/I/C ISg+ V   NSg/V/J P  D   NPr      NSg/V/J+ . ISg+ V   V/J       P  NSg/V R     D/P NSg/J
 > crowd  collected round     it       : there was a   dispute going  on  between the executioner ,
 # NSg/V+ V/J       NSg/V/J/P NPr/ISg+ . +     V   D/P NSg/V+  Nᴹ/V/J J/P NSg/P   D   NSg         .
-> the King      , and the Queen    , who    were  all          talking at    once  , while     all          the rest      were
-# D   NPrᴹ/V/J+ . V/C D   NPr/V/J+ . NPr/I+ NSg/V NSg/I/J/C/Dq Nᴹ/V/J+ NSg/P NSg/C . NSg/V/C/P NSg/I/J/C/Dq D   NSg/V/JS+ NSg/V
+> the King     , and the Queen    , who    were  all          talking at    once  , while     all          the rest      were
+# D   NPr/V/J+ . V/C D   NPr/V/J+ . NPr/I+ NSg/V NSg/I/J/C/Dq Nᴹ/V/J+ NSg/P NSg/C . NSg/V/C/P NSg/I/J/C/Dq D   NSg/V/JS+ NSg/V
 > quite silent , and looked very uncomfortable .
 # R     NSg/J  . V/C V/J    J/R  J             .
 >
@@ -3888,8 +3888,8 @@
 #
 > The Cat’s head     began fading away the moment he       was gone  , and , by      the time      he       had
 # D   NSg$  NPr/V/J+ V     Nᴹ/V/J V/J  D   NSg+   NPr/ISg+ V   V/J/P . V/C . NSg/J/P D   N🅪Sg/V/J+ NPr/ISg+ V
-> come    back    with the Duchess , it       had entirely disappeared ; so        the King      and the
-# NSg/V/P NSg/V/J P    D   NSg/V   . NPr/ISg+ V   R        V/J         . NSg/I/J/C D   NPrᴹ/V/J+ V/C D
+> come    back    with the Duchess , it       had entirely disappeared ; so        the King     and the
+# NSg/V/P NSg/V/J P    D   NSg/V   . NPr/ISg+ V   R        V/J         . NSg/I/J/C D   NPr/V/J+ V/C D
 > executioner ran   wildly up        and down       looking for it       , while     the rest     of the party
 # NSg         NSg/V R      NSg/V/J/P V/C N🅪Sg/V/J/P Nᴹ/V/J  C/P NPr/ISg+ . NSg/V/C/P D   NSg/V/JS P  D   NSg/V/J+
 > went  back    to the game     .
@@ -4142,8 +4142,8 @@
 # I+   ISg+ V/J       NSg/V V/J   P    Nᴹ+     NSg/J/P D   NPl/V+   . NPr/I P  NSg/V+ V   P
 > leave off       being      arches to do     this    , so        that          by      the end   of half        an  hour or    so
 # NSg/V NSg/V/J/P N🅪Sg/V/J/C NPl/V  P  NSg/VX I/Ddem+ . NSg/I/J/C NSg/I/C/Ddem+ NSg/J/P D   NSg/V P  N🅪Sg/V/J/P+ D/P NSg+ NPr/C NSg/I/J/C
-> there were  no    arches left    , and all          the players , except the King      , the Queen    , and
-# +     NSg/V NPr/P NPl/V  NPr/V/J . V/C NSg/I/J/C/Dq D   NPl+    . V/C/P  D   NPrᴹ/V/J+ . D   NPr/V/J+ . V/C
+> there were  no    arches left    , and all          the players , except the King     , the Queen    , and
+# +     NSg/V NPr/P NPl/V  NPr/V/J . V/C NSg/I/J/C/Dq D   NPl+    . V/C/P  D   NPr/V/J+ . D   NPr/V/J+ . V/C
 > Alice , were  in      custody and under   sentence of execution .
 # NPr+  . NSg/V NPr/J/P Nᴹ+     V/C NSg/J/P NSg/V    P  NSg+      .
 >
@@ -4170,8 +4170,8 @@
 # . NSg/V/P J/P . NSg/J/C . . V/J  D+  NPr/V/J+ . . V/C NPr/ISg+ VX    NPr/V ISgPl+ ISg/D$+ N🅪Sg+   . .
 >
 #
-> As    they walked off       together , Alice heard the King      say   in      a    low      voice  , to the
-# NSg/R IPl+ V/J    NSg/V/J/P J        . NPr+  V/J   D+  NPrᴹ/V/J+ NSg/V NPr/J/P D/P+ NSg/V/J+ NSg/V+ . P  D+
+> As    they walked off       together , Alice heard the King     say   in      a    low      voice  , to the
+# NSg/R IPl+ V/J    NSg/V/J/P J        . NPr+  V/J   D+  NPr/V/J+ NSg/V NPr/J/P D/P+ NSg/V/J+ NSg/V+ . P  D+
 > company generally , “ You    are all          pardoned . ” “ Come    , that’s a    good    thing  ! ” she  said
 # N🅪Sg/V+ R         . . ISgPl+ V   NSg/I/J/C/Dq V/J      . . . NSg/V/P . NSg$   D/P+ NPr/V/J NSg/V+ . . ISg+ V/J
 > to herself , for she  had felt     quite unhappy at    the number    of executions the Queen
@@ -5012,14 +5012,14 @@
 # NSg/V+  NSg . NPr/I+ NSg/V D   NPl/V .
 >
 #
-> The King     and Queen   of Hearts were  seated on  their throne when    they arrived , with
-# D   NPrᴹ/V/J V/C NPr/V/J P  NPl/V+ NSg/V V/J    J/P D$+   NSg/V  NSg/I/C IPl+ V/J     . P
+> The King    and Queen   of Hearts were  seated on  their throne when    they arrived , with
+# D   NPr/V/J V/C NPr/V/J P  NPl/V+ NSg/V V/J    J/P D$+   NSg/V  NSg/I/C IPl+ V/J     . P
 > a   great crowd  assembled about them     — all          sorts of little     birds and beasts , as    well
 # D/P NSg/J NSg/V+ V/J       J/P   NSg/IPl+ . NSg/I/J/C/Dq NPl/V P  NPr/I/J/Dq NPl/V V/C NPl/V+ . NSg/R NSg/V/J
 > as    the whole pack  of cards  : the Knave was standing before them     , in      chains , with
 # NSg/R D   NSg/J NSg/V P  NPl/V+ . D   NSg   V   Nᴹ/V/J   C/P    NSg/IPl+ . NPr/J/P NPl/V+ . P
-> a   soldier  on  each side     to guard  him  ; and near      the King      was the White    Rabbit ,
-# D/P NSg/V/J+ J/P Dq   NSg/V/J+ P  NSg/V+ ISg+ . V/C NSg/V/J/P D   NPrᴹ/V/J+ V   D   NPr🅪/V/J NSg/V+ .
+> a   soldier  on  each side     to guard  him  ; and near      the King     was the White    Rabbit ,
+# D/P NSg/V/J+ J/P Dq   NSg/V/J+ P  NSg/V+ ISg+ . V/C NSg/V/J/P D   NPr/V/J+ V   D   NPr🅪/V/J NSg/V+ .
 > with a   trumpet in      one       hand   , and a   scroll of parchment in      the other   . In      the very
 # P    D/P NSg/V+  NPr/J/P NSg/I/V/J NSg/V+ . V/C D/P NSg/V  P  N🅪Sg+     NPr/J/P D   NSg/V/J . NPr/J/P D   J/R
 > middle  of the court    was a   table , with a   large dish  of tarts upon it       : they looked
@@ -5044,8 +5044,8 @@
 # NSg/V+ . .
 >
 #
-> The judge  , by      the way    , was the King      ; and as    he       wore his     crown    over    the wig    ,
-# D+  NSg/V+ . NSg/J/P D+  NSg/J+ . V   D+  NPrᴹ/V/J+ . V/C NSg/R NPr/ISg+ V    ISg/D$+ NSg/V/J+ NSg/J/P D+  NSg/V+ .
+> The judge  , by      the way    , was the King     ; and as    he       wore his     crown    over    the wig    ,
+# D+  NSg/V+ . NSg/J/P D+  NSg/J+ . V   D+  NPr/V/J+ . V/C NSg/R NPr/ISg+ V    ISg/D$+ NSg/V/J+ NSg/J/P D+  NSg/V+ .
 > ( look  at    the frontispiece if    you    want  to see   how   he       did it       , ) he       did not   look  at
 # . NSg/V NSg/P D   NSg/V        NSg/C ISgPl+ NSg/V P  NSg/V NSg/C NPr/ISg+ V   NPr/ISg+ . . NPr/ISg+ V   NSg/C NSg/V NSg/P
 > all          comfortable , and it       was certainly not   becoming .
@@ -5083,7 +5083,7 @@
 > “ Stupid things ! ” Alice began in      a   loud  , indignant voice  , but     she  stopped
 # . NSg/J+ NPl/V+ . . NPr+  V     NPr/J/P D/P NSg/J . J         NSg/V+ . NSg/C/P ISg+ V/J
 > hastily , for the White    Rabbit cried out         , “ Silence in      the court    ! ” and the King
-# R       . C/P D   NPr🅪/V/J NSg/V+ V/J   NSg/V/J/R/P . . NSg/V+  NPr/J/P D   NSg/V/J+ . . V/C D+  NPrᴹ/V/J+
+# R       . C/P D   NPr🅪/V/J NSg/V+ V/J   NSg/V/J/R/P . . NSg/V+  NPr/J/P D   NSg/V/J+ . . V/C D+  NPr/V/J+
 > put   on  his     spectacles and looked anxiously round     , to make  out         who    was talking .
 # NSg/V J/P ISg/D$+ NPl        V/C V/J    R         NSg/V/J/P . P  NSg/V NSg/V/J/R/P NPr/I+ V   Nᴹ/V/J  .
 >
@@ -5116,8 +5116,8 @@
 # NSg/V/J+ .
 >
 #
-> “ Herald , read  the accusation ! ” said the King      .
-# . NSg/V+ . NSg/V D   NSg        . . V/J  D+  NPrᴹ/V/J+ .
+> “ Herald , read  the accusation ! ” said the King     .
+# . NSg/V+ . NSg/V D   NSg        . . V/J  D+  NPr/V/J+ .
 >
 #
 > On  this    the White     Rabbit blew    three blasts on  the trumpet , and then    unrolled the
@@ -5132,8 +5132,8 @@
 # NPl/V+ . NPr/ISg+ NSg/V I/Ddem NPl/V . V/C V    NSg/IPl+ R     V/J  . .
 >
 #
-> “ Consider your verdict , ” the King      said to the jury     .
-# . V        D$+  NSg+    . . D+  NPrᴹ/V/J+ V/J  P  D+  NSg/V/J+ .
+> “ Consider your verdict , ” the King     said to the jury     .
+# . V        D$+  NSg+    . . D+  NPr/V/J+ V/J  P  D+  NSg/V/J+ .
 >
 #
 > “ Not   yet     , not   yet     ! ” the Rabbit hastily interrupted . “ There’s a   great deal     to
@@ -5142,8 +5142,8 @@
 # NSg/V/P C/P    NSg/I/C/Ddem+ . .
 >
 #
-> “ Call  the first    witness , ” said the King      ; and the White     Rabbit blew    three blasts
-# . NSg/V D+  NSg/V/J+ NSg/V+  . . V/J  D+  NPrᴹ/V/J+ . V/C D+  NPr🅪/V/J+ NSg/V+ NSg/V/J NSg   NPl/V
+> “ Call  the first    witness , ” said the King     ; and the White     Rabbit blew    three blasts
+# . NSg/V D+  NSg/V/J+ NSg/V+  . . V/J  D+  NPr/V/J+ . V/C D+  NPr🅪/V/J+ NSg/V+ NSg/V/J NSg   NPl/V
 > on  the trumpet , and called out         , “ First   witness ! ”
 # J/P D   NSg/V+  . V/C V/J    NSg/V/J/R/P . . NSg/V/J NSg/V+  . .
 >
@@ -5156,8 +5156,8 @@
 # . C/P Nᴹ/V/J   I/Ddem NPr/J/P . NSg/C/P ISg+ V      R     V/J      D$+ N🅪Sg/V+ NSg/I/C ISg+ V   NSg/V C/P . .
 >
 #
-> “ You    ought    to have   finished , ” said the King      . “ When    did you    begin ? ”
-# . ISgPl+ NSg/I/VX P  NSg/VX V/J      . . V/J  D+  NPrᴹ/V/J+ . . NSg/I/C V   ISgPl+ NSg/V . .
+> “ You    ought    to have   finished , ” said the King     . “ When    did you    begin ? ”
+# . ISgPl+ NSg/I/VX P  NSg/VX V/J      . . V/J  D+  NPr/V/J+ . . NSg/I/C V   ISgPl+ NSg/V . .
 >
 #
 > The Hatter looked at    the March  Hare     , who    had followed him  into the court    ,
@@ -5174,24 +5174,24 @@
 # . NSg/J     . . V/J   D   NSg      .
 >
 #
-> “ Write that          down       , ” the King      said to the jury     , and the jury     eagerly wrote down
-# . NSg/V NSg/I/C/Ddem+ N🅪Sg/V/J/P . . D+  NPrᴹ/V/J+ V/J  P  D+  NSg/V/J+ . V/C D+  NSg/V/J+ R       V     N🅪Sg/V/J/P
+> “ Write that          down       , ” the King     said to the jury     , and the jury     eagerly wrote down
+# . NSg/V NSg/I/C/Ddem+ N🅪Sg/V/J/P . . D+  NPr/V/J+ V/J  P  D+  NSg/V/J+ . V/C D+  NSg/V/J+ R       V     N🅪Sg/V/J/P
 > all          three dates  on  their slates , and then    added them     up        , and reduced the answer
 # NSg/I/J/C/Dq NSg   NPl/V+ J/P D$+   NPl/V  . V/C NSg/J/C V/J   NSg/IPl+ NSg/V/J/P . V/C V/J     D   NSg/V+
 > to shillings and pence .
 # P  W?        V/C NSg   .
 >
 #
-> “ Take  off       your hat    , ” the King      said to the Hatter .
-# . NSg/V NSg/V/J/P D$+  NSg/V+ . . D+  NPrᴹ/V/J+ V/J  P  D   NSg/V  .
+> “ Take  off       your hat    , ” the King     said to the Hatter .
+# . NSg/V NSg/V/J/P D$+  NSg/V+ . . D+  NPr/V/J+ V/J  P  D   NSg/V  .
 >
 #
 > “ It       isn’t mine     , ” said the Hatter .
 # . NPr/ISg+ NSg/V NSg/I/V+ . . V/J  D   NSg/V  .
 >
 #
-> “ Stolen  ! ” the King      exclaimed , turning to the jury     , who    instantly made a
-# . NSg/V/J . . D+  NPrᴹ/V/J+ V/J       . Nᴹ/V/J  P  D+  NSg/V/J+ . NPr/I+ R         V    D/P
+> “ Stolen  ! ” the King     exclaimed , turning to the jury     , who    instantly made a
+# . NSg/V/J . . D+  NPr/V/J+ V/J       . Nᴹ/V/J  P  D+  NSg/V/J+ . NPr/I+ R         V    D/P
 > memorandum of the fact .
 # NSg        P  D   NSg+ .
 >
@@ -5208,8 +5208,8 @@
 # V/J    NSg/V/J V/C V/J      .
 >
 #
-> “ Give  your evidence , ” said the King      ; “ and don’t be     nervous , or    I’ll have   you
-# . NSg/V D$+  Nᴹ/V+    . . V/J  D+  NPrᴹ/V/J+ . . V/C V     NSg/VX J       . NPr/C W?   NSg/VX ISgPl+
+> “ Give  your evidence , ” said the King     ; “ and don’t be     nervous , or    I’ll have   you
+# . NSg/V D$+  Nᴹ/V+    . . V/J  D+  NPr/V/J+ . . V/C V     NSg/VX J       . NPr/C W?   NSg/VX ISgPl+
 > executed on  the spot     . ”
 # V/J      J/P D   NSg/V/J+ . .
 >
@@ -5270,8 +5270,8 @@
 # NSg/V  V/J      NSg/I/J/C . NSg/I/C/Ddem NPr/ISg+ NSg/V/J I/C/Dq ISg/D$+ NPl/V+ NSg/V/J/P .
 >
 #
-> “ Give  your evidence , ” the King      repeated angrily , “ or    I’ll have   you    executed ,
-# . NSg/V D$+  Nᴹ/V+    . . D+  NPrᴹ/V/J+ V/J      R       . . NPr/C W?   NSg/VX ISgPl+ V/J      .
+> “ Give  your evidence , ” the King     repeated angrily , “ or    I’ll have   you    executed ,
+# . NSg/V D$+  Nᴹ/V+    . . D+  NPr/V/J+ V/J      R       . . NPr/C W?   NSg/VX ISgPl+ V/J      .
 > whether you’re nervous or    not   . ”
 # I/C     W?     J       NPr/C NSg/C . .
 >
@@ -5284,16 +5284,16 @@
 # NSg/V   NSg/I/J/C NSg/V/J . V/C D   Nᴹ/V/J    P  D   N🅪Sg/V+ . .
 >
 #
-> “ The twinkling of the what   ? ” said the King      .
-# . D   Nᴹ/V/J    P  D   NSg/I+ . . V/J  D+  NPrᴹ/V/J+ .
+> “ The twinkling of the what   ? ” said the King     .
+# . D   Nᴹ/V/J    P  D   NSg/I+ . . V/J  D+  NPr/V/J+ .
 >
 #
 > “ It       began with the tea     , ” the Hatter replied .
 # . NPr/ISg+ V     P    D+  N🅪Sg/V+ . . D   NSg/V  V/J     .
 >
 #
-> “ Of course twinkling begins with a   T      ! ” said the King      sharply . “ Do     you    take  me
-# . P  NSg/V+ Nᴹ/V/J    NPl/V  P    D/P NPr/J+ . . V/J  D+  NPrᴹ/V/J+ R       . . NSg/VX ISgPl+ NSg/V NPr/ISg+
+> “ Of course twinkling begins with a   T      ! ” said the King     sharply . “ Do     you    take  me
+# . P  NSg/V+ Nᴹ/V/J    NPl/V  P    D/P NPr/J+ . . V/J  D+  NPr/V/J+ R       . . NSg/VX ISgPl+ NSg/V NPr/ISg+
 > for a   dunce ? Go      on  ! ”
 # C/P D/P NSg   . NSg/V/J J/P . .
 >
@@ -5316,8 +5316,8 @@
 # . ISg+ V    NPr/ISg+ . . V/J  D+  NPr/V+ NSg/V/J+ .
 >
 #
-> “ He       denies it       , ” said the King      : “ leave out         that         part     . ”
-# . NPr/ISg+ V      NPr/ISg+ . . V/J  D   NPrᴹ/V/J+ . . NSg/V NSg/V/J/R/P NSg/I/C/Ddem NSg/V/J+ . .
+> “ He       denies it       , ” said the King     : “ leave out         that         part     . ”
+# . NPr/ISg+ V      NPr/ISg+ . . V/J  D   NPr/V/J+ . . NSg/V NSg/V/J/R/P NSg/I/C/Ddem NSg/V/J+ . .
 >
 #
 > “ Well    , at    any     rate   , the Dormouse said — ” the Hatter went  on  , looking anxiously
@@ -5340,8 +5340,8 @@
 # . NSg/I/C/Ddem ISg+ VX    NSg/V    . . V/J  D   NSg/V  .
 >
 #
-> “ You    must  remember , ” remarked the King      , “ or    I’ll have   you    executed . ”
-# . ISgPl+ NSg/V NSg/V    . . V/J      D+  NPrᴹ/V/J+ . . NPr/C W?   NSg/VX ISgPl+ V/J      . .
+> “ You    must  remember , ” remarked the King     , “ or    I’ll have   you    executed . ”
+# . ISgPl+ NSg/V NSg/V    . . V/J      D+  NPr/V/J+ . . NPr/C W?   NSg/VX ISgPl+ V/J      . .
 >
 #
 > The miserable Hatter dropped his     teacup and bread   - and - butter , and went  down       on
@@ -5350,8 +5350,8 @@
 # NSg/I/V/J NSg/V+ . . W?  D/P+ NSg/V/J NPr/V/J+ . D$+  NSg/I+  . . NPr/ISg+ V     .
 >
 #
-> “ You’re a   very poor    speaker , ” said the King      .
-# . W?     D/P J/R  NSg/V/J NSg+    . . V/J  D   NPrᴹ/V/J+ .
+> “ You’re a   very poor    speaker , ” said the King     .
+# . W?     D/P J/R  NSg/V/J NSg+    . . V/J  D   NPr/V/J+ .
 >
 #
 > Here    one       of the guinea - pigs   cheered , and was immediately suppressed by      the
@@ -5376,16 +5376,16 @@
 # NSg/I+ NPr/ISg+ V     NSg/V/C/P NPr/V/J/C . .
 >
 #
-> “ If    that’s all          you    know  about it       , you    may    stand down       , ” continued the King      .
-# . NSg/C NSg$   NSg/I/J/C/Dq ISgPl+ NSg/V J/P   NPr/ISg+ . ISgPl+ NPr/VX NSg/V N🅪Sg/V/J/P . . V/J       D   NPrᴹ/V/J+ .
+> “ If    that’s all          you    know  about it       , you    may    stand down       , ” continued the King     .
+# . NSg/C NSg$   NSg/I/J/C/Dq ISgPl+ NSg/V J/P   NPr/ISg+ . ISgPl+ NPr/VX NSg/V N🅪Sg/V/J/P . . V/J       D   NPr/V/J+ .
 >
 #
 > “ I    can’t go      no    lower    , ” said the Hatter : “ I’m on  the floor  , as    it       is . ”
 # . ISg+ VX    NSg/V/J NPr/P NSg/V/JC . . V/J  D   NSg/V  . . W?  J/P D   NSg/V+ . NSg/R NPr/ISg+ VL . .
 >
 #
-> “ Then    you    may    sit   down       , ” the King      replied .
-# . NSg/J/C ISgPl+ NPr/VX NSg/V N🅪Sg/V/J/P . . D+  NPrᴹ/V/J+ V/J     .
+> “ Then    you    may    sit   down       , ” the King     replied .
+# . NSg/J/C ISgPl+ NPr/VX NSg/V N🅪Sg/V/J/P . . D+  NPr/V/J+ V/J     .
 >
 #
 > Here    the other   guinea - pig    cheered , and was suppressed .
@@ -5404,8 +5404,8 @@
 # NPr/I+ V   NPrᴹ/V/J D   NSg/V P  +       .
 >
 #
-> “ You    may    go      , ” said the King      , and the Hatter hurriedly left    the court    , without
-# . ISgPl+ NPr/VX NSg/V/J . . V/J  D+  NPrᴹ/V/J+ . V/C D   NSg/V  R         NPr/V/J D   NSg/V/J+ . C/P
+> “ You    may    go      , ” said the King     , and the Hatter hurriedly left    the court    , without
+# . ISgPl+ NPr/VX NSg/V/J . . V/J  D+  NPr/V/J+ . V/C D   NSg/V  R         NPr/V/J D   NSg/V/J+ . C/P
 > even    waiting to put   his     shoes  on  .
 # NSg/V/J Nᴹ/V/J  P  NSg/V ISg/D$+ NPl/V+ J/P .
 >
@@ -5416,8 +5416,8 @@
 # NSg/C/P D   NSg/V  V   NSg/V/J/R/P P  N🅪Sg/V+ C/P    D   NSg/V+  NSg/VX NSg/V P  D   NSg/V+ .
 >
 #
-> “ Call  the next     witness ! ” said the King      .
-# . NSg/V D+  NSg/J/P+ NSg/V+  . . V/J  D+  NPrᴹ/V/J+ .
+> “ Call  the next     witness ! ” said the King     .
+# . NSg/V D+  NSg/J/P+ NSg/V+  . . V/J  D+  NPr/V/J+ .
 >
 #
 > The next     witness was the Duchess’s cook  . She  carried the pepper  - box   in      her     hand   ,
@@ -5428,22 +5428,22 @@
 # NPl/V+ NSg/V/J/P D+  NSg/V+ V     Nᴹ/V/J   NSg/I/J/C/Dq NSg/P NSg/C .
 >
 #
-> “ Give  your evidence , ” said the King      .
-# . NSg/V D$+  Nᴹ/V+    . . V/J  D+  NPrᴹ/V/J+ .
+> “ Give  your evidence , ” said the King     .
+# . NSg/V D$+  Nᴹ/V+    . . V/J  D+  NPr/V/J+ .
 >
 #
 > “ Shan’t , ” said the cook   .
 # . V      . . V/J  D   NPr/V+ .
 >
 #
-> The King      looked anxiously at    the White     Rabbit , who    said in      a    low      voice  , “ Your
-# D+  NPrᴹ/V/J+ V/J    R         NSg/P D+  NPr🅪/V/J+ NSg/V+ . NPr/I+ V/J  NPr/J/P D/P+ NSg/V/J+ NSg/V+ . . D$+
+> The King     looked anxiously at    the White     Rabbit , who    said in      a    low      voice  , “ Your
+# D+  NPr/V/J+ V/J    R         NSg/P D+  NPr🅪/V/J+ NSg/V+ . NPr/I+ V/J  NPr/J/P D/P+ NSg/V/J+ NSg/V+ . . D$+
 > Majesty must  cross      - examine this    witness . ”
 # NSg/I+  NSg/V NPr/V/J/P+ . NSg/V   I/Ddem+ NSg/V+  . .
 >
 #
-> “ Well    , if    I    must  , I    must  , ” the King      said , with a   melancholy air     , and , after
-# . NSg/V/J . NSg/C ISg+ NSg/V . ISg+ NSg/V . . D+  NPrᴹ/V/J+ V/J  . P    D/P NSg/J      N🅪Sg/V+ . V/C . P
+> “ Well    , if    I    must  , I    must  , ” the King     said , with a   melancholy air     , and , after
+# . NSg/V/J . NSg/C ISg+ NSg/V . ISg+ NSg/V . . D+  NPr/V/J+ V/J  . P    D/P NSg/J      N🅪Sg/V+ . V/C . P
 > folding his     arms   and frowning at    the cook   till      his     eyes   were  nearly out         of
 # Nᴹ/V/J  ISg/D$+ NPl/V+ V/C Nᴹ/V/J   NSg/P D   NPr/V+ NSg/V/C/P ISg/D$+ NPl/V+ NSg/V R      NSg/V/J/R/P P
 > sight   , he       said in      a   deep  voice  , “ What   are tarts made of ? ”
@@ -5470,8 +5470,8 @@
 # NSg/V/J/R/P . V/C . NSg/J/P D   N🅪Sg/V/J+ IPl+ V   V/J     N🅪Sg/V/J/P P     . D   NPr/V+ V   V/J         .
 >
 #
-> “ Never mind   ! ” said the King      , with an  air    of great  relief . “ Call  the next
-# . R     NSg/V+ . . V/J  D+  NPrᴹ/V/J+ . P    D/P N🅪Sg/V P  NSg/J+ NSg/J+ . . NSg/V D+  NSg/J/P+
+> “ Never mind   ! ” said the King     , with an  air    of great  relief . “ Call  the next
+# . R     NSg/V+ . . V/J  D+  NPr/V/J+ . P    D/P N🅪Sg/V P  NSg/J+ NSg/J+ . . NSg/V D+  NSg/J/P+
 > witness . ” And he       added in      an  undertone to the Queen    , “ Really , my  dear    , you    must
 # NSg/V+  . . V/C NPr/ISg+ V/J   NPr/J/P D/P NSg/V     P  D   NPr/V/J+ . . R      . D$+ NSg/V/J . ISgPl+ NSg/V
 > cross      - examine the next    witness . It       quite makes my  forehead ache   ! ”
@@ -5516,8 +5516,8 @@
 # V/J       NSg/P NSg/C V/C NSg/V NSg/V/J P    D   NSg/V/J+ . NSg/V+ . NPr/C IPl+ VX    NSg/V .
 >
 #
-> “ The trial    cannot proceed , ” said the King      in      a   very grave    voice  , “ until all          the
-# . D+  NSg/V/J+ NSg/V  V       . . V/J  D   NPrᴹ/V/J+ NPr/J/P D/P J/R  NSg/V/J+ NSg/V+ . . C/P   NSg/I/J/C/Dq D
+> “ The trial    cannot proceed , ” said the King     in      a   very grave    voice  , “ until all          the
+# . D+  NSg/V/J+ NSg/V  V       . . V/J  D   NPr/V/J+ NPr/J/P D/P J/R  NSg/V/J+ NSg/V+ . . C/P   NSg/I/J/C/Dq D
 > jurymen are back    in      their proper places — all          , ” he       repeated with great emphasis ,
 # NPl     V   NSg/V/J NPr/J/P D$+   NSg/J  NPl/V+ . NSg/I/J/C/Dq . . NPr/ISg+ V/J      P    NSg/J NSg+     .
 > looking hard   at    Alice as    he       said so        .
@@ -5548,24 +5548,24 @@
 # Nᴹ/V/J NSg/V/J/P P    D   NSg/V P  D   NSg/V/J+ .
 >
 #
-> “ What   do     you    know  about this    business ? ” the King      said to Alice .
-# . NSg/I+ NSg/VX ISgPl+ NSg/V J/P   I/Ddem+ N🅪Sg/J+  . . D+  NPrᴹ/V/J+ V/J  P  NPr+  .
+> “ What   do     you    know  about this    business ? ” the King     said to Alice .
+# . NSg/I+ NSg/VX ISgPl+ NSg/V J/P   I/Ddem+ N🅪Sg/J+  . . D+  NPr/V/J+ V/J  P  NPr+  .
 >
 #
 > “ Nothing  , ” said Alice .
 # . NSg/I/J+ . . V/J  NPr+  .
 >
 #
-> “ Nothing  whatever ? ” persisted the King      .
-# . NSg/I/J+ NSg/I/J+ . . V/J       D+  NPrᴹ/V/J+ .
+> “ Nothing  whatever ? ” persisted the King     .
+# . NSg/I/J+ NSg/I/J+ . . V/J       D+  NPr/V/J+ .
 >
 #
 > “ Nothing  whatever , ” said Alice .
 # . NSg/I/J+ NSg/I/J+ . . V/J  NPr+  .
 >
 #
-> “ That’s very important , ” the King      said , turning to the jury     . They were  just
-# . NSg$   J/R  J         . . D   NPrᴹ/V/J+ V/J  . Nᴹ/V/J  P  D   NSg/V/J+ . IPl+ NSg/V V/J
+> “ That’s very important , ” the King     said , turning to the jury     . They were  just
+# . NSg$   J/R  J         . . D   NPr/V/J+ V/J  . Nᴹ/V/J  P  D   NSg/V/J+ . IPl+ NSg/V V/J
 > beginning to write this   down       on  their slates , when    the White    Rabbit interrupted :
 # NSg/V/J   P  NSg/V I/Ddem N🅪Sg/V/J/P J/P D$+   NPl/V  . NSg/I/C D   NPr🅪/V/J NSg/V+ V/J         .
 > “ Unimportant , your Majesty means , of course , ” he       said in      a   very respectful tone      ,
@@ -5574,8 +5574,8 @@
 # NSg/C/P Nᴹ/V/J   V/C Nᴹ/V/J NPl/V+ NSg/P ISg+ NSg/R NPr/ISg+ NSg/V .
 >
 #
-> “ Unimportant , of course , I    meant , ” the King      hastily said , and went  on  to himself
-# . J           . P  NSg/V+ . ISg+ V     . . D+  NPrᴹ/V/J+ R       V/J  . V/C NSg/V J/P P  ISg+
+> “ Unimportant , of course , I    meant , ” the King     hastily said , and went  on  to himself
+# . J           . P  NSg/V+ . ISg+ V     . . D+  NPr/V/J+ R       V/J  . V/C NSg/V J/P P  ISg+
 > in      an  undertone ,
 # NPr/J/P D/P NSg/V     .
 >
@@ -5594,8 +5594,8 @@
 # N🅪Sg/V+ D/P NSg/V+ . . ISg+ NSg/V   P  ISg+    .
 >
 #
-> At    this    moment the King      , who    had been  for some      time      busily writing in      his
-# NSg/P I/Ddem+ NSg+   D+  NPrᴹ/V/J+ . NPr/I+ V   NSg/V C/P I/J/R/Dq+ N🅪Sg/V/J+ R      Nᴹ/V/J  NPr/J/P ISg/D$+
+> At    this    moment the King     , who    had been  for some      time      busily writing in      his
+# NSg/P I/Ddem+ NSg+   D+  NPr/V/J+ . NPr/I+ V   NSg/V C/P I/J/R/Dq+ N🅪Sg/V/J+ R      Nᴹ/V/J  NPr/J/P ISg/D$+
 > note   - book   , cackled out         “ Silence ! ” and read  out         from his     book   , “ Rule   Forty - two .
 # NSg/V+ . NSg/V+ . V/J     NSg/V/J/R/P . NSg/V+  . . V/C NSg/V NSg/V/J/R/P P    ISg/D$+ NSg/V+ . . NSg/V+ NSg/J . NSg .
 > All           persons more         than a    mile high    to leave the court    . ”
@@ -5610,8 +5610,8 @@
 # . W?  NSg/C D/P NSg+ NSg/V/J . . V/J  NPr+  .
 >
 #
-> “ You    are , ” said the King      .
-# . ISgPl+ V   . . V/J  D+  NPrᴹ/V/J+ .
+> “ You    are , ” said the King     .
+# . ISgPl+ V   . . V/J  D+  NPr/V/J+ .
 >
 #
 > “ Nearly two  miles  high    , ” added the Queen    .
@@ -5624,16 +5624,16 @@
 # NSg/V+ . ISgPl+ V/J      NPr/ISg+ V/J  NPr/V/J/C . .
 >
 #
-> “ It’s the oldest rule   in      the book   , ” said the King      .
-# . W?   D   JS     NSg/V+ NPr/J/P D   NSg/V+ . . V/J  D   NPrᴹ/V/J+ .
+> “ It’s the oldest rule   in      the book   , ” said the King     .
+# . W?   D   JS     NSg/V+ NPr/J/P D   NSg/V+ . . V/J  D   NPr/V/J+ .
 >
 #
 > “ Then    it       ought    to be     Number     One       , ” said Alice .
 # . NSg/J/C NPr/ISg+ NSg/I/VX P  NSg/VX N🅪Sg/V/JC+ NSg/I/V/J . . V/J  NPr+  .
 >
 #
-> The King      turned pale    , and shut    his     note   - book   hastily . “ Consider your verdict , ”
-# D+  NPrᴹ/V/J+ V/J    NSg/V/J . V/C NSg/V/J ISg/D$+ NSg/V+ . NSg/V+ R       . . V        D$+  NSg+    . .
+> The King     turned pale    , and shut    his     note   - book   hastily . “ Consider your verdict , ”
+# D+  NPr/V/J+ V/J    NSg/V/J . V/C NSg/V/J ISg/D$+ NSg/V+ . NSg/V+ R       . . V        D$+  NSg+    . .
 > he       said to the jury     , in      a   low     , trembling voice  .
 # NPr/ISg+ V/J  P  D+  NSg/V/J+ . NPr/J/P D/P NSg/V/J . Nᴹ/V/J    NSg/V+ .
 >
@@ -5654,8 +5654,8 @@
 # V/J     NSg/J/P D   NSg+     P  . P  NSg/I+   . .
 >
 #
-> “ It       must  have   been  that          , ” said the King      , “ unless it       was written to nobody , which
-# . NPr/ISg+ NSg/V NSg/VX NSg/V NSg/I/C/Ddem+ . . V/J  D+  NPrᴹ/V/J+ . . C      NPr/ISg+ V   V/J     P  NSg/I+ . I/C+
+> “ It       must  have   been  that          , ” said the King     , “ unless it       was written to nobody , which
+# . NPr/ISg+ NSg/V NSg/VX NSg/V NSg/I/C/Ddem+ . . V/J  D+  NPr/V/J+ . . C      NPr/ISg+ V   V/J     P  NSg/I+ . I/C+
 > isn’t usual , you    know  . ”
 # NSg/V NSg/J . ISgPl+ NSg/V . .
 >
@@ -5682,8 +5682,8 @@
 # NPr/ISg+ . . . D+  NSg/V/J+ NSg/I/J/C/Dq V/J    V/J     . .
 >
 #
-> “ He       must  have   imitated somebody else’s hand   , ” said the King      . ( The jury     all
-# . NPr/ISg+ NSg/V NSg/VX V/J      NSg/I+   NSg$   NSg/V+ . . V/J  D   NPrᴹ/V/J+ . . D+  NSg/V/J+ NSg/I/J/C/Dq
+> “ He       must  have   imitated somebody else’s hand   , ” said the King     . ( The jury     all
+# . NPr/ISg+ NSg/V NSg/VX V/J      NSg/I+   NSg$   NSg/V+ . . V/J  D   NPr/V/J+ . . D+  NSg/V/J+ NSg/I/J/C/Dq
 > brightened up        again . )
 # V/J        NSg/V/J/P P     . .
 >
@@ -5694,8 +5694,8 @@
 # ISg+ V   . W?      NPr/P NSg/V+ V/J    NSg/P D   NSg/V+ . .
 >
 #
-> “ If    you    didn’t sign   it       , ” said the King      , “ that          only  makes the matter  worse    . You
-# . NSg/C ISgPl+ V      NSg/V+ NPr/ISg+ . . V/J  D   NPrᴹ/V/J+ . . NSg/I/C/Ddem+ J/R/C NPl/V D   N🅪Sg/V+ NSg/V/JC . ISgPl+
+> “ If    you    didn’t sign   it       , ” said the King     , “ that          only  makes the matter  worse    . You
+# . NSg/C ISgPl+ V      NSg/V+ NPr/ISg+ . . V/J  D   NPr/V/J+ . . NSg/I/C/Ddem+ J/R/C NPl/V D   N🅪Sg/V+ NSg/V/JC . ISgPl+
 > must  have   meant some      mischief , or    else    you’d have   signed your name   like        an
 # NSg/V NSg/VX V     I/J/R/Dq+ NSg/V+   . NPr/C NSg/J/C W?    NSg/VX V/J    D$+  NSg/V+ NSg/V/J/C/P D/P
 > honest man      . ”
@@ -5704,8 +5704,8 @@
 #
 > There was a   general clapping of hands  at    this    : it       was the first   really clever
 # +     V   D/P NSg/V/J NSg/V    P  NPl/V+ NSg/P I/Ddem+ . NPr/ISg+ V   D   NSg/V/J R      J
-> thing  the King      had said that         day   .
-# NSg/V+ D+  NPrᴹ/V/J+ V   V/J  NSg/I/C/Ddem NPr🅪+ .
+> thing  the King     had said that         day   .
+# NSg/V+ D+  NPr/V/J+ V   V/J  NSg/I/C/Ddem NPr🅪+ .
 >
 #
 > “ That          proves his     guilt  , ” said the Queen    .
@@ -5718,8 +5718,8 @@
 # W?      J/P   . .
 >
 #
-> “ Read  them     , ” said the King      .
-# . NSg/V NSg/IPl+ . . V/J  D+  NPrᴹ/V/J+ .
+> “ Read  them     , ” said the King     .
+# . NSg/V NSg/IPl+ . . V/J  D+  NPr/V/J+ .
 >
 #
 > The White     Rabbit put   on  his     spectacles . “ Where shall I    begin , please your
@@ -5728,8 +5728,8 @@
 # NSg/I+  . . NPr/ISg+ V/J   .
 >
 #
-> “ Begin at    the beginning , ” the King      said gravely , “ and go      on  till      you    come    to the
-# . NSg/V NSg/P D+  NSg/V/J+  . . D+  NPrᴹ/V/J+ V/J  R       . . V/C NSg/V/J J/P NSg/V/C/P ISgPl+ NSg/V/P P  D
+> “ Begin at    the beginning , ” the King     said gravely , “ and go      on  till      you    come    to the
+# . NSg/V NSg/P D+  NSg/V/J+  . . D+  NPr/V/J+ V/J  R       . . V/C NSg/V/J J/P NSg/V/C/P ISgPl+ NSg/V/P P  D
 > end    : then    stop  . ”
 # NSg/V+ . NSg/J/C NSg/V . .
 >
@@ -5774,8 +5774,8 @@
 # P    NSg/I/J/C/Dq D   NSg/V/JS+ . NSg/P   ISg+     V/C NPr/ISg+ . .
 >
 #
-> “ That’s the most         important piece of evidence we’ve heard yet     , ” said the King      ,
-# . NSg$   D   NSg/I/J/R/Dq J         NSg/V P  Nᴹ/V+    W?    V/J   NSg/V/C . . V/J  D   NPrᴹ/V/J+ .
+> “ That’s the most         important piece of evidence we’ve heard yet     , ” said the King     ,
+# . NSg$   D   NSg/I/J/R/Dq J         NSg/V P  Nᴹ/V+    W?    V/J   NSg/V/C . . V/J  D   NPr/V/J+ .
 > rubbing his     hands  ; “ so        now       let   the jury     — ”
 # NSg/V   ISg/D$+ NPl/V+ . . NSg/I/J/C NPr/V/J/C NSg/V D   NSg/V/J+ . .
 >
@@ -5794,8 +5794,8 @@
 # N🅪Sg/V/J+ NPr/J/P NPr/ISg+ . . NSg/C/P NSg/I P  NSg/IPl+ V/J       P  V       D   N🅪Sg/V/J+ .
 >
 #
-> “ If    there’s no    meaning   in      it       , ” said the King      , “ that          saves a   world of trouble ,
-# . NSg/C W?      NPr/P N🅪Sg/V/J+ NPr/J/P NPr/ISg+ . . V/J  D   NPrᴹ/V/J+ . . NSg/I/C/Ddem+ NPl/V D/P NSg/V P  NSg/V+  .
+> “ If    there’s no    meaning   in      it       , ” said the King     , “ that          saves a   world of trouble ,
+# . NSg/C W?      NPr/P N🅪Sg/V/J+ NPr/J/P NPr/ISg+ . . V/J  D   NPr/V/J+ . . NSg/I/C/Ddem+ NPl/V D/P NSg/V P  NSg/V+  .
 > you    know  , as    we   needn’t try     to find  any    . And yet     I    don’t know  , ” he       went  on  ,
 # ISgPl+ NSg/V . NSg/R IPl+ VX      NSg/V/J P  NSg/V I/R/Dq . V/C NSg/V/C ISg+ V     NSg/V . . NPr/ISg+ NSg/V J/P .
 > spreading out         the verses on  his     knee   , and looking at    them     with one       eye    ; “ I    seem
@@ -5812,8 +5812,8 @@
 # R         V   NSg/C . N🅪Sg/V/J/C V    R        P  Nᴹ/J+     . .
 >
 #
-> “ All          right   , so        far     , ” said the King      , and he       went  on  muttering over    the verses to
-# . NSg/I/J/C/Dq NPr/V/J . NSg/I/J/C NSg/V/J . . V/J  D+  NPrᴹ/V/J+ . V/C NPr/ISg+ NSg/V J/P Nᴹ/V/J    NSg/J/P D   NPl/V  P
+> “ All          right   , so        far     , ” said the King     , and he       went  on  muttering over    the verses to
+# . NSg/I/J/C/Dq NPr/V/J . NSg/I/J/C NSg/V/J . . V/J  D+  NPr/V/J+ . V/C NPr/ISg+ NSg/V J/P Nᴹ/V/J    NSg/J/P D   NPl/V  P
 > himself : “ ‘          We   know  it       to be     true    — ’ that’s the jury     , of course — ‘          I    gave her     one       ,
 # ISg+    . . Unlintable IPl+ NSg/V NPr/ISg+ P  NSg/VX NSg/V/J . . NSg$   D   NSg/V/J+ . P  NSg/V+ . Unlintable ISg+ V    ISg/D$+ NSg/I/V/J .
 > they gave him  two — ’ why   , that          must  be     what   he       did with the tarts , you    know  — ”
@@ -5824,8 +5824,8 @@
 # . NSg/C/P . NPr/ISg+ NPl/V J/P Unlintable IPl+ NSg/I/J/C/Dq V/J+     P    ISg+ P  ISgPl+ . . . V/J  NPr+  .
 >
 #
-> “ Why   , there they are ! ” said the King      triumphantly , pointing to the tarts on  the
-# . NSg/V . +     IPl+ V   . . V/J  D+  NPrᴹ/V/J+ R            . Nᴹ/V/J   P  D   NPl/V J/P D
+> “ Why   , there they are ! ” said the King     triumphantly , pointing to the tarts on  the
+# . NSg/V . +     IPl+ V   . . V/J  D+  NPr/V/J+ R            . Nᴹ/V/J   P  D   NPl/V J/P D
 > table  . “ Nothing  can    be     clearer than that          . Then    again — ‘          before she  had this    fit      — ’
 # NSg/V+ . . NSg/I/J+ NPr/VX NSg/VX NSg/JC  C/P  NSg/I/C/Ddem+ . NSg/J/C P     . Unlintable C/P    ISg+ V   I/Ddem+ NSg/V/J+ . .
 > you    never had fits  , my  dear    , I    think ? ” he       said to the Queen    .
@@ -5842,16 +5842,16 @@
 # N🅪Sg/V+ . NSg/I/C/Ddem+ V   Nᴹ/V/J    N🅪Sg/V/J/P ISg/D$+ NSg/V+ . NSg/R NPr/V/J NSg/R NPr/ISg+ V/J    . .
 >
 #
-> “ Then    the words  don’t fit     you    , ” said the King      , looking round     the court    with a
-# . NSg/J/C D+  NPl/V+ V     NSg/V/J ISgPl+ . . V/J  D   NPrᴹ/V/J+ . Nᴹ/V/J  NSg/V/J/P D   NSg/V/J+ P    D/P
+> “ Then    the words  don’t fit     you    , ” said the King     , looking round     the court    with a
+# . NSg/J/C D+  NPl/V+ V     NSg/V/J ISgPl+ . . V/J  D   NPr/V/J+ . Nᴹ/V/J  NSg/V/J/P D   NSg/V/J+ P    D/P
 > smile  . There was a    dead     silence .
 # NSg/V+ . +     V   D/P+ NSg/V/J+ NSg/V+  .
 >
 #
-> “ It’s a    pun    ! ” the King      added in      an   offended tone      , and everybody laughed , “ Let
-# . W?   D/P+ NSg/V+ . . D+  NPrᴹ/V/J+ V/J   NPr/J/P D/P+ V/J      N🅪Sg/I/V+ . V/C NSg/I+    V/J     . . NSg/V
-> the jury     consider their verdict , ” the King      said , for about the twentieth time
-# D+  NSg/V/J+ V        D$+   NSg+    . . D+  NPrᴹ/V/J+ V/J  . C/P J/P   D+  NSg/J+    N🅪Sg/V/J+
+> “ It’s a    pun    ! ” the King     added in      an   offended tone      , and everybody laughed , “ Let
+# . W?   D/P+ NSg/V+ . . D+  NPr/V/J+ V/J   NPr/J/P D/P+ V/J      N🅪Sg/I/V+ . V/C NSg/I+    V/J     . . NSg/V
+> the jury     consider their verdict , ” the King     said , for about the twentieth time
+# D+  NSg/V/J+ V        D$+   NSg+    . . D+  NPr/V/J+ V/J  . C/P J/P   D+  NSg/J+    N🅪Sg/V/J+
 > that          day   .
 # NSg/I/C/Ddem+ NPr🅪+ .
 >

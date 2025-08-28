@@ -2317,7 +2317,7 @@
 > There was music     from my  neighbor’s house  through the summer nights . In      his     blue
 # +     V   N🅪Sg/V/J+ P    D$+ NSg$/Am    NPr/V+ NSg/J/P D   NPr/V+ NPl/V+ . NPr/J/P ISg/D$+ N🅪Sg/V/J
 > gardens men and girls  came    and went  like        moths  among the whisperings and the
-# NPl/V+  NSg V/C NPl/V+ NSg/V/P V/C NSg/V NSg/V/J/C/P NPl/V+ P     D   ?           V/C D
+# NPl/V+  NSg V/C NPl/V+ NSg/V/P V/C NSg/V NSg/V/J/C/P NPl/V+ P     D   NPl/V       V/C D
 > champagne and the stars  . At    high    tide  in      the afternoon I    watched his     guests
 # N🅪Sg/V/J  V/C D   NPl/V+ . NSg/P NSg/V/J NSg/V NPr/J/P D+  N🅪Sg+     ISg+ V/J     ISg/D$+ NPl/V+
 > diving  from the tower of his     raft   , or    taking  the sun    on  the hot     sand    of his

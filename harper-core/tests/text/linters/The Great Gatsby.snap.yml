@@ -1402,18 +1402,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    1160 | gardens men and girls came and went like moths among the whisperings and the
-         |                                                          ^~~~~~~~~~~ Did you mean to spell `whisperings` this way?
-    1161 | champagne and the stars. At high tide in the afternoon I watched his guests
-Suggest:
-  - Replace with: “whispering's”
-  - Replace with: “whispering”
-  - Replace with: “whimpering”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1161 | champagne and the stars. At high tide in the afternoon I watched his guests
