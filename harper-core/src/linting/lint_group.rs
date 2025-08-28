@@ -55,6 +55,7 @@ use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
+use super::interested_in::InterestedIn;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::left_right_hand::LeftRightHand;
@@ -442,6 +443,7 @@ impl LintGroup {
         insert_struct_rule!(HowTo, true);
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
+        insert_expr_rule!(InterestedIn, true);
         insert_struct_rule!(ItsContraction, true);
         insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);
