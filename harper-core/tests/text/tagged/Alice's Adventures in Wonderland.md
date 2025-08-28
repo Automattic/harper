@@ -939,7 +939,7 @@
 > Then    they all          crowded round     her     once  more         , while     the Dodo solemnly presented the
 # NSg/J/C IPl+ NSg/I/J/C/Dq V/J     NSg/V/J/P ISg/D$+ NSg/C NPr/I/V/J/Dq . NSg/V/C/P D   NSg  R        V/J       D
 > thimble , saying “ We   beg   your acceptance of this   elegant thimble ; ” and , when    it
-# NSg/V   . NSg/V  . IPl+ NSg/V D$+  NSg        P  I/Ddem NSg/J   NSg/V   . . V/C . NSg/I/C NPr/ISg+
+# NSg/V   . NSg/V  . IPl+ NSg/V D$+  N🅪Sg       P  I/Ddem NSg/J   NSg/V   . . V/C . NSg/I/C NPr/ISg+
 > had finished this   short     speech  , they all          cheered .
 # V   V/J      I/Ddem NPr/V/J/P N🅪Sg/V+ . IPl+ NSg/I/J/C/Dq V/J+    .
 >
@@ -2471,7 +2471,7 @@
 > what   was the matter  with it       . There could  be     no     doubt   that          it       had a   very turn  - up
 # NSg/I+ V   D   N🅪Sg/V+ P    NPr/ISg+ . +     NSg/VX NSg/VX NPr/P+ N🅪Sg/V+ NSg/I/C/Ddem+ NPr/ISg+ V   D/P J/R  NSg/V . NSg/V/J/P
 > nose   , much         more         like        a   snout than a   real  nose   ; also its     eyes   were  getting
-# NSg/V+ . NSg/I/J/R/Dq NPr/I/V/J/Dq NSg/V/J/C/P D/P NSg/V C/P  D/P NSg/J NSg/V+ . W?   ISg/D$+ NPl/V+ NSg/V NSg/V
+# NSg/V+ . NSg/I/J/R/Dq NPr/I/V/J/Dq NSg/V/J/C/P D/P NSg/V C/P  D/P NSg/J NSg/V+ . R/C  ISg/D$+ NPl/V+ NSg/V NSg/V
 > extremely small   for a   baby     : altogether Alice did not   like        the look  of the thing
 # R         NPr/V/J C/P D/P NSg/V/J+ . NSg        NPr+  V   NSg/C NSg/V/J/C/P D   NSg/V P  D   NSg/V+
 > at    all          . “ But     perhaps it       was only  sobbing , ” she  thought , and looked into its     eyes
@@ -3385,7 +3385,7 @@
 > when    his     eye    chanced to fall  upon Alice , as    she  stood watching them     , and he
 # NSg/I/C ISg/D$+ NSg/V+ V/J     P  NSg/V P    NPr+  . NSg/R ISg+ V     V        NSg/IPl+ . V/C NPr/ISg+
 > checked himself suddenly : the others looked round     also , and all          of them     bowed
-# V/J     ISg+    R        . D   NPl/V+ V/J    NSg/V/J/P W?   . V/C NSg/I/J/C/Dq P  NSg/IPl+ V/J
+# V/J     ISg+    R        . D   NPl/V+ V/J    NSg/V/J/P R/C  . V/C NSg/I/J/C/Dq P  NSg/IPl+ V/J
 > low     .
 # NSg/V/J .
 >

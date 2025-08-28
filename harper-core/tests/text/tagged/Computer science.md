@@ -135,7 +135,7 @@
 > electromechanical calculating machine which was to be     controlled by      a   read   - only
 # ?                 V/J         NSg/V+  I/C+  V   P  NSg/VX V/J        NSg/J/P D/P NSg/V+ . J/R/C
 > program . The paper     also introduced the idea of floating - point  arithmetic . In
-# NPr/V+  . D+  N🅪Sg/V/J+ W?   V/J        D   NSg  P  V+       . NSg/V+ Nᴹ/J       . NPr/J/P
+# NPr/V+  . D+  N🅪Sg/V/J+ R/C  V/J        D   NSg  P  V+       . NSg/V+ Nᴹ/J       . NPr/J/P
 > 1920 , to celebrate the 100th anniversary of the invention of the arithmometer ,
 # #    . P  V         D   #     NSg         P  D   N🅪Sg      P  D   ?            .
 > Torres presented in      Paris the Electromechanical Arithmometer , a   prototype that
@@ -147,7 +147,7 @@
 > hundred years after Babbage's impossible dream    , Howard Aiken convinced IBM  ,
 # NSg     NPl+  P     NSg$      NSg/J      NSg/V/J+ . NPr+   NPr   V/J       NPr+ .
 > which was making all          kinds of punched card    equipment and was also in      the
-# I/C+  V   NSg/V  NSg/I/J/C/Dq NSg   P  V/J     N🅪Sg/V+ Nᴹ+       V/C V   W?   NPr/J/P D
+# I/C+  V   NSg/V  NSg/I/J/C/Dq NSg   P  V/J     N🅪Sg/V+ Nᴹ+       V/C V   R/C  NPr/J/P D
 > calculator business to develop his     giant programmable calculator , the
 # NSg+       N🅪Sg/J+  P  V       ISg/D$+ NSg/J NSg/J        NSg+       . D
 > ASCC / Harvard Mark   I    , based on  Babbage's Analytical Engine , which itself used
@@ -237,7 +237,7 @@
 > Peter     Naur being    the first   professor in      datalogy . The term     is used mainly in      the
 # NPr/V/JC+ ?    N🅪Sg/V/C D   NSg/V/J NSg+      NPr/J/P ?        . D+  NSg/V/J+ VL V/J  R      NPr/J/P D
 > Scandinavian countries . An   alternative term     , also proposed by      Naur , is data
-# NSg/J        NPl+      . D/P+ NSg/J+      NSg/V/J+ . W?   V/J      NSg/J/P ?    . VL N🅪Pl+
+# NSg/J        NPl+      . D/P+ NSg/J+      NSg/V/J+ . R/C  V/J      NSg/J/P ?    . VL N🅪Pl+
 > science ; this    is now       used for a   multi - disciplinary field of data  analysis ,
 # N🅪Sg/V+ . I/Ddem+ VL NPr/V/J/C V/J  C/P D/P NSg   . NSg/J        NSg/V P  N🅪Pl+ N🅪Sg+    .
 > including statistics and databases .
@@ -253,7 +253,7 @@
 > and applied epistemologist . Three months later in      the same journal  , comptologist
 # V/C V/J     ?              . NSg+  NPl+   JC    NPr/J/P D+  I/J+ NSg/V/J+ . ?
 > was suggested , followed next    year by      hypologist . The term     computics has also
-# V   V/J       . V/J      NSg/J/P NSg+ NSg/J/P ?          . D+  NSg/V/J+ ?         V   W?
+# V   V/J       . V/J      NSg/J/P NSg+ NSg/J/P ?          . D+  NSg/V/J+ ?         V   R/C
 > been  suggested . In      Europe , terms  derived from contracted translations of the
 # NSg/V V/J       . NPr/J/P NPr+   . NPl/V+ V/J     P    V/J        NPl          P  D+
 > expression " automatic information " ( e.g. " informazione automatica " in      Italian )
@@ -265,7 +265,7 @@
 > Portuguese ) , informatika ( Slavic languages and Hungarian ) or    pliroforiki
 # NPr/J      . . ?           . NSg/J  NPl/V+    V/C NSg/J     . NPr/C ?
 > ( π          λ          η          ρ          ο          φ          ο          ρ          ι          κ          ή          , which means informatics ) in      Greek   . Similar words  have   also been
-# . Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable . I/C+  NPl/V Nᴹ          . NPr/J/P NPr/V/J . NSg/J+  NPl/V+ NSg/VX W?   NSg/V
+# . Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable . I/C+  NPl/V Nᴹ          . NPr/J/P NPr/V/J . NSg/J+  NPl/V+ NSg/VX R/C  NSg/V
 > adopted in      the UK   ( as    in      the School of Informatics , University of Edinburgh ) .
 # V/J     NPr/J/P D+  NPr+ . NSg/R NPr/J/P D   NSg/V  P  Nᴹ          . NSg        P  NPr+      . .
 > " In      the U.S. , however , informatics is linked with applied computing , or
@@ -291,7 +291,7 @@
 > technology or    information systems . However , there has been  exchange of ideas
 # N🅪Sg       NPr/C Nᴹ+         NPl+    . C       . +     V   NSg/V NSg/V    P  NPl+
 > between the various computer - related disciplines . Computer science research also
-# NSg/P   D   J       NSg/V+   . J+      NPl/V+      . NSg/V+   N🅪Sg/V+ Nᴹ/V+    W?
+# NSg/P   D   J       NSg/V+   . J+      NPl/V+      . NSg/V+   N🅪Sg/V+ Nᴹ/V+    R/C
 > often intersects other   disciplines , such  as    cognitive science , linguistics ,
 # R     V+         NSg/V/J NPl/V+      . NSg/I NSg/R NSg/J     N🅪Sg/V  . Nᴹ+         .
 > mathematics , physics , biology , Earth   science , statistics , philosophy , and logic    .
@@ -393,7 +393,7 @@
 > way    as    bridges  in      civil engineering and airplanes in      aerospace engineering . They
 # NSg/J+ NSg/R NPrPl/V+ NPr/J/P J     NSg/V+      V/C NPl/V     NPr/J/P NSg/J+    NSg/V+      . IPl+
 > also argue that         while     empirical sciences observe what   presently exists , computer
-# W?   V     NSg/I/C/Ddem NSg/V/C/P NSg/J+    NPl/V+   NSg/V   NSg/I+ R         V      . NSg/V+
+# R/C  V     NSg/I/C/Ddem NSg/V/C/P NSg/J+    NPl/V+   NSg/V   NSg/I+ R         V      . NSg/V+
 > science observes what   is possible to exist and while     scientists discover laws
 # N🅪Sg/V+ NPl/V    NSg/I+ VL NSg/J    P  V     V/C NSg/V/C/P NPl+       NSg/V/J  NPl/V
 > from observation , no     proper laws   have   been  found in      computer science and it       is
@@ -469,7 +469,7 @@
 > programming methodology and languages , and computer elements and architecture .
 # Nᴹ/V+       NSg         V/C NPl/V+    . V/C NSg/V+   NPl/V    V/C N🅪Sg+        .
 > In      addition to these   four areas , CSAB also identifies fields   such  as    software
-# NPr/J/P NSg+     P  I/Ddem+ NSg+ NPl+  . ?    W?   V          NPrPl/V+ NSg/I NSg/R Nᴹ+
+# NPr/J/P NSg+     P  I/Ddem+ NSg+ NPl+  . ?    R/C  V          NPrPl/V+ NSg/I NSg/R Nᴹ+
 > engineering , artificial intelligence , computer networking and communication ,
 # NSg/V+      . J          N🅪Sg+        . NSg/V+   Nᴹ/V       V/C N🅪Sg+         .
 > database systems , parallel computation , distributed computation , human   – computer
@@ -543,7 +543,7 @@
 > compression , cryptography , error  detection and correction , and more         recently
 # NSg+        . Nᴹ           . NSg/V+ N🅪Sg      V/C NSg+       . V/C NPr/I/V/J/Dq R
 > also for network coding . Codes  are studied for the purpose of designing
-# W?   C/P NSg/V+  V+     . NPl/V+ V   V/J     C/P D   N🅪Sg/V  P  V
+# R/C  C/P NSg/V+  V+     . NPl/V+ V   V/J     C/P D   N🅪Sg/V  P  V
 > efficient and reliable data  transmission methods .
 # NSg/J     V/C NSg/J+   N🅪Pl+ N🅪Sg+        NPl/V+  .
 >
@@ -591,7 +591,7 @@
 > engineering , especially where safety or    security is involved . Formal methods are
 # NSg/V+      . R          NSg/C N🅪Sg/V NPr/C Nᴹ+      VL V/J      . NSg/J+ NPl/V+  V
 > a   useful adjunct to software testing since they help  avoid errors and can    also
-# D/P J      NSg/V/J P  Nᴹ       V+      C/P   IPl+ NSg/V V     NPl/V+ V/C NPr/VX W?
+# D/P J      NSg/V/J P  Nᴹ       V+      C/P   IPl+ NSg/V V     NPl/V+ V/C NPr/VX R/C
 > give  a   framework for testing . For industrial use    , tool   support is required .
 # NSg/V D/P NSg       C/P V+      . C/P NSg/J      NSg/V+ . NSg/V+ N🅪Sg/V+ VL V/J      .
 > However , the high    cost     of using formal methods means that         they are usually only
@@ -605,7 +605,7 @@
 > fundamentals , in      particular logic    calculi , formal languages , automata theory ,
 # NPl+         . NPr/J/P NSg/J+     NSg/V/J+ NSg     . NSg/J  NPl/V+    . NSg      N🅪Sg+  .
 > and program semantics , but     also type   systems and algebraic data  types  to
-# V/C NPr/V+  NPl+      . NSg/C/P W?   NSg/V+ NPl     V/C J         N🅪Pl+ NPl/V+ P
+# V/C NPr/V+  NPl+      . NSg/C/P R/C  NSg/V+ NPl     V/C J         N🅪Pl+ NPl/V+ P
 > problems in      software and hardware specification and verification .
 # NPl      NPr/J/P Nᴹ       V/C Nᴹ+      NSg           V/C N🅪Sg+        .
 >

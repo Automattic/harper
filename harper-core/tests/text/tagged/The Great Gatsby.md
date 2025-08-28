@@ -29,7 +29,7 @@
 > consequence , I’m inclined to reserve all          judgments , a   habit  that          has opened up
 # NSg/V+      . W?  V/J      P  NSg/V   NSg/I/J/C/Dq NPl+      . D/P NSg/V+ NSg/I/C/Ddem+ V   V/J    NSg/V/J/P
 > many       curious natures to me       and also made me       the victim of not   a   few      veteran
-# NSg/I/J/Dq J       NPl/V   P  NPr/ISg+ V/C W?   V    NPr/ISg+ D   NSg/V+ P  NSg/C D/P NSg/I/Dq NSg/J
+# NSg/I/J/Dq J       NPl/V   P  NPr/ISg+ V/C R/C  V    NPr/ISg+ D   NSg/V+ P  NSg/C D/P NSg/I/Dq NSg/J
 > bores . The abnormal mind   is quick   to detect and attach itself to this    quality
 # NPl/V . D+  NSg/J+   NSg/V+ VL NSg/V/J P  V/J    V/C V      ISg+   P  I/Ddem+ NSg/J+
 > when    it       appears in      a    normal person , and so        it       came    about that         in      college I    was
@@ -1759,7 +1759,7 @@
 > Mr   . McKee was a   pale    , feminine man      from the flat    below . He       had just shaved , for
 # NSg+ . NPr   V   D/P NSg/V/J . NSg/J    NPr/V/J+ P    D   NSg/V/J P     . NPr/ISg+ V   V/J  V/J    . C/P
 > there was a   white    spot    of lather on  his     cheekbone , and he       was most         respectful in
-# +     V   D/P NPr🅪/V/J NSg/V/J P  NSg/V  J/P ISg/D$+ NSg       . V/C NPr/ISg+ V   NSg/I/J/R/Dq J          NPr/J/P
+# +     V   D/P NPr🅪/V/J NSg/V/J P  Nᴹ/V   J/P ISg/D$+ NSg       . V/C NPr/ISg+ V   NSg/I/J/R/Dq J          NPr/J/P
 > his     greeting to every one        in      the room      . He       informed me       that         he       was in      the
 # ISg/D$+ NSg/V+   P  Dq    NSg/I/V/J+ NPr/J/P D   N🅪Sg/V/J+ . NPr/ISg+ V/J      NPr/ISg+ NSg/I/C/Ddem NPr/ISg+ V   NPr/J/P D
 > “ artistic game     , ” and I    gathered later that         he       was a   photographer and had made
@@ -1781,7 +1781,7 @@
 > rustle as    she  swept about the room      . With the influence of the dress  her
 # NSg/V  NSg/R ISg+ V/J   J/P   D   N🅪Sg/V/J+ . P    D   N🅪Sg/V    P  D+  NSg/V+ ISg/D$+
 > personality had also undergone a    change  . The intense vitality that          had been  so
-# N🅪Sg+       V   W?   V         D/P+ N🅪Sg/V+ . D+  J+      NSg+     NSg/I/C/Ddem+ V   NSg/V NSg/I/J/C
+# N🅪Sg+       V   R/C  V         D/P+ N🅪Sg/V+ . D+  J+      NSg+     NSg/I/C/Ddem+ V   NSg/V NSg/I/J/C
 > remarkable in      the garage was converted into impressive hauteur . Her     laughter ,
 # W?         NPr/J/P D+  NSg/V+ V   V/J       P    J          NSg     . ISg/D$+ NSg+     .
 > her     gestures , her     assertions became more         violently affected moment by      moment ,
@@ -2221,7 +2221,7 @@
 > like        a   photograph of a   man     of action    . Taking  out         my  handkerchief I    wiped from
 # NSg/V/J/C/P D/P NSg/V      P  D/P NPr/V/J P  N🅪Sg/V/J+ . NSg/V/J NSg/V/J/R/P D$+ NSg+         ISg+ V/J   P
 > his     cheek the spot    of dried lather that          had worried me       all          the afternoon .
-# ISg/D$+ NSg/V D   NSg/V/J P  V/J   NSg/V  NSg/I/C/Ddem+ V   V/J     NPr/ISg+ NSg/I/J/C/Dq D   N🅪Sg+     .
+# ISg/D$+ NSg/V D   NSg/V/J P  V/J   Nᴹ/V   NSg/I/C/Ddem+ V   V/J     NPr/ISg+ NSg/I/J/C/Dq D   N🅪Sg+     .
 >
 #
 > The little      dog      was sitting on  the table  looking with blind    eyes   through the
@@ -3755,7 +3755,7 @@
 > Gus  Waize and Horace O’Donavan and Lester Myer and George Duckweed and Francis
 # NPr+ ?     V/C NPr+   ?         V/C NPr    ?    V/C NPr+   NSg      V/C NPr+
 > Bull     . Also from New      York were  the Chromes and the Backhyssons and the Dennickers
-# NSg/V/J+ . W?   P    NSg/V/J+ NPr+ NSg/V D   NPl/V   V/C D   ?           V/C D   ?
+# NSg/V/J+ . R/C  P    NSg/V/J+ NPr+ NSg/V D   NPl/V   V/C D   ?           V/C D   ?
 > and Russel Betty and the Corrigans and the Kellehers and the Dewars and the
 # V/C NPr    NPr+  V/C D   ?         V/C D   ?         V/C D   ?      V/C D
 > Scullys and S. W. Belcher and the Smirkes and the young   Quinns , divorced now       ,
@@ -4581,7 +4581,7 @@
 > with rubber   nobs  on  the soles  that          bit   into the soft  ground    . I    had on  a   new
 # P    NSg/V/J+ NPl/V J/P D   NPl/V+ NSg/I/C/Ddem+ NSg/V P    D   NSg/J N🅪Sg/V/J+ . ISg+ V   J/P D/P NSg/V/J
 > plaid   skirt also that          blew    a   little     in      the wind    , and whenever this   happened the
-# NSg/V/J NSg/V W?   NSg/I/C/Ddem+ NSg/V/J D/P NPr/I/J/Dq NPr/J/P D   N🅪Sg/V+ . V/C C        I/Ddem V/J      D
+# NSg/V/J NSg/V R/C  NSg/I/C/Ddem+ NSg/V/J D/P NPr/I/J/Dq NPr/J/P D   N🅪Sg/V+ . V/C C        I/Ddem V/J      D
 > red    , white    , and blue     banners in      front   of all          the houses stretched out         stiff   and
 # N🅪Sg/J . NPr🅪/V/J . V/C N🅪Sg/V/J NPl/V+  NPr/J/P NSg/V/J P  NSg/I/J/C/Dq D   NPl/V+ V/J       NSg/V/J/R/P NSg/V/J V/C
 > said tut   - tut   - tut   - tut   , in      a   disapproving way    .
@@ -5823,7 +5823,7 @@
 >
 #
 > There was a   small   picture of Gatsby , also in      yachting costume , on  the
-# +     V   D/P NPr/V/J NSg/V   P  NPr    . W?   NPr/J/P NSg/V    NSg/V   . J/P D
+# +     V   D/P NPr/V/J NSg/V   P  NPr    . R/C  NPr/J/P NSg/V    NSg/V   . J/P D
 > bureau — Gatsby with his     head     thrown back    defiantly — taken apparently when    he       was
 # NSg+   . NPr    P    ISg/D$+ NPr/V/J+ V/J    NSg/V/J R         . V/J   R          NSg/I/C NPr/ISg+ V
 > about eighteen .

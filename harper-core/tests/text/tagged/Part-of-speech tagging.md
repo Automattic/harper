@@ -13,7 +13,7 @@
 > In      corpus linguistics , part     - of - speech  tagging ( POS  tagging or    PoS  tagging or
 # NPr/J/P NSg+   Nᴹ+         . NSg/V/J+ . P  . N🅪Sg/V+ NSg/V   . NSg+ NSg/V   NPr/C NSg+ NSg/V   NPr/C
 > POST      ) , also called grammatical tagging is the process of marking up        a   word   in      a
-# NPr🅪/V/P+ . . W?   V/J    J           NSg/V   VL D   NSg/V   P  NSg/V   NSg/V/J/P D/P NSg/V+ NPr/J/P D/P
+# NPr🅪/V/P+ . . R/C  V/J    J           NSg/V   VL D   NSg/V   P  NSg/V   NSg/V/J/P D/P NSg/V+ NPr/J/P D/P
 > text    ( corpus ) as    corresponding to a   particular part    of speech  , based on  both   its
 # N🅪Sg/V+ . NSg+   . NSg/R NSg/V/J       P  D/P NSg/J      NSg/V/J P  N🅪Sg/V+ . V/J   J/P I/C/Dq ISg/D$+
 > definition and its     context . A   simplified form  of this    is commonly taught to
@@ -51,7 +51,7 @@
 > percentage of word   - forms  are ambiguous . For example , even    " dogs   " , which is
 # N🅪Sg       P  NSg/V+ . NPl/V+ V   J         . C/P NSg/V+  . NSg/V/J . NPl/V+ . . I/C+  VL
 > usually thought of as    just a    plural noun   , can    also be     a    verb   :
-# R       NSg/V   P  NSg/R V/J  D/P+ NSg/J+ NSg/V+ . NPr/VX W?   NSg/VX D/P+ NSg/V+ .
+# R       NSg/V   P  NSg/R V/J  D/P+ NSg/J+ NSg/V+ . NPr/VX R/C  NSg/VX D/P+ NSg/V+ .
 >
 #
 > The sailor dogs   the hatch  .
@@ -63,7 +63,7 @@
 > as    the more         common  plural noun   . Grammatical context is one       way   to determine
 # NSg/R D   NPr/I/V/J/Dq NSg/V/J NSg/J  NSg/V+ . J+          N🅪Sg/V+ VL NSg/I/V/J NSg/J P  V
 > this    ; semantic analysis can    also be     used to infer that          " sailor " and " hatch "
-# I/Ddem+ . NSg/J+   N🅪Sg+    NPr/VX W?   NSg/VX V/J  P  V     NSg/I/C/Ddem+ . NSg+   . V/C . NSg/V .
+# I/Ddem+ . NSg/J+   N🅪Sg+    NPr/VX R/C  NSg/VX V/J  P  V     NSg/I/C/Ddem+ . NSg+   . V/C . NSg/V .
 > implicate " dogs   " as    1 ) in      the nautical context and 2 ) an  action    applied to the
 # NSg/V     . NPl/V+ . NSg/R # . NPr/J/P D   J        N🅪Sg/V+ V/C # . D/P N🅪Sg/V/J+ V/J     P  D
 > object " hatch " ( in      this   context , " dogs   " is a   nautical term     meaning   " fastens ( a
@@ -85,7 +85,7 @@
 > the plural , possessive , and singular forms  can    be     distinguished . In      many
 # D   NSg/J  . NSg/J      . V/C NSg/J    NPl/V+ NPr/VX NSg/VX V/J           . NPr/J/P NSg/I/J/Dq+
 > languages words  are also marked for their " case    " ( role as    subject  , object ,
-# NPl/V+    NPl/V+ V   W?   V/J    C/P D$+   . NPr🅪/V+ . . NSg  NSg/R NSg/V/J+ . NSg/V+ .
+# NPl/V+    NPl/V+ V   R/C  V/J    C/P D$+   . NPr🅪/V+ . . NSg  NSg/R NSg/V/J+ . NSg/V+ .
 > etc. ) , grammatical gender    , and so        on  ; while     verbs  are marked for tense   , aspect ,
 # +    . . J+          N🅪Sg/V/J+ . V/C NSg/I/J/C J/P . NSg/V/C/P NPl/V+ V   V/J    C/P NSg/V/J . NSg/V+ .
 > and other    things . In      some     tagging systems , different inflections of the same
@@ -365,7 +365,7 @@
 > The methods already discussed involve working from a    pre      - existing corpus to
 # D+  NPl/V+  W?      V/J       V       V       P    D/P+ NSg/V/P+ . V        NSg+   P
 > learn tag    probabilities . It       is , however , also possible to bootstrap using
-# NSg/V NSg/V+ NPl+          . NPr/ISg+ VL . C       . W?   NSg/J    P  NSg/V     V
+# NSg/V NSg/V+ NPl+          . NPr/ISg+ VL . C       . R/C  NSg/J    P  NSg/V     V
 > " unsupervised " tagging . Unsupervised tagging techniques use   an  untagged corpus
 # . V/J          . NSg/V   . V/J          NSg/V   NPl+       NSg/V D/P J        NSg+
 > for their training data  and produce the tagset by      induction . That          is , they
@@ -397,7 +397,7 @@
 > Some     current major   algorithms for part     - of - speech  tagging include the Viterbi
 # I/J/R/Dq NSg/J   NPr/V/J NPl        C/P NSg/V/J+ . P  . N🅪Sg/V+ NSg/V   NSg/V   D   ?
 > algorithm , Brill tagger , Constraint Grammar , and the Baum - Welch algorithm ( also
-# NSg       . NSg/J NSg    . NSg+       N🅪Sg/V+ . V/C D   NPr  . ?     NSg       . W?
+# NSg       . NSg/J NSg    . NSg+       N🅪Sg/V+ . V/C D   NPr  . ?     NSg       . R/C
 > known as    the forward - backward algorithm ) . Hidden Markov model    and visible Markov
 # V/J   NSg/R D   NSg/V/J . NSg/J    NSg       . . V/J    NPr    NSg/V/J+ V/C J       NPr
 > model    taggers can    both   be     implemented using the Viterbi algorithm . The
@@ -409,7 +409,7 @@
 >
 #
 > Many        machine learning methods have   also been  applied to the problem of POS
-# NSg/I/J/Dq+ NSg/V+  V+       NPl/V+  NSg/VX W?   NSg/V V/J     P  D   NSg/J   P  NSg+
+# NSg/I/J/Dq+ NSg/V+  V+       NPl/V+  NSg/VX R/C  NSg/V V/J     P  D   NSg/J   P  NSg+
 > tagging . Methods such  as    SVM , maximum entropy classifier , perceptron , and
 # NSg/V   . NPl/V+  NSg/I NSg/R ?   . NSg/J   NSg     NSg        . NSg        . V/C
 > nearest - neighbor    have   all          been  tried , and most         can    achieve accuracy above

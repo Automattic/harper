@@ -197,7 +197,7 @@
 >
 #
 > The Senate shall chuse their other   Officers , and also a   President pro     tempore ,
-# D+  NPr+   VX    ?     D$+   NSg/V/J NPl/V+   . V/C W?   D/P NSg/V+    NSg/J/P ?       .
+# D+  NPr+   VX    ?     D$+   NSg/V/J NPl/V+   . V/C R/C  D/P NSg/V+    NSg/J/P ?       .
 > in      the Absence of the Vice       President , or    when    he       shall exercise the Office of
 # NPr/J/P D   NSg     P  D   NSg/V/J/P+ NSg/V+    . NPr/C NSg/I/C NPr/ISg+ VX    NSg/V    D   NSg/V  P
 > President of the United States   .
@@ -349,7 +349,7 @@
 > Objections at    large on  their Journal  , and proceed to reconsider it       . If    after
 # NPl+       NSg/P NSg/J J/P D$+   NSg/V/J+ . V/C V       P  V          NPr/ISg+ . NSg/C P
 > such  Reconsideration two thirds of that         House  shall agree to pass  the Bill   , it
-# NSg/I NSg             NSg NPl/V  P  NSg/I/C/Ddem NPr/V+ VX    V     P  NSg/V D   NPr/V+ . NPr/ISg+
+# NSg/I N🅪Sg            NSg NPl/V  P  NSg/I/C/Ddem NPr/V+ VX    V     P  NSg/V D   NPr/V+ . NPr/ISg+
 > shall be     sent  , together with the Objections , to the other   House  , by      which it
 # VX    NSg/VX NSg/V . J        P    D   NPl+       . P  D   NSg/V/J NPr/V+ . NSg/J/P I/C+  NPr/ISg+
 > shall likewise be     reconsidered , and if    approved by      two thirds of that         House  , it
@@ -555,7 +555,7 @@
 > ( not   exceeding ten  Miles  square  ) as    may    , by      Cession of particular States   , and
 # . NSg/C NSg/V/J   NSg+ NPrPl+ NSg/V/J . NSg/R NPr/VX . NSg/J/P NSg     P  NSg/J      NPrPl/V+ . V/C
 > the Acceptance of Congress , become the Seat  of the Government of the United
-# D   NSg        P  NPr/V+   . V      D   NSg/V P  D   NSg        P  D   V/J
+# D   N🅪Sg       P  NPr/V+   . V      D   NSg/V P  D   NSg        P  D   V/J
 > States   , and to exercise like        Authority over    all          Places purchased by      the Consent
 # NPrPl/V+ . V/C P  NSg/V    NSg/V/J/C/P N🅪Sg+     NSg/J/P NSg/I/J/C/Dq NPl/V+ V/J       NSg/J/P D   N🅪Sg/V
 > of the Legislature of the State   in      which the Same shall be     , for the Erection of
@@ -1061,7 +1061,7 @@
 > He       shall from time      to time     give  to the Congress Information of
 # NPr/ISg+ VX    P    N🅪Sg/V/J+ P  N🅪Sg/V/J NSg/V P  D   NPr/V+   Nᴹ          P
 > the State  of the Union    , and recommend to their Consideration such   Measures as
-# D   N🅪Sg/V P  D+  NPr/V/J+ . V/C NSg/V     P  D$+   NSg+          NSg/I+ NPl/V+   NSg/R
+# D   N🅪Sg/V P  D+  NPr/V/J+ . V/C NSg/V     P  D$+   N🅪Sg+         NSg/I+ NPl/V+   NSg/R
 > he       shall judge  necessary and expedient ; he       may    , on  extraordinary Occasions ,
 # NPr/ISg+ VX    NSg/V+ NSg/J     V/C NSg/J     . NPr/ISg+ NPr/VX . J/P NSg/J         NPl/V+    .
 > convene both   Houses , or    either of them     , and in      Case   of Disagreement between
