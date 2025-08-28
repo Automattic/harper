@@ -1,13 +1,8 @@
 use super::{ExprLinter, Lint, LintKind};
-use crate::Token;
-use crate::TokenKind;
-use crate::expr::All;
-use crate::expr::Expr;
-use crate::expr::FirstMatchOf;
-use crate::expr::OwnedExprExt;
-use crate::expr::SequenceExpr;
+use crate::expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr};
 use crate::linting::Suggestion;
 use crate::patterns::{Invert, Word, WordSet};
+use crate::{CharStringExt, Token, TokenKind};
 
 /// Corrects the misuse of `then` to `than`.
 pub struct ThenThan {
@@ -16,53 +11,55 @@ pub struct ThenThan {
 
 impl ThenThan {
     pub fn new() -> Self {
+        let comparison = All::new(vec![
+            Box::new(FirstMatchOf::new(vec![
+                // Comparative form of adjective
+                Box::new(
+                    SequenceExpr::default()
+                        .then(Box::new(|tok: &Token, source: &[char]| {
+                            is_comparative(tok, source)
+                        }))
+                        .t_ws()
+                        .t_aco("then")
+                        .t_ws()
+                        .then_unless(Word::new("that")),
+                ),
+                // Positive form of adjective following "more" or "less"
+                Box::new(
+                    SequenceExpr::default()
+                        .then(WordSet::new(&["more", "less"]))
+                        .t_ws()
+                        .then_kind_either(TokenKind::is_adjective, TokenKind::is_adverb)
+                        .t_ws()
+                        .t_aco("then")
+                        .t_ws()
+                        .then_unless(Word::new("that")),
+                ),
+            ])),
+            // Exceptions to the rule.
+            Box::new(Invert::new(WordSet::new(&["back", "this", "so", "but"]))),
+        ]);
+
         Self {
-            expr: Box::new(All::new(vec![
-                Box::new(FirstMatchOf::new(vec![
-                    // Comparative form of adjective
-                    Box::new(
-                        SequenceExpr::default()
-                            .then(Word::new("other").or(Box::new(
-                                |tok: &Token, source: &[char]| {
-                                    is_comparative_adjective(tok, source)
-                                },
-                            )))
-                            .t_ws()
-                            .t_aco("then")
-                            .t_ws()
-                            .then_unless(Word::new("that")),
-                    ),
-                    // Positive form of adjective following "more" or "less"
-                    Box::new(
-                        SequenceExpr::default()
-                            .then(WordSet::new(&["more", "less"]))
-                            .t_ws()
-                            .then_kind_either(TokenKind::is_adjective, TokenKind::is_adverb)
-                            .t_ws()
-                            .t_aco("then")
-                            .t_ws()
-                            .then_unless(Word::new("that")),
-                    ),
-                ])),
-                // Exceptions to the rule.
-                Box::new(Invert::new(WordSet::new(&["back", "this", "so", "but"]))),
+            expr: Box::new(FirstMatchOf::new(vec![
+                Box::new(comparison),
+                Box::new(FixedPhrase::from_phrase("easier said then done")),
+                Box::new(FixedPhrase::from_phrase("now and than")),
+                Box::new(FixedPhrase::from_phrase("other then")),
+                Box::new(FixedPhrase::from_phrase("rather then")),
+                Box::new(FixedPhrase::from_phrase("than again")),
+                Box::new(FixedPhrase::from_phrase("until than")),
             ])),
         }
     }
 }
 
-// TODO: This can be simplified or eliminated when the adjective improvements make it into the affix system.
-fn is_comparative_adjective(tok: &Token, source: &[char]) -> bool {
-    (tok.kind.is_adjective() || tok.kind.is_adverb())
-        .then(|| tok.span.get_content(source))
-        .is_some_and(|src| {
-            // Regular comparative form?
-            src.ends_with(&['e', 'r'])
-                // Irregular comparatives.
-                || src == ['l', 'e', 's', 's']
-                || src == ['m', 'o', 'r', 'e']
-                || src == ['w', 'o', 'r', 's', 'e']
-        })
+fn is_comparative(tok: &Token, source: &[char]) -> bool {
+    tok.kind.is_comparative_adjective()
+        || tok
+            .span
+            .get_content(source)
+            .eq_any_ignore_ascii_case_chars(&[&['l', 'e', 's', 's'], &['m', 'o', 'r', 'e']])
 }
 
 impl Default for ThenThan {
@@ -75,24 +72,41 @@ impl ExprLinter for ThenThan {
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
+
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        // For both "stupider then X" and "more stupid then X", "then" is 3rd last token.
-        let span = matched_tokens[matched_tokens.len() - 3].span;
+        let mut thans_and_thens = matched_tokens.iter().filter(|tok| {
+            tok.span
+                .get_content(source)
+                .eq_any_ignore_ascii_case_chars(&[&['t', 'h', 'a', 'n'], &['t', 'h', 'e', 'n']])
+        });
+
+        // Get the first match and ensure there's exactly one
+        let span = match (thans_and_thens.next(), thans_and_thens.next()) {
+            (Some(token), None) => token.span,
+            _ => return None,
+        };
+
         let offending_text = span.get_content(source);
+
+        let new_text = if offending_text.eq_ignore_ascii_case_chars(&['t', 'h', 'e', 'n']) {
+            "than"
+        } else {
+            "then"
+        };
 
         Some(Lint {
             span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::replace_with_match_case(
-                "than".chars().collect(),
+                new_text.chars().collect(),
                 offending_text,
             )],
-            message: "Did you mean `than`?".to_string(),
+            message: format!("Did you mean `{new_text}`?"),
             priority: 31,
         })
     }
     fn description(&self) -> &'static str {
-        "Corrects the misuse of `then` to `than`."
+        "Corrects mixing up `then` and `than`."
     }
 }
 
@@ -401,6 +415,51 @@ mod tests {
             "He was worse then her at writing code.",
             ThenThan::default(),
             "He was worse than her at writing code.",
+        );
+    }
+
+    #[test]
+    fn patch_rather_then() {
+        assert_suggestion_result(
+            "If copy-paste has to be prevented, I'd prefer it if paste rather then copy would be disabled",
+            ThenThan::default(),
+            "If copy-paste has to be prevented, I'd prefer it if paste rather than copy would be disabled",
+        );
+    }
+
+    #[test]
+    fn patch_easier_said_then_done() {
+        assert_suggestion_result(
+            "This is currently easier said then done because you cannot press Ctrl+A in the debug console",
+            ThenThan::default(),
+            "This is currently easier said than done because you cannot press Ctrl+A in the debug console",
+        );
+    }
+
+    #[test]
+    fn patch_every_now_and_than() {
+        assert_suggestion_result(
+            "I was testing every now and than after an upgrade on the home assistant plugin.",
+            ThenThan::default(),
+            "I was testing every now and then after an upgrade on the home assistant plugin.",
+        );
+    }
+
+    #[test]
+    fn patch_until_than() {
+        assert_suggestion_result(
+            "For the case anyone else ever hits this and the problem is not solved until than, this is a working workaround for the problem",
+            ThenThan::default(),
+            "For the case anyone else ever hits this and the problem is not solved until then, this is a working workaround for the problem",
+        );
+    }
+
+    #[test]
+    fn patch_now_and_than() {
+        assert_suggestion_result(
+            "sounds good if golang-set becomes an issue between now and than…just let me know!",
+            ThenThan::default(),
+            "sounds good if golang-set becomes an issue between now and then…just let me know!",
         );
     }
 }

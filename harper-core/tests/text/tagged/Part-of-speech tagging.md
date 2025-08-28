@@ -42,8 +42,8 @@
 #
 > Part     - of - speech  tagging is harder than just having a   list  of words  and their
 # NSg/V/J+ . P  . N🅪Sg/V+ NSg/V   VL JC     C/P  V/J  V      D/P NSg/V P  NPl/V+ V/C D$+
-> parts of speech  , because some     words  can    represent more         than one       part    of speech
-# NPl/V P  N🅪Sg/V+ . C/P     I/J/R/Dq NPl/V+ NPr/VX V         NPr/I/V/J/Dq C/P  NSg/I/V/J NSg/V/J P  N🅪Sg/V+
+> parts of speech  , because some     words  can    represent more           than one       part    of speech
+# NPl/V P  N🅪Sg/V+ . C/P     I/J/R/Dq NPl/V+ NPr/VX V         NPr/I/V/J/R/Dq C/P  NSg/I/V/J NSg/V/J P  N🅪Sg/V+
 > at    different times  , and because some     parts of speech  are complex . This    is not
 # NSg/P NSg/J     NPl/V+ . V/C C/P     I/J/R/Dq NPl/V P  N🅪Sg/V+ V   NSg/V/J . I/Ddem+ VL NSg/C
 > rare    — in      natural languages ( as    opposed to many        artificial languages ) , a   large
@@ -60,8 +60,8 @@
 #
 > Correct grammatical tagging will   reflect that          " dogs   " is here    used as    a   verb   , not
 # NSg/V/J J           NSg/V   NPr/VX V       NSg/I/C/Ddem+ . NPl/V+ . VL NSg/J/R V/J  NSg/R D/P NSg/V+ . NSg/C
-> as    the more         common  plural noun   . Grammatical context is one       way   to determine
-# NSg/R D   NPr/I/V/J/Dq NSg/V/J NSg/J  NSg/V+ . J+          N🅪Sg/V+ VL NSg/I/V/J NSg/J P  V
+> as    the more           common  plural noun   . Grammatical context is one       way   to determine
+# NSg/R D   NPr/I/V/J/R/Dq NSg/V/J NSg/J  NSg/V+ . J+          N🅪Sg/V+ VL NSg/I/V/J NSg/J P  V
 > this    ; semantic analysis can    also be     used to infer that          " sailor " and " hatch "
 # I/Ddem+ . NSg/J+   N🅪Sg+    NPr/VX W?   NSg/VX V/J  P  V     NSg/I/C/Ddem+ . NSg+   . V/C . NSg/V .
 > implicate " dogs   " as    1 ) in      the nautical context and 2 ) an  action    applied to the
@@ -80,8 +80,8 @@
 # NPl/V+  R        NSg/V NSg/I/C/Ddem +     V   # NPl/V P  N🅪Sg/V NPr/J/P NPr🅪/V/J . NSg/V+ . NSg/V+ .
 > article , adjective , preposition , pronoun , adverb , conjunction , and interjection .
 # NSg/V+  . NSg/V/J+  . NSg/V       . NSg/V+  . NSg/V+ . NSg/V+      . V/C NSg+         .
-> However , there are clearly many        more          categories and sub     - categories . For nouns ,
-# C       . +     V   R       NSg/I/J/Dq+ NPr/I/V/J/Dq+ NPl+       V/C NSg/V/P . NPl+       . C/P NPl/V .
+> However , there are clearly many        more            categories and sub     - categories . For nouns ,
+# C       . +     V   R       NSg/I/J/Dq+ NPr/I/V/J/R/Dq+ NPl+       V/C NSg/V/P . NPl+       . C/P NPl/V .
 > the plural , possessive , and singular forms  can    be     distinguished . In      many
 # D   NSg/J  . NSg/J      . V/C NSg/J    NPl/V+ NPr/VX NSg/VX V/J           . NPr/J/P NSg/I/J/Dq+
 > languages words  are also marked for their " case    " ( role as    subject  , object ,
@@ -150,8 +150,8 @@
 # ?   NSg/VX V/J      D/P . NSg/J     . NSg/V+ NPr/V/J . P    #  NPl+       . C/P NSg/V+  . NPr/P
 > subtypes of nouns , verbs  , punctuation , and so        on  ) . Whether a   very small   set     of
 # NPl      P  NPl/V . NPl/V+ . Nᴹ+         . V/C NSg/I/J/C J/P . . I/C     D/P J/R  NPr/V/J NPr/V/J P
-> very broad tags   or    a   much         larger set     of more         precise ones   is preferable , depends
-# J/R  NSg/J NPl/V+ NPr/C D/P NSg/I/J/R/Dq JC     NPr/V/J P  NPr/I/V/J/Dq V/J+    NPl/V+ VL W?         . NPl/V
+> very broad tags   or    a   much         larger set     of more           precise ones   is preferable , depends
+# J/R  NSg/J NPl/V+ NPr/C D/P NSg/I/J/R/Dq JC     NPr/V/J P  NPr/I/V/J/R/Dq V/J+    NPl/V+ VL W?         . NPl/V
 > on  the purpose at    hand   . Automatic tagging is easier on  smaller tag    - sets  .
 # J/P D   N🅪Sg/V+ NSg/P NSg/V+ . NSg/J     NSg/V   VL NSg/JC J/P NSg/JC  NSg/V+ . NPl/V .
 >
@@ -174,8 +174,8 @@
 # NSg/J/P+ . #d    . NPr/ISg+ NPl/V    P  J/P   # . #   . #   NPl/V P  Nᴹ/V/J/P NPr🅪/V/J+ Nᴹ/V  N🅪Sg/V+ .
 > made up        of 500 samples from randomly chosen publications . Each sample is 2 , 000
 # V    NSg/V/J/P P  #   NPl/V+  P    R        Nᴹ/V/J NPl+         . Dq+  NSg/V+ VL # . #
-> or    more         words  ( ending at    the first   sentence - end    after 2 , 000 words  , so        that         the
-# NPr/C NPr/I/V/J/Dq NPl/V+ . NSg/V  NSg/P D   NSg/V/J NSg/V+   . NSg/V+ P     # . #   NPl/V+ . NSg/I/J/C NSg/I/C/Ddem D
+> or    more           words  ( ending at    the first   sentence - end    after 2 , 000 words  , so        that         the
+# NPr/C NPr/I/V/J/R/Dq NPl/V+ . NSg/V  NSg/P D   NSg/V/J NSg/V+   . NSg/V+ P     # . #   NPl/V+ . NSg/I/J/C NSg/I/C/Ddem D
 > corpus contains only  complete sentences ) .
 # NSg+   V        J/R/C NSg/V/J  NPl/V+    . .
 >
@@ -244,22 +244,22 @@
 # NSg/V+  . NSg/C W?     NSg/V D/P NSg/V+  NSg/I NSg/R . D   . . NSg/R   D   NSg/J/P NSg/V+ VL D/P
 > noun   40 % of the time      , an  adjective 40 % , and a   number     20 % . Knowing   this    , a
 # NSg/V+ #  . P  D   N🅪Sg/V/J+ . D/P NSg/V/J+  #  . . V/C D/P N🅪Sg/V/JC+ #  . . NSg/V/J/P I/Ddem+ . D/P+
-> program can    decide that          " can    " in      " the can    " is far     more         likely to be     a   noun  than
-# NPr/V+  NPr/VX V      NSg/I/C/Ddem+ . NPr/VX . NPr/J/P . D+  NPr/VX . VL NSg/V/J NPr/I/V/J/Dq NSg/J  P  NSg/VX D/P NSg/V C/P
+> program can    decide that          " can    " in      " the can    " is far     more           likely to be     a   noun  than
+# NPr/V+  NPr/VX V      NSg/I/C/Ddem+ . NPr/VX . NPr/J/P . D+  NPr/VX . VL NSg/V/J NPr/I/V/J/R/Dq NSg/J  P  NSg/VX D/P NSg/V C/P
 > a    verb   or    a   modal . The same method can    , of course , be     used to benefit from
 # D/P+ NSg/V+ NPr/C D/P NSg/J . D+  I/J+ NSg/V+ NPr/VX . P  NSg/V+ . NSg/VX V/J  P  NSg/V   P
 > knowledge about the following words  .
 # Nᴹ+       J/P   D+  NSg/V/J/P NPl/V+ .
 >
 #
-> More         advanced ( " higher - order " ) HMMs learn the probabilities not   only  of pairs
-# NPr/I/V/J/Dq V/J      . . NSg/JC . NSg/V . . ?    NSg/V D   NPl+          NSg/C J/R/C P  NPl/V+
+> More           advanced ( " higher - order " ) HMMs learn the probabilities not   only  of pairs
+# NPr/I/V/J/R/Dq V/J      . . NSg/JC . NSg/V . . ?    NSg/V D   NPl+          NSg/C J/R/C P  NPl/V+
 > but     triples or    even    larger sequences . So        , for example , if    you've just seen  a
 # NSg/C/P NPl/V   NPr/C NSg/V/J JC     NPl/V+    . NSg/I/J/C . C/P NSg/V+  . NSg/C W?     V/J  NSg/V D/P
 > noun   followed by      a   verb   , the next    item   may    be     very likely a   preposition ,
 # NSg/V+ V/J      NSg/J/P D/P NSg/V+ . D   NSg/J/P NSg/V+ NPr/VX NSg/VX J/R  NSg/J  D/P NSg/V       .
-> article , or    noun   , but     much         less    likely another verb   .
-# NSg/V+  . NPr/C NSg/V+ . NSg/C/P NSg/I/J/R/Dq V/J/C/P NSg/J  I/D     NSg/V+ .
+> article , or    noun   , but     much         less      likely another verb   .
+# NSg/V+  . NPr/C NSg/V+ . NSg/C/P NSg/I/J/R/Dq V/J/R/C/P NSg/J  I/D     NSg/V+ .
 >
 #
 > When    several ambiguous words  occur together , the possibilities multiply .
@@ -282,8 +282,8 @@
 # V       . #    . NSg/I/C/Ddem+ R      V         D   NSg/I/J/R/Dq NSg/V/J NSg/V+ P  Dq   V/J   NSg/V+ V/C
 > the tag    " proper noun   " to all          unknowns will   approach 90 % accuracy because many
 # D   NSg/V+ . NSg/J  NSg/V+ . P  NSg/I/J/C/Dq NPl/V+   NPr/VX NSg/V+   #  . N🅪Sg+    C/P     NSg/I/J/Dq
-> words  are unambiguous , and many       others only  rarely represent their less    - common
-# NPl/V+ V   J           . V/C NSg/I/J/Dq NPl/V+ J/R/C R      V         D$+   V/J/C/P . NSg/V/J
+> words  are unambiguous , and many       others only  rarely represent their less      - common
+# NPl/V+ V   J           . V/C NSg/I/J/Dq NPl/V+ J/R/C R      V         D$+   V/J/R/C/P . NSg/V/J
 > parts of speech  .
 # NPl/V P  N🅪Sg/V+ .
 >
@@ -314,8 +314,8 @@
 #
 > In      1987 , Steven DeRose and Kenneth W. Church  independently developed dynamic
 # NPr/J/P #    . NPr+   ?      V/C NPr+    ?  NPr🅪/V+ R             V/J       NSg/J
-> programming algorithms to solve the same problem in      vastly less    time      . Their
-# Nᴹ/V+       NPl+       P  NSg/V D   I/J  NSg/J+  NPr/J/P R      V/J/C/P N🅪Sg/V/J+ . D$+
+> programming algorithms to solve the same problem in      vastly less      time      . Their
+# Nᴹ/V+       NPl+       P  NSg/V D   I/J  NSg/J+  NPr/J/P R      V/J/R/C/P N🅪Sg/V/J+ . D$+
 > methods were  similar to the Viterbi algorithm known for some     time      in      other
 # NPl/V+  NSg/V NSg/J   P  D   ?       NSg       V/J   C/P I/J/R/Dq N🅪Sg/V/J+ NPr/J/P NSg/V/J
 > fields   . DeRose used a   table of pairs  , while     Church  used a   table of triples and a

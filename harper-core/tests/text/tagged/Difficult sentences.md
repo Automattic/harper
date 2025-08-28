@@ -232,8 +232,8 @@
 # W?    V      D/P NSg/V+   NSg/V/J C/P NPr+  .
 > The mayor gave a   speech for the charity gala   .
 # D+  NSg+  V    D/P N🅪Sg/V C/P D+  NPr+    NSg/J+ .
-> If    having to bag   the groceries correctly is more         than you    can    handle , then    this   isn't the job    for you    .
-# NSg/C V      P  NSg/V D+  NPl/V+    R         VL NPr/I/V/J/Dq C/P  ISgPl+ NPr/VX NSg/V  . NSg/J/C I/Ddem NSg/V D   NPr/V+ C/P ISgPl+ .
+> If    having to bag   the groceries correctly is more           than you    can    handle , then    this   isn't the job    for you    .
+# NSg/C V      P  NSg/V D+  NPl/V+    R         VL NPr/I/V/J/R/Dq C/P  ISgPl+ NPr/VX NSg/V  . NSg/J/C I/Ddem NSg/V D   NPr/V+ C/P ISgPl+ .
 > This    is a   new     bell  for my  bicycle .
 # I/Ddem+ VL D/P NSg/V/J NPr/V C/P D$+ NSg/V+  .
 > The cake    is for Tom   and Helen's anniversary .
@@ -314,8 +314,8 @@
 # NPr/J/P NSg/V/J P  NSg/V/J+ NPl/V . NPr/V+ V   NSg   C/P NSg  J/P D+  NPr🅪+
 > At    close   of play  , England were  305 for 3 .
 # NSg/P NSg/V/J P  NSg/V . NPr+    NSg/V #   C/P # .
-> He       took the swing  shift  for he       could  get   more         overtime .
-# NPr/ISg+ V    D+  NSg/V+ NSg/V+ C/P NPr/ISg+ NSg/VX NSg/V NPr/I/V/J/Dq NSg/V    .
+> He       took the swing  shift  for he       could  get   more           overtime .
+# NPr/ISg+ V    D+  NSg/V+ NSg/V+ C/P NPr/ISg+ NSg/VX NSg/V NPr/I/V/J/R/Dq NSg/V    .
 > to account for one's whereabouts .
 # P  NSg/V   C/P NSg$+ NSg+        .
 >
@@ -404,8 +404,8 @@
 # NPr/VX ISgPl+ NSg/VX NSg/V/J P  NSg/V  I/Ddem+ NPr/J/P D/P+ NSg/J+ .
 > They said they would call  us       in      a    week   .
 # IPl+ V/J  IPl+ VX    NSg/V NPr/IPl+ NPr/J/P D/P+ NSg/J+ .
-> Less    water   gets  in      your boots this    way    .
-# V/J/C/P N🅪Sg/V+ NPl/V NPr/J/P D$+  NPl/V I/Ddem+ NSg/J+ .
+> Less      water   gets  in      your boots this    way    .
+# V/J/R/C/P N🅪Sg/V+ NPl/V NPr/J/P D$+  NPl/V I/Ddem+ NSg/J+ .
 > She  stood there looking in      the window longingly .
 # ISg+ V     W?    V       NPr/J/P D+  NSg/V+ R         .
 > In      replacing the faucet washers , he       felt     he       was making his     contribution to the environment .
@@ -796,8 +796,8 @@
 # NPr/I+ NPr/V/J ISg+ P  V/Au/Br   . W?   NSg/V/J NSg/V/JC+ NPl/V+ ISg+   .
 > Precisely to get   away from you    was why   I    did what   I    did .
 # R         P  NSg/V V/J  P    ISgPl+ V   NSg/V ISg+ V   NSg/I+ ISg+ V   .
-> I    need    some     more         books  to read  and friends to go      partying with .
-# ISg+ N🅪Sg/VX I/J/R/Dq NPr/I/V/J/Dq NPl/V+ P  NSg/V V/C NPl/V+  P  NSg/V/J V        P    .
+> I    need    some     more           books  to read  and friends to go      partying with .
+# ISg+ N🅪Sg/VX I/J/R/Dq NPr/I/V/J/R/Dq NPl/V+ P  NSg/V V/C NPl/V+  P  NSg/V/J V        P    .
 > If    he       hasn't read  it       yet     , he       ought    to .
 # NSg/C NPr/ISg+ V      NSg/V NPr/ISg+ NSg/V/C . NPr/ISg+ NSg/I/VX P  .
 > I    went  to the shops  to buy   some      bread   .
