@@ -497,8 +497,10 @@
 						"verb": {
 							"verb_form": "ProgressiveForm"
 						},
-						"noun": null,
-						"adjective": null
+						"noun": {
+							"is_mass": true
+						},
+						"adjective": {}
 					}
 				}
 			],
