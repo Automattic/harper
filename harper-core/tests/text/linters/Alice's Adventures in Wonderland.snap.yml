@@ -100,6 +100,17 @@ Suggest:
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+      65 | downward! The Antipathies, I think—” (she was rather glad there was no one
+         |                                                                        ^~~~
+      66 | listening, this time, as it didn’t sound at all the right word) “—but I shall
+         | ~~~~~~~~~ `listening` is a mass noun.
+Suggest:
+  - Replace with: “one piece of listening”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
@@ -1598,6 +1609,18 @@ Suggest:
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+    1484 | begin lessons: you’d only have to whisper a hint to Time, and round goes the
+    1485 | clock in a twinkling! Half-past one, time for dinner!”
+         |          ^~~~~~~~~~~ `twinkling` is a mass noun.
+Suggest:
+  - Replace with: “twinkling”
+  - Replace with: “some twinkling”
+  - Replace with: “a piece of twinkling”
+
+
+
 Lint:    WordChoice (63 priority)
 Message: |
     1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
@@ -1862,6 +1885,17 @@ Suggest:
   - Replace with: “croquet's”
   - Replace with: “coquetted”
   - Replace with: “crocheted”
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+    1887 | “A cat may look at a king,” said Alice. “I’ve read that in some book, but I
+         |                    ^~~~~~ `king` is a mass noun.
+Suggest:
+  - Replace with: “king”
+  - Replace with: “some king”
+  - Replace with: “a piece of king”
 
 
 
