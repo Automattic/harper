@@ -9,26 +9,6 @@ pub struct Everyday {
     expr: Box<dyn Expr>,
 }
 
-// TODO .is_present_tense_verb() is currently broken
-// TODO it returns true for -s 3rd pers. sing. pres.
-// TODO and for -ing continuous/progressive forms, which are not present-only
-// TODO English doesn't have a morphological way to tell
-// TODO the difference between present tense, infinitive, future tense, etc.
-// TODO Switch to use the .is_progressive_form() method when it's merged
-fn is_progressive_form(tok: &Token, src: &[char]) -> bool {
-    tok.kind.is_verb()
-        && tok.kind.is_verb_progressive_form()
-        && tok
-            .span
-            .get_content_string(src)
-            .to_lowercase()
-            .ends_with("ing")
-}
-
-fn is_unknown_word(tok: &Token) -> bool {
-    matches!(&tok.kind, TokenKind::Word(None))
-}
-
 impl Default for Everyday {
     fn default() -> Self {
         let everyday = Word::new("everyday");
@@ -43,10 +23,10 @@ impl Default for Everyday {
                         .then_any_word(),
                 ),
                 Box::new(SequenceExpr::default().t_any().t_any().then(
-                    |tok: &Token, src: &[char]| {
+                    |tok: &Token, _src: &[char]| {
                         !tok.kind.is_noun()
-                            && !is_unknown_word(tok)
-                            && !is_progressive_form(tok, src)
+                            && !tok.kind.is_oov()
+                            && !tok.kind.is_verb_progressive_form()
                     },
                 )),
             ]);

@@ -35,16 +35,27 @@
 //!     - The `Pl` suffix means plural, and `Sg` means singular.
 //!     - The `Pr` suffix means proper noun.
 //!     - The `$` suffix means possessive.
+//!     - Superscript `ᴹ` means mass (uncountable) noun.
+//!     - Superscript `🅪` means mass + countable noun.
 //!   - Pronouns are denoted by `I`.
 //!     - The `Pl` suffix means plural, and `Sg` means singular.
 //!     - The `$` suffix means possessive.
 //!   - Verbs are denoted by `V`.
 //!     - The `L` suffix means linking verb.
 //!     - The `X` suffix means auxiliary verb.
+//!     - The `P` suffix means regular past tense & past participle.
+//!     - The `Pr` suffix means progressive form.
+//!     - The `Pt` suffix means simple past tense.
+//!     - The `Pp` suffix means past participle.
+//!     - The `3` suffix means third person singular present form.
 //!   - Adjectives are denoted by `J`.
+//!     - The `C` suffix means comparative.
+//!     - The `S` suffix means superlative.
 //!   - Adverbs are denoted by `R`.
 //!   - Conjunctions are denoted by `C`.
 //!   - Determiners are denoted by `D`.
+//!     - The `dem` suffix means demonstrative.
+//!     - The `q` suffix means quantifier.
 //!   - Prepositions are denoted by `P`.
 //!   - Dialects are denoted by `Am`, `Br`, `Ca`, or `Au` for individual
 //!     dialects, or `NoAm` for North America (US and Canada)
@@ -65,6 +76,7 @@
 use std::borrow::Cow;
 
 use harper_core::spell::FstDictionary;
+use harper_core::word_metadata::VerbFormFlags;
 use harper_core::{Degree, Dialect, Document, TokenKind, WordMetadata};
 
 mod snapshot;
@@ -133,15 +145,35 @@ fn format_word_tag(word: &WordMetadata) -> String {
         let mut tag = String::from("V");
         add_bool(&mut tag, "L", verb.is_linking);
         add_bool(&mut tag, "X", verb.is_auxiliary);
+        if let Some(forms) = verb.verb_forms {
+            if forms.contains(VerbFormFlags::LEMMA) {
+                tag.push_str("L");
+            }
+            if forms.contains(VerbFormFlags::PAST) {
+                tag.push_str("P");
+            }
+            if forms.contains(VerbFormFlags::PRETERITE) {
+                tag.push_str("Pt");
+            }
+            if forms.contains(VerbFormFlags::PAST_PARTICIPLE) {
+                tag.push_str("Pp");
+            }
+            if forms.contains(VerbFormFlags::PROGRESSIVE) {
+                tag.push_str("g");
+            }
+            if forms.contains(VerbFormFlags::THIRD_PERSON_SINGULAR) {
+                tag.push_str("3");
+            }
+        }
         add(&tag, &mut tags);
     }
     if let Some(adjective) = word.adjective {
         let mut tag = String::from("J");
-        if let Some(dgree) = adjective.degree {
-            tag.push_str(match dgree {
+        if let Some(degree) = adjective.degree {
+            tag.push_str(match degree {
                 Degree::Comparative => "C",
                 Degree::Superlative => "S",
-                Degree::Positive => "P",
+                _ => "",
             });
         }
         add(&tag, &mut tags);
