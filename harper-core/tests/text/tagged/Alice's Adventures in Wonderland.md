@@ -1180,14 +1180,14 @@
 # NSg/V NPr/J/P D   NPr/V+ NSg/C NPr/ISg+ V     V        NPl/V+ J/P   NSg/V/J/C/P NSg/I/C/Ddem+ . .
 >
 #
-> By      this    time      she  had found her     way    into a   tidy    little     room    with a   table  in      the
-# NSg/J/P I/Ddem+ N🅪Sg/V/J+ ISg+ V   NSg/V ISg/D$+ NSg/J+ P    D/P NSg/V/J NPr/I/J/Dq NSg/V/J P    D/P NSg/V+ NPr/J/P D
+> By      this    time      she  had found her     way    into a   tidy    little     room     with a   table  in      the
+# NSg/J/P I/Ddem+ N🅪Sg/V/J+ ISg+ V   NSg/V ISg/D$+ NSg/J+ P    D/P NSg/V/J NPr/I/J/Dq N🅪Sg/V/J P    D/P NSg/V+ NPr/J/P D
 > window , and on  it       ( as    she  had hoped ) a   fan    and two or    three pairs of tiny  white
 # NSg/V+ . V/C J/P NPr/ISg+ . NSg/R ISg+ V   V/J   . D/P NSg/V+ V/C NSg NPr/C NSg   NPl/V P  NSg/J NPr🅪/V/J
 > kid    gloves : she  took up        the fan    and a   pair  of the gloves , and was just going   to
 # NSg/V+ NPl/V+ . ISg+ V    NSg/V/J/P D   NSg/V+ V/C D/P NSg/V P  D   NPl/V+ . V/C V   V/J  NSg/V/J P
-> leave the room     , when    her     eye    fell    upon a   little     bottle that          stood near      the
-# NSg/V D   NSg/V/J+ . NSg/I/C ISg/D$+ NSg/V+ NSg/V/J P    D/P NPr/I/J/Dq NSg/V+ NSg/I/C/Ddem+ V     NSg/V/J/P D
+> leave the room      , when    her     eye    fell    upon a   little     bottle that          stood near      the
+# NSg/V D   N🅪Sg/V/J+ . NSg/I/C ISg/D$+ NSg/V+ NSg/V/J P    D/P NPr/I/J/Dq NSg/V+ NSg/I/C/Ddem+ V     NSg/V/J/P D
 > looking - glass   . There was no     label  this   time      with the words  “ DRINK  ME       , ” but
 # V+      . NPr🅪/V+ . +     V   NPr/P+ NSg/V+ I/Ddem N🅪Sg/V/J+ P    D+  NPl/V+ . NSg/V+ NPr/ISg+ . . NSg/C/P
 > nevertheless she  uncorked it       and put   it       to her     lips   . “ I    know  something
@@ -1215,7 +1215,7 @@
 > Alas ! it       was too late  to wish  that          ! She  went  on  growing , and growing , and very
 # NPl  . NPr/ISg+ V   W?  NSg/J P  NSg/V NSg/I/C/Ddem+ . ISg+ NSg/V J/P NSg/V   . V/C NSg/V   . V/C J/R
 > soon had to kneel down       on  the floor  : in      another minute   there was not   even    room
-# J/R  V   P  V     N🅪Sg/V/J/P J/P D   NSg/V+ . NPr/J/P I/D     NSg/V/J+ +     V   NSg/C NSg/V/J NSg/V/J+
+# J/R  V   P  V     N🅪Sg/V/J/P J/P D   NSg/V+ . NPr/J/P I/D     NSg/V/J+ +     V   NSg/C NSg/V/J N🅪Sg/V/J+
 > for this    , and she  tried the effect of lying   down       with one       elbow  against the
 # C/P I/Ddem+ . V/C ISg+ V/J   D   NSg/V+ P  NSg/V/J N🅪Sg/V/J/P P    NSg/I/V/J NSg/V+ C/P     D
 > door   , and the other   arm      curled round     her     head     . Still   she  went  on  growing , and ,
@@ -1232,8 +1232,8 @@
 # R       C/P NPr+  . D+  NPr/I/J/Dq+ N🅪Sg/V/J+ NSg/V+ V   NPr/V/J/C V   ISg/D$+ NSg/V/J+ NSg/V+ . V/C ISg+
 > grew no    larger : still   it       was very uncomfortable , and , as    there seemed to be     no
 # V    NPr/P JC     . NSg/V/J NPr/ISg+ V   J/R  J             . V/C . NSg/R +     V/J    P  NSg/VX NPr/P
-> sort  of chance  of her     ever getting out         of the room     again , no    wonder she  felt
-# NSg/V P  NPr/V/J P  ISg/D$+ J    NSg/V   NSg/V/J/R/P P  D+  NSg/V/J+ P     . NPr/P N🅪Sg/V ISg+ N🅪Sg/V/J
+> sort  of chance  of her     ever getting out         of the room      again , no    wonder she  felt
+# NSg/V P  NPr/V/J P  ISg/D$+ J    NSg/V   NSg/V/J/R/P P  D+  N🅪Sg/V/J+ P     . NPr/P N🅪Sg/V ISg+ N🅪Sg/V/J
 > unhappy .
 # NSg/V/J .
 >
@@ -1252,8 +1252,8 @@
 # V/C NPr/V/J/C NSg/J/R ISg+ NPr/V/J NPr/J/P D   NSg/V/J P  NSg/I/V/J . +     NSg/I/VX P  NSg/VX D/P NSg/V+ V/J     J/P
 > me       , that         there ought    ! And when    I    grow up        , I’ll write one       — but     I’m grown up        now       , ”
 # NPr/ISg+ . NSg/I/C/Ddem +     NSg/I/VX . V/C NSg/I/C ISg+ V    NSg/V/J/P . W?   NSg/V NSg/I/V/J . NSg/C/P W?  V/J   NSg/V/J/P NPr/V/J/C . .
-> she  added in      a   sorrowful tone      ; “ at    least there’s no    room     to grow up        any    more
-# ISg+ V/J   NPr/J/P D/P J         N🅪Sg/I/V+ . . NSg/P NSg/J W?      NPr/P NSg/V/J+ P  V    NSg/V/J/P I/R/Dq NPr/I/V/J/Dq
+> she  added in      a   sorrowful tone      ; “ at    least there’s no    room      to grow up        any    more
+# ISg+ V/J   NPr/J/P D/P J         N🅪Sg/I/V+ . . NSg/P NSg/J W?      NPr/P N🅪Sg/V/J+ P  V    NSg/V/J/P I/R/Dq NPr/I/V/J/Dq
 > here    . ”
 # NSg/J/R . .
 >
@@ -1268,8 +1268,8 @@
 #
 > “ Oh    , you    foolish Alice ! ” she  answered herself . “ How   can    you    learn lessons in
 # . NPr/V . ISgPl+ J+      NPr+  . . ISg+ V/J      ISg+    . . NSg/C NPr/VX ISgPl+ NSg/V NPl/V+  NPr/J/P
-> here    ? Why   , there’s hardly room     for you    , and no    room     at    all          for any
-# NSg/J/R . NSg/V . W?      R      NSg/V/J+ C/P ISgPl+ . V/C NPr/P NSg/V/J+ NSg/P NSg/I/J/C/Dq C/P I/R/Dq
+> here    ? Why   , there’s hardly room      for you    , and no    room      at    all          for any
+# NSg/J/R . NSg/V . W?      R      N🅪Sg/V/J+ C/P ISgPl+ . V/C NPr/P N🅪Sg/V/J+ NSg/P NSg/I/J/C/Dq C/P I/R/Dq
 > lesson - books  ! ”
 # NSg/V+ . NPl/V+ . .
 >
@@ -1920,8 +1920,8 @@
 # +     V   NPr/P N🅪Sg/V/J+ P  NSg/VX V/J  . NSg/R ISg+ V   V         R       . NSg/I/J/C ISg+ NPr/V/J P  N🅪Sg/V
 > at    once  to eat some     of the other    bit    . Her     chin   was pressed so        closely against
 # NSg/P NSg/C P  V   I/J/R/Dq P  D+  NSg/V/J+ NSg/V+ . ISg/D$+ NPr/V+ V   V/J     NSg/I/J/C R       C/P
-> her     foot   , that         there was hardly room     to open    her     mouth  ; but     she  did it       at    last    ,
-# ISg/D$+ NSg/V+ . NSg/I/C/Ddem +     V   R      NSg/V/J+ P  NSg/V/J ISg/D$+ NSg/V+ . NSg/C/P ISg+ V   NPr/ISg+ NSg/P NSg/V/J .
+> her     foot   , that         there was hardly room      to open    her     mouth  ; but     she  did it       at    last    ,
+# ISg/D$+ NSg/V+ . NSg/I/C/Ddem +     V   R      N🅪Sg/V/J+ P  NSg/V/J ISg/D$+ NSg/V+ . NSg/C/P ISg+ V   NPr/ISg+ NSg/P NSg/V/J .
 > and managed to swallow a   morsel of the lefthand bit    .
 # V/C V/J     P  NSg/V   D/P NSg/V  P  D   ?        NSg/V+ .
 >
@@ -2428,8 +2428,8 @@
 # . NSg/J/R . ISgPl+ NPr/VX NSg/V NPr/ISg+ D/P+ NSg/V+ . NSg/C ISgPl+ NSg/V/J/C/P . . D   NSg/V   V/J  P  NPr+  . V
 > the baby     at    her     as    she  spoke . “ I    must  go      and get   ready   to play   croquet with the
 # D   NSg/V/J+ NSg/P ISg/D$+ NSg/R ISg+ NSg/V . . ISg+ NSg/V NSg/V/J V/C NSg/V NSg/V/J P  N🅪Sg/V NSg/V   P    D+
-> Queen    , ” and she  hurried out         of the room     . The cook  threw a   frying - pan     after her
-# NPr/V/J+ . . V/C ISg+ V/J     NSg/V/J/R/P P  D   NSg/V/J+ . D   NPr/V V     D/P V      . NPr/V/J P     ISg/D$+
+> Queen    , ” and she  hurried out         of the room      . The cook  threw a   frying - pan     after her
+# NPr/V/J+ . . V/C ISg+ V/J     NSg/V/J/R/P P  D   N🅪Sg/V/J+ . D   NPr/V V     D/P V      . NPr/V/J P     ISg/D$+
 > as    she  went  out         , but     it       just missed her     .
 # NSg/R ISg+ NSg/V NSg/V/J/R/P . NSg/C/P NPr/ISg+ V/J  V/J    ISg/D$+ .
 >
@@ -2724,10 +2724,10 @@
 #
 > The table  was a   large one       , but     the three were   all          crowded together at    one       corner
 # D+  NSg/V+ V   D/P NSg/J NSg/I/V/J . NSg/C/P D+  NSg+  NSg/V+ NSg/I/J/C/Dq V/J     J        NSg/P NSg/I/V/J NSg/V
-> of it       : “ No     room     ! No     room     ! ” they cried out         when    they saw   Alice coming  . “ There’s
-# P  NPr/ISg+ . . NPr/P+ NSg/V/J+ . NPr/P+ NSg/V/J+ . . IPl+ V/J   NSg/V/J/R/P NSg/I/C IPl+ NSg/V NPr+  NSg/V/J . . W?
-> plenty  of room     ! ” said Alice indignantly , and she  sat     down       in      a   large arm      - chair
-# NSg/I/J P  NSg/V/J+ . . V/J  NPr+  R           . V/C ISg+ NSg/V/J N🅪Sg/V/J/P NPr/J/P D/P NSg/J NSg/V/J+ . NSg/V+
+> of it       : “ No     room      ! No     room      ! ” they cried out         when    they saw   Alice coming  . “ There’s
+# P  NPr/ISg+ . . NPr/P+ N🅪Sg/V/J+ . NPr/P+ N🅪Sg/V/J+ . . IPl+ V/J   NSg/V/J/R/P NSg/I/C IPl+ NSg/V NPr+  NSg/V/J . . W?
+> plenty  of room      ! ” said Alice indignantly , and she  sat     down       in      a   large arm      - chair
+# NSg/I/J P  N🅪Sg/V/J+ . . V/J  NPr+  R           . V/C ISg+ NSg/V/J N🅪Sg/V/J/P NPr/J/P D/P NSg/J NSg/V/J+ . NSg/V+
 > at    one       end   of the table  .
 # NSg/P NSg/I/V/J NSg/V P  D   NSg/V+ .
 >
@@ -5229,7 +5229,7 @@
 > again , and she  thought at    first   she  would get   up        and leave the court    ; but     on
 # P     . V/C ISg+ NSg/V   NSg/P NSg/V/J ISg+ VX    NSg/V NSg/V/J/P V/C NSg/V D+  NSg/V/J+ . NSg/C/P J/P
 > second   thoughts she  decided to remain where she  was as    long    as    there was room
-# NSg/V/J+ NPl/V+   ISg+ NSg/V/J P  NSg/V  NSg/C ISg+ V   NSg/R NPr/V/J NSg/R +     V   NSg/V/J+
+# NSg/V/J+ NPl/V+   ISg+ NSg/V/J P  NSg/V  NSg/C ISg+ V   NSg/R NPr/V/J NSg/R +     V   N🅪Sg/V/J+
 > for her     .
 # C/P ISg/D$+ .
 >

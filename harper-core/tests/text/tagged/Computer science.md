@@ -29,7 +29,7 @@
 > security involve studying the means for secure communication and preventing
 # Nᴹ+      V       V        D   NPl/V C/P V/J    N🅪Sg+         V/C V
 > security vulnerabilities . Computer graphics and computational geometry address
-# Nᴹ+      NSg+            . NSg/V+   NPl      V/C J+            N🅪Sg+    NSg/V+
+# Nᴹ+      NPl+            . NSg/V+   NPl      V/C J+            N🅪Sg+    NSg/V+
 > the generation of images . Programming language theory considers different ways
 # D   NSg        P  NPl/V+ . Nᴹ/V+       N🅪Sg/V+  N🅪Sg+  V         NSg/J     NPl+
 > to describe computational processes , and database theory concerns the management
@@ -389,7 +389,7 @@
 > science . Proponents of classifying computer science as    an  engineering discipline
 # N🅪Sg/V+ . NPl        P  V           NSg/V+   N🅪Sg/V+ NSg/R D/P NSg/V+      NSg/V+
 > argue that         the reliability of computational systems is investigated in      the same
-# V     NSg/I/C/Ddem D   NSg         P  J             NPl+    VL V/J          NPr/J/P D   I/J
+# V     NSg/I/C/Ddem D   Nᴹ          P  J             NPl+    VL V/J          NPr/J/P D   I/J
 > way    as    bridges  in      civil engineering and airplanes in      aerospace engineering . They
 # NSg/J+ NSg/R NPrPl/V+ NPr/J/P J     NSg/V+      V/C NPl/V     NPr/J/P NSg/J+    NSg/V+      . IPl+
 > also argue that         while     empirical sciences observe what   presently exists , computer
@@ -585,7 +585,7 @@
 > expectation that          , as    in      other    engineering disciplines , performing appropriate
 # NSg+        NSg/I/C/Ddem+ . NSg/R NPr/J/P NSg/V/J+ NSg/V+      NPl/V+      . V          V/J+
 > mathematical analysis can    contribute to the reliability and robustness of a
-# J+           N🅪Sg+    NPr/VX NSg/V      P  D+  NSg+        V/C NSg        P  D/P
+# J+           N🅪Sg+    NPr/VX NSg/V      P  D+  Nᴹ+         V/C NSg        P  D/P
 > design  . They form  an  important theoretical underpinning for software
 # N🅪Sg/V+ . IPl+ NSg/V D/P J         J           NSg/V        C/P Nᴹ+
 > engineering , especially where safety or    security is involved . Formal methods are
@@ -748,8 +748,8 @@
 # N🅪Sg/V/J+     . D   V        NSg/V+ NPr/J/P D+  NSg/J+ #d    V   NPr  NSg$     NSg/V+
 > " Can    computers think ? " , and the question remains effectively unanswered ,
 # . NPr/VX NPl/V+    NSg/V . . . V/C D+  NSg/V+   NPl/V   R           V/J        .
-> although the Turing test   is still   used to assess computer output on  the scale  of
-# C        D   NPr    NSg/V+ VL NSg/V/J V/J  P  V      NSg/V+   NSg/V+ J/P D   N🅪Sg/V P
+> although the Turing test   is still   used to assess computer output  on  the scale  of
+# C        D   NPr    NSg/V+ VL NSg/V/J V/J  P  V      NSg/V+   N🅪Sg/V+ J/P D   N🅪Sg/V P
 > human   intelligence . But     the automation of evaluative and predictive tasks  has
 # NSg/V/J N🅪Sg+        . NSg/C/P D   N🅪Sg       P  W?         V/C W?         NPl/V+ V
 > been  increasingly successful as    a   substitute for human   monitoring and
@@ -798,8 +798,8 @@
 # R              . V/C R           V           P    Dq   NSg/V/J . D/P N🅪Sg/V/JC P
 > mathematical models have   been  developed for general concurrent computation
 # J+           NPl/V+ NSg/VX NSg/V V/J       C/P NSg/V/J NSg/J      NSg
-> including Petri nets  , process calculi and the parallel random  access machine
-# V         ?     NPl/V . NSg/V+  NSg     V/C D   NSg/V/J  NSg/V/J NSg/V+ NSg/V+
+> including Petri nets  , process calculi and the parallel random  access  machine
+# V         ?     NPl/V . NSg/V+  NSg     V/C D   NSg/V/J  NSg/V/J N🅪Sg/V+ NSg/V+
 > model    . When    multiple  computers are connected in      a    network while     using
 # NSg/V/J+ . NSg/I/C NSg/J/Dq+ NPl/V+    V   V/J       NPr/J/P D/P+ NSg/V+  NSg/V/C/P V
 > concurrency , this    is known as    a   distributed system . Computers within  that
@@ -826,10 +826,10 @@
 #
 > Computer security is a   branch of computer technology with the objective of
 # NSg/V+   Nᴹ+      VL D/P NPr/V  P  NSg/V+   N🅪Sg+      P    D   NSg/J     P
-> protecting information from unauthorized access , disruption , or    modification
-# V          Nᴹ+         P    V/J          NSg/V+ . N🅪Sg+      . NPr/C NSg+
+> protecting information from unauthorized access  , disruption , or    modification
+# V          Nᴹ+         P    V/J          N🅪Sg/V+ . N🅪Sg+      . NPr/C NSg+
 > while     maintaining the accessibility and usability of the system for its     intended
-# NSg/V/C/P V           D   NSg+          V/C Nᴹ        P  D   NSg+   C/P ISg/D$+ NSg/V/J
+# NSg/V/C/P V           D   Nᴹ+           V/C Nᴹ        P  D   NSg+   C/P ISg/D$+ NSg/V/J
 > users .
 # NPl+  .
 >
@@ -1020,8 +1020,8 @@
 # . NPl/V+  . . I/C+  NPr/VX V       N🅪Pl+ . NPr/J/P D   NSg/V P  NPrPl/V+ . R     V/J   NSg/R
 > attributes ; and code    , in      the form  of procedures , often known as    methods . A
 # NPl/V+     . V/C N🅪Sg/V+ . NPr/J/P D   NSg/V P  NPl+       . R     V/J   NSg/R NPl/V+  . D/P
-> feature of objects is that         an  object's procedures can    access and often modify
-# NSg/V   P  NPl/V+  VL NSg/I/C/Ddem D/P NSg$     NPl+       NPr/VX NSg/V+ V/C R     V
+> feature of objects is that         an  object's procedures can    access  and often modify
+# NSg/V   P  NPl/V+  VL NSg/I/C/Ddem D/P NSg$     NPl+       NPr/VX N🅪Sg/V+ V/C R     V
 > the data  fields  of the object with which they are associated . Thus
 # D   N🅪Pl+ NPrPl/V P  D   NSg/V+ P    I/C+  IPl+ V   V/J        . NSg
 > object - oriented computer programs are made out         of objects that          interact with

@@ -164,8 +164,8 @@
 # NSg/J/P D$+ NSg/V+    . IPl+ VX     NSg/VX R      W?    .
 > It       is easy    to invert  a   2 - by      - 2 matrix .
 # NPr/ISg+ VL NSg/V/J P  NSg/V/J D/P # . NSg/J/P . # NSg+   .
-> The room     was about 4 foot  by      6 foot   .
-# D+  NSg/V/J+ V   J/P   # NSg/V NSg/J/P # NSg/V+ .
+> The room      was about 4 foot  by      6 foot   .
+# D+  N🅪Sg/V/J+ V   J/P   # NSg/V NSg/J/P # NSg/V+ .
 > The bricks used to build the wall   measured 10 by      20 by      30 cm   .
 # D+  NPl/V+ V/J  P  NSg/V D+  NPr/V+ V/J      #  NSg/J/P #  NSg/J/P #  NSg+ .
 > She's a   lovely little     filly , by      Big   Lad , out         of Damsel in      Distress .
@@ -196,8 +196,8 @@
 # NSg/V/J+
 >
 #
-> a   by      path   ; a   by      room     ( Out         of the way    , off       to one        side     . )
-# D/P NSg/J/P NSg/V+ . D/P NSg/J/P NSg/V/J+ . NSg/V/J/R/P P  D+  NSg/J+ . NSg/V/J/P P  NSg/I/V/J+ NSg/V/J+ . .
+> a   by      path   ; a   by      room      ( Out         of the way    , off       to one        side     . )
+# D/P NSg/J/P NSg/V+ . D/P NSg/J/P N🅪Sg/V/J+ . NSg/V/J/R/P P  D+  NSg/J+ . NSg/V/J/P P  NSg/I/V/J+ NSg/V/J+ . .
 > by      catch ; a   by      issue ( Subsidiary , incidental . )
 # NSg/J/P NSg/V . D/P NSg/J/P NSg/V . NSg/J+     . NSg/J      . .
 >
@@ -878,8 +878,8 @@
 # NPr+ V   V         P  NPr  P    ISg/D$+ NPl/V+ V/J    .
 > The match  result was 10 - 5 , with John scoring three goals  .
 # D+  NSg/V+ NSg/V+ V   #  . # . P    NPr+ V+      NSg+  NPl/V+ .
-> With a   heavy   sigh  , she  looked around the empty    room     .
-# P    D/P NSg/V/J NSg/V . ISg+ V/J    J/P    D+  NSg/V/J+ NSg/V/J+ .
+> With a   heavy   sigh  , she  looked around the empty    room      .
+# P    D/P NSg/V/J NSg/V . ISg+ V/J    J/P    D+  NSg/V/J+ N🅪Sg/V/J+ .
 > Four people were  injured , with one       of them     in      critical condition .
 # NSg+ NPl/V+ NSg/V V/J     . P    NSg/I/V/J P  NSg/IPl+ NPr/J/P NSg/J+   N🅪Sg/V+   .
 > With their reputation on  the line   , they decided to fire     their PR   team   .
