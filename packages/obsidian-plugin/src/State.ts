@@ -15,7 +15,6 @@ export type Settings = {
 	delay?: number;
 	ignoredGlobs?: string[];
 	lintEnabled: boolean;
-	lintEnabledRestore: boolean;
 };
 
 const DEFAULT_DELAY = -1;
@@ -31,7 +30,6 @@ export default class State {
 	private ignoredGlobs?: string[];
 	private editorViewField?: StateField<MarkdownFileInfo>;
 	private lintEnabled: boolean;
-	private lintEnabledRestore: boolean;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -56,7 +54,6 @@ export default class State {
 			settings = {
 				useWebWorker: true,
 				lintEnabled: true,
-				lintEnabledRestore: false,
 				lintSettings: {},
 			};
 		}
@@ -97,7 +94,6 @@ export default class State {
 		this.delay = settings.delay ?? DEFAULT_DELAY;
 		this.ignoredGlobs = settings.ignoredGlobs;
 		this.lintEnabled = settings.lintEnabled;
-		this.lintEnabledRestore = settings.lintEnabledRestore;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
@@ -230,7 +226,6 @@ export default class State {
 			delay: this.delay,
 			ignoredGlobs: this.ignoredGlobs,
 			lintEnabled: this.lintEnabled,
-			lintEnabledRestore: this.lintEnabledRestore,
 		};
 	}
 
