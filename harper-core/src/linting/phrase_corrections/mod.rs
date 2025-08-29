@@ -669,6 +669,13 @@ pub fn lint_group() -> LintGroup {
             "Ensures `just deserts` is used correctly, preserving its meaning of receiving an appropriate outcome for one's actions.",
             LintKind::Spelling
         ),
+        "KelvinDegreesSymbol" => (
+            ["°K"],
+            ["K"],
+            "Use just K when discussing units of Kelvin. No degree symbol needed.",
+            "Replaces degree symbol followed by K to just the kelvin symbol",
+            LintKind::Redundancy
+        ),
         "KindOf" => (
             ["kinda of"],
             ["kind of", "kinda"],
