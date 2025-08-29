@@ -12,6 +12,7 @@ import {
 	type GetDialectResponse,
 	type GetDomainStatusRequest,
 	type GetDomainStatusResponse,
+	type GetEnabledDomainsResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
 	type GetUserDictionaryResponse,
@@ -125,6 +126,8 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleSetDefaultStatus(message);
 		case 'getDefaultStatus':
 			return handleGetDefaultStatus();
+		case 'getEnabledDomains':
+			return handleGetEnabledDomains();
 		case 'getUserDictionary':
 			return handleGetUserDictionary();
 		case 'setUserDictionary':
@@ -182,6 +185,17 @@ async function handleGetDefaultStatus(): Promise<GetDefaultStatusResponse> {
 		kind: 'getDefaultStatus',
 		enabled: await enabledByDefault(),
 	};
+}
+
+async function handleGetEnabledDomains(): Promise<GetEnabledDomainsResponse> {
+	const all = await chrome.storage.local.get(null as any);
+	const prefix = formatDomainKey(''); // yields 'domainStatus '
+	const domains = Object.entries(all)
+		.filter(([k, v]) => typeof v === 'boolean' && v === true && k.startsWith(prefix))
+		.map(([k]) => k.substring(prefix.length))
+		.sort((a, b) => a.localeCompare(b));
+
+	return { kind: 'getEnabledDomains', domains };
 }
 
 async function handleGetDomainStatus(
