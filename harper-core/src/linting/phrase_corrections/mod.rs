@@ -300,6 +300,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `day in age` to `day and age`, which properly means the current era or time period.",
             LintKind::Eggcorn
         ),
+        "DegreesKelvin" => (
+            ["degrees kelvin", "degrees Kelvin"],
+            ["kelvin"],
+            "Use just `kelvins` when discussing the unit Kelvin.",
+            "Corrects use of degrees kelvin to kelvin.",
+            LintKind::Usage
+        ),
         "DoNotWant" => (
             ["don't wan", "do not wan"],
             ["don't want", "do not want"],
