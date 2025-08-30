@@ -8,6 +8,8 @@ use crate::Currency;
 )]
 #[serde(tag = "kind")]
 pub enum Punctuation {
+    /// `°`
+    Degree,
     /// `…`
     Ellipsis,
     /// `–`
@@ -83,6 +85,7 @@ impl Punctuation {
         let punct = match c {
             '@' => Punctuation::At,
             '~' => Punctuation::Tilde,
+            '°' => Punctuation::Degree,
             '=' => Punctuation::Equal,
             '<' => Punctuation::LessThan,
             '>' => Punctuation::GreaterThan,
