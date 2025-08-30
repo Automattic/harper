@@ -53425,6 +53425,7 @@ each other/I
 easy peasy/J
 eco-friendly/J
 editor in chief/N
+en masse
 end user/NgS
 energy-efficient/J
 et al./~
@@ -53650,8 +53651,8 @@ out-and-out/J
 out of date
 Pan Am/Ng           # old airline
 pari passu/RJ
-part of speech/Ng
-parts speech/9
+part of speech/N0g
+parts of speech/N9
 Pascal case/Nmg
 Pax Americana/Og
 peer review/NgSdG
@@ -53682,7 +53683,7 @@ quid pro quo/Ng
 quote unquote/JR
 rack-mounted/J
 rate limit/NgS
-rate-ray casting/Nmg
+ray casting/Nmg
 ray marcher/NgS
 ray marching/Nmg
 ray tracer/NgS
