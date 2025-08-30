@@ -328,6 +328,12 @@ fn corrects_mixed_case() {
 }
 
 #[test]
+fn corrects_degrees_kelvin() {
+    assert_suggestion_result("degrees kelvin", lint_group(), "kelvins");
+    assert_suggestion_result("°K", lint_group(), "K");
+}
+
+#[test]
 fn does_not_flag_already_correct() {
     assert_lint_count("I don't want to leave.", lint_group(), 0);
 }

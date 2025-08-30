@@ -301,10 +301,17 @@ pub fn lint_group() -> LintGroup {
             LintKind::Eggcorn
         ),
         "DegreesKelvin" => (
-            ["degrees kelvin", "degrees Kelvin", "°K"],
-            ["kelvin", "K"],
-            "Use just `kelvins` when discussing the unit Kelvin.",
-            "Corrects use of degrees kelvin to kelvin.",
+            ["degrees kelvin", "degrees Kelvin"],
+            ["kelvins"],
+            "Use `kelvins` when discussing the unit Kelvin.",
+            "Corrects use of `degrees kelvin` to `kelvins`.",
+            LintKind::Usage
+        ),
+        "DegreesKelvinSymbol" => (
+            ["°K"],
+            ["K"],
+            "Use just the symbol `K` when discussing the unit Kelvin.",
+            "Corrects use of `°K` to `K`.",
             LintKind::Usage
         ),
         "DoNotWant" => (
