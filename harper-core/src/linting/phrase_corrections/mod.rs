@@ -1056,9 +1056,9 @@ pub fn lint_group() -> LintGroup {
             "Ensures `to-do` is correctly hyphenated."
         ),
         "ToGreatLengths" => (
-            ["through great lengths"],
+            ["through great lengths", "to a great length"],
             ["to great lengths"],
-            "Did you mean `to great lengths`?",
+            "The idiom is to go `to great lengths`.",
             "Corrects `through great lengths` to `to great lengths`."
         ),
         "ToTheMannerBorn" => (
