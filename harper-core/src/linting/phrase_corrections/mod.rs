@@ -301,8 +301,8 @@ pub fn lint_group() -> LintGroup {
             LintKind::Eggcorn
         ),
         "DegreesKelvin" => (
-            ["degrees kelvin", "degrees Kelvin"],
-            ["kelvin"],
+            ["degrees kelvin", "degrees Kelvin", "°K"],
+            ["kelvin", "K"],
             "Use just `kelvins` when discussing the unit Kelvin.",
             "Corrects use of degrees kelvin to kelvin.",
             LintKind::Usage
@@ -675,13 +675,6 @@ pub fn lint_group() -> LintGroup {
             "Use the correct phrase for receiving what one deserves.",
             "Ensures `just deserts` is used correctly, preserving its meaning of receiving an appropriate outcome for one's actions.",
             LintKind::Spelling
-        ),
-        "KelvinDegreesSymbol" => (
-            ["°K"],
-            ["K"],
-            "Use just K when discussing units of Kelvin. No degree symbol needed.",
-            "Replaces degree symbol followed by K to just the kelvin symbol",
-            LintKind::Redundancy
         ),
         "KindOf" => (
             ["kinda of"],
