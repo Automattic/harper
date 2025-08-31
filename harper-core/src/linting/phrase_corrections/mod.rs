@@ -959,13 +959,6 @@ pub fn lint_group() -> LintGroup {
             "Changes `spacial attention` to `special attention`.",
             LintKind::Typo
         ),
-        "SpokeTooSoon" => (
-            ["spoke to soon"],
-            ["spoke too soon"],
-            "Use the adverb `too` instead.",
-            "Identifies common misuse of the preposition `to` in the phrase `spoke too soon`.",
-            LintKind::Grammar
-        ),
         "Starving" => (
             ["very hungry", "really hungry", "extremely hungry"],
             ["starving"],
