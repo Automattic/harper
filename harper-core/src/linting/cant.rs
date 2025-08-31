@@ -12,7 +12,6 @@ pub struct Cant {
 impl Default for Cant {
     fn default() -> Self {
         let nom_cant = SequenceExpr::default()
-            // .then(NominalPhrase)
             .then_kind_except(|kind| kind.is_nominal(), &["or"])
             .t_ws()
             .t_aco("cant");
