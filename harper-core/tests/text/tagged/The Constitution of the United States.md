@@ -683,7 +683,7 @@
 > on  Imports or    Exports , except what   may    be     absolutely necessary for executing
 # J/P NPl/V   NPr/C NPl/V+  . V/C/P  NSg/I+ NPr/VX NSg/VX R          NSg/J     C/P V
 > it's inspection Laws   : and the net      Produce of all          Duties and Imposts , laid by
-# +    NSg+       NPl/V+ . V/C D   NSg/V/J+ Nᴹ/V    P  NSg/I/J/C/Dq NPl+   V/C NPl     . V/J  NSg/J/P
+# +    N🅪Sg+      NPl/V+ . V/C D   NSg/V/J+ Nᴹ/V    P  NSg/I/J/C/Dq NPl+   V/C NPl     . V/J  NSg/J/P
 > any    State   on  Imports or    Exports , shall be     for the Use   of the Treasury of the
 # I/R/Dq N🅪Sg/V+ J/P NPl/V   NPr/C NPl/V+  . VX    NSg/VX C/P D   NSg/V P  D   NPr      P  D
 > United States   ; and all          such  Laws   shall be     subject to the Revision and Controul

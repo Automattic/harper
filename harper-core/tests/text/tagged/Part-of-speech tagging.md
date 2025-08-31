@@ -323,7 +323,7 @@
 > method of estimating the values for triples that          were  rare    or    nonexistent in      the
 # NSg/V  P  V          D   NPl/V+ C/P NPl/V   NSg/I/C/Ddem+ NSg/V NSg/V/J NPr/C NSg/J       NPr/J/P D
 > Brown    Corpus ( an  actual measurement of triple  probabilities would require a   much
-# NPr🅪/V/J NSg+   . D/P NSg/J  NSg         P  NSg/V/J NPl+          VX    NSg/V   D/P NSg/I/J/R/Dq
+# NPr🅪/V/J NSg+   . D/P NSg/J  N🅪Sg        P  NSg/V/J NPl+          VX    NSg/V   D/P NSg/I/J/R/Dq
 > larger corpus ) . Both   methods achieved an  accuracy of over    95 % . DeRose's 1990
 # JC     NSg+   . . I/C/Dq NPl/V+  V/J      D/P N🅪Sg+    P  NSg/J/P #  . . ?        #
 > dissertation at    Brown    University included analyses    of the specific error  types  ,
