@@ -188,8 +188,8 @@
 # W?   NSg/V NSg/J/P J/P D$+ NSg/J+ NSg/V/J P    N🅪Sg/V+ .
 > We're right   near      the lifeguard station . Come    by      before you    leave .
 # W?    NPr/V/J NSg/V/J/P D   NSg+      NSg/V+  . NSg/V/P NSg/J/P C/P    ISgPl+ NSg/V .
-> The women spent much         time      after harvest putting jams   by      for winter and spring .
-# D+  NPl+  V/J   NSg/I/J/R/Dq N🅪Sg/V/J+ P     NSg/V+  NSg/V   NPl/V+ NSg/J/P C/P NSg/V  V/C NSg/V+ .
+> The women spent much         time      after harvest putting jams   by      for winter and spring  .
+# D+  NPl+  V/J   NSg/I/J/R/Dq N🅪Sg/V/J+ P     NSg/V+  NSg/V   NPl/V+ NSg/J/P C/P N🅪Sg/V V/C N🅪Sg/V+ .
 >
 #
 > Adjective
@@ -329,7 +329,7 @@
 > I    got a   letter from my  brother  .
 # ISg+ V   D/P NSg/V+ P    D$+ NSg/V/J+ .
 > You    can't get   all          your news  from the Internet .
-# ISgPl+ VX    NSg/V NSg/I/J/C/Dq D$+  Nᴹ/V+ P    D   NPr/V+   .
+# ISgPl+ VX    NSg/V NSg/I/J/C/Dq D$+  Nᴹ/V+ P    D   NPrᴹ/V+  .
 > He       had books  piled from floor  to ceiling .
 # NPr/ISg+ V   NPl/V+ V/J   P    NSg/V+ P  NSg/V   .
 > He       departed yesterday from Chicago .
@@ -616,8 +616,8 @@
 # W?   NSg/V/J/C/P P  N🅪Sg/V D   N🅪Sg/J NSg/J/P P  D   N🅪Sg/V/J NSg/V/J+ . NSg/C/P NSg/I/C/Ddem NSg/V/J+ NSg/V J/P .
 > The captain moved two fielders to the on  side     .
 # D+  NSg/V+  V/J   NSg W?       P  D   J/P NSg/V/J+ .
-> Ponsonby - Smythe hit     a   thumping on  drive .
-# ?        . ?      NSg/V/J D/P NSg/V/J  J/P NSg/V .
+> Ponsonby - Smythe hit     a   thumping on  drive  .
+# ?        . ?      NSg/V/J D/P NSg/V/J  J/P N🅪Sg/V .
 > If    the player fails to hit     the ball   on  , it's a   foul    .
 # NSg/C D+  NSg+   NPl/V P  NSg/V/J D+  NPr/V+ J/P . +    D/P NSg/V/J .
 > He       always has to be     on  , it's so        exhausting .
@@ -636,8 +636,8 @@
 # NSg/V J/P D$+  NSg/V V/C NPl/V+ .
 > The policeman moved the tramp on  .
 # D+  NSg+      V/J   D   NSg/V J/P .
-> Drive on  past       the railway station .
-# NSg/V J/P NSg/V/J/P+ D+  NSg+    NSg/V+  .
+> Drive  on  past       the railway station .
+# N🅪Sg/V J/P NSg/V/J/P+ D+  NSg+    NSg/V+  .
 > From now       on  things are going   to be     different .
 # P    NPr/V/J/C J/P NPl/V+ V   NSg/V/J P  NSg/VX NSg/J     .
 > and so        on  .
@@ -749,7 +749,7 @@
 > The meal   is on  the house  .
 # D+  NSg/V+ VL J/P D+  NPr/V+ .
 > I    had a    terrible thirst on  me       .
-# ISg+ V   D/P+ J+       NSg/V+ J/P NPr/ISg+ .
+# ISg+ V   D/P+ J+       Nᴹ/V+  J/P NPr/ISg+ .
 > Have   pity   or    compassion on  him  .
 # NSg/VX N🅪Sg/V NPr/C NSg/V+     J/P ISg+ .
 > He's on  his     lunch   break  .
@@ -922,8 +922,8 @@
 # NSg/V    P    Nᴹ+
 > green    with envy   ; flushed with success
 # NPr🅪/V/J P    NSg/V+ . V/J     P    N🅪Sg+
-> She  was with Acme for twenty years before retiring last    fall   .
-# ISg+ V   P    NSg  C/P NSg    NPl+  C/P    V        NSg/V/J NSg/V+ .
+> She  was with Acme for twenty years before retiring last    fall    .
+# ISg+ V   P    NSg  C/P NSg    NPl+  C/P    V        NSg/V/J N🅪Sg/V+ .
 > With your kind  of body   size    , you    shouldn’t be     eating pizza at    all          .
 # P    D$+  NSg/J P  NSg/V+ N🅪Sg/V+ . ISgPl+ V         NSg/VX V      N🅪Sg+ NSg/P NSg/I/J/C/Dq .
 > That          was a   lot   to explain ; are you    still   with me       ?

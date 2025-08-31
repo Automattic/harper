@@ -16,10 +16,10 @@
 # NPr🅪/V/P+ . . R/C  V/J    J           NSg/V   VL D   NSg/V   P  NSg/V   NSg/V/J/P D/P NSg/V+ NPr/J/P D/P
 > text    ( corpus ) as    corresponding to a   particular part    of speech  , based on  both   its
 # N🅪Sg/V+ . NSg+   . NSg/R NSg/V/J       P  D/P NSg/J      NSg/V/J P  N🅪Sg/V+ . V/J   J/P I/C/Dq ISg/D$+
-> definition and its     context . A   simplified form  of this    is commonly taught to
-# NSg        V/C ISg/D$+ N🅪Sg/V+ . D/P V/J        NSg/V P  I/Ddem+ VL R        V      P
+> definition and its     context . A   simplified form   of this    is commonly taught to
+# NSg        V/C ISg/D$+ N🅪Sg/V+ . D/P V/J        N🅪Sg/V P  I/Ddem+ VL R        V      P
 > school - age     children , in      the identification of words  as    nouns , verbs  , adjectives ,
-# NSg/V  . N🅪Sg/V+ NPl+     . NPr/J/P D   Nᴹ             P  NPl/V+ NSg/R NPl/V . NPl/V+ . NPl/V      .
+# N🅪Sg/V . N🅪Sg/V+ NPl+     . NPr/J/P D   Nᴹ             P  NPl/V+ NSg/R NPl/V . NPl/V+ . NPl/V      .
 > adverbs , etc.
 # NPl/V   . +
 >
@@ -28,8 +28,8 @@
 # NSg/C V/J       NSg/J/P NSg/V+ . NSg+ NSg/V   VL NPr/V/J/C NSg/V/J NPr/J/P D   N🅪Sg/V  P  J
 > linguistics , using algorithms which associate discrete terms  , as    well    as    hidden
 # Nᴹ+         . V     NPl+       I/C+  NSg/V/J+  J        NPl/V+ . NSg/R NSg/V/J NSg/R V/J
-> parts of speech  , by      a   set     of descriptive tags   . POS  - tagging algorithms fall   into
-# NPl/V P  N🅪Sg/V+ . NSg/J/P D/P NPr/V/J P  NSg/J       NPl/V+ . NSg+ . NSg/V   NPl+       NSg/V+ P
+> parts of speech  , by      a   set     of descriptive tags   . POS  - tagging algorithms fall    into
+# NPl/V P  N🅪Sg/V+ . NSg/J/P D/P NPr/V/J P  NSg/J       NPl/V+ . NSg+ . NSg/V   NPl+       N🅪Sg/V+ P
 > two distinctive groups : rule   - based and stochastic . E. Brill's tagger , one       of the
 # NSg NSg/J       NPl/V+ . NSg/V+ . V/J   V/C J          . ?  ?       NSg    . NSg/I/V/J P  D
 > first   and most         widely used English   POS  - taggers , employs rule   - based algorithms .
@@ -96,8 +96,8 @@
 # NPl/V+ . C/P NSg/V+  . ?  C/P NSg/J    NSg/V/J NPl/V . ?   C/P NSg/J  NSg/V/J NPl/V . NPr
 > for singular proper nouns ( see   the POS  tags   used in      the Brown    Corpus ) . Other
 # C/P NSg/J    NSg/J  NPl/V . NSg/V D   NSg+ NPl/V+ V/J  NPr/J/P D   NPr🅪/V/J NSg+   . . NSg/V/J
-> tagging systems use   a   smaller number    of tags   and ignore fine    differences or
-# NSg/V   NPl+    NSg/V D/P NSg/JC  N🅪Sg/V/JC P  NPl/V+ V/C V      NSg/V/J NSg/V       NPr/C
+> tagging systems use    a   smaller number    of tags   and ignore fine    differences or
+# NSg/V   NPl+    N🅪Sg/V D/P NSg/JC  N🅪Sg/V/JC P  NPl/V+ V/C V      NSg/V/J NPl/V       NPr/C
 > model    them     as    features somewhat independent from part     - of - speech  .
 # NSg/V/J+ NSg/IPl+ NSg/R NPl/V+   NSg/I/R  NSg/J       P    NSg/V/J+ . P  . N🅪Sg/V+ .
 >
@@ -126,8 +126,8 @@
 # NPr+ NSg/V+ NPr/V/J . V/J       NPr/J/P D   NPr+ ?        NSg/V+  . NPr/ISg+ VL R       NSg/J   P
 > the earlier Brown    Corpus and LOB   Corpus tag    sets  , though much         smaller . In
 # D   JC      NPr🅪/V/J NSg    V/C NSg/V NSg+   NSg/V+ NPl/V . V/C    NSg/I/J/R/Dq NSg/JC  . NPr/J/P
-> Europe , tag    sets  from the Eagles Guidelines see   wide  use    and include versions
-# NPr+   . NSg/V+ NPl/V P    D   NPl/V  NPl+       NSg/V NSg/J NSg/V+ V/C NSg/V   NPl/V+
+> Europe , tag    sets  from the Eagles Guidelines see   wide  use     and include versions
+# NPr+   . NSg/V+ NPl/V P    D   NPl/V  NPl+       NSg/V NSg/J N🅪Sg/V+ V/C NSg/V   NPl/V+
 > for multiple languages .
 # C/P NSg/J/Dq NPl/V+    .
 >
@@ -141,7 +141,7 @@
 > case    - marking for pronouns but     not   nouns in      English   , and much         larger
 # NPr🅪/V+ . NSg/V   C/P NPl/V    NSg/C/P NSg/C NPl/V NPr/J/P NPr🅪/V/J+ . V/C NSg/I/J/R/Dq JC
 > cross      - language differences . The tag    sets  for heavily inflected languages such  as
-# NPr/V/J/P+ . N🅪Sg/V+  NSg/V+      . D+  NSg/V+ NPl/V C/P R       V/J       NPl/V+    NSg/I NSg/R
+# NPr/V/J/P+ . N🅪Sg/V+  NPl/V+      . D+  NSg/V+ NPl/V C/P R       V/J       NPl/V+    NSg/I NSg/R
 > Greek   and Latin can    be     very large ; tagging words  in      agglutinative languages such
 # NPr/V/J V/C NPr/J NPr/VX NSg/VX J/R  NSg/J . NSg/V   NPl/V+ NPr/J/P ?             NPl/V+    NSg/I
 > as    Inuit languages may    be     virtually impossible . At    the other   extreme , Petrov et
@@ -228,12 +228,12 @@
 # NPl+          NSg/V NSg/VX V/J        C/P Dq+  NSg/V+ .
 >
 #
-> Use   of hidden Markov models
-# NSg/V P  V/J    NPr    NPl/V+
+> Use    of hidden Markov models
+# N🅪Sg/V P  V/J    NPr    NPl/V+
 >
 #
-> In      the mid      - 1980s , researchers in      Europe began to use   hidden Markov models ( HMMs )
-# NPr/J/P D   NSg/J/P+ . #d    . NPl         NPr/J/P NPr+   V     P  NSg/V V/J    NPr    NPl/V+ . ?    .
+> In      the mid      - 1980s , researchers in      Europe began to use    hidden Markov models ( HMMs )
+# NPr/J/P D   NSg/J/P+ . #d    . NPl         NPr/J/P NPr+   V     P  N🅪Sg/V V/J    NPr    NPl/V+ . ?    .
 > to disambiguate parts of speech  , when    working to tag   the Lancaster - Oslo - Bergen
 # P  V            NPl/V P  N🅪Sg/V+ . NSg/I/C V       P  NSg/V D   NPr       . NPr+ . NPr+
 > Corpus of British English   . HMMs involve counting cases  ( such  as    from the Brown
@@ -366,12 +366,12 @@
 # D+  NPl/V+  W?      V/J       V       V       P    D/P+ NSg/V/P+ . V        NSg+   P
 > learn tag    probabilities . It       is , however , also possible to bootstrap using
 # NSg/V NSg/V+ NPl+          . NPr/ISg+ VL . C       . R/C  NSg/J    P  NSg/V     V
-> " unsupervised " tagging . Unsupervised tagging techniques use   an  untagged corpus
-# . V/J          . NSg/V   . V/J          NSg/V   NPl+       NSg/V D/P J        NSg+
+> " unsupervised " tagging . Unsupervised tagging techniques use    an  untagged corpus
+# . V/J          . NSg/V   . V/J          NSg/V   NPl+       N🅪Sg/V D/P J        NSg+
 > for their training data  and produce the tagset by      induction . That          is , they
 # C/P D$+   Nᴹ/V+    N🅪Pl+ V/C Nᴹ/V    D   NSg    NSg/J/P N🅪Sg      . NSg/I/C/Ddem+ VL . IPl+
-> observe patterns in      word   use   , and derive part     - of - speech  categories themselves .
-# NSg/V   NPl/V+   NPr/J/P NSg/V+ NSg/V . V/C NSg/V  NSg/V/J+ . P  . N🅪Sg/V+ NPl+       IPl+       .
+> observe patterns in      word   use    , and derive part     - of - speech  categories themselves .
+# NSg/V   NPl/V+   NPr/J/P NSg/V+ N🅪Sg/V . V/C NSg/V  NSg/V/J+ . P  . N🅪Sg/V+ NPl+       IPl+       .
 > For example , statistics readily reveal that          " the " , " a   " , and " an  " occur in
 # C/P NSg/V+  . NPl/V+     R       NSg/V  NSg/I/C/Ddem+ . D   . . . D/P . . V/C . D/P . V     NPr/J/P
 > similar contexts , while     " eat " occurs in      very different ones   . With sufficient
@@ -379,7 +379,7 @@
 > iteration , similarity classes of words  emerge that          are remarkably similar to
 # N🅪Sg      . NSg        NPl/V   P  NPl/V+ NSg/V  NSg/I/C/Ddem+ V   R          NSg/J   P
 > those  human   linguists would expect ; and the differences themselves sometimes
-# I/Ddem NSg/V/J NPl+      VX    V      . V/C D   NSg/V+      IPl+       R
+# I/Ddem NSg/V/J NPl+      VX    V      . V/C D   NPl/V+      IPl+       R
 > suggest valuable new     insights .
 # V       NSg/J    NSg/V/J NPl+     .
 >

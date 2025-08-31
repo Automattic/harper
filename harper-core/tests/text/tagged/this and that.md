@@ -4,8 +4,8 @@
 # NSg/R NSg/I . V              NSg/IPl+ VL NSg/J     .
 >
 #
-> This    document contains various sentences that          use   " this    " , " that          " , " these  " , and
-# I/Ddem+ NSg/V+   V        J+      NPl/V+    NSg/I/C/Ddem+ NSg/V . I/Ddem+ . . . NSg/I/C/Ddem+ . . . I/Ddem . . V/C
+> This    document contains various sentences that          use    " this    " , " that          " , " these  " , and
+# I/Ddem+ NSg/V+   V        J+      NPl/V+    NSg/I/C/Ddem+ N🅪Sg/V . I/Ddem+ . . . NSg/I/C/Ddem+ . . . I/Ddem . . V/C
 > " those  " in      different contexts with a   lot   of edge   cases  .
 # . I/Ddem . NPr/J/P NSg/J     NPl/V    P    D/P NPr/V P  NSg/V+ NPl/V+ .
 >

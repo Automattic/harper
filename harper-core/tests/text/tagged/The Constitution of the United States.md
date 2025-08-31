@@ -4,8 +4,8 @@
 # Unlintable D   NPr+         P  D   V/J    NPrPl/V+ P  NPr+
 >
 #
-> We   the People of the United States   , in      Order  to form  a   more         perfect  Union    ,
-# IPl+ D   NPl/V  P  D+  V/J    NPrPl/V+ . NPr/J/P NSg/V+ P  NSg/V D/P NPr/I/V/J/Dq NSg/V/J+ NPr/V/J+ .
+> We   the People of the United States   , in      Order  to form   a   more         perfect  Union    ,
+# IPl+ D   NPl/V  P  D+  V/J    NPrPl/V+ . NPr/J/P NSg/V+ P  N🅪Sg/V D/P NPr/I/V/J/Dq NSg/V/J+ NPr/V/J+ .
 > establish Justice , insure domestic Tranquility , provide for the common  defence    ,
 # V         NPr🅪+   . V      NSg/J    NSg         . V       C/P D   NSg/V/J N🅪Sg/Comm+ .
 > promote the general Welfare , and secure the Blessings of Liberty to ourselves
@@ -35,7 +35,7 @@
 > speech  , or    of the press  ; or    the right   of the people peaceably to assemble , and
 # N🅪Sg/V+ . NPr/C P  D   NSg/V+ . NPr/C D   NPr/V/J P  D   NPl/V+ R         P  V        . V/C
 > to petition the government for a   redress of grievances .
-# P  NSg/V    D   NSg+       C/P D/P NSg/V   P  NPl        .
+# P  NSg/V    D   N🅪Sg+      C/P D/P NSg/V   P  NPl        .
 >
 #
 > No     person shall be     a   Senator or    Representative in      Congress , or    elector of
@@ -199,7 +199,7 @@
 > The Senate shall chuse their other   Officers , and also a   President pro     tempore ,
 # D+  NPr+   VX    ?     D$+   NSg/V/J NPl/V+   . V/C R/C  D/P NSg/V+    NSg/J/P ?       .
 > in      the Absence of the Vice       President , or    when    he       shall exercise the Office of
-# NPr/J/P D   NSg     P  D   NSg/V/J/P+ NSg/V+    . NPr/C NSg/I/C NPr/ISg+ VX    NSg/V    D   NSg/V  P
+# NPr/J/P D   N🅪Sg    P  D   NSg/V/J/P+ NSg/V+    . NPr/C NSg/I/C NPr/ISg+ VX    NSg/V    D   NSg/V  P
 > President of the United States   .
 # NSg/V     P  D   V/J    NPrPl/V+ .
 >
@@ -498,8 +498,8 @@
 #
 >
 #
-> To raise and support Armies , but     no    Appropriation of Money   to that          Use   shall be
-# P  NSg/V V/C N🅪Sg/V+ NPl+   . NSg/C/P NPr/P NSg           P  N🅪Sg/J+ P  NSg/I/C/Ddem+ NSg/V VX    NSg/VX
+> To raise and support Armies , but     no    Appropriation of Money   to that          Use    shall be
+# P  NSg/V V/C N🅪Sg/V+ NPl+   . NSg/C/P NPr/P NSg           P  N🅪Sg/J+ P  NSg/I/C/Ddem+ N🅪Sg/V VX    NSg/VX
 > for a   longer Term    than two  Years ;
 # C/P D/P NSg/JC NSg/V/J C/P  NSg+ NPl+  .
 >
@@ -517,7 +517,7 @@
 >
 #
 > To make  Rules  for the Government and Regulation of the land   and naval Forces ;
-# P  NSg/V NPl/V+ C/P D   NSg        V/C N🅪Sg/J     P  D   NPr🅪/V V/C J+    NPl/V+ .
+# P  NSg/V NPl/V+ C/P D   N🅪Sg       V/C N🅪Sg/J     P  D   NPr🅪/V V/C J+    NPl/V+ .
 >
 #
 >
@@ -555,7 +555,7 @@
 > ( not   exceeding ten  Miles  square  ) as    may    , by      Cession of particular States   , and
 # . NSg/C NSg/V/J   NSg+ NPrPl+ NSg/V/J . NSg/R NPr/VX . NSg/J/P NSg     P  NSg/J      NPrPl/V+ . V/C
 > the Acceptance of Congress , become the Seat  of the Government of the United
-# D   N🅪Sg       P  NPr/V+   . V      D   NSg/V P  D   NSg        P  D   V/J
+# D   N🅪Sg       P  NPr/V+   . V      D   NSg/V P  D   N🅪Sg       P  D   V/J
 > States   , and to exercise like        Authority over    all          Places purchased by      the Consent
 # NPrPl/V+ . V/C P  NSg/V    NSg/V/J/C/P N🅪Sg+     NSg/J/P NSg/I/J/C/Dq NPl/V+ V/J       NSg/J/P D   N🅪Sg/V
 > of the Legislature of the State   in      which the Same shall be     , for the Erection of
@@ -573,7 +573,7 @@
 > Execution the foregoing Powers   , and all          other   Powers   vested by      this
 # NSg+      D   V         NPrPl/V+ . V/C NSg/I/J/C/Dq NSg/V/J NPrPl/V+ V/J    NSg/J/P I/Ddem
 > Constitution in      the Government of the United States   , or    in      any    Department or
-# NPr+         NPr/J/P D   NSg        P  D   V/J    NPrPl/V+ . NPr/C NPr/J/P I/R/Dq NSg        NPr/C
+# NPr+         NPr/J/P D   N🅪Sg       P  D   V/J    NPrPl/V+ . NPr/C NPr/J/P I/R/Dq NSg        NPr/C
 > Officer thereof .
 # NSg/V+  W?      .
 >
@@ -684,8 +684,8 @@
 # J/P NPl/V   NPr/C NPl/V+  . V/C/P  NSg/I+ NPr/VX NSg/VX R          NSg/J     C/P V
 > it's inspection Laws   : and the net      Produce of all          Duties and Imposts , laid by
 # +    N🅪Sg+      NPl/V+ . V/C D   NSg/V/J+ Nᴹ/V    P  NSg/I/J/C/Dq NPl+   V/C NPl     . V/J  NSg/J/P
-> any    State   on  Imports or    Exports , shall be     for the Use   of the Treasury of the
-# I/R/Dq N🅪Sg/V+ J/P NPl/V   NPr/C NPl/V+  . VX    NSg/VX C/P D   NSg/V P  D   NPr      P  D
+> any    State   on  Imports or    Exports , shall be     for the Use    of the Treasury of the
+# I/R/Dq N🅪Sg/V+ J/P NPl/V   NPr/C NPl/V+  . VX    NSg/VX C/P D   N🅪Sg/V P  D   NPr      P  D
 > United States   ; and all          such  Laws   shall be     subject to the Revision and Controul
 # V/J    NPrPl/V+ . V/C NSg/I/J/C/Dq NSg/I NPl/V+ VX    NSg/VX NSg/V/J P  D   NSg/V+   V/C ?
 > of the Congress .
@@ -751,9 +751,9 @@
 > number    of votes  for each , which lists  they shall sign   and certify , and transmit
 # N🅪Sg/V/JC P  NPl/V+ C/P Dq   . I/C+  NPl/V+ IPl+ VX    NSg/V+ V/C V       . V/C V
 > sealed to the seat  of the government of the United States   , directed to the
-# V/J    P  D   NSg/V P  D   NSg        P  D   V/J    NPrPl/V+ . V/J      P  D
+# V/J    P  D   NSg/V P  D   N🅪Sg       P  D   V/J    NPrPl/V+ . V/J      P  D
 > President of the Senate ; — The President of the Senate shall , in      the presence of
-# NSg/V     P  D   NPr+   . . D   NSg/V     P  D   NPr+   VX    . NPr/J/P D   NSg/V    P
+# NSg/V     P  D   NPr+   . . D   NSg/V     P  D   NPr+   VX    . NPr/J/P D   N🅪Sg/V   P
 > the Senate and House of Representatives , open    all          the certificates and the
 # D   NPr+   V/C NPr/V P  NPl+            . NSg/V/J NSg/I/J/C/Dq D   NPl/V+       V/C D
 > votes  shall then    be     counted ; — The person having the greatest Number    of votes  for
@@ -975,7 +975,7 @@
 >
 #
 > The District constituting the seat  of Government of the
-# D+  NSg/V/J+ V            D   NSg/V P  NSg        P  D
+# D+  NSg/V/J+ V            D   NSg/V P  N🅪Sg       P  D
 > United States   shall appoint in      such  manner as    the Congress may    direct :
 # V/J    NPrPl/V+ VX    V       NPr/J/P NSg/I NSg+   NSg/R D   NPr/V+   NPr/VX V/J    .
 >
@@ -1206,8 +1206,8 @@
 # NSg/J    NPr🅪/V+ P  NSg/VX D/P NSg/V+  C/P     ISg+    . NSg/C NSg/VX V/J      P  N🅪Sg/V+ .
 > liberty , or    property , without due   process of law     ; nor   shall private property be
 # NSg+    . NPr/C NSg/V+   . C/P     NSg/J NSg/V   P  N🅪Sg/V+ . NSg/C VX    NSg/V/J NSg/V+   NSg/VX
-> taken for public use    , without just compensation .
-# V/J   C/P Nᴹ/V/J NSg/V+ . C/P     V/J  NSg+         .
+> taken for public use     , without just compensation .
+# V/J   C/P Nᴹ/V/J N🅪Sg/V+ . C/P     V/J  NSg+         .
 >
 #
 > In      all          criminal prosecutions , the accused shall enjoy the right   to a   speedy and
@@ -1346,8 +1346,8 @@
 #
 > The United States   shall guarantee to every State   in      this    Union
 # D+  V/J    NPrPl/V+ VX    NSg/V     P  Dq    N🅪Sg/V+ NPr/J/P I/Ddem+ NPr/V/J+
-> a   Republican Form  of Government , and shall protect each of them     against
-# D/P NSg/J      NSg/V P  NSg+       . V/C VX    V       Dq   P  NSg/IPl+ C/P
+> a   Republican Form   of Government , and shall protect each of them     against
+# D/P NSg/J      N🅪Sg/V P  N🅪Sg+      . V/C VX    V       Dq   P  NSg/IPl+ C/P
 > Invasion ; and on  Application of the Legislature , or    of the Executive ( when    the
 # NSg+     . V/C J/P NSg         P  D+  NSg+        . NPr/C P  D   NSg/J     . NSg/I/C D+
 > Legislature cannot be     convened ) against domestic Violence .
@@ -1383,7 +1383,7 @@
 > propose Amendments to this    Constitution , or    , on  the Application of the
 # NSg/V   NPl+       P  I/Ddem+ NPr+         . NPr/C . J/P D   NSg         P  D
 > Legislatures of two thirds of the several States   , shall call  a   Convention for
-# NPl          P  NSg NPl/V  P  D   J/Dq    NPrPl/V+ . VX    NSg/V D/P NSg+       C/P
+# NPl          P  NSg NPl/V  P  D   J/Dq    NPrPl/V+ . VX    NSg/V D/P N🅪Sg+      C/P
 > proposing Amendments , which , in      either Case    , shall be     valid to all          Intents and
 # V         NPl+       . I/C+  . NPr/J/P I/C    NPr🅪/V+ . VX    NSg/VX J     P  NSg/I/J/C/Dq NPl     V/C
 > Purposes , as    Part    of this   Constitution , when    ratified by      the Legislatures of
@@ -1489,11 +1489,11 @@
 >
 #
 > done    in      Convention by      the Unanimous Consent of the States   present the
-# NSg/V/J NPr/J/P NSg+       NSg/J/P D   J         N🅪Sg/V  P  D+  NPrPl/V+ NSg/V/J D
+# NSg/V/J NPr/J/P N🅪Sg+      NSg/J/P D   J         N🅪Sg/V  P  D+  NPrPl/V+ NSg/V/J D
 > Seventeenth Day  of September in      the Year of our Lord     one       thousand seven hundred
 # NSg/J       NPr🅪 P  NPr+      NPr/J/P D   NSg  P  D$+ NPr/V/J+ NSg/I/V/J NSg      NSg   NSg
 > and Eighty seven and of the Independence of the United States  of America the
-# V/C NSg    NSg   V/C P  D   NPr          P  D   V/J    NPrPl/V P  NPr+    D
+# V/C NSg    NSg   V/C P  D   NPrᴹ         P  D   V/J    NPrPl/V P  NPr+    D
 > Twelfth In      witness whereof We   have   hereunto subscribed our Names  ,
 # NSg/J   NPr/J/P NSg/V   C       IPl+ NSg/VX W?       V/J        D$+ NPl/V+ .
 >
@@ -1508,7 +1508,7 @@
 #
 > The transportation or    importation into any    State   , Territory , or
 # D+  Nᴹ+            NPr/C N🅪Sg        P    I/R/Dq N🅪Sg/V+ . N🅪Sg+     . NPr/C
-> possession of the United States   for delivery or    use   therein of intoxicating
-# N🅪Sg/V     P  D   V/J    NPrPl/V+ C/P NSg/V/J+ NPr/C NSg/V W?      P  V
+> possession of the United States   for delivery or    use    therein of intoxicating
+# N🅪Sg/V     P  D   V/J    NPrPl/V+ C/P NSg/V/J+ NPr/C N🅪Sg/V W?      P  V
 > liquors , in      violation of the laws   thereof , is hereby prohibited .
 # NPl/V   . NPr/J/P NSg       P  D   NPl/V+ W?      . VL W?     V/J        .
