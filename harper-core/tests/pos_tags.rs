@@ -103,18 +103,13 @@ fn format_word_tag(word: &WordMetadata) -> String {
         if word.is_mass_noun() {
             add_switch(&mut tag, Some(word.is_countable_noun()), "🅪", "ᴹ");
         }
-        match (
-            noun.is_singular.is_some_and(|sg| sg),
-            noun.is_plural.is_some_and(|pl| pl),
-        ) {
-            (true, false) => tag.push_str("Sg"),
-            (false, true) => tag.push_str("Pl"),
-            (true, true) => tag.push_str("SgPl"),
-            _ => {}
-        }
-        // Treat unmarked (neither singular nor plural) common nouns as singular
-        if noun.is_singular.is_none() && noun.is_plural.is_none() && noun.is_proper.is_none() {
-            tag.push_str("Sg");
+        if word.is_countable_noun() {
+            if word.is_singular_noun() && !word.is_proper_noun() {
+                tag.push_str("Sg");
+            }
+            if word.is_plural_noun() {
+                tag.push_str("Pl");
+            }
         }
         add_bool(&mut tag, "$", noun.is_possessive);
         add(&tag, &mut tags);

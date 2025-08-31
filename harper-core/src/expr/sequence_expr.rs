@@ -95,8 +95,8 @@ impl SequenceExpr {
     }
 
     /// Match the first of multiple expressions.
-    pub fn any_of(self, exprs: Vec<Box<dyn Expr>>) -> Self {
-        self.then_any_of(exprs)
+    pub fn any_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+        Self::default().then_any_of(exprs)
     }
 
     /// Match any word from the given set of words, case-insensitive.
@@ -300,8 +300,11 @@ impl SequenceExpr {
         })
     }
 
+    // Word property matching methods
+
     // Out-of-vocabulary word. (Words not in the dictionary)
     gen_then_from_is!(oov);
+    gen_then_from_is!(swear);
 
     // Part-of-speech matching methods
 
