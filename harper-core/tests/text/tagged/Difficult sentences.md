@@ -673,7 +673,7 @@
 > The lighthouse that          you    can    see   is on  the mainland .
 # D+  NSg+       NSg/I/C/Ddem+ ISgPl+ NPr/VX NSg/V VL J/P D+  NSg+     .
 > The suspect  is thought to still   be     on  the campus .
-# D+  NSg/V/J+ VL NSg/V   P  NSg/V/J NSg/VX J/P D+  NSg/V+ .
+# D+  NSg/V/J+ VL N🅪Sg/V  P  NSg/V/J NSg/VX J/P D+  NSg/V+ .
 > We   live on  the edge  of the city .
 # IPl+ V/J  J/P D   NSg/V P  D+  NSg+ .
 > on  the left     , on  the right   , on  the side     , on  the bottom   .
@@ -737,7 +737,7 @@
 > Her     words  made a    lasting  impression on  my  mind   .
 # ISg/D$+ NPl/V+ V    D/P+ NSg/V/J+ NSg/V+     J/P D$+ NSg/V+ .
 > What   will   be     the effect on  morale ?
-# NSg/I+ NPr/VX NSg/VX D   NSg/V  J/P NSg+   .
+# NSg/I+ NPr/VX NSg/VX D   NSg/V  J/P Nᴹ+    .
 > I    haven't got any    money   on  me       .
 # ISg+ V       V   I/R/Dq N🅪Sg/J+ J/P NPr/ISg+ .
 > On  Jack's entry , William got up        to leave .

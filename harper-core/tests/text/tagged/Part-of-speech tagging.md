@@ -51,7 +51,7 @@
 > percentage of word   - forms  are ambiguous . For example , even    " dogs   " , which is
 # N🅪Sg       P  NSg/V+ . NPl/V+ V   J         . C/P NSg/V+  . NSg/V/J . NPl/V+ . . I/C+  VL
 > usually thought of as    just a    plural noun   , can    also be     a    verb   :
-# R       NSg/V   P  NSg/R V/J  D/P+ NSg/J+ NSg/V+ . NPr/VX R/C  NSg/VX D/P+ NSg/V+ .
+# R       N🅪Sg/V  P  NSg/R V/J  D/P+ NSg/J+ NSg/V+ . NPr/VX R/C  NSg/VX D/P+ NSg/V+ .
 >
 #
 > The sailor dogs   the hatch  .
@@ -369,7 +369,7 @@
 > " unsupervised " tagging . Unsupervised tagging techniques use   an  untagged corpus
 # . V/J          . NSg/V   . V/J          NSg/V   NPl+       NSg/V D/P J        NSg+
 > for their training data  and produce the tagset by      induction . That          is , they
-# C/P D$+   Nᴹ/V+    N🅪Pl+ V/C Nᴹ/V    D   NSg    NSg/J/P NSg       . NSg/I/C/Ddem+ VL . IPl+
+# C/P D$+   Nᴹ/V+    N🅪Pl+ V/C Nᴹ/V    D   NSg    NSg/J/P N🅪Sg      . NSg/I/C/Ddem+ VL . IPl+
 > observe patterns in      word   use   , and derive part     - of - speech  categories themselves .
 # NSg/V   NPl/V+   NPr/J/P NSg/V+ NSg/V . V/C NSg/V  NSg/V/J+ . P  . N🅪Sg/V+ NPl+       IPl+       .
 > For example , statistics readily reveal that          " the " , " a   " , and " an  " occur in

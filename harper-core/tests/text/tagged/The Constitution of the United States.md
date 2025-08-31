@@ -51,7 +51,7 @@
 > support the Constitution of the United States   , shall have   engaged in
 # N🅪Sg/V  D   NPr          P  D   V/J    NPrPl/V+ . VX    NSg/VX V/J     NPr/J/P
 > insurrection or    rebellion against the same , or    given     aid    or    comfort to the
-# NSg          NPr/C NSg+      C/P     D   I/J  . NPr/C NSg/V/J/P N🅪Sg/V NPr/C N🅪Sg/V+ P  D
+# N🅪Sg         NPr/C N🅪Sg+     C/P     D   I/J  . NPr/C NSg/V/J/P N🅪Sg/V NPr/C N🅪Sg/V+ P  D
 > enemies thereof . But     Congress may    , by      a   vote  of two - thirds of each House  ,
 # NPl/V+  W?      . NSg/C/P NPr/V+   NPr/VX . NSg/J/P D/P NSg/V P  NSg . NPl/V  P  Dq+  NPr/V+ .
 > remove such   disability .
@@ -105,7 +105,7 @@
 > inhabitants of such  State   , being     twenty - one       years of age     , and citizens of the
 # NPl         P  NSg/I N🅪Sg/V+ . N🅪Sg/V/C+ NSg    . NSg/I/V/J NPl   P  N🅪Sg/V+ . V/C NPl      P  D
 > United States   , or    in      any    way    abridged , except for participation in      rebellion ,
-# V/J    NPrPl/V+ . NPr/C NPr/J/P I/R/Dq NSg/J+ V/J      . V/C/P  C/P Nᴹ+           NPr/J/P NSg+      .
+# V/J    NPrPl/V+ . NPr/C NPr/J/P I/R/Dq NSg/J+ V/J      . V/C/P  C/P Nᴹ+           NPr/J/P N🅪Sg+     .
 > or    other   crime   , the basis of representation therein shall be     reduced in      the
 # NPr/C NSg/V/J N🅪Sg/V+ . D   NSg   P  NSg+           W?      VX    NSg/VX V/J     NPr/J/P D
 > proportion which the number    of such  male   citizens shall bear    to the whole
@@ -601,7 +601,7 @@
 > The Privilege of the Writ  of Habeas Corpus shall not   be     suspended , unless when
 # D   NSg/V     P  D   NSg/V P  ?      NSg+   VX    NSg/C NSg/VX V/J       . C      NSg/I/C
 > in      Cases of Rebellion or    Invasion the public Safety  may    require it       .
-# NPr/J/P NPl/V P  NSg+      NPr/C NSg      D   Nᴹ/V/J N🅪Sg/V+ NPr/VX NSg/V   NPr/ISg+ .
+# NPr/J/P NPl/V P  N🅪Sg+     NPr/C NSg      D   Nᴹ/V/J N🅪Sg/V+ NPr/VX NSg/V   NPr/ISg+ .
 >
 #
 > No    Bill  of Attainder or    ex       post      facto Law     shall be     passed .
@@ -667,13 +667,13 @@
 >
 #
 > No     State   shall enter into any    Treaty , Alliance , or
-# NPr/P+ N🅪Sg/V+ VX    NSg/V P    I/R/Dq NSg/V+ . NSg/V+   . NPr/C
+# NPr/P+ N🅪Sg/V+ VX    NSg/V P    I/R/Dq NSg/V+ . N🅪Sg/V+  . NPr/C
 > Confederation ; grant  Letters of Marque and Reprisal ; coin   Money   ; emit Bills of
 # NSg/J         . NPr/V+ NPl/V   P  NSg    V/C NSg+     . NSg/V+ N🅪Sg/J+ . V    NPl/V P
 > Credit ; make  any    Thing  but     gold   and silver  Coin   a   Tender  in      Payment of Debts ;
 # NSg/V+ . NSg/V I/R/Dq NSg/V+ NSg/C/P Nᴹ/V/J V/C Nᴹ/V/J+ NSg/V+ D/P NSg/V/J NPr/J/P N🅪Sg    P  NPl+  .
 > pass  any    Bill  of Attainder , ex       post      facto Law     , or    Law     impairing the Obligation
-# NSg/V I/R/Dq NPr/V P  NSg       . NSg/V/J+ NPr🅪/V/P+ ?     N🅪Sg/V+ . NPr/C N🅪Sg/V+ V         D   NSg
+# NSg/V I/R/Dq NPr/V P  NSg       . NSg/V/J+ NPr🅪/V/P+ ?     N🅪Sg/V+ . NPr/C N🅪Sg/V+ V         D   N🅪Sg
 > of Contracts , or    grant any    Title  of Nobility .
 # P  NPl/V+    . NPr/C NPr/V I/R/Dq NSg/V+ P  NSg      .
 >
@@ -1083,7 +1083,7 @@
 > The President , Vice       President and all          civil Officers of the
 # D+  NSg/V+    . NSg/V/J/P+ NSg/V+    V/C NSg/I/J/C/Dq J     NPl/V    P  D+
 > United States   , shall be     removed from Office on  Impeachment for , and Conviction
-# V/J    NPrPl/V+ . VX    NSg/VX V/J     P    NSg/V+ J/P N🅪Sg        C/P . V/C NSg+
+# V/J    NPrPl/V+ . VX    NSg/VX V/J     P    NSg/V+ J/P N🅪Sg        C/P . V/C N🅪Sg+
 > of , Treason , Bribery , or    other   high    Crimes and Misdemeanors .
 # P  . NSg     . Nᴹ      . NPr/C NSg/V/J NSg/V/J NPl/V+ V/C NPl          .
 >
@@ -1123,7 +1123,7 @@
 > affecting Ambassadors , other    public  Ministers and Consuls ; — to all          Cases of
 # V/J       NPl+        . NSg/V/J+ Nᴹ/V/J+ NPl/V+    V/C NPl     . . P  NSg/I/J/C/Dq NPl/V P
 > admiralty and maritime Jurisdiction ; — to Controversies to which the United
-# NPr       V/C J        NSg+         . . P  NPl           P  I/C+  D   V/J
+# NPr       V/C J        N🅪Sg+        . . P  NPl           P  I/C+  D   V/J
 > States   shall be     a   Party    ; — to Controversies between two or    more         States   ; — between
 # NPrPl/V+ VX    NSg/VX D/P NSg/V/J+ . . P  NPl           NSg/P   NSg NPr/C NPr/I/V/J/Dq NPrPl/V+ . . NSg/P
 > Citizens of different States   , — between Citizens of the same State   claiming
@@ -1137,9 +1137,9 @@
 > those  in      which a   State   shall be     Party    , the supreme Court    shall have   original
 # I/Ddem NPr/J/P I/C+  D/P N🅪Sg/V+ VX    NSg/VX NSg/V/J+ . D   NSg/V/J NSg/V/J+ VX    NSg/VX NSg/J
 > Jurisdiction . In      all          the other    Cases  before mentioned , the supreme  Court    shall
-# NSg+         . NPr/J/P NSg/I/J/C/Dq D+  NSg/V/J+ NPl/V+ C/P    V/J       . D+  NSg/V/J+ NSg/V/J+ VX
+# N🅪Sg+        . NPr/J/P NSg/I/J/C/Dq D+  NSg/V/J+ NPl/V+ C/P    V/J       . D+  NSg/V/J+ NSg/V/J+ VX
 > have   appellate Jurisdiction , both   as    to Law    and Fact , with such  Exceptions , and
-# NSg/VX J         NSg+         . I/C/Dq NSg/R P  N🅪Sg/V V/C NSg+ . P    NSg/I NPl+       . V/C
+# NSg/VX J         N🅪Sg+        . I/C/Dq NSg/R P  N🅪Sg/V V/C NSg+ . P    NSg/I NPl+       . V/C
 > under   such  Regulations as    the Congress shall make  .
 # NSg/J/P NSg/I NPl+        NSg/R D   NPr/V+   VX    NSg/V .
 >
@@ -1267,7 +1267,7 @@
 > All           persons born    or    naturalized in      the United States   , and
 # NSg/I/J/C/Dq+ NPl/V+  NPr/V/J NPr/C V/J         NPr/J/P D   V/J    NPrPl/V+ . V/C
 > subject  to the jurisdiction thereof , are citizens of the United States   and of
-# NSg/V/J+ P  D   NSg+         W?      . V   NPl      P  D   V/J    NPrPl/V+ V/C P
+# NSg/V/J+ P  D   N🅪Sg+        W?      . V   NPl      P  D   V/J    NPrPl/V+ V/C P
 > the State   wherein they reside  . No     State   shall make  or    enforce any     law     which
 # D   N🅪Sg/V+ C       IPl+ NSg/V/J . NPr/P+ N🅪Sg/V+ VX    NSg/V NPr/C V       I/R/Dq+ N🅪Sg/V+ I/C+
 > shall abridge the privileges or    immunities of citizens of the United States   ;
@@ -1275,7 +1275,7 @@
 > nor   shall any    State   deprive any    person of life    , liberty , or    property , without
 # NSg/C VX    I/R/Dq N🅪Sg/V+ V       I/R/Dq NSg/V  P  N🅪Sg/V+ . NSg+    . NPr/C NSg/V+   . C/P
 > due   process of law     ; nor   deny to any    person within  its     jurisdiction the equal
-# NSg/J NSg/V   P  N🅪Sg/V+ . NSg/C V    P  I/R/Dq NSg/V+ NSg/J/P ISg/D$+ NSg          D   NSg/V/J
+# NSg/J NSg/V   P  N🅪Sg/V+ . NSg/C V    P  I/R/Dq NSg/V+ NSg/J/P ISg/D$+ N🅪Sg         D   NSg/V/J
 > protection of the laws   .
 # N🅪Sg       P  D   NPl/V+ .
 >
@@ -1295,7 +1295,7 @@
 > executive Authority of the State   from which he       fled , be     delivered up        , to be
 # NSg/J     N🅪Sg      P  D   N🅪Sg/V+ P    I/C+  NPr/ISg+ J    . NSg/VX V/J       NSg/V/J/P . P  NSg/VX
 > removed to the State   having Jurisdiction of the Crime   .
-# V/J     P  D   N🅪Sg/V+ V      NSg          P  D   N🅪Sg/V+ .
+# V/J     P  D   N🅪Sg/V+ V      N🅪Sg         P  D   N🅪Sg/V+ .
 >
 #
 > Neither slavery nor   involuntary servitude , except as    a   punishment for crime
@@ -1303,7 +1303,7 @@
 > whereof the party    shall have   been  duly convicted , shall exist within  the United
 # C       D   NSg/V/J+ VX    NSg/VX NSg/V W?   V/J       . VX    V     NSg/J/P D   V/J
 > States   , or    any    place   subject  to their jurisdiction . No     Person held to Service
-# NPrPl/V+ . NPr/C I/R/Dq N🅪Sg/V+ NSg/V/J+ P  D$+   NSg+         . NPr/P+ NSg/V+ V    P  NSg/V
+# NPrPl/V+ . NPr/C I/R/Dq N🅪Sg/V+ NSg/V/J+ P  D$+   N🅪Sg+        . NPr/P+ NSg/V+ V    P  NSg/V
 > or    Labour       in      one        State   , under   the Laws   thereof , escaping into another , shall ,
 # NPr/C NPr🅪/V/Comm+ NPr/J/P NSg/I/V/J+ N🅪Sg/V+ . NSg/J/P D+  NPl/V+ W?      . V        P    I/D     . VX    .
 > in      Consequence of any    Law    or    Regulation therein , be     discharged from such
@@ -1321,7 +1321,7 @@
 > New      States   may    be     admitted by      the Congress into this    Union    ; but
 # NSg/V/J+ NPrPl/V+ NPr/VX NSg/VX V/J      NSg/J/P D+  NPr/V+   P    I/Ddem+ NPr/V/J+ . NSg/C/P
 > no     new      State   shall be     formed or    erected within  the Jurisdiction of any     other
-# NPr/P+ NSg/V/J+ N🅪Sg/V+ VX    NSg/VX V/J    NPr/C V/J     NSg/J/P D   NSg          P  I/R/Dq+ NSg/V/J+
+# NPr/P+ NSg/V/J+ N🅪Sg/V+ VX    NSg/VX V/J    NPr/C V/J     NSg/J/P D   N🅪Sg         P  I/R/Dq+ NSg/V/J+
 > State   ; nor   any     State   be     formed by      the Junction of two or    more         States   , or    Parts
 # N🅪Sg/V+ . NSg/C I/R/Dq+ N🅪Sg/V+ NSg/VX V/J    NSg/J/P D   NSg/V    P  NSg NPr/C NPr/I/V/J/Dq NPrPl/V+ . NPr/C NPl/V
 > of States   , without the Consent of the Legislatures of the States   concerned as
@@ -1363,11 +1363,11 @@
 > authorized by      law     , including debts incurred for payment of pensions and
 # V/J        NSg/J/P N🅪Sg/V+ . V         NPl+  V        C/P N🅪Sg    P  NPl/V    V/C
 > bounties for services in      suppressing insurrection or    rebellion , shall not   be
-# NPl/V    C/P NPl/V+   NPr/J/P V           NSg          NPr/C NSg+      . VX    NSg/C NSg/VX
+# NPl/V    C/P NPl/V+   NPr/J/P V           N🅪Sg         NPr/C N🅪Sg+     . VX    NSg/C NSg/VX
 > questioned . But     neither the United States   nor   any     State   shall assume or    pay     any
 # V/J        . NSg/C/P I/C     D   V/J    NPrPl/V+ NSg/C I/R/Dq+ N🅪Sg/V+ VX    V      NPr/C NSg/V/J I/R/Dq
 > debt or    obligation incurred in      aid    of insurrection or    rebellion against the
-# N🅪Sg NPr/C NSg+       V        NPr/J/P N🅪Sg/V P  NSg          NPr/C NSg+      C/P     D
+# N🅪Sg NPr/C N🅪Sg+      V        NPr/J/P N🅪Sg/V P  N🅪Sg         NPr/C N🅪Sg+     C/P     D
 > United States   , or    any    claim  for the loss    or    emancipation of any    slave  ; but     all
 # V/J    NPrPl/V+ . NPr/C I/R/Dq NSg/V+ C/P D   N🅪Sg/V+ NPr/C NSg          P  I/R/Dq NSg/V+ . NSg/C/P NSg/I/J/C/Dq
 > such  debts , obligations and claims shall be     held illegal and void     .
