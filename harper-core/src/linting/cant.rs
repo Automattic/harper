@@ -142,7 +142,6 @@ mod tests {
         );
     }
 
-    // passes 'nom_cant' test
     #[test]
     fn dont_flag_legit_noun_sense() {
         assert_lint_count(
