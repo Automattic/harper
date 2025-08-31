@@ -324,6 +324,7 @@ impl SequenceExpr {
     // Pronouns
 
     gen_then_from_is!(pronoun);
+    gen_then_from_is!(personal_pronoun);
     gen_then_from_is!(first_person_singular_pronoun);
     gen_then_from_is!(first_person_plural_pronoun);
     gen_then_from_is!(second_person_pronoun);
