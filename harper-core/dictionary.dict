@@ -52885,9 +52885,11 @@ Grandey/Sg
 GraphQL/Og
 Graphviz/Sg
 Gravatar/Og
+H.265/ONgS          # High Efficiency Video Coding
 HDR/J               # high dynamic range
 HEIC/ONgS           # High Efficiency Image Container
 HEIF/ONgS           # High Efficiency Image Format
+HEVC/ONgS           # High Efficiency Video Coding
 HQL/N
 HTML5
 Hasan/OSg           # surname, given name
