@@ -1,7 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::{
-    Token, TokenKind, TokenStringExt,
+    CharStringExt, Token, TokenKind, TokenStringExt,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, UPOSSet},
@@ -20,9 +20,10 @@ impl Default for HowTo {
             .then_anything()
             .t_aco("how")
             .then_whitespace()
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_upos(UPOS::VERB)
-                    || (tok.kind.is_verb() && tok.kind.is_likely_homograph())
+            .then(|tok: &Token, src: &[char]| {
+                // TODO this is a temporary hack until PR #1730 is merged
+                // TODO we should use then_verb_lemma() instead
+                is_verb_lemma(tok, src)
             });
         pattern.add(pos_pattern);
 
@@ -36,7 +37,6 @@ impl Default for HowTo {
                     &[
                         TokenKind::is_auxiliary_verb,
                         TokenKind::is_adjective,
-                        TokenKind::is_verb_progressive_form,
                         TokenKind::is_conjunction,
                         TokenKind::is_proper_noun,
                     ] as &[_],
@@ -49,6 +49,16 @@ impl Default for HowTo {
         Self {
             expr: Box::new(pattern),
         }
+    }
+}
+
+// TODO this is a temporary hack until PR #1730 is merged
+fn is_verb_lemma(tok: &Token, src: &[char]) -> bool {
+    tok.kind.is_verb() && {
+        let verb = tok.span.get_content(src);
+        !(verb.ends_with_ignore_ascii_case_str("s")
+            || verb.ends_with_ignore_ascii_case_str("ed")
+            || verb.ends_with_ignore_ascii_case_str("ing"))
     }
 }
 
@@ -286,10 +296,18 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_google_comprehensive_rust_false_positive() {
+    fn dont_flag_false_positive_pr_1846() {
         assert_no_lints(
             "About how Microsoft, Google, and others are training people in Rust.",
             HowTo::default(),
         )
+    }
+
+    #[test]
+    fn dont_flag_false_positives_1492_how_indexes() {
+        assert_no_lints(
+            "controls how indexes will be added to unwrapped keys of flat array-like objects",
+            HowTo::default(),
+        );
     }
 }
