@@ -55,32 +55,6 @@ pub enum LintKind {
 }
 
 impl LintKind {
-    pub fn new_from_str(s: &str) -> Option<Self> {
-        Some(match s {
-            "Agreement" => LintKind::Agreement,
-            "BoundaryError" => LintKind::BoundaryError,
-            "Capitalization" => LintKind::Capitalization,
-            "Eggcorn" => LintKind::Eggcorn,
-            "Enhancement" => LintKind::Enhancement,
-            "Formatting" => LintKind::Formatting,
-            "Grammar" => LintKind::Grammar,
-            "Malapropism" => LintKind::Malapropism,
-            "Miscellaneous" => LintKind::Miscellaneous,
-            "Nonstandard" => LintKind::Nonstandard,
-            "Punctuation" => LintKind::Punctuation,
-            "Readability" => LintKind::Readability,
-            "Redundancy" => LintKind::Redundancy,
-            "Regionalism" => LintKind::Regionalism,
-            "Repetition" => LintKind::Repetition,
-            "Spelling" => LintKind::Spelling,
-            "Style" => LintKind::Style,
-            "Typo" => LintKind::Typo,
-            "Usage" => LintKind::Usage,
-            "Word Choice" => LintKind::WordChoice,
-            _ => return None,
-        })
-    }
-
     /// Produce a string representation, which can be used as keys in a map or CSS variables.
     pub fn to_string_key(&self) -> String {
         match self {
