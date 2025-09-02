@@ -64,7 +64,10 @@ impl LintKind {
             "Enhancement" => LintKind::Enhancement,
             "Formatting" => LintKind::Formatting,
             "Grammar" => LintKind::Grammar,
+            "Malapropism" => LintKind::Malapropism,
             "Miscellaneous" => LintKind::Miscellaneous,
+            "Nonstandard" => LintKind::Nonstandard,
+            "Punctuation" => LintKind::Punctuation,
             "Readability" => LintKind::Readability,
             "Redundancy" => LintKind::Redundancy,
             "Regionalism" => LintKind::Regionalism,
@@ -72,6 +75,7 @@ impl LintKind {
             "Spelling" => LintKind::Spelling,
             "Style" => LintKind::Style,
             "Typo" => LintKind::Typo,
+            "Usage" => LintKind::Usage,
             "Word Choice" => LintKind::WordChoice,
             _ => return None,
         })
