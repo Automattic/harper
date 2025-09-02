@@ -1,42 +1,65 @@
-Lint:    Miscellaneous (63 priority)
+Lint:    WordChoice (127 priority)
 Message: |
        7 | One turd, two turds.
          |     ^~~~ Try to avoid offensive language.
+Suggest:
+  - Replace with: “poo”
+  - Replace with: “poop”
+  - Replace with: “feces”
+  - Replace with: “dung”
 
 
 
-Lint:    Miscellaneous (63 priority)
+Lint:    WordChoice (127 priority)
 Message: |
        7 | One turd, two turds.
          |               ^~~~~ Try to avoid offensive language.
+Suggest:
+  - Replace with: “poos”
+  - Replace with: “poops”
+  - Replace with: “feces”
+  - Replace with: “dung”
 
 
 
-Lint:    Miscellaneous (63 priority)
+Lint:    WordChoice (127 priority)
 Message: |
        9 | I fart, you're farting, he farts, she farted.
          |   ^~~~ Try to avoid offensive language.
+Suggest:
+  - Replace with: “gas”
+  - Replace with: “wind”
+  - Replace with: “break wind”
 
 
 
-Lint:    Miscellaneous (63 priority)
+Lint:    WordChoice (127 priority)
 Message: |
        9 | I fart, you're farting, he farts, she farted.
          |                ^~~~~~~ Try to avoid offensive language.
+Suggest:
+  - Replace with: “breaking wind”
 
 
 
-Lint:    Miscellaneous (63 priority)
+Lint:    WordChoice (127 priority)
 Message: |
        9 | I fart, you're farting, he farts, she farted.
          |                            ^~~~~ Try to avoid offensive language.
+Suggest:
+  - Replace with: “gas”
+  - Replace with: “wind”
+  - Replace with: “breaks wind”
 
 
 
-Lint:    Miscellaneous (63 priority)
+Lint:    WordChoice (127 priority)
 Message: |
        9 | I fart, you're farting, he farts, she farted.
          |                                       ^~~~~~ Try to avoid offensive language.
+Suggest:
+  - Replace with: “broke wind”
+  - Replace with: “broken wind”
 
 
 

@@ -39,7 +39,7 @@ GitHub has some [good documentation on how to create a draft PR](https://docs.gi
 
 A vast plurality of potential grammatical rules are pretty simple.
 If you're trying to extend Harper to identify a given phrase (like "all of the sudden") and replace it with something else (like "all of a sudden"), you can do this without any complex programming at all.
-All you have to do is add a line to `harper-core/src/linting/phrase_corrections.rs`:
+All you have to do is add a line to `harper-core/src/linting/phrase_corrections/mod.rs`:
 
 ```rust
 "AllOfASudden" => (
@@ -71,7 +71,7 @@ You can actually add multiple offending phrases and correct phrases to the same 
     ["in itself", "in and of itself"],
 ```
 
-For more complex corrections with multiple variants, singular and plural, or multiple verb tenses, you can use `harper-core/src/linting/phrase_set_corrections.rs`.
+For more complex corrections with multiple variants, singular and plural, or multiple verb tenses, you can use `harper-core/src/linting/phrase_set_corrections/mod.rs`.
 
 It has two sections. The `add_1_to_1_mappings` section is simpler, supporting sets of corrections with a single name, where each pair is a single offending phrase and a single correct phrase.
 ```rust

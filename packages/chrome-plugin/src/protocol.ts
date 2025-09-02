@@ -12,6 +12,7 @@ export type Request =
 	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
 	| GetDefaultStatusRequest
+	| GetEnabledDomainsRequest
 	| AddToUserDictionaryRequest
 	| SetUserDictionaryRequest
 	| IgnoreLintRequest
@@ -28,6 +29,7 @@ export type Response =
 	| GetDialectResponse
 	| GetDomainStatusResponse
 	| GetDefaultStatusResponse
+	| GetEnabledDomainsResponse
 	| GetUserDictionaryResponse
 	| GetActivationKeyResponse;
 
@@ -97,6 +99,15 @@ export type GetDefaultStatusRequest = {
 export type GetDefaultStatusResponse = {
 	kind: 'getDefaultStatus';
 	enabled: boolean;
+};
+
+export type GetEnabledDomainsRequest = {
+	kind: 'getEnabledDomains';
+};
+
+export type GetEnabledDomainsResponse = {
+	kind: 'getEnabledDomains';
+	domains: string[];
 };
 
 export type SetDomainStatusRequest = {
