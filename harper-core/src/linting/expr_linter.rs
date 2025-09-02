@@ -23,6 +23,25 @@ pub trait ExprLinter: LSend {
     fn description(&self) -> &str;
 }
 
+/// Helper function to find the only occurrence of a token matching a predicate
+///
+/// Returns `Some(token)` if exactly one token matches the predicate, `None` otherwise.
+/// TODO: This can be used in the [`ThenThan`] linter when #1819 is merged.
+pub fn find_the_only_token_matching<'a, F>(
+    tokens: &'a [Token],
+    source: &[char],
+    predicate: F,
+) -> Option<&'a Token>
+where
+    F: Fn(&Token, &[char]) -> bool,
+{
+    let mut matches = tokens.iter().filter(|&tok| predicate(tok, source));
+    match (matches.next(), matches.next()) {
+        (Some(tok), None) => Some(tok),
+        _ => None,
+    }
+}
+
 impl<L> Linter for L
 where
     L: ExprLinter,
