@@ -58,8 +58,8 @@
 # NSg/V  NSg/I+ N🅪Sg+      .
 >
 #
-> The terms of Senators and Representatives shall end   at    noon   on  the 3 d      day  of
-# D   NPl/V P  NPl      V/C NPl+            VX    NSg/V NSg/P NSg/V+ J/P D   # NPr/J+ NPr🅪 P
+> The terms of Senators and Representatives shall end   at    noon   on  the 3 d         day  of
+# D   NPl/V P  NPl      V/C NPl+            VX    NSg/V NSg/P NSg/V+ J/P D   # NPr/J/#r+ NPr🅪 P
 > January , of the years in      which such   terms  end    ; and the terms of their
 # NPr+    . P  D+  NPl+  NPr/J/P I/C+  NSg/I+ NPl/V+ NSg/V+ . V/C D   NPl/V P  D$+
 > successors shall then    begin .
@@ -242,8 +242,8 @@
 #
 > The Congress shall assemble at    least once  in      every year , and such   meeting shall
 # D+  NPr/V+   VX    V        NSg/P NSg/J NSg/C NPr/J/P Dq+   NSg+ . V/C NSg/I+ NSg/V+  VX
-> begin at    noon   on  the 3 d      day  of January , unless they shall by      law     appoint a
-# NSg/V NSg/P NSg/V+ J/P D   # NPr/J+ NPr🅪 P  NPr+    . C      IPl+ VX    NSg/J/P N🅪Sg/V+ V       D/P+
+> begin at    noon   on  the 3 d         day  of January , unless they shall by      law     appoint a
+# NSg/V NSg/P NSg/V+ J/P D   # NPr/J/#r+ NPr🅪 P  NPr+    . C      IPl+ VX    NSg/J/P N🅪Sg/V+ V       D/P+
 > different day   .
 # NSg/J     NPr🅪+ .
 >
@@ -703,7 +703,7 @@
 >
 #
 > Article . II .
-# NSg/V+  . W? .
+# NSg/V+  . #r .
 >
 #
 > Section . 1 .
@@ -960,8 +960,8 @@
 #
 > Before he       enter on  the Execution of his     Office , he       shall take  the following
 # C/P    NPr/ISg+ NSg/V J/P D   NSg       P  ISg/D$+ NSg/V+ . NPr/ISg+ VX    NSg/V D   NSg/V/J/P
-> Oath   or    Affirmation : - - " I    do     solemnly swear   ( or    affirm ) that         I    will   faithfully
-# NSg/V+ NPr/C NSg         . . . . ISg+ NSg/VX R        NSg/V/J . NPr/C V      . NSg/I/C/Ddem ISg+ NPr/VX R
+> Oath   or    Affirmation : - - " I       do     solemnly swear   ( or    affirm ) that         I       will   faithfully
+# NSg/V+ NPr/C NSg         . . . . ISg/#r+ NSg/VX R        NSg/V/J . NPr/C V      . NSg/I/C/Ddem ISg/#r+ NPr/VX R
 > execute the Office of President of the United States   , and will   to the best      of
 # V       D   NSg/V  P  NSg/V     P  D   V/J    NPrPl/V+ . V/C NPr/VX P  D   NPr/VX/JS P
 > my  Ability , preserve , protect and defend the Constitution of the United
@@ -1089,7 +1089,7 @@
 >
 #
 > Article . III .
-# NSg/V+  . W?  .
+# NSg/V+  . #r  .
 >
 #
 > Section . 1 .
@@ -1242,8 +1242,8 @@
 # V/C NSg/J   NPl+        V/J       .
 >
 #
-> Article . IV     .
-# NSg/V+  . NSg/J+ .
+> Article . IV        .
+# NSg/V+  . NSg/J/#r+ .
 >
 #
 > Section . 1 .
@@ -1402,8 +1402,8 @@
 # C/P     ISg/D$+ NSg/V   . VX    NSg/VX V/J      P  ISg/D$+ NSg/V/J NSg+     NPr/J/P D   NPr+   .
 >
 #
-> Article . VI  .
-# NSg/V+  . NPr .
+> Article . VI     .
+# NSg/V+  . NPr/#r .
 >
 #
 > All           Debts contracted and Engagements entered into , before the Adoption of this
@@ -1464,8 +1464,8 @@
 # D   NPl/V+ .
 >
 #
-> Article . VII .
-# NSg/V+  . NSg .
+> Article . VII    .
+# NSg/V+  . NSg/#r .
 >
 #
 > The Ratification of the Conventions of nine States   , shall be     sufficient for the
@@ -1499,7 +1499,7 @@
 >
 #
 > Article . VIII .
-# NSg/V+  . W?   .
+# NSg/V+  . #r   .
 >
 #
 > Section 1 .
