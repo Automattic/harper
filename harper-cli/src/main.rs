@@ -368,7 +368,7 @@ fn main() -> anyhow::Result<()> {
             for word in words {
                 let metadata = dictionary.get_word_metadata_str(&word);
                 let mut metadata_value = serde_json::to_value(metadata).unwrap_or_default();
-                
+
                 // If there are derived words, add them to the metadata
                 if let Some(metadata) = dictionary.get_word_metadata_str(&word)
                     && let Some(derived_from) = &metadata.derived_from
@@ -379,13 +379,16 @@ fn main() -> anyhow::Result<()> {
                         .map(|word| word.iter().collect())
                         .collect();
 
-                    if !derived_words.is_empty() {
-                        if let Some(obj) = metadata_value.as_object_mut() {
-                            obj.insert("derived_from_words".to_string(), serde_json::json!(derived_words));
-                        }
+                    if !derived_words.is_empty()
+                        && let Some(obj) = metadata_value.as_object_mut()
+                    {
+                        obj.insert(
+                            "derived_from_words".to_string(),
+                            serde_json::json!(derived_words),
+                        );
                     }
                 }
-                
+
                 results.insert(word, metadata_value);
             }
             let json = serde_json::to_string_pretty(&results).unwrap();
