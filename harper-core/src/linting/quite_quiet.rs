@@ -1,6 +1,6 @@
 use crate::expr::{Expr, FirstMatchOf, SequenceExpr};
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::{Token, TokenKind, TokenStringExt};
+use crate::{CharStringExt, Token, TokenKind, TokenStringExt};
 
 pub struct QuiteQuiet {
     expr: Box<dyn Expr>,
@@ -26,8 +26,9 @@ impl Default for QuiteQuiet {
                 if !tok.kind.is_verb() || !tok.kind.is_apostrophized() {
                     return false;
                 }
-                let norm_lower = tok.span.get_content_string(src).to_lowercase();
-                norm_lower.ends_with("n't") || norm_lower.ends_with("n’t")
+                let chars = tok.span.get_content(src);
+                chars.ends_with_ignore_ascii_case_chars(&['n', '\'', 't'])
+                    || chars.ends_with_ignore_ascii_case_chars(&['n', '’', 't'])
             })
             .t_ws()
             .t_aco("quiet");
