@@ -121,6 +121,7 @@ impl TokenKind {
         is_plural_pronoun,
         is_non_plural_pronoun,
         is_reflexive_pronoun,
+        is_personal_pronoun,
         is_first_person_singular_pronoun,
         is_first_person_plural_pronoun,
         is_second_person_pronoun,
@@ -250,6 +251,10 @@ impl TokenKind {
 
     pub fn is_semicolon(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Semicolon))
+    }
+
+    pub fn is_ampersand(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Ampersand))
     }
 
     // Miscellaneous is-methods

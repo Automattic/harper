@@ -12,10 +12,14 @@ export type Request =
 	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
 	| GetDefaultStatusRequest
+	| GetEnabledDomainsRequest
 	| AddToUserDictionaryRequest
 	| SetUserDictionaryRequest
 	| IgnoreLintRequest
-	| GetUserDictionaryRequest;
+	| GetUserDictionaryRequest
+	| GetActivationKeyRequest
+	| SetActivationKeyRequest
+	| OpenOptionsRequest;
 
 export type Response =
 	| LintResponse
@@ -25,7 +29,9 @@ export type Response =
 	| GetDialectResponse
 	| GetDomainStatusResponse
 	| GetDefaultStatusResponse
-	| GetUserDictionaryResponse;
+	| GetEnabledDomainsResponse
+	| GetUserDictionaryResponse
+	| GetActivationKeyResponse;
 
 export type LintRequest = {
 	kind: 'lint';
@@ -95,6 +101,15 @@ export type GetDefaultStatusResponse = {
 	enabled: boolean;
 };
 
+export type GetEnabledDomainsRequest = {
+	kind: 'getEnabledDomains';
+};
+
+export type GetEnabledDomainsResponse = {
+	kind: 'getEnabledDomains';
+	domains: string[];
+};
+
 export type SetDomainStatusRequest = {
 	kind: 'setDomainStatus';
 	domain: string;
@@ -138,3 +153,27 @@ export type UnitResponse = {
 export function createUnitResponse(): UnitResponse {
 	return { kind: 'unit' };
 }
+
+export enum ActivationKey {
+	Off = 'off',
+	Shift = 'shift',
+	Control = 'control',
+}
+
+export type GetActivationKeyRequest = {
+	kind: 'getActivationKey';
+};
+
+export type GetActivationKeyResponse = {
+	kind: 'getActivationKey';
+	key: ActivationKey;
+};
+
+export type SetActivationKeyRequest = {
+	kind: 'setActivationKey';
+	key: ActivationKey;
+};
+
+export type OpenOptionsRequest = {
+	kind: 'openOptions';
+};
