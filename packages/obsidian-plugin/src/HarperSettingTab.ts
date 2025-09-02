@@ -88,7 +88,7 @@ export class HarperSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Activate Harper')
-			.setDesc('Enable or disable harper with this option.')
+			.setDesc('Enable or disable Harper with this option.')
 			.addToggle((toggle) =>
 				toggle.setValue(this.settings.lintEnabled).onChange(async (value) => {
 					this.state.toggleAutoLint();

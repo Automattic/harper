@@ -14,7 +14,7 @@ export type Settings = {
 	userDictionary?: string[];
 	delay?: number;
 	ignoredGlobs?: string[];
-	lintEnabled: boolean;
+	lintEnabled?: boolean;
 };
 
 const DEFAULT_DELAY = -1;
@@ -29,7 +29,7 @@ export default class State {
 	private onExtensionChange: () => void;
 	private ignoredGlobs?: string[];
 	private editorViewField?: StateField<MarkdownFileInfo>;
-	private lintEnabled: boolean;
+	private lintEnabled?: boolean;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
