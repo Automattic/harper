@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Checkbox, Input, Select, Toggle } from 'flowbite-svelte';
+import { Button, Input, Select } from 'flowbite-svelte';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
@@ -96,6 +96,27 @@ export function stringToDict(s: string): string[] {
 export function dictToString(values: string[]): string {
 	return values.map((v) => v.trim()).join('\n');
 }
+
+async function exportEnabledDomainsCSV() {
+	try {
+		const enabledDomains = await ProtocolClient.getEnabledDomains();
+		const json = JSON.stringify(enabledDomains, null, 2);
+
+		const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = 'enabled-domains.json';
+		document.body.appendChild(a);
+		a.click();
+		a.remove();
+		URL.revokeObjectURL(url);
+	} catch (e) {
+		console.error('Failed to export enabled domains JSON:', e);
+	}
+}
+
+// Import removed
 </script>
 
 <!-- centered wrapper with side gutters -->
@@ -131,6 +152,18 @@ export function dictToString(values: string[]): string {
           <input type="checkbox" bind:checked={defaultEnabled}/>
         </div>
       </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="font-medium">Export Enabled Domains</span>
+            <span class="font-light">Downloads JSON of domains explicitly enabled.</span>
+          </div>
+          <Button size="sm" color="light" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+        </div>
+      </div>
+
+      
 
       <div class="space-y-5">
         <div class="flex items-center justify-between">
