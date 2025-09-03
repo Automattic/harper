@@ -41,9 +41,9 @@ Message: |
       11 | ## Article. I.
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
-  - Replace with: “Is”
-  - Replace with: “I”
+  - Replace with: “In”
   - Replace with: “IC”
+  - Replace with: “IE”
 
 
 
@@ -1590,16 +1590,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      661 | such debts, obligations and claims shall be held illegal and void.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 51 words long.
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-     658 | questioned. But neither the United States nor any State shall assume or pay any
-     659 | debt or obligation incurred in aid of insurrection or rebellion against the
-         | ^~~~~~~ Did you mean the closed compound noun “debtor”?
-Suggest:
-  - Replace with: “debtor”
 
 
 

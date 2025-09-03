@@ -342,6 +342,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`.",
             LintKind::Punctuation
         ),
+        "EverSince" => (
+            ["every since"],
+            ["ever since"],
+            "Did you mean `ever since`?",
+            "Corrects `every since` to `ever since`.",
+            LintKind::Typo
+        ),
         "EveryTime" => (
             ["everytime"],
             ["every time"],
@@ -1047,6 +1054,12 @@ pub fn lint_group() -> LintGroup {
             ["to-do"],
             "Hyphenate `to-do`.",
             "Ensures `to-do` is correctly hyphenated."
+        ),
+        "ToGreatLengths" => (
+            ["through great lengths", "to a great length"],
+            ["to great lengths"],
+            "The idiom is to go `to great lengths`.",
+            "Corrects `through great lengths` to `to great lengths`."
         ),
         "ToTheMannerBorn" => (
             ["to the manor born"],

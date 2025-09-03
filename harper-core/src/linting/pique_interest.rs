@@ -15,7 +15,9 @@ impl Default for PiqueInterest {
                 "peak", "peaked", "peek", "peeked", "peeking", "peaking",
             ]))
             .then_whitespace()
-            .then_non_plural_nominal()
+            .then(|tok: &Token, _: &[char]| {
+                tok.kind.is_non_plural_nominal() || tok.kind.is_possessive_determiner()
+            })
             .then_whitespace()
             .t_aco("interest");
 
@@ -126,6 +128,15 @@ mod tests {
             "She was peaking his interest with her stories.",
             PiqueInterest::default(),
             "She was piquing his interest with her stories.",
+        );
+    }
+
+    #[test]
+    fn corrects_peaked_my_interest() {
+        assert_suggestion_result(
+            "you've peaked my interest.",
+            PiqueInterest::default(),
+            "you've piqued my interest.",
         );
     }
 }

@@ -150,20 +150,48 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                     continue;
                 }
 
-                // If the compound is part of a list of nouns, it's probably not a verb.
-                if prev_tok.kind.is_conjunction() {
-                    let maybe_prev_tok_2 = document.get_next_word_from_offset(i, -3);
-                    if let Some(prev_tok_2) = maybe_prev_tok_2 {
-                        if prev_tok_2.kind.is_noun() {
-                            continue;
-                        }
-                    }
+                if is_part_of_noun_list(document, i) {
+                    continue;
+                }
+
+                // If the previous word is (only) a preposition, this word is surely a noun
+                if prev_tok.kind.is_preposition()
+                    && !prev_tok
+                        .span
+                        .get_content(document.get_source())
+                        .eq_ignore_ascii_case_str("to")
+                {
+                    continue;
                 }
 
                 // If the previous word is OOV, those are most commonly nouns
                 if prev_tok.kind.is_oov() {
                     continue;
                 }
+            }
+
+            // If the compound noun is followed by another noun, check for larger compound nouns.
+            if let Some(next_tok) = maybe_next_tok.filter(|tok| tok.kind.is_noun())
+                && match nountok_lower {
+                    ['b', 'a', 'c', 'k', 'u', 'p'] => {
+                        &["file", "images", "location", "snapshots"][..]
+                    }
+                    ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function"][..],
+                    ['l', 'a', 'y', 'o', 'u', 't'] => &["estimation"][..],
+                    ['p', 'l', 'a', 'y', 'b', 'a', 'c', 'k'] => &["latency"][..],
+                    ['r', 'o', 'l', 'l', 'o', 'u', 't'] => &["status"][..],
+                    ['w', 'o', 'r', 'k', 'o', 'u', 't'] => &["constraints", "preference"][..],
+                    _ => &[],
+                }
+                .contains(
+                    &next_tok
+                        .span
+                        .get_content_string(document.get_source())
+                        .to_lowercase()
+                        .as_ref(),
+                )
+            {
+                continue;
             }
 
             let message = match confidence {
@@ -189,6 +217,33 @@ impl Linter for PhrasalVerbAsCompoundNoun {
 
     fn description(&self) -> &str {
         "This rule looks for phrasal verbs written as compound nouns."
+    }
+}
+
+/// Checks if the current token is part of a list of nouns
+fn is_part_of_noun_list(document: &Document, current_index: usize) -> bool {
+    // Check for a conjunction before the current word (-1 is whitespace, -2 is the conjunction)
+    if !matches!(
+        document.get_next_word_from_offset(current_index, -1),
+        Some(tok) if tok.kind.is_conjunction()
+    ) {
+        return false;
+    }
+
+    // Check the token sequence before the conjunction
+    match document.get_token_offset(current_index, -3) {
+        // A comma without the space, assume we're in a list of nouns.
+        Some(tok) if tok.kind.is_comma() => true,
+
+        // Whitespace. If the token before that is a noun or a comma, assume we're in a list of nouns.
+        Some(ws) if ws.kind.is_whitespace() => {
+            document
+                .get_token_offset(current_index, -4)
+                // `noun and` or `, and`
+                .is_some_and(|tok| tok.kind.is_noun() || tok.kind.is_comma())
+        }
+
+        _ => false,
     }
 }
 
@@ -422,6 +477,168 @@ mod tests {
     fn false_positive_issue_1495() {
         assert_lint_count(
             "Color schemes are available by using the Style Settings plugin.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_location() {
+        assert_lint_count(
+            "Backup location: `%APPDATA%\\Cursor\\User\\globalStorage\\backups`",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_plan() {
+        assert_lint_count(
+            "Every backup plan is unique, based on your risk assessment.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_program() {
+        assert_lint_count(
+            "restic is a backup program that is fast, efficient and secure",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_solution_or_backup_problems() {
+        assert_lint_count(
+            "NPBackup is a multiparadigm backup solution which tries to solve two major backup problems",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_utilities_backup_system_or_backup_snapshots() {
+        assert_lint_count(
+            "GitHub Enterprise Server Backup Utilities is a backup system you install on a separate host, which takes backup snapshots",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_images() {
+        assert_lint_count(
+            "This App creates and stores backup images of your Nextcloud.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn fix_backup_individual_apps() {
+        assert_suggestion_result(
+            "It requires root and allows you to backup individual apps and their data.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "It requires root and allows you to back up individual apps and their data.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_strategy() {
+        assert_lint_count(
+            "This is for you if you want to quickly set up a backup strategy without much fuss.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_helm_backup_plugin() {
+        assert_lint_count(
+            "Helm Backup Plugin.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_callback_function() {
+        assert_lint_count(
+            "By the time the `setTimeout` callback function was invoked",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_playback_latency() {
+        assert_lint_count(
+            "Low-Latency HLS is a recently standardized variant of the protocol that allows to greatly reduce playback latency.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_workout_constraints() {
+        assert_lint_count(
+            "Workout constraints",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_workout_preference() {
+        assert_lint_count(
+            "Workout preference",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_rollout_status() {
+        assert_lint_count(
+            "Rollout Status of Latest Image Release",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn font_flag_with_plugin() {
+        assert_lint_count(
+            "**Xcode** (8.0+, otherwise [with plugin](https://github.com/robertvojta/LigatureXcodePlugin))",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        )
+    }
+
+    #[test]
+    fn dont_flag_and_layout_of_data() {
+        assert_lint_count(
+            "shape, memory space, and layout of data, while performing the complicated indexing for the user",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_in_noun_list_without_space_after_comma() {
+        assert_lint_count(
+            "shape, memory space,and layout of data",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_layout_estimation() {
+        assert_lint_count(
+            "Layout estimation focuses on predicting architectural elements, i.e., walls, doors, and windows, within an indoor scene.",
             PhrasalVerbAsCompoundNoun::default(),
             0,
         );

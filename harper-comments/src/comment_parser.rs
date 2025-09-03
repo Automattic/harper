@@ -1,7 +1,7 @@
 use std::path::Path;
 
 use crate::comment_parsers;
-use comment_parsers::{Go, JavaDoc, JsDoc, Solidity, Unit};
+use comment_parsers::{Go, JavaDoc, JsDoc, Lua, Solidity, Unit};
 use harper_core::Token;
 use harper_core::parsers::{self, MarkdownOptions, Parser};
 use harper_core::spell::MutableDictionary;
@@ -53,6 +53,7 @@ impl CommentParser {
 
         let comment_parser: Box<dyn Parser> = match language_id {
             "go" => Box::new(Go::new_markdown(markdown_options)),
+            "lua" => Box::new(Lua::new_markdown(markdown_options)),
             "java" => Box::new(JavaDoc::default()),
             "javascriptreact" | "typescript" | "typescriptreact" | "javascript" => {
                 Box::new(JsDoc::new_markdown(markdown_options))

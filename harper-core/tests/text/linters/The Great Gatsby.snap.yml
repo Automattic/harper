@@ -88,17 +88,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      24 | express them, are usually plagiaristic and marred by obvious suppressions.
-         |                                                              ^~~~~~~~~~~~ Did you mean to spell `suppressions` this way?
-Suggest:
-  - Replace with: “suppression's”
-  - Replace with: “suppression”
-  - Replace with: “suppressors”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       27 | snobbishly repeat, a sense of the fundamental decencies is parcelled out
          |                                                            ^~~~~~~~~ Did you mean `parceled`?
       28 | unequally at birth.
@@ -692,18 +681,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-     535 | end of the long couch and she read aloud to him from the Saturday Evening
-     536 | Post—the words, murmurous and uninflected, running together in a soothing tune.
-         |                               ^~~~~~~~~~~ Did you mean to spell `uninflected` this way?
-Suggest:
-  - Replace with: “uninfected”
-  - Replace with: “inflected”
-  - Replace with: “noninflected”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      551 | “Jordan’s going to play in the tournament tomorrow,” explained Daisy, “over at
      552 | Westchester.”
          | ^~~~~~~~~~~ Did you mean to spell `Westchester` this way?
@@ -828,8 +805,8 @@ Message: |
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “T”
+  - Replace with: “Ta”
   - Replace with: “Tb”
-  - Replace with: “Ti”
 
 
 
@@ -840,7 +817,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “Jg”
+  - Replace with: “JD”
 
 
 
@@ -862,8 +839,8 @@ Message: |
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “T”
+  - Replace with: “Ta”
   - Replace with: “Tb”
-  - Replace with: “Ti”
 
 
 
@@ -874,7 +851,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “Jg”
+  - Replace with: “JD”
 
 
 
@@ -909,18 +886,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      675 | stare at the dismal scene for as long as half an hour. There is always a halt
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     680 | acquaintances resented the fact that he turned up in popular cafés with her and,
-         |                                                              ^~~~~ Did you mean to spell `cafés` this way?
-     681 | leaving her at a table, sauntered about, chatting with whomsoever he knew.
-Suggest:
-  - Replace with: “caffs”
-  - Replace with: “cafes”
-  - Replace with: “cafe's”
 
 
 
@@ -964,7 +929,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bf”
 
 
 
@@ -1060,17 +1025,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-     731 | nerves of her body were continually smouldering. She smiled slowly and, walking
-     732 | through her husband as if he were a ghost, shook hands with Tom, looking him
-         |                              ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      756 | “Terrible place, isn’t it,” said Tom, exchanging a frown with Doctor Eckleburg.
@@ -1099,7 +1053,7 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “Dc”
+  - Replace with: “Do”
   - Replace with: “D”
   - Replace with: “Db”
 
@@ -1292,7 +1246,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bf”
 
 
 
@@ -1335,17 +1289,6 @@ Message: |
          |                   ^~~~~~~ Did you mean to repeat this word?
 Suggest:
   - Replace with: “was”
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-    1077 | janitor and sent him for some celebrated sandwiches, which were a complete
-         |                                                            ^~~~ Use the contraction or separate the words instead.
-    1078 | supper in themselves. I wanted to get out and walk eastward toward the park
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
 
 
 
@@ -2479,9 +2422,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
+  - Replace with: “Pp”
   - Replace with: “Pa”
+  - Replace with: “Pd”
 
 
 
@@ -2557,7 +2500,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bf”
 
 
 
@@ -2567,9 +2510,9 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Av”
+  - Replace with: “Ax”
   - Replace with: “A”
-  - Replace with: “Ab”
+  - Replace with: “Ah”
 
 
 
@@ -2692,8 +2635,8 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Gt”
-  - Replace with: “Gm”
-  - Replace with: “GB”
+  - Replace with: “G”
+  - Replace with: “Gr”
 
 
 
@@ -2728,7 +2671,7 @@ Message: |
 Suggest:
   - Replace with: “D”
   - Replace with: “Dad”
-  - Replace with: “Dag”
+  - Replace with: “Dam”
 
 
 
@@ -2774,7 +2717,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bf”
 
 
 
@@ -2784,9 +2727,9 @@ Message: |
          |                                         ^~ Did you mean to spell `De` this way?
     1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
 Suggest:
-  - Replace with: “D”
   - Replace with: “Db”
-  - Replace with: “Deb”
+  - Replace with: “Dc”
+  - Replace with: “Def”
 
 
 
@@ -2994,9 +2937,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “Lo”
   - Replace with: “L”
   - Replace with: “La”
+  - Replace with: “Lb”
 
 
 
@@ -3116,9 +3059,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
+  - Replace with: “Pp”
   - Replace with: “Pa”
+  - Replace with: “Pd”
 
 
 
@@ -3863,16 +3806,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-    2447 | “When I said you were a particular friend of Tom’s, he started to abandon the
-         |                  ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2455 | hard, limited person, who dealt in universal scepticism, and who leaned back
@@ -3910,9 +3843,9 @@ Message: |
     2492 | some of the rooms. Let’s go to Coney Island, old sport. In my car.”
          |                                ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
-  - Replace with: “Cone”
   - Replace with: “Conley”
   - Replace with: “Corey”
+  - Replace with: “Coley”
 
 
 
@@ -3941,9 +3874,9 @@ Message: |
     2562 | Coney Island, or for how many hours he “glanced into rooms” while his house
          | ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
-  - Replace with: “Cone”
   - Replace with: “Conley”
   - Replace with: “Corey”
+  - Replace with: “Coley”
 
 
 
@@ -4403,8 +4336,8 @@ Message: |
     3024 | a source of satisfaction to James Gatz of North Dakota, isn’t easy to say.
          |                                   ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -4414,8 +4347,8 @@ Message: |
     3026 | James Gatz—that was really, or at least legally, his name. He had changed it at
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -4438,8 +4371,8 @@ Message: |
     3029 | on Lake Superior. It was James Gatz who had been loafing along the beach that
          |                                ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -4465,16 +4398,6 @@ Suggest:
   - Replace with: “absorption”
   - Replace with: “abortion”
   - Replace with: “adsorption”
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-    3057 | an outlet for his imagination; they were a satisfactory hint of the unreality of
-         |                                     ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
 
 
 
@@ -4529,8 +4452,8 @@ Message: |
     3079 | To young Gatz, resting on his oars and looking up at the railed deck, that yacht
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -4617,16 +4540,6 @@ Message: |
 
 
 
-Lint:    WordChoice (31 priority)
-Message: |
-    3123 | They were a party of three on horseback—Tom and a man named Sloane and a pretty
-         |      ^~~~ Use the contraction or separate the words instead.
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
-
-
-
 Lint:    Repetition (127 priority)
 Message: |
     3135 | uneasy anyhow until he had given them something, realizing in a vague way that
@@ -4688,17 +4601,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3238 | air, a pervading harshness that hadn’t been there before. Or perhaps I had
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
-
-
-
-Lint:    WordChoice (31 priority)
-Message: |
-    3235 | in my memory from Gatsby’s other parties that summer. There were the same
-         |                                                             ^~~~ Use the contraction or separate the words instead.
-    3236 | people, or at least the same sort of people, the same profusion of champagne,
-Suggest:
-  - Replace with: “we're”
-  - Replace with: “we are”
 
 
 
@@ -4914,6 +4816,17 @@ Suggest:
   - Replace with: “incommunicable”
   - Replace with: “communicable”
   - Replace with: “noncommunicable”
+
+
+
+Lint:    WordChoice (54 priority)
+Message: |
+    3495 | It was when curiosity about Gatsby was at its highest that the lights in his
+         |                                           ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
+    3496 | house failed to go on one Saturday night—and, as obscurely as it had begun, his
+Suggest:
+  - Replace with: “it's”
+  - Replace with: “it has”
 
 
 
@@ -5226,8 +5139,8 @@ Message: |
     3640 | “Bles-sed pre-cious,” she crooned, holding out her arms. “Come to your own
          |  ^~~~ Did you mean to spell `Bles` this way?
 Suggest:
-  - Replace with: “B's”
-  - Replace with: “BB's”
+  - Replace with: “Bales”
+  - Replace with: “Bees”
   - Replace with: “BC's”
 
 
@@ -5409,8 +5322,8 @@ Message: |
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “T”
+  - Replace with: “Ta”
   - Replace with: “Tb”
-  - Replace with: “Ti”
 
 
 
@@ -5421,7 +5334,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “Jg”
+  - Replace with: “JD”
 
 
 
@@ -5478,8 +5391,8 @@ Message: |
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “T”
+  - Replace with: “Ta”
   - Replace with: “Tb”
-  - Replace with: “Ti”
 
 
 
@@ -5490,7 +5403,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “Jg”
+  - Replace with: “JD”
 
 
 
@@ -6758,9 +6671,9 @@ Message: |
     5122 | ghost of a superior “Hm!”
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H”
+  - Replace with: “H'm”
+  - Replace with: “Ha”
   - Replace with: “Ham”
-  - Replace with: “He”
 
 
 
@@ -6810,8 +6723,8 @@ Message: |
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “T”
+  - Replace with: “Ta”
   - Replace with: “Tb”
-  - Replace with: “Ti”
 
 
 
@@ -6822,7 +6735,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “Jg”
+  - Replace with: “JD”
 
 
 
@@ -7228,7 +7141,7 @@ Message: |
 Suggest:
   - Replace with: “Cu”
   - Replace with: “C”
-  - Replace with: “Cc”
+  - Replace with: “Ca”
 
 
 
@@ -7238,8 +7151,8 @@ Message: |
          |                                                                 ^~~~ Did you mean to spell `Gatz` this way?
     5353 | from a town in Minnesota. It said only that the sender was leaving immediately
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -7269,8 +7182,8 @@ Message: |
     5385 | After a little while Mr. Gatz opened the door and came out, his mouth ajar, his
          |                          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -7304,8 +7217,8 @@ Message: |
     5396 | “Gatz is my name.”
          |  ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -7315,8 +7228,8 @@ Message: |
     5398 | “—Mr. Gatz. I thought you might want to take the body West.”
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -7335,7 +7248,7 @@ Message: |
 Suggest:
   - Replace with: “Jr”
   - Replace with: “J”
-  - Replace with: “Jg”
+  - Replace with: “JD”
 
 
 
@@ -7363,7 +7276,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bi”
+  - Replace with: “Bf”
 
 
 
@@ -7493,8 +7406,8 @@ Message: |
          |                                                                   ^~~~ Did you mean to spell `Gatz` this way?
     5560 | up and down excitedly in the hall. His pride in his son and in his son’s
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -7570,8 +7483,8 @@ Message: |
     5629 | then Mr. Gatz and the minister and I in the limousine, and a little later four
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
+  - Replace with: “Ga's”
   - Replace with: “GHz”
 
 
@@ -7803,9 +7716,9 @@ Message: |
     5692 | figures in my more fantastic dreams. I see it as a night scene by El Greco: a
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
+  - Replace with: “Ell”
+  - Replace with: “E”
   - Replace with: “Ea”
-  - Replace with: “Ed”
-  - Replace with: “En”
 
 
 

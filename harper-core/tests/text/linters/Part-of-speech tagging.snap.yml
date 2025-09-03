@@ -28,9 +28,9 @@ Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
+  - Replace with: “Em”
   - Replace with: “E”
   - Replace with: “Ea”
-  - Replace with: “Eh”
 
 
 
@@ -68,7 +68,7 @@ Message: |
 Suggest:
   - Replace with: “Nun”
   - Replace with: “Non”
-  - Replace with: “N1”
+  - Replace with: “NT”
 
 
 
@@ -282,8 +282,8 @@ Message: |
          |                                                                            ^~~~ Did you mean to spell `HMMs` this way?
      120 | to disambiguate parts of speech, when working to tag the Lancaster-Oslo-Bergen
 Suggest:
+  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
 
 
@@ -293,8 +293,8 @@ Message: |
      121 | Corpus of British English. HMMs involve counting cases (such as from the Brown
          |                            ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
+  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
 
 
@@ -304,8 +304,8 @@ Message: |
      129 | More advanced ("higher-order") HMMs learn the probabilities not only of pairs
          |                                ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
+  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
 
 
@@ -364,8 +364,8 @@ Message: |
      153 | HMMs underlie the functioning of stochastic taggers and are used in various
          | ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
+  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “Ha's”
   - Replace with: “HMO's”
 
 
@@ -520,8 +520,8 @@ Message: |
          |                          ^~~ Did you mean to spell `SVM` this way?
 Suggest:
   - Replace with: “Sim”
-  - Replace with: “SAM”
   - Replace with: “SCM”
+  - Replace with: “SVG”
 
 
 

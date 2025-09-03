@@ -22,6 +22,29 @@ FocusHook.prototype.hook = function (node, _propertyName, _previousValue) {
 	});
 };
 
+/** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
+var CloseOnEscapeHook = function (onClose: () => void) {
+	this.onClose = onClose;
+};
+
+CloseOnEscapeHook.prototype.hook = function (this: { onClose: () => void }, node: HTMLElement) {
+	const handler = (e: KeyboardEvent) => {
+		if (e.key === 'Escape') {
+			this.onClose();
+		}
+	};
+	window.addEventListener('keydown', handler);
+	(node as any).__harperCloseOnEscapeHandler = handler;
+};
+
+CloseOnEscapeHook.prototype.unhook = function (this: any, node: HTMLElement) {
+	const handler = (node as any).__harperCloseOnEscapeHandler;
+	if (handler) {
+		window.removeEventListener('keydown', handler);
+		delete (node as any).__harperCloseOnEscapeHandler;
+	}
+};
+
 function header(title: string, color: string, onClose: () => void): any {
 	const closeButton = h(
 		'button',
@@ -34,6 +57,20 @@ function header(title: string, color: string, onClose: () => void): any {
 		'×',
 	);
 
+	const settingsButton = h(
+		'button',
+		{
+			className: 'harper-gear-btn',
+			onclick: () => {
+				ProtocolClient.openOptions();
+			},
+			title: 'Settings',
+			'aria-label': 'Settings',
+		},
+		'⚙',
+	);
+
+	const controls = h('div', { className: 'harper-controls' }, [settingsButton, closeButton]);
 	const titleEl = h('span', {}, title);
 
 	return h(
@@ -42,7 +79,7 @@ function header(title: string, color: string, onClose: () => void): any {
 			className: 'harper-header',
 			style: { borderBottom: `2px solid ${color}` },
 		},
-		[titleEl, closeButton],
+		[titleEl, controls],
 	);
 }
 
@@ -164,6 +201,9 @@ function styleTag() {
 		.harper-btn:active{transform:scale(0.97)}
 		.harper-close-btn{background:transparent;border:none;cursor:pointer;font-size:20px;line-height:1;color:#57606a;padding:0 4px;}
 		.harper-close-btn:hover{color:#1f2328;}
+		.harper-gear-btn{background:transparent;border:none;cursor:pointer;font-size:22px;line-height:1;color:#57606a;padding:0 4px;}
+		.harper-gear-btn:hover{color:#1f2328;}
+		.harper-controls{display:flex;align-items:center;gap:6px;}
 		.harper-child-cont{
 		  display:flex;
 		  flex-wrap:wrap;
@@ -203,6 +243,8 @@ function styleTag() {
 		  .harper-btn:hover{filter:brightness(1.15)}
 		  .harper-close-btn{color:#8b949e;}
 		  .harper-close-btn:hover{color:#e6edf3;}
+		  .harper-gear-btn{color:#8b949e;}
+		  .harper-gear-btn:hover{color:#e6edf3;}
 		  .harper-btn[style*="background: #2DA44E"]{background:#238636}
 		  .harper-btn[style*="background: #e5e5e5"]{
 		    background:#4b4b4b;
@@ -237,19 +279,27 @@ export default function SuggestionBox(box: IgnorableLintBox, close: () => void) 
 		left: `${left}px`,
 	};
 
-	return h('div', { className: 'harper-container fade-in', style: positionStyle }, [
-		styleTag(),
-		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind), close),
-		body(box.lint.message_html),
-		footer(
-			suggestions(box.lint.suggestions, (v) => {
-				box.applySuggestion(v);
-				close();
-			}),
-			[
-				box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
-				ignoreLint(box.ignoreLint),
-			],
-		),
-	]);
+	return h(
+		'div',
+		{
+			className: 'harper-container fade-in',
+			style: positionStyle,
+			'harper-close-on-escape': new CloseOnEscapeHook(close),
+		},
+		[
+			styleTag(),
+			header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind), close),
+			body(box.lint.message_html),
+			footer(
+				suggestions(box.lint.suggestions, (v) => {
+					box.applySuggestion(v);
+					close();
+				}),
+				[
+					box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
+					ignoreLint(box.ignoreLint),
+				],
+			),
+		],
+	);
 }

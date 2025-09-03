@@ -65,13 +65,14 @@ impl Linter for OxfordComma {
                 .filter_map(|v| v.kind.as_word())
                 .flatten();
 
-            if let (Some(first), Some(second)) = (words.next(), words.next()) {
-                if first.preposition && second.is_likely_homograph() {
-                    skip = sentence
-                        .iter()
-                        .position(|t| t.kind.is_comma())
-                        .unwrap_or(sentence.iter().len())
-                }
+            if let (Some(first), Some(second)) = (words.next(), words.next())
+                && first.preposition
+                && second.is_likely_homograph()
+            {
+                skip = sentence
+                    .iter()
+                    .position(|t| t.kind.is_comma())
+                    .unwrap_or(sentence.iter().len())
             }
 
             let sentence = &sentence[skip..];

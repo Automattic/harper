@@ -44,6 +44,8 @@ macro_rules! create_test {
 create_test!(multiline_comments.cpp, 3);
 create_test!(multiline_comments.ts, 3);
 create_test!(multiline_comments.sol, 3);
+create_test!(clean.lua, 0);
+create_test!(dirty.lua, 1);
 create_test!(clean.rs, 0);
 create_test!(clean.sol, 0);
 create_test!(jsdoc.ts, 4);

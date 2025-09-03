@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.55.0",
+	"version": "0.61.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -119,6 +119,11 @@
 					"default": "information",
 					"description": "How severe do you want diagnostics to appear in the editor?"
 				},
+				"harper.excludePatterns": {
+					"scope": "resource",
+					"type": "array",
+					"description": "A set of globs to ignore. If a file matches any of the globs, it will not be linted."
+				},
 				"harper.fileDictPath": {
 					"scope": "resource",
 					"type": "string",
@@ -145,7 +150,7 @@
 				"harper.userDictPath": {
 					"scope": "resource",
 					"type": "string",
-					"description": "Optional path to a global dictionary file to use."
+					"description": "Optional path to a user dictionary file to use."
 				},
 				"harper.workspaceDictPath": {
 					"scope": "resource",
@@ -384,7 +389,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "A rule that looks for common offensive language."
+					"description": "Flags offensive language and offers various ways to censor or replace with euphemisms."
 				},
 				"harper.linters.AzureNames": {
 					"scope": "resource",
@@ -452,6 +457,12 @@
 					"default": true,
 					"description": "`Beforehand` functions as a fixed adverb meaning ‘in advance’; writing it as two words or with a hyphen is nonstandard and can jar readers."
 				},
+				"harper.linters.BestOfAllTime": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for nonstandard `of all times` in superlatives instead of singular `time`"
+				},
 				"harper.linters.BestRegards": {
 					"scope": "resource",
 					"type": "boolean",
@@ -505,6 +516,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "When referring to the provinces of Canada, make sure to treat them as a proper noun."
+				},
+				"harper.linters.Cant": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests correcting `cant` to `can't`."
 				},
 				"harper.linters.CapitalizePersonalPronouns": {
 					"scope": "resource",
@@ -740,6 +757,12 @@
 					"default": true,
 					"description": "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`."
 				},
+				"harper.linters.EverSince": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `every since` to `ever since`."
+				},
 				"harper.linters.EveryTime": {
 					"scope": "resource",
 					"type": "boolean",
@@ -793,6 +816,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Expands the abbreviation `deps` to the full word `dependencies` for clarity."
+				},
+				"harper.linters.ExpandMemoryShorthands": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands memory-related abbreviations (`B`, `kB`, `MB`, `GB`, `TB`, `PB`, `KiB`, `MiB`, `GiB`, `TiB`, `PiB`, etc.) to their full forms (`byte`, `kilobyte`, `megabyte`, `gigabyte`, `terabyte`, `petabyte`, `kibibyte`, `mebibyte`, `gibibyte`, `tebibyte`, `pebibyte`, etc.)."
 				},
 				"harper.linters.ExpandMinimum": {
 					"scope": "resource",
@@ -1568,6 +1597,12 @@
 					"default": true,
 					"description": "Expands an initialism."
 				},
+				"harper.linters.NoFrenchSpaces": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Stops users from accidentally inserting French spaces."
+				},
 				"harper.linters.NoMatchFor": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1874,6 +1909,12 @@
 					"default": true,
 					"description": "Ensure proper capitalization of proper nouns."
 				},
+				"harper.linters.QuantifierNeedsOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects missing `of` after the quantifier “a couple” when it precedes a plural noun"
+				},
 				"harper.linters.RapidFire": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2036,6 +2077,12 @@
 					"default": true,
 					"description": "Fixes the improper phrase `sooner than later` by suggesting standard alternatives."
 				},
+				"harper.linters.SoughtAfter": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Correct `sort after` to `sought after`"
+				},
 				"harper.linters.Spaces": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2166,7 +2213,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects the misuse of `then` to `than`."
+					"description": "Corrects mixing up `then` and `than`."
 				},
 				"harper.linters.Therefore": {
 					"scope": "resource",
@@ -2215,6 +2262,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `to-do` is correctly hyphenated."
+				},
+				"harper.linters.ToGreatLengths": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `through great lengths` to `to great lengths`."
 				},
 				"harper.linters.ToTheMannerBorn": {
 					"scope": "resource",

@@ -409,6 +409,16 @@ fn detect_ever_present_real_world() {
     );
 }
 
+// EverSince
+#[test]
+fn detect_ever_since() {
+    assert_suggestion_result(
+        "einstein been real quiet every since this dropped",
+        lint_group(),
+        "einstein been real quiet ever since this dropped",
+    );
+}
+
 // EveryTime
 #[test]
 fn fix_everytime() {
@@ -1258,6 +1268,25 @@ fn suggests_ticking_clock() {
 
 // ToDoHyphen
 // -none-
+
+// ToGreatLengths
+#[test]
+fn correct_through_great_lengths() {
+    assert_suggestion_result(
+        "Bloomberg's sponsored paid for content goes through great lengths to market Nvidia's products and in particular its AI products that we've frequently criticized.",
+        lint_group(),
+        "Bloomberg's sponsored paid for content goes to great lengths to market Nvidia's products and in particular its AI products that we've frequently criticized.",
+    );
+}
+
+#[test]
+fn correct_to_a_great_length() {
+    assert_suggestion_result(
+        "While ratatui-image goes to a great length to detect a rendered image's pixel size in terms of \"character cells that will be covered\", via font pixel size detection, ultimately it's up to the terminal emulator to decide what exactly a pixel is.",
+        lint_group(),
+        "While ratatui-image goes to great lengths to detect a rendered image's pixel size in terms of \"character cells that will be covered\", via font pixel size detection, ultimately it's up to the terminal emulator to decide what exactly a pixel is.",
+    );
+}
 
 // ToTheMannerBorn
 // -none-

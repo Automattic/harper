@@ -2,7 +2,7 @@ use paste::paste;
 
 use crate::{
     CharStringExt, Span, Token, TokenKind,
-    expr::{FirstMatchOf, LongestMatchOf},
+    expr::{FirstMatchOf, FixedPhrase, LongestMatchOf},
     patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
 
@@ -92,6 +92,11 @@ impl SequenceExpr {
     /// Shorthand for [`Self::any_capitalization_of`].
     pub fn aco(word: &'static str) -> Self {
         Self::any_capitalization_of(word)
+    }
+
+    /// Match the first of multiple expressions.
+    pub fn any_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+        Self::default().then_any_of(exprs)
     }
 
     /// Match any word from the given set of words, case-insensitive.
@@ -211,6 +216,11 @@ impl SequenceExpr {
         self.then(Word::new_exact(word))
     }
 
+    /// Match a fixed phrase.
+    pub fn then_fixed_phrase(self, phrase: &'static str) -> Self {
+        self.then(FixedPhrase::from_phrase(phrase))
+    }
+
     /// Match any word except the ones in `words`.
     pub fn then_word_except(self, words: &'static [&'static str]) -> Self {
         self.then(move |tok: &Token, src: &[char]| {
@@ -220,6 +230,8 @@ impl SequenceExpr {
                     .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
         })
     }
+
+    // Predicate matching methods
 
     /// Match a token of a given kind which is not in the list of words.
     pub fn then_kind_except<F>(self, pred: F, words: &'static [&'static str]) -> Self
@@ -260,6 +272,23 @@ impl SequenceExpr {
         self.then(move |tok: &Token, _source: &[char]| preds.iter().any(|pred| pred(&tok.kind)))
     }
 
+    pub fn then_kind_any_or_words<F>(
+        self,
+        preds: &'static [F],
+        words: &'static [&'static str],
+    ) -> Self
+    where
+        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, src: &[char]| {
+            preds.iter().any(|pred| pred(&tok.kind))
+                // && !words
+                || words
+                    .iter()
+                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+        })
+    }
+
     /// Adds a step matching a token where the first token kind predicate returns true and the second returns false.
     pub fn then_kind_is_but_is_not<F1, F2>(self, pred1: F1, pred2: F2) -> Self
     where
@@ -290,8 +319,11 @@ impl SequenceExpr {
         })
     }
 
+    // Word property matching methods
+
     // Out-of-vocabulary word. (Words not in the dictionary)
     gen_then_from_is!(oov);
+    gen_then_from_is!(swear);
 
     // Part-of-speech matching methods
 
@@ -311,6 +343,7 @@ impl SequenceExpr {
     // Pronouns
 
     gen_then_from_is!(pronoun);
+    gen_then_from_is!(personal_pronoun);
     gen_then_from_is!(first_person_singular_pronoun);
     gen_then_from_is!(first_person_plural_pronoun);
     gen_then_from_is!(second_person_pronoun);
@@ -330,6 +363,7 @@ impl SequenceExpr {
     gen_then_from_is!(adjective);
     gen_then_from_is!(positive_adjective);
     gen_then_from_is!(comparative_adjective);
+    gen_then_from_is!(superlative_adjective);
 
     // Adverbs
 

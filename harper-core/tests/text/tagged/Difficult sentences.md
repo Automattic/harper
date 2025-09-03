@@ -3,15 +3,15 @@
 >
 #
 > A   collection of difficult sentences to test  Harper's ability to correctly tag    unusual / uncommon but     correct sentences .
-# D/P NSg        P  V/J       NPl/V+    P  NSg/V NSg$     N🅪Sg+   P  R         NSg/V+ NSg/J   . NSg/V/J  NSg/C/P NSg/V/J NPl/V+    .
+# D/P N🅪Sg       P  V/J       NPl/V+    P  NSg/V NSg$     N🅪Sg+   P  R         NSg/V+ NSg/J   . NSg/V/J  NSg/C/P NSg/V/J NPl/V+    .
 >
 #
 > Note   that         some      word   may    not   be     tagged correctly right   now       .
 # NSg/V+ NSg/I/C/Ddem I/J/R/Dq+ NSg/V+ NPr/VX NSg/C NSg/VX V/J    R         NPr/V/J NPr/V/J/C .
 >
 #
-> Most       example sentences are taken from https://en.wiktionary.org/. License : CC     BY      - SA       4.0 .
-# NSg/I/J/Dq NSg/V+  NPl/V+    V   V/J   P    Url                         NSg/V+  . NSg/V+ NSg/J/P . NPr/V/J+ #   .
+> Most         example sentences are taken from https://en.wiktionary.org/. License : CC     BY      - SA       4.0 .
+# NSg/I/J/R/Dq NSg/V+  NPl/V+    V   V/J   P    Url                         NSg/V+  . NSg/V+ NSg/J/P . NPr/V/J+ #   .
 >
 #
 > A
@@ -36,8 +36,8 @@
 # NPr    V   NSg/P NPr+ . D/P N🅪Sg/V+ NSg/V+ V   V/J    NSg/P NPr+  NPr/J/P #    .
 > I    was at    Jim’s house  at    the corner of Fourth  Street  and Vine .
 # ISg+ V   NSg/P NSg$  NPr/V+ NSg/P D   NSg/V  P  NPr/V/J NSg/V/J V/C NSg+ .
-> at    the bottom  of the page   ; sitting at    the table  ; at    church ; at    sea
-# NSg/P D   NSg/V/J P  D+  NPr/V+ . NSg/V/J NSg/P D+  NSg/V+ . NSg/P NPr/V+ . NSg/P NSg+
+> at    the bottom  of the page   ; sitting at    the table  ; at    church  ; at    sea
+# NSg/P D   NSg/V/J P  D+  NPr/V+ . NSg/V/J NSg/P D+  NSg/V+ . NSg/P NPr🅪/V+ . NSg/P NSg+
 > Target at    five miles  . Prepare torpedoes !
 # NSg/V+ NSg/P NSg+ NPrPl+ . V       NPl/V     .
 > Look  out         ! UFO at    two o'clock !
@@ -45,7 +45,7 @@
 > Don't pick  at    your food !
 # V     NSg/V NSg/P D$+  NSg+ .
 > My  cat      keeps scratching at    the furniture .
-# D$+ NSg/V/J+ NPl/V V          NSg/P D+  NᴹSg+     .
+# D$+ NSg/V/J+ NPl/V V          NSg/P D+  Nᴹ+       .
 > I    was working at    the problem all           day   .
 # ISg+ V   V       NSg/P D+  NSg/J+  NSg/I/J/C/Dq+ NPr🅪+ .
 > He       shouted at    her     .
@@ -54,14 +54,14 @@
 # ISg+ V/J     NSg/P D+  J+      NSg/J+ .
 > At    my  request , they agreed to move  us       to another hotel .
 # NSg/P D$+ NSg/V+  . IPl+ V/J    P  NSg/V NPr/IPl+ P  I/D+    NSg+  .
-> He       jumped at    the sudden noise  .
-# NPr/ISg+ V/J    NSg/P D+  NSg/J+ NSg/V+ .
+> He       jumped at    the sudden noise   .
+# NPr/ISg+ V/J    NSg/P D+  NSg/J+ N🅪Sg/V+ .
 > We   laughed at    the joke   .
 # IPl+ V/J     NSg/P D+  NSg/V+ .
 > She  was mad     at    their comments .
 # ISg+ V   NSg/V/J NSg/P D$+   NPl/V+   .
-> men at    work   ; children at    play
-# NSg NSg/P NSg/V+ . NPl+     NSg/P NSg/V
+> men at    work    ; children at    play
+# NSg NSg/P N🅪Sg/V+ . NPl+     NSg/P NSg/V
 > The two  countries are at    war     .
 # D+  NSg+ NPl+      V   NSg/P N🅪Sg/V+ .
 > She  is at    sixes and sevens with him  .
@@ -104,8 +104,8 @@
 # W?    NSg/V NSg/I+  NSg/J/P D   NSg/V P  NPr/V+ .
 > We   will   send  it       by      the first   week  of July .
 # IPl+ NPr/VX NSg/V NPr/ISg+ NSg/J/P D   NSg/V/J NSg/J P  NPr+ .
-> The matter     was decided by      the chairman .
-# D+  N🅪Sg/V/JC+ V   NSg/V/J NSg/J/P D+  NSg/V+   .
+> The matter  was decided by      the chairman .
+# D+  N🅪Sg/V+ V   NSg/V/J NSg/J/P D+  NSg/V+   .
 > The boat   was swamped by      the water   .
 # D+  NSg/V+ V   V/J     NSg/J/P D+  N🅪Sg/V+ .
 > He       was protected by      his     body   armour      .
@@ -127,17 +127,17 @@
 > By      ' maybe   ' she  means ' no    ' .
 # NSg/J/P . NSg/J/R . ISg+ NPl/V . NPr/P . .
 > The electricity was cut     off       , so        we   had to read  by      candlelight .
-# D+  NᴹSg+       V   NSg/V/J NSg/V/J/P . NSg/I/J/C IPl+ V   P  NSg/V NSg/J/P NSg         .
-> By      the power    vested in      me       , I    now       pronounce you    man     and wife     .
-# NSg/J/P D+  NSg/V/J+ V/J    NPr/J/P NPr/ISg+ . ISg+ NPr/V/J/C NSg/V     ISgPl+ NPr/V/J V/C NSg/V/J+ .
+# D+  Nᴹ+         V   NSg/V/J NSg/V/J/P . NSg/I/J/C IPl+ V   P  NSg/V NSg/J/P NSg         .
+> By      the power     vested in      me       , I    now       pronounce you    man     and wife     .
+# NSg/J/P D+  N🅪Sg/V/J+ V/J    NPr/J/P NPr/ISg+ . ISg+ NPr/V/J/C NSg/V     ISgPl+ NPr/V/J V/C NSg/V/J+ .
 > By      Jove ! I    think she's got it       !
 # NSg/J/P NPr+ . ISg+ NSg/V W?    V   NPr/ISg+ .
 > By      all           that          is holy    , I'll put   an  end    to this    .
 # NSg/J/P NSg/I/J/C/Dq+ NSg/I/C/Ddem+ VL NSg/J/R . W?   NSg/V D/P NSg/V+ P  I/Ddem+ .
 > I    sorted the items  by      category .
 # ISg+ V/J    D   NPl/V+ NSg/J/P NSg+     .
-> Table  1 shows details of our employees broken down      by      sex   and age     .
-# NSg/V+ # NPl/V NPl/V   P  D$+ NPl+      V/J    NSg/V/J/P NSg/J/P NSg/V V/C N🅪Sg/V+ .
+> Table  1 shows details of our employees broken down       by      sex   and age     .
+# NSg/V+ # NPl/V NPl/V   P  D$+ NPl+      V/J    N🅪Sg/V/J/P NSg/J/P NSg/V V/C N🅪Sg/V+ .
 > Our stock     is up        by      ten  percent .
 # D$+ N🅪Sg/V/J+ VL NSg/V/J/P NSg/J/P NSg+ NSg+    .
 > We   won     by      six  goals  to three .
@@ -155,7 +155,7 @@
 > He       sits  listening to the radio   by      the hour .
 # NPr/ISg+ NPl/V V         P  D+  N🅪Sg/V+ NSg/J/P D+  NSg+ .
 > His     health was deteriorating by      the day   .
-# ISg/D$+ NᴹSg+  V   V             NSg/J/P D+  NPr🅪+ .
+# ISg/D$+ Nᴹ+    V   V             NSg/J/P D+  NPr🅪+ .
 > The pickers are paid by      the bushel .
 # D   W?      V   V/J  NSg/J/P D   NSg/V  .
 > He       cheated by      his     own      admission .
@@ -184,12 +184,12 @@
 # ISg+ V/J     D+  NSg/V+ NSg/R NPr/ISg+ V/J    NSg/J/P .
 > There was a    shepherd close   by      .
 # +     V   D/P+ NPr/V+   NSg/V/J NSg/J/P .
-> I'll stop  by      on  my  way    home    from work   .
-# W?   NSg/V NSg/J/P J/P D$+ NSg/J+ NSg/V/J P    NSg/V+ .
+> I'll stop  by      on  my  way    home    from work    .
+# W?   NSg/V NSg/J/P J/P D$+ NSg/J+ NSg/V/J P    N🅪Sg/V+ .
 > We're right   near      the lifeguard station . Come    by      before you    leave .
 # W?    NPr/V/J NSg/V/J/P D   NSg+      NSg/V+  . NSg/V/P NSg/J/P C/P    ISgPl+ NSg/V .
-> The women spent much       time      after harvest putting jams   by      for winter and spring .
-# D+  NPl+  V/J   NSg/I/J/Dq N🅪Sg/V/J+ P     NSg/V+  NSg/V   NPl/V+ NSg/J/P C/P NSg/V  V/C NSg/V+ .
+> The women spent much         time      after harvest putting jams   by      for winter and spring .
+# D+  NPl+  V/J   NSg/I/J/R/Dq N🅪Sg/V/J+ P     NSg/V+  NSg/V   NPl/V+ NSg/J/P C/P NSg/V  V/C NSg/V+ .
 >
 #
 > Adjective
@@ -232,14 +232,14 @@
 # W?    V      D/P NSg/V+   NSg/V/J C/P NPr+  .
 > The mayor gave a   speech for the charity gala   .
 # D+  NSg+  V    D/P N🅪Sg/V C/P D+  NPr+    NSg/J+ .
-> If    having to bag   the groceries correctly is more         than you    can    handle , then    this   isn't the job    for you    .
-# NSg/C V      P  NSg/V D+  NPl/V+    R         VL NPr/I/V/J/Dq C/P  ISgPl+ NPr/VX NSg/V  . NSg/J/C I/Ddem NSg/V D   NPr/V+ C/P ISgPl+ .
+> If    having to bag   the groceries correctly is more           than you    can    handle , then    this   isn't the job    for you    .
+# NSg/C V      P  NSg/V D+  NPl/V+    R         VL NPr/I/V/J/R/Dq C/P  ISgPl+ NPr/VX NSg/V  . NSg/J/C I/Ddem NSg/V D   NPr/V+ C/P ISgPl+ .
 > This    is a   new     bell  for my  bicycle .
 # I/Ddem+ VL D/P NSg/V/J NPr/V C/P D$+ NSg/V+  .
 > The cake    is for Tom   and Helen's anniversary .
 # D+  N🅪Sg/V+ VL C/P NPr/V V/C NSg$    NSg+        .
 > This    medicine is for your cough  .
-# I/Ddem+ NSg/V+   VL C/P D$+  NSg/V+ .
+# I/Ddem+ N🅪Sg/V+  VL C/P D$+  NSg/V+ .
 > He       wouldn't apologize ; and just for that          , she  refused to help  him  .
 # NPr/ISg+ VX       V         . V/C V/J  C/P NSg/I/C/Ddem+ . ISg+ V/J     P  NSg/V ISg+ .
 > He       looks better    for having lost weight  . ( UK   usage )
@@ -264,8 +264,8 @@
 # V       C/P NPr/V/J+ .
 > They swept the area for enemy  operatives .
 # IPl+ V/J   D   N🅪Sg C/P NSg/V+ NPl+       .
-> Police  combed his     flat    for clues  .
-# NᴹSg/V+ V/J    ISg/D$+ NSg/V/J C/P NPl/V+ .
+> Police combed his     flat    for clues  .
+# Nᴹ/V+  V/J    ISg/D$+ NSg/V/J C/P NPl/V+ .
 > I've lived here    for three years .
 # W?   V/J   NSg/J/R C/P NSg   NPl+  .
 > They fought for days over    a    silly  pencil .
@@ -305,7 +305,7 @@
 > Go      scuba  diving   ? For one        thing  , I    can't even    swim  .
 # NSg/V/J N🅪Sg/V NSg/V/J+ . C/P NSg/I/V/J+ NSg/V+ . ISg+ VX    NSg/V/J NSg/V .
 > For another , we   don't have   any    equipment .
-# C/P I/D     . IPl+ V     NSg/VX I/R/Dq NᴹSg+     .
+# C/P I/D     . IPl+ V     NSg/VX I/R/Dq Nᴹ+       .
 > He       is named for his     grandfather .
 # NPr/ISg+ VL V/J   C/P ISg/D$+ NSg/V/J+    .
 > He       totally screwed up        that          project . Now       he's surely for the sack  .
@@ -314,8 +314,8 @@
 # NPr/J/P NSg/V/J P  NSg/V/J+ NPl/V . NPr/V+ V   NSg   C/P NSg  J/P D+  NPr🅪+
 > At    close   of play  , England were  305 for 3 .
 # NSg/P NSg/V/J P  NSg/V . NPr+    NSg/V #   C/P # .
-> He       took the swing  shift  for he       could  get   more         overtime .
-# NPr/ISg+ V    D+  NSg/V+ NSg/V+ C/P NPr/ISg+ NSg/VX NSg/V NPr/I/V/J/Dq NSg/V    .
+> He       took the swing  shift  for he       could  get   more           overtime .
+# NPr/ISg+ V    D+  NSg/V+ NSg/V+ C/P NPr/ISg+ NSg/VX NSg/V NPr/I/V/J/R/Dq NSg/V    .
 > to account for one's whereabouts .
 # P  NSg/V   C/P NSg$+ NSg+        .
 >
@@ -328,8 +328,8 @@
 # NPr+ VL P    NSg/V/J+ NPr+    .
 > I    got a   letter from my  brother  .
 # ISg+ V   D/P NSg/V+ P    D$+ NSg/V/J+ .
-> You    can't get   all          your news    from the Internet .
-# ISgPl+ VX    NSg/V NSg/I/J/C/Dq D$+  NᴹPl/V+ P    D   NPr/V+   .
+> You    can't get   all          your news  from the Internet .
+# ISgPl+ VX    NSg/V NSg/I/J/C/Dq D$+  Nᴹ/V+ P    D   NPr/V+   .
 > He       had books  piled from floor  to ceiling .
 # NPr/ISg+ V   NPl/V+ V/J   P    NSg/V+ P  NSg/V   .
 > He       departed yesterday from Chicago .
@@ -347,7 +347,7 @@
 > Start counting from 1 .
 # NSg/V V        P    # .
 > You    can    study anything from math to literature .
-# ISgPl+ NPr/VX NSg/V NSg/I/V+ P    +    P  NSg        .
+# ISgPl+ NPr/VX NSg/V NSg/I/V+ P    +    P  Nᴹ         .
 > It's hard   to tell  from here    .
 # +    N🅪Sg/J P  NPr/V P    NSg/J/R .
 > Try     to see   it       from his     point of view   .
@@ -384,12 +384,12 @@
 # +     V   NPl/V P  NPl/V+ NPr/J/P D+  NPr/V+ .
 > We   are in      the enemy  camp     .
 # IPl+ V   NPr/J/P D+  NSg/V+ NSg/V/J+ .
-> Her     plane    is in      the air    .
-# ISg/D$+ NSg/V/J+ VL NPr/J/P D+  NSg/V+ .
-> I    glanced over    at    the pretty  girl   in      the red    dress  .
-# ISg+ V/J     NSg/J/P NSg/P D+  NSg/V/J NSg/V+ NPr/J/P D+  NSg/J+ NSg/V+ .
-> There wasn't much       of interest in      her     speech  .
-# +     V      NSg/I/J/Dq P  NSg/V+   NPr/J/P ISg/D$+ N🅪Sg/V+ .
+> Her     plane    is in      the air     .
+# ISg/D$+ NSg/V/J+ VL NPr/J/P D+  N🅪Sg/V+ .
+> I    glanced over    at    the pretty    girl   in      the red     dress  .
+# ISg+ V/J     NSg/J/P NSg/P D+  NSg/V/J/R NSg/V+ NPr/J/P D+  N🅪Sg/J+ NSg/V+ .
+> There wasn't much         of interest in      her     speech  .
+# +     V      NSg/I/J/R/Dq P  NSg/V+   NPr/J/P ISg/D$+ N🅪Sg/V+ .
 > He       hasn't got an  original idea in      him  .
 # NPr/ISg+ V      V   D/P NSg/J    NSg+ NPr/J/P ISg+ .
 > You    are one       in      a   million .
@@ -404,12 +404,12 @@
 # NPr/VX ISgPl+ NSg/VX NSg/V/J P  NSg/V  I/Ddem+ NPr/J/P D/P+ NSg/J+ .
 > They said they would call  us       in      a    week   .
 # IPl+ V/J  IPl+ VX    NSg/V NPr/IPl+ NPr/J/P D/P+ NSg/J+ .
-> Less    water   gets  in      your boots this    way    .
-# V/J/C/P N🅪Sg/V+ NPl/V NPr/J/P D$+  NPl/V I/Ddem+ NSg/J+ .
+> Less      water   gets  in      your boots this    way    .
+# V/J/R/C/P N🅪Sg/V+ NPl/V NPr/J/P D$+  NPl/V I/Ddem+ NSg/J+ .
 > She  stood there looking in      the window longingly .
 # ISg+ V     W?    V       NPr/J/P D+  NSg/V+ R         .
-> In      replacing the faucet washers , he       felt    he       was making his     contribution to the environment .
-# NPr/J/P V         D   NSg    W?      . NPr/ISg+ NSg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D   NSg+        .
+> In      replacing the faucet washers , he       felt     he       was making his     contribution to the environment .
+# NPr/J/P V         D   NSg    W?      . NPr/ISg+ N🅪Sg/V/J NPr/ISg+ V   NSg/V  ISg/D$+ NSg+         P  D   N🅪Sg+       .
 > In      trying  to make  amends , she  actually made matters worse    .
 # NPr/J/P NSg/V/J P  NSg/V NPl/V  . ISg+ R        V    NPl/V+  NSg/V/JC .
 > My  aim    in      travelling   there was to find  my  missing friend   .
@@ -420,34 +420,34 @@
 # D+  NPl/V+ NSg/V/J NSg/J/P NPr/J/P NPl/V+ .
 > Arrange the chairs in      a    circle .
 # NSg/V   D   NPl/V+ NPr/J/P D/P+ NSg/V+ .
-> He       stalked away in      anger   .
-# NPr/ISg+ V/J     V/J  NPr/J/P NᴹSg/V+ .
+> He       stalked away in      anger .
+# NPr/ISg+ V/J     V/J  NPr/J/P Nᴹ/V+ .
 > John is in      a   coma .
 # NPr+ VL NPr/J/P D/P NSg  .
-> My  fruit   trees  are in      bud    .
-# D$+ N🅪Sg/V+ NPl/V+ V   NPr/J/P NPr/V+ .
+> My  fruit   trees  are in      bud     .
+# D$+ N🅪Sg/V+ NPl/V+ V   NPr/J/P NPr🅪/V+ .
 > The company is in      profit    .
-# D+  NSg/V+  VL NPr/J/P N🅪Sg/V/J+ .
+# D+  N🅪Sg/V+ VL NPr/J/P N🅪Sg/V/J+ .
 > You've got a   friend   in      me       .
 # W?     V   D/P NPr/V/J+ NPr/J/P NPr/ISg+ .
 > He's met his     match  in      her     .
 # NSg$ V   ISg/D$+ NSg/V+ NPr/J/P ISg/D$+ .
 > There has been  no    change in      his     condition .
-# +     V   NSg/V NPr/P N🅪Sg/V NPr/J/P ISg/D$+ NSg/V+    .
+# +     V   NSg/V NPr/P N🅪Sg/V NPr/J/P ISg/D$+ N🅪Sg/V+   .
 > What   grade  did he       get   in      English   ?
 # NSg/I+ NSg/V+ V   NPr/ISg+ NSg/V NPr/J/P NPr🅪/V/J+ .
-> Please pay     me       in      cash     — preferably in      tens and twenties .
-# V      NSg/V/J NPr/ISg+ NPr/J/P NPr/V/J+ . R          NPr/J/P W?   V/C NPl+     .
-> The deposit can    be     in      any    legal tender  , even    in      gold      .
-# D+  NSg/V+  NPr/VX NSg/VX NPr/J/P I/R/Dq NSg/J NSg/V/J . NSg/V/J NPr/J/P NᴹSg/V/J+ .
-> Beethoven's " Symphony No    . 5 " in      C        minor   is among his     most       popular .
-# NSg$        . NSg+     NPr/P . # . NPr/J/P NPr/V/J+ NSg/V/J VL P     ISg/D$+ NSg/I/J/Dq NSg/J   .
+> Please pay     me       in      cash      — preferably in      tens and twenties .
+# V      NSg/V/J NPr/ISg+ NPr/J/P NPrᴹ/V/J+ . R          NPr/J/P W?   V/C NPl+     .
+> The deposit can    be     in      any    legal tender  , even    in      gold    .
+# D+  NSg/V+  NPr/VX NSg/VX NPr/J/P I/R/Dq NSg/J NSg/V/J . NSg/V/J NPr/J/P Nᴹ/V/J+ .
+> Beethoven's " Symphony No    . 5 " in      C        minor   is among his     most         popular .
+# NSg$        . NSg+     NPr/P . # . NPr/J/P NPr/V/J+ NSg/V/J VL P     ISg/D$+ NSg/I/J/R/Dq NSg/J   .
 > His     speech  was in      French   , but     was simultaneously translated into eight  languages .
 # ISg/D$+ N🅪Sg/V+ V   NPr/J/P NPr🅪/V/J . NSg/C/P V   R              V/J        P    NSg/J+ NPl/V+    .
 > When    you    write in      cursive , it's illegible .
 # NSg/I/C ISgPl+ NSg/V NPr/J/P NSg/J   . +    J         .
-> Military letters should be     formal in      tone     , but     not   stilted .
-# NSg/J+   NPl/V+  VX     NSg/VX NSg/J  NPr/J/P NSg/I/V+ . NSg/C/P NSg/C V/J     .
+> Military letters should be     formal in      tone      , but     not   stilted .
+# NSg/J+   NPl/V+  VX     NSg/VX NSg/J  NPr/J/P N🅪Sg/I/V+ . NSg/C/P NSg/C V/J     .
 >
 #
 > Verb
@@ -483,7 +483,7 @@
 >
 #
 > His     parents got him  an  in      with the company .
-# ISg/D$+ NPl/V+  V   ISg+ D/P NPr/J/P P    D+  NSg/V+  .
+# ISg/D$+ NPl/V+  V   ISg+ D/P NPr/J/P P    D+  N🅪Sg/V+ .
 >
 #
 > Adjective
@@ -509,11 +509,11 @@
 > You    can't get   round     the headland when    the tide's in      .
 # ISgPl+ VX    NSg/V NSg/V/J/P D   NSg      NSg/I/C D   NSg$   NPr/J/P .
 > in      by      descent ;            in      by      purchase ;            in      of the seisin of her     husband
-# NPr/J/P NSg/J/P NSg/V+  . Unlintable NPr/J/P NSg/J/P NSg/V+   . Unlintable NPr/J/P P  D   ?      P  ISg/D$+ NSg/V+
+# NPr/J/P NSg/J/P N🅪Sg/V+ . Unlintable NPr/J/P NSg/J/P NSg/V+   . Unlintable NPr/J/P P  D   ?      P  ISg/D$+ NSg/V+
 > He       is very in      with the Joneses .
 # NPr/ISg+ VL J/R  NPr/J/P P    D   NPl/V   .
-> I    need    to keep  in      with the neighbours  in      case   I    ever need    a    favour       from them     .
-# ISg+ N🅪Sg/VX P  NSg/V NPr/J/P P    D   NPl/V/Comm+ NPr/J/P NPr/V+ ISg+ J    N🅪Sg/VX D/P+ N🅪Sg/V/Comm+ P    NSg/IPl+ .
+> I    need    to keep  in      with the neighbours  in      case    I    ever need    a    favour       from them     .
+# ISg+ N🅪Sg/VX P  NSg/V NPr/J/P P    D   NPl/V/Comm+ NPr/J/P NPr🅪/V+ ISg+ J    N🅪Sg/VX D/P+ N🅪Sg/V/Comm+ P    NSg/IPl+ .
 > I    think that          bird     fancies you    . You're in      there , mate  !
 # ISg+ NSg/V NSg/I/C/Ddem+ NPr/V/J+ NPl/V   ISgPl+ . +      NPr/J/P W?    . NSg/V .
 > I'm three drinks in      right   now       .
@@ -549,11 +549,11 @@
 > Jesus of Nazareth
 # NPr/V P  NPr+
 > The invention was born    of necessity .
-# D+  NSg+      V   NPr/V/J P  NSg+      .
+# D+  N🅪Sg+     V   NPr/V/J P  NSg+      .
 > It       is said that         she  died of a    broken heart   .
 # NPr/ISg+ VL V/J  NSg/I/C/Ddem ISg+ V/J  P  D/P+ V/J    N🅪Sg/V+ .
-> What   a   lot   of nonsense  !
-# NSg/I+ D/P NPr/V P  NᴹSg/V/J+ .
+> What   a   lot   of nonsense !
+# NSg/I+ D/P NPr/V P  Nᴹ/V/J+  .
 > I'll have   a   dozen of those  apples , please .
 # W?   NSg/VX D/P NSg   P  I/Ddem NPl    . V      .
 > Welcome to the historic town of Harwich .
@@ -594,8 +594,8 @@
 # NSg/I/J/C/Dq+ D+  NPl/V+ V   J/P . NSg/I/J/C IPl+ NSg/V NSg/VX NSg/V/J+ .
 > We   had to ration our food because there was a    war     on  .
 # IPl+ V   P  NSg/V  D$+ NSg+ C/P     +     V   D/P+ N🅪Sg/V+ J/P .
-> Some     of the cast    went  down      with flu  , but     the show's still   on  .
-# I/J/R/Dq P  D   NSg/V/J NSg/V NSg/V/J/P P    NSg+ . NSg/C/P D   NSg$   NSg/V/J J/P .
+> Some     of the cast    went  down       with flu  , but     the show's still   on  .
+# I/J/R/Dq P  D   NSg/V/J NSg/V N🅪Sg/V/J/P P    NSg+ . NSg/C/P D   NSg$   NSg/V/J J/P .
 > That          TV   programme    that          you    wanted to watch is on  now       .
 # NSg/I/C/Ddem+ NSg+ NSg/V/Au/Br+ NSg/I/C/Ddem+ ISgPl+ V/J    P  NSg/V VL J/P NPr/V/J/C .
 > This    is her     last     song  . You're on  next    !
@@ -612,8 +612,8 @@
 # ISg+ V   NSg/V/J P  NSg/V NSg/V/J/R/P P  D+  NSg/V+ NSg/V/C/P D+  NSg/V/J+ V   NSg/V/J J/P .
 > Climbing up        that          steep    ridge  isn't on  . We'll have   to find  another route  .
 # NSg/V/J  NSg/V/J/P NSg/I/C/Ddem+ NSg/V/J+ NSg/V+ NSg/V J/P . W?    NSg/VX P  NSg/V I/D     NSg/V+ .
-> He'd like        to play  the red   next    to the black   spot     , but     that         shot     isn't on  .
-# W?   NSg/V/J/C/P P  NSg/V D   NSg/J NSg/J/P P  D   NSg/V/J NSg/V/J+ . NSg/C/P NSg/I/C/Ddem NSg/V/J+ NSg/V J/P .
+> He'd like        to play  the red    next    to the black    spot     , but     that         shot     isn't on  .
+# W?   NSg/V/J/C/P P  NSg/V D   N🅪Sg/J NSg/J/P P  D   N🅪Sg/V/J NSg/V/J+ . NSg/C/P NSg/I/C/Ddem NSg/V/J+ NSg/V J/P .
 > The captain moved two fielders to the on  side     .
 # D+  NSg/V+  V/J   NSg W?       P  D   J/P NSg/V/J+ .
 > Ponsonby - Smythe hit     a   thumping on  drive .
@@ -654,8 +654,8 @@
 #
 > A   vase  of flowers  stood on  the table  .
 # D/P NSg/V P  NPrPl/V+ V     J/P D   NSg/V+ .
-> Please lie   down      on  the couch  .
-# V      NPr/V NSg/V/J/P J/P D+  NSg/V+ .
+> Please lie   down       on  the couch  .
+# V      NPr/V N🅪Sg/V/J/P J/P D+  NSg/V+ .
 > The parrot was sitting on  Jim's shoulder .
 # D+  NSg/V+ V   NSg/V/J J/P NSg$  NSg/V+   .
 > He       had a   scar   on  the side    of his     face   .
@@ -702,8 +702,8 @@
 # P     V+      J/P ISg/D$+ NPl/V+ . NPr/ISg+ V     J/P ISg/D$+ NPl/V+ . NSg/J/C V/J    J/P ISg/D$+ NPl/V+ .
 > The Tories are on  twenty - five percent in      this   constituency .
 # D   NPl    V   J/P NSg    . NSg  NSg     NPr/J/P I/Ddem NSg+         .
-> The blue     team   are on  six points and the red    team   on  five .
-# D+  NSg/V/J+ NSg/V+ V   J/P NSg NPl/V  V/C D+  NSg/J+ NSg/V+ J/P NSg  .
+> The blue      team   are on  six points and the red     team   on  five .
+# D+  N🅪Sg/V/J+ NSg/V+ V   J/P NSg NPl/V  V/C D+  N🅪Sg/J+ NSg/V+ J/P NSg  .
 > I'm on  question four .
 # W?  J/P NSg/V+   NSg  .
 > Born    on  the 4th of July .
@@ -717,7 +717,7 @@
 > I    was reading a   book  on  history .
 # ISg+ V   NPr/V   D/P NSg/V J/P N🅪Sg+   .
 > The city hosted the World  Summit on  the Information Society
-# D+  NSg+ V/J    D+  NSg/V+ NSg/V+ J/P D+  NᴹSg+       N🅪Sg+
+# D+  NSg+ V/J    D+  NSg/V+ NSg/V+ J/P D+  Nᴹ+         N🅪Sg+
 > I    have   no    opinion on  this    subject  .
 # ISg+ NSg/VX NPr/P NSg+    J/P I/Ddem+ NSg/V/J+ .
 > I    saw   it       on  television .
@@ -742,8 +742,8 @@
 # ISg+ V       V   I/R/Dq N🅪Sg/J+ J/P NPr/ISg+ .
 > On  Jack's entry , William got up        to leave .
 # J/P NSg$   NSg+  . NPr+    V   NSg/V/J/P P  NSg/V .
-> On  the addition of ammonia , a    chemical reaction begins .
-# J/P D   NSg      P  NSg+    . D/P+ NSg/J+   NSg/V/J+ NPl/V  .
+> On  the addition of ammonia , a    chemical reaction  begins .
+# J/P D   NSg      P  NSg+    . D/P+ NSg/J+   N🅪Sg/V/J+ NPl/V  .
 > The drinks are on  me       tonight , boys   .
 # D+  NPl/V+ V   J/P NPr/ISg+ NSg+    . NPl/V+ .
 > The meal   is on  the house  .
@@ -752,14 +752,14 @@
 # ISg+ V   D/P+ J+       NSg/V+ J/P NPr/ISg+ .
 > Have   pity   or    compassion on  him  .
 # NSg/VX N🅪Sg/V NPr/C NSg/V+     J/P ISg+ .
-> He's on  his     lunch  break  .
-# NSg$ J/P ISg/D$+ NSg/V+ NSg/V+ .
+> He's on  his     lunch   break  .
+# NSg$ J/P ISg/D$+ N🅪Sg/V+ NSg/V+ .
 > I'm on  nights all          this   week   .
 # W?  J/P NPl/V+ NSg/I/J/C/Dq I/Ddem NSg/J+ .
 > You've been  on  these  antidepressants far     too long    .
 # W?     NSg/V J/P I/Ddem NPl             NSg/V/J W?  NPr/V/J .
 > I    depended on  them     for assistance .
-# ISg+ V/J      J/P NSg/IPl+ C/P NSg+       .
+# ISg+ V/J      J/P NSg/IPl+ C/P Nᴹ+        .
 > He       will   promise on  certain conditions .
 # NPr/ISg+ NPr/VX NSg/V   J/P I/J+    NPl/V+     .
 > A    curse  on  him  !
@@ -772,8 +772,8 @@
 # NSg/V+
 >
 #
-> Can    you    on  the light    ? ( switch   on  )
-# NPr/VX ISgPl+ J/P D+  NSg/V/J+ . . NSg/V/J+ J/P .
+> Can    you    on  the light     ? ( switch   on  )
+# NPr/VX ISgPl+ J/P D+  N🅪Sg/V/J+ . . NSg/V/J+ J/P .
 >
 #
 > To
@@ -796,12 +796,12 @@
 # NPr/I+ NPr/V/J ISg+ P  V/Au/Br   . W?   NSg/V/J NSg/V/JC+ NPl/V+ ISg+   .
 > Precisely to get   away from you    was why   I    did what   I    did .
 # R         P  NSg/V V/J  P    ISgPl+ V   NSg/V ISg+ V   NSg/I+ ISg+ V   .
-> I    need    some     more         books  to read  and friends to go      partying with .
-# ISg+ N🅪Sg/VX I/J/R/Dq NPr/I/V/J/Dq NPl/V+ P  NSg/V V/C NPl/V+  P  NSg/V/J V        P    .
+> I    need    some     more           books  to read  and friends to go      partying with .
+# ISg+ N🅪Sg/VX I/J/R/Dq NPr/I/V/J/R/Dq NPl/V+ P  NSg/V V/C NPl/V+  P  NSg/V/J V        P    .
 > If    he       hasn't read  it       yet     , he       ought    to .
 # NSg/C NPr/ISg+ V      NSg/V NPr/ISg+ NSg/V/C . NPr/ISg+ NSg/I/VX P  .
-> I    went  to the shops  to buy   some      bread  .
-# ISg+ NSg/V P  D+  NPl/V+ P  NSg/V I/J/R/Dq+ NSg/V+ .
+> I    went  to the shops  to buy   some      bread   .
+# ISg+ NSg/V P  D+  NPl/V+ P  NSg/V I/J/R/Dq+ N🅪Sg/V+ .
 >
 #
 > Preposition
@@ -814,8 +814,8 @@
 # IPl+ V   NSg/V/J P  D+  NSg/V+ .
 > The water   came    right   to the top     of this    wall   .
 # D+  N🅪Sg/V+ NSg/V/P NPr/V/J P  D   NSg/V/J P  I/Ddem+ NPr/V+ .
-> The coconut fell    to the ground   .
-# D+  NSg+    NSg/V/J P  D+  NSg/V/J+ .
+> The coconut fell    to the ground    .
+# D+  NSg+    NSg/V/J P  D+  N🅪Sg/V/J+ .
 > I    gave the book   to him  .
 # ISg+ V    D+  NSg/V+ P  ISg+ .
 > His     face   was beaten to a   pulp     .
@@ -823,7 +823,7 @@
 > I    sang  my  baby     to sleep  .
 # ISg+ NPr/V D$+ NSg/V/J+ P  N🅪Sg/V .
 > Whisk the mixture to a    smooth   consistency .
-# NSg/V D+  NSg+    P  D/P+ NSg/V/J+ NSg+        .
+# NSg/V D+  N🅪Sg+   P  D/P+ NSg/V/J+ NSg+        .
 > He       made several bad     - taste   jokes to groans from the audience .
 # NPr/ISg+ V    J/Dq    NSg/V/J . NSg/V/J NPl/V P  NPl/V  P    D+  NSg+     .
 > I    tried complaining , but     it       was to no     effect .
@@ -842,12 +842,12 @@
 # +     V   #   NSg   P  D+  NPr/V+ .
 > It       takes 2 to 4 weeks  to process typical applications .
 # NPr/ISg+ NPl/V # P  # NPrPl+ P  NSg/V   NSg/J+  +            .
-> Three to the power   of two  is  nine .
-# NSg   P  D   NSg/V/J P  NSg+ VL+ NSg  .
+> Three to the power    of two  is  nine .
+# NSg   P  D   N🅪Sg/V/J P  NSg+ VL+ NSg  .
 > Three to the second  is nine .
 # NSg   P  D   NSg/V/J VL NSg  .
-> Three squared or    three to the second   power    is nine .
-# NSg   V/J     NPr/C NSg   P  D+  NSg/V/J+ NSg/V/J+ VL NSg  .
+> Three squared or    three to the second   power     is nine .
+# NSg   V/J     NPr/C NSg   P  D+  NSg/V/J+ N🅪Sg/V/J+ VL NSg  .
 > What's the time      ? – It's quarter  to four in      the afternoon ( or    3 : 45 pm     ) .
 # NSg$   D+  N🅪Sg/V/J+ . . +    NSg/V/J+ P  NSg  NPr/J/P D+  N🅪Sg+     . NPr/C # . #  NSg/V+ . .
 >
@@ -881,13 +881,13 @@
 > With a   heavy   sigh  , she  looked around the empty    room     .
 # P    D/P NSg/V/J NSg/V . ISg+ V/J    J/P    D+  NSg/V/J+ NSg/V/J+ .
 > Four people were  injured , with one       of them     in      critical condition .
-# NSg+ NPl/V+ NSg/V V/J     . P    NSg/I/V/J P  NSg/IPl+ NPr/J/P NSg/J+   NSg/V+    .
+# NSg+ NPl/V+ NSg/V V/J     . P    NSg/I/V/J P  NSg/IPl+ NPr/J/P NSg/J+   N🅪Sg/V+   .
 > With their reputation on  the line   , they decided to fire     their PR   team   .
 # P    D$+   NSg+       J/P D+  NSg/V+ . IPl+ NSg/V/J P  N🅪Sg/V/J D$+   NSg+ NSg/V+ .
 > We   are with you    all          the way    .
 # IPl+ V   P    ISgPl+ NSg/I/J/C/Dq D+  NSg/J+ .
-> There are a   number   of problems with your plan  .
-# +     V   D/P NSg/V/JC P  NPl+     P    D$+  NSg/V .
+> There are a   number    of problems with your plan  .
+# +     V   D/P N🅪Sg/V/JC P  NPl+     P    D$+  NSg/V .
 > What   on  Earth   is wrong   with my  keyboard ?
 # NSg/I+ J/P NPrᴹ/V+ VL NSg/V/J P    D$+ NSg/V+   .
 > He       was pleased with the outcome .
@@ -900,8 +900,8 @@
 # NSg/V/J P    D/P+ NSg/V+
 > I    water  my  plants with this    watering can    . This    is the watering can    I    water  my  plants with .
 # ISg+ N🅪Sg/V D$+ NPl/V+ P    I/Ddem+ V+       NPr/VX . I/Ddem+ VL D   V        NPr/VX ISg+ N🅪Sg/V D$+ NPl/V+ P    .
-> Find  what   you    want  instantly with our search engine .
-# NSg/V NSg/I+ ISgPl+ NSg/V R         P    D$+ NSg/V+ NSg/V+ .
+> Find  what   you    want  instantly with our search  engine .
+# NSg/V NSg/I+ ISgPl+ NSg/V R         P    D$+ N🅪Sg/V+ NSg/V+ .
 > They dismissed the meeting with a   wave  of their hand   .
 # IPl+ V/J       D+  NSg/V+  P    D/P NSg/V P  D$+   NSg/V+ .
 > Speak with a    confident voice  .
@@ -913,19 +913,19 @@
 > There are lots  of people with no     homes  after the wildfire .
 # +     V   NPl/V P  NPl/V+ P    NPr/P+ NPl/V+ P     D   NSg      .
 > Speak with confidence .
-# NSg/V P    NᴹSg+      .
+# NSg/V P    Nᴹ+        .
 > He       spoke with sadness in      his     voice  .
 # NPr/ISg+ NSg/V P    NSg+    NPr/J/P ISg/D$+ NSg/V+ .
 > The sailors were  infected with malaria .
 # D+  NPl+    NSg/V NSg/V/J  P    NSg+    .
 > overcome with happiness
-# NSg/V    P    NᴹSg+
-> green   with envy   ; flushed with success
-# NPr/V/J P    NSg/V+ . V/J     P    NSg+
+# NSg/V    P    Nᴹ+
+> green    with envy   ; flushed with success
+# NPr🅪/V/J P    NSg/V+ . V/J     P    N🅪Sg+
 > She  was with Acme for twenty years before retiring last    fall   .
 # ISg+ V   P    NSg  C/P NSg    NPl+  C/P    V        NSg/V/J NSg/V+ .
-> With your kind  of body   size   , you    shouldn’t be     eating pizza at    all          .
-# P    D$+  NSg/J P  NSg/V+ NSg/V+ . ISgPl+ V         NSg/VX V      N🅪Sg+ NSg/P NSg/I/J/C/Dq .
+> With your kind  of body   size    , you    shouldn’t be     eating pizza at    all          .
+# P    D$+  NSg/J P  NSg/V+ N🅪Sg/V+ . ISgPl+ V         NSg/VX V      N🅪Sg+ NSg/P NSg/I/J/C/Dq .
 > That          was a   lot   to explain ; are you    still   with me       ?
 # NSg/I/C/Ddem+ V   D/P NPr/V P  V       . V   ISgPl+ NSg/V/J P    NPr/ISg+ .
 >
