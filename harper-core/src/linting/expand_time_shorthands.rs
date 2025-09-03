@@ -1,5 +1,6 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::expr::SpaceOrHyphen;
 use std::sync::Arc;
 
 use super::{ExprLinter, Lint, LintKind};
@@ -25,10 +26,9 @@ impl ExpandTimeShorthands {
                         Box::new(SequenceExpr::default().then(hotwords.clone())),
                         Box::new(
                             SequenceExpr::default()
-                                .then_whitespace()
+                                .then(SpaceOrHyphen)
                                 .then(hotwords.clone()),
                         ),
-                        Box::new(SequenceExpr::default().then_hyphen().then(hotwords.clone())),
                     ]),
             ),
         }

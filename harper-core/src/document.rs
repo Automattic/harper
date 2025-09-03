@@ -139,6 +139,7 @@ impl Document {
         self.condense_latin();
         self.condense_filename_extensions();
         self.condense_tldr();
+        self.condense_ampersand_pairs();
         self.match_quotes();
 
         let chunker = burn_chunker();
@@ -681,6 +682,65 @@ impl Document {
         self.tokens.remove_indices(to_remove);
     }
 
+    /// Condenses "R&D" or "Q&A" down to a single word token.
+    fn condense_ampersand_pairs(&mut self) {
+        if self.tokens.len() < 3 {
+            return;
+        }
+
+        let mut to_remove = VecDeque::new();
+        // The number of tokens we look at, minus 1
+        let mut cursor = 2;
+
+        loop {
+            let l1 = &self.tokens[cursor - 2];
+            let and = &self.tokens[cursor - 1];
+            let l2 = &self.tokens[cursor];
+
+            let is_letter_amp_letter_chunk = l1.kind.is_word()
+                && l1.span.len() == 1
+                && and.kind.is_ampersand()
+                && l2.kind.is_word()
+                && l2.span.len() == 1;
+
+            if is_letter_amp_letter_chunk {
+                let (l1, l2) = (
+                    l1.span.get_content(&self.source).first(),
+                    l2.span.get_content(&self.source).first(),
+                );
+
+                let is_valid_pair = match (l1, l2) {
+                    (Some(l1), Some(l2)) => {
+                        matches!(
+                            (l1.to_ascii_lowercase(), l2.to_ascii_lowercase()),
+                            ('r', 'd') | ('q', 'a')
+                        )
+                    }
+                    _ => false,
+                };
+
+                if is_valid_pair {
+                    self.tokens[cursor - 2].span = Span::new(
+                        self.tokens[cursor - 2].span.start,
+                        self.tokens[cursor].span.end,
+                    );
+                    to_remove.push_back(cursor - 1);
+                    to_remove.push_back(cursor);
+                }
+            }
+
+            // Skip ahead since we've processed these tokens
+            cursor += 1;
+
+            if cursor >= self.tokens.len() {
+                break;
+            }
+        }
+
+        // Remove the marked tokens in reverse order to maintain correct indices
+        self.tokens.remove_indices(to_remove);
+    }
+
     fn uncached_ellipsis_pattern() -> Lrc<Repeating> {
         let period = SequenceExpr::default().then_period();
         Lrc::new(Repeating::new(Box::new(period), 2))
@@ -1096,5 +1156,53 @@ mod tests {
             .collect_vec();
         assert!(tldrs.len() == 1);
         assert!(tldrs[0].span.get_content_string(&doc.source) == "TL;DRs");
+    }
+
+    #[test]
+    fn condense_r_and_d_caps() {
+        let doc = Document::new_plain_english_curated("R&D");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn condense_r_and_d_mixed_case() {
+        let doc = Document::new_plain_english_curated("R&d");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn condense_r_and_d_lowercase() {
+        let doc = Document::new_plain_english_curated("r&d");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn dont_condense_r_and_d_with_spaces() {
+        let doc = Document::new_plain_english_curated("R & D");
+        assert!(doc.tokens.len() == 5);
+        assert!(doc.tokens[0].kind.is_word());
+        assert!(doc.tokens[1].kind.is_whitespace());
+        assert!(doc.tokens[2].kind.is_ampersand());
+        assert!(doc.tokens[3].kind.is_whitespace());
+        assert!(doc.tokens[4].kind.is_word());
+    }
+
+    #[test]
+    fn condense_q_and_a() {
+        let doc =
+            Document::new_plain_english_curated("A Q&A platform software for teams at any scales.");
+        assert!(doc.tokens.len() >= 3);
+        assert!(doc.tokens[2].kind.is_word());
+        assert!(doc.tokens[2].span.get_content_string(&doc.source) == "Q&A");
+    }
+
+    #[test]
+    fn dont_allow_mixed_r_and_d_with_q_and_a() {
+        let doc = Document::new_plain_english_curated("R&A or Q&D");
+        assert!(doc.tokens.len() == 9);
+        assert!(doc.tokens[1].kind.is_ampersand() || doc.tokens[7].kind.is_ampersand());
     }
 }
