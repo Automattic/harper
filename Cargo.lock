@@ -1240,7 +1240,7 @@ dependencies = [
  "cubecl-ir",
  "derive-new",
  "dirs 6.0.0",
- "foldhash",
+ "foldhash 0.1.5",
  "hashbrown 0.15.5",
  "log",
  "md5",
@@ -1724,6 +1724,12 @@ name = "foldhash"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d9c4f5dac5e15c24eb999c26181a6ca40b39fe946cbe4c263c7209467bc83af2"
+
+[[package]]
+name = "foldhash"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77ce24cb58228fbb8aa041425bb1050850ac19177686ea6e0f41a70416f56fdb"
 
 [[package]]
 name = "foreign-types"
@@ -2281,7 +2287,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "0.60.0"
+version = "0.61.0"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -2304,7 +2310,7 @@ dependencies = [
  "harper-pos-utils",
  "harper-stats",
  "harper-typst",
- "hashbrown 0.15.5",
+ "hashbrown 0.16.0",
  "serde",
  "serde_json",
  "strum 0.27.2",
@@ -2313,7 +2319,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "0.60.0"
+version = "0.61.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2348,17 +2354,17 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.60.0"
+version = "0.61.0"
 dependencies = [
  "ammonia",
  "bitflags 2.9.3",
  "blanket",
  "cached",
  "criterion",
- "foldhash",
+ "foldhash 0.1.5",
  "fst",
  "harper-brill",
- "hashbrown 0.15.5",
+ "hashbrown 0.16.0",
  "is-macro",
  "itertools 0.14.0",
  "lazy_static",
@@ -2385,7 +2391,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.60.0"
+version = "0.61.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2396,7 +2402,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.60.0"
+version = "0.61.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2407,7 +2413,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.60.0"
+version = "0.61.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2435,11 +2441,11 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "0.60.0"
+version = "0.61.0"
 dependencies = [
  "burn",
  "burn-ndarray",
- "hashbrown 0.15.5",
+ "hashbrown 0.16.0",
  "is-macro",
  "itertools 0.14.0",
  "lru",
@@ -2454,7 +2460,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.60.0"
+version = "0.61.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2465,7 +2471,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.60.0"
+version = "0.61.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2484,7 +2490,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.60.0"
+version = "0.61.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -2533,7 +2539,19 @@ checksum = "9229cfe53dfd69f0609a49f65461bd93001ea1ef889cd5529dd176593f5338a1"
 dependencies = [
  "allocator-api2",
  "equivalent",
- "foldhash",
+ "foldhash 0.1.5",
+ "serde",
+]
+
+[[package]]
+name = "hashbrown"
+version = "0.16.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5419bdc4f6a9207fbeba6d11b604d481addf78ecd10c11ad51e76c2f6482748d"
+dependencies = [
+ "allocator-api2",
+ "equivalent",
+ "foldhash 0.2.0",
  "serde",
 ]
 
@@ -3147,12 +3165,11 @@ checksum = "650eef8c711430f1a879fdd01d4745a7deea475becfb90269c06775983bbf086"
 
 [[package]]
 name = "nu-ansi-term"
-version = "0.46.0"
+version = "0.50.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77a8165726e8236064dbb45459242600304b42a5ea24ee2948e18e023bf7ba84"
+checksum = "d4a28e057d01f97e61255210fcff094d74ed0466038633e95017f5beb68e4399"
 dependencies = [
- "overload",
- "winapi",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -3340,12 +3357,6 @@ dependencies = [
  "rand 0.8.5",
  "serde",
 ]
-
-[[package]]
-name = "overload"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b15813163c1d831bf4a13c3610c05c0d03b39feb07f7e09fa234dac9b15aaf39"
 
 [[package]]
 name = "parking"
@@ -3743,9 +3754,9 @@ checksum = "60a357793950651c4ed0f3f52338f53b2f809f32d83a07f72909fa13e4c6c1e3"
 
 [[package]]
 name = "rayon"
-version = "1.10.0"
+version = "1.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b418a60154510ca1a002a752ca9714984e21e4241e804d32555251faf8b78ffa"
+checksum = "368f01d005bf8fd9b1206fb6fa653e6c4a81ceb1466406b81792d87c5677a58f"
 dependencies = [
  "either",
  "rayon-core",
@@ -3753,9 +3764,9 @@ dependencies = [
 
 [[package]]
 name = "rayon-core"
-version = "1.12.1"
+version = "1.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1465873a3dfdaa8ae7cb14b4383657caab0b3e8a0aa9ae8e04b044854c8dfce2"
+checksum = "22e18b0f0062d30d4230b2e85ff77fdfe4326feb054b9783a3460d8435c8ab91"
 dependencies = [
  "crossbeam-deque",
  "crossbeam-utils",
@@ -4046,9 +4057,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.142"
+version = "1.0.143"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "030fedb782600dcbd6f02d479bf0d817ac3bb40d644745b769d6a96bc3afc5a7"
+checksum = "d401abef1d108fbd9cbaebc3e46611f4b1021f714a0597a71f41ee463f5f4a5a"
 dependencies = [
  "indexmap",
  "itoa",
@@ -4693,9 +4704,9 @@ dependencies = [
 
 [[package]]
 name = "tracing-subscriber"
-version = "0.3.19"
+version = "0.3.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8189decb5ac0fa7bc8b96b7cb9b2701d60d48805aca84a238004d665fcc4008"
+checksum = "2054a14f5307d601f88daf0553e1cbf472acc4f2c51afab632431cdcd72124d5"
 dependencies = [
  "nu-ansi-term",
  "sharded-slab",
@@ -4793,9 +4804,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-go"
-version = "0.23.4"
+version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b13d476345220dbe600147dd444165c5791bf85ef53e28acbedd46112ee18431"
+checksum = "c8560a4d2f835cc0d4d2c2e03cbd0dde2f6114b43bc491164238d333e28b16ea"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -5594,6 +5605,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "56e6c93f3a0c3b36176cb1327a4958a0353d5d166c2a35cb268ace15e91d3b57"
 dependencies = [
  "windows-link",
+]
+
+[[package]]
+name = "windows-sys"
+version = "0.52.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "282be5f36a8ce781fad8c8ae18fa3f9beff57ec1b52cb3de0789201425d9a33d"
+dependencies = [
+ "windows-targets 0.52.6",
 ]
 
 [[package]]
