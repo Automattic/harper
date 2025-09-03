@@ -295,7 +295,7 @@
 > often intersects other   disciplines , such  as    cognitive science , linguistics ,
 # R     V+         NSg/V/J NPl/V+      . NSg/I NSg/R NSg/J     N🅪Sg/V  . Nᴹ+         .
 > mathematics , physics , biology , Earth   science , statistics , philosophy , and logic   .
-# Nᴹ+         . NPl/V+  . NSg+    . NPrᴹ/V+ N🅪Sg/V+ . NPl/V+     . N🅪Sg/V+    . V/C Nᴹ/V/J+ .
+# Nᴹ+         . NPl/V+  . N🅪Sg+   . NPrᴹ/V+ N🅪Sg/V+ . NPl/V+     . N🅪Sg/V+    . V/C Nᴹ/V/J+ .
 >
 #
 > Computer science is considered by      some     to have   a   much         closer relationship with
@@ -645,7 +645,7 @@
 > it       is electrical , mechanical or    biological . This    field  plays important role in
 # NPr/ISg+ VL NSg/J      . NSg/J      NPr/C NSg/J      . I/Ddem+ NSg/V+ NPl/V J         NSg  NPr/J/P
 > information theory , telecommunications , information engineering and has
-# Nᴹ+         N🅪Sg+  . NPl+               . Nᴹ+         Nᴹ/V+       V/C V
+# Nᴹ+         N🅪Sg+  . Nᴹ+                . Nᴹ+         Nᴹ/V+       V/C V
 > applications in      medical image   computing and speech  synthesis , among others . What
 # W?           NPr/J/P NSg/J   N🅪Sg/V+ Nᴹ/V      V/C N🅪Sg/V+ Nᴹ+       . P     NPl/V+ . NSg/I+
 > is the lower    bound   on  the complexity of fast    Fourier transform algorithms ? is

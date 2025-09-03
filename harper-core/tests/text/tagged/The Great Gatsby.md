@@ -39,7 +39,7 @@
 > of wild    , unknown men  . Most         of the confidences were  unsought — frequently I    have
 # P  NSg/V/J . NSg/V/J NSg+ . NSg/I/J/R/Dq P  D   NPl         NSg/V V        . R          ISg+ NSg/VX
 > feigned sleep   , preoccupation , or    a   hostile levity when    I    realized by      some
-# V/J     N🅪Sg/V+ . NSg           . NPr/C D/P NSg/J   NSg    NSg/I/C ISg+ V/J/NoAm NSg/J/P I/J/R/Dq
+# V/J     N🅪Sg/V+ . NSg           . NPr/C D/P NSg/J   Nᴹ     NSg/I/C ISg+ V/J/NoAm NSg/J/P I/J/R/Dq
 > unmistakable sign   that         an  intimate revelation was quivering on  the horizon ; for
 # J            NSg/V+ NSg/I/C/Ddem D/P NSg/V/J  NPr        V   V         J/P D   NSg+    . C/P
 > the intimate revelations of young   men  , or    at    least the terms  in      which they
@@ -1134,8 +1134,8 @@
 # . P  NSg/V+ ISgPl+ NPr/VX . . V/J       NPr+  . . NPr/J/P NSg+ ISg+ NSg/V W?   NSg/V   D/P N🅪Sg+    .
 > Come    over    often , Nick   , and I’ll sort   of — oh    — fling you    together . You    know  — lock   you
 # NSg/V/P NSg/J/P R     . NPr/V+ . V/C W?   NSg/V+ P  . NPr/V . NSg/V ISgPl+ J        . ISgPl+ NSg/V . NSg/V+ ISgPl+
-> up        accidentally in      linen  closets and push  you    out         to sea in      a   boat   , and all          that
-# NSg/V/J/P R            NPr/J/P NSg/J+ NPl/V   V/C NSg/V ISgPl+ NSg/V/J/R/P P  NSg NPr/J/P D/P NSg/V+ . V/C NSg/I/J/C/Dq NSg/I/C/Ddem
+> up        accidentally in      linen   closets and push  you    out         to sea in      a   boat   , and all          that
+# NSg/V/J/P R            NPr/J/P N🅪Sg/J+ NPl/V   V/C NSg/V ISgPl+ NSg/V/J/R/P P  NSg NPr/J/P D/P NSg/V+ . V/C NSg/I/J/C/Dq NSg/I/C/Ddem
 > sort  of thing  — — — ”
 # NSg/V P  NSg/V+ . . . .
 >
@@ -3145,7 +3145,7 @@
 > said to be     their husbands . Even    Jordan’s party    , the quartet from East   Egg     , were
 # V/J  P  NSg/VX D$+   NPl/V+   . NSg/V/J NSg$     NSg/V/J+ . D   NSg+    P    NPr/J+ N🅪Sg/V+ . NSg/V
 > rent    asunder by      dissension . One       of the men  was talking with curious intensity to
-# Nᴹ/V/J+ W?      NSg/J/P NSg        . NSg/I/V/J P  D+  NSg+ V   V       P    J       NSg+      P
+# Nᴹ/V/J+ R       NSg/J/P NSg        . NSg/I/V/J P  D+  NSg+ V   V       P    J       NSg+      P
 > a    young    actress , and his     wife     , after attempting to laugh at    the situation in      a
 # D/P+ NPr/V/J+ NSg+    . V/C ISg/D$+ NSg/V/J+ . P     V          P  NSg/V NSg/P D+  NSg+      NPr/J/P D/P
 > dignified and indifferent way    , broke   down       entirely and resorted to flank
@@ -5748,8 +5748,8 @@
 #
 > He       took out         a   pile  of shirts and began throwing them     , one       by      one       , before us       ,
 # NPr/ISg+ V    NSg/V/J/R/P D/P NSg/V P  NPl/V+ V/C V     V        NSg/IPl+ . NSg/I/V/J NSg/J/P NSg/I/V/J . C/P    NPr/IPl+ .
-> shirts of sheer   linen and thick   silk   and fine     flannel  , which lost their folds  as
-# NPl/V  P  NSg/V/J NSg/J V/C NSg/V/J N🅪Sg/V V/C NSg/V/J+ NSg/V/J+ . I/C+  V/J  D$+   NPl/V+ NSg/R
+> shirts of sheer   linen  and thick   silk   and fine     flannel  , which lost their folds  as
+# NPl/V  P  NSg/V/J N🅪Sg/J V/C NSg/V/J N🅪Sg/V V/C NSg/V/J+ NSg/V/J+ . I/C+  V/J  D$+   NPl/V+ NSg/R
 > they fell    and covered the table  in      many       colored    disarray . While     we   admired he
 # IPl+ NSg/V/J V/C V/J     D+  NSg/V+ NPr/J/P NSg/I/J/Dq NSg/V/J/Am NSg/V    . NSg/V/C/P IPl+ V/J     NPr/ISg+
 > brought more         and the soft  rich     heap   mounted higher — shirts with stripes and
