@@ -301,8 +301,8 @@ pub fn lint_group() -> LintGroup {
             LintKind::Eggcorn
         ),
         "DegreesKelvin" => (
-            ["degrees kelvin", "degrees Kelvin"],
-            ["kelvins"],
+            ["degrees kelvin", "degrees Kelvin", "degree kelvin", "degree Kelvin"],
+            ["kelvins", "kelvin"],
             "Use `kelvins` when discussing the unit Kelvin.",
             "Corrects use of `degrees kelvin` to `kelvins`.",
             LintKind::Usage
