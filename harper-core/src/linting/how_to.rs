@@ -1,7 +1,10 @@
 use harper_brill::UPOS;
 
 use crate::{
-    expr::{All, Expr, MatchInfo, OwnedExprExt, SequenceExpr}, linting::{ExprLinter, Lint, LintKind, Suggestion}, patterns::{InflectionOfBe, UPOSSet}, CharStringExt, Token, TokenKind, TokenStringExt
+    CharStringExt, Token, TokenKind, TokenStringExt,
+    expr::{All, Expr, MatchInfo, OwnedExprExt, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::{InflectionOfBe, UPOSSet},
 };
 
 pub struct HowTo {
