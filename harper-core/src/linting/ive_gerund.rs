@@ -1,5 +1,5 @@
-use crate::expr::SequenceExpr;
 use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{Token, TokenKind};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -14,7 +14,9 @@ impl Default for IveGerund {
             .t_ws()
             .then_kind_both(TokenKind::is_verb, TokenKind::is_verb_progressive_form);
 
-        Self { expr: Box::new(expr) }
+        Self {
+            expr: Box::new(expr),
+        }
     }
 }
 
@@ -53,7 +55,11 @@ mod tests {
 
     #[test]
     fn suggests_im_looking() {
-        assert_suggestion_result("I've looking into it.", IveGerund::default(), "I'm looking into it.");
+        assert_suggestion_result(
+            "I've looking into it.",
+            IveGerund::default(),
+            "I'm looking into it.",
+        );
     }
 
     #[test]
