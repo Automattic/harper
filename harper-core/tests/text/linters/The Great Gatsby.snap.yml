@@ -4953,8 +4953,8 @@ Message: |
     3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
          |    ^~~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
-  - Replace with: “.”
   - Replace with: “!”
+  - Replace with: “.”
 
 
 
@@ -4982,8 +4982,8 @@ Message: |
     3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
          |                                                                  ^~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
-  - Replace with: “?”
   - Replace with: “.”
+  - Replace with: “?”
 
 
 
@@ -5834,8 +5834,8 @@ Message: |
     4363 | “Want any of this stuff? Jordan? . . . Nick?”
          |                                ^~~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
-  - Replace with: “?”
   - Replace with: “.”
+  - Replace with: “?”
 
 
 

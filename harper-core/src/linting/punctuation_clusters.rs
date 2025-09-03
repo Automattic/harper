@@ -1,3 +1,5 @@
+use std::collections::BTreeSet;
+
 use hashbrown::HashSet;
 
 use crate::{
@@ -59,7 +61,7 @@ impl Linter for PunctuationClusters {
 
             let start = i;
             let mut end = i;
-            let mut uniq = HashSet::<char>::new();
+            let mut uniq = BTreeSet::<char>::new();
 
             // Consume the cluster (allowing spaces/newlines in between)
             while i < toks.len() {
