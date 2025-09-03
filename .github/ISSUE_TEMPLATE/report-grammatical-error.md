@@ -2,8 +2,8 @@
 name: Report Grammatical Error
 about: Harper missed a grammatical error
 title: ''
-labels: enhancement, linting
-
+labels: enhancement, harper-core, linting
+---
 **The Error**
 Description of the error.
 
