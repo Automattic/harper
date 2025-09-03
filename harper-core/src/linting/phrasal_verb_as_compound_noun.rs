@@ -483,6 +483,15 @@ mod tests {
     }
 
     #[test]
+    fn dont_flag_thanks_a_lot_linter_description() {
+        assert_lint_count(
+            "Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers.",
+            PhrasalVerbAsCompoundNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
     fn dont_flag_backup_location() {
         assert_lint_count(
             "Backup location: `%APPDATA%\\Cursor\\User\\globalStorage\\backups`",

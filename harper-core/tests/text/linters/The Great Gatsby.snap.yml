@@ -1355,10 +1355,28 @@ Message: |
 
 Lint:    Formatting (63 priority)
 Message: |
+    1149 | . . . I was standing beside his bed and he was sitting up between the sheets,
+         | ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
     1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
          |                      ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
+         |                       ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -1374,9 +1392,27 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
+         |                                        ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
          |                                                               ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
+         |                                                                ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -1399,6 +1435,16 @@ Message: |
          |       ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
+    1153 | Bridge . . .” Then I was lying half asleep in the cold lower level of the
+         |        ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -1947,12 +1993,39 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
+         |         ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
     1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
          |               ^~~~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Simply”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1614 | face. “Please come and see me. . . . Phone book. . . . Under the name of Mrs.
+         |                              ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1614 | face. “Please come and see me. . . . Phone book. . . . Under the name of Mrs.
+         |                                                ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -1964,6 +2037,43 @@ Suggest:
   - Replace with: “Gurney”
   - Replace with: “Journey”
   - Replace with: “Tourney”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1615 | Sigourney Howard. . . . My aunt. . . .” She was hurrying off as she talked—her
+         |                 ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1615 | Sigourney Howard. . . . My aunt. . . .” She was hurrying off as she talked—her
+         |                                ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1632 | “All right, in a minute. Tell them I’ll be right there. . . . Good night.”
+         |                                                       ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1637 | in having been among the last to go, as if he had desired it all the time. “Good
+    1638 | night, old sport. . . . Good night.”
+         |                 ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -3172,6 +3282,16 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    2082 | “Anything can happen now that we’ve slid over this bridge,” I thought; “anything
+    2083 | at all. . . .”
+         |       ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2091 | “Mr. Carraway, this is my friend Mr. Wolfshiem.”
@@ -3653,6 +3773,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    2386 | in for amour at all—and yet there’s something in that voice of hers. . . .
+         |                                                                    ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2395 | When Jordan Baker had finished telling all this we had left the Plaza for half
@@ -3756,6 +3885,15 @@ Message: |
          |        ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
 Suggest:
   - Replace with: “excellent”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2603 | “Of course, of course! They’re fine!” and he added hollowly, “. . . old sport.”
+         |                                                               ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4020,6 +4158,61 @@ Message: |
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
+         |     ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
+         |                                   ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
+         |                                                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
+    2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
+         |                  ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
+         |                                                           ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2927 | use to us if Detroit is his idea of a small town. . . .” He rang off.
+         |                                                 ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2940 | “I know what we'll do,” said Gatsby, “we'll have Klipspringer play the piano.”
@@ -4040,6 +4233,15 @@ Message: |
          |                               ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2950 | I’d been asleep. Then I got up . . .”
+         |                                ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4357,6 +4559,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    3137 | little champagne? Nothing at all, thanks. . . . I’m sorry———
+         |                                         ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Enhancement (31 priority)
 Message: |
     3141 | “Very good roads around here.”
@@ -4423,12 +4634,30 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
+         |                ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
     3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
          |                      ^~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “And”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3303 | here’s my little gold pencil.” . . . She looked around after a moment and told
+         |                                ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4531,6 +4760,25 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3422 | guest-rooms overhead. When he came down the steps at last the tanned skin was
          | ~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3465 | a certain starting place and go over it all slowly, he could find out what that
+    3466 | thing was. . . .
+         |          ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3468 | . . . One autumn night, five years before, they had been walking down the street
+         | ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4678,10 +4926,69 @@ Suggest:
 
 Lint:    Formatting (63 priority)
 Message: |
+    3565 | “Hot!” said the conductor to familiar faces. “Some weather! . . . Hot! . . .
+         |                                                           ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “!”
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3565 | “Hot!” said the conductor to familiar faces. “Some weather! . . . Hot! . . .
+         |                                                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “!”
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
+         |    ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “!”
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
+         |               ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “!”
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
     3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
          |                                                                 ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
+         |                                                                  ^~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+  - Replace with: “?”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3572 | . . . Through the hall of the Buchanans’ house blew a faint wind, carrying the
+         | ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4707,9 +5014,27 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
+         |                               ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
          |                                        ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
+         |                                         ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4726,11 +5051,31 @@ Suggest:
 
 Lint:    Formatting (63 priority)
 Message: |
+    3605 | We were silent. The voice in the hall rose high with annoyance: “Very well,
+    3606 | then, I won’t sell you the car at all. . . . I’m under no obligations to you at
+         |                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
     3606 | then, I won’t sell you the car at all. . . . I’m under no obligations to you at
     3607 | all . . . and as for your bothering me about it at lunch time, I won’t stand
          |    ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3606 | then, I won’t sell you the car at all. . . . I’m under no obligations to you at
+    3607 | all . . . and as for your bothering me about it at lunch time, I won’t stand
+         |     ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4762,6 +5107,25 @@ Suggest:
   - Replace with: “fade”
   - Replace with: “fife”
   - Replace with: “file”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3618 | “Mr. Gatsby!” He put out his broad, flat hand with well-concealed dislike. “I’m
+    3619 | glad to see you, sir. . . . Nick. . . .”
+         |                     ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3619 | glad to see you, sir. . . . Nick. . . .”
+         |                                 ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4882,6 +5246,27 @@ Message: |
          |                            ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3794 | inexhaustible charm that rose and fell in it, the jingle of it, the cymbals’
+    3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
+         |           ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
+         |                                                                              ^~~~
+    3796 | . .
+         | ~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -5117,6 +5502,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    4004 | thought, or pretended to think, that we were being very funny . . .
+         |                                                               ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     4010 | “It’s a swell suite,” whispered Jordan respectfully, and every one laughed.
@@ -5281,6 +5675,26 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    4133 | “Open the whiskey, Tom,” she ordered, ‘‘and I'll make you a mint julep. Then you
+    4134 | won’t seem so stupid to yourself. . . . Look at the mint!”
+         |                                 ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    4148 | sit back and let Mr. Nobody from Nowhere make love to your wife. Well, if that’s
+    4149 | the idea you can count me out. . . . Nowadays people begin by sneering at family
+         |                              ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     4185 | At this point Jordan and I tried to go, but Tom and Gatsby insisted with
@@ -5311,6 +5725,16 @@ Suggest:
   - Replace with: “Kaitlin”
   - Replace with: “Kaposi”
   - Replace with: “Capillary”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    4248 | “Not that day I carried you down from the Punch Bowl to keep your shoes dry?”
+    4249 | There was a husky tenderness in his tone. . . . “Daisy?”
+         |                                         ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -5402,10 +5826,29 @@ Suggest:
 
 Lint:    Formatting (63 priority)
 Message: |
+    4363 | “Want any of this stuff? Jordan? . . . Nick?”
+         |                                ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+  - Replace with: “?”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
     4373 | “No . . . I just remembered that to-day’s my birthday.”
          |    ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    4373 | “No . . . I just remembered that to-day’s my birthday.”
+         |     ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -5808,6 +6251,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    4554 | body. “He says he knows the car that did it. . . . It was a yellow car.”
+         |                                            ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4560 | “It’s a blue car, a coupé.”
@@ -5945,6 +6397,16 @@ Message: |
          |                ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    4822 | was in love with me too. She thought I knew a lot because I knew different
+    4823 | things from her . . . Well, there I was, ’way off my ambitions, getting deeper
+         |                 ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -6373,6 +6835,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    5204 | where poor ghosts, breathing dreams like air, drifted fortuitously about . . .
+         |                                                                          ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
     5205 | like that ashen, fantastic figure gliding toward him through the amorphous
@@ -6598,6 +7069,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    5333 | “This is Slagle speaking . . .”
+         |                          ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5341 | “Young Parke’s in trouble,” he said rapidly. “They picked him up when he handed
@@ -6626,6 +7106,16 @@ Message: |
          |            ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    5349 | There was a long silence on the other end of the wire, followed by an
+    5350 | exclamation . . . then a quick squawk as the connection was broken.
+         |             ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -7331,6 +7821,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    5783 | them together, and let other people clean up the mess they had made. . . .
+         |                                                                    ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     5791 | long as mine. One of the taxi drivers in the village never took a fare past the
@@ -7417,6 +7916,16 @@ Suggest:
   - Replace with: “orgasmic”
   - Replace with: “orgiastic”
   - Replace with: “organic”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    5829 | recedes before us. It eluded us then, but that’s no matter—to-morrow we will run
+    5830 | faster, stretch out our arms farther. . . . And one fine morning———
+         |                                     ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
