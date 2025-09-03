@@ -1005,7 +1005,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
-         |                                   ^~~ Condense this punctuation cluster to a single mark.
+         |                                   ^~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “,”
   - Replace with: “.”

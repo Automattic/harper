@@ -19,7 +19,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
       51 | Be back by ten o'clock!.
-         |                       ^~~ Condense this punctuation cluster to a single mark.
+         |                       ^~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “!”
   - Replace with: “.”

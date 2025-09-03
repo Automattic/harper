@@ -1356,7 +1356,7 @@ Message: |
 Lint:    Formatting (63 priority)
 Message: |
     1149 | . . . I was standing beside his bed and he was sitting up between the sheets,
-         | ^~~~~~ Condense this punctuation cluster to a single mark.
+         | ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -1374,7 +1374,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
-         |                       ^~~~~~ Condense this punctuation cluster to a single mark.
+         |                       ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -1392,7 +1392,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
-         |                                        ^~~~~~ Condense this punctuation cluster to a single mark.
+         |                                        ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -1410,8 +1410,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
-         |                                                                ^~~~~~ Condense this punctuation cluster to a single mark.
-    1153 | Bridge . . .” Then I was lying half asleep in the cold lower level of the
+         |                                                                ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -1997,7 +1996,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
-         |         ^~~~~~ Condense this punctuation cluster to a single mark.
+         |         ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -2015,7 +2014,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1614 | face. “Please come and see me. . . . Phone book. . . . Under the name of Mrs.
-         |                              ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                              ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -2024,7 +2023,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1614 | face. “Please come and see me. . . . Phone book. . . . Under the name of Mrs.
-         |                                                ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                                                ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -2044,7 +2043,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1615 | Sigourney Howard. . . . My aunt. . . .” She was hurrying off as she talked—her
-         |                 ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                 ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -2062,7 +2061,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1632 | “All right, in a minute. Tell them I’ll be right there. . . . Good night.”
-         |                                                       ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                                                       ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -2072,7 +2071,7 @@ Lint:    Formatting (63 priority)
 Message: |
     1637 | in having been among the last to go, as if he had desired it all the time. “Good
     1638 | night, old sport. . . . Good night.”
-         |                 ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                 ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -3892,7 +3891,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     2603 | “Of course, of course! They’re fine!” and he added hollowly, “. . . old sport.”
-         |                                                               ^~~~~~ Condense this punctuation cluster to a single mark.
+         |                                                               ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -4162,7 +4161,7 @@ Message: |
 Lint:    Formatting (63 priority)
 Message: |
     2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
-         |     ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |     ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -4171,7 +4170,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
-         |                                   ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                                   ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -4180,8 +4179,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
-         |                                                                      ^~~~~~~~ Condense this punctuation cluster to a single mark.
-    2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
+         |                                                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -4191,7 +4189,7 @@ Lint:    Formatting (63 priority)
 Message: |
     2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
     2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
-         |                  ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                  ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -4200,8 +4198,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
-         |                                                           ^~~~~~~~ Condense this punctuation cluster to a single mark.
-    2927 | use to us if Detroit is his idea of a small town. . . .” He rang off.
+         |                                                           ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -4565,7 +4562,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3137 | little champagne? Nothing at all, thanks. . . . I’m sorry———
-         |                                         ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                                         ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -4640,7 +4637,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
-         |                ^~~~~~ Condense this punctuation cluster to a single mark.
+         |                ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -4658,7 +4655,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3303 | here’s my little gold pencil.” . . . She looked around after a moment and told
-         |                                ^~~~~~ Condense this punctuation cluster to a single mark.
+         |                                ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -4779,7 +4776,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3468 | . . . One autumn night, five years before, they had been walking down the street
-         | ^~~~~~ Condense this punctuation cluster to a single mark.
+         | ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -4930,7 +4927,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3565 | “Hot!” said the conductor to familiar faces. “Some weather! . . . Hot! . . .
-         |                                                           ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                                                           ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “!”
   - Replace with: “.”
@@ -4940,8 +4937,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3565 | “Hot!” said the conductor to familiar faces. “Some weather! . . . Hot! . . .
-         |                                                                      ^~~~~~~~ Condense this punctuation cluster to a single mark.
-    3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
+         |                                                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “!”
   - Replace with: “.”
@@ -4951,7 +4947,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
-         |    ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |    ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “!”
   - Replace with: “.”
@@ -4961,7 +4957,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
-         |               ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |               ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “!”
   - Replace with: “.”
@@ -4990,7 +4986,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3572 | . . . Through the hall of the Buchanans’ house blew a faint wind, carrying the
-         | ^~~~~~ Condense this punctuation cluster to a single mark.
+         | ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -5018,7 +5014,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
-         |                               ^~~~~~ Condense this punctuation cluster to a single mark.
+         |                               ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -5036,7 +5032,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
-         |                                         ^~~~~~ Condense this punctuation cluster to a single mark.
+         |                                         ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -5057,8 +5053,7 @@ Lint:    Formatting (63 priority)
 Message: |
     3605 | We were silent. The voice in the hall rose high with annoyance: “Very well,
     3606 | then, I won’t sell you the car at all. . . . I’m under no obligations to you at
-         |                                      ^~~~~~~~ Condense this punctuation cluster to a single mark.
-    3607 | all . . . and as for your bothering me about it at lunch time, I won’t stand
+         |                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -5078,7 +5073,7 @@ Lint:    Formatting (63 priority)
 Message: |
     3606 | then, I won’t sell you the car at all. . . . I’m under no obligations to you at
     3607 | all . . . and as for your bothering me about it at lunch time, I won’t stand
-         |     ^~~~~~ Condense this punctuation cluster to a single mark.
+         |     ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -5119,7 +5114,7 @@ Lint:    Formatting (63 priority)
 Message: |
     3618 | “Mr. Gatsby!” He put out his broad, flat hand with well-concealed dislike. “I’m
     3619 | glad to see you, sir. . . . Nick. . . .”
-         |                     ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                     ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -5258,7 +5253,7 @@ Lint:    Formatting (63 priority)
 Message: |
     3794 | inexhaustible charm that rose and fell in it, the jingle of it, the cymbals’
     3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
-         |           ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |           ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -5684,7 +5679,7 @@ Lint:    Formatting (63 priority)
 Message: |
     4133 | “Open the whiskey, Tom,” she ordered, ‘‘and I'll make you a mint julep. Then you
     4134 | won’t seem so stupid to yourself. . . . Look at the mint!”
-         |                                 ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                                 ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -5694,7 +5689,7 @@ Lint:    Formatting (63 priority)
 Message: |
     4148 | sit back and let Mr. Nobody from Nowhere make love to your wife. Well, if that’s
     4149 | the idea you can count me out. . . . Nowadays people begin by sneering at family
-         |                              ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                              ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -5737,7 +5732,7 @@ Lint:    Formatting (63 priority)
 Message: |
     4248 | “Not that day I carried you down from the Punch Bowl to keep your shoes dry?”
     4249 | There was a husky tenderness in his tone. . . . “Daisy?”
-         |                                         ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                                         ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -5832,7 +5827,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     4363 | “Want any of this stuff? Jordan? . . . Nick?”
-         |                                ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                                ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
   - Replace with: “?”
@@ -5851,7 +5846,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     4373 | “No . . . I just remembered that to-day’s my birthday.”
-         |     ^~~~~~ Condense this punctuation cluster to a single mark.
+         |     ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -6259,7 +6254,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     4554 | body. “He says he knows the car that did it. . . . It was a yellow car.”
-         |                                            ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                                            ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -6409,7 +6404,7 @@ Lint:    Formatting (63 priority)
 Message: |
     4822 | was in love with me too. She thought I knew a lot because I knew different
     4823 | things from her . . . Well, there I was, ’way off my ambitions, getting deeper
-         |                 ^~~~~~ Condense this punctuation cluster to a single mark.
+         |                 ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -6843,8 +6838,7 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     5204 | where poor ghosts, breathing dreams like air, drifted fortuitously about . . .
-         |                                                                          ^~~~~~ Condense this punctuation cluster to a single mark.
-    5205 | like that ashen, fantastic figure gliding toward him through the amorphous
+         |                                                                          ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -7119,7 +7113,7 @@ Lint:    Formatting (63 priority)
 Message: |
     5349 | There was a long silence on the other end of the wire, followed by an
     5350 | exclamation . . . then a quick squawk as the connection was broken.
-         |             ^~~~~~ Condense this punctuation cluster to a single mark.
+         |             ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
@@ -7929,7 +7923,7 @@ Lint:    Formatting (63 priority)
 Message: |
     5829 | recedes before us. It eluded us then, but that’s no matter—to-morrow we will run
     5830 | faster, stretch out our arms farther. . . . And one fine morning———
-         |                                     ^~~~~~~~ Condense this punctuation cluster to a single mark.
+         |                                     ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
 
