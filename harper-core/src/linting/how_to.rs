@@ -1,15 +1,7 @@
 use harper_brill::UPOS;
 
-use crate::expr::All;
-use crate::expr::Expr;
-use crate::expr::MatchInfo;
-use crate::expr::OwnedExprExt;
-use crate::expr::SequenceExpr;
-use crate::patterns::UPOSSet;
 use crate::{
-    Token, TokenStringExt,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::InflectionOfBe,
+    expr::{All, Expr, MatchInfo, OwnedExprExt, SequenceExpr}, linting::{ExprLinter, Lint, LintKind, Suggestion}, patterns::{InflectionOfBe, UPOSSet}, CharStringExt, Token, TokenKind, TokenStringExt
 };
 
 pub struct HowTo {
@@ -25,9 +17,10 @@ impl Default for HowTo {
             .then_anything()
             .t_aco("how")
             .then_whitespace()
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_upos(UPOS::VERB)
-                    || (tok.kind.is_verb() && tok.kind.is_likely_homograph())
+            .then(|tok: &Token, src: &[char]| {
+                // TODO this is a temporary hack until PR #1730 is merged
+                // TODO we should use then_verb_lemma() instead
+                is_verb_lemma(tok, src)
             });
         pattern.add(pos_pattern);
 
@@ -37,18 +30,15 @@ impl Default for HowTo {
             .then_anything()
             .then_anything()
             .then_unless(
-                InflectionOfBe::new().or(Box::new(|tok: &Token, src: &[char]| {
-                    if tok.kind.is_auxiliary_verb()
-                        || tok.kind.is_adjective()
-                        || tok.kind.is_verb_progressive_form()
-                        || tok.kind.is_conjunction()
-                    {
-                        true
-                    } else {
-                        let normed = tok.span.get_content_string(src).to_ascii_lowercase();
-                        normed == "did" || normed == "come" || normed == "does"
-                    }
-                })),
+                InflectionOfBe::new().or(SequenceExpr::default().then_kind_any_or_words(
+                    &[
+                        TokenKind::is_auxiliary_verb,
+                        TokenKind::is_adjective,
+                        TokenKind::is_conjunction,
+                        TokenKind::is_proper_noun,
+                    ] as &[_],
+                    &["did", "come", "does"],
+                )),
             );
 
         pattern.add(SequenceExpr::default().then(exceptions));
@@ -56,6 +46,16 @@ impl Default for HowTo {
         Self {
             expr: Box::new(pattern),
         }
+    }
+}
+
+// TODO this is a temporary hack until PR #1730 is merged
+fn is_verb_lemma(tok: &Token, src: &[char]) -> bool {
+    tok.kind.is_verb() && {
+        let verb = tok.span.get_content(src);
+        !(verb.ends_with_ignore_ascii_case_str("s")
+            || verb.ends_with_ignore_ascii_case_str("ed")
+            || verb.ends_with_ignore_ascii_case_str("ing"))
     }
 }
 
@@ -289,6 +289,22 @@ mod tests {
     fn allow_issue_1298() {
         assert_no_lints(
             "The story of how and why things came to this point.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_false_positive_pr_1846() {
+        assert_no_lints(
+            "About how Microsoft, Google, and others are training people in Rust.",
+            HowTo::default(),
+        )
+    }
+
+    #[test]
+    fn dont_flag_false_positives_1492_how_indexes() {
+        assert_no_lints(
+            "controls how indexes will be added to unwrapped keys of flat array-like objects",
             HowTo::default(),
         );
     }

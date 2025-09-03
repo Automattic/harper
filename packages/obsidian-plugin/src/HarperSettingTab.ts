@@ -87,6 +87,16 @@ export class HarperSettingTab extends PluginSettingTab {
 		});
 
 		new Setting(containerEl)
+			.setName('Activate Harper')
+			.setDesc('Enable or disable Harper with this option.')
+			.addToggle((toggle) =>
+				toggle.setValue(this.settings.lintEnabled).onChange(async (value) => {
+					this.state.toggleAutoLint();
+					this.plugin.updateStatusBar();
+				}),
+			);
+
+		new Setting(containerEl)
 			.setName('Personal Dictionary')
 			.setDesc(
 				'Make edits to your personal dictionary. Add names, places, or terms you use often. Each line should contain its own word.',
