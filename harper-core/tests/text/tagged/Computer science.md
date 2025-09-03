@@ -106,8 +106,8 @@
 # NSg/V+ . NPr/J/P #    . I/C+  R          V    ISg+ D   NSg  P  D   NSg/V/J NSg/J
 > mechanical calculator , his     Analytical Engine . He       started developing this    machine
 # NSg/J      NSg+       . ISg/D$+ J          NSg/V+ . NPr/ISg+ VP/J    Vg         I/Ddem+ NSg/V+
-> in      1834 , and " in      less    than two  years , he       had sketched out         many       of the salient
-# NPr/J/P #    . V/C . NPr/J/P V/J/C/P C/P  NSg+ NPl+  . NPr/ISg+ V   VP/J     NSg/V/J/R/P NSg/I/J/Dq P  D   NSg/J
+> in      1834 , and " in      less      than two  years , he       had sketched out         many       of the salient
+# NPr/J/P #    . V/C . NPr/J/P V/J/R/C/P C/P  NSg+ NPl+  . NPr/ISg+ V   VP/J     NSg/V/J/R/P NSg/I/J/Dq P  D   NSg/J
 > features of the modern computer " . " A    crucial step   was the adoption of a   punched
 # NPl/V3   P  D   NSg/J  NSg/V+   . . . D/P+ J+      NSg/V+ VPt D   NSg      P  D/P VP/J
 > card    system derived from the Jacquard loom  " making it       infinitely
@@ -158,14 +158,14 @@
 # NPr/ISg+ NSg/R . NSg$      NSg/V/J+ NSg/VLPp/P NSg/V/J . .
 >
 #
-> During the 1940s , with the development of new     and more         powerful computing
-# V/P    D+  #d    . P    D   N🅪Sg        P  NSg/V/J V/C NPr/I/V/J/Dq J        Nᴹ/Vg+
+> During the 1940s , with the development of new     and more           powerful computing
+# V/P    D+  #d    . P    D   N🅪Sg        P  NSg/V/J V/C NPr/I/V/J/R/Dq J        Nᴹ/Vg+
 > machines such  as    the Atanasoff – Berry   computer and ENIAC , the term     computer came
 # NPl/V3   NSg/I NSg/R D   ?         . NPr🅪/V+ NSg/V+   V/C ?     . D   NSg/V/J+ NSg/V+   NSg/VPt/P
 > to refer to the machines rather    than their human   predecessors . As    it       became
 # P  NSg/V P  D   NPl/V3+  NPr/V/J/R C/P  D$+   NSg/V/J NPl+         . NSg/R NPr/ISg+ VPtPp
-> clear   that         computers could  be      used     for more         than just mathematical calculations ,
-# NSg/V/J NSg/I/C/Ddem NPl/V3+   NSg/VX NSg/VXL VPPtPp/J C/P NPr/I/V/J/Dq C/P  V/J  J+           +            .
+> clear   that         computers could  be      used     for more           than just mathematical calculations ,
+# NSg/V/J NSg/I/C/Ddem NPl/V3+   NSg/VX NSg/VXL VPPtPp/J C/P NPr/I/V/J/R/Dq C/P  V/J  J+           +            .
 > the field of computer science broadened to study computation in      general . In
 # D   NSg/V P  NSg/V+   N🅪Sg/V+ VP/J      P  NSg/V NSg         NPr/J/P NSg/V/J . NPr/J/P
 > 1945 , IBM  founded the Watson Scientific Computing Laboratory at    Columbia
@@ -276,8 +276,8 @@
 #
 > A   folkloric quotation , often attributed to — but     almost certainly not   first
 # D/P J         NSg       . R     VP/J       P  . NSg/C/P R      R         NSg/C NSg/V/J
-> formulated by      — Edsger Dijkstra , states    that          " computer science is  no    more         about
-# VP/J       NSg/J/P . ?      NSg      . NPrPl/V3+ NSg/I/C/Ddem+ . NSg/V+   N🅪Sg/V+ VL3 NPr/P NPr/I/V/J/Dq J/P
+> formulated by      — Edsger Dijkstra , states    that          " computer science is  no    more           about
+# VP/J       NSg/J/P . ?      NSg      . NPrPl/V3+ NSg/I/C/Ddem+ . NSg/V+   N🅪Sg/V+ VL3 NPr/P NPr/I/V/J/R/Dq J/P
 > computers than astronomy is  about telescopes . " [ note   3 ] The design and deployment
 # NPl/V3+   C/P  Nᴹ+       VL3 J/P   NPl/V3     . . . NSg/V+ # . D   N🅪Sg/V V/C NSg
 > of computers and computer systems is  generally considered the province of
@@ -490,8 +490,8 @@
 # NPl/V3  ISg/D$+ N🅪Sg+      P    NSg/J     V/C NSg/J    NSg         . NPr/ISg+ NPl/V3 P
 > understand the nature of computation and , as    a   consequence of this
 # VL         D   NSg/V  P  NSg         V/C . NSg/R D/P NSg/V       P  I/Ddem
-> understanding , provide more         efficient methodologies .
-# N🅪Sg/Vg/J+    . V       NPr/I/V/J/Dq NSg/J     NPl           .
+> understanding , provide more           efficient methodologies .
+# N🅪Sg/Vg/J+    . V       NPr/I/V/J/R/Dq NSg/J     NPl           .
 >
 #
 > Theory of computation
@@ -540,8 +540,8 @@
 # NPl/V3     P  NPl/V3+ . NPl+    C/P Vg         Nᴹ+         P    NSg/I/V/J NSg/V+ P
 > another ) and their fitness for a    specific application . Codes   are used     for data
 # I/D     . V/C D$+   NSg     C/P D/P+ NSg/J+   NSg+        . NPl/V3+ V   VPPtPp/J C/P N🅪Pl+
-> compression , cryptography , error  detection and correction , and more         recently
-# NSg+        . NSg          . NSg/V+ N🅪Sg      V/C NSg+       . V/C NPr/I/V/J/Dq R
+> compression , cryptography , error  detection and correction , and more           recently
+# NSg+        . NSg          . NSg/V+ N🅪Sg      V/C NSg+       . V/C NPr/I/V/J/R/Dq R
 > also for network coding . Codes   are studied for the purpose of designing
 # W?   C/P NSg/V+  Vg+    . NPl/V3+ V   VP/J    C/P D   N🅪Sg/V  P  Vg
 > efficient and reliable data  transmission methods .
@@ -940,14 +940,14 @@
 #
 > Corrado Böhm and Giuseppe Jacopini's insight : there are only  three ways of
 # ?       ?    V/C NSg      ?          NSg+    . +     V   J/R/C NSg   NPl  P
-> combining these  actions ( into more         complex ones    ) that          are needed in      order  for
-# Vg        I/Ddem NPl/V3+ . P    NPr/I/V/J/Dq NSg/V/J NPl/V3+ . NSg/I/C/Ddem+ V   VP/J   NPr/J/P NSg/V+ C/P
+> combining these  actions ( into more           complex ones    ) that          are needed in      order  for
+# Vg        I/Ddem NPl/V3+ . P    NPr/I/V/J/R/Dq NSg/V/J NPl/V3+ . NSg/I/C/Ddem+ V   VP/J   NPr/J/P NSg/V+ C/P
 > a   computer to do     " anything " .
 # D/P NSg/V+   P  NSg/VX . NSg/I/V+ . .
 >
 #
 > Only  three rules   are needed to combine any    set     of basic  instructions into more
-# J/R/C NSg+  NPl/V3+ V   VP/J   P  NSg/V   I/R/Dq NPr/V/J P  NPr/J+ NPl+         P    NPr/I/V/J/Dq
+# J/R/C NSg+  NPl/V3+ V   VP/J   P  NSg/V   I/R/Dq NPr/V/J P  NPr/J+ NPl+         P    NPr/I/V/J/R/Dq
 > complex  ones    :
 # NSg/V/J+ NPl/V3+ .
 >
@@ -968,8 +968,8 @@
 # NSg/V+     . NSg/V/C/P NSg/I . V/C . NSg/I VL3 D   NPr🅪/V . NSg/VX I/Ddem+ . D   NSg   NPl/V3 P
 > Boehm's and Jacopini's insight can    be      further simplified with the use    of
 # ?       V/C ?          NSg+    NPr/VX NSg/VXL V/J     VP/J       P    D   NSg/V+ P
-> goto ( which means  it       is  more         elementary than structured programming ) .
-# ?    . I/C+  NPl/V3 NPr/ISg+ VL3 NPr/I/V/J/Dq NSg/J      C/P  VP/J       Nᴹ/Vg+      . .
+> goto ( which means  it       is  more           elementary than structured programming ) .
+# ?    . I/C+  NPl/V3 NPr/ISg+ VL3 NPr/I/V/J/R/Dq NSg/J      C/P  VP/J       Nᴹ/Vg+      . .
 >
 #
 >
@@ -1039,7 +1039,7 @@
 >
 #
 > Many        languages offer    support for multiple  paradigms , making the distinction more
-# NSg/I/J/Dq+ NPl/V3+   NSg/V/JC N🅪Sg/V  C/P NSg/J/Dq+ NPl+      . NSg/Vg D+  NSg+        NPr/I/V/J/Dq
+# NSg/I/J/Dq+ NPl/V3+   NSg/V/JC N🅪Sg/V  C/P NSg/J/Dq+ NPl+      . NSg/Vg D+  NSg+        NPr/I/V/J/R/Dq
 > a   matter of style  than of technical capabilities .
 # D/P N🅪Sg/V P  NSg/V+ C/P  P  NSg/J+    NPl+         .
 >
