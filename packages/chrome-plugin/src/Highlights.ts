@@ -80,6 +80,8 @@ export default class Highlights {
 				hostStyle.transform = `translate(${-cpa.x}px, ${-cpa.y}px)`;
 				hostStyle.inset = '0';
 				hostStyle.pointerEvents = 'none';
+				hostStyle.width = '0px';
+				hostStyle.height = '0px';
 			}
 
 			renderBox.render(this.renderTree(boxes));
