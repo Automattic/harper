@@ -1,6 +1,6 @@
 use crate::{
     CharStringExt, Token, TokenKind,
-    expr::{Expr, SequenceExpr},
+    expr::{Expr, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
@@ -29,7 +29,8 @@ impl ExprLinter for InterestedIn {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let tokens = match_info.matched_tokens;
         let prep_span = tokens.last().unwrap().span;
         let prep_chars = prep_span.get_content(source);
 
