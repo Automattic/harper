@@ -22,7 +22,7 @@ impl Default for AskNoPreposition {
         let pattern = SequenceExpr::default()
             .then(verbs)
             .then_whitespace()
-            .then_exact_word("to")
+            .t_aco("to")
             .then_whitespace()
             .then(objs);
 
@@ -73,6 +73,15 @@ mod tests {
             "Nora asked to us about the concert lineup.",
             AskNoPreposition::default(),
             "Nora asked us about the concert lineup.",
+        );
+    }
+
+    #[test]
+    fn flags_ask_all_caps() {
+        assert_suggestion_result(
+            "NORA ASKED TO US ABOUT THE CONCERT LINEUP.",
+            AskNoPreposition::default(),
+            "NORA ASKED US ABOUT THE CONCERT LINEUP.",
         );
     }
 

@@ -221,6 +221,17 @@ Suggest:
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+     310 | Ponsonby-Smythe hit a thumping on drive.
+         |                     ^~~~~~~~~~ `thumping` is a mass noun.
+Suggest:
+  - Replace with: “thumping”
+  - Replace with: “some thumping”
+  - Replace with: “a piece of thumping”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      316 | turn the television on
