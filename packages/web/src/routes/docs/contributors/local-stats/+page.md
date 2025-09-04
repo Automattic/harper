@@ -28,7 +28,7 @@ The `stats.txt` file is formatted into lines (so it is easy to open in append-mo
 {"kind":{"Lint":{"kind":"Spelling","context":[{"content":"Teasting","kind":{"kind":"Word","value":null}}]}},"when":1743696288,"uuid":"bd955190-a4d9-4f3e-b7df-d4bf6f12a415"}
 ```
 
-In `harper-ls` it is written to the Harper `data` directory.
+In `harper-ls` it is written to the Harper `data` directory. (On Linux `~/.local/share/harper-ls/stats.txt`, on macOS `~/Library/Application Support/harper-ls/stats.txt`, on Windows `%FOLDERID_LocalAppData%/harper-ls/stats.txt`)
 In `harper.js` it is available through methods of objects that implement the [`Linter`](/docs/harperjs/ref/harper.js.linter.html) interface.
 
 A simple dashboard to view a summary of these statistics is available [on our website](/stats).
