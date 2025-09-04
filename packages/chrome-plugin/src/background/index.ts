@@ -87,6 +87,7 @@ async function enableDefaultDomains() {
 		'prosemirror.net',
 		'draftjs.org',
 		'gitlab.com',
+		'core.trac.wordpress.org',
 	];
 
 	for (const item of defaultEnabledDomains) {

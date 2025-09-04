@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.60.0",
+	"version": "0.61.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -516,6 +516,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "When referring to the provinces of Canada, make sure to treat them as a proper noun."
+				},
+				"harper.linters.Cant": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests correcting `cant` to `can't`."
 				},
 				"harper.linters.CapitalizePersonalPronouns": {
 					"scope": "resource",
@@ -2207,7 +2213,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects the misuse of `then` to `than`."
+					"description": "Corrects mixing up `then` and `than`."
 				},
 				"harper.linters.Therefore": {
 					"scope": "resource",

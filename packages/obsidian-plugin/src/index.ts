@@ -31,7 +31,7 @@ export default class HarperPlugin extends Plugin {
 		this.registerEditorExtension(this.state.getCMEditorExtensions());
 		this.setupCommands();
 		this.setupStatusBar();
-		if (!data.lintEnabled) {
+		if (!(data?.lintEnabled ?? true)) {
 			this.state.disableEditorLinter();
 		} else this.state.enableEditorLinter();
 
