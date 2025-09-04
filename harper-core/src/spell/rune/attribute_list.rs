@@ -36,10 +36,10 @@ impl AttributeList {
     }
 
     pub fn parse(source: &str) -> Result<Self, Error> {
-        let human_readable: HumanReadableAttributeList =
-            serde_json::from_str(source).map_err(|_| Error::MalformedJSON)?;
-
-        human_readable.into_normal()
+        let human_readable: Result<HumanReadableAttributeList, _> = serde_json::from_str(source);
+        human_readable
+            .map_err(Error::from)
+            .and_then(|parsed| parsed.into_normal())
     }
 
     /// Expand [`MarkedWord`] into a list of full words, including itself.
