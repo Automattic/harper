@@ -231,6 +231,8 @@ impl SequenceExpr {
         })
     }
 
+    // Predicate matching methods
+
     /// Match a token of a given kind which is not in the list of words.
     pub fn then_kind_except<F>(self, pred: F, words: &'static [&'static str]) -> Self
     where
@@ -270,6 +272,23 @@ impl SequenceExpr {
         self.then(move |tok: &Token, _source: &[char]| preds.iter().any(|pred| pred(&tok.kind)))
     }
 
+    pub fn then_kind_any_or_words<F>(
+        self,
+        preds: &'static [F],
+        words: &'static [&'static str],
+    ) -> Self
+    where
+        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, src: &[char]| {
+            preds.iter().any(|pred| pred(&tok.kind))
+                // && !words
+                || words
+                    .iter()
+                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+        })
+    }
+
     /// Adds a step matching a token where the first token kind predicate returns true and the second returns false.
     pub fn then_kind_is_but_is_not<F1, F2>(self, pred1: F1, pred2: F2) -> Self
     where
@@ -300,8 +319,11 @@ impl SequenceExpr {
         })
     }
 
+    // Word property matching methods
+
     // Out-of-vocabulary word. (Words not in the dictionary)
     gen_then_from_is!(oov);
+    gen_then_from_is!(swear);
 
     // Part-of-speech matching methods
 
@@ -321,6 +343,7 @@ impl SequenceExpr {
     // Pronouns
 
     gen_then_from_is!(pronoun);
+    gen_then_from_is!(personal_pronoun);
     gen_then_from_is!(first_person_singular_pronoun);
     gen_then_from_is!(first_person_plural_pronoun);
     gen_then_from_is!(second_person_pronoun);

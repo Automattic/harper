@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.59.0",
+	"version": "0.61.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -389,7 +389,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "A rule that looks for common offensive language."
+					"description": "Flags offensive language and offers various ways to censor or replace with euphemisms."
 				},
 				"harper.linters.AzureNames": {
 					"scope": "resource",
@@ -516,6 +516,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "When referring to the provinces of Canada, make sure to treat them as a proper noun."
+				},
+				"harper.linters.Cant": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests correcting `cant` to `can't`."
 				},
 				"harper.linters.CapitalizePersonalPronouns": {
 					"scope": "resource",
@@ -810,6 +816,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Expands the abbreviation `deps` to the full word `dependencies` for clarity."
+				},
+				"harper.linters.ExpandMemoryShorthands": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands memory-related abbreviations (`B`, `kB`, `MB`, `GB`, `TB`, `PB`, `KiB`, `MiB`, `GiB`, `TiB`, `PiB`, etc.) to their full forms (`byte`, `kilobyte`, `megabyte`, `gigabyte`, `terabyte`, `petabyte`, `kibibyte`, `mebibyte`, `gibibyte`, `tebibyte`, `pebibyte`, etc.)."
 				},
 				"harper.linters.ExpandMinimum": {
 					"scope": "resource",
@@ -2201,7 +2213,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects the misuse of `then` to `than`."
+					"description": "Corrects mixing up `then` and `than`."
 				},
 				"harper.linters.Therefore": {
 					"scope": "resource",
@@ -2250,6 +2262,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `to-do` is correctly hyphenated."
+				},
+				"harper.linters.ToGreatLengths": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `through great lengths` to `to great lengths`."
 				},
 				"harper.linters.ToTheMannerBorn": {
 					"scope": "resource",
