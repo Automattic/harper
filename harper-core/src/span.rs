@@ -24,6 +24,7 @@ pub struct Span<T> {
     /// Note that [`Span`] represents an exclusive range. This means that a `Span::new(0, 5)` will
     /// cover the values `0, 1, 2, 3, 4`; it will not cover the `5`.
     pub end: usize,
+    #[serde(skip)]
     span_type: PhantomData<T>,
 }
 
@@ -102,6 +103,14 @@ impl<T> Span<T> {
         } else if target >= self.end {
             self.end = target + 1;
         }
+    }
+
+    /// Return an expanded span by either modifying [`Self::start`] or [`Self::end`] to include the target
+    /// index.
+    pub fn expanded_to_include(&self, target: usize) -> Self {
+        let mut clone = *self;
+        clone.expand_to_include(target);
+        clone
     }
 
     /// Get the associated content. Will panic if any aspect is invalid.

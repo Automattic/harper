@@ -1,22 +1,16 @@
 use harper_core::Lrc;
+use harper_core::Span;
+use harper_core::Token;
 use harper_core::parsers::{Markdown, MarkdownOptions, Parser};
-use harper_core::{Span, Token};
 
 use super::without_initiators;
 
-/// A comment parser that strips starting `/` or `*` characters.
-/// See [without_initiators] for a more complete list.
-///
-/// It is meant to cover _most_ cases in _most_ programming languages.
-///
-/// It assumes it is being provided a single line of comment at a time,
-/// including the comment initiation characters.
 #[derive(Clone)]
-pub struct Unit {
+pub struct Lua {
     inner: Lrc<dyn Parser>,
 }
 
-impl Unit {
+impl Lua {
     pub fn new(parser: Lrc<dyn Parser>) -> Self {
         Self { inner: parser }
     }
@@ -26,19 +20,18 @@ impl Unit {
     }
 }
 
-impl Parser for Unit {
+impl Parser for Lua {
     fn parse(&self, source: &[char]) -> Vec<Token> {
         let mut tokens = Vec::new();
 
         let mut chars_traversed = 0;
-        let mut in_code_fence = false;
 
         for line in source.split(|c| *c == '\n') {
-            if line_is_code_fence(line) {
-                in_code_fence = !in_code_fence;
-            }
-
-            if in_code_fence {
+            if starts_with_prefix(line) {
+                tokens.push(Token::new(
+                    Span::new_with_len(chars_traversed, 0),
+                    harper_core::TokenKind::Newline(2),
+                ));
                 chars_traversed += line.len() + 1;
                 continue;
             }
@@ -64,6 +57,13 @@ impl Parser for Unit {
     }
 }
 
+fn starts_with_prefix(source: &[char]) -> bool {
+    let actual = without_initiators(source);
+    let actual_chars = actual.get_content(source);
+
+    matches!(actual_chars, ['@', ..])
+}
+
 fn parse_line(source: &[char], parser: Lrc<dyn Parser>) -> Vec<Token> {
     let actual = without_initiators(source);
 
@@ -80,11 +80,4 @@ fn parse_line(source: &[char], parser: Lrc<dyn Parser>) -> Vec<Token> {
         .for_each(|t| t.span.push_by(actual.start));
 
     new_tokens
-}
-
-fn line_is_code_fence(source: &[char]) -> bool {
-    let actual = without_initiators(source);
-    let actual_chars = actual.get_content(source);
-
-    matches!(actual_chars, ['`', '`', '`', ..])
 }

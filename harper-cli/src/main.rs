@@ -88,8 +88,8 @@ enum Args {
         #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
         annotation_type: AnnotationType,
     },
-    /// Get the metadata associated with a particular word.
-    Metadata { word: String },
+    /// Get the metadata associated with one or more words.
+    Metadata { words: Vec<String> },
     /// Get all the forms of a word using the affixes.
     Forms { line: String },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
@@ -361,12 +361,14 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Metadata { word } => {
-            let metadata = dictionary.get_word_metadata_str(&word);
-            let json = serde_json::to_string_pretty(&metadata).unwrap();
-
+        Args::Metadata { words } => {
+            let mut results = BTreeMap::new();
+            for word in words {
+                let metadata = dictionary.get_word_metadata_str(&word);
+                results.insert(word, metadata);
+            }
+            let json = serde_json::to_string_pretty(&results).unwrap();
             println!("{json}");
-
             Ok(())
         }
         Args::SummarizeLintRecord { file } => {
