@@ -300,6 +300,20 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `day in age` to `day and age`, which properly means the current era or time period.",
             LintKind::Eggcorn
         ),
+        "DegreesKelvin" => (
+            ["degrees kelvin", "degrees Kelvin", "degree kelvin", "degree Kelvin"],
+            ["kelvins", "kelvin"],
+            "Use `kelvins` when discussing the unit Kelvin.",
+            "Corrects use of `degrees kelvin` to `kelvins`.",
+            LintKind::Usage
+        ),
+        "DegreesKelvinSymbol" => (
+            ["°K"],
+            ["K"],
+            "Use just the symbol `K` when discussing the unit Kelvin.",
+            "Corrects use of `°K` to `K`.",
+            LintKind::Usage
+        ),
         "DoNotWant" => (
             ["don't wan", "do not wan"],
             ["don't want", "do not want"],
@@ -1049,9 +1063,9 @@ pub fn lint_group() -> LintGroup {
             "Ensures `to-do` is correctly hyphenated."
         ),
         "ToGreatLengths" => (
-            ["through great lengths"],
+            ["through great lengths", "to a great length"],
             ["to great lengths"],
-            "Did you mean `to great lengths`?",
+            "The idiom is to go `to great lengths`.",
             "Corrects `through great lengths` to `to great lengths`."
         ),
         "ToTheMannerBorn" => (

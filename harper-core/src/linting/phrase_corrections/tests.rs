@@ -328,6 +328,12 @@ fn corrects_mixed_case() {
 }
 
 #[test]
+fn corrects_degrees_kelvin() {
+    assert_suggestion_result("degrees kelvin", lint_group(), "kelvins");
+    assert_suggestion_result("°K", lint_group(), "K");
+}
+
+#[test]
 fn does_not_flag_already_correct() {
     assert_lint_count("I don't want to leave.", lint_group(), 0);
 }
@@ -1268,11 +1274,20 @@ fn suggests_ticking_clock() {
 
 // ToGreatLengths
 #[test]
-fn correct_to_great_lengths() {
+fn correct_through_great_lengths() {
     assert_suggestion_result(
         "Bloomberg's sponsored paid for content goes through great lengths to market Nvidia's products and in particular its AI products that we've frequently criticized.",
         lint_group(),
         "Bloomberg's sponsored paid for content goes to great lengths to market Nvidia's products and in particular its AI products that we've frequently criticized.",
+    );
+}
+
+#[test]
+fn correct_to_a_great_length() {
+    assert_suggestion_result(
+        "While ratatui-image goes to a great length to detect a rendered image's pixel size in terms of \"character cells that will be covered\", via font pixel size detection, ultimately it's up to the terminal emulator to decide what exactly a pixel is.",
+        lint_group(),
+        "While ratatui-image goes to great lengths to detect a rendered image's pixel size in terms of \"character cells that will be covered\", via font pixel size detection, ultimately it's up to the terminal emulator to decide what exactly a pixel is.",
     );
 }
 
