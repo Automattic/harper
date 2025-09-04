@@ -76,6 +76,7 @@ impl TokenKind {
         is_plural_pronoun,
         is_non_plural_pronoun,
         is_reflexive_pronoun,
+        is_personal_pronoun,
         is_first_person_singular_pronoun,
         is_first_person_plural_pronoun,
         is_second_person_pronoun,

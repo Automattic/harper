@@ -1,22 +1,14 @@
 ---
 name: Report False Positive
-about: If Harper flags an error that is not actually wrong, let us know
+about: Harper flagged something that's actually correct
 title: ''
 labels: bug, harper-core, linting, false-positive
-assignees: ''
-
 ---
+**What got flagged?**
+The text that was incorrectly flagged.
 
-## Description
+**Why is this incorrect?**
+Brief explanation.
 
-Provide a detailed description of the false positive flagged by Harper.
-
-Is it only flagging a non-error or is a spurious fix also suggested?
-
-## Resources
-
-If the problem is not obvious, some online resources clarifying the relevant grammar point can be useful.
-
-## Screenshots
-
-If applicable, add screenshots to help explain the false positive.
+**Example of correct usage:**
+[Your example here]

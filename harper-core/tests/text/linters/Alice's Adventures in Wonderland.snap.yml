@@ -100,6 +100,17 @@ Suggest:
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+      65 | downward! The Antipathies, I think—” (she was rather glad there was no one
+         |                                                                        ^~~~
+      66 | listening, this time, as it didn’t sound at all the right word) “—but I shall
+         | ~~~~~~~~~ `listening` is a mass noun.
+Suggest:
+  - Replace with: “one piece of listening”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
@@ -402,6 +413,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      197 | way I want to go! Let me see: I’ll give them a new pair of boots every
          | ~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+     204 | > Alice’s Right Foot, Esq., Hearthrug, near the Fender, (with Alice’s love).
+         |                          ^~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “,”
+  - Replace with: “.”
 
 
 
@@ -1598,6 +1619,18 @@ Suggest:
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+    1484 | begin lessons: you’d only have to whisper a hint to Time, and round goes the
+    1485 | clock in a twinkling! Half-past one, time for dinner!”
+         |          ^~~~~~~~~~~ `twinkling` is a mass noun.
+Suggest:
+  - Replace with: “twinkling”
+  - Replace with: “some twinkling”
+  - Replace with: “a piece of twinkling”
+
+
+
 Lint:    WordChoice (63 priority)
 Message: |
     1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
@@ -2781,9 +2814,9 @@ Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H”
   - Replace with: “H'm”
   - Replace with: “Ha”
+  - Replace with: “Ham”
 
 
 
@@ -2803,9 +2836,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2836,9 +2869,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2859,9 +2892,9 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2913,9 +2946,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2946,9 +2979,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2969,9 +3002,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -3044,9 +3077,9 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
