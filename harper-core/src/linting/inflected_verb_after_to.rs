@@ -1,4 +1,5 @@
 use super::{Lint, LintKind, Linter, Suggestion};
+use crate::char_string::CharStringExt;
 use crate::spell::Dictionary;
 use crate::{Document, Span, TokenStringExt};
 
@@ -30,7 +31,7 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
                 continue;
             }
             let prep_to = document.get_span_content(&prep.span);
-            if prep_to != ['t', 'o'] && prep_to != ['T', 'o'] {
+            if !prep_to.eq_ignore_ascii_case_chars(&['t', 'o']) {
                 continue;
             }
 

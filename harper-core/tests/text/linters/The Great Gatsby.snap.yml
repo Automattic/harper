@@ -1448,17 +1448,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    1160 | gardens men and girls came and went like moths among the whisperings and the
-         |                                                          ^~~~~~~~~~~ Did you mean to spell `whisperings` this way?
-    1161 | champagne and the stars. At high tide in the afternoon I watched his guests
-Suggest:
-  - Replace with: “whispering”
-  - Replace with: “whimpering”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1161 | champagne and the stars. At high tide in the afternoon I watched his guests
@@ -4303,17 +4292,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (54 priority)
-Message: |
-    2995 | of emotion. I think that voice held him most, with its fluctuating, feverish
-         |                                                    ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
-    2996 | warmth, because it couldn’t be over-dreamed—that voice was a deathless song.
-Suggest:
-  - Replace with: “it's”
-  - Replace with: “it has”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     3020 | short of being news. Contemporary legends such as the “underground pipe-line to
@@ -5954,6 +5932,16 @@ Message: |
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+    4427 | policeman that it was light green. The other car, the one going toward New York,
+         |                                                       ^~~~~~~~~ `going` is a mass noun.
+    4428 | came to rest a hundred yards beyond, and it’s driver hurried back to where
+Suggest:
+  - Replace with: “one piece of going”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4432 | Michaelis and this man reached her first, but when they had torn open her
@@ -7490,6 +7478,16 @@ Message: |
          |                            ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+    5631 | wet to the skin. As we started through the gate into the cemetery I heard a car
+    5632 | stop and then the sound of some one splashing after us over the soggy ground. I
+         |                                 ^~~~~~~~~~~~~ `splashing` is a mass noun.
+Suggest:
+  - Replace with: “one piece of splashing”
 
 
 

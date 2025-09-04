@@ -1,3 +1,13 @@
+Lint:    Style (31 priority)
+Message: |
+      27 | problem-solving, decision-making, environmental adaptation, planning and
+         |                                                             ^~~~~~~~ An Oxford comma is necessary here.
+      28 | learning found in humans and animals. Within artificial intelligence, computer
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       45 | Wilhelm Schickard designed and constructed the first working mechanical
@@ -779,6 +789,16 @@ Suggest:
 
 
 
+Lint:    Style (31 priority)
+Message: |
+     224 | design, specification, programming, verification, implementation and testing of
+         |                                                   ^~~~~~~~~~~~~~ An Oxford comma is necessary here.
+     225 | human-made computing systems.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      231 | implementing computing systems in hardware and software. CSAB, formerly called
@@ -872,6 +892,17 @@ Message: |
          |                    ^~~~~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Problem”
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+     286 | programming languages and their individual features. It falls within the
+     287 | discipline of computer science, both depending on and affecting mathematics,
+         |                                 ^~~~~~~~~~~~~~ `depending` is a mass noun.
+     288 | software engineering, and linguistics. It is an active research area, with
+Suggest:
+  - Replace with: “both pieces of depending”
 
 
 
