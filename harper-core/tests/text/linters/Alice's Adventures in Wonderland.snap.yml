@@ -100,6 +100,17 @@ Suggest:
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+      65 | downward! The Antipathies, I think—” (she was rather glad there was no one
+         |                                                                        ^~~~
+      66 | listening, this time, as it didn’t sound at all the right word) “—but I shall
+         | ~~~~~~~~~ `listening` is a mass noun.
+Suggest:
+  - Replace with: “one piece of listening”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
@@ -1605,6 +1616,18 @@ Message: |
          |      ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “That”
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+    1484 | begin lessons: you’d only have to whisper a hint to Time, and round goes the
+    1485 | clock in a twinkling! Half-past one, time for dinner!”
+         |          ^~~~~~~~~~~ `twinkling` is a mass noun.
+Suggest:
+  - Replace with: “twinkling”
+  - Replace with: “some twinkling”
+  - Replace with: “a piece of twinkling”
 
 
 
