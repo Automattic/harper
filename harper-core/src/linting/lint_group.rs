@@ -56,6 +56,7 @@ use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
+use super::interested_in::InterestedIn;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::left_right_hand::LeftRightHand;
@@ -91,6 +92,7 @@ use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
+use super::punctuation_clusters::PunctuationClusters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
@@ -444,6 +446,7 @@ impl LintGroup {
         insert_struct_rule!(HowTo, true);
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
+        insert_expr_rule!(InterestedIn, true);
         insert_struct_rule!(ItsContraction, true);
         insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);
@@ -480,6 +483,7 @@ impl LintGroup {
         insert_struct_rule!(PronounContraction, true);
         insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(PronounKnew, true);
+        insert_struct_rule!(PunctuationClusters, true);
         insert_expr_rule!(QuantifierNeedsOf, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
@@ -654,6 +658,22 @@ mod tests {
         let group =
             LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
         group.all_descriptions_html();
+    }
+
+    #[test]
+    fn dont_flag_low_hanging_fruit_msg() {
+        assert_no_lints(
+            "The standard form is low-hanging fruit with a hyphen and singular form.",
+            test_group(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_low_hanging_fruit_desc() {
+        assert_no_lints(
+            "Corrects non-standard variants of low-hanging fruit.",
+            test_group(),
+        );
     }
 
     #[test]

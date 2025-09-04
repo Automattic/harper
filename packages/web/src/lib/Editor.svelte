@@ -61,6 +61,7 @@ $: superSmall = (w ?? 1024) < 550;
 			bind:this={editor}
 			class="w-full text-nowrap m-0 rounded-none p-0 z-0 bg-transparent overflow-hidden border-none text-lg resize-none focus:border-0"
 			spellcheck="false"
+			data-enable-grammarly="false"
 			style={`grid-row: 1; grid-column: 1; height: ${boxHeight}px`}
 			on:keydown={() => (focused = undefined)}
 			bind:value={content}
