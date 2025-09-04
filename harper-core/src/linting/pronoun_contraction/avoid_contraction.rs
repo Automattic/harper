@@ -1,7 +1,5 @@
 use crate::TokenKind;
-use crate::expr::Expr;
-use crate::expr::MatchInfo;
-use crate::expr::SequenceExpr;
+use crate::expr::{Expr, MatchInfo, SequenceExpr};
 
 use super::super::{ExprLinter, Lint, LintKind, Suggestion};
 

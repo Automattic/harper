@@ -460,43 +460,45 @@ impl WordMetadata {
     }
 
     pub fn is_verb_lemma(&self) -> bool {
-        matches!(
-            self.verb,
-            Some(VerbData {
-                verb_form: Some(VerbForm::LemmaForm),
-                ..
-            })
-        )
+        self.verb.is_some_and(|v| {
+            v.verb_forms
+                .is_some_and(|vf| vf.contains(VerbFormFlags::LEMMA))
+        })
     }
 
     pub fn is_verb_past_form(&self) -> bool {
-        matches!(
-            self.verb,
-            Some(VerbData {
-                verb_form: Some(VerbForm::PastForm),
-                ..
-            })
-        )
+        self.verb.is_some_and(|v| {
+            v.verb_forms
+                .is_some_and(|vf| vf.contains(VerbFormFlags::PAST))
+        })
+    }
+
+    pub fn is_verb_simple_past_form(&self) -> bool {
+        self.verb.is_some_and(|v| {
+            v.verb_forms
+                .is_some_and(|vf| vf.contains(VerbFormFlags::PRETERITE))
+        })
+    }
+
+    pub fn is_verb_past_participle_form(&self) -> bool {
+        self.verb.is_some_and(|v| {
+            v.verb_forms
+                .is_some_and(|vf| vf.contains(VerbFormFlags::PAST_PARTICIPLE))
+        })
     }
 
     pub fn is_verb_progressive_form(&self) -> bool {
-        matches!(
-            self.verb,
-            Some(VerbData {
-                verb_form: Some(VerbForm::ProgressiveForm),
-                ..
-            })
-        )
+        self.verb.is_some_and(|v| {
+            v.verb_forms
+                .is_some_and(|vf| vf.contains(VerbFormFlags::PROGRESSIVE))
+        })
     }
 
     pub fn is_verb_third_person_singular_present_form(&self) -> bool {
-        matches!(
-            self.verb,
-            Some(VerbData {
-                verb_form: Some(VerbForm::ThirdPersonSingularPresentForm),
-                ..
-            })
-        )
+        self.verb.is_some_and(|v| {
+            v.verb_forms
+                .is_some_and(|vf| vf.contains(VerbFormFlags::THIRD_PERSON_SINGULAR))
+        })
     }
 
     // Noun metadata queries
@@ -736,28 +738,65 @@ impl WordMetadata {
 // 1. English expresses time through auxiliary verbs, not verb form alone
 // 2. Irregular verbs can have different forms for past participle and simple past
 // 3. Future is always expressed through auxiliary verbs (e.g., "will sleep", "going to sleep")
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
+#[repr(u32)]
 pub enum VerbForm {
-    LemmaForm,
-    PastForm,
-    ProgressiveForm,
-    ThirdPersonSingularPresentForm,
+    /// The uninflected verb form: "walk", "eat"
+    LemmaForm = 1 << 0,
+    /// The past form for regular verbs: "walked"
+    PastForm = 1 << 1,
+    /// The simple past/preterite form for irregular verbs: "ate"
+    SimplePastForm = 1 << 2,
+    /// The past participle form for irregular verbs: "eaten"
+    PastParticipleForm = 1 << 3,
+    /// The progressive/continuous/gerund/present participle form: "walking", "eating"
+    ProgressiveForm = 1 << 4,
+    /// The third person singular present form: "walks", "eats"
+    ThirdPersonSingularPresentForm = 1 << 5,
+}
+
+/// The underlying type used for verb form flags.
+pub type VerbFormFlagsUnderlyingType = u32;
+
+bitflags::bitflags! {
+    /// A collection of bit flags used to represent verb forms.
+    ///
+    /// This allows a word to be tagged with multiple verb forms when applicable.
+    #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
+    #[serde(transparent)]
+    pub struct VerbFormFlags: VerbFormFlagsUnderlyingType {
+        const LEMMA = VerbForm::LemmaForm as VerbFormFlagsUnderlyingType;
+        const PAST = VerbForm::PastForm as VerbFormFlagsUnderlyingType;
+        const PRETERITE = VerbForm::SimplePastForm as VerbFormFlagsUnderlyingType;
+        const PAST_PARTICIPLE = VerbForm::PastParticipleForm as VerbFormFlagsUnderlyingType;
+        const PROGRESSIVE = VerbForm::ProgressiveForm as VerbFormFlagsUnderlyingType;
+        const THIRD_PERSON_SINGULAR = VerbForm::ThirdPersonSingularPresentForm as VerbFormFlagsUnderlyingType;
+    }
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct VerbData {
     pub is_linking: Option<bool>,
     pub is_auxiliary: Option<bool>,
-    pub verb_form: Option<VerbForm>,
+    #[serde(rename = "verb_form", default)]
+    pub verb_forms: Option<VerbFormFlags>,
 }
 
 impl VerbData {
     /// Produce a copy of `self` with the known properties of `other` set.
     pub fn or(&self, other: &Self) -> Self {
+        let verb_forms = match (self.verb_forms, other.verb_forms) {
+            (Some(self_verb_forms), Some(other_verb_forms)) => {
+                Some(self_verb_forms | other_verb_forms)
+            }
+            (Some(self_verb_forms), None) => Some(self_verb_forms),
+            (None, Some(other_verb_forms)) => Some(other_verb_forms),
+            (None, None) => None,
+        };
+
         Self {
             is_linking: self.is_linking.or(other.is_linking),
             is_auxiliary: self.is_auxiliary.or(other.is_auxiliary),
-            verb_form: self.verb_form.or(other.verb_form),
+            verb_forms,
         }
     }
 }
@@ -1259,8 +1298,17 @@ pub mod tests {
             assert!(md("furniture").is_mass_noun());
         }
         #[test]
-        fn furniture_is_not_countable_noun() {
+        fn furniture_is_non_countable_noun() {
             assert!(md("furniture").is_non_countable_noun());
+        }
+
+        #[test]
+        fn equipment_is_mass_noun() {
+            assert!(md("equipment").is_mass_noun());
+        }
+        #[test]
+        fn equipment_is_non_countable_noun() {
+            assert!(md("equipment").is_non_countable_noun());
         }
 
         #[test]
@@ -1771,5 +1819,45 @@ pub mod tests {
     #[test]
     fn equipment_isnt_countable_noun() {
         assert!(!md("equipment").is_countable_noun());
+    }
+
+    mod verb {
+        use crate::word_metadata::tests::md;
+
+        #[test]
+        fn lemma_walk() {
+            let md = md("walk");
+            assert!(md.is_verb_lemma())
+        }
+
+        #[test]
+        fn progressive_walking() {
+            let md = md("walking");
+            assert!(md.is_verb_progressive_form())
+        }
+
+        #[test]
+        fn past_walked() {
+            let md = md("walked");
+            assert!(md.is_verb_past_form())
+        }
+
+        #[test]
+        fn simple_past_ate() {
+            let md = md("ate");
+            assert!(md.is_verb_simple_past_form())
+        }
+
+        #[test]
+        fn past_participle_eaten() {
+            let md = md("eaten");
+            assert!(md.is_verb_past_participle_form())
+        }
+
+        #[test]
+        fn third_pers_sing_walks() {
+            let md = md("walks");
+            assert!(md.is_verb_third_person_singular_present_form())
+        }
     }
 }

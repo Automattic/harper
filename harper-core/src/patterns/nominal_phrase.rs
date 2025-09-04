@@ -125,7 +125,7 @@ mod tests {
     }
 
     #[test]
-    fn progressive_way() {
+    fn present_participle_way() {
         let doc = Document::new_markdown_default_curated("a winning way");
         assert!(
             NominalPhrase
@@ -135,7 +135,7 @@ mod tests {
     }
 
     #[test]
-    fn perfect_way() {
+    fn perfect_participle_way() {
         let doc = Document::new_markdown_default_curated("a failed way");
         assert!(
             NominalPhrase
