@@ -405,6 +405,16 @@ Message: |
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+     204 | > Alice’s Right Foot, Esq., Hearthrug, near the Fender, (with Alice’s love).
+         |                          ^~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “,”
+  - Replace with: “.”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      226 | himself as he came, “Oh! the Duchess, the Duchess! Oh! won’t she be savage if
