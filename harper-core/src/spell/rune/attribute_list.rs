@@ -36,10 +36,10 @@ impl AttributeList {
     }
 
     pub fn parse(source: &str) -> Result<Self, Error> {
-        let human_readable: HumanReadableAttributeList =
-            serde_json::from_str(source).map_err(|_| Error::MalformedJSON)?;
-
-        human_readable.into_normal()
+        let human_readable: Result<HumanReadableAttributeList, _> = serde_json::from_str(source);
+        human_readable
+            .map_err(Error::from)
+            .and_then(|parsed| parsed.into_normal())
     }
 
     /// Expand [`MarkedWord`] into a list of full words, including itself.
@@ -342,7 +342,6 @@ mod tests {
     use crate::word_metadata_orthography::OrthFlags;
 
     fn check_orthography_str(s: &str) -> OrthFlags {
-        // let word = MarkedWord::new(s.chars().collect());
         let word = MarkedWord {
             letters: s.chars().collect(),
             attributes: Vec::new(),
