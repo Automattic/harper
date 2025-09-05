@@ -716,6 +716,11 @@ impl WordMetadata {
         self.orth_info.contains(OrthFlags::UPPER_CAMEL)
     }
 
+    /// Does the lexeme for this word cover an apostrophized variant? (e.g., "doesn't")
+    pub fn is_apostrophized(&self) -> bool {
+        self.orth_info.contains(OrthFlags::APOSTROPHE)
+    }
+
     /// Same thing as [`Self::or`], except in-place rather than a clone.
     pub fn append(&mut self, other: &Self) -> &mut Self {
         *self = self.or(other);
