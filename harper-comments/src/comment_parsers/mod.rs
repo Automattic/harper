@@ -1,6 +1,7 @@
 mod go;
 mod javadoc;
 mod jsdoc;
+mod lua;
 mod solidity;
 mod unit;
 
@@ -8,6 +9,7 @@ pub use go::Go;
 use harper_core::Span;
 pub use javadoc::JavaDoc;
 pub use jsdoc::JsDoc;
+pub use lua::Lua;
 pub use solidity::Solidity;
 pub use unit::Unit;
 
@@ -32,7 +34,7 @@ fn without_initiators(source: &[char]) -> Span<char> {
 }
 
 fn is_comment_character(c: char) -> bool {
-    matches!(c, '#' | '-' | '/' | '*' | '!')
+    matches!(c, '#' | '-' | '/' | '*' | '!' | ';')
 }
 
 #[cfg(test)]

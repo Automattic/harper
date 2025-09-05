@@ -4,7 +4,8 @@ use harper_core::{Span, Token};
 
 use super::without_initiators;
 
-/// A comment parser that strips starting `/` and `*` characters.
+/// A comment parser that strips starting `/` or `*` characters.
+/// See [without_initiators] for a more complete list.
 ///
 /// It is meant to cover _most_ cases in _most_ programming languages.
 ///

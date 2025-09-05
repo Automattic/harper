@@ -19,14 +19,14 @@ pub trait Dictionary: Send + Sync {
     fn contains_exact_word_str(&self, word: &str) -> bool;
     /// Gets best fuzzy match from dictionary
     fn fuzzy_match(
-        &self,
+        &'_ self,
         word: &[char],
         max_distance: u8,
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>>;
     /// Gets best fuzzy match from dictionary
     fn fuzzy_match_str(
-        &self,
+        &'_ self,
         word: &str,
         max_distance: u8,
         max_results: usize,

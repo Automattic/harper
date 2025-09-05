@@ -1,7 +1,5 @@
-use crate::Token;
-use crate::TokenKind;
-use crate::expr::Expr;
-use crate::expr::SequenceExpr;
+use crate::expr::{Expr, SequenceExpr};
+use crate::{Token, TokenKind};
 
 use super::super::{ExprLinter, Lint, LintKind, Suggestion};
 

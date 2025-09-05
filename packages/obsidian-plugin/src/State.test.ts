@@ -100,3 +100,60 @@ test('Can be initialized with incomplete lint settings and retain default state.
 
 	expect(await state.getSettings()).toStrictEqual(defaultSettings);
 });
+
+test('resetAllRulesToDefaults sets all overrides to null', async () => {
+	const state = createEphemeralState();
+
+	// Start with all enabled, then reset
+	let settings = await state.getSettings();
+	for (const key of Object.keys(settings.lintSettings)) {
+		settings.lintSettings[key] = true;
+	}
+	await state.initializeFromSettings(settings);
+
+	await state.resetAllRulesToDefaults();
+	settings = await state.getSettings();
+	for (const key of Object.keys(settings.lintSettings)) {
+		expect(settings.lintSettings[key]).toBeNull();
+	}
+});
+
+test('setAllRulesEnabled toggles all rules on and off', async () => {
+	const state = createEphemeralState();
+
+	await state.setAllRulesEnabled(true);
+	let settings = await state.getSettings();
+	for (const key of Object.keys(settings.lintSettings)) {
+		expect(settings.lintSettings[key]).toBe(true);
+	}
+
+	await state.setAllRulesEnabled(false);
+	settings = await state.getSettings();
+	for (const key of Object.keys(settings.lintSettings)) {
+		expect(settings.lintSettings[key]).toBe(false);
+	}
+});
+
+test('getEffectiveLintConfig matches defaults after reset', async () => {
+	const state = createEphemeralState();
+	await state.resetAllRulesToDefaults();
+	const effective = await state.getEffectiveLintConfig();
+	const defaults = (await state.getDefaultLintConfig()) as Record<string, boolean>;
+	expect(Object.keys(effective).sort()).toStrictEqual(Object.keys(defaults).sort());
+	for (const k of Object.keys(defaults)) {
+		expect(effective[k]).toBe(defaults[k]);
+	}
+});
+
+test('getEffectiveLintConfig reflects explicit overrides', async () => {
+	const state = createEphemeralState();
+	const settings = await state.getSettings();
+	for (const key of Object.keys(settings.lintSettings)) {
+		settings.lintSettings[key] = true;
+	}
+	await state.initializeFromSettings(settings);
+	const effective = await state.getEffectiveLintConfig();
+	for (const k of Object.keys(effective)) {
+		expect(effective[k]).toBe(true);
+	}
+});

@@ -103,6 +103,15 @@ pub fn lint_group() -> LintGroup {
             "The name of the word `the` is `definite article`.",
             LintKind::Usage
         ),
+        "DigestiveTract" => (
+            &[
+                ("digestive track", "digestive tract"),
+                ("digestive tracks", "digestive tracts"),
+            ],
+            "The correct term is digestive `tract`.",
+            "Corrects `digestive track` to `digestive tract`.",
+            LintKind::WordChoice
+        ),
         "Discuss" => (
             &[
                 ("discuss about", "discuss"),
@@ -381,6 +390,7 @@ pub fn lint_group() -> LintGroup {
                 (&["worst and worst", "worse and worst", "worst and worse"], &["worse and worse"]),
                 (&["worst than"], &["worse than"]),
                 // worse -> worst
+                (&["at worse"], &["at worst"]),
                 (&["worse case scenario", "worse-case scenario", "worse-case-scenario"], &["worst-case scenario"]),
                 (&["worse ever"], &["worst ever"]),
             ],

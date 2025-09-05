@@ -24,6 +24,7 @@ use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::best_of_all_time::BestOfAllTime;
 use super::boring_words::BoringWords;
+use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::chock_full::ChockFull;
 use super::comma_fixes::CommaFixes;
@@ -37,6 +38,7 @@ use super::double_modal::DoubleModal;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
+use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
@@ -54,6 +56,7 @@ use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
+use super::interested_in::InterestedIn;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::left_right_hand::LeftRightHand;
@@ -89,7 +92,9 @@ use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
+use super::punctuation_clusters::PunctuationClusters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
+use super::quite_quiet::QuiteQuiet;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
@@ -99,6 +104,7 @@ use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::since_duration::SinceDuration;
 use super::somewhat_something::SomewhatSomething;
+use super::sought_after::SoughtAfter;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
@@ -120,6 +126,7 @@ use super::whereas::Whereas;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wordpress_dotcom::WordPressDotcom;
+use super::would_never_have::WouldNeverHave;
 use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
 use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
@@ -408,10 +415,11 @@ impl LintGroup {
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(AskNoPreposition, true);
-        insert_struct_rule!(AvoidCurses, true);
+        insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
+        insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
         insert_struct_rule!(ToTwoToo, true);
@@ -430,6 +438,7 @@ impl LintGroup {
         insert_struct_rule!(EllipsisLength, true);
         insert_struct_rule!(ElsePossessive, true);
         insert_struct_rule!(Everyday, true);
+        insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_expr_rule!(FillerWords, true);
@@ -443,6 +452,7 @@ impl LintGroup {
         insert_struct_rule!(HowTo, true);
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
+        insert_expr_rule!(InterestedIn, true);
         insert_struct_rule!(ItsContraction, true);
         insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);
@@ -458,6 +468,7 @@ impl LintGroup {
         insert_expr_rule!(MostNumber, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_struct_rule!(NailOnTheHead, true);
+        insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
@@ -478,6 +489,9 @@ impl LintGroup {
         insert_struct_rule!(PronounContraction, true);
         insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(PronounKnew, true);
+        insert_struct_rule!(PunctuationClusters, true);
+        insert_expr_rule!(QuantifierNeedsOf, true);
+        insert_expr_rule!(QuiteQuiet, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);
@@ -485,6 +499,7 @@ impl LintGroup {
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(SomewhatSomething, true);
+        insert_expr_rule!(SoughtAfter, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
         insert_expr_rule!(ThatThan, true);
@@ -504,6 +519,7 @@ impl LintGroup {
         insert_expr_rule!(WidelyAccepted, true);
         insert_expr_rule!(WinPrize, true);
         insert_struct_rule!(WordPressDotcom, true);
+        insert_expr_rule!(WouldNeverHave, true);
 
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
@@ -650,6 +666,22 @@ mod tests {
         let group =
             LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
         group.all_descriptions_html();
+    }
+
+    #[test]
+    fn dont_flag_low_hanging_fruit_msg() {
+        assert_no_lints(
+            "The standard form is low-hanging fruit with a hyphen and singular form.",
+            test_group(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_low_hanging_fruit_desc() {
+        assert_no_lints(
+            "Corrects non-standard variants of low-hanging fruit.",
+            test_group(),
+        );
     }
 
     #[test]

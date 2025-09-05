@@ -1,6 +1,4 @@
-use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
+use crate::expr::{Expr, LongestMatchOf, SequenceExpr};
 use crate::{Lrc, Token, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -14,13 +12,16 @@ pub struct OpenCompounds {
 impl Default for OpenCompounds {
     fn default() -> Self {
         let phrases = [
+            "a few",
             "a lot",
             "a while",
             "as well",
             "at least",
             "each other",
             "in case",
+            "in fact",
             "in front",
+            "up to",
         ];
         let mut compound_to_phrase = HashMap::new();
         for phrase in phrases {
@@ -239,6 +240,17 @@ mod tests {
         );
     }
 
+    // A few
+
+    #[test]
+    fn correct_afew_atomic() {
+        assert_suggestion_result(
+            "ITK code to generate anisotropic metrics, mostly Riemannian metrics and afew particular cases of Finslerian metrics.",
+            OpenCompounds::default(),
+            "ITK code to generate anisotropic metrics, mostly Riemannian metrics and a few particular cases of Finslerian metrics.",
+        );
+    }
+
     // A lot
 
     #[test]
@@ -404,6 +416,28 @@ mod tests {
             "InCase save your secrets for a friend, so they can use in case it in case you went \"missing\".",
             OpenCompounds::default(),
             0,
+        );
+    }
+
+    // In fact
+
+    #[test]
+    fn correct_infact_atomic() {
+        assert_suggestion_result(
+            "Yes I do infact exist :O",
+            OpenCompounds::default(),
+            "Yes I do in fact exist :O",
+        );
+    }
+
+    // up to
+
+    #[test]
+    fn correct_upto() {
+        assert_suggestion_result(
+            "Free for upto 10k subscribers, unlimited push notifications, in-browser messaging",
+            OpenCompounds::default(),
+            "Free for up to 10k subscribers, unlimited push notifications, in-browser messaging",
         );
     }
 }
