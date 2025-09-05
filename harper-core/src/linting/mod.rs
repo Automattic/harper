@@ -242,7 +242,7 @@ pub use since_duration::SinceDuration;
 pub use somewhat_something::SomewhatSomething;
 pub use sought_after::SoughtAfter;
 pub use spaces::Spaces;
-pub use spell_check::SpellCheck;
+pub use spell_check::{SpellCheck, SpellCheckConfig};
 pub use spelled_numbers::SpelledNumbers;
 pub use suggestion::Suggestion;
 pub use take_serious::TakeSerious;
