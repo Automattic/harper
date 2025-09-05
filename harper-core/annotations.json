@@ -521,7 +521,13 @@
 					"condition": "."
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"metadata": {
+						"adverb": {}
+					}
+				}
+			],
 			"base_metadata": {},
 			"rename_ok": true
 		},

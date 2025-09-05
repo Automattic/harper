@@ -49,7 +49,7 @@ impl ExprLinter for AskNoPreposition {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::ReplaceWith(Vec::new())],
             message: format!(
-                "The verb `to {verb} someone` should not be preceded by the preposition “to”."
+                "The verb `to {verb} someone` should not be preceded by the preposition `to`."
             ),
             priority: 63,
         })

@@ -489,7 +489,7 @@
 >
 #
 > “ Do     they miss  me       ? ” she  cried ecstatically .
-# . NSg/VX IPl+ NSg/V NPr/ISg+ . . ISg+ VP/J  W?           .
+# . NSg/VX IPl+ NSg/V NPr/ISg+ . . ISg+ VP/J  R            .
 >
 #
 > “ The whole  town is  desolate . All          the cars have   the left    rear     wheel  painted black
@@ -801,7 +801,7 @@
 >
 #
 > “ I’ll tell   you    a   family  secret  , ” she  whispered enthusiastically . “ It’s about the
-# . W?   NPr/VB ISgPl+ D/P N🅪Sg/J+ NSg/V/J . . ISg+ VP/J      W?               . . W?   J/P   D
+# . W?   NPr/VB ISgPl+ D/P N🅪Sg/J+ NSg/V/J . . ISg+ VP/J      R                . . W?   J/P   D
 > butler’s nose   . Do     you    want  to hear about the butler’s nose   ? ”
 # NSg$     NSg/V+ . NSg/VX ISgPl+ NSg/V P  VB   J/P   D   NSg$     NSg/V+ . .
 >
@@ -1605,7 +1605,7 @@
 >
 #
 > “ I    think it’s cute , ” said    Mrs  . Wilson enthusiastically . “ How   much         is  it       ? ”
-# . ISg+ NSg/V W?   J    . . VPtPp/J NPl+ . NPr+   W?               . . NSg/C NSg/I/J/R/Dq VL3 NPr/ISg+ . .
+# . ISg+ NSg/V W?   J    . . VPtPp/J NPl+ . NPr+   R                . . NSg/C NSg/I/J/R/Dq VL3 NPr/ISg+ . .
 >
 #
 > “ That          dog      ? ” He       looked at    it       admiringly . “ That         dog      will   cost     you    ten  dollars . ”
@@ -1701,7 +1701,7 @@
 > full    of straw    and some      milk    , to which he       added on  his     own     initiative a   tin      of
 # NSg/V/J P  N🅪Sg/V/J V/C I/J/R/Dq+ N🅪Sg/V+ . P  I/C+  NPr/ISg+ VP/J  J/P ISg/D$+ NSg/V/J NSg/J+     D/P N🅪Sg/V/J P
 > large , hard    dog      - biscuits — one       of which decomposed apathetically in      the saucer of
-# NSg/J . N🅪Sg/J+ NSg/V/J+ . NPl      . NSg/I/V/J P  I/C+  VP/J       W?            NPr/J/P D   NSg/V  P
+# NSg/J . N🅪Sg/J+ NSg/V/J+ . NPl      . NSg/I/V/J P  I/C+  VP/J       R             NPr/J/P D   NSg/V  P
 > milk    all          afternoon . Meanwhile Tom    brought out         a   bottle of whiskey from a   locked
 # N🅪Sg/V+ NSg/I/J/C/Dq N🅪Sg+     . NSg       NPr/V+ VPtPp   NSg/V/J/R/P D/P NSg/V  P  NSg     P    D/P VP/J
 > bureau door   .
@@ -2807,7 +2807,7 @@
 > tortuously , fashionably , and keeping in      the corners — and a   great number    of single
 # R          . R           . V/C Nᴹ/Vg/J NPr/J/P D   +       . V/C D/P NSg/J N🅪Sg/V/JC P  NSg/V/J
 > girls   dancing individualistically or    relieving the orchestra for a   moment of the
-# NPl/V3+ Nᴹ/Vg/J W?                  NPr/C Nᴹ/Vg/J   D   NSg+      C/P D/P NSg    P  D
+# NPl/V3+ Nᴹ/Vg/J R                   NPr/C Nᴹ/Vg/J   D   NSg+      C/P D/P NSg    P  D
 > burden of the banjo or    the traps  . By      midnight the hilarity had increased . A
 # NSg/V  P  D   NSg/V NPr/C D   NPl/V3 . NSg/J/P NSg/J+   D   NSg      V   VP/J      . D/P
 > celebrated tenor had sung    in      Italian , and a   notorious contralto had sung    in
@@ -5375,7 +5375,7 @@
 >
 #
 > “ It’s an   old   clock  , ” I    told  them     idiotically .
-# . W?   D/P+ NSg/J NSg/V+ . . ISg+ VPtPp NSg/IPl+ W?          .
+# . W?   D/P+ NSg/J NSg/V+ . . ISg+ VPtPp NSg/IPl+ R           .
 >
 #
 > I    think we   all          believed for a    moment that          it       had smashed in      pieces  on  the floor  .
@@ -5601,7 +5601,7 @@
 >
 #
 > “ I    did , old    sport  , ” he       said    automatically , “ but     I    lost    most         of it       in      the big
-# . ISg+ VPt . NSg/J+ NSg/V+ . . NPr/ISg+ VPtPp/J W?            . . NSg/C/P ISg+ VPtPp/J NSg/I/J/R/Dq P  NPr/ISg+ NPr/J/P D+  NSg/J+
+# . ISg+ VPt . NSg/J+ NSg/V+ . . NPr/ISg+ VPtPp/J R             . . NSg/C/P ISg+ VPtPp/J NSg/I/J/R/Dq P  NPr/ISg+ NPr/J/P D+  NSg/J+
 > panic    — the panic   of the war     . ”
 # NSg/V/J+ . D   NSg/V/J P  D+  N🅪Sg/V+ . .
 >
@@ -6371,7 +6371,7 @@
 >
 #
 > “ You    come       to supper with me       , ” said    the lady   enthusiastically . “ Both   of you    . ”
-# . ISgPl+ NSg/VBPp/P P  NSg/V  P    NPr/ISg+ . . VPtPp/J D+  NPr/V+ W?               . . I/C/Dq P  ISgPl+ . .
+# . ISgPl+ NSg/VBPp/P P  NSg/V  P    NPr/ISg+ . . VPtPp/J D+  NPr/V+ R                . . I/C/Dq P  ISgPl+ . .
 >
 #
 > This   included me       . Mr   . Sloane got to his     feet .
@@ -8351,7 +8351,7 @@
 >
 #
 > “ You    must  be      crazy ! ” exclaimed Tom    automatically .
-# . ISgPl+ NSg/V NSg/VXB NSg/J . . VP/J      NPr/V+ W?            .
+# . ISgPl+ NSg/V NSg/VXB NSg/J . . VP/J      NPr/V+ R             .
 >
 #
 > Gatsby sprang to his     feet , vivid with excitement .
@@ -8889,7 +8889,7 @@
 > nearer , the hushed , intent faces  of the people at    the garage door   made him
 # NSg/JC . D   VP/J   . NSg/J+ NPl/V3 P  D   NPl/V+ NSg/P D   NSg/V+ NSg/V+ V    ISg+
 > automatically put   on  the brakes  .
-# W?            NSg/V J/P D   NPl/V3+ .
+# R             NSg/V J/P D   NPl/V3+ .
 >
 #
 > “ We'll take  a   look   , ” he       said    doubtfully , “ just a   look   . ”
@@ -9677,7 +9677,7 @@
 > front    , and following the Argonne battles he       got his     majority and the command of
 # NSg/V/J+ . V/C Nᴹ/Vg/J/P D   NPr     NPl/V3+ NPr/ISg+ V   ISg/D$+ NSg+     V/C D   NSg/V   P
 > the divisional machine - guns    . After the armistice he       tried frantically to get
-# D   NSg/J      NSg/V+  . NPl/V3+ . P     D   NPr🅪      NPr/ISg+ VP/J  W?          P  NSg/V
+# D   NSg/J      NSg/V+  . NPl/V3+ . P     D   NPr🅪      NPr/ISg+ VP/J  R           P  NSg/V
 > home     , but     some     complication or    misunderstanding sent  him  to Oxford instead . He
 # NSg/V/J+ . NSg/C/P I/J/R/Dq N🅪Sg         NPr/C N🅪Sg/Vg/J+       NSg/V ISg+ P  NPr+   R       . NPr/ISg+
 > was worried now       — there was a   quality of nervous despair in      Daisy’s letters . She
@@ -9845,7 +9845,7 @@
 >
 #
 > “ Don’t do     it       to - day   , ” Gatsby answered . He       turned to me       apologetically . “ You
-# . V     NSg/VX NPr/ISg+ P  . NPr🅪+ . . NPr    VP/J     . NPr/ISg+ VP/J   P  NPr/ISg+ W?             . . ISgPl+
+# . V     NSg/VX NPr/ISg+ P  . NPr🅪+ . . NPr    VP/J     . NPr/ISg+ VP/J   P  NPr/ISg+ R              . . ISgPl+
 > know   , old    sport  , I’ve never used     that         pool   all          summer  ? ”
 # NSg/VB . NSg/J+ NSg/V+ . W?   R     VPPtPp/J NSg/I/C/Ddem NSg/V+ NSg/I/J/C/Dq NPr🅪/V+ . .
 >

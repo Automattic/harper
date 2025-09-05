@@ -22,6 +22,7 @@ impl DiscourseMarkers {
             "thus",
             "instead",
             "moreover",
+            "honestly",
             "alternatively",
             "frankly",
             "additionally",

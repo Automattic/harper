@@ -115,6 +115,7 @@ use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::thing_think::ThingThink;
 use super::throw_rubbish::ThrowRubbish;
+use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::use_genitive::UseGenitive;
@@ -421,6 +422,9 @@ impl LintGroup {
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
+        insert_struct_rule!(ToTwoToo, true);
+        insert_expr_rule!(QuantifierNeedsOf, true);
+        insert_struct_rule!(NoFrenchSpaces, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(Confident, true);
