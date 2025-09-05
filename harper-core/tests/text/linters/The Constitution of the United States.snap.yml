@@ -703,15 +703,6 @@ Message: |
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-     290 | Expenditures of all public Money shall be published from time to time.
-         |                                                               ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      292 | No Title of Nobility shall be granted by the United States: And no Person

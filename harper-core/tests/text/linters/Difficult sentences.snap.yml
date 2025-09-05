@@ -66,15 +66,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-     107 | I had to stay with my wicked stepmother, for I had nowhere else to go.
-         |                                                                 ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
      160 | to account for one's whereabouts.

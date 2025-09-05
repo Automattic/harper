@@ -425,16 +425,6 @@ Message: |
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-     196 | can;—but I must be kind to them,” thought Alice, “or perhaps they won’t walk the
-     197 | way I want to go! Let me see: I’ll give them a new pair of boots every
-         |            ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Formatting (63 priority)
 Message: |
      204 | > Alice’s Right Foot, Esq., Hearthrug, near the Fender, (with Alice’s love).
@@ -704,15 +694,6 @@ Lint:    Miscellaneous (31 priority)
 Message: |
      361 | It was high time to go, for the pool was getting quite crowded with the birds
          |    ^~~~ You may be missing a preposition here.
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-     361 | It was high time to go, for the pool was getting quite crowded with the birds
-         |                  ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -1437,16 +1418,6 @@ Message: |
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1141 | were the cook, and a large cat which was sitting on the hearth and grinning from
-    1142 | ear to ear.
-         |     ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1165 | well to introduce some other subject of conversation. While she was trying to
@@ -1588,16 +1559,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1328 | and after a minute or two she walked on in the direction in which the March Hare
-    1329 | was said to live. “I’ve seen hatters before,” she said to herself; “the March
-         |          ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1348 | like ears and the roof was thatched with fur. It was so large a house, that she
@@ -1658,32 +1619,12 @@ Message: |
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1475 | “Of course you don’t!” the Hatter said, tossing his head contemptuously. “I dare
-    1476 | say you never even spoke to Time!”
-         |                          ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
     1481 | “Ah! that accounts for it,” said the Hatter. “He won’t stand beating. Now, if
          |      ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “That”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    1484 | begin lessons: you’d only have to whisper a hint to Time, and round goes the
-         |                                                  ^~ Use `too` here to mean ‘also’ or an excessive degree.
-    1485 | clock in a twinkling! Half-past one, time for dinner!”
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -1699,16 +1640,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1492 | “Not at first, perhaps,” said the Hatter: “but you could keep it to half-past
-         |                                                                  ^~ Use `too` here to mean ‘also’ or an excessive degree.
-    1493 | one as long as you liked.”
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    WordChoice (63 priority)
 Message: |
     1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
@@ -1716,16 +1647,6 @@ Message: |
     1499 | March Hare,) “—it was at the great concert given by the Queen of Hearts, and I
 Suggest:
   - Replace with: “teaspoon”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    1499 | March Hare,) “—it was at the great concert given by the Queen of Hearts, and I
-    1500 | had to sing
-         |     ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -2187,15 +2108,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2025 | appeared to them to be otherwise.’”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 67 words long.
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    2046 | “Just about as much right,” said the Duchess, “as pigs have to fly; and the m—”
-         |                                                             ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 

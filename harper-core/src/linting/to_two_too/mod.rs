@@ -317,4 +317,28 @@ mod tests {
     fn ccoveille_suggestion() {
         assert_no_lints("He goes too far with bets.", ToTwoToo::default());
     }
+
+    #[test]
+    fn no_lint_auto_detect_debuggers() {
+        assert_no_lints(
+            "Daprio attempts to auto-detect debugger servers and configurations, which can save significant time, especially for common languages.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_commitment_open_source() {
+        assert_no_lints(
+            "I believe a commitment to open-source solutions and internal skill development would ultimately yield a more sustainable and ethical approach.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_feeling_confident_dominate() {
+        assert_no_lints(
+            "I'm feeling confident, and I suspect you all should be too – because I’m about to dominate.",
+            ToTwoToo::default(),
+        );
+    }
 }

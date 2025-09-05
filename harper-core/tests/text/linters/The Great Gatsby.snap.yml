@@ -2077,16 +2077,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1636 | “Good night.” He smiled—and suddenly there seemed to be a pleasant significance
-    1637 | in having been among the last to go, as if he had desired it all the time. “Good
-         |                               ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Formatting (63 priority)
 Message: |
     1637 | in having been among the last to go, as if he had desired it all the time. “Good
@@ -4045,16 +4035,6 @@ Message: |
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    2719 | “This is a terrible mistake,” he said, shaking his head from side to side, ‘‘a
-         |                                                                   ^~ Use `too` here to mean ‘also’ or an excessive degree.
-    2720 | terrible, terrible mistake.”
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     2737 | I walked out the back way—just as Gatsby had when he had made his nervous
@@ -4644,24 +4624,6 @@ Suggest:
   - Replace with: “var”
   - Replace with: “veer”
   - Replace with: “verb”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    3195 | Gatsby looked at me questioningly. He wanted to go, and he didn’t see that Mr.
-         |                                              ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    3225 | “Come on,” said Mr. Sloane to Tom, “we’re late. We've got to go.” And then to
-         |                                                           ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -5335,15 +5297,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    3754 | “Are we just going to go?” she objected. “Like this? Aren’t we going to let any
-         |                    ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Formatting (63 priority)
 Message: |
     3794 | inexhaustible charm that rose and fell in it, the jingle of it, the cymbals’
@@ -5803,15 +5756,6 @@ Message: |
 
 Lint:    WordChoice (127 priority)
 Message: |
-    4185 | At this point Jordan and I tried to go, but Tom and Gatsby insisted with
-         |                                  ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
     4192 | “I told you what’s been going on,” said Gatsby. “Going on for five years—and you
          |         ^~~ The possessive version of this word is more common in this context.
 Suggest:
@@ -5904,15 +5848,6 @@ Message: |
     4341 | lost voice across the room.
 Suggest:
   - Replace with: “despairingly”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    4343 | The voice begged again to go.
-         |                        ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -6162,16 +6097,6 @@ Suggest:
   - Replace with: “glamorously”
   - Replace with: “clamorous”
   - Replace with: “clangorously”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    4473 | doorposts with both hands. Some man was talking to him in a low voice and
-    4474 | attempting, from time to time, to lay a hand on his shoulder, but Wilson neither
-         |                       ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -6462,24 +6387,6 @@ Suggest:
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
   - Replace with: “Wolsey's”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    4694 | “All night, if necessary. Anyhow, till they all go to bed.”
-         |                                                    ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    4729 | “I want to wait here till Daisy goes to bed. Good night, old sport.”
-         |                                      ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
