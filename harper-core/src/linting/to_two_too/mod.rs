@@ -356,4 +356,36 @@ mod tests {
             ToTwoToo::default(),
         );
     }
+
+    #[test]
+    fn no_lint_egyptian_smiling_faces_commentary() {
+        assert_no_lints(
+            "Today I learned that the ubiquitous, seemingly cheerful faces carved into ancient Egyptian relief sculptures – often referred to as “smiling faces” – weren’t simply a stylistic choice reflecting happiness. Recent scholarship suggests they functioned as a subtle, often satirical, form of social commentary, particularly targeting individuals who were arrogant, boastful, or otherwise deserving of ridicule.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_intended_to_leave_it_to() {
+        assert_no_lints(
+            "Beatrice never explicitly said who she intended to leave it to.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_time_for_good_girl_to_bed() {
+        assert_no_lints(
+            "Time for this good girl to go to bed.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_connected_to_many_other_fields() {
+        assert_no_lints(
+            "The study is connected to many other fields.",
+            ToTwoToo::default(),
+        );
+    }
 }

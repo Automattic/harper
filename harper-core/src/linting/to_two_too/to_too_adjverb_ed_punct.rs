@@ -18,6 +18,7 @@ impl Default for ToTooAdjVerbEdPunct {
             .then(|tok: &crate::Token, src: &[char]| {
                 tok.kind.is_adjective()
                     && tok.kind.is_verb()
+                    && !tok.kind.is_noun()
                     && tok
                         .span
                         .get_content(src)

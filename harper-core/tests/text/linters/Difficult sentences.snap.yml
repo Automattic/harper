@@ -328,15 +328,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-     401 | If he hasn't read it yet, he ought to.
-         |                                    ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      443 | With their reputation on the line, they decided to fire their PR team.

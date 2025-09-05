@@ -655,16 +655,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-     548 | “Ten o’clock,” she remarked, apparently finding the time on the ceiling. “Time
-     549 | for this good girl to go to bed.”
-         |                          ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      551 | “Jordan’s going to play in the tournament tomorrow,” explained Daisy, “over at
@@ -1260,15 +1250,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1050 | “Why did you, Myrtle?” demanded Catherine. “Nobody forced you to.”
-         |                                                               ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     1062 | She pointed suddenly at me, and every one looked at me accusingly. I tried to
@@ -1319,15 +1300,6 @@ Message: |
 Suggest:
   - Replace with: “him”
   - Replace with: “I”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    1103 | with it. I’ve got to get another one to-morrow. I’m going to make a list of all
-         |                                      ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -1672,15 +1644,6 @@ Suggest:
   - Replace with: “Currier's”
   - Replace with: “Courier's”
   - Replace with: “Crosier's”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    1292 | “Sure I did. I was going to wear it to-night, but it was too big in the bust and
-         |                                     ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -3087,16 +3050,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1908 | “Good morning, old sport. You’re having lunch with me to-day and I thought we’d
-         |                                                       ^~ Use `too` here to mean ‘also’ or an excessive degree.
-    1909 | ride up together.”
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1911 | He was balancing himself on the dashboard of his car with that resourcefulness
@@ -3244,16 +3197,6 @@ Suggest:
   - Replace with: “gnawing”
   - Replace with: “gearings”
   - Replace with: “gratings”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    2024 | “I’m going to make a big request of you to-day,” he said, pocketing his
-         |                                         ^~ Use `too` here to mean ‘also’ or an excessive degree.
-    2025 | souvenirs with satisfaction, “so I thought you ought to know something about me.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -3877,15 +3820,6 @@ Suggest:
   - Replace with: “Conley”
   - Replace with: “Corey”
   - Replace with: “Coley”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    2499 | “I’ve got to go to bed.”
-         |                 ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -5901,15 +5835,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    4373 | “No . . . I just remembered that to-day’s my birthday.”
-         |                                  ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4377 | It was seven o’clock when we got into the coupé with him and started for Long
@@ -6391,24 +6316,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    4694 | “All night, if necessary. Anyhow, till they all go to bed.”
-         |                                                    ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    4729 | “I want to wait here till Daisy goes to bed. Good night, old sport.”
-         |                                      ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     4739 | Toward dawn I heard a taxi go up Gatsby’s drive, and immediately I jumped out of
@@ -6553,15 +6460,6 @@ Suggest:
   - Replace with: “Leakey's”
   - Replace with: “Leave's”
   - Replace with: “Leaven's”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    4924 | “Don’t do it to-day,” Gatsby answered. He turned to me apologetically. “You
-         |              ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 

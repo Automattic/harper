@@ -33,7 +33,11 @@ impl Default for ToToo {
         let to_before_adverb = SequenceExpr::default()
             .t_aco("to")
             .t_ws()
-            .then_adverb()
+            .then_kind_is_but_is_not_except(
+                TokenKind::is_adverb,
+                |_| false,
+                &["as"],
+            )
             .then_optional(WhitespacePattern)
             .then_any_of(vec![
                 Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
@@ -52,6 +56,7 @@ impl Default for ToToo {
             .then(|tok: &Token, src: &[char]| {
                 tok.kind.is_adjective()
                     && tok.kind.is_verb()
+                    && !tok.kind.is_noun()
                     && tok
                         .span
                         .get_content(src)
@@ -83,10 +88,20 @@ impl Default for ToToo {
                 &["`", "\"", "'", "“", "”", "‘", "’", "-", "–", "—"],
             );
 
+        // to + (many|much|few) + (punct|end) to avoid "connected to many ..."
         let to_before_degree_words = SequenceExpr::default()
             .t_aco("to")
             .t_ws()
-            .then_word_set(&["many", "much", "few"]);
+            .then_word_set(&["many", "much", "few"])
+            .t_ws_opt()
+            .then_any_of(vec![
+                Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
+                    TokenKind::is_punctuation,
+                    |_| false,
+                    &["`", "\"", "'", "“", "”", "‘", "’", "-", "–", "—"],
+                )),
+                Box::new(AnchorEnd),
+            ]);
 
         let chunk_start_to_pause = SequenceExpr::default()
             .then(AnchorStart)
@@ -94,8 +109,20 @@ impl Default for ToToo {
             .then_optional(WhitespacePattern)
             .then_comma();
 
-        // pronoun + to + (punct_without_quotes | end)
+        // (start|punct) + pronoun + to + (punct_without_quotes | end)
         let pronoun_to_end = SequenceExpr::default()
+            .then_any_of(vec![
+                Box::new(SequenceExpr::default().then_anchor_start()),
+                Box::new(
+                    SequenceExpr::default()
+                        .then_kind_is_but_is_not_except(
+                            TokenKind::is_punctuation,
+                            |_| false,
+                            &["`", "\"", "'", "“", "”", "‘", "’"],
+                        )
+                        .t_ws_opt(),
+                ),
+            ])
             .then_pronoun()
             .t_ws()
             .t_aco("to")
@@ -131,13 +158,6 @@ impl ExprLinter for ToToo {
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
         // The expression ensures only valid contexts reach here.
-        eprintln!(
-            "[ToToo] matched tokens: {:?}",
-            tokens
-                .iter()
-                .map(|t| t.span.get_content(source).iter().collect::<String>())
-                .collect::<Vec<_>>()
-        );
         let to_tok = tokens.iter().find(|t| {
             t.span
                 .get_content(source)

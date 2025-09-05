@@ -46,16 +46,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-      25 | at different times, and because some parts of speech are complex. This is not
-      26 | rare—in natural languages (as opposed to many artificial languages), a large
-         |                                       ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
       33 | as the more common plural noun. Grammatical context is one way to determine

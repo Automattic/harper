@@ -1,7 +1,7 @@
 use crate::{
-    Token,
+    Token, TokenKind,
     char_string::CharStringExt,
-    expr::{Expr, SequenceExpr},
+    expr::{AnchorEnd, Expr, SequenceExpr},
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -12,10 +12,20 @@ pub struct ToTooDegreeWords {
 
 impl Default for ToTooDegreeWords {
     fn default() -> Self {
+        // Only flag `to` before degree words when the phrase ends the clause
+        // (punctuation or end). Avoids false positives like "connected to many X".
         let expr = SequenceExpr::default()
             .t_aco("to")
             .t_ws()
-            .then_word_set(&["many", "much", "few"]);
+            .then_word_set(&["many", "much", "few"])
+            .then_any_of(vec![
+                Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
+                    TokenKind::is_punctuation,
+                    |_| false,
+                    &["`", "\"", "'", "“", "”", "‘", "’", "-", "–", "—"],
+                )),
+                Box::new(AnchorEnd),
+            ]);
 
         Self {
             expr: Box::new(expr),

@@ -144,15 +144,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-      74 | again. “Dinah’ll miss me very much to-night, I should think!” (Dinah was the
-         |                                    ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
       84 | ever eat a bat?” when suddenly, thump! thump! down she came upon a heap of
