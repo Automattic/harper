@@ -26,7 +26,9 @@ impl Default for ToTooAdjectiveEnd {
             .then_optional(WhitespacePattern)
             .then_optional(SequenceExpr::default().then_punctuation());
 
-        Self { expr: Box::new(expr) }
+        Self {
+            expr: Box::new(expr),
+        }
     }
 }
 
@@ -83,8 +85,7 @@ impl ExprLinter for ToTooAdjectiveEnd {
                 "too",
                 to_tok.span.get_content(source),
             )],
-            message:
-                "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
             ..Default::default()
         })
     }

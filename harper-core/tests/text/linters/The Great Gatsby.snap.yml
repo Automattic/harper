@@ -562,24 +562,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-     411 | “Things went from bad to worse,” suggested Miss Baker.
-         |                       ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-     413 | “Yes. Things went from bad to worse, until finally he had to give up his
-         |                            ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      416 | For a moment the last sunshine fell with romantic affection upon her glowing
@@ -670,6 +652,16 @@ Suggest:
   - Replace with: “contributory”
   - Replace with: “contributor”
   - Replace with: “contributors”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+     548 | “Ten o’clock,” she remarked, apparently finding the time on the ceiling. “Time
+     549 | for this good girl to go to bed.”
+         |                          ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -3888,6 +3880,15 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    2499 | “I’ve got to go to bed.”
+         |                 ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2555 | “You wouldn’t have to do any business with Wolfshiem.” Evidently he thought that
@@ -6390,6 +6391,24 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    4694 | “All night, if necessary. Anyhow, till they all go to bed.”
+         |                                                    ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    4729 | “I want to wait here till Daisy goes to bed. Good night, old sport.”
+         |                                      ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     4739 | Toward dawn I heard a taxi go up Gatsby’s drive, and immediately I jumped out of
@@ -6590,15 +6609,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5020 | achievement was forgotten. Now I want to go back a little and tell what happened
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 56 words long.
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    5025 | liquor and unable to understand that the ambulance had already gone to Flushing.
-         |                                                                     ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 

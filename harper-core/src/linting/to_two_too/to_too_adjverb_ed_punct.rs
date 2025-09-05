@@ -26,13 +26,11 @@ impl Default for ToTooAdjVerbEdPunct {
                         .to_lowercase()
                         .ends_with("ed")
             })
-            .then_kind_is_but_is_not_except(
-                TokenKind::is_punctuation,
-                |_| false,
-                &["`", "\"", "'", "“", "”", "‘", "’", "-", "–", "—"],
-            );
+            .then_sentence_terminator();
 
-        Self { expr: Box::new(expr) }
+        Self {
+            expr: Box::new(expr),
+        }
     }
 }
 
@@ -55,8 +53,7 @@ impl ExprLinter for ToTooAdjVerbEdPunct {
                 "too",
                 to_tok.span.get_content(source),
             )],
-            message:
-                "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
             ..Default::default()
         })
     }
@@ -65,4 +62,3 @@ impl ExprLinter for ToTooAdjVerbEdPunct {
         "Detects `to` before words that are adj/verb ending with `ed`, followed by punctuation."
     }
 }
-

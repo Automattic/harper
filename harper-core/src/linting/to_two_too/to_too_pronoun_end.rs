@@ -1,8 +1,7 @@
 use crate::{
-    Token,
+    Token, TokenKind,
     char_string::CharStringExt,
     expr::{AnchorEnd, Expr, SequenceExpr},
-    TokenKind,
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -18,17 +17,17 @@ impl Default for ToTooPronounEnd {
             .t_ws()
             .t_aco("to")
             .then_any_of(vec![
-                Box::new(
-                    SequenceExpr::default().then_kind_is_but_is_not_except(
-                        TokenKind::is_punctuation,
-                        |_| false,
-                        &["`", "\"", "'", "“", "”", "‘", "’"],
-                    ),
-                ),
+                Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
+                    TokenKind::is_punctuation,
+                    |_| false,
+                    &["`", "\"", "'", "“", "”", "‘", "’"],
+                )),
                 Box::new(AnchorEnd),
             ]);
 
-        Self { expr: Box::new(expr) }
+        Self {
+            expr: Box::new(expr),
+        }
     }
 }
 
@@ -51,8 +50,7 @@ impl ExprLinter for ToTooPronounEnd {
                 "too",
                 to_tok.span.get_content(source),
             )],
-            message:
-                "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
             ..Default::default()
         })
     }
@@ -61,4 +59,3 @@ impl ExprLinter for ToTooPronounEnd {
         "Detects `to` after a pronoun at clause end (e.g., `Me to!`)."
     }
 }
-

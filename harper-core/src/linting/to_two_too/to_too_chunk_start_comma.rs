@@ -19,7 +19,9 @@ impl Default for ToTooChunkStartComma {
             .then_optional(WhitespacePattern)
             .then_comma();
 
-        Self { expr: Box::new(expr) }
+        Self {
+            expr: Box::new(expr),
+        }
     }
 }
 
@@ -42,8 +44,7 @@ impl ExprLinter for ToTooChunkStartComma {
                 "too",
                 to_tok.span.get_content(source),
             )],
-            message:
-                "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
             ..Default::default()
         })
     }
@@ -52,4 +53,3 @@ impl ExprLinter for ToTooChunkStartComma {
         "Detects `to` at the start of a clause before a comma."
     }
 }
-

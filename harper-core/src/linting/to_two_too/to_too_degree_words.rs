@@ -17,7 +17,9 @@ impl Default for ToTooDegreeWords {
             .t_ws()
             .then_word_set(&["many", "much", "few"]);
 
-        Self { expr: Box::new(expr) }
+        Self {
+            expr: Box::new(expr),
+        }
     }
 }
 
@@ -40,8 +42,7 @@ impl ExprLinter for ToTooDegreeWords {
                 "too",
                 to_tok.span.get_content(source),
             )],
-            message:
-                "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
             ..Default::default()
         })
     }
@@ -50,4 +51,3 @@ impl ExprLinter for ToTooDegreeWords {
         "Detects `to` used before degree words like `many`, `much`, or `few`."
     }
 }
-

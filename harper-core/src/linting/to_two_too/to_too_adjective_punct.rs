@@ -22,13 +22,11 @@ impl Default for ToTooAdjectivePunct {
                 &["standard"],
             )
             .then_optional(WhitespacePattern)
-            .then_kind_is_but_is_not_except(
-                TokenKind::is_punctuation,
-                |_| false,
-                &["`", "\"", "'", "“", "”", "‘", "’", "-", "–", "—"],
-            );
+            .then_sentence_terminator();
 
-        Self { expr: Box::new(expr) }
+        Self {
+            expr: Box::new(expr),
+        }
     }
 }
 
@@ -51,8 +49,7 @@ impl ExprLinter for ToTooAdjectivePunct {
                 "too",
                 to_tok.span.get_content(source),
             )],
-            message:
-                "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
             ..Default::default()
         })
     }
@@ -61,4 +58,3 @@ impl ExprLinter for ToTooAdjectivePunct {
         "Detects `to` before an adjective when followed by punctuation."
     }
 }
-
