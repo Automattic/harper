@@ -283,7 +283,6 @@ pub trait Linter: LSend {
     /// Default implementation does nothing.
     fn update_spell_check_config(&mut self, _config: SpellCheckConfig) {
         // Default: do nothing for linters that don't support spell check config
-        return ();
     }
 }
 
