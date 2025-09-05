@@ -58,7 +58,7 @@ use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
-use super::ive_gerund::IveGerund;
+use super::ive_perfect_progressive::IvePerfectProgressive;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::lets_confusion::LetsConfusion;
@@ -445,7 +445,7 @@ impl LintGroup {
         insert_struct_rule!(HowTo, true);
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
-        insert_expr_rule!(IveGerund, true);
+        insert_expr_rule!(IvePerfectProgressive, true);
         insert_struct_rule!(ItsContraction, true);
         insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);

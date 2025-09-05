@@ -4,11 +4,11 @@ use crate::{Token, TokenKind};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
-pub struct IveGerund {
+pub struct IvePerfectProgressive {
     expr: Box<dyn Expr>,
 }
 
-impl Default for IveGerund {
+impl Default for IvePerfectProgressive {
     fn default() -> Self {
         let expr = SequenceExpr::aco("I've")
             .t_ws()
@@ -20,7 +20,7 @@ impl Default for IveGerund {
     }
 }
 
-impl ExprLinter for IveGerund {
+impl ExprLinter for IvePerfectProgressive {
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -48,7 +48,7 @@ impl ExprLinter for IveGerund {
 
 #[cfg(test)]
 mod tests {
-    use super::IveGerund;
+    use super::IvePerfectProgressive;
     use crate::linting::tests::{
         assert_good_and_bad_suggestions, assert_lint_count, assert_suggestion_result,
     };
@@ -57,7 +57,7 @@ mod tests {
     fn suggests_im_looking() {
         assert_suggestion_result(
             "I've looking into it.",
-            IveGerund::default(),
+            IvePerfectProgressive::default(),
             "I'm looking into it.",
         );
     }
@@ -66,7 +66,7 @@ mod tests {
     fn corrects_basic_im() {
         assert_suggestion_result(
             "I've looking into it.",
-            IveGerund::default(),
+            IvePerfectProgressive::default(),
             "I'm looking into it.",
         );
     }
@@ -75,7 +75,7 @@ mod tests {
     fn offers_both_suggestions() {
         assert_good_and_bad_suggestions(
             "I've looking into it.",
-            IveGerund::default(),
+            IvePerfectProgressive::default(),
             &["I'm looking into it.", "I've been looking into it."],
             &[],
         );
@@ -83,34 +83,42 @@ mod tests {
 
     #[test]
     fn allows_ive_looked() {
-        assert_lint_count("I've looked into it.", IveGerund::default(), 0);
+        assert_lint_count("I've looked into it.", IvePerfectProgressive::default(), 0);
     }
 
     #[test]
     fn allows_ive_been_looking() {
-        assert_lint_count("I've been looking into it.", IveGerund::default(), 0);
+        assert_lint_count("I've been looking into it.", IvePerfectProgressive::default(), 0);
     }
 
     #[test]
     fn allows_ive_seen() {
-        assert_lint_count("I've seen the results.", IveGerund::default(), 0);
+        assert_lint_count("I've seen the results.", IvePerfectProgressive::default(), 0);
     }
 
     #[test]
     fn allows_ive_long_been_looking() {
-        assert_lint_count("I've long been looking into it.", IveGerund::default(), 0);
+        assert_lint_count(
+            "I've long been looking into it.",
+            IvePerfectProgressive::default(),
+            0,
+        );
     }
 
     #[test]
     fn no_match_with_punctuation_between() {
-        assert_lint_count("I've, looking into it.", IveGerund::default(), 0);
+        assert_lint_count(
+            "I've, looking into it.",
+            IvePerfectProgressive::default(),
+            0,
+        );
     }
 
     #[test]
     fn handles_newline_whitespace() {
         assert_suggestion_result(
             "I've\nlooking into it.",
-            IveGerund::default(),
+            IvePerfectProgressive::default(),
             "I'm\nlooking into it.",
         );
     }
@@ -119,8 +127,9 @@ mod tests {
     fn capitalization_all_caps_base() {
         assert_suggestion_result(
             "I'VE looking into it.",
-            IveGerund::default(),
+            IvePerfectProgressive::default(),
             "I'M looking into it.",
         );
     }
 }
+
