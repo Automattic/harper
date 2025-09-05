@@ -374,23 +374,41 @@ impl LintGroup {
     }
 
     /// Update the SpellCheck linter configuration. This will recreate the SpellCheck linter
-    pub fn update_spell_check_config(&mut self, spell_check_config: SpellCheckConfig, dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) {
+    pub fn update_spell_check_config(
+        &mut self,
+        spell_check_config: SpellCheckConfig,
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: Dialect,
+    ) {
         self.spell_check_config = spell_check_config.clone();
-        
+
         // If SpellCheck linter exists, recreate it with the new config
         if self.linters.contains_key("SpellCheck") {
-            self.linters.insert("SpellCheck".to_string(), Box::new(SpellCheck::new(dictionary, dialect, spell_check_config)));
+            self.linters.insert(
+                "SpellCheck".to_string(),
+                Box::new(SpellCheck::new(dictionary, dialect, spell_check_config)),
+            );
         }
     }
 
     /// Enable or disable ignoring capitalized words in spell checking
-    pub fn set_spell_check_ignore_capitalized(&mut self, ignore: bool, dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) {
+    pub fn set_spell_check_ignore_capitalized(
+        &mut self,
+        ignore: bool,
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: Dialect,
+    ) {
         self.spell_check_config.ignore_capitalized = ignore;
         self.update_spell_check_config(self.spell_check_config.clone(), dictionary, dialect);
     }
 
     /// Enable or disable ignoring abbreviations in spell checking
-    pub fn set_spell_check_ignore_abbreviations(&mut self, ignore: bool, dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) {
+    pub fn set_spell_check_ignore_abbreviations(
+        &mut self,
+        ignore: bool,
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: Dialect,
+    ) {
         self.spell_check_config.ignore_abbreviations = ignore;
         self.update_spell_check_config(self.spell_check_config.clone(), dictionary, dialect);
     }
@@ -540,12 +558,17 @@ impl LintGroup {
         insert_expr_rule!(WinPrize, true);
         insert_struct_rule!(WordPressDotcom, true);
 
-        out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect, out.spell_check_config.clone()));
+        out.add(
+            "SpellCheck",
+            SpellCheck::new(dictionary.clone(), dialect, out.spell_check_config.clone()),
+        );
         out.config.set_rule_enabled("SpellCheck", true);
 
         // Add spell check configuration options as toggleable rules
-        out.config.set_rule_enabled("SpellCheckIgnoreCapitalized", false);
-        out.config.set_rule_enabled("SpellCheckIgnoreAbbreviations", false);
+        out.config
+            .set_rule_enabled("SpellCheckIgnoreCapitalized", false);
+        out.config
+            .set_rule_enabled("SpellCheckIgnoreAbbreviations", false);
 
         out.add(
             "InflectedVerbAfterTo",
@@ -596,18 +619,16 @@ impl Default for LintGroup {
 
 impl Linter for LintGroup {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
-    
-
         // Sync spell check configuration with rule settings before linting
         let ignore_capitalized = self.config.is_rule_enabled("SpellCheckIgnoreCapitalized");
         let ignore_abbreviations = self.config.is_rule_enabled("SpellCheckIgnoreAbbreviations");
-        
-        if self.spell_check_config.ignore_capitalized != ignore_capitalized 
-            || self.spell_check_config.ignore_abbreviations != ignore_abbreviations {
-            
+
+        if self.spell_check_config.ignore_capitalized != ignore_capitalized
+            || self.spell_check_config.ignore_abbreviations != ignore_abbreviations
+        {
             self.spell_check_config.ignore_capitalized = ignore_capitalized;
             self.spell_check_config.ignore_abbreviations = ignore_abbreviations;
-            
+
             // Update the existing SpellCheck linter's config safely through the trait
             if let Some(spell_check_linter) = self.linters.get_mut("SpellCheck") {
                 spell_check_linter.update_spell_check_config(self.spell_check_config.clone());

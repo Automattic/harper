@@ -7,7 +7,7 @@ use smallvec::ToSmallVec;
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::spell::{suggest_correct_spelling, Dictionary};
+use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Default)]
@@ -84,15 +84,14 @@ fn check_abbrv(chars: &[char]) -> bool {
     if chars.is_empty() {
         return false;
     }
-    
+
     if chars.iter().all(|&c| c.is_uppercase() || c.is_numeric()) {
         return true;
     }
-    
+
     // Find valid suffixes at the end
     let mut found_lowercase = false;
     let mut lowercase_start_idx = chars.len();
-    
 
     for (i, &c) in chars.iter().enumerate().rev() {
         if c.is_lowercase() {
@@ -102,24 +101,26 @@ fn check_abbrv(chars: &[char]) -> bool {
             break;
         }
     }
-    
+
     if !found_lowercase {
         return chars.iter().all(|&c| c.is_uppercase() || c.is_numeric());
     }
-    
+
     let lowercase_part: String = chars[lowercase_start_idx..].iter().collect();
-    
+
     let allowed_suffixes = ["d", "s", "'s", "ed"];
-    let is_valid_suffix = allowed_suffixes.iter().any(|&suffix| lowercase_part == suffix);
-    
+    let is_valid_suffix = allowed_suffixes
+        .iter()
+        .any(|&suffix| lowercase_part == suffix);
+
     if !is_valid_suffix {
         return false;
     }
-    
-    chars[..lowercase_start_idx].iter().all(|&c| c.is_uppercase() || c.is_numeric())
+
+    chars[..lowercase_start_idx]
+        .iter()
+        .all(|&c| c.is_uppercase() || c.is_numeric())
 }
-
-
 
 impl<T: Dictionary> Linter for SpellCheck<T> {
     fn update_spell_check_config(&mut self, config: SpellCheckConfig) {
@@ -132,7 +133,9 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
         for word in document.iter_words() {
             let word_chars = document.get_span_content(&word.span);
 
-            if self.config.ignore_capitalized && word_chars.first().is_some_and(|c| c.is_uppercase()) {
+            if self.config.ignore_capitalized
+                && word_chars.first().is_some_and(|c| c.is_uppercase())
+            {
                 continue;
             }
 
@@ -210,7 +213,11 @@ mod tests {
     fn america_capitalized() {
         assert_suggestion_result(
             "The word america should be capitalized.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::American,
+                SpellCheckConfig::default(),
+            ),
             "The word America should be capitalized.",
         );
     }
@@ -221,7 +228,11 @@ mod tests {
     fn harper_automattic_capitalized() {
         assert_lint_count(
             "So should harper and automattic.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::American,
+                SpellCheckConfig::default(),
+            ),
             2,
         );
     }
@@ -230,7 +241,11 @@ mod tests {
     fn american_color_in_british_dialect() {
         assert_lint_count(
             "Do you like the color?",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::British,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -239,7 +254,11 @@ mod tests {
     fn canadian_words_in_australian_dialect() {
         assert_lint_count(
             "Does your mom like yogourt?",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Australian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Australian,
+                SpellCheckConfig::default(),
+            ),
             2,
         );
     }
@@ -248,7 +267,11 @@ mod tests {
     fn australian_words_in_canadian_dialect() {
         assert_lint_count(
             "We mine bauxite to make aluminium.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Canadian,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -257,7 +280,11 @@ mod tests {
     fn mum_and_mummy_not_just_commonwealth() {
         assert_lint_count(
             "Mum's the word about that Egyptian mummy.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::American,
+                SpellCheckConfig::default(),
+            ),
             0,
         );
     }
@@ -266,7 +293,11 @@ mod tests {
     fn australian_verandah() {
         assert_lint_count(
             "Our house has a verandah.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Australian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Australian,
+                SpellCheckConfig::default(),
+            ),
             0,
         );
     }
@@ -275,7 +306,11 @@ mod tests {
     fn australian_verandah_in_american_dialect() {
         assert_lint_count(
             "Our house has a verandah.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::American,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -284,7 +319,11 @@ mod tests {
     fn austrlaian_verandah_in_british_dialect() {
         assert_lint_count(
             "Our house has a verandah.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::British,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -293,7 +332,11 @@ mod tests {
     fn australian_verandah_in_canadian_dialect() {
         assert_lint_count(
             "Our house has a verandah.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Canadian,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -302,7 +345,11 @@ mod tests {
     fn mixing_australian_and_canadian_dialects() {
         assert_lint_count(
             "In summer we sit on the verandah and eat yogourt.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Australian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Australian,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -311,7 +358,11 @@ mod tests {
     fn mixing_canadian_and_australian_dialects() {
         assert_lint_count(
             "In summer we sit on the verandah and eat yogourt.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Canadian,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -320,7 +371,11 @@ mod tests {
     fn australian_and_canadian_spellings_that_are_not_american() {
         assert_lint_count(
             "In summer we sit on the verandah and eat yogourt.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::American,
+                SpellCheckConfig::default(),
+            ),
             2,
         );
     }
@@ -329,7 +384,11 @@ mod tests {
     fn australian_and_canadian_spellings_that_are_not_british() {
         assert_lint_count(
             "In summer we sit on the verandah and eat yogourt.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::British,
+                SpellCheckConfig::default(),
+            ),
             2,
         );
     }
@@ -338,7 +397,11 @@ mod tests {
     fn australian_labour_vs_labor() {
         assert_lint_count(
             "In Australia we write 'labour' but the political party is the 'Labor Party'.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Australian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Australian,
+                SpellCheckConfig::default(),
+            ),
             0,
         )
     }
@@ -347,7 +410,11 @@ mod tests {
     fn australian_words_flagged_for_american_english() {
         assert_lint_count(
             "There's an esky full of beers in the back of the ute.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::American,
+                SpellCheckConfig::default(),
+            ),
             2,
         );
     }
@@ -356,7 +423,11 @@ mod tests {
     fn american_words_not_flagged_for_australian_english() {
         assert_lint_count(
             "In general, utes have unibody construction while pickups have frames.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Australian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Australian,
+                SpellCheckConfig::default(),
+            ),
             0,
         );
     }
@@ -365,7 +436,11 @@ mod tests {
     fn abandonware_correction() {
         assert_suggestion_result(
             "abanonedware",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Australian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Australian,
+                SpellCheckConfig::default(),
+            ),
             "abandonware",
         );
     }
@@ -377,7 +452,11 @@ mod tests {
         // assert_suggestion_result(
         assert_top3_suggestion_result(
             "Abandonedware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::American,
+                SpellCheckConfig::default(),
+            ),
             "Abandonware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
         );
     }
@@ -386,7 +465,11 @@ mod tests {
     fn afterwards_not_us() {
         assert_lint_count(
             "afterwards",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::American,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -395,7 +478,11 @@ mod tests {
     fn afterward_is_us() {
         assert_lint_count(
             "afterward",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::American,
+                SpellCheckConfig::default(),
+            ),
             0,
         );
     }
@@ -404,7 +491,11 @@ mod tests {
     fn afterward_not_au() {
         assert_lint_count(
             "afterward",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Australian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Australian,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -413,7 +504,11 @@ mod tests {
     fn afterwards_is_au() {
         assert_lint_count(
             "afterwards",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Australian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Australian,
+                SpellCheckConfig::default(),
+            ),
             0,
         );
     }
@@ -422,7 +517,11 @@ mod tests {
     fn afterward_not_ca() {
         assert_lint_count(
             "afterward",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Canadian,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -431,7 +530,11 @@ mod tests {
     fn afterwards_is_ca() {
         assert_lint_count(
             "afterwards",
-            SpellCheck::new(FstDictionary::curated(), Dialect::Canadian, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::Canadian,
+                SpellCheckConfig::default(),
+            ),
             0,
         );
     }
@@ -440,7 +543,11 @@ mod tests {
     fn afterward_not_uk() {
         assert_lint_count(
             "afterward",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::British,
+                SpellCheckConfig::default(),
+            ),
             1,
         );
     }
@@ -449,7 +556,11 @@ mod tests {
     fn afterwards_is_uk() {
         assert_lint_count(
             "afterwards",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::British,
+                SpellCheckConfig::default(),
+            ),
             0,
         );
     }
@@ -458,7 +569,11 @@ mod tests {
     fn corrects_hes() {
         assert_suggestion_result(
             "hes",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::British,
+                SpellCheckConfig::default(),
+            ),
             "he's",
         );
     }
@@ -467,7 +582,11 @@ mod tests {
     fn corrects_shes() {
         assert_suggestion_result(
             "shes",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British, SpellCheckConfig::default()),
+            SpellCheck::new(
+                FstDictionary::curated(),
+                Dialect::British,
+                SpellCheckConfig::default(),
+            ),
             "she's",
         );
     }
@@ -477,12 +596,7 @@ mod tests {
 mod conditional {
     use super::{SpellCheck, SpellCheckConfig};
     use crate::spell::FstDictionary;
-    use crate::{
-        Dialect,
-        linting::tests::{
-            assert_lint_count
-        },
-    };
+    use crate::{Dialect, linting::tests::assert_lint_count};
 
     #[test]
     fn ignore_capitalized_word() {

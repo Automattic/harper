@@ -278,7 +278,7 @@ pub trait Linter: LSend {
     /// A user-facing description of what kinds of grammatical errors this rule looks for.
     /// It is usually shown in settings menus.
     fn description(&self) -> &str;
-    
+
     /// Update spell check configuration if this linter supports it.
     /// Default implementation does nothing.
     fn update_spell_check_config(&mut self, _config: SpellCheckConfig) {
