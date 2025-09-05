@@ -375,10 +375,7 @@ mod tests {
 
     #[test]
     fn no_lint_time_for_good_girl_to_bed() {
-        assert_no_lints(
-            "Time for this good girl to go to bed.",
-            ToTwoToo::default(),
-        );
+        assert_no_lints("Time for this good girl to go to bed.", ToTwoToo::default());
     }
 
     #[test]
