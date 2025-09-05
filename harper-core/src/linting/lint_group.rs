@@ -545,7 +545,7 @@ impl LintGroup {
 
         // Add spell check configuration options as toggleable rules
         out.config.set_rule_enabled("SpellCheckIgnoreCapitalized", false);
-        out.config.set_rule_enabled("SpellCheckIgnoreAbbreviations", true);
+        out.config.set_rule_enabled("SpellCheckIgnoreAbbreviations", false);
 
         out.add(
             "InflectedVerbAfterTo",
@@ -596,6 +596,8 @@ impl Default for LintGroup {
 
 impl Linter for LintGroup {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
+    
+
         // Sync spell check configuration with rule settings before linting
         let ignore_capitalized = self.config.is_rule_enabled("SpellCheckIgnoreCapitalized");
         let ignore_abbreviations = self.config.is_rule_enabled("SpellCheckIgnoreAbbreviations");
@@ -606,11 +608,9 @@ impl Linter for LintGroup {
             self.spell_check_config.ignore_capitalized = ignore_capitalized;
             self.spell_check_config.ignore_abbreviations = ignore_abbreviations;
             
-            // Update the SpellCheck linter's config
+            // Update the existing SpellCheck linter's config safely through the trait
             if let Some(spell_check_linter) = self.linters.get_mut("SpellCheck") {
-                if let Some(spell_check) = spell_check_linter.as_any_mut().downcast_mut::<SpellCheck<_>>() {
-                    spell_check.update_config(self.spell_check_config.clone());
-                }
+                spell_check_linter.update_spell_check_config(self.spell_check_config.clone());
             }
         }
 

@@ -122,6 +122,10 @@ fn check_abbrv(chars: &[char]) -> bool {
 
 
 impl<T: Dictionary> Linter for SpellCheck<T> {
+    fn update_spell_check_config(&mut self, config: SpellCheckConfig) {
+        self.config = config;
+    }
+
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
 
