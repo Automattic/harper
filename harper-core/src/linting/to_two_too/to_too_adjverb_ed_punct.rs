@@ -1,6 +1,6 @@
 use crate::char_string::CharStringExt;
 use crate::{
-    Token, TokenKind,
+    Token,
     expr::{Expr, SequenceExpr},
 };
 
