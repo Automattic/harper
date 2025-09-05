@@ -1,14 +1,38 @@
-mod to_too;
+mod to_too_adjective_end;
+mod to_too_adjective_punct;
+mod to_too_adverb;
+mod to_too_adjverb_ed_punct;
+mod to_too_chunk_start_comma;
+mod to_too_degree_words;
 mod to_too_eos;
+mod to_too_pronoun_end;
 mod too_to;
 
 use super::merge_linters::merge_linters;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
-use to_too::ToToo;
+use to_too_adjective_end::ToTooAdjectiveEnd;
+use to_too_adjective_punct::ToTooAdjectivePunct;
+use to_too_adverb::ToTooAdverb;
+use to_too_adjverb_ed_punct::ToTooAdjVerbEdPunct;
+use to_too_chunk_start_comma::ToTooChunkStartComma;
+use to_too_degree_words::ToTooDegreeWords;
 use to_too_eos::ToTooEos;
+use to_too_pronoun_end::ToTooPronounEnd;
 use too_to::TooTo;
 
-merge_linters!(ToTwoToo => ToToo, ToTooEos, TooTo => "Corrects homophone confusion between `to` and `too`.");
+merge_linters!(
+    ToTwoToo =>
+        ToTooAdjectiveEnd,
+        ToTooAdjectivePunct,
+        ToTooAdverb,
+        ToTooAdjVerbEdPunct,
+        ToTooChunkStartComma,
+        ToTooDegreeWords,
+        ToTooPronounEnd,
+        ToTooEos,
+        TooTo
+    => "Corrects homophone confusion between `to` and `too`."
+);
 
 #[cfg(test)]
 mod tests {
