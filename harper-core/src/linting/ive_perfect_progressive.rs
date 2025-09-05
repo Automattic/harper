@@ -231,4 +231,643 @@ mod tests {
             0,
         );
     }
+
+    // Additional generalized cases
+    // Contracted: I've/We've/You've/They've + gerund
+    #[test]
+    fn ive_working() {
+        assert_suggestion_result(
+            "I've working on it today.",
+            IvePerfectProgressive::default(),
+            "I'm working on it today.",
+        );
+    }
+    #[test]
+    fn weve_working() {
+        assert_suggestion_result(
+            "We've working on it today.",
+            IvePerfectProgressive::default(),
+            "We're working on it today.",
+        );
+    }
+    #[test]
+    fn youve_working() {
+        assert_suggestion_result(
+            "You've working on it today.",
+            IvePerfectProgressive::default(),
+            "You're working on it today.",
+        );
+    }
+    #[test]
+    fn theyve_working() {
+        assert_suggestion_result(
+            "They've working on it today.",
+            IvePerfectProgressive::default(),
+            "They're working on it today.",
+        );
+    }
+
+    #[test]
+    fn ive_eating() {
+        assert_suggestion_result(
+            "I've eating it today.",
+            IvePerfectProgressive::default(),
+            "I'm eating it today.",
+        );
+    }
+    #[test]
+    fn weve_eating() {
+        assert_suggestion_result(
+            "We've eating it today.",
+            IvePerfectProgressive::default(),
+            "We're eating it today.",
+        );
+    }
+    #[test]
+    fn youve_eating() {
+        assert_suggestion_result(
+            "You've eating it today.",
+            IvePerfectProgressive::default(),
+            "You're eating it today.",
+        );
+    }
+    #[test]
+    fn theyve_eating() {
+        assert_suggestion_result(
+            "They've eating it today.",
+            IvePerfectProgressive::default(),
+            "They're eating it today.",
+        );
+    }
+
+    #[test]
+    fn ive_reading() {
+        assert_suggestion_result(
+            "I've reading it today.",
+            IvePerfectProgressive::default(),
+            "I'm reading it today.",
+        );
+    }
+    #[test]
+    fn weve_reading() {
+        assert_suggestion_result(
+            "We've reading it today.",
+            IvePerfectProgressive::default(),
+            "We're reading it today.",
+        );
+    }
+    #[test]
+    fn youve_reading() {
+        assert_suggestion_result(
+            "You've reading it today.",
+            IvePerfectProgressive::default(),
+            "You're reading it today.",
+        );
+    }
+    #[test]
+    fn theyve_reading() {
+        assert_suggestion_result(
+            "They've reading it today.",
+            IvePerfectProgressive::default(),
+            "They're reading it today.",
+        );
+    }
+
+    #[test]
+    fn ive_writing() {
+        assert_suggestion_result(
+            "I've writing it today.",
+            IvePerfectProgressive::default(),
+            "I'm writing it today.",
+        );
+    }
+    #[test]
+    fn weve_writing() {
+        assert_suggestion_result(
+            "We've writing it today.",
+            IvePerfectProgressive::default(),
+            "We're writing it today.",
+        );
+    }
+    #[test]
+    fn youve_writing() {
+        assert_suggestion_result(
+            "You've writing it today.",
+            IvePerfectProgressive::default(),
+            "You're writing it today.",
+        );
+    }
+    #[test]
+    fn theyve_writing() {
+        assert_suggestion_result(
+            "They've writing it today.",
+            IvePerfectProgressive::default(),
+            "They're writing it today.",
+        );
+    }
+
+    #[test]
+    fn ive_speaking() {
+        assert_suggestion_result(
+            "I've speaking about it today.",
+            IvePerfectProgressive::default(),
+            "I'm speaking about it today.",
+        );
+    }
+    #[test]
+    fn weve_speaking() {
+        assert_suggestion_result(
+            "We've speaking about it today.",
+            IvePerfectProgressive::default(),
+            "We're speaking about it today.",
+        );
+    }
+    #[test]
+    fn youve_speaking() {
+        assert_suggestion_result(
+            "You've speaking about it today.",
+            IvePerfectProgressive::default(),
+            "You're speaking about it today.",
+        );
+    }
+    #[test]
+    fn theyve_speaking() {
+        assert_suggestion_result(
+            "They've speaking about it today.",
+            IvePerfectProgressive::default(),
+            "They're speaking about it today.",
+        );
+    }
+
+    #[test]
+    fn ive_studying() {
+        assert_suggestion_result(
+            "I've studying it today.",
+            IvePerfectProgressive::default(),
+            "I'm studying it today.",
+        );
+    }
+    #[test]
+    fn weve_studying() {
+        assert_suggestion_result(
+            "We've studying it today.",
+            IvePerfectProgressive::default(),
+            "We're studying it today.",
+        );
+    }
+    #[test]
+    fn youve_studying() {
+        assert_suggestion_result(
+            "You've studying it today.",
+            IvePerfectProgressive::default(),
+            "You're studying it today.",
+        );
+    }
+    #[test]
+    fn theyve_studying() {
+        assert_suggestion_result(
+            "They've studying it today.",
+            IvePerfectProgressive::default(),
+            "They're studying it today.",
+        );
+    }
+
+    #[test]
+    fn ive_testing() {
+        assert_suggestion_result(
+            "I've testing it today.",
+            IvePerfectProgressive::default(),
+            "I'm testing it today.",
+        );
+    }
+    #[test]
+    fn weve_testing() {
+        assert_suggestion_result(
+            "We've testing it today.",
+            IvePerfectProgressive::default(),
+            "We're testing it today.",
+        );
+    }
+    #[test]
+    fn youve_testing() {
+        assert_suggestion_result(
+            "You've testing it today.",
+            IvePerfectProgressive::default(),
+            "You're testing it today.",
+        );
+    }
+    #[test]
+    fn theyve_testing() {
+        assert_suggestion_result(
+            "They've testing it today.",
+            IvePerfectProgressive::default(),
+            "They're testing it today.",
+        );
+    }
+
+    #[test]
+    fn ive_using() {
+        assert_suggestion_result(
+            "I've using it today.",
+            IvePerfectProgressive::default(),
+            "I'm using it today.",
+        );
+    }
+    #[test]
+    fn weve_using() {
+        assert_suggestion_result(
+            "We've using it today.",
+            IvePerfectProgressive::default(),
+            "We're using it today.",
+        );
+    }
+    #[test]
+    fn youve_using() {
+        assert_suggestion_result(
+            "You've using it today.",
+            IvePerfectProgressive::default(),
+            "You're using it today.",
+        );
+    }
+    #[test]
+    fn theyve_using() {
+        assert_suggestion_result(
+            "They've using it today.",
+            IvePerfectProgressive::default(),
+            "They're using it today.",
+        );
+    }
+
+    // Non-contracted: I/We/You/They have + gerund
+    #[test]
+    fn i_have_working() {
+        assert_suggestion_result(
+            "I have working on it today.",
+            IvePerfectProgressive::default(),
+            "I'm working on it today.",
+        );
+    }
+    #[test]
+    fn we_have_working() {
+        assert_suggestion_result(
+            "We have working on it today.",
+            IvePerfectProgressive::default(),
+            "We're working on it today.",
+        );
+    }
+    #[test]
+    fn you_have_working() {
+        assert_suggestion_result(
+            "You have working on it today.",
+            IvePerfectProgressive::default(),
+            "You're working on it today.",
+        );
+    }
+    #[test]
+    fn they_have_working() {
+        assert_suggestion_result(
+            "They have working on it today.",
+            IvePerfectProgressive::default(),
+            "They're working on it today.",
+        );
+    }
+
+    #[test]
+    fn i_have_eating() {
+        assert_suggestion_result(
+            "I have eating it today.",
+            IvePerfectProgressive::default(),
+            "I'm eating it today.",
+        );
+    }
+    #[test]
+    fn we_have_eating() {
+        assert_suggestion_result(
+            "We have eating it today.",
+            IvePerfectProgressive::default(),
+            "We're eating it today.",
+        );
+    }
+    #[test]
+    fn you_have_eating() {
+        assert_suggestion_result(
+            "You have eating it today.",
+            IvePerfectProgressive::default(),
+            "You're eating it today.",
+        );
+    }
+    #[test]
+    fn they_have_eating() {
+        assert_suggestion_result(
+            "They have eating it today.",
+            IvePerfectProgressive::default(),
+            "They're eating it today.",
+        );
+    }
+
+    #[test]
+    fn i_have_reading() {
+        assert_suggestion_result(
+            "I have reading it today.",
+            IvePerfectProgressive::default(),
+            "I'm reading it today.",
+        );
+    }
+    #[test]
+    fn we_have_reading() {
+        assert_suggestion_result(
+            "We have reading it today.",
+            IvePerfectProgressive::default(),
+            "We're reading it today.",
+        );
+    }
+    #[test]
+    fn you_have_reading() {
+        assert_suggestion_result(
+            "You have reading it today.",
+            IvePerfectProgressive::default(),
+            "You're reading it today.",
+        );
+    }
+    #[test]
+    fn they_have_reading() {
+        assert_suggestion_result(
+            "They have reading it today.",
+            IvePerfectProgressive::default(),
+            "They're reading it today.",
+        );
+    }
+
+    #[test]
+    fn i_have_writing() {
+        assert_suggestion_result(
+            "I have writing it today.",
+            IvePerfectProgressive::default(),
+            "I'm writing it today.",
+        );
+    }
+    #[test]
+    fn we_have_writing() {
+        assert_suggestion_result(
+            "We have writing it today.",
+            IvePerfectProgressive::default(),
+            "We're writing it today.",
+        );
+    }
+    #[test]
+    fn you_have_writing() {
+        assert_suggestion_result(
+            "You have writing it today.",
+            IvePerfectProgressive::default(),
+            "You're writing it today.",
+        );
+    }
+    #[test]
+    fn they_have_writing() {
+        assert_suggestion_result(
+            "They have writing it today.",
+            IvePerfectProgressive::default(),
+            "They're writing it today.",
+        );
+    }
+
+    #[test]
+    fn i_have_speaking() {
+        assert_suggestion_result(
+            "I have speaking about it today.",
+            IvePerfectProgressive::default(),
+            "I'm speaking about it today.",
+        );
+    }
+    #[test]
+    fn we_have_speaking() {
+        assert_suggestion_result(
+            "We have speaking about it today.",
+            IvePerfectProgressive::default(),
+            "We're speaking about it today.",
+        );
+    }
+    #[test]
+    fn you_have_speaking() {
+        assert_suggestion_result(
+            "You have speaking about it today.",
+            IvePerfectProgressive::default(),
+            "You're speaking about it today.",
+        );
+    }
+    #[test]
+    fn they_have_speaking() {
+        assert_suggestion_result(
+            "They have speaking about it today.",
+            IvePerfectProgressive::default(),
+            "They're speaking about it today.",
+        );
+    }
+
+    #[test]
+    fn i_have_studying() {
+        assert_suggestion_result(
+            "I have studying it today.",
+            IvePerfectProgressive::default(),
+            "I'm studying it today.",
+        );
+    }
+    #[test]
+    fn we_have_studying() {
+        assert_suggestion_result(
+            "We have studying it today.",
+            IvePerfectProgressive::default(),
+            "We're studying it today.",
+        );
+    }
+    #[test]
+    fn you_have_studying() {
+        assert_suggestion_result(
+            "You have studying it today.",
+            IvePerfectProgressive::default(),
+            "You're studying it today.",
+        );
+    }
+    #[test]
+    fn they_have_studying() {
+        assert_suggestion_result(
+            "They have studying it today.",
+            IvePerfectProgressive::default(),
+            "They're studying it today.",
+        );
+    }
+
+    #[test]
+    fn i_have_testing() {
+        assert_suggestion_result(
+            "I have testing it today.",
+            IvePerfectProgressive::default(),
+            "I'm testing it today.",
+        );
+    }
+    #[test]
+    fn we_have_testing() {
+        assert_suggestion_result(
+            "We have testing it today.",
+            IvePerfectProgressive::default(),
+            "We're testing it today.",
+        );
+    }
+    #[test]
+    fn you_have_testing() {
+        assert_suggestion_result(
+            "You have testing it today.",
+            IvePerfectProgressive::default(),
+            "You're testing it today.",
+        );
+    }
+    #[test]
+    fn they_have_testing() {
+        assert_suggestion_result(
+            "They have testing it today.",
+            IvePerfectProgressive::default(),
+            "They're testing it today.",
+        );
+    }
+
+    #[test]
+    fn i_have_using() {
+        assert_suggestion_result(
+            "I have using it today.",
+            IvePerfectProgressive::default(),
+            "I'm using it today.",
+        );
+    }
+    #[test]
+    fn we_have_using() {
+        assert_suggestion_result(
+            "We have using it today.",
+            IvePerfectProgressive::default(),
+            "We're using it today.",
+        );
+    }
+    #[test]
+    fn you_have_using() {
+        assert_suggestion_result(
+            "You have using it today.",
+            IvePerfectProgressive::default(),
+            "You're using it today.",
+        );
+    }
+    #[test]
+    fn they_have_using() {
+        assert_suggestion_result(
+            "They have using it today.",
+            IvePerfectProgressive::default(),
+            "They're using it today.",
+        );
+    }
+
+    // Both-suggestion checks
+    #[test]
+    fn both_suggestions_ive_working() {
+        assert_good_and_bad_suggestions(
+            "I've working today.",
+            IvePerfectProgressive::default(),
+            &["I'm working today.", "I've been working today."],
+            &[],
+        );
+    }
+    #[test]
+    fn both_suggestions_we_have_reading() {
+        assert_good_and_bad_suggestions(
+            "We have reading it today.",
+            IvePerfectProgressive::default(),
+            &["We're reading it today.", "We have been reading it today."],
+            &[],
+        );
+    }
+    #[test]
+    fn both_suggestions_youve_reading() {
+        assert_good_and_bad_suggestions(
+            "You've reading today.",
+            IvePerfectProgressive::default(),
+            &["You're reading today.", "You've been reading today."],
+            &[],
+        );
+    }
+    #[test]
+    fn both_suggestions_they_have_writing() {
+        assert_good_and_bad_suggestions(
+            "They have writing today.",
+            IvePerfectProgressive::default(),
+            &["They're writing today.", "They have been writing today."],
+            &[],
+        );
+    }
+
+    // Non-match and allowed-form checks
+    fn no_match_punctuation_contracted() {
+        assert_lint_count("I've, working today.", IvePerfectProgressive::default(), 0);
+    }
+    #[test]
+    fn no_match_punctuation_non_contracted() {
+        assert_lint_count(
+            "I have, working today.",
+            IvePerfectProgressive::default(),
+            0,
+        );
+    }
+    #[test]
+    fn no_match_adverb_interruption() {
+        assert_lint_count(
+            "I have quickly working today.",
+            IvePerfectProgressive::default(),
+            0,
+        );
+    }
+    #[test]
+    fn allowed_contracted_have_been() {
+        assert_lint_count(
+            "You've been studying today.",
+            IvePerfectProgressive::default(),
+            0,
+        );
+    }
+    #[test]
+    fn allowed_non_contracted_have_been() {
+        assert_lint_count(
+            "You have been studying today.",
+            IvePerfectProgressive::default(),
+            0,
+        );
+    }
+    #[test]
+    fn allowed_they_have_been() {
+        assert_lint_count(
+            "They have been testing today.",
+            IvePerfectProgressive::default(),
+            0,
+        );
+    }
+    #[test]
+    fn allowed_theyve_been() {
+        assert_lint_count(
+            "They've been testing today.",
+            IvePerfectProgressive::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn capitalization_variants_non_contracted() {
+        assert_suggestion_result(
+            "WE HAVE working today.",
+            IvePerfectProgressive::default(),
+            "WE'RE working today.",
+        );
+    }
+    #[test]
+    fn newline_variants_non_contracted() {
+        assert_suggestion_result(
+            "We have\nworking on it today.",
+            IvePerfectProgressive::default(),
+            "We're\nworking on it today.",
+        );
+    }
 }
