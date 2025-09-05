@@ -10,7 +10,7 @@ pub struct IvePerfectProgressive {
 
 impl Default for IvePerfectProgressive {
     fn default() -> Self {
-        let expr = SequenceExpr::aco("I've")
+        let expr = SequenceExpr::word_set(&["I've", "We've", "You've", "They've"])
             .t_ws()
             .then_kind_both(TokenKind::is_verb, TokenKind::is_verb_progressive_form);
 
@@ -26,23 +26,42 @@ impl ExprLinter for IvePerfectProgressive {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let ive_tok = toks.iter().find(|t| t.kind.is_word())?;
-        let span = ive_tok.span;
+        let have_tok = toks.iter().find(|t| t.kind.is_word())?;
+        let span = have_tok.span;
+
+        // Determine correct progressive replacement for the matched contraction
+        let matched_str: String = span.get_content(src).into_iter().collect();
+        let lower = matched_str.to_lowercase();
+        let progressive_replacement = if lower.starts_with("i'v") {
+            "I'm"
+        } else if lower.starts_with("we'v") {
+            "We're"
+        } else if lower.starts_with("you'v") {
+            "You're"
+        } else if lower.starts_with("they'v") {
+            "They're"
+        } else {
+            // Fallback: default to replacing with present progressive of be for safety
+            "I'm"
+        };
 
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![
-                Suggestion::replace_with_match_case("I'm".chars().collect(), span.get_content(src)),
+                Suggestion::replace_with_match_case(
+                    progressive_replacement.chars().collect(),
+                    span.get_content(src),
+                ),
                 Suggestion::InsertAfter(" been".chars().collect()),
             ],
-            message: "Use present progressive (`I'm …`) or present perfect progressive (`I've been …`) instead of `I've …ing`.".to_string(),
+            message: "Use present progressive (`…'re/…'m …`) or present perfect progressive (`…'ve been …`) instead of `…'ve …ing`.".to_string(),
             priority: 31,
         })
     }
 
     fn description(&self) -> &'static str {
-        "Detects the ungrammatical pattern `I've` followed directly by a gerund (e.g., `I've looking`) and suggests either the present progressive (`I'm …`) or the present perfect progressive (`I've been …`)."
+        "Detects the ungrammatical pattern `<pronoun>'ve` (e.g., `I've`, `We've`, `You've`, `They've`) followed directly by a gerund and suggests either the present progressive (e.g., `I'm/We're/You're/They're …`) or the present perfect progressive (e.g., `I've/We've/You've/They've been …`)."
     }
 }
 
@@ -88,12 +107,20 @@ mod tests {
 
     #[test]
     fn allows_ive_been_looking() {
-        assert_lint_count("I've been looking into it.", IvePerfectProgressive::default(), 0);
+        assert_lint_count(
+            "I've been looking into it.",
+            IvePerfectProgressive::default(),
+            0,
+        );
     }
 
     #[test]
     fn allows_ive_seen() {
-        assert_lint_count("I've seen the results.", IvePerfectProgressive::default(), 0);
+        assert_lint_count(
+            "I've seen the results.",
+            IvePerfectProgressive::default(),
+            0,
+        );
     }
 
     #[test]
@@ -131,5 +158,13 @@ mod tests {
             "I'M looking into it.",
         );
     }
-}
 
+    #[test]
+    fn works_for_weve() {
+        assert_suggestion_result(
+            "We've looking into it.",
+            IvePerfectProgressive::default(),
+            "We're looking into it.",
+        );
+    }
+}
