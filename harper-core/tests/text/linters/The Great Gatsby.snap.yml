@@ -597,19 +597,19 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    WordChoice (127 priority)
 Message: |
      411 | “Things went from bad to worse,” suggested Miss Baker.
-         |                       ^~ Use `too` (with two `o`’s) when indicating excess or addition.
+         |                       ^~ Use `too` here to mean ‘also’ or an excessive degree.
 Suggest:
   - Replace with: “too”
 
 
 
-Lint:    Typo (31 priority)
+Lint:    WordChoice (127 priority)
 Message: |
      413 | “Yes. Things went from bad to worse, until finally he had to give up his
-         |                            ^~ Use `too` (with two `o`’s) when indicating excess or addition.
+         |                            ^~ Use `too` here to mean ‘also’ or an excessive degree.
 Suggest:
   - Replace with: “too”
 
@@ -825,6 +825,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      661 | which screens their obscure operations from your sight.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+     659 | invisible track, gives out a ghastly creak, and comes to rest, and immediately
+         |                                                       ^~ Use `too` here to mean ‘also’ or an excessive degree.
+     660 | the ash-gray men swarm up with leaden spades and stir up an impenetrable cloud,
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -1315,6 +1325,15 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    1050 | “Why did you, Myrtle?” demanded Catherine. “Nobody forced you to.”
+         |                                                               ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     1062 | She pointed suddenly at me, and every one looked at me accusingly. I tried to
@@ -1365,6 +1384,15 @@ Message: |
 Suggest:
   - Replace with: “him”
   - Replace with: “I”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    1103 | with it. I’ve got to get another one to-morrow. I’m going to make a list of all
+         |                                      ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -1677,6 +1705,15 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    1292 | “Sure I did. I was going to wear it to-night, but it was too big in the bust and
+         |                                     ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     1307 | A thrill passed over all of us. The three Mr. Mumbles bent forward and listened
@@ -1694,16 +1731,6 @@ Suggest:
   - Replace with: “skeptically”
   - Replace with: “scenically”
   - Replace with: “ascetically”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    1331 | escort, a persistent undergraduate given to violent innuendo, and obviously
-         |                                          ^~ Use `too` (with two `o`’s) when indicating excess or addition.
-    1332 | under the impression that sooner or later Jordan was going to yield him up her
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -2018,6 +2045,16 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    1636 | “Good night.” He smiled—and suddenly there seemed to be a pleasant significance
+    1637 | in having been among the last to go, as if he had desired it all the time. “Good
+         |                               ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1642 | scene. In the ditch beside the road, right side up, but violently shorn of one
@@ -2039,6 +2076,16 @@ Suggest:
   - Replace with: “coup”
   - Replace with: “coupe”
   - Replace with: “coups”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    1667 | “Don’t ask me,” said Owl Eyes, washing his hands of the whole matter. “I know
+    1668 | very little about driving—next to nothing. It happened, and that’s all I know.”
+         |                                ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -3016,6 +3063,16 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    1908 | “Good morning, old sport. You’re having lunch with me to-day and I thought we’d
+         |                                                       ^~ Use `too` here to mean ‘also’ or an excessive degree.
+    1909 | ride up together.”
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1911 | He was balancing himself on the dashboard of his car with that resourcefulness
@@ -3163,6 +3220,16 @@ Suggest:
   - Replace with: “gnawing”
   - Replace with: “gearings”
   - Replace with: “gratings”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    2024 | “I’m going to make a big request of you to-day,” he said, pocketing his
+         |                                         ^~ Use `too` here to mean ‘also’ or an excessive degree.
+    2025 | souvenirs with satisfaction, “so I thought you ought to know something about me.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -3908,6 +3975,16 @@ Message: |
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    2719 | “This is a terrible mistake,” he said, shaking his head from side to side, ‘‘a
+         |                                                                   ^~ Use `too` here to mean ‘also’ or an excessive degree.
+    2720 | terrible, terrible mistake.”
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2737 | I walked out the back way—just as Gatsby had when he had made his nervous
@@ -4303,15 +4380,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    3079 | To young Gatz, resting on his oars and looking up at the railed deck, that yacht
-         | ^~ Use `too` (with two `o`’s) when indicating excess or addition.
-Suggest:
-  - Replace with: “Too”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3079 | To young Gatz, resting on his oars and looking up at the railed deck, that yacht
@@ -4447,6 +4515,24 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    3195 | Gatsby looked at me questioningly. He wanted to go, and he didn’t see that Mr.
+         |                                              ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    3225 | “Come on,” said Mr. Sloane to Tom, “we’re late. We've got to go.” And then to
+         |                                                           ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     3235 | in my memory from Gatsby’s other parties that summer. There were the same
@@ -4554,6 +4640,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3353 | inhabitants along a short-cut from nothing to nothing. She saw something awful
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    3353 | inhabitants along a short-cut from nothing to nothing. She saw something awful
+         |                                            ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -4952,6 +5047,15 @@ Message: |
          |                            ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    3754 | “Are we just going to go?” she objected. “Like this? Aren’t we going to let any
+         |                    ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -5364,6 +5468,15 @@ Message: |
 
 Lint:    WordChoice (127 priority)
 Message: |
+    4185 | At this point Jordan and I tried to go, but Tom and Gatsby insisted with
+         |                                  ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
     4192 | “I told you what’s been going on,” said Gatsby. “Going on for five years—and you
          |         ^~~ The possessive version of this word is more common in this context.
 Suggest:
@@ -5449,6 +5562,15 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    4343 | The voice begged again to go.
+         |                        ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Repetition (127 priority)
 Message: |
     4347 | Her frightened eyes told that whatever intentions, whatever courage she had had,
@@ -5476,6 +5598,15 @@ Message: |
          |    ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    4373 | “No . . . I just remembered that to-day’s my birthday.”
+         |                                  ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -5657,6 +5788,16 @@ Suggest:
   - Replace with: “glamorously”
   - Replace with: “clamorous”
   - Replace with: “clangorously”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    4473 | doorposts with both hands. Some man was talking to him in a low voice and
+    4474 | attempting, from time to time, to lay a hand on his shoulder, but Wilson neither
+         |                       ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -5941,6 +6082,24 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    4694 | “All night, if necessary. Anyhow, till they all go to bed.”
+         |                                                    ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    4729 | “I want to wait here till Daisy goes to bed. Good night, old sport.”
+         |                                      ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     4739 | Toward dawn I heard a taxi go up Gatsby’s drive, and immediately I jumped out of
@@ -6075,6 +6234,15 @@ Suggest:
   - Replace with: “Leakey's”
   - Replace with: “Leave's”
   - Replace with: “Leaven's”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    4924 | “Don’t do it to-day,” Gatsby answered. He turned to me apologetically. “You
+         |              ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -6247,6 +6415,24 @@ Message: |
          |                     ^~~~~~~~~~ Did you mean the closed compound noun “workbench”?
 Suggest:
   - Replace with: “workbench”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    5065 | “Have you got a church you go to sometimes, George? Maybe even if you haven’t
+         |                               ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    5069 | “Don’t belong to any.”
+         |               ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
