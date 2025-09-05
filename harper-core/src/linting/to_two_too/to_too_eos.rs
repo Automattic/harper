@@ -30,7 +30,7 @@ impl Default for ToTooEos {
 
 impl Linter for ToTooEos {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
-        let matches = self.expr.iter_matches_in_doc(&document);
+        let matches = self.expr.iter_matches_in_doc(document);
 
         matches
             .map(|m| {
