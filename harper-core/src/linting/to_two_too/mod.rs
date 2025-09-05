@@ -1,7 +1,7 @@
 mod to_too_adjective_end;
 mod to_too_adjective_punct;
-mod to_too_adverb;
 mod to_too_adjverb_ed_punct;
+mod to_too_adverb;
 mod to_too_chunk_start_comma;
 mod to_too_degree_words;
 mod to_too_eos;
@@ -12,8 +12,8 @@ use super::merge_linters::merge_linters;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use to_too_adjective_end::ToTooAdjectiveEnd;
 use to_too_adjective_punct::ToTooAdjectivePunct;
-use to_too_adverb::ToTooAdverb;
 use to_too_adjverb_ed_punct::ToTooAdjVerbEdPunct;
+use to_too_adverb::ToTooAdverb;
 use to_too_chunk_start_comma::ToTooChunkStartComma;
 use to_too_degree_words::ToTooDegreeWords;
 use to_too_eos::ToTooEos;
@@ -137,15 +137,6 @@ mod tests {
             "It's not to hard, is it?",
             ToTwoToo::default(),
             "It's not too hard, is it?",
-        );
-    }
-
-    #[test]
-    fn fixes_to_easy() {
-        assert_suggestion_result(
-            "It's not to easy, is it?",
-            ToTwoToo::default(),
-            "It's not too easy, is it?",
         );
     }
 

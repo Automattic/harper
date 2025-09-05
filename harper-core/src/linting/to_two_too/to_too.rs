@@ -36,13 +36,11 @@ impl Default for ToToo {
             .then_adverb()
             .then_optional(WhitespacePattern)
             .then_any_of(vec![
-                Box::new(
-                    SequenceExpr::default().then_kind_is_but_is_not_except(
-                        TokenKind::is_punctuation,
-                        |_| false,
-                        &["`", "\"", "'", "“", "”", "‘", "’"],
-                    ),
-                ),
+                Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
+                    TokenKind::is_punctuation,
+                    |_| false,
+                    &["`", "\"", "'", "“", "”", "‘", "’"],
+                )),
                 Box::new(SequenceExpr::default().then_unless(SequenceExpr::default().t_any())),
             ]);
 
@@ -102,13 +100,11 @@ impl Default for ToToo {
             .t_ws()
             .t_aco("to")
             .then_any_of(vec![
-                Box::new(
-                    SequenceExpr::default().then_kind_is_but_is_not_except(
-                        TokenKind::is_punctuation,
-                        |_| false,
-                        &["`", "\"", "'", "“", "”", "‘", "’"],
-                    ),
-                ),
+                Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
+                    TokenKind::is_punctuation,
+                    |_| false,
+                    &["`", "\"", "'", "“", "”", "‘", "’"],
+                )),
                 Box::new(AnchorEnd),
             ]);
 
@@ -174,7 +170,11 @@ impl ExprLinter for ToToo {
             while j < tokens.len() && tokens[j].kind.is_whitespace() {
                 j += 1;
             }
-            let after_next_non_ws = if j < tokens.len() { Some(&tokens[j]) } else { None };
+            let after_next_non_ws = if j < tokens.len() {
+                Some(&tokens[j])
+            } else {
+                None
+            };
 
             // Branch: degree words
             if matches!(next_lower.as_str(), "many" | "much" | "few") {
@@ -243,34 +243,5 @@ impl ExprLinter for ToToo {
 
     fn description(&self) -> &str {
         "Corrects mistaken `to` to `too` when it means ‘also’ or an excessive degree."
-    }
-}
-
-// Intentionally no debug tests here; behavior is covered in the composite tests.
-#[cfg(test)]
-mod local_dbg {
-    use super::ToToo;
-    use crate::{Document, TokenKind, expr::ExprExt};
-
-    #[test]
-    fn dbg_tokens_too_easy() {
-        let s = "It's not to easy, is it?";
-        let doc = Document::new_markdown_default_curated(s);
-        for (i, tok) in doc.get_tokens().iter().enumerate() {
-            let t = doc.get_span_content_str(&tok.span);
-            println!(
-                "i={} t='{}' ws={} punct={} adj={} verb={} adv={}",
-                i,
-                t,
-                tok.kind.is_whitespace(),
-                tok.kind.is_punctuation(),
-                tok.kind.is_adjective(),
-                tok.kind.is_verb(),
-                tok.kind.is_adverb(),
-            );
-        }
-        let l = ToToo::default();
-        let matches = l.expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
-        println!("matches = {:?}", matches);
     }
 }
