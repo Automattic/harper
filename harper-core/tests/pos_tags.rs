@@ -43,6 +43,7 @@
 //!   - Verbs are denoted by `V`.
 //!     - The `L` suffix means linking verb.
 //!     - The `X` suffix means auxiliary verb.
+//!     - The `B` suffix means base (lemma) form.
 //!     - The `P` suffix means regular past tense & past participle.
 //!     - The `Pr` suffix means progressive form.
 //!     - The `Pt` suffix means simple past tense.
@@ -147,7 +148,7 @@ fn format_word_tag(word: &WordMetadata) -> String {
         add_bool(&mut tag, "X", verb.is_auxiliary);
         if let Some(forms) = verb.verb_forms {
             if forms.contains(VerbFormFlags::LEMMA) {
-                tag.push_str("L");
+                tag.push_str("B");
             }
             if forms.contains(VerbFormFlags::PAST) {
                 tag.push_str("P");
