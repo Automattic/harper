@@ -103,6 +103,15 @@ pub fn lint_group() -> LintGroup {
             "The name of the word `the` is `definite article`.",
             LintKind::Usage
         ),
+        "DigestiveTract" => (
+            &[
+                ("digestive track", "digestive tract"),
+                ("digestive tracks", "digestive tracts"),
+            ],
+            "The correct term is digestive `tract`.",
+            "Corrects `digestive track` to `digestive tract`.",
+            LintKind::WordChoice
+        ),
         "Discuss" => (
             &[
                 ("discuss about", "discuss"),

@@ -163,6 +163,26 @@ fn corrects_definite_articles_lowercase() {
     );
 }
 
+// DigestiveTract
+
+#[test]
+fn dont_flag_digestive_track() {
+    assert_suggestion_result(
+        "In infants less than a year old, because their digestive track is not finished developing yet",
+        lint_group(),
+        "In infants less than a year old, because their digestive tract is not finished developing yet",
+    );
+}
+
+#[test]
+fn corrects_digestive_tracks() {
+    assert_suggestion_result(
+        "The digestive tracks of mammals are complex and diverse, with each species having its own unique digestive system.",
+        lint_group(),
+        "The digestive tracts of mammals are complex and diverse, with each species having its own unique digestive system.",
+    );
+}
+
 // Discuss
 // -none-
 
