@@ -1,6 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
@@ -58,7 +59,8 @@ impl ExprLinter for NominalWants {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let subject = toks.first()?;
         let offender = &toks.last()?;
 

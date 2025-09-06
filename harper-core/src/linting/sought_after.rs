@@ -1,5 +1,5 @@
-use crate::expr::{Expr, SequenceExpr, SpaceOrHyphen};
-use crate::{Token, TokenKind};
+use crate::TokenKind;
+use crate::expr::{Expr, MatchInfo, SequenceExpr, SpaceOrHyphen};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -39,7 +39,8 @@ impl ExprLinter for SoughtAfter {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let span = toks[2].span;
 
         Some(Lint {

@@ -1,5 +1,5 @@
 use super::{ExprLinter, Lint, LintKind};
-use crate::expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr};
+use crate::expr::{All, Expr, FirstMatchOf, FixedPhrase, MatchInfo, SequenceExpr};
 use crate::linting::Suggestion;
 use crate::patterns::{Invert, Word, WordSet};
 use crate::{CharStringExt, Token, TokenKind};
@@ -73,7 +73,8 @@ impl ExprLinter for ThenThan {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let mut thans_and_thens = matched_tokens.iter().filter(|tok| {
             tok.span
                 .get_content(source)

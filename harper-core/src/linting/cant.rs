@@ -1,6 +1,6 @@
 use super::{ExprLinter, Suggestion};
 use crate::Lint;
-use crate::expr::{Expr, LongestMatchOf, SequenceExpr};
+use crate::expr::{Expr, LongestMatchOf, MatchInfo, SequenceExpr};
 use crate::linting::LintKind;
 use crate::linting::expr_linter::find_the_only_token_matching;
 use crate::{CharStringExt, Token};
@@ -52,7 +52,8 @@ impl ExprLinter for Cant {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let token = find_the_only_token_matching(toks, src, |tok, src| {
             tok.span
                 .get_content(src)

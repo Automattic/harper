@@ -1,6 +1,6 @@
 use crate::{
-    CharStringExt, Token, TokenStringExt,
-    expr::{Expr, FirstMatchOf, SequenceExpr},
+    CharStringExt, TokenStringExt,
+    expr::{Expr, FirstMatchOf, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, WordSet},
 };
@@ -39,7 +39,8 @@ impl ExprLinter for NoMatchFor {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let prep_tok = toks.last()?;
         let prep_chars = prep_tok.span.get_content(src);
         if prep_chars.eq_ignore_ascii_case_chars(&['f', 'o', 'r']) {

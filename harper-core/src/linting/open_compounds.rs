@@ -1,4 +1,4 @@
-use crate::expr::{Expr, LongestMatchOf, SequenceExpr};
+use crate::expr::{Expr, LongestMatchOf, MatchInfo, SequenceExpr};
 use crate::{Lrc, Token, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -70,7 +70,8 @@ impl ExprLinter for OpenCompounds {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_toks: &[Token], source_chars: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source_chars: &[char]) -> Option<Lint> {
+        let matched_toks = match_info.matched_tokens;
         // Because we don't have anything like regex captures we need to find which token matched which compound
         let index = self
             .compound_to_phrase

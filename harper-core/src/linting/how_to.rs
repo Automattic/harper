@@ -2,7 +2,7 @@ use harper_brill::UPOS;
 
 use crate::{
     CharStringExt, Token, TokenKind, TokenStringExt,
-    expr::{All, Expr, OwnedExprExt, SequenceExpr},
+    expr::{All, Expr, MatchInfo, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, UPOSSet},
 };
@@ -67,7 +67,8 @@ impl ExprLinter for HowTo {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, _src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let span = toks[2..4].span()?;
         let fix: Vec<char> = "to ".chars().collect();
 
