@@ -721,6 +721,10 @@ impl WordMetadata {
         self.orth_info.contains(OrthFlags::APOSTROPHE)
     }
 
+    pub fn is_roman_numerals(&self) -> bool {
+        self.orth_info.contains(OrthFlags::ROMAN_NUMERALS)
+    }
+
     /// Same thing as [`Self::or`], except in-place rather than a clone.
     pub fn append(&mut self, other: &Self) -> &mut Self {
         *self = self.or(other);
