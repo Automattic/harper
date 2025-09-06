@@ -205,10 +205,20 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                     }
                     ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function"][..],
                     ['l', 'a', 'y', 'o', 'u', 't'] => &["estimation"][..],
-                    ['m', 'a', 'r', 'k', 'u', 'p'] => &["languages"][..],
+                    ['m', 'a', 'r', 'k', 'u', 'p'] => &["language", "languages"][..],
                     ['p', 'l', 'a', 'y', 'b', 'a', 'c', 'k'] => &["latency"][..],
-                    ['p', 'l', 'u', 'g', 'i', 'n'] => &["architecture"][..],
+                    ['p', 'l', 'u', 'g', 'i', 'n'] => &[
+                        "architecture",
+                        "development",
+                        "docs",
+                        "ecosystem",
+                        "files",
+                        "interface",
+                        "packages",
+                        "suite",
+                    ][..],
                     ['r', 'o', 'l', 'l', 'o', 'u', 't'] => &["logic", "status"][..],
+                    ['t', 'h', 'r', 'o', 'w', 'b', 'a', 'c', 'k'] => &["machine"][..],
                     ['w', 'o', 'r', 'k', 'o', 'u', 't'] => &["constraints", "preference"][..],
                     _ => &[],
                 }
@@ -663,5 +673,58 @@ mod tests {
             "Plugin for text editors and IDEs.",
             PhrasalVerbAsCompoundNoun::default(),
         );
+    }
+
+    #[test]
+    fn dont_flag_markup_language() {
+        assert_no_lints(
+            "Markup language used for websites & web apps.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_plugin_ecosystem_or_plugin_development() {
+        assert_no_lints(
+            "## 🧩 Plugin Ecosystem\n### Plugin Development",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_plugin_files_or_plugin_packages() {
+        assert_no_lints(
+            "plugin files between plugin packages installed with pip must have unique filenames.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_plugin_docs() {
+        assert_no_lints(
+            "building your own plugin: [Plugin Docs]",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_plugin_suite() {
+        assert_no_lints(
+            "An all-in-one digital audio workstation (DAW) and plugin suite.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_hacker_news_throwback_machine() {
+        assert_no_lints(
+            "| Hacker News Throwback Machine | Shows what was popular on Hacker News on this day in previous years.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_plugin_interface() {
+        assert_no_lints("[Plugin interface]", PhrasalVerbAsCompoundNoun::default());
     }
 }

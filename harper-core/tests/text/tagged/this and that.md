@@ -4,8 +4,8 @@
 # NSg/R NSg/I . Nᴹ/Vg/J        NSg/IPl+ VL3 NSg/J     .
 >
 #
-> This    document contains various sentences that          use   " this    " , " that          " , " these  " , and
-# I/Ddem+ NSg/V+   V3       J+      NPl/V3+   NSg/I/C/Ddem+ NSg/V . I/Ddem+ . . . NSg/I/C/Ddem+ . . . I/Ddem . . V/C
+> This    document contains various sentences that          use     " this    " , " that          " , " these  " , and
+# I/Ddem+ NSg/V+   V3       J+      NPl/V3+   NSg/I/C/Ddem+ N🅪Sg/VB . I/Ddem+ . . . NSg/I/C/Ddem+ . . . I/Ddem . . V/C
 > " those  " in      different contexts with a   lot   of edge   cases   .
 # . I/Ddem . NPr/J/P NSg/J     NPl/V3   P    D/P NPr/V P  NSg/V+ NPl/V3+ .
 >
@@ -51,9 +51,9 @@
 >
 #
 > That          could  be      a    solution .
-# NSg/I/C/Ddem+ NSg/VX NSg/VXL D/P+ NSg+     .
+# NSg/I/C/Ddem+ NSg/VX NSg/VXB D/P+ NSg+     .
 > Find  all           candidates that          could  be      a    solution .
-# NSg/V NSg/I/J/C/Dq+ NPl/V3+    NSg/I/C/Ddem+ NSg/VX NSg/VXL D/P+ NSg+     .
+# NSg/V NSg/I/J/C/Dq+ NPl/V3+    NSg/I/C/Ddem+ NSg/VX NSg/VXB D/P+ NSg+     .
 >
 #
 > This    is  all          that         I    have   .
