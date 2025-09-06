@@ -1182,9 +1182,6 @@ fn spacial_attention() {
     assert_suggestion_result("spacial attention", lint_group(), "special attention");
 }
 
-// SpokeTooSoon
-// -none-
-
 // Starving
 // -none-
 
