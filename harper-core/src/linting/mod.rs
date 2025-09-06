@@ -106,6 +106,7 @@ mod pronoun_knew;
 mod proper_noun_capitalization_linters;
 mod punctuation_clusters;
 mod quantifier_needs_of;
+mod quite_quiet;
 mod redundant_additive_adverbs;
 mod regionalisms;
 mod repeated_words;
@@ -138,6 +139,7 @@ mod whereas;
 mod widely_accepted;
 mod win_prize;
 mod wordpress_dotcom;
+mod would_never_have;
 
 pub use a_part::APart;
 pub use adjective_double_degree::AdjectiveDoubleDegree;
@@ -229,6 +231,7 @@ pub use pronoun_contraction::PronounContraction;
 pub use pronoun_inflection_be::PronounInflectionBe;
 pub use punctuation_clusters::PunctuationClusters;
 pub use quantifier_needs_of::QuantifierNeedsOf;
+pub use quite_quiet::QuiteQuiet;
 pub use redundant_additive_adverbs::RedundantAdditiveAdverbs;
 pub use regionalisms::Regionalisms;
 pub use repeated_words::RepeatedWords;
@@ -261,6 +264,7 @@ pub use whereas::Whereas;
 pub use widely_accepted::WidelyAccepted;
 pub use win_prize::WinPrize;
 pub use wordpress_dotcom::WordPressDotcom;
+pub use would_never_have::WouldNeverHave;
 
 use crate::{Document, LSend, render_markdown};
 

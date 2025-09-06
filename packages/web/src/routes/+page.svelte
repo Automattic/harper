@@ -46,22 +46,22 @@ function agentHas(keyword) {
 
   {#if agentHas("firefox")}
 	  <a href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-	  	><FirefoxLogo width="40px" height="40px" />Firefox Extension</a
+	  	><FirefoxLogo width="40px" height="40px" />Add to Firefox</a
 	  >
   {:else}
 	  <a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-	  	><ChromeLogo width="40px" height="40px" />Chrome Extension</a
+	  	><ChromeLogo width="40px" height="40px" />Add to Chrome</a
 	  >
   {/if}
 
 	<a href="/docs/integrations/obsidian" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-		><ObsidianLogo width="40px" height="40px" />Obsidian Plugin</a
+		><ObsidianLogo width="40px" height="40px" />Install in Obsidian</a
 	>
 
 	<a
 		href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
 		class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-		><CodeLogo width="40px" height="40px" />Code Plugin</a
+		><CodeLogo width="40px" height="40px" />Install in VS Code</a
 	>
 	<a href="https://elijahpotter.dev" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><img
@@ -74,6 +74,10 @@ function agentHas(keyword) {
 	>
 </div>
 
+<div class="w-full h-[800px] overflow-hidden">
+	<Editor />
+</div>
+
 <Section noChild>
 	<span slot="title"> What is it? </span>
 	<span slot="subtitle">
@@ -82,10 +86,6 @@ function agentHas(keyword) {
 		shortcomings of the competition.
 	</span>
 </Section>
-
-<div class="w-full h-[800px] overflow-hidden">
-	<Editor />
-</div>
 
 <Section>
 	<span slot="title">Private</span>
@@ -110,9 +110,9 @@ function agentHas(keyword) {
 		>, so you can get fantastic grammar checking anywhere you work.
 		<br /><br /> That said, we take extra care to make sure the
 		<a href="/docs/integrations/visual-studio-code"
-			>Visual Studio Code</a
-		>, <a href="/docs/integrations/neovim">Neovim</a>,
-		<a href="/docs/integrations/obsidian">Obsidian</a>, and <a href="/docs/integrations/chrome-extension">Chrome</a> integrations are amazing.
+			>Install in Visual Studio Code</a
+		>, <a href="/docs/integrations/neovim">Use in Neovim</a>,
+		<a href="/docs/integrations/obsidian">Install in Obsidian</a>, and <a href="/docs/integrations/chrome-extension">Add to Chrome</a> integrations are amazing.
 	</span>
 
 	<img
