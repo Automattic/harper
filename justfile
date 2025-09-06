@@ -591,8 +591,15 @@ newest-dict-changes *numCommits:
     });
   });
 
-getnps a:
-  cargo run --bin harper-cli -- nominal-phrases "{{a}}"
+# List the nominal phrases in the input string or file.
+getnps text:
+  cargo run --bin harper-cli -- nominal-phrases "{{text}}"
+
+# Print the input string or file with nominal phrases highlighted.
+getnps-color text:
+  cargo run --bin harper-cli -- nominal-phrases --colour "{{text}}"
+
+alias getnps-colour := getnps-color
 
 # Suggest annotations for a potential new property annotation
 suggestannotation input:
