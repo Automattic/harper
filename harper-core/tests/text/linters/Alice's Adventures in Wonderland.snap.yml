@@ -1619,18 +1619,6 @@ Suggest:
 
 
 
-Lint:    Agreement (31 priority)
-Message: |
-    1484 | begin lessons: you’d only have to whisper a hint to Time, and round goes the
-    1485 | clock in a twinkling! Half-past one, time for dinner!”
-         |          ^~~~~~~~~~~ `twinkling` is a mass noun.
-Suggest:
-  - Replace with: “twinkling”
-  - Replace with: “some twinkling”
-  - Replace with: “a piece of twinkling”
-
-
-
 Lint:    WordChoice (63 priority)
 Message: |
     1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
