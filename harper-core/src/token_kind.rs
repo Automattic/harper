@@ -83,6 +83,7 @@ impl TokenKind {
         is_third_person_pronoun,
         is_third_person_singular_pronoun,
         is_third_person_plural_pronoun,
+        is_subject_pronoun,
         is_object_pronoun,
         is_possessive_noun,
         is_possessive_pronoun,
