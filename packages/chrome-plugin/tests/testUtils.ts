@@ -44,20 +44,20 @@ export function getHarperHighlights(page: Page): Locator {
 export async function clickHarperHighlight(page: Page): Promise<boolean> {
 	const highlights = getHarperHighlights(page);
 
-	if ((await highlights.count()) == 0) {
+	// Wait briefly for at least one highlight to appear.
+	// If none appear within a reasonable time, return false.
+	try {
+		await highlights.first().waitFor({ state: 'visible', timeout: 5000 });
+	} catch {
 		return false;
 	}
 
 	const box = await highlights.first().boundingBox();
+	if (box == null) return false;
 
-	if (box == null) {
-		return false;
-	}
-
-	// Locate the center of the element.
+	// Locate the center of the element and click to open the popup.
 	const cx = box.x + box.width / 2;
 	const cy = box.y + box.height / 2;
-
 	await page.mouse.click(cx, cy);
 	return true;
 }
@@ -102,10 +102,13 @@ export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
 
 		await page.waitForTimeout(6000);
 
-		await clickHarperHighlight(page);
+		// Open the popup for the first highlight and click Ignore.
+		const opened = await clickHarperHighlight(page);
+		expect(opened).toBe(true);
 		await page.getByTitle('Ignore this lint').click();
 
-		await page.waitForTimeout(3000);
+		// Wait for highlights to disappear after ignoring.
+		await expect(getHarperHighlights(page)).toHaveCount(0);
 
 		// Nothing should change.
 		expect(editor).toHaveValue(cacheSalt);
