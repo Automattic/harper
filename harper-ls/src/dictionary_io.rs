@@ -1,7 +1,7 @@
 use itertools::Itertools;
 use std::path::Path;
 
-use harper_core::WordMetadata;
+use harper_core::LexemeMetadata;
 use harper_core::spell::{Dictionary, MutableDictionary};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
@@ -56,7 +56,7 @@ async fn dict_from_word_list(mut r: impl AsyncRead + Unpin) -> Result<MutableDic
     let mut dict = MutableDictionary::new();
     dict.extend_words(
         str.lines()
-            .map(|l| (l.chars().collect::<Vec<char>>(), WordMetadata::default())),
+            .map(|l| (l.chars().collect::<Vec<char>>(), LexemeMetadata::default())),
     );
 
     Ok(dict)
@@ -97,7 +97,7 @@ mod tests {
     fn get_test_unsorted_dict() -> MutableDictionary {
         let mut test_unsorted_dict = MutableDictionary::new();
         test_unsorted_dict.extend_words(
-            TEST_UNSORTED_WORDS.map(|w| (w.chars().collect::<Vec<_>>(), WordMetadata::default())),
+            TEST_UNSORTED_WORDS.map(|w| (w.chars().collect::<Vec<_>>(), LexemeMetadata::default())),
         );
         test_unsorted_dict
     }
