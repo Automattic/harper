@@ -1,6 +1,5 @@
 use crate::{
-    Token,
-    expr::{Expr, FixedPhrase, SequenceExpr},
+    expr::{Expr, FixedPhrase, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     token_string_ext::TokenStringExt,
 };
@@ -41,7 +40,8 @@ impl ExprLinter for WouldNeverHave {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let modal_have_toks = toks.first()?;
         let modal_have_chars = modal_have_toks.span.get_content(src);
         let modal_have_str = modal_have_toks.span.get_content_string(src).to_lowercase();

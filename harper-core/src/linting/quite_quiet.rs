@@ -1,4 +1,4 @@
-use crate::expr::{Expr, FirstMatchOf, SequenceExpr};
+use crate::expr::{Expr, FirstMatchOf, MatchInfo, SequenceExpr};
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{CharStringExt, Token, TokenKind, TokenStringExt};
 
@@ -53,7 +53,8 @@ impl ExprLinter for QuiteQuiet {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let text = toks.span()?.get_content_string(src).to_lowercase();
 
         if text.ends_with("quite") {
