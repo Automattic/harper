@@ -385,4 +385,12 @@ mod tests {
             ToTwoToo::default(),
         );
     }
+
+    #[test]
+    fn no_lint_till_she_too_began_dreaming() {
+        assert_no_lints(
+            "till she too began dreaming after a fashion",
+            ToTwoToo::default(),
+        );
+    }
 }

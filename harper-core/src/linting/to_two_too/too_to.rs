@@ -36,6 +36,12 @@ impl ExprLinter for TooTo {
         let span = too_token.span;
         let text = span.get_content(source);
 
+        if let Some(next_tok) = matched_tokens.get(2) {
+            if next_tok.kind.is_upos(UPOS::VERB) && !next_tok.kind.is_verb_lemma() {
+                return None;
+            }
+        }
+
         Some(Lint {
             span,
             lint_kind: LintKind::Typo,

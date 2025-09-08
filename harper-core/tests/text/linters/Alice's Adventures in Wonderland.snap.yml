@@ -3361,16 +3361,6 @@ Message: |
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    2961 | watching the setting sun, and thinking of little Alice and all her wonderful
-    2962 | Adventures, till she too began dreaming after a fashion, and this was her
-         |                      ^~~ Use the infinitive marker `to` here instead of the adverb `too`, which indicates excess degree.
-Suggest:
-  - Replace with: “to”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     2965 | First, she dreamed of little Alice herself, and once again the tiny hands were

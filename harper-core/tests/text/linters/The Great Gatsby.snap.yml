@@ -3842,16 +3842,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    2557 | was wrong. He waited a moment longer, hoping I’d begin a conversation, but I was
-    2558 | too absorbed to be responsive, so he went unwillingly home.
-         | ^~~ Use the infinitive marker `to` here instead of the adverb `too`, which indicates excess degree.
-Suggest:
-  - Replace with: “to”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2561 | sleep as I entered my front door. So I don’t know whether or not Gatsby went to
