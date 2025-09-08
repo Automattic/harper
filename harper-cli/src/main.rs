@@ -169,9 +169,6 @@ enum Args {
     NominalPhrases {
         /// The text or file to analyze. If not provided, it will be read from standard input.
         input: Option<Input>,
-        /// Use colored output instead of detailed position information
-        #[arg(short, long)]
-        colour: bool,
     },
 }
 
@@ -752,7 +749,7 @@ fn main() -> anyhow::Result<()> {
             }
             Ok(())
         }
-        Args::NominalPhrases { input, colour } => {
+        Args::NominalPhrases { input } => {
             // Get input from either file or direct text
             let input = match input {
                 Some(Input::File(path)) => std::fs::read_to_string(path)?,
@@ -778,7 +775,7 @@ fn main() -> anyhow::Result<()> {
                 if start > last_end {
                     let span = Span::new(last_end, start);
                     let txt = doc.get_span_content_str(&span);
-                    if !txt.trim().is_empty() && colour {
+                    if !txt.trim().is_empty() {
                         print!("{}", txt);
                     }
                 }
@@ -787,11 +784,7 @@ fn main() -> anyhow::Result<()> {
                 let span = Span::new(start, end);
                 let txt = doc.get_span_content_str(&span);
 
-                if colour {
-                    print!("\x1b[33m{}\x1b[0m", txt);
-                } else {
-                    println!("{}", txt);
-                }
+                print!("\x1b[33m{}\x1b[0m", txt);
 
                 last_end = end;
             }
@@ -801,14 +794,12 @@ fn main() -> anyhow::Result<()> {
             if last_end < doc_len {
                 let span = Span::new(last_end, doc_len);
                 let txt = doc.get_span_content_str(&span);
-                if !txt.trim().is_empty() && colour {
+                if !txt.trim().is_empty() {
                     print!("{}", txt);
                 }
             }
 
-            if colour {
-                println!();
-            }
+            println!();
 
             Ok(())
         }
