@@ -84,6 +84,8 @@ impl Expr for SequenceExpr {
 impl SequenceExpr {
     // Constructor methods
 
+    // Single word token methods
+
     /// Construct a new sequence with a [`Word`] at the beginning of the operation list.
     pub fn any_capitalization_of(word: &'static str) -> Self {
         Self::default().then_any_capitalization_of(word)
@@ -94,17 +96,31 @@ impl SequenceExpr {
         Self::any_capitalization_of(word)
     }
 
-    /// Match the first of multiple expressions.
-    pub fn any_of(exprs: Vec<Box<dyn Expr>>) -> Self {
-        Self::default().then_any_of(exprs)
-    }
-
     /// Match any word from the given set of words, case-insensitive.
     pub fn word_set(words: &'static [&'static str]) -> Self {
         Self::default().then_word_set(words)
     }
 
-    // General builder methods
+    /// Match any word.
+    pub fn any_word() -> Self {
+        Self::default().then_any_word()
+    }
+
+    // Expressions of more than one token
+
+    // Multiple expressions
+
+    /// Match the first of multiple expressions.
+    pub fn any_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+        Self::default().then_any_of(exprs)
+    }
+
+    /// Will be accepted unless the condition matches.
+    pub fn unless(condition: impl Expr + 'static) -> Self {
+        Self::default().then_unless(condition)
+    }
+
+    // Builder methods
 
     /// Push an [expression](Expr) to the operation list.
     pub fn then(mut self, expr: impl Expr + 'static) -> Self {
