@@ -1430,18 +1430,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     610 | the State wherein they reside. No State shall make or enforce any law which
-     611 | shall abridge the privileges or immunities of citizens of the United States;
-         |                                 ^~~~~~~~~~ Did you mean to spell `immunities` this way?
-Suggest:
-  - Replace with: “immunity's”
-  - Replace with: “immensities”
-  - Replace with: “immunizes”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      616 | The right of citizens of the United States, who are eighteen years of age or
