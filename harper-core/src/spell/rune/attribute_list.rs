@@ -387,7 +387,6 @@ fn is_really_roman_numerals(word: &[char]) -> bool {
         return false;
     }
 
-    println!("Valid roman numeral: {}", s);
     true
 }
 
