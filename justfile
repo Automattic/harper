@@ -84,7 +84,7 @@ dev-web: build-harperjs build-content-framework
   pnpm dev
 
 # Build the Harper website.
-build-web: build-harperjs
+build-web: build-harperjs build-content-framework
   #!/usr/bin/env bash
   set -eo pipefail
   
