@@ -9,6 +9,8 @@ use crate::document::Document;
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
 
+
+
 pub struct SpellCheck<T>
 where
     T: Dictionary,
@@ -16,6 +18,7 @@ where
     dictionary: T,
     word_cache: LruCache<CharString, Vec<CharString>>,
     dialect: Dialect,
+    pub(crate) ignore_all_caps: bool,
 }
 
 impl<T: Dictionary> SpellCheck<T> {
@@ -24,10 +27,44 @@ impl<T: Dictionary> SpellCheck<T> {
             dictionary,
             word_cache: LruCache::new(NonZero::new(10000).unwrap()),
             dialect,
+            ignore_all_caps: false,
         }
     }
 
     const MAX_SUGGESTIONS: usize = 3;
+
+    fn is_all_caps(&self, word: &[char]) -> bool {
+        if word.len() <= 1 {
+            return false;
+        }
+
+        let word_str: String = word.iter().collect();
+        let word_str = word_str.as_str();
+        
+        // Check for allowed single suffixes only: 's, 'd, ed, s
+        let suffixes = ["'s", "'d", "ed", "s"];
+        
+        for suffix in &suffixes {
+            if let Some(stem) = word_str.strip_suffix(suffix) {
+                if !stem.is_empty() {
+                    let stem_chars: Vec<char> = stem.chars().collect();
+                    // Check if stem is all caps (ignoring non-alphabetic characters)
+                    if stem_chars.iter().all(|c| c.is_uppercase() || !c.is_alphabetic()) {
+                        // Make sure the stem doesn't end with another suffix
+                        for other_suffix in &suffixes {
+                            if stem.ends_with(other_suffix) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        // If no suffix matches, check the whole word
+        word.iter().all(|c| c.is_uppercase() || !c.is_alphabetic())
+    }
 
     fn suggest_correct_spelling(&mut self, word: &[char]) -> Vec<CharString> {
         if let Some(hit) = self.word_cache.get(word) {
@@ -66,12 +103,19 @@ impl<T: Dictionary> SpellCheck<T> {
     }
 }
 
+
+
 impl<T: Dictionary> Linter for SpellCheck<T> {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
 
         for word in document.iter_words() {
             let word_chars = document.get_span_content(&word.span);
+
+            // Skip all-caps words if flag is set
+            if self.ignore_all_caps && self.is_all_caps(word_chars) {
+                continue;
+            }
 
             if let Some(metadata) = word.kind.as_word().unwrap()
                 && metadata.dialects.is_dialect_enabled(self.dialect)
@@ -123,6 +167,10 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
     fn description(&self) -> &'static str {
         "Looks and provides corrections for misspelled words."
+    }
+
+    fn configure_spell_check(&mut self, ignore_all_caps: bool) {
+        self.ignore_all_caps = ignore_all_caps;
     }
 }
 
@@ -385,6 +433,54 @@ mod tests {
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             0,
         );
+    }
+
+    #[test]
+    fn ignore_all_caps_with_suffixes() {
+        let mut spell_check = SpellCheck::new(FstDictionary::curated(), Dialect::American);
+        spell_check.ignore_all_caps = true;
+        
+        // These should be ignored (all caps + allowed suffixes)
+        assert_lint_count("APIs", spell_check, 0);
+        spell_check = SpellCheck::new(FstDictionary::curated(), Dialect::American);
+        spell_check.ignore_all_caps = true;
+        
+        assert_lint_count("CPU's", spell_check, 0);
+        spell_check = SpellCheck::new(FstDictionary::curated(), Dialect::American);
+        spell_check.ignore_all_caps = true;
+        
+        assert_lint_count("API'd", spell_check, 0);
+    }
+
+    #[test]
+    fn dont_ignore_suffix_combinations() {
+        let mut spell_check = SpellCheck::new(FstDictionary::curated(), Dialect::American);
+        spell_check.ignore_all_caps = true;
+        
+        // Should NOT be ignored (combination of suffixes)
+        assert_lint_count("CPUsed", spell_check, 1);
+    }
+
+    #[test]
+    fn ignore_all_caps_basic() {
+        let mut spell_check = SpellCheck::new(FstDictionary::curated(), Dialect::American);
+        spell_check.ignore_all_caps = true;
+        
+        // Should be ignored (all caps)
+        assert_lint_count("API", spell_check, 0);
+        spell_check = SpellCheck::new(FstDictionary::curated(), Dialect::American);
+        spell_check.ignore_all_caps = true;
+        
+        assert_lint_count("CPU", spell_check, 0);
+    }
+
+    #[test]
+    fn dont_ignore_mixed_case() {
+        let mut spell_check = SpellCheck::new(FstDictionary::curated(), Dialect::American);
+        spell_check.ignore_all_caps = true;
+        
+        // Should still lint mixed case misspellings
+        assert_lint_count("speling", spell_check, 1);
     }
 
     #[test]

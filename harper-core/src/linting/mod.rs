@@ -286,6 +286,10 @@ pub trait Linter: LSend {
     /// A user-facing description of what kinds of grammatical errors this rule looks for.
     /// It is usually shown in settings menus.
     fn description(&self) -> &str;
+    /// Configure spell check behavior. Default implementation does nothing.
+    fn configure_spell_check(&mut self, _ignore_all_caps: bool) {
+        // Default: do nothing
+    }
 }
 
 /// A blanket-implemented trait that renders the Markdown description field of a linter to HTML.

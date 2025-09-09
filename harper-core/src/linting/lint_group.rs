@@ -139,6 +139,26 @@ use crate::linting::{
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 
+/// A modifier linter that configures SpellCheck to ignore ALL CAPS words.
+/// This linter produces no lints itself - it only modifies SpellCheck behavior.
+pub struct SpellCheckIgnoreAllCaps;
+
+impl Default for SpellCheckIgnoreAllCaps {
+    fn default() -> Self {
+        Self
+    }
+}
+
+impl Linter for SpellCheckIgnoreAllCaps {
+    fn lint(&mut self, _document: &Document) -> Vec<Lint> {
+        Vec::new() // Produces no lints
+    }
+
+    fn description(&self) -> &'static str {
+        "When enabled, configures spell check to ignore ALL CAPS words."
+    }
+}
+
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
     S: Serializer,
@@ -527,6 +547,9 @@ impl LintGroup {
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
 
+        out.add("SpellCheckIgnoreAllCaps", SpellCheckIgnoreAllCaps::default());
+        out.config.set_rule_enabled("SpellCheckIgnoreAllCaps", false);
+
         out.add(
             "InflectedVerbAfterTo",
             InflectedVerbAfterTo::new(dictionary.clone()),
@@ -578,9 +601,17 @@ impl Linter for LintGroup {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut results = Vec::new();
 
+        // Check for spell check flags before running linters
+        let ignore_all_caps_enabled = self.config.is_rule_enabled("SpellCheckIgnoreAllCaps");
+
         // Normal linters
         for (key, linter) in &mut self.linters {
             if self.config.is_rule_enabled(key) {
+                // Configure SpellCheck before running
+                if key == "SpellCheck" {
+                    linter.configure_spell_check(ignore_all_caps_enabled);
+                }
+                
                 results.extend(linter.lint(document));
             }
         }
