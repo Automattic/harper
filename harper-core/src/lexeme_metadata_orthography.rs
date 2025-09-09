@@ -18,12 +18,14 @@ pub enum Orthography {
     Hyphenated = 1 << 6,
     /// Contains an apostrophe, so it's a possessive or a contraction.
     Apostrophe = 1 << 7,
+    /// Could be Roman numerals.
+    RomanNumerals = 1 << 8,
 }
 
 /// The underlying type used for OrthographyFlags.
 /// At the time of writing, this is currently a `u8`. If we want to define more than 8 orthographic
 /// properties in the future, we will need to switch this to a larger type.
-type OrthographyFlagsUnderlyingType = u8;
+type OrthographyFlagsUnderlyingType = u16;
 
 bitflags::bitflags! {
     /// A collection of bit flags used to represent orthographic properties of a word.
@@ -40,6 +42,7 @@ bitflags::bitflags! {
         const MULTIWORD = Orthography::Multiword as OrthographyFlagsUnderlyingType;
         const HYPHENATED = Orthography::Hyphenated as OrthographyFlagsUnderlyingType;
         const APOSTROPHE = Orthography::Apostrophe as OrthographyFlagsUnderlyingType;
+        const ROMAN_NUMERALS = Orthography::RomanNumerals as OrthographyFlagsUnderlyingType;
     }
 }
 impl Default for OrthFlags {

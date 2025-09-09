@@ -742,9 +742,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.5.45"
+version = "4.5.47"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1fc0e74a703892159f5ae7d3aac52c8e6c392f5ae5f359c70b5881d60aaac318"
+checksum = "7eac00902d9d136acd712710d71823fb8ac8004ca445a89e73a41d45aa712931"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -752,9 +752,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.5.44"
+version = "4.5.47"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b3e7f4214277f3c7aa526a59dd3fbe306a370daee1f8b7b8c987069cd8e888a8"
+checksum = "2ad9bbf750e73b5884fb8a211a9424a1906c1e156724260fdae972f31d70e1d6"
 dependencies = [
  "anstream",
  "anstyle",
@@ -764,9 +764,9 @@ dependencies = [
 
 [[package]]
 name = "clap_derive"
-version = "4.5.45"
+version = "4.5.47"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "14cb31bb0a7d536caef2639baa7fad459e15c3144efefa6dbd1c84562c4739f6"
+checksum = "bbfd7eae0b0f1a6e63d4b13c9c478de77c2eb546fba158ad50b4203dc24b9f9c"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -2287,7 +2287,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "0.61.0"
+version = "0.62.0"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -2319,7 +2319,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "0.61.0"
+version = "0.62.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2354,14 +2354,14 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.61.0"
+version = "0.62.0"
 dependencies = [
  "ammonia",
  "bitflags 2.9.3",
  "blanket",
  "cached",
  "criterion",
- "foldhash 0.1.5",
+ "foldhash 0.2.0",
  "fst",
  "harper-brill",
  "hashbrown 0.16.0",
@@ -2391,7 +2391,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.61.0"
+version = "0.62.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2402,7 +2402,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.61.0"
+version = "0.62.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2413,7 +2413,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.61.0"
+version = "0.62.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2441,7 +2441,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "0.61.0"
+version = "0.62.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2460,7 +2460,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.61.0"
+version = "0.62.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2471,7 +2471,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.61.0"
+version = "0.62.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2490,7 +2490,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.61.0"
+version = "0.62.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -4729,9 +4729,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter"
-version = "0.25.8"
+version = "0.25.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d7b8994f367f16e6fa14b5aebbcb350de5d7cbea82dc5b00ae997dd71680dd2"
+checksum = "ccd2a058a86cfece0bf96f7cce1021efef9c8ed0e892ab74639173e5ed7a34fa"
 dependencies = [
  "cc",
  "regex",
@@ -4844,9 +4844,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-javascript"
-version = "0.23.1"
+version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf40bf599e0416c16c125c3cec10ee5ddc7d1bb8b0c60fa5c4de249ad34dc1b1"
+checksum = "68204f2abc0627a90bdf06e605f5c470aa26fdcb2081ea553a04bdad756693f5"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -5139,9 +5139,9 @@ checksum = "06abde3611657adf66d383f00b093d7faecc7fa57071cce2578660c9f1010821"
 
 [[package]]
 name = "uuid"
-version = "1.18.0"
+version = "1.18.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f33196643e165781c20a5ead5582283a7dacbb87855d867fbc2df3f81eddc1be"
+checksum = "2f87b8aa10b915a06587d0dec516c282ff295b475d94abf425d62b57710070a2"
 dependencies = [
  "getrandom 0.3.3",
  "js-sys",

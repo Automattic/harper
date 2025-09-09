@@ -140,6 +140,7 @@ impl Document {
         self.condense_filename_extensions();
         self.condense_tldr();
         self.condense_ampersand_pairs();
+        self.condense_slash_pairs();
         self.match_quotes();
 
         let chunker = burn_chunker();
@@ -682,28 +683,36 @@ impl Document {
         self.tokens.remove_indices(to_remove);
     }
 
-    /// Condenses "R&D" or "Q&A" down to a single word token.
-    fn condense_ampersand_pairs(&mut self) {
+    /// Allows condensing of delimited pairs of tokens into a single token.
+    ///
+    /// # Arguments
+    ///
+    /// * `is_delimiter` - A function that returns `true` if the token is a delimiter.
+    /// * `valid_pairs` - A slice of tuples representing the valid pairs of tokens to condense.
+    ///
+    fn condense_delimited_pairs<F>(&mut self, is_delimiter: F, valid_pairs: &[(char, char)])
+    where
+        F: Fn(&TokenKind) -> bool,
+    {
         if self.tokens.len() < 3 {
             return;
         }
 
         let mut to_remove = VecDeque::new();
-        // The number of tokens we look at, minus 1
         let mut cursor = 2;
 
         loop {
             let l1 = &self.tokens[cursor - 2];
-            let and = &self.tokens[cursor - 1];
+            let delim = &self.tokens[cursor - 1];
             let l2 = &self.tokens[cursor];
 
-            let is_letter_amp_letter_chunk = l1.kind.is_word()
+            let is_delimited_chunk = l1.kind.is_word()
                 && l1.span.len() == 1
-                && and.kind.is_ampersand()
+                && is_delimiter(&delim.kind)
                 && l2.kind.is_word()
                 && l2.span.len() == 1;
 
-            if is_letter_amp_letter_chunk {
+            if is_delimited_chunk {
                 let (l1, l2) = (
                     l1.span.get_content(&self.source).first(),
                     l2.span.get_content(&self.source).first(),
@@ -711,10 +720,8 @@ impl Document {
 
                 let is_valid_pair = match (l1, l2) {
                     (Some(l1), Some(l2)) => {
-                        matches!(
-                            (l1.to_ascii_lowercase(), l2.to_ascii_lowercase()),
-                            ('r', 'd') | ('q', 'a')
-                        )
+                        let pair = (l1.to_ascii_lowercase(), l2.to_ascii_lowercase());
+                        valid_pairs.contains(&pair)
                     }
                     _ => false,
                 };
@@ -729,16 +736,52 @@ impl Document {
                 }
             }
 
-            // Skip ahead since we've processed these tokens
             cursor += 1;
-
             if cursor >= self.tokens.len() {
                 break;
             }
         }
 
-        // Remove the marked tokens in reverse order to maintain correct indices
         self.tokens.remove_indices(to_remove);
+    }
+
+    // Condenses "ampersand pairs" such as "R&D" or "Q&A" into single tokens.
+    fn condense_ampersand_pairs(&mut self) {
+        self.condense_delimited_pairs(
+            |kind| kind.is_ampersand(),
+            &[
+                ('b', 'b'), // bed & breakfast
+                ('b', 'w'), // black & white
+                ('g', 't'), // gin & tonic
+                ('k', 'r'), // Kernighan & Ritchie
+                ('q', 'a'), // question & answer
+                ('r', 'b'), // rhythm & blues
+                ('r', 'd'), // research & development
+                ('r', 'r'), // rest & relaxation
+                ('s', 'p'), // Standard & Poor's
+            ],
+        );
+    }
+
+    // Condenses "slash pairs" such as "I/O" into single tokens.
+    fn condense_slash_pairs(&mut self) {
+        self.condense_delimited_pairs(
+            |kind| kind.is_slash(),
+            &[
+                ('a', 'c'), // aircon; alternating current
+                ('b', 'w'), // black and white
+                ('c', 'o'), // care of
+                ('d', 'c'), // direct current
+                ('d', 'l'), // download
+                ('i', 'o'), // input/output
+                ('j', 'k'), // just kidding
+                ('n', 'a'), // not applicable
+                ('r', 'c'), // radio control
+                ('s', 'n'), // serial number
+                ('y', 'n'), // yes/no
+                ('y', 'o'), // years old
+            ],
+        );
     }
 
     fn uncached_ellipsis_pattern() -> Lrc<Repeating> {
@@ -1204,5 +1247,12 @@ mod tests {
         let doc = Document::new_plain_english_curated("R&A or Q&D");
         assert!(doc.tokens.len() == 9);
         assert!(doc.tokens[1].kind.is_ampersand() || doc.tokens[7].kind.is_ampersand());
+    }
+
+    #[test]
+    fn condense_io() {
+        let doc = Document::new_plain_english_curated("I/O");
+        assert!(doc.tokens.len() == 1);
+        assert!(doc.tokens[0].kind.is_word());
     }
 }
