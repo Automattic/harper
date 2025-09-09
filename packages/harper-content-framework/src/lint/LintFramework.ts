@@ -28,18 +28,18 @@ export default class LintFramework {
 	private lintProvider: (text: string, domain: string) => Promise<Lint[]>;
 	/** Actions wired by host environment (extension/app). */
 	private actions: {
-		ignoreLint: (hash: string) => Promise<void>;
-		getActivationKey: () => Promise<ActivationKey>;
-		openOptions: () => Promise<void>;
+		ignoreLint?: (hash: string) => Promise<void>;
+		getActivationKey?: () => Promise<ActivationKey>;
+		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 	};
 
 	constructor(
 		lintProvider: (text: string, domain: string) => Promise<Lint[]>,
 		actions: {
-			ignoreLint: (hash: string) => Promise<void>;
-			getActivationKey: () => Promise<ActivationKey>;
-			openOptions: () => Promise<void>;
+			ignoreLint?: (hash: string) => Promise<void>;
+			getActivationKey?: () => Promise<ActivationKey>;
+			openOptions?: () => Promise<void>;
 			addToUserDictionary?: (words: string[]) => Promise<void>;
 		},
 	) {

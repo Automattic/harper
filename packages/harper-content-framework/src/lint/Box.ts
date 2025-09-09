@@ -18,7 +18,7 @@ export type LintBox = Box & {
 };
 
 export type IgnorableLintBox = LintBox & {
-	ignoreLint: () => Promise<void>;
+	ignoreLint?: () => Promise<void>;
 };
 
 /** Get a box that represents the screen. */

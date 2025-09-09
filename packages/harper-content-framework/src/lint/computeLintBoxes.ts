@@ -18,7 +18,7 @@ function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement
 export default function computeLintBoxes(
 	el: HTMLElement,
 	lint: UnpackedLint,
-	opts: { ignoreLint: (hash: string) => Promise<void> },
+	opts: { ignoreLint?: (hash: string) => Promise<void> },
 ): IgnorableLintBox[] {
 	try {
 		let range: Range | TextFieldRange | null = null;
@@ -73,7 +73,7 @@ export default function computeLintBoxes(
 						: (el.textContent ?? '');
 					replaceValue(el, applySuggestion(current, lint.span, sug));
 				},
-				ignoreLint: () => opts.ignoreLint(lint.context_hash),
+				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});
 		}
 		return boxes;

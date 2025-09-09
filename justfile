@@ -75,7 +75,7 @@ build-wp: build-harperjs
   pnpm plugin-zip
 
 # Compile the website's dependencies and start a development server. Note that if you make changes to `harper-wasm`, you will have to re-run this command.
-dev-web: build-harperjs
+dev-web: build-harperjs build-content-framework
   #!/usr/bin/env bash
   set -eo pipefail
 

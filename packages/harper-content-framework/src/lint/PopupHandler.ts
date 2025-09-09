@@ -33,14 +33,14 @@ export default class PopupHandler {
 	private pointerDownCallback: (e: PointerEvent) => void;
 	private activationKeyListener: (() => void) | undefined;
 	private readonly actions: {
-		getActivationKey: () => Promise<ActivationKey>;
-		openOptions: () => Promise<void>;
+		getActivationKey?: () => Promise<ActivationKey>;
+		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 	};
 
 	constructor(actions: {
-		getActivationKey: () => Promise<ActivationKey>;
-		openOptions: () => Promise<void>;
+		getActivationKey?: () => Promise<ActivationKey>;
+		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 	}) {
 		this.actions = actions;
@@ -59,13 +59,17 @@ export default class PopupHandler {
 	private updateActivationKeyListener() {
 		if (this.activationKeyListener) {
 			this.activationKeyListener();
+			this.activationKeyListener = undefined;
 		}
 
-		this.actions.getActivationKey().then((key) => {
-			if (key !== 'off') {
-				this.activationKeyListener = monitorActivationKey(() => this.openClosestToCaret(), key);
-			}
-		});
+		const getKey = this.actions.getActivationKey;
+		if (getKey) {
+			getKey().then((key) => {
+				if (key !== 'off') {
+					this.activationKeyListener = monitorActivationKey(() => this.openClosestToCaret(), key);
+				}
+			});
+		}
 	}
 
 	/** Tries to get the current caret position.

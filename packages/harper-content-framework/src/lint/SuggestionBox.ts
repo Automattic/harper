@@ -49,7 +49,7 @@ function header(
 	title: string,
 	color: string,
 	onClose: () => void,
-	openOptions: () => Promise<void>,
+	openOptions?: () => Promise<void>,
 ): any {
 	const closeButton = h(
 		'button',
@@ -62,20 +62,23 @@ function header(
 		'×',
 	);
 
-	const settingsButton = h(
-		'button',
-		{
-			className: 'harper-gear-btn',
-			onclick: () => {
-				openOptions();
-			},
-			title: 'Settings',
-			'aria-label': 'Settings',
-		},
-		'⚙',
-	);
+	const settingsButton = openOptions
+		? h(
+				'button',
+				{
+					className: 'harper-gear-btn',
+					onclick: () => {
+						openOptions();
+					},
+					title: 'Settings',
+					'aria-label': 'Settings',
+				},
+				'⚙',
+			)
+		: undefined;
 
-	const controls = h('div', { className: 'harper-controls' }, [settingsButton, closeButton]);
+	const controlsChildren = settingsButton ? [settingsButton, closeButton] : [closeButton];
+	const controls = h('div', { className: 'harper-controls' }, controlsChildren);
 	const titleEl = h('span', {}, title);
 
 	return h(
@@ -262,7 +265,7 @@ function styleTag() {
 	]);
 }
 
-function ignoreLint(onIgnore: () => void): any {
+function ignoreLint(onIgnore: () => void | Promise<void>): any {
 	return button(
 		'Ignore',
 		{ background: '#e5e5e5', color: '#000000', fontWeight: 'lighter' },
@@ -274,7 +277,7 @@ function ignoreLint(onIgnore: () => void): any {
 export default function SuggestionBox(
 	box: IgnorableLintBox,
 	actions: {
-		openOptions: () => Promise<void>;
+		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 	},
 	close: () => void,
@@ -316,10 +319,10 @@ export default function SuggestionBox(
 					close();
 				}),
 				[
-					box.lint.lint_kind === 'Spelling'
+					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary
 						? addToDictionary(box, actions.addToUserDictionary)
 						: undefined,
-					ignoreLint(box.ignoreLint),
+					box.ignoreLint ? ignoreLint(box.ignoreLint) : undefined,
 				],
 			),
 		],
