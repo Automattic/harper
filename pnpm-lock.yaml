@@ -323,6 +323,9 @@ importers:
       chart.js:
         specifier: ^4.4.8
         version: 4.4.8
+      harper-content-framework:
+        specifier: workspace:*
+        version: link:../harper-content-framework
       harper.js:
         specifier: workspace:*
         version: link:../harper.js
