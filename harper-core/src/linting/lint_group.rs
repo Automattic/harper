@@ -547,8 +547,12 @@ impl LintGroup {
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
 
-        out.add("SpellCheckIgnoreAllCaps", SpellCheckIgnoreAllCaps::default());
-        out.config.set_rule_enabled("SpellCheckIgnoreAllCaps", false);
+        out.add(
+            "SpellCheckIgnoreAllCaps",
+            SpellCheckIgnoreAllCaps::default(),
+        );
+        out.config
+            .set_rule_enabled("SpellCheckIgnoreAllCaps", false);
 
         out.add(
             "InflectedVerbAfterTo",
@@ -611,7 +615,7 @@ impl Linter for LintGroup {
                 if key == "SpellCheck" {
                     linter.configure_spell_check(ignore_all_caps_enabled);
                 }
-                
+
                 results.extend(linter.lint(document));
             }
         }
@@ -736,5 +740,125 @@ mod tests {
                 panic!();
             }
         }
+    }
+
+    #[test]
+    fn spell_check_ignore_all_caps_integration() {
+        let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+
+        // Test with the modifier disabled (default)
+        group.config.set_rule_enabled("SpellCheck", true);
+        group
+            .config
+            .set_rule_enabled("SpellCheckIgnoreAllCaps", false);
+
+        // Use made-up ALL CAPS words that we know aren't in the dictionary
+        let doc = Document::new_markdown_default_curated(
+            "The WRONGAPI is broken. We need WRONGAPIS and WRONGCPU's.",
+        );
+        let lints = group.lint(&doc);
+
+        // Should find lints for ALL CAPS misspellings when modifier is disabled
+        let spell_lints: Vec<_> = lints
+            .iter()
+            .filter(|lint| lint.lint_kind == crate::linting::LintKind::Spelling)
+            .collect();
+        assert!(
+            spell_lints.len() > 0,
+            "Expected spelling lints for made-up ALL CAPS words when modifier is disabled"
+        );
+
+        // Test with the modifier enabled
+        group
+            .config
+            .set_rule_enabled("SpellCheckIgnoreAllCaps", true);
+
+        let lints = group.lint(&doc);
+        let spell_lints: Vec<_> = lints
+            .iter()
+            .filter(|lint| lint.lint_kind == crate::linting::LintKind::Spelling)
+            .collect();
+
+        // Should find no spelling lints for ALL CAPS words when modifier is enabled
+        let all_caps_flagged = spell_lints.iter().any(|lint| {
+            let content = doc.get_span_content_str(&lint.span);
+            content == "WRONGAPI" || content == "WRONGAPIS" || content == "WRONGCPU's"
+        });
+
+        assert!(
+            !all_caps_flagged,
+            "ALL CAPS words should not be flagged when modifier is enabled"
+        );
+    }
+
+    #[test]
+    fn spell_check_ignore_all_caps_still_flags_mixed_case() {
+        let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+
+        // Enable both SpellCheck and the modifier
+        group.config.set_rule_enabled("SpellCheck", true);
+        group
+            .config
+            .set_rule_enabled("SpellCheckIgnoreAllCaps", true);
+
+        let doc = Document::new_markdown_default_curated("The API works but speling is wrong.");
+        let lints = group.lint(&doc);
+
+        let spell_lints: Vec<_> = lints
+            .iter()
+            .filter(|lint| lint.lint_kind == crate::linting::LintKind::Spelling)
+            .collect();
+
+        // Should still flag "speling" (mixed case misspelling)
+        let mixed_case_flagged = spell_lints.iter().any(|lint| {
+            let content = doc.get_span_content_str(&lint.span);
+            content == "speling"
+        });
+
+        assert!(
+            mixed_case_flagged,
+            "Mixed case misspellings should still be flagged"
+        );
+
+        // Should not flag "API" (all caps)
+        let all_caps_flagged = spell_lints.iter().any(|lint| {
+            let content = doc.get_span_content_str(&lint.span);
+            content == "API"
+        });
+
+        assert!(
+            !all_caps_flagged,
+            "ALL CAPS words should not be flagged when modifier is enabled"
+        );
+    }
+
+    #[test]
+    fn spell_check_ignore_all_caps_suffix_combinations() {
+        let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+
+        // Enable both SpellCheck and the modifier
+        group.config.set_rule_enabled("SpellCheck", true);
+        group
+            .config
+            .set_rule_enabled("SpellCheckIgnoreAllCaps", true);
+
+        let doc = Document::new_markdown_default_curated("The CPUsed approach is wrong.");
+        let lints = group.lint(&doc);
+
+        let spell_lints: Vec<_> = lints
+            .iter()
+            .filter(|lint| lint.lint_kind == crate::linting::LintKind::Spelling)
+            .collect();
+
+        // Should still flag "CPUsed" (suffix combination)
+        let combination_flagged = spell_lints.iter().any(|lint| {
+            let content = doc.get_span_content_str(&lint.span);
+            content == "CPUsed"
+        });
+
+        assert!(
+            combination_flagged,
+            "Suffix combinations should still be flagged"
+        );
     }
 }
