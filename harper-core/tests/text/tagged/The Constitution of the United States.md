@@ -205,7 +205,7 @@
 >
 #
 > The Senate shall have    the sole      Power      to try      all          Impeachments . When    sitting  for
-# D+  NPr+   VXB   NSg/VXB D+  NSg/VB/J+ N🅪Sg/VB/J+ P  NSg/VB/J NSg/I/J/C/Dq NPl          . NSg/I/C NSg/VB/J C/P
+# D+  NPr+   VXB   NSg/VXB D+  NSg/VB/J+ N🅪Sg/VB/J+ P  NSg/VB/J NSg/I/J/C/Dq NPl          . NSg/I/C NSg/Vg/J C/P
 > that          Purpose  , they shall be      on  Oath    or    Affirmation . When    the President of the
 # NSg/I/C/Ddem+ N🅪Sg/VB+ . IPl+ VXB   NSg/VXB J/P NSg/VB+ NPr/C NSg         . NSg/I/C D   NSg/VB    P  D+
 > United States    is  tried , the Chief     Justice shall preside : And  no     Person  shall be
@@ -285,7 +285,7 @@
 > the other    , adjourn for more            than three days , nor   to any    other    Place    than that
 # D   NSg/VB/J . VB      C/P NPr/I/VB/J/R/Dq C/P  NSg   NPl+ . NSg/C P  I/R/Dq NSg/VB/J N🅪Sg/VB+ C/P  NSg/I/C/Ddem+
 > in      which the two Houses  shall be      sitting  .
-# NPr/J/P I/C+  D   NSg NPl/V3+ VXB   NSg/VXB NSg/VB/J .
+# NPr/J/P I/C+  D   NSg NPl/V3+ VXB   NSg/VXB NSg/Vg/J .
 >
 #
 > Section . 6 .

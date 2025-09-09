@@ -300,8 +300,8 @@
 #
 > Computer science  is  considered by      some     to have    a   much         closer relationship with
 # NSg/VB+  N🅪Sg/VB+ VL3 VP/J       NSg/J/P I/J/R/Dq P  NSg/VXB D/P NSg/I/J/R/Dq NSg/JC NSg          P
-> mathematics than many        scientific disciplines , with some      observers saying  that
-# Nᴹ+         C/P  NSg/I/J/Dq+ J+         NPl/V3+     . P    I/J/R/Dq+ NPl+      Nᴹ/Vg/J NSg/I/C/Ddem
+> mathematics than many        scientific disciplines , with some      observers saying    that
+# Nᴹ+         C/P  NSg/I/J/Dq+ J+         NPl/V3+     . P    I/J/R/Dq+ NPl+      N🅪Sg/Vg/J NSg/I/C/Ddem
 > computing is  a   mathematical science . Early    computer science  was strongly
 # Nᴹ/Vg/J+  VL3 D/P J            N🅪Sg/VB . NSg/J/R+ NSg/VB+  N🅪Sg/VB+ VPt R
 > influenced by      the work    of mathematicians such  as    Kurt Gödel , Alan Turing , John
@@ -651,7 +651,7 @@
 > is  the lower     bound    on  the complexity of fast     Fourier transform algorithms ? is
 # VL3 D   NSg/VB/JC NSg/VP/J J/P D   NSg        P  NSg/VB/J NPr     NSg/VB    NPl+       . VL3
 > one        of the unsolved problems in      theoretical computer science  .
-# NSg/I/VB/J P  D   VB/J     NPl      NPr/J/P J+          NSg/VB+  N🅪Sg/VB+ .
+# NSg/I/VB/J P  D   VP/J     NPl      NPr/J/P J+          NSg/VB+  N🅪Sg/VB+ .
 >
 #
 > Computational science  , finance and  engineering

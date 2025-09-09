@@ -37,7 +37,7 @@
 > I       was at    Jim’s house   at    the corner of Fourth   Street   and  Vine .
 # ISg/#r+ VPt NSg/P NSg$  NPr/VB+ NSg/P D   NSg/VB P  NPr/VB/J NSg/VB/J VB/C NSg+ .
 > at    the bottom   of the page    ; sitting  at    the table   ; at    church   ; at    sea
-# NSg/P D   NSg/VB/J P  D+  NPr/VB+ . NSg/VB/J NSg/P D+  NSg/VB+ . NSg/P NPr🅪/VB+ . NSg/P NSg+
+# NSg/P D   NSg/VB/J P  D+  NPr/VB+ . NSg/Vg/J NSg/P D+  NSg/VB+ . NSg/P NPr🅪/VB+ . NSg/P NSg+
 > Target  at    five miles  . Prepare torpedoes !
 # NSg/VB+ NSg/P NSg+ NPrPl+ . VB      NPl/VB    .
 > Look   out          ! UFO at    two o'clock !
@@ -151,7 +151,7 @@
 > sold   by      the yard    ; cheaper if    bought by      the gross
 # NSg/VP NSg/J/P D+  NSg/VB+ . NSg/JC  NSg/C NSg/VP NSg/J/P D   NPr/VB/J
 > While      sitting  listening to the radio    by      the hour , she  can     drink   brandy  by      the bucketful !
-# NSg/VB/C/P NSg/VB/J Nᴹ/Vg/J   P  D+  N🅪Sg/VB+ NSg/J/P D+  NSg+ . ISg+ NPr/VXB NSg/VB+ NPr/VB+ NSg/J/P D   NSg       .
+# NSg/VB/C/P NSg/Vg/J Nᴹ/Vg/J   P  D+  N🅪Sg/VB+ NSg/J/P D+  NSg+ . ISg+ NPr/VXB NSg/VB+ NPr/VB+ NSg/J/P D   NSg       .
 > He       sits   listening to the radio    by      the hour .
 # NPr/ISg+ NPl/V3 Nᴹ/Vg/J   P  D+  N🅪Sg/VB+ NSg/J/P D+  NSg+ .
 > His     health was deteriorating by      the day   .
@@ -657,7 +657,7 @@
 > Please lie    down        on  the couch   .
 # VB     NPr/VB N🅪Sg/VB/J/P J/P D+  NSg/VB+ .
 > The parrot  was sitting  on  Jim's shoulder .
-# D+  NSg/VB+ VPt NSg/VB/J J/P NSg$  NSg/VB+  .
+# D+  NSg/VB+ VPt NSg/Vg/J J/P NSg$  NSg/VB+  .
 > He       had a   scar    on  the side     of his     face    .
 # NPr/ISg+ VB  D/P NSg/VB+ J/P D   NSg/VB/J P  ISg/D$+ NSg/VB+ .
 > There is  a   dirty smudge on  this    window  .
@@ -693,7 +693,7 @@
 > I       caught my  fingernail on  the door    handle .
 # ISg/#r+ VB/J   D$+ NSg+       J/P D+  NSg/VB+ NSg/VB .
 > The rope    snagged on  a   branch  .
-# D+  NSg/VB+ VB/J    J/P D/P NPr/VB+ .
+# D+  NSg/VB+ VP/J    J/P D/P NPr/VB+ .
 > to play    on  a   violin or    piano     .
 # P  N🅪Sg/VB J/P D/P NSg/VB NPr/C NSg/VB/J+ .
 > A    table   can't stand  on  two legs    .

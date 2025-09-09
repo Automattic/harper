@@ -659,7 +659,7 @@
 >
 #
 > “ We   ought     to plan   something   , ” yawned Miss   Baker , sitting  down        at    the table   as    if
-# . IPl+ NSg/I/VXB P  NSg/VB NSg/I/VB/J+ . . VP/J   NSg/VB NPr+  . NSg/VB/J N🅪Sg/VB/J/P NSg/P D+  NSg/VB+ NSg/R NSg/C
+# . IPl+ NSg/I/VXB P  NSg/VB NSg/I/VB/J+ . . VP/J   NSg/VB NPr+  . NSg/Vg/J N🅪Sg/VB/J/P NSg/P D+  NSg/VB+ NSg/R NSg/C
 > she  were    getting into bed        .
 # ISg+ NSg/VPt NSg/VB  P    NSg/VBP/J+ .
 >
@@ -1257,7 +1257,7 @@
 > where new      red    gaspumps sat      out          in      pools  of light      , and  when    I       reached my  estate
 # NSg/C NSg/VB/J N🅪Sg/J ?        NSg/VP/J NSg/VB/J/R/P NPr/J/P NPl/V3 P  N🅪Sg/VB/J+ . VB/C NSg/I/C ISg/#r+ VP/J    D$+ NSg/VB/J+
 > at    West      Egg      I       ran     the car  under   its     shed    and  sat      for a   while       on  an  abandoned
-# NSg/P NPr/VB/J+ N🅪Sg/VB+ ISg/#r+ NSg/VPt D   NSg+ NSg/J/P ISg/D$+ NSg/VB+ VB/C NSg/VP/J C/P D/P NSg/VB/C/P+ J/P D/P VP/J
+# NSg/P NPr/VB/J+ N🅪Sg/VB+ ISg/#r+ NSg/VPt D   NSg+ NSg/J/P ISg/D$+ NSg/VP+ VB/C NSg/VP/J C/P D/P NSg/VB/C/P+ J/P D/P VP/J
 > grass    roller in      the yard    . The wind     had blown off        , leaving a   loud  , bright   night    ,
 # NPr🅪/VB+ NSg/VB NPr/J/P D   NSg/VB+ . D+  N🅪Sg/VB+ VB  VPp/J NSg/VB/J/P . Nᴹ/Vg/J D/P NSg/J . NPr/VB/J N🅪Sg/VB+ .
 > with wings   beating in      the trees   and  a   persistent organ  sound      as    the full     bellows
@@ -1387,7 +1387,7 @@
 > hundred yards   along the road    under   Doctor  Eckleburg’s persistent stare   . The only
 # NSg     NPl/V3+ P     D   N🅪Sg/J+ NSg/J/P NSg/VB+ ?           J          NSg/VB+ . D   J/R/C
 > building  in      sight    was a   small    block  of yellow    brick      sitting  on  the edge   of the
-# N🅪Sg/Vg/J NPr/J/P N🅪Sg/VB+ VPt D/P NPr/VB/J NSg/VB P  NSg/VB/J+ N🅪Sg/VB/J+ NSg/VB/J J/P D   NSg/VB P  D+
+# N🅪Sg/Vg/J NPr/J/P N🅪Sg/VB+ VPt D/P NPr/VB/J NSg/VB P  NSg/VB/J+ N🅪Sg/VB/J+ NSg/Vg/J J/P D   NSg/VB P  D+
 > waste     land     , a   sort   of compact   Main      Street    ministering to it       , and  contiguous to
 # NSg/VB/J+ NPr🅪/VB+ . D/P NSg/VB P  NSg/VB/J+ NSg/VB/J+ NSg/VB/J+ Nᴹ/Vg/J     P  NPr/ISg+ . VB/C J          P
 > absolutely nothing  . One        of the three shops   it       contained was for rent     and  another
@@ -1551,7 +1551,7 @@
 > she  selected a   new      one         , lavender - colored     with gray         upholstery , and  in      this   we
 # ISg+ VP/J     D/P NSg/VB/J NSg/I/VB/J+ . Nᴹ/VB/J  . NSg/VP/J/Am P    NPr🅪/VB/J/Am NSg        . VB/C NPr/J/P I/Ddem IPl+
 > slid out          from the mass      of the station into the glowing sunshine . But     immediately
-# VB   NSg/VB/J/R/P P    D   NPr🅪/VB/J P  D   NSg/VB+ P    D   Nᴹ/Vg/J NSg/J+   . NSg/C/P R
+# VP   NSg/VB/J/R/P P    D   NPr🅪/VB/J P  D   NSg/VB+ P    D   Nᴹ/Vg/J NSg/J+   . NSg/C/P R
 > she  turned sharply from the window  and  , leaning forward  , tapped on  the front
 # ISg+ VP/J   R       P    D+  NSg/VB+ VB/C . Nᴹ/Vg/J NSg/VB/J . VB/J   J/P D   NSg/VB/J+
 > glass    .
@@ -1687,7 +1687,7 @@
 > stumble continually over    scenes of ladies  swinging in      the gardens of Versailles .
 # NSg/VB  R           NSg/J/P NPl/V3 P  NPl/V3+ Nᴹ/Vg/J  NPr/J/P D   NPl/V3  P  NPr+       .
 > The only   picture was an  over    - enlarged photograph , apparently a   hen    sitting  on  a
-# D+  J/R/C+ NSg/VB+ VPt D/P NSg/J/P . VP/J     NSg/VB+    . R          D/P NSg/VB NSg/VB/J J/P D/P
+# D+  J/R/C+ NSg/VB+ VPt D/P NSg/J/P . VP/J     NSg/VB+    . R          D/P NSg/VB NSg/Vg/J J/P D/P
 > blurred rock     . Looked at    from a    distance , however , the hen    resolved itself into a
 # VP/J    NPr🅪/VB+ . VP/J   NSg/P P    D/P+ N🅪Sg/VB+ . C       . D   NSg/VB VP/J     ISg+   P    D/P
 > bonnet , and  the countenance of a   stout     old   lady    beamed down        into the room       .
@@ -1713,7 +1713,7 @@
 > so        everything that          happened has a   dim      , hazy  cast     over    it       , although until after
 # NSg/I/J/C NSg/I/VB+  NSg/I/C/Ddem+ VP/J     V3  D/P NSg/VB/J . NSg/J NSg/VB/J NSg/J/P NPr/ISg+ . C        C/P   P
 > eight o’clock the apartment was full     of cheerful sun     . Sitting  on  Tom’s lap       Mrs  .
-# NSg/J W?      D+  NSg+      VPt NSg/VB/J P  J+       NPr/VB+ . NSg/VB/J J/P NSg$  NSg/VB/J+ NPl+ .
+# NSg/J W?      D+  NSg+      VPt NSg/VB/J P  J+       NPr/VB+ . NSg/Vg/J J/P NSg$  NSg/VB/J+ NPl+ .
 > Wilson called up         several people  on  the telephone ; then    there were    no     cigarettes ,
 # NPr+   VP/J   NSg/VB/J/P J/Dq    NPl/VB+ J/P D+  NSg/VB+   . NSg/J/C +     NSg/VPt NPr/P+ NPl/V3+    .
 > and  I       went    out          to buy    some     at    the drugstore on  the corner  . When    I       came      back     they
@@ -2074,8 +2074,8 @@
 # . ISg/#r+ R      VB   D/P+ NSg/VB+ . W?  . . ISg+ VP/J     R          . . ISg/#r+ R      NSg/VP/J D/P
 > little     kyke who’d been    after me       for years . I       knew he       was below me       . Everybody
 # NPr/I/J/Dq ?    W?    NSg/VPp P     NPr/ISg+ C/P NPl+  . ISg/#r+ VPt  NPr/ISg+ VPt P     NPr/ISg+ . NSg/I+
-> kept saying  to me       : ‘          Lucille , that          man’s       ’ way    below you    ! ’ But     if    I       hadn’t met
-# VP   Nᴹ/Vg/J P  NPr/ISg+ . Unlintable NPr+    . NSg/I/C/Ddem+ NPr$/I/VB/J . NSg/J+ P     ISgPl+ . . NSg/C/P NSg/C ISg/#r+ VB     VB
+> kept saying    to me       : ‘          Lucille , that          man’s       ’ way    below you    ! ’ But     if    I       hadn’t met
+# VP   N🅪Sg/Vg/J P  NPr/ISg+ . Unlintable NPr+    . NSg/I/C/Ddem+ NPr$/I/VB/J . NSg/J+ P     ISgPl+ . . NSg/C/P NSg/C ISg/#r+ VB     VB
 > Chester , he’d of got me       sure . ”
 # NPr+    . W?   P  VB  NPr/ISg+ J    . .
 >
@@ -2225,7 +2225,7 @@
 >
 #
 > The little      dog       was sitting  on  the table   looking with blind     eyes    through the
-# D+  NPr/I/J/Dq+ NSg/VB/J+ VPt NSg/VB/J J/P D+  NSg/VB+ Nᴹ/Vg/J P    NSg/VB/J+ NPl/V3+ NSg/J/P D+
+# D+  NPr/I/J/Dq+ NSg/VB/J+ VPt NSg/Vg/J J/P D+  NSg/VB+ Nᴹ/Vg/J P    NSg/VB/J+ NPl/V3+ NSg/J/P D+
 > smoke    , and  from time       to time      groaning faintly . People  disappeared , reappeared ,
 # N🅪Sg/VB+ . VB/C P    N🅪Sg/VB/J+ P  N🅪Sg/VB/J Nᴹ/Vg/J  R       . NPl/VB+ VP/J        . VP/J       .
 > made plans   to go       somewhere , and  then    lost each other    , searched for each other    ,
@@ -2295,7 +2295,7 @@
 >
 #
 > . . . I       was standing beside his     bed        and  he       was sitting  up         between the sheets  ,
-# . . . ISg/#r+ VPt Nᴹ/Vg/J  P      ISg/D$+ NSg/VBP/J+ VB/C NPr/ISg+ VPt NSg/VB/J NSg/VB/J/P NSg/P   D+  NPl/V3+ .
+# . . . ISg/#r+ VPt Nᴹ/Vg/J  P      ISg/D$+ NSg/VBP/J+ VB/C NPr/ISg+ VPt NSg/Vg/J NSg/VB/J/P NSg/P   D+  NPl/V3+ .
 > clad in      his     underwear , with a   great portfolio in      his     hands   .
 # VB/J NPr/J/P ISg/D$+ Nᴹ+       . P    D/P NSg/J NSg       NPr/J/P ISg/D$+ NPl/V3+ .
 >
@@ -2333,7 +2333,7 @@
 > And  on  Mondays eight  servants , including an  extra gardener , toiled all          day   with
 # VB/C J/P NPl     NSg/J+ NPl/V3+  . Nᴹ/Vg/J   D/P NSg/J NSg/JC   . VP/J   NSg/I/J/C/Dq NPr🅪+ P
 > mops   and  scrubbing - brushes and  hammers and  garden    - shears , repairing the ravages
-# NPl/V3 VB/C NSg/VB    . NPl/V3+ VB/C NPl/V3  VB/C NSg/VB/J+ . NPl/V3 . Nᴹ/Vg/J   D   NPl/V3
+# NPl/V3 VB/C NSg/Vg    . NPl/V3+ VB/C NPl/V3  VB/C NSg/VB/J+ . NPl/V3 . Nᴹ/Vg/J   D   NPl/V3
 > of the night    before .
 # P  D   N🅪Sg/VB+ C/P    .
 >
@@ -2699,7 +2699,7 @@
 >
 #
 > A    stout     , middle   - aged man      , with enormous owl     - eyed spectacles , was sitting
-# D/P+ NPr/VB/J+ . NSg/VB/J . VP/J NPr/VB/J . P    J+       NSg/VB+ . VP/J NPl        . VPt NSg/VB/J
+# D/P+ NPr/VB/J+ . NSg/VB/J . VP/J NPr/VB/J . P    J+       NSg/VB+ . VP/J NPl        . VPt NSg/Vg/J
 > somewhat drunk     on  the edge   of a   great table   , staring with unsteady concentration
 # NSg/I/R  NSg/VPp/J J/P D   NSg/VB P  D/P NSg/J NSg/VB+ . Nᴹ/Vg/J P    VB/J     NSg+
 > at    the shelves of books   . As    we   entered he       wheeled excitedly around and  examined
@@ -2827,7 +2827,7 @@
 >
 #
 > I       was still    with Jordan Baker . We   were    sitting  at    a   table  with a   man      of about my
-# ISg/#r+ VPt NSg/VB/J P    NPr+   NPr+  . IPl+ NSg/VPt NSg/VB/J NSg/P D/P NSg/VB P    D/P NPr/VB/J P  J/P   D$+
+# ISg/#r+ VPt NSg/VB/J P    NPr+   NPr+  . IPl+ NSg/VPt NSg/Vg/J NSg/P D/P NSg/VB P    D/P NPr/VB/J P  J/P   D$+
 > age     and  a    rowdy  little      girl    , who    gave way    upon the slightest provocation to
 # N🅪Sg/VB VB/C D/P+ NSg/J+ NPr/I/J/Dq+ NSg/VB+ . NPr/I+ VB   NSg/J+ P    D   JS        NSg+        P
 > uncontrollable laughter . I       was enjoying myself now        . I       had taken two finger  - bowls
@@ -3196,8 +3196,8 @@
 #
 > As    I       waited for my  hat     in      the hall the door   of the library opened and  Jordan
 # NSg/R ISg/#r+ VP/J   C/P D$+ NSg/VB+ NPr/J/P D+  NPr+ D   NSg/VB P  D+  NSg+    VP/J   VB/C NPr+
-> Baker and  Gatsby came      out          together . He       was saying  some     last      word    to her     , but     the
-# NPr+  VB/C NPr    NSg/VPt/P NSg/VB/J/R/P J        . NPr/ISg+ VPt Nᴹ/Vg/J I/J/R/Dq NSg/VB/J+ NSg/VB+ P  ISg/D$+ . NSg/C/P D
+> Baker and  Gatsby came      out          together . He       was saying    some     last      word    to her     , but     the
+# NPr+  VB/C NPr    NSg/VPt/P NSg/VB/J/R/P J        . NPr/ISg+ VPt N🅪Sg/Vg/J I/J/R/Dq NSg/VB/J+ NSg/VB+ P  ISg/D$+ . NSg/C/P D
 > eagerness in      his     manner tightened abruptly into formality as    several people
 # NSg       NPr/J/P ISg/D$+ NSg+   VP/J      R        P    NSg+      NSg/R J/Dq    NPl/VB+
 > approached him  to say    good     - by      .
@@ -3819,7 +3819,7 @@
 >
 #
 > He       was balancing himself on  the dashboard of his     car  with that          resourcefulness
-# NPr/ISg+ VPt Nᴹ/Vg/J   ISg+    J/P D   NSg/VB    P  ISg/D$+ NSg+ P    NSg/I/C/Ddem+ NSg
+# NPr/ISg+ VPt Nᴹ/Vg/J   ISg+    J/P D   NSg/VB    P  ISg/D$+ NSg+ P    NSg/I/C/Ddem+ Nᴹ
 > of movement that          is  so        peculiarly American — that          comes  , I       suppose , with the
 # P  N🅪Sg+    NSg/I/C/Ddem+ VL3 NSg/I/J/C R          NPr/J    . NSg/I/C/Ddem+ NPl/V3 . ISg/#r+ VB      . P    D
 > absence of lifting work     in      youth and  , even     more            , with the formless grace   of our
@@ -3851,7 +3851,7 @@
 > and  supper  - boxes  and  tool    - boxes   , and  terraced with a   labyrinth of wind     - shields
 # VB/C NSg/VB+ . NPl/V3 VB/C NSg/VB+ . NPl/V3+ . VB/C VP/J     P    D/P NSg/VB    P  N🅪Sg/VB+ . NPrPl/V3+
 > that         mirrored a   dozen suns   . Sitting  down        behind  many       layers of glass    in      a   sort
-# NSg/I/C/Ddem VP/J     D/P NSg   NPl/V3 . NSg/VB/J N🅪Sg/VB/J/P NSg/J/P NSg/I/J/Dq NPl/V3 P  NPr🅪/VB+ NPr/J/P D/P NSg/VB
+# NSg/I/C/Ddem VP/J     D/P NSg   NPl/V3 . NSg/Vg/J N🅪Sg/VB/J/P NSg/J/P NSg/I/J/Dq NPl/V3 P  NPr🅪/VB+ NPr/J/P D/P NSg/VB
 > of green      leather    conservatory , we   started to town .
 # P  NPr🅪/VB/J+ N🅪Sg/VB/J+ NSg/J+       . IPl+ VP/J    P  NSg  .
 >
@@ -3993,13 +3993,13 @@
 > circumstances which had elicited this   tribute from Montenegro’s warm      little
 # NPl/V3+       I/C+  VB  VP/J     I/Ddem NSg/VB  P    NSg$         NSg/VB/J+ NPr/I/J/Dq
 > heart    . My  incredulity was submerged in      fascination now        ; it       was like         skimming
-# N🅪Sg/VB+ . D$+ NSg+        VPt VP/J      NPr/J/P NSg+        NPr/VB/J/C . NPr/ISg+ VPt NSg/VB/J/C/P NSg/VB
+# N🅪Sg/VB+ . D$+ NSg+        VPt VP/J      NPr/J/P NSg+        NPr/VB/J/C . NPr/ISg+ VPt NSg/VB/J/C/P NSg/Vg
 > hastily through a   dozen magazines .
 # R       NSg/J/P D/P NSg   NPl+      .
 >
 #
 > He       reached in      his     pocket    , and  a   piece  of metal      , slung on  a    ribbon  , fell      into my
-# NPr/ISg+ VP/J    NPr/J/P ISg/D$+ NSg/VB/J+ . VB/C D/P NSg/VB P  N🅪Sg/VB/J+ . VB    J/P D/P+ NSg/VB+ . NSg/VPt/J P    D$+
+# NPr/ISg+ VP/J    NPr/J/P ISg/D$+ NSg/VB/J+ . VB/C D/P NSg/VB P  N🅪Sg/VB/J+ . VP    J/P D/P+ NSg/VB+ . NSg/VPt/J P    D$+
 > palm    .
 # NSg/VB+ .
 >
@@ -4104,8 +4104,8 @@
 # P    +       N🅪Sg/VB NSg/VB/J/C/P NPl/V3+ IPl+ VP/J      N🅪Sg/VB/J+ NSg/J/P N🅪Sg/VB/J/P+ NPr     . J/R/C
 > half         , for as    we   twisted among the pillars of the elevated I       heard the familiar
 # N🅪Sg/VB/J/P+ . C/P NSg/R IPl+ VP/J    P     D   NPl/V3  P  D   VP/J     ISg/#r+ VP/J  D   NSg/J
-> “ jug     - jug     - spat   ! ” of a    motorcycle , and  a    frantic policeman rode   alongside .
-# . NSg/VB+ . NSg/VB+ . NSg/VB . . P  D/P+ NSg/VB+    . VB/C D/P+ NSg/J+  NSg+      NSg/VB P         .
+> “ jug     - jug     - spat   ! ” of a    motorcycle , and  a    frantic policeman rode    alongside .
+# . NSg/VB+ . NSg/VB+ . NSg/VB . . P  D/P+ NSg/VB+    . VB/C D/P+ NSg/J+  NSg+      NSg/VPt P         .
 >
 #
 > “ All          right    , old    sport   , ” called Gatsby . We   slowed down        . Taking   a   white     card     from
@@ -4161,7 +4161,7 @@
 >
 #
 > “ Anything  can     happen now        that         we’ve slid over    this   bridge   , ” I       thought ; “ anything
-# . NSg/I/VB+ NPr/VXB VB     NPr/VB/J/C NSg/I/C/Ddem W?    VB   NSg/J/P I/Ddem N🅪Sg/VB+ . . ISg/#r+ N🅪Sg/VP . . NSg/I/VB+
+# . NSg/I/VB+ NPr/VXB VB     NPr/VB/J/C NSg/I/C/Ddem W?    VP   NSg/J/P I/Ddem N🅪Sg/VB+ . . ISg/#r+ N🅪Sg/VP . . NSg/I/VB+
 > at    all          . . . . ”
 # NSg/P NSg/I/J/C/Dq . . . . .
 >
@@ -4569,7 +4569,7 @@
 >
 #
 > ( said Jordan Baker that          afternoon , sitting  up         very straight on  a   straight chair
-# . VP/J NPr+   NPr+  NSg/I/C/Ddem+ N🅪Sg+     . NSg/VB/J NSg/VB/J/P J/R  NSg/VB/J J/P D/P NSg/VB/J NSg/VB
+# . VP/J NPr+   NPr+  NSg/I/C/Ddem+ N🅪Sg+     . NSg/Vg/J NSg/VB/J/P J/R  NSg/VB/J J/P D/P NSg/VB/J NSg/VB
 > in      the tea      - garden   at    the Plaza Hotel )
 # NPr/J/P D   N🅪Sg/VB+ . NSg/VB/J NSg/P D+  NSg+  NSg+  .
 >
@@ -4605,7 +4605,7 @@
 > When    I       came      opposite her     house   that          morning    her     white     roadster was beside the
 # NSg/I/C ISg/#r+ NSg/VPt/P NSg/J/P+ ISg/D$+ NPr/VB+ NSg/I/C/Ddem+ N🅪Sg/Vg/J+ ISg/D$+ NPr🅪/VB/J NSg      VPt P      D
 > curb    , and  she  was sitting  in      it       with a   lieutenant I       had never seen    before . They
-# NSg/VB+ . VB/C ISg+ VPt NSg/VB/J NPr/J/P NPr/ISg+ P    D/P NSg/J+     ISg/#r+ VB  R     NSg/VPp C/P    . IPl+
+# NSg/VB+ . VB/C ISg+ VPt NSg/Vg/J NPr/J/P NPr/ISg+ P    D/P NSg/J+     ISg/#r+ VB  R     NSg/VPp C/P    . IPl+
 > were    so        engrossed in      each other    that         she  didn’t see    me       until I       was five feet
 # NSg/VPt NSg/I/J/C VP/J      NPr/J/P Dq   NSg/VB/J NSg/I/C/Ddem ISg+ VB     NSg/VB NPr/ISg+ C/P   ISg/#r+ VPt NSg  NPl+
 > away .
@@ -4737,7 +4737,7 @@
 > expression until she  saw     him  coming  in      the door    . She  used to sit    on  the sand
 # N🅪Sg+      C/P   ISg+ NSg/VPt ISg+ Nᴹ/Vg/J NPr/J/P D   NSg/VB+ . ISg+ VP/J P  NSg/VB J/P D   NSg/VB/J+
 > with his     head      in      her     lap       by      the hour , rubbing her     fingers over    his     eyes    and
-# P    ISg/D$+ NPr/VB/J+ NPr/J/P ISg/D$+ NSg/VB/J+ NSg/J/P D+  NSg+ . NSg/VB  ISg/D$+ NPl/V3+ NSg/J/P ISg/D$+ NPl/V3+ VB/C
+# P    ISg/D$+ NPr/VB/J+ NPr/J/P ISg/D$+ NSg/VB/J+ NSg/J/P D+  NSg+ . NSg/Vg  ISg/D$+ NPl/V3+ NSg/J/P ISg/D$+ NPl/V3+ VB/C
 > looking at    him  with unfathomable delight    . It       was touching  to see    them
 # Nᴹ/Vg/J NSg/P ISg+ P    J+           N🅪Sg/VB/J+ . NPr/ISg+ VPt Nᴹ/Vg/J/P P  NSg/VB NSg/IPl+
 > together — it       made you    laugh  in      a   hushed , fascinated way    . That          was in      August    . A
@@ -4884,8 +4884,8 @@
 # NSg/VB/J .
 >
 #
-> “ ‘          I       don’t want   to do      anything  out          of the way    ! ’ he       kept saying  . ‘          I       want   to see
-# . Unlintable ISg/#r+ VB    NSg/VB P  NSg/VXB NSg/I/VB+ NSg/VB/J/R/P P  D   NSg/J+ . . NPr/ISg+ VP   Nᴹ/Vg/J . Unlintable ISg/#r+ NSg/VB P  NSg/VB
+> “ ‘          I       don’t want   to do      anything  out          of the way    ! ’ he       kept saying    . ‘          I       want   to see
+# . Unlintable ISg/#r+ VB    NSg/VB P  NSg/VXB NSg/I/VB+ NSg/VB/J/R/P P  D   NSg/J+ . . NPr/ISg+ VP   N🅪Sg/Vg/J . Unlintable ISg/#r+ NSg/VB P  NSg/VB
 > her     right     next     door    . ’
 # ISg/D$+ NPr/VB/J+ NSg/J/P+ NSg/VB+ . .
 >
@@ -5347,7 +5347,7 @@
 > far      that         it       rested against the face   of a    defunct   mantelpiece clock   , and  from
 # NSg/VB/J NSg/I/C/Ddem NPr/ISg+ VP/J   C/P     D   NSg/VB P  D/P+ NSg/VB/J+ NSg+        NSg/VB+ . VB/C P
 > this    position his     distraught eyes    stared down        at    Daisy , who    was sitting  ,
-# I/Ddem+ NSg/VB+  ISg/D$+ J          NPl/V3+ VP/J   N🅪Sg/VB/J/P NSg/P NPr+  . NPr/I+ VPt NSg/VB/J .
+# I/Ddem+ NSg/VB+  ISg/D$+ J          NPl/V3+ VP/J   N🅪Sg/VB/J/P NSg/P NPr+  . NPr/I+ VPt NSg/Vg/J .
 > frightened but     graceful , on  the edge   of a   stiff    chair   .
 # VP/J       NSg/C/P J        . J/P D   NSg/VB P  D/P NSg/VB/J NSg/VB+ .
 >
@@ -5461,7 +5461,7 @@
 > “ You're acting  like         a    little      boy     , ” I       broke     out          impatiently . “ Not   only  that          , but
 # . +      Nᴹ/Vg/J NSg/VB/J/C/P D/P+ NPr/I/J/Dq+ NSg/VB+ . . ISg/#r+ NSg/VPt/J NSg/VB/J/R/P R           . . NSg/C J/R/C NSg/I/C/Ddem+ . NSg/C/P
 > you’re rude . Daisy’s sitting  in      there all          alone . ”
-# W?     J    . NSg$    NSg/VB/J NPr/J/P +     NSg/I/J/C/Dq J     . .
+# W?     J    . NSg$    NSg/Vg/J NPr/J/P +     NSg/I/J/C/Dq J     . .
 >
 #
 > He       raised his     hand    to stop   my  words   , looked at    me       with unforgettable reproach ,
@@ -5519,7 +5519,7 @@
 > I       went    in      — after making  every possible noise    in      the kitchen , short      of pushing
 # ISg/#r+ NSg/VPt NPr/J/P . P     Nᴹ/Vg/J Dq+   NSg/J    N🅪Sg/VB+ NPr/J/P D+  NSg/VB+ . NPr/VB/J/P P  Nᴹ/Vg/J
 > over    the stove   — but     I       don’t believe they heard a   sound      . They were    sitting  at
-# NSg/J/P D+  NSg/VB+ . NSg/C/P ISg/#r+ VB    VB      IPl+ VP/J  D/P N🅪Sg/VB/J+ . IPl+ NSg/VPt NSg/VB/J NSg/P
+# NSg/J/P D+  NSg/VB+ . NSg/C/P ISg/#r+ VB    VB      IPl+ VP/J  D/P N🅪Sg/VB/J+ . IPl+ NSg/VPt NSg/Vg/J NSg/P
 > either end    of the couch   , looking at    each other    as    if    some      question had been
 # I/C    NSg/VB P  D+  NSg/VB+ . Nᴹ/Vg/J NSg/P Dq   NSg/VB/J NSg/R NSg/C I/J/R/Dq+ NSg/VB+  VB  NSg/VPp
 > asked , or    was in      the air      , and  every vestige of embarrassment was gone    . Daisy’s
@@ -5606,8 +5606,8 @@
 # NSg/VB/J+ . D   NSg/VB/J P  D+  N🅪Sg/VB+ . .
 >
 #
-> I       think  he       hardly knew what   he       was saying  , for when    I       asked him  what   business he
-# ISg/#r+ NSg/VB NPr/ISg+ R      VPt  NSg/I+ NPr/ISg+ VPt Nᴹ/Vg/J . C/P NSg/I/C ISg/#r+ VP/J  ISg+ NSg/I+ N🅪Sg/J+  NPr/ISg+
+> I       think  he       hardly knew what   he       was saying    , for when    I       asked him  what   business he
+# ISg/#r+ NSg/VB NPr/ISg+ R      VPt  NSg/I+ NPr/ISg+ VPt N🅪Sg/Vg/J . C/P NSg/I/C ISg/#r+ VP/J  ISg+ NSg/I+ N🅪Sg/J+  NPr/ISg+
 > was in      he       answered : ‘          ‘          That’s my  affair , ” before he       realized  that         it       wasn’t an
 # VPt NPr/J/P NPr/ISg+ VP/J     . Unlintable Unlintable NSg$   D$+ NSg+   . . C/P    NPr/ISg+ VP/J/NoAm NSg/I/C/Ddem NPr/ISg+ VB     D/P
 > appropriate reply   .
@@ -5763,7 +5763,7 @@
 >
 #
 > “ They’re such  beautiful shirts  , ” she  sobbed , her     voice   muffled in      the thick
-# . W?      NSg/I NSg/J     NPl/V3+ . . ISg+ VB     . ISg/D$+ NSg/VB+ VP/J    NPr/J/P D   NSg/VB/J
+# . W?      NSg/I NSg/J     NPl/V3+ . . ISg+ VP     . ISg/D$+ NSg/VB+ VP/J    NPr/J/P D   NSg/VB/J
 > folds   . “ It       makes  me       sad      because I’ve never seen    such  — such  beautiful shirts
 # NPl/V3+ . . NPr/ISg+ NPl/V3 NPr/ISg+ NSg/VB/J C/P     W?   R     NSg/VPp NSg/I . NSg/I NSg/J     NPl/V3+
 > before . ”
@@ -6593,7 +6593,7 @@
 >
 #
 > Tom     appeared from his     oblivion as    we   were    sitting  down        to supper together . “ Do
-# NPr/VB+ VP/J     P    ISg/D$+ NSg/VB+  NSg/R IPl+ NSg/VPt NSg/VB/J N🅪Sg/VB/J/P P  NSg/VB J        . . NSg/VXB
+# NPr/VB+ VP/J     P    ISg/D$+ NSg/VB+  NSg/R IPl+ NSg/VPt NSg/Vg/J N🅪Sg/VB/J/P P  NSg/VB J        . . NSg/VXB
 > you    mind    if    I       eat with some      people  over    here    ? ” he       said . “ A   fellow’s getting off
 # ISgPl+ NSg/VB+ NSg/C ISg/#r+ VB  P    I/J/R/Dq+ NPl/VB+ NSg/J/P NSg/J/R . . NPr/ISg+ VP/J . . D/P NSg$     NSg/VB+ NSg/VB/J/P
 > some     funny stuff  . ”
@@ -7444,8 +7444,8 @@
 # Nᴹ            P    NPl/V3+ .
 >
 #
-> “ I’ve heard of making  a   garage  out          of a   stable   , ” Tom     was saying  to Gatsby , “ but
-# . W?   VP/J  P  Nᴹ/Vg/J D/P NSg/VB+ NSg/VB/J/R/P P  D/P NSg/VB/J . . NPr/VB+ VPt Nᴹ/Vg/J P  NPr    . . NSg/C/P
+> “ I’ve heard of making  a   garage  out          of a   stable   , ” Tom     was saying    to Gatsby , “ but
+# . W?   VP/J  P  Nᴹ/Vg/J D/P NSg/VB+ NSg/VB/J/R/P P  D/P NSg/VB/J . . NPr/VB+ VPt N🅪Sg/Vg/J P  NPr    . . NSg/C/P
 > I’m the first    man       who    ever made a   stable   out          of a   garage  . ”
 # W?  D   NSg/VB/J NPr/VB/J+ NPr/I+ J    VB   D/P NSg/VB/J NSg/VB/J/R/P P  D/P NSg/VB+ . .
 >
@@ -7761,7 +7761,7 @@
 >
 #
 > Tom     threw on  both    brakes  impatiently , and  we   slid to an  abrupt   dusty spot      under
-# NPr/VB+ VB    J/P I/C/Dq+ NPl/V3+ R           . VB/C IPl+ VB   P  D/P NSg/VB/J NPr/J NSg/VB/J+ NSg/J/P
+# NPr/VB+ VB    J/P I/C/Dq+ NPl/V3+ R           . VB/C IPl+ VP   P  D/P NSg/VB/J NPr/J NSg/VB/J+ NSg/J/P
 > Wilson’s sign    . After a    moment the proprietor emerged from the interior of his
 # NSg$     NSg/VB+ . P     D/P+ NSg+   D   NSg        VP/J    P    D   NSg/J    P  ISg/D$+
 > establishment and  gazed hollow   - eyed at    the car  .
@@ -7923,7 +7923,7 @@
 > Tom     was feeling   the hot      whips  of panic     . His     wife     and  his     mistress , until an   hour
 # NPr/VB+ VPt N🅪Sg/Vg/J D   NSg/VB/J NPl/V3 P  NSg/VB/J+ . ISg/D$+ NSg/VB/J VB/C ISg/D$+ NSg/VB+  . C/P   D/P+ NSg+
 > ago secure and  inviolate , were    slipping precipitately from his     control  . Instinct
-# J/P VB/J   VB/C J         . NSg/VPt NSg/VB   R             P    ISg/D$+ N🅪Sg/VB+ . NSg/J+
+# J/P VB/J   VB/C J         . NSg/VPt NSg/Vg   R             P    ISg/D$+ N🅪Sg/VB+ . NSg/J+
 > made him  step    on  the accelerator with the double   purpose of overtaking Daisy and
 # VB   ISg+ NSg/VB+ J/P D   NSg+        P    D   NSg/VB/J N🅪Sg/VB P  Nᴹ/Vg/J    NPr+  VB/C
 > leaving Wilson behind  , and  we   sped   along toward Astoria at    fifty miles  an  hour ,
@@ -7947,7 +7947,7 @@
 > The word    “ sensuous ” had the effect of further disquieting Tom     , but     before he
 # D+  NSg/VB+ . J        . VB  D   NSg/VB P  VB/J    Nᴹ/Vg/J     NPr/VB+ . NSg/C/P C/P    NPr/ISg+
 > could   invent a   protest the coupé came      to a   stop    , and  Daisy signalled us       to draw
-# NSg/VXB VB     D/P NSg/VB+ D   ?     NSg/VPt/P P  D/P NSg/VB+ . VB/C NPr+  VB/Comm   NPr/IPl+ P  NSg/VB
+# NSg/VXB VB     D/P NSg/VB+ D   ?     NSg/VPt/P P  D/P NSg/VB+ . VB/C NPr+  VP/Comm   NPr/IPl+ P  NSg/VB
 > up         alongside .
 # NSg/VB/J/P P         .
 >
@@ -8049,7 +8049,7 @@
 >
 #
 > There was a   moment of silence . The telephone book    slipped from its     nail    and
-# +     VPt D/P NSg    P  NSg/VB+ . D+  NSg/VB+   NSg/VB+ VB/J    P    ISg/D$+ NSg/VB+ VB/C
+# +     VPt D/P NSg    P  NSg/VB+ . D+  NSg/VB+   NSg/VB+ VP/J    P    ISg/D$+ NSg/VB+ VB/C
 > splashed to the floor   , whereupon Jordan whispered , “ Excuse  me       ” — but     this   time       no
 # VP/J     P  D+  NSg/VB+ . C         NPr+   VP/J      . . NSg/VB+ NPr/ISg+ . . NSg/C/P I/Ddem N🅪Sg/VB/J+ NPr/P
 > one         laughed .
@@ -8391,11 +8391,11 @@
 >
 #
 > “ You’ve been    seeing     this   fellow for five years ? ”
-# . W?     NSg/VPp NSg/VB/J/C I/Ddem NSg/VB C/P NSg  NPl+  . .
+# . W?     NSg/VPp NSg/Vg/J/C I/Ddem NSg/VB C/P NSg  NPl+  . .
 >
 #
 > “ Not   seeing     , ” said Gatsby . “ No    , we   couldn’t meet     . But     both   of us       loved each
-# . NSg/C NSg/VB/J/C . . VP/J NPr    . . NPr/P . IPl+ VB       NSg/VB/J . NSg/C/P I/C/Dq P  NPr/IPl+ VP/J  Dq
+# . NSg/C NSg/Vg/J/C . . VP/J NPr    . . NPr/P . IPl+ VB       NSg/VB/J . NSg/C/P I/C/Dq P  NPr/IPl+ VP/J  Dq
 > other    all          that          time       , old    sport   , and  you    didn’t know   . I       used to laugh
 # NSg/VB/J NSg/I/J/C/Dq NSg/I/C/Ddem+ N🅪Sg/VB/J+ . NSg/J+ NSg/VB+ . VB/C ISgPl+ VB     NSg/VB . ISg/#r+ VP/J P  NSg/VB
 > sometimes ” — but     there was no    laughter in      his     eyes    — “ to think  that         you    didn’t
@@ -8639,7 +8639,7 @@
 > “ Don’t you    call   me       ‘          old   sport   ’ ! ” cried Tom     . Gatsby said nothing  . “ Walter could
 # . VB    ISgPl+ NSg/VB NPr/ISg+ Unlintable NSg/J NSg/VB+ . . . VP/J  NPr/VB+ . NPr    VP/J NSg/I/J+ . . NPr+   NSg/VXB
 > have    you    up         on  the betting  laws    too , but     Wolfshiem scared him  into shutting his
-# NSg/VXB ISgPl+ NSg/VB/J/P J/P D   NSg/Vg/J NPl/V3+ W?  . NSg/C/P ?         VP/J   ISg+ P    NSg/VB   ISg/D$+
+# NSg/VXB ISgPl+ NSg/VB/J/P J/P D   NSg/Vg/J NPl/V3+ W?  . NSg/C/P ?         VP/J   ISg+ P    NSg/Vg   ISg/D$+
 > mouth   . ”
 # NSg/VB+ . .
 >
@@ -8675,7 +8675,7 @@
 > word    she  was drawing   further and  further into herself , so        he       gave that          up         , and
 # NSg/VB+ ISg+ VPt N🅪Sg/Vg/J VB/J    VB/C VB/J    P    ISg+    . NSg/I/J/C NPr/ISg+ VB   NSg/I/C/Ddem+ NSg/VB/J/P . VB/C
 > only  the dead      dream     fought on  as    the afternoon slipped away , trying  to touch
-# J/R/C D+  NSg/VB/J+ NSg/VB/J+ VB     J/P NSg/R D+  N🅪Sg+     VB/J    VB/J . Nᴹ/Vg/J P  N🅪Sg/VB
+# J/R/C D+  NSg/VB/J+ NSg/VB/J+ VB     J/P NSg/R D+  N🅪Sg+     VP/J    VB/J . Nᴹ/Vg/J P  N🅪Sg/VB
 > what   was no    longer tangible , struggling unhappily , undespairingly , toward that
 # NSg/I+ VPt NPr/P NSg/JC NSg/J    . Nᴹ/Vg/J    R         . ?              . J/P    NSg/I/C/Ddem+
 > lost voice   across the room       .
@@ -8786,8 +8786,8 @@
 # NSg  . NSg/I/C NPr/ISg+ VP/J     NSg/J/P P  D+  NSg/VB+ . VB/C NSg/VB NPr+   NPr+   NSg/VB/J NPr/J/P ISg/D$+
 > office  — really sick     , pale     as    his     own       pale      hair     and  shaking all          over    . Michaelis
 # NSg/VB+ . R      NSg/VB/J . NSg/VB/J NSg/R ISg/D$+ NSg/VB/J+ NSg/VB/J+ N🅪Sg/VB+ VB/C Nᴹ/Vg/J NSg/I/J/C/Dq NSg/J/P . ?
-> advised him  to go       to bed       , but     Wilson refused , saying  that         he’d miss   a   lot    of
-# VP/J    ISg+ P  NSg/VB/J P  NSg/VBP/J . NSg/C/P NPr+   VP/J    . Nᴹ/Vg/J NSg/I/C/Ddem W?   NSg/VB D/P NPr/VB P
+> advised him  to go       to bed       , but     Wilson refused , saying    that         he’d miss   a   lot    of
+# VP/J    ISg+ P  NSg/VB/J P  NSg/VBP/J . NSg/C/P NPr+   VP/J    . N🅪Sg/Vg/J NSg/I/C/Ddem W?   NSg/VB D/P NPr/VB P
 > business if    he       did . While      his     neighbor     was trying  to persuade him  a    violent
 # N🅪Sg/J+  NSg/C NPr/ISg+ VPt . NSg/VB/C/P ISg/D$+ NSg/VB/J/Am+ VPt Nᴹ/Vg/J P  VB       ISg+ D/P+ NSg/VB/J+
 > racket  broke     out          overhead .
@@ -8964,8 +8964,8 @@
 # P    VP/J   NPl/V3+ . VP/J      D/P VP/J    J          NSg/VB P  D+  NSg+      .
 >
 #
-> “ M           - a   - v        — ” the policeman was saying  , “ — o       — — — ”
-# . NPr/VB/J/#r . D/P . NSg/P/#r . . D+  NSg+      VPt Nᴹ/Vg/J . . . NPr/J/P . . . .
+> “ M           - a   - v        — ” the policeman was saying    , “ — o       — — — ”
+# . NPr/VB/J/#r . D/P . NSg/P/#r . . D+  NSg+      VPt N🅪Sg/Vg/J . . . NPr/J/P . . . .
 >
 #
 > “ No    , r        — ” corrected the man       , “ M           - a   - v        - r        - o       — — — ”
@@ -9415,7 +9415,7 @@
 >
 #
 > Daisy and  Tom     were    sitting  opposite each other    at    the kitchen table   , with a
-# NPr   VB/C NPr/VB+ NSg/VPt NSg/VB/J NSg/J/P  Dq   NSg/VB/J NSg/P D+  NSg/VB+ NSg/VB+ . P    D/P
+# NPr   VB/C NPr/VB+ NSg/VPt NSg/Vg/J NSg/J/P  Dq   NSg/VB/J NSg/P D+  NSg/VB+ NSg/VB+ . P    D/P
 > plate  of cold  fried chicken   between them     , and  two bottles of ale   . He       was talking
 # NSg/VB P  NSg/J VP/J  N🅪Sg/VB/J NSg/P   NSg/IPl+ . VB/C NSg NPl/V3  P  N🅪Sg+ . NPr/ISg+ VPt Nᴹ/Vg/J
 > intently across the table   at    her     , and  in      his     earnestness his     hand    had fallen
@@ -9754,8 +9754,8 @@
 # I/Ddem+ N🅪Sg+     . NPr/ISg+ VP   ISg/D$+ I/Ddem+ NPl+   NPr/J/P D/P+ NSg/J+ NSg/I/C/Ddem+ VP/J       ISg/D$+ . NSg/I/C/Ddem+ VB
 > it       look   as    if    I       was some     kind  of cheap    sharper . And  the result  was she  hardly
 # NPr/ISg+ NSg/VB NSg/R NSg/C ISg/#r+ VPt I/J/R/Dq NSg/J P  NSg/VB/J NSg/JC  . VB/C D+  NSg/VB+ VPt ISg+ R
-> knew what   she  was saying  . ”
-# VPt  NSg/I+ ISg+ VPt Nᴹ/Vg/J . .
+> knew what   she  was saying    . ”
+# VPt  NSg/I+ ISg+ VPt N🅪Sg/Vg/J . .
 >
 #
 > He       sat      down        gloomily .
@@ -9805,7 +9805,7 @@
 > was leaving her     behind  . The day   - coach   — he       was penniless now        — was hot      . He       went    out
 # VPt Nᴹ/Vg/J ISg/D$+ NSg/J/P . D+  NPr🅪+ . NSg/VB+ . NPr/ISg+ VPt J         NPr/VB/J/C . VPt NSg/VB/J . NPr/ISg+ NSg/VPt NSg/VB/J/R/P
 > to the open     vestibule and  sat      down        on  a   folding  - chair   , and  the station slid away
-# P  D   NSg/VB/J NSg/VB    VB/C NSg/VP/J N🅪Sg/VB/J/P J/P D/P Nᴹ/Vg/J+ . NSg/VB+ . VB/C D   NSg/VB+ VB   VB/J
+# P  D   NSg/VB/J NSg/VB    VB/C NSg/VP/J N🅪Sg/VB/J/P J/P D/P Nᴹ/Vg/J+ . NSg/VB+ . VB/C D   NSg/VB+ VP   VB/J
 > and  the backs  of unfamiliar buildings moved by      . Then    out          into the spring   fields    ,
 # VB/C D   NPl/V3 P  NSg/J      NPl/V3+   VP/J  NSg/J/P . NSg/J/C NSg/VB/J/R/P P    D+  N🅪Sg/VB+ NPrPl/V3+ .
 > where a   yellow   trolley raced them     for a   minute    with people  in      it       who    might    once
@@ -10205,7 +10205,7 @@
 > why    his     wife      might    have    bought the dog       - leash   . But     conceivably Wilson had heard
 # NSg/VB ISg/D$+ NSg/VB/J+ Nᴹ/VXB/J NSg/VXB NSg/VP D   NSg/VB/J+ . NSg/VB+ . NSg/C/P R           NPr+   VB  VP/J
 > some     of these   same explanations before , from Myrtle , because he       began saying
-# I/J/R/Dq P  I/Ddem+ I/J+ NPl+         C/P    . P    NPr    . C/P     NPr/ISg+ VPt   Nᴹ/Vg/J
+# I/J/R/Dq P  I/Ddem+ I/J+ NPl+         C/P    . P    NPr    . C/P     NPr/ISg+ VPt   N🅪Sg/Vg/J
 > “ Oh     , my  God     ! ” again in      a   whisper — his     comforter left     several explanations in      the
 # . NPr/VB . D$+ NPr/VB+ . . P     NPr/J/P D/P NSg/VB+ . ISg/D$+ NSg+      NPr/VB/J J/Dq    NPl          NPr/J/P D+
 > air      .
@@ -10226,8 +10226,8 @@
 #
 > “ You’re morbid , George , ” said his     friend    . “ This    has been    a   strain  to you    and  you
 # . W?     J      . NPr+   . . VP/J ISg/D$+ NPr/VB/J+ . . I/Ddem+ V3  NSg/VPp D/P N🅪Sg/VB P  ISgPl+ VB/C ISgPl+
-> don’t know   what   you're saying  . You’d better      try       and  sit    quiet     till       morning    . ”
-# VB    NSg/VB NSg/I+ +      Nᴹ/Vg/J . W?    NSg/VXB/JC+ NSg/VB/J+ VB/C NSg/VB N🅪Sg/VB/J NSg/VB/C/P N🅪Sg/Vg/J+ . .
+> don’t know   what   you're saying    . You’d better      try       and  sit    quiet     till       morning    . ”
+# VB    NSg/VB NSg/I+ +      N🅪Sg/Vg/J . W?    NSg/VXB/JC+ NSg/VB/J+ VB/C NSg/VB N🅪Sg/VB/J NSg/VB/C/P N🅪Sg/Vg/J+ . .
 >
 #
 > “ He       murdered her     . ”
@@ -10735,7 +10735,7 @@
 >
 #
 > His     eyes    , seeing     nothing  , moved ceaselessly about the room       .
-# ISg/D$+ NPl/V3+ . NSg/VB/J/C NSg/I/J+ . VP/J  R           J/P   D+  N🅪Sg/VB/J+ .
+# ISg/D$+ NPl/V3+ . NSg/Vg/J/C NSg/I/J+ . VP/J  R           J/P   D+  N🅪Sg/VB/J+ .
 >
 #
 > “ It       was a   madman , ” he       said . “ He       must   have    been    mad      . ”
@@ -10853,7 +10853,7 @@
 > I       was relieved too , for that          seemed to promise another friend    at    Gatsby’s grave     .
 # ISg/#r+ VPt VP/J     W?  . C/P NSg/I/C/Ddem+ VP/J   P  NSg/VB  I/D+    NPr/VB/J+ NSg/P NSg$     NSg/VB/J+ .
 > I       didn’t want   it       to be      in      the papers  and  draw   a   sightseeing crowd   , so        I’d been
-# ISg/#r+ VB     NSg/VB NPr/ISg+ P  NSg/VXB NPr/J/P D   NPl/V3+ VB/C NSg/VB D/P NSg/VB+     NSg/VB+ . NSg/I/J/C W?  NSg/VPp
+# ISg/#r+ VB     NSg/VB NPr/ISg+ P  NSg/VXB NPr/J/P D   NPl/V3+ VB/C NSg/VB D/P NSg/Vg+     NSg/VB+ . NSg/I/J/C W?  NSg/VPp
 > calling up         a   few      people  myself . They were    hard   to find   .
 # Nᴹ/Vg/J NSg/VB/J/P D/P NSg/I/Dq NPl/VB+ ISg+   . IPl+ NSg/VPt N🅪Sg/J P  NSg/VB .
 >
@@ -10882,8 +10882,8 @@
 # . NSg/VB/J . W?   R         NSg/VB/J . NSg/I+ ISg/#r+ VP/J   NSg/VB/J/P J/P   VL3 . . . .
 >
 #
-> “ Wait   a    minute    , ” I       interrupted . “ How   about saying  you’ll come       ? ”
-# . NSg/VB D/P+ NSg/VB/J+ . . ISg/#r+ VP/J        . . NSg/C J/P   Nᴹ/Vg/J W?     NSg/VBPp/P . .
+> “ Wait   a    minute    , ” I       interrupted . “ How   about saying    you’ll come       ? ”
+# . NSg/VB D/P+ NSg/VB/J+ . . ISg/#r+ VP/J        . . NSg/C J/P   N🅪Sg/Vg/J W?     NSg/VBPp/P . .
 >
 #
 > “ Well     , the fact is  — the truth   of the matter   is  that          I’m staying with some     people
@@ -10897,7 +10897,7 @@
 >
 #
 > I       ejaculated an  unrestrained “ Huh ! ” and  he       must   have    heard me       , for he       went    on
-# ISg/#r+ VP/J       D/P VB/J         . W?  . . VB/C NPr/ISg+ NSg/VB NSg/VXB VP/J  NPr/ISg+ . C/P NPr/ISg+ NSg/VPt J/P
+# ISg/#r+ VP/J       D/P VP/J         . W?  . . VB/C NPr/ISg+ NSg/VB NSg/VXB VP/J  NPr/ISg+ . C/P NPr/ISg+ NSg/VPt J/P
 > nervously :
 # R         .
 >
@@ -11547,7 +11547,7 @@
 > “ And  if    you    think  I       didn’t have    my  share  of suffering — look   here    , when    I       went    to
 # . VB/C NSg/C ISgPl+ NSg/VB ISg/#r+ VB     NSg/VXB D$+ NSg/VB P  Nᴹ/Vg/J+  . NSg/VB NSg/J/R . NSg/I/C ISg/#r+ NSg/VPt P
 > give   up         that         flat     and  saw     that         damn     box    of dog       biscuits sitting  there on  the
-# NSg/VB NSg/VB/J/P NSg/I/C/Ddem NSg/VB/J VB/C NSg/VPt NSg/I/C/Ddem NSg/VB/J NSg/VB P  NSg/VB/J+ NPl      NSg/VB/J W?    J/P D
+# NSg/VB NSg/VB/J/P NSg/I/C/Ddem NSg/VB/J VB/C NSg/VPt NSg/I/C/Ddem NSg/VB/J NSg/VB P  NSg/VB/J+ NPl      NSg/Vg/J W?    J/P D
 > sideboard , I       sat      down        and  cried like         a   baby      . By      God     it       was awful — ”
 # NSg/VB    . ISg/#r+ NSg/VP/J N🅪Sg/VB/J/P VB/C VP/J  NSg/VB/J/C/P D/P NSg/VB/J+ . NSg/J/P NPr/VB+ NPr/ISg+ VPt J     . .
 >
