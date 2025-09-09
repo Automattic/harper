@@ -426,9 +426,6 @@ impl LintGroup {
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
-        insert_struct_rule!(ToTwoToo, true);
-        insert_expr_rule!(QuantifierNeedsOf, true);
-        insert_struct_rule!(NoFrenchSpaces, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(Confident, true);
@@ -513,6 +510,7 @@ impl LintGroup {
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(ThingThink, true);
         insert_struct_rule!(ThrowRubbish, true);
+        insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
