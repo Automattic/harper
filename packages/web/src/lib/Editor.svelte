@@ -1,12 +1,13 @@
 <script lang="ts">
-import { Button, Card } from 'flowbite-svelte';
-import { SuggestionKind, type WorkerLinter } from 'harper.js';
+import { Card } from 'flowbite-svelte';
+import { type WorkerLinter } from 'harper.js';
 import {
 	applySuggestion,
 	LintFramework,
 	type UnpackedLint,
 	type UnpackedSuggestion,
 	unpackLint,
+	lintKindColor,
 } from 'lint-framework';
 import demo from '../../../../demo.md?raw';
 
@@ -44,15 +45,8 @@ $: if (editor != null) {
 	lfw.addTarget(editor);
 }
 
-function suggestionLabel(s: UnpackedSuggestion): string {
-	switch (s.kind) {
-		case SuggestionKind.Remove:
-			return 'Remove';
-		case SuggestionKind.Replace:
-			return s.replacement_text ? `Replace with "${s.replacement_text}"` : 'Replace';
-		case SuggestionKind.InsertAfter:
-			return s.replacement_text ? `Insert "${s.replacement_text}"` : 'Insert';
-	}
+function suggestionText(s: UnpackedSuggestion): string {
+	return s.replacement_text !== '' ? s.replacement_text : String(s.kind);
 }
 
 function applySug(lint: UnpackedLint, s: UnpackedSuggestion) {
@@ -72,26 +66,35 @@ function applySug(lint: UnpackedLint, s: UnpackedSuggestion) {
 	</Card>
 
 	<Card class="hidden md:flex md:flex-col md:w-1/3 h-full p-5 z-10">
-		<div class="text-base font-semibold mb-3">Lints</div>
+		<div class="text-base font-semibold mb-3">Problems</div>
 		<div class="flex-1 overflow-y-auto pr-1">
 			{#if lints.length === 0}
 				<p class="text-sm text-gray-500">No lints yet.</p>
 			{:else}
 				<div class="space-y-3">
 					{#each lints as lint}
-						<Card class="p-3">
-							<div class="text-sm font-medium">{lint.lint_kind_pretty}</div>
-							<div class="text-xs text-gray-600 mb-2 break-words">{lint.problem_text}</div>
+						<div class="rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm p-3 bg-white dark:bg-[#0d1117]">
+							<div class="text-sm font-semibold pb-1 mb-2" style={`border-bottom: 2px solid ${lintKindColor(lint.lint_kind)}`}>{lint.lint_kind_pretty}</div>
+							<div class="text-sm text-gray-700 dark:text-gray-300 mb-2 break-words">
+								{@html lint.message_html}
+							</div>
 							{#if lint.suggestions && lint.suggestions.length > 0}
-								<div class="flex flex-wrap gap-2">
+								<div class="flex flex-wrap gap-2 justify-end">
 									{#each lint.suggestions as s}
-										<Button size="xs" on:click={() => applySug(lint, s)}>{suggestionLabel(s)}</Button>
+										<button
+											class="inline-flex items-center justify-center rounded-md px-2 py-1 text-xs font-semibold"
+											style="background:#2DA44E;color:#FFFFFF"
+											title={`Replace with \"${suggestionText(s)}\"`}
+											on:click={() => applySug(lint, s)}
+										>
+											{suggestionText(s)}
+										</button>
 									{/each}
 								</div>
 							{:else}
 								<div class="text-xs text-gray-400">No suggestions available.</div>
 							{/if}
-						</Card>
+						</div>
 					{/each}
 				</div>
 			{/if}
