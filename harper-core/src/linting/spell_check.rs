@@ -43,22 +43,22 @@ impl<T: Dictionary> SpellCheck<T> {
         let suffixes = ["'s", "'d", "ed", "s"];
 
         for suffix in &suffixes {
-            if let Some(stem) = word_str.strip_suffix(suffix) {
-                if !stem.is_empty() {
-                    let stem_chars: Vec<char> = stem.chars().collect();
-                    // Check if stem is all caps (ignoring non-alphabetic characters)
-                    if stem_chars
-                        .iter()
-                        .all(|c| c.is_uppercase() || !c.is_alphabetic())
-                    {
-                        // Make sure the stem doesn't end with another suffix
-                        for other_suffix in &suffixes {
-                            if stem.ends_with(other_suffix) {
-                                return false;
-                            }
+            if let Some(stem) = word_str.strip_suffix(suffix)
+                && !stem.is_empty()
+            {
+                let stem_chars: Vec<char> = stem.chars().collect();
+                // Check if stem is all caps (ignoring non-alphabetic characters)
+                if stem_chars
+                    .iter()
+                    .all(|c| c.is_uppercase() || !c.is_alphabetic())
+                {
+                    // Make sure the stem doesn't end with another suffix
+                    for other_suffix in &suffixes {
+                        if stem.ends_with(other_suffix) {
+                            return false;
                         }
-                        return true;
                     }
+                    return true;
                 }
             }
         }

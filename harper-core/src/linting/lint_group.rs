@@ -547,10 +547,7 @@ impl LintGroup {
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
 
-        out.add(
-            "SpellCheckIgnoreAllCaps",
-            SpellCheckIgnoreAllCaps::default(),
-        );
+        out.add("SpellCheckIgnoreAllCaps", SpellCheckIgnoreAllCaps);
         out.config
             .set_rule_enabled("SpellCheckIgnoreAllCaps", false);
 
