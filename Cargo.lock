@@ -2401,6 +2401,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-ink"
+version = "0.61.0"
+dependencies = [
+ "harper-core",
+ "harper-tree-sitter",
+ "paste",
+ "tree-sitter",
+ "tree-sitter-ink-lbz",
+]
+
+[[package]]
 name = "harper-literate-haskell"
 version = "0.62.0"
 dependencies = [
@@ -4827,6 +4838,16 @@ name = "tree-sitter-html"
 version = "0.23.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "261b708e5d92061ede329babaaa427b819329a9d427a1d710abb0f67bbef63ee"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-ink-lbz"
+version = "0.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "72ad4b541e533725c780243a1ac6f516b0f64d5e8705940cf92cd6005890b43e"
 dependencies = [
  "cc",
  "tree-sitter-language",
