@@ -107,7 +107,7 @@ use super::since_duration::SinceDuration;
 use super::somewhat_something::SomewhatSomething;
 use super::sought_after::SoughtAfter;
 use super::spaces::Spaces;
-use super::spell_check::SpellCheck;
+use super::spell_check::{SpellCheck, SpellCheckConfig};
 use super::spelled_numbers::SpelledNumbers;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
@@ -249,6 +249,7 @@ impl Hash for LintGroupConfig {
 /// Each child can be toggled via the public, mutable [Self::config] object.
 pub struct LintGroup {
     pub config: LintGroupConfig,
+    pub spell_check_config: SpellCheckConfig,
     /// We use a binary map here so the ordering is stable.
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
@@ -267,6 +268,7 @@ impl LintGroup {
     pub fn empty() -> Self {
         Self {
             config: LintGroupConfig::default(),
+            spell_check_config: SpellCheckConfig::default(),
             linters: BTreeMap::new(),
             expr_linters: BTreeMap::new(),
             chunk_expr_cache: LruCache::new(NonZero::new(10000).unwrap()),
@@ -314,6 +316,7 @@ impl LintGroup {
     /// The other lint group will be left empty after this operation.
     pub fn merge_from(&mut self, other: &mut LintGroup) {
         self.config.merge_from(&mut other.config);
+        // Note: spell_check_config is not merged, as each LintGroup should maintain its own
 
         let other_linters = std::mem::take(&mut other.linters);
         self.linters.extend(other_linters);
@@ -372,6 +375,46 @@ impl LintGroup {
     pub fn with_lint_config(mut self, config: LintGroupConfig) -> Self {
         self.config = config;
         self
+    }
+
+    /// Update the SpellCheck linter configuration. This will recreate the SpellCheck linter
+    pub fn update_spell_check_config(
+        &mut self,
+        spell_check_config: SpellCheckConfig,
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: Dialect,
+    ) {
+        self.spell_check_config = spell_check_config.clone();
+
+        // If SpellCheck linter exists, recreate it with the new config
+        if self.linters.contains_key("SpellCheck") {
+            self.linters.insert(
+                "SpellCheck".to_string(),
+                Box::new(SpellCheck::new(dictionary, dialect, spell_check_config)),
+            );
+        }
+    }
+
+    /// Enable or disable ignoring capitalized words in spell checking
+    pub fn set_spell_check_ignore_capitalized(
+        &mut self,
+        ignore: bool,
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: Dialect,
+    ) {
+        self.spell_check_config.ignore_capitalized = ignore;
+        self.update_spell_check_config(self.spell_check_config.clone(), dictionary, dialect);
+    }
+
+    /// Enable or disable ignoring abbreviations in spell checking
+    pub fn set_spell_check_ignore_abbreviations(
+        &mut self,
+        ignore: bool,
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: Dialect,
+    ) {
+        self.spell_check_config.ignore_abbreviations = ignore;
+        self.update_spell_check_config(self.spell_check_config.clone(), dictionary, dialect);
     }
 
     pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) -> Self {
@@ -524,8 +567,17 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule!(WouldNeverHave, true);
 
-        out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
+        out.add(
+            "SpellCheck",
+            SpellCheck::new(dictionary.clone(), dialect, out.spell_check_config.clone()),
+        );
         out.config.set_rule_enabled("SpellCheck", true);
+
+        // Add spell check configuration options as toggleable rules
+        out.config
+            .set_rule_enabled("SpellCheckIgnoreCapitalized", false);
+        out.config
+            .set_rule_enabled("SpellCheckIgnoreAbbreviations", false);
 
         out.add(
             "InflectedVerbAfterTo",
@@ -576,6 +628,22 @@ impl Default for LintGroup {
 
 impl Linter for LintGroup {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
+        // Sync spell check configuration with rule settings before linting
+        let ignore_capitalized = self.config.is_rule_enabled("SpellCheckIgnoreCapitalized");
+        let ignore_abbreviations = self.config.is_rule_enabled("SpellCheckIgnoreAbbreviations");
+
+        if self.spell_check_config.ignore_capitalized != ignore_capitalized
+            || self.spell_check_config.ignore_abbreviations != ignore_abbreviations
+        {
+            self.spell_check_config.ignore_capitalized = ignore_capitalized;
+            self.spell_check_config.ignore_abbreviations = ignore_abbreviations;
+
+            // Update the existing SpellCheck linter's config safely through the trait
+            if let Some(spell_check_linter) = self.linters.get_mut("SpellCheck") {
+                spell_check_linter.update_spell_check_config(self.spell_check_config.clone());
+            }
+        }
+
         let mut results = Vec::new();
 
         // Normal linters

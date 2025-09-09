@@ -2143,6 +2143,18 @@
 					"default": true,
 					"description": "Looks and provides corrections for misspelled words."
 				},
+				"harper.linters.SpellCheckIgnoreCapitalized": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Tells spell check to ignore capitalized words."
+				},
+				"harper.linters.SpellCheckIgnoreAbbreviations": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Tells spell check to ignore abbreviations."
+				},
 				"harper.linters.SpelledNumbers": {
 					"scope": "resource",
 					"type": "boolean",

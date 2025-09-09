@@ -247,7 +247,7 @@ pub use since_duration::SinceDuration;
 pub use somewhat_something::SomewhatSomething;
 pub use sought_after::SoughtAfter;
 pub use spaces::Spaces;
-pub use spell_check::SpellCheck;
+pub use spell_check::{SpellCheck, SpellCheckConfig};
 pub use spelled_numbers::SpelledNumbers;
 pub use suggestion::Suggestion;
 pub use take_serious::TakeSerious;
@@ -286,6 +286,12 @@ pub trait Linter: LSend {
     /// A user-facing description of what kinds of grammatical errors this rule looks for.
     /// It is usually shown in settings menus.
     fn description(&self) -> &str;
+
+    /// Update spell check configuration if this linter supports it.
+    /// Default implementation does nothing.
+    fn update_spell_check_config(&mut self, _config: SpellCheckConfig) {
+        // Default: do nothing for linters that don't support spell check config
+    }
 }
 
 /// A blanket-implemented trait that renders the Markdown description field of a linter to HTML.
