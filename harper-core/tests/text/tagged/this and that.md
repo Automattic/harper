@@ -56,8 +56,8 @@
 # NSg/VB NSg/I/J/C/Dq+ NPl/V3+    NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ NSg+     .
 >
 #
-> This    is  all          that         I    have    .
-# I/Ddem+ VL3 NSg/I/J/C/Dq NSg/I/C/Ddem ISg+ NSg/VXB .
+> This    is  all          that         I       have    .
+# I/Ddem+ VL3 NSg/I/J/C/Dq NSg/I/C/Ddem ISg/#r+ NSg/VXB .
 > This    is  all          that         solutions can     do      .
 # I/Ddem+ VL3 NSg/I/J/C/Dq NSg/I/C/Ddem NPl+      NPr/VXB NSg/VXB .
 > That         solution can     do      .
@@ -66,8 +66,8 @@
 #
 > We   can     do      this    !
 # IPl+ NPr/VXB NSg/VXB I/Ddem+ .
-> I    can     do      this   and  that          .
-# ISg+ NPr/VXB NSg/VXB I/Ddem VB/C NSg/I/C/Ddem+ .
+> I       can     do      this   and  that          .
+# ISg/#r+ NPr/VXB NSg/VXB I/Ddem VB/C NSg/I/C/Ddem+ .
 >
 #
 > We   unite  to stand  united in      unity .

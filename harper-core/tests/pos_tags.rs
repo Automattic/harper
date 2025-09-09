@@ -71,6 +71,7 @@
 //! - [`TokenKind::Punctuation`] are denoted by `.`.
 //! - [`TokenKind::Number`] are denoted by `#`.
 //! - [`TokenKind::Decade`] are denoted by `#d`.
+//! - Roman numerals are denoted by `#r`.
 //! - [`TokenKind::Space`], [`TokenKind::Newline`], and
 //!   [`TokenKind::ParagraphBreak`] are ignored.
 //! - All other token kinds are denoted by their variant name.
@@ -209,6 +210,9 @@ fn format_word_tag(word: &WordMetadata) -> String {
     }
     if word.preposition {
         add("P", &mut tags);
+    }
+    if word.is_roman_numerals() {
+        add("#r", &mut tags);
     }
 
     get_dialect_annotations(word).into_iter().for_each(|tag| {

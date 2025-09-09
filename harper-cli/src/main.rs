@@ -17,8 +17,8 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    CharStringExt, Dialect, Document, TokenKind, TokenStringExt, WordMetadata, remove_overlaps,
-    word_metadata_orthography::OrthFlags,
+    CharStringExt, Dialect, Document, Span, TokenKind, TokenStringExt, WordMetadata,
+    remove_overlaps, word_metadata_orthography::OrthFlags,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 #[cfg(feature = "training")]
@@ -165,8 +165,11 @@ enum Args {
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary
     /// which occur in more than one lettercase variant.    
     CaseVariants,
-    /// Provided a sentence or phrase, emit a list of each noun phrase contained within.
-    NominalPhrases { input: String },
+    /// Emit a list of each noun phrase contained within the input
+    NominalPhrases {
+        /// The text or file to analyze. If not provided, it will be read from standard input.
+        input: Option<Input>,
+    },
 }
 
 fn main() -> anyhow::Result<()> {
@@ -747,14 +750,56 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::NominalPhrases { input } => {
+            // Get input from either file or direct text
+            let input = match input {
+                Some(Input::File(path)) => std::fs::read_to_string(path)?,
+                Some(Input::Text(text)) => text,
+                None => std::io::read_to_string(std::io::stdin())?,
+            };
+
             let doc = Document::new_markdown_default_curated(&input);
+            let phrases: Vec<_> = doc
+                .iter_nominal_phrases()
+                .map(|toks| {
+                    (
+                        toks.first().unwrap().span.start,
+                        toks.last().unwrap().span.end,
+                    )
+                })
+                .collect();
 
-            for phrase in doc.iter_nominal_phrases() {
-                let s =
-                    doc.get_span_content_str(&phrase.span().ok_or(anyhow!("Unable to get span"))?);
+            let mut last_end = 0;
 
-                println!("{s}");
+            for (start, end) in phrases {
+                // Plain text between nominal phrases
+                if start > last_end {
+                    let span = Span::new(last_end, start);
+                    let txt = doc.get_span_content_str(&span);
+                    if !txt.trim().is_empty() {
+                        print!("{}", txt);
+                    }
+                }
+
+                // Highlighted nominal phrase
+                let span = Span::new(start, end);
+                let txt = doc.get_span_content_str(&span);
+
+                print!("\x1b[33m{}\x1b[0m", txt);
+
+                last_end = end;
             }
+
+            // Plain text after the last nominal phrase, if any
+            let doc_len = doc.get_full_content().len();
+            if last_end < doc_len {
+                let span = Span::new(last_end, doc_len);
+                let txt = doc.get_span_content_str(&span);
+                if !txt.trim().is_empty() {
+                    print!("{}", txt);
+                }
+            }
+
+            println!();
 
             Ok(())
         }

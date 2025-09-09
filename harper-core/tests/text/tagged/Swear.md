@@ -14,5 +14,5 @@
 # NSg/I/VB/J+ NSg/VB+/B . NSg NPl/V3/B .
 >
 #
-> I    fart     , you're farting   , he       farts    , she  farted .
-# ISg+ NSg/VB/B . +      Nᴹ/Vg/J/B . NPr/ISg+ NPl/V3/B . ISg+ VP/J/B .
+> I       fart     , you're farting   , he       farts    , she  farted .
+# ISg/#r+ NSg/VB/B . +      Nᴹ/Vg/J/B . NPr/ISg+ NPl/V3/B . ISg+ VP/J/B .

@@ -150,8 +150,8 @@
 # I/C+  VPt Nᴹ/Vg/J NSg/I/J/C/Dq NSg   P  VP/J    N🅪Sg/VB+ Nᴹ+       VB/C VPt R/C  NPr/J/P D
 > calculator business to develop his     giant programmable calculator , the
 # NSg+       N🅪Sg/J+  P  VB      ISg/D$+ NSg/J NSg/J        NSg+       . D
-> ASCC / Harvard Mark    I    , based on  Babbage's Analytical Engine  , which itself used
-# ?    . NPr+    NPr/VB+ ISg+ . VP/J  J/P NSg$      J          NSg/VB+ . I/C+  ISg+   VP/J
+> ASCC / Harvard Mark    I       , based on  Babbage's Analytical Engine  , which itself used
+# ?    . NPr+    NPr/VB+ ISg/#r+ . VP/J  J/P NSg$      J          NSg/VB+ . I/C+  ISg+   VP/J
 > cards  and  a   central computing unit . When    the machine was finished , some     hailed
 # NPl/V3 VB/C D/P NPr/J   Nᴹ/Vg/J+  NSg+ . NSg/I/C D+  NSg/VB+ VPt VP/J     . I/J/R/Dq VP/J
 > it       as    " Babbage's dream     come       true     " .

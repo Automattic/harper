@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.61.0",
+	"version": "0.62.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -174,6 +174,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Finds and corrects common mistakes between 'a part' and 'apart'"
+				},
+				"harper.linters.Addicting": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Replaces `addicting` with `addictive` when used as an adjective."
 				},
 				"harper.linters.AdjectiveDoubleDegree": {
 					"scope": "resource",
@@ -661,6 +667,18 @@
 					"default": true,
 					"description": "The name of the word `the` is `definite article`."
 				},
+				"harper.linters.DegreesKelvin": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects use of `degrees kelvin` to `kelvins`."
+				},
+				"harper.linters.DegreesKelvinSymbol": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects use of `°K` to `K`."
+				},
 				"harper.linters.Desktop": {
 					"scope": "resource",
 					"type": "boolean",
@@ -678,6 +696,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `devops`."
+				},
+				"harper.linters.DigestiveTract": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `digestive track` to `digestive tract`."
 				},
 				"harper.linters.DiscourseMarkers": {
 					"scope": "resource",
@@ -1254,6 +1278,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Prevents the erroneous spacing in `in tact`; `intact` is the single correct word."
+				},
+				"harper.linters.InterestedIn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Ensures the correct preposition is used with the word `interested` (e.g. `interested in`)."
 				},
 				"harper.linters.Into": {
 					"scope": "resource",
@@ -1909,11 +1939,23 @@
 					"default": true,
 					"description": "Ensure proper capitalization of proper nouns."
 				},
+				"harper.linters.PunctuationClusters": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects consecutive or mixed punctuation marks that should be reduced to a single comma, semicolon, colon, slash, question mark, exclamation mark, period, or ampersand."
+				},
 				"harper.linters.QuantifierNeedsOf": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Detects missing `of` after the quantifier “a couple” when it precedes a plural noun"
+				},
+				"harper.linters.QuiteQuiet": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects when `quiet` is a typo for `quite` or the other way around."
 				},
 				"harper.linters.RapidFire": {
 					"scope": "resource",
@@ -2335,6 +2377,12 @@
 					"default": true,
 					"description": "Corrects `unless if`."
 				},
+				"harper.linters.UpdatePlaceNames": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "This rule looks for deprecated place names and offers to update them."
+				},
 				"harper.linters.Upset": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2466,6 +2514,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
+				},
+				"harper.linters.WouldNeverHave": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `would/could have never` to `never would/could have`."
 				},
 				"harper.linters.WroughtIron": {
 					"scope": "resource",
