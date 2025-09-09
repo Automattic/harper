@@ -13,11 +13,6 @@ export function findAncestor(
 	return null;
 }
 
-export function isVisible(el: Element): boolean {
-	const style = window.getComputedStyle(el);
-	return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
-}
-
 export function getGhostRoot(el: HTMLElement): HTMLElement | null {
 	return findAncestor(el, (node: HTMLElement) => node.closest('article, main, section') != null);
 }
