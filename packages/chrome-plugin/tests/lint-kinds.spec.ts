@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import lintKindColor, { LINT_KINDS } from '../src/lintKindColor';
+import lintKindColor, { LINT_KINDS } from 'harper-content-framework';
 
 test('display lint kind colors', async ({ page }, testInfo) => {
 	// Generate color boxes for each lint kind

@@ -3,7 +3,7 @@ import h from 'virtual-dom/h';
 import bookDownSvg from '../assets/book-down.svg?raw';
 import type { IgnorableLintBox, LintBox } from './Box';
 import lintKindColor from './lintKindColor';
-import ProtocolClient from './ProtocolClient';
+// Decoupled: actions passed in by framework consumer
 import type { UnpackedSuggestion } from './unpackLint';
 
 var FocusHook = function () {};
@@ -45,7 +45,12 @@ CloseOnEscapeHook.prototype.unhook = function (this: any, node: HTMLElement) {
 	}
 };
 
-function header(title: string, color: string, onClose: () => void): any {
+function header(
+	title: string,
+	color: string,
+	onClose: () => void,
+	openOptions: () => Promise<void>,
+): any {
 	const closeButton = h(
 		'button',
 		{
@@ -62,7 +67,7 @@ function header(title: string, color: string, onClose: () => void): any {
 		{
 			className: 'harper-gear-btn',
 			onclick: () => {
-				ProtocolClient.openOptions();
+				openOptions();
 			},
 			title: 'Settings',
 			'aria-label': 'Settings',
@@ -115,13 +120,16 @@ function footer(leftChildren: any, rightChildren: any) {
 	return h('div', { className: 'harper-footer' }, [left, right]);
 }
 
-function addToDictionary(box: LintBox): any {
+function addToDictionary(
+	box: LintBox,
+	addToUserDictionary?: (words: string[]) => Promise<void>,
+): any {
 	return h(
 		'button',
 		{
 			className: 'harper-btn',
 			onclick: () => {
-				ProtocolClient.addToUserDictionary([box.lint.problem_text]);
+				addToUserDictionary?.([box.lint.problem_text]);
 			},
 			title: 'Add word to user dictionary',
 			'aria-label': 'Add word to user dictionary',
@@ -137,7 +145,7 @@ function suggestions(
 ): any {
 	return suggestions.map((s: UnpackedSuggestion, i: number) => {
 		const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
-		const desc = `Replace with "${label}"`;
+		const desc = `Replace with \"${label}\"`;
 		const props = i === 0 ? { hook: new FocusHook() } : {};
 		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc, props);
 	});
@@ -162,7 +170,7 @@ function styleTag() {
 		  display:flex;
 		  flex-direction:column;
 		  z-index:5000;
-		  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+		  font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Helvetica,Arial,sans-serif;
 		  pointer-events:auto
 		}
 		.harper-header{
@@ -263,7 +271,14 @@ function ignoreLint(onIgnore: () => void): any {
 	);
 }
 
-export default function SuggestionBox(box: IgnorableLintBox, close: () => void) {
+export default function SuggestionBox(
+	box: IgnorableLintBox,
+	actions: {
+		openOptions: () => Promise<void>;
+		addToUserDictionary?: (words: string[]) => Promise<void>;
+	},
+	close: () => void,
+) {
 	const top = box.y + box.height + 3;
 	let bottom: number | undefined;
 	const left = box.x;
@@ -288,7 +303,12 @@ export default function SuggestionBox(box: IgnorableLintBox, close: () => void) 
 		},
 		[
 			styleTag(),
-			header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind), close),
+			header(
+				box.lint.lint_kind_pretty,
+				lintKindColor(box.lint.lint_kind),
+				close,
+				actions.openOptions,
+			),
 			body(box.lint.message_html),
 			footer(
 				suggestions(box.lint.suggestions, (v) => {
@@ -296,7 +316,9 @@ export default function SuggestionBox(box: IgnorableLintBox, close: () => void) 
 					close();
 				}),
 				[
-					box.lint.lint_kind === 'Spelling' ? addToDictionary(box) : undefined,
+					box.lint.lint_kind === 'Spelling'
+						? addToDictionary(box, actions.addToUserDictionary)
+						: undefined,
 					ignoreLint(box.ignoreLint),
 				],
 			),

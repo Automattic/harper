@@ -1,8 +1,9 @@
 import h from 'virtual-dom/h';
 import { closestBox, isPointInBox, type LintBox } from './Box';
 import { getCaretPosition } from './editorUtils';
-import ProtocolClient from './ProtocolClient';
-import { ActivationKey } from './protocol';
+
+type ActivationKey = 'off' | 'shift' | 'control';
+
 import RenderBox from './RenderBox';
 import SuggestionBox from './SuggestionBox';
 
@@ -31,8 +32,18 @@ export default class PopupHandler {
 	private renderBox: RenderBox;
 	private pointerDownCallback: (e: PointerEvent) => void;
 	private activationKeyListener: (() => void) | undefined;
+	private readonly actions: {
+		getActivationKey: () => Promise<ActivationKey>;
+		openOptions: () => Promise<void>;
+		addToUserDictionary?: (words: string[]) => Promise<void>;
+	};
 
-	constructor() {
+	constructor(actions: {
+		getActivationKey: () => Promise<ActivationKey>;
+		openOptions: () => Promise<void>;
+		addToUserDictionary?: (words: string[]) => Promise<void>;
+	}) {
+		this.actions = actions;
 		this.currentLintBoxes = [];
 		this.renderBox = new RenderBox(document.body);
 		this.renderBox.getShadowHost().popover = 'manual';
@@ -43,12 +54,6 @@ export default class PopupHandler {
 		};
 
 		this.updateActivationKeyListener();
-
-		chrome.storage.onChanged.addListener((changes) => {
-			if (changes.activationKey) {
-				this.updateActivationKeyListener();
-			}
-		});
 	}
 
 	private updateActivationKeyListener() {
@@ -56,7 +61,7 @@ export default class PopupHandler {
 			this.activationKeyListener();
 		}
 
-		ProtocolClient.getActivationKey().then((key) => {
+		this.actions.getActivationKey().then((key) => {
 			if (key !== ActivationKey.Off) {
 				this.activationKeyListener = monitorActivationKey(() => this.openClosestToCaret(), key);
 			}
@@ -97,7 +102,7 @@ export default class PopupHandler {
 
 		if (this.popupLint != null && this.popupLint < this.currentLintBoxes.length) {
 			const box = this.currentLintBoxes[this.popupLint];
-			tree = SuggestionBox(box, () => {
+			tree = SuggestionBox(box, this.actions, () => {
 				this.popupLint = undefined;
 			});
 			this.renderBox.getShadowHost().showPopover();

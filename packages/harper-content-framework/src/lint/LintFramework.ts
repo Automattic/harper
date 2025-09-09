@@ -3,7 +3,8 @@ import computeLintBoxes from './computeLintBoxes';
 import { isVisible } from './domUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
-import ProtocolClient from './ProtocolClient';
+
+type ActivationKey = 'off' | 'shift' | 'control';
 
 /** Events on an input (any kind) that can trigger a re-render. */
 const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
@@ -23,9 +24,33 @@ export default class LintFramework {
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
 
-	constructor() {
+	/** Function used to fetch lints for a given text/domain. */
+	private lintProvider: (text: string, domain: string) => Promise<Lint[]>;
+	/** Actions wired by host environment (extension/app). */
+	private actions: {
+		ignoreLint: (hash: string) => Promise<void>;
+		getActivationKey: () => Promise<ActivationKey>;
+		openOptions: () => Promise<void>;
+		addToUserDictionary?: (words: string[]) => Promise<void>;
+	};
+
+	constructor(
+		lintProvider: (text: string, domain: string) => Promise<Lint[]>,
+		actions: {
+			ignoreLint: (hash: string) => Promise<void>;
+			getActivationKey: () => Promise<ActivationKey>;
+			openOptions: () => Promise<void>;
+			addToUserDictionary?: (words: string[]) => Promise<void>;
+		},
+	) {
+		this.lintProvider = lintProvider;
+		this.actions = actions;
 		this.highlights = new Highlights();
-		this.popupHandler = new PopupHandler();
+		this.popupHandler = new PopupHandler({
+			getActivationKey: actions.getActivationKey,
+			openOptions: actions.openOptions,
+			addToUserDictionary: actions.addToUserDictionary,
+		});
 		this.targets = new Set();
 		this.scrollableAncestors = new Set();
 		this.lastLints = [];
@@ -47,7 +72,7 @@ export default class LintFramework {
 
 	/** Returns the currents targets that are visible on-screen. */
 	onScreenTargets(): Node[] {
-		const onScreen = [];
+		const onScreen = [] as Node[];
 
 		for (const target of this.targets) {
 			if (isVisible(target)) {
@@ -75,7 +100,7 @@ export default class LintFramework {
 			this.onScreenTargets().map(async (target) => {
 				if (!document.contains(target)) {
 					this.targets.delete(target);
-					return { target: null as HTMLElement | null, lints: [] };
+					return { target: null as HTMLElement | null, lints: [] as Lint[] };
 				}
 
 				const text =
@@ -84,15 +109,15 @@ export default class LintFramework {
 						: target.textContent;
 
 				if (!text || text.length > 120000) {
-					return { target: null as HTMLElement | null, lints: [] };
+					return { target: null as HTMLElement | null, lints: [] as Lint[] };
 				}
 
-				const lints = await ProtocolClient.lint(text, window.location.hostname);
+				const lints = await this.lintProvider(text, window.location.hostname);
 				return { target: target as HTMLElement, lints };
 			}),
 		);
 
-		this.lastLints = lintResults;
+		this.lastLints = lintResults.filter((r) => r.target != null) as any;
 		this.lintRequested = false;
 		this.requestRender();
 	}
@@ -123,18 +148,21 @@ export default class LintFramework {
 		const observer = new MutationObserver(this.updateEventCallback);
 		const config = { subtree: true, characterData: true };
 
-		if (target.tagName == undefined) {
-			observer.observe(target.parentElement!, config);
+		if ((target as any).tagName == undefined) {
+			observer.observe((target as any).parentElement!, config);
 		} else {
-			observer.observe(target, config);
+			observer.observe(target as Element, config);
 		}
 
 		const scrollableAncestors = getScrollableAncestors(target);
 
 		for (const el of scrollableAncestors) {
-			if (!this.scrollableAncestors.has(el)) {
-				this.scrollableAncestors.add(el);
-				el.addEventListener('scroll', this.updateEventCallback, { capture: true, passive: true });
+			if (!this.scrollableAncestors.has(el as HTMLElement)) {
+				this.scrollableAncestors.add(el as HTMLElement);
+				(el as HTMLElement).addEventListener('scroll', this.updateEventCallback, {
+					capture: true,
+					passive: true,
+				});
 			}
 		}
 	}
@@ -166,7 +194,11 @@ export default class LintFramework {
 
 		requestAnimationFrame(() => {
 			const boxes = this.lastLints.flatMap(({ target, lints }) =>
-				target ? lints.flatMap((l) => computeLintBoxes(target, l)) : [],
+				target
+					? lints.flatMap((l) =>
+							computeLintBoxes(target, l as any, { ignoreLint: this.actions.ignoreLint }),
+						)
+					: [],
 			);
 			this.highlights.renderLintBoxes(boxes);
 			this.popupHandler.updateLintBoxes(boxes);
@@ -183,7 +215,7 @@ export default class LintFramework {
 function getScrollableAncestors(element: Node): Element[] {
 	const scrollables: Element[] = [];
 	const root = document.scrollingElement || document.documentElement;
-	let parent = element.parentElement;
+	let parent = (element as any).parentElement;
 
 	while (parent) {
 		const style = window.getComputedStyle(parent);

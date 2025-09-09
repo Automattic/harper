@@ -2,7 +2,6 @@ import type { Span } from 'harper.js';
 import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
 import { getRangeForTextSpan } from './domUtils';
 import { getLexicalEditable, getSlateRoot } from './editorUtils';
-import ProtocolClient from './ProtocolClient';
 import TextFieldRange from './TextFieldRange';
 import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
 
@@ -16,7 +15,11 @@ function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement
 	}
 }
 
-export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): IgnorableLintBox[] {
+export default function computeLintBoxes(
+	el: HTMLElement,
+	lint: UnpackedLint,
+	opts: { ignoreLint: (hash: string) => Promise<void> },
+): IgnorableLintBox[] {
 	try {
 		let range: Range | TextFieldRange | null = null;
 		let text: string | null = null;
@@ -63,7 +66,7 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): I
 				applySuggestion: (sug: UnpackedSuggestion) => {
 					replaceValue(el, applySuggestion(el.value ?? el.textContent, lint.span, sug));
 				},
-				ignoreLint: () => ProtocolClient.ignoreHash(lint.context_hash),
+				ignoreLint: () => opts.ignoreLint(lint.context_hash),
 			});
 		}
 		return boxes;

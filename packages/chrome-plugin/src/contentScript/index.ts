@@ -1,10 +1,14 @@
 import '@webcomponents/custom-elements';
+import { isVisible, LintFramework, leafNodes } from 'harper-content-framework';
 import $ from 'jquery';
-import { isVisible, leafNodes } from '../domUtils';
-import LintFramework from '../LintFramework';
 import ProtocolClient from '../ProtocolClient';
 
-const fw = new LintFramework();
+const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain), {
+	ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
+	getActivationKey: () => ProtocolClient.getActivationKey(),
+	openOptions: () => ProtocolClient.openOptions(),
+	addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
+});
 
 const keepAliveCallback = () => {
 	ProtocolClient.lint('', 'example.com');

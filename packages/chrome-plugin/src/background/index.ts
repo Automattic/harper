@@ -1,4 +1,5 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
+import { unpackLint } from 'harper-content-framework';
 import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
@@ -29,7 +30,6 @@ import {
 	type SetUserDictionaryRequest,
 	type UnitResponse,
 } from '../protocol';
-import unpackLint from '../unpackLint';
 
 console.log('background is running');
 

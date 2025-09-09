@@ -24,6 +24,15 @@ build-harperjs: build-wasm
   # Generate API reference
   ./docs.sh
 
+# Build the browser content framework module
+build-content-framework:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/packages/harper-content-framework"
+  pnpm install
+  pnpm build
+
 test-harperjs: build-harperjs
   #!/usr/bin/env bash
   set -eo pipefail
@@ -96,7 +105,7 @@ build-obsidian: build-harperjs
   zip harper-obsidian-plugin.zip manifest.json main.js
 
 # Build the Chrome extension.
-build-chrome-plugin: build-harperjs
+build-chrome-plugin: build-harperjs build-content-framework
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -106,7 +115,7 @@ build-chrome-plugin: build-harperjs
   pnpm zip-for-chrome
 
 # Start a development server for the Chrome extension.
-dev-chrome-plugin: build-harperjs
+dev-chrome-plugin: build-harperjs build-content-framework
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -116,7 +125,7 @@ dev-chrome-plugin: build-harperjs
   pnpm dev
 
 # Build the Firefox extension.
-build-firefox-plugin: build-harperjs
+build-firefox-plugin: build-harperjs build-content-framework
   #!/usr/bin/env bash
   set -eo pipefail
   
