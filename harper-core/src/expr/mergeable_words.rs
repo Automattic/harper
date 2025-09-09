@@ -2,14 +2,15 @@ use std::sync::Arc;
 
 use super::{Expr, SequenceExpr, SpaceOrHyphen};
 use crate::spell::{Dictionary, FstDictionary};
-use crate::{CharString, LexemeMetadata, Span, Token};
+use crate::{CharString, DictWordMetadata, Span, Token};
 
-type PredicateFn = dyn Fn(Option<&LexemeMetadata>, Option<&LexemeMetadata>) -> bool + Send + Sync;
+type PredicateFn =
+    dyn Fn(Option<&DictWordMetadata>, Option<&DictWordMetadata>) -> bool + Send + Sync;
 
-/// A [`Expr`] that identifies adjacent words that could potentially be merged into a single word.
+/// An [`Expr`] that identifies adjacent words that could potentially be merged into a single word.
 ///
 /// This checks if two adjacent words could form a valid compound word, but first verifies
-/// that the two words aren't already a valid lexeme in the dictionary (like "straight away").
+/// that the two words aren't already a valid entry in the dictionary (like "straight away").
 pub struct MergeableWords {
     inner: SequenceExpr,
     dict: Arc<FstDictionary>,
@@ -18,7 +19,7 @@ pub struct MergeableWords {
 
 impl MergeableWords {
     pub fn new(
-        predicate: impl Fn(Option<&LexemeMetadata>, Option<&LexemeMetadata>) -> bool
+        predicate: impl Fn(Option<&DictWordMetadata>, Option<&DictWordMetadata>) -> bool
         + Send
         + Sync
         + 'static,
@@ -84,9 +85,12 @@ impl Expr for MergeableWords {
 #[cfg(test)]
 mod tests {
     use super::MergeableWords;
-    use crate::{Document, LexemeMetadata};
+    use crate::{DictWordMetadata, Document};
 
-    fn predicate(meta_closed: Option<&LexemeMetadata>, meta_open: Option<&LexemeMetadata>) -> bool {
+    fn predicate(
+        meta_closed: Option<&DictWordMetadata>,
+        meta_open: Option<&DictWordMetadata>,
+    ) -> bool {
         meta_open.is_none() && meta_closed.is_some_and(|m| m.is_noun() && !m.is_proper_noun())
     }
 

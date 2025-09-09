@@ -8,7 +8,7 @@ use itertools::Itertools;
 use lazy_static::lazy_static;
 use std::sync::Arc;
 
-use crate::{CharString, CharStringExt, LexemeMetadata};
+use crate::{CharString, CharStringExt, DictWordMetadata};
 
 use super::FuzzyMatchResult;
 use super::dictionary::Dictionary;
@@ -73,7 +73,7 @@ impl MutableDictionary {
     /// distinct calls to this function.
     pub fn extend_words(
         &mut self,
-        words: impl IntoIterator<Item = (impl AsRef<[char]>, LexemeMetadata)>,
+        words: impl IntoIterator<Item = (impl AsRef<[char]>, DictWordMetadata)>,
     ) {
         for (chars, metadata) in words.into_iter() {
             self.word_map.insert(WordMapEntry {
@@ -87,7 +87,7 @@ impl MutableDictionary {
     ///
     /// If you are appending many words, consider using [`Self::extend_words`]
     /// instead.
-    pub fn append_word(&mut self, word: impl AsRef<[char]>, metadata: LexemeMetadata) {
+    pub fn append_word(&mut self, word: impl AsRef<[char]>, metadata: DictWordMetadata) {
         self.extend_words(std::iter::once((word.as_ref(), metadata)))
     }
 
@@ -95,7 +95,7 @@ impl MutableDictionary {
     ///
     /// If you are appending many words, consider using [`Self::extend_words`]
     /// instead.
-    pub fn append_word_str(&mut self, word: &str, metadata: LexemeMetadata) {
+    pub fn append_word_str(&mut self, word: &str, metadata: DictWordMetadata) {
         self.append_word(word.chars().collect::<Vec<_>>(), metadata)
     }
 }
@@ -107,7 +107,7 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_lexeme_metadata(&self, word: &[char]) -> Option<&LexemeMetadata> {
+    fn get_lexeme_metadata(&self, word: &[char]) -> Option<&DictWordMetadata> {
         self.word_map.get_with_chars(word).map(|v| &v.metadata)
     }
 
@@ -120,7 +120,7 @@ impl Dictionary for MutableDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_lexeme_metadata_str(&self, word: &str) -> Option<&LexemeMetadata> {
+    fn get_lexeme_metadata_str(&self, word: &str) -> Option<&DictWordMetadata> {
         let chars: CharString = word.chars().collect();
         self.get_lexeme_metadata(&chars)
     }

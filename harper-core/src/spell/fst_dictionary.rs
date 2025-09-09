@@ -4,7 +4,7 @@ use lazy_static::lazy_static;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 use std::{cell::RefCell, sync::Arc};
 
-use crate::{CharString, CharStringExt, LexemeMetadata};
+use crate::{CharString, CharStringExt, DictWordMetadata};
 
 use super::Dictionary;
 use super::FuzzyMatchResult;
@@ -19,7 +19,7 @@ pub struct FstDictionary {
     /// Used for fuzzy-finding the index of words or metadata
     word_map: FstMap<Vec<u8>>,
     /// Used for fuzzy-finding the index of words or metadata
-    words: Vec<(CharString, LexemeMetadata)>,
+    words: Vec<(CharString, DictWordMetadata)>,
 }
 
 const EXPECTED_DISTANCE: u8 = 3;
@@ -55,7 +55,7 @@ impl FstDictionary {
 
     /// Construct a new [`FstDictionary`] using a word list as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
-    pub fn new(mut words: Vec<(CharString, LexemeMetadata)>) -> Self {
+    pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {
         words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
         words.dedup_by(|(a, _), (b, _)| a == b);
 
@@ -120,11 +120,11 @@ impl Dictionary for FstDictionary {
         self.full_dict.contains_word_str(word)
     }
 
-    fn get_lexeme_metadata(&self, word: &[char]) -> Option<&LexemeMetadata> {
+    fn get_lexeme_metadata(&self, word: &[char]) -> Option<&DictWordMetadata> {
         self.full_dict.get_lexeme_metadata(word)
     }
 
-    fn get_lexeme_metadata_str(&self, word: &str) -> Option<&LexemeMetadata> {
+    fn get_lexeme_metadata_str(&self, word: &str) -> Option<&DictWordMetadata> {
         self.full_dict.get_lexeme_metadata_str(word)
     }
 

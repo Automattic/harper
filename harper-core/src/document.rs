@@ -158,7 +158,7 @@ impl Document {
 
             let mut i = 0;
 
-            // Annotate lexeme metadata
+            // Annotate DictWord metadata
             for token in sent.iter_mut() {
                 if let TokenKind::Word(meta) = &mut token.kind {
                     let word_source = token.span.get_content(&self.source);

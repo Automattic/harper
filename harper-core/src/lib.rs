@@ -4,14 +4,14 @@
 mod char_ext;
 mod char_string;
 mod currency;
+pub mod dict_word_metadata;
+pub mod dict_word_metadata_orthography;
 mod document;
 mod edit_distance;
 pub mod expr;
 mod fat_token;
 mod ignored_lints;
 pub mod language_detection;
-pub mod lexeme_metadata;
-pub mod lexeme_metadata_orthography;
 mod lexing;
 pub mod linting;
 mod mask;
@@ -34,13 +34,13 @@ use std::collections::VecDeque;
 
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
+pub use dict_word_metadata::{
+    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DictWordMetadata, NounData,
+    PronounData, VerbData, VerbForm,
+};
 pub use document::Document;
 pub use fat_token::{FatStringToken, FatToken};
 pub use ignored_lints::{IgnoredLints, LintContext};
-pub use lexeme_metadata::{
-    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, LexemeMetadata, NounData,
-    PronounData, VerbData, VerbForm,
-};
 use linting::Lint;
 pub use mask::{Mask, Masker};
 pub use number::{Number, OrdinalSuffix};

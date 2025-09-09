@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use super::Error;
 use super::affix_replacement::{AffixReplacement, HumanReadableAffixReplacement};
-use crate::LexemeMetadata;
+use crate::DictWordMetadata;
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "snake_case")]
@@ -23,7 +23,7 @@ pub struct Expansion {
     /// Metadata to apply to the transformed word
     pub target: Vec<MetadataExpansion>,
     /// Metadata to apply to the base word when this expansion is applied
-    pub base_metadata: LexemeMetadata,
+    pub base_metadata: DictWordMetadata,
 }
 
 impl Expansion {
@@ -44,8 +44,8 @@ impl Expansion {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MetadataExpansion {
-    pub metadata: LexemeMetadata,
-    pub if_base: Option<LexemeMetadata>,
+    pub metadata: DictWordMetadata,
+    pub if_base: Option<DictWordMetadata>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -54,7 +54,7 @@ pub struct HumanReadableExpansion {
     pub cross_product: bool,
     pub replacements: Vec<HumanReadableAffixReplacement>,
     pub target: Vec<MetadataExpansion>,
-    pub base_metadata: LexemeMetadata,
+    pub base_metadata: DictWordMetadata,
 }
 
 impl HumanReadableExpansion {
@@ -81,5 +81,5 @@ pub struct Property {
     #[serde(default)]
     pub propagate: bool,
     /// The metadata applied to the word.
-    pub metadata: LexemeMetadata,
+    pub metadata: DictWordMetadata,
 }

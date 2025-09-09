@@ -6,7 +6,7 @@ use itertools::Itertools;
 
 use super::{FstDictionary, WordId};
 use super::{FuzzyMatchResult, dictionary::Dictionary};
-use crate::{CharString, LexemeMetadata};
+use crate::{CharString, DictWordMetadata};
 
 /// A simple wrapper over [`Dictionary`] that allows
 /// one to merge multiple dictionaries without copying.
@@ -93,7 +93,7 @@ impl Dictionary for MergedDictionary {
         false
     }
 
-    fn get_lexeme_metadata(&self, word: &[char]) -> Option<&LexemeMetadata> {
+    fn get_lexeme_metadata(&self, word: &[char]) -> Option<&DictWordMetadata> {
         for child in &self.children {
             if let Some(found_item) = child.get_lexeme_metadata(word) {
                 return Some(found_item);
@@ -117,7 +117,7 @@ impl Dictionary for MergedDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_lexeme_metadata_str(&self, word: &str) -> Option<&LexemeMetadata> {
+    fn get_lexeme_metadata_str(&self, word: &str) -> Option<&DictWordMetadata> {
         let chars: CharString = word.chars().collect();
         self.get_lexeme_metadata(&chars)
     }

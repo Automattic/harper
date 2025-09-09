@@ -17,8 +17,8 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    CharStringExt, Dialect, Document, LexemeMetadata, Span, TokenKind, TokenStringExt,
-    lexeme_metadata_orthography::OrthFlags, remove_overlaps,
+    CharStringExt, Dialect, DictWordMetadata, Document, Span, TokenKind, TokenStringExt,
+    dict_word_metadata_orthography::OrthFlags, remove_overlaps,
 };
 use harper_literate_haskell::LiterateHaskellParser;
 #[cfg(feature = "training")]
@@ -872,7 +872,7 @@ fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let mut dict = MutableDictionary::new();
     dict.extend_words(
         str.lines()
-            .map(|l| (l.chars().collect::<Vec<_>>(), LexemeMetadata::default())),
+            .map(|l| (l.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
     );
 
     Ok(dict)

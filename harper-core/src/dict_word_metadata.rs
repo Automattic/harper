@@ -9,15 +9,15 @@ use strum_macros::{Display, EnumCount, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
-use crate::lexeme_metadata_orthography::OrthFlags;
+use crate::dict_word_metadata_orthography::OrthFlags;
 use crate::spell::WordId;
 use crate::{Document, TokenKind, TokenStringExt};
 
 /// This represents a "lexeme" or "headword" which is case-folded but affix-expanded.
 /// So not only lemmata but also inflected forms are stored here, with "horn" and "horns" each
-/// having their own lexeme, but "Ivy" and "ivy" share the same lexeme.
+/// having their own lexeme, but "Ivy" and "ivy" sharing the same lexeme.
 #[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Hash)]
-pub struct LexemeMetadata {
+pub struct DictWordMetadata {
     pub noun: Option<NounData>,
     pub pronoun: Option<PronounData>,
     pub verb: Option<VerbData>,
@@ -106,7 +106,7 @@ macro_rules! generate_metadata_queries {
     };
 }
 
-impl LexemeMetadata {
+impl DictWordMetadata {
     /// If there is only one possible interpretation of the metadata, infer its UPOS tag.
     pub fn infer_pos_tag(&self) -> Option<UPOS> {
         // If an explicit POS tag exists, return it immediately.
@@ -650,7 +650,7 @@ impl LexemeMetadata {
 
     // Orthographic queries
 
-    /// Does the lexeme for this word cover an all-lowercase variant? (e.g., "hello")
+    /// Does the metadata for this word cover an all-lowercase variant? (e.g., "hello")
     ///
     /// This returns true if all letters in the word are lowercase. Words containing
     /// non-letter characters (like numbers or symbols) are only considered if all
@@ -658,7 +658,7 @@ impl LexemeMetadata {
     pub fn is_lowercase(&self) -> bool {
         self.orth_info.contains(OrthFlags::LOWERCASE)
     }
-    /// Does the lexeme for this word cover a titlecase variant? (e.g., "Hello")
+    /// Does the metadata for this word cover a titlecase variant? (e.g., "Hello")
     ///
     /// This returns true if the word is in titlecase form, which means:
     /// - The first letter is uppercase
@@ -672,7 +672,7 @@ impl LexemeMetadata {
     pub fn is_titlecase(&self) -> bool {
         self.orth_info.contains(OrthFlags::TITLECASE)
     }
-    /// Does the lexeme for this word cover an all-uppercase variant? (e.g., "HELLO")
+    /// Does the metadata for this word cover an all-uppercase variant? (e.g., "HELLO")
     ///
     /// This returns true if all letters in the word are uppercase. Words containing
     /// non-letter characters (like numbers or symbols) are only considered if all
@@ -682,7 +682,7 @@ impl LexemeMetadata {
     pub fn is_allcaps(&self) -> bool {
         self.orth_info.contains(OrthFlags::ALLCAPS)
     }
-    /// Does the lexeme for this word cover a lower camel case variant? (e.g., "helloWorld")
+    /// Does the metadata for this word cover a lower camel case variant? (e.g., "helloWorld")
     ///
     /// This returns true if the word is in lower camel case, which means:
     /// - The first letter is lowercase
@@ -696,7 +696,7 @@ impl LexemeMetadata {
     pub fn is_lower_camel(&self) -> bool {
         self.orth_info.contains(OrthFlags::LOWER_CAMEL)
     }
-    /// Does the lexeme for this word cover an upper camel case / pascal case variant? (e.g., "HelloWorld")
+    /// Does the metadata for this word cover an upper camel case / pascal case variant? (e.g., "HelloWorld")
     ///
     /// This returns true if the word is in upper camel case (also known as Pascal case), which means:
     /// - The first letter is uppercase
@@ -716,7 +716,7 @@ impl LexemeMetadata {
         self.orth_info.contains(OrthFlags::UPPER_CAMEL)
     }
 
-    /// Does the lexeme for this word cover an apostrophized variant? (e.g., "doesn't")
+    /// Does the metadata for this word cover an apostrophized variant? (e.g., "doesn't")
     pub fn is_apostrophized(&self) -> bool {
         self.orth_info.contains(OrthFlags::APOSTROPHE)
     }
@@ -1132,11 +1132,11 @@ impl Default for DialectFlags {
 
 #[cfg(test)]
 pub mod tests {
-    use crate::LexemeMetadata;
+    use crate::DictWordMetadata;
     use crate::spell::{Dictionary, FstDictionary};
 
-    // Helper function to get lexeme metadata from the curated dictionary
-    pub fn md(word: &str) -> LexemeMetadata {
+    // Helper function to get metadata from the curated dictionary
+    pub fn md(word: &str) -> DictWordMetadata {
         FstDictionary::curated()
             .get_lexeme_metadata_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
@@ -1169,7 +1169,7 @@ pub mod tests {
     }
 
     mod noun {
-        use crate::lexeme_metadata::tests::md;
+        use crate::dict_word_metadata::tests::md;
 
         #[test]
         fn puppy_is_noun() {
@@ -1331,10 +1331,10 @@ pub mod tests {
     }
 
     mod pronoun {
-        use crate::lexeme_metadata::tests::md;
+        use crate::dict_word_metadata::tests::md;
 
         mod i_me_myself {
-            use crate::lexeme_metadata::tests::md;
+            use crate::dict_word_metadata::tests::md;
 
             #[test]
             fn i_is_pronoun() {
@@ -1389,7 +1389,7 @@ pub mod tests {
         }
 
         mod we_us_ourselves {
-            use crate::lexeme_metadata::tests::md;
+            use crate::dict_word_metadata::tests::md;
 
             #[test]
             fn we_is_pronoun() {
@@ -1444,7 +1444,7 @@ pub mod tests {
         }
 
         mod you_yourself {
-            use crate::lexeme_metadata::tests::md;
+            use crate::dict_word_metadata::tests::md;
 
             #[test]
             fn you_is_pronoun() {
@@ -1489,7 +1489,7 @@ pub mod tests {
         }
 
         mod he_him_himself {
-            use crate::lexeme_metadata::tests::md;
+            use crate::dict_word_metadata::tests::md;
 
             #[test]
             fn he_is_pronoun() {
@@ -1544,7 +1544,7 @@ pub mod tests {
         }
 
         mod she_her_herself {
-            use crate::lexeme_metadata::tests::md;
+            use crate::dict_word_metadata::tests::md;
 
             #[test]
             fn she_is_pronoun() {
@@ -1599,7 +1599,7 @@ pub mod tests {
         }
 
         mod it_itself {
-            use crate::lexeme_metadata::tests::md;
+            use crate::dict_word_metadata::tests::md;
 
             #[test]
             fn it_is_pronoun() {
@@ -1641,7 +1641,7 @@ pub mod tests {
         }
 
         mod they_them_themselves {
-            use crate::lexeme_metadata::tests::md;
+            use crate::dict_word_metadata::tests::md;
 
             #[test]
             fn they_is_pronoun() {
@@ -1761,7 +1761,7 @@ pub mod tests {
     }
 
     mod adjective {
-        use crate::{Degree, lexeme_metadata::tests::md};
+        use crate::{Degree, dict_word_metadata::tests::md};
 
         // Getting degrees
 
@@ -1831,7 +1831,7 @@ pub mod tests {
     }
 
     mod verb {
-        use crate::lexeme_metadata::tests::md;
+        use crate::dict_word_metadata::tests::md;
 
         #[test]
         fn lemma_walk() {

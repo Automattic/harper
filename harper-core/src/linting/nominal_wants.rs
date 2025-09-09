@@ -4,7 +4,7 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    lexeme_metadata::Person,
+    dict_word_metadata::Person,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
