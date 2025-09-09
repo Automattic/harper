@@ -22,11 +22,9 @@ export default function computeLintBoxes(
 ): IgnorableLintBox[] {
 	try {
 		let range: Range | TextFieldRange | null = null;
-		let text: string | null = null;
 
 		if (isFormEl(el)) {
 			range = new TextFieldRange(el, lint.span.start, lint.span.end);
-			text = el.value;
 		} else {
 			range = getRangeForTextSpan(el, lint.span as Span);
 		}

@@ -1,5 +1,5 @@
 import h from 'virtual-dom/h';
-import { closestBox, type IgnorableLintBox, isPointInBox, type LintBox } from './Box';
+import { closestBox, type IgnorableLintBox, isPointInBox } from './Box';
 import { getCaretPosition } from './editorUtils';
 
 type ActivationKey = 'off' | 'shift' | 'control';

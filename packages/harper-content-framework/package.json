@@ -9,16 +9,15 @@
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"default": "./src/index.ts"
+			"default": "./dist/index.js"
 		}
 	},
-	"sideEffects": false,
 	"files": [
 		"dist"
 	],
 	"scripts": {
-		"build": "tsc -p tsconfig.json",
-		"dev": "tsc -w -p tsconfig.json",
+		"build": "tsc && vite build",
+		"dev": "vite",
 		"test": "echo 'no tests'"
 	},
 	"dependencies": {
@@ -30,6 +29,8 @@
 	"devDependencies": {
 		"@types/virtual-dom": "^2.1.4",
 		"type-fest": "^4.37.0",
-		"typescript": "catalog:"
+		"typescript": "catalog:",
+		"vite": "^6.1.0",
+		"vite-plugin-dts": "^4.5.0"
 	}
 }

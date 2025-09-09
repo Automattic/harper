@@ -179,12 +179,6 @@ export default class LintFramework {
 		}
 	}
 
-	private detachWindowListeners() {
-		for (const event of PAGE_EVENTS) {
-			window.removeEventListener(event, this.updateEventCallback);
-		}
-	}
-
 	private requestRender() {
 		if (this.renderRequested) {
 			return;

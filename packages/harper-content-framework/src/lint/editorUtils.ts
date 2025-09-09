@@ -117,7 +117,7 @@ export function getMediumRoot(el: HTMLElement): HTMLElement | null {
 
 /** Determines if a given node is a child of a Notion editor instance.
  * If so, returns the root node of that instance. */
-export function getNotionRoot(el: HTMLElement): HTMLElement | null {
+export function getNotionRoot(): HTMLElement | null {
 	return document.getElementById('notion-app');
 }
 
