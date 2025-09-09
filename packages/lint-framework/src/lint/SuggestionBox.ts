@@ -8,155 +8,155 @@ import type { UnpackedSuggestion } from './unpackLint';
 
 var FocusHook: any = function () {};
 FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousValue: any) {
-  if ((node as any).__harperAutofocused) {
-    return;
-  }
+	if ((node as any).__harperAutofocused) {
+		return;
+	}
 
-  requestAnimationFrame(() => {
-    node.focus();
-    Object.defineProperty(node, '__harperAutofocused', {
-      value: true,
-      enumerable: false,
-      configurable: false,
-    });
-  });
+	requestAnimationFrame(() => {
+		node.focus();
+		Object.defineProperty(node, '__harperAutofocused', {
+			value: true,
+			enumerable: false,
+			configurable: false,
+		});
+	});
 };
 
 /** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
 var CloseOnEscapeHook: any = function (this: any, onClose: () => void) {
-  this.onClose = onClose;
+	this.onClose = onClose;
 };
 
 CloseOnEscapeHook.prototype.hook = function (this: { onClose: () => void }, node: HTMLElement) {
-  const handler = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      this.onClose();
-    }
-  };
-  window.addEventListener('keydown', handler);
-  (node as any).__harperCloseOnEscapeHandler = handler;
+	const handler = (e: KeyboardEvent) => {
+		if (e.key === 'Escape') {
+			this.onClose();
+		}
+	};
+	window.addEventListener('keydown', handler);
+	(node as any).__harperCloseOnEscapeHandler = handler;
 };
 
 CloseOnEscapeHook.prototype.unhook = function (this: any, node: HTMLElement) {
-  const handler = (node as any).__harperCloseOnEscapeHandler;
-  if (handler) {
-    window.removeEventListener('keydown', handler);
-    delete (node as any).__harperCloseOnEscapeHandler;
-  }
+	const handler = (node as any).__harperCloseOnEscapeHandler;
+	if (handler) {
+		window.removeEventListener('keydown', handler);
+		delete (node as any).__harperCloseOnEscapeHandler;
+	}
 };
 
 function header(
-  title: string,
-  color: string,
-  onClose: () => void,
-  openOptions?: () => Promise<void>,
+	title: string,
+	color: string,
+	onClose: () => void,
+	openOptions?: () => Promise<void>,
 ): any {
-  const closeButton = h(
-    'button',
-    {
-      className: 'harper-close-btn',
-      onclick: onClose,
-      title: 'Close',
-      'aria-label': 'Close',
-    },
-    '×',
-  );
+	const closeButton = h(
+		'button',
+		{
+			className: 'harper-close-btn',
+			onclick: onClose,
+			title: 'Close',
+			'aria-label': 'Close',
+		},
+		'×',
+	);
 
-  const settingsButton = openOptions
-    ? h(
-        'button',
-        {
-          className: 'harper-gear-btn',
-          onclick: () => {
-            openOptions();
-          },
-          title: 'Settings',
-          'aria-label': 'Settings',
-        },
-        '⚙',
-      )
-    : undefined;
+	const settingsButton = openOptions
+		? h(
+				'button',
+				{
+					className: 'harper-gear-btn',
+					onclick: () => {
+						openOptions();
+					},
+					title: 'Settings',
+					'aria-label': 'Settings',
+				},
+				'⚙',
+			)
+		: undefined;
 
-  const controlsChildren = settingsButton ? [settingsButton, closeButton] : [closeButton];
-  const controls = h('div', { className: 'harper-controls' }, controlsChildren);
-  const titleEl = h('span', {}, title);
+	const controlsChildren = settingsButton ? [settingsButton, closeButton] : [closeButton];
+	const controls = h('div', { className: 'harper-controls' }, controlsChildren);
+	const titleEl = h('span', {}, title);
 
-  return h(
-    'div',
-    {
-      className: 'harper-header',
-      style: { borderBottom: `2px solid ${color}` },
-    },
-    [titleEl, controls],
-  );
+	return h(
+		'div',
+		{
+			className: 'harper-header',
+			style: { borderBottom: `2px solid ${color}` },
+		},
+		[titleEl, controls],
+	);
 }
 
 function body(message_html: string): any {
-  return h('div', { className: 'harper-body', innerHTML: message_html }, []);
+	return h('div', { className: 'harper-body', innerHTML: message_html }, []);
 }
 
 function button(
-  label: string,
-  extraStyle: { [key: string]: string },
-  onClick: (event: Event) => void,
-  description?: string,
-  extraProps: Record<string, unknown> = {},
+	label: string,
+	extraStyle: { [key: string]: string },
+	onClick: (event: Event) => void,
+	description?: string,
+	extraProps: Record<string, unknown> = {},
 ): any {
-  const desc = description || label;
-  return h(
-    'button',
-    {
-      className: 'harper-btn',
-      style: extraStyle,
-      onclick: onClick,
-      title: desc,
-      'aria-label': desc,
-      ...extraProps,
-    },
-    label,
-  );
+	const desc = description || label;
+	return h(
+		'button',
+		{
+			className: 'harper-btn',
+			style: extraStyle,
+			onclick: onClick,
+			title: desc,
+			'aria-label': desc,
+			...extraProps,
+		},
+		label,
+	);
 }
 
 function footer(leftChildren: any, rightChildren: any) {
-  const left = h('div', { className: 'harper-child-cont' }, leftChildren);
-  const right = h('div', { className: 'harper-child-cont' }, rightChildren);
-  return h('div', { className: 'harper-footer' }, [left, right]);
+	const left = h('div', { className: 'harper-child-cont' }, leftChildren);
+	const right = h('div', { className: 'harper-child-cont' }, rightChildren);
+	return h('div', { className: 'harper-footer' }, [left, right]);
 }
 
 function addToDictionary(
-  box: LintBox,
-  addToUserDictionary?: (words: string[]) => Promise<void>,
+	box: LintBox,
+	addToUserDictionary?: (words: string[]) => Promise<void>,
 ): any {
-  return h(
-    'button',
-    {
-      className: 'harper-btn',
-      onclick: () => {
-        addToUserDictionary?.([box.lint.problem_text]);
-      },
-      title: 'Add word to user dictionary',
-      'aria-label': 'Add word to user dictionary',
-      innerHTML: bookDownSvg,
-    },
-    [],
-  );
+	return h(
+		'button',
+		{
+			className: 'harper-btn',
+			onclick: () => {
+				addToUserDictionary?.([box.lint.problem_text]);
+			},
+			title: 'Add word to user dictionary',
+			'aria-label': 'Add word to user dictionary',
+			innerHTML: bookDownSvg,
+		},
+		[],
+	);
 }
 
 function suggestions(
-  suggestions: UnpackedSuggestion[],
-  apply: (s: UnpackedSuggestion) => void,
+	suggestions: UnpackedSuggestion[],
+	apply: (s: UnpackedSuggestion) => void,
 ): any {
-  return suggestions.map((s: UnpackedSuggestion, i: number) => {
-    const label = s.replacement_text !== '' ? s.replacement_text : String(s.kind);
-    const desc = `Replace with \"${label}\"`;
-    const props = i === 0 ? { hook: new FocusHook() } : {};
-    return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc, props);
-  });
+	return suggestions.map((s: UnpackedSuggestion, i: number) => {
+		const label = s.replacement_text !== '' ? s.replacement_text : String(s.kind);
+		const desc = `Replace with \"${label}\"`;
+		const props = i === 0 ? { hook: new FocusHook() } : {};
+		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc, props);
+	});
 }
 
 function styleTag() {
-  return h('style', { id: 'harper-suggestion-style' }, [
-    `code{
+	return h('style', { id: 'harper-suggestion-style' }, [
+		`code{
       background-color:#e3eccf;
       padding:0.125rem;
       border-radius:0.25rem
@@ -262,70 +262,69 @@ function styleTag() {
       color:#ffffff
       }
       }`,
-  ]);
+	]);
 }
 
 function ignoreLint(onIgnore: () => void | Promise<void>): any {
-  return button(
-    'Ignore',
-    { background: '#e5e5e5', color: '#000000', fontWeight: 'lighter' },
-    onIgnore,
-    'Ignore this lint',
-  );
+	return button(
+		'Ignore',
+		{ background: '#e5e5e5', color: '#000000', fontWeight: 'lighter' },
+		onIgnore,
+		'Ignore this lint',
+	);
 }
 
 export default function SuggestionBox(
-  box: IgnorableLintBox,
-  actions: {
-    openOptions?: () => Promise<void>;
-    addToUserDictionary?: (words: string[]) => Promise<void>;
-  },
-  close: () => void,
+	box: IgnorableLintBox,
+	actions: {
+		openOptions?: () => Promise<void>;
+		addToUserDictionary?: (words: string[]) => Promise<void>;
+	},
+	close: () => void,
 ) {
-  const top = box.y + box.height + 3;
-  let bottom: number | undefined;
-  const left = box.x;
+	const top = box.y + box.height + 3;
+	let bottom: number | undefined;
+	const left = box.x;
 
-  if (top + 400 > window.innerHeight) {
-    bottom = window.innerHeight - box.y - 3;
-  }
+	if (top + 400 > window.innerHeight) {
+		bottom = window.innerHeight - box.y - 3;
+	}
 
-  const positionStyle: { [key: string]: string } = {
-    position: 'fixed',
-    top: bottom ? '' : `${top}px`,
-    bottom: bottom ? `${bottom}px` : '',
-    left: `${left}px`,
-  };
+	const positionStyle: { [key: string]: string } = {
+		position: 'fixed',
+		top: bottom ? '' : `${top}px`,
+		bottom: bottom ? `${bottom}px` : '',
+		left: `${left}px`,
+	};
 
-  return h(
-    'div',
-    {
-      className: 'harper-container fade-in',
-      style: positionStyle,
-      'harper-close-on-escape': new CloseOnEscapeHook(close),
-    },
-    [
-      styleTag(),
-      header(
-        box.lint.lint_kind_pretty,
-        lintKindColor(box.lint.lint_kind),
-        close,
-        actions.openOptions,
-      ),
-      body(box.lint.message_html),
-      footer(
-        suggestions(box.lint.suggestions, (v) => {
-          box.applySuggestion(v);
-          close();
-        }),
-        [
-          box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary
-            ? addToDictionary(box, actions.addToUserDictionary)
-            : undefined,
-          box.ignoreLint ? ignoreLint(box.ignoreLint) : undefined,
-        ],
-      ),
-    ],
-  );
+	return h(
+		'div',
+		{
+			className: 'harper-container fade-in',
+			style: positionStyle,
+			'harper-close-on-escape': new CloseOnEscapeHook(close),
+		},
+		[
+			styleTag(),
+			header(
+				box.lint.lint_kind_pretty,
+				lintKindColor(box.lint.lint_kind),
+				close,
+				actions.openOptions,
+			),
+			body(box.lint.message_html),
+			footer(
+				suggestions(box.lint.suggestions, (v) => {
+					box.applySuggestion(v);
+					close();
+				}),
+				[
+					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary
+						? addToDictionary(box, actions.addToUserDictionary)
+						: undefined,
+					box.ignoreLint ? ignoreLint(box.ignoreLint) : undefined,
+				],
+			),
+		],
+	);
 }
-
