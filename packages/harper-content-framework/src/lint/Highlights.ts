@@ -140,7 +140,7 @@ export default class Highlights {
 	 * Depends on text editor. */
 	private computeRenderTarget(el: HTMLElement): HTMLElement {
 		if (el.parentElement?.classList.contains('ProseMirror')) {
-			return el.parentElement.parentElement;
+			return el.parentElement.parentElement!;
 		}
 
 		const queries = [
@@ -162,11 +162,11 @@ export default class Highlights {
 		for (const query of queries) {
 			const root = query(el);
 			if (root != null) {
-				return root.parentElement;
+				return root.parentElement!;
 			}
 		}
 
-		return el.parentElement;
+		return el.parentElement!;
 	}
 }
 
@@ -190,11 +190,8 @@ function getInitialContainingRect(el: HTMLElement): DOMRect | null {
  * content-visibility.
  *
  * Logs the element and the precise reason it qualifies.
- *
- * @param {Element} el
- * @returns {boolean}
  */
-function isContainingBlock(el): boolean {
+function isContainingBlock(el: Element): boolean {
 	if (!(el instanceof Element)) {
 		throw new TypeError('Expected a DOM Element');
 	}

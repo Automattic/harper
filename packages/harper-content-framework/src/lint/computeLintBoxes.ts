@@ -31,9 +31,15 @@ export default function computeLintBoxes(
 			range = getRangeForTextSpan(el, lint.span as Span);
 		}
 
-		const targetRects = range.getClientRects();
-		const elBox = domRectToBox(range.getBoundingClientRect());
-		range.detach();
+		if (!range) {
+			return [];
+		}
+
+		const targetRects = Array.from(
+			(range as Range).getClientRects ? (range as Range).getClientRects() : [],
+		);
+		const elBox = domRectToBox((range as Range).getBoundingClientRect());
+		(range as any).detach?.();
 
 		const boxes: IgnorableLintBox[] = [];
 
@@ -49,7 +55,7 @@ export default function computeLintBoxes(
 			return [];
 		}
 
-		for (const targetRect of targetRects) {
+		for (const targetRect of targetRects as DOMRect[]) {
 			if (!isBottomEdgeInBox(targetRect, elBox)) {
 				continue;
 			}
@@ -64,7 +70,10 @@ export default function computeLintBoxes(
 				lint,
 				source,
 				applySuggestion: (sug: UnpackedSuggestion) => {
-					replaceValue(el, applySuggestion(el.value ?? el.textContent, lint.span, sug));
+					const current = isFormEl(el)
+						? (el as HTMLInputElement | HTMLTextAreaElement).value
+						: (el.textContent ?? '');
+					replaceValue(el, applySuggestion(current, lint.span, sug));
 				},
 				ignoreLint: () => opts.ignoreLint(lint.context_hash),
 			});

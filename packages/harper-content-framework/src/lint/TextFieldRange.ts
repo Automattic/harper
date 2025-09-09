@@ -1,10 +1,11 @@
+import type { ConditionalKeys, WritableKeysOf } from 'type-fest';
 import { boxesOverlap, domRectToBox } from './Box';
 
 /** A version of the `Range` object that works for `<textarea />` and `<input />` elements. */
 export default class TextFieldRange {
 	field: HTMLTextAreaElement | HTMLInputElement;
 	mirror: HTMLElement | null;
-	mirrorTextNode: Text;
+	mirrorTextNode: Text | null;
 	startOffset: number;
 	endOffset: number;
 
@@ -27,20 +28,23 @@ export default class TextFieldRange {
 		this.startOffset = startOffset;
 		this.endOffset = endOffset;
 		this.mirror = null;
-		this._createMirror();
+		this.mirrorTextNode = null;
+		this.createMirror();
 	}
 
 	/**
 	 * Creates an off-screen mirror element that mimics the field's styles and positions it exactly over the field.
 	 */
-	private _createMirror(): void {
+	private createMirror(): void {
 		this.mirror = document.createElement('div');
 		this.mirror.id = 'textfield-mirror';
 
 		// Copy necessary computed styles from the field (affecting text layout)
 		const computed: CSSStyleDeclaration = window.getComputedStyle(this.field);
 		// The properties below help ensure the mirror text has the same layout as the actual text.
-		const propertiesToCopy: Array<keyof CSSStyleDeclaration> = [
+		const propertiesToCopy: Array<
+			ConditionalKeys<Pick<CSSStyleDeclaration, WritableKeysOf<CSSStyleDeclaration>>, string>
+		> = [
 			'fontFamily',
 			'fontSize',
 			'fontWeight',
@@ -60,6 +64,7 @@ export default class TextFieldRange {
 			'overflowX',
 			'overflowY',
 		];
+
 		propertiesToCopy.forEach((prop) => {
 			this.mirror!.style[prop] = computed[prop];
 		});
@@ -94,7 +99,7 @@ export default class TextFieldRange {
 		this.mirror.appendChild(this.mirrorTextNode);
 
 		// Needed for the scroll to work.
-		this._updateMirrorText();
+		this.updateMirrorText();
 
 		// Append the mirror element to the document body.
 		document.body.appendChild(this.mirror);
@@ -109,8 +114,8 @@ export default class TextFieldRange {
 	/**
 	 * Updates the mirror's text node with the current value of the field.
 	 */
-	private _updateMirrorText(): void {
-		this.mirrorTextNode.nodeValue = this.field.value;
+	private updateMirrorText(): void {
+		if (this.mirrorTextNode) this.mirrorTextNode.nodeValue = this.field.value;
 	}
 
 	/**
@@ -119,11 +124,11 @@ export default class TextFieldRange {
 	 * @returns {DOMRect[]} An array of DOMRect objects.
 	 */
 	getClientRects(): DOMRect[] {
-		this._updateMirrorText();
+		this.updateMirrorText();
 
 		const range = document.createRange();
-		range.setStart(this.mirrorTextNode, this.startOffset);
-		range.setEnd(this.mirrorTextNode, this.endOffset);
+		range.setStart(this.mirrorTextNode!, this.startOffset);
+		range.setEnd(this.mirrorTextNode!, this.endOffset);
 
 		let arr = Array.from(range.getClientRects());
 
@@ -139,7 +144,7 @@ export default class TextFieldRange {
 	}
 
 	getBoundingClientRect(): DOMRect | null {
-		this._updateMirrorText();
+		this.updateMirrorText();
 		if (this.mirror == null) {
 			return null;
 		}

@@ -1,13 +1,13 @@
 /** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
 import h from 'virtual-dom/h';
-import bookDownSvg from '../assets/book-down.svg?raw';
+import bookDownSvg from '../assets/bookDownSvg';
 import type { IgnorableLintBox, LintBox } from './Box';
 import lintKindColor from './lintKindColor';
 // Decoupled: actions passed in by framework consumer
 import type { UnpackedSuggestion } from './unpackLint';
 
-var FocusHook = function () {};
-FocusHook.prototype.hook = function (node, _propertyName, _previousValue) {
+var FocusHook: any = function () {};
+FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousValue: any) {
 	if ((node as any).__harperAutofocused) {
 		return;
 	}
@@ -23,7 +23,7 @@ FocusHook.prototype.hook = function (node, _propertyName, _previousValue) {
 };
 
 /** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
-var CloseOnEscapeHook = function (onClose: () => void) {
+var CloseOnEscapeHook: any = function (this: any, onClose: () => void) {
 	this.onClose = onClose;
 };
 
@@ -144,7 +144,7 @@ function suggestions(
 	apply: (s: UnpackedSuggestion) => void,
 ): any {
 	return suggestions.map((s: UnpackedSuggestion, i: number) => {
-		const label = s.replacement_text !== '' ? s.replacement_text : s.kind;
+		const label = s.replacement_text !== '' ? s.replacement_text : String(s.kind);
 		const desc = `Replace with \"${label}\"`;
 		const props = i === 0 ? { hook: new FocusHook() } : {};
 		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc, props);

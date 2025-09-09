@@ -1,5 +1,5 @@
 import h from 'virtual-dom/h';
-import { closestBox, isPointInBox, type LintBox } from './Box';
+import { closestBox, type IgnorableLintBox, isPointInBox, type LintBox } from './Box';
 import { getCaretPosition } from './editorUtils';
 
 type ActivationKey = 'off' | 'shift' | 'control';
@@ -27,7 +27,7 @@ function monitorActivationKey(
 }
 
 export default class PopupHandler {
-	private currentLintBoxes: LintBox[];
+	private currentLintBoxes: IgnorableLintBox[];
 	private popupLint: number | undefined;
 	private renderBox: RenderBox;
 	private pointerDownCallback: (e: PointerEvent) => void;
@@ -62,7 +62,7 @@ export default class PopupHandler {
 		}
 
 		this.actions.getActivationKey().then((key) => {
-			if (key !== ActivationKey.Off) {
+			if (key !== 'off') {
 				this.activationKeyListener = monitorActivationKey(() => this.openClosestToCaret(), key);
 			}
 		});
@@ -113,19 +113,19 @@ export default class PopupHandler {
 		this.renderBox.render(tree);
 	}
 
-	public updateLintBoxes(boxes: LintBox[]) {
-		this.currentLintBoxes.forEach((b) =>
-			b.source.removeEventListener('pointerdown', this.pointerDownCallback),
-		);
+	public updateLintBoxes(boxes: IgnorableLintBox[]) {
+		this.currentLintBoxes.forEach((b) => {
+			b.source.removeEventListener('pointerdown', this.pointerDownCallback);
+		});
 
 		if (boxes.length != this.currentLintBoxes.length) {
 			this.popupLint = undefined;
 		}
 
 		this.currentLintBoxes = boxes;
-		this.currentLintBoxes.forEach((b) =>
-			b.source.addEventListener('pointerdown', this.pointerDownCallback),
-		);
+		this.currentLintBoxes.forEach((b) => {
+			b.source.addEventListener('pointerdown', this.pointerDownCallback);
+		});
 
 		this.render();
 	}

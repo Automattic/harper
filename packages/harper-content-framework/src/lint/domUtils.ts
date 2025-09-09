@@ -7,11 +7,10 @@ import { isBoxInScreen } from './Box';
  */
 export function extractFromHTMLCollection(collection: HTMLCollection): Element[] {
 	const elements: Element[] = [];
-
-	for (const el of collection) {
-		elements.push(el);
+	for (let i = 0; i < collection.length; i++) {
+		const el = collection.item(i);
+		if (el) elements.push(el);
 	}
-
 	return elements;
 }
 
@@ -98,8 +97,7 @@ export function isVisible(node: Node): boolean {
 
 		const range = document.createRange();
 		range.selectNode(node);
-		const rects = range.getClientRects();
-
+		const rects = Array.from(range.getClientRects());
 		for (const rect of rects) {
 			if (isBoxInScreen(rect)) {
 				return true;
