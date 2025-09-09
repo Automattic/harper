@@ -46,15 +46,15 @@ importers:
       '@webcomponents/custom-elements':
         specifier: ^1.6.0
         version: 1.6.0
-      harper-content-framework:
-        specifier: workspace:*
-        version: link:../harper-content-framework
       harper.js:
         specifier: workspace:*
         version: link:../harper.js
       jquery:
         specifier: ^3.7.1
         version: 3.7.1
+      lint-framework:
+        specifier: workspace:*
+        version: link:../lint-framework
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -132,31 +132,6 @@ importers:
         specifier: ^5.4.10
         version: 5.4.17(@types/node@22.13.10)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0)
 
-  packages/harper-content-framework:
-    dependencies:
-      harper.js:
-        specifier: workspace:*
-        version: link:../harper.js
-      virtual-dom:
-        specifier: ^2.1.1
-        version: 2.1.1
-    devDependencies:
-      '@types/virtual-dom':
-        specifier: ^2.1.4
-        version: 2.1.4
-      type-fest:
-        specifier: ^4.37.0
-        version: 4.37.0
-      typescript:
-        specifier: 'catalog:'
-        version: 5.8.2
-      vite:
-        specifier: ^6.1.0
-        version: 6.3.5(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-      vite-plugin-dts:
-        specifier: ^4.5.0
-        version: 4.5.3(@types/node@22.13.10)(rollup@4.35.0)(typescript@5.8.2)(vite@6.3.5(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
-
   packages/harper.js:
     devDependencies:
       '@microsoft/api-documenter':
@@ -204,6 +179,31 @@ importers:
       harper.js:
         specifier: workspace:*
         version: link:../..
+
+  packages/lint-framework:
+    dependencies:
+      harper.js:
+        specifier: workspace:*
+        version: link:../harper.js
+      virtual-dom:
+        specifier: ^2.1.1
+        version: 2.1.1
+    devDependencies:
+      '@types/virtual-dom':
+        specifier: ^2.1.4
+        version: 2.1.4
+      type-fest:
+        specifier: ^4.37.0
+        version: 4.37.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.2
+      vite:
+        specifier: ^6.1.0
+        version: 6.3.5(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite-plugin-dts:
+        specifier: ^4.5.0
+        version: 4.5.3(@types/node@22.13.10)(rollup@4.35.0)(typescript@5.8.2)(vite@6.3.5(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
 
   packages/obsidian-plugin:
     dependencies:
@@ -323,12 +323,12 @@ importers:
       chart.js:
         specifier: ^4.4.8
         version: 4.4.8
-      harper-content-framework:
-        specifier: workspace:*
-        version: link:../harper-content-framework
       harper.js:
         specifier: workspace:*
         version: link:../harper.js
+      lint-framework:
+        specifier: workspace:*
+        version: link:../lint-framework
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21

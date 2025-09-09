@@ -1,6 +1,6 @@
 import '@webcomponents/custom-elements';
-import { isVisible, LintFramework, leafNodes } from 'harper-content-framework';
 import $ from 'jquery';
+import { isVisible, LintFramework, leafNodes } from 'lint-framework';
 import ProtocolClient from '../ProtocolClient';
 
 const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain), {

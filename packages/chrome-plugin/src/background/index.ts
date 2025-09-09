@@ -1,5 +1,5 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
-import { unpackLint } from 'harper-content-framework';
+import { unpackLint } from 'lint-framework';
 import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,

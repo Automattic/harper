@@ -1,7 +1,7 @@
 <script lang="ts">
 import { Card } from 'flowbite-svelte';
 import { type WorkerLinter } from 'harper.js';
-import { LintFramework, unpackLint } from 'harper-content-framework';
+import { LintFramework, unpackLint } from 'lint-framework';
 import demo from '../../../../demo.md?raw';
 
 export let content = demo.trim();

@@ -30,7 +30,7 @@ WORKDIR /usr/build/packages/harper.js
 
 RUN pnpm build && ./docs.sh
 
-WORKDIR /usr/build/packages/harper-content-framework
+WORKDIR /usr/build/packages/lint-framework
 RUN pnpm build
 
 WORKDIR /usr/build/packages/web

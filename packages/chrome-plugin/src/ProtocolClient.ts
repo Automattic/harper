@@ -1,5 +1,5 @@
 import type { Dialect, LintConfig } from 'harper.js';
-import type { UnpackedLint } from 'harper-content-framework';
+import type { UnpackedLint } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
 import type { ActivationKey } from './protocol';
 
