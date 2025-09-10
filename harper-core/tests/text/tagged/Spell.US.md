@@ -2,8 +2,8 @@
 # NSg/VB
 >
 #
-> This    document contains a   list   of words   spelled correctly in      some     dialects of English    , but     not   American English    . This    is  designed to test   the spelling suggestions we   give   for such   mistakes .
-# I/Ddem+ NSg/VB+  V3       D/P NSg/VB P  NPl/V3+ VP/J    R         NPr/J/P I/J/R/Dq NPl      P  NPr🅪/VB/J+ . NSg/C/P NSg/C NPr/J    NPr🅪/VB/J+ . I/Ddem+ VL3 VP/J     P  NSg/VB D+  Nᴹ/Vg/J+ NPl+        IPl+ NSg/VB C/P NSg/I+ NPl/V3+  .
+> This    document contains a   list   of words   spelled correctly in      some     dialects of English    , but     not     American English    . This    is  designed to test   the spelling suggestions we   give   for such   mistakes .
+# I/Ddem+ NSg/VB+  V3       D/P NSg/VB P  NPl/V3+ VP/J    R         NPr/J/P I/J/R/Dq NPl      P  NPr🅪/VB/J+ . NSg/C/P NSg/R/C NPr/J    NPr🅪/VB/J+ . I/Ddem+ VL3 VP/J     P  NSg/VB D+  Nᴹ/Vg/J+ NPl+        IPl+ NSg/VB C/P NSg/I+ NPl/V3+  .
 >
 #
 > To achieve this    , the filename of this   file    contains `.US       , which will    tell   the snapshot generator to use     the American dialect , rather     than trying  to use     an  automatically detected dialect .

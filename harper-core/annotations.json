@@ -379,7 +379,18 @@
 					"condition": "[^aeiou]e"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Positive"
+						}
+					}
+				}
+			],
 			"base_metadata": {}
 		},
 		"S": {

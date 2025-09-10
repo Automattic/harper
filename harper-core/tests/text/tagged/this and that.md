@@ -51,9 +51,9 @@
 >
 #
 > That          could   be      a    solution .
-# NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ NSg+     .
+# NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ N🅪Sg+    .
 > Find   all           candidates that          could   be      a    solution .
-# NSg/VB NSg/I/J/C/Dq+ NPl/V3+    NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ NSg+     .
+# NSg/VB NSg/I/J/C/Dq+ NPl/V3+    NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ N🅪Sg+    .
 >
 #
 > This    is  all          that         I       have    .
@@ -61,7 +61,7 @@
 > This    is  all          that         solutions can     do      .
 # I/Ddem+ VL3 NSg/I/J/C/Dq NSg/I/C/Ddem NPl+      NPr/VXB NSg/VXB .
 > That         solution can     do      .
-# NSg/I/C/Ddem NSg+     NPr/VXB NSg/VXB .
+# NSg/I/C/Ddem N🅪Sg+    NPr/VXB NSg/VXB .
 >
 #
 > We   can     do      this    !
