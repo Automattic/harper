@@ -119,7 +119,7 @@
 > algorithm to compute the Bernoulli numbers   , which is  considered to be      the first
 # NSg       P  NSg/VB  D   NPr+      NPrPl/V3+ . I/C+  VL3 VP/J       P  NSg/VXB D   NSg/VB/J
 > published algorithm ever specifically tailored for implementation on  a   computer .
-# VP/J      NSg       J    W?           VP/J     C/P NSg+           J/P D/P NSg/VB+  .
+# VP/J      NSg       J    R            VP/J     C/P NSg+           J/P D/P NSg/VB+  .
 > Around 1885 , Herman Hollerith invented the tabulator , which used punched cards
 # J/P    #    . NPr+   NPr       VP/J     D   NSg       . I/C+  VP/J VP/J    NPl/V3+
 > to process statistical information ; eventually his     company  became part     of IBM  .
@@ -143,7 +143,7 @@
 > demonstrated the feasibility of an  electromechanical analytical engine  , on  which
 # VP/J         D   Nᴹ          P  D/P ?                 J          NSg/VB+ . J/P I/C+
 > commands could   be      typed and  the results printed automatically . In      1937 , one
-# NPl/V3+  NSg/VXB NSg/VXB VP/J  VB/C D   NPl/V3+ VP/J    W?            . NPr/J/P #    . NSg/I/VB/J
+# NPl/V3+  NSg/VXB NSg/VXB VP/J  VB/C D   NPl/V3+ VP/J    R             . NPr/J/P #    . NSg/I/VB/J
 > hundred years after Babbage's impossible dream     , Howard Aiken convinced IBM  ,
 # NSg     NPl+  P     NSg$      NSg/J      NSg/VB/J+ . NPr+   NPr   VP/J      NPr+ .
 > which was making  all          kinds of punched card     equipment and  was also in      the

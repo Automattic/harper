@@ -116,6 +116,7 @@ use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::thing_think::ThingThink;
 use super::throw_rubbish::ThrowRubbish;
+use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
@@ -509,6 +510,7 @@ impl LintGroup {
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(ThingThink, true);
         insert_struct_rule!(ThrowRubbish, true);
+        insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
