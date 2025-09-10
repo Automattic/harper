@@ -344,6 +344,16 @@ Message: |
 
 
 
+Lint:    Style (31 priority)
+Message: |
+     133 | Each House shall be the Judge of the Elections, Returns and
+         |                                                 ^~~~~~~ An Oxford comma is necessary here.
+     134 | Qualifications of its own Members, and a Majority of each shall constitute a
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      139 | Each House may determine the Rules of its Proceedings, punish its Members for
@@ -1415,6 +1425,16 @@ Message: |
 
 
 
+Lint:    Style (31 priority)
+Message: |
+     603 | Congress may by general Laws prescribe the Manner in which such Acts, Records
+         |                                                                       ^~~~~~~ An Oxford comma is necessary here.
+     604 | and Proceedings shall be proved, and the Effect thereof.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      610 | the State wherein they reside. No State shall make or enforce any law which
@@ -1578,6 +1598,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      661 | such debts, obligations and claims shall be held illegal and void.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 51 words long.
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     660 | United States, or any claim for the loss or emancipation of any slave; but all
+     661 | such debts, obligations and claims shall be held illegal and void.
+         |             ^~~~~~~~~~~ An Oxford comma is necessary here.
+Suggest:
+  - Insert “,”
 
 
 
