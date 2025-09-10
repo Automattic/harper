@@ -145,11 +145,11 @@ export default class Highlights {
 		}
 
 		const queries = [
+			getNotionRoot,
 			getGhostRoot,
 			getDraftRoot,
 			getPMRoot,
 			getCMRoot,
-			getNotionRoot,
 			getSlateRoot,
 			getMediumRoot,
 			getShredditComposerRoot,
