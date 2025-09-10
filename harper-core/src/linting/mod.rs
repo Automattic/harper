@@ -3,6 +3,7 @@
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
 mod a_part;
+mod addicting;
 mod adjective_double_degree;
 mod adjective_of_a;
 mod am_in_the_morning;
@@ -129,8 +130,10 @@ mod the_my;
 mod then_than;
 mod thing_think;
 mod throw_rubbish;
+mod to_two_too;
 mod touristic;
 mod unclosed_quotes;
+mod update_place_names;
 mod use_genitive;
 mod very_unique;
 mod was_aloud;
@@ -142,6 +145,7 @@ mod wordpress_dotcom;
 mod would_never_have;
 
 pub use a_part::APart;
+pub use addicting::Addicting;
 pub use adjective_double_degree::AdjectiveDoubleDegree;
 pub use adjective_of_a::AdjectiveOfA;
 pub use am_in_the_morning::AmInTheMorning;
@@ -254,8 +258,10 @@ pub use the_my::TheMy;
 pub use then_than::ThenThan;
 pub use thing_think::ThingThink;
 pub use throw_rubbish::ThrowRubbish;
+pub use to_two_too::ToTwoToo;
 pub use touristic::Touristic;
 pub use unclosed_quotes::UnclosedQuotes;
+pub use update_place_names::UpdatePlaceNames;
 pub use use_genitive::UseGenitive;
 pub use very_unique::VeryUnique;
 pub use was_aloud::WasAloud;

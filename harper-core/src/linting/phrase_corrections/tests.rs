@@ -135,6 +135,25 @@ fn detect_as_early_back_as_real_world() {
     );
 }
 
+// AsIfThough
+#[test]
+fn correct_as_if_though_usagi_1() {
+    assert_top3_suggestion_result(
+        "It's coming back to you. and looking as if though it's very bright red.",
+        lint_group(),
+        "It's coming back to you. and looking as if it's very bright red.",
+    );
+}
+
+#[test]
+fn correct_as_if_though_usagi_2() {
+    assert_top3_suggestion_result(
+        "it passes right on by it as if though nothing happened.",
+        lint_group(),
+        "it passes right on by it as though nothing happened.",
+    );
+}
+
 // AsItHappens
 #[test]
 fn correct_as_it_happens() {
@@ -495,6 +514,16 @@ fn corrects_fair_bit() {
         "I've read through a fare bit of the ecosystem framework, but I am not clear on what is modified...",
         lint_group(),
         "I've read through a fair bit of the ecosystem framework, but I am not clear on what is modified...",
+    );
+}
+
+// FarAndFewBetween
+#[test]
+fn corrects_far_and_few_between() {
+    assert_suggestion_result(
+        "Their neighbors were far and few between, which only made it even more unlikely that surveillance footage recovered from their properties could help.",
+        lint_group(),
+        "Their neighbors were few and far between, which only made it even more unlikely that surveillance footage recovered from their properties could help.",
     );
 }
 

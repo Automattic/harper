@@ -56,6 +56,7 @@ enum Concept {
     PramStroller,
     SpannerWrench,
     StationWagonEstate,
+    WindscreenWindshield,
 }
 
 use Concept::*;
@@ -449,6 +450,18 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         dialects: &[American],
         concept: SpannerWrench,
     },
+    Term {
+        term: "windscreen",
+        flag: Flag,
+        dialects: &[British, Australian],
+        concept: WindscreenWindshield,
+    },
+    Term {
+        term: "windshield",
+        flag: Flag,
+        dialects: &[American, Canadian],
+        concept: WindscreenWindshield,
+    },
 ];
 
 pub struct Regionalisms {
@@ -627,6 +640,15 @@ mod tests {
             "A caravan (from Persian کاروان kârvân) is a group of people traveling together, often on a trade expedition. Caravans were used mainly in desert areas.",
             Regionalisms::new(Dialect::British),
             0,
+        )
+    }
+
+    #[test]
+    fn uk_to_us_windscreen() {
+        assert_top3_suggestion_result(
+            "Detect raindrops on vehicle windscreen by combining various region proposal algorithm with Convolutional Neural Network.",
+            Regionalisms::new(Dialect::American),
+            "Detect raindrops on vehicle windshield by combining various region proposal algorithm with Convolutional Neural Network.",
         )
     }
 }
