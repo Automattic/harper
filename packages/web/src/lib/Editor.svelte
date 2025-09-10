@@ -1,10 +1,10 @@
 <script lang="ts">
+import LintCard from '$lib/LintCard.svelte';
 import { Card } from 'flowbite-svelte';
 import { type WorkerLinter } from 'harper.js';
 import {
 	applySuggestion,
 	LintFramework,
-	lintKindColor,
 	type UnpackedLint,
 	type UnpackedSuggestion,
 	unpackLint,
@@ -18,6 +18,7 @@ let linter: WorkerLinter;
 
 // Live list of lints from the framework's lint callback
 let lints: UnpackedLint[] = [];
+let openIndex: number | null = null;
 
 let lfw = new LintFramework(async (text) => {
 	// Guard until the linter is ready
@@ -45,10 +46,6 @@ $: if (editor != null) {
 	lfw.addTarget(editor);
 }
 
-function suggestionText(s: UnpackedSuggestion): string {
-	return s.replacement_text !== '' ? s.replacement_text : String(s.kind);
-}
-
 function applySug(lint: UnpackedLint, s: UnpackedSuggestion) {
 	content = applySuggestion(content, lint.span, s);
 	// Trigger re-lint and rerender after programmatic change
@@ -72,29 +69,13 @@ function applySug(lint: UnpackedLint, s: UnpackedSuggestion) {
 				<p class="text-sm text-gray-500">No lints yet.</p>
 			{:else}
 				<div class="space-y-3">
-					{#each lints as lint}
-						<div class="rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm p-3 bg-white dark:bg-[#0d1117]">
-							<div class="text-sm font-semibold pb-1 mb-2" style={`border-bottom: 2px solid ${lintKindColor(lint.lint_kind)}`}>{lint.lint_kind_pretty}</div>
-							<div class="text-sm text-gray-700 dark:text-gray-300 mb-2 break-words">
-								{@html lint.message_html}
-							</div>
-							{#if lint.suggestions && lint.suggestions.length > 0}
-								<div class="flex flex-wrap gap-2 justify-end">
-									{#each lint.suggestions as s}
-										<button
-											class="inline-flex items-center justify-center rounded-md px-2 py-1 text-xs font-semibold"
-											style="background:#2DA44E;color:#FFFFFF"
-											title={`Replace with \"${suggestionText(s)}\"`}
-											on:click={() => applySug(lint, s)}
-										>
-											{suggestionText(s)}
-										</button>
-									{/each}
-								</div>
-							{:else}
-								<div class="text-xs text-gray-400">No suggestions available.</div>
-							{/if}
-						</div>
+					{#each lints as lint, i}
+						<LintCard
+							{lint}
+							open={openIndex === i}
+							onToggle={() => (openIndex = openIndex === i ? null : i)}
+							onApply={(s) => applySug(lint, s)}
+						/>
 					{/each}
 				</div>
 			{/if}
