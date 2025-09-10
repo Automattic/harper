@@ -4,10 +4,20 @@ import { boxesOverlap, domRectToBox } from './Box';
 /** A version of the `Range` object that works for `<textarea />` and `<input />` elements. */
 export default class TextFieldRange {
 	field: HTMLTextAreaElement | HTMLInputElement;
-	mirror: HTMLElement | null;
-	mirrorTextNode: Text | null;
 	startOffset: number;
 	endOffset: number;
+
+	// Shared arena per field to avoid repeated layout work
+	private static arenas: WeakMap<
+		HTMLTextAreaElement | HTMLInputElement,
+		{
+			mirror: HTMLDivElement;
+			text: Text;
+			refs: number;
+		}
+	> = new WeakMap();
+
+	private arena: { mirror: HTMLDivElement; text: Text; refs: number };
 
 	/**
 	 * Create a range-like object for a given text input field.
@@ -27,21 +37,27 @@ export default class TextFieldRange {
 		this.field = field;
 		this.startOffset = startOffset;
 		this.endOffset = endOffset;
-		this.mirror = null;
-		this.mirrorTextNode = null;
-		this.createMirror();
+		this.arena = TextFieldRange.ensureArena(this.field);
+		this.arena.refs++;
 	}
 
 	/**
-	 * Creates an off-screen mirror element that mimics the field's styles and positions it exactly over the field.
+	 * Creates (or reuses) an off-screen mirror element that mimics the field's styles
+	 * and positions it exactly over the field.
 	 */
-	private createMirror(): void {
-		this.mirror = document.createElement('div');
-		this.mirror.id = 'textfield-mirror';
+	private static ensureArena(field: HTMLTextAreaElement | HTMLInputElement): {
+		mirror: HTMLDivElement;
+		text: Text;
+		refs: number;
+	} {
+		const existing = TextFieldRange.arenas.get(field);
+		if (existing) return existing;
+
+		const mirror = document.createElement('div');
+		mirror.className = 'harper-textfield-mirror';
 
 		// Copy necessary computed styles from the field (affecting text layout)
-		const computed: CSSStyleDeclaration = window.getComputedStyle(this.field);
-		// The properties below help ensure the mirror text has the same layout as the actual text.
+		const computed: CSSStyleDeclaration = window.getComputedStyle(field);
 		const propertiesToCopy: Array<
 			ConditionalKeys<Pick<CSSStyleDeclaration, WritableKeysOf<CSSStyleDeclaration>>, string>
 		> = [
@@ -66,56 +82,64 @@ export default class TextFieldRange {
 		];
 
 		propertiesToCopy.forEach((prop) => {
-			this.mirror!.style[prop] = computed[prop];
+			(mirror.style as any)[prop] = (computed as any)[prop];
 		});
 
-		if (this.field instanceof HTMLTextAreaElement) {
-			this.mirror.style.overflowX = 'auto';
-			this.mirror.style.overflowY = 'auto';
+		if (field instanceof HTMLTextAreaElement) {
+			mirror.style.overflowX = 'auto';
+			mirror.style.overflowY = 'auto';
 		}
 
-		// Compute the absolute position of the field.
-		const fieldRect = this.field.getBoundingClientRect();
-		const scrollTop = window.scrollY || document.documentElement.scrollTop;
-		const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-
 		// Position the mirror exactly over the field.
-		Object.assign(this.mirror.style, {
-			top: `${fieldRect.top + scrollTop}px`,
-			left: `${fieldRect.left + scrollLeft}px`,
-			width: `${fieldRect.width}px`,
-			height: `${fieldRect.height}px`,
+		TextFieldRange.positionMirror(mirror, field);
+
+		Object.assign(mirror.style, {
 			boxSizing: 'border-box',
-			// For a textarea, use "pre-wrap" (so line-breaks are preserved); for a single‑line input, use "pre"
-			whiteSpace: this.field.tagName.toLowerCase() === 'textarea' ? 'pre-wrap' : 'pre',
+			whiteSpace: field.tagName.toLowerCase() === 'textarea' ? 'pre-wrap' : 'pre',
 			wordWrap: 'break-word',
 			visibility: 'hidden',
 			position: 'absolute',
 			pointerEvents: 'none',
 		});
 
-		// Create the text node that will mirror the field's text.
-		this.mirrorTextNode = document.createTextNode('');
-		this.mirror.appendChild(this.mirrorTextNode);
+		const text = document.createTextNode('');
+		mirror.appendChild(text);
 
-		// Needed for the scroll to work.
-		this.updateMirrorText();
+		// Initialize text + scroll
+		text.nodeValue = field.value;
+		document.body.appendChild(mirror);
+		mirror.scrollTop = field.scrollTop;
+		mirror.scrollLeft = field.scrollLeft;
 
-		// Append the mirror element to the document body.
-		document.body.appendChild(this.mirror);
+		const arena = { mirror, text, refs: 0 } as const;
+		TextFieldRange.arenas.set(field, arena);
+		return arena;
+	}
 
-		this.mirror.scrollTo({
-			top: this.field.scrollTop,
-			left: this.field.scrollLeft,
-			behavior: 'instant',
+	private static positionMirror(
+		mirror: HTMLDivElement,
+		field: HTMLTextAreaElement | HTMLInputElement,
+	) {
+		const fieldRect = field.getBoundingClientRect();
+		const scrollTop = window.scrollY || document.documentElement.scrollTop;
+		const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+		Object.assign(mirror.style, {
+			top: `${fieldRect.top + scrollTop}px`,
+			left: `${fieldRect.left + scrollLeft}px`,
+			width: `${fieldRect.width}px`,
+			height: `${fieldRect.height}px`,
 		});
 	}
 
 	/**
 	 * Updates the mirror's text node with the current value of the field.
 	 */
-	private updateMirrorText(): void {
-		if (this.mirrorTextNode) this.mirrorTextNode.nodeValue = this.field.value;
+	private syncMirror(): void {
+		// Ensure text, scroll, and position reflect the current field
+		this.arena.text.nodeValue = this.field.value;
+		this.arena.mirror.scrollTop = this.field.scrollTop;
+		this.arena.mirror.scrollLeft = this.field.scrollLeft;
+		TextFieldRange.positionMirror(this.arena.mirror, this.field);
 	}
 
 	/**
@@ -124,11 +148,11 @@ export default class TextFieldRange {
 	 * @returns {DOMRect[]} An array of DOMRect objects.
 	 */
 	getClientRects(): DOMRect[] {
-		this.updateMirrorText();
+		this.syncMirror();
 
 		const range = document.createRange();
-		range.setStart(this.mirrorTextNode!, this.startOffset);
-		range.setEnd(this.mirrorTextNode!, this.endOffset);
+		range.setStart(this.arena.text, this.startOffset);
+		range.setEnd(this.arena.text, this.endOffset);
 
 		let arr = Array.from(range.getClientRects());
 
@@ -144,21 +168,22 @@ export default class TextFieldRange {
 	}
 
 	getBoundingClientRect(): DOMRect | null {
-		this.updateMirrorText();
-		if (this.mirror == null) {
-			return null;
-		}
-
-		return this.mirror.getBoundingClientRect();
+		this.syncMirror();
+		return this.arena.mirror.getBoundingClientRect();
 	}
 
 	/**
 	 * Detaches (removes) the mirror element from the document.
 	 */
 	detach(): void {
-		if (this.mirror?.parentNode) {
-			this.mirror.parentNode.removeChild(this.mirror);
-			this.mirror = null;
+		// Release this handle; keep the shared mirror for reuse unless the field is gone.
+		this.arena.refs = Math.max(0, this.arena.refs - 1);
+		// If the field is no longer in the document, clean up the arena.
+		if (!document.contains(this.field)) {
+			try {
+				this.arena.mirror.parentNode?.removeChild(this.arena.mirror);
+			} catch {}
+			TextFieldRange.arenas.delete(this.field);
 		}
 	}
 }
