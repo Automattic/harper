@@ -40,7 +40,7 @@ impl<T: Dictionary> SpellCheck<T> {
         let word_str = word_str.as_str();
 
         // Check for allowed single suffixes only: 's, 'd, ed, s
-        let suffixes = ["'s", "'d", "ed", "s"];
+        let suffixes = ["'s", "'d", "ed", "s", "es"];
 
         for suffix in &suffixes {
             if let Some(stem) = word_str.strip_suffix(suffix)
