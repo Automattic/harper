@@ -243,7 +243,7 @@
 > example , once  you've seen    an  article such  as    ' the ' , perhaps the next    word    is  a
 # NSg/VB+ . NSg/C W?     NSg/VPp D/P NSg/VB+ NSg/I NSg/R . D   . . NSg/R   D   NSg/J/P NSg/VB+ VL3 D/P
 > noun    40 % of the time       , an  adjective 40 % , and  a   number      20 % . Knowing    this    , a
-# NSg/VB+ #  . P  D   N🅪Sg/VB/J+ . D/P NSg/VB/J+ #  . . VB/C D/P N🅪Sg/VB/JC+ #  . . NSg/VB/J/P I/Ddem+ . D/P+
+# NSg/VB+ #  . P  D   N🅪Sg/VB/J+ . D/P NSg/VB/J+ #  . . VB/C D/P N🅪Sg/VB/JC+ #  . . NSg/Vg/J/P I/Ddem+ . D/P+
 > program can     decide that          " can     " in      " the can     " is  far      more            likely to be      a   noun   than
 # NPr/VB+ NPr/VXB VB     NSg/I/C/Ddem+ . NPr/VXB . NPr/J/P . D+  NPr/VXB . VL3 NSg/VB/J NPr/I/VB/J/R/Dq NSg/J  P  NSg/VXB D/P NSg/VB C/P
 > a    verb    or    a   modal . The same method  can     , of course  , be      used to benefit from

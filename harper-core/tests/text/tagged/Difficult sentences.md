@@ -475,7 +475,7 @@
 > Bring the water    to the boil    and  drop   the vegetables in      .
 # VB    D+  N🅪Sg/VB+ P  D+  NSg/VB+ VB/C NSg/VB D+  NPl+       NPr/J/P .
 > The show   still    didn't become interesting 20 minutes in      .
-# D   NSg/VB NSg/VB/J VB     VBPp   VB/J        #  NPl/V3+ NPr/J/P .
+# D   NSg/VB NSg/VB/J VB     VBPp   Vg/J        #  NPl/V3+ NPr/J/P .
 >
 #
 > Noun
@@ -831,7 +831,7 @@
 > It       was to a   large extent true     .
 # NPr/ISg+ VPt P  D/P NSg/J NSg/J+ NSg/VB/J .
 > We   manufacture these   parts   to a   very high      tolerance .
-# IPl+ NSg/VB      I/Ddem+ NPl/V3+ P  D/P J/R  NSg/VB/J+ NSg/VB+   .
+# IPl+ NSg/VB      I/Ddem+ NPl/V3+ P  D/P J/R  NSg/VB/J+ N🅪Sg/VB+  .
 > This    gauge   is  accurate to a   second   .
 # I/Ddem+ NSg/VB+ VL3 J        P  D/P NSg/VB/J .
 > There's a   lot    of sense    to what   he       says   .

@@ -622,7 +622,7 @@
 		},
 		"l": {
 			"#": "linking verb property",
-			"//": "see also m: auxiliary verb property",
+			"//": "see also A: auxiliary verb property",
 			"metadata": {
 				"verb": {
 					"is_linking": true
