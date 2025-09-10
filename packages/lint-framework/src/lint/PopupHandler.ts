@@ -1,8 +1,9 @@
 import h from 'virtual-dom/h';
-import { closestBox, isPointInBox, type LintBox } from './Box';
+import { closestBox, type IgnorableLintBox, isPointInBox } from './Box';
 import { getCaretPosition } from './editorUtils';
-import ProtocolClient from './ProtocolClient';
-import { ActivationKey } from './protocol';
+
+type ActivationKey = 'off' | 'shift' | 'control';
+
 import RenderBox from './RenderBox';
 import SuggestionBox from './SuggestionBox';
 
@@ -26,13 +27,23 @@ function monitorActivationKey(
 }
 
 export default class PopupHandler {
-	private currentLintBoxes: LintBox[];
+	private currentLintBoxes: IgnorableLintBox[];
 	private popupLint: number | undefined;
 	private renderBox: RenderBox;
 	private pointerDownCallback: (e: PointerEvent) => void;
 	private activationKeyListener: (() => void) | undefined;
+	private readonly actions: {
+		getActivationKey?: () => Promise<ActivationKey>;
+		openOptions?: () => Promise<void>;
+		addToUserDictionary?: (words: string[]) => Promise<void>;
+	};
 
-	constructor() {
+	constructor(actions: {
+		getActivationKey?: () => Promise<ActivationKey>;
+		openOptions?: () => Promise<void>;
+		addToUserDictionary?: (words: string[]) => Promise<void>;
+	}) {
+		this.actions = actions;
 		this.currentLintBoxes = [];
 		this.renderBox = new RenderBox(document.body);
 		this.renderBox.getShadowHost().popover = 'manual';
@@ -43,24 +54,22 @@ export default class PopupHandler {
 		};
 
 		this.updateActivationKeyListener();
-
-		chrome.storage.onChanged.addListener((changes) => {
-			if (changes.activationKey) {
-				this.updateActivationKeyListener();
-			}
-		});
 	}
 
 	private updateActivationKeyListener() {
 		if (this.activationKeyListener) {
 			this.activationKeyListener();
+			this.activationKeyListener = undefined;
 		}
 
-		ProtocolClient.getActivationKey().then((key) => {
-			if (key !== ActivationKey.Off) {
-				this.activationKeyListener = monitorActivationKey(() => this.openClosestToCaret(), key);
-			}
-		});
+		const getKey = this.actions.getActivationKey;
+		if (getKey) {
+			getKey().then((key) => {
+				if (key !== 'off') {
+					this.activationKeyListener = monitorActivationKey(() => this.openClosestToCaret(), key);
+				}
+			});
+		}
 	}
 
 	/** Tries to get the current caret position.
@@ -97,7 +106,7 @@ export default class PopupHandler {
 
 		if (this.popupLint != null && this.popupLint < this.currentLintBoxes.length) {
 			const box = this.currentLintBoxes[this.popupLint];
-			tree = SuggestionBox(box, () => {
+			tree = SuggestionBox(box, this.actions, () => {
 				this.popupLint = undefined;
 			});
 			this.renderBox.getShadowHost().showPopover();
@@ -108,19 +117,19 @@ export default class PopupHandler {
 		this.renderBox.render(tree);
 	}
 
-	public updateLintBoxes(boxes: LintBox[]) {
-		this.currentLintBoxes.forEach((b) =>
-			b.source.removeEventListener('pointerdown', this.pointerDownCallback),
-		);
+	public updateLintBoxes(boxes: IgnorableLintBox[]) {
+		this.currentLintBoxes.forEach((b) => {
+			b.source.removeEventListener('pointerdown', this.pointerDownCallback as EventListener);
+		});
 
 		if (boxes.length != this.currentLintBoxes.length) {
 			this.popupLint = undefined;
 		}
 
 		this.currentLintBoxes = boxes;
-		this.currentLintBoxes.forEach((b) =>
-			b.source.addEventListener('pointerdown', this.pointerDownCallback),
-		);
+		this.currentLintBoxes.forEach((b) => {
+			b.source.addEventListener('pointerdown', this.pointerDownCallback as EventListener);
+		});
 
 		this.render();
 	}

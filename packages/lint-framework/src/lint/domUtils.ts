@@ -7,11 +7,10 @@ import { isBoxInScreen } from './Box';
  */
 export function extractFromHTMLCollection(collection: HTMLCollection): Element[] {
 	const elements: Element[] = [];
-
-	for (const el of collection) {
-		elements.push(el);
+	for (let i = 0; i < collection.length; i++) {
+		const el = collection.item(i);
+		if (el) elements.push(el);
 	}
-
 	return elements;
 }
 
@@ -88,26 +87,33 @@ export function getRangeForTextSpan(target: Element, span: Span): Range | null {
 	return null;
 }
 
+const sharedRange: Range | null = typeof document !== 'undefined' ? document.createRange() : null;
+
 /** Check if an element is visible to the user.
+ *
  * It is coarse and meant for performance improvements, not precision.*/
 export function isVisible(node: Node): boolean {
 	try {
+		if (!node || !(node as any).ownerDocument) return false;
+
 		if (node instanceof Element) {
-			return node.checkVisibility();
+			if (!node.isConnected) return false;
+			const rect = node.getBoundingClientRect();
+			if (!isBoxInScreen(rect)) return false;
+			const cv = (node as any).checkVisibility;
+			if (typeof cv === 'function') return cv.call(node);
+			const cs = getComputedStyle(node);
+			if (cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0') return false;
+			return true;
 		}
 
-		const range = document.createRange();
-		range.selectNode(node);
-		const rects = range.getClientRects();
-
-		for (const rect of rects) {
-			if (isBoxInScreen(rect)) {
-				return true;
-			}
-		}
-	} catch (e) {
+		if (!sharedRange) return false;
+		const parent = (node as any).parentElement as Element | null;
+		if (parent && !parent.isConnected) return false;
+		sharedRange.selectNode(node);
+		const rect = sharedRange.getBoundingClientRect();
+		return isBoxInScreen(rect);
+	} catch {
 		return false;
 	}
-
-	return false;
 }

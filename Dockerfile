@@ -30,8 +30,10 @@ WORKDIR /usr/build/packages/harper.js
 
 RUN pnpm build && ./docs.sh
 
-WORKDIR /usr/build/packages/web
+WORKDIR /usr/build/packages/lint-framework
+RUN pnpm build
 
+WORKDIR /usr/build/packages/web
 RUN pnpm build
 
 FROM node:${NODE_VERSION}

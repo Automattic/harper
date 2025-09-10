@@ -18,6 +18,8 @@ The content script has three responsibilities:
 - Writing text back to the user's web page (after applying a suggestion to it).
 - Rendering underlines over their text (this is the hard part).
 
+All three of these responsibilities are handled by the `lint-framework` package.
+
 Notably, it does not do any linting itself.
 Instead, it submits requests to the background worker to do so, since instantiating a WebAssembly module on every page load is expensive.
 

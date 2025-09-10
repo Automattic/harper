@@ -2,7 +2,6 @@ import type { Span } from 'harper.js';
 import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
 import { getRangeForTextSpan } from './domUtils';
 import { getLexicalEditable, getSlateRoot } from './editorUtils';
-import ProtocolClient from './ProtocolClient';
 import TextFieldRange from './TextFieldRange';
 import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
 
@@ -16,21 +15,29 @@ function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement
 	}
 }
 
-export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): IgnorableLintBox[] {
+export default function computeLintBoxes(
+	el: HTMLElement,
+	lint: UnpackedLint,
+	opts: { ignoreLint?: (hash: string) => Promise<void> },
+): IgnorableLintBox[] {
 	try {
 		let range: Range | TextFieldRange | null = null;
-		let text: string | null = null;
 
 		if (isFormEl(el)) {
 			range = new TextFieldRange(el, lint.span.start, lint.span.end);
-			text = el.value;
 		} else {
 			range = getRangeForTextSpan(el, lint.span as Span);
 		}
 
-		const targetRects = range.getClientRects();
-		const elBox = domRectToBox(range.getBoundingClientRect());
-		range.detach();
+		if (!range) {
+			return [];
+		}
+
+		const targetRects = Array.from(
+			(range as Range).getClientRects ? (range as Range).getClientRects() : [],
+		);
+		const elBox = domRectToBox((range as Range).getBoundingClientRect());
+		(range as any).detach?.();
 
 		const boxes: IgnorableLintBox[] = [];
 
@@ -46,7 +53,7 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): I
 			return [];
 		}
 
-		for (const targetRect of targetRects) {
+		for (const targetRect of targetRects as DOMRect[]) {
 			if (!isBottomEdgeInBox(targetRect, elBox)) {
 				continue;
 			}
@@ -61,9 +68,12 @@ export default function computeLintBoxes(el: HTMLElement, lint: UnpackedLint): I
 				lint,
 				source,
 				applySuggestion: (sug: UnpackedSuggestion) => {
-					replaceValue(el, applySuggestion(el.value ?? el.textContent, lint.span, sug));
+					const current = isFormEl(el)
+						? (el as HTMLInputElement | HTMLTextAreaElement).value
+						: (el.textContent ?? '');
+					replaceValue(el, applySuggestion(current, lint.span, sug));
 				},
-				ignoreLint: () => ProtocolClient.ignoreHash(lint.context_hash),
+				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});
 		}
 		return boxes;
@@ -79,12 +89,12 @@ function replaceValue(el: HTMLElement, value: string) {
 
 	if (isFormEl(el)) {
 		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
-		el.value = value;
+		(el as any).value = value;
 		el.dispatchEvent(new InputEvent('input', { bubbles: true }));
 	} else if (slateRoot != null || lexicalRoot != null) {
 		replaceValueSpecial(el, value);
 	} else {
-		el.textContent = value;
+		(el as any).textContent = value;
 
 		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
 		el.dispatchEvent(new InputEvent('input', { bubbles: true }));
