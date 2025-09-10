@@ -119,7 +119,7 @@ export default class PopupHandler {
 
 	public updateLintBoxes(boxes: IgnorableLintBox[]) {
 		this.currentLintBoxes.forEach((b) => {
-			b.source.removeEventListener('pointerdown', this.pointerDownCallback);
+			b.source.removeEventListener('pointerdown', this.pointerDownCallback as EventListener);
 		});
 
 		if (boxes.length != this.currentLintBoxes.length) {
@@ -128,7 +128,7 @@ export default class PopupHandler {
 
 		this.currentLintBoxes = boxes;
 		this.currentLintBoxes.forEach((b) => {
-			b.source.addEventListener('pointerdown', this.pointerDownCallback);
+			b.source.addEventListener('pointerdown', this.pointerDownCallback as EventListener);
 		});
 
 		this.render();

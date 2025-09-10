@@ -18,10 +18,11 @@ import {
 } from './editorUtils';
 import lintKindColor from './lintKindColor';
 import RenderBox from './RenderBox';
+import type SourceElement from './SourceElement';
 
 /** A class that renders highlights to a page and nothing else. Uses a virtual DOM to minimize jitter. */
 export default class Highlights {
-	renderBoxes: Map<HTMLElement, RenderBox>;
+	renderBoxes: Map<SourceElement, RenderBox>;
 
 	constructor() {
 		this.renderBoxes = new Map();
@@ -29,7 +30,7 @@ export default class Highlights {
 
 	public renderLintBoxes(boxes: LintBox[]) {
 		// Sort the lint boxes based on their source, so we can render them all together.
-		const sourceToBoxes: Map<HTMLElement, { boxes: LintBox[]; cpa: DOMRect | null }> = new Map();
+		const sourceToBoxes: Map<SourceElement, { boxes: LintBox[]; cpa: DOMRect | null }> = new Map();
 
 		for (const box of boxes) {
 			let renderBox = this.renderBoxes.get(box.source);
@@ -138,7 +139,7 @@ export default class Highlights {
 
 	/** Determines which target the render boxes should be attached to.
 	 * Depends on text editor. */
-	private computeRenderTarget(el: HTMLElement): HTMLElement {
+	private computeRenderTarget(el: SourceElement): HTMLElement {
 		if (el.parentElement?.classList.contains('ProseMirror')) {
 			return el.parentElement.parentElement!;
 		}

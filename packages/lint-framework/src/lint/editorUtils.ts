@@ -1,11 +1,12 @@
 import { type Box, domRectToBox } from './Box';
+import type SourceElement from './SourceElement';
 import TextFieldRange from './TextFieldRange';
 
 export function findAncestor(
-	el: HTMLElement,
-	predicate: (el: HTMLElement) => boolean,
-): HTMLElement | null {
-	let current: HTMLElement | null = el;
+	el: SourceElement,
+	predicate: (el: SourceElement) => boolean,
+): SourceElement | null {
+	let current: SourceElement | null = el;
 	while (current != null) {
 		if (predicate(current)) return current;
 		current = current.parentElement;
@@ -13,71 +14,101 @@ export function findAncestor(
 	return null;
 }
 
-export function getGhostRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.closest('article, main, section') != null);
-}
-
-export function getDraftRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) =>
-		node.classList.contains('public-DraftEditor-content'),
+export function getGhostRoot(el: SourceElement): SourceElement | null {
+	return findAncestor(
+		el,
+		(node: SourceElement) => !isTextNode(node) && node.closest('article, main, section') != null,
 	);
 }
 
-export function getPMRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.classList.contains('ProseMirror'));
+export function getDraftRoot(el: SourceElement): SourceElement | null {
+	return findAncestor(
+		el,
+		(node: SourceElement) =>
+			!isTextNode(node) && node.classList.contains('public-DraftEditor-content'),
+	);
 }
 
-export function getCMRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.classList.contains('cm-editor'));
+export function getPMRoot(el: SourceElement): SourceElement | null {
+	return findAncestor(
+		el,
+		(node: SourceElement) => !isTextNode(node) && node.classList.contains('ProseMirror'),
+	);
 }
 
-export function getNotionRoot(): HTMLElement | null {
+export function getCMRoot(el: SourceElement): SourceElement | null {
+	return findAncestor(
+		el,
+		(node: SourceElement) => !isTextNode(node) && node.classList.contains('cm-editor'),
+	);
+}
+
+export function getNotionRoot(): SourceElement | null {
 	return document.getElementById('notion-app');
 }
 
-export function getSlateRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.getAttribute('data-slate-editor') === 'true');
-}
-
-export function getLexicalRoot(el: HTMLElement): HTMLElement | null {
+export function getSlateRoot(el: SourceElement): SourceElement | null {
 	return findAncestor(
 		el,
-		(node: HTMLElement) => node.getAttribute('data-lexical-editor') === 'true',
+		(node: SourceElement) => !isTextNode(node) && node.getAttribute('data-slate-editor') === 'true',
 	);
 }
 
-export function getLexicalEditable(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.getAttribute('contenteditable') === 'true');
-}
-
-export function getMediumRoot(el: HTMLElement): HTMLElement | null {
+export function getLexicalRoot(el: SourceElement): SourceElement | null {
 	return findAncestor(
 		el,
-		(node: HTMLElement) => node.nodeName == 'MAIN' && location.hostname == 'medium.com',
+		(node: SourceElement) =>
+			!isTextNode(node) && node.getAttribute('data-lexical-editor') === 'true',
 	);
 }
 
-export function getShredditComposerRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.nodeName == 'SHREDDIT-COMPOSER');
-}
-
-export function getQuillJsRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.classList.contains('ql-container'));
-}
-
-export function getP2Root(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.id === 'p2' || node.classList.contains('p2'));
-}
-
-export function getGutenbergRoot(el: HTMLElement): HTMLElement | null {
+export function getLexicalEditable(el: SourceElement): SourceElement | null {
 	return findAncestor(
 		el,
-		(node: HTMLElement) => node.id === 'editor' || node.classList.contains('editor-styles-wrapper'),
+		(node: SourceElement) => !isTextNode(node) && node.getAttribute('contenteditable') === 'true',
 	);
 }
 
-export function getTrixRoot(el: HTMLElement): HTMLElement | null {
-	return findAncestor(el, (node: HTMLElement) => node.nodeName == 'TRIX-EDITOR');
+export function getMediumRoot(el: SourceElement): SourceElement | null {
+	return findAncestor(
+		el,
+		(node: SourceElement) => node.nodeName == 'MAIN' && location.hostname == 'medium.com',
+	);
+}
+
+export function getShredditComposerRoot(el: SourceElement): SourceElement | null {
+	return findAncestor(
+		el,
+		(node: SourceElement) => !isTextNode(node) && node.nodeName == 'SHREDDIT-COMPOSER',
+	);
+}
+
+export function getQuillJsRoot(el: SourceElement): SourceElement | null {
+	return findAncestor(
+		el,
+		(node: SourceElement) => !isTextNode(node) && node.classList.contains('ql-container'),
+	);
+}
+
+export function getP2Root(el: SourceElement): SourceElement | null {
+	return findAncestor(
+		el,
+		(node: SourceElement) =>
+			!isTextNode(node) && (node.id === 'p2' || node.classList.contains('p2')),
+	);
+}
+
+export function getGutenbergRoot(el: SourceElement): SourceElement | null {
+	return findAncestor(
+		el,
+		(node: SourceElement) =>
+			!isTextNode(node) &&
+			(node.id === 'editor' || node.classList.contains('editor-styles-wrapper')),
+	);
+}
+
+export function getTrixRoot(el: SourceElement): SourceElement | null {
+	return findAncestor(el, (node: SourceElement) => node.nodeName == 'TRIX-EDITOR');
 }
 
 export function getCaretPosition(): Box | null {
@@ -114,4 +145,8 @@ export function getCaretPosition(): Box | null {
 
 export function isFormEl(el: any): el is HTMLInputElement | HTMLTextAreaElement {
 	return el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement;
+}
+
+export function isTextNode(el: SourceElement): el is Text {
+	return el.nodeType === Node.TEXT_NODE;
 }

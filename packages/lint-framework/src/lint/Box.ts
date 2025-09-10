@@ -1,3 +1,4 @@
+import type SourceElement from './SourceElement';
 import type { UnpackedLint, UnpackedSuggestion } from './unpackLint';
 
 export type Box = {
@@ -13,7 +14,7 @@ export type Box = {
 
 export type LintBox = Box & {
 	lint: UnpackedLint;
-	source: HTMLElement;
+	source: SourceElement;
 	applySuggestion: (sug: UnpackedSuggestion) => void;
 };
 
