@@ -88,8 +88,8 @@ enum Args {
         #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
         annotation_type: AnnotationType,
     },
-    /// Get the metadata associated with a particular word.
-    Metadata { word: String },
+    /// Get the metadata associated with one or more words.
+    Metadata { words: Vec<String> },
     /// Get all the forms of a word using the affixes.
     Forms { line: String },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
@@ -363,27 +363,36 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Metadata { word } => {
-            let metadata = dictionary.get_word_metadata_str(&word);
-            let json = serde_json::to_string_pretty(&metadata).unwrap();
+        Args::Metadata { words } => {
+            let mut results = BTreeMap::new();
+            for word in words {
+                let metadata = dictionary.get_word_metadata_str(&word);
+                let mut metadata_value = serde_json::to_value(metadata).unwrap_or_default();
 
-            println!("{json}");
+                // If there are derived words, add them to the metadata
+                if let Some(metadata) = dictionary.get_word_metadata_str(&word)
+                    && let Some(derived_from) = &metadata.derived_from
+                {
+                    let derived_words: Vec<String> = derived_from
+                        .iter()
+                        .filter_map(|wordid| dictionary.get_word_from_id(wordid))
+                        .map(|word| word.iter().collect())
+                        .collect();
 
-            // iterate through any and all derived_from and resolve the word from each wordid
-            if let Some(metadata) = dictionary.get_word_metadata_str(&word)
-                && let Some(derived_from) = &metadata.derived_from
-            {
-                let derived_words: Vec<String> = derived_from
-                    .iter()
-                    .filter_map(|wordid| dictionary.get_word_from_id(wordid))
-                    .map(|word| word.iter().collect())
-                    .collect();
-
-                if !derived_words.is_empty() {
-                    println!("derived_from: {derived_words:?}");
+                    if !derived_words.is_empty()
+                        && let Some(obj) = metadata_value.as_object_mut()
+                    {
+                        obj.insert(
+                            "derived_from_words".to_string(),
+                            serde_json::json!(derived_words),
+                        );
+                    }
                 }
-            }
 
+                results.insert(word, metadata_value);
+            }
+            let json = serde_json::to_string_pretty(&results).unwrap();
+            println!("{json}");
             Ok(())
         }
         Args::SummarizeLintRecord { file } => {

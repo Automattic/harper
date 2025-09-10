@@ -1,6 +1,6 @@
 [package]
 name = "harper-pos-utils"
-version = "0.60.0"
+version = "0.61.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -8,16 +8,16 @@ repository = "https://github.com/automattic/harper"
 
 [dependencies]
 rs-conllu = "0.3.0"
-hashbrown = { version = "0.15.5", features = ["serde"] }
+hashbrown = { version = "0.16.0", features = ["serde"] }
 strum = "0.27.2"
 strum_macros = "0.27.2"
 serde = { version = "1.0.219", features = ["derive"] }
 is-macro = "0.3.7"
-rayon = { version = "1.10.0", optional = true }
+rayon = { version = "1.11.0", optional = true }
 rand = { version = "0.9.1", optional = true }
 burn = { version = "0.18.0", default-features = false, features = ["std"] }
 burn-ndarray = { version = "0.18.0", default-features = false }
-serde_json = "1.0.142"
+serde_json = "1.0.143"
 itertools = "0.14.0"
 lru = "0.16.0"
 

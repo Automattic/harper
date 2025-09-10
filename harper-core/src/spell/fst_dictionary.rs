@@ -129,7 +129,7 @@ impl Dictionary for FstDictionary {
     }
 
     fn fuzzy_match(
-        &self,
+        &'_ self,
         word: &[char],
         max_distance: u8,
         max_results: usize,
@@ -177,7 +177,7 @@ impl Dictionary for FstDictionary {
     }
 
     fn fuzzy_match_str(
-        &self,
+        &'_ self,
         word: &str,
         max_distance: u8,
         max_results: usize,
