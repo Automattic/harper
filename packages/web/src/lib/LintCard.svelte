@@ -6,6 +6,13 @@ export let lint: UnpackedLint;
 export let open = false;
 export let onToggle: () => void;
 export let onApply: (s: UnpackedSuggestion) => void;
+export let snippet: {
+	prefix: string;
+	problem: string;
+	suffix: string;
+	prefixEllipsis: boolean;
+	suffixEllipsis: boolean;
+};
 
 function suggestionText(s: UnpackedSuggestion): string {
 	return s.replacement_text !== '' ? s.replacement_text : String(s.kind);
@@ -40,6 +47,11 @@ function suggestionText(s: UnpackedSuggestion): string {
     <div class="px-3 pb-3" in:slide={{ duration: 150 }} out:slide={{ duration: 150 }}>
       <div class="text-sm text-gray-700 dark:text-gray-300 mb-2 break-words">
         {@html lint.message_html}
+      </div>
+      <div class="text-xs font-mono mb-2 p-2 rounded border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0b0f14] text-gray-800 dark:text-gray-200 leading-snug">
+        <span class="text-gray-500">{snippet.prefixEllipsis ? '…' : ''}{snippet.prefix}</span>
+        <span class="px-0.5 rounded bg-yellow-200 text-black dark:bg-yellow-800 dark:text-yellow-100">{snippet.problem}</span>
+        <span class="text-gray-500">{snippet.suffix}{snippet.suffixEllipsis ? '…' : ''}</span>
       </div>
       {#if lint.suggestions && lint.suggestions.length > 0}
         <div class="flex flex-wrap gap-2 justify-end">
