@@ -317,6 +317,7 @@ impl SequenceExpr {
         })
     }
 
+    gen_then_from_is!(sentence_terminator);
     // More than two kinds
 
     /// Match a token where any of the token kind predicates returns true.

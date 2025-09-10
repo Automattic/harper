@@ -7,7 +7,7 @@
 >
 #
 > To achieve this    , the filename of this   file    contains `.US       , which will    tell   the snapshot generator to use     the American dialect , rather     than trying  to use     an  automatically detected dialect .
-# P  VB      I/Ddem+ . D   NSg      P  I/Ddem NSg/VB+ V3       Unlintable . I/C+  NPr/VXB NPr/VB D   NSg/VB+  NSg       P  N🅪Sg/VB D   NPr/J    NSg+    . NPr/VB/J/R C/P  Nᴹ/Vg/J P  N🅪Sg/VB D/P W?            VP/J     NSg+    .
+# P  VB      I/Ddem+ . D   NSg      P  I/Ddem NSg/VB+ V3       Unlintable . I/C+  NPr/VXB NPr/VB D   NSg/VB+  NSg       P  N🅪Sg/VB D   NPr/J    NSg+    . NPr/VB/J/R C/P  Nᴹ/Vg/J P  N🅪Sg/VB D/P R             VP/J     NSg+    .
 >
 #
 > Words

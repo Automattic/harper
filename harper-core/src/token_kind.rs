@@ -145,6 +145,14 @@ impl TokenKind {
         metadata.common
     }
 
+    /// Checks whether the token is a member of a nominal phrase.
+    pub fn is_np_member(&self) -> bool {
+        let Word(Some(metadata)) = self else {
+            return false;
+        };
+        metadata.np_member.unwrap_or(false)
+    }
+
     /// Checks whether a word token is out-of-vocabulary (not found in the dictionary).
     ///
     /// Returns `true` if the token is a word that was not found in the dictionary,
@@ -213,6 +221,10 @@ impl TokenKind {
 
     pub fn is_ampersand(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Ampersand))
+    }
+
+    pub fn is_slash(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::ForwardSlash))
     }
 
     // Miscellaneous is-methods
