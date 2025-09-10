@@ -1,8 +1,8 @@
-import type { Lint } from 'harper.js';
 import computeLintBoxes from './computeLintBoxes';
 import { isVisible } from './domUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
+import type { UnpackedLint } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
 
@@ -19,13 +19,13 @@ export default class LintFramework {
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequested = false;
 	private renderRequested = false;
-	private lastLints: { target: HTMLElement; lints: Lint[] }[] = [];
+	private lastLints: { target: HTMLElement; lints: UnpackedLint[] }[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
 
 	/** Function used to fetch lints for a given text/domain. */
-	private lintProvider: (text: string, domain: string) => Promise<Lint[]>;
+	private lintProvider: (text: string, domain: string) => Promise<UnpackedLint[]>;
 	/** Actions wired by host environment (extension/app). */
 	private actions: {
 		ignoreLint?: (hash: string) => Promise<void>;
@@ -35,7 +35,7 @@ export default class LintFramework {
 	};
 
 	constructor(
-		lintProvider: (text: string, domain: string) => Promise<Lint[]>,
+		lintProvider: (text: string, domain: string) => Promise<UnpackedLint[]>,
 		actions: {
 			ignoreLint?: (hash: string) => Promise<void>;
 			getActivationKey?: () => Promise<ActivationKey>;
@@ -100,7 +100,7 @@ export default class LintFramework {
 			this.onScreenTargets().map(async (target) => {
 				if (!document.contains(target)) {
 					this.targets.delete(target);
-					return { target: null as HTMLElement | null, lints: [] as Lint[] };
+					return { target: null as HTMLElement | null, lints: [] as UnpackedLint[] };
 				}
 
 				const text =
@@ -109,7 +109,7 @@ export default class LintFramework {
 						: target.textContent;
 
 				if (!text || text.length > 120000) {
-					return { target: null as HTMLElement | null, lints: [] as Lint[] };
+					return { target: null as HTMLElement | null, lints: [] as UnpackedLint[] };
 				}
 
 				const lints = await this.lintProvider(text, window.location.hostname);

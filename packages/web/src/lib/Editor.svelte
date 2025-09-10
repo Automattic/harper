@@ -4,10 +4,10 @@ import { type WorkerLinter } from 'harper.js';
 import {
 	applySuggestion,
 	LintFramework,
+	lintKindColor,
 	type UnpackedLint,
 	type UnpackedSuggestion,
 	unpackLint,
-	lintKindColor,
 } from 'lint-framework';
 import demo from '../../../../demo.md?raw';
 
@@ -26,7 +26,7 @@ let lfw = new LintFramework(async (text) => {
 	const raw = await linter.lint(text);
 	// The framework expects "unpacked" lints with plain fields
 	const unpacked = await Promise.all(
-		raw.map((lint) => unpackLint(window.location.hostname, lint as any, linter as any)),
+		raw.map((lint) => unpackLint(window.location.hostname, lint, linter)),
 	);
 
 	lints = unpacked;
