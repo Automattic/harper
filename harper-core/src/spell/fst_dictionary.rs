@@ -224,6 +224,26 @@ mod tests {
     use super::FstDictionary;
 
     #[test]
+    fn damerau_transposition_costs_one() {
+        let lev_automata =
+            levenshtein_automata::LevenshteinAutomatonBuilder::new(1, true).build_dfa("woof");
+        assert_eq!(
+            lev_automata.eval("wofo"),
+            levenshtein_automata::Distance::Exact(1)
+        );
+    }
+
+    #[test]
+    fn damerau_transposition_costs_two() {
+        let lev_automata =
+            levenshtein_automata::LevenshteinAutomatonBuilder::new(1, false).build_dfa("woof");
+        assert_eq!(
+            lev_automata.eval("wofo"),
+            levenshtein_automata::Distance::AtLeast(2)
+        );
+    }
+
+    #[test]
     fn fst_map_contains_all_in_full_dict() {
         let dict = FstDictionary::curated();
 
