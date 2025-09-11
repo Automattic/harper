@@ -123,6 +123,19 @@ function footer(leftChildren: any, rightChildren: any) {
 	return h('div', { className: 'harper-footer' }, [left, right]);
 }
 
+function hintDrawer(hint: string | null): any {
+	if (!hint) return undefined;
+	return h('div', { className: 'harper-hint-drawer', role: 'note', 'aria-live': 'polite' }, [
+		h('div', { className: 'harper-hint-content' }, [
+			h('div', { className: 'harper-hint-icon', 'aria-hidden': 'true' }, '💡'),
+			h('div', {}, [
+				h('div', { className: 'harper-hint-title' }, 'Tip'),
+				h('div', {}, String(hint)),
+			]),
+		]),
+	]);
+}
+
 function addToDictionary(
 	box: LintBox,
 	addToUserDictionary?: (words: string[]) => Promise<void>,
@@ -229,6 +242,33 @@ function styleTag() {
       gap:16px
       }
 
+      /* Hint drawer styles */
+      .harper-hint-drawer{
+        margin-top:6px;
+        border-top:1px solid #eaeef2;
+        background:#f6f8fa;
+        color:#3e4c59;
+        border-radius:0 0 6px 6px;
+      }
+      .harper-hint-content{
+        display:flex;
+        gap:8px;
+        align-items:flex-start;
+        padding:8px 10px;
+        font-size:13px;
+        line-height:18px;
+      }
+      .harper-hint-icon{
+        flex:0 0 auto;
+        width:18px;height:18px;
+        border-radius:50%;
+        background:#fff3c4;
+        color:#7c5e10;
+        display:flex;align-items:center;justify-content:center;
+        font-weight:700;
+      }
+      .harper-hint-title{ font-weight:600; margin-right:6px; color:#1f2328; }
+
     .fade-in {
       animation: fadeIn 100ms ease-in-out forwards;
     }
@@ -261,6 +301,9 @@ function styleTag() {
       background:#4b4b4b;
       color:#ffffff
       }
+      .harper-hint-drawer{ border-top-color:#30363d; background:#151b23; color:#9aa4af; }
+      .harper-hint-icon{ background:#3a2f0b; color:#f2cc60; }
+      .harper-hint-title{ color:#e6edf3; }
       }`,
 	]);
 }
@@ -280,6 +323,7 @@ export default function SuggestionBox(
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 	},
+	hint: string | null,
 	close: () => void,
 ) {
 	const top = box.y + box.height + 3;
@@ -325,6 +369,7 @@ export default function SuggestionBox(
 					box.ignoreLint ? ignoreLint(box.ignoreLint) : undefined,
 				],
 			),
+			hintDrawer(hint),
 		],
 	);
 }

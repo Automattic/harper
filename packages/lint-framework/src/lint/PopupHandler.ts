@@ -4,6 +4,7 @@ import { getCaretPosition } from './editorUtils';
 
 type ActivationKey = 'off' | 'shift' | 'control';
 
+import hintsData from '../assets/hints.json';
 import RenderBox from './RenderBox';
 import SuggestionBox from './SuggestionBox';
 
@@ -29,6 +30,8 @@ function monitorActivationKey(
 export default class PopupHandler {
 	private currentLintBoxes: IgnorableLintBox[];
 	private popupLint: number | undefined;
+	private currentHint: string | null | undefined;
+	private currentHintFor: number | undefined;
 	private renderBox: RenderBox;
 	private pointerDownCallback: (e: PointerEvent) => void;
 	private activationKeyListener: (() => void) | undefined;
@@ -45,6 +48,8 @@ export default class PopupHandler {
 	}) {
 		this.actions = actions;
 		this.currentLintBoxes = [];
+		this.currentHint = undefined;
+		this.currentHintFor = undefined;
 		this.renderBox = new RenderBox(document.body);
 		this.renderBox.getShadowHost().popover = 'manual';
 		this.renderBox.getShadowHost().style.pointerEvents = 'none';
@@ -104,10 +109,14 @@ export default class PopupHandler {
 	private render() {
 		let tree = h('div', {}, []);
 
+		this.updateHint();
+
 		if (this.popupLint != null && this.popupLint < this.currentLintBoxes.length) {
 			const box = this.currentLintBoxes[this.popupLint];
-			tree = SuggestionBox(box, this.actions, () => {
+
+			tree = SuggestionBox(box, this.actions, this.currentHint ?? null, () => {
 				this.popupLint = undefined;
+				this.updateHint();
 			});
 			this.renderBox.getShadowHost().showPopover();
 		} else {
@@ -115,6 +124,27 @@ export default class PopupHandler {
 		}
 
 		this.renderBox.render(tree);
+	}
+
+	/** Synchronize the hint with the currently focused lint.
+	 * - If no lint is open, clear the hint state.
+	 * - If a different lint opens, or the hint is uninitialized, decide once (~10%).
+	 */
+	private updateHint() {
+		if (this.popupLint == null) {
+			this.currentHint = undefined;
+			this.currentHintFor = undefined;
+			return;
+		}
+
+		if (this.currentHintFor !== this.popupLint || this.currentHint === undefined) {
+			const hints: string[] = Array.isArray(hintsData)
+				? ((hintsData as unknown[]).filter((v) => typeof v === 'string') as string[])
+				: [];
+			const show = Math.random() < 0.1 && hints.length > 0;
+			this.currentHint = show ? hints[Math.floor(Math.random() * hints.length)] : null;
+			this.currentHintFor = this.popupLint;
+		}
 	}
 
 	public updateLintBoxes(boxes: IgnorableLintBox[]) {
