@@ -43,7 +43,8 @@
 //!   - Verbs are denoted by `V`.
 //!     - The `L` suffix means linking verb.
 //!     - The `X` suffix means auxiliary verb.
-//!     - The `P` suffix means regular past tense & past participle.
+//!     - The `B` suffix means base (lemma) form.
+//!     - The `P` suffix means simple past tense & past participle.
 //!     - The `Pr` suffix means progressive form.
 //!     - The `Pt` suffix means simple past tense.
 //!     - The `Pp` suffix means past participle.
@@ -70,6 +71,7 @@
 //! - [`TokenKind::Punctuation`] are denoted by `.`.
 //! - [`TokenKind::Number`] are denoted by `#`.
 //! - [`TokenKind::Decade`] are denoted by `#d`.
+//! - Roman numerals are denoted by `#r`.
 //! - [`TokenKind::Space`], [`TokenKind::Newline`], and
 //!   [`TokenKind::ParagraphBreak`] are ignored.
 //! - All other token kinds are denoted by their variant name.
@@ -146,17 +148,30 @@ fn format_word_tag(word: &WordMetadata) -> String {
         add_bool(&mut tag, "L", verb.is_linking);
         add_bool(&mut tag, "X", verb.is_auxiliary);
         if let Some(forms) = verb.verb_forms {
-            if forms.contains(VerbFormFlags::LEMMA) {
-                tag.push_str("L");
+            // If Lemma flag is explicity set; or if no verb forms are set Lemma is the default.
+            match (
+                forms.contains(VerbFormFlags::LEMMA),
+                forms.contains(VerbFormFlags::PAST),
+                forms.contains(VerbFormFlags::PAST_PARTICIPLE),
+                forms.contains(VerbFormFlags::PRETERITE),
+                forms.contains(VerbFormFlags::PROGRESSIVE),
+                forms.contains(VerbFormFlags::THIRD_PERSON_SINGULAR),
+            ) {
+                (true, _, _, _, _, _) | (false, false, false, false, false, false) => {
+                    tag.push_str("B")
+                }
+                _ => {}
             }
-            if forms.contains(VerbFormFlags::PAST) {
-                tag.push_str("P");
-            }
-            if forms.contains(VerbFormFlags::PRETERITE) {
-                tag.push_str("Pt");
-            }
-            if forms.contains(VerbFormFlags::PAST_PARTICIPLE) {
-                tag.push_str("Pp");
+            // Regular verbs set both together; Irregular verbs can set them separately.
+            match (
+                forms.contains(VerbFormFlags::PAST),
+                forms.contains(VerbFormFlags::PRETERITE),
+                forms.contains(VerbFormFlags::PAST_PARTICIPLE),
+            ) {
+                (true, _, _) | (_, true, true) => tag.push_str("P"),
+                (false, true, false) => tag.push_str("Pt"),
+                (false, false, true) => tag.push_str("Pp"),
+                _ => {}
             }
             if forms.contains(VerbFormFlags::PROGRESSIVE) {
                 tag.push_str("g");
@@ -164,6 +179,8 @@ fn format_word_tag(word: &WordMetadata) -> String {
             if forms.contains(VerbFormFlags::THIRD_PERSON_SINGULAR) {
                 tag.push_str("3");
             }
+        } else {
+            tag.push_str("B");
         }
         add(&tag, &mut tags);
     }
@@ -193,6 +210,9 @@ fn format_word_tag(word: &WordMetadata) -> String {
     }
     if word.preposition {
         add("P", &mut tags);
+    }
+    if word.is_roman_numerals() {
+        add("#r", &mut tags);
     }
 
     get_dialect_annotations(word).into_iter().for_each(|tag| {

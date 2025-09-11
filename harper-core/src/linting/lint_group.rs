@@ -12,6 +12,7 @@ use lru::LruCache;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::a_part::APart;
+use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
 use super::am_in_the_morning::AmInTheMorning;
@@ -56,6 +57,7 @@ use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
+use super::interested_in::InterestedIn;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::left_right_hand::LeftRightHand;
@@ -92,7 +94,9 @@ use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
+use super::punctuation_clusters::PunctuationClusters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
+use super::quite_quiet::QuiteQuiet;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
@@ -113,8 +117,10 @@ use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::thing_think::ThingThink;
 use super::throw_rubbish::ThrowRubbish;
+use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
+use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
 use super::very_unique::VeryUnique;
 use super::was_aloud::WasAloud;
@@ -123,6 +129,7 @@ use super::whereas::Whereas;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wordpress_dotcom::WordPressDotcom;
+use super::would_never_have::WouldNeverHave;
 use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
 use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
@@ -398,11 +405,13 @@ impl LintGroup {
         ));
         out.merge_from(&mut closed_compounds::lint_group());
         out.merge_from(&mut initialisms::lint_group());
+        // out.merge_from(&mut update_place_names::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
+        insert_expr_rule!(Addicting, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
         insert_struct_rule!(AmInTheMorning, true);
@@ -445,6 +454,7 @@ impl LintGroup {
         insert_struct_rule!(HowTo, true);
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
+        insert_expr_rule!(InterestedIn, true);
         insert_struct_rule!(ItsContraction, true);
         insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);
@@ -482,7 +492,9 @@ impl LintGroup {
         insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(PronounKnew, true);
         insert_expr_rule!(ProgressiveNeedsBe, true);
+        insert_struct_rule!(PunctuationClusters, true);
         insert_expr_rule!(QuantifierNeedsOf, true);
+        insert_expr_rule!(QuiteQuiet, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);
@@ -500,8 +512,10 @@ impl LintGroup {
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(ThingThink, true);
         insert_struct_rule!(ThrowRubbish, true);
+        insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
+        insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(UseGenitive, false);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(WasAloud, true);
@@ -510,6 +524,7 @@ impl LintGroup {
         insert_expr_rule!(WidelyAccepted, true);
         insert_expr_rule!(WinPrize, true);
         insert_struct_rule!(WordPressDotcom, true);
+        insert_expr_rule!(WouldNeverHave, true);
 
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);

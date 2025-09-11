@@ -14,7 +14,7 @@ use super::expansion::{
 use super::word_list::MarkedWord;
 use crate::spell::WordId;
 use crate::word_metadata_orthography::OrthFlags;
-use crate::{CharString, Span, WordMetadata};
+use crate::{CharString, CharStringExt, Span, WordMetadata};
 
 #[derive(Debug, Clone)]
 pub struct AttributeList {
@@ -333,7 +333,98 @@ fn check_orthography(word: &MarkedWord) -> OrthFlags {
         }
     }
 
+    if looks_like_roman_numerals(&word.letters)
+        && is_really_roman_numerals(&word.letters.to_lower())
+    {
+        ortho_flags |= OrthFlags::ROMAN_NUMERALS;
+    }
+
     ortho_flags
+}
+
+fn looks_like_roman_numerals(word: &CharString) -> bool {
+    let mut is_roman = false;
+    let first_char_upper;
+
+    if let Some((&first, rest)) = word.split_first()
+        && "mdclxvi".contains(first.to_ascii_lowercase())
+    {
+        first_char_upper = first.is_uppercase();
+
+        for &c in rest {
+            if !"mdclxvi".contains(c.to_ascii_lowercase()) || c.is_uppercase() != first_char_upper {
+                return false;
+            }
+        }
+        is_roman = true;
+    }
+    is_roman
+}
+
+fn is_really_roman_numerals(word: &[char]) -> bool {
+    let s: String = word.iter().collect();
+    let mut chars = s.chars().peekable();
+
+    let mut m_count = 0;
+    while m_count < 4 && chars.peek() == Some(&'m') {
+        chars.next();
+        m_count += 1;
+    }
+
+    if !check_roman_group(&mut chars, 'c', 'd', 'm') {
+        return false;
+    }
+
+    if !check_roman_group(&mut chars, 'x', 'l', 'c') {
+        return false;
+    }
+
+    if !check_roman_group(&mut chars, 'i', 'v', 'x') {
+        return false;
+    }
+
+    if chars.next().is_some() {
+        return false;
+    }
+
+    true
+}
+
+fn check_roman_group<I: Iterator<Item = char>>(
+    chars: &mut std::iter::Peekable<I>,
+    one: char,
+    five: char,
+    ten: char,
+) -> bool {
+    match chars.peek() {
+        Some(&c) if c == one => {
+            chars.next();
+            match chars.peek() {
+                Some(&next) if next == ten || next == five => {
+                    chars.next();
+                    true
+                }
+                _ => {
+                    let mut count = 0;
+                    while count < 2 && chars.peek() == Some(&one) {
+                        chars.next();
+                        count += 1;
+                    }
+                    true
+                }
+            }
+        }
+        Some(&c) if c == five => {
+            chars.next();
+            let mut count = 0;
+            while count < 3 && chars.peek() == Some(&one) {
+                chars.next();
+                count += 1;
+            }
+            true
+        }
+        _ => true,
+    }
 }
 
 #[cfg(test)]
@@ -441,6 +532,38 @@ mod tests {
 
         // Needs at least 3 chars
         assert!(!check_orthography_str("Hi").contains(OrthFlags::UPPER_CAMEL));
+    }
+
+    #[test]
+    fn test_roman_numerals() {
+        assert!(check_orthography_str("MCMXCIV").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("mdccclxxi").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("MMXXI").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("mcmxciv").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("MCMXCIV").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("MMI").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("MMXXV").contains(OrthFlags::ROMAN_NUMERALS));
+    }
+
+    #[test]
+    fn test_single_roman_numeral() {
+        assert!(check_orthography_str("i").contains(OrthFlags::ROMAN_NUMERALS));
+    }
+
+    #[test]
+    fn empty_string_is_not_roman_numeral() {
+        assert!(!check_orthography_str("").contains(OrthFlags::ROMAN_NUMERALS));
+    }
+
+    #[test]
+    fn dont_allow_mixed_case_roman_numerals() {
+        assert!(!check_orthography_str("MCMlxxxVIII").contains(OrthFlags::ROMAN_NUMERALS));
+    }
+
+    #[test]
+    fn dont_allow_looks_like_but_isnt_roman_numeral() {
+        assert!(!check_orthography_str("mdxlivx").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(!check_orthography_str("XIXIVV").contains(OrthFlags::ROMAN_NUMERALS));
     }
 }
 

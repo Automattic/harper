@@ -1,7 +1,6 @@
 import type { VNode } from 'virtual-dom';
 import createElement from 'virtual-dom/create-element';
 import diff from 'virtual-dom/diff';
-import h from 'virtual-dom/h';
 import patch from 'virtual-dom/patch';
 
 /** Wraps `virtual-dom` to create a box that is unaffected by the style of the rest of the page. */

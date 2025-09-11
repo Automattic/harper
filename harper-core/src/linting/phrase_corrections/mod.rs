@@ -127,6 +127,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects nonstandard `as early back as` to `as far back as`.",
             LintKind::WordChoice
         ),
+        "AsIfThough" => (
+            ["as if though"],
+            ["as if", "as though"],
+            "This should be `as if` or `as though`.",
+            "Corrects redundant `as if though`.",
+            LintKind::Redundancy
+        ),
         "AsItHappens" => (
             ["as it so happens"],
             ["as it happens"],
@@ -300,6 +307,20 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `day in age` to `day and age`, which properly means the current era or time period.",
             LintKind::Eggcorn
         ),
+        "DegreesKelvin" => (
+            ["degrees kelvin", "degrees Kelvin", "degree kelvin", "degree Kelvin"],
+            ["kelvins", "kelvin"],
+            "Use `kelvins` when discussing the unit Kelvin.",
+            "Corrects use of `degrees kelvin` to `kelvins`.",
+            LintKind::Usage
+        ),
+        "DegreesKelvinSymbol" => (
+            ["°K"],
+            ["K"],
+            "Use just the symbol `K` when discussing the unit Kelvin.",
+            "Corrects use of `°K` to `K`.",
+            LintKind::Usage
+        ),
         "DoNotWant" => (
             ["don't wan", "do not wan"],
             ["don't want", "do not want"],
@@ -410,6 +431,13 @@ pub fn lint_group() -> LintGroup {
             ["fair bit"],
             "A `decent amount` is a `fair bit`. `Fare` is the price of a ticket.",
             "Corrects malapropisms of `a fair bit`.",
+            LintKind::Eggcorn
+        ),
+        "FarAndFewBetween" => (
+            ["far and few between"],
+            ["few and far between"],
+            "The correct idiom is `few and far between`?",
+            "Corrects `far and few between` to the standard idiom `few and far between`.",
             LintKind::Eggcorn
         ),
         "FastPaste" => (

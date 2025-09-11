@@ -76,18 +76,6 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
-      23 | the intimate revelations of young men, or at least the terms in which they
-      24 | express them, are usually plagiaristic and marred by obvious suppressions.
-         |                           ^~~~~~~~~~~~ Did you mean to spell `plagiaristic` this way?
-Suggest:
-  - Replace with: “plagiarist's”
-  - Replace with: “plagiarist”
-  - Replace with: “plagiarists”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       27 | snobbishly repeat, a sense of the fundamental decencies is parcelled out
          |                                                            ^~~~~~~~~ Did you mean `parceled`?
       28 | unequally at birth.
@@ -193,8 +181,8 @@ Message: |
       62 | seemed like the ragged edge of the universe—so I decided to go East and learn
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -214,12 +202,10 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
       72 | sounded like a great idea. He found the house, a weatherbeaten cardboard
-         |                                                  ^~~~~~~~~~~~~ Did you mean to spell `weatherbeaten` this way?
+         |                                                  ^~~~~~~~~~~~~ Did you mean `weather-beaten`?
       73 | bungalow at eighty a month, but at the last minute the firm ordered him to
 Suggest:
-  - Replace with: “weatherboard”
-  - Replace with: “weatherboards”
-  - Replace with: “weatherization”
+  - Replace with: “weather-beaten”
 
 
 
@@ -392,16 +378,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      141 | for instance, he’d brought down a string of polo ponies from Lake Forest. It was
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 47 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     145 | particular reason, and then drifted here and there unrestfully wherever people
-         |                                                    ^~~~~~~~~~~ Did you mean `restfully`?
-     146 | played polo and were rich together. This was a permanent move, said Daisy over
-Suggest:
-  - Replace with: “restfully”
 
 
 
@@ -997,7 +973,7 @@ Message: |
 Suggest:
   - Replace with: “crepe”
   - Replace with: “crape”
-  - Replace with: “cope”
+  - Replace with: “crime”
 
 
 
@@ -1332,7 +1308,7 @@ Message: |
     1122 | Daisy! Dai———”
          |        ^~~ Did you mean to spell `Dai` this way?
 Suggest:
-  - Replace with: “Day”
+  - Replace with: “Dab”
   - Replace with: “Dad”
   - Replace with: “Dais”
 
@@ -1355,10 +1331,28 @@ Message: |
 
 Lint:    Formatting (63 priority)
 Message: |
+    1149 | . . . I was standing beside his bed and he was sitting up between the sheets,
+         | ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
     1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
          |                      ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
+         |                       ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -1374,9 +1368,27 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
+         |                                        ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
          |                                                               ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
+         |                                                                ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -1402,14 +1414,13 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Formatting (63 priority)
 Message: |
-    1160 | gardens men and girls came and went like moths among the whisperings and the
-         |                                                          ^~~~~~~~~~~ Did you mean to spell `whisperings` this way?
-    1161 | champagne and the stars. At high tide in the afternoon I watched his guests
+    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
+    1153 | Bridge . . .” Then I was lying half asleep in the cold lower level of the
+         |        ^~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
-  - Replace with: “whispering”
-  - Replace with: “whimpering”
+  - Replace with: “.”
 
 
 
@@ -1559,8 +1570,8 @@ Message: |
     1204 | triumph, glide on through the sea-change of faces and voices and color under the
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -1947,12 +1958,39 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
+         |         ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
     1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
          |               ^~~~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Simply”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1614 | face. “Please come and see me. . . . Phone book. . . . Under the name of Mrs.
+         |                              ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1614 | face. “Please come and see me. . . . Phone book. . . . Under the name of Mrs.
+         |                                                ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -1964,6 +2002,43 @@ Suggest:
   - Replace with: “Gurney”
   - Replace with: “Journey”
   - Replace with: “Tourney”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1615 | Sigourney Howard. . . . My aunt. . . .” She was hurrying off as she talked—her
+         |                 ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1615 | Sigourney Howard. . . . My aunt. . . .” She was hurrying off as she talked—her
+         |                                ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1632 | “All right, in a minute. Tell them I’ll be right there. . . . Good night.”
+         |                                                       ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    1637 | in having been among the last to go, as if he had desired it all the time. “Good
+    1638 | night, old sport. . . . Good night.”
+         |                 ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -1988,6 +2063,16 @@ Suggest:
   - Replace with: “coup”
   - Replace with: “coupe”
   - Replace with: “coups”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    1667 | “Don’t ask me,” said Owl Eyes, washing his hands of the whole matter. “I know
+    1668 | very little about driving—next to nothing. It happened, and that’s all I know.”
+         |                                ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -2167,9 +2252,9 @@ Message: |
     1838 | was nephew to Von Hindenburg and second cousin to the devil. Reach me a rose,
          |               ^~~ Did you mean to spell `Von` this way?
 Suggest:
+  - Replace with: “Van”
   - Replace with: “Vol”
   - Replace with: “Yon”
-  - Replace with: “Con”
 
 
 
@@ -2325,6 +2410,7 @@ Message: |
 Suggest:
   - Replace with: “Schroeder's”
   - Replace with: “Schroeder”
+  - Replace with: “Threaders”
 
 
 
@@ -2884,8 +2970,8 @@ Message: |
          |                                              ^~~~~~~~ Did you mean to spell `Faustina` this way?
     1894 | least once and the Baedeker girls and young Brewer, who had his nose shot off in
 Suggest:
-  - Replace with: “Faustino”
   - Replace with: “Faustian”
+  - Replace with: “Faustino”
 
 
 
@@ -3008,9 +3094,9 @@ Message: |
          |                                                                             ^~~~ Did you mean to spell `Bois` this way?
     1982 | de Boulogne.
 Suggest:
-  - Replace with: “Boss”
+  - Replace with: “Bogs”
   - Replace with: “Boris”
-  - Replace with: “Bis”
+  - Replace with: “Bios”
 
 
 
@@ -3156,7 +3242,7 @@ Message: |
 Suggest:
   - Replace with: “somber”
   - Replace with: “hombre”
-  - Replace with: “some”
+  - Replace with: “sober”
 
 
 
@@ -3169,6 +3255,16 @@ Suggest:
   - Replace with: “Negroes”
   - Replace with: “Negro's”
   - Replace with: “Negros”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2082 | “Anything can happen now that we’ve slid over this bridge,” I thought; “anything
+    2083 | at all. . . .”
+         |       ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -3317,9 +3413,9 @@ Message: |
     2142 | “Sure he went.” Mr. Wolfshiem’s nose flashed at me indignantly. “He turned
          |                     ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -3653,6 +3749,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    2386 | in for amour at all—and yet there’s something in that voice of hers. . . .
+         |                                                                    ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2395 | When Jordan Baker had finished telling all this we had left the Plaza for half
@@ -3759,6 +3864,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    2603 | “Of course, of course! They’re fine!” and he added hollowly, “. . . old sport.”
+         |                                                               ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
     2603 | “Of course, of course! They’re fine!” and he added hollowly, “. . . old sport.”
@@ -3789,7 +3903,7 @@ Message: |
 Suggest:
   - Replace with: “blared”
   - Replace with: “bleated”
-  - Replace with: “beard”
+  - Replace with: “blurred”
 
 
 
@@ -4020,6 +4134,61 @@ Message: |
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
+         |     ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
+         |                                   ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
+         |                                                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
+    2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
+         |                  ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
+         |                                                           ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2927 | use to us if Detroit is his idea of a small town. . . .” He rang off.
+         |                                                 ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2940 | “I know what we'll do,” said Gatsby, “we'll have Klipspringer play the piano.”
@@ -4040,6 +4209,15 @@ Message: |
          |                               ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    2950 | I’d been asleep. Then I got up . . .”
+         |                                ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4098,17 +4276,6 @@ Suggest:
   - Replace with: “pray”
   - Replace with: “prat”
   - Replace with: “pram”
-
-
-
-Lint:    WordChoice (54 priority)
-Message: |
-    2995 | of emotion. I think that voice held him most, with its fluctuating, feverish
-         |                                                    ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
-    2996 | warmth, because it couldn’t be over-dreamed—that voice was a deathless song.
-Suggest:
-  - Replace with: “it's”
-  - Replace with: “it has”
 
 
 
@@ -4175,12 +4342,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3031 | Jay Gatsby who borrowed a rowboat, pulled out to the Tuolomee, and informed Cody
-         |                                                      ^~~~~~~~ Did you mean to spell `Tuolomee` this way?
+         |                                                      ^~~~~~~~ Did you mean `Toulouse`?
     3032 | that a wind might catch him and break him up in half an hour.
 Suggest:
-  - Replace with: “Togolese”
-  - Replace with: “Tolkien”
-  - Replace with: “Toltec”
+  - Replace with: “Toulouse”
 
 
 
@@ -4256,12 +4421,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3085 | and a yachting cap. And when the Tuolomee left for the West Indies and the
-         |                                  ^~~~~~~~ Did you mean to spell `Tuolomee` this way?
+         |                                  ^~~~~~~~ Did you mean `Toulouse`?
     3086 | Barbary Coast Gatsby left too.
 Suggest:
-  - Replace with: “Togolese”
-  - Replace with: “Tolkien”
-  - Replace with: “Toltec”
+  - Replace with: “Toulouse”
 
 
 
@@ -4357,6 +4520,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    3137 | little champagne? Nothing at all, thanks. . . . I’m sorry———
+         |                                         ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Enhancement (31 priority)
 Message: |
     3141 | “Very good roads around here.”
@@ -4423,12 +4595,30 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
+         |                ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
     3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
          |                      ^~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “And”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3303 | here’s my little gold pencil.” . . . She looked around after a moment and told
+         |                                ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4487,6 +4677,15 @@ Message: |
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    3353 | inhabitants along a short-cut from nothing to nothing. She saw something awful
+         |                                            ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3389 | Daisy began to sing with the music in a husky, rythmic whisper, bringing out a
@@ -4531,6 +4730,25 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3422 | guest-rooms overhead. When he came down the steps at last the tanned skin was
          | ~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3465 | a certain starting place and go over it all slowly, he could find out what that
+    3466 | thing was. . . .
+         |          ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3468 | . . . One autumn night, five years before, they had been walking down the street
+         | ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4678,10 +4896,69 @@ Suggest:
 
 Lint:    Formatting (63 priority)
 Message: |
+    3565 | “Hot!” said the conductor to familiar faces. “Some weather! . . . Hot! . . .
+         |                                                           ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “!”
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3565 | “Hot!” said the conductor to familiar faces. “Some weather! . . . Hot! . . .
+         |                                                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “!”
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
+         |    ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “!”
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
+         |               ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “!”
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
     3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
          |                                                                 ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
+         |                                                                  ^~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+  - Replace with: “?”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3572 | . . . Through the hall of the Buchanans’ house blew a faint wind, carrying the
+         | ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4707,9 +4984,27 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
+         |                               ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
          |                                        ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
+         |                                         ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4719,8 +5014,18 @@ Message: |
          |                     ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3605 | We were silent. The voice in the hall rose high with annoyance: “Very well,
+    3606 | then, I won’t sell you the car at all. . . . I’m under no obligations to you at
+         |                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4731,6 +5036,16 @@ Message: |
          |    ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3606 | then, I won’t sell you the car at all. . . . I’m under no obligations to you at
+    3607 | all . . . and as for your bothering me about it at lunch time, I won’t stand
+         |     ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4762,6 +5077,25 @@ Suggest:
   - Replace with: “fade”
   - Replace with: “fife”
   - Replace with: “file”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3618 | “Mr. Gatsby!” He put out his broad, flat hand with well-concealed dislike. “I’m
+    3619 | glad to see you, sir. . . . Nick. . . .”
+         |                     ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3619 | glad to see you, sir. . . . Nick. . . .”
+         |                                 ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -4882,6 +5216,27 @@ Message: |
          |                            ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3794 | inexhaustible charm that rose and fell in it, the jingle of it, the cymbals’
+    3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
+         |           ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
+         |                                                                              ^~~~
+    3796 | . .
+         | ~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -5117,6 +5472,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    4004 | thought, or pretended to think, that we were being very funny . . .
+         |                                                               ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     4010 | “It’s a swell suite,” whispered Jordan respectfully, and every one laughed.
@@ -5232,9 +5596,9 @@ Message: |
          |                                                                  ^~~ Did you mean to spell `Asa` this way?
     4084 | brought him around at the last minute and asked if we had room for him.”
 Suggest:
-  - Replace with: “Ass”
+  - Replace with: “As”
+  - Replace with: “Asap”
   - Replace with: “Ada”
-  - Replace with: “Ala”
 
 
 
@@ -5281,6 +5645,26 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    4133 | “Open the whiskey, Tom,” she ordered, ‘‘and I'll make you a mint julep. Then you
+    4134 | won’t seem so stupid to yourself. . . . Look at the mint!”
+         |                                 ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    4148 | sit back and let Mr. Nobody from Nowhere make love to your wife. Well, if that’s
+    4149 | the idea you can count me out. . . . Nowadays people begin by sneering at family
+         |                              ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     4185 | At this point Jordan and I tried to go, but Tom and Gatsby insisted with
@@ -5311,6 +5695,16 @@ Suggest:
   - Replace with: “Kaitlin”
   - Replace with: “Kaposi”
   - Replace with: “Capillary”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    4248 | “Not that day I carried you down from the Punch Bowl to keep your shoes dry?”
+    4249 | There was a husky tenderness in his tone. . . . “Daisy?”
+         |                                         ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -5402,10 +5796,29 @@ Suggest:
 
 Lint:    Formatting (63 priority)
 Message: |
+    4363 | “Want any of this stuff? Jordan? . . . Nick?”
+         |                                ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+  - Replace with: “?”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
     4373 | “No . . . I just remembered that to-day’s my birthday.”
          |    ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    4373 | “No . . . I just remembered that to-day’s my birthday.”
+         |     ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -5511,6 +5924,16 @@ Message: |
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+    4427 | policeman that it was light green. The other car, the one going toward New York,
+         |                                                       ^~~~~~~~~ `going` is a mass noun.
+    4428 | came to rest a hundred yards beyond, and it’s driver hurried back to where
+Suggest:
+  - Replace with: “one piece of going”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4432 | Michaelis and this man reached her first, but when they had torn open her
@@ -5595,9 +6018,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |            ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -5606,9 +6029,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                          ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -5617,9 +6040,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                     ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -5628,9 +6051,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                                   ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -5693,8 +6116,8 @@ Message: |
          |                                                   ^~~~~~ Did you mean to spell `stopus` this way?
 Suggest:
   - Replace with: “stop's”
+  - Replace with: “stoups”
   - Replace with: “stops”
-  - Replace with: “stomp's”
 
 
 
@@ -5808,6 +6231,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    4554 | body. “He says he knows the car that did it. . . . It was a yellow car.”
+         |                                            ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4560 | “It’s a blue car, a coupé.”
@@ -5865,9 +6297,9 @@ Message: |
     4636 | faces of “Wolfshiem’s people,” behind him in the dark shrubbery.
          |           ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -5948,6 +6380,16 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    4822 | was in love with me too. She thought I knew a lot because I knew different
+    4823 | things from her . . . Well, there I was, ’way off my ambitions, getting deeper
+         |                 ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     4833 | They had never been closer in their month of love, nor communicated more
@@ -5967,9 +6409,9 @@ Message: |
          |                                                ^~~~~ Did you mean to spell `Beale` this way?
     4851 | hundred pairs of golden and silver slippers shuffled the shining dust. At the
 Suggest:
-  - Replace with: “Bale”
-  - Replace with: “Beadle”
+  - Replace with: “Belle”
   - Replace with: “Berle”
+  - Replace with: “Beadle”
 
 
 
@@ -6180,6 +6622,24 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    5065 | “Have you got a church you go to sometimes, George? Maybe even if you haven’t
+         |                               ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    5069 | “Don’t belong to any.”
+         |               ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5087 | Michaelis opened the drawer nearest his hand. There was nothing in it but a
@@ -6373,6 +6833,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    5204 | where poor ghosts, breathing dreams like air, drifted fortuitously about . . .
+         |                                                                          ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
     5205 | like that ashen, fantastic figure gliding toward him through the amorphous
@@ -6387,9 +6856,9 @@ Message: |
     5208 | The chauffeur—he was one of Wolfshiem’s protégés—heard the shots—afterward he
          |                             ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -6490,9 +6959,9 @@ Message: |
     5279 | Meyer Wolfshiem’s name wasn’t in the phone book. The butler gave me his office
          |       ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -6530,9 +6999,9 @@ Message: |
          |                                                               ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
     5310 | I began to have a feeling of defiance, of scornful solidarity between Gatsby and
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -6598,6 +7067,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    5333 | “This is Slagle speaking . . .”
+         |                          ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5341 | “Young Parke’s in trouble,” he said rapidly. “They picked him up when he handed
@@ -6626,6 +7104,16 @@ Message: |
          |            ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    5349 | There was a long silence on the other end of the wire, followed by an
+    5350 | exclamation . . . then a quick squawk as the connection was broken.
+         |             ^~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 
@@ -6809,9 +7297,9 @@ Message: |
     5472 | “Nobody’s in,” she said. “Mr. Wolfshiem’s gone to Chicago.”
          |                               ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -6840,21 +7328,19 @@ Message: |
     5481 | At this moment a voice, unmistakably Wolfshiem’s, called “Stella!” from the
          |                                      ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5500 | She vanished. In a moment Meyer Wolfsheim stood solemnly in the doorway, holding
-         |                                 ^~~~~~~~~ Did you mean to spell `Wolfsheim` this way?
+         |                                 ^~~~~~~~~ Did you mean `Florsheim`?
     5501 | out both hands. He drew me into his office, remarking in a reverent voice that
 Suggest:
-  - Replace with: “Waldheim”
-  - Replace with: “Wolfe's”
-  - Replace with: “Wilhelm”
+  - Replace with: “Florsheim”
 
 
 
@@ -7000,6 +7486,16 @@ Message: |
          |                            ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+    5631 | wet to the skin. As we started through the gate into the cemetery I heard a car
+    5632 | stop and then the sound of some one splashing after us over the soggy ground. I
+         |                                 ^~~~~~~~~~~~~ `splashing` is a mass noun.
+Suggest:
+  - Replace with: “one piece of splashing”
 
 
 
@@ -7331,6 +7827,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+    5783 | them together, and let other people clean up the mess they had made. . . .
+         |                                                                    ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     5791 | long as mine. One of the taxi drivers in the village never took a fare past the
@@ -7417,6 +7922,16 @@ Suggest:
   - Replace with: “orgasmic”
   - Replace with: “orgiastic”
   - Replace with: “organic”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+    5829 | recedes before us. It eluded us then, but that’s no matter—to-morrow we will run
+    5830 | faster, stretch out our arms farther. . . . And one fine morning———
+         |                                     ^~~~~~~ Condense this punctuation cluster to a single mark.
+Suggest:
+  - Replace with: “.”
 
 
 

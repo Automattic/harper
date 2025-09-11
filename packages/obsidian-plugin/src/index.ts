@@ -2,7 +2,6 @@ import { Dialect } from 'harper.js';
 import { type App, editorViewField, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg?raw';
 import logoSvgDisabled from '../logo-disabled.svg?raw';
-import packageJson from '../package.json';
 import { HarperSettingTab } from './HarperSettingTab';
 import State from './State';
 

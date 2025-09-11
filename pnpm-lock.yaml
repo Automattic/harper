@@ -52,6 +52,9 @@ importers:
       jquery:
         specifier: ^3.7.1
         version: 3.7.1
+      lint-framework:
+        specifier: workspace:*
+        version: link:../lint-framework
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -61,9 +64,6 @@ importers:
       tailwindcss:
         specifier: ^4.1.4
         version: 4.1.4
-      virtual-dom:
-        specifier: ^2.1.1
-        version: 2.1.1
     devDependencies:
       '@crxjs/vite-plugin':
         specifier: ^2.0.0-beta.26
@@ -86,9 +86,6 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.13.10
-      '@types/virtual-dom':
-        specifier: ^2.1.4
-        version: 2.1.4
       flowbite:
         specifier: ^3.1.2
         version: 3.1.2(rollup@4.35.0)
@@ -182,6 +179,31 @@ importers:
       harper.js:
         specifier: workspace:*
         version: link:../..
+
+  packages/lint-framework:
+    dependencies:
+      harper.js:
+        specifier: workspace:*
+        version: link:../harper.js
+      virtual-dom:
+        specifier: ^2.1.1
+        version: 2.1.1
+    devDependencies:
+      '@types/virtual-dom':
+        specifier: ^2.1.4
+        version: 2.1.4
+      type-fest:
+        specifier: ^4.37.0
+        version: 4.37.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.2
+      vite:
+        specifier: ^6.1.0
+        version: 6.3.5(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite-plugin-dts:
+        specifier: ^4.5.0
+        version: 4.5.3(@types/node@22.13.10)(rollup@4.35.0)(typescript@5.8.2)(vite@6.3.5(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
 
   packages/obsidian-plugin:
     dependencies:
@@ -304,6 +326,9 @@ importers:
       harper.js:
         specifier: workspace:*
         version: link:../harper.js
+      lint-framework:
+        specifier: workspace:*
+        version: link:../lint-framework
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7784,10 +7809,6 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lru-cache@11.0.2:
-    resolution: {integrity: sha512-123qHRfJBmo2jXDbo/a5YOQrJoHF/GNQTLzQ5+IdK5pWpceK17yRc6ozlWd25FxvGKQbIUs91fDFkXmDHTKcyA==}
-    engines: {node: 20 || >=22}
-
   lru-cache@11.1.0:
     resolution: {integrity: sha512-QIXZUBJUx+2zHUdQujWejBkcD9+cs94tLn0+YL8UrCh+D5sCXZ4c7LaEH48pNwRY3MLDgqUFyhlCyjJPf1WP0A==}
     engines: {node: 20 || >=22}
@@ -9813,6 +9834,7 @@ packages:
   source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
 
   sourcemap-codec@1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
@@ -21266,8 +21288,6 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lru-cache@11.0.2: {}
-
   lru-cache@11.1.0: {}
 
   lru-cache@5.1.1:
@@ -22345,7 +22365,7 @@ snapshots:
 
   path-scurry@2.0.0:
     dependencies:
-      lru-cache: 11.0.2
+      lru-cache: 11.1.0
       minipass: 7.1.2
 
   path-to-regexp@0.1.12: {}
