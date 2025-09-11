@@ -13,9 +13,9 @@ Message: |
       10 | - Centre.
          |   ^~~~~~ Did you mean to spell `Centre` this way?
 Suggest:
+  - Replace with: “Center”
   - Replace with: “Entire”
   - Replace with: “Entry”
-  - Replace with: “Genre”
 
 
 
@@ -132,9 +132,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       22 | - Theatre.
-         |   ^~~~~~~ Did you mean `Sheathe`?
+         |   ^~~~~~~ Did you mean to spell `Theatre` this way?
 Suggest:
-  - Replace with: “Sheathe”
+  - Replace with: “Theater”
+  - Replace with: “Heater”
+  - Replace with: “Cheater”
 
 
 
