@@ -23,7 +23,7 @@ pub struct FstDictionary {
 }
 
 const EXPECTED_DISTANCE: u8 = 3;
-const TRANSPOSITION_COST_ONE: bool = false;
+const TRANSPOSITION_COST_ONE: bool = true;
 
 lazy_static! {
     static ref DICT: Arc<FstDictionary> = Arc::new((*MutableDictionary::curated()).clone().into());
