@@ -80,6 +80,7 @@ use super::nominal_wants::NominalWants;
 use super::noun_countability::NounCountability;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
+use super::ought_to_be::OughtToBe;
 use super::on_floor::OnFloor;
 use super::one_and_the_same::OneAndTheSame;
 use super::open_the_light::OpenTheLight;
@@ -478,6 +479,7 @@ impl LintGroup {
         insert_expr_rule!(NounCountability, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
+        insert_struct_rule!(OughtToBe, true);
         insert_expr_rule!(OnFloor, true);
         insert_expr_rule!(OneAndTheSame, true);
         insert_expr_rule!(OpenCompounds, true);
