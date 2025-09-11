@@ -1,3 +1,4 @@
+import type { IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
 import { isVisible } from './domUtils';
 import Highlights from './Highlights';
@@ -17,12 +18,16 @@ export default class LintFramework {
 	private popupHandler: PopupHandler;
 	private targets: Set<Node>;
 	private scrollableAncestors: Set<HTMLElement>;
+	private scrollPositions: Map<HTMLElement, { left: number; top: number }>;
 	private lintRequested = false;
 	private renderRequested = false;
 	private lastLints: { target: HTMLElement; lints: UnpackedLint[] }[] = [];
+	private lastBoxes: IgnorableLintBox[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
+	/** Scroll handler used to register/deregister scroll listeners. */
+	private scrollEventCallback: (ev: Event) => void;
 
 	/** Function used to fetch lints for a given text/domain. */
 	private lintProvider: (text: string, domain: string) => Promise<UnpackedLint[]>;
@@ -53,10 +58,16 @@ export default class LintFramework {
 		});
 		this.targets = new Set();
 		this.scrollableAncestors = new Set();
+		this.scrollPositions = new Map();
 		this.lastLints = [];
+		this.lastBoxes = [];
 
 		this.updateEventCallback = () => {
 			this.update();
+		};
+
+		this.scrollEventCallback = (ev: Event) => {
+			this.onAncestorScroll(ev);
 		};
 
 		const timeoutCallback = () => {
@@ -159,7 +170,15 @@ export default class LintFramework {
 		for (const el of scrollableAncestors) {
 			if (!this.scrollableAncestors.has(el as HTMLElement)) {
 				this.scrollableAncestors.add(el as HTMLElement);
-				(el as HTMLElement).addEventListener('scroll', this.updateEventCallback, {
+				// Initialize scroll position tracking
+				const scroller = el as HTMLElement;
+				this.scrollPositions.set(scroller, {
+					left: scroller.scrollLeft,
+					top: scroller.scrollTop,
+				});
+
+				// Listen for scroll with immediate highlight shift
+				(el as HTMLElement).addEventListener('scroll', this.scrollEventCallback, {
 					capture: true,
 					passive: true,
 				});
@@ -179,6 +198,47 @@ export default class LintFramework {
 		}
 	}
 
+	/**
+	 * Handle scrolls on tracked ancestor elements by shifting the last-rendered
+	 * boxes immediately by the scroll delta, then schedule a full recompute.
+	 */
+	private onAncestorScroll(ev: Event) {
+		const scroller = ev.target as HTMLElement | null;
+		if (!scroller) return;
+
+		const prev = this.scrollPositions.get(scroller);
+		const current = { left: scroller.scrollLeft, top: scroller.scrollTop };
+		if (!prev) {
+			this.scrollPositions.set(scroller, current);
+			this.updateEventCallback();
+			return;
+		}
+
+		const dx = current.left - prev.left;
+		const dy = current.top - prev.top;
+
+		// Update stored position immediately
+		this.scrollPositions.set(scroller, current);
+
+		if ((dx !== 0 || dy !== 0) && this.lastBoxes.length > 0) {
+			// Shift only boxes whose source is within this scroller
+			const adjusted: IgnorableLintBox[] = this.lastBoxes.map((b) => {
+				const sourceEl = b.source as any as HTMLElement;
+				if (sourceEl && scroller.contains(sourceEl)) {
+					return { ...b, x: b.x - dx, y: b.y - dy };
+				}
+				return b;
+			});
+
+			// Render immediately so highlights track content without visible lag
+			this.highlights.renderLintBoxes(adjusted);
+			this.popupHandler.updateLintBoxes(adjusted);
+		}
+
+		// Continue with normal update to recompute accurate layout
+		this.updateEventCallback();
+	}
+
 	private requestRender() {
 		if (this.renderRequested) {
 			return;
@@ -194,6 +254,8 @@ export default class LintFramework {
 						)
 					: [],
 			);
+			// Save for immediate scroll adjustments
+			this.lastBoxes = boxes;
 			this.highlights.renderLintBoxes(boxes);
 			this.popupHandler.updateLintBoxes(boxes);
 
