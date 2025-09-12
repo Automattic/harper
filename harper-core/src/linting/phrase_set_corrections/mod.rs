@@ -353,7 +353,7 @@ pub fn lint_group() -> LintGroup {
             "Corrects `rise the question` to `raise the question`.",
             LintKind::Grammar
         ),
-        "ToToo" => (
+        "ToTooIdioms" => (
             &[
                 (&["a bridge to far"], &["a bridge too far"]),
                 (&["cake and eat it to"], &["cake and eat it too"]),
