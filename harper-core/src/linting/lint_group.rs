@@ -104,6 +104,7 @@ use super::save_to_safe::SaveToSafe;
 use super::semicolon_apostrophe::SemicolonApostrophe;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
+use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
 use super::somewhat_something::SomewhatSomething;
 use super::sought_after::SoughtAfter;
@@ -447,6 +448,7 @@ impl LintGroup {
         insert_struct_rule!(FirstAidKit, true);
         insert_struct_rule!(ForNoun, true);
         insert_expr_rule!(FriendOfMe, true);
+        insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(HavePronoun, true);
         insert_expr_rule!(Hedging, true);
         insert_expr_rule!(Hereby, true);

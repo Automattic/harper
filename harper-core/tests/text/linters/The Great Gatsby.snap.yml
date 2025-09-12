@@ -7412,6 +7412,16 @@ Suggest:
 
 
 
+Lint:    Grammar (127 priority)
+Message: |
+    5575 | “He come out to see me two years ago and bought me the house I live in now. Of
+    5576 | course we was broke up when he run off from home, but I see now there was a
+         |               ^~~~~ Use the past participle `broken` instead of `broke` when using compound tenses or passive voice.
+Suggest:
+  - Replace with: “broken”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5582 | pocket a ragged old copy of a book called “Hopalong Cassidy.”

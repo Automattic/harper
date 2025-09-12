@@ -493,44 +493,6 @@ fn correct_to_an_extend() {
     );
 }
 
-// HaveGone
-
-#[test]
-fn correct_have_went() {
-    assert_suggestion_result(
-        "I have went into the btle.py file and added a print statement in _connect()",
-        lint_group(),
-        "I have gone into the btle.py file and added a print statement in _connect()",
-    );
-}
-
-#[test]
-fn correct_had_went() {
-    assert_suggestion_result(
-        "Not sure if TroLoos had went from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
-        lint_group(),
-        "Not sure if TroLoos had gone from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
-    );
-}
-
-#[test]
-fn correct_having_went() {
-    assert_suggestion_result(
-        "Having went through the setup guidelines and picking react starter, running npm run watch results in an error",
-        lint_group(),
-        "Having gone through the setup guidelines and picking react starter, running npm run watch results in an error",
-    );
-}
-
-#[test]
-fn correct_has_went() {
-    assert_suggestion_result(
-        "I would like to report that the package request which you are loading has went into maintenance mode.",
-        lint_group(),
-        "I would like to report that the package request which you are loading has gone into maintenance mode.",
-    );
-}
-
 // HavePassed
 
 #[test]
