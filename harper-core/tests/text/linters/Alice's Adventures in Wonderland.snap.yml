@@ -103,8 +103,8 @@ Message: |
          | ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -545,16 +545,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      252 | and strange, and the words did not come the same as they used to do:—
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 47 words long.
-
-
-
-Lint:    WordChoice (63 priority)
-Message: |
-     249 | Rome—no, that’s all wrong, I’m certain! I must have been changed for Mabel! I’ll
-     250 | try and say ‘How doth the little—’” and she crossed her hands on her lap as if
-         |              ^~~~ Insert `to` after `how` (e.g., `how to clone`).
-Suggest:
-  - Insert “to ”
 
 
 
