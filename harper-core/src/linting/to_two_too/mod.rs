@@ -393,4 +393,20 @@ mod tests {
             ToTwoToo::default(),
         );
     }
+
+    #[test]
+    fn no_lint_to_quickly_find_a_factory() {
+        assert_no_lints(
+            "To quickly find a factory, look for a map.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_llm_as_judge_to_automatically_score() {
+        assert_no_lints(
+            "We used an LLM-as-judge to automatically score agent trajectories.",
+            ToTwoToo::default(),
+        );
+    }
 }
