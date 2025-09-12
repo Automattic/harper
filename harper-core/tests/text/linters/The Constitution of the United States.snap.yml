@@ -1156,7 +1156,7 @@ Message: |
 Lint:    Formatting (63 priority)
 Message: |
      455 | Oath or Affirmation:-- "I do solemnly swear (or affirm) that I will faithfully
-         |                     ^~ A sequence of hyphens is not an en dash.
+         |                     ^~ Replace these two hyphens with an en dash (–).
 Suggest:
   - Replace with: “–”
 
