@@ -61,10 +61,15 @@ impl DocumentState {
         let span = range_to_span(source_chars, range).with_len(1);
 
         let mut actions: Vec<CodeActionOrCommand> = lints
-            .into_iter()
+            .iter()
             .filter(|lint| lint.span.overlaps_with(span))
             .flat_map(|lint| {
-                lint_to_code_actions(&lint, &self.uri, &self.document, code_action_config)
+                let others = lints
+                    .iter()
+                    .filter(|other| other.spanless_hash() == lint.spanless_hash())
+                    .filter(|other| *other != lint)
+                    .collect::<Vec<_>>();
+                lint_to_code_actions(lint, &others, &self.uri, &self.document, code_action_config)
             })
             .collect();
 
