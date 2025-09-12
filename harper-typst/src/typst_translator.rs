@@ -16,8 +16,8 @@ use typst_syntax::{
 macro_rules! def_token {
     ($doc:expr, $a:expr, $kind:expr, $offset:ident) => {{
         let range = $doc.range($a.span()).unwrap();
-        let start = $offset.push_to(range.start);
-        let end_char_loc = start.push_to(range.end).char;
+        let start = $offset.push_to(range.start)?;
+        let end_char_loc = start.push_to(range.end)?.char;
 
         Some(vec![Token {
             span: harper_core::Span::new(start.char, end_char_loc),
@@ -122,7 +122,7 @@ impl<'a> TypstTranslator<'a> {
     pub fn parse_expr(self, expr: Expr, offset: OffsetCursor) -> Option<Vec<Token>> {
         // Update the offset that will be passed to other functions by moving it to the beginning
         // of the current expression's span.
-        let offset = offset.push_to_span(expr.span());
+        let offset = offset.push_to_span(expr.span())?;
 
         /// Simplification of [`def_token!`] that bakes-in local variables
         macro_rules! token {
@@ -241,7 +241,7 @@ impl<'a> TypstTranslator<'a> {
         //
         // A full list of variants is available in the [typst_syntax docs](https://docs.rs/typst/latest/typst/syntax/ast/enum.Expr.html)
         match expr {
-            Expr::Text(text) => self.parse_english(text.get(), offset.push_to_span(text.span())),
+            Expr::Text(text) => self.parse_english(text.get(), offset.push_to_span(text.span())?),
             Expr::Space(a) => {
                 let mut chars = get_text!(a).chars();
                 let first_char = chars.next().unwrap();
@@ -280,7 +280,7 @@ impl<'a> TypstTranslator<'a> {
                     .chain(term_item.description().exprs()),
             ),
             Expr::Str(text) => {
-                let offset = offset.push_to_span(text.span()).char + 1;
+                let offset = offset.push_to_span(text.span())?.char + 1;
                 let string = text.to_untyped().text();
 
                 Some(
@@ -365,5 +365,23 @@ impl<'a> TypstTranslator<'a> {
             Expr::FuncCall(func) => parse_func_call(func),
             a => token!(a, TokenKind::Unlintable),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use typst_syntax::ast::None;
+
+    #[test]
+    fn parse_none_returns_none() {
+        let source = Source::detached("");
+        let translator = TypstTranslator::new(&source);
+
+        assert!(
+            translator
+                .parse_expr(Expr::None(None::default()), OffsetCursor::new(&source))
+                .is_none()
+        )
     }
 }

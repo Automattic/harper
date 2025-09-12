@@ -79,3 +79,14 @@ fn convert_parbreaks<'a>(buf: &'a mut Vec<SyntaxNode>, exprs: &'a [Expr]) -> Vec
 
     res
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use harper_core::parsers::StrParser;
+
+    #[test]
+    fn issue_1898() {
+        Typst.parse_str("#for ");
+    }
+}
