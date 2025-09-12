@@ -1,14 +1,9 @@
 use std::sync::Arc;
 
-use crate::TokenKind;
-use crate::expr::AnchorStart;
-use crate::expr::Expr;
-use crate::expr::OwnedExprExt;
-use crate::expr::SequenceExpr;
-use crate::{Token, patterns::WordSet};
-
-use crate::Lint;
+use crate::expr::{AnchorStart, Expr, MatchInfo, OwnedExprExt, SequenceExpr};
 use crate::linting::{ExprLinter, LintKind, Suggestion};
+use crate::patterns::WordSet;
+use crate::{Lint, TokenKind};
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -65,7 +60,8 @@ impl ExprLinter for ShouldContract {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         // Locate the mistake
         let possible_mistakes = [matched_tokens[0].span, matched_tokens[1].span];
 

@@ -1,6 +1,7 @@
 use crate::expr::Expr;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
-use crate::{Token, patterns::WordSet};
+use crate::patterns::WordSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -28,7 +29,8 @@ impl ExprLinter for LeftRightHand {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, _source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let space = &matched_tokens[1];
 
         Some(Lint {

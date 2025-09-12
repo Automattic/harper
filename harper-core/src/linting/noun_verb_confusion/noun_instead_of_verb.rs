@@ -1,7 +1,7 @@
-use crate::expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr};
+use crate::expr::{Expr, FirstMatchOf, LongestMatchOf, MatchInfo, SequenceExpr};
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::patterns::Word;
-use crate::{CharStringExt, Lrc, Token, patterns::WordSet};
+use crate::patterns::{Word, WordSet};
+use crate::{CharStringExt, Lrc};
 
 use super::NOUN_VERB_PAIRS;
 
@@ -89,7 +89,8 @@ impl ExprLinter for NounInsteadOfVerb {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         let prev_tok = &toks[0];
 
         // If we have the next word token, try to rule out compound nouns

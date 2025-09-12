@@ -1,6 +1,6 @@
 use crate::{
-    Token, TokenStringExt,
-    expr::{Expr, FixedPhrase, SequenceExpr},
+    TokenStringExt,
+    expr::{Expr, FixedPhrase, MatchInfo, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -27,7 +27,8 @@ impl ExprLinter for AnotherThinkComing {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         Some(Lint {
             span: toks[2..].span()?,
             lint_kind: LintKind::WordChoice,

@@ -1,10 +1,11 @@
 use crate::CharStringExt;
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::patterns::WordSet;
 use crate::{
-    Lrc, Token, TokenStringExt,
+    Lrc, TokenStringExt,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
@@ -61,7 +62,8 @@ impl ExprLinter for OnFloor {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, source: &[char]) -> Option<Lint> {
+        let matched_tokens = match_info.matched_tokens;
         let incorrect_preposition = matched_tokens[0..1].span()?.get_content(source).to_string();
         // if the first token is not "in" or "at", means that the match is belong to the exceptions
         // so we don't need to lint it

@@ -1,8 +1,9 @@
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
+use crate::expr::MatchInfo;
 use crate::expr::SequenceExpr;
 use crate::{
-    Lrc, Token, TokenStringExt,
+    Lrc, TokenStringExt,
     linting::{LintKind, Suggestion},
     patterns::WordSet,
 };
@@ -62,7 +63,8 @@ impl ExprLinter for OpenTheLight {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, match_info: MatchInfo<'_>, src: &[char]) -> Option<Lint> {
+        let toks = match_info.matched_tokens;
         // If I try to do this in the Pattern, the shorter pattern matches, without the context token.
         if toks.len() == 7 {
             let device_tok = &toks[toks.len() - 3];
