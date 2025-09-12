@@ -103,6 +103,8 @@ enum Args {
         /// The document to mine words from.
         file: PathBuf,
     },
+    /// Get the word associated with a particular word id.
+    WordFromId { hash: u64 },
     #[cfg(feature = "training")]
     TrainBrillTagger {
         #[arg(short, long, default_value = "1.0")]
@@ -368,7 +370,29 @@ fn main() -> anyhow::Result<()> {
             let mut results = BTreeMap::new();
             for word in words {
                 let metadata = dictionary.get_word_metadata_str(&word);
-                results.insert(word, metadata);
+                let mut metadata_value = serde_json::to_value(metadata).unwrap_or_default();
+
+                // If there are derived words, add them to the metadata
+                if let Some(metadata) = dictionary.get_word_metadata_str(&word)
+                    && let Some(derived_from) = &metadata.derived_from
+                {
+                    let derived_words: Vec<String> = derived_from
+                        .iter()
+                        .filter_map(|wordid| dictionary.get_word_from_id(wordid))
+                        .map(|word| word.iter().collect())
+                        .collect();
+
+                    if !derived_words.is_empty()
+                        && let Some(obj) = metadata_value.as_object_mut()
+                    {
+                        obj.insert(
+                            "derived_from_words".to_string(),
+                            serde_json::json!(derived_words),
+                        );
+                    }
+                }
+
+                results.insert(word, metadata_value);
             }
             let json = serde_json::to_string_pretty(&results).unwrap();
             println!("{json}");
@@ -500,6 +524,11 @@ fn main() -> anyhow::Result<()> {
                 println!("{word}");
             }
 
+            Ok(())
+        }
+        Args::WordFromId { hash } => {
+            let id = WordId::from_hash(hash);
+            println!("{:?}", dictionary.get_word_from_id(&id));
             Ok(())
         }
         Args::CoreVersion => {
@@ -853,9 +882,14 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
 
     let id = WordId::from_word_str(word);
 
-    let children = dictionary
-        .words_iter()
-        .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
+    let children = dictionary.words_iter().filter(|e| {
+        dictionary
+            .get_word_metadata(e)
+            .unwrap()
+            .derived_from
+            .as_ref()
+            .is_some_and(|derived| derived.contains(&id))
+    });
 
     println!(" - {word}");
 
