@@ -367,3 +367,21 @@ impl<'a> TypstTranslator<'a> {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use typst_syntax::ast::None;
+
+    #[test]
+    fn parse_none_returns_none() {
+        let source = Source::detached("");
+        let translator = TypstTranslator::new(&source);
+
+        assert!(
+            translator
+                .parse_expr(Expr::None(None::default()), OffsetCursor::new(&source))
+                .is_none()
+        )
+    }
+}
