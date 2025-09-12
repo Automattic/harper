@@ -425,6 +425,7 @@ impl SequenceExpr {
     gen_then_from_is!(verb);
     gen_then_from_is!(auxiliary_verb);
     gen_then_from_is!(linking_verb);
+    gen_then_from_is!(verb_lemma);
 
     // Adjectives
 

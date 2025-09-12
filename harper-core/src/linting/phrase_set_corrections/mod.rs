@@ -194,17 +194,6 @@ pub fn lint_group() -> LintGroup {
             // ConfusedPair??
             LintKind::WordChoice
         ),
-        "HaveGone" => (
-            &[
-                ("had went", "had gone"),
-                ("has went", "has gone"),
-                ("have went", "have gone"),
-                ("having went", "having gone"),
-            ],
-            "`Have gone` is the correct form.",
-            "Corrects `have went` to `have gone`.",
-            LintKind::Grammar
-        ),
         "HavePassed" => (
             &[
                 ("had past", "had passed"),

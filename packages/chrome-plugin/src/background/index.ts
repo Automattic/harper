@@ -1,4 +1,5 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
+import { unpackLint } from 'lint-framework';
 import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
@@ -29,7 +30,6 @@ import {
 	type SetUserDictionaryRequest,
 	type UnitResponse,
 } from '../protocol';
-import unpackLint from '../unpackLint';
 
 console.log('background is running');
 
@@ -88,6 +88,8 @@ async function enableDefaultDomains() {
 		'draftjs.org',
 		'gitlab.com',
 		'core.trac.wordpress.org',
+		'write.ellipsus.com',
+		'www.facebook.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

@@ -459,11 +459,16 @@ impl WordMetadata {
         )
     }
 
+    // Lemma is default if no verb form is specified in the dictionary
     pub fn is_verb_lemma(&self) -> bool {
-        self.verb.is_some_and(|v| {
-            v.verb_forms
-                .is_some_and(|vf| vf.contains(VerbFormFlags::LEMMA))
-        })
+        if let Some(verb) = self.verb {
+            if let Some(forms) = verb.verb_forms {
+                return forms.is_empty() || forms.contains(VerbFormFlags::LEMMA);
+            } else {
+                return true;
+            }
+        }
+        false
     }
 
     pub fn is_verb_past_form(&self) -> bool {
@@ -1836,6 +1841,12 @@ pub mod tests {
         #[test]
         fn lemma_walk() {
             let md = md("walk");
+            assert!(md.is_verb_lemma())
+        }
+
+        #[test]
+        fn lemma_fix() {
+            let md = md("fix");
             assert!(md.is_verb_lemma())
         }
 

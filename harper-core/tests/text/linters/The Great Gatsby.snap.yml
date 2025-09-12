@@ -181,8 +181,8 @@ Message: |
       62 | seemed like the ragged edge of the universe—so I decided to go East and learn
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -973,7 +973,7 @@ Message: |
 Suggest:
   - Replace with: “crepe”
   - Replace with: “crape”
-  - Replace with: “cope”
+  - Replace with: “crime”
 
 
 
@@ -1318,7 +1318,7 @@ Message: |
     1122 | Daisy! Dai———”
          |        ^~~ Did you mean to spell `Dai` this way?
 Suggest:
-  - Replace with: “Day”
+  - Replace with: “Dab”
   - Replace with: “Dad”
   - Replace with: “Dais”
 
@@ -1580,8 +1580,8 @@ Message: |
     1204 | triumph, glide on through the sea-change of faces and voices and color under the
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -2271,9 +2271,9 @@ Message: |
     1838 | was nephew to Von Hindenburg and second cousin to the devil. Reach me a rose,
          |               ^~~ Did you mean to spell `Von` this way?
 Suggest:
+  - Replace with: “Van”
   - Replace with: “Vol”
   - Replace with: “Yon”
-  - Replace with: “Con”
 
 
 
@@ -2429,6 +2429,7 @@ Message: |
 Suggest:
   - Replace with: “Schroeder's”
   - Replace with: “Schroeder”
+  - Replace with: “Threaders”
 
 
 
@@ -2988,8 +2989,8 @@ Message: |
          |                                              ^~~~~~~~ Did you mean to spell `Faustina` this way?
     1894 | least once and the Baedeker girls and young Brewer, who had his nose shot off in
 Suggest:
-  - Replace with: “Faustino”
   - Replace with: “Faustian”
+  - Replace with: “Faustino”
 
 
 
@@ -3112,9 +3113,9 @@ Message: |
          |                                                                             ^~~~ Did you mean to spell `Bois` this way?
     1982 | de Boulogne.
 Suggest:
-  - Replace with: “Boss”
+  - Replace with: “Bogs”
   - Replace with: “Boris”
-  - Replace with: “Bis”
+  - Replace with: “Bios”
 
 
 
@@ -3260,7 +3261,7 @@ Message: |
 Suggest:
   - Replace with: “somber”
   - Replace with: “hombre”
-  - Replace with: “some”
+  - Replace with: “sober”
 
 
 
@@ -3431,9 +3432,9 @@ Message: |
     2142 | “Sure he went.” Mr. Wolfshiem’s nose flashed at me indignantly. “He turned
          |                     ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -3921,7 +3922,7 @@ Message: |
 Suggest:
   - Replace with: “blared”
   - Replace with: “bleated”
-  - Replace with: “beard”
+  - Replace with: “blurred”
 
 
 
@@ -4360,12 +4361,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3031 | Jay Gatsby who borrowed a rowboat, pulled out to the Tuolomee, and informed Cody
-         |                                                      ^~~~~~~~ Did you mean to spell `Tuolomee` this way?
+         |                                                      ^~~~~~~~ Did you mean `Toulouse`?
     3032 | that a wind might catch him and break him up in half an hour.
 Suggest:
-  - Replace with: “Togolese”
-  - Replace with: “Tolkien”
-  - Replace with: “Toltec”
+  - Replace with: “Toulouse”
 
 
 
@@ -4441,12 +4440,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3085 | and a yachting cap. And when the Tuolomee left for the West Indies and the
-         |                                  ^~~~~~~~ Did you mean to spell `Tuolomee` this way?
+         |                                  ^~~~~~~~ Did you mean `Toulouse`?
     3086 | Barbary Coast Gatsby left too.
 Suggest:
-  - Replace with: “Togolese”
-  - Replace with: “Tolkien”
-  - Replace with: “Toltec”
+  - Replace with: “Toulouse”
 
 
 
@@ -5036,8 +5033,8 @@ Message: |
          |                     ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -5618,9 +5615,9 @@ Message: |
          |                                                                  ^~~ Did you mean to spell `Asa` this way?
     4084 | brought him around at the last minute and asked if we had room for him.”
 Suggest:
-  - Replace with: “Ass”
+  - Replace with: “As”
+  - Replace with: “Asap”
   - Replace with: “Ada”
-  - Replace with: “Ala”
 
 
 
@@ -6040,9 +6037,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |            ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -6051,9 +6048,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                          ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -6062,9 +6059,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                     ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -6073,9 +6070,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                                   ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -6138,8 +6135,8 @@ Message: |
          |                                                   ^~~~~~ Did you mean to spell `stopus` this way?
 Suggest:
   - Replace with: “stop's”
+  - Replace with: “stoups”
   - Replace with: “stops”
-  - Replace with: “stomp's”
 
 
 
@@ -6319,9 +6316,9 @@ Message: |
     4636 | faces of “Wolfshiem’s people,” behind him in the dark shrubbery.
          |           ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -6431,9 +6428,9 @@ Message: |
          |                                                ^~~~~ Did you mean to spell `Beale` this way?
     4851 | hundred pairs of golden and silver slippers shuffled the shining dust. At the
 Suggest:
-  - Replace with: “Bale”
-  - Replace with: “Beadle”
+  - Replace with: “Belle”
   - Replace with: “Berle”
+  - Replace with: “Beadle”
 
 
 
@@ -6878,9 +6875,9 @@ Message: |
     5208 | The chauffeur—he was one of Wolfshiem’s protégés—heard the shots—afterward he
          |                             ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -6981,9 +6978,9 @@ Message: |
     5279 | Meyer Wolfshiem’s name wasn’t in the phone book. The butler gave me his office
          |       ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -7021,9 +7018,9 @@ Message: |
          |                                                               ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
     5310 | I began to have a feeling of defiance, of scornful solidarity between Gatsby and
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -7319,9 +7316,9 @@ Message: |
     5472 | “Nobody’s in,” she said. “Mr. Wolfshiem’s gone to Chicago.”
          |                               ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -7350,21 +7347,19 @@ Message: |
     5481 | At this moment a voice, unmistakably Wolfshiem’s, called “Stella!” from the
          |                                      ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5500 | She vanished. In a moment Meyer Wolfsheim stood solemnly in the doorway, holding
-         |                                 ^~~~~~~~~ Did you mean to spell `Wolfsheim` this way?
+         |                                 ^~~~~~~~~ Did you mean `Florsheim`?
     5501 | out both hands. He drew me into his office, remarking in a reverent voice that
 Suggest:
-  - Replace with: “Waldheim”
-  - Replace with: “Wolfe's”
-  - Replace with: “Wilhelm”
+  - Replace with: “Florsheim”
 
 
 
@@ -7433,6 +7428,16 @@ Message: |
          |           ^~~ Make the verb agree with its subject.
 Suggest:
   - Replace with: “were”
+
+
+
+Lint:    Grammar (127 priority)
+Message: |
+    5575 | “He come out to see me two years ago and bought me the house I live in now. Of
+    5576 | course we was broke up when he run off from home, but I see now there was a
+         |               ^~~~~ Use the past participle `broken` instead of `broke` when using compound tenses or passive voice.
+Suggest:
+  - Replace with: “broken”
 
 
 

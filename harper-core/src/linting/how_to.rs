@@ -1,7 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::{
-    CharStringExt, Token, TokenKind, TokenStringExt,
+    Token, TokenKind, TokenStringExt,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, UPOSSet},
@@ -20,11 +20,7 @@ impl Default for HowTo {
             .then_anything()
             .t_aco("how")
             .then_whitespace()
-            .then(|tok: &Token, src: &[char]| {
-                // TODO this is a temporary hack until PR #1730 is merged
-                // TODO we should use then_verb_lemma() instead
-                is_verb_lemma(tok, src)
-            });
+            .then_verb_lemma();
         pattern.add(pos_pattern);
 
         let exceptions = SequenceExpr::default()
@@ -49,16 +45,6 @@ impl Default for HowTo {
         Self {
             expr: Box::new(pattern),
         }
-    }
-}
-
-// TODO this is a temporary hack until PR #1730 is merged
-fn is_verb_lemma(tok: &Token, src: &[char]) -> bool {
-    tok.kind.is_verb() && {
-        let verb = tok.span.get_content(src);
-        !(verb.ends_with_ignore_ascii_case_str("s")
-            || verb.ends_with_ignore_ascii_case_str("ed")
-            || verb.ends_with_ignore_ascii_case_str("ing"))
     }
 }
 

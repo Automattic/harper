@@ -32,7 +32,6 @@
 		"@types/jquery": "^3.5.32",
 		"@types/lodash-es": "^4.17.12",
 		"@types/node": "catalog:",
-		"@types/virtual-dom": "^2.1.4",
 		"flowbite": "^3.1.2",
 		"flowbite-svelte": "^0.44.18",
 		"flowbite-svelte-icons": "^2.1.1",
@@ -53,10 +52,10 @@
 		"@tailwindcss/vite": "^4.1.4",
 		"@webcomponents/custom-elements": "^1.6.0",
 		"harper.js": "workspace:*",
+		"lint-framework": "workspace:*",
 		"jquery": "^3.7.1",
 		"lodash-es": "^4.17.21",
 		"lru-cache": "^11.1.0",
-		"tailwindcss": "^4.1.4",
-		"virtual-dom": "^2.1.1"
+		"tailwindcss": "^4.1.4"
 	}
 }

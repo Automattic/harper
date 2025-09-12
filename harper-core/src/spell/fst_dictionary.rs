@@ -23,7 +23,7 @@ pub struct FstDictionary {
 }
 
 const EXPECTED_DISTANCE: u8 = 3;
-const TRANSPOSITION_COST_ONE: bool = false;
+const TRANSPOSITION_COST_ONE: bool = true;
 
 lazy_static! {
     static ref DICT: Arc<FstDictionary> = Arc::new((*MutableDictionary::curated()).clone().into());
@@ -222,6 +222,26 @@ mod tests {
     use crate::spell::{Dictionary, WordId};
 
     use super::FstDictionary;
+
+    #[test]
+    fn damerau_transposition_costs_one() {
+        let lev_automata =
+            levenshtein_automata::LevenshteinAutomatonBuilder::new(1, true).build_dfa("woof");
+        assert_eq!(
+            lev_automata.eval("wofo"),
+            levenshtein_automata::Distance::Exact(1)
+        );
+    }
+
+    #[test]
+    fn damerau_transposition_costs_two() {
+        let lev_automata =
+            levenshtein_automata::LevenshteinAutomatonBuilder::new(1, false).build_dfa("woof");
+        assert_eq!(
+            lev_automata.eval("wofo"),
+            levenshtein_automata::Distance::AtLeast(2)
+        );
+    }
 
     #[test]
     fn fst_map_contains_all_in_full_dict() {

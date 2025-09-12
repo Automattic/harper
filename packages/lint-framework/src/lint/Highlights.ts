@@ -18,10 +18,11 @@ import {
 } from './editorUtils';
 import lintKindColor from './lintKindColor';
 import RenderBox from './RenderBox';
+import type SourceElement from './SourceElement';
 
 /** A class that renders highlights to a page and nothing else. Uses a virtual DOM to minimize jitter. */
 export default class Highlights {
-	renderBoxes: Map<HTMLElement, RenderBox>;
+	renderBoxes: Map<SourceElement, RenderBox>;
 
 	constructor() {
 		this.renderBoxes = new Map();
@@ -29,7 +30,7 @@ export default class Highlights {
 
 	public renderLintBoxes(boxes: LintBox[]) {
 		// Sort the lint boxes based on their source, so we can render them all together.
-		const sourceToBoxes: Map<HTMLElement, { boxes: LintBox[]; cpa: DOMRect | null }> = new Map();
+		const sourceToBoxes: Map<SourceElement, { boxes: LintBox[]; cpa: DOMRect | null }> = new Map();
 
 		for (const box of boxes) {
 			let renderBox = this.renderBoxes.get(box.source);
@@ -138,17 +139,17 @@ export default class Highlights {
 
 	/** Determines which target the render boxes should be attached to.
 	 * Depends on text editor. */
-	private computeRenderTarget(el: HTMLElement): HTMLElement {
+	private computeRenderTarget(el: SourceElement): HTMLElement {
 		if (el.parentElement?.classList.contains('ProseMirror')) {
-			return el.parentElement.parentElement;
+			return el.parentElement.parentElement!;
 		}
 
 		const queries = [
+			getNotionRoot,
 			getGhostRoot,
 			getDraftRoot,
 			getPMRoot,
 			getCMRoot,
-			getNotionRoot,
 			getSlateRoot,
 			getMediumRoot,
 			getShredditComposerRoot,
@@ -162,11 +163,11 @@ export default class Highlights {
 		for (const query of queries) {
 			const root = query(el);
 			if (root != null) {
-				return root.parentElement;
+				return root.parentElement!;
 			}
 		}
 
-		return el.parentElement;
+		return el.parentElement!;
 	}
 }
 
@@ -190,11 +191,8 @@ function getInitialContainingRect(el: HTMLElement): DOMRect | null {
  * content-visibility.
  *
  * Logs the element and the precise reason it qualifies.
- *
- * @param {Element} el
- * @returns {boolean}
  */
-function isContainingBlock(el): boolean {
+function isContainingBlock(el: Element): boolean {
 	if (!(el instanceof Element)) {
 		throw new TypeError('Expected a DOM Element');
 	}

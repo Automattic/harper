@@ -1,0 +1,36 @@
+{
+	"name": "lint-framework",
+	"version": "0.0.1",
+	"license": "Apache-2.0",
+	"type": "module",
+	"private": false,
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsc && vite build",
+		"dev": "vite",
+		"test": "echo 'no tests'"
+	},
+	"dependencies": {
+		"virtual-dom": "^2.1.1"
+	},
+	"peerDependencies": {
+		"harper.js": "workspace:*"
+	},
+	"devDependencies": {
+		"@types/virtual-dom": "^2.1.4",
+		"type-fest": "^4.37.0",
+		"typescript": "catalog:",
+		"vite": "^6.1.0",
+		"vite-plugin-dts": "^4.5.0"
+	}
+}
