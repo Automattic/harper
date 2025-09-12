@@ -149,7 +149,7 @@ Message: |
 Suggest:
   - Replace with: “Nissan”
   - Replace with: “Nisan”
-  - Replace with: “Norman”
+  - Replace with: “Nampa”
 
 
 
@@ -330,9 +330,9 @@ Message: |
      141 | Eugene Charniak points out in Statistical techniques for natural language
          |        ^~~~~~~~ Did you mean to spell `Charniak` this way?
 Suggest:
+  - Replace with: “Carina”
   - Replace with: “Carnap”
   - Replace with: “Chadian”
-  - Replace with: “Chadwick”
 
 
 
