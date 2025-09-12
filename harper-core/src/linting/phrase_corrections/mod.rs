@@ -801,6 +801,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `no to` to `not to`, ensuring proper negation.",
             LintKind::Typo
         ),
+        "NotUncommon" => (
+            ["not uncommon"],
+            ["common"],
+            "Prefer the direct adjective `common` over the litotes `not uncommon`.",
+            "Rewrites the litotes `not uncommon` to the clearer `common`.",
+            LintKind::WordChoice
+        ),
         "OfCourse" => (
             // See also: `of_course.rs` for "of curse/corse" → "of course" corrections
             ["off course", "o course", "ofcourse"],
