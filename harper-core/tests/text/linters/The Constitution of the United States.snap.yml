@@ -672,17 +672,6 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
-     271 | The Privilege of the Writ of Habeas Corpus shall not be suspended, unless when
-         |                              ^~~~~~ Did you mean to spell `Habeas` this way?
-Suggest:
-  - Replace with: “Haber's”
-  - Replace with: “Hale's”
-  - Replace with: “Hebe's”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      274 | No Bill of Attainder or ex post facto Law shall be passed.
          |                                 ^~~~~ Did you mean to spell `facto` this way?
 Suggest:
