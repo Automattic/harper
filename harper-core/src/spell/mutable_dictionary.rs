@@ -414,7 +414,7 @@ mod tests {
     }
 
     #[test]
-    fn is_is_verb_lemma() {
+    fn be_is_verb_lemma() {
         let dict = MutableDictionary::curated();
 
         let is = dict.get_word_metadata_str("be");
