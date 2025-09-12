@@ -1,7 +1,7 @@
 use itertools::Itertools;
 use ordered_float::OrderedFloat;
 
-use harper_core::{Document, NounData, Number, Punctuation, TokenKind, WordMetadata};
+use harper_core::{DictWordMetadata, Document, NounData, Number, Punctuation, TokenKind};
 use harper_typst::Typst;
 
 #[test]
@@ -262,7 +262,7 @@ fn smart_apostrophe_newline() {
     assert!(matches!(
         token_kinds.as_slice(),
         &[
-            TokenKind::Word(Some(WordMetadata {
+            TokenKind::Word(Some(DictWordMetadata {
                 noun: Some(NounData {
                     is_possessive: Some(true),
                     ..

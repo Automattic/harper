@@ -4,9 +4,9 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
+    dict_word_metadata::Person,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
-    word_metadata::Person,
 };
 
 pub struct NominalWants {
