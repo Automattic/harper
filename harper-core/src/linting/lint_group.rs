@@ -83,6 +83,7 @@ use super::of_course::OfCourse;
 use super::on_floor::OnFloor;
 use super::one_and_the_same::OneAndTheSame;
 use super::open_the_light::OpenTheLight;
+use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
@@ -480,6 +481,7 @@ impl LintGroup {
         insert_expr_rule!(NounCountability, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
+        insert_struct_rule!(OughtToBe, true);
         insert_expr_rule!(OnFloor, true);
         insert_expr_rule!(OneAndTheSame, true);
         insert_expr_rule!(OpenCompounds, true);
