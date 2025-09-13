@@ -107,8 +107,10 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata> {
-        self.word_map.get_with_chars(word).map(|v| &v.metadata)
+    fn get_word_metadata(&self, word: &[char]) -> Option<WordMetadata> {
+        self.word_map
+            .get_with_chars(word)
+            .map(|v| v.metadata.clone())
     }
 
     fn contains_word(&self, word: &[char]) -> bool {
@@ -120,7 +122,7 @@ impl Dictionary for MutableDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<&WordMetadata> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<WordMetadata> {
         let chars: CharString = word.chars().collect();
         self.get_word_metadata(&chars)
     }
