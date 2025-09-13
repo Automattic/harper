@@ -1,8 +1,9 @@
+use harper_core::word_metadata::DialectFlags;
 use itertools::Itertools;
 use std::path::Path;
 
-use harper_core::WordMetadata;
 use harper_core::spell::{Dictionary, MutableDictionary};
+use harper_core::{Dialect, WordMetadata};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
 
@@ -38,26 +39,34 @@ async fn write_word_list(dict: impl Dictionary, mut w: impl AsyncWrite + Unpin) 
 }
 
 /// Load a dictionary from a file on disk.
-pub async fn load_dict(path: impl AsRef<Path>) -> Result<MutableDictionary> {
+pub async fn load_dict(path: impl AsRef<Path>, dialect: Dialect) -> Result<MutableDictionary> {
     let file = File::open(path.as_ref()).await?;
     let read = BufReader::new(file);
 
-    dict_from_word_list(read).await
+    dict_from_word_list(read, dialect).await
 }
 
 /// Load a dictionary from a list of words.
 /// It could definitely be optimized to use less memory.
 /// Right now it isn't an issue.
-async fn dict_from_word_list(mut r: impl AsyncRead + Unpin) -> Result<MutableDictionary> {
+async fn dict_from_word_list(
+    mut r: impl AsyncRead + Unpin,
+    dialect: Dialect,
+) -> Result<MutableDictionary> {
     let mut str = String::new();
 
     r.read_to_string(&mut str).await?;
 
     let mut dict = MutableDictionary::new();
-    dict.extend_words(
-        str.lines()
-            .map(|l| (l.chars().collect::<Vec<char>>(), WordMetadata::default())),
-    );
+    dict.extend_words(str.lines().map(|l| {
+        (
+            l.chars().collect::<Vec<char>>(),
+            WordMetadata {
+                dialects: DialectFlags::from_dialect(dialect),
+                ..Default::default()
+            },
+        )
+    }));
 
     Ok(dict)
 }
