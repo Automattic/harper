@@ -9,7 +9,7 @@
 > establish Justice , insure domestic Tranquility , provide for the common   defence    ,
 # VB        NPr🅪Sg+ . VB     NSg/J    NSg         . VB      C/P D   NSg/VB/J N🅪Sg/Comm+ .
 > promote the general  Welfare , and  secure the Blessings of Liberty to ourselves
-# NSg/VB  D   NSg/VB/J Nᴹ/VB+  . VB/C VB/J   D   W?        P  NSg+    P  IPl+
+# NSg/VB  D   NSg/VB/J Nᴹ/VB+  . VB/C VB/J   D   NPl/V3    P  NSg+    P  IPl+
 > and  our Posterity , do      ordain and  establish this   Constitution for the United
 # VB/C D$+ Nᴹ+       . NSg/VXB VB     VB/C VB        I/Ddem NPr+         C/P D   VP/J
 > States   of America .
@@ -525,7 +525,7 @@
 >
 #
 > To provide for calling forth the Militia to execute the Laws   of the Union     ,
-# P  VB      C/P Nᴹ/Vg/J W?    D   NSg     P  VB      D   NPl/V3 P  D   NPr/VB/J+ .
+# P  VB      C/P Nᴹ/Vg/J R     D   NSg     P  VB      D   NPl/V3 P  D   NPr/VB/J+ .
 > suppress Insurrections and  repel Invasions ;
 # VB       NPl           VB/C VB    NPl       .
 >
@@ -1007,7 +1007,7 @@
 > of the United States    , and  of the Militia of the several States    , when    called
 # P  D+  VP/J   NPrPl/V3+ . VB/C P  D   NSg     P  D   J/Dq    NPrPl/V3+ . NSg/I/C VP/J
 > into the actual Service of the United States    ; he       may     require the Opinion , in
-# P    D   NSg/J  NSg/VB  P  D   VP/J   NPrPl/V3+ . NPr/ISg+ NPr/VXB NSg/VB  D   NSg+    . NPr/J/P
+# P    D   NSg/J  NSg/VB  P  D   VP/J   NPrPl/V3+ . NPr/ISg+ NPr/VXB NSg/VB  D   N🅪Sg+   . NPr/J/P
 > writing , of the principal Officer in      each of the executive Departments , upon
 # Nᴹ/Vg/J . P  D   NSg/J     NSg/VB+ NPr/J/P Dq   P  D   NSg/J     NPl+        . P
 > any    Subject   relating to the Duties of their respective Offices , and  he       shall
@@ -1173,7 +1173,7 @@
 > Attainder of Treason shall work     Corruption of Blood  , or    Forfeiture except
 # NSg       P  NSg     VXB   N🅪Sg/VB+ NSg        P  Nᴹ/VB+ . NPr/C NSg        VB/C/P
 > during the Life    of the Person  attainted .
-# VB/P   D   N🅪Sg/VB P  D   NSg/VB+ ?         .
+# VB/P   D   N🅪Sg/VB P  D   NSg/VB+ VP/J      .
 >
 #
 > Section . 4 .
@@ -1301,7 +1301,7 @@
 > Neither slavery nor   involuntary servitude , except as    a   punishment for crime
 # I/C     NSg/J+  NSg/C J           NSg       . VB/C/P NSg/R D/P N🅪Sg       C/P N🅪Sg/VB+
 > whereof the party     shall have    been    duly convicted , shall exist within  the United
-# C       D   NSg/VB/J+ VXB   NSg/VXB NSg/VPp W?   VP/J      . VXB   VB    NSg/J/P D   VP/J
+# C       D   NSg/VB/J+ VXB   NSg/VXB NSg/VPp R    VP/J      . VXB   VB    NSg/J/P D   VP/J
 > States    , or    any    place    subject   to their jurisdiction . No     Person  held to Service
 # NPrPl/V3+ . NPr/C I/R/Dq N🅪Sg/VB+ NSg/VB/J+ P  D$+   N🅪Sg+        . NPr/P+ NSg/VB+ VB   P  NSg/VB
 > or    Labour          in      one         State    , under   the Laws    thereof , escaping into another , shall ,
@@ -1421,7 +1421,7 @@
 > Authority of the United States    , shall be      the supreme  Law     of the Land       ; and  the
 # N🅪Sg      P  D   VP/J   NPrPl/V3+ . VXB   NSg/VXB D   NSg/VB/J N🅪Sg/VB P  D   NPr🅪Sg/VB+ . VB/C D
 > Judges    in      every State    shall be      bound    thereby , any    Thing in      the Constitution or
-# NPrPl/V3+ NPr/J/P Dq    N🅪Sg/VB+ VXB   NSg/VXB NSg/VP/J W?      . I/R/Dq NSg+  NPr/J/P D   NPr+         NPr/C
+# NPrPl/V3+ NPr/J/P Dq    N🅪Sg/VB+ VXB   NSg/VXB NSg/VP/J R       . I/R/Dq NSg+  NPr/J/P D   NPr+         NPr/C
 > Laws   of any    State    to the Contrary  notwithstanding .
 # NPl/V3 P  I/R/Dq N🅪Sg/VB+ P  D   NSg/VB/J+ C/P             .
 >
@@ -1495,7 +1495,7 @@
 > and  Eighty seven and  of the Independence of the United States   of America the
 # VB/C NSg    NSg   VB/C P  D   NPrᴹ         P  D   VP/J   NPrPl/V3 P  NPr+    D
 > Twelfth In      witness whereof We   have    hereunto subscribed our Names   ,
-# NSg/J   NPr/J/P NSg/VB  C       IPl+ NSg/VXB W?       VP/J       D$+ NPl/V3+ .
+# NSg/J   NPr/J/P NSg/VB  C       IPl+ NSg/VXB R        VP/J       D$+ NPl/V3+ .
 >
 #
 > Article . VIII .

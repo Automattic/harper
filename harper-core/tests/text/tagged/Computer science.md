@@ -17,7 +17,7 @@
 > computation , and  information theory ) to applied disciplines ( including the
 # NSg         . VB/C Nᴹ+         N🅪Sg+  . P  VP/J    NPl/V3+     . Nᴹ/Vg/J   D
 > design   and  implementation of hardware and  software ) .
-# N🅪Sg/VB+ VB/C NSg            P  Nᴹ       VB/C Nᴹ+      . .
+# N🅪Sg/VB+ VB/C N🅪Sg           P  Nᴹ       VB/C Nᴹ+      . .
 >
 #
 > Algorithms and  data  structures are central to computer science  . The theory of
@@ -119,7 +119,7 @@
 > algorithm to compute the Bernoulli numbers   , which is  considered to be      the first
 # NSg       P  NSg/VB  D   NPr+      NPrPl/V3+ . I/C+  VL3 VP/J       P  NSg/VXB D   NSg/VB/J
 > published algorithm ever specifically tailored for implementation on  a   computer .
-# VP/J      NSg       J    R            VP/J     C/P NSg+           J/P D/P NSg/VB+  .
+# VP/J      NSg       J    R            VP/J     C/P N🅪Sg+          J/P D/P NSg/VB+  .
 > Around 1885 , Herman Hollerith invented the tabulator , which used punched cards
 # J/P    #    . NPr+   NPr       VP/J     D   NSg       . I/C+  VP/J VP/J    NPl/V3+
 > to process statistical information ; eventually his     company  became part     of IBM  .
@@ -133,15 +133,15 @@
 > Essays  on  Automatics , and  designed , inspired by      Babbage , a   theoretical
 # NPl/V3+ J/P NPl        . VB/C VP/J     . VP/J     NSg/J/P NPr     . D/P J
 > electromechanical calculating machine which was to be      controlled by      a   read     - only
-# ?                 Nᴹ/Vg/J     NSg/VB+ I/C+  VPt P  NSg/VXB VB/J       NSg/J/P D/P NSg/VBP+ . J/R/C
+# J                 Nᴹ/Vg/J     NSg/VB+ I/C+  VPt P  NSg/VXB VB/J       NSg/J/P D/P NSg/VBP+ . J/R/C
 > program . The paper      also introduced the idea of floating - point   arithmetic . In
 # NPr/VB+ . D+  N🅪Sg/VB/J+ R/C  VP/J       D   NSg  P  Nᴹ/Vg/J+ . NSg/VB+ Nᴹ/J       . NPr/J/P
 > 1920 , to celebrate the 100th anniversary of the invention of the arithmometer ,
 # #    . P  VB        D   #     NSg         P  D   N🅪Sg      P  D   ?            .
 > Torres presented in      Paris the Electromechanical Arithmometer , a   prototype that
-# NPr    VP/J      NPr/J/P NPr+  D   ?                 ?            . D/P NSg/VB+   NSg/I/C/Ddem+
+# NPr    VP/J      NPr/J/P NPr+  D   J                 ?            . D/P NSg/VB+   NSg/I/C/Ddem+
 > demonstrated the feasibility of an  electromechanical analytical engine  , on  which
-# VP/J         D   Nᴹ          P  D/P ?                 J          NSg/VB+ . J/P I/C+
+# VP/J         D   Nᴹ          P  D/P J                 J          NSg/VB+ . J/P I/C+
 > commands could   be      typed and  the results printed automatically . In      1937 , one
 # NPl/V3+  NSg/VXB NSg/VXB VP/J  VB/C D   NPl/V3+ VP/J    R             . NPr/J/P #    . NSg/I/VB/J
 > hundred years after Babbage's impossible dream     , Howard Aiken convinced IBM  ,
@@ -251,7 +251,7 @@
 > the ACM — turingineer , turologist , flow    - charts  - man       , applied meta  - mathematician ,
 # D   NSg . ?           . ?          . NSg/VB+ . NPl/V3+ . NPr/VB/J+ . VP/J    NSg/J . NSg+          .
 > and  applied epistemologist . Three months later in      the same journal   , comptologist
-# VB/C VP/J    ?              . NSg+  NPl+   JC    NPr/J/P D+  I/J+ NSg/VB/J+ . ?
+# VB/C VP/J    NSg            . NSg+  NPl+   JC    NPr/J/P D+  I/J+ NSg/VB/J+ . ?
 > was suggested , followed next    year by      hypologist . The term      computics has also
 # VPt VP/J      . VP/J     NSg/J/P NSg+ NSg/J/P ?          . D+  NSg/VB/J+ ?         V3  R/C
 > been    suggested . In      Europe , terms   derived from contracted translations of the
@@ -351,7 +351,7 @@
 >
 #
 > Epistemology of computer science
-# NSg          P  NSg/VB+  N🅪Sg/VB+
+# Nᴹ           P  NSg/VB+  N🅪Sg/VB+
 >
 #
 > Despite  the word    science  in      its     name    , there is  debate   over    whether or    not
@@ -443,7 +443,7 @@
 > artificial intelligence ) . Computer science  focuses on  methods involved in
 # J          N🅪Sg+        . . NSg/VB+  N🅪Sg/VB+ NPl/V3  J/P NPl/V3+ VP/J     NPr/J/P
 > design   , specification , programming , verification , implementation and  testing of
-# N🅪Sg/VB+ . NSg+          . Nᴹ/Vg/J     . N🅪Sg+        . NSg            VB/C Nᴹ/Vg/J P
+# N🅪Sg/VB+ . NSg+          . Nᴹ/Vg/J     . N🅪Sg+        . N🅪Sg           VB/C Nᴹ/Vg/J P
 > human    - made computing systems .
 # NSg/VB/J . VB   Nᴹ/Vg/J+  NPl+    .
 >
@@ -565,7 +565,7 @@
 > Programming language theory is  a   branch of computer science  that          deals  with the
 # Nᴹ/Vg/J+    N🅪Sg/VB+ N🅪Sg+  VL3 D/P NPr/VB P  NSg/VB+  N🅪Sg/VB+ NSg/I/C/Ddem+ NPl/V3 P    D
 > design   , implementation , analysis , characterization , and  classification of
-# N🅪Sg/VB+ . NSg+           . N🅪Sg+    . N🅪Sg             . VB/C N🅪Sg           P
+# N🅪Sg/VB+ . N🅪Sg+          . N🅪Sg+    . N🅪Sg             . VB/C N🅪Sg           P
 > programming languages and  their individual features . It       falls   within  the
 # Nᴹ/Vg/J+    NPl/V3    VB/C D$+   NSg/J+     NPl/V3+  . NPr/ISg+ NPl/V3+ NSg/J/P D
 > discipline of computer science  , both   depending on  and  affecting mathematics ,
@@ -737,7 +737,7 @@
 > drawing   on  areas of expertise such  as    applied mathematics , symbolic logic    ,
 # N🅪Sg/Vg/J J/P NPl   P  Nᴹ/VB+    NSg/I NSg/R VP/J    Nᴹ+         . J        Nᴹ/VB/J+ .
 > semiotics , electrical engineering , philosophy of mind    , neurophysiology , and
-# Nᴹ        . NSg/J      Nᴹ/Vg/J+    . N🅪Sg/VB    P  NSg/VB+ . ?               . VB/C
+# Nᴹ        . NSg/J      Nᴹ/Vg/J+    . N🅪Sg/VB    P  NSg/VB+ . Nᴹ              . VB/C
 > social intelligence . AI      is  associated in      the popular mind    with robotic
 # NSg/J  N🅪Sg+        . NPr🅪Sg+ VL3 VP/J       NPr/J/P D   NSg/J   NSg/VB+ P    J+
 > development , but     the main     field  of practical application has been    as    an  embedded
@@ -879,7 +879,7 @@
 > Gottfried Wilhelm Leibniz's , George Boole's , Alan Turing's , Claude Shannon's ,
 # ?         NPr     NSg$      . NPr+   NSg$    . NPr+ NSg$     . NPr+   NSg$      .
 > and  Samuel Morse's insight : there are only  two objects that         a   computer has to
-# VB/C NPr+   NSg$    NSg+    . R+    VB  J/R/C NSg NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
+# VB/C NPr+   NSg$    N🅪Sg+   . R+    VB  J/R/C NSg NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
 > deal     with in      order   to represent " anything  " . [ note    4 ]
 # NSg/VB/J P    NPr/J/P NSg/VB+ P  VB        . NSg/I/VB+ . . . NSg/VB+ # .
 >
@@ -887,7 +887,7 @@
 > All          the information about any    computable problem can     be      represented using
 # NSg/I/J/C/Dq D   Nᴹ+         J/P   I/R/Dq J          NSg/J+  NPr/VXB NSg/VXB VP/J        Nᴹ/Vg/J
 > only  0 and  1 ( or    any    other    bistable pair    that          can     flip     - flop    between two
-# J/R/C # VB/C # . NPr/C I/R/Dq NSg/VB/J ?        NSg/VB+ NSg/I/C/Ddem+ NPr/VXB NSg/VB/J . NSg/VB+ NSg/P   NSg
+# J/R/C # VB/C # . NPr/C I/R/Dq NSg/VB/J J        NSg/VB+ NSg/I/C/Ddem+ NPr/VXB NSg/VB/J . NSg/VB+ NSg/P   NSg
 > easily distinguishable states    , such  as    " on  / off        " , " magnetized / de   - magnetized " ,
 # R      J               NPrPl/V3+ . NSg/I NSg/R . J/P . NSg/VB/J/P . . . VP/J       . NPr+ . VP/J       . .
 > " high     - voltage / low      - voltage " , etc. ) .
@@ -899,7 +899,7 @@
 >
 #
 > Alan Turing's insight : there are only  five actions that         a   computer has to
-# NPr+ NSg$     NSg+    . R+    VB  J/R/C NSg  NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
+# NPr+ NSg$     N🅪Sg+   . R+    VB  J/R/C NSg  NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
 > perform in      order   to do      " anything  " .
 # VB      NPr/J/P NSg/VB+ P  NSg/VXB . NSg/I/VB+ . .
 >
@@ -939,7 +939,7 @@
 >
 #
 > Corrado Böhm and  Giuseppe Jacopini's insight : there are only  three ways of
-# ?       ?    VB/C NSg      ?          NSg+    . R+    VB  J/R/C NSg   NPl  P
+# ?       ?    VB/C NSg      ?          N🅪Sg+   . R+    VB  J/R/C NSg   NPl  P
 > combining these  actions ( into more            complex  ones    ) that          are needed in      order   for
 # Nᴹ/Vg/J   I/Ddem NPl/V3+ . P    NPr/I/VB/J/R/Dq NSg/VB/J NPl/V3+ . NSg/I/C/Ddem+ VB  VP/J   NPr/J/P NSg/VB+ C/P
 > a   computer to do      " anything  " .
@@ -967,7 +967,7 @@
 > repetition : WHILE      such  - and  - such  is  the case      , DO      this    . The three rules  of
 # N🅪Sg/VB+   . NSg/VB/C/P NSg/I . VB/C . NSg/I VL3 D   NPr🅪Sg/VB . NSg/VXB I/Ddem+ . D   NSg   NPl/V3 P
 > Boehm's and  Jacopini's insight can     be      further simplified with the use      of
-# ?       VB/C ?          NSg+    NPr/VXB NSg/VXB VB/JC   VP/J       P    D   N🅪Sg/VB+ P
+# ?       VB/C ?          N🅪Sg+   NPr/VXB NSg/VXB VB/JC   VP/J       P    D   N🅪Sg/VB+ P
 > goto ( which means  it       is  more            elementary than structured programming ) .
 # ?    . I/C+  NPl/V3 NPr/ISg+ VL3 NPr/I/VB/J/R/Dq NSg/J      C/P  VP/J       Nᴹ/Vg/J+    . .
 >

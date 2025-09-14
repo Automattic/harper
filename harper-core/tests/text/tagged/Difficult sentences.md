@@ -719,7 +719,7 @@
 > The city hosted the World   Summit  on  the Information Society
 # D+  NSg+ VP/J   D+  NSg/VB+ NSg/VB+ J/P D+  Nᴹ+         N🅪Sg+
 > I       have    no    opinion on  this    subject   .
-# ISg/#r+ NSg/VXB NPr/P NSg+    J/P I/Ddem+ NSg/VB/J+ .
+# ISg/#r+ NSg/VXB NPr/P N🅪Sg+   J/P I/Ddem+ NSg/VB/J+ .
 > I       saw     it       on  television .
 # ISg/#r+ NSg/VPt NPr/ISg+ J/P N🅪Sg/VB+   .
 > Can't you    see    I'm on  the phone   ?

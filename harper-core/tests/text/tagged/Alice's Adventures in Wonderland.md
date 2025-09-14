@@ -3159,7 +3159,7 @@
 >
 #
 > “ Nobody asked your opinion , ” said Alice .
-# . NSg/I+ VP/J  D$+  NSg+    . . VP/J NPr+  .
+# . NSg/I+ VP/J  D$+  N🅪Sg+   . . VP/J NPr+  .
 >
 #
 > “ Who’s making  personal remarks now        ? ” the Hatter asked triumphantly .
@@ -3405,7 +3405,7 @@
 > all          have    our heads   cut       off        , you    know   . So        you    see    , Miss   , we’re doing   our best       ,
 # NSg/I/J/C/Dq NSg/VXB D$+ NPl/V3+ NSg/VBP/J NSg/VB/J/P . ISgPl+ NSg/VB . NSg/I/J/C ISgPl+ NSg/VB . NSg/VB . K     Nᴹ/Vg/J D$+ NPr/VXB/JS .
 > afore she  comes  , to — ” At    this   moment Five , who    had been    anxiously looking across
-# ?     ISg+ NPl/V3 . P  . . NSg/P I/Ddem NSg+   NSg  . NPr/I+ VB  NSg/VPp R         Nᴹ/Vg/J NSg/P
+# R/C/P ISg+ NPl/V3 . P  . . NSg/P I/Ddem NSg+   NSg  . NPr/I+ VB  NSg/VPp R         Nᴹ/Vg/J NSg/P
 > the garden    , called out          “ The Queen     ! The Queen     ! ” and  the three gardeners instantly
 # D   NSg/VB/J+ . VP/J   NSg/VB/J/R/P . D   NPr/VB/J+ . D+  NPr/VB/J+ . . VB/C D+  NSg+  NPl+      R
 > threw themselves flat     upon their faces   . There was a   sound     of many        footsteps , and
@@ -3629,7 +3629,7 @@
 > never seen    such  a   curious croquet - ground    in      her     life     ; it       was all          ridges and
 # R     NSg/VPp NSg/I D/P J       NSg/VB  . N🅪Sg/VB/J NPr/J/P ISg/D$+ N🅪Sg/VB+ . NPr/ISg+ VPt NSg/I/J/C/Dq NPl/V3 VB/C
 > furrows ; the balls   were    live hedgehogs , the mallets live flamingoes , and  the
-# NPl/V3  . D   NPl/V3+ NSg/VPt VB/J NPl/V3    . D   NPl/V3  VB/J ?          . VB/C D
+# NPl/V3  . D   NPl/V3+ NSg/VPt VB/J NPl/V3    . D   NPl/V3  VB/J NPl        . VB/C D
 > soldiers had to double   themselves up         and  to stand  on  their hands  and  feet , to
 # NPl/V3+  VB  P  NSg/VB/J IPl+       NSg/VB/J/P VB/C P  NSg/VB J/P D$+   NPl/V3 VB/C NPl+ . P
 > make   the arches .
@@ -3725,7 +3725,7 @@
 > alive ; for instance , there’s the arch     I’ve got to go       through next    walking about
 # J     . C/P NSg/VB+  . K       D   NSg/VB/J K    VB  P  NSg/VB/J NSg/J/P NSg/J/P Nᴹ/Vg/J J/P
 > at    the other    end    of the ground     — and  I       should have    croqueted the Queen’s hedgehog
-# NSg/P D   NSg/VB/J NSg/VB P  D   N🅪Sg/VB/J+ . VB/C ISg/#r+ VXB    NSg/VXB ?         D   NSg$    NSg/VB+
+# NSg/P D   NSg/VB/J NSg/VB P  D   N🅪Sg/VB/J+ . VB/C ISg/#r+ VXB    NSg/VXB VP/J      D   NSg$    NSg/VB+
 > just now        , only  it       ran     away when    it       saw     mine      coming  ! ”
 # VB/J NPr/VB/J/C . J/R/C NPr/ISg+ NSg/VPt VB/J NSg/I/C NPr/ISg+ NSg/VPt NSg/I/VB+ Nᴹ/Vg/J . .
 >
@@ -3813,7 +3813,7 @@
 > The hedgehog was engaged in      a   fight   with another hedgehog , which seemed to Alice
 # D+  NSg/VB+  VPt VP/J    NPr/J/P D/P NSg/VB+ P    I/D+    NSg/VB+  . I/C+  VP/J   P  NPr+
 > an   excellent opportunity for croqueting one        of them     with the other    : the only
-# D/P+ J+        N🅪Sg+       C/P ?          NSg/I/VB/J P  NSg/IPl+ P    D   NSg/VB/J . D   J/R/C
+# D/P+ J+        N🅪Sg+       C/P Nᴹ/Vg/J    NSg/I/VB/J P  NSg/IPl+ P    D   NSg/VB/J . D   J/R/C
 > difficulty was , that         her     flamingo was gone    across to the other    side     of the
 # N🅪Sg+      VPt . NSg/I/C/Ddem ISg/D$+ NSg/J    VPt VPp/J/P NSg/P  P  D   NSg/VB/J NSg/VB/J P  D
 > garden    , where Alice could   see    it       trying  in      a   helpless sort   of way    to fly      up         into
@@ -4007,7 +4007,7 @@
 >
 #
 > “ Very true     , ” said the Duchess : “ flamingoes and  mustard both   bite   . And  the moral
-# . J/R  NSg/VB/J . . VP/J D   NSg/VB  . . ?          VB/C Nᴹ/J    I/C/Dq NSg/VB . VB/C D   NSg/VB/J
+# . J/R  NSg/VB/J . . VP/J D   NSg/VB  . . NPl        VB/C Nᴹ/J    I/C/Dq NSg/VB . VB/C D   NSg/VB/J
 > of that          is  — ‘          Birds  of a    feather flock   together . ’ ”
 # P  NSg/I/C/Ddem+ VL3 . Unlintable NPl/V3 P  D/P+ NSg/VB+ NSg/VB+ J        . . .
 >
@@ -4377,13 +4377,13 @@
 > “ Reeling and  Writhing , of course  , to begin  with , ” the Mock     Turtle  replied ; “ and
 # . Nᴹ/Vg/J VB/C Nᴹ/Vg/J+ . P  NSg/VB+ . P  NSg/VB P    . . D   NSg/VB/J NSg/VB+ VP/J    . . VB/C
 > then    the different branches of Arithmetic — Ambition , Distraction , Uglification ,
-# NSg/J/C D   NSg/J     NPl/V3   P  Nᴹ/J       . N🅪Sg/VB+ . N🅪Sg/VB+    . ?            .
+# NSg/J/C D   NSg/J     NPl/V3   P  Nᴹ/J       . N🅪Sg/VB+ . N🅪Sg/VB+    . N🅪Sg         .
 > and  Derision . ”
 # VB/C N🅪Sg     . .
 >
 #
 > “ I       never heard of ‘          Uglification , ’ ” Alice ventured to say    . “ What   is  it       ? ”
-# . ISg/#r+ R     VP/J  P  Unlintable ?            . . . NPr+  VP/J     P  NSg/VB . . NSg/I+ VL3 NPr/ISg+ . .
+# . ISg/#r+ R     VP/J  P  Unlintable N🅪Sg         . . . NPr+  VP/J     P  NSg/VB . . NSg/I+ VL3 NPr/ISg+ . .
 >
 #
 > The Gryphon lifted up         both   its     paws    in      surprise . “ What   ! Never heard of
