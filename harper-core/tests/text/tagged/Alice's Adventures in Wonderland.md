@@ -3595,7 +3595,7 @@
 > his     shoulder as    he       spoke   , and  then    raised himself upon tiptoe    , put     his     mouth
 # ISg/D$+ NSg/VB+  NSg/R NPr/ISg+ NSg/VPt . VB/C NSg/J/C VP/J   ISg+    P    NSg/VB/J+ . NSg/VBP ISg/D$+ NSg/VB+
 > close    to her     ear       , and  whispered “ She’s under   sentence of execution . ”
-# NSg/VB/J P  ISg/D$+ NSg/VB/J+ . VB/C VP/J      . K     NSg/J/P NSg/VB   P  NSg+      . .
+# NSg/VB/J P  ISg/D$+ NSg/VB/J+ . VB/C VP/J      . K     NSg/J/P NSg/VB   P  N🅪Sg+     . .
 >
 #
 > “ What   for ? ” said Alice .
@@ -4145,7 +4145,7 @@
 > there were    no    arches left     , and  all          the players , except the King      , the Queen     , and
 # R+    NSg/VPt NPr/P NPl/V3 NPr/VB/J . VB/C NSg/I/J/C/Dq D   NPl+    . VB/C/P D   NPr/VB/J+ . D   NPr/VB/J+ . VB/C
 > Alice , were    in      custody and  under   sentence of execution .
-# NPr+  . NSg/VPt NPr/J/P Nᴹ+     VB/C NSg/J/P NSg/VB   P  NSg+      .
+# NPr+  . NSg/VPt NPr/J/P Nᴹ+     VB/C NSg/J/P NSg/VB   P  N🅪Sg+     .
 >
 #
 > Then    the Queen     left      off        , quite out          of breath     , and  said to Alice , “ Have    you    seen
@@ -4175,7 +4175,7 @@
 > company  generally , “ You    are all          pardoned . ” “ Come       , that’s a    good     thing ! ” she  said
 # N🅪Sg/VB+ R         . . ISgPl+ VB  NSg/I/J/C/Dq VP/J     . . . NSg/VBPp/P . NSg$   D/P+ NPr/VB/J NSg+  . . ISg+ VP/J
 > to herself , for she  had felt      quite unhappy  at    the number     of executions the Queen
-# P  ISg+    . C/P ISg+ VB  N🅪Sg/VB/J R     NSg/VB/J NSg/P D   N🅪Sg/VB/JC P  +          D+  NPr/VB/J+
+# P  ISg+    . C/P ISg+ VB  N🅪Sg/VB/J R     NSg/VB/J NSg/P D   N🅪Sg/VB/JC P  NPl+       D+  NPr/VB/J+
 > had ordered .
 # VB  VP/J    .
 >
@@ -4187,7 +4187,7 @@
 > “ and  take   this    young    lady    to see    the Mock      Turtle  , and  to hear his     history . I
 # . VB/C NSg/VB I/Ddem+ NPr/VB/J NPr/VB+ P  NSg/VB D+  NSg/VB/J+ NSg/VB+ . VB/C P  VB   ISg/D$+ N🅪Sg+   . ISg/#r+
 > must   go       back     and  see    after some      executions I       have    ordered ; ” and  she  walked off        ,
-# NSg/VB NSg/VB/J NSg/VB/J VB/C NSg/VB P     I/J/R/Dq+ +          ISg/#r+ NSg/VXB VP/J    . . VB/C ISg+ VP/J   NSg/VB/J/P .
+# NSg/VB NSg/VB/J NSg/VB/J VB/C NSg/VB P     I/J/R/Dq+ NPl+       ISg/#r+ NSg/VXB VP/J    . . VB/C ISg+ VP/J   NSg/VB/J/P .
 > leaving Alice alone with the Gryphon . Alice did not     quite like         the look   of the
 # Nᴹ/Vg/J NPr+  J     P    D   ?       . NPr+  VPt NSg/R/C R     NSg/VB/J/C/P D   NSg/VB P  D+
 > creature , but     on  the whole she  thought it       would be      quite as    safe     to stay     with it
@@ -5947,7 +5947,7 @@
 > and  the shrill   voice  of the Queen     ordering off        her     unfortunate guests  to
 # VB/C D   NSg/VB/J NSg/VB P  D   NPr/VB/J+ Nᴹ/Vg/J+ NSg/VB/J/P ISg/D$+ NSg/J       NPl/V3+ P
 > execution — once  more            the pig     - baby      was sneezing on  the Duchess’s knee    , while
-# NSg       . NSg/C NPr/I/VB/J/R/Dq D   NSg/VB+ . NSg/VB/J+ VPt Nᴹ/Vg/J  J/P D   NSg$      NSg/VB+ . NSg/VB/C/P
+# N🅪Sg      . NSg/C NPr/I/VB/J/R/Dq D   NSg/VB+ . NSg/VB/J+ VPt Nᴹ/Vg/J  J/P D   NSg$      NSg/VB+ . NSg/VB/C/P
 > plates and  dishes  crashed around it       — once  more            the shriek of the Gryphon , the
 # NPl/V3 VB/C NPl/V3+ VP/J    J/P    NPr/ISg+ . NSg/C NPr/I/VB/J/R/Dq D   NSg/VB P  D   ?       . D
 > squeaking of the Lizard’s slate     - pencil  , and  the choking of the suppressed

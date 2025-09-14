@@ -293,7 +293,7 @@
 >
 #
 > The Senators and  Representatives shall receive a   Compensation
-# D   NPl      VB/C NPl+            VXB   NSg/VB  D/P Nᴹ+
+# D   NPl      VB/C NPl+            VXB   NSg/VB  D/P N🅪Sg+
 > for their Services , to be      ascertained by      Law      , and  paid out          of the Treasury of
 # C/P D$+   NPl/V3+  . P  NSg/VXB VP/J        NSg/J/P N🅪Sg/VB+ . VB/C VP/J NSg/VB/J/R/P P  D   NPr      P
 > the United States    . They shall in      all           Cases   , except Treason , Felony and  Breach
@@ -319,7 +319,7 @@
 > States    , shall be      a   Member of either House   during his     Continuance in      Office  . No
 # NPrPl/V3+ . VXB   NSg/VXB D/P NSg/VB P  I/C    NPr/VB+ VB/P   ISg/D$+ NSg         NPr/J/P NSg/VB+ . NPr/P+
 > law      , varying the compensation for the services of the Senators and
-# N🅪Sg/VB+ . Nᴹ/Vg/J D   Nᴹ+          C/P D   NPl/V3   P  D   NPl      VB/C
+# N🅪Sg/VB+ . Nᴹ/Vg/J D   N🅪Sg+        C/P D   NPl/V3   P  D   NPl      VB/C
 > Representatives , shall take   effect  , until an  election of Representatives shall
 # NPl+            . VXB   NSg/VB NSg/VB+ . C/P   D/P NSg      P  NPl+            VXB
 > have    intervened .
@@ -571,7 +571,7 @@
 > To make   all           Laws    which shall be      necessary and  proper for carrying into
 # P  NSg/VB NSg/I/J/C/Dq+ NPl/V3+ I/C+  VXB   NSg/VXB NSg/J     VB/C NSg/J  C/P Nᴹ/Vg/J  P
 > Execution the foregoing Powers    , and  all          other    Powers    vested by      this
-# NSg+      D   Nᴹ/Vg/J   NPrPl/V3+ . VB/C NSg/I/J/C/Dq NSg/VB/J NPrPl/V3+ VP/J   NSg/J/P I/Ddem
+# N🅪Sg+     D   Nᴹ/Vg/J   NPrPl/V3+ . VB/C NSg/I/J/C/Dq NSg/VB/J NPrPl/V3+ VP/J   NSg/J/P I/Ddem
 > Constitution in      the Government of the United States    , or    in      any    Department or
 # NPr+         NPr/J/P D   N🅪Sg       P  D   VP/J   NPrPl/V3+ . NPr/C NPr/J/P I/R/Dq NSg        NPr/C
 > Officer thereof .
@@ -949,7 +949,7 @@
 > The President shall , at    stated Times   , receive for his
 # D+  NSg/VB+   VXB   . NSg/P VP/J   NPl/V3+ . NSg/VB  C/P ISg/D$+
 > Services , a    Compensation , which shall neither be      encreased nor   diminished
-# NPl/V3+  . D/P+ Nᴹ+          . I/C+  VXB   I/C     NSg/VXB ?         NSg/C VP/J
+# NPl/V3+  . D/P+ N🅪Sg+        . I/C+  VXB   I/C     NSg/VXB ?         NSg/C VP/J
 > during the Period    for which he       shall have    been    elected  , and  he       shall not
 # VB/P   D   NSg/VB/J+ C/P I/C+  NPr/ISg+ VXB   NSg/VXB NSg/VPp NSg/VP/J . VB/C NPr/ISg+ VXB   NSg/R/C
 > receive within  that         Period    any    other    Emolument from the United States    , or    any
@@ -959,7 +959,7 @@
 >
 #
 > Before he       enter  on  the Execution of his     Office  , he       shall take   the following
-# C/P    NPr/ISg+ NSg/VB J/P D   NSg       P  ISg/D$+ NSg/VB+ . NPr/ISg+ VXB   NSg/VB D   Nᴹ/Vg/J/P
+# C/P    NPr/ISg+ NSg/VB J/P D   N🅪Sg      P  ISg/D$+ NSg/VB+ . NPr/ISg+ VXB   NSg/VB D   Nᴹ/Vg/J/P
 > Oath    or    Affirmation : - - " I       do      solemnly swear    ( or    affirm ) that         I       will    faithfully
 # NSg/VB+ NPr/C NSg         . . . . ISg/#r+ NSg/VXB R        NSg/VB/J . NPr/C VB     . NSg/I/C/Ddem ISg/#r+ NPr/VXB R
 > execute the Office of President of the United States    , and  will    to the best       of
@@ -1105,7 +1105,7 @@
 > shall hold     their Offices during good      Behaviour  , and  shall , at    stated Times   ,
 # VXB   NSg/VB/J D$+   NPl/V3+ VB/P   NPr/VB/J+ N🅪Sg/Comm+ . VB/C VXB   . NSg/P VP/J   NPl/V3+ .
 > receive for their Services , a    Compensation , which shall not     be      diminished
-# NSg/VB  C/P D$+   NPl/V3+  . D/P+ Nᴹ+          . I/C+  VXB   NSg/R/C NSg/VXB VP/J
+# NSg/VB  C/P D$+   NPl/V3+  . D/P+ N🅪Sg+        . I/C+  VXB   NSg/R/C NSg/VXB VP/J
 > during their Continuance in      Office  .
 # VB/P   D$+   NSg         NPr/J/P NSg/VB+ .
 >
@@ -1207,7 +1207,7 @@
 > liberty , or    property , without due   process of law      ; nor   shall private  property be
 # NSg+    . NPr/C NSg/VB+  . C/P     NSg/J NSg/VB  P  N🅪Sg/VB+ . NSg/C VXB   NSg/VB/J NSg/VB+  NSg/VXB
 > taken for public  use      , without just compensation .
-# VB/J  C/P Nᴹ/VB/J N🅪Sg/VB+ . C/P     VB/J Nᴹ+          .
+# VB/J  C/P Nᴹ/VB/J N🅪Sg/VB+ . C/P     VB/J N🅪Sg+        .
 >
 #
 > In      all          criminal prosecutions , the accused shall enjoy the right    to a   speedy and
