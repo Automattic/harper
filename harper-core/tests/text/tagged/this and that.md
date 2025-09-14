@@ -1,5 +1,5 @@
-> " This    " and  " that          " are common   and  fulfill multiple purposes in      everyday English    .
-# . I/Ddem+ . VB/C . NSg/I/C/Ddem+ . VB  NSg/VB/J VB/C VB/NoAm NSg/J/Dq NPl/V3   NPr/J/P NSg/J+   NPr🅪/VB/J+ .
+> " This    " and  " that          " are common   and  fulfill multiple purposes in      everyday English      .
+# . I/Ddem+ . VB/C . NSg/I/C/Ddem+ . VB  NSg/VB/J VB/C VB/NoAm NSg/J/Dq NPl/V3   NPr/J/P NSg/J+   NPr🅪Sg/VB/J+ .
 > As    such  , disambiguating them     is  necessary .
 # NSg/R NSg/I . Nᴹ/Vg/J        NSg/IPl+ VL3 NSg/J     .
 >

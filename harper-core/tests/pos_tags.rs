@@ -234,15 +234,6 @@ fn format_word_tag(word: &WordMetadata) -> String {
         add("B", &mut tags);
     }
 
-    // if tags.is_empty() {
-    //     if word.orth_info.contains(OrthFlags::APOSTROPHE) {
-    //         String::from("K")
-    //     } else {
-    //         String::from("W?")
-    //     }
-    // } else {
-    //     tags
-    // }
     match tags.is_empty() {
         true if word.orth_info.contains(OrthFlags::APOSTROPHE) => String::from("K"),
         true => String::from("W?"),

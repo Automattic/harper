@@ -112,8 +112,8 @@
 # NPl/V3   P  D   NSg/J  NSg/VB+  . . . D/P+ J+      NSg/VB+ VPt D   NSg      P  D/P VP/J
 > card     system derived from the Jacquard loom   " making  it       infinitely
 # N🅪Sg/VB+ NSg+   VP/J    P    D   NPr      NSg/VB . Nᴹ/Vg/J NPr/ISg+ R
-> programmable . [ note    2 ] In      1843 , during the translation of a   French    article on  the
-# NSg/J        . . NSg/VB+ # . NPr/J/P #    . VB/P   D   N🅪Sg        P  D/P NPr🅪/VB/J NSg/VB+ J/P D
+> programmable . [ note    2 ] In      1843 , during the translation of a   French      article on  the
+# NSg/J        . . NSg/VB+ # . NPr/J/P #    . VB/P   D   N🅪Sg        P  D/P NPr🅪Sg/VB/J NSg/VB+ J/P D
 > Analytical Engine  , Ada  Lovelace wrote , in      one        of the many       notes   she  included , an
 # J          NSg/VB+ . NPr+ NPr      VB    . NPr/J/P NSg/I/VB/J P  D   NSg/I/J/Dq NPl/V3+ ISg+ VP/J     . D/P
 > algorithm to compute the Bernoulli numbers   , which is  considered to be      the first
@@ -160,8 +160,8 @@
 #
 > During the 1940s , with the development of new      and  more            powerful computing
 # VB/P   D+  #d    . P    D   N🅪Sg        P  NSg/VB/J VB/C NPr/I/VB/J/R/Dq J        Nᴹ/Vg/J+
-> machines such  as    the Atanasoff – Berry    computer and  ENIAC , the term      computer came
-# NPl/V3   NSg/I NSg/R D   ?         . NPr🅪/VB+ NSg/VB+  VB/C ?     . D   NSg/VB/J+ NSg/VB+  NSg/VPt/P
+> machines such  as    the Atanasoff – Berry      computer and  ENIAC , the term      computer came
+# NPl/V3   NSg/I NSg/R D   ?         . NPr🅪Sg/VB+ NSg/VB+  VB/C ?     . D   NSg/VB/J+ NSg/VB+  NSg/VPt/P
 > to refer  to the machines rather     than their human    predecessors . As    it       became
 # P  NSg/VB P  D   NPl/V3+  NPr/VB/J/R C/P  D$+   NSg/VB/J NPl+         . NSg/R NPr/ISg+ VPt
 > clear    that         computers could   be      used for more            than just mathematical calculations ,
@@ -210,8 +210,8 @@
 # NSg      P  D/P NSg/VB/J+ N🅪Sg/VB+ NPr/J/P NSg/VB+  NPl/V3+  J         P  D   NSg      P
 > Harvard Business School   in      1921 . Louis justifies the name    by      arguing that          , like
 # NPr+    N🅪Sg/J+  N🅪Sg/VB+ NPr/J/P #    . NPr+  V3        D+  NSg/VB+ NSg/J/P Nᴹ/Vg/J NSg/I/C/Ddem+ . NSg/VB/J/C/P
-> management science  , the subject   is  applied and  interdisciplinary in      nature  ,
-# N🅪Sg+      N🅪Sg/VB+ . D+  NSg/VB/J+ VL3 VP/J    VB/C J                 NPr/J/P NSg/VB+ .
+> management science  , the subject   is  applied and  interdisciplinary in      nature   ,
+# N🅪Sg+      N🅪Sg/VB+ . D+  NSg/VB/J+ VL3 VP/J    VB/C J                 NPr/J/P N🅪Sg/VB+ .
 > while      having  the characteristics typical of an  academic discipline . His     efforts ,
 # NSg/VB/C/P Nᴹ/Vg/J D   NPl+            NSg/J   P  D/P NSg/J    NSg/VB+    . ISg/D$+ NPl/V3+ .
 > and  those  of others  such  as    numerical analyst George Forsythe , were    rewarded :
@@ -258,10 +258,10 @@
 # NSg/VPp VP/J      . NPr/J/P NPr+   . NPl/V3+ VP/J    P    VP/J       NPl          P  D+
 > expression " automatic information " ( e.g. " informazione automatica " in      Italian )
 # N🅪Sg+      . NSg/J+    Nᴹ+         . . NSg  . ?            ?          . NPr/J/P N🅪Sg/J  .
-> or    " information and  mathematics " are often used , e.g. informatique ( French    ) ,
-# NPr/C . Nᴹ          VB/C Nᴹ+         . VB  R     VP/J . NSg  ?            . NPr🅪/VB/J . .
-> Informatik ( German ) , informatica ( Italian , Dutch     ) , informática ( Spanish ,
-# ?          . NPr🅪/J . . ?           . N🅪Sg/J  . NPrᴹ/VB/J . . ?           . NPrᴹ/J  .
+> or    " information and  mathematics " are often used , e.g. informatique ( French      ) ,
+# NPr/C . Nᴹ          VB/C Nᴹ+         . VB  R     VP/J . NSg  ?            . NPr🅪Sg/VB/J . .
+> Informatik ( German   ) , informatica ( Italian , Dutch     ) , informática ( Spanish ,
+# ?          . NPr🅪Sg/J . . ?           . N🅪Sg/J  . NPrᴹ/VB/J . . ?           . NPrᴹ/J  .
 > Portuguese ) , informatika ( Slavic languages and  Hungarian ) or    pliroforiki
 # NPr/J      . . ?           . NSg/J  NPl/V3+   VB/C NSg/J     . NPr/C ?
 > ( π          λ          η          ρ          ο          φ          ο          ρ          ι          κ          ή          , which means  informatics ) in      Greek    . Similar words   have    also been
@@ -306,8 +306,8 @@
 # Nᴹ/Vg/J+  VL3 D/P J            N🅪Sg/VB . NSg/J/R+ NSg/VB+  N🅪Sg/VB+ VPt R
 > influenced by      the work    of mathematicians such  as    Kurt Gödel , Alan Turing , John
 # VP/J       NSg/J/P D   N🅪Sg/VB P  NPl+           NSg/I NSg/R NPr  NPr   . NPr+ NPr    . NPr+
-> von Neumann , Rózsa Péter and  Alonzo Church   and  there continues to be      a   useful
-# ?   ?       . ?     ?     VB/C NPr    NPr🅪/VB+ VB/C R+    NPl/V3    P  NSg/VXB D/P J
+> von Neumann , Rózsa Péter and  Alonzo Church     and  there continues to be      a   useful
+# ?   ?       . ?     ?     VB/C NPr    NPr🅪Sg/VB+ VB/C R+    NPl/V3    P  NSg/VXB D/P J
 > interchange of ideas between the two fields    in      areas such  as    mathematical logic    ,
 # NSg/VB      P  NPl+  NSg/P   D   NSg NPrPl/V3+ NPr/J/P NPl+  NSg/I NSg/R J            Nᴹ/VB/J+ .
 > category theory , domain theory , and  algebra .
@@ -372,8 +372,8 @@
 # D   NSg/J        NSg/VB+ . R           . IPl+ VB  NPl/V3+     . Dq+  NSg/VB/J+ NSg/VB+
 > that          is  built    is  an   experiment . Actually constructing the machine poses   a
 # NSg/I/C/Ddem+ VL3 NSg/VB/J VL3 D/P+ NSg/VB+    . R        Nᴹ/Vg/J      D+  NSg/VB+ NPl/V3+ D/P+
-> question to nature ; and  we   listen for the answer  by      observing the machine in
-# NSg/VB+  P  NSg/VB . VB/C IPl+ NSg/VB C/P D+  NSg/VB+ NSg/J/P Nᴹ/Vg/J   D   NSg/VB+ NPr/J/P
+> question to nature  ; and  we   listen for the answer  by      observing the machine in
+# NSg/VB+  P  N🅪Sg/VB . VB/C IPl+ NSg/VB C/P D+  NSg/VB+ NSg/J/P Nᴹ/Vg/J   D   NSg/VB+ NPr/J/P
 > operation and  analyzing it       by      all          analytical and  measurement means  available .
 # N🅪Sg+     VB/C Nᴹ/Vg/J   NPr/ISg+ NSg/J/P NSg/I/J/C/Dq J          VB/C N🅪Sg+       NPl/V3 J         .
 >
@@ -384,8 +384,8 @@
 # N🅪Sg/VB+ C/P   NPr/ISg+ NPl/V3 N🅪Sg/VB P  NSg/J     Nᴹ/Vg/J+ P  VB       D   NSg         P
 > programs , but     a    problem remains in      defining the laws    and  theorems of computer
 # NPl/V3+  . NSg/C/P D/P+ NSg/J+  NPl/V3  NPr/J/P Nᴹ/Vg/J  D+  NPl/V3+ VB/C NPl/V3   P  NSg/VB+
-> science  ( if    any    exist ) and  defining the nature of experiments in      computer
-# N🅪Sg/VB+ . NSg/C I/R/Dq VB+   . VB/C Nᴹ/Vg/J  D   NSg/VB P  NPl/V3+     NPr/J/P NSg/VB+
+> science  ( if    any    exist ) and  defining the nature  of experiments in      computer
+# N🅪Sg/VB+ . NSg/C I/R/Dq VB+   . VB/C Nᴹ/Vg/J  D   N🅪Sg/VB P  NPl/V3+     NPr/J/P NSg/VB+
 > science  . Proponents of classifying computer science  as    an  engineering discipline
 # N🅪Sg/VB+ . NPl        P  Nᴹ/Vg/J     NSg/VB+  N🅪Sg/VB+ NSg/R D/P Nᴹ/Vg/J+    NSg/VB+
 > argue that         the reliability of computational systems is  investigated in      the same
@@ -488,8 +488,8 @@
 # J+          NSg/VB+  N🅪Sg/VB+ VL3 J            VB/C NSg/VB/J NPr/J/P NSg/VB+ . NSg/C/P NPr/ISg+
 > derives its     motivation from practical and  everyday computation . It       aims   to
 # NPl/V3  ISg/D$+ N🅪Sg+      P    NSg/J     VB/C NSg/J    NSg         . NPr/ISg+ NPl/V3 P
-> understand the nature of computation and  , as    a   consequence of this
-# VB         D   NSg/VB P  NSg         VB/C . NSg/R D/P NSg/VB      P  I/Ddem
+> understand the nature  of computation and  , as    a   consequence of this
+# VB         D   N🅪Sg/VB P  NSg         VB/C . NSg/R D/P NSg/VB      P  I/Ddem
 > understanding , provide more            efficient methodologies .
 # N🅪Sg/Vg/J+    . VB      NPr/I/VB/J/R/Dq NSg/J     NPl           .
 >
@@ -587,7 +587,7 @@
 > mathematical analysis can     contribute to the reliability and  robustness of a
 # J+           N🅪Sg+    NPr/VXB NSg/VB     P  D+  Nᴹ+         VB/C NSg        P  D/P
 > design   . They form    an  important theoretical underpinning for software
-# N🅪Sg/VB+ . IPl+ N🅪Sg/VB D/P J         J           NSg/VB       C/P Nᴹ+
+# N🅪Sg/VB+ . IPl+ N🅪Sg/VB D/P J         J           NSg/Vg       C/P Nᴹ+
 > engineering , especially where safety  or    security is  involved . Formal methods are
 # Nᴹ/Vg/J+    . R          NSg/C N🅪Sg/VB NPr/C Nᴹ+      VL3 VP/J     . NSg/J+ NPl/V3+ VB
 > a   useful adjunct  to software testing  since they help   avoid errors  and  can     also
@@ -693,7 +693,7 @@
 > interaction between humans and  computer interfaces . HCI has several subfields
 # N🅪Sg        NSg/P   NPl/V3 VB/C NSg/VB+  NPl/V3+    . ?   V3  J/Dq    NPl
 > that         focus    on  the relationship between emotions , social behavior and  brain
-# NSg/I/C/Ddem N🅪Sg/VB+ J/P D   NSg          NSg/P   NPl+     . NSg/J  N🅪Sg/Am  VB/C NPr🅪/VB+
+# NSg/I/C/Ddem N🅪Sg/VB+ J/P D   NSg          NSg/P   NPl+     . NSg/J  N🅪Sg/Am  VB/C NPr🅪Sg/VB+
 > activity with computers .
 # NSg      P    NPl/V3+   .
 >
@@ -724,8 +724,8 @@
 # J+         N🅪Sg+
 >
 #
-> Artificial intelligence ( AI    ) aims   to or    is  required to synthesize
-# J          N🅪Sg         . NPr🅪+ . NPl/V3 P  NPr/C VL3 VP/J     P  VB
+> Artificial intelligence ( AI      ) aims   to or    is  required to synthesize
+# J          N🅪Sg         . NPr🅪Sg+ . NPl/V3 P  NPr/C VL3 VP/J     P  VB
 > goal    - orientated processes such  as    problem - solving , decision - making  ,
 # NSg/VB+ . VP/J       NPl/V3    NSg/I NSg/R NSg/J+  . Nᴹ/Vg/J . NSg/VB+  . Nᴹ/Vg/J .
 > environmental adaptation , learning , and  communication found  in      humans and
@@ -738,8 +738,8 @@
 # N🅪Sg/Vg/J J/P NPl   P  Nᴹ/VB+    NSg/I NSg/R VP/J    Nᴹ+         . J        Nᴹ/VB/J+ .
 > semiotics , electrical engineering , philosophy of mind    , neurophysiology , and
 # Nᴹ        . NSg/J      Nᴹ/Vg/J+    . N🅪Sg/VB    P  NSg/VB+ . ?               . VB/C
-> social intelligence . AI    is  associated in      the popular mind    with robotic
-# NSg/J  N🅪Sg+        . NPr🅪+ VL3 VP/J       NPr/J/P D   NSg/J   NSg/VB+ P    J+
+> social intelligence . AI      is  associated in      the popular mind    with robotic
+# NSg/J  N🅪Sg+        . NPr🅪Sg+ VL3 VP/J       NPr/J/P D   NSg/J   NSg/VB+ P    J+
 > development , but     the main     field  of practical application has been    as    an  embedded
 # N🅪Sg+       . NSg/C/P D   NSg/VB/J NSg/VB P  NSg/J+    NSg+        V3  NSg/VPp NSg/R D/P VP/J
 > component in      areas of software development , which require computational
@@ -747,7 +747,7 @@
 > understanding . The starting point   in      the late   1940s was Alan Turing's question
 # N🅪Sg/Vg/J+    . D   Nᴹ/Vg/J  NSg/VB+ NPr/J/P D+  NSg/J+ #d    VPt NPr  NSg$     NSg/VB+
 > " Can     computers think  ? " , and  the question remains effectively unanswered ,
-# . NPr/VXB NPl/V3+   NSg/VB . . . VB/C D+  NSg/VB+  NPl/V3  R           VB/J       .
+# . NPr/VXB NPl/V3+   NSg/VB . . . VB/C D+  NSg/VB+  NPl/V3  R           J          .
 > although the Turing test    is  still    used to assess computer output     on  the scale   of
 # C        D   NPr    NSg/VB+ VL3 NSg/VB/J VP/J P  VB     NSg/VB+  N🅪Sg/VBPt+ J/P D   N🅪Sg/VB P
 > human    intelligence . But     the automation of evaluative and  predictive tasks   has
@@ -827,15 +827,15 @@
 > Computer security is  a   branch of computer technology with the objective of
 # NSg/VB+  Nᴹ+      VL3 D/P NPr/VB P  NSg/VB+  N🅪Sg+      P    D   NSg/J     P
 > protecting information from unauthorized access   , disruption , or    modification
-# Nᴹ/Vg/J    Nᴹ+         P    VB/J         N🅪Sg/VB+ . N🅪Sg+      . NPr/C N🅪Sg+
+# Nᴹ/Vg/J    Nᴹ+         P    J            N🅪Sg/VB+ . N🅪Sg+      . NPr/C N🅪Sg+
 > while      maintaining the accessibility and  usability of the system for its     intended
 # NSg/VB/C/P Nᴹ/Vg/J     D   Nᴹ+           VB/C Nᴹ        P  D   NSg+   C/P ISg/D$+ NSg/VP/J
 > users .
 # NPl+  .
 >
 #
-> Historical cryptography is  the art     of writing and  deciphering secret   messages .
-# NSg/J      Nᴹ           VL3 D   NPr🅪/VB P  Nᴹ/Vg/J VB/C Nᴹ/Vg/J     NSg/VB/J NPl/V3+  .
+> Historical cryptography is  the art       of writing and  deciphering secret   messages .
+# NSg/J      Nᴹ           VL3 D   NPr🅪Sg/VB P  Nᴹ/Vg/J VB/C Nᴹ/Vg/J     NSg/VB/J NPl/V3+  .
 > Modern cryptography is  the scientific study  of problems relating to distributed
 # NSg/J  Nᴹ           VL3 D   J          NSg/VB P  NPl+     Nᴹ/Vg/J  P  VP/J
 > computations that          can     be      attacked . Technologies studied in      modern cryptography
@@ -960,12 +960,12 @@
 # NSg/VB+  . NSg/VB/J NSg/VXB I/Ddem+ . NSg/J/C NSg/VXB NSg/I/C/Ddem+ .
 >
 #
-> selection : IF    such  - and  - such  is  the case    , THEN    do      this    , ELSE    do      that          ;
-# N🅪Sg+     . NSg/C NSg/I . VB/C . NSg/I VL3 D   NPr🅪/VB . NSg/J/C NSg/VXB I/Ddem+ . NSg/J/C NSg/VXB NSg/I/C/Ddem+ .
+> selection : IF    such  - and  - such  is  the case      , THEN    do      this    , ELSE    do      that          ;
+# N🅪Sg+     . NSg/C NSg/I . VB/C . NSg/I VL3 D   NPr🅪Sg/VB . NSg/J/C NSg/VXB I/Ddem+ . NSg/J/C NSg/VXB NSg/I/C/Ddem+ .
 >
 #
-> repetition : WHILE      such  - and  - such  is  the case    , DO      this    . The three rules  of
-# NSg/VB+    . NSg/VB/C/P NSg/I . VB/C . NSg/I VL3 D   NPr🅪/VB . NSg/VXB I/Ddem+ . D   NSg   NPl/V3 P
+> repetition : WHILE      such  - and  - such  is  the case      , DO      this    . The three rules  of
+# N🅪Sg/VB+   . NSg/VB/C/P NSg/I . VB/C . NSg/I VL3 D   NPr🅪Sg/VB . NSg/VXB I/Ddem+ . D   NSg   NPl/V3 P
 > Boehm's and  Jacopini's insight can     be      further simplified with the use      of
 # ?       VB/C ?          NSg+    NPr/VXB NSg/VXB VB/JC   VP/J       P    D   N🅪Sg/VB+ P
 > goto ( which means  it       is  more            elementary than structured programming ) .
