@@ -705,7 +705,7 @@
 > Software engineering is  the study  of designing , implementing , and  modifying the
 # Nᴹ+      Nᴹ/Vg/J+    VL3 D   NSg/VB P  Nᴹ/Vg/J+  . Nᴹ/Vg/J      . VB/C Nᴹ/Vg/J   D
 > software in      order   to ensure it       is  of high      quality , affordable , maintainable , and
-# Nᴹ+      NPr/J/P NSg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J+ NSg/J+  . J          . J            . VB/C
+# Nᴹ+      NPr/J/P NSg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J+ N🅪Sg/J+ . J          . J            . VB/C
 > fast     to build  . It       is  a   systematic approach to software design   , involving the
 # NSg/VB/J P  NSg/VB . NPr/ISg+ VL3 D/P J          NSg/VB   P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
 > application of engineering practices to software . Software engineering deals

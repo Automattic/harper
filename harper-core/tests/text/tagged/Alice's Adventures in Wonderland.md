@@ -5536,8 +5536,8 @@
 # VXB   NSg/VXB R     NSg/R NSg/I/J/R/Dq N🅪Sg/VB NPr/J/P D+  NSg/VB/J+ NSg/I/VB/J+ NSg/J+ NSg/VB/J/P NSg/R D   NSg/VB/J . .
 >
 #
-> As    soon as    the jury      had a   little     recovered from the shock    of being       upset    , and
-# NSg/R J/R  NSg/R D+  NSg/VB/J+ VB  D/P NPr/I/J/Dq VP/J+     P    D   NSg/VB/J P  N🅪Sg/Vg/J/C NSg/VB/J . VB/C
+> As    soon as    the jury      had a   little     recovered from the shock     of being       upset    , and
+# NSg/R J/R  NSg/R D+  NSg/VB/J+ VB  D/P NPr/I/J/Dq VP/J+     P    D   N🅪Sg/VB/J P  N🅪Sg/Vg/J/C NSg/VB/J . VB/C
 > their slates and  pencils had been    found  and  handed back     to them     , they set       to
 # D$+   NPl/V3 VB/C NPl/V3+ VB  NSg/VPp NSg/VB VB/C VP/J   NSg/VB/J P  NSg/IPl+ . IPl+ NPr/VBP/J P
 > work    very diligently to write  out          a   history of the accident , all          except the

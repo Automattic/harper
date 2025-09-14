@@ -451,18 +451,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     192 | We walked through a high hallway into a bright rosy-colored space, fragilely
-         |                                                                    ^~~~~~~~~ Did you mean to spell `fragilely` this way?
-     193 | bound into the house by French windows at either end. The windows were ajar and
-Suggest:
-  - Replace with: “fragile”
-  - Replace with: “facilely”
-  - Replace with: “fragiler”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      195 | into the house. A breeze blew through the room, blew curtains in at one end and
@@ -499,56 +487,6 @@ Message: |
          |        ^~~~~~~~ Did you mean the closed compound noun “bondman”?
 Suggest:
   - Replace with: “bondman”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     322 | Slenderly, languidly, their hands set lightly on their hips, the two young women
-         | ^~~~~~~~~ Did you mean `Tenderly`?
-Suggest:
-  - Replace with: “Tenderly”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     334 | “All right,” said Daisy. ‘‘What’ll we plan?” She turned to me helplessly: ‘‘What
-         |                            ^~~~~~~ Did you mean `That'll`?
-Suggest:
-  - Replace with: “That'll”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     352 | Sometimes she and Miss Baker talked at once, unobtrusively and with a bantering
-     353 | inconsequence that was never quite chatter, that was as cool as their white
-         | ^~~~~~~~~~~~~ Did you mean `consequence`?
-Suggest:
-  - Replace with: “consequence”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     362 | “You make me feel uncivilized, Daisy,” I confessed on my second glass of corky
-         |                                                                          ^~~~~ Did you mean to spell `corky` this way?
-     363 | but rather impressive claret. “Can’t you talk about crops or something?”
-Suggest:
-  - Replace with: “cork”
-  - Replace with: “cocky”
-  - Replace with: “corks”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     378 | “Tom’s getting very profound,” said Daisy, with an expression of unthoughtful
-         |                                                                  ^~~~~~~~~~~~ Did you mean `thoughtful`?
-     379 | sadness. “He reads deep books with long words in them. What was that word we———”
-Suggest:
-  - Replace with: “thoughtful”
 
 
 
@@ -593,17 +531,6 @@ Suggest:
   - Replace with: “gaiety”
   - Replace with: “gamely”
   - Replace with: “gamete”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     474 | The telephone rang inside, startingly, and as Daisy shook her head decisively at
-         |                            ^~~~~~~~~~ Did you mean to spell `startingly` this way?
-Suggest:
-  - Replace with: “startlingly”
-  - Replace with: “searingly”
-  - Replace with: “slantingly”
 
 
 
@@ -842,18 +769,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     669 | sank down himself into eternal blindness, or forgot them and moved away. But his
-     670 | eyes, dimmed a little by many paintless days, under sun and rain, brood on over
-         |                               ^~~~~~~~~ Did you mean to spell `paintless` this way?
-Suggest:
-  - Replace with: “pointless”
-  - Replace with: “painless”
-  - Replace with: “painters”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      673 | The valley of ashes is bounded on one side by a small foul river, and, when the
@@ -909,15 +824,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     702 | The interior was unprosperous and bare; the only car visible was the
-         |                  ^~~~~~~~~~~~ Did you mean `prosperous`?
-Suggest:
-  - Replace with: “prosperous”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      703 | dust-covered wreck of a Ford which crouched in a dim corner. It had occurred to
@@ -938,42 +844,6 @@ Message: |
          |              ^~~~~~~~~~~ The word `of` is not needed here.
 Suggest:
   - Replace with: “shadow a”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     706 | door of an office, wiping his hands on a piece of waste. He was a blond,
-     707 | spiritless man, anæmic, and faintly handsome. When he saw us a damp gleam of
-         |                 ^~~~~~ Did you mean to spell `anæmic` this way?
-Suggest:
-  - Replace with: “anemic”
-  - Replace with: “anemia”
-  - Replace with: “atomic”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     726 | footsteps on a stairs, and in a moment the thickish figure of a woman blocked
-         |                                            ^~~~~~~~ Did you mean to spell `thickish` this way?
-     727 | out the light from the office door. She was in the middle thirties, and faintly
-Suggest:
-  - Replace with: “thick's”
-  - Replace with: “thickest”
-  - Replace with: “thickos”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     728 | stout, but she carried her flesh sensuously as some women can. Her face, above a
-     729 | spotted dress of dark blue crêpe-de-chine, contained no facet or gleam of
-         |                            ^~~~~ Did you mean to spell `crêpe` this way?
-Suggest:
-  - Replace with: “crepe”
-  - Replace with: “crape”
-  - Replace with: “crime”
 
 
 
@@ -1083,16 +953,6 @@ Suggest:
   - Replace with: “McKee's”
   - Replace with: “McKee”
   - Replace with: “McGee's”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     842 | small bedroom, and a bath. The living-room was crowded to the doors with a set
-     843 | of tapestried furniture entirely too large for it, so that to move about was to
-         |    ^~~~~~~~~~ Did you mean `tapestries`?
-Suggest:
-  - Replace with: “tapestries”
 
 
 
@@ -5216,15 +5076,6 @@ Suggest:
   - Replace with: “gaiety”
   - Replace with: “gamely”
   - Replace with: “gamete”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3712 | “What’ll we do with ourselves this afternoon?” cried Daisy, “and the day after
-         |  ^~~~~~~ Did you mean `That'll`?
-Suggest:
-  - Replace with: “That'll”
 
 
 

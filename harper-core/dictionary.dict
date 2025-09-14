@@ -12733,7 +12733,7 @@ aperitif/NgS
 aperture/~NSg
 apeshit/Jx
 apex/~NgS
-aphasia/Ng
+aphasia/Nmg
 aphasic/JNgS
 aphelia/N
 aphelion/NSg
@@ -12747,10 +12747,10 @@ apical/~JNY
 apiece/~
 apish/JY
 aplenty/J
-aplomb/Ng
+aplomb/Nmg
 apocalypse/~NSg
 apocalyptic/~JN
-apocrypha/Ng
+apocrypha/Nmg
 apocryphal/~JY
 apogee/~NgS
 apolitical/JNY
@@ -12759,7 +12759,7 @@ apologia/NSg
 apologise/VGdS!_
 apologist/~NgS
 apologize/~VGdS
-apology/~NSg
+apology/~NwSg
 apoplectic/JN
 apoplexy/NSg
 apoptosis/~N
@@ -16657,7 +16657,7 @@ casualness/Nmg
 casualty/~NSg
 casuist/NSg
 casuistic/J
-casuistry/Ng
+casuistry/Nmg
 cat/~NVJSg
 cataclysm/~NgS
 cataclysmal/J
@@ -18417,7 +18417,7 @@ compendious/J
 compendium/~NSg
 compensate/~VdSXGn
 compensated/~JVU
-compensation/~Ng
+compensation/~Nwg
 compensatory/~J
 compere/NVdSG
 compete/~VdSG
@@ -18426,7 +18426,7 @@ competences/N
 competencies/~N
 competency/~Nig
 competent/~JiY
-competition/~NSg
+competition/~NwSg
 competitive/~JpY
 competitiveness/~Ng
 competitor/~NSg
@@ -19170,7 +19170,7 @@ cordless/JN
 cordon/~NVSgdG
 cordovan/NJg
 corduroy/NwJVgS
-corduroys/Ng
+corduroys/N9g
 core/~NJVgZGd>S
 coreligionist/NS
 corer/NgS
@@ -20782,8 +20782,8 @@ dentifrice/NSg
 dentin/Ng
 dentine/Ng!@_
 dentist/~NgS
-dentistry/~Ng
-dentition/~Ng
+dentistry/~Nmg
+dentition/~Nmg
 denture/NigS
 denuclearise/VGdS!_
 denuclearize/VGdS
@@ -23956,11 +23956,11 @@ exquisiteness/Ng
 ext/~N
 extant/~J
 extemporaneous/JpY
-extemporaneousness/Ng
+extemporaneousness/NmSg
 extempore/JN
 extemporisation/Ng!_
 extemporise/VGdS!_
-extemporization/Ng
+extemporization/Nmg
 extemporize/VGdS
 extend/~VNSZGd>B
 extender/Ng
@@ -23969,7 +23969,7 @@ extensible/~J
 extension/~NSg
 extensional/J
 extensive/~JYp
-extensiveness/Ng
+extensiveness/Nmg
 extent/~NJSg
 extenuate/VJdSGn
 extenuation/Ng
@@ -24209,7 +24209,7 @@ famous/~JViY
 fan/~NVSg
 fanatic/~JNSg
 fanatical/JY
-fanaticism/Ng
+fanaticism/Nmg
 fanboy/NVSgdG
 fanciable/J
 fancier/NJg
@@ -26284,7 +26284,7 @@ genuineness/Ng
 genus/~N0g
 geocache/NVdSG
 geocentric/JQ
-geochemistry/Ng
+geochemistry/Nmg
 geocode/VGdSNg
 geode/NSg
 geodesic/NJSg
@@ -36952,8 +36952,8 @@ overcloud/VSGd
 overcoat/NVgS
 overcome/~VNGS
 overcompensate/VdSGn
-overcompensation/Ng
-overconfidence/Ng
+overcompensation/Nmg
+overconfidence/Nmg
 overconfident/J
 overconscientious/J
 overcook/VdGS
@@ -37382,7 +37382,7 @@ palm/~NVgdSG
 palmate/NJ
 palmetto/NSg
 palmist/NSg
-palmistry/Ng
+palmistry/Nmg
 palmtop/NSg
 palmy/J^>
 palomino/NgS
@@ -37427,7 +37427,7 @@ panes/~N
 pang/~NVgS
 panhandle/~NVd>SgZG
 panhandler/Ng
-panic/~JNVSg
+panic/~JNwVSg
 panicked/VtTJ
 panicking/V6N
 panicky/J
@@ -39759,7 +39759,7 @@ prepandemic/J
 preparation/~NwSg
 preparatory/~J
 prepare/~VGdS       # remove `N` noun sense is obsolete
-prepared/~JVUp
+prepared/~JVtTUp
 preparedness/~NUg
 prepay/VGSL
 prepayment/NwgS
@@ -39902,11 +39902,11 @@ pricey/J
 pricier/Jc
 priciest/Ju
 prick/NVgd>YSZG
-pricker/Ng
+pricker/NgS
 prickle/NVgGdS
 prickliness/Nmg
 prickly/JNp>^
-pride/~NVgGdS
+pride/~NmVgGdS
 prideful/JY
 prier/Ng
 priest/~NVSgY
@@ -39946,7 +39946,7 @@ princeling/NgS
 princely/~Jp>^
 princess/~NgS
 principal/~JNSgY
-principality/~NSg
+principality/~NmSg
 principle/~NwVdSg
 principled/JVU
 print/~JVNwrgdSG
@@ -40205,7 +40205,7 @@ propitious/JY
 proponent/~NJSg
 proportion/~NVESg
 proportional/~JNYS
-proportionality/~N
+proportionality/~Nmg
 proportionate/JVEY
 proposal/~NgS
 propped/VtT
@@ -40509,7 +40509,7 @@ punctilio/Ng
 punctilious/JpY
 punctiliousness/Nmg
 punctual/JY
-punctuality/Ng
+punctuality/Nmg
 punctuate/VJGndS
 punctuation/~Nmg
 puncture/NVdSgG
@@ -40706,7 +40706,7 @@ qualified/~JVtTU
 qualifier/~NSg
 qualify/~VNEGXndS
 qualitative/~JNY
-quality/~NJSg
+quality/~NwJSg
 qualitywise/R
 qualm/NVgS
 qualmish/J
@@ -41150,7 +41150,7 @@ rationalise/VdSG!_
 rationalism/Ng
 rationalist/~NSg
 rationalistic/J
-rationality/~Ng
+rationality/~Nmg
 rationalization/NgS
 rationalize/VdSG
 ratlike/J
@@ -43961,7 +43961,7 @@ sexting/NmgV6
 sexton/~NgS
 sextuplet/NSg
 sexual/~JNY
-sexuality/~Ng
+sexuality/~Nmg
 sexualize/VGdS
 sexy/~Jp^>
 sf/~N
@@ -44218,7 +44218,7 @@ shiver/VNgdG
 shivery/J
 shoal/~JNVGgdS
 shoat/NgS
-shock/~NJVZGgd>S
+shock/~NwJVZGgd>S
 shocker/~Ng
 shocking/~JV6NY
 shockproof/JV
@@ -45426,7 +45426,7 @@ sophistical/J
 sophisticate/VJNdSgGn
 sophisticated/~JVU
 sophistication/~Ng
-sophistry/NSg
+sophistry/NwSg
 sophomore/~JNgS
 sophomoric/J
 soporific/NJgSQ
@@ -45615,10 +45615,10 @@ specialisation/NgS!_
 specialise/VGdS!_
 specialism/NS
 specialist/~JNgS
-speciality/NSg!_
+speciality/NwSg!_
 specialization/~NgS
 specialize/~VGdS
-specialty/~NSg
+specialty/~NwSg
 specie/NSg
 species/~Ng09       # singular and plural
 specif/
@@ -45763,7 +45763,7 @@ spiritual/~JNgYS
 spiritualism/~Ng
 spiritualist/~NJgS
 spiritualistic/J
-spirituality/~Ng
+spirituality/~Nmg
 spirituous/J
 spirochaete/NSg!_
 spirochete/NSg
@@ -47001,7 +47001,7 @@ sulfa/JNg
 sulfate/~NVSg
 sulfide/~NSg
 sulfonamides/N
-sulfur/~NJVgdSG
+sulfur/~NmJVgdSG
 sulfuric/~J
 sulfurous/J
 sulk/VNgdGS
@@ -47014,7 +47014,7 @@ sullied/JVU
 sully/~VNGdS
 sulphate/NwVgS!@_
 sulphide/NgS!@_
-sulphur/NVSgdG!@_
+sulphur/NmVSgdG!@_
 sulphuric/J!@_
 sulphurous/J!@_
 sultan/~NgS
@@ -47127,7 +47127,7 @@ supererogation/Ng
 supererogatory/J
 superfast/JR
 superficial/~JNY
-superficiality/Ng
+superficiality/Nmg
 superfine/J
 superfluity/Ng
 superfluous/~JYp
@@ -48162,7 +48162,7 @@ terrify/VGdS
 terrifying/~JV6Y
 terrine/NS
 territorial/~JNgS
-territoriality/N
+territoriality/Nmg
 territory/~NwSg
 terror/~NwSg
 terrorise/VdSG!_
@@ -48247,7 +48247,7 @@ theatergoer/NSg
 theatre/NwSg!@_
 theatregoer/NgS!@_
 theatrical/~JNYS
-theatricality/Ng
+theatricality/Nmg
 theatricals/Ng
 theatrics/N9g
 thee/~I2o
@@ -48921,7 +48921,7 @@ total/~NJVGSgdY
 totalisator/NgS!@_
 totalitarian/~JNSg
 totalitarianism/~Nmg
-totality/~NSg
+totality/~NwSg
 totalizator/NSg
 totalize/VSdG
 totalled/VtTJ!@_
@@ -49449,7 +49449,7 @@ trivia/~Ng
 trivial/~JNY
 trivialisation/NwSg!_
 trivialise/VGdS!_
-triviality/NSg
+triviality/NwSg
 trivialization/NwSg
 trivialize/VGdS
 trivium/Nmg
@@ -49796,7 +49796,7 @@ typhoid/~JNmg
 typhoon/~NVgS
 typhus/~Nmg
 typical/~JNUY
-typicality/Ng
+typicality/Nmg
 typification/Nmg
 typify/VnGdS
 typing/~NwVgS
@@ -50262,7 +50262,7 @@ universal/~JNgYS
 universalise/VdSG!_
 universalism/~N
 universalist/~JN
-universality/Ng
+universality/Nmg
 universalize/VdSG
 universe/~ONSg
 university/~NSg
@@ -50820,7 +50820,7 @@ velvet/~NmVJg
 velveteen/Nmg
 velvety/J
 venal/JY
-venality/Ng
+venality/Nmg
 venation/Ng
 vend/VNdGS
 vendetta/~NSg
@@ -51158,7 +51158,7 @@ vitae/~9
 vital/~JSY
 vitalisation/Nrg!_
 vitalise/VerGSd!_
-vitality/~Ng
+vitality/~Nmg
 vitalization/Nrg
 vitalize/VerGSd
 vitals/Ng
@@ -51849,7 +51849,7 @@ whilst/~C
 whim/~NVgS
 whimper/NVgdGS
 whimsical/~JY
-whimsicality/Ng
+whimsicality/Nmg
 whimsy/NVJSg
 whine/NVd>SgZG
 whiner/Ng

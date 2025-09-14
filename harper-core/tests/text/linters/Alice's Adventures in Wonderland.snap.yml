@@ -1875,18 +1875,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    1702 | all have our heads cut off, you know. So you see, Miss, we’re doing our best,
-    1703 | afore she comes, to—” At this moment Five, who had been anxiously looking across
-         | ^~~~~ Did you mean to spell `afore` this way?
-Suggest:
-  - Replace with: “adore”
-  - Replace with: “afire”
-  - Replace with: “fore”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1708 | First came ten soldiers carrying clubs; these were all shaped like the three
@@ -1962,18 +1950,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1817 | make the arches.
          | ~~~~~~~~~~~~~~~~ This sentence is 49 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    1815 | furrows; the balls were live hedgehogs, the mallets live flamingoes, and the
-         |                                                          ^~~~~~~~~~ Did you mean to spell `flamingoes` this way?
-    1816 | soldiers had to double themselves up and to stand on their hands and feet, to
-Suggest:
-  - Replace with: “flamingo's”
-  - Replace with: “flamingos”
-  - Replace with: “flamingo”
 
 
 
@@ -2061,18 +2037,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    1863 | at the other end of the ground—and I should have croqueted the Queen’s hedgehog
-         |                                                  ^~~~~~~~~ Did you mean to spell `croqueted` this way?
-    1864 | just now, only it ran away when it saw mine coming!”
-Suggest:
-  - Replace with: “croquet's”
-  - Replace with: “coquetted”
-  - Replace with: “crocheted”
-
-
-
 Lint:    Style (31 priority)
 Message: |
     1894 | The Queen had only one way of settling all difficulties, great or small. “Off
@@ -2107,17 +2071,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1910 | a tree.
          | ~~~~~~~ This sentence is 60 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    1906 | The hedgehog was engaged in a fight with another hedgehog, which seemed to Alice
-    1907 | an excellent opportunity for croqueting one of them with the other: the only
-         |                              ^~~~~~~~~~ Did you mean to spell `croqueting` this way?
-Suggest:
-  - Replace with: “coquetting”
-  - Replace with: “crocheting”
 
 
 
@@ -2238,17 +2191,6 @@ Suggest:
   - Replace with: “tic”
   - Replace with: “this”
   - Replace with: “ti's”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    2004 | “Very true,” said the Duchess: “flamingoes and mustard both bite. And the moral
-         |                                 ^~~~~~~~~~ Did you mean to spell `flamingoes` this way?
-Suggest:
-  - Replace with: “flamingo's”
-  - Replace with: “flamingos”
-  - Replace with: “flamingo”
 
 
 
@@ -2486,25 +2428,6 @@ Message: |
 Suggest:
   - Replace with: “ours”
   - Replace with: “they”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    2189 | then the different branches of Arithmetic—Ambition, Distraction, Uglification,
-         |                                                                  ^~~~~~~~~~~~ Did you mean `Vilification`?
-    2190 | and Derision.”
-Suggest:
-  - Replace with: “Vilification”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    2192 | “I never heard of ‘Uglification,’” Alice ventured to say. “What is it?”
-         |                    ^~~~~~~~~~~~ Did you mean `Vilification`?
-Suggest:
-  - Replace with: “Vilification”
 
 
 

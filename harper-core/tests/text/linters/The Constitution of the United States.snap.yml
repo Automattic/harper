@@ -1345,18 +1345,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     561 | Attainder of Treason shall work Corruption of Blood, or Forfeiture except
-     562 | during the Life of the Person attainted.
-         |                               ^~~~~~~~~ Did you mean to spell `attainted` this way?
-Suggest:
-  - Replace with: “attained”
-  - Replace with: “attainder”
-  - Replace with: “tainted”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      566 | The right of the people to be secure in their persons, houses,

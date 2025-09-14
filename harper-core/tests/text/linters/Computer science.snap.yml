@@ -111,14 +111,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      68 | Essays on Automatics, and designed, inspired by Babbage, a theoretical
-      69 | electromechanical calculating machine which was to be controlled by a read-only
-         | ^~~~~~~~~~~~~~~~~ Did you mean to spell `electromechanical` this way?
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       71 | 1920, to celebrate the 100th anniversary of the invention of the arithmometer,
          |                                                                  ^~~~~~~~~~~~ Did you mean to spell `arithmometer` this way?
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
@@ -130,27 +122,9 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      71 | 1920, to celebrate the 100th anniversary of the invention of the arithmometer,
-      72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
-         |                               ^~~~~~~~~~~~~~~~~ Did you mean to spell `Electromechanical` this way?
-      73 | demonstrated the feasibility of an electromechanical analytical engine, on which
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
          |                                                 ^~~~~~~~~~~~ Did you mean to spell `Arithmometer` this way?
       73 | demonstrated the feasibility of an electromechanical analytical engine, on which
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-      72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
-      73 | demonstrated the feasibility of an electromechanical analytical engine, on which
-         |                                    ^~~~~~~~~~~~~~~~~ Did you mean to spell `electromechanical` this way?
-      74 | commands could be typed and the results printed automatically. In 1937, one
 
 
 
@@ -357,18 +331,6 @@ Suggest:
   - Replace with: “urologist”
   - Replace with: “theologist”
   - Replace with: “neurologist”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     127 | the ACM—turingineer, turologist, flow-charts-man, applied meta-mathematician,
-     128 | and applied epistemologist. Three months later in the same journal, comptologist
-         |             ^~~~~~~~~~~~~~ Did you mean to spell `epistemologist` this way?
-Suggest:
-  - Replace with: “epistemological”
-  - Replace with: “epistemology”
-  - Replace with: “epidemiologist”
 
 
 
@@ -1003,16 +965,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-     371 | semiotics, electrical engineering, philosophy of mind, neurophysiology, and
-         |                                                        ^~~~~~~~~~~~~~~ Did you mean `neurobiology`?
-     372 | social intelligence. AI is associated in the popular mind with robotic
-Suggest:
-  - Replace with: “neurobiology”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
          |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
@@ -1093,18 +1045,6 @@ Suggest:
   - Replace with: “Lotteries”
   - Replace with: “Notified”
   - Replace with: “Pottered”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     442 |   > All the information about any computable problem can be represented using
-     443 |   > only 0 and 1 (or any other bistable pair that can flip-flop between two
-         |                                ^~~~~~~~ Did you mean to spell `bistable` this way?
-Suggest:
-  - Replace with: “beatable”
-  - Replace with: “biddable”
-  - Replace with: “billable”
 
 
 
