@@ -79,21 +79,21 @@ function createSnippetFor(lint: UnpackedLint) {
 $: allOpen = lints.length > 0 && openSet.size === lints.length;
 
 function toggleAll() {
-    if (allOpen) {
-        openSet = new Set();
-    } else {
-        openSet = new Set(lints.map((_, i) => i));
-    }
+	if (allOpen) {
+		openSet = new Set();
+	} else {
+		openSet = new Set(lints.map((_, i) => i));
+	}
 }
 
 // Keep openSet in range if lint list changes
 $: if (openSet.size > 0) {
-    const max = lints.length;
-    const next = new Set<number>();
-    for (const idx of openSet) {
-        if (idx >= 0 && idx < max) next.add(idx);
-    }
-    if (next.size !== openSet.size) openSet = next;
+	const max = lints.length;
+	const next = new Set<number>();
+	for (const idx of openSet) {
+		if (idx >= 0 && idx < max) next.add(idx);
+	}
+	if (next.size !== openSet.size) openSet = next;
 }
 </script>
 
