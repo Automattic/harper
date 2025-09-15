@@ -88,6 +88,39 @@ function createSnippetFor(lint: UnpackedLint) {
 	};
 }
 
+function jumpTo(lint: UnpackedLint) {
+	if (!editor) return;
+	const start = lint.span.start;
+	const end = lint.span.end;
+	// Focus and select; most browsers will scroll selection into view on focus
+	editor.focus();
+	editor.setSelectionRange(start, end);
+	// As a fallback, nudge scroll to selection if needed
+	try {
+		const approxLineHeight = 20;
+		const beforeText = content.slice(0, start);
+		const line = (beforeText.match(/\n/g)?.length ?? 0) + 1;
+		const targetTop = Math.max(0, (line - 3) * approxLineHeight);
+		(editor as HTMLTextAreaElement).scrollTop = targetTop;
+	} catch {}
+}
+
+function toggleCard(i: number) {
+	const wasOpen = openSet.has(i);
+	if (wasOpen) {
+		const ns = new Set(openSet);
+		ns.delete(i);
+		openSet = ns;
+	} else {
+		const ns = new Set(openSet);
+		ns.add(i);
+		openSet = ns;
+		if (lints[i]) {
+			jumpTo(lints[i]);
+		}
+	}
+}
+
 $: allOpen = lints.length > 0 && openSet.size === lints.length;
 
 function toggleAll() {
@@ -161,7 +194,7 @@ $: if (openSet.size > 0) {
                             {lint}
                             snippet={createSnippetFor(lint)}
                             open={openSet.has(i)}
-                            onToggle={() => (openSet = (openSet.has(i) ? (openSet.delete(i), new Set(openSet)) : new Set(openSet).add(i)))}
+                            onToggle={() => toggleCard(i)}
                             onApply={(s) => applySug(lint, s)}
                         />
                     {/each}
