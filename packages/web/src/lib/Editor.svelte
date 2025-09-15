@@ -21,31 +21,32 @@ let lints: UnpackedLint[] = [];
 // Track which lint cards are open by index
 let openSet: Set<number> = new Set();
 
-let lfw = new LintFramework(async (text) => {
-	if (!linter) return [];
+let lfw = new LintFramework(
+	async (text) => {
+		if (!linter) return [];
 
-	const raw = await linter.lint(text);
-	// The framework expects "unpacked" lints with plain fields
-	const unpacked = await Promise.all(
-		raw.map((lint) => unpackLint(text, lint, linter)),
-	);
+		const raw = await linter.lint(text);
+		// The framework expects "unpacked" lints with plain fields
+		const unpacked = await Promise.all(raw.map((lint) => unpackLint(text, lint, linter)));
 
-	lints = unpacked;
+		lints = unpacked;
 
-	return unpacked;
-}, {
-	ignoreLint: async (hash: string) => {
-		if (!linter) return;
-		try {
-			await linter.ignoreLintHash(BigInt(hash));
-      console.log(`Ignored ${hash}`)
-			// Re-run linting to hide ignored lint immediately
-			lfw.update();
-		} catch (e) {
-			console.error('Failed to ignore lint', e);
-		}
+		return unpacked;
 	},
-});
+	{
+		ignoreLint: async (hash: string) => {
+			if (!linter) return;
+			try {
+				await linter.ignoreLintHash(BigInt(hash));
+				console.log(`Ignored ${hash}`);
+				// Re-run linting to hide ignored lint immediately
+				lfw.update();
+			} catch (e) {
+				console.error('Failed to ignore lint', e);
+			}
+		},
+	},
+);
 
 (async () => {
 	let { WorkerLinter, binary } = await import('harper.js');
@@ -97,6 +98,18 @@ function toggleAll() {
 	}
 }
 
+async function ignoreAll() {
+	if (!linter || lints.length === 0) return;
+	try {
+		const hashes = Array.from(new Set(lints.map((l) => l.context_hash)));
+		await Promise.all(hashes.map((h) => linter.ignoreLintHash(BigInt(h))));
+		// Refresh to hide ignored lints immediately
+		lfw.update();
+	} catch (e) {
+		console.error('Failed to ignore all lints', e);
+	}
+}
+
 // Keep openSet in range if lint list changes
 $: if (openSet.size > 0) {
 	const max = lints.length;
@@ -120,12 +133,23 @@ $: if (openSet.size > 0) {
 	<Card class="hidden md:flex md:flex-col md:w-1/3 h-full p-5 z-10">
 		<div class="flex items-center justify-between mb-3">
 			<div class="text-base font-semibold">Problems</div>
-			<button
-				class="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#0b0f14]"
-				on:click={toggleAll}
-			>
-				{allOpen ? 'Collapse all' : 'Open all'}
-			</button>
+			<div class="flex items-center gap-2">
+				<button
+					class="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#0b0f14]"
+					on:click={toggleAll}
+					aria-label={allOpen ? 'Collapse all lint cards' : 'Open all lint cards'}
+				>
+					{allOpen ? 'Collapse all' : 'Open all'}
+				</button>
+				<button
+					class="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#0b0f14]"
+					on:click={ignoreAll}
+					disabled={lints.length === 0}
+					aria-label="Ignore all current lints"
+				>
+					Ignore all
+				</button>
+			</div>
 		</div>
 		<div class="flex-1 overflow-y-auto pr-1">
 			{#if lints.length === 0}
