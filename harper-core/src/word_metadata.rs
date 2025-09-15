@@ -1145,7 +1145,7 @@ pub mod tests {
         FstDictionary::curated()
             .get_word_metadata_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
-            .clone()
+            .into_owned()
     }
 
     mod dialect {

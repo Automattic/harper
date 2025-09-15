@@ -1,4 +1,5 @@
 use blanket::blanket;
+use std::borrow::Cow;
 
 use super::FuzzyMatchResult;
 use super::WordId;
@@ -33,11 +34,11 @@ pub trait Dictionary: Send + Sync {
     ) -> Vec<FuzzyMatchResult<'_>>;
     fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]>;
     /// Get the associated [`WordMetadata`] for any capitalization of a given word.
-    fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata>;
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, WordMetadata>>;
     /// Get the associated [`WordMetadata`] for any capitalization of a given word.
     /// If the word isn't in the dictionary, the resulting metadata will be
     /// empty.
-    fn get_word_metadata_str(&self, word: &str) -> Option<&WordMetadata>;
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, WordMetadata>>;
 
     /// Iterate over the words in the dictionary.
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_>;

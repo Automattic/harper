@@ -6,6 +6,7 @@ use super::{
 use crate::edit_distance::edit_distance_min_alloc;
 use itertools::Itertools;
 use lazy_static::lazy_static;
+use std::borrow::Cow;
 use std::sync::Arc;
 
 use crate::{CharString, CharStringExt, WordMetadata};
@@ -107,8 +108,10 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata> {
-        self.word_map.get_with_chars(word).map(|v| &v.metadata)
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, WordMetadata>> {
+        self.word_map
+            .get_with_chars(word)
+            .map(|v| Cow::Borrowed(&v.metadata))
     }
 
     fn contains_word(&self, word: &[char]) -> bool {
@@ -120,7 +123,7 @@ impl Dictionary for MutableDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<&WordMetadata> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, WordMetadata>> {
         let chars: CharString = word.chars().collect();
         self.get_word_metadata(&chars)
     }

@@ -21,7 +21,7 @@ mod word_map;
 pub struct FuzzyMatchResult<'a> {
     pub word: &'a [char],
     pub edit_distance: u8,
-    pub metadata: &'a WordMetadata,
+    pub metadata: std::borrow::Cow<'a, WordMetadata>,
 }
 
 impl PartialOrd for FuzzyMatchResult<'_> {

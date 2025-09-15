@@ -88,5 +88,7 @@ mod tests {
     #[test]
     fn issue_1898() {
         Typst.parse_str("#for ");
+        Typst.parse_str("#(.$#$$$. ");
+        Typst.parse_str("=#{m\"\".'m\"\"#p#");
     }
 }

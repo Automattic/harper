@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::hash::{BuildHasher, Hasher};
 use std::sync::Arc;
 
@@ -93,14 +94,11 @@ impl Dictionary for MergedDictionary {
         false
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata> {
-        for child in &self.children {
-            if let Some(found_item) = child.get_word_metadata(word) {
-                return Some(found_item);
-            }
-        }
-
-        None
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, WordMetadata>> {
+        self.children
+            .iter()
+            .filter_map(|d| d.get_word_metadata(word))
+            .reduce(|acc, md| Cow::Owned(acc.or(&md)))
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
@@ -117,7 +115,7 @@ impl Dictionary for MergedDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<&WordMetadata> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, WordMetadata>> {
         let chars: CharString = word.chars().collect();
         self.get_word_metadata(&chars)
     }

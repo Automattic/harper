@@ -162,7 +162,9 @@ impl Document {
             for token in sent.iter_mut() {
                 if let TokenKind::Word(meta) = &mut token.kind {
                     let word_source = token.span.get_content(&self.source);
-                    let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
+                    let mut found_meta = dictionary
+                        .get_word_metadata(word_source)
+                        .map(|c| c.into_owned());
 
                     if let Some(inner) = &mut found_meta {
                         inner.pos_tag = token_tags[i].or_else(|| inner.infer_pos_tag());

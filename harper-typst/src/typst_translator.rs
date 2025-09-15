@@ -15,7 +15,7 @@ use typst_syntax::{
 /// Directly translate a span ($a) in a Typst source ($doc) to a token.
 macro_rules! def_token {
     ($doc:expr, $a:expr, $kind:expr, $offset:ident) => {{
-        let range = $doc.range($a.span()).unwrap();
+        let range = $doc.range($a.span())?;
         let start = $offset.push_to(range.start)?;
         let end_char_loc = start.push_to(range.end)?.char;
 
@@ -147,7 +147,7 @@ impl<'a> TypstTranslator<'a> {
         macro_rules! get_text {
             ($expr:expr) => {
                 self.doc
-                    .get(self.doc.range($expr.span()).unwrap())
+                    .get(self.doc.range($expr.span())?)
                     .expect("Unable to get text from typst document span!")
             };
         }

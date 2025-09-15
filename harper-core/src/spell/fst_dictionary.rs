@@ -2,6 +2,7 @@ use super::{MutableDictionary, WordId};
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use lazy_static::lazy_static;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
+use std::borrow::Cow;
 use std::{cell::RefCell, sync::Arc};
 
 use crate::{CharString, CharStringExt, WordMetadata};
@@ -15,7 +16,7 @@ use super::FuzzyMatchResult;
 /// [`MutableDictionary`].
 pub struct FstDictionary {
     /// Underlying [`super::MutableDictionary`] used for everything except fuzzy finding
-    full_dict: Arc<MutableDictionary>,
+    mutable_dict: Arc<MutableDictionary>,
     /// Used for fuzzy-finding the index of words or metadata
     word_map: FstMap<Vec<u8>>,
     /// Used for fuzzy-finding the index of words or metadata
@@ -42,7 +43,7 @@ thread_local! {
 
 impl PartialEq for FstDictionary {
     fn eq(&self, other: &Self) -> bool {
-        self.full_dict == other.full_dict
+        self.mutable_dict == other.mutable_dict
     }
 }
 
@@ -67,14 +68,14 @@ impl FstDictionary {
                 .expect("Insertion not in lexicographical order!");
         }
 
-        let mut full_dict = MutableDictionary::new();
-        full_dict.extend_words(words.iter().cloned());
+        let mut mutable_dict = MutableDictionary::new();
+        mutable_dict.extend_words(words.iter().cloned());
 
         let fst_bytes = builder.into_inner().unwrap();
         let word_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
 
         FstDictionary {
-            full_dict: Arc::new(full_dict),
+            mutable_dict: Arc::new(mutable_dict),
             word_map,
             words,
         }
@@ -113,19 +114,19 @@ fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u
 
 impl Dictionary for FstDictionary {
     fn contains_word(&self, word: &[char]) -> bool {
-        self.full_dict.contains_word(word)
+        self.mutable_dict.contains_word(word)
     }
 
     fn contains_word_str(&self, word: &str) -> bool {
-        self.full_dict.contains_word_str(word)
+        self.mutable_dict.contains_word_str(word)
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata> {
-        self.full_dict.get_word_metadata(word)
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, WordMetadata>> {
+        self.mutable_dict.get_word_metadata(word)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<&WordMetadata> {
-        self.full_dict.get_word_metadata_str(word)
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, WordMetadata>> {
+        self.mutable_dict.get_word_metadata_str(word)
     }
 
     fn fuzzy_match(
@@ -164,7 +165,7 @@ impl Dictionary for FstDictionary {
             merged.push(FuzzyMatchResult {
                 word,
                 edit_distance,
-                metadata,
+                metadata: Cow::Borrowed(metadata),
             })
         }
 
@@ -190,27 +191,27 @@ impl Dictionary for FstDictionary {
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        self.full_dict.words_iter()
+        self.mutable_dict.words_iter()
     }
 
     fn word_count(&self) -> usize {
-        self.full_dict.word_count()
+        self.mutable_dict.word_count()
     }
 
     fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.full_dict.contains_exact_word(word)
+        self.mutable_dict.contains_exact_word(word)
     }
 
     fn contains_exact_word_str(&self, word: &str) -> bool {
-        self.full_dict.contains_exact_word_str(word)
+        self.mutable_dict.contains_exact_word_str(word)
     }
 
     fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        self.full_dict.get_correct_capitalization_of(word)
+        self.mutable_dict.get_correct_capitalization_of(word)
     }
 
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
-        self.full_dict.get_word_from_id(id)
+        self.mutable_dict.get_word_from_id(id)
     }
 }
 
@@ -244,7 +245,7 @@ mod tests {
     }
 
     #[test]
-    fn fst_map_contains_all_in_full_dict() {
+    fn fst_map_contains_all_in_mutable_dict() {
         let dict = FstDictionary::curated();
 
         for word in dict.words_iter() {
