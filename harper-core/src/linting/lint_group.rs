@@ -37,6 +37,7 @@ use super::despite_of::DespiteOf;
 use super::discourse_markers::DiscourseMarkers;
 use super::dot_initialisms::DotInitialisms;
 use super::double_modal::DoubleModal;
+use super::effect_affect::EffectAffect;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
@@ -443,6 +444,7 @@ impl LintGroup {
         insert_expr_rule!(DoubleModal, true);
         insert_struct_rule!(EllipsisLength, true);
         insert_struct_rule!(ElsePossessive, true);
+        insert_expr_rule!(EffectAffect, true);
         insert_struct_rule!(Everyday, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
