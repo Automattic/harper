@@ -22,19 +22,30 @@ let lints: UnpackedLint[] = [];
 let openSet: Set<number> = new Set();
 
 let lfw = new LintFramework(async (text) => {
-	// Guard until the linter is ready
 	if (!linter) return [];
 
 	const raw = await linter.lint(text);
 	// The framework expects "unpacked" lints with plain fields
 	const unpacked = await Promise.all(
-		raw.map((lint) => unpackLint(window.location.hostname, lint, linter)),
+		raw.map((lint) => unpackLint(text, lint, linter)),
 	);
 
 	lints = unpacked;
 
 	return unpacked;
-}, {});
+}, {
+	ignoreLint: async (hash: string) => {
+		if (!linter) return;
+		try {
+			await linter.ignoreLintHash(BigInt(hash));
+      console.log(`Ignored ${hash}`)
+			// Re-run linting to hide ignored lint immediately
+			lfw.update();
+		} catch (e) {
+			console.error('Failed to ignore lint', e);
+		}
+	},
+});
 
 (async () => {
 	let { WorkerLinter, binary } = await import('harper.js');
