@@ -51,7 +51,7 @@ impl MergeableWords {
         compound.remove(a_chars.len());
         let meta_closed = self.dict.get_word_metadata(&compound);
 
-        if (self.predicate)(meta_closed.as_ref(), meta_open.as_ref()) {
+        if (self.predicate)(meta_closed.as_deref(), meta_open.as_deref()) {
             return Some(compound);
         }
 

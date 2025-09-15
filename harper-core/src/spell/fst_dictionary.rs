@@ -2,6 +2,7 @@ use super::{MutableDictionary, WordId};
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use lazy_static::lazy_static;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
+use std::borrow::Cow;
 use std::{cell::RefCell, sync::Arc};
 
 use crate::{CharString, CharStringExt, WordMetadata};
@@ -120,11 +121,11 @@ impl Dictionary for FstDictionary {
         self.mutable_dict.contains_word_str(word)
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<WordMetadata> {
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, WordMetadata>> {
         self.mutable_dict.get_word_metadata(word)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<WordMetadata> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, WordMetadata>> {
         self.mutable_dict.get_word_metadata_str(word)
     }
 
@@ -164,7 +165,7 @@ impl Dictionary for FstDictionary {
             merged.push(FuzzyMatchResult {
                 word,
                 edit_distance,
-                metadata: metadata.clone(),
+                metadata: Cow::Borrowed(metadata),
             })
         }
 
