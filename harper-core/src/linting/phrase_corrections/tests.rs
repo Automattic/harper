@@ -968,20 +968,8 @@ fn detect_nerve_racking_no_hyphen() {
 // NotTo
 // -none-
 
-// NotUncommon
-#[test]
-fn corrects_not_uncommon_atomic() {
-    assert_suggestion_result("not uncommon", lint_group(), "common");
-}
-
-#[test]
-fn corrects_not_uncommon_real_world() {
-    assert_suggestion_result(
-        "It is not uncommon to see outages during storms.",
-        lint_group(),
-        "It is common to see outages during storms.",
-    );
-}
+// NotUncommon moved to phrase_set_corrections as part of the
+// generalized double negative mapping.
 
 // OfCourse
 // See also: tests in `of_course.rs` for "of curse/corse" → "of course" corrections
