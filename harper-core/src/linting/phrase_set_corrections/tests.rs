@@ -236,11 +236,7 @@ fn litotes_not_insignificant() {
 
 #[test]
 fn redundant_more_optimal() {
-    assert_suggestion_result(
-        "Is this more optimal?",
-        lint_group(),
-        "Is this optimal?",
-    );
+    assert_suggestion_result("Is this more optimal?", lint_group(), "Is this optimal?");
 }
 
 #[test]
