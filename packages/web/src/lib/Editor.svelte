@@ -115,9 +115,6 @@ function toggleCard(i: number) {
 		const ns = new Set(openSet);
 		ns.add(i);
 		openSet = ns;
-		if (lints[i]) {
-			jumpTo(lints[i]);
-		}
 	}
 }
 
@@ -194,7 +191,8 @@ $: if (openSet.size > 0) {
                             {lint}
                             snippet={createSnippetFor(lint)}
                             open={openSet.has(i)}
-                            onToggle={() => toggleCard(i)}
+                            onToggleOpen={() => toggleCard(i)}
+                            focusError={() => jumpTo(lint)}
                             onApply={(s) => applySug(lint, s)}
                         />
                     {/each}

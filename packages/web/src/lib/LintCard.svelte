@@ -4,7 +4,8 @@ import { slide } from 'svelte/transition';
 
 export let lint: UnpackedLint;
 export let open = false;
-export let onToggle: () => void;
+export let onToggleOpen: () => void;
+export let focusError: () => void;
 export let onApply: (s: UnpackedSuggestion) => void;
 export let snippet: {
 	prefix: string;
@@ -19,14 +20,17 @@ function suggestionText(s: UnpackedSuggestion): string {
 }
 </script>
 
-<div class="rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm bg-white dark:bg-[#0d1117]">
+<div
+  class="rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm bg-white dark:bg-[#0d1117]"
+  on:click={() => focusError?.()}
+>
   <div
     role="button"
     tabindex="0"
     class="flex items-center justify-between p-3 cursor-pointer select-none"
     aria-expanded={open}
-    on:click={() => onToggle?.()}
-    on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), onToggle?.())}
+    on:click={() => onToggleOpen?.()}
+    on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), onToggleOpen?.())}
   >
     <div
       class="text-sm font-semibold pb-1"
