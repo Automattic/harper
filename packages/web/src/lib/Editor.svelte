@@ -18,7 +18,8 @@ let linter: WorkerLinter;
 
 // Live list of lints from the framework's lint callback
 let lints: UnpackedLint[] = [];
-let openIndex: number | null = null;
+// Track which lint cards are open by index
+let openSet: Set<number> = new Set();
 
 let lfw = new LintFramework(async (text) => {
 	// Guard until the linter is ready
@@ -74,6 +75,26 @@ function createSnippetFor(lint: UnpackedLint) {
 		suffixEllipsis: end < content.length,
 	};
 }
+
+$: allOpen = lints.length > 0 && openSet.size === lints.length;
+
+function toggleAll() {
+    if (allOpen) {
+        openSet = new Set();
+    } else {
+        openSet = new Set(lints.map((_, i) => i));
+    }
+}
+
+// Keep openSet in range if lint list changes
+$: if (openSet.size > 0) {
+    const max = lints.length;
+    const next = new Set<number>();
+    for (const idx of openSet) {
+        if (idx >= 0 && idx < max) next.add(idx);
+    }
+    if (next.size !== openSet.size) openSet = next;
+}
 </script>
 
 <div class="flex flex-row h-full max-w-full">
@@ -86,7 +107,15 @@ function createSnippetFor(lint: UnpackedLint) {
 	</Card>
 
 	<Card class="hidden md:flex md:flex-col md:w-1/3 h-full p-5 z-10">
-		<div class="text-base font-semibold mb-3">Problems</div>
+		<div class="flex items-center justify-between mb-3">
+			<div class="text-base font-semibold">Problems</div>
+			<button
+				class="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#0b0f14]"
+				on:click={toggleAll}
+			>
+				{allOpen ? 'Collapse all' : 'Open all'}
+			</button>
+		</div>
 		<div class="flex-1 overflow-y-auto pr-1">
 			{#if lints.length === 0}
 				<p class="text-sm text-gray-500">No lints yet.</p>
@@ -96,8 +125,8 @@ function createSnippetFor(lint: UnpackedLint) {
                         <LintCard
                             {lint}
                             snippet={createSnippetFor(lint)}
-                            open={openIndex === i}
-                            onToggle={() => (openIndex = openIndex === i ? null : i)}
+                            open={openSet.has(i)}
+                            onToggle={() => (openSet = (openSet.has(i) ? (openSet.delete(i), new Set(openSet)) : new Set(openSet).add(i)))}
                             onApply={(s) => applySug(lint, s)}
                         />
                     {/each}
