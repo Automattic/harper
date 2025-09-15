@@ -110,9 +110,9 @@ function agentHas(keyword) {
 		>, so you can get fantastic grammar checking anywhere you work.
 		<br /><br /> That said, we take extra care to make sure the
 		<a href="/docs/integrations/visual-studio-code"
-			>Install in Visual Studio Code</a
-		>, <a href="/docs/integrations/neovim">Use in Neovim</a>,
-		<a href="/docs/integrations/obsidian">Install in Obsidian</a>, and <a href="/docs/integrations/chrome-extension">Add to Chrome</a> integrations are amazing.
+			>Visual Studio Code</a
+		>, <a href="/docs/integrations/neovim">Neovim</a>,
+		<a href="/docs/integrations/obsidian">Obsidian</a>, and <a href="/docs/integrations/chrome-extension">Chrome</a> extensions are amazing.
 	</span>
 
 	<img
