@@ -1,0 +1,45 @@
+[package]
+name = "fuzz"
+version = "0.0.0"
+publish = false
+edition = "2024"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+harper-core = { path = "../harper-core" }
+harper-typst = { path = "../harper-typst" }
+harper-literate-haskell = { path = "../harper-literate-haskell" }
+harper-html = { path = "../harper-html" }
+harper-comments = { path = "../harper-comments" }
+
+[[bin]]
+name = "fuzz_harper_typst"
+path = "fuzz_targets/fuzz_harper_typst.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "fuzz_harper_literate_haskell"
+path = "fuzz_targets/fuzz_harper_literate_haskell.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "fuzz_harper_html"
+path = "fuzz_targets/fuzz_harper_html.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "fuzz_harper_comment"
+path = "fuzz_targets/fuzz_harper_comment.rs"
+test = false
+doc = false
+bench = false
