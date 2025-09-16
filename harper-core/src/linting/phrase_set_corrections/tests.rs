@@ -232,6 +232,15 @@ fn litotes_not_insignificant() {
     );
 }
 
+#[test]
+fn litotes_more_preferable() {
+    assert_suggestion_result(
+        "Is it more preferable to use process.env.variable or env.parsed.variable?",
+        lint_group(),
+        "Is it preferable to use process.env.variable or env.parsed.variable?",
+    );
+}
+
 // RedundantSuperlatives
 
 #[test]

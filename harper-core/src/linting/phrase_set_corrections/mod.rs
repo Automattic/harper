@@ -297,6 +297,7 @@ pub fn lint_group() -> LintGroup {
                 ("not unpleasant", "pleasant"),
                 ("not unreasonable", "reasonable"),
                 ("not impossible", "possible"),
+                ("more preferable", "preferable"),
             ],
             "Consider a direct form instead of litotes like `not uncommon`.",
             "Offers direct-positive alternatives when double negatives might feel heavy.",
