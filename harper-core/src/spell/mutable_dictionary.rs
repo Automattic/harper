@@ -6,6 +6,7 @@ use super::{
 use crate::edit_distance::edit_distance_min_alloc;
 use itertools::Itertools;
 use lazy_static::lazy_static;
+use std::borrow::Cow;
 use std::sync::Arc;
 
 use crate::{CharString, CharStringExt, DictWordMetadata};
@@ -107,8 +108,10 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_lexeme_metadata(&self, word: &[char]) -> Option<&DictWordMetadata> {
-        self.word_map.get_with_chars(word).map(|v| &v.metadata)
+    fn get_lexeme_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.word_map
+            .get_with_chars(word)
+            .map(|v| Cow::Borrowed(&v.metadata))
     }
 
     fn contains_word(&self, word: &[char]) -> bool {
@@ -120,7 +123,7 @@ impl Dictionary for MutableDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_lexeme_metadata_str(&self, word: &str) -> Option<&DictWordMetadata> {
+    fn get_lexeme_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
         let chars: CharString = word.chars().collect();
         self.get_lexeme_metadata(&chars)
     }
@@ -445,7 +448,7 @@ mod tests {
     }
 
     #[test]
-    fn is_is_verb_lemma() {
+    fn be_is_verb_lemma() {
         let dict = MutableDictionary::curated();
 
         let is = dict.get_lexeme_metadata_str("be");

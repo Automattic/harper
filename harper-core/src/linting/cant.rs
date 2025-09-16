@@ -18,7 +18,7 @@ impl Default for Cant {
         let cant_pron = SequenceExpr::aco("cant").t_ws().then_personal_pronoun();
         let cant_verb = SequenceExpr::aco("cant")
             .t_ws()
-            .then_kind_is_but_is_not(|kind| kind.is_verb(), |kind| kind.is_noun());
+            .then_kind_is_but_is_not(|kind| kind.is_verb_lemma(), |kind| kind.is_noun());
 
         Self {
             expr: Box::new(LongestMatchOf::new(vec![
@@ -28,23 +28,6 @@ impl Default for Cant {
             ])),
         }
     }
-}
-
-// TODO: This can be removed once #1730 is merged
-fn is_verb_lemma(tok: &Token, src: &[char]) -> bool {
-    tok.kind.is_verb()
-        && !tok
-            .span
-            .get_content(src)
-            .ends_with_ignore_ascii_case_chars(&['s'])
-        && !tok
-            .span
-            .get_content(src)
-            .ends_with_ignore_ascii_case_chars(&['e', 'd'])
-        && !tok
-            .span
-            .get_content(src)
-            .ends_with_ignore_ascii_case_chars(&['i', 'n', 'g'])
 }
 
 impl ExprLinter for Cant {

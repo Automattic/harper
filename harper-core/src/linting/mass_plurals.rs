@@ -24,12 +24,17 @@ where
         });
         let oov_looks_plural = All::new(vec![Box::new(oov), Box::new(looks_plural)]);
 
-        let source_codes = FixedPhrase::from_phrase("source codes");
+        // let source_codes = FixedPhrase::from_phrase("source codes");
+        let phrases = FirstMatchOf::new(vec![
+            Box::new(FixedPhrase::from_phrase("real estates")),
+            Box::new(FixedPhrase::from_phrase("source codes")),
+        ]);
 
         Self {
             expr: Box::new(FirstMatchOf::new(vec![
                 Box::new(oov_looks_plural),
-                Box::new(source_codes),
+                // Box::new(source_codes),
+                Box::new(phrases),
             ])),
             dict,
         }
@@ -97,18 +102,8 @@ where
             }
         } else {
             // Multiple tokens means we matched a fixed phrase
-            let the_fixed_phrase = mistake_toks.span()?.get_content(src);
-            // For now the only one is "source codes" and the singular is "source code"
-            if the_fixed_phrase
-                .to_string()
-                .eq_ignore_ascii_case("source codes")
-            {
-                let source_code_chars: Box<[char]> = "source code"
-                    .chars()
-                    .collect::<Vec<char>>()
-                    .into_boxed_slice();
-                legit_words_found.insert(source_code_chars);
-            }
+            let phrase = mistake_toks.span()?.get_content(src);
+            legit_words_found.insert(phrase[..phrase.len() - 1].into());
         }
 
         if legit_words_found.is_empty() {
@@ -171,6 +166,16 @@ mod tests {
     fn flag_noun_ending_in_ies() {
         assert_lint_count(
             "Celibacies are better than sex.",
+            MassPlurals::new(FstDictionary::curated()),
+            1,
+        );
+    }
+
+    // instead of giving any of her many luxury real estates or multi-million dollar fortune ...
+    #[test]
+    fn flag_real_estates() {
+        assert_lint_count(
+            "Instead of giving any of her many luxury real estates or multi-million dollar fortune ...",
             MassPlurals::new(FstDictionary::curated()),
             1,
         );

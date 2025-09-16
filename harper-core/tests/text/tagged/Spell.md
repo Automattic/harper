@@ -22,5 +22,5 @@
 # ISg/#r+ VB/Au/Br NSg/C ISgPl+ ?           NPr/ISg+ .
 > Careful , traveller !
 # J       . NSg/Comm+ .
-> At    the centre      of the theatre    I       dropped a   litre    of coke     .
-# NSg/P D   NSg/VB/Comm P  D+  N🅪Sg/Comm+ ISg/#r+ VP/J    D/P NSg/Comm P  NPr🅪/VB+ .
+> At    the centre      of the theatre    I       dropped a   litre    of coke       .
+# NSg/P D   NSg/VB/Comm P  D+  N🅪Sg/Comm+ ISg/#r+ VP/J    D/P NSg/Comm P  NPr🅪Sg/VB+ .

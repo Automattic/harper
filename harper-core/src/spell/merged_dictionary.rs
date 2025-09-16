@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::hash::{BuildHasher, Hasher};
 use std::sync::Arc;
 
@@ -93,14 +94,11 @@ impl Dictionary for MergedDictionary {
         false
     }
 
-    fn get_lexeme_metadata(&self, word: &[char]) -> Option<&DictWordMetadata> {
-        for child in &self.children {
-            if let Some(found_item) = child.get_lexeme_metadata(word) {
-                return Some(found_item);
-            }
-        }
-
-        None
+    fn get_lexeme_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.children
+            .iter()
+            .filter_map(|d| d.get_lexeme_metadata(word))
+            .reduce(|acc, md| Cow::Owned(acc.or(&md)))
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
@@ -117,7 +115,7 @@ impl Dictionary for MergedDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_lexeme_metadata_str(&self, word: &str) -> Option<&DictWordMetadata> {
+    fn get_lexeme_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
         let chars: CharString = word.chars().collect();
         self.get_lexeme_metadata(&chars)
     }

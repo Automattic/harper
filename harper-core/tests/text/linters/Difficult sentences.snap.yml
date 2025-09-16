@@ -111,8 +111,8 @@ Message: |
      249 | The bullet is about five centimetres in.
          |                          ^~~~~~~~~~~ Did you mean to spell `centimetres` this way?
 Suggest:
-  - Replace with: “centimeter's”
   - Replace with: “centimeters”
+  - Replace with: “centimeter's”
   - Replace with: “centimeter”
 
 

@@ -18,7 +18,7 @@ impl Default for QuiteQuiet {
                     TokenKind::is_verb,
                 ] as &[_],
                 TokenKind::is_noun,
-                &["here", "up"],
+                &["here", "not", "up"],
             );
 
         let negative_contraction_quiet = SequenceExpr::default()

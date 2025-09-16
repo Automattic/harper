@@ -127,6 +127,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects nonstandard `as early back as` to `as far back as`.",
             LintKind::WordChoice
         ),
+        "AsIfThough" => (
+            ["as if though"],
+            ["as if", "as though"],
+            "This should be `as if` or `as though`.",
+            "Corrects redundant `as if though`.",
+            LintKind::Redundancy
+        ),
         "AsItHappens" => (
             ["as it so happens"],
             ["as it happens"],
@@ -424,6 +431,13 @@ pub fn lint_group() -> LintGroup {
             ["fair bit"],
             "A `decent amount` is a `fair bit`. `Fare` is the price of a ticket.",
             "Corrects malapropisms of `a fair bit`.",
+            LintKind::Eggcorn
+        ),
+        "FarAndFewBetween" => (
+            ["far and few between"],
+            ["few and far between"],
+            "The correct idiom is `few and far between`?",
+            "Corrects `far and few between` to the standard idiom `few and far between`.",
             LintKind::Eggcorn
         ),
         "FastPaste" => (
@@ -972,13 +986,6 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `special attention`?",
             "Changes `spacial attention` to `special attention`.",
             LintKind::Typo
-        ),
-        "SpokeTooSoon" => (
-            ["spoke to soon"],
-            ["spoke too soon"],
-            "Use the adverb `too` instead.",
-            "Identifies common misuse of the preposition `to` in the phrase `spoke too soon`.",
-            LintKind::Grammar
         ),
         "Starving" => (
             ["very hungry", "really hungry", "extremely hungry"],

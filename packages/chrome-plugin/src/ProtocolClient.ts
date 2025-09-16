@@ -1,7 +1,7 @@
 import type { Dialect, LintConfig } from 'harper.js';
+import type { UnpackedLint } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
 import type { ActivationKey } from './protocol';
-import type { UnpackedLint } from './unpackLint';
 
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<any>>({

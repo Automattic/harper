@@ -80,8 +80,8 @@ Message: |
          |        ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -101,9 +101,9 @@ Message: |
       13 | At the centre of the theatre I dropped a litre of coke.
          |                                          ^~~~~ Did you mean to spell `litre` this way?
 Suggest:
-  - Replace with: “liter”
   - Replace with: “lire”
   - Replace with: “lite”
+  - Replace with: “liter”
 
 
 

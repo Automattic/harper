@@ -194,17 +194,6 @@ pub fn lint_group() -> LintGroup {
             // ConfusedPair??
             LintKind::WordChoice
         ),
-        "HaveGone" => (
-            &[
-                ("had went", "had gone"),
-                ("has went", "has gone"),
-                ("have went", "have gone"),
-                ("having went", "having gone"),
-            ],
-            "`Have gone` is the correct form.",
-            "Corrects `have went` to `have gone`.",
-            LintKind::Grammar
-        ),
         "HavePassed" => (
             &[
                 ("had past", "had passed"),
@@ -351,6 +340,49 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",
+            LintKind::Grammar
+        ),
+        "ToTooIdioms" => (
+            &[
+                (&["a bridge to far"], &["a bridge too far"]),
+                (&["cake and eat it to"], &["cake and eat it too"]),
+                // "a few to many" has many false positives
+
+                (&["go to far"], &["go too far"]),
+                (&["goes to far"], &["goes too far"]),
+                (&["going to far"], &["going too far"]),
+                (&["gone to far"], &["gone too far"]),
+                (&["went to far"], &["went too far"]),
+
+                // "in to deep" has many false positives
+                (&["life's to short", "lifes to short"], &["life's too short"]),
+                (&["life is to short"], &["life is too short"]),
+
+                // "one to many" has many false positives
+                (&["put to fine a point"], &["put too fine a point"], ),
+
+                (&["speak to soon"], &["speak too soon"]),
+                (&["speaking to soon"], &["speaking too soon"]),
+                // "speaks to soon" is very rare
+                (&["spoke to soon"], &["spoke too soon"]),
+                (&["spoken to soon"], &["spoken too soon"]),
+
+                (&["think to much"], &["think too much"]),
+                (&["to big for"], &["too big for"]),
+                (&["to big to fail"], &["too big to fail"]),
+                (&["to good to be true", "too good too be true"], &["too good to be true"]),
+                (&["to much information"], &["too much information"]),
+            ],
+            "Use `too` rather than `to` in this expression.",
+            "Corrects `to` used instead of `too`.",
+            LintKind::Grammar
+        ),
+        "TooTo" => (
+            &[
+                (&["too big too fail"], &["too big to fail"])
+            ],
+            "Use `to` rather than `too` in this expression.",
+            "Corrects `too` used instead of `to`.",
             LintKind::Grammar
         ),
         "WholeEntire" => (

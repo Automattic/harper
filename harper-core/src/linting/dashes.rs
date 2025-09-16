@@ -42,14 +42,14 @@ impl ExprLinter for Dashes {
                 span,
                 lint_kind,
                 suggestions: vec![Suggestion::ReplaceWith(vec![EN_DASH])],
-                message: "A sequence of hyphens is not an en dash.".to_owned(),
+                message: "Replace these two hyphens with an en dash (–).".to_owned(),
                 priority: 63,
             }),
             3 => Some(Lint {
                 span,
                 lint_kind,
                 suggestions: vec![Suggestion::ReplaceWith(vec![EM_DASH])],
-                message: "A sequence of hyphens is not an em dash.".to_owned(),
+                message: "Replace these three hyphens with an em dash (—).".to_owned(),
                 priority: 63,
             }),
             4.. => None, // Ignore longer hyphen sequences.
@@ -58,7 +58,7 @@ impl ExprLinter for Dashes {
     }
 
     fn description(&self) -> &'static str {
-        "Rather than outright using an em dash or en dash, authors often use a sequence of hyphens, expecting them to be condensed. Use two hyphens to denote an en dash and three to denote an em dash."
+        "Writers often type `--` or `---` expecting their editor to convert them into proper dashes. Replace these sequences with the correct characters: use an en dash (–) for ranges or connections and an em dash (—) for a break in thought."
     }
 }
 

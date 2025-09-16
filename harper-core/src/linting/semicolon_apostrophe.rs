@@ -40,14 +40,15 @@ impl ExprLinter for SemicolonApostrophe {
             ending.span.get_content_string(src).to_lowercase()
         );
 
-        let lettercase_template_char_slice = base.span.get_content(src);
+        let mut lettercase_template = base.span.get_content(src).to_vec();
+        lettercase_template.extend_from_slice(ending.span.get_content(src));
 
         Some(Lint {
             span: whole_span,
             lint_kind: LintKind::Typo,
             suggestions: vec![Suggestion::replace_with_match_case(
                 replacement_str.chars().collect(),
-                lettercase_template_char_slice,
+                &lettercase_template,
             )],
             message: format!("Did you mean `{replacement_str}`?"),
             priority: 57,
@@ -115,5 +116,10 @@ mod tests {
             SemicolonApostrophe::default(),
             "Let's see if we've fixed patrakov's bug. Fun wasn't it?",
         )
+    }
+
+    #[test]
+    fn corrects_ive_with_correct_capitalization() {
+        assert_suggestion_result("I;ve", SemicolonApostrophe::default(), "I've");
     }
 }

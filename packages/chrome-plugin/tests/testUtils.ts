@@ -1,5 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
-import type { Box } from '../src/Box';
+import type { Box } from 'lint-framework';
 import { expect, test } from './fixtures';
 
 export function randomString(length: number): string {

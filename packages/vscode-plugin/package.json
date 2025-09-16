@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.62.0",
+	"version": "0.64.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -337,6 +337,12 @@
 					"default": true,
 					"description": "Corrects nonstandard `as early back as` to `as far back as`."
 				},
+				"harper.linters.AsIfThough": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects redundant `as if though`."
+				},
 				"harper.linters.AsItHappens": {
 					"scope": "resource",
 					"type": "boolean",
@@ -647,7 +653,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Rather than outright using an em dash or en dash, authors often use a sequence of hyphens, expecting them to be condensed. Use two hyphens to denote an en dash and three to denote an em dash."
+					"description": "Writers often type `--` or `---` expecting their editor to convert them into proper dashes. Replace these sequences with the correct characters: use an en dash (–) for ranges or connections and an em dash (—) for a break in thought."
 				},
 				"harper.linters.DayAndAge": {
 					"scope": "resource",
@@ -907,6 +913,12 @@
 					"default": true,
 					"description": "Corrects malapropisms of `a fair bit`."
 				},
+				"harper.linters.FarAndFewBetween": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `far and few between` to the standard idiom `few and far between`."
+				},
 				"harper.linters.FastPaste": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1050,12 +1062,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the eggcorn `half hazard` to `haphazard`, which properly means lacking organization or being random."
-				},
-				"harper.linters.HaveGone": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `have went` to `have gone`."
 				},
 				"harper.linters.HavePassed": {
 					"scope": "resource",
@@ -1795,6 +1801,12 @@
 					"default": true,
 					"description": "Ensures `operating system` is used correctly instead of `operative system`."
 				},
+				"harper.linters.OughtToBe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects the mistaken `out to be` and suggests `ought to be`, while ignoring legitimate phrasal-verb uses such as `turn out to be` and `make it out to be`."
+				},
 				"harper.linters.OutOfDate": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1908,6 +1920,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `preying mantis` to `praying mantis`, ensuring accurate reference to the insect’s characteristic pose."
+				},
+				"harper.linters.ProgressiveNeedsBe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects the ungrammatical patterns `<pronoun> have …ing` (e.g., `I have …ing`) and `<pronoun>'ve …ing` (e.g., `I've …ing`) and suggests either the present progressive (e.g., `I'm/We're/You're/They're …`) or the present perfect progressive (e.g., `I/We/You/They have been …` or `I've/We've/You've/They've been …`)."
 				},
 				"harper.linters.PronounContraction": {
 					"scope": "resource",
@@ -2059,6 +2077,12 @@
 					"default": true,
 					"description": "Corrects `simply grammatical` to `simple grammatical` for proper adjective usage."
 				},
+				"harper.linters.SimplePastToPastParticiple": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects simple past tense verbs to past participle after auxiliary verbs like \"have\" or \"be\"."
+				},
 				"harper.linters.SinceDuration": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2148,12 +2172,6 @@
 					"type": "boolean",
 					"default": false,
 					"description": "Most style guides recommend that you spell out numbers less than ten."
-				},
-				"harper.linters.SpokeTooSoon": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Identifies common misuse of the preposition `to` in the phrase `spoke too soon`."
 				},
 				"harper.linters.Starving": {
 					"scope": "resource",
@@ -2316,6 +2334,24 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `to the manor born` to `to the manner born`, ensuring the intended meaning of being naturally suited to a way of life."
+				},
+				"harper.linters.ToTooIdioms": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `to` used instead of `too`."
+				},
+				"harper.linters.ToTwoToo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects homophone confusion between `to` and `too`."
+				},
+				"harper.linters.TooTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `too` used instead of `to`."
 				},
 				"harper.linters.Touristic": {
 					"scope": "resource",
