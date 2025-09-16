@@ -87,10 +87,11 @@ impl ExprLinter for EffectToAffect {
         }
 
         // Avoid "to effect change", which uses the legitimate verb "effect".
-        if let Some(prev) = preceding {
-            if is_token_to(prev, source) && is_change_like(first_following, source) {
-                return None;
-            }
+        if let Some(prev) = preceding
+            && is_token_to(prev, source)
+            && is_change_like(first_following, source)
+        {
+            return None;
         }
 
         if first_following.kind.is_upos(UPOS::VERB)
@@ -107,17 +108,18 @@ impl ExprLinter for EffectToAffect {
         }
 
         // Skip when the context already shows a clear noun usage (e.g., "the effect your idea had").
-        if let Some(prev) = preceding {
-            if prev.kind.is_upos(UPOS::DET) || prev.kind.is_upos(UPOS::ADJ) {
-                return None;
-            }
+        if let Some(prev) = preceding
+            && (prev.kind.is_upos(UPOS::DET) || prev.kind.is_upos(UPOS::ADJ))
+        {
+            return None;
         }
 
         // Do not flag when the following noun is clearly the result of "effect" in the idiomatic sense.
-        if let Some(next) = second_following {
-            if next.kind.is_noun() && is_change_like(next, source) {
-                return None;
-            }
+        if let Some(next) = second_following
+            && next.kind.is_noun()
+            && is_change_like(next, source)
+        {
+            return None;
         }
 
         let token_text = target.span.get_content_string(source);
@@ -231,7 +233,7 @@ fn tag_matches_any(token: &Token, allowed: &[UPOS]) -> bool {
     };
 
     match word_meta_opt {
-        Some(meta) => meta.pos_tag.map_or(true, |tag| allowed.contains(&tag)),
+        Some(meta) => meta.pos_tag.is_none_or(|tag| allowed.contains(&tag)),
         None => true,
     }
 }

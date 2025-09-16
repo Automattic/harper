@@ -78,27 +78,25 @@ impl ExprLinter for AffectToEffect {
             return None;
         }
 
-        if let Some(prev) = preceding {
-            if prev.kind.is_upos(UPOS::AUX) || prev.kind.is_upos(UPOS::VERB) {
-                let lower_prev = prev.span.get_content_string(source).to_lowercase();
+        if let Some(prev) = preceding
+            && (prev.kind.is_upos(UPOS::AUX) || prev.kind.is_upos(UPOS::VERB))
+        {
+            let lower_prev = prev.span.get_content_string(source).to_lowercase();
 
-                if !matches!(
-                    lower_prev.as_str(),
-                    "take" | "takes" | "taking" | "took" | "taken"
-                ) {
-                    return None;
-                }
+            if !matches!(
+                lower_prev.as_str(),
+                "take" | "takes" | "taking" | "took" | "taken"
+            ) {
+                return None;
             }
         }
 
         if first_following
             .is_some_and(|tok| tok.kind.is_upos(UPOS::AUX) || tok.kind.is_upos(UPOS::VERB))
-        {
-            if preceding
+            && preceding
                 .is_some_and(|tok| tok.kind.is_upos(UPOS::AUX) || tok.kind.is_upos(UPOS::VERB))
-            {
-                return None;
-            }
+        {
+            return None;
         }
 
         let token_text = target.span.get_content_string(source);
