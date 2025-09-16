@@ -124,15 +124,6 @@ mod tests {
     }
 
     #[test]
-    fn correct_great_affect() {
-        assert_suggestion_result(
-            "badges that they provide to users to allow them to promote their projects to great affect",
-            VerbInsteadOfNoun::default(),
-            "badges that they provide to users to allow them to promote their projects to great effect",
-        );
-    }
-
-    #[test]
     fn correct_strong_believe() {
         assert_suggestion_result(
             "cause my strong believe is that we must give any user to describe whether a post is meant factual",
@@ -142,39 +133,11 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_best_affect() {
-        assert_lint_count(
-            "Using linear regression to predict and understand what factors best affect house price",
-            VerbInsteadOfNoun::default(),
-            0,
-        );
-    }
-
-    #[test]
     fn correct_deep_breathe() {
         assert_suggestion_result(
             "Take deep breathe and Do it again!",
             VerbInsteadOfNoun::default(),
             "Take deep breath and Do it again!",
-        );
-    }
-
-    #[test]
-    fn dont_flag_sound_affect() {
-        assert_lint_count(
-            "The goal of this study was to learn what properties of sound affect human focus the most.",
-            VerbInsteadOfNoun::default(),
-            0,
-        );
-    }
-
-    #[test]
-    #[ignore = "`Affect` is both verb and noun, so we can't disambiguate without more context"]
-    fn correct_sound_affect() {
-        assert_suggestion_result(
-            "Diesel Generator's animation returns to 'idle' state, but it's sound affect remains in the 'work' state.",
-            VerbInsteadOfNoun::default(),
-            "Diesel Generator's animation returns to 'idle' state, but it's sound effect remains in the 'work' state.",
         );
     }
 

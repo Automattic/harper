@@ -9,14 +9,37 @@ use crate::{
     patterns::UPOSSet,
 };
 
+#[derive(Clone, Copy)]
+struct MatchInfo {
+    offending_index: usize,
+    skip_for_adj_noun_phrase: bool,
+}
+
 pub(super) struct AffectToEffect {
     expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    map: Arc<ExprMap<MatchInfo>>,
 }
 
 impl Default for AffectToEffect {
     fn default() -> Self {
         let mut map = ExprMap::default();
+
+        let adj_then_noun_follow = SequenceExpr::default()
+            .then(|tok: &Token, _source: &[char]| is_preceding_context(tok))
+            .t_ws()
+            .then(|tok: &Token, source: &[char]| is_affect_word(tok, source))
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::ADJ]))
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::NOUN]));
+
+        map.insert(
+            adj_then_noun_follow,
+            MatchInfo {
+                offending_index: 2,
+                skip_for_adj_noun_phrase: true,
+            },
+        );
 
         let word_follow = SequenceExpr::default()
             .then(|tok: &Token, _source: &[char]| is_preceding_context(tok))
@@ -33,7 +56,13 @@ impl Default for AffectToEffect {
                 UPOS::ADJ,
             ]));
 
-        map.insert(word_follow, 2);
+        map.insert(
+            word_follow,
+            MatchInfo {
+                offending_index: 2,
+                skip_for_adj_noun_phrase: false,
+            },
+        );
 
         let punctuation_follow = SequenceExpr::default()
             .then(|tok: &Token, _source: &[char]| is_preceding_context(tok))
@@ -41,7 +70,26 @@ impl Default for AffectToEffect {
             .then(|tok: &Token, source: &[char]| is_affect_word(tok, source))
             .then(|tok: &Token, _source: &[char]| matches!(tok.kind, TokenKind::Punctuation(_)));
 
-        map.insert(punctuation_follow, 2);
+        map.insert(
+            punctuation_follow,
+            MatchInfo {
+                offending_index: 2,
+                skip_for_adj_noun_phrase: false,
+            },
+        );
+
+        let great_affect = SequenceExpr::default()
+            .t_aco("great")
+            .t_ws()
+            .then(|tok: &Token, source: &[char]| is_affect_word(tok, source));
+
+        map.insert(
+            great_affect,
+            MatchInfo {
+                offending_index: 2,
+                skip_for_adj_noun_phrase: false,
+            },
+        );
 
         let map = Arc::new(map);
 
@@ -58,18 +106,67 @@ impl ExprLinter for AffectToEffect {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let offending_idx = *self.map.lookup(0, matched_tokens, source)?;
-        let target = &matched_tokens[offending_idx];
+        let match_info = *self.map.lookup(0, matched_tokens, source)?;
+        let target = &matched_tokens[match_info.offending_index];
 
-        let preceding = matched_tokens[..offending_idx]
+        let preceding = matched_tokens[..match_info.offending_index]
             .iter()
             .rfind(|tok| !tok.kind.is_whitespace());
 
-        let mut following = matched_tokens[offending_idx + 1..]
+        let mut following = matched_tokens[match_info.offending_index + 1..]
             .iter()
             .filter(|tok| !tok.kind.is_whitespace());
 
         let first_following = following.next();
+        let second_following = following.next();
+
+        let preceding_word = preceding.map(|tok| tok.span.get_content_string(source));
+        let skip_when_preceding_is_noun = match_info.skip_for_adj_noun_phrase
+            && preceding.is_some_and(|tok| tok.kind.is_noun() || tok.kind.is_proper_noun())
+            && preceding_word.as_ref().is_some_and(|word| {
+                !matches!(
+                    word.to_lowercase().as_str(),
+                    "take" | "takes" | "taking" | "took" | "taken"
+                )
+            });
+
+        if skip_when_preceding_is_noun {
+            return None;
+        }
+
+        if first_following.is_none() {
+            let Some(prev) = preceding else {
+                return None;
+            };
+
+            if !prev.kind.is_adjective()
+                && !prev.kind.is_determiner()
+                && !prev.kind.is_noun()
+                && !prev.kind.is_proper_noun()
+            {
+                return None;
+            }
+
+            let lower_prev = prev.span.get_content_string(source).to_lowercase();
+
+            if lower_prev.as_str() != "great" {
+                return None;
+            }
+        }
+
+        if let Some(first) = first_following
+            && (first.kind.is_upos(UPOS::ADJ) || first.kind.is_noun())
+            && second_following.is_some_and(|tok| tok.kind.is_noun())
+            && preceding.is_some_and(|tok| tok.kind.is_noun() || tok.kind.is_proper_noun())
+            && preceding_word.as_ref().is_some_and(|word| {
+                !matches!(
+                    word.to_lowercase().as_str(),
+                    "take" | "takes" | "taking" | "took" | "taken"
+                )
+            })
+        {
+            return None;
+        }
 
         if matched_tokens
             .first()

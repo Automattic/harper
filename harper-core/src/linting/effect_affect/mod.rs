@@ -66,6 +66,15 @@ mod tests {
     }
 
     #[test]
+    fn ignores_to_effect_substitutions() {
+        assert_lint_count(
+            "or it may be desired to effect substitutions",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
     fn ignores_effect_followed_by_of_phrase() {
         assert_lint_count(
             "We measured the effect of caffeine on sleep.",
@@ -309,6 +318,15 @@ mod tests {
     }
 
     #[test]
+    fn corrects_rules_effect_honeypot() {
+        assert_suggestion_result(
+            "I cant seem to get my additional rules to effect the honeypot",
+            EffectAffect::default(),
+            "I cant seem to get my additional rules to affect the honeypot",
+        );
+    }
+
+    #[test]
     fn corrects_bandwidth_effect_video() {
         assert_suggestion_result(
             "Fluctuating bandwidth can effect video call quality.",
@@ -401,6 +419,15 @@ mod tests {
             "The new law had a positive affect on small businesses.",
             EffectAffect::default(),
             "The new law had a positive effect on small businesses.",
+        );
+    }
+
+    #[test]
+    fn corrects_great_affect() {
+        assert_suggestion_result(
+            "badges that they provide to users to allow them to promote their projects to great affect",
+            EffectAffect::default(),
+            "badges that they provide to users to allow them to promote their projects to great effect",
         );
     }
 
@@ -608,6 +635,33 @@ mod tests {
             "Sound affects were added in post.",
             EffectAffect::default(),
             "Sound effects were added in post.",
+        );
+    }
+
+    #[test]
+    fn does_not_flag_best_affect() {
+        assert_lint_count(
+            "Using linear regression to predict and understand what factors best affect house price",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn does_not_flag_sound_affect() {
+        assert_lint_count(
+            "The goal of this study was to learn what properties of sound affect human focus the most.",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn corrects_sound_affect() {
+        assert_suggestion_result(
+            "Diesel Generator's animation returns to 'idle' state, but it's sound affect remains in the 'work' state.",
+            EffectAffect::default(),
+            "Diesel Generator's animation returns to 'idle' state, but it's sound effect remains in the 'work' state.",
         );
     }
 

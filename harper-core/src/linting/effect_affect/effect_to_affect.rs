@@ -170,7 +170,7 @@ fn is_token_to(token: &Token, source: &[char]) -> bool {
 }
 
 fn is_change_like(token: &Token, source: &[char]) -> bool {
-    if !token.kind.is_noun() {
+    if !token.kind.is_word() {
         return false;
     }
 
@@ -180,7 +180,7 @@ fn is_change_like(token: &Token, source: &[char]) -> bool {
             .get_content_string(source)
             .to_lowercase()
             .as_str(),
-        "change" | "changes"
+        "change" | "changes" | "substitution" | "substitutions"
     )
 }
 

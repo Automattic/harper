@@ -451,29 +451,11 @@ mod tests {
     }
 
     #[test]
-    fn allow_to_effect_noun() {
-        assert_lint_count(
-            "or it may be desired to effect substitutions",
-            NounInsteadOfVerb::default(),
-            0,
-        );
-    }
-
-    #[test]
     fn allow_to_intent_adjective() {
         assert_lint_count(
             "Cleanup passing statistics to intent aware iterator",
             NounInsteadOfVerb::default(),
             0,
-        );
-    }
-
-    #[test]
-    fn fix_to_effect_the() {
-        assert_suggestion_result(
-            "I cant seem to get my additional rules to effect the honeypot",
-            NounInsteadOfVerb::default(),
-            "I cant seem to get my additional rules to affect the honeypot",
         );
     }
 
