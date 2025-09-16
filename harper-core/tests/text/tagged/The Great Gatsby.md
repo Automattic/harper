@@ -9629,7 +9629,7 @@
 > voice   huskier and  more            charming than ever , and  Gatsby was overwhelmingly aware
 # NSg/VB+ JC      VB/C NPr/I/VB/J/R/Dq Nᴹ/Vg/J  C/P  J    . VB/C NPr    VPt R              VB/J
 > of the youth and  mystery that          wealth imprisons and  preserves , of the freshness
-# P  D   NSg   VB/C N🅪Sg+   NSg/I/C/Ddem+ Nᴹ+    V3        VB/C NPl/V3    . P  D   NSg
+# P  D   NSg   VB/C N🅪Sg+   NSg/I/C/Ddem+ N🅪Sg+  V3        VB/C NPl/V3    . P  D   NSg
 > of many       clothes , and  of Daisy , gleaming like         silver   , safe     and  proud above   the
 # P  NSg/I/J/Dq NPl/V3+ . VB/C P  NPr+  . Nᴹ/Vg/J  NSg/VB/J/C/P Nᴹ/VB/J+ . NSg/VB/J VB/C J     NSg/J/P D
 > hot      struggles of the poor     .
