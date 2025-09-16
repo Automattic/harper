@@ -394,8 +394,8 @@
 # NSg/J+ NSg/R NPrPl/V3+ NPr/J/P J     Nᴹ/Vg/J+    VB/C NPl/V3    NPr/J/P NSg/J+    Nᴹ/Vg/J+    . IPl+
 > also argue that         while      empirical sciences observe what   presently exists , computer
 # R/C  VB    NSg/I/C/Ddem NSg/VB/C/P NSg/J+    NPl/V3+  NSg/VB  NSg/I+ R         V3     . NSg/VB+
-> science  observes what   is  possible to exist and  while      scientists discover laws
-# N🅪Sg/VB+ NPl/V3   NSg/I+ VL3 NSg/J    P  VB    VB/C NSg/VB/C/P NPl+       NSg/VB/J NPl/V3
+> science  observes what   is  possible to exist and  while      scientists discover  laws
+# N🅪Sg/VB+ NPl/V3   NSg/I+ VL3 NSg/J    P  VB    VB/C NSg/VB/C/P NPl+       N🅪Sg/VB/J NPl/V3
 > from observation , no     proper laws    have    been    found  in      computer science  and  it       is
 # P    N🅪Sg+       . NPr/P+ NSg/J+ NPl/V3+ NSg/VXB NSg/VPp NSg/VB NPr/J/P NSg/VB+  N🅪Sg/VB+ VB/C NPr/ISg+ VL3
 > instead concerned with creating phenomena .

@@ -389,7 +389,7 @@
 > I       glanced over    at    the pretty     girl    in      the red     dress   .
 # ISg/#r+ VP/J    NSg/J/P NSg/P D+  NSg/VB/J/R NSg/VB+ NPr/J/P D+  N🅪Sg/J+ NSg/VB+ .
 > There wasn't much         of interest in      her     speech   .
-# R+    VB     NSg/I/J/R/Dq P  NSg/VB+  NPr/J/P ISg/D$+ N🅪Sg/VB+ .
+# R+    VB     NSg/I/J/R/Dq P  N🅪Sg/VB+ NPr/J/P ISg/D$+ N🅪Sg/VB+ .
 > He       hasn't got an  original idea in      him  .
 # NPr/ISg+ V3     VB  D/P NSg/J    NSg+ NPr/J/P ISg+ .
 > You    are one        in      a   million .

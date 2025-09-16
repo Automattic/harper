@@ -89,7 +89,7 @@
 > all          right    at    the end     ; it       is  what   preyed on  Gatsby , what   foul     dust   floated in      the
 # NSg/I/J/C/Dq NPr/VB/J NSg/P D   NSg/VB+ . NPr/ISg+ VL3 NSg/I+ VP/J   J/P NPr    . NSg/I+ NSg/VB/J Nᴹ/VB+ VP/J    NPr/J/P D
 > wake   of his     dreams  that          temporarily closed out          my  interest in      the abortive
-# NPr/VB P  ISg/D$+ NPl/V3+ NSg/I/C/Ddem+ R           VP/J   NSg/VB/J/R/P D$+ NSg/VB+  NPr/J/P D   NSg/VB/J
+# NPr/VB P  ISg/D$+ NPl/V3+ NSg/I/C/Ddem+ R           VP/J   NSg/VB/J/R/P D$+ N🅪Sg/VB+ NPr/J/P D   NSg/VB/J
 > sorrows and  short      - winded elations of men  .
 # NPl/V3+ VB/C NPr/VB/J/P . VP/J   NPl      P  NPl+ .
 >
@@ -1237,7 +1237,7 @@
 >
 #
 > Their interest rather     touched me       and  made them     less       remotely rich     — nevertheless ,
-# D$+   NSg/VB+  NPr/VB/J/R VP/J    NPr/ISg+ VB/C VB   NSg/IPl+ VB/J/R/C/P R        NPr/VB/J . R            .
+# D$+   N🅪Sg/VB+ NPr/VB/J/R VP/J    NPr/ISg+ VB/C VB   NSg/IPl+ VB/J/R/C/P R        NPr/VB/J . R            .
 > I       was confused and  a   little     disgusted as    I       drove   away . It       seemed to me       that         the
 # ISg/#r+ VPt VP/J     VB/C D/P NPr/I/J/Dq VP/J      NSg/R ISg/#r+ NSg/VPt VB/J . NPr/ISg+ VP/J   P  NPr/ISg+ NSg/I/C/Ddem D+
 > thing for Daisy to do      was to rush     out          of the house   , child   in      arms    — but     apparently
@@ -2493,7 +2493,7 @@
 > came      out          of the house   and  stood at    the head     of the marble    steps   , leaning a
 # NSg/VPt/P NSg/VB/J/R/P P  D+  NPr/VB+ VB/C VB    NSg/P D   NPr/VB/J P  D+  NSg/VB/J+ NPl/V3+ . Nᴹ/Vg/J D/P
 > little     backward and  looking with contemptuous interest down        into the garden    .
-# NPr/I/J/Dq NSg/J    VB/C Nᴹ/Vg/J P    J            NSg/VB+  N🅪Sg/VB/J/P P    D   NSg/VB/J+ .
+# NPr/I/J/Dq NSg/J    VB/C Nᴹ/Vg/J P    J            N🅪Sg/VB+ N🅪Sg/VB/J/P P    D   NSg/VB/J+ .
 >
 #
 > Welcome  or    not     , I       found  it       necessary to attach myself to some      one         before I
@@ -5083,7 +5083,7 @@
 >
 #
 > “ Well     , this    would interest you    . It       wouldn’t take   up         much         of your time       and  you
-# . NSg/VB/J . I/Ddem+ VXB   NSg/VB   ISgPl+ . NPr/ISg+ VXB      NSg/VB NSg/VB/J/P NSg/I/J/R/Dq P  D$+  N🅪Sg/VB/J+ VB/C ISgPl+
+# . NSg/VB/J . I/Ddem+ VXB   N🅪Sg/VB  ISgPl+ . NPr/ISg+ VXB      NSg/VB NSg/VB/J/P NSg/I/J/R/Dq P  D$+  N🅪Sg/VB/J+ VB/C ISgPl+
 > might    pick   up         a   nice     bit     of money   . It       happens to be      a   rather     confidential sort
 # Nᴹ/VXB/J NSg/VB NSg/VB/J/P D/P NPr/VB/J NSg/VPt P  N🅪Sg/J+ . NPr/ISg+ V3      P  NSg/VXB D/P NPr/VB/J/R J            NSg/VB
 > of thing . ”
@@ -6921,7 +6921,7 @@
 >
 #
 > He       talked a    lot     about the past       , and  I       gathered that         he       wanted to recover
-# NPr/ISg+ VP/J   D/P+ NPr/VB+ J/P   D   NSg/VB/J/P . VB/C ISg/#r+ VP/J     NSg/I/C/Ddem NPr/ISg+ VP/J   P  NSg/VB/J
+# NPr/ISg+ VP/J   D/P+ NPr/VB+ J/P   D   NSg/VB/J/P . VB/C ISg/#r+ VP/J     NSg/I/C/Ddem NPr/ISg+ VP/J   P  N🅪Sg/VB/J
 > something   , some     idea of himself perhaps , that          had gone    into loving   Daisy . His
 # NSg/I/VB/J+ . I/J/R/Dq NSg  P  ISg+    NSg/R   . NSg/I/C/Ddem+ VB  VPp/J/P P    Nᴹ/Vg/J+ NPr+  . ISg/D$+
 > life     had been    confused and  disordered since then    , but     if    he       could   once  return to
@@ -10509,7 +10509,7 @@
 > I       was responsible , because no    one         else    was interested — interested , I       mean     , with
 # ISg/#r+ VPt NSg/J       . C/P     NPr/P NSg/I/VB/J+ NSg/J/C VPt VP/J       . VP/J       . ISg/#r+ NSg/VB/J . P
 > that         intense personal interest to which every one         has some     vague    right    at    the
-# NSg/I/C/Ddem J       NSg/J    NSg/VB+  P  I/C+  Dq    NSg/I/VB/J+ V3  I/J/R/Dq NSg/VB/J NPr/VB/J NSg/P D
+# NSg/I/C/Ddem J       NSg/J    N🅪Sg/VB+ P  I/C+  Dq    NSg/I/VB/J+ V3  I/J/R/Dq NSg/VB/J NPr/VB/J NSg/P D
 > end     .
 # NSg/VB+ .
 >
@@ -11168,8 +11168,8 @@
 # . NSg/VB NSg/J/R . I/Ddem+ VL3 D/P NSg/VB NPr/ISg+ VB  NSg/I/C NPr/ISg+ VPt D/P NSg/VB . NPr/ISg+ VB/J NPl/V3 ISgPl+ . .
 >
 #
-> He       opened it       at    the back     cover    and  turned it       around for me       to see    . On  the last
-# NPr/ISg+ VP/J   NPr/ISg+ NSg/P D   NSg/VB/J NSg/VB/J VB/C VP/J   NPr/ISg+ J/P    C/P NPr/ISg+ P  NSg/VB . J/P D   NSg/VB/J
+> He       opened it       at    the back     cover     and  turned it       around for me       to see    . On  the last
+# NPr/ISg+ VP/J   NPr/ISg+ NSg/P D   NSg/VB/J N🅪Sg/VB/J VB/C VP/J   NPr/ISg+ J/P    C/P NPr/ISg+ P  NSg/VB . J/P D   NSg/VB/J
 > fly       - leaf    was printed the word    SCHEDULE , and  the date     September 12 , 1906 . And
 # NSg/VB/J+ . NSg/VB+ VPt VP/J    D+  NSg/VB+ NSg/VB+  . VB/C D+  N🅪Sg/VB+ NPr+      #  . #    . VB/C
 > underneath :

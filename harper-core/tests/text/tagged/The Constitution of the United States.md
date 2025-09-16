@@ -470,8 +470,8 @@
 #
 >
 #
-> To constitute Tribunals inferior to the supreme  Court     ;
-# P  NSg/VB     NPl       NSg/J    P  D   NSg/VB/J NSg/VB/J+ .
+> To constitute Tribunals inferior to the supreme  Court      ;
+# P  NSg/VB     NPl       NSg/J    P  D   NSg/VB/J N🅪Sg/VB/J+ .
 >
 #
 >
@@ -1024,8 +1024,8 @@
 # NPl/V3+  . VP/J/C   NSg NPl/V3 P  D+  NPl+     NSg/VB/J+ VB+    . VB/C NPr/ISg+ VXB
 > nominate , and  by      and  with the Advice and  Consent of the Senate , shall appoint
 # VB/J     . VB/C NSg/J/P VB/C P    D   Nᴹ+    VB/C N🅪Sg/VB P  D   NPr+   . VXB   VB
-> Ambassadors , other    public  Ministers and  Consuls , Judges   of the supreme  Court     ,
-# NPl+        . NSg/VB/J Nᴹ/VB/J NPl/V3+   VB/C NPl     . NPrPl/V3 P  D   NSg/VB/J NSg/VB/J+ .
+> Ambassadors , other    public  Ministers and  Consuls , Judges   of the supreme  Court      ,
+# NPl+        . NSg/VB/J Nᴹ/VB/J NPl/V3+   VB/C NPl     . NPrPl/V3 P  D   NSg/VB/J N🅪Sg/VB/J+ .
 > and  all          other    Officers of the United States    , whose Appointments are not     herein
 # VB/C NSg/I/J/C/Dq NSg/VB/J NPl/V3   P  D   VP/J   NPrPl/V3+ . I+    NPl+         VB  NSg/R/C R
 > otherwise provided for , and  which shall be      established by      Law      : but     the Congress
@@ -1098,8 +1098,8 @@
 #
 > The judicial Power     of the United States    , shall be      vested in
 # D   NSg/J    N🅪Sg/VB/J P  D+  VP/J   NPrPl/V3+ . VXB   NSg/VXB VP/J   NPr/J/P
-> one        supreme  Court     , and  in      such  inferior Courts  as    the Congress may     from time       to
-# NSg/I/VB/J NSg/VB/J NSg/VB/J+ . VB/C NPr/J/P NSg/I NSg/J+   NPl/V3+ NSg/R D+  NPr/VB+  NPr/VXB P    N🅪Sg/VB/J+ P
+> one        supreme  Court      , and  in      such  inferior Courts  as    the Congress may     from time       to
+# NSg/I/VB/J NSg/VB/J N🅪Sg/VB/J+ . VB/C NPr/J/P NSg/I NSg/J+   NPl/V3+ NSg/R D+  NPr/VB+  NPr/VXB P    N🅪Sg/VB/J+ P
 > time      ordain and  establish . The Judges    , both   of the supreme  and  inferior Courts  ,
 # N🅪Sg/VB/J VB     VB/C VB        . D+  NPrPl/V3+ . I/C/Dq P  D   NSg/VB/J VB/C NSg/J+   NPl/V3+ .
 > shall hold     their Offices during good      Behaviour  , and  shall , at    stated Times   ,
@@ -1134,10 +1134,10 @@
 #
 > In      all           Cases   affecting Ambassadors , other     public   Ministers and  Consuls , and
 # NPr/J/P NSg/I/J/C/Dq+ NPl/V3+ Nᴹ/Vg/J   NPl+        . NSg/VB/J+ Nᴹ/VB/J+ NPl/V3+   VB/C NPl     . VB/C
-> those  in      which a   State    shall be      Party     , the supreme  Court     shall have    original
-# I/Ddem NPr/J/P I/C+  D/P N🅪Sg/VB+ VXB   NSg/VXB NSg/VB/J+ . D   NSg/VB/J NSg/VB/J+ VXB   NSg/VXB NSg/J
-> Jurisdiction . In      all          the other     Cases   before mentioned , the supreme   Court     shall
-# N🅪Sg+        . NPr/J/P NSg/I/J/C/Dq D+  NSg/VB/J+ NPl/V3+ C/P    VP/J      . D+  NSg/VB/J+ NSg/VB/J+ VXB
+> those  in      which a   State    shall be      Party     , the supreme  Court      shall have    original
+# I/Ddem NPr/J/P I/C+  D/P N🅪Sg/VB+ VXB   NSg/VXB NSg/VB/J+ . D   NSg/VB/J N🅪Sg/VB/J+ VXB   NSg/VXB NSg/J
+> Jurisdiction . In      all          the other     Cases   before mentioned , the supreme   Court      shall
+# N🅪Sg+        . NPr/J/P NSg/I/J/C/Dq D+  NSg/VB/J+ NPl/V3+ C/P    VP/J      . D+  NSg/VB/J+ N🅪Sg/VB/J+ VXB
 > have    appellate Jurisdiction , both   as    to Law     and  Fact , with such  Exceptions , and
 # NSg/VXB J         N🅪Sg+        . I/C/Dq NSg/R P  N🅪Sg/VB VB/C NSg+ . P    NSg/I NPl+       . VB/C
 > under   such  Regulations as    the Congress shall make   .
@@ -1164,8 +1164,8 @@
 # Nᴹ/Vg/J N🅪Sg/VB+ C/P     NSg/IPl+ . NPr/C NPr/J/P Nᴹ/Vg/J  P  D$+   NPl/V3+ . Nᴹ/Vg/J NSg/IPl+ N🅪Sg/VB VB/C
 > Comfort  . No     Person  shall be      convicted of Treason unless on  the Testimony of two
 # N🅪Sg/VB+ . NPr/P+ NSg/VB+ VXB   NSg/VXB VP/J      P  NSg     C      J/P D   NSg       P  NSg
-> Witnesses to the same overt Act     , or    on  Confession in      open     Court     .
-# NPl/V3+   P  D   I/J  NSg/J NPr/VB+ . NPr/C J/P N🅪Sg+      NPr/J/P NSg/VB/J NSg/VB/J+ .
+> Witnesses to the same overt Act     , or    on  Confession in      open     Court      .
+# NPl/V3+   P  D   I/J  NSg/J NPr/VB+ . NPr/C J/P N🅪Sg+      NPr/J/P NSg/VB/J N🅪Sg/VB/J+ .
 >
 #
 > The Congress shall have    Power      to declare the Punishment of Treason , but     no
@@ -1230,8 +1230,8 @@
 # NPr/J/P NPl/V3 NSg/P NSg/VB/J+ N🅪Sg/VB+ . NSg/C D   N🅪Sg/VB+ NPr/J/P N🅪Sg+       VXB   VB     NSg+
 > dollars , the right    of trial     by      jury      shall be      preserved , and  no     fact tried by      a
 # NPl+    . D   NPr/VB/J P  NSg/VB/J+ NSg/J/P NSg/VB/J+ VXB   NSg/VXB VP/J      . VB/C NPr/P+ NSg+ VP/J  NSg/J/P D/P+
-> jury      , shall be      otherwise reexamined in      any    court    of the United States    , than
-# NSg/VB/J+ . VXB   NSg/VXB J         VP/J       NPr/J/P I/R/Dq NSg/VB/J P  D   VP/J   NPrPl/V3+ . C/P
+> jury      , shall be      otherwise reexamined in      any    court     of the United States    , than
+# NSg/VB/J+ . VXB   NSg/VXB J         VP/J       NPr/J/P I/R/Dq N🅪Sg/VB/J P  D   VP/J   NPrPl/V3+ . C/P
 > according to the rules  of the common   law      .
 # Nᴹ/Vg/J   P  D   NPl/V3 P  D   NSg/VB/J N🅪Sg/VB+ .
 >
