@@ -1201,7 +1201,7 @@
 > of war     or    public  danger      ; nor   shall any    person  be      subject  for the same offense
 # P  N🅪Sg/VB NPr/C Nᴹ/VB/J N🅪Sg/VB/JC+ . NSg/C VXB   I/R/Dq NSg/VB+ NSg/VXB NSg/VB/J C/P D   I/J  N🅪Sg+
 > to be      twice put     in      jeopardy of life    or    limb    ; nor   shall be      compelled in      any
-# P  NSg/VXB R     NSg/VBP NPr/J/P NSg/VB   P  N🅪Sg/VB NPr/C NSg/VB+ . NSg/C VXB   NSg/VXB VB/J      NPr/J/P I/R/Dq
+# P  NSg/VXB R     NSg/VBP NPr/J/P NSg/VB   P  N🅪Sg/VB NPr/C NSg/VB+ . NSg/C VXB   NSg/VXB VP/J      NPr/J/P I/R/Dq
 > criminal case       to be      a   witness against himself , nor   be      deprived of life     ,
 # NSg/J    NPr🅪Sg/VB+ P  NSg/VXB D/P NSg/VB+ C/P     ISg+    . NSg/C NSg/VXB VP/J     P  N🅪Sg/VB+ .
 > liberty , or    property , without due   process of law      ; nor   shall private  property be

@@ -635,7 +635,7 @@
 > Before I       could   reply   that          he       was my  neighbor     dinner   was announced ; wedging his
 # C/P    ISg/#r+ NSg/VXB NSg/VB+ NSg/I/C/Ddem+ NPr/ISg+ VPt D$+ NSg/VB/J/Am+ N🅪Sg/VB+ VPt VP/J      . Nᴹ/Vg/J ISg/D$+
 > tense    arm       imperatively under   mine      , Tom     Buchanan compelled me       from the room       as
-# NSg/VB/J NSg/VB/J+ R            NSg/J/P NSg/I/VB+ . NPr/VB+ NPr+     VB/J      NPr/ISg+ P    D   N🅪Sg/VB/J+ NSg/R
+# NSg/VB/J NSg/VB/J+ R            NSg/J/P NSg/I/VB+ . NPr/VB+ NPr+     VP/J      NPr/ISg+ P    D   N🅪Sg/VB/J+ NSg/R
 > though he       were    moving  a   checker to another square   .
 # VB/C   NPr/ISg+ NSg/VPt Nᴹ/Vg/J D/P NSg/VB  P  I/D     NSg/VB/J .
 >
@@ -831,7 +831,7 @@
 > For a    moment the last      sunshine fell      with romantic affection upon her     glowing
 # C/P D/P+ NSg+   D+  NSg/VB/J+ Nᴹ/J+    NSg/VPt/J P    NSg/J+   Nᴹ+       P    ISg/D$+ Nᴹ/Vg/J
 > face    ; her     voice   compelled me       forward  breathlessly as    I       listened — then    the glow
-# NSg/VB+ . ISg/D$+ NSg/VB+ VB/J      NPr/ISg+ NSg/VB/J R            NSg/R ISg/#r+ VP/J     . NSg/J/C D   NSg/VB+
+# NSg/VB+ . ISg/D$+ NSg/VB+ VP/J      NPr/ISg+ NSg/VB/J R            NSg/R ISg/#r+ VP/J     . NSg/J/C D   NSg/VB+
 > faded , each light      deserting her     with lingering regret   , like         children leaving a
 # J     . Dq   N🅪Sg/VB/J+ Nᴹ/Vg/J   ISg/D$+ P    Nᴹ/Vg/J   N🅪Sg/VB+ . NSg/VB/J/C/P NPl+     Nᴹ/Vg/J D/P
 > pleasant street    at    dusk     .
@@ -6471,7 +6471,7 @@
 > people  , or    at    least the same sort   of people  , the same profusion of champagne  ,
 # NPl/VB+ . NPr/C NSg/P NSg/J D   I/J  NSg/VB P  NPl/VB+ . D   I/J  N🅪Sg/VB   P  N🅪Sg/VB/J+ .
 > the same many       - colored     , many       - keyed commotion , but     I       felt      an  unpleasantness in      the
-# D   I/J  NSg/I/J/Dq . NSg/VP/J/Am . NSg/I/J/Dq . VP/J  NSg       . NSg/C/P ISg/#r+ N🅪Sg/VB/J D/P NSg            NPr/J/P D
+# D   I/J  NSg/I/J/Dq . NSg/VP/J/Am . NSg/I/J/Dq . VP/J  N🅪Sg      . NSg/C/P ISg/#r+ N🅪Sg/VB/J D/P NSg            NPr/J/P D
 > air      , a   pervading harshness that          hadn’t been    there before . Or    perhaps I       had
 # N🅪Sg/VB+ . D/P Nᴹ/Vg/J   NSg       NSg/I/C/Ddem+ VB     NSg/VPp R+    C/P    . NPr/C NSg/R   ISg/#r+ VB
 > merely grown used to it       , grown to accept   West      Egg      as    a    world   complete in      itself ,
@@ -9399,7 +9399,7 @@
 >
 #
 > “ You    wait   here    , ” I       said . “ I’ll see    if    there’s any    sign   of a   commotion . ”
-# . ISgPl+ NSg/VB NSg/J/R . . ISg/#r+ VP/J . . K    NSg/VB NSg/C K       I/R/Dq NSg/VB P  D/P NSg       . .
+# . ISgPl+ NSg/VB NSg/J/R . . ISg/#r+ VP/J . . K    NSg/VB NSg/C K       I/R/Dq NSg/VB P  D/P N🅪Sg      . .
 >
 #
 > I       walked back     along the border of the lawn    , traversed the gravel   softly , and
@@ -11629,7 +11629,7 @@
 > all          human    dreams  ; for a   transitory enchanted moment man       must   have    held his
 # NSg/I/J/C/Dq NSg/VB/J NPl/V3+ . C/P D/P J          VP/J      NSg+   NPr/VB/J+ NSg/VB NSg/VXB VB   ISg/D$+
 > breath     in      the presence of this   continent , compelled into an  esthetic
-# N🅪Sg/VB/J+ NPr/J/P D   N🅪Sg/VB  P  I/Ddem NPr/J+    . VB/J      P    D/P ?
+# N🅪Sg/VB/J+ NPr/J/P D   N🅪Sg/VB  P  I/Ddem NPr/J+    . VP/J      P    D/P ?
 > contemplation he       neither understood nor   desired , face    to face   for the last     time
 # Nᴹ            NPr/ISg+ I/C     VP/J       NSg/C VP/J    . NSg/VB+ P  NSg/VB C/P D   NSg/VB/J N🅪Sg/VB/J+
 > in      history with something   commensurate to his     capacity for wonder  .

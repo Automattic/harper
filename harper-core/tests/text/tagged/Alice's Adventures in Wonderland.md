@@ -699,7 +699,7 @@
 > in      a   sorrowful tone       , “ I’m afraid I’ve offended it       again ! ” For the Mouse   was
 # NPr/J/P D/P J         N🅪Sg/I/VB+ . . K   J      K    VP/J     NPr/ISg+ P     . . C/P D+  NSg/VB+ VPt
 > swimming away from her     as    hard   as    it       could   go       , and  making  quite a   commotion in
-# NSg/VB   VB/J P    ISg/D$+ NSg/R N🅪Sg/J NSg/R NPr/ISg+ NSg/VXB NSg/VB/J . VB/C Nᴹ/Vg/J R     D/P NSg       NPr/J/P
+# NSg/VB   VB/J P    ISg/D$+ NSg/R N🅪Sg/J NSg/R NPr/ISg+ NSg/VXB NSg/VB/J . VB/C Nᴹ/Vg/J R     D/P N🅪Sg      NPr/J/P
 > the pool    as    it       went    .
 # D   NSg/VB+ NSg/R NPr/ISg+ NSg/VPt .
 >
