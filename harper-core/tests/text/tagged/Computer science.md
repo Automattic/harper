@@ -707,7 +707,7 @@
 > software in      order   to ensure it       is  of high      quality , affordable , maintainable , and
 # Nᴹ+      NPr/J/P NSg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J+ N🅪Sg/J+ . J          . J            . VB/C
 > fast     to build  . It       is  a   systematic approach to software design   , involving the
-# NSg/VB/J P  NSg/VB . NPr/ISg+ VL3 D/P J          NSg/VB   P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
+# NSg/VB/J P  NSg/VB . NPr/ISg+ VL3 D/P J          N🅪Sg/VB  P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
 > application of engineering practices to software . Software engineering deals
 # NSg         P  Nᴹ/Vg/J+    NPl/V3+   P  Nᴹ       . Nᴹ+      Nᴹ/Vg/J+    NPl/V3+
 > with the organizing and  analyzing of software — it       does   not     just deal     with the

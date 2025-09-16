@@ -31,7 +31,7 @@
 > Representatives . Congress shall make   no     law      respecting an  establishment of
 # NPl+            . NPr/VB+  VXB   NSg/VB NPr/P+ N🅪Sg/VB+ Nᴹ/Vg/J    D/P NSg           P
 > religion , or    prohibiting the free     exercise thereof ; or    abridging the freedom of
-# NSg/VB+  . NPr/C Nᴹ/Vg/J     D+  NSg/VB/J NSg/VB+  R       . NPr/C Nᴹ/Vg/J   D   N🅪Sg    P
+# NSg/VB+  . NPr/C Nᴹ/Vg/J     D+  NSg/VB/J N🅪Sg/VB+ R       . NPr/C Nᴹ/Vg/J   D   N🅪Sg    P
 > speech   , or    of the press   ; or    the right    of the people  peaceably to assemble , and
 # N🅪Sg/VB+ . NPr/C P  D   NSg/VB+ . NPr/C D   NPr/VB/J P  D   NPl/VB+ R         P  VB       . VB/C
 > to petition the government for a   redress of grievances .
@@ -199,7 +199,7 @@
 > The Senate shall chuse their other    Officers , and  also a   President pro     tempore ,
 # D+  NPr+   VXB   ?     D$+   NSg/VB/J NPl/V3+  . VB/C R/C  D/P NSg/VB+   NSg/J/P ?       .
 > in      the Absence of the Vice        President , or    when    he       shall exercise the Office of
-# NPr/J/P D   N🅪Sg    P  D   NSg/VB/J/P+ NSg/VB+   . NPr/C NSg/I/C NPr/ISg+ VXB   NSg/VB   D   NSg/VB P
+# NPr/J/P D   N🅪Sg    P  D   NSg/VB/J/P+ NSg/VB+   . NPr/C NSg/I/C NPr/ISg+ VXB   N🅪Sg/VB  D   NSg/VB P
 > President of the United States    .
 # NSg/VB    P  D   VP/J   NPrPl/V3+ .
 >
@@ -551,13 +551,13 @@
 >
 #
 > To exercise exclusive Legislation in      all           Cases   whatsoever , over    such  District
-# P  NSg/VB   NSg/J     NSg+        NPr/J/P NSg/I/J/C/Dq+ NPl/V3+ I          . NSg/J/P NSg/I NSg/VB/J+
+# P  N🅪Sg/VB  NSg/J     NSg+        NPr/J/P NSg/I/J/C/Dq+ NPl/V3+ I          . NSg/J/P NSg/I NSg/VB/J+
 > ( not     exceeding ten  Miles  square   ) as    may     , by      Cession of particular States    , and
 # . NSg/R/C Nᴹ/Vg/J   NSg+ NPrPl+ NSg/VB/J . NSg/R NPr/VXB . NSg/J/P NSg     P  NSg/J      NPrPl/V3+ . VB/C
 > the Acceptance of Congress , become the Seat   of the Government of the United
 # D   N🅪Sg       P  NPr/VB+  . VBPp   D   NSg/VB P  D   N🅪Sg       P  D   VP/J
 > States    , and  to exercise like         Authority over    all          Places  purchased by      the Consent
-# NPrPl/V3+ . VB/C P  NSg/VB   NSg/VB/J/C/P N🅪Sg+     NSg/J/P NSg/I/J/C/Dq NPl/V3+ VP/J      NSg/J/P D   N🅪Sg/VB
+# NPrPl/V3+ . VB/C P  N🅪Sg/VB  NSg/VB/J/C/P N🅪Sg+     NSg/J/P NSg/I/J/C/Dq NPl/V3+ VP/J      NSg/J/P D   N🅪Sg/VB
 > of the Legislature of the State    in      which the Same shall be      , for the Erection of
 # P  D   NSg         P  D   N🅪Sg/VB+ NPr/J/P I/C+  D   I/J  VXB   NSg/VXB . C/P D   NSg      P
 > Forts  , Magazines , Arsenals , dock    - Yards   , and  other    needful Buildings ; — And
@@ -1351,7 +1351,7 @@
 > Invasion ; and  on  Application of the Legislature , or    of the Executive ( when    the
 # NSg+     . VB/C J/P NSg         P  D+  NSg+        . NPr/C P  D   NSg/J     . NSg/I/C D+
 > Legislature cannot be      convened ) against domestic Violence .
-# NSg+        NSg/VB NSg/VXB VP/J     . C/P     NSg/J    NSg/VB+  .
+# NSg+        NSg/VB NSg/VXB VP/J     . C/P     NSg/J    Nᴹ/VB+   .
 >
 #
 > Section . 5 .

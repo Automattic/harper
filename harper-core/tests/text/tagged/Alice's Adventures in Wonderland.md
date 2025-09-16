@@ -29,7 +29,7 @@
 > made her     feel     very sleepy and  stupid ) , whether the pleasure of making  a
 # VB   ISg/D$+ NSg/I/VB J/R  NSg/J  VB/C NSg/J  . . I/C     D   NSg/VB   P  Nᴹ/Vg/J D/P+
 > daisy - chain   would be      worth    the trouble of getting up         and  picking the daisies ,
-# NPr+  . NSg/VB+ VXB   NSg/VXB NSg/VB/J D   NSg/VB  P  NSg/VB  NSg/VB/J/P VB/C Nᴹ/Vg/J D   NPl     .
+# NPr+  . NSg/VB+ VXB   NSg/VXB NSg/VB/J D   N🅪Sg/VB P  NSg/VB  NSg/VB/J/P VB/C Nᴹ/Vg/J D   NPl     .
 > when    suddenly a   White       Rabbit  with pink      eyes    ran     close    by      her     .
 # NSg/I/C R        D/P NPr🅪Sg/VB/J NSg/VB+ P    N🅪Sg/VB/J NPl/V3+ NSg/VPt NSg/VB/J NSg/J/P ISg/D$+ .
 >
@@ -387,7 +387,7 @@
 > stockings for you    now        , dears   ? I’m sure I       shan’t be      able     ! I       shall be      a    great  deal
 # NPl/V3+   C/P ISgPl+ NPr/VB/J/C . NPl/V3+ . K   J    ISg/#r+ VB     NSg/VXB NSg/VB/J . ISg/#r+ VXB   NSg/VXB D/P+ NSg/J+ NSg/VB/J+
 > too far      off        to trouble myself about you    : you    must   manage the best        way    you
-# R   NSg/VB/J NSg/VB/J/P P  NSg/VB  ISg+   J/P   ISgPl+ . ISgPl+ NSg/VB NSg/VB D+  NPr/VXB/JS+ NSg/J+ ISgPl+
+# R   NSg/VB/J NSg/VB/J/P P  N🅪Sg/VB ISg+   J/P   ISgPl+ . ISgPl+ NSg/VB NSg/VB D+  NPr/VXB/JS+ NSg/J+ ISgPl+
 > can     ; — but     I       must   be      kind  to them     , ” thought Alice , “ or    perhaps they won’t walk   the
 # NPr/VXB . . NSg/C/P ISg/#r+ NSg/VB NSg/VXB NSg/J P  NSg/IPl+ . . N🅪Sg/VP NPr+  . . NPr/C NSg/R   IPl+ VB    NSg/VB D
 > way    I       want   to go       ! Let     me       see    : I’ll give   them     a   new      pair   of boots   every
@@ -1998,8 +1998,8 @@
 # NSg/I/VB+ NPr/I/VB/J/R/Dq NSg/VB/C/P D+  NSg/VB+ VB  VP/J     .
 >
 #
-> “ As    if    it       wasn’t trouble enough hatching the eggs    , ” said the Pigeon  ; “ but     I       must
-# . NSg/R NSg/C NPr/ISg+ VB     NSg/VB+ NSg/I  Nᴹ/Vg/J  D   NPl/V3+ . . VP/J D   NSg/VB+ . . NSg/C/P ISg/#r+ NSg/VB
+> “ As    if    it       wasn’t trouble  enough hatching the eggs    , ” said the Pigeon  ; “ but     I       must
+# . NSg/R NSg/C NPr/ISg+ VB     N🅪Sg/VB+ NSg/I  Nᴹ/Vg/J  D   NPl/V3+ . . VP/J D   NSg/VB+ . . NSg/C/P ISg/#r+ NSg/VB
 > be      on  the look    - out          for serpents night   and  day     ! Why    , I       haven’t had a   wink   of
 # NSg/VXB J/P D   NSg/VB+ . NSg/VB/J/R/P C/P NPl/V3   N🅪Sg/VB VB/C NPr🅪Sg+ . NSg/VB . ISg/#r+ VB      VB  D/P NSg/VB P
 > sleep    these  three weeks  ! ”
@@ -2299,7 +2299,7 @@
 >
 #
 > She  said the last     word   with such   sudden violence that          Alice quite jumped ; but
-# ISg+ VP/J D   NSg/VB/J NSg/VB P    NSg/I+ NSg/J+ NSg/VB+  NSg/I/C/Ddem+ NPr+  R     VP/J   . NSg/C/P
+# ISg+ VP/J D   NSg/VB/J NSg/VB P    NSg/I+ NSg/J+ Nᴹ/VB+   NSg/I/C/Ddem+ NPr+  R     VP/J   . NSg/C/P
 > she  saw     in      another moment that          it       was addressed to the baby      , and  not     to her     , so
 # ISg+ NSg/VPt NPr/J/P I/D+    NSg+   NSg/I/C/Ddem+ NPr/ISg+ VPt VP/J      P  D+  NSg/VB/J+ . VB/C NSg/R/C P  ISg/D$+ . NSg/I/J/C
 > she  took courage , and  went    on  again : —
@@ -4064,12 +4064,12 @@
 # VP/J    N🅪Sg/I/VB+ .
 >
 #
-> “ Pray don’t trouble yourself to say    it       any    longer than that          , ” said Alice .
-# . VB   VB    NSg/VB+ ISg+     P  NSg/VB NPr/ISg+ I/R/Dq NSg/JC C/P  NSg/I/C/Ddem+ . . VP/J NPr+  .
+> “ Pray don’t trouble  yourself to say    it       any    longer than that          , ” said Alice .
+# . VB   VB    N🅪Sg/VB+ ISg+     P  NSg/VB NPr/ISg+ I/R/Dq NSg/JC C/P  NSg/I/C/Ddem+ . . VP/J NPr+  .
 >
 #
-> “ Oh     , don’t talk    about trouble ! ” said the Duchess . “ I       make   you    a   present  of
-# . NPr/VB . VB    N🅪Sg/VB J/P   NSg/VB+ . . VP/J D   NSg/VB  . . ISg/#r+ NSg/VB ISgPl+ D/P NSg/VB/J P
+> “ Oh     , don’t talk    about trouble  ! ” said the Duchess . “ I       make   you    a   present  of
+# . NPr/VB . VB    N🅪Sg/VB J/P   N🅪Sg/VB+ . . VP/J D   NSg/VB  . . ISg/#r+ NSg/VB ISgPl+ D/P NSg/VB/J P
 > everything I’ve said as    yet      . ”
 # NSg/I/VB+  K    VP/J NSg/R NSg/VB/C . .
 >
@@ -5794,8 +5794,8 @@
 # N🅪Sg/Vg/J+ NPr/J/P NPr/ISg+ . . NSg/C/P NSg/I P  NSg/IPl+ VP/J      P  VB      D   N🅪Sg/VB/J+ .
 >
 #
-> “ If    there’s no    meaning    in      it       , ” said the King      , “ that          saves  a   world  of trouble ,
-# . NSg/C K       NPr/P N🅪Sg/Vg/J+ NPr/J/P NPr/ISg+ . . VP/J D   NPr/VB/J+ . . NSg/I/C/Ddem+ NPl/V3 D/P NSg/VB P  NSg/VB+ .
+> “ If    there’s no    meaning    in      it       , ” said the King      , “ that          saves  a   world  of trouble  ,
+# . NSg/C K       NPr/P N🅪Sg/Vg/J+ NPr/J/P NPr/ISg+ . . VP/J D   NPr/VB/J+ . . NSg/I/C/Ddem+ NPl/V3 D/P NSg/VB P  N🅪Sg/VB+ .
 > you    know   , as    we   needn’t try      to find   any    . And  yet      I       don’t know   , ” he       went    on  ,
 # ISgPl+ NSg/VB . NSg/R IPl+ VXB     NSg/VB/J P  NSg/VB I/R/Dq . VB/C NSg/VB/C ISg/#r+ VB    NSg/VB . . NPr/ISg+ NSg/VPt J/P .
 > spreading out          the verses on  his     knee    , and  looking at    them     with one        eye     ; “ I       seem

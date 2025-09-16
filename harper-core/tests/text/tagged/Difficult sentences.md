@@ -764,8 +764,8 @@
 # NPr/ISg+ NPr/VXB NSg/VB  J/P I/J+    NPl/V3+    .
 > A    curse   on  him  !
 # D/P+ NSg/VB+ J/P ISg+ .
-> Please don't tell   on  her     and  get    her     in      trouble .
-# VB     VB    NPr/VB J/P ISg/D$+ VB/C NSg/VB ISg/D$+ NPr/J/P NSg/VB+ .
+> Please don't tell   on  her     and  get    her     in      trouble  .
+# VB     VB    NPr/VB J/P ISg/D$+ VB/C NSg/VB ISg/D$+ NPr/J/P N🅪Sg/VB+ .
 >
 #
 > Verb
