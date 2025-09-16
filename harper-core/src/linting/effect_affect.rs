@@ -59,6 +59,14 @@ impl ExprLinter for EffectAffect {
         let first_following = following.next()?;
         let second_following = following.next();
 
+        if first_following
+            .kind
+            .is_auxiliary_verb()
+            || first_following.kind.is_linking_verb()
+        {
+            return None;
+        }
+
         // Avoid "to effect change", which uses the legitimate verb "effect".
         if let Some(prev) = preceding {
             if is_token_to(prev, source) && is_change_like(first_following, source) {
@@ -232,6 +240,60 @@ mod tests {
     fn ignores_effect_noun_phrase() {
         assert_lint_count(
             "The effect your plan had was dramatic.",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_effect_as_result_noun() {
+        assert_lint_count(
+            "The effect was immediate and obvious.",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_effect_followed_by_of_phrase() {
+        assert_lint_count(
+            "We measured the effect of caffeine on sleep.",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_side_effects_usage() {
+        assert_lint_count(
+            "Side effects may include mild nausea.",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_special_effects_phrase() {
+        assert_lint_count(
+            "She admired the special effects in the film.",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_effect_in_cause_and_effect() {
+        assert_lint_count(
+            "The diagram explains cause and effect relationships.",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_effects_with_pronoun_subject() {
+        assert_lint_count(
+            "Those effects were less severe than expected.",
             EffectAffect::default(),
             0,
         );
