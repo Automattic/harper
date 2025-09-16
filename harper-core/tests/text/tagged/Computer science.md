@@ -583,7 +583,7 @@
 > The use     of formal methods for software and  hardware design   is  motivated by      the
 # D   N🅪Sg/VB P  NSg/J  NPl/V3  C/P Nᴹ       VB/C Nᴹ+      N🅪Sg/VB+ VL3 VP/J      NSg/J/P D+
 > expectation that          , as    in      other     engineering disciplines , performing appropriate
-# NSg+        NSg/I/C/Ddem+ . NSg/R NPr/J/P NSg/VB/J+ Nᴹ/Vg/J+    NPl/V3+     . Nᴹ/Vg/J    VB/J+
+# N🅪Sg+       NSg/I/C/Ddem+ . NSg/R NPr/J/P NSg/VB/J+ Nᴹ/Vg/J+    NPl/V3+     . Nᴹ/Vg/J    VB/J+
 > mathematical analysis can     contribute to the reliability and  robustness of a
 # J+           N🅪Sg+    NPr/VXB NSg/VB     P  D+  Nᴹ+         VB/C NSg        P  D/P
 > design   . They form    an  important theoretical underpinning for software

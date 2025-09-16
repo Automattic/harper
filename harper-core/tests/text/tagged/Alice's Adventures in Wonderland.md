@@ -710,8 +710,8 @@
 # N🅪Sg/VB J/P   NPl/V3+ NPr/C NPl/V3+ I/C    . NSg/C ISgPl+ VB    NSg/VB/J/C/P NSg/IPl+ . . NSg/I/C D+  NSg/VB+ VP/J
 > this    , it       turned round      and  swam slowly back     to her     : its     face    was quite pale     ( with
 # I/Ddem+ . NPr/ISg+ VP/J   NSg/VB/J/P VB/C VPt  R      NSg/VB/J P  ISg/D$+ . ISg/D$+ NSg/VB+ VPt R     NSg/VB/J . P
-> passion , Alice thought ) , and  it       said in      a    low       trembling voice   , “ Let     us       get    to
-# NPr/VB+ . NPr+  N🅪Sg/VP . . VB/C NPr/ISg+ VP/J NPr/J/P D/P+ NSg/VB/J+ Nᴹ/Vg/J+  NSg/VB+ . . NSg/VBP NPr/IPl+ NSg/VB P
+> passion  , Alice thought ) , and  it       said in      a    low       trembling voice   , “ Let     us       get    to
+# NPrᴹ/VB+ . NPr+  N🅪Sg/VP . . VB/C NPr/ISg+ VP/J NPr/J/P D/P+ NSg/VB/J+ Nᴹ/Vg/J+  NSg/VB+ . . NSg/VBP NPr/IPl+ NSg/VB P
 > the shore   , and  then    I’ll tell   you    my  history , and  you’ll understand why    it       is  I
 # D+  NSg/VB+ . VB/C NSg/J/C K    NPr/VB ISgPl+ D$+ N🅪Sg+   . VB/C K      VB         NSg/VB NPr/ISg+ VL3 ISg/#r+
 > hate    cats   and  dogs    . ”
@@ -3666,8 +3666,8 @@
 # D+  NPl+    NSg/I/J/C/Dq+ VP/J+  NSg/P NSg/C C/P     Nᴹ/Vg/J C/P NPl/V3 . Nᴹ/VB/Comm  NSg/I/J/C/Dq D
 > while      , and  fighting for the hedgehogs ; and  in      a   very short      time       the Queen     was in
 # NSg/VB/C/P . VB/C Nᴹ/Vg/J  C/P D   NPl/V3    . VB/C NPr/J/P D/P J/R  NPr/VB/J/P N🅪Sg/VB/J+ D   NPr/VB/J+ VPt NPr/J/P
-> a   furious passion , and  went    stamping about , and  shouting “ Off        with his     head      ! ” or
-# D/P J       NPr/VB+ . VB/C NSg/VPt NSg      J/P   . VB/C Nᴹ/Vg/J+ . NSg/VB/J/P P    ISg/D$+ NPr/VB/J+ . . NPr/C
+> a   furious passion  , and  went    stamping about , and  shouting “ Off        with his     head      ! ” or
+# D/P J       NPrᴹ/VB+ . VB/C NSg/VPt NSg      J/P   . VB/C Nᴹ/Vg/J+ . NSg/VB/J/P P    ISg/D$+ NPr/VB/J+ . . NPr/C
 > “ Off        with her     head      ! ” about once  in      a    minute    .
 # . NSg/VB/J/P P    ISg/D$+ NPr/VB/J+ . . J/P   NSg/C NPr/J/P D/P+ NSg/VB/J+ .
 >
@@ -3798,8 +3798,8 @@
 #
 > Alice thought she  might    as    well     go       back     , and  see    how   the game      was going   on  , as
 # NPr+  N🅪Sg/VP ISg+ Nᴹ/VXB/J NSg/R NSg/VB/J NSg/VB/J NSg/VB/J . VB/C NSg/VB NSg/C D+  NSg/VB/J+ VPt Nᴹ/Vg/J J/P . NSg/R
-> she  heard the Queen’s voice   in      the distance , screaming with passion . She  had
-# ISg+ VP/J  D   NSg$    NSg/VB+ NPr/J/P D   N🅪Sg/VB+ . Nᴹ/Vg/J   P    NPr/VB+ . ISg+ VB
+> she  heard the Queen’s voice   in      the distance , screaming with passion  . She  had
+# ISg+ VP/J  D   NSg$    NSg/VB+ NPr/J/P D   N🅪Sg/VB+ . Nᴹ/Vg/J   P    NPrᴹ/VB+ . ISg+ VB
 > already heard her     sentence three of the players to be      executed for having  missed
 # R       VP/J  ISg/D$+ NSg/VB+  NSg   P  D+  NPl+    P  NSg/VXB VP/J     C/P Nᴹ/Vg/J VP/J
 > their turns  , and  she  did not     like         the look   of things at    all          , as    the game      was in
@@ -5741,7 +5741,7 @@
 > “ They told me       you    had been    to her     , And  mentioned me       to him  : She  gave me       a    good
 # . IPl+ VP   NPr/ISg+ ISgPl+ VB  NSg/VPp P  ISg/D$+ . VB/C VP/J      NPr/ISg+ P  ISg+ . ISg+ VB   NPr/ISg+ D/P+ NPr/VB/J+
 > character , But     said I       could   not     swim   .
-# NSg/VB+   . NSg/C/P VP/J ISg/#r+ NSg/VXB NSg/R/C NSg/VB .
+# N🅪Sg/VB+  . NSg/C/P VP/J ISg/#r+ NSg/VXB NSg/R/C NSg/VB .
 >
 #
 > He       sent   them     word    I       had not     gone    ( We   know   it       to be      true     ) : If    she  should push

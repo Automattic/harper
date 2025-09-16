@@ -86,8 +86,8 @@
 # D   NSg/J  . NSg/J      . VB/C NSg/J    NPl/V3+ NPr/VXB NSg/VXB VP/J          . NPr/J/P NSg/I/J/Dq+
 > languages words   are also marked for their " case       " ( role as    subject   , object  ,
 # NPl/V3+   NPl/V3+ VB  R/C  VP/J   C/P D$+   . NPr🅪Sg/VB+ . . NSg  NSg/R NSg/VB/J+ . NSg/VB+ .
-> etc. ) , grammatical gender     , and  so        on  ; while      verbs   are marked for tense    , aspect  ,
-# +    . . J+          N🅪Sg/VB/J+ . VB/C NSg/I/J/C J/P . NSg/VB/C/P NPl/V3+ VB  VP/J   C/P NSg/VB/J . NSg/VB+ .
+> etc. ) , grammatical gender     , and  so        on  ; while      verbs   are marked for tense    , aspect   ,
+# +    . . J+          N🅪Sg/VB/J+ . VB/C NSg/I/J/C J/P . NSg/VB/C/P NPl/V3+ VB  VP/J   C/P NSg/VB/J . N🅪Sg/VB+ .
 > and  other     things . In      some     tagging systems , different inflections of the same
 # VB/C NSg/VB/J+ NPl+   . NPr/J/P I/J/R/Dq NSg/Vg  NPl+    . NSg/J     NPl         P  D   I/J
 > root    word    will    get    different parts  of speech   , resulting in      a   large number     of

@@ -3959,7 +3959,7 @@
 > were    worn so        threadbare that         they evoked no    image    except that         of a   turbaned
 # NSg/VPt VB/J NSg/I/J/C J          NSg/I/C/Ddem IPl+ VP/J   NPr/P N🅪Sg/VB+ VB/C/P NSg/I/C/Ddem P  D/P VP/J
 > “ character ” leaking sawdust at    every pore   as    he       pursued a   tiger through the Bois
-# . NSg/VB+   . Nᴹ/Vg/J Nᴹ/VB+  NSg/P Dq    NSg/VB NSg/R NPr/ISg+ VP/J    D/P NSg+  NSg/J/P D   ?
+# . N🅪Sg/VB+  . Nᴹ/Vg/J Nᴹ/VB+  NSg/P Dq    NSg/VB NSg/R NPr/ISg+ VP/J    D/P NSg+  NSg/J/P D   ?
 > de   Boulogne .
 # NPr+ ?        .
 >
@@ -4467,7 +4467,7 @@
 > “ He       becomes very sentimental sometimes , ” explained Gatsby . “ This    is  one        of his
 # . NPr/ISg+ V3      J/R  J           R         . . VP/J      NPr    . . I/Ddem+ VL3 NSg/I/VB/J P  ISg/D$+
 > sentimental days . He’s quite a   character around New      York — a   denizen of Broadway . ”
-# J+          NPl+ . NSg$ R     D/P NSg/VB+   J/P    NSg/VB/J NPr+ . D/P NSg/VB  P  NPr/J+   . .
+# J+          NPl+ . NSg$ R     D/P N🅪Sg/VB+  J/P    NSg/VB/J NPr+ . D/P NSg/VB  P  NPr/J+   . .
 >
 #
 > “ Who    is  he       , anyhow , an   actor ? ”
@@ -5650,8 +5650,8 @@
 #
 > Instead of taking   the short      cut       along the Sound      we   went    down        to the road    and
 # R       P  NSg/Vg/J D   NPr/VB/J/P NSg/VBP/J P     D+  N🅪Sg/VB/J+ IPl+ NSg/VPt N🅪Sg/VB/J/P P  D+  N🅪Sg/J+ VB/C
-> entered by      the big   postern . With enchanting murmurs Daisy admired this   aspect  or
-# VP/J    NSg/J/P D   NSg/J ?       . P    Nᴹ/Vg/J    NPl/V3  NPr+  VP/J    I/Ddem NSg/VB+ NPr/C
+> entered by      the big   postern . With enchanting murmurs Daisy admired this   aspect   or
+# VP/J    NSg/J/P D   NSg/J ?       . P    Nᴹ/Vg/J    NPl/V3  NPr+  VP/J    I/Ddem N🅪Sg/VB+ NPr/C
 > that         of the feudal silhouette against the sky      , admired the gardens , the
 # NSg/I/C/Ddem P  D   J      NSg/VB+    C/P     D   N🅪Sg/VB+ . VP/J    D   NPl/V3+ . D
 > sparkling odor    of jonquils and  the frothy odor    of hawthorn and  plum       blossoms and
@@ -5974,8 +5974,8 @@
 # ISg/D$+ NSg/VB/J+ NSg/VB+ . NSg/C/P C/P     P  D   J        Nᴹ       P  ISg/D$+ N🅪Sg+    . NPr/ISg+ VB  VPp/J/P
 > beyond her     , beyond everything . He       had thrown himself into it       with a    creative
 # NSg/P  ISg/D$+ . NSg/P  NSg/I/VB+  . NPr/ISg+ VB  VB/J   ISg+    P    NPr/ISg+ P    D/P+ NSg/J+
-> passion , adding  to it       all          the time       , decking  it       out          with every bright    feather
-# NPr/VB+ . Nᴹ/Vg/J P  NPr/ISg+ NSg/I/J/C/Dq D+  N🅪Sg/VB/J+ . Nᴹ/Vg/J+ NPr/ISg+ NSg/VB/J/R/P P    Dq+   NPr/VB/J+ NSg/VB+
+> passion  , adding  to it       all          the time       , decking  it       out          with every bright    feather
+# NPrᴹ/VB+ . Nᴹ/Vg/J P  NPr/ISg+ NSg/I/J/C/Dq D+  N🅪Sg/VB/J+ . Nᴹ/Vg/J+ NPr/ISg+ NSg/VB/J/R/P P    Dq+   NPr/VB/J+ NSg/VB+
 > that          drifted his     way    . No    amount of fire      or    freshness can     challenge what   a    man
 # NSg/I/C/Ddem+ VP/J    ISg/D$+ NSg/J+ . NPr/P NSg/VB P  N🅪Sg/VB/J NPr/C NSg+      NPr/VXB N🅪Sg/VB   NSg/I+ D/P+ NPr/VB/J+
 > can     store  up         in      his     ghostly heart    .
@@ -7584,8 +7584,8 @@
 #
 > That          was it       . I’d never understood before . It       was full     of money   — that          was the
 # NSg/I/C/Ddem+ VPt NPr/ISg+ . K   R     VP/J       C/P    . NPr/ISg+ VPt NSg/VB/J P  N🅪Sg/J+ . NSg/I/C/Ddem+ VPt D
-> inexhaustible charm  that          rose      and  fell      in      it       , the jingle of it       , the cymbals ’
-# J             NSg/VB NSg/I/C/Ddem+ NPr/VPt/J VB/C NSg/VPt/J NPr/J/P NPr/ISg+ . D   NSg/VB P  NPr/ISg+ . D   NPl     .
+> inexhaustible charm   that          rose      and  fell      in      it       , the jingle of it       , the cymbals ’
+# J             N🅪Sg/VB NSg/I/C/Ddem+ NPr/VPt/J VB/C NSg/VPt/J NPr/J/P NPr/ISg+ . D   NSg/VB P  NPr/ISg+ . D   NPl     .
 > song of it       . . . . High     in      a   white       palace  the king’s daughter , the golden   girl    . .
 # N🅪Sg P  NPr/ISg+ . . . . NSg/VB/J NPr/J/P D/P NPr🅪Sg/VB/J NSg/VB+ D   NSg$   NSg+     . D   NPr/VB/J NSg/VB+ . .
 > . .
@@ -10481,7 +10481,7 @@
 > racy pasquinade — but     Catherine , who    might    have    said anything  , didn’t say    a   word    .
 # J    ?          . NSg/C/P NPr+      . NPr/I+ Nᴹ/VXB/J NSg/VXB VP/J NSg/I/VB+ . VB     NSg/VB D/P NSg/VB+ .
 > She  showed a   surprising amount of character about it       too — looked at    the coroner
-# ISg+ VP/J   D/P Nᴹ/Vg/J    NSg/VB P  NSg/VB+   J/P   NPr/ISg+ R   . VP/J   NSg/P D+  NSg+
+# ISg+ VP/J   D/P Nᴹ/Vg/J    NSg/VB P  N🅪Sg/VB+  J/P   NPr/ISg+ R   . VP/J   NSg/P D+  NSg+
 > with determined eyes    under   that          corrected brow   of hers , and  swore that         her
 # P    VP/J       NPl/V3+ NSg/J/P NSg/I/C/Ddem+ VP/J      NSg/VB P  ISg+ . VB/C VB    NSg/I/C/Ddem ISg/D$+
 > sister  had never seen    Gatsby , that         her     sister  was completely happy    with her

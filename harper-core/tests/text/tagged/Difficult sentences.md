@@ -751,7 +751,7 @@
 > I       had a    terrible thirst on  me       .
 # ISg/#r+ VB  D/P+ J+       Nᴹ/VB+ J/P NPr/ISg+ .
 > Have    pity    or    compassion on  him  .
-# NSg/VXB N🅪Sg/VB NPr/C NSg/VB+    J/P ISg+ .
+# NSg/VXB N🅪Sg/VB NPr/C Nᴹ/VB+     J/P ISg+ .
 > He's on  his     lunch    break   .
 # NSg$ J/P ISg/D$+ N🅪Sg/VB+ NSg/VB+ .
 > I'm on  nights  all          this   week   .
