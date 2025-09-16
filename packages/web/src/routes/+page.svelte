@@ -34,7 +34,7 @@ function agentHas(keyword) {
 	<Logo width="200px" />
 </div>
 <h1 class="font-bold text-center">Hi. I’m Harper.</h1>
-<h2 class="text-center text-lg md:text-2xl lg:text-4xl">The Grammar Checker That Respects Your Privacy</h2>
+<h2 class="text-center text-lg md:text-2xl lg:text-4xl">The <strong>Free</strong> Grammar Checker That Respects Your Privacy</h2>
 
 <div
 	class="md:flex md:flex-row grid grid-cols-2 items-center justify-evenly mt-5 transition-all place-items-center"

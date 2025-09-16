@@ -298,8 +298,10 @@ pub fn lint_group() -> LintGroup {
                 ("not unreasonable", "reasonable"),
                 ("not impossible", "possible"),
                 ("more preferable", "preferable"),
+                ("not online", "offline"),
+                ("not offline", "online"),
             ],
-            "Consider a direct form instead of litotes like `not uncommon`.",
+            "Consider the direct form.",
             "Offers direct-positive alternatives when double negatives might feel heavy.",
             LintKind::Style
         ),
