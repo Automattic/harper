@@ -2306,6 +2306,7 @@ dependencies = [
  "dirs 6.0.0",
  "harper-comments",
  "harper-core",
+ "harper-ink",
  "harper-literate-haskell",
  "harper-pos-utils",
  "harper-stats",
@@ -2402,7 +2403,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "0.61.0"
+version = "0.64.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2434,6 +2435,7 @@ dependencies = [
  "harper-comments",
  "harper-core",
  "harper-html",
+ "harper-ink",
  "harper-literate-haskell",
  "harper-stats",
  "harper-typst",
