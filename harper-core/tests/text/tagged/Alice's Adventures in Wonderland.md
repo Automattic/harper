@@ -3615,7 +3615,7 @@
 > “ She  boxed the Queen’s ears    — ” the Rabbit  began . Alice gave a   little     scream of
 # . ISg+ VP/J  D   NSg$    NPl/V3+ . . D   NSg/VB+ VPt   . NPr+  VB   D/P NPr/I/J/Dq NSg/VB P
 > laughter . “ Oh     , hush    ! ” the Rabbit  whispered in      a    frightened tone       . “ The Queen     will
-# NSg+     . . NPr/VB . NSg/VB+ . . D+  NSg/VB+ VP/J      NPr/J/P D/P+ VP/J       N🅪Sg/I/VB+ . . D+  NPr/VB/J+ NPr/VXB
+# Nᴹ+      . . NPr/VB . NSg/VB+ . . D+  NSg/VB+ VP/J      NPr/J/P D/P+ VP/J       N🅪Sg/I/VB+ . . D+  NPr/VB/J+ NPr/VXB
 > hear you    ! You    see    , she  came      rather     late  , and  the Queen     said — ”
 # VB   ISgPl+ . ISgPl+ NSg/VB . ISg+ NSg/VPt/P NPr/VB/J/R NSg/J . VB/C D+  NPr/VB/J+ VP/J . .
 >

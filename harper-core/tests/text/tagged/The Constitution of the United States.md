@@ -592,8 +592,8 @@
 # NPrPl/V3+ NPr/VB/J/C Nᴹ/Vg/J  VXB   NSg/VB NSg/J  P  VB    . VXB   NSg/R/C NSg/VXB VP/J       NSg/J/P D
 > Congress prior to the Year one         thousand eight hundred and  eight , but     a   Tax     or
 # NPr/VB+  NSg/J P  D   NSg+ NSg/I/VB/J+ NSg      NSg/J NSg     VB/C NSg/J . NSg/C/P D/P N🅪Sg/VB NPr/C
-> duty may     be      imposed on  such  Importation , not     exceeding ten dollars for each
-# NSg+ NPr/VXB NSg/VXB VP/J    J/P NSg/I N🅪Sg        . NSg/R/C Nᴹ/Vg/J   NSg NPl+    C/P Dq
+> duty  may     be      imposed on  such  Importation , not     exceeding ten dollars for each
+# N🅪Sg+ NPr/VXB NSg/VXB VP/J    J/P NSg/I N🅪Sg        . NSg/R/C Nᴹ/Vg/J   NSg NPl+    C/P Dq
 > Person  .
 # NSg/VB+ .
 >
@@ -620,8 +620,8 @@
 # NSg/VB+ NPr/C N🅪Sg        .
 >
 #
-> No    Tax     or    Duty shall be      laid on  Articles exported from any    State    .
-# NPr/P N🅪Sg/VB NPr/C NSg+ VXB   NSg/VXB VB/J J/P NPl/V3+  VP/J     P    I/R/Dq N🅪Sg/VB+ .
+> No    Tax     or    Duty  shall be      laid on  Articles exported from any    State    .
+# NPr/P N🅪Sg/VB NPr/C N🅪Sg+ VXB   NSg/VXB VB/J J/P NPl/V3+  VP/J     P    I/R/Dq N🅪Sg/VB+ .
 >
 #
 > No     Preference shall be      given      by      any    Regulation of Commerce or    Revenue to the
@@ -693,7 +693,7 @@
 >
 #
 > No     State    shall , without the Consent of Congress , lay      any    Duty of Tonnage , keep
-# NPr/P+ N🅪Sg/VB+ VXB   . C/P     D   N🅪Sg/VB P  NPr/VB+  . NSg/VB/J I/R/Dq NSg  P  NSg+    . NSg/VB
+# NPr/P+ N🅪Sg/VB+ VXB   . C/P     D   N🅪Sg/VB P  NPr/VB+  . NSg/VB/J I/R/Dq N🅪Sg P  NSg+    . NSg/VB
 > Troops  , or    Ships  of War      in      time      of Peace      , enter  into any    Agreement or    Compact
 # NPl/V3+ . NPr/C NPl/V3 P  N🅪Sg/VB+ NPr/J/P N🅪Sg/VB/J P  NPr🅪Sg/VB+ . NSg/VB P    I/R/Dq N🅪Sg+     NPr/C NSg/VB/J
 > with another State    , or    with a    foreign Power      , or    engage in      War      , unless actually

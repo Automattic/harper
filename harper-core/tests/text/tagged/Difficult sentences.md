@@ -127,7 +127,7 @@
 > By      ' maybe   ' she  means  ' no    ' .
 # NSg/J/P . NSg/J/R . ISg+ NPl/V3 . NPr/P . .
 > The electricity was cut       off        , so        we   had to read    by      candlelight .
-# D+  Nᴹ+         VPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/C IPl+ VB  P  NSg/VBP NSg/J/P NSg         .
+# D+  Nᴹ+         VPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/C IPl+ VB  P  NSg/VBP NSg/J/P Nᴹ          .
 > By      the power      vested in      me       , I       now        pronounce you    man      and  wife      .
 # NSg/J/P D+  N🅪Sg/VB/J+ VP/J   NPr/J/P NPr/ISg+ . ISg/#r+ NPr/VB/J/C NSg/VB    ISgPl+ NPr/VB/J VB/C NSg/VB/J+ .
 > By      Jove ! I       think  she's got it       !
