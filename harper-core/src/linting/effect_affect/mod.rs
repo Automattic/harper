@@ -1,214 +1,25 @@
-use std::sync::Arc;
+mod affect_to_effect;
+mod effect_to_affect;
 
-use harper_brill::UPOS;
+use affect_to_effect::AffectToEffect;
+use effect_to_affect::EffectToAffect;
 
-use crate::{
-    CharStringExt, Token, TokenKind,
-    expr::{Expr, ExprMap, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WhitespacePattern,
-};
+use super::merge_linters::merge_linters;
 
-pub struct EffectAffect {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
-}
-
-impl Default for EffectAffect {
-    fn default() -> Self {
-        let mut map = ExprMap::default();
-
-        let context = SequenceExpr::default()
-            .then(matches_preceding_context)
-            .t_ws()
-            .then(|tok: &Token, source: &[char]| is_effect_word(tok, source))
-            .t_ws()
-            .then(matches_following_context)
-            .then_optional(WhitespacePattern)
-            .then_optional(matches_optional_following)
-            .then_optional(WhitespacePattern);
-
-        map.insert(context, 2);
-
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
-    }
-}
-
-impl ExprLinter for EffectAffect {
-    fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
-    }
-
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let offending_idx = *self.map.lookup(0, matched_tokens, source)?;
-        let target = &matched_tokens[offending_idx];
-
-        let preceding = matched_tokens[..offending_idx]
-            .iter()
-            .rfind(|tok| !tok.kind.is_whitespace());
-
-        let mut following = matched_tokens[offending_idx + 1..]
-            .iter()
-            .filter(|tok| !tok.kind.is_whitespace());
-
-        let first_following = following.next()?;
-        let second_following = following.next();
-
-        if first_following
-            .kind
-            .is_auxiliary_verb()
-            || first_following.kind.is_linking_verb()
-        {
-            return None;
-        }
-
-        // Avoid "to effect change", which uses the legitimate verb "effect".
-        if let Some(prev) = preceding {
-            if is_token_to(prev, source) && is_change_like(first_following, source) {
-                return None;
-            }
-        }
-
-        // Skip when the context already shows a clear noun usage (e.g., "the effect your idea had").
-        if let Some(prev) = preceding {
-            if prev.kind.is_upos(UPOS::DET) || prev.kind.is_upos(UPOS::ADJ) {
-                return None;
-            }
-        }
-
-        // Do not flag when the following noun is clearly the result of "effect" in the idiomatic sense.
-        if let Some(next) = second_following {
-            if next.kind.is_noun() && is_change_like(next, source) {
-                return None;
-            }
-        }
-
-        let token_text = target.span.get_content_string(source);
-        let lower = token_text.to_lowercase();
-
-        let replacement = match lower.as_str() {
-            "effect" => "affect",
-            "effects" => "affects",
-            _ => return None,
-        };
-
-        Some(Lint {
-            span: target.span,
-            lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                replacement,
-                target.span.get_content(source),
-            )],
-            message:
-                "Use `affect` for the verb meaning to influence; `effect` usually names the result."
-                    .into(),
-            priority: 63,
-        })
-    }
-
-    fn description(&self) -> &'static str {
-        "Corrects `effect` to `affect` when the context shows the verb meaning `influence`."
-    }
-}
-
-fn is_effect_word(token: &Token, source: &[char]) -> bool {
-    if !matches!(token.kind, TokenKind::Word(_)) {
-        return false;
-    }
-
-    const EFFECT: &[char] = &['e', 'f', 'f', 'e', 'c', 't'];
-    const EFFECTS: &[char] = &['e', 'f', 'f', 'e', 'c', 't', 's'];
-
-    let text = token.span.get_content(source);
-    text.eq_ignore_ascii_case_chars(EFFECT) || text.eq_ignore_ascii_case_chars(EFFECTS)
-}
-
-fn is_token_to(token: &Token, source: &[char]) -> bool {
-    token
-        .span
-        .get_content(source)
-        .eq_ignore_ascii_case_chars(&['t', 'o'])
-}
-
-fn is_change_like(token: &Token, source: &[char]) -> bool {
-    if !token.kind.is_noun() {
-        return false;
-    }
-
-    matches!(
-        token
-            .span
-            .get_content_string(source)
-            .to_lowercase()
-            .as_str(),
-        "change" | "changes"
-    )
-}
-
-fn matches_preceding_context(token: &Token, _source: &[char]) -> bool {
-    tag_matches_any(
-        token,
-        &[
-            UPOS::PART,
-            UPOS::NOUN,
-            UPOS::PRON,
-            UPOS::PROPN,
-            UPOS::ADV,
-            UPOS::AUX,
-            UPOS::VERB,
-            UPOS::ADJ,
-        ],
-    )
-}
-
-fn matches_following_context(token: &Token, _source: &[char]) -> bool {
-    tag_matches_any(
-        token,
-        &[
-            UPOS::ADV,
-            UPOS::AUX,
-            UPOS::PRON,
-            UPOS::PROPN,
-            UPOS::VERB,
-            UPOS::NUM,
-            UPOS::NOUN,
-            UPOS::INTJ,
-            UPOS::SCONJ,
-            UPOS::DET,
-            UPOS::ADJ,
-        ],
-    )
-}
-
-fn matches_optional_following(token: &Token, _source: &[char]) -> bool {
-    if token.kind.is_punctuation() {
-        return true;
-    }
-
-    tag_matches_any(token, &[UPOS::NOUN])
-}
-
-fn tag_matches_any(token: &Token, allowed: &[UPOS]) -> bool {
-    let Some(word_meta_opt) = token.kind.as_word() else {
-        return false;
-    };
-
-    match word_meta_opt {
-        Some(meta) => meta.pos_tag.map_or(true, |tag| allowed.contains(&tag)),
-        None => true,
-    }
-}
+merge_linters!(
+    EffectAffect =>
+        EffectToAffect,
+        AffectToEffect
+    => "Guides writers toward the right choice between `effect` and `affect`, correcting each term when it shows up in the other one's role."
+);
 
 #[cfg(test)]
 mod tests {
-    use super::EffectAffect;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
+    use super::EffectAffect;
+
+    // `effect` mistakenly used as the verb `affect`.
     #[test]
     fn corrects_noun_subject_effects_object() {
         assert_suggestion_result(
@@ -566,6 +377,273 @@ mod tests {
             "The warning label may effect how consumers use the product.",
             EffectAffect::default(),
             "The warning label may affect how consumers use the product.",
+        );
+    }
+
+    // `affect` mistakenly used as the noun `effect`.
+    #[test]
+    fn corrects_because_affect_is() {
+        assert_suggestion_result(
+            "I worry because affect is hidden.",
+            EffectAffect::default(),
+            "I worry because effect is hidden.",
+        );
+    }
+
+    #[test]
+    fn ignores_psychology_usage() {
+        assert_lint_count("The patient's affect is flat.", EffectAffect::default(), 0);
+    }
+
+    #[test]
+    fn corrects_positive_affect_on() {
+        assert_suggestion_result(
+            "The new law had a positive affect on small businesses.",
+            EffectAffect::default(),
+            "The new law had a positive effect on small businesses.",
+        );
+    }
+
+    #[test]
+    fn corrects_affect_of() {
+        assert_suggestion_result(
+            "We measured the affect of caffeine on reaction time.",
+            EffectAffect::default(),
+            "We measured the effect of caffeine on reaction time.",
+        );
+    }
+
+    #[test]
+    fn corrects_side_affects() {
+        assert_suggestion_result(
+            "The side affects included nausea and fatigue.",
+            EffectAffect::default(),
+            "The side effects included nausea and fatigue.",
+        );
+    }
+
+    #[test]
+    fn corrects_cause_and_affect() {
+        assert_suggestion_result(
+            "Cause and affect are not the same thing.",
+            EffectAffect::default(),
+            "Cause and effect are not the same thing.",
+        );
+    }
+
+    #[test]
+    fn corrects_have_an_affect_on() {
+        assert_suggestion_result(
+            "The change will have an affect on our revenue.",
+            EffectAffect::default(),
+            "The change will have an effect on our revenue.",
+        );
+    }
+
+    #[test]
+    fn corrects_took_affect() {
+        assert_suggestion_result(
+            "The medicine took affect within minutes.",
+            EffectAffect::default(),
+            "The medicine took effect within minutes.",
+        );
+    }
+
+    #[test]
+    fn corrects_come_into_affect() {
+        assert_suggestion_result(
+            "The policy will come into affect on October 1.",
+            EffectAffect::default(),
+            "The policy will come into effect on October 1.",
+        );
+    }
+
+    #[test]
+    fn corrects_in_affect_sentence() {
+        assert_suggestion_result(
+            "The rules are now in affect.",
+            EffectAffect::default(),
+            "The rules are now in effect.",
+        );
+    }
+
+    #[test]
+    fn corrects_with_immediate_affect() {
+        assert_suggestion_result(
+            "With immediate affect, the office is closed.",
+            EffectAffect::default(),
+            "With immediate effect, the office is closed.",
+        );
+    }
+
+    #[test]
+    fn corrects_special_affects() {
+        assert_suggestion_result(
+            "The director used stunning special affects.",
+            EffectAffect::default(),
+            "The director used stunning special effects.",
+        );
+    }
+
+    #[test]
+    fn corrects_placebo_affect() {
+        assert_suggestion_result(
+            "The placebo affect can be powerful.",
+            EffectAffect::default(),
+            "The placebo effect can be powerful.",
+        );
+    }
+
+    #[test]
+    fn corrects_ripple_affect() {
+        assert_suggestion_result(
+            "We felt the ripple affect across the entire market.",
+            EffectAffect::default(),
+            "We felt the ripple effect across the entire market.",
+        );
+    }
+
+    #[test]
+    fn corrects_snowball_affect() {
+        assert_suggestion_result(
+            "The snowball affect amplified the problem.",
+            EffectAffect::default(),
+            "The snowball effect amplified the problem.",
+        );
+    }
+
+    #[test]
+    fn corrects_knock_on_affect() {
+        assert_suggestion_result(
+            "That decision had a knock-on affect throughout the team.",
+            EffectAffect::default(),
+            "That decision had a knock-on effect throughout the team.",
+        );
+    }
+
+    #[test]
+    fn corrects_greenhouse_affect() {
+        assert_suggestion_result(
+            "The greenhouse affect warms the planet.",
+            EffectAffect::default(),
+            "The greenhouse effect warms the planet.",
+        );
+    }
+
+    #[test]
+    fn corrects_little_affect() {
+        assert_suggestion_result(
+            "Her apology had little affect.",
+            EffectAffect::default(),
+            "Her apology had little effect.",
+        );
+    }
+
+    #[test]
+    fn corrects_go_into_affect() {
+        assert_suggestion_result(
+            "The new settings go into affect after a restart.",
+            EffectAffect::default(),
+            "The new settings go into effect after a restart.",
+        );
+    }
+
+    #[test]
+    fn corrects_put_plan_into_affect() {
+        assert_suggestion_result(
+            "They put the new plan into affect last week.",
+            EffectAffect::default(),
+            "They put the new plan into effect last week.",
+        );
+    }
+
+    #[test]
+    fn corrects_contract_into_affect() {
+        assert_suggestion_result(
+            "The contract comes into affect at midnight.",
+            EffectAffect::default(),
+            "The contract comes into effect at midnight.",
+        );
+    }
+
+    #[test]
+    fn corrects_no_affect_on_behavior() {
+        assert_suggestion_result(
+            "The warning had no affect on his behavior.",
+            EffectAffect::default(),
+            "The warning had no effect on his behavior.",
+        );
+    }
+
+    #[test]
+    fn corrects_opposite_affect() {
+        assert_suggestion_result(
+            "Inflation had the opposite affect than expected.",
+            EffectAffect::default(),
+            "Inflation had the opposite effect than expected.",
+        );
+    }
+
+    #[test]
+    fn corrects_remains_in_affect() {
+        assert_suggestion_result(
+            "The regulation remains in affect until further notice.",
+            EffectAffect::default(),
+            "The regulation remains in effect until further notice.",
+        );
+    }
+
+    #[test]
+    fn corrects_take_affect_next_week() {
+        assert_suggestion_result(
+            "The app changes take affect next week.",
+            EffectAffect::default(),
+            "The app changes take effect next week.",
+        );
+    }
+
+    #[test]
+    fn corrects_sound_affects() {
+        assert_suggestion_result(
+            "Sound affects were added in post.",
+            EffectAffect::default(),
+            "Sound effects were added in post.",
+        );
+    }
+
+    #[test]
+    fn does_not_flag_affect_as_verb() {
+        assert_lint_count(
+            "The change will affect our revenue significantly.",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn does_not_flag_affects_as_verb() {
+        assert_lint_count(
+            "This policy directly affects remote workers.",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn does_not_flag_correct_effect_noun() {
+        assert_lint_count(
+            "The placebo effect can be powerful.",
+            EffectAffect::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn does_not_flag_sound_effects() {
+        assert_lint_count(
+            "Sound effects were added in post.",
+            EffectAffect::default(),
+            0,
         );
     }
 }

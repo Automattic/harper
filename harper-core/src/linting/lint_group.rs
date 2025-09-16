@@ -15,7 +15,6 @@ use super::a_part::APart;
 use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
-use super::affect_effect::AffectEffect;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
@@ -416,7 +415,6 @@ impl LintGroup {
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
         insert_expr_rule!(Addicting, true);
-        insert_expr_rule!(AffectEffect, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
         insert_struct_rule!(AmInTheMorning, true);
@@ -444,7 +442,7 @@ impl LintGroup {
         insert_expr_rule!(DoubleModal, true);
         insert_struct_rule!(EllipsisLength, true);
         insert_struct_rule!(ElsePossessive, true);
-        insert_expr_rule!(EffectAffect, true);
+        insert_struct_rule!(EffectAffect, true);
         insert_struct_rule!(Everyday, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
