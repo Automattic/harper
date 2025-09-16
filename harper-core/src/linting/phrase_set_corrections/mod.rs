@@ -279,6 +279,43 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
             LintKind::Eggcorn
         ),
+
+        // General litotes (double negatives) → direct positive suggestions
+        "LitotesDirectPositive" => (
+            &[
+                ("not uncommon", "common"),
+                ("not unusual", "common"),
+                ("not insignificant", "significant"),
+                ("not unimportant", "important"),
+                ("not unlikely", "likely"),
+                ("not infrequent", "frequent"),
+                ("not inaccurate", "accurate"),
+                ("not unclear", "clear"),
+                ("not irrelevant", "relevant"),
+                ("not unpredictable", "predictable"),
+                ("not inadequate", "adequate"),
+                ("not unpleasant", "pleasant"),
+                ("not unreasonable", "reasonable"),
+                ("not impossible", "possible"),
+                ("more preferable", "preferable"),
+            ],
+            "Consider a direct form instead of litotes like `not uncommon`.",
+            "Offers direct-positive alternatives when double negatives might feel heavy.",
+            LintKind::Style
+        ),
+
+        // Redundant degree modifiers on positives (double positives) → base form
+        "RedundantSuperlatives" => (
+            &[
+                ("more optimal", "optimal"),
+                ("most optimal", "optimal"),
+                ("more ideal", "ideal"),
+                ("most ideal", "ideal"),
+            ],
+            "Avoid redundant degree modifiers; prefer the base adjective.",
+            "Simplifies redundant double positives like `most optimal` to the base form.",
+            LintKind::Redundancy
+        ),
     });
 
     add_many_to_many_mappings!(group, {

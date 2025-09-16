@@ -1,9 +1,9 @@
-use harper_core::word_metadata::DialectFlags;
+use harper_core::dict_word_metadata::DialectFlags;
 use itertools::Itertools;
 use std::path::Path;
 
 use harper_core::spell::{Dictionary, MutableDictionary};
-use harper_core::{Dialect, WordMetadata};
+use harper_core::{Dialect, DictWordMetadata};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
 
@@ -61,7 +61,7 @@ async fn dict_from_word_list(
     dict.extend_words(str.lines().map(|l| {
         (
             l.chars().collect::<Vec<char>>(),
-            WordMetadata {
+            DictWordMetadata {
                 dialects: DialectFlags::from_dialect(dialect),
                 ..Default::default()
             },
@@ -106,7 +106,8 @@ mod tests {
     fn get_test_unsorted_dict() -> MutableDictionary {
         let mut test_unsorted_dict = MutableDictionary::new();
         test_unsorted_dict.extend_words(
-            TEST_UNSORTED_WORDS.map(|w| (w.chars().collect::<Vec<_>>(), WordMetadata::default())),
+            TEST_UNSORTED_WORDS
+                .map(|w| (w.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
         );
         test_unsorted_dict
     }

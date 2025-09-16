@@ -119,6 +119,7 @@ use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::thing_think::ThingThink;
+use super::though_thought::ThoughThought;
 use super::throw_rubbish::ThrowRubbish;
 use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
@@ -517,6 +518,7 @@ impl LintGroup {
         insert_struct_rule!(TheMy, true);
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(ThingThink, true);
+        insert_expr_rule!(ThoughThought, true);
         insert_struct_rule!(ThrowRubbish, true);
         insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
