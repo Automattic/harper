@@ -1555,12 +1555,6 @@
 					"default": true,
 					"description": "Corrects `mute` to `moot` in the phrase `moot point`."
 				},
-				"harper.linters.MorePreferable": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `more preferable` to `preferable`."
-				},
 				"harper.linters.MostNumber": {
 					"scope": "resource",
 					"type": "boolean",

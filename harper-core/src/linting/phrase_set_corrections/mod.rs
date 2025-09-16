@@ -280,7 +280,7 @@ pub fn lint_group() -> LintGroup {
             LintKind::Eggcorn
         ),
 
-        // General litotes (double negatives) → direct positive
+        // General litotes (double negatives) → direct positive suggestions
         "LitotesDirectPositive" => (
             &[
                 ("not uncommon", "common"),
@@ -298,9 +298,9 @@ pub fn lint_group() -> LintGroup {
                 ("not unreasonable", "reasonable"),
                 ("not impossible", "possible"),
             ],
-            "Prefer a direct form over litotes like `not uncommon`.",
-            "Rewrites common double negatives (litotes) to a clearer direct positive.",
-            LintKind::WordChoice
+            "Consider a direct form instead of litotes like `not uncommon`.",
+            "Offers direct-positive alternatives when double negatives might feel heavy.",
+            LintKind::Style
         ),
 
         // Redundant degree modifiers on positives (double positives) → base form
