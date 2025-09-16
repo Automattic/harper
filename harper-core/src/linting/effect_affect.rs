@@ -6,7 +6,7 @@ use crate::{
     CharStringExt, Token, TokenKind,
     expr::{Expr, ExprMap, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{UPOSSet, WhitespacePattern},
+    patterns::WhitespacePattern,
 };
 
 pub struct EffectAffect {
@@ -19,23 +19,13 @@ impl Default for EffectAffect {
         let mut map = ExprMap::default();
 
         let context = SequenceExpr::default()
-            .then(UPOSSet::new(&[UPOS::PART, UPOS::PUNCT, UPOS::NOUN]))
+            .then(matches_preceding_context)
             .t_ws()
             .then(|tok: &Token, source: &[char]| is_effect_word(tok, source))
             .t_ws()
-            .then(UPOSSet::new(&[
-                UPOS::ADV,
-                UPOS::AUX,
-                UPOS::PRON,
-                UPOS::PROPN,
-                UPOS::VERB,
-                UPOS::NUM,
-                UPOS::NOUN,
-                UPOS::INTJ,
-                UPOS::SCONJ,
-            ]))
+            .then(matches_following_context)
             .then_optional(WhitespacePattern)
-            .then_optional(UPOSSet::new(&[UPOS::NOUN, UPOS::PUNCT]))
+            .then_optional(matches_optional_following)
             .then_optional(WhitespacePattern);
 
         map.insert(context, 2);
@@ -78,7 +68,7 @@ impl ExprLinter for EffectAffect {
 
         // Skip when the context already shows a clear noun usage (e.g., "the effect your idea had").
         if let Some(prev) = preceding {
-            if prev.kind.is_determiner() || prev.kind.is_adjective() {
+            if prev.kind.is_upos(UPOS::DET) || prev.kind.is_upos(UPOS::ADJ) {
                 return None;
             }
         }
@@ -92,6 +82,7 @@ impl ExprLinter for EffectAffect {
 
         let token_text = target.span.get_content_string(source);
         let lower = token_text.to_lowercase();
+
         let replacement = match lower.as_str() {
             "effect" => "affect",
             "effects" => "affects",
@@ -151,16 +142,64 @@ fn is_change_like(token: &Token, source: &[char]) -> bool {
     )
 }
 
+fn matches_preceding_context(token: &Token, _source: &[char]) -> bool {
+    tag_matches_any(
+        token,
+        &[
+            UPOS::PART,
+            UPOS::NOUN,
+            UPOS::PRON,
+            UPOS::PROPN,
+            UPOS::ADV,
+            UPOS::AUX,
+            UPOS::VERB,
+            UPOS::ADJ,
+        ],
+    )
+}
+
+fn matches_following_context(token: &Token, _source: &[char]) -> bool {
+    tag_matches_any(
+        token,
+        &[
+            UPOS::ADV,
+            UPOS::AUX,
+            UPOS::PRON,
+            UPOS::PROPN,
+            UPOS::VERB,
+            UPOS::NUM,
+            UPOS::NOUN,
+            UPOS::INTJ,
+            UPOS::SCONJ,
+            UPOS::DET,
+            UPOS::ADJ,
+        ],
+    )
+}
+
+fn matches_optional_following(token: &Token, _source: &[char]) -> bool {
+    if token.kind.is_punctuation() {
+        return true;
+    }
+
+    tag_matches_any(token, &[UPOS::NOUN])
+}
+
+fn tag_matches_any(token: &Token, allowed: &[UPOS]) -> bool {
+    let Some(word_meta_opt) = token.kind.as_word() else {
+        return false;
+    };
+
+    match word_meta_opt {
+        Some(meta) => meta.pos_tag.map_or(true, |tag| allowed.contains(&tag)),
+        None => true,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::EffectAffect;
-    use crate::{
-        Document,
-        linting::{
-            expr_linter::ExprLinter,
-            tests::{assert_lint_count, assert_suggestion_result},
-        },
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_noun_subject_effects_object() {
