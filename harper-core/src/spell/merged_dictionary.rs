@@ -7,7 +7,7 @@ use itertools::Itertools;
 
 use super::{FstDictionary, WordId};
 use super::{FuzzyMatchResult, dictionary::Dictionary};
-use crate::{CharString, WordMetadata};
+use crate::{CharString, DictWordMetadata};
 
 /// A simple wrapper over [`Dictionary`] that allows
 /// one to merge multiple dictionaries without copying.
@@ -94,10 +94,10 @@ impl Dictionary for MergedDictionary {
         false
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, WordMetadata>> {
+    fn get_lexeme_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
         self.children
             .iter()
-            .filter_map(|d| d.get_word_metadata(word))
+            .filter_map(|d| d.get_lexeme_metadata(word))
             .reduce(|acc, md| Cow::Owned(acc.or(&md)))
     }
 
@@ -115,9 +115,9 @@ impl Dictionary for MergedDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, WordMetadata>> {
+    fn get_lexeme_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
         let chars: CharString = word.chars().collect();
-        self.get_word_metadata(&chars)
+        self.get_lexeme_metadata(&chars)
     }
 
     fn fuzzy_match(

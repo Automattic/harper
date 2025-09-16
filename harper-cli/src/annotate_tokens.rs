@@ -47,7 +47,7 @@ impl Annotation {
         match annotation_type {
             AnnotationType::Upos => {
                 if let TokenKind::Word(Some(metadata)) = &token.kind {
-                    // Only annotate words (with word metadata) for `AnnotationType::Upos`.
+                    // Only annotate words (with dict word metadata) for `AnnotationType::Upos`.
                     let pos_tag = metadata.pos_tag;
                     Some(Self {
                         span,

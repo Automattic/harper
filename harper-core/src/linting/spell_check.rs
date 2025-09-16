@@ -47,7 +47,7 @@ impl<T: Dictionary> SpellCheck<T> {
                     .filter(|v| {
                         // ignore entries outside the configured dialect
                         self.dictionary
-                            .get_word_metadata(v)
+                            .get_lexeme_metadata(v)
                             .unwrap()
                             .dialects
                             .is_dialect_enabled(self.dialect)
@@ -129,16 +129,16 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 #[cfg(test)]
 mod tests {
     use super::SpellCheck;
+    use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-    use crate::word_metadata::DialectFlags;
     use crate::{
         Dialect,
         linting::tests::{
             assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
         },
     };
-    use crate::{Document, WordMetadata};
+    use crate::{DictWordMetadata, Document};
 
     // Capitalization tests
 
@@ -416,7 +416,7 @@ mod tests {
         let mut user_dict = MutableDictionary::new();
         user_dict.append_word_str(
             "Calibre",
-            WordMetadata {
+            DictWordMetadata {
                 dialects: DialectFlags::from_dialect(user_dialect),
                 ..Default::default()
             },

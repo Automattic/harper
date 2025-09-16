@@ -53,8 +53,8 @@ impl Default for OrthFlags {
 
 #[cfg(test)]
 mod tests {
-    use crate::word_metadata::tests::md;
-    use crate::word_metadata_orthography::OrthFlags;
+    use crate::dict_word_metadata::tests::md;
+    use crate::dict_word_metadata_orthography::OrthFlags;
 
     #[test]
     fn australia_lexeme_is_titlecase_even_when_word_is_lowercase() {
