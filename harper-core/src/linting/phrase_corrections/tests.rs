@@ -900,16 +900,6 @@ fn detect_monumentous_real_world() {
     );
 }
 
-// MorePreferable
-#[test]
-fn correct_more_preferable() {
-    assert_suggestion_result(
-        "Is it more preferable to use process.env.variable or env.parsed.variable?",
-        lint_group(),
-        "Is it preferable to use process.env.variable or env.parsed.variable?",
-    );
-}
-
 // MyHouse
 // -none-
 
@@ -967,6 +957,9 @@ fn detect_nerve_racking_no_hyphen() {
 
 // NotTo
 // -none-
+
+// NotUncommon moved to phrase_set_corrections as part of the
+// generalized double negative mapping.
 
 // OfCourse
 // See also: tests in `of_course.rs` for "of curse/corse" → "of course" corrections
