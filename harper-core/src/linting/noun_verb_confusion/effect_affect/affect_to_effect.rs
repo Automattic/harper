@@ -6,7 +6,7 @@ use crate::{
     CharStringExt, Token, TokenKind,
     expr::{Expr, ExprMap, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::UPOSSet,
+    patterns::{ModalVerb, Pattern, UPOSSet},
 };
 
 #[derive(Clone, Copy)]
@@ -178,7 +178,7 @@ impl ExprLinter for AffectToEffect {
 
             let prev_behaves_like_verb = prev.kind.is_upos(UPOS::AUX)
                 || prev.kind.is_auxiliary_verb()
-                || is_modal(&lower_prev);
+                || is_modal_like(prev, source, &lower_prev);
 
             if prev_behaves_like_verb && !is_take_form(&lower_prev) {
                 return None;
@@ -235,36 +235,17 @@ fn is_take_form(word: &str) -> bool {
     matches!(word, "take" | "takes" | "taking" | "took" | "taken")
 }
 
-fn is_modal(word: &str) -> bool {
+fn is_modal_like(token: &Token, source: &[char], lower_prev: &str) -> bool {
+    if ModalVerb::default()
+        .matches(std::slice::from_ref(token), source)
+        .is_some()
+    {
+        return true;
+    }
+
     matches!(
-        word,
-        "can"
-            | "cannot"
-            | "can't"
-            | "could"
-            | "couldn't"
-            | "may"
-            | "might"
-            | "mightn't"
-            | "must"
-            | "mustn't"
-            | "shall"
-            | "shan't"
-            | "should"
-            | "shouldn't"
-            | "will"
-            | "won't"
-            | "would"
-            | "wouldn't"
-            | "do"
-            | "does"
-            | "did"
-            | "don't"
-            | "dont"
-            | "doesn't"
-            | "doesnt"
-            | "didn't"
-            | "didnt"
+        lower_prev,
+        "do" | "does" | "did" | "don't" | "dont" | "doesn't" | "doesnt" | "didn't" | "didnt"
     )
 }
 
