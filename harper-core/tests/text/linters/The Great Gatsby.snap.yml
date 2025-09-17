@@ -882,16 +882,6 @@ Suggest:
 
 
 
-Lint:    Typo (63 priority)
-Message: |
-     767 | So Tom Buchanan and his girl and I went up together to New York—or not quite
-         |                                                                        ^~~~~ After an adverb like 'not', use 'quiet' not 'quite'
-     768 | together, for Mrs. Wilson sat discreetly in another car. Tom deferred that much
-Suggest:
-  - Replace with: “quiet”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      768 | together, for Mrs. Wilson sat discreetly in another car. Tom deferred that much
@@ -1909,15 +1899,6 @@ Message: |
          |                 ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
   - Replace with: “.”
-
-
-
-Lint:    Typo (63 priority)
-Message: |
-    1640 | But as I walked down the steps I saw that the evening was not quite over. Fifty
-         |                                                               ^~~~~ After an adverb like 'not', use 'quiet' not 'quite'
-Suggest:
-  - Replace with: “quiet”
 
 
 

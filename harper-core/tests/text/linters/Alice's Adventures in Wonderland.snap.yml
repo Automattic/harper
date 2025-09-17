@@ -1335,15 +1335,6 @@ Suggest:
 
 
 
-Lint:    Typo (63 priority)
-Message: |
-     906 | “Not quite right, I’m afraid,” said Alice, timidly; “some of the words have got
-         |      ^~~~~ After an adverb like 'Not', use 'quiet' not 'quite'
-Suggest:
-  - Replace with: “quiet”
-
-
-
 Lint:    Enhancement (31 priority)
 Message: |
      929 | “It is a very good height indeed!” said the Caterpillar angrily, rearing itself
@@ -1531,16 +1522,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1133 | which seemed to be full of soup.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 52 words long.
-
-
-
-Lint:    Typo (63 priority)
-Message: |
-    1144 | “Please would you tell me,” said Alice, a little timidly, for she was not quite
-         |                                                                           ^~~~~ After an adverb like 'not', use 'quiet' not 'quite'
-    1145 | sure whether it was good manners for her to speak first, “why your cat grins
-Suggest:
-  - Replace with: “quiet”
 
 
 
@@ -1794,15 +1775,6 @@ Suggest:
   - Replace with: “Billie”
   - Replace with: “Lillie”
   - Replace with: “Millie”
-
-
-
-Lint:    Typo (63 priority)
-Message: |
-    1584 | Alice did not quite know what to say to this: so she helped herself to some tea
-         |               ^~~~~ After an adverb like 'not', use 'quiet' not 'quite'
-Suggest:
-  - Replace with: “quiet”
 
 
 
@@ -2292,16 +2264,6 @@ Message: |
          |                              ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
-
-
-
-Lint:    Typo (63 priority)
-Message: |
-    2095 | leaving Alice alone with the Gryphon. Alice did not quite like the look of the
-         |                                                     ^~~~~ After an adverb like 'not', use 'quiet' not 'quite'
-    2096 | creature, but on the whole she thought it would be quite as safe to stay with it
-Suggest:
-  - Replace with: “quiet”
 
 
 
