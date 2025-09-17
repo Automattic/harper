@@ -121,14 +121,12 @@ impl ExprLinter for AffectToEffect {
         let second_following = following.next();
 
         let preceding_word = preceding.map(|tok| tok.span.get_content_string(source));
+        let preceding_lower = preceding_word.as_ref().map(|word| word.to_lowercase());
         let skip_when_preceding_is_noun = match_info.skip_for_adj_noun_phrase
             && preceding.is_some_and(|tok| tok.kind.is_noun() || tok.kind.is_proper_noun())
-            && preceding_word.as_ref().is_some_and(|word| {
-                !matches!(
-                    word.to_lowercase().as_str(),
-                    "take" | "takes" | "taking" | "took" | "taken"
-                )
-            });
+            && preceding_lower
+                .as_deref()
+                .is_some_and(|word| !is_take_form(word));
 
         if skip_when_preceding_is_noun {
             return None;
@@ -158,12 +156,9 @@ impl ExprLinter for AffectToEffect {
             && (first.kind.is_upos(UPOS::ADJ) || first.kind.is_noun())
             && second_following.is_some_and(|tok| tok.kind.is_noun())
             && preceding.is_some_and(|tok| tok.kind.is_noun() || tok.kind.is_proper_noun())
-            && preceding_word.as_ref().is_some_and(|word| {
-                !matches!(
-                    word.to_lowercase().as_str(),
-                    "take" | "takes" | "taking" | "took" | "taken"
-                )
-            })
+            && preceding_lower
+                .as_deref()
+                .is_some_and(|word| !is_take_form(word))
         {
             return None;
         }
@@ -175,15 +170,17 @@ impl ExprLinter for AffectToEffect {
             return None;
         }
 
-        if let Some(prev) = preceding
-            && (prev.kind.is_upos(UPOS::AUX) || prev.kind.is_upos(UPOS::VERB))
-        {
-            let lower_prev = prev.span.get_content_string(source).to_lowercase();
+        if let Some(prev) = preceding {
+            let lower_prev = preceding_lower
+                .as_ref()
+                .cloned()
+                .unwrap_or_else(|| prev.span.get_content_string(source).to_lowercase());
 
-            if !matches!(
-                lower_prev.as_str(),
-                "take" | "takes" | "taking" | "took" | "taken"
-            ) {
+            let prev_behaves_like_verb = prev.kind.is_upos(UPOS::AUX)
+                || prev.kind.is_auxiliary_verb()
+                || is_modal(&lower_prev);
+
+            if prev_behaves_like_verb && !is_take_form(&lower_prev) {
                 return None;
             }
         }
@@ -232,6 +229,43 @@ fn is_affect_word(token: &Token, source: &[char]) -> bool {
 
     let text = token.span.get_content(source);
     text.eq_ignore_ascii_case_chars(AFFECT) || text.eq_ignore_ascii_case_chars(AFFECTS)
+}
+
+fn is_take_form(word: &str) -> bool {
+    matches!(word, "take" | "takes" | "taking" | "took" | "taken")
+}
+
+fn is_modal(word: &str) -> bool {
+    matches!(
+        word,
+        "can"
+            | "cannot"
+            | "can't"
+            | "could"
+            | "couldn't"
+            | "may"
+            | "might"
+            | "mightn't"
+            | "must"
+            | "mustn't"
+            | "shall"
+            | "shan't"
+            | "should"
+            | "shouldn't"
+            | "will"
+            | "won't"
+            | "would"
+            | "wouldn't"
+            | "do"
+            | "does"
+            | "did"
+            | "don't"
+            | "dont"
+            | "doesn't"
+            | "doesnt"
+            | "didn't"
+            | "didnt"
+    )
 }
 
 fn is_preceding_context(token: &Token) -> bool {

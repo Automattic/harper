@@ -4,6 +4,7 @@ use crate::{
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
+use harper_brill::UPOS;
 
 use super::NOUN_VERB_PAIRS;
 
@@ -42,6 +43,10 @@ impl ExprLinter for VerbInsteadOfNoun {
         let adj_text = adj_tok.span.get_content_string(src);
         let verb_text = verb_tok.span.get_content_string(src);
         let verb_lower = verb_text.to_lowercase();
+
+        if adj_tok.kind.is_auxiliary_verb() || adj_tok.kind.is_upos(UPOS::AUX) {
+            return None;
+        }
 
         let noun = NOUN_VERB_PAIRS
             .iter()
