@@ -1219,7 +1219,7 @@
 > ascertained by      law      , and  to be      informed of the nature   and  cause     of the
 # VP/J        NSg/J/P N🅪Sg/VB+ . VB/C P  NSg/VXB VP/J     P  D   N🅪Sg/VB+ VB/C N🅪Sg/VB/C P  D
 > accusation ; to be      confronted with the witnesses against him  ; to have    compulsory
-# NSg        . P  NSg/VXB VP/J       P    D   NPl/V3+   C/P     ISg+ . P  NSg/VXB NSg/J
+# N🅪Sg       . P  NSg/VXB VP/J       P    D   NPl/V3+   C/P     ISg+ . P  NSg/VXB NSg/J
 > process for obtaining witnesses in      his     favor       , and  to have    the assistance of
 # NSg/VB+ C/P Nᴹ/Vg/J   NPl/V3+   NPr/J/P ISg/D$+ N🅪Sg/VB/Am+ . VB/C P  NSg/VXB D   Nᴹ         P
 > counsel for his     defense     .

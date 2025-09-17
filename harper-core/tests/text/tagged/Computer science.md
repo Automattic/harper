@@ -731,7 +731,7 @@
 > environmental adaptation , learning , and  communication found  in      humans and
 # NSg/J         NSg+       . Nᴹ/Vg/J+ . VB/C N🅪Sg+         NSg/VB NPr/J/P NPl/V3 VB/C
 > animals . From its     origins in      cybernetics and  in      the Dartmouth Conference ( 1956 ) ,
-# NPl+    . P    ISg/D$+ NPl+    NPr/J/P NSg         VB/C NPr/J/P D   NPr+      NSg/VB+    . #    . .
+# NPl+    . P    ISg/D$+ NPl+    NPr/J/P Nᴹ          VB/C NPr/J/P D   NPr+      NSg/VB+    . #    . .
 > artificial intelligence research has been    necessarily cross       - disciplinary ,
 # J          N🅪Sg+        Nᴹ/VB+   V3  NSg/VPp R           NPr/VB/J/P+ . NSg/J        .
 > drawing   on  areas of expertise such  as    applied mathematics , symbolic logic    ,

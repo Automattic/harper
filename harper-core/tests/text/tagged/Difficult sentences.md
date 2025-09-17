@@ -169,7 +169,7 @@
 > The bricks  used to build  the wall    measured 10 by      20 by      30 cm      .
 # D+  NPl/V3+ VP/J P  NSg/VB D+  NPr/VB+ VP/J     #  NSg/J/P #  NSg/J/P #  NSg/#r+ .
 > She's a   lovely little     filly , by      Big   Lad , out          of Damsel in      Distress .
-# K     D/P NSg/J  NPr/I/J/Dq NSg   . NSg/J/P NSg/J NSg . NSg/VB/J/R/P P  NSg    NPr/J/P NSg/VB+  .
+# K     D/P NSg/J  NPr/I/J/Dq NSg   . NSg/J/P NSg/J NSg . NSg/VB/J/R/P P  NSg    NPr/J/P Nᴹ/VB+   .
 > Are you    eating  by      Rabbi Fischer ? ( at    the house  of )
 # VB  ISgPl+ Nᴹ/Vg/J NSg/J/P NSg+  NPr+    . . NSg/P D   NPr/VB P  .
 > By      Chabad , it's different . ( with , among )

@@ -5117,7 +5117,7 @@
 >
 #
 > “ Herald  , read    the accusation ! ” said the King      .
-# . NSg/VB+ . NSg/VBP D   NSg        . . VP/J D+  NPr/VB/J+ .
+# . NSg/VB+ . NSg/VBP D   N🅪Sg       . . VP/J D+  NPr/VB/J+ .
 >
 #
 > On  this    the White        Rabbit  blew      three blasts on  the trumpet , and  then    unrolled the
