@@ -1142,6 +1142,26 @@ fn correct_iirc_correctly() {
 // RoadMap
 // -none-
 
+// RulesOfThumb
+
+#[test]
+fn correct_rules_of_thumbs() {
+    assert_suggestion_result(
+        "Thanks. 0.2 is just from my rule of thumbs.",
+        lint_group(),
+        "Thanks. 0.2 is just from my rules of thumb.",
+    );
+}
+
+#[test]
+fn correct_rules_of_thumbs_hyphenated() {
+    assert_suggestion_result(
+        "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".",
+        lint_group(),
+        "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
+    );
+}
+
 // SameAs
 // -none-
 

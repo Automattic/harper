@@ -194,6 +194,17 @@ pub fn lint_group() -> LintGroup {
             // ConfusedPair??
             LintKind::WordChoice
         ),
+        "FootTheBill" => (
+            &[
+                ("flip the bill", "foot the bill"),
+                ("flipped the bill", "footed the bill"),
+                ("flipping the bill", "footing the bill"),
+                ("flips the bill", "foots the bill"),
+            ],
+            "The standard expression is `foot the bill`.",
+            "Corrects `flip the bill` to `foot the bill`.",
+            LintKind::Nonstandard
+        ),
         "HavePassed" => (
             &[
                 ("had past", "had passed"),
