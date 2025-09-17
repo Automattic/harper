@@ -133,9 +133,7 @@ impl ExprLinter for AffectToEffect {
         }
 
         if first_following.is_none() {
-            let Some(prev) = preceding else {
-                return None;
-            };
+            let prev = preceding?;
 
             if !prev.kind.is_adjective()
                 && !prev.kind.is_determiner()
