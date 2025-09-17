@@ -3,7 +3,7 @@ use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::patterns::Word;
 use crate::{CharStringExt, Lrc, Token, patterns::WordSet};
 
-use super::NOUN_VERB_PAIRS;
+use super::super::NOUN_VERB_PAIRS;
 
 /// Pronouns that can come before verbs but not nouns
 const PRONOUNS: &[&str] = &["he", "I", "it", "she", "they", "we", "who", "you"];
@@ -38,11 +38,11 @@ const MODAL_VERBS_ETC: &[&str] = &[
 ];
 
 /// Linter that corrects common noun/verb confusions
-pub struct NounInsteadOfVerb {
+pub(super) struct GeneralNounInsteadOfVerb {
     expr: Box<dyn Expr>,
 }
 
-impl Default for NounInsteadOfVerb {
+impl Default for GeneralNounInsteadOfVerb {
     fn default() -> Self {
         let pre_context = FirstMatchOf::new(vec![
             Box::new(WordSet::new(PRONOUNS)),
@@ -84,7 +84,7 @@ impl Default for NounInsteadOfVerb {
     }
 }
 
-impl ExprLinter for NounInsteadOfVerb {
+impl ExprLinter for GeneralNounInsteadOfVerb {
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -158,7 +158,7 @@ impl ExprLinter for NounInsteadOfVerb {
 
 #[cfg(test)]
 mod tests {
-    use super::NounInsteadOfVerb;
+    use crate::linting::noun_verb_confusion::NounInsteadOfVerb;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     // made up unit tests
@@ -492,6 +492,224 @@ mod tests {
             "People who are managing this situation tend to advice their users to lock+unlock their screen",
             NounInsteadOfVerb::default(),
             "People who are managing this situation tend to advise their users to lock+unlock their screen",
+        );
+    }
+
+    // affect vs. effect sentences gathered from user reports
+
+    #[test]
+    fn fix_positive_affect_on_small_businesses() {
+        assert_suggestion_result(
+            "The new law had a positive affect on small businesses.",
+            NounInsteadOfVerb::default(),
+            "The new law had a positive effect on small businesses.",
+        );
+    }
+
+    #[test]
+    fn fix_measured_the_affect_of_caffeine() {
+        assert_suggestion_result(
+            "We measured the affect of caffeine on reaction time.",
+            NounInsteadOfVerb::default(),
+            "We measured the effect of caffeine on reaction time.",
+        );
+    }
+
+    #[test]
+    fn fix_side_affects_included_nausea() {
+        assert_suggestion_result(
+            "The side affects included nausea and fatigue.",
+            NounInsteadOfVerb::default(),
+            "The side effects included nausea and fatigue.",
+        );
+    }
+
+    #[test]
+    fn fix_cause_and_affect_not_same() {
+        assert_suggestion_result(
+            "Cause and affect are not the same thing.",
+            NounInsteadOfVerb::default(),
+            "Cause and effect are not the same thing.",
+        );
+    }
+
+    #[test]
+    fn fix_change_will_have_an_affect_on_revenue() {
+        assert_suggestion_result(
+            "The change will have an affect on our revenue.",
+            NounInsteadOfVerb::default(),
+            "The change will have an effect on our revenue.",
+        );
+    }
+
+    #[test]
+    fn fix_medicine_took_affect_within_minutes() {
+        assert_suggestion_result(
+            "The medicine took affect within minutes.",
+            NounInsteadOfVerb::default(),
+            "The medicine took effect within minutes.",
+        );
+    }
+
+    #[test]
+    fn fix_policy_will_come_into_affect() {
+        assert_suggestion_result(
+            "The policy will come into affect on October 1.",
+            NounInsteadOfVerb::default(),
+            "The policy will come into effect on October 1.",
+        );
+    }
+
+    #[test]
+    fn fix_rules_are_now_in_affect() {
+        assert_suggestion_result(
+            "The rules are now in affect.",
+            NounInsteadOfVerb::default(),
+            "The rules are now in effect.",
+        );
+    }
+
+    #[test]
+    fn fix_with_immediate_affect_office_closed() {
+        assert_suggestion_result(
+            "With immediate affect, the office is closed.",
+            NounInsteadOfVerb::default(),
+            "With immediate effect, the office is closed.",
+        );
+    }
+
+    #[test]
+    fn fix_stunning_special_affects() {
+        assert_suggestion_result(
+            "The director used stunning special affects.",
+            NounInsteadOfVerb::default(),
+            "The director used stunning special effects.",
+        );
+    }
+
+    #[test]
+    fn fix_placebo_affect_can_be_powerful() {
+        assert_suggestion_result(
+            "The placebo affect can be powerful.",
+            NounInsteadOfVerb::default(),
+            "The placebo effect can be powerful.",
+        );
+    }
+
+    #[test]
+    fn fix_ripple_affect_across_market() {
+        assert_suggestion_result(
+            "We felt the ripple affect across the entire market.",
+            NounInsteadOfVerb::default(),
+            "We felt the ripple effect across the entire market.",
+        );
+    }
+
+    #[test]
+    fn fix_snowball_affect_amplified_problem() {
+        assert_suggestion_result(
+            "The snowball affect amplified the problem.",
+            NounInsteadOfVerb::default(),
+            "The snowball effect amplified the problem.",
+        );
+    }
+
+    #[test]
+    fn fix_knock_on_affect_throughout_team() {
+        assert_suggestion_result(
+            "That decision had a knock-on affect throughout the team.",
+            NounInsteadOfVerb::default(),
+            "That decision had a knock-on effect throughout the team.",
+        );
+    }
+
+    #[test]
+    fn fix_greenhouse_affect_warms_planet() {
+        assert_suggestion_result(
+            "The greenhouse affect warms the planet.",
+            NounInsteadOfVerb::default(),
+            "The greenhouse effect warms the planet.",
+        );
+    }
+
+    #[test]
+    fn fix_apology_had_little_affect() {
+        assert_suggestion_result(
+            "Her apology had little affect.",
+            NounInsteadOfVerb::default(),
+            "Her apology had little effect.",
+        );
+    }
+
+    #[test]
+    fn fix_settings_go_into_affect() {
+        assert_suggestion_result(
+            "The new settings go into affect after a restart.",
+            NounInsteadOfVerb::default(),
+            "The new settings go into effect after a restart.",
+        );
+    }
+
+    #[test]
+    fn fix_put_plan_into_affect() {
+        assert_suggestion_result(
+            "They put the new plan into affect last week.",
+            NounInsteadOfVerb::default(),
+            "They put the new plan into effect last week.",
+        );
+    }
+
+    #[test]
+    fn fix_contract_comes_into_affect() {
+        assert_suggestion_result(
+            "The contract comes into affect at midnight.",
+            NounInsteadOfVerb::default(),
+            "The contract comes into effect at midnight.",
+        );
+    }
+
+    #[test]
+    fn fix_warning_had_no_affect_on_behavior() {
+        assert_suggestion_result(
+            "The warning had no affect on his behavior.",
+            NounInsteadOfVerb::default(),
+            "The warning had no effect on his behavior.",
+        );
+    }
+
+    #[test]
+    fn fix_inflation_had_opposite_affect() {
+        assert_suggestion_result(
+            "Inflation had the opposite affect than expected.",
+            NounInsteadOfVerb::default(),
+            "Inflation had the opposite effect than expected.",
+        );
+    }
+
+    #[test]
+    fn fix_regulation_remains_in_affect() {
+        assert_suggestion_result(
+            "The regulation remains in affect until further notice.",
+            NounInsteadOfVerb::default(),
+            "The regulation remains in effect until further notice.",
+        );
+    }
+
+    #[test]
+    fn fix_app_changes_take_affect() {
+        assert_suggestion_result(
+            "The app changes take affect next week.",
+            NounInsteadOfVerb::default(),
+            "The app changes take effect next week.",
+        );
+    }
+
+    #[test]
+    fn fix_sound_affects_were_added() {
+        assert_suggestion_result(
+            "Sound affects were added in post.",
+            NounInsteadOfVerb::default(),
+            "Sound effects were added in post.",
         );
     }
 }

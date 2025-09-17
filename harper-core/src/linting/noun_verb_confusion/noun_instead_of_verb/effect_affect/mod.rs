@@ -4,7 +4,7 @@ mod effect_to_affect;
 use affect_to_effect::AffectToEffect;
 use effect_to_affect::EffectToAffect;
 
-use super::merge_linters::merge_linters;
+use crate::linting::merge_linters::merge_linters;
 
 merge_linters!(
     EffectAffect =>
