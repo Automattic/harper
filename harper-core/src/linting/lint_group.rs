@@ -78,7 +78,6 @@ use super::no_match_for::NoMatchFor;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::noun_countability::NounCountability;
-use super::noun_verb_confusion::NounInsteadOfVerb;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
 use super::on_floor::OnFloor;
@@ -138,7 +137,8 @@ use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
-    MassPlurals, closed_compounds, initialisms, phrase_corrections, phrase_set_corrections,
+    MassPlurals, NounVerbConfusion, closed_compounds, initialisms, phrase_corrections,
+    phrase_set_corrections,
 };
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
@@ -479,7 +479,7 @@ impl LintGroup {
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
         insert_struct_rule!(NominalWants, true);
-        insert_struct_rule!(NounInsteadOfVerb, true);
+        insert_struct_rule!(NounVerbConfusion, true);
         insert_expr_rule!(NounCountability, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
