@@ -9,15 +9,9 @@ use crate::{
     patterns::{ModalVerb, Pattern, UPOSSet},
 };
 
-#[derive(Clone, Copy)]
-struct MatchInfo {
-    offending_index: usize,
-    skip_for_adj_noun_phrase: bool,
-}
-
 pub(super) struct AffectToEffect {
     expr: Box<dyn Expr>,
-    map: Arc<ExprMap<MatchInfo>>,
+    map: Arc<ExprMap<usize>>,
 }
 
 impl Default for AffectToEffect {
@@ -25,7 +19,7 @@ impl Default for AffectToEffect {
         let mut map = ExprMap::default();
 
         let adj_then_noun_follow = SequenceExpr::default()
-            .then(|tok: &Token, _source: &[char]| is_preceding_context(tok))
+            .then(|tok: &Token, source: &[char]| matches_preceding_context_adj_noun(tok, source))
             .t_ws()
             .then(|tok: &Token, source: &[char]| is_affect_word(tok, source))
             .t_ws()
@@ -33,63 +27,45 @@ impl Default for AffectToEffect {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::NOUN]));
 
-        map.insert(
-            adj_then_noun_follow,
-            MatchInfo {
-                offending_index: 2,
-                skip_for_adj_noun_phrase: true,
-            },
-        );
+        map.insert(adj_then_noun_follow, 2);
 
         let word_follow = SequenceExpr::default()
-            .then(|tok: &Token, _source: &[char]| is_preceding_context(tok))
+            .then(|tok: &Token, source: &[char]| matches_preceding_context(tok, source))
             .t_ws()
             .then(|tok: &Token, source: &[char]| is_affect_word(tok, source))
             .t_ws()
             .then(UPOSSet::new(&[
-                UPOS::AUX,
                 UPOS::PROPN,
-                UPOS::VERB,
                 UPOS::INTJ,
                 UPOS::ADP,
                 UPOS::SCONJ,
-                UPOS::ADJ,
             ]));
 
-        map.insert(
-            word_follow,
-            MatchInfo {
-                offending_index: 2,
-                skip_for_adj_noun_phrase: false,
-            },
-        );
+        map.insert(word_follow, 2);
+
+        let verb_follow = SequenceExpr::default()
+            .then(|tok: &Token, source: &[char]| matches_preceding_context_verb_follow(tok, source))
+            .t_ws()
+            .then(|tok: &Token, source: &[char]| is_affect_word(tok, source))
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::AUX, UPOS::VERB]));
+
+        map.insert(verb_follow, 2);
 
         let punctuation_follow = SequenceExpr::default()
-            .then(|tok: &Token, _source: &[char]| is_preceding_context(tok))
+            .then(|tok: &Token, source: &[char]| matches_preceding_context(tok, source))
             .t_ws()
             .then(|tok: &Token, source: &[char]| is_affect_word(tok, source))
             .then(|tok: &Token, _source: &[char]| matches!(tok.kind, TokenKind::Punctuation(_)));
 
-        map.insert(
-            punctuation_follow,
-            MatchInfo {
-                offending_index: 2,
-                skip_for_adj_noun_phrase: false,
-            },
-        );
+        map.insert(punctuation_follow, 2);
 
         let great_affect = SequenceExpr::default()
             .t_aco("great")
             .t_ws()
             .then(|tok: &Token, source: &[char]| is_affect_word(tok, source));
 
-        map.insert(
-            great_affect,
-            MatchInfo {
-                offending_index: 2,
-                skip_for_adj_noun_phrase: false,
-            },
-        );
+        map.insert(great_affect, 2);
 
         let map = Arc::new(map);
 
@@ -106,90 +82,8 @@ impl ExprLinter for AffectToEffect {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let match_info = *self.map.lookup(0, matched_tokens, source)?;
-        let target = &matched_tokens[match_info.offending_index];
-
-        let preceding = matched_tokens[..match_info.offending_index]
-            .iter()
-            .rfind(|tok| !tok.kind.is_whitespace());
-
-        let mut following = matched_tokens[match_info.offending_index + 1..]
-            .iter()
-            .filter(|tok| !tok.kind.is_whitespace());
-
-        let first_following = following.next();
-        let second_following = following.next();
-
-        let preceding_word = preceding.map(|tok| tok.span.get_content_string(source));
-        let preceding_lower = preceding_word.as_ref().map(|word| word.to_lowercase());
-        let skip_when_preceding_is_noun = match_info.skip_for_adj_noun_phrase
-            && preceding.is_some_and(|tok| tok.kind.is_noun() || tok.kind.is_proper_noun())
-            && preceding_lower
-                .as_deref()
-                .is_some_and(|word| !is_take_form(word));
-
-        if skip_when_preceding_is_noun {
-            return None;
-        }
-
-        if first_following.is_none() {
-            let prev = preceding?;
-
-            if !prev.kind.is_adjective()
-                && !prev.kind.is_determiner()
-                && !prev.kind.is_noun()
-                && !prev.kind.is_proper_noun()
-            {
-                return None;
-            }
-
-            let lower_prev = prev.span.get_content_string(source).to_lowercase();
-
-            if lower_prev.as_str() != "great" {
-                return None;
-            }
-        }
-
-        if let Some(first) = first_following
-            && (first.kind.is_upos(UPOS::ADJ) || first.kind.is_noun())
-            && second_following.is_some_and(|tok| tok.kind.is_noun())
-            && preceding.is_some_and(|tok| tok.kind.is_noun() || tok.kind.is_proper_noun())
-            && preceding_lower
-                .as_deref()
-                .is_some_and(|word| !is_take_form(word))
-        {
-            return None;
-        }
-
-        if matched_tokens
-            .first()
-            .is_some_and(|tok| tok.kind.is_possessive_nominal())
-        {
-            return None;
-        }
-
-        if let Some(prev) = preceding {
-            let lower_prev = preceding_lower
-                .as_ref()
-                .cloned()
-                .unwrap_or_else(|| prev.span.get_content_string(source).to_lowercase());
-
-            let prev_behaves_like_verb = prev.kind.is_upos(UPOS::AUX)
-                || prev.kind.is_auxiliary_verb()
-                || is_modal_like(prev, source, &lower_prev);
-
-            if prev_behaves_like_verb && !is_take_form(&lower_prev) {
-                return None;
-            }
-        }
-
-        if first_following
-            .is_some_and(|tok| tok.kind.is_upos(UPOS::AUX) || tok.kind.is_upos(UPOS::VERB))
-            && preceding
-                .is_some_and(|tok| tok.kind.is_upos(UPOS::AUX) || tok.kind.is_upos(UPOS::VERB))
-        {
-            return None;
-        }
+        let offending_index = *self.map.lookup(0, matched_tokens, source)?;
+        let target = &matched_tokens[offending_index];
 
         let token_text = target.span.get_content_string(source);
         let lower = token_text.to_lowercase();
@@ -245,6 +139,58 @@ fn is_modal_like(token: &Token, source: &[char], lower_prev: &str) -> bool {
         lower_prev,
         "do" | "does" | "did" | "don't" | "dont" | "doesn't" | "doesnt" | "didn't" | "didnt"
     )
+}
+
+fn matches_preceding_context(token: &Token, source: &[char]) -> bool {
+    matches_preceding_context_impl(token, source, true, true)
+}
+
+fn matches_preceding_context_adj_noun(token: &Token, source: &[char]) -> bool {
+    matches_preceding_context_impl(token, source, false, true)
+}
+
+fn matches_preceding_context_verb_follow(token: &Token, source: &[char]) -> bool {
+    matches_preceding_context_impl(token, source, true, false)
+}
+
+fn matches_preceding_context_impl(
+    token: &Token,
+    source: &[char],
+    allow_noun_like: bool,
+    allow_verb_like: bool,
+) -> bool {
+    if token.kind.is_possessive_nominal() {
+        return false;
+    }
+
+    if !is_preceding_context(token) {
+        return false;
+    }
+
+    let lower = token.span.get_content_string(source).to_lowercase();
+
+    if behaves_like_verb(token, source, &lower) && !is_take_form(&lower) {
+        return false;
+    }
+
+    if !allow_verb_like && token.kind.is_upos(UPOS::VERB) && !is_take_form(&lower) {
+        return false;
+    }
+
+    if !allow_noun_like
+        && (token.kind.is_noun() || token.kind.is_proper_noun())
+        && !is_take_form(&lower)
+    {
+        return false;
+    }
+
+    true
+}
+
+fn behaves_like_verb(token: &Token, source: &[char], lower_prev: &str) -> bool {
+    token.kind.is_upos(UPOS::AUX)
+        || token.kind.is_auxiliary_verb()
+        || is_modal_like(token, source, lower_prev)
 }
 
 fn is_preceding_context(token: &Token) -> bool {
