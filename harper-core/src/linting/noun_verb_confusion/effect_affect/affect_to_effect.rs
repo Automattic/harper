@@ -123,11 +123,15 @@ fn is_affect_word(token: &Token, source: &[char]) -> bool {
     text.eq_ignore_ascii_case_chars(AFFECT) || text.eq_ignore_ascii_case_chars(AFFECTS)
 }
 
-fn is_take_form(word: &str) -> bool {
-    matches!(word, "take" | "takes" | "taking" | "took" | "taken")
+fn is_take_form(chars: &[char]) -> bool {
+    chars.eq_ignore_ascii_case_str("take")
+        || chars.eq_ignore_ascii_case_str("takes")
+        || chars.eq_ignore_ascii_case_str("taking")
+        || chars.eq_ignore_ascii_case_str("took")
+        || chars.eq_ignore_ascii_case_str("taken")
 }
 
-fn is_modal_like(token: &Token, source: &[char], lower_prev: &str) -> bool {
+fn is_modal_like(token: &Token, source: &[char], prev: &[char]) -> bool {
     if ModalVerb::default()
         .matches(std::slice::from_ref(token), source)
         .is_some()
@@ -135,10 +139,15 @@ fn is_modal_like(token: &Token, source: &[char], lower_prev: &str) -> bool {
         return true;
     }
 
-    matches!(
-        lower_prev,
-        "do" | "does" | "did" | "don't" | "dont" | "doesn't" | "doesnt" | "didn't" | "didnt"
-    )
+    prev.eq_ignore_ascii_case_str("do")
+        || prev.eq_ignore_ascii_case_str("does")
+        || prev.eq_ignore_ascii_case_str("did")
+        || prev.eq_ignore_ascii_case_str("don't")
+        || prev.eq_ignore_ascii_case_str("dont")
+        || prev.eq_ignore_ascii_case_str("doesn't")
+        || prev.eq_ignore_ascii_case_str("doesnt")
+        || prev.eq_ignore_ascii_case_str("didn't")
+        || prev.eq_ignore_ascii_case_str("didnt")
 }
 
 fn matches_preceding_context(token: &Token, source: &[char]) -> bool {
@@ -167,30 +176,28 @@ fn matches_preceding_context_impl(
         return false;
     }
 
-    let lower = token.span.get_content_string(source).to_lowercase();
+    let content = token.span.get_content(source);
+    let is_take_form_word = is_take_form(content);
 
-    if behaves_like_verb(token, source, &lower) && !is_take_form(&lower) {
+    if behaves_like_verb(token, source, content) && !is_take_form_word {
         return false;
     }
 
-    if !allow_verb_like && token.kind.is_upos(UPOS::VERB) && !is_take_form(&lower) {
+    if !allow_verb_like && token.kind.is_upos(UPOS::VERB) && !is_take_form_word {
         return false;
     }
 
-    if !allow_noun_like
-        && (token.kind.is_noun() || token.kind.is_proper_noun())
-        && !is_take_form(&lower)
-    {
+    if !allow_noun_like && (token.kind.is_noun() || token.kind.is_proper_noun()) && !is_take_form_word {
         return false;
     }
 
     true
 }
 
-fn behaves_like_verb(token: &Token, source: &[char], lower_prev: &str) -> bool {
+fn behaves_like_verb(token: &Token, source: &[char], prev: &[char]) -> bool {
     token.kind.is_upos(UPOS::AUX)
         || token.kind.is_auxiliary_verb()
-        || is_modal_like(token, source, lower_prev)
+        || is_modal_like(token, source, prev)
 }
 
 fn is_preceding_context(token: &Token) -> bool {
