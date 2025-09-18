@@ -187,7 +187,10 @@ fn matches_preceding_context_impl(
         return false;
     }
 
-    if !allow_noun_like && (token.kind.is_noun() || token.kind.is_proper_noun()) && !is_take_form_word {
+    if !allow_noun_like
+        && (token.kind.is_noun() || token.kind.is_proper_noun())
+        && !is_take_form_word
+    {
         return false;
     }
 
