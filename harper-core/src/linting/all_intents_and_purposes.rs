@@ -122,6 +122,15 @@ mod tests {
     }
 
     #[test]
+    fn fix_for_intrinsic_purposes() {
+        assert_suggestion_result(
+            "For all intrinsic purposes I think you are wrong.",
+            AllIntentsAndPurposes::default(),
+            "For all intents and purposes I think you are wrong.",
+        );
+    }
+
+    #[test]
     fn fix_in_intense_purposes() {
         assert_suggestion_result(
             "the solution has some rules than in all intense purposes is not necessarily database driven",
