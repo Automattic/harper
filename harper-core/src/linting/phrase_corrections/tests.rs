@@ -536,9 +536,6 @@ fn corrects_far_and_few_between() {
 // FetalPosition
 // -none-
 
-// ForAllIntentsAndPurposes
-// -none-
-
 // ForALongTime
 #[test]
 fn test_for_a_long_time() {

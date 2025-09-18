@@ -1637,6 +1637,18 @@ Message: |
 
 
 
+Lint:    Nonstandard (50 priority)
+Message: |
+     668 | proposing Amendments, which, in either Case, shall be valid to all Intents and
+         |                                                             ^~~~~~~~~~~~~~~~~~~
+     669 | Purposes, as Part of this Constitution, when ratified by the Legislatures of
+         | ~~~~~~~~ The time period is redundant because it repeats what's already specified by the AM/PM indicator.
+Suggest:
+  - Replace with: “to all Intents and Purposes”
+  - Replace with: “for alL intents anD purposes”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      683 | This Constitution, and the Laws of the United States which shall be made in
