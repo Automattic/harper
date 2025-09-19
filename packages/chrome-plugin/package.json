@@ -51,7 +51,6 @@
 	"dependencies": {
 		"@tailwindcss/vite": "^4.1.4",
 		"@webcomponents/custom-elements": "^1.6.0",
-		"bowser": "^2.12.1",
 		"harper.js": "workspace:*",
 		"jquery": "^3.7.1",
 		"lint-framework": "workspace:*",

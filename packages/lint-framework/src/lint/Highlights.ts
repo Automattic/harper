@@ -1,4 +1,4 @@
-import * as Bowser from "bowser";
+import * as Bowser from 'bowser';
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import type { LintBox } from './Box';
@@ -22,7 +22,7 @@ import RenderBox from './RenderBox';
 import type SourceElement from './SourceElement';
 import type { UnpackedLint } from './unpackLint';
 
-let useCustomHighlights =  supportsCustomHighlights();
+const useCustomHighlights = supportsCustomHighlights();
 
 /** A class that renders highlights to a page and nothing else. Uses a virtual DOM to minimize jitter. */
 export default class Highlights {
@@ -295,25 +295,24 @@ function isContainingBlock(el: Element): boolean {
 	return false;
 }
 
-
-
 export function supportsCustomHighlights(ua = navigator.userAgent) {
-  const parser = Bowser.getParser(ua);
-  const isFirefox = parser.getBrowserName(true) === 'firefox';
-  if (isFirefox) return false;
-  if (!('CSS' in window) || typeof CSS.supports !== 'function') return false;
-  const supportsSelector = CSS.supports('selector(::highlight(__x))');
-  const reg = CSS && CSS.highlights;
-  const hasRegistry = !!reg && ['get', 'set', 'has', 'delete', 'clear'].every(m => typeof reg[m] === 'function');
-  const hasCtor = typeof window.Highlight === 'function';
-  let canRegister = false;
-  if (hasRegistry && hasCtor) {
-    try {
-      const h = new Highlight();
-      CSS.highlights.set('__probe__', h);
-      canRegister = CSS.highlights.has('__probe__');
-      CSS.highlights.delete('__probe__');
-    } catch {}
-  }
-  return supportsSelector && hasRegistry && hasCtor && canRegister;
+	const parser = Bowser.getParser(ua);
+	const isFirefox = parser.getBrowserName(true) === 'firefox';
+	if (isFirefox) return false;
+	if (!('CSS' in window) || typeof CSS.supports !== 'function') return false;
+	const supportsSelector = CSS.supports('selector(::highlight(__x))');
+	const reg = CSS?.highlights as any;
+	const hasRegistry =
+		!!reg && ['get', 'set', 'has', 'delete', 'clear'].every((m) => typeof reg[m] === 'function');
+	const hasCtor = typeof window.Highlight === 'function';
+	let canRegister = false;
+	if (hasRegistry && hasCtor) {
+		try {
+			const h = new Highlight();
+			CSS.highlights.set('__probe__', h);
+			canRegister = CSS.highlights.has('__probe__');
+			CSS.highlights.delete('__probe__');
+		} catch {}
+	}
+	return supportsSelector && hasRegistry && hasCtor && canRegister;
 }
