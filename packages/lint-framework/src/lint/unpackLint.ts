@@ -1,4 +1,5 @@
 import { type Lint, type Linter, SuggestionKind } from 'harper.js';
+import type { LintKind } from './lintKindColor';
 
 export type UnpackedSpan = {
 	start: number;
@@ -9,7 +10,7 @@ export type UnpackedLint = {
 	span: UnpackedSpan;
 	message_html: string;
 	problem_text: string;
-	lint_kind: string;
+	lint_kind: LintKind;
 	lint_kind_pretty: string;
 	suggestions: UnpackedSuggestion[];
 	context_hash: string;
@@ -32,7 +33,7 @@ export default async function unpackLint(
 		span: { start: span.start, end: span.end },
 		message_html: lint.message_html(),
 		problem_text: lint.get_problem_text(),
-		lint_kind: lint.lint_kind(),
+		lint_kind: lint.lint_kind() as LintKind,
 		lint_kind_pretty: lint.lint_kind_pretty(),
 		suggestions: lint.suggestions().map((sug) => {
 			return { kind: sug.kind(), replacement_text: sug.get_replacement_text() };

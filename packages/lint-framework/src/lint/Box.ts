@@ -15,6 +15,8 @@ export type Box = {
 export type LintBox = Box & {
 	lint: UnpackedLint;
 	source: SourceElement;
+	/** Optionally provided to improve highlight rendering performance. */
+	range?: Range;
 	applySuggestion: (sug: UnpackedSuggestion) => void;
 };
 

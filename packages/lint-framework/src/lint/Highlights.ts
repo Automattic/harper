@@ -16,23 +16,72 @@ import {
 	getSlateRoot,
 	getTrixRoot,
 } from './editorUtils';
-import lintKindColor from './lintKindColor';
+import lintKindColor, { type LintKind } from './lintKindColor';
 import RenderBox from './RenderBox';
 import type SourceElement from './SourceElement';
+import type { UnpackedLint } from './unpackLint';
 
 /** A class that renders highlights to a page and nothing else. Uses a virtual DOM to minimize jitter. */
 export default class Highlights {
 	renderBoxes: Map<SourceElement, RenderBox>;
+	highlights?: Map<LintKind, Highlight>;
 
 	constructor() {
 		this.renderBoxes = new Map();
+		if (CSS.highlights) {
+			this.highlights = new Map();
+		}
+	}
+
+	/** Used for CSS highlight API */
+	private insertHighlightStyle(tag: string, lint: UnpackedLint) {
+		const color = lintKindColor(lint.lint_kind);
+		const textDecor = `underline ${color} solid 2px`;
+		const backgroundColor = `${color}22`;
+
+		const styleId = `harper-highlight-style-${lint.lint_kind}`;
+		if (document.getElementById(styleId)) return;
+
+		const style = document.createElement('style');
+		style.id = styleId;
+		style.textContent = `
+      ::highlight(${tag}) {
+        text-decoration: ${textDecor};
+        background-color: ${backgroundColor};
+      }
+    `;
+		document.head.appendChild(style);
 	}
 
 	public renderLintBoxes(boxes: LintBox[]) {
 		// Sort the lint boxes based on their source, so we can render them all together.
 		const sourceToBoxes: Map<SourceElement, { boxes: LintBox[]; cpa: DOMRect | null }> = new Map();
 
+		// Clear old highlights
+		if (this.highlights) {
+			for (const [_, highlight] of this.highlights) {
+				highlight.clear();
+			}
+		}
+
 		for (const box of boxes) {
+			if (box.range && this.highlights != null) {
+				let highlight = this.highlights.get(box.lint.lint_kind);
+
+				if (highlight != null) {
+					highlight.add(box.range);
+				} else {
+					highlight = new Highlight();
+					const tag = `harper-${box.lint.lint_kind}`;
+					CSS.highlights.set(tag, highlight);
+					this.insertHighlightStyle(tag, box.lint);
+					highlight.add(box.range);
+					this.highlights.set(box.lint.lint_kind, highlight);
+				}
+
+				continue;
+			}
+
 			let renderBox = this.renderBoxes.get(box.source);
 
 			if (renderBox == null) {
