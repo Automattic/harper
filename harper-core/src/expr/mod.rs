@@ -130,7 +130,7 @@ where
         &'a self,
         tokens: &'a [Token],
         source: &'a [char],
-    ) -> Box<(dyn Iterator<Item = Span<Token>> + 'a)> {
+    ) -> Box<dyn Iterator<Item = Span<Token>> + 'a> {
         let mut last_end = 0usize;
 
         Box::new((0..tokens.len()).filter_map(move |i| {
@@ -147,7 +147,7 @@ where
     fn iter_matches_in_doc<'a>(
         &'a self,
         doc: &'a Document,
-    ) -> Box<(dyn Iterator<Item = Span<Token>> + 'a)> {
+    ) -> Box<dyn Iterator<Item = Span<Token>> + 'a> {
         Box::new(self.iter_matches(doc.get_tokens(), doc.get_source()))
     }
 }
