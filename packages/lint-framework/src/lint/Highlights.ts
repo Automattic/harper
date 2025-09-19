@@ -1,4 +1,4 @@
-import * as Bowser from 'bowser';
+import Bowser from 'bowser';
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import type { LintBox } from './Box';
@@ -22,8 +22,6 @@ import RenderBox from './RenderBox';
 import type SourceElement from './SourceElement';
 import type { UnpackedLint } from './unpackLint';
 
-const useCustomHighlights = supportsCustomHighlights();
-
 /** A class that renders highlights to a page and nothing else. Uses a virtual DOM to minimize jitter. */
 export default class Highlights {
 	renderBoxes: Map<SourceElement, RenderBox>;
@@ -31,7 +29,7 @@ export default class Highlights {
 
 	constructor() {
 		this.renderBoxes = new Map();
-		if (CSS.highlights) {
+		if (supportsCustomHighlights()) {
 			this.highlights = new Map();
 		}
 	}
@@ -68,7 +66,7 @@ export default class Highlights {
 		}
 
 		for (const box of boxes) {
-			if (box.range && this.highlights != null && useCustomHighlights) {
+			if (box.range && this.highlights != null) {
 				let highlight = this.highlights.get(box.lint.lint_kind);
 
 				if (highlight != null) {
