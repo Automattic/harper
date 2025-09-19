@@ -539,7 +539,7 @@
 > properties of codes   ( systems for converting information from one        form     to
 # NPl/V3     P  NPl/V3+ . NPl+    C/P Nᴹ/Vg/J    Nᴹ+         P    NSg/I/VB/J N🅪Sg/VB+ P
 > another ) and  their fitness for a    specific application . Codes   are used for data
-# I/D     . VB/C D$+   NSg     C/P D/P+ NSg/J+   NSg+        . NPl/V3+ VB  VP/J C/P N🅪Pl+
+# I/D     . VB/C D$+   Nᴹ      C/P D/P+ NSg/J+   NSg+        . NPl/V3+ VB  VP/J C/P N🅪Pl+
 > compression , cryptography , error   detection and  correction , and  more            recently
 # NSg+        . Nᴹ           . NSg/VB+ N🅪Sg      VB/C NSg+       . VB/C NPr/I/VB/J/R/Dq R
 > also for network coding   . Codes   are studied for the purpose of designing
