@@ -20,7 +20,6 @@ impl Default for ItLooksLikeThat {
                         let is_subj = tok.kind.is_subject_pronoun();
                         let is_ing = tok.kind.is_verb_progressive_form();
                         let is_definitely_rel_pron = is_subj || is_ing;
-                        eprintln!("rel? subj:{} ing:{}", is_subj, is_ing);
 
                         // Heuristics on the word after "that" which show "that"
                         // could possibly be a legitimate demonstrative pronoun or determiner
