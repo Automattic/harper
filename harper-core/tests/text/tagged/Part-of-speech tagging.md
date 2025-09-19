@@ -189,7 +189,7 @@
 > all          . For example , article then    noun    can     occur , but     article then    verb    ( arguably )
 # NSg/I/J/C/Dq . C/P NSg/VB+ . NSg/VB+ NSg/J/C NSg/VB+ NPr/VXB VB    . NSg/C/P NSg/VB+ NSg/J/C NSg/VB+ . R        .
 > cannot . The program got about 70 % correct  . Its     results were    repeatedly reviewed
-# NSg/VB . D+  NPr/VB+ VB  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ NSg/VPt R          VP/J
+# NSg/VB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ NSg/VPt R          VP/J
 > and  corrected by      hand    , and  later users sent   in      errata so        that          by      the late  70 s
 # VB/C VP/J      NSg/J/P NSg/VB+ . VB/C JC    NPl+  NSg/VB NPr/J/P NSg    NSg/I/J/C NSg/I/C/Ddem+ NSg/J/P D   NSg/J #  ?
 > the tagging was nearly perfect  ( allowing for some     cases   on  which even     human
