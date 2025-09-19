@@ -159,6 +159,11 @@ enum Args {
         /// The directory containing the dictionary and affixes.
         dir: PathBuf,
     },
+    /// Normalize the `dictionary.dict` file.
+    NormalizeDictionary {
+        /// The directory containing the dictionary and affixes.
+        dir: PathBuf,
+    },
     /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
     /// As long as there's either an open or hyphenated spelling.
     Compounds,
@@ -666,6 +671,49 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        Args::NormalizeDictionary { dir } => {
+            let dict_path = dir.join("dictionary.dict");
+            let dict_content = fs::read_to_string(&dict_path)
+                .map_err(|e| anyhow!("Failed to read dictionary: {e}"))?;
+
+            for oldline in dict_content.lines() {
+                let newline = if oldline.is_empty()
+                    || oldline.starts_with('#')
+                    || oldline.chars().all(|c| c.is_ascii_digit())
+                {
+                    oldline.into()
+                } else {
+                    let (entry_part, comment_part) = oldline
+                        .split_once('#')
+                        .map_or((oldline, ""), |(e, c)| (e, c));
+
+                    if let Some((lexeme, rest)) = entry_part.split_once('/') {
+                        let (annotation, whitespace) = match rest.split_once([' ', '\t']) {
+                            Some((a, _)) => (a, &rest[a.len()..]),
+                            None => (rest, ""),
+                        };
+
+                        let normalized = format!(
+                            "{}/{}{}",
+                            lexeme,
+                            normalize_annotation_flags(annotation),
+                            whitespace
+                        );
+                        if !comment_part.is_empty() {
+                            format!("{}{}#{}", normalized.trim_end(), whitespace, comment_part)
+                        } else {
+                            normalized
+                        }
+                    } else {
+                        oldline.into()
+                    }
+                };
+
+                println!("{newline}");
+            }
+
+            Ok(())
+        }
         Args::Compounds => {
             let mut compound_map: HashMap<String, Vec<String>> = HashMap::new();
 
@@ -890,4 +938,98 @@ fn file_dict_name(path: &Path) -> PathBuf {
     }
 
     rewritten.into()
+}
+
+/// Normalizes a dictionary entry's annotation flags
+fn normalize_annotation_flags(flag_str: &str) -> String {
+    let char_vec = flag_str.chars().collect::<Vec<_>>();
+
+    let mut pos_order: Vec<char> = Vec::new();
+    let mut pos_map: HashMap<char, Vec<char>> = HashMap::new();
+
+    let pos_tags = "NOVJRIPCD";
+    let noun_props = "09gmw";
+    let verb_props = "lAbdGtT6h";
+    let pron_props = "aso123F";
+    let adj_props = "^cuY*.:";
+    let det_props = "qM5";
+
+    // Create a special key in the map for the 'unused' flags, using the null byte char as the key
+    pos_map.insert('\0', vec![]);
+
+    // Check for ~ because it must be first if present
+    if char_vec.contains(&'~') {
+        pos_order.push('~');
+        pos_map.insert('~', vec![]);
+    }
+
+    char_vec.iter().for_each(|flag| {
+        if flag == &'~' {
+            // This will drop any duplicates should they exist
+            return;
+        }
+        if pos_tags.contains(*flag) {
+            // This one is a POS tag so if it's not already in the map, add it as a key and push it to the pos_order vec
+            // but if it is already in the map (a dupe), treat it as a property of the POS and push it onto the value of the key
+            if pos_map.contains_key(flag) {
+                // add dupe
+                pos_map.get_mut(flag).unwrap().push(*flag);
+            } else {
+                pos_map.insert(*flag, vec![]);
+                pos_order.push(*flag);
+            }
+        } else if noun_props.contains(*flag) {
+            if pos_map.contains_key(&'N') {
+                pos_map.get_mut(&'N').unwrap().push(*flag);
+            } else if pos_map.contains_key(&'O') {
+                pos_map.get_mut(&'O').unwrap().push(*flag);
+            } else {
+                // we got a noun property before we got the 'N' tag, so add it to the unused flags
+                pos_map.get_mut(&'\0').unwrap().push(*flag);
+            }
+        } else if verb_props.contains(*flag) {
+            if pos_map.contains_key(&'V') {
+                pos_map.get_mut(&'V').unwrap().push(*flag);
+            } else {
+                pos_order.push(*flag);
+            }
+        } else if *flag == 'S' {
+            if pos_map.contains_key(&'N') {
+                pos_map.get_mut(&'N').unwrap().push(*flag);
+            } else if pos_map.contains_key(&'V') {
+                pos_map.get_mut(&'V').unwrap().push(*flag);
+            } else {
+                pos_order.push(*flag);
+            }
+        } else if *flag == '>' {
+            if pos_map.contains_key(&'V') {
+                pos_map.get_mut(&'V').unwrap().push(*flag);
+            } else if pos_map.contains_key(&'J') {
+                pos_map.get_mut(&'J').unwrap().push(*flag);
+            } else {
+                pos_order.push(*flag);
+            }
+        } else if adj_props.contains(*flag) {
+            pos_map.get_mut(&'J').unwrap().push(*flag);
+        } else if pron_props.contains(*flag) {
+            pos_map.get_mut(&'I').unwrap().push(*flag);
+        } else if det_props.contains(*flag) {
+            pos_map.get_mut(&'D').unwrap().push(*flag);
+        } else {
+            // This one is not a POS tag so add it to the 'unused' flags
+            pos_map.get_mut(&'\0').unwrap().push(*flag);
+        }
+    });
+
+    let mut result = String::new();
+    // Get the pos in order then append it and its values to the result string
+    pos_order.iter().for_each(|pos_flag_char| {
+        result.push(*pos_flag_char);
+        if let Some(props) = pos_map.get(pos_flag_char) {
+            result.extend(props);
+        }
+    });
+    // finally append the unused flags
+    result.extend(pos_map.get(&'\0').unwrap());
+    result
 }
