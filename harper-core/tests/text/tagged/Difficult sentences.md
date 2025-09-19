@@ -131,7 +131,7 @@
 > By      the power      vested in      me       , I       now        pronounce you    man      and  wife      .
 # NSg/J/P D+  N🅪Sg/VB/J+ VP/J   NPr/J/P NPr/ISg+ . ISg/#r+ NPr/VB/J/C NSg/VB    ISgPl+ NPr/VB/J VB/C NSg/VB/J+ .
 > By      Jove ! I       think  she's got it       !
-# NSg/J/P NPr+ . ISg/#r+ NSg/VB K     VB  NPr/ISg+ .
+# NSg/J/P NPr+ . ISg/#r+ NSg/VB K     VP  NPr/ISg+ .
 > By      all           that          is  holy    , I'll put     an  end     to this    .
 # NSg/J/P NSg/I/J/C/Dq+ NSg/I/C/Ddem+ VL3 NSg/J/R . K    NSg/VBP D/P NSg/VB+ P  I/Ddem+ .
 > I       sorted the items   by      category .
@@ -327,7 +327,7 @@
 > Paul is  from New       Zealand .
 # NPr+ VL3 P    NSg/VB/J+ NPr+    .
 > I       got a   letter  from my  brother   .
-# ISg/#r+ VB  D/P NSg/VB+ P    D$+ NSg/VB/J+ .
+# ISg/#r+ VP  D/P NSg/VB+ P    D$+ NSg/VB/J+ .
 > You    can't get    all          your news   from the Internet .
 # ISgPl+ VXB   NSg/VB NSg/I/J/C/Dq D$+  Nᴹ/V3+ P    D   NPrᴹ/VB+ .
 > He       had books   piled from floor   to ceiling .
@@ -391,7 +391,7 @@
 > There wasn't much         of interest in      her     speech   .
 # R+    VB     NSg/I/J/R/Dq P  N🅪Sg/VB+ NPr/J/P ISg/D$+ N🅪Sg/VB+ .
 > He       hasn't got an  original idea in      him  .
-# NPr/ISg+ V3     VB  D/P NSg/J    NSg+ NPr/J/P ISg+ .
+# NPr/ISg+ V3     VP  D/P NSg/J    NSg+ NPr/J/P ISg+ .
 > You    are one        in      a   million .
 # ISgPl+ VB  NSg/I/VB/J NPr/J/P D/P NSg     .
 > She's in      an  orchestra .
@@ -429,7 +429,7 @@
 > The company  is  in      profit      .
 # D+  N🅪Sg/VB+ VL3 NPr/J/P N🅪Sg/VBP/J+ .
 > You've got a   friend    in      me       .
-# K      VB  D/P NPr/VB/J+ NPr/J/P NPr/ISg+ .
+# K      VP  D/P NPr/VB/J+ NPr/J/P NPr/ISg+ .
 > He's met his     match   in      her     .
 # NSg$ VB  ISg/D$+ NSg/VB+ NPr/J/P ISg/D$+ .
 > There has been    no    change  in      his     condition .
@@ -483,7 +483,7 @@
 >
 #
 > His     parents got him  an  in      with the company  .
-# ISg/D$+ NPl/V3+ VB  ISg+ D/P NPr/J/P P    D+  N🅪Sg/VB+ .
+# ISg/D$+ NPl/V3+ VP  ISg+ D/P NPr/J/P P    D+  N🅪Sg/VB+ .
 >
 #
 > Adjective
@@ -739,9 +739,9 @@
 > What   will    be      the effect on  morale ?
 # NSg/I+ NPr/VXB NSg/VXB D   NSg/VB J/P Nᴹ+    .
 > I       haven't got any    money   on  me       .
-# ISg/#r+ VB      VB  I/R/Dq N🅪Sg/J+ J/P NPr/ISg+ .
+# ISg/#r+ VB      VP  I/R/Dq N🅪Sg/J+ J/P NPr/ISg+ .
 > On  Jack's entry , William got up         to leave  .
-# J/P NSg$   NSg+  . NPr+    VB  NSg/VB/J/P P  NSg/VB .
+# J/P NSg$   NSg+  . NPr+    VP  NSg/VB/J/P P  NSg/VB .
 > On  the addition of ammonia , a    chemical reaction   begins .
 # J/P D   NSg      P  Nᴹ+     . D/P+ NSg/J+   N🅪Sg/VB/J+ NPl/V3 .
 > The drinks  are on  me       tonight , boys    .
