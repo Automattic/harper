@@ -900,16 +900,6 @@ fn detect_monumentous_real_world() {
     );
 }
 
-// MorePreferable
-#[test]
-fn correct_more_preferable() {
-    assert_suggestion_result(
-        "Is it more preferable to use process.env.variable or env.parsed.variable?",
-        lint_group(),
-        "Is it preferable to use process.env.variable or env.parsed.variable?",
-    );
-}
-
 // MyHouse
 // -none-
 
@@ -967,6 +957,9 @@ fn detect_nerve_racking_no_hyphen() {
 
 // NotTo
 // -none-
+
+// NotUncommon moved to phrase_set_corrections as part of the
+// generalized double negative mapping.
 
 // OfCourse
 // See also: tests in `of_course.rs` for "of curse/corse" → "of course" corrections
@@ -1148,6 +1141,26 @@ fn correct_iirc_correctly() {
 
 // RoadMap
 // -none-
+
+// RulesOfThumb
+
+#[test]
+fn correct_rules_of_thumbs() {
+    assert_suggestion_result(
+        "Thanks. 0.2 is just from my rule of thumbs.",
+        lint_group(),
+        "Thanks. 0.2 is just from my rules of thumb.",
+    );
+}
+
+#[test]
+fn correct_rules_of_thumbs_hyphenated() {
+    assert_suggestion_result(
+        "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".",
+        lint_group(),
+        "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
+    );
+}
 
 // SameAs
 // -none-

@@ -86,8 +86,8 @@
 # D   NSg/J  . NSg/J      . VB/C NSg/J    NPl/V3+ NPr/VXB NSg/VXB VP/J          . NPr/J/P NSg/I/J/Dq+
 > languages words   are also marked for their " case       " ( role as    subject   , object  ,
 # NPl/V3+   NPl/V3+ VB  R/C  VP/J   C/P D$+   . NPr🅪Sg/VB+ . . NSg  NSg/R NSg/VB/J+ . NSg/VB+ .
-> etc. ) , grammatical gender     , and  so        on  ; while      verbs   are marked for tense    , aspect  ,
-# +    . . J+          N🅪Sg/VB/J+ . VB/C NSg/I/J/C J/P . NSg/VB/C/P NPl/V3+ VB  VP/J   C/P NSg/VB/J . NSg/VB+ .
+> etc. ) , grammatical gender     , and  so        on  ; while      verbs   are marked for tense    , aspect   ,
+# +    . . J+          N🅪Sg/VB/J+ . VB/C NSg/I/J/C J/P . NSg/VB/C/P NPl/V3+ VB  VP/J   C/P NSg/VB/J . N🅪Sg/VB+ .
 > and  other     things . In      some     tagging systems , different inflections of the same
 # VB/C NSg/VB/J+ NPl+   . NPr/J/P I/J/R/Dq NSg/Vg  NPl+    . NSg/J     NPl         P  D   I/J
 > root    word    will    get    different parts  of speech   , resulting in      a   large number     of
@@ -281,7 +281,7 @@
 > parsing ( 1997 ) that          merely assigning the most         common   tag     to each known word    and
 # Nᴹ/Vg/J . #    . NSg/I/C/Ddem+ R      Nᴹ/Vg/J   D   NSg/I/J/R/Dq NSg/VB/J NSg/VB+ P  Dq   VPp/J NSg/VB+ VB/C
 > the tag     " proper noun    " to all          unknowns will    approach 90 % accuracy because many
-# D   NSg/VB+ . NSg/J  NSg/VB+ . P  NSg/I/J/C/Dq NPl/V3+  NPr/VXB NSg/VB+  #  . N🅪Sg+    C/P     NSg/I/J/Dq
+# D   NSg/VB+ . NSg/J  NSg/VB+ . P  NSg/I/J/C/Dq NPl/V3+  NPr/VXB N🅪Sg/VB+ #  . N🅪Sg+    C/P     NSg/I/J/Dq
 > words   are unambiguous , and  many       others  only  rarely represent their less       - common
 # NPl/V3+ VB  J           . VB/C NSg/I/J/Dq NPl/V3+ J/R/C R      VB        D$+   VB/J/R/C/P . NSg/VB/J
 > parts  of speech   .
@@ -429,9 +429,9 @@
 > this   particular dataset ) . Thus , it       should not     be      assumed that         the results
 # I/Ddem NSg/J      NSg     . . NSg  . NPr/ISg+ VXB    NSg/R/C NSg/VXB VP/J    NSg/I/C/Ddem D+  NPl/V3+
 > reported here    are the best       that          can     be      achieved with a    given       approach ; nor   even
-# VP/J     NSg/J/R VB  D   NPr/VXB/JS NSg/I/C/Ddem+ NPr/VXB NSg/VXB VP/J     P    D/P+ NSg/VB/J/P+ NSg/VB+  . NSg/C NSg/VB/J
+# VP/J     NSg/J/R VB  D   NPr/VXB/JS NSg/I/C/Ddem+ NPr/VXB NSg/VXB VP/J     P    D/P+ NSg/VB/J/P+ N🅪Sg/VB+ . NSg/C NSg/VB/J
 > the best        that          have    been    achieved with a    given       approach .
-# D+  NPr/VXB/JS+ NSg/I/C/Ddem+ NSg/VXB NSg/VPp VP/J     P    D/P+ NSg/VB/J/P+ NSg/VB+  .
+# D+  NPr/VXB/JS+ NSg/I/C/Ddem+ NSg/VXB NSg/VPp VP/J     P    D/P+ NSg/VB/J/P+ N🅪Sg/VB+ .
 >
 #
 > In      2014 , a    paper      reporting using   the structure regularization method for

@@ -759,13 +759,6 @@ pub fn lint_group() -> LintGroup {
             "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage.",
             LintKind::Nonstandard
         ),
-        "MorePreferable" => (
-            ["more preferable"],
-            ["preferable"],
-            "Use just `preferable` instead of `more preferable`.",
-            "Corrects `more preferable` to `preferable`.",
-            LintKind::Redundancy
-        ),
         "MyHouse" => (
             ["mu house"],
             ["my house"],
@@ -930,6 +923,13 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `road map`?",
             "Detects when `roadmap` is used instead of `road map`, prompting the correct spacing.",
             LintKind::WordChoice
+        ),
+        "RulesOfThumb" => (
+            ["rule of thumbs", "rule-of-thumbs"],
+            ["rules of thumb"],
+            "The correct plural is `rules of thumb`.",
+            "Corrects pluralizing the wrong noun in `rule of thumb`.",
+            LintKind::Usage
         ),
         "SameAs" => (
             ["same then"],

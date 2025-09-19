@@ -127,7 +127,7 @@
 > By      ' maybe   ' she  means  ' no    ' .
 # NSg/J/P . NSg/J/R . ISg+ NPl/V3 . NPr/P . .
 > The electricity was cut       off        , so        we   had to read    by      candlelight .
-# D+  Nᴹ+         VPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/C IPl+ VB  P  NSg/VBP NSg/J/P NSg         .
+# D+  Nᴹ+         VPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/C IPl+ VB  P  NSg/VBP NSg/J/P Nᴹ          .
 > By      the power      vested in      me       , I       now        pronounce you    man      and  wife      .
 # NSg/J/P D+  N🅪Sg/VB/J+ VP/J   NPr/J/P NPr/ISg+ . ISg/#r+ NPr/VB/J/C NSg/VB    ISgPl+ NPr/VB/J VB/C NSg/VB/J+ .
 > By      Jove ! I       think  she's got it       !
@@ -169,7 +169,7 @@
 > The bricks  used to build  the wall    measured 10 by      20 by      30 cm      .
 # D+  NPl/V3+ VP/J P  NSg/VB D+  NPr/VB+ VP/J     #  NSg/J/P #  NSg/J/P #  NSg/#r+ .
 > She's a   lovely little     filly , by      Big   Lad , out          of Damsel in      Distress .
-# K     D/P NSg/J  NPr/I/J/Dq NSg   . NSg/J/P NSg/J NSg . NSg/VB/J/R/P P  NSg    NPr/J/P NSg/VB+  .
+# K     D/P NSg/J  NPr/I/J/Dq NSg   . NSg/J/P NSg/J NSg . NSg/VB/J/R/P P  NSg    NPr/J/P Nᴹ/VB+   .
 > Are you    eating  by      Rabbi Fischer ? ( at    the house  of )
 # VB  ISgPl+ Nᴹ/Vg/J NSg/J/P NSg+  NPr+    . . NSg/P D   NPr/VB P  .
 > By      Chabad , it's different . ( with , among )
@@ -389,7 +389,7 @@
 > I       glanced over    at    the pretty     girl    in      the red     dress   .
 # ISg/#r+ VP/J    NSg/J/P NSg/P D+  NSg/VB/J/R NSg/VB+ NPr/J/P D+  N🅪Sg/J+ NSg/VB+ .
 > There wasn't much         of interest in      her     speech   .
-# R+    VB     NSg/I/J/R/Dq P  NSg/VB+  NPr/J/P ISg/D$+ N🅪Sg/VB+ .
+# R+    VB     NSg/I/J/R/Dq P  N🅪Sg/VB+ NPr/J/P ISg/D$+ N🅪Sg/VB+ .
 > He       hasn't got an  original idea in      him  .
 # NPr/ISg+ V3     VB  D/P NSg/J    NSg+ NPr/J/P ISg+ .
 > You    are one        in      a   million .
@@ -751,7 +751,7 @@
 > I       had a    terrible thirst on  me       .
 # ISg/#r+ VB  D/P+ J+       Nᴹ/VB+ J/P NPr/ISg+ .
 > Have    pity    or    compassion on  him  .
-# NSg/VXB N🅪Sg/VB NPr/C NSg/VB+    J/P ISg+ .
+# NSg/VXB N🅪Sg/VB NPr/C Nᴹ/VB+     J/P ISg+ .
 > He's on  his     lunch    break   .
 # NSg$ J/P ISg/D$+ N🅪Sg/VB+ NSg/VB+ .
 > I'm on  nights  all          this   week   .
@@ -764,8 +764,8 @@
 # NPr/ISg+ NPr/VXB NSg/VB  J/P I/J+    NPl/V3+    .
 > A    curse   on  him  !
 # D/P+ NSg/VB+ J/P ISg+ .
-> Please don't tell   on  her     and  get    her     in      trouble .
-# VB     VB    NPr/VB J/P ISg/D$+ VB/C NSg/VB ISg/D$+ NPr/J/P NSg/VB+ .
+> Please don't tell   on  her     and  get    her     in      trouble  .
+# VB     VB    NPr/VB J/P ISg/D$+ VB/C NSg/VB ISg/D$+ NPr/J/P N🅪Sg/VB+ .
 >
 #
 > Verb

@@ -198,6 +198,65 @@ fn corrects_dose_not() {
     );
 }
 
+// LitotesDirectPositive
+
+#[test]
+fn litotes_not_uncommon_atomic() {
+    assert_suggestion_result("not uncommon", lint_group(), "common");
+}
+
+#[test]
+fn litotes_not_uncommon_sentence() {
+    assert_suggestion_result(
+        "It is not uncommon to see outages during storms.",
+        lint_group(),
+        "It is common to see outages during storms.",
+    );
+}
+
+#[test]
+fn litotes_not_unlikely() {
+    assert_suggestion_result(
+        "This outcome is not unlikely given the data.",
+        lint_group(),
+        "This outcome is likely given the data.",
+    );
+}
+
+#[test]
+fn litotes_not_insignificant() {
+    assert_suggestion_result(
+        "That is not insignificant progress.",
+        lint_group(),
+        "That is significant progress.",
+    );
+}
+
+#[test]
+fn litotes_more_preferable() {
+    assert_suggestion_result(
+        "Is it more preferable to use process.env.variable or env.parsed.variable?",
+        lint_group(),
+        "Is it preferable to use process.env.variable or env.parsed.variable?",
+    );
+}
+
+// RedundantSuperlatives
+
+#[test]
+fn redundant_more_optimal() {
+    assert_suggestion_result("Is this more optimal?", lint_group(), "Is this optimal?");
+}
+
+#[test]
+fn redundant_most_ideal() {
+    assert_suggestion_result(
+        "This is the most ideal scenario.",
+        lint_group(),
+        "This is the ideal scenario.",
+    );
+}
+
 // -dose it true positive-
 #[test]
 #[ignore = "due to false positives this can't be fixed yet"]
@@ -275,7 +334,6 @@ fn dont_flag_dont_dose_it_too_high() {
     );
 }
 
-// the only solution the other hopefully-dominant-reasonable-adult-human mind can find, is to dose it off, hoping the drowsiness can keep the fear at bay
 #[test]
 #[ignore = "would be a false positive in a naive implementation"]
 fn dont_flag_to_dose_it_off() {
@@ -490,6 +548,44 @@ fn correct_to_an_extend() {
         "It mimics (to an extend) the way in which Chrome requests SSO cookies with the Windows 10 accounts extension.",
         lint_group(),
         "It mimics (to an extent) the way in which Chrome requests SSO cookies with the Windows 10 accounts extension.",
+    );
+}
+
+// FootTheBill
+
+#[test]
+fn correct_flip_the_bill() {
+    assert_suggestion_result(
+        "- SQL Compare (If the company will flip the bill)",
+        lint_group(),
+        "- SQL Compare (If the company will foot the bill)",
+    );
+}
+
+#[test]
+fn correct_flipped_the_bill() {
+    assert_suggestion_result(
+        "As a meetup we were extremely lucky that NOVI flipped the bill for our in-person events.",
+        lint_group(),
+        "As a meetup we were extremely lucky that NOVI footed the bill for our in-person events.",
+    );
+}
+
+#[test]
+fn correct_flipping_the_bill() {
+    assert_suggestion_result(
+        "for the simple reason that there were no multimillion dollar company flipping the bill",
+        lint_group(),
+        "for the simple reason that there were no multimillion dollar company footing the bill",
+    );
+}
+
+#[test]
+fn correct_flips_the_bill() {
+    assert_suggestion_result(
+        "There seems to be a perennial debate in Illinois between urbanites and rural folk about who really flips the bill.",
+        lint_group(),
+        "There seems to be a perennial debate in Illinois between urbanites and rural folk about who really foots the bill.",
     );
 }
 

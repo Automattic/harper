@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.63.0",
+	"version": "0.64.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -1555,12 +1555,6 @@
 					"default": true,
 					"description": "Corrects `mute` to `moot` in the phrase `moot point`."
 				},
-				"harper.linters.MorePreferable": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `more preferable` to `preferable`."
-				},
 				"harper.linters.MostNumber": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1800,6 +1794,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `operating system` is used correctly instead of `operative system`."
+				},
+				"harper.linters.OughtToBe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects the mistaken `out to be` and suggests `ought to be`, while ignoring legitimate phrasal-verb uses such as `turn out to be` and `make it out to be`."
 				},
 				"harper.linters.OutOfDate": {
 					"scope": "resource",

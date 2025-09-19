@@ -18,7 +18,7 @@ impl Default for QuiteQuiet {
                     TokenKind::is_verb,
                 ] as &[_],
                 TokenKind::is_noun,
-                &["here", "not", "up"],
+                &["here", "up"],
             );
 
         let negative_contraction_quiet = SequenceExpr::default()
@@ -34,7 +34,7 @@ impl Default for QuiteQuiet {
             .t_aco("quiet");
 
         let adverb_quite = SequenceExpr::default()
-            .then_kind_except(TokenKind::is_adverb, &["never"])
+            .then_kind_except(TokenKind::is_adverb, &["never", "not"])
             .t_ws()
             .t_aco("quite");
 
@@ -116,7 +116,7 @@ impl ExprLinter for QuiteQuiet {
 #[cfg(test)]
 mod tests {
     use super::QuiteQuiet;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn fix_quiet_adverb() {
@@ -203,5 +203,10 @@ mod tests {
             QuiteQuiet::default(),
             "I couldn't quite understand everything",
         );
+    }
+
+    #[test]
+    fn fix_but_its_not_quite_clear_1956() {
+        assert_no_lints("But it's not quite clear", QuiteQuiet::default());
     }
 }

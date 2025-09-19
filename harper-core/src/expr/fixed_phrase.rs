@@ -35,7 +35,7 @@ impl FixedPhrase {
 
         for token in doc.fat_tokens() {
             match token.kind {
-                TokenKind::Word(_word_metadata) => {
+                TokenKind::Word(_lexeme_metadata) => {
                     phrase = phrase.then(Word::from_chars(token.content.as_slice()));
                 }
                 TokenKind::Space(_) => {

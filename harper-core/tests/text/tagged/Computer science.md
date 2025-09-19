@@ -394,8 +394,8 @@
 # NSg/J+ NSg/R NPrPl/V3+ NPr/J/P J     Nᴹ/Vg/J+    VB/C NPl/V3    NPr/J/P NSg/J+    Nᴹ/Vg/J+    . IPl+
 > also argue that         while      empirical sciences observe what   presently exists , computer
 # R/C  VB    NSg/I/C/Ddem NSg/VB/C/P NSg/J+    NPl/V3+  NSg/VB  NSg/I+ R         V3     . NSg/VB+
-> science  observes what   is  possible to exist and  while      scientists discover laws
-# N🅪Sg/VB+ NPl/V3   NSg/I+ VL3 NSg/J    P  VB    VB/C NSg/VB/C/P NPl+       NSg/VB/J NPl/V3
+> science  observes what   is  possible to exist and  while      scientists discover  laws
+# N🅪Sg/VB+ NPl/V3   NSg/I+ VL3 NSg/J    P  VB    VB/C NSg/VB/C/P NPl+       N🅪Sg/VB/J NPl/V3
 > from observation , no     proper laws    have    been    found  in      computer science  and  it       is
 # P    N🅪Sg+       . NPr/P+ NSg/J+ NPl/V3+ NSg/VXB NSg/VPp NSg/VB NPr/J/P NSg/VB+  N🅪Sg/VB+ VB/C NPr/ISg+ VL3
 > instead concerned with creating phenomena .
@@ -583,7 +583,7 @@
 > The use     of formal methods for software and  hardware design   is  motivated by      the
 # D   N🅪Sg/VB P  NSg/J  NPl/V3  C/P Nᴹ       VB/C Nᴹ+      N🅪Sg/VB+ VL3 VP/J      NSg/J/P D+
 > expectation that          , as    in      other     engineering disciplines , performing appropriate
-# NSg+        NSg/I/C/Ddem+ . NSg/R NPr/J/P NSg/VB/J+ Nᴹ/Vg/J+    NPl/V3+     . Nᴹ/Vg/J    VB/J+
+# N🅪Sg+       NSg/I/C/Ddem+ . NSg/R NPr/J/P NSg/VB/J+ Nᴹ/Vg/J+    NPl/V3+     . Nᴹ/Vg/J    VB/J+
 > mathematical analysis can     contribute to the reliability and  robustness of a
 # J+           N🅪Sg+    NPr/VXB NSg/VB     P  D+  Nᴹ+         VB/C NSg        P  D/P
 > design   . They form    an  important theoretical underpinning for software
@@ -707,7 +707,7 @@
 > software in      order   to ensure it       is  of high      quality , affordable , maintainable , and
 # Nᴹ+      NPr/J/P NSg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J+ N🅪Sg/J+ . J          . J            . VB/C
 > fast     to build  . It       is  a   systematic approach to software design   , involving the
-# NSg/VB/J P  NSg/VB . NPr/ISg+ VL3 D/P J          NSg/VB   P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
+# NSg/VB/J P  NSg/VB . NPr/ISg+ VL3 D/P J          N🅪Sg/VB  P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
 > application of engineering practices to software . Software engineering deals
 # NSg         P  Nᴹ/Vg/J+    NPl/V3+   P  Nᴹ       . Nᴹ+      Nᴹ/Vg/J+    NPl/V3+
 > with the organizing and  analyzing of software — it       does   not     just deal     with the
@@ -731,7 +731,7 @@
 > environmental adaptation , learning , and  communication found  in      humans and
 # NSg/J         NSg+       . Nᴹ/Vg/J+ . VB/C N🅪Sg+         NSg/VB NPr/J/P NPl/V3 VB/C
 > animals . From its     origins in      cybernetics and  in      the Dartmouth Conference ( 1956 ) ,
-# NPl+    . P    ISg/D$+ NPl+    NPr/J/P NSg         VB/C NPr/J/P D   NPr+      NSg/VB+    . #    . .
+# NPl+    . P    ISg/D$+ NPl+    NPr/J/P Nᴹ          VB/C NPr/J/P D   NPr+      NSg/VB+    . #    . .
 > artificial intelligence research has been    necessarily cross       - disciplinary ,
 # J          N🅪Sg+        Nᴹ/VB+   V3  NSg/VPp R           NPr/VB/J/P+ . NSg/J        .
 > drawing   on  areas of expertise such  as    applied mathematics , symbolic logic    ,

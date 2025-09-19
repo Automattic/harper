@@ -1,6 +1,6 @@
 {
 	"name": "harper.js",
-	"version": "0.63.0",
+	"version": "0.64.0",
 	"license": "Apache-2.0",
 	"author": "Elijah Potter",
 	"description": "The grammar checker that respects your privacy.",
