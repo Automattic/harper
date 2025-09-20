@@ -164,6 +164,16 @@ fn correct_as_it_happens() {
     );
 }
 
+// AsLongAs
+#[test]
+fn correct_as_long_as() {
+    assert_suggestion_result(
+        "server loads up fine but cant log on client side aslong as the plugin is installed",
+        lint_group(),
+        "server loads up fine but cant log on client side as long as the plugin is installed",
+    );
+}
+
 // AsOfLate
 #[test]
 fn corrects_as_of_lately() {
