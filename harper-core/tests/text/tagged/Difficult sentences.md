@@ -231,7 +231,7 @@
 > We're having  a   birthday party    for Janet .
 # K     Nᴹ/Vg/J D/P NSg/VB+  NSg/VB/J C/P NPr+  .
 > The mayor gave a   speech  for the charity gala   .
-# D+  NSg+  VB   D/P N🅪Sg/VB C/P D+  NPr+    NSg/J+ .
+# D+  NSg+  VPt  D/P N🅪Sg/VB C/P D+  NPr+    NSg/J+ .
 > If    having  to bag    the groceries correctly is  more            than you    can     handle , then    this   isn't  the job     for you    .
 # NSg/C Nᴹ/Vg/J P  NSg/VB D+  NPl/V3+   R         VL3 NPr/I/VB/J/R/Dq C/P  ISgPl+ NPr/VXB NSg/VB . NSg/J/C I/Ddem NSg/VB D   NPr/VB+ C/P ISgPl+ .
 > This    is  a   new      bell   for my  bicycle .
@@ -315,7 +315,7 @@
 > At    close    of play    , England were    305 for 3 .
 # NSg/P NSg/VB/J P  N🅪Sg/VB . NPr+    NSg/VPt #   C/P # .
 > He       took the swing   shift   for he       could   get    more            overtime .
-# NPr/ISg+ VB   D+  NSg/VB+ NSg/VB+ C/P NPr/ISg+ NSg/VXB NSg/VB NPr/I/VB/J/R/Dq NSg/VB   .
+# NPr/ISg+ VPt  D+  NSg/VB+ NSg/VB+ C/P NPr/ISg+ NSg/VXB NSg/VB NPr/I/VB/J/R/Dq NSg/VB   .
 > to account for one's whereabouts .
 # P  NSg/VB  C/P NSg$+ NSg+        .
 >
@@ -416,8 +416,8 @@
 # D$+ NSg/VB+ NPr/J/P NSg/Vg/J/Comm R+    VPt P  NSg/VB D$+ Nᴹ/Vg/J NPr/VB/J+ .
 > My  fat       rolls   around in      folds   .
 # D$+ N🅪Sg/VB/J NPl/V3+ J/P    NPr/J/P NPl/V3+ .
-> The planes  flew     over    in      waves   .
-# D+  NPl/V3+ NSg/VB/J NSg/J/P NPr/J/P NPl/V3+ .
+> The planes  flew      over    in      waves   .
+# D+  NPl/V3+ NSg/VPt/J NSg/J/P NPr/J/P NPl/V3+ .
 > Arrange the chairs  in      a    circle  .
 # NSg/VB  D   NPl/V3+ NPr/J/P D/P+ NSg/VB+ .
 > He       stalked away in      anger  .
@@ -468,8 +468,8 @@
 # VXB   ISgPl+ NSg/VB/J/C/P NSg/I/C/Ddem+ P  NSg/VB VB/J NPr/C VB  NPr/J/P .
 > He       ran     to the edge   of the swimming pool    and  dived in      .
 # NPr/ISg+ NSg/VPt P  D   NSg/VB P  D+  NSg/VB   NSg/VB+ VB/C VP/J  NPr/J/P .
-> They flew     in      from London last      night    .
-# IPl+ NSg/VB/J NPr/J/P P    NPr+   NSg/VB/J+ N🅪Sg/VB+ .
+> They flew      in      from London last      night    .
+# IPl+ NSg/VPt/J NPr/J/P P    NPr+   NSg/VB/J+ N🅪Sg/VB+ .
 > For six  hours the tide    flows  in      , then    for another six  hours it       flows  out          .
 # C/P NSg+ NPl+  D+  NSg/VB+ NPl/V3 NPr/J/P . NSg/J/C C/P I/D+    NSg+ NPl+  NPr/ISg+ NPl/V3 NSg/VB/J/R/P .
 > Bring the water    to the boil    and  drop   the vegetables in      .
@@ -579,7 +579,7 @@
 > I’ve not     taken her     out          of a   goodly long     while      .
 # K    NSg/R/C VB/J  ISg/D$+ NSg/VB/J/R/P P  D/P J/R    NPr/VB/J NSg/VB/C/P .
 > After a   delay    of three hours , the plane     finally took off        .
-# P     D/P NSg/VB/J P  NSg+  NPl+  . D+  NSg/VB/J+ R       VB   NSg/VB/J/P .
+# P     D/P NSg/VB/J P  NSg+  NPl+  . D+  NSg/VB/J+ R       VPt  NSg/VB/J/P .
 >
 #
 > On
@@ -817,7 +817,7 @@
 > The coconut fell      to the ground     .
 # D+  N🅪Sg+   NSg/VPt/J P  D+  N🅪Sg/VB/J+ .
 > I       gave the book    to him  .
-# ISg/#r+ VB   D+  NSg/VB+ P  ISg+ .
+# ISg/#r+ VPt  D+  NSg/VB+ P  ISg+ .
 > His     face    was beaten to a   pulp      .
 # ISg/D$+ NSg/VB+ VPt VB/J   P  D/P N🅪Sg/VB/J .
 > I       sang    my  baby      to sleep   .

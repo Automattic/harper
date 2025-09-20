@@ -103,7 +103,7 @@
 > started the design  of the first    automatic mechanical calculator , his     Difference
 # VP/J    D   N🅪Sg/VB P  D   NSg/VB/J NSg/J     NSg/J      NSg+       . ISg/D$+ N🅪Sg/VB+
 > Engine  , in      1822 , which eventually gave him  the idea of the first    programmable
-# NSg/VB+ . NPr/J/P #    . I/C+  R          VB   ISg+ D   NSg  P  D   NSg/VB/J NSg/J
+# NSg/VB+ . NPr/J/P #    . I/C+  R          VPt  ISg+ D   NSg  P  D   NSg/VB/J NSg/J
 > mechanical calculator , his     Analytical Engine  . He       started developing this    machine
 # NSg/J      NSg+       . ISg/D$+ J          NSg/VB+ . NPr/ISg+ VP/J    Nᴹ/Vg/J    I/Ddem+ NSg/VB+
 > in      1834 , and  " in      less       than two  years , he       had sketched out          many       of the salient
@@ -115,7 +115,7 @@
 > programmable . [ note    2 ] In      1843 , during the translation of a   French      article on  the
 # NSg/J        . . NSg/VB+ # . NPr/J/P #    . VB/P   D   N🅪Sg        P  D/P NPr🅪Sg/VB/J NSg/VB+ J/P D
 > Analytical Engine  , Ada  Lovelace wrote , in      one        of the many       notes   she  included , an
-# J          NSg/VB+ . NPr+ NPr      VB    . NPr/J/P NSg/I/VB/J P  D   NSg/I/J/Dq NPl/V3+ ISg+ VP/J     . D/P
+# J          NSg/VB+ . NPr+ NPr      VPt   . NPr/J/P NSg/I/VB/J P  D   NSg/I/J/Dq NPl/V3+ ISg+ VP/J     . D/P
 > algorithm to compute the Bernoulli numbers   , which is  considered to be      the first
 # NSg       P  NSg/VB  D   NPr+      NPrPl/V3+ . I/C+  VL3 VP/J       P  NSg/VXB D   NSg/VB/J
 > published algorithm ever specifically tailored for implementation on  a   computer .
