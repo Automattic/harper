@@ -461,13 +461,6 @@ pub fn lint_group() -> LintGroup {
             "Ensures the correct use of `fetal position`, avoiding confusion with `feeble position`, which is not a standard phrase.",
             LintKind::Malapropism
         ),
-        "ForAllIntentsAndPurposes" => (
-            ["for all intensive purposes"],
-            ["for all intents and purposes"],
-            "Use the correct phrase meaning 'in every practical sense'.",
-            "Corrects `for all intensive purposes` to `for all intents and purposes`, ensuring the phrase conveys its intended meaning.",
-            LintKind::Eggcorn
-        ),
         "ForALongTime" => (
             ["for along time"],
             ["for a long time"],

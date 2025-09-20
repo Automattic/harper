@@ -15,6 +15,7 @@ use super::a_part::APart;
 use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
+use super::all_intents_and_purposes::AllIntentsAndPurposes;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
@@ -58,6 +59,7 @@ use super::i_am_agreement::IAmAgreement;
 use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
+use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::left_right_hand::LeftRightHand;
@@ -139,7 +141,8 @@ use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
-    MassPlurals, closed_compounds, initialisms, phrase_corrections, phrase_set_corrections,
+    MassPlurals, NounVerbConfusion, closed_compounds, initialisms, phrase_corrections,
+    phrase_set_corrections,
 };
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
@@ -418,6 +421,7 @@ impl LintGroup {
         insert_expr_rule!(Addicting, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
+        insert_expr_rule!(AllIntentsAndPurposes, true);
         insert_struct_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
@@ -459,6 +463,7 @@ impl LintGroup {
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(InterestedIn, true);
+        insert_expr_rule!(ItLooksLikeThat, true);
         insert_struct_rule!(ItsContraction, true);
         insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);
@@ -480,6 +485,7 @@ impl LintGroup {
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
         insert_struct_rule!(NominalWants, true);
+        insert_struct_rule!(NounVerbConfusion, true);
         insert_expr_rule!(NounCountability, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
