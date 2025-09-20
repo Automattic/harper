@@ -1337,7 +1337,7 @@
 > sank down        himself into eternal blindness , or    forgot them     and  moved away . But     his
 # VB   N🅪Sg/VB/J/P ISg+    P    NSg/J   NSg+      . NPr/C VPt    NSg/IPl+ VB/C VP/J  VB/J . NSg/C/P ISg/D$+
 > eyes    , dimmed a   little     by      many       paintless days , under   sun    and  rain     , brood    on  over
-# NPl/V3+ . VB     D/P NPr/I/J/Dq NSg/J/P NSg/I/J/Dq J         NPl+ . NSg/J/P NPr/VB VB/C N🅪Sg/VB+ . NSg/VB/J J/P NSg/J/P
+# NPl/V3+ . VP     D/P NPr/I/J/Dq NSg/J/P NSg/I/J/Dq J         NPl+ . NSg/J/P NPr/VB VB/C N🅪Sg/VB+ . NSg/VB/J J/P NSg/J/P
 > the solemn dumping  ground     .
 # D   J      Nᴹ/Vg/J+ N🅪Sg/VB/J+ .
 >
@@ -1553,7 +1553,7 @@
 > slid out          from the mass        of the station into the glowing sunshine . But     immediately
 # VP   NSg/VB/J/R/P P    D   NPr🅪Sg/VB/J P  D   NSg/VB+ P    D   Nᴹ/Vg/J Nᴹ/J+    . NSg/C/P R
 > she  turned sharply from the window  and  , leaning forward  , tapped on  the front
-# ISg+ VP/J   R       P    D+  NSg/VB+ VB/C . Nᴹ/Vg/J NSg/VB/J . VB/J   J/P D   NSg/VB/J+
+# ISg+ VP/J   R       P    D+  NSg/VB+ VB/C . Nᴹ/Vg/J NSg/VB/J . VP/J   J/P D   NSg/VB/J+
 > glass      .
 # NPr🅪Sg/VB+ .
 >
@@ -3829,7 +3829,7 @@
 > punctilious manner in      the shape    of restlessness . He       was never quite still    ; there
 # J           NSg+   NPr/J/P D   N🅪Sg/VB+ P  NSg          . NPr/ISg+ VPt R     R     NSg/VB/J . R+
 > was always a   tapping foot    somewhere or    the impatient opening  and  closing of a
-# VPt R      D/P Nᴹ/VB   NSg/VB+ NSg       NPr/C D+  J+        Nᴹ/Vg/J+ VB/C Nᴹ/Vg/J P  D/P+
+# VPt R      D/P Nᴹ/Vg   NSg/VB+ NSg       NPr/C D+  J+        Nᴹ/Vg/J+ VB/C Nᴹ/Vg/J P  D/P+
 > hand    .
 # NSg/VB+ .
 >
@@ -5147,7 +5147,7 @@
 > The day     agreed upon was pouring rain     . At    eleven o’clock a    man       in      a   raincoat ,
 # D+  NPr🅪Sg+ VP/J   P    VPt Nᴹ/Vg/J N🅪Sg/VB+ . NSg/P NSg    R       D/P+ NPr/VB/J+ NPr/J/P D/P NSg      .
 > dragging a   lawn    - mower , tapped at    my  front     door    and  said that         Mr   . Gatsby had sent
-# NSg/Vg/J D/P NSg/VB+ . NSg   . VB/J   NSg/P D$+ NSg/VB/J+ NSg/VB+ VB/C VP/J NSg/I/C/Ddem NSg+ . NPr    VB  NSg/VB
+# NSg/Vg/J D/P NSg/VB+ . NSg   . VP/J   NSg/P D$+ NSg/VB/J+ NSg/VB+ VB/C VP/J NSg/I/C/Ddem NSg+ . NPr    VB  NSg/VB
 > him  over    to cut       my  grass      . This   reminded me       that         I       had forgotten to tell   my  Finn
 # ISg+ NSg/J/P P  NSg/VBP/J D$+ NPr🅪Sg/VB+ . I/Ddem VP/J     NPr/ISg+ NSg/I/C/Ddem ISg/#r+ VB  NSg/VPp/J P  NPr/VB D$+ NPr+
 > to come       back     , so        I       drove   into West      Egg      Village to search  for her     among soggy
@@ -8405,7 +8405,7 @@
 >
 #
 > “ Oh     — that’s all          . ” Tom     tapped his     thick    fingers together like         a   clergyman and
-# . NPr/VB . NSg$   NSg/I/J/C/Dq . . NPr/VB+ VB/J   ISg/D$+ NSg/VB/J NPl/V3+ J        NSg/VB/J/C/P D/P NSg       VB/C
+# . NPr/VB . NSg$   NSg/I/J/C/Dq . . NPr/VB+ VP/J   ISg/D$+ NSg/VB/J NPl/V3+ J        NSg/VB/J/C/P D/P NSg       VB/C
 > leaned back     in      his     chair   .
 # VP/J   NSg/VB/J NPr/J/P ISg/D$+ NSg/VB+ .
 >

@@ -621,7 +621,7 @@
 > Computer graphics is  the study  of digital visual contents and  involves the
 # NSg/VB+  NPl+     VL3 D   NSg/VB P  NSg/J+  NSg/J+ NPl/V3+  VB/C V3       D
 > synthesis and  manipulation of image    data  . The study   is  connected to many       other
-# Nᴹ        VB/C N🅪Sg         P  N🅪Sg/VB+ N🅪Pl+ . D+  NSg/VB+ VL3 VP/J      P  NSg/I/J/Dq NSg/VB/J
+# N🅪Sg      VB/C N🅪Sg         P  N🅪Sg/VB+ N🅪Pl+ . D+  NSg/VB+ VL3 VP/J      P  NSg/I/J/Dq NSg/VB/J
 > fields   in      computer science  , including computer vision  , image    processing , and
 # NPrPl/V3 NPr/J/P NSg/VB+  N🅪Sg/VB+ . Nᴹ/Vg/J   NSg/VB+  N🅪Sg/VB . N🅪Sg/VB+ Nᴹ/Vg/J+   . VB/C
 > computational geometry , and  is  heavily applied in      the fields   of special  effects
@@ -647,7 +647,7 @@
 > information theory , telecommunications , information engineering and  has
 # Nᴹ+         N🅪Sg+  . Nᴹ+                . Nᴹ+         Nᴹ/Vg/J+    VB/C V3
 > applications in      medical image    computing and  speech   synthesis , among others  . What
-# NPl          NPr/J/P NSg/J   N🅪Sg/VB+ Nᴹ/Vg/J   VB/C N🅪Sg/VB+ Nᴹ+       . P     NPl/V3+ . NSg/I+
+# NPl          NPr/J/P NSg/J   N🅪Sg/VB+ Nᴹ/Vg/J   VB/C N🅪Sg/VB+ N🅪Sg+     . P     NPl/V3+ . NSg/I+
 > is  the lower     bound    on  the complexity of fast     Fourier transform algorithms ? is
 # VL3 D   NSg/VB/JC NSg/VP/J J/P D   NSg        P  NSg/VB/J NPr     NSg/VB    NPl+       . VL3
 > one        of the unsolved problems in      theoretical computer science  .
