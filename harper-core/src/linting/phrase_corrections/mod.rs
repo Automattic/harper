@@ -141,6 +141,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `as it so happens` to `as it happens`.",
             LintKind::Usage
         ),
+        "AsLongAs" => (
+            ["aslong as"],
+            ["as long as"],
+            "`As long` should be written as two words.",
+            "Corrects `aslong as` to `as long as`.",
+            LintKind::BoundaryError
+        ),
         "AsOfLate" => (
             ["as of lately"],
             ["as of late"],
