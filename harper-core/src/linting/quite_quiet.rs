@@ -60,7 +60,6 @@ impl ExprLinter for QuiteQuiet {
         let text = toks.span()?.get_content_string(src).to_lowercase();
 
         if text.ends_with("quite") {
-            let first_token = toks.first()?;
             let quite_span = toks.last()?.span;
 
             return Some(Lint {
@@ -70,12 +69,10 @@ impl ExprLinter for QuiteQuiet {
                     "quiet".chars().collect(),
                     quite_span.get_content(src),
                 )],
-                message: "After an adverb like '{}', use 'quiet' not 'quite'"
-                    .replace("{}", &first_token.span.get_content_string(src)),
+                message: "‘Quite’ might be a typo here. It means ‘rather’ but you might be trying to say ‘quiet’ (not noisy).".to_string(),
                 priority: 63,
             });
         } else if text.starts_with("quiet") {
-            let last_token = toks.last()?;
             let quiet_span = toks.first()?.span;
 
             return Some(Lint {
@@ -85,14 +82,10 @@ impl ExprLinter for QuiteQuiet {
                     "quite".chars().collect(),
                     quiet_span.get_content(src),
                 )],
-                message: format!(
-                    "Before an adjective, adverb, or verb like '{}', use 'quite' not 'quiet'",
-                    last_token.span.get_content_string(src)
-                ),
+                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_string(),
                 priority: 63,
             });
         } else if text.ends_with("quiet") {
-            let first_token = toks.first()?;
             let quiet_span = toks.last()?.span;
 
             return Some(Lint {
@@ -102,8 +95,7 @@ impl ExprLinter for QuiteQuiet {
                     "quite".chars().collect(),
                     quiet_span.get_content(src),
                 )],
-                message: "After a negative contraction like '{}', use 'quite' not 'quiet'"
-                    .replace("{}", &first_token.span.get_content_string(src)),
+                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_string(),
                 priority: 63,
             });
         }
@@ -112,7 +104,7 @@ impl ExprLinter for QuiteQuiet {
     }
 
     fn description(&self) -> &str {
-        "Corrects when `quiet` is a typo for `quite` or the other way around."
+        "Helps distinguish between ‘quiet’ (making ‘little noise’) and ‘quite’ (meaning ‘rather’)."
     }
 }
 
