@@ -43,15 +43,15 @@
 > President and  Vice        President , or    hold     any    office  , civil or    military , under   the
 # NSg/VB    VB/C NSg/VB/J/P+ NSg/VB+   . NPr/C NSg/VB/J I/R/Dq NSg/VB+ . J     NPr/C NSg/J    . NSg/J/P D
 > United States    , or    under   any    State    , who    , having  previously taken an  oath    , as    a
-# VP/J   NPrPl/V3+ . NPr/C NSg/J/P I/R/Dq N🅪Sg/VB+ . NPr/I+ . Nᴹ/Vg/J R          VB/J  D/P NSg/VB+ . NSg/R D/P
+# VP/J   NPrPl/V3+ . NPr/C NSg/J/P I/R/Dq N🅪Sg/VB+ . NPr/I+ . Nᴹ/Vg/J R          VPp/J D/P NSg/VB+ . NSg/R D/P
 > member of Congress , or    as    an  officer of the United States    , or    as    a   member of
 # NSg/VB P  NPr/VB+  . NPr/C NSg/R D/P NSg/VB  P  D   VP/J   NPrPl/V3+ . NPr/C NSg/R D/P NSg/VB P
 > any    State    legislature , or    as    an  executive or    judicial officer of any    State    , to
 # I/R/Dq N🅪Sg/VB+ NSg+        . NPr/C NSg/R D/P NSg/J     NPr/C NSg/J    NSg/VB  P  I/R/Dq N🅪Sg/VB+ . P
 > support the Constitution of the United States    , shall have    engaged in
 # N🅪Sg/VB D   NPr          P  D   VP/J   NPrPl/V3+ . VXB   NSg/VXB VP/J    NPr/J/P
-> insurrection or    rebellion against the same , or    given      aid     or    comfort  to the
-# N🅪Sg         NPr/C N🅪Sg+     C/P     D   I/J  . NPr/C NSg/VB/J/P N🅪Sg/VB NPr/C N🅪Sg/VB+ P  D
+> insurrection or    rebellion against the same , or    given       aid     or    comfort  to the
+# N🅪Sg         NPr/C N🅪Sg+     C/P     D   I/J  . NPr/C NSg/VPp/J/P N🅪Sg/VB NPr/C N🅪Sg/VB+ P  D
 > enemies thereof . But     Congress may     , by      a   vote   of two - thirds of each House   ,
 # NPl/V3+ R       . NSg/C/P NPr/VB+  NPr/VXB . NSg/J/P D/P NSg/VB P  NSg . NPl/V3 P  Dq+  NPr/VB+ .
 > remove such   disability .
@@ -611,7 +611,7 @@
 > No    Capitation , or    other    direct , Tax      shall be      laid , unless in      Proportion to the
 # NPr/P NSg        . NPr/C NSg/VB/J VB/J   . N🅪Sg/VB+ VXB   NSg/VXB VB/J . C      NPr/J/P NSg/VB+    P  D
 > Census  or    Enumeration herein before directed to be      taken . Congress shall have
-# NSg/VB+ NPr/C N🅪Sg        R      C/P    VP/J     P  NSg/VXB VB/J  . NPr/VB+  VXB   NSg/VXB
+# NSg/VB+ NPr/C N🅪Sg        R      C/P    VP/J     P  NSg/VXB VPp/J . NPr/VB+  VXB   NSg/VXB
 > power      to lay      and  collect  taxes   on  incomes , from whatever source   derived ,
 # N🅪Sg/VB/J+ P  NSg/VB/J VB/C NSg/VB/J NPl/V3+ J/P NPl/V3+ . P    NSg/I/J+ N🅪Sg/VB+ VP/J    .
 > without apportionment among the several States    , and  without regard  to any
@@ -624,8 +624,8 @@
 # NPr/P N🅪Sg/VB NPr/C N🅪Sg+ VXB   NSg/VXB VB/J J/P NPl/V3+  VP/J     P    I/R/Dq N🅪Sg/VB+ .
 >
 #
-> No     Preference shall be      given      by      any    Regulation of Commerce or    Revenue to the
-# NPr/P+ NSg/VB+    VXB   NSg/VXB NSg/VB/J/P NSg/J/P I/R/Dq N🅪Sg/J     P  Nᴹ/VB    NPr/C NSg+    P  D
+> No     Preference shall be      given       by      any    Regulation of Commerce or    Revenue to the
+# NPr/P+ NSg/VB+    VXB   NSg/VXB NSg/VPp/J/P NSg/J/P I/R/Dq N🅪Sg/J     P  Nᴹ/VB    NPr/C NSg+    P  D
 > Ports  of one        State    over    those  of another : nor   shall Vessels bound    to , or    from ,
 # NPl/V3 P  NSg/I/VB/J N🅪Sg/VB+ NSg/J/P I/Ddem P  I/D     . NSg/C VXB   NPl/V3+ NSg/VP/J P  . NPr/C P    .
 > one         State    , be      obliged to enter  , clear    , or    pay      Duties in      another .
@@ -769,7 +769,7 @@
 > by      ballot  , the President . But     in      choosing the President , the votes   shall be
 # NSg/J/P NSg/VB+ . D   NSg/VB+   . NSg/C/P NPr/J/P Nᴹ/Vg/J  D+  NSg/VB+   . D+  NPl/V3+ VXB   NSg/VXB
 > taken by      states    , the representation from each state    having  one         vote    ; a   quorum
-# VB/J  NSg/J/P NPrPl/V3+ . D   NSg            P    Dq+  N🅪Sg/VB+ Nᴹ/Vg/J NSg/I/VB/J+ NSg/VB+ . D/P NSg
+# VPp/J NSg/J/P NPrPl/V3+ . D   NSg            P    Dq+  N🅪Sg/VB+ Nᴹ/Vg/J NSg/I/VB/J+ NSg/VB+ . D/P NSg
 > for this   purpose  shall consist of a   member or    members from two - thirds of the
 # C/P I/Ddem N🅪Sg/VB+ VXB   NSg/VB  P  D/P NSg/VB NPr/C NPl/V3+ P    NSg . NPl/V3 P  D
 > states    , and  a   majority of all          the states    shall be      necessary to a   choice  . [ If    ,
@@ -1207,7 +1207,7 @@
 > liberty , or    property , without due   process of law      ; nor   shall private  property be
 # NSg+    . NPr/C NSg/VB+  . C/P     NSg/J NSg/VB  P  N🅪Sg/VB+ . NSg/C VXB   NSg/VB/J NSg/VB+  NSg/VXB
 > taken for public  use      , without just compensation .
-# VB/J  C/P Nᴹ/VB/J N🅪Sg/VB+ . C/P     VB/J N🅪Sg+        .
+# VPp/J C/P Nᴹ/VB/J N🅪Sg/VB+ . C/P     VB/J N🅪Sg+        .
 >
 #
 > In      all          criminal prosecutions , the accused shall enjoy the right    to a   speedy and
@@ -1250,8 +1250,8 @@
 # NSg/VB+ . # .
 >
 #
-> Full     Faith and  Credit  shall be      given      in      each State    to the
-# NSg/VB/J NPrᴹ  VB/C NSg/VB+ VXB   NSg/VXB NSg/VB/J/P NPr/J/P Dq   N🅪Sg/VB+ P  D
+> Full     Faith and  Credit  shall be      given       in      each State    to the
+# NSg/VB/J NPrᴹ  VB/C NSg/VB+ VXB   NSg/VXB NSg/VPp/J/P NPr/J/P Dq   N🅪Sg/VB+ P  D
 > public  Acts     , Records , and  judicial Proceedings of every other     State    . And  the
 # Nᴹ/VB/J NPrPl/V3 . NPl/V3+ . VB/C NSg/J    NPl         P  Dq+   NSg/VB/J+ N🅪Sg/VB+ . VB/C D+
 > Congress may     by      general  Laws    prescribe the Manner in      which such  Acts      , Records

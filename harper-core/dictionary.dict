@@ -1,4 +1,4 @@
-54000
+54100
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -13773,7 +13773,7 @@ badass/NgSJ
 badder/Jc
 baddest/Ju
 baddie/NgS
-bade/~V
+bade/~Vt
 badge/~NVgZ>S
 badger/~NVGgd
 badinage/NVg
@@ -14580,9 +14580,9 @@ bicuspid/JNgS
 bicycle/~NVd>SgZG
 bicycler/Ng
 bicyclist/NSg
-bid/~VNSgG
+bid/~VbtTNSgG
 biddable/J
-bidden/VU
+bidden/VTU
 bidder/~NgS
 bidding/~V6Ng
 biddy/NSg
@@ -24976,7 +24976,7 @@ flesh/~NwVGgdSY
 fleshly/J^>
 fleshpot/NgS
 fleshy/~J>^
-flew/~VNJ
+flew/~VtNJ
 flex/~NVrgS
 flexed/V
 flexibility/~Nig
@@ -25080,7 +25080,7 @@ flowering/~V6NJS
 flowerless/J
 flowerpot/NgS
 flowery/Jp^>
-flown/~VJ
+flown/~VTJ
 flt/N
 flu/~Ng
 flub/NVgS
@@ -25467,7 +25467,7 @@ forum/~NSg
 forward/~JVNgd>YZ^GSp
 forwarder/NJg
 forwardness/Ng
-forwent/V
+forwent/Vt
 fossa/~N
 fossil/~NSg
 fossilisation/Ng!_
@@ -26160,7 +26160,7 @@ gauntness/Nmg
 gauze/NmVg
 gauziness/Nmg
 gauzy/J>p^
-gave/~V
+gave/~Vt
 gavel/NVSg
 gavotte/NVgS
 gawd/N
@@ -26465,7 +26465,7 @@ gite/NS
 give/~VNZGz>S
 giveaway/NJgS
 giveback/NgS
-given/~VPNJSg
+given/~VTPNJSg
 giver/~Ng
 gizmo/NSg
 gizzard/NgS
@@ -34139,13 +34139,13 @@ mist/~NwVed>SZG
 mist's
 mistakable/JU
 mistake/~VNBgGS
-mistaken/~VJY
+mistaken/~VTJY
 mister's
 mistily/R
 mistime/VGdS
 mistiness/Nmg
 mistletoe/~Ng
-mistook/V
+mistook/Vt
 mistral/~NgS
 mistranslated/VtT
 mistreat/VLdGS
@@ -36844,7 +36844,7 @@ outpoint/VNdGS
 outpost/~NgS
 outpouring/NgS
 outproduce/VdSG
-output/~NwVbtdSg
+output/~NwVbtTSg
 outputted/VtT
 outputting/V6
 outrace/VGdS
@@ -37170,7 +37170,7 @@ oversupply/VNwGdS
 oversuspicious/J
 overt/~JNY
 overtake/~VNGS
-overtaken/~VJ
+overtaken/~VTJ
 overtax/VGdS
 overthink/VSG
 overthought/VtTN
@@ -37181,7 +37181,7 @@ overtighten/VNGdS
 overtime/~NVgS
 overtire/VGdS
 overtone/NVgS
-overtook/~V
+overtook/~Vtg
 overture/~NVJgS
 overturn/~VNdSG
 overuse/~VNdSgG
@@ -37668,7 +37668,7 @@ parsonage/~NgS
 part/~NVJedSG
 part's
 partake/~VZG>S
-partaken/V
+partaken/VT
 partaker/Ng
 parterre/NSg
 parthenogenesis/Nmg
@@ -37699,7 +37699,7 @@ partitive/JNgS
 partly/~
 partner/~NVgdSG
 partnership/~NwgS
-partook/V
+partook/Vt
 partridge/~NSg
 parturition/Ng
 partway/
@@ -41890,7 +41890,7 @@ reputably/ER
 reputation/~NgS
 reputational/J
 repute/NVdSgGB
-reputed/~VTJY
+reputed/~VtTJY
 request/~VNGdS
 requester/NgS
 requiem/~NSg
@@ -42250,7 +42250,7 @@ ricochet/NVGgdS
 ricotta/Nmg
 rid/~VS             # removed adj flag, too archaic
 riddance/Ng
-ridden/~VJT
+ridden/~VTJ
 ridding/V
 riddle/~NVdSgG
 ride/~VNgZG>S
@@ -42960,7 +42960,7 @@ sanitise/VZGd>S!_
 sanitization/Nmg<
 sanitize/VZGd>S<
 sanity/~Nmig
-sank/~V
+sank/~Vt
 sans/~PJN
 sanserif/NJ         # dictionaries prefer: sans serif
 sap/~NVSg
@@ -44865,7 +44865,7 @@ slenderness/Nmg
 slept/~VtT
 sleuth/~N0VgG
 sleuths/N9V
-slew/~NVgdGS
+slew/~NVtgdGS
 slice/~NVJd>SgZG
 slicer/NgS
 slick/~JNVSgd>YZ^Gp
@@ -46422,8 +46422,8 @@ stoical/JY
 stoicism/Ng
 stoke/~VNd>SZG
 stoker/Ng
-stole/~VNSg
-stolen/~VJN
+stole/~VtNSg
+stolen/~VTJN
 stolid/J>Y^p
 stolidity/Ng
 stolidness/Ng
@@ -47087,7 +47087,7 @@ sung/~VTU
 sunglasses/~Ng
 sunhat/NS
 sunk/~Vn
-sunken/J
+sunken/JT
 sunlamp/NSg
 sunless/J
 sunlight/~NVg
@@ -47676,7 +47676,7 @@ tainted/~JVtTU
 take/~VNrigS
 takeaway/JNwgS
 takedown/NSg
-taken/~JVdr
+taken/~JVTdr
 takeoff/~NgS
 takeout/JNwgS
 takeover/~NVSg
@@ -48826,7 +48826,7 @@ tonsorial/J
 tonsure/VNdSgG
 tony/~JN>^
 too/~R
-took/~Vr
+took/~Vtr
 tool/~NVrdGS
 tool's
 toolbar/~NSg
@@ -49998,7 +49998,7 @@ underage/~JN
 underappreciated/VtTJ
 underarm/NJVSg
 underbelly/~NSg
-underbid/VbtdNS
+underbid/VbtTdNS
 underbidding/V6
 underbody/NgS
 underbrush/NVg
@@ -50102,7 +50102,7 @@ undersign/VdGS
 undersigned/JNg
 undersized/J
 underskirt/NSg
-undersold/VJtd
+undersold/VJtTd
 underspent/V
 understaff/VSdG
 understand/~VbSGBz

@@ -103,7 +103,7 @@
 > started the design  of the first    automatic mechanical calculator , his     Difference
 # VP/J    D   N🅪Sg/VB P  D   NSg/VB/J NSg/J     NSg/J      NSg+       . ISg/D$+ N🅪Sg/VB+
 > Engine  , in      1822 , which eventually gave him  the idea of the first    programmable
-# NSg/VB+ . NPr/J/P #    . I/C+  R          VB   ISg+ D   NSg  P  D   NSg/VB/J NSg/J
+# NSg/VB+ . NPr/J/P #    . I/C+  R          VPt  ISg+ D   NSg  P  D   NSg/VB/J NSg/J
 > mechanical calculator , his     Analytical Engine  . He       started developing this    machine
 # NSg/J      NSg+       . ISg/D$+ J          NSg/VB+ . NPr/ISg+ VP/J    Nᴹ/Vg/J    I/Ddem+ NSg/VB+
 > in      1834 , and  " in      less       than two  years , he       had sketched out          many       of the salient
@@ -748,8 +748,8 @@
 # N🅪Sg/Vg/J+    . D   Nᴹ/Vg/J  NSg/VB+ NPr/J/P D+  NSg/J+ #d    VPt NPr  NSg$     NSg/VB+
 > " Can     computers think  ? " , and  the question remains effectively unanswered ,
 # . NPr/VXB NPl/V3+   NSg/VB . . . VB/C D+  NSg/VB+  NPl/V3  R           J          .
-> although the Turing test    is  still    used to assess computer output     on  the scale   of
-# C        D   NPr    NSg/VB+ VL3 NSg/VB/J VP/J P  VB     NSg/VB+  N🅪Sg/VBPt+ J/P D   N🅪Sg/VB P
+> although the Turing test    is  still    used to assess computer output    on  the scale   of
+# C        D   NPr    NSg/VB+ VL3 NSg/VB/J VP/J P  VB     NSg/VB+  N🅪Sg/VBP+ J/P D   N🅪Sg/VB P
 > human    intelligence . But     the automation of evaluative and  predictive tasks   has
 # NSg/VB/J N🅪Sg+        . NSg/C/P D   N🅪Sg       P  J          VB/C J          NPl/V3+ V3
 > been    increasingly successful as    a   substitute for human    monitoring and

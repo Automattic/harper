@@ -428,10 +428,10 @@
 # NSg/R/C VP/J     . NSg/R   C/P     P  D   NPr🅪Sg/VB/Am/Au+ VP/J     NPr/J/P Nᴹ/Vg/J       NSg/IPl+ C/P
 > this   particular dataset ) . Thus , it       should not     be      assumed that         the results
 # I/Ddem NSg/J      NSg     . . NSg  . NPr/ISg+ VXB    NSg/R/C NSg/VXB VP/J    NSg/I/C/Ddem D+  NPl/V3+
-> reported here    are the best       that          can     be      achieved with a    given       approach ; nor   even
-# VP/J     NSg/J/R VB  D   NPr/VXB/JS NSg/I/C/Ddem+ NPr/VXB NSg/VXB VP/J     P    D/P+ NSg/VB/J/P+ N🅪Sg/VB+ . NSg/C NSg/VB/J
-> the best        that          have    been    achieved with a    given       approach .
-# D+  NPr/VXB/JS+ NSg/I/C/Ddem+ NSg/VXB NSg/VPp VP/J     P    D/P+ NSg/VB/J/P+ N🅪Sg/VB+ .
+> reported here    are the best       that          can     be      achieved with a    given        approach ; nor   even
+# VP/J     NSg/J/R VB  D   NPr/VXB/JS NSg/I/C/Ddem+ NPr/VXB NSg/VXB VP/J     P    D/P+ NSg/VPp/J/P+ N🅪Sg/VB+ . NSg/C NSg/VB/J
+> the best        that          have    been    achieved with a    given        approach .
+# D+  NPr/VXB/JS+ NSg/I/C/Ddem+ NSg/VXB NSg/VPp VP/J     P    D/P+ NSg/VPp/J/P+ N🅪Sg/VB+ .
 >
 #
 > In      2014 , a    paper      reporting using   the structure regularization method for
