@@ -252,8 +252,8 @@
 # Nᴹ+       J/P   D+  Nᴹ/Vg/J/P NPl/V3+ .
 >
 #
-> More            advanced ( " higher - order  " ) HMMs learn  the probabilities not     only  of pairs
-# NPr/I/VB/J/R/Dq VP/J     . . NSg/JC . NSg/VB . . ?    NSg/VB D   NPl+          NSg/R/C J/R/C P  NPl/V3+
+> More            advanced ( " higher - order   " ) HMMs learn  the probabilities not     only  of pairs
+# NPr/I/VB/J/R/Dq VP/J     . . NSg/JC . N🅪Sg/VB . . ?    NSg/VB D   NPl+          NSg/R/C J/R/C P  NPl/V3+
 > but     triples or    even     larger sequences . So        , for example , if    you've just seen    a
 # NSg/C/P NPl/V3  NPr/C NSg/VB/J JC     NPl/V3+   . NSg/I/J/C . C/P NSg/VB+ . NSg/C K      VB/J NSg/VPp D/P
 > noun    followed by      a   verb    , the next    item    may     be      very likely a   preposition ,

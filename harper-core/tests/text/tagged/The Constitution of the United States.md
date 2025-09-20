@@ -4,8 +4,8 @@
 # Unlintable D   NPr+         P  D   VP/J   NPrPl/V3+ P  NPr+
 >
 #
-> We   the People of the United States    , in      Order   to form    a   more            perfect   Union     ,
-# IPl+ D   NPl/VB P  D+  VP/J   NPrPl/V3+ . NPr/J/P NSg/VB+ P  N🅪Sg/VB D/P NPr/I/VB/J/R/Dq NSg/VB/J+ NPr/VB/J+ .
+> We   the People of the United States    , in      Order    to form    a   more            perfect   Union     ,
+# IPl+ D   NPl/VB P  D+  VP/J   NPrPl/V3+ . NPr/J/P N🅪Sg/VB+ P  N🅪Sg/VB D/P NPr/I/VB/J/R/Dq NSg/VB/J+ NPr/VB/J+ .
 > establish Justice , insure domestic Tranquility , provide for the common   defence    ,
 # VB        NPr🅪Sg+ . VB     NSg/J    NSg         . VB      C/P D   NSg/VB/J N🅪Sg/Comm+ .
 > promote the general  Welfare , and  secure the Blessings of Liberty to ourselves
@@ -164,12 +164,12 @@
 # R           P     IPl+ VXB   NSg/VXB VP/J      NPr/J/P NSg/VB      P  D+  NSg/VB/J+ NSg+     .
 > they shall be      divided as    equally as    may     be      into three Classes . The Seats  of the
 # IPl+ VXB   NSg/VXB VP/J    NSg/R R       NSg/R NPr/VXB NSg/VXB P    NSg+  NPl/V3+ . D   NPl/V3 P  D
-> Senators of the first     Class     shall be      vacated at    the Expiration of the second
-# NPl      P  D+  NSg/VB/J+ NSg/VB/J+ VXB   NSg/VXB VP/J    NSg/P D   N🅪Sg       P  D+  NSg/VB/J+
-> Year , of the second   Class     at    the Expiration of the fourth    Year , and  of the
-# NSg+ . P  D   NSg/VB/J NSg/VB/J+ NSg/P D   N🅪Sg       P  D+  NPr/VB/J+ NSg+ . VB/C P  D
-> third    Class     at    the Expiration of the sixth     Year , so        that         one        third    may     be
-# NSg/VB/J NSg/VB/J+ NSg/P D   N🅪Sg       P  D+  NSg/VB/J+ NSg+ . NSg/I/J/C NSg/I/C/Ddem NSg/I/VB/J NSg/VB/J NPr/VXB NSg/VXB
+> Senators of the first     Class      shall be      vacated at    the Expiration of the second
+# NPl      P  D+  NSg/VB/J+ N🅪Sg/VB/J+ VXB   NSg/VXB VP/J    NSg/P D   N🅪Sg       P  D+  NSg/VB/J+
+> Year , of the second   Class      at    the Expiration of the fourth    Year , and  of the
+# NSg+ . P  D   NSg/VB/J N🅪Sg/VB/J+ NSg/P D   N🅪Sg       P  D+  NPr/VB/J+ NSg+ . VB/C P  D
+> third    Class      at    the Expiration of the sixth     Year , so        that         one        third    may     be
+# NSg/VB/J N🅪Sg/VB/J+ NSg/P D   N🅪Sg       P  D+  NSg/VB/J+ NSg+ . NSg/I/J/C NSg/I/C/Ddem NSg/I/VB/J NSg/VB/J NPr/VXB NSg/VXB
 > chosen   every second    Year ; and  when    vacancies happen in      the representation of
 # Nᴹ/VPp/J Dq+   NSg/VB/J+ NSg+ . VB/C NSg/I/C NPl       VB     NPr/J/P D   NSg            P
 > any    State    in      the Senate , the executive authority of such  State    shall issue
@@ -370,8 +370,8 @@
 # VB      ISg/D$+ NSg/VB . NPr/J/P I/C+  NPr🅪Sg/VB+ NPr/ISg+ VXB   NSg/R/C NSg/VXB D/P N🅪Sg/VB+ .
 >
 #
-> Every Order   , Resolution , or    Vote    to which the Concurrence of the Senate and
-# Dq    NSg/VB+ . +          . NPr/C NSg/VB+ P  I/C+  D   NSg         P  D   NPr+   VB/C
+> Every Order    , Resolution , or    Vote    to which the Concurrence of the Senate and
+# Dq    N🅪Sg/VB+ . +          . NPr/C NSg/VB+ P  I/C+  D   NSg         P  D   NPr+   VB/C
 > House  of Representatives may     be      necessary ( except on  a   question of Adjournment )
 # NPr/VB P  NPl+            NPr/VXB NSg/VXB NSg/J     . VB/C/P J/P D/P NSg/VB+  P  NSg         .
 > shall be      presented to the President of the United States    ; and  before the Same
@@ -835,7 +835,7 @@
 > No    Person  except a    natural born      Citizen , or    a   Citizen of the
 # NPr/P NSg/VB+ VB/C/P D/P+ NSg/J+  NPr/VB/J+ NSg+    . NPr/C D/P NSg     P  D+
 > United States    , at    the time      of the Adoption of this    Constitution , shall be
-# VP/J   NPrPl/V3+ . NSg/P D   N🅪Sg/VB/J P  D   NSg      P  I/Ddem+ NPr+         . VXB   NSg/VXB
+# VP/J   NPrPl/V3+ . NSg/P D   N🅪Sg/VB/J P  D   N🅪Sg     P  I/Ddem+ NPr+         . VXB   NSg/VXB
 > eligible to the Office of President ; neither shall any     Person  be      eligible to
 # NSg/J    P  D   NSg/VB P  NSg/VB+   . I/C     VXB   I/R/Dq+ NSg/VB+ NSg/VXB NSg/J    P
 > that         Office  who    shall not     have    attained to the Age     of thirty five Years , and
@@ -885,11 +885,11 @@
 > Whenever the President transmits to the President pro     tempore of the Senate and
 # C        D+  NSg/VB+   V3        P  D   NSg/VB+   NSg/J/P ?       P  D   NPr+   VB/C
 > the Speaker of the House  of Representatives his     written declaration that          he       is
-# D   NSg     P  D   NPr/VB P  NPl+            ISg/D$+ VB/J    NSg+        NSg/I/C/Ddem+ NPr/ISg+ VL3
+# D   NSg     P  D   NPr/VB P  NPl+            ISg/D$+ VPp/J   NSg+        NSg/I/C/Ddem+ NPr/ISg+ VL3
 > unable   to discharge the powers    and  duties of his     office  , and  until he       transmits
 # NSg/VB/J P  N🅪Sg/VB   D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+ . VB/C C/P   NPr/ISg+ V3
 > to them     a   written declaration to the contrary  , such  powers   and  duties shall be
-# P  NSg/IPl+ D/P VB/J    NSg+        P  D   NSg/VB/J+ . NSg/I NPrPl/V3 VB/C NPl+   VXB   NSg/VXB
+# P  NSg/IPl+ D/P VPp/J   NSg+        P  D   NSg/VB/J+ . NSg/I NPrPl/V3 VB/C NPl+   VXB   NSg/VXB
 > discharged by      the Vice        President as    Acting  President .
 # VP/J       NSg/J/P D   NSg/VB/J/P+ NSg/VB+   NSg/R Nᴹ/Vg/J NSg/VB+   .
 >
@@ -901,7 +901,7 @@
 > transmit to the President pro     tempore of the Senate and  the Speaker of the
 # VB       P  D+  NSg/VB+   NSg/J/P ?       P  D   NPr+   VB/C D   NSg     P  D
 > House  of Representatives their written declaration that         the President is  unable
-# NPr/VB P  NPl+            D$+   VB/J    NSg+        NSg/I/C/Ddem D   NSg/VB+   VL3 NSg/VB/J
+# NPr/VB P  NPl+            D$+   VPp/J   NSg+        NSg/I/C/Ddem D   NSg/VB+   VL3 NSg/VB/J
 > to discharge the powers    and  duties of his     office  , the Vice        President shall
 # P  N🅪Sg/VB   D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+ . D   NSg/VB/J/P+ NSg/VB+   VXB
 > immediately assume the powers    and  duties of the office  as    Acting  President .
@@ -911,7 +911,7 @@
 > Thereafter , when    the President transmits to the President pro     tempore of the
 # NSg        . NSg/I/C D+  NSg/VB+   V3        P  D   NSg/VB+   NSg/J/P ?       P  D
 > Senate and  the Speaker of the House  of Representatives his     written declaration
-# NPr+   VB/C D   NSg     P  D   NPr/VB P  NPl+            ISg/D$+ VB/J    NSg+
+# NPr+   VB/C D   NSg     P  D   NPr/VB P  NPl+            ISg/D$+ VPp/J   NSg+
 > that         no    inability exists , he       shall resume the powers    and  duties of his     office
 # NSg/I/C/Ddem NPr/P N🅪Sg+     V3     . NPr/ISg+ VXB   NSg/VB D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+
 > unless the Vice        President and  a   majority of either the principal officers of
@@ -921,7 +921,7 @@
 > transmit within  four days to the President pro     tempore of the Senate and  the
 # VB       NSg/J/P NSg  NPl+ P  D   NSg/VB+   NSg/J/P ?       P  D   NPr+   VB/C D
 > Speaker of the House  of Representatives their written declaration that         the
-# NSg     P  D   NPr/VB P  NPl+            D$+   VB/J    NSg+        NSg/I/C/Ddem D
+# NSg     P  D   NPr/VB P  NPl+            D$+   VPp/J   NSg+        NSg/I/C/Ddem D
 > President is  unable   to discharge the powers    and  duties of his     office  . Thereupon
 # NSg/VB+   VL3 NSg/VB/J P  N🅪Sg/VB   D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+ . W?
 > Congress shall decide the issue   , assembling within  forty - eight hours for that
@@ -929,7 +929,7 @@
 > purpose  if    not     in      session . If    the Congress , within  twenty - one        days after
 # N🅪Sg/VB+ NSg/C NSg/R/C NPr/J/P NSg/VB+ . NSg/C D+  NPr/VB+  . NSg/J/P NSg    . NSg/I/VB/J NPl  P
 > receipt of the latter written declaration , or    , if    Congress is  not     in      session ,
-# NSg/VB  P  D+  NSg/J+ VB/J    NSg+        . NPr/C . NSg/C NPr/VB+  VL3 NSg/R/C NPr/J/P NSg/VB+ .
+# NSg/VB  P  D+  NSg/J+ VPp/J   NSg+        . NPr/C . NSg/C NPr/VB+  VL3 NSg/R/C NPr/J/P NSg/VB+ .
 > within  twenty - one        days after Congress is  required to assemble , determines by
 # NSg/J/P NSg    . NSg/I/VB/J NPl  P     NPr/VB+  VL3 VP/J     P  VB       . V3         NSg/J/P
 > two - thirds vote   of both   Houses  that         the President is  unable   to discharge the
@@ -1171,7 +1171,7 @@
 > The Congress shall have    Power      to declare the Punishment of Treason , but     no
 # D+  NPr/VB+  VXB   NSg/VXB N🅪Sg/VB/J+ P  VB      D   N🅪Sg       P  NSg     . NSg/C/P NPr/P
 > Attainder of Treason shall work     Corruption of Blood  , or    Forfeiture except
-# NSg       P  NSg     VXB   N🅪Sg/VB+ NSg        P  Nᴹ/VB+ . NPr/C NSg        VB/C/P
+# NSg       P  NSg     VXB   N🅪Sg/VB+ N🅪Sg       P  Nᴹ/VB+ . NPr/C NSg        VB/C/P
 > during the Life    of the Person  attainted .
 # VB/P   D   N🅪Sg/VB P  D   NSg/VB+ VP/J      .
 >
@@ -1407,7 +1407,7 @@
 >
 #
 > All           Debts contracted and  Engagements entered into , before the Adoption of this
-# NSg/I/J/C/Dq+ NPl+  VP/J       VB/C NPl         VP/J    P    . C/P    D   NSg      P  I/Ddem
+# NSg/I/J/C/Dq+ NPl+  VP/J       VB/C NPl         VP/J    P    . C/P    D   N🅪Sg     P  I/Ddem
 > Constitution , shall be      as    valid against the United States    under   this
 # NPr+         . VXB   NSg/VXB NSg/R J     C/P     D   VP/J   NPrPl/V3+ NSg/J/P I/Ddem
 > Constitution , as    under   the Confederation .
@@ -1477,7 +1477,7 @@
 > The Word    " the " , being       interlined between the seventh and  eight Lines  of the
 # D+  NSg/VB+ . D   . . N🅪Sg/Vg/J/C VP/J       NSg/P   D   NSg/J   VB/C NSg/J NPl/V3 P  D
 > first    Page    , The Word    " Thirty " being       partly written on  an  Erazure in      the
-# NSg/VB/J NPr/VB+ . D   NSg/VB+ . NSg    . N🅪Sg/Vg/J/C W?     VB/J    J/P D/P ?       NPr/J/P D
+# NSg/VB/J NPr/VB+ . D   NSg/VB+ . NSg    . N🅪Sg/Vg/J/C W?     VPp/J   J/P D/P ?       NPr/J/P D
 > fifteenth Line   of the first    Page    . The Words   " is  tried " being       interlined between
 # NSg/J+    NSg/VB P  D   NSg/VB/J NPr/VB+ . D+  NPl/V3+ . VL3 VP/J  . N🅪Sg/Vg/J/C VP/J       NSg/P
 > the thirty second   and  thirty third    Lines  of the first    Page   and  the Word    " the "

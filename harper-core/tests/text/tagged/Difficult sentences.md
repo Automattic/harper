@@ -868,8 +868,8 @@
 # NSg/VB
 >
 #
-> He       picked a   fight  with the class     bully     .
-# NPr/ISg+ VP/J   D/P NSg/VB P    D+  NSg/VB/J+ NSg/VB/J+ .
+> He       picked a   fight  with the class      bully     .
+# NPr/ISg+ VP/J   D/P NSg/VB P    D+  N🅪Sg/VB/J+ NSg/VB/J+ .
 > He       went    with his     friends .
 # NPr/ISg+ NSg/VPt P    ISg/D$+ NPl/V3+ .
 > She  owns   a    motorcycle with a   sidecar .

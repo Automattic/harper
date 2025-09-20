@@ -109,13 +109,13 @@
 > in      1834 , and  " in      less       than two  years , he       had sketched out          many       of the salient
 # NPr/J/P #    . VB/C . NPr/J/P VB/J/R/C/P C/P  NSg+ NPl+  . NPr/ISg+ VB  VP/J     NSg/VB/J/R/P NSg/I/J/Dq P  D   NSg/J
 > features of the modern computer " . " A    crucial step    was the adoption of a   punched
-# NPl/V3   P  D   NSg/J  NSg/VB+  . . . D/P+ J+      NSg/VB+ VPt D   NSg      P  D/P VP/J
+# NPl/V3   P  D   NSg/J  NSg/VB+  . . . D/P+ J+      NSg/VB+ VPt D   N🅪Sg     P  D/P VP/J
 > card     system derived from the Jacquard loom   " making  it       infinitely
 # N🅪Sg/VB+ NSg+   VP/J    P    D   NPr      NSg/VB . Nᴹ/Vg/J NPr/ISg+ R
 > programmable . [ note    2 ] In      1843 , during the translation of a   French      article on  the
 # NSg/J        . . NSg/VB+ # . NPr/J/P #    . VB/P   D   N🅪Sg        P  D/P NPr🅪Sg/VB/J NSg/VB+ J/P D
 > Analytical Engine  , Ada  Lovelace wrote , in      one        of the many       notes   she  included , an
-# J          NSg/VB+ . NPr+ NPr      VB    . NPr/J/P NSg/I/VB/J P  D   NSg/I/J/Dq NPl/V3+ ISg+ VP/J     . D/P
+# J          NSg/VB+ . NPr+ NPr      VPt   . NPr/J/P NSg/I/VB/J P  D   NSg/I/J/Dq NPl/V3+ ISg+ VP/J     . D/P
 > algorithm to compute the Bernoulli numbers   , which is  considered to be      the first
 # NSg       P  NSg/VB  D   NPr+      NPrPl/V3+ . I/C+  VL3 VP/J       P  NSg/VXB D   NSg/VB/J
 > published algorithm ever specifically tailored for implementation on  a   computer .
@@ -704,8 +704,8 @@
 #
 > Software engineering is  the study  of designing , implementing , and  modifying the
 # Nᴹ+      Nᴹ/Vg/J+    VL3 D   NSg/VB P  Nᴹ/Vg/J+  . Nᴹ/Vg/J      . VB/C Nᴹ/Vg/J   D
-> software in      order   to ensure it       is  of high      quality , affordable , maintainable , and
-# Nᴹ+      NPr/J/P NSg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J+ N🅪Sg/J+ . J          . J            . VB/C
+> software in      order    to ensure it       is  of high      quality , affordable , maintainable , and
+# Nᴹ+      NPr/J/P N🅪Sg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J+ N🅪Sg/J+ . J          . J            . VB/C
 > fast     to build  . It       is  a   systematic approach to software design   , involving the
 # NSg/VB/J P  NSg/VB . NPr/ISg+ VL3 D/P J          N🅪Sg/VB  P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
 > application of engineering practices to software . Software engineering deals
@@ -880,8 +880,8 @@
 # ?         NPr     NSg$      . NPr+   NSg$    . NPr+ NSg$     . NPr+   NSg$      .
 > and  Samuel Morse's insight : there are only  two objects that         a   computer has to
 # VB/C NPr+   NSg$    N🅪Sg+   . R+    VB  J/R/C NSg NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
-> deal     with in      order   to represent " anything  " . [ note    4 ]
-# NSg/VB/J P    NPr/J/P NSg/VB+ P  VB        . NSg/I/VB+ . . . NSg/VB+ # .
+> deal     with in      order    to represent " anything  " . [ note    4 ]
+# NSg/VB/J P    NPr/J/P N🅪Sg/VB+ P  VB        . NSg/I/VB+ . . . NSg/VB+ # .
 >
 #
 > All          the information about any    computable problem can     be      represented using
@@ -900,8 +900,8 @@
 #
 > Alan Turing's insight : there are only  five actions that         a   computer has to
 # NPr+ NSg$     N🅪Sg+   . R+    VB  J/R/C NSg  NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
-> perform in      order   to do      " anything  " .
-# VB      NPr/J/P NSg/VB+ P  NSg/VXB . NSg/I/VB+ . .
+> perform in      order    to do      " anything  " .
+# VB      NPr/J/P N🅪Sg/VB+ P  NSg/VXB . NSg/I/VB+ . .
 >
 #
 > Every algorithm can     be      expressed in      a   language for a   computer consisting of
@@ -940,8 +940,8 @@
 #
 > Corrado Böhm and  Giuseppe Jacopini's insight : there are only  three ways of
 # ?       ?    VB/C NSg      ?          N🅪Sg+   . R+    VB  J/R/C NSg   NPl  P
-> combining these  actions ( into more            complex  ones    ) that          are needed in      order   for
-# Nᴹ/Vg/J   I/Ddem NPl/V3+ . P    NPr/I/VB/J/R/Dq NSg/VB/J NPl/V3+ . NSg/I/C/Ddem+ VB  VP/J   NPr/J/P NSg/VB+ C/P
+> combining these  actions ( into more            complex  ones    ) that          are needed in      order    for
+# Nᴹ/Vg/J   I/Ddem NPl/V3+ . P    NPr/I/VB/J/R/Dq NSg/VB/J NPl/V3+ . NSg/I/C/Ddem+ VB  VP/J   NPr/J/P N🅪Sg/VB+ C/P
 > a   computer to do      " anything  " .
 # D/P NSg/VB+  P  NSg/VXB . NSg/I/VB+ . .
 >
