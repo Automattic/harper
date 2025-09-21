@@ -43,6 +43,7 @@ use super::everyday::Everyday;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
+use super::feel_fell::FeelFell;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
 use super::first_aid_kit::FirstAidKit;
@@ -450,6 +451,7 @@ impl LintGroup {
         insert_struct_rule!(Everyday, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
+        insert_expr_rule!(FeelFell, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_expr_rule!(FillerWords, true);
         insert_struct_rule!(FirstAidKit, true);
