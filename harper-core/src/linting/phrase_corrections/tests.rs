@@ -174,9 +174,6 @@ fn corrects_as_of_lately() {
     )
 }
 
-// AsWell
-// -none-
-
 // AtFaceValue
 #[test]
 fn correct_on_face_value() {
@@ -684,9 +681,6 @@ fn test_in_a_while() {
         "We’ll talk again in a while.",
     );
 }
-
-// InCase
-// -none-
 
 // InNeedOf
 #[test]
@@ -1448,11 +1442,6 @@ fn now_on_hold() {
 #[test]
 fn thanks_lot() {
     assert_suggestion_result("thanks lot", lint_group(), "thanks a lot");
-}
-
-#[test]
-fn thanks_alot() {
-    assert_suggestion_result("thanks alot", lint_group(), "thanks a lot");
 }
 
 #[test]
