@@ -10,10 +10,10 @@ repository = "https://github.com/automattic/harper"
 harper-pos-utils = { path = "../harper-pos-utils/", version = "0.64.0" }
 lazy_static = "1.5.0"
 rs-conllu = "0.3.0"
-serde = "1.0.224"
+serde = "1.0.226"
 serde_json = "1.0.145"
 
 [build-dependencies]
 rs-conllu = "0.3.0"
-serde = "1.0.224"
+serde = "1.0.226"
 serde_json = "1.0.145"

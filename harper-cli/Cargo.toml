@@ -17,7 +17,7 @@ harper-pos-utils = { path = "../harper-pos-utils", version = "0.64.0", features 
 harper-comments = { path = "../harper-comments", version = "0.64.0" }
 harper-typst = { path = "../harper-typst", version = "0.64.0" }
 hashbrown = "0.16.0"
-serde = { version = "1.0.224", features = ["derive"] }
+serde = { version = "1.0.226", features = ["derive"] }
 serde_json = "1.0.145"
 strum = "0.27.2"
 strum_macros = "0.27.2"
