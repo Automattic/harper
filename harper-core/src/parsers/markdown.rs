@@ -567,4 +567,12 @@ Paragraph.
         let parser = Markdown::new(opts);
         let _res = parser.parse_str("[[#|]]:A]");
     }
+
+    #[test]
+    fn hang2() {
+        // This seems to only be a java specific problem...
+        let opts = MarkdownOptions::default();
+        let parser = Markdown::new(opts);
+        let _res = parser.parse_str("//{@j");
+    }
 }

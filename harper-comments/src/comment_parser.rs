@@ -123,3 +123,28 @@ impl Parser for CommentParser {
         self.inner.parse(source)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::CommentParser;
+    use harper_core::parsers::{MarkdownOptions, StrParser};
+
+    #[test]
+    fn hang() {
+        use std::sync::mpsc::channel;
+        use std::thread;
+        use std::time::Duration;
+
+        let (tx, rx) = channel::<()>();
+
+        let handle = thread::spawn(move || {
+            let opts = MarkdownOptions::default();
+            let parser = CommentParser::new_from_language_id("java", opts).unwrap();
+            let _res = parser.parse_str("//{@j");
+            tx.send(()).expect("send failed");
+        });
+
+        rx.recv_timeout(Duration::from_secs(10)).expect("timed out");
+        handle.join().expect("failed to join");
+    }
+}
