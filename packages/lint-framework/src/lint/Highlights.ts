@@ -32,26 +32,6 @@ export default class Highlights {
 		this.highlights = supportsCustomHighlights() ? new Map() : null;
 	}
 
-	private refreshCustomHighlightPreference() {
-		const shouldUse = supportsCustomHighlights();
-		const currentlyUsing = this.highlights != null;
-		if (shouldUse === currentlyUsing) {
-			return;
-		}
-
-		if (!shouldUse && this.highlights) {
-			for (const [lintKind, highlight] of this.highlights) {
-				highlight.clear();
-				try {
-					CSS.highlights.delete(`harper-${lintKind}`);
-				} catch {}
-			}
-			this.highlights = null;
-		} else if (shouldUse && this.highlights == null) {
-			this.highlights = new Map();
-		}
-	}
-
 	/** Used for CSS highlight API */
 	private insertHighlightStyle(tag: string, lint: UnpackedLint) {
 		const color = lintKindColor(lint.lint_kind);
@@ -76,9 +56,7 @@ export default class Highlights {
 		// Sort the lint boxes based on their source, so we can render them all together.
 		const sourceToBoxes: Map<SourceElement, { boxes: LintBox[]; cpa: DOMRect | null }> = new Map();
 
-		this.refreshCustomHighlightPreference();
-
-		// Clear old highlights
+		// Clear old highlights if they exist
 		if (this.highlights) {
 			for (const [_, highlight] of this.highlights) {
 				highlight.clear();
