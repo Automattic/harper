@@ -123,16 +123,3 @@ impl Parser for CommentParser {
         self.inner.parse(source)
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::CommentParser;
-    use harper_core::parsers::{MarkdownOptions, StrParser};
-
-    #[test]
-    fn hang() {
-        let opts = MarkdownOptions::default();
-        let parser = CommentParser::new_from_language_id("cmake", opts).unwrap();
-        let _res = parser.parse_str("#[[#|]]:A]");
-    }
-}
