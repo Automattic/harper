@@ -153,7 +153,12 @@ impl MissingTo {
             return None;
         }
 
-        Some(source[cursor..end].iter().collect::<String>().to_ascii_lowercase())
+        Some(
+            source[cursor..end]
+                .iter()
+                .collect::<String>()
+                .to_ascii_lowercase(),
+        )
     }
 
     fn previous_non_whitespace_char(source: &[char], start: usize) -> Option<char> {
@@ -203,10 +208,8 @@ impl ExprLinter for MissingTo {
 
         let controller_text = controller.span.get_content_string(source).to_lowercase();
 
-        let is_adjective_controller = matches!(
-            controller_text.as_str(),
-            "eager" | "inclined" | "ready"
-        );
+        let is_adjective_controller =
+            matches!(controller_text.as_str(), "eager" | "inclined" | "ready");
 
         if controller.kind.is_upos(UPOS::ADJ) && !is_adjective_controller {
             return None;
@@ -297,7 +300,8 @@ impl ExprLinter for MissingTo {
         if matches!(
             controller_text.as_str(),
             "learn" | "learned" | "learning" | "learns" | "learnt"
-        ) && next_is_noun && !next_is_verb
+        ) && next_is_noun
+            && !next_is_verb
         {
             return None;
         }
@@ -305,7 +309,8 @@ impl ExprLinter for MissingTo {
         if matches!(
             controller_text.as_str(),
             "hope" | "hoped" | "hopes" | "hoping"
-        ) && next_is_noun && !next_is_verb
+        ) && next_is_noun
+            && !next_is_verb
         {
             return None;
         }
@@ -313,7 +318,8 @@ impl ExprLinter for MissingTo {
         if matches!(
             controller_text.as_str(),
             "need" | "needed" | "needing" | "needs"
-        ) && next_is_noun && !next_is_verb
+        ) && next_is_noun
+            && !next_is_verb
         {
             return None;
         }
@@ -329,13 +335,7 @@ impl ExprLinter for MissingTo {
         if next_token.kind.is_upos(UPOS::PROPN)
             && matches!(
                 Self::previous_non_whitespace_char(source, span.start),
-                Some('"')
-                    | Some('\'')
-                    | Some('”')
-                    | Some('’')
-                    | Some('!')
-                    | Some('?')
-                    | Some(',')
+                Some('"') | Some('\'') | Some('”') | Some('’') | Some('!') | Some('?') | Some(',')
             )
         {
             return None;
@@ -452,20 +452,12 @@ mod tests {
 
     #[test]
     fn no_lint_when_to_present() {
-        assert_lint_count(
-            "She wants to finish early.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("She wants to finish early.", MissingTo::default(), 0);
     }
 
     #[test]
     fn no_lint_with_noun_after_controller() {
-        assert_lint_count(
-            "They arranged a meeting at noon.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("They arranged a meeting at noon.", MissingTo::default(), 0);
     }
 
     #[test]
