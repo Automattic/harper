@@ -26,12 +26,35 @@ import type { UnpackedLint } from './unpackLint';
 export default class Highlights {
 	renderBoxes: Map<SourceElement, RenderBox>;
 	highlights?: Map<LintKind, Highlight>;
+	private useCustomHighlights: boolean;
 
 	constructor() {
 		this.renderBoxes = new Map();
-		if (supportsCustomHighlights()) {
+		this.useCustomHighlights = supportsCustomHighlights();
+		if (this.useCustomHighlights) {
 			this.highlights = new Map();
 		}
+	}
+
+	private refreshCustomHighlightPreference() {
+		const shouldUse = supportsCustomHighlights();
+		if (shouldUse === this.useCustomHighlights) {
+			return;
+		}
+
+		if (!shouldUse && this.highlights) {
+			for (const [lintKind, highlight] of this.highlights) {
+				highlight.clear();
+				try {
+					CSS.highlights.delete(`harper-${lintKind}`);
+				} catch {}
+			}
+			this.highlights = undefined;
+		} else if (shouldUse && !this.highlights) {
+			this.highlights = new Map();
+		}
+
+		this.useCustomHighlights = shouldUse;
 	}
 
 	/** Used for CSS highlight API */
@@ -58,15 +81,17 @@ export default class Highlights {
 		// Sort the lint boxes based on their source, so we can render them all together.
 		const sourceToBoxes: Map<SourceElement, { boxes: LintBox[]; cpa: DOMRect | null }> = new Map();
 
+		this.refreshCustomHighlightPreference();
+
 		// Clear old highlights
-		if (this.highlights) {
+		if (this.useCustomHighlights && this.highlights) {
 			for (const [_, highlight] of this.highlights) {
 				highlight.clear();
 			}
 		}
 
 		for (const box of boxes) {
-			if (box.range && this.highlights != null) {
+			if (box.range && this.useCustomHighlights && this.highlights != null) {
 				let highlight = this.highlights.get(box.lint.lint_kind);
 
 				if (highlight != null) {
@@ -294,6 +319,17 @@ function isContainingBlock(el: Element): boolean {
 }
 
 export function supportsCustomHighlights(ua = navigator.userAgent) {
+	const root = globalThis.document?.documentElement;
+	const disableFlag =
+		root?.getAttribute?.('data-harper-disable-css-highlights') === 'true' ||
+		root?.dataset?.harperDisableCssHighlights === 'true';
+	if (disableFlag) {
+		return false;
+	}
+	const isAutomated = globalThis.navigator?.webdriver === true;
+	if (isAutomated) {
+		return false;
+	}
 	const parser = Bowser.getParser(ua);
 	const isFirefox = parser.getBrowserName(true) === 'firefox';
 	if (isFirefox) return false;
