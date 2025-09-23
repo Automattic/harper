@@ -25,20 +25,17 @@ import type { UnpackedLint } from './unpackLint';
 /** A class that renders highlights to a page and nothing else. Uses a virtual DOM to minimize jitter. */
 export default class Highlights {
 	renderBoxes: Map<SourceElement, RenderBox>;
-	highlights?: Map<LintKind, Highlight>;
-	private useCustomHighlights: boolean;
+	highlights: Map<LintKind, Highlight> | null;
 
 	constructor() {
 		this.renderBoxes = new Map();
-		this.useCustomHighlights = supportsCustomHighlights();
-		if (this.useCustomHighlights) {
-			this.highlights = new Map();
-		}
+		this.highlights = supportsCustomHighlights() ? new Map() : null;
 	}
 
 	private refreshCustomHighlightPreference() {
 		const shouldUse = supportsCustomHighlights();
-		if (shouldUse === this.useCustomHighlights) {
+		const currentlyUsing = this.highlights != null;
+		if (shouldUse === currentlyUsing) {
 			return;
 		}
 
@@ -49,12 +46,10 @@ export default class Highlights {
 					CSS.highlights.delete(`harper-${lintKind}`);
 				} catch {}
 			}
-			this.highlights = undefined;
-		} else if (shouldUse && !this.highlights) {
+			this.highlights = null;
+		} else if (shouldUse && this.highlights == null) {
 			this.highlights = new Map();
 		}
-
-		this.useCustomHighlights = shouldUse;
 	}
 
 	/** Used for CSS highlight API */
@@ -84,14 +79,14 @@ export default class Highlights {
 		this.refreshCustomHighlightPreference();
 
 		// Clear old highlights
-		if (this.useCustomHighlights && this.highlights) {
+		if (this.highlights) {
 			for (const [_, highlight] of this.highlights) {
 				highlight.clear();
 			}
 		}
 
 		for (const box of boxes) {
-			if (box.range && this.useCustomHighlights && this.highlights != null) {
+			if (box.range && this.highlights != null) {
 				let highlight = this.highlights.get(box.lint.lint_kind);
 
 				if (highlight != null) {
