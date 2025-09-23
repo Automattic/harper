@@ -1,6 +1,6 @@
 [package]
 name = "harper-pos-utils"
-version = "0.64.0"
+version = "0.65.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -11,7 +11,7 @@ rs-conllu = "0.3.0"
 hashbrown = { version = "0.16.0", features = ["serde"] }
 strum = "0.27.2"
 strum_macros = "0.27.2"
-serde = { version = "1.0.224", features = ["derive"] }
+serde = { version = "1.0.226", features = ["derive"] }
 is-macro = "0.3.7"
 rayon = { version = "1.11.0", optional = true }
 rand = { version = "0.9.1", optional = true }

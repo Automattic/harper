@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.64.0",
+	"version": "0.65.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -211,6 +211,12 @@
 					"default": true,
 					"description": "Corrects `an` to `and` after `ahead`."
 				},
+				"harper.linters.AllIntentsAndPurposes": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Finds redundant am/pm indicators used together with time periods such as 'in the morning' or 'at night'."
+				},
 				"harper.linters.AllOfASudden": {
 					"scope": "resource",
 					"type": "boolean",
@@ -349,6 +355,12 @@
 					"default": true,
 					"description": "Corrects `as it so happens` to `as it happens`."
 				},
+				"harper.linters.AsLongAs": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `aslong as` to `as long as`."
+				},
 				"harper.linters.AsOfLate": {
 					"scope": "resource",
 					"type": "boolean",
@@ -360,12 +372,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Expands an initialism."
-				},
-				"harper.linters.AsWell": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `aswell` to `as well`."
 				},
 				"harper.linters.AskNoPreposition": {
 					"scope": "resource",
@@ -931,6 +937,12 @@
 					"default": true,
 					"description": "Replaces `fatal outcome` with the more direct term `death` for conciseness."
 				},
+				"harper.linters.FeelFell": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects some expressions using `fell` where `feel` is correct."
+				},
 				"harper.linters.FetalPosition": {
 					"scope": "resource",
 					"type": "boolean",
@@ -955,6 +967,12 @@
 					"default": true,
 					"description": "Detects when “kid” after “aid”, “starter”, “travel”, or “tool” should be “kit” (a set of supplies)."
 				},
+				"harper.linters.FootTheBill": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `flip the bill` to `foot the bill`."
+				},
 				"harper.linters.ForALongTime": {
 					"scope": "resource",
 					"type": "boolean",
@@ -966,12 +984,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the missing article in `for while`, forming `for a while`."
-				},
-				"harper.linters.ForAllIntentsAndPurposes": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `for all intensive purposes` to `for all intents and purposes`, ensuring the phrase conveys its intended meaning."
 				},
 				"harper.linters.ForNoun": {
 					"scope": "resource",
@@ -1189,12 +1201,6 @@
 					"default": true,
 					"description": "Corrects ungrammatical `in anyway` to `in any way`."
 				},
-				"harper.linters.InCase": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `incase` to `in case`."
-				},
 				"harper.linters.InDetail": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1314,6 +1320,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the misspelling `It cam` to the proper phrase `It can`."
+				},
+				"harper.linters.ItLooksLikeThat": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `it looks like that` to just `it looks like`."
 				},
 				"harper.linters.ItsContraction": {
 					"scope": "resource",
@@ -1435,6 +1447,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `likewise`."
 				},
+				"harper.linters.LitotesDirectPositive": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Offers direct-positive alternatives when double negatives might feel heavy."
+				},
 				"harper.linters.LongSentences": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1530,6 +1548,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `misused`."
+				},
+				"harper.linters.MixedBag": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the eggcorn `mixed bad` to `mixed bag`."
 				},
 				"harper.linters.ModalOf": {
 					"scope": "resource",
@@ -1698,6 +1722,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Correct mass nouns that are preceded by the wrong determiners or quantifiers."
+				},
+				"harper.linters.NounVerbConfusion": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Handles common confusions between related nouns and verbs (e.g., 'advice/advise', 'breath/breathe')"
 				},
 				"harper.linters.Nowhere": {
 					"scope": "resource",
@@ -1967,7 +1997,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects when `quiet` is a typo for `quite` or the other way around."
+					"description": "Helps distinguish between ‘quiet’ (making ‘little noise’) and ‘quite’ (meaning ‘rather’)."
 				},
 				"harper.linters.RapidFire": {
 					"scope": "resource",
@@ -1992,6 +2022,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags redundant use of 'if' or 'correctly' with 'IIRC', since 'IIRC' already stands for 'if I recall correctly'."
+				},
+				"harper.linters.RedundantSuperlatives": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Simplifies redundant double positives like `most optimal` to the base form."
 				},
 				"harper.linters.Regardless": {
 					"scope": "resource",
@@ -2028,6 +2064,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Detects when `roadmap` is used instead of `road map`, prompting the correct spacing."
+				},
+				"harper.linters.RulesOfThumb": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects pluralizing the wrong noun in `rule of thumb`."
 				},
 				"harper.linters.SameAs": {
 					"scope": "resource",
@@ -2123,7 +2165,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "When describing a single instance of a noun, use `something` rather than `somewhat`."
+					"description": "Flags the phrase `somewhat of a` in favor of `something of a`, which can be considered more traditional."
 				},
 				"harper.linters.Somewhere": {
 					"scope": "resource",
@@ -2213,7 +2255,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers."
+					"description": "Corrects the missing article in `thanks lot`, forming `thanks a lot`."
 				},
 				"harper.linters.ThatChallenged": {
 					"scope": "resource",
@@ -2286,6 +2328,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the typo `thing` when it should be `think`."
+				},
+				"harper.linters.ThoughThought": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `though` when it's a typo for `thought`."
 				},
 				"harper.linters.ThoughtProcess": {
 					"scope": "resource",

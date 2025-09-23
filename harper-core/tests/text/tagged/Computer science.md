@@ -103,19 +103,19 @@
 > started the design  of the first    automatic mechanical calculator , his     Difference
 # VP/J    D   N🅪Sg/VB P  D   NSg/VB/J NSg/J     NSg/J      NSg+       . ISg/D$+ N🅪Sg/VB+
 > Engine  , in      1822 , which eventually gave him  the idea of the first    programmable
-# NSg/VB+ . NPr/J/P #    . I/C+  R          VB   ISg+ D   NSg  P  D   NSg/VB/J NSg/J
+# NSg/VB+ . NPr/J/P #    . I/C+  R          VPt  ISg+ D   NSg  P  D   NSg/VB/J NSg/J
 > mechanical calculator , his     Analytical Engine  . He       started developing this    machine
 # NSg/J      NSg+       . ISg/D$+ J          NSg/VB+ . NPr/ISg+ VP/J    Nᴹ/Vg/J    I/Ddem+ NSg/VB+
 > in      1834 , and  " in      less       than two  years , he       had sketched out          many       of the salient
 # NPr/J/P #    . VB/C . NPr/J/P VB/J/R/C/P C/P  NSg+ NPl+  . NPr/ISg+ VB  VP/J     NSg/VB/J/R/P NSg/I/J/Dq P  D   NSg/J
 > features of the modern computer " . " A    crucial step    was the adoption of a   punched
-# NPl/V3   P  D   NSg/J  NSg/VB+  . . . D/P+ J+      NSg/VB+ VPt D   NSg      P  D/P VP/J
+# NPl/V3   P  D   NSg/J  NSg/VB+  . . . D/P+ J+      NSg/VB+ VPt D   N🅪Sg     P  D/P VP/J
 > card     system derived from the Jacquard loom   " making  it       infinitely
 # N🅪Sg/VB+ NSg+   VP/J    P    D   NPr      NSg/VB . Nᴹ/Vg/J NPr/ISg+ R
 > programmable . [ note    2 ] In      1843 , during the translation of a   French      article on  the
 # NSg/J        . . NSg/VB+ # . NPr/J/P #    . VB/P   D   N🅪Sg        P  D/P NPr🅪Sg/VB/J NSg/VB+ J/P D
 > Analytical Engine  , Ada  Lovelace wrote , in      one        of the many       notes   she  included , an
-# J          NSg/VB+ . NPr+ NPr      VB    . NPr/J/P NSg/I/VB/J P  D   NSg/I/J/Dq NPl/V3+ ISg+ VP/J     . D/P
+# J          NSg/VB+ . NPr+ NPr      VPt   . NPr/J/P NSg/I/VB/J P  D   NSg/I/J/Dq NPl/V3+ ISg+ VP/J     . D/P
 > algorithm to compute the Bernoulli numbers   , which is  considered to be      the first
 # NSg       P  NSg/VB  D   NPr+      NPrPl/V3+ . I/C+  VL3 VP/J       P  NSg/VXB D   NSg/VB/J
 > published algorithm ever specifically tailored for implementation on  a   computer .
@@ -539,7 +539,7 @@
 > properties of codes   ( systems for converting information from one        form     to
 # NPl/V3     P  NPl/V3+ . NPl+    C/P Nᴹ/Vg/J    Nᴹ+         P    NSg/I/VB/J N🅪Sg/VB+ P
 > another ) and  their fitness for a    specific application . Codes   are used for data
-# I/D     . VB/C D$+   NSg     C/P D/P+ NSg/J+   NSg+        . NPl/V3+ VB  VP/J C/P N🅪Pl+
+# I/D     . VB/C D$+   Nᴹ      C/P D/P+ NSg/J+   NSg+        . NPl/V3+ VB  VP/J C/P N🅪Pl+
 > compression , cryptography , error   detection and  correction , and  more            recently
 # NSg+        . Nᴹ           . NSg/VB+ N🅪Sg      VB/C NSg+       . VB/C NPr/I/VB/J/R/Dq R
 > also for network coding   . Codes   are studied for the purpose of designing
@@ -621,7 +621,7 @@
 > Computer graphics is  the study  of digital visual contents and  involves the
 # NSg/VB+  NPl+     VL3 D   NSg/VB P  NSg/J+  NSg/J+ NPl/V3+  VB/C V3       D
 > synthesis and  manipulation of image    data  . The study   is  connected to many       other
-# Nᴹ        VB/C N🅪Sg         P  N🅪Sg/VB+ N🅪Pl+ . D+  NSg/VB+ VL3 VP/J      P  NSg/I/J/Dq NSg/VB/J
+# N🅪Sg      VB/C N🅪Sg         P  N🅪Sg/VB+ N🅪Pl+ . D+  NSg/VB+ VL3 VP/J      P  NSg/I/J/Dq NSg/VB/J
 > fields   in      computer science  , including computer vision  , image    processing , and
 # NPrPl/V3 NPr/J/P NSg/VB+  N🅪Sg/VB+ . Nᴹ/Vg/J   NSg/VB+  N🅪Sg/VB . N🅪Sg/VB+ Nᴹ/Vg/J+   . VB/C
 > computational geometry , and  is  heavily applied in      the fields   of special  effects
@@ -647,7 +647,7 @@
 > information theory , telecommunications , information engineering and  has
 # Nᴹ+         N🅪Sg+  . Nᴹ+                . Nᴹ+         Nᴹ/Vg/J+    VB/C V3
 > applications in      medical image    computing and  speech   synthesis , among others  . What
-# NPl          NPr/J/P NSg/J   N🅪Sg/VB+ Nᴹ/Vg/J   VB/C N🅪Sg/VB+ Nᴹ+       . P     NPl/V3+ . NSg/I+
+# NPl          NPr/J/P NSg/J   N🅪Sg/VB+ Nᴹ/Vg/J   VB/C N🅪Sg/VB+ N🅪Sg+     . P     NPl/V3+ . NSg/I+
 > is  the lower     bound    on  the complexity of fast     Fourier transform algorithms ? is
 # VL3 D   NSg/VB/JC NSg/VP/J J/P D   NSg        P  NSg/VB/J NPr     NSg/VB    NPl+       . VL3
 > one        of the unsolved problems in      theoretical computer science  .
@@ -704,8 +704,8 @@
 #
 > Software engineering is  the study  of designing , implementing , and  modifying the
 # Nᴹ+      Nᴹ/Vg/J+    VL3 D   NSg/VB P  Nᴹ/Vg/J+  . Nᴹ/Vg/J      . VB/C Nᴹ/Vg/J   D
-> software in      order   to ensure it       is  of high      quality , affordable , maintainable , and
-# Nᴹ+      NPr/J/P NSg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J+ N🅪Sg/J+ . J          . J            . VB/C
+> software in      order    to ensure it       is  of high      quality , affordable , maintainable , and
+# Nᴹ+      NPr/J/P N🅪Sg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J+ N🅪Sg/J+ . J          . J            . VB/C
 > fast     to build  . It       is  a   systematic approach to software design   , involving the
 # NSg/VB/J P  NSg/VB . NPr/ISg+ VL3 D/P J          N🅪Sg/VB  P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
 > application of engineering practices to software . Software engineering deals
@@ -748,8 +748,8 @@
 # N🅪Sg/Vg/J+    . D   Nᴹ/Vg/J  NSg/VB+ NPr/J/P D+  NSg/J+ #d    VPt NPr  NSg$     NSg/VB+
 > " Can     computers think  ? " , and  the question remains effectively unanswered ,
 # . NPr/VXB NPl/V3+   NSg/VB . . . VB/C D+  NSg/VB+  NPl/V3  R           J          .
-> although the Turing test    is  still    used to assess computer output     on  the scale   of
-# C        D   NPr    NSg/VB+ VL3 NSg/VB/J VP/J P  VB     NSg/VB+  N🅪Sg/VBPt+ J/P D   N🅪Sg/VB P
+> although the Turing test    is  still    used to assess computer output    on  the scale   of
+# C        D   NPr    NSg/VB+ VL3 NSg/VB/J VP/J P  VB     NSg/VB+  N🅪Sg/VBP+ J/P D   N🅪Sg/VB P
 > human    intelligence . But     the automation of evaluative and  predictive tasks   has
 # NSg/VB/J N🅪Sg+        . NSg/C/P D   N🅪Sg       P  J          VB/C J          NPl/V3+ V3
 > been    increasingly successful as    a   substitute for human    monitoring and
@@ -880,8 +880,8 @@
 # ?         NPr     NSg$      . NPr+   NSg$    . NPr+ NSg$     . NPr+   NSg$      .
 > and  Samuel Morse's insight : there are only  two objects that         a   computer has to
 # VB/C NPr+   NSg$    N🅪Sg+   . R+    VB  J/R/C NSg NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
-> deal     with in      order   to represent " anything  " . [ note    4 ]
-# NSg/VB/J P    NPr/J/P NSg/VB+ P  VB        . NSg/I/VB+ . . . NSg/VB+ # .
+> deal     with in      order    to represent " anything  " . [ note    4 ]
+# NSg/VB/J P    NPr/J/P N🅪Sg/VB+ P  VB        . NSg/I/VB+ . . . NSg/VB+ # .
 >
 #
 > All          the information about any    computable problem can     be      represented using
@@ -900,8 +900,8 @@
 #
 > Alan Turing's insight : there are only  five actions that         a   computer has to
 # NPr+ NSg$     N🅪Sg+   . R+    VB  J/R/C NSg  NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
-> perform in      order   to do      " anything  " .
-# VB      NPr/J/P NSg/VB+ P  NSg/VXB . NSg/I/VB+ . .
+> perform in      order    to do      " anything  " .
+# VB      NPr/J/P N🅪Sg/VB+ P  NSg/VXB . NSg/I/VB+ . .
 >
 #
 > Every algorithm can     be      expressed in      a   language for a   computer consisting of
@@ -940,8 +940,8 @@
 #
 > Corrado Böhm and  Giuseppe Jacopini's insight : there are only  three ways of
 # ?       ?    VB/C NSg      ?          N🅪Sg+   . R+    VB  J/R/C NSg   NPl  P
-> combining these  actions ( into more            complex  ones    ) that          are needed in      order   for
-# Nᴹ/Vg/J   I/Ddem NPl/V3+ . P    NPr/I/VB/J/R/Dq NSg/VB/J NPl/V3+ . NSg/I/C/Ddem+ VB  VP/J   NPr/J/P NSg/VB+ C/P
+> combining these  actions ( into more            complex  ones    ) that          are needed in      order    for
+# Nᴹ/Vg/J   I/Ddem NPl/V3+ . P    NPr/I/VB/J/R/Dq NSg/VB/J NPl/V3+ . NSg/I/C/Ddem+ VB  VP/J   NPr/J/P N🅪Sg/VB+ C/P
 > a   computer to do      " anything  " .
 # D/P NSg/VB+  P  NSg/VXB . NSg/I/VB+ . .
 >

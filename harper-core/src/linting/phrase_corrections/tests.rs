@@ -164,6 +164,16 @@ fn correct_as_it_happens() {
     );
 }
 
+// AsLongAs
+#[test]
+fn correct_as_long_as() {
+    assert_suggestion_result(
+        "server loads up fine but cant log on client side aslong as the plugin is installed",
+        lint_group(),
+        "server loads up fine but cant log on client side as long as the plugin is installed",
+    );
+}
+
 // AsOfLate
 #[test]
 fn corrects_as_of_lately() {
@@ -173,9 +183,6 @@ fn corrects_as_of_lately() {
         "I haven't noticed any crashing with AMDGPU as of late, so this looks to not be an issue anymore.",
     )
 }
-
-// AsWell
-// -none-
 
 // AtFaceValue
 #[test]
@@ -536,9 +543,6 @@ fn corrects_far_and_few_between() {
 // FetalPosition
 // -none-
 
-// ForAllIntentsAndPurposes
-// -none-
-
 // ForALongTime
 #[test]
 fn test_for_a_long_time() {
@@ -687,9 +691,6 @@ fn test_in_a_while() {
         "We’ll talk again in a while.",
     );
 }
-
-// InCase
-// -none-
 
 // InNeedOf
 #[test]
@@ -1451,11 +1452,6 @@ fn now_on_hold() {
 #[test]
 fn thanks_lot() {
     assert_suggestion_result("thanks lot", lint_group(), "thanks a lot");
-}
-
-#[test]
-fn thanks_alot() {
-    assert_suggestion_result("thanks alot", lint_group(), "thanks a lot");
 }
 
 #[test]

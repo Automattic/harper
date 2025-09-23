@@ -141,19 +141,19 @@ pub fn lint_group() -> LintGroup {
             "Corrects `as it so happens` to `as it happens`.",
             LintKind::Usage
         ),
+        "AsLongAs" => (
+            ["aslong as"],
+            ["as long as"],
+            "`As long` should be written as two words.",
+            "Corrects `aslong as` to `as long as`.",
+            LintKind::BoundaryError
+        ),
         "AsOfLate" => (
             ["as of lately"],
             ["as of late"],
             "The standard form is `as of late`.",
             "Corrects `as of lately` to `as of late`.",
             LintKind::WordChoice
-        ),
-        "AsWell" => (
-            ["aswell"],
-            ["as well"],
-            "`as well` should be written as two words.",
-            "Corrects `aswell` to `as well`.",
-            LintKind::BoundaryError
         ),
         "AtFaceValue" => (
             ["on face value"],
@@ -461,13 +461,6 @@ pub fn lint_group() -> LintGroup {
             "Ensures the correct use of `fetal position`, avoiding confusion with `feeble position`, which is not a standard phrase.",
             LintKind::Malapropism
         ),
-        "ForAllIntentsAndPurposes" => (
-            ["for all intensive purposes"],
-            ["for all intents and purposes"],
-            "Use the correct phrase meaning 'in every practical sense'.",
-            "Corrects `for all intensive purposes` to `for all intents and purposes`, ensuring the phrase conveys its intended meaning.",
-            LintKind::Eggcorn
-        ),
         "ForALongTime" => (
             ["for along time"],
             ["for a long time"],
@@ -605,13 +598,6 @@ pub fn lint_group() -> LintGroup {
             "When describing a timeframe, use `a while`.",
             "Corrects the missing article in `in while`, forming `in a while`.",
             LintKind::Grammar
-        ),
-        "InCase" => (
-            ["incase"],
-            ["in case"],
-            "`In case` should be written as two words.",
-            "Corrects `incase` to `in case`.",
-            LintKind::BoundaryError
         ),
         "InNeedOf" => (
             ["in need for"],
@@ -1030,11 +1016,11 @@ pub fn lint_group() -> LintGroup {
             LintKind::Usage
         ),
         "ThanksALot" => (
-            ["thanks lot", "thanks alot"],
+            ["thanks lot"],
             ["thanks a lot"],
-            "Prefer the two-word expression `thanks a lot`.",
-            "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers.",
-            LintKind::Usage
+            "The indefinite article `a` is required in `thanks a lot`.",
+            "Corrects the missing article in `thanks lot`, forming `thanks a lot`.",
+            LintKind::Grammar
         ),
         "ThatChallenged" => (
             ["the challenged"],

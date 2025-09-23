@@ -11,7 +11,7 @@
 >
 #
 > Most         example sentences are taken from https://en.wiktionary.org/. License : CC         BY      - SA        4.0 .
-# NSg/I/J/R/Dq NSg/VB+ NPl/V3+   VB  VB/J  P    Url                         NSg/VB+ . NSg/VB/#r+ NSg/J/P . NPr/VB/J+ #   .
+# NSg/I/J/R/Dq NSg/VB+ NPl/V3+   VB  VPp/J P    Url                         NSg/VB+ . NSg/VB/#r+ NSg/J/P . NPr/VB/J+ #   .
 >
 #
 > A
@@ -131,7 +131,7 @@
 > By      the power      vested in      me       , I       now        pronounce you    man      and  wife      .
 # NSg/J/P D+  N🅪Sg/VB/J+ VP/J   NPr/J/P NPr/ISg+ . ISg/#r+ NPr/VB/J/C NSg/VB    ISgPl+ NPr/VB/J VB/C NSg/VB/J+ .
 > By      Jove ! I       think  she's got it       !
-# NSg/J/P NPr+ . ISg/#r+ NSg/VB K     VB  NPr/ISg+ .
+# NSg/J/P NPr+ . ISg/#r+ NSg/VB K     VP  NPr/ISg+ .
 > By      all           that          is  holy    , I'll put     an  end     to this    .
 # NSg/J/P NSg/I/J/C/Dq+ NSg/I/C/Ddem+ VL3 NSg/J/R . K    NSg/VBP D/P NSg/VB+ P  I/Ddem+ .
 > I       sorted the items   by      category .
@@ -231,7 +231,7 @@
 > We're having  a   birthday party    for Janet .
 # K     Nᴹ/Vg/J D/P NSg/VB+  NSg/VB/J C/P NPr+  .
 > The mayor gave a   speech  for the charity gala   .
-# D+  NSg+  VB   D/P N🅪Sg/VB C/P D+  NPr+    NSg/J+ .
+# D+  NSg+  VPt  D/P N🅪Sg/VB C/P D+  NPr+    NSg/J+ .
 > If    having  to bag    the groceries correctly is  more            than you    can     handle , then    this   isn't  the job     for you    .
 # NSg/C Nᴹ/Vg/J P  NSg/VB D+  NPl/V3+   R         VL3 NPr/I/VB/J/R/Dq C/P  ISgPl+ NPr/VXB NSg/VB . NSg/J/C I/Ddem NSg/VB D   NPr/VB+ C/P ISgPl+ .
 > This    is  a   new      bell   for my  bicycle .
@@ -315,7 +315,7 @@
 > At    close    of play    , England were    305 for 3 .
 # NSg/P NSg/VB/J P  N🅪Sg/VB . NPr+    NSg/VPt #   C/P # .
 > He       took the swing   shift   for he       could   get    more            overtime .
-# NPr/ISg+ VB   D+  NSg/VB+ NSg/VB+ C/P NPr/ISg+ NSg/VXB NSg/VB NPr/I/VB/J/R/Dq NSg/VB   .
+# NPr/ISg+ VPt  D+  NSg/VB+ NSg/VB+ C/P NPr/ISg+ NSg/VXB NSg/VB NPr/I/VB/J/R/Dq NSg/VB   .
 > to account for one's whereabouts .
 # P  NSg/VB  C/P NSg$+ NSg+        .
 >
@@ -327,7 +327,7 @@
 > Paul is  from New       Zealand .
 # NPr+ VL3 P    NSg/VB/J+ NPr+    .
 > I       got a   letter  from my  brother   .
-# ISg/#r+ VB  D/P NSg/VB+ P    D$+ NSg/VB/J+ .
+# ISg/#r+ VP  D/P NSg/VB+ P    D$+ NSg/VB/J+ .
 > You    can't get    all          your news   from the Internet .
 # ISgPl+ VXB   NSg/VB NSg/I/J/C/Dq D$+  Nᴹ/V3+ P    D   NPrᴹ/VB+ .
 > He       had books   piled from floor   to ceiling .
@@ -391,7 +391,7 @@
 > There wasn't much         of interest in      her     speech   .
 # R+    VB     NSg/I/J/R/Dq P  N🅪Sg/VB+ NPr/J/P ISg/D$+ N🅪Sg/VB+ .
 > He       hasn't got an  original idea in      him  .
-# NPr/ISg+ V3     VB  D/P NSg/J    NSg+ NPr/J/P ISg+ .
+# NPr/ISg+ V3     VP  D/P NSg/J    NSg+ NPr/J/P ISg+ .
 > You    are one        in      a   million .
 # ISgPl+ VB  NSg/I/VB/J NPr/J/P D/P NSg     .
 > She's in      an  orchestra .
@@ -416,8 +416,8 @@
 # D$+ NSg/VB+ NPr/J/P NSg/Vg/J/Comm R+    VPt P  NSg/VB D$+ Nᴹ/Vg/J NPr/VB/J+ .
 > My  fat       rolls   around in      folds   .
 # D$+ N🅪Sg/VB/J NPl/V3+ J/P    NPr/J/P NPl/V3+ .
-> The planes  flew     over    in      waves   .
-# D+  NPl/V3+ NSg/VB/J NSg/J/P NPr/J/P NPl/V3+ .
+> The planes  flew      over    in      waves   .
+# D+  NPl/V3+ NSg/VPt/J NSg/J/P NPr/J/P NPl/V3+ .
 > Arrange the chairs  in      a    circle  .
 # NSg/VB  D   NPl/V3+ NPr/J/P D/P+ NSg/VB+ .
 > He       stalked away in      anger  .
@@ -429,7 +429,7 @@
 > The company  is  in      profit      .
 # D+  N🅪Sg/VB+ VL3 NPr/J/P N🅪Sg/VBP/J+ .
 > You've got a   friend    in      me       .
-# K      VB  D/P NPr/VB/J+ NPr/J/P NPr/ISg+ .
+# K      VP  D/P NPr/VB/J+ NPr/J/P NPr/ISg+ .
 > He's met his     match   in      her     .
 # NSg$ VB  ISg/D$+ NSg/VB+ NPr/J/P ISg/D$+ .
 > There has been    no    change  in      his     condition .
@@ -468,8 +468,8 @@
 # VXB   ISgPl+ NSg/VB/J/C/P NSg/I/C/Ddem+ P  NSg/VB VB/J NPr/C VB  NPr/J/P .
 > He       ran     to the edge   of the swimming pool    and  dived in      .
 # NPr/ISg+ NSg/VPt P  D   NSg/VB P  D+  NSg/VB   NSg/VB+ VB/C VP/J  NPr/J/P .
-> They flew     in      from London last      night    .
-# IPl+ NSg/VB/J NPr/J/P P    NPr+   NSg/VB/J+ N🅪Sg/VB+ .
+> They flew      in      from London last      night    .
+# IPl+ NSg/VPt/J NPr/J/P P    NPr+   NSg/VB/J+ N🅪Sg/VB+ .
 > For six  hours the tide    flows  in      , then    for another six  hours it       flows  out          .
 # C/P NSg+ NPl+  D+  NSg/VB+ NPl/V3 NPr/J/P . NSg/J/C C/P I/D+    NSg+ NPl+  NPr/ISg+ NPl/V3 NSg/VB/J/R/P .
 > Bring the water    to the boil    and  drop   the vegetables in      .
@@ -483,7 +483,7 @@
 >
 #
 > His     parents got him  an  in      with the company  .
-# ISg/D$+ NPl/V3+ VB  ISg+ D/P NPr/J/P P    D+  N🅪Sg/VB+ .
+# ISg/D$+ NPl/V3+ VP  ISg+ D/P NPr/J/P P    D+  N🅪Sg/VB+ .
 >
 #
 > Adjective
@@ -577,9 +577,9 @@
 > It's not     that         big   of a    deal      .
 # +    NSg/R/C NSg/I/C/Ddem NSg/J P  D/P+ NSg/VB/J+ .
 > I’ve not     taken her     out          of a   goodly long     while      .
-# K    NSg/R/C VB/J  ISg/D$+ NSg/VB/J/R/P P  D/P J/R    NPr/VB/J NSg/VB/C/P .
+# K    NSg/R/C VPp/J ISg/D$+ NSg/VB/J/R/P P  D/P J/R    NPr/VB/J NSg/VB/C/P .
 > After a   delay    of three hours , the plane     finally took off        .
-# P     D/P NSg/VB/J P  NSg+  NPl+  . D+  NSg/VB/J+ R       VB   NSg/VB/J/P .
+# P     D/P NSg/VB/J P  NSg+  NPl+  . D+  NSg/VB/J+ R       VPt  NSg/VB/J/P .
 >
 #
 > On
@@ -739,9 +739,9 @@
 > What   will    be      the effect on  morale ?
 # NSg/I+ NPr/VXB NSg/VXB D   NSg/VB J/P Nᴹ+    .
 > I       haven't got any    money   on  me       .
-# ISg/#r+ VB      VB  I/R/Dq N🅪Sg/J+ J/P NPr/ISg+ .
+# ISg/#r+ VB      VP  I/R/Dq N🅪Sg/J+ J/P NPr/ISg+ .
 > On  Jack's entry , William got up         to leave  .
-# J/P NSg$   NSg+  . NPr+    VB  NSg/VB/J/P P  NSg/VB .
+# J/P NSg$   NSg+  . NPr+    VP  NSg/VB/J/P P  NSg/VB .
 > On  the addition of ammonia , a    chemical reaction   begins .
 # J/P D   NSg      P  Nᴹ+     . D/P+ NSg/J+   N🅪Sg/VB/J+ NPl/V3 .
 > The drinks  are on  me       tonight , boys    .
@@ -817,7 +817,7 @@
 > The coconut fell      to the ground     .
 # D+  N🅪Sg+   NSg/VPt/J P  D+  N🅪Sg/VB/J+ .
 > I       gave the book    to him  .
-# ISg/#r+ VB   D+  NSg/VB+ P  ISg+ .
+# ISg/#r+ VPt  D+  NSg/VB+ P  ISg+ .
 > His     face    was beaten to a   pulp      .
 # ISg/D$+ NSg/VB+ VPt VB/J   P  D/P N🅪Sg/VB/J .
 > I       sang    my  baby      to sleep   .
@@ -868,8 +868,8 @@
 # NSg/VB
 >
 #
-> He       picked a   fight  with the class     bully     .
-# NPr/ISg+ VP/J   D/P NSg/VB P    D+  NSg/VB/J+ NSg/VB/J+ .
+> He       picked a   fight  with the class      bully     .
+# NPr/ISg+ VP/J   D/P NSg/VB P    D+  N🅪Sg/VB/J+ NSg/VB/J+ .
 > He       went    with his     friends .
 # NPr/ISg+ NSg/VPt P    ISg/D$+ NPl/V3+ .
 > She  owns   a    motorcycle with a   sidecar .
