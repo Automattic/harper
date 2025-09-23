@@ -43,3 +43,10 @@ path = "fuzz_targets/fuzz_harper_comment.rs"
 test = false
 doc = false
 bench = false
+
+[[bin]]
+name = "fuzz_harper_core_markdown"
+path = "fuzz_targets/fuzz_harper_core_markdown.rs"
+test = false
+doc = false
+bench = false
