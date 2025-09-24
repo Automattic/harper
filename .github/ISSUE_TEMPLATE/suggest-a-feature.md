@@ -14,9 +14,9 @@ How should it work?
 Show, don't tell.
 
 **Component**
-[ ] Core engine
-[ ] Plugin/Extension
-[ ] Other: _____
+- [ ] Core engine
+- [ ] Plugin/Extension
+- [ ] Other: _____
 
 **Additional Context**
 Any other relevant info.

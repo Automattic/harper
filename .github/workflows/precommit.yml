@@ -18,11 +18,14 @@ jobs:
       - uses: extractions/setup-just@v2
       - name: Install pnpm
         uses: pnpm/action-setup@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: rustfmt
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
-          cache: 'pnpm'
+          cache: "pnpm"
       - name: Enable Corepack
         run: corepack enable
       - name: Install `pandoc`

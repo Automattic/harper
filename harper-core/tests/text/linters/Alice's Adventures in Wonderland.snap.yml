@@ -3457,15 +3457,6 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    2954 | and said, “It was a curious dream, dear, certainly: but now run in to your tea;
-         |                                                                 ^~~~~ Did you mean the closed compound `into`?
-Suggest:
-  - Replace with: “into”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
     2955 | it’s getting late.” So Alice got up and ran off, thinking while she ran, as well
