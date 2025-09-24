@@ -264,13 +264,10 @@ impl ExprLinter for MissingTo {
             return None;
         }
 
-        let Some(next_token) = matched_tokens
+        let next_token = matched_tokens
             .iter()
             .skip(offending_idx + 1)
-            .find(|tok| !tok.kind.is_whitespace())
-        else {
-            return None;
-        };
+            .find(|tok| !tok.kind.is_whitespace())?;
 
         let next_text = next_token.span.get_content_string(source).to_lowercase();
 
