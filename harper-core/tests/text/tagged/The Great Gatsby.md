@@ -972,8 +972,8 @@
 # D/P NSg/VB P      D/P R         NSg/J    NSg/VB+ . NSg/VB/C/P . Nᴹ/Vg/J P  NSg/VB R
 > interested and  a   little     deaf     , I       followed Daisy around a   chain   of connecting
 # VP/J       VB/C D/P NPr/I/J/Dq NSg/VB/J . ISg/#r+ VP/J     NPr+  J/P    D/P N🅪Sg/VB P  Nᴹ/Vg/J
-> verandas    to the porch in      front     . In      its     deep   gloom   we   sat      down        side      by      side      on  a
-# NPl/NoAm/Br P  D   NSg+  NPr/J/P NSg/VB/J+ . NPr/J/P ISg/D$+ NSg/J+ NSg/VB+ IPl+ NSg/VP/J N🅪Sg/VB/J/P NSg/VB/J+ NSg/J/P NSg/VB/J+ J/P D/P
+> verandas    to the porch in      front     . In      its     deep   gloom  we   sat      down        side      by      side      on  a
+# NPl/NoAm/Br P  D   NSg+  NPr/J/P NSg/VB/J+ . NPr/J/P ISg/D$+ NSg/J+ Nᴹ/VB+ IPl+ NSg/VP/J N🅪Sg/VB/J/P NSg/VB/J+ NSg/J/P NSg/VB/J+ J/P D/P
 > wicker settee .
 # NSg/JC NSg    .
 >
@@ -3687,7 +3687,7 @@
 > read    the gray            names   , and  they will    give   you    a    better      impression than my
 # NSg/VBP D+  NPr🅪Sg/VB/J/Am+ NPl/V3+ . VB/C IPl+ NPr/VXB NSg/VB ISgPl+ D/P+ NSg/VXB/JC+ NSg/VB+    C/P  D$+
 > generalities of those  who    accepted Gatsby’s hospitality and  paid him  the subtle
-# NPl          P  I/Ddem NPr/I+ VP/J     NSg$     NSg+        VB/C VP/J ISg+ D   J
+# NPl          P  I/Ddem NPr/I+ VP/J     NSg$     Nᴹ+         VB/C VP/J ISg+ D   J
 > tribute of knowing    nothing  whatever about him  .
 # NSg/VB  P  NSg/Vg/J/P NSg/I/J+ NSg/I/J+ J/P   ISg+ .
 >
@@ -5928,8 +5928,8 @@
 #
 > When    Klipspringer had played “ The Love      Nest       ” he       turned around on  the bench   and
 # NSg/I/C ?            VB  VP/J   . D   NPr🅪Sg/VB NSg/VB/JS+ . NPr/ISg+ VP/J   J/P    J/P D   NSg/VB+ VB/C
-> searched unhappily for Gatsby in      the gloom   .
-# VP/J     R         C/P NPr    NPr/J/P D   NSg/VB+ .
+> searched unhappily for Gatsby in      the gloom  .
+# VP/J     R         C/P NPr    NPr/J/P D   Nᴹ/VB+ .
 >
 #
 > “ I’m all          out          of practice , you    see    . I       told you    I       couldn’t play    . I’m all          out          of
@@ -6033,7 +6033,7 @@
 > It       was a   random   shot     , and  yet      the reporter’s instinct was right    . Gatsby’s
 # NPr/ISg+ VPt D/P NSg/VB/J NSg/VP/J . VB/C NSg/VB/C D   NSg$       NSg/J+   VPt NPr/VB/J . NSg$
 > notoriety , spread   about by      the hundreds who    had accepted his     hospitality and  so
-# Nᴹ        . N🅪Sg/VBP J/P   NSg/J/P D   NPl+     NPr/I+ VB  VP/J     ISg/D$+ NSg+        VB/C NSg/I/J/C
+# Nᴹ        . N🅪Sg/VBP J/P   NSg/J/P D   NPl+     NPr/I+ VB  VP/J     ISg/D$+ Nᴹ+         VB/C NSg/I/J/C
 > become authorities upon his     past       , had increased all          summer     until he       fell      just
 # VBPp   NPl+        P    ISg/D$+ NSg/VB/J/P . VB  VP/J      NSg/I/J/C/Dq NPr🅪Sg/VB+ C/P   NPr/ISg+ NSg/VPt/J VB/J
 > short      of being       news   . Contemporary legends such  as    the “ underground pipe    - line   to
@@ -9929,7 +9929,7 @@
 >
 #
 > I       thanked him  for his     hospitality . We   were    always thanking him  for that          — I       and
-# ISg/#r+ VP/J    ISg+ C/P ISg/D$+ NSg+        . IPl+ NSg/VPt R      Nᴹ/Vg/J  ISg+ C/P NSg/I/C/Ddem+ . ISg/#r+ VB/C
+# ISg/#r+ VP/J    ISg+ C/P ISg/D$+ Nᴹ+         . IPl+ NSg/VPt R      Nᴹ/Vg/J  ISg+ C/P NSg/I/C/Ddem+ . ISg/#r+ VB/C
 > the others  .
 # D+  NPl/V3+ .
 >
