@@ -2,7 +2,7 @@ use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
     expr::{Expr, SequenceExpr},
-    patterns::WhitespacePattern,
+    patterns::{SingleTokenPattern, WhitespacePattern, prepositional_preceder},
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -14,6 +14,11 @@ pub struct ToTooAdjectiveEnd {
 impl Default for ToTooAdjectiveEnd {
     fn default() -> Self {
         let expr = SequenceExpr::default()
+            .then_optional(
+                SequenceExpr::default()
+                    .then_any_word()
+                    .then(WhitespacePattern),
+            )
             .t_aco("to")
             .t_ws()
             .then_kind_is_but_is_not_except(
@@ -51,6 +56,16 @@ impl ExprLinter for ToTooAdjectiveEnd {
             idx += 1;
         }
         if idx >= tokens.len() || !tokens[idx].kind.is_adjective() {
+            return None;
+        }
+        let prev_non_ws = tokens[..to_index].iter().rfind(|t| !t.kind.is_whitespace());
+        if tokens[idx].kind.is_preposition() {
+            return None;
+        }
+
+        if let Some(prev_token) = prev_non_ws
+            && prepositional_preceder().matches_token(prev_token, source)
+        {
             return None;
         }
 
