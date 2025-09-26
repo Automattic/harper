@@ -201,7 +201,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             if let Some(next_tok) = maybe_next_tok.filter(|tok| tok.kind.is_noun())
                 && match nountok_lower {
                     ['b', 'a', 'c', 'k', 'u', 'p'] => {
-                        &["file", "images", "location", "plan", "snapshots"][..]
+                        &["file", "images", "location", "plan", "sites", "snapshots"][..]
                     }
                     ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function", "handlers"][..],
                     ['l', 'a', 'y', 'o', 'u', 't'] => &["estimation"][..],
@@ -221,8 +221,8 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                         "suite",
                         "support",
                     ][..],
-                    ['s', 't', 'a', 'r', 't', 'u', 'p'] => &["environments"][..],
                     ['r', 'o', 'l', 'l', 'o', 'u', 't'] => &["logic", "status"][..],
+                    ['s', 't', 'a', 'r', 't', 'u', 'p'] => &["environments"][..],
                     ['t', 'h', 'r', 'o', 'w', 'b', 'a', 'c', 'k'] => &["machine"][..],
                     ['w', 'o', 'r', 'k', 'o', 'u', 't'] => &["constraints", "preference"][..],
                     _ => &[],
