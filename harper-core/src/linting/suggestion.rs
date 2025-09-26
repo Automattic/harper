@@ -40,12 +40,10 @@ impl Suggestion {
                 .copied()
                 .chain(template_term),
         ) {
-            if v.is_ascii_uppercase() != t.is_ascii_uppercase() {
-                if t.is_uppercase() {
-                    *v = v.to_ascii_uppercase();
-                } else {
-                    *v = v.to_ascii_lowercase();
-                }
+            if t.is_uppercase() {
+                *v = v.to_ascii_uppercase();
+            } else {
+                *v = v.to_ascii_lowercase();
             }
         }
 

@@ -12,8 +12,10 @@ use lru::LruCache;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::a_part::APart;
+use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
+use super::all_intents_and_purposes::AllIntentsAndPurposes;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
@@ -41,6 +43,7 @@ use super::everyday::Everyday;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
+use super::feel_fell::FeelFell;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
 use super::first_aid_kit::FirstAidKit;
@@ -57,6 +60,7 @@ use super::i_am_agreement::IAmAgreement;
 use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
+use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::left_right_hand::LeftRightHand;
@@ -67,6 +71,7 @@ use super::long_sentences::LongSentences;
 use super::looking_forward_to::LookingForwardTo;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
+use super::mixed_bag::MixedBag;
 use super::modal_of::ModalOf;
 use super::months::Months;
 use super::most_number::MostNumber;
@@ -82,12 +87,14 @@ use super::of_course::OfCourse;
 use super::on_floor::OnFloor;
 use super::one_and_the_same::OneAndTheSame;
 use super::open_the_light::OpenTheLight;
+use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::possessive_noun::PossessiveNoun;
 use super::possessive_your::PossessiveYour;
+use super::progressive_needs_be::ProgressiveNeedsBe;
 use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
@@ -102,6 +109,7 @@ use super::save_to_safe::SaveToSafe;
 use super::semicolon_apostrophe::SemicolonApostrophe;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
+use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
 use super::somewhat_something::SomewhatSomething;
 use super::sought_after::SoughtAfter;
@@ -114,9 +122,12 @@ use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::thing_think::ThingThink;
+use super::though_thought::ThoughThought;
 use super::throw_rubbish::ThrowRubbish;
+use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
+use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
 use super::very_unique::VeryUnique;
 use super::was_aloud::WasAloud;
@@ -131,7 +142,8 @@ use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
-    MassPlurals, closed_compounds, initialisms, phrase_corrections, phrase_set_corrections,
+    MassPlurals, NounVerbConfusion, closed_compounds, initialisms, phrase_corrections,
+    phrase_set_corrections,
 };
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
@@ -401,13 +413,16 @@ impl LintGroup {
         ));
         out.merge_from(&mut closed_compounds::lint_group());
         out.merge_from(&mut initialisms::lint_group());
+        // out.merge_from(&mut update_place_names::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
+        insert_expr_rule!(Addicting, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
+        insert_expr_rule!(AllIntentsAndPurposes, true);
         insert_struct_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
@@ -436,6 +451,7 @@ impl LintGroup {
         insert_struct_rule!(Everyday, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
+        insert_expr_rule!(FeelFell, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_expr_rule!(FillerWords, true);
         insert_struct_rule!(FirstAidKit, true);
@@ -449,6 +465,7 @@ impl LintGroup {
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(InterestedIn, true);
+        insert_expr_rule!(ItLooksLikeThat, true);
         insert_struct_rule!(ItsContraction, true);
         insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);
@@ -459,6 +476,7 @@ impl LintGroup {
         insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule!(MergeWords, true);
         insert_expr_rule!(MissingPreposition, true);
+        insert_expr_rule!(MixedBag, true);
         insert_expr_rule!(ModalOf, true);
         insert_expr_rule!(Months, true);
         insert_expr_rule!(MostNumber, true);
@@ -469,6 +487,7 @@ impl LintGroup {
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
         insert_struct_rule!(NominalWants, true);
+        insert_struct_rule!(NounVerbConfusion, true);
         insert_expr_rule!(NounCountability, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
@@ -476,12 +495,14 @@ impl LintGroup {
         insert_expr_rule!(OneAndTheSame, true);
         insert_expr_rule!(OpenCompounds, true);
         insert_expr_rule!(OpenTheLight, true);
+        insert_struct_rule!(OughtToBe, true);
         insert_expr_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
         insert_expr_rule!(PossessiveYour, true);
+        insert_expr_rule!(ProgressiveNeedsBe, true);
         insert_struct_rule!(PronounContraction, true);
         insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(PronounKnew, true);
@@ -493,6 +514,7 @@ impl LintGroup {
         insert_struct_rule!(SaveToSafe, true);
         insert_expr_rule!(SemicolonApostrophe, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
+        insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(SomewhatSomething, true);
         insert_expr_rule!(SoughtAfter, true);
@@ -504,9 +526,12 @@ impl LintGroup {
         insert_struct_rule!(TheMy, true);
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(ThingThink, true);
+        insert_expr_rule!(ThoughThought, true);
         insert_struct_rule!(ThrowRubbish, true);
+        insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
+        insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(UseGenitive, false);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(WasAloud, true);

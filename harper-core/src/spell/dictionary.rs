@@ -1,8 +1,9 @@
 use blanket::blanket;
+use std::borrow::Cow;
 
 use super::FuzzyMatchResult;
 use super::WordId;
-use crate::WordMetadata;
+use crate::DictWordMetadata;
 
 /// An in-memory database that contains everything necessary to parse and analyze English text.
 ///
@@ -32,12 +33,12 @@ pub trait Dictionary: Send + Sync {
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>>;
     fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]>;
-    /// Get the associated [`WordMetadata`] for any capitalization of a given word.
-    fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata>;
-    /// Get the associated [`WordMetadata`] for any capitalization of a given word.
+    /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
+    fn get_lexeme_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>>;
+    /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
     /// If the word isn't in the dictionary, the resulting metadata will be
     /// empty.
-    fn get_word_metadata_str(&self, word: &str) -> Option<&WordMetadata>;
+    fn get_lexeme_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>>;
 
     /// Iterate over the words in the dictionary.
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_>;

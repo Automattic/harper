@@ -1,19 +1,52 @@
 <script lang="ts">
-import CheckMark from '$lib/CheckMark.svelte';
-import Underlines from '$lib/Underlines.svelte';
-import { Button, Card } from 'flowbite-svelte';
-import { type Lint, SuggestionKind, type WorkerLinter } from 'harper.js';
-import { fly } from 'svelte/transition';
+import LintCard from '$lib/LintCard.svelte';
+import { Card } from 'flowbite-svelte';
+import { type WorkerLinter } from 'harper.js';
+import {
+	applySuggestion,
+	LintFramework,
+	type UnpackedLint,
+	type UnpackedSuggestion,
+	unpackLint,
+} from 'lint-framework';
 import demo from '../../../../demo.md?raw';
-import lintKindColor from './lintKindColor';
 
-export let content = demo;
+export let content = demo.trim();
 
-let lints: Lint[] = [];
-let lintCards: HTMLButtonElement[] = [];
-let focused: number | undefined;
 let editor: HTMLTextAreaElement | null;
 let linter: WorkerLinter;
+
+// Live list of lints from the framework's lint callback
+let lints: UnpackedLint[] = [];
+// Track which lint cards are open by index
+let openSet: Set<number> = new Set();
+
+let lfw = new LintFramework(
+	async (text) => {
+		if (!linter) return [];
+
+		const raw = await linter.lint(text);
+		// The framework expects "unpacked" lints with plain fields
+		const unpacked = await Promise.all(raw.map((lint) => unpackLint(text, lint, linter)));
+
+		lints = unpacked;
+
+		return unpacked;
+	},
+	{
+		ignoreLint: async (hash: string) => {
+			if (!linter) return;
+			try {
+				await linter.ignoreLintHash(BigInt(hash));
+				console.log(`Ignored ${hash}`);
+				// Re-run linting to hide ignored lint immediately
+				lfw.update();
+			} catch (e) {
+				console.error('Failed to ignore lint', e);
+			}
+		},
+	},
+);
 
 (async () => {
 	let { WorkerLinter, binary } = await import('harper.js');
@@ -22,138 +55,149 @@ let linter: WorkerLinter;
 	await linter.setup();
 })();
 
-let w: number | undefined;
+$: if (editor != null) {
+	lfw.addTarget(editor);
+}
 
-$: linter?.lint(content).then((newLints) => {
-	lints = newLints;
-});
-$: boxHeight = calcHeight(content);
-$: if (focused != null && lintCards[focused])
-	lintCards[focused].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
-$: if (focused != null && focused >= lints.length) focused = undefined;
+function applySug(lint: UnpackedLint, s: UnpackedSuggestion) {
+	content = applySuggestion(content, lint.span, s);
+	// Trigger re-lint and rerender after programmatic change
+	lfw.update();
+}
 
-$: if (editor != null && focused != null) {
-	let lint = lints[focused % lints.length];
-	if (lint != null) {
-		let p = lint.span().end;
-		editor.selectionStart = p;
-		editor.selectionEnd = p;
+function createSnippetFor(lint: UnpackedLint) {
+	const CONTEXT = 60;
+	const start = Math.max(0, lint.span.start - CONTEXT);
+	const end = Math.min(content.length, lint.span.end + CONTEXT);
+
+	let prefix = content.slice(start, lint.span.start);
+	let suffix = content.slice(lint.span.end, end);
+
+	// Collapse whitespace/newlines for a compact blurb
+	const collapse = (s: string) => s.replace(/\s+/g, ' ').trim();
+	prefix = collapse(prefix);
+	const problem = collapse(lint.problem_text);
+	suffix = collapse(suffix);
+
+	return {
+		prefix,
+		problem,
+		suffix,
+		prefixEllipsis: start > 0,
+		suffixEllipsis: end < content.length,
+	};
+}
+
+function jumpTo(lint: UnpackedLint) {
+	if (!editor) return;
+	const start = lint.span.start;
+	const end = lint.span.end;
+	// Focus and select; most browsers will scroll selection into view on focus
+	editor.focus();
+	editor.setSelectionRange(start, end);
+	// As a fallback, nudge scroll to selection if needed
+	try {
+		const approxLineHeight = 20;
+		const beforeText = content.slice(0, start);
+		const line = (beforeText.match(/\n/g)?.length ?? 0) + 1;
+		const targetTop = Math.max(0, (line - 3) * approxLineHeight);
+		(editor as HTMLTextAreaElement).scrollTop = targetTop;
+	} catch {}
+}
+
+function toggleCard(i: number) {
+	const wasOpen = openSet.has(i);
+	if (wasOpen) {
+		const ns = new Set(openSet);
+		ns.delete(i);
+		openSet = ns;
+	} else {
+		const ns = new Set(openSet);
+		ns.add(i);
+		openSet = ns;
 	}
 }
 
-function calcHeight(boxContent: string): number {
-	let numberOfLineBreaks = (boxContent.match(/\n/g) || []).length;
-	let newHeight = 20 + numberOfLineBreaks * 30 + 12 + 2;
-	return newHeight;
+$: allOpen = lints.length > 0 && openSet.size === lints.length;
+
+function toggleAll() {
+	if (allOpen) {
+		openSet = new Set();
+	} else {
+		openSet = new Set(lints.map((_, i) => i));
+	}
 }
 
-// Whether to display a smallar variant of the editor
-$: small = (w ?? 1024) < 1024;
-$: superSmall = (w ?? 1024) < 550;
+async function ignoreAll() {
+	if (!linter || lints.length === 0) return;
+	try {
+		const hashes = Array.from(new Set(lints.map((l) => l.context_hash)));
+		await Promise.all(hashes.map((h) => linter.ignoreLintHash(BigInt(h))));
+		// Refresh to hide ignored lints immediately
+		lfw.update();
+	} catch (e) {
+		console.error('Failed to ignore all lints', e);
+	}
+}
+
+// Keep openSet in range if lint list changes
+$: if (openSet.size > 0) {
+	const max = lints.length;
+	const next = new Set<number>();
+	for (const idx of openSet) {
+		if (idx >= 0 && idx < max) next.add(idx);
+	}
+	if (next.size !== openSet.size) openSet = next;
+}
 </script>
 
-<div class={`flex w-full h-full p-5 ${small ? 'flex-col' : 'flex-row'}`} bind:clientWidth={w}>
-	<Card
-		class="flex-grow h-full p-5 grid z-10 max-w-full text-lg overflow-auto mr-5"
-		on:click={() => editor && editor.focus()}
-	>
+<div class="flex flex-row h-full max-w-full">
+	<Card class="flex-1 h-full p-5 z-10 max-w-full text-lg mr-5">
 		<textarea
 			bind:this={editor}
-			class="w-full text-nowrap m-0 rounded-none p-0 z-0 bg-transparent overflow-hidden border-none text-lg resize-none focus:border-0"
-			spellcheck="false"
-			data-enable-grammarly="false"
-			style={`grid-row: 1; grid-column: 1; height: ${boxHeight}px`}
-			on:keydown={() => (focused = undefined)}
+			class="w-full m-0 rounded-none p-0 z-0 bg-transparent h-full border-none text-lg resize-none focus:border-0"
 			bind:value={content}
 		></textarea>
-		<div class="m-0 p-0 z-10 pointer-events-none" style="grid-row: 1; grid-column: 1">
-			<Underlines {content} bind:focusLintIndex={focused} />
-		</div>
 	</Card>
-	<Card class={`flex-none basis-[400px] max-h-full p-1 ${small ? 'hidden' : 'flex'}`}>
-		<h2 class="text-2xl font-bold m-2">Suggestions</h2>
-		<div class="flex flex-col overflow-y-auto overflow-x-hidden m-0 p-0 h-full">
-			{#if lints.length == 0}
-				<div class="w-full h-full flex flex-row text-center justify-center items-center" in:fly>
-					<p class="dark:white font-bold text-lg">Looks good to me</p>
-					<CheckMark />
-				</div>
-			{/if}
 
-			{#each lints as lint, i}
+	<Card class="hidden md:flex md:flex-col md:w-1/3 h-full p-5 z-10">
+		<div class="flex items-center justify-between mb-3">
+			<div class="text-base font-semibold">Problems</div>
+			<div class="flex items-center gap-2">
 				<button
-					class="block max-w-sm p-3 bg-white dark:bg-gray-800 border border-gray-200 rounded-lg shadow m-1 hover:translate-x-1 transition-all"
-					on:click={() => (focused = i)}
-					bind:this={lintCards[i]}
+					class="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#0b0f14]"
+					on:click={toggleAll}
+					aria-label={allOpen ? 'Collapse all lint cards' : 'Open all lint cards'}
 				>
-					<div class={`pl-2`} style={`border-left: 4px solid ${lintKindColor(lint.lint_kind())}`}>
-						<div class="flex flex-row">
-							<h3 class="font-bold text-base p-0">
-								{lint.lint_kind_pretty()} - “<span class="italic">
-									{lint.get_problem_text()}
-								</span>”
-							</h3>
-						</div>
-						<div
-							class="transition-all overflow-hidden flex flex-col justify-evenly"
-							style={`height: ${focused === i ? `calc(55px * ${lint.suggestion_count() + 1})` : '0px'}`}
-						>
-							<p style="height: 50px" class="text-left text-sm p-0">{@html lint.message_html().replaceAll('<p>', "").replaceAll('<p />', "")}</p>
-							{#each lint.suggestions() as suggestion}
-								<div class="w-full p-[4px]">
-									<Button
-										class="w-full"
-										style="height: 40px; margin: 5px 0px;"
-										on:click={() =>
-											linter
-												.applySuggestion(content, lint, suggestion)
-												.then((edited) => (content = edited))}
-									>
-										{#if suggestion.kind() == SuggestionKind.Remove}
-											Remove "{lint.get_problem_text()}"
-										{:else if suggestion.kind() == SuggestionKind.Replace}
-											Replace "{lint.get_problem_text()}" with "{suggestion.get_replacement_text()}"
-										{:else}
-											Insert "{suggestion.get_replacement_text()}" after "{lint.get_problem_text()}"
-										{/if}
-									</Button>
-								</div>
-							{/each}
-						</div>
-					</div>
+					{allOpen ? 'Collapse all' : 'Open all'}
 				</button>
-			{/each}
+				<button
+					class="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#0b0f14]"
+					on:click={ignoreAll}
+					disabled={lints.length === 0}
+					aria-label="Ignore all current lints"
+				>
+					Ignore all
+				</button>
+			</div>
 		</div>
-	</Card>
-	{#if focused != null}
-		<Card
-			class={`max-w-full w-full ${superSmall ? 'justify-center' : 'justify-between'} flex-row ${small ? '' : 'hidden'}`}
-		>
-			<div class={superSmall ? 'hidden' : ''}>
-				<h1 class={`font-bold p-0 text-base`}>{lints[focused].lint_kind_pretty()}</h1>
-				<p class={`p-0 text-sm`}>{@html lints[focused].message_html().replaceAll('<p>', "").replaceAll('<p />', "")}</p>
-			</div>
-			<div class="flex flex-row">
-				{#each lints[focused].suggestions() as suggestion}
-					<div class="p-[4px]">
-						<Button
-							class="w-full"
-							style="height: 40px; margin: 5px 0px;"
-							on:click={() =>
-								focused != null &&
-								linter
-									.applySuggestion(content, lints[focused], suggestion)
-									.then((edited) => (content = edited))}
-						>
-							{#if suggestion.kind() == SuggestionKind.Remove}
-								Remove
-							{:else}
-								"{suggestion.get_replacement_text()}"
-							{/if}
-						</Button>
-					</div>
-				{/each}
-			</div>
-		</Card>
-	{/if}
+		<div class="flex-1 overflow-y-auto pr-1">
+			{#if lints.length === 0}
+				<p class="text-sm text-gray-500">No lints yet.</p>
+			{:else}
+                <div class="space-y-3">
+                    {#each lints as lint, i}
+                        <LintCard
+                            {lint}
+                            snippet={createSnippetFor(lint)}
+                            open={openSet.has(i)}
+                            onToggleOpen={() => toggleCard(i)}
+                            focusError={() => jumpTo(lint)}
+                            onApply={(s) => applySug(lint, s)}
+                        />
+                    {/each}
+                </div>
+            {/if}
+        </div>
+    </Card>
 </div>

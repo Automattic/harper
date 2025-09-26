@@ -135,6 +135,25 @@ fn detect_as_early_back_as_real_world() {
     );
 }
 
+// AsIfThough
+#[test]
+fn correct_as_if_though_usagi_1() {
+    assert_top3_suggestion_result(
+        "It's coming back to you. and looking as if though it's very bright red.",
+        lint_group(),
+        "It's coming back to you. and looking as if it's very bright red.",
+    );
+}
+
+#[test]
+fn correct_as_if_though_usagi_2() {
+    assert_top3_suggestion_result(
+        "it passes right on by it as if though nothing happened.",
+        lint_group(),
+        "it passes right on by it as though nothing happened.",
+    );
+}
+
 // AsItHappens
 #[test]
 fn correct_as_it_happens() {
@@ -142,6 +161,16 @@ fn correct_as_it_happens() {
         "As it so happens, we have language currently in review that basically states that a major version break means backwards incompatibility ...",
         lint_group(),
         "As it happens, we have language currently in review that basically states that a major version break means backwards incompatibility ...",
+    );
+}
+
+// AsLongAs
+#[test]
+fn correct_as_long_as() {
+    assert_suggestion_result(
+        "server loads up fine but cant log on client side aslong as the plugin is installed",
+        lint_group(),
+        "server loads up fine but cant log on client side as long as the plugin is installed",
     );
 }
 
@@ -154,9 +183,6 @@ fn corrects_as_of_lately() {
         "I haven't noticed any crashing with AMDGPU as of late, so this looks to not be an issue anymore.",
     )
 }
-
-// AsWell
-// -none-
 
 // AtFaceValue
 #[test]
@@ -498,6 +524,16 @@ fn corrects_fair_bit() {
     );
 }
 
+// FarAndFewBetween
+#[test]
+fn corrects_far_and_few_between() {
+    assert_suggestion_result(
+        "Their neighbors were far and few between, which only made it even more unlikely that surveillance footage recovered from their properties could help.",
+        lint_group(),
+        "Their neighbors were few and far between, which only made it even more unlikely that surveillance footage recovered from their properties could help.",
+    );
+}
+
 // FastPaste
 // -none-
 
@@ -505,9 +541,6 @@ fn corrects_fair_bit() {
 // -none-
 
 // FetalPosition
-// -none-
-
-// ForAllIntentsAndPurposes
 // -none-
 
 // ForALongTime
@@ -658,9 +691,6 @@ fn test_in_a_while() {
         "We’ll talk again in a while.",
     );
 }
-
-// InCase
-// -none-
 
 // InNeedOf
 #[test]
@@ -871,16 +901,6 @@ fn detect_monumentous_real_world() {
     );
 }
 
-// MorePreferable
-#[test]
-fn correct_more_preferable() {
-    assert_suggestion_result(
-        "Is it more preferable to use process.env.variable or env.parsed.variable?",
-        lint_group(),
-        "Is it preferable to use process.env.variable or env.parsed.variable?",
-    );
-}
-
 // MyHouse
 // -none-
 
@@ -938,6 +958,9 @@ fn detect_nerve_racking_no_hyphen() {
 
 // NotTo
 // -none-
+
+// NotUncommon moved to phrase_set_corrections as part of the
+// generalized double negative mapping.
 
 // OfCourse
 // See also: tests in `of_course.rs` for "of curse/corse" → "of course" corrections
@@ -1120,6 +1143,26 @@ fn correct_iirc_correctly() {
 // RoadMap
 // -none-
 
+// RulesOfThumb
+
+#[test]
+fn correct_rules_of_thumbs() {
+    assert_suggestion_result(
+        "Thanks. 0.2 is just from my rule of thumbs.",
+        lint_group(),
+        "Thanks. 0.2 is just from my rules of thumb.",
+    );
+}
+
+#[test]
+fn correct_rules_of_thumbs_hyphenated() {
+    assert_suggestion_result(
+        "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".",
+        lint_group(),
+        "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
+    );
+}
+
 // SameAs
 // -none-
 
@@ -1181,9 +1224,6 @@ fn corrects_some_the() {
 fn spacial_attention() {
     assert_suggestion_result("spacial attention", lint_group(), "special attention");
 }
-
-// SpokeTooSoon
-// -none-
 
 // Starving
 // -none-
@@ -1412,11 +1452,6 @@ fn now_on_hold() {
 #[test]
 fn thanks_lot() {
     assert_suggestion_result("thanks lot", lint_group(), "thanks a lot");
-}
-
-#[test]
-fn thanks_alot() {
-    assert_suggestion_result("thanks alot", lint_group(), "thanks a lot");
 }
 
 #[test]

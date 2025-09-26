@@ -20,24 +20,24 @@ impl<'a> OffsetCursor<'a> {
     }
 
     /// Returns a new [`OffsetCursor`] at the given byte based on the current cursor.
-    pub fn push_to(self, new_byte: usize) -> Self {
+    pub fn push_to(self, new_byte: usize) -> Option<Self> {
         assert!(new_byte >= self.byte);
 
         if new_byte == self.byte {
-            return self;
+            return Some(self);
         }
 
-        Self {
-            char: self.char + self.doc.get(self.byte..new_byte).unwrap().chars().count(),
+        Some(Self {
+            char: self.char + self.doc.get(self.byte..new_byte)?.chars().count(),
             byte: new_byte,
             ..self
-        }
+        })
     }
 
     /// Returns a new [`OffsetCursor`] at the beginning of the given [`typst_syntax::Span`] based
     /// on the current cursor.
-    pub fn push_to_span(self, span: typst_syntax::Span) -> Self {
-        let new_byte = self.doc.range(span).unwrap().start;
+    pub fn push_to_span(self, span: typst_syntax::Span) -> Option<Self> {
+        let new_byte = self.doc.range(span)?.start;
 
         self.push_to(new_byte)
     }
