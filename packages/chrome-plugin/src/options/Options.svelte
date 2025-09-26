@@ -4,6 +4,7 @@ import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
 import { ActivationKey } from '../protocol';
+import type { Modifier, Hotkey } from '../protocol';
 
 let lintConfig: LintConfig = $state({});
 let lintDescriptions: Record<string, string> = $state({});
@@ -13,6 +14,8 @@ let dialect = $state(Dialect.American);
 let defaultEnabled = $state(false);
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
+let modifyHotkeyButton: Button;
+let hotkey : Hotkey = $state({modifiers: ['Ctrl'], key: 'e'});
 
 $effect(() => {
 	ProtocolClient.setLintConfig(lintConfig);
@@ -31,7 +34,6 @@ $effect(() => {
 });
 
 $effect(() => {
-	console.log('hit');
 	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
@@ -54,6 +56,16 @@ ProtocolClient.getDefaultEnabled().then((d) => {
 ProtocolClient.getActivationKey().then((d) => {
 	activationKey = d;
 });
+
+ProtocolClient.getHotkey().then((d) => {
+	// Ensure we have a plain object, not a Proxy
+	hotkey = {
+		modifiers: [...d.modifiers],
+		key: d.key
+	};
+	buttonText = `Hotkey: ${d.modifiers.join('+')}+${d.key}`;
+});
+
 
 ProtocolClient.getUserDictionary().then((d) => {
 	userDict = dictToString(d.toSorted());
@@ -116,6 +128,52 @@ async function exportEnabledDomainsCSV() {
 	}
 }
 
+let buttonText = $state('Set Hotkey');
+let isBlue = $state(false); // modify color of hotkey button once it is pressed
+function startHotkeyCapture(modifyHotkeyButton: Button) {
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    event.preventDefault();
+
+    const modifiers: Modifier[] = [];
+    if (event.ctrlKey) modifiers.push('Ctrl');
+    if (event.shiftKey) modifiers.push('Shift');
+    if (event.altKey) modifiers.push('Alt');
+
+    let key = event.key;
+
+    if (key !== 'Control' && key !== 'Shift' && key !== 'Alt') {
+        if (modifiers.length === 0) {
+          return;
+        }
+        buttonText = `Hotkey: ${modifiers.join('+')}+${key}`;
+        // Create a plain object to avoid proxy cloning issues
+        const newHotkey = {
+          modifiers: [...modifiers],
+          key: key
+        };
+        hotkey = newHotkey;
+        
+        // Call ProtocolClient directly with the plain object to avoid proxy issues
+        ProtocolClient.setHotkey(newHotkey);
+        
+        // Remove listener
+        window.removeEventListener('keydown', handleKeydown);
+
+        // change button color
+        isBlue = !isBlue;
+      }
+
+    }
+
+    // Add temporary key listener
+    window.addEventListener('keydown', handleKeydown);
+
+
+  };
+
+
+
 // Import removed
 </script>
 
@@ -176,6 +234,18 @@ async function exportEnabledDomainsCSV() {
             <option value={ActivationKey.Control}>Double Control</option>
             <option value={ActivationKey.Off}>Off</option>
           </Select>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="font-medium">Apply Last Suggestion Hotkey</span>
+            <span class="font-light">Hotkey to apply the most likely suggestion to previously incorrect lint.</span>
+          </div>
+          <textarea bind:value={buttonText} />
+          <Button size="sm" color="light" style="background-color: {isBlue ? 'blue' : ''}" bind:this={modifyHotkeyButton} on:click={() => {startHotkeyCapture(modifyHotkeyButton); isBlue = !isBlue}}>Modify Hotkey</Button>
+
         </div>
       </div>
 

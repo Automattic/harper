@@ -2,9 +2,11 @@ import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
 import { unpackLint } from 'lint-framework';
 import {
 	ActivationKey,
+	type Hotkey,
 	type AddToUserDictionaryRequest,
 	createUnitResponse,
 	type GetActivationKeyRequest,
+	type GetHotkeyResponse,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
@@ -23,6 +25,7 @@ import {
 	type Request,
 	type Response,
 	type SetActivationKeyRequest,
+	type SetHotkeyRequest,
 	type SetConfigRequest,
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
@@ -139,6 +142,10 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetActivationKey();
 		case 'setActivationKey':
 			return handleSetActivationKey(message);
+		case 'getHotkey':
+			return handleGetHotkey();
+		case 'setHotkey':
+			return handleSetHotkey(message);
 		case 'openOptions':
 			chrome.runtime.openOptionsPage();
 			return createUnitResponse();
@@ -263,6 +270,24 @@ async function handleSetActivationKey(req: SetActivationKeyRequest): Promise<Uni
 	return createUnitResponse();
 }
 
+async function handleGetHotkey(): Promise<GetHotkeyResponse> {
+	const hotkey = await getHotkey();
+
+	return { kind: 'getHotkey', hotkey };
+}
+
+async function handleSetHotkey(req: SetHotkeyRequest): Promise<UnitResponse> {
+	// Create a plain object to avoid proxy cloning issues
+	const hotkey = {
+		modifiers: [...req.hotkey.modifiers],
+		key: req.hotkey.key
+	};
+	await setHotkey(hotkey);
+
+	return createUnitResponse();
+}
+
+
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
 async function setLintConfig(lintConfig: LintConfig): Promise<void> {
 	await linter.setLintConfig(lintConfig);
@@ -305,8 +330,17 @@ async function getActivationKey(): Promise<ActivationKey> {
 	return resp.activationKey;
 }
 
+async function getHotkey(): Promise<Hotkey> {
+	const resp = await chrome.storage.local.get({ hotkey: { modifiers: ['Ctrl'], key: 'e' } });
+	return resp.hotkey;
+}
+
 async function setActivationKey(key: ActivationKey) {
 	await chrome.storage.local.set({ activationKey: key });
+}
+
+async function setHotkey(hotkey: Hotkey) {
+	await chrome.storage.local.set({ hotkey: hotkey });
 }
 
 function initializeLinter(dialect: Dialect) {
