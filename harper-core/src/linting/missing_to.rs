@@ -239,15 +239,14 @@ impl ExprLinter for MissingTo {
         }
 
         let previous_word_info = Self::previous_word_with_span(source, span.start);
-        let previous_word = previous_word_info
-            .as_ref()
-            .map(|(word, _)| word.as_str());
+        let previous_word = previous_word_info.as_ref().map(|(word, _)| word.as_str());
 
         let mut determiner_within_three = false;
         let mut determiner_scan_cursor = span.start;
 
         for _ in 0..3 {
-            let Some((word, start)) = Self::previous_word_with_span(source, determiner_scan_cursor) else {
+            let Some((word, start)) = Self::previous_word_with_span(source, determiner_scan_cursor)
+            else {
                 break;
             };
 
