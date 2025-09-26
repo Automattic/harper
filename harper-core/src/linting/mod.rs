@@ -28,6 +28,7 @@ mod correct_number_suffix;
 mod currency_placement;
 mod dashes;
 mod despite_of;
+mod determiner_without_noun;
 mod discourse_markers;
 mod dot_initialisms;
 mod double_modal;
