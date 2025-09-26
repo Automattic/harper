@@ -20,6 +20,7 @@ use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, Document, Span, TokenKind, TokenStringExt,
     dict_word_metadata_orthography::OrthFlags, remove_overlaps,
 };
+use harper_ink::InkParser;
 use harper_literate_haskell::LiterateHaskellParser;
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
@@ -818,6 +819,7 @@ fn load_file(
         .map(|v| v.to_str().unwrap())
     {
         Some("md") => Box::new(Markdown::default()),
+        Some("ink") => Box::new(InkParser::default()),
 
         Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
             MarkdownOptions::default(),

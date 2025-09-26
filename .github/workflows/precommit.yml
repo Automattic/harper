@@ -20,7 +20,7 @@ jobs:
         uses: pnpm/action-setup@v4
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          components: rustfmt
+          components: rustfmt,clippy
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
