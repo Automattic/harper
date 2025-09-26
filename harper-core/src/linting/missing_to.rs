@@ -127,7 +127,7 @@ impl MissingTo {
         ])
     }
 
-    fn previous_word(source: &[char], start: usize) -> Option<String> {
+    fn previous_word_with_span(source: &[char], start: usize) -> Option<(String, usize)> {
         let mut cursor = start;
 
         while cursor > 0 && source[cursor - 1].is_whitespace() {
@@ -153,12 +153,17 @@ impl MissingTo {
             return None;
         }
 
-        Some(
+        Some((
             source[cursor..end]
                 .iter()
                 .collect::<String>()
                 .to_ascii_lowercase(),
-        )
+            cursor,
+        ))
+    }
+
+    fn previous_word(source: &[char], start: usize) -> Option<String> {
+        Self::previous_word_with_span(source, start).map(|(word, _)| word)
     }
 
     fn previous_non_whitespace_char(source: &[char], start: usize) -> Option<char> {
@@ -170,6 +175,20 @@ impl MissingTo {
             if !ch.is_whitespace() {
                 return Some(ch);
             }
+        }
+
+        None
+    }
+
+    fn next_non_whitespace_char(source: &[char], start: usize) -> Option<char> {
+        let mut cursor = start;
+
+        while cursor < source.len() {
+            let ch = source[cursor];
+            if !ch.is_whitespace() {
+                return Some(ch);
+            }
+            cursor += 1;
         }
 
         None
@@ -219,10 +238,37 @@ impl ExprLinter for MissingTo {
             return None;
         }
 
-        let previous_word = Self::previous_word(source, span.start);
+        let previous_word_info = Self::previous_word_with_span(source, span.start);
+        let previous_word = previous_word_info
+            .as_ref()
+            .map(|(word, _)| word.as_str());
+
+        let mut determiner_within_three = false;
+        let mut determiner_scan_cursor = span.start;
+
+        for _ in 0..3 {
+            let Some((word, start)) = Self::previous_word_with_span(source, determiner_scan_cursor) else {
+                break;
+            };
+
+            if matches!(word.as_str(), "and" | "or" | "but") {
+                determiner_scan_cursor = start;
+                continue;
+            }
+
+            if matches!(
+                word.as_str(),
+                "a" | "an" | "the" | "this" | "that" | "these" | "those"
+            ) {
+                determiner_within_three = true;
+                break;
+            }
+
+            determiner_scan_cursor = start;
+        }
 
         if matches!(
-            previous_word.as_deref(),
+            previous_word,
             Some("a")
                 | Some("an")
                 | Some("the")
@@ -235,23 +281,23 @@ impl ExprLinter for MissingTo {
         }
 
         if matches!(
-            previous_word.as_deref(),
+            previous_word,
             Some("very") | Some("so") | Some("too") | Some("quite") | Some("rather")
         ) {
             return None;
         }
 
-        if previous_word.as_deref() == Some("of")
+        if previous_word == Some("of")
             && (controller_text.ends_with('d') || controller_text.ends_with("en"))
         {
             return None;
         }
 
-        if controller_text.starts_with("hope") && previous_word.as_deref() == Some("of") {
+        if controller_text.starts_with("hope") && previous_word == Some("of") {
             return None;
         }
 
-        if controller_text == "needs" && previous_word.as_deref() == Some("must") {
+        if controller_text == "needs" && previous_word == Some("must") {
             return None;
         }
 
@@ -270,6 +316,7 @@ impl ExprLinter for MissingTo {
             .find(|tok| !tok.kind.is_whitespace())?;
 
         let next_text = next_token.span.get_content_string(source).to_lowercase();
+        let next_non_whitespace_char = Self::next_non_whitespace_char(source, next_token.span.end);
 
         if controller_text.starts_with("try") && next_text == "and" {
             return None;
@@ -279,6 +326,13 @@ impl ExprLinter for MissingTo {
         let next_is_noun = next_token.kind.is_upos(UPOS::NOUN)
             || next_token.kind.is_upos(UPOS::PROPN)
             || next_token.kind.is_upos(UPOS::ADJ);
+
+        if next_token.kind.is_np_member()
+            && !next_is_verb
+            && (previous_word == Some("to") || determiner_within_three)
+        {
+            return None;
+        }
 
         if !next_is_verb
             && (next_token.kind.is_upos(UPOS::ADV)
@@ -325,6 +379,29 @@ impl ExprLinter for MissingTo {
             controller_text.as_str(),
             "need" | "needed" | "needing" | "needs"
         ) && next_text == "help"
+        {
+            return None;
+        }
+
+        if matches!(
+            controller_text.as_str(),
+            "hope" | "hoped" | "hopes" | "hoping"
+        ) && next_token.kind.is_upos(UPOS::AUX)
+        {
+            return None;
+        }
+
+        if matches!(controller_text.as_str(), "mean" | "means" | "meant")
+            && next_is_noun
+            && !next_is_verb
+        {
+            return None;
+        }
+
+        if matches!(
+            controller_text.as_str(),
+            "need" | "needed" | "needing" | "needs"
+        ) && matches!(next_non_whitespace_char, Some('-'))
         {
             return None;
         }
@@ -458,6 +535,33 @@ mod tests {
     }
 
     #[test]
+    fn no_lint_needs_follow_up_appointments() {
+        assert_lint_count(
+            "Gus is recovering well, though he needs follow-up appointments.",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_delays_meant_decisions() {
+        assert_lint_count(
+            "The delays meant decisions were often made on outdated information, hindering agility and potentially impacting return on investment.",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_bouquet_of_roses() {
+        assert_lint_count(
+            "I made a note to request a small bouquet of roses for his room, a simple gesture that I hoped would bring a moment of solace.",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
     fn no_lint_for_intended_word_phrase() {
         assert_lint_count(
             "Detects incorrect usage of `peak` when the intended word is `pique`.",
@@ -488,6 +592,24 @@ mod tests {
     fn no_lint_learn_tag_probabilities() {
         assert_lint_count(
             "These models learn tag probabilities from annotated corpora.",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_standard_feature_nominal_phrase() {
+        assert_lint_count(
+            "This is a standard and expected feature for any e-commerce site selling visually-driven products.",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_mixing_bowl_nominal_phrase() {
+        assert_lint_count(
+            "This is a 2-quart mixing bowl, ideal for everything from whipping cream to preparing cake batter.",
             MissingTo::default(),
             0,
         );
