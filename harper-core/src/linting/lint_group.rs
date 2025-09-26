@@ -33,6 +33,7 @@ use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
+use super::criteria_phenomena::CriteriaPhenomena;
 use super::despite_of::DespiteOf;
 use super::discourse_markers::DiscourseMarkers;
 use super::dot_initialisms::DotInitialisms;
@@ -481,6 +482,7 @@ impl LintGroup {
         insert_expr_rule!(Months, true);
         insert_expr_rule!(MostNumber, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
+        insert_expr_rule!(CriteriaPhenomena, true);
         insert_struct_rule!(NailOnTheHead, true);
         insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoMatchFor, true);
