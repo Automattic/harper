@@ -1,36 +1,36 @@
-use crate::{
-    Token, TokenStringExt,
-    patterns::{EitherPattern, Pattern, SequencePattern},
-};
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
+use crate::{Token, TokenStringExt};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 const EN_DASH: char = '–';
 const EM_DASH: char = '—';
 
 pub struct Dashes {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for Dashes {
     fn default() -> Self {
-        let en_dash = SequencePattern::default().then_hyphen().then_hyphen();
-        let em_dash_or_longer = SequencePattern::default()
+        let en_dash = SequenceExpr::default().then_hyphen().then_hyphen();
+        let em_dash_or_longer = SequenceExpr::default()
             .then_hyphen()
             .then_hyphen()
             .then_one_or_more_hyphens();
 
-        let pattern = EitherPattern::new(vec![Box::new(em_dash_or_longer), Box::new(en_dash)]);
+        let pattern = LongestMatchOf::new(vec![Box::new(em_dash_or_longer), Box::new(en_dash)]);
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for Dashes {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for Dashes {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
@@ -42,14 +42,14 @@ impl PatternLinter for Dashes {
                 span,
                 lint_kind,
                 suggestions: vec![Suggestion::ReplaceWith(vec![EN_DASH])],
-                message: "A sequence of hyphens is not an en dash.".to_owned(),
+                message: "Replace these two hyphens with an en dash (–).".to_owned(),
                 priority: 63,
             }),
             3 => Some(Lint {
                 span,
                 lint_kind,
                 suggestions: vec![Suggestion::ReplaceWith(vec![EM_DASH])],
-                message: "A sequence of hyphens is not an em dash.".to_owned(),
+                message: "Replace these three hyphens with an em dash (—).".to_owned(),
                 priority: 63,
             }),
             4.. => None, // Ignore longer hyphen sequences.
@@ -58,7 +58,7 @@ impl PatternLinter for Dashes {
     }
 
     fn description(&self) -> &'static str {
-        "Rather than outright using an em dash or en dash, authors often use a sequence of hyphens, expecting them to be condensed. Use two hyphens to denote an en dash and three to denote an em dash."
+        "Writers often type `--` or `---` expecting their editor to convert them into proper dashes. Replace these sequences with the correct characters: use an en dash (–) for ranges or connections and an em dash (—) for a break in thought."
     }
 }
 

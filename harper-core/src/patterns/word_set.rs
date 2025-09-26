@@ -1,9 +1,9 @@
-use super::Pattern;
+use super::SingleTokenPattern;
 use smallvec::SmallVec;
 
 use crate::{CharString, Token};
 
-/// A [`Pattern`] that matches against any of a set of provided words.
+/// A [`super::Pattern`] that matches against any of a set of provided words.
 /// For small sets of short words, it doesn't allocate.
 ///
 /// Note that any capitalization of the contained words will result in a match.
@@ -18,6 +18,12 @@ impl WordSet {
 
         if !self.words.contains(&chars) {
             self.words.push(chars);
+        }
+    }
+
+    pub fn add_chars(&mut self, chars: &[char]) {
+        if !self.words.iter().any(|i| i.as_ref() == chars) {
+            self.words.push(chars.into());
         }
     }
 
@@ -37,31 +43,40 @@ impl WordSet {
     }
 }
 
-impl Pattern for WordSet {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        let tok = tokens.first()?;
-        if !tok.kind.is_word() {
-            return None;
+impl SingleTokenPattern for WordSet {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        if !token.kind.is_word() {
+            return false;
         }
 
-        let tok_chars = tok.span.get_content(source);
+        let tok_chars = token.span.get_content(source);
 
         for word in &self.words {
             if tok_chars.len() != word.len() {
                 continue;
             }
 
+            fn canonical(c: &char) -> char {
+                match c {
+                    '\u{2018}' | '\u{2019}' | '\u{02BC}' | '\u{FF07}' => '\'',
+                    '\u{201C}' | '\u{201D}' | '\u{FF02}' => '"',
+                    '\u{2013}' | '\u{2014}' | '\u{2212}' | '\u{FF0D}' => '-',
+                    _ => *c,
+                }
+            }
+
             let partial_match = tok_chars
                 .iter()
-                .zip(word)
-                .all(|(a, b)| a.eq_ignore_ascii_case(b));
+                .map(canonical)
+                .zip(word.iter().map(canonical))
+                .all(|(a, b)| a.eq_ignore_ascii_case(&b));
 
             if partial_match {
-                return Some(1);
+                return true;
             }
         }
 
-        None
+        false
     }
 }
 
@@ -91,5 +106,16 @@ mod tests {
         let matches = set.find_all_matches_in_doc(&doc);
 
         assert_eq!(matches, vec![Span::new(6, 7), Span::new(12, 13)]);
+    }
+
+    #[test]
+    fn supports_typographic_apostrophes() {
+        let set = WordSet::new(&["They're"]);
+
+        let doc = Document::new_markdown_default_curated("They’re");
+
+        let matches = set.find_all_matches_in_doc(&doc);
+
+        assert_eq!(matches, vec![Span::new(0, 1)]);
     }
 }

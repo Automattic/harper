@@ -1,13 +1,26 @@
 import '@webcomponents/custom-elements';
 import $ from 'jquery';
-import LintFramework from '../LintFramework';
-import { leafNodes } from '../domUtils';
+import { isVisible, LintFramework, leafNodes } from 'lint-framework';
+import ProtocolClient from '../ProtocolClient';
 
-const fw = new LintFramework();
+const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain), {
+	ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
+	getActivationKey: () => ProtocolClient.getActivationKey(),
+	openOptions: () => ProtocolClient.openOptions(),
+	addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
+});
+
+const keepAliveCallback = () => {
+	ProtocolClient.lint('', 'example.com');
+
+	setTimeout(keepAliveCallback, 400);
+};
+
+keepAliveCallback();
 
 function scan() {
 	$('textarea:visible').each(function () {
-		if (this.getAttribute('data-enable-grammarly') == 'false') {
+		if (this.getAttribute('data-enable-grammarly') == 'false' || this.disabled || this.readOnly) {
 			return;
 		}
 
@@ -15,6 +28,10 @@ function scan() {
 	});
 
 	$('input[type="text"][spellcheck="true"]').each(function () {
+		if (this.disabled || this.readOnly) {
+			return;
+		}
+
 		fw.addTarget(this as HTMLInputElement);
 	});
 
@@ -22,7 +39,15 @@ function scan() {
 		const leafs = leafNodes(this);
 
 		for (const leaf of leafs) {
-			fw.addTarget(leaf as HTMLElement);
+			if (leaf.parentElement?.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
+				continue;
+			}
+
+			if (!isVisible(leaf)) {
+				continue;
+			}
+
+			fw.addTarget(leaf);
 		}
 	});
 }

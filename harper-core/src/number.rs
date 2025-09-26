@@ -4,11 +4,16 @@ use is_macro::Is;
 use ordered_float::OrderedFloat;
 use serde::{Deserialize, Serialize};
 
+/// Represents a written number.
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, Default, PartialEq, Eq, Hash, PartialOrd)]
 pub struct Number {
+    /// The actual value of the number
     pub value: OrderedFloat<f64>,
+    /// Whether it contains a suffix (like the 1__st__ element).
     pub suffix: Option<OrdinalSuffix>,
+    /// What base it is in (hex v.s. decimal, for example).
     pub radix: u32,
+    /// The level of precision the number is formatted with.
     pub precision: usize,
 }
 
@@ -22,7 +27,7 @@ impl Display for Number {
 
         if let Some(suffix) = self.suffix {
             for c in suffix.to_chars() {
-                write!(f, "{}", c)?;
+                write!(f, "{c}")?;
             }
         }
 

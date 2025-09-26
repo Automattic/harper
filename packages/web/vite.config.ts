@@ -68,6 +68,10 @@ export default defineConfig({
 									to: '/docs/integrations/chrome-extension',
 								},
 								{
+									title: 'Firefox Extension',
+									to: '/docs/integrations/firefox-extension',
+								},
+								{
 									title: 'WordPress',
 									to: '/docs/integrations/wordpress',
 								},
@@ -94,6 +98,10 @@ export default defineConfig({
 								{
 									title: 'Zed',
 									to: '/docs/integrations/zed',
+								},
+								{
+									title: 'Sublime Text',
+									to: '/docs/integrations/sublime-text',
 								},
 							],
 						},
@@ -154,6 +162,10 @@ export default defineConfig({
 									to: '/docs/contributors/dictionary',
 								},
 								{
+									title: 'Test Suite',
+									to: '/docs/contributors/tests',
+								},
+								{
 									title: 'Author a Rule',
 									to: '/docs/contributors/author-a-rule',
 								},
@@ -182,10 +194,18 @@ export default defineConfig({
 									to: '/docs/contributors/local-stats',
 								},
 								{
+									title: 'Brill Tagging',
+									to: '/docs/contributors/brill',
+								},
+								{
 									title: 'FAQ',
 									to: '/docs/contributors/faq',
 								},
 							],
+						},
+						{
+							title: 'Rust Reference',
+							to: 'https://docs.rs/harper-core/latest/harper_core/',
 						},
 						{
 							title: 'Rules',

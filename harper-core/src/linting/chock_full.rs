@@ -1,33 +1,30 @@
-use crate::{
-    Token, TokenStringExt,
-    patterns::{EitherPattern, Pattern, SequencePattern, WhitespacePattern, WordSet},
-};
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::expr::SpaceOrHyphen;
+use crate::{Token, TokenStringExt, patterns::WordSet};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct ChockFull {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ChockFull {
     fn default() -> Self {
         Self {
-            pattern: Box::new(
-                SequencePattern::default()
+            expr: Box::new(
+                SequenceExpr::default()
                     .then(WordSet::new(&["chalk", "choke"]))
-                    .then(EitherPattern::new(vec![
-                        Box::new(WhitespacePattern),
-                        Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
-                    ]))
+                    .then(SpaceOrHyphen)
                     .then_exact_word("full"),
             ),
         }
     }
 }
 
-impl PatternLinter for ChockFull {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ChockFull {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_toks: &[Token], source: &[char]) -> Option<Lint> {

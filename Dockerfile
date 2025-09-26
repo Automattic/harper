@@ -6,12 +6,12 @@ RUN rustup toolchain install
 RUN mkdir -p /usr/build/
 WORKDIR /usr/build/
 
-RUN curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+RUN cargo install wasm-pack
 
 COPY . .
 
 WORKDIR /usr/build/harper-wasm
-RUN wasm-pack build --release --target web
+RUN RUSTFLAGS='--cfg getrandom_backend="wasm_js"' wasm-pack build --target web
 
 FROM node:${NODE_VERSION} AS node-build
 
@@ -30,8 +30,10 @@ WORKDIR /usr/build/packages/harper.js
 
 RUN pnpm build && ./docs.sh
 
-WORKDIR /usr/build/packages/web
+WORKDIR /usr/build/packages/lint-framework
+RUN pnpm build
 
+WORKDIR /usr/build/packages/web
 RUN pnpm build
 
 FROM node:${NODE_VERSION}

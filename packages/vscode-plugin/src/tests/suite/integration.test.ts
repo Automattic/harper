@@ -8,14 +8,11 @@ import {
 	compareActualVsExpectedDiagnostics,
 	createExpectedDiagnostics,
 	createRange,
-	getActualDiagnostics,
-	openFile,
+	getUri,
 	openUntitled,
+	openUri,
 	setTextDocumentLanguage,
-	waitForHarperToActivate,
-	waitForUpdatesFromConfigChange,
-	waitForUpdatesFromDeletedFile,
-	waitForUpdatesFromOpenedFile,
+	waitForDiagnosticsChange,
 } from './helper';
 
 describe('Integration >', () => {
@@ -25,28 +22,28 @@ describe('Integration >', () => {
 	beforeAll(async () => {
 		await closeAll();
 		harper = await activateHarper();
-		markdownUri = await openFile('integration.md');
-		await waitForHarperToActivate();
+		markdownUri = getUri('integration.md');
+		await openUri(markdownUri);
 	});
 
 	it('runs', () => {
 		expect(harper.isActive).toBe(true);
 	});
 
-	it('gives correct diagnostics for files', () => {
+	it('gives correct diagnostics for files', async () => {
 		compareActualVsExpectedDiagnostics(
-			getActualDiagnostics(markdownUri),
+			await waitForDiagnosticsChange(markdownUri),
 			createExpectedDiagnostics(
+				{
+					message: 'Did you mean to spell `errorz` this way?',
+					range: createRange(2, 26, 2, 32),
+				},
 				{
 					message: 'Did you mean to repeat this word?',
 					range: createRange(2, 39, 2, 48),
 				},
 				{
-					message: 'Did you mean to spell “errorz” this way?',
-					range: createRange(2, 26, 2, 32),
-				},
-				{
-					message: 'Did you mean to spell “realise” this way?',
+					message: 'Did you mean to spell `realise` this way?',
 					range: createRange(4, 26, 4, 33),
 				},
 			),
@@ -55,12 +52,11 @@ describe('Integration >', () => {
 
 	it('gives correct diagnostics for untitled', async () => {
 		const untitledUri = await openUntitled('Errorz');
-		await waitForHarperToActivate(); // requires a longer time
 
 		compareActualVsExpectedDiagnostics(
-			getActualDiagnostics(untitledUri),
+			await waitForDiagnosticsChange(untitledUri),
 			createExpectedDiagnostics({
-				message: 'Did you mean to spell “Errorz” this way?',
+				message: 'Did you mean to spell `Errorz` this way?',
 				range: createRange(0, 0, 0, 6),
 			}),
 		);
@@ -68,32 +64,31 @@ describe('Integration >', () => {
 
 	it('gives correct diagnostics when language is changed', async () => {
 		const untitledUri = await openUntitled('Errorz # Errorz');
-		await setTextDocumentLanguage(untitledUri, 'plaintext');
-		await waitForHarperToActivate(); // requires a longer time
 
 		compareActualVsExpectedDiagnostics(
-			getActualDiagnostics(untitledUri),
+			await waitForDiagnosticsChange(
+				untitledUri,
+				async () => await setTextDocumentLanguage(untitledUri, 'plaintext'),
+			),
 			createExpectedDiagnostics(
 				{
-					message: 'Did you mean to spell “Errorz” this way?',
+					message: 'Did you mean to spell `Errorz` this way?',
 					range: createRange(0, 0, 0, 6),
 				},
 				{
-					message: 'Did you mean to spell “Errorz” this way?',
+					message: 'Did you mean to spell `Errorz` this way?',
 					range: createRange(0, 9, 0, 15),
 				},
 			),
 		);
 
-		await setTextDocumentLanguage(untitledUri, 'shellscript');
-
-		// Wait for `harper-ls` to send diagnostics
-		await waitForUpdatesFromConfigChange();
-
 		compareActualVsExpectedDiagnostics(
-			getActualDiagnostics(untitledUri),
+			await waitForDiagnosticsChange(
+				untitledUri,
+				async () => await setTextDocumentLanguage(untitledUri, 'shellscript'),
+			),
 			createExpectedDiagnostics({
-				message: 'Did you mean to spell “Errorz” this way?',
+				message: 'Did you mean to spell `Errorz` this way?',
 				range: createRange(0, 9, 0, 15),
 			}),
 		);
@@ -101,48 +96,82 @@ describe('Integration >', () => {
 
 	it('updates diagnostics on configuration change', async () => {
 		const config = workspace.getConfiguration('harper.linters');
-		await config.update('RepeatedWords', false, ConfigurationTarget.Workspace);
-		await waitForUpdatesFromConfigChange();
 
 		compareActualVsExpectedDiagnostics(
-			getActualDiagnostics(markdownUri),
+			await waitForDiagnosticsChange(
+				markdownUri,
+				async () => await config.update('RepeatedWords', false, ConfigurationTarget.Workspace),
+			),
 			createExpectedDiagnostics(
 				{
-					message: 'Did you mean to spell “errorz” this way?',
+					message: 'Did you mean to spell `errorz` this way?',
 					range: createRange(2, 26, 2, 32),
 				},
 				{
-					message: 'Did you mean to spell “realise” this way?',
+					message: 'Did you mean to spell `realise` this way?',
 					range: createRange(4, 26, 4, 33),
 				},
 			),
 		);
 
 		// Set config back to default value
-		await config.update('RepeatedWords', true, ConfigurationTarget.Workspace);
+		await waitForDiagnosticsChange(
+			markdownUri,
+			async () => await config.update('RepeatedWords', true, ConfigurationTarget.Workspace),
+		);
 	});
 
 	it('accepts British spellings when dialect is set to British', async () => {
 		const config = workspace.getConfiguration('harper');
-		await config.update('dialect', 'British', ConfigurationTarget.Workspace);
-		await waitForUpdatesFromConfigChange();
 
 		compareActualVsExpectedDiagnostics(
-			getActualDiagnostics(markdownUri),
+			await waitForDiagnosticsChange(
+				markdownUri,
+				async () => await config.update('dialect', 'British', ConfigurationTarget.Workspace),
+			),
 			createExpectedDiagnostics(
+				{
+					message: 'Did you mean to spell `errorz` this way?',
+					range: createRange(2, 26, 2, 32),
+				},
 				{
 					message: 'Did you mean to repeat this word?',
 					range: createRange(2, 39, 2, 48),
-				},
-				{
-					message: 'Did you mean to spell “errorz” this way?',
-					range: createRange(2, 26, 2, 32),
 				},
 			),
 		);
 
 		// Set config back to default value
-		await config.update('dialect', 'American', ConfigurationTarget.Workspace);
+		await waitForDiagnosticsChange(
+			markdownUri,
+			async () => await config.update('dialect', 'American', ConfigurationTarget.Workspace),
+		);
+	});
+
+	it('excludes Markdown files when excludePatterns include *.md', async () => {
+		const config = workspace.getConfiguration('harper');
+
+		compareActualVsExpectedDiagnostics(
+			await waitForDiagnosticsChange(markdownUri, async () => {
+				await config.update('excludePatterns', ['*.md'], ConfigurationTarget.Workspace);
+			}),
+			createExpectedDiagnostics(),
+		);
+
+		await waitForDiagnosticsChange(markdownUri, async () => {
+			// Set config back to default value
+			await config.update('excludePatterns', [], ConfigurationTarget.Workspace);
+
+			// Ideally, we can just execute `workbench.action.closeActiveEditor` then
+			// `workbench.action.reopenClosedEditor` here and the diagnostics should reset since that
+			// works when done manually as that triggers `textDocument/didOpen`, but when done automated,
+			// it won't work. So, we delete, restore, then reopen the file instead.
+			const markdownContent = await workspace.fs.readFile(markdownUri);
+			await commands.executeCommand('workbench.files.action.showActiveFileInExplorer');
+			await commands.executeCommand('deleteFile');
+			await workspace.fs.writeFile(markdownUri, markdownContent);
+			await openUri(markdownUri);
+		});
 	});
 
 	it('updates diagnostics when files are deleted', async () => {
@@ -150,30 +179,29 @@ describe('Integration >', () => {
 
 		// Delete file through VS Code
 		await commands.executeCommand('workbench.files.action.showActiveFileInExplorer');
-		await commands.executeCommand('deleteFile');
-		await waitForUpdatesFromDeletedFile();
 
 		compareActualVsExpectedDiagnostics(
-			getActualDiagnostics(markdownUri),
+			await waitForDiagnosticsChange(
+				markdownUri,
+				async () => await commands.executeCommand('deleteFile'),
+			),
 			createExpectedDiagnostics(),
 		);
 
 		// Restore and reopen deleted file
 		await workspace.fs.writeFile(markdownUri, markdownContent);
-		await openFile('integration.md');
-		await waitForUpdatesFromOpenedFile();
+		await waitForDiagnosticsChange(markdownUri, async () => await openUri(markdownUri));
 
 		// Delete file directly
-		await workspace.fs.delete(markdownUri);
-		await waitForUpdatesFromDeletedFile();
-
 		compareActualVsExpectedDiagnostics(
-			getActualDiagnostics(markdownUri),
+			await waitForDiagnosticsChange(
+				markdownUri,
+				async () => await workspace.fs.delete(markdownUri),
+			),
 			createExpectedDiagnostics(),
 		);
 
 		// Restore and reopen deleted file
 		await workspace.fs.writeFile(markdownUri, markdownContent);
-		await openFile('integration.md');
 	});
 });

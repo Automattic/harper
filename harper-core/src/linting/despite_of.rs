@@ -1,29 +1,28 @@
-use crate::{
-    Token, TokenStringExt,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::{Token, TokenStringExt};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct DespiteOf {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for DespiteOf {
     fn default() -> Self {
-        let pattern = SequencePattern::aco("despite")
+        let pattern = SequenceExpr::aco("despite")
             .then_whitespace()
             .then_exact_word("of");
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for DespiteOf {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for DespiteOf {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched: &[Token], source: &[char]) -> Option<Lint> {

@@ -11,7 +11,7 @@ macro_rules! create_decl_for {
 
             fn [< last_ $thing _index >](&self) -> Option<usize>;
 
-            fn [<iter_ $thing _indices>](&self) -> impl Iterator<Item = usize> + '_;
+            fn [<iter_ $thing _indices>](&self) -> impl DoubleEndedIterator<Item = usize> + '_;
 
             fn [<iter_ $thing s>](&self) -> impl Iterator<Item = &Token> + '_;
         }
@@ -33,7 +33,7 @@ macro_rules! create_fns_for {
                 self.iter().rev().position(|v| v.kind.[<is_ $thing>]()).map(|i| self.len() - i - 1)
             }
 
-            fn [<iter_ $thing _indices>](&self) -> impl Iterator<Item = usize> + '_ {
+            fn [<iter_ $thing _indices>](&self) -> impl DoubleEndedIterator<Item = usize> + '_ {
                 self.iter()
                     .enumerate()
                     .filter(|(_, t)| t.kind.[<is_ $thing>]())
@@ -53,7 +53,7 @@ pub trait TokenStringExt {
     fn first_non_whitespace(&self) -> Option<&Token>;
     /// Grab the span that represents the beginning of the first element and the
     /// end of the last element.
-    fn span(&self) -> Option<Span>;
+    fn span(&self) -> Option<Span<char>>;
 
     create_decl_for!(adjective);
     create_decl_for!(apostrophe);
@@ -99,6 +99,10 @@ pub trait TokenStringExt {
     /// Get an iterator over token slices that represent the individual
     /// sentences in a document.
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
+
+    /// Get an iterator over mutable token slices that represent the individual
+    /// sentences in a document.
+    fn iter_sentences_mut(&mut self) -> impl Iterator<Item = &'_ mut [Token]> + '_;
 }
 
 impl TokenStringExt for [Token] {
@@ -140,7 +144,7 @@ impl TokenStringExt for [Token] {
         if w_idx < u_idx { Some(word) } else { None }
     }
 
-    fn span(&self) -> Option<Span> {
+    fn span(&self) -> Option<Span<char>> {
         let min_max = self
             .iter()
             .flat_map(|v| [v.span.start, v.span.end].into_iter())
@@ -238,5 +242,33 @@ impl TokenStringExt for [Token] {
         };
 
         first_sentence.into_iter().chain(rest).chain(last_sentence)
+    }
+
+    fn iter_sentences_mut(&mut self) -> impl Iterator<Item = &mut [Token]> + '_ {
+        struct SentIter<'a> {
+            rem: &'a mut [Token],
+        }
+
+        impl<'a> Iterator for SentIter<'a> {
+            type Item = &'a mut [Token];
+
+            fn next(&mut self) -> Option<Self::Item> {
+                if self.rem.is_empty() {
+                    return None;
+                }
+                let split = self
+                    .rem
+                    .iter()
+                    .position(|t| t.kind.is_sentence_terminator())
+                    .map(|i| i + 1)
+                    .unwrap_or(self.rem.len());
+                let tmp = core::mem::take(&mut self.rem);
+                let (sent, rest) = tmp.split_at_mut(split);
+                self.rem = rest;
+                Some(sent)
+            }
+        }
+
+        SentIter { rem: self }
     }
 }

@@ -1,11 +1,11 @@
-use anyhow::anyhow;
+use harper_core::dict_word_metadata::DialectFlags;
 use itertools::Itertools;
-use std::path::{Component, Path, PathBuf};
+use std::path::Path;
 
-use harper_core::{Dictionary, MutableDictionary, WordMetadata};
+use harper_core::spell::{Dictionary, MutableDictionary};
+use harper_core::{Dialect, DictWordMetadata};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
-use tower_lsp::lsp_types::Url;
 
 /// Save the contents of a dictionary to a file.
 /// Ensures that the path to the destination exists.
@@ -39,53 +39,42 @@ async fn write_word_list(dict: impl Dictionary, mut w: impl AsyncWrite + Unpin) 
 }
 
 /// Load a dictionary from a file on disk.
-pub async fn load_dict(path: impl AsRef<Path>) -> Result<MutableDictionary> {
+pub async fn load_dict(path: impl AsRef<Path>, dialect: Dialect) -> Result<MutableDictionary> {
     let file = File::open(path.as_ref()).await?;
     let read = BufReader::new(file);
 
-    dict_from_word_list(read).await
+    dict_from_word_list(read, dialect).await
 }
 
 /// Load a dictionary from a list of words.
 /// It could definitely be optimized to use less memory.
 /// Right now it isn't an issue.
-async fn dict_from_word_list(mut r: impl AsyncRead + Unpin) -> Result<MutableDictionary> {
+async fn dict_from_word_list(
+    mut r: impl AsyncRead + Unpin,
+    dialect: Dialect,
+) -> Result<MutableDictionary> {
     let mut str = String::new();
 
     r.read_to_string(&mut str).await?;
 
     let mut dict = MutableDictionary::new();
-    dict.extend_words(
-        str.lines()
-            .map(|l| (l.chars().collect::<Vec<char>>(), WordMetadata::default())),
-    );
+    dict.extend_words(str.lines().map(|l| {
+        (
+            l.chars().collect::<Vec<char>>(),
+            DictWordMetadata {
+                dialects: DialectFlags::from_dialect(dialect),
+                ..Default::default()
+            },
+        )
+    }));
 
     Ok(dict)
-}
-
-/// Rewrites a path to a filename using the same conventions as
-/// [Neovim's undo-files](https://neovim.io/doc/user/options.html#'undodir').
-pub fn file_dict_name(url: &Url) -> anyhow::Result<PathBuf> {
-    let mut rewritten = String::new();
-
-    // We assume all URLs are local files and have a base.
-    for seg in url
-        .to_file_path()
-        .map_err(|_| anyhow!("Unable to convert URL to file path."))?
-        .components()
-    {
-        if !matches!(seg, Component::RootDir) {
-            rewritten.push_str(&seg.as_os_str().to_string_lossy());
-            rewritten.push('%');
-        }
-    }
-
-    Ok(rewritten.into())
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use harper_core::spell::MutableDictionary;
     use std::io::Cursor;
 
     const TEST_UNSORTED_WORDS: [&str; 10] = [
@@ -117,7 +106,8 @@ mod tests {
     fn get_test_unsorted_dict() -> MutableDictionary {
         let mut test_unsorted_dict = MutableDictionary::new();
         test_unsorted_dict.extend_words(
-            TEST_UNSORTED_WORDS.map(|w| (w.chars().collect::<Vec<_>>(), WordMetadata::default())),
+            TEST_UNSORTED_WORDS
+                .map(|w| (w.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
         );
         test_unsorted_dict
     }

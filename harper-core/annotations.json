@@ -1,0 +1,947 @@
+{
+	"affixes": {
+		"K": {
+			"#": "'pro-' prefix",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "pro",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"L": {
+			"#": "'-ment' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ment",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"E": {
+			"#": "'dis-' prefix",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "dis",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Y": {
+			"#": "'-ly' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ly",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adverb": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"adjective": {}
+			}
+		},
+		"U": {
+			"#": "'un-' prefix",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "un",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {}
+		},
+		"H": {
+			"#": "'-ieth' suffix",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "y",
+					"add": "ieth",
+					"condition": "y"
+				},
+				{
+					"remove": "",
+					"add": "th",
+					"condition": "[^y]"
+				}
+			],
+			"target": [],
+			"base_metadata": {}
+		},
+		"^": {
+			"#": "'-(i)est' superlative suffix",
+			"//": "mnemonic: the topmost is the best. see also 'u' which marks a superlative form",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "e"
+				},
+				{
+					"remove": "y",
+					"add": "iest",
+					"condition": "[^aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[^ey]"
+				}
+			],
+			"target": [
+				{
+					"if_base": {
+						"adjective": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Superlative"
+						}
+					}
+				}
+			],
+			"base_metadata": {}
+		},
+		">": {
+			"#": "'-(i)er' comparative suffix; agent suffix. see also 'c' which marks a comparative form",
+			"//": "mnemonic: greater than is better",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "r",
+					"condition": "e"
+				},
+				{
+					"remove": "y",
+					"add": "ier",
+					"condition": "[^aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "[aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "[^ey]"
+				}
+			],
+			"target": [
+				{
+					"if_base": {
+						"adjective": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Comparative"
+						}
+					}
+				},
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"noun": {
+							"//": "TODO: agent noun: run -> runner"
+						}
+					}
+				}
+			],
+			"base_metadata": {}
+		},
+		"e": {
+			"#": "'de-' prefix",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "de",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {}
+		},
+		"v": {
+			"#": "'-ive' suffix",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "e",
+					"add": "ive",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "ive",
+					"condition": "[^e]"
+				}
+			],
+			"target": [],
+			"base_metadata": {}
+		},
+		"n": {
+			"#": "nominalization suffixes: -ion, -ication, -en",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "e",
+					"add": "ion",
+					"condition": "e"
+				},
+				{
+					"remove": "y",
+					"add": "ication",
+					"condition": "y"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^ey]"
+				}
+			],
+			"target": [],
+			"base_metadata": {}
+		},
+		"r": {
+			"#": "'re-' prefix",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "re",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {}
+		},
+		"Z": {
+			"#": "'-(i)(e)rs' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "rs",
+					"condition": "e"
+				},
+				{
+					"remove": "y",
+					"add": "iers",
+					"condition": "[^aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "ers",
+					"condition": "[aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "ers",
+					"condition": "[^ey]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"p": {
+			"#": "'-(i)ness' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "y",
+					"add": "iness",
+					"condition": "[^aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "ness",
+					"condition": "[aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "ness",
+					"condition": "[^y]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"g": {
+			"#": "-'s possessive suffix; contraction of 'has' and 'is",
+			"//": "mnemonic: 'genitive' is a similar concept to 'possessive'",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "'s",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"is_possessive": true
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			}
+		},
+		"W": {
+			"#": "'con-' prefix",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "con",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"B": {
+			"#": "'-able' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "able",
+					"condition": "[^aeiou]"
+				},
+				{
+					"remove": "",
+					"add": "able",
+					"condition": "ee"
+				},
+				{
+					"remove": "e",
+					"add": "able",
+					"condition": "[^aeiou]e"
+				}
+			],
+			"target": [
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Positive"
+						}
+					}
+				}
+			],
+			"base_metadata": {}
+		},
+		"S": {
+			"#": "'-(i)(e)s' plural suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "y",
+					"add": "ies",
+					"condition": "[^aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "s",
+					"condition": "[aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "[sxzh]"
+				},
+				{
+					"remove": "",
+					"add": "s",
+					"condition": "[^sxzhy]"
+				}
+			],
+			"target": [
+				{
+					"if_base": {
+						"noun": {}
+					},
+					"metadata": {
+						"noun": {
+							"is_plural": true
+						}
+					}
+				},
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"verb": {
+							"verb_form": "THIRD_PERSON_SINGULAR"
+						}
+					}
+				}
+			],
+			"base_metadata": {}
+		},
+		"d": {
+			"#": "'-(e)d' suffix; verb past",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "d",
+					"condition": "e"
+				},
+				{
+					"remove": "y",
+					"add": "ied",
+					"condition": "[^aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "ed",
+					"condition": "[^ey]"
+				},
+				{
+					"remove": "",
+					"add": "ed",
+					"condition": "[aeiou]y"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {
+							"degree": "Positive"
+						}
+					}
+				},
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"verb": {
+							"verb_form": "PAST"
+						}
+					}
+				}
+			],
+			"base_metadata": {}
+		},
+		"G": {
+			"#": "'-ing' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "e",
+					"add": "ing",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "ing",
+					"condition": "[^e]"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"verb": {
+							"verb_form": "PROGRESSIVE"
+						},
+						"noun": {
+							"is_mass": true
+						},
+						"adjective": {}
+					}
+				}
+			],
+			"base_metadata": {}
+		},
+		"Q": {
+			"#": "'-ally' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ally",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adverb": {}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"f": {
+			"#": "'-ful' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ful",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {}
+		},
+		"i": {
+			"#": "'in-' prefix",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {}
+		},
+		"X": {
+			"#": "'-ions', '-ications', '-ens' suffixes",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "e",
+					"add": "ions",
+					"condition": "e"
+				},
+				{
+					"remove": "y",
+					"add": "ications",
+					"condition": "y"
+				},
+				{
+					"remove": "",
+					"add": "ens",
+					"condition": "[^ey]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"z": {
+			"#": "'-ings' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "e",
+					"add": "ings",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "ings",
+					"condition": "[^e]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		}
+	},
+	"properties": {
+		"N": {
+			"#": "noun property",
+			"metadata": {
+				"noun": {}
+			}
+		},
+		"O": {
+			"#": "proper noun property",
+			"metadata": {
+				"noun": {
+					"is_proper": true
+				}
+			}
+		},
+		"l": {
+			"#": "linking verb property",
+			"//": "see also A: auxiliary verb property",
+			"metadata": {
+				"verb": {
+					"is_linking": true
+				}
+			}
+		},
+		"V": {
+			"#": "verb property",
+			"metadata": {
+				"verb": {}
+			}
+		},
+		"J": {
+			"#": "adjective property",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"x": {
+			"#": "swear word property",
+			"//": "'xxx' used to be a placeholder for swear words",
+			"propagate": true,
+			"metadata": {
+				"swear": true
+			}
+		},
+		"C": {
+			"#": "conjunction property",
+			"metadata": {
+				"conjunction": {}
+			}
+		},
+		"I": {
+			"#": "pronoun property",
+			"metadata": {
+				"pronoun": {}
+			}
+		},
+		"0": {
+			"#": "singular noun property",
+			"//": "mnemonic: the closest digit to single '1' that's not used for grammatical person",
+			"metadata": {
+				"noun": {
+					"is_singular": true
+				}
+			}
+		},
+		"9": {
+			"#": "plural noun property",
+			"//": "mnemonic: the biggest, most plural digit",
+			"metadata": {
+				"noun": {
+					"is_plural": true
+				}
+			}
+		},
+		"~": {
+			"#": "common word property",
+			"metadata": {
+				"common": true
+			},
+			"rename_ok": true
+		},
+		"P": {
+			"#": "preposition property",
+			"metadata": {
+				"preposition": true
+			}
+		},
+		"D": {
+			"#": "determiner property",
+			"metadata": {
+				"determiner": {}
+			}
+		},
+		"q": {
+			"#": "quantifier property",
+			"metadata": {
+				"determiner": {
+					"is_quantifier": true
+				}
+			}
+		},
+		"R": {
+			"#": "adverb property",
+			"metadata": {
+				"adverb": {}
+			}
+		},
+		"s": {
+			"#": "subject case property",
+			"metadata": {
+				"pronoun": {
+					"is_subject": true
+				}
+			}
+		},
+		"o": {
+			"#": "object case property",
+			"metadata": {
+				"pronoun": {
+					"is_object": true
+				}
+			}
+		},
+		"1": {
+			"#": "first-person property",
+			"metadata": {
+				"pronoun": {
+					"person": "First"
+				}
+			}
+		},
+		"2": {
+			"#": "second-person property",
+			"metadata": {
+				"pronoun": {
+					"person": "Second"
+				}
+			}
+		},
+		"3": {
+			"#": "third-person property",
+			"metadata": {
+				"pronoun": {
+					"person": "Third"
+				}
+			}
+		},
+		"c": {
+			"#": "comparative property",
+			"//": "see also '>' which derives a comparative form",
+			"metadata": {
+				"adjective": {
+					"degree": "Comparative"
+				}
+			}
+		},
+		"u": {
+			"#": "superlative property",
+			"//": "see also '^' which derives a superlative form",
+			"metadata": {
+				"adjective": {
+					"degree": "Superlative"
+				}
+			}
+		},
+		"*": {
+			"#": "singular third-person subject pronoun property",
+			"//": "so we can do verb agreement",
+			"metadata": {
+				"pronoun": {
+					"is_singular": true,
+					"person": "Third"
+				}
+			}
+		},
+		".": {
+			"#": "singular pronoun property",
+			"//": "mnemonic: one dot",
+			"metadata": {
+				"pronoun": {
+					"is_singular": true
+				}
+			}
+		},
+		":": {
+			"#": "plural pronoun property",
+			"//": "mnemonic: multiple dots",
+			"metadata": {
+				"pronoun": {
+					"is_plural": true
+				}
+			}
+		},
+		"A": {
+			"#": "auxiliary verb property",
+			"//": "see also l: linking verb property",
+			"metadata": {
+				"verb": {
+					"is_auxiliary": true
+				}
+			}
+		},
+		"<": {
+			"#": "American property",
+			"propagate": true,
+			"metadata": {
+				"dialects": "AMERICAN"
+			},
+			"rename_ok": true
+		},
+		"!": {
+			"#": "GB property",
+			"propagate": true,
+			"metadata": {
+				"dialects": "BRITISH"
+			},
+			"rename_ok": true
+		},
+		"@": {
+			"#": "CA property",
+			"//": "mnemonic: at symbol resembles an 'a' inside a 'C'",
+			"propagate": true,
+			"metadata": {
+				"dialects": "CANADIAN"
+			}
+		},
+		"_": {
+			"#": "AU property",
+			"//": "mnemonic: down under",
+			"propagate": true,
+			"metadata": {
+				"dialects": "AUSTRALIAN"
+			}
+		},
+		"F": {
+			"#": "reflexive property",
+			"metadata": {
+				"pronoun": {
+					"is_reflexive": true
+				}
+			}
+		},
+		"M": {
+			"#": "demonstrative determiner property",
+			"metadata": {
+				"determiner": {
+					"is_demonstrative": true
+				}
+			}
+		},
+		"5": {
+			"#": "possessive determiner property",
+			"//": "mnemonic: 5 looks like an 's'",
+			"metadata": {
+				"determiner": {
+					"is_possessive": true
+				}
+			}
+		},
+		"a": {
+			"#": "personal pronoun property",
+			"//": "'personal' means 'grammatical person', not 'human'",
+			"metadata": {
+				"pronoun": {
+					"is_personal": true
+				}
+			}
+		},
+		"m": {
+			"#": "mass noun (only) property",
+			"metadata": {
+				"noun": {
+					"is_mass": true
+				}
+			}
+		},
+		"w": {
+			"#": "mass + countable noun property",
+			"metadata": {
+				"noun": {
+					"is_countable": true,
+					"is_mass": true
+				}
+			}
+		},
+		"b": {
+			"#": "verb lemma form property",
+			"//": "mnemonic: 'b' for 'base form'",
+			"metadata": {
+				"verb": {
+					"verb_form": "LEMMA"
+				}
+			}
+		},
+		"t": {
+			"#": "verb preterite / simple past form property",
+			"metadata": {
+				"verb": {
+					"verb_form": "PRETERITE"
+				}
+			}
+		},
+		"T": {
+			"#": "verb past participle form property",
+			"metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			}
+		},
+		"6": {
+			"#": "verb progressive form property",
+			"//": "mnemonic: '6' looks like 'g' in 'ing'",
+			"metadata": {
+				"verb": {
+					"verb_form": "PROGRESSIVE"
+				}
+			}
+		},
+		"h": {
+			"#": "verb third person singular present form property",
+			"metadata": {
+				"verb": {
+					"verb_form": "THIRD_PERSON_SINGULAR"
+				}
+			}
+		}
+	}
+}

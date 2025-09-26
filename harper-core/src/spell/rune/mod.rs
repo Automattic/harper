@@ -43,10 +43,7 @@ mod tests {
                         "condition": "."
                       }
                     ],
-                    "target_metadata": {
-                      "kind": null,
-                      "tense": null
-                    },
+                    "target": [],
                     "base_metadata": {}
                 },
                 "B": {
@@ -64,13 +61,17 @@ mod tests {
                         "condition": "y"
                       }
                     ],
-                    "target_metadata": {
-                      "kind": null,
-                      "tense": null
-                    },
+                    "target": [
+                        {
+                            "metadata": {
+                                "noun": {}
+                            }
+                        }
+                    ],
                     "base_metadata": {}
                 }
-            }
+            },
+            "properties": {}
         })
     });
 
@@ -80,7 +81,7 @@ mod tests {
 
         let mut expanded = WordMap::default();
 
-        attributes.expand_marked_words(words, &mut expanded);
+        attributes.expand_annotated_words(words, &mut expanded);
 
         let expanded: HashSet<String> = expanded
             .into_iter()
@@ -126,7 +127,7 @@ mod tests {
 
         let mut expanded = WordMap::default();
 
-        attributes.expand_marked_words(words, &mut expanded);
+        attributes.expand_annotated_words(words, &mut expanded);
         let expanded: HashSet<String> = expanded
             .into_iter()
             .map(|v| v.canonical_spelling.to_string())
@@ -170,11 +171,15 @@ mod tests {
                             "condition": "[^sxzhy]"
                           }
                         ],
-                        "target_metadata": {
-                            "noun": {
-                                "is_plural": true
+                        "target": [
+                            {
+                                "metadata": {
+                                    "noun": {
+                                        "is_plural": true
+                                    }
+                                }
                             }
-                        },
+                        ],
                         "base_metadata": {
                             "noun": {}
                         }
@@ -189,10 +194,11 @@ mod tests {
                             "condition": "."
                           }
                         ],
-                        "target_metadata": {},
+                        "target": [],
                         "base_metadata": {}
                     }
-                }
+                },
+                "properties": {}
             })
             .to_string(),
         )
@@ -200,7 +206,7 @@ mod tests {
 
         let mut expanded = WordMap::default();
 
-        attributes.expand_marked_words(words, &mut expanded);
+        attributes.expand_annotated_words(words, &mut expanded);
 
         let giant_data = expanded.get_with_str("giant").unwrap();
         assert!(giant_data.metadata.is_noun());

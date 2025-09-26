@@ -1,36 +1,43 @@
+//! Corrects "of curse/corse" to "of course" while ignoring phrases like "kind of curse".
+//!
+//! See also:
+//! - `OfCourse` in `phrase_corrections` for "off course" / "o course" / "ofcourse" → "of course" corrections.
+
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{SequencePattern, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::WordSet,
 };
 
 pub struct OfCourse {
-    pattern: Box<dyn crate::patterns::Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for OfCourse {
     fn default() -> Self {
         let wrong_forms = WordSet::new(&["curse", "corse"]);
-        let pattern = SequencePattern::default()
+        let expr = SequenceExpr::default()
             .t_aco("of")
             .then_whitespace()
             .then(wrong_forms);
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(expr),
         }
     }
 }
 
-impl PatternLinter for OfCourse {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for OfCourse {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched: &[Token], source: &[char]) -> Option<Lint> {
         // Skip if the word before “of” is “kind” or “sort” → “kind of curse” is valid.
-        if let Some(of_idx) = matched.first().map(|t| t.span.start) {
-            match source.get(..of_idx).map(|src| {
+        if let Some(of_idx) = matched.first().map(|t| t.span.start)
+            && let Some(prev) = source.get(..of_idx).map(|src| {
                 // Walk backwards over whitespace to find the preceding word token.
                 let mut i = of_idx.saturating_sub(1);
                 while i > 0 && src[i].is_whitespace() {
@@ -43,14 +50,11 @@ impl PatternLinter for OfCourse {
                     .map(|p| p + 1)
                     .unwrap_or(0);
                 src[start..=i].iter().collect::<String>()
-            }) {
-                Some(prev) => {
-                    let lower = prev.to_ascii_lowercase();
-                    if lower == "kind" || lower == "sort" {
-                        return None;
-                    }
-                }
-                _ => (),
+            })
+        {
+            let lower = prev.to_ascii_lowercase();
+            if lower == "kind" || lower == "sort" {
+                return None;
             }
         }
 

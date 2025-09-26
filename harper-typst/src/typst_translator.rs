@@ -15,15 +15,12 @@ use typst_syntax::{
 /// Directly translate a span ($a) in a Typst source ($doc) to a token.
 macro_rules! def_token {
     ($doc:expr, $a:expr, $kind:expr, $offset:ident) => {{
-        let range = $doc.range($a.span()).unwrap();
-        let start = $offset.push_to(range.start);
-        let end_char_loc = start.push_to(range.end).char;
+        let range = $doc.range($a.span())?;
+        let start = $offset.push_to(range.start)?;
+        let end_char_loc = start.push_to(range.end)?.char;
 
         Some(vec![Token {
-            span: harper_core::Span {
-                start: start.char,
-                end: end_char_loc,
-            },
+            span: harper_core::Span::new(start.char, end_char_loc),
             kind: $kind,
         }])
     }};
@@ -125,7 +122,7 @@ impl<'a> TypstTranslator<'a> {
     pub fn parse_expr(self, expr: Expr, offset: OffsetCursor) -> Option<Vec<Token>> {
         // Update the offset that will be passed to other functions by moving it to the beginning
         // of the current expression's span.
-        let offset = offset.push_to_span(expr.span());
+        let offset = offset.push_to_span(expr.span())?;
 
         /// Simplification of [`def_token!`] that bakes-in local variables
         macro_rules! token {
@@ -150,9 +147,20 @@ impl<'a> TypstTranslator<'a> {
         macro_rules! get_text {
             ($expr:expr) => {
                 self.doc
-                    .get(self.doc.range($expr.span()).unwrap())
+                    .get(self.doc.range($expr.span())?)
                     .expect("Unable to get text from typst document span!")
             };
+        }
+
+        fn parbreak() -> Option<Vec<Token>> {
+            Some(vec![Token {
+                span: harper_core::Span::EMPTY,
+                kind: TokenKind::ParagraphBreak,
+            }])
+        }
+
+        fn isolate(inner: Option<Vec<Token>>) -> Option<Vec<Token>> {
+            merge![parbreak(), inner, parbreak()]
         }
 
         // Recurse on each element of an iterator
@@ -244,7 +252,7 @@ impl<'a> TypstTranslator<'a> {
         //
         // A full list of variants is available in the [typst_syntax docs](https://docs.rs/typst/latest/typst/syntax/ast/enum.Expr.html)
         match expr {
-            Expr::Text(text) => self.parse_english(text.get(), offset.push_to_span(text.span())),
+            Expr::Text(text) => self.parse_english(text.get(), offset.push_to_span(text.span())?),
             Expr::Space(a) => {
                 let mut chars = get_text!(a).chars();
                 let first_char = chars.next().unwrap();
@@ -283,7 +291,7 @@ impl<'a> TypstTranslator<'a> {
                     .chain(term_item.description().exprs()),
             ),
             Expr::Str(text) => {
-                let offset = offset.push_to_span(text.span()).char + 1;
+                let offset = offset.push_to_span(text.span())?.char + 1;
                 let string = text.to_untyped().text();
 
                 Some(
@@ -297,7 +305,9 @@ impl<'a> TypstTranslator<'a> {
                         .collect_vec(),
                 )
             }
-            Expr::Content(content_block) => iter_recurse(&mut content_block.body().exprs()),
+            Expr::Content(content_block) => {
+                isolate(iter_recurse(&mut content_block.body().exprs()))
+            }
             Expr::Parenthesized(parenthesized) => recurse!(parenthesized.expr()),
             Expr::Array(array) => Some(
                 array
@@ -368,5 +378,23 @@ impl<'a> TypstTranslator<'a> {
             Expr::FuncCall(func) => parse_func_call(func),
             a => token!(a, TokenKind::Unlintable),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use typst_syntax::ast::None;
+
+    #[test]
+    fn parse_none_returns_none() {
+        let source = Source::detached("");
+        let translator = TypstTranslator::new(&source);
+
+        assert!(
+            translator
+                .parse_expr(Expr::None(None::default()), OffsetCursor::new(&source))
+                .is_none()
+        )
     }
 }

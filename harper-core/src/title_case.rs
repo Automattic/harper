@@ -6,7 +6,8 @@ use crate::TokenKind;
 use hashbrown::HashSet;
 use lazy_static::lazy_static;
 
-use crate::{CharStringExt, Dictionary, Document, TokenStringExt, parsers::Parser};
+use crate::spell::Dictionary;
+use crate::{CharStringExt, Document, TokenStringExt, parsers::Parser};
 
 /// A helper function for [`make_title_case`] that uses Strings instead of char buffers.
 pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &impl Dictionary) -> String {
@@ -37,18 +38,18 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
     let mut output = toks.span().unwrap().get_content(source).to_vec();
 
     while let Some((index, word)) = word_likes.next() {
-        if let Some(Some(metadata)) = word.kind.as_word() {
-            if metadata.is_proper_noun() {
-                // Replace it with the dictionary entry verbatim.
-                let orig_text = word.span.get_content(source);
+        if let Some(Some(metadata)) = word.kind.as_word()
+            && metadata.is_proper_noun()
+        {
+            // Replace it with the dictionary entry verbatim.
+            let orig_text = word.span.get_content(source);
 
-                if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
-                    // It should match the dictionary verbatim
-                    output[word.span.start - start_index..word.span.end - start_index]
-                        .iter_mut()
-                        .enumerate()
-                        .for_each(|(idx, c)| *c = correct_caps[idx]);
-                }
+            if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
+                // It should match the dictionary verbatim
+                output[word.span.start - start_index..word.span.end - start_index]
+                    .iter_mut()
+                    .enumerate()
+                    .for_each(|(idx, c)| *c = correct_caps[idx]);
             }
         };
 
@@ -89,14 +90,14 @@ fn should_capitalize_token(tok: &Token, source: &[char], dict: &impl Dictionary)
 
             let mut metadata = Cow::Borrowed(metadata);
 
-            if let Some(metadata_lower) = dict.get_word_metadata(&chars_lower) {
-                metadata = Cow::Owned(metadata.clone().or(metadata_lower));
+            if let Some(metadata_lower) = dict.get_lexeme_metadata(&chars_lower) {
+                metadata = Cow::Owned(metadata.clone().or(&metadata_lower));
             }
 
             let is_short_preposition = metadata.preposition && tok.span.len() <= 4;
 
             !is_short_preposition
-                && !metadata.determiner
+                && !metadata.is_determiner()
                 && !SPECIAL_CONJUNCTIONS.contains(chars_lower.as_ref())
         }
         _ => true,
@@ -105,15 +106,12 @@ fn should_capitalize_token(tok: &Token, source: &[char], dict: &impl Dictionary)
 
 #[cfg(test)]
 mod tests {
-
     use quickcheck::TestResult;
     use quickcheck_macros::quickcheck;
 
     use super::make_title_case_str;
-    use crate::{
-        FstDictionary,
-        parsers::{Markdown, PlainEnglish},
-    };
+    use crate::parsers::{Markdown, PlainEnglish};
+    use crate::spell::FstDictionary;
 
     #[test]
     fn normal() {

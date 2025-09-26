@@ -2,9 +2,10 @@ use super::{MutableDictionary, WordId};
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use lazy_static::lazy_static;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
+use std::borrow::Cow;
 use std::{cell::RefCell, sync::Arc};
 
-use crate::{CharString, CharStringExt, WordMetadata};
+use crate::{CharString, CharStringExt, DictWordMetadata};
 
 use super::Dictionary;
 use super::FuzzyMatchResult;
@@ -15,15 +16,15 @@ use super::FuzzyMatchResult;
 /// [`MutableDictionary`].
 pub struct FstDictionary {
     /// Underlying [`super::MutableDictionary`] used for everything except fuzzy finding
-    full_dict: Arc<MutableDictionary>,
+    mutable_dict: Arc<MutableDictionary>,
     /// Used for fuzzy-finding the index of words or metadata
     word_map: FstMap<Vec<u8>>,
     /// Used for fuzzy-finding the index of words or metadata
-    words: Vec<(CharString, WordMetadata)>,
+    words: Vec<(CharString, DictWordMetadata)>,
 }
 
 const EXPECTED_DISTANCE: u8 = 3;
-const TRANSPOSITION_COST_ONE: bool = false;
+const TRANSPOSITION_COST_ONE: bool = true;
 
 lazy_static! {
     static ref DICT: Arc<FstDictionary> = Arc::new((*MutableDictionary::curated()).clone().into());
@@ -42,7 +43,7 @@ thread_local! {
 
 impl PartialEq for FstDictionary {
     fn eq(&self, other: &Self) -> bool {
-        self.full_dict == other.full_dict
+        self.mutable_dict == other.mutable_dict
     }
 }
 
@@ -55,7 +56,7 @@ impl FstDictionary {
 
     /// Construct a new [`FstDictionary`] using a word list as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
-    pub fn new(mut words: Vec<(CharString, WordMetadata)>) -> Self {
+    pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {
         words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
         words.dedup_by(|(a, _), (b, _)| a == b);
 
@@ -67,14 +68,14 @@ impl FstDictionary {
                 .expect("Insertion not in lexicographical order!");
         }
 
-        let mut full_dict = MutableDictionary::new();
-        full_dict.extend_words(words.iter().cloned());
+        let mut mutable_dict = MutableDictionary::new();
+        mutable_dict.extend_words(words.iter().cloned());
 
         let fst_bytes = builder.into_inner().unwrap();
         let word_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
 
         FstDictionary {
-            full_dict: Arc::new(full_dict),
+            mutable_dict: Arc::new(mutable_dict),
             word_map,
             words,
         }
@@ -113,27 +114,27 @@ fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u
 
 impl Dictionary for FstDictionary {
     fn contains_word(&self, word: &[char]) -> bool {
-        self.full_dict.contains_word(word)
+        self.mutable_dict.contains_word(word)
     }
 
     fn contains_word_str(&self, word: &str) -> bool {
-        self.full_dict.contains_word_str(word)
+        self.mutable_dict.contains_word_str(word)
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata> {
-        self.full_dict.get_word_metadata(word)
+    fn get_lexeme_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.mutable_dict.get_lexeme_metadata(word)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<&WordMetadata> {
-        self.full_dict.get_word_metadata_str(word)
+    fn get_lexeme_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        self.mutable_dict.get_lexeme_metadata_str(word)
     }
 
     fn fuzzy_match(
-        &self,
+        &'_ self,
         word: &[char],
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult> {
+    ) -> Vec<FuzzyMatchResult<'_>> {
         let misspelled_word_charslice = word.normalized();
         let misspelled_word_string = misspelled_word_charslice.to_string();
 
@@ -164,7 +165,7 @@ impl Dictionary for FstDictionary {
             merged.push(FuzzyMatchResult {
                 word,
                 edit_distance,
-                metadata,
+                metadata: Cow::Borrowed(metadata),
             })
         }
 
@@ -177,11 +178,11 @@ impl Dictionary for FstDictionary {
     }
 
     fn fuzzy_match_str(
-        &self,
+        &'_ self,
         word: &str,
         max_distance: u8,
         max_results: usize,
-    ) -> Vec<FuzzyMatchResult> {
+    ) -> Vec<FuzzyMatchResult<'_>> {
         self.fuzzy_match(
             word.chars().collect::<Vec<_>>().as_slice(),
             max_distance,
@@ -190,27 +191,27 @@ impl Dictionary for FstDictionary {
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        self.full_dict.words_iter()
+        self.mutable_dict.words_iter()
     }
 
     fn word_count(&self) -> usize {
-        self.full_dict.word_count()
+        self.mutable_dict.word_count()
     }
 
     fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.full_dict.contains_exact_word(word)
+        self.mutable_dict.contains_exact_word(word)
     }
 
     fn contains_exact_word_str(&self, word: &str) -> bool {
-        self.full_dict.contains_exact_word_str(word)
+        self.mutable_dict.contains_exact_word_str(word)
     }
 
     fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        self.full_dict.get_correct_capitalization_of(word)
+        self.mutable_dict.get_correct_capitalization_of(word)
     }
 
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
-        self.full_dict.get_word_from_id(id)
+        self.mutable_dict.get_word_from_id(id)
     }
 }
 
@@ -219,13 +220,32 @@ mod tests {
     use itertools::Itertools;
 
     use crate::CharStringExt;
-    use crate::Dictionary;
-    use crate::WordId;
+    use crate::spell::{Dictionary, WordId};
 
     use super::FstDictionary;
 
     #[test]
-    fn fst_map_contains_all_in_full_dict() {
+    fn damerau_transposition_costs_one() {
+        let lev_automata =
+            levenshtein_automata::LevenshteinAutomatonBuilder::new(1, true).build_dfa("woof");
+        assert_eq!(
+            lev_automata.eval("wofo"),
+            levenshtein_automata::Distance::Exact(1)
+        );
+    }
+
+    #[test]
+    fn damerau_transposition_costs_two() {
+        let lev_automata =
+            levenshtein_automata::LevenshteinAutomatonBuilder::new(1, false).build_dfa("woof");
+        assert_eq!(
+            lev_automata.eval("wofo"),
+            levenshtein_automata::Distance::AtLeast(2)
+        );
+    }
+
+    #[test]
+    fn fst_map_contains_all_in_mutable_dict() {
         let dict = FstDictionary::curated();
 
         for word in dict.words_iter() {
@@ -263,7 +283,7 @@ mod tests {
     fn on_is_not_nominal() {
         let dict = FstDictionary::curated();
 
-        assert!(!dict.get_word_metadata_str("on").unwrap().is_nominal());
+        assert!(!dict.get_lexeme_metadata_str("on").unwrap().is_nominal());
     }
 
     #[test]
@@ -296,7 +316,7 @@ mod tests {
         for contraction in contractions {
             dbg!(contraction);
             assert!(
-                dict.get_word_metadata_str(contraction)
+                dict.get_lexeme_metadata_str(contraction)
                     .unwrap()
                     .derived_from
                     .is_none()
@@ -309,7 +329,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_word_metadata_str("llamas")
+            dict.get_lexeme_metadata_str("llamas")
                 .unwrap()
                 .derived_from
                 .unwrap(),
@@ -322,7 +342,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_word_metadata_str("cats")
+            dict.get_lexeme_metadata_str("cats")
                 .unwrap()
                 .derived_from
                 .unwrap(),
@@ -335,7 +355,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_word_metadata_str("unhappy")
+            dict.get_lexeme_metadata_str("unhappy")
                 .unwrap()
                 .derived_from
                 .unwrap(),
@@ -348,7 +368,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_word_metadata_str("quickly")
+            dict.get_lexeme_metadata_str("quickly")
                 .unwrap()
                 .derived_from
                 .unwrap(),

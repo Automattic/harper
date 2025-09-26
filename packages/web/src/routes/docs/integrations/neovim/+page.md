@@ -12,7 +12,7 @@ Though Neovim supports language servers [out-of-the-box](https://neovim.io/doc/u
 
 Once you have `harper-ls` and nvim-lspconfig installed, you need to add this to your `init.lua`:
 
-```lua title=inti.lua
+```lua title=init.lua
 require('lspconfig').harper_ls.setup {}
 ```
 
@@ -25,6 +25,7 @@ require('lspconfig').harper_ls.setup {
   settings = {
     ["harper-ls"] = {
       userDictPath = "",
+      workspaceDictPath = "",
       fileDictPath = "",
       linters = {
         SpellCheck = true,
@@ -47,7 +48,9 @@ require('lspconfig').harper_ls.setup {
       },
       diagnosticSeverity = "hint",
       isolateEnglish = false,
-      dialect = "American"
+      dialect = "American",
+      maxFileLength = 120000,
+      ignoredLintsPath = {}
     }
   }
 }

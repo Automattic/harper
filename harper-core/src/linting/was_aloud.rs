@@ -1,29 +1,31 @@
-use super::{Lint, LintKind, PatternLinter};
+use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
 use crate::TokenStringExt;
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
-use crate::patterns::{Pattern, SequencePattern, WordSet};
+use crate::patterns::WordSet;
 
 pub struct WasAloud {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for WasAloud {
     fn default() -> Self {
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(WordSet::new(&["was", "were", "be", "been"]))
             .then_whitespace()
             .then_exact_word("aloud");
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for WasAloud {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for WasAloud {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -33,7 +35,7 @@ impl PatternLinter for WasAloud {
             span: matched_tokens.span()?,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
-                format!("{} allowed", verb).chars().collect(),
+                format!("{verb} allowed").chars().collect(),
                 matched_tokens[0].span.get_content(source),
             )],
             message: format!("Did you mean `{verb} allowed`?"),

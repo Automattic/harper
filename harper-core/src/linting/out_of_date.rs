@@ -1,31 +1,31 @@
-use crate::{
-    Token, TokenStringExt,
-    patterns::{EitherPattern, ExactPhrase, Pattern},
-};
+use crate::expr::Expr;
+use crate::expr::FirstMatchOf;
+use crate::expr::FixedPhrase;
+use crate::{Token, TokenStringExt};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct OutOfDate {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for OutOfDate {
     fn default() -> Self {
-        let pattern = EitherPattern::new(vec![
-            Box::new(ExactPhrase::from_phrase("out of date")),
-            Box::new(ExactPhrase::from_phrase("out-of date")),
-            Box::new(ExactPhrase::from_phrase("out of-date")),
+        let pattern = FirstMatchOf::new(vec![
+            Box::new(FixedPhrase::from_phrase("out of date")),
+            Box::new(FixedPhrase::from_phrase("out-of date")),
+            Box::new(FixedPhrase::from_phrase("out of-date")),
         ]);
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for OutOfDate {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for OutOfDate {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

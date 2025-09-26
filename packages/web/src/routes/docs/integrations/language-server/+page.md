@@ -76,17 +76,23 @@ If none of the previous installation methods are available to you, we also provi
 
 ## Dictionaries
 
-`harper-ls` has three kinds of dictionaries: user, file-local, and static dictionaries. All three dictionaries are combined and used together when spell checking files.
+`harper-ls` has four kinds of dictionaries: user, workspace, file-local, and static dictionaries. All four dictionaries are combined and used together when spell checking files.
 
 ### User Dictionary
 
-Each user of `harper-ls` has their own dictionary, which by default, is located at the following paths on each operating system:
+Each user of `harper-ls` has their own dictionary, created on-demand the first time that a word is added to it, which by default, is located at the following paths on each operating system:
 
 | Operating System |                                                                                Location |
 | :--------------- | --------------------------------------------------------------------------------------: |
 | Linux            | `$XDG_CONFIG_HOME/harper-ls/dictionary.txt` or `$HOME/.config/harper-ls/dictionary.txt` |
 | macOS            |                            `$HOME/Library/Application Support/harper-ls/dictionary.txt` |
 | Windows          |                                    `%FOLDERID_RoamingAppData%/harper-ls/dictionary.txt` |
+
+This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Dictionaries_).
+
+### Workspace Dictionary
+
+Each workspace in which you use `harper-ls` has its own dictionary, which by default is located at `.harper-dictionary.txt` in the root of the workspace.
 
 This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Dictionaries_).
 
@@ -114,12 +120,13 @@ We _do_ take pull requests or issues for adding words to the static dictionary. 
 
 `harper-ls` has code actions that help in quickly dealing with spelling or grammar errors you encounter. The examples below assume that you have misspelled "contained" as "containes" and have selected it to apply a code action to it.
 
-| Code Action or Command | Description                                                | Example                                     |
-| ---------------------- | ---------------------------------------------------------- | ------------------------------------------- |
-| Quick Fixes            | Suggests fixes for the selected error                      | `Replace with: "contained"`                 |
-| `HarperIgnoreLint`     | Ignores the selected error for the duration of the session | `Ignore Harper error.`                      |
-| `HarperAddToUserDict`  | Adds the selected word to the user dictionary              | `Add "containes" to the global dictionary.` |
-| `HarperAddToFileDict`  | Adds the selected word to a file-local dictionary          | `Add "containes" to the file dictionary.`   |
+| Code Action or Command | Description                                                | Example                                        |
+| ---------------------- | ---------------------------------------------------------- | ---------------------------------------------- |
+| Quick Fixes            | Suggests fixes for the selected error                      | `Replace with: "contained"`                    |
+| `HarperIgnoreLint`     | Ignores the selected error for the duration of the session | `Ignore Harper error.`                         |
+| `HarperAddToUserDict`  | Adds the selected word to the user dictionary              | `Add "containes" to the user dictionary.`      |
+| `HarperAddToWSDict`    | Adds the selected word to the workspace dictionary         | `Add "containes" to the workspace dictionary.` |
+| `HarperAddToFileDict`  | Adds the selected word to a file-local dictionary          | `Add "containes" to the file dictionary.`      |
 
 ## Ignore Comments
 
@@ -163,12 +170,16 @@ In the above example, "spellcheckd", "this this", and other spelling or grammar 
 }
 ```
 
-### Dictionaries
+### Directories
 
-| Config         | Type     | Default Value | Description                                                     |
-| -------------- | -------- | ------------- | --------------------------------------------------------------- |
-| `userDictPath` | `string` | `""`          | Set the file path where the user dictionary is located          |
-| `fileDictPath` | `string` | `""`          | Set the directory where the file-local dictionaries are located |
+| Config              | Type     | Default Value | Description                                                     |
+| ------------------- | -------- | ------------- | --------------------------------------------------------------- |
+| `userDictPath`      | `string` | `""`          | Set the file path where the user dictionary is located          |
+| `workspaceDictPath` | `string` | `""`          | Set the file path where the workspace dictionary is located     |
+| `fileDictPath`      | `string` | `""`          | Set the directory where the file-local dictionaries are located |
+| `ignoredLintsPath`  | `string` | `""`          | Set the directory where the ignored lint lists are located      |
+
+These paths are always resolved relative to the root of the workspace in which `harper-ls` was invoked.
 
 ### Linters
 
@@ -249,6 +260,8 @@ These configs are under the `markdown` key:
 | `diagnosticSeverity` | `"error"`, `"hint"`, `"information"`, `"warning"`       | `"hint"`      | Configures how severe diagnostics appear in your editor                                                                                                                   |
 | `isolateEnglish`     | `boolean`                                               | `false`       | In documents that are a mixture of English and another language, only lint English text. This feature is incredibly new and unstable. Do not expect it to work perfectly. |
 | `dialect`            | `"American"`, `"British"`, `"Australian"`, `"Canadian"` | `"American"`  | Set the dialect of English Harper should expect.                                                                                                                          |
+| `maxFileLength`      | `number`                                                | `120000`      | Maximum length of file to be linted (in bytes). If a file is larger/longer than this, it will not be linted.                                                              |
+| `excludePatterns`    | `array`                                                 | `[]`          | A set of globs to ignore. If a file matches any of the globs, it will not be linted.                                                                                      |
 
 ## Supported Languages
 
@@ -280,11 +293,15 @@ These configs are under the `markdown` key:
 | Rust              |            `rust`             |            ✅ |
 | Scala             |           `scala`             |            ✅ |
 | Shell/Bash Script |         `shellscript`         |            ✅ |
+| Solidity          |          `solidity`           |            ✅ |
 | Swift             |            `swift`            |            ✅ |
 | TOML              |            `toml`             |            ✅ |
 | TypeScript        |         `typescript`          |            ✅ |
 | TypeScript React  |       `typescriptreact`       |            ✅ |
 | Typst             |            `typst`            |               |
+| Kotlin            |            `kotlin`           |            ✅ |
+| Clojure           |            `clojure`          |            ✅ |
+| Ink               |            `ink`              |               |
 
 Want your language added?
 Let us know by [commenting on this issue](https://github.com/Automattic/harper/issues/79).

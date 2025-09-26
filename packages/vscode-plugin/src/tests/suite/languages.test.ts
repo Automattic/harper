@@ -2,9 +2,9 @@ import {
 	compareActualVsExpectedDiagnostics,
 	createExpectedDiagnostics,
 	createRange,
-	getActualDiagnostics,
-	openFile,
-	waitForUpdatesFromOpenedFile,
+	getUri,
+	openUri,
+	waitForDiagnosticsChange,
 } from './helper';
 
 describe('Languages >', () => {
@@ -15,7 +15,7 @@ describe('Languages >', () => {
 		// Uncomment when #265 is fixed.
 		// { type: 'JavaScript JSX', file: 'javascriptreact.jsx', row: 1, column: 36 },
 
-		// VS Code doesn't support CMake, Haskell, Literate Haskell, Nix, TOML, and Typst files out of
+		// VS Code doesn't support CMake, Haskell, Literate Haskell, Nix, Solidity, TOML, and Typst files out of
 		// the box. Uncomment when you figure out how to support them during testing.
 		// { type: 'CMake', file: 'CMakeLists.txt', row: 2, column: 30 },
 		// { type: 'Haskell', file: 'haskell.hs', row: 1, column: 3 },
@@ -23,6 +23,7 @@ describe('Languages >', () => {
 		// { type: 'Nix', file: 'nix.nix', row: 1, column: 2 },
 		// { type: 'TOML', file: 'toml.toml', row: 1, column: 2 },
 		// { type: 'Typst', file: 'typst.typ', row: 2, column: 1 },
+		// { type: 'Solidity', file: 'solidity.sol', row: 3, column: 4 },
 
 		{ type: 'C', file: 'c.c', row: 2, column: 3 },
 		{ type: 'C++', file: 'cpp.cpp', row: 3, column: 5 },
@@ -49,13 +50,12 @@ describe('Languages >', () => {
 		{ type: 'TypeScript JSX', file: 'typescriptreact.tsx', row: 3, column: 7 },
 	].forEach((testCase) => {
 		it(`gives correct diagnostics for ${testCase.type} files`, async () => {
-			const uri = await openFile('languages', testCase.file);
-			await waitForUpdatesFromOpenedFile();
+			const uri = getUri('languages', testCase.file);
 
 			compareActualVsExpectedDiagnostics(
-				getActualDiagnostics(uri),
+				await waitForDiagnosticsChange(uri, async () => await openUri(uri)),
 				createExpectedDiagnostics({
-					message: 'Did you mean to spell “Errorz” this way?',
+					message: 'Did you mean to spell `Errorz` this way?',
 					range: createRange(testCase.row, testCase.column, testCase.row, testCase.column + 6),
 				}),
 			);

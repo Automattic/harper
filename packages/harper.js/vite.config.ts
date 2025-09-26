@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 import { resolve } from 'path';
-import { type Plugin, defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import dts from 'vite-plugin-dts';
 import apiExtractorConfig from './api-extractor.json';
 
@@ -68,10 +68,7 @@ export default defineConfig({
 			enabled: true,
 			headless: true,
 			screenshotFailures: false,
-			instances: [
-				{ browser: 'chromium' },
-				// { browser: 'firefox' },
-			],
+			instances: [{ browser: 'chromium' }],
 		},
 	},
 	assetsInclude: ['**/*.wasm'],

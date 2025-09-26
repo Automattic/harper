@@ -1,68 +1,58 @@
+use crate::expr::{Expr, SequenceExpr};
 use crate::{
-    Token,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{Pattern, SequencePattern, WordSet},
+    Token, TokenKind,
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct ItIs {
-    pattern: Box<dyn crate::patterns::Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ItIs {
     fn default() -> Self {
-        let exceptions = WordSet::new(&[
-            "own",
-            "1st",
-            "mainline",
-            "team",
-            "body",
-            "mean",
-            "animal",
-            "head",
-            "material",
-            "frontline",
-            "center",
-            "centre",
-            "business",
-            "state",
-            "runtime",
-            "size",
-            "power",
-            "budget",
-            "regulation",
-            "woman",
-            "turnover",
-            "utility",
-            "key",
-            "assault",
-        ]);
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .t_aco("its")
             .then_whitespace()
-            .then(move |tok: &Token, src: &[char]| {
-                if let Some(Some(meta)) = tok.kind.as_word() {
-                    if !meta.is_adjective() {
-                        return false;
-                    }
-                    if exceptions.matches(&[tok.clone()], src).is_some() {
-                        return false;
-                    }
-                    true
-                } else {
-                    false
-                }
-            })
+            .then_kind_except(
+                TokenKind::is_adjective,
+                &[
+                    "1st",
+                    "animal",
+                    "assault",
+                    "body",
+                    "budget",
+                    "business",
+                    "center",
+                    "centre",
+                    "frontline",
+                    "head",
+                    "key",
+                    "mainline",
+                    "material",
+                    "mean",
+                    "own",
+                    "power",
+                    "regulation",
+                    "runtime",
+                    "size",
+                    "state",
+                    "team",
+                    "turnover",
+                    "utility",
+                    "woman",
+                ],
+            )
             .then_whitespace()
             .then_preposition();
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for ItIs {
-    fn pattern(&self) -> &dyn crate::patterns::Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ItIs {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {

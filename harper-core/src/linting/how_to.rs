@@ -1,51 +1,60 @@
+use harper_brill::UPOS;
+
 use crate::{
-    Token, TokenStringExt,
-    linting::{Lint, LintKind, PatternLinter, Suggestion},
-    patterns::{All, InflectionOfBe, Invert, OwnedPatternExt, Pattern, SequencePattern},
+    Token, TokenKind, TokenStringExt,
+    expr::{All, Expr, OwnedExprExt, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::{InflectionOfBe, UPOSSet},
 };
 
 pub struct HowTo {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for HowTo {
     fn default() -> Self {
         let mut pattern = All::default();
 
-        let pos_pattern = SequencePattern::default()
+        let pos_pattern = SequenceExpr::default()
+            .then_anything()
+            .then_anything()
             .t_aco("how")
             .then_whitespace()
-            .then_verb();
-        pattern.add(Box::new(pos_pattern));
+            .then_verb_lemma();
+        pattern.add(pos_pattern);
 
-        let exceptions = SequencePattern::default()
+        let exceptions = SequenceExpr::default()
+            .then_unless(UPOSSet::new(&[UPOS::PART]))
             .then_anything()
             .then_anything()
-            .then(
-                InflectionOfBe::new().or(Box::new(|tok: &Token, src: &[char]| {
-                    tok.kind.is_auxiliary_verb()
-                        || tok.kind.is_adjective()
-                        || tok.kind.is_present_tense_verb()
-                        // Special case for "did" as in "how did you do that?"
-                        || tok.span.get_content_string(src).eq_ignore_ascii_case("did")
-                })),
+            .then_anything()
+            .then_unless(
+                InflectionOfBe::new().or(SequenceExpr::default().then_kind_any_or_words(
+                    &[
+                        TokenKind::is_auxiliary_verb,
+                        TokenKind::is_adjective,
+                        TokenKind::is_conjunction,
+                        TokenKind::is_proper_noun,
+                    ] as &[_],
+                    &["did", "come", "does"],
+                )),
             );
 
-        pattern.add(Box::new(Invert::new(exceptions)));
+        pattern.add(SequenceExpr::default().then(exceptions));
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for HowTo {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for HowTo {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
-        let span = toks[0..2].span()?;
+        let span = toks[2..4].span()?;
         let fix: Vec<char> = "to ".chars().collect();
 
         Some(Lint {
@@ -65,7 +74,7 @@ impl PatternLinter for HowTo {
 #[cfg(test)]
 mod tests {
     use super::HowTo;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn flags_missing_to() {
@@ -236,8 +245,55 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn dont_flag_how_did_you() {
         assert_lint_count("How did you get to school every day?", HowTo::default(), 0);
+    }
+
+    #[test]
+    fn dont_flag_how_come() {
+        assert_lint_count(
+            "How come this has to be a special case?",
+            HowTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allows_how_has() {
+        assert_lint_count("How Has This Been Tested?", HowTo::default(), 0);
+    }
+
+    #[test]
+    fn issue_1492() {
+        assert_no_lints(
+            "I hope to provide some insight into correct HTML formatting, in addition to how authors can avoid these issues.",
+            HowTo::default(),
+        );
+
+        assert_no_lints("But how does something like this...", HowTo::default());
+    }
+
+    #[test]
+    fn allow_issue_1298() {
+        assert_no_lints(
+            "The story of how and why things came to this point.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_false_positive_pr_1846() {
+        assert_no_lints(
+            "About how Microsoft, Google, and others are training people in Rust.",
+            HowTo::default(),
+        )
+    }
+
+    #[test]
+    fn dont_flag_false_positives_1492_how_indexes() {
+        assert_no_lints(
+            "controls how indexes will be added to unwrapped keys of flat array-like objects",
+            HowTo::default(),
+        );
     }
 }

@@ -1,56 +1,38 @@
-//! [`Pattern`]s are one of the more powerful ways to query text inside Harper, especially for beginners.
+//! [`Pattern`]s are one of the more powerful ways to query text inside Harper, especially for beginners. They are a simplified abstraction over [`Expr`](crate::expr::Expr).
 //!
-//! Through the [`PatternLinter`](crate::linting::PatternLinter) trait, they make it much easier to
+//! Through the [`ExprLinter`](crate::linting::ExprLinter) trait, they make it much easier to
 //! build Harper [rules](crate::linting::Linter).
 //!
-//! See the page about [`SequencePattern`] for a concrete example of their use.
+//! See the page about [`SequenceExpr`](crate::expr::SequenceExpr) for a concrete example of their use.
 
 use crate::{Document, LSend, Span, Token};
 
-mod all;
 mod any_pattern;
-mod either_pattern;
-mod exact_phrase;
 mod implies_quantity;
 mod indefinite_article;
 mod inflection_of_be;
 mod invert;
-mod naive_pattern_group;
+mod modal_verb;
 mod nominal_phrase;
-mod pattern_map;
-mod repeating_pattern;
-mod sequence_pattern;
-mod similar_to_phrase;
-mod split_compound_word;
+mod upos_set;
 mod whitespace_pattern;
 mod within_edit_distance;
 mod word;
-mod word_pattern_group;
 mod word_set;
 
-pub use all::All;
 pub use any_pattern::AnyPattern;
-use blanket::blanket;
-pub use either_pattern::EitherPattern;
-pub use exact_phrase::ExactPhrase;
 pub use implies_quantity::ImpliesQuantity;
 pub use indefinite_article::IndefiniteArticle;
 pub use inflection_of_be::InflectionOfBe;
 pub use invert::Invert;
-pub use naive_pattern_group::NaivePatternGroup;
+pub use modal_verb::ModalVerb;
 pub use nominal_phrase::NominalPhrase;
-pub use pattern_map::PatternMap;
-pub use repeating_pattern::RepeatingPattern;
-pub use sequence_pattern::SequencePattern;
-pub use similar_to_phrase::SimilarToPhrase;
-pub use split_compound_word::SplitCompoundWord;
+pub use upos_set::UPOSSet;
 pub use whitespace_pattern::WhitespacePattern;
+pub use within_edit_distance::WithinEditDistance;
 pub use word::Word;
-pub use word_pattern_group::WordPatternGroup;
 pub use word_set::WordSet;
 
-#[cfg_attr(feature = "concurrent", blanket(derive(Arc)))]
-#[cfg_attr(not(feature = "concurrent"), blanket(derive(Rc, Arc)))]
 pub trait Pattern: LSend {
     /// Check if the pattern matches at the start of the given token slice.
     ///
@@ -59,10 +41,10 @@ pub trait Pattern: LSend {
 }
 
 pub trait PatternExt {
-    fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span>;
+    fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span<Token>>;
 
     /// Search through all tokens to locate all non-overlapping pattern matches.
-    fn find_all_matches(&self, tokens: &[Token], source: &[char]) -> Vec<Span> {
+    fn find_all_matches(&self, tokens: &[Token], source: &[char]) -> Vec<Span<Token>> {
         self.iter_matches(tokens, source).collect()
     }
 }
@@ -71,7 +53,7 @@ impl<P> PatternExt for P
 where
     P: Pattern + ?Sized,
 {
-    fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span> {
+    fn iter_matches(&self, tokens: &[Token], source: &[char]) -> impl Iterator<Item = Span<Token>> {
         MatchIter::new(self, tokens, source)
     }
 }
@@ -99,7 +81,7 @@ impl<P> Iterator for MatchIter<'_, '_, '_, P>
 where
     P: Pattern + ?Sized,
 {
-    type Item = Span;
+    type Item = Span<Token>;
 
     fn next(&mut self) -> Option<Self::Item> {
         while self.index < self.tokens.len() {
@@ -119,25 +101,15 @@ where
     }
 }
 
-pub trait OwnedPatternExt {
-    fn or(self, other: Box<dyn Pattern>) -> EitherPattern;
+/// A simpler version of the [`Pattern`] trait that only matches a single
+/// token.
+pub trait SingleTokenPattern: LSend {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool;
 }
 
-impl<P> OwnedPatternExt for P
-where
-    P: Pattern + 'static,
-{
-    fn or(self, other: Box<dyn Pattern>) -> EitherPattern {
-        EitherPattern::new(vec![Box::new(self), other])
-    }
-}
-
-impl<F> Pattern for F
-where
-    F: LSend + Fn(&Token, &[char]) -> bool,
-{
+impl<S: SingleTokenPattern> Pattern for S {
     fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        if self(tokens.first()?, source) {
+        if self.matches_token(tokens.first()?, source) {
             Some(1)
         } else {
             None
@@ -145,12 +117,18 @@ where
     }
 }
 
+impl<F: LSend + Fn(&Token, &[char]) -> bool> SingleTokenPattern for F {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        self(token, source)
+    }
+}
+
 pub trait DocPattern {
-    fn find_all_matches_in_doc(&self, document: &Document) -> Vec<Span>;
+    fn find_all_matches_in_doc(&self, document: &Document) -> Vec<Span<Token>>;
 }
 
 impl<P: PatternExt> DocPattern for P {
-    fn find_all_matches_in_doc(&self, document: &Document) -> Vec<Span> {
+    fn find_all_matches_in_doc(&self, document: &Document) -> Vec<Span<Token>> {
         self.find_all_matches(document.get_tokens(), document.get_source())
     }
 }

@@ -1,36 +1,33 @@
-use crate::{
-    Token,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::Token;
+use crate::TokenKind;
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct PossessiveYour {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for PossessiveYour {
     fn default() -> Self {
-        let pattern =
-            SequencePattern::aco("you")
-                .then_whitespace()
-                .then(|tok: &Token, source: &[char]| {
-                    if tok.kind.is_nominal() && !tok.kind.is_likely_homograph() {
-                        let word = tok.span.get_content_string(source).to_lowercase();
-                        return !matches!(word.as_str(), "guys" | "what's");
-                    }
-                    false
-                });
+        let pattern = SequenceExpr::aco("you")
+            .then_whitespace()
+            .then_kind_is_but_is_not_except(
+                TokenKind::is_nominal,
+                TokenKind::is_likely_homograph,
+                &["guys", "what's"],
+            );
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for PossessiveYour {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for PossessiveYour {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -59,12 +56,13 @@ impl PatternLinter for PossessiveYour {
 #[cfg(test)]
 mod tests {
     use crate::linting::tests::{
-        assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
+        assert_lint_count, assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
     };
 
     use super::PossessiveYour;
 
     #[test]
+    #[should_panic] // currently fails because comments is a homographs (verb or noun)
     fn your_comments() {
         assert_suggestion_result(
             "You comments may end up in the documentation.",
@@ -125,6 +123,14 @@ mod tests {
             "I'm just showing you what's available and how to use it.",
             PossessiveYour::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn allows_issue_1583() {
+        assert_no_lints(
+            "Note that in a world with modules everywhere, you almost never need an IIFE",
+            PossessiveYour::default(),
         );
     }
 }

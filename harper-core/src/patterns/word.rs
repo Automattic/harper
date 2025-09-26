@@ -1,14 +1,14 @@
-use super::Pattern;
+use super::SingleTokenPattern;
 
 use crate::{CharString, Token};
 
 /// Matches a predefined word.
-///
-/// Note that any capitalization of the contained words will result in a match.
 #[derive(Clone)]
 pub struct Word {
+    /// The word to match.
     word: CharString,
-    exact: bool,
+    /// Determines whether the match is case-sensitive.
+    case_sensitive: bool,
 }
 
 impl Word {
@@ -16,14 +16,23 @@ impl Word {
     pub fn new(word: &'static str) -> Self {
         Self {
             word: word.chars().collect(),
-            exact: false,
+            case_sensitive: false,
         }
     }
+
     /// Matches the provided word, ignoring case.
     pub fn from_chars(word: &[char]) -> Self {
         Self {
             word: word.iter().copied().collect(),
-            exact: false,
+            case_sensitive: false,
+        }
+    }
+
+    /// Matches the provided word, ignoring case.
+    pub fn from_char_string(word: CharString) -> Self {
+        Self {
+            word,
+            case_sensitive: false,
         }
     }
 
@@ -31,32 +40,29 @@ impl Word {
     pub fn new_exact(word: &'static str) -> Self {
         Self {
             word: word.chars().collect(),
-            exact: true,
+            case_sensitive: true,
         }
     }
 }
 
-impl Pattern for Word {
-    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
-        let tok = tokens.first()?;
-        if !tok.kind.is_word() {
-            return None;
+impl SingleTokenPattern for Word {
+    fn matches_token(&self, token: &Token, source: &[char]) -> bool {
+        if !token.kind.is_word() {
+            return false;
         }
-        if tok.span.len() != self.word.len() {
-            return None;
+        if token.span.len() != self.word.len() {
+            return false;
         }
 
-        let chars = tok.span.get_content(source);
-        let eq = if self.exact {
+        let chars = token.span.get_content(source);
+        if self.case_sensitive {
             chars == self.word.as_slice()
         } else {
             chars
                 .iter()
                 .zip(&self.word)
                 .all(|(a, b)| a.eq_ignore_ascii_case(b))
-        };
-
-        if eq { Some(1) } else { None }
+        }
     }
 }
 

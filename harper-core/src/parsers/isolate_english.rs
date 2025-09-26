@@ -1,6 +1,6 @@
-use crate::{Dictionary, language_detection::is_likely_english};
-
 use super::{Parser, Token, TokenStringExt};
+use crate::language_detection::is_likely_english;
+use crate::spell::Dictionary;
 
 /// A parser that wraps another, using heuristics to quickly redact paragraphs of a document that aren't
 /// intended to be English text.
@@ -36,9 +36,9 @@ impl<D: Dictionary> Parser for IsolateEnglish<D> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Document, FstDictionary, TokenStringExt, parsers::PlainEnglish};
-
     use super::IsolateEnglish;
+    use crate::spell::FstDictionary;
+    use crate::{Document, TokenStringExt, parsers::PlainEnglish};
 
     /// Assert that the provided text contains _no_ chunks of valid English
     fn assert_no_english(text: &str) {

@@ -1,9 +1,8 @@
-use crate::{
-    Token, TokenStringExt,
-    patterns::{Pattern, SequencePattern},
-};
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::{Token, TokenStringExt};
 
-use crate::linting::{Lint, LintKind, PatternLinter, Suggestion};
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -11,24 +10,22 @@ use crate::linting::{Lint, LintKind, PatternLinter, Suggestion};
 /// harper-core/src/linting/lets_confusion/no_contraction_with_verb.rs
 /// harper-core/src/linting/pronoun_contraction/should_contract.rs
 pub struct LetUsRedundancy {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for LetUsRedundancy {
     fn default() -> Self {
-        let pattern = SequencePattern::aco("let's")
-            .then_whitespace()
-            .then_pronoun();
+        let pattern = SequenceExpr::aco("let's").then_whitespace().then_pronoun();
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
 
-impl PatternLinter for LetUsRedundancy {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for LetUsRedundancy {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

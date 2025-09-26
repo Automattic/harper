@@ -1,9 +1,21 @@
 [workspace]
-members = [ "harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-wasm", "harper-tree-sitter", "harper-html", "harper-literate-haskell", "harper-typst" , "harper-stats"]
+members = ["harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-wasm", "harper-tree-sitter", "harper-html", "harper-literate-haskell", "harper-typst", "harper-stats", "harper-pos-utils", "harper-brill", "harper-ink"]
 resolver = "2"
+
+# Comment out the below lines if you plan to use a debugger.
+[profile.test]
+opt-level = 1
 
 [profile.release]
 codegen-units = 1
 lto = true
 opt-level = 3
-strip = true
+# Stripping binaries triggers a bug in `wasm-opt`.
+# Disable it for now.
+# strip = true
+
+# Release profile with debug info.
+# Useful for debugging and profiling.
+[profile.release-debug]
+inherits = "release"
+debug = 2

@@ -1,11 +1,12 @@
+use crate::expr::{Expr, ExprMap, FixedPhrase};
 use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
 
+use super::{ExprLinter, LintGroup};
 use super::{Lint, LintKind, Suggestion};
-use super::{LintGroup, PatternLinter};
+use crate::Document;
 use crate::parsers::PlainEnglish;
-use crate::patterns::{ExactPhrase, Pattern, PatternMap};
-use crate::{Dictionary, Document};
+use crate::spell::Dictionary;
 use crate::{Token, TokenStringExt};
 use std::sync::Arc;
 
@@ -14,7 +15,7 @@ use std::sync::Arc;
 ///
 /// If you would like to add a proper noun to Harper, see `proper_noun_rules.json`.
 pub struct ProperNounCapitalizationLinter<D: Dictionary + 'static> {
-    pattern_map: PatternMap<Document>,
+    pattern_map: ExprMap<Document>,
     description: String,
     dictionary: Arc<D>,
 }
@@ -43,7 +44,7 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
     ) -> Self {
         let dictionary = Arc::new(dictionary);
 
-        let mut pattern_map = PatternMap::default();
+        let mut expr_map = ExprMap::default();
 
         for can_vers in canonical_versions {
             let doc = Document::new_from_vec(
@@ -51,26 +52,26 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
                 &PlainEnglish,
                 &dictionary,
             );
-            let pattern = ExactPhrase::from_document(&doc);
+            let expr = FixedPhrase::from_document(&doc);
 
-            pattern_map.insert(pattern, doc);
+            expr_map.insert(expr, doc);
         }
 
         Self {
-            pattern_map,
+            pattern_map: expr_map,
             dictionary: dictionary.clone(),
             description: description.to_string(),
         }
     }
 }
 
-impl<D: Dictionary + 'static> PatternLinter for ProperNounCapitalizationLinter<D> {
-    fn pattern(&self) -> &dyn Pattern {
+impl<D: Dictionary + 'static> ExprLinter for ProperNounCapitalizationLinter<D> {
+    fn expr(&self) -> &dyn Expr {
         &self.pattern_map
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let canonical_case = self.pattern_map.lookup(matched_tokens, source).unwrap();
+        let canonical_case = self.pattern_map.lookup(0, matched_tokens, source).unwrap();
 
         let mut broken = false;
 
@@ -116,7 +117,7 @@ fn lint_group_from_json(json: &str, dictionary: Arc<impl Dictionary + 'static>) 
     let rules: HashMap<String, RuleEntry> = serde_json::from_str(json).unwrap();
 
     for (key, rule) in rules.into_iter() {
-        group.add_pattern_linter(
+        group.add_expr_linter(
             key,
             Box::new(ProperNounCapitalizationLinter::new_strs(
                 rule.canonical,
@@ -137,12 +138,9 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        FstDictionary,
-        linting::tests::{assert_lint_count, assert_suggestion_result},
-    };
-
     use super::lint_group;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::spell::FstDictionary;
 
     #[test]
     fn americas_lowercase() {

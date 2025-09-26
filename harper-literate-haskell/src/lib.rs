@@ -1,10 +1,11 @@
 use harper_comments::CommentParser;
 use harper_core::{
-    Lrc, Masker, MutableDictionary, Token,
+    Lrc, Masker, Token,
     parsers::{Markdown, MarkdownOptions, Mask, Parser},
 };
 
 mod masker;
+use harper_core::spell::MutableDictionary;
 use itertools::Itertools;
 use masker::LiterateHaskellMasker;
 

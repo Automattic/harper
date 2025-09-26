@@ -1,10 +1,14 @@
+use crate::TokenKind;
+use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use crate::{
     Token,
     linting::{Lint, LintKind, Suggestion},
-    patterns::{EitherPattern, Pattern, SequencePattern, WordSet},
+    patterns::WordSet,
 };
 
-use crate::linting::PatternLinter;
+use crate::linting::ExprLinter;
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -12,67 +16,49 @@ use crate::linting::PatternLinter;
 /// harper-core/src/linting/lets_confusion/let_us_redundancy.rs
 /// harper-core/src/linting/pronoun_contraction/should_contract.rs
 pub struct NoContractionWithVerb {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for NoContractionWithVerb {
     fn default() -> Self {
         // Only tests "let".
-        let let_ws = SequencePattern::default()
+        let let_ws = SequenceExpr::default()
             .then(WordSet::new(&["lets", "let"]))
             .then_whitespace();
 
-        // Word is only a verb, and not the gerund/present participle form.
-        // Only tests the next word after "let".
-        let non_ing_verb = SequencePattern::default().then(|tok: &Token, source: &[char]| {
-            let Some(Some(meta)) = tok.kind.as_word() else {
-                return false;
-            };
-
-            if !meta.is_verb() || meta.is_noun() || meta.is_adjective() {
-                return false;
-            }
-
-            let lowercase = tok.span.get_content_string(source).to_lowercase();
-
-            // If it ends with 'ing' and is at least 5 chars long, it could be a gerund or past participle
-            // TODO: replace with metadata check when affix system supports verb forms
-            if lowercase.len() < 5 {
-                return true;
-            }
-
-            let is_ing_form = lowercase.ends_with("ing");
-
-            !is_ing_form
+        // Match verbs that are only verbs (not also nouns/adjectives) and not in -ing form
+        let non_ing_verb = SequenceExpr::default().then(|tok: &Token, _src: &[char]| {
+            tok.kind.is_verb()
+                && !tok.kind.is_noun()
+                && !tok.kind.is_adjective()
+                && !tok.kind.is_verb_progressive_form()
         });
 
         // Ambiguous word is a verb determined by heuristic of following word's part of speech
         // Tests the next two words after "let".
-        let verb_due_to_following_pos = SequencePattern::default()
-            .then(|tok: &Token, source: &[char]| {
-                tok.kind.is_verb()
-                // TODO: because 'US' is a noun, 'us' also gets marked as a noun
-                || tok.kind.is_noun() && tok.span.get_content_string(source) != "us"
-            })
+        let verb_due_to_following_pos = SequenceExpr::default()
+            .then_verb()
             .then_whitespace()
-            .then(|tok: &Token, _source: &[char]| {
-                tok.kind.is_determiner() || tok.kind.is_pronoun() || tok.kind.is_conjunction()
-            });
+            .then_kind_any(&[
+                TokenKind::is_determiner,
+                TokenKind::is_pronoun,
+                TokenKind::is_conjunction,
+            ] as &[_]);
 
-        let let_then_verb = let_ws.then(EitherPattern::new(vec![
+        let let_then_verb = let_ws.then(LongestMatchOf::new(vec![
             Box::new(non_ing_verb),
             Box::new(verb_due_to_following_pos),
         ]));
 
         Self {
-            pattern: Box::new(let_then_verb),
+            expr: Box::new(let_then_verb),
         }
     }
 }
 
-impl PatternLinter for NoContractionWithVerb {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for NoContractionWithVerb {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -81,7 +67,7 @@ impl PatternLinter for NoContractionWithVerb {
             matched_tokens[2].span.get_content_string(source),
         );
 
-        // "to let go" is a phrasal verb but "lets go" is quite a common mistak for "let's go"
+        // "to let go" is a phrasal verb but "lets go" is quite a common mistake for "let's go"
         if let_string == "let" && verb_string == "go" {
             return None;
         }
@@ -111,7 +97,7 @@ mod tests {
     use super::NoContractionWithVerb;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
-    // Corrections
+    // Correct unambiguous verb
 
     #[test]
     fn fix_lets_inspect() {
@@ -187,7 +173,7 @@ mod tests {
         );
     }
 
-    // Disambiguated noun/verb by following determiner
+    // Correct disambiguated noun/verb by following determiner
 
     #[test]
     fn corrects_lets_make_this() {
@@ -198,7 +184,7 @@ mod tests {
         );
     }
 
-    // Disambiguated verb by following pronoun
+    // Correct disambiguated verb by following pronoun
 
     #[test]
     fn corrects_lets_mock_them() {
@@ -220,6 +206,17 @@ mod tests {
     fn dont_flag_let_go_1202() {
         assert_lint_count(
             "... until you hit your opponent, then let go and quickly retap",
+            NoContractionWithVerb::default(),
+            0,
+        );
+    }
+
+    // False positive wrongly flagged by previous version of this linter
+
+    #[test]
+    fn dont_flag_let_in_and() {
+        assert_lint_count(
+            "Japanese is good enough to be let in and.",
             NoContractionWithVerb::default(),
             0,
         );

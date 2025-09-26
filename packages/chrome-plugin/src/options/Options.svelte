@@ -1,14 +1,18 @@
 <script lang="ts">
-import { Button, Input, Select, Toggle } from 'flowbite-svelte';
+import { Button, Input, Select } from 'flowbite-svelte';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
+import { ActivationKey } from '../protocol';
 
 let lintConfig: LintConfig = $state({});
 let lintDescriptions: Record<string, string> = $state({});
 let searchQuery = $state('');
 let searchQueryLower = $derived(searchQuery.toLowerCase());
 let dialect = $state(Dialect.American);
+let defaultEnabled = $state(false);
+let activationKey: ActivationKey = $state(ActivationKey.Off);
+let userDict = $state('');
 
 $effect(() => {
 	ProtocolClient.setLintConfig(lintConfig);
@@ -16,6 +20,19 @@ $effect(() => {
 
 $effect(() => {
 	ProtocolClient.setDialect(dialect);
+});
+
+$effect(() => {
+	ProtocolClient.setDefaultEnabled(defaultEnabled);
+});
+
+$effect(() => {
+	ProtocolClient.setActivationKey(activationKey);
+});
+
+$effect(() => {
+	console.log('hit');
+	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
 ProtocolClient.getLintConfig().then((l) => {
@@ -28,6 +45,18 @@ ProtocolClient.getLintDescriptions().then((d) => {
 
 ProtocolClient.getDialect().then((d) => {
 	dialect = d;
+});
+
+ProtocolClient.getDefaultEnabled().then((d) => {
+	defaultEnabled = d;
+});
+
+ProtocolClient.getActivationKey().then((d) => {
+	activationKey = d;
+});
+
+ProtocolClient.getUserDictionary().then((d) => {
+	userDict = dictToString(d.toSorted());
 });
 
 function configValueToString(value: boolean | undefined): string {
@@ -54,6 +83,40 @@ function configStringToValue(str: string): boolean | undefined | null {
 
 	throw 'Fell through case';
 }
+
+/** Converts the content of a text area to viable dictionary values. */
+export function stringToDict(s: string): string[] {
+	return s
+		.split('\n')
+		.map((s) => s.trim())
+		.filter((v) => v.length > 0);
+}
+
+/** Converts the content of a text area to viable dictionary values. */
+export function dictToString(values: string[]): string {
+	return values.map((v) => v.trim()).join('\n');
+}
+
+async function exportEnabledDomainsCSV() {
+	try {
+		const enabledDomains = await ProtocolClient.getEnabledDomains();
+		const json = JSON.stringify(enabledDomains, null, 2);
+
+		const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = 'enabled-domains.json';
+		document.body.appendChild(a);
+		a.click();
+		a.remove();
+		URL.revokeObjectURL(url);
+	} catch (e) {
+		console.error('Failed to export enabled domains JSON:', e);
+	}
+}
+
+// Import removed
 </script>
 
 <!-- centered wrapper with side gutters -->
@@ -79,6 +142,53 @@ function configStringToValue(str: string): boolean | undefined | null {
           </Select>
         </div>
       </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="font-medium">Enable on New Sites by Default</span>
+            <span class="font-light">Can make some apps behave abnormally.</span>
+          </div>
+          <input type="checkbox" bind:checked={defaultEnabled}/>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="font-medium">Export Enabled Domains</span>
+            <span class="font-light">Downloads JSON of domains explicitly enabled.</span>
+          </div>
+          <Button size="sm" color="light" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+        </div>
+      </div>
+
+      
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="font-medium">Activation Key</span>
+            <span class="font-light">If you're finding that you're accidentally triggering Harper.</span>
+          </div>
+          <Select size="sm" color="primary" class="w-44" bind:value={activationKey}>
+            <option value={ActivationKey.Shift}>Double Shift</option>
+            <option value={ActivationKey.Control}>Double Control</option>
+            <option value={ActivationKey.Off}>Off</option>
+          </Select>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="font-medium">User Dictionary</span>
+            <span class="font-light">Each word should be on its own line.</span>
+          </div>
+          <textarea bind:value={userDict} />
+        </div>
+      </div>
+
     </section>
 
     <!-- ── RULES ─────────────────────────────── -->
@@ -95,7 +205,7 @@ function configStringToValue(str: string): boolean | undefined | null {
             <div class="flex items-start justify-between gap-4">
               <div class="space-y-0.5">
                 <p class="font-medium">{key}</p>
-                <p class="text-xs text-gray-600">{lintDescriptions[key]}</p>
+                <p class="text-xs text-gray-600">{@html lintDescriptions[key]}</p>
               </div>
               <Select
                 size="sm"

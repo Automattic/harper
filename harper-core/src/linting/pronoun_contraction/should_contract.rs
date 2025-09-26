@@ -1,10 +1,14 @@
-use crate::{
-    CharStringExt, Token,
-    patterns::{Pattern, SequencePattern, WordSet},
-};
+use std::sync::Arc;
+
+use crate::TokenKind;
+use crate::expr::AnchorStart;
+use crate::expr::Expr;
+use crate::expr::OwnedExprExt;
+use crate::expr::SequenceExpr;
+use crate::{Token, patterns::WordSet};
 
 use crate::Lint;
-use crate::linting::{LintKind, PatternLinter, Suggestion};
+use crate::linting::{ExprLinter, LintKind, Suggestion};
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -12,49 +16,80 @@ use crate::linting::{LintKind, PatternLinter, Suggestion};
 /// harper-core/src/linting/lets_confusion/let_us_redundancy.rs
 /// harper-core/src/linting/lets_confusion/no_contraction_with_verb.rs
 pub struct ShouldContract {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for ShouldContract {
     fn default() -> Self {
+        let cap = Arc::new(
+            SequenceExpr::default()
+                .then(WordSet::new(&["your", "were"]))
+                .then_whitespace()
+                .then_kind_is_but_is_not(
+                    TokenKind::is_non_quantifier_determiner,
+                    TokenKind::is_pronoun,
+                )
+                .then_whitespace()
+                .then_adjective(),
+        );
+
+        let start = SequenceExpr::default().then(AnchorStart).then(cap.clone());
+        let mid = SequenceExpr::default()
+            .then_unless(WordSet::new(&["what"]))
+            .t_ws()
+            .then(cap);
+
         Self {
-            pattern: Box::new(
-                SequencePattern::default()
-                    .then(WordSet::new(&["your", "were"]))
-                    .then_whitespace()
-                    .then_determiner()
-                    .then_whitespace()
-                    .then_adjective(),
-            ),
+            expr: Box::new(start.or(mid)),
         }
     }
 }
 
 impl ShouldContract {
-    fn mistake_to_correct(mistake: &str) -> impl Iterator<Item = Vec<char>> {
-        match mistake.to_lowercase().as_str() {
+    fn mistake_to_correct(mistake: &str) -> Option<Vec<Vec<char>>> {
+        let words = match mistake.to_lowercase().as_str() {
             "your" => vec!["you're", "you are"],
             "were" => vec!["we're", "we are"],
-            _ => panic!("The pattern in this linter should make a fall-through impossible."),
+            _ => return None,
         }
         .into_iter()
         .map(|v| v.chars().collect())
+        .collect();
+
+        Some(words)
     }
 }
 
-impl PatternLinter for ShouldContract {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ShouldContract {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let mistake = matched_tokens[0].span.get_content(source);
+        // Locate the mistake
+        let possible_mistakes = [matched_tokens[0].span, matched_tokens[1].span];
+
+        let mut correct = None;
+        let mut span = None;
+
+        for p_mist in possible_mistakes {
+            let mistake = p_mist.get_content_string(source);
+            let correct_cand = Self::mistake_to_correct(&mistake);
+            if correct_cand.is_some() {
+                correct = correct_cand;
+                span = Some(p_mist);
+            }
+        }
+
+        let correct = correct?;
+        let span = span?;
 
         Some(Lint {
-            span: matched_tokens[0].span,
+            span,
             lint_kind: LintKind::WordChoice,
-            suggestions: Self::mistake_to_correct(&mistake.to_lower().to_string())
-                .map(|v| Suggestion::replace_with_match_case(v, mistake))
+            suggestions: correct
+                .into_iter()
+                .map(|v| Suggestion::replace_with_match_case(v, span.get_content(source)))
                 .collect(),
             message: "Use the contraction or separate the words instead.".to_string(),
             priority: 31,
@@ -69,7 +104,7 @@ impl PatternLinter for ShouldContract {
 #[cfg(test)]
 mod tests {
     use super::ShouldContract;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn contracts_your_correctly() {
@@ -116,5 +151,16 @@ mod tests {
             ShouldContract::default(),
             0,
         );
+    }
+
+    #[test]
+    fn allow_issue_1508() {
+        assert_no_lints("Were any other toys fun?", ShouldContract::default());
+        assert_no_lints("You were his closest friend.", ShouldContract::default());
+    }
+
+    #[test]
+    fn allows_issue_1673() {
+        assert_no_lints("What were the action items?", ShouldContract::default());
     }
 }

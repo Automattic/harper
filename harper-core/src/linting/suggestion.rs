@@ -40,12 +40,10 @@ impl Suggestion {
                 .copied()
                 .chain(template_term),
         ) {
-            if v.is_ascii_uppercase() != t.is_ascii_uppercase() {
-                if t.is_uppercase() {
-                    *v = v.to_ascii_uppercase();
-                } else {
-                    *v = v.to_ascii_lowercase();
-                }
+            if t.is_uppercase() {
+                *v = v.to_ascii_uppercase();
+            } else {
+                *v = v.to_ascii_lowercase();
             }
         }
 
@@ -53,7 +51,7 @@ impl Suggestion {
     }
 
     /// Apply a suggestion to a given text.
-    pub fn apply(&self, span: Span, source: &mut Vec<char>) {
+    pub fn apply(&self, span: Span<char>, source: &mut Vec<char>) {
         match self {
             Self::ReplaceWith(chars) => {
                 // Avoid allocation if possible

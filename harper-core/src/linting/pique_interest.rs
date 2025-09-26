@@ -1,28 +1,28 @@
-use crate::{
-    CharString, CharStringExt, Token,
-    char_string::char_string,
-    patterns::{Pattern, SequencePattern, WordSet},
-};
+use crate::expr::Expr;
+use crate::expr::SequenceExpr;
+use crate::{CharString, CharStringExt, Token, char_string::char_string, patterns::WordSet};
 
-use super::{Lint, LintKind, PatternLinter, Suggestion};
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct PiqueInterest {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for PiqueInterest {
     fn default() -> Self {
-        let pattern = SequencePattern::default()
+        let pattern = SequenceExpr::default()
             .then(WordSet::new(&[
                 "peak", "peaked", "peek", "peeked", "peeking", "peaking",
             ]))
             .then_whitespace()
-            .then_not_plural_nominal()
+            .then(|tok: &Token, _: &[char]| {
+                tok.kind.is_non_plural_nominal() || tok.kind.is_possessive_determiner()
+            })
             .then_whitespace()
             .t_aco("interest");
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(pattern),
         }
     }
 }
@@ -41,9 +41,9 @@ impl PiqueInterest {
     }
 }
 
-impl PatternLinter for PiqueInterest {
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for PiqueInterest {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -128,6 +128,15 @@ mod tests {
             "She was peaking his interest with her stories.",
             PiqueInterest::default(),
             "She was piquing his interest with her stories.",
+        );
+    }
+
+    #[test]
+    fn corrects_peaked_my_interest() {
+        assert_suggestion_result(
+            "you've peaked my interest.",
+            PiqueInterest::default(),
+            "you've piqued my interest.",
         );
     }
 }

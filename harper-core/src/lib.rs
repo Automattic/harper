@@ -4,8 +4,11 @@
 mod char_ext;
 mod char_string;
 mod currency;
+pub mod dict_word_metadata;
+pub mod dict_word_metadata_orthography;
 mod document;
 mod edit_distance;
+pub mod expr;
 mod fat_token;
 mod ignored_lints;
 pub mod language_detection;
@@ -16,6 +19,7 @@ mod number;
 pub mod parsers;
 pub mod patterns;
 mod punctuation;
+mod render_markdown;
 mod span;
 pub mod spell;
 mod sync;
@@ -24,31 +28,30 @@ mod token;
 mod token_kind;
 mod token_string_ext;
 mod vec_ext;
-mod word_metadata;
 
+use render_markdown::render_markdown;
 use std::collections::VecDeque;
 
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
+pub use dict_word_metadata::{
+    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DictWordMetadata, NounData,
+    PronounData, VerbData, VerbForm,
+};
 pub use document::Document;
 pub use fat_token::{FatStringToken, FatToken};
-pub use ignored_lints::IgnoredLints;
+pub use ignored_lints::{IgnoredLints, LintContext};
 use linting::Lint;
 pub use mask::{Mask, Masker};
 pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
 pub use span::Span;
-pub use spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 pub use sync::{LSend, Lrc};
 pub use title_case::{make_title_case, make_title_case_str};
 pub use token::Token;
 pub use token_kind::TokenKind;
 pub use token_string_ext::TokenStringExt;
 pub use vec_ext::VecExt;
-pub use word_metadata::{
-    AdverbData, ConjunctionData, Degree, Dialect, NounData, PronounData, Tense, VerbData,
-    WordMetadata,
-};
 
 /// Return harper-core version
 pub fn core_version() -> &'static str {
@@ -82,8 +85,9 @@ pub fn remove_overlaps(lints: &mut Vec<Lint>) {
 
 #[cfg(test)]
 mod tests {
+    use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document, FstDictionary,
+        Dialect, Document,
         linting::{LintGroup, Linter},
         remove_overlaps,
     };

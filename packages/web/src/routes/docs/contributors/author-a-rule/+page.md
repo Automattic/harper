@@ -12,6 +12,8 @@ This guide will go through one easy way to add a complex rule to Harper.
 The lofty goal is for this to be doable by someone with little to no Rust experience.
 You should, however, be able to figure out how to use Git.
 
+While this guide should be enough to get stared, [others](https://elijahpotter.dev/articles/writing_a_grammatical_rule_for_harper) have been written.
+
 ## Fork the Harper Monorepo
 
 Before you can open a pull request or modify any code, you need a mutable copy of our monorepo.
@@ -36,23 +38,69 @@ GitHub has some [good documentation on how to create a draft PR](https://docs.gi
 ## Determine Your Rule's Needed Complexity
 
 A vast plurality of potential grammatical rules are pretty simple.
-If you're trying to extend Harper to identify a given phrase (like "mute point") and replace it with something else (like "moot point"), you can do this without any complex programming at all.
-All you have to do is add a line to `harper-core/src/linting/phrase_corrections.rs`:
+If you're trying to extend Harper to identify a given phrase (like "all of the sudden") and replace it with something else (like "all of a sudden"), you can do this without any complex programming at all.
+All you have to do is add a line to `harper-core/src/linting/phrase_corrections/mod.rs`:
 
 ```rust
-"MutePoint" => (
+"AllOfASudden" => (
     // The offending phrase
-    "mute point",
+    ["all of the sudden"],
     // The correct phrase
-    ["moot point"],
+    ["all of a sudden"],
     // The message to notify the user of the error
-    "Did you mean `moot point`?",
+    "The phrase is `all of a sudden`, meaning `unexpectedly`.",
     // A description of the rule.
-    "Ensures `moot point` is used instead of `mute point`, as `moot` means debatable or irrelevant."
+    "Corrects `all of the sudden` to `all of a sudden`."
 ),
 ```
 
 This method also covers more complex cases, like if one of the words contains capitalization or the phrase is split by a line break.
+
+You can actually add multiple offending phrases and correct phrases to the same rule:
+
+```rust
+"EnMasse" => (
+    // Multiple offending phrases
+    ["on mass", "on masse", "in mass"],
+    ["en masse"],
+```
+```rust
+"InOfItself" => (
+    ["in of itself"],
+    // Multiple correct phrases
+    ["in itself", "in and of itself"],
+```
+
+For more complex corrections with multiple variants, singular and plural, or multiple verb tenses, you can use `harper-core/src/linting/phrase_set_corrections/mod.rs`.
+
+It has two sections. The `add_1_to_1_mappings` section is simpler, supporting sets of corrections with a single name, where each pair is a single offending phrase and a single correct phrase.
+```rust
+"Ado" => (
+    &[
+        // Multiple variants but only one offending phrase
+        // and one correct phrase
+        ("further adieu", "further ado"),
+        ("much adieu", "much ado"),
+    ],
+    "Use `ado` (meaning 'fuss') not `adieu` (meaning 'farewell').",
+    "Corrects `adieu` to `ado` in common phrases."
+),
+```
+
+The `add_many_to_many_mappings` section is more complex. Each set still has a single name, but each pair can have multiple offending phrases and multiple correct phrases.
+```rust
+"ChangeTack" => (
+    &[
+        // Both multiple variants and also multiple offending
+        // phrases and/or correct phrases
+        (&["change tact", "change tacks"], &["change tack"]),
+        (&["changed tact", "changed tacks"], &["changed tack"]),
+    ],
+    "A change in direction is a change of `tack` (not `tact`).",
+    "Corrects the idiom `change tack`."
+),
+```
+
 
 Similarly, if you just want Harper to enforce proper capitalization of a multi-token proper noun (like "Tumblr Blaze") you just need to add an entry to `harper-core/proper_noun_rules.json`.
 
@@ -120,18 +168,18 @@ Finally, enable it in a macro invocation near the bottom:
 
 ```rust title="harper-core/src/linting/lint_group.rs"
 insert_struct_rule!(AdjectiveOfA, true);
-insert_pattern_rule!(BackInTheDay, true);
+insert_expr_rule!(BackInTheDay, true);
 insert_struct_rule!(WordPressDotcom, true);
-insert_pattern_rule!(OutOfDate, true);
-// [svp! df:+]   insert_pattern_rule!(MyRule, true);
+insert_expr_rule!(OutOfDate, true);
+// [svp! df:+]insert_expr_rule!(MyRule, true);
 ```
 
-If you use a `PatternLinter`, use `insert_pattern_rule` to take advantage of Harper's aggressive caching.
+If you use a `ExprLinter`, use `insert_expr_rule` to take advantage of Harper's aggressive caching.
 Otherwise, use `insert_struct_rule`.
 
 ## Write Your Rule
 
-Defining a pattern and [implementing the PatternLinter trait](https://docs.rs/harper-core/latest/harper_core/linting/trait.PatternLinter.html) is the easiest way to define a new rule for Harper.
+Defining an expression and [implementing the ExprLinter trait](https://docs.rs/harper-core/latest/harper_core/linting/trait.ExprLinter.html) is the easiest way to define a new rule for Harper.
 Here's a template to get you started:
 
 ```rust title="my_rule.rs"
@@ -139,30 +187,30 @@ use crate::{
     Lrc, Token
 };
 
-use super::{Lint, PatternLinter};
+use super::{Lint, ExprLinter};
 
 pub struct MyRule {
-    pattern: Box<dyn Pattern>,
+    expr: Box<dyn Expr>,
 }
 
 impl Default for MyRule {
     fn default() -> Self {
-        // Define the grammatical pattern the rule should look for in user text.
-        let mut pattern = todo!();
+        // Define the grammatical expr the rule should look for in user text.
+        let mut expr = todo!();
 
         Self {
-            pattern: Box::new(pattern),
+            expr: Box::new(expr),
         }
     }
 }
 
-impl PatternLinter for ThatWhich {
-    /// Pass the pattern to the PatternLinter framework.
-    fn pattern(&self) -> &dyn Pattern {
-        self.pattern.as_ref()
+impl ExprLinter for ThatWhich {
+    /// Pass the expr to the ExprLinter framework.
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
     }
 
-    /// Any series of tokens that match the pattern provided in the `default()` method above will
+    /// Any series of tokens that match the expr provided in the `default()` method above will
     /// be provided to this function, which you are required to map into a [`Lint`] object.
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         unimplemented!();

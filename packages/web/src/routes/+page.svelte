@@ -1,13 +1,14 @@
 <script module>
 import ChromeLogo from '$lib/ChromeLogo.svelte';
 import CodeLogo from '$lib/CodeLogo.svelte';
+import EdgeLogo from '$lib/EdgeLogo.svelte';
 import Editor from '$lib/Editor.svelte';
+import FirefoxLogo from '$lib/FirefoxLogo.svelte';
 import GitHubLogo from '$lib/GitHubLogo.svelte';
 import Graph from '$lib/Graph.svelte';
 import Logo from '$lib/Logo.svelte';
 import ObsidianLogo from '$lib/ObsidianLogo.svelte';
 import Section from '$lib/Section.svelte';
-import TypewriterHeading from '$lib/TypewriterHeading.svelte';
 
 export const frontmatter = {
 	home: false,
@@ -21,20 +22,19 @@ window.addEventListener('resize', () => {
 
 let mobile = $derived(width < 640);
 
-const headings = [
-	'Grammar Checking That Fits into Your Workflow',
-	'Quality Grammar Checking, Straight and Simple',
-	'Grammar Checking Without the Cloud',
-	'Grammar Checking That Respects Your Privacy',
-	'Grammar Checking for Developers',
-];
+/**
+ * @param {string} keyword
+ */
+function agentHas(keyword) {
+	return navigator.userAgent.toLowerCase().search(keyword.toLowerCase()) > -1;
+}
 </script>
 
 <div class="w-full flex flex-col items-center">
 	<Logo width="200px" />
 </div>
 <h1 class="font-bold text-center">Hi. I’m Harper.</h1>
-<TypewriterHeading items={headings} />
+<h2 class="text-center text-lg md:text-2xl lg:text-4xl">The <strong>Free</strong> Grammar Checker That Respects Your Privacy</h2>
 
 <div
 	class="md:flex md:flex-row grid grid-cols-2 items-center justify-evenly mt-5 transition-all place-items-center"
@@ -44,17 +44,29 @@ const headings = [
 		class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><GitHubLogo width="40px" height="40px" />GitHub</a
 	>
-	<a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-		><ChromeLogo width="40px" height="40px" />Chrome Extension</a
-	>
+
+  {#if agentHas("firefox")}
+	  <a href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	  	><FirefoxLogo width="40px" height="40px" />Add to Firefox</a
+	  >
+  {:else if agentHas("Edg")}
+	  <a href="https://microsoftedge.microsoft.com/addons/detail/private-grammar-checker-/ihjkkjfembmnjldmdchmadigpmapkpdh" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	  	><EdgeLogo width="40px" height="40px" />Add to Edge</a
+	  >
+  {:else}
+	  <a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	  	><ChromeLogo width="40px" height="40px" />Add to Chrome</a
+	  >
+  {/if}
+
 	<a href="/docs/integrations/obsidian" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-		><ObsidianLogo width="40px" height="40px" />Obsidian Plugin</a
+		><ObsidianLogo width="40px" height="40px" />Install in Obsidian</a
 	>
 
 	<a
 		href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
 		class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-		><CodeLogo width="40px" height="40px" />Code Plugin</a
+		><CodeLogo width="40px" height="40px" />Install in VS Code</a
 	>
 	<a href="https://elijahpotter.dev" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
 		><img
@@ -67,18 +79,18 @@ const headings = [
 	>
 </div>
 
+<div class="w-full h-[800px] overflow-hidden">
+	<Editor />
+</div>
+
 <Section noChild>
 	<span slot="title"> What is it? </span>
 	<span slot="subtitle">
-		Harper is an English grammar checker designed to be <em>just right</em>. You can think of it as
+		Harper is a free English grammar checker designed to be <em>just right</em>. You can think of it as
 		an open-source alternative to Grammarly. I created it after years of dealing with the
 		shortcomings of the competition.
 	</span>
 </Section>
-
-<div class="w-full h-[800px] overflow-hidden">
-	<Editor />
-</div>
 
 <Section>
 	<span slot="title">Private</span>
@@ -105,7 +117,7 @@ const headings = [
 		<a href="/docs/integrations/visual-studio-code"
 			>Visual Studio Code</a
 		>, <a href="/docs/integrations/neovim">Neovim</a>,
-		<a href="/docs/integrations/obsidian">Obsidian</a>, and <a href="/docs/integrations/chrome-extension">Chrome</a> integrations are amazing.
+		<a href="/docs/integrations/obsidian">Obsidian</a>, and <a href="/docs/integrations/chrome-extension">Chrome</a> extensions are amazing.
 	</span>
 
 	<img

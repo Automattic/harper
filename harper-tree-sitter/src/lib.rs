@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 
-use harper_core::{Mask, Masker, MutableDictionary, Span, WordMetadata};
+use harper_core::spell::MutableDictionary;
+use harper_core::{DictWordMetadata, Mask, Masker, Span};
 use tree_sitter::{Language, Node, Tree, TreeCursor};
 
 /// A Harper [`Masker`] that wraps a given tree-sitter language and a condition,
@@ -20,7 +21,7 @@ impl TreeSitterMasker {
 
     fn parse_root(&self, text: &str) -> Option<Tree> {
         let mut parser = tree_sitter::Parser::new();
-        parser.set_language(self.language).unwrap();
+        parser.set_language(&self.language).unwrap();
 
         // TODO: Use incremental parsing
         parser.parse(text, None)
@@ -39,7 +40,7 @@ impl TreeSitterMasker {
             }
         });
 
-        byte_spans_to_char_spans(&mut ident_spans, &text);
+        let ident_spans = byte_spans_to_char_spans(ident_spans, &text);
 
         let mut idents = HashSet::new();
 
@@ -49,7 +50,7 @@ impl TreeSitterMasker {
 
         let idents: Vec<_> = idents
             .into_iter()
-            .map(|ident| (ident, WordMetadata::default()))
+            .map(|ident| (ident, DictWordMetadata::default()))
             .collect();
 
         let mut dictionary = MutableDictionary::new();
@@ -61,7 +62,7 @@ impl TreeSitterMasker {
     /// Visits the children of a TreeSitter node, searching for comments.
     ///
     /// Returns the BYTE spans of the comment position.
-    fn extract_comments(&self, cursor: &mut TreeCursor, comments: &mut Vec<Span>) {
+    fn extract_comments(&self, cursor: &mut TreeCursor, comments: &mut Vec<Span<u8>>) {
         Self::visit_nodes(cursor, &mut |node: &Node| {
             if (self.node_condition)(node) {
                 comments.push(node.byte_range().into());
@@ -101,7 +102,7 @@ impl Masker for TreeSitterMasker {
         let mut comments_spans = Vec::new();
 
         self.extract_comments(&mut root.walk(), &mut comments_spans);
-        byte_spans_to_char_spans(&mut comments_spans, &text);
+        let comments_spans = byte_spans_to_char_spans(comments_spans, &text);
 
         let mut mask = Mask::new_blank();
 
@@ -115,37 +116,40 @@ impl Masker for TreeSitterMasker {
     }
 }
 
-/// Converts a set of byte-indexed [`Span`]s to char-index Spans, in-place.
+/// Converts a set of byte-indexed [`Span`]s to char-index Spans and returns them.
 /// NOTE: Will sort the given slice by their [`Span::start`].
 ///
-/// If any spans overlap, it will remove the second one.
-fn byte_spans_to_char_spans(byte_spans: &mut Vec<Span>, source: &str) {
-    byte_spans.sort_by_key(|s| s.start);
+/// If any spans overlap, it will merge them.
+fn byte_spans_to_char_spans(mut byte_spans: Vec<Span<u8>>, source: &str) -> Vec<Span<char>> {
+    byte_spans.sort_unstable_by_key(|s| s.start);
 
-    let cloned = byte_spans.clone();
-
-    let mut i: usize = 0;
-    byte_spans.retain(|cur| {
-        i += 1;
-        if let Some(prev) = cloned.get(i.wrapping_sub(2)) {
-            !cur.overlaps_with(*prev)
-        } else {
-            true
+    // merge overlapping spans
+    let mut spans = Vec::with_capacity(byte_spans.len());
+    for span in byte_spans {
+        match spans.last_mut() {
+            Some(last) if !span.overlaps_with(*last) => spans.push(span),
+            Some(last) => {
+                // ranges overlap, we can merge them
+                last.end = span.end;
+            }
+            None => spans.push(span),
         }
-    });
+    }
 
-    let mut last_byte_pos = 0;
-    let mut last_char_pos = 0;
+    // Convert byte spans to char spans.
+    spans
+        .iter()
+        .scan((0, 0), |(last_byte_pos, last_char_pos), span| {
+            let byte_span = *span;
 
-    byte_spans.iter_mut().for_each(|span| {
-        let byte_span = *span;
+            *last_char_pos += source[*last_byte_pos..byte_span.start].chars().count();
+            let start = *last_char_pos;
 
-        last_char_pos += source[last_byte_pos..byte_span.start].chars().count();
-        span.start = last_char_pos;
+            *last_char_pos += source[byte_span.start..byte_span.end].chars().count();
+            let end = *last_char_pos;
 
-        last_char_pos += source[byte_span.start..byte_span.end].chars().count();
-        span.end = last_char_pos;
-
-        last_byte_pos = byte_span.end;
-    })
+            *last_byte_pos = byte_span.end;
+            Some(Span::new(start, end))
+        })
+        .collect()
 }

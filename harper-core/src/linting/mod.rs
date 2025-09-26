@@ -2,11 +2,22 @@
 //!
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
+mod a_part;
+mod addicting;
+mod adjective_double_degree;
 mod adjective_of_a;
+mod all_intents_and_purposes;
+mod am_in_the_morning;
+mod amounts_for;
 mod an_a;
+mod another_thing_coming;
+mod another_think_coming;
+mod ask_no_preposition;
 mod avoid_curses;
 mod back_in_the_day;
+mod best_of_all_time;
 mod boring_words;
+mod cant;
 mod capitalize_personal_pronouns;
 mod chock_full;
 mod closed_compounds;
@@ -17,71 +28,148 @@ mod correct_number_suffix;
 mod currency_placement;
 mod dashes;
 mod despite_of;
+mod discourse_markers;
 mod dot_initialisms;
+mod double_modal;
 mod ellipsis_length;
+mod else_possessive;
+mod everyday;
+mod expand_memory_shorthands;
 mod expand_time_shorthands;
+mod expr_linter;
+mod feel_fell;
+mod few_units_of_time_ago;
+mod filler_words;
 mod first_aid_kit;
 mod for_noun;
+mod friend_of_me;
+mod have_pronoun;
+mod have_take_a_look;
 mod hedging;
 mod hereby;
 mod hop_hope;
+mod hope_youre;
 mod how_to;
 mod hyphenate_number_day;
+mod i_am_agreement;
+mod in_on_the_cards;
 mod inflected_verb_after_to;
+mod initialism_linter;
+mod initialisms;
+mod interested_in;
 mod it_is;
+mod it_looks_like_that;
 mod it_would_be;
+mod its_contraction;
+mod its_possessive;
 mod left_right_hand;
+mod less_worse;
 mod lets_confusion;
 mod likewise;
-mod linking_verbs;
 mod lint;
 mod lint_group;
 mod lint_kind;
 mod long_sentences;
+mod looking_forward_to;
 mod map_phrase_linter;
+mod map_phrase_set_linter;
+mod mass_plurals;
 mod merge_linters;
 mod merge_words;
+mod missing_preposition;
+mod missing_to;
+mod mixed_bag;
 mod modal_of;
+mod months;
+mod most_number;
 mod multiple_sequential_pronouns;
+mod nail_on_the_head;
+mod no_french_spaces;
+mod no_match_for;
 mod no_oxford_comma;
 mod nobody;
+mod nominal_wants;
+mod noun_countability;
+mod noun_verb_confusion;
 mod number_suffix_capitalization;
 mod of_course;
+mod on_floor;
+mod one_and_the_same;
+mod open_compounds;
+mod open_the_light;
+mod ought_to_be;
 mod out_of_date;
 mod oxford_comma;
 mod oxymorons;
-mod pattern_linter;
 mod phrasal_verb_as_compound_noun;
 mod phrase_corrections;
+mod phrase_set_corrections;
 mod pique_interest;
+mod possessive_noun;
 mod possessive_your;
+mod progressive_needs_be;
 mod pronoun_contraction;
+mod pronoun_inflection_be;
 mod pronoun_knew;
 mod proper_noun_capitalization_linters;
+mod punctuation_clusters;
+mod quantifier_needs_of;
+mod quite_quiet;
+mod redundant_additive_adverbs;
+mod regionalisms;
 mod repeated_words;
+mod save_to_safe;
+mod semicolon_apostrophe;
 mod sentence_capitalization;
+mod shoot_oneself_in_the_foot;
+mod simple_past_to_past_participle;
+mod since_duration;
 mod somewhat_something;
+mod sought_after;
 mod spaces;
 mod spell_check;
 mod spelled_numbers;
 mod split_words;
 mod suggestion;
+mod take_serious;
+mod that_than;
 mod that_which;
 mod the_how_why;
 mod the_my;
 mod then_than;
+mod thing_think;
+mod though_thought;
+mod throw_rubbish;
+mod to_two_too;
+mod touristic;
 mod unclosed_quotes;
+mod update_place_names;
 mod use_genitive;
+mod very_unique;
 mod was_aloud;
+mod way_too_adjective;
 mod whereas;
 mod widely_accepted;
+mod win_prize;
 mod wordpress_dotcom;
+mod would_never_have;
 
+pub use a_part::APart;
+pub use addicting::Addicting;
+pub use adjective_double_degree::AdjectiveDoubleDegree;
 pub use adjective_of_a::AdjectiveOfA;
+pub use all_intents_and_purposes::AllIntentsAndPurposes;
+pub use am_in_the_morning::AmInTheMorning;
+pub use amounts_for::AmountsFor;
 pub use an_a::AnA;
+pub use another_thing_coming::AnotherThingComing;
+pub use another_think_coming::AnotherThinkComing;
+pub use ask_no_preposition::AskNoPreposition;
 pub use avoid_curses::AvoidCurses;
 pub use back_in_the_day::BackInTheDay;
+pub use best_of_all_time::BestOfAllTime;
 pub use boring_words::BoringWords;
+pub use cant::Cant;
 pub use capitalize_personal_pronouns::CapitalizePersonalPronouns;
 pub use chock_full::ChockFull;
 pub use comma_fixes::CommaFixes;
@@ -91,64 +179,124 @@ pub use correct_number_suffix::CorrectNumberSuffix;
 pub use currency_placement::CurrencyPlacement;
 pub use dashes::Dashes;
 pub use despite_of::DespiteOf;
+pub use discourse_markers::DiscourseMarkers;
 pub use dot_initialisms::DotInitialisms;
+pub use double_modal::DoubleModal;
 pub use ellipsis_length::EllipsisLength;
+pub use everyday::Everyday;
+pub use expand_memory_shorthands::ExpandMemoryShorthands;
 pub use expand_time_shorthands::ExpandTimeShorthands;
+pub use expr_linter::ExprLinter;
+pub use feel_fell::FeelFell;
+pub use few_units_of_time_ago::FewUnitsOfTimeAgo;
+pub use filler_words::FillerWords;
 pub use for_noun::ForNoun;
+pub use friend_of_me::FriendOfMe;
+pub use have_pronoun::HavePronoun;
+pub use have_take_a_look::HaveTakeALook;
 pub use hedging::Hedging;
 pub use hereby::Hereby;
 pub use hop_hope::HopHope;
 pub use how_to::HowTo;
 pub use hyphenate_number_day::HyphenateNumberDay;
+pub use i_am_agreement::IAmAgreement;
+pub use in_on_the_cards::InOnTheCards;
 pub use inflected_verb_after_to::InflectedVerbAfterTo;
+pub use initialism_linter::InitialismLinter;
+pub use interested_in::InterestedIn;
+pub use it_looks_like_that::ItLooksLikeThat;
+pub use its_contraction::ItsContraction;
+pub use its_possessive::ItsPossessive;
 pub use left_right_hand::LeftRightHand;
+pub use less_worse::LessWorse;
 pub use lets_confusion::LetsConfusion;
 pub use likewise::Likewise;
-pub use linking_verbs::LinkingVerbs;
 pub use lint::Lint;
 pub use lint_group::{LintGroup, LintGroupConfig};
 pub use lint_kind::LintKind;
 pub use long_sentences::LongSentences;
+pub use looking_forward_to::LookingForwardTo;
 pub use map_phrase_linter::MapPhraseLinter;
+pub use map_phrase_set_linter::MapPhraseSetLinter;
+pub use mass_plurals::MassPlurals;
 pub use merge_words::MergeWords;
+pub use missing_preposition::MissingPreposition;
+pub use missing_to::MissingTo;
+pub use mixed_bag::MixedBag;
 pub use modal_of::ModalOf;
+pub use months::Months;
+pub use most_number::MostNumber;
 pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
+pub use nail_on_the_head::NailOnTheHead;
+pub use no_french_spaces::NoFrenchSpaces;
+pub use no_match_for::NoMatchFor;
 pub use no_oxford_comma::NoOxfordComma;
 pub use nobody::Nobody;
+pub use noun_countability::NounCountability;
+pub use noun_verb_confusion::NounVerbConfusion;
 pub use number_suffix_capitalization::NumberSuffixCapitalization;
 pub use of_course::OfCourse;
+pub use on_floor::OnFloor;
+pub use one_and_the_same::OneAndTheSame;
+pub use open_the_light::OpenTheLight;
+pub use ought_to_be::OughtToBe;
 pub use out_of_date::OutOfDate;
 pub use oxford_comma::OxfordComma;
 pub use oxymorons::Oxymorons;
-pub use pattern_linter::PatternLinter;
 pub use phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 pub use pique_interest::PiqueInterest;
+pub use possessive_noun::PossessiveNoun;
 pub use possessive_your::PossessiveYour;
+pub use progressive_needs_be::ProgressiveNeedsBe;
 pub use pronoun_contraction::PronounContraction;
+pub use pronoun_inflection_be::PronounInflectionBe;
+pub use punctuation_clusters::PunctuationClusters;
+pub use quantifier_needs_of::QuantifierNeedsOf;
+pub use quite_quiet::QuiteQuiet;
+pub use redundant_additive_adverbs::RedundantAdditiveAdverbs;
+pub use regionalisms::Regionalisms;
 pub use repeated_words::RepeatedWords;
+pub use save_to_safe::SaveToSafe;
+pub use semicolon_apostrophe::SemicolonApostrophe;
 pub use sentence_capitalization::SentenceCapitalization;
+pub use shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
+pub use simple_past_to_past_participle::SimplePastToPastParticiple;
+pub use since_duration::SinceDuration;
 pub use somewhat_something::SomewhatSomething;
+pub use sought_after::SoughtAfter;
 pub use spaces::Spaces;
 pub use spell_check::SpellCheck;
 pub use spelled_numbers::SpelledNumbers;
 pub use split_words::SplitWords;
 pub use suggestion::Suggestion;
+pub use take_serious::TakeSerious;
+pub use that_than::ThatThan;
 pub use that_which::ThatWhich;
 pub use the_how_why::TheHowWhy;
 pub use the_my::TheMy;
 pub use then_than::ThenThan;
+pub use thing_think::ThingThink;
+pub use though_thought::ThoughThought;
+pub use throw_rubbish::ThrowRubbish;
+pub use to_two_too::ToTwoToo;
+pub use touristic::Touristic;
 pub use unclosed_quotes::UnclosedQuotes;
+pub use update_place_names::UpdatePlaceNames;
 pub use use_genitive::UseGenitive;
+pub use very_unique::VeryUnique;
 pub use was_aloud::WasAloud;
+pub use way_too_adjective::WayTooAdjective;
 pub use whereas::Whereas;
 pub use widely_accepted::WidelyAccepted;
+pub use win_prize::WinPrize;
 pub use wordpress_dotcom::WordPressDotcom;
+pub use would_never_have::WouldNeverHave;
 
-use crate::{Document, LSend};
+use crate::{Document, LSend, render_markdown};
 
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
-/// Commonly implemented via [`PatternLinter`].
+/// Commonly implemented via [`ExprLinter`].
 ///
 /// See also: [`LintGroup`].
 pub trait Linter: LSend {
@@ -160,10 +308,51 @@ pub trait Linter: LSend {
     fn description(&self) -> &str;
 }
 
+/// A blanket-implemented trait that renders the Markdown description field of a linter to HTML.
+pub trait HtmlDescriptionLinter {
+    fn description_html(&self) -> String;
+}
+
+impl<L: ?Sized> HtmlDescriptionLinter for L
+where
+    L: Linter,
+{
+    fn description_html(&self) -> String {
+        let desc = self.description();
+        render_markdown(desc)
+    }
+}
+
 #[cfg(test)]
-mod tests {
+pub mod tests {
+    use crate::{Document, Span, Token, parsers::PlainEnglish};
+    use hashbrown::HashSet;
+
+    /// Extension trait for converting spans of tokens back to their original text
+    pub trait SpanVecExt {
+        fn to_strings(&self, doc: &Document) -> Vec<String>;
+    }
+
+    impl SpanVecExt for Vec<Span<Token>> {
+        fn to_strings(&self, doc: &Document) -> Vec<String> {
+            self.iter()
+                .map(|sp| {
+                    doc.get_tokens()[sp.start..sp.end]
+                        .iter()
+                        .map(|tok| doc.get_span_content_str(&tok.span))
+                        .collect::<String>()
+                })
+                .collect()
+        }
+    }
+
     use super::Linter;
-    use crate::{Document, FstDictionary, parsers::PlainEnglish};
+    use crate::spell::FstDictionary;
+
+    #[track_caller]
+    pub fn assert_no_lints(text: &str, linter: impl Linter) {
+        assert_lint_count(text, linter, 0);
+    }
 
     #[track_caller]
     pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {
@@ -246,10 +435,111 @@ mod tests {
                 [2]: \"{second}\""
             ),
             // I think it's not possible for more than one suggestion to be correct
-            (true, true, false) => unreachable!(),
-            (true, false, true) => unreachable!(),
-            (false, true, true) => unreachable!(),
-            (true, true, true) => unreachable!(),
+            _ => {}
+        }
+    }
+
+    /// Asserts that none of the suggestions from the linter match the given text.
+    #[track_caller]
+    pub fn assert_not_in_suggestion_result(
+        text: &str,
+        mut linter: impl Linter,
+        bad_suggestion: &str,
+    ) {
+        let test = Document::new_markdown_default_curated(text);
+        let lints = linter.lint(&test);
+
+        for (i, lint) in lints.iter().enumerate() {
+            for (j, suggestion) in lint.suggestions.iter().enumerate() {
+                let mut text_chars: Vec<char> = text.chars().collect();
+                suggestion.apply(lint.span, &mut text_chars);
+                let suggestion_text: String = text_chars.into_iter().collect();
+
+                if suggestion_text == bad_suggestion {
+                    panic!(
+                        "Found undesired suggestion at lint[{i}].suggestions[{j}]:\n\
+                        Expected to not find suggestion: \"{bad_suggestion}\"\n\
+                        But found: \"{suggestion_text}\""
+                    );
+                }
+            }
+        }
+    }
+
+    /// Asserts both that the given text matches the expected good suggestions and that none of the
+    /// suggestions are in the bad suggestions list.
+    #[track_caller]
+    pub fn assert_good_and_bad_suggestions(
+        text: &str,
+        mut linter: impl Linter,
+        good: &[&str],
+        bad: &[&str],
+    ) {
+        let test = Document::new_markdown_default_curated(text);
+        let lints = linter.lint(&test);
+
+        let mut unseen_good: HashSet<_> = good.iter().cloned().collect();
+        let mut found_bad = Vec::new();
+        let mut found_good = Vec::new();
+
+        for (i, lint) in lints.into_iter().enumerate() {
+            for (j, suggestion) in lint.suggestions.into_iter().enumerate() {
+                let mut text_chars: Vec<char> = text.chars().collect();
+                suggestion.apply(lint.span, &mut text_chars);
+                let suggestion_text: String = text_chars.into_iter().collect();
+
+                // Check for bad suggestions
+                if bad.contains(&&*suggestion_text) {
+                    found_bad.push((i, j, suggestion_text.clone()));
+                    eprintln!(
+                        "  ❌ Found bad suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
+                }
+                // Check for good suggestions
+                else if good.contains(&&*suggestion_text) {
+                    found_good.push((i, j, suggestion_text.clone()));
+                    eprintln!(
+                        "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
+                    unseen_good.remove(suggestion_text.as_str());
+                }
+            }
+        }
+
+        // Print summary
+        if !found_bad.is_empty() || !unseen_good.is_empty() {
+            eprintln!("\n=== Test Summary ===");
+
+            // In the summary section, change these loops:
+            if !found_bad.is_empty() {
+                eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
+                for (i, j, text) in &found_bad {
+                    eprintln!("  - lint[{i}].suggestions[{j}]: \"{text}\"");
+                }
+            }
+
+            // And for the good suggestions:
+            if !unseen_good.is_empty() {
+                eprintln!(
+                    "\n❌ Missing {} expected good suggestions:",
+                    unseen_good.len()
+                );
+                for text in &unseen_good {
+                    eprintln!("  - \"{text}\"");
+                }
+            }
+
+            eprintln!("\n✅ Found {} good suggestions", found_good.len());
+            eprintln!("==================\n");
+
+            if !found_bad.is_empty() || !unseen_good.is_empty() {
+                panic!("Test failed - see error output above");
+            }
+        } else {
+            eprintln!(
+                "\n✅ All {} good suggestions found, no bad suggestions\n",
+                found_good.len()
+            );
         }
     }
 
@@ -259,8 +549,6 @@ mod tests {
         let mut iter_count = 0;
 
         loop {
-            iter_count += 1;
-
             let test = Document::new_from_vec(
                 text_chars.clone().into(),
                 &PlainEnglish,
@@ -281,12 +569,14 @@ mod tests {
                 break;
             }
 
+            iter_count += 1;
+
             if iter_count == 100 {
                 break;
             }
         }
 
-        eprintln!("Corrected {} times.", iter_count);
+        eprintln!("Corrected {iter_count} times.");
 
         text_chars.iter().collect()
     }

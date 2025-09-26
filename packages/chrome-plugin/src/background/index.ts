@@ -1,30 +1,44 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
+import { unpackLint } from 'lint-framework';
 import {
+	ActivationKey,
 	type AddToUserDictionaryRequest,
+	createUnitResponse,
+	type GetActivationKeyRequest,
+	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
+	type GetDefaultStatusResponse,
 	type GetDialectRequest,
 	type GetDialectResponse,
 	type GetDomainStatusRequest,
 	type GetDomainStatusResponse,
+	type GetEnabledDomainsResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
+	type GetUserDictionaryResponse,
+	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
 	type Request,
 	type Response,
+	type SetActivationKeyRequest,
 	type SetConfigRequest,
+	type SetDefaultStatusRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
+	type SetUserDictionaryRequest,
 	type UnitResponse,
-	createUnitResponse,
 } from '../protocol';
-import unpackLint from '../unpackLint';
+
 console.log('background is running');
 
-let linter: LocalLinter;
-
-getDialect().then(setDialect);
+chrome.runtime.onInstalled.addListener((details) => {
+	if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
+		chrome.runtime.setUninstallURL('https://writewithharper.com/uninstall-browser-extension');
+		chrome.tabs.create({ url: 'https://writewithharper.com/install-browser-extension' });
+	}
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	handleRequest(request).then(sendResponse);
@@ -32,8 +46,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	return true;
 });
 
+let linter: LocalLinter;
+
+getDialect().then(setDialect);
+
 async function enableDefaultDomains() {
 	const defaultEnabledDomains = [
+		'old.reddit.com',
 		'chatgpt.com',
 		'www.perplexity.ai',
 		'textarea.online',
@@ -47,12 +66,30 @@ async function enableDefaultDomains() {
 		'froala.com',
 		'playground.lexical.dev',
 		'discord.com',
-		'youtube.com',
-		'instagram.com',
+		'www.youtube.com',
+		'www.google.com',
+		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
 		'www.reddit.com',
 		'www.linkedin.com',
+		'bsky.app',
+		'pootlewriter.com',
+		'www.tumblr.com',
+		'dayone.me',
+		'medium.com',
+		'x.com',
+		'www.notion.so',
+		'hashnode.com',
+		'www.slatejs.org',
+		'localhost',
+		'writewithharper.com',
+		'prosemirror.net',
+		'draftjs.org',
+		'gitlab.com',
+		'core.trac.wordpress.org',
+		'write.ellipsus.com',
+		'www.facebook.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -65,6 +102,8 @@ async function enableDefaultDomains() {
 enableDefaultDomains();
 
 function handleRequest(message: Request): Promise<Response> {
+	console.log(`Handling ${message.kind} request`);
+
 	switch (message.kind) {
 		case 'lint':
 			return handleLint(message);
@@ -84,6 +123,25 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleSetDomainStatus(message);
 		case 'addToUserDictionary':
 			return handleAddToUserDictionary(message);
+		case 'ignoreLint':
+			return handleIgnoreLint(message);
+		case 'setDefaultStatus':
+			return handleSetDefaultStatus(message);
+		case 'getDefaultStatus':
+			return handleGetDefaultStatus();
+		case 'getEnabledDomains':
+			return handleGetEnabledDomains();
+		case 'getUserDictionary':
+			return handleGetUserDictionary();
+		case 'setUserDictionary':
+			return handleSetUserDictionary(message);
+		case 'getActivationKey':
+			return handleGetActivationKey();
+		case 'setActivationKey':
+			return handleSetActivationKey(message);
+		case 'openOptions':
+			chrome.runtime.openOptionsPage();
+			return createUnitResponse();
 	}
 }
 
@@ -94,7 +152,7 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 	}
 
 	const lints = await linter.lint(req.text);
-	const unpackedLints = lints.map(unpackLint);
+	const unpackedLints = await Promise.all(lints.map((l) => unpackLint(req.text, l, linter)));
 	return { kind: 'lints', lints: unpackedLints };
 }
 
@@ -118,6 +176,31 @@ async function handleGetDialect(req: GetDialectRequest): Promise<GetDialectRespo
 	return { kind: 'getDialect', dialect: await getDialect() };
 }
 
+async function handleIgnoreLint(req: IgnoreLintRequest): Promise<UnitResponse> {
+	await linter.ignoreLintHash(BigInt(req.contextHash));
+	await setIgnoredLints(await linter.exportIgnoredLints());
+
+	return createUnitResponse();
+}
+
+async function handleGetDefaultStatus(): Promise<GetDefaultStatusResponse> {
+	return {
+		kind: 'getDefaultStatus',
+		enabled: await enabledByDefault(),
+	};
+}
+
+async function handleGetEnabledDomains(): Promise<GetEnabledDomainsResponse> {
+	const all = await chrome.storage.local.get(null as any);
+	const prefix = formatDomainKey(''); // yields 'domainStatus '
+	const domains = Object.entries(all)
+		.filter(([k, v]) => typeof v === 'boolean' && v === true && k.startsWith(prefix))
+		.map(([k]) => k.substring(prefix.length))
+		.sort((a, b) => a.localeCompare(b));
+
+	return { kind: 'getEnabledDomains', domains };
+}
+
 async function handleGetDomainStatus(
 	req: GetDomainStatusRequest,
 ): Promise<GetDomainStatusResponse> {
@@ -134,14 +217,48 @@ async function handleSetDomainStatus(req: SetDomainStatusRequest): Promise<UnitR
 	return createUnitResponse();
 }
 
+async function handleSetDefaultStatus(req: SetDefaultStatusRequest): Promise<UnitResponse> {
+	await setDefaultEnable(req.enabled);
+
+	return createUnitResponse();
+}
+
 async function handleGetLintDescriptions(
 	req: GetLintDescriptionsRequest,
 ): Promise<GetLintDescriptionsResponse> {
-	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptions() };
+	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptionsHTML() };
+}
+
+async function handleSetUserDictionary(req: SetUserDictionaryRequest): Promise<UnitResponse> {
+	await resetDictionary();
+	await addToDictionary(req.words);
+
+	return createUnitResponse();
 }
 
 async function handleAddToUserDictionary(req: AddToUserDictionaryRequest): Promise<UnitResponse> {
-	await addToDictionary(req.word);
+	await addToDictionary(req.words);
+
+	return createUnitResponse();
+}
+
+async function handleGetUserDictionary(): Promise<GetUserDictionaryResponse> {
+	const dict = await getUserDictionary();
+
+	return { kind: 'getUserDictionary', words: dict };
+}
+
+async function handleGetActivationKey(): Promise<GetActivationKeyResponse> {
+	const key = await getActivationKey();
+
+	return { kind: 'getActivationKey', key };
+}
+
+async function handleSetActivationKey(req: SetActivationKeyRequest): Promise<UnitResponse> {
+	if (!Object.values(ActivationKey).includes(req.key)) {
+		throw new Error(`Invalid activation key: ${req.key}`);
+	}
+	await setActivationKey(req.key);
 
 	return createUnitResponse();
 }
@@ -162,9 +279,34 @@ async function getLintConfig(): Promise<LintConfig> {
 	return JSON.parse(resp.lintConfig);
 }
 
+/** Get the ignored lint state from permanent storage. */
+async function setIgnoredLints(state: string): Promise<void> {
+	await linter.importIgnoredLints(state);
+
+	const json = await linter.exportIgnoredLints();
+
+	await chrome.storage.local.set({ ignoredLints: json });
+}
+
+/** Get the ignored lint state from permanent storage. */
+async function getIgnoredLints(): Promise<string> {
+	const state = await linter.exportIgnoredLints();
+	const resp = await chrome.storage.local.get({ ignoredLints: state });
+	return resp.ignoredLints;
+}
+
 async function getDialect(): Promise<Dialect> {
 	const resp = await chrome.storage.local.get({ dialect: Dialect.American });
 	return resp.dialect;
+}
+
+async function getActivationKey(): Promise<ActivationKey> {
+	const resp = await chrome.storage.local.get({ activationKey: ActivationKey.Off });
+	return resp.activationKey;
+}
+
+async function setActivationKey(key: ActivationKey) {
+	await chrome.storage.local.set({ activationKey: key });
 }
 
 function initializeLinter(dialect: Dialect) {
@@ -173,6 +315,7 @@ function initializeLinter(dialect: Dialect) {
 		dialect,
 	});
 
+	getIgnoredLints().then((i) => linter.importIgnoredLints(i));
 	getUserDictionary().then((u) => linter.importWords(u));
 	getLintConfig().then((c) => linter.setLintConfig(c));
 	linter.setup();
@@ -190,7 +333,9 @@ function formatDomainKey(domain: string): string {
 
 /** Check if Harper has been enabled for a given domain. */
 async function enabledForDomain(domain: string): Promise<boolean> {
-	const req = await chrome.storage.local.get({ [formatDomainKey(domain)]: false });
+	const req = await chrome.storage.local.get({
+		[formatDomainKey(domain)]: await enabledByDefault(),
+	});
 	return req[formatDomainKey(domain)];
 }
 
@@ -199,20 +344,38 @@ async function setDomainEnable(domain: string, status: boolean) {
 	await chrome.storage.local.set({ [formatDomainKey(domain)]: status });
 }
 
+/** Set whether Harper is enabled by default. */
+async function setDefaultEnable(status: boolean) {
+	await chrome.storage.local.set({ defaultEnable: status });
+}
+
+/** Check if Harper has been enabled by default. */
+async function enabledByDefault(): Promise<boolean> {
+	const req = await chrome.storage.local.get({ defaultEnable: false });
+	return req.defaultEnable;
+}
+
 /** Check whether Harper's state has been set for a given domain. */
 async function isDomainSet(domain: string): Promise<boolean> {
 	const resp = await chrome.storage.local.get(formatDomainKey(domain));
 	return typeof resp[formatDomainKey(domain)] == 'boolean';
 }
 
-/** Add a word to the persistent user dictionary. */
-async function addToDictionary(word: string): Promise<void> {
-	const words = await linter.exportWords();
-	words.push(word);
+/** Reset the persistent user dictionary. */
+async function resetDictionary(): Promise<void> {
+	await chrome.storage.local.set({ userDictionary: null });
+
+	initializeLinter(await linter.getDialect());
+}
+
+/** Add words to the persistent user dictionary. */
+async function addToDictionary(words: string[]): Promise<void> {
+	const exported = await linter.exportWords();
+	exported.push(...words);
 
 	await Promise.all([
-		linter.importWords(words),
-		chrome.storage.local.set({ userDictionary: words }),
+		linter.importWords(exported),
+		chrome.storage.local.set({ userDictionary: exported }),
 	]);
 }
 
