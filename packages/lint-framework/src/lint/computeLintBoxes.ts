@@ -67,6 +67,7 @@ export default function computeLintBoxes(
 				height: shrunkBox.height,
 				lint,
 				source,
+				range: range instanceof Range ? range : undefined,
 				applySuggestion: (sug: UnpackedSuggestion) => {
 					const current = isFormEl(el)
 						? (el as HTMLInputElement | HTMLTextAreaElement).value

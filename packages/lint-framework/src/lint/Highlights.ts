@@ -1,3 +1,4 @@
+import Bowser from 'bowser';
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import type { LintBox } from './Box';
@@ -16,23 +17,70 @@ import {
 	getSlateRoot,
 	getTrixRoot,
 } from './editorUtils';
-import lintKindColor from './lintKindColor';
+import lintKindColor, { type LintKind } from './lintKindColor';
 import RenderBox from './RenderBox';
 import type SourceElement from './SourceElement';
+import type { UnpackedLint } from './unpackLint';
 
 /** A class that renders highlights to a page and nothing else. Uses a virtual DOM to minimize jitter. */
 export default class Highlights {
 	renderBoxes: Map<SourceElement, RenderBox>;
+	highlights: Map<LintKind, Highlight> | null;
 
 	constructor() {
 		this.renderBoxes = new Map();
+		this.highlights = supportsCustomHighlights() ? new Map() : null;
+	}
+
+	/** Used for CSS highlight API */
+	private insertHighlightStyle(tag: string, lint: UnpackedLint) {
+		const color = lintKindColor(lint.lint_kind);
+		const textDecor = `underline ${color} solid 2px`;
+		const backgroundColor = `${color}22`;
+
+		const styleId = `harper-highlight-style-${lint.lint_kind}`;
+		if (document.getElementById(styleId)) return;
+
+		const style = document.createElement('style');
+		style.id = styleId;
+		style.textContent = `
+      ::highlight(${tag}) {
+        text-decoration: ${textDecor};
+        background-color: ${backgroundColor};
+      }
+    `;
+		document.head.appendChild(style);
 	}
 
 	public renderLintBoxes(boxes: LintBox[]) {
 		// Sort the lint boxes based on their source, so we can render them all together.
 		const sourceToBoxes: Map<SourceElement, { boxes: LintBox[]; cpa: DOMRect | null }> = new Map();
 
+		// Clear old highlights if they exist
+		if (this.highlights) {
+			for (const [_, highlight] of this.highlights) {
+				highlight.clear();
+			}
+		}
+
 		for (const box of boxes) {
+			if (box.range && this.highlights != null) {
+				let highlight = this.highlights.get(box.lint.lint_kind);
+
+				if (highlight != null) {
+					highlight.add(box.range);
+				} else {
+					highlight = new Highlight();
+					const tag = `harper-${box.lint.lint_kind}`;
+					CSS.highlights.set(tag, highlight);
+					this.insertHighlightStyle(tag, box.lint);
+					highlight.add(box.range);
+					this.highlights.set(box.lint.lint_kind, highlight);
+				}
+
+				continue;
+			}
+
 			let renderBox = this.renderBoxes.get(box.source);
 
 			if (renderBox == null) {
@@ -241,4 +289,37 @@ function isContainingBlock(el: Element): boolean {
 	}
 
 	return false;
+}
+
+export function supportsCustomHighlights(ua = navigator.userAgent) {
+	const root = globalThis.document?.documentElement;
+	const disableFlag =
+		root?.getAttribute?.('data-harper-disable-css-highlights') === 'true' ||
+		root?.dataset?.harperDisableCssHighlights === 'true';
+	if (disableFlag) {
+		return false;
+	}
+	const isAutomated = globalThis.navigator?.webdriver === true;
+	if (isAutomated) {
+		return false;
+	}
+	const parser = Bowser.getParser(ua);
+	const isFirefox = parser.getBrowserName(true) === 'firefox';
+	if (isFirefox) return false;
+	if (!('CSS' in window) || typeof CSS.supports !== 'function') return false;
+	const supportsSelector = CSS.supports('selector(::highlight(__x))');
+	const reg = CSS?.highlights as any;
+	const hasRegistry =
+		!!reg && ['get', 'set', 'has', 'delete', 'clear'].every((m) => typeof reg[m] === 'function');
+	const hasCtor = typeof window.Highlight === 'function';
+	let canRegister = false;
+	if (hasRegistry && hasCtor) {
+		try {
+			const h = new Highlight();
+			CSS.highlights.set('__probe__', h);
+			canRegister = CSS.highlights.has('__probe__');
+			CSS.highlights.delete('__probe__');
+		} catch {}
+	}
+	return supportsSelector && hasRegistry && hasCtor && canRegister;
 }

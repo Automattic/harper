@@ -52,8 +52,8 @@
 		"@tailwindcss/vite": "^4.1.4",
 		"@webcomponents/custom-elements": "^1.6.0",
 		"harper.js": "workspace:*",
-		"lint-framework": "workspace:*",
 		"jquery": "^3.7.1",
+		"lint-framework": "workspace:*",
 		"lodash-es": "^4.17.21",
 		"lru-cache": "^11.1.0",
 		"tailwindcss": "^4.1.4"
