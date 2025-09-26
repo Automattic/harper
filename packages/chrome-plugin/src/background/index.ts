@@ -1,5 +1,5 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
-import { unpackLint } from 'lint-framework';
+import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
 import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
@@ -148,12 +148,20 @@ function handleRequest(message: Request): Promise<Response> {
 /** Handle a request for linting. */
 async function handleLint(req: LintRequest): Promise<LintResponse> {
 	if (!(await enabledForDomain(req.domain))) {
-		return { kind: 'lints', lints: [] };
+		return { kind: 'lints', lints: {} };
 	}
 
-	const lints = await linter.lint(req.text);
-	const unpackedLints = await Promise.all(lints.map((l) => unpackLint(req.text, l, linter)));
-	return { kind: 'lints', lints: unpackedLints };
+	const grouped = await linter.organizedLints(req.text);
+	const unpackedEntries = await Promise.all(
+		Object.entries(grouped).map(async ([source, lints]) => {
+			const unpacked = await Promise.all(
+				lints.map((lint) => unpackLint(req.text, lint, linter, source)),
+			);
+			return [source, unpacked] as const;
+		}),
+	);
+	const unpackedBySource = Object.fromEntries(unpackedEntries) as UnpackedLintGroups;
+	return { kind: 'lints', lints: unpackedBySource };
 }
 
 async function handleGetConfig(req: GetConfigRequest): Promise<GetConfigResponse> {

@@ -407,6 +407,7 @@ pub mod tests {
         assert_lint_count(&transformed_str, linter, 0);
     }
 
+    #[track_caller]
     pub fn assert_top3_suggestion_result(
         text: &str,
         mut linter: impl Linter,

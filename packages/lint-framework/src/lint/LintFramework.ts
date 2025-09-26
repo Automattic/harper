@@ -2,7 +2,7 @@ import computeLintBoxes from './computeLintBoxes';
 import { isVisible } from './domUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
-import type { UnpackedLint } from './unpackLint';
+import type { UnpackedLintGroups } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
 
@@ -19,13 +19,13 @@ export default class LintFramework {
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequested = false;
 	private renderRequested = false;
-	private lastLints: { target: HTMLElement; lints: UnpackedLint[] }[] = [];
+	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
 
 	/** Function used to fetch lints for a given text/domain. */
-	private lintProvider: (text: string, domain: string) => Promise<UnpackedLint[]>;
+	private lintProvider: (text: string, domain: string) => Promise<UnpackedLintGroups>;
 	/** Actions wired by host environment (extension/app). */
 	private actions: {
 		ignoreLint?: (hash: string) => Promise<void>;
@@ -35,7 +35,7 @@ export default class LintFramework {
 	};
 
 	constructor(
-		lintProvider: (text: string, domain: string) => Promise<UnpackedLint[]>,
+		lintProvider: (text: string, domain: string) => Promise<UnpackedLintGroups>,
 		actions: {
 			ignoreLint?: (hash: string) => Promise<void>;
 			getActivationKey?: () => Promise<ActivationKey>;
@@ -100,7 +100,7 @@ export default class LintFramework {
 			this.onScreenTargets().map(async (target) => {
 				if (!document.contains(target)) {
 					this.targets.delete(target);
-					return { target: null as HTMLElement | null, lints: [] as UnpackedLint[] };
+					return { target: null as HTMLElement | null, lints: {} };
 				}
 
 				const text =
@@ -109,11 +109,11 @@ export default class LintFramework {
 						: target.textContent;
 
 				if (!text || text.length > 120000) {
-					return { target: null as HTMLElement | null, lints: [] as UnpackedLint[] };
+					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				const lints = await this.lintProvider(text, window.location.hostname);
-				return { target: target as HTMLElement, lints };
+				const lintsBySource = await this.lintProvider(text, window.location.hostname);
+				return { target: target as HTMLElement, lints: lintsBySource };
 			}),
 		);
 
@@ -189,8 +189,12 @@ export default class LintFramework {
 		requestAnimationFrame(() => {
 			const boxes = this.lastLints.flatMap(({ target, lints }) =>
 				target
-					? lints.flatMap((l) =>
-							computeLintBoxes(target, l as any, { ignoreLint: this.actions.ignoreLint }),
+					? Object.entries(lints).flatMap(([ruleName, ls]) =>
+							ls.flatMap((l) =>
+								computeLintBoxes(target, l as any, ruleName, {
+									ignoreLint: this.actions.ignoreLint,
+								}),
+							),
 						)
 					: [],
 			);
