@@ -839,7 +839,7 @@
 > The name    has a    nice      ring    to it       .
 # D+  NSg/VB+ V3  D/P+ NPr/VB/J+ NSg/VB+ P  NPr/ISg+ .
 > There are 100 pence to the pound   .
-# R+    VB  #   NSg   P  D+  NPr/VB+ .
+# R+    VB  #   NPl   P  D+  NPr/VB+ .
 > It       takes  2 to 4 weeks  to process typical applications .
 # NPr/ISg+ NPl/V3 # P  # NPrPl+ P  NSg/VB  NSg/J+  NPl+         .
 > Three to the power     of two  is   nine .

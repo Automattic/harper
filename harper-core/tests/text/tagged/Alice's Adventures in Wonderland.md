@@ -1061,7 +1061,7 @@
 > Ma     ! ” said the young     Crab    , a   little     snappishly . “ You’re enough to try      the
 # NPr/J+ . . VP/J D+  NPr/VB/J+ NSg/VB+ . D/P NPr/I/J/Dq R          . . K      NSg/I  P  NSg/VB/J D
 > patience of an  oyster    ! ”
-# NSg      P  D/P NSg/VB/J+ . .
+# Nᴹ       P  D/P NSg/VB/J+ . .
 >
 #
 > “ I       wish   I       had our Dinah here    , I       know   I       do      ! ” said Alice aloud , addressing nobody
@@ -2631,7 +2631,7 @@
 > Alice was not     much         surprised at    this    , she  was getting so        used to queer     things
 # NPr+  VPt NSg/R/C NSg/I/J/R/Dq VP/J      NSg/P I/Ddem+ . ISg+ VPt NSg/Vg  NSg/I/J/C VP/J P  NSg/VB/J+ NPl+
 > happening . While      she  was looking at    the place    where it       had been    , it       suddenly
-# Nᴹ/Vg/J   . NSg/VB/C/P ISg+ VPt Nᴹ/Vg/J NSg/P D+  N🅪Sg/VB+ NSg/C NPr/ISg+ VB  NSg/VPp . NPr/ISg+ R
+# N🅪Sg/Vg/J . NSg/VB/C/P ISg+ VPt Nᴹ/Vg/J NSg/P D+  N🅪Sg/VB+ NSg/C NPr/ISg+ VB  NSg/VPp . NPr/ISg+ R
 > appeared again .
 # VP/J     P     .
 >
@@ -3417,7 +3417,7 @@
 > First    came      ten  soldiers carrying clubs   ; these   were    all          shaped like         the three
 # NSg/VB/J NSg/VPt/P NSg+ NPl/V3+  Nᴹ/Vg/J  NPl/V3+ . I/Ddem+ NSg/VPt NSg/I/J/C/Dq VP/J   NSg/VB/J/C/P D+  NSg+
 > gardeners , oblong   and  flat     , with their hands  and  feet at    the corners : next    the
-# NPl+      . NSg/VB/J VB/C NSg/VB/J . P    D$+   NPl/V3 VB/C NPl+ NSg/P D   +       . NSg/J/P D
+# NPl+      . NSg/VB/J VB/C NSg/VB/J . P    D$+   NPl/V3 VB/C NPl+ NSg/P D   NPl/V3+ . NSg/J/P D
 > ten courtiers ; these   were    ornamented all          over     with diamonds , and  walked two and
 # NSg NPl       . I/Ddem+ NSg/VPt VP/J       NSg/I/J/C/Dq NSg/J/P+ P    NPl/V3   . VB/C VP/J   NSg VB/C
 > two , as    the soldiers did . After these  came      the royal  children ; there were    ten of
@@ -4108,8 +4108,8 @@
 # . D/P+ NSg/VB/J+ NPr🅪Sg+ . D$+  N🅪Sg/I+ . . D   NSg/VB  VPt   NPr/J/P D/P NSg/VB/J . J    NSg/VB+ .
 >
 #
-> “ Now        , I       give   you    fair      warning  , ” shouted the Queen     , stamping on  the ground     as    she
-# . NPr/VB/J/C . ISg/#r+ NSg/VB ISgPl+ NSg/VB/J+ Nᴹ/Vg/J+ . . VP/J    D+  NPr/VB/J+ . NSg      J/P D+  N🅪Sg/VB/J+ NSg/R ISg+
+> “ Now        , I       give   you    fair      warning    , ” shouted the Queen     , stamping on  the ground     as    she
+# . NPr/VB/J/C . ISg/#r+ NSg/VB ISgPl+ NSg/VB/J+ N🅪Sg/Vg/J+ . . VP/J    D+  NPr/VB/J+ . NSg      J/P D+  N🅪Sg/VB/J+ NSg/R ISg+
 > spoke   ; “ either you    or    your head      must   be      off        , and  that          in      about half         no     time       !
 # NSg/VPt . . I/C    ISgPl+ NPr/C D$+  NPr/VB/J+ NSg/VB NSg/VXB NSg/VB/J/P . VB/C NSg/I/C/Ddem+ NPr/J/P J/P   N🅪Sg/VB/J/P+ NPr/P+ N🅪Sg/VB/J+ .
 > Take   your choice  ! ”
@@ -5179,7 +5179,7 @@
 > all          three dates   on  their slates , and  then    added them     up         , and  reduced the answer
 # NSg/I/J/C/Dq NSg   NPl/V3+ J/P D$+   NPl/V3 . VB/C NSg/J/C VP/J  NSg/IPl+ NSg/VB/J/P . VB/C VP/J    D   NSg/VB+
 > to shillings and  pence .
-# P  W?        VB/C NSg   .
+# P  NPl       VB/C NPl   .
 >
 #
 > “ Take   off        your hat     , ” the King      said to the Hatter .
