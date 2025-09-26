@@ -3,7 +3,6 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 import copy from 'rollup-plugin-copy';
-import sveltePreprocess from 'svelte-preprocess';
 import { defineConfig, loadEnv } from 'vite';
 import manifest from './src/manifest';
 
@@ -45,8 +44,8 @@ export default defineConfig(({ mode }) => {
 			svelte({
 				compilerOptions: {
 					dev: !production,
+					runes: true,
 				},
-				preprocess: sveltePreprocess(),
 			}),
 		],
 		resolve: {

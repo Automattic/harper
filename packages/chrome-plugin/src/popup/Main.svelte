@@ -48,7 +48,7 @@ function toggleDomainEnabled() {
       size="lg"
       class="rounded-full aspect-square h-16 w-16 p-0 shadow-md transition-colors flex flex-row justify-center"
       style="background-color: {enabled ? 'var(--color-primary-500)' : '#d1d5db'};"
-      on:click={toggleDomainEnabled}
+      onclick={toggleDomainEnabled}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

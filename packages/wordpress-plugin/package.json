@@ -11,7 +11,8 @@
 		"start": "wp-scripts start --webpack-copy-php"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^30.9.0",
+		"@playwright/test": "^1.55.0",
+		"@wordpress/scripts": "^30.24.0",
 		"@wp-now/wp-now": "^0.1.74",
 		"typescript": "catalog:"
 	},

@@ -38,7 +38,7 @@ linter.getDefaultLintConfig().then(async (v) => {
 			<TableBodyRow>
 				<TableBodyCell>{name}</TableBodyCell>
 				<TableBodyCell>{default_config[name] ? '✔️' : '❌'}</TableBodyCell>
-				<TableBodyCell tdClass="px-6 py-4 font-medium">{@html description.replaceAll('<p>', "").replaceAll('<p />', "")}</TableBodyCell>
+				<TableBodyCell class="px-6 py-4 font-medium">{@html description.replaceAll('<p>', "").replaceAll('<p />', "")}</TableBodyCell>
 			</TableBodyRow>
 		{/each}
 	</TableBody>

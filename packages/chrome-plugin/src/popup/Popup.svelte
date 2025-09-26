@@ -1,6 +1,4 @@
 <script lang="ts">
-import { Button } from 'flowbite-svelte';
-import { createEventDispatcher } from 'svelte';
 import logo from '/logo.png';
 import Main from './Main.svelte';
 import Onboarding from './Onboarding.svelte';
@@ -38,6 +36,12 @@ function openSettings() {
     <a href="https://github.com/Automattic/harper" target="_blank" rel="noopener" class="text-primary-600 hover:underline">GitHub</a>
     <a href="https://discord.com/invite/JBqcAaKrzQ" target="_blank" rel="noopener" class="text-primary-600 hover:underline">Discord</a>
     <a href="https://writewithharper.com" target="_blank" rel="noopener" class="text-primary-600 hover:underline">Discover</a>
-    <a target="_blank" rel="noopener" class="text-primary-600 hover:underline" on:click={openSettings}>Settings</a>
+    <button
+      type="button"
+      class="text-primary-600 hover:underline bg-transparent border-none p-0 cursor-pointer"
+      onclick={openSettings}
+    >
+      Settings
+    </button>
   </footer>
 </div>

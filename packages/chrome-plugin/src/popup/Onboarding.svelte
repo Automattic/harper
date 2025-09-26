@@ -26,7 +26,7 @@ const steps = [
     {/each}
   </ul>
 
-  <Button color="primary" outline class="w-full h-10" on:click={onConfirm}>
+  <Button color="primary" outline class="w-full h-10" onclick={onConfirm}>
     Let's start writing
   </Button>
 </main>

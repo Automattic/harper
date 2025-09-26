@@ -15,5 +15,31 @@
 		"check-dependency-version-consistency": "^5.0.0",
 		"typescript": "catalog:"
 	},
+	"pnpm": {
+		"overrides": {
+			"@babel/runtime": "^7.26.10",
+			"axios": "^1.12.2",
+			"body-parser": "^1.20.3",
+			"brace-expansion": "^2.0.2",
+			"brace-expansion@1": "1.1.12",
+			"compression": "^1.8.1",
+			"cookie": "^0.7.2",
+			"devalue": "^5.3.2",
+			"esbuild": "^0.25.10",
+			"express": "^4.21.2",
+			"form-data": "^4.0.4",
+			"http-proxy-middleware": "^2.0.9",
+			"on-headers": "^1.1.0",
+			"path-to-regexp": "^0.1.12",
+			"send": "^0.19.0",
+			"serve-static": "^1.16.2",
+			"tar-fs": "^3.1.1",
+			"tar-fs@^2": "2.1.4",
+			"tmp": "^0.2.5",
+			"wait-on": "^8.0.5",
+			"webpack-dev-server": "^5.2.1",
+			"ws": "^8.17.1"
+		}
+	},
 	"packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
 }

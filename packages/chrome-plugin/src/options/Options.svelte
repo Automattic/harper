@@ -115,8 +115,6 @@ async function exportEnabledDomainsCSV() {
 		console.error('Failed to export enabled domains JSON:', e);
 	}
 }
-
-// Import removed
 </script>
 
 <!-- centered wrapper with side gutters -->
@@ -159,7 +157,7 @@ async function exportEnabledDomainsCSV() {
             <span class="font-medium">Export Enabled Domains</span>
             <span class="font-light">Downloads JSON of domains explicitly enabled.</span>
           </div>
-          <Button size="sm" color="light" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+          <Button size="sm" color="light" onclick={exportEnabledDomainsCSV}>Export JSON</Button>
         </div>
       </div>
 
@@ -185,7 +183,7 @@ async function exportEnabledDomainsCSV() {
             <span class="font-medium">User Dictionary</span>
             <span class="font-light">Each word should be on its own line.</span>
           </div>
-          <textarea bind:value={userDict} />
+          <textarea bind:value={userDict}></textarea>
         </div>
       </div>
 
@@ -210,7 +208,7 @@ async function exportEnabledDomainsCSV() {
               <Select
                 size="sm"
                 value={configValueToString(value)}
-                on:change={(e) => {
+                onchange={(e) => {
                   lintConfig[key] = configStringToValue(e.target.value);
                 }}
                 class="max-w-[10rem]"

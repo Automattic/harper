@@ -4,7 +4,6 @@ import { binary, WorkerLinter } from 'harper.js';
 import { onMount } from 'svelte';
 import Typed from 'typed.js';
 
-let textareaRef;
 let linter = new WorkerLinter({ binary });
 
 let text = $state('');
@@ -55,7 +54,7 @@ onMount(() => {
 			<article class="mb-8">
 				<Textarea
 					bind:value={text}
-					rows="1"
+					rows={1}
 					class="heading-textarea font-serif text-2xl md:text-3xl font-bold border-none focus:ring-2 focus:ring-blue-200 bg-transparent p-0 resize-none overflow-hidden"
 					id="titleCaseInputField"
 				/>

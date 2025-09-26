@@ -43,10 +43,6 @@ let templates = [
 		value: 'I have a simple motto in life: jeśli jesteś spragniony, napij się wody.',
 	},
 ];
-
-function selectChange(e: Event) {
-	text = (e.target as HTMLSelectElement).value;
-}
 </script>
 
 <div class="[&>*]:mt-12 p-4 dark:[&>*]:text-white">
@@ -58,7 +54,7 @@ function selectChange(e: Event) {
 		Since this is used to redact commented-out code, it airs on the side of producing false-positives.
 	</p>
 
-	<Select items={templates} on:change={selectChange} />
+	<Select items={templates} bind:value={text} />
 
 	<Textarea
 		rows={8}
