@@ -1,5 +1,5 @@
 [workspace]
-members = [ "harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-wasm", "harper-tree-sitter", "harper-html", "harper-literate-haskell", "harper-typst" , "harper-stats", "harper-pos-utils", "harper-brill"]
+members = ["harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-wasm", "harper-tree-sitter", "harper-html", "harper-literate-haskell", "harper-typst", "harper-stats", "harper-pos-utils", "harper-brill", "harper-ink"]
 resolver = "2"
 
 # Comment out the below lines if you plan to use a debugger.

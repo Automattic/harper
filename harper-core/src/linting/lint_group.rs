@@ -72,6 +72,7 @@ use super::long_sentences::LongSentences;
 use super::looking_forward_to::LookingForwardTo;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
+use super::missing_to::MissingTo;
 use super::mixed_bag::MixedBag;
 use super::modal_of::ModalOf;
 use super::months::Months;
@@ -477,6 +478,7 @@ impl LintGroup {
         insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule!(MergeWords, true);
         insert_expr_rule!(MissingPreposition, true);
+        insert_expr_rule!(MissingTo, true);
         insert_expr_rule!(MixedBag, true);
         insert_expr_rule!(ModalOf, true);
         insert_expr_rule!(Months, true);

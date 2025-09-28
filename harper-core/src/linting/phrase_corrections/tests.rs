@@ -255,6 +255,16 @@ fn allows_beforehand() {
     assert_lint_count("We finished the preparations beforehand.", lint_group(), 0);
 }
 
+// BesideThePoint
+#[test]
+fn beside_the_point() {
+    assert_suggestion_result(
+        "we kind of focus on GPUs a lot but uh that's besides the point so uh sometime ago",
+        lint_group(),
+        "we kind of focus on GPUs a lot but uh that's beside the point so uh sometime ago",
+    );
+}
+
 // BestRegards
 // -none-
 
@@ -334,6 +344,13 @@ fn does_not_flag_other_contexts() {
 // DayAndAge
 // -none
 
+// DegreesKelvin
+#[test]
+fn corrects_degrees_kelvin() {
+    assert_suggestion_result("degrees kelvin", lint_group(), "kelvins");
+    assert_suggestion_result("°K", lint_group(), "K");
+}
+
 // DoNotWant
 #[test]
 fn corrects_dont_wan() {
@@ -354,14 +371,18 @@ fn corrects_mixed_case() {
 }
 
 #[test]
-fn corrects_degrees_kelvin() {
-    assert_suggestion_result("degrees kelvin", lint_group(), "kelvins");
-    assert_suggestion_result("°K", lint_group(), "K");
-}
-
-#[test]
 fn does_not_flag_already_correct() {
     assert_lint_count("I don't want to leave.", lint_group(), 0);
+}
+
+// DontCan
+#[test]
+fn corrects_dont_can() {
+    assert_suggestion_result(
+        "And currently uh I'm looking at it when I don't can see it like you know where it is, right?",
+        lint_group(),
+        "And currently uh I'm looking at it when I can't see it like you know where it is, right?",
+    );
 }
 
 // EachAndEveryOne
