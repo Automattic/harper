@@ -15,13 +15,9 @@ pub struct CriteriaPhenomena {
 
 impl CriteriaPhenomena {
     fn new() -> Self {
-        let plural_words = Lrc::new(WordSet::new(&[
-            "criteria", "phenomena",
-        ]));
+        let plural_words = Lrc::new(WordSet::new(&["criteria", "phenomena"]));
 
-        let singular_modifiers = Lrc::new(WordSet::new(&[
-            "this", "that", "a", "one",
-        ]));
+        let singular_modifiers = Lrc::new(WordSet::new(&["this", "that", "a", "one"]));
 
         Self {
             expr: Box::new(
@@ -48,16 +44,16 @@ impl ExprLinter for CriteriaPhenomena {
         let mut suggestions = Vec::new();
 
         if matched_tokens.len() == 3 {
-            let second_word = matched_tokens[2].span.get_content(source).to_string().to_ascii_lowercase();
-            
+            let second_word = matched_tokens[2]
+                .span
+                .get_content(source)
+                .to_string()
+                .to_ascii_lowercase();
+
             if second_word == "criteria" {
-                suggestions.push(Suggestion::ReplaceWith(
-                    "criterion".chars().collect(),
-                ));
+                suggestions.push(Suggestion::ReplaceWith("criterion".chars().collect()));
             } else if second_word == "phenomena" {
-                suggestions.push(Suggestion::ReplaceWith(
-                    "phenomenon".chars().collect(),
-                ));
+                suggestions.push(Suggestion::ReplaceWith("phenomenon".chars().collect()));
             }
         }
 
