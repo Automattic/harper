@@ -23,11 +23,8 @@ impl CriteriaPhenomena {
             expr: Box::new(
                 SequenceExpr::default()
                     .then(singular_modifiers.clone())
-                    .then(
-                        SequenceExpr::default()
-                            .then_whitespace()
-                            .then(plural_words.clone()),
-                    ),
+                    .then_whitespace()
+                    .then(plural_words.clone()),
             ),
             plural_words,
             singular_modifiers,
@@ -41,20 +38,19 @@ impl ExprLinter for CriteriaPhenomena {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let second_word = matched_tokens[2]
+            .span
+            .get_content(source)
+            .to_string()
+            .to_ascii_lowercase();
+
         let mut suggestions = Vec::new();
-
-        if matched_tokens.len() == 3 {
-            let second_word = matched_tokens[2]
-                .span
-                .get_content(source)
-                .to_string()
-                .to_ascii_lowercase();
-
-            if second_word == "criteria" {
-                suggestions.push(Suggestion::ReplaceWith("criterion".chars().collect()));
-            } else if second_word == "phenomena" {
-                suggestions.push(Suggestion::ReplaceWith("phenomenon".chars().collect()));
-            }
+        if second_word == "criteria" {
+            suggestions.push(Suggestion::ReplaceWith("criterion".chars().collect()));
+        } else if second_word == "phenomena" {
+            suggestions.push(Suggestion::ReplaceWith("phenomenon".chars().collect()));
+        } else {
+            panic!("Don't know what to say about '{second_word}'!")
         }
 
         Some(Lint {

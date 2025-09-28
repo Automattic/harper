@@ -442,6 +442,7 @@ impl LintGroup {
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
+        insert_expr_rule!(CriteriaPhenomena, true);
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
         insert_expr_rule!(DespiteOf, true);
@@ -484,7 +485,6 @@ impl LintGroup {
         insert_expr_rule!(Months, true);
         insert_expr_rule!(MostNumber, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
-        insert_expr_rule!(CriteriaPhenomena, true);
         insert_struct_rule!(NailOnTheHead, true);
         insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoMatchFor, true);
