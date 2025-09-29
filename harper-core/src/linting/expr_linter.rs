@@ -44,7 +44,7 @@ where
 
 impl<L> Linter for L
 where
-    L: ExprLinter,
+    L: ExprLinter + 'static,
 {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
