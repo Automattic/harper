@@ -4,7 +4,7 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::linting::LintKind;
 use crate::patterns::WordSet;
-use crate::{CharStringExt, Lint, Lrc, Token, TokenStringExt};
+use crate::{Lint, Lrc, Token, TokenStringExt};
 
 /// Linter that checks if 'criteria' or 'phenomena' is used as singular.
 pub struct CriteriaPhenomena {
@@ -38,20 +38,19 @@ impl ExprLinter for CriteriaPhenomena {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let second_word = matched_tokens[2]
+        let mut second_word: String = matched_tokens[2]
             .span
             .get_content(source)
-            .to_string()
-            .to_ascii_lowercase();
+            .iter()
+            .copied()
+            .collect();
+        second_word.make_ascii_lowercase();
 
-        let mut suggestions = Vec::new();
-        if second_word == "criteria" {
-            suggestions.push(Suggestion::ReplaceWith("criterion".chars().collect()));
-        } else if second_word == "phenomena" {
-            suggestions.push(Suggestion::ReplaceWith("phenomenon".chars().collect()));
-        } else {
-            panic!("Don't know what to say about '{second_word}'!")
-        }
+        let suggestions = match second_word.as_str() {
+            "criteria" => vec![Suggestion::ReplaceWith("criterion".chars().collect())],
+            "phenomena" => vec![Suggestion::ReplaceWith("phenomenon".chars().collect())],
+            _ => panic!("Don't know what to say about '{second_word}'!"),
+        };
 
         Some(Lint {
             span: matched_tokens.span()?,
