@@ -144,13 +144,11 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::BTreeMap;
-
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document, Span,
-        linting::{Lint, LintGroup, Linter},
-        remove_overlaps, remove_overlaps_map,
+        Dialect, Document,
+        linting::{LintGroup, Linter},
+        remove_overlaps,
     };
 
     #[test]
