@@ -643,6 +643,12 @@
 					"default": true,
 					"description": "In English idioms, “to course” means to flow rapidly—so avoid the eggcorn `cursing through veins.`"
 				},
+				"harper.linters.CriteriaPhenomena": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "The words “criteria” and “phenomena” are the plurals of “criterion” and “phenomenon”, respectively. They are often incorrectly used as singular."
+				},
 				"harper.linters.CurrencyPlacement": {
 					"scope": "resource",
 					"type": "boolean",
