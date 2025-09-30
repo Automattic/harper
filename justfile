@@ -265,7 +265,7 @@ check-rust:
 # Perform format and type checking.
 check: check-rust check-js build-web
 
-check-js: 
+check-js: build-harperjs
   #!/usr/bin/env bash
   set -eo pipefail
 
