@@ -10,7 +10,7 @@ on:
 
 jobs:
   vscode-plugin:
-    name: Package - ${{ matrix.platform.code_target }}
+    name: ${{ matrix.platform.code_target }}
     strategy:
       matrix:
         platform:

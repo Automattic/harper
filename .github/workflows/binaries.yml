@@ -10,7 +10,7 @@ on:
 
 jobs:
   binaries:
-    name: Release ${{ matrix.platform.project }} - ${{ matrix.platform.release_for }}
+    name: ${{ matrix.platform.project }} - ${{ matrix.platform.release_for }}
     strategy:
       matrix:
         platform:
