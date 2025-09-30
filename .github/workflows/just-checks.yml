@@ -13,7 +13,7 @@ env:
 jobs:
   just-checks:
     runs-on: ubuntu-latest
-    name: ${{ matrix.platform.project }} - ${{ matrix.platform.release_for }}
+    name: just ${{ matrix.task }}
     strategy:
       matrix:
         task:
