@@ -371,26 +371,17 @@ impl Document {
 
             // Find open quotes first.
             for quote in &quote_indices {
-                let is_open = {
-                    if *quote == 0 {
-                        true
-                    } else if pg[0..*quote].iter_word_likes().next().is_none() {
-                        true
-                    } else if pg[quote - 1].kind.is_whitespace() {
-                        true
-                    } else if matches!(
+                let is_open = *quote == 0
+                    || pg[0..*quote].iter_word_likes().next().is_none()
+                    || pg[quote - 1].kind.is_whitespace()
+                    || matches!(
                         pg[quote - 1].kind.as_punctuation(),
                         Some(Punctuation::LessThan)
                             | Some(Punctuation::OpenRound)
                             | Some(Punctuation::OpenSquare)
                             | Some(Punctuation::OpenCurly)
                             | Some(Punctuation::Apostrophe)
-                    ) {
-                        true
-                    } else {
-                        false
-                    }
-                };
+                    );
 
                 if is_open {
                     open_quote_indices.push(*quote);
