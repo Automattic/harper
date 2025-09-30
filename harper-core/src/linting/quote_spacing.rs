@@ -1,43 +1,54 @@
-use crate::expr::Expr;
-use crate::expr::SequenceExpr;
-use crate::{Token, TokenStringExt};
+use crate::expr::{ExprExt, SequenceExpr};
+use crate::linting::LintKind;
+use crate::{Document, TokenStringExt};
 
-use super::{ExprLinter, Lint, LintKind};
+use super::{Lint, Linter};
 
 pub struct QuoteSpacing {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
-impl Default for QuoteSpacing {
-    fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then_any_word()
-            .then_quote()
-            .then_any_word();
-
+impl QuoteSpacing {
+    pub fn new() -> Self {
         Self {
-            expr: Box::new(expr),
+            expr: SequenceExpr::default()
+                .then_any_word()
+                .then_quote()
+                .then_any_word(),
         }
     }
 }
 
-impl ExprLinter for QuoteSpacing {
-    fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+impl Default for QuoteSpacing {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl Linter for QuoteSpacing {
+    fn lint(&mut self, document: &Document) -> Vec<Lint> {
+        let mut lints = Vec::new();
+
+        for m in self.expr.iter_matches_in_doc(document) {
+            let matched_tokens = m.get_content(document.get_tokens());
+
+            let Some(span) = matched_tokens.span() else {
+                continue;
+            };
+
+            lints.push(Lint {
+                span,
+                lint_kind: LintKind::Formatting,
+                suggestions: vec![],
+                message: "A quote must be preceded or succeeded by a space.".to_owned(),
+                priority: 31,
+            })
+        }
+
+        lints
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
-        dbg!(matched_tokens);
-        Some(Lint {
-            span: matched_tokens.span()?,
-            lint_kind: LintKind::Formatting,
-            suggestions: vec![],
-            message: "A quote must be preceded or succeeded by a space.".to_owned(),
-            priority: 31,
-        })
-    }
-
-    fn description(&self) -> &'static str {
+    fn description(&self) -> &str {
         "Checks that quotation marks are preceded or succeeded by whitespace."
     }
 }
@@ -64,5 +75,10 @@ mod tests {
     #[test]
     fn allows_quotes_with_spacing() {
         assert_no_lints("They shouted \"charge\" together.", QuoteSpacing::default());
+    }
+
+    #[test]
+    fn allows_quotes_at_end_of_sentence() {
+        assert_no_lints("They shouted \"charge.\"", QuoteSpacing::default());
     }
 }
