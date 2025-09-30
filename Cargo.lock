@@ -2302,6 +2302,7 @@ dependencies = [
  "harper-ink",
  "harper-literate-haskell",
  "harper-pos-utils",
+ "harper-python",
  "harper-stats",
  "harper-typst",
  "hashbrown 0.16.0",
@@ -2336,7 +2337,6 @@ dependencies = [
  "tree-sitter-lua",
  "tree-sitter-nix",
  "tree-sitter-php",
- "tree-sitter-python",
  "tree-sitter-ruby",
  "tree-sitter-rust",
  "tree-sitter-scala",
@@ -2430,6 +2430,7 @@ dependencies = [
  "harper-html",
  "harper-ink",
  "harper-literate-haskell",
+ "harper-python",
  "harper-stats",
  "harper-typst",
  "indexmap",
@@ -2462,6 +2463,17 @@ dependencies = [
  "serde_json",
  "strum 0.27.2",
  "strum_macros 0.27.2",
+]
+
+[[package]]
+name = "harper-python"
+version = "0.65.0"
+dependencies = [
+ "harper-core",
+ "harper-tree-sitter",
+ "paste",
+ "tree-sitter",
+ "tree-sitter-python",
 ]
 
 [[package]]
