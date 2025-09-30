@@ -389,7 +389,7 @@ impl Backend {
             "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "typst" => Some(Box::new(Typst)),
             "org" => Some(Box::new(OrgMode)),
-            "py" | "pyi" => Some(Box::new(PythonParser::default())),
+            "python" => Some(Box::new(PythonParser::default())),
             _ => None,
         };
 
