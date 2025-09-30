@@ -1326,4 +1326,34 @@ This is a final paragraph with a weird "quote and a not-weird "quote".
             vec![Some(19), Some(16), None, None, Some(89), Some(87)]
         )
     }
+
+    #[test]
+    fn issue_1901() {
+        let raw = r#"
+"A quoted line"
+"A quote without a closing mark
+"Another quoted lined"
+"The last quoted line"
+            "#;
+
+        let doc = Document::new_markdown_default_curated(raw);
+
+        let quote_twins: Vec<_> = doc
+            .iter_quotes()
+            .map(|t| t.kind.as_quote().unwrap().twin_loc)
+            .collect();
+
+        assert_eq!(
+            quote_twins,
+            vec![
+                Some(6),
+                Some(0),
+                None,
+                Some(27),
+                Some(21),
+                Some(37),
+                Some(29)
+            ]
+        )
+    }
 }
