@@ -1,4 +1,4 @@
-name: Release Chrome Plugin 
+name: Release Chrome Plugin
 
 on:
   push:
@@ -9,7 +9,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  package:
+  release-chrome-plugin:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,9 +25,9 @@ jobs:
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Build Chrome Plugin
-        run: just build-chrome-plugin 
+        run: just build-chrome-plugin
       - name: Build Firefox Plugin
-        run: just build-firefox-plugin 
+        run: just build-firefox-plugin
       - name: Upload Chrome extension
         uses: actions/upload-artifact@v4
         with:

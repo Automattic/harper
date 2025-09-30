@@ -6,7 +6,7 @@ on:
   merge_group:
 
 jobs:
-  release:
+  build-binaries:
     name: Release ${{ matrix.platform.project }} - ${{ matrix.platform.release_for }}
     if: github.event.pull_request.draft == false
     strategy:

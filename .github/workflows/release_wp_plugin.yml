@@ -1,4 +1,4 @@
-name: Release WordPress Plugin 
+name: Release WordPress Plugin
 
 on:
   push:
@@ -9,7 +9,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  package:
+  release-wp-plugin:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,7 +25,7 @@ jobs:
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Build
-        run: just build-wp 
+        run: just build-wp
       - name: Upload extension
         uses: actions/upload-artifact@v4
         with:
