@@ -470,16 +470,6 @@ Message: |
 
 
 
-Lint:    Formatting (63 priority)
-Message: |
-     204 | > Alice’s Right Foot, Esq., Hearthrug, near the Fender, (with Alice’s love).
-         |                          ^~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “,”
-  - Replace with: “.”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
      206 | Oh dear, what nonsense I’m talking!”

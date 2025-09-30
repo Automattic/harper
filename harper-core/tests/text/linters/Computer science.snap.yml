@@ -985,16 +985,6 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
-Message: |
-     394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
-         |                                   ^~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “,”
-  - Replace with: “.”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      401 | mathematical models have been developed for general concurrent computation
