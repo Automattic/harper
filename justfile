@@ -260,8 +260,12 @@ check-rust:
   cargo fmt -- --check
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
+  cargo hack check --each-feature
+
 # Perform format and type checking.
-check: check-rust build-web
+check: check-rust check-js build-web
+
+check-js: 
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -281,7 +285,6 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
   set -eo pipefail
 
   cargo build --all-targets
-  cargo hack check --each-feature
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
