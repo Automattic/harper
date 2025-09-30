@@ -2,8 +2,11 @@ name: Release Chrome Plugin
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: ["master"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["master"]
+  merge_group:
 
 env:
   CARGO_TERM_COLOR: always
@@ -38,7 +41,9 @@ jobs:
         with:
           name: harper-firefox-plugin.zip
           path: "packages/chrome-plugin/package/harper-firefox-plugin.zip"
-      - uses: ncipollo/release-action@v1
+      - name: Release artifacts
+        uses: ncipollo/release-action@v1
+        if: startsWith(github.ref, 'refs/tags/v')
         with:
           artifacts: "packages/chrome-plugin/package/*.zip"
           allowUpdates: true
