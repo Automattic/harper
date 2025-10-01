@@ -25,7 +25,7 @@ build-harperjs: build-wasm
   ./docs.sh
 
 # Build the browser lint framework module
-build-lint-framework:
+build-lint-framework: build-harperjs
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -266,7 +266,7 @@ check-rust:
 # Perform format and type checking.
 check: check-rust check-js build-web
 
-check-js: build-harperjs
+check-js: build-harperjs build-lint-framework
   #!/usr/bin/env bash
   set -eo pipefail
 
