@@ -69,6 +69,10 @@ export default class WorkerLinter implements Linter {
 		return this.rpc('lint', [text, options]);
 	}
 
+	organizedLints(text: string, options?: LintOptions): Promise<Record<string, Lint[]>> {
+		return this.rpc('organizedLints', [text, options]);
+	}
+
 	applySuggestion(text: string, lint: Lint, suggestion: Suggestion): Promise<string> {
 		return this.rpc('applySuggestion', [text, lint, suggestion]);
 	}

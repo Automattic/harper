@@ -1,13 +1,14 @@
-name: Release Binaries
+name: Binaries
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: ["master"]
+    tags: ["v*"]
+  merge_group:
 
 jobs:
-  release:
-    name: Release ${{ matrix.platform.project }} - ${{ matrix.platform.release_for }}
+  binaries:
+    name: ${{ matrix.platform.project }} - ${{ matrix.platform.release_for }}
     if: github.event.pull_request.draft == false
     strategy:
       matrix:
@@ -136,13 +137,16 @@ jobs:
             tar czvf ../../../${{ matrix.platform.name }} ${{ matrix.platform.bin }}
           fi
           cd -
-      - uses: ncipollo/release-action@v1
-        with:
-          artifacts: ${{ matrix.platform.name }}
-          allowUpdates: true
-          draft: true
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.platform.bin }}-${{ matrix.platform.target }}
           path: ${{ matrix.platform.name }}
+
+      - name: Release artifacts
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: ${{ matrix.platform.name }}
+          allowUpdates: true
+          draft: true

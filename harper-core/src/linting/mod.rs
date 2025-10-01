@@ -25,6 +25,7 @@ mod comma_fixes;
 mod compound_nouns;
 mod confident;
 mod correct_number_suffix;
+mod criteria_phenomena;
 mod currency_placement;
 mod dashes;
 mod despite_of;
@@ -113,7 +114,6 @@ mod pronoun_contraction;
 mod pronoun_inflection_be;
 mod pronoun_knew;
 mod proper_noun_capitalization_linters;
-mod punctuation_clusters;
 mod quantifier_needs_of;
 mod quite_quiet;
 mod redundant_additive_adverbs;
@@ -176,6 +176,7 @@ pub use comma_fixes::CommaFixes;
 pub use compound_nouns::CompoundNouns;
 pub use confident::Confident;
 pub use correct_number_suffix::CorrectNumberSuffix;
+pub use criteria_phenomena::CriteriaPhenomena;
 pub use currency_placement::CurrencyPlacement;
 pub use dashes::Dashes;
 pub use despite_of::DespiteOf;
@@ -250,7 +251,6 @@ pub use possessive_your::PossessiveYour;
 pub use progressive_needs_be::ProgressiveNeedsBe;
 pub use pronoun_contraction::PronounContraction;
 pub use pronoun_inflection_be::PronounInflectionBe;
-pub use punctuation_clusters::PunctuationClusters;
 pub use quantifier_needs_of::QuantifierNeedsOf;
 pub use quite_quiet::QuiteQuiet;
 pub use redundant_additive_adverbs::RedundantAdditiveAdverbs;
@@ -408,6 +408,7 @@ pub mod tests {
         assert_lint_count(&transformed_str, linter, 0);
     }
 
+    #[track_caller]
     pub fn assert_top3_suggestion_result(
         text: &str,
         mut linter: impl Linter,

@@ -29,8 +29,8 @@ test('Wraps correctly', async ({ page }) => {
 	await page.waitForTimeout(6000);
 
 	await assertHarperHighlightBoxes(page, [
-		{ height: 18, width: 25.21875, x: 512.28125, y: 63 },
-		{ height: 18, width: 67.21875, x: 260.234375, y: 103 },
+		{ x: 260.234375, y: 103, width: 67.21875, height: 18 },
+		{ x: 512.28125, y: 63, width: 25.21875, height: 18 },
 	]);
 });
 

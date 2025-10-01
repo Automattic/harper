@@ -33,6 +33,7 @@ use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
+use super::criteria_phenomena::CriteriaPhenomena;
 use super::despite_of::DespiteOf;
 use super::discourse_markers::DiscourseMarkers;
 use super::dot_initialisms::DotInitialisms;
@@ -100,7 +101,6 @@ use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
-use super::punctuation_clusters::PunctuationClusters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quite_quiet::QuiteQuiet;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
@@ -256,7 +256,7 @@ impl Hash for LintGroupConfig {
 }
 
 /// A struct for collecting the output of a number of individual [Linter]s.
-/// Each child can be toggled via the public, mutable [Self::config] object.
+/// Each child can be toggled via the public, mutable `Self::config` object.
 pub struct LintGroup {
     pub config: LintGroupConfig,
     /// We use a binary map here so the ordering is stable.
@@ -269,7 +269,7 @@ pub struct LintGroup {
     ///
     /// Since the pattern linter results also depend on the config, we hash it and pass it as part
     /// of the key.
-    chunk_expr_cache: LruCache<(CharString, u64), Vec<Lint>>,
+    chunk_expr_cache: LruCache<(CharString, u64), BTreeMap<String, Vec<Lint>>>,
     hasher_builder: RandomState,
 }
 
@@ -441,6 +441,7 @@ impl LintGroup {
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
+        insert_expr_rule!(CriteriaPhenomena, true);
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
         insert_expr_rule!(DespiteOf, true);
@@ -508,7 +509,6 @@ impl LintGroup {
         insert_struct_rule!(PronounContraction, true);
         insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(PronounKnew, true);
-        insert_struct_rule!(PunctuationClusters, true);
         insert_expr_rule!(QuantifierNeedsOf, true);
         insert_expr_rule!(QuiteQuiet, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
@@ -586,22 +586,14 @@ impl LintGroup {
         group.config.clear();
         group
     }
-}
 
-impl Default for LintGroup {
-    fn default() -> Self {
-        Self::empty()
-    }
-}
-
-impl Linter for LintGroup {
-    fn lint(&mut self, document: &Document) -> Vec<Lint> {
-        let mut results = Vec::new();
+    pub fn organized_lints(&mut self, document: &Document) -> BTreeMap<String, Vec<Lint>> {
+        let mut results = BTreeMap::new();
 
         // Normal linters
         for (key, linter) in &mut self.linters {
             if self.config.is_rule_enabled(key) {
-                results.extend(linter.lint(document));
+                results.insert(key.clone(), linter.lint(document));
             }
         }
 
@@ -613,37 +605,57 @@ impl Linter for LintGroup {
 
             let chunk_chars = document.get_span_content(&chunk_span);
             let config_hash = self.hasher_builder.hash_one(&self.config);
-            let key = (chunk_chars.into(), config_hash);
+            let cache_key = (chunk_chars.into(), config_hash);
 
-            let mut chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&key) {
+            let mut chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
                 hit.clone()
             } else {
-                let mut pattern_lints = Vec::new();
+                let mut pattern_lints = BTreeMap::new();
 
                 for (key, linter) in &mut self.expr_linters {
                     if self.config.is_rule_enabled(key) {
-                        pattern_lints.extend(run_on_chunk(linter, chunk, document.get_source()));
+                        let lints =
+                            run_on_chunk(linter, chunk, document.get_source()).map(|mut l| {
+                                l.span.pull_by(chunk_span.start);
+                                l
+                            });
+
+                        pattern_lints.insert(key.clone(), lints.collect());
                     }
                 }
 
-                // Make the spans relative to the chunk start
-                for lint in &mut pattern_lints {
-                    lint.span.pull_by(chunk_span.start);
-                }
-
-                self.chunk_expr_cache.put(key, pattern_lints.clone());
+                self.chunk_expr_cache.put(cache_key, pattern_lints.clone());
                 pattern_lints
             };
 
             // Bring the spans back into document-space
-            for lint in &mut chunk_results {
-                lint.span.push_by(chunk_span.start);
+            for value in chunk_results.values_mut() {
+                for lint in value {
+                    lint.span.push_by(chunk_span.start);
+                }
             }
 
-            results.append(&mut chunk_results);
+            for (key, mut vec) in chunk_results {
+                results.entry(key).or_default().append(&mut vec);
+            }
         }
 
         results
+    }
+}
+
+impl Default for LintGroup {
+    fn default() -> Self {
+        Self::empty()
+    }
+}
+
+impl Linter for LintGroup {
+    fn lint(&mut self, document: &Document) -> Vec<Lint> {
+        self.organized_lints(document)
+            .into_values()
+            .flatten()
+            .collect()
     }
 
     fn description(&self) -> &str {

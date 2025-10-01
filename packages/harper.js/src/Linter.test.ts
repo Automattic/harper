@@ -17,6 +17,28 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(lints.length).toBe(1);
 	});
 
+	test(`${linterName} emits organized lints the same as it emits normal lints`, async () => {
+		const linter = new Linter({ binary });
+		const source = 'The the problem is...';
+
+		const lints = await linter.lint(source);
+		expect(lints.length).toBeGreaterThan(0);
+
+		const organized = await linter.organizedLints(source);
+		const normal = await linter.lint(source);
+
+		const flattened = [];
+		for (const [_, value] of Object.entries(organized)) {
+			flattened.push(...value);
+		}
+
+		expect(flattened.length).toBe(1);
+		expect(flattened.length).toBe(normal.length);
+
+		const item = flattened[0];
+		expect(item.message().length).not.toBe(0);
+	});
+
 	test(`${linterName} detects repeated words with multiple synchronous requests`, async () => {
 		const linter = new Linter({ binary });
 
