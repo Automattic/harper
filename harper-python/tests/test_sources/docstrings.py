@@ -9,3 +9,14 @@ class Main:
     def __init__(self):
         """Flat is bettter than nested."""
         pass
+
+
+
+def multiline_docstring(action_name: str):
+    """Perform the specified action.
+
+    Available actions:
+     - stop
+     - start
+     - pause
+    """

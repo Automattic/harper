@@ -1,5 +1,5 @@
-use harper_core::Token;
 use harper_core::parsers::{self, Parser, PlainEnglish};
+use harper_core::{Token, TokenKind};
 use harper_tree_sitter::TreeSitterMasker;
 use tree_sitter::Node;
 
@@ -38,7 +38,25 @@ impl Default for PythonParser {
 
 impl Parser for PythonParser {
     fn parse(&self, source: &[char]) -> Vec<Token> {
-        self.inner.parse(source)
+        let mut tokens = self.inner.parse(source);
+
+        let mut prev_kind: Option<&TokenKind> = None;
+
+        for token in &mut tokens {
+            if let TokenKind::Space(v) = &mut token.kind {
+                if let Some(TokenKind::Newline(_)) = &prev_kind {
+                    // Lines in multiline docstrings are indented with spaces to match the current level.
+                    // We need to remove such spaces to avoid triggering French spaces rule.
+                    *v = 0;
+                } else {
+                    *v = (*v).clamp(0, 1);
+                }
+            }
+
+            prev_kind = Some(&token.kind);
+        }
+
+        tokens
     }
 }
 
