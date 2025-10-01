@@ -1,7 +1,6 @@
 <script lang="ts">
 export let layout: 'single' | 'split' = 'single';
 export let reverse = false;
-export let padding = 'py-12';
 
 const hasSubtitle = Boolean($$slots.subtitle);
 const hasAside = Boolean($$slots.aside);
@@ -11,7 +10,7 @@ const { class: extraClass = '', ...restProps } = $$restProps;
 
 <section
 	{...restProps}
-	class={`w-full px-4 md:px-6 ${padding} ${extraClass}`.trim()}
+	class={`w-full px-4 md:px-6 ${extraClass}`.trim()}
 >
 	{#if layout === 'split'}
 		<div class={`grid gap-8 md:grid-cols-2 ${hasAside ? 'md:items-start' : ''}`}>
