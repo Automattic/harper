@@ -35,6 +35,58 @@ fn is_directive(chars: &[char], start: usize) -> bool {
     chars[start] == '#' && chars[start + 1] == '+'
 }
 
+// Check if a line is a list item (starts with -, +, or number)
+fn is_list_item(chars: &[char], start: usize) -> bool {
+    let mut pos = start;
+
+    // initial whitespaces or tabs
+    while pos < chars.len() && (chars[pos] == ' ' || chars[pos] == '\t') {
+        pos += 1;
+    }
+
+    if pos >= chars.len() {
+        return false;
+    }
+
+    // Check for - or + followed by space
+    if (chars[pos] == '-' || chars[pos] == '+') && pos + 1 < chars.len() && chars[pos + 1] == ' ' {
+        return true;
+    }
+
+    // Check for numbered list
+    if chars[pos].is_ascii_digit() {
+        let mut num_pos = pos;
+        while num_pos < chars.len() && chars[num_pos].is_ascii_digit() {
+            num_pos += 1;
+        }
+
+        if num_pos < chars.len()
+            && (chars[num_pos] == '.' || chars[num_pos] == ')')
+            && num_pos + 1 < chars.len()
+            && chars[num_pos + 1] == ' '
+        {
+            return true;
+        }
+    }
+
+    false
+}
+
+// Convert tabs to spaces in list items to avoid French spaces error
+fn normalize_list_item_whitespace(chars: &[char]) -> Vec<char> {
+    let mut result = Vec::new();
+    let mut init_list = false;
+    for &ch in chars {
+        if !init_list && ch == '\t' {
+            result.push(' ');
+            init_list = true;
+        } else {
+            result.push(ch);
+        }
+    }
+    result
+}
+
 // Get the rest of the line from a starting position
 fn get_line_from_start(chars: &[char], start: usize) -> &[char] {
     let mut end = start;
@@ -142,6 +194,22 @@ impl Parser for OrgMode {
                     span: Span::new(line_start, line_end),
                     kind: TokenKind::Unlintable,
                 });
+                cursor = line_end;
+                continue;
+            }
+
+            // Check for list items and normalize tabs to avoid French spaces
+            if is_list_item(source, line_start) {
+                let line_end = find_line_end(source, line_start);
+                let line_chars = &source[line_start..line_end];
+                let normalized_chars = normalize_list_item_whitespace(line_chars);
+
+                let mut line_tokens = english_parser.parse(&normalized_chars);
+                line_tokens
+                    .iter_mut()
+                    .for_each(|token| token.span.push_by(line_start));
+                tokens.append(&mut line_tokens);
+
                 cursor = line_end;
                 continue;
             }
@@ -292,5 +360,37 @@ print("hello")
 
         // Should not end with newline token if source doesn't
         assert!(!tokens.last().unwrap().kind.is_newline());
+    }
+
+    #[test]
+    fn list_items_with_tabs() {
+        let source = "- First item\n\t- Indented with tab\n+ Second item\n1. Numbered item";
+        let tokens = OrgMode.parse_str(source);
+
+        assert!(tokens.iter().any(|t| matches!(t.kind, TokenKind::Word(_))));
+
+        let unlintable_count = tokens
+            .iter()
+            .filter(|t| matches!(t.kind, TokenKind::Unlintable))
+            .count();
+        assert_eq!(unlintable_count, 0);
+    }
+
+    #[test]
+    fn mixed_list_formats() {
+        let source = r#"- Bullet item
+1. Numbered item
++ Plus item
+2) Parenthesis numbered"#;
+
+        let tokens = OrgMode.parse_str(source);
+
+        // Should recognize all list formats
+        let word_count = tokens
+            .iter()
+            .filter(|t| matches!(t.kind, TokenKind::Word(_)))
+            .count();
+
+        assert!(word_count == 8, "{:?}", tokens); // "Bullet", "item", "Numbered", "item", "Plus", "item", "Parenthesis", "numbered"
     }
 }

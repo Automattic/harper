@@ -1,5 +1,5 @@
 import type { Dialect, LintConfig, Summary } from 'harper.js';
-import type { UnpackedLint, UnpackedSuggestion } from 'lint-framework';
+import type { UnpackedLintGroups } from 'lint-framework';
 
 export type Request =
 	| LintRequest
@@ -41,7 +41,7 @@ export type LintRequest = {
 
 export type LintResponse = {
 	kind: 'lints';
-	lints: UnpackedLint[];
+	lints: UnpackedLintGroups;
 };
 
 export type GetConfigRequest = {

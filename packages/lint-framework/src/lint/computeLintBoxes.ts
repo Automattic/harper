@@ -18,6 +18,7 @@ function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement
 export default function computeLintBoxes(
 	el: HTMLElement,
 	lint: UnpackedLint,
+	rule: string,
 	opts: { ignoreLint?: (hash: string) => Promise<void> },
 ): IgnorableLintBox[] {
 	try {
@@ -67,6 +68,8 @@ export default function computeLintBoxes(
 				height: shrunkBox.height,
 				lint,
 				source,
+				rule,
+				range: range instanceof Range ? range : undefined,
 				applySuggestion: (sug: UnpackedSuggestion) => {
 					const current = isFormEl(el)
 						? (el as HTMLInputElement | HTMLTextAreaElement).value

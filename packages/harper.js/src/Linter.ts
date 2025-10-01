@@ -13,6 +13,9 @@ export default interface Linter {
 	/** Lint the provided text. */
 	lint(text: string, options?: LintOptions): Promise<Lint[]>;
 
+	/** Lint the provided text, maintaining the relationship with the source rule. */
+	organizedLints(text: string, options?: LintOptions): Promise<Record<string, Lint[]>>;
+
 	/** Apply a suggestion from a lint to text, returning the changed text. */
 	applySuggestion(text: string, lint: Lint, suggestion: Suggestion): Promise<string>;
 

@@ -35,6 +35,18 @@ function scan() {
 		fw.addTarget(this as HTMLInputElement);
 	});
 
+	$('[data-testid="gutenberg-editor"]').each(function () {
+		const leafs = leafNodes(this);
+
+		for (const leaf of leafs) {
+			if (!isVisible(leaf)) {
+				continue;
+			}
+
+			fw.addTarget(leaf);
+		}
+	});
+
 	$('[contenteditable="true"],[contenteditable]').each(function () {
 		const leafs = leafNodes(this);
 
@@ -53,4 +65,6 @@ function scan() {
 }
 
 scan();
-new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
+new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
+
+setTimeout(scan, 1000);

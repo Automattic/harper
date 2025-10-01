@@ -25,6 +25,7 @@ mod comma_fixes;
 mod compound_nouns;
 mod confident;
 mod correct_number_suffix;
+mod criteria_phenomena;
 mod currency_placement;
 mod dashes;
 mod despite_of;
@@ -77,6 +78,7 @@ mod mass_plurals;
 mod merge_linters;
 mod merge_words;
 mod missing_preposition;
+mod missing_to;
 mod mixed_bag;
 mod modal_of;
 mod months;
@@ -111,9 +113,9 @@ mod pronoun_contraction;
 mod pronoun_inflection_be;
 mod pronoun_knew;
 mod proper_noun_capitalization_linters;
-mod punctuation_clusters;
 mod quantifier_needs_of;
 mod quite_quiet;
+mod quote_spacing;
 mod redundant_additive_adverbs;
 mod regionalisms;
 mod repeated_words;
@@ -174,6 +176,7 @@ pub use comma_fixes::CommaFixes;
 pub use compound_nouns::CompoundNouns;
 pub use confident::Confident;
 pub use correct_number_suffix::CorrectNumberSuffix;
+pub use criteria_phenomena::CriteriaPhenomena;
 pub use currency_placement::CurrencyPlacement;
 pub use dashes::Dashes;
 pub use despite_of::DespiteOf;
@@ -219,6 +222,7 @@ pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use mass_plurals::MassPlurals;
 pub use merge_words::MergeWords;
 pub use missing_preposition::MissingPreposition;
+pub use missing_to::MissingTo;
 pub use mixed_bag::MixedBag;
 pub use modal_of::ModalOf;
 pub use months::Months;
@@ -247,9 +251,9 @@ pub use possessive_your::PossessiveYour;
 pub use progressive_needs_be::ProgressiveNeedsBe;
 pub use pronoun_contraction::PronounContraction;
 pub use pronoun_inflection_be::PronounInflectionBe;
-pub use punctuation_clusters::PunctuationClusters;
 pub use quantifier_needs_of::QuantifierNeedsOf;
 pub use quite_quiet::QuiteQuiet;
+pub use quote_spacing::QuoteSpacing;
 pub use redundant_additive_adverbs::RedundantAdditiveAdverbs;
 pub use regionalisms::Regionalisms;
 pub use repeated_words::RepeatedWords;
@@ -405,6 +409,7 @@ pub mod tests {
         assert_lint_count(&transformed_str, linter, 0);
     }
 
+    #[track_caller]
     pub fn assert_top3_suggestion_result(
         text: &str,
         mut linter: impl Linter,

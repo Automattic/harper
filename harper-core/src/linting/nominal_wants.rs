@@ -1,5 +1,6 @@
 use harper_brill::UPOS;
 
+use crate::CharStringExt;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{
@@ -17,25 +18,27 @@ impl Default for NominalWants {
     fn default() -> Self {
         fn is_applicable_pronoun(tok: &Token, src: &[char]) -> bool {
             if tok.kind.is_pronoun() && tok.kind.is_upos(UPOS::PRON) {
-                let pron = tok.span.get_content_string(src).to_lowercase();
-                // "That" can act as two kinds of pronoun: demonstrative and relative.
-                // As a demonstrative pronoun, it's third person singular.
-                // As a relative pronoun, it's behaves as any person:
-                // I am the one that wants to. He is the one that wants to.
-                pron != "that"
+                let pron = tok.span.get_content(src);
+                !pron.eq_any_ignore_ascii_case_chars(&[
+                    // "That" can act as two kinds of pronoun: demonstrative and relative.
+                    // As a demonstrative pronoun, it's third person singular.
+                    // As a relative pronoun, it's behaves as any person:
+                    // I am the one that wants to. He is the one that wants to.
+                    &['t', 'h', 'a', 't'],
                     // Personal pronouns have case. Object case personal pronouns
                     // can come after "want":
                     // Make them want to believe.
                     // Note: "you" and "it" are both subject and object case.
-                    && pron != "me"
-                    && pron != "us"
+                    &['m', 'e'],
+                    &['u', 's'],
                     // "you" is subject and object both OK before "want".
-                    && pron != "him"
-                    && pron != "her"
+                    &['h', 'i', 'm'],
+                    &['h', 'e', 'r'],
                     // "it" is both subject and object. Subject before "wants", object before "want".
-                    && pron != "it"
-                    && pron != "them"
-                    && pron != "who"
+                    &['i', 't'],
+                    &['t', 'h', 'e', 'm'],
+                    &['w', 'h', 'o'],
+                ])
             } else {
                 false
             }
@@ -82,14 +85,20 @@ impl ExprLinter for NominalWants {
 
         let replacement_chars: Vec<char> = replacement.chars().collect();
 
-        if offender.span.get_content(source) == replacement_chars.as_slice() {
+        let offender_span = offender.span;
+        let offender_chars = offender_span.get_content(source);
+
+        if offender_chars.eq_ignore_ascii_case_chars(&replacement_chars) {
             return None;
         }
 
         Some(Lint {
-            span: offender.span,
+            span: offender_span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::ReplaceWith(replacement_chars)],
+            suggestions: vec![Suggestion::replace_with_match_case(
+                replacement_chars,
+                offender_chars,
+            )],
             message: format!("Did you mean `{replacement}`?"),
             priority: 55,
         })
@@ -308,5 +317,13 @@ mod tests {
             "Harper is a grammar checker for people who want to write fast.",
             NominalWants::default(),
         );
+    }
+
+    #[test]
+    fn test_2007() {
+        assert_no_lints(
+            "### 🙌 **We Want to Hear From You!**",
+            NominalWants::default(),
+        )
     }
 }

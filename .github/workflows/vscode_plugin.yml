@@ -1,13 +1,16 @@
-name: Release VS Code Plugin
+name: VS Code Plugin
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: ["master"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["master"]
+  merge_group:
 
 jobs:
-  package:
-    name: Package - ${{ matrix.platform.code_target }}
+  vscode-plugin:
+    name: ${{ matrix.platform.code_target }}
     if: github.event.pull_request.draft == false
     strategy:
       matrix:
@@ -60,12 +63,15 @@ jobs:
 
           just package-vscode ${{ matrix.platform.code_target }}
           echo artifact=$(echo packages/vscode-plugin/*.vsix) >> $GITHUB_OUTPUT
-      - uses: ncipollo/release-action@v1
+      - name: Release artifacts
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
         with:
           artifacts: "./packages/vscode-plugin/*.vsix"
           allowUpdates: true
           draft: true
       - name: Publish to OpenVSX
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.OPEN_VSX_TOKEN }}
@@ -73,6 +79,7 @@ jobs:
           extensionFile: ${{ steps.package_extension.outputs.artifact }}
           skipDuplicate: true
       - name: Publish to the Visual Studio Marketplace
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}

@@ -6,6 +6,7 @@ import {
 	applySuggestion,
 	LintFramework,
 	type UnpackedLint,
+	type UnpackedLintGroups,
 	type UnpackedSuggestion,
 	unpackLint,
 } from 'lint-framework';
@@ -23,15 +24,21 @@ let openSet: Set<number> = new Set();
 
 let lfw = new LintFramework(
 	async (text) => {
-		if (!linter) return [];
+		if (!linter) return {};
 
-		const raw = await linter.lint(text);
-		// The framework expects "unpacked" lints with plain fields
-		const unpacked = await Promise.all(raw.map((lint) => unpackLint(text, lint, linter)));
+		const raw = await linter.organizedLints(text);
+		// The framework expects grouped lints keyed by source
+		const entries = await Promise.all(
+			Object.entries(raw).map(async ([source, lintGroup]) => {
+				const unpacked = await Promise.all(lintGroup.map((lint) => unpackLint(text, lint, linter)));
+				return [source, unpacked] as const;
+			}),
+		);
 
-		lints = unpacked;
+		const grouped: UnpackedLintGroups = Object.fromEntries(entries);
+		lints = Object.values(grouped).flat();
 
-		return unpacked;
+		return grouped;
 	},
 	{
 		ignoreLint: async (hash: string) => {

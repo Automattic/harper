@@ -30,7 +30,7 @@ mod token_string_ext;
 mod vec_ext;
 
 use render_markdown::render_markdown;
-use std::collections::VecDeque;
+use std::collections::{BTreeMap, VecDeque};
 
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
@@ -81,6 +81,65 @@ pub fn remove_overlaps(lints: &mut Vec<Lint>) {
     }
 
     lints.remove_indices(remove_indices);
+}
+
+/// Remove overlapping lints from a map keyed by rule name, similar to [`remove_overlaps`].
+///
+/// The map is treated as if all contained lints were in a single flat collection, ensuring the
+/// same lint would be kept regardless of whether it originated from `lint` or `organized_lints`.
+pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
+    let total: usize = lint_map.values().map(Vec::len).sum();
+    if total < 2 {
+        return;
+    }
+
+    struct IndexedSpan {
+        rule_idx: usize,
+        lint_idx: usize,
+        start: usize,
+        end: usize,
+    }
+
+    let mut removal_flags: Vec<Vec<bool>> = lint_map
+        .values()
+        .map(|lints| vec![false; lints.len()])
+        .collect();
+
+    let mut spans = Vec::with_capacity(total);
+    for (rule_idx, (_, lints)) in lint_map.iter().enumerate() {
+        for (lint_idx, lint) in lints.iter().enumerate() {
+            spans.push(IndexedSpan {
+                rule_idx,
+                lint_idx,
+                start: lint.span.start,
+                end: lint.span.end,
+            });
+        }
+    }
+
+    spans.sort_by_key(|span| (span.start, usize::MAX - span.end));
+
+    let mut cur = 0;
+    for span in spans {
+        if span.start < cur {
+            removal_flags[span.rule_idx][span.lint_idx] = true;
+        } else {
+            cur = span.end;
+        }
+    }
+
+    for (rule_idx, (_, lints)) in lint_map.iter_mut().enumerate() {
+        if removal_flags[rule_idx].iter().all(|flag| !*flag) {
+            continue;
+        }
+
+        let mut idx = 0;
+        lints.retain(|_| {
+            let remove = removal_flags[rule_idx][idx];
+            idx += 1;
+            !remove
+        });
+    }
 }
 
 #[cfg(test)]
