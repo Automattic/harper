@@ -47,41 +47,40 @@ function agentHas(keyword: string) {
 		>
 			<a
 				href="https://github.com/automattic/harper"
-				class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+				class="flex flex-row items-center [&>*]:m-2 skew-hover-left"
 			>
 				<GitHubLogo width="40px" height="40px" />GitHub
 			</a>
 
       {#if agentHas("firefox")}
-	      <a href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	      <a href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/" class="flex flex-row items-center [&>*]:m-2 skew-hover"
 	      	><FirefoxLogo width="40px" height="40px" />Add to Firefox</a
 	      >
       {:else if agentHas("Edg")}
-	      <a href="https://microsoftedge.microsoft.com/addons/detail/private-grammar-checker-/ihjkkjfembmnjldmdchmadigpmapkpdh" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	      <a href="https://microsoftedge.microsoft.com/addons/detail/private-grammar-checker-/ihjkkjfembmnjldmdchmadigpmapkpdh" class="flex flex-row items-center [&>*]:m-2 skew-hover-left"
 	      	><EdgeLogo width="40px" height="40px" />Add to Edge</a
 	      >
       {:else}
-	      <a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	      <a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 skew-hover"
 	      	><ChromeLogo width="40px" height="40px" />Add to Chrome</a
 	      >
       {/if}
 			<a
 				href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
-				class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+				class="flex flex-row items-center [&>*]:m-2 skew-hover-left"
 			>
 				<CodeLogo width="40px" height="40px" />Install in VS Code
 			</a>
 			<a
 				href="/docs/integrations/obsidian"
-				class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+				class="flex flex-row items-center [&>*]:m-2 skew-hover"
 			>
 				<ObsidianLogo width="40px" height="40px" />Install in Obsidian
 			</a>
-      <a href="https://elijahpotter.dev" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+      <a href="https://elijahpotter.dev" class="flex flex-row items-center [&>*]:m-2 skew-hover-left"
 		><img
 			width="40"
 			height="40"
-			class="hover:scale-105 transition-all"
 			src="/icons/profile.svg"
 			alt="Author"
 		/>Author</a
@@ -141,70 +140,70 @@ function agentHas(keyword: string) {
 			<div class="grid gap-4 sm:grid-cols-2">
 				<a
 					href="/docs/integrations/obsidian"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
+					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
 				>
 					<ObsidianLogo width="40" height="40" />
 					<span class="font-medium">Obsidian</span>
 				</a>
 				<a
 					href="/docs/integrations/visual-studio-code"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
+					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
 				>
 					<CodeLogo width="40" height="40" />
 					<span class="font-medium">Visual Studio Code</span>
 				</a>
 				<a
 					href="/docs/integrations/neovim"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
+					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
 				>
 					<NeovimLogo width="40" height="40" />
 					<span class="font-medium">Neovim</span>
 				</a>
 				<a
 					href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
+					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
 				>
 					<ChromeLogo width="40" height="40" />
 					<span class="font-medium">Chrome</span>
 				</a>
 				<a
 					href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
+					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
 				>
 					<FirefoxLogo width="40" height="40" />
 					<span class="font-medium">Firefox</span>
 				</a>
 				<a
 					href="/docs/integrations/helix"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
+					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
 				>
 					<HelixLogo width="40" height="40" />
 					<span class="font-medium">Helix</span>
 				</a>
 				<a
 					href="/docs/integrations/wordpress"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
+					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
 				>
 					<WordPressLogo width="40" height="40" />
 					<span class="font-medium">WordPress</span>
 				</a>
 				<a
 					href="/docs/integrations/zed"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
+					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
 				>
 					<ZedLogo width="40" height="40" />
 					<span class="font-medium">Zed</span>
 				</a>
 				<a
 					href="/docs/integrations/emacs"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
+					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
 				>
 					<EmacsLogo width="40" height="40" />
 					<span class="font-medium">Emacs</span>
 				</a>
 				<a
 					href="/docs/integrations/sublime-text"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
+					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
 				>
 					<SublimeLogo width="40" height="40" />
 					<span class="font-medium">Sublime Text</span>
