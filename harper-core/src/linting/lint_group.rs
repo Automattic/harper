@@ -103,6 +103,7 @@ use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quite_quiet::QuiteQuiet;
+use super::quote_spacing::QuoteSpacing;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
@@ -511,6 +512,7 @@ impl LintGroup {
         insert_struct_rule!(PronounKnew, true);
         insert_expr_rule!(QuantifierNeedsOf, true);
         insert_expr_rule!(QuiteQuiet, true);
+        insert_struct_rule!(QuoteSpacing, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);

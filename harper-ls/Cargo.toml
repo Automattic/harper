@@ -1,6 +1,6 @@
 [package]
 name = "harper-ls"
-version = "0.65.0"
+version = "0.66.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -31,7 +31,7 @@ futures = "0.3.31"
 serde = { version = "1.0.228", features = ["derive"] }
 indexmap = { version = "2.11.4", features = ["serde"] }
 globset = "0.4.16"
-harper-ink = { version = "0.65.0", path = "../harper-ink" }
+harper-ink = { version = "0.66.0", path = "../harper-ink" }
 
 [features]
 default = []
