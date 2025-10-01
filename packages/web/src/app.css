@@ -114,3 +114,11 @@ th[align="center"] {
 th[align="right"] {
 	text-align: right;
 }
+
+.skew-hover {
+	@apply transition-all hover:rotate-3 hover:scale-105;
+}
+
+.skew-hover-left {
+	@apply transition-all hover:-rotate-3 hover:scale-105;
+}
