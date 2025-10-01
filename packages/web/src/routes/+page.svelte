@@ -115,7 +115,7 @@ import ZedLogo from '$lib/ZedLogo.svelte';
 			<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/visual-studio-code">Visual Studio Code</a>,
 			<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/neovim">Neovim</a>,
 			<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/obsidian">Obsidian</a>, and
-			<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/chrome-extension">Chrome</a>
+			<a class="text-blue-600 underline dark:text-blue-400" href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb">Chrome</a>
 			extensions are amazing.
 		</p>
 		<svelte:fragment slot="aside">
@@ -142,14 +142,14 @@ import ZedLogo from '$lib/ZedLogo.svelte';
 					<span class="font-medium">Neovim</span>
 				</a>
 				<a
-					href="/docs/integrations/chrome-extension"
+					href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb"
 					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
 				>
 					<ChromeLogo width="40" height="40" />
 					<span class="font-medium">Chrome</span>
 				</a>
 				<a
-					href="/docs/integrations/firefox-extension"
+					href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/"
 					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800"
 				>
 					<FirefoxLogo width="40" height="40" />
