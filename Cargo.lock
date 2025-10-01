@@ -2467,7 +2467,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "0.65.0"
+version = "0.66.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
