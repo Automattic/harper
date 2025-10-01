@@ -13,7 +13,7 @@ impl PythonParser {
         if n.kind().contains("comment") {
             return true;
         }
-        if n.kind() == "string"
+        if n.kind() == "string_content"
             && let Some(expr_stmt) = parent_is_expression_statement(n)
             && (is_module_level_docstring(&expr_stmt)
                 || is_fn_or_class_docstrings(&expr_stmt)
@@ -60,9 +60,11 @@ impl Parser for PythonParser {
     }
 }
 
-#[inline]
 fn parent_is_expression_statement<'a>(node: &Node<'a>) -> Option<Node<'a>> {
-    node.parent().filter(|n| n.kind() == "expression_statement")
+    node.parent()
+        .filter(|n| n.kind() == "string")
+        .and_then(|string_node| string_node.parent())
+        .filter(|n| n.kind() == "expression_statement")
 }
 
 #[inline]
