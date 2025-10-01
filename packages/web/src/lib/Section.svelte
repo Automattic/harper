@@ -16,7 +16,7 @@ const { class: extraClass = '', ...restProps } = $$restProps;
 		<div class={`grid gap-8 md:grid-cols-2 ${hasAside ? 'md:items-start' : ''}`}>
 			<div class={`space-y-4 ${reverse ? 'md:order-2' : ''}`}>
 				{#if $$slots.title}
-					<h3 class="text-2xl font-semibold">
+					<h3 class="font-semibold">
 						<slot name="title" />
 					</h3>
 				{/if}
@@ -40,7 +40,7 @@ const { class: extraClass = '', ...restProps } = $$restProps;
 	{:else}
 		<div class="space-y-4">
 			{#if $$slots.title}
-				<h3 class="text-2xl font-semibold">
+				<h3 class="font-semibold">
 					<slot name="title" />
 				</h3>
 			{/if}

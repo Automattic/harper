@@ -36,8 +36,8 @@ function agentHas(keyword: string) {
 			<Logo width="200px" />
 		</div>
 		<div class="space-y-2 text-center">
-			<h1 class="text-4xl font-bold">Hi. I'm Harper.</h1>
-			<h2 class="text-lg md:text-2xl lg:text-4xl">
+			<h1 class="font-bold">Hi. I'm Harper.</h1>
+			<h2>
 				The <strong>Free</strong> Grammar Checker That Respects Your Privacy
 			</h2>
 		</div>
@@ -230,46 +230,46 @@ function agentHas(keyword: string) {
 		<svelte:fragment slot="title">FAQs</svelte:fragment>
 		<div class="space-y-4">
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
+				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
 					Is Harper Free?
 				</summary>
-				<p class="mt-3 text-sm md:text-base">
+				<p class="mt-3">
 					Yes. Harper is free in every sense of the word. You don't need a credit card to start using
 					Harper, and the source code is freely available unde the Apache-2.0 license.
 				</p>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
+				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
 					How Does Harper Work?
 				</summary>
-				<p class="mt-3 text-sm md:text-base">
+				<p class="mt-3">
 					Harper watches your writing and provides instant suggestions when it notices a grammatical
 					error. When you see an underline, it's probably because Harper has something to say.
 				</p>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
+				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
 					Does Harper Change The Meaning of My Words?
 				</summary>
-				<p class="mt-3 text-sm md:text-base">
+				<p class="mt-3">
 					No. Harper will never intentionally suggest an edit that might change your meaning. Harper
 					strives to never make it harder to express your creativity.
 				</p>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
+				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
 					Is Harper Really Private?
 				</summary>
-				<p class="mt-3 text-sm md:text-base">
+				<p class="mt-3">
 					Harper is the only widespread and comprehensive grammar checker that is truly private. Your
 					data never leaves your device. Your writing should remain just that: <strong>yours.</strong>
 				</p>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
+				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
 					How Do I Use or Integrate Harper?
 				</summary>
-				<div class="mt-3 text-sm md:text-base">
+				<div class="mt-3">
 					<p>
 						That depends on your use case. Do you want to use it within Obsidian? We have an
 						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/obsidian">Obsidian plugin</a>. Do you want to use it within WordPress? We have a
@@ -289,20 +289,20 @@ function agentHas(keyword: string) {
 				</div>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
+				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
 					What Human Languages Do You Support?
 				</summary>
-				<p class="mt-3 text-sm md:text-base">
+				<p class="mt-3">
 					We currently only support English and its dialects British, American, Canadian, and
 					Australian. Other languages are on the horizon, but we want our English support to be truly
 					amazing before we diversify.
 				</p>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
+				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
 					What Programming Languages Do You Support?
 				</summary>
-				<p class="mt-3 text-sm md:text-base">
+				<p class="mt-3">
 					For <code>harper-ls</code> and our code editor integrations, we support a wide variety of
 					programming languages. You can view all of them over at the
 					<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/language-server#Supported-Languages">harper-ls documentation</a>.
@@ -310,32 +310,32 @@ function agentHas(keyword: string) {
 					on your code's comments, you can use
 					<a class="text-blue-600 underline dark:text-blue-400" href="https://github.com/Automattic/harper/pull/332">this PR as a model for what to do</a>.
 				</p>
-				<p class="mt-3 text-sm md:text-base">
+				<p class="mt-3">
 					For <code>harper.js</code> and those that use it under the hood like our Obsidian plugin, we
 					support plaintext and/or Markdown.
 				</p>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
+				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
 					Where Did the Name Harper Come From?
 				</summary>
-				<p class="mt-3 text-sm md:text-base">
+				<p class="mt-3">
 					See <a class="text-blue-600 underline dark:text-blue-400" href="https://elijahpotter.dev/articles/naming_harper">this blog post</a>.
 				</p>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
+				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
 					Do I Need a GPU?
 				</summary>
-				<div class="mt-3 text-sm md:text-base">
+				<div class="mt-3">
 					<p>No. Harper runs on-device, no matter what. There are no special hardware requirements. No GPU, no additional memory, no fuss.</p>
 				</div>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
+				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
 					What Do I Do If My Question Isn't Here?
 				</summary>
-				<p class="mt-3 text-sm md:text-base">
+				<p class="mt-3">
 					You can join our
 					<a class="text-blue-600 underline dark:text-blue-400" href="https://discord.gg/invite/JBqcAaKrzQ">Discord</a>
 					and ask your questions there or you can start a discussion over at
