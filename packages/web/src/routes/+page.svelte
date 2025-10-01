@@ -20,6 +20,14 @@ import NeovimLogo from '$lib/NeovimLogo.svelte';
 import SublimeLogo from '$lib/SublimeLogo.svelte';
 import WordPressLogo from '$lib/WordPressLogo.svelte';
 import ZedLogo from '$lib/ZedLogo.svelte';
+    import EdgeLogo from '$lib/EdgeLogo.svelte';
+
+/**
+ * @param {string} keyword
+ */
+function agentHas(keyword: string) {
+	return navigator.userAgent.toLowerCase().search(keyword.toLowerCase()) > -1;
+}
 </script>
 
 <main class="mx-auto flex w-full max-w-5xl flex-col gap-12 py-12">
@@ -43,18 +51,20 @@ import ZedLogo from '$lib/ZedLogo.svelte';
 			>
 				<GitHubLogo width="40px" height="40px" />GitHub
 			</a>
-			<a
-				href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb"
-				class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-			>
-				<ChromeLogo width="40px" height="40px" />Add to Chrome
-			</a>
-			<a
-				href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/"
-				class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
-			>
-				<FirefoxLogo width="40px" height="40px" />Add to Firefox
-			</a>
+
+      {#if agentHas("firefox")}
+	      <a href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	      	><FirefoxLogo width="40px" height="40px" />Add to Firefox</a
+	      >
+      {:else if agentHas("Edg")}
+	      <a href="https://microsoftedge.microsoft.com/addons/detail/private-grammar-checker-/ihjkkjfembmnjldmdchmadigpmapkpdh" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	      	><EdgeLogo width="40px" height="40px" />Add to Edge</a
+	      >
+      {:else}
+	      <a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+	      	><ChromeLogo width="40px" height="40px" />Add to Chrome</a
+	      >
+      {/if}
 			<a
 				href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
 				class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
@@ -67,6 +77,15 @@ import ZedLogo from '$lib/ZedLogo.svelte';
 			>
 				<ObsidianLogo width="40px" height="40px" />Install in Obsidian
 			</a>
+      <a href="https://elijahpotter.dev" class="flex flex-row items-center [&>*]:m-2 hover:scale-105"
+		><img
+			width="40"
+			height="40"
+			class="hover:scale-105 transition-all"
+			src="/icons/profile.svg"
+			alt="Author"
+		/>Author</a
+	>
 		</div>
 
 		<div class="h-[800px] w-full overflow-hidden rounded-xl border border-neutral-200 shadow-sm dark:border-neutral-800">
