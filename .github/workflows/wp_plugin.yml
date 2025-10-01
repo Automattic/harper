@@ -1,8 +1,9 @@
-name: Package WordPress Plugin 
+name: WordPress Plugin
 
 on:
   push:
     branches: ["master"]
+    tags: ["v*"]
   pull_request:
     branches: ["master"]
   merge_group:
@@ -11,7 +12,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  package:
+  wp-plugin:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,15 +22,22 @@ jobs:
           node-version-file: ".node-version"
       - name: Enable Corepack
         run: corepack enable
-      - name: Install `pandoc`
+      - name: Install pandoc
         run: sudo apt-get update && sudo apt-get install pandoc -y
       - uses: cargo-bins/cargo-binstall@main
-      - name: Install `wasm-pack`
+      - name: Install wasm-pack
         run: cargo binstall wasm-pack --force --no-confirm
-      - name: Precommit
-        run: just build-wp 
-      - name: Upload extension
+      - name: Build
+        run: just build-wp
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: harper.zip
-          path: "packages/wordpress-plugin/harper.zip"
+          path: packages/wordpress-plugin/harper.zip
+      - name: Draft GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: packages/wordpress-plugin/harper.zip
+          allowUpdates: true
+          draft: true

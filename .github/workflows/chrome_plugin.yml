@@ -1,15 +1,18 @@
-name: Release Chrome Plugin 
+name: Chrome Plugin
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: ["master"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["master"]
+  merge_group:
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  package:
+  chrome-plugin:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,9 +28,9 @@ jobs:
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Build Chrome Plugin
-        run: just build-chrome-plugin 
+        run: just build-chrome-plugin
       - name: Build Firefox Plugin
-        run: just build-firefox-plugin 
+        run: just build-firefox-plugin
       - name: Upload Chrome extension
         uses: actions/upload-artifact@v4
         with:
@@ -38,7 +41,9 @@ jobs:
         with:
           name: harper-firefox-plugin.zip
           path: "packages/chrome-plugin/package/harper-firefox-plugin.zip"
-      - uses: ncipollo/release-action@v1
+      - name: Release artifacts
+        uses: ncipollo/release-action@v1
+        if: startsWith(github.ref, 'refs/tags/v')
         with:
           artifacts: "packages/chrome-plugin/package/*.zip"
           allowUpdates: true
