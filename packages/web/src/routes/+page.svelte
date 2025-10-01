@@ -250,30 +250,21 @@ import ZedLogo from '$lib/ZedLogo.svelte';
 				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
 					How Do I Use or Integrate Harper?
 				</summary>
-				<div class="mt-3 space-y-3 text-sm md:text-base">
-					<p>That depends on your use case.</p>
+				<div class="mt-3 text-sm md:text-base">
 					<p>
-						Do you want to use it within Obsidian? We have an <a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/obsidian">Obsidian plugin</a>.
-					</p>
-					<p>
-						Do you want to use it within WordPress? We have a <a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/wordpress">WordPress plugin</a>.
-					</p>
-					<p>
-						Do you want to use it within your Browser? We have a <a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/chrome-extension">Chrome extension</a> and a <a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/firefox-extension">Firefox plugin</a>.
-					</p>
-					<p>
-						Do you want to use it within your code editor? We have documentation on how you can
-						integrate with <a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/visual-studio-code">Visual Studio Code and its forks</a>,
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/neovim">Neovim</a>, <a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/helix">Helix</a>, <a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/emacs">Emacs</a>,
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/zed">Zed</a> and <a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/sublime-text">Sublime Text</a>. If you're using a different code editor, then you can
-						integrate directly with our language server, <a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/language-server">harper-ls</a>.
-					</p>
-					<p>
-						Do you want to integrate it in your web app or your JavaScript/TypeScript codebase? You
-						can use <a class="text-blue-600 underline dark:text-blue-400" href="/docs/harperjs/introduction">harper.js</a>.
-					</p>
-					<p>
-						Do you want to integrate it in your Rust program or codebase? You can use
+						That depends on your use case. Do you want to use it within Obsidian? We have an
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/obsidian">Obsidian plugin</a>. Do you want to use it within WordPress? We have a
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/wordpress">WordPress plugin</a>. Do you want to use it within your Browser? We have a
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/chrome-extension">Chrome extension</a> and a
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/firefox-extension">Firefox plugin</a>. Do you want to use it within your code editor? We have documentation on how you can integrate with
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/visual-studio-code">Visual Studio Code and its forks</a>,
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/neovim">Neovim</a>,
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/helix">Helix</a>,
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/emacs">Emacs</a>,
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/zed">Zed</a> and
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/sublime-text">Sublime Text</a>. If you're using a different code editor, then you can integrate directly with our language server,
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/language-server">harper-ls</a>. Do you want to integrate it in your web app or your JavaScript/TypeScript codebase? You can use
+						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/harperjs/introduction">harper.js</a>. Do you want to integrate it in your Rust program or codebase? You can use
 						<a class="text-blue-600 underline dark:text-blue-400" href="https://crates.io/crates/harper-core">harper-core</a>.
 					</p>
 				</div>
@@ -317,11 +308,8 @@ import ZedLogo from '$lib/ZedLogo.svelte';
 				<summary class="cursor-pointer text-lg font-semibold marker:text-neutral-400">
 					Do I Need a GPU?
 				</summary>
-				<div class="mt-3 space-y-2 text-sm md:text-base">
-					<p>No.</p>
-					<p>Harper runs on-device, no matter what.</p>
-					<p>There are no special hardware requirements.</p>
-					<p>No GPU, no additional memory, no fuss.</p>
+				<div class="mt-3 text-sm md:text-base">
+					<p>No. Harper runs on-device, no matter what. There are no special hardware requirements. No GPU, no additional memory, no fuss.</p>
 				</div>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
