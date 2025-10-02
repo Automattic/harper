@@ -84,8 +84,11 @@ export default class State {
 			await this.harper.importIgnoredLints(settings.ignoredLints);
 		}
 
-		if (settings.userDictionary != null && settings.userDictionary.length > 0) {
-			await this.harper.importWords(settings.userDictionary);
+		if (settings.userDictionary != null) {
+			await this.harper.clearWords();
+			if (settings.userDictionary.length > 0) {
+				await this.harper.importWords(settings.userDictionary);
+			}
 		}
 
 		await this.harper.setLintConfig(settings.lintSettings);

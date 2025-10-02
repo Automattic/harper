@@ -157,3 +157,37 @@ test('getEffectiveLintConfig reflects explicit overrides', async () => {
 		expect(effective[k]).toBe(true);
 	}
 });
+
+test('can persist dictionary words in settings', async () => {
+	const state = createEphemeralState();
+	let settings = await state.getSettings();
+
+	const testWord = 'ajhsbdajshdb';
+	settings.userDictionary = [testWord];
+
+	await state.initializeFromSettings(settings);
+
+	settings = await state.getSettings();
+
+	expect(settings.userDictionary).toStrictEqual([testWord]);
+});
+
+test('can overwrite dictionary words in settings', async () => {
+	const state = createEphemeralState();
+	let settings = await state.getSettings();
+
+	const testWord = 'ajhsbdajshdb';
+	settings.userDictionary = [testWord];
+
+	await state.initializeFromSettings(settings);
+	settings = await state.getSettings();
+
+	expect(settings.userDictionary).toStrictEqual([testWord]);
+
+	settings.userDictionary = [];
+
+	await state.initializeFromSettings(settings);
+	settings = await state.getSettings();
+
+	expect(settings.userDictionary).toStrictEqual([]);
+});

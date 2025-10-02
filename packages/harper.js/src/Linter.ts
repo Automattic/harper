@@ -81,6 +81,9 @@ export default interface Linter {
 	/** Clear records of all previously ignored lints. */
 	clearIgnoredLints(): Promise<void>;
 
+	/** Clear the words which have been added to the dictionary. This will not clear words from the curated dictionary. */
+	clearWords(): Promise<void>;
+
 	/** Import words into the dictionary. This is a significant operation, so try to batch words. */
 	importWords(words: string[]): Promise<void>;
 

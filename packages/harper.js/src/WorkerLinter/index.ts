@@ -153,6 +153,10 @@ export default class WorkerLinter implements Linter {
 		return this.rpc('clearIgnoredLints', []);
 	}
 
+	clearWords(): Promise<void> {
+		return this.rpc('clearWords', []);
+	}
+
 	importWords(words: string[]): Promise<void> {
 		return this.rpc('importWords', [words]);
 	}
