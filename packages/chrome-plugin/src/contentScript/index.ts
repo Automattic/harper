@@ -1,5 +1,4 @@
 import '@webcomponents/custom-elements';
-import $ from 'jquery';
 import { isVisible, LintFramework, leafNodes } from 'lint-framework';
 import ProtocolClient from '../ProtocolClient';
 
@@ -19,24 +18,31 @@ const keepAliveCallback = () => {
 keepAliveCallback();
 
 function scan() {
-	$('textarea:visible').each(function () {
-		if (this.getAttribute('data-enable-grammarly') == 'false' || this.disabled || this.readOnly) {
+	document.querySelectorAll<HTMLTextAreaElement>('textarea').forEach((element) => {
+		if (
+			!isVisible(element) ||
+			element.getAttribute('data-enable-grammarly') === 'false' ||
+			element.disabled ||
+			element.readOnly
+		) {
 			return;
 		}
 
-		fw.addTarget(this as HTMLTextAreaElement);
+		fw.addTarget(element);
 	});
 
-	$('input[type="text"][spellcheck="true"]').each(function () {
-		if (this.disabled || this.readOnly) {
-			return;
-		}
+	document
+		.querySelectorAll<HTMLInputElement>('input[type="text"][spellcheck="true"]')
+		.forEach((element) => {
+			if (element.disabled || element.readOnly) {
+				return;
+			}
 
-		fw.addTarget(this as HTMLInputElement);
-	});
+			fw.addTarget(element);
+		});
 
-	$('[data-testid="gutenberg-editor"]').each(function () {
-		const leafs = leafNodes(this);
+	document.querySelectorAll('[data-testid="gutenberg-editor"]').forEach((element) => {
+		const leafs = leafNodes(element);
 
 		for (const leaf of leafs) {
 			if (!isVisible(leaf)) {
@@ -47,8 +53,8 @@ function scan() {
 		}
 	});
 
-	$('[contenteditable="true"],[contenteditable]').each(function () {
-		const leafs = leafNodes(this);
+	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
+		const leafs = leafNodes(element);
 
 		for (const leaf of leafs) {
 			if (leaf.parentElement?.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
