@@ -10,9 +10,16 @@ pub(crate) const NOUN_VERB_PAIRS: &[(&str, &str)] = &[
     ("advice", "advise"),
     ("belief", "believe"),
     ("breath", "breathe"),
+    ("device", "devise"),
     ("effect", "affect"), // "Effect" is also a verb meaning "to bring about". "Affect" is a noun in psychology.
     ("emphasis", "emphasize"), // TODO how to handle "emphasise" as well as "emphasize"?
+    ("envelop", "envelope"),
     ("intent", "intend"),
+    ("pour", "poor"),
+    ("pray", "prey"),
+    ("resume", "resumé"),
+    ("waste", "waist"),
+    ("write", "rite"),
     // ("proof", "prove"),  // "Proof" is also a verb, a synonym of "proofread".
     // Add more pairs here as needed
 ];
