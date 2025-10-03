@@ -133,6 +133,7 @@ use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
 use super::very_unique::VeryUnique;
+use super::vice_versa::ViceVersa;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
 use super::whereas::Whereas;
@@ -539,6 +540,7 @@ impl LintGroup {
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(UseGenitive, false);
+        insert_expr_rule!(ViceVersa, true);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(WasAloud, true);
         insert_expr_rule!(WayTooAdjective, true);

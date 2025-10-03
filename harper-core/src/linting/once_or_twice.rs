@@ -28,13 +28,9 @@ impl ExprLinter for OnceOrTwice {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let article = matched_tokens
-            .iter()
-            .find(|token| token.kind.is_word()
-                && token
-                    .span
-                    .get_content(source)
-                    .eq_ignore_ascii_case_str("a"))?;
+        let article = matched_tokens.iter().find(|token| {
+            token.kind.is_word() && token.span.get_content(source).eq_ignore_ascii_case_str("a")
+        })?;
 
         let span = article.span;
         let original = span.get_content(source);
@@ -258,18 +254,12 @@ mod tests {
 
     #[test]
     fn allows_once_a_time_story() {
-        assert_no_lints(
-            "Once a time, in a distant land...",
-            OnceOrTwice::default(),
-        );
+        assert_no_lints("Once a time, in a distant land...", OnceOrTwice::default());
     }
 
     #[test]
     fn allows_once_a_week_routine() {
-        assert_no_lints(
-            "We meet once a week to sync up.",
-            OnceOrTwice::default(),
-        );
+        assert_no_lints("We meet once a week to sync up.", OnceOrTwice::default());
     }
 
     #[test]
@@ -282,10 +272,7 @@ mod tests {
 
     #[test]
     fn allows_once_or_twice_uppercase() {
-        assert_no_lints(
-            "ONCE OR TWICE, WE MADE IT WORK.",
-            OnceOrTwice::default(),
-        );
+        assert_no_lints("ONCE OR TWICE, WE MADE IT WORK.", OnceOrTwice::default());
     }
 
     #[test]
@@ -298,18 +285,12 @@ mod tests {
 
     #[test]
     fn allows_once_and_twice_separated() {
-        assert_no_lints(
-            "Once I tried; twice I failed.",
-            OnceOrTwice::default(),
-        );
+        assert_no_lints("Once I tried; twice I failed.", OnceOrTwice::default());
     }
 
     #[test]
     fn allows_oncemisatypo() {
-        assert_no_lints(
-            "oncemisatypo appears once a line.",
-            OnceOrTwice::default(),
-        );
+        assert_no_lints("oncemisatypo appears once a line.", OnceOrTwice::default());
     }
 
     #[test]
