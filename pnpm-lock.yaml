@@ -49,9 +49,6 @@ importers:
       harper.js:
         specifier: workspace:*
         version: link:../harper.js
-      jquery:
-        specifier: ^3.7.1
-        version: 3.7.1
       lint-framework:
         specifier: workspace:*
         version: link:../lint-framework
@@ -77,9 +74,6 @@ importers:
       '@types/chrome':
         specifier: ^0.0.246
         version: 0.0.246
-      '@types/jquery':
-        specifier: ^3.5.32
-        version: 3.5.32
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -3320,9 +3314,6 @@ packages:
   '@types/jasmine@5.1.7':
     resolution: {integrity: sha512-DVOfk9FaClQfNFpSfaML15jjB5cjffDMvjtph525sroR5BEAW2uKnTOYUTqTFuZFjNvH0T5XMIydvIctnUKufw==}
 
-  '@types/jquery@3.5.32':
-    resolution: {integrity: sha512-b9Xbf4CkMqS02YH8zACqN1xzdxc3cO735Qe5AbSUFmyOiaWAbcpqh9Wna+Uk0vgACvoQHpWDg2rGdHkYPLmCiQ==}
-
   '@types/js-yaml@4.0.9':
     resolution: {integrity: sha512-k4MGaQl5TGo/iipqb2UDG2UwjXziSWkh0uysQelTlJpX1qGlpUZYm8PnO4DxG1qBomtJUdYJ6qR6xdIah10JLg==}
 
@@ -3411,9 +3402,6 @@ packages:
 
   '@types/simple-peer@9.11.8':
     resolution: {integrity: sha512-rvqefdp2rvIA6wiomMgKWd2UZNPe6LM2EV5AuY3CPQJF+8TbdrL5TjYdMf0VAjGczzlkH4l1NjDkihwbj3Xodw==}
-
-  '@types/sizzle@2.3.9':
-    resolution: {integrity: sha512-xzLEyKB50yqCUPUJkIsrVvoWNfFUbIZI+RspLWt8u+tIW/BetMBZtgV2LY/2o+tYH8dRvQ+eoPf3NdhQCcLE2w==}
 
   '@types/sockjs@0.3.36':
     resolution: {integrity: sha512-MK9V6NzAS1+Ud7JV9lJLFqW85VbC9dq3LmwZCuBe4wBDgKC0Kj/jd8Xl+nSviU+Qc3+m7umHHyHg//2KSa0a0Q==}
@@ -7400,9 +7388,6 @@ packages:
 
   jpeg-js@0.4.4:
     resolution: {integrity: sha512-WZzeDOEtTOBK4Mdsar0IqEU5sMr3vSV2RqkAIzUEV2BHnUfKGyswWFPFwK5EeDo93K3FohSHbLAjj0s1Wzd+dg==}
-
-  jquery@3.7.1:
-    resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
 
   js-library-detector@6.7.0:
     resolution: {integrity: sha512-c80Qupofp43y4cJ7+8TTDN/AsDwLi5oOm/plBrWI+iQt485vKXCco+yVmOwEgdo9VOdsYTuV0UlTeetVPTriXA==}
@@ -15204,10 +15189,6 @@ snapshots:
 
   '@types/jasmine@5.1.7': {}
 
-  '@types/jquery@3.5.32':
-    dependencies:
-      '@types/sizzle': 2.3.9
-
   '@types/js-yaml@4.0.9': {}
 
   '@types/jsdom@20.0.1':
@@ -15293,8 +15274,6 @@ snapshots:
   '@types/simple-peer@9.11.8':
     dependencies:
       '@types/node': 22.13.10
-
-  '@types/sizzle@2.3.9': {}
 
   '@types/sockjs@0.3.36':
     dependencies:
@@ -20863,8 +20842,6 @@ snapshots:
       '@sideway/pinpoint': 2.0.0
 
   jpeg-js@0.4.4: {}
-
-  jquery@3.7.1: {}
 
   js-library-detector@6.7.0: {}
 
