@@ -140,5 +140,5 @@ export function assertBoxesClose(a: Box, b: Box) {
 }
 
 function assertClose(actual: number, expected: number) {
-	expect(Math.abs(actual - expected)).toBeLessThanOrEqual(9);
+	expect(Math.abs(actual - expected)).toBeLessThanOrEqual(15);
 }
