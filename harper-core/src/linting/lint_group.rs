@@ -87,6 +87,7 @@ use super::noun_countability::NounCountability;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
 use super::on_floor::OnFloor;
+use super::once_or_twice::OnceOrTwice;
 use super::one_and_the_same::OneAndTheSame;
 use super::open_the_light::OpenTheLight;
 use super::ought_to_be::OughtToBe;
@@ -496,6 +497,7 @@ impl LintGroup {
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
         insert_expr_rule!(OnFloor, true);
+        insert_expr_rule!(OnceOrTwice, true);
         insert_expr_rule!(OneAndTheSame, true);
         insert_expr_rule!(OpenCompounds, true);
         insert_expr_rule!(OpenTheLight, true);
