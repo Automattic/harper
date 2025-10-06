@@ -91,12 +91,7 @@ export default class Highlights {
 			const value = sourceToBoxes.get(box.source);
 			const icr = getInitialContainingRect(renderBox.getShadowHost());
 
-			const parent = renderBox.getShadowHost().offsetParent;
 			let cpa = null;
-
-			if (parent != null && parent != document.body && parent.shadowRoot == null) {
-				cpa = parent.getBoundingClientRect();
-			}
 
 			if (cpa == null) {
 				if (icr != null) {
@@ -131,6 +126,8 @@ export default class Highlights {
 				hostStyle.pointerEvents = 'none';
 				hostStyle.width = '0px';
 				hostStyle.height = '0px';
+			} else if (host.hasAttribute('style')) {
+				host.removeAttribute('style');
 			}
 
 			renderBox.render(this.renderTree(boxes));

@@ -91,6 +91,7 @@ async function enableDefaultDomains() {
 		'write.ellipsus.com',
 		'www.facebook.com',
 		'www.upwork.com',
+		'news.ycombinator.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

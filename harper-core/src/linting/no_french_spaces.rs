@@ -1,6 +1,6 @@
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::Document;
 use crate::TokenStringExt;
+use crate::{Document, TokenKind};
 
 #[derive(Debug, Default)]
 pub struct NoFrenchSpaces;
@@ -13,6 +13,9 @@ impl Linter for NoFrenchSpaces {
             if let Some(space_idx) = sentence.iter_space_indices().next() {
                 let space = &sentence[space_idx];
 
+                if matches!(space.kind, TokenKind::Space(0)) {
+                    continue;
+                }
                 if space_idx == 0 && space.span.len() != 1 {
                     output.push(Lint {
                         span: space.span,

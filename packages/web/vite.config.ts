@@ -50,10 +50,6 @@ export default defineConfig({
 									title: 'About',
 									to: '/docs/about',
 								},
-								{
-									title: 'FAQ',
-									to: '/docs/faq',
-								},
 							],
 						},
 						{
