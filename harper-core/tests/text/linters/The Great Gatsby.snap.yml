@@ -490,6 +490,20 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     334 | “All right,” said Daisy. ‘‘What’ll we plan?” She turned to me helplessly: ‘‘What
+         |                                            ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     335 | do people plan?”
+         |                ^ This quote has no termination.
+
+
+
 Lint:    Style (31 priority)
 Message: |
      394 | me again. ‘‘—And we’ve produced all the things that go to make civilization—oh,
@@ -497,6 +511,13 @@ Message: |
          | ^~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     395 | science and art, and all that. Do you see?”
+         |                                           ^ This quote has no termination.
 
 
 
@@ -520,6 +541,13 @@ Message: |
      427 | rose. Doesn’t he?” She turned to Miss Baker for confirmation: “An absolute
 Suggest:
   - Replace with: “an”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     452 | “Why—” she said hesitantly, ‘‘Tom’s got some woman in New York.”
+         |                                                                ^ This quote has no termination.
 
 
 
@@ -570,6 +598,13 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     514 | “I’ll show you how I’ve gotten to feel about—things. Well, she was less than an
+         | ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      529 | the whole evening had been a trick of some sort to exact a contributary emotion
@@ -610,6 +645,13 @@ Message: |
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
 Suggest:
   - Replace with: “excellent”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     603 | square of light. As I started my motor Daisy peremptorily called: “Wait!
+         |                                                                   ^ This quote has no termination.
 
 
 
@@ -844,6 +886,13 @@ Message: |
          |              ^~~~~~~~~~~ The word `of` is not needed here.
 Suggest:
   - Replace with: “shadow a”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     711 | ‘‘How’s business?”
+         |                  ^ This quote has no termination.
 
 
 
@@ -1592,6 +1641,14 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1406 | burden of the banjo or the traps. By midnight the hilarity had increased. A
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 57 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1408 | jazz, and between the numbers people were doing ‘‘stunts” all over the garden,
+         |                                                         ^ This quote has no termination.
+    1409 | while happy, vacuous bursts of laughter rose toward the summer sky. A pair of
 
 
 
@@ -3148,6 +3205,21 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2126 | “The old Metropole,” brooded Mr. Wolfshiem gloomily. “Filled with faces dead and
+         |                                                      ^ This quote has no termination.
+    2127 | gone. Filled with friends gone now forever. I can’t forget so long as I live the
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2134 | “‘Let the bastards come in here if they want you, Rosy, but don’t you, so help
+         | ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2142 | “Sure he went.” Mr. Wolfshiem’s nose flashed at me indignantly. “He turned
@@ -3165,6 +3237,13 @@ Message: |
          |                                          ^~~~~~~~~~ Did you mean `connection`?
 Suggest:
   - Replace with: “connection”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2154 | “Oh, no,” he exclaimed, ‘‘this isn’t the man.”
+         |                                              ^ This quote has no termination.
 
 
 
@@ -3452,6 +3531,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2352 | change’ her mine!’”
+         |                   ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2360 | But she didn’t say another word. We gave her spirits of ammonia and put ice on
@@ -3462,6 +3548,14 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2363 | over. Next day at five o’clock she married Tom Buchanan without so much as a
          | ~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2368 | around uneasily, and say: ‘‘Where’s Tom gone?” and wear the most abstracted
+         |                                              ^ This quote has no termination.
+    2369 | expression until she saw him coming in the door. She used to sit on the sand
 
 
 
@@ -3512,6 +3606,21 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2437 | “I think he half expected her to wander into one of his parties, some night,”
+    2438 | went on Jordan, “but she never did. Then he began asking people casually if they
+         |                 ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2444 | “‘I don’t want to do anything out of the way!’ he kept saying. ‘I want to see
+         | ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2455 | hard, limited person, who dealt in universal scepticism, and who leaned back
@@ -3520,6 +3629,13 @@ Message: |
 Suggest:
   - Replace with: “skepticism”
   - Replace with: “asceticism”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2458 | busy and the tired.”
+         |                    ^ This quote has no termination.
 
 
 
@@ -3552,6 +3668,13 @@ Suggest:
   - Replace with: “Conley”
   - Replace with: “Corey”
   - Replace with: “Coley”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2530 | “Oh, it isn’t about that. At least—’’ He fumbled with a series of beginnings.
+         | ^ This quote has no termination.
 
 
 
@@ -3683,6 +3806,13 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2720 | terrible, terrible mistake.”
+         |                            ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2737 | I walked out the back way—just as Gatsby had when he had made his nervous
@@ -3726,6 +3856,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2806 | was in he answered: ‘‘That’s my affair,” before he realized that it wasn’t an
+         |                                        ^ This quote has no termination.
+
+
+
 Lint:    Style (31 priority)
 Message: |
     2823 | “I keep it always full of interesting people, night and day. People who do
@@ -3760,6 +3897,14 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2837 | closed the door of ‘‘the Merton College Library” I could have sworn I heard the
+         |                                                ^ This quote has no termination.
+    2838 | owl-eyed man break into ghostly laughter.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2840 | We went up-stairs, through period bedrooms swathed in rose and lavender silk and
@@ -3787,6 +3932,14 @@ Lint:    Spelling (63 priority)
 Message: |
     2843 | doing liver exercises on the floor. It was Mr. Klipspringer, the ‘‘boarder.” I
          |                                                ^~~~~~~~~~~~ Did you mean to spell `Klipspringer` this way?
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2843 | doing liver exercises on the floor. It was Mr. Klipspringer, the ‘‘boarder.” I
+         |                                                                            ^ This quote has no termination.
+    2844 | had seen him wandering hungrily about the beach that morning. Finally we came to
 
 
 
@@ -4253,6 +4406,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    3296 | explained, ‘‘or any act of God.”
+         |                                ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3316 | “Wha’?”
@@ -4414,6 +4574,13 @@ Message: |
     3496 | house failed to go on one Saturday night—and, as obscurely as it had begun, his
     3497 | career as Trimalchio was over. Only gradually did I become aware that the
          |           ^~~~~~~~~~ Did you mean to spell `Trimalchio` this way?
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    3505 | “Nope.” After a pause he added “sir’’ in a dilatory, grudging way.
+         |                                ^ This quote has no termination.
 
 
 
@@ -4674,6 +4841,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    3687 | “It seems that pretty soon the earth’s going to fall into the sun—or wait a
+         | ^ This quote has no termination.
+
+
+
 Lint:    Regionalism (63 priority)
 Message: |
     3690 | “Come outside,” he suggested to Gatsby, “I’d like you to have a look at the
@@ -4703,6 +4877,14 @@ Message: |
          |                            ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    3739 | “You resemble the advertisement of the man,” she went on innocently. ‘You know
+    3740 | the advertisement of the man—”
+         |                              ^ This quote has no termination.
 
 
 
@@ -5003,6 +5185,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    4062 | wasn’t any connection.”
+         |                       ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4064 | “I used to know a Bill Biloxi from Memphis,” I remarked.
@@ -5033,6 +5222,13 @@ Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
   - Replace with: “Biro's”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4075 | “Remember Biloxi,” Jordan warned her. ‘‘Where’d you know him, Tom?”
+         |                                                                   ^ This quote has no termination.
 
 
 
@@ -5102,6 +5298,20 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    4134 | won’t seem so stupid to yourself. . . . Look at the mint!”
+         |                                                          ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4175 | me.”
+         |    ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     4185 | At this point Jordan and I tried to go, but Tom and Gatsby insisted with
@@ -5121,6 +5331,21 @@ Suggest:
   - Replace with: “your”
   - Replace with: “you're a”
   - Replace with: “you're an”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4201 | sometimes”—but there was no laughter in his eyes—“to think that you didn’t
+         |                                                  ^ This quote has no termination.
+    4202 | know.”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4202 | know.”
+         |      ^ This quote has no termination.
 
 
 
@@ -5571,6 +5796,14 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
+    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
+         |                               ^ This quote has no termination.
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
@@ -5614,6 +5847,13 @@ Suggest:
   - Replace with: “gain”
   - Replace with: “gin”
   - Replace with: “going”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4511 | knock right into her, goin’ thirty or forty miles an hour.”
+         |                                                           ^ This quote has no termination.
 
 
 
@@ -5699,6 +5939,13 @@ Suggest:
   - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4679 | “Don’t tell me, old sport.” He winced. “Anyhow—Daisy stepped on it. I tried to
+         |                                        ^ This quote has no termination.
 
 
 
@@ -6086,6 +6333,21 @@ Suggest:
   - Replace with: “asthma's”
   - Replace with: “airheads”
   - Replace with: “ashcans”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5151 | and walked to the rear window and leaned with his face pressed against it—“and I
+         |                                                                           ^ This quote has no termination.
+    5152 | said ‘God knows what you’ve been doing, everything you’ve been doing. You may
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5153 | fool me, but you can’t fool God!’”
+         |                                  ^ This quote has no termination.
 
 
 
@@ -6695,6 +6957,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    5498 | “Oh-h!” She looked at me over again. ‘‘Will you just— What was your name?”
+         |                                                                          ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5500 | She vanished. In a moment Meyer Wolfsheim stood solemnly in the doorway, holding
@@ -6738,6 +7007,21 @@ Suggest:
   - Replace with: “Oxford”
   - Replace with: “Osborn”
   - Replace with: “Osgood”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5522 | of mine up to Albany. We were so thick like that in everything”—he held up two
+    5523 | bulbous fingers—“always together.”
+         |                 ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5523 | bulbous fingers—“always together.”
+         |                                  ^ This quote has no termination.
 
 
 
@@ -7140,6 +7424,27 @@ Message: |
          |  ^~~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5723 | for me, and I felt a little dizzy for a while.”
+         |                                               ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5727 | “Oh, and do you remember”—she added—“a conversation we had once about driving a
+         |                                     ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5728 | car?”
+         |     ^ This quote has no termination.
 
 
 

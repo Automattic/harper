@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.65.0",
+	"version": "0.66.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -475,6 +475,12 @@
 					"default": true,
 					"description": "`Beforehand` functions as a fixed adverb meaning ‘in advance’; writing it as two words or with a hyphen is nonstandard and can jar readers."
 				},
+				"harper.linters.BesideThePoint": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `besides the point` to `beside the point`."
+				},
 				"harper.linters.BestOfAllTime": {
 					"scope": "resource",
 					"type": "boolean",
@@ -744,6 +750,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Tries to correct typos of `dose` to `does`."
+				},
+				"harper.linters.DontCan": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `don't can` to `can't` or `cannot`."
 				},
 				"harper.linters.DotInitialisms": {
 					"scope": "resource",
@@ -1303,12 +1315,6 @@
 					"default": true,
 					"description": "Ensures the correct preposition is used with the word `interested` (e.g. `interested in`)."
 				},
-				"harper.linters.Into": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Looks for incorrect spacing inside the closed compound `into`."
-				},
 				"harper.linters.InvestIn": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1530,6 +1536,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Locates potentially missing prepositions."
+				},
+				"harper.linters.MissingTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags verbs and adjectives like `need`, `want`, or `ready` that are missing `to` before an infinitive."
 				},
 				"harper.linters.Misunderstand": {
 					"scope": "resource",
@@ -1987,12 +1999,6 @@
 					"default": true,
 					"description": "Ensure proper capitalization of proper nouns."
 				},
-				"harper.linters.PunctuationClusters": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Detects consecutive or mixed punctuation marks that should be reduced to a single comma, semicolon, colon, slash, question mark, exclamation mark, period, or ampersand."
-				},
 				"harper.linters.QuantifierNeedsOf": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2004,6 +2010,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Helps distinguish between ‘quiet’ (making ‘little noise’) and ‘quite’ (meaning ‘rather’)."
+				},
+				"harper.linters.QuoteSpacing": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks that quotation marks are preceded or succeeded by whitespace."
 				},
 				"harper.linters.RapidFire": {
 					"scope": "resource",

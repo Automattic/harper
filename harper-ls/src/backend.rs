@@ -22,6 +22,7 @@ use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
 use harper_literate_haskell::LiterateHaskellParser;
+use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
 use harper_typst::Typst;
 use serde_json::Value;
@@ -388,6 +389,7 @@ impl Backend {
             "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "typst" => Some(Box::new(Typst)),
             "org" => Some(Box::new(OrgMode)),
+            "python" => Some(Box::new(PythonParser::default())),
             _ => None,
         };
 

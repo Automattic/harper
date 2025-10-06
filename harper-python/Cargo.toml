@@ -1,5 +1,5 @@
 [package]
-name = "harper-ink"
+name = "harper-python"
 version = "0.66.0"
 edition = "2024"
 description = "The language checker for developers."
@@ -9,7 +9,7 @@ repository = "https://github.com/automattic/harper"
 [dependencies]
 harper-core = { path = "../harper-core", version = "0.66.0" }
 harper-tree-sitter = { path = "../harper-tree-sitter", version = "0.66.0" }
-tree-sitter-ink-lbz = "0.0.1"
+tree-sitter-python = "0.25.0"
 tree-sitter = "0.25.10"
 
 [dev-dependencies]

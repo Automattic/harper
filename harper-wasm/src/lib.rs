@@ -332,6 +332,12 @@ impl Linter {
         self.ignored_lints = IgnoredLints::new();
     }
 
+    /// Clear the user dictionary.
+    pub fn clear_words(&mut self) {
+        self.user_dictionary = MutableDictionary::new();
+        self.synchronize_lint_dict();
+    }
+
     /// Import words into the dictionary.
     pub fn import_words(&mut self, additional_words: Vec<String>) {
         let init_len = self.user_dictionary.word_count();
