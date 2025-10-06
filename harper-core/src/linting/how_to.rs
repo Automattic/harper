@@ -1,14 +1,10 @@
 use harper_brill::UPOS;
 
-use crate::expr::All;
-use crate::expr::Expr;
-use crate::expr::OwnedExprExt;
-use crate::expr::SequenceExpr;
-use crate::patterns::UPOSSet;
 use crate::{
-    Token, TokenStringExt,
+    Token, TokenKind, TokenStringExt,
+    expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::InflectionOfBe,
+    patterns::{InflectionOfBe, UPOSSet},
 };
 
 pub struct HowTo {
@@ -24,10 +20,7 @@ impl Default for HowTo {
             .then_anything()
             .t_aco("how")
             .then_whitespace()
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_upos(UPOS::VERB)
-                    || (tok.kind.is_verb() && tok.kind.is_likely_homograph())
-            });
+            .then_verb_lemma();
         pattern.add(pos_pattern);
 
         let exceptions = SequenceExpr::default()
@@ -36,18 +29,15 @@ impl Default for HowTo {
             .then_anything()
             .then_anything()
             .then_unless(
-                InflectionOfBe::new().or(Box::new(|tok: &Token, src: &[char]| {
-                    if tok.kind.is_auxiliary_verb()
-                        || tok.kind.is_adjective()
-                        || tok.kind.is_verb_progressive_form()
-                        || tok.kind.is_conjunction()
-                    {
-                        true
-                    } else {
-                        let normed = tok.span.get_content_string(src).to_ascii_lowercase();
-                        normed == "did" || normed == "come" || normed == "does"
-                    }
-                })),
+                InflectionOfBe::new().or(SequenceExpr::default().then_kind_any_or_words(
+                    &[
+                        TokenKind::is_auxiliary_verb,
+                        TokenKind::is_adjective,
+                        TokenKind::is_conjunction,
+                        TokenKind::is_proper_noun,
+                    ] as &[_],
+                    &["did", "come", "does"],
+                )),
             );
 
         pattern.add(SequenceExpr::default().then(exceptions));
@@ -287,6 +277,22 @@ mod tests {
     fn allow_issue_1298() {
         assert_no_lints(
             "The story of how and why things came to this point.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_false_positive_pr_1846() {
+        assert_no_lints(
+            "About how Microsoft, Google, and others are training people in Rust.",
+            HowTo::default(),
+        )
+    }
+
+    #[test]
+    fn dont_flag_false_positives_1492_how_indexes() {
+        assert_no_lints(
+            "controls how indexes will be added to unwrapped keys of flat array-like objects",
             HowTo::default(),
         );
     }

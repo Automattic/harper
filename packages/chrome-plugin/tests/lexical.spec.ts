@@ -1,6 +1,7 @@
 import { expect, test } from './fixtures';
 import {
 	clickHarperHighlight,
+	getHarperHighlights,
 	getLexicalEditor,
 	randomString,
 	replaceEditorContent,
@@ -37,10 +38,11 @@ test('Can ignore suggestion.', async ({ page }) => {
 
 	await page.waitForTimeout(3000);
 
-	await clickHarperHighlight(page);
+	const opened = await clickHarperHighlight(page);
+	expect(opened).toBe(true);
 	await page.getByTitle('Ignore this lint').click();
 
-	await page.waitForTimeout(3000);
+	await expect(getHarperHighlights(page)).toHaveCount(0);
 
 	// Nothing should change.
 	expect(lexical).toContainText(cacheSalt);

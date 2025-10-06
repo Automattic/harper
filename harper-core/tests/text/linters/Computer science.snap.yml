@@ -1,3 +1,13 @@
+Lint:    Style (31 priority)
+Message: |
+      27 | problem-solving, decision-making, environmental adaptation, planning and
+         |                                                             ^~~~~~~~ An Oxford comma is necessary here.
+      28 | learning found in humans and animals. Within artificial intelligence, computer
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       45 | Wilhelm Schickard designed and constructed the first working mechanical
@@ -101,14 +111,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      68 | Essays on Automatics, and designed, inspired by Babbage, a theoretical
-      69 | electromechanical calculating machine which was to be controlled by a read-only
-         | ^~~~~~~~~~~~~~~~~ Did you mean to spell `electromechanical` this way?
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       71 | 1920, to celebrate the 100th anniversary of the invention of the arithmometer,
          |                                                                  ^~~~~~~~~~~~ Did you mean to spell `arithmometer` this way?
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
@@ -120,27 +122,9 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      71 | 1920, to celebrate the 100th anniversary of the invention of the arithmometer,
-      72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
-         |                               ^~~~~~~~~~~~~~~~~ Did you mean to spell `Electromechanical` this way?
-      73 | demonstrated the feasibility of an electromechanical analytical engine, on which
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
          |                                                 ^~~~~~~~~~~~ Did you mean to spell `Arithmometer` this way?
       73 | demonstrated the feasibility of an electromechanical analytical engine, on which
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-      72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
-      73 | demonstrated the feasibility of an electromechanical analytical engine, on which
-         |                                    ^~~~~~~~~~~~~~~~~ Did you mean to spell `electromechanical` this way?
-      74 | commands could be typed and the results printed automatically. In 1937, one
 
 
 
@@ -347,18 +331,6 @@ Suggest:
   - Replace with: “urologist”
   - Replace with: “theologist”
   - Replace with: “neurologist”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     127 | the ACM—turingineer, turologist, flow-charts-man, applied meta-mathematician,
-     128 | and applied epistemologist. Three months later in the same journal, comptologist
-         |             ^~~~~~~~~~~~~~ Did you mean to spell `epistemologist` this way?
-Suggest:
-  - Replace with: “epistemological”
-  - Replace with: “epistemology”
-  - Replace with: “epidemiologist”
 
 
 
@@ -642,9 +614,9 @@ Message: |
      182 | Newell and Herbert A. Simon argued in 1975,
          |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Aw”
-  - Replace with: “Ab”
-  - Replace with: “Ac”
+  - Replace with: “Ax”
+  - Replace with: “A”
+  - Replace with: “Ah”
 
 
 
@@ -773,9 +745,19 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Ht”
-  - Replace with: “H”
+  - Replace with: “Hr”
   - Replace with: “He”
+  - Replace with: “Hf”
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     224 | design, specification, programming, verification, implementation and testing of
+         |                                                   ^~~~~~~~~~~~~~ An Oxford comma is necessary here.
+     225 | human-made computing systems.
+Suggest:
+  - Insert “,”
 
 
 
@@ -875,6 +857,17 @@ Suggest:
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+     286 | programming languages and their individual features. It falls within the
+     287 | discipline of computer science, both depending on and affecting mathematics,
+         |                                 ^~~~~~~~~~~~~~ `depending` is a mass noun.
+     288 | software engineering, and linguistics. It is an active research area, with
+Suggest:
+  - Replace with: “both pieces of depending”
+
+
+
 Lint:    Style (31 priority)
 Message: |
      291 | Formal methods are a particular kind of mathematically based technique for the
@@ -944,8 +937,8 @@ Message: |
          |                             ^~~ Did you mean to spell `HCI` this way?
 Suggest:
   - Replace with: “Hi”
+  - Replace with: “Chi”
   - Replace with: “CI”
-  - Replace with: “MCI”
 
 
 
@@ -956,8 +949,8 @@ Message: |
      349 | that focus on the relationship between emotions, social behavior and brain
 Suggest:
   - Replace with: “Hi”
+  - Replace with: “Chi”
   - Replace with: “CI”
-  - Replace with: “MCI”
 
 
 
@@ -967,16 +960,6 @@ Message: |
          |              ^~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
 Suggest:
   - Insert “,”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     371 | semiotics, electrical engineering, philosophy of mind, neurophysiology, and
-         |                                                        ^~~~~~~~~~~~~~~ Did you mean `neurobiology`?
-     372 | social intelligence. AI is associated in the popular mind with robotic
-Suggest:
-  - Replace with: “neurobiology”
 
 
 
@@ -996,9 +979,9 @@ Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
+  - Replace with: “Pp”
   - Replace with: “Pa”
+  - Replace with: “Pd”
 
 
 
@@ -1052,18 +1035,6 @@ Suggest:
   - Replace with: “Lotteries”
   - Replace with: “Notified”
   - Replace with: “Pottered”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     442 |   > All the information about any computable problem can be represented using
-     443 |   > only 0 and 1 (or any other bistable pair that can flip-flop between two
-         |                                ^~~~~~~~ Did you mean to spell `bistable` this way?
-Suggest:
-  - Replace with: “beatable”
-  - Replace with: “biddable”
-  - Replace with: “billable”
 
 
 
@@ -1169,7 +1140,7 @@ Message: |
 Suggest:
   - Replace with: “got”
   - Replace with: “goo”
-  - Replace with: “gore”
+  - Replace with: “goths”
 
 
 

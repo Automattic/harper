@@ -90,8 +90,8 @@ fn should_capitalize_token(tok: &Token, source: &[char], dict: &impl Dictionary)
 
             let mut metadata = Cow::Borrowed(metadata);
 
-            if let Some(metadata_lower) = dict.get_word_metadata(&chars_lower) {
-                metadata = Cow::Owned(metadata.clone().or(metadata_lower));
+            if let Some(metadata_lower) = dict.get_lexeme_metadata(&chars_lower) {
+                metadata = Cow::Owned(metadata.clone().or(&metadata_lower));
             }
 
             let is_short_preposition = metadata.preposition && tok.span.len() <= 4;

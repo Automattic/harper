@@ -278,7 +278,9 @@
 			"Google AdSense",
 			"Google Pixel",
 			"Google Nest",
-			"Google Workspace"
+			"Google Workspace",
+			"Chrome Web Store",
+			"Google Chrome Web Store"
 		],
 		"description": "When referring to Google products and services, make sure to treat them as proper nouns."
 	},

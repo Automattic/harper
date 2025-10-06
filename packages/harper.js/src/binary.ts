@@ -144,7 +144,14 @@ export class BinaryModule {
 		}
 
 		if (argType == 'object') {
-			return { json: JSON.stringify(arg), type: 'object' };
+			return {
+				json: JSON.stringify(
+					await Promise.all(
+						Object.entries(arg).map(([key, value]) => this.serializeArg([key, value])),
+					),
+				),
+				type: 'object',
+			};
 		}
 
 		throw new Error(`Unhandled case: ${arg}`);
@@ -182,7 +189,9 @@ export class BinaryModule {
 			}
 			case 'object': {
 				const parsed = JSON.parse(requestArg.json);
-				return parsed;
+				return Object.fromEntries(
+					await Promise.all(parsed.map((val: any) => this.deserializeArg(val))),
+				);
 			}
 			default:
 				throw new Error(`Unhandled case: ${requestArg.type}`);

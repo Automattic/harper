@@ -45,6 +45,18 @@ Message: |
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+      21 | be late!” (when she thought it over afterwards, it occurred to her that she
+         |                                     ^~~~~~~~~~ Did you mean to spell `afterwards` this way?
+      22 | ought to have wondered at this, but at the time it all seemed quite natural);
+Suggest:
+  - Replace with: “afterward”
+  - Replace with: “afterwords”
+  - Replace with: “afterword's”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
       39 | next. First, she tried to look down and make out what she was coming to, but it
@@ -70,6 +82,29 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       46 | she fell past it.
          | ~~~~~~~~~~~~~~~~~ This sentence is 55 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      43 | shelves as she passed; it was labelled “ORANGE MARMALADE”, but to her great
+         |                               ^~~~~~~~ Did you mean to spell `labelled` this way?
+Suggest:
+  - Replace with: “labeled”
+  - Replace with: “labeler”
+  - Replace with: “labelless”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+      54 | I’ve fallen by this time?” she said aloud. “I must be getting somewhere near the
+      55 | centre of the earth. Let me see: that would be four thousand miles down, I
+         | ^~~~~~ Did you mean to spell `centre` this way?
+Suggest:
+  - Replace with: “center”
+  - Replace with: “central”
+  - Replace with: “censure”
 
 
 
@@ -100,6 +135,17 @@ Suggest:
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+      65 | downward! The Antipathies, I think—” (she was rather glad there was no one
+         |                                                                        ^~~~
+      66 | listening, this time, as it didn’t sound at all the right word) “—but I shall
+         | ~~~~~~~~~ `listening` is a mass noun.
+Suggest:
+  - Replace with: “one piece of listening”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       68 | this New Zealand or Australia?” (and she tried to curtsey as she spoke—fancy
@@ -107,8 +153,8 @@ Message: |
       69 | curtseying as you’re falling through the air! Do you think you could manage it?)
 Suggest:
   - Replace with: “curtsy”
+  - Replace with: “courtesy”
   - Replace with: “curse”
-  - Replace with: “cursed”
 
 
 
@@ -274,6 +320,18 @@ Message: |
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+     138 | finding it very nice, (it had, in fact, a sort of mixed flavour of cherry-tart,
+         |                                                         ^~~~~~~ Did you mean to spell `flavour` this way?
+     139 | custard, pine-apple, roast turkey, toffee, and hot buttered toast,) she very
+Suggest:
+  - Replace with: “flavor”
+  - Replace with: “favor”
+  - Replace with: “flour”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      146 | door into that lovely garden. First, however, she waited for a few minutes to
@@ -405,6 +463,20 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     201 | the carrier,” she thought; “and how funny it’ll seem, sending presents to one’s
+         |                            ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     206 | Oh dear, what nonsense I’m talking!”
+         |                                    ^ This quote has no termination.
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      226 | himself as he came, “Oh! the Duchess, the Duchess! Oh! won’t she be savage if
@@ -477,6 +549,13 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      252 | and strange, and the words did not come the same as they used to do:—
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 47 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     254 | > “How doth the little crocodile Improve his shining tail, And pour the waters
+         |   ^ This quote has no termination.
 
 
 
@@ -741,6 +820,18 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
+     387 | driest thing I know. Silence all round, if you please! ‘William the Conqueror,
+     388 | whose cause was favoured by the pope, was soon submitted to by the English, who
+         |                 ^~~~~~~~ Did you mean to spell `favoured` this way?
+Suggest:
+  - Replace with: “favored”
+  - Replace with: “flavored”
+  - Replace with: “floured”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
      390 | Edwin and Morcar, the earls of Mercia and Northumbria—’”
          |           ^~~~~~ Did you mean to spell `Morcar` this way?
 Suggest:
@@ -851,6 +942,13 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      476 | simply bowed, and took the thimble, looking as solemn as she could.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     502 | > Fury: ‘I’ll try the whole cause, and condemn you to death.’”
+         |                                                              ^ This quote has no termination.
 
 
 
@@ -1001,6 +1099,44 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     659 | Next came an angry voice—the Rabbit’s—“Pat! Pat! Where are you?” And then a
+         |                                       ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     659 | Next came an angry voice—the Rabbit’s—“Pat! Pat! Where are you?” And then a
+         |                                                                ^ This quote has no termination.
+     660 | voice she had never heard before, “Sure then I’m here! Digging for apples, yer
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     660 | voice she had never heard before, “Sure then I’m here! Digging for apples, yer
+     661 | honour!”
+         | ^~~~~~ Did you mean to spell `honour` this way?
+Suggest:
+  - Replace with: “honor”
+  - Replace with: “hour”
+  - Replace with: “honer”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
+         |                         ^~~~~~ Did you mean to spell `honour` this way?
+Suggest:
+  - Replace with: “honor”
+  - Replace with: “hour”
+  - Replace with: “honer”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
@@ -1009,6 +1145,28 @@ Suggest:
   - Replace with: “arum”
   - Replace with: “album”
   - Replace with: “alum”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     672 | “Sure, it does, yer honour: but it’s an arm for all that.”
+         |                     ^~~~~~ Did you mean to spell `honour` this way?
+Suggest:
+  - Replace with: “honor”
+  - Replace with: “hour”
+  - Replace with: “honer”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     677 | then; such as, “Sure, I don’t like it, yer honour, at all, at all!” “Do as I
+         |                                            ^~~~~~ Did you mean to spell `honour` this way?
+Suggest:
+  - Replace with: “honor”
+  - Replace with: “hour”
+  - Replace with: “honer”
 
 
 
@@ -1040,12 +1198,26 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     692 | below!” (a loud crash)—“Now, who did that?—It was Bill, I fancy—Who’s to go down
+         |                        ^ This quote has no termination.
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      694 | down—Here, Bill! the master says you’re to go down the chimney!”
          |                  ^~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “The”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     694 | down—Here, Bill! the master says you’re to go down the chimney!”
+         |                                                                ^ This quote has no termination.
 
 
 
@@ -1059,6 +1231,37 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      704 | is Bill,” she gave one sharp kick, and waited to see what would happen next.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 58 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     706 | The first thing she heard was a general chorus of “There goes Bill!” then the
+     707 | Rabbit’s voice along—“Catch him, you by the hedge!” then silence, and then
+         |                      ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     707 | Rabbit’s voice along—“Catch him, you by the hedge!” then silence, and then
+         |                                                   ^ This quote has no termination.
+     708 | another confusion of voices—“Hold up his head—Brandy now—Don’t choke him—How was
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     707 | Rabbit’s voice along—“Catch him, you by the hedge!” then silence, and then
+     708 | another confusion of voices—“Hold up his head—Brandy now—Don’t choke him—How was
+         |                             ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     709 | it, old fellow? What happened to you? Tell us all about it!”
+         |                                                            ^ This quote has no termination.
 
 
 
@@ -1195,6 +1398,39 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      824 | butterfly, I should think you’ll feel it a little queer, won’t you?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     865 | “Well, I’ve tried to say “How doth the little busy bee,” but it all came
+         | ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     866 | different!” Alice replied in a very melancholy voice.
+         |           ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     868 | “Repeat, “You are old, Father William,’” said the Caterpillar.
+         | ^ This quote has no termination.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+     884 | > “In my youth,” said the sage, as he shook his grey locks, “I kept all my limbs
+         |                                                 ^~~~ Did you mean to spell `grey` this way?
+     885 | > very supple By the use of this ointment—one shilling the box— Allow me to sell
+Suggest:
+  - Replace with: “gray”
+  - Replace with: “grew”
+  - Replace with: “grep”
 
 
 
@@ -1598,6 +1834,17 @@ Suggest:
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+    1497 | The Hatter shook his head mournfully. “Not I!” he replied. “We quarrelled last
+         |                                                                ^~~~~~~~~~ Did you mean to spell `quarrelled` this way?
+    1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
+Suggest:
+  - Replace with: “quarreled”
+  - Replace with: “quarreler”
+
+
+
 Lint:    WordChoice (63 priority)
 Message: |
     1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
@@ -1605,6 +1852,35 @@ Message: |
     1499 | March Hare,) “—it was at the great concert given by the Queen of Hearts, and I
 Suggest:
   - Replace with: “teaspoon”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
+    1499 | March Hare,) “—it was at the great concert given by the Queen of Hearts, and I
+         |              ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1504 | You know the song, perhaps?”
+         |                            ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1508 | “It goes on, you know,” the Hatter continued, “in this way:—
+         |                                               ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1510 | > ‘Up above the world you fly, Like a tea-tray in the sky. Twinkle, twinkle—’”
+         |                                                                              ^ This quote has no termination.
 
 
 
@@ -1642,6 +1918,20 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1641 | such a thing as a drawing of a muchness?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 73 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1639 | went on: “—that begins with an M, such as mouse-traps, and the moon, and memory,
+         |          ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1641 | such a thing as a drawing of a muchness?”
+         |                                         ^ This quote has no termination.
 
 
 
@@ -1699,18 +1989,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    1702 | all have our heads cut off, you know. So you see, Miss, we’re doing our best,
-    1703 | afore she comes, to—” At this moment Five, who had been anxiously looking across
-         | ^~~~~ Did you mean to spell `afore` this way?
-Suggest:
-  - Replace with: “adore”
-  - Replace with: “afire”
-  - Replace with: “fore”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1708 | First came ten soldiers carrying clubs; these were all shaped like the three
@@ -1721,6 +1999,28 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1711 | two, as the soldiers did. After these came the royal children; there were ten of
          | ~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Style (31 priority)
+Message: |
+    1708 | First came ten soldiers carrying clubs; these were all shaped like the three
+    1709 | gardeners, oblong and flat, with their hands and feet at the corners: next the
+         |            ^~~~~~ An Oxford comma is necessary here.
+Suggest:
+  - Insert “,”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    1713 | they were all ornamented with hearts. Next came the guests, mostly Kings and
+    1714 | Queens, and among them Alice recognised the White Rabbit: it was talking in a
+         |                              ^~~~~~~~~~ Did you mean to spell `recognised` this way?
+Suggest:
+  - Replace with: “recognized”
+  - Replace with: “recognize”
+  - Replace with: “recognizer”
 
 
 
@@ -1767,18 +2067,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    1815 | furrows; the balls were live hedgehogs, the mallets live flamingoes, and the
-         |                                                          ^~~~~~~~~~ Did you mean to spell `flamingoes` this way?
-    1816 | soldiers had to double themselves up and to stand on their hands and feet, to
-Suggest:
-  - Replace with: “flamingo's”
-  - Replace with: “flamingos”
-  - Replace with: “flamingo”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1819 | The chief difficulty Alice found at first was in managing her flamingo: she
@@ -1819,6 +2107,16 @@ Message: |
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+    1832 | The players all played at once without waiting for turns, quarrelling all the
+         |                                                           ^~~~~~~~~~~ Did you mean `quarreling`?
+    1833 | while, and fighting for the hedgehogs; and in a very short time the Queen was in
+Suggest:
+  - Replace with: “quarreling”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1842 | She was looking about for some way of escape, and wondering whether she could
@@ -1850,18 +2148,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1864 | just now, only it ran away when it saw mine coming!”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 97 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    1863 | at the other end of the ground—and I should have croqueted the Queen’s hedgehog
-         |                                                  ^~~~~~~~~ Did you mean to spell `croqueted` this way?
-    1864 | just now, only it ran away when it saw mine coming!”
-Suggest:
-  - Replace with: “croquet's”
-  - Replace with: “coquetted”
-  - Replace with: “crocheted”
 
 
 
@@ -1899,17 +2185,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1910 | a tree.
          | ~~~~~~~ This sentence is 60 words long.
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    1906 | The hedgehog was engaged in a fight with another hedgehog, which seemed to Alice
-    1907 | an excellent opportunity for croqueting one of them with the other: the only
-         |                              ^~~~~~~~~~ Did you mean to spell `croqueting` this way?
-Suggest:
-  - Replace with: “coquetting”
-  - Replace with: “crocheting”
 
 
 
@@ -2033,17 +2308,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    2004 | “Very true,” said the Duchess: “flamingoes and mustard both bite. And the moral
-         |                                 ^~~~~~~~~~ Did you mean to spell `flamingoes` this way?
-Suggest:
-  - Replace with: “flamingo's”
-  - Replace with: “flamingos”
-  - Replace with: “flamingo”
-
-
-
 Lint:    WordChoice (63 priority)
 Message: |
     2009 | “Right, as usual,” said the Duchess: “what a clear way you have of putting
@@ -2069,6 +2333,17 @@ Message: |
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+    2048 | But here, to Alice’s great surprise, the Duchess’s voice died away, even in the
+    2049 | middle of her favourite word ‘moral,’ and the arm that was linked into hers
+         |               ^~~~~~~~~ Did you mean to spell `favourite` this way?
+Suggest:
+  - Replace with: “favorite”
+  - Replace with: “favorites”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2064 | The other guests had taken advantage of the Queen’s absence, and were resting in
@@ -2077,6 +2352,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2066 | Queen merely remarking that a moment’s delay would cost them their lives.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2068 | All the time they were playing the Queen never left off quarrelling with the
+         |                                                         ^~~~~~~~~~~ Did you mean `quarreling`?
+    2069 | other players, and shouting “Off with his head!” or “Off with her head!” Those
+Suggest:
+  - Replace with: “quarreling”
 
 
 
@@ -2252,25 +2537,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    2189 | then the different branches of Arithmetic—Ambition, Distraction, Uglification,
-         |                                                                  ^~~~~~~~~~~~ Did you mean `Vilification`?
-    2190 | and Derision.”
-Suggest:
-  - Replace with: “Vilification”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    2192 | “I never heard of ‘Uglification,’” Alice ventured to say. “What is it?”
-         |                    ^~~~~~~~~~~~ Did you mean `Vilification`?
-Suggest:
-  - Replace with: “Vilification”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     2194 | The Gryphon lifted up both its paws in surprise. “What! Never heard of
          |     ^~~~~~~ Did you mean `Krypton`?
 Suggest:
@@ -2424,6 +2690,22 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2252 | “You may not have lived much under the sea—” (“I haven’t,” said Alice)—“and
+         |                                                                        ^ This quote has no termination.
+    2253 | perhaps you were never even introduced to a lobster—” (Alice began to say “I
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2253 | perhaps you were never even introduced to a lobster—” (Alice began to say “I
+         |                                                     ^ This quote has no termination.
+    2254 | once tasted—” but checked herself hastily, and said “No, never”) “—so you can
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2259 | “Why,” said the Gryphon, “you first form into a line along the sea-shore—”
@@ -2540,6 +2822,14 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
+         |                                                               ^ This quote has no termination.
+    2307 | > porpoise close behind us, and he’s treading on my tail. See how eagerly the
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2333 | “Yes,” said Alice, “I’ve often seen them at dinn—” she checked herself hastily.
@@ -2559,6 +2849,22 @@ Suggest:
   - Replace with: “Din”
   - Replace with: “Ding”
   - Replace with: “Diann”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2343 | here the Mock Turtle yawned and shut his eyes.—“Tell her about the reason and
+         |                                                ^ This quote has no termination.
+    2344 | all that,” he said to the Gryphon.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2343 | here the Mock Turtle yawned and shut his eyes.—“Tell her about the reason and
+    2344 | all that,” he said to the Gryphon.
+         |          ^ This quote has no termination.
 
 
 
@@ -2698,6 +3004,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
+         |   ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
@@ -2706,6 +3019,14 @@ Suggest:
   - Replace with: “Tic”
   - Replace with: “T's”
   - Replace with: “This”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2427 | > Trims his belt and his buttons, and turns out his toes.”
+         |                                                          ^ This quote has no termination.
+    2428 | >
 
 
 
@@ -2781,9 +3102,16 @@ Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H”
   - Replace with: “H'm”
   - Replace with: “Ha”
+  - Replace with: “Ham”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2483 | > “Beautiful Soup, so rich and green, Waiting in a hot tureen! Who for such
+         |   ^ This quote has no termination.
 
 
 
@@ -2803,9 +3131,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2836,9 +3164,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2859,9 +3187,9 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2913,9 +3241,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2946,9 +3274,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -2969,9 +3297,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -3044,9 +3372,9 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Soon”
+  - Replace with: “Solo”
+  - Replace with: “Sop”
   - Replace with: “Sou”
-  - Replace with: “Soy”
 
 
 
@@ -3089,6 +3417,22 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2513 | so good, that it made Alice quite hungry to look at them—“I wish they’d get the
+         |                                                          ^ This quote has no termination.
+    2514 | trial done,” she thought, “and hand round the refreshments!” But there seemed to
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2513 | so good, that it made Alice quite hungry to look at them—“I wish they’d get the
+    2514 | trial done,” she thought, “and hand round the refreshments!” But there seemed to
+         |            ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2523 | The judge, by the way, was the King; and as he wore his crown over the wig,
@@ -3117,6 +3461,17 @@ Message: |
     2539 | they should forget them before the end of the trial.”
 Suggest:
   - Replace with: “Krypton”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2547 | even make out that one of them didn’t know how to spell “stupid,” and that he
+    2548 | had to ask his neighbour to tell him. “A nice muddle their slates’ll be in
+         |                ^~~~~~~~~ Did you mean to spell `neighbour` this way?
+Suggest:
+  - Replace with: “neighbor”
+  - Replace with: “neighbors”
 
 
 
@@ -3203,6 +3558,21 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2684 | “I’m glad I’ve seen that done,” thought Alice. “I’ve so often read in the
+         |                                                ^ This quote has no termination.
+    2685 | newspapers, at the end of trials, “There was some attempts at applause, which
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2687 | what it meant till now.”
+         |                        ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2722 | “Well, if I must, I must,” the King said, with a melancholy air, and, after
@@ -3259,6 +3629,35 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2870 | > “They told me you had been to her, And mentioned me to him: She gave me a good
+         |   ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2886 | > from all the rest, Between yourself and me.”
+         |                                              ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2900 | spreading out the verses on his knee, and looking at them with one eye; “I seem
+         |                                                                         ^ This quote has no termination.
+    2901 | to see some meaning in them, after all. “—said I could not swim—” you can’t
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2902 | swim, can you?” he added, turning to the Knave.
+         |               ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2907 | “All right, so far,” said the King, and he went on muttering over the verses to
@@ -3278,6 +3677,17 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2920 | ink, that was trickling down his face, as long as it lasted.)
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2929 | “No, no!” said the Queen. “Sentence first—verdict afterwards.”
+         |                                                   ^~~~~~~~~~ Did you mean to spell `afterwards` this way?
+Suggest:
+  - Replace with: “afterward”
+  - Replace with: “afterwords”
+  - Replace with: “afterword's”
 
 
 
@@ -3308,22 +3718,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2955 | it’s getting late.” So Alice got up and ran off, thinking while she ran, as well
          | ~~~~~~~~~~~~~~~~~~ This sentence is 55 words long.
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    2954 | and said, “It was a curious dream, dear, certainly: but now run in to your tea;
-         |                                                                 ^~~~~ Did you mean the closed compound `into`?
-Suggest:
-  - Replace with: “into”
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    2955 | it’s getting late.” So Alice got up and ran off, thinking while she ran, as well
-         |                   ^ This quote has no termination.
 
 
 
@@ -3382,6 +3776,17 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
+    2972 | The long grass rustled at her feet as the White Rabbit hurried by—the frightened
+    2973 | Mouse splashed his way through the neighbouring pool—she could hear the rattle
+         |                                    ^~~~~~~~~~~~ Did you mean `neighboring`?
+    2974 | of the teacups as the March Hare and his friends shared their never-ending meal,
+Suggest:
+  - Replace with: “neighboring”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
     2977 | plates and dishes crashed around it—once more the shriek of the Gryphon, the
          |                                                                 ^~~~~~~ Did you mean `Krypton`?
     2978 | squeaking of the Lizard’s slate-pencil, and the choking of the suppressed
@@ -3420,6 +3825,18 @@ Message: |
     2988 | noises, would change (she knew) to the confused clamour of the busy
 Suggest:
   - Replace with: “Krypton”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2988 | noises, would change (she knew) to the confused clamour of the busy
+         |                                                 ^~~~~~~ Did you mean to spell `clamour` this way?
+    2989 | farm-yard—while the lowing of the cattle in the distance would take the place of
+Suggest:
+  - Replace with: “clamor”
+  - Replace with: “glamour”
+  - Replace with: “clamber”
 
 
 

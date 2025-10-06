@@ -19,5 +19,3 @@ Harper takes advantage of decades of natural language research to analyze exactl
 If something is off, Harper lets you know.
 
 In a way, Harper is an error-tolerant parser for English.
-
-Check out our [FAQs](./faq) to know how you can use Harper and more.

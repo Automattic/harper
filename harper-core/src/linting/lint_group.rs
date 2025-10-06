@@ -12,8 +12,10 @@ use lru::LruCache;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::a_part::APart;
+use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
+use super::all_intents_and_purposes::AllIntentsAndPurposes;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
@@ -24,12 +26,14 @@ use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::best_of_all_time::BestOfAllTime;
 use super::boring_words::BoringWords;
+use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::chock_full::ChockFull;
 use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
+use super::criteria_phenomena::CriteriaPhenomena;
 use super::despite_of::DespiteOf;
 use super::discourse_markers::DiscourseMarkers;
 use super::dot_initialisms::DotInitialisms;
@@ -37,8 +41,10 @@ use super::double_modal::DoubleModal;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
+use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
+use super::feel_fell::FeelFell;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
 use super::first_aid_kit::FirstAidKit;
@@ -54,6 +60,8 @@ use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
+use super::interested_in::InterestedIn;
+use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::left_right_hand::LeftRightHand;
@@ -64,6 +72,8 @@ use super::long_sentences::LongSentences;
 use super::looking_forward_to::LookingForwardTo;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
+use super::missing_to::MissingTo;
+use super::mixed_bag::MixedBag;
 use super::modal_of::ModalOf;
 use super::months::Months;
 use super::most_number::MostNumber;
@@ -79,17 +89,21 @@ use super::of_course::OfCourse;
 use super::on_floor::OnFloor;
 use super::one_and_the_same::OneAndTheSame;
 use super::open_the_light::OpenTheLight;
+use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
 use super::oxymorons::Oxymorons;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::possessive_noun::PossessiveNoun;
 use super::possessive_your::PossessiveYour;
+use super::progressive_needs_be::ProgressiveNeedsBe;
 use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
+use super::quite_quiet::QuiteQuiet;
+use super::quote_spacing::QuoteSpacing;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
@@ -97,6 +111,7 @@ use super::save_to_safe::SaveToSafe;
 use super::semicolon_apostrophe::SemicolonApostrophe;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
+use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
 use super::somewhat_something::SomewhatSomething;
 use super::sought_after::SoughtAfter;
@@ -109,9 +124,12 @@ use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::thing_think::ThingThink;
+use super::though_thought::ThoughThought;
 use super::throw_rubbish::ThrowRubbish;
+use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
+use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
 use super::very_unique::VeryUnique;
 use super::was_aloud::WasAloud;
@@ -120,12 +138,14 @@ use super::whereas::Whereas;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wordpress_dotcom::WordPressDotcom;
+use super::would_never_have::WouldNeverHave;
 use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
 use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
-    MassPlurals, closed_compounds, initialisms, phrase_corrections, phrase_set_corrections,
+    MassPlurals, NounVerbConfusion, closed_compounds, initialisms, phrase_corrections,
+    phrase_set_corrections,
 };
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
@@ -237,7 +257,7 @@ impl Hash for LintGroupConfig {
 }
 
 /// A struct for collecting the output of a number of individual [Linter]s.
-/// Each child can be toggled via the public, mutable [Self::config] object.
+/// Each child can be toggled via the public, mutable `Self::config` object.
 pub struct LintGroup {
     pub config: LintGroupConfig,
     /// We use a binary map here so the ordering is stable.
@@ -250,7 +270,7 @@ pub struct LintGroup {
     ///
     /// Since the pattern linter results also depend on the config, we hash it and pass it as part
     /// of the key.
-    chunk_expr_cache: LruCache<(CharString, u64), Vec<Lint>>,
+    chunk_expr_cache: LruCache<(CharString, u64), BTreeMap<String, Vec<Lint>>>,
     hasher_builder: RandomState,
 }
 
@@ -395,31 +415,34 @@ impl LintGroup {
         ));
         out.merge_from(&mut closed_compounds::lint_group());
         out.merge_from(&mut initialisms::lint_group());
+        // out.merge_from(&mut update_place_names::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
+        insert_expr_rule!(Addicting, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
+        insert_expr_rule!(AllIntentsAndPurposes, true);
         insert_struct_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(AskNoPreposition, true);
-        insert_struct_rule!(AvoidCurses, true);
+        insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
+        insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
-        insert_expr_rule!(QuantifierNeedsOf, true);
-        insert_struct_rule!(NoFrenchSpaces, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
+        insert_expr_rule!(CriteriaPhenomena, true);
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
         insert_expr_rule!(DespiteOf, true);
@@ -429,7 +452,9 @@ impl LintGroup {
         insert_struct_rule!(EllipsisLength, true);
         insert_struct_rule!(ElsePossessive, true);
         insert_struct_rule!(Everyday, true);
+        insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
+        insert_expr_rule!(FeelFell, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_expr_rule!(FillerWords, true);
         insert_struct_rule!(FirstAidKit, true);
@@ -442,6 +467,8 @@ impl LintGroup {
         insert_struct_rule!(HowTo, true);
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
+        insert_expr_rule!(InterestedIn, true);
+        insert_expr_rule!(ItLooksLikeThat, true);
         insert_struct_rule!(ItsContraction, true);
         insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);
@@ -452,15 +479,19 @@ impl LintGroup {
         insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule!(MergeWords, true);
         insert_expr_rule!(MissingPreposition, true);
+        insert_expr_rule!(MissingTo, true);
+        insert_expr_rule!(MixedBag, true);
         insert_expr_rule!(ModalOf, true);
         insert_expr_rule!(Months, true);
         insert_expr_rule!(MostNumber, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_struct_rule!(NailOnTheHead, true);
+        insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
         insert_struct_rule!(NominalWants, true);
+        insert_struct_rule!(NounVerbConfusion, true);
         insert_expr_rule!(NounCountability, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_struct_rule!(OfCourse, true);
@@ -468,20 +499,26 @@ impl LintGroup {
         insert_expr_rule!(OneAndTheSame, true);
         insert_expr_rule!(OpenCompounds, true);
         insert_expr_rule!(OpenTheLight, true);
+        insert_struct_rule!(OughtToBe, true);
         insert_expr_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
         insert_expr_rule!(PossessiveYour, true);
+        insert_expr_rule!(ProgressiveNeedsBe, true);
         insert_struct_rule!(PronounContraction, true);
         insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(PronounKnew, true);
+        insert_expr_rule!(QuantifierNeedsOf, true);
+        insert_expr_rule!(QuiteQuiet, true);
+        insert_struct_rule!(QuoteSpacing, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_struct_rule!(SaveToSafe, true);
         insert_expr_rule!(SemicolonApostrophe, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
+        insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(SomewhatSomething, true);
         insert_expr_rule!(SoughtAfter, true);
@@ -493,9 +530,12 @@ impl LintGroup {
         insert_struct_rule!(TheMy, true);
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(ThingThink, true);
+        insert_expr_rule!(ThoughThought, true);
         insert_struct_rule!(ThrowRubbish, true);
+        insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
+        insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(UseGenitive, false);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(WasAloud, true);
@@ -504,6 +544,7 @@ impl LintGroup {
         insert_expr_rule!(WidelyAccepted, true);
         insert_expr_rule!(WinPrize, true);
         insert_struct_rule!(WordPressDotcom, true);
+        insert_expr_rule!(WouldNeverHave, true);
 
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
@@ -547,22 +588,14 @@ impl LintGroup {
         group.config.clear();
         group
     }
-}
 
-impl Default for LintGroup {
-    fn default() -> Self {
-        Self::empty()
-    }
-}
-
-impl Linter for LintGroup {
-    fn lint(&mut self, document: &Document) -> Vec<Lint> {
-        let mut results = Vec::new();
+    pub fn organized_lints(&mut self, document: &Document) -> BTreeMap<String, Vec<Lint>> {
+        let mut results = BTreeMap::new();
 
         // Normal linters
         for (key, linter) in &mut self.linters {
             if self.config.is_rule_enabled(key) {
-                results.extend(linter.lint(document));
+                results.insert(key.clone(), linter.lint(document));
             }
         }
 
@@ -574,37 +607,57 @@ impl Linter for LintGroup {
 
             let chunk_chars = document.get_span_content(&chunk_span);
             let config_hash = self.hasher_builder.hash_one(&self.config);
-            let key = (chunk_chars.into(), config_hash);
+            let cache_key = (chunk_chars.into(), config_hash);
 
-            let mut chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&key) {
+            let mut chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
                 hit.clone()
             } else {
-                let mut pattern_lints = Vec::new();
+                let mut pattern_lints = BTreeMap::new();
 
                 for (key, linter) in &mut self.expr_linters {
                     if self.config.is_rule_enabled(key) {
-                        pattern_lints.extend(run_on_chunk(linter, chunk, document.get_source()));
+                        let lints =
+                            run_on_chunk(linter, chunk, document.get_source()).map(|mut l| {
+                                l.span.pull_by(chunk_span.start);
+                                l
+                            });
+
+                        pattern_lints.insert(key.clone(), lints.collect());
                     }
                 }
 
-                // Make the spans relative to the chunk start
-                for lint in &mut pattern_lints {
-                    lint.span.pull_by(chunk_span.start);
-                }
-
-                self.chunk_expr_cache.put(key, pattern_lints.clone());
+                self.chunk_expr_cache.put(cache_key, pattern_lints.clone());
                 pattern_lints
             };
 
             // Bring the spans back into document-space
-            for lint in &mut chunk_results {
-                lint.span.push_by(chunk_span.start);
+            for value in chunk_results.values_mut() {
+                for lint in value {
+                    lint.span.push_by(chunk_span.start);
+                }
             }
 
-            results.append(&mut chunk_results);
+            for (key, mut vec) in chunk_results {
+                results.entry(key).or_default().append(&mut vec);
+            }
         }
 
         results
+    }
+}
+
+impl Default for LintGroup {
+    fn default() -> Self {
+        Self::empty()
+    }
+}
+
+impl Linter for LintGroup {
+    fn lint(&mut self, document: &Document) -> Vec<Lint> {
+        self.organized_lints(document)
+            .into_values()
+            .flatten()
+            .collect()
     }
 
     fn description(&self) -> &str {
@@ -650,6 +703,22 @@ mod tests {
         let group =
             LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
         group.all_descriptions_html();
+    }
+
+    #[test]
+    fn dont_flag_low_hanging_fruit_msg() {
+        assert_no_lints(
+            "The standard form is low-hanging fruit with a hyphen and singular form.",
+            test_group(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_low_hanging_fruit_desc() {
+        assert_no_lints(
+            "Corrects non-standard variants of low-hanging fruit.",
+            test_group(),
+        );
     }
 
     #[test]

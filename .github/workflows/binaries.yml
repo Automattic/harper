@@ -1,0 +1,152 @@
+name: Binaries
+
+on:
+  push:
+    branches: ["master"]
+    tags: ["v*"]
+  merge_group:
+
+jobs:
+  binaries:
+    name: ${{ matrix.platform.project }} - ${{ matrix.platform.release_for }}
+    if: github.event.pull_request.draft == false
+    strategy:
+      matrix:
+        platform:
+          - release_for: Windows-x86_64
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            project: harper-ls
+            bin: harper-ls.exe
+            name: harper-ls-x86_64-pc-windows-msvc.zip
+            command: build
+          - release_for: macOS-x86_64
+            os: macOS-latest
+            target: x86_64-apple-darwin
+            project: harper-ls
+            bin: harper-ls
+            name: harper-ls-x86_64-apple-darwin.tar.gz
+            command: build
+          - release_for: macOS-aarch64
+            os: macOS-latest
+            target: aarch64-apple-darwin
+            project: harper-ls
+            bin: harper-ls
+            name: harper-ls-aarch64-apple-darwin.tar.gz
+            command: build
+          - release_for: Linux-x86_64-GNU
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            project: harper-ls
+            bin: harper-ls
+            name: harper-ls-x86_64-unknown-linux-gnu.tar.gz
+            command: build
+          - release_for: Linux-aarch64-GNU
+            os: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+            project: harper-ls
+            bin: harper-ls
+            name: harper-ls-aarch64-unknown-linux-gnu.tar.gz
+            command: build
+          - release_for: Linux-x86_64-musl
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-musl
+            project: harper-ls
+            bin: harper-ls
+            name: harper-ls-x86_64-unknown-linux-musl.tar.gz
+            command: build
+          - release_for: Linux-aarch64-musl
+            os: ubuntu-latest
+            target: aarch64-unknown-linux-musl
+            project: harper-ls
+            bin: harper-ls
+            name: harper-ls-aarch64-unknown-linux-musl.tar.gz
+            command: build
+
+          - release_for: Windows-x86_64
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            project: harper-cli
+            bin: harper-cli.exe
+            name: harper-cli-x86_64-pc-windows-msvc.zip
+            command: build
+          - release_for: macOS-x86_64
+            os: macOS-latest
+            target: x86_64-apple-darwin
+            project: harper-cli
+            bin: harper-cli
+            name: harper-cli-x86_64-apple-darwin.tar.gz
+            command: build
+          - release_for: macOS-aarch64
+            os: macOS-latest
+            target: aarch64-apple-darwin
+            project: harper-cli
+            bin: harper-cli
+            name: harper-cli-aarch64-apple-darwin.tar.gz
+            command: build
+          - release_for: Linux-x86_64-GNU
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            project: harper-cli
+            bin: harper-cli
+            name: harper-cli-x86_64-unknown-linux-gnu.tar.gz
+            command: build
+          - release_for: Linux-aarch64-GNU
+            os: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+            project: harper-cli
+            bin: harper-cli
+            name: harper-cli-aarch64-unknown-linux-gnu.tar.gz
+            command: build
+          - release_for: Linux-x86_64-musl
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-musl
+            project: harper-cli
+            bin: harper-cli
+            name: harper-cli-x86_64-unknown-linux-musl.tar.gz
+            command: build
+          - release_for: Linux-aarch64-musl
+            os: ubuntu-latest
+            target: aarch64-unknown-linux-musl
+            project: harper-cli
+            bin: harper-cli
+            name: harper-cli-aarch64-unknown-linux-musl.tar.gz
+            command: build
+
+    runs-on: ${{ matrix.platform.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2.7.8
+      - name: Build binary
+        uses: houseabsolute/actions-rust-cross@v1
+        with:
+          command: ${{ matrix.platform.command }}
+          target: ${{ matrix.platform.target }}
+          args: "--locked --release --bin ${{ matrix.platform.project }}"
+          force-use-cross: ${{ matrix.platform.os == 'ubuntu-latest' }}
+          strip: true
+      - name: Package as archive
+        shell: bash
+        run: |
+          cd target/${{ matrix.platform.target }}/release
+          if [[ "${{ matrix.platform.os }}" == "windows-latest" ]]; then
+            7z a ../../../${{ matrix.platform.name }} ${{ matrix.platform.bin }}
+          else
+            tar czvf ../../../${{ matrix.platform.name }} ${{ matrix.platform.bin }}
+          fi
+          cd -
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform.bin }}-${{ matrix.platform.target }}
+          path: ${{ matrix.platform.name }}
+
+      - name: Release artifacts
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: ${{ matrix.platform.name }}
+          allowUpdates: true
+          draft: true

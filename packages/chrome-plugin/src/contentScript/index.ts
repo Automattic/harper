@@ -1,10 +1,13 @@
 import '@webcomponents/custom-elements';
-import $ from 'jquery';
-import { isVisible, leafNodes } from '../domUtils';
-import LintFramework from '../LintFramework';
+import { isVisible, LintFramework, leafNodes } from 'lint-framework';
 import ProtocolClient from '../ProtocolClient';
 
-const fw = new LintFramework();
+const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain), {
+	ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
+	getActivationKey: () => ProtocolClient.getActivationKey(),
+	openOptions: () => ProtocolClient.openOptions(),
+	addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
+});
 
 const keepAliveCallback = () => {
 	ProtocolClient.lint('', 'example.com');
@@ -15,24 +18,47 @@ const keepAliveCallback = () => {
 keepAliveCallback();
 
 function scan() {
-	$('textarea:visible').each(function () {
-		if (this.getAttribute('data-enable-grammarly') == 'false' || this.disabled || this.readOnly) {
+	document.querySelectorAll<HTMLTextAreaElement>('textarea').forEach((element) => {
+		if (
+			!isVisible(element) ||
+			element.getAttribute('data-enable-grammarly') === 'false' ||
+			element.disabled ||
+			element.readOnly
+		) {
 			return;
 		}
 
-		fw.addTarget(this as HTMLTextAreaElement);
+		fw.addTarget(element);
 	});
 
-	$('input[type="text"][spellcheck="true"]').each(function () {
-		if (this.disabled || this.readOnly) {
+	document
+		.querySelectorAll<HTMLInputElement>('input[type="text"][spellcheck="true"]')
+		.forEach((element) => {
+			if (element.disabled || element.readOnly) {
+				return;
+			}
+
+			fw.addTarget(element);
+		});
+
+	document.querySelectorAll('[data-testid="gutenberg-editor"]').forEach((element) => {
+		const leafs = leafNodes(element);
+
+		for (const leaf of leafs) {
+			if (!isVisible(leaf)) {
+				continue;
+			}
+
+			fw.addTarget(leaf);
+		}
+	});
+
+	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
+		if (element.matches('[role="combobox"]')) {
 			return;
 		}
 
-		fw.addTarget(this as HTMLInputElement);
-	});
-
-	$('[contenteditable="true"],[contenteditable]').each(function () {
-		const leafs = leafNodes(this);
+		const leafs = leafNodes(element);
 
 		for (const leaf of leafs) {
 			if (leaf.parentElement?.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
@@ -49,4 +75,6 @@ function scan() {
 }
 
 scan();
-new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
+new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
+
+setTimeout(scan, 1000);

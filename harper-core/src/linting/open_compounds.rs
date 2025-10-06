@@ -21,6 +21,7 @@ impl Default for OpenCompounds {
             "in case",
             "in fact",
             "in front",
+            "up to",
         ];
         let mut compound_to_phrase = HashMap::new();
         for phrase in phrases {
@@ -101,7 +102,7 @@ impl ExprLinter for OpenCompounds {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::WordChoice,
+            lint_kind: LintKind::BoundaryError,
             suggestions: vec![Suggestion::replace_with_match_case(
                 phrase.chars().collect(),
                 span.get_content(source_chars),
@@ -426,6 +427,17 @@ mod tests {
             "Yes I do infact exist :O",
             OpenCompounds::default(),
             "Yes I do in fact exist :O",
+        );
+    }
+
+    // up to
+
+    #[test]
+    fn correct_upto() {
+        assert_suggestion_result(
+            "Free for upto 10k subscribers, unlimited push notifications, in-browser messaging",
+            OpenCompounds::default(),
+            "Free for up to 10k subscribers, unlimited push notifications, in-browser messaging",
         );
     }
 }

@@ -2,7 +2,6 @@ import { Dialect } from 'harper.js';
 import { type App, editorViewField, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg?raw';
 import logoSvgDisabled from '../logo-disabled.svg?raw';
-import packageJson from '../package.json';
 import { HarperSettingTab } from './HarperSettingTab';
 import State from './State';
 
@@ -31,7 +30,9 @@ export default class HarperPlugin extends Plugin {
 		this.registerEditorExtension(this.state.getCMEditorExtensions());
 		this.setupCommands();
 		this.setupStatusBar();
-		this.state.enableEditorLinter();
+		if (!(data?.lintEnabled ?? true)) {
+			this.state.disableEditorLinter();
+		} else this.state.enableEditorLinter();
 
 		this.addSettingTab(new HarperSettingTab(this.app, this, this.state));
 	}
@@ -62,7 +63,7 @@ export default class HarperPlugin extends Plugin {
 
 		const logo = document.createElement('span');
 		logo.style.width = '24px';
-		logo.innerHTML = logoSvg;
+		logo.innerHTML = this.state.hasEditorLinter() ? logoSvg : logoSvgDisabled;
 		this.logo = logo;
 		button.appendChild(logo);
 

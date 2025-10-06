@@ -28,7 +28,7 @@ Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
-  - Replace with: “En”
+  - Replace with: “Em”
   - Replace with: “E”
   - Replace with: “Ea”
 
@@ -149,7 +149,7 @@ Message: |
 Suggest:
   - Replace with: “Nissan”
   - Replace with: “Nisan”
-  - Replace with: “Norman”
+  - Replace with: “Nampa”
 
 
 
@@ -330,9 +330,9 @@ Message: |
      141 | Eugene Charniak points out in Statistical techniques for natural language
          |        ^~~~~~~~ Did you mean to spell `Charniak` this way?
 Suggest:
+  - Replace with: “Carina”
   - Replace with: “Carnap”
   - Replace with: “Chadian”
-  - Replace with: “Chadwick”
 
 
 
@@ -520,8 +520,8 @@ Message: |
          |                          ^~~ Did you mean to spell `SVM` this way?
 Suggest:
   - Replace with: “Sim”
-  - Replace with: “SAM”
   - Replace with: “SCM”
+  - Replace with: “SVG”
 
 
 

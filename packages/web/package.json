@@ -35,6 +35,7 @@
 		"@sveltepress/vite": "^1.1.5",
 		"chart.js": "^4.4.8",
 		"harper.js": "workspace:*",
+		"lint-framework": "workspace:*",
 		"lodash-es": "^4.17.21",
 		"posthog-js": "^1.245.1",
 		"reveal.js": "^5.1.0",

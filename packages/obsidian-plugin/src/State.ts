@@ -14,6 +14,7 @@ export type Settings = {
 	userDictionary?: string[];
 	delay?: number;
 	ignoredGlobs?: string[];
+	lintEnabled?: boolean;
 };
 
 const DEFAULT_DELAY = -1;
@@ -28,6 +29,7 @@ export default class State {
 	private onExtensionChange: () => void;
 	private ignoredGlobs?: string[];
 	private editorViewField?: StateField<MarkdownFileInfo>;
+	private lintEnabled?: boolean;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -49,7 +51,11 @@ export default class State {
 
 	public async initializeFromSettings(settings: Settings | null) {
 		if (settings == null) {
-			settings = { useWebWorker: true, lintSettings: {} };
+			settings = {
+				useWebWorker: true,
+				lintEnabled: true,
+				lintSettings: {},
+			};
 		}
 
 		const defaultConfig = await this.harper.getDefaultLintConfig();
@@ -78,8 +84,11 @@ export default class State {
 			await this.harper.importIgnoredLints(settings.ignoredLints);
 		}
 
-		if (settings.userDictionary != null && settings.userDictionary.length > 0) {
-			await this.harper.importWords(settings.userDictionary);
+		if (settings.userDictionary != null) {
+			await this.harper.clearWords();
+			if (settings.userDictionary.length > 0) {
+				await this.harper.importWords(settings.userDictionary);
+			}
 		}
 
 		await this.harper.setLintConfig(settings.lintSettings);
@@ -87,11 +96,12 @@ export default class State {
 
 		this.delay = settings.delay ?? DEFAULT_DELAY;
 		this.ignoredGlobs = settings.ignoredGlobs;
+		this.lintEnabled = settings.lintEnabled;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
-			this.disableEditorLinter();
-			this.enableEditorLinter();
+			this.disableEditorLinter(false);
+			this.enableEditorLinter(false);
 		}
 
 		await this.saveData(settings);
@@ -218,6 +228,7 @@ export default class State {
 			dialect: await this.harper.getDialect(),
 			delay: this.delay,
 			ignoredGlobs: this.ignoredGlobs,
+			lintEnabled: this.lintEnabled,
 		};
 	}
 
@@ -289,20 +300,25 @@ export default class State {
 	}
 
 	/** Enables the editor linter by adding an extension to the editor extensions array. */
-	public enableEditorLinter() {
+	public enableEditorLinter(reinit = true) {
 		if (!this.hasEditorLinter()) {
 			this.editorExtensions.push(this.constructEditorLinter());
+			this.lintEnabled = true;
 			this.onExtensionChange();
+			if (reinit) this.reinitialize();
 			console.log('Enabled');
 		}
 	}
 
 	/** Disables the editor linter by removing the extension from the editor extensions array. */
-	public disableEditorLinter() {
+	public disableEditorLinter(reinit = true) {
 		while (this.hasEditorLinter()) {
 			this.editorExtensions.pop();
 		}
+		this.lintEnabled = false;
 		this.onExtensionChange();
+		if (reinit) this.reinitialize();
+		console.log('Disabled');
 	}
 
 	public hasEditorLinter(): boolean {

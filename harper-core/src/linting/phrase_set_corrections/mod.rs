@@ -103,6 +103,15 @@ pub fn lint_group() -> LintGroup {
             "The name of the word `the` is `definite article`.",
             LintKind::Usage
         ),
+        "DigestiveTract" => (
+            &[
+                ("digestive track", "digestive tract"),
+                ("digestive tracks", "digestive tracts"),
+            ],
+            "The correct term is digestive `tract`.",
+            "Corrects `digestive track` to `digestive tract`.",
+            LintKind::WordChoice
+        ),
         "Discuss" => (
             &[
                 ("discuss about", "discuss"),
@@ -185,16 +194,16 @@ pub fn lint_group() -> LintGroup {
             // ConfusedPair??
             LintKind::WordChoice
         ),
-        "HaveGone" => (
+        "FootTheBill" => (
             &[
-                ("had went", "had gone"),
-                ("has went", "has gone"),
-                ("have went", "have gone"),
-                ("having went", "having gone"),
+                ("flip the bill", "foot the bill"),
+                ("flipped the bill", "footed the bill"),
+                ("flipping the bill", "footing the bill"),
+                ("flips the bill", "foots the bill"),
             ],
-            "`Have gone` is the correct form.",
-            "Corrects `have went` to `have gone`.",
-            LintKind::Grammar
+            "The standard expression is `foot the bill`.",
+            "Corrects `flip the bill` to `foot the bill`.",
+            LintKind::Nonstandard
         ),
         "HavePassed" => (
             &[
@@ -281,6 +290,45 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
             LintKind::Eggcorn
         ),
+
+        // General litotes (double negatives) → direct positive suggestions
+        "LitotesDirectPositive" => (
+            &[
+                ("not uncommon", "common"),
+                ("not unusual", "common"),
+                ("not insignificant", "significant"),
+                ("not unimportant", "important"),
+                ("not unlikely", "likely"),
+                ("not infrequent", "frequent"),
+                ("not inaccurate", "accurate"),
+                ("not unclear", "clear"),
+                ("not irrelevant", "relevant"),
+                ("not unpredictable", "predictable"),
+                ("not inadequate", "adequate"),
+                ("not unpleasant", "pleasant"),
+                ("not unreasonable", "reasonable"),
+                ("not impossible", "possible"),
+                ("more preferable", "preferable"),
+                ("not online", "offline"),
+                ("not offline", "online"),
+            ],
+            "Consider the direct form.",
+            "Offers direct-positive alternatives when double negatives might feel heavy.",
+            LintKind::Style
+        ),
+
+        // Redundant degree modifiers on positives (double positives) → base form
+        "RedundantSuperlatives" => (
+            &[
+                ("more optimal", "optimal"),
+                ("most optimal", "optimal"),
+                ("more ideal", "ideal"),
+                ("most ideal", "ideal"),
+            ],
+            "Avoid redundant degree modifiers; prefer the base adjective.",
+            "Simplifies redundant double positives like `most optimal` to the base form.",
+            LintKind::Redundancy
+        ),
     });
 
     add_many_to_many_mappings!(group, {
@@ -344,6 +392,49 @@ pub fn lint_group() -> LintGroup {
             "Corrects `rise the question` to `raise the question`.",
             LintKind::Grammar
         ),
+        "ToTooIdioms" => (
+            &[
+                (&["a bridge to far"], &["a bridge too far"]),
+                (&["cake and eat it to"], &["cake and eat it too"]),
+                // "a few to many" has many false positives
+
+                (&["go to far"], &["go too far"]),
+                (&["goes to far"], &["goes too far"]),
+                (&["going to far"], &["going too far"]),
+                (&["gone to far"], &["gone too far"]),
+                (&["went to far"], &["went too far"]),
+
+                // "in to deep" has many false positives
+                (&["life's to short", "lifes to short"], &["life's too short"]),
+                (&["life is to short"], &["life is too short"]),
+
+                // "one to many" has many false positives
+                (&["put to fine a point"], &["put too fine a point"], ),
+
+                (&["speak to soon"], &["speak too soon"]),
+                (&["speaking to soon"], &["speaking too soon"]),
+                // "speaks to soon" is very rare
+                (&["spoke to soon"], &["spoke too soon"]),
+                (&["spoken to soon"], &["spoken too soon"]),
+
+                (&["think to much"], &["think too much"]),
+                (&["to big for"], &["too big for"]),
+                (&["to big to fail"], &["too big to fail"]),
+                (&["to good to be true", "too good too be true"], &["too good to be true"]),
+                (&["to much information"], &["too much information"]),
+            ],
+            "Use `too` rather than `to` in this expression.",
+            "Corrects `to` used instead of `too`.",
+            LintKind::Grammar
+        ),
+        "TooTo" => (
+            &[
+                (&["too big too fail"], &["too big to fail"])
+            ],
+            "Use `to` rather than `too` in this expression.",
+            "Corrects `too` used instead of `to`.",
+            LintKind::Grammar
+        ),
         "WholeEntire" => (
             &[
                 (&["whole entire"], &["whole", "entire"]),
@@ -381,6 +472,7 @@ pub fn lint_group() -> LintGroup {
                 (&["worst and worst", "worse and worst", "worst and worse"], &["worse and worse"]),
                 (&["worst than"], &["worse than"]),
                 // worse -> worst
+                (&["at worse"], &["at worst"]),
                 (&["worse case scenario", "worse-case scenario", "worse-case-scenario"], &["worst-case scenario"]),
                 (&["worse ever"], &["worst ever"]),
             ],

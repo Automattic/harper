@@ -1,10 +1,10 @@
 import type { Dialect, LintConfig } from 'harper.js';
+import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
 import type { ActivationKey } from './protocol';
-import type { UnpackedLint } from './unpackLint';
 
 export default class ProtocolClient {
-	private static readonly lintCache = new LRUCache<string, Promise<any>>({
+	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
 		max: 5000,
 		ttl: 5_000,
 	});
@@ -13,11 +13,13 @@ export default class ProtocolClient {
 		return `${domain}:${text}`;
 	}
 
-	public static async lint(text: string, domain: string): Promise<UnpackedLint[]> {
+	public static async lint(text: string, domain: string): Promise<UnpackedLintGroups> {
 		const key = this.cacheKey(text, domain);
 		let p = this.lintCache.get(key);
 		if (!p) {
-			p = chrome.runtime.sendMessage({ kind: 'lint', text, domain }).then((r) => r.lints);
+			p = chrome.runtime
+				.sendMessage({ kind: 'lint', text, domain })
+				.then((r) => r.lints as UnpackedLintGroups);
 			this.lintCache.set(key, p);
 		}
 		return p;
@@ -56,6 +58,10 @@ export default class ProtocolClient {
 	public static async getDefaultEnabled(): Promise<boolean> {
 		this.lintCache.clear();
 		return (await chrome.runtime.sendMessage({ kind: 'getDefaultStatus' })).enabled;
+	}
+
+	public static async getEnabledDomains(): Promise<string[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getEnabledDomains' })).domains;
 	}
 
 	public static async setDefaultEnabled(enabled: boolean): Promise<void> {

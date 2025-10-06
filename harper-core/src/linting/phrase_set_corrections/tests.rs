@@ -163,6 +163,26 @@ fn corrects_definite_articles_lowercase() {
     );
 }
 
+// DigestiveTract
+
+#[test]
+fn dont_flag_digestive_track() {
+    assert_suggestion_result(
+        "In infants less than a year old, because their digestive track is not finished developing yet",
+        lint_group(),
+        "In infants less than a year old, because their digestive tract is not finished developing yet",
+    );
+}
+
+#[test]
+fn corrects_digestive_tracks() {
+    assert_suggestion_result(
+        "The digestive tracks of mammals are complex and diverse, with each species having its own unique digestive system.",
+        lint_group(),
+        "The digestive tracts of mammals are complex and diverse, with each species having its own unique digestive system.",
+    );
+}
+
 // Discuss
 // -none-
 
@@ -175,6 +195,65 @@ fn corrects_dose_not() {
         "It dose not run windows ?",
         lint_group(),
         "It does not run windows ?",
+    );
+}
+
+// LitotesDirectPositive
+
+#[test]
+fn litotes_not_uncommon_atomic() {
+    assert_suggestion_result("not uncommon", lint_group(), "common");
+}
+
+#[test]
+fn litotes_not_uncommon_sentence() {
+    assert_suggestion_result(
+        "It is not uncommon to see outages during storms.",
+        lint_group(),
+        "It is common to see outages during storms.",
+    );
+}
+
+#[test]
+fn litotes_not_unlikely() {
+    assert_suggestion_result(
+        "This outcome is not unlikely given the data.",
+        lint_group(),
+        "This outcome is likely given the data.",
+    );
+}
+
+#[test]
+fn litotes_not_insignificant() {
+    assert_suggestion_result(
+        "That is not insignificant progress.",
+        lint_group(),
+        "That is significant progress.",
+    );
+}
+
+#[test]
+fn litotes_more_preferable() {
+    assert_suggestion_result(
+        "Is it more preferable to use process.env.variable or env.parsed.variable?",
+        lint_group(),
+        "Is it preferable to use process.env.variable or env.parsed.variable?",
+    );
+}
+
+// RedundantSuperlatives
+
+#[test]
+fn redundant_more_optimal() {
+    assert_suggestion_result("Is this more optimal?", lint_group(), "Is this optimal?");
+}
+
+#[test]
+fn redundant_most_ideal() {
+    assert_suggestion_result(
+        "This is the most ideal scenario.",
+        lint_group(),
+        "This is the ideal scenario.",
     );
 }
 
@@ -255,7 +334,6 @@ fn dont_flag_dont_dose_it_too_high() {
     );
 }
 
-// the only solution the other hopefully-dominant-reasonable-adult-human mind can find, is to dose it off, hoping the drowsiness can keep the fear at bay
 #[test]
 #[ignore = "would be a false positive in a naive implementation"]
 fn dont_flag_to_dose_it_off() {
@@ -473,41 +551,41 @@ fn correct_to_an_extend() {
     );
 }
 
-// HaveGone
+// FootTheBill
 
 #[test]
-fn correct_have_went() {
+fn correct_flip_the_bill() {
     assert_suggestion_result(
-        "I have went into the btle.py file and added a print statement in _connect()",
+        "- SQL Compare (If the company will flip the bill)",
         lint_group(),
-        "I have gone into the btle.py file and added a print statement in _connect()",
+        "- SQL Compare (If the company will foot the bill)",
     );
 }
 
 #[test]
-fn correct_had_went() {
+fn correct_flipped_the_bill() {
     assert_suggestion_result(
-        "Not sure if TroLoos had went from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
+        "As a meetup we were extremely lucky that NOVI flipped the bill for our in-person events.",
         lint_group(),
-        "Not sure if TroLoos had gone from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
+        "As a meetup we were extremely lucky that NOVI footed the bill for our in-person events.",
     );
 }
 
 #[test]
-fn correct_having_went() {
+fn correct_flipping_the_bill() {
     assert_suggestion_result(
-        "Having went through the setup guidelines and picking react starter, running npm run watch results in an error",
+        "for the simple reason that there were no multimillion dollar company flipping the bill",
         lint_group(),
-        "Having gone through the setup guidelines and picking react starter, running npm run watch results in an error",
+        "for the simple reason that there were no multimillion dollar company footing the bill",
     );
 }
 
 #[test]
-fn correct_has_went() {
+fn correct_flips_the_bill() {
     assert_suggestion_result(
-        "I would like to report that the package request which you are loading has went into maintenance mode.",
+        "There seems to be a perennial debate in Illinois between urbanites and rural folk about who really flips the bill.",
         lint_group(),
-        "I would like to report that the package request which you are loading has gone into maintenance mode.",
+        "There seems to be a perennial debate in Illinois between urbanites and rural folk about who really foots the bill.",
     );
 }
 
@@ -1107,6 +1185,228 @@ fn detect_risen_the_question() {
     );
 }
 
+// ToToo
+
+// -a bridge too far-
+#[test]
+fn fix_a_bridge_too_far() {
+    assert_suggestion_result(
+        "If Winforms can ever be conquered by the Mono developers may be a bridge to far.",
+        lint_group(),
+        "If Winforms can ever be conquered by the Mono developers may be a bridge too far.",
+    );
+}
+
+// -cake and eat it too-
+#[test]
+fn fix_cake_and_eat_it_too() {
+    assert_suggestion_result(
+        "The solution: wouldn't it be great if I could have my cake and eat it to?",
+        lint_group(),
+        "The solution: wouldn't it be great if I could have my cake and eat it too?",
+    );
+}
+
+// -go to far-
+#[test]
+fn fix_go_to_far() {
+    assert_suggestion_result(
+        "It's difficult to be sure when we go to far sometime when you don't exactly how the beast works in the background .",
+        lint_group(),
+        "It's difficult to be sure when we go too far sometime when you don't exactly how the beast works in the background .",
+    );
+}
+
+// -goes to far-
+#[test]
+fn fix_goes_to_far() {
+    assert_suggestion_result(
+        "Memory consumption and cpu consumption goes to far like 900% and more than this",
+        lint_group(),
+        "Memory consumption and cpu consumption goes too far like 900% and more than this",
+    );
+}
+
+// -going to far-
+#[test]
+fn fix_going_to_far() {
+    assert_suggestion_result(
+        "wsrun is going to far on this because debug 's devDependency shouldn't be considered in the cycle detection, should it?",
+        lint_group(),
+        "wsrun is going too far on this because debug 's devDependency shouldn't be considered in the cycle detection, should it?",
+    );
+}
+
+// -gone to far-
+#[test]
+fn fix_gone_to_far() {
+    assert_suggestion_result(
+        "I might have gone to far with opening issues for small things.",
+        lint_group(),
+        "I might have gone too far with opening issues for small things.",
+    );
+}
+
+// -went to far-
+#[test]
+fn fix_went_to_far() {
+    assert_suggestion_result(
+        "But I went to far compared to the initial request that seems talk about ...",
+        lint_group(),
+        "But I went too far compared to the initial request that seems talk about ...",
+    );
+}
+
+// -life's too short-
+#[test]
+fn fix_life_s_too_short() {
+    assert_suggestion_result(
+        "Life's to short for messing around with git add , writing commit message.",
+        lint_group(),
+        "Life's too short for messing around with git add , writing commit message.",
+    );
+}
+
+#[test]
+fn fix_lifes_to_short() {
+    assert_suggestion_result(
+        "I wouldn't go back after the 3rd interview lifes to short.",
+        lint_group(),
+        "I wouldn't go back after the 3rd interview life's too short.",
+    );
+}
+
+// -life is too short-
+#[test]
+fn fix_life_is_too_short() {
+    assert_suggestion_result(
+        "[Life is to short to use dated cli tools that suck]",
+        lint_group(),
+        "[Life is too short to use dated cli tools that suck]",
+    );
+}
+
+// -put too fine a point-
+#[test]
+fn fix_put_too_fine_a_point() {
+    assert_suggestion_result(
+        "Not to put to fine a point on it... that's not the kind of team I think we want to be.",
+        lint_group(),
+        "Not to put too fine a point on it... that's not the kind of team I think we want to be.",
+    );
+}
+
+// -speak too soon-
+#[test]
+fn fix_speak_too_soon() {
+    assert_suggestion_result(
+        "I don't want to speak to soon but I kept everything as I had before but included: http = httplib2.Http()",
+        lint_group(),
+        "I don't want to speak too soon but I kept everything as I had before but included: http = httplib2.Http()",
+    );
+}
+
+// -speaking too soon-
+#[test]
+fn fix_speaking_too_soon() {
+    assert_suggestion_result(
+        "EDIT: Thats what I get for speaking to soon...",
+        lint_group(),
+        "EDIT: Thats what I get for speaking too soon...",
+    );
+}
+
+// -spoke too soon-
+#[test]
+fn fix_spoke_too_soon() {
+    assert_suggestion_result(
+        "I spoke to soon. Ignore the previous post.",
+        lint_group(),
+        "I spoke too soon. Ignore the previous post.",
+    );
+}
+
+// -spoken too soon-
+#[test]
+fn fix_spoken_too_soon() {
+    assert_suggestion_result(
+        "EDIT: I might have spoken to soon...",
+        lint_group(),
+        "EDIT: I might have spoken too soon...",
+    );
+}
+
+// -think to much-
+#[test]
+fn fix_think_too_much() {
+    assert_suggestion_result(
+        "I don't think to much about it, but I don't think it's a big deal.",
+        lint_group(),
+        "I don't think too much about it, but I don't think it's a big deal.",
+    );
+}
+
+// -too big for-
+#[test]
+fn fix_too_big_for() {
+    assert_suggestion_result(
+        "ng-relations form to big for small screens",
+        lint_group(),
+        "ng-relations form too big for small screens",
+    );
+}
+
+// -too big to fail-
+#[test]
+fn fix_too_big_to_fail() {
+    assert_suggestion_result(
+        "The core alone has 50k LOC. Reminds me of \"to big to fail\".",
+        lint_group(),
+        "The core alone has 50k LOC. Reminds me of \"too big to fail\".",
+    );
+}
+
+// -too good to be true-
+#[test]
+fn fix_too_good_to_be_true() {
+    assert_suggestion_result(
+        "This seemed to good to be true, but local to scene resources will not work when they are not contained in a node.",
+        lint_group(),
+        "This seemed too good to be true, but local to scene resources will not work when they are not contained in a node.",
+    );
+}
+
+#[test]
+fn fix_too_good_too_be_true() {
+    assert_suggestion_result(
+        "The normalization of rewards is making the plot in tensorboard look too good too be true, because they are not the actual reward ...",
+        lint_group(),
+        "The normalization of rewards is making the plot in tensorboard look too good to be true, because they are not the actual reward ...",
+    );
+}
+
+// -too much information-
+#[test]
+fn fix_too_much_information() {
+    assert_suggestion_result(
+        "Live test are printing way to much information and is polluting our test output",
+        lint_group(),
+        "Live test are printing way too much information and is polluting our test output",
+    );
+}
+
+// TooTo
+
+// -too big too fail-
+#[test]
+fn fix_too_big_too_fail() {
+    assert_suggestion_result(
+        "In other words, pointer arithmetic is, at this point, too big too fail, regardless of the clever and sophisticated way C++ lawyercats worded it.",
+        lint_group(),
+        "In other words, pointer arithmetic is, at this point, too big to fail, regardless of the clever and sophisticated way C++ lawyercats worded it.",
+    );
+}
+
 // WholeEntire
 
 #[test]
@@ -1362,6 +1662,16 @@ fn detect_worse_and_worst_real_world() {
         "This progressively got worse and worst to the point that the machine (LEAD 1010) stopped moving alltogether.",
         lint_group(),
         "This progressively got worse and worse to the point that the machine (LEAD 1010) stopped moving alltogether.",
+    );
+}
+
+// -at worst-
+#[test]
+fn detect_at_worst_atomic() {
+    assert_suggestion_result(
+        "Partial moving of core objects to interpreter state is incorrect at best, unsafe at worse.",
+        lint_group(),
+        "Partial moving of core objects to interpreter state is incorrect at best, unsafe at worst.",
     );
 }
 

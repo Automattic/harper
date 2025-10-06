@@ -1,4 +1,5 @@
 use super::{Lint, LintKind, Linter, Suggestion};
+use crate::char_string::CharStringExt;
 use crate::spell::Dictionary;
 use crate::{Document, Span, TokenStringExt};
 
@@ -30,7 +31,7 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
                 continue;
             }
             let prep_to = document.get_span_content(&prep.span);
-            if prep_to != ['t', 'o'] && prep_to != ['T', 'o'] {
+            if !prep_to.eq_ignore_ascii_case_chars(&['t', 'o']) {
                 continue;
             }
 
@@ -41,7 +42,7 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
             }
 
             let check_stem = |stem: &[char]| {
-                if let Some(metadata) = self.dictionary.get_word_metadata(stem)
+                if let Some(metadata) = self.dictionary.get_lexeme_metadata(stem)
                     && metadata.is_verb()
                     && !metadata.is_noun()
                 {
@@ -78,9 +79,9 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
             let ed_specific_heuristics = || {
                 if let Some(prev) = document.get_next_word_from_offset(pi, -1) {
                     let prev_chars = document.get_span_content(&prev.span);
-                    if let Some(metadata) = self.dictionary.get_word_metadata(prev_chars) {
-                        // adj: "able" to expects an infinitive verb
-                        // verb: have/had/has/having to expects an infinitive verb
+                    if let Some(metadata) = self.dictionary.get_lexeme_metadata(prev_chars) {
+                        // adj: "able to" expects an infinitive verb
+                        // verb: "have/had/has/having to" expect an infinitive verb
                         if metadata.is_adjective() || metadata.is_verb() {
                             return ToVerbExpects::ExpectsInfinitive;
                         }
