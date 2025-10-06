@@ -54,6 +54,10 @@ function scan() {
 	});
 
 	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
+		if (element.matches('[role="combobox"]')) {
+			return;
+		}
+
 		const leafs = leafNodes(element);
 
 		for (const leaf of leafs) {
