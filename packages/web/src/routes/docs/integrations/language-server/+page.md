@@ -301,6 +301,7 @@ These configs are under the `markdown` key:
 | Typst             |            `typst`            |               |
 | Kotlin            |            `kotlin`           |            ✅ |
 | Clojure           |            `clojure`          |            ✅ |
+| Ink               |            `ink`              |               |
 
 Want your language added?
 Let us know by [commenting on this issue](https://github.com/Automattic/harper/issues/79).

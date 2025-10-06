@@ -353,7 +353,7 @@
 > shall be      sent   , together with the Objections , to the other    House   , by      which it
 # VXB   NSg/VXB NSg/VB . J        P    D   NPl+       . P  D   NSg/VB/J NPr/VB+ . NSg/J/P I/C+  NPr/ISg+
 > shall likewise be      reconsidered , and  if    approved by      two thirds of that         House   , it
-# VXB   W?       NSg/VXB VP/J         . VB/C NSg/C VP/J     NSg/J/P NSg NPl/V3 P  NSg/I/C/Ddem NPr/VB+ . NPr/ISg+
+# VXB   R        NSg/VXB VP/J         . VB/C NSg/C VP/J     NSg/J/P NSg NPl/V3 P  NSg/I/C/Ddem NPr/VB+ . NPr/ISg+
 > shall become a   Law      . But     in      all          such  Cases   the Votes  of both   Houses  shall be
 # VXB   VBPp   D/P N🅪Sg/VB+ . NSg/C/P NPr/J/P NSg/I/J/C/Dq NSg/I NPl/V3+ D   NPl/V3 P  I/C/Dq NPl/V3+ VXB   NSg/VXB
 > determined by      yeas and  Nays   , and  the Names  of the Persons voting   for and
@@ -923,7 +923,7 @@
 > Speaker of the House  of Representatives their written declaration that         the
 # NSg     P  D   NPr/VB P  NPl+            D$+   VPp/J   NSg+        NSg/I/C/Ddem D
 > President is  unable   to discharge the powers    and  duties of his     office  . Thereupon
-# NSg/VB+   VL3 NSg/VB/J P  N🅪Sg/VB   D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+ . W?
+# NSg/VB+   VL3 NSg/VB/J P  N🅪Sg/VB   D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+ . R
 > Congress shall decide the issue   , assembling within  forty - eight hours for that
 # NPr/VB+  VXB   VB     D   NSg/VB+ . Nᴹ/Vg/J    NSg/J/P NSg/J . NSg/J NPl+  C/P NSg/I/C/Ddem
 > purpose  if    not     in      session . If    the Congress , within  twenty - one        days after
@@ -1477,7 +1477,7 @@
 > The Word    " the " , being       interlined between the seventh and  eight Lines  of the
 # D+  NSg/VB+ . D   . . N🅪Sg/Vg/J/C VP/J       NSg/P   D   NSg/J   VB/C NSg/J NPl/V3 P  D
 > first    Page    , The Word    " Thirty " being       partly written on  an  Erazure in      the
-# NSg/VB/J NPr/VB+ . D   NSg/VB+ . NSg    . N🅪Sg/Vg/J/C W?     VPp/J   J/P D/P ?       NPr/J/P D
+# NSg/VB/J NPr/VB+ . D   NSg/VB+ . NSg    . N🅪Sg/Vg/J/C R      VPp/J   J/P D/P ?       NPr/J/P D
 > fifteenth Line   of the first    Page    . The Words   " is  tried " being       interlined between
 # NSg/J+    NSg/VB P  D   NSg/VB/J NPr/VB+ . D+  NPl/V3+ . VL3 VP/J  . N🅪Sg/Vg/J/C VP/J       NSg/P
 > the thirty second   and  thirty third    Lines  of the first    Page   and  the Word    " the "

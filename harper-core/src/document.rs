@@ -3,6 +3,7 @@ use std::collections::VecDeque;
 use std::fmt::Display;
 
 use harper_brill::{Chunker, Tagger, brill_tagger, burn_chunker};
+use itertools::Itertools;
 use paste::paste;
 
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
@@ -351,22 +352,64 @@ impl Document {
     /// [`Punctuation::Quote::twin_loc`] field. This is on a best-effort
     /// basis.
     ///
-    /// Current algorithm is basic and could use some work.
+    /// Current algorithm is based on https://leancrew.com/all-this/2025/03/a-mac-smart-quote-curiosity
     fn match_quotes(&mut self) {
-        let quote_indices: Vec<usize> = self.tokens.iter_quote_indices().collect();
+        let mut pg_indices: Vec<_> = vec![0];
+        pg_indices.extend(self.iter_paragraph_break_indices());
+        pg_indices.push(self.tokens.len());
 
-        for i in 0..quote_indices.len() / 2 {
-            let a_i = quote_indices[i * 2];
-            let b_i = quote_indices[i * 2 + 1];
+        // Avoid allocation in loop
+        let mut quote_indices = Vec::new();
+        let mut open_quote_indices = Vec::new();
 
-            {
-                let a = self.tokens[a_i].kind.as_mut_quote().unwrap();
-                a.twin_loc = Some(b_i);
+        for (start, end) in pg_indices.into_iter().tuple_windows() {
+            let pg = &mut self.tokens[start..end];
+
+            quote_indices.clear();
+            quote_indices.extend(pg.iter_quote_indices());
+            open_quote_indices.clear();
+
+            // Find open quotes first.
+            for quote in &quote_indices {
+                let is_open = *quote == 0
+                    || pg[0..*quote].iter_word_likes().next().is_none()
+                    || pg[quote - 1].kind.is_whitespace()
+                    || matches!(
+                        pg[quote - 1].kind.as_punctuation(),
+                        Some(Punctuation::LessThan)
+                            | Some(Punctuation::OpenRound)
+                            | Some(Punctuation::OpenSquare)
+                            | Some(Punctuation::OpenCurly)
+                            | Some(Punctuation::Apostrophe)
+                    );
+
+                if is_open {
+                    open_quote_indices.push(*quote);
+                }
             }
 
-            {
-                let b = self.tokens[b_i].kind.as_mut_quote().unwrap();
-                b.twin_loc = Some(a_i);
+            while let Some(open_idx) = open_quote_indices.pop() {
+                let Some(close_idx) = pg[open_idx + 1..].iter_quote_indices().next() else {
+                    continue;
+                };
+
+                if pg[close_idx + open_idx + 1]
+                    .kind
+                    .as_quote()
+                    .unwrap()
+                    .twin_loc
+                    .is_some()
+                {
+                    continue;
+                }
+
+                pg[open_idx].kind.as_mut_quote().unwrap().twin_loc =
+                    Some(close_idx + open_idx + start + 1);
+                pg[close_idx + open_idx + 1]
+                    .kind
+                    .as_mut_quote()
+                    .unwrap()
+                    .twin_loc = Some(open_idx + start);
             }
         }
     }
@@ -928,6 +971,7 @@ mod tests {
     use itertools::Itertools;
 
     use super::Document;
+    use crate::TokenStringExt;
     use crate::{Span, parsers::MarkdownOptions};
 
     fn assert_condensed_contractions(text: &str, final_tok_count: usize) {
@@ -1256,5 +1300,60 @@ mod tests {
         let doc = Document::new_plain_english_curated("I/O");
         assert!(doc.tokens.len() == 1);
         assert!(doc.tokens[0].kind.is_word());
+    }
+
+    #[test]
+    fn finds_unmatched_quotes_in_document() {
+        let raw = r#"
+This is a paragraph with a single word "quoted."
+
+This is a second paragraph with no quotes.
+
+This is a third paragraph with a single erroneous "quote.
+
+This is a final paragraph with a weird "quote and a not-weird "quote".
+            "#;
+
+        let doc = Document::new_markdown_default_curated(raw);
+
+        let quote_twins: Vec<_> = doc
+            .iter_quotes()
+            .map(|t| t.kind.as_quote().unwrap().twin_loc)
+            .collect();
+
+        assert_eq!(
+            quote_twins,
+            vec![Some(19), Some(16), None, None, Some(89), Some(87)]
+        )
+    }
+
+    #[test]
+    fn issue_1901() {
+        let raw = r#"
+"A quoted line"
+"A quote without a closing mark
+"Another quoted lined"
+"The last quoted line"
+            "#;
+
+        let doc = Document::new_markdown_default_curated(raw);
+
+        let quote_twins: Vec<_> = doc
+            .iter_quotes()
+            .map(|t| t.kind.as_quote().unwrap().twin_loc)
+            .collect();
+
+        assert_eq!(
+            quote_twins,
+            vec![
+                Some(6),
+                Some(0),
+                None,
+                Some(27),
+                Some(21),
+                Some(37),
+                Some(29)
+            ]
+        )
     }
 }

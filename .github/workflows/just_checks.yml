@@ -1,4 +1,4 @@
-name: Precommit
+name: Just Checks
 
 on:
   push:
@@ -11,18 +11,35 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  precommit:
+  just-checks:
     runs-on: ubuntu-latest
+    name: just ${{ matrix.task }}
+    strategy:
+      matrix:
+        task:
+          [
+            check-rust,
+            check-js,
+            test-harperjs,
+            test-vscode,
+            test-chrome-plugin,
+            test-firefox-plugin,
+            test-obsidian,
+            build-obsidian,
+          ]
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v2
       - name: Install pnpm
         uses: pnpm/action-setup@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: rustfmt,clippy
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
-          cache: 'pnpm'
+          package-manager-cache: false
       - name: Enable Corepack
         run: corepack enable
       - name: Install `pandoc`
@@ -34,7 +51,5 @@ jobs:
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo hack`
         run: cargo binstall cargo-hack --force --no-confirm
-      - name: Run `cargo-hack`
-        run: cargo hack check --each-feature
-      - name: Precommit
-        run: just precommit
+      - name: Run `${{ matrix.task }}`
+        run: just ${{ matrix.task }}

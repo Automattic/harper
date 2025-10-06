@@ -20,9 +20,11 @@ use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, Document, Span, TokenKind, TokenStringExt,
     dict_word_metadata_orthography::OrthFlags, remove_overlaps,
 };
+use harper_ink::InkParser;
 use harper_literate_haskell::LiterateHaskellParser;
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
+use harper_python::PythonParser;
 
 use harper_stats::Stats;
 use serde::Serialize;
@@ -818,12 +820,14 @@ fn load_file(
         .map(|v| v.to_str().unwrap())
     {
         Some("md") => Box::new(Markdown::default()),
+        Some("ink") => Box::new(InkParser::default()),
 
         Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
             MarkdownOptions::default(),
         )),
         Some("org") => Box::new(OrgMode),
         Some("typ") => Box::new(harper_typst::Typst),
+        Some("py") | Some("pyi") => Box::new(PythonParser::default()),
         _ => {
             if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {
                 Box::new(comment_parser)

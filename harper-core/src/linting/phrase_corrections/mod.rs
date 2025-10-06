@@ -58,7 +58,7 @@ pub fn lint_group() -> LintGroup {
             "Corrects `an` to `and` after `ahead`."
         ),
         "AllOfASudden" => (
-            ["all of the sudden"],
+            ["all of the sudden", "all of sudden"],
             ["all of a sudden"],
             "The phrase is `all of a sudden`, meaning `unexpectedly`.",
             "Corrects `all of the sudden` to `all of a sudden`.",
@@ -224,6 +224,13 @@ pub fn lint_group() -> LintGroup {
             "Prefer the single-word adverb `beforehand`.",
             "`Beforehand` functions as a fixed adverb meaning ‘in advance’; writing it as two words or with a hyphen is nonstandard and can jar readers."
         ),
+        "BesideThePoint" => (
+            ["besides the point"],
+            ["beside the point"],
+            "Use `beside` in the idiom `beside the point`.",
+            "Corrects `besides the point` to `beside the point`.",
+            LintKind::Eggcorn
+        ),
         "BestRegards" => (
             ["beat regards"],
             ["best regards"],
@@ -327,6 +334,13 @@ pub fn lint_group() -> LintGroup {
             "Use the full verb “want” after negation: “don't want” or “do not want.”",
             "In English, negation still requires the complete verb form (“want”), so avoid truncating it to “wan.”",
             LintKind::Typo
+        ),
+        "DontCan" => (
+            ["don't can"],
+            ["can't", "cannot"],
+            "The grammatically correct form is `can't` or `cannot`.",
+            "Corrects `don't can` to `can't` or `cannot`.",
+            LintKind::Grammar
         ),
         "EachAndEveryOne" => (
             ["each and everyone"],

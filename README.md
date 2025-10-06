@@ -42,7 +42,7 @@ Just please make sure to read [our contribution guidelines first.](https://githu
 
 ## Links
 
-- [Frequently Asked Questions](https://writewithharper.com/docs/faq)
+- [Frequently Asked Questions](https://writewithharper.com/#faqs)
 - [Obsidian Documentation](https://writewithharper.com/docs/integrations/obsidian)
 - [`harper-ls` Documentation](https://writewithharper.com/docs/integrations/language-server)
 - Supported Editors' Documentation

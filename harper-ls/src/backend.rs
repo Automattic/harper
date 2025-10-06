@@ -20,7 +20,9 @@ use harper_core::parsers::{
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
 use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
 use harper_html::HtmlParser;
+use harper_ink::InkParser;
 use harper_literate_haskell::LiterateHaskellParser;
+use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
 use harper_typst::Typst;
 use serde_json::Value;
@@ -378,6 +380,7 @@ impl Backend {
                     Some(Box::new(parser))
                 }
             }
+            "ink" => Some(Box::new(InkParser::default())),
             "markdown" => Some(Box::new(Markdown::new(markdown_options))),
             "git-commit" | "gitcommit" => {
                 Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
@@ -386,6 +389,7 @@ impl Backend {
             "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "typst" => Some(Box::new(Typst)),
             "org" => Some(Box::new(OrgMode)),
+            "python" => Some(Box::new(PythonParser::default())),
             _ => None,
         };
 

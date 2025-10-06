@@ -17,6 +17,28 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(lints.length).toBe(1);
 	});
 
+	test(`${linterName} emits organized lints the same as it emits normal lints`, async () => {
+		const linter = new Linter({ binary });
+		const source = 'The the problem is...';
+
+		const lints = await linter.lint(source);
+		expect(lints.length).toBeGreaterThan(0);
+
+		const organized = await linter.organizedLints(source);
+		const normal = await linter.lint(source);
+
+		const flattened = [];
+		for (const [_, value] of Object.entries(organized)) {
+			flattened.push(...value);
+		}
+
+		expect(flattened.length).toBe(1);
+		expect(flattened.length).toBe(normal.length);
+
+		const item = flattened[0];
+		expect(item.message().length).not.toBe(0);
+	});
+
 	test(`${linterName} detects repeated words with multiple synchronous requests`, async () => {
 		const linter = new Linter({ binary });
 
@@ -201,6 +223,21 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const secondRound = await linter.lint(source);
 
 		expect(secondRound.length).toBeLessThan(firstRound.length);
+	});
+
+	test(`${linterName} can ignore larger lints to reveal smaller ones`, async () => {
+		const linter = new Linter({ binary });
+		const source = `This is a really long sentensd with some errorz in it, which in an old version of Harper, would get removedd when the bigger "Long Sentences" lint was ignored, that isn't what we woant, so we are writing a test for that exact problem.`;
+
+		const firstRound = await linter.lint(source);
+
+		expect(firstRound.length).toBeGreaterThanOrEqual(1);
+
+		await linter.ignoreLint(source, firstRound[0]);
+
+		const secondRound = await linter.lint(source);
+
+		expect(secondRound.length).toBe(4);
 	});
 
 	test(`${linterName} can reimport ignored lints.`, async () => {

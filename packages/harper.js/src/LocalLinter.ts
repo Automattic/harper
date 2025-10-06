@@ -38,6 +38,20 @@ export default class LocalLinter implements Linter {
 		return lints;
 	}
 
+	async organizedLints(text: string, options?: LintOptions): Promise<Record<string, Lint[]>> {
+		const inner = await this.inner;
+		const language = options?.language === 'plaintext' ? Language.Plain : Language.Markdown;
+		const lintGroups = inner.organized_lints(text, language);
+
+		const output: Record<string, Lint[]> = {};
+
+		for (const { group, lints } of lintGroups) {
+			output[group] = lints;
+		}
+
+		return output;
+	}
+
 	async applySuggestion(text: string, lint: Lint, suggestion: Suggestion): Promise<string> {
 		const inner = await this.inner;
 		return inner.apply_suggestion(text, lint, suggestion);
@@ -133,6 +147,12 @@ export default class LocalLinter implements Linter {
 	async clearIgnoredLints(): Promise<void> {
 		const inner = await this.inner;
 		inner.clear_ignored_lints();
+	}
+
+	async clearWords(): Promise<void> {
+		const inner = await this.inner;
+
+		return inner.clear_words();
 	}
 
 	async importWords(words: string[]): Promise<void> {
