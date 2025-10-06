@@ -38,4 +38,4 @@ macro_rules! create_test {
 }
 
 create_test!(good.ink, 0);
-create_test!(bad.ink, 6);
+create_test!(bad.ink, 5);

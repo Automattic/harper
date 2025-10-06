@@ -1,10 +1,10 @@
 import type { Dialect, LintConfig } from 'harper.js';
-import type { UnpackedLint } from 'lint-framework';
+import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
 import type { ActivationKey } from './protocol';
 
 export default class ProtocolClient {
-	private static readonly lintCache = new LRUCache<string, Promise<any>>({
+	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
 		max: 5000,
 		ttl: 5_000,
 	});
@@ -13,11 +13,13 @@ export default class ProtocolClient {
 		return `${domain}:${text}`;
 	}
 
-	public static async lint(text: string, domain: string): Promise<UnpackedLint[]> {
+	public static async lint(text: string, domain: string): Promise<UnpackedLintGroups> {
 		const key = this.cacheKey(text, domain);
 		let p = this.lintCache.get(key);
 		if (!p) {
-			p = chrome.runtime.sendMessage({ kind: 'lint', text, domain }).then((r) => r.lints);
+			p = chrome.runtime
+				.sendMessage({ kind: 'lint', text, domain })
+				.then((r) => r.lints as UnpackedLintGroups);
 			this.lintCache.set(key, p);
 		}
 		return p;

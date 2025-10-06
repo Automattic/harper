@@ -463,13 +463,17 @@ Message: |
 
 
 
-Lint:    Formatting (63 priority)
+Lint:    Formatting (255 priority)
 Message: |
-     204 | > Alice’s Right Foot, Esq., Hearthrug, near the Fender, (with Alice’s love).
-         |                          ^~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “,”
-  - Replace with: “.”
+     201 | the carrier,” she thought; “and how funny it’ll seem, sending presents to one’s
+         |                            ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     206 | Oh dear, what nonsense I’m talking!”
+         |                                    ^ This quote has no termination.
 
 
 
@@ -545,6 +549,13 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      252 | and strange, and the words did not come the same as they used to do:—
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 47 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     254 | > “How doth the little crocodile Improve his shining tail, And pour the waters
+         |   ^ This quote has no termination.
 
 
 
@@ -934,6 +945,13 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     502 | > Fury: ‘I’ll try the whole cause, and condemn you to death.’”
+         |                                                              ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      527 | “What a pity it wouldn’t stay!” sighed the Lory, as soon as it was quite out of
@@ -1081,6 +1099,21 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     659 | Next came an angry voice—the Rabbit’s—“Pat! Pat! Where are you?” And then a
+         |                                       ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     659 | Next came an angry voice—the Rabbit’s—“Pat! Pat! Where are you?” And then a
+         |                                                                ^ This quote has no termination.
+     660 | voice she had never heard before, “Sure then I’m here! Digging for apples, yer
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      660 | voice she had never heard before, “Sure then I’m here! Digging for apples, yer
@@ -1165,12 +1198,26 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     692 | below!” (a loud crash)—“Now, who did that?—It was Bill, I fancy—Who’s to go down
+         |                        ^ This quote has no termination.
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      694 | down—Here, Bill! the master says you’re to go down the chimney!”
          |                  ^~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “The”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     694 | down—Here, Bill! the master says you’re to go down the chimney!”
+         |                                                                ^ This quote has no termination.
 
 
 
@@ -1184,6 +1231,37 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      704 | is Bill,” she gave one sharp kick, and waited to see what would happen next.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 58 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     706 | The first thing she heard was a general chorus of “There goes Bill!” then the
+     707 | Rabbit’s voice along—“Catch him, you by the hedge!” then silence, and then
+         |                      ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     707 | Rabbit’s voice along—“Catch him, you by the hedge!” then silence, and then
+         |                                                   ^ This quote has no termination.
+     708 | another confusion of voices—“Hold up his head—Brandy now—Don’t choke him—How was
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     707 | Rabbit’s voice along—“Catch him, you by the hedge!” then silence, and then
+     708 | another confusion of voices—“Hold up his head—Brandy now—Don’t choke him—How was
+         |                             ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     709 | it, old fellow? What happened to you? Tell us all about it!”
+         |                                                            ^ This quote has no termination.
 
 
 
@@ -1320,6 +1398,27 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      824 | butterfly, I should think you’ll feel it a little queer, won’t you?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     865 | “Well, I’ve tried to say “How doth the little busy bee,” but it all came
+         | ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     866 | different!” Alice replied in a very melancholy voice.
+         |           ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     868 | “Repeat, “You are old, Father William,’” said the Caterpillar.
+         | ^ This quote has no termination.
 
 
 
@@ -1756,6 +1855,35 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    1498 | March—just before he went mad, you know—” (pointing with his tea spoon at the
+    1499 | March Hare,) “—it was at the great concert given by the Queen of Hearts, and I
+         |              ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1504 | You know the song, perhaps?”
+         |                            ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1508 | “It goes on, you know,” the Hatter continued, “in this way:—
+         |                                               ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1510 | > ‘Up above the world you fly, Like a tea-tray in the sky. Twinkle, twinkle—’”
+         |                                                                              ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
@@ -1790,6 +1918,20 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1641 | such a thing as a drawing of a muchness?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 73 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1639 | went on: “—that begins with an M, such as mouse-traps, and the moon, and memory,
+         |          ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1641 | such a thing as a drawing of a muchness?”
+         |                                         ^ This quote has no termination.
 
 
 
@@ -2548,6 +2690,22 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2252 | “You may not have lived much under the sea—” (“I haven’t,” said Alice)—“and
+         |                                                                        ^ This quote has no termination.
+    2253 | perhaps you were never even introduced to a lobster—” (Alice began to say “I
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2253 | perhaps you were never even introduced to a lobster—” (Alice began to say “I
+         |                                                     ^ This quote has no termination.
+    2254 | once tasted—” but checked herself hastily, and said “No, never”) “—so you can
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2259 | “Why,” said the Gryphon, “you first form into a line along the sea-shore—”
@@ -2664,6 +2822,14 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
+         |                                                               ^ This quote has no termination.
+    2307 | > porpoise close behind us, and he’s treading on my tail. See how eagerly the
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2333 | “Yes,” said Alice, “I’ve often seen them at dinn—” she checked herself hastily.
@@ -2683,6 +2849,22 @@ Suggest:
   - Replace with: “Din”
   - Replace with: “Ding”
   - Replace with: “Diann”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2343 | here the Mock Turtle yawned and shut his eyes.—“Tell her about the reason and
+         |                                                ^ This quote has no termination.
+    2344 | all that,” he said to the Gryphon.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2343 | here the Mock Turtle yawned and shut his eyes.—“Tell her about the reason and
+    2344 | all that,” he said to the Gryphon.
+         |          ^ This quote has no termination.
 
 
 
@@ -2822,6 +3004,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
+         |   ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
@@ -2830,6 +3019,14 @@ Suggest:
   - Replace with: “Tic”
   - Replace with: “T's”
   - Replace with: “This”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2427 | > Trims his belt and his buttons, and turns out his toes.”
+         |                                                          ^ This quote has no termination.
+    2428 | >
 
 
 
@@ -2908,6 +3105,13 @@ Suggest:
   - Replace with: “H'm”
   - Replace with: “Ha”
   - Replace with: “Ham”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2483 | > “Beautiful Soup, so rich and green, Waiting in a hot tureen! Who for such
+         |   ^ This quote has no termination.
 
 
 
@@ -3213,6 +3417,22 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2513 | so good, that it made Alice quite hungry to look at them—“I wish they’d get the
+         |                                                          ^ This quote has no termination.
+    2514 | trial done,” she thought, “and hand round the refreshments!” But there seemed to
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2513 | so good, that it made Alice quite hungry to look at them—“I wish they’d get the
+    2514 | trial done,” she thought, “and hand round the refreshments!” But there seemed to
+         |            ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2523 | The judge, by the way, was the King; and as he wore his crown over the wig,
@@ -3338,6 +3558,21 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2684 | “I’m glad I’ve seen that done,” thought Alice. “I’ve so often read in the
+         |                                                ^ This quote has no termination.
+    2685 | newspapers, at the end of trials, “There was some attempts at applause, which
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2687 | what it meant till now.”
+         |                        ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2722 | “Well, if I must, I must,” the King said, with a melancholy air, and, after
@@ -3391,6 +3626,35 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2773 | gazing up into the roof of the court.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2870 | > “They told me you had been to her, And mentioned me to him: She gave me a good
+         |   ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2886 | > from all the rest, Between yourself and me.”
+         |                                              ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2900 | spreading out the verses on his knee, and looking at them with one eye; “I seem
+         |                                                                         ^ This quote has no termination.
+    2901 | to see some meaning in them, after all. “—said I could not swim—” you can’t
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2902 | swim, can you?” he added, turning to the Knave.
+         |               ^ This quote has no termination.
 
 
 
@@ -3454,13 +3718,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2955 | it’s getting late.” So Alice got up and ran off, thinking while she ran, as well
          | ~~~~~~~~~~~~~~~~~~ This sentence is 55 words long.
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    2955 | it’s getting late.” So Alice got up and ran off, thinking while she ran, as well
-         |                   ^ This quote has no termination.
 
 
 

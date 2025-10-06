@@ -14,7 +14,10 @@ export type UnpackedLint = {
 	lint_kind_pretty: string;
 	suggestions: UnpackedSuggestion[];
 	context_hash: string;
+	source: string;
 };
+
+export type UnpackedLintGroups = Record<string, UnpackedLint[]>;
 
 export type UnpackedSuggestion = {
 	kind: SuggestionKind;
@@ -23,7 +26,7 @@ export type UnpackedSuggestion = {
 };
 
 export default async function unpackLint(
-	source: string,
+	text: string,
 	lint: Lint,
 	linter: Linter,
 ): Promise<UnpackedLint> {
@@ -38,7 +41,8 @@ export default async function unpackLint(
 		suggestions: lint.suggestions().map((sug) => {
 			return { kind: sug.kind(), replacement_text: sug.get_replacement_text() };
 		}),
-		context_hash: (await linter.contextHash(source, lint)).toString(),
+		context_hash: (await linter.contextHash(text, lint)).toString(),
+		source: text,
 	};
 }
 

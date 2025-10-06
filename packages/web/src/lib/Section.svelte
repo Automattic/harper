@@ -1,29 +1,59 @@
 <script lang="ts">
-export let swapped = false;
-export let noChild = false;
+export let layout: 'single' | 'split' = 'single';
+export let reverse = false;
+
+const hasSubtitle = Boolean($$slots.subtitle);
+const hasAside = Boolean($$slots.aside);
+
+const { class: extraClass = '', ...restProps } = $$restProps;
 </script>
 
 <section
-	class={`py-6 md:py-12 w-full px-4 md:px-6 grid ${noChild ? 'sm:grid-cols-1' : 'sm:grid-cols-2'} gap-8 dark:text-white`}
+	{...restProps}
+	class={`w-full px-4 md:px-6 ${extraClass}`.trim()}
 >
-	{#if swapped && !noChild}
-		<div>
-			<slot />
+	{#if layout === 'split'}
+		<div class={`grid gap-8 md:grid-cols-2 ${hasAside ? 'md:items-start' : ''}`}>
+			<div class={`space-y-4 ${reverse ? 'md:order-2' : ''}`}>
+				{#if $$slots.title}
+					<h3 class="font-semibold">
+						<slot name="title" />
+					</h3>
+				{/if}
+				{#if hasSubtitle}
+					<p class="text-gray-600 dark:text-gray-300">
+						<slot name="subtitle" />
+					</p>
+				{/if}
+				{#if $$slots.default}
+					<div class="space-y-3">
+						<slot />
+					</div>
+				{/if}
+			</div>
+			{#if hasAside}
+				<div class={`${reverse ? 'md:order-1' : ''}`}>
+					<slot name="aside" />
+				</div>
+			{/if}
 		</div>
-	{/if}
-
-	<div class={`justify-center space-y-2`}>
-		<h2 class="font-bold">
-			<slot name="title" />
-		</h2>
-		<p class="text-gray-500 dark:text-gray-400">
-			<slot name="subtitle" />
-		</p>
-	</div>
-
-	{#if !swapped && !noChild}
-		<div>
-			<slot />
+	{:else}
+		<div class="space-y-4">
+			{#if $$slots.title}
+				<h3 class="font-semibold">
+					<slot name="title" />
+				</h3>
+			{/if}
+			{#if hasSubtitle}
+				<p class="text-gray-600 dark:text-gray-300">
+					<slot name="subtitle" />
+				</p>
+			{/if}
+			{#if $$slots.default}
+				<div class="space-y-3">
+					<slot />
+				</div>
+			{/if}
 		</div>
 	{/if}
 </section>

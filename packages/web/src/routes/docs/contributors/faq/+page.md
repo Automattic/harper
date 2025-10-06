@@ -3,7 +3,6 @@ title: Frequently Asked Questions
 ---
 
 This page will be composed of frequently asked questions for contributors.
-If you're reading this page, you might also be interested in [the main FAQ page](/docs/faq).
 
 ## What's the Difference Between a `Linter` and a `PatternLinter`?
 

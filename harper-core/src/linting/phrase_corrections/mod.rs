@@ -58,7 +58,7 @@ pub fn lint_group() -> LintGroup {
             "Corrects `an` to `and` after `ahead`."
         ),
         "AllOfASudden" => (
-            ["all of the sudden"],
+            ["all of the sudden", "all of sudden"],
             ["all of a sudden"],
             "The phrase is `all of a sudden`, meaning `unexpectedly`.",
             "Corrects `all of the sudden` to `all of a sudden`.",
