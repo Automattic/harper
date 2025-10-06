@@ -20,12 +20,3 @@ serde_json = "1.0.145"
 serde = { version = "1.0.228", features = ["derive"] }
 getrandom = { version = "0.3.3", default-features = false, features = ["wasm_js"] }
 harper-stats = { path = "../harper-stats", version = "0.66.0", features = ["js"] }
-
-[package.metadata.wasm-pack.profile.dev]
-wasm-opt = false
-
-[package.metadata.wasm-pack.profile.profiling]
-wasm-opt = false
-
-[package.metadata.wasm-pack.profile.release]
-wasm-opt = false
