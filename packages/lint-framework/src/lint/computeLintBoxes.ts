@@ -1,7 +1,7 @@
 import type { Span } from 'harper.js';
 import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
 import { getRangeForTextSpan } from './domUtils';
-import { getLexicalEditable, getLexicalRoot, getSlateRoot } from './editorUtils';
+import { getLexicalRoot, getSlateRoot } from './editorUtils';
 import TextFieldRange from './TextFieldRange';
 import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
 
@@ -87,31 +87,34 @@ export default function computeLintBoxes(
 }
 
 function replaceValue(el: HTMLElement, value: string) {
-	const slateRoot = getSlateRoot(el);
-	const lexicalEditable = getLexicalEditable(el);
-	const lexicalRoot = getLexicalRoot(el);
-
 	if (isFormEl(el)) {
-		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
-		(el as any).value = value;
-		el.dispatchEvent(new InputEvent('input', { bubbles: true }));
-	} else if (slateRoot != null || lexicalRoot != null) {
-		const mode = lexicalEditable != null || lexicalRoot != null ? 'lexical' : 'slate';
-		replaceValueSpecial(el, value, { mode });
+		replaceFormElementValue(el as HTMLTextAreaElement | HTMLInputElement, value);
+	} else if (getLexicalRoot(el) != null) {
+		replaceRichTextValue(el, value, { mode: 'lexical' });
+	} else if (getSlateRoot(el) != null) {
+		replaceRichTextValue(el, value, { mode: 'slate' });
 	} else {
-		(el as any).textContent = value;
-
-		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
-		el.dispatchEvent(new InputEvent('input', { bubbles: true }));
+		replaceGenericContentEditable(el, value);
 	}
 
 	el.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-/** Replace the content of a special editor node. */
-function replaceValueSpecial(el: HTMLElement, value: string, opts: { mode: 'lexical' | 'slate' }) {
+function replaceFormElementValue(el: HTMLTextAreaElement | HTMLInputElement, value: string) {
+	el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
+	el.value = value;
+	el.dispatchEvent(new InputEvent('input', { bubbles: true }));
+}
+
+function replaceRichTextValue(el: HTMLElement, value: string, opts: { mode: 'lexical' | 'slate' }) {
 	specialSelectAllText(el);
 	specialInsertText(el, value, opts);
+}
+
+function replaceGenericContentEditable(el: HTMLElement, value: string) {
+	el.textContent = value;
+	el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
+	el.dispatchEvent(new InputEvent('input', { bubbles: true }));
 }
 
 function specialSelectAllText(target: Node): Range {
