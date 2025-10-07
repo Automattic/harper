@@ -98,7 +98,7 @@ fn to_lower_word(word: &[char]) -> Cow<'_, [char]> {
 fn starts_with_vowel(word: &[char]) -> bool {
     let is_likely_initialism = word.iter().all(|c| !c.is_alphabetic() || c.is_uppercase());
 
-    if is_likely_initialism && !word.is_empty() {
+    if is_likely_initialism && !word.is_empty() && !is_likely_acronym(word) {
         return matches!(
             word[0],
             'A' | 'E' | 'F' | 'H' | 'I' | 'L' | 'M' | 'N' | 'O' | 'R' | 'S' | 'X'
@@ -189,6 +189,20 @@ fn starts_with_vowel(word: &[char]) -> bool {
         word,
         ['a', ..] | ['e', ..] | ['i', ..] | ['o', ..] | ['u', ..]
     )
+}
+
+fn is_likely_acronym(word: &[char]) -> bool {
+    fn is_upper_vowel(c: char) -> bool {
+        matches!(c, 'A' | 'E' | 'I' | 'O' | 'U')
+    }
+    // If the first two letters are not consonants, the initialism might be an acronym.
+    // (Like MAC, NASA, LAN, etc.)
+    word.get(..2).is_some_and(|first_chars| {
+        first_chars
+            .iter()
+            .fold(0, |acc, char| acc + !is_upper_vowel(*char) as u8)
+            < 2
+    })
 }
 
 #[cfg(test)]
