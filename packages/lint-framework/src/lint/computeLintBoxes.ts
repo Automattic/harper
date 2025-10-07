@@ -1,7 +1,7 @@
 import type { Span } from 'harper.js';
 import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
 import { getRangeForTextSpan } from './domUtils';
-import { getLexicalEditable, getSlateRoot } from './editorUtils';
+import { getLexicalEditable, getLexicalRoot, getSlateRoot } from './editorUtils';
 import TextFieldRange from './TextFieldRange';
 import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
 
@@ -88,14 +88,16 @@ export default function computeLintBoxes(
 
 function replaceValue(el: HTMLElement, value: string) {
 	const slateRoot = getSlateRoot(el);
-	const lexicalRoot = getLexicalEditable(el);
+	const lexicalEditable = getLexicalEditable(el);
+	const lexicalRoot = getLexicalRoot(el);
 
 	if (isFormEl(el)) {
 		el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
 		(el as any).value = value;
 		el.dispatchEvent(new InputEvent('input', { bubbles: true }));
 	} else if (slateRoot != null || lexicalRoot != null) {
-		replaceValueSpecial(el, value);
+		const mode = lexicalEditable != null || lexicalRoot != null ? 'lexical' : 'slate';
+		replaceValueSpecial(el, value, { mode });
 	} else {
 		(el as any).textContent = value;
 
@@ -107,9 +109,9 @@ function replaceValue(el: HTMLElement, value: string) {
 }
 
 /** Replace the content of a special editor node. */
-function replaceValueSpecial(el: HTMLElement, value: string) {
+function replaceValueSpecial(el: HTMLElement, value: string, opts: { mode: 'lexical' | 'slate' }) {
 	specialSelectAllText(el);
-	specialInsertText(el, value);
+	specialInsertText(el, value, opts);
 }
 
 function specialSelectAllText(target: Node): Range {
@@ -127,7 +129,20 @@ function specialSelectAllText(target: Node): Range {
 	return range;
 }
 
-function specialInsertText(el: HTMLElement, raw: string): void {
+function getEditorText(el: HTMLElement): string {
+	const text = el.textContent ?? '';
+	return normalizeEditorText(text);
+}
+
+function normalizeEditorText(text: string): string {
+	return text.replace(/\u200b/g, '').replace(/[\n\r]+$/g, '');
+}
+
+function specialInsertText(
+	el: HTMLElement,
+	raw: string,
+	opts: { mode: 'lexical' | 'slate' },
+): void {
 	const inputType = 'insertText';
 
 	const evInit: InputEventInit = {
@@ -143,12 +158,29 @@ function specialInsertText(el: HTMLElement, raw: string): void {
 	}
 
 	const beforeEvt = new InputEvent('beforeinput', evInit);
-	const biSuccess: boolean = el.dispatchEvent(beforeEvt);
+	const biSuccess = el.dispatchEvent(beforeEvt);
+	if (getEditorText(el) === raw) {
+		return;
+	}
 
 	const textEvt = new InputEvent('textInput', evInit);
 	const teSuccess = el.dispatchEvent(textEvt);
-
-	if (biSuccess && teSuccess) {
-		el.ownerDocument.execCommand(inputType, false, raw);
+	if (getEditorText(el) === raw) {
+		return;
 	}
+
+	const finalize = () => {
+		if (getEditorText(el) !== raw) {
+			el.textContent = raw;
+		}
+	};
+
+	const shouldRunExecCommand = opts.mode !== 'lexical' && (!biSuccess || !teSuccess);
+	if (shouldRunExecCommand) {
+		el.ownerDocument.execCommand(inputType, false, raw);
+		finalize();
+		return;
+	}
+
+	setTimeout(finalize, 0);
 }
