@@ -289,4 +289,15 @@ mod tests {
     fn disallow_a_mp_and_a_mp3() {
         assert_lint_count("a MP and a MP3?", AnA, 2);
     }
+
+    #[test]
+    fn recognize_acronyms() {
+        assert_lint_count("using a MAC address", AnA, 0);
+        assert_lint_count("a NASA spacecraft", AnA, 0);
+        assert_lint_count("a NAT", AnA, 0);
+        assert_lint_count("a REST API", AnA, 0);
+        assert_lint_count("a LIBERO", AnA, 0);
+        assert_lint_count("a README", AnA, 0);
+        assert_lint_count("a LAN", AnA, 0);
+    }
 }
