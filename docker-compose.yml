@@ -2,7 +2,7 @@
 # You do not need it to use Harper.
 version: "3"
 services:
-  blog:
+  site:
     build:
       dockerfile: Dockerfile
     restart: always
