@@ -1,0 +1,15 @@
+# This Docker compose file is for the Harper website and web services.
+# You do not need it to use Harper.
+version: "3"
+services:
+  blog:
+    build:
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_FILE_NAME=file:local.db
+      - ORIGIN=http://localhost:3000
+    volumes:
+      - ./packages/web/local.db:/usr/build/packages/web/build/local.db
