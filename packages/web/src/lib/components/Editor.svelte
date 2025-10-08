@@ -10,7 +10,7 @@ import {
 	type UnpackedSuggestion,
 	unpackLint,
 } from 'lint-framework';
-import demo from '../../../../demo.md?raw';
+import demo from '../../../../../demo.md?raw';
 
 export let content = demo.trim();
 
