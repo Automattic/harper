@@ -1,6 +1,11 @@
 import '@webcomponents/custom-elements';
 import { isVisible, LintFramework, leafNodes } from 'lint-framework';
+import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
+
+if (isWordPress()) {
+	ProtocolClient.setDomainEnabled(window.location.hostname, true);
+}
 
 const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain), {
 	ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
