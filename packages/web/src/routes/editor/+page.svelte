@@ -1,7 +1,7 @@
 <script>
 import { page } from '$app/stores';
 /// This page exists to be embedded via an `iframe`.
-import Editor from '$lib/Editor.svelte';
+import Editor from '$lib/components/Editor.svelte';
 
 let content = $page.url.searchParams.get('initialText') ?? '';
 </script>
