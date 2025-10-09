@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import Isolate from '$lib/components/Isolate.svelte';
 import { Button, Card, Input, Label, Radio } from 'flowbite-svelte';
 
@@ -11,10 +11,10 @@ const reasons = {
 	'no-positives': "It didn't identify any errors in my text",
 };
 
-let otherSelected = false;
+let otherSelected: string | number | undefined;
 let otherText = '';
 
-function handleFormData(e) {
+function handleFormData(e: FormDataEvent) {
 	const fd = e.formData;
 	if (fd.get('feedback') === 'other') {
 		const v = (fd.get('other') || '').toString().trim();
