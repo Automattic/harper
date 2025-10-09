@@ -2,6 +2,7 @@ use std::borrow::Cow;
 
 use itertools::Itertools;
 
+use crate::char_ext::CharExt;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::{Document, TokenStringExt};
 
@@ -192,15 +193,12 @@ fn starts_with_vowel(word: &[char]) -> bool {
 }
 
 fn is_likely_acronym(word: &[char]) -> bool {
-    fn is_upper_vowel(c: char) -> bool {
-        matches!(c, 'A' | 'E' | 'I' | 'O' | 'U')
-    }
     // If the first two letters are not consonants, the initialism might be an acronym.
     // (Like MAC, NASA, LAN, etc.)
     word.get(..2).is_some_and(|first_chars| {
         first_chars
             .iter()
-            .fold(0, |acc, char| acc + !is_upper_vowel(*char) as u8)
+            .fold(0, |acc, char| acc + !char.is_vowel() as u8)
             < 2
     })
 }
