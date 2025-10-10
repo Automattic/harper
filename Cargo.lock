@@ -1517,7 +1517,7 @@ dependencies = [
 [[package]]
 name = "distro"
 version = "0.0.0"
-source = "git+https://github.com/latex-lsp/texlab#cdbe6a8f6af4565e9e1687bbde3622d826a50c18"
+source = "git+https://github.com/latex-lsp/texlab?tag=v5.23.1#d80c436aef6cbfea1866879d5c5e67b1cf727269"
 dependencies = [
  "anyhow",
  "rustc-hash 2.1.1",
@@ -2434,7 +2434,6 @@ dependencies = [
  "harper-core",
  "itertools 0.14.0",
  "parser",
- "rowan",
  "syntax",
 ]
 
@@ -3502,7 +3501,7 @@ dependencies = [
 [[package]]
 name = "parser"
 version = "0.0.0"
-source = "git+https://github.com/latex-lsp/texlab#cdbe6a8f6af4565e9e1687bbde3622d826a50c18"
+source = "git+https://github.com/latex-lsp/texlab?tag=v5.23.1#d80c436aef6cbfea1866879d5c5e67b1cf727269"
 dependencies = [
  "distro",
  "log",
@@ -4464,7 +4463,7 @@ dependencies = [
 [[package]]
 name = "syntax"
 version = "0.0.0"
-source = "git+https://github.com/latex-lsp/texlab#cdbe6a8f6af4565e9e1687bbde3622d826a50c18"
+source = "git+https://github.com/latex-lsp/texlab?tag=v5.23.1#d80c436aef6cbfea1866879d5c5e67b1cf727269"
 dependencies = [
  "distro",
  "itertools 0.13.0",
