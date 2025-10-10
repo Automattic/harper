@@ -16,6 +16,7 @@
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"@types/reveal.js": "^5.0.3",
 		"autoprefixer": "^10.4.21",
+		"drizzle-kit": "^0.31.5",
 		"flowbite": "^3.1.2",
 		"flowbite-svelte": "^0.44.18",
 		"postcss": "^8.4.31",
@@ -23,6 +24,7 @@
 		"svelte-check": "^4.1.5",
 		"tailwindcss": "^3.3.3",
 		"tslib": "catalog:",
+		"tsx": "^4.20.6",
 		"typescript": "catalog:",
 		"vite": "^6.1.0",
 		"vite-plugin-pwa": "^0.21.1",
@@ -31,15 +33,20 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@libsql/client": "^0.15.15",
 		"@sveltepress/theme-default": "^5.0.7",
 		"@sveltepress/vite": "^1.1.5",
 		"chart.js": "^4.4.8",
+		"dotenv": "^17.2.3",
+		"drizzle-orm": "^0.44.6",
+		"drizzle-zod": "^0.8.3",
 		"harper.js": "workspace:*",
 		"lint-framework": "workspace:*",
 		"lodash-es": "^4.17.21",
 		"posthog-js": "^1.245.1",
 		"reveal.js": "^5.1.0",
 		"svelte-intersection-observer": "^1.0.0",
-		"typed.js": "^2.1.0"
+		"typed.js": "^2.1.0",
+		"zod": "^4.1.12"
 	}
 }
