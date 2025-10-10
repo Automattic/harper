@@ -3,12 +3,12 @@ use itertools::Itertools;
 // so we don't have to manually match its version with the one the texlab crates use
 use rowan::WalkEvent;
 
-use parser::{parse_latex, SyntaxConfig};
+use parser::{SyntaxConfig, parse_latex};
 use syntax::latex::{SyntaxKind, SyntaxNode};
 
 use harper_core::{
-    parsers::{Parser, PlainEnglish, StrParser},
     Token,
+    parsers::{Parser, PlainEnglish, StrParser},
 };
 
 /// A parser that wraps Harper's `PlainEnglish` parser allowing one to ingest TeX files.
@@ -30,7 +30,7 @@ impl Parser for Tex {
                         .parse_str(String::from(node.text()).as_str())
                         .into_iter()
                         .map(|mut t| {
-                            t.span.push_by(node.index());
+                            t.span.push_by(node.text_range().start().into());
                             t
                         })
                         .collect_vec(),
