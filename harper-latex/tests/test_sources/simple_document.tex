@@ -1,0 +1,54 @@
+\documentclass{article}
+
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ifpdf}
+\usepackage{mla}
+\usepackage{blindtext}
+\usepackage{charter}
+\usepackage[all]{nowidow}
+\usepackage{microtype}
+\usepackage[skip=1em, tocskip=1.3em, parfill]{parskip}
+\usepackage{fancyhdr}
+\usepackage{ragged2e}
+
+\title{Sections and Chapters}
+\author{John Doe}
+\date{August 2022}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  This is a simple paragraph at the beginning of the
+  document. A brief introduction about the main subject.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+
+% LaTeX is a tool for typesetting professional-looking documents.
+% However, LaTeXs mode of operation is quite different to many other document-production applications you may have used, such as Microsoft Word or LibreOffice Writer: those tools provide users with an interactive page into which they type and edit their text and apply various forms of styling.
+% LaTeX works very differently: instead, your document is a plain text file interspersed with LaTeX commands used to express the desired (typeset) results.
+% To produce a visible, typeset document, your LaTeX file is processed by a piece of software called a TeX engine which uses the commands embedded in your text file to guide and control the typesetting process, converting the LaTeX commands and document text into a professionally typeset PDF file.
+% This means you only need to focus on the content of your document and the computer, via LaTeX commands and the TeX engine, will take care of the visual appearance (formatting).
+
+After our abstract we can begin the first paragraph, then press ``enter'' twice to start the second one.
+
+This line will start a second paragraph.
+
+This is the first section.
+
+\section*{Unnumbered Section}
+% \addcontentsline{toc}{section}{Unnumbered Section}
+
+I will start the third paragraph and then add \\ a manual line break which causes this text to start on a fresh line but remains part of the same paragraph. Alternatively, I can use the \verb|\newline|\newline command to start a fresh line, which is also part of the same paragraph.
+
+\section{Second Section}
+
+Longer documents, irrespective of authoring software, are usually partitioned into parts, chapters, sections, subsections, and so forth. LaTeX also provides document-structuring commands but the available commands, and their implementations (what they do), can depend on the document class being used.
+
+\end{document}

@@ -2835,6 +2835,7 @@ dependencies = [
  "harper-core",
  "itertools 0.14.0",
  "parser",
+ "paste",
  "syntax",
 ]
 
