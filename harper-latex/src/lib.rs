@@ -8,10 +8,10 @@ use harper_core::{
     parsers::{Parser, PlainEnglish, StrParser},
 };
 
-/// A parser that wraps Harper's `PlainEnglish` parser allowing one to ingest TeX files.
-pub struct Tex;
+/// A parser that wraps Harper's `PlainEnglish` parser allowing one to ingest LaTeX files.
+pub struct Latex;
 
-impl Parser for Tex {
+impl Parser for Latex {
     fn parse(&self, source: &[char]) -> Vec<Token> {
         let source_str: String = source.iter().collect();
 
@@ -21,17 +21,20 @@ impl Parser for Tex {
         let harper_tokens: Vec<_> = latex_ast
             .descendants()
             .filter_map(|node| match node.kind() {
-                SyntaxKind::TEXT => Some(
-                    PlainEnglish
-                        .parse_str(String::from(node.text()).as_str())
-                        .into_iter()
-                        .map(|mut t| {
-                            t.span.push_by(node.text_range().start().into());
-                            t
-                        })
-                        .collect_vec(),
-                ),
-                // TODO
+                SyntaxKind::TEXT => {
+                    // dbg!(&node.text());
+
+                    Some(
+                        PlainEnglish
+                            .parse_str(String::from(node.text()).as_str())
+                            .into_iter()
+                            .map(|mut t| {
+                                t.span.push_by(node.text_range().start().into());
+                                t
+                            })
+                            .collect_vec(),
+                    )
+                }
                 _ => None,
             })
             .flatten()
@@ -50,7 +53,7 @@ mod tests {
 
     #[test]
     fn basic() {
-        Tex.parse_str(
+        Latex.parse_str(
             r#"
             \documentclass{article}
 
