@@ -23,7 +23,6 @@ impl Parser for Tex {
 
         let harper_tokens: Vec<_> = latex_ast
             .preorder()
-            .into_iter()
             .filter_map(|evt| match evt {
                 WalkEvent::Enter(node) => Some(match node.kind() {
                     SyntaxKind::TEXT => PlainEnglish
@@ -42,7 +41,7 @@ impl Parser for Tex {
             .flatten()
             .collect();
 
-        dbg!(&harper_tokens);
+        // dbg!(&harper_tokens);
 
         harper_tokens
     }
