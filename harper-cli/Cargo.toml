@@ -18,6 +18,7 @@ harper-core = { path = "../harper-core", version = "1.0.0" }
 harper-pos-utils = { path = "../harper-pos-utils", version = "1.0.0", features = [] }
 harper-comments = { path = "../harper-comments", version = "1.0.0" }
 harper-typst = { path = "../harper-typst", version = "1.0.0" }
+harper-latex = { path = "../harper-latex", version = "1.0.0" }
 hashbrown = "0.16.1"
 rayon = "1.11.0"
 serde = { version = "1.0.228", features = ["derive"] }
