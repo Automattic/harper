@@ -1,0 +1,16 @@
+[package]
+name = "harper-latex"
+version = "0.67.0"
+edition = "2024"
+description = "The language checker for developers."
+license = "Apache-2.0"
+repository = "https://github.com/automattic/harper"
+
+[dependencies]
+harper-core = { path = "../harper-core", version = "0.67.0" }
+parser = { git = "https://github.com/latex-lsp/texlab", tag = "v5.23.1" }
+syntax = { git = "https://github.com/latex-lsp/texlab", tag = "v5.23.1" }
+itertools = "0.14.0"
+
+[dev-dependencies]
+paste = "1.0.15"
