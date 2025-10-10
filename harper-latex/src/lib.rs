@@ -1,7 +1,4 @@
 use itertools::Itertools;
-// TODO: remove direct dependency on rowan if possible
-// so we don't have to manually match its version with the one the texlab crates use
-use rowan::WalkEvent;
 
 use parser::{SyntaxConfig, parse_latex};
 use syntax::latex::{SyntaxKind, SyntaxNode};
@@ -22,10 +19,10 @@ impl Parser for Tex {
         let latex_ast = SyntaxNode::new_root(latex_document);
 
         let harper_tokens: Vec<_> = latex_ast
-            .preorder()
-            .filter_map(|evt| match evt {
-                WalkEvent::Enter(node) => Some(match node.kind() {
-                    SyntaxKind::TEXT => PlainEnglish
+            .descendants()
+            .filter_map(|node| match node.kind() {
+                SyntaxKind::TEXT => Some(
+                    PlainEnglish
                         .parse_str(String::from(node.text()).as_str())
                         .into_iter()
                         .map(|mut t| {
@@ -33,10 +30,9 @@ impl Parser for Tex {
                             t
                         })
                         .collect_vec(),
-                    // TODO
-                    _ => vec![],
-                }),
-                WalkEvent::Leave(_) => None,
+                ),
+                // TODO
+                _ => None,
             })
             .flatten()
             .collect();
