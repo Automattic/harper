@@ -781,7 +781,7 @@ checksum = "fe6d2e5af09e8c8ad56c969f2157a3d4238cebc7c55f0a517728c38f7b200f81"
 dependencies = [
  "serde",
  "termcolor",
- "unicode-width 0.1.14",
+ "unicode-width 0.2.2",
 ]
 
 [[package]]
@@ -2384,6 +2384,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-git-commit"
+version = "0.68.0"
+dependencies = [
+ "harper-core",
+ "harper-tree-sitter",
+ "paste",
+ "tree-sitter",
+ "tree-sitter-gitcommit",
+]
+
+[[package]]
 name = "harper-html"
 version = "0.68.0"
 dependencies = [
@@ -2427,6 +2438,7 @@ dependencies = [
  "globset",
  "harper-comments",
  "harper-core",
+ "harper-git-commit",
  "harper-html",
  "harper-ink",
  "harper-literate-haskell",
@@ -4830,6 +4842,15 @@ checksum = "df2196ea9d47b4ab4a31b9297eaa5a5d19a0b121dceb9f118f6790ad0ab94743"
 dependencies = [
  "cc",
  "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-gitcommit"
+version = "0.3.3"
+source = "git+https://github.com/gbprod/tree-sitter-gitcommit?rev=a716678c0f00645fed1e6f1d0eb221481dbd6f6d#a716678c0f00645fed1e6f1d0eb221481dbd6f6d"
+dependencies = [
+ "cc",
+ "tree-sitter",
 ]
 
 [[package]]

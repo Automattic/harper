@@ -1,0 +1,26 @@
+This is the the subject
+
+This is a first line without typos
+# This is a comment with a typooo that should be ignored
+This is a line below the comment with typooos
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+#
+# Initial commit
+#
+# Changes to be committed:
+#new file:   myfile.txt
+#
+# ------------------------ >8 ------------------------
+# Do not modify or remove the line above.
+# Everything below it will be ignored.
+diff --git a/myfile.txt b/myfile.txt
+new file mode 100644
+index 0000000..485c415
+--- /dev/null
++++ b/myfile.txt
+@@ -0,0 +1 @@
++some textt in the file that was added (the typo should be ignored)
