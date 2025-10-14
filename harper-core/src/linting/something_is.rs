@@ -49,7 +49,8 @@ impl ExprLinter for SomethingIs {
                 Suggestion::replace_with_match_case(contraction, original),
                 Suggestion::replace_with_match_case(expanded, original),
             ],
-            message: "Prefer the contraction or full `is` rather than pluralizing this pronoun.".into(),
+            message: "Prefer the contraction or full `is` rather than pluralizing this pronoun."
+                .into(),
             priority: 31,
         })
     }
