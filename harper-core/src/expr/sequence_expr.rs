@@ -6,7 +6,7 @@ use crate::{
     patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
 
-use super::{Expr, Optional, Repeating, Step, UnlessStep};
+use super::{Expr, Optional, OwnedExprExt, Repeating, Step, UnlessStep};
 
 #[derive(Default)]
 pub struct SequenceExpr {
@@ -173,6 +173,16 @@ impl SequenceExpr {
     /// Match against one or more whitespace tokens.
     pub fn then_whitespace(self) -> Self {
         self.then(WhitespacePattern)
+    }
+
+    /// Match against one or more whitespace tokens.
+    pub fn then_whitespace_or_hyphen(self) -> Self {
+        self.then(WhitespacePattern.or(|tok: &Token, _: &[char]| tok.kind.is_hyphen()))
+    }
+
+    /// Shorthand for [`Self::then_whitespace_or_hyphen`].
+    pub fn t_ws_h(self) -> Self {
+        self.then_whitespace_or_hyphen()
     }
 
     /// Shorthand for [`Self::then_whitespace`].
@@ -427,6 +437,8 @@ impl SequenceExpr {
     gen_then_from_is!(auxiliary_verb);
     gen_then_from_is!(linking_verb);
     gen_then_from_is!(verb_lemma);
+    gen_then_from_is!(verb_simple_past_form);
+    gen_then_from_is!(verb_past_participle_form);
 
     // Adjectives
 

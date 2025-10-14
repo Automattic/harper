@@ -266,10 +266,11 @@ impl Linter {
 
         self.lint_group.config = temp;
 
-        remove_overlaps_map(&mut lints);
         for value in lints.values_mut() {
             self.ignored_lints.remove_ignored(value, &document);
         }
+
+        remove_overlaps_map(&mut lints);
 
         lints
             .into_iter()
@@ -302,8 +303,8 @@ impl Linter {
 
         self.lint_group.config = temp;
 
-        remove_overlaps(&mut lints);
         self.ignored_lints.remove_ignored(&mut lints, &document);
+        remove_overlaps(&mut lints);
 
         lints
             .into_iter()
