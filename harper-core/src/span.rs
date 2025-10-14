@@ -29,8 +29,8 @@ pub struct Span<T> {
 }
 
 impl<T> Span<T> {
-    /// An empty [`Span`].
-    pub const EMPTY: Self = Self {
+    /// A [`Span`] with a start and end index of 0.
+    pub const ZERO: Self = Self {
         start: 0,
         end: 0,
         span_type: PhantomData,
@@ -179,7 +179,7 @@ impl Span<Token> {
     /// this span is required.
     pub fn to_char_span(&self, source_document_tokens: &[Token]) -> Span<char> {
         if self.is_empty() {
-            Span::EMPTY
+            Span::ZERO
         } else {
             let target_tokens = &source_document_tokens[self.start..self.end];
             Span::new(
@@ -263,7 +263,7 @@ mod tests {
         let doc = Document::new_plain_english_curated("Hello world!");
 
         // Empty span.
-        let token_span = Span::EMPTY;
+        let token_span = Span::ZERO;
         let converted = token_span.to_char_span(doc.get_tokens());
         assert!(converted.is_empty());
 

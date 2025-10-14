@@ -154,7 +154,7 @@ impl<'a> TypstTranslator<'a> {
 
         fn parbreak() -> Option<Vec<Token>> {
             Some(vec![Token {
-                span: harper_core::Span::EMPTY,
+                span: harper_core::Span::ZERO,
                 kind: TokenKind::ParagraphBreak,
             }])
         }
