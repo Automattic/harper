@@ -115,6 +115,7 @@ use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
+use super::something_is::SomethingIs;
 use super::somewhat_something::SomewhatSomething;
 use super::sought_after::SoughtAfter;
 use super::spaces::Spaces;
@@ -526,6 +527,7 @@ impl LintGroup {
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
+        insert_expr_rule!(SomethingIs, true);
         insert_expr_rule!(SomewhatSomething, true);
         insert_expr_rule!(SoughtAfter, true);
         insert_struct_rule!(Spaces, true);
