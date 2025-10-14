@@ -37,14 +37,6 @@ impl ExprLinter for Didnt {
             return None;
         }
 
-        if !suspect
-            .span
-            .get_content(src)
-            .eq_ignore_ascii_case_chars(&['d', 'i', 'n', 't'])
-        {
-            return None;
-        }
-
         Some(Lint {
             span: suspect.span,
             lint_kind: LintKind::Typo,
