@@ -27,13 +27,11 @@
 		"tsx": "^4.20.6",
 		"typescript": "catalog:",
 		"vite": "^6.1.0",
-		"vite-plugin-pwa": "^0.21.1",
 		"vite-plugin-top-level-await": "^1.5.0",
 		"vite-plugin-wasm": "^3.4.1"
 	},
 	"type": "module",
 	"dependencies": {
-		"@libsql/client": "^0.15.15",
 		"@sveltepress/theme-default": "^5.0.7",
 		"@sveltepress/vite": "^1.1.5",
 		"chart.js": "^4.4.8",
@@ -43,6 +41,7 @@
 		"harper.js": "workspace:*",
 		"lint-framework": "workspace:*",
 		"lodash-es": "^4.17.21",
+		"mysql2": "^3.15.2",
 		"posthog-js": "^1.245.1",
 		"reveal.js": "^5.1.0",
 		"svelte-intersection-observer": "^1.0.0",

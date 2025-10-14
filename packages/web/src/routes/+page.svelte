@@ -21,6 +21,7 @@ import SublimeLogo from '$lib/components/SublimeLogo.svelte';
 import WordPressLogo from '$lib/components/WordPressLogo.svelte';
 import ZedLogo from '$lib/components/ZedLogo.svelte';
     import EdgeLogo from '$lib/components/EdgeLogo.svelte';
+    import { browser } from '$app/environment';
 
 /**
  * @param {string} keyword
@@ -88,7 +89,9 @@ function agentHas(keyword: string) {
 		</div>
 
 		<div class="h-[800px] w-full overflow-hidden rounded-xl border border-neutral-200 shadow-sm dark:border-neutral-800">
-			<Editor />
+      {#if browser}
+			  <Editor />
+      {/if}
 		</div>
 	</div>
 

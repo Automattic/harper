@@ -44,6 +44,7 @@ FROM node:${NODE_VERSION}
 COPY --from=node-build /usr/build/node_modules /usr/build/node_modules
 COPY --from=node-build /usr/build/packages/web/node_modules /usr/build/packages/web/node_modules
 COPY --from=node-build /usr/build/packages/web/build /usr/build/packages/web/build
+COPY ./packages/web/drizzle /usr/build/packages/web/build/drizzle
 COPY --from=node-build /usr/build/packages/web/package.json /usr/build/packages/web/package.json
 
 WORKDIR /usr/build/packages/web/build

@@ -1,8 +1,7 @@
-import { int, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import timestamp from './timestamp';
+import { int, mysqlTable, text, timestamp } from 'drizzle-orm/mysql-core';
 
-export const uninstallFeedbackTable = sqliteTable('uninstall_feedback', {
-	id: int().primaryKey({ autoIncrement: true }),
+export const uninstallFeedbackTable = mysqlTable('uninstall_feedback', {
+	id: int().autoincrement().primaryKey(),
 	feedback: text().notNull(),
-	timestamp: timestamp(),
+	timestamp: timestamp().notNull().defaultNow(),
 });

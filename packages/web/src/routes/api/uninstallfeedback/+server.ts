@@ -1,5 +1,5 @@
 import UninstallFeedback from '$lib/db/models/UninstallFeedback';
-import { fail, type RequestEvent, redirect } from '@sveltejs/kit';
+import { type RequestEvent, redirect } from '@sveltejs/kit';
 
 export const POST = async ({ request }: RequestEvent) => {
 	const data = await request.formData();
