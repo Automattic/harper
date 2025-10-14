@@ -30,11 +30,7 @@ pub struct Span<T> {
 
 impl<T> Span<T> {
     /// A [`Span`] with a start and end index of 0.
-    pub const ZERO: Self = Self {
-        start: 0,
-        end: 0,
-        span_type: PhantomData,
-    };
+    pub const ZERO: Self = Self::empty(0);
 
     /// Creates a new [`Span`] with the provided start and end indices.
     ///
@@ -57,6 +53,15 @@ impl<T> Span<T> {
         Self {
             start,
             end: start + len,
+            span_type: PhantomData,
+        }
+    }
+
+    /// Creates a new empty [`Span`] with the provided position.
+    pub const fn empty(pos: usize) -> Self {
+        Self {
+            start: pos,
+            end: pos,
             span_type: PhantomData,
         }
     }
