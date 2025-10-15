@@ -2406,6 +2406,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-jjdescription"
+version = "0.68.0"
+dependencies = [
+ "harper-core",
+ "harper-tree-sitter",
+ "paste",
+ "tree-sitter",
+ "tree-sitter-jjdescription",
+]
+
+[[package]]
 name = "harper-literate-haskell"
 version = "0.68.0"
 dependencies = [
@@ -2429,6 +2440,7 @@ dependencies = [
  "harper-core",
  "harper-html",
  "harper-ink",
+ "harper-jjdescription",
  "harper-literate-haskell",
  "harper-python",
  "harper-stats",
@@ -4890,6 +4902,16 @@ checksum = "68204f2abc0627a90bdf06e605f5c470aa26fdcb2081ea553a04bdad756693f5"
 dependencies = [
  "cc",
  "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-jjdescription"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3af4295730637817c988dd0af3ab622505fc91b4bbccf8bbcc20cae0a6e43527"
+dependencies = [
+ "cc",
+ "tree-sitter",
 ]
 
 [[package]]
