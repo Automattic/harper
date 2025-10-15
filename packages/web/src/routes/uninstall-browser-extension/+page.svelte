@@ -27,7 +27,7 @@ function handleFormData(e: FormDataEvent) {
   <div class="flex flex-row justify-center items-center h-screen"> 
     <Card> 
       <h1 class="text-3xl font-semibold">Uninstalling Harper</h1> <p class="text-sm text-gray-600">We’re sorry to see you go. If you have a minute, would you mind telling us why you uninstalled our browser extension?</p>
-      <form method="POST" class="mt-4 space-y-6" action="/api/uninstallfeedback" on:formdata={handleFormData}>
+      <form method="POST" class="mt-4 space-y-6" action="/api/uninstall-feedback" on:formdata={handleFormData}>
         <div class="space-y-3">
           <div class="flex items-baseline gap-2">
             <Label>Why did you uninstall Harper?</Label>
