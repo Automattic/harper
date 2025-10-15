@@ -25,17 +25,7 @@ impl ExprLinter for Didnt {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let pronoun = toks.first()?;
         let suspect = toks.last()?;
-
-        let pronoun_text = pronoun.span.get_content_string(src).to_ascii_lowercase();
-
-        if !matches!(
-            pronoun_text.as_str(),
-            "i" | "you" | "he" | "she" | "we" | "they" | "it"
-        ) {
-            return None;
-        }
 
         Some(Lint {
             span: suspect.span,
