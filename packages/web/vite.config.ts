@@ -6,7 +6,7 @@ import wasm from 'vite-plugin-wasm';
 
 export default defineConfig({
 	ssr: {
-		noExternal: true,
+		noExternal: ['mysql2'],
 	},
 	server: {
 		port: 3000,

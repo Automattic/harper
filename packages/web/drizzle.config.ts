@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
@@ -6,6 +5,6 @@ export default defineConfig({
 	schema: './src/lib/db/schema.ts',
 	dialect: 'mysql',
 	dbCredentials: {
-		url: process.env.DB_FILE_NAME!,
+		url: process.env.DATABASE_URL!,
 	},
 });
