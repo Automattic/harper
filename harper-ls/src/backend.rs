@@ -23,6 +23,7 @@ use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
 use harper_jjdescription::JJDescriptionParser;
+use harper_latex::Latex;
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
@@ -397,6 +398,7 @@ impl Backend {
             "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "python" => Some(Box::new(PythonParser::default())),
             "typst" => Some(Box::new(Typst)),
+            "latex" => Some(Box::new(Latex)),
             _ => None,
         };
 
