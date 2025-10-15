@@ -21,10 +21,8 @@ impl Default for WellEducated {
             .then_optional(WhitespacePattern)
             .t_aco("educated");
 
-        let expr = SequenceExpr::default().then_any_of(vec![
-            Box::new(combined),
-            Box::new(separated),
-        ]);
+        let expr =
+            SequenceExpr::default().then_any_of(vec![Box::new(combined), Box::new(separated)]);
 
         Self {
             expr: Box::new(expr),
@@ -128,11 +126,7 @@ mod tests {
 
     #[test]
     fn allows_well_educated() {
-        assert_lint_count(
-            "She is well-educated.",
-            WellEducated::default(),
-            0,
-        );
+        assert_lint_count("She is well-educated.", WellEducated::default(), 0);
     }
 
     #[test]
