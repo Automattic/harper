@@ -1,6 +1,6 @@
+use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::{CharStringExt, Token};
 
 pub struct Didnt {
     expr: Box<dyn Expr>,

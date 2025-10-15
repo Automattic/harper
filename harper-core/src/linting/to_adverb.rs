@@ -1,6 +1,5 @@
 use harper_brill::UPOS;
 
-use crate::char_string::CharStringExt;
 use crate::expr::{Expr, OwnedExprExt, SequenceExpr};
 use crate::patterns::{UPOSSet, WordSet};
 use crate::{Span, Token};
