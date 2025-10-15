@@ -20,14 +20,18 @@ import NeovimLogo from '$lib/components/NeovimLogo.svelte';
 import SublimeLogo from '$lib/components/SublimeLogo.svelte';
 import WordPressLogo from '$lib/components/WordPressLogo.svelte';
 import ZedLogo from '$lib/components/ZedLogo.svelte';
-    import EdgeLogo from '$lib/components/EdgeLogo.svelte';
-    import { browser } from '$app/environment';
+import EdgeLogo from '$lib/components/EdgeLogo.svelte';
+import { browser } from '$app/environment';
 
 /**
  * @param {string} keyword
  */
-function agentHas(keyword: string) {
-	return navigator.userAgent.toLowerCase().search(keyword.toLowerCase()) > -1;
+function agentHas(keyword: string): boolean | undefined {
+  if (navigator){
+	  return navigator.userAgent.toLowerCase().search(keyword.toLowerCase()) > -1;
+  }else{
+    return undefined;
+  }
 }
 </script>
 
