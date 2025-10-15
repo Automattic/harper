@@ -12,7 +12,8 @@ const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain)
 	getActivationKey: () => ProtocolClient.getActivationKey(),
 	openOptions: () => ProtocolClient.openOptions(),
 	addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
-	reportError: (lint: UnpackedLint, ruleId: string) => ProtocolClient.openReportError(lint.source, ruleId, ''),
+	reportError: (lint: UnpackedLint, ruleId: string) =>
+		ProtocolClient.openReportError(lint.source, ruleId, ''),
 });
 
 const keepAliveCallback = () => {
