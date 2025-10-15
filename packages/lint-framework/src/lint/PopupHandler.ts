@@ -39,12 +39,14 @@ export default class PopupHandler {
 		getActivationKey?: () => Promise<ActivationKey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
+		reportError?: () => Promise<void>;
 	};
 
 	constructor(actions: {
 		getActivationKey?: () => Promise<ActivationKey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
+		reportError?: () => Promise<void>;
 	}) {
 		this.actions = actions;
 		this.currentLintBoxes = [];

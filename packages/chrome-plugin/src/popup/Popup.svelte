@@ -1,20 +1,20 @@
 <script lang="ts">
-import { Button } from 'flowbite-svelte';
-import { createEventDispatcher } from 'svelte';
 import logo from '/logo.png';
+import type { PopupState } from '../PopupState';
 import Main from './Main.svelte';
 import Onboarding from './Onboarding.svelte';
+import ReportProblematicLint from './ReportProblematicLint.svelte';
 
-let page: 'onboarding' | 'main' = $state('main');
+let state: PopupState = $state({ page: 'main' });
 
 $effect(() => {
-	chrome.storage.local.get({ popupState: 'onboarding' }).then((result) => {
-		page = result.popupState;
+	chrome.storage.local.get({ popupState: { page: 'onboarding' } }).then((result) => {
+		state = result.popupState;
 	});
 });
 
 $effect(() => {
-	chrome.storage.local.set({ popupState: page });
+	chrome.storage.local.set({ popupState: state });
 });
 
 function openSettings() {
@@ -28,10 +28,12 @@ function openSettings() {
     <span class="font-semibold text-sm">Harper</span>
   </header>
 
-  {#if page == "onboarding"}
-    <Onboarding onConfirm={() => { page = "main";}} />
-  {:else if page == "main"}
+  {#if state.page == "onboarding"}
+    <Onboarding onConfirm={() => { state = {page: "main"};}} />
+  {:else if state.page == "main"}
     <Main /> 
+  {:else if state.page == 'report-error'}
+    <ReportProblematicLint example={state.example} rule_id={state.rule_id} feedback={state.feedback} />
   {/if}
 
   <footer class="flex items-center justify-center gap-6 px-3 py-2 text-sm border-t border-gray-100 rounded-b-lg bg-white/60">

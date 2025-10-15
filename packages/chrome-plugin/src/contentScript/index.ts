@@ -1,5 +1,5 @@
 import '@webcomponents/custom-elements';
-import { isVisible, LintFramework, leafNodes } from 'lint-framework';
+import { isVisible, LintFramework, leafNodes, type UnpackedLint } from 'lint-framework';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
 
@@ -12,6 +12,7 @@ const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain)
 	getActivationKey: () => ProtocolClient.getActivationKey(),
 	openOptions: () => ProtocolClient.openOptions(),
 	addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
+	reportError: (lint: UnpackedLint, ruleId: string) => ProtocolClient.openReportError(lint.source, ruleId, ''),
 });
 
 const keepAliveCallback = () => {

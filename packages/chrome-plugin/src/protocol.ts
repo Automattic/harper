@@ -19,7 +19,8 @@ export type Request =
 	| GetUserDictionaryRequest
 	| GetActivationKeyRequest
 	| SetActivationKeyRequest
-	| OpenOptionsRequest;
+	| OpenOptionsRequest
+	| OpenReportErrorRequest;
 
 export type Response =
 	| LintResponse
@@ -176,4 +177,11 @@ export type SetActivationKeyRequest = {
 
 export type OpenOptionsRequest = {
 	kind: 'openOptions';
+};
+
+export type OpenReportErrorRequest = {
+	kind: 'openReportError';
+	example: string;
+	rule_id: string;
+	feedback: string;
 };

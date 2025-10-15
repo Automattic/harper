@@ -1,5 +1,6 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
 import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
+import type { PopupState } from '../PopupState';
 import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
@@ -20,6 +21,7 @@ import {
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
+	type OpenReportErrorRequest,
 	type Request,
 	type Response,
 	type SetActivationKeyRequest,
@@ -141,6 +143,8 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetActivationKey();
 		case 'setActivationKey':
 			return handleSetActivationKey(message);
+		case 'openReportError':
+			return handleOpenReportError(message);
 		case 'openOptions':
 			chrome.runtime.openOptionsPage();
 			return createUnitResponse();
@@ -269,6 +273,27 @@ async function handleSetActivationKey(req: SetActivationKeyRequest): Promise<Uni
 		throw new Error(`Invalid activation key: ${req.key}`);
 	}
 	await setActivationKey(req.key);
+
+	return createUnitResponse();
+}
+
+async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitResponse> {
+	const popupState: PopupState = {
+		page: 'report-error',
+		example: req.example,
+		rule_id: req.rule_id,
+		feedback: req.feedback,
+	};
+
+	await chrome.storage.local.set({ popupState });
+
+	if (chrome.action?.openPopup) {
+		try {
+			await chrome.action.openPopup();
+		} catch (error) {
+			console.error('Failed to open popup for report error', error);
+		}
+	}
 
 	return createUnitResponse();
 }
