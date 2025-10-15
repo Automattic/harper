@@ -131,6 +131,7 @@ use super::thing_think::ThingThink;
 use super::though_thought::ThoughThought;
 use super::throw_away::ThrowAway;
 use super::throw_rubbish::ThrowRubbish;
+use super::to_adverb::ToAdverb;
 use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
@@ -544,6 +545,7 @@ impl LintGroup {
         insert_expr_rule!(ThoughThought, true);
         insert_expr_rule!(ThrowAway, true);
         insert_struct_rule!(ThrowRubbish, true);
+        insert_expr_rule!(ToAdverb, true);
         insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
