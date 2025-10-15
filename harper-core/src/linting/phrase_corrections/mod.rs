@@ -752,6 +752,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects non-standard variants of `low-hanging fruit`.",
             LintKind::Usage
         ),
+        "ManagerialReins" => (
+            ["managerial reigns"],
+            ["managerial reins"],
+            "Swap in `reins` when talking about control of a team or project.",
+            "Corrects the eggcorn `managerial reigns` to the idiomatic `managerial reins`.",
+            LintKind::Eggcorn
+        ),
         "Monumentous" => (
             ["monumentous"],
             ["momentous", "monumental"],
