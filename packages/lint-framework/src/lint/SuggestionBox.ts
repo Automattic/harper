@@ -189,13 +189,18 @@ function reportProblemButton(reportError?: () => Promise<void>): any {
 		return undefined;
 	}
 
-	return button(
-		'!',
-		{ background: '#f97316', color: '#ffffff' },
-		() => {
-			reportError();
+	return h(
+		'button',
+		{
+			className: 'harper-report-link',
+			type: 'button',
+			onclick: () => {
+				reportError();
+			},
+			title: 'Report an issue with this lint',
+			'aria-label': 'Report an issue with this lint',
 		},
-		'Report an issue with this lint',
+		'Report',
 	);
 }
 
@@ -355,6 +360,22 @@ function styleTag() {
       .harper-hint-drawer{ border-top-color:#30363d; background:#151b23; color:#9aa4af; }
       .harper-hint-icon{ background:#3a2f0b; color:#f2cc60; }
       .harper-hint-title{ color:#e6edf3; }
+      }
+      .harper-report-link{
+      margin-top:8px;
+      align-self:flex-start;
+      background:none;
+      border:none;
+      padding:0;
+      color:#0969da;
+      font-size:13px;
+      font-weight:600;
+      cursor:pointer;
+      }
+      .harper-report-link:hover{text-decoration:underline;}
+      .harper-report-link:focus{outline:2px solid #0969da; outline-offset:2px;}
+      @media (prefers-color-scheme:dark){
+      .harper-report-link{color:#58a6ff;}
       }`,
 	]);
 }
@@ -416,14 +437,6 @@ export default function SuggestionBox(
 					close();
 				}),
 				[
-					actions.reportError
-						? reportProblemButton(() => {
-								if (actions.reportError) {
-									return actions.reportError(box.lint, box.rule);
-								}
-								return Promise.resolve();
-							})
-						: undefined,
 					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary
 						? addToDictionary(box, actions.addToUserDictionary)
 						: undefined,
@@ -431,6 +444,14 @@ export default function SuggestionBox(
 				],
 			),
 			hintDrawer(hint),
+			actions.reportError
+				? reportProblemButton(() => {
+						if (actions.reportError) {
+							return actions.reportError(box.lint, box.rule);
+						}
+						return Promise.resolve();
+					})
+				: undefined,
 		],
 	);
 }

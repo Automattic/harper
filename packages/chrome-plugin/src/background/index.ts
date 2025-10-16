@@ -149,7 +149,7 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleOpenReportError(message);
 		case 'openOptions':
 			chrome.runtime.openOptionsPage();
-			return createUnitResponse();
+			return Promise.resolve(createUnitResponse());
 		case 'postFormData':
 			return handlePostFormData(message);
 	}
@@ -164,9 +164,7 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 	const grouped = await linter.organizedLints(req.text);
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
-			const unpacked = await Promise.all(
-				lints.map((lint) => unpackLint(req.text, lint, linter, source)),
-			);
+			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
 			return [source, unpacked] as const;
 		}),
 	);
