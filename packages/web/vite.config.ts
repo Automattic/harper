@@ -6,7 +6,7 @@ import wasm from 'vite-plugin-wasm';
 
 export default defineConfig({
 	ssr: {
-		noExternal: ['mysql2', "drizzle-orm"],
+		noExternal: ['mysql2', "drizzle-orm", "posthog-js"],
 	},
 	server: {
 		port: 3000,
