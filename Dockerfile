@@ -1,7 +1,7 @@
 # This Dockerfile is for the Harper website and web services.
 # You do not need it to use Harper.
 
-ARG NODE_VERSION=slim
+ARG NODE_VERSION=24
 
 FROM rust:latest AS wasm-build
 RUN rustup toolchain install
