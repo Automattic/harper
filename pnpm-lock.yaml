@@ -6,6 +6,12 @@ settings:
 
 catalogs:
   default:
+    '@babel/runtime':
+      specifier: ^7.26.10
+      version: 7.26.10
+    '@types/node':
+      specifier: ^22.13.10
+      version: 22.13.10
     tslib:
       specifier: ^2.8.1
       version: 2.8.1
@@ -34,6 +40,9 @@ importers:
 
   packages/chrome-plugin:
     dependencies:
+      '@fortawesome/free-solid-svg-icons':
+        specifier: ^7.1.0
+        version: 7.1.0
       '@tailwindcss/vite':
         specifier: ^4.1.4
         version: 4.1.4(vite@5.4.17(@types/node@22.13.10)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0))
@@ -52,6 +61,9 @@ importers:
       lru-cache:
         specifier: ^11.1.0
         version: 11.1.0
+      svelte-fa:
+        specifier: ^4.0.4
+        version: 4.0.4(svelte@5.21.0)
       tailwindcss:
         specifier: ^4.1.4
         version: 4.1.4
@@ -80,9 +92,6 @@ importers:
       flowbite-svelte:
         specifier: ^0.44.18
         version: 0.44.24(rollup@4.35.0)(svelte@5.21.0)
-      flowbite-svelte-icons:
-        specifier: ^2.1.1
-        version: 2.1.1(svelte@5.21.0)(tailwind-merge@3.2.0)
       gulp:
         specifier: ^5.0.0
         version: 5.0.0
@@ -2261,6 +2270,14 @@ packages:
 
   '@formatjs/intl-localematcher@0.6.0':
     resolution: {integrity: sha512-4rB4g+3hESy1bHSBG3tDFaMY2CH67iT7yne1e+0CLTsGLDcmoEWWpJjjpWVaYgYfYuohIRuo0E+N536gd2ZHZA==}
+
+  '@fortawesome/fontawesome-common-types@7.1.0':
+    resolution: {integrity: sha512-l/BQM7fYntsCI//du+6sEnHOP6a74UixFyOYUyz2DLMXKx+6DEhfR3F2NYGE45XH1JJuIamacb4IZs9S0ZOWLA==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/free-solid-svg-icons@7.1.0':
+    resolution: {integrity: sha512-Udu3K7SzAo9N013qt7qmm22/wo2hADdheXtBfxFTecp+ogsc0caQNRKEb7pkvvagUGOpG9wJC1ViH6WXs8oXIA==}
+    engines: {node: '>=6'}
 
   '@gulpjs/messages@1.1.0':
     resolution: {integrity: sha512-Ys9sazDatyTgZVb4xPlDufLweJ/Os2uHWOv+Caxvy2O85JcnT4M3vc73bi8pdLWlv3fdWQz3pdI9tVwo8rQQSg==}
@@ -6715,12 +6732,6 @@ packages:
   flowbite-datepicker@1.3.2:
     resolution: {integrity: sha512-6Nfm0MCVX3mpaR7YSCjmEO2GO8CDt6CX8ZpQnGdeu03WUCWtEPQ/uy0PUiNtIJjJZWnX0Cm3H55MOhbD1g+E/g==}
 
-  flowbite-svelte-icons@2.1.1:
-    resolution: {integrity: sha512-VNNMcekjbM1bQEGgbdGsdYR9mRdTj/L0A5ba0P1tiFv5QB9GvbvJMABJoiD80eqpZUkfR2QVOmiZfgCwHicT/Q==}
-    peerDependencies:
-      svelte: ^5.0.0
-      tailwind-merge: ^3.0.0
-
   flowbite-svelte@0.44.24:
     resolution: {integrity: sha512-kXhJZHGpBVq5RFOoYnzRCEM8eFa81DVp4KjUbBsLJptKhizbSSBJuYApWIQb9pBCS8EBhX4PAX+RsgEDZfEqtA==}
     engines: {node: '>=18.0.0', pnpm: '>=8.0.0'}
@@ -10665,6 +10676,11 @@ packages:
       svelte: ^4.0.0 || ^5.0.0-next.0
       typescript: '>=5.0.0'
 
+  svelte-fa@4.0.4:
+    resolution: {integrity: sha512-85BomCGkTrH8kPDGvb8JrVwq9CqR9foprbKjxemP4Dtg3zPR7OXj5hD0xVYK0C+UCzFI1zooLoK/ndIX6aYXAw==}
+    peerDependencies:
+      svelte: ^4.0.0 || ^5.0.0
+
   svelte-intersection-observer@1.0.0:
     resolution: {integrity: sha512-AoxSog8fSt9sSN8ajMYM1I48ndq+rmPlaZSkJFCRbZ7I3KO8IPX6pl5mewWxdYL1JDI06hHu/7epn3h5tlJV9w==}
 
@@ -10773,9 +10789,6 @@ packages:
 
   tailwind-merge@2.6.0:
     resolution: {integrity: sha512-P+Vu1qXfzediirmHOC3xKGAYeZtPcV9g76X+xg2FD4tYgR71ewMA35Y3sCz3zhiN/dwefRpJX0yBcgwi1fXNQA==}
-
-  tailwind-merge@3.2.0:
-    resolution: {integrity: sha512-FQT/OVqCD+7edmmJpsgCsY820RTD5AkBryuG5IUqR5YQZSdj5xlH5nLgH7YPths7WsLPSpSBNneJdM8aS8aeFA==}
 
   tailwindcss@3.4.17:
     resolution: {integrity: sha512-w33E2aCvSDP0tW9RZuNXadXlkHXqFzSkQew/aIa2i/Sj8fThxwovwlXHSPXTbAHwEIhBFXAedUhP2tueAKP8Og==}
@@ -14363,6 +14376,12 @@ snapshots:
   '@formatjs/intl-localematcher@0.6.0':
     dependencies:
       tslib: 2.8.1
+
+  '@fortawesome/fontawesome-common-types@7.1.0': {}
+
+  '@fortawesome/free-solid-svg-icons@7.1.0':
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 7.1.0
 
   '@gulpjs/messages@1.1.0': {}
 
@@ -20310,11 +20329,6 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  flowbite-svelte-icons@2.1.1(svelte@5.21.0)(tailwind-merge@3.2.0):
-    dependencies:
-      svelte: 5.21.0
-      tailwind-merge: 3.2.0
-
   flowbite-svelte@0.44.24(rollup@4.35.0)(svelte@5.21.0):
     dependencies:
       '@floating-ui/dom': 1.6.13
@@ -24979,6 +24993,10 @@ snapshots:
     transitivePeerDependencies:
       - picomatch
 
+  svelte-fa@4.0.4(svelte@5.21.0):
+    dependencies:
+      svelte: 5.21.0
+
   svelte-intersection-observer@1.0.0: {}
 
   svelte-preprocess@6.0.3(@babel/core@7.26.10)(postcss-load-config@4.0.2(postcss@8.5.3))(postcss@8.5.3)(sass@1.85.1)(svelte@5.21.0)(typescript@5.8.2):
@@ -25080,8 +25098,6 @@ snapshots:
       strip-ansi: 6.0.1
 
   tailwind-merge@2.6.0: {}
-
-  tailwind-merge@3.2.0: {}
 
   tailwindcss@3.4.17:
     dependencies:

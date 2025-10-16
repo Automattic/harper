@@ -112,4 +112,11 @@ export default class ProtocolClient {
 		// Use background to open options to support content scripts reliably
 		await chrome.runtime.sendMessage({ kind: 'openOptions' });
 	}
+
+	public static async postFormData(
+		url: string,
+		formData: Record<string, string>,
+	): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'postFormData', url, formData })).success;
+	}
 }
