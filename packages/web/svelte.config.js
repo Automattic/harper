@@ -6,6 +6,12 @@ const config = {
 	extensions: ['.svelte', '.md'],
 	preprocess: vitePreprocess(),
 	kit: {
+		csrf: {
+			trustedOrigins: [
+				'chrome-extension://lodbfhdipoipcjmlebjbgmmgekckhpfb',
+				'chrome-extension://hkjdmakdmihopipoiplebkelbhebigea',
+			],
+		},
 		prerender: {
 			entries: [],
 		},
