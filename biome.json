@@ -12,6 +12,7 @@
 			"**/*.json",
 			"!**/test-results",
 			"!**/node_modules",
+			"!**/mariadb_data",
 			"!**/dist",
 			"!**/target",
 			"!**/build",

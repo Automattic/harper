@@ -5,6 +5,9 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 import wasm from 'vite-plugin-wasm';
 
 export default defineConfig({
+	ssr: {
+		noExternal: ['mysql2', "drizzle-orm"],
+	},
 	server: {
 		port: 3000,
 		fs: {

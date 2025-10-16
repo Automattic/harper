@@ -20,7 +20,7 @@
 	--color-accent-sand: #d68c45;
 }
 
-@source "../node_modules/flowbite-svelte/dist";
+@source "./node_modules/flowbite-svelte/dist";
 
 code {
 	@apply bg-primary-100 rounded p-1;

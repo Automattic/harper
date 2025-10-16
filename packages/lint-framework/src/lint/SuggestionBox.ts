@@ -4,7 +4,7 @@ import bookDownSvg from '../assets/bookDownSvg';
 import type { IgnorableLintBox, LintBox } from './Box';
 import lintKindColor from './lintKindColor';
 // Decoupled: actions passed in by framework consumer
-import type { UnpackedSuggestion } from './unpackLint';
+import type { UnpackedLint, UnpackedSuggestion } from './unpackLint';
 
 var FocusHook: any = function () {};
 FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousValue: any) {
@@ -185,6 +185,21 @@ function suggestions(
 	});
 }
 
+function reportProblemButton(reportError?: () => Promise<void>): any {
+	if (!reportError) {
+		return undefined;
+	}
+
+	return button(
+		'Report',
+		{ background: '#f97316', color: '#ffffff' },
+		() => {
+			reportError();
+		},
+		'Report an issue with this lint',
+	);
+}
+
 function styleTag() {
 	return h('style', { id: 'harper-suggestion-style' }, [
 		`code{
@@ -359,6 +374,7 @@ export default function SuggestionBox(
 	actions: {
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
+		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
 	},
 	hint: string | null,
 	close: () => void,
@@ -401,6 +417,14 @@ export default function SuggestionBox(
 					close();
 				}),
 				[
+					actions.reportError
+						? reportProblemButton(() => {
+								if (actions.reportError) {
+									return actions.reportError(box.lint, box.rule);
+								}
+								return Promise.resolve();
+							})
+						: undefined,
 					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary
 						? addToDictionary(box, actions.addToUserDictionary)
 						: undefined,
