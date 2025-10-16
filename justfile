@@ -302,9 +302,11 @@ dogfood:
     ./target/release/harper-cli lint $file
   done
 
-# Test everything.
-test: test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
+test-rust:
   cargo test
+
+# Test everything.
+test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
 
 # Use `harper-cli` to parse a provided file and print out the resulting tokens.
 parse file:
