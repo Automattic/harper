@@ -20,7 +20,8 @@ export type Request =
 	| GetActivationKeyRequest
 	| SetActivationKeyRequest
 	| OpenOptionsRequest
-	| OpenReportErrorRequest;
+	| OpenReportErrorRequest
+	| PostFormDataRequest;
 
 export type Response =
 	| LintResponse
@@ -32,7 +33,8 @@ export type Response =
 	| GetDefaultStatusResponse
 	| GetEnabledDomainsResponse
 	| GetUserDictionaryResponse
-	| GetActivationKeyResponse;
+	| GetActivationKeyResponse
+	| PostFormDataResponse;
 
 export type LintRequest = {
 	kind: 'lint';
@@ -170,6 +172,11 @@ export type GetActivationKeyResponse = {
 	key: ActivationKey;
 };
 
+export type PostFormDataResponse = {
+	kind: 'postFormData';
+	success: boolean;
+};
+
 export type SetActivationKeyRequest = {
 	kind: 'setActivationKey';
 	key: ActivationKey;
@@ -184,4 +191,10 @@ export type OpenReportErrorRequest = {
 	example: string;
 	rule_id: string;
 	feedback: string;
+};
+
+export type PostFormDataRequest = {
+	kind: 'postFormData';
+	url: string;
+	formData: Record<string, string>;
 };

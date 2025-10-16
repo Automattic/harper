@@ -191,7 +191,7 @@ function reportProblemButton(reportError?: () => Promise<void>): any {
 	}
 
 	return button(
-		'Report',
+		'!',
 		{ background: '#f97316', color: '#ffffff' },
 		() => {
 			reportError();

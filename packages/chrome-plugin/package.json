@@ -33,7 +33,6 @@
 		"@types/node": "catalog:",
 		"flowbite": "^3.1.2",
 		"flowbite-svelte": "^0.44.18",
-		"flowbite-svelte-icons": "^2.1.1",
 		"gulp": "^5.0.0",
 		"gulp-zip": "^6.0.0",
 		"http-server": "^14.1.1",
@@ -48,12 +47,14 @@
 		"vite": "^5.4.10"
 	},
 	"dependencies": {
+		"@fortawesome/free-solid-svg-icons": "^7.1.0",
 		"@tailwindcss/vite": "^4.1.4",
 		"@webcomponents/custom-elements": "^1.6.0",
 		"harper.js": "workspace:*",
 		"lint-framework": "workspace:*",
 		"lodash-es": "^4.17.21",
 		"lru-cache": "^11.1.0",
+		"svelte-fa": "^4.0.4",
 		"tailwindcss": "^4.1.4"
 	}
 }

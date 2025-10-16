@@ -22,6 +22,8 @@ import {
 	type LintRequest,
 	type LintResponse,
 	type OpenReportErrorRequest,
+	type PostFormDataRequest,
+	type PostFormDataResponse,
 	type Request,
 	type Response,
 	type SetActivationKeyRequest,
@@ -148,6 +150,8 @@ function handleRequest(message: Request): Promise<Response> {
 		case 'openOptions':
 			chrome.runtime.openOptionsPage();
 			return createUnitResponse();
+		case 'postFormData':
+			return handlePostFormData(message);
 	}
 }
 
@@ -296,6 +300,25 @@ async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitR
 	}
 
 	return createUnitResponse();
+}
+
+async function handlePostFormData(req: PostFormDataRequest): Promise<PostFormDataResponse> {
+	const formData = new FormData();
+	for (const [key, value] of Object.entries(req.formData)) {
+		formData.append(key, value);
+	}
+
+	try {
+		const response = await fetch(req.url, {
+			method: 'POST',
+			body: formData,
+		});
+
+		return { kind: 'postFormData', success: response.ok };
+	} catch (error) {
+		console.error('Failed to post form data', error);
+		return { kind: 'postFormData', success: false };
+	}
 }
 
 /** Set the lint configuration inside the global `linter` and in permanent storage. */

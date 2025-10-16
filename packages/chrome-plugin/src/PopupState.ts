@@ -11,3 +11,7 @@ export type PopupState =
 			example: string;
 			rule_id: string;
 	  };
+
+export function main(): PopupState {
+	return { page: 'main' };
+}

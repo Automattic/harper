@@ -1,20 +1,23 @@
 <script lang="ts">
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import { Button } from 'flowbite-svelte';
+import Fa from 'svelte-fa';
 import logo from '/logo.png';
-import type { PopupState } from '../PopupState';
+import { main, type PopupState } from '../PopupState';
 import Main from './Main.svelte';
 import Onboarding from './Onboarding.svelte';
 import ReportProblematicLint from './ReportProblematicLint.svelte';
 
-let state: PopupState = $state({ page: 'main' });
+let popupState: PopupState = $state({ page: 'main' });
 
 $effect(() => {
 	chrome.storage.local.get({ popupState: { page: 'onboarding' } }).then((result) => {
-		state = result.popupState;
+		popupState = result.popupState;
 	});
 });
 
 $effect(() => {
-	chrome.storage.local.set({ popupState: state });
+	chrome.storage.local.set({ popupState: $state.snapshot(popupState) });
 });
 
 function openSettings() {
@@ -23,17 +26,25 @@ function openSettings() {
 </script>
 
 <div class="w-[340px] border border-gray-200 bg-white font-sans flex flex-col rounded-lg shadow-sm select-none">
-  <header class="flex items-center gap-2 px-3 py-2 bg-gray-50/60 rounded-t-lg">
-    <img src={logo} alt="Harper logo" class="h-6 w-auto" />
-    <span class="font-semibold text-sm">Harper</span>
+  <header class="flex flex-row justify-between items-center gap-2 px-3 py-2 bg-gray-50/60 rounded-t-lg">
+    <div class="flex flex-row justify-start items-center">
+      <img src={logo} alt="Harper logo" class="h-6 w-auto" />
+      <span class="font-semibold text-sm">Harper</span>
+    </div>
+
+    {#if popupState.page != "main"}
+       <Button outline on:click={() => { 
+          popupState = main();
+       }}><Fa icon={faCaretLeft}/></Button>
+    {/if}
   </header>
 
-  {#if state.page == "onboarding"}
-    <Onboarding onConfirm={() => { state = {page: "main"};}} />
-  {:else if state.page == "main"}
+  {#if popupState.page == "onboarding"}
+    <Onboarding onConfirm={() => { popupState = main();}} />
+  {:else if popupState.page == "main"}
     <Main /> 
-  {:else if state.page == 'report-error'}
-    <ReportProblematicLint example={state.example} rule_id={state.rule_id} feedback={state.feedback} />
+  {:else if popupState.page == 'report-error'}
+    <ReportProblematicLint example={popupState.example} rule_id={popupState.rule_id} feedback={popupState.feedback} onSubmit={() => { popupState = main();}} />
   {/if}
 
   <footer class="flex items-center justify-center gap-6 px-3 py-2 text-sm border-t border-gray-100 rounded-b-lg bg-white/60">

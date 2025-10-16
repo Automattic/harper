@@ -22,7 +22,6 @@ $effect(() => {
  */
 export async function getCurrentTabDomain(): Promise<string | undefined> {
 	const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-	console.log(tab);
 
 	if (!tab?.url) return undefined;
 
