@@ -27,11 +27,11 @@ import { browser } from '$app/environment';
  * @param {string} keyword
  */
 function agentHas(keyword: string): boolean | undefined {
-  if (navigator != null){
-	  return navigator.userAgent.toLowerCase().search(keyword.toLowerCase()) > -1;
-  }else{
-    return undefined;
-  }
+	if (!browser) {
+		return false;
+	}
+
+	return navigator.userAgent.toLowerCase().includes(keyword.toLowerCase());
 }
 </script>
 
