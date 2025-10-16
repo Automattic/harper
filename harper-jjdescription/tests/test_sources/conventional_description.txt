@@ -1,0 +1,25 @@
+feat(stuff): use session-based authentiation
+
+BREAKING CHANGE: JWT authentication removed. API clients mustt now use
+session cookies instead of Authorization headers with bearer tokens.
+
+Sessions expire after 24 hours of inactvity.
+
+Closes: #247
+Reviewed-by: John Doe <john@example.com>
+
+JJ: Change ID: qrutlxlw
+JJ: This commit contains the following changes:
+JJ:     M Cargo.lock
+JJ:     M Cargo.toml
+JJ:     A harper-jjdescription/Cargo.toml
+JJ:     A harper-jjdescription/src/lib.rs
+JJ:     A harper-jjdescription/tests/run_tests.rs
+JJ:     A harper-jjdescription/tests/test_sources/complex_verbose_description.txt
+JJ:     A harper-jjdescription/tests/test_sources/conventional_description.txt
+JJ:     A harper-jjdescription/tests/test_sources/simple_description.txt
+JJ:     M harper-ls/Cargo.toml
+JJ:     M harper-ls/src/backend.rs
+JJ:
+JJ: Lines starting with "JJ:" (like this one) will be removed.
+

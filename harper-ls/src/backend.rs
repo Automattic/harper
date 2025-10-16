@@ -21,6 +21,7 @@ use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDic
 use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
+use harper_jjdescription::JJDescriptionParser;
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
@@ -385,6 +386,7 @@ impl Backend {
             "git-commit" | "gitcommit" => {
                 Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
             }
+            "jjdescription" => Some(Box::new(JJDescriptionParser::new(markdown_options))),
             "html" => Some(Box::new(HtmlParser::default())),
             "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "typst" => Some(Box::new(Typst)),
