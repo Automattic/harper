@@ -14,7 +14,10 @@ pub struct RollerSkated {
 
 impl RollerSkated {
     fn roller_pair() -> SequenceExpr {
-        SequenceExpr::default().t_aco("roller").t_ws().t_aco("skated")
+        SequenceExpr::default()
+            .t_aco("roller")
+            .t_ws()
+            .t_aco("skated")
     }
 }
 

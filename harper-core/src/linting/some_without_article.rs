@@ -39,8 +39,9 @@ impl ExprLinter for SomeWithoutArticle {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            message: "Use `some` on its own here, or switch to `the same` if that was the intention."
-                .to_owned(),
+            message:
+                "Use `some` on its own here, or switch to `the same` if that was the intention."
+                    .to_owned(),
             suggestions,
             ..Default::default()
         })

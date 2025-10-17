@@ -1524,11 +1524,7 @@ fn tongue_in_cheek_is_allowed() {
 
 #[test]
 fn tongue_in_cheek_hyphenated_is_allowed() {
-    assert_lint_count(
-        "That was a tongue-in-cheek reply.",
-        lint_group(),
-        0,
-    );
+    assert_lint_count("That was a tongue-in-cheek reply.", lint_group(), 0);
 }
 
 // Towards
