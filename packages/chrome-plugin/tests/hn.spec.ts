@@ -7,7 +7,7 @@ import {
 	testCanIgnoreTextareaSuggestion,
 } from './testUtils';
 
-const TEST_PAGE_URL = 'https://news.ycombinator.com/item?id=45453448';
+const TEST_PAGE_URL = 'https://news.ycombinator.com/item?id=45610226';
 
 testBasicSuggestionTextarea(TEST_PAGE_URL);
 testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);

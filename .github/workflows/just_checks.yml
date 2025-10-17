@@ -20,6 +20,7 @@ jobs:
           [
             check-rust,
             check-js,
+            test-rust,
             test-harperjs,
             test-vscode,
             test-chrome-plugin,

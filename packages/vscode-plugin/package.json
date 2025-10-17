@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.67.0",
+	"version": "0.68.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -720,6 +720,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `devops`."
+				},
+				"harper.linters.Didnt": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `dint` to `didn't` after subject pronouns."
 				},
 				"harper.linters.DigestiveTract": {
 					"scope": "resource",
@@ -1501,6 +1507,12 @@
 					"default": true,
 					"description": "When referring to the states of Malaysia and their capitals, make sure to treat them as a proper noun."
 				},
+				"harper.linters.ManagerialReins": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the eggcorn `managerial reigns` to the idiomatic `managerial reins`."
+				},
 				"harper.linters.MassPlurals": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1542,6 +1554,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags verbs and adjectives like `need`, `want`, or `ready` that are missing `to` before an infinitive."
+				},
+				"harper.linters.Misspell": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Ensures `misspell` and its inflected forms are written as a single word."
 				},
 				"harper.linters.Misunderstand": {
 					"scope": "resource",
@@ -1818,6 +1836,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects two common malapropisms of `once in a while`."
+				},
+				"harper.linters.OnceOrTwice": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects the mistaken phrase `once a twice` and suggests `once or twice`."
 				},
 				"harper.linters.OneAndTheSame": {
 					"scope": "resource",
@@ -2179,6 +2203,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `someone`."
 				},
+				"harper.linters.SomethingIs": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags forms like `somethings` before progressive verbs and suggests using `something's` or `something is`."
+				},
 				"harper.linters.SomewhatSomething": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2359,6 +2389,12 @@
 					"default": true,
 					"description": "Changes `though process` to `thought process`."
 				},
+				"harper.linters.ThrowAway": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Finds the typo `through away` and suggests `throw away` instead."
+				},
 				"harper.linters.ThrowRubbish": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2370,6 +2406,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `ticking time clock` to `ticking time bomb` for idiomatic urgency or `ticking clock` otherwise."
+				},
+				"harper.linters.ToAdverb": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags duplicated `to` around certain adverbs (e.g. `to never to`) and offers fixes that keep only one `to`."
 				},
 				"harper.linters.ToBeHonest": {
 					"scope": "resource",
@@ -2503,6 +2545,12 @@
 					"default": true,
 					"description": "Flags phrases like `very unique`, `pretty unique`, etc., and suggests using `unique` alone or a more precise adjective such as `special`, `rare`, or `unusual`."
 				},
+				"harper.linters.ViceVersa": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Recommends writing ‘vice versa’ without hyphens."
+				},
 				"harper.linters.WantBe": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2532,6 +2580,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `well-being` is correctly hyphenated."
+				},
+				"harper.linters.WellEducated": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Replaces `good-educated` with the accepted compound `well-educated`."
 				},
 				"harper.linters.WellKept": {
 					"scope": "resource",
