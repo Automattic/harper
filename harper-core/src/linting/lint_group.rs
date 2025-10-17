@@ -110,6 +110,7 @@ use super::quote_spacing::QuoteSpacing;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
+use super::roller_skated::RollerSkated;
 use super::save_to_safe::SaveToSafe;
 use super::semicolon_apostrophe::SemicolonApostrophe;
 use super::sentence_capitalization::SentenceCapitalization;
@@ -526,6 +527,7 @@ impl LintGroup {
         insert_struct_rule!(QuoteSpacing, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
+        insert_expr_rule!(RollerSkated, true);
         insert_struct_rule!(SaveToSafe, true);
         insert_expr_rule!(SemicolonApostrophe, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
