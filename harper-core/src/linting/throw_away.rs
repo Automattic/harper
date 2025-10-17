@@ -33,21 +33,27 @@ impl ExprLinter for ThrowAway {
         Some(Lint {
             span: typo.span,
             lint_kind: LintKind::Typo,
-            suggestions: vec![Suggestion::replace_with_match_case_str("throw", original)],
-            message: "Use `throw away` when you want to discard something.".to_string(),
+            suggestions: vec![
+                Suggestion::replace_with_match_case_str("throw", original),
+                Suggestion::replace_with_match_case_str("threw", original),
+            ],
+            message: "Use `throw away` or `threw away`, depending on the tense you need."
+                .to_string(),
             priority: 60,
         })
     }
 
     fn description(&self) -> &str {
-        "Finds the typo `through away` and suggests `throw away` instead."
+        "Finds the typo `through away` and suggests `throw away` or `threw away` instead."
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::ThrowAway;
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
+    };
 
     #[test]
     fn corrects_simple_case() {
@@ -55,6 +61,16 @@ mod tests {
             "We through away the old code.",
             ThrowAway::default(),
             "We throw away the old code.",
+        );
+    }
+
+    #[test]
+    fn offers_past_tense_option() {
+        assert_nth_suggestion_result(
+            "We through away the old code.",
+            ThrowAway::default(),
+            "We threw away the old code.",
+            1,
         );
     }
 
