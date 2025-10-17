@@ -2488,6 +2488,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-thesaurus"
+version = "0.67.0"
+dependencies = [
+ "hashbrown 0.16.0",
+ "itertools 0.14.0",
+]
+
+[[package]]
 name = "harper-tree-sitter"
 version = "0.68.0"
 dependencies = [

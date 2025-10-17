@@ -1,0 +1,11 @@
+[package]
+name = "harper-thesaurus"
+version = "0.68.0"
+edition = "2024"
+description = "The language checker for developers."
+license = "Apache-2.0"
+repository = "https://github.com/automattic/harper"
+
+[dependencies]
+hashbrown = "0.16.0"
+itertools = "0.14.0"
