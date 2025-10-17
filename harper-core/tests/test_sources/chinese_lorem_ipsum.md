@@ -1,4 +1,4 @@
-The following text was generated using [a Chinese lorem ipsum generator](https://pinkylam.me/generator/chinese-lorem-ipsum/).
+The following text was generated using [a Chinese lorrm ipsum generator](https://pinkylam.me/generator/chinese-lorem-ipsum/).
 
 食棵支每躲種。奶象打星爪子二細喜才記行在發像原斤！頁固點子衣點豆看身蝴看苗急午公何足，筆娘經色蝶行元香也要。麻了綠尼固世，色北書目登功；因告黑。
 
