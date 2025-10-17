@@ -1,5 +1,5 @@
 <script lang="ts">
-import LintCard from '$lib/LintCard.svelte';
+import LintCard from '$lib/components/LintCard.svelte';
 import { Card } from 'flowbite-svelte';
 import { type WorkerLinter } from 'harper.js';
 import {
@@ -10,7 +10,7 @@ import {
 	type UnpackedSuggestion,
 	unpackLint,
 } from 'lint-framework';
-import demo from '../../../../demo.md?raw';
+import demo from '../../../../../demo.md?raw';
 
 export let content = demo.trim();
 

@@ -1,5 +1,5 @@
 import '@webcomponents/custom-elements';
-import { isVisible, LintFramework, leafNodes } from 'lint-framework';
+import { isVisible, LintFramework, leafNodes, type UnpackedLint } from 'lint-framework';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
 
@@ -12,7 +12,22 @@ const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain)
 	getActivationKey: () => ProtocolClient.getActivationKey(),
 	openOptions: () => ProtocolClient.openOptions(),
 	addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
+	reportError: (lint: UnpackedLint, ruleId: string) =>
+		ProtocolClient.openReportError(
+			padWithContext(lint.source, lint.span.start, lint.span.end, 15),
+			ruleId,
+			'',
+		),
 });
+
+function padWithContext(source: string, start: number, end: number, contextLength: number): string {
+	const normalizedStart = Math.max(0, Math.min(start, source.length));
+	const normalizedEnd = Math.max(normalizedStart, Math.min(end, source.length));
+	const contextStart = Math.max(0, normalizedStart - contextLength);
+	const contextEnd = Math.min(source.length, normalizedEnd + contextLength);
+
+	return source.slice(contextStart, contextEnd);
+}
 
 const keepAliveCallback = () => {
 	ProtocolClient.lint('', 'example.com');

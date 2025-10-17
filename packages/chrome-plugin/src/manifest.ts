@@ -23,6 +23,8 @@ export function makeExtensionCSP(isDev: boolean): string {
 		connectSrc.push('http://127.0.0.1:*', 'ws://127.0.0.1:*');
 	}
 
+	connectSrc.push('https://writewithharper.com');
+
 	// Assemble the semicolon-delimited CSP
 	return `${[
 		`script-src ${scriptSrc.join(' ')}`,
@@ -73,4 +75,5 @@ export default defineManifest({
 	content_security_policy: {
 		extension_pages: makeExtensionCSP(isDev),
 	},
+	host_permissions: ['https://writewithharper.com/*'],
 });

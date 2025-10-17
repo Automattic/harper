@@ -5,28 +5,33 @@ export const frontmatter = {
 </script>
 
 <script lang="ts">
-import ChromeLogo from '$lib/ChromeLogo.svelte';
-import CodeLogo from '$lib/CodeLogo.svelte';
-import Editor from '$lib/Editor.svelte';
-import FirefoxLogo from '$lib/FirefoxLogo.svelte';
-import GitHubLogo from '$lib/GitHubLogo.svelte';
-import ObsidianLogo from '$lib/ObsidianLogo.svelte';
-import Logo from '$lib/Logo.svelte';
-import Graph from '$lib/Graph.svelte';
-import Section from '$lib/Section.svelte';
-import EmacsLogo from '$lib/EmacsLogo.svelte';
-import HelixLogo from '$lib/HelixLogo.svelte';
-import NeovimLogo from '$lib/NeovimLogo.svelte';
-import SublimeLogo from '$lib/SublimeLogo.svelte';
-import WordPressLogo from '$lib/WordPressLogo.svelte';
-import ZedLogo from '$lib/ZedLogo.svelte';
-    import EdgeLogo from '$lib/EdgeLogo.svelte';
+import ChromeLogo from '$lib/components/ChromeLogo.svelte';
+import CodeLogo from '$lib/components/CodeLogo.svelte';
+import Editor from '$lib/components/Editor.svelte';
+import FirefoxLogo from '$lib/components/FirefoxLogo.svelte';
+import GitHubLogo from '$lib/components/GitHubLogo.svelte';
+import ObsidianLogo from '$lib/components/ObsidianLogo.svelte';
+import Logo from '$lib/components/Logo.svelte';
+import Graph from '$lib/components/Graph.svelte';
+import Section from '$lib/components/Section.svelte';
+import EmacsLogo from '$lib/components/EmacsLogo.svelte';
+import HelixLogo from '$lib/components/HelixLogo.svelte';
+import NeovimLogo from '$lib/components/NeovimLogo.svelte';
+import SublimeLogo from '$lib/components/SublimeLogo.svelte';
+import WordPressLogo from '$lib/components/WordPressLogo.svelte';
+import ZedLogo from '$lib/components/ZedLogo.svelte';
+import EdgeLogo from '$lib/components/EdgeLogo.svelte';
+import { browser } from '$app/environment';
 
 /**
  * @param {string} keyword
  */
-function agentHas(keyword: string) {
-	return navigator.userAgent.toLowerCase().search(keyword.toLowerCase()) > -1;
+function agentHas(keyword: string): boolean | undefined {
+	if (!browser) {
+		return false;
+	}
+
+	return navigator.userAgent.toLowerCase().includes(keyword.toLowerCase());
 }
 </script>
 
@@ -88,7 +93,9 @@ function agentHas(keyword: string) {
 		</div>
 
 		<div class="h-[800px] w-full overflow-hidden rounded-xl border border-neutral-200 shadow-sm dark:border-neutral-800">
-			<Editor />
+      {#if browser}
+			  <Editor />
+      {/if}
 		</div>
 	</div>
 

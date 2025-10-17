@@ -1,7 +1,7 @@
 <script lang="ts">
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/dist/theme/serif.css';
-import Logo from '$lib/Logo.svelte';
+import Logo from '$lib/components/Logo.svelte';
 import Reveal from 'reveal.js';
 import { onMount } from 'svelte';
 
