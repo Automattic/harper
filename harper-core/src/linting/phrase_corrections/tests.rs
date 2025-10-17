@@ -1562,6 +1562,20 @@ fn thanks_a_lot_clean() {
     assert_lint_count("thanks a lot", lint_group(), 0);
 }
 
+#[test]
+fn fixes_to_worry_about() {
+    assert_top3_suggestion_result(
+        "I don't want you to worried about it.",
+        lint_group(),
+        "I don't want you to worry about it.",
+    );
+    assert_top3_suggestion_result(
+        "I don't want you to worried about it.",
+        lint_group(),
+        "I don't want you too worried about it.",
+    );
+}
+
 // WroughtIron
 #[test]
 fn corrects_rod_iron() {
