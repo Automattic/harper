@@ -87,6 +87,7 @@ create_test!(hex_basic_clean.md, 0, Dialect::American);
 create_test!(hex_basic_dirty.md, 1, Dialect::American);
 create_test!(misc_closed_compound_clean.md, 0, Dialect::American);
 create_test!(yogurt_british_clean.md, 0, Dialect::British);
+create_test!(issue_1581.md, 0, Dialect::British);
 
 // Make sure it doesn't panic
 create_test!(lukas_homework.md, 3, Dialect::American);

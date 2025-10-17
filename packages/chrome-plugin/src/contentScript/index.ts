@@ -1,6 +1,11 @@
 import '@webcomponents/custom-elements';
 import { isVisible, LintFramework, leafNodes } from 'lint-framework';
+import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
+
+if (isWordPress()) {
+	ProtocolClient.setDomainEnabled(window.location.hostname, true);
+}
 
 const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain), {
 	ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
@@ -54,6 +59,10 @@ function scan() {
 	});
 
 	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
+		if (element.matches('[role="combobox"]')) {
+			return;
+		}
+
 		const leafs = leafNodes(element);
 
 		for (const leaf of leafs) {

@@ -1,5 +1,5 @@
 use crate::linting::tests::{
-    assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+    assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
     assert_top3_suggestion_result,
 };
 
@@ -905,6 +905,88 @@ fn corrects_low_hanging_fruits_space() {
         lint_group(),
         "Will search for low-hanging fruit and useful information for escalation on a compromised workstation.",
     )
+}
+
+// ManagerialReins
+#[test]
+fn fixes_managerial_reigns_basic() {
+    assert_suggestion_result(
+        "She grabbed the managerial reigns during the crisis.",
+        lint_group(),
+        "She grabbed the managerial reins during the crisis.",
+    );
+}
+
+#[test]
+fn fixes_managerial_reigns_sentence_start() {
+    assert_suggestion_result(
+        "Managerial reigns are never easy to hand over.",
+        lint_group(),
+        "Managerial reins are never easy to hand over.",
+    );
+}
+
+#[test]
+fn fixes_managerial_reigns_with_article() {
+    assert_suggestion_result(
+        "The managerial reigns belong to Carla now.",
+        lint_group(),
+        "The managerial reins belong to Carla now.",
+    );
+}
+
+#[test]
+fn fixes_managerial_reigns_with_comma() {
+    assert_suggestion_result(
+        "By winter, he held the managerial reigns, and morale improved.",
+        lint_group(),
+        "By winter, he held the managerial reins, and morale improved.",
+    );
+}
+
+#[test]
+fn fixes_managerial_reigns_question() {
+    assert_suggestion_result(
+        "Who will hold the managerial reigns after April?",
+        lint_group(),
+        "Who will hold the managerial reins after April?",
+    );
+}
+
+#[test]
+fn fixes_managerial_reigns_in_quotes() {
+    assert_suggestion_result(
+        "\"managerial reigns\" showed up in the draft notes.",
+        lint_group(),
+        "\"managerial reins\" showed up in the draft notes.",
+    );
+}
+
+#[test]
+fn counts_managerial_reigns_error() {
+    assert_lint_count(
+        "They debated who should manage the managerial reigns for the quarter.",
+        lint_group(),
+        1,
+    );
+}
+
+#[test]
+fn counts_managerial_reigns_caps() {
+    assert_lint_count("Their memo shouted MANAGERIAL REIGNS.", lint_group(), 1);
+}
+
+#[test]
+fn allows_managerial_reins_correct() {
+    assert_no_lints(
+        "He kept the managerial reins despite the reshuffle.",
+        lint_group(),
+    );
+}
+
+#[test]
+fn allows_reigns_without_managerial() {
+    assert_no_lints("Legends of ancient reigns filled the museum.", lint_group());
 }
 
 // Monumentous
