@@ -13,8 +13,21 @@ const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain)
 	openOptions: () => ProtocolClient.openOptions(),
 	addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
 	reportError: (lint: UnpackedLint, ruleId: string) =>
-		ProtocolClient.openReportError(lint.source, ruleId, ''),
+		ProtocolClient.openReportError(
+			padWithContext(lint.source, lint.span.start, lint.span.end, 15),
+			ruleId,
+			'',
+		),
 });
+
+function padWithContext(source: string, start: number, end: number, contextLength: number): string {
+	const normalizedStart = Math.max(0, Math.min(start, source.length));
+	const normalizedEnd = Math.max(normalizedStart, Math.min(end, source.length));
+	const contextStart = Math.max(0, normalizedStart - contextLength);
+	const contextEnd = Math.min(source.length, normalizedEnd + contextLength);
+
+	return source.slice(contextStart, contextEnd);
+}
 
 const keepAliveCallback = () => {
 	ProtocolClient.lint('', 'example.com');

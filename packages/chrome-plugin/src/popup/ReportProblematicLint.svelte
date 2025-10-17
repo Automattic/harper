@@ -37,8 +37,7 @@ async function handleSubmit(event: SubmitEvent) {
 <div class="p-5">
 	<h1 class="text-2xl font-semibold">Report Problematic Lint</h1>
 	<p class="text-sm text-gray-600">
-		If you've encountered an example of Harper producing an incorrect result, we'd love to know
-		about it.
+		Only the data you enter below will be sent to the Harper maintainer.
 	</p>
 	<form class="mt-4 space-y-6" onsubmit={handleSubmit}>
 		<div class="space-y-3">
