@@ -2358,6 +2358,7 @@ dependencies = [
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
+ "harper-thesaurus",
  "hashbrown 0.16.0",
  "is-macro",
  "itertools 0.14.0",
@@ -2489,7 +2490,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "0.67.0"
+version = "0.68.0"
 dependencies = [
  "hashbrown 0.16.0",
  "itertools 0.14.0",

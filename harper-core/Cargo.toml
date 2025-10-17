@@ -33,6 +33,7 @@ strum = "0.27.2"
 ammonia = "4.1.2"
 harper-brill = { path = "../harper-brill", version = "0.68.0" }
 bitflags = { version = "2.9.4", features = ["serde"] }
+harper-thesaurus = { path = "../harper-thesaurus", version = "0.68.0", optional = true }
 
 [dev-dependencies]
 criterion = { version = "0.7.0", default-features = false }
@@ -49,3 +50,4 @@ harness = false
 [features]
 default = []
 concurrent = []
+thesaurus = ["dep:harper-thesaurus"]
