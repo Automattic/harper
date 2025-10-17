@@ -120,6 +120,7 @@ use super::since_duration::SinceDuration;
 use super::something_is::SomethingIs;
 use super::somewhat_something::SomewhatSomething;
 use super::sought_after::SoughtAfter;
+use super::some_without_article::SomeWithoutArticle;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
@@ -536,6 +537,7 @@ impl LintGroup {
         insert_expr_rule!(SomethingIs, true);
         insert_expr_rule!(SomewhatSomething, true);
         insert_expr_rule!(SoughtAfter, true);
+        insert_expr_rule!(SomeWithoutArticle, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
         insert_expr_rule!(ThatThan, true);
