@@ -1096,6 +1096,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `to the manor born` to `to the manner born`, ensuring the intended meaning of being naturally suited to a way of life.",
             LintKind::Eggcorn
         ),
+        "TongueInCheek" => (
+            ["tongue and cheek"],
+            ["tongue in cheek"],
+            "Use `tongue in cheek` for the idiom.",
+            "Corrects the idiom when `and` replaces the needed preposition.",
+            LintKind::WordChoice
+        ),
         "Towards" => (
             ["to towards"],
             ["towards"],

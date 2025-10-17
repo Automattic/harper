@@ -1440,6 +1440,93 @@ fn correct_to_a_great_length() {
 // ToTheMannerBorn
 // -none-
 
+// TongueInCheek
+#[test]
+fn tongue_and_cheek_plain() {
+    assert_suggestion_result(
+        "The remark was entirely tongue and cheek.",
+        lint_group(),
+        "The remark was entirely tongue in cheek.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_with_article() {
+    assert_suggestion_result(
+        "It was a tongue and cheek response.",
+        lint_group(),
+        "It was a tongue in cheek response.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_with_comma() {
+    assert_suggestion_result(
+        "He delivered it tongue and cheek, expecting a laugh.",
+        lint_group(),
+        "He delivered it tongue in cheek, expecting a laugh.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_in_quotes() {
+    assert_suggestion_result(
+        "\"tongue and cheek\" jokes are tough to read.",
+        lint_group(),
+        "\"tongue in cheek\" jokes are tough to read.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_all_caps() {
+    assert_suggestion_result(
+        "Their tone was TONGUE AND CHEEK all night.",
+        lint_group(),
+        "Their tone was TONGUE IN CHEEK all night.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_capitalized() {
+    assert_suggestion_result(
+        "Tongue and cheek banter kept the meeting light.",
+        lint_group(),
+        "Tongue in cheek banter kept the meeting light.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_in_parentheses() {
+    assert_suggestion_result(
+        "Her note (totally tongue and cheek) made us smile.",
+        lint_group(),
+        "Her note (totally tongue in cheek) made us smile.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_question() {
+    assert_suggestion_result(
+        "Was that tongue and cheek or sincere?",
+        lint_group(),
+        "Was that tongue in cheek or sincere?",
+    );
+}
+
+#[test]
+fn tongue_in_cheek_is_allowed() {
+    assert_lint_count(
+        "Their comments were deliberately tongue in cheek.",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
+fn tongue_in_cheek_hyphenated_is_allowed() {
+    assert_lint_count("That was a tongue-in-cheek reply.", lint_group(), 0);
+}
+
 // Towards
 // -none-
 
