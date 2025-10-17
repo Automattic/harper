@@ -1,0 +1,1 @@
+A simple commit with a typo: comit
