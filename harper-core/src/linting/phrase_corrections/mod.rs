@@ -1182,6 +1182,12 @@ pub fn lint_group() -> LintGroup {
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers.",
             LintKind::Eggcorn
         ),
+        "ToWorryAbout" => (
+            ["to worried about"],
+            ["to worry about", "too worried about"],
+            "Did you mean the progressive form?",
+            "Fixes incorrect use of `to worried about`."
+        ),
         "The" => (
             ["teh"],
             ["the"],
