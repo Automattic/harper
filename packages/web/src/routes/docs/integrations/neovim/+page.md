@@ -50,7 +50,8 @@ require('lspconfig').harper_ls.setup {
       isolateEnglish = false,
       dialect = "American",
       maxFileLength = 120000,
-      ignoredLintsPath = {}
+      ignoredLintsPath = "",
+      excludePatterns = {}
     }
   }
 }
