@@ -79,7 +79,7 @@ export function createRange(
 }
 
 function getActualDiagnostics(resource: Uri): Diagnostic[] {
-	return languages.getDiagnostics(resource).filter((d) => d.source === 'Harper');
+	return languages.getDiagnostics(resource).filter((d) => d.source?.includes('Harper'));
 }
 
 /** Note that this function times out if there is no change detected. */
