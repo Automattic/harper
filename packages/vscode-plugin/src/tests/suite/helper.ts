@@ -48,9 +48,9 @@ export async function setTextDocumentLanguage(uri: Uri, languageId: string): Pro
 }
 
 export function createExpectedDiagnostics(
-	...data: { message: string; range: Range }[]
+	...data: { message: string; range: Range; source: string }[]
 ): Diagnostic[] {
-	return data.map((d) => ({ ...d, source: 'Harper', severity: DiagnosticSeverity.Information }));
+	return data.map((d) => ({ ...d, severity: DiagnosticSeverity.Information }));
 }
 
 export function compareActualVsExpectedDiagnostics(
