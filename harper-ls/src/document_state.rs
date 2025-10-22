@@ -3,7 +3,7 @@ use crate::diagnostics::{lint_to_code_actions, lints_to_diagnostics};
 use crate::pos_conv::range_to_span;
 use harper_core::linting::{Lint, LintGroup, Linter};
 use harper_core::spell::{MergedDictionary, MutableDictionary};
-use harper_core::{Document, IgnoredLints, TokenKind, remove_overlaps, remove_overlaps_map};
+use harper_core::{Document, IgnoredLints, TokenKind, remove_overlaps_map};
 use harper_core::{Lrc, Token};
 use tower_lsp_server::lsp_types::{CodeActionOrCommand, Command, Diagnostic, Range, Uri};
 
@@ -35,8 +35,6 @@ impl DocumentState {
         }
 
         remove_overlaps_map(&mut lints);
-
-        let a = lints.iter().next();
 
         lints_to_diagnostics(
             self.document.get_full_content(),
