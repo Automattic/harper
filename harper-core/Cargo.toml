@@ -26,13 +26,13 @@ unicode-script = "0.5.7"
 unicode-width = "0.2.2"
 levenshtein_automata = { version = "0.2.1", features = ["fst_automaton"] }
 cached = "0.56.0"
-lru = "0.16.1"
+lru = "0.16.2"
 foldhash = "0.2.0"
 strum_macros = "0.27.2"
 strum = "0.27.2"
 ammonia = "4.1.2"
 harper-brill = { path = "../harper-brill", version = "0.68.0" }
-bitflags = { version = "2.9.4", features = ["serde"] }
+bitflags = { version = "2.10.0", features = ["serde"] }
 
 [dev-dependencies]
 criterion = { version = "0.7.0", default-features = false }

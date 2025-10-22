@@ -62,7 +62,8 @@ Additionally, you can also configure things like which linters to use or how you
                             :isolateEnglish :json-false
                             :dialect "American"
                             :maxFileLength 120000
-                            :ignoredLintsPath [])))
+                            :ignoredLintsPath ""
+                            :excludePatterns [])))
 ```
 
 :::note

@@ -19,7 +19,7 @@ burn = { version = "0.18.0", default-features = false, features = ["std"] }
 burn-ndarray = { version = "0.18.0", default-features = false }
 serde_json = "1.0.145"
 itertools = "0.14.0"
-lru = "0.16.1"
+lru = "0.16.2"
 
 [features]
 default = []
