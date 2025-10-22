@@ -42,7 +42,7 @@ describe('Integration >', () => {
 				{
 					message: 'Did you mean to repeat this word?',
 					range: createRange(2, 39, 2, 48),
-					source: 'Harper (SpellCheck)',
+					source: 'Harper (RepeatedWords)',
 				},
 				{
 					message: 'Did you mean to spell `realise` this way?',
@@ -147,7 +147,7 @@ describe('Integration >', () => {
 				{
 					message: 'Did you mean to repeat this word?',
 					range: createRange(2, 39, 2, 48),
-					source: 'Harper (SpellCheck)',
+					source: 'Harper (RepeatedWords)',
 				},
 			),
 		);
