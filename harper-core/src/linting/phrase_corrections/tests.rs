@@ -454,6 +454,85 @@ fn does_not_flag_already_correct() {
     assert_lint_count("I don't want to leave.", lint_group(), 0);
 }
 
+// EggYolk
+#[test]
+fn corrects_simple_egg_yoke() {
+    assert_suggestion_result(
+        "She whisked the egg yoke briskly.",
+        lint_group(),
+        "She whisked the egg yolk briskly.",
+    );
+}
+
+#[test]
+fn corrects_sentence_start_egg_yoke() {
+    assert_suggestion_result(
+        "Egg yoke is rich in nutrients.",
+        lint_group(),
+        "Egg yolk is rich in nutrients.",
+    );
+}
+
+#[test]
+fn corrects_all_caps_egg_yoke() {
+    assert_suggestion_result(
+        "Add the EGG YOKE to the batter.",
+        lint_group(),
+        "Add the EGG YOLK to the batter.",
+    );
+}
+
+#[test]
+fn corrects_punctuated_egg_yoke() {
+    assert_suggestion_result(
+        "Separate the egg yoke, then fold it in.",
+        lint_group(),
+        "Separate the egg yolk, then fold it in.",
+    );
+}
+
+#[test]
+fn corrects_adjective_egg_yoke() {
+    assert_suggestion_result(
+        "The runny egg yoke spilled over the toast.",
+        lint_group(),
+        "The runny egg yolk spilled over the toast.",
+    );
+}
+
+#[test]
+fn corrects_plural_context_egg_yoke() {
+    assert_suggestion_result(
+        "Blend the cream with each egg yoke before baking.",
+        lint_group(),
+        "Blend the cream with each egg yolk before baking.",
+    );
+}
+
+#[test]
+fn allows_correct_egg_yolk() {
+    assert_lint_count("The custard calls for one egg yolk.", lint_group(), 0);
+}
+
+#[test]
+fn allows_plural_egg_yolks() {
+    assert_lint_count("Reserve the egg yolks for later.", lint_group(), 0);
+}
+
+#[test]
+fn allows_yoke_without_egg() {
+    assert_lint_count(
+        "The artisan carved a wooden yoke for the oxen.",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
+fn does_not_flag_partial_phrase() {
+    assert_lint_count("Crack the eggs so no yoke spills.", lint_group(), 0);
+}
+
 // DontCan
 #[test]
 fn corrects_dont_can() {

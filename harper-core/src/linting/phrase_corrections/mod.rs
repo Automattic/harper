@@ -342,6 +342,13 @@ pub fn lint_group() -> LintGroup {
             "In English, negation still requires the complete verb form (“want”), so avoid truncating it to “wan.”",
             LintKind::Typo
         ),
+        "EggYolk" => (
+            ["egg yoke"],
+            ["egg yolk"],
+            "Use `egg yolk` when you mean the yellow portion of an egg.",
+            "Corrects the eggcorn `egg yoke`, replacing it with the standard culinary term `egg yolk`.",
+            LintKind::Eggcorn
+        ),
         "DontCan" => (
             ["don't can"],
             ["can't", "cannot"],
