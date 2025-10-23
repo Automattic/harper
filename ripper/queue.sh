@@ -1,6 +1,9 @@
 #! /bin/bash
 
 # cargo run --release -- -m 1000000 -g 75 -c 10 --problem-file rules/to_too.txt --clean-file clean.txt --max-mutations 60 --seed to -o to_too.sol 
+cargo run --release -- -m 1600000 -g 75 -c 10 --problem-file rules/their_there.txt --clean-file clean.txt --max-mutations 60 -o their_there.sol
+cargo run --release -- -m 1600000 -g 75 -c 10 --problem-file rules/there_theyre.txt --clean-file clean.txt --max-mutations 60 -o there_theyre.sol
+cargo run --release -- -m 1600000 -g 75 -c 10 --problem-file rules/theyre_their.txt --clean-file clean.txt --max-mutations 60 -o theyre_their.sol
 cargo run --release -- -m 1000000 -g 75 -c 10 --problem-file rules/whose_whos.txt --clean-file clean.txt --max-mutations 60 -o whose_whos.sol
 cargo run --release -- -m 1000000 -g 75 -c 10 --problem-file rules/whos_whose.txt --clean-file clean.txt --max-mutations 60 -o whos_whose.sol
 cargo run --release -- -m 1000000 -g 75 -c 10 --problem-file rules/missing_article.txt --clean-file clean.txt --max-mutations 60 -o missing_article.sol
