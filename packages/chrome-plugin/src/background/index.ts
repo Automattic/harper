@@ -5,7 +5,6 @@ import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
 	createUnitResponse,
-	type GetActivationKeyRequest,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
@@ -228,7 +227,7 @@ async function handleGetDomainStatus(
 }
 
 async function handleSetDomainStatus(req: SetDomainStatusRequest): Promise<UnitResponse> {
-	await setDomainEnable(req.domain, req.enabled);
+	await setDomainEnable(req.domain, req.enabled, req.overrideValue);
 
 	return createUnitResponse();
 }
@@ -388,16 +387,27 @@ function formatDomainKey(domain: string): string {
 }
 
 /** Check if Harper has been enabled for a given domain. */
-async function enabledForDomain(domain: string): Promise<boolean> {
+async function enabledForDomain(domain: string): Promise<boolean | null> {
 	const req = await chrome.storage.local.get({
 		[formatDomainKey(domain)]: await enabledByDefault(),
 	});
 	return req[formatDomainKey(domain)];
 }
 
-/** Set whether Harper is enabled for a given domain. */
-async function setDomainEnable(domain: string, status: boolean) {
-	await chrome.storage.local.set({ [formatDomainKey(domain)]: status });
+/** Set whether Harper is enabled for a given domain.
+ *
+ * @param overrideValue dictates whether this should override a previous setting.
+ * */
+async function setDomainEnable(domain: string, status: boolean, overrideValue = true) {
+	let shouldSet = !(await isDomainSet(domain));
+
+	if (overrideValue) {
+		shouldSet = true;
+	}
+
+	if (shouldSet) {
+		await chrome.storage.local.set({ [formatDomainKey(domain)]: status });
+	}
 }
 
 /** Set whether Harper is enabled by default. */

@@ -4,7 +4,7 @@ import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
 
 if (isWordPress()) {
-	ProtocolClient.setDomainEnabled(window.location.hostname, true);
+	ProtocolClient.setDomainEnabled(window.location.hostname, true, false);
 }
 
 const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain), {

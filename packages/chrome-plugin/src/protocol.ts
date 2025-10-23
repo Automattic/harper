@@ -117,6 +117,8 @@ export type SetDomainStatusRequest = {
 	kind: 'setDomainStatus';
 	domain: string;
 	enabled: boolean;
+	/** Dictates whether this should override a previous setting. */
+	overrideValue: boolean;
 };
 
 export type SetDefaultStatusRequest = {
