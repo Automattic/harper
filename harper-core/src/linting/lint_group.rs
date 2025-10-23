@@ -31,6 +31,7 @@ use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::chock_full::ChockFull;
 use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
+use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::criteria_phenomena::CriteriaPhenomena;
@@ -451,6 +452,7 @@ impl LintGroup {
         insert_expr_rule!(ChockFull, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
+        insert_expr_rule!(CompoundSubjectI, true);
         insert_expr_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
         insert_expr_rule!(CriteriaPhenomena, true);
