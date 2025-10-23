@@ -345,7 +345,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(span.start).toBe(48);
 		expect(span.end).toBe(54);
 
-    expect(text.slice(span.start, span.end)).toBe("sdssda")
+		expect(text.slice(span.start, span.end)).toBe('sdssda');
 	});
 }
 
