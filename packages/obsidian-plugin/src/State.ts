@@ -1,10 +1,10 @@
 import type { Extension, StateField } from '@codemirror/state';
 import type { LintConfig, Linter, Suggestion } from 'harper.js';
 import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
-import { toArray } from 'lodash-es';
 import { minimatch } from 'minimatch';
 import type { MarkdownFileInfo, MarkdownView, Workspace } from 'obsidian';
 import { linter } from './lint';
+import { charIndexToCodeUnit } from './textUtils';
 
 export type Settings = {
 	ignoredLints?: string;
@@ -128,15 +128,15 @@ export default class State {
 				}
 
 				const text = view.state.doc.sliceString(-1);
-				const chars = toArray(text);
+				const chars = Array.from(text);
 
 				const lints = await this.harper.lint(text);
 
 				return lints.map((lint) => {
 					const span = lint.span();
 
-					span.start = charIndexToCodePointIndex(span.start, chars);
-					span.end = charIndexToCodePointIndex(span.end, chars);
+					span.start = charIndexToCodeUnit(span.start, chars);
+					span.end = charIndexToCodeUnit(span.end, chars);
 
 					const actions = lint.suggestions().map((sug) => {
 						return {
@@ -334,26 +334,11 @@ export default class State {
 	}
 }
 
-/** Harper returns positions based on char indexes,
- * but Obsidian identifies locations in documents based on Unicode code points.
- * This converts between from the former to the latter.*/
-function charIndexToCodePointIndex(index: number, sourceChars: string[]): number {
-	let traversed = 0;
-
-	for (let i = 0; i < index; i++) {
-		const delta = sourceChars[i].length;
-
-		traversed += delta;
-	}
-
-	return traversed;
-}
-
 function suggestionToLabel(sug: Suggestion) {
 	if (sug.kind() === SuggestionKind.Remove) {
 		return 'Remove';
 	} else if (sug.kind() === SuggestionKind.Replace) {
-		return `“Replace with ${sug.get_replacement_text()}”`;
+		return `Replace with “${sug.get_replacement_text()}”`;
 	} else if (sug.kind() === SuggestionKind.InsertAfter) {
 		return `Insert “${sug.get_replacement_text()}” after this.`;
 	}
