@@ -135,9 +135,6 @@ export default class State {
 				return lints.map((lint) => {
 					const span = lint.span();
 
-					span.start = charIndexToCodeUnit(span.start, chars);
-					span.end = charIndexToCodeUnit(span.end, chars);
-
 					const actions = lint.suggestions().map((sug) => {
 						return {
 							name:
