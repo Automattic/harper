@@ -528,7 +528,7 @@ impl Lint {
 
     /// Get the location of the problematic text.
     pub fn span(&self) -> Span {
-        self.span.into()
+        self.span
     }
 
     /// Get a description of the error.
