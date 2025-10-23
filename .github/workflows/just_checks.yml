@@ -1,0 +1,56 @@
+name: Just Checks
+
+on:
+  push:
+    branches: ["master", "web-prod"]
+  pull_request:
+    branches: ["master"]
+  merge_group:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  just-checks:
+    runs-on: ubuntu-latest
+    name: just ${{ matrix.task }}
+    strategy:
+      matrix:
+        task:
+          [
+            check-rust,
+            check-js,
+            test-rust,
+            test-harperjs,
+            test-vscode,
+            test-chrome-plugin,
+            test-firefox-plugin,
+            test-obsidian,
+            build-obsidian,
+          ]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: rustfmt,clippy
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+          package-manager-cache: false
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install `pandoc`
+        run: sudo apt-get update && sudo apt-get install pandoc -y
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2.7.8
+      - uses: cargo-bins/cargo-binstall@main
+      - name: Install `wasm-pack`
+        run: cargo binstall wasm-pack --force --no-confirm
+      - name: Install `cargo hack`
+        run: cargo binstall cargo-hack --force --no-confirm
+      - name: Run `${{ matrix.task }}`
+        run: just ${{ matrix.task }}

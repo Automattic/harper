@@ -24,6 +24,15 @@ build-harperjs: build-wasm
   # Generate API reference
   ./docs.sh
 
+# Build the browser lint framework module
+build-lint-framework: build-harperjs
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/packages/lint-framework"
+  pnpm install
+  pnpm build
+
 test-harperjs: build-harperjs
   #!/usr/bin/env bash
   set -eo pipefail
@@ -43,6 +52,7 @@ test-obsidian: build-obsidian
 
   pnpm install
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
+  pnpm playwright install
   pnpm test
 
 dev-wp: build-harperjs
@@ -66,7 +76,7 @@ build-wp: build-harperjs
   pnpm plugin-zip
 
 # Compile the website's dependencies and start a development server. Note that if you make changes to `harper-wasm`, you will have to re-run this command.
-dev-web: build-harperjs
+dev-web: build-harperjs build-lint-framework
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -75,7 +85,7 @@ dev-web: build-harperjs
   pnpm dev
 
 # Build the Harper website.
-build-web: build-harperjs
+build-web: build-harperjs build-lint-framework
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -96,7 +106,7 @@ build-obsidian: build-harperjs
   zip harper-obsidian-plugin.zip manifest.json main.js
 
 # Build the Chrome extension.
-build-chrome-plugin: build-harperjs
+build-chrome-plugin: build-harperjs build-lint-framework
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -106,7 +116,7 @@ build-chrome-plugin: build-harperjs
   pnpm zip-for-chrome
 
 # Start a development server for the Chrome extension.
-dev-chrome-plugin: build-harperjs
+dev-chrome-plugin: build-harperjs build-lint-framework
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -116,7 +126,7 @@ dev-chrome-plugin: build-harperjs
   pnpm dev
 
 # Build the Firefox extension.
-build-firefox-plugin: build-harperjs
+build-firefox-plugin: build-harperjs build-lint-framework
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -251,8 +261,12 @@ check-rust:
   cargo fmt -- --check
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
+  cargo hack check --each-feature
+
 # Perform format and type checking.
-check: check-rust build-web
+check: check-rust check-js build-web
+
+check-js: build-harperjs build-lint-framework
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -272,7 +286,6 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
   set -eo pipefail
 
   cargo build --all-targets
-  cargo hack check --each-feature
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
@@ -289,9 +302,11 @@ dogfood:
     ./target/release/harper-cli lint $file
   done
 
-# Test everything.
-test: test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
+test-rust:
   cargo test
+
+# Test everything.
+test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
 
 # Use `harper-cli` to parse a provided file and print out the resulting tokens.
 parse file:
@@ -591,8 +606,9 @@ newest-dict-changes *numCommits:
     });
   });
 
-getnps a:
-  cargo run --bin harper-cli -- nominal-phrases "{{a}}"
+# Print the input string or file with nominal phrases highlighted.
+getnps text:
+  cargo run --bin harper-cli -- nominal-phrases "{{text}}"
 
 # Suggest annotations for a potential new property annotation
 suggestannotation input:

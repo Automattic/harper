@@ -1,5 +1,5 @@
 use crate::linting::tests::{
-    assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+    assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
     assert_top3_suggestion_result,
 };
 
@@ -135,6 +135,25 @@ fn detect_as_early_back_as_real_world() {
     );
 }
 
+// AsIfThough
+#[test]
+fn correct_as_if_though_usagi_1() {
+    assert_top3_suggestion_result(
+        "It's coming back to you. and looking as if though it's very bright red.",
+        lint_group(),
+        "It's coming back to you. and looking as if it's very bright red.",
+    );
+}
+
+#[test]
+fn correct_as_if_though_usagi_2() {
+    assert_top3_suggestion_result(
+        "it passes right on by it as if though nothing happened.",
+        lint_group(),
+        "it passes right on by it as though nothing happened.",
+    );
+}
+
 // AsItHappens
 #[test]
 fn correct_as_it_happens() {
@@ -142,6 +161,16 @@ fn correct_as_it_happens() {
         "As it so happens, we have language currently in review that basically states that a major version break means backwards incompatibility ...",
         lint_group(),
         "As it happens, we have language currently in review that basically states that a major version break means backwards incompatibility ...",
+    );
+}
+
+// AsLongAs
+#[test]
+fn correct_as_long_as() {
+    assert_suggestion_result(
+        "server loads up fine but cant log on client side aslong as the plugin is installed",
+        lint_group(),
+        "server loads up fine but cant log on client side as long as the plugin is installed",
     );
 }
 
@@ -154,9 +183,6 @@ fn corrects_as_of_lately() {
         "I haven't noticed any crashing with AMDGPU as of late, so this looks to not be an issue anymore.",
     )
 }
-
-// AsWell
-// -none-
 
 // AtFaceValue
 #[test]
@@ -227,6 +253,16 @@ fn corrects_before_hand_hyphen() {
 #[test]
 fn allows_beforehand() {
     assert_lint_count("We finished the preparations beforehand.", lint_group(), 0);
+}
+
+// BesideThePoint
+#[test]
+fn beside_the_point() {
+    assert_suggestion_result(
+        "we kind of focus on GPUs a lot but uh that's besides the point so uh sometime ago",
+        lint_group(),
+        "we kind of focus on GPUs a lot but uh that's beside the point so uh sometime ago",
+    );
 }
 
 // BestRegards
@@ -308,6 +344,13 @@ fn does_not_flag_other_contexts() {
 // DayAndAge
 // -none
 
+// DegreesKelvin
+#[test]
+fn corrects_degrees_kelvin() {
+    assert_suggestion_result("degrees kelvin", lint_group(), "kelvins");
+    assert_suggestion_result("°K", lint_group(), "K");
+}
+
 // DoNotWant
 #[test]
 fn corrects_dont_wan() {
@@ -330,6 +373,16 @@ fn corrects_mixed_case() {
 #[test]
 fn does_not_flag_already_correct() {
     assert_lint_count("I don't want to leave.", lint_group(), 0);
+}
+
+// DontCan
+#[test]
+fn corrects_dont_can() {
+    assert_suggestion_result(
+        "And currently uh I'm looking at it when I don't can see it like you know where it is, right?",
+        lint_group(),
+        "And currently uh I'm looking at it when I can't see it like you know where it is, right?",
+    );
 }
 
 // EachAndEveryOne
@@ -492,6 +545,16 @@ fn corrects_fair_bit() {
     );
 }
 
+// FarAndFewBetween
+#[test]
+fn corrects_far_and_few_between() {
+    assert_suggestion_result(
+        "Their neighbors were far and few between, which only made it even more unlikely that surveillance footage recovered from their properties could help.",
+        lint_group(),
+        "Their neighbors were few and far between, which only made it even more unlikely that surveillance footage recovered from their properties could help.",
+    );
+}
+
 // FastPaste
 // -none-
 
@@ -499,9 +562,6 @@ fn corrects_fair_bit() {
 // -none-
 
 // FetalPosition
-// -none-
-
-// ForAllIntentsAndPurposes
 // -none-
 
 // ForALongTime
@@ -652,9 +712,6 @@ fn test_in_a_while() {
         "We’ll talk again in a while.",
     );
 }
-
-// InCase
-// -none-
 
 // InNeedOf
 #[test]
@@ -850,6 +907,88 @@ fn corrects_low_hanging_fruits_space() {
     )
 }
 
+// ManagerialReins
+#[test]
+fn fixes_managerial_reigns_basic() {
+    assert_suggestion_result(
+        "She grabbed the managerial reigns during the crisis.",
+        lint_group(),
+        "She grabbed the managerial reins during the crisis.",
+    );
+}
+
+#[test]
+fn fixes_managerial_reigns_sentence_start() {
+    assert_suggestion_result(
+        "Managerial reigns are never easy to hand over.",
+        lint_group(),
+        "Managerial reins are never easy to hand over.",
+    );
+}
+
+#[test]
+fn fixes_managerial_reigns_with_article() {
+    assert_suggestion_result(
+        "The managerial reigns belong to Carla now.",
+        lint_group(),
+        "The managerial reins belong to Carla now.",
+    );
+}
+
+#[test]
+fn fixes_managerial_reigns_with_comma() {
+    assert_suggestion_result(
+        "By winter, he held the managerial reigns, and morale improved.",
+        lint_group(),
+        "By winter, he held the managerial reins, and morale improved.",
+    );
+}
+
+#[test]
+fn fixes_managerial_reigns_question() {
+    assert_suggestion_result(
+        "Who will hold the managerial reigns after April?",
+        lint_group(),
+        "Who will hold the managerial reins after April?",
+    );
+}
+
+#[test]
+fn fixes_managerial_reigns_in_quotes() {
+    assert_suggestion_result(
+        "\"managerial reigns\" showed up in the draft notes.",
+        lint_group(),
+        "\"managerial reins\" showed up in the draft notes.",
+    );
+}
+
+#[test]
+fn counts_managerial_reigns_error() {
+    assert_lint_count(
+        "They debated who should manage the managerial reigns for the quarter.",
+        lint_group(),
+        1,
+    );
+}
+
+#[test]
+fn counts_managerial_reigns_caps() {
+    assert_lint_count("Their memo shouted MANAGERIAL REIGNS.", lint_group(), 1);
+}
+
+#[test]
+fn allows_managerial_reins_correct() {
+    assert_no_lints(
+        "He kept the managerial reins despite the reshuffle.",
+        lint_group(),
+    );
+}
+
+#[test]
+fn allows_reigns_without_managerial() {
+    assert_no_lints("Legends of ancient reigns filled the museum.", lint_group());
+}
+
 // Monumentous
 #[test]
 fn detect_monumentous_atomic() {
@@ -862,16 +1001,6 @@ fn detect_monumentous_real_world() {
         "I think that would be a monumentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
         lint_group(),
         "I think that would be a momentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
-    );
-}
-
-// MorePreferable
-#[test]
-fn correct_more_preferable() {
-    assert_suggestion_result(
-        "Is it more preferable to use process.env.variable or env.parsed.variable?",
-        lint_group(),
-        "Is it preferable to use process.env.variable or env.parsed.variable?",
     );
 }
 
@@ -932,6 +1061,9 @@ fn detect_nerve_racking_no_hyphen() {
 
 // NotTo
 // -none-
+
+// NotUncommon moved to phrase_set_corrections as part of the
+// generalized double negative mapping.
 
 // OfCourse
 // See also: tests in `of_course.rs` for "of curse/corse" → "of course" corrections
@@ -1114,6 +1246,26 @@ fn correct_iirc_correctly() {
 // RoadMap
 // -none-
 
+// RulesOfThumb
+
+#[test]
+fn correct_rules_of_thumbs() {
+    assert_suggestion_result(
+        "Thanks. 0.2 is just from my rule of thumbs.",
+        lint_group(),
+        "Thanks. 0.2 is just from my rules of thumb.",
+    );
+}
+
+#[test]
+fn correct_rules_of_thumbs_hyphenated() {
+    assert_suggestion_result(
+        "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".",
+        lint_group(),
+        "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
+    );
+}
+
 // SameAs
 // -none-
 
@@ -1175,9 +1327,6 @@ fn corrects_some_the() {
 fn spacial_attention() {
     assert_suggestion_result("spacial attention", lint_group(), "special attention");
 }
-
-// SpokeTooSoon
-// -none-
 
 // Starving
 // -none-
@@ -1290,6 +1439,93 @@ fn correct_to_a_great_length() {
 
 // ToTheMannerBorn
 // -none-
+
+// TongueInCheek
+#[test]
+fn tongue_and_cheek_plain() {
+    assert_suggestion_result(
+        "The remark was entirely tongue and cheek.",
+        lint_group(),
+        "The remark was entirely tongue in cheek.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_with_article() {
+    assert_suggestion_result(
+        "It was a tongue and cheek response.",
+        lint_group(),
+        "It was a tongue in cheek response.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_with_comma() {
+    assert_suggestion_result(
+        "He delivered it tongue and cheek, expecting a laugh.",
+        lint_group(),
+        "He delivered it tongue in cheek, expecting a laugh.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_in_quotes() {
+    assert_suggestion_result(
+        "\"tongue and cheek\" jokes are tough to read.",
+        lint_group(),
+        "\"tongue in cheek\" jokes are tough to read.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_all_caps() {
+    assert_suggestion_result(
+        "Their tone was TONGUE AND CHEEK all night.",
+        lint_group(),
+        "Their tone was TONGUE IN CHEEK all night.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_capitalized() {
+    assert_suggestion_result(
+        "Tongue and cheek banter kept the meeting light.",
+        lint_group(),
+        "Tongue in cheek banter kept the meeting light.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_in_parentheses() {
+    assert_suggestion_result(
+        "Her note (totally tongue and cheek) made us smile.",
+        lint_group(),
+        "Her note (totally tongue in cheek) made us smile.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_question() {
+    assert_suggestion_result(
+        "Was that tongue and cheek or sincere?",
+        lint_group(),
+        "Was that tongue in cheek or sincere?",
+    );
+}
+
+#[test]
+fn tongue_in_cheek_is_allowed() {
+    assert_lint_count(
+        "Their comments were deliberately tongue in cheek.",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
+fn tongue_in_cheek_hyphenated_is_allowed() {
+    assert_lint_count("That was a tongue-in-cheek reply.", lint_group(), 0);
+}
 
 // Towards
 // -none-
@@ -1409,13 +1645,22 @@ fn thanks_lot() {
 }
 
 #[test]
-fn thanks_alot() {
-    assert_suggestion_result("thanks alot", lint_group(), "thanks a lot");
+fn thanks_a_lot_clean() {
+    assert_lint_count("thanks a lot", lint_group(), 0);
 }
 
 #[test]
-fn thanks_a_lot_clean() {
-    assert_lint_count("thanks a lot", lint_group(), 0);
+fn fixes_to_worry_about() {
+    assert_top3_suggestion_result(
+        "I don't want you to worried about it.",
+        lint_group(),
+        "I don't want you to worry about it.",
+    );
+    assert_top3_suggestion_result(
+        "I don't want you to worried about it.",
+        lint_group(),
+        "I don't want you too worried about it.",
+    );
 }
 
 // WroughtIron

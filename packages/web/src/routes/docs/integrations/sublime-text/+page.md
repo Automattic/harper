@@ -52,7 +52,8 @@ Open `Preferences > Package Settings > LSP > Settings` and add the `harper-ls` c
           "isolateEnglish": false,
           "dialect": "American",
           "maxFileLength": 120000,
-          "ignoredLintsPath": []
+          "ignoredLintsPath": "",
+          "excludePatterns": []
         }
       }
     }

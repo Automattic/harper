@@ -1,0 +1,50 @@
+name: Chrome Plugin
+
+on:
+  push:
+    branches: ["master"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["master"]
+  merge_group:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  chrome-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install `pandoc`
+        run: sudo apt-get update && sudo apt-get install pandoc -y
+      - uses: cargo-bins/cargo-binstall@main
+      - name: Install `wasm-pack`
+        run: cargo binstall wasm-pack --force --no-confirm
+      - name: Build Chrome Plugin
+        run: just build-chrome-plugin
+      - name: Build Firefox Plugin
+        run: just build-firefox-plugin
+      - name: Upload Chrome extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: harper-chrome-plugin.zip
+          path: "packages/chrome-plugin/package/harper-chrome-plugin.zip"
+      - name: Upload Firefox extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: harper-firefox-plugin.zip
+          path: "packages/chrome-plugin/package/harper-firefox-plugin.zip"
+      - name: Release artifacts
+        uses: ncipollo/release-action@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          artifacts: "packages/chrome-plugin/package/*.zip"
+          allowUpdates: true
+          draft: true

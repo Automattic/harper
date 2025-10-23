@@ -6,7 +6,7 @@ use crate::{
     patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
 
-use super::{Expr, Optional, Repeating, Step, UnlessStep};
+use super::{Expr, Optional, OwnedExprExt, Repeating, Step, UnlessStep};
 
 #[derive(Default)]
 pub struct SequenceExpr {
@@ -84,6 +84,8 @@ impl Expr for SequenceExpr {
 impl SequenceExpr {
     // Constructor methods
 
+    // Single word token methods
+
     /// Construct a new sequence with a [`Word`] at the beginning of the operation list.
     pub fn any_capitalization_of(word: &'static str) -> Self {
         Self::default().then_any_capitalization_of(word)
@@ -94,17 +96,31 @@ impl SequenceExpr {
         Self::any_capitalization_of(word)
     }
 
-    /// Match the first of multiple expressions.
-    pub fn any_of(exprs: Vec<Box<dyn Expr>>) -> Self {
-        Self::default().then_any_of(exprs)
-    }
-
     /// Match any word from the given set of words, case-insensitive.
     pub fn word_set(words: &'static [&'static str]) -> Self {
         Self::default().then_word_set(words)
     }
 
-    // General builder methods
+    /// Match any word.
+    pub fn any_word() -> Self {
+        Self::default().then_any_word()
+    }
+
+    // Expressions of more than one token
+
+    // Multiple expressions
+
+    /// Match the first of multiple expressions.
+    pub fn any_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+        Self::default().then_any_of(exprs)
+    }
+
+    /// Will be accepted unless the condition matches.
+    pub fn unless(condition: impl Expr + 'static) -> Self {
+        Self::default().then_unless(condition)
+    }
+
+    // Builder methods
 
     /// Push an [expression](Expr) to the operation list.
     pub fn then(mut self, expr: impl Expr + 'static) -> Self {
@@ -157,6 +173,16 @@ impl SequenceExpr {
     /// Match against one or more whitespace tokens.
     pub fn then_whitespace(self) -> Self {
         self.then(WhitespacePattern)
+    }
+
+    /// Match against one or more whitespace tokens.
+    pub fn then_whitespace_or_hyphen(self) -> Self {
+        self.then(WhitespacePattern.or(|tok: &Token, _: &[char]| tok.kind.is_hyphen()))
+    }
+
+    /// Shorthand for [`Self::then_whitespace_or_hyphen`].
+    pub fn t_ws_h(self) -> Self {
+        self.then_whitespace_or_hyphen()
     }
 
     /// Shorthand for [`Self::then_whitespace`].
@@ -231,47 +257,108 @@ impl SequenceExpr {
         })
     }
 
-    // Predicate matching methods
+    // Token kind/predicate matching methods
+
+    // One kind
 
     /// Match a token of a given kind which is not in the list of words.
-    pub fn then_kind_except<F>(self, pred: F, words: &'static [&'static str]) -> Self
+    pub fn then_kind_except<F>(self, pred_is: F, ex: &'static [&'static str]) -> Self
     where
         F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
         self.then(move |tok: &Token, src: &[char]| {
-            pred(&tok.kind)
-                && !words
+            pred_is(&tok.kind)
+                && !ex
                     .iter()
                     .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
         })
     }
 
-    /// Adds a step matching a token where both token kind predicates return true.
-    pub fn then_kind_both<F1, F2>(self, pred1: F1, pred2: F2) -> Self
+    // Two kinds
+
+    /// Match a token where both token kind predicates return true.
+    /// For instance, a word that can be both noun and verb.
+    pub fn then_kind_both<F1, F2>(self, pred_is_1: F1, pred_is_2: F2) -> Self
     where
         F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
         F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
-        self.then(move |tok: &Token, _source: &[char]| pred1(&tok.kind) && pred2(&tok.kind))
+        self.then(move |tok: &Token, _source: &[char]| pred_is_1(&tok.kind) && pred_is_2(&tok.kind))
     }
 
-    /// Adds a step matching a token where either of the two token kind predicates returns true.
-    pub fn then_kind_either<F1, F2>(self, pred1: F1, pred2: F2) -> Self
+    /// Match a token where either of the two token kind predicates returns true.
+    /// For instance, an adjetive or an adverb.
+    pub fn then_kind_either<F1, F2>(self, pred_is_1: F1, pred_is_2: F2) -> Self
     where
         F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
         F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
-        self.then(move |tok: &Token, _source: &[char]| pred1(&tok.kind) || pred2(&tok.kind))
+        self.then(move |tok: &Token, _source: &[char]| pred_is_1(&tok.kind) || pred_is_2(&tok.kind))
     }
 
-    /// Adds a step matching a token where any of the token kind predicates returns true.
-    pub fn then_kind_any<F>(self, preds: &'static [F]) -> Self
+    /// Match a token where the first token kind predicate returns true and the second returns false.
+    /// For instance, a word that can be a noun but cannot be a verb.
+    pub fn then_kind_is_but_is_not<F1, F2>(self, pred_is: F1, pred_not: F2) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, _source: &[char]| pred_is(&tok.kind) && !pred_not(&tok.kind))
+    }
+
+    /// Match a token where the first token kind predicate returns true and the second returns false,
+    /// and the token is not in the list of exceptions.
+    pub fn then_kind_is_but_is_not_except<F1, F2>(
+        self,
+        pred_is: F1,
+        pred_not: F2,
+        ex: &'static [&'static str],
+    ) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, src: &[char]| {
+            pred_is(&tok.kind)
+                && !pred_not(&tok.kind)
+                && !ex
+                    .iter()
+                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+        })
+    }
+
+    gen_then_from_is!(sentence_terminator);
+    // More than two kinds
+
+    /// Match a token where any of the token kind predicates returns true.
+    /// Like `then_kind_either` but for more than two predicates.
+    pub fn then_kind_any<F>(self, preds_is: &'static [F]) -> Self
     where
         F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
-        self.then(move |tok: &Token, _source: &[char]| preds.iter().any(|pred| pred(&tok.kind)))
+        self.then(move |tok: &Token, _source: &[char]| preds_is.iter().any(|pred| pred(&tok.kind)))
     }
 
+    /// Match a token where any of the token kind predicates returns true,
+    /// and the word is not in the list of exceptions.
+    pub fn then_kind_any_except<F>(
+        self,
+        preds_is: &'static [F],
+        ex: &'static [&'static str],
+    ) -> Self
+    where
+        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, src: &[char]| {
+            preds_is.iter().any(|pred| pred(&tok.kind))
+                && !ex
+                    .iter()
+                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+        })
+    }
+
+    /// Match a token where any of the token kind predicates returns true,
+    /// or the token is in the list of words.
     pub fn then_kind_any_or_words<F>(
         self,
         preds: &'static [F],
@@ -289,31 +376,22 @@ impl SequenceExpr {
         })
     }
 
-    /// Adds a step matching a token where the first token kind predicate returns true and the second returns false.
-    pub fn then_kind_is_but_is_not<F1, F2>(self, pred1: F1, pred2: F2) -> Self
-    where
-        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
-        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
-    {
-        self.then(move |tok: &Token, _source: &[char]| pred1(&tok.kind) && !pred2(&tok.kind))
-    }
-
-    /// Adds a step matching a token where the first token kind predicate returns true and the second returns false,
-    /// and the token is not in the list of words.
-    pub fn then_kind_is_but_is_not_except<F1, F2>(
+    /// Match a token where any of the first token kind predicates returns true,
+    /// the second returns false, and the token is not in the list of exceptions.    
+    pub fn then_kind_any_but_not_except<F1, F2>(
         self,
-        pred1: F1,
-        pred2: F2,
-        words: &'static [&'static str],
+        preds_is: &'static [F1],
+        pred_not: F2,
+        ex: &'static [&'static str],
     ) -> Self
     where
         F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
         F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
         self.then(move |tok: &Token, src: &[char]| {
-            pred1(&tok.kind)
-                && !pred2(&tok.kind)
-                && !words
+            preds_is.iter().any(|pred| pred(&tok.kind))
+                && !pred_not(&tok.kind)
+                && !ex
                     .iter()
                     .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
         })
@@ -350,6 +428,7 @@ impl SequenceExpr {
     gen_then_from_is!(third_person_pronoun);
     gen_then_from_is!(third_person_singular_pronoun);
     gen_then_from_is!(third_person_plural_pronoun);
+    gen_then_from_is!(subject_pronoun);
     gen_then_from_is!(object_pronoun);
 
     // Verbs
@@ -357,6 +436,9 @@ impl SequenceExpr {
     gen_then_from_is!(verb);
     gen_then_from_is!(auxiliary_verb);
     gen_then_from_is!(linking_verb);
+    gen_then_from_is!(verb_lemma);
+    gen_then_from_is!(verb_simple_past_form);
+    gen_then_from_is!(verb_past_participle_form);
 
     // Adjectives
 
@@ -394,6 +476,7 @@ impl SequenceExpr {
     gen_then_from_is!(hyphen);
     gen_then_from_is!(period);
     gen_then_from_is!(semicolon);
+    gen_then_from_is!(quote);
 
     // Other
 

@@ -3,11 +3,13 @@
     <h1>Harper</h1>
 </div>
 
-[![Harper Binaries](https://github.com/automattic/harper/actions/workflows/build_harper_binaries.yml/badge.svg)](https://github.com/automattic/harper/actions/workflows/build_harper_binaries.yml)
+[![Harper Binaries](https://github.com/automattic/harper/actions/workflows/binaries.yml/badge.svg)](https://github.com/automattic/harper/actions/workflows/binaries.yml)
 [![Website](https://github.com/automattic/harper/actions/workflows/build_web.yml/badge.svg)](https://github.com/automattic/harper/actions/workflows/build_web.yml)
-[![Precommit](https://github.com/automattic/harper/actions/workflows/precommit.yml/badge.svg)](https://github.com/automattic/harper/actions/workflows/precommit.yml)
+[![Checks](https://github.com/automattic/harper/actions/workflows/just_checks.yml/badge.svg)](https://github.com/automattic/harper/actions/workflows/just_checks.yml)
 [![Crates.io](https://img.shields.io/crates/v/harper-ls)](https://crates.io/crates/harper-ls)
 ![NPM Version](https://img.shields.io/npm/v/harper.js)
+![Downloads](https://img.shields.io/github/downloads/automattic/harper/total?label=Binary+Downloads)
+![Obsidian Plugin Downloads](https://img.shields.io/github/downloads/automattic/harper-obsidian-plugin/total?label=Obsidian+Plugin+Downloads)
 
 Harper is an English grammar checker designed to be _just right._
 I created it after years of dealing with the shortcomings of the competition.
@@ -42,7 +44,7 @@ Just please make sure to read [our contribution guidelines first.](https://githu
 
 ## Links
 
-- [Frequently Asked Questions](https://writewithharper.com/docs/faq)
+- [Frequently Asked Questions](https://writewithharper.com/#faqs)
 - [Obsidian Documentation](https://writewithharper.com/docs/integrations/obsidian)
 - [`harper-ls` Documentation](https://writewithharper.com/docs/integrations/language-server)
 - Supported Editors' Documentation

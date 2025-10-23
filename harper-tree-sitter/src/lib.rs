@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use harper_core::spell::MutableDictionary;
-use harper_core::{Mask, Masker, Span, WordMetadata};
+use harper_core::{DictWordMetadata, Mask, Masker, Span};
 use tree_sitter::{Language, Node, Tree, TreeCursor};
 
 /// A Harper [`Masker`] that wraps a given tree-sitter language and a condition,
@@ -50,7 +50,7 @@ impl TreeSitterMasker {
 
         let idents: Vec<_> = idents
             .into_iter()
-            .map(|ident| (ident, WordMetadata::default()))
+            .map(|ident| (ident, DictWordMetadata::default()))
             .collect();
 
         let mut dictionary = MutableDictionary::new();

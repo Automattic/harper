@@ -4,7 +4,12 @@ import { defineConfig } from 'vite';
 import topLevelAwait from 'vite-plugin-top-level-await';
 import wasm from 'vite-plugin-wasm';
 
+const prod = process.env.APP_ENV === 'production';
+
 export default defineConfig({
+	ssr: {
+		noExternal: prod ? ['mysql2', 'drizzle-orm', 'posthog-js', 'drizzle-zod', 'zod'] : [],
+	},
 	server: {
 		port: 3000,
 		fs: {
@@ -49,10 +54,6 @@ export default defineConfig({
 								{
 									title: 'About',
 									to: '/docs/about',
-								},
-								{
-									title: 'FAQ',
-									to: '/docs/faq',
 								},
 							],
 						},

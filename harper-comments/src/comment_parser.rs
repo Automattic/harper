@@ -37,7 +37,6 @@ impl CommentParser {
             "lua" => tree_sitter_lua::LANGUAGE,
             "nix" => tree_sitter_nix::LANGUAGE,
             "php" => tree_sitter_php::LANGUAGE_PHP,
-            "python" => tree_sitter_python::LANGUAGE,
             "ruby" => tree_sitter_ruby::LANGUAGE,
             "rust" => tree_sitter_rust::LANGUAGE,
             "scala" => tree_sitter_scala::LANGUAGE,
@@ -108,7 +107,7 @@ impl CommentParser {
             "toml" => "toml",
             "ts" => "typescript",
             "tsx" => "typescriptreact",
-            "clj" | "cljs" | "cljc" | "bb" => "clojure",
+            "clj" | "cljc" | "cljd" | "cljs" | "bb" => "clojure",
             _ => return None,
         })
     }

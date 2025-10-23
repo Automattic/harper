@@ -101,8 +101,8 @@ Message: |
      249 | The bullet is about five centimetres in.
          |                          ^~~~~~~~~~~ Did you mean to spell `centimetres` this way?
 Suggest:
-  - Replace with: “centimeter's”
   - Replace with: “centimeters”
+  - Replace with: “centimeter's”
   - Replace with: “centimeter”
 
 
@@ -208,6 +208,17 @@ Suggest:
   - Replace with: “Scythe”
   - Replace with: “Myth”
   - Replace with: “Myths”
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+     310 | Ponsonby-Smythe hit a thumping on drive.
+         |                     ^~~~~~~~~~ `thumping` is a mass noun.
+Suggest:
+  - Replace with: “thumping”
+  - Replace with: “some thumping”
+  - Replace with: “a piece of thumping”
 
 
 

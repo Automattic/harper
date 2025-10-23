@@ -15,7 +15,7 @@ let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
 
 $effect(() => {
-	ProtocolClient.setLintConfig(lintConfig);
+	ProtocolClient.setLintConfig($state.snapshot(lintConfig));
 });
 
 $effect(() => {

@@ -58,7 +58,7 @@ pub fn lint_group() -> LintGroup {
             "Corrects `an` to `and` after `ahead`."
         ),
         "AllOfASudden" => (
-            ["all of the sudden"],
+            ["all of the sudden", "all of sudden"],
             ["all of a sudden"],
             "The phrase is `all of a sudden`, meaning `unexpectedly`.",
             "Corrects `all of the sudden` to `all of a sudden`.",
@@ -127,6 +127,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects nonstandard `as early back as` to `as far back as`.",
             LintKind::WordChoice
         ),
+        "AsIfThough" => (
+            ["as if though"],
+            ["as if", "as though"],
+            "This should be `as if` or `as though`.",
+            "Corrects redundant `as if though`.",
+            LintKind::Redundancy
+        ),
         "AsItHappens" => (
             ["as it so happens"],
             ["as it happens"],
@@ -134,19 +141,19 @@ pub fn lint_group() -> LintGroup {
             "Corrects `as it so happens` to `as it happens`.",
             LintKind::Usage
         ),
+        "AsLongAs" => (
+            ["aslong as"],
+            ["as long as"],
+            "`As long` should be written as two words.",
+            "Corrects `aslong as` to `as long as`.",
+            LintKind::BoundaryError
+        ),
         "AsOfLate" => (
             ["as of lately"],
             ["as of late"],
             "The standard form is `as of late`.",
             "Corrects `as of lately` to `as of late`.",
             LintKind::WordChoice
-        ),
-        "AsWell" => (
-            ["aswell"],
-            ["as well"],
-            "`as well` should be written as two words.",
-            "Corrects `aswell` to `as well`.",
-            LintKind::BoundaryError
         ),
         "AtFaceValue" => (
             ["on face value"],
@@ -216,6 +223,13 @@ pub fn lint_group() -> LintGroup {
             ["beforehand"],
             "Prefer the single-word adverb `beforehand`.",
             "`Beforehand` functions as a fixed adverb meaning ‘in advance’; writing it as two words or with a hyphen is nonstandard and can jar readers."
+        ),
+        "BesideThePoint" => (
+            ["besides the point"],
+            ["beside the point"],
+            "Use `beside` in the idiom `beside the point`.",
+            "Corrects `besides the point` to `beside the point`.",
+            LintKind::Eggcorn
         ),
         "BestRegards" => (
             ["beat regards"],
@@ -300,12 +314,33 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `day in age` to `day and age`, which properly means the current era or time period.",
             LintKind::Eggcorn
         ),
+        "DegreesKelvin" => (
+            ["degrees kelvin", "degrees Kelvin", "degree kelvin", "degree Kelvin"],
+            ["kelvins", "kelvin"],
+            "Use `kelvins` when discussing the unit Kelvin.",
+            "Corrects use of `degrees kelvin` to `kelvins`.",
+            LintKind::Usage
+        ),
+        "DegreesKelvinSymbol" => (
+            ["°K"],
+            ["K"],
+            "Use just the symbol `K` when discussing the unit Kelvin.",
+            "Corrects use of `°K` to `K`.",
+            LintKind::Usage
+        ),
         "DoNotWant" => (
             ["don't wan", "do not wan"],
             ["don't want", "do not want"],
             "Use the full verb “want” after negation: “don't want” or “do not want.”",
             "In English, negation still requires the complete verb form (“want”), so avoid truncating it to “wan.”",
             LintKind::Typo
+        ),
+        "DontCan" => (
+            ["don't can"],
+            ["can't", "cannot"],
+            "The grammatically correct form is `can't` or `cannot`.",
+            "Corrects `don't can` to `can't` or `cannot`.",
+            LintKind::Grammar
         ),
         "EachAndEveryOne" => (
             ["each and everyone"],
@@ -412,6 +447,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects malapropisms of `a fair bit`.",
             LintKind::Eggcorn
         ),
+        "FarAndFewBetween" => (
+            ["far and few between"],
+            ["few and far between"],
+            "The correct idiom is `few and far between`?",
+            "Corrects `far and few between` to the standard idiom `few and far between`.",
+            LintKind::Eggcorn
+        ),
         "FastPaste" => (
             ["fast paste", "fast-paste"],
             ["fast-paced"],
@@ -432,13 +474,6 @@ pub fn lint_group() -> LintGroup {
             "Use the correct term for a curled-up posture.",
             "Ensures the correct use of `fetal position`, avoiding confusion with `feeble position`, which is not a standard phrase.",
             LintKind::Malapropism
-        ),
-        "ForAllIntentsAndPurposes" => (
-            ["for all intensive purposes"],
-            ["for all intents and purposes"],
-            "Use the correct phrase meaning 'in every practical sense'.",
-            "Corrects `for all intensive purposes` to `for all intents and purposes`, ensuring the phrase conveys its intended meaning.",
-            LintKind::Eggcorn
         ),
         "ForALongTime" => (
             ["for along time"],
@@ -577,13 +612,6 @@ pub fn lint_group() -> LintGroup {
             "When describing a timeframe, use `a while`.",
             "Corrects the missing article in `in while`, forming `in a while`.",
             LintKind::Grammar
-        ),
-        "InCase" => (
-            ["incase"],
-            ["in case"],
-            "`In case` should be written as two words.",
-            "Corrects `incase` to `in case`.",
-            LintKind::BoundaryError
         ),
         "InNeedOf" => (
             ["in need for"],
@@ -724,19 +752,19 @@ pub fn lint_group() -> LintGroup {
             "Corrects non-standard variants of `low-hanging fruit`.",
             LintKind::Usage
         ),
+        "ManagerialReins" => (
+            ["managerial reigns"],
+            ["managerial reins"],
+            "Swap in `reins` when talking about control of a team or project.",
+            "Corrects the eggcorn `managerial reigns` to the idiomatic `managerial reins`.",
+            LintKind::Eggcorn
+        ),
         "Monumentous" => (
             ["monumentous"],
             ["momentous", "monumental"],
             "Retain `monumentous` for jocular effect. Otherwise `momentous` indicates great signifcance while `monumental` indicates imposing size.",
             "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage.",
             LintKind::Nonstandard
-        ),
-        "MorePreferable" => (
-            ["more preferable"],
-            ["preferable"],
-            "Use just `preferable` instead of `more preferable`.",
-            "Corrects `more preferable` to `preferable`.",
-            LintKind::Redundancy
         ),
         "MyHouse" => (
             ["mu house"],
@@ -903,6 +931,13 @@ pub fn lint_group() -> LintGroup {
             "Detects when `roadmap` is used instead of `road map`, prompting the correct spacing.",
             LintKind::WordChoice
         ),
+        "RulesOfThumb" => (
+            ["rule of thumbs", "rule-of-thumbs"],
+            ["rules of thumb"],
+            "The correct plural is `rules of thumb`.",
+            "Corrects pluralizing the wrong noun in `rule of thumb`.",
+            LintKind::Usage
+        ),
         "SameAs" => (
             ["same then"],
             ["same as"],
@@ -959,13 +994,6 @@ pub fn lint_group() -> LintGroup {
             "Changes `spacial attention` to `special attention`.",
             LintKind::Typo
         ),
-        "SpokeTooSoon" => (
-            ["spoke to soon"],
-            ["spoke too soon"],
-            "Use the adverb `too` instead.",
-            "Identifies common misuse of the preposition `to` in the phrase `spoke too soon`.",
-            LintKind::Grammar
-        ),
         "Starving" => (
             ["very hungry", "really hungry", "extremely hungry"],
             ["starving"],
@@ -1009,11 +1037,11 @@ pub fn lint_group() -> LintGroup {
             LintKind::Usage
         ),
         "ThanksALot" => (
-            ["thanks lot", "thanks alot"],
+            ["thanks lot"],
             ["thanks a lot"],
-            "Prefer the two-word expression `thanks a lot`.",
-            "`Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers.",
-            LintKind::Usage
+            "The indefinite article `a` is required in `thanks a lot`.",
+            "Corrects the missing article in `thanks lot`, forming `thanks a lot`.",
+            LintKind::Grammar
         ),
         "ThatChallenged" => (
             ["the challenged"],
@@ -1067,6 +1095,13 @@ pub fn lint_group() -> LintGroup {
             "Use the correct phrase for being naturally suited to something.",
             "Corrects `to the manor born` to `to the manner born`, ensuring the intended meaning of being naturally suited to a way of life.",
             LintKind::Eggcorn
+        ),
+        "TongueInCheek" => (
+            ["tongue and cheek"],
+            ["tongue in cheek"],
+            "Use `tongue in cheek` for the idiom.",
+            "Corrects the idiom when `and` replaces the needed preposition.",
+            LintKind::WordChoice
         ),
         "Towards" => (
             ["to towards"],
@@ -1153,6 +1188,12 @@ pub fn lint_group() -> LintGroup {
             "Prefer the standard term `wrought iron`.",
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers.",
             LintKind::Eggcorn
+        ),
+        "ToWorryAbout" => (
+            ["to worried about"],
+            ["to worry about", "too worried about"],
+            "Did you mean the progressive form?",
+            "Fixes incorrect use of `to worried about`."
         ),
         "The" => (
             ["teh"],

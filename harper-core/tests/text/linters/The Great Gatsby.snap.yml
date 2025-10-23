@@ -76,18 +76,6 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
-      23 | the intimate revelations of young men, or at least the terms in which they
-      24 | express them, are usually plagiaristic and marred by obvious suppressions.
-         |                           ^~~~~~~~~~~~ Did you mean to spell `plagiaristic` this way?
-Suggest:
-  - Replace with: “plagiarist's”
-  - Replace with: “plagiarist”
-  - Replace with: “plagiarists”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       27 | snobbishly repeat, a sense of the fundamental decencies is parcelled out
          |                                                            ^~~~~~~~~ Did you mean `parceled`?
       28 | unequally at birth.
@@ -193,8 +181,8 @@ Message: |
       62 | seemed like the ragged edge of the universe—so I decided to go East and learn
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -214,12 +202,10 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
       72 | sounded like a great idea. He found the house, a weatherbeaten cardboard
-         |                                                  ^~~~~~~~~~~~~ Did you mean to spell `weatherbeaten` this way?
+         |                                                  ^~~~~~~~~~~~~ Did you mean `weather-beaten`?
       73 | bungalow at eighty a month, but at the last minute the firm ordered him to
 Suggest:
-  - Replace with: “weatherboard”
-  - Replace with: “weatherboards”
-  - Replace with: “weatherization”
+  - Replace with: “weather-beaten”
 
 
 
@@ -395,16 +381,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     145 | particular reason, and then drifted here and there unrestfully wherever people
-         |                                                    ^~~~~~~~~~~ Did you mean `restfully`?
-     146 | played polo and were rich together. This was a permanent move, said Daisy over
-Suggest:
-  - Replace with: “restfully”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      146 | played polo and were rich together. This was a permanent move, said Daisy over
@@ -475,18 +451,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     192 | We walked through a high hallway into a bright rosy-colored space, fragilely
-         |                                                                    ^~~~~~~~~ Did you mean to spell `fragilely` this way?
-     193 | bound into the house by French windows at either end. The windows were ajar and
-Suggest:
-  - Replace with: “fragile”
-  - Replace with: “facilely”
-  - Replace with: “fragiler”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      195 | into the house. A breeze blew through the room, blew curtains in at one end and
@@ -526,53 +490,17 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     322 | Slenderly, languidly, their hands set lightly on their hips, the two young women
-         | ^~~~~~~~~ Did you mean `Tenderly`?
-Suggest:
-  - Replace with: “Tenderly”
-
-
-
-Lint:    Spelling (63 priority)
+Lint:    Formatting (255 priority)
 Message: |
      334 | “All right,” said Daisy. ‘‘What’ll we plan?” She turned to me helplessly: ‘‘What
-         |                            ^~~~~~~ Did you mean `That'll`?
-Suggest:
-  - Replace with: “That'll”
+         |                                            ^ This quote has no termination.
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Formatting (255 priority)
 Message: |
-     352 | Sometimes she and Miss Baker talked at once, unobtrusively and with a bantering
-     353 | inconsequence that was never quite chatter, that was as cool as their white
-         | ^~~~~~~~~~~~~ Did you mean `consequence`?
-Suggest:
-  - Replace with: “consequence”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     362 | “You make me feel uncivilized, Daisy,” I confessed on my second glass of corky
-         |                                                                          ^~~~~ Did you mean to spell `corky` this way?
-     363 | but rather impressive claret. “Can’t you talk about crops or something?”
-Suggest:
-  - Replace with: “cork”
-  - Replace with: “cocky”
-  - Replace with: “corks”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     378 | “Tom’s getting very profound,” said Daisy, with an expression of unthoughtful
-         |                                                                  ^~~~~~~~~~~~ Did you mean `thoughtful`?
-     379 | sadness. “He reads deep books with long words in them. What was that word we———”
-Suggest:
-  - Replace with: “thoughtful”
+     335 | do people plan?”
+         |                ^ This quote has no termination.
 
 
 
@@ -583,6 +511,13 @@ Message: |
          | ^~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     395 | science and art, and all that. Do you see?”
+         |                                           ^ This quote has no termination.
 
 
 
@@ -609,6 +544,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     452 | “Why—” she said hesitantly, ‘‘Tom’s got some woman in New York.”
+         |                                                                ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      464 | “It couldn’t be helped!” cried Daisy with tense gayety.
@@ -617,17 +559,6 @@ Suggest:
   - Replace with: “gaiety”
   - Replace with: “gamely”
   - Replace with: “gamete”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     474 | The telephone rang inside, startingly, and as Daisy shook her head decisively at
-         |                            ^~~~~~~~~~ Did you mean to spell `startingly` this way?
-Suggest:
-  - Replace with: “startlingly”
-  - Replace with: “searingly”
-  - Replace with: “slantingly”
 
 
 
@@ -664,6 +595,13 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      488 | verandas to the porch in front. In its deep gloom we sat down side by side on a
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 50 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     514 | “I’ll show you how I’ve gotten to feel about—things. Well, she was less than an
+         | ^ This quote has no termination.
 
 
 
@@ -707,6 +645,13 @@ Message: |
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
 Suggest:
   - Replace with: “excellent”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     603 | square of light. As I started my motor Daisy peremptorily called: “Wait!
+         |                                                                   ^ This quote has no termination.
 
 
 
@@ -866,18 +811,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     669 | sank down himself into eternal blindness, or forgot them and moved away. But his
-     670 | eyes, dimmed a little by many paintless days, under sun and rain, brood on over
-         |                               ^~~~~~~~~ Did you mean to spell `paintless` this way?
-Suggest:
-  - Replace with: “pointless”
-  - Replace with: “painless”
-  - Replace with: “painters”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      673 | The valley of ashes is bounded on one side by a small foul river, and, when the
@@ -933,15 +866,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     702 | The interior was unprosperous and bare; the only car visible was the
-         |                  ^~~~~~~~~~~~ Did you mean `prosperous`?
-Suggest:
-  - Replace with: “prosperous”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      703 | dust-covered wreck of a Ford which crouched in a dim corner. It had occurred to
@@ -965,39 +889,10 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Formatting (255 priority)
 Message: |
-     706 | door of an office, wiping his hands on a piece of waste. He was a blond,
-     707 | spiritless man, anæmic, and faintly handsome. When he saw us a damp gleam of
-         |                 ^~~~~~ Did you mean to spell `anæmic` this way?
-Suggest:
-  - Replace with: “anemic”
-  - Replace with: “anemia”
-  - Replace with: “atomic”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     726 | footsteps on a stairs, and in a moment the thickish figure of a woman blocked
-         |                                            ^~~~~~~~ Did you mean to spell `thickish` this way?
-     727 | out the light from the office door. She was in the middle thirties, and faintly
-Suggest:
-  - Replace with: “thick's”
-  - Replace with: “thickest”
-  - Replace with: “thickos”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     728 | stout, but she carried her flesh sensuously as some women can. Her face, above a
-     729 | spotted dress of dark blue crêpe-de-chine, contained no facet or gleam of
-         |                            ^~~~~ Did you mean to spell `crêpe` this way?
-Suggest:
-  - Replace with: “crepe”
-  - Replace with: “crape”
-  - Replace with: “cope”
+     711 | ‘‘How’s business?”
+         |                  ^ This quote has no termination.
 
 
 
@@ -1097,16 +992,6 @@ Suggest:
   - Replace with: “McKee's”
   - Replace with: “McKee”
   - Replace with: “McGee's”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     842 | small bedroom, and a bath. The living-room was crowded to the doors with a set
-     843 | of tapestried furniture entirely too large for it, so that to move about was to
-         |    ^~~~~~~~~~ Did you mean `tapestries`?
-Suggest:
-  - Replace with: “tapestries”
 
 
 
@@ -1332,7 +1217,7 @@ Message: |
     1122 | Daisy! Dai———”
          |        ^~~ Did you mean to spell `Dai` this way?
 Suggest:
-  - Replace with: “Day”
+  - Replace with: “Dab”
   - Replace with: “Dad”
   - Replace with: “Dais”
 
@@ -1399,17 +1284,6 @@ Message: |
          |       ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    1160 | gardens men and girls came and went like moths among the whisperings and the
-         |                                                          ^~~~~~~~~~~ Did you mean to spell `whisperings` this way?
-    1161 | champagne and the stars. At high tide in the afternoon I watched his guests
-Suggest:
-  - Replace with: “whispering”
-  - Replace with: “whimpering”
 
 
 
@@ -1559,8 +1433,8 @@ Message: |
     1204 | triumph, glide on through the sea-change of faces and voices and color under the
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -1767,6 +1641,14 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1406 | burden of the banjo or the traps. By midnight the hilarity had increased. A
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 57 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    1408 | jazz, and between the numbers people were doing ‘‘stunts” all over the garden,
+         |                                                         ^ This quote has no termination.
+    1409 | while happy, vacuous bursts of laughter rose toward the summer sky. A pair of
 
 
 
@@ -1991,6 +1873,16 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    1667 | “Don’t ask me,” said Owl Eyes, washing his hands of the whole matter. “I know
+    1668 | very little about driving—next to nothing. It happened, and that’s all I know.”
+         |                                ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1683 | The shock that followed this declaration found voice in a sustained “Ah-h-h!” as
@@ -2167,9 +2059,9 @@ Message: |
     1838 | was nephew to Von Hindenburg and second cousin to the devil. Reach me a rose,
          |               ^~~ Did you mean to spell `Von` this way?
 Suggest:
+  - Replace with: “Van”
   - Replace with: “Vol”
   - Replace with: “Yon”
-  - Replace with: “Con”
 
 
 
@@ -2325,6 +2217,7 @@ Message: |
 Suggest:
   - Replace with: “Schroeder's”
   - Replace with: “Schroeder”
+  - Replace with: “Threaders”
 
 
 
@@ -2884,8 +2777,8 @@ Message: |
          |                                              ^~~~~~~~ Did you mean to spell `Faustina` this way?
     1894 | least once and the Baedeker girls and young Brewer, who had his nose shot off in
 Suggest:
-  - Replace with: “Faustino”
   - Replace with: “Faustian”
+  - Replace with: “Faustino”
 
 
 
@@ -3008,9 +2901,9 @@ Message: |
          |                                                                             ^~~~ Did you mean to spell `Bois` this way?
     1982 | de Boulogne.
 Suggest:
-  - Replace with: “Boss”
+  - Replace with: “Bogs”
   - Replace with: “Boris”
-  - Replace with: “Bis”
+  - Replace with: “Bios”
 
 
 
@@ -3156,7 +3049,7 @@ Message: |
 Suggest:
   - Replace with: “somber”
   - Replace with: “hombre”
-  - Replace with: “some”
+  - Replace with: “sober”
 
 
 
@@ -3312,14 +3205,29 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2126 | “The old Metropole,” brooded Mr. Wolfshiem gloomily. “Filled with faces dead and
+         |                                                      ^ This quote has no termination.
+    2127 | gone. Filled with friends gone now forever. I can’t forget so long as I live the
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2134 | “‘Let the bastards come in here if they want you, Rosy, but don’t you, so help
+         | ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2142 | “Sure he went.” Mr. Wolfshiem’s nose flashed at me indignantly. “He turned
          |                     ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -3329,6 +3237,13 @@ Message: |
          |                                          ^~~~~~~~~~ Did you mean `connection`?
 Suggest:
   - Replace with: “connection”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2154 | “Oh, no,” he exclaimed, ‘‘this isn’t the man.”
+         |                                              ^ This quote has no termination.
 
 
 
@@ -3616,6 +3531,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2352 | change’ her mine!’”
+         |                   ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2360 | But she didn’t say another word. We gave her spirits of ammonia and put ice on
@@ -3626,6 +3548,14 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2363 | over. Next day at five o’clock she married Tom Buchanan without so much as a
          | ~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2368 | around uneasily, and say: ‘‘Where’s Tom gone?” and wear the most abstracted
+         |                                              ^ This quote has no termination.
+    2369 | expression until she saw him coming in the door. She used to sit on the sand
 
 
 
@@ -3676,6 +3606,21 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2437 | “I think he half expected her to wander into one of his parties, some night,”
+    2438 | went on Jordan, “but she never did. Then he began asking people casually if they
+         |                 ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2444 | “‘I don’t want to do anything out of the way!’ he kept saying. ‘I want to see
+         | ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2455 | hard, limited person, who dealt in universal scepticism, and who leaned back
@@ -3684,6 +3629,13 @@ Message: |
 Suggest:
   - Replace with: “skepticism”
   - Replace with: “asceticism”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2458 | busy and the tired.”
+         |                    ^ This quote has no termination.
 
 
 
@@ -3716,6 +3668,13 @@ Suggest:
   - Replace with: “Conley”
   - Replace with: “Corey”
   - Replace with: “Coley”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2530 | “Oh, it isn’t about that. At least—’’ He fumbled with a series of beginnings.
+         | ^ This quote has no termination.
 
 
 
@@ -3789,7 +3748,7 @@ Message: |
 Suggest:
   - Replace with: “blared”
   - Replace with: “bleated”
-  - Replace with: “beard”
+  - Replace with: “blurred”
 
 
 
@@ -3847,6 +3806,13 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2720 | terrible, terrible mistake.”
+         |                            ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2737 | I walked out the back way—just as Gatsby had when he had made his nervous
@@ -3890,6 +3856,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2806 | was in he answered: ‘‘That’s my affair,” before he realized that it wasn’t an
+         |                                        ^ This quote has no termination.
+
+
+
 Lint:    Style (31 priority)
 Message: |
     2823 | “I keep it always full of interesting people, night and day. People who do
@@ -3924,6 +3897,14 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2837 | closed the door of ‘‘the Merton College Library” I could have sworn I heard the
+         |                                                ^ This quote has no termination.
+    2838 | owl-eyed man break into ghostly laughter.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2840 | We went up-stairs, through period bedrooms swathed in rose and lavender silk and
@@ -3951,6 +3932,14 @@ Lint:    Spelling (63 priority)
 Message: |
     2843 | doing liver exercises on the floor. It was Mr. Klipspringer, the ‘‘boarder.” I
          |                                                ^~~~~~~~~~~~ Did you mean to spell `Klipspringer` this way?
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2843 | doing liver exercises on the floor. It was Mr. Klipspringer, the ‘‘boarder.” I
+         |                                                                            ^ This quote has no termination.
+    2844 | had seen him wandering hungrily about the beach that morning. Finally we came to
 
 
 
@@ -4101,17 +4090,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (54 priority)
-Message: |
-    2995 | of emotion. I think that voice held him most, with its fluctuating, feverish
-         |                                                    ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
-    2996 | warmth, because it couldn’t be over-dreamed—that voice was a deathless song.
-Suggest:
-  - Replace with: “it's”
-  - Replace with: “it has”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     3020 | short of being news. Contemporary legends such as the “underground pipe-line to
@@ -4175,12 +4153,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3031 | Jay Gatsby who borrowed a rowboat, pulled out to the Tuolomee, and informed Cody
-         |                                                      ^~~~~~~~ Did you mean to spell `Tuolomee` this way?
+         |                                                      ^~~~~~~~ Did you mean `Toulouse`?
     3032 | that a wind might catch him and break him up in half an hour.
 Suggest:
-  - Replace with: “Togolese”
-  - Replace with: “Tolkien”
-  - Replace with: “Toltec”
+  - Replace with: “Toulouse”
 
 
 
@@ -4256,12 +4232,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     3085 | and a yachting cap. And when the Tuolomee left for the West Indies and the
-         |                                  ^~~~~~~~ Did you mean to spell `Tuolomee` this way?
+         |                                  ^~~~~~~~ Did you mean `Toulouse`?
     3086 | Barbary Coast Gatsby left too.
 Suggest:
-  - Replace with: “Togolese”
-  - Replace with: “Tolkien”
-  - Replace with: “Toltec”
+  - Replace with: “Toulouse”
 
 
 
@@ -4432,6 +4406,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    3296 | explained, ‘‘or any act of God.”
+         |                                ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3316 | “Wha’?”
@@ -4484,6 +4465,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3353 | inhabitants along a short-cut from nothing to nothing. She saw something awful
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    3353 | inhabitants along a short-cut from nothing to nothing. She saw something awful
+         |                                            ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
 
 
 
@@ -4584,6 +4574,13 @@ Message: |
     3496 | house failed to go on one Saturday night—and, as obscurely as it had begun, his
     3497 | career as Trimalchio was over. Only gradually did I become aware that the
          |           ^~~~~~~~~~ Did you mean to spell `Trimalchio` this way?
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    3505 | “Nope.” After a pause he added “sir’’ in a dilatory, grudging way.
+         |                                ^ This quote has no termination.
 
 
 
@@ -4719,8 +4716,8 @@ Message: |
          |                     ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
+  - Replace with: “central”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -4844,6 +4841,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    3687 | “It seems that pretty soon the earth’s going to fall into the sun—or wait a
+         | ^ This quote has no termination.
+
+
+
 Lint:    Regionalism (63 priority)
 Message: |
     3690 | “Come outside,” he suggested to Gatsby, “I’d like you to have a look at the
@@ -4866,15 +4870,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    3712 | “What’ll we do with ourselves this afternoon?” cried Daisy, “and the day after
-         |  ^~~~~~~ Did you mean `That'll`?
-Suggest:
-  - Replace with: “That'll”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     3736 | mouth opened a little, and he looked at Gatsby, and then back at Daisy as if he
@@ -4882,6 +4877,14 @@ Message: |
          |                            ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    3739 | “You resemble the advertisement of the man,” she went on innocently. ‘You know
+    3740 | the advertisement of the man—”
+         |                              ^ This quote has no termination.
 
 
 
@@ -5182,6 +5185,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    4062 | wasn’t any connection.”
+         |                       ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4064 | “I used to know a Bill Biloxi from Memphis,” I remarked.
@@ -5215,6 +5225,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    4075 | “Remember Biloxi,” Jordan warned her. ‘‘Where’d you know him, Tom?”
+         |                                                                   ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4077 | “Biloxi?” He concentrated with an effort. “I didn’t know him. He was a friend of
@@ -5232,9 +5249,9 @@ Message: |
          |                                                                  ^~~ Did you mean to spell `Asa` this way?
     4084 | brought him around at the last minute and asked if we had room for him.”
 Suggest:
-  - Replace with: “Ass”
+  - Replace with: “As”
+  - Replace with: “Asap”
   - Replace with: “Ada”
-  - Replace with: “Ala”
 
 
 
@@ -5281,6 +5298,20 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    4134 | won’t seem so stupid to yourself. . . . Look at the mint!”
+         |                                                          ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4175 | me.”
+         |    ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     4185 | At this point Jordan and I tried to go, but Tom and Gatsby insisted with
@@ -5300,6 +5331,21 @@ Suggest:
   - Replace with: “your”
   - Replace with: “you're a”
   - Replace with: “you're an”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4201 | sometimes”—but there was no laughter in his eyes—“to think that you didn’t
+         |                                                  ^ This quote has no termination.
+    4202 | know.”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4202 | know.”
+         |      ^ This quote has no termination.
 
 
 
@@ -5511,6 +5557,16 @@ Message: |
 
 
 
+Lint:    Agreement (31 priority)
+Message: |
+    4427 | policeman that it was light green. The other car, the one going toward New York,
+         |                                                       ^~~~~~~~~ `going` is a mass noun.
+    4428 | came to rest a hundred yards beyond, and it’s driver hurried back to where
+Suggest:
+  - Replace with: “one piece of going”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4432 | Michaelis and this man reached her first, but when they had torn open her
@@ -5595,9 +5651,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |            ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -5606,9 +5662,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                          ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -5617,9 +5673,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                     ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -5628,9 +5684,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                                   ^~ Did you mean to spell `od` this way?
 Suggest:
+  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
-  - Replace with: “of”
 
 
 
@@ -5693,8 +5749,8 @@ Message: |
          |                                                   ^~~~~~ Did you mean to spell `stopus` this way?
 Suggest:
   - Replace with: “stop's”
+  - Replace with: “stoups”
   - Replace with: “stops”
-  - Replace with: “stomp's”
 
 
 
@@ -5737,6 +5793,14 @@ Suggest:
   - Replace with: “gain”
   - Replace with: “gin”
   - Replace with: “going”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
+    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
+         |                               ^ This quote has no termination.
 
 
 
@@ -5783,6 +5847,13 @@ Suggest:
   - Replace with: “gain”
   - Replace with: “gin”
   - Replace with: “going”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4511 | knock right into her, goin’ thirty or forty miles an hour.”
+         |                                                           ^ This quote has no termination.
 
 
 
@@ -5865,9 +5936,16 @@ Message: |
     4636 | faces of “Wolfshiem’s people,” behind him in the dark shrubbery.
          |           ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4679 | “Don’t tell me, old sport.” He winced. “Anyhow—Daisy stepped on it. I tried to
+         |                                        ^ This quote has no termination.
 
 
 
@@ -5967,9 +6045,9 @@ Message: |
          |                                                ^~~~~ Did you mean to spell `Beale` this way?
     4851 | hundred pairs of golden and silver slippers shuffled the shining dust. At the
 Suggest:
-  - Replace with: “Bale”
-  - Replace with: “Beadle”
+  - Replace with: “Belle”
   - Replace with: “Berle”
+  - Replace with: “Beadle”
 
 
 
@@ -6180,6 +6258,24 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+    5065 | “Have you got a church you go to sometimes, George? Maybe even if you haven’t
+         |                               ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+    5069 | “Don’t belong to any.”
+         |               ^~ Use `too` here to mean ‘also’ or an excessive degree.
+Suggest:
+  - Replace with: “too”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5087 | Michaelis opened the drawer nearest his hand. There was nothing in it but a
@@ -6237,6 +6333,21 @@ Suggest:
   - Replace with: “asthma's”
   - Replace with: “airheads”
   - Replace with: “ashcans”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5151 | and walked to the rear window and leaned with his face pressed against it—“and I
+         |                                                                           ^ This quote has no termination.
+    5152 | said ‘God knows what you’ve been doing, everything you’ve been doing. You may
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5153 | fool me, but you can’t fool God!’”
+         |                                  ^ This quote has no termination.
 
 
 
@@ -6387,9 +6498,9 @@ Message: |
     5208 | The chauffeur—he was one of Wolfshiem’s protégés—heard the shots—afterward he
          |                             ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -6490,9 +6601,9 @@ Message: |
     5279 | Meyer Wolfshiem’s name wasn’t in the phone book. The butler gave me his office
          |       ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -6530,9 +6641,9 @@ Message: |
          |                                                               ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
     5310 | I began to have a feeling of defiance, of scornful solidarity between Gatsby and
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -6809,9 +6920,9 @@ Message: |
     5472 | “Nobody’s in,” she said. “Mr. Wolfshiem’s gone to Chicago.”
          |                               ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
 
 
 
@@ -6840,21 +6951,26 @@ Message: |
     5481 | At this moment a voice, unmistakably Wolfshiem’s, called “Stella!” from the
          |                                      ^~~~~~~~~~~ Did you mean to spell `Wolfshiem’s` this way?
 Suggest:
+  - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
-  - Replace with: “Wolsey's”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5498 | “Oh-h!” She looked at me over again. ‘‘Will you just— What was your name?”
+         |                                                                          ^ This quote has no termination.
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5500 | She vanished. In a moment Meyer Wolfsheim stood solemnly in the doorway, holding
-         |                                 ^~~~~~~~~ Did you mean to spell `Wolfsheim` this way?
+         |                                 ^~~~~~~~~ Did you mean `Florsheim`?
     5501 | out both hands. He drew me into his office, remarking in a reverent voice that
 Suggest:
-  - Replace with: “Waldheim”
-  - Replace with: “Wolfe's”
-  - Replace with: “Wilhelm”
+  - Replace with: “Florsheim”
 
 
 
@@ -6894,6 +7010,21 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    5522 | of mine up to Albany. We were so thick like that in everything”—he held up two
+    5523 | bulbous fingers—“always together.”
+         |                 ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5523 | bulbous fingers—“always together.”
+         |                                  ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5552 | For a moment I thought he was going to suggest a “gonnegtion,” but he only
@@ -6923,6 +7054,16 @@ Message: |
          |           ^~~ Make the verb agree with its subject.
 Suggest:
   - Replace with: “were”
+
+
+
+Lint:    Grammar (127 priority)
+Message: |
+    5575 | “He come out to see me two years ago and bought me the house I live in now. Of
+    5576 | course we was broke up when he run off from home, but I see now there was a
+         |               ^~~~~ Use the past participle `broken` instead of `broke` when using compound tenses or passive voice.
+Suggest:
+  - Replace with: “broken”
 
 
 
@@ -7000,6 +7141,16 @@ Message: |
          |                            ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
+
+
+
+Lint:    Agreement (31 priority)
+Message: |
+    5631 | wet to the skin. As we started through the gate into the cemetery I heard a car
+    5632 | stop and then the sound of some one splashing after us over the soggy ground. I
+         |                                 ^~~~~~~~~~~~~ `splashing` is a mass noun.
+Suggest:
+  - Replace with: “one piece of splashing”
 
 
 
@@ -7273,6 +7424,27 @@ Message: |
          |  ^~~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5723 | for me, and I felt a little dizzy for a while.”
+         |                                               ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5727 | “Oh, and do you remember”—she added—“a conversation we had once about driving a
+         |                                     ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5728 | car?”
+         |     ^ This quote has no termination.
 
 
 

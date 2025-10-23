@@ -1,5 +1,5 @@
 <script lang="ts">
-import LintKindChart from '$lib/LintKindChart.svelte';
+import LintKindChart from '$lib/components/LintKindChart.svelte';
 import {
 	Fileupload,
 	Table,
