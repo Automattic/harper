@@ -71,6 +71,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `along time` to `a long time`.",
             LintKind::Grammar
         ),
+        "Alongside" => (
+            ["along side"],
+            ["alongside"],
+            "Use the single word `alongside`.",
+            "Replaces the spaced form `along side` with `alongside`.",
+            LintKind::WordChoice
+        ),
         "AlzheimersDisease" => (
             ["old-timers' disease"],
             ["Alzheimer’s disease"],

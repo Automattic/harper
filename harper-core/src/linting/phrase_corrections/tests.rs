@@ -60,6 +60,85 @@ fn detect_a_long_time_real_world() {
     );
 }
 
+// Alongside
+#[test]
+fn corrects_along_side_basic() {
+    assert_suggestion_result(
+        "They walked along side the river.",
+        lint_group(),
+        "They walked alongside the river.",
+    );
+}
+
+#[test]
+fn corrects_along_side_sentence_start() {
+    assert_suggestion_result(
+        "Along side the road, we saw a parade.",
+        lint_group(),
+        "Alongside the road, we saw a parade.",
+    );
+}
+
+#[test]
+fn corrects_along_side_all_caps() {
+    assert_suggestion_result(
+        "The banner read ALONG SIDE THE TEAM!",
+        lint_group(),
+        "The banner read ALONGSIDE THE TEAM!",
+    );
+}
+
+#[test]
+fn corrects_along_side_with_period() {
+    assert_suggestion_result(
+        "The skiff pulled along side.",
+        lint_group(),
+        "The skiff pulled alongside.",
+    );
+}
+
+#[test]
+fn corrects_along_side_in_quotes() {
+    assert_suggestion_result(
+        "\"We drifted along side,\" she said.",
+        lint_group(),
+        "\"We drifted alongside,\" she said.",
+    );
+}
+
+#[test]
+fn corrects_along_side_before_comma() {
+    assert_suggestion_result(
+        "They stood along side, waiting patiently.",
+        lint_group(),
+        "They stood alongside, waiting patiently.",
+    );
+}
+
+#[test]
+fn corrects_along_side_plural_subject() {
+    assert_suggestion_result(
+        "Cars lined up along side the curb.",
+        lint_group(),
+        "Cars lined up alongside the curb.",
+    );
+}
+
+#[test]
+fn allows_correct_alongside() {
+    assert_lint_count("They walked alongside the river.", lint_group(), 0);
+}
+
+#[test]
+fn allows_along_the_side_phrase() {
+    assert_lint_count("They walked along the side of the river.", lint_group(), 0);
+}
+
+#[test]
+fn allows_lakeside_usage() {
+    assert_lint_count("We camped along the lakeside all weekend.", lint_group(), 0);
+}
+
 // AlzheimersDisease
 // -none-
 
