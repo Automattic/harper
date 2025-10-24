@@ -1,10 +1,9 @@
 import type { Extension, StateField } from '@codemirror/state';
-import type { LintConfig, Linter, Suggestion } from 'harper.js';
+import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
 import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { minimatch } from 'minimatch';
 import type { MarkdownFileInfo, MarkdownView, Workspace } from 'obsidian';
 import { linter } from './lint';
-import { charIndexToCodeUnit } from './textUtils';
 
 export type Settings = {
 	ignoredLints?: string;
@@ -196,8 +195,7 @@ export default class State {
 							return node.content;
 						},
 						ignore: async () => {
-							await this.harper.ignoreLint(text, lint);
-							await this.reinitialize();
+							await this.ignoreLints(text, [lint]);
 						},
 						actions,
 					};
@@ -207,6 +205,15 @@ export default class State {
 				delay: this.delay,
 			},
 		);
+	}
+
+	/** Use this method instead of interacting with the linter directly. */
+	public async ignoreLints(text: string, lints: Lint[]) {
+		for (const lint of lints) {
+			await this.harper.ignoreLint(text, lint);
+		}
+
+		await this.reinitialize();
 	}
 
 	public async reinitialize() {
@@ -328,6 +335,12 @@ export default class State {
 		} else {
 			this.enableEditorLinter();
 		}
+	}
+
+	/** Get a reference to the current linter.
+	 * It's best not to hold on to this type and to instead use this function again if another reference is needed. */
+	public getLinter(): Linter {
+		return this.harper;
 	}
 }
 

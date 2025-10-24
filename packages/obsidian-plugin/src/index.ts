@@ -104,6 +104,28 @@ export default class HarperPlugin extends Plugin {
 				this.updateStatusBar();
 			},
 		});
+
+		this.addCommand({
+			id: 'harper-ignore-all-in-buffer',
+			name: 'Ignore all errors in the open file',
+			callback: async () => {
+				const file = this.app.workspace.getActiveFile();
+				if (file != null) {
+					const text = await this.app.vault.read(file);
+
+					const lints = await this.state.getLinter().lint(text);
+					const confirmation = confirm(
+						`Are you sure you want to ignore ${lints.length} errors from Harper?`,
+					);
+
+					if (confirmation) {
+						await this.state.ignoreLints(text, lints);
+					}
+				} else {
+					new Notice('No file currently open.');
+				}
+			},
+		});
 	}
 
 	public updateStatusBar(dialect?: Dialect) {
