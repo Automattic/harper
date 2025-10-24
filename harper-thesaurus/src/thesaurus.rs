@@ -5,8 +5,10 @@ use std::sync::OnceLock;
 
 use hashbrown::HashMap;
 use hashbrown::HashSet;
+use itertools::Itertools;
 
 static RAW_THESAURUS_TEXT: &str = include_str!("../thesaurus.txt");
+static RAW_WORD_FREQUENCY_TEXT: &str = include_str!("../word-freq.txt");
 
 /// Gets a read-only reference to the thesaurus.
 pub fn thesaurus() -> &'static Thesaurus {
@@ -24,6 +26,12 @@ fn deduped_word_set() -> &'static HashSet<&'static str> {
         }
         deduped_word_set
     })
+}
+
+/// A list of words sorted by frequency of use, in descending order.
+fn sorted_word_freq_list() -> &'static [&'static str] {
+    static WORD_FREQ_LIST: OnceLock<Vec<&'static str>> = OnceLock::new();
+    WORD_FREQ_LIST.get_or_init(|| RAW_WORD_FREQUENCY_TEXT.lines().collect_vec())
 }
 
 pub struct Thesaurus {
@@ -78,6 +86,18 @@ impl Thesaurus {
     pub fn get_synonyms(&self, word: &str) -> Option<&[&'static str]> {
         self.word_ref_list_collection
             .get_words(self.entries.get(word)?)
+    }
+
+    /// Retrieves a list of synonyms, sorted by the frequency of their use.
+    pub fn get_synonyms_freq_sorted(&self, word: &str) -> Option<Vec<&'static str>> {
+        let mut syns = self.get_synonyms(word)?.to_owned();
+        syns.sort_unstable_by_key(|syn| {
+            sorted_word_freq_list()
+                .iter()
+                .position(|freq_sorted_word| *freq_sorted_word == syn.to_ascii_lowercase())
+                .unwrap_or(usize::MAX)
+        });
+        Some(syns)
     }
 }
 
