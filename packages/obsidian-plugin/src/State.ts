@@ -217,11 +217,14 @@ export default class State {
 	public async getSettings(): Promise<Settings> {
 		const usingWebWorker = this.harper instanceof WorkerLinter;
 
+    const userDictionary = await this.harper.exportWords();
+    userDictionary.sort();
+
 		return {
 			ignoredLints: await this.harper.exportIgnoredLints(),
 			useWebWorker: usingWebWorker,
 			lintSettings: await this.harper.getLintConfig(),
-			userDictionary: await this.harper.exportWords(),
+			userDictionary,
 			dialect: await this.harper.getDialect(),
 			delay: this.delay,
 			ignoredGlobs: this.ignoredGlobs,
