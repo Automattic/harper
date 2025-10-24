@@ -61,29 +61,17 @@ mod tests {
 
     #[test]
     fn corrects_basic_greeting() {
-        assert_suggestion_result(
-            "Halo John!",
-            HelloGreeting::default(),
-            "Hello John!",
-        );
+        assert_suggestion_result("Halo John!", HelloGreeting::default(), "Hello John!");
     }
 
     #[test]
     fn corrects_with_comma() {
-        assert_suggestion_result(
-            "Halo, Jane.",
-            HelloGreeting::default(),
-            "Hello, Jane.",
-        );
+        assert_suggestion_result("Halo, Jane.", HelloGreeting::default(), "Hello, Jane.");
     }
 
     #[test]
     fn corrects_with_world() {
-        assert_suggestion_result(
-            "Halo world!",
-            HelloGreeting::default(),
-            "Hello world!",
-        );
+        assert_suggestion_result("Halo world!", HelloGreeting::default(), "Hello world!");
     }
 
     #[test]
@@ -102,11 +90,7 @@ mod tests {
 
     #[test]
     fn corrects_question() {
-        assert_suggestion_result(
-            "Halo?",
-            HelloGreeting::default(),
-            "Hello?",
-        );
+        assert_suggestion_result("Halo?", HelloGreeting::default(), "Hello?");
     }
 
     #[test]

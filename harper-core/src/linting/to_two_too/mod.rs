@@ -97,10 +97,7 @@ mod tests {
 
     #[test]
     fn no_lint_distance_from_center() {
-        assert_no_lints(
-            "Distance from the center to any face",
-            ToTwoToo::default(),
-        );
+        assert_no_lints("Distance from the center to any face", ToTwoToo::default());
     }
 
     #[test]
