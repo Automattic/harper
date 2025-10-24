@@ -2,6 +2,8 @@ use crate::linting::tests::{
     assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
     assert_top3_suggestion_result,
 };
+use crate::linting::Linter;
+use crate::Document;
 
 use super::lint_group;
 
@@ -43,6 +45,126 @@ fn corrects_all_of_a_sudden() {
         lint_group(),
         "On an app that has been released since December, all of a sudden around February 5th ANRs started going up.",
     )
+}
+
+#[test]
+fn corrects_all_the_sudden_basic() {
+    assert_suggestion_result(
+        "It happened all the sudden when the lights went out.",
+        lint_group(),
+        "It happened all of a sudden when the lights went out.",
+    );
+}
+
+#[test]
+fn offers_all_the_sudden_second_option() {
+    let text = "It happened all the sudden when the lights went out.";
+    let mut group = lint_group();
+    let doc = Document::new_markdown_default_curated(text);
+    let lint = group
+        .lint(&doc)
+        .into_iter()
+        .find(|lint| {
+            lint.message == "Prefer the phrasing `all of a sudden` or `all of the sudden`."
+        })
+        .expect("expected all the sudden lint");
+
+    let suggestions: Vec<String> = lint
+        .suggestions
+        .iter()
+        .map(|suggestion| {
+            let mut chars: Vec<char> = text.chars().collect();
+            suggestion.apply(lint.span, &mut chars);
+            chars.iter().collect()
+        })
+        .collect();
+
+    assert!(suggestions.contains(
+        &"It happened all of a sudden when the lights went out.".to_string()
+    ));
+    assert!(suggestions.contains(
+        &"It happened all of the sudden when the lights went out.".to_string()
+    ));
+}
+
+#[test]
+fn corrects_all_the_sudden_sentence_start() {
+    assert_suggestion_result(
+        "All the sudden the room fell quiet.",
+        lint_group(),
+        "All of a sudden the room fell quiet.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_with_comma() {
+    assert_suggestion_result(
+        "The music stopped, all the sudden, during the chorus.",
+        lint_group(),
+        "The music stopped, all of a sudden, during the chorus.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_question() {
+    assert_suggestion_result(
+        "Did the power cut all the sudden?",
+        lint_group(),
+        "Did the power cut all of a sudden?",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_in_quotes() {
+    assert_suggestion_result(
+        "He whispered, \"all the sudden we were alone.\"",
+        lint_group(),
+        "He whispered, \"all of a sudden we were alone.\"",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_all_caps() {
+    assert_suggestion_result(
+        "ALL THE SUDDEN THE ROOM WENT DARK.",
+        lint_group(),
+        "ALL OF A SUDDEN THE ROOM WENT DARK.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_end_period() {
+    assert_suggestion_result(
+        "They were laughing all the sudden.",
+        lint_group(),
+        "They were laughing all of a sudden.",
+    );
+}
+
+#[test]
+fn counts_all_the_sudden_once() {
+    assert_lint_count(
+        "This all the sudden change surprised everyone.",
+        lint_group(),
+        1,
+    );
+}
+
+#[test]
+fn corrects_all_of_sudden_variant() {
+    assert_suggestion_result(
+        "It stormed all of sudden after a warm morning.",
+        lint_group(),
+        "It stormed all of a sudden after a warm morning.",
+    );
+}
+
+#[test]
+fn ignores_all_the_suddenness() {
+    assert_no_lints(
+        "Their excitement and suddenness were all the suddenness she remembered.",
+        lint_group(),
+    );
 }
 
 // ALongTime
