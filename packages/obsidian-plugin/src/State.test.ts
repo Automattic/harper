@@ -195,11 +195,11 @@ test('can persist dictionary order in settings', async () => {
 
 	settings = await state.getSettings();
 
-  let roundOne = settings.userDictionary;
+	const roundOne = settings.userDictionary;
 
-  await state.initializeFromSettings(settings);
+	await state.initializeFromSettings(settings);
 	settings = await state.getSettings();
-  let roundTwo = settings.userDictionary;
+	const roundTwo = settings.userDictionary;
 
 	expect(roundOne).toStrictEqual(roundTwo);
 });

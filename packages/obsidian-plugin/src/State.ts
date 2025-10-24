@@ -217,8 +217,8 @@ export default class State {
 	public async getSettings(): Promise<Settings> {
 		const usingWebWorker = this.harper instanceof WorkerLinter;
 
-    const userDictionary = await this.harper.exportWords();
-    userDictionary.sort();
+		const userDictionary = await this.harper.exportWords();
+		userDictionary.sort();
 
 		return {
 			ignoredLints: await this.harper.exportIgnoredLints(),
