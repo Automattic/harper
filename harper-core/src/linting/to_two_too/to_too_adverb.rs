@@ -16,7 +16,7 @@ impl Default for ToTooAdverb {
         let expr = SequenceExpr::default()
             .t_aco("to")
             .t_ws()
-            .then_kind_is_but_is_not_except(TokenKind::is_adverb, |_| false, &["as"])
+            .then_kind_is_but_is_not_except(TokenKind::is_adverb, TokenKind::is_determiner, &["as"])
             .then_optional(WhitespacePattern)
             .then_any_of(vec![
                 Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(

@@ -6267,15 +6267,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    5069 | “Don’t belong to any.”
-         |               ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     5087 | Michaelis opened the drawer nearest his hand. There was nothing in it but a
