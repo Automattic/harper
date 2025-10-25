@@ -37,9 +37,12 @@ impl ExprLinter for BoringWords {
         Some(Lint {
             span: matched_tokens.span()?,
             lint_kind: LintKind::Enhancement,
-            suggestions: thesaurus_helper::get_synonym_replacement_suggestions(&matched_word)
-                .take(5)
-                .collect_vec(),
+            suggestions: thesaurus_helper::get_synonym_replacement_suggestions(
+                &matched_word,
+                &matched_tokens[0].kind,
+            )
+            .take(5)
+            .collect_vec(),
             message: format!(
                 "“{matched_word}” is a boring word. Try something a little more exotic."
             ),
