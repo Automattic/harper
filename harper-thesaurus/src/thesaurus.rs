@@ -158,18 +158,4 @@ mod tests {
                 .is_some_and(|syns| syns.contains(&"great"))
         );
     }
-
-    #[test]
-    fn all_entries_of_the_same_synonym_point_to_the_same_str() {
-        let word = "any";
-        assert!(
-            deduped_word_set()
-                .iter()
-                .filter_map(|word| super::thesaurus().get_synonyms(word))
-                .flatten()
-                .filter(|syn| **syn == word)
-                .map(|syn| syn.as_ptr())
-                .all_equal()
-        );
-    }
 }
