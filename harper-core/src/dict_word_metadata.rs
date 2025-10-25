@@ -735,6 +735,43 @@ impl DictWordMetadata {
         *self = self.or(other);
         self
     }
+
+    /// How different is this word from another?
+    pub fn difference(&self, other: &Self) -> u8 {
+        [
+            Self::is_first_person_plural_pronoun,
+            Self::is_first_person_singular_pronoun,
+            Self::is_third_person_plural_pronoun,
+            Self::is_third_person_singular_pronoun,
+            Self::is_third_person_pronoun,
+            Self::is_second_person_pronoun,
+            Self::is_verb_lemma,
+            Self::is_verb_past_form,
+            Self::is_verb_simple_past_form,
+            Self::is_verb_past_participle_form,
+            Self::is_verb_progressive_form,
+            Self::is_verb_third_person_singular_present_form,
+            Self::is_singular_noun,
+            Self::is_non_singular_noun,
+            Self::is_countable_noun,
+            Self::is_non_countable_noun,
+            Self::is_mass_noun_only,
+            Self::is_nominal,
+            Self::is_singular_nominal,
+            Self::is_plural_nominal,
+            Self::is_possessive_nominal,
+            Self::is_non_singular_nominal,
+            Self::is_non_plural_nominal,
+            Self::is_non_possessive_nominal,
+            Self::is_comparative_adjective,
+            Self::is_superlative_adjective,
+            Self::is_positive_adjective,
+            Self::is_quantifier,
+            Self::is_swear,
+        ]
+        .iter()
+        .fold(0, |acc, func| acc + (func(self) ^ func(other)) as u8)
+    }
 }
 
 // These verb forms are morphological variations, distinct from TAM (Tense-Aspect-Mood)
