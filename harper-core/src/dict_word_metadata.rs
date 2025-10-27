@@ -1143,7 +1143,7 @@ pub mod tests {
     // Helper function to get metadata from the curated dictionary
     pub fn md(word: &str) -> DictWordMetadata {
         FstDictionary::curated()
-            .get_lexeme_metadata_str(word)
+            .get_word_metadata_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
             .into_owned()
     }

@@ -108,7 +108,7 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_lexeme_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
         self.word_map
             .get_with_chars(word)
             .map(|v| Cow::Borrowed(&v.metadata))
@@ -123,9 +123,9 @@ impl Dictionary for MutableDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_lexeme_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
         let chars: CharString = word.chars().collect();
-        self.get_lexeme_metadata(&chars)
+        self.get_word_metadata(&chars)
     }
 
     fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
@@ -188,7 +188,7 @@ impl Dictionary for MutableDictionary {
             .map(|(word, edit_distance)| FuzzyMatchResult {
                 word,
                 edit_distance,
-                metadata: self.get_lexeme_metadata(word).unwrap(),
+                metadata: self.get_word_metadata(word).unwrap(),
             })
             .collect()
     }
@@ -275,23 +275,15 @@ mod tests {
     #[test]
     fn this_is_determiner() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_lexeme_metadata_str("this")
-                .unwrap()
-                .is_determiner()
-        );
-        assert!(
-            dict.get_lexeme_metadata_str("This")
-                .unwrap()
-                .is_determiner()
-        );
+        assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
+        assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
     }
 
     #[test]
     fn several_is_quantifier() {
         let dict = MutableDictionary::curated();
         assert!(
-            dict.get_lexeme_metadata_str("several")
+            dict.get_word_metadata_str("several")
                 .unwrap()
                 .is_quantifier()
         );
@@ -300,47 +292,27 @@ mod tests {
     #[test]
     fn few_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_lexeme_metadata_str("few").unwrap().is_quantifier());
+        assert!(dict.get_word_metadata_str("few").unwrap().is_quantifier());
     }
 
     #[test]
     fn fewer_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_lexeme_metadata_str("fewer")
-                .unwrap()
-                .is_quantifier()
-        );
+        assert!(dict.get_word_metadata_str("fewer").unwrap().is_quantifier());
     }
 
     #[test]
     fn than_is_conjunction() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_lexeme_metadata_str("than")
-                .unwrap()
-                .is_conjunction()
-        );
-        assert!(
-            dict.get_lexeme_metadata_str("Than")
-                .unwrap()
-                .is_conjunction()
-        );
+        assert!(dict.get_word_metadata_str("than").unwrap().is_conjunction());
+        assert!(dict.get_word_metadata_str("Than").unwrap().is_conjunction());
     }
 
     #[test]
     fn herself_is_pronoun() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_lexeme_metadata_str("herself")
-                .unwrap()
-                .is_pronoun()
-        );
-        assert!(
-            dict.get_lexeme_metadata_str("Herself")
-                .unwrap()
-                .is_pronoun()
-        );
+        assert!(dict.get_word_metadata_str("herself").unwrap().is_pronoun());
+        assert!(dict.get_word_metadata_str("Herself").unwrap().is_pronoun());
     }
 
     #[test]
@@ -352,7 +324,7 @@ mod tests {
     #[test]
     fn im_is_common() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_lexeme_metadata_str("I'm").unwrap().common);
+        assert!(dict.get_word_metadata_str("I'm").unwrap().common);
     }
 
     #[test]
@@ -373,8 +345,8 @@ mod tests {
     fn there_is_not_a_pronoun() {
         let dict = MutableDictionary::curated();
 
-        assert!(!dict.get_lexeme_metadata_str("there").unwrap().is_nominal());
-        assert!(!dict.get_lexeme_metadata_str("there").unwrap().is_pronoun());
+        assert!(!dict.get_word_metadata_str("there").unwrap().is_nominal());
+        assert!(!dict.get_word_metadata_str("there").unwrap().is_pronoun());
     }
 
     #[test]
@@ -400,7 +372,7 @@ mod tests {
     fn curated_contains_possessive_abandonment() {
         assert!(
             MutableDictionary::curated()
-                .get_lexeme_metadata_str("abandonment's")
+                .get_word_metadata_str("abandonment's")
                 .unwrap()
                 .is_possessive_noun()
         )
@@ -410,7 +382,7 @@ mod tests {
     fn has_is_not_a_nominal() {
         let dict = MutableDictionary::curated();
 
-        let has = dict.get_lexeme_metadata_str("has");
+        let has = dict.get_word_metadata_str("has");
         assert!(has.is_some());
 
         assert!(!has.unwrap().is_nominal())
@@ -420,7 +392,7 @@ mod tests {
     fn is_is_linking_verb() {
         let dict = MutableDictionary::curated();
 
-        let is = dict.get_lexeme_metadata_str("is");
+        let is = dict.get_word_metadata_str("is");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_linking_verb());
@@ -444,14 +416,14 @@ mod tests {
     fn apart_is_not_noun() {
         let dict = MutableDictionary::curated();
 
-        assert!(!dict.get_lexeme_metadata_str("apart").unwrap().is_noun());
+        assert!(!dict.get_word_metadata_str("apart").unwrap().is_noun());
     }
 
     #[test]
     fn be_is_verb_lemma() {
         let dict = MutableDictionary::curated();
 
-        let is = dict.get_lexeme_metadata_str("be");
+        let is = dict.get_word_metadata_str("be");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_verb_lemma());

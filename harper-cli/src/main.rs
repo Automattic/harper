@@ -369,7 +369,7 @@ fn main() -> anyhow::Result<()> {
         Args::Metadata { words } => {
             let mut results = BTreeMap::new();
             for word in words {
-                let metadata = dictionary.get_lexeme_metadata_str(&word);
+                let metadata = dictionary.get_word_metadata_str(&word);
                 results.insert(word, metadata);
             }
             let json = serde_json::to_string_pretty(&results).unwrap();
@@ -729,7 +729,7 @@ fn main() -> anyhow::Result<()> {
             let mut processed_words = HashMap::new();
             let mut longest_word = 0;
             for word in dictionary.words_iter() {
-                if let Some(metadata) = dictionary.get_lexeme_metadata(word) {
+                if let Some(metadata) = dictionary.get_word_metadata(word) {
                     let orth = metadata.orth_info;
                     let bits = orth.bits() & case_bitmask.bits();
 
@@ -859,7 +859,7 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
 
     let children = dictionary
         .words_iter()
-        .filter(|e| dictionary.get_lexeme_metadata(e).unwrap().derived_from == Some(id));
+        .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
 
     println!(" - {word}");
 

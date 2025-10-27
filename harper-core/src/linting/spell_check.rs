@@ -48,7 +48,7 @@ impl<T: Dictionary> SpellCheck<T> {
                     .filter(|v| {
                         // Ignore entries outside the configured dialect
                         self.dictionary
-                            .get_lexeme_metadata(v)
+                            .get_word_metadata(v)
                             .unwrap()
                             .dialects
                             .is_dialect_enabled(self.dialect)
@@ -71,7 +71,7 @@ impl<T: Dictionary> SpellCheck<T> {
                 if edit_distance(word, &base) == len_diff as u8 && len_diff >= 2 {
                     // Grab the end
                     let end = &word[word.len() - len_diff..];
-                    let end_meta = self.dictionary.get_lexeme_metadata(end);
+                    let end_meta = self.dictionary.get_word_metadata(end);
 
                     if let Some(end_meta) = end_meta
                         && end_meta.common
@@ -87,7 +87,7 @@ impl<T: Dictionary> SpellCheck<T> {
 
                     // Grab the start
                     let start = &word[..len_diff];
-                    let start_meta = self.dictionary.get_lexeme_metadata(start);
+                    let start_meta = self.dictionary.get_word_metadata(start);
 
                     if let Some(start_meta) = start_meta
                         && start_meta.common
