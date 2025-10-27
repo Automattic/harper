@@ -316,5 +316,9 @@ mod tests {
 
         // an
         assert_lint_count("an RA message", AnA, 0);
+        assert_lint_count("an SI unit", AnA, 0);
+        assert_lint_count("he is an MA of both Oxford and Cambridge", AnA, 0);
+        assert_lint_count("in an FA Cup 6th Round match", AnA, 0);
+        assert_lint_count("a AM transmitter", AnA, 1);
     }
 }
