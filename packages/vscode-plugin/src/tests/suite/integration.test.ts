@@ -35,16 +35,19 @@ describe('Integration >', () => {
 			await waitForDiagnosticsChange(markdownUri),
 			createExpectedDiagnostics(
 				{
-					message: 'Did you mean to spell `errorz` this way?',
-					range: createRange(2, 26, 2, 32),
-				},
-				{
 					message: 'Did you mean to repeat this word?',
 					range: createRange(2, 39, 2, 48),
+					source: 'Harper (RepeatedWords)',
+				},
+				{
+					message: 'Did you mean to spell `errorz` this way?',
+					range: createRange(2, 26, 2, 32),
+					source: 'Harper (SpellCheck)',
 				},
 				{
 					message: 'Did you mean to spell `realise` this way?',
 					range: createRange(4, 26, 4, 33),
+					source: 'Harper (SpellCheck)',
 				},
 			),
 		);
@@ -58,6 +61,7 @@ describe('Integration >', () => {
 			createExpectedDiagnostics({
 				message: 'Did you mean to spell `Errorz` this way?',
 				range: createRange(0, 0, 0, 6),
+				source: 'Harper (SpellCheck)',
 			}),
 		);
 	});
@@ -74,10 +78,12 @@ describe('Integration >', () => {
 				{
 					message: 'Did you mean to spell `Errorz` this way?',
 					range: createRange(0, 0, 0, 6),
+					source: 'Harper (SpellCheck)',
 				},
 				{
 					message: 'Did you mean to spell `Errorz` this way?',
 					range: createRange(0, 9, 0, 15),
+					source: 'Harper (SpellCheck)',
 				},
 			),
 		);
@@ -90,6 +96,7 @@ describe('Integration >', () => {
 			createExpectedDiagnostics({
 				message: 'Did you mean to spell `Errorz` this way?',
 				range: createRange(0, 9, 0, 15),
+				source: 'Harper (SpellCheck)',
 			}),
 		);
 	});
@@ -106,10 +113,12 @@ describe('Integration >', () => {
 				{
 					message: 'Did you mean to spell `errorz` this way?',
 					range: createRange(2, 26, 2, 32),
+					source: 'Harper (SpellCheck)',
 				},
 				{
 					message: 'Did you mean to spell `realise` this way?',
 					range: createRange(4, 26, 4, 33),
+					source: 'Harper (SpellCheck)',
 				},
 			),
 		);
@@ -131,12 +140,14 @@ describe('Integration >', () => {
 			),
 			createExpectedDiagnostics(
 				{
-					message: 'Did you mean to spell `errorz` this way?',
-					range: createRange(2, 26, 2, 32),
-				},
-				{
 					message: 'Did you mean to repeat this word?',
 					range: createRange(2, 39, 2, 48),
+					source: 'Harper (RepeatedWords)',
+				},
+				{
+					message: 'Did you mean to spell `errorz` this way?',
+					range: createRange(2, 26, 2, 32),
+					source: 'Harper (SpellCheck)',
 				},
 			),
 		);

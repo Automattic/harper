@@ -84,8 +84,16 @@ export default class HarperPlugin extends Plugin {
 					.setTitle(`${this.state.hasEditorLinter() ? 'Disable' : 'Enable'} automatic checking`)
 					.setIcon('documents')
 					.onClick(() => {
-						this.state.toggleAutoLint();
-						this.updateStatusBar();
+						this.toggleAutoLint();
+					}),
+			);
+
+			menu.addItem((item) =>
+				item
+					.setTitle('Ignore all errors in file')
+					.setIcon('eraser')
+					.onClick(() => {
+						this.doIgnoreAllFlow();
 					}),
 			);
 
@@ -95,15 +103,47 @@ export default class HarperPlugin extends Plugin {
 		statusBarItem.appendChild(button);
 	}
 
+	/** Preferred over directly calling `this.state.toggleAutoLint()` */
+	private toggleAutoLint() {
+		this.state.toggleAutoLint();
+		this.updateStatusBar();
+	}
+
 	private setupCommands() {
 		this.addCommand({
 			id: 'harper-toggle-auto-lint',
 			name: 'Toggle automatic grammar checking',
 			callback: () => {
-				this.state.toggleAutoLint();
-				this.updateStatusBar();
+				this.toggleAutoLint();
 			},
 		});
+
+		this.addCommand({
+			id: 'harper-ignore-all-in-buffer',
+			name: 'Ignore all errors in the open file',
+			callback: async () => {
+				await this.doIgnoreAllFlow();
+			},
+		});
+	}
+
+	/** Trigger the flow for ignoring all files in a document, including a confirmation modal. */
+	public async doIgnoreAllFlow() {
+		const file = this.app.workspace.getActiveFile();
+		if (file != null) {
+			const text = await this.app.vault.read(file);
+
+			const lints = await this.state.getLinter().lint(text);
+			const confirmation = confirm(
+				`Are you sure you want to ignore ${lints.length} errors from Harper?`,
+			);
+
+			if (confirmation) {
+				await this.state.ignoreLints(text, lints);
+			}
+		} else {
+			new Notice('No file currently open.');
+		}
 	}
 
 	public updateStatusBar(dialect?: Dialect) {

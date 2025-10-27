@@ -333,6 +333,20 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const newLinter = new Linter({ binary });
 		await newLinter.importStatsFile(stats);
 	});
+
+	test(`${linterName} emits the correct span indices`, async () => {
+		const text = '✉️👋👍✉️🚀✉️🌴 This is to show the offset issue sdssda is it there?';
+
+		const linter = new LocalLinter({ binary });
+		const lints = await linter.lint(text);
+
+		const span = lints[0].span();
+
+		expect(span.start).toBe(48);
+		expect(span.end).toBe(54);
+
+		expect(text.slice(span.start, span.end)).toBe('sdssda');
+	});
 }
 
 test('Linters have the same config format', async () => {
