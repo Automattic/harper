@@ -6,6 +6,7 @@ use smallvec::ToSmallVec;
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
+use crate::edit_distance::edit_distance;
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
 
@@ -14,7 +15,7 @@ where
     T: Dictionary,
 {
     dictionary: T,
-    word_cache: LruCache<CharString, Vec<CharString>>,
+    suggestion_cache: LruCache<CharString, Vec<CharString>>,
     dialect: Dialect,
 }
 
@@ -22,7 +23,7 @@ impl<T: Dictionary> SpellCheck<T> {
     pub fn new(dictionary: T, dialect: Dialect) -> Self {
         Self {
             dictionary,
-            word_cache: LruCache::new(NonZero::new(10000).unwrap()),
+            suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
             dialect,
         }
     }
@@ -30,22 +31,22 @@ impl<T: Dictionary> SpellCheck<T> {
     const MAX_SUGGESTIONS: usize = 3;
 
     fn suggest_correct_spelling(&mut self, word: &[char]) -> Vec<CharString> {
-        if let Some(hit) = self.word_cache.get(word) {
+        if let Some(hit) = self.suggestion_cache.get(word) {
             hit.clone()
         } else {
             let suggestions = self.uncached_suggest_correct_spelling(word);
-            self.word_cache.put(word.into(), suggestions.clone());
+            self.suggestion_cache.put(word.into(), suggestions.clone());
             suggestions
         }
     }
     fn uncached_suggest_correct_spelling(&self, word: &[char]) -> Vec<CharString> {
         // Back off until we find a match.
         for dist in 2..5 {
-            let suggestions: Vec<CharString> =
+            let mut suggestions: Vec<CharString> =
                 suggest_correct_spelling(word, 100, dist, &self.dictionary)
                     .into_iter()
                     .filter(|v| {
-                        // ignore entries outside the configured dialect
+                        // Ignore entries outside the configured dialect
                         self.dictionary
                             .get_lexeme_metadata(v)
                             .unwrap()
@@ -55,6 +56,26 @@ impl<T: Dictionary> SpellCheck<T> {
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
                     .collect();
+
+            // If the edit included only deletions and the deleted characters compose a full word, a space
+            // may be all that is missing.
+            if let Some(first) = suggestions.first() {
+                let len_diff = word.len().abs_diff(first.len());
+
+                if edit_distance(word, first) == len_diff as u8 {
+                    // Grab the end
+                    let end = &word[word.len() - len_diff..];
+
+                    if self.dictionary.contains_word(&end) {
+                        let mut with_space = CharString::new();
+                        with_space.extend_from_slice(first);
+                        with_space.push(' ');
+                        with_space.extend_from_slice(&end);
+
+                        suggestions.push(with_space);
+                    }
+                }
+            };
 
             if !suggestions.is_empty() {
                 return suggestions;
@@ -92,15 +113,16 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 }
             }
 
-            let suggestions = possibilities
+            let suggestions: Vec<_> = possibilities
                 .iter()
-                .map(|word| Suggestion::ReplaceWith(word.to_vec()));
+                .map(|sug| Suggestion::ReplaceWith(sug.to_vec()))
+                .collect();
 
             // If there's only one suggestion, save the user a step in the GUI
             let message = if suggestions.len() == 1 {
                 format!(
                     "Did you mean `{}`?",
-                    possibilities.last().unwrap().iter().collect::<String>()
+                    possibilities.first().unwrap().iter().collect::<String>()
                 )
             } else {
                 format!(
@@ -112,7 +134,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             lints.push(Lint {
                 span: word.span,
                 lint_kind: LintKind::Spelling,
-                suggestions: suggestions.collect(),
+                suggestions,
                 message,
                 priority: 63,
             })
@@ -131,6 +153,7 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
+    use crate::linting::tests::assert_nth_suggestion_result;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
@@ -448,6 +471,15 @@ mod tests {
                 ))
                 .len(),
             1
+        );
+    }
+
+    #[test]
+    fn issue_1905() {
+        assert_top3_suggestion_result(
+            "I want to try this insteadof that.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "I want to try this instead of that.",
         );
     }
 }
