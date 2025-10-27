@@ -7,7 +7,7 @@ format:
 build-wasm:
   #!/usr/bin/env bash
   cd "{{justfile_directory()}}/harper-wasm"
-  RUSTFLAGS='--cfg getrandom_backend="wasm_js"' wasm-pack build --target web
+  wasm-pack build --target web
 
 # Build `harper.js` with all size optimizations available.
 build-harperjs: build-wasm 

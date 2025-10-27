@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.69.0",
+	"version": "0.70.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -2052,6 +2052,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures the correct use of `real trouper`, distinguishing it from `trooper`, which refers to a soldier or police officer."
+				},
+				"harper.linters.Really": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
 				},
 				"harper.linters.RedundantAdditiveAdverbs": {
 					"scope": "resource",
