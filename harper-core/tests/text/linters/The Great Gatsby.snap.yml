@@ -2604,6 +2604,7 @@ Suggest:
   - Replace with: “Knickers”
   - Replace with: “Nickers”
   - Replace with: “Picnickers”
+  - Replace with: “Den nickers”
 
 
 
@@ -2720,8 +2721,8 @@ Message: |
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
   - Replace with: “L”
-  - Replace with: “La”
   - Replace with: “Lb”
+  - Replace with: “Lg”
 
 
 
@@ -2948,6 +2949,7 @@ Suggest:
   - Replace with: “Order”
   - Replace with: “Oder”
   - Replace with: “Orders”
+  - Replace with: “Or Oder”
 
 
 
@@ -4452,6 +4454,7 @@ Suggest:
   - Replace with: “inarguable”
   - Replace with: “unarguably”
   - Replace with: “arguably”
+  - Replace with: “in arguably”
 
 
 
@@ -5209,8 +5212,8 @@ Message: |
          |                                   ^~ Did you mean to spell `lf` this way?
 Suggest:
   - Replace with: “l”
-  - Replace with: “la”
   - Replace with: “lb”
+  - Replace with: “lg”
 
 
 
@@ -5470,9 +5473,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4391 | The young Greek, Michaelis, who ran the coffee joint beside the ashheaps was the
-         |                  ^~~~~~~~~ Did you mean `Michael`?
+         |                  ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -5491,28 +5495,31 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4394 | office—really sick, pale as his own pale hair and shaking all over. Michaelis
-         |                                                                     ^~~~~~~~~ Did you mean `Michael`?
+         |                                                                     ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
     4395 | advised him to go to bed, but Wilson refused, saying that he’d miss a lot of
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     4402 | Michaelis was astonished; they had been neighbors for four years, and Wilson had
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     4409 | So naturally Michaelis tried to find out what had happened, but Wilson wouldn’t
-         |              ^~~~~~~~~ Did you mean `Michael`?
+         |              ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -5520,9 +5527,10 @@ Lint:    Spelling (63 priority)
 Message: |
     4412 | latter was getting uneasy, some workmen came past the door bound for his
     4413 | restaurant, and Michaelis took the opportunity to get away, intending to come
-         |                 ^~~~~~~~~ Did you mean `Michael`?
+         |                 ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -5570,9 +5578,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4432 | Michaelis and this man reached her first, but when they had torn open her
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -5757,9 +5766,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
-         |                            ^~~~~~~~~ Did you mean `Michael`?
+         |                            ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6165,9 +6175,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5034 | and closed the door. Michaelis and several other men were with him; first, four
-         |                      ^~~~~~~~~ Did you mean `Michael`?
+         |                      ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6184,10 +6195,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5035 | or five men, later two or three men. Still later Michaelis had to ask the last
-         |                                                  ^~~~~~~~~ Did you mean `Michael`?
+         |                                                  ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
     5036 | stranger to wait there fifteen minutes longer, while he went back to his own
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6207,9 +6219,10 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     5047 | again in his groaning voice. Michaelis made a clumsy attempt to distract him.
-         |                              ^~~~~~~~~ Did you mean `Michael`?
+         |                              ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6217,9 +6230,10 @@ Lint:    Spelling (63 priority)
 Message: |
     5057 | The hard brown beetles kept thudding against the dull light, and whenever
     5058 | Michaelis heard a car go tearing along the road outside it sounded to him like
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6279,18 +6293,20 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5087 | Michaelis opened the drawer nearest his hand. There was nothing in it but a
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5102 | Michaelis didn’t see anything odd in that, and he gave Wilson a dozen reasons
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6309,18 +6325,20 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5128 | Michaelis had seen this too, but it hadn’t occurred to him that there was any
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5136 | He began to rock again, and Michaelis stood twisting the leash in his hand.
-         |                             ^~~~~~~~~ Did you mean `Michael`?
+         |                             ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6354,9 +6372,10 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     5155 | Standing behind him, Michaelis saw with a shock that he was looking at the eyes
-         |                      ^~~~~~~~~ Did you mean `Michael`?
+         |                      ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6397,9 +6416,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5161 | “That’s an advertisement,” Michaelis assured him. Something made him turn away
-         |                            ^~~~~~~~~ Did you mean `Michael`?
+         |                            ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6416,18 +6436,20 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5165 | By six o’clock Michaelis was worn out, and grateful for the sound of a car
-         |                ^~~~~~~~~ Did you mean `Michael`?
+         |                ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5168 | man ate together. Wilson was quieter now, and Michaelis went home to sleep; when
-         |                                               ^~~~~~~~~ Did you mean `Michael`?
+         |                                               ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6459,9 +6481,10 @@ Lint:    Spelling (63 priority)
 Message: |
     5177 | hours he disappeared from view. The police, on the strength of what he said to
     5178 | Michaelis, that he “had a way of finding out,” supposed that he spent that time
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
   - Replace with: “Michael”
+  - Replace with: “Michael is”
 
 
 
@@ -6756,7 +6779,7 @@ Message: |
 Suggest:
   - Replace with: “Cu”
   - Replace with: “C”
-  - Replace with: “Ca”
+  - Replace with: “Cc”
 
 
 
@@ -7075,6 +7098,7 @@ Suggest:
   - Replace with: “Along”
   - Replace with: “Oblong”
   - Replace with: “Coaling”
+  - Replace with: “Hop along”
 
 
 
@@ -7385,6 +7409,8 @@ Suggest:
   - Replace with: “Geo”
   - Replace with: “Greece”
   - Replace with: “Greek”
+  - Replace with: “Geo co”
+  - Replace with: “Gr Geo”
 
 
 
