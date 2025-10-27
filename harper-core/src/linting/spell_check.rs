@@ -180,7 +180,6 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
-    use crate::linting::tests::assert_nth_suggestion_result;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
