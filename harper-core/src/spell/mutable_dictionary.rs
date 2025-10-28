@@ -236,14 +236,28 @@ impl Dictionary for MutableDictionary {
         self.word_map.get(id).map(|w| w.canonical_spelling.as_ref())
     }
 
-    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<&'_ [char]> {
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
         let mut found = Vec::new();
 
         for word in self.words_iter() {
             if let Some(item_prefix) = word.get(0..prefix.len())
                 && item_prefix == prefix
             {
-                found.push(word);
+                found.push(Cow::Borrowed(word));
+            }
+        }
+
+        found
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        let mut found = Vec::new();
+
+        for item in self.words_iter() {
+            if let Some(item_prefix) = word.get(0..item.len())
+                && item_prefix == item
+            {
+                found.push(Cow::Borrowed(item));
             }
         }
 
@@ -265,6 +279,8 @@ impl From<MutableDictionary> for FstDictionary {
 
 #[cfg(test)]
 mod tests {
+    use std::borrow::Cow;
+
     use hashbrown::HashSet;
     use itertools::Itertools;
 
@@ -455,8 +471,23 @@ mod tests {
         let with_prefix = dict.find_words_with_prefix(char_string!("pre").as_slice());
 
         assert_eq!(with_prefix.len(), 3);
-        assert!(with_prefix.contains(&char_string!("predict").as_slice()));
-        assert!(with_prefix.contains(&char_string!("prelude").as_slice()));
-        assert!(with_prefix.contains(&char_string!("preview").as_slice()));
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("predict").into_vec())));
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("prelude").into_vec())));
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("preview").into_vec())));
+    }
+
+    #[test]
+    fn gets_common_prefixes_as_expected() {
+        let mut dict = MutableDictionary::new();
+        dict.append_word_str("pre", DictWordMetadata::default());
+        dict.append_word_str("prep", DictWordMetadata::default());
+        dict.append_word_str("dwight", DictWordMetadata::default());
+
+        let with_prefix =
+            dict.find_words_with_common_prefix(char_string!("preposition").as_slice());
+
+        assert_eq!(with_prefix.len(), 2);
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("pre").into_vec())));
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("prep").into_vec())));
     }
 }

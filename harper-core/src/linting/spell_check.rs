@@ -57,54 +57,7 @@ impl<T: Dictionary> SpellCheck<T> {
                     .take(Self::MAX_SUGGESTIONS)
                     .collect();
 
-            // If the edit included only deletions and the deleted characters compose a full word, a space
-            // may be all that is missing.
-            let mut split = Vec::new();
-            for base in &suggestions {
-                let len_diff = word.len().abs_diff(base.len());
-                if len_diff > word.len() || len_diff > base.len() {
-                    continue;
-                }
-
-                let base = base.clone();
-
-                if edit_distance(word, &base) == len_diff as u8 && len_diff >= 2 {
-                    // Grab the end
-                    let end = &word[word.len() - len_diff..];
-                    let end_meta = self.dictionary.get_word_metadata(end);
-
-                    if let Some(end_meta) = end_meta
-                        && end_meta.common
-                        && Some(end) != base.get(base.len() - len_diff..)
-                    {
-                        let mut with_space = CharString::new();
-                        with_space.extend_from_slice(&base);
-                        with_space.push(' ');
-                        with_space.extend_from_slice(&end);
-
-                        split.push(with_space);
-                    }
-
-                    // Grab the start
-                    let start = &word[..len_diff];
-                    let start_meta = self.dictionary.get_word_metadata(start);
-
-                    if let Some(start_meta) = start_meta
-                        && start_meta.common
-                        && Some(start) != base.get(..len_diff)
-                    {
-                        let mut with_space = CharString::new();
-                        with_space.extend_from_slice(start);
-                        with_space.push(' ');
-                        with_space.extend_from_slice(&base);
-
-                        split.push(with_space);
-                    }
-                }
-            }
-
             if !suggestions.is_empty() {
-                suggestions.append(&mut split);
                 return suggestions;
             }
         }
@@ -267,7 +220,7 @@ mod tests {
     }
 
     #[test]
-    fn austrlaian_verandah_in_british_dialect() {
+    fn australian_verandah_in_british_dialect() {
         assert_lint_count(
             "Our house has a verandah.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
@@ -498,35 +451,6 @@ mod tests {
                 ))
                 .len(),
             1
-        );
-    }
-
-    #[test]
-    fn issue_1905() {
-        assert_top3_suggestion_result(
-            "I want to try this insteadof that.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British),
-            "I want to try this instead of that.",
-        );
-    }
-
-    /// Same as above, but with the longer component word at the end.
-    #[test]
-    fn issue_1905_rev() {
-        assert_top3_suggestion_result(
-            "I want to try thisinstead of that.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British),
-            "I want to try this instead of that.",
-        );
-    }
-
-    #[test]
-    fn split_common() {
-        assert_nth_suggestion_result(
-            "This is notnot a problem.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British),
-            "This is not not a problem.",
-            4,
         );
     }
 }

@@ -214,8 +214,12 @@ impl Dictionary for FstDictionary {
         self.mutable_dict.get_word_from_id(id)
     }
 
-    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<&'_ [char]> {
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
         self.mutable_dict.find_words_with_prefix(prefix)
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.mutable_dict.find_words_with_common_prefix(word)
     }
 }
 

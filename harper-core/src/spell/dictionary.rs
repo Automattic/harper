@@ -49,5 +49,9 @@ pub trait Dictionary: Send + Sync {
     /// Returns the correct capitalization of the word with the given ID.
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]>;
 
-    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<&'_ [char]>;
+    /// Look for words with a specific prefix
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>>;
+
+    /// Look for words that share a prefix with the provided word
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>>;
 }
