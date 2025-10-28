@@ -48,4 +48,6 @@ pub trait Dictionary: Send + Sync {
 
     /// Returns the correct capitalization of the word with the given ID.
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]>;
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<&'_ [char]>;
 }

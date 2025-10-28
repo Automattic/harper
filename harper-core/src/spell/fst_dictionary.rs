@@ -54,7 +54,7 @@ impl FstDictionary {
         (*DICT).clone()
     }
 
-    /// Construct a new [`FstDictionary`] using a word list as a source.
+    /// Construct a new [`FstDictionary`] using a wordlist as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
     pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {
         words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
@@ -212,6 +212,10 @@ impl Dictionary for FstDictionary {
 
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
         self.mutable_dict.get_word_from_id(id)
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<&'_ [char]> {
+        self.mutable_dict.find_words_with_prefix(prefix)
     }
 }
 

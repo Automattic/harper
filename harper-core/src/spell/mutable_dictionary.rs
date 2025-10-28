@@ -17,7 +17,7 @@ use super::dictionary::Dictionary;
 /// A basic dictionary that allows words to be added after instantiating.
 /// This is useful for user and file dictionaries that may change at runtime.
 ///
-/// For immutable use-cases, such as the curated dictionary, prefer [`super::FstDictionary`],
+/// For immutable use-cases that require fuzzy lookups, such as the curated dictionary, prefer [`super::FstDictionary`],
 /// as it is much faster.
 ///
 /// To combine the contents of multiple dictionaries, regardless of type, use
@@ -235,6 +235,20 @@ impl Dictionary for MutableDictionary {
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
         self.word_map.get(id).map(|w| w.canonical_spelling.as_ref())
     }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<&'_ [char]> {
+        let mut found = Vec::new();
+
+        for word in self.words_iter() {
+            if let Some(item_prefix) = word.get(0..prefix.len())
+                && item_prefix == prefix
+            {
+                found.push(word);
+            }
+        }
+
+        found
+    }
 }
 
 impl From<MutableDictionary> for FstDictionary {
@@ -255,6 +269,7 @@ mod tests {
     use itertools::Itertools;
 
     use crate::spell::{Dictionary, MutableDictionary};
+    use crate::{DictWordMetadata, char_string::char_string};
 
     #[test]
     fn curated_contains_no_duplicates() {
@@ -427,5 +442,21 @@ mod tests {
 
         assert!(is.is_some());
         assert!(is.unwrap().is_verb_lemma());
+    }
+
+    #[test]
+    fn gets_prefixes_as_expected() {
+        let mut dict = MutableDictionary::new();
+        dict.append_word_str("predict", DictWordMetadata::default());
+        dict.append_word_str("prelude", DictWordMetadata::default());
+        dict.append_word_str("preview", DictWordMetadata::default());
+        dict.append_word_str("dwight", DictWordMetadata::default());
+
+        let with_prefix = dict.find_words_with_prefix(char_string!("pre").as_slice());
+
+        assert_eq!(with_prefix.len(), 3);
+        assert!(with_prefix.contains(&char_string!("predict").as_slice()));
+        assert!(with_prefix.contains(&char_string!("prelude").as_slice()));
+        assert!(with_prefix.contains(&char_string!("preview").as_slice()));
     }
 }

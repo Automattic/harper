@@ -180,6 +180,7 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
+    use crate::linting::tests::assert_nth_suggestion_result;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
@@ -509,13 +510,23 @@ mod tests {
         );
     }
 
-    /// Save as above, but with the longer component word at the end.
+    /// Same as above, but with the longer component word at the end.
     #[test]
     fn issue_1905_rev() {
         assert_top3_suggestion_result(
             "I want to try thisinstead of that.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "I want to try this instead of that.",
+        );
+    }
+
+    #[test]
+    fn split_common() {
+        assert_nth_suggestion_result(
+            "This is notnot a problem.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "This is not not a problem.",
+            4,
         );
     }
 }

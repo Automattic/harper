@@ -157,4 +157,13 @@ impl Dictionary for MergedDictionary {
             .iter()
             .find_map(|dict| dict.get_word_from_id(id))
     }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<&'_ [char]> {
+        self.children
+            .iter()
+            .flat_map(|dict| dict.find_words_with_prefix(prefix))
+            .sorted()
+            .dedup()
+            .collect()
+    }
 }
