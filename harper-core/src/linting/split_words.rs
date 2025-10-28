@@ -1,19 +1,23 @@
+use crate::spell::Dictionary;
 use std::sync::Arc;
 
+use crate::Token;
+use crate::expr::Expr;
 use crate::linting::{LintKind, Suggestion};
-use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
-use crate::{Document, TokenStringExt};
+use crate::spell::{FstDictionary, TrieDictionary};
 
-use super::{Lint, Linter};
+use super::{ExprLinter, Lint};
 
 pub struct SplitWords {
     dict: Arc<TrieDictionary<Arc<FstDictionary>>>,
+    expr: Box<dyn Expr>,
 }
 
 impl SplitWords {
     pub fn new() -> Self {
         Self {
             dict: TrieDictionary::curated(),
+            expr: Box::new(|tok: &Token, _: &[char]| tok.kind.is_word()),
         }
     }
 }
@@ -24,64 +28,66 @@ impl Default for SplitWords {
     }
 }
 
-impl Linter for SplitWords {
-    fn lint(&mut self, document: &Document) -> Vec<Lint> {
-        let mut lints = Vec::new();
+impl ExprLinter for SplitWords {
+    fn description(&self) -> &str {
+        "Finds missing spaces in improper compound words."
+    }
 
-        for word in document.iter_words() {
-            // If it's a recognized word, we don't care about it.
-            if let Some(_) = word.kind.as_word().unwrap() {
+    fn expr(&self) -> &dyn Expr {
+        self.expr.as_ref()
+    }
+
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let word = &matched_tokens[0];
+
+        // If it's a recognized word, we don't care about it.
+        if let Some(_) = word.kind.as_word().unwrap() {
+            return None;
+        }
+
+        let chars = &word.span.get_content(source);
+        // The word that starts the compound
+        let candidates = self.dict.find_words_with_common_prefix(chars);
+
+        for candidate in candidates {
+            if candidate.len() >= chars.len() {
                 continue;
             }
 
-            let chars = document.get_span_content(&word.span);
-            // The word that starts the compound
-            let candidates = self.dict.find_words_with_common_prefix(chars);
+            let cand_meta = self.dict.get_word_metadata(&candidate).unwrap();
+            if !cand_meta.common {
+                continue;
+            }
 
-            for candidate in candidates {
-                if candidate.len() >= chars.len() {
-                    continue;
-                }
+            // The potential word that completes the compound
+            let remainder = &chars[candidate.len()..];
+            if let Some(rem_meta) = self.dict.get_word_metadata(&remainder)
+                && rem_meta.common
+            {
+                let candidate_chars = candidate.as_ref();
+                let mut suggestion = Vec::new();
 
-                let cand_meta = self.dict.get_word_metadata(&candidate).unwrap();
-                if !cand_meta.common {
-                    continue;
-                }
+                suggestion.extend(candidate_chars.iter());
+                suggestion.push(' ');
+                suggestion.extend(remainder.iter());
 
-                // The potential word that completes the compound
-                let remainder = &chars[candidate.len()..];
-                if let Some(rem_meta) = self.dict.get_word_metadata(&remainder)
-                    && rem_meta.common
-                {
-                    let candidate_chars = candidate.as_ref();
-                    let mut suggestion = Vec::new();
+                let original_word: String = chars.iter().collect();
+                let candidate_word: String = candidate_chars.iter().collect();
+                let remainder_word: String = remainder.iter().collect();
 
-                    suggestion.extend(candidate_chars.iter());
-                    suggestion.push(' ');
-                    suggestion.extend(remainder.iter());
-
-                    let original_word: String = chars.iter().collect();
-                    let candidate_word: String = candidate_chars.iter().collect();
-                    let remainder_word: String = remainder.iter().collect();
-
-                    lints.push(Lint {
-                        span: word.span,
-                        lint_kind: LintKind::Typo,
-                        suggestions: vec![Suggestion::ReplaceWith(suggestion)],
-                        message: format!(
-                            "`{original_word}` should probably be written as `{candidate_word} {remainder_word}`."
-                        ),
-                        ..Default::default()
-                    });
-                }
+                return Some(Lint {
+                    span: word.span,
+                    lint_kind: LintKind::Typo,
+                    suggestions: vec![Suggestion::ReplaceWith(suggestion)],
+                    message: format!(
+                        "`{original_word}` should probably be written as `{candidate_word} {remainder_word}`."
+                    ),
+                    ..Default::default()
+                });
             }
         }
 
-        lints
-    }
-
-    fn description(&self) -> &str {
-        "Finds missing spaces in improper compound words."
+        None
     }
 }
 

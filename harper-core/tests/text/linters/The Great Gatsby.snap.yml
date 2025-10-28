@@ -3492,16 +3492,6 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
-Message: |
-    2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
-         |                                                           ^~~~~ `beaux` should probably be written as `beau x`.
-    2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
-Suggest:
-  - Replace with: “beau x”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2329 | By the next autumn she was gay again, gay as ever. She had a début after the
@@ -5870,15 +5860,6 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
-Message: |
-    4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
-         |                                                   ^~~~~~ `stopus` should probably be written as `stop us`.
-Suggest:
-  - Replace with: “stop us”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
@@ -5905,15 +5886,6 @@ Message: |
          |                                            ^~~~~ `comin` should probably be written as `co min`.
 Suggest:
   - Replace with: “co min”
-
-
-
-Lint:    Typo (127 priority)
-Message: |
-    4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
-         |                                            ^~~~~ `comin` should probably be written as `com in`.
-Suggest:
-  - Replace with: “com in”
 
 
 
@@ -5994,16 +5966,6 @@ Message: |
     4511 | knock right into her, goin’ thirty or forty miles an hour.”
 Suggest:
   - Replace with: “co min”
-
-
-
-Lint:    Typo (127 priority)
-Message: |
-    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
-         |                                                              ^~~~~ `comin` should probably be written as `com in`.
-    4511 | knock right into her, goin’ thirty or forty miles an hour.”
-Suggest:
-  - Replace with: “com in”
 
 
 
