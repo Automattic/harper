@@ -6,7 +6,6 @@ use smallvec::ToSmallVec;
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::edit_distance::edit_distance;
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
 
@@ -42,7 +41,7 @@ impl<T: Dictionary> SpellCheck<T> {
     fn uncached_suggest_correct_spelling(&self, word: &[char]) -> Vec<CharString> {
         // Back off until we find a match.
         for dist in 2..5 {
-            let mut suggestions: Vec<CharString> =
+            let suggestions: Vec<CharString> =
                 suggest_correct_spelling(word, 100, dist, &self.dictionary)
                     .into_iter()
                     .filter(|v| {
@@ -133,7 +132,6 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
-    use crate::linting::tests::assert_nth_suggestion_result;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,

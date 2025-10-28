@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
-use crate::{CharString, DictWordMetadata};
+use crate::DictWordMetadata;
 
 use super::{Dictionary, FuzzyMatchResult, WordId};
 
