@@ -43,9 +43,16 @@ impl Linter for SplitWords {
                     continue;
                 }
 
+                let cand_meta = self.dict.get_word_metadata(&candidate).unwrap();
+                if !cand_meta.common {
+                    continue;
+                }
+
                 // The potential word that completes the compound
                 let remainder = &chars[candidate.len()..];
-                if self.dict.contains_word(&remainder) {
+                if let Some(rem_meta) = self.dict.get_word_metadata(&remainder)
+                    && rem_meta.common
+                {
                     let candidate_chars = candidate.as_ref();
                     let mut suggestion = Vec::new();
 

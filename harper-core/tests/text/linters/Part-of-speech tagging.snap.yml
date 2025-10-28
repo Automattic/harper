@@ -90,9 +90,9 @@ Message: |
          |                                                                               ^~ Did you mean to spell `NP` this way?
       50 | for singular proper nouns (see the POS tags used in the Brown Corpus). Other
 Suggest:
-  - Replace with: “N”
   - Replace with: “Nap”
   - Replace with: “Nip”
+  - Replace with: “Nu”
 
 
 

@@ -286,6 +286,7 @@ pub use sought_after::SoughtAfter;
 pub use spaces::Spaces;
 pub use spell_check::SpellCheck;
 pub use spelled_numbers::SpelledNumbers;
+pub use split_words::SplitWords;
 pub use suggestion::Suggestion;
 pub use take_serious::TakeSerious;
 pub use that_than::ThatThan;

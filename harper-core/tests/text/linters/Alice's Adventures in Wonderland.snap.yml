@@ -1148,6 +1148,15 @@ Suggest:
 
 
 
+Lint:    Typo (127 priority)
+Message: |
+     668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
+         |                                                     ^~~~~ `arrum` should probably be written as `arr um`.
+Suggest:
+  - Replace with: “arr um”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      672 | “Sure, it does, yer honour: but it’s an arm for all that.”
@@ -1465,6 +1474,16 @@ Suggest:
 
 
 
+Lint:    Typo (127 priority)
+Message: |
+     961 | her foot, that there was hardly room to open her mouth; but she did it at last,
+     962 | and managed to swallow a morsel of the lefthand bit.
+         |                                        ^~~~~~~~ `lefthand` should probably be written as `left hand`.
+Suggest:
+  - Replace with: “left hand”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
@@ -1580,6 +1599,16 @@ Message: |
 Suggest:
   - Replace with: “right-hand”
   - Replace with: “rightward”
+
+
+
+Lint:    Typo (127 priority)
+Message: |
+    1055 | this size: why, I should frighten them out of their wits!” So she began nibbling
+    1056 | at the righthand bit again, and did not venture to go near the house till she
+         |        ^~~~~~~~~ `righthand` should probably be written as `right hand`.
+Suggest:
+  - Replace with: “right hand”
 
 
 
@@ -1788,6 +1817,16 @@ Message: |
 Suggest:
   - Replace with: “left-hand”
   - Replace with: “leftward”
+
+
+
+Lint:    Typo (127 priority)
+Message: |
+    1349 | did not like to go nearer till she had nibbled some more of the lefthand bit of
+         |                                                                 ^~~~~~~~ `lefthand` should probably be written as `left hand`.
+    1350 | mushroom, and raised herself to about two feet high: even then she walked up
+Suggest:
+  - Replace with: “left hand”
 
 
 
@@ -3324,6 +3363,16 @@ Suggest:
   - Replace with: “beauty”
   - Replace with: “beaut”
   - Replace with: “beauts”
+
+
+
+Lint:    Typo (127 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+    2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
+         |                           ^~~~~~ `beauti` should probably be written as `beau ti`.
+Suggest:
+  - Replace with: “beau ti”
 
 
 

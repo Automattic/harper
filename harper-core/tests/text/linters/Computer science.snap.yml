@@ -46,9 +46,9 @@ Message: |
       50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
          | ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -407,6 +407,16 @@ Suggest:
 
 
 
+Lint:    Typo (127 priority)
+Message: |
+     131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
+         |                                                        ^~~~~~~~~~ `automatica` should probably be written as `automatic a`.
+     132 | or "information and mathematics" are often used, e.g. informatique (French),
+Suggest:
+  - Replace with: “automatic a”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      132 | or "information and mathematics" are often used, e.g. informatique (French),
@@ -518,6 +528,16 @@ Suggest:
   - Replace with: “van”
   - Replace with: “vol”
   - Replace with: “vow”
+
+
+
+Lint:    Typo (127 priority)
+Message: |
+     155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
+     156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
+         | ^~~ `von` should probably be written as `v on`.
+Suggest:
+  - Replace with: “v on”
 
 
 
@@ -842,9 +862,9 @@ Message: |
      262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
          |                ^~ Did you mean to spell `NP` this way?
 Suggest:
-  - Replace with: “N”
   - Replace with: “Nap”
   - Replace with: “Nip”
+  - Replace with: “Nu”
 
 
 
@@ -1044,9 +1064,9 @@ Message: |
          |                                                                  ^~ Did you mean to spell `de` this way?
      445 |   > "high-voltage/low-voltage", etc.).
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -1141,6 +1161,16 @@ Suggest:
   - Replace with: “got”
   - Replace with: “goo”
   - Replace with: “goths”
+
+
+
+Lint:    Typo (127 priority)
+Message: |
+     468 |     Boehm's and Jacopini's insight can be further simplified with the use of
+     469 |     goto (which means it is more elementary than structured programming).
+         |     ^~~~ `goto` should probably be written as `go to`.
+Suggest:
+  - Replace with: “go to”
 
 
 
