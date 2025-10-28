@@ -1,9 +1,9 @@
+use crate::Document;
+use crate::linting::Linter;
 use crate::linting::tests::{
     assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
     assert_top3_suggestion_result,
 };
-use crate::linting::Linter;
-use crate::Document;
 
 use super::lint_group;
 
@@ -79,12 +79,13 @@ fn offers_all_the_sudden_second_option() {
         })
         .collect();
 
-    assert!(suggestions.contains(
-        &"It happened all of a sudden when the lights went out.".to_string()
-    ));
-    assert!(suggestions.contains(
-        &"It happened all of the sudden when the lights went out.".to_string()
-    ));
+    assert!(
+        suggestions.contains(&"It happened all of a sudden when the lights went out.".to_string())
+    );
+    assert!(
+        suggestions
+            .contains(&"It happened all of the sudden when the lights went out.".to_string())
+    );
 }
 
 #[test]
