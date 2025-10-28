@@ -23,6 +23,7 @@ use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::ask_no_preposition::AskNoPreposition;
 use super::avoid_curses::AvoidCurses;
+use super::be_allowed::BeAllowed;
 use super::back_in_the_day::BackInTheDay;
 use super::best_of_all_time::BestOfAllTime;
 use super::boring_words::BoringWords;
@@ -447,6 +448,7 @@ impl LintGroup {
         insert_expr_rule!(AskNoPreposition, true);
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
+        insert_expr_rule!(BeAllowed, true);
         insert_expr_rule!(BestOfAllTime, true);
         insert_expr_rule!(Bought, true);
         insert_expr_rule!(BoringWords, false);
