@@ -7,13 +7,13 @@ use crate::{Document, TokenStringExt};
 use super::{Lint, Linter};
 
 pub struct SplitWords {
-    dict: TrieDictionary<Arc<FstDictionary>>,
+    dict: Arc<TrieDictionary<Arc<FstDictionary>>>,
 }
 
 impl SplitWords {
     pub fn new() -> Self {
         Self {
-            dict: TrieDictionary::new(FstDictionary::curated()),
+            dict: TrieDictionary::curated(),
         }
     }
 }

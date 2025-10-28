@@ -1,17 +1,32 @@
+use lazy_static::lazy_static;
 use std::borrow::Cow;
+use std::sync::Arc;
 
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
 use crate::DictWordMetadata;
 
-use super::{Dictionary, FuzzyMatchResult, WordId};
+use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordId};
 
 /// A [`Dictionary`] optimized for pre- and postfix search.
 /// Wraps another dictionary to implement other operations.
 pub struct TrieDictionary<D: Dictionary> {
     trie: Trie<char>,
     inner: D,
+}
+
+lazy_static! {
+    static ref DICT: Arc<TrieDictionary<Arc<FstDictionary>>> =
+        Arc::new(TrieDictionary::new(FstDictionary::curated()));
+}
+
+impl TrieDictionary<Arc<FstDictionary>> {
+    /// Create a dictionary from the curated dictionary included
+    /// in the Harper binary.
+    pub fn curated() -> Arc<Self> {
+        (*DICT).clone()
+    }
 }
 
 impl<D: Dictionary> TrieDictionary<D> {
