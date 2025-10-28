@@ -41,7 +41,7 @@ impl ExprLinter for SplitWords {
         let word = &matched_tokens[0];
 
         // If it's a recognized word, we don't care about it.
-        if let Some(_) = word.kind.as_word().unwrap() {
+        if word.kind.as_word().unwrap().is_some() {
             return None;
         }
 
@@ -61,7 +61,7 @@ impl ExprLinter for SplitWords {
 
             // The potential word that completes the compound
             let remainder = &chars[candidate.len()..];
-            if let Some(rem_meta) = self.dict.get_word_metadata(&remainder)
+            if let Some(rem_meta) = self.dict.get_word_metadata(remainder)
                 && rem_meta.common
             {
                 let candidate_chars = candidate.as_ref();
