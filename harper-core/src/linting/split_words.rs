@@ -80,7 +80,7 @@ impl Linter for SplitWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     use super::SplitWords;
 
@@ -110,5 +110,42 @@ mod tests {
             SplitWords::default(),
             "This is not not a problem.",
         );
+    }
+
+    #[test]
+    fn splits_multiple_compound_words() {
+        assert_suggestion_result(
+            "We stared intothe darkness and kindof panicked about sortof everything.",
+            SplitWords::default(),
+            "We stared into the darkness and kind of panicked about sort of everything.",
+        );
+    }
+
+    #[test]
+    fn splits_word_with_longer_prefix() {
+        assert_suggestion_result(
+            "The astronauts waited on the landingpad for hours.",
+            SplitWords::default(),
+            "The astronauts waited on the landing pad for hours.",
+        );
+    }
+
+    #[test]
+    fn splits_before_punctuation() {
+        assert_suggestion_result(
+            "This was kindof, actually, hilarious.",
+            SplitWords::default(),
+            "This was kind of, actually, hilarious.",
+        );
+    }
+
+    #[test]
+    fn ignores_known_compound_words() {
+        assert_no_lints("Someone left early.", SplitWords::default());
+    }
+
+    #[test]
+    fn ignores_prefix_without_valid_remainder() {
+        assert_no_lints("The monkeyxyz escaped unnoticed.", SplitWords::default());
     }
 }
