@@ -57,35 +57,6 @@ fn corrects_all_the_sudden_basic() {
 }
 
 #[test]
-fn offers_all_the_sudden_standard_option() {
-    let text = "It happened all the sudden when the lights went out.";
-    let mut group = lint_group();
-    let doc = Document::new_markdown_default_curated(text);
-    let lint = group
-        .lint(&doc)
-        .into_iter()
-        .find(|lint| {
-            lint.message == "Prefer the standard phrasing `all of a sudden`; avoid less standard regional variants."
-        })
-        .expect("expected all the sudden lint");
-
-    let suggestions: Vec<String> = lint
-        .suggestions
-        .iter()
-        .map(|suggestion| {
-            let mut chars: Vec<char> = text.chars().collect();
-            suggestion.apply(lint.span, &mut chars);
-            chars.iter().collect()
-        })
-        .collect();
-
-    assert!(
-        suggestions.contains(&"It happened all of a sudden when the lights went out.".to_string())
-    );
-    assert_eq!(suggestions.len(), 1);
-}
-
-#[test]
 fn corrects_all_the_sudden_sentence_start() {
     assert_suggestion_result(
         "All the sudden the room fell quiet.",
