@@ -29,6 +29,7 @@ pub fn lints_to_diagnostics<'a>(
 
 pub fn lint_to_code_actions<'a>(
     lint: &'a Lint,
+    others: &[&'a Lint],
     uri: &'a Uri,
     document: &Document,
     config: &CodeActionConfig,
@@ -52,7 +53,27 @@ pub fn lint_to_code_actions<'a>(
                     ),
                 };
 
-                Some(CodeAction {
+                let all_edits = if others.is_empty() {
+                    None
+                } else {
+                    Some(
+                        Some(TextEdit {
+                            range,
+                            new_text: replace_string.clone(),
+                        })
+                        .into_iter()
+                        .chain(others.iter().map(|other| {
+                            let range = span_to_range(source, other.span);
+                            TextEdit {
+                                range,
+                                new_text: replace_string.clone(),
+                            }
+                        }))
+                        .collect::<Vec<_>>(),
+                    )
+                };
+
+                let this_edit_action = CodeAction {
                     title: suggestion.to_string(),
                     kind: Some(CodeActionKind::QUICKFIX),
                     diagnostics: None,
@@ -77,7 +98,18 @@ pub fn lint_to_code_actions<'a>(
                     is_preferred: None,
                     disabled: None,
                     data: None,
-                })
+                };
+
+                let all_edits = all_edits.map(|edits| {
+                    let mut do_all = this_edit_action.clone();
+                    do_all.title = do_all.title.replace("Replace ", "Replace all in document ");
+                    if let Some(e) = do_all.edit.as_mut() {
+                        e.changes = Some(HashMap::from([(uri.clone(), edits)]));
+                    }
+                    do_all
+                });
+
+                all_edits.into_iter().chain(Some(this_edit_action))
             })
             .map(CodeActionOrCommand::CodeAction),
     );
