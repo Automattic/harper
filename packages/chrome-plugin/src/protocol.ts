@@ -19,6 +19,8 @@ export type Request =
 	| GetUserDictionaryRequest
 	| GetActivationKeyRequest
 	| SetActivationKeyRequest
+	| GetHotkeyRequest
+	| SetHotkeyRequest
 	| OpenOptionsRequest
 	| OpenReportErrorRequest
 	| PostFormDataRequest;
@@ -33,6 +35,7 @@ export type Response =
 	| GetDefaultStatusResponse
 	| GetEnabledDomainsResponse
 	| GetUserDictionaryResponse
+	| GetHotkeyResponse
 	| GetActivationKeyResponse
 	| PostFormDataResponse;
 
@@ -169,6 +172,10 @@ export type GetActivationKeyRequest = {
 	kind: 'getActivationKey';
 };
 
+export type GetHotkeyRequest = {
+	kind: 'getHotkey';
+}
+
 export type GetActivationKeyResponse = {
 	kind: 'getActivationKey';
 	key: ActivationKey;
@@ -188,6 +195,22 @@ export type OpenOptionsRequest = {
 	kind: 'openOptions';
 };
 
+export type GetHotkeyResponse = {
+	kind: 'getHotkey';
+	hotkey: Hotkey;
+};
+
+export type SetHotkeyRequest = {
+	kind: 'setHotkey';
+	hotkey: Hotkey;
+};
+
+export type Modifier = 'Ctrl' | 'Shift' | 'Alt';
+
+export type Hotkey = {
+  modifiers: Modifier[];
+  key: string;
+};
 export type OpenReportErrorRequest = {
 	kind: 'openReportError';
 	example: string;

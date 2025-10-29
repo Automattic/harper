@@ -3,8 +3,11 @@ import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
 import type { PopupState } from '../PopupState';
 import {
 	ActivationKey,
+	type Hotkey,
 	type AddToUserDictionaryRequest,
 	createUnitResponse,
+	type GetActivationKeyRequest,
+	type GetHotkeyResponse,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
@@ -26,6 +29,7 @@ import {
 	type Request,
 	type Response,
 	type SetActivationKeyRequest,
+	type SetHotkeyRequest,
 	type SetConfigRequest,
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
@@ -144,6 +148,10 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetActivationKey();
 		case 'setActivationKey':
 			return handleSetActivationKey(message);
+		case 'getHotkey':
+			return handleGetHotkey();
+		case 'setHotkey':
+			return handleSetHotkey(message);
 		case 'openReportError':
 			return handleOpenReportError(message);
 		case 'openOptions':
@@ -278,6 +286,21 @@ async function handleSetActivationKey(req: SetActivationKeyRequest): Promise<Uni
 	return createUnitResponse();
 }
 
+async function handleGetHotkey(): Promise<GetHotkeyResponse> {
+	const hotkey = await getHotkey();
+
+	return { kind: 'getHotkey', hotkey };
+}
+
+async function handleSetHotkey(req: SetHotkeyRequest): Promise<UnitResponse> {
+	// Create a plain object to avoid proxy cloning issues
+	const hotkey = {
+		modifiers: [...req.hotkey.modifiers],
+		key: req.hotkey.key
+	};
+	await setHotkey(hotkey);
+}
+
 async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitResponse> {
 	const popupState: PopupState = {
 		page: 'report-error',
@@ -360,8 +383,17 @@ async function getActivationKey(): Promise<ActivationKey> {
 	return resp.activationKey;
 }
 
+async function getHotkey(): Promise<Hotkey> {
+	const resp = await chrome.storage.local.get({ hotkey: { modifiers: ['Ctrl'], key: 'e' } });
+	return resp.hotkey;
+}
+
 async function setActivationKey(key: ActivationKey) {
 	await chrome.storage.local.set({ activationKey: key });
+}
+
+async function setHotkey(hotkey: Hotkey) {
+	await chrome.storage.local.set({ hotkey: hotkey });
 }
 
 function initializeLinter(dialect: Dialect) {
