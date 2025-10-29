@@ -129,9 +129,12 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
 #[cfg(test)]
 mod tests {
+    use strum::IntoEnumIterator;
+
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
+    use crate::linting::tests::assert_no_lints;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
@@ -450,5 +453,16 @@ mod tests {
                 .len(),
             1
         );
+    }
+
+    #[test]
+    fn matt_is_allowed() {
+        for dialect in Dialect::iter() {
+            dbg!(dialect);
+            assert_no_lints(
+                "Matt is a great name.",
+                SpellCheck::new(FstDictionary::curated(), dialect),
+            );
+        }
     }
 }
