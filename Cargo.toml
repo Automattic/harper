@@ -4,7 +4,7 @@ resolver = "2"
 
 # Comment out the below lines if you plan to use a debugger.
 [profile.test]
-opt-level = 1
+opt-level = 3
 
 [profile.release]
 codegen-units = 1
