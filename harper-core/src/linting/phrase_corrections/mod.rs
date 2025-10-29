@@ -59,9 +59,9 @@ pub fn lint_group() -> LintGroup {
         ),
         "AllOfASudden" => (
             ["all of the sudden", "all of sudden", "all the sudden"],
-            ["all of a sudden", "all of the sudden"],
-            "Prefer the phrasing `all of a sudden` or `all of the sudden`.",
-            "Guides this expression toward `all of a sudden` or `all of the sudden`.",
+            ["all of a sudden"],
+            "Prefer the standard phrasing `all of a sudden`.",
+            "Guides this expression toward the standard `all of a sudden`.",
             LintKind::Nonstandard
         ),
         "ALongTime" => (

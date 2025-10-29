@@ -41,7 +41,7 @@ fn correct_ahead_and() {
 #[test]
 fn corrects_all_of_a_sudden() {
     assert_suggestion_result(
-        "On an app that has been released since December, all of the sudden around February 5th ANRs started going up.",
+            "On an app that has been released since December, all of the sudden around February 5th ANRs started going up.",
         lint_group(),
         "On an app that has been released since December, all of a sudden around February 5th ANRs started going up.",
     )
@@ -57,7 +57,7 @@ fn corrects_all_the_sudden_basic() {
 }
 
 #[test]
-fn offers_all_the_sudden_second_option() {
+fn offers_all_the_sudden_standard_option() {
     let text = "It happened all the sudden when the lights went out.";
     let mut group = lint_group();
     let doc = Document::new_markdown_default_curated(text);
@@ -65,7 +65,7 @@ fn offers_all_the_sudden_second_option() {
         .lint(&doc)
         .into_iter()
         .find(|lint| {
-            lint.message == "Prefer the phrasing `all of a sudden` or `all of the sudden`."
+            lint.message == "Prefer the standard phrasing `all of a sudden`; avoid less standard regional variants."
         })
         .expect("expected all the sudden lint");
 
@@ -82,10 +82,7 @@ fn offers_all_the_sudden_second_option() {
     assert!(
         suggestions.contains(&"It happened all of a sudden when the lights went out.".to_string())
     );
-    assert!(
-        suggestions
-            .contains(&"It happened all of the sudden when the lights went out.".to_string())
-    );
+    assert_eq!(suggestions.len(), 1);
 }
 
 #[test]
