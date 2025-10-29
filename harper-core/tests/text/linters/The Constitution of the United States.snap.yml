@@ -172,7 +172,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
       63 | one Representative; and until such enumeration shall be made, the State of New
       64 | Hampshire shall be entitled to chuse three, Massachusetts eight, Rhode-Island
@@ -193,7 +193,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
       72 | The House of Representatives shall chuse their Speaker and other Officers; and
          |                                    ^~~~~ `chuse` should probably be written as `ch use`.
@@ -257,7 +257,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      103 | The Senate shall chuse their other Officers, and also a President pro tempore,
          |                  ^~~~~ `chuse` should probably be written as `ch use`.
@@ -288,7 +288,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      103 | The Senate shall chuse their other Officers, and also a President pro tempore,
          |                                                                       ^~~~~~~ `tempore` should probably be written as `temp ore`.
@@ -1066,7 +1066,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      415 | Whenever the President transmits to the President pro tempore of the Senate and
          |                                                       ^~~~~~~ `tempore` should probably be written as `temp ore`.
@@ -1105,7 +1105,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      422 | the executive departments or of such other body as Congress may by law provide,
      423 | transmit to the President pro tempore of the Senate and the Speaker of the
@@ -1148,7 +1148,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      428 | Thereafter, when the President transmits to the President pro tempore of the
          |                                                               ^~~~~~~ `tempore` should probably be written as `temp ore`.
@@ -1170,7 +1170,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      433 | transmit within four days to the President pro tempore of the Senate and the
          |                                                ^~~~~~~ `tempore` should probably be written as `temp ore`.
@@ -1683,8 +1683,8 @@ Message: |
          |             ^~ Did you mean to spell `V.` this way?
 Suggest:
   - Replace with: “Vs.”
-  - Replace with: “V”
   - Replace with: “Vb”
+  - Replace with: “Vi”
 
 
 

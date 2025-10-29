@@ -82,7 +82,7 @@ impl ExprLinter for SplitWords {
                     message: format!(
                         "`{original_word}` should probably be written as `{candidate_word} {remainder_word}`."
                     ),
-                    ..Default::default()
+                    priority: 31,
                 });
             }
         }

@@ -407,7 +407,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
          |                                                        ^~~~~~~~~~ `automatica` should probably be written as `automatic a`.
@@ -528,16 +528,6 @@ Suggest:
   - Replace with: “van”
   - Replace with: “vol”
   - Replace with: “vow”
-
-
-
-Lint:    Typo (127 priority)
-Message: |
-     155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
-     156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
-         | ^~~ `von` should probably be written as `v on`.
-Suggest:
-  - Replace with: “v on”
 
 
 
@@ -1164,7 +1154,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      468 |     Boehm's and Jacopini's insight can be further simplified with the use of
      469 |     goto (which means it is more elementary than structured programming).

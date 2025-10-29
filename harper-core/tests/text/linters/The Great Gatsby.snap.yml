@@ -209,7 +209,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
       72 | sounded like a great idea. He found the house, a weatherbeaten cardboard
          |                                                  ^~~~~~~~~~~~~ `weatherbeaten` should probably be written as `weather beaten`.
@@ -627,7 +627,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      529 | the whole evening had been a trick of some sort to exact a contributary emotion
          |                                                            ^~~~~~~~~~~~ `contributary` should probably be written as `con tributary`.
@@ -1343,7 +1343,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     1172 | York—every Monday these same oranges and lemons left his back door in a pyramid
     1173 | of pulpless halves. There was a machine in the kitchen which could extract the
@@ -1947,7 +1947,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
          |                                                 ^~~~ `outa` should probably be written as `out a`.
@@ -3482,7 +3482,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
          |                                                           ^~~~~ `beaux` should probably be written as `be aux`.
@@ -4013,7 +4013,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     2866 | intensity. Now, in the reaction, he was running down like an overwound clock.
          |                                                              ^~~~~~~~~ `overwound` should probably be written as `over wound`.
@@ -4056,7 +4056,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     2878 | brought more and the soft rich heap mounted higher—shirts with stripes and
     2879 | scrolls and plaids in coral and applegreen and lavender and faint orange, with
@@ -4333,7 +4333,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     3089 | in turn steward, mate, skipper, secretary, and even jailor, for Dan Cody sober
          |                                                     ^~~~~~ `jailor` should probably be written as `jail or`.
@@ -4534,7 +4534,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     3349 | But the rest offended her—and inarguably, because it wasn’t a gesture but an
          |                               ^~~~~~~~~~ `inarguably` should probably be written as `in arguably`.
@@ -5302,7 +5302,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     4073 | “We're getting old,” said Daisy. “lf we were young we’d rise and dance.”
          |                                   ^~ `lf` should probably be written as `l f`.
@@ -5851,7 +5851,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
          |                                                   ^~~~~~ `stopus` should probably be written as `st opus`.
@@ -5880,7 +5880,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
          |                                            ^~~~~ `comin` should probably be written as `co min`.
@@ -5900,7 +5900,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
          |                                                        ^~~~ `goin` should probably be written as `go in`.
@@ -5920,7 +5920,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
          |      ^~~~ `goin` should probably be written as `go in`.
@@ -5959,7 +5959,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
          |                                                              ^~~~~ `comin` should probably be written as `co min`.
@@ -5993,7 +5993,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
     4511 | knock right into her, goin’ thirty or forty miles an hour.”
@@ -7571,7 +7571,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     5714 | leaf, her face the same brown tint as the fingerless glove on her knee. When I
          |                                           ^~~~~~~~~~ `fingerless` should probably be written as `finger less`.

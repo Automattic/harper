@@ -1148,7 +1148,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
          |                                                     ^~~~~ `arrum` should probably be written as `arr um`.
@@ -1474,7 +1474,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
      961 | her foot, that there was hardly room to open her mouth; but she did it at last,
      962 | and managed to swallow a morsel of the lefthand bit.
@@ -1602,7 +1602,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     1055 | this size: why, I should frighten them out of their wits!” So she began nibbling
     1056 | at the righthand bit again, and did not venture to go near the house till she
@@ -1820,7 +1820,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     1349 | did not like to go nearer till she had nibbled some more of the lefthand bit of
          |                                                                 ^~~~~~~~ `lefthand` should probably be written as `left hand`.
@@ -3366,7 +3366,7 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
+Lint:    Typo (31 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
