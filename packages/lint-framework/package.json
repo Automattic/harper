@@ -28,6 +28,7 @@
 		"harper.js": "workspace:*"
 	},
 	"devDependencies": {
+		"@types/chrome": "0.1.24",
 		"@types/virtual-dom": "^2.1.4",
 		"type-fest": "^4.37.0",
 		"typescript": "catalog:",

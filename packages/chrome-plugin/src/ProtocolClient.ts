@@ -1,7 +1,7 @@
 import type { Dialect, LintConfig } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
-import type { ActivationKey } from './protocol';
+import type { ActivationKey, SpellCheckingMode } from './protocol';
 
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
@@ -80,8 +80,17 @@ export default class ProtocolClient {
 		return (await chrome.runtime.sendMessage({ kind: 'getActivationKey' })).key;
 	}
 
+	public static async getSpellCheckingMode(): Promise<SpellCheckingMode> {
+		return (await chrome.runtime.sendMessage({ kind: 'getSpellCheckingMode' })).spellCheckingMode;
+	}
+
+
 	public static async setActivationKey(key: ActivationKey): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setActivationKey', key });
+	}
+
+	public static async setSpellCheckingMode(spellCheckingMode: SpellCheckingMode): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setSpellCheckingMode', spellCheckingMode });
 	}
 
 	public static async addToUserDictionary(words: string[]): Promise<void> {

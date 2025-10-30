@@ -16,10 +16,13 @@ import {
 	type GetEnabledDomainsResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
+	type GetSpellCheckingModeResponse,
+	type GetSpellCheckingModeRequest,
 	type GetUserDictionaryResponse,
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
+	SpellCheckingMode,
 	type OpenReportErrorRequest,
 	type PostFormDataRequest,
 	type PostFormDataResponse,
@@ -30,6 +33,7 @@ import {
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
+	type SetSpellCheckingModeRequest,
 	type SetUserDictionaryRequest,
 	type UnitResponse,
 } from '../protocol';
@@ -140,6 +144,10 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetUserDictionary();
 		case 'setUserDictionary':
 			return handleSetUserDictionary(message);
+		case 'getSpellCheckingMode':
+			return handleGetSpellCheckingMode();
+		case 'setSpellCheckingMode':
+			return handleSetSpellCheckingMode(message);
 		case 'getActivationKey':
 			return handleGetActivationKey();
 		case 'setActivationKey':
@@ -278,6 +286,18 @@ async function handleSetActivationKey(req: SetActivationKeyRequest): Promise<Uni
 	return createUnitResponse();
 }
 
+async function handleGetSpellCheckingMode(): Promise<GetSpellCheckingModeResponse> {
+	const spellCheckingMode = await getSpellCheckingMode();
+
+	return { kind: 'getSpellCheckingMode', spellCheckingMode };
+}
+
+async function handleSetSpellCheckingMode(req: SetSpellCheckingModeRequest): Promise<UnitResponse> {
+	if (!Object.values(SpellCheckingMode).includes(req.spellCheckingMode)) {
+		throw new Error(`Invalid spell checking mode: ${req.spellCheckingMode}`);
+	}
+	await setSpellCheckingMode(req.spellCheckingMode);
+}
 async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitResponse> {
 	const popupState: PopupState = {
 		page: 'report-error',
@@ -363,6 +383,16 @@ async function getActivationKey(): Promise<ActivationKey> {
 async function setActivationKey(key: ActivationKey) {
 	await chrome.storage.local.set({ activationKey: key });
 }
+
+async function getSpellCheckingMode(): Promise<SpellCheckingMode> {
+	const resp = await chrome.storage.local.get({ spellCheckingMode: SpellCheckingMode.Default });
+	return resp.spellCheckingMode;
+}
+
+async function setSpellCheckingMode(spellCheckingMode: SpellCheckingMode) {
+	await chrome.storage.local.set({ spellCheckingMode: spellCheckingMode });
+}
+
 
 function initializeLinter(dialect: Dialect) {
 	linter = new LocalLinter({

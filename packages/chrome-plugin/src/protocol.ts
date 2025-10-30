@@ -1,4 +1,4 @@
-import type { Dialect, LintConfig, Summary } from 'harper.js';
+import type { Dialect, LintConfig } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 
 export type Request =
@@ -19,6 +19,8 @@ export type Request =
 	| GetUserDictionaryRequest
 	| GetActivationKeyRequest
 	| SetActivationKeyRequest
+	| GetSpellCheckingModeRequest
+	| SetSpellCheckingModeRequest
 	| OpenOptionsRequest
 	| OpenReportErrorRequest
 	| PostFormDataRequest;
@@ -34,7 +36,9 @@ export type Response =
 	| GetEnabledDomainsResponse
 	| GetUserDictionaryResponse
 	| GetActivationKeyResponse
-	| PostFormDataResponse;
+	| PostFormDataResponse
+	| GetSpellCheckingModeResponse;
+
 
 export type LintRequest = {
 	kind: 'lint';
@@ -183,6 +187,27 @@ export type SetActivationKeyRequest = {
 	kind: 'setActivationKey';
 	key: ActivationKey;
 };
+
+export enum SpellCheckingMode {
+	Default = 'default',
+	Space = 'space',
+	Stop = 'stop',
+}
+
+export type GetSpellCheckingModeRequest = {
+	kind: 'getSpellCheckingMode';
+};
+
+export type GetSpellCheckingModeResponse = {
+	kind: 'getSpellCheckingMode';
+	spellCheckingMode: SpellCheckingMode;
+};
+
+export type SetSpellCheckingModeRequest = {
+	kind: 'setSpellCheckingMode';
+	spellCheckingMode: SpellCheckingMode;
+};
+
 
 export type OpenOptionsRequest = {
 	kind: 'openOptions';

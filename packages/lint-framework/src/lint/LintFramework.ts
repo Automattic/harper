@@ -3,8 +3,13 @@ import { isVisible } from './domUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
+import ProtocolClient from '../../../chrome-plugin/src/ProtocolClient';
 
 type ActivationKey = 'off' | 'shift' | 'control';
+
+type SpellCheckingMode = 'default' | 'space' | 'stop';
+
+let renderTimer: ReturnType<typeof setTimeout> | null = null;
 
 /** Events on an input (any kind) that can trigger a re-render. */
 const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
@@ -30,6 +35,7 @@ export default class LintFramework {
 	private actions: {
 		ignoreLint?: (hash: string) => Promise<void>;
 		getActivationKey?: () => Promise<ActivationKey>;
+		getSpellCheckingMode?: () => Promise<SpellCheckingMode>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 		reportError?: (lint: UnpackedLint) => Promise<void>;
@@ -40,6 +46,7 @@ export default class LintFramework {
 		actions: {
 			ignoreLint?: (hash: string) => Promise<void>;
 			getActivationKey?: () => Promise<ActivationKey>;
+			getSpellCheckingMode?: () => Promise<SpellCheckingMode>;
 			openOptions?: () => Promise<void>;
 			addToUserDictionary?: (words: string[]) => Promise<void>;
 			reportError?: () => Promise<void>;
@@ -87,8 +94,8 @@ export default class LintFramework {
 	}
 
 	async update() {
+		this.determineSpellCheckingMode();
 		this.requestRender();
-		this.requestLintUpdate();
 	}
 
 	async requestLintUpdate() {
@@ -122,7 +129,6 @@ export default class LintFramework {
 
 		this.lastLints = lintResults.filter((r) => r.target != null) as any;
 		this.lintRequested = false;
-		this.requestRender();
 	}
 
 	public async addTarget(target: Node) {
@@ -180,6 +186,33 @@ export default class LintFramework {
 		for (const event of PAGE_EVENTS) {
 			window.addEventListener(event, this.updateEventCallback);
 		}
+	}
+
+	private async determineSpellCheckingMode() {
+		let spellCheckingMode: SpellCheckingMode = await ProtocolClient.getSpellCheckingMode();
+		switch(spellCheckingMode) {
+			case 'space':
+				window.addEventListener('keyup', (event: KeyboardEvent) => {
+					let key = event.code;
+					let expectedKey = 'Space';
+					if(key === expectedKey) {
+						this.requestLintUpdate();
+					}
+				});
+				break;
+			case 'stop':
+				window.addEventListener('input', () => {
+						if(renderTimer) clearTimeout(renderTimer);
+						renderTimer = setTimeout(() => {
+							this.requestLintUpdate();
+						}, 2000);
+					}, {once: true});
+				break;
+			case 'default':
+				this.requestLintUpdate();
+
+		}
+
 	}
 
 	private requestRender() {
