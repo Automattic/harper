@@ -3,7 +3,7 @@ use crate::linting::{LintKind, Suggestion};
 use std::sync::Arc;
 
 use crate::expr::Expr;
-use crate::spell::FstDictionary;
+use crate::spell::{Dictionary, FstDictionary};
 use crate::{OrthFlags, Token};
 
 use super::{ExprLinter, Lint};
@@ -60,6 +60,51 @@ impl ExprLinter for OrthographicConsistency {
                 message: "This word's canonical spelling is all-caps.".to_owned(),
                 ..Default::default()
             });
+        }
+
+        let canonical_flags = metadata.orth_info;
+
+        if metadata.is_titlecase()
+            && cur_flags.contains(OrthFlags::LOWERCASE)
+            && !canonical_flags.contains(OrthFlags::TITLECASE)
+        {
+            if let Some(canonical) = self.dict.get_correct_capitalization_of(chars) {
+                return Some(Lint {
+                    span: word.span,
+                    lint_kind: LintKind::Capitalization,
+                    suggestions: vec![Suggestion::ReplaceWith(canonical.to_vec())],
+                    message: format!(
+                        "The canonical dictionary spelling is `{}`.",
+                        canonical.iter().collect::<String>()
+                    ),
+                    ..Default::default()
+                });
+            }
+        }
+
+        let flags_to_check = [
+            OrthFlags::LOWER_CAMEL,
+            OrthFlags::UPPER_CAMEL,
+            OrthFlags::APOSTROPHE,
+            OrthFlags::HYPHENATED,
+        ];
+
+        if flags_to_check
+            .iter()
+            .any(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
+        {
+            if let Some(canonical) = self.dict.get_correct_capitalization_of(chars) {
+                return Some(Lint {
+                    span: word.span,
+                    lint_kind: LintKind::Capitalization,
+                    suggestions: vec![Suggestion::ReplaceWith(canonical.to_vec())],
+                    message: format!(
+                        "The canonical dictionary spelling is `{}`.",
+                        canonical.iter().collect::<String>()
+                    ),
+                    ..Default::default()
+                });
+            }
         }
 
         None
@@ -195,6 +240,24 @@ mod tests {
             "Faq answers common questions.",
             OrthographicConsistency::default(),
             "FAQ answers common questions.",
+        );
+    }
+
+    #[test]
+    fn linkedin_should_use_canonical_case() {
+        assert_suggestion_result(
+            "I updated my linkedin profile yesterday.",
+            OrthographicConsistency::default(),
+            "I updated my LinkedIn profile yesterday.",
+        );
+    }
+
+    #[test]
+    fn wordpress_should_use_canonical_case() {
+        assert_suggestion_result(
+            "She writes daily on her wordpress blog.",
+            OrthographicConsistency::default(),
+            "She writes daily on her WordPress blog.",
         );
     }
 
