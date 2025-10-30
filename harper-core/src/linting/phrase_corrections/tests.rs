@@ -1,5 +1,3 @@
-use crate::Document;
-use crate::linting::Linter;
 use crate::linting::tests::{
     assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
     assert_top3_suggestion_result,
