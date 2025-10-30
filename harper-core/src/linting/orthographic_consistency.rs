@@ -62,9 +62,6 @@ impl ExprLinter for OrthographicConsistency {
         }
 
         let canonical_flags = metadata.orth_info;
-        dbg!(cur_flags);
-        dbg!(canonical_flags);
-
         let flags_to_check = [
             OrthFlags::LOWER_CAMEL,
             OrthFlags::UPPER_CAMEL,
