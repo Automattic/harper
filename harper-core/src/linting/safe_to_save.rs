@@ -176,10 +176,7 @@ mod tests {
 
     #[test]
     fn allows_safe_noun() {
-        assert_no_lints(
-            "Put the money in the safe today.",
-            SafeToSave::default(),
-        );
+        assert_no_lints("Put the money in the safe today.", SafeToSave::default());
     }
 
     #[test]

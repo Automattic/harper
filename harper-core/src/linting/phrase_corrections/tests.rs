@@ -41,7 +41,7 @@ fn correct_ahead_and() {
 #[test]
 fn corrects_all_of_a_sudden() {
     assert_suggestion_result(
-            "On an app that has been released since December, all of the sudden around February 5th ANRs started going up.",
+        "On an app that has been released since December, all of the sudden around February 5th ANRs started going up.",
         lint_group(),
         "On an app that has been released since December, all of a sudden around February 5th ANRs started going up.",
     )

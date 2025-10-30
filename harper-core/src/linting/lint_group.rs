@@ -83,6 +83,7 @@ use super::missing_to::MissingTo;
 use super::misspell::Misspell;
 use super::mixed_bag::MixedBag;
 use super::modal_of::ModalOf;
+use super::modal_seem::ModalSeem;
 use super::months::Months;
 use super::most_number::MostNumber;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
@@ -509,6 +510,7 @@ impl LintGroup {
         insert_expr_rule!(MissingTo, true);
         insert_expr_rule!(MixedBag, true);
         insert_expr_rule!(ModalOf, true);
+        insert_expr_rule!(ModalSeem, true);
         insert_expr_rule!(Months, true);
         insert_expr_rule!(MostNumber, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
