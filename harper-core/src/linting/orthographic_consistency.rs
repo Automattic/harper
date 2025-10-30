@@ -1,4 +1,3 @@
-use crate::dict_word_metadata_orthography::Orthography;
 use crate::linting::{LintKind, Suggestion};
 use std::sync::Arc;
 
@@ -76,36 +75,35 @@ impl ExprLinter for OrthographicConsistency {
         if flags_to_check
             .iter()
             .any(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
+            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
         {
-            if let Some(canonical) = self.dict.get_correct_capitalization_of(chars) {
-                return Some(Lint {
-                    span: word.span,
-                    lint_kind: LintKind::Capitalization,
-                    suggestions: vec![Suggestion::ReplaceWith(canonical.to_vec())],
-                    message: format!(
-                        "The canonical dictionary spelling is `{}`.",
-                        canonical.iter().collect::<String>()
-                    ),
-                    ..Default::default()
-                });
-            }
+            return Some(Lint {
+                span: word.span,
+                lint_kind: LintKind::Capitalization,
+                suggestions: vec![Suggestion::ReplaceWith(canonical.to_vec())],
+                message: format!(
+                    "The canonical dictionary spelling is `{}`.",
+                    canonical.iter().collect::<String>()
+                ),
+                ..Default::default()
+            });
         }
 
-        if metadata.is_titlecase() && cur_flags.contains(OrthFlags::LOWERCASE) {
-            if let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
-                && canonical != chars
-            {
-                return Some(Lint {
-                    span: word.span,
-                    lint_kind: LintKind::Capitalization,
-                    suggestions: vec![Suggestion::ReplaceWith(canonical.to_vec())],
-                    message: format!(
-                        "The canonical dictionary spelling is `{}`.",
-                        canonical.iter().collect::<String>()
-                    ),
-                    ..Default::default()
-                });
-            }
+        if metadata.is_titlecase()
+            && cur_flags.contains(OrthFlags::LOWERCASE)
+            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && canonical != chars
+        {
+            return Some(Lint {
+                span: word.span,
+                lint_kind: LintKind::Capitalization,
+                suggestions: vec![Suggestion::ReplaceWith(canonical.to_vec())],
+                message: format!(
+                    "The canonical dictionary spelling is `{}`.",
+                    canonical.iter().collect::<String>()
+                ),
+                ..Default::default()
+            });
         }
 
         None

@@ -1,5 +1,5 @@
+use crate::CharStringExt;
 use crate::char_ext::CharExt;
-use crate::{CharString, CharStringExt};
 use serde::{Deserialize, Serialize};
 
 /// Orthography information.
