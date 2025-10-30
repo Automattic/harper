@@ -109,6 +109,7 @@ mod once_or_twice;
 mod one_and_the_same;
 mod open_compounds;
 mod open_the_light;
+mod orthographic_consistency;
 mod ought_to_be;
 mod out_of_date;
 mod oxford_comma;

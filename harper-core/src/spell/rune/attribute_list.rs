@@ -272,7 +272,6 @@ impl AttributeList {
     }
 }
 
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HumanReadableAttributeList {
     affixes: HashMap<char, HumanReadableExpansion>,

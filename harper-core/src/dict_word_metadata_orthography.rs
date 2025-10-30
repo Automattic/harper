@@ -55,7 +55,7 @@ impl Default for OrthFlags {
 
 impl OrthFlags {
     /// Construct orthography flags for a given sequence of letters.
-    pub fn from_letters(letters: &CharString) -> Self {
+    pub fn from_letters(letters: &[char]) -> Self {
         let mut ortho_flags = Self::default();
         let mut all_lower = true;
         let mut all_upper = true;
@@ -137,9 +137,7 @@ impl OrthFlags {
             }
         }
 
-        if looks_like_roman_numerals(letters)
-            && is_really_roman_numerals(&letters.to_lower())
-        {
+        if looks_like_roman_numerals(letters) && is_really_roman_numerals(&letters.to_lower()) {
             ortho_flags |= Self::ROMAN_NUMERALS;
         }
 
@@ -147,7 +145,7 @@ impl OrthFlags {
     }
 }
 
-fn looks_like_roman_numerals(word: &CharString) -> bool {
+fn looks_like_roman_numerals(word: &[char]) -> bool {
     let mut is_roman = false;
     let first_char_upper;
 
@@ -234,9 +232,9 @@ fn check_roman_group<I: Iterator<Item = char>>(
 
 #[cfg(test)]
 mod tests {
+    use crate::CharString;
     use crate::dict_word_metadata::tests::md;
     use crate::dict_word_metadata_orthography::OrthFlags;
-    use crate::CharString;
 
     fn orth_flags(s: &str) -> OrthFlags {
         let letters: CharString = s.chars().collect();
