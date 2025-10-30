@@ -63,10 +63,19 @@ impl ExprLinter for OrthographicConsistency {
         }
 
         let canonical_flags = metadata.orth_info;
+        dbg!(cur_flags);
+        dbg!(canonical_flags);
 
-        if metadata.is_titlecase()
-            && cur_flags.contains(OrthFlags::LOWERCASE)
-            && !canonical_flags.contains(OrthFlags::TITLECASE)
+        let flags_to_check = [
+            OrthFlags::LOWER_CAMEL,
+            OrthFlags::UPPER_CAMEL,
+            OrthFlags::APOSTROPHE,
+            OrthFlags::HYPHENATED,
+        ];
+
+        if flags_to_check
+            .iter()
+            .any(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
         {
             if let Some(canonical) = self.dict.get_correct_capitalization_of(chars) {
                 return Some(Lint {
@@ -82,18 +91,10 @@ impl ExprLinter for OrthographicConsistency {
             }
         }
 
-        let flags_to_check = [
-            OrthFlags::LOWER_CAMEL,
-            OrthFlags::UPPER_CAMEL,
-            OrthFlags::APOSTROPHE,
-            OrthFlags::HYPHENATED,
-        ];
-
-        if flags_to_check
-            .iter()
-            .any(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
-        {
-            if let Some(canonical) = self.dict.get_correct_capitalization_of(chars) {
+        if metadata.is_titlecase() && cur_flags.contains(OrthFlags::LOWERCASE) {
+            if let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+                && canonical != chars
+            {
                 return Some(Lint {
                     span: word.span,
                     lint_kind: LintKind::Capitalization,
@@ -312,6 +313,15 @@ mod tests {
             "Ufo sightings provoke debate.",
             OrthographicConsistency::default(),
             "UFO sightings provoke debate.",
+        );
+    }
+
+    #[test]
+    fn markdown_should_be_caps() {
+        assert_suggestion_result(
+            "I adore markdown.",
+            OrthographicConsistency::default(),
+            "I adore Markdown.",
         );
     }
 }

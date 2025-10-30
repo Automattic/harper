@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Ff”
+  - Replace with: “Fa”
 
 
 
@@ -861,8 +861,8 @@ Message: |
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “B”
   - Replace with: “Be”
-  - Replace with: “Bf”
 
 
 
@@ -948,9 +948,9 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “Do”
   - Replace with: “D”
   - Replace with: “Db”
+  - Replace with: “Dc”
 
 
 
@@ -1130,8 +1130,8 @@ Message: |
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “B”
   - Replace with: “Be”
-  - Replace with: “Bf”
 
 
 
@@ -2192,9 +2192,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Rd”
+  - Replace with: “Re”
   - Replace with: “R”
-  - Replace with: “RC”
+  - Replace with: “Rd”
 
 
 
@@ -2281,8 +2281,8 @@ Message: |
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “B”
   - Replace with: “Be”
-  - Replace with: “Bf”
 
 
 
@@ -2294,7 +2294,7 @@ Message: |
 Suggest:
   - Replace with: “Ax”
   - Replace with: “A”
-  - Replace with: “Ah”
+  - Replace with: “Ab”
 
 
 
@@ -2417,8 +2417,8 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Gt”
-  - Replace with: “G”
-  - Replace with: “Gr”
+  - Replace with: “Gm”
+  - Replace with: “Go”
 
 
 
@@ -2498,8 +2498,8 @@ Message: |
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “B”
   - Replace with: “Be”
-  - Replace with: “Bf”
 
 
 
@@ -2511,7 +2511,7 @@ Message: |
 Suggest:
   - Replace with: “Db”
   - Replace with: “Dc”
-  - Replace with: “Def”
+  - Replace with: “Dd”
 
 
 
@@ -6291,9 +6291,9 @@ Message: |
     5122 | ghost of a superior “Hm!”
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
+  - Replace with: “H”
   - Replace with: “H'm”
-  - Replace with: “Ha”
-  - Replace with: “Ham”
+  - Replace with: “Hem”
 
 
 
@@ -6745,7 +6745,7 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
-  - Replace with: “Cu”
+  - Replace with: “Cw”
   - Replace with: “C”
   - Replace with: “Ca”
 
@@ -6881,8 +6881,8 @@ Message: |
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
   - Replace with: “Bu”
+  - Replace with: “B”
   - Replace with: “Be”
-  - Replace with: “Bf”
 
 
 
@@ -6893,7 +6893,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Ff”
+  - Replace with: “Fa”
 
 
 
