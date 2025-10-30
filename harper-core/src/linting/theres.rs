@@ -38,9 +38,7 @@ impl ExprLinter for Theres {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "there's", &template,
-            )],
+            suggestions: vec![Suggestion::replace_with_match_case_str("there's", template)],
             message: "Use `there's`—the contraction of “there is”—for this construction.".into(),
             priority: 31,
         })

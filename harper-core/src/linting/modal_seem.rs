@@ -7,15 +7,9 @@ use crate::{
     patterns::ModalVerb,
 };
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default)]
 struct MatchContext {
     modal_index: usize,
-}
-
-impl Default for MatchContext {
-    fn default() -> Self {
-        Self { modal_index: 0 }
-    }
 }
 
 pub struct ModalSeem {

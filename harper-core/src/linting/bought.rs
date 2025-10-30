@@ -32,7 +32,7 @@ impl ExprLinter for Bought {
         let typo = matched_tokens.last()?;
 
         Some(Lint {
-            span: typo.span.clone(),
+            span: typo.span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
                 "bought".chars().collect(),
