@@ -272,6 +272,7 @@ pub use on_floor::OnFloor;
 pub use once_or_twice::OnceOrTwice;
 pub use one_and_the_same::OneAndTheSame;
 pub use open_the_light::OpenTheLight;
+pub use orthographic_consistency::OrthographicConsistency;
 pub use ought_to_be::OughtToBe;
 pub use out_of_date::OutOfDate;
 pub use oxford_comma::OxfordComma;

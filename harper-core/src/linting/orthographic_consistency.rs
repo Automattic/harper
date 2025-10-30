@@ -28,7 +28,7 @@ impl Default for OrthographicConsistency {
 
 impl ExprLinter for OrthographicConsistency {
     fn description(&self) -> &str {
-        todo!()
+        "Ensures word casing matches the dictionary's canonical orthography."
     }
 
     fn expr(&self) -> &dyn Expr {

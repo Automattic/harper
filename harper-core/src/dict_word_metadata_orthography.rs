@@ -79,7 +79,7 @@ impl OrthFlags {
                 continue;
             }
 
-            if c == '\'' || c == '’' {
+            if c.normalized() == '\'' {
                 ortho_flags |= Self::APOSTROPHE;
                 continue;
             }
