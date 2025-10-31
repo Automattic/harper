@@ -100,7 +100,7 @@ impl CommentParser {
             "py" => "python",
             "rb" => "ruby",
             "rs" => "rust",
-            "scala" | "sbt" | "mill" => "scala",
+            "scala" | "sc" | "sbt" | "mill" => "scala",
             "sh" => "shellscript",
             "sol" => "solidity",
             "swift" => "swift",
