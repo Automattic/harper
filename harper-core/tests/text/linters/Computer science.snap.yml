@@ -40,6 +40,16 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+      49 | including the fact that he documented the binary number system. In 1820, Thomas
+      50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
+         | ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “DE”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       49 | including the fact that he documented the binary number system. In 1820, Thomas
@@ -626,7 +636,7 @@ Message: |
 Suggest:
   - Replace with: “Ax”
   - Replace with: “A”
-  - Replace with: “Ah”
+  - Replace with: “Ab”
 
 
 
@@ -755,7 +765,7 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Hr”
+  - Replace with: “Ht”
   - Replace with: “He”
   - Replace with: “Hf”
 
@@ -978,9 +988,9 @@ Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
          |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Rd”
   - Replace with: “R”
-  - Replace with: “RC”
+  - Replace with: “Rd”
+  - Replace with: “Re”
 
 
 
@@ -1045,6 +1055,16 @@ Suggest:
   - Replace with: “Lotteries”
   - Replace with: “Notified”
   - Replace with: “Pottered”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
+         |                                                                  ^~ This word's canonical spelling is all-caps.
+     445 |   > "high-voltage/low-voltage", etc.).
+Suggest:
+  - Replace with: “DE”
 
 
 

@@ -56,12 +56,30 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     126 | Who's for ice-cream?
+         | ^~~~~ The canonical dictionary spelling is `who's`.
+Suggest:
+  - Replace with: “who's”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      160 | to account for one's whereabouts.
          | ^~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “To”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     166 | You can't get all your news from the Internet.
+         |                        ^~~~ The canonical dictionary spelling is `news`.
+Suggest:
+  - Replace with: “news”
 
 
 
@@ -323,9 +341,9 @@ Message: |
      443 | With their reputation on the line, they decided to fire their PR team.
          |                                                               ^~ Did you mean to spell `PR` this way?
 Suggest:
-  - Replace with: “Pt”
+  - Replace with: “Pry”
   - Replace with: “P”
-  - Replace with: “Par”
+  - Replace with: “Pa”
 
 
 

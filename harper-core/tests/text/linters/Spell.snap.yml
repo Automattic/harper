@@ -8,6 +8,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+       7 | My favourite color is blu.
+         |                       ^~~ The canonical dictionary spelling is `Blu`.
+Suggest:
+  - Replace with: “Blu”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
        7 | My favourite color is blu.

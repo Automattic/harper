@@ -674,6 +674,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     320 | she began again: “Où est ma chatte?” which was the first sentence in her French
+         |                      ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “EST”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
@@ -1214,6 +1223,16 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     692 | below!” (a loud crash)—“Now, who did that?—It was Bill, I fancy—Who’s to go down
+         |                                                                 ^~~~~ The canonical dictionary spelling is `who's`.
+     693 | the chimney?—Nay, I shan’t! You do it!—That I won’t, then!—Bill’s to go
+Suggest:
+  - Replace with: “who's”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      694 | down—Here, Bill! the master says you’re to go down the chimney!”
@@ -1484,6 +1503,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
+         |           ^~~~~~ The canonical dictionary spelling is `head's`.
+Suggest:
+  - Replace with: “head's”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
@@ -1637,6 +1665,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1081 | the sky.
          | ~~~~~~~~ This sentence is 49 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1127 | “Oh, there’s no use in talking to him,” said Alice desperately: “he’s perfectly
+         |                                                                  ^~~~ The canonical dictionary spelling is `he's`.
+    1128 | idiotic!” And she opened the door and went in.
+Suggest:
+  - Replace with: “he's”
 
 
 
@@ -1942,6 +1980,15 @@ Suggest:
   - Replace with: “Billie”
   - Replace with: “Lillie”
   - Replace with: “Millie”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1582 | “Who’s making personal remarks now?” the Hatter asked triumphantly.
+         |  ^~~~~ The canonical dictionary spelling is `who's`.
+Suggest:
+  - Replace with: “who's”
 
 
 
@@ -2869,6 +2916,16 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
+    2307 | > porpoise close behind us, and he’s treading on my tail. See how eagerly the
+         |                                 ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2333 | “Yes,” said Alice, “I’ve often seen them at dinn—” she checked herself hastily.
@@ -3136,14 +3193,23 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
+         |                                                            ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “HM”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
+  - Replace with: “H”
   - Replace with: “H'm”
-  - Replace with: “Ha”
-  - Replace with: “Ham”
+  - Replace with: “Hem”
 
 
 
@@ -3173,6 +3239,15 @@ Suggest:
   - Replace with: “Solo”
   - Replace with: “Sop”
   - Replace with: “Sou”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
+         |                                             ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OOP”
 
 
 
@@ -3209,6 +3284,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
+         |                                                                   ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OOP”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
@@ -3229,6 +3313,16 @@ Suggest:
   - Replace with: “Solo”
   - Replace with: “Sop”
   - Replace with: “Sou”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
+         |                                                                            ^~~ This word's canonical spelling is all-caps.
+    2486 | > of the e—e—evening, Beautiful, beautiful Soup!
+Suggest:
+  - Replace with: “OOP”
 
 
 
@@ -3286,6 +3380,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+         |                                    ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OOP”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
@@ -3319,6 +3422,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+         |                                                          ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OOP”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
@@ -3339,6 +3451,16 @@ Suggest:
   - Replace with: “Solo”
   - Replace with: “Sop”
   - Replace with: “Sou”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+         |                                                                   ^~~ This word's canonical spelling is all-caps.
+    2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
+Suggest:
+  - Replace with: “OOP”
 
 
 
@@ -3424,6 +3546,15 @@ Suggest:
   - Replace with: “Solo”
   - Replace with: “Sop”
   - Replace with: “Sou”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
+         |        ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OOP”
 
 
 

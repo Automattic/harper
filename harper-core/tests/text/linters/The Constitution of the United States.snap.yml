@@ -882,6 +882,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     338 | #### SubSection. 1.
+         |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
+Suggest:
+  - Replace with: “subsection”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      340 | The Electors shall meet in their respective states, and vote
@@ -994,6 +1003,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     388 | #### SubSection. 2
+         |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
+Suggest:
+  - Replace with: “subsection”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      390 | No Person except a natural born Citizen, or a Citizen of the
@@ -1036,6 +1054,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      404 | acting as President during the remainder of such term.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 65 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     406 | #### SubSection 3.
+         |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
+Suggest:
+  - Replace with: “subsection”
 
 
 
@@ -1199,6 +1226,15 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     446 | #### SubSection 4.
+         |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
+Suggest:
+  - Replace with: “subsection”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      448 | The President shall, at stated Times, receive for his
@@ -1258,6 +1294,15 @@ Message: |
          | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
 Suggest:
   - Replace with: “United States”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     460 | #### SubSection 5.
+         |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
+Suggest:
+  - Replace with: “subsection”
 
 
 
