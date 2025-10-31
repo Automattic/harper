@@ -267,41 +267,43 @@ These configs are under the `markdown` key:
 
 `harper-ls` supports a wide variety of programming and markup languages.
 
-| Language          |          Language ID          | Comments Only |
-| :---------------- | :---------------------------: | ------------: |
-| C                 |              `c`              |            ✅ |
-| CMake             |            `cmake`            |            ✅ |
-| C++               |             `cpp`             |            ✅ |
-| C#                |           `csharp`            |            ✅ |
-| Dart              |            `dart`             |            ✅ |
-| Email             |            `mail`             |               |
-| Git Commit        |   `git-commit`/`gitcommit`    |               |
-| Go                |             `go`              |            ✅ |
-| Haskell           |           `haskell`           |            ✅ |
-| HTML              |            `html`             |               |
-| Java              |            `java`             |            ✅ |
-| JavaScript        |         `javascript`          |            ✅ |
-| JavaScript React  |       `javascriptreact`       |            ✅ |
-| Literate Haskell  | `literate haskell`/`lhaskell` |               |
-| Lua               |             `lua`             |            ✅ |
-| Markdown          |          `markdown`           |               |
-| Nix               |             `nix`             |            ✅ |
-| PHP               |             `php`             |            ✅ |
-| Plain Text        |      `plaintext`/`text`       |               |
-| Python            |           `python`            |            ✅ |
-| Ruby              |            `ruby`             |            ✅ |
-| Rust              |            `rust`             |            ✅ |
-| Scala             |           `scala`             |            ✅ |
-| Shell/Bash Script |         `shellscript`         |            ✅ |
-| Solidity          |          `solidity`           |            ✅ |
-| Swift             |            `swift`            |            ✅ |
-| TOML              |            `toml`             |            ✅ |
-| TypeScript        |         `typescript`          |            ✅ |
-| TypeScript React  |       `typescriptreact`       |            ✅ |
-| Typst             |            `typst`            |               |
-| Kotlin            |            `kotlin`           |            ✅ |
-| Clojure           |            `clojure`          |            ✅ |
-| Ink               |            `ink`              |               |
+| Language            |          Language ID          | Comments Only |
+| :------------------ | :---------------------------: | ------------: |
+| C                   |              `c`              |            ✅ |
+| Clojure             |           `clojure`           |            ✅ |
+| CMake               |            `cmake`            |            ✅ |
+| C++                 |             `cpp`             |            ✅ |
+| C#                  |           `csharp`            |            ✅ |
+| Dart                |            `dart`             |            ✅ |
+| Git Commit          |   `git-commit`/`gitcommit`    |               |
+| Go                  |             `go`              |            ✅ |
+| Haskell             |           `haskell`           |            ✅ |
+| HTML                |            `html`             |               |
+| Ink                 |             `ink`             |               |
+| Java                |            `java`             |            ✅ |
+| JavaScript          |         `javascript`          |            ✅ |
+| JavaScript React    |       `javascriptreact`       |            ✅ |
+| Jujutsu Description |  `jj-commit`/`jjdescription`  |               |
+| Kotlin              |           `kotlin`            |            ✅ |
+| Literate Haskell    | `lhaskell`/`literate haskell` |               |
+| Lua                 |             `lua`             |            ✅ |
+| Email               |            `mail`             |               |
+| Markdown            |          `markdown`           |               |
+| Nix                 |             `nix`             |            ✅ |
+| Org Mode            |             `org`             |               |
+| PHP                 |             `php`             |            ✅ |
+| Plain Text          |      `plaintext`/`text`       |               |
+| Python              |           `python`            |            ✅ |
+| Ruby                |            `ruby`             |            ✅ |
+| Rust                |            `rust`             |            ✅ |
+| Scala               |            `scala`            |            ✅ |
+| Shell/Bash Script   |         `shellscript`         |            ✅ |
+| Solidity            |          `solidity`           |            ✅ |
+| Swift               |            `swift`            |            ✅ |
+| TOML                |            `toml`             |            ✅ |
+| TypeScript          |         `typescript`          |            ✅ |
+| TypeScript React    |       `typescriptreact`       |            ✅ |
+| Typst               |            `typst`            |               |
 
 Want your language added?
 Let us know by [commenting on this issue](https://github.com/Automattic/harper/issues/79).
