@@ -386,7 +386,9 @@ impl Backend {
             "git-commit" | "gitcommit" => {
                 Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
             }
-            "jjdescription" => Some(Box::new(JJDescriptionParser::new(markdown_options))),
+            "jjdescription" | "jj-commit" => {
+                Some(Box::new(JJDescriptionParser::new(markdown_options)))
+            }
             "html" => Some(Box::new(HtmlParser::default())),
             "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "typst" => Some(Box::new(Typst)),
