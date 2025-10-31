@@ -57,7 +57,7 @@ impl ExprLinter for OrthographicConsistency {
                     chars.iter().map(|c| c.to_ascii_uppercase()).collect(),
                 )],
                 message: "This word's canonical spelling is all-caps.".to_owned(),
-                ..Default::default()
+                priority: 127,
             });
         }
 
@@ -82,7 +82,7 @@ impl ExprLinter for OrthographicConsistency {
                     "The canonical dictionary spelling is `{}`.",
                     canonical.iter().collect::<String>()
                 ),
-                ..Default::default()
+                priority: 127,
             });
         }
 
@@ -99,7 +99,7 @@ impl ExprLinter for OrthographicConsistency {
                     "The canonical dictionary spelling is `{}`.",
                     canonical.iter().collect::<String>()
                 ),
-                ..Default::default()
+                priority: 127,
             });
         }
 
@@ -109,7 +109,7 @@ impl ExprLinter for OrthographicConsistency {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     use super::OrthographicConsistency;
 
@@ -318,5 +318,38 @@ mod tests {
             OrthographicConsistency::default(),
             "I adore Markdown.",
         );
+    }
+
+    #[test]
+    fn canonical_forms_should_not_be_flagged() {
+        let sentences = [
+            "NASA is a governmental institution.",
+            "IKEA operates a vast retail network.",
+            "LEGO bricks encourage creativity.",
+            "NATO is a military alliance.",
+            "FBI investigates federal crimes.",
+            "CIA gathers intelligence.",
+            "HIV is a virus.",
+            "DNA carries genetic information.",
+            "RNA participates in protein synthesis.",
+            "CPU executes instructions.",
+            "GPU accelerates graphics.",
+            "HTML structures web documents.",
+            "URL identifies a resource.",
+            "FAQ answers common questions.",
+            "I updated my LinkedIn profile yesterday.",
+            "She writes daily on her WordPress blog.",
+            "PDF preserves formatting.",
+            "Our CEO approved the budget.",
+            "The CFO presented the report.",
+            "The HR team scheduled interviews.",
+            "AI enables new capabilities.",
+            "UFO sightings provoke debate.",
+            "I adore Markdown.",
+        ];
+
+        for sentence in sentences {
+            assert_no_lints(sentence, OrthographicConsistency::default());
+        }
     }
 }
