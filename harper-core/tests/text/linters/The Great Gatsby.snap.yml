@@ -218,6 +218,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+      72 | sounded like a great idea. He found the house, a weatherbeaten cardboard
+         |                                                  ^~~~~~~~~~~~~ `weatherbeaten` should probably be written as `weather beaten`.
+      73 | bungalow at eighty a month, but at the last minute the firm ordered him to
+Suggest:
+  - Replace with: “weather beaten”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
       74 | Washington, and I went out to the country alone. I had a dog—at least I had him
@@ -333,9 +343,9 @@ Message: |
      120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
          |                                       ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -665,6 +675,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+     529 | the whole evening had been a trick of some sort to exact a contributary emotion
+         |                                                            ^~~~~~~~~~~~ `contributary` should probably be written as `con tributary`.
+     530 | from me. I waited, and sure enough, in a moment she looked at me with an
+Suggest:
+  - Replace with: “con tributary”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      551 | “Jordan’s going to play in the tournament tomorrow,” explained Daisy, “over at
@@ -797,9 +817,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “T”
   - Replace with: “Ta”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -831,9 +851,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “T”
   - Replace with: “Ta”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -960,9 +980,9 @@ Message: |
      729 | spotted dress of dark blue crêpe-de-chine, contained no facet or gleam of
          |                                  ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -1035,9 +1055,9 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “D”
   - Replace with: “Db”
   - Replace with: “Dc”
+  - Replace with: “Do”
 
 
 
@@ -1425,6 +1445,16 @@ Suggest:
   - Replace with: “purple's”
   - Replace with: “pullers”
   - Replace with: “pullets”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    1172 | York—every Monday these same oranges and lemons left his back door in a pyramid
+    1173 | of pulpless halves. There was a machine in the kitchen which could extract the
+         |    ^~~~~~~~ `pulpless` should probably be written as `pulp less`.
+Suggest:
+  - Replace with: “pulp less”
 
 
 
@@ -2062,6 +2092,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
+         |                                                 ^~~~ `outa` should probably be written as `out a`.
+Suggest:
+  - Replace with: “out a”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     1701 | “It came off,” some one explained.
@@ -2347,9 +2386,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Re”
   - Replace with: “R”
   - Replace with: “Rd”
+  - Replace with: “Re”
 
 
 
@@ -2615,9 +2654,9 @@ Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
-  - Replace with: “D”
   - Replace with: “Dad”
   - Replace with: “Dam”
+  - Replace with: “Day”
 
 
 
@@ -2894,8 +2933,8 @@ Message: |
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
   - Replace with: “L”
-  - Replace with: “La”
   - Replace with: “Lb”
+  - Replace with: “Lg”
 
 
 
@@ -3097,9 +3136,9 @@ Message: |
     1982 | de Boulogne.
          | ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -3151,9 +3190,9 @@ Message: |
          |                                                              ^~ Did you mean to spell `di` this way?
     2007 | circular legend, “Montenegro, Nicolas Rex.”
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -3681,6 +3720,16 @@ Suggest:
   - Replace with: “beau”
   - Replace with: “beaus”
   - Replace with: “beaut”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
+         |                                                           ^~~~~ `beaux` should probably be written as `be aux`.
+    2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
+Suggest:
+  - Replace with: “be aux”
 
 
 
@@ -4253,6 +4302,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    2866 | intensity. Now, in the reaction, he was running down like an overwound clock.
+         |                                                              ^~~~~~~~~ `overwound` should probably be written as `over wound`.
+Suggest:
+  - Replace with: “over wound”
+
+
+
 Lint:    Style (31 priority)
 Message: |
     2872 | “I’ve got a man in England who buys me clothes. He sends over a selection of
@@ -4284,6 +4342,17 @@ Suggest:
   - Replace with: “Appleseed”
   - Replace with: “allergen”
   - Replace with: “appeared”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    2878 | brought more and the soft rich heap mounted higher—shirts with stripes and
+    2879 | scrolls and plaids in coral and applegreen and lavender and faint orange, with
+         |                                 ^~~~~~~~~~ `applegreen` should probably be written as `apple green`.
+    2880 | monograms of Indian blue. Suddenly, with a strained sound, Daisy bent her head
+Suggest:
+  - Replace with: “apple green”
 
 
 
@@ -4427,8 +4496,8 @@ Message: |
     3024 | a source of satisfaction to James Gatz of North Dakota, isn’t easy to say.
          |                                   ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -4438,8 +4507,8 @@ Message: |
     3026 | James Gatz—that was really, or at least legally, his name. He had changed it at
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -4462,8 +4531,8 @@ Message: |
     3029 | on Lake Superior. It was James Gatz who had been loafing along the beach that
          |                                ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -4516,9 +4585,9 @@ Message: |
          |                                               ^~ Did you mean to spell `de` this way?
     3075 | sent him to sea in a yacht, were common property of the turgid journalism
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -4551,8 +4620,8 @@ Message: |
     3079 | To young Gatz, resting on his oars and looking up at the railed deck, that yacht
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -4589,6 +4658,16 @@ Suggest:
   - Replace with: “jailer”
   - Replace with: “sailor”
   - Replace with: “tailor”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    3089 | in turn steward, mate, skipper, secretary, and even jailor, for Dan Cody sober
+         |                                                     ^~~~~~ `jailor` should probably be written as `jail or`.
+    3090 | knew what lavish doings Dan Cody drunk might soon be about, and he provided for
+Suggest:
+  - Replace with: “jail or”
 
 
 
@@ -4789,6 +4868,15 @@ Suggest:
   - Replace with: “inarguable”
   - Replace with: “unarguably”
   - Replace with: “arguably”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    3349 | But the rest offended her—and inarguably, because it wasn’t a gesture but an
+         |                               ^~~~~~~~~~ `inarguably` should probably be written as `in arguably`.
+Suggest:
+  - Replace with: “in arguably”
 
 
 
@@ -5198,9 +5286,9 @@ Message: |
     3647 | up now, and say—How-de-do.”
          |                     ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -5357,9 +5445,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “T”
   - Replace with: “Ta”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -5426,9 +5514,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “T”
   - Replace with: “Ta”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -5632,8 +5720,17 @@ Message: |
          |                                   ^~ Did you mean to spell `lf` this way?
 Suggest:
   - Replace with: “l”
-  - Replace with: “la”
   - Replace with: “lb”
+  - Replace with: “lg”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    4073 | “We're getting old,” said Daisy. “lf we were young we’d rise and dance.”
+         |                                   ^~ `lf` should probably be written as `l f`.
+Suggest:
+  - Replace with: “l f”
 
 
 
@@ -6101,9 +6198,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |            ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
+  - Replace with: “of”
 
 
 
@@ -6130,9 +6227,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                          ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
+  - Replace with: “of”
 
 
 
@@ -6159,9 +6256,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                     ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
+  - Replace with: “of”
 
 
 
@@ -6188,9 +6285,9 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                                   ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
+  - Replace with: “of”
 
 
 
@@ -6208,9 +6305,9 @@ Message: |
     4484 | “M-a-v—” the policeman was saying, “—o———”
          |                                      ^ Did you mean to spell `o` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “of”
   - Replace with: “oh”
+  - Replace with: “oi”
 
 
 
@@ -6228,9 +6325,9 @@ Message: |
     4486 | “No, r—” corrected the man, “M-a-v-r-o———”
          |                                      ^ Did you mean to spell `o` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “of”
   - Replace with: “oh”
+  - Replace with: “oi”
 
 
 
@@ -6248,9 +6345,9 @@ Message: |
     4490 | “r—” said the policeman, “o———”
          |                           ^ Did you mean to spell `o` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “of”
   - Replace with: “oh”
+  - Replace with: “oi”
 
 
 
@@ -6294,6 +6391,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
+         |                                                   ^~~~~~ `stopus` should probably be written as `st opus`.
+Suggest:
+  - Replace with: “st opus”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
@@ -6314,6 +6420,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
+         |                                            ^~~~~ `comin` should probably be written as `co min`.
+Suggest:
+  - Replace with: “co min”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
@@ -6325,6 +6440,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
+         |                                                        ^~~~ `goin` should probably be written as `go in`.
+Suggest:
+  - Replace with: “go in”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
@@ -6333,6 +6457,15 @@ Suggest:
   - Replace with: “gain”
   - Replace with: “gin”
   - Replace with: “going”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
+         |      ^~~~ `goin` should probably be written as `go in`.
+Suggest:
+  - Replace with: “go in”
 
 
 
@@ -6366,6 +6499,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
+         |                                                              ^~~~~ `comin` should probably be written as `co min`.
+    4511 | knock right into her, goin’ thirty or forty miles an hour.”
+Suggest:
+  - Replace with: “co min”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
@@ -6387,6 +6530,16 @@ Suggest:
   - Replace with: “gain”
   - Replace with: “gin”
   - Replace with: “going”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
+    4511 | knock right into her, goin’ thirty or forty miles an hour.”
+         |                       ^~~~ `goin` should probably be written as `go in`.
+Suggest:
+  - Replace with: “go in”
 
 
 
@@ -6917,9 +7070,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “T”
   - Replace with: “Ta”
   - Replace with: “Tb”
+  - Replace with: “Ti”
 
 
 
@@ -7327,7 +7480,7 @@ Message: |
 Suggest:
   - Replace with: “Cw”
   - Replace with: “C”
-  - Replace with: “Ca”
+  - Replace with: “Cc”
 
 
 
@@ -7337,8 +7490,8 @@ Message: |
          |                                                                 ^~~~ Did you mean to spell `Gatz` this way?
     5353 | from a town in Minnesota. It said only that the sender was leaving immediately
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -7368,8 +7521,8 @@ Message: |
     5385 | After a little while Mr. Gatz opened the door and came out, his mouth ajar, his
          |                          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -7403,8 +7556,8 @@ Message: |
     5396 | “Gatz is my name.”
          |  ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -7414,8 +7567,8 @@ Message: |
     5398 | “—Mr. Gatz. I thought you might want to take the body West.”
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -7660,8 +7813,8 @@ Message: |
          |                                                                   ^~~~ Did you mean to spell `Gatz` this way?
     5560 | up and down excitedly in the hall. His pride in his son and in his son’s
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -7775,8 +7928,8 @@ Message: |
     5629 | then Mr. Gatz and the minister and I in the limousine, and a little later four
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -8062,6 +8215,15 @@ Message: |
          |                                           ^~~~~~~~~~ Did you mean `linerless`?
 Suggest:
   - Replace with: “linerless”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    5714 | leaf, her face the same brown tint as the fingerless glove on her knee. When I
+         |                                           ^~~~~~~~~~ `fingerless` should probably be written as `finger less`.
+Suggest:
+  - Replace with: “finger less”
 
 
 

@@ -7,6 +7,7 @@ pub use self::dictionary::Dictionary;
 pub use self::fst_dictionary::FstDictionary;
 pub use self::merged_dictionary::MergedDictionary;
 pub use self::mutable_dictionary::MutableDictionary;
+pub use self::trie_dictionary::TrieDictionary;
 pub use self::word_id::WordId;
 
 mod dictionary;
@@ -14,6 +15,7 @@ mod fst_dictionary;
 mod merged_dictionary;
 mod mutable_dictionary;
 mod rune;
+mod trie_dictionary;
 mod word_id;
 mod word_map;
 

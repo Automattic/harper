@@ -56,9 +56,9 @@ Message: |
       50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
          | ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -414,6 +414,16 @@ Suggest:
   - Replace with: “automatic”
   - Replace with: “automatics”
   - Replace with: “automata”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
+         |                                                        ^~~~~~~~~~ `automatica` should probably be written as `automatic a`.
+     132 | or "information and mathematics" are often used, e.g. informatique (French),
+Suggest:
+  - Replace with: “automatic a”
 
 
 
@@ -852,9 +862,9 @@ Message: |
      262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
          |                ^~ Did you mean to spell `NP` this way?
 Suggest:
-  - Replace with: “N”
   - Replace with: “Nap”
   - Replace with: “Nip”
+  - Replace with: “Nu”
 
 
 
@@ -978,9 +988,9 @@ Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
          |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Re”
   - Replace with: “R”
   - Replace with: “Rd”
+  - Replace with: “Re”
 
 
 
@@ -1064,9 +1074,9 @@ Message: |
          |                                                                  ^~ Did you mean to spell `de` this way?
      445 |   > "high-voltage/low-voltage", etc.).
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -1161,6 +1171,16 @@ Suggest:
   - Replace with: “got”
   - Replace with: “goo”
   - Replace with: “goths”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     468 |     Boehm's and Jacopini's insight can be further simplified with the use of
+     469 |     goto (which means it is more elementary than structured programming).
+         |     ^~~~ `goto` should probably be written as `go to`.
+Suggest:
+  - Replace with: “go to”
 
 
 

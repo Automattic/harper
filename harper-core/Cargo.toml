@@ -33,6 +33,7 @@ strum = "0.27.2"
 ammonia = "4.1.2"
 harper-brill = { path = "../harper-brill", version = "0.70.0" }
 bitflags = { version = "2.10.0", features = ["serde"] }
+trie-rs = "0.4.2"
 
 [dev-dependencies]
 criterion = { version = "0.7.0", default-features = false }
@@ -43,7 +44,7 @@ once_cell = "1.21.3"
 rayon = "1.11.0"
 
 [[bench]]
-name = "parse_demo"
+name = "parse_essay"
 harness = false
 
 [features]

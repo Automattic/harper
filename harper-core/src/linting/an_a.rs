@@ -193,11 +193,12 @@ fn starts_with_vowel(word: &[char]) -> bool {
 }
 
 fn is_likely_acronym(word: &[char]) -> bool {
-    // If the first two letters are not consonants, the initialism might be an acronym.
+    // If it's three letters or longer, and the first two letters are not consonants, the initialism might be an acronym.
     // (Like MAC, NASA, LAN, etc.)
-    word.get(..2).is_some_and(|first_chars| {
+    word.get(..3).is_some_and(|first_chars| {
         first_chars
             .iter()
+            .take(2)
             .fold(0, |acc, char| acc + !char.is_vowel() as u8)
             < 2
     })
@@ -304,6 +305,7 @@ mod tests {
 
     #[test]
     fn recognize_acronyms() {
+        // a
         assert_lint_count("using a MAC address", AnA, 0);
         assert_lint_count("a NASA spacecraft", AnA, 0);
         assert_lint_count("a NAT", AnA, 0);
@@ -311,5 +313,12 @@ mod tests {
         assert_lint_count("a LIBERO", AnA, 0);
         assert_lint_count("a README", AnA, 0);
         assert_lint_count("a LAN", AnA, 0);
+
+        // an
+        assert_lint_count("an RA message", AnA, 0);
+        assert_lint_count("an SI unit", AnA, 0);
+        assert_lint_count("he is an MA of both Oxford and Cambridge", AnA, 0);
+        assert_lint_count("in an FA Cup 6th Round match", AnA, 0);
+        assert_lint_count("a AM transmitter", AnA, 1);
     }
 }
