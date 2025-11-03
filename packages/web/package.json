@@ -22,6 +22,7 @@
 		"svelte": "^5.15.0",
 		"svelte-check": "^4.1.5",
 		"tailwindcss": "^4.1.16",
+		"@tailwindcss/vite": "^4.1.4",
 		"tslib": "catalog:",
 		"tsx": "^4.20.6",
 		"typescript": "catalog:",

@@ -43,9 +43,6 @@ importers:
       '@fortawesome/free-solid-svg-icons':
         specifier: ^7.1.0
         version: 7.1.0
-      '@tailwindcss/vite':
-        specifier: ^4.1.4
-        version: 4.1.4(vite@5.4.17(@types/node@22.13.10)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0))
       '@webcomponents/custom-elements':
         specifier: ^1.6.0
         version: 1.6.0
@@ -64,9 +61,6 @@ importers:
       svelte-fa:
         specifier: ^4.0.4
         version: 4.0.4(svelte@5.21.0)
-      tailwindcss:
-        specifier: ^4.1.4
-        version: 4.1.16
     devDependencies:
       '@crxjs/vite-plugin':
         specifier: ^2.0.0-beta.26
@@ -77,6 +71,9 @@ importers:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^4.0.0
         version: 4.0.4(svelte@5.21.0)(vite@5.4.17(@types/node@22.13.10)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0))
+      '@tailwindcss/vite':
+        specifier: ^4.1.4
+        version: 4.1.4(vite@5.4.17(@types/node@22.13.10)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0))
       '@types/chrome':
         specifier: ^0.0.246
         version: 0.0.246
@@ -119,6 +116,9 @@ importers:
       svelte-preprocess:
         specifier: ^6.0.0
         version: 6.0.3(@babel/core@7.26.10)(postcss-load-config@4.0.2(postcss@8.5.3))(postcss@8.5.3)(sass@1.85.1)(svelte@5.21.0)(typescript@5.8.2)
+      tailwindcss:
+        specifier: ^4.1.4
+        version: 4.1.16
       tslib:
         specifier: ^2.6.2
         version: 2.8.1
@@ -390,9 +390,6 @@ importers:
       flowbite-svelte:
         specifier: ^0.44.18
         version: 0.44.24(rollup@4.35.0)(svelte@5.21.0)
-      postcss:
-        specifier: ^8.4.31
-        version: 8.5.3
       svelte:
         specifier: ^5.15.0
         version: 5.21.0
