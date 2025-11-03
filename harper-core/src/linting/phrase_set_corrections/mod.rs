@@ -332,22 +332,6 @@ pub fn lint_group() -> LintGroup {
     });
 
     add_many_to_many_mappings!(group, {
-        "ChangeTack" => (
-            &[
-                // verb
-                (&["change tact", "change tacks", "change tacts"], &["change tack"]),
-                (&["changed tact", "changed tacks", "changed tacts"], &["changed tack"]),
-                (&["changes tact", "changes tacks", "changes tacts"], &["changes tack"]),
-                (&["changing tact", "changing tacks", "changing tacts"], &["changing tack"]),
-                // noun
-                (&["change of tact", "change of tacks", "change of tacts"], &["change of tack"]),
-                (&["changes of tact", "changes of tacks", "changes of tacts"], &["changes of tack"]),
-                (&["changing of tact", "changing of tacks", "changing of tacts"], &["changing of tack"])
-            ],
-            "A change in direction or approach is a change of `tack`. Not `tact` (or `tacks` or `tacts`).",
-            "Locates errors in the idioms `to change tack` and `change of tack` to convey the correct meaning of altering one's course or strategy.",
-            LintKind::Eggcorn
-        ),
         "GetRidOf" => (
             &[
                 (&["get rid off", "get ride of", "get ride off"], &["get rid of"]),
