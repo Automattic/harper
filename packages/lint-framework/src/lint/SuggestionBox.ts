@@ -22,7 +22,6 @@ FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousVal
 	});
 };
 
-/** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
 var CloseOnEscapeHook: any = function (this: any, onClose: () => void) {
 	this.onClose = onClose;
 };

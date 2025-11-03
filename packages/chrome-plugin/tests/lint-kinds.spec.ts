@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { test } from '@playwright/test';
 import { LINT_KINDS, lintKindColor } from 'lint-framework';
 
 // biome-ignore lint/correctness/noEmptyPattern: Playwright requires an object destruction
