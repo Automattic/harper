@@ -897,6 +897,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `preying mantis` to `praying mantis`, ensuring accurate reference to the insect’s characteristic pose.",
             LintKind::Eggcorn
         ),
+        "QuiteMany" => (
+            ["quite many"],
+            ["quite a few"],
+            "Use `quite a few` instead of `quite many`.",
+            "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered non-standard usage.",
+            LintKind::Nonstandard
+        ),
         "RapidFire" => (
             ["rapid fire"],
             ["rapid-fire"],
