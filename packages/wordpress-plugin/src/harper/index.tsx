@@ -21,9 +21,9 @@ function Sidebar() {
 	);
 }
 
-// @ts-ignore
+// @ts-expect-error
 if (!window.__harperSidebarRegistered) {
 	registerPlugin('harper-sidebar', { render: Sidebar });
-	// @ts-ignore
+	// @ts-expect-error
 	window.__harperSidebarRegistered = true;
 }

@@ -115,12 +115,15 @@ export default class State {
 				if (this.editorViewField != null) {
 					const mdView = view.state.field(this.editorViewField) as MarkdownView;
 					const file = mdView?.file;
-					const path = file?.path!;
 
-					if (path != null) {
-						for (const glob of ignoredGlobs) {
-							if (minimatch(path, glob)) {
-								return [];
+					if (file != null) {
+						const path = file.path;
+
+						if (path != null) {
+							for (const glob of ignoredGlobs) {
+								if (minimatch(path, glob)) {
+									return [];
+								}
 							}
 						}
 					}

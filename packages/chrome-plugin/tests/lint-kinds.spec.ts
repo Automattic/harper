@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { LINT_KINDS, lintKindColor } from 'lint-framework';
 
-test('display lint kind colors', async ({ page }, testInfo) => {
+test('display lint kind colors', async (_, testInfo) => {
 	// Generate color boxes for each lint kind
 	const colorBoxes = LINT_KINDS.map((kind) => {
 		const color = lintKindColor(kind);
