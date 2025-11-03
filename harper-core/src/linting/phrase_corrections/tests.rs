@@ -1452,6 +1452,16 @@ fn corrects_points_of_view() {
 // PrayingMantis
 // -none-
 
+// QuiteMany
+#[test]
+fn corrects_quite_many() {
+    assert_suggestion_result(
+        "To me it seems it might be caused by a2aaa55 which contains quite many build-related changes.",
+        lint_group(),
+        "To me it seems it might be caused by a2aaa55 which contains quite a few build-related changes.",
+    );
+}
+
 // RapidFire
 // -none-
 
