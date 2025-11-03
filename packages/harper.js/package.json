@@ -16,7 +16,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc && vite build",
+		"build": "tsc && vite build -l warn",
 		"test": "vitest run",
 		"test:debug": "vitest run --browser.headless false --testTimeout 0",
 		"api:extractor": "api-extractor run",

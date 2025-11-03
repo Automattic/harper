@@ -177,7 +177,8 @@ test-vscode:
     mkdir "$bin_dir"
   fi
 
-  cargo build --release
+  echo Building binaries
+  cargo build --release -q
 
   cp "{{justfile_directory()}}/target/release/harper-ls"* "$bin_dir"
 
@@ -203,7 +204,8 @@ package-vscode target="":
   cp LICENSE "$ext_dir"
 
   if [[ -z "{{target}}" ]]; then
-    cargo build --release
+    echo Building binaries
+    cargo build --release -q
 
     if ! [[ -d "$bin_dir" ]]; then
       mkdir "$bin_dir"
@@ -285,7 +287,8 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo build --all-targets
+  echo Building binaries
+  cargo build --all-targets -q
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
@@ -303,7 +306,8 @@ dogfood:
   done
 
 test-rust:
-  cargo test
+  echo Running all Rust tests
+  cargo test -q
 
 # Test everything.
 test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
