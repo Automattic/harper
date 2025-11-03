@@ -143,6 +143,9 @@ importers:
       harper-wasm:
         specifier: workspace:*
         version: link:../../harper-wasm/pkg
+      marked:
+        specifier: ^16.4.1
+        version: 16.4.1
       p-lazy:
         specifier: ^5.0.0
         version: 5.0.0
@@ -8439,6 +8442,11 @@ packages:
   markdownlint@0.25.1:
     resolution: {integrity: sha512-AG7UkLzNa1fxiOv5B+owPsPhtM4D6DoODhsJgiaNg1xowXovrYgOnLqAgOOFQpWOlHFVQUzjMY5ypNNTeov92g==}
     engines: {node: '>=12'}
+
+  marked@16.4.1:
+    resolution: {integrity: sha512-ntROs7RaN3EvWfy3EZi14H4YxmT6A5YvywfhO+0pm+cH/dnSQRmdAmoFIc3B9aiwTehyk7pESH4ofyBY+V5hZg==}
+    engines: {node: '>= 20'}
+    hasBin: true
 
   marky@1.2.5:
     resolution: {integrity: sha512-q9JtQJKjpsVxCRVgQ+WapguSbKC3SQ5HEzFGPAJMStgh3QjCawp00UKv3MTTAArTmGmmPUvllHZoNbZ3gs0I+Q==}
@@ -22323,6 +22331,8 @@ snapshots:
   markdownlint@0.25.1:
     dependencies:
       markdown-it: 12.3.2
+
+  marked@16.4.1: {}
 
   marky@1.2.5: {}
 
