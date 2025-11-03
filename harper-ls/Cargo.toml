@@ -18,7 +18,7 @@ harper-html = { path = "../harper-html", version = "0.70.0" }
 harper-python = { path = "../harper-python", version = "0.70.0" }
 tower-lsp-server = "0.22.1"
 tokio = { version = "1.48.0", default-features = false, features = ["fs", "io-std", "io-util", "macros", "net", "rt-multi-thread", "sync"] }
-clap = { version = "4.5.50", default-features = false, features = ["derive", "std"] }
+clap = { version = "4.5.51", default-features = false, features = ["derive", "std"] }
 once_cell = "1.21.3"
 dirs = "6.0.0"
 anyhow = "1.0.100"
