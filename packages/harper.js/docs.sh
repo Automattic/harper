@@ -19,13 +19,6 @@ if [[ -d "$harperjs_docs_dir" ]]; then
 fi
 mkdir -p "$harperjs_docs_dir" || true
 
-cat <<- PANDOC_FILTER > "./temp/md_to_html.lua"
-	function Link(elem)
-	  elem.target = string.gsub(elem.target, "%.md$", ".html")
-	  return elem
-	end
-PANDOC_FILTER
-
 echo "Rendering HTML..."
 if command -v parallel &> /dev/null; then
 	parallel '

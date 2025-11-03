@@ -13,7 +13,6 @@ For Nix users, we provide a [Nix development shell](#Nix-development-shell) to s
 - `grep`
 - [`wasm-pack`](https://drager.github.io/wasm-pack/installer/)
 - `zip`
-- `pandoc`
 - [`cargo-hack`](https://github.com/taiki-e/cargo-hack?tab=readme-ov-file#installation)
 
 To run integration tests, you may also need `libnss3` and/or `libasound3`.
