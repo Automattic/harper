@@ -99,6 +99,9 @@
 			"includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
 			"linter": {
 				"rules": {
+					"correctness": {
+						"noUnusedImports": "off"
+					},
 					"style": {
 						"useConst": "off",
 						"useImportType": "off"

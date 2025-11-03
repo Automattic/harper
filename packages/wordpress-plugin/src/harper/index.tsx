@@ -3,7 +3,6 @@ import { registerPlugin } from '@wordpress/plugins';
 import Logo from './Logo';
 import SidebarControl from './SidebarControl';
 import './index.css';
-import React from 'react';
 import LinterProvider from './LinterProvider';
 
 function Sidebar() {

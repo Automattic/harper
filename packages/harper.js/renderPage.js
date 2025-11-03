@@ -10,7 +10,7 @@ const renderer = new marked.Renderer();
 
 renderer.link = ({ href, title, text }) => {
 	if (href.endsWith('.md')) {
-		href = href.slice(0, href.length - 3) + '.html';
+		href = `${href.slice(0, href.length - 3)}.html`;
 	}
 	const titleAttr = title ? ` title="${title}"` : '';
 	return `<a href="${href}" ${titleAttr}>${text}</a>`;
