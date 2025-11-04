@@ -39,7 +39,7 @@ export default class State {
 	constructor(
 		saveDataCallback: (data: any) => Promise<void>,
 		onExtensionChange: () => void,
-		editorViewField?: StateField<MarkdownFileInfo>,
+		_editorViewField?: StateField<MarkdownFileInfo>,
 	) {
 		this.harper = new WorkerLinter({ binary: binaryInlined });
 		this.delay = DEFAULT_DELAY;
@@ -115,12 +115,15 @@ export default class State {
 				if (this.editorViewField != null) {
 					const mdView = view.state.field(this.editorViewField) as MarkdownView;
 					const file = mdView?.file;
-					const path = file?.path!;
 
-					if (path != null) {
-						for (const glob of ignoredGlobs) {
-							if (minimatch(path, glob)) {
-								return [];
+					if (file != null) {
+						const path = file.path;
+
+						if (path != null) {
+							for (const glob of ignoredGlobs) {
+								if (minimatch(path, glob)) {
+									return [];
+								}
 							}
 						}
 					}
@@ -177,7 +180,7 @@ export default class State {
 						actions.push({
 							name: '📖',
 							title: `Add “${word}” to your dictionary`,
-							apply: (view) => {
+							apply: (_view) => {
 								this.harper.importWords([word]);
 								this.reinitialize();
 							},
@@ -189,7 +192,7 @@ export default class State {
 						to: span.end,
 						severity: 'error',
 						title: lint.lint_kind_pretty(),
-						renderMessage: (view) => {
+						renderMessage: (_view) => {
 							const node = document.createElement('template');
 							node.innerHTML = lint.message_html();
 							return node.content;

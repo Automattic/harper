@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.3.3/schema.json",
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
@@ -29,6 +29,11 @@
 			"!**/playwright-report",
 			"!**/yarn.lock"
 		]
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
 	},
 	"formatter": {
 		"enabled": true,
@@ -94,6 +99,9 @@
 			"includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
 			"linter": {
 				"rules": {
+					"correctness": {
+						"noUnusedImports": "off"
+					},
 					"style": {
 						"useConst": "off",
 						"useImportType": "off"

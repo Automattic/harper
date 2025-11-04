@@ -43,7 +43,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 	}
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 	handleRequest(request).then(sendResponse);
 
 	return true;
@@ -172,7 +172,7 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 	return { kind: 'lints', lints: unpackedBySource };
 }
 
-async function handleGetConfig(req: GetConfigRequest): Promise<GetConfigResponse> {
+async function handleGetConfig(_req: GetConfigRequest): Promise<GetConfigResponse> {
 	return { kind: 'getConfig', config: await getLintConfig() };
 }
 
@@ -188,7 +188,7 @@ async function handleSetDialect(req: SetDialectRequest): Promise<UnitResponse> {
 	return createUnitResponse();
 }
 
-async function handleGetDialect(req: GetDialectRequest): Promise<GetDialectResponse> {
+async function handleGetDialect(_req: GetDialectRequest): Promise<GetDialectResponse> {
 	return { kind: 'getDialect', dialect: await getDialect() };
 }
 
@@ -240,7 +240,7 @@ async function handleSetDefaultStatus(req: SetDefaultStatusRequest): Promise<Uni
 }
 
 async function handleGetLintDescriptions(
-	req: GetLintDescriptionsRequest,
+	_req: GetLintDescriptionsRequest,
 ): Promise<GetLintDescriptionsResponse> {
 	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptionsHTML() };
 }
