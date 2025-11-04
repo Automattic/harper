@@ -28,6 +28,7 @@ use harper_python::PythonParser;
 
 use harper_stats::Stats;
 use serde::Serialize;
+use serde_json::Value;
 
 mod input;
 use input::Input;
@@ -158,6 +159,11 @@ enum Args {
         old: String,
         /// The new flag.
         new: String,
+        /// The directory containing the dictionary and affixes.
+        dir: PathBuf,
+    },
+    /// Audit the `dictionary.dict` file.
+    AuditDictionary {
         /// The directory containing the dictionary and affixes.
         dir: PathBuf,
     },
@@ -548,8 +554,6 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::RenameFlag { old, new, dir } => {
-            use serde_json::Value;
-
             let dict_path = dir.join("dictionary.dict");
             let affixes_path = dir.join("annotations.json");
 
@@ -665,6 +669,108 @@ fn main() -> anyhow::Result<()> {
             println!("Successfully renamed flag '{old}' to '{new}'");
             println!("  Description: {description}");
             println!("  Backups created at:\n    {backup_dict}\n    {backup_affixes}");
+
+            Ok(())
+        }
+        Args::AuditDictionary { dir } => {
+            let annotations_path = dir.join("annotations.json");
+            let annotations_content = fs::read_to_string(&annotations_path)
+                .map_err(|e| anyhow!("Failed to read annotations: {e}"))?;
+            let annotations_json: Value = serde_json::from_str(&annotations_content)
+                .map_err(|e| anyhow!("Failed to parse annotations.json: {e}"))?;
+
+            let annotations = annotations_json
+                .as_object()
+                .ok_or_else(|| anyhow!("annotations.json is not an object"))?;
+
+            let (affixes, properties) = ["affixes", "properties"]
+                .iter()
+                .map(|key| {
+                    annotations
+                        .get(*key)
+                        .and_then(Value::as_object)
+                        .ok_or_else(|| {
+                            anyhow!("Missing or invalid '{key}' key in annotations.json")
+                        })
+                })
+                .collect::<Result<Vec<_>, _>>()
+                .map(|v| (v[0], v[1]))?;
+
+            let all_keys = affixes.keys().chain(properties.keys()).collect::<Vec<_>>();
+
+            let mut annotation_flag_count: HashMap<char, u32> = all_keys
+                .iter()
+                .filter_map(|key| key.chars().next()) // Get first char of each key
+                .map(|c| (c, 0))
+                .collect();
+
+            let mut duplicate_flags = 0;
+            let mut unknown_flags = 0;
+            let mut unused_flags = 0;
+
+            let dict_path = dir.join("dictionary.dict");
+            let dict_content = fs::read_to_string(&dict_path)
+                .map_err(|e| anyhow!("Failed to read dictionary: {e}"))?;
+
+            for line in dict_content.lines() {
+                if line.is_empty()
+                    || line.starts_with('#')
+                    || line.chars().all(|c| c.is_ascii_digit())
+                {
+                    continue;
+                }
+
+                let (entry_part, _comment_part) =
+                    line.split_once('#').map_or((line, ""), |(e, c)| (e, c));
+
+                if let Some((lexeme, rest)) = entry_part.split_once('/') {
+                    let (annotation, _whitespace) = match rest.split_once([' ', '\t']) {
+                        Some((a, _)) => (a, &rest[a.len()..]),
+                        None => (rest, ""),
+                    };
+
+                    let mut seen_flags = hashbrown::HashSet::new();
+
+                    for flag in annotation.chars() {
+                        if !seen_flags.insert(flag) {
+                            eprintln!(
+                                "Warning: Duplicate annotation flag '{}' found in entry: {}/{}",
+                                flag, lexeme, annotation
+                            );
+                            duplicate_flags += 1;
+                        }
+                        if !annotation_flag_count.contains_key(&flag) {
+                            eprintln!(
+                                "Warning: Unknown annotation flag '{}' found in entry: {}/{}",
+                                flag, lexeme, annotation
+                            );
+                            unknown_flags += 1;
+                        }
+                        *annotation_flag_count.entry(flag).or_insert(0) += 1;
+                    }
+                }
+            }
+
+            for (flag, count) in annotation_flag_count {
+                if count == 0 {
+                    eprintln!("Warning: Unused annotation flag '{}'", flag);
+                    unused_flags += 1;
+                }
+            }
+
+            if duplicate_flags > 0 || unknown_flags > 0 || unused_flags > 0 {
+                eprintln!("\nAudit found issues:");
+                if duplicate_flags > 0 {
+                    eprintln!("  - {} duplicate flags found", duplicate_flags);
+                }
+                if unknown_flags > 0 {
+                    eprintln!("  - {} unknown flags found", unknown_flags);
+                }
+                if unused_flags > 0 {
+                    eprintln!("  - {} unused flags found", unused_flags);
+                }
+                std::process::exit(1);
+            }
 
             Ok(())
         }
