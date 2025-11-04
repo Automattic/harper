@@ -241,7 +241,7 @@ function agentHas(keyword: string): boolean | undefined {
 				</summary>
 				<p class="mt-3">
 					Yes. Harper is free in every sense of the word. You don't need a credit card to start using
-					Harper, and the source code is freely available unde the Apache-2.0 license.
+					Harper, and the source code is freely available under the Apache-2.0 license.
 				</p>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
