@@ -1179,7 +1179,11 @@ fn single_input_report(
     batch_mode: bool, // If true, we are processing multiple files, which affects how we report
     report_mode: &ReportStyle,
 ) {
-    let InputInfo { input: current_input, doc, source } = input_info;
+    let InputInfo {
+        input: current_input,
+        doc,
+        source,
+    } = input_info;
     let (lint_count_before, lint_count_after) = lint_count;
     // The Ariadne report works poorly for files with very long lines, so suppress it unless only processing one file
     const MAX_LINE_LEN: usize = 150;
@@ -1423,10 +1427,7 @@ fn final_report(
             })
             .collect();
 
-        println!(
-            "All files Spelling::SpellCheck (For dialect: {})",
-            dialect
-        );
+        println!("All files Spelling::SpellCheck (For dialect: {})", dialect);
         print_formatted_items(spelling_vec);
     }
 }
