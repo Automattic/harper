@@ -651,3 +651,9 @@ suggestannotation input:
       console.log(`None of the characters of "${input}" are available to use for new annotations, and none of them are OK to be moved to make way for new annotations.`);
     }
   }
+
+# Audit the curated dictionary for any issues.
+alias auditdict := auditdictionary
+
+auditdictionary DIR="harper-core":
+  cargo run --bin harper-cli -- audit-dictionary {{DIR}}
