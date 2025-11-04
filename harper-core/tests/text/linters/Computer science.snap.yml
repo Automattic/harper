@@ -626,7 +626,7 @@ Message: |
 Suggest:
   - Replace with: “Ax”
   - Replace with: “A”
-  - Replace with: “Ah”
+  - Replace with: “Ab”
 
 
 
@@ -978,8 +978,8 @@ Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
          |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Rd”
   - Replace with: “R”
+  - Replace with: “Re”
   - Replace with: “RC”
 
 
@@ -989,8 +989,8 @@ Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
-  - Replace with: “Pa”
+  - Replace with: “Pt”
+  - Replace with: “P”
   - Replace with: “Pd”
 
 
