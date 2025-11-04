@@ -23,6 +23,7 @@ serde_json = "1.0.145"
 strum = "0.27.2"
 strum_macros = "0.27.2"
 harper-ink = { version = "0.70.0", path = "../harper-ink" }
+either = "1.15.0"
 
 [features]
 default = []
