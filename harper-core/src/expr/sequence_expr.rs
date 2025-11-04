@@ -455,6 +455,7 @@ impl SequenceExpr {
 
     gen_then_from_is!(determiner);
     gen_then_from_is!(demonstrative_determiner);
+    gen_then_from_is!(possessive_determiner);
     gen_then_from_is!(quantifier);
     gen_then_from_is!(non_quantifier_determiner);
 

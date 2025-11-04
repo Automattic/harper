@@ -864,7 +864,7 @@ pub fn lint_group() -> LintGroup {
             ["points of view"],
             "The correct plural is `points of view`.",
             "Corrects pluralizing the wrong noun in `point of view`.",
-            LintKind::Usage
+            LintKind::Grammar
         ),
         "PortAuPrince" => (
             // Note: this lint matches any case but cannot correct wrong case
@@ -896,6 +896,13 @@ pub fn lint_group() -> LintGroup {
             "Use the insect's correct name.",
             "Corrects `preying mantis` to `praying mantis`, ensuring accurate reference to the insect’s characteristic pose.",
             LintKind::Eggcorn
+        ),
+        "QuiteMany" => (
+            ["quite many"],
+            ["quite a few"],
+            "Use `quite a few` instead of `quite many`.",
+            "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered non-standard usage.",
+            LintKind::Nonstandard
         ),
         "RapidFire" => (
             ["rapid fire"],
@@ -936,7 +943,7 @@ pub fn lint_group() -> LintGroup {
             ["rules of thumb"],
             "The correct plural is `rules of thumb`.",
             "Corrects pluralizing the wrong noun in `rule of thumb`.",
-            LintKind::Usage
+            LintKind::Grammar
         ),
         "SameAs" => (
             ["same then"],
