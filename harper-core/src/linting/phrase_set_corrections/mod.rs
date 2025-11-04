@@ -280,6 +280,15 @@ pub fn lint_group() -> LintGroup {
             "Ensures `operating system` is used correctly instead of `operative system`.",
             LintKind::Usage
         ),
+        "PassersBy" => (
+            &[
+                ("passerbys", "passersby"),
+                ("passer-bys", "passers-by"),
+            ],
+            "The correct plural is `passersby` or `passers-by`.",
+            "Corrects `passerbys` and `passer-bys` to `passersby` or `passers-by`.",
+            LintKind::Grammar
+        ),
         "Piggyback" => (
             &[
                 ("piggy bag", "piggyback"),
