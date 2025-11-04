@@ -3,37 +3,6 @@ import { defineConfig } from 'vite';
 import topLevelAwait from 'vite-plugin-top-level-await';
 import wasm from 'vite-plugin-wasm';
 
-// Guard against Node 25's stubbed localStorage missing Storage methods.
-if (
-	typeof globalThis.localStorage !== 'undefined' &&
-	typeof globalThis.localStorage.getItem !== 'function'
-) {
-	const storage = new Map<string, string>();
-	const patchedStorage = {
-		get length() {
-			return storage.size;
-		},
-		clear() {
-			storage.clear();
-		},
-		getItem(key: string) {
-			const value = storage.get(key);
-			return value === undefined ? null : value;
-		},
-		key(index: number) {
-			const keys = Array.from(storage.keys());
-			return keys[index] ?? null;
-		},
-		removeItem(key: string) {
-			storage.delete(key);
-		},
-		setItem(key: string, value: string) {
-			storage.set(key, value);
-		},
-	};
-	globalThis.localStorage = patchedStorage as Storage;
-}
-
 const prod = process.env.APP_ENV === 'production';
 
 export default defineConfig(async () => {
