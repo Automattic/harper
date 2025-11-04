@@ -29,6 +29,7 @@ use super::boring_words::BoringWords;
 use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::cautionary_tale::CautionaryTale;
+use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
 use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
@@ -450,6 +451,7 @@ impl LintGroup {
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(CautionaryTale, true);
+        insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
