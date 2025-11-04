@@ -794,7 +794,6 @@ fn load_file(
         Some("py") | Some("pyi") => Box::new(PythonParser::default()),
         Some("txt") => Box::new(PlainEnglish),
         _ => {
-            // 1. First try to detect if this is a source file with comments (e.g., .c, .rs, etc.)
             if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {
                 Box::new(comment_parser)
             } else {

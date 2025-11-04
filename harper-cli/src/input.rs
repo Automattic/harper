@@ -63,7 +63,6 @@ impl Input {
     pub(super) fn try_from_stdin() -> anyhow::Result<Self> {
         let mut buf = String::new();
         std::io::stdin().lock().read_to_string(&mut buf)?;
-        // Ok(Self::from(buf))
         Ok(Self::Stdin(buf))
     }
 }
