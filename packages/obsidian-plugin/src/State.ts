@@ -2,7 +2,7 @@ import type { Extension, StateField } from '@codemirror/state';
 import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
 import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { minimatch } from 'minimatch';
-import type { MarkdownFileInfo, MarkdownView, Workspace } from 'obsidian';
+import type { MarkdownFileInfo, Workspace } from 'obsidian';
 import { linter } from './lint';
 
 export type Settings = {
@@ -27,7 +27,7 @@ export default class State {
 	private workspace: Workspace;
 	private onExtensionChange: () => void;
 	private ignoredGlobs?: string[];
-	private editorViewField?: StateField<MarkdownFileInfo>;
+	private editorInfoField?: StateField<MarkdownFileInfo>;
 	private lintEnabled?: boolean;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
@@ -39,13 +39,15 @@ export default class State {
 	constructor(
 		saveDataCallback: (data: any) => Promise<void>,
 		onExtensionChange: () => void,
-		_editorViewField?: StateField<MarkdownFileInfo>,
+		_editorInfoField?: StateField<MarkdownFileInfo>,
 	) {
 		this.harper = new WorkerLinter({ binary: binaryInlined });
 		this.delay = DEFAULT_DELAY;
 		this.saveData = saveDataCallback;
 		this.onExtensionChange = onExtensionChange;
 		this.editorExtensions = [];
+
+		this.editorInfoField = _editorInfoField;
 	}
 
 	public async initializeFromSettings(settings: Settings | null) {
@@ -112,18 +114,15 @@ export default class State {
 			async (view) => {
 				const ignoredGlobs = this.ignoredGlobs ?? [];
 
-				if (this.editorViewField != null) {
-					const mdView = view.state.field(this.editorViewField) as MarkdownView;
+				if (this.editorInfoField != null) {
+					const mdView = view.state.field(this.editorInfoField, false);
 					const file = mdView?.file;
 
 					if (file != null) {
 						const path = file.path;
-
-						if (path != null) {
-							for (const glob of ignoredGlobs) {
-								if (minimatch(path, glob)) {
-									return [];
-								}
+						for (const glob of ignoredGlobs) {
+							if (minimatch(path, glob)) {
+								return [];
 							}
 						}
 					}
