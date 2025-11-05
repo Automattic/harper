@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import type { LintBox } from './Box';
 import type RichText from './RichText';
 import SuggestionControl from './SuggestionControl';

@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::hash::{BuildHasher, Hasher};
 use std::sync::Arc;
 
@@ -6,7 +7,7 @@ use itertools::Itertools;
 
 use super::{FstDictionary, WordId};
 use super::{FuzzyMatchResult, dictionary::Dictionary};
-use crate::{CharString, WordMetadata};
+use crate::{CharString, DictWordMetadata};
 
 /// A simple wrapper over [`Dictionary`] that allows
 /// one to merge multiple dictionaries without copying.
@@ -93,14 +94,11 @@ impl Dictionary for MergedDictionary {
         false
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata> {
-        for child in &self.children {
-            if let Some(found_item) = child.get_word_metadata(word) {
-                return Some(found_item);
-            }
-        }
-
-        None
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.children
+            .iter()
+            .filter_map(|d| d.get_word_metadata(word))
+            .reduce(|acc, md| Cow::Owned(acc.or(&md)))
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
@@ -117,7 +115,7 @@ impl Dictionary for MergedDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<&WordMetadata> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
         let chars: CharString = word.chars().collect();
         self.get_word_metadata(&chars)
     }
@@ -158,5 +156,23 @@ impl Dictionary for MergedDictionary {
         self.children
             .iter()
             .find_map(|dict| dict.get_word_from_id(id))
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.children
+            .iter()
+            .flat_map(|dict| dict.find_words_with_prefix(prefix))
+            .sorted()
+            .dedup()
+            .collect()
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.children
+            .iter()
+            .flat_map(|dict| dict.find_words_with_common_prefix(word))
+            .sorted()
+            .dedup()
+            .collect()
     }
 }

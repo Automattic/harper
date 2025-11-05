@@ -6,9 +6,10 @@ use super::{
 use crate::edit_distance::edit_distance_min_alloc;
 use itertools::Itertools;
 use lazy_static::lazy_static;
+use std::borrow::Cow;
 use std::sync::Arc;
 
-use crate::{CharString, CharStringExt, WordMetadata};
+use crate::{CharString, CharStringExt, DictWordMetadata};
 
 use super::FuzzyMatchResult;
 use super::dictionary::Dictionary;
@@ -16,7 +17,7 @@ use super::dictionary::Dictionary;
 /// A basic dictionary that allows words to be added after instantiating.
 /// This is useful for user and file dictionaries that may change at runtime.
 ///
-/// For immutable use-cases, such as the curated dictionary, prefer [`super::FstDictionary`],
+/// For immutable use-cases that require fuzzy lookups, such as the curated dictionary, prefer [`super::FstDictionary`],
 /// as it is much faster.
 ///
 /// To combine the contents of multiple dictionaries, regardless of type, use
@@ -56,7 +57,7 @@ impl MutableDictionary {
         // There will be at _least_ this number of words
         let mut word_map = WordMap::default();
 
-        attr_list.expand_marked_words(word_list, &mut word_map);
+        attr_list.expand_annotated_words(word_list, &mut word_map);
 
         Ok(Self { word_map })
     }
@@ -73,7 +74,7 @@ impl MutableDictionary {
     /// distinct calls to this function.
     pub fn extend_words(
         &mut self,
-        words: impl IntoIterator<Item = (impl AsRef<[char]>, WordMetadata)>,
+        words: impl IntoIterator<Item = (impl AsRef<[char]>, DictWordMetadata)>,
     ) {
         for (chars, metadata) in words.into_iter() {
             self.word_map.insert(WordMapEntry {
@@ -87,7 +88,7 @@ impl MutableDictionary {
     ///
     /// If you are appending many words, consider using [`Self::extend_words`]
     /// instead.
-    pub fn append_word(&mut self, word: impl AsRef<[char]>, metadata: WordMetadata) {
+    pub fn append_word(&mut self, word: impl AsRef<[char]>, metadata: DictWordMetadata) {
         self.extend_words(std::iter::once((word.as_ref(), metadata)))
     }
 
@@ -95,7 +96,7 @@ impl MutableDictionary {
     ///
     /// If you are appending many words, consider using [`Self::extend_words`]
     /// instead.
-    pub fn append_word_str(&mut self, word: &str, metadata: WordMetadata) {
+    pub fn append_word_str(&mut self, word: &str, metadata: DictWordMetadata) {
         self.append_word(word.chars().collect::<Vec<_>>(), metadata)
     }
 }
@@ -107,8 +108,10 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_word_metadata(&self, word: &[char]) -> Option<&WordMetadata> {
-        self.word_map.get_with_chars(word).map(|v| &v.metadata)
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.word_map
+            .get_with_chars(word)
+            .map(|v| Cow::Borrowed(&v.metadata))
     }
 
     fn contains_word(&self, word: &[char]) -> bool {
@@ -120,7 +123,7 @@ impl Dictionary for MutableDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<&WordMetadata> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
         let chars: CharString = word.chars().collect();
         self.get_word_metadata(&chars)
     }
@@ -232,6 +235,34 @@ impl Dictionary for MutableDictionary {
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
         self.word_map.get(id).map(|w| w.canonical_spelling.as_ref())
     }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        let mut found = Vec::new();
+
+        for word in self.words_iter() {
+            if let Some(item_prefix) = word.get(0..prefix.len())
+                && item_prefix == prefix
+            {
+                found.push(Cow::Borrowed(word));
+            }
+        }
+
+        found
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        let mut found = Vec::new();
+
+        for item in self.words_iter() {
+            if let Some(item_prefix) = word.get(0..item.len())
+                && item_prefix == item
+            {
+                found.push(Cow::Borrowed(item));
+            }
+        }
+
+        found
+    }
 }
 
 impl From<MutableDictionary> for FstDictionary {
@@ -248,10 +279,13 @@ impl From<MutableDictionary> for FstDictionary {
 
 #[cfg(test)]
 mod tests {
+    use std::borrow::Cow;
+
     use hashbrown::HashSet;
     use itertools::Itertools;
 
     use crate::spell::{Dictionary, MutableDictionary};
+    use crate::{DictWordMetadata, char_string::char_string};
 
     #[test]
     fn curated_contains_no_duplicates() {
@@ -266,6 +300,9 @@ mod tests {
         assert!(dict.contains_word_str("This"));
     }
 
+    // "This" is a determiner when used similarly to "the"
+    // but when used alone it's a "demonstrative pronoun".
+    // Harper previously wrongly classified it as a noun.
     #[test]
     fn this_is_determiner() {
         let dict = MutableDictionary::curated();
@@ -414,12 +451,43 @@ mod tests {
     }
 
     #[test]
-    fn is_is_verb_lemma() {
+    fn be_is_verb_lemma() {
         let dict = MutableDictionary::curated();
 
         let is = dict.get_word_metadata_str("be");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_verb_lemma());
+    }
+
+    #[test]
+    fn gets_prefixes_as_expected() {
+        let mut dict = MutableDictionary::new();
+        dict.append_word_str("predict", DictWordMetadata::default());
+        dict.append_word_str("prelude", DictWordMetadata::default());
+        dict.append_word_str("preview", DictWordMetadata::default());
+        dict.append_word_str("dwight", DictWordMetadata::default());
+
+        let with_prefix = dict.find_words_with_prefix(char_string!("pre").as_slice());
+
+        assert_eq!(with_prefix.len(), 3);
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("predict").into_vec())));
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("prelude").into_vec())));
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("preview").into_vec())));
+    }
+
+    #[test]
+    fn gets_common_prefixes_as_expected() {
+        let mut dict = MutableDictionary::new();
+        dict.append_word_str("pre", DictWordMetadata::default());
+        dict.append_word_str("prep", DictWordMetadata::default());
+        dict.append_word_str("dwight", DictWordMetadata::default());
+
+        let with_prefix =
+            dict.find_words_with_common_prefix(char_string!("preposition").as_slice());
+
+        assert_eq!(with_prefix.len(), 2);
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("pre").into_vec())));
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("prep").into_vec())));
     }
 }

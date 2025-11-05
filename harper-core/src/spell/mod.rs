@@ -1,12 +1,13 @@
 //! Contains the relevant code for performing dictionary lookups and spellchecking (i.e. fuzzy
 //! dictionary lookups).
 
-use crate::{CharString, CharStringExt, WordMetadata};
+use crate::{CharString, CharStringExt, DictWordMetadata};
 
 pub use self::dictionary::Dictionary;
 pub use self::fst_dictionary::FstDictionary;
 pub use self::merged_dictionary::MergedDictionary;
 pub use self::mutable_dictionary::MutableDictionary;
+pub use self::trie_dictionary::TrieDictionary;
 pub use self::word_id::WordId;
 
 mod dictionary;
@@ -14,6 +15,7 @@ mod fst_dictionary;
 mod merged_dictionary;
 mod mutable_dictionary;
 mod rune;
+mod trie_dictionary;
 mod word_id;
 mod word_map;
 
@@ -21,7 +23,7 @@ mod word_map;
 pub struct FuzzyMatchResult<'a> {
     pub word: &'a [char],
     pub edit_distance: u8,
-    pub metadata: &'a WordMetadata,
+    pub metadata: std::borrow::Cow<'a, DictWordMetadata>,
 }
 
 impl PartialOrd for FuzzyMatchResult<'_> {

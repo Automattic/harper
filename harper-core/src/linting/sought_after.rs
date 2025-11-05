@@ -12,7 +12,7 @@ impl Default for SoughtAfter {
         let pattern = SequenceExpr::any_of(vec![
             Box::new(
                 SequenceExpr::default()
-                    .then_kind_except(TokenKind::is_adverb, &["always", "maybe", "perhaps"]),
+                    .then_kind_except(TokenKind::is_adverb, &["always", "maybe", "not", "perhaps"]),
             ),
             Box::new(SequenceExpr::word_set(&[
                 "abit", // Typo for "a bit"

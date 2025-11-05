@@ -18,9 +18,12 @@ use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-use harper_core::{Dialect, Document, IgnoredLints, WordMetadata};
+use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
 use harper_html::HtmlParser;
+use harper_ink::InkParser;
+use harper_jjdescription::JJDescriptionParser;
 use harper_literate_haskell::LiterateHaskellParser;
+use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
 use harper_typst::Typst;
 use serde_json::Value;
@@ -79,7 +82,7 @@ impl Backend {
             .await
             .context("Unable to get the file path.")?;
 
-        load_dict(path)
+        load_dict(path, self.config.read().await.dialect)
             .await
             .map_err(|err| info!("{err}"))
             .or(Ok(MutableDictionary::new()))
@@ -143,7 +146,7 @@ impl Backend {
     async fn load_user_dictionary(&self) -> MutableDictionary {
         let config = self.config.read().await;
 
-        load_dict(&config.user_dict_path)
+        load_dict(&config.user_dict_path, self.config.read().await.dialect)
             .await
             .map_err(|err| info!("{err}"))
             .unwrap_or(MutableDictionary::new())
@@ -159,10 +162,13 @@ impl Backend {
 
     async fn load_workspace_dictionary(&self) -> MutableDictionary {
         let config = self.config.read().await;
-        load_dict(&config.workspace_dict_path)
-            .await
-            .map_err(|err| info!("{err}"))
-            .unwrap_or(MutableDictionary::new())
+        load_dict(
+            &config.workspace_dict_path,
+            self.config.read().await.dialect,
+        )
+        .await
+        .map_err(|err| info!("{err}"))
+        .unwrap_or(MutableDictionary::new())
     }
 
     async fn save_workspace_dictionary(&self, dict: impl Dictionary) -> Result<()> {
@@ -353,7 +359,15 @@ impl Backend {
                     Some(Box::new(ts_parser))
                 }
             }
-            "literate haskell" | "lhaskell" => {
+            "git-commit" | "gitcommit" => {
+                Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
+            }
+            "html" => Some(Box::new(HtmlParser::default())),
+            "ink" => Some(Box::new(InkParser::default())),
+            "jj-commit" | "jjdescription" => {
+                Some(Box::new(JJDescriptionParser::new(markdown_options)))
+            }
+            "lhaskell" | "literate haskell" => {
                 let parser = LiterateHaskellParser::new_markdown(markdown_options);
 
                 if let Some(new_dict) =
@@ -375,14 +389,12 @@ impl Backend {
                     Some(Box::new(parser))
                 }
             }
+            "mail" => Some(Box::new(PlainEnglish)),
             "markdown" => Some(Box::new(Markdown::new(markdown_options))),
-            "git-commit" | "gitcommit" => {
-                Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
-            }
-            "html" => Some(Box::new(HtmlParser::default())),
-            "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
-            "typst" => Some(Box::new(Typst)),
             "org" => Some(Box::new(OrgMode)),
+            "plaintext" | "text" => Some(Box::new(PlainEnglish)),
+            "python" => Some(Box::new(PythonParser::default())),
+            "typst" => Some(Box::new(Typst)),
             _ => None,
         };
 
@@ -672,7 +684,7 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_user_dictionary().await;
-                dict.append_word(word, WordMetadata::default());
+                dict.append_word(word, DictWordMetadata::default());
                 self.save_user_dictionary(dict)
                     .await
                     .map_err(|err| error!("{err}"))
@@ -693,7 +705,7 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_workspace_dictionary().await;
-                dict.append_word(word, WordMetadata::default());
+                dict.append_word(word, DictWordMetadata::default());
                 self.save_workspace_dictionary(dict)
                     .await
                     .map_err(|err| error!("{err}"))
@@ -723,7 +735,7 @@ impl LanguageServer for Backend {
                         return Ok(None);
                     }
                 };
-                dict.append_word(word, WordMetadata::default());
+                dict.append_word(word, DictWordMetadata::default());
 
                 self.save_file_dictionary(&file_uri, dict)
                     .await

@@ -40,15 +40,25 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+      49 | including the fact that he documented the binary number system. In 1820, Thomas
+      50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
+         | ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “DE”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       49 | including the fact that he documented the binary number system. In 1820, Thomas
       50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
          | ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -111,14 +121,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      68 | Essays on Automatics, and designed, inspired by Babbage, a theoretical
-      69 | electromechanical calculating machine which was to be controlled by a read-only
-         | ^~~~~~~~~~~~~~~~~ Did you mean to spell `electromechanical` this way?
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       71 | 1920, to celebrate the 100th anniversary of the invention of the arithmometer,
          |                                                                  ^~~~~~~~~~~~ Did you mean to spell `arithmometer` this way?
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
@@ -130,27 +132,9 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      71 | 1920, to celebrate the 100th anniversary of the invention of the arithmometer,
-      72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
-         |                               ^~~~~~~~~~~~~~~~~ Did you mean to spell `Electromechanical` this way?
-      73 | demonstrated the feasibility of an electromechanical analytical engine, on which
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
          |                                                 ^~~~~~~~~~~~ Did you mean to spell `Arithmometer` this way?
       73 | demonstrated the feasibility of an electromechanical analytical engine, on which
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-      72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
-      73 | demonstrated the feasibility of an electromechanical analytical engine, on which
-         |                                    ^~~~~~~~~~~~~~~~~ Did you mean to spell `electromechanical` this way?
-      74 | commands could be typed and the results printed automatically. In 1937, one
 
 
 
@@ -362,18 +346,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-     127 | the ACM—turingineer, turologist, flow-charts-man, applied meta-mathematician,
-     128 | and applied epistemologist. Three months later in the same journal, comptologist
-         |             ^~~~~~~~~~~~~~ Did you mean to spell `epistemologist` this way?
-Suggest:
-  - Replace with: “epistemological”
-  - Replace with: “epistemology”
-  - Replace with: “epidemiologist”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      128 | and applied epistemologist. Three months later in the same journal, comptologist
          |                                                                     ^~~~~~~~~~~~ Did you mean `cosmetologist`?
      129 | was suggested, followed next year by hypologist. The term computics has also
@@ -442,6 +414,16 @@ Suggest:
   - Replace with: “automatic”
   - Replace with: “automatics”
   - Replace with: “automata”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
+         |                                                        ^~~~~~~~~~ `automatica` should probably be written as `automatic a`.
+     132 | or "information and mathematics" are often used, e.g. informatique (French),
+Suggest:
+  - Replace with: “automatic a”
 
 
 
@@ -653,8 +635,8 @@ Message: |
          |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
   - Replace with: “Ax”
-  - Replace with: “A”
-  - Replace with: “Ah”
+  - Replace with: “Ab”
+  - Replace with: “Ac”
 
 
 
@@ -783,7 +765,7 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Hr”
+  - Replace with: “Ht”
   - Replace with: “He”
   - Replace with: “Hf”
 
@@ -880,9 +862,9 @@ Message: |
      262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
          |                ^~ Did you mean to spell `NP` this way?
 Suggest:
-  - Replace with: “N”
   - Replace with: “Nap”
   - Replace with: “Nip”
+  - Replace with: “Nu”
 
 
 
@@ -1003,16 +985,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-     371 | semiotics, electrical engineering, philosophy of mind, neurophysiology, and
-         |                                                        ^~~~~~~~~~~~~~~ Did you mean `neurobiology`?
-     372 | social intelligence. AI is associated in the popular mind with robotic
-Suggest:
-  - Replace with: “neurobiology”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
          |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
@@ -1027,19 +999,9 @@ Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
-  - Replace with: “Pa”
+  - Replace with: “Pt”
+  - Replace with: “P”
   - Replace with: “Pd”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-     394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
-         |                                   ^~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “,”
-  - Replace with: “.”
 
 
 
@@ -1096,15 +1058,13 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Capitalization (127 priority)
 Message: |
-     442 |   > All the information about any computable problem can be represented using
-     443 |   > only 0 and 1 (or any other bistable pair that can flip-flop between two
-         |                                ^~~~~~~~ Did you mean to spell `bistable` this way?
+     444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
+         |                                                                  ^~ This word's canonical spelling is all-caps.
+     445 |   > "high-voltage/low-voltage", etc.).
 Suggest:
-  - Replace with: “beatable”
-  - Replace with: “biddable”
-  - Replace with: “billable”
+  - Replace with: “DE”
 
 
 
@@ -1114,9 +1074,9 @@ Message: |
          |                                                                  ^~ Did you mean to spell `de` this way?
      445 |   > "high-voltage/low-voltage", etc.).
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -1211,6 +1171,16 @@ Suggest:
   - Replace with: “got”
   - Replace with: “goo”
   - Replace with: “goths”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     468 |     Boehm's and Jacopini's insight can be further simplified with the use of
+     469 |     goto (which means it is more elementary than structured programming).
+         |     ^~~~ `goto` should probably be written as `go to`.
+Suggest:
+  - Replace with: “go to”
 
 
 

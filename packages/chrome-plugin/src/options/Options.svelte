@@ -15,7 +15,7 @@ let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
 
 $effect(() => {
-	ProtocolClient.setLintConfig(lintConfig);
+	ProtocolClient.setLintConfig($state.snapshot(lintConfig));
 });
 
 $effect(() => {
@@ -185,7 +185,7 @@ async function exportEnabledDomainsCSV() {
             <span class="font-medium">User Dictionary</span>
             <span class="font-light">Each word should be on its own line.</span>
           </div>
-          <textarea bind:value={userDict} />
+          <textarea bind:value={userDict} ></textarea>
         </div>
       </div>
 

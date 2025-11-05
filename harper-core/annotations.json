@@ -379,7 +379,18 @@
 					"condition": "[^aeiou]e"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Positive"
+						}
+					}
+				}
+			],
 			"base_metadata": {}
 		},
 		"S": {
@@ -622,7 +633,7 @@
 		},
 		"l": {
 			"#": "linking verb property",
-			"//": "see also m: auxiliary verb property",
+			"//": "see also A: auxiliary verb property",
 			"metadata": {
 				"verb": {
 					"is_linking": true

@@ -1,0 +1,32 @@
+# Adapted from [Jeff Geerling's Stale Workflow](https://github.com/geerlingguy/mac-dev-playbook/blob/719de3569804fcf4974fc3a14f46f3ebb92989b2/.github/workflows/stale.yml)
+
+---
+name: Close inactive issues
+"on":
+  schedule:
+    - cron: "0 18 * * 1"
+
+jobs:
+  close-issues:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/stale@v10
+        with:
+          days-before-stale: 120
+          days-before-close: 60
+          exempt-issue-labels: bug,pinned,security,planned
+          exempt-pr-labels: bug,pinned,security,planned
+          stale-issue-label: "stale"
+          stale-pr-label: "stale"
+          stale-issue-message: |
+            This issue has been marked 'stale' due to lack of recent activity. If there is no further activity, the issue will be closed in another 30 days. Thank you for your contribution!
+          close-issue-message: |
+            This issue has been closed due to inactivity. If you feel this is in error, please reopen the issue or file a new issue with the relevant details.
+          stale-pr-message: |
+            This pr has been marked 'stale' due to lack of recent activity. If there is no further activity, the issue will be closed in another 30 days. Thank you for your contribution!
+          close-pr-message: |
+            This pr has been closed due to inactivity. If you feel this is in error, please reopen the issue or file a new issue with the relevant details.
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

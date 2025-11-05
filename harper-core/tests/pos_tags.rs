@@ -24,11 +24,11 @@
 //!
 //! ## Tags
 //!
-//! Tags are assigned based on the [`TokenKind`] and [`WordMetadata`] of a
+//! Tags are assigned based on the [`TokenKind`] and [`DictWordMetadata`] of a
 //! token.
 //!
 //! - The tag of [`TokenKind::Word`] variants depends on their
-//!   [`WordMetadata`]. If they don't have any metadata, they are denoted by `?`.
+//!   [`DictWordMetadata`]. If they don't have any metadata, they are denoted by `?`.
 //!   Otherwise, the tag is constructed as follows:
 //!
 //!   - Nouns are denoted by `N`.
@@ -63,6 +63,9 @@
 //!     or `Comm` for Commonwealth (UK, Australia, and Canada).
 //!   - Swear words are denoted by `B` (for bad).
 //!   - Noun phrase membership is denoted by `+`
+//!   - For words not in the dictionary or without annotations,
+//!     they are denoted by `K` for "contraction" if they contain an apostrophe,
+//!     or `W?` otherwise.
 //!
 //!   The tagger supports uncertainty, so a single word can be e.g. both a
 //!   noun and a verb. This is denoted by a `/` between the tags.
@@ -77,13 +80,14 @@
 //! - All other token kinds are denoted by their variant name.
 use std::borrow::Cow;
 
+use harper_core::dict_word_metadata::VerbFormFlags;
+use harper_core::dict_word_metadata_orthography::OrthFlags;
 use harper_core::spell::FstDictionary;
-use harper_core::word_metadata::VerbFormFlags;
-use harper_core::{Degree, Dialect, Document, TokenKind, WordMetadata};
+use harper_core::{Degree, Dialect, DictWordMetadata, Document, TokenKind};
 
 mod snapshot;
 
-fn format_word_tag(word: &WordMetadata) -> String {
+fn format_word_tag(word: &DictWordMetadata) -> String {
     // These tags are inspired by the Penn Treebank POS tagset
     let mut tags = String::new();
     fn add(t: &str, tags: &mut String) {
@@ -118,7 +122,12 @@ fn format_word_tag(word: &WordMetadata) -> String {
             add_switch(&mut tag, Some(word.is_countable_noun()), "🅪", "ᴹ");
         }
         if word.is_countable_noun() {
-            if word.is_singular_noun() && !word.is_proper_noun() {
+            // Countable nouns are optionally marked in the dictionary. Countable is default if neither it nor mass is marked.
+            // Common nouns are not marked in the dictionary, but being a mass noun implies being a common noun.
+            // We don't want to clutter the output with `Sg` for mass nouns unless they are also countable.
+            // We don't want to clutter the output with `Sg` for proper nouns unless they are also common.
+            // "wood"/"Wood" is a countable and mass common noun and also a proper noun.
+            if word.is_singular_noun() && (!word.is_proper_noun() || word.is_mass_noun()) {
                 tag.push_str("Sg");
             }
             if word.is_plural_noun() {
@@ -148,7 +157,7 @@ fn format_word_tag(word: &WordMetadata) -> String {
         add_bool(&mut tag, "L", verb.is_linking);
         add_bool(&mut tag, "X", verb.is_auxiliary);
         if let Some(forms) = verb.verb_forms {
-            // If Lemma flag is explicity set; or if no verb forms are set Lemma is the default.
+            // If Lemma flag is explicitly set; or if no verb forms are set Lemma is the default.
             match (
                 forms.contains(VerbFormFlags::LEMMA),
                 forms.contains(VerbFormFlags::PAST),
@@ -225,16 +234,16 @@ fn format_word_tag(word: &WordMetadata) -> String {
         add("B", &mut tags);
     }
 
-    if tags.is_empty() {
-        String::from("W?")
-    } else {
-        tags
+    match tags.is_empty() {
+        true if word.orth_info.contains(OrthFlags::APOSTROPHE) => String::from("K"),
+        true => String::from("W?"),
+        false => tags,
     }
 }
 
 /// Returns a vector of dialect annotation strings for the given word.
 /// Handles both individual dialects and special groupings (NoAm, Comm).
-fn get_dialect_annotations(word: &WordMetadata) -> Vec<&'static str> {
+fn get_dialect_annotations(word: &DictWordMetadata) -> Vec<&'static str> {
     let mut annotations = Vec::new();
     let mut north_america = false;
     let mut commonwealth = false;

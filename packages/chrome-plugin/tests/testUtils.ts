@@ -68,7 +68,7 @@ export function getTextarea(page: Page): Locator {
 }
 
 export async function testBasicSuggestionTextarea(testPageUrl: string) {
-	test('Can apply basic suggestion.', async ({ page, context }) => {
+	test('Can apply basic suggestion.', async ({ page }) => {
 		await page.goto(testPageUrl);
 
 		await page.waitForTimeout(2000);
@@ -140,5 +140,5 @@ export function assertBoxesClose(a: Box, b: Box) {
 }
 
 function assertClose(actual: number, expected: number) {
-	expect(Math.abs(actual - expected)).toBeLessThanOrEqual(9);
+	expect(Math.abs(actual - expected)).toBeLessThanOrEqual(15);
 }

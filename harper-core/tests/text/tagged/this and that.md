@@ -1,5 +1,5 @@
-> " This    " and  " that          " are common   and  fulfill multiple purposes in      everyday English    .
-# . I/Ddem+ . VB/C . NSg/I/C/Ddem+ . VB  NSg/VB/J VB/C VB/NoAm NSg/J/Dq NPl/V3   NPr/J/P NSg/J+   NPr🅪/VB/J+ .
+> " This    " and  " that          " are common   and  fulfill multiple purposes in      everyday English      .
+# . I/Ddem+ . VB/C . NSg/I/C/Ddem+ . VB  NSg/VB/J VB/C VB/NoAm NSg/J/Dq NPl/V3   NPr/J/P NSg/J+   NPr🅪Sg/VB/J+ .
 > As    such  , disambiguating them     is  necessary .
 # NSg/R NSg/I . Nᴹ/Vg/J        NSg/IPl+ VL3 NSg/J     .
 >
@@ -51,9 +51,9 @@
 >
 #
 > That          could   be      a    solution .
-# NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ NSg+     .
+# NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ N🅪Sg+    .
 > Find   all           candidates that          could   be      a    solution .
-# NSg/VB NSg/I/J/C/Dq+ NPl/V3+    NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ NSg+     .
+# NSg/VB NSg/I/J/C/Dq+ NPl/V3+    NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ N🅪Sg+    .
 >
 #
 > This    is  all          that         I       have    .
@@ -61,7 +61,7 @@
 > This    is  all          that         solutions can     do      .
 # I/Ddem+ VL3 NSg/I/J/C/Dq NSg/I/C/Ddem NPl+      NPr/VXB NSg/VXB .
 > That         solution can     do      .
-# NSg/I/C/Ddem NSg+     NPr/VXB NSg/VXB .
+# NSg/I/C/Ddem N🅪Sg+    NPr/VXB NSg/VXB .
 >
 #
 > We   can     do      this    !

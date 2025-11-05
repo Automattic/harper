@@ -3,7 +3,7 @@
 >
 #
 > This    documents tests   that         different forms   / variations of swears are tagged as    such  .
-# I/Ddem+ NPl/V3+   NPl/V3+ NSg/I/C/Ddem NSg/J+    NPl/V3+ . W?         P  NPl/V3 VB  VP/J   NSg/R NSg/I .
+# I/Ddem+ NPl/V3+   NPl/V3+ NSg/I/C/Ddem NSg/J+    NPl/V3+ . NPl        P  NPl/V3 VB  VP/J   NSg/R NSg/I .
 >
 #
 > Examples

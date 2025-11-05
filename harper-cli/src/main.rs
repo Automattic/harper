@@ -17,12 +17,14 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    CharStringExt, Dialect, Document, Span, TokenKind, TokenStringExt, WordMetadata,
-    remove_overlaps, word_metadata_orthography::OrthFlags,
+    CharStringExt, Dialect, DictWordMetadata, Document, Span, TokenKind, TokenStringExt,
+    dict_word_metadata_orthography::OrthFlags, remove_overlaps,
 };
+use harper_ink::InkParser;
 use harper_literate_haskell::LiterateHaskellParser;
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
+use harper_python::PythonParser;
 
 use harper_stats::Stats;
 use serde::Serialize;
@@ -818,12 +820,14 @@ fn load_file(
         .map(|v| v.to_str().unwrap())
     {
         Some("md") => Box::new(Markdown::default()),
+        Some("ink") => Box::new(InkParser::default()),
 
         Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
             MarkdownOptions::default(),
         )),
         Some("org") => Box::new(OrgMode),
         Some("typ") => Box::new(harper_typst::Typst),
+        Some("py") | Some("pyi") => Box::new(PythonParser::default()),
         _ => {
             if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {
                 Box::new(comment_parser)
@@ -872,7 +876,7 @@ fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let mut dict = MutableDictionary::new();
     dict.extend_words(
         str.lines()
-            .map(|l| (l.chars().collect::<Vec<_>>(), WordMetadata::default())),
+            .map(|l| (l.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
     );
 
     Ok(dict)

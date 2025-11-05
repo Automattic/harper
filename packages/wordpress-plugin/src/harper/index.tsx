@@ -3,7 +3,6 @@ import { registerPlugin } from '@wordpress/plugins';
 import Logo from './Logo';
 import SidebarControl from './SidebarControl';
 import './index.css';
-import React from 'react';
 import LinterProvider from './LinterProvider';
 
 function Sidebar() {
@@ -21,9 +20,9 @@ function Sidebar() {
 	);
 }
 
-// @ts-ignore
+// @ts-expect-error
 if (!window.__harperSidebarRegistered) {
 	registerPlugin('harper-sidebar', { render: Sidebar });
-	// @ts-ignore
+	// @ts-expect-error
 	window.__harperSidebarRegistered = true;
 }

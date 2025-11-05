@@ -1,6 +1,6 @@
 use hashbrown::{HashMap, hash_map::IntoValues};
 
-use crate::{CharString, WordMetadata};
+use crate::{CharString, DictWordMetadata};
 
 use super::WordId;
 
@@ -12,7 +12,7 @@ pub struct WordMap {
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub struct WordMapEntry {
-    pub metadata: WordMetadata,
+    pub metadata: DictWordMetadata,
     pub canonical_spelling: CharString,
 }
 
@@ -53,14 +53,14 @@ impl WordMap {
     pub fn get_metadata_mut_chars(
         &mut self,
         chars: impl AsRef<[char]>,
-    ) -> Option<&mut WordMetadata> {
+    ) -> Option<&mut DictWordMetadata> {
         let id = WordId::from_word_chars(chars);
 
         self.get_metadata_mut(&id)
     }
 
     /// Borrow a word's metadata mutably
-    pub fn get_metadata_mut(&mut self, id: &WordId) -> Option<&mut WordMetadata> {
+    pub fn get_metadata_mut(&mut self, id: &WordId) -> Option<&mut DictWordMetadata> {
         self.inner.get_mut(id).map(|v| &mut v.metadata)
     }
 

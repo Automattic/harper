@@ -102,7 +102,7 @@ impl ExprLinter for OpenCompounds {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::WordChoice,
+            lint_kind: LintKind::BoundaryError,
             suggestions: vec![Suggestion::replace_with_match_case(
                 phrase.chars().collect(),
                 span.get_content(source_chars),

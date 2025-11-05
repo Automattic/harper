@@ -172,6 +172,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+      63 | one Representative; and until such enumeration shall be made, the State of New
+      64 | Hampshire shall be entitled to chuse three, Massachusetts eight, Rhode-Island
+         |                                ^~~~~ `chuse` should probably be written as `ch use`.
+Suggest:
+  - Replace with: “ch use”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       72 | The House of Representatives shall chuse their Speaker and other Officers; and
@@ -180,6 +190,15 @@ Suggest:
   - Replace with: “cause”
   - Replace with: “chase”
   - Replace with: “chose”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+      72 | The House of Representatives shall chuse their Speaker and other Officers; and
+         |                                    ^~~~~ `chuse` should probably be written as `ch use`.
+Suggest:
+  - Replace with: “ch use”
 
 
 
@@ -238,6 +257,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+     103 | The Senate shall chuse their other Officers, and also a President pro tempore,
+         |                  ^~~~~ `chuse` should probably be written as `ch use`.
+Suggest:
+  - Replace with: “ch use”
+
+
+
 Lint:    Redundancy (31 priority)
 Message: |
      103 | The Senate shall chuse their other Officers, and also a President pro tempore,
@@ -257,6 +285,16 @@ Suggest:
   - Replace with: “temper”
   - Replace with: “temple”
   - Replace with: “tempo”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     103 | The Senate shall chuse their other Officers, and also a President pro tempore,
+         |                                                                       ^~~~~~~ `tempore` should probably be written as `temp ore`.
+     104 | in the Absence of the Vice President, or when he shall exercise the Office of
+Suggest:
+  - Replace with: “temp ore”
 
 
 
@@ -341,6 +379,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      137 | and under such Penalties as each House may provide.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 61 words long.
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     133 | Each House shall be the Judge of the Elections, Returns and
+         |                                                 ^~~~~~~ An Oxford comma is necessary here.
+     134 | Qualifications of its own Members, and a Majority of each shall constitute a
+Suggest:
+  - Insert “,”
 
 
 
@@ -834,6 +882,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     338 | #### SubSection. 1.
+         |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
+Suggest:
+  - Replace with: “subsection”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      340 | The Electors shall meet in their respective states, and vote
@@ -946,6 +1003,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     388 | #### SubSection. 2
+         |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
+Suggest:
+  - Replace with: “subsection”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      390 | No Person except a natural born Citizen, or a Citizen of the
@@ -991,6 +1057,15 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     406 | #### SubSection 3.
+         |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
+Suggest:
+  - Replace with: “subsection”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      415 | Whenever the President transmits to the President pro tempore of the Senate and
@@ -1015,6 +1090,16 @@ Suggest:
   - Replace with: “temper”
   - Replace with: “temple”
   - Replace with: “tempo”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     415 | Whenever the President transmits to the President pro tempore of the Senate and
+         |                                                       ^~~~~~~ `tempore` should probably be written as `temp ore`.
+     416 | the Speaker of the House of Representatives his written declaration that he is
+Suggest:
+  - Replace with: “temp ore”
 
 
 
@@ -1044,6 +1129,16 @@ Suggest:
   - Replace with: “temper”
   - Replace with: “temple”
   - Replace with: “tempo”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     422 | the executive departments or of such other body as Congress may by law provide,
+     423 | transmit to the President pro tempore of the Senate and the Speaker of the
+         |                               ^~~~~~~ `tempore` should probably be written as `temp ore`.
+Suggest:
+  - Replace with: “temp ore”
 
 
 
@@ -1080,6 +1175,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+     428 | Thereafter, when the President transmits to the President pro tempore of the
+         |                                                               ^~~~~~~ `tempore` should probably be written as `temp ore`.
+     429 | Senate and the Speaker of the House of Representatives his written declaration
+Suggest:
+  - Replace with: “temp ore”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      433 | transmit within four days to the President pro tempore of the Senate and the
@@ -1089,6 +1194,16 @@ Suggest:
   - Replace with: “temper”
   - Replace with: “temple”
   - Replace with: “tempo”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     433 | transmit within four days to the President pro tempore of the Senate and the
+         |                                                ^~~~~~~ `tempore` should probably be written as `temp ore`.
+     434 | Speaker of the House of Representatives their written declaration that the
+Suggest:
+  - Replace with: “temp ore”
 
 
 
@@ -1108,6 +1223,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      443 | and duties of his office.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 77 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     446 | #### SubSection 4.
+         |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
+Suggest:
+  - Replace with: “subsection”
 
 
 
@@ -1156,7 +1280,7 @@ Message: |
 Lint:    Formatting (63 priority)
 Message: |
      455 | Oath or Affirmation:-- "I do solemnly swear (or affirm) that I will faithfully
-         |                     ^~ A sequence of hyphens is not an en dash.
+         |                     ^~ Replace these two hyphens with an en dash (–).
 Suggest:
   - Replace with: “–”
 
@@ -1170,6 +1294,15 @@ Message: |
          | ~~~~~~ When referring to national or international organizations, make sure to treat them as a proper noun.
 Suggest:
   - Replace with: “United States”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     460 | #### SubSection 5.
+         |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
+Suggest:
+  - Replace with: “subsection”
 
 
 
@@ -1335,18 +1468,6 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     561 | Attainder of Treason shall work Corruption of Blood, or Forfeiture except
-     562 | during the Life of the Person attainted.
-         |                               ^~~~~~~~~ Did you mean to spell `attainted` this way?
-Suggest:
-  - Replace with: “attained”
-  - Replace with: “attainder”
-  - Replace with: “tainted”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      566 | The right of the people to be secure in their persons, houses,
@@ -1412,6 +1533,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      592 | according to the rules of the common law.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 50 words long.
+
+
+
+Lint:    Style (31 priority)
+Message: |
+     603 | Congress may by general Laws prescribe the Manner in which such Acts, Records
+         |                                                                       ^~~~~~~ An Oxford comma is necessary here.
+     604 | and Proceedings shall be proved, and the Effect thereof.
+Suggest:
+  - Insert “,”
 
 
 
@@ -1581,14 +1712,24 @@ Message: |
 
 
 
+Lint:    Style (31 priority)
+Message: |
+     660 | United States, or any claim for the loss or emancipation of any slave; but all
+     661 | such debts, obligations and claims shall be held illegal and void.
+         |             ^~~~~~~~~~~ An Oxford comma is necessary here.
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      663 | ## Article. V.
          |             ^~ Did you mean to spell `V.` this way?
 Suggest:
   - Replace with: “Vs.”
-  - Replace with: “V”
   - Replace with: “Vb”
+  - Replace with: “Vi”
 
 
 
@@ -1616,6 +1757,18 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      675 | without its Consent, shall be deprived of its equal Suffrage in the Senate.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 143 words long.
+
+
+
+Lint:    Nonstandard (50 priority)
+Message: |
+     668 | proposing Amendments, which, in either Case, shall be valid to all Intents and
+         |                                                             ^~~~~~~~~~~~~~~~~~~
+     669 | Purposes, as Part of this Constitution, when ratified by the Legislatures of
+         | ~~~~~~~~ The time period is redundant because it repeats what's already specified by the AM/PM indicator.
+Suggest:
+  - Replace with: “to all Intents and Purposes”
+  - Replace with: “for alL intents anD purposes”
 
 
 

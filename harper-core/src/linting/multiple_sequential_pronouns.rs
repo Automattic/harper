@@ -30,7 +30,7 @@ impl MultipleSequentialPronouns {
             "our", "your", "their", // possessive adjectives, plural
         ]));
 
-        // TODO: temporary sets of pronouns - remove when WordMetadata has this info
+        // TODO: temporary sets of pronouns - remove when DictWordMetadata has this info
         let subject_pronouns = Lrc::new(WordSet::new(&[
             "i", "you", "he", "she", "it", // subject case, singular
             "we", "you", "they", // subject case, plural

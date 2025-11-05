@@ -14,7 +14,7 @@ where
     T: Dictionary,
 {
     dictionary: T,
-    word_cache: LruCache<CharString, Vec<CharString>>,
+    suggestion_cache: LruCache<CharString, Vec<CharString>>,
     dialect: Dialect,
     pub(crate) ignore_all_caps: bool,
 }
@@ -23,7 +23,7 @@ impl<T: Dictionary> SpellCheck<T> {
     pub fn new(dictionary: T, dialect: Dialect) -> Self {
         Self {
             dictionary,
-            word_cache: LruCache::new(NonZero::new(10000).unwrap()),
+            suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
             dialect,
             ignore_all_caps: false,
         }
@@ -68,11 +68,11 @@ impl<T: Dictionary> SpellCheck<T> {
     }
 
     fn suggest_correct_spelling(&mut self, word: &[char]) -> Vec<CharString> {
-        if let Some(hit) = self.word_cache.get(word) {
+        if let Some(hit) = self.suggestion_cache.get(word) {
             hit.clone()
         } else {
             let suggestions = self.uncached_suggest_correct_spelling(word);
-            self.word_cache.put(word.into(), suggestions.clone());
+            self.suggestion_cache.put(word.into(), suggestions.clone());
             suggestions
         }
     }
@@ -83,7 +83,7 @@ impl<T: Dictionary> SpellCheck<T> {
                 suggest_correct_spelling(word, 100, dist, &self.dictionary)
                     .into_iter()
                     .filter(|v| {
-                        // ignore entries outside the configured dialect
+                        // Ignore entries outside the configured dialect
                         self.dictionary
                             .get_word_metadata(v)
                             .unwrap()
@@ -135,15 +135,16 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 }
             }
 
-            let suggestions = possibilities
+            let suggestions: Vec<_> = possibilities
                 .iter()
-                .map(|word| Suggestion::ReplaceWith(word.to_vec()));
+                .map(|sug| Suggestion::ReplaceWith(sug.to_vec()))
+                .collect();
 
             // If there's only one suggestion, save the user a step in the GUI
             let message = if suggestions.len() == 1 {
                 format!(
                     "Did you mean `{}`?",
-                    possibilities.last().unwrap().iter().collect::<String>()
+                    possibilities.first().unwrap().iter().collect::<String>()
                 )
             } else {
                 format!(
@@ -155,7 +156,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             lints.push(Lint {
                 span: word.span,
                 lint_kind: LintKind::Spelling,
-                suggestions: suggestions.collect(),
+                suggestions,
                 message,
                 priority: 63,
             })
@@ -175,14 +176,20 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
 #[cfg(test)]
 mod tests {
+    use strum::IntoEnumIterator;
+
     use super::SpellCheck;
-    use crate::spell::FstDictionary;
+    use crate::dict_word_metadata::DialectFlags;
+    use crate::linting::Linter;
+    use crate::linting::tests::assert_no_lints;
+    use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
         linting::tests::{
             assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
         },
     };
+    use crate::{DictWordMetadata, Document};
 
     // Capitalization tests
 
@@ -261,7 +268,7 @@ mod tests {
     }
 
     #[test]
-    fn austrlaian_verandah_in_british_dialect() {
+    fn australian_verandah_in_british_dialect() {
         assert_lint_count(
             "Our house has a verandah.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
@@ -498,5 +505,59 @@ mod tests {
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "she's",
         );
+    }
+
+    #[test]
+    fn issue_1876() {
+        let user_dialect = Dialect::American;
+
+        // Create a user dictionary with a word normally of another dialect in it.
+        let mut user_dict = MutableDictionary::new();
+        user_dict.append_word_str(
+            "Calibre",
+            DictWordMetadata {
+                dialects: DialectFlags::from_dialect(user_dialect),
+                ..Default::default()
+            },
+        );
+
+        // Create a merged dictionary, using curated first.
+        let mut merged_dict = MergedDictionary::new();
+        merged_dict.add_dictionary(FstDictionary::curated());
+        merged_dict.add_dictionary(std::sync::Arc::from(user_dict));
+        assert!(merged_dict.contains_word_str("Calibre"));
+
+        // No dialect issues should be found if the word from another dialect is in our user dictionary.
+        assert_eq!(
+            SpellCheck::new(merged_dict.clone(), user_dialect)
+                .lint(&Document::new_markdown_default(
+                    "I like to use the software Calibre.",
+                    &merged_dict
+                ))
+                .len(),
+            0,
+            "Calibre is not part of the user's dialect!"
+        );
+
+        assert_eq!(
+            SpellCheck::new(merged_dict.clone(), user_dialect)
+                .lint(&Document::new_markdown_default(
+                    "I like to use the spelling colour.",
+                    &merged_dict
+                ))
+                .len(),
+            1
+        );
+    }
+
+    #[test]
+    fn matt_is_allowed() {
+        for dialect in Dialect::iter() {
+            dbg!(dialect);
+            assert_no_lints(
+                "Matt is a great name.",
+                SpellCheck::new(FstDictionary::curated(), dialect),
+            );
+        }
     }
 }

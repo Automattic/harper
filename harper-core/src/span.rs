@@ -29,12 +29,8 @@ pub struct Span<T> {
 }
 
 impl<T> Span<T> {
-    /// An empty [`Span`].
-    pub const EMPTY: Self = Self {
-        start: 0,
-        end: 0,
-        span_type: PhantomData,
-    };
+    /// A [`Span`] with a start and end index of 0.
+    pub const ZERO: Self = Self::empty(0);
 
     /// Creates a new [`Span`] with the provided start and end indices.
     ///
@@ -57,6 +53,15 @@ impl<T> Span<T> {
         Self {
             start,
             end: start + len,
+            span_type: PhantomData,
+        }
+    }
+
+    /// Creates a new empty [`Span`] with the provided position.
+    pub const fn empty(pos: usize) -> Self {
+        Self {
+            start: pos,
+            end: pos,
             span_type: PhantomData,
         }
     }
@@ -103,14 +108,6 @@ impl<T> Span<T> {
         } else if target >= self.end {
             self.end = target + 1;
         }
-    }
-
-    /// Return an expanded span by either modifying [`Self::start`] or [`Self::end`] to include the target
-    /// index.
-    pub fn expanded_to_include(&self, target: usize) -> Self {
-        let mut clone = *self;
-        clone.expand_to_include(target);
-        clone
     }
 
     /// Get the associated content. Will panic if any aspect is invalid.
@@ -187,7 +184,7 @@ impl Span<Token> {
     /// this span is required.
     pub fn to_char_span(&self, source_document_tokens: &[Token]) -> Span<char> {
         if self.is_empty() {
-            Span::EMPTY
+            Span::ZERO
         } else {
             let target_tokens = &source_document_tokens[self.start..self.end];
             Span::new(
@@ -271,7 +268,7 @@ mod tests {
         let doc = Document::new_plain_english_curated("Hello world!");
 
         // Empty span.
-        let token_span = Span::EMPTY;
+        let token_span = Span::ZERO;
         let converted = token_span.to_char_span(doc.get_tokens());
         assert!(converted.is_empty());
 

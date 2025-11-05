@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lexical Webcomponent Test</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 2rem;
+      }
+      reddit-lexical-editor {
+        display: block;
+        max-width: 600px;
+      }
+      [data-lexical-editor="true"] {
+        border: 1px solid #ccc;
+        padding: 1rem;
+        min-height: 150px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lexical Editor Inside Webcomponent</h1>
+    <reddit-lexical-editor></reddit-lexical-editor>
+    <section aria-live="polite" id="lexical-mirror" style="margin-top: 1rem; font-weight: bold;"></section>
+
+    <script type="module">
+      class RedditLexicalEditor extends HTMLElement {
+        constructor() {
+          super();
+          this._init();
+        }
+
+        _init() {
+          const editor = document.createElement('div');
+          editor.setAttribute('contenteditable', 'true');
+          editor.setAttribute('data-lexical-editor', 'true');
+          editor.textContent = 'This is an test';
+
+          const mirror = document.getElementById('lexical-mirror');
+          const syncMirror = () => {
+            if (mirror) mirror.textContent = editor.textContent ?? '';
+          };
+
+          editor.addEventListener('beforeinput', (event) => {
+            if (
+              event.isTrusted === false &&
+              event.inputType === 'insertText' &&
+              typeof event.data === 'string'
+            ) {
+              event.preventDefault();
+              // Mimic Reddit's Lexical behaviour that applies the full change
+              // in response to synthetic beforeinput events emitted by our
+              // extension when a suggestion is accepted.
+              setTimeout(() => {
+                editor.textContent = `${event.data}\n`;
+                syncMirror();
+              }, 0);
+            }
+          });
+
+          editor.addEventListener('input', syncMirror);
+          editor.addEventListener('keyup', syncMirror);
+
+          syncMirror();
+
+          this.append(editor);
+        }
+      }
+
+      customElements.define('reddit-lexical-editor', RedditLexicalEditor);
+    </script>
+  </body>
+</html>

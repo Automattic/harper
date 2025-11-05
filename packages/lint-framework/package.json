@@ -16,11 +16,12 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "tsc && vite build",
+		"build": "tsc && vite build -l warn",
 		"dev": "vite",
 		"test": "echo 'no tests'"
 	},
 	"dependencies": {
+		"bowser": "^2.12.1",
 		"virtual-dom": "^2.1.1"
 	},
 	"peerDependencies": {

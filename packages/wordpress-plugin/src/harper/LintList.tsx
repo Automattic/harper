@@ -1,5 +1,4 @@
 import { Animate, Spinner } from '@wordpress/components';
-import React from 'react';
 import type { IgnorableLintBox } from './Box';
 import LintListItem from './LintListItem';
 
