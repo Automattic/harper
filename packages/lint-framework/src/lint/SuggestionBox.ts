@@ -1,11 +1,20 @@
 /** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
-import h from 'virtual-dom/h';
+import { type IconDefinition, icon } from '@fortawesome/fontawesome-svg-core';
+import { faBan, faGear } from '@fortawesome/free-solid-svg-icons';
 import type { VNode } from 'virtual-dom';
+import h from 'virtual-dom/h';
 import bookDownSvg from '../assets/bookDownSvg';
 import type { IgnorableLintBox, LintBox } from './Box';
 import lintKindColor from './lintKindColor';
 // Decoupled: actions passed in by framework consumer
 import type { UnpackedLint, UnpackedSuggestion } from './unpackLint';
+
+function iconSvg(definition: IconDefinition): string {
+	return icon(definition).html.join('');
+}
+
+const settingsIconSvg = iconSvg(faGear);
+const disableIconSvg = iconSvg(faBan);
 
 var FocusHook: any = function () {};
 FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousValue: any) {
@@ -74,8 +83,9 @@ function header(
 					},
 					title: 'Settings',
 					'aria-label': 'Settings',
+					innerHTML: settingsIconSvg,
 				},
-				'⚙',
+				[],
 			)
 		: undefined;
 
@@ -92,8 +102,9 @@ function header(
 						},
 						title: `Disable the ${rule} rule`,
 						'aria-label': 'Disable this lint rule',
+						innerHTML: disableIconSvg,
 					},
-					'🚫',
+					[],
 				)
 			: undefined;
 
@@ -273,11 +284,28 @@ function styleTag() {
       .harper-btn:active{transform:scale(0.97)}
       .harper-close-btn{background:transparent;border:none;cursor:pointer;font-size:20px;line-height:1;color:#57606a;padding:0 4px;}
       .harper-close-btn:hover{color:#1f2328;}
-      .harper-disable-btn{background:transparent;border:none;cursor:pointer;font-size:20px;line-height:1;color:#57606a;padding:0 4px;}
-      .harper-disable-btn:hover{color:#1f2328;}
-      .harper-gear-btn{background:transparent;border:none;cursor:pointer;font-size:22px;line-height:1;color:#57606a;padding:0 4px;}
+      .harper-disable-btn,
+      .harper-gear-btn{
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      font-size:18px;
+      line-height:1;
+      color:#57606a;
+      padding:0 4px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      }
+      .harper-disable-btn:hover,
       .harper-gear-btn:hover{color:#1f2328;}
-      .harper-controls{display:flex;align-items:center;gap:6px;}
+      .harper-disable-btn svg,
+      .harper-gear-btn svg{
+      width:18px;
+      height:18px;
+      display:block;
+      }
+      .harper-controls{display:flex;align-items:center;gap:3px;}
       .harper-child-cont{
       display:flex;
       flex-wrap:wrap;
@@ -344,9 +372,9 @@ function styleTag() {
       .harper-btn:hover{filter:brightness(1.15)}
       .harper-close-btn{color:#8b949e;}
       .harper-close-btn:hover{color:#e6edf3;}
-      .harper-disable-btn{color:#8b949e;}
-      .harper-disable-btn:hover{color:#e6edf3;}
+      .harper-disable-btn,
       .harper-gear-btn{color:#8b949e;}
+      .harper-disable-btn:hover,
       .harper-gear-btn:hover{color:#e6edf3;}
       .harper-btn[style*="background: #2DA44E"]{background:#238636}
       .harper-btn[style*="background: #e5e5e5"]{

@@ -182,6 +182,12 @@ importers:
 
   packages/lint-framework:
     dependencies:
+      '@fortawesome/fontawesome-svg-core':
+        specifier: ^7.1.0
+        version: 7.1.0
+      '@fortawesome/free-solid-svg-icons':
+        specifier: ^7.1.0
+        version: 7.1.0
       bowser:
         specifier: ^2.12.1
         version: 2.12.1
@@ -2272,6 +2278,10 @@ packages:
 
   '@fortawesome/fontawesome-common-types@7.1.0':
     resolution: {integrity: sha512-l/BQM7fYntsCI//du+6sEnHOP6a74UixFyOYUyz2DLMXKx+6DEhfR3F2NYGE45XH1JJuIamacb4IZs9S0ZOWLA==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/fontawesome-svg-core@7.1.0':
+    resolution: {integrity: sha512-fNxRUk1KhjSbnbuBxlWSnBLKLBNun52ZBTcs22H/xEEzM6Ap81ZFTQ4bZBxVQGQgVY0xugKGoRcCbaKjLQ3XZA==}
     engines: {node: '>=6'}
 
   '@fortawesome/free-solid-svg-icons@7.1.0':
@@ -14329,6 +14339,10 @@ snapshots:
       tslib: 2.8.1
 
   '@fortawesome/fontawesome-common-types@7.1.0': {}
+
+  '@fortawesome/fontawesome-svg-core@7.1.0':
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 7.1.0
 
   '@fortawesome/free-solid-svg-icons@7.1.0':
     dependencies:
