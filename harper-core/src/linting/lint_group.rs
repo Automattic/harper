@@ -81,6 +81,7 @@ use super::mixed_bag::MixedBag;
 use super::modal_of::ModalOf;
 use super::months::Months;
 use super::most_number::MostNumber;
+use super::most_of_the_times::MostOfTheTimes;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
 use super::no_french_spaces::NoFrenchSpaces;
@@ -502,6 +503,7 @@ impl LintGroup {
         insert_expr_rule!(ModalOf, true);
         insert_expr_rule!(Months, true);
         insert_expr_rule!(MostNumber, true);
+        insert_expr_rule!(MostOfTheTimes, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_struct_rule!(NailOnTheHead, true);
         insert_struct_rule!(NoFrenchSpaces, true);
