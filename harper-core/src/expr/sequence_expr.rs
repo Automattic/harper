@@ -108,6 +108,11 @@ impl SequenceExpr {
 
     // Expressions of more than one token
 
+    /// Match a fixed phrase.
+    pub fn fixed_phrase(phrase: &'static str) -> Self {
+        Self::default().then_fixed_phrase(phrase)
+    }
+
     // Multiple expressions
 
     /// Match the first of multiple expressions.
