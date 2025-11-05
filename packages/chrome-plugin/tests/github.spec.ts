@@ -1,8 +1,6 @@
 import { test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
-	clickHarperHighlight,
-	getHarperHighlights,
 	getTextarea,
 	replaceEditorContent,
 	testBasicSuggestionTextarea,

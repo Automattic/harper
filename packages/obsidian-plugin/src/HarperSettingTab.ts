@@ -79,7 +79,7 @@ export class HarperSettingTab extends PluginSettingTab {
 				.addOption(Dialect.Australian.toString(), 'Australian')
 				.setValue((this.settings.dialect ?? Dialect.American).toString())
 				.onChange(async (value) => {
-					const dialect = Number.parseInt(value);
+					const dialect = Number.parseInt(value, 10);
 					this.settings.dialect = dialect;
 					await this.state.initializeFromSettings(this.settings);
 					this.plugin.updateStatusBar(dialect);
@@ -90,7 +90,7 @@ export class HarperSettingTab extends PluginSettingTab {
 			.setName('Activate Harper')
 			.setDesc('Enable or disable Harper with this option.')
 			.addToggle((toggle) =>
-				toggle.setValue(this.settings.lintEnabled).onChange(async (value) => {
+				toggle.setValue(this.settings.lintEnabled).onChange(async (_value) => {
 					this.state.toggleAutoLint();
 					this.plugin.updateStatusBar();
 				}),

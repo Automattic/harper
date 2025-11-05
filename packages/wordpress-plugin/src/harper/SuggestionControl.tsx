@@ -1,5 +1,5 @@
 import { Button, Popover } from '@wordpress/components';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { type IgnorableLintBox, isPointInBox } from './Box';
 import { suggestionText } from './lintUtils';
 import { useAddToDictionary } from './usePersonalDictionary';

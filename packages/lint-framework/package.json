@@ -16,7 +16,7 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "tsc && vite build",
+		"build": "tsc && vite build -l warn",
 		"dev": "vite",
 		"test": "echo 'no tests'"
 	},

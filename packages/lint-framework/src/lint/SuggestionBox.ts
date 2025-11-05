@@ -22,7 +22,6 @@ FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousVal
 	});
 };
 
-/** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
 var CloseOnEscapeHook: any = function (this: any, onClose: () => void) {
 	this.onClose = onClose;
 };
@@ -179,7 +178,7 @@ function suggestions(
 ): any {
 	return suggestions.map((s: UnpackedSuggestion, i: number) => {
 		const label = s.replacement_text !== '' ? s.replacement_text : String(s.kind);
-		const desc = `Replace with \"${label}\"`;
+		const desc = `Replace with "${label}"`;
 		const props = i === 0 ? { hook: new FocusHook() } : {};
 		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc, props);
 	});
@@ -224,7 +223,7 @@ function styleTag() {
       display:flex;
       flex-direction:column;
       z-index:5000;
-      font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Helvetica,Arial,sans-serif;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
       pointer-events:auto
       }
       .harper-header{

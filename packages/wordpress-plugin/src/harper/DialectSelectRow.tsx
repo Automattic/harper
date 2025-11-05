@@ -1,6 +1,5 @@
 import { SelectControl } from '@wordpress/components';
 import { Dialect } from 'harper.js';
-import React from 'react';
 import useDialect from './useDialect';
 
 export default function DialectSelectRow() {
@@ -31,7 +30,7 @@ export default function DialectSelectRow() {
 						value: Dialect.British.toString(),
 					},
 				]}
-				onChange={(value) => setDialect(Number.parseInt(value))}
+				onChange={(value) => setDialect(Number.parseInt(value, 10))}
 			/>
 		</div>
 	);

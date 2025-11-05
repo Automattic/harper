@@ -22,8 +22,6 @@ jobs:
           node-version-file: ".node-version"
       - name: Enable Corepack
         run: corepack enable
-      - name: Install `pandoc`
-        run: sudo apt-get update && sudo apt-get install pandoc -y
       - uses: cargo-bins/cargo-binstall@main
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm

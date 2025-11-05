@@ -15,7 +15,7 @@
 		"vitest": "^3.0.8"
 	},
 	"scripts": {
-		"build": "vite build",
+		"build": "vite build -l warn",
 		"dev": "vite build --watch",
 		"test": "vitest run"
 	},

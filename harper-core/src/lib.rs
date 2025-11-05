@@ -38,6 +38,7 @@ pub use dict_word_metadata::{
     AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DictWordMetadata, NounData,
     PronounData, VerbData, VerbForm,
 };
+pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
 pub use fat_token::{FatStringToken, FatToken};
 pub use ignored_lints::{IgnoredLints, LintContext};

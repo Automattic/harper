@@ -1,6 +1,6 @@
 <script lang="ts">
-import Isolate from '$lib/components/Isolate.svelte';
 import { Button, Card, Input, Label, Radio } from 'flowbite-svelte';
+import Isolate from '$lib/components/Isolate.svelte';
 
 const reasons = {
 	confused: 'I was confused by how it worked',
