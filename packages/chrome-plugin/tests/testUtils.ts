@@ -68,7 +68,7 @@ export function getTextarea(page: Page): Locator {
 }
 
 export async function testBasicSuggestionTextarea(testPageUrl: string) {
-	test('Can apply basic suggestion.', async ({ page, context }) => {
+	test('Can apply basic suggestion.', async ({ page }) => {
 		await page.goto(testPageUrl);
 
 		await page.waitForTimeout(2000);

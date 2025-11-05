@@ -809,6 +809,25 @@ fn operative_systems() {
     );
 }
 
+// PassersBy
+#[test]
+fn correct_passerbys() {
+    assert_suggestion_result(
+        "For any passerbys, you may replace visibility: hidden/collapsed with: opacity: 0; pointer-events: none;.",
+        lint_group(),
+        "For any passersby, you may replace visibility: hidden/collapsed with: opacity: 0; pointer-events: none;.",
+    );
+}
+
+#[test]
+fn correct_passer_bys_hyphen() {
+    assert_suggestion_result(
+        "Is there any way for random willing passer-bys to help with this effort?",
+        lint_group(),
+        "Is there any way for random willing passers-by to help with this effort?",
+    );
+}
+
 // Piggyback
 // -none-
 

@@ -1,5 +1,5 @@
-import ProblematicLints from '$lib/db/models/ProblematicLints';
 import { type RequestEvent, redirect } from '@sveltejs/kit';
+import ProblematicLints from '$lib/db/models/ProblematicLints';
 
 export const POST = async ({ request }: RequestEvent) => {
 	const data = await request.formData();

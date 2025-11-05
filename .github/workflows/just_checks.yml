@@ -43,8 +43,6 @@ jobs:
           package-manager-cache: false
       - name: Enable Corepack
         run: corepack enable
-      - name: Install `pandoc`
-        run: sudo apt-get update && sudo apt-get install pandoc -y
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2.7.8
       - uses: cargo-bins/cargo-binstall@main

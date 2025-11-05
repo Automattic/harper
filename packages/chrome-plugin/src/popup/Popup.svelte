@@ -51,6 +51,6 @@ function openSettings() {
     <a href="https://github.com/Automattic/harper" target="_blank" rel="noopener" class="text-primary-600 hover:underline">GitHub</a>
     <a href="https://discord.com/invite/JBqcAaKrzQ" target="_blank" rel="noopener" class="text-primary-600 hover:underline">Discord</a>
     <a href="https://writewithharper.com" target="_blank" rel="noopener" class="text-primary-600 hover:underline">Discover</a>
-    <a target="_blank" rel="noopener" class="text-primary-600 hover:underline" on:click={openSettings}>Settings</a>
+    <button class="text-primary-600 hover:underline" onclick={openSettings}>Settings</button>
   </footer>
 </div>

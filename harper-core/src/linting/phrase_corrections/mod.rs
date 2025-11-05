@@ -878,7 +878,7 @@ pub fn lint_group() -> LintGroup {
             ["points of view"],
             "The correct plural is `points of view`.",
             "Corrects pluralizing the wrong noun in `point of view`.",
-            LintKind::Usage
+            LintKind::Grammar
         ),
         "PortAuPrince" => (
             // Note: this lint matches any case but cannot correct wrong case
@@ -957,7 +957,7 @@ pub fn lint_group() -> LintGroup {
             ["rules of thumb"],
             "The correct plural is `rules of thumb`.",
             "Corrects pluralizing the wrong noun in `rule of thumb`.",
-            LintKind::Usage
+            LintKind::Grammar
         ),
         "SameAs" => (
             ["same then"],
