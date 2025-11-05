@@ -53,6 +53,11 @@ export default defineConfig(async () => {
 							to: 'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb',
 						},
 					],
+					docsearch: {
+						indexName: 'Documentation',
+						appId: 'YIV4D9QMR0',
+						apiKey: 'ff521ad7f129e4f4defe97dce3c923ad',
+					},
 					sidebar: {
 						'/docs/': [
 							{
