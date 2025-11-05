@@ -409,7 +409,7 @@ function ignoreLint(onIgnore: () => void | Promise<void>): any {
 		'Dismiss',
 		{ background: '#e5e5e5', color: '#000000', fontWeight: 'lighter' },
 		onIgnore,
-		'Dismiss this lint',
+		'Ignore this lint',
 	);
 }
 
