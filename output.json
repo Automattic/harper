@@ -1,0 +1,191 @@
+{
+  "span": {
+    "start": 0,
+    "end": 2
+  },
+  "kind": {
+    "kind": "Word",
+    "value": {
+      "noun": {
+        "is_proper": true,
+        "is_singular": null,
+        "is_plural": null,
+        "is_countable": null,
+        "is_mass": null,
+        "is_possessive": null
+      },
+      "pronoun": null,
+      "verb": null,
+      "adjective": null,
+      "adverb": null,
+      "conjunction": null,
+      "swear": null,
+      "dialects": "",
+      "orth_info": "TITLECASE | ALLCAPS",
+      "determiner": null,
+      "preposition": false,
+      "common": false,
+      "derived_from": null,
+      "np_member": true,
+      "pos_tag": "PROPN"
+    }
+  }
+}
+{
+  "span": {
+    "start": 2,
+    "end": 3
+  },
+  "kind": {
+    "kind": "Space",
+    "value": 1
+  }
+}
+{
+  "span": {
+    "start": 3,
+    "end": 6
+  },
+  "kind": {
+    "kind": "Word",
+    "value": {
+      "noun": {
+        "is_proper": null,
+        "is_singular": null,
+        "is_plural": null,
+        "is_countable": null,
+        "is_mass": null,
+        "is_possessive": null
+      },
+      "pronoun": null,
+      "verb": null,
+      "adjective": null,
+      "adverb": null,
+      "conjunction": null,
+      "swear": null,
+      "dialects": "",
+      "orth_info": "LOWERCASE",
+      "determiner": null,
+      "preposition": false,
+      "common": true,
+      "derived_from": null,
+      "np_member": false,
+      "pos_tag": "NOUN"
+    }
+  }
+}
+{
+  "span": {
+    "start": 6,
+    "end": 7
+  },
+  "kind": {
+    "kind": "Space",
+    "value": 1
+  }
+}
+{
+  "span": {
+    "start": 7,
+    "end": 12
+  },
+  "kind": {
+    "kind": "Word",
+    "value": null
+  }
+}
+{
+  "span": {
+    "start": 12,
+    "end": 13
+  },
+  "kind": {
+    "kind": "Space",
+    "value": 1
+  }
+}
+{
+  "span": {
+    "start": 13,
+    "end": 16
+  },
+  "kind": {
+    "kind": "Word",
+    "value": {
+      "noun": {
+        "is_proper": null,
+        "is_singular": null,
+        "is_plural": null,
+        "is_countable": null,
+        "is_mass": null,
+        "is_possessive": null
+      },
+      "pronoun": null,
+      "verb": null,
+      "adjective": {
+        "degree": null
+      },
+      "adverb": null,
+      "conjunction": null,
+      "swear": null,
+      "dialects": "",
+      "orth_info": "LOWERCASE | TITLECASE",
+      "determiner": null,
+      "preposition": false,
+      "common": true,
+      "derived_from": null,
+      "np_member": true,
+      "pos_tag": "NOUN"
+    }
+  }
+}
+{
+  "span": {
+    "start": 16,
+    "end": 17
+  },
+  "kind": {
+    "kind": "Space",
+    "value": 1
+  }
+}
+{
+  "span": {
+    "start": 17,
+    "end": 22
+  },
+  "kind": {
+    "kind": "Word",
+    "value": null
+  }
+}
+{
+  "span": {
+    "start": 22,
+    "end": 23
+  },
+  "kind": {
+    "kind": "Space",
+    "value": 1
+  }
+}
+{
+  "span": {
+    "start": 23,
+    "end": 27
+  },
+  "kind": {
+    "kind": "Word",
+    "value": null
+  }
+}
+{
+  "span": {
+    "start": 27,
+    "end": 28
+  },
+  "kind": {
+    "kind": "Newline",
+    "value": 1
+  }
+}

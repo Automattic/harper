@@ -33,7 +33,7 @@ pub struct MutableDictionary {
 fn uncached_inner_new() -> Arc<MutableDictionary> {
     MutableDictionary::from_rune_files(
         include_str!("../../dictionary.dict"),
-        include_str!("../../annotations.json"),
+        include_str!("../../annotations-portuguese.json"),
     )
     .map(Arc::new)
     .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
