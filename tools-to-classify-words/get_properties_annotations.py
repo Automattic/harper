@@ -22,6 +22,7 @@ with open(dictionary_file) as f:
     dictionary = f.readlines()
 
 for entry in dictionary:
+    # ignore comments
     entry = entry.split("#")[0]
     if len(entry) == 0:
         continue
@@ -31,7 +32,7 @@ for entry in dictionary:
     except Exception as e:
         print(e)
         continue
-    print(f"properties are {properties}")
+
     for property in properties:
         result_properties = backup["properties"].get(property)
         result_affixes = backup["affixes"].get(property)

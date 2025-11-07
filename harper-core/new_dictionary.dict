@@ -1,87 +1,84 @@
 10
 
-eu/Ia1s.            # I~pronoun a~personal 1~person .~singular s~subject
-sou/~V
-feliz/~J^NV>Up
-com/~P
-a/~Dz             # removed `+` preposition: archaic
-minha/~D5S
-vida/~NwgV>ZS
-
+eu/Ia1s.- # I~pronoun a~personal 1~person .~singular s~subject
+sou/~V-
+feliz/~J^NV>Up-
+com/~P-
+a/~Dz- # removed `+` preposition: archaic
+minha/~D5S=
+vida/~NwgV>ZS=
 # 54100
-
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
 # This section is sorted alphabetically
 # and contains general-purpose English words.
 # This section includes words that are spelled differently
 # in US English vs UK, Canadian, and Australian English etc.
-
 # AA/NOJVg
 # AAA/NO
 # AB/ONJg
 # ABA/ON
 # ABC/NOJSg
-# ABI/NgS             # application binary interface, cf. API
+# ABI/NgS
 # ABM/ONSg
 # ABS/NO
 # AC/NOJg
-# ACL/NgS             # anterior cruciate ligament
+# ACL/NgS
 # ACLU/Og
 # ACT/ON
 # ACTH/Ng
 # AD/NOJg
 # ADC/N
 # ADD/N
-# ADHD/N              # attention deficit hyperactivity disorder
+# ADHD/N
 # ADM/NO
 # ADP/Ng
-# AES/N               # advanced encryption standard
+# AES/N
 # AF/NJ
-# AFAIK/              # as far as I know
+# AFAIK/
 # AFB/N
 # AFC/ONg
 # AFDC/O
 # AFN/ON
 # AFT/O
-# AI/NOwSg            # artificial intelligence
-# AIDS/NgJ            # disease
-# AK/ON               # US state (Alaska)
-# AKP/Og              # political party
-# AL/NO               # US state (Alabama)
+# AI/NOwSg
+# AIDS/NgJ
+# AK/ON
+# AKP/Og
+# AL/NO
 # AM/ONJg
 # AMA/ON
 # AMD/NOg
-# AMG/NOSg            # car brand
-# ANSI/OS             # text encoding
-# ANZUS/Og            # alliance
-# AOL/Og              # old internet company
+# AMG/NOSg
+# ANSI/OS
+# ANZUS/Og
+# AOL/Og
 # AP/NOJg
-# APB/N               # all-points bulletin
+# APB/N
 # APC/NOJ
-# API/NSg             # application programming interface, cf. ABI
+# API/NSg
 # APO/N
 # APR/N
-# AR/JNO              # US state (Arkansas)
+# AR/JNO
 # ARC/NOJ
-# ASAP/               # as soon as possible
+# ASAP/
 # ASCII/OgS
-# ASIO/Og             # agency
-# ASL/Og              # American Sign Language
-# ASML/Og             # company
+# ASIO/Og
+# ASL/Og
+# ASML/Og
 # ASPCA/O
-# AST/NgS             # abstract syntax tree
-# ATM/NgS             # automated teller machine
+# AST/NgS
+# ATM/NgS
 # ATP/ONg
-# ATV/ON              # all-terrain vehicle
-# ATX/Ng              # old motherboard std
+# ATV/ON
+# ATX/Ng
 # AV/JNO
-# AVI/O               # media format
+# AVI/O
 # AWACS/Ng
-# AWOL/JNg            # absent without leave
+# AWOL/JNg
 # AWS/ONg
-# AZ/Og               # US state (Arizona)
-# AZT/Ng              # drug
+# AZ/Og
+# AZT/Ng
 # Aachen/Og
 # Aaliyah/Og
 # Aaron/ONg
@@ -195,7 +192,7 @@ vida/~NwgV>ZS
 # Aggie/ONg
 # Aglaia/Og
 # Agnes/Og
-# Agnew/Og            # spiro -
+# Agnew/Og
 # Agni/Og
 # Agra/Og
 # Agricola/g
@@ -217,11 +214,11 @@ vida/~NwgV>ZS
 # Aiken/Og
 # Aileen/Og
 # Aimee/Og
-# Ainu/NOmJg          # ethnicity, language
+# Ainu/NOmJg
 # Airedale/ONSg
 # Aires/g
 # Aisha/Og
-# Ajax/Og             # should we also include AJAX?
+# Ajax/Og
 # Akbar/Og
 # Akhmatova/g
 # Akihito/g
@@ -230,7 +227,7 @@ vida/~NwgV>ZS
 # Akiva/Og
 # Akkad/Og
 # Akron/Og
-# Al/NOg              # aluminium, aluminum; given name
+# Al/NOg
 # Ala/NOS
 # Alabama/NOg
 # Alabaman/JNgS
@@ -389,7 +386,7 @@ vida/~NwgV>ZS
 # Amazon/NOVSg
 # Amazonian/JON
 # Amber/Og
-# Amdahl/Og           # As in Amdahl's law
+# Amdahl/Og
 # Amelia/Og
 # Amen/Og
 # Amenhotep/g
@@ -527,7 +524,7 @@ vida/~NwgV>ZS
 # Antarctica/Og
 # Antares/Og
 # Anthony/Og
-# Anthropocene/Og     # geological period
+# Anthropocene/Og
 # Antichrist/OgS
 # Antietam/Og
 # Antifa/ONg
@@ -836,7 +833,7 @@ vida/~NwgV>ZS
 # Azerbaijani/NOJSg
 # Azores/Og
 # Azov/Og
-# Aztec/NOJSg         # ancient civilization
+# Aztec/NOJSg
 # Aztecan/JNg
 # Aztlan/Og
 # B/NO^gn
@@ -866,7 +863,7 @@ vida/~NwgV>ZS
 # BS/ONVg
 # BSA/NO
 # BSD/ONSg
-# BTU/N               # same as Btu?
+# BTU/N
 # BTW/
 # BYOB/
 # Ba/ONg
@@ -1044,7 +1041,7 @@ vida/~NwgV>ZS
 # Be/gH
 # Beach/Og
 # Beadle/Og
-# Beamer/NgS          # nickname for BMW
+# Beamer/NgS
 # Bean/Og
 # Beard/Og
 # Beardmore/Og
@@ -1403,14 +1400,14 @@ vida/~NwgV>ZS
 # Bowen/Og
 # Bowers/Og
 # Bowery/OgJ
-# Bowie/ONg           # david -
+# Bowie/ONg
 # Bowman/Og
 # Boyd/Og
 # Boyer/Og
 # Boyle/Og
-# Br/NgJ^             # bromine
+# Br/NgJ^
 # Brad/OgY
-# Bradbury/ONg        # ray =
+# Bradbury/ONg
 # Braddock/Og
 # Bradenton/Og
 # Bradford/ONg
@@ -1557,7 +1554,7 @@ vida/~NwgV>ZS
 # Brynner/g
 # Bryon/Og
 # Brzezinski/Og
-# Btu/g               # same as BTU?
+# Btu/g
 # Buber/g
 # Buchanan/Og
 # Bucharest/Og
@@ -1645,67 +1642,67 @@ vida/~NwgV>ZS
 # Byzantine/JNgS
 # Byzantium/ONg
 # C/NOVSJg
-# CA/ON               # US state (California)
-# CAD/Ng              # computer-aided design; canadian dollar
+# CA/ON
+# CAD/Ng
 # CAI/NO
 # CAM/NO
 # CAP/NO
 # CARE
 # CATV/N
-# CB/NOJ              # citizen's band (radio)
+# CB/NOJ
 # CBC/ONJg
-# CBS/ONg             # media company
-# CCP/Og              # political party
-# CCTV/NO             # closed-circuit television
+# CBS/ONg
+# CCP/Og
+# CCTV/NO
 # CCU/N
 # CD/NSgV
 # CDC/ON
 # CDT/N
-# CEO/NgS             # chief executive officer
+# CEO/NgS
 # CF/NOJ
 # CFC/ONg
-# CFO/NO              # financial officer
-# CGI/NOV             # computer graphics interface; common gateway interface
-# CIA/ONJg            # agency
+# CFO/NO
+# CGI/NOV
+# CIA/ONJg
 # CID/NO
-# CIS/Og              # commonwealth of independent states
-# CLI/NgS             # command line interface
+# CIS/Og
+# CLI/NgS
 # CNBC/Og
-# CNC/NgV             # computer numerical control
-# CNC'd/VtT           # past
-# CNCing/NV6          # present, gerund
-# CNN/ONSg            # media company; convolutional neural network
+# CNC/NgV
+# CNC'd/VtT
+# CNCing/NV6
+# CNN/ONSg
 # CNS/Ng
-# CO/ONVg             # US state (Colorado)
-# COBOL/OgS           # programming language
+# CO/ONVg
+# COBOL/OgS
 # COD/ON
-# COFF/ONg            # common object file format
+# COFF/ONg
 # COL/ON
 # COLA/NO
-# COVID/N             # virus
+# COVID/N
 # CO₂/N
 # CPA/Ng
 # CPI/NOg
 # CPO/N
-# CPR/NOg             # cardiac pulmonary resuscitation
+# CPR/NOg
 # CPU/NgS
-# CRT/NSg             # cathode ray tube
+# CRT/NSg
 # CSS/NOg
 # CST/ONg
-# CSV/Ng              # data file format
-# CT/ONVJg            # US state (Connecticut)
-# CUDA/ONg            # computing architecture
-# CV/NOJS             # curriculum vitae
-# CVS/NOg             # version control
+# CSV/Ng
+# CT/ONVJg
+# CUDA/ONg
+# CV/NOJS
+# CVS/NOg
 # CZ/N
-# Ca/g                # calcium
+# Ca/g
 # Cabernet/g
 # Cabot/Og
 # Cabral/g
 # Cabrera/Og
 # Cabrini/g
 # Cadette
-# Cadillac/ONJSg      # car company
+# Cadillac/ONJSg
 # Cadiz/Og
 # Caedmon/Og
 # Caerphilly/Og
@@ -2074,7 +2071,7 @@ vida/~NwgV>ZS
 # Chernenko/g
 # Chernobyl/ONg
 # Chernomyrdin/g
-# Cherokee/NOSg09     # singular and plural, but also has plural in -s
+# Cherokee/NOSg09
 # Cherry/ONg
 # Cheryl/Og
 # Chesapeake/NOg
@@ -2293,7 +2290,7 @@ vida/~NwgV>ZS
 # Columbine/ONg
 # Columbus/ONVg
 # Com
-# Comanche/NOJSg09    # singular and plural, but also has plural in -s
+# Comanche/NOJSg09
 # Combs/Og
 # Comdr
 # Comintern/Og
@@ -2304,14 +2301,14 @@ vida/~NwgV>ZS
 # Communion/OgS
 # Communism/Nmg
 # Communist/NSgJ
-# Como/Og             # laku
+# Como/Og
 # Comoran/JN
-# Comoros/Og          # country
+# Comoros/Og
 # Compaq/g
-# Compton/Og          # company
+# Compton/Og
 # CompuServe/g
 # Comte/g
-# Conakry/Og          # capital of Guinea
+# Conakry/Og
 # Conan/Og
 # Concepcion/Og
 # Concetta/g
@@ -2382,7 +2379,7 @@ vida/~NwgV>ZS
 # Cordoba/Og
 # Corey/Og
 # Corfu/Og
-# Corg/ONg            # company
+# Corg/ONg
 # Corina/Og
 # Corine/g
 # Corinne/Og
@@ -2459,7 +2456,7 @@ vida/~NwgV>ZS
 # Creation/g
 # Creator/Og
 # Crecy/Og
-# Cree/ONdSg09        # singular and plural, but also has plural in -s
+# Cree/ONdSg09
 # Creek/NOJSg
 # Creighton/Og
 # Creole/NOJSg
@@ -2556,11 +2553,11 @@ vida/~NwgV>ZS
 # DARPA/Og
 # DAT/Ng
 # DBMS/Ng
-# DC/ONJVg            # US District of Columbia
+# DC/ONJVg
 # DD/NOJg
 # DDS/Ng
 # DDT/NS
-# DE/ON               # US state (Delaware)
+# DE/ON
 # DEA/ON
 # DEC/NOSd
 # DH/NO
@@ -2568,23 +2565,23 @@ vida/~NwgV>ZS
 # DI/N
 # DIY/J
 # DJ/NOV
-# DMA/Ng              # direct memory access
+# DMA/Ng
 # DMCA/OV
 # DMD/Ng
 # DMV/Ng
-# DMZ/N               # demilitarized zone
+# DMZ/N
 # DNA/NOVg
-# DOA/J               # dead on arrival
+# DOA/J
 # DOB/NO
 # DOD/N
-# DOE/NOV             # department of energy
-# DOJ/Og              # department of justice
-# DOS/NOg             # disk operating system
+# DOE/NOV
+# DOJ/Og
+# DOS/NOg
 # DOT/ON
 # DP/NOVSg
-# DPRK/Og             # north korea
+# DPRK/Og
 # DPT/N
-# DSP/NgS             # digital signal processor
+# DSP/NgS
 # DST/N
 # DTP/N
 # DUI/N
@@ -2694,8 +2691,8 @@ vida/~NwgV>ZS
 # Daytona/Og
 # DeGeneres/Og
 # DeKalb/Og
-# DeLorean/OgS        # car brand
-# DeSoto/NOSg         # car brand
+# DeLorean/OgS
+# DeSoto/NOSg
 # Deadhead/Ng
 # Dean/Og
 # Deana/g
@@ -2814,7 +2811,7 @@ vida/~NwgV>ZS
 # Di/OgS
 # DiCaprio/Og
 # DiMaggio/g
-# Diablo/NgS          # car model
+# Diablo/NgS
 # Diaghilev/g
 # Dial/Og
 # Diana/ONg
@@ -3037,40 +3034,40 @@ vida/~NwgV>ZS
 # Dzungaria/Og
 # E/NOSg
 # EC/NO
-# ECG/Ng              # electrocardiogram, cf. EKG
+# ECG/Ng
 # ECM/NgS
-# ECMAScript/Og       # programming language, cf. JavaScript, TypeScript
+# ECMAScript/Og
 # EDP/NOg
 # EDT/ON
 # EEC/ONg
-# EEG/Ng              # electroencephalogram
+# EEG/Ng
 # EEO/N
 # EEOC/O
 # EFL/NO
 # EFT/NO
-# EKG/Ng              # cf. ECG
-# ELF/NOg             # file format
+# EKG/Ng
+# ELF/NOg
 # EM/NJ
 # EMT/N
 # ENE/NgJ
 # EOE/N
-# EPA/ONg             # agency
-# EPROM/NSg           # electrically erasable programmable read-only memory
+# EPA/ONg
+# EPROM/NSg
 # ER/ON
-# ERA/NO              # equal rights amendment
+# ERA/NO
 # ESE/NgJ
 # ESL/N
-# ESP/Nmg             # extra-sensory perception
-# ESPN/Og             # media company
+# ESP/Nmg
+# ESPN/Og
 # ESR/N
 # EST/ONg
 # ET/N
-# ETA/ONV             # estimated time of arrival
+# ETA/ONV
 # ETD/N
 # EU/ON
-# EULA/NgS            # end-user license agreement
+# EULA/NgS
 # EUR/N
-# EUV/N               # extreme ultraviolet
+# EUV/N
 # Eakins/Og
 # Earhart/Og
 # Earl/NOg
@@ -3136,7 +3133,7 @@ vida/~NwgV>ZS
 # Ehrenberg/Og
 # Ehrlich/Og
 # Eichmann/Ng
-# Eid/OgS             # festival
+# Eid/OgS
 # Eiffel/Og
 # Eileen/Og
 # Einstein/ONSg
@@ -3248,7 +3245,7 @@ vida/~NwgV>ZS
 # Enrique/g
 # Enron/Ng
 # Enterprise/Og
-# Eocene/JOg          # geological period
+# Eocene/JOg
 # Epcot/Og
 # Ephesian/JNgS
 # Ephesus/Og
@@ -3417,11 +3414,11 @@ vida/~NwgV>ZS
 # FDIC/Og
 # FDR/ONg
 # FEMA/Og
-# FFT/NgS             # fast Fourier transform
+# FFT/NgS
 # FHA/Og
 # FICA/Og
 # FIFO/N
-# FL/NO               # US state (Florida)
+# FL/NO
 # FM/NSg
 # FNMA/Og
 # FOFL
@@ -3445,7 +3442,7 @@ vida/~NwgV>ZS
 # Fahd/g
 # Fahrenheit/Jg
 # Fairbanks/Og
-# Fairchild/Og        # surname, electronics
+# Fairchild/Og
 # Fairfield/Og
 # Fairhope/g
 # Faisal/Og
@@ -3583,7 +3580,7 @@ vida/~NwgV>ZS
 # Florsheim/g
 # Flory/Og
 # Flossie/Og
-# FLOSS/ONV           # free libre open source software
+# FLOSS/ONV
 # Flowers/Og
 # Floyd/Og
 # Flynn/Og
@@ -3608,7 +3605,7 @@ vida/~NwgV>ZS
 # Forster/Og
 # Fortaleza/Og
 # Fortran/Og
-# FOSS/ONV            # free open source software
+# FOSS/ONV
 # Fosse/Og
 # Foster/Og
 # Fotomat/g
@@ -3667,7 +3664,7 @@ vida/~NwgV>ZS
 # Freetown/Og
 # Freida/g
 # Fremont/Og
-# French/ONJVSwg      # there shouldn't be a plural but `S` works on both verbs and nouns
+# French/ONJVSwg
 # Frenchman/Ng
 # Frenchmen/9g
 # Frenchwoman/Ng
@@ -3710,11 +3707,11 @@ vida/~NwgV>ZS
 # Fugger/g
 # Fuji/Og
 # Fujian/OgJ
-# Fujitsu/g           # Disinhibited
+# Fujitsu/g
 # Fujiwara/Og
 # Fujiyama/Og
 # Fukuoka/Og
-# Fukuyama/Og         # francis -
+# Fukuyama/Og
 # Fukuyaman/J
 # Fulani/Og
 # Fulbright/Og
@@ -3730,36 +3727,36 @@ vida/~NwgV>ZS
 # Fuzhou/Og
 # Fuzzbuster/g
 # G/Ng>nB
-# GA/ON               # US state (Georgia)
+# GA/ON
 # GAO/O
 # GATT/Og
 # GB/NOg
 # GCC/Og
-# GDP/Ng              # gross domestic product
-# GDPR/O              # General Data Protection Regulation
+# GDP/Ng
+# GDPR/O
 # GE/ONJg
 # GED/N
-# GFC/Ng              # global financial crisis
+# GFC/Ng
 # GHQ/Ng
 # GHz/
 # GI/JNV
-# GIF/NSg             # file format
+# GIF/NSg
 # GIGO/
-# GM/NOVJg            # car company
-# GMAT/O              # global
+# GM/NOVJg
+# GMAT/O
 # GMO/NJ
 # GMT/ONg
 # GNP/Ng
 # GNU/Og
-# GOP/ONg             # political party
+# GOP/ONg
 # GP/NOJg
-# GPA/N               # grade point average
+# GPA/N
 # GPO/ON
-# GPS/ONV             # global positioning system
+# GPS/ONV
 # GPU/NSg
 # GSA/ON
-# GST/Ng              # goods and services tax
-# GT/NgS              # grand touring/tourer
+# GST/Ng
+# GT/NgS
 # GTE/Og
 # GTO/NSg
 # GTR/NgS
@@ -4222,7 +4219,7 @@ vida/~NwgV>ZS
 # HDTV/N
 # HF/NgJ
 # HHS/ON
-# HI/ON               # US state (Hawaii)
+# HI/ON
 # HIMARS/N
 # HIV/Ng
 # HM/NO
@@ -4398,7 +4395,7 @@ vida/~NwgV>ZS
 # Hazel/Og
 # Hazleton/Og
 # Hazlitt/g
-# He/Ia3Og            # I~pronoun a~personal 3~person .~singular s~subject / Og~proper noun+possessive
+# He/Ia3Og
 # Head/Og
 # Healey/Og
 # Healy/Og
@@ -4516,7 +4513,7 @@ vida/~NwgV>ZS
 # Hershey/Og
 # Hertz/ONg
 # Hertzsprung/Og
-# Herz/Og             # company
+# Herz/Og
 # Herzegovina/Og
 # Herzl/Og
 # Heshvan/Og
@@ -4535,8 +4532,8 @@ vida/~NwgV>ZS
 # Heywood/Og
 # Hezbollah/Og
 # Hezekiah/Og
-# Hf/g                # hafnium
-# Hg/g                # mercury
+# Hf/g
+# Hg/g
 # Hialeah/Og
 # Hiawatha/Og
 # Hibernia/Og
@@ -4633,23 +4630,23 @@ vida/~NwgV>ZS
 # Holman/Og
 # Holmes/Og
 # Holocaust/OgV
-# Holocene/JOg        # geological period
+# Holocene/JOg
 # Holst/g
 # Holstein/ONSg
 # Holt/Og
 # Homer/Og
 # Homeric/Jg
 # Hon/J
-# Honda/OgS           # company
+# Honda/OgS
 # Honduran/NgSJ
 # Honduras/Og
 # Honecker/g
 # Honeywell/Og
 # Hong/O
-# Honiara/Og          # capital of Vanuatu
+# Honiara/Og
 # Honolulu/Og
 # Honorable/J
-# Honshu/Og           # island
+# Honshu/Og
 # Hood/Og
 # Hooke/Og>
 # Hooker/Og
@@ -4659,7 +4656,7 @@ vida/~NwgV>ZS
 # Hoover/ONVSg
 # Hope/Og
 # Hopewell/Og
-# Hopi/NOSg09         # singular and plural, but also has plural in -s
+# Hopi/NOSg09
 # Hopkins/Og
 # Hopper/Og
 # Horace/Og
@@ -4758,52 +4755,52 @@ vida/~NwgV>ZS
 # Hyperion/Og
 # Hyundai/Ng
 # Hz/g
-# I/~Ia1s.            # I~pronoun a~personal 1~person .~singular s~subject
+# I/~Ia1s.
 # I'd/~
 # I'd've/
 # I'll/~
 # I'm/~
 # I've/~
-# IA/ON               # US state (Iowa)
+# IA/ON
 # IBM/ONg
-# IC/NgS              # integrated circuit
+# IC/NgS
 # ICBM/NSg
-# ICC/O               # International Criminal Court
-# ICQ/ONV             # chat protocol
-# ICU/NO              # Unicode library
-# ID/NOVSJg           # US state (Idaho)
+# ICC/O
+# ICQ/ONV
+# ICU/NO
+# ID/NOVSJg
 # IDE/N
-# IDF/Og              # Israel's military
+# IDF/Og
 # IE/ONJ
-# IED/N               # improvised explosive device
-# IEEE/O              # standards organization
-# IIRC                # If I recall correctly
-# IKEA/Og             # furniture company
-# IL/NO               # US state (Illinois)
-# IMF/Og              # International Monetary Fund
+# IED/N
+# IEEE/O
+# IIRC
+# IKEA/Og
+# IL/NO
+# IMF/Og
 # IMHO/
 # IMNSHO/
 # IMO/NO
-# IN/ON               # US state (Indiana)
+# IN/ON
 # ING/g
 # INRI
 # INS/NO
-# IO                  # input output
+# IO
 # IOU/Ng
 # IP/JNO
-# IPA/ON              # phonetic alphabet
+# IPA/ON
 # IPO/NgSV
 # IQ/NgS
 # IRA/ONSg
-# IRC/ONV             # chat protocol
+# IRC/ONV
 # IRS/ONg
 # ISBN/NgS
-# ISDN/Ng             # telephone standard
+# ISDN/Ng
 # ISIS/O
-# ISO/ONPg            # standards organization
+# ISO/ONPg
 # ISP/N
 # ISS/NO
-# IT/N                # removed `5`. nouns can qualify nouns. makes `it` an adjective which interferes with heuristics
+# IT/N
 # IUD/N
 # IV/JNSg
 # IVF/N
@@ -4929,7 +4926,7 @@ vida/~NwgV>ZS
 # Irkutsk/Og
 # Irma/Og
 # Iroquoian/JNSg
-# Iroquois/NOg09      # singular and plural
+# Iroquois/NOg09
 # Irrawaddy/Og
 # Irtish/g
 # Irvin/Og
@@ -4969,7 +4966,7 @@ vida/~NwgV>ZS
 # Issachar/Og
 # Istanbul/Og
 # Istanbulite/NgSJ
-# Isuzu/ONg           # car brand
+# Isuzu/ONg
 # It/ON
 # Itaipu/Og
 # Ital/N
@@ -5000,7 +4997,7 @@ vida/~NwgV>ZS
 # JD/NO
 # JDM
 # JFK/ONVg
-# JIT/NgSVdG          # cf. jit
+# JIT/NgSVdG
 # JP/NO
 # JPEG/ONV
 # JV/N
@@ -5188,7 +5185,7 @@ vida/~NwgV>ZS
 # Joe/ONg
 # Joel/Og
 # Joey/Og
-# Jogjakarta/g        # city
+# Jogjakarta/g
 # Johann/Og
 # Johanna/Og
 # Johannes/NOg
@@ -5278,13 +5275,13 @@ vida/~NwgV>ZS
 # June/OgS
 # Juneau/Og
 # Jung/Og
-# Jungfrau/Og         # mountain
+# Jungfrau/Og
 # Jungian/JNg
 # Junior/OgS
 # Junker/NSg
 # Juno/Og
 # Jupiter/ONg
-# Jurassic/JOg        # geological period
+# Jurassic/JOg
 # Jurua/g
 # Justice/NOg
 # Justin/Og
@@ -5293,40 +5290,40 @@ vida/~NwgV>ZS
 # Jutland/Og
 # Juvenal/Og
 # K/NSgn
-# KB/NOg              # kilobyte, cf. Kb
+# KB/NOg
 # KC/ON
-# KFC/Og              # company
+# KFC/Og
 # KGB/ONg
-# KIA/NJ              # killed in action
+# KIA/NJ
 # KKK/Og
 # KO/NgV
 # KP/N
-# KS/ONV              # US state (Kansas)
-# KY/O                # US state (Kentucky)
+# KS/ONV
+# KY/O
 # Kaaba/Og
 # Kabul/Og
-# Kafka/Og            # franz -
+# Kafka/Og
 # Kafkaesque/Jg
-# Kagoshima/Og        # city
+# Kagoshima/Og
 # Kahlua/Ng
 # Kahului/Og
 # Kaifeng/Og
 # Kailua/g
 # Kaiser/NOSg
 # Kaitlin/Og
-# Kalahari/Og         # desert
+# Kalahari/Og
 # Kalamazoo/ONg
 # Kalashnikov/Og
 # Kalb/g
 # Kalevala/Og
-# Kalgoorlie/Og       # city
+# Kalgoorlie/Og
 # Kali/Og
-# Kalmyk/JNOg         # ethnicity
+# Kalmyk/JNOg
 # Kama/Og
 # Kamchatka/Og
 # Kamehameha/Og
 # Kampala/Og
-# Kampuchea/Og        # old name of Cambodia
+# Kampuchea/Og
 # Kan/OgS
 # Kanchenjunga/Og
 # Kandahar/Og
@@ -5334,12 +5331,12 @@ vida/~NwgV>ZS
 # Kane/Og
 # Kaneohe/Og
 # Kankakee/Og
-# Kannada/Ng          # language
+# Kannada/Ng
 # Kano/Og
 # Kanpur/Og
 # Kansan/JNgS
 # Kansas/Og
-# Kant/Og             # immanuel -
+# Kant/Og
 # Kantian/JNg
 # Kaohsiung/Og
 # Kaposi/Og
@@ -5357,15 +5354,15 @@ vida/~NwgV>ZS
 # Karina/Og
 # Karl/Og
 # Karla/Og
-# Karloff/g           # boris -
+# Karloff/g
 # Karo/NOg
 # Karol/g
 # Karroo/Og
 # Karyn/Og
 # Kasai/g
 # Kasey/Og
-# Kashmir/ONSg        # region
-# Kasparov/Og         # gary -
+# Kashmir/ONSg
+# Kasparov/Og
 # Kate/Og
 # Katelyn/Og
 # Katharine/Og
@@ -5385,12 +5382,12 @@ vida/~NwgV>ZS
 # Katowice/Og
 # Katrina/Og
 # Katy/ONg
-# Kauai/Og            # island
+# Kauai/Og
 # Kaufman/Og
 # Kaunas/Og
 # Kaunda/g
-# Kawabata/g          # author
-# Kawasaki/OgS        # company
+# Kawabata/g
+# Kawasaki/OgS
 # Kay/ONg
 # Kaye/Og
 # Kayla/Og
@@ -5399,7 +5396,7 @@ vida/~NwgV>ZS
 # Kazakhstan/Og
 # Kazan/Og
 # Kazantzakis/g
-# Kb/Ng               # kilobit, cf. KB
+# Kb/Ng
 # Keaton/Og
 # Keats/Og
 # Keck/Og
@@ -5505,7 +5502,7 @@ vida/~NwgV>ZS
 # Kinney/Og
 # Kinsey/ONg
 # Kinshasa/Og
-# Kiowa/NOSg09        # singular and plural, but also has plural in -s
+# Kiowa/NOSg09
 # Kip/Og
 # Kipling/Og
 # Kirby/Og
@@ -5661,7 +5658,7 @@ vida/~NwgV>ZS
 # L'Enfant
 # L'Oreal/g
 # L'Ouverture/g
-# LA/NO               # US state (Louisiana)
+# LA/NO
 # LAN/Ng
 # LBJ/NOg
 # LC/NJ
@@ -5671,13 +5668,13 @@ vida/~NwgV>ZS
 # LED/NgS
 # LG/NOg
 # LGB/JN
-# LGPL/NO             # GNU Lesser General Public License
+# LGPL/NO
 # LGBT/JN
 # LGBTQ/JN
 # LIFO/J
 # LL/NJ
 # LLB/Ng
-# LLC/NgS             # limited liability company
+# LLC/NgS
 # LLD/g
 # LNG/N
 # LOGO
@@ -5690,8 +5687,8 @@ vida/~NwgV>ZS
 # La/ONSg
 # Lab/NO
 # Laban/Og
-# Labor/Og_           # the australian political party doesn't use the normal australian spelling of 'labour'
-# Labour/Og!          # the uk political party does use the normal british spelling of 'labour'
+# Labor/Og_
+# Labour/Og!
 # Labrador/ONSg
 # Labradorean/JN
 # Lacey/Og
@@ -5842,7 +5839,7 @@ vida/~NwgV>ZS
 # Legendre/Og
 # Leger/Og
 # Leghorn/ONg
-# Lego/Ng             # see also LEGO
+# Lego/Ng
 # Legree/Og
 # Lehman/Og
 # Leibniz/Og
@@ -6191,49 +6188,49 @@ vida/~NwgV>ZS
 # Lysistrata/ONg
 # Lysol/Og
 # M/NOJSGgB
-# MA/JNOg             # US state (Massachusetts)
+# MA/JNOg
 # MASH/N
 # MB/NOVg
 # MBA/Ng
 # MC/NOV
 # MCI/ONg
-# MD/ONJg             # US state (Maryland)
+# MD/ONJg
 # MD5/Ng
-# MDF/Ng              # medium-density fiberboard
+# MDF/Ng
 # MDT/NO
-# ME/ON               # US state (Maine)
+# ME/ON
 # MEGO/S
 # MFA/ONg
-# MGM/ONg             # movie company
+# MGM/ONg
 # MHz/
-# MI/ONg              # US state (Michigan)
-# MI6/Og              # agency
-# MIA/JNO             # missing in action
+# MI/ONg
+# MI6/Og
+# MIA/JNO
 # MIDI/ONg
-# MIPS/NO             # cpu
+# MIPS/NO
 # MIRV/N
-# MIT/Og              # a university
-# MLK/Og              # Martin Luther King
+# MIT/Og
+# MLK/Og
 # MM/NO
-# MMA/Ng              # mixed martial arts
-# MMU/NgS             # memory management unit
-# MN/ON               # US state (Minnesota)
-# MO/ONJ              # US state (Missouri)
+# MMA/Ng
+# MMU/NgS
+# MN/ON
+# MO/ONJ
 # MOOC/N
-# MOSFET/NgS          # transistor
-# MP/NOJg             # military police; member of parliament
-# MP3/NSg             # audio format
-# MP4/NSg             # audio/video format
+# MOSFET/NgS
+# MP/NOJg
+# MP3/NSg
+# MP4/NSg
 # MPEG/ON
-# MRI/NgV             # magnetic resonance imaging
-# MS/NOg              # US state (Mississippi)
-# MSG/NOg             # flavour enhancer
+# MRI/NgV
+# MS/NOg
+# MSG/NOg
 # MSRP/NSg
 # MST/ONVg
 # MSW/N
-# MT/JNOg             # US state (Montana)
+# MT/JNOg
 # MTV/Og
-# MVP/Ng              # most valuable player
+# MVP/Ng
 # MW/NO
 # Maalox/g
 # Mabel/Og
@@ -6908,7 +6905,7 @@ vida/~NwgV>ZS
 # Mintaka/Og
 # Minuit/g
 # Minuteman/g
-# Miocene/JOg         # geological period
+# Miocene/JOg
 # Mir/Og
 # Mira/Og
 # Mirabeau/g
@@ -6937,18 +6934,18 @@ vida/~NwgV>ZS
 # Mitford/Og
 # Mithra/Og
 # Mithridates/Og
-# Mitsubishi/NgS      # car company
-# Mitterrand/g        # president
+# Mitsubishi/NgS
+# Mitterrand/g
 # Mitty/g
 # Mitzi/Og
-# Mixtec/NOJg         # ethnicity
+# Mixtec/NOJg
 # Mizar/Og
 # Mk/N
 # Mlle/N
 # Mme/NS
-# Mn/Ng               # manganese
+# Mn/Ng
 # Mnemosyne/Og
-# Mo/Og               # molybdenum
+# Mo/Og
 # Mobil/Og
 # Mobile/Og
 # Mobutu/g
@@ -6956,7 +6953,7 @@ vida/~NwgV>ZS
 # Modigliani/g
 # Moe/Og
 # Moet/g
-# Mogadishu/Og        # capital of Somalia
+# Mogadishu/Og
 # Mogul/NOSg
 # Mohacs/g
 # Mohamed/Og
@@ -6984,21 +6981,21 @@ vida/~NwgV>ZS
 # Molnar/Og
 # Moloch/Og
 # Molokai/Og
-# Molotov/ONVg        # minister
+# Molotov/ONVg
 # Moluccas/Og
 # Mombasa/Og
-# Mon/NOSg            # city
+# Mon/NOSg
 # Mona/Og
 # Monacan/JN
 # Monaco/Og
-# Mondale/g           # surname
+# Mondale/g
 # Monday/NSg
 # Mondrian/g
 # Monegasque/NSgJ
 # Monera/Og
 # Monessen/Og
 # Monet/Og
-# MongoDB/g           # trademark
+# MongoDB/g
 # Mongol/NOJSg
 # Mongolia/Og
 # Mongolian/JNwSg
@@ -7040,7 +7037,7 @@ vida/~NwgV>ZS
 # Montserrat/Og
 # Monty/Og
 # Moody/Og
-# Moog/ONg            # company
+# Moog/ONg
 # Moon/Og
 # Mooney/Og
 # Moor/NOSg
@@ -7085,7 +7082,7 @@ vida/~NwgV>ZS
 # Mosley/Og
 # Moss/Og
 # Mosul/Og
-# Motorola/Og         # company
+# Motorola/Og
 # Motown/ONg
 # Motrin/g
 # Mott/Og
@@ -7100,16 +7097,16 @@ vida/~NwgV>ZS
 # Mozambican/JNSg
 # Mozambique/ONg
 # Mozart/NOg
-# Mozilla/g           # company
+# Mozilla/g
 # Mr/NSg
 # Ms/NS
 # Msgr
 # Mt/N
 # Muawiya/g
-# Mubarak/Og          # president
+# Mubarak/Og
 # Mueller/Og
 # Muenster/Sg
-# Mugabe/Og           # president
+# Mugabe/Og
 # Muhammad/Og
 # Muhammadan/NgSJ
 # Muhammadanism/OwgS
@@ -7124,7 +7121,7 @@ vida/~NwgV>ZS
 # Mulroney/Og
 # Multan/Og
 # Multics/O
-# Mumbai/Og           # city
+# Mumbai/Og
 # Mumford/Og
 # Munch/Og
 # Munchhausen/g
@@ -7143,7 +7140,7 @@ vida/~NwgV>ZS
 # Muriel/Og
 # Murillo/g
 # Murine/g
-# Murmansk/Og         # city
+# Murmansk/Og
 # Murphy/ONVg
 # Murray/Og
 # Murrieta/Og
@@ -7162,12 +7159,12 @@ vida/~NwgV>ZS
 # Mussorgsky/g
 # Mustafa/Og
 # Mutsuhito/g
-# Muzak/ONVg          # trademark
+# Muzak/ONVg
 # MySQL/g
-# MySpace/Ng          # social media
+# MySpace/Ng
 # Myanmar/Og
 # Mycenae/Og
-# Mycenaean/JNOg      # ancient civilization
+# Mycenaean/JNOg
 # Myers/Og
 # Mylar/OgS
 # Myles/Og
@@ -7176,69 +7173,69 @@ vida/~NwgV>ZS
 # Myrna/Og
 # Myron/Og
 # Myrtle/Og
-# Mysore/Og           # old name of karnataka
+# Mysore/Og
 # Myst/g
 # N/Ng
-# N'Djamena/O         # capital of Chad
+# N'Djamena/O
 # NAACP/Og
-# NAFTA/Og            # trade agreement
-# NASA/Og             # space agency
+# NAFTA/Og
+# NASA/Og
 # NASCAR/Og
-# NASDAQ/Og           # stock exchange
-# NATO/Og             # North Atlantic Treaty Organization
+# NASDAQ/Og
+# NATO/Og
 # NB/JNO
-# NBA/Og              # sports organization
+# NBA/Og
 # NBC/ONJg
 # NBS
-# NC/ONJ              # US state (North Carolina)
+# NC/ONJ
 # NCAA/Og
 # NCO/N
-# ND/ONJ              # US state (North Dakota)
-# NDA/NSg             # non-disclosure agreement
-# NE/ONJg             # US state (Nebraska)
-# NEC/Og              # electronics company
+# ND/ONJ
+# NDA/NSg
+# NE/ONJg
+# NEC/Og
 # NEH/O
-# NES/Ng              # game console
+# NES/Ng
 # NF/ONJ
-# NFC/ON              # near-field communication
-# NFL/ONg             # sports organization
-# NGO/NgS             # non-government organization
-# NH/ONVJ             # US state (New Hampshire)
-# NHL/NOg             # sports organization
-# NIH/OJ              # National Institutes of Health
-# NIMBY/NJ            # not in my backyard
-# NJ/OJ               # US state (New Jersey)
+# NFC/ON
+# NFL/ONg
+# NGO/NgS
+# NH/ONVJ
+# NHL/NOg
+# NIH/OJ
+# NIMBY/NJ
+# NJ/OJ
 # NLRB/O
-# NM/ONJV             # US state (New Mexico)
+# NM/ONJV
 # NORAD/Og
 # NOW/ON
 # NP/ON
-# NPC/NSg             # non-player character
-# NPR/ONg             # National Public Radio
+# NPC/NSg
+# NPR/ONg
 # NR/JNO
-# NRA/O               # National Rifle Association
+# NRA/O
 # NRC/ONJ
 # NS/ONJ
-# NSA/JONg            # FIXME! elsewhere we have N.S.A.
+# NSA/JONg
 # NSC/ON
 # NSF/ON
-# NSFW/J              # not safe for work
-# NSW/Og              # New South Wales
-# NSX/Ng              # car
+# NSFW/J
+# NSW/Og
+# NSX/Ng
 # NT/ON
-# NTFS/Ng             # file system
-# NTSC/Ng             # television standard
-# NV/ONJ              # US state (Nevada)
-# NVIDIA/g            # FIXME! elsewhere we have Nvidia
+# NTFS/Ng
+# NTSC/Ng
+# NV/ONJ
+# NVIDIA/g
 # NVMe/O
 # NW/ONg
 # NWT/O
-# NY/O                # US state (New York)
+# NY/O
 # NYC/O
-# NYSE/O              # stock exchange
-# NZ/Og               # New Zealand
-# Na/Og               # sodium
-# Nabisco/g           # company
+# NYSE/O
+# NZ/Og
+# Na/Og
+# Nabisco/g
 # Nabokov/g
 # Nader/Og
 # Nadia/Og
@@ -7276,7 +7273,7 @@ vida/~NwgV>ZS
 # Naples/Og
 # Napoleon/ONSg
 # Napoleonic/Jg
-# Napster/Ng          # old music sharing service
+# Napster/Ng
 # Narcissus/Og
 # Narmada/Og
 # Narnia/Og
@@ -7302,7 +7299,7 @@ vida/~NwgV>ZS
 # Naugahyde/Ng
 # Nauru/Og
 # Nautilus/g
-# Navajo/NOSg09       # singular and plural, but also has plural in -s
+# Navajo/NOSg09
 # Navajoes/N9
 # Navarre/Og
 # Navarro/Og
@@ -7313,10 +7310,10 @@ vida/~NwgV>ZS
 # Nazca/Og
 # Nazi/NOJSg
 # Nazism/NgS
-# Nb/g                # niobium
-# Nd/g                # neodymium
+# Nb/g
+# Nd/g
 # Ndjamena/g
-# Ne/g                # neon
+# Ne/g
 # NeWS
 # NeWSes
 # Neal/Og
@@ -7356,19 +7353,19 @@ vida/~NwgV>ZS
 # Nepali/JNOSg
 # Neptune/Og
 # Nereid/Og
-# Nerf/g              # brand
+# Nerf/g
 # Nero/ONg
 # Neruda/g
-# Nescafe/Og          # brand
+# Nescafe/Og
 # Nesselrode/Og
-# Nestle/Og           # company
+# Nestle/Og
 # Nestor/ONg
 # Nestorius/g
-# Netanyahu/Og        # surname, Israeli politician
-# Netflix/Vg          # media company
+# Netanyahu/Og
+# Netflix/Vg
 # Netherlander/NSg
 # Netherlands/ONJg
-# Netscape/g          # old browser & company
+# Netscape/g
 # Nettie/Og
 # Netzahualcoyotl/g
 # Nev/Og
@@ -7408,7 +7405,7 @@ vida/~NwgV>ZS
 # Nichols/Og
 # Nicholson/Og
 # Nick/Og
-# Nickelodeon/Ng      # media company
+# Nickelodeon/Ng
 # Nicklaus/g
 # Nickolas/Og
 # Nicobar/JNg
@@ -7416,30 +7413,30 @@ vida/~NwgV>ZS
 # Nicola/OgS
 # Nicolas/Og
 # Nicole/Og
-# Nicosia/Og          # capital of Cyprus
+# Nicosia/Og
 # Niebuhr/Og
 # Nielsen/Og
 # Nietzsche/Og
 # Nieves/Og
 # Nigel/ONg
-# Niger/Og            # country
+# Niger/Og
 # Nigeria/Og
 # Nigerian/NgSJ
 # Nigerien/NgJ
 # Nightingale/Og
 # Nijinsky/g
-# Nike/ONg            # company
+# Nike/ONg
 # Nikita/Og
-# Nikkei/NgJ          # stock market index
+# Nikkei/NgJ
 # Nikki/Og
 # Nikolai/Og
-# Nikon/g             # company
-# Nile/Og             # river
+# Nikon/g
+# Nile/Og
 # Nimitz/Og
 # Nimrod/ONg
 # Nina/ONg
-# Nineveh/Og          # ancient city
-# Nintendo/ONg        # company
+# Nineveh/Og
+# Nintendo/ONg
 # Niobe/ONg
 # Nippon/Og
 # Nipponese/JONg
@@ -7447,22 +7444,22 @@ vida/~NwgV>ZS
 # Nirvana/g
 # Nisan/Og
 # Nisei/Ng
-# Nissan/NOSg         # company
+# Nissan/NOSg
 # Nita/g
 # Nivea/g
 # Nixon/ONg
 # Nkrumah/g
 # No/NOSg
-# NoDoz/g             # trademark
+# NoDoz/g
 # Noah/ONg
-# Nobel/ONg           # prize
+# Nobel/ONg
 # Nobelist/NgS
 # Noble/Og
 # Noe/Og
 # Noel/OgS
 # Noelle/Og
 # Noemi/Og
-# Nokia/ONg           # company
+# Nokia/ONg
 # Nola/Og
 # Nolan/Og
 # Nome/Og
@@ -7520,16 +7517,16 @@ vida/~NwgV>ZS
 # Nubia/Og
 # Nubian/NgJ
 # Nukualofa/Og
-# Nukuʻalofa/Og       # capital of Tonga
+# Nukuʻalofa/Og
 # Numbers/Og
 # Nunavut/Og
 # Nunez/Og
 # Nunki/Og
 # Nürburgring/Og
-# Nuremberg/Og        # city
-# Nureyev/Og          # rudolf -
-# NutraSweet/g        # trademark
-# NyQuil/g            # trademark
+# Nuremberg/Og
+# Nureyev/Og
+# NutraSweet/g
+# NyQuil/g
 # Nyasa/g
 # Nyerere/Og
 # O/NOPJSg
@@ -7547,43 +7544,43 @@ vida/~NwgV>ZS
 # O'Toole/Og
 # OAS/NOg
 # OB/NJ
-# OBD/NgS             # on-board diagnostics
-# OCR/ONV             # optical character recognition
+# OBD/NgS
+# OCR/ONV
 # OD/NSgV
 # OE/ONJV
-# OECD/Og             # organization
-# OED/O               # dictionary
-# OEM/JNgS            # original equipment manufacturer
-# OH/ON               # US state (Ohio)
-# OHSA/g              # law
+# OECD/Og
+# OED/O
+# OEM/JNgS
+# OH/ON
+# OHSA/g
 # OJ/NJ
-# OK/NOVSdGJg         # US state (Oklahoma)
-# OLED/Ng             # organic light-emitting diode
+# OK/NOVSdGJg
+# OLED/Ng
 # OMB/Og
-# OMG                 # exclamation
-# OPEC/Og             # organization
-# OR/CNO              # Oregon
+# OMG
+# OPEC/Og
+# OR/CNO
 # OS/ONJg
-# OSHA/Og             # agency
+# OSHA/Og
 # OSes/N
 # OT/NOJ
 # OTB/J
-# OTC/JNO             # over the counter
-# OTOH/               # on the other hand
-# Oahu/Og             # island
+# OTC/JNO
+# OTOH/
+# Oahu/Og
 # Oakland/Og
 # Oakley/Og
 # Oates/Og
-# Oaxaca/ONg          # city, state
-# Ob/Og               # obamium
+# Oaxaca/ONg
+# Ob/Og
 # Obadiah/Og
-# Obama/Og            # president
+# Obama/Og
 # Obamacare/O
 # Oberlin/Og
 # Oberon/Og
 # Ocala/Og
-# Ocaml/g             # programming language
-# Occam/Og            # -'s razor
+# Ocaml/g
+# Occam/Og
 # Occident/O
 # Occidental/OgJS
 # Oceania/Og
@@ -7600,7 +7597,7 @@ vida/~NwgV>ZS
 # Odesa/Og
 # Odessa/Og
 # Odets/g
-# Odia/ONg            # language, previously Oriya
+# Odia/ONg
 # Odin/Og
 # Odis/g
 # Odom/Og
@@ -7619,12 +7616,12 @@ vida/~NwgV>ZS
 # Ohio/OgJ
 # Ohioan/NSgJ
 # Oise/Og
-# Ojibwa/Og09S        # singular and plural, but also has plural in -s
+# Ojibwa/Og09S
 # Okayama/O
 # Okeechobee/Og
 # Okefenokee/Og
-# Okhotsk/Og          # city
-# Okinawa/Og          # island, prefecture
+# Okhotsk/Og
+# Okinawa/Og
 # Okinawan/JNO
 # Okla/O
 # Oklahoma/Og
@@ -7641,15 +7638,15 @@ vida/~NwgV>ZS
 # Olen/g
 # Olenek/Og
 # Olga/Og
-# Oligocene/JOg       # geological period
+# Oligocene/JOg
 # Olin/Og
 # Olive/Og>
 # Oliver/OgJ
-# Olivetti/g          # computer company
+# Olivetti/g
 # Olivia/Og
 # Olivier/g
 # Ollie/Og
-# Olmec/Ng            # ancient civilization
+# Olmec/Ng
 # Olmsted/Og
 # Olsen/Og
 # Olson/Og
@@ -7659,21 +7656,21 @@ vida/~NwgV>ZS
 # Olympic/JNSg
 # Olympics/ONg
 # Olympus/Og
-# Omaha/NOSg          # city
+# Omaha/NOSg
 # Oman/Og
 # Omani/NgSJ
 # Omar/Og
 # Omayyad/JNg
 # Omdurman/Og
 # Omnipotent/O
-# Omsk/Og             # city
+# Omsk/Og
 # Onassis/g
 # Oneal/g
 # Onega/Og
-# Onegin/g            # eugene -
+# Onegin/g
 # Oneida/NOSg
-# Onion/Ng            # media company
-# Ono/Og              # yoko -
+# Onion/Ng
+# Ono/Og
 # Onondaga/NOSg
 # Onsager/g
 # Ont/O
@@ -7681,15 +7678,15 @@ vida/~NwgV>ZS
 # Ontario/Og
 # Oort/Og
 # Opal/Og
-# Opel/g              # car company
-# OpenOffice/g        # product
+# Opel/g
+# OpenOffice/g
 # Ophelia/Og
 # Ophiuchus/Og
 # Oppenheimer/ONg
 # Opposition
 # Oprah/OgV
 # Ora/Og
-# Oracle/Og           # company
+# Oracle/Og
 # Oran/Og
 # Orange/OgJ
 # Oranjestad/Og
@@ -7709,9 +7706,9 @@ vida/~NwgV>ZS
 # Orin/ONg
 # Orinoco/Og
 # Orion/Og
-# Oriya/ONg           # old name of odiya language
+# Oriya/ONg
 # Orizaba/Og
-# Orkney/Og           # island
+# Orkney/Og
 # Orlando/Og
 # Orleans/ONg
 # Orlon/NgS
@@ -7726,9 +7723,9 @@ vida/~NwgV>ZS
 # Orville/Og
 # Orwell/Og
 # Orwellian/Jg
-# Os/Ng               # osmium
+# Os/Ng
 # Osage/OgS
-# Osaka/Og            # city
+# Osaka/Og
 # Osbert/g
 # Osborn/Og
 # Osborne/Og
@@ -7740,7 +7737,7 @@ vida/~NwgV>ZS
 # Osiris/Og
 # Oslo/Og
 # Osman/Og
-# OSS/ONV             # open source software
+# OSS/ONV
 # Ostrogoth/Ng
 # Ostwald/g
 # Osvaldo/g
@@ -7770,61 +7767,61 @@ vida/~NwgV>ZS
 # Ozymandias/Ng
 # Ozzie/ONJg
 # P/NOJgn
-# PA/ONJg             # US state (Pennsylvania)
-# PAC/NOg             # political action committee
-# PARC/S              # xerox
-# PASCAL              # cf. pascal, Pascal
-# PB/NgS              # personal best; peanut butter
-# PBS/NOg             # organization
+# PA/ONJg
+# PAC/NOg
+# PARC/S
+# PASCAL
+# PB/NgS
+# PBS/NOg
 # PBX/N
 # PC/JNOVSg
-# PCB/NgS             # printed circuit board
-# PCI/NgS             # expansion slot standard
+# PCB/NgS
+# PCI/NgS
 # PCM/Ng
-# PCMCIA/O            # standard
-# PCP/Ng              # drug
+# PCMCIA/O
+# PCP/Ng
 # PD/NO
-# PDA/NwSg            # personal digital assistant; public display of affection
-# PDF/NS              # document format
+# PDA/NwSg
+# PDF/NS
 # PDQ/
 # PDT/ON
 # PE/ON
-# PED/NgS             # performance-enhancing drug
-# PET/NOg             # early computer
+# PED/NgS
+# PET/NOg
 # PFC/N
 # PG/JNO
-# PGP/NO              # encryption
-# PHP/NOg             # programming language
-# PIN/N               # personal identification number
+# PGP/NO
+# PHP/NOg
+# PIN/N
 # PJ's
-# PLA/Og              # china's army
-# PLC/NgS             # public limited company; programmable logic controller
-# PLO/ONg             # organization
-# PM/NSgVdG           # prime minister; private message
+# PLA/Og
+# PLC/NgS
+# PLO/ONg
+# PM/NSgVdG
 # PMS/NOVJg
-# PNG/Og              # Papua New Guinea; image format
+# PNG/Og
 # PO/NJ
-# POS/Ng              # part-of-speech
-# POV/NSg             # point of view
-# POW/NgS             # prisoner of war
+# POS/Ng
+# POV/NSg
+# POW/NgS
 # PP/NO
-# PPE/Ng              # personal protective equipment
-# PPS/N               # post-postscript; other meanings?
-# P.P.S.              # post-postscript
-# PR/NgS              # public relations; pull request; Puerto Rico
-# PRC/ONg             # mainland China
+# PPE/Ng
+# PPS/N
+# P.P.S.
+# PR/NgS
+# PRC/ONg
 # PRO/N
-# PS/ONJg             # postscript; multiple meanings as implied by the attributes?
-# P.S.                # postscript
+# PS/ONJg
+# P.S.
 # PST/ONg
-# PSU/Sg              # power supply unit
+# PSU/Sg
 # PT/NOJ
 # PTA/NgV
 # PTO/ON
-# PVC/Ng              # plastic
+# PVC/Ng
 # PW/ON
 # PX/N
-# Pa/Ng               # protactinium
+# Pa/Ng
 # Paar/Og
 # Pablo/Og
 # Pablum/Og
@@ -7832,8 +7829,8 @@ vida/~NwgV>ZS
 # Pace/Og
 # Pacheco/Og
 # Pacific/ONJg
-# Pacino/Og           # al -
-# Packard/Og          # old car company
+# Pacino/Og
+# Packard/Og
 # Padang/O
 # Paderewski/Og
 # Padilla/Og
@@ -7847,11 +7844,11 @@ vida/~NwgV>ZS
 # Pakistan/Og
 # Pakistani/NSgJ
 # Palembang/Og
-# Paleocene/JOg       # geological period
+# Paleocene/JOg
 # Paleogene/JOg
-# Paleolithic/OgJ     # geological period
-# Paleozoic/JOg       # geological period
-# Palermo/Og          # city
+# Paleolithic/OgJ
+# Paleozoic/JOg
+# Palermo/Og
 # Palestine/Og
 # Palestinian/JNSg
 # Palestrina/g
@@ -7872,7 +7869,7 @@ vida/~NwgV>ZS
 # Pan/ONg
 # Panama/ONSg
 # Panamanian/NgSJ
-# Panasonic/Og        # company
+# Panasonic/Og
 # Pandora/Og
 # Pangaea/Og
 # Pankhurst/Og
@@ -7915,7 +7912,7 @@ vida/~NwgV>ZS
 # Parthia/Og
 # Pasadena/Og
 # Pascagoula/Og
-# Pascal/OgS          # cf. pascal, PASCAL
+# Pascal/OgS
 # Pasco/Og
 # Pasquale/Og
 # Passion/OgS
@@ -7950,10 +7947,10 @@ vida/~NwgV>ZS
 # Pavlova/ONg
 # Pavlovian/Jg
 # Pawnee/ONJSg
-# PayPal/ONVg         # company
+# PayPal/ONVg
 # Payne/Og
-# Pb/g                # lead
-# Pd/g                # palladium
+# Pb/g
+# Pd/g
 # Peabody/Og
 # Peace/ONg
 # Peale/Og
@@ -7993,15 +7990,15 @@ vida/~NwgV>ZS
 # Pennzoil/g
 # Pensacola/ONg
 # Pentagon/Og
-# Pentateuch/Og       # part of the Old Testament
-# Pentax/g            # camera company
+# Pentateuch/Og
+# Pentax/g
 # Pentecost/OgS
 # Pentecostal/JNgS
 # Pentecostalism/N
-# Pentium/NSg         # cpu brand
+# Pentium/NSg
 # Peoria/ONg
 # Pepin/Og
-# Pepsi/ONg           # drink brand
+# Pepsi/ONg
 # Pepys/Og
 # Pequot/NOg
 # Percheron/Ng
@@ -8043,12 +8040,12 @@ vida/~NwgV>ZS
 # Peterson/Og
 # Petra/Og
 # Petrarch/Og
-# Petrograd/Og        # old name of St. Petersburg, cf. Leningrad
+# Petrograd/Og
 # Petty/Og
-# Peugeot/ONg         # car company
+# Peugeot/ONg
 # Pfc
 # Pfizer/Og
-# PhD/NgS             # degree
+# PhD/NgS
 # Phaedra/Og
 # Phaethon/Og
 # Phanerozoic/JOg
@@ -8086,24 +8083,24 @@ vida/~NwgV>ZS
 # Photostatting
 # Phrygia/Og
 # Phyllis/Og
-# Piaf/Og             # Edith -
+# Piaf/Og
 # Piaget/Og
 # Pianola/g
-# Picasso/Og          # Pablo -
+# Picasso/Og
 # Piccadilly/Og
 # Pickering/Og
 # Pickett/Og
 # Pickford/Og
 # Pickwick/Og
-# Pict/Ng             # ancient culture
+# Pict/Ng
 # Piedmont/Og
 # Pierce/Og
 # Pierre/Og
 # Pierrot/Og
 # Pikachu/OgS
 # Pike/ONg
-# Pilate/OgS          # Pontius -
-# Pilates/Ng          # exercise
+# Pilate/OgS
+# Pilates/Ng
 # Pilcomayo/Og
 # Pilgrim/NOSg
 # Pillsbury/Og
@@ -8112,15 +8109,15 @@ vida/~NwgV>ZS
 # Pindar/Og
 # Pinkerton/ONg
 # Pinocchio/ONg
-# Pinochet/Og         # General -
+# Pinochet/Og
 # Pinter/Og
-# Pinterest/ONg       # social media
-# Pinyin/ON           # romanization
+# Pinterest/ONg
+# Pinyin/ON
 # Pippin/Og
 # Piraeus/Og
 # Pirandello/g
-# Pirelli/NOSg        # surname, tyres
-# Pisa/Og             # city
+# Pirelli/NOSg
+# Pisa/Og
 # Pisces/ONg
 # Pisistratus/Og
 # Pissaro/g
@@ -8130,10 +8127,10 @@ vida/~NwgV>ZS
 # Pitts/Og
 # Pittsburgh/Og
 # Pittsfield/Og
-# Pius/g              # pope
+# Pius/g
 # Pizarro/Og
 # Pkwy/N
-# Pl/                 # platinum
+# Pl/
 # Planck/ONg
 # Plano/O
 # Plantagenet/NOg
@@ -8146,20 +8143,20 @@ vida/~NwgV>ZS
 # Platonist/Ng
 # Platte/Og
 # Plautus/Og
-# PlayStation/NgV     # game console
-# Playboy/ONJg        # company
+# PlayStation/NgV
+# Playboy/ONJg
 # Playtex/g
 # Pleiades/Og
-# Pleistocene/JOg     # geological period
+# Pleistocene/JOg
 # Plexiglas/OgS
 # Pliny/Og
-# Pliocene/JOgS       # geological period
+# Pliocene/JOgS
 # Plutarch/ONg
 # Pluto/Og
 # Plymouth/ONg
 # Plymouths/9
-# Pm/g                # promethium
-# Po/Og               # polonium
+# Pm/g
+# Po/Og
 # Pocahontas/ONg
 # Pocatello/Og
 # Pocono/Sg
@@ -8281,7 +8278,7 @@ vida/~NwgV>ZS
 # Princeton/Og
 # Principe/Og
 # Priscilla/Og
-# Pristina/Og         # capital of Kosovo
+# Pristina/Og
 # Prius/NgS
 # Private/N
 # Procrustean/Jg
@@ -8302,13 +8299,13 @@ vida/~NwgV>ZS
 # Protestantism/NSg
 # Proteus/Og
 # Proudhon/g
-# Proust/Og           # Marcel -
+# Proust/Og
 # Provencal/OgS
 # Provence/Og
 # Proverbs/O
 # Providence/OgS
 # Provo/ONg
-# Prozac/OgS          # drug
+# Prozac/OgS
 # Prudence/Og
 # Prudential/g
 # Pruitt/Og
@@ -8319,18 +8316,18 @@ vida/~NwgV>ZS
 # Psalms/Og
 # Psalter/Sg
 # Psyche/Og
-# Pt/g                # platinum
+# Pt/g
 # Ptah/Og
 # Ptolemaic/Jg
 # Ptolemy/OgS
-# Pu/Og               # plutonium
+# Pu/Og
 # Puccini/Og
 # Puck/Og
 # Puckett/Og
 # Puebla/Og
 # Pueblo/Og
 # Puerto/O
-# Puget/Og            # - Sound
+# Puget/Og
 # Pugh/Og
 # Pulaski/Og
 # Pulitzer/NOg
@@ -8347,7 +8344,7 @@ vida/~NwgV>ZS
 # Puritan/NgJ
 # Puritanism/Nmg
 # Purus/g
-# Pusan/Og            # old spelling of Busan
+# Pusan/Og
 # Pusey/Og
 # Pushkin/Og
 # Pushtu/Og
@@ -8361,34 +8358,34 @@ vida/~NwgV>ZS
 # Pygmy/Sg
 # Pyle/Og
 # Pym/Og
-# Pynchon/Og          # Thomas -
+# Pynchon/Og
 # Pyongyang/Og
 # Pyotr/Og
 # Pyrenees/Og
-# Pyrex/ONSg          # trademark
+# Pyrex/ONSg
 # Pyrrhic/Jg
 # Pythagoras/Og
 # Pythagorean/NgJ
 # Pythias/Ng
-# Python/ONg          # programming language
+# Python/ONg
 # Pythonic/J
 # Q/NO
 # QA/N
 # QB/NO
 # QC/ON
 # QED/N
-# QLD/Og              # Queensland
+# QLD/Og
 # QM/N
 # QWERTY/NJ
 # Qaddafi/Og
-# Qantas/Og           # airline
+# Qantas/Og
 # Qatar/Og
 # Qatari/NgSJ
 # Qingdao/Og
 # Qinghai/Og
 # Qiqihar/Og
 # Qom/Og
-# Quaalude/ONg        # drug
+# Quaalude/ONg
 # Quaker/NgS
 # Quakerism/NSg
 # Qualcomm/g
@@ -8434,25 +8431,25 @@ vida/~NwgV>ZS
 # RF/NO
 # RFC/ONS
 # RFD/JNO
-# RGB                 # colour model
-# RI/ON               # US state (Rhode Island)
+# RGB
+# RI/ON
 # RIF/NV
 # RIFA/Og
 # RIP/ON
 # RISC/N
 # RN/NOg
 # RNA/Ng
-# RNG/NgS             # random number generator
+# RNG/NgS
 # ROFL/V
-# ROM/NSg             # read-only memory
+# ROM/NSg
 # ROTC/Og
 # RP/NOV
 # RPM/NgS
 # RR/NOV
-# RSA/Ng              # encryption standard
+# RSA/Ng
 # RSFSR/O
 # RSI/N
-# RSS/NOV             # Really Simple Syndication
+# RSS/NOV
 # RSV/ON
 # RSVP/NOV
 # RSVP'd/VtT
@@ -8487,14 +8484,14 @@ vida/~NwgV>ZS
 # Rambo/ONg
 # Ramirez/Og
 # Ramiro/g
-# Rammstein/Og        # band
+# Rammstein/Og
 # Ramon/g
 # Ramona/Og
 # Ramos/Og
 # Ramsay/Og
 # Ramses/Og
 # Ramsey/Og
-# Ramstein/Og         # air base
+# Ramstein/Og
 # Rand/NOg
 # Randal/Og
 # Randall/Og
@@ -8882,59 +8879,59 @@ vida/~NwgV>ZS
 # SALT/Og
 # SAM/ONg
 # SAP/ONg
-# SAR/N               # special administrative region
-# SARS/NOg            # disease
+# SAR/N
+# SARS/NOg
 # SASE/N
 # SAT/NgS
-# SATA/Ng             # computing standard
+# SATA/Ng
 # SBA/NO
-# SC/JNOg             # US state (South Carolina)
-# SCSI/Og             # computing standard
-# SD/ON               # US state (San Diego)
-# SDI/NO              # strategic defense initiative
+# SC/JNOg
+# SCSI/Og
+# SD/ON
+# SDI/NO
 # SE/NOJg
 # SEATO/O
-# SEC/ONg             # security and exchange commisson
-# SEO/Ng              # search engine optimization
-# SF/NOJ              # san francisco
-# SGI/Og              # computer company
-# SGML/Og             # mark-up language
-# SIDS/NOg            # syndrome
+# SEC/ONg
+# SEO/Ng
+# SF/NOJ
+# SGI/Og
+# SGML/Og
+# SIDS/NOg
 # SJ/ON
 # SJW/N
 # SK/VNO
-# SLR/N               # single-lens reflex; self-loading rifle
-# SNES/NgS            # game console
+# SLR/N
+# SNES/NgS
 # SO/NSI
 # SOB/Ng
-# SOP/ONg             # sum-of-parts
+# SOP/ONg
 # SOS/Ng
 # SOSes/N
 # SPCA/O
 # SPF/NOJ
-# SQL/N               # database query language
+# SQL/N
 # SQLite/g
 # SRAM/Ng
 # SRO/N
 # SS/NOJ
 # SSA/ONJ
-# SSD/NSg             # solid-state drive
+# SSD/NSg
 # SSE/NOJg
 # SSS/ON
 # SST/NO
 # SSW/NgJ
 # ST/NOV
-# STD/JNgS            # sexually transmitted disease; cf. STI, VD
-# STI/Ng              # sexually transmitted infection; cf. STD, VD
+# STD/JNgS
+# STI/Ng
 # STOL/N
 # SUSE/g
-# SUV/NgS             # vehicle type
-# SVN/Og              # version control
+# SUV/NgS
+# SVN/Og
 # SW/ONJVg
 # SWAK/
 # SWAT/N
-# SaaS/Ng             # software as a service
-# Saab/ONg            # car brand
+# SaaS/Ng
+# Saab/ONg
 # Saar/Og
 # Saarinen/g
 # Saatchi/Og
@@ -9175,7 +9172,7 @@ vida/~NwgV>ZS
 # Scythian/JNOg
 # Se/gH
 # Seaborg/Og
-# Seagate/Og          # hard drive company
+# Seagate/Og
 # Seagram/Og
 # Sean/Og
 # Sears/Og
@@ -9333,7 +9330,7 @@ vida/~NwgV>ZS
 # Sheridan/Og
 # Sherlock/OgV
 # Sherman/ONg
-# Sherpa/NOSg         # ethnicity, language, surname
+# Sherpa/NOSg
 # Sherri/Og
 # Sherrie/g
 # Sherry/Og
@@ -9423,7 +9420,7 @@ vida/~NwgV>ZS
 # Singleton/Og
 # Sinhalese/JNg
 # Sinkiang/Og
-# Sioux/Og09          # singular and plural
+# Sioux/Og09
 # Sir/NOSg
 # Sirius/Og
 # Sistine/Jg
@@ -9443,7 +9440,7 @@ vida/~NwgV>ZS
 # Slater/Og
 # Slav/NSgJ
 # Slavic/JNg
-# Slavoj/Og           # given name; - Zizek
+# Slavoj/Og
 # Slavonic/OgJ
 # Slidell/Og
 # Slinky/Ng
@@ -9560,7 +9557,7 @@ vida/~NwgV>ZS
 # Spenser/Og
 # Spenserian/JNg
 # Sperry/Og
-# Spetsnaz/9          # plural only
+# Spetsnaz/9
 # Sphinx/Og
 # Spica/Og
 # Spider-Man/Og
@@ -9736,7 +9733,7 @@ vida/~NwgV>ZS
 # Superglue/g
 # Superior/Og
 # Superman/ONg
-# Supra/NgS           # car model
+# Supra/NgS
 # Supt
 # Surabaya/Og
 # Surat/ONg
@@ -9816,18 +9813,18 @@ vida/~NwgV>ZS
 # TLC/NOg
 # TLS/NO
 # TM/N
-# TN/ON               # US state (Tennessee)
+# TN/ON
 # TNT/NOg
-# TOC/NgS             # table of contents
+# TOC/NgS
 # TOEFL/N
 # TQM/N
 # TTL
 # TV/NSg
 # TVA/O
-# TVR/NOSg            # car company
+# TVR/NOSg
 # TWA/ONg
 # TWX/O
-# TX/ONV              # US state (Texas)
+# TX/ONV
 # Ta/g
 # Tabasco/ONSg
 # Tabatha/Og
@@ -9959,8 +9956,8 @@ vida/~NwgV>ZS
 # Tennyson/Og
 # Tennysonian/J
 # Tenochtitlan/Og
-# TensorFlow/g        # free software
-# Teotihuacan/Og      # archaeological site
+# TensorFlow/g
+# Teotihuacan/Og
 # Terence/Og
 # Teresa/Og
 # Tereshkova/g
@@ -9977,11 +9974,11 @@ vida/~NwgV>ZS
 # Terrie/Og
 # Terry/Og
 # Tertiary/JOg
-# Tesla/ONSg          # surname, car company
+# Tesla/ONSg
 # Tess/Og
 # Tessa/Og
 # Tessie/Og
-# Testarossa/ONSg     # car model
+# Testarossa/ONSg
 # Tet/ONg
 # Tethys/Og
 # Tetons/NOg
@@ -9990,11 +9987,11 @@ vida/~NwgV>ZS
 # Teutonic/JNg
 # Tevet/Og
 # Tex/Og
-# Texaco/g            # company
+# Texaco/g
 # Texan/JNgS
 # Texarkana/Og
 # Texas/Og
-# Th/NOg              # thorium
+# Th/NOg
 # Thackeray/Og
 # Thad/Og
 # Thaddeus/Og
@@ -10026,24 +10023,24 @@ vida/~NwgV>ZS
 # Theresa/Og
 # Therese/g
 # Thermopylae/Og
-# Thermos/O           # trademark
+# Thermos/O
 # Theron/Og
 # Theseus/Og
 # Thespian/NgJ
 # Thespis/g
 # Thessalonian/JNSg
-# Thessaloniki/Og     # city
+# Thessaloniki/Og
 # Thessaly/Og
 # Thieu/g
-# Thimbu/ONg          # capital of bhutan
-# Thimphu/O           # capital of bhutan
+# Thimbu/ONg
+# Thimphu/O
 # Thomas/NOg
 # Thomism/Ng
 # Thomistic/Jg
 # Thompson/ONg
 # Thomson/Og
 # Thor/Og
-# Thorazine/Ng        # medicine
+# Thorazine/Ng
 # Thoreau/Og
 # Thornton/Og
 # Thoroughbred/Ng
@@ -10054,33 +10051,33 @@ vida/~NwgV>ZS
 # Thu/NO
 # Thucydides/Og
 # Thule/Og
-# Thunderbird/NOSg    # car model
+# Thunderbird/NOSg
 # Thur/NS
 # Thurber/Og
 # Thurman/Og
 # Thurmond/Og
 # Thursday/NSg
 # Thutmose/Og
-# Ti/g                # titanium
+# Ti/g
 # Tia/Og
 # Tianjin/Og
 # Tiber/Og
 # Tiberius/Og
 # Tibet/Og
 # Tibetan/JNgS
-# Ticketmaster/g      # company
+# Ticketmaster/g
 # Ticonderoga/Og
 # Tide/g
 # Tienanmen/Og
 # Tiffany/ONg
 # Tigris/Og
-# Tijuana/Og          # city
+# Tijuana/Og
 # Tillich/g
 # Tillman/Og
 # Tilsit/Ng
 # Tim/ONg
-# Timbuktu/Og         # city
-# Timex/g             # company
+# Timbuktu/Og
+# Timex/g
 # Timmy/Og
 # Timon/Og
 # Timor/Og
@@ -10104,15 +10101,15 @@ vida/~NwgV>ZS
 # Titan/NOSg
 # Titania/Og
 # Titanic/JONg
-# Titian/Og           # painter
-# Titicaca/Og         # lake
-# Tito/Og             # president
+# Titian/Og
+# Titicaca/Og
+# Tito/Og
 # Titus/Og
 # Titusville/Og
-# Tl/g                # thallium
+# Tl/g
 # Tlaloc/Og
 # Tlingit/NOJg
-# Tm/Ng               # thulium
+# Tm/Ng
 # Tobago/Og
 # Tobit/ONg
 # Toby/ONg
@@ -10122,15 +10119,15 @@ vida/~NwgV>ZS
 # Todd/Og
 # Togo/Og
 # Togolese/JNg
-# Tojo/ONg            # general
+# Tojo/ONg
 # Tokay/g
-# Tokugawa/Og         # period
+# Tokugawa/Og
 # Tokyo/Og
 # Tokyoite/JN
 # Toledo/OgS
-# Tolkien/Og          # author
-# Tolstoy/Og          # author
-# Toltec/Ng           # ancient civilization
+# Tolkien/Og
+# Tolstoy/Og
+# Toltec/Ng
 # Tolyatti/Og
 # Tom/ONg
 # Tomas/g
@@ -10139,7 +10136,7 @@ vida/~NwgV>ZS
 # Tommie/ONg
 # Tommy/ONg
 # Tompkins/Og
-# Tomsk/Og            # city
+# Tomsk/Og
 # Tonga/Og
 # Tongan/NgSJ
 # Toni/Og
@@ -10157,49 +10154,49 @@ vida/~NwgV>ZS
 # Torrens/Og
 # Torres/Og
 # Torricelli/Og
-# Tórshavn/Og         # capital of the Faroe Islands
+# Tórshavn/Og
 # Tortola/Og
 # Tortuga/Og
-# Torvalds/Og         # linus -
-# Tory/NOJSg          # party
+# Torvalds/Og
+# Tory/NOJSg
 # Tosca/Ng
 # Toscanini/g
-# Toshiba/Ng          # company
+# Toshiba/Ng
 # Toto/NOg
 # Toulouse/Og
 # Townes/Og
 # Townsend/Og
-# Townsville/Og       # city
+# Townsville/Og
 # Toynbee/g
 # Toyoda/Og
-# Toyota/ONSg         # car company
+# Toyota/ONSg
 # Tracey/Og
 # Traci/Og
 # Tracie/Og
 # Tracy/Og
 # Trafalgar/Og
 # Trailways/g
-# Trajan/Og           # emperor
-# Tran/Og             # surname
-# Transcaucasia/Og    # region
+# Trajan/Og
+# Tran/Og
+# Transcaucasia/Og
 # Transvaal/Og
-# Transylvania/Og     # region
+# Transylvania/Og
 # Transylvanian/JNg
 # Trappist/NSgJ
 # Travis/Og
-# Travolta/Og         # john -
+# Travolta/Og
 # Treasury/ONSg
 # Treblinka/Og
 # Trekkie/Ng
 # Trent/Og
 # Trenton/Og
-# Trev/Og             # short for Trevor
+# Trev/Og
 # Trevelyan/Og
 # Trevino/Og
 # Trevor/Og
 # Trey/Og
 # Triangulum/Og
-# Triassic/JOg        # geologic period
+# Triassic/JOg
 # Tricia/Og
 # Trident/Og
 # Trieste/Og
@@ -10220,7 +10217,7 @@ vida/~NwgV>ZS
 # Trollope/Og
 # Trondheim/Og
 # Tropicana/g
-# Trotsky/Og          # leon -
+# Trotsky/Og
 # Troy/Og
 # Troyes/O
 # Truckee/Og
@@ -10242,14 +10239,14 @@ vida/~NwgV>ZS
 # Tsitsihar/Og
 # Tsongkhapa/g
 # Tswana/NOg
-# Tu/NOg              # former symbol for thulium, now Tm
+# Tu/NOg
 # Tuamotu/Jg
 # Tuareg/NOg
 # Tubman/Og
 # Tucker/Og
 # Tucson/Og
 # Tucuman/g
-# Tudor/NSgJ          # period
+# Tudor/NSgJ
 # Tue/NOS
 # Tues/Ng
 # Tuesday/NgS
@@ -10265,18 +10262,18 @@ vida/~NwgV>ZS
 # Tunisian/NgSJ
 # Tunney/Og
 # Tupi/NOg
-# Tupperware/Nwg      # company
+# Tupperware/Nwg
 # Tupungato/Og
 # Turanism/Nmg
 # Turgenev/g
-# Turin/Og            # city
+# Turin/Og
 # Turing/Og
 # Turk/NOJSg
 # Turkestan/Og
 # Turkey/ONJg
 # Turkic/JOgS
 # Turkish/OgJ
-# Türkiye/Og          # english name of Turkey since 2021
+# Türkiye/Og
 # Turkmenistan/Og
 # Turlock/Og
 # Turnbull/Og
@@ -10288,50 +10285,50 @@ vida/~NwgV>ZS
 # Tuscarora/NOSg
 # Tuscon/g
 # Tuskegee/ONg
-# Tussaud/g           # madame -
+# Tussaud/g
 # Tut/Og
 # Tutankhamen/Og
-# Tutsi/Ng            # ethnicity
+# Tutsi/Ng
 # Tutu/Og
 # Tuvalu/Og
 # Tuvaluan/NOJ
-# Twain/Og            # mark -
+# Twain/Og
 # Tweed/Og
 # Tweedledee/g
 # Tweedledum/g
 # Twila/Og
 # Twinkies/Ng
-# Twitter/ONVg        # company, now x
+# Twitter/ONVg
 # Twizzlers/Ng
 # Twp
 # Ty/Og
-# Tycho/Og            # -brae
-# Tylenol/ONg         # medicine
+# Tycho/Og
+# Tylenol/ONg
 # Tyler/Og
 # Tyndale/Og
 # Tyndall/Og
-# TypeScript/NgSV     # programming language
+# TypeScript/NgSV
 # Tyre/Og
 # Tyree/Og
 # Tyrolean/JN
 # Tyrone/ONg
 # Tyson/Og
-# U/g                 # removed `1`noun `5`adj. `2`proper noun `+`prep., was interfering with linter heuristics. I only know this as an abbreviation for university
-# UAE/Og              # United Arab Emirates
+# U/g
+# UAE/Og
 # UAR/O
-# UART/NgS            # electronics
+# UART/NgS
 # UAW/O
 # UBS/Og
-# UCLA/Og             # university
-# UFC/Og              # combat sport promotion
+# UCLA/Og
+# UFC/Og
 # UFO/NSg
-# UHF/NOJg            # frequency band
+# UHF/NOJg
 # UI/NSg
 # UK/Og
 # UL/NOVJ
 # UN/Og
-# UNESCO/Og           # organization
-# UNICEF/Og           # organization
+# UNESCO/Og
+# UNICEF/Og
 # UNIX/Og
 # UPC/N
 # UPI/ONg
@@ -10340,10 +10337,10 @@ vida/~NwgV>ZS
 # US/Og
 # USA/ONg
 # USAF/O
-# USAID/Og            # agency
+# USAID/Og
 # USB/ONSg
 # USCG/O
-# USCIS/O             # immigration agency
+# USCIS/O
 # USD/N
 # USDA/Og
 # USIA/O
@@ -10354,7 +10351,7 @@ vida/~NwgV>ZS
 # USPS/O
 # USS/NO
 # USSR/Og
-# UT/ONg              # US state (Utah)
+# UT/ONg
 # UTC/O
 # UV/JNg
 # Ubangi/Og
@@ -10424,40 +10421,40 @@ vida/~NwgV>ZS
 # Uzbek/NOJg
 # Uzbekistan/Og
 # Uzi/NSg
-# V/NgP               # vanadium; ...
+# V/NgP
 # V10/NgS
 # V12/NgS
 # V6/NgS
 # V8/NOSg
-# VA/ONJ              # US state (Virginia)
-# VAT/Ng              # tax
-# VAX                 # old computer
+# VA/ONJ
+# VAT/Ng
+# VAX
 # VAXes
 # VBA/Og
 # VCR/Ng
-# VD/Ng               # venereal disease; cf. STD, STI
-# VDT/N               # video display terminal
-# VDU/N               # visual display unit
+# VD/Ng
+# VDT/N
+# VDU/N
 # VF/NJ
 # VFW/Og
 # VG/JN
-# VGA/ON              # computing standard
-# VHF/JNg             # frequency band
-# VHS/N               # video tape
+# VGA/ON
+# VHF/JNg
+# VHS/N
 # VI/NOg
 # VIN/NgS
 # VIP/NSg
 # VISTA
 # VJ/NOV
 # VLF/Ng
-# VM/NgS              # virtual machine
-# VMS/g               # operating system
-# VOA/ON              # voice of america
-# VP/NO               # vice president
-# VRAM/Ng             # video memory
-# VT/ONJV             # US state (Vermont)
-# VTOL/N              # vertical takeoff and landing
-# VW/OgS              # car brand; cf. Volkswagen
+# VM/NgS
+# VMS/g
+# VOA/ON
+# VP/NO
+# VRAM/Ng
+# VT/ONJV
+# VTOL/N
+# VW/OgS
 # Va/Og
 # Vacaville/Og
 # Vader/g
@@ -10641,25 +10638,25 @@ vida/~NwgV>ZS
 # Vulg
 # Vulgate/OgS
 # W12/NSg
-# WA/ON               # US state (Washington)
+# WA/ON
 # WAC/ON
 # WASP/Ng
 # WATS/Ng
 # WC/N
 # WHO/Og
-# WI/O                # US state (Wisconsin)
+# WI/O
 # WMD/N
 # WNW/NgJ
 # WP/ON
 # WSW/NgJ
 # WTF/NS
 # WTO/O
-# WV/O                # US state (West Virginia)
+# WV/O
 # WW/NO
 # WWI/O
 # WWII/O
 # WWW/Og
-# WY/O                # US state (Wyoming)
+# WY/O
 # WYSIWYG/N
 # Wabash/Og
 # Wac/N
@@ -10945,7 +10942,7 @@ vida/~NwgV>ZS
 # XEmacs/g
 # XL/NgJ
 # XML/O
-# XMPP/ONV            # chat protocol
+# XMPP/ONV
 # XS/NJ
 # XXL/NJ
 # Xamarin/g
@@ -11079,7 +11076,7 @@ vida/~NwgV>ZS
 # Zanzibar/Og
 # Zapata/Og
 # Zaporozhye/Og
-# Zapotec/NOJg        # ethnicity
+# Zapotec/NOJg
 # Zappa/Og
 # Zara/Og
 # Zarathustra/Og
@@ -11087,10 +11084,10 @@ vida/~NwgV>ZS
 # Zebedee/Og
 # Zechariah/Og
 # Zedekiah/Og
-# Zedong/g            # mao -
+# Zedong/g
 # Zeffirelli/g
 # Zeke/Og
-# Zelenskyy/Og        # president
+# Zelenskyy/Og
 # Zelig/Ng
 # Zelma/Og
 # Zen/ONJg
@@ -11104,14 +11101,14 @@ vida/~NwgV>ZS
 # Zhdanov/O
 # Zhejiang/Og
 # Zhengzhou/Og
-# Zhivago/Og          # dr -
+# Zhivago/Og
 # Zhukov/Og
 # Zibo/Og
 # Ziegfeld/g
 # Ziegler/Og
 # Ziggy/Og
-# Zika/ON             # virus
-# Zilog/Og            # semiconductor company
+# Zika/ON
+# Zilog/Og
 # Zimbabwe/Og
 # Zimbabwean/NSgJ
 # Zimmerman/Og
@@ -11119,9 +11116,9 @@ vida/~NwgV>ZS
 # Zion/OgS
 # Zionism/NwSg
 # Zionist/NSgJ
-# Ziploc/Ng           # trademark
-# Žižek/Og            # slavoj -
-# Zn/g                # zinc
+# Ziploc/Ng
+# Žižek/Og
+# Zn/g
 # Zoë/Og
 # Zoe/Og
 # Zola/Og
@@ -11134,7 +11131,7 @@ vida/~NwgV>ZS
 # Zoroastrianism/OwgS
 # Zorro/ONg
 # Zosma/Og
-# Zr/g                # zirconium
+# Zr/g
 # Zsigmondy/g
 # Zubenelgenubi/Og
 # Zubeneschamali/Og
@@ -11948,7 +11945,7 @@ vida/~NwgV>ZS
 # airbrush/NgSVdG
 # airbus/~NgS
 # aircon/Nmg
-# aircraft/~N09g      # singular and plural
+# aircraft/~N09g
 # aircraftman/N0
 # aircraftmen/N9
 # aircrew/~NS
@@ -12346,7 +12343,7 @@ vida/~NwgV>ZS
 # amygdala/Ng
 # amylase/Ng
 # amyloid/NJ
-# an/~DPSe            # removed `7` conjunction: archaic
+# an/~DPSe
 # anabolism/Ng
 # anachronism/NwSg
 # anachronistic/JQ
@@ -12451,7 +12448,7 @@ vida/~NwgV>ZS
 # aneurysm/~NSg
 # anew/~
 # angel/~NgSV
-# angelfish/N9gS09    # singular and plural, also has a plural in -s
+# angelfish/N9gS09
 # angelic/~J
 # angelica/~Ng
 # angelical/JY
@@ -12718,7 +12715,7 @@ vida/~NwgV>ZS
 # anxiety/~NwSg
 # anxious/~JYp
 # anxiousness/Nmg
-# any/~IRDq           # removed `5` adjective. it's determiner/pronoun/adverb only
+# any/~IRDq
 # anybody/~ISg
 # anyhow/~J
 # anymore/~
@@ -12733,7 +12730,7 @@ vida/~NwgV>ZS
 # aorta/NgS
 # aortic/~J
 # apace/
-# apart/~J            # removed `1` noun, probably imported from Wiktionary's misspelling sense!
+# apart/~J
 # apartheid/~NgV
 # apartment/~NgS
 # apathetic/JQ
@@ -12979,7 +12976,7 @@ vida/~NwgV>ZS
 # ardour/NwgS!@_
 # arduous/~JYp
 # arduousness/Ng
-# are/~VS            # 2nd person singular & plural / 3rd person plural present of 'be'
+# are/~VS
 # area/~NwSg
 # areal/J
 # aren't/V
@@ -13306,11 +13303,11 @@ vida/~NwgV>ZS
 # asymptomatic/~JN
 # asymptote/NgS
 # asymptotic/~JQ
-# async/J             # abbreviation of "asynchronous"
+# async/J
 # asynchronicity/Nmg
 # asynchronous/~JY
 # asynchrony/Nmg
-# at/~PN              # removed `4` an `8` obscure verb and obsolete dialectal pronoun
+# at/~PN
 # atavism/Nmg
 # atavist/NSg
 # atavistic/J
@@ -13814,7 +13811,7 @@ vida/~NwgV>ZS
 # bagpiper/Ng
 # baguette/NgS
 # bah/~N
-# baht/~NSg09P        # singular and plural, also has a plural in -s
+# baht/~NSg09P
 # bail/~NSgVGdB
 # bailey/~NS
 # bailiff/~NS
@@ -14581,8 +14578,8 @@ vida/~NwgV>ZS
 # bicarbonate/~NgS
 # bicentenary/NSg
 # bicentennial/~JNSg
-# bicep/Ng0           # biceps is the standard/traditional singular but bicep has become accepted
-# biceps/N09g         # singular and plural
+# bicep/Ng0
+# biceps/N09g
 # bicker/Vd>GNgSZ
 # bickerer/Ng
 # biconcave/J
@@ -14780,7 +14777,7 @@ vida/~NwgV>ZS
 # bishop/~NgSV
 # bishopric/~NSg
 # bismuth/~Ng
-# bison/~Ng09         # singular and plural
+# bison/~Ng09
 # bisque/NgJV
 # bistable/J
 # bistro/NgSV
@@ -14895,7 +14892,7 @@ vida/~NwgV>ZS
 # blazer/~NgS
 # blazing/JY
 # blazon/~NgSVdG
-# bldg/N              # POS: abbreviation for building
+# bldg/N
 # bleach/~JVd>GNgSZ
 # bleached/~JVtTU
 # bleacher/NgS
@@ -15048,7 +15045,7 @@ vida/~NwgV>ZS
 # bluebird/~NgS
 # bluebonnet/NSg
 # bluebottle/NSg
-# bluefish/N9gS09     # singular and plural, also has a plural in -s
+# bluefish/N9gS09
 # bluegill/NgS
 # bluegrass/~Ng
 # blueish/J
@@ -15807,7 +15804,7 @@ vida/~NwgV>ZS
 # budgetary/~J
 # budgie/NSg
 # buff/~NgSJVdGr
-# buffalo/~Ng09VbdG   # singular and plural, also has a plural in -s below
+# buffalo/~Ng09VbdG
 # buffaloes/~N9Vh
 # buffer/~NSgJVdG
 # buffet/~NSgVdGz
@@ -15918,7 +15915,7 @@ vida/~NwgV>ZS
 # bunny/~NSgJ
 # bunt/~NgSVdGz
 # bunting/~NgV
-# bunyip/NgS          # Australian mythological creature
+# bunyip/NgS
 # buoy/~NgSVdG
 # buoyancy/~Ng
 # buoyant/JY
@@ -16021,7 +16018,7 @@ vida/~NwgV>ZS
 # busybody/NSgV
 # busyness/Ng
 # busywork/Ng
-# but/~PCNSre         # removed `4` verb: archaic
+# but/~PCNSre
 # butane/Ng
 # butch/~JNgSV>Z
 # butcher/~NgVdGJ
@@ -16344,7 +16341,7 @@ vida/~NwgV>ZS
 # cannily/RU
 # canniness/Ng
 # canning/~V6N
-# cannon/~NgS09VGdJ   # singular and plural, also has a plural in -s
+# cannon/~NgS09VGdJ
 # cannonade/NgSVGd
 # cannonball/~NSgV
 # cannot/~VN
@@ -16426,7 +16423,7 @@ vida/~NwgV>ZS
 # caprice/NSg
 # capricious/JYp
 # capriciousness/Nmg
-# capsicum/NwSg_      # term for bell/red/green pepper in Australian English
+# capsicum/NwSg_
 # capsize/VdGNS
 # capstan/NSg
 # capstone/NgSV
@@ -16447,7 +16444,7 @@ vida/~NwgV>ZS
 # captivity/~NwSg
 # captor/NgS
 # capture/~NwSgVdGr
-# car/~NSg #d>ZG
+# car/~NSg
 # carafe/NgS
 # caramel/~NwSgJV
 # caramelise/VdSG!_
@@ -16508,7 +16505,7 @@ vida/~NwgV>ZS
 # cardiovascular/~J
 # cardsharp/NgS>Z
 # cardsharper/Ng
-# care/~NwSgV>GZ      # not using '/d' since it marsk the past form as an adjective
+# care/~NwSgV>GZ
 # cared/VtT
 # careen/VdGNS
 # career/~NgSVdGJ
@@ -16569,7 +16566,7 @@ vida/~NwgV>ZS
 # carouse/Vd>GNSgZ
 # carousel/~NSgV
 # carouser/Ng
-# carp/~NSg09VGd>Z    # singular and plural, also has a plural in -s
+# carp/~NSg09VGd>Z
 # carpal/NgSJ
 # carpel/NgS
 # carpenter/~NgSVdG
@@ -16624,7 +16621,7 @@ vida/~NwgV>ZS
 # casaba/NgS
 # cascade/~NSgVdG
 # cascara/NSg
-# case/~NwSgVdGLz      # removed `5` adj. rare poker sense only
+# case/~NwSgVdGLz
 # casebook/~NSJ
 # cased/VtTJU
 # caseharden/VdGS
@@ -16726,7 +16723,7 @@ vida/~NwgV>ZS
 # caterer/Ng
 # caterpillar/~NgSV
 # caterwaul/VdGNSg
-# catfish/~N9gS09V    # singular and plural, also has a plural in -s
+# catfish/~N9gS09V
 # catgut/Ng
 # catharses/N9
 # catharsis/Nm0g
@@ -17111,7 +17108,7 @@ vida/~NwgV>ZS
 # chases/~V
 # chaser/~NgS
 # chasm/NgS
-# chassis/~Ng09       # singular and plural
+# chassis/~Ng09
 # chaste/JY^>p
 # chasten/VdGS
 # chasteness/Nmg
@@ -17985,7 +17982,7 @@ vida/~NwgV>ZS
 # cocoa/~NwSgJ
 # coconut/~NwSg
 # cocoon/~NSgVdG
-# cod/~NSg09JV        # singular and plural, also has a plural in -s
+# cod/~NSg09JV
 # coda/~NgS
 # codded/V
 # codding/VJ
@@ -18000,7 +17997,7 @@ vida/~NwgV>ZS
 # codependent/JNSg
 # coder/NgSe
 # codex/~Ng
-# codfish/NgS09       # singular and plural, also has a plural in -s
+# codfish/NgS09
 # codger/NSg
 # codices/9
 # codicil/NSgV
@@ -18402,7 +18399,7 @@ vida/~NwgV>ZS
 # companionship/~Ng
 # companionway/NgS
 # company/~NwSgV
-# companywide/J       # in Wiktionary and https://seeds.sproutsocial.com/writing/grammar-and-mechanics/
+# companywide/J
 # comparability/Nmg
 # comparable/~JNi
 # comparably/Ri
@@ -19624,14 +19621,14 @@ vida/~NwgV>ZS
 # craving/~NgV
 # craw/NgSV
 # crawdad/NSg
-# crawfish/NgS09      # singular and plural, also has a plural in -s
+# crawfish/NgS09
 # crawl/~Vd>GNSgZ
 # crawlable/J
 # crawler/~Ng
 # crawlspace/NSg
 # crawly/J^>Sg
 # cray/~NSJ
-# crayfish/~NgS09V    # singular and plural, also has a plural in -s
+# crayfish/~NgS09V
 # crayola/S
 # crayon/~NwSgVGd
 # craze/~NSgVdG
@@ -20121,7 +20118,7 @@ vida/~NwgV>ZS
 # cutter/~NSg
 # cutthroat/~NSgJ
 # cutting/~NgSJYV
-# cuttlefish/N9gS09   # singular and plural, also has a plural in -s
+# cuttlefish/N9gS09
 # cutup/NSg
 # cutworm/NgS
 # cw/~
@@ -20547,7 +20544,7 @@ vida/~NwgV>ZS
 # deepen/~VGd
 # deepfake/NSgV
 # deepness/Ng
-# deer/~Ng09          # singular and plural
+# deer/~Ng09
 # deerskin/Ng
 # deerstalker/NS
 # def/~NJZ
@@ -20557,7 +20554,7 @@ vida/~NwgV>ZS
 # defalcation/Ng
 # defamation/~Ng
 # defamatory/~J
-# defame/VGd>SJZ      # removed `N`, noun senses now rare
+# defame/VGd>SJZ
 # defamer/Ng
 # defang/VdGS
 # defaulter/NSg
@@ -20719,7 +20716,7 @@ vida/~NwgV>ZS
 # demimonde/Ng
 # demise/~NgSVGd
 # demitasse/NgS
-# demo/~NgSVGd        # only wiktionary calls this an adjective. doing so messes with 'adj of a' lint
+# demo/~NgSVGd
 # democracy/~NSg
 # democrat/~NgS
 # democratic/~JNUQ
@@ -21757,7 +21754,7 @@ vida/~NwgV>ZS
 # doge/~NgS
 # dogeared/JV
 # dogfight/NSgV
-# dogfish/NgS09       # singular and plural, also has a plural in -s
+# dogfish/NgS09
 # dogfood/NgSVdG
 # dogged/~VJYp
 # doggedness/Ng
@@ -21833,7 +21830,7 @@ vida/~NwgV>ZS
 # donate/~VdSGXn
 # donation/~NwgS
 # done/~JVTNWrU
-# dong/~NgS09VdG      # singular and plural, currency plural is dong or dongs
+# dong/~NgS09VdG
 # dongle/NSg
 # donkey/~NSg
 # donned/~V
@@ -21903,7 +21900,7 @@ vida/~NwgV>ZS
 # doss/Vd>GNSJZ
 # dosshouse/NS
 # dossier/~NgS
-# dost/~V             # archaic 2nd person singular present of 'do'
+# dost/~V
 # dot/~NSgVGd>PZ
 # dotage/Nmg
 # dotard/NSg
@@ -22147,7 +22144,7 @@ vida/~NwgV>ZS
 # driveshaft/NSg
 # drivetrain/NgS
 # driveway/NgS
-# drizzle/VGdNwgS     # normally a mass noun but "a drizzle" means it's also a countable noun
+# drizzle/VGdNwgS
 # drizzly/J
 # drogue/NSgV
 # droid/NSg
@@ -22528,7 +22525,7 @@ vida/~NwgV>ZS
 # ecru/NgJ
 # ecstasy/~NSgV
 # ecstatic/~JNQ
-# ectoplasm/Nwg       # used with indefinite article in The Great Gatsby
+# ectoplasm/Nwg
 # ecu/NS
 # ecumenical/~JY
 # ecumenicism/Ng
@@ -22788,7 +22785,7 @@ vida/~NwgV>ZS
 # elitism/Nmg
 # elitist/~JNgS
 # elixir/NSg
-# elk/~NSg09          # singular and plural, also has a plural in -s
+# elk/~NSg09
 # ell/~NSg
 # ellipse/~NgSV
 # ellipsis/N0g
@@ -22915,7 +22912,7 @@ vida/~NwgV>ZS
 # emitter/~NgS
 # emitting/~V6
 # emo/~NSgJ
-# emoji/~NwSg09       # singular and plural, also has a plural in -s
+# emoji/~NwSg09
 # emollient/NgSJ
 # emolument/NgS
 # emote/VdGNSXnv
@@ -23003,7 +23000,7 @@ vida/~NwgV>ZS
 # encipher/VSGd
 # encircle/VdSGL
 # encirclement/~Ng
-# encl/N              # Wiktionary says abbreviation of encyclopedia
+# encl/N
 # enclave/~NgSV
 # enclose/~VGdS
 # enclosed/~JVtTU
@@ -23469,7 +23466,7 @@ vida/~NwgV>ZS
 # escrow/NSgV
 # escudo/NSg
 # escutcheon/~NSg
-# esky/NgS_           # Australian genericised brand name of a cooler
+# esky/NgS_
 # esophageal/~J
 # esophagi/N9
 # esophagus/~N0g
@@ -23512,7 +23509,7 @@ vida/~NwgV>ZS
 # estrus/NgS
 # estuary/~NSg
 # eta/~NSg
-# etc./~              # most dictionary only list it with the final dot
+# etc./~
 # etch/Vd>GNSZz
 # etcher/Ng
 # etching/~NgV
@@ -24373,7 +24370,7 @@ vida/~NwgV>ZS
 # faze/VGdS
 # fazed/JVtTU
 # fealty/Nmg
-# fear/~NwgSVdG        # removed 5 adjective flag since it's rare and dialectal
+# fear/~NwgSVdG
 # fearful/~JYp
 # fearfulness/Nmg
 # fearless/~JYp
@@ -24787,7 +24784,7 @@ vida/~NwgV>ZS
 # firth/~Ng
 # firths/N
 # fiscal/~JYNgS
-# fish/~Nw09gSVd>GZ   # singular and plural, also has a plural in -s
+# fish/~Nw09gSVd>GZ
 # fishbowl/~NSg
 # fishcake/NSg
 # fisher/~Ng
@@ -24922,7 +24919,7 @@ vida/~NwgV>ZS
 # flatbread/Nmg
 # flatcar/NSg
 # flatfeet/9
-# flatfish/N09gS      # singular and plural, also has a plural in -s
+# flatfish/N09gS
 # flatfoot/NSgVd
 # flathead/~NSg
 # flatiron/NSgJ
@@ -26089,7 +26086,7 @@ vida/~NwgV>ZS
 # gardener/~NgS
 # gardenia/NgS
 # gardening/~NgV
-# garfish/N09gS       # singular and plural, also has a plural in -s
+# garfish/N09gS
 # gargantuan/J
 # gargle/VdGNSg
 # gargoyle/NSg
@@ -26125,7 +26122,7 @@ vida/~NwgV>ZS
 # gasman/N0
 # gasmen/N9
 # gasohol/Ng
-# gasoline/~Nmg       # Wiktionary says it's also an adjective but other dictionaries don't
+# gasoline/~Nmg
 # gasometer/NS
 # gasp/VdGNgS
 # gassed/JVtTe
@@ -26204,7 +26201,7 @@ vida/~NwgV>ZS
 # geeky/J>^
 # geese/~N9
 # geezer/NgS
-# geisha/~Ng09S       # singular and plural, also has a plural in -s
+# geisha/~Ng09S
 # gel/~NwSgV
 # gelatin/~Nmg
 # gelatinous/~J
@@ -26371,7 +26368,7 @@ vida/~NwgV>ZS
 # get/~VbNS
 # getaway/~NSgJ
 # getter/NSg
-# getting/~V6Ng       # `M` for getting's contraction
+# getting/~V6Ng
 # getup/Ng
 # gewgaw/NSgJ
 # geyser/NSgV
@@ -26710,7 +26707,7 @@ vida/~NwgV>ZS
 # goldenrod/~NgJ
 # goldfield/NS
 # goldfinch/NgS
-# goldfish/~NgS09     # singular and plural, also has a plural in -s
+# goldfish/~NgS09
 # goldmine/NSg
 # goldsmith/~Ng
 # goldsmiths/~N
@@ -27344,7 +27341,7 @@ vida/~NwgV>ZS
 # gyroscope/NgS
 # gyroscopic/J
 # gyve/NgSVGd
-# h/~NVGJnXZvz        # removed `>` 'her' is not comparative of 'h'
+# h/~NVGJnXZvz
 # h'm/
 # ha/~
 # haberdasher/NSg
@@ -27599,7 +27596,7 @@ vida/~NwgV>ZS
 # harbormaster/NS<
 # harbour/NgSVGd!@_
 # harbourmaster/NS!@_
-# hard/~J>Y^NwnXp     # removed `V` verb sense is obsolete
+# hard/~J>Y^NwnXp
 # hardback/~NgSJ
 # hardball/NgJV
 # hardboard/NgV
@@ -27765,7 +27762,7 @@ vida/~NwgV>ZS
 # hazmat/~N
 # hazy/J>^Np
 # hdqrs/N
-# he/~Ia3s*           # I~pronoun a~personal 3~person .~singular s~subject *:3pers-sing-subj
+# he/~Ia3s*
 # he'd/
 # he'll/
 # he's/~
@@ -28031,7 +28028,7 @@ vida/~NwgV>ZS
 # heptagon/NgS
 # heptagonal/J
 # heptathlon/NSg
-# her/~D5Ia3o.        # I~pronoun a~personal 3~person .~singular o~object / D5=determiner+possessive
+# her/~D5Ia3o.
 # herald/~NSgVdG
 # heralded/~VU
 # heraldic/~J
@@ -28097,7 +28094,7 @@ vida/~NwgV>ZS
 # herring/~NwgS
 # herringbone/NgV
 # hers/~I*
-# herself/~Ia3F.      # I~pronoun a~personal 3~person .~singular F~reflexive
+# herself/~Ia3F.
 # hertz/~Ng
 # hesitance/Nmg
 # hesitancy/Nmg
@@ -28198,8 +28195,8 @@ vida/~NwgV>ZS
 # hilltop/~NgS
 # hilly/~J>^p
 # hilt/~NgSV
-# him/~Ia3o.          # I~pronoun a~personal 3~person .~singular o~object
-# himself/~Ia3F.      # I~pronoun a~personal 3~person .~singular F~reflexive
+# him/~Ia3o.
+# himself/~Ia3F.
 # hind/~J>NgSZ
 # hinder/~VGdJN
 # hindered/~VU
@@ -28250,10 +28247,10 @@ vida/~NwgV>ZS
 # historicity/~Nmg
 # historiographer/NgS
 # historiography/~Nmg
-# history/~NwSg       # removed `4` verb sense is obsolte and interferes with heuristics
+# history/~NwSg
 # histrionic/JSQ
 # histrionics/Nmg
-# hit/~VbtTNSgJ          # removed `8` pronoun sense is dialectal and interferes with heuristics
+# hit/~VbtTNSgJ
 # hitch/~NSVdGU
 # hitch's
 # hitcher/NgS
@@ -28661,7 +28658,7 @@ vida/~NwgV>ZS
 # hovel/NSgV
 # hover/~VGdNS
 # hoverboard/NgSV
-# hovercraft/NgS09    # singular and plural, also has a plural in -s
+# hovercraft/NgS09
 # how/~CNSg
 # how'd/
 # how're/
@@ -29444,7 +29441,7 @@ vida/~NwgV>ZS
 # impurity/~NSg
 # imputation/NSg
 # impute/VdSGB
-# in/~PJrg            # removed `4`, verb senses are obsolete, `NS`, noun sense is marginal
+# in/~PJrg
 # inaccuracy/NwgS
 # inaction/~Nmg
 # inadequacy/NS
@@ -30529,7 +30526,7 @@ vida/~NwgV>ZS
 # issuer/~NgS
 # isthmian/~JN
 # isthmus/~NgS
-# it/~Ia3so*          # I~pronoun a~personal 3~person .~singular s~subject o~object *~3pers-sing-subj
+# it/~Ia3so*
 # it'd/
 # it'll/
 # it's/~
@@ -30556,7 +30553,7 @@ vida/~NwgV>ZS
 # itinerant/~JNSg
 # itinerary/~NSgJ
 # its/~ID5*
-# itself/~Ia3F.       # I~pronoun a~personal 3~person .~singular F~reflexive
+# itself/~Ia3F.
 # iv/~U
 # ivory/~NwSgJ
 # ivy/~NSgd
@@ -30662,7 +30659,7 @@ vida/~NwgV>ZS
 # jello/NS
 # jelly/~NSgVGdJ
 # jellybean/NgSJ
-# jellyfish/N09gS     # singular and plural, also has a plural in -s
+# jellyfish/N09gS
 # jellylike/J
 # jellyroll/NSg
 # jemmy/NSVGdJ
@@ -30922,7 +30919,7 @@ vida/~NwgV>ZS
 # jurymen/N9
 # jurywoman/N0g
 # jurywomen/N9
-# just/~JY^V>p        # removed `1` noun. archaic and interferes with linter heuristics
+# just/~JY^V>p
 # justice/~NwgSi
 # justifiable/~JU
 # justifiably/RU
@@ -30957,7 +30954,7 @@ vida/~NwgV>ZS
 # kamikaze/~NgSVJ
 # kana/~NV
 # kangaroo/~NgSVJ
-# kanji/~N09S         # singular and plural, also has a plural in -s
+# kanji/~N09S
 # kaolin/Nwg
 # kapok/Ng
 # kappa/~NSg
@@ -31145,7 +31142,7 @@ vida/~NwgV>ZS
 # kinswoman/Ng
 # kinswomen/9
 # kiosk/~NSg
-# kip/~NSg09V         # in the currency sense, singular and plural, also has a plural in -s
+# kip/~NSg09V
 # kipped/V
 # kipper/NgSVdGJ
 # kipping/V
@@ -31237,7 +31234,7 @@ vida/~NwgV>ZS
 # knowledge/~Nmg
 # knowledgeable/~JN
 # knowledgeably/R
-# known/~JVT          # removed `N`, only a noun in the `unknown knows` sense
+# known/~JVT
 # knuckle/NSgVdG
 # knuckleduster/NS
 # knucklehead/NgS
@@ -31749,7 +31746,7 @@ vida/~NwgV>ZS
 # leitmotiv/NgS
 # lemma/~N0S
 # lemmata/N9
-# lemme/Gz            # POS: contraction
+# lemme/Gz
 # lemming/NgS
 # lemon/~NwSgJV
 # lemonade/~NwSg
@@ -31794,7 +31791,7 @@ vida/~NwgV>ZS
 # lesson/~VNgS
 # lessor/NgS
 # let/~VbtTNSgi
-# let's               # POS: contraction
+# let's
 # letdown/NSg
 # lethal/~JYN
 # lethality/Nmg
@@ -32535,7 +32532,7 @@ vida/~NwgV>ZS
 # lunchtime/~NwgS
 # lung/~NgSdG
 # lunge/NSgV
-# lungfish/N09gS      # singular and plural, also has a plural in -s
+# lungfish/N09gS
 # lungful/NS
 # lunkhead/NgS
 # lupin/NSg!_
@@ -32604,7 +32601,7 @@ vida/~NwgV>ZS
 # lysosomes/N
 # m/JNSVKr
 # mRNA/Nmg
-# mTOR                # mammalian target of rapamycin
+# mTOR
 # ma/~NSgH
 # ma'am/NV
 # mac/~NSgGd
@@ -32654,7 +32651,7 @@ vida/~NwgV>ZS
 # madder/NgSJcV
 # maddest/Ju
 # madding/JV
-# made/~VrU           # removed `N`, noun is dialectal
+# made/~VrU
 # mademoiselle/NgSV
 # madhouse/~NSg
 # madman/~N0g
@@ -32858,7 +32855,7 @@ vida/~NwgV>ZS
 # mammoth/~N9gJ
 # mammoths/~N0
 # mammy/NSg
-# man/~NOJYVSU        # removed `8` pronoun, dialectal & complicates lint heuristics
+# man/~NOJYVSU
 # man's/~NOJIVW
 # manacle/NSgVdG
 # manage/~VGd>NSZL
@@ -32998,7 +32995,7 @@ vida/~NwgV>ZS
 # mare/~NgS
 # margarine/Nmg
 # margarita/~NwgS
-# marge/~Nmg          # short for "margarine"
+# marge/~Nmg
 # margin/~NgSV
 # marginal/~JYNS
 # marginalia/Nmg
@@ -33257,7 +33254,7 @@ vida/~NwgV>ZS
 # maze/~NgSV
 # mazurka/NgS
 # mdse/N
-# me/~Ia1o.           # I~pronoun a~personal 1~person .~singular o~object
+# me/~Ia1o.
 # mead/~Ng
 # meadow/~NgSV
 # meadowlark/NgS
@@ -33591,7 +33588,7 @@ vida/~NwgV>ZS
 # metalanguage/NgS
 # metalled/JV!@_
 # metallic/~JN
-# metallize/VGd>SZ    # ll vs l not clearly US/UK difference, few dictionaries include -ise spellings
+# metallize/VGd>SZ
 # metallurgic/J
 # metallurgical/~J
 # metallurgist/NgS
@@ -33891,7 +33888,7 @@ vida/~NwgV>ZS
 # mind's
 # mindboggling/JY<
 # minded/~JVp
-# mindedness/Nmg      # Wiktionary has an entry for this on its own
+# mindedness/Nmg
 # mindfuck/NSgx
 # mindful/~JYNp
 # mindfulness/~Nmg
@@ -34200,7 +34197,7 @@ vida/~NwgV>ZS
 # mm/~N
 # mnemonic/~JNgS
 # mnemonically/R
-# mo/~JNSKH           # removed `C` de- prefix should only be for negation; breaks heuristics otherwise
+# mo/~JNSKH
 # moan/NgSVd>GZ
 # moaner/Ng
 # moat/~NgSVd
@@ -34479,7 +34476,7 @@ vida/~NwgV>ZS
 # moorhen/~NS
 # mooring/VNwgS
 # moorland/~NgS
-# moose/~Ng09         # singular and plural
+# moose/~Ng09
 # moot/~JNSVdG
 # mop/~NSgVGd>Z
 # mope/VNgS
@@ -34522,7 +34519,7 @@ vida/~NwgV>ZS
 # morgue/~NgS
 # moribund/JN
 # morn/NgSGz
-# morning/~NwgS       # as a part of the day it's uncountable
+# morning/~NwgS
 # morocco/~Ng
 # moron/NSg
 # moronic/JQ
@@ -34833,7 +34830,7 @@ vida/~NwgV>ZS
 # multiverse/~NSg
 # multivitamin/NgSJ
 # multiyear/J
-# mum/~NgSJV          # "mother" sense is UK/AU, "silent" sense is universal
+# mum/~NgSJV
 # mumble/~VGd>NgSZ
 # mumbler/NgS
 # mumbletypeg/Ng
@@ -34841,7 +34838,7 @@ vida/~NwgV>ZS
 # mummery/Ng
 # mummification/Nmg
 # mummify/VGdSn
-# mummy/~NSgV         # "mother" sense is UK/AU, "mummified" sense is universal
+# mummy/~NSgV
 # mumps/NgV
 # mun/~VNI
 # munch/~VGdNS
@@ -34974,7 +34971,7 @@ vida/~NwgV>ZS
 # myrmidon/NgS
 # myrrh/Nmg
 # myrtle/~NSg
-# myself/~Ia1F.       # I~pronoun a~personal 1~person .~singular F~reflexive
+# myself/~Ia1F.
 # mysterious/~JYp
 # mysteriousness/Nmg
 # mystery/~NwSg
@@ -35366,7 +35363,7 @@ vida/~NwgV>ZS
 # neutralizer/NgS
 # neutrino/NSg
 # neutron/~NSg
-# never/~R            # removed `V` verb sense is dialectal
+# never/~R
 # nevermore/~
 # nevertheless/~R
 # nevi/N
@@ -35492,7 +35489,7 @@ vida/~NwgV>ZS
 # ninetieth/JNg
 # ninetieths/N
 # ninety/~SHg
-# ninja/~NSg09JV      # singular and plural, also has a plural in -s
+# ninja/~NSg09JV
 # ninny/NSg
 # ninth/~JNgV
 # ninths/N
@@ -36377,7 +36374,7 @@ vida/~NwgV>ZS
 # offstage/~JVS
 # offtrack/J
 # oft/~
-# often/~R^>          # removed `J` adjective sense is archaic
+# often/~R^>
 # oftentimes/~
 # ofttimes/
 # ogle/~VGd>NgSZ
@@ -36453,7 +36450,7 @@ vida/~NwgV>ZS
 # omnivore/NgS
 # omnivorous/~JYp
 # omnivorousness/Nmg
-# on/~JP              # verb sense is nonstandard dialectal and interferes with linter heuristics
+# on/~JP
 # onboard/~JRVSdG
 # once/~CNg
 # oncogene/NSg
@@ -36495,7 +36492,7 @@ vida/~NwgV>ZS
 # onyx/~NgSJ
 # oodles/N9g
 # ooh/NSVGd
-# oolong/Nwg          # tea
+# oolong/Nwg
 # oomph/NV
 # oops/~NV
 # oopsy/NgS
@@ -36587,7 +36584,7 @@ vida/~NwgV>ZS
 # opulence/Nmg
 # opulent/JY
 # opus/~NgS
-# or/~CN              # removed `5` adjective, rare heraldic usage; `+` preposition: archaic
+# or/~CN
 # oracle/~NSgV
 # oracular/J
 # oral/~JYNgS
@@ -36755,8 +36752,8 @@ vida/~NwgV>ZS
 # ounce/~NgS
 # our/~D5
 # ours/~I
-# ourself/Ia1F        # I:pronoun a:personal 1:person .~singular F:reflexive (of the 'Royal We')
-# ourselves/~Ia1F:    # I:pronoun a:personal 1:person :~plural F:reflexive
+# ourself/Ia1F
+# ourselves/~Ia1F:
 # oust/~VGd>SZ
 # ouster/~NgSV
 # out/~PNSgVGd>JRz
@@ -37022,8 +37019,8 @@ vida/~NwgV>ZS
 # overfed/JV
 # overfeed/VGS
 # overfill/VdGNS
-# overfit/VS          # one or two past forms?
-# overfitted/VJ       # is 'overfit' also a past form?
+# overfit/VS
+# overfitted/VJ
 # overfitting/NgV
 # overflew/V
 # overflight/NgS
@@ -37608,7 +37605,7 @@ vida/~NwgV>ZS
 # pardoner/Ng
 # pare/VS
 # paregoric/NgJ
-# paren/NgS           # informal: parenthesis
+# paren/NgS
 # parent/~NgSVGd
 # parentage/~Ng
 # parental/~JN
@@ -37717,7 +37714,7 @@ vida/~NwgV>ZS
 # partway/
 # party/~NSgVGdJ
 # parvenu/NgSJ
-# pascal/~NgS         # cf. Pascal, PASCAL
+# pascal/~NgS
 # paschal/~J
 # pasha/~NSg
 # pass/~VNg
@@ -38275,7 +38272,7 @@ vida/~NwgV>ZS
 # persimmon/NwSg
 # persist/~VSGd
 # persistence/~Nmg
-# persistency/Nmg     # uncommon variant
+# persistency/Nmg
 # persistent/~JY
 # persnickety/J
 # person/~NgSVU
@@ -38628,7 +38625,7 @@ vida/~NwgV>ZS
 # pickings/Ng
 # pickle/~NgSVGd
 # pickpocket/NSgV
-# pickup/~NgS         # removed `4` verb which applies to `pick up`
+# pickup/~NgS
 # picky/J^>Np
 # picnic/~NgSV
 # picnicked/VtT
@@ -39778,7 +39775,7 @@ vida/~NwgV>ZS
 # prepandemic/J
 # preparation/~NwSg
 # preparatory/~J
-# prepare/~VGdS       # remove `N` noun sense is obsolete
+# prepare/~VGdS
 # prepared/~JVtTUp
 # preparedness/~NgU
 # prepay/VGSL
@@ -39844,7 +39841,7 @@ vida/~NwgV>ZS
 # preshrunk/VT
 # preside/~VGdS
 # presidency/~NSg
-# president/~NgSV     # removed `5` adj. sense archaic, interferes with heuristics
+# president/~NgSV
 # presidential/~J
 # presidium/~Ng
 # presort/VdGS
@@ -40733,7 +40730,7 @@ vida/~NwgV>ZS
 # qualmish/J
 # quandary/NSg
 # quango/NS
-# quant/NgS           # quantitative analyst
+# quant/NgS
 # quanta/~N9
 # quantifiable/JN
 # quantification/~Ng
@@ -40791,7 +40788,7 @@ vida/~NwgV>ZS
 # quenchable/JU
 # quencher/Ng
 # quenchless/J
-# quercetin/Ng        # a flavonol
+# quercetin/Ng
 # querulous/JYp
 # querulousness/Ng
 # query/~NSgVdGB
@@ -40883,7 +40880,6 @@ vida/~NwgV>ZS
 # quondam/J
 # quorate/NJi
 # quorum/~NSg
-# #quot/B             # !! is this due to HTML entity &quot;?
 # quota/~NSg
 # quotability/Ng
 # quotable/J
@@ -40892,8 +40888,8 @@ vida/~NwgV>ZS
 # quote's
 # quotidian/JN
 # quotient/~NSg
-# qwerty/J            # dictionaries prefer QWERTY
-# r/~VS               # !! 'r' is a verb??
+# qwerty/J
+# r/~VS
 # rabbet/NgSVGd
 # rabbi/~NSg
 # rabbinate/Ng
@@ -42260,7 +42256,7 @@ vida/~NwgV>ZS
 # rickshaw/NgSV
 # ricochet/NgSVGd
 # ricotta/Nmg
-# rid/~VS             # removed adj flag, too archaic
+# rid/~VS
 # riddance/Ng
 # ridden/~VTJ
 # ridding/V
@@ -42325,7 +42321,7 @@ vida/~NwgV>ZS
 # rind/NgSV
 # ring/~NgVGd>Zz
 # ringer/~NgS
-# ringgit/NgS09       # singular and plural, also has a plural in -s
+# ringgit/NgS09
 # ringleader/NgS
 # ringlet/NgSV
 # ringlike/J
@@ -42691,7 +42687,7 @@ vida/~NwgV>ZS
 # rump/~NgSVY
 # rumple/VdGNSg
 # rumpus/NgS
-# run/~VbTNgSr        # removed `5` adj. a bit marginal and interferes with linter heuristics
+# run/~VbTNgSr
 # runabout/NgS
 # runaround/NSg
 # runaway/~NgSJ
@@ -42712,7 +42708,7 @@ vida/~NwgV>ZS
 # runty/J>^
 # runway/~NSg
 # rupee/~NSg
-# rupiah/Ng09         # singular and plural, also has a plural in -s below
+# rupiah/Ng09
 # rupiahs/N9
 # rupture/~NgSVGd
 # rural/~JN
@@ -42825,7 +42821,7 @@ vida/~NwgV>ZS
 # sailboarding/Ng
 # sailboat/~NgS
 # sailcloth/Nmg
-# sailfish/N09gS      # singular and plural, also has a plural in -s below
+# sailfish/N09gS
 # sailing/~V6JNmg
 # sailor/~NSg
 # sailplane/NgSV
@@ -42871,7 +42867,7 @@ vida/~NwgV>ZS
 # sallow/J^V>Np
 # sallowness/Nmg
 # sally/~NSgVdG
-# salmon/~NwSg09JV     # singular and plural, also has a plural in -s below
+# salmon/~NwSg09JV
 # salmonella/N0g
 # salmonellae/N9
 # salon/~NgS
@@ -42974,7 +42970,7 @@ vida/~NwgV>ZS
 # sanity/~Nmgi
 # sank/~Vt
 # sans/~PJN
-# sanserif/NJ         # dictionaries prefer: sans serif
+# sanserif/NJ
 # sap/~NSgV
 # sapience/Nmg
 # sapiens/~N
@@ -43681,7 +43677,7 @@ vida/~NwgV>ZS
 # seismology/Nmg
 # seize/~VGdSU
 # seizure/~NgSV
-# seldom/~R           # removed `J` adjective sense is archaic
+# seldom/~R
 # select/~JVSGdev
 # selection/~NwSg
 # selective/~JY
@@ -43884,7 +43880,7 @@ vida/~NwgV>ZS
 # serialise/VGdSB!_
 # serialization/NwSg
 # serialize/VGdS>B
-# series/~Ng09        # singular and plural
+# series/~Ng09
 # serif/~NgSJ
 # serigraph/N0g
 # serigraphs/N9
@@ -44099,7 +44095,7 @@ vida/~NwgV>ZS
 # shaving/~NgV6
 # shawl/~NgSV
 # shay/~NgS
-# she/~Ia3s*          # I~pronoun a:personal 3:person .~singular s~subject *:3rd pers. sing. subj.
+# she/~Ia3s*
 # she'd/
 # she'll/
 # she's/
@@ -44117,7 +44113,7 @@ vida/~NwgV>ZS
 # shedding/~V6N
 # sheen/~JNgV
 # sheeny/NJ^>
-# sheep/~N09g         # singular and plural
+# sheep/~N09g
 # sheepdog/NgSV
 # sheepfold/NSg
 # sheepherder/NgS
@@ -44142,7 +44138,7 @@ vida/~NwgV>ZS
 # shellacked/JtT
 # shellacking/V6NgS
 # shellfire/Ng
-# shellfish/~N09gS    # singular and plural, also has a plural in -s
+# shellfish/~N09gS
 # shelter/~NgSVGd
 # shelve/VbGdS
 # shelves/VhN9
@@ -44372,7 +44368,7 @@ vida/~NwgV>ZS
 # shrill/J^Vd>GNSp
 # shrillness/Nmg
 # shrilly/JR
-# shrimp/~NwgS09Vd>GZ # singular and plural, also has a plural in -s
+# shrimp/~NwgS09Vd>GZ
 # shrine/~NgSV
 # shrink/~VGNgSB
 # shrinkage/Nmg
@@ -44534,7 +44530,7 @@ vida/~NwgV>ZS
 # silk/~NwgSVn
 # silkily/R
 # silkiness/Ng
-# silkscreen/NSgVd    # past form used re pcb's
+# silkscreen/NSgVd
 # silkworm/~NgS
 # silky/~J^>Np
 # sill/~NgSJ
@@ -44546,7 +44542,7 @@ vida/~NwgV>ZS
 # silt/~NgSVGd
 # silty/J^>
 # silver/~NmgSJVGd
-# silverfish/N09gS    # singular and plural, also has a plural in -s
+# silverfish/N09gS
 # silverish/J
 # silversmith/Ng
 # silversmiths/N
@@ -44641,7 +44637,7 @@ vida/~NwgV>ZS
 # sirocco/NSg
 # sirrah/N
 # sirree/Ng
-# sirtuin/NgS         # enzyme
+# sirtuin/NgS
 # sis/~NgSI
 # sisal/Ng
 # sissified/JV
@@ -45394,7 +45390,7 @@ vida/~NwgV>ZS
 # someone/~INgS
 # someplace/N
 # somersault/NgSVdG
-# somerset/~NSgV      # archaic word for somersault
+# somerset/~NSgV
 # somersetted/VtT
 # somersetting/V6
 # something/~IJVNSg
@@ -45476,7 +45472,7 @@ vida/~NwgV>ZS
 # sorrowfulness/Nmg
 # sorry/~J^NV>p
 # sort/~NSgVGdWr
-# sorta/              # 'sort of'
+# sorta/
 # sortable/J
 # sorted/~VtTJU
 # sorter/NSg
@@ -45551,7 +45547,7 @@ vida/~NwgV>ZS
 # sozzled/JVtT
 # spa/~NSg
 # space/~NwSgVd>GZ
-# spacecraft/~NgS09   # singular and plural, also has a plural in -s
+# spacecraft/~NgS09
 # spaceflight/~NgS
 # spaceman/N0g
 # spacemen/N9
@@ -45628,7 +45624,7 @@ vida/~NwgV>ZS
 # speaker/~Ng
 # speakerphone/NS
 # spear/~NSgVdGJ
-# spearfish/N09gSVGd  # singular and plural, also has a plural in -s
+# spearfish/N09gSVGd
 # speargun/N
 # spearhead/~NgSVGd
 # spearmint/Ng
@@ -45643,7 +45639,7 @@ vida/~NwgV>ZS
 # specialize/~VGdS
 # specialty/~NwSg
 # specie/NSg
-# species/~Ng09       # singular and plural
+# species/~Ng09
 # specif/
 # specifiable/J
 # specific/~JNgSQ
@@ -46020,7 +46016,7 @@ vida/~NwgV>ZS
 # squelch/VGdNgS
 # squelchy/J
 # squib/NSgV
-# squid/~NSg09V       # singular and plural, also has a plural in -s
+# squid/~NSg09V
 # squidgy/JN
 # squiffy/J
 # squiggle/NSgVdG
@@ -46150,7 +46146,7 @@ vida/~NwgV>ZS
 # stardust/~Nmg
 # stare/~VNSg
 # starer/Ng
-# starfish/~N09gSV    # singular and plural, also has a plural in -s
+# starfish/~N09gSV
 # starfruit/Nmg
 # stargate/~NgS
 # stargaze/Vd>SGZ
@@ -46446,7 +46442,7 @@ vida/~NwgV>ZS
 # stomacher/Ng
 # stomachs/N9V
 # stomp/~VGdNSg
-# stone/~NwSg09Vd>GJZ # weight sense in UK is singular and plural
+# stone/~NwSg09Vd>GJZ
 # stonemason/~NgS
 # stoner/~Ng
 # stonewall/~NSVGdJ
@@ -47094,7 +47090,7 @@ vida/~NwgV>ZS
 # sundress/NS
 # sundries/Ng
 # sundry/JNSI
-# sunfish/N09gSV      # singular and plural, also has a plural in -s
+# sunfish/N09gSV
 # sunflower/~NgS
 # sung/~VTU
 # sunglasses/~Ng
@@ -47476,7 +47472,7 @@ vida/~NwgV>ZS
 # swoop/VGdNSg
 # swoosh/VdGNgS
 # sword/~NSgV
-# swordfish/~N09gSV   # singular and plural, also has a plural in -s
+# swordfish/~N09gSV
 # swordplay/Ng
 # swordsman/~N0g
 # swordsmanship/Nmg
@@ -47775,7 +47771,7 @@ vida/~NwgV>ZS
 # tantalize/VGd>SZ
 # tantalizer/NgS
 # tantalizing/JYV6N
-# tantalum/~NwgS      # plural can be used for capacitors
+# tantalum/~NwgS
 # tantamount/JVN
 # tantra/~Ng
 # tantrum/NSgV
@@ -48264,7 +48260,7 @@ vida/~NwgV>ZS
 # thatcher/~NgS
 # thatching/NgV
 # thaw/~VdGNgS
-# the/~Dz             # removed `+` preposition: archaic
+# the/~Dz
 # theater/~NwSg<
 # theatergoer/NSg
 # theatre/NwSg!@_
@@ -48280,11 +48276,11 @@ vida/~NwgV>ZS
 # theism/~Nmg
 # theist/NSg
 # theistic/~J
-# them/~Ia3o:g        # I~pronoun a~personal 3~person :~plural o~object (g=them's as in (one of) them is/has)
+# them/~Ia3o:g
 # thematic/~JNQ
 # thematically/
 # theme/~NSgVdG
-# themselves/~Ia3F:   # I~pronoun a~personal 3~person :~plural F~reflexive
+# themselves/~Ia3F:
 # then/~JNgC
 # thence/~
 # thenceforth/
@@ -48355,7 +48351,7 @@ vida/~NwgV>ZS
 # thespian/JNSg
 # theta/~NSg
 # thew/NgSV
-# they/~Ia3s:         # I~pronoun a~personal 3~person :~plural s:~subject
+# they/~Ia3s:
 # they'd/
 # they'll/
 # they're/
@@ -48377,7 +48373,7 @@ vida/~NwgV>ZS
 # thieves/N9
 # thieving/VJNg
 # thievish/J
-# thigh/~N0wg         # `S` here results in the wrong `thighes` instead of `thighs`
+# thigh/~N0wg
 # thighbone/NgS
 # thighs/N9
 # thimble/NgSV
@@ -48390,7 +48386,7 @@ vida/~NwgV>ZS
 # thingumabob/NSg
 # thingummy/NSg
 # thingy/NSIJ
-# think/~V>GNSgBZ     # `M` for 's as in What do you think's going on?
+# think/~V>GNSgBZ
 # thinkable/JU
 # thinker/~NgS
 # thinking's
@@ -48562,7 +48558,6 @@ vida/~NwgV>ZS
 # tickler/Ng
 # ticklish/JYp
 # ticklishness/Ng
-# #ticktacktoe/Ng     # tic-tac-toe
 # ticktock/VNgS
 # tidal/~JY
 # tidbit/NSg
@@ -48856,7 +48851,7 @@ vida/~NwgV>ZS
 # tooth/~N0gVd
 # toothache/NgS
 # toothbrush/NgSV
-# toothfish/NgS09     # singular and plural, also has a plural in -s
+# toothfish/NgS09
 # toothily/R
 # toothless/J
 # toothpaste/NSg
@@ -49381,7 +49376,7 @@ vida/~NwgV>ZS
 # trice/VNg
 # tricentennial/NgSJ
 # triceps/NgS
-# triceratops/Ng09S   # singular and plural, also has a plural in -s
+# triceratops/Ng09S
 # trichina/Ng
 # trichinae/9
 # trichinosis/Ng
@@ -49529,7 +49524,7 @@ vida/~NwgV>ZS
 # trousers/~N9g
 # trousseau/Ng
 # trousseaux/N
-# trout/~NSg09V       # singular and plural, also has a plural in -s
+# trout/~NSg09V
 # trove/NSg
 # trow/VdGNS
 # trowel/NgSVdG
@@ -50601,7 +50596,7 @@ vida/~NwgV>ZS
 # urology/Nmg
 # ursine/JN
 # urticaria/Ng
-# us/~Ia1o:           # I~pronoun a~personal 1~person :~plural o~object
+# us/~Ia1o:
 # usability/~Nmg
 # usable/~JUr
 # usage/~NwSg
@@ -50625,7 +50620,7 @@ vida/~NwgV>ZS
 # usurpation/Ng
 # usurper/~NgS
 # usury/~Nmg
-# ute/NSg_            # Australian pickup truck
+# ute/NSg_
 # utensil/NSg
 # uteri/N9
 # uterine/~JN
@@ -51314,7 +51309,7 @@ vida/~NwgV>ZS
 # voyeur/NgS
 # voyeurism/Ng
 # voyeuristic/J
-# vs./~               # versus
+# vs./~
 # vtable/NgS
 # vulcanisation/Ng!_
 # vulcanise/VGdS!_
@@ -51574,7 +51569,7 @@ vida/~NwgV>ZS
 # watercolor/NgSJ
 # watercolour/NgSJV!@_
 # watercourse/~NSg
-# watercraft/~Ng09S   # singular and plural, also has a plural in -s
+# watercraft/~Ng09S
 # watercress/Ng
 # waterfall/~NSgV
 # waterfowl/~NSg
@@ -51633,7 +51628,7 @@ vida/~NwgV>ZS
 # wayward/~JYp
 # waywardness/Nmg
 # wazoo/NSg
-# we/~Ia1so:          # I~pronoun a~personal 1~person :~plural s~subject
+# we/~Ia1so:
 # we'd/
 # we'll/
 # we're/~
@@ -51641,7 +51636,7 @@ vida/~NwgV>ZS
 # weak/~J>Y^pnX
 # weaken/~Vd>GZ
 # weakener/Ng
-# weakfish/N09gS      # singular and plural, also has a plural in -s
+# weakfish/N09gS
 # weakish/J
 # weakling/NSgJ
 # weakness/~NwgS
@@ -51920,7 +51915,7 @@ vida/~NwgV>ZS
 # whitebait/NV
 # whiteboard/NSV
 # whitecap/NSg
-# whitefish/~N09gSV   # singular and plural, also has a plural in -s
+# whitefish/~N09gSV
 # whitehead/~NgS
 # whitelist/NSVGd
 # whiten/VGd>Zz
@@ -52252,7 +52247,7 @@ vida/~NwgV>ZS
 # women/~N9g
 # womenfolk/N9Sg
 # womenfolks/9g
-# won/~VtTNg09          # singular and plural
+# won/~VtTNg09
 # won't/V
 # wonder/~NwgSVdGL
 # wonderful/~JYp
@@ -52412,7 +52407,7 @@ vida/~NwgV>ZS
 # worthy's
 # wot/VI
 # wotcha/
-# would/~A            # removed `NS` noun and plural seem very marginal
+# would/~A
 # would've/
 # wouldn't/A
 # wouldst/V
@@ -52490,7 +52485,7 @@ vida/~NwgV>ZS
 # wurst/NSg
 # wuss/NgSV
 # wussy/J>^NSg
-# x/~                 # removed `5` and `7` adjective and `conjunction`
+# x/~
 # x64/Ng
 # x86/~Ng
 # xci
@@ -52557,7 +52552,7 @@ vida/~NwgV>ZS
 # yak/~NSgV
 # yakked/VtT
 # yakking/V6
-# yakuza/NgS09        # singular and plural, also has a plural in -s
+# yakuza/NgS09
 # yam/~NSgV
 # yammer/VGd>NSgZ
 # yammerer/NgS
@@ -52605,7 +52600,7 @@ vida/~NwgV>ZS
 # yellowness/Ng
 # yellowy/J
 # yelp/NgSVdG
-# yen/~NSg09V         # singular and plural, currency plural is yen, desire plural is yens
+# yen/~NSg09V
 # yeoman/~Ng
 # yeomanry/~Ng
 # yeomen/~9
@@ -52650,7 +52645,7 @@ vida/~NwgV>ZS
 # yonder/~JN
 # yonks/N
 # yore/Ng
-# you/~Ia2so.:        # I~pronoun a~personal 2~person :~plural s:~subject o~object
+# you/~Ia2so.:
 # you'd/
 # you'll/
 # you're/~
@@ -52660,19 +52655,19 @@ vida/~NwgV>ZS
 # youngster/~NgS
 # your/~D5
 # yours/~I
-# yourself/~Ia2F.     # I~pronoun a~personal 2~person F~reflexive
-# yourselves/~Ia2F:   # I~pronoun a~personal 2~person :~plural F~reflexive
+# yourself/~Ia2F.
+# yourselves/~Ia2F:
 # youth/~Ng
 # youthful/~JYp
 # youthfulness/Ng
 # youths/~9
 # yow/N
-# yowie/NgS           # Australian mythological creature
+# yowie/NgS
 # yowl/NgSVdG
 # yr/~NS
 # ytterbium/Nmg
 # yttrium/Nmg
-# yuan/~Ng09S         # singular and plural, also has a plural in -s
+# yuan/~Ng09S
 # yucca/~NwSg
 # yuck/NV
 # yucky/J^>
@@ -52771,494 +52766,488 @@ vida/~NwgV>ZS
 # zygote/NSg
 # zygotic/~J
 # zymurgy/Ng
-#
-# # End of original dictionary imports
-# # Words below this point are now also sorted alphabetically
-# # This section contains mostly programming and technical terms
-# # Some words may be very domain-specific, proprietary, or trademarked
-#
-# 0s/~9               # not sure how well "words" starting with numbers are handled
-# 1s/~9               # not sure how well "words" starting with numbers are handled
-# 3D/J                # not sure how well "words" starting with numbers are handled
-# AAC/Ng              # audio format
+# 0s/~9
+# 1s/~9
+# 3D/J
+# AAC/Ng
 # ACM/Ng
-# AGI/Sg              # artificial general intelligence
-# AMC/NOSg            # old car brand
-# AOC/Og              # US politician Alexandria Ocasio-Cortez
-# APFS/Og             # Apple file system
-# ARM64/Og            # see also AArch64
-# ASLR/Ng             # Address Space Layout Randomization
-# ASM/N               # assembly language - should "asm" be included as well/instead?
+# AGI/Sg
+# AMC/NOSg
+# AOC/Og
+# APFS/Og
+# ARM64/Og
+# ASLR/Ng
+# ASM/N
 # ASUS/Og
-# ATF/Ng              # automatic transmission fluid
-# AVC/Ng              # H.264 video format
-# AVL tree/NgS        # data structure
+# ATF/Ng
+# AVC/Ng
+# AVL tree/NgS
 # Airbnb/ONSg
 # Akismet/Og
-# Alexa/Og            # voice assistant
+# Alexa/Og
 # Alexandre/OgS
 # Alibaba/Og
 # AliExpress/Og
-# AlphaFold/Og        # Google DeepMind project
-# Ambien/NSg          # insomnia treatment
+# AlphaFold/Og
+# Ambien/NSg
 # Anker/Sg
-# Anki/Og             # flashcard app
+# Anki/Og
 # AngularJS/Og
-# Anthropic/Og        # AI company
-# Archytas/Sg         # !! please check and comment !! we also have archytas
-# AArch64/Og          # see also ARM64
+# Anthropic/Og
+# Archytas/Sg
+# AArch64/Og
 # AutoGPT/Og
-# Automattic/Og       # WordPress company
+# Automattic/Og
 # Automattician/Sg
 # B&B/Ng
-# B2B/J               # business-to-business
-# BCD/Ng              # binary coded decimal
-# BCPL/Ng             # old programming language
+# B2B/J
+# BCD/Ng
+# BCPL/Ng
 # BLM/Ng
-# BOM/NSg             # Byte Order Mark
-# BRICS/              # intergovernmental organization
-# BSP/NSg             # data structure
-# BYD/OgS             # Chinese automobile manufacturer
+# BOM/NSg
+# BRICS/
+# BSP/NSg
+# BYD/OgS
 # Bachiyski/Sg
-# Bezos/O             # Surname, Amazon founder
+# Bezos/O
 # Binance/Og
-# Bing/Og             # Microsoft product
-# Bitbucket/Og        # GitHub alternative
-# BitKeeper/Og        # version control
+# Bing/Og
+# Bitbucket/Og
+# BitKeeper/Og
 # BlasterHacks/Sg
 # Bluesky/Og
-# Boxster/NOSg        # car model
-# Brembo/OgS          # brake company
-# Btrfs/Ng            # file system
+# Boxster/NOSg
+# Brembo/OgS
+# Btrfs/Ng
 # BurpSuite/ONSg
-# C++/OgS             # programming language
+# C++/OgS
 # CAPTCHA/NgS
-# CCP/OS              # Chinese Communist Party
+# CCP/OS
 # CDMA/NSg
-# CDN/NSg             # content delivery network
-# CEO/NSg             # chief executive officer
-# CERN/Og             # intergovernmental organization
-# CI/NSg              # continuous integration
-# CISC/Ng             # cpu architecture
-# CLR/Og              # common language runtime
-# CMOS/N              # microchip process
-# CMake/Sg            # build tool
-# CMS/NSg             # content management system
-# CMYK                # colour model
-# CORS                # web: cross-origin resource sharing
-# CPython/Og          # Python implementation
+# CDN/NSg
+# CEO/NSg
+# CERN/Og
+# CI/NSg
+# CISC/Ng
+# CLR/Og
+# CMOS/N
+# CMake/Sg
+# CMS/NSg
+# CMYK
+# CORS
+# CPython/Og
 # CQL/N
-# CRC/NgS             # cyclic redundancy check
+# CRC/NgS
 # CRDT/NSg
 # CRM/NOSg
 # CTE/NS
-# CTF/NSg             # capture the flag
-# CVE/NSg             # Common Vulnerabilities and Exposures
+# CTF/NSg
+# CVE/NSg
 # Captcha/OgS
-# ChatGPT/Og          # OpenAI product
+# ChatGPT/Og
 # ClickHouse/g
 # CloudFlare/Og
-# Codeberg/Og         # GitHub alternative
+# Codeberg/Og
 # Colemak/NgJ
 # CommonMark/g
-# CompUSA             # retailer
-# Conda/Og            # package manager for Python and R
+# CompUSA
+# Conda/Og
 # Corretto/Sg
 # Coursera/Og
 # Crowdsignal/Og
 # Cypher/ONg
-# DATETIME/NgS        # dictionaries prefer: datetime
-# DBMS/NOSg           # database management system
-# DCT/NgS             # discrete cosine transform
+# DATETIME/NgS
+# DBMS/NOSg
+# DCT/NgS
 # DDoS/Ng
 # DEI
 # DFA/NgS
 # DKIM/NSg
-# DLL/NgS             # dynamic link library
-# DM'd/V              # direct message
+# DLL/NgS
+# DM'd/V
 # DM/NSgVb
 # DMed/VtT
 # DMing/V6
-# DNS/OgS             # domain name system
-# DOM/NSg             # document object model
-# DRM/Ng              # digital rights management
-# DSL/NSg             # domain-specific language
-# DX/Ng               # developer experience
+# DNS/OgS
+# DOM/NSg
+# DRM/Ng
+# DSL/NSg
+# DX/Ng
 # DeepMind/Og
-# DeepSeek/Og         # AI company
+# DeepSeek/Og
 # Deno/Og
 # DevOps/Sg
 # DirectX/Og
 # Docker/Og
 # Dockerfile/NgS
-# Dreamcast/OgS       # game console
-# DuckDuckGo/Og       # search engine
-# EBITDA/N            # earnings before interest, taxes, depreciation, and amortization
-# ECMA/Og             # European Computer Manufacturers Association
-# EEA/O               # European Economic Area
-# EGR/                # exhaust gas recirculation
+# Dreamcast/OgS
+# DuckDuckGo/Og
+# EBITDA/N
+# ECMA/Og
+# EEA/O
+# EGR/
 # EMR/NOSg
-# EOF/NgS             # end of file
-# EPUB/NOSg           # e-book format
-# ESLint/Og           # JavaScript linter
-# EV/NSg              # electric vehicle
-# EXIF                # metadata
+# EOF/NgS
+# EPUB/NOSg
+# ESLint/Og
+# EV/NSg
+# EXIF
 # ElasticSearch/Sg
 # Elon/Og
-# Erdoğan/Og          # surname, Turkish politician
-# Ethereum/Og         # digital currency
-# Evo/OgS             # car model
+# Erdoğan/Og
+# Ethereum/Og
+# Evo/OgS
 # Expedia/Og
-# Exynos/OgJ          # Samsung SoC series.
-# FAANG/NSg           # Facebook, Amazon, Apple, Netflix, Google
-# FAT32/Ng            # file system
-# FFI/Ng              # foreign function interface
+# Exynos/OgJ
+# FAANG/NSg
+# FAT32/Ng
+# FFI/Ng
 # FFmpeg/Og
 # FIDO/NOSg
-# FIFA/Ng             # football/soccer association
-# FOV/Ng              # field of view
-# FPGA/NSg            # field-programmable gate array
+# FIFA/Ng
+# FOV/Ng
+# FPGA/NSg
 # FPM/Sg
-# FSD/Ng              # full self-driving
-# Famicom/NOSg        # game console
-# FireWire/Sg         # trademark
+# FSD/Ng
+# Famicom/NOSg
+# FireWire/Sg
 # Firestore/g
 # Foddy/Sg
-# Forgejo/Og          # programming forge / git host
+# Forgejo/Og
 # Frankl/Sg
-# FreeBSD/Og          # operating system
-# FreeType/ONg        # typography library
+# FreeBSD/Og
+# FreeType/ONg
 # GLFW/Og
-# GPG/Og              # GNU Privacy Guard
-# GPIO/Ng             # general purpose input/output
-# GPL/Og              # GNU General Public License
+# GPG/Og
+# GPIO/Ng
+# GPL/Og
 # GPLv1/Og
 # GPLv2/Og
 # GPLv3/Og
-# GPT/NSg             # generative pre-trained transformer
-# GPU/NS              # graphics processing unit
-# GSM/OJ              # Global System for Mobile Communications
-# GTK/O               # GIMP Toolkit
+# GPT/NSg
+# GPU/NS
+# GSM/OJ
+# GTK/O
 # Ganeti/Sg
 # Gateron/Sg
 # GeForce/Og
-# Gerber/Ng           # file format
-# Ghidra/Og           # reverse engineering
-# GitLab/Sg           # GitHub alternative
+# Gerber/Ng
+# Ghidra/Og
+# GitLab/Sg
 # Gmail/ONVSg
-# Golang/Sg           # programming language
+# Golang/Sg
 # Goleman/Sg
-# Gradle/Sg           # build tool
+# Gradle/Sg
 # Grafana/Sg
-# Grammarly/Og        # grammar checker
+# Grammarly/Og
 # Grandey/Sg
 # GraphQL/Og
 # Graphviz/Sg
 # Gravatar/Og
-# H.265/ONSg          # High Efficiency Video Coding
-# HDR/J               # high dynamic range
-# HEIC/ONSg           # High Efficiency Image Container
-# HEIF/ONSg           # High Efficiency Image Format
-# HEVC/ONSg           # High Efficiency Video Coding
+# H.265/ONSg
+# HDR/J
+# HEIC/ONSg
+# HEIF/ONSg
+# HEVC/ONSg
 # HQL/N
 # HTML5
-# Hasan/OgS           # surname, given name
+# Hasan/OgS
 # Hiera/Sg
 # Holmdel/Sg
 # Hugging Face/Og
-# IBAN/NgS            # International Bank Account Number
-# ICMP/Og             # internet control message protocol
-# ID3                 # audio metadata
-# IDA/Og              # reverse engineering software
-# IFRS/Og             # International Financial Reporting Standards
-# IIFE/NgS            # immediately-invoked function expression
-# IMAP/Sg             # internet message access protocol
-# IME/NgS             # input method editor
-# IMSI/N              # international mobile subscriber identity
-# IPC/Ng              # interprocess communication
+# IBAN/NgS
+# ICMP/Og
+# ID3
+# IDA/Og
+# IFRS/Og
+# IIFE/NgS
+# IMAP/Sg
+# IME/NgS
+# IMSI/N
+# IPC/Ng
 # IPCC/Og
-# IPS/J               # in-plane switching (screen technology)
+# IPS/J
 # IPv4/OgS
 # IPv6/OgS
-# ISA/NOSg            # instruction set architecture; industry standard architecture
+# ISA/NOSg
 # IntelliJ/Sg
 # IntelliSense/Og
-# IoT/Ng              # internet of things
-# JNI/Og              # Java Native Interface
-# JS/Ng               # JavaScript
+# IoT/Ng
+# JNI/Og
+# JS/Ng
 # JSDoc/Sg
-# JSON/Og             # data format
+# JSON/Og
 # JSONP/Og
-# JVM/Sg              # Java virtual machine
-# JWT/Ng              # JSON Web Token
+# JVM/Sg
+# JWT/Ng
 # Jacoco/Sg
 # JavaDoc/Sg
-# JavaScript/ONSg     # programming language
+# JavaScript/ONSg
 # Javadoc/Sg
 # JetBrains
 # Jetpack/Og
-# Jira/Og             # issue tracker
+# Jira/Og
 # Joomla/Sg
 # Jupyter/Og
-# KDE/Og              # K Desktop Environment
+# KDE/Og
 # KSQL/N
-# KVM/NSg             # keyboard-video-mouse
+# KVM/NSg
 # Kagi/Sg
 # Kahneman/Sg
 # KanBan/Ng
-# KiCad/Og            # software
-# Kia/ONSg            # automobile brand
+# KiCad/Og
+# Kia/ONSg
 # Kubernetes/OgS
 # LADAR
-# LDAP/Og             # Lightweight Directory Access Protocol 
-# LEGO/NSg            # official trademark form of Lego
-# LIBOR/N             # London Interbank Offered Rate
-# LIDAR/N             # FIXME! elsewhere we have LiDAR
-# LLM/NgS             # large language model
-# LLVM/Ng             # compiler system
-# LOC/9               # source lines of code
-# LRU                 # least recently used
-# LSB/NOgS            # least significant bit/byte; Linux Standard Base
-# LSP/NgS             # language server protocol
-# LTE/NOJ             # long-term evolution
+# LDAP/Og
+# LEGO/NSg
+# LIBOR/N
+# LIDAR/N
+# LLM/NgS
+# LLVM/Ng
+# LOC/9
+# LRU
+# LSB/NOgS
+# LSP/NgS
+# LTE/NOJ
 # LTS/NSg
-# LUT/NgS             # lookup table
+# LUT/NgS
 # LVM/Sg
 # Labriola/OgS
-# LanguageTool/g      # grammar checker
+# LanguageTool/g
 # Laravel/g
 # Lato/ONg
-# LeetCode/Og         # programming contest
-# Lenovo/Og           # computer manufacturer
-# Levenshtein/g       # surname, mathematician
-# LiDAR/N             # FIXME! elsewhere we have LIDAR
+# LeetCode/Og
+# Lenovo/Og
+# Levenshtein/g
+# LiDAR/N
 # LinkedIn/Og
-# Loctite/Omg         # product
+# Loctite/Omg
 # Logotherapy/Sg
 # Longreads/Og
-# LoRA/NwSg           # low-rank adaptation
-# Lua/Og              # programming language
+# LoRA/NwSg
+# Lua/Og
 # LuaTeX/Og
-# MCP/Ng              # model context protocol
-# MMO/NgS             # massively multiplayer online
-# MMX/Ng              # multimedia extension
+# MCP/Ng
+# MMO/NgS
+# MMX/Ng
 # MPC/ONg
-# MRU                 # most recently used
-# MSB/NgS             # most significant bit/byte
-# MSE/NgS             # mean squared error
-# MSNBC/Og            # media company
-# MSVC                # Microsoft Visual C++
+# MRU
+# MSB/NgS
+# MSE/NgS
+# MSNBC/Og
+# MSVC
 # MTA/NSg
-# MacBook/OgS         # Apple product
+# MacBook/OgS
 # Manilas/N
 # Manilla/Og
 # MapReduce/N
 # Marchus/Sg
-# Mbps                # megabits per second
+# Mbps
 # Murcielago/OgS
-# MediaWiki/Og        # the software Wikimedia runs on
+# MediaWiki/Og
 # Metasploit/ONSg
 # Minecraft/Og
 # Minhaj/OgS
-# Minix/Og            # old hobby operating system
+# Minix/Og
 # Mockito/Sg
-# Molex/NOSg          # Molex connector
+# Molex/NOSg
 # Mullenweg/g
 # Munin/Sg
-# N.S.A./OgS          # FIXME! elsewhere we have NSA
+# N.S.A./OgS
 # N1/Og
 # N2/Og
 # N3/Og
 # N4/Og
 # N5/Og
-# NAT/Ng              # network address translation/translator
+# NAT/Ng
 # NFA/NgS
 # NLP/g
-# NMI/NgS             # non-maskable interrupt
+# NMI/NgS
 # NPC/Sg
 # NPM/Sg
-# NTP/N               # network time protocol
+# NTP/N
 # NYTimes/Sg
 # NYU/Og
 # NaN/NgS
 # Neo4J/ONg
-# Neovim/g            # code editor
-# NetBSD/Og           # operating system
-# Netlify/Og          # cloud
-# Next.js/ONg         # framework
+# Neovim/g
+# NetBSD/Og
+# Netlify/Og
+# Next.js/ONg
 # Nikolay/Sg
 # NixOS/Og
 # NoSQL/N
-# Node.js/Og          # official spelling has dot
+# Node.js/Og
 # NumPy/ONg
-# Nvidia/Og           # FIXME! elsewhere we have NVIDIA
+# Nvidia/Og
 # O'Reilly/OgS
-# OAuth/g             # open authentication
-# OCaml/Og            # programming language
+# OAuth/g
+# OCaml/Og
 # OG/NgS
 # OOP/Nmg
-# ORM/NOS             # object-relational mapping
-# Ollama/Og           # AI tool
+# ORM/NOS
+# Ollama/Og
 # OpenAI/Og
-# OpenBSD/Og          # operating system
+# OpenBSD/Og
 # OpenCV/Og
-# OpenGL/Sg           # open graphics library
+# OpenGL/Sg
 # OpenID/Og
 # OpenMetrics/Sg
 # OpenPGP/Sg
 # OpenSearch/Sg
-# OpenZFS/Ng          # file system
+# OpenZFS/Ng
 # OSINT/Nmg
 # P2/Sg
 # P2P/ONg
-# PCH/Og              # highway
-# PDP/NSg             # old computer
+# PCH/Og
+# PDP/NSg
 # PII/NSg
-# PIO/NgS             # programmed I/O
+# PIO/NgS
 # PKCS/Sg
 # POP3/OgS2x
-# POSIX/Og            # unix standard
+# POSIX/Og
 # PRQL/N
-# PTSD/NSg            # post-traumatic stress disorder
+# PTSD/NSg
 # PWA/ONSg
-# Pandoc/Ng           # FIXME! elsewhere we have pandoc
+# Pandoc/Ng
 # Parth/Sg
 # Patreon/OgS
 # Polldaddy/Og
 # Postfix/Sg
 # Postgres/Og
-# PowerShell/Sg       # Microsoft product
-# Prolog/Og           # old programming language
+# PowerShell/Sg
+# Prolog/Og
 # PromQL/Sg
-# PyPI/Og             # Python Package Index
-# PyTorch/Og          # framework
+# PyPI/Og
+# PyTorch/Og
 # Q1
 # Q2
 # Q3
 # Q4
-# QQ/NSg              # instant messaging app
-# QUERTY/Sg           # !! mistake for QWERTY? !!
+# QQ/NSg
+# QUERTY/Sg
 # QUIC/OgS
 # Qin/OgS
-# QoL/Nmg             # quality of life
-# QoS/Nmg             # quality of service
-# Quora/Og            # Q&A platform
-# RDBMS/NOSg          # relational database management system
-# REPL/NgS            # read evaluate print loop
-# RFID/ONg            # radio frequency identification
-# RISC/Ng             # cpu architecture
-# RJ45/Ng             # ethernet connector
-# RPC/ONSg            # remote procedure call
-# RPG/NgS             # role-playing game
+# QoL/Nmg
+# QoS/Nmg
+# Quora/Og
+# RDBMS/NOSg
+# REPL/NgS
+# RFID/ONg
+# RISC/Ng
+# RJ45/Ng
+# RPC/ONSg
+# RPG/NgS
 # RTX/NSg
 # Raytheon/Og
 # ReactJS/Og
-# React Native/Og     # framework
+# React Native/Og
 # Red Hat/Og
 # Reddit/Og
-# Rivian/Sg           # ev company
-# Roumania/Og         # pre-WWII spelling
-# RustConf/Og         # conference
-# SCM/Ng              # source code management
-# SDK/NSg             # software development kit
-# SDL/Og              # Simple DirectMedia Layer
-# SHA/ONg             # Secure Hash Algorithm
-# SIMD/NSg            # single instruction, multiple data
+# Rivian/Sg
+# Roumania/Og
+# RustConf/Og
+# SCM/Ng
+# SDK/NSg
+# SDL/Og
+# SHA/ONg
+# SIMD/NSg
 # SLA/NSg
-# SLOC/9              # source lines of code
+# SLOC/9
 # SMS/N0gVb
 # SMSed/VtT
 # SMSes/N9Vh
 # SMSing/V6
-# SMTP                # Simple Mail Transfer Protocol
-# SNL/Og              # Saturday Night Live
+# SMTP
+# SNL/Og
 # SQLAlchemy/N
 # SSID/NgS
-# SSL/Og              # Secure Sockets Layer
-# SVG/ONs             # scalable vector graphics
-# SVGA/N              # super VGA
+# SSL/Og
+# SVG/ONs
+# SVGA/N
 # Sharman/OgS
-# Shellsort/NgS       # algorithm
+# Shellsort/NgS
 # Shibuya/Og
 # Shinjuku/Og
-# Shopify/Og          # company
+# Shopify/Og
 # Simplenote/Og
 # Sioyek/Ng
-# Siri/Og             # voice assistant
-# Skia/Og             # 2d graphics library
+# Siri/Og
+# Skia/Og
 # Snapchat/Sg
-# SolidJS/Og          # ui lib
-# Soros/Og            # financier George Soros
+# SolidJS/Og
+# Soros/Og
 # SpaceX/Og
 # Spotify/Og
-# Stellantis/Og       # car company
-# Subversion/Ng       # version control
-# Svelte/Og           # js framework
-# SwiftUI/Og          # framework
-# Systemd/Sg          # Linux system software
-# TARGET2/O           # RTGS system for the Eurozone
-# TCP/JOgS            # internet protocol
-# TEU/O               # Treaty on the European Union
-# TFEU/O              # Treaty on the Functioning of the European Union
-# TL;DR               # internet slang
-# TODO                # FIXME! elsewhere in Harper we refer to Todo and to-do
-# TOML/Ng             # configuration file format
-# TSMC/Og             # Taiwanese Semiconductor Manufacturing Company
-# TSR/NgS             # terminate and stay resident
-# TTS/Ng              # text-to-speech
-# TUI/NOSg            # text user interface
-# Tandy/Og            # surname, given name, old computer company
+# Stellantis/Og
+# Subversion/Ng
+# Svelte/Og
+# SwiftUI/Og
+# Systemd/Sg
+# TARGET2/O
+# TCP/JOgS
+# TEU/O
+# TFEU/O
+# TL;DR
+# TODO
+# TOML/Ng
+# TSMC/Og
+# TSR/NgS
+# TTS/Ng
+# TUI/NOSg
+# Tandy/Og
 # TechCrunch/g
 # Tencent/Og
 # TensorFlow/Og
-# ThinkPad/OgS        # pc brand
+# ThinkPad/OgS
 # TikTok/Sg
-# TLS/Og              # Transport Layer Security
-# Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
-# Topcoder/Og         # programming contest
-# Toronado/OgS        # car brand
-# Tree-sitter/Og      # parsing
-# Trinitron/NOSg      # CRT
+# TLS/Og
+# Todo
+# Topcoder/Og
+# Toronado/OgS
+# Tree-sitter/Og
+# Trinitron/NOSg
 # Trocla/Sg
 # TrueNAS/Sg
 # Tumblr/Og
 # Typst/Sg
-# UAC                 # User Account Control (Windows)
-# UDP/NOSg            # internet protocol
-# UEFI/Og             # Unified Extensible Firmware Interface
-# ULA/NgS             # uncommitted logic array
-# URI/NSg             # uniform resource identifier
-# UUID/NgS            # universal unique identifier
-# UX/Ng               # user experience
-# VAG/Og              # car company
+# UAC
+# UDP/NOSg
+# UEFI/Og
+# ULA/NgS
+# URI/NSg
+# UUID/NgS
+# UX/Ng
+# VAG/Og
 # VARCHAR/NgS
-# VCS/Ng              # version control system
-# VFD/NgS             # vacuum fluorescent display
+# VCS/Ng
+# VFD/NgS
 # VMware/ONSg
-# VPN/NSg             # virtual private network
+# VPN/NSg
 # VR/Og
 # VS Code/Og
 # Vaadin/Sg
 # VaultPress/Og
-# Vercel/Og           # cloud
-# Vimeo/Og            # video platform
+# Vercel/Og
+# Vimeo/Og
 # VideoPress/Og
 # Viktor/Sg
 # VirtualBox/ONSg
 # Vite/Sg
-# Vue/Og              # framework
+# Vue/Og
 # Vulkan/Og
 # WAL/ONSg
 # WASI/Sg
-# WASM/Sg             # see WebAssembly
+# WASM/Sg
 # WD40/Ng
-# WIP/Ng              # work in progress
+# WIP/Ng
 # WPA/Og
 # WPA2/Og
-# WSL/Og              # windows subsystem for linux
+# WSL/Og
 # Waymo/Og
 # WeChat/Og
-# WebAssembly/g       # see WASM
+# WebAssembly/g
 # Webpack/Og
 # WebDAV/Og
 # WebGL/Og
@@ -53267,156 +53256,151 @@ vida/~NwgV>ZS
 # WebRTC/Og
 # WebSocket/Sg
 # Webpack/Og
-# WhatsApp/NOVGg      # messaging app
-# Wikilink/SNg        # !! please check and comment !! elsewhere we have wikilink
-# Wikimedia/Og        # foundation that runs Wikipedia etc.
+# WhatsApp/NOVGg
+# Wikilink/SNg
+# Wikimedia/Og
 # Wireguard/Sg
 # WooCommerce/Og
-# XFS/Ng              # file system
-# XLR/Ng              # connector
-# XPath/Og            # XML path language
+# XFS/Ng
+# XLR/Ng
+# XPath/Og
 # Xbox/NOSg
-# Xcode/Og            # Apple IDE
+# Xcode/Og
 # Xorg/ONSg
-# Y2K/g               # year 2000
-# YAML/OgS            # markup language
+# Y2K/g
+# YAML/OgS
 # Yazi/ONSg
-# Yoast/Og            # seo
+# Yoast/Og
 # YubiKey/Sg
 # Zettelkasten/Ng
-# ZFS/Ng              # file system
-# Zig/Og              # programming language
-# Zuckerberg/OgS      # surname, Facebook founder
+# ZFS/Ng
+# Zig/Og
+# Zuckerberg/OgS
 # a11n/N
 # a12s/9
 # a8c/Sg
 # antimalware/Nmg
-# arXiv/Og            # research archive
-# archytas/Sg         # !! please check and comment !! we also have Archytas
+# arXiv/Og
+# archytas/Sg
 # autoconfig/Ng
 # autoconfiguration/Ng
 # autoconfigure/VSdG
 # autodifferentiation/Nmg
 # autoprefixer/NgS
 # autosave/VSdGNg
-# awk/Og              # *nix tool
-# backend/NSg         # dictionaries prefer: back end
+# awk/Og
+# backend/NSg
 # backoff/NsG
 # backtest/NgSVdG
-# baz/~               # cf. foo, bar
+# baz/~
 # blogpost/NgS
 # clickstream/NgS
 # concat/VSdG
-# config/NSgV         # not marked as a verb since "configed" and "configing" look wrong
+# config/NSgV
 # configurator/NgS
 # corpo/NgS
 # cronjob/NgS
 # datagram/NgS
 # datetime/NgS
-# decomp/NgSVdG       # decompile/decompilation
-# dedup/Ng            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
-# dedupe/NSgVdG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
-# diarization/NmgS    # used in voice recognition
+# decomp/NgSVdG
+# dedup/Ng
+# dedupe/NSgVdG
+# diarization/NmgS
 # docstring/NSg
-# dotfile/~NSg        # not well covered by dictionaries.
+# dotfile/~NSg
 # eVTOL/NgS
-# ext2/Ng             # file system
-# ext3/Ng             # file system
-# ext4/Ng             # file system
+# ext2/Ng
+# ext3/Ng
+# ext4/Ng
 # failover/NwgS
 # falsy/J
 # filepath/NgS
-# filesystem/~Sg      # dictionaries prefer: file system
+# filesystem/~Sg
 # freemium/J
-# frontend/NSg        # dictionaries prefer: front end
+# frontend/NSg
 # fuser/NgS
-# gcd/Ng              # greatest common divisor
+# gcd/Ng
 # gen AI/Ng
 # geodata/Nwg
 # geofence/NgSVdG
-# gRPC/OgS            # framework
-# glymph/Sg           # !! please check and comment !!
-# gzip/VS             # GNU compression utility
+# gRPC/OgS
+# glymph/Sg
+# gzip/VS
 # gzipped/VtT
 # gzipping/V6
-# hardcode/VGdS       # dictionaries prefer: hard code
+# hardcode/VGdS
 # heapsort
 # hoster/NgS
 # hostname/NSg
-# hotwire/VGB         # dictionaries prefer: hot-wire
-# i18n/Nm             # internationalization
+# hotwire/VGB
+# i18n/Nm
 # iframe/NgS
-# infosec/NmG         # information security
+# infosec/NmG
 # inpaint/VGdS
-# invokable/J         # not in most dictionaries, used in computing
+# invokable/J
 # iPadOS/Og
 # jQuery/Og
-# keybind/NgS         # key binding
+# keybind/NgS
 # keyserver/NgS
-# labriola/Sg         # !! please check and comment !! - should be uppercase surname?
+# labriola/Sg
 # linkification/Nmg
-# manip/NgS           # gamer slang manipulation
+# manip/NgS
 # megatron/NgS
 # memecoin/NgS
 # mergesort
 # microframework/NgS
 # multicast/JVSdG
-# npm/Og              # node package manager
+# npm/Og
 # nullish/J
-# olds/~              # common in phrasing such as "twenty year olds"
-# pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
+# olds/~
+# pandoc/Sg
 # pastebin/NgS
 # pentest/VSdG
-# pentester/NSg       # penetration tester
+# pentester/NSg
 # pentesting/NmgV6
 # postfix/NgSVdG
-# pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
+# pre/~PNV
 # preshared/J
-# quadtree/NgS        # data structure
-# quicksort/NgSVdG    # algo
-# raytracer/N         # dictionaries prefer: ray tracer
+# quadtree/NgS
+# quicksort/NgSVdG
+# raytracer/N
 # redump/VdGS
 # remux/VdGS
 # reranker/NgS
-# roadmap/NgS         # overtook "road map" c. 2000 but not in dictionaries yet
+# roadmap/NgS
 # roguelike/NgS
-# royale/~NSgJ        # !! please check and comment !! dictionaries only list noun sense type of custard
+# royale/~NSgJ
 # runahead/NgS
-# s.t./~              # !! please check and comment !!
-# sRGB/Og             # colour space
-# scatterplot/NSgVG   # dictionaries prefer: scatter plot
+# s.t./~
+# sRGB/Og
+# scatterplot/NSgVG
 # screencast/VdSG
-# scrollbar/NSg       # dictionaries prefer: scroll bar
-# sed/Og              # *nix tool / language
+# scrollbar/NSg
+# sed/Og
 # sigil/NgS
 # singleplayer/J
-# sioyek/Sg           # !! please check and comment !!
-# stacktrace/SNg      # dictionaries prefer: stack trace
-# standup/Sg          # dictionaries prefer: stand-up
-# strat/NgS           # gamer slang strategy
+# sioyek/Sg
+# stacktrace/SNg
+# standup/Sg
+# strat/NgS
 # subchannel/NgS
 # supersequence/NgS
 # subkey/NgS
 # tagset/NgS
 # terraform/VGdS
 # timespan/NgS
-# trie/NgS            # data structure
+# trie/NgS
 # truthy/J
 # unicast/JVSdG
-# upsert/VdSGNg       # database operation: update or insert
-# upsertion/NgS       # database operation: update or insert
+# upsert/VdSGNg
+# upsertion/NgS
 # uptime/NwgS
-# vid/NgS             # video
+# vid/NgS
 # waitlist/NgS
 # watchOS/Og
-# whitespace/~NSg     # dictionaries prefer: white space
-# wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
+# whitespace/~NSg
+# wikilink/~NSg
 # z-buffer/NgS
-#
-# # Experimental multi-word entries
-# # Harper may not recognize these as words in documents
-# # But it will be able to include them in suggestions
-#
 # a lot
 # ad-free/J
 # ad nauseam/R
@@ -53478,13 +53462,13 @@ vida/~NwgV>ZS
 # closed circuit/NgS
 # closed-circuit/J
 # code name/NgS
-# code point/NSg      # Unicode code point
+# code point/NSg
 # color code/NgSVdG<
 # color coded/J<
 # colour code/NgSVdG!@_
 # colour coded/J!@_
 # command line/NgS
-# company-wide        # in Cambridge and OED dictionaries
+# company-wide
 # control flow/Nmg
 # cost cutting/Nmg
 # cost-effective/J
@@ -53709,7 +53693,7 @@ vida/~NwgV>ZS
 # neo-Nazi/NSgJ
 # neo-Nazism/Ng
 # no-code/JNmg
-# no-op/NgS           # no operation
+# no-op/NgS
 # non-Western/J
 # NOR gate/NgS
 # not-for-profit/JNgS
@@ -53748,10 +53732,10 @@ vida/~NwgV>ZS
 # opt-out/J
 # OR gate/NgS
 # order book/NgS
-# OS X/Og             # before macOS
+# OS X/Og
 # out-and-out/J
 # out of date
-# Pan Am/Ng           # old airline
+# Pan Am/Ng
 # pari passu/RJ
 # part of speech/N0g
 # parts of speech/N9
@@ -53803,7 +53787,7 @@ vida/~NwgV>ZS
 # reparse point/NgS
 # right-hand/J
 # right-wing/J
-# road map/NgS        # standard in all dictionaries but overtaken by "roadmap" c. 2000
+# road map/NgS
 # rock face/NgS
 # run time/NwgS
 # run-time/J
@@ -53858,7 +53842,7 @@ vida/~NwgV>ZS
 # stay-behind/NgS
 # straight up/R
 # straight-up/J
-# straight away/R     # see also `straightaway` n. & adj.
+# straight away/R
 # sui generis/JRN
 # surface-to-air/J
 # suss out/V
@@ -53867,7 +53851,7 @@ vida/~NwgV>ZS
 # sussing out/V
 # ta-da
 # tai chi/Nmg
-# Tailwind CSS/ONg    # framework
+# Tailwind CSS/ONg
 # take-home/JNgS
 # tax-exempt/J
 # tech-savvy/J
@@ -53948,11 +53932,6 @@ vida/~NwgV>ZS
 # y-axis/Ng
 # year-over-year/J
 # z-axis/Ng
-#
-# # Phrasal verbs. These help correct the error where people write "to login" instead of "to log in"
-# # For this reason the most important ones to include are the ones that have a noun counterpart.
-# # Remember not to add any affixes since only the verb part at the start undergoes inflection.
-#
 # back off/V
 # back up/V
 # black out/V
@@ -54027,8 +54006,3 @@ vida/~NwgV>ZS
 # wipe out/V
 # work around/V
 # work out/V
-#
-# # New entries may be added below this line
-# # If you're not confident in using the affix annotations, add missing words here
-# # And they will be reviewed
-# # Word added using the `just addnoun` command will be added here
