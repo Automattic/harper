@@ -1,12 +1,8 @@
 use std::default::Default;
 
+#[derive(Default)]
 pub enum Language {
+    #[default]
     English,
     Portuguese,
-}
-
-impl Default for Language {
-    fn default() -> Self {
-        Self::English
-    }
 }
