@@ -6,9 +6,9 @@ use crate::{Span, Token};
 /// A parser that will attempt to lex as many tokens as possible,
 /// without discrimination and until the end of input.
 #[derive(Clone, Copy)]
-pub struct PlainEnglish;
+pub struct PlainPortuguese;
 
-impl Parser for PlainEnglish {
+impl Parser for PlainPortuguese {
     fn parse(&self, source: &[char]) -> Vec<Token> {
         let mut cursor = 0;
 
@@ -21,7 +21,7 @@ impl Parser for PlainEnglish {
             }
 
             if let Some(FoundToken { token, next_index }) =
-                lex_token(&source[cursor..], Language::English)
+                lex_token(&source[cursor..], Language::Portuguese)
             {
                 tokens.push(Token {
                     span: Span::new(cursor, cursor + next_index),

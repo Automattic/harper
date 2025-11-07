@@ -3,8 +3,8 @@ members = ["harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-
 resolver = "2"
 
 # Comment out the below lines if you plan to use a debugger.
-[profile.test]
-opt-level = 3
+# [profile.test]
+# opt-level = 3
 
 [profile.release]
 codegen-units = 1

@@ -6,6 +6,7 @@ mod markdown;
 mod mask;
 mod org_mode;
 mod plain_english;
+mod plain_portuguese;
 
 use blanket::blanket;
 pub use collapse_identifiers::CollapseIdentifiers;

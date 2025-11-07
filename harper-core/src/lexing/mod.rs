@@ -8,6 +8,7 @@ use url::lex_url;
 
 use self::email_address::lex_email_address;
 use crate::char_ext::CharExt;
+use crate::languages::Language;
 use crate::punctuation::{Punctuation, Quote};
 use crate::{Number, TokenKind};
 
@@ -19,23 +20,42 @@ pub struct FoundToken {
     pub token: TokenKind,
 }
 
-pub fn lex_token(source: &[char]) -> Option<FoundToken> {
-    let lexers = [
-        lex_regexish,
-        lex_punctuation,
-        lex_tabs,
-        lex_spaces,
-        lex_newlines,
-        lex_plural_digit, // Before lex_number, which would match the initial digit
-        lex_hex_number,   // Before lex_number, which would match the initial 0
-        lex_long_decade,  // Before lex_number, which would match the digits up to the -s
-        lex_number,
-        lex_url,
-        lex_email_address,
-        lex_hostname_token,
-        lex_word,
-        lex_catch,
-    ];
+type LexerFunction = fn(&[char]) -> Option<FoundToken>;
+pub fn lex_token(source: &[char], language: Language) -> Option<FoundToken> {
+    let lexers: &[LexerFunction] = match language {
+        Language::English => &[
+            lex_regexish,
+            lex_punctuation,
+            lex_tabs,
+            lex_spaces,
+            lex_newlines,
+            lex_plural_digit, // Before lex_number, which would match the initial digit
+            lex_hex_number,   // Before lex_number, which would match the initial 0
+            lex_long_decade,  // Before lex_number, which would match the digits up to the -s
+            lex_number,
+            lex_url,
+            lex_email_address,
+            lex_hostname_token,
+            lex_word,
+            lex_catch,
+        ],
+        Language::Portuguese => &[
+            lex_regexish,
+            lex_punctuation,
+            lex_tabs,
+            lex_spaces,
+            lex_newlines,
+            // lex_plural_digit, // The Portugese language doesn't have this feature
+            lex_hex_number, // Before lex_number, which would match the initial 0
+            // lex_long_decade,  // This works in other ways in Portuguese
+            lex_number,
+            lex_url,
+            lex_email_address,
+            lex_hostname_token,
+            lex_word,
+            lex_catch,
+        ],
+    };
 
     for lexer in lexers {
         if let Some(f) = lexer(source) {
@@ -312,6 +332,7 @@ fn lex_catch(_source: &[char]) -> Option<FoundToken> {
 mod tests {
     use crate::Punctuation;
     use crate::char_string::char_string;
+    use crate::languages::Language;
     use crate::lexing::lex_plural_digit;
 
     use super::lex_hex_number;
@@ -428,7 +449,7 @@ mod tests {
     fn lexes_youtube_as_hostname() {
         let source: Vec<_> = "YouTube.com".chars().collect();
         assert_eq!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Hostname,
                 next_index: source.len()
@@ -440,7 +461,7 @@ mod tests {
     fn doesnt_lex_regex_mini_range() {
         let source: Vec<_> = "[]".chars().collect();
         assert!(!matches!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 2
@@ -452,7 +473,7 @@ mod tests {
     fn lexes_regex_one_letter() {
         let source: Vec<_> = "[a]".chars().collect();
         assert_eq!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 3
@@ -464,7 +485,7 @@ mod tests {
     fn lexes_regex_two_letters() {
         let source: Vec<_> = "[az]".chars().collect();
         assert_eq!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 4
@@ -476,7 +497,7 @@ mod tests {
     fn lexes_regex_digits() {
         let source: Vec<_> = "[123]".chars().collect();
         assert_eq!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 5
@@ -488,7 +509,7 @@ mod tests {
     fn lexes_regex_two_alphanumeric() {
         let source: Vec<_> = "[a0b1c2]".chars().collect();
         assert_eq!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 8
@@ -500,7 +521,7 @@ mod tests {
     fn lexes_regex_one_range() {
         let source: Vec<_> = "[a-z]".chars().collect();
         assert_eq!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 5
@@ -512,7 +533,7 @@ mod tests {
     fn lexes_regex_letter_plus_range() {
         let source: Vec<_> = "[ax-z]".chars().collect();
         assert_eq!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 6
@@ -524,7 +545,7 @@ mod tests {
     fn lexes_regex_range_plus_letter() {
         let source: Vec<_> = "[a-cz]".chars().collect();
         assert_eq!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 6
@@ -536,7 +557,7 @@ mod tests {
     fn lexes_regex_two_ranges() {
         let source: Vec<_> = "[a-cx-z]".chars().collect();
         assert_eq!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 8
@@ -549,7 +570,7 @@ mod tests {
         // You can't end a range and start a range with a single letter
         let source: Vec<_> = "[a-x-z]".chars().collect();
         assert_eq!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Punctuation(Punctuation::OpenSquare),
                 next_index: 1
@@ -561,7 +582,7 @@ mod tests {
     fn doesnt_lex_regex_hyphen_at_start() {
         let source: Vec<_> = "[a-]".chars().collect();
         assert!(!matches!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 ..
@@ -573,7 +594,7 @@ mod tests {
     fn doesnt_lex_regex_hyphen_at_end() {
         let source: Vec<_> = "[-z]".chars().collect();
         assert!(!matches!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Regexish,
                 ..
@@ -781,7 +802,7 @@ mod tests {
     fn lexes_word_before_decade() {
         let source: Vec<_> = "late 1980s".chars().collect();
         assert!(matches!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Word(_),
                 ..
@@ -793,7 +814,7 @@ mod tests {
     fn lexes_word_after_decade() {
         let source: Vec<_> = "1980s and".chars().collect();
         assert!(matches!(
-            lex_token(&source),
+            lex_token(&source, Language::English),
             Some(FoundToken {
                 token: TokenKind::Decade,
                 ..
@@ -869,7 +890,8 @@ mod tests {
                 break; // Exit if we've processed the entire source
             }
 
-            let token = lex_token(&sentence[next_index..]).expect("Failed to lex token");
+            let token =
+                lex_token(&sentence[next_index..], Language::English).expect("Failed to lex token");
             assert_eq!(token.token, *expected_token);
             next_index += token.next_index;
         }
@@ -895,7 +917,8 @@ mod tests {
                 break; // Exit if we've processed the entire source
             }
 
-            let token = lex_token(&sentence[next_index..]).expect("Failed to lex token");
+            let token =
+                lex_token(&sentence[next_index..], Language::English).expect("Failed to lex token");
 
             if i < 6 {
                 assert_eq!(token.token, *expected_token);
