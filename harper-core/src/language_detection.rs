@@ -55,10 +55,11 @@ pub fn is_likely_english(toks: &[Token], source: &[char], dict: &impl Dictionary
 mod tests {
     use super::is_doc_likely_english;
     use crate::Document;
+    use crate::languages::Language;
     use crate::spell::FstDictionary;
 
     fn assert_not_english(source: &'static str) {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
         let doc = Document::new_plain_english(source, &dict);
         let is_likely_english = is_doc_likely_english(&doc, &dict);
         dbg!(source);
@@ -66,7 +67,7 @@ mod tests {
     }
 
     fn assert_english(source: &'static str) {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
         let doc = Document::new_plain_english(source, &dict);
         let is_likely_english = is_doc_likely_english(&doc, &dict);
         dbg!(source);

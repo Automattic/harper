@@ -106,6 +106,7 @@ fn should_capitalize_token(tok: &Token, source: &[char], dict: &impl Dictionary)
 
 #[cfg(test)]
 mod tests {
+    use crate::languages::Language;
     use quickcheck::TestResult;
     use quickcheck_macros::quickcheck;
 
@@ -116,7 +117,11 @@ mod tests {
     #[test]
     fn normal() {
         assert_eq!(
-            make_title_case_str("this is a test", &PlainEnglish, &FstDictionary::curated()),
+            make_title_case_str(
+                "this is a test",
+                &PlainEnglish,
+                &FstDictionary::curated(Language::English)
+            ),
             "This Is a Test"
         )
     }
@@ -127,7 +132,7 @@ mod tests {
             make_title_case_str(
                 "the first and last words should be capitalized, even if it is \"the\"",
                 &PlainEnglish,
-                &FstDictionary::curated()
+                &FstDictionary::curated(Language::English)
             ),
             "The First and Last Words Should Be Capitalized, Even If It Is \"The\""
         )
@@ -137,7 +142,11 @@ mod tests {
     #[test]
     fn about_uppercase_with_numbers() {
         assert_eq!(
-            make_title_case_str("0 about 0", &PlainEnglish, &FstDictionary::curated()),
+            make_title_case_str(
+                "0 about 0",
+                &PlainEnglish,
+                &FstDictionary::curated(Language::English)
+            ),
             "0 About 0"
         )
     }
@@ -145,7 +154,11 @@ mod tests {
     #[test]
     fn pipe_does_not_cause_crash() {
         assert_eq!(
-            make_title_case_str("|", &Markdown::default(), &FstDictionary::curated()),
+            make_title_case_str(
+                "|",
+                &Markdown::default(),
+                &FstDictionary::curated(Language::English)
+            ),
             "|"
         )
     }
@@ -153,7 +166,11 @@ mod tests {
     #[test]
     fn a_paragraph_does_not_cause_crash() {
         assert_eq!(
-            make_title_case_str("A\n", &Markdown::default(), &FstDictionary::curated()),
+            make_title_case_str(
+                "A\n",
+                &Markdown::default(),
+                &FstDictionary::curated(Language::English)
+            ),
             "A"
         )
     }
@@ -161,7 +178,11 @@ mod tests {
     #[test]
     fn tab_a_becomes_upcase() {
         assert_eq!(
-            make_title_case_str("\ta", &PlainEnglish, &FstDictionary::curated()),
+            make_title_case_str(
+                "\ta",
+                &PlainEnglish,
+                &FstDictionary::curated(Language::English)
+            ),
             "\tA"
         )
     }
@@ -169,7 +190,11 @@ mod tests {
     #[test]
     fn fixes_video_press() {
         assert_eq!(
-            make_title_case_str("videopress", &PlainEnglish, &FstDictionary::curated()),
+            make_title_case_str(
+                "videopress",
+                &PlainEnglish,
+                &FstDictionary::curated(Language::English)
+            ),
             "VideoPress"
         )
     }
@@ -188,7 +213,7 @@ mod tests {
         let title_case: Vec<_> = make_title_case_str(
             &format!("{prefix} a {postfix}"),
             &Markdown::default(),
-            &FstDictionary::curated(),
+            &FstDictionary::curated(Language::English),
         )
         .chars()
         .collect();
@@ -210,7 +235,7 @@ mod tests {
         let title_case: Vec<_> = make_title_case_str(
             &format!("{prefix} about {postfix}"),
             &Markdown::default(),
-            &FstDictionary::curated(),
+            &FstDictionary::curated(Language::English),
         )
         .chars()
         .collect();
@@ -220,10 +245,13 @@ mod tests {
 
     #[quickcheck]
     fn first_word_is_upcase(text: String) -> TestResult {
-        let title_case: Vec<_> =
-            make_title_case_str(&text, &PlainEnglish, &FstDictionary::curated())
-                .chars()
-                .collect();
+        let title_case: Vec<_> = make_title_case_str(
+            &text,
+            &PlainEnglish,
+            &FstDictionary::curated(Language::English),
+        )
+        .chars()
+        .collect();
 
         if let Some(first) = title_case.first() {
             if first.is_ascii_alphabetic() {
@@ -239,7 +267,11 @@ mod tests {
     #[test]
     fn united_states() {
         assert_eq!(
-            make_title_case_str("united states", &PlainEnglish, &FstDictionary::curated()),
+            make_title_case_str(
+                "united states",
+                &PlainEnglish,
+                &FstDictionary::curated(Language::English)
+            ),
             "United States"
         )
     }

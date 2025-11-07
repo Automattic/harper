@@ -1155,11 +1155,12 @@ impl Default for DialectFlags {
 #[cfg(test)]
 pub mod tests {
     use crate::DictWordMetadata;
+    use crate::languages::Language;
     use crate::spell::{Dictionary, FstDictionary};
 
     // Helper function to get metadata from the curated dictionary
     pub fn md(word: &str) -> DictWordMetadata {
-        FstDictionary::curated()
+        FstDictionary::curated(Language::English)
             .get_word_metadata_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
             .into_owned()

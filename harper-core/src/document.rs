@@ -7,6 +7,7 @@ use itertools::Itertools;
 use paste::paste;
 
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
+use crate::languages::Language;
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
 use crate::patterns::WordSet;
 use crate::punctuation::Punctuation;
@@ -24,7 +25,11 @@ pub struct Document {
 
 impl Default for Document {
     fn default() -> Self {
-        Self::new("", &PlainEnglish, &FstDictionary::curated())
+        Self::new(
+            "",
+            &PlainEnglish,
+            &FstDictionary::curated(Language::English),
+        )
     }
 }
 
@@ -64,7 +69,11 @@ impl Document {
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
         let source: Vec<_> = text.chars().collect();
 
-        Self::new_from_vec(Lrc::new(source), parser, &FstDictionary::curated())
+        Self::new_from_vec(
+            Lrc::new(source),
+            parser,
+            &FstDictionary::curated(Language::English),
+        )
     }
 
     /// Lexes and parses text to produce a document using a provided language
@@ -85,7 +94,11 @@ impl Document {
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and curated dictionary.
     pub fn new_plain_english_curated(text: &str) -> Self {
-        Self::new(text, &PlainEnglish, &FstDictionary::curated())
+        Self::new(
+            text,
+            &PlainEnglish,
+            &FstDictionary::curated(Language::English),
+        )
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
@@ -100,7 +113,7 @@ impl Document {
         Self::new(
             text,
             &Markdown::new(markdown_options),
-            &FstDictionary::curated(),
+            &FstDictionary::curated(Language::English),
         )
     }
 

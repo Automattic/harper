@@ -696,12 +696,16 @@ mod tests {
     use std::sync::Arc;
 
     use super::LintGroup;
+    use crate::languages::Language;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::{Dialect, Document, linting::Linter};
 
     fn test_group() -> LintGroup {
-        LintGroup::new_curated(Arc::new(MutableDictionary::curated()), Dialect::American)
+        LintGroup::new_curated(
+            Arc::new(MutableDictionary::curated(Language::English)),
+            Dialect::American,
+        )
     }
 
     #[test]
@@ -749,7 +753,8 @@ mod tests {
 
     #[test]
     fn lint_descriptions_are_clean() {
-        let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut group =
+            LintGroup::new_curated(FstDictionary::curated(Language::English), Dialect::American);
         let pairs: Vec<_> = group
             .all_descriptions()
             .into_iter()

@@ -62,6 +62,7 @@ impl Parser for CollapseIdentifiers {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::languages::Language;
     use crate::spell::{FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         DictWordMetadata,
@@ -83,7 +84,7 @@ mod tests {
 
     #[test]
     fn no_collapse() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
         let source = "This is a test.";
 
         let tokens =
@@ -94,7 +95,7 @@ mod tests {
     #[test]
     fn one_collapse() {
         let source = "This is a separated_identifier, wow!";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated(Language::English);
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
@@ -117,7 +118,7 @@ mod tests {
     #[test]
     fn kebab_collapse() {
         let source = "This is a separated-identifier, wow!";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated(Language::English);
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
@@ -142,7 +143,7 @@ mod tests {
     #[test]
     fn double_collapse() {
         let source = "This is a separated_identifier_token, wow!";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated(Language::English);
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
@@ -165,7 +166,7 @@ mod tests {
     #[test]
     fn two_collapses() {
         let source = "This is a separated_identifier, wow! separated_identifier";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated(Language::English);
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
@@ -188,7 +189,7 @@ mod tests {
     #[test]
     fn overlapping_identifiers() {
         let source = "This is a separated_identifier_token, wow!";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated(Language::English);
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
@@ -212,7 +213,7 @@ mod tests {
     #[test]
     fn nested_identifiers() {
         let source = "This is a separated_identifier_token, wow!";
-        let curated_dictionary = FstDictionary::curated();
+        let curated_dictionary = FstDictionary::curated(Language::English);
 
         let tokens =
             CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))

@@ -352,6 +352,7 @@ where
 
 #[cfg(test)]
 pub mod tests {
+    use crate::languages::Language;
     use crate::{Document, Span, Token, parsers::PlainEnglish};
     use hashbrown::HashSet;
 
@@ -580,7 +581,7 @@ pub mod tests {
             let test = Document::new_from_vec(
                 text_chars.clone().into(),
                 &PlainEnglish,
-                &FstDictionary::curated(),
+                &FstDictionary::curated(Language::English),
             );
             let lints = linter.lint(&test);
 

@@ -121,13 +121,14 @@ fn is_full_sentence(toks: &[Token]) -> bool {
 mod tests {
     use super::super::tests::assert_lint_count;
     use super::SentenceCapitalization;
+    use crate::languages::Language;
     use crate::spell::FstDictionary;
 
     #[test]
     fn catches_basic() {
         assert_lint_count(
             "there is no way she is not guilty.",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             1,
         )
     }
@@ -136,7 +137,7 @@ mod tests {
     fn no_period() {
         assert_lint_count(
             "there is no way she is not guilty",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             1,
         )
     }
@@ -145,7 +146,7 @@ mod tests {
     fn two_sentence() {
         assert_lint_count(
             "i have complete conviction in this. she is absolutely guilty",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             2,
         )
     }
@@ -154,7 +155,7 @@ mod tests {
     fn start_with_number() {
         assert_lint_count(
             "53 is the length of the longest word.",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             0,
         );
     }
@@ -163,7 +164,7 @@ mod tests {
     fn ignores_unlintable() {
         assert_lint_count(
             "[`misspelled_word`] is assumed to be quite small (n < 100). ",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             0,
         )
     }
@@ -172,7 +173,7 @@ mod tests {
     fn unfazed_unlintable() {
         assert_lint_count(
             "the linter should not be affected by `this` unlintable.",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             1,
         )
     }
@@ -181,7 +182,7 @@ mod tests {
     fn unfazed_ellipsis() {
         assert_lint_count(
             "the linter should not be affected by... that ellipsis.",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             1,
         )
     }
@@ -190,7 +191,7 @@ mod tests {
     fn unfazed_comma() {
         assert_lint_count(
             "the linter should not be affected by, that comma.",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             1,
         )
     }
@@ -199,7 +200,7 @@ mod tests {
     fn issue_228_allows_labels() {
         assert_lint_count(
             "python lsp (fork of pyright)",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             0,
         )
     }
@@ -209,7 +210,7 @@ mod tests {
         // Some words are marked as proper nouns in `dictionary.dict` but are lower camel case.
         assert_lint_count(
             "macOS 16 could be called something like Redwood or Shasta",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             0,
         )
     }
@@ -219,7 +220,7 @@ mod tests {
     fn uppercase_unamerican_at_start() {
         assert_lint_count(
             "un-American starts with a lowercase letter and contains an uppercase letter, but is not a proper noun or trademark.",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             1,
         )
     }
@@ -234,7 +235,7 @@ mod tests {
                 "continent use npm to share and borrow packages, and many organizations use npm to ",
                 "manage private development as well."
             ),
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             0,
         )
     }
@@ -244,7 +245,7 @@ mod tests {
         // A very few words are not considered proper nouns but still start with a lowercase letter that shouldn't be uppercased at the start of a sentence.
         assert_lint_count(
             "mRNA is synthesized from the coding sequence of a gene during the transcriptional process.",
-            SentenceCapitalization::new(FstDictionary::curated()),
+            SentenceCapitalization::new(FstDictionary::curated(Language::English)),
             0,
         )
     }

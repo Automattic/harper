@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+use harper_core::languages::Language;
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
@@ -14,6 +15,7 @@ use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
 use harper_comments::CommentParser;
+
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
@@ -177,7 +179,7 @@ enum Args {
 fn main() -> anyhow::Result<()> {
     let args = Args::parse();
     let markdown_options = MarkdownOptions::default();
-    let dictionary = FstDictionary::curated();
+    let dictionary = FstDictionary::curated(Language::English);
 
     match args {
         Args::Lint {
@@ -433,7 +435,11 @@ fn main() -> anyhow::Result<()> {
 
             if let Some((dict_word, dict_annot)) = &entry_in_dict {
                 println!("Old, from the dictionary:");
-                print_word_derivations(dict_word, dict_annot, &FstDictionary::curated());
+                print_word_derivations(
+                    dict_word,
+                    dict_annot,
+                    &FstDictionary::curated(Language::English),
+                );
             };
 
             if !annot.is_empty() {

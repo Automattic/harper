@@ -3,6 +3,7 @@ use std::sync::Arc;
 use itertools::Itertools;
 
 use super::{Lint, LintKind, Linter, Suggestion};
+use crate::languages::Language;
 use crate::spell::{Dictionary, FstDictionary};
 use crate::{CharString, Document, Span};
 
@@ -13,7 +14,7 @@ pub struct MergeWords {
 impl MergeWords {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: FstDictionary::curated(Language::English),
         }
     }
 }

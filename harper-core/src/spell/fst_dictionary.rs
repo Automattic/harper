@@ -5,6 +5,7 @@ use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 use std::borrow::Cow;
 use std::{cell::RefCell, sync::Arc};
 
+use crate::languages::Language;
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
 use super::Dictionary;
@@ -27,7 +28,18 @@ const EXPECTED_DISTANCE: u8 = 3;
 const TRANSPOSITION_COST_ONE: bool = true;
 
 lazy_static! {
-    static ref DICT: Arc<FstDictionary> = Arc::new((*MutableDictionary::curated()).clone().into());
+    static ref DICT: Arc<FstDictionary> = Arc::new(
+        (*MutableDictionary::curated(Language::English))
+            .clone()
+            .into()
+    );
+}
+lazy_static! {
+    static ref DICT_PORTUGUESE: Arc<FstDictionary> = Arc::new(
+        (*MutableDictionary::curated(Language::Portuguese))
+            .clone()
+            .into()
+    );
 }
 
 thread_local! {
@@ -50,8 +62,11 @@ impl PartialEq for FstDictionary {
 impl FstDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
-    pub fn curated() -> Arc<Self> {
-        (*DICT).clone()
+    pub fn curated(language: Language) -> Arc<Self> {
+        match language {
+            Language::English => (*DICT).clone(),
+            Language::Portuguese => (*DICT_PORTUGUESE).clone(),
+        }
     }
 
     /// Construct a new [`FstDictionary`] using a wordlist as a source.
@@ -228,6 +243,7 @@ mod tests {
     use itertools::Itertools;
 
     use crate::CharStringExt;
+    use crate::languages::Language;
     use crate::spell::{Dictionary, WordId};
 
     use super::FstDictionary;
@@ -254,7 +270,7 @@ mod tests {
 
     #[test]
     fn fst_map_contains_all_in_mutable_dict() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
 
         for word in dict.words_iter() {
             let misspelled_normalized = word.normalized();
@@ -273,7 +289,7 @@ mod tests {
 
     #[test]
     fn fst_contains_hello() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
 
         let word: Vec<_> = "hello".chars().collect();
         let misspelled_normalized = word.normalized();
@@ -289,14 +305,14 @@ mod tests {
 
     #[test]
     fn on_is_not_nominal() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
 
         assert!(!dict.get_word_metadata_str("on").unwrap().is_nominal());
     }
 
     #[test]
     fn fuzzy_result_sorted_by_edit_distance() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
 
         let results = dict.fuzzy_match_str("hello", 3, 100);
         let is_sorted_by_dist = results
@@ -310,14 +326,14 @@ mod tests {
 
     #[test]
     fn curated_contains_no_duplicates() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
 
         assert!(dict.words.iter().map(|(word, _)| word).all_unique());
     }
 
     #[test]
     fn contractions_not_derived() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
 
         let contractions = ["there's", "we're", "here's"];
 
@@ -334,7 +350,7 @@ mod tests {
 
     #[test]
     fn plural_llamas_derived_from_llama() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
 
         assert_eq!(
             dict.get_word_metadata_str("llamas")
@@ -347,7 +363,7 @@ mod tests {
 
     #[test]
     fn plural_cats_derived_from_cat() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
 
         assert_eq!(
             dict.get_word_metadata_str("cats")
@@ -360,7 +376,7 @@ mod tests {
 
     #[test]
     fn unhappy_derived_from_happy() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
 
         assert_eq!(
             dict.get_word_metadata_str("unhappy")
@@ -373,7 +389,7 @@ mod tests {
 
     #[test]
     fn quickly_derived_from_quick() {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(Language::English);
 
         assert_eq!(
             dict.get_word_metadata_str("quickly")

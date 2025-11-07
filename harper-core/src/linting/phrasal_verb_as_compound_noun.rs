@@ -1,6 +1,7 @@
 use std::sync::Arc;
 
 use super::{Lint, LintKind, Linter, Suggestion};
+use crate::languages::Language;
 use crate::spell::{Dictionary, FstDictionary};
 use crate::{CharStringExt, Document, Span, TokenStringExt};
 
@@ -17,7 +18,7 @@ enum Confidence {
 impl PhrasalVerbAsCompoundNoun {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: FstDictionary::curated(Language::English),
         }
     }
 }
@@ -25,7 +26,7 @@ impl PhrasalVerbAsCompoundNoun {
 impl Default for PhrasalVerbAsCompoundNoun {
     fn default() -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: FstDictionary::curated(Language::English),
         }
     }
 }

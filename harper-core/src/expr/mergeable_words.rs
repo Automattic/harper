@@ -1,6 +1,7 @@
 use std::sync::Arc;
 
 use super::{Expr, SequenceExpr, SpaceOrHyphen};
+use crate::languages::Language;
 use crate::spell::{Dictionary, FstDictionary};
 use crate::{CharString, DictWordMetadata, Span, Token};
 
@@ -29,7 +30,7 @@ impl MergeableWords {
                 .then_any_word()
                 .then(SpaceOrHyphen)
                 .then_any_word(),
-            dict: FstDictionary::curated(),
+            dict: FstDictionary::curated(Language::English),
             predicate: Box::new(predicate),
         }
     }
