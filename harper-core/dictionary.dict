@@ -2229,7 +2229,6 @@ Clorets/g
 Clorox/NgV
 Closure/g
 Clotho/Og
-Cloudflare/Og
 Clouseau/Og
 Clovis/Og
 Clyde/Og
@@ -52873,7 +52872,7 @@ CVE/NSg             # Common Vulnerabilities and Exposures
 Captcha/OgS
 ChatGPT/Og          # OpenAI product
 ClickHouse/g
-CloudFlare/Og
+Cloudflare/Og
 Codeberg/Og         # GitHub alternative
 Colemak/NgJ
 CommonMark/g
