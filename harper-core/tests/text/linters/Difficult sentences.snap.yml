@@ -56,7 +56,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      126 | Who's for ice-cream?
          | ^~~~~ The canonical dictionary spelling is `who's`.
@@ -74,7 +74,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      166 | You can't get all your news from the Internet.
          |                        ^~~~ The canonical dictionary spelling is `news`.

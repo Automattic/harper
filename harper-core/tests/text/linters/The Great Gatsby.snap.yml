@@ -279,7 +279,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
       98 | of very solemn and obvious editorials for the Yale News—and now I was going to
          |                                                    ^~~~ The canonical dictionary spelling is `news`.
@@ -998,7 +998,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      747 | “I’ll meet you by the news-stand on the lower level.”
          |                       ^~~~ The canonical dictionary spelling is `news`.
@@ -1040,7 +1040,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      772 | her rather wide hips as Tom helped her to the platform in New York. At the
      773 | news-stand she bought a copy of Town Tattle and a moving-picture magazine, and
@@ -1583,7 +1583,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     1210 | rhythm obligingly for her, and there is a burst of chatter as the erroneous news
          |                                                                             ^~~~ The canonical dictionary spelling is `news`.
@@ -4185,7 +4185,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2776 | ecstatic patron of recurrent light, and repeated the news to Daisy. “What do you
          |                                                      ^~~~ The canonical dictionary spelling is `news`.
@@ -4367,7 +4367,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     2905 | “Who’s this?”
          |  ^~~~~ The canonical dictionary spelling is `who's`.
@@ -4467,7 +4467,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     3019 | become authorities upon his past, had increased all summer until he fell just
     3020 | short of being news. Contemporary legends such as the “underground pipe-line to
@@ -4923,7 +4923,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     3409 | Her glance left me and sought the lighted top of the steps, where “Three o’Clock
          |                                                                          ^~~~~~~ The canonical dictionary spelling is `o'clock`.
@@ -7274,7 +7274,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     5251 | Gatsby’s side, and alone. From the moment I telephoned news of the catastrophe
          |                                                        ^~~~ The canonical dictionary spelling is `news`.
