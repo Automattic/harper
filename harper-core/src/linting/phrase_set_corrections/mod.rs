@@ -374,6 +374,15 @@ pub fn lint_group() -> LintGroup {
             "Don't inflect `seem` in `make it seem`.",
             "Corrects `make it seems` to `make it seem`."
         ),
+        "NervousWreck" => (
+            &[
+                (&["nerve wreck", "nerve-wreck"], &["nervous wreck"]),
+                (&["nerve wrecks", "nerve-wrecks"], &["nervous wrecks"]),
+            ],
+            "Use `nervous wreck` when referring to a person who is extremely anxious or upset. `Nerve wreck` is non-standard but sometimes used for events or situations.",
+            "Suggests using `nervous wreck` when referring to a person's emotional state.",
+            LintKind::Eggcorn
+        ),
         "RiseTheQuestion" => (
             &[
                 (&["rise the question"], &["raise the question"]),

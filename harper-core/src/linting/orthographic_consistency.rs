@@ -82,7 +82,7 @@ impl ExprLinter for OrthographicConsistency {
                     "The canonical dictionary spelling is `{}`.",
                     canonical.iter().collect::<String>()
                 ),
-                priority: 127,
+                priority: 31,
             });
         }
 
