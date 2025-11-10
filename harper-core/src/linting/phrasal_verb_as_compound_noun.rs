@@ -732,4 +732,12 @@ mod tests {
     fn dont_flag_plugin_interface() {
         assert_no_lints("[Plugin interface]", PhrasalVerbAsCompoundNoun::default());
     }
+
+    #[test]
+    fn issue_1918() {
+        assert_no_lints(
+            "Boost your productivity with our JetBrains plugin!",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
 }
