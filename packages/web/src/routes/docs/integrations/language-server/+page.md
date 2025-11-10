@@ -284,6 +284,7 @@ These configs are under the `markdown` key:
 | JavaScript          |         `javascript`          |            ✅ |
 | JavaScript React    |       `javascriptreact`       |            ✅ |
 | Jujutsu Description |  `jj-commit`/`jjdescription`  |               |
+| Julia               |           `julia`             |            ✅ |
 | Kotlin              |           `kotlin`            |            ✅ |
 | Literate Haskell    | `lhaskell`/`literate haskell` |               |
 | Lua                 |             `lua`             |            ✅ |

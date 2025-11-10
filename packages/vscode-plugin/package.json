@@ -46,6 +46,7 @@
 		"onLanguage:javascript",
 		"onLanguage:javascriptreact",
 		"onLanguage:jj-commit",
+		"onLanguage:julia",
 		"onLanguage:kotlin",
 		"onLanguage:literate haskell",
 		"onLanguage:lua",
