@@ -21,6 +21,7 @@ mod be_allowed;
 mod best_of_all_time;
 mod boring_words;
 mod bought;
+mod call_them;
 mod cant;
 mod capitalize_personal_pronouns;
 mod cautionary_tale;
