@@ -1,4 +1,3 @@
-use crate::CharString;
 use crate::spell::WordId;
 
 use super::Pattern;

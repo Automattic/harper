@@ -1,5 +1,6 @@
-use crate::expr::Expr;
-use crate::expr::SequenceExpr;
+use std::{ops::Range, sync::Arc};
+
+use crate::expr::{Expr, ExprMap, SequenceExpr};
 use crate::patterns::DerivedFrom;
 use crate::{Token, TokenStringExt};
 
@@ -7,19 +8,38 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct CallThem {
     expr: Box<dyn Expr>,
+    map: Arc<ExprMap<Range<usize>>>,
 }
 
 impl Default for CallThem {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(DerivedFrom::new_from_str("call"))
-            .t_ws()
-            .then_pronoun()
-            .t_ws()
-            .t_aco("as");
+        let mut map = ExprMap::default();
+
+        map.insert(
+            SequenceExpr::default()
+                .then(DerivedFrom::new_from_str("call"))
+                .t_ws()
+                .then_pronoun()
+                .t_ws()
+                .t_aco("as"),
+            3..5,
+        );
+
+        map.insert(
+            SequenceExpr::default()
+                .then(DerivedFrom::new_from_str("call"))
+                .t_ws()
+                .t_aco("as")
+                .t_ws()
+                .then_pronoun(),
+            1..3,
+        );
+
+        let map = Arc::new(map);
 
         Self {
-            expr: Box::new(expr),
+            expr: Box::new(map.clone()),
+            map,
         }
     }
 }
@@ -29,8 +49,9 @@ impl ExprLinter for CallThem {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
-        let offending_tokens = &matched_tokens[3..5];
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let removal_range = self.map.lookup(0, matched_tokens, source)?.clone();
+        let offending_tokens = matched_tokens.get(removal_range)?;
 
         Some(Lint {
             span: offending_tokens.span()?,
@@ -48,6 +69,8 @@ impl ExprLinter for CallThem {
 
 #[cfg(test)]
 mod tests {
+    #[allow(unused_imports)]
+    use crate::Document;
     use crate::linting::tests::assert_suggestion_result;
 
     use super::CallThem;
@@ -227,8 +250,8 @@ mod tests {
     #[test]
     fn called_as_he() {
         assert_fix(
-            r#"I prefer to be called as “he” when referred in 3rd person and I’m sure that everyone would be ok to call me as “he”."#,
-            r#"I prefer to be called “he” when referred in 3rd person and I’m sure that everyone would be ok to call me “he”."#,
+            r#"I prefer to be called as he when referred in 3rd person and I’m sure that everyone would be ok to call me as he."#,
+            r#"I prefer to be called he when referred in 3rd person and I’m sure that everyone would be ok to call me he."#,
         );
     }
 
