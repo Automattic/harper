@@ -146,6 +146,19 @@ export default class LintFramework {
 		}
 	}
 
+	/** Get the individual lints produced the last time the text on the screen was scanned. */
+	public getLastLints(): UnpackedLint[] {
+		const lints = [];
+
+		for (const group of this.lastLints) {
+			for (const groupLints of Object.values(group.lints)) {
+				lints.push(...groupLints);
+			}
+		}
+
+		return lints;
+	}
+
 	private attachTargetListeners(target: Node) {
 		for (const event of INPUT_EVENTS) {
 			target.addEventListener(event, this.updateEventCallback);

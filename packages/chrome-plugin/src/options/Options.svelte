@@ -13,6 +13,7 @@ let dialect = $state(Dialect.American);
 let defaultEnabled = $state(false);
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
+let anyRulesEnabled = $derived(Object.values(lintConfig ?? {}).some((value) => value !== false));
 
 $effect(() => {
 	ProtocolClient.setLintConfig($state.snapshot(lintConfig));
@@ -95,6 +96,34 @@ export function stringToDict(s: string): string[] {
 /** Converts the content of a text area to viable dictionary values. */
 export function dictToString(values: string[]): string {
 	return values.map((v) => v.trim()).join('\n');
+}
+
+function resetRulesToDefaults(): void {
+	const keys = Object.keys(lintConfig ?? {});
+	if (keys.length === 0) return;
+
+	const nextConfig: LintConfig = { ...lintConfig };
+	for (const key of keys) {
+		nextConfig[key] = null;
+	}
+	lintConfig = nextConfig;
+}
+
+function updateAllRules(enabled: boolean): void {
+	const keys = Object.keys(lintConfig ?? {});
+	if (keys.length === 0) {
+		return;
+	}
+
+	const nextConfig: LintConfig = { ...lintConfig };
+	for (const key of keys) {
+		nextConfig[key] = enabled;
+	}
+	lintConfig = nextConfig;
+}
+
+function toggleAllRules(): void {
+	updateAllRules(!anyRulesEnabled);
 }
 
 async function exportEnabledDomainsCSV() {
@@ -197,8 +226,18 @@ async function exportEnabledDomainsCSV() {
         <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500">Rules</h3>
         <Input bind:value={searchQuery} placeholder="Search for a rule…" size="sm" class="w-60" />
       </div>
+      <div class="flex flex-wrap gap-3">
+        <Button size="sm" color="light" on:click={resetRulesToDefaults}>Reset to Default Rules</Button>
+        <Button size="sm" color="light" on:click={toggleAllRules}>
+          {anyRulesEnabled ? 'Disable All Rules' : 'Enable All Rules'}
+        </Button>
+      </div>
 
-      {#each Object.entries(lintConfig).filter(([key]) => lintDescriptions[key].toLowerCase().includes(searchQueryLower) || key.toLowerCase().includes(searchQueryLower)) as [key, value]}
+      {#each Object.entries(lintConfig).filter(
+        ([key]) =>
+          (lintDescriptions[key] ?? '').toLowerCase().includes(searchQueryLower) ||
+          key.toLowerCase().includes(searchQueryLower)
+      ) as [key, value]}
         <div class="space-y-4 max-h-80 overflow-y-auto pr-1">
           <!-- rule card sample -->
           <div class="rounded-lg border border-gray-200 p-3 shadow-sm">
