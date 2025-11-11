@@ -773,7 +773,7 @@
 > driest thing I       know   . Silence all          round      , if    you    please ! ‘          William the Conqueror ,
 # JS     NSg   ISg/#r+ NSg/VB . NSg/VB+ NSg/I/J/C/Dq NSg/VB/J/P . NSg/C ISgPl+ VB     . Unlintable NPr+    D   NSg       .
 > whose cause      was favoured  by      the pope    , was soon submitted to by      the English      , who
-# I+    N🅪Sg/VB/C+ VPt VP/J/Comm NSg/J/P D   NPr/VB+ . VPt J/R  VB        P  NSg/J/P D   NPr🅪Sg/VB/J+ . NPr/I+
+# I+    N🅪Sg/VB/C+ VPt VP/J/Comm NSg/J/P D   NPr/VB+ . VPt J/R  VP        P  NSg/J/P D   NPr🅪Sg/VB/J+ . NPr/I+
 > wanted leaders , and  had been    of late  much         accustomed to usurpation and  conquest .
 # VP/J   NPl+    . VB/C VB  NSg/VPp P  NSg/J NSg/I/J/R/Dq VP/J       P  NSg        VB/C NSg/VB+  .
 > Edwin and  Morcar , the earls of Mercia and  Northumbria — ’ ”
