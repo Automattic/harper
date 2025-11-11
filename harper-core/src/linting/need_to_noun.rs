@@ -28,15 +28,8 @@ impl Default for NeedToNoun {
         let b = SequenceExpr::default()
             .then(|tok: &Token, _: &[char]| tok.kind.is_nominal() && !tok.kind.is_verb());
 
-        let open_words = ["need", "used"];
-
         let expr = SequenceExpr::default()
-            .then(LongestMatchOf::new(
-                open_words
-                    .iter()
-                    .map(|word| Box::new(DerivedFrom::new_from_str(word)) as Box<dyn Expr>)
-                    .collect(),
-            ))
+            .then(DerivedFrom::new_from_str("need"))
             .t_ws()
             .t_aco("to")
             .t_ws()
