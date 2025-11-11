@@ -9,7 +9,7 @@ pub struct Didnt {
 impl Default for Didnt {
     fn default() -> Self {
         let pattern = SequenceExpr::default()
-            .then_personal_pronoun()
+            .then_subject_pronoun()
             .t_ws()
             .t_aco("dint");
 
