@@ -11,6 +11,9 @@
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"module": "ESNext",
+		"paths": {
+      "lint-framework": ["../lint-framework/src/index.ts"]
+    },
 		"moduleResolution": "Node",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
