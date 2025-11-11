@@ -18,7 +18,10 @@ impl Default for VerbToAdjective {
             .then(WordSet::new(&["the", "a", "an"]))
             .t_ws()
             .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_verb() && !tok.kind.is_adjective() && !tok.kind.is_noun()
+                tok.kind.is_verb()
+                    && !tok.kind.is_verb_past_form()
+                    && !tok.kind.is_adjective()
+                    && !tok.kind.is_noun()
             })
             .t_ws()
             .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]));
@@ -97,6 +100,22 @@ mod tests {
     fn correct_auxiliary_is_valid() {
         assert_no_lints(
             "Can you suggest a correct auxiliary?",
+            VerbToAdjective::default(),
+        );
+    }
+
+    #[test]
+    fn submitted_form_data_is_valid() {
+        assert_no_lints(
+            "This is the email address that will receive the submitted form data.",
+            VerbToAdjective::default(),
+        );
+    }
+
+    #[test]
+    fn the_unexplored_territories_is_valid() {
+        assert_no_lints(
+            "Not the unexplored territories, ripe for discovery, but the areas actively erased, obscured, or simply deemed unworthy of representation?",
             VerbToAdjective::default(),
         );
     }

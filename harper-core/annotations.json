@@ -646,6 +646,14 @@
 				"verb": {}
 			}
 		},
+		"j": {
+			"#": "verb past property",
+			"metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			}
+		},
 		"J": {
 			"#": "adjective property",
 			"metadata": {
