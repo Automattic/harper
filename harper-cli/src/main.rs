@@ -704,15 +704,16 @@ fn main() -> anyhow::Result<()> {
                 .map(|c| (c, 0))
                 .collect();
 
-            let mut duplicate_flags = 0;
-            let mut unknown_flags = 0;
-            let mut unused_flags = 0;
+            // let mut duplicate_flag_total = 0;
+            let mut duplicate_flags = std::collections::HashMap::new();
+            let mut unknown_flags = std::collections::HashMap::new();
+            let mut unused_flag_total = 0;
 
             let dict_path = dir.join("dictionary.dict");
             let dict_content = fs::read_to_string(&dict_path)
                 .map_err(|e| anyhow!("Failed to read dictionary: {e}"))?;
 
-            for line in dict_content.lines() {
+            for (line_num, line) in dict_content.lines().enumerate() {
                 if line.is_empty()
                     || line.starts_with('#')
                     || line.chars().all(|c| c.is_ascii_digit())
@@ -734,19 +735,27 @@ fn main() -> anyhow::Result<()> {
                     for flag in annotation.chars() {
                         if !seen_flags.insert(flag) {
                             eprintln!(
-                                "Warning: Duplicate annotation flag '{}' found in entry: {}/{}",
-                                flag, lexeme, annotation
+                                "Warning: Line {}: Duplicate annotation flag '{}' in entry: {}/{}",
+                                line_num + 1,
+                                flag,
+                                lexeme,
+                                annotation
                             );
-                            duplicate_flags += 1;
+                            // duplicate_flag_total += 1;
+                            *duplicate_flags.entry(flag).or_insert(0) += 1;
                         }
                         if !annotation_flag_count.contains_key(&flag) {
                             eprintln!(
-                                "Warning: Unknown annotation flag '{}' found in entry: {}/{}",
-                                flag, lexeme, annotation
+                                "Warning: Line {}: Unknown annotation flag '{}' in entry: {}/{}",
+                                line_num + 1,
+                                flag,
+                                lexeme,
+                                annotation
                             );
-                            unknown_flags += 1;
+                            *unknown_flags.entry(flag).or_insert(0) += 1;
+                        } else {
+                            *annotation_flag_count.get_mut(&flag).unwrap() += 1;
                         }
-                        *annotation_flag_count.entry(flag).or_insert(0) += 1;
                     }
                 }
             }
@@ -754,20 +763,32 @@ fn main() -> anyhow::Result<()> {
             for (flag, count) in annotation_flag_count {
                 if count == 0 {
                     eprintln!("Warning: Unused annotation flag '{}'", flag);
-                    unused_flags += 1;
+                    unused_flag_total += 1;
                 }
             }
 
-            if duplicate_flags > 0 || unknown_flags > 0 || unused_flags > 0 {
+            let duplicate_flag_total = duplicate_flags.values().sum::<usize>();
+            let unknown_flag_total = unknown_flags.values().sum::<usize>();
+
+            if duplicate_flag_total > 0 || unknown_flag_total > 0 || unused_flag_total > 0 {
                 eprintln!("\nAudit found issues:");
-                if duplicate_flags > 0 {
-                    eprintln!("  - {} duplicate flags found", duplicate_flags);
+                if duplicate_flag_total > 0 {
+                    eprintln!(
+                        "  - {} duplicate flags found in {} entries",
+                        duplicate_flags.len(),
+                        duplicate_flag_total
+                    );
                 }
-                if unknown_flags > 0 {
-                    eprintln!("  - {} unknown flags found", unknown_flags);
+                if !unknown_flags.is_empty() {
+                    let total_unknown = unknown_flags.values().sum::<usize>();
+                    eprintln!(
+                        "  - {} unknown flags found in {} entries",
+                        unknown_flags.len(),
+                        total_unknown
+                    );
                 }
-                if unused_flags > 0 {
-                    eprintln!("  - {} unused flags found", unused_flags);
+                if unused_flag_total > 0 {
+                    eprintln!("  - {} unused flags found", unused_flag_total);
                 }
                 std::process::exit(1);
             }

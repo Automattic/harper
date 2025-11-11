@@ -260,7 +260,7 @@ update-vscode-linters:
   just format
 
 # Run Rust formatting and linting.
-check-rust:
+check-rust: auditdictionary
   #!/usr/bin/env bash
   set -eo pipefail
 

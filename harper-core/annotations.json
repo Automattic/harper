@@ -942,6 +942,24 @@
 					"verb_form": "THIRD_PERSON_SINGULAR"
 				}
 			}
+		},
+		"♂": {
+			"#": "masculine property",
+			"metadata": {
+				"//": "not yet implemented"
+			}
+		},
+		"♀": {
+			"#": "feminine property",
+			"metadata": {
+				"//": "not yet implemented"
+			}
+		},
+		"ª": {
+			"#": "animate property",
+			"metadata": {
+				"//": "not yet implemented"
+			}
 		}
 	}
 }
