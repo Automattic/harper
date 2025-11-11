@@ -161,6 +161,11 @@ enum Args {
         /// The directory containing the dictionary and affixes.
         dir: PathBuf,
     },
+    /// Normalize the `dictionary.dict` file.
+    NormalizeDictionary {
+        /// The directory containing the dictionary and affixes.
+        dir: PathBuf,
+    },
     /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
     /// As long as there's either an open or hyphenated spelling.
     Compounds,
@@ -668,6 +673,49 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        Args::NormalizeDictionary { dir } => {
+            let dict_path = dir.join("dictionary.dict");
+            let dict_content = fs::read_to_string(&dict_path)
+                .map_err(|e| anyhow!("Failed to read dictionary: {e}"))?;
+
+            for oldline in dict_content.lines() {
+                let newline = if oldline.is_empty()
+                    || oldline.starts_with('#')
+                    || oldline.chars().all(|c| c.is_ascii_digit())
+                {
+                    oldline.into()
+                } else {
+                    let (entry_part, comment_part) = oldline
+                        .split_once('#')
+                        .map_or((oldline, ""), |(e, c)| (e, c));
+
+                    if let Some((lexeme, rest)) = entry_part.split_once('/') {
+                        let (annotation, whitespace) = match rest.split_once([' ', '\t']) {
+                            Some((a, _)) => (a, &rest[a.len()..]),
+                            None => (rest, ""),
+                        };
+
+                        let normalized = format!(
+                            "{}/{}{}",
+                            lexeme,
+                            normalize_annotation_flags(annotation),
+                            whitespace
+                        );
+                        if !comment_part.is_empty() {
+                            format!("{}{}#{}", normalized.trim_end(), whitespace, comment_part)
+                        } else {
+                            normalized
+                        }
+                    } else {
+                        oldline.into()
+                    }
+                };
+
+                println!("{newline}");
+            }
+
+            Ok(())
+        }
         Args::Compounds => {
             let mut compound_map: HashMap<String, Vec<String>> = HashMap::new();
 
@@ -894,4 +942,113 @@ fn file_dict_name(path: &Path) -> PathBuf {
     }
 
     rewritten.into()
+}
+
+/// Normalize annotation flags
+///
+/// Ensures any tilde (~) is the first flag.
+/// Maintains relative order of POS flags.
+/// Groups N (noun) and O (proper noun) flags together.
+/// Groups property tags following the POS to which they apply (or pair of POS in the case of N/O).
+/// Property tags will maintain relative order, except for 0 (singular) and 9 (plural) which are sorted.
+/// Property tags and tags that are neither POS nor property tags will be grouped together at the end and maintain relative order.
+/// Duplicate POS and property tags are grouped together.
+fn normalize_annotation_flags(flag_str: &str) -> String {
+    let flags: Vec<char> = flag_str.chars().collect();
+
+    let pos_to_props: HashMap<_, _> = [
+        ('C', ""),            // Conjunction
+        ('D', "qM5"),         // Determiner
+        ('I', "aso123F"),     // Pronoun
+        ('J', ">^cuY*.:"),    // Adjective
+        ('N', "09gmw♂♀ªS"),   // Noun
+        ('O', "9gS"),         // Proper noun
+        ('P', ""),            // Preposition
+        ('R', ""),            // Adverb
+        ('V', "lAbdGtT6hS>"), // Verb
+    ]
+    .iter()
+    .map(|&(pos, props)| (pos, props.chars().collect::<Vec<_>>()))
+    .collect();
+
+    let prop_to_poses: HashMap<_, _> = pos_to_props
+        .iter()
+        .flat_map(|(&pos, props)| props.iter().map(move |&c| (c, pos)))
+        .fold(HashMap::new(), |mut acc, (c, pos)| {
+            acc.entry(c).or_insert_with(Vec::new).push(pos);
+            acc
+        });
+
+    let mut tildes = Vec::with_capacity(flags.len());
+    let mut poses_with_props: Vec<Vec<char>> = Vec::new();
+    let mut other_flags = Vec::new();
+
+    // First pass: tildes and POS
+    for &flag in &flags {
+        if flag == '~' {
+            tildes.push('~');
+        } else if pos_to_props.contains_key(&flag) {
+            // Keep noun (N) & proper noun (O) flags together
+            let poses = match flag {
+                'N' | 'O' => &['N', 'O'][..],
+                _ => &[flag][..],
+            };
+            if let Some(which) = poses_with_props
+                .iter()
+                // The first entry in each pos-with-props vector is always its POS
+                .position(|pos_with_props| poses.contains(pos_with_props.first().unwrap()))
+            {
+                poses_with_props[which].push(flag);
+            } else {
+                poses_with_props.push(vec![flag]);
+            }
+        }
+    }
+
+    // Second pass: properties and other flags
+    for &flag in &flags {
+        if prop_to_poses.contains_key(&flag) {
+            let prop = flag;
+            let poses = prop_to_poses.get(&prop).unwrap();
+            // Find the first POS-with-props vector that contains one of this property's POSes
+            if let Some(which) = poses_with_props
+                .iter()
+                .position(|pos_with_props| pos_with_props.iter().any(|&pos| poses.contains(&pos)))
+            {
+                // Check if this prop already exists in the group
+                let pos_with_props = &mut poses_with_props[which];
+
+                // Keep singular (0) and plural (9) flags together
+                let props = match prop {
+                    '0' | '9' => &['0', '9'][..],
+                    _ => &[prop][..],
+                };
+
+                if let Some(mut i) = pos_with_props.iter().position(|&p| props.contains(&p)) {
+                    // And keep duplicate 0s and 9s sorted
+                    while i < pos_with_props.len() && props.contains(&pos_with_props[i]) {
+                        if pos_with_props[i] >= prop {
+                            break;
+                        }
+                        i += 1;
+                    }
+                    pos_with_props.insert(i, prop);
+                } else {
+                    // Prop doesn't exist in this group yet, add it
+                    pos_with_props.push(prop);
+                }
+            } else {
+                // This property is an orphan
+                other_flags.push(prop);
+            }
+        } else if flag != '~' && !pos_to_props.contains_key(&flag) {
+            other_flags.push(flag);
+        }
+    }
+
+    tildes
+        .into_iter()
+        .chain(poses_with_props.into_iter().flatten())
+        .chain(other_flags)
+        .collect::<String>()
 }
