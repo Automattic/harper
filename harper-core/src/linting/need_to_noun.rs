@@ -4,6 +4,7 @@ use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
+use crate::patterns::DerivedFrom;
 use crate::patterns::WordSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -19,22 +20,30 @@ impl Default for NeedToNoun {
             Box::new(WordSet::new(&["about"])),
         ]);
 
-        let a = SequenceExpr::aco("need")
-            .t_ws()
-            .t_aco("to")
-            .t_ws()
+        let a = SequenceExpr::default()
             .then(|tok: &Token, _: &[char]| tok.kind.is_nominal())
             .t_ws()
             .then_unless(postfix_exceptions);
 
-        let b = SequenceExpr::aco("need")
+        let b = SequenceExpr::default()
+            .then(|tok: &Token, _: &[char]| tok.kind.is_nominal() && !tok.kind.is_verb());
+
+        let open_words = ["need", "used"];
+
+        let expr = SequenceExpr::default()
+            .then(LongestMatchOf::new(
+                open_words
+                    .iter()
+                    .map(|word| Box::new(DerivedFrom::new_from_str(word)) as Box<dyn Expr>)
+                    .collect(),
+            ))
             .t_ws()
             .t_aco("to")
             .t_ws()
-            .then(|tok: &Token, _: &[char]| tok.kind.is_nominal() && !tok.kind.is_verb());
+            .then(a.or(b));
 
         Self {
-            expr: Box::new(a.or(b)),
+            expr: Box::new(expr),
         }
     }
 }
@@ -180,11 +189,29 @@ mod tests {
     }
 
     #[test]
+    fn avoids_false_positive_for_need_to_verify() {
+        assert_lint_count(
+            "I need to verify the expenses before submission.",
+            NeedToNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
     fn flags_need_to_compiler() {
         assert_suggestion_result(
             "We simply don't need to compiler to do as much work anymore.",
             NeedToNoun::default(),
             "We simply don't need the compiler to do as much work anymore.",
+        );
+    }
+
+    #[test]
+    fn catches_false_negative_for_need_to_credentials() {
+        assert_suggestion_result(
+            "I need to credentials before logging in.",
+            NeedToNoun::default(),
+            "I need the credentials before logging in.",
         );
     }
 
@@ -275,6 +302,114 @@ mod tests {
             "I need to silence to think clearly.",
             NeedToNoun::default(),
             "I need the silence to think clearly.",
+        );
+    }
+
+    #[test]
+    fn flags_needs_to_approval() {
+        assert_suggestion_result(
+            "She needs to approval from her advisor.",
+            NeedToNoun::default(),
+            "She needs the approval from her advisor.",
+        );
+    }
+
+    #[test]
+    fn avoids_false_positive_for_needs_to_coordinate() {
+        assert_lint_count(
+            "She needs to collaborate with everyone on the plan.",
+            NeedToNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn catches_false_negative_for_needs_to_credentials() {
+        assert_suggestion_result(
+            "He needs to credentials ready before the audit.",
+            NeedToNoun::default(),
+            "He needs the credentials ready before the audit.",
+        );
+    }
+
+    #[test]
+    fn allows_needs_to_finalize() {
+        assert_lint_count(
+            "She needs to finalize the schedule.",
+            NeedToNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn flags_needed_to_permit() {
+        assert_suggestion_result(
+            "They needed to permit before entering the site.",
+            NeedToNoun::default(),
+            "They needed the permit before entering the site.",
+        );
+    }
+
+    #[test]
+    fn avoids_false_positive_for_needed_to_explain() {
+        assert_lint_count(
+            "They needed to explain the new policy carefully.",
+            NeedToNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn catches_false_negative_for_needed_to_authorization() {
+        assert_suggestion_result(
+            "They needed to authorization before proceeding.",
+            NeedToNoun::default(),
+            "They needed the authorization before proceeding.",
+        );
+    }
+
+    #[test]
+    fn allows_needed_to_file() {
+        assert_lint_count(
+            "They needed to file the paperwork before noon.",
+            NeedToNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn flags_needing_to_documentation() {
+        assert_suggestion_result(
+            "Needing to documentation slowed the entire process.",
+            NeedToNoun::default(),
+            "Needing the documentation slowed the entire process.",
+        );
+    }
+
+    #[test]
+    fn avoids_false_positive_for_needing_to_calibrate() {
+        assert_lint_count(
+            "Needing to calibrate the equipment delayed us slightly.",
+            NeedToNoun::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn catches_false_negative_for_needing_to_confirmation() {
+        assert_suggestion_result(
+            "Needing to confirmation from legal stalled the launch.",
+            NeedToNoun::default(),
+            "Needing the confirmation from legal stalled the launch.",
+        );
+    }
+
+    #[test]
+    fn allows_needing_to_call() {
+        assert_lint_count(
+            "Needing to call your mother is stressful.",
+            NeedToNoun::default(),
+            0,
         );
     }
 }
