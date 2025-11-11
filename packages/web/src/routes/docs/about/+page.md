@@ -6,7 +6,7 @@ Harper is a grammar checker designed to run anywhere there is text (so really, a
 Most Harper users are catching their mistakes in [Neovim](./integrations/neovim), [Obsidian](./integrations/obsidian), or [Visual Studio Code](./integrations/visual-studio-code).
 
 <script>
-    import Editor from "$lib/Editor.svelte"
+    import Editor from "$lib/components/Editor.svelte"
 </script>
 
 <div class="h-96">
@@ -19,5 +19,3 @@ Harper takes advantage of decades of natural language research to analyze exactl
 If something is off, Harper lets you know.
 
 In a way, Harper is an error-tolerant parser for English.
-
-Check out our [FAQs](./faq) to know how you can use Harper and more.

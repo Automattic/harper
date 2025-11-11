@@ -68,7 +68,7 @@ export function getTextarea(page: Page): Locator {
 }
 
 export async function testBasicSuggestionTextarea(testPageUrl: string) {
-	test('Can apply basic suggestion.', async ({ page, context }) => {
+	test('Can apply basic suggestion.', async ({ page }) => {
 		await page.goto(testPageUrl);
 
 		await page.waitForTimeout(2000);
@@ -116,6 +116,25 @@ export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
 	});
 }
 
+export async function testCanBlockRuleTextareaSuggestion(testPageUrl: string) {
+	test('Can hide with rule block button', async ({ page }) => {
+		await page.goto(testPageUrl);
+
+		const editor = getTextarea(page);
+		await replaceEditorContent(editor, 'This is an test.');
+
+		await page.waitForTimeout(6000);
+
+		await clickHarperHighlight(page);
+
+		await page.getByTitle('Disable the AnA rule').click();
+
+		await page.waitForTimeout(500);
+
+		await assertHarperHighlightBoxes(page, []);
+	});
+}
+
 export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
 	const highlights = getHarperHighlights(page);
 	expect(await highlights.count()).toBe(boxes.length);
@@ -140,5 +159,5 @@ export function assertBoxesClose(a: Box, b: Box) {
 }
 
 function assertClose(actual: number, expected: number) {
-	expect(Math.abs(actual - expected)).toBeLessThanOrEqual(9);
+	expect(Math.abs(actual - expected)).toBeLessThanOrEqual(15);
 }

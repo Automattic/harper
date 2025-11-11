@@ -40,15 +40,25 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+      49 | including the fact that he documented the binary number system. In 1820, Thomas
+      50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
+         | ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “DE”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       49 | including the fact that he documented the binary number system. In 1820, Thomas
       50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
          | ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -407,6 +417,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+     131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
+         |                                                        ^~~~~~~~~~ `automatica` should probably be written as `automatic a`.
+     132 | or "information and mathematics" are often used, e.g. informatique (French),
+Suggest:
+  - Replace with: “automatic a”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      132 | or "information and mathematics" are often used, e.g. informatique (French),
@@ -615,8 +635,8 @@ Message: |
          |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
   - Replace with: “Ax”
-  - Replace with: “A”
-  - Replace with: “Ah”
+  - Replace with: “Ab”
+  - Replace with: “Ac”
 
 
 
@@ -745,7 +765,7 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Hr”
+  - Replace with: “Ht”
   - Replace with: “He”
   - Replace with: “Hf”
 
@@ -842,9 +862,9 @@ Message: |
      262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
          |                ^~ Did you mean to spell `NP` this way?
 Suggest:
-  - Replace with: “N”
   - Replace with: “Nap”
   - Replace with: “Nip”
+  - Replace with: “Nu”
 
 
 
@@ -979,19 +999,9 @@ Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
-  - Replace with: “Pa”
+  - Replace with: “Pt”
+  - Replace with: “P”
   - Replace with: “Pd”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-     394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
-         |                                   ^~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “,”
-  - Replace with: “.”
 
 
 
@@ -1048,15 +1058,25 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
+         |                                                                  ^~ This word's canonical spelling is all-caps.
+     445 |   > "high-voltage/low-voltage", etc.).
+Suggest:
+  - Replace with: “DE”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
          |                                                                  ^~ Did you mean to spell `de` this way?
      445 |   > "high-voltage/low-voltage", etc.).
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -1151,6 +1171,16 @@ Suggest:
   - Replace with: “got”
   - Replace with: “goo”
   - Replace with: “goths”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     468 |     Boehm's and Jacopini's insight can be further simplified with the use of
+     469 |     goto (which means it is more elementary than structured programming).
+         |     ^~~~ `goto` should probably be written as `go to`.
+Suggest:
+  - Replace with: “go to”
 
 
 

@@ -7,7 +7,11 @@ format:
 build-wasm:
   #!/usr/bin/env bash
   cd "{{justfile_directory()}}/harper-wasm"
-  RUSTFLAGS='--cfg getrandom_backend="wasm_js"' wasm-pack build --target web
+  if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
+    wasm-pack build --target web --no-opt
+  else
+    wasm-pack build --target web
+  fi
 
 # Build `harper.js` with all size optimizations available.
 build-harperjs: build-wasm 
@@ -25,7 +29,7 @@ build-harperjs: build-wasm
   ./docs.sh
 
 # Build the browser lint framework module
-build-lint-framework:
+build-lint-framework: build-harperjs
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -52,6 +56,7 @@ test-obsidian: build-obsidian
 
   pnpm install
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
+  pnpm playwright install
   pnpm test
 
 dev-wp: build-harperjs
@@ -176,7 +181,8 @@ test-vscode:
     mkdir "$bin_dir"
   fi
 
-  cargo build --release
+  echo Building binaries
+  cargo build --release -q
 
   cp "{{justfile_directory()}}/target/release/harper-ls"* "$bin_dir"
 
@@ -202,7 +208,8 @@ package-vscode target="":
   cp LICENSE "$ext_dir"
 
   if [[ -z "{{target}}" ]]; then
-    cargo build --release
+    echo Building binaries
+    cargo build --release -q
 
     if ! [[ -d "$bin_dir" ]]; then
       mkdir "$bin_dir"
@@ -260,8 +267,12 @@ check-rust:
   cargo fmt -- --check
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
+  cargo hack check --each-feature
+
 # Perform format and type checking.
-check: check-rust build-web
+check: check-rust check-js build-web
+
+check-js: build-harperjs build-lint-framework
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -280,8 +291,8 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo build --all-targets
-  cargo hack check --each-feature
+  echo Building binaries
+  cargo build --all-targets -q
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
@@ -298,9 +309,12 @@ dogfood:
     ./target/release/harper-cli lint $file
   done
 
+test-rust:
+  echo Running all Rust tests
+  cargo test -q
+
 # Test everything.
-test: test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
-  cargo test
+test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
 
 # Use `harper-cli` to parse a provided file and print out the resulting tokens.
 parse file:

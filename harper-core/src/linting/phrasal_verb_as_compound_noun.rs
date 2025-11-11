@@ -103,10 +103,10 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             // So far we only have a small number of phrasal verbs in the dictionary.
             let (verb_part_is_verb, phrasal_verb_is_verb) = (
                 self.dict
-                    .get_lexeme_metadata(verb_part)
+                    .get_word_metadata(verb_part)
                     .is_some_and(|md| md.verb.is_some()),
                 self.dict
-                    .get_lexeme_metadata_str(&phrasal_verb)
+                    .get_word_metadata_str(&phrasal_verb)
                     .is_some_and(|md| md.verb.is_some()),
             );
 
@@ -201,23 +201,28 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             if let Some(next_tok) = maybe_next_tok.filter(|tok| tok.kind.is_noun())
                 && match nountok_lower {
                     ['b', 'a', 'c', 'k', 'u', 'p'] => {
-                        &["file", "images", "location", "snapshots"][..]
+                        &["file", "images", "location", "plan", "sites", "snapshots"][..]
                     }
-                    ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function"][..],
+                    ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function", "handlers"][..],
                     ['l', 'a', 'y', 'o', 'u', 't'] => &["estimation"][..],
                     ['m', 'a', 'r', 'k', 'u', 'p'] => &["language", "languages"][..],
-                    ['p', 'l', 'a', 'y', 'b', 'a', 'c', 'k'] => &["latency"][..],
+                    ['m', 'o', 'u', 's', 'e', 'o', 'v', 'e', 'r'] => &["hints"][..],
+                    ['p', 'l', 'a', 'y', 'b', 'a', 'c', 'k'] => &["latency", "speed"][..],
                     ['p', 'l', 'u', 'g', 'i', 'n'] => &[
                         "architecture",
+                        "classes",
                         "development",
                         "docs",
                         "ecosystem",
                         "files",
                         "interface",
+                        "name",
                         "packages",
                         "suite",
+                        "support",
                     ][..],
                     ['r', 'o', 'l', 'l', 'o', 'u', 't'] => &["logic", "status"][..],
+                    ['s', 't', 'a', 'r', 't', 'u', 'p'] => &["environments"][..],
                     ['t', 'h', 'r', 'o', 'w', 'b', 'a', 'c', 'k'] => &["machine"][..],
                     ['w', 'o', 'r', 'k', 'o', 'u', 't'] => &["constraints", "preference"][..],
                     _ => &[],
@@ -726,5 +731,13 @@ mod tests {
     #[test]
     fn dont_flag_plugin_interface() {
         assert_no_lints("[Plugin interface]", PhrasalVerbAsCompoundNoun::default());
+    }
+
+    #[test]
+    fn issue_1918() {
+        assert_no_lints(
+            "Boost your productivity with our JetBrains plugin!",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
     }
 }

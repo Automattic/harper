@@ -5,7 +5,7 @@ use paste::paste;
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
 use strum::{EnumCount as _, VariantArray as _};
-use strum_macros::{Display, EnumCount, EnumString, VariantArray};
+use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
@@ -964,6 +964,7 @@ impl ConjunctionData {
     Hash,
     EnumCount,
     EnumString,
+    EnumIter,
     Display,
     VariantArray,
 )]
@@ -1143,7 +1144,7 @@ pub mod tests {
     // Helper function to get metadata from the curated dictionary
     pub fn md(word: &str) -> DictWordMetadata {
         FstDictionary::curated()
-            .get_lexeme_metadata_str(word)
+            .get_word_metadata_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
             .into_owned()
     }

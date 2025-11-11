@@ -48,9 +48,9 @@ export async function setTextDocumentLanguage(uri: Uri, languageId: string): Pro
 }
 
 export function createExpectedDiagnostics(
-	...data: { message: string; range: Range }[]
+	...data: { message: string; range: Range; source: string }[]
 ): Diagnostic[] {
-	return data.map((d) => ({ ...d, source: 'Harper', severity: DiagnosticSeverity.Information }));
+	return data.map((d) => ({ ...d, severity: DiagnosticSeverity.Information }));
 }
 
 export function compareActualVsExpectedDiagnostics(
@@ -79,7 +79,7 @@ export function createRange(
 }
 
 function getActualDiagnostics(resource: Uri): Diagnostic[] {
-	return languages.getDiagnostics(resource).filter((d) => d.source === 'Harper');
+	return languages.getDiagnostics(resource).filter((d) => d.source?.includes('Harper'));
 }
 
 /** Note that this function times out if there is no change detected. */

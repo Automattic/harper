@@ -94,6 +94,7 @@ impl TokenKind {
         is_linking_verb,
         is_verb_lemma,
         is_verb_simple_past_form,
+        is_verb_past_participle_form,
         is_verb_progressive_form,
         is_verb_third_person_singular_present_form,
 

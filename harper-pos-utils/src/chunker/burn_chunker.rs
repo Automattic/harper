@@ -69,7 +69,7 @@ impl<B: Backend> NpModel<B> {
         }
 
         let x = self.linear_out.forward(x);
-        x.squeeze::<2>(2)
+        x.squeeze_dim::<2>(2)
     }
 }
 

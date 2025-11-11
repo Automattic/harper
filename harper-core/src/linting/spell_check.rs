@@ -14,7 +14,7 @@ where
     T: Dictionary,
 {
     dictionary: T,
-    word_cache: LruCache<CharString, Vec<CharString>>,
+    suggestion_cache: LruCache<CharString, Vec<CharString>>,
     dialect: Dialect,
 }
 
@@ -22,7 +22,7 @@ impl<T: Dictionary> SpellCheck<T> {
     pub fn new(dictionary: T, dialect: Dialect) -> Self {
         Self {
             dictionary,
-            word_cache: LruCache::new(NonZero::new(10000).unwrap()),
+            suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
             dialect,
         }
     }
@@ -30,11 +30,11 @@ impl<T: Dictionary> SpellCheck<T> {
     const MAX_SUGGESTIONS: usize = 3;
 
     fn suggest_correct_spelling(&mut self, word: &[char]) -> Vec<CharString> {
-        if let Some(hit) = self.word_cache.get(word) {
+        if let Some(hit) = self.suggestion_cache.get(word) {
             hit.clone()
         } else {
             let suggestions = self.uncached_suggest_correct_spelling(word);
-            self.word_cache.put(word.into(), suggestions.clone());
+            self.suggestion_cache.put(word.into(), suggestions.clone());
             suggestions
         }
     }
@@ -45,9 +45,9 @@ impl<T: Dictionary> SpellCheck<T> {
                 suggest_correct_spelling(word, 100, dist, &self.dictionary)
                     .into_iter()
                     .filter(|v| {
-                        // ignore entries outside the configured dialect
+                        // Ignore entries outside the configured dialect
                         self.dictionary
-                            .get_lexeme_metadata(v)
+                            .get_word_metadata(v)
                             .unwrap()
                             .dialects
                             .is_dialect_enabled(self.dialect)
@@ -92,15 +92,16 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 }
             }
 
-            let suggestions = possibilities
+            let suggestions: Vec<_> = possibilities
                 .iter()
-                .map(|word| Suggestion::ReplaceWith(word.to_vec()));
+                .map(|sug| Suggestion::ReplaceWith(sug.to_vec()))
+                .collect();
 
             // If there's only one suggestion, save the user a step in the GUI
             let message = if suggestions.len() == 1 {
                 format!(
                     "Did you mean `{}`?",
-                    possibilities.last().unwrap().iter().collect::<String>()
+                    possibilities.first().unwrap().iter().collect::<String>()
                 )
             } else {
                 format!(
@@ -112,7 +113,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             lints.push(Lint {
                 span: word.span,
                 lint_kind: LintKind::Spelling,
-                suggestions: suggestions.collect(),
+                suggestions,
                 message,
                 priority: 63,
             })
@@ -128,9 +129,12 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
 #[cfg(test)]
 mod tests {
+    use strum::IntoEnumIterator;
+
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
+    use crate::linting::tests::assert_no_lints;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
@@ -217,7 +221,7 @@ mod tests {
     }
 
     #[test]
-    fn austrlaian_verandah_in_british_dialect() {
+    fn australian_verandah_in_british_dialect() {
         assert_lint_count(
             "Our house has a verandah.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
@@ -449,5 +453,16 @@ mod tests {
                 .len(),
             1
         );
+    }
+
+    #[test]
+    fn matt_is_allowed() {
+        for dialect in Dialect::iter() {
+            dbg!(dialect);
+            assert_no_lints(
+                "Matt is a great name.",
+                SpellCheck::new(FstDictionary::curated(), dialect),
+            );
+        }
     }
 }

@@ -1,6 +1,6 @@
 [package]
 name = "harper-pos-utils"
-version = "0.65.0"
+version = "0.71.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -11,17 +11,16 @@ rs-conllu = "0.3.0"
 hashbrown = { version = "0.16.0", features = ["serde"] }
 strum = "0.27.2"
 strum_macros = "0.27.2"
-serde = { version = "1.0.226", features = ["derive"] }
+serde = { version = "1.0.228", features = ["derive"] }
 is-macro = "0.3.7"
-rayon = { version = "1.11.0", optional = true }
 rand = { version = "0.9.1", optional = true }
-burn = { version = "0.18.0", default-features = false, features = ["std"] }
-burn-ndarray = { version = "0.18.0", default-features = false }
+burn = { version = "0.19.1", default-features = false, features = ["std"] }
+burn-ndarray = { version = "0.19.0", default-features = false }
 serde_json = "1.0.145"
-itertools = "0.14.0"
-lru = "0.16.1"
+lru = "0.16.2"
+rayon = { version = "1.11.0", optional = true }
 
 [features]
 default = []
-threaded = ["dep:rayon"]
 training = ["dep:rand", "burn/train", "burn/autodiff"]
+threaded = ["dep:rayon"]

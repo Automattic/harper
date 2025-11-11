@@ -96,6 +96,11 @@ mod tests {
     }
 
     #[test]
+    fn no_lint_distance_from_center() {
+        assert_no_lints("Distance from the center to any face", ToTwoToo::default());
+    }
+
+    #[test]
     fn fixes_too_go() {
         assert_suggestion_result(
             "I want too go abroad.",
@@ -408,5 +413,31 @@ mod tests {
             "We used an LLM-as-judge to automatically score agent trajectories.",
             ToTwoToo::default(),
         );
+    }
+
+    #[test]
+    fn no_lint_all_the_way_to_advanced_usage() {
+        assert_no_lints(
+            "All the way to advanced usage, like an expert.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_access_to_over_400_integrations() {
+        assert_no_lints(
+            "You'll have access to over 400 integrations.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_accustomed_to_precision() {
+        assert_no_lints("I’m rather accustomed to precision.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_prone_to_melancholy() {
+        assert_no_lints("He wasn’t a man prone to melancholy.", ToTwoToo::default());
     }
 }

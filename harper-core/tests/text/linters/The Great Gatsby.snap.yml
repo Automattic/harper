@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Ff”
+  - Replace with: “Fa”
 
 
 
@@ -174,6 +174,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+      57 | reference to the rather hard-boiled painting that hangs in father’s office. I
+         |                                                            ^~~~~~~~ The canonical dictionary spelling is `father's`.
+Suggest:
+  - Replace with: “father's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       61 | restless. Instead of being the warm centre of the world, the Middle West now
@@ -206,6 +215,16 @@ Message: |
       73 | bungalow at eighty a month, but at the last minute the firm ordered him to
 Suggest:
   - Replace with: “weather-beaten”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+      72 | sounded like a great idea. He found the house, a weatherbeaten cardboard
+         |                                                  ^~~~~~~~~~~~~ `weatherbeaten` should probably be written as `weather beaten`.
+      73 | bungalow at eighty a month, but at the last minute the firm ordered him to
+Suggest:
+  - Replace with: “weather beaten”
 
 
 
@@ -260,6 +279,16 @@ Message: |
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+      98 | of very solemn and obvious editorials for the Yale News—and now I was going to
+         |                                                    ^~~~ The canonical dictionary spelling is `news`.
+      99 | bring back all such things into my life and become again that most limited of
+Suggest:
+  - Replace with: “news”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      106 | natural curiosities, two unusual formations of land. Twenty miles from the city
@@ -298,15 +327,25 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     119 | thousand a season. The one on my right was a colossal affair by any standard—it
+     120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
+         |                                       ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “DE”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      119 | thousand a season. The one on my right was a colossal affair by any standard—it
      120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
          |                                       ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -490,6 +529,20 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     334 | “All right,” said Daisy. ‘‘What’ll we plan?” She turned to me helplessly: ‘‘What
+         |                                            ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     335 | do people plan?”
+         |                ^ This quote has no termination.
+
+
+
 Lint:    Style (31 priority)
 Message: |
      394 | me again. ‘‘—And we’ve produced all the things that go to make civilization—oh,
@@ -497,6 +550,32 @@ Message: |
          | ^~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     395 | science and art, and all that. Do you see?”
+         |                                           ^ This quote has no termination.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     402 | “I’ll tell you a family secret,” she whispered enthusiastically. “It’s about the
+     403 | butler’s nose. Do you want to hear about the butler’s nose?”
+         | ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+Suggest:
+  - Replace with: “butler's”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     403 | butler’s nose. Do you want to hear about the butler’s nose?”
+         |                                              ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+Suggest:
+  - Replace with: “butler's”
 
 
 
@@ -520,6 +599,13 @@ Message: |
      427 | rose. Doesn’t he?” She turned to Miss Baker for confirmation: “An absolute
 Suggest:
   - Replace with: “an”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     452 | “Why—” she said hesitantly, ‘‘Tom’s got some woman in New York.”
+         |                                                                ^ This quote has no termination.
 
 
 
@@ -570,6 +656,13 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     514 | “I’ll show you how I’ve gotten to feel about—things. Well, she was less than an
+         | ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      529 | the whole evening had been a trick of some sort to exact a contributary emotion
@@ -579,6 +672,16 @@ Suggest:
   - Replace with: “contributory”
   - Replace with: “contributor”
   - Replace with: “contributors”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     529 | the whole evening had been a trick of some sort to exact a contributary emotion
+         |                                                            ^~~~~~~~~~~~ `contributary` should probably be written as `con tributary`.
+     530 | from me. I waited, and sure enough, in a moment she looked at me with an
+Suggest:
+  - Replace with: “con tributary”
 
 
 
@@ -610,6 +713,13 @@ Message: |
          |                                                      ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
 Suggest:
   - Replace with: “excellent”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+     603 | square of light. As I started my motor Daisy peremptorily called: “Wait!
+         |                                                                   ^ This quote has no termination.
 
 
 
@@ -707,9 +817,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “T”
   - Replace with: “Ta”
   - Replace with: “Tb”
+  - Replace with: “Tn”
 
 
 
@@ -718,7 +828,7 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                         ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jr”
+  - Replace with: “Jg”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -741,9 +851,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “T”
   - Replace with: “Ta”
   - Replace with: “Tb”
+  - Replace with: “Tn”
 
 
 
@@ -752,7 +862,7 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jr”
+  - Replace with: “Jg”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -847,15 +957,32 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     711 | ‘‘How’s business?”
+         |                  ^ This quote has no termination.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     728 | stout, but she carried her flesh sensuously as some women can. Her face, above a
+     729 | spotted dress of dark blue crêpe-de-chine, contained no facet or gleam of
+         |                                  ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “DE”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      728 | stout, but she carried her flesh sensuously as some women can. Her face, above a
      729 | spotted dress of dark blue crêpe-de-chine, contained no facet or gleam of
          |                                  ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -871,6 +998,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+     747 | “I’ll meet you by the news-stand on the lower level.”
+         |                       ^~~~ The canonical dictionary spelling is `news`.
+Suggest:
+  - Replace with: “news”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      756 | “Terrible place, isn’t it,” said Tom, exchanging a frown with Doctor Eckleburg.
@@ -879,6 +1015,16 @@ Suggest:
   - Replace with: “Excalibur”
   - Replace with: “Vicksburg”
   - Replace with: “Iceberg”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     764 | “Wilson? He thinks she goes to see her sister in New York. He’s so dumb he
+     765 | doesn’t know he’s alive.”
+         |              ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
 
 
 
@@ -894,14 +1040,24 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+     772 | her rather wide hips as Tom helped her to the platform in New York. At the
+     773 | news-stand she bought a copy of Town Tattle and a moving-picture magazine, and
+         | ^~~~ The canonical dictionary spelling is `news`.
+Suggest:
+  - Replace with: “news”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “Do”
-  - Replace with: “D”
-  - Replace with: “Db”
+  - Replace with: “Dc”
+  - Replace with: “DA”
+  - Replace with: “DE”
 
 
 
@@ -1074,6 +1230,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     964 | “Well, they say he’s a nephew or a cousin of Kaiser Wilhelm’s. That’s where all
+         |                 ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      989 | studies of him.” His lips moved silently for a moment as he invented. “‘George
@@ -1107,6 +1272,15 @@ Suggest:
   - Replace with: “kike”
   - Replace with: “tyke”
   - Replace with: “dyke”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1039 | kept saying to me: ‘Lucille, that man’s ’way below you!’ But if I hadn’t met
+         |                                   ^~~~~ The canonical dictionary spelling is `man's`.
+Suggest:
+  - Replace with: “man's”
 
 
 
@@ -1168,9 +1342,9 @@ Message: |
     1122 | Daisy! Dai———”
          |        ^~~ Did you mean to spell `Dai` this way?
 Suggest:
+  - Replace with: “Day”
   - Replace with: “Dab”
   - Replace with: “Dad”
-  - Replace with: “Dais”
 
 
 
@@ -1191,28 +1365,10 @@ Message: |
 
 Lint:    Formatting (63 priority)
 Message: |
-    1149 | . . . I was standing beside his bed and he was sitting up between the sheets,
-         | ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
     1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
          |                      ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
-         |                       ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -1228,27 +1384,9 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
-         |                                        ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
          |                                                               ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
-         |                                                                ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -1271,16 +1409,6 @@ Message: |
          |       ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    1152 | “Beauty and the Beast . . . Loneliness . . . Old Grocery Horse . . . Brook’n
-    1153 | Bridge . . .” Then I was lying half asleep in the cold lower level of the
-         |        ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -1317,6 +1445,26 @@ Suggest:
   - Replace with: “purple's”
   - Replace with: “pullers”
   - Replace with: “pullets”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    1172 | York—every Monday these same oranges and lemons left his back door in a pyramid
+    1173 | of pulpless halves. There was a machine in the kitchen which could extract the
+         |    ^~~~~~~~ `pulpless` should probably be written as `pulp less`.
+Suggest:
+  - Replace with: “pulp less”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1174 | juice of two hundred oranges in half an hour if a little button was pressed two
+    1175 | hundred times by a butler’s thumb.
+         |                    ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+Suggest:
+  - Replace with: “butler's”
 
 
 
@@ -1435,6 +1583,16 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+    1210 | rhythm obligingly for her, and there is a burst of chatter as the erroneous news
+         |                                                                             ^~~~ The canonical dictionary spelling is `news`.
+    1211 | goes around that she is Gilda Gray’s understudy from the Follies. The party has
+Suggest:
+  - Replace with: “news”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1223 | I had been actually invited. A chauffeur in a uniform of robin’s-egg blue
@@ -1445,6 +1603,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1226 | his “little party” that night. He had seen me several times, and had intended to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1223 | I had been actually invited. A chauffeur in a uniform of robin’s-egg blue
+         |                                                          ^~~~~~~ The canonical dictionary spelling is `robin's`.
+    1224 | crossed my lawn early that Saturday morning with a surprisingly formal note from
+Suggest:
+  - Replace with: “robin's”
 
 
 
@@ -1641,6 +1809,14 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    1408 | jazz, and between the numbers people were doing ‘‘stunts” all over the garden,
+         |                                                         ^ This quote has no termination.
+    1409 | while happy, vacuous bursts of laughter rose toward the summer sky. A pair of
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1413 | trembling a little to the stiff, tinny drip of the banjoes on the lawn.
@@ -1794,6 +1970,16 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    1569 | “She had a fight with a man who says he’s her husband,” explained a girl at my
+         |                                      ^~~~ The canonical dictionary spelling is `he's`.
+    1570 | elbow.
+Suggest:
+  - Replace with: “he's”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1574 | rent asunder by dissension. One of the men was talking with curious intensity to
@@ -1818,39 +2004,12 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
-Message: |
-    1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
-         |         ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
     1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
          |               ^~~~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Simply”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    1614 | face. “Please come and see me. . . . Phone book. . . . Under the name of Mrs.
-         |                              ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    1614 | face. “Please come and see me. . . . Phone book. . . . Under the name of Mrs.
-         |                                                ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -1862,43 +2021,6 @@ Suggest:
   - Replace with: “Gurney”
   - Replace with: “Journey”
   - Replace with: “Tourney”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    1615 | Sigourney Howard. . . . My aunt. . . .” She was hurrying off as she talked—her
-         |                 ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    1615 | Sigourney Howard. . . . My aunt. . . .” She was hurrying off as she talked—her
-         |                                ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    1632 | “All right, in a minute. Tell them I’ll be right there. . . . Good night.”
-         |                                                       ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    1637 | in having been among the last to go, as if he had desired it all the time. “Good
-    1638 | night, old sport. . . . Good night.”
-         |                 ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -1967,6 +2089,15 @@ Suggest:
   - Replace with: “outta”
   - Replace with: “out”
   - Replace with: “outs”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
+         |                                                 ^~~~ `outa` should probably be written as `out a`.
+Suggest:
+  - Replace with: “out a”
 
 
 
@@ -2084,6 +2215,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1792 | smile turned to the world and yet satisfy the demands of her hard, jaunty body.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1797 | passed so close to some workmen that our fender flicked a button on one man’s
+         |                                                                         ^~~~~ The canonical dictionary spelling is `man's`.
+    1798 | coat.
+Suggest:
+  - Replace with: “man's”
 
 
 
@@ -2256,8 +2397,8 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
-  - Replace with: “Pa”
+  - Replace with: “Pt”
+  - Replace with: “P”
   - Replace with: “Pd”
 
 
@@ -2346,8 +2487,8 @@ Message: |
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
   - Replace with: “Ax”
-  - Replace with: “A”
-  - Replace with: “Ah”
+  - Replace with: “Ab”
+  - Replace with: “Ac”
 
 
 
@@ -2470,7 +2611,7 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Gt”
-  - Replace with: “G”
+  - Replace with: “Go”
   - Replace with: “Gr”
 
 
@@ -2499,12 +2640,21 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
+         |                               ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “DA”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
-  - Replace with: “D”
+  - Replace with: “Dab”
   - Replace with: “Dad”
   - Replace with: “Dam”
 
@@ -2553,6 +2703,16 @@ Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
   - Replace with: “Bf”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
+         |                                         ^~ This word's canonical spelling is all-caps.
+    1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
+Suggest:
+  - Replace with: “DE”
 
 
 
@@ -2773,8 +2933,8 @@ Message: |
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
   - Replace with: “L”
-  - Replace with: “La”
   - Replace with: “Lb”
+  - Replace with: “Lo”
 
 
 
@@ -2894,8 +3054,8 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pp”
-  - Replace with: “Pa”
+  - Replace with: “Pt”
+  - Replace with: “P”
   - Replace with: “Pd”
 
 
@@ -2960,15 +3120,25 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    1981 | “character” leaking sawdust at every pore as he pursued a tiger through the Bois
+    1982 | de Boulogne.
+         | ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “DE”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1981 | “character” leaking sawdust at every pore as he pursued a tiger through the Bois
     1982 | de Boulogne.
          | ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -3004,15 +3174,25 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2006 | To my astonishment, the thing had an authentic look. “Orderi di Danilo,” ran the
+         |                                                              ^~ This word's canonical spelling is all-caps.
+    2007 | circular legend, “Montenegro, Nicolas Rex.”
+Suggest:
+  - Replace with: “DI”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2006 | To my astonishment, the thing had an authentic look. “Orderi di Danilo,” ran the
          |                                                              ^~ Did you mean to spell `di` this way?
     2007 | circular legend, “Montenegro, Nicolas Rex.”
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -3073,6 +3253,16 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2056 | “All right, old sport,” called Gatsby. We slowed down. Taking a white card from
+    2057 | his wallet, he waved it before the man’s eyes.
+         |                                    ^~~~~ The canonical dictionary spelling is `man's`.
+Suggest:
+  - Replace with: “man's”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2067 | Over the great bridge, with the sunlight through the girders making a constant
@@ -3106,6 +3296,16 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2078 | driven by a white chauffeur, in which sat three modish negroes, two bucks and a
+         |                                                        ^~~~~~~ The canonical dictionary spelling is `Negroes`.
+    2079 | girl. I laughed aloud as the yolks of their eyeballs rolled toward us in haughty
+Suggest:
+  - Replace with: “Negroes”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2078 | driven by a white chauffeur, in which sat three modish negroes, two bucks and a
@@ -3115,16 +3315,6 @@ Suggest:
   - Replace with: “Negroes”
   - Replace with: “Negro's”
   - Replace with: “Negros”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    2082 | “Anything can happen now that we’ve slid over this bridge,” I thought; “anything
-    2083 | at all. . . .”
-         |       ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -3161,6 +3351,15 @@ Lint:    Spelling (63 priority)
 Message: |
     2105 | “I handed the money to Katspaugh and I sid: ‘All right, Katspaugh, don’t pay him
          |                        ^~~~~~~~~ Did you mean to spell `Katspaugh` this way?
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2105 | “I handed the money to Katspaugh and I sid: ‘All right, Katspaugh, don’t pay him
+         |                                        ^~~ The canonical dictionary spelling is `Sid`.
+Suggest:
+  - Replace with: “Sid”
 
 
 
@@ -3268,6 +3467,21 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2126 | “The old Metropole,” brooded Mr. Wolfshiem gloomily. “Filled with faces dead and
+         |                                                      ^ This quote has no termination.
+    2127 | gone. Filled with friends gone now forever. I can’t forget so long as I live the
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2134 | “‘Let the bastards come in here if they want you, Rosy, but don’t you, so help
+         | ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2142 | “Sure he went.” Mr. Wolfshiem’s nose flashed at me indignantly. “He turned
@@ -3285,6 +3499,13 @@ Message: |
          |                                          ^~~~~~~~~~ Did you mean `connection`?
 Suggest:
   - Replace with: “connection”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2154 | “Oh, no,” he exclaimed, ‘‘this isn’t the man.”
+         |                                              ^ This quote has no termination.
 
 
 
@@ -3378,6 +3599,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2215 | about women. He would never so much as look at a friend’s wife.”
+         |                                                  ^~~~~~~~ The canonical dictionary spelling is `friend's`.
+Suggest:
+  - Replace with: “friend's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2218 | Mr. Wolfshiem drank his coffee with a jerk and got to his feet.
@@ -3415,6 +3645,15 @@ Message: |
          |        ^~~~~~~~~ Did you mean `Bolshie`?
 Suggest:
   - Replace with: “Bolshie”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2243 | “Meyer Wolfshiem? No, he’s a gambler.” Gatsby hesitated, then added coolly:
+         |                       ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
 
 
 
@@ -3481,6 +3720,16 @@ Suggest:
   - Replace with: “beau”
   - Replace with: “beaus”
   - Replace with: “beaut”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
+         |                                                           ^~~~~ `beaux` should probably be written as `be aux`.
+    2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
+Suggest:
+  - Replace with: “be aux”
 
 
 
@@ -3572,6 +3821,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2352 | change’ her mine!’”
+         |                   ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2360 | But she didn’t say another word. We gave her spirits of ammonia and put ice on
@@ -3582,6 +3838,14 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2363 | over. Next day at five o’clock she married Tom Buchanan without so much as a
          | ~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2368 | around uneasily, and say: ‘‘Where’s Tom gone?” and wear the most abstracted
+         |                                              ^ This quote has no termination.
+    2369 | expression until she saw him coming in the door. She used to sit on the sand
 
 
 
@@ -3609,12 +3873,13 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
+Lint:    Capitalization (127 priority)
 Message: |
-    2386 | in for amour at all—and yet there’s something in that voice of hers. . . .
-         |                                                                    ^~~~~~~ Condense this punctuation cluster to a single mark.
+    2395 | When Jordan Baker had finished telling all this we had left the Plaza for half
+    2396 | an hour and were driving in a victoria through Central Park. The sun had gone
+         |                               ^~~~~~~~ The canonical dictionary spelling is `Victoria`.
 Suggest:
-  - Replace with: “.”
+  - Replace with: “Victoria”
 
 
 
@@ -3641,6 +3906,50 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2425 | “He’s afraid, he’s waited so long. He thought you might be offended. You see,
+         |               ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2425 | “He’s afraid, he’s waited so long. He thought you might be offended. You see,
+    2426 | he’s regular tough underneath it all.”
+         | ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2437 | “I think he half expected her to wander into one of his parties, some night,”
+    2438 | went on Jordan, “but she never did. Then he began asking people casually if they
+         |                 ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2444 | “‘I don’t want to do anything out of the way!’ he kept saying. ‘I want to see
+         | ^ This quote has no termination.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2448 | whole idea. He doesn’t know very much about Tom, though he says he’s read a
+         |                                                                 ^~~~ The canonical dictionary spelling is `he's`.
+    2449 | Chicago paper for years just on the chance of catching a glimpse of Daisy’s
+Suggest:
+  - Replace with: “he's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2455 | hard, limited person, who dealt in universal scepticism, and who leaned back
@@ -3649,6 +3958,13 @@ Message: |
 Suggest:
   - Replace with: “skepticism”
   - Replace with: “asceticism”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2458 | busy and the tired.”
+         |                    ^ This quote has no termination.
 
 
 
@@ -3681,6 +3997,13 @@ Suggest:
   - Replace with: “Conley”
   - Replace with: “Corey”
   - Replace with: “Coley”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2530 | “Oh, it isn’t about that. At least—’’ He fumbled with a series of beginnings.
+         | ^ This quote has no termination.
 
 
 
@@ -3721,15 +4044,6 @@ Message: |
          |        ^~~~~~~~~ Vocabulary enhancement: use `excellent` instead of `very good`
 Suggest:
   - Replace with: “excellent”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    2603 | “Of course, of course! They’re fine!” and he added hollowly, “. . . old sport.”
-         |                                                               ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -3821,6 +4135,13 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2720 | terrible, terrible mistake.”
+         |                            ^ This quote has no termination.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2737 | I walked out the back way—just as Gatsby had when he had made his nervous
@@ -3864,6 +4185,22 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+    2776 | ecstatic patron of recurrent light, and repeated the news to Daisy. “What do you
+         |                                                      ^~~~ The canonical dictionary spelling is `news`.
+Suggest:
+  - Replace with: “news”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    2806 | was in he answered: ‘‘That’s my affair,” before he realized that it wasn’t an
+         |                                        ^ This quote has no termination.
+
+
+
 Lint:    Style (31 priority)
 Message: |
     2823 | “I keep it always full of interesting people, night and day. People who do
@@ -3898,6 +4235,14 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2837 | closed the door of ‘‘the Merton College Library” I could have sworn I heard the
+         |                                                ^ This quote has no termination.
+    2838 | owl-eyed man break into ghostly laughter.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2840 | We went up-stairs, through period bedrooms swathed in rose and lavender silk and
@@ -3928,6 +4273,14 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    2843 | doing liver exercises on the floor. It was Mr. Klipspringer, the ‘‘boarder.” I
+         |                                                                            ^ This quote has no termination.
+    2844 | had seen him wandering hungrily about the beach that morning. Finally we came to
+
+
+
 Lint:    Style (31 priority)
 Message: |
     2844 | had seen him wandering hungrily about the beach that morning. Finally we came to
@@ -3946,6 +4299,15 @@ Suggest:
   - Replace with: “overground”
   - Replace with: “overfond”
   - Replace with: “overfund”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    2866 | intensity. Now, in the reaction, he was running down like an overwound clock.
+         |                                                              ^~~~~~~~~ `overwound` should probably be written as `over wound`.
+Suggest:
+  - Replace with: “over wound”
 
 
 
@@ -3983,6 +4345,17 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    2878 | brought more and the soft rich heap mounted higher—shirts with stripes and
+    2879 | scrolls and plaids in coral and applegreen and lavender and faint orange, with
+         |                                 ^~~~~~~~~~ `applegreen` should probably be written as `apple green`.
+    2880 | monograms of Indian blue. Suddenly, with a strained sound, Daisy bent her head
+Suggest:
+  - Replace with: “apple green”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2887 | After the house, we were to see the grounds and the swimming-pool, and the
@@ -3994,58 +4367,22 @@ Message: |
 
 
 
-Lint:    Formatting (63 priority)
+Lint:    Capitalization (31 priority)
 Message: |
-    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
-         |     ^~~~~~~ Condense this punctuation cluster to a single mark.
+    2905 | “Who’s this?”
+         |  ^~~~~ The canonical dictionary spelling is `who's`.
 Suggest:
-  - Replace with: “.”
+  - Replace with: “who's”
 
 
 
-Lint:    Formatting (63 priority)
-Message: |
-    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
-         |                                   ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
-         |                                                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    2925 | “Yes. . . . Well, I can’t talk now. . . . I can’t talk now, old sport. . . . I
-    2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
-         |                  ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
+Lint:    Capitalization (127 priority)
 Message: |
     2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
-         |                                                           ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
+         |                                                                         ^~~~ The canonical dictionary spelling is `he's`.
     2927 | use to us if Detroit is his idea of a small town. . . .” He rang off.
-         |                                                 ^~~~~~~ Condense this punctuation cluster to a single mark.
 Suggest:
-  - Replace with: “.”
+  - Replace with: “he's”
 
 
 
@@ -4069,15 +4406,6 @@ Message: |
          |                               ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    2950 | I’d been asleep. Then I got up . . .”
-         |                                ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -4139,6 +4467,16 @@ Suggest:
 
 
 
+Lint:    Capitalization (31 priority)
+Message: |
+    3019 | become authorities upon his past, had increased all summer until he fell just
+    3020 | short of being news. Contemporary legends such as the “underground pipe-line to
+         |                ^~~~ The canonical dictionary spelling is `news`.
+Suggest:
+  - Replace with: “news”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     3020 | short of being news. Contemporary legends such as the “underground pipe-line to
@@ -4158,8 +4496,8 @@ Message: |
     3024 | a source of satisfaction to James Gatz of North Dakota, isn’t easy to say.
          |                                   ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -4169,8 +4507,8 @@ Message: |
     3026 | James Gatz—that was really, or at least legally, his name. He had changed it at
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -4193,8 +4531,8 @@ Message: |
     3029 | on Lake Superior. It was James Gatz who had been loafing along the beach that
          |                                ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -4231,15 +4569,25 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    3074 | Ella Kaye, the newspaper woman, played Madame de Maintenon to his weakness and
+         |                                               ^~ This word's canonical spelling is all-caps.
+    3075 | sent him to sea in a yacht, were common property of the turgid journalism
+Suggest:
+  - Replace with: “DE”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3074 | Ella Kaye, the newspaper woman, played Madame de Maintenon to his weakness and
          |                                               ^~ Did you mean to spell `de` this way?
     3075 | sent him to sea in a yacht, were common property of the turgid journalism
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -4272,8 +4620,8 @@ Message: |
     3079 | To young Gatz, resting on his oars and looking up at the railed deck, that yacht
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -4310,6 +4658,16 @@ Suggest:
   - Replace with: “jailer”
   - Replace with: “sailor”
   - Replace with: “tailor”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    3089 | in turn steward, mate, skipper, secretary, and even jailor, for Dan Cody sober
+         |                                                     ^~~~~~ `jailor` should probably be written as `jail or`.
+    3090 | knew what lavish doings Dan Cody drunk might soon be about, and he provided for
+Suggest:
+  - Replace with: “jail or”
 
 
 
@@ -4380,15 +4738,6 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
-Message: |
-    3137 | little champagne? Nothing at all, thanks. . . . I’m sorry———
-         |                                         ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
 Lint:    Enhancement (31 priority)
 Message: |
     3141 | “Very good roads around here.”
@@ -4406,6 +4755,15 @@ Suggest:
   - Replace with: “var”
   - Replace with: “veer”
   - Replace with: “verb”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    3213 | “My God, I believe the man’s coming,” said Tom. “Doesn’t he know she doesn’t
+         |                        ^~~~~ The canonical dictionary spelling is `man's`.
+Suggest:
+  - Replace with: “man's”
 
 
 
@@ -4455,15 +4813,6 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
-Message: |
-    3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
-         |                ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
     3274 | “Mrs. Buchanan . . . and Mr. Buchanan—” After an instant’s hesitation he added:
@@ -4473,12 +4822,10 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
+Lint:    Formatting (255 priority)
 Message: |
-    3303 | here’s my little gold pencil.” . . . She looked around after a moment and told
-         |                                ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
+    3296 | explained, ‘‘or any act of God.”
+         |                                ^ This quote has no termination.
 
 
 
@@ -4524,6 +4871,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    3349 | But the rest offended her—and inarguably, because it wasn’t a gesture but an
+         |                               ^~~~~~~~~~ `inarguably` should probably be written as `in arguably`.
+Suggest:
+  - Replace with: “in arguably”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     3350 | emotion. She was appalled by West Egg, this unprecedented “place” that Broadway
@@ -4554,6 +4910,26 @@ Message: |
 Suggest:
   - Replace with: “rhythmic”
   - Replace with: “mythic”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    3396 | hadn’t been invited. They simply force their way in and he’s too polite to
+         |                                                         ^~~~ The canonical dictionary spelling is `he's`.
+    3397 | object.”
+Suggest:
+  - Replace with: “he's”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+    3409 | Her glance left me and sought the lighted top of the steps, where “Three o’Clock
+         |                                                                          ^~~~~~~ The canonical dictionary spelling is `o'clock`.
+    3410 | in the Morning,” a neat, sad little waltz of that year, was drifting out the
+Suggest:
+  - Replace with: “o'clock”
 
 
 
@@ -4593,25 +4969,6 @@ Message: |
 
 
 
-Lint:    Formatting (63 priority)
-Message: |
-    3465 | a certain starting place and go over it all slowly, he could find out what that
-    3466 | thing was. . . .
-         |          ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3468 | . . . One autumn night, five years before, they had been walking down the street
-         | ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     3474 | Out of the corner of his eye Gatsby saw that the blocks of the sidewalks really
@@ -4631,6 +4988,16 @@ Message: |
          |     ^~~~~~~~~~ Did you mean the closed compound noun “heartbeat”?
 Suggest:
   - Replace with: “heartbeat”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    3488 | somewhere a long time ago. For a moment a phrase tried to take shape in my mouth
+    3489 | and my lips parted like a dumb man’s, as though there was more struggling upon
+         |                                ^~~~~ The canonical dictionary spelling is `man's`.
+Suggest:
+  - Replace with: “man's”
 
 
 
@@ -4662,6 +5029,13 @@ Message: |
     3496 | house failed to go on one Saturday night—and, as obscurely as it had begun, his
     3497 | career as Trimalchio was over. Only gradually did I become aware that the
          |           ^~~~~~~~~~ Did you mean to spell `Trimalchio` this way?
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    3505 | “Nope.” After a pause he added “sir’’ in a dilatory, grudging way.
+         |                                ^ This quote has no termination.
 
 
 
@@ -4756,69 +5130,10 @@ Suggest:
 
 Lint:    Formatting (63 priority)
 Message: |
-    3565 | “Hot!” said the conductor to familiar faces. “Some weather! . . . Hot! . . .
-         |                                                           ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “!”
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3565 | “Hot!” said the conductor to familiar faces. “Some weather! . . . Hot! . . .
-         |                                                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “!”
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
-         |    ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “!”
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
-         |               ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “!”
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
     3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
          |                                                                 ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3566 | Hot! . . . Hot! . . . Is it hot enough for you? Is it hot? Is it . . .?”
-         |                                                                  ^~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-  - Replace with: “?”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3572 | . . . Through the hall of the Buchanans’ house blew a faint wind, carrying the
-         | ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -4844,27 +5159,9 @@ Suggest:
 Lint:    Formatting (63 priority)
 Message: |
     3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
-         |                               ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
          |                                        ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3578 | What he really said was: “Yes . . . Yes . . . I’ll see.”
-         |                                         ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -4881,31 +5178,11 @@ Suggest:
 
 Lint:    Formatting (63 priority)
 Message: |
-    3605 | We were silent. The voice in the hall rose high with annoyance: “Very well,
-    3606 | then, I won’t sell you the car at all. . . . I’m under no obligations to you at
-         |                                      ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
     3606 | then, I won’t sell you the car at all. . . . I’m under no obligations to you at
     3607 | all . . . and as for your bothering me about it at lunch time, I won’t stand
          |    ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3606 | then, I won’t sell you the car at all. . . . I’m under no obligations to you at
-    3607 | all . . . and as for your bothering me about it at lunch time, I won’t stand
-         |     ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -4915,6 +5192,15 @@ Message: |
          |           ^~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “And”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    3612 | “No, he’s not,” I assured her. “It’s a bona-fide deal. I happen to know about
+         |      ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
 
 
 
@@ -4937,25 +5223,6 @@ Suggest:
   - Replace with: “fade”
   - Replace with: “fife”
   - Replace with: “file”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3618 | “Mr. Gatsby!” He put out his broad, flat hand with well-concealed dislike. “I’m
-    3619 | glad to see you, sir. . . . Nick. . . .”
-         |                     ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    3619 | glad to see you, sir. . . . Nick. . . .”
-         |                                 ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -5003,15 +5270,25 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
+    3647 | up now, and say—How-de-do.”
+         |                     ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “DE”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
     3647 | up now, and say—How-de-do.”
          |                     ^~ Did you mean to spell `de` this way?
 Suggest:
-  - Replace with: “d”
   - Replace with: “db”
   - Replace with: “dc”
+  - Replace with: “dd”
 
 
 
@@ -5035,6 +5312,32 @@ Suggest:
   - Replace with: “rickets”
   - Replace with: “Rickey's”
   - Replace with: “rice's”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    3686 | “I read somewhere that the sun’s getting hotter every year,” said Tom genially.
+         |                            ^~~~~ The canonical dictionary spelling is `sun's`.
+Suggest:
+  - Replace with: “sun's”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    3687 | “It seems that pretty soon the earth’s going to fall into the sun—or wait a
+         | ^ This quote has no termination.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    3687 | “It seems that pretty soon the earth’s going to fall into the sun—or wait a
+    3688 | minute—it’s just the opposite—the sun’s getting colder every year.
+         |                                   ^~~~~ The canonical dictionary spelling is `sun's`.
+Suggest:
+  - Replace with: “sun's”
 
 
 
@@ -5070,24 +5373,20 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
+Lint:    Formatting (255 priority)
 Message: |
-    3794 | inexhaustible charm that rose and fell in it, the jingle of it, the cymbals’
-    3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
-         |           ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
+    3739 | “You resemble the advertisement of the man,” she went on innocently. ‘You know
+    3740 | the advertisement of the man—”
+         |                              ^ This quote has no termination.
 
 
 
-Lint:    Formatting (63 priority)
+Lint:    Capitalization (127 priority)
 Message: |
     3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
-         |                                                                              ^~~~
-    3796 | . .
-         | ~~~ Condense this punctuation cluster to a single mark.
+         |                                              ^~~~~~ The canonical dictionary spelling is `king's`.
 Suggest:
-  - Replace with: “.”
+  - Replace with: “king's”
 
 
 
@@ -5132,14 +5431,23 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    3864 | “Nevertheless he’s an Oxford man.”
+         |               ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “T”
   - Replace with: “Ta”
   - Replace with: “Tb”
+  - Replace with: “Tn”
 
 
 
@@ -5148,7 +5456,7 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                     ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jr”
+  - Replace with: “Jg”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -5206,9 +5514,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “T”
   - Replace with: “Ta”
   - Replace with: “Tb”
+  - Replace with: “Tn”
 
 
 
@@ -5217,7 +5525,7 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                       ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jr”
+  - Replace with: “Jg”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -5323,15 +5631,6 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
-Message: |
-    4004 | thought, or pretended to think, that we were being very funny . . .
-         |                                                               ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     4010 | “It’s a swell suite,” whispered Jordan respectfully, and every one laughed.
@@ -5397,6 +5696,13 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    4062 | wasn’t any connection.”
+         |                       ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4064 | “I used to know a Bill Biloxi from Memphis,” I remarked.
@@ -5414,8 +5720,17 @@ Message: |
          |                                   ^~ Did you mean to spell `lf` this way?
 Suggest:
   - Replace with: “l”
-  - Replace with: “la”
   - Replace with: “lb”
+  - Replace with: “lg”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    4073 | “We're getting old,” said Daisy. “lf we were young we’d rise and dance.”
+         |                                   ^~ `lf` should probably be written as `l f`.
+Suggest:
+  - Replace with: “l f”
 
 
 
@@ -5427,6 +5742,13 @@ Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
   - Replace with: “Biro's”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4075 | “Remember Biloxi,” Jordan warned her. ‘‘Where’d you know him, Tom?”
+         |                                                                   ^ This quote has no termination.
 
 
 
@@ -5496,23 +5818,17 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
+Lint:    Formatting (255 priority)
 Message: |
-    4133 | “Open the whiskey, Tom,” she ordered, ‘‘and I'll make you a mint julep. Then you
     4134 | won’t seem so stupid to yourself. . . . Look at the mint!”
-         |                                 ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
+         |                                                          ^ This quote has no termination.
 
 
 
-Lint:    Formatting (63 priority)
+Lint:    Formatting (255 priority)
 Message: |
-    4148 | sit back and let Mr. Nobody from Nowhere make love to your wife. Well, if that’s
-    4149 | the idea you can count me out. . . . Nowadays people begin by sneering at family
-         |                              ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
+    4175 | me.”
+         |    ^ This quote has no termination.
 
 
 
@@ -5538,6 +5854,21 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    4201 | sometimes”—but there was no laughter in his eyes—“to think that you didn’t
+         |                                                  ^ This quote has no termination.
+    4202 | know.”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4202 | know.”
+         |      ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4241 | “Not at Kapiolani?” demanded Tom suddenly.
@@ -5546,16 +5877,6 @@ Suggest:
   - Replace with: “Kaitlin”
   - Replace with: “Kaposi”
   - Replace with: “Capillary”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    4248 | “Not that day I carried you down from the Punch Bowl to keep your shoes dry?”
-    4249 | There was a husky tenderness in his tone. . . . “Daisy?”
-         |                                         ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -5647,16 +5968,6 @@ Suggest:
 
 Lint:    Formatting (63 priority)
 Message: |
-    4363 | “Want any of this stuff? Jordan? . . . Nick?”
-         |                                ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-  - Replace with: “?”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
     4373 | “No . . . I just remembered that to-day’s my birthday.”
          |    ^ Unnecessary space at the end of the sentence.
 Suggest:
@@ -5664,12 +5975,12 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
+Lint:    Capitalization (127 priority)
 Message: |
     4373 | “No . . . I just remembered that to-day’s my birthday.”
-         |     ^~~~~ Condense this punctuation cluster to a single mark.
+         |                                     ^~~~~ The canonical dictionary spelling is `day's`.
 Suggest:
-  - Replace with: “.”
+  - Replace with: “day's”
 
 
 
@@ -5864,14 +6175,50 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
+         |         ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “GA”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
+         |            ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OD”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |            ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
+  - Replace with: “of”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
+         |                       ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “GA”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
+         |                          ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OD”
 
 
 
@@ -5880,9 +6227,27 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                          ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
+  - Replace with: “of”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
+         |                                  ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “GA”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
+         |                                     ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OD”
 
 
 
@@ -5891,9 +6256,27 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                     ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
+  - Replace with: “of”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
+         |                                                ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “GA”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
+         |                                                   ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OD”
 
 
 
@@ -5902,9 +6285,18 @@ Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
          |                                                   ^~ Did you mean to spell `od` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “odd”
   - Replace with: “ode”
+  - Replace with: “of”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4484 | “M-a-v—” the policeman was saying, “—o———”
+         |                                      ^ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “O”
 
 
 
@@ -5913,9 +6305,18 @@ Message: |
     4484 | “M-a-v—” the policeman was saying, “—o———”
          |                                      ^ Did you mean to spell `o` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “of”
   - Replace with: “oh”
+  - Replace with: “oi”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4486 | “No, r—” corrected the man, “M-a-v-r-o———”
+         |                                      ^ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “O”
 
 
 
@@ -5924,9 +6325,18 @@ Message: |
     4486 | “No, r—” corrected the man, “M-a-v-r-o———”
          |                                      ^ Did you mean to spell `o` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “of”
   - Replace with: “oh”
+  - Replace with: “oi”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4490 | “r—” said the policeman, “o———”
+         |                           ^ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “O”
 
 
 
@@ -5935,9 +6345,9 @@ Message: |
     4490 | “r—” said the policeman, “o———”
          |                           ^ Did you mean to spell `o` this way?
 Suggest:
-  - Replace with: “ob”
   - Replace with: “of”
   - Replace with: “oh”
+  - Replace with: “oi”
 
 
 
@@ -5947,6 +6357,15 @@ Message: |
          |                ^~~~~~~~~ Did you mean `Instantly`?
 Suggest:
   - Replace with: “Instantly”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
+         |              ^~~ The canonical dictionary spelling is `Ina`.
+Suggest:
+  - Replace with: “Ina”
 
 
 
@@ -5972,6 +6391,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
+         |                                                   ^~~~~~ `stopus` should probably be written as `st opus`.
+Suggest:
+  - Replace with: “st opus”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
@@ -5992,6 +6420,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
+         |                                            ^~~~~ `comin` should probably be written as `co min`.
+Suggest:
+  - Replace with: “co min”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
@@ -6003,6 +6440,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
+         |                                                        ^~~~ `goin` should probably be written as `go in`.
+Suggest:
+  - Replace with: “go in”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
@@ -6011,6 +6457,23 @@ Suggest:
   - Replace with: “gain”
   - Replace with: “gin”
   - Replace with: “going”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
+         |      ^~~~ `goin` should probably be written as `go in`.
+Suggest:
+  - Replace with: “go in”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
+    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
+         |                               ^ This quote has no termination.
 
 
 
@@ -6033,6 +6496,16 @@ Suggest:
   - Replace with: “coin”
   - Replace with: “comic”
   - Replace with: “coming”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
+         |                                                              ^~~~~ `comin` should probably be written as `co min`.
+    4511 | knock right into her, goin’ thirty or forty miles an hour.”
+Suggest:
+  - Replace with: “co min”
 
 
 
@@ -6060,6 +6533,23 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
+    4511 | knock right into her, goin’ thirty or forty miles an hour.”
+         |                       ^~~~ `goin` should probably be written as `go in`.
+Suggest:
+  - Replace with: “go in”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4511 | knock right into her, goin’ thirty or forty miles an hour.”
+         |                                                           ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4523 | “No, but the car passed me down the road, going faster’n forty. Going fifty,
@@ -6079,15 +6569,6 @@ Suggest:
   - Replace with: “coup”
   - Replace with: “coupe”
   - Replace with: “coups”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    4554 | body. “He says he knows the car that did it. . . . It was a yellow car.”
-         |                                            ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -6142,6 +6623,16 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    4622 | house. I sat down for a few minutes with my head in my hands, until I heard the
+    4623 | phone taken up inside and the butler’s voice calling a taxi. Then I walked
+         |                               ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+Suggest:
+  - Replace with: “butler's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4635 | the house in a moment; I wouldn’t have been surprised to see sinister faces, the
@@ -6151,6 +6642,13 @@ Suggest:
   - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    4679 | “Don’t tell me, old sport.” He winced. “Anyhow—Daisy stepped on it. I tried to
+         |                                        ^ This quote has no termination.
 
 
 
@@ -6228,16 +6726,6 @@ Message: |
          |                ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    4822 | was in love with me too. She thought I knew a lot because I knew different
-    4823 | things from her . . . Well, there I was, ’way off my ambitions, getting deeper
-         |                 ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -6482,15 +6970,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    5069 | “Don’t belong to any.”
-         |               ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     5087 | Michaelis opened the drawer nearest his hand. There was nothing in it but a
@@ -6506,6 +6985,16 @@ Message: |
          | ^~~~~~~~~ Did you mean `Michael`?
 Suggest:
   - Replace with: “Michael”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    5121 | Wilson shook his head. His eyes narrowed and his mouth widened slightly with the
+    5122 | ghost of a superior “Hm!”
+         |                      ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “HM”
 
 
 
@@ -6551,6 +7040,21 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    5151 | and walked to the rear window and leaned with his face pressed against it—“and I
+         |                                                                           ^ This quote has no termination.
+    5152 | said ‘God knows what you’ve been doing, everything you’ve been doing. You may
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5153 | fool me, but you can’t fool God!’”
+         |                                  ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5155 | Standing behind him, Michaelis saw with a shock that he was looking at the eyes
@@ -6566,9 +7070,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “T”
   - Replace with: “Ta”
   - Replace with: “Tb”
+  - Replace with: “Tn”
 
 
 
@@ -6577,7 +7081,7 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jr”
+  - Replace with: “Jg”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -6684,15 +7188,6 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
-Message: |
-    5204 | where poor ghosts, breathing dreams like air, drifted fortuitously about . . .
-         |                                                                          ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
     5205 | like that ashen, fantastic figure gliding toward him through the amorphous
@@ -6776,6 +7271,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5245 | husband, that her sister had been into no mischief whatever. She convinced
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 50 words long.
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+    5251 | Gatsby’s side, and alone. From the moment I telephoned news of the catastrophe
+         |                                                        ^~~~ The canonical dictionary spelling is `news`.
+    5252 | to West Egg village, every surmise about him, and every practical question, was
+Suggest:
+  - Replace with: “news”
 
 
 
@@ -6898,6 +7403,16 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    5330 | thought this would be Daisy at last. But the connection came through as a man’s
+         |                                                                           ^~~~~ The canonical dictionary spelling is `man's`.
+    5331 | voice, very thin and far away.
+Suggest:
+  - Replace with: “man's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5333 | “This is Slagle speaking . . .”
@@ -6915,15 +7430,6 @@ Message: |
          |                         ^ Unnecessary space at the end of the sentence.
 Suggest:
   - Remove error
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    5333 | “This is Slagle speaking . . .”
-         |                          ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -6958,16 +7464,6 @@ Suggest:
 
 
 
-Lint:    Formatting (63 priority)
-Message: |
-    5349 | There was a long silence on the other end of the wire, followed by an
-    5350 | exclamation . . . then a quick squawk as the connection was broken.
-         |             ^~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
     5350 | exclamation . . . then a quick squawk as the connection was broken.
@@ -6982,9 +7478,9 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
-  - Replace with: “Cu”
-  - Replace with: “C”
-  - Replace with: “Ca”
+  - Replace with: “Cw”
+  - Replace with: “Cc”
+  - Replace with: “Ch”
 
 
 
@@ -6994,8 +7490,8 @@ Message: |
          |                                                                 ^~~~ Did you mean to spell `Gatz` this way?
     5353 | from a town in Minnesota. It said only that the sender was leaving immediately
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -7025,8 +7521,8 @@ Message: |
     5385 | After a little while Mr. Gatz opened the door and came out, his mouth ajar, his
          |                          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -7060,8 +7556,8 @@ Message: |
     5396 | “Gatz is my name.”
          |  ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -7071,8 +7567,8 @@ Message: |
     5398 | “—Mr. Gatz. I thought you might want to take the body West.”
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -7089,7 +7585,7 @@ Message: |
     5412 | “If he’d of lived, he’d of been a great man. A man like James J. Hill. He’d of
          |                                                               ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jr”
+  - Replace with: “Jg”
   - Replace with: “J”
   - Replace with: “JD”
 
@@ -7130,7 +7626,7 @@ Message: |
 Suggest:
   - Replace with: “Ft”
   - Replace with: “F”
-  - Replace with: “Ff”
+  - Replace with: “Fa”
 
 
 
@@ -7185,6 +7681,42 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    5487 | “But I know he’s there.”
+         |             ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    5493 | “We’re getting sick in tired of it. When I say he’s in Chicago, he’s in
+         |                                                ^~~~ The canonical dictionary spelling is `he's`.
+    5494 | Chicago.”
+Suggest:
+  - Replace with: “he's”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    5493 | “We’re getting sick in tired of it. When I say he’s in Chicago, he’s in
+         |                                                                 ^~~~ The canonical dictionary spelling is `he's`.
+    5494 | Chicago.”
+Suggest:
+  - Replace with: “he's”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5498 | “Oh-h!” She looked at me over again. ‘‘Will you just— What was your name?”
+         |                                                                          ^ This quote has no termination.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5500 | She vanished. In a moment Meyer Wolfsheim stood solemnly in the doorway, holding
@@ -7204,6 +7736,16 @@ Suggest:
   - Replace with: “Windbreaker's”
   - Replace with: “Icebreaker's”
   - Replace with: “Tiebreaker's”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    5508 | Street and asked for a job. He hadn’t eat anything for a couple of days. ‘Come
+    5509 | on have some lunch with me,’ I sid. He ate more than four dollars’ worth of food
+         |                                ^~~ The canonical dictionary spelling is `Sid`.
+Suggest:
+  - Replace with: “Sid”
 
 
 
@@ -7231,6 +7773,30 @@ Suggest:
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+    5522 | of mine up to Albany. We were so thick like that in everything”—he held up two
+    5523 | bulbous fingers—“always together.”
+         |                 ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5523 | bulbous fingers—“always together.”
+         |                                  ^ This quote has no termination.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    5528 | “Now he’s dead,” I said after a moment. “You were his closest friend, so I know
+         |      ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5552 | For a moment I thought he was going to suggest a “gonnegtion,” but he only
@@ -7247,9 +7813,19 @@ Message: |
          |                                                                   ^~~~ Did you mean to spell `Gatz` this way?
     5560 | up and down excitedly in the hall. His pride in his son and in his son’s
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    5560 | up and down excitedly in the hall. His pride in his son and in his son’s
+         |                                                                    ^~~~~ The canonical dictionary spelling is `son's`.
+    5561 | possessions was continually increasing and now he had something to show me.
+Suggest:
+  - Replace with: “son's”
 
 
 
@@ -7308,6 +7884,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    5612 | something. Do you notice what he’s got about improving his mind? He was always
+         |                               ^~~~ The canonical dictionary spelling is `he's`.
+Suggest:
+  - Replace with: “he's”
+
+
+
 Lint:    Repetition (63 priority)
 Message: |
     5613 | great for that. He told me I et like a hog once, and I beat him for it.”
@@ -7315,6 +7900,15 @@ Message: |
 Suggest:
   - Replace with: “me”
   - Replace with: “I”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    5613 | great for that. He told me I et like a hog once, and I beat him for it.”
+         |                              ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “ET”
 
 
 
@@ -7334,8 +7928,8 @@ Message: |
     5629 | then Mr. Gatz and the minister and I in the limousine, and a little later four
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Gate”
   - Replace with: “Ga's”
+  - Replace with: “Gate”
   - Replace with: “GHz”
 
 
@@ -7624,12 +8218,42 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    5714 | leaf, her face the same brown tint as the fingerless glove on her knee. When I
+         |                                           ^~~~~~~~~~ `fingerless` should probably be written as `finger less`.
+Suggest:
+  - Replace with: “finger less”
+
+
+
 Lint:    Punctuation (31 priority)
 Message: |
     5721 | “Nevertheless you did throw me over,” said Jordan suddenly. ‘‘You threw me over
          |  ^~~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5723 | for me, and I felt a little dizzy for a while.”
+         |                                               ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5727 | “Oh, and do you remember”—she added—“a conversation we had once about driving a
+         |                                     ^ This quote has no termination.
+
+
+
+Lint:    Formatting (255 priority)
+Message: |
+    5728 | car?”
+         |     ^ This quote has no termination.
 
 
 
@@ -7685,15 +8309,6 @@ Message: |
          |         ^~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    5783 | them together, and let other people clean up the mess they had made. . . .
-         |                                                                    ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 
@@ -7783,16 +8398,6 @@ Suggest:
   - Replace with: “orgasmic”
   - Replace with: “orgiastic”
   - Replace with: “organic”
-
-
-
-Lint:    Formatting (63 priority)
-Message: |
-    5829 | recedes before us. It eluded us then, but that’s no matter—to-morrow we will run
-    5830 | faster, stretch out our arms farther. . . . And one fine morning———
-         |                                     ^~~~~~~ Condense this punctuation cluster to a single mark.
-Suggest:
-  - Replace with: “.”
 
 
 

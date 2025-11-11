@@ -36,7 +36,7 @@ impl Default for QuiteQuiet {
         let adverb_quite = SequenceExpr::default()
             .then_kind_except(
                 TokenKind::is_adverb,
-                &["actually", "never", "not", "really"],
+                &["actually", "never", "not", "really", "generally"],
             )
             .t_ws()
             .t_aco("quite");
@@ -209,6 +209,14 @@ mod tests {
     fn dont_flag_adv_quite_1971() {
         assert_no_lints(
             "It’s actually quite smart. It’s really quite smart. The proof is actually quite neat. Actually really quite simple. It’s actually quite strong. The Sneetches got really quite smart on that day.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
+    fn issue_2003() {
+        assert_no_lints(
+            "The namespaces are generally quite short",
             QuiteQuiet::default(),
         );
     }

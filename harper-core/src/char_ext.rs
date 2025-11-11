@@ -9,6 +9,11 @@ pub trait CharExt {
     fn is_english_lingual(&self) -> bool;
     fn is_emoji(&self) -> bool;
     fn is_punctuation(&self) -> bool;
+    /// Whether the character is an (English) vowel.
+    ///
+    /// Checks whether the character is in the set (A, E, I, O, U); case-insensitive.
+    fn is_vowel(&self) -> bool;
+    fn normalized(self) -> Self;
 }
 
 impl CharExt for char {
@@ -21,6 +26,13 @@ impl CharExt for char {
             && self.is_alphabetic()
             && !self.is_cjk()
             && self.script() == Script::Latin
+    }
+
+    fn normalized(self) -> Self {
+        match self {
+            '’' | '‘' | 'ʼ' | '＇' => '\'',
+            _ => self,
+        }
     }
 
     fn is_emoji(&self) -> bool {
@@ -76,6 +88,10 @@ impl CharExt for char {
 
     fn is_punctuation(&self) -> bool {
         Punctuation::from_char(*self).is_some()
+    }
+
+    fn is_vowel(&self) -> bool {
+        matches!(self.to_ascii_lowercase(), 'a' | 'e' | 'i' | 'o' | 'u')
     }
 }
 
