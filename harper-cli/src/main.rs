@@ -215,6 +215,7 @@ fn main() -> anyhow::Result<()> {
             let mut merged_dict = MergedDictionary::new();
 
             println!("Selected language is {language}");
+            merged_dict.add_dictionary(dictionary);
 
             // Attempt to load user dictionary.
             match load_dict(&user_dict_path) {
