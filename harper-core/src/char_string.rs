@@ -1,3 +1,4 @@
+use crate::char_ext::CharExt;
 use std::borrow::Cow;
 
 use smallvec::SmallVec;
@@ -58,12 +59,12 @@ impl CharStringExt for [char] {
     /// Convert a given character sequence to the standard character set
     /// the dictionary is in.
     fn normalized(&'_ self) -> Cow<'_, [char]> {
-        if self.as_ref().iter().any(|c| char_to_normalized(*c) != *c) {
+        if self.as_ref().iter().any(|c| c.normalized() != *c) {
             Cow::Owned(
                 self.as_ref()
                     .iter()
                     .copied()
-                    .map(char_to_normalized)
+                    .map(|c| c.normalized())
                     .collect(),
             )
         } else {
@@ -117,15 +118,6 @@ impl CharStringExt for [char] {
             .rev()
             .zip(suffix.iter())
             .all(|(a, b)| a.to_ascii_lowercase() == *b)
-    }
-}
-
-fn char_to_normalized(c: char) -> char {
-    match c {
-        '’' => '\'',
-        '‘' => '\'',
-        '＇' => '\'',
-        _ => c,
     }
 }
 

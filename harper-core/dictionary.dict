@@ -1120,6 +1120,7 @@ Benet/g
 Benetton/g
 Bengal/ONSg
 Bengali/JNg
+Bengaluru/Og
 Benghazi/Og
 Benin/Og
 Beninese/JNg
@@ -1606,7 +1607,7 @@ Burke/Og
 Burks/Og
 Burl/Og
 Burlington/Og
-Burma/Og
+Burma/Og            # old name of Myanmar
 Burmese/JNOg
 Burnett/Og
 Burns/Og
@@ -1650,6 +1651,7 @@ CCTV/NO             # closed-circuit television
 CCU/N
 CD/NSgV
 CDC/ON
+CDMX/Og             # Mexico City, see also DF
 CDT/N
 CEO/NgS             # chief executive officer
 CF/NOJ
@@ -1969,7 +1971,7 @@ Cesar/Og
 Cesarean/JNg
 Cessna/Og
 Cetus/Og
-Ceylon/ONg
+Ceylon/ONg          # old name of Sri Lanka
 Ceylonese/JN
 Cezanne/g
 Cf/g
@@ -2037,6 +2039,7 @@ Chattahoochee/Og
 Chattanooga/Og
 Chatterley/Og
 Chatterton/Og
+Chattogram/Og
 Chaucer/Og
 Chauncey/Og
 Chautauqua/ONg
@@ -2111,7 +2114,7 @@ Chiron/Og
 Chisholm/Og
 Chișinău/Og
 Chisinau/Og
-Chittagong/Og
+Chittagong/Og       # old name of Chattogram
 Chivas/g
 Chloe/Og
 Choctaw/ONJSg
@@ -2226,7 +2229,6 @@ Clorets/g
 Clorox/NgV
 Closure/g
 Clotho/Og
-Cloudflare/Og
 Clouseau/Og
 Clovis/Og
 Clyde/Og
@@ -2553,6 +2555,7 @@ DDT/NS
 DE/ON               # US state (Delaware)
 DEA/ON
 DEC/NOSd
+DF/Og               # Distrito Federal, see also CDMX
 DH/NO
 DHS/O
 DI/N
@@ -2581,6 +2584,7 @@ DUI/N
 DVD/NS
 DVR/NSgV
 DWI/NV
+Dacca/Og            # old spelling of Dhaka
 Dachau/Og
 Dacron/NSg
 Dada/Ng
@@ -3320,6 +3324,7 @@ Esther/Og
 Estonia/Og
 Estonian/JNSg
 Estrada/Og
+Eswatini/Og
 Ethan/Og
 Ethel/Og
 Ethelred/Og
@@ -3862,6 +3867,7 @@ Gayle/Og
 Gaza/Og
 Gaziantep/Og
 Gd/g
+Gdańsk/Og
 Gdansk/Og
 Ge/Og
 Geffen/Og
@@ -5311,6 +5317,7 @@ Kalb/g
 Kalevala/Og
 Kalgoorlie/Og       # city
 Kali/Og
+Kaliningrad/Og
 Kalmyk/JNOg         # ethnicity
 Kama/Og
 Kamchatka/Og
@@ -5458,7 +5465,8 @@ Khabarovsk/Og
 Khachaturian/Og
 Khalid/Og
 Khan/Og
-Kharkov/Og
+Kharkiv/Og
+Kharkov/Og          # old name of Kharkiv
 Khartoum/Og
 Khayyam/g
 Khazar/NOJg
@@ -5477,7 +5485,7 @@ Kidd/Og
 Kiel/Og
 Kierkegaard/Og
 Kieth/g
-Kiev/ONg
+Kiev/ONg            # old name of Kyiv
 Kigali/Og
 Kikuyu/NOg
 Kilauea/Og
@@ -5549,6 +5557,7 @@ Knuths/O
 Kobe/Og
 Koch/Og
 Kochab/Og
+Kochi/Og
 Kodachrome/Og
 Kodak/g
 Kodaly/g
@@ -5565,6 +5574,8 @@ Kommunizma/g
 Konami/Og
 Kong/Og
 Kongo/OgJ
+Königsberg/Og       # old name of Kaliningrad
+Konigsberg/Og
 Konrad/g
 Koontz/Og
 Koppel/g
@@ -5852,7 +5863,7 @@ Len/Og
 Lena/Og
 Lenard/Og
 Lenin/Og
-Leningrad/Og
+Leningrad/Og        # old name of St. Petersburg
 Leninism/Nmg
 Leninist/JNg
 Lennon/Og
@@ -6127,6 +6138,8 @@ Ludwig/Og
 Luella/Og
 Lufthansa/Og
 Luftwaffe/Og
+Lugansk/Og          # old name of Luhansk
+Luhansk/Og
 Luger/ONg
 Lugosi/g
 Luigi/Og
@@ -6154,7 +6167,7 @@ Luxembourgian/NJ
 Luz/Og
 Luzon/Og
 Lviv/Og
-Lvov/Og
+Lvov/Og             # old name of Lviv
 LyX/g
 Lyallpur/O
 Lycra/Ng
@@ -6324,7 +6337,7 @@ Makarios/g
 Maker/Og
 Malabar/ONg
 Malabo/Og
-Malacca/ONg
+Malacca/ONg         # old spelling of Melaka
 Malachi/Og
 Malaga/Og
 Malagasy/NgJ
@@ -6699,6 +6712,7 @@ Meir/Og
 Mejia/Og
 Mekong/Og
 Mel/Og
+Melaka/Og
 Melanesia/Og
 Melanesian/JNg
 Melanie/Og
@@ -7166,7 +7180,8 @@ Myrdal/Og
 Myrna/Og
 Myron/Og
 Myrtle/Og
-Mysore/Og           # old name of karnataka
+Mysore/Og           # old name of karnataka state and mysuru city
+Mysuru/Og
 Myst/g
 N/Ng
 N'Djamena/O         # capital of Chad
@@ -7588,7 +7603,7 @@ October/ONVSg
 Odell/Og
 Oder/Og
 Odesa/Og
-Odessa/Og
+Odessa/Og           # old spelling of Odesa
 Odets/g
 Odia/ONg            # language, previously Oriya
 Odin/Og
@@ -8193,6 +8208,7 @@ Pompeian/JN
 Pompeii/Og
 Pompey/Og
 Ponce/Og
+Pondicherry/Og      # old name of Puducherry
 Pontchartrain/g
 Pontiac/ONSg
 Pontianak/Og
@@ -8200,7 +8216,7 @@ Pontic/JOg
 Ponzi/OgS
 Pooh/Og
 Poole/Og
-Poona/Og
+Poona/Og            # old name of Pune
 Pope/ONg
 Popeye/Og
 Popocatepetl/Og
@@ -8317,6 +8333,7 @@ Pu/Og               # plutonium
 Puccini/Og
 Puck/Og
 Puckett/Og
+Puducherry/Og
 Puebla/Og
 Pueblo/Og
 Puerto/O
@@ -8326,6 +8343,7 @@ Pulaski/Og
 Pulitzer/NOg
 Pullman/NOSg
 Punch/ONg
+Pune/Og
 Punic/JNOg
 Punjab/Og
 Punjabi/JONwg
@@ -8492,7 +8510,7 @@ Randell/Og
 Randi/g
 Randolph/Og
 Randy/Og
-Rangoon/Og
+Rangoon/Og          # old name of Yangon
 Rankin/Og
 Rankine/Og
 Raoul/g
@@ -9359,7 +9377,7 @@ Shula/Og
 Shylock/ONg
 Shylockian/g
 Si/Og
-Siam/Og
+Siam/Og             # old name of Thailand
 Siamese/JONg
 Sibelius/g
 Siberia/ONg
@@ -9586,7 +9604,7 @@ Stael/g
 Stafford/ONg
 StairMaster/g
 Stalin/Og
-Stalingrad/Og
+Stalingrad/Og       # old name of Volgograd
 Stalinism/Nmg
 Stalinist/JNg
 Stallone/Og
@@ -10027,6 +10045,7 @@ Thessaly/Og
 Thieu/g
 Thimbu/ONg          # capital of bhutan
 Thimphu/O           # capital of bhutan
+Thiruvananthapuram/Og
 Thomas/NOg
 Thomism/Ng
 Thomistic/Jg
@@ -10063,6 +10082,7 @@ Ticonderoga/Og
 Tide/g
 Tienanmen/Og
 Tiffany/ONg
+Tiflis/Og           # old name of Tbilisi
 Tigris/Og
 Tijuana/Og          # city
 Tillich/g
@@ -10097,6 +10117,7 @@ Titanic/JONg
 Titian/Og           # painter
 Titicaca/Og         # lake
 Tito/Og             # president
+Titograd/Og         # old name of Podgorica
 Titus/Og
 Titusville/Og
 Tl/g                # thallium
@@ -10204,6 +10225,7 @@ Trippe/Og
 Trisha/Og
 Tristan/Og
 Triton/Og
+Trivandrum/Og       # old name of Thiruvananthapuram
 Trobriand/Jg
 Troilus/Og
 Trojan/NgSJ
@@ -10360,8 +10382,10 @@ Uighur/ONJg
 Ujungpandang/g
 Ukraine/Og
 Ukrainian/JNOSg
+Ulaanbaatar/Og
 Ulster/ONg
 Ultrasuede/Ng
+Uluru/Og
 Ulyanovsk/Og
 Ulysses/Og
 Umbriel/Og
@@ -10580,6 +10604,8 @@ Vince/Og
 Vincent/Og
 Vindemiatrix/Og
 Vineland/g
+Vinnitsa/Og         # old name of Vinnytsia
+Vinnytsia/Og
 Vinson/Og
 Viola/Og
 Violet/Og
@@ -11068,7 +11094,8 @@ Zane/Og
 Zanuck/g
 Zanzibar/Og
 Zapata/Og
-Zaporozhye/Og
+Zaporizhzhia/Og
+Zaporozhye/Og       # old name of Zaporizhzhia
 Zapotec/NOJg        # ethnicity
 Zappa/Og
 Zara/Og
@@ -12441,7 +12468,7 @@ anesthetize/VGdS
 aneurysm/~NSg
 anew/~
 angel/~NgSV
-angelfish/N9gS09    # singular and plural, also has a plural in -s
+angelfish/N09gS     # singular and plural, also has a plural in -s
 angelic/~J
 angelica/~Ng
 angelical/JY
@@ -15038,7 +15065,7 @@ blueberry/~NwSgJV
 bluebird/~NgS
 bluebonnet/NSg
 bluebottle/NSg
-bluefish/N9gS09     # singular and plural, also has a plural in -s
+bluefish/N09gS      # singular and plural, also has a plural in -s
 bluegill/NgS
 bluegrass/~Ng
 blueish/J
@@ -16716,7 +16743,7 @@ catercorner/J
 caterer/Ng
 caterpillar/~NgSV
 caterwaul/VdGNSg
-catfish/~N9gS09V    # singular and plural, also has a plural in -s
+catfish/~N09gSV     # singular and plural, also has a plural in -s
 catgut/Ng
 catharses/N9
 catharsis/Nm0g
@@ -19163,7 +19190,7 @@ cor/~N
 coracle/NSg
 coral/~NwSgJ
 corbel/NSgV
-cord/~NSgVGdEr
+cord/~NSgVGdr
 cordage/Ng
 cordial/~JYNSg
 cordiality/Nmg
@@ -20111,7 +20138,7 @@ cutout/NSg
 cutter/~NSg
 cutthroat/~NSgJ
 cutting/~NgSJYV
-cuttlefish/N9gS09   # singular and plural, also has a plural in -s
+cuttlefish/N09gS    # singular and plural, also has a plural in -s
 cutup/NSg
 cutworm/NgS
 cw/~
@@ -23662,7 +23689,7 @@ exaction/Ng
 exactitude/Nmg
 exactness/Nmgi
 exaggerate/VdSGJXn
-exaggerated/~JYtTVtT
+exaggerated/~JYVtT
 exaggeration/~NmgS
 exaggerator/NgS
 exajoule/NS
@@ -28667,7 +28694,6 @@ howsoever/
 hoyden/NgSJV
 hoydenish/J
 hp/~N
-hr/~NS
 ht/~N
 huarache/NSg
 hub/~NOSg
@@ -33014,7 +33040,6 @@ marital/~JY
 maritime/~J
 marjoram/Ng
 mark/~NgSVdGr
-markdown/NgS
 marked/~JVtTU
 markedly/~R
 marker/~NgSV
@@ -41927,7 +41952,7 @@ resentful/~JYp
 resentfulness/Nmg
 resentment/~NgS
 reserpine/Ng
-reservation/ ~NgS
+reservation/~NgS
 resveratrol/Ng
 reserved/~VtTJYU
 reservedness/Nmg
@@ -50744,7 +50769,7 @@ vaporizer/NgS
 vaporous/J
 vaporware/Nmg<
 vapory/J<
-vapour/NmgSgV!@_
+vapour/NmgSV!@_
 vapoury/J!@_
 vaquero/NgS
 var/~NS
@@ -52847,7 +52872,7 @@ CVE/NSg             # Common Vulnerabilities and Exposures
 Captcha/OgS
 ChatGPT/Og          # OpenAI product
 ClickHouse/g
-CloudFlare/Og
+Cloudflare/Og
 Codeberg/Og         # GitHub alternative
 Colemak/NgJ
 CommonMark/g
@@ -52984,8 +53009,7 @@ JWT/Ng              # JSON Web Token
 Jacoco/Sg
 JavaDoc/Sg
 JavaScript/ONSg     # programming language
-Javadoc/Sg
-JetBrains
+JetBrains/Og
 Jetpack/Og
 Jira/Og             # issue tracker
 Joomla/Sg
@@ -53814,7 +53838,7 @@ self-indulgent/J
 self-obsessed/J
 self-tapping/J
 shark-infested/J
-short circuit/NgSSVdG
+short circuit/NgSVdG
 short-circuit/lSdG
 short-lived/J
 short-term/JR

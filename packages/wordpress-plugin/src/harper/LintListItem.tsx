@@ -1,5 +1,4 @@
 import { Button, Card, CardBody } from '@wordpress/components';
-import React from 'react';
 import type { IgnorableLintBox } from './Box';
 import { suggestionText } from './lintUtils';
 import { useAddToDictionary } from './usePersonalDictionary';

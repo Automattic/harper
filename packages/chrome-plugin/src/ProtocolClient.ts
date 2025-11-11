@@ -34,6 +34,12 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setConfig', config: lintConfig });
 	}
 
+	public static async setRuleEnabled(ruleId: string, enabled: boolean): Promise<void> {
+		const config = await this.getLintConfig();
+		const nextConfig: LintConfig = { ...config, [ruleId]: enabled };
+		await this.setLintConfig(nextConfig);
+	}
+
 	public static async getLintDescriptions(): Promise<Record<string, string>> {
 		return (await chrome.runtime.sendMessage({ kind: 'getLintDescriptions' })).descriptions;
 	}

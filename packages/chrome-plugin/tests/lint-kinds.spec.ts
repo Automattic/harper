@@ -1,7 +1,8 @@
-import { expect, test } from '@playwright/test';
+import { test } from '@playwright/test';
 import { LINT_KINDS, lintKindColor } from 'lint-framework';
 
-test('display lint kind colors', async ({ page }, testInfo) => {
+// biome-ignore lint/correctness/noEmptyPattern: Playwright requires an object destruction
+test('display lint kind colors', async ({}, testInfo) => {
 	// Generate color boxes for each lint kind
 	const colorBoxes = LINT_KINDS.map((kind) => {
 		const color = lintKindColor(kind);

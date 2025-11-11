@@ -108,6 +108,11 @@ impl SequenceExpr {
 
     // Expressions of more than one token
 
+    /// Match a fixed phrase.
+    pub fn fixed_phrase(phrase: &'static str) -> Self {
+        Self::default().then_fixed_phrase(phrase)
+    }
+
     // Multiple expressions
 
     /// Match the first of multiple expressions.
@@ -455,6 +460,7 @@ impl SequenceExpr {
 
     gen_then_from_is!(determiner);
     gen_then_from_is!(demonstrative_determiner);
+    gen_then_from_is!(possessive_determiner);
     gen_then_from_is!(quantifier);
     gen_then_from_is!(non_quantifier_determiner);
 

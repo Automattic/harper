@@ -45,6 +45,95 @@ fn corrects_all_of_a_sudden() {
     )
 }
 
+#[test]
+fn corrects_all_the_sudden_basic() {
+    assert_suggestion_result(
+        "It happened all the sudden when the lights went out.",
+        lint_group(),
+        "It happened all of a sudden when the lights went out.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_sentence_start() {
+    assert_suggestion_result(
+        "All the sudden the room fell quiet.",
+        lint_group(),
+        "All of a sudden the room fell quiet.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_with_comma() {
+    assert_suggestion_result(
+        "The music stopped, all the sudden, during the chorus.",
+        lint_group(),
+        "The music stopped, all of a sudden, during the chorus.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_question() {
+    assert_suggestion_result(
+        "Did the power cut all the sudden?",
+        lint_group(),
+        "Did the power cut all of a sudden?",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_in_quotes() {
+    assert_suggestion_result(
+        "He whispered, \"all the sudden we were alone.\"",
+        lint_group(),
+        "He whispered, \"all of a sudden we were alone.\"",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_all_caps() {
+    assert_suggestion_result(
+        "ALL THE SUDDEN THE ROOM WENT DARK.",
+        lint_group(),
+        "ALL OF A SUDDEN THE ROOM WENT DARK.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_end_period() {
+    assert_suggestion_result(
+        "They were laughing all the sudden.",
+        lint_group(),
+        "They were laughing all of a sudden.",
+    );
+}
+
+#[test]
+fn counts_all_the_sudden_once() {
+    assert_lint_count(
+        "This all the sudden change surprised everyone.",
+        lint_group(),
+        1,
+    );
+}
+
+#[test]
+fn corrects_all_of_sudden_variant() {
+    assert_suggestion_result(
+        "It stormed all of sudden after a warm morning.",
+        lint_group(),
+        "It stormed all of a sudden after a warm morning.",
+    );
+}
+
+#[test]
+fn ignores_all_the_suddenness() {
+    assert_no_lints(
+        "Their excitement and suddenness were all the suddenness she remembered.",
+        lint_group(),
+    );
+}
+
 // ALongTime
 #[test]
 fn detect_a_long_time() {
@@ -58,6 +147,85 @@ fn detect_a_long_time_real_world() {
         lint_group(),
         "Fast refreshing is very slow had to wait a long time for it to update.",
     );
+}
+
+// Alongside
+#[test]
+fn corrects_along_side_basic() {
+    assert_suggestion_result(
+        "They walked along side the river.",
+        lint_group(),
+        "They walked alongside the river.",
+    );
+}
+
+#[test]
+fn corrects_along_side_sentence_start() {
+    assert_suggestion_result(
+        "Along side the road, we saw a parade.",
+        lint_group(),
+        "Alongside the road, we saw a parade.",
+    );
+}
+
+#[test]
+fn corrects_along_side_all_caps() {
+    assert_suggestion_result(
+        "The banner read ALONG SIDE THE TEAM!",
+        lint_group(),
+        "The banner read ALONGSIDE THE TEAM!",
+    );
+}
+
+#[test]
+fn corrects_along_side_with_period() {
+    assert_suggestion_result(
+        "The skiff pulled along side.",
+        lint_group(),
+        "The skiff pulled alongside.",
+    );
+}
+
+#[test]
+fn corrects_along_side_in_quotes() {
+    assert_suggestion_result(
+        "\"We drifted along side,\" she said.",
+        lint_group(),
+        "\"We drifted alongside,\" she said.",
+    );
+}
+
+#[test]
+fn corrects_along_side_before_comma() {
+    assert_suggestion_result(
+        "They stood along side, waiting patiently.",
+        lint_group(),
+        "They stood alongside, waiting patiently.",
+    );
+}
+
+#[test]
+fn corrects_along_side_plural_subject() {
+    assert_suggestion_result(
+        "Cars lined up along side the curb.",
+        lint_group(),
+        "Cars lined up alongside the curb.",
+    );
+}
+
+#[test]
+fn allows_correct_alongside() {
+    assert_lint_count("They walked alongside the river.", lint_group(), 0);
+}
+
+#[test]
+fn allows_along_the_side_phrase() {
+    assert_lint_count("They walked along the side of the river.", lint_group(), 0);
+}
+
+#[test]
+fn allows_lakeside_usage() {
+    assert_lint_count("We camped along the lakeside all weekend.", lint_group(), 0);
 }
 
 // AlzheimersDisease
@@ -373,6 +541,85 @@ fn corrects_mixed_case() {
 #[test]
 fn does_not_flag_already_correct() {
     assert_lint_count("I don't want to leave.", lint_group(), 0);
+}
+
+// EggYolk
+#[test]
+fn corrects_simple_egg_yoke() {
+    assert_suggestion_result(
+        "She whisked the egg yoke briskly.",
+        lint_group(),
+        "She whisked the egg yolk briskly.",
+    );
+}
+
+#[test]
+fn corrects_sentence_start_egg_yoke() {
+    assert_suggestion_result(
+        "Egg yoke is rich in nutrients.",
+        lint_group(),
+        "Egg yolk is rich in nutrients.",
+    );
+}
+
+#[test]
+fn corrects_all_caps_egg_yoke() {
+    assert_suggestion_result(
+        "Add the EGG YOKE to the batter.",
+        lint_group(),
+        "Add the EGG YOLK to the batter.",
+    );
+}
+
+#[test]
+fn corrects_punctuated_egg_yoke() {
+    assert_suggestion_result(
+        "Separate the egg yoke, then fold it in.",
+        lint_group(),
+        "Separate the egg yolk, then fold it in.",
+    );
+}
+
+#[test]
+fn corrects_adjective_egg_yoke() {
+    assert_suggestion_result(
+        "The runny egg yoke spilled over the toast.",
+        lint_group(),
+        "The runny egg yolk spilled over the toast.",
+    );
+}
+
+#[test]
+fn corrects_plural_context_egg_yoke() {
+    assert_suggestion_result(
+        "Blend the cream with each egg yoke before baking.",
+        lint_group(),
+        "Blend the cream with each egg yolk before baking.",
+    );
+}
+
+#[test]
+fn allows_correct_egg_yolk() {
+    assert_lint_count("The custard calls for one egg yolk.", lint_group(), 0);
+}
+
+#[test]
+fn allows_plural_egg_yolks() {
+    assert_lint_count("Reserve the egg yolks for later.", lint_group(), 0);
+}
+
+#[test]
+fn allows_yoke_without_egg() {
+    assert_lint_count(
+        "The artisan carved a wooden yoke for the oxen.",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
+fn does_not_flag_partial_phrase() {
+    assert_lint_count("Crack the eggs so no yoke spills.", lint_group(), 0);
 }
 
 // DontCan
@@ -1204,6 +1451,16 @@ fn corrects_points_of_view() {
 
 // PrayingMantis
 // -none-
+
+// QuiteMany
+#[test]
+fn corrects_quite_many() {
+    assert_suggestion_result(
+        "To me it seems it might be caused by a2aaa55 which contains quite many build-related changes.",
+        lint_group(),
+        "To me it seems it might be caused by a2aaa55 which contains quite a few build-related changes.",
+    );
+}
 
 // RapidFire
 // -none-

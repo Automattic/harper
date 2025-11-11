@@ -6,28 +6,28 @@
   <script type="module">
     // We can import `harper.js` using native ECMAScript syntax.
     // TODO: Update to the latest version.
-    import {WorkerLinter, binaryInlined} from 'https://unpkg.com/harper.js@0.54.0/dist/harper.js';
+    import {binaryInlined, WorkerLinter } from 'https://unpkg.com/harper.js@0.54.0/dist/harper.js';
 
     // Since we are working in the browser, we can use either `WorkerLinter`, which doesn't block the event loop, or `LocalLinter`, which does.
-    let linter = new WorkerLinter({binary: binaryInlined});
+    const linter = new WorkerLinter({binary: binaryInlined});
 
     // Every time the `<textarea/>` received an input, we process it and update our list.
     async function onInput(e) {
-      let lints = await linter.lint(e.target.value);
+      const lints = await linter.lint(e.target.value);
 
-      let list = document.getElementById('errorlist');
+      const list = document.getElementById('errorlist');
       // Clear previous results
       list.innerHTML = '';
 
-      for (let lint of lints) {
-        let item = document.createElement('LI');
-        var text = document.createTextNode(lint.message());
+      for (const lint of lints) {
+        const item = document.createElement('LI');
+        const text = document.createTextNode(lint.message());
         item.appendChild(text);
         list.appendChild(item);
       }
     }
 
-    let inputField = document.getElementById('maininput');
+    const inputField = document.getElementById('maininput');
     inputField.addEventListener('input', onInput);
     onInput({target: inputField});
   </script>

@@ -29,7 +29,6 @@
               nodejs
               wasm-pack
               zip
-              pandoc
               wasm-bindgen-cli_0_2_100
             ];
 

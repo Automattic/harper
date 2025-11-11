@@ -58,10 +58,10 @@ pub fn lint_group() -> LintGroup {
             "Corrects `an` to `and` after `ahead`."
         ),
         "AllOfASudden" => (
-            ["all of the sudden", "all of sudden"],
+            ["all of the sudden", "all of sudden", "all the sudden"],
             ["all of a sudden"],
-            "The phrase is `all of a sudden`, meaning `unexpectedly`.",
-            "Corrects `all of the sudden` to `all of a sudden`.",
+            "Prefer the standard phrasing `all of a sudden`.",
+            "Guides this expression toward the standard `all of a sudden`.",
             LintKind::Nonstandard
         ),
         "ALongTime" => (
@@ -70,6 +70,13 @@ pub fn lint_group() -> LintGroup {
             "Use `a long time` for referring to a duration of time.",
             "Corrects `along time` to `a long time`.",
             LintKind::Grammar
+        ),
+        "Alongside" => (
+            ["along side"],
+            ["alongside"],
+            "Use the single word `alongside`.",
+            "Replaces the spaced form `along side` with `alongside`.",
+            LintKind::WordChoice
         ),
         "AlzheimersDisease" => (
             ["old-timers' disease"],
@@ -334,6 +341,13 @@ pub fn lint_group() -> LintGroup {
             "Use the full verb “want” after negation: “don't want” or “do not want.”",
             "In English, negation still requires the complete verb form (“want”), so avoid truncating it to “wan.”",
             LintKind::Typo
+        ),
+        "EggYolk" => (
+            ["egg yoke"],
+            ["egg yolk"],
+            "Use `egg yolk` when you mean the yellow portion of an egg.",
+            "Corrects the eggcorn `egg yoke`, replacing it with the standard culinary term `egg yolk`.",
+            LintKind::Eggcorn
         ),
         "DontCan" => (
             ["don't can"],
@@ -864,7 +878,7 @@ pub fn lint_group() -> LintGroup {
             ["points of view"],
             "The correct plural is `points of view`.",
             "Corrects pluralizing the wrong noun in `point of view`.",
-            LintKind::Usage
+            LintKind::Grammar
         ),
         "PortAuPrince" => (
             // Note: this lint matches any case but cannot correct wrong case
@@ -896,6 +910,13 @@ pub fn lint_group() -> LintGroup {
             "Use the insect's correct name.",
             "Corrects `preying mantis` to `praying mantis`, ensuring accurate reference to the insect’s characteristic pose.",
             LintKind::Eggcorn
+        ),
+        "QuiteMany" => (
+            ["quite many"],
+            ["quite a few"],
+            "Use `quite a few` instead of `quite many`.",
+            "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered non-standard usage.",
+            LintKind::Nonstandard
         ),
         "RapidFire" => (
             ["rapid fire"],
@@ -936,7 +957,7 @@ pub fn lint_group() -> LintGroup {
             ["rules of thumb"],
             "The correct plural is `rules of thumb`.",
             "Corrects pluralizing the wrong noun in `rule of thumb`.",
-            LintKind::Usage
+            LintKind::Grammar
         ),
         "SameAs" => (
             ["same then"],
