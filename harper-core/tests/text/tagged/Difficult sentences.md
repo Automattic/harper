@@ -234,8 +234,8 @@
 # D+  NSg+  VPt  D/P N🅪Sg/VB C/P D+  NPr+    NSg/J+ .
 > If    having  to bag    the groceries correctly is  more            than you    can     handle , then    this   isn't  the job     for you    .
 # NSg/C Nᴹ/Vg/J P  NSg/VB D+  NPl/V3+   R         VL3 NPr/I/VB/J/R/Dq C/P  ISgPl+ NPr/VXB NSg/VB . NSg/J/C I/Ddem NSg/VB D   NPr/VB+ C/P ISgPl+ .
-> This    is  a   new      bell   for my  bicycle .
-# I/Ddem+ VL3 D/P NSg/VB/J NPr/VB C/P D$+ NSg/VB+ .
+> This    is  a   new   bell   for my  bicycle .
+# I/Ddem+ VL3 D/P NSg/J NPr/VB C/P D$+ NSg/VB+ .
 > The cake     is  for Tom    and  Helen's anniversary .
 # D+  N🅪Sg/VB+ VL3 C/P NPr/VB VB/C NSg$    NSg+        .
 > This    medicine is  for your cough   .
@@ -256,8 +256,8 @@
 # NSg VP/J  C/P . VB/C NSg   C/P     . . P    VP/J    NSg/VB+ .
 > Make   way   for the president !
 # NSg/VB NSg/J C/P D+  NSg/VB+   .
-> Clear    the shelves for our new       Christmas stock      !
-# NSg/VB/J D   NPl/V3  C/P D$+ NSg/VB/J+ NPr/VB/J+ N🅪Sg/VB/J+ .
+> Clear    the shelves for our new    Christmas stock      !
+# NSg/VB/J D   NPl/V3  C/P D$+ NSg/J+ NPr/VB/J+ N🅪Sg/VB/J+ .
 > Stand  by      for your cue     .
 # NSg/VB NSg/J/P C/P D$+  NSg/VB+ .
 > Prepare for battle    .
@@ -324,12 +324,12 @@
 # P
 >
 #
-> Paul is  from New       Zealand .
-# NPr+ VL3 P    NSg/VB/J+ NPr+    .
+> Paul is  from New    Zealand .
+# NPr+ VL3 P    NSg/J+ NPr+    .
 > I       got a   letter  from my  brother   .
 # ISg/#r+ VP  D/P NSg/VB+ P    D$+ NSg/VB/J+ .
 > You    can't get    all          your news   from the Internet .
-# ISgPl+ VXB   NSg/VB NSg/I/J/C/Dq D$+  Nᴹ/V3+ P    D   NPrᴹ/VB+ .
+# ISgPl+ VXB   NSg/VB NSg/I/J/C/Dq D$+  Nᴹ/VB+ P    D   NPrᴹ/VB+ .
 > He       had books   piled from floor   to ceiling .
 # NPr/ISg+ VB  NPl/V3+ VP/J  P    NSg/VB+ P  NSg/VB  .
 > He       departed yesterday from Chicago .

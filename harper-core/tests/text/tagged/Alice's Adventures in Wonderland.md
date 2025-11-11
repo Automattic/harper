@@ -132,8 +132,8 @@
 # Nᴹ/Vg/J   . I/Ddem N🅪Sg/VB/J+ . NSg/R NPr/ISg+ VB     N🅪Sg/VB/J+ NSg/P NSg/I/J/C/Dq D   NPr/VB/J NSg/VB+ . . . NSg/C/P ISg/#r+ VXB
 > have    to ask    them     what   the name   of the country is  , you    know   . Please , Ma’am  , is
 # NSg/VXB P  NSg/VB NSg/IPl+ NSg/I+ D   NSg/VB P  D   NSg/J+  VL3 . ISgPl+ NSg/VB . VB     . NSg/VB . VL3
-> this   New      Zealand or    Australia ? ” ( and  she  tried to curtsey as    she  spoke   — fancy
-# I/Ddem NSg/VB/J NPr     NPr/C NPr+      . . . VB/C ISg+ VP/J  P  ?       NSg/R ISg+ NSg/VPt . NSg/VB/J
+> this   New   Zealand or    Australia ? ” ( and  she  tried to curtsey as    she  spoke   — fancy
+# I/Ddem NSg/J NPr     NPr/C NPr+      . . . VB/C ISg+ VP/J  P  ?       NSg/R ISg+ NSg/VPt . NSg/VB/J
 > curtseying as    you’re falling through the air      ! Do      you    think  you    could   manage it       ? )
 # ?          NSg/R K      Nᴹ/Vg/J NSg/J/P D   N🅪Sg/VB+ . NSg/VXB ISgPl+ NSg/VB ISgPl+ NSg/VXB NSg/VB NPr/ISg+ . .
 > “ And  what   an   ignorant little      girl    she’ll think  me       for asking  ! No    , it’ll never do
@@ -390,8 +390,8 @@
 # R   NSg/VB/J NSg/VB/J/P P  N🅪Sg/VB ISg+   J/P   ISgPl+ . ISgPl+ NSg/VB NSg/VB D+  NPr/VXB/JS+ NSg/J+ ISgPl+
 > can     ; — but     I       must   be      kind  to them     , ” thought Alice , “ or    perhaps they won’t walk   the
 # NPr/VXB . . NSg/C/P ISg/#r+ NSg/VB NSg/VXB NSg/J P  NSg/IPl+ . . N🅪Sg/VP NPr+  . . NPr/C NSg/R   IPl+ VB    NSg/VB D
-> way    I       want   to go       ! Let     me       see    : I’ll give   them     a   new      pair   of boots   every
-# NSg/J+ ISg/#r+ NSg/VB P  NSg/VB/J . NSg/VBP NPr/ISg+ NSg/VB . K    NSg/VB NSg/IPl+ D/P NSg/VB/J NSg/VB P  NPl/V3+ Dq
+> way    I       want   to go       ! Let     me       see    : I’ll give   them     a   new   pair   of boots   every
+# NSg/J+ ISg/#r+ NSg/VB P  NSg/VB/J . NSg/VBP NPr/ISg+ NSg/VB . K    NSg/VB NSg/IPl+ D/P NSg/J NSg/VB P  NPl/V3+ Dq
 > Christmas . ”
 # NPr/VB/J+ . .
 >
@@ -2058,8 +2058,8 @@
 # P  NSg/VB+ . NSg$   NSg/I/J/C/Dq ISg/#r+ NPr/VXB NSg/VB . .
 >
 #
-> This    was such  a   new      idea to Alice , that         she  was quite silent for a    minute    or
-# I/Ddem+ VPt NSg/I D/P NSg/VB/J NSg  P  NPr+  . NSg/I/C/Ddem ISg+ VPt R     NSg/J  C/P D/P+ NSg/VB/J+ NPr/C
+> This    was such  a   new   idea to Alice , that         she  was quite silent for a    minute    or
+# I/Ddem+ VPt NSg/I D/P NSg/J NSg  P  NPr+  . NSg/I/C/Ddem ISg+ VPt R     NSg/J  C/P D/P+ NSg/VB/J+ NPr/C
 > two , which gave the Pigeon  the opportunity of adding   , “ You’re looking for eggs    ,
 # NSg . I/C+  VPt  D   NSg/VB+ D   N🅪Sg        P  Nᴹ/Vg/J+ . . K      Nᴹ/Vg/J C/P NPl/V3+ .
 > I       know   that         well     enough ; and  what   does   it       matter   to me       whether you’re a   little
@@ -3922,8 +3922,8 @@
 # . ISg/#r+ VB    NSg/VXB I/R/Dq N🅪Sg/VB+ NPr/J/P D$+ NSg/VB+ NSg/P NSg/I/J/C/Dq . N🅪Sg/VB+ NPl/V3 J/R  NSg/VB/J C/P     . NSg/J/R
 > it’s always pepper  that          makes  people  hot      - tempered , ” she  went    on  , very much
 # K    R      N🅪Sg/VB NSg/I/C/Ddem+ NPl/V3 NPl/VB+ NSg/VB/J . VP/J     . . ISg+ NSg/VPt J/P . J/R  NSg/I/J/R/Dq
-> pleased at    having  found  out          a   new      kind  of rule    , “ and  vinegar that          makes  them
-# VP/J    NSg/P Nᴹ/Vg/J NSg/VB NSg/VB/J/R/P D/P NSg/VB/J NSg/J P  NSg/VB+ . . VB/C NSg/VB+ NSg/I/C/Ddem+ NPl/V3 NSg/IPl+
+> pleased at    having  found  out          a   new   kind  of rule    , “ and  vinegar that          makes  them
+# VP/J    NSg/P Nᴹ/Vg/J NSg/VB NSg/VB/J/R/P D/P NSg/J NSg/J P  NSg/VB+ . . VB/C NSg/VB+ NSg/I/C/Ddem+ NPl/V3 NSg/IPl+
 > sour     — and  camomile that          makes  them     bitter   — and  — and  barley - sugar   and  such  things
 # NSg/VB/J . VB/C ?        NSg/I/C/Ddem+ NPl/V3 NSg/IPl+ NSg/VB/J . VB/C . VB/C Nᴹ     . N🅪Sg/VB VB/C NSg/I NPl+
 > that          make   children sweet    - tempered . I       only  wish   people  knew that          : then    they
@@ -4466,8 +4466,8 @@
 # VB/C   P    NPr🅪Sg+ P  NPr🅪Sg . .
 >
 #
-> This    was quite a   new      idea to Alice , and  she  thought it       over    a   little     before she
-# I/Ddem+ VPt R     D/P NSg/VB/J NSg  P  NPr+  . VB/C ISg+ N🅪Sg/VP NPr/ISg+ NSg/J/P D/P NPr/I/J/Dq C/P    ISg+
+> This    was quite a   new   idea to Alice , and  she  thought it       over    a   little     before she
+# I/Ddem+ VPt R     D/P NSg/J NSg  P  NPr+  . VB/C ISg+ N🅪Sg/VP NPr/ISg+ NSg/J/P D/P NPr/I/J/Dq C/P    ISg+
 > made her     next     remark  . “ Then    the eleventh day     must   have    been    a    holiday ? ”
 # VB   ISg/D$+ NSg/J/P+ NSg/VB+ . . NSg/J/C D+  NSg/J+   NPr🅪Sg+ NSg/VB NSg/VXB NSg/VPp D/P+ NPr/VB+ . .
 >
@@ -5536,8 +5536,8 @@
 # VXB   NSg/VXB R     NSg/R NSg/I/J/R/Dq N🅪Sg/VB NPr/J/P D+  NSg/VB/J+ NSg/I/VB/J+ NSg/J+ NSg/VB/J/P NSg/R D   NSg/VB/J . .
 >
 #
-> As    soon as    the jury      had a   little     recovered from the shock     of being       upset    , and
-# NSg/R J/R  NSg/R D+  NSg/VB/J+ VB  D/P NPr/I/J/Dq VP/J+     P    D   N🅪Sg/VB/J P  N🅪Sg/Vg/J/C NSg/VB/J . VB/C
+> As    soon as    the jury      had a   little     recovered from the shock  of being       upset    , and
+# NSg/R J/R  NSg/R D+  NSg/VB/J+ VB  D/P NPr/I/J/Dq VP/J+     P    D   N🅪Sg/J P  N🅪Sg/Vg/J/C NSg/VB/J . VB/C
 > their slates and  pencils had been    found  and  handed back     to them     , they set       to
 # D$+   NPl/V3 VB/C NPl/V3+ VB  NSg/VPp NSg/VB VB/C VP/J   NSg/VB/J P  NSg/IPl+ . IPl+ NPr/VBP/J P
 > work    very diligently to write  out          a   history of the accident , all          except the

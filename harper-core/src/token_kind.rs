@@ -113,6 +113,7 @@ impl TokenKind {
         is_possessive_determiner,
         is_quantifier,
         is_non_quantifier_determiner,
+        is_non_demonstrative_determiner,
 
         // Conjunction methods
         is_conjunction,
