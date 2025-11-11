@@ -1223,7 +1223,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      692 | below!” (a loud crash)—“Now, who did that?—It was Bill, I fancy—Who’s to go down
          |                                                                 ^~~~~ The canonical dictionary spelling is `who's`.
@@ -1983,7 +1983,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     1582 | “Who’s making personal remarks now?” the Hatter asked triumphantly.
          |  ^~~~~ The canonical dictionary spelling is `who's`.
