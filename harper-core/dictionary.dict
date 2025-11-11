@@ -7216,7 +7216,6 @@ NJ/OJ               # US state (New Jersey)
 NLRB/O
 NM/ONJV             # US state (New Mexico)
 NORAD/Og
-NOW/ON
 NP/ON
 NPC/NSg             # non-player character
 NPR/ONg             # National Public Radio
@@ -36014,7 +36013,7 @@ novenae/N!@_
 novene/J
 novice/~NgS
 novitiate/NgS
-now/~JCNgV
+now/~JCNgVR
 nowadays/~g
 noway/S
 nowhere/~JNg
@@ -51855,7 +51854,7 @@ when/~CINgS
 whence/~C
 whenever/~C
 whensoever/
-where/~CNSg
+where/~CNSRg
 where'd/
 whereabouts/~Ng
 whereas/~CN
