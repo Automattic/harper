@@ -1,6 +1,7 @@
 use std::{borrow::Cow, io::Read, path::PathBuf};
 
 use harper_core::languages::Language;
+use harper_core::parsers::{Parser, PlainPortuguese};
 use harper_core::spell::Dictionary;
 use harper_core::{
     Document,
@@ -25,9 +26,13 @@ impl Input {
         dictionary: &impl Dictionary,
         language: Language,
     ) -> anyhow::Result<(Document, String)> {
+        let parser: Box<dyn Parser> = match language {
+            Language::English => Box::new(PlainEnglish),
+            Language::Portuguese => Box::new(PlainPortuguese),
+        };
         match self {
             Input::File(file) => super::load_file(file, markdown_options, dictionary, language),
-            Input::Text(s) => Ok((Document::new(s, &PlainEnglish, dictionary), s.clone())),
+            Input::Text(s) => Ok((Document::new(s, &parser, dictionary), s.clone())),
         }
     }
 
