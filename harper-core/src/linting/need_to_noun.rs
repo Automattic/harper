@@ -4,6 +4,7 @@ use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
+use crate::expr::UnlessStep;
 use crate::patterns::DerivedFrom;
 use crate::patterns::WordSet;
 
@@ -19,6 +20,13 @@ impl Default for NeedToNoun {
             Box::new(|tok: &Token, _: &[char]| tok.kind.is_adverb() || tok.kind.is_determiner()),
             Box::new(WordSet::new(&["about"])),
         ]);
+
+        let exceptions = SequenceExpr::default()
+            .t_any()
+            .t_any()
+            .t_any()
+            .t_any()
+            .then_word_set(&["be"]);
 
         let a = SequenceExpr::default()
             .then(|tok: &Token, _: &[char]| tok.kind.is_nominal())
@@ -36,7 +44,7 @@ impl Default for NeedToNoun {
             .then(a.or(b));
 
         Self {
-            expr: Box::new(expr),
+            expr: Box::new(expr.and(UnlessStep::new(exceptions, |_: &Token, _: &[char]| true))),
         }
     }
 }
