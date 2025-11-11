@@ -145,7 +145,6 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
 
 #[cfg(test)]
 mod tests {
-    use crate::languages::Language;
     use crate::spell::FstDictionary;
     use crate::{
         Dialect, Document,
@@ -157,8 +156,7 @@ mod tests {
     fn keeps_space_lint() {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
-        let mut linter =
-            LintGroup::new_curated(FstDictionary::curated(Language::English), Dialect::American);
+        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
 
         let mut lints = linter.lint(&doc);
 

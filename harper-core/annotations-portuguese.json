@@ -13,7 +13,7 @@
         {
           "remove": "",
           "add": "es",
-          "condition": "[rz]"
+          "condition": "[rzs]"
         },
         {
           "remove": "l",
@@ -34,12 +34,10 @@
         },
         {
           "if_base": {
-            "verb": {}
+            "noun": {}
           },
           "metadata": {
-            "verb": {
-              "verb_form": "THIRD_PERSON_SINGULAR"
-            }
+            "stress": "Oxitona"
           }
         }
       ],
@@ -360,15 +358,6 @@
       "metadata": {
         "determiner": {
           "is_possessive": true
-        }
-      }
-    },
-    "w": {
-      "#": "mass + countable noun property",
-      "metadata": {
-        "noun": {
-          "is_countable": true,
-          "is_mass": true
         }
       }
     },

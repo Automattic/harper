@@ -7,7 +7,6 @@ use itertools::Itertools;
 
 use super::{FstDictionary, WordId};
 use super::{FuzzyMatchResult, dictionary::Dictionary};
-use crate::languages::Language;
 use crate::{CharString, DictWordMetadata};
 
 /// A simple wrapper over [`Dictionary`] that allows
@@ -40,7 +39,7 @@ impl MergedDictionary {
         // Hashing the curated dictionary isn't super helpful and takes a long time.
         if Arc::ptr_eq(
             dictionary,
-            &(FstDictionary::curated(Language::English) as Arc<dyn Dictionary>),
+            &(FstDictionary::curated() as Arc<dyn Dictionary>),
         ) {
             return 1;
         }

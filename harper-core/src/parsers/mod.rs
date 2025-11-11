@@ -15,6 +15,7 @@ pub use markdown::{Markdown, MarkdownOptions};
 pub use mask::Mask;
 pub use org_mode::OrgMode;
 pub use plain_english::PlainEnglish;
+pub use plain_portuguese::PlainPortuguese;
 
 use crate::{LSend, Token, TokenStringExt};
 

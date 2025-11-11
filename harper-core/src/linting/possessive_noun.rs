@@ -99,12 +99,11 @@ mod tests {
     use std::sync::Arc;
 
     use super::PossessiveNoun;
-    use crate::languages::Language;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     fn test_linter() -> PossessiveNoun<Arc<FstDictionary>> {
-        PossessiveNoun::new(FstDictionary::curated(Language::English))
+        PossessiveNoun::new(FstDictionary::curated())
     }
 
     /// Sourced from a Hacker News comment

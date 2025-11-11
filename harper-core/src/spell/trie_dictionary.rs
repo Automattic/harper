@@ -6,7 +6,6 @@ use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
 use crate::DictWordMetadata;
-use crate::languages::Language;
 
 use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordId};
 
@@ -18,9 +17,8 @@ pub struct TrieDictionary<D: Dictionary> {
 }
 
 lazy_static! {
-    static ref DICT: Arc<TrieDictionary<Arc<FstDictionary>>> = Arc::new(TrieDictionary::new(
-        FstDictionary::curated(Language::English)
-    ));
+    static ref DICT: Arc<TrieDictionary<Arc<FstDictionary>>> =
+        Arc::new(TrieDictionary::new(FstDictionary::curated()));
 }
 
 impl TrieDictionary<Arc<FstDictionary>> {

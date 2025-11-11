@@ -380,7 +380,6 @@ pub fn suggest_correct_spelling_str(
 mod tests {
     use itertools::Itertools;
 
-    use crate::languages::Language;
     use crate::{
         CharStringExt, Dialect,
         linting::{
@@ -408,7 +407,7 @@ mod tests {
             "punctation",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(Language::English),
+            &FstDictionary::curated(),
         );
 
         assert!(results.iter().all_unique())
@@ -440,7 +439,7 @@ mod tests {
             "Semantical",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(Language::English),
+            &FstDictionary::curated(),
         );
 
         dbg!(&results);
@@ -459,7 +458,7 @@ mod tests {
             "hvllo",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(Language::English),
+            &FstDictionary::curated(),
         );
 
         dbg!(&results);
@@ -475,7 +474,7 @@ mod tests {
             misspelled_word,
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(Language::English),
+            &FstDictionary::curated(),
         );
 
         dbg!(&results);
@@ -499,19 +498,19 @@ mod tests {
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(Language::English),
+            &FstDictionary::curated(),
         );
         let results2 = suggest_correct_spelling_str(
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(Language::English),
+            &FstDictionary::curated(),
         );
         let results3 = suggest_correct_spelling_str(
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(Language::English),
+            &FstDictionary::curated(),
         );
 
         assert_eq!(results1, results2);
@@ -550,7 +549,7 @@ mod tests {
     fn suggest_color_for_colour_lowercase() {
         assert_suggestion_result(
             "colour",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "color",
         );
     }
@@ -559,7 +558,7 @@ mod tests {
     fn suggest_colour_for_color_lowercase() {
         assert_suggestion_result(
             "color",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "colour",
         );
     }
@@ -569,7 +568,7 @@ mod tests {
     fn suggest_color_for_colour_titlecase() {
         assert_suggestion_result(
             "Colour",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "Color",
         );
     }
@@ -579,7 +578,7 @@ mod tests {
     fn suggest_colour_for_color_titlecase() {
         assert_suggestion_result(
             "Color",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "Colour",
         );
     }
@@ -590,7 +589,7 @@ mod tests {
     fn suggest_color_for_colour_all_caps() {
         assert_suggestion_result(
             "COLOUR",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "COLOR",
         );
     }
@@ -600,7 +599,7 @@ mod tests {
     fn suggest_colour_for_color_all_caps() {
         assert_suggestion_result(
             "COLOR",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "COLOUR",
         );
     }
@@ -612,7 +611,7 @@ mod tests {
     fn suggest_realise_for_realize() {
         assert_suggestion_result(
             "realize",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "realise",
         );
     }
@@ -621,7 +620,7 @@ mod tests {
     fn suggest_realize_for_realise() {
         assert_suggestion_result(
             "realise",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "realize",
         );
     }
@@ -630,7 +629,7 @@ mod tests {
     fn suggest_realise_for_realize_titlecase() {
         assert_suggestion_result(
             "Realize",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "Realise",
         );
     }
@@ -640,7 +639,7 @@ mod tests {
     fn suggest_realize_for_realise_titlecase() {
         assert_suggestion_result(
             "Realise",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "Realize",
         );
     }
@@ -650,7 +649,7 @@ mod tests {
     fn suggest_realise_for_realize_all_caps() {
         assert_suggestion_result(
             "REALIZE",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "REALISE",
         );
     }
@@ -660,7 +659,7 @@ mod tests {
     fn suggest_realize_for_realise_all_caps() {
         assert_suggestion_result(
             "REALISE",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "REALIZE",
         );
     }
@@ -670,7 +669,7 @@ mod tests {
     fn suggest_defence_for_defense() {
         assert_suggestion_result(
             "defense",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "defence",
         );
     }
@@ -679,7 +678,7 @@ mod tests {
     fn suggest_defense_for_defence() {
         assert_suggestion_result(
             "defence",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "defense",
         );
     }
@@ -688,7 +687,7 @@ mod tests {
     fn suggest_defense_for_defence_titlecase() {
         assert_suggestion_result(
             "Defense",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "Defence",
         );
     }
@@ -697,7 +696,7 @@ mod tests {
     fn suggest_defence_for_defense_titlecase() {
         assert_suggestion_result(
             "Defence",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "Defense",
         );
     }
@@ -707,7 +706,7 @@ mod tests {
     fn suggest_defense_for_defence_all_caps() {
         assert_suggestion_result(
             "DEFENSE",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "DEFENCE",
         );
     }
@@ -717,7 +716,7 @@ mod tests {
     fn suggest_defence_for_defense_all_caps() {
         assert_suggestion_result(
             "DEFENCE",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "DEFENSE",
         );
     }
@@ -727,7 +726,7 @@ mod tests {
     fn suggest_sceptic_for_skeptic() {
         assert_suggestion_result(
             "skeptic",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "sceptic",
         );
     }
@@ -736,7 +735,7 @@ mod tests {
     fn suggest_skeptic_for_sceptic() {
         assert_suggestion_result(
             "sceptic",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "skeptic",
         );
     }
@@ -745,7 +744,7 @@ mod tests {
     fn suggest_sceptic_for_skeptic_titlecase() {
         assert_suggestion_result(
             "Skeptic",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "Sceptic",
         );
     }
@@ -755,7 +754,7 @@ mod tests {
     fn suggest_skeptic_for_sceptic_titlecase() {
         assert_suggestion_result(
             "Sceptic",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "Skeptic",
         );
     }
@@ -765,7 +764,7 @@ mod tests {
     fn suggest_skeptic_for_sceptic_all_caps() {
         assert_suggestion_result(
             "SKEPTIC",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "SCEPTIC",
         );
     }
@@ -775,7 +774,7 @@ mod tests {
     fn suggest_sceptic_for_skeptic_all_caps() {
         assert_suggestion_result(
             "SCEPTIC",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "SKEPTIC",
         );
     }
@@ -786,7 +785,7 @@ mod tests {
     fn suggest_centimeter_for_centimetre() {
         assert_suggestion_result(
             "centimetre",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "centimeter",
         );
     }
@@ -795,7 +794,7 @@ mod tests {
     fn suggest_centimetre_for_centimeter() {
         assert_suggestion_result(
             "centimeter",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "centimetre",
         );
     }
@@ -804,7 +803,7 @@ mod tests {
     fn suggest_centimeter_for_centimetre_titlecase() {
         assert_suggestion_result(
             "Centimetre",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "Centimeter",
         );
     }
@@ -814,7 +813,7 @@ mod tests {
     fn suggest_centimetre_for_centimeter_titlecase() {
         assert_suggestion_result(
             "Centimeter",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "Centimetre",
         );
     }
@@ -824,7 +823,7 @@ mod tests {
     fn suggest_centimeter_for_centimetre_all_caps() {
         assert_suggestion_result(
             "CENTIMETRE",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "CENTIMETER",
         );
     }
@@ -834,7 +833,7 @@ mod tests {
     fn suggest_centimetre_for_centimeter_all_caps() {
         assert_suggestion_result(
             "CENTIMETER",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "CENTIMETRE",
         );
     }
@@ -845,7 +844,7 @@ mod tests {
     fn suggest_traveler_for_traveller() {
         assert_suggestion_result(
             "traveller",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "traveler",
         );
     }
@@ -854,7 +853,7 @@ mod tests {
     fn suggest_traveller_for_traveler() {
         assert_suggestion_result(
             "traveler",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "traveller",
         );
     }
@@ -863,7 +862,7 @@ mod tests {
     fn suggest_traveler_for_traveller_titlecase() {
         assert_suggestion_result(
             "Traveller",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "Traveler",
         );
     }
@@ -873,7 +872,7 @@ mod tests {
     fn suggest_traveller_for_traveler_titlecase() {
         assert_suggestion_result(
             "Traveler",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "Traveller",
         );
     }
@@ -883,7 +882,7 @@ mod tests {
     fn suggest_traveler_for_traveller_all_caps() {
         assert_suggestion_result(
             "TRAVELLER",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "TRAVELER",
         );
     }
@@ -893,7 +892,7 @@ mod tests {
     fn suggest_traveller_for_traveler_all_caps() {
         assert_suggestion_result(
             "TRAVELER",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "TRAVELLER",
         );
     }
@@ -905,7 +904,7 @@ mod tests {
     fn suggest_grey_for_gray_in_non_american() {
         assert_suggestion_result(
             "I've got a gray cat.",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "I've got a grey cat.",
         );
     }
@@ -914,7 +913,7 @@ mod tests {
     fn suggest_gray_for_grey_in_american() {
         assert_suggestion_result(
             "It's a greyscale photo.",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "It's a grayscale photo.",
         );
     }
@@ -924,7 +923,7 @@ mod tests {
     fn suggest_grey_for_gray_in_non_american_titlecase() {
         assert_suggestion_result(
             "I've Got a Gray Cat.",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "I've Got a Grey Cat.",
         );
     }
@@ -933,7 +932,7 @@ mod tests {
     fn suggest_gray_for_grey_in_american_titlecase() {
         assert_suggestion_result(
             "It's a Greyscale Photo.",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "It's a Grayscale Photo.",
         );
     }
@@ -943,7 +942,7 @@ mod tests {
     fn suggest_grey_for_gray_in_non_american_all_caps() {
         assert_suggestion_result(
             "GRAY",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "GREY",
         );
     }
@@ -953,7 +952,7 @@ mod tests {
     fn suggest_gray_for_grey_in_american_all_caps() {
         assert_suggestion_result(
             "GREY",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::American),
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "GRAY",
         );
     }
@@ -965,7 +964,7 @@ mod tests {
     fn fix_cheif_and_recieved() {
         assert_top3_suggestion_result(
             "The cheif recieved a letter.",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "The chief received a letter.",
         );
     }
@@ -975,7 +974,7 @@ mod tests {
     fn fix_cheif_and_recieved_titlecase() {
         assert_top3_suggestion_result(
             "The Cheif Recieved a Letter.",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "The Chief Received a Letter.",
         );
     }
@@ -985,7 +984,7 @@ mod tests {
     fn fix_cheif_and_recieved_all_caps() {
         assert_top3_suggestion_result(
             "THE CHEIF RECIEVED A LETTER.",
-            SpellCheck::new(FstDictionary::curated(Language::English), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "THE CHEIF RECEIVED A LETTER.",
         );
     }

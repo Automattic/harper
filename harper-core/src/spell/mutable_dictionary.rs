@@ -47,9 +47,7 @@ fn uncached_inner_new(language: Language) -> Arc<MutableDictionary> {
 }
 
 lazy_static! {
-    static ref DICT: Arc<MutableDictionary> = uncached_inner_new(Language::default());
-}
-lazy_static! {
+    static ref DICT: Arc<MutableDictionary> = uncached_inner_new(Language::English);
     static ref DICT_PORTUGUESE: Arc<MutableDictionary> = uncached_inner_new(Language::Portuguese);
 }
 
@@ -75,11 +73,14 @@ impl MutableDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
     /// Consider using [`super::FstDictionary::curated()`] instead, as it is more performant for spellchecking.
-    pub fn curated(language: Language) -> Arc<Self> {
+    pub fn curated_select_language(language: Language) -> Arc<Self> {
         match language {
-            Language::English => (*DICT).clone(),
+            Language::English => (*DICT).clone(), // (*DICT).clone(),
             Language::Portuguese => (*DICT_PORTUGUESE).clone(),
         }
+    }
+    pub fn curated() -> Arc<Self> {
+        (*DICT).clone() //(*DICT).clone()
     }
 
     /// Appends words to the dictionary.
@@ -297,19 +298,18 @@ mod tests {
     use hashbrown::HashSet;
     use itertools::Itertools;
 
-    use crate::languages::Language;
     use crate::spell::{Dictionary, MutableDictionary};
     use crate::{DictWordMetadata, char_string::char_string};
 
     #[test]
     fn curated_contains_no_duplicates() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
         assert!(dict.words_iter().all_unique());
     }
 
     #[test]
     fn curated_matches_capitalized() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
         assert!(dict.contains_word_str("this"));
         assert!(dict.contains_word_str("This"));
     }
@@ -319,14 +319,14 @@ mod tests {
     // Harper previously wrongly classified it as a noun.
     #[test]
     fn this_is_determiner() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
         assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
         assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
     }
 
     #[test]
     fn several_is_quantifier() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
         assert!(
             dict.get_word_metadata_str("several")
                 .unwrap()
@@ -336,45 +336,45 @@ mod tests {
 
     #[test]
     fn few_is_quantifier() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
         assert!(dict.get_word_metadata_str("few").unwrap().is_quantifier());
     }
 
     #[test]
     fn fewer_is_quantifier() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
         assert!(dict.get_word_metadata_str("fewer").unwrap().is_quantifier());
     }
 
     #[test]
     fn than_is_conjunction() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
         assert!(dict.get_word_metadata_str("than").unwrap().is_conjunction());
         assert!(dict.get_word_metadata_str("Than").unwrap().is_conjunction());
     }
 
     #[test]
     fn herself_is_pronoun() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
         assert!(dict.get_word_metadata_str("herself").unwrap().is_pronoun());
         assert!(dict.get_word_metadata_str("Herself").unwrap().is_pronoun());
     }
 
     #[test]
     fn discussion_171() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
         assert!(dict.contains_word_str("natively"));
     }
 
     #[test]
     fn im_is_common() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
         assert!(dict.get_word_metadata_str("I'm").unwrap().common);
     }
 
     #[test]
     fn fuzzy_result_sorted_by_edit_distance() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
 
         let results = dict.fuzzy_match_str("hello", 3, 100);
         let is_sorted_by_dist = results
@@ -388,7 +388,7 @@ mod tests {
 
     #[test]
     fn there_is_not_a_pronoun() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
 
         assert!(!dict.get_word_metadata_str("there").unwrap().is_nominal());
         assert!(!dict.get_word_metadata_str("there").unwrap().is_pronoun());
@@ -396,17 +396,17 @@ mod tests {
 
     #[test]
     fn expanded_contains_giants() {
-        assert!(MutableDictionary::curated(Language::English).contains_word_str("giants"));
+        assert!(MutableDictionary::curated().contains_word_str("giants"));
     }
 
     #[test]
     fn expanded_contains_deallocate() {
-        assert!(MutableDictionary::curated(Language::English).contains_word_str("deallocate"));
+        assert!(MutableDictionary::curated().contains_word_str("deallocate"));
     }
 
     #[test]
     fn curated_contains_repo() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
 
         assert!(dict.contains_word_str("repo"));
         assert!(dict.contains_word_str("repos"));
@@ -416,7 +416,7 @@ mod tests {
     #[test]
     fn curated_contains_possessive_abandonment() {
         assert!(
-            MutableDictionary::curated(Language::English)
+            MutableDictionary::curated()
                 .get_word_metadata_str("abandonment's")
                 .unwrap()
                 .is_possessive_noun()
@@ -425,7 +425,7 @@ mod tests {
 
     #[test]
     fn has_is_not_a_nominal() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
 
         let has = dict.get_word_metadata_str("has");
         assert!(has.is_some());
@@ -435,7 +435,7 @@ mod tests {
 
     #[test]
     fn is_is_linking_verb() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
 
         let is = dict.get_word_metadata_str("is");
 
@@ -459,14 +459,14 @@ mod tests {
 
     #[test]
     fn apart_is_not_noun() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
 
         assert!(!dict.get_word_metadata_str("apart").unwrap().is_noun());
     }
 
     #[test]
     fn be_is_verb_lemma() {
-        let dict = MutableDictionary::curated(Language::English);
+        let dict = MutableDictionary::curated();
 
         let is = dict.get_word_metadata_str("be");
 

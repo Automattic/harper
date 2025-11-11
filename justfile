@@ -313,8 +313,9 @@ parse file:
   cargo run --bin harper-cli -- parse {{file}}
 
 # Lint a provided file using Harper and print the results.
-lint file:
-  cargo run --bin harper-cli -- lint {{file}}
+lint file language:
+  cargo run --bin harper-cli -- --language {{language}} lint {{file}}
+
 
 # Show the spans of the parsed tokens overlapped in the provided file.
 spans file:

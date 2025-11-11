@@ -5,7 +5,6 @@ use std::io::Cursor;
 use std::sync::Arc;
 
 use harper_core::language_detection::is_doc_likely_english;
-use harper_core::languages::Language as DictionaryLanguage;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
@@ -131,7 +130,7 @@ impl Linter {
     fn construct_merged_dict(user_dictionary: MutableDictionary) -> Arc<MergedDictionary> {
         let mut lint_dict = MergedDictionary::new();
 
-        lint_dict.add_dictionary(FstDictionary::curated(DictionaryLanguage::English));
+        lint_dict.add_dictionary(FstDictionary::curated());
         lint_dict.add_dictionary(Arc::new(user_dictionary.clone()));
 
         Arc::new(lint_dict)
@@ -420,11 +419,7 @@ impl Linter {
 
 #[wasm_bindgen]
 pub fn to_title_case(text: String) -> String {
-    harper_core::make_title_case_str(
-        &text,
-        &PlainEnglish,
-        &FstDictionary::curated(DictionaryLanguage::English),
-    )
+    harper_core::make_title_case_str(&text, &PlainEnglish, &FstDictionary::curated())
 }
 
 /// A suggestion to fix a Lint.

@@ -1,5 +1,6 @@
 use std::{borrow::Cow, io::Read, path::PathBuf};
 
+use harper_core::languages::Language;
 use harper_core::spell::Dictionary;
 use harper_core::{
     Document,
@@ -22,9 +23,10 @@ impl Input {
         &self,
         markdown_options: MarkdownOptions,
         dictionary: &impl Dictionary,
+        language: Language,
     ) -> anyhow::Result<(Document, String)> {
         match self {
-            Input::File(file) => super::load_file(file, markdown_options, dictionary),
+            Input::File(file) => super::load_file(file, markdown_options, dictionary, language),
             Input::Text(s) => Ok((Document::new(s, &PlainEnglish, dictionary), s.clone())),
         }
     }

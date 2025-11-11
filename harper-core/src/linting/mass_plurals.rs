@@ -140,7 +140,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::languages::Language;
     use crate::{linting::tests::assert_lint_count, spell::FstDictionary};
 
     use super::MassPlurals;
@@ -149,7 +148,7 @@ mod tests {
     fn flag_advicess() {
         assert_lint_count(
             "You gave me bad advices.",
-            MassPlurals::new(FstDictionary::curated(Language::English)),
+            MassPlurals::new(FstDictionary::curated()),
             1,
         );
     }
@@ -158,7 +157,7 @@ mod tests {
     fn flag_source_codes_and_softwares() {
         assert_lint_count(
             "Do we have the source codes for these softwares?",
-            MassPlurals::new(FstDictionary::curated(Language::English)),
+            MassPlurals::new(FstDictionary::curated()),
             2,
         );
     }
@@ -167,7 +166,7 @@ mod tests {
     fn flag_noun_ending_in_ies() {
         assert_lint_count(
             "Celibacies are better than sex.",
-            MassPlurals::new(FstDictionary::curated(Language::English)),
+            MassPlurals::new(FstDictionary::curated()),
             1,
         );
     }
@@ -177,7 +176,7 @@ mod tests {
     fn flag_real_estates() {
         assert_lint_count(
             "Instead of giving any of her many luxury real estates or multi-million dollar fortune ...",
-            MassPlurals::new(FstDictionary::curated(Language::English)),
+            MassPlurals::new(FstDictionary::curated()),
             1,
         );
     }
