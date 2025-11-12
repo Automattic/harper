@@ -3,13 +3,15 @@ import { Card } from 'flowbite-svelte';
 import { type WorkerLinter } from 'harper.js';
 import {
 	applySuggestion,
+	type IgnorableLintBox,
+	type IgnorableLintBox,
 	LintFramework,
 	type UnpackedLint,
 	type UnpackedLintGroups,
 	type UnpackedSuggestion,
 	unpackLint,
 } from 'lint-framework';
-import LintCard from '$lib/components/LintCard.svelte';
+import LintSidebar from '$lib/components/LintSidebar.svelte';
 import demo from '../../../../../demo.md?raw';
 
 export let content = demo.trim();
@@ -18,10 +20,7 @@ let editor: HTMLDivElement | null;
 let linter: WorkerLinter;
 
 // Live list of lints from the framework's lint callback
-let lints: UnpackedLint[] = [];
-// Track which lint cards are open by index
-let openSet: Set<number> = new Set();
-
+let lintBoxes: IgnorableLintBox[] = [];
 let lfw = new LintFramework(
 	async (text) => {
 		if (!linter) return {};
@@ -37,7 +36,7 @@ let lfw = new LintFramework(
 
 		const grouped: UnpackedLintGroups = Object.fromEntries(entries);
 
-		lints = lfw.getLastLints();
+		lintBoxes = lfw.getLastIgnorableLintBoxes();
 
 		return grouped;
 	},
@@ -86,76 +85,20 @@ $: if (editor != null) {
 	updateLintFrameworkElements();
 }
 
-function applySug(lint: UnpackedLint, s: UnpackedSuggestion) {}
+function jumpTo(lintBox: IgnorableLintBox) {
 
-function createSnippetFor(lint: UnpackedLint) {
-	const CONTEXT = 60;
-	const start = Math.max(0, lint.span.start - CONTEXT);
-	const end = Math.min(content.length, lint.span.end + CONTEXT);
-
-	let prefix = content.slice(start, lint.span.start);
-	let suffix = content.slice(lint.span.end, end);
-
-	// Collapse whitespace/newlines for a compact blurb
-	const collapse = (s: string) => s.replace(/\s+/g, ' ').trim();
-	prefix = collapse(prefix);
-	const problem = collapse(lint.problem_text);
-	suffix = collapse(suffix);
-
-	return {
-		prefix,
-		problem,
-		suffix,
-		prefixEllipsis: start > 0,
-		suffixEllipsis: end < content.length,
-	};
-}
-
-function jumpTo(lint: UnpackedLint) {}
-
-function toggleCard(i: number) {
-	const wasOpen = openSet.has(i);
-	if (wasOpen) {
-		const ns = new Set(openSet);
-		ns.delete(i);
-		openSet = ns;
-	} else {
-		const ns = new Set(openSet);
-		ns.add(i);
-		openSet = ns;
-	}
-}
-
-$: allOpen = lints.length > 0 && openSet.size === lints.length;
-
-function toggleAll() {
-	if (allOpen) {
-		openSet = new Set();
-	} else {
-		openSet = new Set(lints.map((_, i) => i));
-	}
 }
 
 async function ignoreAll() {
-	if (!linter || lints.length === 0) return;
+	if (!linter || lintBoxes.length === 0) return;
 	try {
-		const hashes = Array.from(new Set(lints.map((l) => l.context_hash)));
+		const hashes = Array.from(new Set(lintBoxes.map((b) => b.lint.context_hash)));
 		await Promise.all(hashes.map((h) => linter.ignoreLintHash(BigInt(h))));
 		// Refresh to hide ignored lints immediately
 		lfw.update();
 	} catch (e) {
 		console.error('Failed to ignore all lints', e);
 	}
-}
-
-// Keep openSet in range if lint list changes
-$: if (openSet.size > 0) {
-	const max = lints.length;
-	const next = new Set<number>();
-	for (const idx of openSet) {
-		if (idx >= 0 && idx < max) next.add(idx);
-	}
-	if (next.size !== openSet.size) openSet = next;
 }
 </script>
 
@@ -166,44 +109,10 @@ $: if (openSet.size > 0) {
     </div>
 	</Card>
 
-	<Card class="hidden md:flex md:flex-col md:w-1/3 h-full p-5 z-10">
-		<div class="flex items-center justify-between mb-3">
-			<div class="text-base font-semibold">Problems</div>
-			<div class="flex items-center gap-2">
-				<button
-					class="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#0b0f14]"
-					on:click={toggleAll}
-					aria-label={allOpen ? 'Collapse all lint cards' : 'Open all lint cards'}
-				>
-					{allOpen ? 'Collapse all' : 'Open all'}
-				</button>
-				<button
-					class="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#0b0f14]"
-					on:click={ignoreAll}
-					disabled={lints.length === 0}
-					aria-label="Ignore all current lints"
-				>
-					Ignore all
-				</button>
-			</div>
-		</div>
-		<div class="flex-1 overflow-y-auto pr-1">
-			{#if lints.length === 0}
-				<p class="text-sm text-gray-500">No lints yet.</p>
-			{:else}
-                <div class="space-y-3">
-                    {#each lints as lint, i}
-                        <LintCard
-                            {lint}
-                            snippet={createSnippetFor(lint)}
-                            open={openSet.has(i)}
-                            onToggleOpen={() => toggleCard(i)}
-                            focusError={() => jumpTo(lint)}
-                            onApply={(s) => applySug(lint, s)}
-                        />
-                    {/each}
-                </div>
-            {/if}
-        </div>
-    </Card>
+	<LintSidebar
+		lintBoxes={lintBoxes}
+		content={content}
+		focusLint={jumpTo}
+		ignoreAll={ignoreAll}
+	/>
 </div>
