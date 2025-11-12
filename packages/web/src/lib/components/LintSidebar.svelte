@@ -6,7 +6,10 @@ import LintCard from '$lib/components/LintCard.svelte';
 export let lintBoxes: IgnorableLintBox[] = [];
 export let content = '';
 export let focusLint: (lintBox: IgnorableLintBox) => void = () => {};
-export let ignoreAll: () => void = () => {};
+
+async function ignoreAll() {
+	await Promise.all(lintBoxes.map((b) => (b.ignoreLint ? b.ignoreLint() : Promise.resolve())));
+}
 
 let openSet: Set<number> = new Set();
 

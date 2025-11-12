@@ -107,18 +107,6 @@ function jumpTo(lintBox: IgnorableLintBox) {
 		console.error('Failed to jump to lint', error);
 	}
 }
-
-async function ignoreAll() {
-	if (!linter || lintBoxes.length === 0) return;
-	try {
-		const hashes = Array.from(new Set(lintBoxes.map((b) => b.lint.context_hash)));
-		await Promise.all(hashes.map((h) => linter.ignoreLintHash(BigInt(h))));
-		// Refresh to hide ignored lints immediately
-		lfw.update();
-	} catch (e) {
-		console.error('Failed to ignore all lints', e);
-	}
-}
 </script>
 
 <div class="flex flex-row h-full max-w-full">
@@ -132,6 +120,5 @@ async function ignoreAll() {
 		lintBoxes={lintBoxes}
 		content={content}
 		focusLint={jumpTo}
-		ignoreAll={ignoreAll}
 	/>
 </div>
