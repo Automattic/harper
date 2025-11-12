@@ -175,7 +175,9 @@ use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::would_never_have::WouldNeverHave;
-use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
+use super::{
+    CureFor, CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma,
+};
 use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
@@ -487,6 +489,7 @@ impl LintGroup {
         insert_expr_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
         insert_expr_rule!(CriteriaPhenomena, true);
+        insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
         insert_expr_rule!(DespiteOf, true);
