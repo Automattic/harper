@@ -41,7 +41,7 @@ function collapse(contents: string) {
 
 function createSnippetFor(lintBox: LintBox) {
 	let lint = lintBox.lint;
-	let content = lintBox.source.textContent;
+	let content = lintBox.source.textContent ?? '';
 
 	const CONTEXT = 60;
 	const start = Math.max(0, lint.span.start - CONTEXT);
