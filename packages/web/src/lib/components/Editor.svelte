@@ -11,12 +11,17 @@ import LintSidebar from '$lib/components/LintSidebar.svelte';
 import demo from '../../../../../demo.md?raw';
 
 export let content = demo.trim();
+export let onReady: () => void;
 
 let editor: HTMLDivElement | null;
 let linter: WorkerLinter;
-
-// Live list of lints from the framework's lint callback
+let quill: any;
 let lintBoxes: IgnorableLintBox[] = [];
+
+$: if (linter != null && quill != null) {
+	onReady();
+}
+
 let lfw = new LintFramework(
 	async (text) => {
 		if (!linter) return {};
@@ -53,12 +58,12 @@ let lfw = new LintFramework(
 
 (async () => {
 	let { WorkerLinter, binary } = await import('harper.js');
-	linter = new WorkerLinter({ binary });
+	let newLinter = new WorkerLinter({ binary });
 
-	await linter.setup();
+	newLinter.setup();
+	await newLinter.lint(content);
+	linter = newLinter;
 })();
-
-let quill: any;
 
 async function updateLintFrameworkElements() {
 	if (editor == null) {
