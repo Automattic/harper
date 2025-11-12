@@ -1,10 +1,9 @@
 <script lang="ts">
 import { Card } from 'flowbite-svelte';
-import { type IgnorableLintBox, type UnpackedLint } from 'lint-framework';
+import { type IgnorableLintBox, type LintBox, type UnpackedLint } from 'lint-framework';
 import LintCard from '$lib/components/LintCard.svelte';
 
 export let lintBoxes: IgnorableLintBox[] = [];
-export let content = '';
 export let focusLint: (lintBox: IgnorableLintBox) => void = () => {};
 
 async function ignoreAll() {
@@ -40,7 +39,10 @@ function collapse(contents: string) {
 	return contents.replace(/\s+/g, ' ').trim();
 }
 
-function createSnippetFor(lint: UnpackedLint) {
+function createSnippetFor(lintBox: LintBox) {
+	let lint = lintBox.lint;
+	let content = lintBox.source.textContent;
+
 	const CONTEXT = 60;
 	const start = Math.max(0, lint.span.start - CONTEXT);
 	const end = Math.min(content.length, lint.span.end + CONTEXT);
@@ -100,7 +102,7 @@ $: if (openSet.size > 0) {
 				{#each lintBoxes as lintBox, i}
 					<LintCard
 						lint={lintBox.lint}
-						snippet={createSnippetFor(lintBox.lint)}
+						snippet={createSnippetFor(lintBox)}
 						open={openSet.has(i)}
 						onToggleOpen={() => toggleCard(i)}
 						focusError={() => focusLint(lintBox)}

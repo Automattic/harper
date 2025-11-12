@@ -68,6 +68,10 @@ async function updateLintFrameworkElements() {
 	if (quill == null) {
 		let { default: Quill } = await import('quill');
 		quill = new Quill(editor, {});
+		const container = quill.container ?? quill.root?.parentElement;
+		container?.classList.add('h-full', 'min-h-0');
+
+		quill.root?.classList.add('flex', 'flex-col', 'h-full', 'min-h-0', 'outline-transparent');
 	}
 
 	for (let el of editor.getElementsByTagName('p')) {
@@ -111,14 +115,13 @@ function jumpTo(lintBox: IgnorableLintBox) {
 
 <div class="flex flex-row h-full max-w-full">
 	<Card class="flex-1 h-full p-5 z-10 max-w-full text-lg mr-5">
-    <div bind:this={editor} class="w-full m-0 rounded-none p-0 z-0 bg-transparent h-full border-none text-lg resize-none focus:border-0">
+    <div bind:this={editor}>
     {@html content.replace(/\n\n/g, '<br>')}
     </div>
 	</Card>
 
 	<LintSidebar
 		lintBoxes={lintBoxes}
-		content={content}
 		focusLint={jumpTo}
 	/>
 </div>
