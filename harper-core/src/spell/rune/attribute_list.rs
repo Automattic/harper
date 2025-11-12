@@ -93,6 +93,14 @@ impl AttributeList {
                 if let Some(replaced) =
                     Self::apply_replacement(replacement, &annotated_word.letters, expansion.kind)
                 {
+                    // println!(
+                    //     "{} with replacement remove:{} add:{} condition:{}",
+                    //     replaced.to_string(),
+                    //     replacement.to_human_readable().remove,
+                    //     replacement.to_human_readable().add,
+                    //     replacement.to_human_readable().condition
+                    // );
+
                     // Get or create metadata for this new word form
                     let metadata = new_words.entry(replaced.clone()).or_default();
 
@@ -270,6 +278,26 @@ impl AttributeList {
 
         None
     }
+}
+
+/// Checks the object with the metadata condition.
+/// Returns true if the all the conditions are true, and false if one of them fails
+// It is important to keep this updated with all fields in DictWordMetadata
+fn check_metadata_condition(obj: DictWordMetadata, filter: serde_json::Value) -> bool {
+    fn recursive(obj_snippet: serde_json::Value, filter_snippet: serde_json::Value) -> bool {
+        for (key, value) in filter_snippet.as_object().unwrap() {
+            if value.is_object() {
+                if !recursive(obj_snippet[key].clone(), value.clone()) {
+                    return false;
+                }
+            } else if value != &obj_snippet[key] {
+                return false;
+            }
+        }
+        true
+    }
+    let serialized_obj = serde_json::to_value(obj).expect("Could not serialize DictWordMetadata");
+    recursive(serialized_obj, filter)
 }
 
 /// Gather metadata about the orthography of a word.
@@ -468,8 +496,13 @@ fn check_roman_group<I: Iterator<Item = char>>(
 
 #[cfg(test)]
 mod tests {
+    use serde_json::json;
+
     use super::*;
-    use crate::dict_word_metadata_orthography::OrthFlags;
+    use crate::{
+        dict_word_metadata::{Gender, Stress},
+        dict_word_metadata_orthography::OrthFlags,
+    };
 
     fn check_orthography_str(s: &str) -> OrthFlags {
         let word = AnnotatedWord {
@@ -603,6 +636,84 @@ mod tests {
     fn dont_allow_looks_like_but_isnt_roman_numeral() {
         assert!(!check_orthography_str("mdxlivx").contains(OrthFlags::ROMAN_NUMERALS));
         assert!(!check_orthography_str("XIXIVV").contains(OrthFlags::ROMAN_NUMERALS));
+    }
+
+    #[test]
+    fn test_metadata_condition_check_true() {
+        let obj = DictWordMetadata {
+            stress: Some(Stress::Oxitona),
+            ..Default::default()
+        };
+
+        let filter = json!({
+            "stress": "Oxitona",
+        });
+
+        assert!(check_metadata_condition(obj, filter));
+    }
+
+    #[test]
+    fn test_metadata_condition_check_false() {
+        let obj = DictWordMetadata {
+            stress: Some(Stress::Oxitona),
+            ..Default::default()
+        };
+
+        let filter = json!({
+            "stress": "Paroxitona"
+        });
+
+        assert!(!check_metadata_condition(obj, filter));
+    }
+
+    #[test]
+    fn test_multiple_fields_match() {
+        let obj = DictWordMetadata {
+            stress: Some(Stress::Oxitona),
+            gender: Some(Gender::Masculine),
+            common: true,
+            ..Default::default()
+        };
+
+        let filter = json!({
+            "stress": "Oxitona",
+            "gender": "Masculine",
+            "common": true
+        });
+
+        assert!(check_metadata_condition(obj, filter));
+    }
+
+    #[test]
+    fn test_multiple_fields_partial_match() {
+        let obj = DictWordMetadata {
+            stress: Some(Stress::Oxitona),
+            gender: Some(Gender::Masculine),
+            common: true,
+            ..Default::default()
+        };
+
+        let filter = json!({
+            "stress": "Oxitona"
+        });
+
+        assert!(check_metadata_condition(obj, filter));
+    }
+
+    #[test]
+    fn test_multiple_fields_one_mismatch() {
+        let obj = DictWordMetadata {
+            stress: Some(Stress::Oxitona),
+            gender: Some(Gender::Masculine),
+            ..Default::default()
+        };
+
+        let filter = json!({
+            "stress": "Oxitona",
+            "gender": "Feminine"
+        });
+
+        assert!(!check_metadata_condition(obj, filter));
     }
 }
 

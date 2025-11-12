@@ -13,7 +13,15 @@
         {
           "remove": "",
           "add": "es",
-          "condition": "[rzs]"
+          "condition": "[rz]"
+        },
+        {
+          "metadata_condition": {
+            "stress": "Oxitona"
+          },
+          "remove": "",
+          "add": "es",
+          "condition": "[s]"
         },
         {
           "remove": "l",
@@ -37,7 +45,17 @@
             "noun": {}
           },
           "metadata": {
-            "stress": "Oxitona"
+            "stress": "OXITONA"
+          }
+        },
+        {
+          "if_base": {
+            "verb": {}
+          },
+          "metadata": {
+            "verb": {
+              "verb_form": "THIRD_PERSON_SINGULAR"
+            }
           }
         }
       ],
@@ -49,9 +67,9 @@
       "cross_product": true,
       "replacements": [
         {
-          "remove": "e",
-          "add": "ion",
-          "condition": "e"
+          "remove": "",
+          "add": "",
+          "condition": "[aei]r"
         },
         {
           "remove": "y",
@@ -64,7 +82,13 @@
           "condition": "[^ey]"
         }
       ],
-      "target": [],
+      "target": [
+        {
+          "if_base": {
+            "verb": {}
+          }
+        }
+      ],
       "base_metadata": {}
     },
     "^": {
@@ -385,6 +409,22 @@
       "metadata": {
         "determiner": {
           "is_possessive": true
+        }
+      }
+    },
+    "F": {
+      "#": "feminine property",
+      "metadata": {
+        "noun": {
+          "gender": true
+        }
+      }
+    },
+    "M": {
+      "#": "feminine property",
+      "metadata": {
+        "noun": {
+          "gender": false
         }
       }
     }
