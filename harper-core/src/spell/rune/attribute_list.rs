@@ -90,6 +90,11 @@ impl AttributeList {
 
             // Apply each replacement rule in this affix
             for replacement in &expansion.replacements {
+                if let Some(filter) = &replacement.metadata_condition
+                    && !check_metadata_condition(&base_metadata, filter)
+                {
+                    continue;
+                }
                 if let Some(replaced) =
                     Self::apply_replacement(replacement, &annotated_word.letters, expansion.kind)
                 {
@@ -282,12 +287,11 @@ impl AttributeList {
 
 /// Checks the object with the metadata condition.
 /// Returns true if the all the conditions are true, and false if one of them fails
-// It is important to keep this updated with all fields in DictWordMetadata
-fn check_metadata_condition(obj: DictWordMetadata, filter: serde_json::Value) -> bool {
-    fn recursive(obj_snippet: serde_json::Value, filter_snippet: serde_json::Value) -> bool {
+fn check_metadata_condition(obj: &DictWordMetadata, filter: &serde_json::Value) -> bool {
+    fn recursive(obj_snippet: &serde_json::Value, filter_snippet: &serde_json::Value) -> bool {
         for (key, value) in filter_snippet.as_object().unwrap() {
             if value.is_object() {
-                if !recursive(obj_snippet[key].clone(), value.clone()) {
+                if !recursive(&obj_snippet[key].clone(), &value.clone()) {
                     return false;
                 }
             } else if value != &obj_snippet[key] {
@@ -297,7 +301,7 @@ fn check_metadata_condition(obj: DictWordMetadata, filter: serde_json::Value) ->
         true
     }
     let serialized_obj = serde_json::to_value(obj).expect("Could not serialize DictWordMetadata");
-    recursive(serialized_obj, filter)
+    recursive(&serialized_obj, filter)
 }
 
 /// Gather metadata about the orthography of a word.
@@ -649,7 +653,7 @@ mod tests {
             "stress": "Oxitona",
         });
 
-        assert!(check_metadata_condition(obj, filter));
+        assert!(check_metadata_condition(&obj, &filter));
     }
 
     #[test]
@@ -663,11 +667,11 @@ mod tests {
             "stress": "Paroxitona"
         });
 
-        assert!(!check_metadata_condition(obj, filter));
+        assert!(!check_metadata_condition(&obj, &filter));
     }
 
     #[test]
-    fn test_multiple_fields_match() {
+    fn test_metadata_condition_multiple_fields_match() {
         let obj = DictWordMetadata {
             stress: Some(Stress::Oxitona),
             gender: Some(Gender::Masculine),
@@ -681,11 +685,11 @@ mod tests {
             "common": true
         });
 
-        assert!(check_metadata_condition(obj, filter));
+        assert!(check_metadata_condition(&obj, &filter));
     }
 
     #[test]
-    fn test_multiple_fields_partial_match() {
+    fn test_metadata_condition_multiple_fields_partial_match() {
         let obj = DictWordMetadata {
             stress: Some(Stress::Oxitona),
             gender: Some(Gender::Masculine),
@@ -697,11 +701,11 @@ mod tests {
             "stress": "Oxitona"
         });
 
-        assert!(check_metadata_condition(obj, filter));
+        assert!(check_metadata_condition(&obj, &filter));
     }
 
     #[test]
-    fn test_multiple_fields_one_mismatch() {
+    fn test_metadata_condition_multiple_fields_one_mismatch() {
         let obj = DictWordMetadata {
             stress: Some(Stress::Oxitona),
             gender: Some(Gender::Masculine),
@@ -713,7 +717,7 @@ mod tests {
             "gender": "Feminine"
         });
 
-        assert!(!check_metadata_condition(obj, filter));
+        assert!(!check_metadata_condition(&obj, &filter));
     }
 }
 
