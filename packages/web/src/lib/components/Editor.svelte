@@ -2,13 +2,9 @@
 import { Card } from 'flowbite-svelte';
 import { type WorkerLinter } from 'harper.js';
 import {
-	applySuggestion,
-	type IgnorableLintBox,
 	type IgnorableLintBox,
 	LintFramework,
-	type UnpackedLint,
 	type UnpackedLintGroups,
-	type UnpackedSuggestion,
 	unpackLint,
 } from 'lint-framework';
 import LintSidebar from '$lib/components/LintSidebar.svelte';
@@ -86,7 +82,30 @@ $: if (editor != null) {
 }
 
 function jumpTo(lintBox: IgnorableLintBox) {
+	if (typeof window === 'undefined') {
+		return;
+	}
 
+	const range = lintBox.range;
+	if (!range) {
+		return;
+	}
+
+	try {
+		const rect = range.getBoundingClientRect();
+
+		const selection = window.getSelection();
+		if (selection) {
+			selection.removeAllRanges();
+			selection.addRange(range.cloneRange());
+		}
+
+		const margin = Math.max(10, window.innerHeight * 0.2);
+		const target = Math.max(0, window.scrollY + rect.top - margin);
+		window.scrollTo({ top: target, behavior: 'smooth' });
+	} catch (error) {
+		console.error('Failed to jump to lint', error);
+	}
 }
 
 async function ignoreAll() {

@@ -1,11 +1,11 @@
 <script lang="ts">
 import { Card } from 'flowbite-svelte';
-import { applySuggestion, type IgnorableLintBox, type UnpackedLint, type UnpackedSuggestion } from 'lint-framework';
+import { type IgnorableLintBox, type UnpackedLint } from 'lint-framework';
 import LintCard from '$lib/components/LintCard.svelte';
 
 export let lintBoxes: IgnorableLintBox[] = [];
 export let content = '';
-export let focusLint: (lint: UnpackedLint) => void = () => {};
+export let focusLint: (lintBox: IgnorableLintBox) => void = () => {};
 export let ignoreAll: () => void = () => {};
 
 let openSet: Set<number> = new Set();
@@ -94,14 +94,14 @@ $: if (openSet.size > 0) {
 			<p class="text-sm text-gray-500">No lints yet.</p>
 		{:else}
 			<div class="space-y-3">
-				{#each lintBoxes as { lint, applySuggestion }, i}
+				{#each lintBoxes as lintBox, i}
 					<LintCard
-						{lint}
-						snippet={createSnippetFor(lint)}
+						lint={lintBox.lint}
+						snippet={createSnippetFor(lintBox.lint)}
 						open={openSet.has(i)}
 						onToggleOpen={() => toggleCard(i)}
-						focusError={() => focusLint(lint)}
-						onApply={(s) => applySuggestion(s)}
+						focusError={() => focusLint(lintBox)}
+						onApply={(s) => lintBox.applySuggestion(s)}
 					/>
 				{/each}
 			</div>
