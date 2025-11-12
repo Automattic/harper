@@ -72,6 +72,7 @@ async function updateLintFrameworkElements() {
 		container?.classList.add('h-full', 'min-h-0');
 
 		quill.root?.classList.add('flex', 'flex-col', 'h-full', 'min-h-0', 'outline-transparent');
+		quill.root?.setAttribute('data-enable-grammarly', 'false');
 	}
 
 	for (let el of editor.getElementsByTagName('p')) {
@@ -115,7 +116,7 @@ function jumpTo(lintBox: IgnorableLintBox) {
 
 <div class="flex flex-row h-full max-w-full">
 	<Card class="flex-1 h-full p-5 z-10 max-w-full text-lg mr-5">
-    <div bind:this={editor}>
+    <div bind:this={editor} spellcheck="false">
     {@html content.replace(/\n\n/g, '<br>')}
     </div>
 	</Card>
