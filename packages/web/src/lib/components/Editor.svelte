@@ -14,7 +14,7 @@ import demo from '../../../../../demo.md?raw';
 
 export let content = demo.trim();
 
-let editor: HTMLTextAreaElement | null;
+let editor: HTMLDivElement | null;
 let linter: WorkerLinter;
 
 // Live list of lints from the framework's lint callback
@@ -36,7 +36,8 @@ let lfw = new LintFramework(
 		);
 
 		const grouped: UnpackedLintGroups = Object.fromEntries(entries);
-		lints = Object.values(grouped).flat();
+
+		lints = lfw.getLastLints();
 
 		return grouped;
 	},
@@ -62,15 +63,30 @@ let lfw = new LintFramework(
 	await linter.setup();
 })();
 
-$: if (editor != null) {
-	lfw.addTarget(editor);
+let quill: any;
+
+async function updateLintFrameworkElements() {
+	if (editor == null) {
+		return;
+	}
+
+	if (quill == null) {
+		let { default: Quill } = await import('quill');
+		quill = new Quill(editor, {});
+	}
+
+	for (let el of editor.getElementsByTagName('p')) {
+		lfw.addTarget(el);
+	}
 }
 
-function applySug(lint: UnpackedLint, s: UnpackedSuggestion) {
-	content = applySuggestion(content, lint.span, s);
-	// Trigger re-lint and rerender after programmatic change
-	lfw.update();
+$: if (editor != null) {
+	let mo = new MutationObserver(updateLintFrameworkElements);
+	mo.observe(editor, { childList: true, subtree: true });
+	updateLintFrameworkElements();
 }
+
+function applySug(lint: UnpackedLint, s: UnpackedSuggestion) {}
 
 function createSnippetFor(lint: UnpackedLint) {
 	const CONTEXT = 60;
@@ -95,22 +111,7 @@ function createSnippetFor(lint: UnpackedLint) {
 	};
 }
 
-function jumpTo(lint: UnpackedLint) {
-	if (!editor) return;
-	const start = lint.span.start;
-	const end = lint.span.end;
-	// Focus and select; most browsers will scroll selection into view on focus
-	editor.focus();
-	editor.setSelectionRange(start, end);
-	// As a fallback, nudge scroll to selection if needed
-	try {
-		const approxLineHeight = 20;
-		const beforeText = content.slice(0, start);
-		const line = (beforeText.match(/\n/g)?.length ?? 0) + 1;
-		const targetTop = Math.max(0, (line - 3) * approxLineHeight);
-		(editor as HTMLTextAreaElement).scrollTop = targetTop;
-	} catch {}
-}
+function jumpTo(lint: UnpackedLint) {}
 
 function toggleCard(i: number) {
 	const wasOpen = openSet.has(i);
@@ -160,11 +161,9 @@ $: if (openSet.size > 0) {
 
 <div class="flex flex-row h-full max-w-full">
 	<Card class="flex-1 h-full p-5 z-10 max-w-full text-lg mr-5">
-		<textarea
-			bind:this={editor}
-			class="w-full m-0 rounded-none p-0 z-0 bg-transparent h-full border-none text-lg resize-none focus:border-0"
-			bind:value={content}
-		></textarea>
+    <div bind:this={editor} class="w-full m-0 rounded-none p-0 z-0 bg-transparent h-full border-none text-lg resize-none focus:border-0">
+    {@html content.replace(/\n\n/g, '<br>')}
+    </div>
 	</Card>
 
 	<Card class="hidden md:flex md:flex-col md:w-1/3 h-full p-5 z-10">
