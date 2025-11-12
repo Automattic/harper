@@ -11,7 +11,7 @@ import LintSidebar from '$lib/components/LintSidebar.svelte';
 import demo from '../../../../../demo.md?raw';
 
 export let content = demo.trim();
-export let onReady: () => void;
+export let onReady: () => void = () => null;
 
 let editor: HTMLDivElement | null;
 let linter: WorkerLinter;
