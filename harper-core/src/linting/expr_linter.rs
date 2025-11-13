@@ -110,11 +110,11 @@ mod tests {
     use crate::token_string_ext::TokenStringExt;
     use crate::{Lint, Token};
 
-    pub struct SimpleLinter {
+    pub struct TestSimpleLinter {
         expr: Box<dyn Expr>,
     }
 
-    impl Default for SimpleLinter {
+    impl Default for TestSimpleLinter {
         fn default() -> Self {
             Self {
                 expr: Box::new(FixedPhrase::from_phrase("two")),
@@ -122,7 +122,7 @@ mod tests {
         }
     }
 
-    impl ExprLinter for SimpleLinter {
+    impl ExprLinter for TestSimpleLinter {
         fn expr(&self) -> &dyn Expr {
             &*self.expr
         }
@@ -141,11 +141,11 @@ mod tests {
         }
     }
 
-    pub struct ContextLinter {
+    pub struct TestContextLinter {
         expr: Box<dyn Expr>,
     }
 
-    impl Default for ContextLinter {
+    impl Default for TestContextLinter {
         fn default() -> Self {
             Self {
                 expr: Box::new(FixedPhrase::from_phrase("two")),
@@ -153,7 +153,7 @@ mod tests {
         }
     }
 
-    impl ExprLinter for ContextLinter {
+    impl ExprLinter for TestContextLinter {
         fn expr(&self) -> &dyn Expr {
             &*self.expr
         }
@@ -207,16 +207,16 @@ mod tests {
 
     #[test]
     fn simple_test_123() {
-        assert_suggestion_result("one two three", SimpleLinter::default(), "one 2 three");
+        assert_suggestion_result("one two three", TestSimpleLinter::default(), "one 2 three");
     }
 
     #[test]
     fn context_test_123() {
-        assert_suggestion_result("one two three", ContextLinter::default(), "one > three");
+        assert_suggestion_result("one two three", TestContextLinter::default(), "one > three");
     }
 
     #[test]
     fn context_test_321() {
-        assert_suggestion_result("three two one", ContextLinter::default(), "three < one");
+        assert_suggestion_result("three two one", TestContextLinter::default(), "three < one");
     }
 }
