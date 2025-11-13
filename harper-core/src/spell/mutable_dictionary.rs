@@ -48,6 +48,8 @@ fn uncached_inner_new(language: Language) -> Arc<MutableDictionary> {
 
 lazy_static! {
     static ref DICT: Arc<MutableDictionary> = uncached_inner_new(Language::English);
+}
+lazy_static! {
     static ref DICT_PORTUGUESE: Arc<MutableDictionary> = uncached_inner_new(Language::Portuguese);
 }
 

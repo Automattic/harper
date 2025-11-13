@@ -161,7 +161,7 @@ use crate::linting::{
     phrase_set_corrections,
 };
 use crate::spell::{Dictionary, MutableDictionary};
-use crate::{CharString, Dialect, Document, TokenStringExt};
+use crate::{CharString, Document, EnglishDialect, TokenStringExt};
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
@@ -192,7 +192,7 @@ pub struct LintGroupConfig {
 #[cached]
 fn curated_config() -> LintGroupConfig {
     // The Dictionary and Dialect do not matter, we're just after the config.
-    let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
+    let group = LintGroup::new_curated(MutableDictionary::new().into(), EnglishDialect::American);
     group.config
 }
 
@@ -398,7 +398,10 @@ impl LintGroup {
         self
     }
 
-    pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) -> Self {
+    pub fn new_curated(
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: EnglishDialect,
+    ) -> Self {
         let mut out = Self::empty();
 
         /// Add a `Linter` to the group, setting it to be enabled by default.
@@ -608,7 +611,7 @@ impl LintGroup {
     /// Create a new curated group with all config values cleared out.
     pub fn new_curated_empty_config(
         dictionary: Arc<impl Dictionary + 'static>,
-        dialect: Dialect,
+        dialect: EnglishDialect,
     ) -> Self {
         let mut group = Self::new_curated(dictionary, dialect);
         group.config.clear();
@@ -698,10 +701,13 @@ mod tests {
     use super::LintGroup;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
-    use crate::{Dialect, Document, linting::Linter};
+    use crate::{Document, EnglishDialect, linting::Linter};
 
     fn test_group() -> LintGroup {
-        LintGroup::new_curated(Arc::new(MutableDictionary::curated()), Dialect::American)
+        LintGroup::new_curated(
+            Arc::new(MutableDictionary::curated()),
+            EnglishDialect::American,
+        )
     }
 
     #[test]
@@ -719,15 +725,19 @@ mod tests {
 
     #[test]
     fn can_get_all_descriptions() {
-        let group =
-            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+        let group = LintGroup::new_curated(
+            Arc::new(MutableDictionary::default()),
+            EnglishDialect::American,
+        );
         group.all_descriptions();
     }
 
     #[test]
     fn can_get_all_descriptions_as_html() {
-        let group =
-            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+        let group = LintGroup::new_curated(
+            Arc::new(MutableDictionary::default()),
+            EnglishDialect::American,
+        );
         group.all_descriptions_html();
     }
 
@@ -749,7 +759,7 @@ mod tests {
 
     #[test]
     fn lint_descriptions_are_clean() {
-        let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut group = LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American);
         let pairs: Vec<_> = group
             .all_descriptions()
             .into_iter()

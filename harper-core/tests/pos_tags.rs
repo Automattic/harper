@@ -83,7 +83,7 @@ use std::borrow::Cow;
 use harper_core::dict_word_metadata::VerbFormFlags;
 use harper_core::dict_word_metadata_orthography::OrthFlags;
 use harper_core::spell::FstDictionary;
-use harper_core::{Degree, Dialect, DictWordMetadata, Document, TokenKind};
+use harper_core::{Degree, DictWordMetadata, Document, EnglishDialect, TokenKind};
 
 mod snapshot;
 
@@ -248,10 +248,18 @@ fn get_dialect_annotations(word: &DictWordMetadata) -> Vec<&'static str> {
     let mut north_america = false;
     let mut commonwealth = false;
 
-    let en_au = word.dialects.is_dialect_enabled_strict(Dialect::Australian);
-    let en_ca = word.dialects.is_dialect_enabled_strict(Dialect::Canadian);
-    let en_gb = word.dialects.is_dialect_enabled_strict(Dialect::British);
-    let en_us = word.dialects.is_dialect_enabled_strict(Dialect::American);
+    let en_au = word
+        .dialects
+        .is_dialect_enabled_strict(EnglishDialect::Australian);
+    let en_ca = word
+        .dialects
+        .is_dialect_enabled_strict(EnglishDialect::Canadian);
+    let en_gb = word
+        .dialects
+        .is_dialect_enabled_strict(EnglishDialect::British);
+    let en_us = word
+        .dialects
+        .is_dialect_enabled_strict(EnglishDialect::American);
 
     // Dialect groups in alphabetical order
     if en_gb && en_au && en_ca {

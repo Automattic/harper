@@ -11,7 +11,7 @@
 
 use harper_core::spell::FstDictionary;
 use harper_core::{
-    Dialect, Document,
+    Document, EnglishDialect,
     linting::{LintGroup, Linter},
 };
 
@@ -197,7 +197,8 @@ fn test_most_lints() {
         let mut linter = LintGroup::new_curated(
             dict,
             dialect_override.unwrap_or_else(|| {
-                Dialect::try_guess_from_document(&document).unwrap_or(Dialect::American)
+                EnglishDialect::try_guess_from_document(&document)
+                    .unwrap_or(EnglishDialect::American)
             }),
         );
 

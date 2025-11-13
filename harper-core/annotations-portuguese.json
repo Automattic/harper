@@ -45,7 +45,7 @@
             "noun": {}
           },
           "metadata": {
-            "stress": "OXITONA"
+            "stress": "Oxitona"
           }
         },
         {
@@ -82,13 +82,7 @@
           "condition": "[^ey]"
         }
       ],
-      "target": [
-        {
-          "if_base": {
-            "verb": {}
-          }
-        }
-      ],
+      "target": [],
       "base_metadata": {}
     },
     "^": {

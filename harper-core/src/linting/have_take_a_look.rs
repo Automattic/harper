@@ -1,5 +1,5 @@
 use crate::{
-    Dialect, Token,
+    EnglishDialect, Token,
     expr::{Expr, FixedPhrase, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
@@ -7,14 +7,16 @@ use crate::{
 
 pub struct HaveTakeALook {
     expr: Box<dyn Expr>,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl HaveTakeALook {
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         let light_verb = match dialect {
             // Match the opposite of what is used in the dialect.
-            Dialect::British | Dialect::Australian => &["take", "took", "taken", "takes", "taking"],
+            EnglishDialect::British | EnglishDialect::Australian => {
+                &["take", "took", "taken", "takes", "taking"]
+            }
             _ => &["have", "had", "had", "has", "having"],
         };
 
@@ -91,7 +93,7 @@ impl ExprLinter for HaveTakeALook {
 #[cfg(test)]
 mod tests {
     use crate::{
-        Dialect,
+        EnglishDialect,
         linting::{HaveTakeALook, tests::assert_suggestion_result},
     };
 
@@ -99,7 +101,7 @@ mod tests {
     fn correct_taking_a_look() {
         assert_suggestion_result(
             "Consider taking a look at crossorigin attribute.",
-            HaveTakeALook::new(Dialect::British),
+            HaveTakeALook::new(EnglishDialect::British),
             "Consider having a look at crossorigin attribute.",
         );
     }
@@ -108,7 +110,7 @@ mod tests {
     fn correct_take_a_look() {
         assert_suggestion_result(
             "Have time to help take a look at the jdk21 upgrade issue.",
-            HaveTakeALook::new(Dialect::Australian),
+            HaveTakeALook::new(EnglishDialect::Australian),
             "Have time to help have a look at the jdk21 upgrade issue.",
         );
     }
@@ -117,7 +119,7 @@ mod tests {
     fn correct_have_a_look() {
         assert_suggestion_result(
             "Have a look at this question crashing histoire using init-state and ref.",
-            HaveTakeALook::new(Dialect::American),
+            HaveTakeALook::new(EnglishDialect::American),
             "Take a look at this question crashing histoire using init-state and ref.",
         );
     }
@@ -126,7 +128,7 @@ mod tests {
     fn correct_taken_a_look() {
         assert_suggestion_result(
             "Have you taken a look at HQEMU?",
-            HaveTakeALook::new(Dialect::British),
+            HaveTakeALook::new(EnglishDialect::British),
             "Have you had a look at HQEMU?",
         );
     }
@@ -135,7 +137,7 @@ mod tests {
     fn correct_had_a_look() {
         assert_suggestion_result(
             "I had a look at the podman.go and have some theories I could test.",
-            HaveTakeALook::new(Dialect::Canadian),
+            HaveTakeALook::new(EnglishDialect::Canadian),
             "I took a look at the podman.go and have some theories I could test.",
         );
     }
@@ -144,7 +146,7 @@ mod tests {
     fn correct_took_a_look() {
         assert_suggestion_result(
             "I though GitHub's “Dashboard” page might help with this, so I took a look.",
-            HaveTakeALook::new(Dialect::Australian),
+            HaveTakeALook::new(EnglishDialect::Australian),
             "I though GitHub's “Dashboard” page might help with this, so I had a look.",
         );
     }
@@ -153,7 +155,7 @@ mod tests {
     fn correct_takes_a_look() {
         assert_suggestion_result(
             "I'm closing this one, but it would be nice if someone takes a look at the notes in the original issue.",
-            HaveTakeALook::new(Dialect::British),
+            HaveTakeALook::new(EnglishDialect::British),
             "I'm closing this one, but it would be nice if someone has a look at the notes in the original issue.",
         );
     }
@@ -162,7 +164,7 @@ mod tests {
     fn correct_having_a_look() {
         assert_suggestion_result(
             "It only appeared after I was having a look through the files.",
-            HaveTakeALook::new(Dialect::American),
+            HaveTakeALook::new(EnglishDialect::American),
             "It only appeared after I was taking a look through the files.",
         );
     }
@@ -171,7 +173,7 @@ mod tests {
     fn correct_has_a_look() {
         assert_suggestion_result(
             "When Serializing messages the code in SchemaRegistrySerde has a look into the registry using the topic name.",
-            HaveTakeALook::new(Dialect::Canadian),
+            HaveTakeALook::new(EnglishDialect::Canadian),
             "When Serializing messages the code in SchemaRegistrySerde takes a look into the registry using the topic name.",
         );
     }

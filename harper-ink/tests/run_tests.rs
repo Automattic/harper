@@ -1,6 +1,6 @@
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
+use harper_core::{Document, EnglishDialect};
 use harper_ink::InkParser;
 
 /// Creates a unit test checking that the linting of a Ink document (in

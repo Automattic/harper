@@ -98,13 +98,13 @@ impl AttributeList {
                 if let Some(replaced) =
                     Self::apply_replacement(replacement, &annotated_word.letters, expansion.kind)
                 {
-                    // println!(
-                    //     "{} with replacement remove:{} add:{} condition:{}",
-                    //     replaced.to_string(),
-                    //     replacement.to_human_readable().remove,
-                    //     replacement.to_human_readable().add,
-                    //     replacement.to_human_readable().condition
-                    // );
+                    println!(
+                        "{} with replacement remove:{} add:{} condition:{}",
+                        replaced.to_string(),
+                        replacement.to_human_readable().remove,
+                        replacement.to_human_readable().add,
+                        replacement.to_human_readable().condition
+                    );
 
                     // Get or create metadata for this new word form
                     let metadata = new_words.entry(replaced.clone()).or_default();

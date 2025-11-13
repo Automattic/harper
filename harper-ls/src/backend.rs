@@ -18,7 +18,7 @@ use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
+use harper_core::{DictWordMetadata, Document, EnglishDialect, IgnoredLints};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
 use harper_jjdescription::JJDescriptionParser;
@@ -315,7 +315,7 @@ impl Backend {
             uri: &'a Uri,
             doc_state: &'a mut DocumentState,
             lint_config: &LintGroupConfig,
-            dialect: Dialect,
+            dialect: EnglishDialect,
         ) -> Result<Box<dyn Parser>> {
             if doc_state.ident_dict != new_dict {
                 info!("Constructing new linter because of modified ident dictionary.");

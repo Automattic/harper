@@ -18,7 +18,7 @@ use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish, PlainPortuguese};
 use harper_core::{
-    CharStringExt, Dialect, DictWordMetadata, Document, Span, TokenKind, TokenStringExt,
+    CharStringExt, DictWordMetadata, Document, EnglishDialect, Span, TokenKind, TokenStringExt,
     dict_word_metadata_orthography::OrthFlags, remove_overlaps,
 };
 use harper_ink::InkParser;
@@ -53,8 +53,8 @@ struct GlobalOpts {
     #[arg(short, long, default_value = Language::English.to_string())]
     language: Language,
     /// Specify the dialect.
-    #[arg(short, long, default_value = Dialect::American.to_string())]
-    dialect: Dialect,
+    #[arg(short, long, default_value = EnglishDialect::American.to_string())]
+    dialect: EnglishDialect,
 }
 
 #[derive(Debug, Subcommand)]
@@ -483,7 +483,7 @@ fn main() -> anyhow::Result<()> {
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(dictionary, Dialect::American);
+            let linter = LintGroup::new_curated(dictionary, EnglishDialect::American);
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();

@@ -1,6 +1,6 @@
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
+use harper_core::{Document, EnglishDialect};
 use harper_python::PythonParser;
 
 /// Creates a unit test checking Python source code parsing.
