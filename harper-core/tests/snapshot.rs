@@ -3,6 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
+use harper_core::Dialect;
 use harper_core::EnglishDialect;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 

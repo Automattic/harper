@@ -22,7 +22,7 @@ macro_rules! create_test {
                       &FstDictionary::curated()
                       );
 
-                 let mut linter = LintGroup::new_curated(dict, Dialect::American);
+                 let mut linter = LintGroup::new_curated(dict, EnglishDialect::American);
                  let lints = linter.lint(&document);
 
                  dbg!(&lints);
