@@ -697,6 +697,20 @@ pub fn lint_group() -> LintGroup {
             "Corrects the slip `I've go to` to the idiomatic `I've got to`.",
             LintKind::Typo
         ),
+        "JackOLantern" => (
+            ["jack o lantern", "jackolantern", "jack-o-lantern"],
+            ["jack-o'-lantern", "jack o'lantern"],
+            "Use contraction when referring to `jack-o'-lantern`",
+            "Corrects contraction of `jack o lantern` to `jack o'lantern` or `jack-o'-lantern`",
+            LintKind::Punctuation
+        ),
+        "JackOLanterns" => (
+            ["jack o lanterns", "jackolanterns", "jack-o-lanterns"],
+            ["jack-o'-lanterns", "jack o'lanterns"],
+            "Use contraction when referring to `jack-o'-lanterns`",
+            "Corrects contraction of `jack o lanterns` to `jack o'lanterns` or `jack-o'-lanterns`",
+            LintKind::Punctuation
+        ),
         "JawDropping" => (
             ["jar-dropping"],
             ["jaw-dropping"],
