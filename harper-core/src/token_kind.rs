@@ -107,6 +107,9 @@ impl TokenKind {
 
         // Adverb methods
         is_adverb,
+        is_manner_adverb,
+        is_frequency_adverb,
+        is_degree_adverb,
 
         // Determiner methods
         is_determiner,

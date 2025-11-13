@@ -26,8 +26,8 @@
 #
 > Once  performed by      hand    , POS  tagging is  now        done      in      the context of computational
 # NSg/C VP/J      NSg/J/P NSg/VB+ . NSg+ NSg/Vg  VL3 NPr/VB/J/C NSg/VPp/J NPr/J/P D   N🅪Sg/VB P  J
-> linguistics , using   algorithms which associate discrete terms   , as    well     as    hidden
-# Nᴹ+         . Nᴹ/Vg/J NPl+       I/C+  NSg/VB/J+ J        NPl/V3+ . NSg/R NSg/VB/J NSg/R VB/J
+> linguistics , using   algorithms which associate discrete terms   , as    well       as    hidden
+# Nᴹ+         . Nᴹ/Vg/J NPl+       I/C+  NSg/VB/J+ J        NPl/V3+ . NSg/R NSg/VB/J/R NSg/R VB/J
 > parts  of speech   , by      a   set       of descriptive tags    . POS  - tagging algorithms fall     into
 # NPl/V3 P  N🅪Sg/VB+ . NSg/J/P D/P NPr/VBP/J P  NSg/J       NPl/V3+ . NSg+ . NSg/Vg  NPl+       N🅪Sg/VB+ P
 > two distinctive groups  : rule    - based and  stochastic . E. Brill's tagger , one        of the
@@ -352,8 +352,8 @@
 # NPl/V3 P  Nᴹ/Vg/J+   . I/Ddem+ . NPr/J/P NSg/VB . VP/J       D   N🅪Sg   VB/C NSg/VB   P
 > computerized language analysis and  encouraged researchers to find   ways to
 # VP/J         N🅪Sg/VB+ N🅪Sg+    VB/C VP/J       NPl+        P  NSg/VB NPl+ P
-> separate other    pieces  as    well     . Markov Models  became the standard method  for the
-# NSg/VB/J NSg/VB/J NPl/V3+ NSg/R NSg/VB/J . NPr    NPl/V3+ VPt    D   NSg/J    NSg/VB+ C/P D
+> separate other    pieces  as    well       . Markov Models  became the standard method  for the
+# NSg/VB/J NSg/VB/J NPl/V3+ NSg/R NSg/VB/J/R . NPr    NPl/V3+ VPt    D   NSg/J    NSg/VB+ C/P D
 > part      - of - speech   assignment .
 # NSg/VB/J+ . P  . N🅪Sg/VB+ NSg+       .
 >

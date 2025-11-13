@@ -7,7 +7,7 @@ export const frontmatter = {
 <script lang="ts">
 import ChromeLogo from '$lib/components/ChromeLogo.svelte';
 import CodeLogo from '$lib/components/CodeLogo.svelte';
-import Editor from '$lib/components/Editor.svelte';
+import LazyEditor from '$lib/components/LazyEditor.svelte';
 import FirefoxLogo from '$lib/components/FirefoxLogo.svelte';
 import GitHubLogo from '$lib/components/GitHubLogo.svelte';
 import ObsidianLogo from '$lib/components/ObsidianLogo.svelte';
@@ -155,7 +155,7 @@ const testimonials = [
 
 		<div class="h-[800px] w-full overflow-hidden rounded-xl border border-neutral-200 shadow-sm dark:border-neutral-800">
       {#if browser}
-			  <Editor />
+			  <LazyEditor />
       {/if}
 		</div>
 	</div>
@@ -176,6 +176,9 @@ const testimonials = [
 		<p>
 			That means you have 100% certainty we don't violate your copyright by training large language
 			models.
+		</p>
+		<p>
+			Harper also intentionally avoids including any kind of generative AI in any part of our processing pipeline.
 		</p>
 		<svelte:fragment slot="aside">
 			<img

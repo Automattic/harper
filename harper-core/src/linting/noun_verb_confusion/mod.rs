@@ -1353,4 +1353,12 @@ mod tests {
             NounVerbConfusion::default(),
         );
     }
+
+    #[test]
+    fn issue_2008() {
+        assert_no_lints(
+            "Changes that only affect static types, without breaking runtime behavior.",
+            NounVerbConfusion::default(),
+        );
+    }
 }
