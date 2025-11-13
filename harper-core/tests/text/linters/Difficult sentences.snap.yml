@@ -23,7 +23,7 @@ Message: |
 Suggest:
   - Replace with: “armor”
   - Replace with: “amour”
-  - Replace with: “arbor”
+  - Replace with: “armory”
 
 
 
@@ -163,8 +163,8 @@ Message: |
          |                                                             ^~~~~~ Did you mean to spell `favour` this way?
 Suggest:
   - Replace with: “favor”
-  - Replace with: “famous”
   - Replace with: “flavor”
+  - Replace with: “flour”
 
 
 

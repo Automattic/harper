@@ -98,8 +98,8 @@
 # NPr+ ?      VP/J     D   NSg/J      NSg+       N🅪Sg+    . NSg/VB+ # . NSg/I/C NPr/ISg+ VP/J
 > his     simplified arithmometer , the first    calculating machine strong enough and
 # ISg/D$+ VP/J       ?            . D   NSg/VB/J Nᴹ/Vg/J     NSg/VB+ NPr/J  NSg/I  VB/C
-> reliable enough to be      used daily    in      an  office  environment . Charles Babbage
-# NSg/J    NSg/I  P  NSg/VXB VP/J NSg/VB/J NPr/J/P D/P NSg/VB+ N🅪Sg+       . NPr+    NPr
+> reliable enough to be      used daily      in      an  office  environment . Charles Babbage
+# NSg/J    NSg/I  P  NSg/VXB VP/J NSg/VB/J/R NPr/J/P D/P NSg/VB+ N🅪Sg+       . NPr+    NPr
 > started the design  of the first    automatic mechanical calculator , his     Difference
 # VP/J    D   N🅪Sg/VB P  D   NSg/VB/J NSg/J     NSg/J      NSg+       . ISg/D$+ N🅪Sg/VB+
 > Engine  , in      1822 , which eventually gave him  the idea of the first    programmable
@@ -594,10 +594,10 @@
 # D/P J      NSg/VB/J P  Nᴹ       Nᴹ/Vg/J+ C/P   IPl+ NSg/VB VB    NPl/V3+ VB/C NPr/VXB R/C
 > give   a   framework for testing  . For industrial use      , tool    support  is  required .
 # NSg/VB D/P NSg       C/P Nᴹ/Vg/J+ . C/P NSg/J      N🅪Sg/VB+ . NSg/VB+ N🅪Sg/VB+ VL3 VP/J     .
-> However , the high     cost       of using   formal methods means  that         they are usually only
-# C       . D   NSg/VB/J N🅪Sg/VBP/J P  Nᴹ/Vg/J NSg/J+ NPl/V3+ NPl/V3 NSg/I/C/Ddem IPl+ VB  R       J/R/C
-> used in      the development of high     - integrity and  life     - critical systems , where
-# VP/J NPr/J/P D   N🅪Sg        P  NSg/VB/J . Nᴹ        VB/C N🅪Sg/VB+ . NSg/J    NPl     . NSg/C
+> However , the high       cost       of using   formal methods means  that         they are usually only
+# C       . D   NSg/VB/J/R N🅪Sg/VBP/J P  Nᴹ/Vg/J NSg/J+ NPl/V3+ NPl/V3 NSg/I/C/Ddem IPl+ VB  R       J/R/C
+> used in      the development of high       - integrity and  life     - critical systems , where
+# VP/J NPr/J/P D   N🅪Sg        P  NSg/VB/J/R . Nᴹ        VB/C N🅪Sg/VB+ . NSg/J    NPl     . NSg/C
 > safety  or    security is  of utmost importance . Formal methods are best       described as
 # N🅪Sg/VB NPr/C Nᴹ+      VL3 P  NSg/J+ Nᴹ+        . NSg/J+ NPl/V3+ VB  NPr/VXB/JS VP/J      NSg/R
 > the application of a   fairly broad variety of theoretical computer science
@@ -648,8 +648,8 @@
 # Nᴹ+         N🅪Sg+  . Nᴹ+                . Nᴹ+         Nᴹ/Vg/J+    VB/C V3
 > applications in      medical image    computing and  speech   synthesis , among others  . What
 # NPl          NPr/J/P NSg/J   N🅪Sg/VB+ Nᴹ/Vg/J   VB/C N🅪Sg/VB+ N🅪Sg+     . P     NPl/V3+ . NSg/I+
-> is  the lower     bound    on  the complexity of fast     Fourier transform algorithms ? is
-# VL3 D   NSg/VB/JC NSg/VP/J J/P D   NSg        P  NSg/VB/J NPr     NSg/VB    NPl+       . VL3
+> is  the lower     bound    on  the complexity of fast       Fourier transform algorithms ? is
+# VL3 D   NSg/VB/JC NSg/VP/J J/P D   NSg        P  NSg/VB/J/R NPr     NSg/VB    NPl+       . VL3
 > one        of the unsolved problems in      theoretical computer science  .
 # NSg/I/VB/J P  D   VP/J     NPl      NPr/J/P J+          NSg/VB+  N🅪Sg/VB+ .
 >
@@ -668,14 +668,14 @@
 # J+         Nᴹ/Vg/J+  VL3 N🅪Sg       P  J+      NPl/V3+   . Nᴹ/Vg/J   J+
 > fluid   dynamics , physical , electrical , and  electronic systems and  circuits , as
 # N🅪Sg/J+ NSgPl+   . NSg/J    . NSg/J      . VB/C J+         NPl+    VB/C NPl/V3   . NSg/R
-> well     as    societies and  social situations ( notably war      games   ) along with their
-# NSg/VB/J NSg/R NPl       VB/C NSg/J  +          . R       N🅪Sg/VB+ NPl/V3+ . P     P    D$+
+> well       as    societies and  social situations ( notably war      games   ) along with their
+# NSg/VB/J/R NSg/R NPl       VB/C NSg/J  +          . R       N🅪Sg/VB+ NPl/V3+ . P     P    D$+
 > habitats , among many       others  . Modern computers enable optimization of such
 # NPl      . P     NSg/I/J/Dq NPl/V3+ . NSg/J  NPl/V3+   VB     N🅪Sg         P  NSg/I
 > designs as    complete  aircraft . Notable in      electrical and  electronic circuit
 # NPl/V3+ NSg/R NSg/VB/J+ NSgPl+   . J       NPr/J/P NSg/J      VB/C J+         NSg/VB+
-> design   are SPICE    , as    well     as    software for physical realization of new      ( or
-# N🅪Sg/VB+ VB  N🅪Sg/VB+ . NSg/R NSg/VB/J NSg/R Nᴹ       C/P NSg/J    NSg/NoAm    P  NSg/VB/J . NPr/C
+> design   are SPICE    , as    well       as    software for physical realization of new      ( or
+# N🅪Sg/VB+ VB  N🅪Sg/VB+ . NSg/R NSg/VB/J/R NSg/R Nᴹ       C/P NSg/J    NSg/NoAm    P  NSg/VB/J . NPr/C
 > modified ) designs . The latter includes essential design   software for integrated
 # NSg/VP/J . NPl/V3+ . D   NSg/J  NPl/V3   NSg/J+    N🅪Sg/VB+ Nᴹ+      C/P VP/J
 > circuits .
@@ -704,10 +704,10 @@
 #
 > Software engineering is  the study  of designing , implementing , and  modifying the
 # Nᴹ+      Nᴹ/Vg/J+    VL3 D   NSg/VB P  Nᴹ/Vg/J+  . Nᴹ/Vg/J      . VB/C Nᴹ/Vg/J   D
-> software in      order    to ensure it       is  of high      quality , affordable , maintainable , and
-# Nᴹ+      NPr/J/P N🅪Sg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J+ N🅪Sg/J+ . J          . J            . VB/C
-> fast     to build  . It       is  a   systematic approach to software design   , involving the
-# NSg/VB/J P  NSg/VB . NPr/ISg+ VL3 D/P J          N🅪Sg/VB  P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
+> software in      order    to ensure it       is  of high        quality , affordable , maintainable , and
+# Nᴹ+      NPr/J/P N🅪Sg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J/R+ N🅪Sg/J+ . J          . J            . VB/C
+> fast       to build  . It       is  a   systematic approach to software design   , involving the
+# NSg/VB/J/R P  NSg/VB . NPr/ISg+ VL3 D/P J          N🅪Sg/VB  P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
 > application of engineering practices to software . Software engineering deals
 # NSg         P  Nᴹ/Vg/J+    NPl/V3+   P  Nᴹ       . Nᴹ+      Nᴹ/Vg/J+    NPl/V3+
 > with the organizing and  analyzing of software — it       does   not     just deal     with the
@@ -890,8 +890,8 @@
 # J/R/C # VB/C # . NPr/C I/R/Dq NSg/VB/J J        NSg/VB+ NSg/I/C/Ddem+ NPr/VXB NSg/VB/J . NSg/VB+ NSg/P   NSg
 > easily distinguishable states    , such  as    " on  / off        " , " magnetized / de   - magnetized " ,
 # R      J               NPrPl/V3+ . NSg/I NSg/R . J/P . NSg/VB/J/P . . . VP/J       . NPr+ . VP/J       . .
-> " high     - voltage / low      - voltage " , etc. ) .
-# . NSg/VB/J . NSg     . NSg/VB/J . NSg+    . . +    . .
+> " high       - voltage / low        - voltage " , etc. ) .
+# . NSg/VB/J/R . NSg     . NSg/VB/J/R . NSg+    . . +    . .
 >
 #
 >

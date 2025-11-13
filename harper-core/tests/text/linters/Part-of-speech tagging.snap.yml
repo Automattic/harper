@@ -38,9 +38,9 @@ Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
-  - Replace with: “Em”
   - Replace with: “E”
   - Replace with: “Ea”
+  - Replace with: “Ed”
 
 
 
