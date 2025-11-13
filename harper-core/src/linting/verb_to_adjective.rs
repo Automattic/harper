@@ -1,5 +1,6 @@
 use harper_brill::UPOS;
 
+use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::patterns::UPOSSet;
@@ -18,16 +19,22 @@ impl Default for VerbToAdjective {
             .then(WordSet::new(&["the", "a", "an"]))
             .t_ws()
             .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_verb()
+                (tok.kind.is_verb()
                     && !tok.kind.is_verb_past_form()
                     && !tok.kind.is_adjective()
-                    && !tok.kind.is_noun()
+                    && !tok.kind.is_noun())
+                    || tok.kind.is_degree_adverb()
             })
             .t_ws()
             .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]));
 
+        let exceptions = SequenceExpr::default()
+            .t_any()
+            .t_any()
+            .then_unless(WordSet::new(&["very"]));
+
         Self {
-            expr: Box::new(expr),
+            expr: Box::new(All::new(vec![Box::new(expr), Box::new(exceptions)])),
         }
     }
 }
