@@ -1952,3 +1952,12 @@ fn fixes_teh() {
         "I adore the light of the moon.",
     );
 }
+
+#[test]
+fn issue_2132() {
+    assert_suggestion_result(
+        "I know that that answer is correct",
+        lint_group(),
+        "I know that answer is correct",
+    );
+}
