@@ -38,9 +38,9 @@ Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
-  - Replace with: “Em”
+  - Replace with: “E”
+  - Replace with: “Ea”
   - Replace with: “Ed”
-  - Replace with: “EC”
 
 
 
@@ -78,7 +78,7 @@ Message: |
 Suggest:
   - Replace with: “Nun”
   - Replace with: “Non”
-  - Replace with: “NV”
+  - Replace with: “Na”
 
 
 
@@ -88,9 +88,9 @@ Message: |
          |                                                  ^~~ Did you mean to spell `NNS` this way?
       50 | for singular proper nouns (see the POS tags used in the Brown Corpus). Other
 Suggest:
-  - Replace with: “NBS”
   - Replace with: “NES”
-  - Replace with: “NS”
+  - Replace with: “Ens”
+  - Replace with: “INS”
 
 
 
@@ -238,7 +238,7 @@ Message: |
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
-  - Replace with: “WC”
+  - Replace with: “WI”
 
 
 
@@ -248,9 +248,9 @@ Message: |
          |                                                                             ^ Did you mean to spell `s` this way?
       99 | the tagging was nearly perfect (allowing for some cases on which even human
 Suggest:
-  - Replace with: “sf”
-  - Replace with: “sh”
   - Replace with: “so”
+  - Replace with: “as”
+  - Replace with: “is”
 
 
 
@@ -398,7 +398,7 @@ Message: |
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
-  - Replace with: “WC”
+  - Replace with: “WI”
 
 
 

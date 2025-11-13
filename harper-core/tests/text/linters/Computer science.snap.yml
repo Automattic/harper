@@ -56,9 +56,9 @@ Message: |
       50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
          | ^~ Did you mean to spell `de` this way?
 Suggest:
+  - Replace with: “den”
   - Replace with: “db”
   - Replace with: “dc”
-  - Replace with: “dd”
 
 
 
@@ -232,8 +232,8 @@ Message: |
      106 | creation of a Graduate School in Computer Sciences analogous to the creation of
 Suggest:
   - Replace with: “Fern”
-  - Replace with: “Fain”
   - Replace with: “Vein”
+  - Replace with: “Rein”
 
 
 
@@ -242,8 +242,8 @@ Message: |
      110 | and those of others such as numerical analyst George Forsythe, were rewarded:
          |                                                      ^~~~~~~~ Did you mean to spell `Forsythe` this way?
 Suggest:
-  - Replace with: “Forster”
   - Replace with: “Forsythia”
+  - Replace with: “Forster”
   - Replace with: “Porsche”
 
 
@@ -338,8 +338,8 @@ Message: |
      127 | the ACM—turingineer, turologist, flow-charts-man, applied meta-mathematician,
          |                      ^~~~~~~~~~ Did you mean to spell `turologist` this way?
 Suggest:
-  - Replace with: “urologist”
   - Replace with: “theologist”
+  - Replace with: “urologist”
   - Replace with: “neurologist”
 
 
@@ -549,7 +549,7 @@ Message: |
 Suggest:
   - Replace with: “Newman”
   - Replace with: “Newman's”
-  - Replace with: “Norman”
+  - Replace with: “Normans”
 
 
 
@@ -635,8 +635,8 @@ Message: |
          |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
   - Replace with: “Ax”
+  - Replace with: “A”
   - Replace with: “Ab”
-  - Replace with: “Ac”
 
 
 
@@ -688,7 +688,7 @@ Message: |
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
-  - Replace with: “WC”
+  - Replace with: “WI”
 
 
 
@@ -765,9 +765,9 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
-  - Replace with: “Ht”
   - Replace with: “He”
-  - Replace with: “Hf”
+  - Replace with: “Hi”
+  - Replace with: “Ht”
 
 
 
@@ -788,8 +788,8 @@ Message: |
      232 | Computing Sciences Accreditation Board—which is made up of representatives of
 Suggest:
   - Replace with: “Cab”
-  - Replace with: “CAI”
-  - Replace with: “CIA”
+  - Replace with: “CPA”
+  - Replace with: “CSS”
 
 
 
@@ -841,8 +841,8 @@ Message: |
          |                                  ^~~~ Did you mean to spell `CSAB` this way?
 Suggest:
   - Replace with: “Cab”
-  - Replace with: “CAI”
-  - Replace with: “CIA”
+  - Replace with: “CPA”
+  - Replace with: “CSS”
 
 
 
@@ -852,8 +852,8 @@ Message: |
          |                    ^~~~~~~ Did you mean to spell `Denning` this way?
 Suggest:
   - Replace with: “Denying”
-  - Replace with: “Donning”
   - Replace with: “Penning”
+  - Replace with: “Dunning”
 
 
 
@@ -988,9 +988,9 @@ Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
          |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Rd”
-  - Replace with: “R”
-  - Replace with: “RC”
+  - Replace with: “Re”
+  - Replace with: “RI”
+  - Replace with: “Ra”
 
 
 
@@ -999,9 +999,9 @@ Message: |
      394 | Johnson and Frederick P. Brooks Jr., members of the Machine Organization
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
-  - Replace with: “Pd”
+  - Replace with: “Pa”
+  - Replace with: “Po”
+  - Replace with: “PE”
 
 
 
@@ -1012,8 +1012,8 @@ Message: |
          |           ^~~~~ Did you mean to spell `Petri` this way?
 Suggest:
   - Replace with: “Petra”
-  - Replace with: “Patti”
-  - Replace with: “Peary”
+  - Replace with: “Perth”
+  - Replace with: “Perry”
 
 
 
@@ -1074,9 +1074,9 @@ Message: |
          |                                                                  ^~ Did you mean to spell `de` this way?
      445 |   > "high-voltage/low-voltage", etc.).
 Suggest:
+  - Replace with: “den”
   - Replace with: “db”
   - Replace with: “dc”
-  - Replace with: “dd”
 
 
 
@@ -1107,7 +1107,7 @@ Message: |
 Suggest:
   - Replace with: “Baum”
   - Replace with: “Bohr”
-  - Replace with: “Chm”
+  - Replace with: “Ohm”
 
 
 

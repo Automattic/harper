@@ -78,7 +78,11 @@ function scan() {
 	});
 
 	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
-		if (element.matches('[role="combobox"]')) {
+		if (
+			element.matches('[role="combobox"]') ||
+			element.getAttribute('data-enable-grammarly') === 'false' ||
+			element.getAttribute('spellcheck') === 'false'
+		) {
 			return;
 		}
 
