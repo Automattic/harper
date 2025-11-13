@@ -70,7 +70,6 @@ async function enableDefaultDomains() {
 		'playground.lexical.dev',
 		'discord.com',
 		'www.youtube.com',
-		'www.google.com',
 		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
@@ -96,6 +95,7 @@ async function enableDefaultDomains() {
 		'www.upwork.com',
 		'news.ycombinator.com',
 		'classroom.google.com',
+		'quilljs.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

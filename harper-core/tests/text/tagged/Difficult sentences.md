@@ -96,8 +96,8 @@
 # D   NSg     VL3 NSg/J/P D   NSg/VB+ NSg/VB .
 > The stream  runs   by      our back     door    .
 # D+  NSg/VB+ NPl/V3 NSg/J/P D$+ NSg/VB/J NSg/VB+ .
-> He       ran     straight by      me       .
-# NPr/ISg+ NSg/VPt NSg/VB/J NSg/J/P NPr/ISg+ .
+> He       ran     straight   by      me       .
+# NPr/ISg+ NSg/VPt NSg/VB/J/R NSg/J/P NPr/ISg+ .
 > Be      back     by      ten o'clock ! .
 # NSg/VXB NSg/VB/J NSg/J/P NSg R       . .
 > We'll find   someone by      the end    of March   .
@@ -114,8 +114,8 @@
 # R+    VPt D/P+ NSg/VB+ NSg/J/P D   NPl/V3 R/C/P D/P #  . NSg/VB/J NSg/VB+ .
 > I       was aghast by      what   I       saw     .
 # ISg/#r+ VPt J      NSg/J/P NSg/I+ ISg/#r+ NSg/VPt .
-> There are many       well     - known plays  by      William Shakespeare .
-# R+    VB  NSg/I/J/Dq NSg/VB/J . VPp/J NPl/V3 NSg/J/P NPr+    NPr/VB+     .
+> There are many       well       - known plays  by      William Shakespeare .
+# R+    VB  NSg/I/J/Dq NSg/VB/J/R . VPp/J NPl/V3 NSg/J/P NPr+    NPr/VB+     .
 > I       avoided the guards  by      moving  only  when    they weren't looking .
 # ISg/#r+ VP/J    D+  NPl/V3+ NSg/J/P Nᴹ/Vg/J J/R/C NSg/I/C IPl+ VB      Nᴹ/Vg/J .
 > By      Pythagoras ' theorem , we   can     calculate the length  of the hypotenuse .
@@ -142,8 +142,8 @@
 # D$+ N🅪Sg/VB/J+ VL3 NSg/VB/J/P NSg/J/P NSg+ NSg+    .
 > We   won      by      six  goals   to three .
 # IPl+ NSgPl/VP NSg/J/P NSg+ NPl/V3+ P  NSg   .
-> His     date    of birth     was wrong    by      ten  years .
-# ISg/D$+ N🅪Sg/VB P  NSg/VB/J+ VPt NSg/VB/J NSg/J/P NSg+ NPl+  .
+> His     date    of birth     was wrong      by      ten  years .
+# ISg/D$+ N🅪Sg/VB P  NSg/VB/J+ VPt NSg/VB/J/R NSg/J/P NSg+ NPl+  .
 > We   went    through the book    page    by      page    .
 # IPl+ NSg/VPt NSg/J/P D+  NSg/VB+ NPr/VB+ NSg/J/P NPr/VB+ .
 > We   crawled forward  by      inches  .
@@ -234,8 +234,8 @@
 # D+  NSg+  VPt  D/P N🅪Sg/VB R/C/P D+  NPr+    NSg/J+ .
 > If    having  to bag    the groceries correctly is  more            than you    can     handle , then    this   isn't  the job     for   you    .
 # NSg/C Nᴹ/Vg/J P  NSg/VB D+  NPl/V3+   R         VL3 NPr/I/VB/J/R/Dq C/P  ISgPl+ NPr/VXB NSg/VB . NSg/J/C I/Ddem NSg/VB D   NPr/VB+ R/C/P ISgPl+ .
-> This    is  a   new      bell   for   my  bicycle .
-# I/Ddem+ VL3 D/P NSg/VB/J NPr/VB R/C/P D$+ NSg/VB+ .
+> This    is  a   new   bell   for   my  bicycle .
+# I/Ddem+ VL3 D/P NSg/J NPr/VB R/C/P D$+ NSg/VB+ .
 > The cake     is  for   Tom    and  Helen's anniversary .
 # D+  N🅪Sg/VB+ VL3 R/C/P NPr/VB VB/C NSg$    NSg+        .
 > This    medicine is  for   your cough   .
@@ -256,8 +256,8 @@
 # NSg VP/J  R/C/P . VB/C NSg   C/P     . . P    VP/J    NSg/VB+ .
 > Make   way   for   the president !
 # NSg/VB NSg/J R/C/P D+  NSg/VB+   .
-> Clear    the shelves for   our new       Christmas stock      !
-# NSg/VB/J D   NPl/V3  R/C/P D$+ NSg/VB/J+ NPr/VB/J+ N🅪Sg/VB/J+ .
+> Clear    the shelves for   our new    Christmas stock      !
+# NSg/VB/J D   NPl/V3  R/C/P D$+ NSg/J+ NPr/VB/J+ N🅪Sg/VB/J+ .
 > Stand  by      for   your cue     .
 # NSg/VB NSg/J/P R/C/P D$+  NSg/VB+ .
 > Prepare for   battle    .
@@ -324,12 +324,12 @@
 # P
 >
 #
-> Paul is  from New       Zealand .
-# NPr+ VL3 P    NSg/VB/J+ NPr+    .
+> Paul is  from New    Zealand .
+# NPr+ VL3 P    NSg/J+ NPr+    .
 > I       got a   letter  from my  brother   .
 # ISg/#r+ VP  D/P NSg/VB+ P    D$+ NSg/VB/J+ .
 > You    can't get    all          your news   from the Internet .
-# ISgPl+ VXB   NSg/VB NSg/I/J/C/Dq D$+  Nᴹ/V3+ P    D   NPrᴹ/VB+ .
+# ISgPl+ VXB   NSg/VB NSg/I/J/C/Dq D$+  Nᴹ/VB+ P    D   NPrᴹ/VB+ .
 > He       had books   piled from floor   to ceiling .
 # NPr/ISg+ VB  NPl/V3+ VP/J  P    NSg/VB+ P  NSg/VB  .
 > He       departed yesterday from Chicago .
@@ -348,8 +348,8 @@
 # NSg/VB Nᴹ/Vg/J  P    # .
 > You    can     study  anything  from math to literature .
 # ISgPl+ NPr/VXB NSg/VB NSg/I/VB+ P    +    P  Nᴹ         .
-> It's hard   to tell   from here    .
-# +    N🅪Sg/J P  NPr/VB P    NSg/J/R .
+> It's hard     to tell   from here    .
+# +    N🅪Sg/J/R P  NPr/VB P    NSg/J/R .
 > Try      to see    it       from his     point  of view    .
 # NSg/VB/J P  NSg/VB NPr/ISg+ P    ISg/D$+ NSg/VB P  NSg/VB+ .
 > The bomb      went     off        just 100 yards   from where   they were    standing .
@@ -360,8 +360,8 @@
 # K    NSg/VPp Nᴹ/Vg/J I/Ddem+ P    ?       .
 > Your opinions differ    from mine      .
 # D$+  NPl+     NSg/VB/JC P    NSg/I/VB+ .
-> He       knows  right    from wrong    .
-# NPr/ISg+ NPl/V3 NPr/VB/J P    NSg/VB/J .
+> He       knows  right    from wrong      .
+# NPr/ISg+ NPl/V3 NPr/VB/J P    NSg/VB/J/R .
 >
 #
 > In
@@ -538,8 +538,8 @@
 #
 > Take   the chicken    out          of the freezer .
 # NSg/VB D+  N🅪Sg/VB/J+ NSg/VB/J/R/P P  D+  NSg+    .
-> He       hasn't been    well     of late  .
-# NPr/ISg+ V3     NSg/VPp NSg/VB/J P  NSg/J .
+> He       hasn't been    well       of late  .
+# NPr/ISg+ V3     NSg/VPp NSg/VB/J/R P  NSg/J .
 > Finally she  was relieved of the burden of caring  for   her     sick      husband .
 # R       ISg+ VPt VP/J     P  D   NSg/VB P  Nᴹ/Vg/J R/C/P ISg/D$+ NSg/VB/J+ NSg/VB+ .
 > He       seemed devoid of human     feelings .
@@ -686,8 +686,8 @@
 # NSg/I/J/C/Dq P  D+  N🅪Sg+          VL3 J/P ISg+ .
 > I       put     a    bet       on  the winning  horse   .
 # ISg/#r+ NSg/VBP D/P+ NSg/VB/P+ J/P D+  NSg/VB/J NSg/VB+ .
-> tug     on  the rope    ; push   hard   on  the door    .
-# NSg/VB+ J/P D+  NSg/VB+ . NSg/VB N🅪Sg/J J/P D+  NSg/VB+ .
+> tug     on  the rope    ; push   hard     on  the door    .
+# NSg/VB+ J/P D+  NSg/VB+ . NSg/VB N🅪Sg/J/R J/P D+  NSg/VB+ .
 > I       stubbed my  toe     on  an  old   tree    stump  .
 # ISg/#r+ VB/J    D$+ NSg/VB+ J/P D/P NSg/J NSg/VB+ NSg/VB .
 > I       caught my  fingernail on  the door    handle .
@@ -830,8 +830,8 @@
 # ISg/#r+ VP/J  Nᴹ/Vg/J     . NSg/C/P NPr/ISg+ VPt P  NPr/P+ NSg/VB+ .
 > It       was to a   large extent true     .
 # NPr/ISg+ VPt P  D/P NSg/J NSg/J+ NSg/VB/J .
-> We   manufacture these   parts   to a   very high      tolerance .
-# IPl+ NSg/VB      I/Ddem+ NPl/V3+ P  D/P J/R  NSg/VB/J+ N🅪Sg/VB+  .
+> We   manufacture these   parts   to a   very high        tolerance .
+# IPl+ NSg/VB      I/Ddem+ NPl/V3+ P  D/P J/R  NSg/VB/J/R+ N🅪Sg/VB+  .
 > This    gauge   is  accurate to a   second   .
 # I/Ddem+ NSg/VB+ VL3 J        P  D/P NSg/VB/J .
 > There's a   lot    of sense    to what   he       says   .
@@ -888,8 +888,8 @@
 # IPl+ VB  P    ISgPl+ NSg/I/J/C/Dq D+  NSg/J+ .
 > There are a   number     of problems with your plan   .
 # R+    VB  D/P N🅪Sg/VB/JC P  NPl+     P    D$+  NSg/VB .
-> What   on  Earth    is  wrong    with my  keyboard ?
-# NSg/I+ J/P NPrᴹ/VB+ VL3 NSg/VB/J P    D$+ NSg/VB+  .
+> What   on  Earth    is  wrong      with my  keyboard ?
+# NSg/I+ J/P NPrᴹ/VB+ VL3 NSg/VB/J/R P    D$+ NSg/VB+  .
 > He       was pleased with the outcome .
 # NPr/ISg+ VPt VP/J    P    D+  NSg+    .
 > I’m upset    with my  father  .

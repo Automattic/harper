@@ -159,6 +159,7 @@ use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
+use super::verb_to_adjective::VerbToAdjective;
 use super::very_unique::VeryUnique;
 use super::vice_versa::ViceVersa;
 use super::was_aloud::WasAloud;
@@ -475,6 +476,7 @@ impl LintGroup {
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
         insert_struct_rule!(NeedToNoun, true);
+        insert_expr_rule!(VerbToAdjective, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);

@@ -26,7 +26,6 @@ jobs:
             test-chrome-plugin,
             test-firefox-plugin,
             test-obsidian,
-            build-obsidian,
           ]
     steps:
       - uses: actions/checkout@v4

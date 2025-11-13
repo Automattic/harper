@@ -20,8 +20,8 @@ Message: |
        7 | promote the general Welfare, and secure the Blessings of Liberty to ourselves
 Suggest:
   - Replace with: “defense”
-  - Replace with: “decency”
-  - Replace with: “deface”
+  - Replace with: “defended”
+  - Replace with: “defect”
 
 
 
@@ -42,8 +42,8 @@ Message: |
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
   - Replace with: “In”
+  - Replace with: “Id”
   - Replace with: “IC”
-  - Replace with: “IE”
 
 
 
@@ -736,7 +736,7 @@ Message: |
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
-  - Replace with: “facts”
+  - Replace with: “faith”
 
 
 
@@ -802,7 +802,7 @@ Message: |
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
-  - Replace with: “facts”
+  - Replace with: “faith”
 
 
 
@@ -1727,9 +1727,9 @@ Message: |
      663 | ## Article. V.
          |             ^~ Did you mean to spell `V.` this way?
 Suggest:
-  - Replace with: “Vs.”
-  - Replace with: “Vb”
   - Replace with: “Vi”
+  - Replace with: “Va”
+  - Replace with: “Vs.”
 
 
 

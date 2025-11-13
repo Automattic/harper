@@ -40,14 +40,14 @@
 # I/Ddem+ NPl/V3+  VB  NPr/VB/J .
 > Those   massages are nice     .
 # I/Ddem+ NPl/V3+  VB  NPr/VB/J .
-> This    massages well     .
-# I/Ddem+ NPl/V3+  NSg/VB/J .
-> That          massages well     .
-# NSg/I/C/Ddem+ NPl/V3+  NSg/VB/J .
-> These   massage well     .
-# I/Ddem+ NSg/VB+ NSg/VB/J .
-> Those   massage well     .
-# I/Ddem+ NSg/VB+ NSg/VB/J .
+> This    massages well       .
+# I/Ddem+ NPl/V3+  NSg/VB/J/R .
+> That          massages well       .
+# NSg/I/C/Ddem+ NPl/V3+  NSg/VB/J/R .
+> These   massage well       .
+# I/Ddem+ NSg/VB+ NSg/VB/J/R .
+> Those   massage well       .
+# I/Ddem+ NSg/VB+ NSg/VB/J/R .
 >
 #
 > That          could   be      a    solution .
