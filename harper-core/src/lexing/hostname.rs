@@ -31,14 +31,15 @@ pub fn lex_hostname(source: &[char]) -> Option<usize> {
     // The beginning has different requirements from the rest of the hostname.
     let first = source.first()?;
 
-    if !matches!(first, 'A'..='Z' | 'a'..='z' | '0'..='9' ) {
+    // Hostnames are technically allowed to have capital letters, but they usually don't
+    if !matches!(first, /* 'A'..='Z' | */ 'a'..='z' | '0'..='9' ) {
         return None;
     }
 
     for label in source.split(|c| *c == '.') {
         for c in label {
             passed_chars += 1;
-            if !matches!(c, 'A'..='Z' | 'a'..='z' | '0'..='9' | '-') {
+            if !matches!(c, /* 'A'..='Z' | */ 'a'..='z' | '0'..='9' | '-') {
                 return Some(passed_chars - 1);
             }
         }

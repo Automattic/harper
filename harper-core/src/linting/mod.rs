@@ -92,6 +92,7 @@ mod mass_plurals;
 mod merge_linters;
 mod merge_words;
 mod missing_preposition;
+mod missing_space;
 mod missing_to;
 mod misspell;
 mod mixed_bag;
