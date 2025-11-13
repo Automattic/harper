@@ -882,7 +882,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      338 | #### SubSection. 1.
          |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
@@ -1003,7 +1003,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      388 | #### SubSection. 2
          |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
@@ -1057,7 +1057,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      406 | #### SubSection 3.
          |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
@@ -1226,7 +1226,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      446 | #### SubSection 4.
          |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
@@ -1297,7 +1297,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      460 | #### SubSection 5.
          |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
