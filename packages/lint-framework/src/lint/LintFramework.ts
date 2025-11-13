@@ -1,3 +1,4 @@
+import type { IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
 import { isVisible } from './domUtils';
 import Highlights from './Highlights';
@@ -20,6 +21,7 @@ export default class LintFramework {
 	private lintRequested = false;
 	private renderRequested = false;
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
+	private lastLintBoxes: IgnorableLintBox[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
@@ -146,17 +148,9 @@ export default class LintFramework {
 		}
 	}
 
-	/** Get the individual lints produced the last time the text on the screen was scanned. */
-	public getLastLints(): UnpackedLint[] {
-		const lints = [];
-
-		for (const group of this.lastLints) {
-			for (const groupLints of Object.values(group.lints)) {
-				lints.push(...groupLints);
-			}
-		}
-
-		return lints;
+	/** Return the last known ignorable lint boxes rendered on-screen. */
+	public getLastIgnorableLintBoxes(): IgnorableLintBox[] {
+		return this.lastLintBoxes;
 	}
 
 	private attachTargetListeners(target: Node) {
@@ -217,6 +211,7 @@ export default class LintFramework {
 						)
 					: [],
 			);
+			this.lastLintBoxes = boxes;
 			this.highlights.renderLintBoxes(boxes);
 			this.popupHandler.updateLintBoxes(boxes);
 
