@@ -65,7 +65,7 @@ function toggleDomainEnabled() {
       </svg>
     </Button>
 
-    <p class="text-sm font-medium">
+    <p class="text-sm font-medium dark:text-white">
       {enabled ? 'Enabled on ' : 'Disabled on '}{domain}
     </p>
   </section>
