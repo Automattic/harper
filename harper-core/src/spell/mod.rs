@@ -3,7 +3,6 @@
 
 use itertools::Itertools;
 
-use crate::char_ext::CharExt;
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
 pub use self::dictionary::Dictionary;
