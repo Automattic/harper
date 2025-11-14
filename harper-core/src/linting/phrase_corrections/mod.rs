@@ -766,6 +766,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects non-standard variants of `low-hanging fruit`.",
             LintKind::Usage
         ),
+        "LoAndBehold" => (
+            ["low and behold"],
+            ["lo and behold"],
+            "The correct form is `lo and behold`.",
+            "Corrects non-standard variant of `lo and behold`.",
+            LintKind::Malapropism
+        ),
         "ManagerialReins" => (
             ["managerial reigns"],
             ["managerial reins"],
