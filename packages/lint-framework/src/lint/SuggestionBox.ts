@@ -1,10 +1,20 @@
 /** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
+import { type IconDefinition, icon } from '@fortawesome/fontawesome-svg-core';
+import { faBan, faGear } from '@fortawesome/free-solid-svg-icons';
+import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import bookDownSvg from '../assets/bookDownSvg';
 import type { IgnorableLintBox, LintBox } from './Box';
 import lintKindColor from './lintKindColor';
 // Decoupled: actions passed in by framework consumer
 import type { UnpackedLint, UnpackedSuggestion } from './unpackLint';
+
+function iconSvg(definition: IconDefinition): string {
+	return icon(definition).html.join('');
+}
+
+const settingsIconSvg = iconSvg(faGear);
+const disableIconSvg = iconSvg(faBan);
 
 var FocusHook: any = function () {};
 FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousValue: any) {
@@ -22,7 +32,6 @@ FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousVal
 	});
 };
 
-/** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
 var CloseOnEscapeHook: any = function (this: any, onClose: () => void) {
 	this.onClose = onClose;
 };
@@ -51,6 +60,7 @@ function header(
 	onClose: () => void,
 	openOptions?: () => Promise<void>,
 	rule?: string,
+	setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void,
 ): any {
 	const closeButton = h(
 		'button',
@@ -73,30 +83,36 @@ function header(
 					},
 					title: 'Settings',
 					'aria-label': 'Settings',
+					innerHTML: settingsIconSvg,
 				},
-				'⚙',
+				[],
 			)
 		: undefined;
 
-	const controlsChildren = settingsButton ? [settingsButton, closeButton] : [closeButton];
+	const disableRuleButton =
+		setRuleEnabled && rule
+			? h(
+					'button',
+					{
+						className: 'harper-disable-btn',
+						onclick: () => {
+							Promise.resolve(setRuleEnabled(rule, false)).finally(() => {
+								onClose();
+							});
+						},
+						title: `Disable the ${rule} rule`,
+						'aria-label': 'Disable this lint rule',
+						innerHTML: disableIconSvg,
+					},
+					[],
+				)
+			: undefined;
+
+	const controlsChildren = [disableRuleButton, settingsButton, closeButton].filter(
+		(node): node is VNode => node != null,
+	);
 	const controls = h('div', { className: 'harper-controls' }, controlsChildren);
-	const trimmedRule = rule?.trim();
-	const titleChildren = [title] as any[];
-	if (trimmedRule) {
-		titleChildren.push(
-			h(
-				'span',
-				{
-					className: 'harper-info-icon',
-					title: trimmedRule,
-					'aria-label': `Grammar rule: ${trimmedRule}`,
-					role: 'img',
-				},
-				'i',
-			),
-		);
-	}
-	const titleEl = h('span', { className: 'harper-title' }, titleChildren);
+	const titleEl = h('span', { className: 'harper-title' }, [title]);
 
 	return h(
 		'div',
@@ -179,7 +195,7 @@ function suggestions(
 ): any {
 	return suggestions.map((s: UnpackedSuggestion, i: number) => {
 		const label = s.replacement_text !== '' ? s.replacement_text : String(s.kind);
-		const desc = `Replace with \"${label}\"`;
+		const desc = `Replace with "${label}"`;
 		const props = i === 0 ? { hook: new FocusHook() } : {};
 		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc, props);
 	});
@@ -224,7 +240,7 @@ function styleTag() {
       display:flex;
       flex-direction:column;
       z-index:5000;
-      font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Helvetica,Arial,sans-serif;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
       pointer-events:auto
       }
       .harper-header{
@@ -243,19 +259,6 @@ function styleTag() {
       display:flex;
       align-items:center;
       gap:6px;
-      }
-      .harper-info-icon{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width:16px;
-      height:16px;
-      border-radius:50%;
-      background:#eaeef2;
-      color:#1f2328;
-      font-size:11px;
-      font-weight:700;
-      cursor:default;
       }
       .harper-body{
       font-size:14px;
@@ -281,9 +284,28 @@ function styleTag() {
       .harper-btn:active{transform:scale(0.97)}
       .harper-close-btn{background:transparent;border:none;cursor:pointer;font-size:20px;line-height:1;color:#57606a;padding:0 4px;}
       .harper-close-btn:hover{color:#1f2328;}
-      .harper-gear-btn{background:transparent;border:none;cursor:pointer;font-size:22px;line-height:1;color:#57606a;padding:0 4px;}
+      .harper-disable-btn,
+      .harper-gear-btn{
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      font-size:18px;
+      line-height:1;
+      color:#57606a;
+      padding:0 4px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      }
+      .harper-disable-btn:hover,
       .harper-gear-btn:hover{color:#1f2328;}
-      .harper-controls{display:flex;align-items:center;gap:6px;}
+      .harper-disable-btn svg,
+      .harper-gear-btn svg{
+      width:18px;
+      height:18px;
+      display:block;
+      }
+      .harper-controls{display:flex;align-items:center;gap:3px;}
       .harper-child-cont{
       display:flex;
       flex-wrap:wrap;
@@ -342,7 +364,6 @@ function styleTag() {
       box-shadow:0 4px 12px rgba(1,4,9,0.85)
       }
       .harper-header{color:#e6edf3}
-      .harper-info-icon{background:#30363d;color:#c9d1d9}
       .harper-body{color:#8b949e}
       .harper-btn{
       background:#21262d;
@@ -351,7 +372,9 @@ function styleTag() {
       .harper-btn:hover{filter:brightness(1.15)}
       .harper-close-btn{color:#8b949e;}
       .harper-close-btn:hover{color:#e6edf3;}
+      .harper-disable-btn,
       .harper-gear-btn{color:#8b949e;}
+      .harper-disable-btn:hover,
       .harper-gear-btn:hover{color:#e6edf3;}
       .harper-btn[style*="background: #2DA44E"]{background:#238636}
       .harper-btn[style*="background: #e5e5e5"]{
@@ -383,7 +406,7 @@ function styleTag() {
 
 function ignoreLint(onIgnore: () => void | Promise<void>): any {
 	return button(
-		'Ignore',
+		'Dismiss',
 		{ background: '#e5e5e5', color: '#000000', fontWeight: 'lighter' },
 		onIgnore,
 		'Ignore this lint',
@@ -396,6 +419,7 @@ export default function SuggestionBox(
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 	},
 	hint: string | null,
 	close: () => void,
@@ -430,6 +454,7 @@ export default function SuggestionBox(
 				close,
 				actions.openOptions,
 				box.rule,
+				actions.setRuleEnabled,
 			),
 			body(box.lint.message_html),
 			footer(
@@ -446,12 +471,7 @@ export default function SuggestionBox(
 			),
 			hintDrawer(hint),
 			actions.reportError
-				? reportProblemButton(() => {
-						if (actions.reportError) {
-							return actions.reportError(box.lint, box.rule);
-						}
-						return Promise.resolve();
-					})
+				? reportProblemButton(() => actions.reportError!(box.lint, box.rule))
 				: undefined,
 		],
 	);

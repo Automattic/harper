@@ -1,7 +1,7 @@
 {
 	"name": "obsidian-plugin",
 	"private": true,
-	"version": "0.70.0",
+	"version": "0.71.0",
 	"main": "main.js",
 	"devDependencies": {
 		"@playwright/test": "^1.52.0",
@@ -15,7 +15,7 @@
 		"vitest": "^3.0.8"
 	},
 	"scripts": {
-		"build": "vite build",
+		"build": "vite build -l warn",
 		"dev": "vite build --watch",
 		"test": "vitest run"
 	},

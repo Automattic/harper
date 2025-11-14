@@ -1,3 +1,4 @@
+import type { IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
 import { isVisible } from './domUtils';
 import Highlights from './Highlights';
@@ -20,6 +21,7 @@ export default class LintFramework {
 	private lintRequested = false;
 	private renderRequested = false;
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
+	private lastLintBoxes: IgnorableLintBox[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
@@ -32,7 +34,8 @@ export default class LintFramework {
 		getActivationKey?: () => Promise<ActivationKey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
-		reportError?: (lint: UnpackedLint) => Promise<void>;
+		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 	};
 
 	constructor(
@@ -42,7 +45,8 @@ export default class LintFramework {
 			getActivationKey?: () => Promise<ActivationKey>;
 			openOptions?: () => Promise<void>;
 			addToUserDictionary?: (words: string[]) => Promise<void>;
-			reportError?: () => Promise<void>;
+			reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+			setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 		},
 	) {
 		this.lintProvider = lintProvider;
@@ -53,6 +57,7 @@ export default class LintFramework {
 			openOptions: actions.openOptions,
 			addToUserDictionary: actions.addToUserDictionary,
 			reportError: actions.reportError,
+			setRuleEnabled: actions.setRuleEnabled,
 		});
 		this.targets = new Set();
 		this.scrollableAncestors = new Set();
@@ -143,6 +148,11 @@ export default class LintFramework {
 		}
 	}
 
+	/** Return the last known ignorable lint boxes rendered on-screen. */
+	public getLastIgnorableLintBoxes(): IgnorableLintBox[] {
+		return this.lastLintBoxes;
+	}
+
 	private attachTargetListeners(target: Node) {
 		for (const event of INPUT_EVENTS) {
 			target.addEventListener(event, this.updateEventCallback);
@@ -201,6 +211,7 @@ export default class LintFramework {
 						)
 					: [],
 			);
+			this.lastLintBoxes = boxes;
 			this.highlights.renderLintBoxes(boxes);
 			this.popupHandler.updateLintBoxes(boxes);
 

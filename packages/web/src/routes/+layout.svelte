@@ -1,11 +1,11 @@
 <script lang="ts">
 import '../app.css';
 
+import posthog from 'posthog-js';
+import { onMount } from 'svelte';
 import { browser } from '$app/environment';
 import AutomatticLogo from '$lib/components/AutomatticLogo.svelte';
 import GutterCenter from '$lib/components/GutterCenter.svelte';
-import posthog from 'posthog-js';
-import { onMount } from 'svelte';
 
 onMount(() => {
 	if (browser) {

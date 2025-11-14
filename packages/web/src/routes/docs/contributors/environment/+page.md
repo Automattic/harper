@@ -2,7 +2,13 @@
 title: Set Up Your Environment
 ---
 
-To use the tooling required to build and debug Harper, you'll need the following programs available in your `$PATH`.
+Depending on what you're wanting to work on within the Harper repo, you may not need to set up every aspect of the environment described on this page.
+For example, if you only intend to work on the core grammar engine, `harper-ls`, or `harper-cli`, you only need `cargo` installed.
+In that case, Harper follows all of the standard conventions for Rust projects, so any existing Rust knowledge will apply.
+
+If you intend to work on the Chrome extension, Obsidian plugin, or certain other projects, you'll need the full environment set up.
+
+To use _all_ the tooling we use to build and debug Harper, you'll need the following programs available in your `$PATH`.
 For Nix users, we provide a [Nix development shell](#Nix-development-shell) to setup all the necessary tooling automatically.
 
 - [`just`](https://github.com/casey/just)
@@ -13,7 +19,6 @@ For Nix users, we provide a [Nix development shell](#Nix-development-shell) to s
 - `grep`
 - [`wasm-pack`](https://drager.github.io/wasm-pack/installer/)
 - `zip`
-- `pandoc`
 - [`cargo-hack`](https://github.com/taiki-e/cargo-hack?tab=readme-ov-file#installation)
 
 To run integration tests, you may also need `libnss3` and/or `libasound3`.

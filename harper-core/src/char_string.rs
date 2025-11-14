@@ -1,3 +1,4 @@
+use crate::char_ext::CharExt;
 use std::borrow::Cow;
 
 use smallvec::SmallVec;
@@ -36,6 +37,9 @@ pub trait CharStringExt {
     /// Case-insensitive check if the string ends with the given ASCII suffix.
     /// The suffix is assumed to be lowercase.
     fn ends_with_ignore_ascii_case_str(&self, suffix: &str) -> bool;
+
+    /// Check if the string contains any vowels
+    fn contains_vowel(&self) -> bool;
 }
 
 impl CharStringExt for [char] {
@@ -58,12 +62,12 @@ impl CharStringExt for [char] {
     /// Convert a given character sequence to the standard character set
     /// the dictionary is in.
     fn normalized(&'_ self) -> Cow<'_, [char]> {
-        if self.as_ref().iter().any(|c| char_to_normalized(*c) != *c) {
+        if self.as_ref().iter().any(|c| c.normalized() != *c) {
             Cow::Owned(
                 self.as_ref()
                     .iter()
                     .copied()
-                    .map(char_to_normalized)
+                    .map(|c| c.normalized())
                     .collect(),
             )
         } else {
@@ -118,14 +122,9 @@ impl CharStringExt for [char] {
             .zip(suffix.iter())
             .all(|(a, b)| a.to_ascii_lowercase() == *b)
     }
-}
 
-fn char_to_normalized(c: char) -> char {
-    match c {
-        '’' => '\'',
-        '‘' => '\'',
-        '＇' => '\'',
-        _ => c,
+    fn contains_vowel(&self) -> bool {
+        self.iter().any(|c| c.is_vowel())
     }
 }
 

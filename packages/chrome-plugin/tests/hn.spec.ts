@@ -4,6 +4,7 @@ import {
 	getTextarea,
 	replaceEditorContent,
 	testBasicSuggestionTextarea,
+	testCanBlockRuleTextareaSuggestion,
 	testCanIgnoreTextareaSuggestion,
 } from './testUtils';
 
@@ -11,6 +12,7 @@ const TEST_PAGE_URL = 'https://news.ycombinator.com/item?id=45798898';
 
 testBasicSuggestionTextarea(TEST_PAGE_URL);
 testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
+testCanBlockRuleTextareaSuggestion(TEST_PAGE_URL);
 
 test('Hacker News wraps correctly', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);

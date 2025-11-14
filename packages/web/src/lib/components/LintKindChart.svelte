@@ -1,6 +1,6 @@
 <script lang="ts">
-import lintKindColor from '$lib/lintKindColor';
 import Chart from 'chart.js/auto';
+import { lintKindColor } from 'lint-framework';
 import { onMount } from 'svelte';
 
 // Receive lint counts from the parent component

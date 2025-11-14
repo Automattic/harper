@@ -18,6 +18,10 @@ const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain)
 			ruleId,
 			'',
 		),
+	setRuleEnabled: async (ruleId, enabled) => {
+		await ProtocolClient.setRuleEnabled(ruleId, enabled);
+		fw.update();
+	},
 });
 
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
@@ -74,7 +78,11 @@ function scan() {
 	});
 
 	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
-		if (element.matches('[role="combobox"]')) {
+		if (
+			element.matches('[role="combobox"]') ||
+			element.getAttribute('data-enable-grammarly') === 'false' ||
+			element.getAttribute('spellcheck') === 'false'
+		) {
 			return;
 		}
 
