@@ -7216,7 +7216,6 @@ NJ/OJ               # US state (New Jersey)
 NLRB/O
 NM/ONJV             # US state (New Mexico)
 NORAD/Og
-NOW/ON
 NP/ON
 NPC/NSg             # non-player character
 NPR/ONg             # National Public Radio
@@ -25294,7 +25293,7 @@ fop/NSg
 foppery/Nmg
 foppish/Jp
 foppishness/Nmg
-for/~CPH
+for/~CPHR
 fora/~N9
 forage/~NSgVd>GZ
 forager/NgS
@@ -29465,7 +29464,7 @@ impure/~JY^V>
 impurity/~NSg
 imputation/NSg
 impute/VdSGB
-in/~PJrg            # removed `4`, verb senses are obsolete, `NS`, noun sense is marginal
+in/~PJRrg            # removed `4`, verb senses are obsolete, `NS`, noun sense is marginal
 inaccuracy/NwgS
 inaction/~Nmg
 inadequacy/NS
@@ -36019,7 +36018,7 @@ novenae/N!@_
 novene/J
 novice/~NgS
 novitiate/NgS
-now/~JCNgV
+now/~JCNgVR
 nowadays/~g
 noway/S
 nowhere/~JNg
@@ -51864,7 +51863,7 @@ when/~CINgS
 whence/~C
 whenever/~C
 whensoever/
-where/~CNSg
+where/~CNSRg
 where'd/
 whereabouts/~Ng
 whereas/~CN
