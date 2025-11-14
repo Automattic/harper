@@ -1226,9 +1226,9 @@ pub fn lint_group() -> LintGroup {
         "RedundantThat" => (
             ["that that"],
             ["that"],
-            "The second `that` is redundant.",
-            "There is never a situation where `that that` cannot be condensed into a single token.",
-            LintKind::Redundancy
+            "Consider whether the second `that` adds meaning in this context.",
+            "There is rarely a situation where `that that` cannot be condensed into a single token.",
+            LintKind::Repetition
         )
     });
 
