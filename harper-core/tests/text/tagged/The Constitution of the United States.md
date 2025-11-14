@@ -792,10 +792,10 @@
 # NPr/VB+ NSg/R NSg/VB+   . NPr/C D   NSg+   NPr/J/P I/C+  NSg/I/VB/J NPr/I+ VL3 P  NPr/VB VXB   NSg/VXB VP/J     .
 > and  such  person  shall act     accordingly until a   President or    Vice        President shall
 # VB/C NSg/I NSg/VB+ VXB   NPr/VB+ R           C/P   D/P NSg/VB    NPr/C NSg/VB/J/P+ NSg/VB+   VXB
-> have    qualified.The Congress may     by      law      provide for the case      of the death  of any
-# NSg/VXB Hostname      NPr/VB+  NPr/VXB NSg/J/P N🅪Sg/VB+ VB      C/P D   NPr🅪Sg/VB P  D   NPr🅪Sg P  I/R/Dq
-> of the persons from whom the House  of Representatives may     choose   a   President
-# P  D   NPl/V3+ P    I+   D   NPr/VB P  NPl+            NPr/VXB NSg/VB/C D/P NSg/VB+
+> have    qualified . The Congress may     by      law      provide for the case      of the death  of any
+# NSg/VXB VP/J      . D+  NPr/VB+  NPr/VXB NSg/J/P N🅪Sg/VB+ VB      C/P D   NPr🅪Sg/VB P  D   NPr🅪Sg P  I/R/Dq
+> of the persons from whom the House  of Representatives may     choose   a    President
+# P  D   NPl/V3+ P    I+   D   NPr/VB P  NPl+            NPr/VXB NSg/VB/C D/P+ NSg/VB+
 > whenever the right    of choice  shall have    devolved upon them     , and  for the case      of
 # C        D   NPr/VB/J P  N🅪Sg/J+ VXB   NSg/VXB VP/J     P    NSg/IPl+ . VB/C C/P D   NPr🅪Sg/VB P
 > the death  of any    of the persons from whom the Senate may     choose   a   Vice
