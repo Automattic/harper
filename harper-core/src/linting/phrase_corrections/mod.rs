@@ -935,7 +935,7 @@ pub fn lint_group() -> LintGroup {
         "RedundantIIRC" => (
             ["if IIRC", "IIRC correctly"], ["IIRC"],
             "`IIRC` already means 'if I recall correctly', so adding 'if' or 'correctly' is redundant.",
-            "Flags redundant use of 'if' or 'correctly' with 'IIRC', since 'IIRC' already stands for 'if I recall correctly'.",
+            "Flags redundant use of 'if' or 'correctly' with `IIRC`, since `IIRC` already stands for 'if I recall correctly'.",
             LintKind::Redundancy
         ),
         "RifeWith" => (
