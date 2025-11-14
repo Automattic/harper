@@ -5,10 +5,18 @@ use crate::{Document, LSend, Token, TokenStringExt};
 
 use super::{Lint, Linter};
 
+#[derive(Clone, Copy)]
+pub enum Unit {
+    /// Default: Process text in chunks (clauses between commas)
+    Chunk,
+    /// Process text in full sentences
+    Sentence,
+}
+
 /// A trait that searches for tokens that fulfil [`Expr`]s in a [`Document`].
 ///
-/// Makes use of [`TokenStringExt::iter_chunks`] to avoid matching across sentence or clause
-/// boundaries.
+/// Makes use of [`TokenStringExt::iter_chunks`] by default, or [`TokenStringExt::iter_sentences`] to process either
+/// a chunk (clause) or a sentence at a time.
 #[blanket(derive(Box))]
 pub trait ExprLinter: LSend {
     /// A simple getter for the expression you want Harper to search for.
@@ -21,6 +29,11 @@ pub trait ExprLinter: LSend {
     /// A user-facing description of what kinds of grammatical errors this rule looks for.
     /// It is usually shown in settings menus.
     fn description(&self) -> &str;
+    /// The unit of analysis for this linter.
+    /// Use [`Unit::Sentence`] if you need commas to be included in the analysis.
+    fn get_unit(&self) -> Unit {
+        Unit::Chunk
+    }
 }
 
 /// Helper function to find the only occurrence of a token matching a predicate
@@ -50,7 +63,12 @@ where
         let mut lints = Vec::new();
         let source = document.get_source();
 
-        for chunk in document.iter_chunks() {
+        let iter: Box<dyn Iterator<Item = &[Token]>> = match self.get_unit() {
+            Unit::Chunk => Box::new(document.iter_chunks()),
+            Unit::Sentence => Box::new(document.iter_sentences()),
+        };
+
+        for chunk in iter {
             lints.extend(run_on_chunk(self, chunk, source));
         }
 
@@ -64,13 +82,77 @@ where
 
 pub fn run_on_chunk<'a>(
     linter: &'a impl ExprLinter,
-    chunk: &'a [Token],
+    unit: &'a [Token],
     source: &'a [char],
 ) -> impl Iterator<Item = Lint> + 'a {
     linter
         .expr()
-        .iter_matches(chunk, source)
+        .iter_matches(unit, source)
         .filter_map(|match_span| {
-            linter.match_to_lint(&chunk[match_span.start..match_span.end], source)
+            linter.match_to_lint(&unit[match_span.start..match_span.end], source)
         })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::expr::SequenceExpr;
+    use crate::linting::Suggestion;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+
+    pub struct FooBar {
+        expr: Box<dyn Expr>,
+        unit: Unit,
+    }
+
+    impl FooBar {
+        pub fn new(unit: Unit) -> Self {
+            Self {
+                expr: Box::new(SequenceExpr::fixed_phrase("foo, bar")),
+                unit,
+            }
+        }
+    }
+
+    impl Default for FooBar {
+        fn default() -> Self {
+            Self::new(Unit::Chunk)
+        }
+    }
+
+    impl ExprLinter for FooBar {
+        fn expr(&self) -> &dyn Expr {
+            self.expr.as_ref()
+        }
+
+        fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
+            Some(Lint {
+                span: toks.span()?,
+                suggestions: vec![Suggestion::ReplaceWith("foo and bar".chars().collect())],
+                ..Default::default()
+            })
+        }
+
+        fn description(&self) -> &str {
+            "A test"
+        }
+
+        fn get_unit(&self) -> Unit {
+            self.unit
+        }
+    }
+
+    #[test]
+    fn cant_match_a_phrase_containing_commas() {
+        assert_no_lints("one, two, foo, bar, three, four", FooBar::default());
+    }
+
+    #[test]
+    fn matches_a_phrase_containing_commas() {
+        assert_suggestion_result(
+            "one, two, foo, bar, three, four",
+            FooBar::new(Unit::Sentence),
+            "one, two, foo and bar, three, four",
+        );
+    }
 }
