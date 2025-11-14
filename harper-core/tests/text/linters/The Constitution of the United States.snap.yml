@@ -960,7 +960,14 @@ Message: |
      367 | and such person shall act accordingly until a President or Vice President shall
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      368 | have qualified.The Congress may by law provide for the case of the death of any
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ~~~~~~~~~~~~~~~ This sentence is 101 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     368 | have qualified.The Congress may by law provide for the case of the death of any
+         |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      369 | of the persons from whom the House of Representatives may choose a President
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      370 | whenever the right of choice shall have devolved upon them, and for the case of
@@ -968,7 +975,7 @@ Message: |
      371 | the death of any of the persons from whom the Senate may choose a Vice
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      372 | President whenever the right of choice shall have devolved upon them.]The
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 167 words long.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
 
 
 

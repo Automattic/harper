@@ -261,7 +261,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "When referring to the various products of Amazon.com, make sure to treat them as a proper noun."
+					"description": "When referring to the various products of amazon.com, make sure to treat them as a proper noun."
 				},
 				"harper.linters.Americas": {
 					"scope": "resource",
