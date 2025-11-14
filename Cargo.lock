@@ -2661,6 +2661,7 @@ dependencies = [
  "ariadne",
  "clap",
  "dirs 6.0.0",
+ "either",
  "harper-comments",
  "harper-core",
  "harper-ink",
@@ -2673,6 +2674,7 @@ dependencies = [
  "serde",
  "serde_json",
  "strum",
+ "strum_macros",
 ]
 
 [[package]]
