@@ -378,7 +378,9 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::Metadata { words, brief } => {
-            const POS: &[(&str, fn(&DictWordMetadata) -> bool)] = &[
+            type PosPredicate = fn(&DictWordMetadata) -> bool;
+
+            const POS: &[(&str, PosPredicate)] = &[
                 ("N📦", |m| m.is_noun() && !m.is_proper_noun()),
                 ("O📛", DictWordMetadata::is_proper_noun),
                 ("V🏃", DictWordMetadata::is_verb),
