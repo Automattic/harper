@@ -1222,6 +1222,13 @@ pub fn lint_group() -> LintGroup {
             "Did you mean the definite article?",
             "Fixes especially common misspellings of the word `the`",
             LintKind::Typo
+        ),
+        "RedundantThat" => (
+            ["that that"],
+            ["that"],
+            "Consider whether the second `that` adds meaning in this context.",
+            "There is rarely a situation where `that that` cannot be condensed into a single token.",
+            LintKind::Repetition
         )
     });
 
