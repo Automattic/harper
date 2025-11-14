@@ -378,6 +378,8 @@ userdictoverlap:
 # Get the metadata associated with one or more words in Harper's dictionary as JSON.
 getmetadata *words:
   cargo run --bin harper-cli -- metadata {{words}}
+getmetadata-brief *words:
+  cargo run --bin harper-cli -- metadata --brief {{words}}
 # Get all the forms of a word using the affixes.
 getforms word:
   cargo run --bin harper-cli -- forms {{word}}
