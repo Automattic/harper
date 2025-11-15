@@ -278,9 +278,9 @@ Message: |
      119 | Department of Datalogy at the University of Copenhagen, founded in 1969, with
          |               ^~~~~~~~ Did you mean to spell `Datalogy` this way?
 Suggest:
+  - Replace with: “DataDog”
   - Replace with: “Analogy”
   - Replace with: “Catalog”
-  - Replace with: “Catalogs”
 
 
 
@@ -789,7 +789,7 @@ Message: |
 Suggest:
   - Replace with: “Cab”
   - Replace with: “CPA”
-  - Replace with: “CSS”
+  - Replace with: “CSON”
 
 
 
@@ -842,7 +842,7 @@ Message: |
 Suggest:
   - Replace with: “Cab”
   - Replace with: “CPA”
-  - Replace with: “CSS”
+  - Replace with: “CSON”
 
 
 
