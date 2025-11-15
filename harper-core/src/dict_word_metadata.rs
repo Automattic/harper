@@ -643,7 +643,7 @@ impl DictWordMetadata {
 
     // Checks if the word is definitely a determiner and more specifically is labeled as (a) quantifier.
     pub fn is_quantifier(&self) -> bool {
-        self.determiner.is_some()
+        self.is_quantifier_determiner()
     }
 
     // Non-POS queries
@@ -1827,6 +1827,16 @@ pub mod tests {
     #[test]
     fn your_is_possessive_determiner() {
         assert!(md("your").is_possessive_determiner());
+    }
+
+    #[test]
+    fn every_is_quantifier() {
+        assert!(md("every").is_quantifier());
+    }
+
+    #[test]
+    fn the_isnt_quantifier() {
+        assert!(!md("the").is_quantifier());
     }
 
     #[test]
