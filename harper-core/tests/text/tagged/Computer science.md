@@ -276,8 +276,8 @@
 #
 > A   folkloric quotation , often attributed to — but     almost certainly not     first
 # D/P J         NSg       . R     VP/J       P  . NSg/C/P R      R         NSg/R/C NSg/VB/J
-> formulated by      — Edsger Dijkstra , states    that          " computer science  is  no    more            about
-# VP/J       NSg/J/P . ?      NSg      . NPrPl/V3+ NSg/I/C/Ddem+ . NSg/VB+  N🅪Sg/VB+ VL3 NPr/P NPr/I/VB/J/R/Dq J/P
+> formulated by      — Edsger Dijkstra , states    that          " computer science  is  no       more            about
+# VP/J       NSg/J/P . ?      NSg      . NPrPl/V3+ NSg/I/C/Ddem+ . NSg/VB+  N🅪Sg/VB+ VL3 NPr/Dq/P NPr/I/VB/J/R/Dq J/P
 > computers than astronomy is  about telescopes . " [ note    3 ] The design  and  deployment
 # NPl/V3+   C/P  Nᴹ+       VL3 J/P   NPl/V3     . . . NSg/VB+ # . D   N🅪Sg/VB VB/C NSg
 > of computers and  computer systems is  generally considered the province of
@@ -396,8 +396,8 @@
 # R/C  VB    NSg/I/C/Ddem NSg/VB/C/P NSg/J+    NPl/V3+  NSg/VB  NSg/I+ R         V3     . NSg/VB+
 > science  observes what   is  possible to exist and  while      scientists discover  laws
 # N🅪Sg/VB+ NPl/V3   NSg/I+ VL3 NSg/J    P  VB    VB/C NSg/VB/C/P NPl+       N🅪Sg/VB/J NPl/V3
-> from observation , no     proper laws    have    been    found  in      computer science  and  it       is
-# P    N🅪Sg+       . NPr/P+ NSg/J+ NPl/V3+ NSg/VXB NSg/VPp NSg/VB NPr/J/P NSg/VB+  N🅪Sg/VB+ VB/C NPr/ISg+ VL3
+> from observation , no        proper laws    have    been    found  in      computer science  and  it       is
+# P    N🅪Sg+       . NPr/Dq/P+ NSg/J+ NPl/V3+ NSg/VXB NSg/VPp NSg/VB NPr/J/P NSg/VB+  N🅪Sg/VB+ VB/C NPr/ISg+ VL3
 > instead concerned with creating phenomena .
 # R       VP/J      P    Nᴹ/Vg/J  NSg+      .
 >
