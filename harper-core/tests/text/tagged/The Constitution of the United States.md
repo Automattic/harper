@@ -119,7 +119,7 @@
 > in      such  Manner as    they shall by      Law      direct . The Number     of Representatives shall
 # NPr/J/P NSg/I NSg+   NSg/R IPl+ VXB   NSg/J/P N🅪Sg/VB+ VB/J   . D   N🅪Sg/VB/JC P  NPl+            VXB
 > not     exceed one        for every thirty Thousand , but     each State    shall have    at    Least
-# NSg/R/C VB     NSg/I/VB/J C/P Dq    NSg    NSg      . NSg/C/P Dq+  N🅪Sg/VB+ VXB   NSg/VXB NSg/P NSg/J+
+# NSg/R/C VB     NSg/I/VB/J C/P Dq    NSg    NSg      . NSg/C/P Dq+  N🅪Sg/VB+ VXB   NSg/VXB NSg/P NSg/J/Dq+
 > one         Representative ; and  until such  enumeration shall be      made , the State   of New
 # NSg/I/VB/J+ NSg/J+         . VB/C C/P   NSg/I N🅪Sg        VXB   NSg/VXB VB   . D   N🅪Sg/VB P  NSg/J
 > Hampshire shall be      entitled to chuse three , Massachusetts eight , Rhode - Island
@@ -240,8 +240,8 @@
 # NPl+        . VB/C/P NSg/R P  D   NPl/V3 P  ?       NPl+     .
 >
 #
-> The Congress shall assemble at    least once  in      every year , and  such   meeting    shall
-# D+  NPr/VB+  VXB   VB       NSg/P NSg/J NSg/C NPr/J/P Dq+   NSg+ . VB/C NSg/I+ N🅪Sg/Vg/J+ VXB
+> The Congress shall assemble at    least    once  in      every year , and  such   meeting    shall
+# D+  NPr/VB+  VXB   VB       NSg/P NSg/J/Dq NSg/C NPr/J/P Dq+   NSg+ . VB/C NSg/I+ N🅪Sg/Vg/J+ VXB
 > begin  at    noon    on  the 3 d         day    of January , unless they shall by      law      appoint a
 # NSg/VB NSg/P NSg/VB+ J/P D   # NPr/J/#r+ NPr🅪Sg P  NPr+    . C      IPl+ VXB   NSg/J/P N🅪Sg/VB+ VB      D/P+
 > different day     .
@@ -738,8 +738,8 @@
 #
 > The Electors shall meet     in      their respective states    , and  vote
 # D   NPl      VXB   NSg/VB/J NPr/J/P D$+   J          NPrPl/V3+ . VB/C NSg/VB+
-> by      ballot for President and  Vice        - President , one        of whom , at    least , shall not     be
-# NSg/J/P NSg/VB C/P NSg/VB    VB/C NSg/VB/J/P+ . NSg/VB+   . NSg/I/VB/J P  I+   . NSg/P NSg/J . VXB   NSg/R/C NSg/VXB
+> by      ballot for President and  Vice        - President , one        of whom , at    least    , shall not     be
+# NSg/J/P NSg/VB C/P NSg/VB    VB/C NSg/VB/J/P+ . NSg/VB+   . NSg/I/VB/J P  I+   . NSg/P NSg/J/Dq . VXB   NSg/R/C NSg/VXB
 > an  inhabitant of the same state    with themselves ; they shall name   in      their
 # D/P NSg/J      P  D   I/J  N🅪Sg/VB+ P    IPl+       . IPl+ VXB   NSg/VB NPr/J/P D$+
 > ballots the person  voted for as    President , and  in      distinct ballots the person
@@ -984,8 +984,8 @@
 # D/P N🅪Sg/VB/JC P  NPl      P  NSg/VB    VB/C NSg/VB/J/P+ NSg/VB+   NSg/VB/J P  D   NSg/J N🅪Sg/VB/JC
 > of Senators and  Representatives in      Congress to which the District  would be
 # P  NPl+     VB/C NPl+            NPr/J/P NPr/VB+  P  I/C+  D   NSg/VB/J+ VXB   NSg/VXB
-> entitled if    it       were    a   State    , but     in      no    event   more            than the least populous
-# VP/J     NSg/C NPr/ISg+ NSg/VPt D/P N🅪Sg/VB+ . NSg/C/P NPr/J/P NPr/P NSg/VB+ NPr/I/VB/J/R/Dq C/P  D   NSg/J J
+> entitled if    it       were    a   State    , but     in      no    event   more            than the least    populous
+# VP/J     NSg/C NPr/ISg+ NSg/VPt D/P N🅪Sg/VB+ . NSg/C/P NPr/J/P NPr/P NSg/VB+ NPr/I/VB/J/R/Dq C/P  D   NSg/J/Dq J
 > State    ; they shall be      in      addition to those  appointed by      the States    , but     they
 # N🅪Sg/VB+ . IPl+ VXB   NSg/VXB NPr/J/P NSg+     P  I/Ddem VP/J+     NSg/J/P D   NPrPl/V3+ . NSg/C/P IPl+
 > shall be      considered , for the purposes of the election of President and  Vice
