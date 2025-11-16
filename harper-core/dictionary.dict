@@ -27365,7 +27365,7 @@ gyrofrequency/NgS
 gyroscope/NgS
 gyroscopic/J
 gyve/NgSVGd
-h/~NVGJnXZvz        # removed `>` 'her' is not comparative of 'h'
+h/~NGJnXZvz         # removed `>` 'her' is not comparative of 'h'
 h'm/
 ha/~
 haberdasher/NSg
@@ -30943,7 +30943,7 @@ juryman/N0g
 jurymen/N9
 jurywoman/N0g
 jurywomen/N9
-just/~JY^>Vp        # removed `1` noun. archaic and interferes with linter heuristics
+just/~JY^>p         # removed `1` noun. archaic and interferes with linter heuristics
 justice/~NwgSi
 justifiable/~JU
 justifiably/RyU
@@ -34534,7 +34534,7 @@ morbidity/NwSg
 morbidness/Nmg
 mordancy/Ng
 mordant/JYNSgV
-more/~RIJNSVDq
+more/~RIJNSDq
 moreish/J
 morel/~NSg
 moreover/~R
@@ -36019,7 +36019,7 @@ novenae/N!@_
 novene/J
 novice/~NgS
 novitiate/NgS
-now/~JCNgV
+now/~JCNg
 nowadays/~g
 noway/S
 nowhere/~JNg
@@ -36481,7 +36481,7 @@ oncogene/NSg
 oncologist/~NSg
 oncology/~Ng
 oncoming/~NJV
-one/~NSgIJVXnp
+one/~NSgIJXnp
 oneness/Ng
 onerous/JYp
 onerousness/Nmg
@@ -45418,7 +45418,7 @@ somersault/NgSVdG
 somerset/~NSgV      # archaic word for somersault
 somersetted/VtT
 somersetting/V6
-something/~IJVSNg
+something/~IJSNg
 sometime/~J
 sometimes/R8
 someway/
@@ -47961,7 +47961,7 @@ teaspoon/NSgV
 teaspoonful/NSg
 teat/NgS
 teatime/NwgS
-tech/~N0mgV
+tech/~N0mg
 techie/NSJ
 technetium/~Nmg
 technical/~JYN
