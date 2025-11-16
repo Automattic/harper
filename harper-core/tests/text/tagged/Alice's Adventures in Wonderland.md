@@ -493,7 +493,7 @@
 > that          rate    ! However , the Multiplication Table   doesn’t signify : let’s try
 # NSg/I/C/Ddem+ NSg/VB+ . C       . D   Nᴹ             NSg/VB+ VB      VB      . NSg$  NSg/VB/J
 > Geography . London is  the capital of Paris , and  Paris is  the capital of Rome , and
-# N🅪Sg+     . NPr+   VL3 D   NSg/J   P  NPr+  . VB/C NPr+  VL3 D   NSg/J   P  NPr+ . VB/C
+# N🅪Sg+     . NPr+   VL3 D   N🅪Sg/J  P  NPr+  . VB/C NPr+  VL3 D   N🅪Sg/J  P  NPr+ . VB/C
 > Rome — no    , that’s all          wrong      , I’m certain ! I       must   have    been    changed for Mabel ! I’ll
 # NPr+ . NPr/P . NSg$   NSg/I/J/C/Dq NSg/VB/J/R . K   I/J     . ISg/#r+ NSg/VB NSg/VXB NSg/VPp VP/J    C/P NPr   . K
 > try      and  say    ‘          How   doth the little     — ’ ” and  she  crossed her     hands   on  her     lap       as    if
@@ -663,7 +663,7 @@
 > nicely by      the fire       , licking her     paws    and  washing her     face    — and  she  is  such  a   nice
 # R      NSg/J/P D   N🅪Sg/VB/J+ . Nᴹ/Vg/J ISg/D$+ NPl/V3+ VB/C Nᴹ/Vg/J ISg/D$+ NSg/VB+ . VB/C ISg+ VL3 NSg/I D/P NPr/VB/J
 > soft  thing to nurse  — and  she’s such  a   capital one         for catching mice    — oh     , I       beg
-# NSg/J NSg+  P  NSg/VB . VB/C K     NSg/I D/P NSg/J+  NSg/I/VB/J+ C/P Nᴹ/Vg/J  NPl/VB+ . NPr/VB . ISg/#r+ NSg/VB
+# NSg/J NSg+  P  NSg/VB . VB/C K     NSg/I D/P N🅪Sg/J+ NSg/I/VB/J+ C/P Nᴹ/Vg/J  NPl/VB+ . NPr/VB . ISg/#r+ NSg/VB
 > your pardon ! ” cried Alice again , for this    time       the Mouse   was bristling all          over    ,
 # D$+  NSg/VB . . VP/J  NPr+  P     . C/P I/Ddem+ N🅪Sg/VB/J+ D+  NSg/VB+ VPt Nᴹ/Vg/J   NSg/I/J/C/Dq NSg/J/P .
 > and  she  felt      certain it       must   be      really offended . “ We   won’t talk    about her     any
@@ -1077,7 +1077,7 @@
 > Alice replied eagerly , for she  was always ready    to talk    about her     pet       : “ Dinah’s
 # NPr+  VP/J    R       . C/P ISg+ VPt R      NSg/VB/J P  N🅪Sg/VB J/P   ISg/D$+ NPr/VB/J+ . . NSg$
 > our cat       . And  she’s such  a   capital one         for catching mice    you    can’t think  ! And  oh     ,
-# D$+ NSg/VB/J+ . VB/C K     NSg/I D/P NSg/J+  NSg/I/VB/J+ C/P Nᴹ/Vg/J  NPl/VB+ ISgPl+ VXB   NSg/VB . VB/C NPr/VB .
+# D$+ NSg/VB/J+ . VB/C K     NSg/I D/P N🅪Sg/J+ NSg/I/VB/J+ C/P Nᴹ/Vg/J  NPl/VB+ ISgPl+ VXB   NSg/VB . VB/C NPr/VB .
 > I       wish   you    could   see    her     after the birds   ! Why    , she’ll eat a   little     bird      as    soon
 # ISg/#r+ NSg/VB ISgPl+ NSg/VXB NSg/VB ISg/D$+ P     D+  NPl/V3+ . NSg/VB . K      VB  D/P NPr/I/J/Dq NPr/VB/J+ NSg/R J/R
 > as    look   at    it       ! ”
@@ -1400,8 +1400,8 @@
 # NPr/I/J/Dq . .
 >
 #
-> She  drew   her     foot    as    far      down        the chimney as    she  could   , and  waited till       she
-# ISg+ NPr/VB ISg/D$+ NSg/VB+ NSg/R NSg/VB/J N🅪Sg/VB/J/P D+  NSg/VB+ NSg/R ISg+ NSg/VXB . VB/C VP/J   NSg/VB/C/P ISg+
+> She  drew    her     foot    as    far      down        the chimney as    she  could   , and  waited till       she
+# ISg+ NPr/VPt ISg/D$+ NSg/VB+ NSg/R NSg/VB/J N🅪Sg/VB/J/P D+  NSg/VB+ NSg/R ISg+ NSg/VXB . VB/C VP/J   NSg/VB/C/P ISg+
 > heard a    little      animal ( she  couldn’t guess  of what   sort    it       was ) scratching and
 # VP/J  D/P+ NPr/I/J/Dq+ NSg/J+ . ISg+ VB       NSg/VB P  NSg/I+ NSg/VB+ NPr/ISg+ VPt . Nᴹ/Vg/J    VB/C
 > scrambling about in      the chimney close    above   her     : then    , saying    to herself “ This
@@ -1668,8 +1668,8 @@
 # I/C+  VP      NSg/IPl+ NSg/VB/J P     P  D   NSg/Vg/J  P  D+  N🅪Sg/VB+     . NPr+  N🅪Sg/VB/J D/P+
 > little      irritated at    the Caterpillar’s making  such  very short      remarks , and  she
 # NPr/I/J/Dq+ VP/J+     NSg/P D   NSg$          Nᴹ/Vg/J NSg/I J/R  NPr/VB/J/P NPl/V3+ . VB/C ISg+
-> drew   herself up         and  said , very gravely , “ I       think  , you    ought     to tell   me       who    you
-# NPr/VB ISg+    NSg/VB/J/P VB/C VP/J . J/R  R       . . ISg/#r+ NSg/VB . ISgPl+ NSg/I/VXB P  NPr/VB NPr/ISg+ NPr/I+ ISgPl+
+> drew    herself up         and  said , very gravely , “ I       think  , you    ought     to tell   me       who    you
+# NPr/VPt ISg+    NSg/VB/J/P VB/C VP/J . J/R  R       . . ISg/#r+ NSg/VB . ISgPl+ NSg/I/VXB P  NPr/VB NPr/ISg+ NPr/I+ ISgPl+
 > are , first    . ”
 # VB  . NSg/VB/J . .
 >
@@ -3254,8 +3254,8 @@
 #
 > “ They were    learning to draw   , ” the Dormouse went    on  , yawning and  rubbing its
 # . IPl+ NSg/VPt Nᴹ/Vg/J  P  NSg/VB . . D   NSg      NSg/VPt J/P . Nᴹ/Vg/J VB/C NSg/Vg  ISg/D$+
-> eyes    , for it       was getting very sleepy ; “ and  they drew   all          manner of
-# NPl/V3+ . C/P NPr/ISg+ VPt NSg/Vg  J/R  NSg/J  . . VB/C IPl+ NPr/VB NSg/I/J/C/Dq NSg    P
+> eyes    , for it       was getting very sleepy ; “ and  they drew    all          manner of
+# NPl/V3+ . C/P NPr/ISg+ VPt NSg/Vg  J/R  NSg/J  . . VB/C IPl+ NPr/VPt NSg/I/J/C/Dq NSg    P
 > things — everything that          begins with an  M           — ”
 # NPl+   . NSg/I/VB+  NSg/I/C/Ddem+ NPl/V3 P    D/P NPr/VB/J/#r . .
 >
@@ -4490,8 +4490,8 @@
 # NSg/VB+ NPr/J/#r+ . D+  NSg/VB/J+ NSg/VB/J
 >
 #
-> The Mock      Turtle  sighed deeply , and  drew   the back     of one        flapper across his     eyes    .
-# D+  NSg/VB/J+ NSg/VB+ VP/J   R      . VB/C NPr/VB D   NSg/VB/J P  NSg/I/VB/J NSg     NSg/P  ISg/D$+ NPl/V3+ .
+> The Mock      Turtle  sighed deeply , and  drew    the back     of one        flapper across his     eyes    .
+# D+  NSg/VB/J+ NSg/VB+ VP/J   R      . VB/C NPr/VPt D   NSg/VB/J P  NSg/I/VB/J NSg     NSg/P  ISg/D$+ NPl/V3+ .
 > He       looked at    Alice , and  tried to speak  , but     for a    minute    or    two sobs   choked his
 # NPr/ISg+ VP/J   NSg/P NPr+  . VB/C VP/J  P  NSg/VB . NSg/C/P C/P D/P+ NSg/VB/J+ NPr/C NSg NPl/V3 VP/J   ISg/D$+
 > voice   . “ Same as    if    he       had a    bone       in      his     throat  , ” said the Gryphon : and  it       set       to
@@ -4818,8 +4818,8 @@
 # NSg/VB/C/P ISg+ VP  P  D+  NSg/VB/J+ J/P   ISg/D$+ Nᴹ/Vg/J   . ISgPl+ VB  NSg/J . NPr/VB+ NPr+    . . P
 > the Caterpillar , and  the words   all          coming  different , and  then    the Mock     Turtle
 # D   NSg/VB      . VB/C D   NPl/V3+ NSg/I/J/C/Dq Nᴹ/Vg/J NSg/J     . VB/C NSg/J/C D   NSg/VB/J NSg/VB+
-> drew   a   long     breath     , and  said “ That’s very curious . ”
-# NPr/VB D/P NPr/VB/J N🅪Sg/VB/J+ . VB/C VP/J . NSg$   J/R  J       . .
+> drew    a   long     breath     , and  said “ That’s very curious . ”
+# NPr/VPt D/P NPr/VB/J N🅪Sg/VB/J+ . VB/C VP/J . NSg$   J/R  J       . .
 >
 #
 > “ It’s all          about as    curious as    it       can     be      , ” said the Gryphon .

@@ -633,7 +633,7 @@
 >
 #
 > No     Money   shall be      drawn from the Treasury , but     in      Consequence of Appropriations
-# NPr/P+ N🅪Sg/J+ VXB   NSg/VXB VB/J  P    D   NPr      . NSg/C/P NPr/J/P NSg/VB      P  +
+# NPr/P+ N🅪Sg/J+ VXB   NSg/VXB VPp/J P    D   NPr      . NSg/C/P NPr/J/P NSg/VB      P  +
 > made by      Law      ; and  a   regular Statement and  Account of the Receipts and
 # VB   NSg/J/P N🅪Sg/VB+ . VB/C D/P NSg/J   NSg/VB/J+ VB/C NSg/VB  P  D   NPl/V3+  VB/C
 > Expenditures of all          public  Money   shall be      published from time       to time      .
@@ -1193,7 +1193,7 @@
 >
 #
 > No     person  shall be      held to answer for a    capital , or    otherwise infamous crime    ,
-# NPr/P+ NSg/VB+ VXB   NSg/VXB VB   P  NSg/VB C/P D/P+ NSg/J+  . NPr/C J         VB/J+    N🅪Sg/VB+ .
+# NPr/P+ NSg/VB+ VXB   NSg/VXB VB   P  NSg/VB C/P D/P+ N🅪Sg/J+ . NPr/C J         VB/J+    N🅪Sg/VB+ .
 > unless on  a   presentment or    indictment of a   grand jury      , except in      cases   arising
 # C      J/P D/P NSg         NPr/C NSg        P  D/P NSg/J NSg/VB/J+ . VB/C/P NPr/J/P NPl/V3+ Nᴹ/Vg/J
 > in      the land      or    naval forces  , or    in      the militia , when    in      actual service in      time
