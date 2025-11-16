@@ -474,6 +474,12 @@ impl SequenceExpr {
     gen_then_from_is!(conjunction);
     gen_then_from_is!(preposition);
 
+    // Numbers
+
+    gen_then_from_is!(number);
+    gen_then_from_is!(cardinal_number);
+    gen_then_from_is!(ordinal_number);
+
     // Punctuation
 
     gen_then_from_is!(punctuation);
@@ -486,7 +492,6 @@ impl SequenceExpr {
 
     // Other
 
-    gen_then_from_is!(number);
     gen_then_from_is!(case_separator);
     gen_then_from_is!(likely_homograph);
 }

@@ -643,7 +643,7 @@ impl DictWordMetadata {
 
     // Checks if the word is definitely a determiner and more specifically is labeled as (a) quantifier.
     pub fn is_quantifier(&self) -> bool {
-        self.determiner.is_some()
+        self.is_quantifier_determiner()
     }
 
     // Non-POS queries
