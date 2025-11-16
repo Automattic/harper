@@ -296,10 +296,10 @@ pub struct LintGroup {
     /// We use a binary map here so the ordering is stable.
     expr_linters: BTreeMap<String, Box<dyn ExprLinter>>,
     /// Since [`ExprLinter`]s operate on a chunk-basis, we can store a
-    /// mapping of `Chunk -> Lint` and only re-run the pattern linters
+    /// mapping of `Chunk -> Lint` and only re-run the expr linters
     /// when a chunk changes.
     ///
-    /// Since the pattern linter results also depend on the config, we hash it and pass it as part
+    /// Since the expr linter results also depend on the config, we hash it and pass it as part
     /// of the key.
     chunk_expr_cache: LruCache<(CharString, u64), BTreeMap<String, Vec<Lint>>>,
     hasher_builder: RandomState,
@@ -360,8 +360,8 @@ impl LintGroup {
         let other_linters = std::mem::take(&mut other.linters);
         self.linters.extend(other_linters);
 
-        let other_pattern_linters = std::mem::take(&mut other.expr_linters);
-        self.expr_linters.extend(other_pattern_linters);
+        let other_expr_linters = std::mem::take(&mut other.expr_linters);
+        self.expr_linters.extend(other_expr_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
@@ -661,7 +661,7 @@ impl LintGroup {
             }
         }
 
-        // Pattern linters
+        // Expr linters
         for chunk in document.iter_chunks() {
             let Some(chunk_span) = chunk.span() else {
                 continue;
