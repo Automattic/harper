@@ -225,12 +225,18 @@ fn main() -> anyhow::Result<()> {
                 linter.set_all_rules_to(Some(false));
 
                 for rule in rules {
+                    if !linter.contains_key(&rule) {
+                        eprintln!("Warning: Cannot enable unknown rule '{}'.", &rule);
+                    }
                     linter.config.set_rule_enabled(rule, true);
                 }
             }
 
             if let Some(rules) = ignore {
                 for rule in rules {
+                    if !linter.contains_key(&rule) {
+                        eprintln!("Warning: Cannot disable unknown rule '{}'.", &rule);
+                    }
                     linter.config.set_rule_enabled(rule, false);
                 }
             }
@@ -960,7 +966,7 @@ fn load_file(
                 Box::new(comment_parser)
             } else {
                 println!(
-                    "Warning: could not detect language ID; falling back to PlainEnglish parser."
+                    "Warning: Could not detect language ID; falling back to PlainEnglish parser."
                 );
                 Box::new(PlainEnglish)
             }
