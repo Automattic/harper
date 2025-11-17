@@ -36,6 +36,7 @@ pub trait Dialect:
     ///
     /// ```
     /// use harper_core::EnglishDialect;
+    /// use harper_core::Dialect;
     ///
     /// let abbrs = ["US", "CA", "AU", "GB"];
     /// let mut dialects = abbrs.iter().map(|abbr| EnglishDialect::try_from_abbr(abbr));

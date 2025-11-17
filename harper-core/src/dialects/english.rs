@@ -55,14 +55,15 @@ impl Dialect for EnglishDialect {
     ///
     /// ```
     /// use harper_core::EnglishDialect;
+    /// use harper_core::Dialect;
     ///
     /// let abbrs = ["US", "CA", "AU", "GB"];
     /// let mut dialects = abbrs.iter().map(|abbr| EnglishDialect::try_from_abbr(abbr));
     ///
-    /// assert_eq!(Some(Dialect::American), dialects.next().unwrap()); // US
-    /// assert_eq!(Some(Dialect::Canadian), dialects.next().unwrap()); // CA
-    /// assert_eq!(Some(Dialect::Australian), dialects.next().unwrap()); // AU
-    /// assert_eq!(Some(Dialect::British), dialects.next().unwrap()); // GB
+    /// assert_eq!(Some(EnglishDialect::American), dialects.next().unwrap()); // US
+    /// assert_eq!(Some(EnglishDialect::Canadian), dialects.next().unwrap()); // CA
+    /// assert_eq!(Some(EnglishDialect::Australian), dialects.next().unwrap()); // AU
+    /// assert_eq!(Some(EnglishDialect::British), dialects.next().unwrap()); // GB
     /// ```
     #[allow(refining_impl_trait_internal)]
     fn try_from_abbr(abbr: &str) -> Option<Self> {
