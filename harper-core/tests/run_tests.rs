@@ -92,7 +92,7 @@ create_test!(issue_2054.md, 6, EnglishDialect::British);
 create_test!(issue_2054_clean.md, 0, EnglishDialect::British);
 create_test!(issue_1873.md, 0, EnglishDialect::British);
 // It just matters that it is > 1
-create_test!(issue_2151.md, 4, English:Dialect::British);
+create_test!(issue_2151.md, 4, EnglishDialect::British);
 
 // Make sure it doesn't panic
 create_test!(lukas_homework.md, 3, EnglishDialect::American);

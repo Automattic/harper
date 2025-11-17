@@ -702,7 +702,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::AuditDictionary { dir } => {
+        Command::AuditDictionary { dir } => {
             let annotations_path = dir.join("annotations.json");
             let annotations_content = fs::read_to_string(&annotations_path)
                 .map_err(|e| anyhow!("Failed to read annotations: {e}"))?;
