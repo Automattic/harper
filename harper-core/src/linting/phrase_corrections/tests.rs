@@ -250,9 +250,6 @@ fn correct_a_another() {
     );
 }
 
-// AndIn
-// -none-
-
 // AndTheLike
 // -none-
 

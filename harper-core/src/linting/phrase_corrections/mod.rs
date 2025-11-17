@@ -92,13 +92,6 @@ pub fn lint_group() -> LintGroup {
             "Corrects `an another` and `a another`.",
             LintKind::Redundancy
         ),
-        "AndIn" => (
-            ["an in"],
-            ["and in"],
-            "Did you mean `and in`?",
-            "Fixes the incorrect phrase `an in` to `and in` for proper conjunction usage.",
-            LintKind::Typo
-        ),
         "AndTheLike" => (
             ["an the like"],
             ["and the like"],
