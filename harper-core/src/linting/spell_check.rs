@@ -470,13 +470,13 @@ mod tests {
     fn issue_2026() {
         assert_top3_suggestion_result(
             "'Tere' is supposed to be 'There'",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "'There' is supposed to be 'There'",
         );
 
         assert_top3_suggestion_result(
             "'fll' is supposed to be 'fill'",
-            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "'fill' is supposed to be 'fill'",
         );
     }
