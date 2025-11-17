@@ -121,11 +121,11 @@
 > not     exceed one        for every thirty Thousand , but     each State    shall have    at    Least
 # NSg/R/C VB     NSg/I/VB/J C/P Dq    NSg    NSg      . NSg/C/P Dq+  N🅪Sg/VB+ VXB   NSg/VXB NSg/P NSg/J+
 > one         Representative ; and  until such  enumeration shall be      made , the State   of New
-# NSg/I/VB/J+ NSg/J+         . VB/C C/P   NSg/I N🅪Sg        VXB   NSg/VXB VB   . D   N🅪Sg/VB P  NSg/VB/J
+# NSg/I/VB/J+ NSg/J+         . VB/C C/P   NSg/I N🅪Sg        VXB   NSg/VXB VB   . D   N🅪Sg/VB P  NSg/J
 > Hampshire shall be      entitled to chuse three , Massachusetts eight , Rhode - Island
 # NPr+      VXB   NSg/VXB VP/J     P  ?     NSg   . NPr+          NSg/J . NPr   . NSg/VB
-> and  Providence Plantations one        , Connecticut five , New      - York six , New      Jersey
-# VB/C NPr+       NPl         NSg/I/VB/J . NPr+        NSg  . NSg/VB/J . NPr+ NSg . NSg/VB/J NPr+
+> and  Providence Plantations one        , Connecticut five , New   - York six , New   Jersey
+# VB/C NPr+       NPl         NSg/I/VB/J . NPr+        NSg  . NSg/J . NPr+ NSg . NSg/J NPr+
 > four , Pennsylvania eight , Delaware one        , Maryland six , Virginia ten , North
 # NSg  . NPr+         NSg/J . NPr      NSg/I/VB/J . NPr      NSg . NPr+     NSg . NPr/VB/J+
 > Carolina five , South     Carolina five , and  Georgia three .
@@ -478,8 +478,8 @@
 #
 >
 #
-> To define   and  punish Piracies and  Felonies committed on  the high     Seas , and
-# P  NSg/VB/J VB/C VB     ?        VB/C NPl      VB/J      J/P D   NSg/VB/J NPl+ . VB/C
+> To define   and  punish Piracies and  Felonies committed on  the high       Seas , and
+# P  NSg/VB/J VB/C VB     ?        VB/C NPl      VB/J      J/P D   NSg/VB/J/R NPl+ . VB/C
 > Offences against the Law     of Nations ;
 # NPl/Comm C/P     D   N🅪Sg/VB P  NPl+    .
 >
@@ -1084,8 +1084,8 @@
 # D+  NSg/VB+   . NSg/VB/J/P+ NSg/VB+   VB/C NSg/I/J/C/Dq J     NPl/V3   P  D+
 > United States    , shall be      removed from Office  on  Impeachment for , and  Conviction
 # VP/J   NPrPl/V3+ . VXB   NSg/VXB VP/J    P    NSg/VB+ J/P N🅪Sg        C/P . VB/C N🅪Sg+
-> of , Treason , Bribery , or    other    high     Crimes  and  Misdemeanors .
-# P  . NSg     . Nᴹ      . NPr/C NSg/VB/J NSg/VB/J NPl/V3+ VB/C NPl          .
+> of , Treason , Bribery , or    other    high       Crimes  and  Misdemeanors .
+# P  . NSg     . Nᴹ      . NPr/C NSg/VB/J NSg/VB/J/R NPl/V3+ VB/C NPl          .
 >
 #
 > Article . III .
@@ -1318,16 +1318,16 @@
 # NSg/VB+ . # .
 >
 #
-> New       States    may     be      admitted by      the Congress into this    Union     ; but
-# NSg/VB/J+ NPrPl/V3+ NPr/VXB NSg/VXB VP/J     NSg/J/P D+  NPr/VB+  P    I/Ddem+ NPr/VB/J+ . NSg/C/P
-> no     new       State    shall be      formed or    erected within  the Jurisdiction of any     other
-# NPr/P+ NSg/VB/J+ N🅪Sg/VB+ VXB   NSg/VXB VP/J   NPr/C VP/J    NSg/J/P D   N🅪Sg         P  I/R/Dq+ NSg/VB/J+
+> New    States    may     be      admitted by      the Congress into this    Union     ; but
+# NSg/J+ NPrPl/V3+ NPr/VXB NSg/VXB VP/J     NSg/J/P D+  NPr/VB+  P    I/Ddem+ NPr/VB/J+ . NSg/C/P
+> no     new    State    shall be      formed or    erected within  the Jurisdiction of any     other
+# NPr/P+ NSg/J+ N🅪Sg/VB+ VXB   NSg/VXB VP/J   NPr/C VP/J    NSg/J/P D   N🅪Sg         P  I/R/Dq+ NSg/VB/J+
 > State    ; nor   any     State    be      formed by      the Junction of two or    more            States    , or    Parts
 # N🅪Sg/VB+ . NSg/C I/R/Dq+ N🅪Sg/VB+ NSg/VXB VP/J   NSg/J/P D   NSg/VB   P  NSg NPr/C NPr/I/VB/J/R/Dq NPrPl/V3+ . NPr/C NPl/V3
 > of States    , without the Consent of the Legislatures of the States    concerned as
 # P  NPrPl/V3+ . C/P     D   N🅪Sg/VB P  D   NPl          P  D   NPrPl/V3+ VP/J      NSg/R
-> well     as    of the Congress .
-# NSg/VB/J NSg/R P  D   NPr/VB+  .
+> well       as    of the Congress .
+# NSg/VB/J/R NSg/R P  D   NPr/VB+  .
 >
 #
 > The Congress shall have    Power      to dispose of and  make   all          needful Rules  and
@@ -1440,8 +1440,8 @@
 # NPrPl/V3+ .
 >
 #
-> A   well     regulated militia , being       necessary to the security of a   free     state    , the
-# D/P NSg/VB/J VP/J      NSg     . N🅪Sg/Vg/J/C NSg/J     P  D   Nᴹ       P  D/P NSg/VB/J N🅪Sg/VB+ . D
+> A   well       regulated militia , being       necessary to the security of a   free     state    , the
+# D/P NSg/VB/J/R VP/J      NSg     . N🅪Sg/Vg/J/C NSg/J     P  D   Nᴹ       P  D/P NSg/VB/J N🅪Sg/VB+ . D
 > right    of the people  to keep   and  bear      arms    , shall not     be      infringed .
 # NPr/VB/J P  D   NPl/VB+ P  NSg/VB VB/C NSg/VB/J+ NPl/V3+ . VXB   NSg/R/C NSg/VXB VP/J      .
 >

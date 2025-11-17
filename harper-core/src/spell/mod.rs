@@ -1,6 +1,8 @@
 //! Contains the relevant code for performing dictionary lookups and spellchecking (i.e. fuzzy
 //! dictionary lookups).
 
+use itertools::Itertools;
+
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
 pub use self::dictionary::Dictionary;
@@ -188,6 +190,13 @@ pub(crate) fn is_ll_misspelling(a: &[char], b: &[char]) -> bool {
     }
 }
 
+pub fn is_th_h_missing(a: &[char], b: &[char]) -> bool {
+    a.iter().any(|c| c.eq_ignore_ascii_case(&'t'))
+        && b.iter()
+            .tuple_windows()
+            .any(|(a, b)| a.eq_ignore_ascii_case(&'t') && b.eq_ignore_ascii_case(&'h'))
+}
+
 /// Returns whether the two words are the same, except that one is written
 /// with 'ay' and the other with 'ey'.
 ///
@@ -314,15 +323,25 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
         score -= 5;
     }
 
+    if is_th_h_missing(misspelled_word, sug.word) {
+        score -= 6;
+    }
+
+    if !misspelled_word.contains_vowel() && !sug.word.contains_vowel() {
+        score += 10;
+    }
+
     // Detect dialect-specific variations
     if sug.edit_distance == 1
         && (is_cksz_misspelling(misspelled_word, sug.word)
             || is_ou_misspelling(misspelled_word, sug.word)
             || is_ll_misspelling(misspelled_word, sug.word)
-            || is_ay_ey_misspelling(misspelled_word, sug.word))
+            || is_ay_ey_misspelling(misspelled_word, sug.word)
+            || is_th_h_missing(misspelled_word, sug.word))
     {
         score -= 6;
     }
+
     if sug.edit_distance == 2 {
         if is_ei_ie_misspelling(misspelled_word, sug.word) {
             score -= 11;
@@ -340,7 +359,7 @@ fn order_suggestions<'b>(
     misspelled_word: &[char],
     mut matches: Vec<FuzzyMatchResult<'b>>,
 ) -> Vec<&'b [char]> {
-    matches.sort_by_key(|v| score_suggestion(misspelled_word, v));
+    matches.sort_by_cached_key(|v| score_suggestion(misspelled_word, v));
 
     matches.into_iter().map(|v| v.word).collect()
 }
@@ -390,7 +409,7 @@ mod tests {
 
     use super::{FstDictionary, suggest_correct_spelling_str};
 
-    const RESULT_LIMIT: usize = 100;
+    const RESULT_LIMIT: usize = 200;
     const MAX_EDIT_DIST: u8 = 2;
 
     #[test]
@@ -442,8 +461,6 @@ mod tests {
             &FstDictionary::curated(),
         );
 
-        dbg!(&results);
-
         assert!(results.iter().all_unique())
     }
 
@@ -460,8 +477,6 @@ mod tests {
             MAX_EDIT_DIST,
             &FstDictionary::curated(),
         );
-
-        dbg!(&results);
 
         assert!(results.iter().take(3).contains(&"hello".to_string()));
     }

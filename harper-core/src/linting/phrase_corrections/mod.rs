@@ -1217,7 +1217,7 @@ pub fn lint_group() -> LintGroup {
             "Fixes incorrect use of `to worried about`."
         ),
         "The" => (
-            ["teh"],
+            ["teh", "te"],
             ["the"],
             "Did you mean the definite article?",
             "Fixes especially common misspellings of the word `the`",

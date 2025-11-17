@@ -389,7 +389,7 @@ impl DictWordMetadata {
         verb has linking, auxiliary.
         conjunction has.
         adjective has.
-        adverb has
+        adverb has manner, frequency, degree
     );
 
     // Manual metadata queries
@@ -956,12 +956,20 @@ impl AdjectiveData {
 /// The typical adverbs are "adverbs of manner", those derived from adjectives in -ly
 /// other adverbs (time, place, etc) should probably not be considered adverbs for Harper's purposes
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
-pub struct AdverbData {}
+pub struct AdverbData {
+    pub is_manner: Option<bool>,
+    pub is_frequency: Option<bool>,
+    pub is_degree: Option<bool>,
+}
 
 impl AdverbData {
     /// Produce a copy of `self` with the known properties of `other` set.
     pub fn or(&self, _other: &Self) -> Self {
-        Self {}
+        Self {
+            is_manner: self.is_manner.or(_other.is_manner),
+            is_frequency: self.is_frequency.or(_other.is_frequency),
+            is_degree: self.is_degree.or(_other.is_degree),
+        }
     }
 }
 

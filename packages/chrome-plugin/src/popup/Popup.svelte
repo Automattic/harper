@@ -25,10 +25,10 @@ function openSettings() {
 }
 </script>
 
-<div class="w-[340px] border border-gray-200 bg-white font-sans flex flex-col rounded-lg shadow-sm select-none">
-  <header class="flex flex-row justify-between items-center gap-2 px-3 py-2 bg-gray-50/60 rounded-t-lg">
+<div class="w-[340px] border border-gray-200 bg-white font-sans flex flex-col rounded-lg shadow-sm select-none dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100">
+  <header class="flex flex-row justify-between items-center gap-2 px-3 py-2 rounded-t-lg bg-gray-50/60 text-gray-900 dark:bg-slate-900/70 dark:text-slate-100">
     <div class="flex flex-row justify-start items-center">
-      <img src={logo} alt="Harper logo" class="h-6 w-auto" />
+      <img src={logo} alt="Harper logo" class="h-6 w-auto rounded-lg mx-2" />
       <span class="font-semibold text-sm">Harper</span>
     </div>
 
@@ -47,7 +47,7 @@ function openSettings() {
     <ReportProblematicLint example={popupState.example} rule_id={popupState.rule_id} feedback={popupState.feedback} onSubmit={() => { popupState = main();}} />
   {/if}
 
-  <footer class="flex items-center justify-center gap-6 px-3 py-2 text-sm border-t border-gray-100 rounded-b-lg bg-white/60">
+  <footer class="flex items-center justify-center gap-6 px-3 py-2 text-sm border-t border-gray-100 rounded-b-lg bg-white/60 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-100">
     <a href="https://github.com/Automattic/harper" target="_blank" rel="noopener" class="text-primary-600 hover:underline">GitHub</a>
     <a href="https://discord.com/invite/JBqcAaKrzQ" target="_blank" rel="noopener" class="text-primary-600 hover:underline">Discord</a>
     <a href="https://writewithharper.com" target="_blank" rel="noopener" class="text-primary-600 hover:underline">Discover</a>

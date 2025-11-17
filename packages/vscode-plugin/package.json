@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.71.0",
+	"version": "0.72.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -232,6 +232,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Guides this expression toward the standard `all of a sudden`."
+				},
+				"harper.linters.AllowTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags erroneous usage of `allow to` without a subject."
 				},
 				"harper.linters.Alongside": {
 					"scope": "resource",
@@ -1001,6 +1007,12 @@
 					"default": true,
 					"description": "Corrects `far and few between` to the standard idiom `few and far between`."
 				},
+				"harper.linters.FarBeIt": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags misuse of `far be it` and suggests using `from` when it is followed by `for`"
+				},
 				"harper.linters.FastPaste": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1691,6 +1703,12 @@
 					"default": true,
 					"description": "Corrects `mute` to `moot` in the phrase `moot point`."
 				},
+				"harper.linters.MoreBetter": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Finds redundant paring of `more` or `most` with adjectives already in the comparative or superlative form."
+				},
 				"harper.linters.MostNumber": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1762,6 +1780,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects common misspellings and missing hyphen in `nerve-racking`."
+				},
+				"harper.linters.NervousWreck": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests using `nervous wreck` when referring to a person's emotional state."
 				},
 				"harper.linters.NeverMind": {
 					"scope": "resource",
@@ -2692,6 +2716,12 @@
 					"type": "boolean",
 					"default": false,
 					"description": "Looks for situations where the genitive case of \"there\" should be used."
+				},
+				"harper.linters.VerbToAdjective": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for situations where a verb was written where an adjective is often intended."
 				},
 				"harper.linters.VeryUnique": {
 					"scope": "resource",
