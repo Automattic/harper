@@ -96,6 +96,11 @@ mod tests {
     }
 
     #[test]
+    fn no_lint_distance_from_center() {
+        assert_no_lints("Distance from the center to any face", ToTwoToo::default());
+    }
+
+    #[test]
     fn fixes_too_go() {
         assert_suggestion_result(
             "I want too go abroad.",

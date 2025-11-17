@@ -1,5 +1,4 @@
-import { Panel, PanelBody, SelectControl, TabPanel } from '@wordpress/components';
-import React from 'react';
+import { Panel, PanelBody, TabPanel } from '@wordpress/components';
 import type { IgnorableLintBox } from './Box';
 import DialectSelectRow from './DialectSelectRow';
 import LintList from './LintList';

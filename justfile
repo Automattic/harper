@@ -7,7 +7,11 @@ format:
 build-wasm:
   #!/usr/bin/env bash
   cd "{{justfile_directory()}}/harper-wasm"
-  wasm-pack build --target web
+  if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
+    wasm-pack build --target web --no-opt
+  else
+    wasm-pack build --target web
+  fi
 
 # Build `harper.js` with all size optimizations available.
 build-harperjs: build-wasm 
@@ -177,7 +181,8 @@ test-vscode:
     mkdir "$bin_dir"
   fi
 
-  cargo build --release
+  echo Building binaries
+  cargo build --release -q
 
   cp "{{justfile_directory()}}/target/release/harper-ls"* "$bin_dir"
 
@@ -203,7 +208,8 @@ package-vscode target="":
   cp LICENSE "$ext_dir"
 
   if [[ -z "{{target}}" ]]; then
-    cargo build --release
+    echo Building binaries
+    cargo build --release -q
 
     if ! [[ -d "$bin_dir" ]]; then
       mkdir "$bin_dir"
@@ -254,7 +260,7 @@ update-vscode-linters:
   just format
 
 # Run Rust formatting and linting.
-check-rust:
+check-rust: auditdictionary
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -285,7 +291,8 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo build --all-targets
+  echo Building binaries
+  cargo build --all-targets -q
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
@@ -303,7 +310,8 @@ dogfood:
   done
 
 test-rust:
-  cargo test
+  echo Running all Rust tests
+  cargo test -q
 
 # Test everything.
 test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
@@ -652,3 +660,9 @@ suggestannotation input:
       console.log(`None of the characters of "${input}" are available to use for new annotations, and none of them are OK to be moved to make way for new annotations.`);
     }
   }
+
+# Audit the curated dictionary for any issues.
+alias auditdict := auditdictionary
+
+auditdictionary DIR="harper-core":
+  cargo run --bin harper-cli -- audit-dictionary {{DIR}}

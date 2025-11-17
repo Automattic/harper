@@ -22,7 +22,7 @@ for (let [key, val] of data.entries()) {
 
 let els: Record<string, HTMLElement> = {};
 
-function expand(node: HTMLElement, { width, duration }: { width: number; duration: number }) {
+function expand(_node: HTMLElement, { width, duration }: { width: number; duration: number }) {
 	return {
 		duration,
 		css: (t: number) => {

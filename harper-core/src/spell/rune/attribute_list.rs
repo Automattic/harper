@@ -14,7 +14,7 @@ use super::expansion::{
 use super::word_list::AnnotatedWord;
 use crate::dict_word_metadata_orthography::OrthFlags;
 use crate::spell::WordId;
-use crate::{CharString, CharStringExt, DictWordMetadata, Span};
+use crate::{CharString, DictWordMetadata, Span};
 
 #[derive(Debug, Clone)]
 pub struct AttributeList {
@@ -61,7 +61,7 @@ impl AttributeList {
         let mut base_metadata = DictWordMetadata::default();
 
         // Store metadata that should only be applied if certain conditions are met
-        let orth_flags = check_orthography(&annotated_word);
+        let orth_flags = OrthFlags::from_letters(&annotated_word.letters);
         base_metadata.orth_info = orth_flags;
 
         let mut conditional_expansion_metadata = Vec::new();

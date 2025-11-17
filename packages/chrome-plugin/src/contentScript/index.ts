@@ -18,6 +18,10 @@ const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain)
 			ruleId,
 			'',
 		),
+	setRuleEnabled: async (ruleId, enabled) => {
+		await ProtocolClient.setRuleEnabled(ruleId, enabled);
+		fw.update();
+	},
 });
 
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {

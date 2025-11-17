@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
 	body {
@@ -51,12 +49,12 @@
 }
 
 code {
-	font-family: "JetBrains Mono", monospace !important;
+	font-family: "JetBrains Mono", monospace;
 	word-break: keep-all;
 }
 
 code * {
-	font-family: "JetBrains Mono", monospace !important;
+	font-family: "JetBrains Mono", monospace;
 }
 
 .underlinespecial {
@@ -80,7 +78,7 @@ code * {
 }
 
 textarea {
-	--tw-ring-shadow: 0 0 #000 !important;
+	--tw-ring-shadow: 0 0 #000;
 }
 
 .animate-bigbounce {

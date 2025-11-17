@@ -29,6 +29,7 @@ use harper_python::PythonParser;
 
 use harper_stats::Stats;
 use serde::Serialize;
+use serde_json::Value;
 
 mod input;
 use input::Input;
@@ -175,6 +176,11 @@ enum Command {
         old: String,
         /// The new flag.
         new: String,
+        /// The directory containing the dictionary and affixes.
+        dir: PathBuf,
+    },
+    /// Audit the `dictionary.dict` file.
+    AuditDictionary {
         /// The directory containing the dictionary and affixes.
         dir: PathBuf,
     },
@@ -693,6 +699,129 @@ fn main() -> anyhow::Result<()> {
             println!("Successfully renamed flag '{old}' to '{new}'");
             println!("  Description: {description}");
             println!("  Backups created at:\n    {backup_dict}\n    {backup_affixes}");
+
+            Ok(())
+        }
+        Args::AuditDictionary { dir } => {
+            let annotations_path = dir.join("annotations.json");
+            let annotations_content = fs::read_to_string(&annotations_path)
+                .map_err(|e| anyhow!("Failed to read annotations: {e}"))?;
+            let annotations_json: Value = serde_json::from_str(&annotations_content)
+                .map_err(|e| anyhow!("Failed to parse annotations.json: {e}"))?;
+
+            let annotations = annotations_json
+                .as_object()
+                .ok_or_else(|| anyhow!("annotations.json is not an object"))?;
+
+            let (affixes, properties) = ["affixes", "properties"]
+                .iter()
+                .map(|key| {
+                    annotations
+                        .get(*key)
+                        .and_then(Value::as_object)
+                        .ok_or_else(|| {
+                            anyhow!("Missing or invalid '{key}' key in annotations.json")
+                        })
+                })
+                .collect::<Result<Vec<_>, _>>()
+                .map(|v| (v[0], v[1]))?;
+
+            let all_keys = affixes.keys().chain(properties.keys()).collect::<Vec<_>>();
+
+            let mut annotation_flag_count: HashMap<char, u32> = all_keys
+                .iter()
+                .filter_map(|key| key.chars().next()) // Get first char of each key
+                .map(|c| (c, 0))
+                .collect();
+
+            // let mut duplicate_flag_total = 0;
+            let mut duplicate_flags = std::collections::HashMap::new();
+            let mut unknown_flags = std::collections::HashMap::new();
+            let mut unused_flag_total = 0;
+
+            let dict_path = dir.join("dictionary.dict");
+            let dict_content = fs::read_to_string(&dict_path)
+                .map_err(|e| anyhow!("Failed to read dictionary: {e}"))?;
+
+            for (line_num, line) in dict_content.lines().enumerate() {
+                if line.is_empty()
+                    || line.starts_with('#')
+                    || line.chars().all(|c| c.is_ascii_digit())
+                {
+                    continue;
+                }
+
+                let (entry_part, _comment_part) =
+                    line.split_once('#').map_or((line, ""), |(e, c)| (e, c));
+
+                if let Some((lexeme, rest)) = entry_part.split_once('/') {
+                    let (annotation, _whitespace) = match rest.split_once([' ', '\t']) {
+                        Some((a, _)) => (a, &rest[a.len()..]),
+                        None => (rest, ""),
+                    };
+
+                    let mut seen_flags = hashbrown::HashSet::new();
+
+                    for flag in annotation.chars() {
+                        if !seen_flags.insert(flag) {
+                            eprintln!(
+                                "Warning: Line {}: Duplicate annotation flag '{}' in entry: {}/{}",
+                                line_num + 1,
+                                flag,
+                                lexeme,
+                                annotation
+                            );
+                            // duplicate_flag_total += 1;
+                            *duplicate_flags.entry(flag).or_insert(0) += 1;
+                        }
+                        if !annotation_flag_count.contains_key(&flag) {
+                            eprintln!(
+                                "Warning: Line {}: Unknown annotation flag '{}' in entry: {}/{}",
+                                line_num + 1,
+                                flag,
+                                lexeme,
+                                annotation
+                            );
+                            *unknown_flags.entry(flag).or_insert(0) += 1;
+                        } else {
+                            *annotation_flag_count.get_mut(&flag).unwrap() += 1;
+                        }
+                    }
+                }
+            }
+
+            for (flag, count) in annotation_flag_count {
+                if count == 0 {
+                    eprintln!("Warning: Unused annotation flag '{}'", flag);
+                    unused_flag_total += 1;
+                }
+            }
+
+            let duplicate_flag_total = duplicate_flags.values().sum::<usize>();
+            let unknown_flag_total = unknown_flags.values().sum::<usize>();
+
+            if duplicate_flag_total > 0 || unknown_flag_total > 0 || unused_flag_total > 0 {
+                eprintln!("\nAudit found issues:");
+                if duplicate_flag_total > 0 {
+                    eprintln!(
+                        "  - {} duplicate flags found in {} entries",
+                        duplicate_flags.len(),
+                        duplicate_flag_total
+                    );
+                }
+                if !unknown_flags.is_empty() {
+                    let total_unknown = unknown_flags.values().sum::<usize>();
+                    eprintln!(
+                        "  - {} unknown flags found in {} entries",
+                        unknown_flags.len(),
+                        total_unknown
+                    );
+                }
+                if unused_flag_total > 0 {
+                    eprintln!("  - {} unused flags found", unused_flag_total);
+                }
+                std::process::exit(1);
+            }
 
             Ok(())
         }

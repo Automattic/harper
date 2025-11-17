@@ -1,5 +1,4 @@
-import { binary, LocalLinter } from 'harper.js';
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { linesToString, stringToLines } from './textUtils';
 
 test('Dictionary values are reversible', () => {

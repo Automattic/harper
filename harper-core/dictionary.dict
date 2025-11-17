@@ -1121,6 +1121,7 @@ Benetton/g
 Bengal/ONSg
 Bengali/JNg
 Bengaluru/Og
+Bengaluru/Og
 Benghazi/Og
 Benin/Og
 Beninese/JNg
@@ -2229,7 +2230,6 @@ Clorets/g
 Clorox/NgV
 Closure/g
 Clotho/Og
-Cloudflare/Og
 Clouseau/Og
 Clovis/Og
 Clyde/Og
@@ -6168,8 +6168,8 @@ Luxembourgian/NJ
 Luz/Og
 Luzon/Og
 Lviv/Og
-Lvov/Og             # old name of Lviv
-LyX/g
+Lvov/Og
+LyX/Og              # GUI document processor based on LaTeX
 Lyallpur/O
 Lycra/Ng
 Lycurgus/Og
@@ -9941,8 +9941,6 @@ Tbilisi/Og
 Tc/g
 Tchaikovsky/Og
 Te/Og
-TeX/O
-TeXes
 Teasdale/Og
 Technicolor/NgJ
 Tecumseh/Og
@@ -9999,10 +9997,12 @@ Teuton/NgSJ
 Teutonic/JNg
 Tevet/Og
 Tex/Og
+TeX/Og              # Typesetting engine
 Texaco/g            # company
 Texan/JNgS
 Texarkana/Og
 Texas/Og
+TeXes
 Th/NOg              # thorium
 Thackeray/Og
 Thad/Og
@@ -12469,7 +12469,7 @@ anesthetize/VGdS
 aneurysm/~NSg
 anew/~
 angel/~NgSV
-angelfish/N9gS09    # singular and plural, also has a plural in -s
+angelfish/N09gS     # singular and plural, also has a plural in -s
 angelic/~J
 angelica/~Ng
 angelical/JY
@@ -15066,7 +15066,7 @@ blueberry/~NwSgJV
 bluebird/~NgS
 bluebonnet/NSg
 bluebottle/NSg
-bluefish/N9gS09     # singular and plural, also has a plural in -s
+bluefish/N09gS      # singular and plural, also has a plural in -s
 bluegill/NgS
 bluegrass/~Ng
 blueish/J
@@ -16744,7 +16744,7 @@ catercorner/J
 caterer/Ng
 caterpillar/~NgSV
 caterwaul/VdGNSg
-catfish/~N9gS09V    # singular and plural, also has a plural in -s
+catfish/~N09gSV     # singular and plural, also has a plural in -s
 catgut/Ng
 catharses/N9
 catharsis/Nm0g
@@ -20139,7 +20139,7 @@ cutout/NSg
 cutter/~NSg
 cutthroat/~NSgJ
 cutting/~NgSJYV
-cuttlefish/N9gS09   # singular and plural, also has a plural in -s
+cuttlefish/N09gS    # singular and plural, also has a plural in -s
 cutup/NSg
 cutworm/NgS
 cw/~
@@ -23690,7 +23690,7 @@ exaction/Ng
 exactitude/Nmg
 exactness/Nmgi
 exaggerate/VdSGJXn
-exaggerated/~JYtTVtT
+exaggerated/~JYVtT
 exaggeration/~NmgS
 exaggerator/NgS
 exajoule/NS
@@ -50770,7 +50770,7 @@ vaporizer/NgS
 vaporous/J
 vaporware/Nmg<
 vapory/J<
-vapour/NmgSgV!@_
+vapour/NmgSV!@_
 vapoury/J!@_
 vaquero/NgS
 var/~NS
@@ -52873,7 +52873,7 @@ CVE/NSg             # Common Vulnerabilities and Exposures
 Captcha/OgS
 ChatGPT/Og          # OpenAI product
 ClickHouse/g
-CloudFlare/Og
+Cloudflare/Og
 Codeberg/Og         # GitHub alternative
 Colemak/NgJ
 CommonMark/g
@@ -53010,7 +53010,7 @@ JWT/Ng              # JSON Web Token
 Jacoco/Sg
 JavaDoc/Sg
 JavaScript/ONSg     # programming language
-JetBrains
+JetBrains/Og
 Jetpack/Og
 Jira/Og             # issue tracker
 Joomla/Sg
@@ -53042,6 +53042,7 @@ LVM/Sg
 Labriola/OgS
 LanguageTool/g      # grammar checker
 Laravel/g
+LaTeX/Og            # Typesetting system, based on TeX engine
 Lato/ONg
 LeetCode/Og         # programming contest
 Lenovo/Og           # computer manufacturer
@@ -53053,7 +53054,7 @@ Logotherapy/Sg
 Longreads/Og
 LoRA/NwSg           # low-rank adaptation
 Lua/Og              # programming language
-LuaTeX/Og
+LuaTeX/Og           # TeX-based typesetting engine
 MCP/Ng              # model context protocol
 MMO/NgS             # massively multiplayer online
 MMX/Ng              # multimedia extension
@@ -53381,6 +53382,7 @@ nullish/J
 olds/~              # common in phrasing such as "twenty year olds"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
 pastebin/NgS
+pdfTeX/Og           # Program, extension for TeX engine
 pentest/VSdG
 pentester/NSg       # penetration tester
 pentesting/NmgV6
@@ -53426,6 +53428,7 @@ waitlist/NgS
 watchOS/Og
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
+XeTeX/Og            # TeX typesetting engine
 z-buffer/NgS
 
 # Experimental multi-word entries
@@ -53839,7 +53842,7 @@ self-indulgent/J
 self-obsessed/J
 self-tapping/J
 shark-infested/J
-short circuit/NgSSVdG
+short circuit/NgSVdG
 short-circuit/lSdG
 short-lived/J
 short-term/JR

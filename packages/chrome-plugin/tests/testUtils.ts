@@ -68,7 +68,7 @@ export function getTextarea(page: Page): Locator {
 }
 
 export async function testBasicSuggestionTextarea(testPageUrl: string) {
-	test('Can apply basic suggestion.', async ({ page, context }) => {
+	test('Can apply basic suggestion.', async ({ page }) => {
 		await page.goto(testPageUrl);
 
 		await page.waitForTimeout(2000);
@@ -113,6 +113,25 @@ export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
 		// Nothing should change.
 		expect(editor).toHaveValue(cacheSalt);
 		expect(await clickHarperHighlight(page)).toBe(false);
+	});
+}
+
+export async function testCanBlockRuleTextareaSuggestion(testPageUrl: string) {
+	test('Can hide with rule block button', async ({ page }) => {
+		await page.goto(testPageUrl);
+
+		const editor = getTextarea(page);
+		await replaceEditorContent(editor, 'This is an test.');
+
+		await page.waitForTimeout(6000);
+
+		await clickHarperHighlight(page);
+
+		await page.getByTitle('Disable the AnA rule').click();
+
+		await page.waitForTimeout(500);
+
+		await assertHarperHighlightBoxes(page, []);
 	});
 }
 

@@ -7,8 +7,6 @@ resolver = "2"
 # opt-level = 3
 
 [profile.release]
-codegen-units = 1
-lto = true
 opt-level = 3
 # Stripping binaries triggers a bug in `wasm-opt`.
 # Disable it for now.

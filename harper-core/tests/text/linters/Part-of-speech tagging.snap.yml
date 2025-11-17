@@ -11,6 +11,16 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+       8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
+         |                                                               ^~~ This word's canonical spelling is all-caps.
+       9 | POST), also called grammatical tagging is the process of marking up a word in a
+Suggest:
+  - Replace with: “POS”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
        8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
@@ -29,8 +39,8 @@ Message: |
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
   - Replace with: “Em”
-  - Replace with: “E”
-  - Replace with: “Ea”
+  - Replace with: “Ed”
+  - Replace with: “EC”
 
 
 
@@ -68,7 +78,7 @@ Message: |
 Suggest:
   - Replace with: “Nun”
   - Replace with: “Non”
-  - Replace with: “NT”
+  - Replace with: “NV”
 
 
 

@@ -48,7 +48,9 @@ export function leafNodes(node: Node): Node[] {
 
 	for (const child of children) {
 		const sub = leafNodes(child);
-		sub.forEach((v) => out.push(v));
+		sub.forEach((v) => {
+			out.push(v);
+		});
 	}
 
 	return out;

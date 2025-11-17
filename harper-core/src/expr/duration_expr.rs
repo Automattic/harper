@@ -1,4 +1,4 @@
-use crate::patterns::WordSet;
+use crate::patterns::{IndefiniteArticle, WordSet};
 use crate::{Span, Token};
 
 use super::{Expr, SequenceExpr, SpelledNumberExpr};
@@ -21,6 +21,7 @@ impl Expr for DurationExpr {
             .then_longest_of(vec![
                 Box::new(SpelledNumberExpr),
                 Box::new(SequenceExpr::default().then_number()),
+                Box::new(IndefiniteArticle::default()),
             ])
             .then_whitespace()
             .then(units);

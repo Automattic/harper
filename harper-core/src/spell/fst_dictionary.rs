@@ -278,10 +278,7 @@ mod tests {
             dbg!(&misspelled_lower);
 
             assert!(!misspelled_word.is_empty());
-            assert!(
-                dict.word_map.contains_key(misspelled_word)
-                    || dict.word_map.contains_key(misspelled_lower)
-            );
+            assert!(dict.word_map.contains_key(misspelled_word));
         }
     }
 

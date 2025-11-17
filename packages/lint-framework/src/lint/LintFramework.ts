@@ -32,7 +32,8 @@ export default class LintFramework {
 		getActivationKey?: () => Promise<ActivationKey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
-		reportError?: (lint: UnpackedLint) => Promise<void>;
+		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 	};
 
 	constructor(
@@ -42,7 +43,8 @@ export default class LintFramework {
 			getActivationKey?: () => Promise<ActivationKey>;
 			openOptions?: () => Promise<void>;
 			addToUserDictionary?: (words: string[]) => Promise<void>;
-			reportError?: () => Promise<void>;
+			reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+			setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 		},
 	) {
 		this.lintProvider = lintProvider;
@@ -53,6 +55,7 @@ export default class LintFramework {
 			openOptions: actions.openOptions,
 			addToUserDictionary: actions.addToUserDictionary,
 			reportError: actions.reportError,
+			setRuleEnabled: actions.setRuleEnabled,
 		});
 		this.targets = new Set();
 		this.scrollableAncestors = new Set();
@@ -141,6 +144,19 @@ export default class LintFramework {
 		} else {
 			throw new Error('HTMLElement not added.');
 		}
+	}
+
+	/** Get the individual lints produced the last time the text on the screen was scanned. */
+	public getLastLints(): UnpackedLint[] {
+		const lints = [];
+
+		for (const group of this.lastLints) {
+			for (const groupLints of Object.values(group.lints)) {
+				lints.push(...groupLints);
+			}
+		}
+
+		return lints;
 	}
 
 	private attachTargetListeners(target: Node) {
