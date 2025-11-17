@@ -13,10 +13,6 @@ pub struct AffixReplacement {
 
 impl AffixReplacement {
     pub fn to_human_readable(&self) -> HumanReadableAffixReplacement {
-        // let metadata_condition = self
-        //     .metadata_condition
-        //     .as_ref()
-        //     .map(|x| serde_json::to_string(&x).unwrap());
         HumanReadableAffixReplacement {
             metadata_condition: self.metadata_condition.clone(),
             remove: self.remove.iter().collect(),
@@ -38,10 +34,6 @@ pub struct HumanReadableAffixReplacement {
 
 impl HumanReadableAffixReplacement {
     pub fn to_normal(&self) -> Result<AffixReplacement, Error> {
-        // let metadata_condition: Option<serde_json::Value> = self
-        //     .metadata_condition
-        //     .as_ref()
-        //     .map(|data| serde_json::from_str(data).unwrap());
         Ok(AffixReplacement {
             metadata_condition: self.metadata_condition.clone(),
             remove: self.remove.chars().collect(),

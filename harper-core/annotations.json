@@ -59,7 +59,9 @@
       "target": [
         {
           "metadata": {
-            "adverb": {}
+            "adverb": {
+              "is_manner": true
+            }
           }
         }
       ],
@@ -646,6 +648,14 @@
         "verb": {}
       }
     },
+    "j": {
+      "#": "verb past property",
+      "metadata": {
+        "verb": {
+          "verb_form": "PAST"
+        }
+      }
+    },
     "J": {
       "#": "adjective property",
       "metadata": {
@@ -940,6 +950,33 @@
       "metadata": {
         "verb": {
           "verb_form": "THIRD_PERSON_SINGULAR"
+        }
+      }
+    },
+    "y": {
+      "#": "adverb of manner property",
+      "//": "mnemonic: 'y' looks like 'ly'",
+      "metadata": {
+        "adverb": {
+          "is_manner": true
+        }
+      }
+    },
+    "8": {
+      "#": "adverb of frequency property",
+      "//": "mnemonic: '8' looks like '♾️'",
+      "metadata": {
+        "adverb": {
+          "is_frequency": true
+        }
+      }
+    },
+    "%": {
+      "#": "adverb of degree property",
+      "//": "mnemonic: '%' reminds of '°'",
+      "metadata": {
+        "adverb": {
+          "is_degree": true
         }
       }
     }
