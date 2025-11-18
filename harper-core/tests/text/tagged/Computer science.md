@@ -158,8 +158,8 @@
 # NPr/ISg+ NSg/R . NSg$      NSg/VB/J+ NSg/VBPp/P NSg/VB/J . .
 >
 #
-> During the 1940s , with the development of new      and  more            powerful computing
-# VB/P   D+  #d    . P    D   N🅪Sg        P  NSg/VB/J VB/C NPr/I/VB/J/R/Dq J        Nᴹ/Vg/J+
+> During the 1940s , with the development of new   and  more            powerful computing
+# VB/P   D+  #d    . P    D   N🅪Sg        P  NSg/J VB/C NPr/I/VB/J/R/Dq J        Nᴹ/Vg/J+
 > machines such  as    the Atanasoff – Berry      computer and  ENIAC , the term      computer came
 # NPl/V3   NSg/I NSg/R D   ?         . NPr🅪Sg/VB+ NSg/VB+  VB/C ?     . D   NSg/VB/J+ NSg/VB+  NSg/VPt/P
 > to refer  to the machines rather     than their human    predecessors . As    it       became
@@ -170,16 +170,16 @@
 # D   NSg/VB P  NSg/VB+  N🅪Sg/VB+ VP/J      P  NSg/VB NSg         NPr/J/P NSg/VB/J . NPr/J/P
 > 1945 , IBM  founded the Watson Scientific Computing Laboratory at    Columbia
 # #    . NPr+ VP/J    D+  NPr+   J+         Nᴹ/Vg/J+  NSg+       NSg/P NPr+
-> University in      New       York City . The renovated fraternity house  on  Manhattan's West
-# NSg        NPr/J/P NSg/VB/J+ NPr+ NSg+ . D   VP/J      NSg+       NPr/VB J/P NSg$        NPr/VB/J+
+> University in      New    York City . The renovated fraternity house  on  Manhattan's West
+# NSg        NPr/J/P NSg/J+ NPr+ NSg+ . D   VP/J      NSg+       NPr/VB J/P NSg$        NPr/VB/J+
 > Side      was IBM's first    laboratory devoted to pure     science  . The lab  is  the
 # NSg/VB/J+ VPt NSg$  NSg/VB/J NSg+       VP/J    P  NSg/VB/J N🅪Sg/VB+ . D+  NPr+ VL3 D
 > forerunner of IBM's Research Division , which today  operates research facilities
 # NSg        P  NSg$  Nᴹ/VB+   NSg+     . I/C+  NSg/J+ V3       Nᴹ/VB+   NPl+
 > around the world   . Ultimately , the close    relationship between IBM and  Columbia
 # J/P    D   NSg/VB+ . R          . D   NSg/VB/J NSg          NSg/P   NPr VB/C NPr+
-> University was instrumental in      the emergence of a   new      scientific discipline ,
-# NSg+       VPt NSg/J        NPr/J/P D   Nᴹ        P  D/P NSg/VB/J J          NSg/VB+    .
+> University was instrumental in      the emergence of a   new   scientific discipline ,
+# NSg+       VPt NSg/J        NPr/J/P D   Nᴹ        P  D/P NSg/J J          NSg/VB+    .
 > with Columbia offering  one        of the first    academic - credit  courses in      computer
 # P    NPr+     N🅪Sg/Vg/J NSg/I/VB/J P  D   NSg/VB/J NSg/J    . NSg/VB+ NPl/V3  NPr/J/P NSg/VB+
 > science  in      1946 . Computer science  began to be      established as    a   distinct academic
@@ -368,8 +368,8 @@
 # NSg/J+       N🅪Sg/VB+ . NSg/C/P NSg/VB/J/C/P Nᴹ+       . Nᴹ+       . VB/C NSg     . I/J/R/Dq P  ISg/D$+
 > unique forms  of observation and  experience do      not     fit       a   narrow   stereotype of
 # NSg/J  NPl/V3 P  N🅪Sg        VB/C N🅪Sg/VB+   NSg/VXB NSg/R/C NSg/VBP/J D/P NSg/VB/J NSg/VB     P
-> the experimental method  . Nonetheless , they are experiments . Each new       machine
-# D   NSg/J        NSg/VB+ . R           . IPl+ VB  NPl/V3+     . Dq+  NSg/VB/J+ NSg/VB+
+> the experimental method  . Nonetheless , they are experiments . Each new    machine
+# D   NSg/J        NSg/VB+ . R           . IPl+ VB  NPl/V3+     . Dq+  NSg/J+ NSg/VB+
 > that          is  built    is  an   experiment . Actually constructing the machine poses   a
 # NSg/I/C/Ddem+ VL3 NSg/VB/J VL3 D/P+ NSg/VB+    . R        Nᴹ/Vg/J      D+  NSg/VB+ NPl/V3+ D/P+
 > question to nature  ; and  we   listen for the answer  by      observing the machine in
@@ -674,8 +674,8 @@
 # NPl      . P     NSg/I/J/Dq NPl/V3+ . NSg/J  NPl/V3+   VB     N🅪Sg         P  NSg/I
 > designs as    complete  aircraft . Notable in      electrical and  electronic circuit
 # NPl/V3+ NSg/R NSg/VB/J+ NSgPl+   . J       NPr/J/P NSg/J      VB/C J+         NSg/VB+
-> design   are SPICE    , as    well       as    software for physical realization of new      ( or
-# N🅪Sg/VB+ VB  N🅪Sg/VB+ . NSg/R NSg/VB/J/R NSg/R Nᴹ       C/P NSg/J    NSg/NoAm    P  NSg/VB/J . NPr/C
+> design   are SPICE    , as    well       as    software for physical realization of new   ( or
+# N🅪Sg/VB+ VB  N🅪Sg/VB+ . NSg/R NSg/VB/J/R NSg/R Nᴹ       C/P NSg/J    NSg/NoAm    P  NSg/J . NPr/C
 > modified ) designs . The latter includes essential design   software for integrated
 # NSg/VP/J . NPl/V3+ . D   NSg/J  NPl/V3   NSg/J+    N🅪Sg/VB+ Nᴹ+      C/P VP/J
 > circuits .
@@ -712,8 +712,8 @@
 # NSg         P  Nᴹ/Vg/J+    NPl/V3+   P  Nᴹ       . Nᴹ+      Nᴹ/Vg/J+    NPl/V3+
 > with the organizing and  analyzing of software — it       does   not     just deal     with the
 # P    D   Nᴹ/Vg/J    VB/C Nᴹ/Vg/J   P  Nᴹ+      . NPr/ISg+ NPl/V3 NSg/R/C VB/J NSg/VB/J P    D+
-> creation or    manufacture of new       software , but     its     internal arrangement and
-# NSg+     NPr/C NSg/VB      P  NSg/VB/J+ Nᴹ+      . NSg/C/P ISg/D$+ J        NSg         VB/C
+> creation or    manufacture of new    software , but     its     internal arrangement and
+# NSg+     NPr/C NSg/VB      P  NSg/J+ Nᴹ+      . NSg/C/P ISg/D$+ J        NSg         VB/C
 > maintenance . For example software testing  , systems engineering , technical debt
 # Nᴹ+         . C/P NSg/VB+ Nᴹ+      Nᴹ/Vg/J+ . NPl+    Nᴹ/Vg/J+    . NSg/J     N🅪Sg
 > and  software development processes .
@@ -1058,7 +1058,7 @@
 # D   Nᴹ/VB/J  P  NSg/VB+    NPl/V3+ VL3 JC      C/P  NSg/I/C/Ddem P  NSg/VB/J+ NPl+         .
 > One        proposed explanation for this    is  the quick    development of this   relatively
 # NSg/I/VB/J VP/J     N🅪Sg+       C/P I/Ddem+ VL3 D   NSg/VB/J N🅪Sg        P  I/Ddem R
-> new      field   requires rapid review and  distribution of results , a    task    better
-# NSg/VB/J NSg/VB+ NPl/V3   NSg/J NSg/VB VB/C NSg          P  NPl/V3+ . D/P+ NSg/VB+ NSg/VXB/JC
+> new   field   requires rapid review and  distribution of results , a    task    better
+# NSg/J NSg/VB+ NPl/V3   NSg/J NSg/VB VB/C NSg          P  NPl/V3+ . D/P+ NSg/VB+ NSg/VXB/JC
 > handled by      conferences than by      journals .
 # VP/J    NSg/J/P NPl/V3+     C/P  NSg/J/P NPl/V3+  .

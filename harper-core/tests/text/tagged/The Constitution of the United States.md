@@ -121,11 +121,11 @@
 > not     exceed one        for every thirty Thousand , but     each State    shall have    at    Least
 # NSg/R/C VB     NSg/I/VB/J C/P Dq    NSg    NSg      . NSg/C/P Dq+  N🅪Sg/VB+ VXB   NSg/VXB NSg/P NSg/J+
 > one         Representative ; and  until such  enumeration shall be      made , the State   of New
-# NSg/I/VB/J+ NSg/J+         . VB/C C/P   NSg/I N🅪Sg        VXB   NSg/VXB VB   . D   N🅪Sg/VB P  NSg/VB/J
+# NSg/I/VB/J+ NSg/J+         . VB/C C/P   NSg/I N🅪Sg        VXB   NSg/VXB VB   . D   N🅪Sg/VB P  NSg/J
 > Hampshire shall be      entitled to chuse three , Massachusetts eight , Rhode - Island
 # NPr+      VXB   NSg/VXB VP/J     P  ?     NSg   . NPr+          NSg/J . NPr   . NSg/VB
-> and  Providence Plantations one        , Connecticut five , New      - York six , New      Jersey
-# VB/C NPr+       NPl         NSg/I/VB/J . NPr+        NSg  . NSg/VB/J . NPr+ NSg . NSg/VB/J NPr+
+> and  Providence Plantations one        , Connecticut five , New   - York six , New   Jersey
+# VB/C NPr+       NPl         NSg/I/VB/J . NPr+        NSg  . NSg/J . NPr+ NSg . NSg/J NPr+
 > four , Pennsylvania eight , Delaware one        , Maryland six , Virginia ten , North
 # NSg  . NPr+         NSg/J . NPr      NSg/I/VB/J . NPr      NSg . NPr+     NSg . NPr/VB/J+
 > Carolina five , South     Carolina five , and  Georgia three .
@@ -1318,10 +1318,10 @@
 # NSg/VB+ . # .
 >
 #
-> New       States    may     be      admitted by      the Congress into this    Union     ; but
-# NSg/VB/J+ NPrPl/V3+ NPr/VXB NSg/VXB VP/J     NSg/J/P D+  NPr/VB+  P    I/Ddem+ NPr/VB/J+ . NSg/C/P
-> no     new       State    shall be      formed or    erected within  the Jurisdiction of any     other
-# NPr/P+ NSg/VB/J+ N🅪Sg/VB+ VXB   NSg/VXB VP/J   NPr/C VP/J    NSg/J/P D   N🅪Sg         P  I/R/Dq+ NSg/VB/J+
+> New    States    may     be      admitted by      the Congress into this    Union     ; but
+# NSg/J+ NPrPl/V3+ NPr/VXB NSg/VXB VP/J     NSg/J/P D+  NPr/VB+  P    I/Ddem+ NPr/VB/J+ . NSg/C/P
+> no     new    State    shall be      formed or    erected within  the Jurisdiction of any     other
+# NPr/P+ NSg/J+ N🅪Sg/VB+ VXB   NSg/VXB VP/J   NPr/C VP/J    NSg/J/P D   N🅪Sg         P  I/R/Dq+ NSg/VB/J+
 > State    ; nor   any     State    be      formed by      the Junction of two or    more            States    , or    Parts
 # N🅪Sg/VB+ . NSg/C I/R/Dq+ N🅪Sg/VB+ NSg/VXB VP/J   NSg/J/P D   NSg/VB   P  NSg NPr/C NPr/I/VB/J/R/Dq NPrPl/V3+ . NPr/C NPl/V3
 > of States    , without the Consent of the Legislatures of the States    concerned as

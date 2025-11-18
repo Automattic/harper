@@ -380,8 +380,8 @@
 # N🅪Sg      . NSg        NPl/V3  P  NPl/V3+ NSg/VB NSg/I/C/Ddem+ VB  R          NSg/J   P
 > those  human    linguists would expect ; and  the differences themselves sometimes
 # I/Ddem NSg/VB/J NPl+      VXB   VB     . VB/C D   NPl/VB+     IPl+       R
-> suggest valuable new      insights .
-# VB      NSg/J    NSg/VB/J NPl+     .
+> suggest valuable new   insights .
+# VB      NSg/J    NSg/J NPl+     .
 >
 #
 > These   two  categories can     be      further subdivided into rule    - based , stochastic , and

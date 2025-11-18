@@ -93,6 +93,7 @@ impl TokenKind {
         is_auxiliary_verb,
         is_linking_verb,
         is_verb_lemma,
+        is_verb_past_form,
         is_verb_simple_past_form,
         is_verb_past_participle_form,
         is_verb_progressive_form,
@@ -116,6 +117,7 @@ impl TokenKind {
         is_possessive_determiner,
         is_quantifier,
         is_non_quantifier_determiner,
+        is_non_demonstrative_determiner,
 
         // Conjunction methods
         is_conjunction,

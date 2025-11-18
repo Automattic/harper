@@ -105,12 +105,12 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (127 priority)
 Message: |
      243 | His parents got him an in with the company.
-         |                     ^~~~~ Did you mean `and in`?
+         |                     ^~ Did you mean `and in`?
 Suggest:
-  - Replace with: “and in”
+  - Replace with: “and”
 
 
 
@@ -341,9 +341,9 @@ Message: |
      443 | With their reputation on the line, they decided to fire their PR team.
          |                                                               ^~ Did you mean to spell `PR` this way?
 Suggest:
-  - Replace with: “Pt”
   - Replace with: “Pa”
   - Replace with: “Par”
+  - Replace with: “Pre”
 
 
 

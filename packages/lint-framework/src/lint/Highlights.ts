@@ -190,6 +190,7 @@ export default class Highlights {
 		}
 
 		const queries = [
+			getQuillJsRoot,
 			getNotionRoot,
 			getGhostRoot,
 			getDraftRoot,
@@ -198,7 +199,6 @@ export default class Highlights {
 			getSlateRoot,
 			getMediumRoot,
 			getShredditComposerRoot,
-			getQuillJsRoot,
 			getLexicalRoot,
 			getP2Root,
 			getGutenbergRoot,

@@ -129,6 +129,8 @@ impl Dictionary for MergedDictionary {
         self.children
             .iter()
             .flat_map(|d| d.fuzzy_match(word, max_distance, max_results))
+            .sorted_by_key(|r| r.word)
+            .dedup_by(|a, b| a.word == b.word)
             .sorted_by_key(|r| r.edit_distance)
             .take(max_results)
             .collect()
@@ -143,6 +145,8 @@ impl Dictionary for MergedDictionary {
         self.children
             .iter()
             .flat_map(|d| d.fuzzy_match_str(word, max_distance, max_results))
+            .sorted_by_key(|r| r.word)
+            .dedup_by(|a, b| a.word == b.word)
             .sorted_by_key(|r| r.edit_distance)
             .take(max_results)
             .collect()

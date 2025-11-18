@@ -915,8 +915,8 @@ Message: |
      412 | advisable to go with Edgar Atheling to meet William and offer him the crown.
          |                            ^~~~~~~~ Did you mean to spell `Atheling` this way?
 Suggest:
-  - Replace with: “Steeling”
   - Replace with: “Theming”
+  - Replace with: “Steeling”
 
 
 
@@ -1028,7 +1028,7 @@ Message: |
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
-  - Replace with: “WC”
+  - Replace with: “WI”
 
 
 
@@ -2364,9 +2364,9 @@ Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |   ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “This”
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
 
 
 
@@ -2376,8 +2376,8 @@ Message: |
          |                                                              ^~~ Did you mean to spell `tis` this way?
     1986 | love, that makes the world go round!’”
 Suggest:
-  - Replace with: “tic”
   - Replace with: “this”
+  - Replace with: “tic”
   - Replace with: “ti's”
 
 
@@ -2388,8 +2388,8 @@ Message: |
          |                                                                         ^~~ Did you mean to spell `tis` this way?
     1986 | love, that makes the world go round!’”
 Suggest:
-  - Replace with: “tic”
   - Replace with: “this”
+  - Replace with: “tic”
   - Replace with: “ti's”
 
 
@@ -3085,9 +3085,9 @@ Message: |
     2418 | “Stand up and repeat ‘’Tis the voice of the sluggard,’” said the Gryphon.
          |                        ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “This”
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
 
 
 
@@ -3112,9 +3112,9 @@ Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
          |     ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “This”
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
 
 
 
@@ -3207,9 +3207,9 @@ Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H'm”
-  - Replace with: “Ha”
-  - Replace with: “Hem”
+  - Replace with: “Him”
+  - Replace with: “Ho”
+  - Replace with: “Am”
 
 
 

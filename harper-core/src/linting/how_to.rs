@@ -26,7 +26,7 @@ impl Default for HowTo {
         let exceptions = SequenceExpr::default()
             .then_unless(UPOSSet::new(&[UPOS::PART]))
             .then_anything()
-            .then_anything()
+            .then_unless(|tok: &Token, _: &[char]| tok.kind.is_np_member())
             .then_anything()
             .then_unless(
                 InflectionOfBe::new().or(SequenceExpr::default().then_kind_any_or_words(
@@ -40,7 +40,7 @@ impl Default for HowTo {
                 )),
             );
 
-        pattern.add(SequenceExpr::default().then(exceptions));
+        pattern.add(exceptions);
 
         Self {
             expr: Box::new(pattern),
@@ -293,6 +293,18 @@ mod tests {
     fn dont_flag_false_positives_1492_how_indexes() {
         assert_no_lints(
             "controls how indexes will be added to unwrapped keys of flat array-like objects",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn issue_2124() {
+        assert_no_lints(
+            "I like how discord shows Spotify status on your profile.",
+            HowTo::default(),
+        );
+        assert_no_lints(
+            "To be determined based on how error handling is done in new paradigm.",
             HowTo::default(),
         );
     }

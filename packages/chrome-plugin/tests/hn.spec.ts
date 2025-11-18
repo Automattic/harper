@@ -1,3 +1,4 @@
+import type { Page } from '@playwright/test';
 import { test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
@@ -8,14 +9,22 @@ import {
 	testCanIgnoreTextareaSuggestion,
 } from './testUtils';
 
-const TEST_PAGE_URL = 'https://news.ycombinator.com/item?id=45798898';
+/** Must be computed. */
+async function getTestPageUrl(page: Page) {
+	await page.goto('https://news.ycombinator.com');
 
-testBasicSuggestionTextarea(TEST_PAGE_URL);
-testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
-testCanBlockRuleTextareaSuggestion(TEST_PAGE_URL);
+	const firstLink = page.locator('.subline').first().locator('a').last();
+	await firstLink.click();
+
+	return page.url();
+}
+
+testBasicSuggestionTextarea(getTestPageUrl);
+testCanIgnoreTextareaSuggestion(getTestPageUrl);
+testCanBlockRuleTextareaSuggestion(getTestPageUrl);
 
 test('Hacker News wraps correctly', async ({ page }) => {
-	await page.goto(TEST_PAGE_URL);
+	await page.goto(await getTestPageUrl(page));
 
 	await page.waitForTimeout(2000);
 	await page.reload();
@@ -35,7 +44,7 @@ test('Hacker News wraps correctly', async ({ page }) => {
 });
 
 test('Hacker News scrolls correctly', async ({ page }) => {
-	await page.goto(TEST_PAGE_URL);
+	await page.goto(await getTestPageUrl(page));
 
 	await page.waitForTimeout(2000);
 	await page.reload();
