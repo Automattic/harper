@@ -1,8 +1,8 @@
-use harper_brill::UPOS;
+use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
 use crate::patterns::UPOSSet;
-use super::{ExprLinter, Lint, LintKind, Suggestion};
+use harper_brill::UPOS;
 
 pub struct ThesesThese {
     expr: Box<dyn Expr>,
@@ -37,7 +37,7 @@ impl ExprLinter for ThesesThese {
             span: theses_token.span,
             lint_kind: LintKind::Spelling,
             suggestions,
-            message: "Did you mean “these”?".to_string(),
+            message: "Did you mean `these`?".to_string(),
             priority: 1,
         })
     }
@@ -116,10 +116,7 @@ mod tests {
 
     #[test]
     fn with_punctuation() {
-        assert_no_lints(
-            "Are theses, books good?",
-            ThesesThese::default(),
-        );
+        assert_no_lints("Are theses, books good?", ThesesThese::default());
     }
 
     #[test]
@@ -143,6 +140,9 @@ mod tests {
 
     #[test]
     fn does_not_correct_valid_theses() {
-        assert_no_lints("She wrote multiple theses on the topic.", ThesesThese::default());
+        assert_no_lints(
+            "She wrote multiple theses on the topic.",
+            ThesesThese::default(),
+        );
     }
 }
