@@ -11164,7 +11164,7 @@ Zworykin/g
 Zyrtec/g
 Zyuganov/g
 Zzz
-a/~DP
+a/~DP(
 a.m./
 aah/NV
 aardvark/~NSg
@@ -12591,7 +12591,7 @@ antagonist/~NSg
 antagonistic/~JQ
 antagonize/VdSG
 antarctic/~J
-ante/~NSgV
+ante/~NSgV(
 anteater/NgS
 antebellum/~J
 antecedence/Nmg
@@ -12626,7 +12626,7 @@ anthropomorphise/V!_
 anthropomorphism/Nmg
 anthropomorphize/V
 anthropomorphous/J
-anti/~JNSgP
+anti/~JNSgP(
 antiabortion/J
 antiabortionist/NgS
 antiaircraft/JN
@@ -12955,7 +12955,7 @@ arbutus/NgS
 arc/~NSgVdG
 arcade/~NgSV
 arcane/~J
-arch/~NgSVGd>J^YpZv
+arch/~NgSVGd>J^YpZv(
 archaeological/~JY
 archaeologist/~NSg
 archaeology/~Nmg
@@ -13514,7 +13514,7 @@ authorized/~JVtT
 authorship/~Nmg
 autism/~Nmg
 autistic/~JN
-auto/~JNgSV
+auto/~JNgSV(
 autobahn/~NSg
 autobiographer/NSg
 autobiographic/J
@@ -14442,6 +14442,7 @@ bend/~VbG>NSgBZ
 bendability/Nmg
 bender/~Ng
 bendy/J^>N
+# bene              # prefixes that are not also words in their own right don't belong in the dictionary
 beneath/~P
 benedictine/~
 benediction/NwSg
@@ -14578,7 +14579,7 @@ bezel/NgS
 bezier/NgS
 bf/~N
 bhaji/N
-bi/~J>NSgZ
+bi/~J>NSgZ(
 biannual/JYN
 bias/~NgSVGdJ
 biased/~JVtTU
@@ -16896,6 +16897,7 @@ center/~NgJVdG
 centerboard/NSg
 centerfold/NgS
 centerpiece/~NgS
+# centi             # prefixes that are not also words in their own right don't belong in the dictionary
 centigrade/JN
 centigram/NSg
 centiliter/NgS<
@@ -17558,6 +17560,7 @@ circularize/VdSG
 circulate/~VdSGr
 circulation/~NSgr
 circulatory/JN
+# circum            # prefixes that are not also words in their own right don't belong in the dictionary
 circumcise/VdSGXn
 circumcised/JVtTNU
 circumcision/~Ng
@@ -17917,7 +17920,7 @@ clxvi
 clxvii
 cm/~
 cnidarian/NgS
-co/~NSIdE
+co/~NSIdE(
 coach/~NgSVdG
 coachload/NS
 coachman/N0g
@@ -20370,6 +20373,7 @@ dc/~N
 dd/~NSdG
 dded/K
 dding/K
+# de                # prefixes that are not also words in their own right don't belong in the dictionary
 deacon/~NgSV
 deaconess/NgS
 dead/~J^YNgV>Xn
@@ -20441,6 +20445,7 @@ debtor/~NgS
 debugger/NSg
 debut/~NgVGd
 debutante/NSg
+# deca              # prefixes that are not also words in their own right don't belong in the dictionary
 decade/~NgS
 decadence/~Nmg
 decadency/Nmg
@@ -21118,6 +21123,7 @@ dextrose/Nmg
 dharma/~NwgS
 dhoti/NSg
 dhow/NgS
+# di                # prefixes that are not also words in their own right don't belong in the dictionary
 diabetes/~Nmg
 diabetic/~JNSg
 diabolic/J
@@ -21407,7 +21413,7 @@ dirtball/NS
 dirtily/Ry
 dirtiness/Nmg
 dirty/~J^Vd>SGp
-dis/~VNgI
+dis/~VNgI(
 disable/~VdSGJL
 disablement/Ng
 disambiguate/~VSdGn
@@ -22400,6 +22406,7 @@ dynamo/~NSg
 dynastic/~J
 dynasty/~NSg
 dyno/NSg
+# dys               # prefixes that are not also words in their own right don't belong in the dictionary
 dysentery/~Nmg
 dysfunction/~Nmg
 dysfunctional/~J
@@ -22990,7 +22997,7 @@ emulsification/Nmg
 emulsifier/~NgS
 emulsify/Vd>SGnZ
 emulsion/~NwgSV
-en/~NSgPI
+en/~NSgPI(
 enable/~Vd>SGZ
 enabler/NgS
 enact/~VSdGrL
@@ -23576,6 +23583,7 @@ etude/NSg
 etymological/~JY
 etymologist/NSg
 etymology/~NwSg
+# eu                # prefixes that are not also words in their own right don't belong in the dictionary
 eucalypti/N9
 eucalyptus/~N0gS
 euchre/NSgVdG
@@ -23683,7 +23691,7 @@ evolutionist/NSg
 evolve/~VdSG
 ewe/~NSg>Z
 ewer/Ng
-ex/~NgSVJ
+ex/~NgSVJ(
 exabyte/NgS
 exacerbate/VGdSn
 exacerbation/Nwg
@@ -24033,7 +24041,7 @@ extortion/~Ng>Z
 extortionate/JY
 extortioner/Ng
 extortionist/NgS
-extra/~JNSg
+extra/~JNSg(
 extracellular/~J
 extract/~NgSVdGv
 extraction/~NwSg
@@ -25315,7 +25323,7 @@ forceps/N09g
 forcible/~J
 forcibly/~Ry
 ford/~NgSVdGB
-fore/~JNgS
+fore/~JNgS(
 forearm/~NSgVGd
 forebear/NgSV
 forebode/VGdNSz
@@ -28127,7 +28135,7 @@ hesitate/~VdSGnX
 hesitating/VNYU
 hesitation/~Ng
 hessian/~N
-hetero/~JNSg
+hetero/~JNSg(
 heterodox/J
 heterodoxy/Nmg
 heterogeneity/Ng
@@ -28428,7 +28436,7 @@ homily/~NSg
 hominid/NSgJ
 hominoid/NS
 hominy/Ng
-homo/~NgSJ
+homo/~NgSJ(
 homoerotic/J
 homogeneity/Ng
 homogeneous/~JY
@@ -28918,6 +28926,7 @@ hymn/~NgSVdG
 hymnal/~NgSJ
 hymnbook/NSg
 hype/~NmgSVGd>J
+# hyper             # prefixes that are not also words in their own right don't belong in the dictionary
 hyperactive/J
 hyperactivity/~Ng
 hyperaggressive/J
@@ -29114,6 +29123,7 @@ ignore/~VGdS
 iguana/~NgS
 ii/~
 iii/~
+# il                # prefixes that are not also words in their own right don't belong in the dictionary
 ilea/N
 ileitis/Ng
 ileum/Ng
@@ -29154,6 +29164,7 @@ illustrative/~JY
 illustrator/~NSg
 illustrious/~JYp
 illustriousness/Nmg
+# im                # prefixes that are not also words in their own right don't belong in the dictionary
 image/~NwSgVdG
 imager/NgS
 imagery/~Nmg
@@ -29465,7 +29476,7 @@ impure/~JY^V>
 impurity/~NSg
 imputation/NSg
 impute/VdSGB
-in/~PJrg            # removed `4`, verb senses are obsolete, `NS`, noun sense is marginal
+in/~PJrg(           # removed `4`, verb senses are obsolete, `NS`, noun sense is marginal
 inaccuracy/NwgS
 inaction/~Nmg
 inadequacy/NS
@@ -30115,7 +30126,7 @@ intent/~NSgJYp
 intention/~NgSV
 intentional/~JYNU
 intentness/Ng
-inter/~VSEL
+inter/~VSEL(
 interact/~VGdNSv
 interaction/~NwSg
 interactive/~JYN
@@ -30299,6 +30310,7 @@ intonation/~NSg
 intoxicant/NSgJ
 intoxicate/VdSGJn
 intoxication/~Ng
+# intra             # prefixes that are not also words in their own right don't belong in the dictionary
 intracranial/~J
 intramural/~JN
 intramuscular/J
@@ -30317,7 +30329,7 @@ intriguer/Ng
 intriguing/~JYV6N
 intrinsic/~JNgS
 intrinsically/~Ry
-intro/~NSgV
+intro/~NSgV(
 introduce/~VGdSr
 introduction/~N0gr
 introductions/~N9
@@ -31101,7 +31113,7 @@ killer/~NgJ
 killing/~JNgV
 killjoy/NSg
 kiln/~NgSVdG
-kilo/~NgS
+kilo/~NgS(
 kilobit/NSg
 kilobyte/NSg
 kilocoulomb/S
@@ -32655,7 +32667,7 @@ mackerel/~NwSg
 mackinaw/NSg
 mackintosh/~NgS
 macrame/NgV
-macro/~JNSg
+macro/~JNSg(
 macroaggregate/Ng
 macrobiotic/JS
 macrobiotics/Nwg
@@ -33384,7 +33396,7 @@ meeting/~NwgSV
 meetinghouse/NSg
 meetup/NgS
 meg/~NSV
-mega/~JN
+mega/~JN(
 megabit/NSg
 megabucks/Ng
 megabyte/NgS
@@ -33701,7 +33713,7 @@ mica/~Ng
 mice/~N9V
 mick/~NSJ
 mickey/~NgSV
-micro/~JNSgV
+micro/~JNSgV(
 microaggression/NSg
 microarchitecture/NgS
 microbe/NgS
@@ -33763,7 +33775,7 @@ microtransaction/NSg
 microvascular/J
 microwave/~NSgVdGB
 microwaveable/J
-mid/~JPN
+mid/~JPN(
 midair/J
 midcentury/J
 midday/~Ng
@@ -33865,6 +33877,7 @@ millennial/JNgS
 millennium/~NgS
 miller/~Ng
 millet/~Ng
+# milli             # prefixes that are not also words in their own right don't belong in the dictionary
 milliamp/NgS
 milliard/Sg
 millibar/NgS
@@ -33930,7 +33943,7 @@ minestrone/Nmg
 minesweeper/NSg
 mingle/VdGNS
 mingy/J
-mini/~JNgS
+mini/~JNgS(
 miniature/~NgSJV
 miniaturisation/Ng!_
 miniaturise/VGdS!_
@@ -34002,6 +34015,7 @@ mirthful/JYp
 mirthfulness/Nmg
 mirthless/JY
 miry/J>^
+# mis               # prefixes that are not also words in their own right don't belong in the dictionary
 misaddress/VdSG
 misadventure/NwgS
 misaligned/JV
@@ -34401,7 +34415,7 @@ monkey/~NgSVdG
 monkeyshine/NSg
 monkish/J
 monkshood/NSg
-mono/~NgJ
+mono/~NgJ(
 monochromatic/~J
 monochrome/~NgSJ
 monocle/NSgd
@@ -34775,7 +34789,7 @@ mullet/~NgS
 mulligan/~NSg
 mulligatawny/Ng
 mullion/NSgVd
-multi/~N
+multi/~N(
 multibillion/J
 multibyte/J
 multicellular/J
@@ -35274,6 +35288,7 @@ nelson/~NSg
 nematode/NSg
 nemeses/N9
 nemesis/~N0g
+# neo               # prefixes that are not also words in their own right don't belong in the dictionary
 neoclassic/J
 neoclassical/~JN
 neoclassicism/Nmg
@@ -35595,7 +35610,7 @@ nomination's/r
 nominative/~JNSg
 nominator/~NSge
 nominee/~NgS
-non/~N
+non/~N(
 nonabrasive/JN
 nonabsorbent/JSg
 nonacademic/JN
@@ -36463,6 +36478,7 @@ omission/~NwgS
 omit/~VS
 omitted/~V
 omitting/~VN
+# omni              # prefixes that are not also words in their own right don't belong in the dictionary
 omnibus/~NgSJV
 omnidirectional/J
 omnipotence/Nmg
@@ -36780,7 +36796,7 @@ ourself/Ia1F        # I:pronoun a:personal 1:person .~singular F:reflexive (of t
 ourselves/~Ia1F:    # I:pronoun a:personal 1:person :~plural F:reflexive
 oust/~VGd>SZ
 ouster/~NgSV
-out/~PNSgVGd>JRz
+out/~PNSgVGd>JRz(
 outage/NSg
 outargue/VGdS
 outback/~NgSJV
@@ -36943,7 +36959,7 @@ oven/~NgSV
 ovenbird/NSg
 ovenproof/J
 ovenware/Nmg
-over/~JYNgSP
+over/~JYNgSP(
 overabundance/Ng
 overabundant/J
 overachieve/VGd>SZ
@@ -37440,7 +37456,7 @@ pampas/Ng
 pamper/VdGNS
 pamphlet/~NgSV
 pamphleteer/NgSV
-pan/~NSgVJ
+pan/~NSgVJ(
 panacea/NSg
 panache/Ng
 panama/~NgS
@@ -37529,7 +37545,7 @@ paprika/~NmgJ
 papyri/~N9
 papyrus/~N0g
 par/~NSgJPVGd>ZBz
-para/~NgSJ
+para/~NgSJ(
 parable/~NgSVJ
 parabola/N0Sg
 parabolæ/N9
@@ -38138,6 +38154,7 @@ peppy/J^>Np
 pepsin/Ng
 peptic/JNgS
 peptide/~NS
+# per               # prefixes that are not also words in their own right don't belong in the dictionary
 peradventure/Ng
 perambulate/VGdSXn
 perambulation/Nwg
@@ -39242,7 +39259,7 @@ polonaise/NSgV
 polonium/Nmg
 poltergeist/~NgS
 poltroon/NSgJ
-poly/~NJV
+poly/~NJV(
 polyacrylamide/N
 polyamory/NS
 polyandrous/J
@@ -39449,7 +39466,7 @@ possibility/~NSg
 possible/~JNSg
 possibly/~R         # adverb of probability/certainty/affirmation; modal adverb
 possum/~NSgV
-post/~NwgSVGd>PZz
+post/~NwgSVGd>PZz(
 postage/~Nmg
 postal/~J
 postbag/NgS
@@ -40035,7 +40052,7 @@ prizefighter/Ng
 prizefighting/Ng
 prizewinner/NgS
 prizewinning/J
-pro/~NSgPJ
+pro/~NSgPJ(
 probabilistic/~J
 probability/~NSg
 probable/~JNSg
@@ -40317,6 +40334,7 @@ protein/~NwSg
 protest/NwgS
 protestant/~JNgS
 protestation/NwgS
+# proto             # prefixes that are not also words in their own right don't belong in the dictionary
 protocol/~NwgSV
 proton/~NSg
 protoplasm/Nmg
@@ -40390,7 +40408,7 @@ psaltery/NSg
 psephologist/NS
 psephology/N
 pseud/NS
-pseudo/~NSJ
+pseudo/~NSJ(
 pseudocode/NmgG
 pseudonym/~NSg
 pseudonymous/~J
@@ -41245,7 +41263,7 @@ razz/NgSVGd
 razzmatazz/Ng
 rcpt/N
 rd/~N
-re/PNSgvz
+re/PNSgvz(
 reach/~VdGNgSB
 reachable/~JNU
 reacquire/VdSG
@@ -42131,7 +42149,7 @@ retributive/J
 retrieval/~NSg
 retrieve/~Vd>GNSgZB
 retriever/Ng
-retro/~JNmgS
+retro/~JNmgS(
 retroactive/~JY
 retrofire/NSVGdJ
 retrofit/~VNSg
@@ -43737,7 +43755,7 @@ semaphore/NSgVdG
 semblance/NSgr
 semen/~Nmg
 semester/~NSg
-semi/~NgS
+semi/~NgS(
 semiannual/JYN
 semiarid/J
 semiautomatic/JNgSQ
@@ -46776,7 +46794,7 @@ suasion/NgE
 suave/J>Y^Np
 suaveness/Ng
 suavity/Ng
-sub/~NSgVP
+sub/~NSgVP(
 subaltern/JNgS
 subaqua/J
 subarctic/~ONJ
@@ -47145,7 +47163,7 @@ suntanning/V6
 suntrap/NS
 sunup/Ng
 sup/~V>NSgJZ
-super/~JNgV
+super/~JNgV(
 superabundance/NwgS
 superabundant/J
 superannuate/VGdSn
@@ -47283,6 +47301,7 @@ supremacy/~Ng
 supreme/~JYVN
 supremo/NS
 supt/V
+# sur               # prefixes that are not also words in their own right don't belong in the dictionary
 surcease/NSgVdG
 surcharge/NSgVdG
 surcingle/NSgV
@@ -48004,6 +48023,7 @@ teetotalism/Ng
 teetotaller/NgS!@_
 tektite/NSg
 tel/~N
+# tele              # prefixes that are not also words in their own right don't belong in the dictionary
 telecast/~VG>NSgZ
 telecaster/Ng
 telecom/NgS
@@ -49152,7 +49172,7 @@ tranquilizer/Ng
 tranquillise/Vd>SGZ!_
 tranquilliser/Ng!_
 tranquillity/Ng!_
-trans/~JNVi
+trans/~JNVi(
 transact/VdGS
 transaction/~NSg
 transactional/J
@@ -49372,6 +49392,7 @@ tress/NgSVE
 trestle/~NgS
 trews/N
 trey/~NgS
+# tri               # prefixes that are not also words in their own right don't belong in the dictionary
 triad/~NSg
 triage/NmgVd
 triager/NSg
@@ -49900,7 +49921,7 @@ ulterior/J
 ultimate/~JYNgV
 ultimatum/~NgS
 ultimo/~JN
-ultra/~JNSg
+ultra/~JNSg(
 ultraconservative/JNSg
 ultrahigh/J
 ultraist/NSg
@@ -49929,6 +49950,7 @@ umlaut/NgSV
 ump/NSgVGd
 umpire/~NgSVGd
 umpteen/H
+# un                # prefixes that are not also words in their own right don't belong in the dictionary
 unabridged/~JNgS
 unacceptability/Nmg
 unacceptable/~JN
@@ -50026,7 +50048,7 @@ undecided/~JNSgV
 undefine/VGdS
 undemonstrative/JY
 undeniably/Ry
-under/~PJN
+under/~PJN(
 underachieve/VGd>SLZ
 underachiever/Ng
 underact/VSdG
@@ -50259,6 +50281,7 @@ unhealthy/~J^
 unhistorical/J
 unholy/~J^
 unhurt/J
+# uni               # prefixes that are not also words in their own right don't belong in the dictionary
 unibody/NSg
 unicameral/~J
 unicellular/JN
@@ -51037,7 +51060,7 @@ vicar/~NSg
 vicarage/~NSg
 vicarious/JYp
 vicariousness/Ng
-vice/~NgSVJPe
+vice/~NgSVJPe(
 viced/JVtT
 vicegerent/NSgJ
 vicennial/JN
@@ -53395,7 +53418,7 @@ pentest/VSdG
 pentester/NSg       # penetration tester
 pentesting/NmgV6
 postfix/NgSVdG
-pre/~PNV            # !! please check and comment !! dictionaries only list prefix pre-
+pre/~PNV(           # !! please check and comment !! dictionaries only list prefix pre-
 preshared/J
 quadtree/NgS        # data structure
 quicksort/NgSVdG    # algo
