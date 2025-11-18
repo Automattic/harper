@@ -979,6 +979,24 @@
           "is_degree": true
         }
       }
+    },
+    "♂": {
+      "#": "masculine property",
+      "metadata": {
+        "//": "not yet implemented"
+      }
+    },
+    "♀": {
+      "#": "feminine property",
+      "metadata": {
+        "//": "not yet implemented"
+      }
+    },
+    "ª": {
+      "#": "animate property",
+      "metadata": {
+        "//": "not yet implemented"
+      }
     }
   }
 }
