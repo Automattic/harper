@@ -46,7 +46,7 @@ mod tests {
     fn fixes_basic() {
         assert_suggestion_result(
             "This is a short sentence.  This is another short sentence.",
-            NoFrenchSpaces::default(),
+            NoFrenchSpaces,
             "This is a short sentence. This is another short sentence.",
         );
     }

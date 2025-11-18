@@ -1,9 +1,8 @@
-use harper_core::dict_word_metadata::DialectFlags;
 use itertools::Itertools;
 use std::path::Path;
 
 use harper_core::spell::{Dictionary, MutableDictionary};
-use harper_core::{Dialect, DictWordMetadata};
+use harper_core::{DialectFlags, DictWordMetadata, EnglishDialect, EnglishDialectFlags};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
 
@@ -39,7 +38,10 @@ async fn write_word_list(dict: impl Dictionary, mut w: impl AsyncWrite + Unpin) 
 }
 
 /// Load a dictionary from a file on disk.
-pub async fn load_dict(path: impl AsRef<Path>, dialect: Dialect) -> Result<MutableDictionary> {
+pub async fn load_dict(
+    path: impl AsRef<Path>,
+    dialect: EnglishDialect,
+) -> Result<MutableDictionary> {
     let file = File::open(path.as_ref()).await?;
     let read = BufReader::new(file);
 
@@ -51,7 +53,7 @@ pub async fn load_dict(path: impl AsRef<Path>, dialect: Dialect) -> Result<Mutab
 /// Right now it isn't an issue.
 async fn dict_from_word_list(
     mut r: impl AsyncRead + Unpin,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 ) -> Result<MutableDictionary> {
     let mut str = String::new();
 
@@ -62,7 +64,7 @@ async fn dict_from_word_list(
         (
             l.chars().collect::<Vec<char>>(),
             DictWordMetadata {
-                dialects: DialectFlags::from_dialect(dialect),
+                dialects: EnglishDialectFlags::from_dialect(dialect),
                 ..Default::default()
             },
         )

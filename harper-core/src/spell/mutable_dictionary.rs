@@ -3,7 +3,7 @@ use super::{
     rune::{self, AttributeList, parse_word_list},
     word_map::{WordMap, WordMapEntry},
 };
-use crate::edit_distance::edit_distance_min_alloc;
+use crate::{edit_distance::edit_distance_min_alloc, languages::Language};
 use itertools::Itertools;
 use lazy_static::lazy_static;
 use std::borrow::Cow;
@@ -30,17 +30,27 @@ pub struct MutableDictionary {
 
 /// The uncached function that is used to produce the original copy of the
 /// curated dictionary.
-fn uncached_inner_new() -> Arc<MutableDictionary> {
-    MutableDictionary::from_rune_files(
-        include_str!("../../dictionary.dict"),
-        include_str!("../../annotations.json"),
-    )
-    .map(Arc::new)
-    .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
+fn uncached_inner_new(language: Language) -> Arc<MutableDictionary> {
+    let (dict_path, annotations_path) = match language {
+        Language::English => (
+            include_str!("../../dictionary.dict"),
+            include_str!("../../annotations.json"),
+        ),
+        Language::Portuguese => (
+            include_str!("../../dictionary-portuguese.dict"),
+            include_str!("../../annotations-portuguese.json"),
+        ),
+    };
+    MutableDictionary::from_rune_files(dict_path, annotations_path)
+        .map(Arc::new)
+        .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
 }
 
 lazy_static! {
-    static ref DICT: Arc<MutableDictionary> = uncached_inner_new();
+    static ref DICT: Arc<MutableDictionary> = uncached_inner_new(Language::English);
+}
+lazy_static! {
+    static ref DICT_PORTUGUESE: Arc<MutableDictionary> = uncached_inner_new(Language::Portuguese);
 }
 
 impl MutableDictionary {
@@ -65,8 +75,14 @@ impl MutableDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
     /// Consider using [`super::FstDictionary::curated()`] instead, as it is more performant for spellchecking.
+    pub fn curated_select_language(language: Language) -> Arc<Self> {
+        match language {
+            Language::English => (*DICT).clone(), // (*DICT).clone(),
+            Language::Portuguese => (*DICT_PORTUGUESE).clone(),
+        }
+    }
     pub fn curated() -> Arc<Self> {
-        (*DICT).clone()
+        (*DICT).clone() //(*DICT).clone()
     }
 
     /// Appends words to the dictionary.

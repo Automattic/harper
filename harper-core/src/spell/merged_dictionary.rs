@@ -5,7 +5,7 @@ use std::sync::Arc;
 use foldhash::quality::FixedState;
 use itertools::Itertools;
 
-use super::{FstDictionary, WordId};
+use super::WordId;
 use super::{FuzzyMatchResult, dictionary::Dictionary};
 use crate::{CharString, DictWordMetadata};
 
@@ -36,13 +36,23 @@ impl MergedDictionary {
     }
 
     fn hash_dictionary(&self, dictionary: &Arc<dyn Dictionary>) -> u64 {
-        // Hashing the curated dictionary isn't super helpful and takes a long time.
-        if Arc::ptr_eq(
-            dictionary,
-            &(FstDictionary::curated() as Arc<dyn Dictionary>),
-        ) {
-            return 1;
-        }
+        // Hashing the curated dictionary isn't super helpful and takes a long
+        // time.
+        //
+        // TODO
+        // This has been commented out until I find a better way to check if
+        // this is one of the default dictionaries. If a dictionary other
+        // than the English one is used, it creates the curated English
+        // only to compare it to the one being hashed. I have to check it
+        // against all the curated ones, witout having to create the ones
+        // that wont be used. This could be made by passing down the "language"
+        // variable from the main function, but that seems like a stupid way.
+        // if Arc::ptr_eq(
+        //     dictionary,
+        //     &(FstDictionary::curated() as Arc<dyn Dictionary>),
+        // ) {
+        //     return 1;
+        // }
 
         let mut hasher = self.hasher_builder.build_hasher();
 

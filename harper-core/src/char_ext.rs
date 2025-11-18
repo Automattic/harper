@@ -7,6 +7,7 @@ pub trait CharExt {
     fn is_cjk(&self) -> bool;
     /// Whether a character can be a component of an English word.
     fn is_english_lingual(&self) -> bool;
+    fn is_portuguese_lingual(&self) -> bool;
     fn is_emoji(&self) -> bool;
     fn is_punctuation(&self) -> bool;
     /// Whether the character is an (English) vowel.
@@ -18,6 +19,17 @@ pub trait CharExt {
 
 impl CharExt for char {
     fn is_english_lingual(&self) -> bool {
+        !self.is_whitespace()
+            && !self.is_numeric()
+            && !self.is_emoji()
+            && matches!(self.width(), Some(1..))
+            && !self.is_punctuation()
+            && self.is_alphabetic()
+            && !self.is_cjk()
+            && self.script() == Script::Latin
+    }
+
+    fn is_portuguese_lingual(&self) -> bool {
         !self.is_whitespace()
             && !self.is_numeric()
             && !self.is_emoji()

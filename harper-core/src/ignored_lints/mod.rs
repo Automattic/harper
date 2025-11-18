@@ -63,7 +63,7 @@ mod tests {
     use super::IgnoredLints;
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document,
+        Document, EnglishDialect,
         linting::{LintGroup, Linter},
     };
 
@@ -71,8 +71,8 @@ mod tests {
     fn can_ignore_all(text: String) -> bool {
         let document = Document::new_markdown_default_curated(&text);
 
-        let mut lints =
-            LintGroup::new_curated(FstDictionary::curated(), Dialect::American).lint(&document);
+        let mut lints = LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American)
+            .lint(&document);
 
         let mut ignored = IgnoredLints::new();
 
@@ -88,8 +88,8 @@ mod tests {
     fn can_ignore_first(text: String) -> TestResult {
         let document = Document::new_markdown_default_curated(&text);
 
-        let mut lints =
-            LintGroup::new_curated(FstDictionary::curated(), Dialect::American).lint(&document);
+        let mut lints = LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American)
+            .lint(&document);
 
         let Some(first) = lints.first().cloned() else {
             return TestResult::discard();
@@ -107,8 +107,8 @@ mod tests {
     fn assert_ignore_lint_reduction(source: &str, nth_lint: usize) {
         let document = Document::new_markdown_default_curated(source);
 
-        let mut lints =
-            LintGroup::new_curated(FstDictionary::curated(), Dialect::American).lint(&document);
+        let mut lints = LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American)
+            .lint(&document);
 
         let nth = lints.get(nth_lint).cloned().unwrap_or_else(|| {
             panic!("If ignoring the lint at {nth_lint}, make sure there are enough problems.")

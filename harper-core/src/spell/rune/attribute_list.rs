@@ -14,7 +14,7 @@ use super::expansion::{
 use super::word_list::AnnotatedWord;
 use crate::dict_word_metadata_orthography::OrthFlags;
 use crate::spell::WordId;
-use crate::{CharString, DictWordMetadata, Span};
+use crate::{CharString, CharStringExt, DictWordMetadata, Span};
 
 #[derive(Debug, Clone)]
 pub struct AttributeList {
@@ -90,9 +90,22 @@ impl AttributeList {
 
             // Apply each replacement rule in this affix
             for replacement in &expansion.replacements {
+                if let Some(filter) = &replacement.metadata_condition
+                    && !check_metadata_condition(&base_metadata, filter)
+                {
+                    continue;
+                }
                 if let Some(replaced) =
                     Self::apply_replacement(replacement, &annotated_word.letters, expansion.kind)
                 {
+                    // println!(
+                    //     "{} with replacement remove:{} add:{} condition:{}",
+                    //     replaced.to_string(),
+                    //     replacement.to_human_readable().remove,
+                    //     replacement.to_human_readable().add,
+                    //     replacement.to_human_readable().condition
+                    // );
+
                     // Get or create metadata for this new word form
                     let metadata = new_words.entry(replaced.clone()).or_default();
 
@@ -269,6 +282,442 @@ impl AttributeList {
         }
 
         None
+    }
+}
+
+/// Checks the object with the metadata condition.
+/// Returns true if the all the conditions are true, and false if one of them fails
+fn check_metadata_condition(obj: &DictWordMetadata, filter: &serde_json::Value) -> bool {
+    fn recursive(obj_snippet: &serde_json::Value, filter_snippet: &serde_json::Value) -> bool {
+        for (key, value) in filter_snippet.as_object().unwrap() {
+            if value.is_object() {
+                if !recursive(&obj_snippet[key].clone(), &value.clone()) {
+                    return false;
+                }
+            } else if value != &obj_snippet[key] {
+                return false;
+            }
+        }
+        true
+    }
+    let serialized_obj = serde_json::to_value(obj).expect("Could not serialize DictWordMetadata");
+    recursive(&serialized_obj, filter)
+}
+
+/// Gather metadata about the orthography of a word.
+fn check_orthography(word: &AnnotatedWord) -> OrthFlags {
+    use crate::char_ext::CharExt;
+    use crate::dict_word_metadata_orthography::OrthFlags;
+
+    let mut ortho_flags = OrthFlags::default();
+    let mut all_lower = true;
+    let mut all_upper = true;
+    let mut first_is_upper = false;
+    let mut first_is_lower = false;
+    let mut saw_upper_after_first = false;
+    let mut saw_lower_after_first = false;
+    let mut is_first_char = true;
+    let mut upper_to_lower = false;
+    let mut lower_to_upper = false;
+    let letter_count = word
+        .letters
+        .iter()
+        .filter(|c| c.is_english_lingual())
+        .count();
+
+    for &c in &word.letters {
+        // Multiword: contains at least one space
+        if c == ' ' {
+            ortho_flags |= OrthFlags::MULTIWORD;
+            continue;
+        }
+        // Hyphenated: contains at least one hyphen
+        if c == '-' {
+            ortho_flags |= OrthFlags::HYPHENATED;
+            continue;
+        }
+        // Apostrophe: contains at least one apostrophe (straight or curly)
+        if c == '\'' || c == '’' {
+            ortho_flags |= OrthFlags::APOSTROPHE;
+            continue;
+        }
+        // Only consider English letters for case flags
+        if !c.is_english_lingual() {
+            continue;
+        }
+        if c.is_lowercase() {
+            all_upper = false;
+            if is_first_char {
+                first_is_lower = true;
+            } else {
+                saw_lower_after_first = true;
+                if upper_to_lower {
+                    lower_to_upper = true;
+                }
+                upper_to_lower = true;
+            }
+        } else if c.is_uppercase() {
+            all_lower = false;
+            if is_first_char {
+                first_is_upper = true;
+            } else {
+                saw_upper_after_first = true;
+                if lower_to_upper {
+                    upper_to_lower = true;
+                }
+                lower_to_upper = true;
+            }
+        } else {
+            // Non-cased char (e.g., numbers, symbols) - ignore for case flags
+            // Reset case tracking after non-letter character
+            first_is_upper = false;
+            first_is_lower = false;
+            upper_to_lower = false;
+            lower_to_upper = false;
+        }
+        is_first_char = false;
+    }
+
+    // Set case-related orthography flags
+    if letter_count > 0 {
+        if all_lower {
+            ortho_flags |= OrthFlags::LOWERCASE;
+        }
+        if all_upper {
+            ortho_flags |= OrthFlags::ALLCAPS;
+        }
+        // Only mark as TITLECASE if more than one letter
+        if letter_count > 1 && first_is_upper && !saw_upper_after_first {
+            ortho_flags |= OrthFlags::TITLECASE;
+        }
+        // LowerCamel: first is lowercase and there's at least one uppercase character after it
+        // Note: This must come after Titlecase check to avoid marking Titlecase words as LowerCamel
+        // Example: "pH" is LowerCamel, but "Providence" is Titlecase
+        if first_is_lower && saw_upper_after_first {
+            ortho_flags |= OrthFlags::LOWER_CAMEL;
+        }
+        // UpperCamel: first is uppercase and there are both lowercase and uppercase characters after it
+        // Note: This must come after Titlecase check to avoid marking Titlecase words as UpperCamel
+        // Example: "CamelCase" is UpperCamel, but "Providence" is Titlecase
+        if first_is_upper && saw_lower_after_first && saw_upper_after_first {
+            ortho_flags |= OrthFlags::UPPER_CAMEL;
+        }
+    }
+
+    if looks_like_roman_numerals(&word.letters)
+        && is_really_roman_numerals(&word.letters.to_lower())
+    {
+        ortho_flags |= OrthFlags::ROMAN_NUMERALS;
+    }
+
+    ortho_flags
+}
+
+fn looks_like_roman_numerals(word: &CharString) -> bool {
+    let mut is_roman = false;
+    let first_char_upper;
+
+    if let Some((&first, rest)) = word.split_first()
+        && "mdclxvi".contains(first.to_ascii_lowercase())
+    {
+        first_char_upper = first.is_uppercase();
+
+        for &c in rest {
+            if !"mdclxvi".contains(c.to_ascii_lowercase()) || c.is_uppercase() != first_char_upper {
+                return false;
+            }
+        }
+        is_roman = true;
+    }
+    is_roman
+}
+
+fn is_really_roman_numerals(word: &[char]) -> bool {
+    let s: String = word.iter().collect();
+    let mut chars = s.chars().peekable();
+
+    let mut m_count = 0;
+    while m_count < 4 && chars.peek() == Some(&'m') {
+        chars.next();
+        m_count += 1;
+    }
+
+    if !check_roman_group(&mut chars, 'c', 'd', 'm') {
+        return false;
+    }
+
+    if !check_roman_group(&mut chars, 'x', 'l', 'c') {
+        return false;
+    }
+
+    if !check_roman_group(&mut chars, 'i', 'v', 'x') {
+        return false;
+    }
+
+    if chars.next().is_some() {
+        return false;
+    }
+
+    true
+}
+
+fn check_roman_group<I: Iterator<Item = char>>(
+    chars: &mut std::iter::Peekable<I>,
+    one: char,
+    five: char,
+    ten: char,
+) -> bool {
+    match chars.peek() {
+        Some(&c) if c == one => {
+            chars.next();
+            match chars.peek() {
+                Some(&next) if next == ten || next == five => {
+                    chars.next();
+                    true
+                }
+                _ => {
+                    let mut count = 0;
+                    while count < 2 && chars.peek() == Some(&one) {
+                        chars.next();
+                        count += 1;
+                    }
+                    true
+                }
+            }
+        }
+        Some(&c) if c == five => {
+            chars.next();
+            let mut count = 0;
+            while count < 3 && chars.peek() == Some(&one) {
+                chars.next();
+                count += 1;
+            }
+            true
+        }
+        _ => true,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use serde_json::json;
+
+    use super::*;
+    use crate::{
+        dict_word_metadata::{Gender, Stress},
+        dict_word_metadata_orthography::OrthFlags,
+    };
+
+    fn check_orthography_str(s: &str) -> OrthFlags {
+        let word = AnnotatedWord {
+            letters: s.chars().collect(),
+            annotations: Vec::new(),
+        };
+        check_orthography(&word)
+    }
+
+    #[test]
+    fn test_lowercase() {
+        let flags = check_orthography_str("hello");
+        assert!(flags.contains(OrthFlags::LOWERCASE));
+        assert!(!flags.contains(OrthFlags::TITLECASE));
+        assert!(!flags.contains(OrthFlags::ALLCAPS));
+        assert!(!flags.contains(OrthFlags::LOWER_CAMEL));
+        assert!(!flags.contains(OrthFlags::UPPER_CAMEL));
+
+        // With non-letters
+        let flags = check_orthography_str("hello123");
+        assert!(flags.contains(OrthFlags::LOWERCASE));
+    }
+
+    #[test]
+    fn test_titlecase() {
+        let flags = check_orthography_str("Hello");
+        assert!(!flags.contains(OrthFlags::LOWERCASE));
+        assert!(flags.contains(OrthFlags::TITLECASE));
+        assert!(!flags.contains(OrthFlags::ALLCAPS));
+        assert!(!flags.contains(OrthFlags::LOWER_CAMEL));
+        assert!(!flags.contains(OrthFlags::UPPER_CAMEL));
+
+        // Examples that should be titlecase
+        assert!(check_orthography_str("World").contains(OrthFlags::TITLECASE));
+        assert!(check_orthography_str("Something").contains(OrthFlags::TITLECASE));
+
+        // These examples should NOT be titlecase (they're UPPER_CAMEL)
+        assert!(!check_orthography_str("McDonald").contains(OrthFlags::TITLECASE));
+        assert!(!check_orthography_str("O'Reilly").contains(OrthFlags::TITLECASE));
+
+        // Single character should not be titlecase
+        assert!(!check_orthography_str("A").contains(OrthFlags::TITLECASE));
+    }
+
+    #[test]
+    fn test_allcaps() {
+        let flags = check_orthography_str("HELLO");
+        assert!(!flags.contains(OrthFlags::LOWERCASE));
+        assert!(!flags.contains(OrthFlags::TITLECASE));
+        assert!(flags.contains(OrthFlags::ALLCAPS));
+        assert!(!flags.contains(OrthFlags::LOWER_CAMEL));
+        assert!(!flags.contains(OrthFlags::UPPER_CAMEL));
+
+        // Examples from docs
+        assert!(check_orthography_str("NASA").contains(OrthFlags::ALLCAPS));
+        assert!(check_orthography_str("I").contains(OrthFlags::ALLCAPS));
+    }
+
+    #[test]
+    fn test_lower_camel() {
+        let flags = check_orthography_str("helloWorld");
+        assert!(!flags.contains(OrthFlags::LOWERCASE));
+        assert!(!flags.contains(OrthFlags::TITLECASE));
+        assert!(!flags.contains(OrthFlags::ALLCAPS));
+        assert!(flags.contains(OrthFlags::LOWER_CAMEL));
+        assert!(!flags.contains(OrthFlags::UPPER_CAMEL));
+
+        // Examples from docs
+        assert!(check_orthography_str("getHTTPResponse").contains(OrthFlags::LOWER_CAMEL));
+        assert!(check_orthography_str("eBay").contains(OrthFlags::LOWER_CAMEL));
+
+        // All lowercase should not be lower camel
+        assert!(!check_orthography_str("hello").contains(OrthFlags::LOWER_CAMEL));
+
+        // Starts with uppercase should not be lower camel
+        assert!(!check_orthography_str("HelloWorld").contains(OrthFlags::LOWER_CAMEL));
+    }
+
+    #[test]
+    fn test_upper_camel() {
+        let flags = check_orthography_str("HelloWorld");
+        assert!(!flags.contains(OrthFlags::LOWERCASE));
+        assert!(!flags.contains(OrthFlags::TITLECASE));
+        assert!(!flags.contains(OrthFlags::ALLCAPS));
+        assert!(!flags.contains(OrthFlags::LOWER_CAMEL));
+        assert!(flags.contains(OrthFlags::UPPER_CAMEL));
+
+        // Examples from docs
+        assert!(check_orthography_str("HttpRequest").contains(OrthFlags::UPPER_CAMEL));
+        assert!(check_orthography_str("McDonald").contains(OrthFlags::UPPER_CAMEL));
+        assert!(check_orthography_str("O'Reilly").contains(OrthFlags::UPPER_CAMEL));
+        assert!(check_orthography_str("XMLHttpRequest").contains(OrthFlags::UPPER_CAMEL));
+
+        // Titlecase should not be upper camel
+        assert!(!check_orthography_str("Hello").contains(OrthFlags::UPPER_CAMEL));
+
+        // All caps should not be upper camel
+        assert!(!check_orthography_str("NASA").contains(OrthFlags::UPPER_CAMEL));
+
+        // Needs at least 3 chars
+        assert!(!check_orthography_str("Hi").contains(OrthFlags::UPPER_CAMEL));
+    }
+
+    #[test]
+    fn test_roman_numerals() {
+        assert!(check_orthography_str("MCMXCIV").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("mdccclxxi").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("MMXXI").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("mcmxciv").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("MCMXCIV").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("MMI").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(check_orthography_str("MMXXV").contains(OrthFlags::ROMAN_NUMERALS));
+    }
+
+    #[test]
+    fn test_single_roman_numeral() {
+        assert!(check_orthography_str("i").contains(OrthFlags::ROMAN_NUMERALS));
+    }
+
+    #[test]
+    fn empty_string_is_not_roman_numeral() {
+        assert!(!check_orthography_str("").contains(OrthFlags::ROMAN_NUMERALS));
+    }
+
+    #[test]
+    fn dont_allow_mixed_case_roman_numerals() {
+        assert!(!check_orthography_str("MCMlxxxVIII").contains(OrthFlags::ROMAN_NUMERALS));
+    }
+
+    #[test]
+    fn dont_allow_looks_like_but_isnt_roman_numeral() {
+        assert!(!check_orthography_str("mdxlivx").contains(OrthFlags::ROMAN_NUMERALS));
+        assert!(!check_orthography_str("XIXIVV").contains(OrthFlags::ROMAN_NUMERALS));
+    }
+
+    #[test]
+    fn test_metadata_condition_check_true() {
+        let obj = DictWordMetadata {
+            stress: Some(Stress::Oxitona),
+            ..Default::default()
+        };
+
+        let filter = json!({
+            "stress": "Oxitona",
+        });
+
+        assert!(check_metadata_condition(&obj, &filter));
+    }
+
+    #[test]
+    fn test_metadata_condition_check_false() {
+        let obj = DictWordMetadata {
+            stress: Some(Stress::Oxitona),
+            ..Default::default()
+        };
+
+        let filter = json!({
+            "stress": "Paroxitona"
+        });
+
+        assert!(!check_metadata_condition(&obj, &filter));
+    }
+
+    #[test]
+    fn test_metadata_condition_multiple_fields_match() {
+        let obj = DictWordMetadata {
+            stress: Some(Stress::Oxitona),
+            gender: Some(Gender::Masculine),
+            common: true,
+            ..Default::default()
+        };
+
+        let filter = json!({
+            "stress": "Oxitona",
+            "gender": "Masculine",
+            "common": true
+        });
+
+        assert!(check_metadata_condition(&obj, &filter));
+    }
+
+    #[test]
+    fn test_metadata_condition_multiple_fields_partial_match() {
+        let obj = DictWordMetadata {
+            stress: Some(Stress::Oxitona),
+            gender: Some(Gender::Masculine),
+            common: true,
+            ..Default::default()
+        };
+
+        let filter = json!({
+            "stress": "Oxitona"
+        });
+
+        assert!(check_metadata_condition(&obj, &filter));
+    }
+
+    #[test]
+    fn test_metadata_condition_multiple_fields_one_mismatch() {
+        let obj = DictWordMetadata {
+            stress: Some(Stress::Oxitona),
+            gender: Some(Gender::Masculine),
+            ..Default::default()
+        };
+
+        let filter = json!({
+            "stress": "Oxitona",
+            "gender": "Feminine"
+        });
+
+        assert!(!check_metadata_condition(&obj, &filter));
     }
 }
 

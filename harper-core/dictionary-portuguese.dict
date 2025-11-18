@@ -1,0 +1,64 @@
+60
+
+eu/Ia1s. # I~pronoun a~personal 1~person .~singular s~subject
+sou/~V
+feliz/~J^NV>Up
+com/~P
+a/~Dz # removed `+` preposition: archaic
+minha/~D5S
+vida/~NgV>ZS
+
+tu/Ia2s. # you~pronoun a~personal 2~person .~singular s~subject
+ele/Ia3s. # he~pronoun a~personal 3~person .~singular s~subject
+ela/Ia3s. # she~pronoun a~personal 3~person .~singular s~subject
+nós/Ia1p. # we~pronoun a~personal 1~person p~plural s~subject
+vós/Ia2p. # you (plural)~pronoun a~personal 2~person p~plural s~subject
+eles/Ia3p. # they (masc.)~pronoun a~personal 3~person p~plural s~subject
+elas/Ia3p. # they (fem.)~pronoun a~personal 3~person p~plural s~subject
+
+estou/~V
+era/~V
+fui/~V
+estás/~V
+são/~V
+ser/~V
+
+triste/~J^NV>Up
+muito/~R # very~adverb
+
+de/~P
+por/~P
+para/~P
+em/~P
+sem/~P
+sobre/~P
+
+o/~Dz
+os/~DS
+as/~DS
+um/~Dz
+uma/~Dz
+uns/~DS
+umas/~DS
+
+meu/~D5S
+meus/~D5S
+minhas/~D5S
+teu/~D5S
+tua/~D5S
+seu/~D5S
+sua/~D5S
+nossos/~D5S
+nossas/~D5S
+vosso/~D5S
+vossa/~D5S
+
+mundo/~NgV>ZS
+amor/~NgV>ZS
+amizade/~NgV>ZS
+trabalho/~NgV>ZS
+dia/~NgV>ZS
+noite/~NgV>ZS
+tempo/~NgV>ZS
+ano/~NgV>ZS
+pessoa/~NgV>ZS

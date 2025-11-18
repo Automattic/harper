@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+use harper_core::languages::Language;
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
@@ -11,13 +12,13 @@ use std::{fs, process};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
-use clap::Parser;
+use clap::{Args, Parser, Subcommand};
 use dirs::{config_dir, data_local_dir};
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
+use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish, PlainPortuguese};
 use harper_core::{
-    CharStringExt, Dialect, DictWordMetadata, Document, Span, TokenKind, TokenStringExt,
+    CharStringExt, DictWordMetadata, Document, EnglishDialect, Span, TokenKind, TokenStringExt,
     dict_word_metadata_orthography::OrthFlags, remove_overlaps,
 };
 use harper_ink::InkParser;
@@ -39,7 +40,26 @@ use annotate_tokens::{Annotation, AnnotationType};
 /// A debugging tool for the Harper grammar checker.
 #[derive(Debug, Parser)]
 #[command(version, about)]
-enum Args {
+pub struct Cli {
+    #[clap(flatten)]
+    global: GlobalOpts,
+
+    #[clap(subcommand)]
+    command: Command,
+}
+
+#[derive(Debug, Args)]
+struct GlobalOpts {
+    /// Specify the language to be used.
+    #[arg(short, long, default_value = Language::English.to_string())]
+    language: Language,
+    /// Specify the dialect.
+    #[arg(short, long, default_value = EnglishDialect::American.to_string())]
+    dialect: EnglishDialect,
+}
+
+#[derive(Debug, Subcommand)]
+enum Command {
     /// Lint a provided document.
     Lint {
         /// The text or file you wish to grammar check. If not provided, it will be read from
@@ -57,9 +77,6 @@ enum Args {
         /// If omitted, `harper-cli` will run every rule.
         #[arg(long, value_delimiter = ',')]
         only: Option<Vec<String>>,
-        /// Specify the dialect.
-        #[arg(short, long, default_value = Dialect::American.to_string())]
-        dialect: Dialect,
         /// Path to the user dictionary.
         #[arg(short, long, default_value = config_dir().unwrap().join("harper-ls/dictionary.txt").into_os_string())]
         user_dict_path: PathBuf,
@@ -181,17 +198,20 @@ enum Args {
 }
 
 fn main() -> anyhow::Result<()> {
-    let args = Args::parse();
+    let cli = Cli::parse();
+    let command = cli.command;
+    let global_options = cli.global;
+    let language = global_options.language;
     let markdown_options = MarkdownOptions::default();
-    let dictionary = FstDictionary::curated();
 
-    match args {
-        Args::Lint {
+    let dictionary = FstDictionary::curated_select_language(language);
+
+    match command {
+        Command::Lint {
             input,
             count,
             ignore,
             only,
-            dialect,
             user_dict_path,
             file_dict_path,
         } => {
@@ -199,6 +219,8 @@ fn main() -> anyhow::Result<()> {
             let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
 
             let mut merged_dict = MergedDictionary::new();
+
+            println!("Selected language is {language}");
             merged_dict.add_dictionary(dictionary);
 
             // Attempt to load user dictionary.
@@ -217,9 +239,9 @@ fn main() -> anyhow::Result<()> {
             }
 
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &merged_dict)?;
+            let (doc, source) = input.load(markdown_options, &merged_dict, language)?;
 
-            let mut linter = LintGroup::new_curated(Arc::new(merged_dict), dialect);
+            let mut linter = LintGroup::new_curated(Arc::new(merged_dict), global_options.dialect);
 
             if let Some(rules) = only {
                 linter.set_all_rules_to(Some(false));
@@ -268,12 +290,12 @@ fn main() -> anyhow::Result<()> {
 
             process::exit(1)
         }
-        Args::Parse { input } => {
+        Command::Parse { input } => {
             // Try to read from standard input if `input` was not provided.
             let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
 
             // Load the file/text.
-            let (doc, _) = input.load(markdown_options, &dictionary)?;
+            let (doc, _) = input.load(markdown_options, &dictionary, language)?;
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
@@ -282,7 +304,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Spans {
+        Command::Spans {
             input,
             include_newlines,
         } => {
@@ -290,7 +312,7 @@ fn main() -> anyhow::Result<()> {
             let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
 
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &dictionary)?;
+            let (doc, source) = input.load(markdown_options, &dictionary, language)?;
 
             let primary_color = Color::Blue;
             let secondary_color = Color::Magenta;
@@ -331,7 +353,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::AnnotateTokens {
+        Command::AnnotateTokens {
             input,
             annotation_type,
         } => {
@@ -339,7 +361,7 @@ fn main() -> anyhow::Result<()> {
             let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
 
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &dictionary)?;
+            let (doc, source) = input.load(markdown_options, &dictionary, language)?;
 
             let input_identifier = input.get_identifier();
 
@@ -360,7 +382,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Words => {
+        Command::Words => {
             let mut word_str = String::new();
 
             for word in dictionary.words_iter() {
@@ -372,7 +394,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Metadata { words } => {
+        Command::Metadata { words } => {
             let mut results = BTreeMap::new();
             for word in words {
                 let metadata = dictionary.get_word_metadata_str(&word);
@@ -382,7 +404,7 @@ fn main() -> anyhow::Result<()> {
             println!("{json}");
             Ok(())
         }
-        Args::SummarizeLintRecord { file } => {
+        Command::SummarizeLintRecord { file } => {
             let file = File::open(file)?;
             let mut reader = BufReader::new(file);
             let stats = Stats::read(&mut reader)?;
@@ -392,10 +414,15 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Forms { line } => {
+        Command::Forms { line } => {
             let (word, annot) = line_to_parts(&line);
 
-            let curated_word_list = include_str!("../../harper-core/dictionary.dict");
+            let curated_word_list = match language {
+                Language::English => include_str!("../../harper-core/dictionary.dict"),
+                Language::Portuguese => {
+                    include_str!("../../harper-core/dictionary-portuguese.dict")
+                }
+            };
             let dict_lines = curated_word_list.split('\n');
 
             let mut entry_in_dict = None;
@@ -455,14 +482,14 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Config => {
+        Command::Config => {
             #[derive(Serialize)]
             struct Config {
                 default_value: bool,
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(dictionary, Dialect::American);
+            let linter = LintGroup::new_curated(dictionary, EnglishDialect::American);
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();
@@ -483,8 +510,9 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::MineWords { file } => {
-            let (doc, _source) = load_file(&file, MarkdownOptions::default(), &dictionary)?;
+        Command::MineWords { file } => {
+            let (doc, _source) =
+                load_file(&file, MarkdownOptions::default(), &dictionary, language)?;
 
             let mut words = HashMap::new();
 
@@ -510,12 +538,12 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::CoreVersion => {
+        Command::CoreVersion => {
             println!("harper-core v{}", harper_core::core_version());
             Ok(())
         }
         #[cfg(feature = "training")]
-        Args::TrainBrillTagger {
+        Command::TrainBrillTagger {
             datasets: dataset,
             epochs,
             output,
@@ -527,7 +555,7 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         #[cfg(feature = "training")]
-        Args::TrainBrillChunker {
+        Command::TrainBrillChunker {
             datasets,
             epochs,
             output,
@@ -538,7 +566,7 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         #[cfg(feature = "training")]
-        Args::TrainBurnChunker {
+        Command::TrainBurnChunker {
             datasets,
             test_file,
             epochs,
@@ -553,7 +581,9 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::RenameFlag { old, new, dir } => {
+        Command::RenameFlag { old, new, dir } => {
+            use serde_json::Value;
+
             let dict_path = dir.join("dictionary.dict");
             let affixes_path = dir.join("annotations.json");
 
@@ -672,7 +702,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::AuditDictionary { dir } => {
+        Command::AuditDictionary { dir } => {
             let annotations_path = dir.join("annotations.json");
             let annotations_content = fs::read_to_string(&annotations_path)
                 .map_err(|e| anyhow!("Failed to read annotations: {e}"))?;
@@ -795,7 +825,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Compounds => {
+        Command::Compounds => {
             let mut compound_map: HashMap<String, Vec<String>> = HashMap::new();
 
             // First pass: process open and hyphenated compounds
@@ -847,7 +877,7 @@ fn main() -> anyhow::Result<()> {
             println!("\nFound {} compound word groups", results.len());
             Ok(())
         }
-        Args::CaseVariants => {
+        Command::CaseVariants => {
             let case_bitmask = OrthFlags::LOWERCASE
                 | OrthFlags::TITLECASE
                 | OrthFlags::ALLCAPS
@@ -878,7 +908,7 @@ fn main() -> anyhow::Result<()> {
             }
             Ok(())
         }
-        Args::NominalPhrases { input } => {
+        Command::NominalPhrases { input } => {
             // Get input from either file or direct text
             let input = match input {
                 Some(Input::File(path)) => std::fs::read_to_string(path)?,
@@ -939,6 +969,7 @@ fn load_file(
     file: &Path,
     markdown_options: MarkdownOptions,
     dictionary: &impl Dictionary,
+    language: Language,
 ) -> anyhow::Result<(Document, String)> {
     let source = std::fs::read_to_string(file)?;
 
@@ -959,10 +990,20 @@ fn load_file(
             if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {
                 Box::new(comment_parser)
             } else {
-                println!(
-                    "Warning: could not detect language ID; falling back to PlainEnglish parser."
-                );
-                Box::new(PlainEnglish)
+                match language {
+                    Language::English => {
+                        println!(
+                            "Warning: could not detect language ID; falling back to PlainEnglish parser."
+                        );
+                        Box::new(PlainEnglish)
+                    }
+                    Language::Portuguese => {
+                        println!(
+                            "Warning: could not detect language ID; falling back to PlainPortuguese parser."
+                        );
+                        Box::new(PlainPortuguese)
+                    }
+                }
             }
         }
     };

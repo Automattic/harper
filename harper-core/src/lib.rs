@@ -4,6 +4,7 @@
 mod char_ext;
 mod char_string;
 mod currency;
+mod dialects;
 pub mod dict_word_metadata;
 pub mod dict_word_metadata_orthography;
 mod document;
@@ -12,6 +13,7 @@ pub mod expr;
 mod fat_token;
 mod ignored_lints;
 pub mod language_detection;
+pub mod languages;
 mod lexing;
 pub mod linting;
 mod mask;
@@ -34,9 +36,11 @@ use std::collections::{BTreeMap, VecDeque};
 
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
+pub use dialects::dialect_trait::{Dialect, DialectFlags};
+pub use dialects::english::{EnglishDialect, EnglishDialectFlags};
 pub use dict_word_metadata::{
-    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DictWordMetadata, NounData,
-    PronounData, VerbData, VerbForm,
+    AdverbData, ConjunctionData, Degree, DeterminerData, DictWordMetadata, NounData, PronounData,
+    VerbData, VerbForm,
 };
 pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
@@ -147,7 +151,7 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
 mod tests {
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document,
+        Document, EnglishDialect,
         linting::{LintGroup, Linter},
         remove_overlaps,
     };
@@ -156,7 +160,7 @@ mod tests {
     fn keeps_space_lint() {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut linter = LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American);
 
         let mut lints = linter.lint(&doc);
 

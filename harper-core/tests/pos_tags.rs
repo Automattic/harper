@@ -83,7 +83,7 @@ use std::borrow::Cow;
 use harper_core::dict_word_metadata::VerbFormFlags;
 use harper_core::dict_word_metadata_orthography::OrthFlags;
 use harper_core::spell::FstDictionary;
-use harper_core::{Degree, Dialect, DictWordMetadata, Document, TokenKind};
+use harper_core::{Degree, DialectFlags, DictWordMetadata, Document, EnglishDialect, TokenKind};
 
 mod snapshot;
 
@@ -166,9 +166,7 @@ fn format_word_tag(word: &DictWordMetadata) -> String {
                 forms.contains(VerbFormFlags::PROGRESSIVE),
                 forms.contains(VerbFormFlags::THIRD_PERSON_SINGULAR),
             ) {
-                (true, _, _, _, _, _) | (false, false, false, false, false, false) => {
-                    tag.push_str("B")
-                }
+                (true, _, _, _, _, _) | (false, false, false, false, false, false) => tag.push('B'),
                 _ => {}
             }
             // Regular verbs set both together; Irregular verbs can set them separately.
@@ -177,19 +175,19 @@ fn format_word_tag(word: &DictWordMetadata) -> String {
                 forms.contains(VerbFormFlags::PRETERITE),
                 forms.contains(VerbFormFlags::PAST_PARTICIPLE),
             ) {
-                (true, _, _) | (_, true, true) => tag.push_str("P"),
+                (true, _, _) | (_, true, true) => tag.push('P'),
                 (false, true, false) => tag.push_str("Pt"),
                 (false, false, true) => tag.push_str("Pp"),
                 _ => {}
             }
             if forms.contains(VerbFormFlags::PROGRESSIVE) {
-                tag.push_str("g");
+                tag.push('g');
             }
             if forms.contains(VerbFormFlags::THIRD_PERSON_SINGULAR) {
-                tag.push_str("3");
+                tag.push('3');
             }
         } else {
-            tag.push_str("B");
+            tag.push('B');
         }
         add(&tag, &mut tags);
     }
@@ -248,10 +246,18 @@ fn get_dialect_annotations(word: &DictWordMetadata) -> Vec<&'static str> {
     let mut north_america = false;
     let mut commonwealth = false;
 
-    let en_au = word.dialects.is_dialect_enabled_strict(Dialect::Australian);
-    let en_ca = word.dialects.is_dialect_enabled_strict(Dialect::Canadian);
-    let en_gb = word.dialects.is_dialect_enabled_strict(Dialect::British);
-    let en_us = word.dialects.is_dialect_enabled_strict(Dialect::American);
+    let en_au = word
+        .dialects
+        .is_dialect_enabled_strict(EnglishDialect::Australian);
+    let en_ca = word
+        .dialects
+        .is_dialect_enabled_strict(EnglishDialect::Canadian);
+    let en_gb = word
+        .dialects
+        .is_dialect_enabled_strict(EnglishDialect::British);
+    let en_us = word
+        .dialects
+        .is_dialect_enabled_strict(EnglishDialect::American);
 
     // Dialect groups in alphabetical order
     if en_gb && en_au && en_ca {

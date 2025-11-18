@@ -1,5 +1,5 @@
 use crate::{
-    Dialect::{self, American, Australian, British, Canadian},
+    EnglishDialect::{self, American, Australian, British, Canadian},
     Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase},
     linting::{Lint, LintKind, Suggestion},
@@ -70,7 +70,7 @@ struct Term<'a> {
     /// We also don't want to flag terms that are common in other senses.
     flag: CanFlag,
     /// The dialect(s) this term is associated with.
-    dialects: &'a [Dialect],
+    dialects: &'a [EnglishDialect],
     /// The concept this term is associated with.
     /// Named by concatenating all the associated terms in alphabetical order.
     concept: Concept,
@@ -466,11 +466,11 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
 
 pub struct Regionalisms {
     expr: Box<dyn Expr>,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl Regionalisms {
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         let terms: Vec<Box<dyn Expr>> = REGIONAL_TERMS
             .iter()
             .filter(|row| row.flag == Flag)
@@ -565,7 +565,7 @@ mod tests {
     fn uk_to_us_food() {
         assert_top3_suggestion_result(
             "I can't eat aubergine or coriander, so I'll just have a bag of crisps.",
-            Regionalisms::new(Dialect::American),
+            Regionalisms::new(EnglishDialect::American),
             "I can't eat eggplant or cilantro, so I'll just have a bag of chips.",
         );
     }
@@ -574,7 +574,7 @@ mod tests {
     fn au_to_us_phone() {
         assert_top3_suggestion_result(
             "I dropped my mobile phone in the esky and now it's covered in tomato sauce.",
-            Regionalisms::new(Dialect::American),
+            Regionalisms::new(EnglishDialect::American),
             // Tomato sauce is valid in American English, it just means pasta sauce rather than ketchup.
             "I dropped my cellphone in the cooler and now it's covered in tomato sauce.",
         )
@@ -584,7 +584,7 @@ mod tests {
     fn au_to_uk_cars() {
         assert_top3_suggestion_result(
             "Drive the station wagon onto the footpath and hand me that spanner.",
-            Regionalisms::new(Dialect::British),
+            Regionalisms::new(EnglishDialect::British),
             "Drive the estate onto the pavement and hand me that spanner.",
         )
     }
@@ -593,7 +593,7 @@ mod tests {
     fn au_to_us_cars() {
         assert_top3_suggestion_result(
             "Drive the station wagon onto the footpath and hand me that spanner.",
-            Regionalisms::new(Dialect::American),
+            Regionalisms::new(EnglishDialect::American),
             "Drive the station wagon onto the sidewalk and hand me that wrench.",
         )
     }
@@ -602,7 +602,7 @@ mod tests {
     fn us_to_au_baby() {
         assert_top3_suggestion_result(
             "Wash the pacifier under the faucet.",
-            Regionalisms::new(Dialect::Australian),
+            Regionalisms::new(EnglishDialect::Australian),
             "Wash the dummy under the tap.",
         )
     }
@@ -611,7 +611,7 @@ mod tests {
     fn us_to_uk_fuel() {
         assert_top3_suggestion_result(
             "I needed more gasoline to drive the truck to the soccer match.",
-            Regionalisms::new(Dialect::British),
+            Regionalisms::new(EnglishDialect::British),
             "I needed more petrol to drive the truck to the football match.",
         )
     }
@@ -620,7 +620,7 @@ mod tests {
     fn au_to_uk_light() {
         assert_top3_suggestion_result(
             "Can you sell me a light globe for this torch?",
-            Regionalisms::new(Dialect::British),
+            Regionalisms::new(EnglishDialect::British),
             "Can you sell me a light bulb for this torch?",
         )
     }
@@ -629,7 +629,7 @@ mod tests {
     fn us_to_au_oops() {
         assert_top3_suggestion_result(
             "I spilled ketchup on my clean sweater.",
-            Regionalisms::new(Dialect::Australian),
+            Regionalisms::new(EnglishDialect::Australian),
             "I spilled tomato sauce on my clean jumper.",
         )
     }
@@ -638,7 +638,7 @@ mod tests {
     fn caravan_doesnt_always_mean_trailer() {
         assert_lint_count(
             "A caravan (from Persian کاروان kârvân) is a group of people traveling together, often on a trade expedition. Caravans were used mainly in desert areas.",
-            Regionalisms::new(Dialect::British),
+            Regionalisms::new(EnglishDialect::British),
             0,
         )
     }
@@ -647,7 +647,7 @@ mod tests {
     fn uk_to_us_windscreen() {
         assert_top3_suggestion_result(
             "Detect raindrops on vehicle windscreen by combining various region proposal algorithm with Convolutional Neural Network.",
-            Regionalisms::new(Dialect::American),
+            Regionalisms::new(EnglishDialect::American),
             "Detect raindrops on vehicle windshield by combining various region proposal algorithm with Convolutional Neural Network.",
         )
     }
