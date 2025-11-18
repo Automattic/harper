@@ -1001,7 +1001,9 @@
 		"(": {
 			"#": "prefix property",
 			"metadata": {
-				"//": "not yet implemented"
+				"affix": {
+					"is_prefix": true
+				}
 			}
 		}
 	}

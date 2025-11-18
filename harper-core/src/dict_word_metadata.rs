@@ -18,12 +18,20 @@ use crate::{Document, TokenKind, TokenStringExt};
 /// having their own lexeme, but "Ivy" and "ivy" sharing the same lexeme.
 #[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Hash)]
 pub struct DictWordMetadata {
+    /// The main parts of speech which have extra data.
     pub noun: Option<NounData>,
     pub pronoun: Option<PronounData>,
     pub verb: Option<VerbData>,
     pub adjective: Option<AdjectiveData>,
     pub adverb: Option<AdverbData>,
     pub conjunction: Option<ConjunctionData>,
+    pub determiner: Option<DeterminerData>,
+    pub affix: Option<AffixData>,
+    /// Parts of speech which don't have extra data.
+    /// Whether the word is a [preposition](https://www.merriam-webster.com/dictionary/preposition).
+    #[serde(default = "default_false")]
+    pub preposition: bool,
+    /// Whether the word is an offensive word.
     pub swear: Option<bool>,
     /// The dialects this word belongs to.
     /// If no dialects are defined, it can be assumed that the word is
@@ -33,11 +41,6 @@ pub struct DictWordMetadata {
     /// Orthographic information: letter case, spaces, hyphens, etc.
     #[serde(default = "OrthFlags::empty")]
     pub orth_info: OrthFlags,
-    /// Whether the word is a [determiner](https://en.wikipedia.org/wiki/English_determiners).
-    pub determiner: Option<DeterminerData>,
-    /// Whether the word is a [preposition](https://www.merriam-webster.com/dictionary/preposition).
-    #[serde(default = "default_false")]
-    pub preposition: bool,
     /// Whether the word is considered especially common.
     #[serde(default = "default_false")]
     pub common: bool,
@@ -186,11 +189,12 @@ impl DictWordMetadata {
             adjective: merge!(self.adjective, other.adjective),
             adverb: merge!(self.adverb, other.adverb),
             conjunction: merge!(self.conjunction, other.conjunction),
+            determiner: merge!(self.determiner, other.determiner),
+            affix: merge!(self.affix, other.affix),
+            preposition: self.preposition || other.preposition,
             dialects: self.dialects | other.dialects,
             orth_info: self.orth_info | other.orth_info,
             swear: self.swear.or(other.swear),
-            determiner: merge!(self.determiner, other.determiner),
-            preposition: self.preposition || other.preposition,
             common: self.common || other.common,
             derived_from: self.derived_from.or(other.derived_from),
             pos_tag: self.pos_tag.or(other.pos_tag),
@@ -231,6 +235,7 @@ impl DictWordMetadata {
                 self.adverb = None;
                 self.conjunction = None;
                 self.determiner = None;
+                self.affix = None;
                 self.preposition = false;
             }
             PROPN => {
@@ -256,6 +261,7 @@ impl DictWordMetadata {
                 self.adverb = None;
                 self.conjunction = None;
                 self.determiner = None;
+                self.affix = None;
                 self.preposition = false;
             }
             PRON => {
@@ -269,6 +275,7 @@ impl DictWordMetadata {
                 self.adverb = None;
                 self.conjunction = None;
                 self.determiner = None;
+                self.affix = None;
                 self.preposition = false;
             }
             VERB => {
@@ -290,6 +297,7 @@ impl DictWordMetadata {
                 self.adverb = None;
                 self.conjunction = None;
                 self.determiner = None;
+                self.affix = None;
                 self.preposition = false;
             }
             AUX => {
@@ -311,6 +319,7 @@ impl DictWordMetadata {
                 self.adverb = None;
                 self.conjunction = None;
                 self.determiner = None;
+                self.affix = None;
                 self.preposition = false;
             }
             ADJ => {
@@ -324,6 +333,7 @@ impl DictWordMetadata {
                 self.adverb = None;
                 self.conjunction = None;
                 self.determiner = None;
+                self.affix = None;
                 self.preposition = false;
             }
             ADV => {
@@ -337,6 +347,7 @@ impl DictWordMetadata {
                 self.adjective = None;
                 self.conjunction = None;
                 self.determiner = None;
+                self.affix = None;
                 self.preposition = false;
             }
             ADP => {
@@ -347,6 +358,7 @@ impl DictWordMetadata {
                 self.adverb = None;
                 self.conjunction = None;
                 self.determiner = None;
+                self.affix = None;
                 self.preposition = true;
             }
             DET => {
@@ -356,6 +368,7 @@ impl DictWordMetadata {
                 self.adjective = None;
                 self.adverb = None;
                 self.conjunction = None;
+                self.affix = None;
                 self.preposition = false;
                 self.determiner = Some(DeterminerData::default());
             }
@@ -370,6 +383,7 @@ impl DictWordMetadata {
                 self.adjective = None;
                 self.adverb = None;
                 self.determiner = None;
+                self.affix = None;
                 self.preposition = false;
             }
             _ => {}
@@ -952,6 +966,22 @@ impl ConjunctionData {
     /// Produce a copy of `self` with the known properties of `other` set.
     pub fn or(&self, _other: &Self) -> Self {
         Self {}
+    }
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
+pub struct AffixData {
+    pub is_prefix: Option<bool>,
+    pub is_suffix: Option<bool>,
+}
+
+impl AffixData {
+    /// Produce a copy of `self` with the known properties of `other` set.
+    pub fn or(&self, _other: &Self) -> Self {
+        Self {
+            is_prefix: self.is_prefix.or(_other.is_prefix),
+            is_suffix: self.is_suffix.or(_other.is_suffix),
+        }
     }
 }
 
