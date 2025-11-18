@@ -11,7 +11,7 @@ function onReady() {
 </script>
 
 {#await editor then { default: Editor}}
-  <div class={`flex-row h-full max-w-full ${loading ? "hidden" : "flex"}`}>
+  <div class={`flex-row h-full w-full ${loading ? "hidden" : "flex"}`}>
 		<Editor content={content} {onReady}/>
   </div>
 {/await}

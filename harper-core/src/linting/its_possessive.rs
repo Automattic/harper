@@ -47,6 +47,7 @@ impl Default for ItsPossessive {
             .then(UPOSSet::new(&[UPOS::ADJ, UPOS::NOUN, UPOS::PROPN]))
             .t_ws()
             .then_unless(UPOSSet::new(&[
+                UPOS::VERB,
                 UPOS::PART,
                 UPOS::ADP,
                 UPOS::NOUN,
@@ -319,6 +320,14 @@ mod tests {
     fn allow_issue_1658() {
         assert_no_lints(
             "It's kind of a nuisance, but it will work.",
+            ItsPossessive::default(),
+        );
+    }
+
+    #[test]
+    fn allow_issue_2001() {
+        assert_no_lints(
+            "It's worth highlighting that while using a fork instead of a spoon is easy, it sometimes isn't.",
             ItsPossessive::default(),
         );
     }

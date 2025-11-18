@@ -119,7 +119,7 @@ function jumpTo(lintBox: IgnorableLintBox) {
 }
 </script>
 
-<div class="flex flex-row h-full max-w-full">
+<div class="flex flex-row h-full w-full">
 	<Card class="flex-1 h-full p-5 z-10 max-w-full text-lg mr-5">
     <div bind:this={editor} spellcheck="false">
     {@html content.replace(/\n\n/g, '<br>')}

@@ -3,9 +3,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |    ^~ Did you mean to spell `F.` this way?
 Suggest:
-  - Replace with: “Ft”
+  - Replace with: “Fe”
   - Replace with: “F”
-  - Replace with: “Fa”
+  - Replace with: “Ff”
 
 
 
@@ -343,9 +343,9 @@ Message: |
      120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
          |                                       ^~ Did you mean to spell `de` this way?
 Suggest:
+  - Replace with: “den”
   - Replace with: “db”
   - Replace with: “dc”
-  - Replace with: “dd”
 
 
 
@@ -818,8 +818,8 @@ Message: |
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “Ta”
-  - Replace with: “Tb”
-  - Replace with: “Tn”
+  - Replace with: “Ti”
+  - Replace with: “Th”
 
 
 
@@ -828,8 +828,8 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                         ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
-  - Replace with: “J”
+  - Replace with: “Jo”
+  - Replace with: “Jr”
   - Replace with: “JD”
 
 
@@ -852,8 +852,8 @@ Message: |
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “Ta”
-  - Replace with: “Tb”
-  - Replace with: “Tn”
+  - Replace with: “Ti”
+  - Replace with: “Th”
 
 
 
@@ -862,8 +862,8 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
-  - Replace with: “J”
+  - Replace with: “Jo”
+  - Replace with: “Jr”
   - Replace with: “JD”
 
 
@@ -930,7 +930,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
 
 
 
@@ -980,9 +980,9 @@ Message: |
      729 | spotted dress of dark blue crêpe-de-chine, contained no facet or gleam of
          |                                  ^~ Did you mean to spell `de` this way?
 Suggest:
+  - Replace with: “den”
   - Replace with: “db”
   - Replace with: “dc”
-  - Replace with: “dd”
 
 
 
@@ -1055,9 +1055,9 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “Dc”
   - Replace with: “DA”
   - Replace with: “DE”
+  - Replace with: “Di”
 
 
 
@@ -1247,7 +1247,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
 
 
 
@@ -1342,9 +1342,9 @@ Message: |
     1122 | Daisy! Dai———”
          |        ^~~ Did you mean to spell `Dai` this way?
 Suggest:
-  - Replace with: “Day”
   - Replace with: “Dab”
   - Replace with: “Dad”
+  - Replace with: “Dais”
 
 
 
@@ -1475,8 +1475,8 @@ Message: |
     1180 | spiced baked hams crowded against salads of harlequin designs and pastry pigs
 Suggest:
   - Replace with: “hours”
-  - Replace with: “hers”
   - Replace with: “ho's”
+  - Replace with: “hers”
 
 
 
@@ -2088,7 +2088,7 @@ Message: |
 Suggest:
   - Replace with: “outta”
   - Replace with: “out”
-  - Replace with: “outs”
+  - Replace with: “oath”
 
 
 
@@ -2255,7 +2255,7 @@ Message: |
 Suggest:
   - Replace with: “Van”
   - Replace with: “Vol”
-  - Replace with: “Yon”
+  - Replace with: “Eon”
 
 
 
@@ -2266,8 +2266,8 @@ Message: |
     1849 | Bunsen, whom I knew at Yale, and Doctor Webster Civet, who was drowned last
 Suggest:
   - Replace with: “Becker's”
-  - Replace with: “Backers”
   - Replace with: “Bickers”
+  - Replace with: “Becker”
 
 
 
@@ -2353,8 +2353,8 @@ Message: |
          |                                                  ^~~~ Did you mean to spell `Etty` this way?
 Suggest:
   - Replace with: “Etta”
+  - Replace with: “Thy”
   - Replace with: “Betty”
-  - Replace with: “Getty”
 
 
 
@@ -2386,9 +2386,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Rd”
-  - Replace with: “R”
-  - Replace with: “RC”
+  - Replace with: “Re”
+  - Replace with: “RI”
+  - Replace with: “Ra”
 
 
 
@@ -2397,9 +2397,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
-  - Replace with: “Pd”
+  - Replace with: “Pa”
+  - Replace with: “Po”
+  - Replace with: “PE”
 
 
 
@@ -2441,9 +2441,9 @@ Message: |
     1861 | the gravel drive that Mrs. Ulysses Swett’s automobile ran over his right hand.
          |                                    ^~~~~~~ Did you mean to spell `Swett’s` this way?
 Suggest:
+  - Replace with: “Seth's”
   - Replace with: “Scott's”
   - Replace with: “Sept's”
-  - Replace with: “Seth's”
 
 
 
@@ -2454,7 +2454,7 @@ Message: |
 Suggest:
   - Replace with: “Dannie's”
   - Replace with: “Fancies”
-  - Replace with: “Danes”
+  - Replace with: “Dances”
 
 
 
@@ -2463,9 +2463,9 @@ Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |                            ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
   - Replace with: “So”
+  - Replace with: “SA”
+  - Replace with: “Si”
 
 
 
@@ -2476,7 +2476,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
 
 
 
@@ -2487,8 +2487,8 @@ Message: |
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
   - Replace with: “Ax”
+  - Replace with: “A”
   - Replace with: “Ab”
-  - Replace with: “Ac”
 
 
 
@@ -2566,9 +2566,9 @@ Message: |
     1868 | Excellence, and Eckhaust and Clyde Cohen and Don S. Schwartze (the son) and
          |                                                  ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
   - Replace with: “So”
+  - Replace with: “SA”
+  - Replace with: “Si”
 
 
 
@@ -2610,9 +2610,9 @@ Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
-  - Replace with: “Gt”
   - Replace with: “Go”
-  - Replace with: “Gr”
+  - Replace with: “GI”
+  - Replace with: “GU”
 
 
 
@@ -2623,8 +2623,8 @@ Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
 Suggest:
   - Replace with: “Mullion”
+  - Replace with: “Moulton”
   - Replace with: “Mauldin”
-  - Replace with: “Mellon”
 
 
 
@@ -2635,8 +2635,8 @@ Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
 Suggest:
   - Replace with: “Mullion”
+  - Replace with: “Moulton”
   - Replace with: “Mauldin”
-  - Replace with: “Mellon”
 
 
 
@@ -2654,9 +2654,9 @@ Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
          |                               ^~ Did you mean to spell `Da` this way?
 Suggest:
-  - Replace with: “Dab”
   - Replace with: “Dad”
   - Replace with: “Dam”
+  - Replace with: “Day”
 
 
 
@@ -2702,7 +2702,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
 
 
 
@@ -2724,7 +2724,7 @@ Message: |
 Suggest:
   - Replace with: “Db”
   - Replace with: “Dc”
-  - Replace with: “Def”
+  - Replace with: “Dd”
 
 
 
@@ -2874,9 +2874,9 @@ Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |             ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
   - Replace with: “So”
+  - Replace with: “SA”
+  - Replace with: “Si”
 
 
 
@@ -2887,7 +2887,7 @@ Message: |
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
-  - Replace with: “WC”
+  - Replace with: “WI”
 
 
 
@@ -2932,9 +2932,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “L”
-  - Replace with: “Lb”
-  - Replace with: “Lo”
+  - Replace with: “Le”
+  - Replace with: “Li”
+  - Replace with: “Lu”
 
 
 
@@ -3008,9 +3008,9 @@ Message: |
          |                                          ^~~~ Did you mean to spell `Haag` this way?
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
 Suggest:
-  - Replace with: “Hag”
   - Replace with: “Haas”
   - Replace with: “Ha's”
+  - Replace with: “Hang”
 
 
 
@@ -3043,9 +3043,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          | ^~~~ Did you mean to spell `Fitz` this way?
 Suggest:
+  - Replace with: “Fizz”
   - Replace with: “Fit”
   - Replace with: “Fritz”
-  - Replace with: “Ditz”
 
 
 
@@ -3054,9 +3054,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
-  - Replace with: “Pd”
+  - Replace with: “Pa”
+  - Replace with: “Po”
+  - Replace with: “PE”
 
 
 
@@ -3114,7 +3114,7 @@ Message: |
          |                                                                             ^~~~ Did you mean to spell `Bois` this way?
     1982 | de Boulogne.
 Suggest:
-  - Replace with: “Bogs”
+  - Replace with: “Bops”
   - Replace with: “Boris”
   - Replace with: “Bios”
 
@@ -3136,9 +3136,9 @@ Message: |
     1982 | de Boulogne.
          | ^~ Did you mean to spell `de` this way?
 Suggest:
+  - Replace with: “den”
   - Replace with: “db”
   - Replace with: “dc”
-  - Replace with: “dd”
 
 
 
@@ -3190,9 +3190,9 @@ Message: |
          |                                                              ^~ Did you mean to spell `di` this way?
     2007 | circular legend, “Montenegro, Nicolas Rex.”
 Suggest:
+  - Replace with: “dig”
   - Replace with: “db”
   - Replace with: “dc”
-  - Replace with: “dd”
 
 
 
@@ -3368,9 +3368,9 @@ Message: |
     2105 | “I handed the money to Katspaugh and I sid: ‘All right, Katspaugh, don’t pay him
          |                                        ^~~ Did you mean to spell `sid` this way?
 Suggest:
-  - Replace with: “sad”
   - Replace with: “said”
   - Replace with: “sic”
+  - Replace with: “side”
 
 
 
@@ -3687,6 +3687,14 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    2286 | (said Jordan Baker that afternoon, sitting up very straight on a straight chair
+         |                                                                ^~~~~~~~~~~~~~~~ Did you intend to use an adjective here?
+    2287 | in the tea-garden at the Plaza Hotel)
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2291 | with rubber nobs on the soles that bit into the soft ground. I had on a new
@@ -3718,8 +3726,8 @@ Message: |
     2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
 Suggest:
   - Replace with: “beau”
-  - Replace with: “beaus”
   - Replace with: “beaut”
+  - Replace with: “beaus”
 
 
 
@@ -3997,6 +4005,17 @@ Suggest:
   - Replace with: “Conley”
   - Replace with: “Corey”
   - Replace with: “Coley”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2526 | “There’s another little thing,” he said uncertainly, and hesitated.
+         |                                         ^~~~~~~~~~~ Did you mean to spell `uncertainly` this way?
+Suggest:
+  - Replace with: “uncertainty”
+  - Replace with: “uncertain”
+  - Replace with: “certainly”
 
 
 
@@ -4496,9 +4515,9 @@ Message: |
     3024 | a source of satisfaction to James Gatz of North Dakota, isn’t easy to say.
          |                                   ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
+  - Replace with: “Garth”
+  - Replace with: “Goth”
   - Replace with: “Ga's”
-  - Replace with: “Gate”
-  - Replace with: “GHz”
 
 
 
@@ -4507,9 +4526,9 @@ Message: |
     3026 | James Gatz—that was really, or at least legally, his name. He had changed it at
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
+  - Replace with: “Garth”
+  - Replace with: “Goth”
   - Replace with: “Ga's”
-  - Replace with: “Gate”
-  - Replace with: “GHz”
 
 
 
@@ -4531,9 +4550,9 @@ Message: |
     3029 | on Lake Superior. It was James Gatz who had been loafing along the beach that
          |                                ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
+  - Replace with: “Garth”
+  - Replace with: “Goth”
   - Replace with: “Ga's”
-  - Replace with: “Gate”
-  - Replace with: “GHz”
 
 
 
@@ -4585,9 +4604,9 @@ Message: |
          |                                               ^~ Did you mean to spell `de` this way?
     3075 | sent him to sea in a yacht, were common property of the turgid journalism
 Suggest:
+  - Replace with: “den”
   - Replace with: “db”
   - Replace with: “dc”
-  - Replace with: “dd”
 
 
 
@@ -4597,9 +4616,9 @@ Message: |
          |                                                  ^~~~~~~~~ Did you mean to spell `Maintenon` this way?
     3075 | sent him to sea in a yacht, were common property of the turgid journalism
 Suggest:
+  - Replace with: “Maintenance”
   - Replace with: “Maintop”
-  - Replace with: “Maine's”
-  - Replace with: “Mainer's”
+  - Replace with: “Matheson”
 
 
 
@@ -4609,9 +4628,9 @@ Message: |
     3077 | when he turned up as James Gatz’s destiny in Little Girl Bay.
          |                            ^~~~~~ Did you mean to spell `Gatz’s` this way?
 Suggest:
-  - Replace with: “Ga's”
-  - Replace with: “Gaea's”
-  - Replace with: “Gael's”
+  - Replace with: “Gate's”
+  - Replace with: “Garth's”
+  - Replace with: “Goth's”
 
 
 
@@ -4620,9 +4639,9 @@ Message: |
     3079 | To young Gatz, resting on his oars and looking up at the railed deck, that yacht
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
+  - Replace with: “Garth”
+  - Replace with: “Goth”
   - Replace with: “Ga's”
-  - Replace with: “Gate”
-  - Replace with: “GHz”
 
 
 
@@ -4668,6 +4687,17 @@ Message: |
     3090 | knew what lavish doings Dan Cody drunk might soon be about, and he provided for
 Suggest:
   - Replace with: “jail or”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    3093 | It might have lasted indefinitely except for the fact that Ella Kaye came on
+         |                      ^~~~~~~~~~~~ Did you mean to spell `indefinitely` this way?
+Suggest:
+  - Replace with: “indefinite”
+  - Replace with: “infinitely”
+  - Replace with: “definitely”
 
 
 
@@ -4857,8 +4887,8 @@ Message: |
          |                                                       ^~~~~~~ Did you mean to spell `defence` this way?
 Suggest:
   - Replace with: “defense”
-  - Replace with: “decency”
-  - Replace with: “deface”
+  - Replace with: “defended”
+  - Replace with: “defect”
 
 
 
@@ -5243,8 +5273,8 @@ Message: |
          |  ^~~~ Did you mean to spell `Bles` this way?
 Suggest:
   - Replace with: “Bales”
-  - Replace with: “Bees”
-  - Replace with: “BC's”
+  - Replace with: “Blew”
+  - Replace with: “Boles”
 
 
 
@@ -5297,9 +5327,9 @@ Message: |
     3647 | up now, and say—How-de-do.”
          |                     ^~ Did you mean to spell `de` this way?
 Suggest:
+  - Replace with: “den”
   - Replace with: “db”
   - Replace with: “dc”
-  - Replace with: “dd”
 
 
 
@@ -5457,8 +5487,8 @@ Message: |
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “Ta”
-  - Replace with: “Tb”
-  - Replace with: “Tn”
+  - Replace with: “Ti”
+  - Replace with: “Th”
 
 
 
@@ -5467,8 +5497,8 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                     ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
-  - Replace with: “J”
+  - Replace with: “Jo”
+  - Replace with: “Jr”
   - Replace with: “JD”
 
 
@@ -5526,8 +5556,8 @@ Message: |
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “Ta”
-  - Replace with: “Tb”
-  - Replace with: “Tn”
+  - Replace with: “Ti”
+  - Replace with: “Th”
 
 
 
@@ -5536,8 +5566,8 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                       ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
-  - Replace with: “J”
+  - Replace with: “Jo”
+  - Replace with: “Jr”
   - Replace with: “JD”
 
 
@@ -5730,9 +5760,9 @@ Message: |
     4073 | “We're getting old,” said Daisy. “lf we were young we’d rise and dance.”
          |                                   ^~ Did you mean to spell `lf` this way?
 Suggest:
-  - Replace with: “l”
-  - Replace with: “lb”
-  - Replace with: “lg”
+  - Replace with: “la”
+  - Replace with: “lo”
+  - Replace with: “elf”
 
 
 
@@ -5780,9 +5810,9 @@ Message: |
          |                                                                  ^~~ Did you mean to spell `Asa` this way?
     4084 | brought him around at the last minute and asked if we had room for him.”
 Suggest:
+  - Replace with: “Ass”
   - Replace with: “As”
-  - Replace with: “Asap”
-  - Replace with: “Ada”
+  - Replace with: “Ash”
 
 
 
@@ -7015,9 +7045,9 @@ Message: |
     5122 | ghost of a superior “Hm!”
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H'm”
-  - Replace with: “Ha”
-  - Replace with: “Ham”
+  - Replace with: “Him”
+  - Replace with: “Ho”
+  - Replace with: “Am”
 
 
 
@@ -7082,8 +7112,8 @@ Message: |
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “Ta”
-  - Replace with: “Tb”
-  - Replace with: “Tn”
+  - Replace with: “Ti”
+  - Replace with: “Th”
 
 
 
@@ -7092,8 +7122,8 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
-  - Replace with: “J”
+  - Replace with: “Jo”
+  - Replace with: “Jr”
   - Replace with: “JD”
 
 
@@ -7152,9 +7182,9 @@ Message: |
     5172 | Roosevelt and then to Gad’s Hill, where he bought a sandwich that he didn’t eat,
          |                       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Ga's”
-  - Replace with: “Gd's”
   - Replace with: “Gab's”
+  - Replace with: “Gd's”
+  - Replace with: “Ga's”
 
 
 
@@ -7164,9 +7194,9 @@ Message: |
     5174 | reach Gad’s Hill until noon. Thus far there was no difficulty in accounting for
          |       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Ga's”
-  - Replace with: “Gd's”
   - Replace with: “Gab's”
+  - Replace with: “Gd's”
+  - Replace with: “Ga's”
 
 
 
@@ -7410,7 +7440,7 @@ Message: |
 Suggest:
   - Replace with: “eta”
   - Replace with: “etc.”
-  - Replace with: “etch”
+  - Replace with: “ethic”
 
 
 
@@ -7489,9 +7519,9 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
-  - Replace with: “Cw”
-  - Replace with: “Cc”
-  - Replace with: “Ch”
+  - Replace with: “Cu”
+  - Replace with: “CI”
+  - Replace with: “Ce”
 
 
 
@@ -7501,9 +7531,9 @@ Message: |
          |                                                                 ^~~~ Did you mean to spell `Gatz` this way?
     5353 | from a town in Minnesota. It said only that the sender was leaving immediately
 Suggest:
+  - Replace with: “Garth”
+  - Replace with: “Goth”
   - Replace with: “Ga's”
-  - Replace with: “Gate”
-  - Replace with: “GHz”
 
 
 
@@ -7532,9 +7562,9 @@ Message: |
     5385 | After a little while Mr. Gatz opened the door and came out, his mouth ajar, his
          |                          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
+  - Replace with: “Garth”
+  - Replace with: “Goth”
   - Replace with: “Ga's”
-  - Replace with: “Gate”
-  - Replace with: “GHz”
 
 
 
@@ -7567,9 +7597,9 @@ Message: |
     5396 | “Gatz is my name.”
          |  ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
+  - Replace with: “Garth”
+  - Replace with: “Goth”
   - Replace with: “Ga's”
-  - Replace with: “Gate”
-  - Replace with: “GHz”
 
 
 
@@ -7578,9 +7608,9 @@ Message: |
     5398 | “—Mr. Gatz. I thought you might want to take the body West.”
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
+  - Replace with: “Garth”
+  - Replace with: “Goth”
   - Replace with: “Ga's”
-  - Replace with: “Gate”
-  - Replace with: “GHz”
 
 
 
@@ -7596,8 +7626,8 @@ Message: |
     5412 | “If he’d of lived, he’d of been a great man. A man like James J. Hill. He’d of
          |                                                               ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
-  - Replace with: “J”
+  - Replace with: “Jo”
+  - Replace with: “Jr”
   - Replace with: “JD”
 
 
@@ -7626,7 +7656,7 @@ Message: |
 Suggest:
   - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
 
 
 
@@ -7635,9 +7665,9 @@ Message: |
     5455 | and I’m sort of helpless without them. My address is care of B. F.———”
          |                                                                 ^~ Did you mean to spell `F.` this way?
 Suggest:
-  - Replace with: “Ft”
+  - Replace with: “Fe”
   - Replace with: “F”
-  - Replace with: “Fa”
+  - Replace with: “Ff”
 
 
 
@@ -7766,9 +7796,9 @@ Message: |
     5509 | on have some lunch with me,’ I sid. He ate more than four dollars’ worth of food
          |                                ^~~ Did you mean to spell `sid` this way?
 Suggest:
-  - Replace with: “sad”
   - Replace with: “said”
   - Replace with: “sic”
+  - Replace with: “side”
 
 
 
@@ -7824,9 +7854,9 @@ Message: |
          |                                                                   ^~~~ Did you mean to spell `Gatz` this way?
     5560 | up and down excitedly in the hall. His pride in his son and in his son’s
 Suggest:
+  - Replace with: “Garth”
+  - Replace with: “Goth”
   - Replace with: “Ga's”
-  - Replace with: “Gate”
-  - Replace with: “GHz”
 
 
 
@@ -7939,9 +7969,9 @@ Message: |
     5629 | then Mr. Gatz and the minister and I in the limousine, and a little later four
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
+  - Replace with: “Garth”
+  - Replace with: “Goth”
   - Replace with: “Ga's”
-  - Replace with: “Gate”
-  - Replace with: “GHz”
 
 
 
@@ -8183,8 +8213,8 @@ Message: |
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
   - Replace with: “Ell”
-  - Replace with: “E”
   - Replace with: “Ea”
+  - Replace with: “E”
 
 
 

@@ -118,4 +118,13 @@ mod tests {
             "Really excited for this.",
         );
     }
+
+    #[test]
+    fn issue_2181() {
+        assert_suggestion_result(
+            "AFAIK, we don't currently have an issue for it.",
+            lint_group(),
+            "As far as i know, we don't currently have an issue for it.",
+        );
+    }
 }
