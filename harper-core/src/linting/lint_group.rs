@@ -659,7 +659,7 @@ impl LintGroup {
             }
         }
 
-        // Pattern linters
+        // Expr linters
         for chunk in document.iter_chunks() {
             let Some(chunk_span) = chunk.span() else {
                 continue;
