@@ -29,6 +29,9 @@ test('Hacker News wraps correctly', async ({ page }) => {
 	await page.waitForTimeout(2000);
 	await page.reload();
 
+	// Needed because this element has a variable height and may offset the highlight boxes by an unknown amount.
+	await page.locator('.toptext').evaluate((el) => el.remove());
+
 	const editor = getTextarea(page);
 	await replaceEditorContent(
 		editor,
@@ -48,6 +51,9 @@ test('Hacker News scrolls correctly', async ({ page }) => {
 
 	await page.waitForTimeout(2000);
 	await page.reload();
+
+	// Needed because this element has a variable height and may offset the highlight boxes by an unknown amount.
+	await page.locator('.toptext').evaluate((el) => el.remove());
 
 	const editor = getTextarea(page);
 	await replaceEditorContent(
