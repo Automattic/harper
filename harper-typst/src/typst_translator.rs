@@ -152,15 +152,17 @@ impl<'a> TypstTranslator<'a> {
             };
         }
 
-        fn parbreak() -> Option<Vec<Token>> {
+        fn parbreak(pos: usize) -> Option<Vec<Token>> {
             Some(vec![Token {
-                span: harper_core::Span::EMPTY,
+                span: harper_core::Span::empty(pos),
                 kind: TokenKind::ParagraphBreak,
             }])
         }
 
         fn isolate(inner: Option<Vec<Token>>) -> Option<Vec<Token>> {
-            merge![parbreak(), inner, parbreak()]
+            let start = inner.as_ref()?.first().map_or(0, |token| token.span.start);
+            let end = inner.as_ref()?.last().map_or(0, |token| token.span.end);
+            merge![parbreak(start), inner, parbreak(end)]
         }
 
         // Recurse on each element of an iterator

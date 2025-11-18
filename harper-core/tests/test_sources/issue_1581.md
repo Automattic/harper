@@ -1,0 +1,3 @@
+Simple walkthroughs with...
+
+The above phrase supposedly threw an error in an older version of Harper.

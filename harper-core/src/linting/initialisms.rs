@@ -28,6 +28,7 @@ pub fn lint_group() -> LintGroup {
         "NeverMind"          => ("nvm", "never mind"),
         "ToBeHonest"         => ("tbh", "to be honest"),
         "AsFarAsIKnow"       => ("afaik", "as far as I know"),
+        "Really"             => ("rly", "really"),
     });
 
     group.set_all_rules_to(Some(true));
@@ -106,6 +107,24 @@ mod tests {
             "Tbh, I'm not impressed.",
             lint_group(),
             "To be honest, I'm not impressed.",
+        );
+    }
+
+    #[test]
+    fn corrects_rly() {
+        assert_suggestion_result(
+            "Rly excited for this.",
+            lint_group(),
+            "Really excited for this.",
+        );
+    }
+
+    #[test]
+    fn issue_2181() {
+        assert_suggestion_result(
+            "AFAIK, we don't currently have an issue for it.",
+            lint_group(),
+            "As far as i know, we don't currently have an issue for it.",
         );
     }
 }

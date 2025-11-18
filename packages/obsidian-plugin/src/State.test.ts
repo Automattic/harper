@@ -2,6 +2,15 @@ import { shuffle } from 'lodash-es';
 import { expect, test } from 'vitest';
 import State from './State';
 
+function randomString(length: number): string {
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	let result = '';
+	for (let i = 0; i < length; i++) {
+		result += chars.charAt(Math.floor(Math.random() * chars.length));
+	}
+	return result;
+}
+
 /** Create an instance of the test class that doesn't use external persistence. */
 function createEphemeralState(): State {
 	return new State(
@@ -156,4 +165,61 @@ test('getEffectiveLintConfig reflects explicit overrides', async () => {
 	for (const k of Object.keys(effective)) {
 		expect(effective[k]).toBe(true);
 	}
+});
+
+test('can persist dictionary words in settings', async () => {
+	const state = createEphemeralState();
+	let settings = await state.getSettings();
+
+	const testWord = 'ajhsbdajshdb';
+	settings.userDictionary = [testWord];
+
+	await state.initializeFromSettings(settings);
+
+	settings = await state.getSettings();
+
+	expect(settings.userDictionary).toStrictEqual([testWord]);
+});
+
+test('can persist dictionary order in settings', async () => {
+	const state = createEphemeralState();
+	let settings = await state.getSettings();
+
+	const testDictionary: string[] = [];
+	for (let i = 0; i < 200; i++) {
+		testDictionary.push(randomString(10));
+	}
+
+	settings.userDictionary = testDictionary;
+	await state.initializeFromSettings(settings);
+
+	settings = await state.getSettings();
+
+	const roundOne = settings.userDictionary;
+
+	await state.initializeFromSettings(settings);
+	settings = await state.getSettings();
+	const roundTwo = settings.userDictionary;
+
+	expect(roundOne).toStrictEqual(roundTwo);
+});
+
+test('can overwrite dictionary words in settings', async () => {
+	const state = createEphemeralState();
+	let settings = await state.getSettings();
+
+	const testWord = 'ajhsbdajshdb';
+	settings.userDictionary = [testWord];
+
+	await state.initializeFromSettings(settings);
+	settings = await state.getSettings();
+
+	expect(settings.userDictionary).toStrictEqual([testWord]);
+
+	settings.userDictionary = [];
+
+	await state.initializeFromSettings(settings);
+	settings = await state.getSettings();
+
+	expect(settings.userDictionary).toStrictEqual([]);
 });

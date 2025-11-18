@@ -7,6 +7,7 @@ use std::sync::Arc;
 use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Parser, PlainEnglish};
+use harper_core::remove_overlaps_map;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
@@ -250,6 +251,44 @@ impl Linter {
         ctx.default_hash()
     }
 
+    pub fn organized_lints(&mut self, text: String, language: Language) -> Vec<OrganizedGroup> {
+        let source: Vec<_> = text.chars().collect();
+        let source = Lrc::new(source);
+
+        let parser = language.create_parser();
+
+        let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
+
+        let temp = self.lint_group.config.clone();
+        self.lint_group.config.fill_with_curated();
+
+        let mut lints = self.lint_group.organized_lints(&document);
+
+        self.lint_group.config = temp;
+
+        for value in lints.values_mut() {
+            self.ignored_lints.remove_ignored(value, &document);
+        }
+
+        remove_overlaps_map(&mut lints);
+
+        lints
+            .into_iter()
+            .map(|(s, ls)| OrganizedGroup {
+                group: s,
+                lints: ls
+                    .into_iter()
+                    .map(|l| {
+                        let problem_text = l.span.get_content_string(&source);
+                        let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+
+                        Lint::new(l, span, problem_text, language)
+                    })
+                    .collect(),
+            })
+            .collect()
+    }
+
     /// Perform the configured linting on the provided text.
     pub fn lint(&mut self, text: String, language: Language) -> Vec<Lint> {
         let source: Vec<_> = text.chars().collect();
@@ -266,15 +305,15 @@ impl Linter {
 
         self.lint_group.config = temp;
 
-        remove_overlaps(&mut lints);
-
         self.ignored_lints.remove_ignored(&mut lints, &document);
+        remove_overlaps(&mut lints);
 
         lints
             .into_iter()
             .map(|l| {
                 let problem_text = l.span.get_content_string(&source);
-                Lint::new(l, problem_text, language)
+                let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                Lint::new(l, span, problem_text, language)
             })
             .collect()
     }
@@ -295,6 +334,12 @@ impl Linter {
 
     pub fn clear_ignored_lints(&mut self) {
         self.ignored_lints = IgnoredLints::new();
+    }
+
+    /// Clear the user dictionary.
+    pub fn clear_words(&mut self) {
+        self.user_dictionary = MutableDictionary::new();
+        self.synchronize_lint_dict();
     }
 
     /// Import words into the dictionary.
@@ -425,10 +470,12 @@ impl Suggestion {
 /// An error found in provided text.
 ///
 /// May include zero or more suggestions that may fix the problematic text.
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 #[wasm_bindgen]
 pub struct Lint {
     inner: harper_core::linting::Lint,
+    /// Indexed in a proverbial JS string
+    span: Span,
     /// The problematic text that produced this lint.
     problem_text: String,
     language: Language,
@@ -438,11 +485,13 @@ pub struct Lint {
 impl Lint {
     pub(crate) fn new(
         inner: harper_core::linting::Lint,
+        span: Span,
         problem_text: String,
         language: Language,
     ) -> Self {
         Self {
             inner,
+            span,
             problem_text,
             language,
         }
@@ -479,7 +528,7 @@ impl Lint {
 
     /// Get the location of the problematic text.
     pub fn span(&self) -> Span {
-        self.inner.span.into()
+        self.span
     }
 
     /// Get a description of the error.
@@ -491,6 +540,13 @@ impl Lint {
     pub fn message_html(&self) -> String {
         self.inner.message_html()
     }
+}
+
+/// Convert Harper's character index into a UTF-16 code unit index understood by JS.
+fn char_idx_to_js_str_idx(char_idx: usize, char_str: &[char]) -> usize {
+    char_str.iter().take(char_idx).fold(0usize, |acc, ch| {
+        acc + if (*ch as u32) <= 0xFFFF { 1 } else { 2 }
+    })
 }
 
 #[wasm_bindgen]
@@ -535,6 +591,15 @@ impl Span {
     }
 }
 
+impl Span {
+    pub fn to_js_indices(&self, source: &[char]) -> Self {
+        Self::new(
+            char_idx_to_js_str_idx(self.start, source),
+            char_idx_to_js_str_idx(self.end, source),
+        )
+    }
+}
+
 impl From<Span> for harper_core::Span<char> {
     fn from(value: Span) -> Self {
         harper_core::Span::new(value.start, value.end)
@@ -545,4 +610,14 @@ impl From<harper_core::Span<char>> for Span {
     fn from(value: harper_core::Span<char>) -> Self {
         Span::new(value.start, value.end)
     }
+}
+
+/// Used exclusively for [`Linter::organized_lints`]
+#[wasm_bindgen]
+#[derive(Serialize, Deserialize, Clone)]
+pub struct OrganizedGroup {
+    #[wasm_bindgen(getter_with_clone)]
+    pub group: String,
+    #[wasm_bindgen(getter_with_clone)]
+    pub lints: Vec<Lint>,
 }

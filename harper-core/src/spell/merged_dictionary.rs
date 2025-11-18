@@ -94,10 +94,10 @@ impl Dictionary for MergedDictionary {
         false
     }
 
-    fn get_lexeme_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
         self.children
             .iter()
-            .filter_map(|d| d.get_lexeme_metadata(word))
+            .filter_map(|d| d.get_word_metadata(word))
             .reduce(|acc, md| Cow::Owned(acc.or(&md)))
     }
 
@@ -115,9 +115,9 @@ impl Dictionary for MergedDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_lexeme_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
         let chars: CharString = word.chars().collect();
-        self.get_lexeme_metadata(&chars)
+        self.get_word_metadata(&chars)
     }
 
     fn fuzzy_match(
@@ -129,6 +129,8 @@ impl Dictionary for MergedDictionary {
         self.children
             .iter()
             .flat_map(|d| d.fuzzy_match(word, max_distance, max_results))
+            .sorted_by_key(|r| r.word)
+            .dedup_by(|a, b| a.word == b.word)
             .sorted_by_key(|r| r.edit_distance)
             .take(max_results)
             .collect()
@@ -143,6 +145,8 @@ impl Dictionary for MergedDictionary {
         self.children
             .iter()
             .flat_map(|d| d.fuzzy_match_str(word, max_distance, max_results))
+            .sorted_by_key(|r| r.word)
+            .dedup_by(|a, b| a.word == b.word)
             .sorted_by_key(|r| r.edit_distance)
             .take(max_results)
             .collect()
@@ -156,5 +160,23 @@ impl Dictionary for MergedDictionary {
         self.children
             .iter()
             .find_map(|dict| dict.get_word_from_id(id))
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.children
+            .iter()
+            .flat_map(|dict| dict.find_words_with_prefix(prefix))
+            .sorted()
+            .dedup()
+            .collect()
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.children
+            .iter()
+            .flat_map(|dict| dict.find_words_with_common_prefix(word))
+            .sorted()
+            .dedup()
+            .collect()
     }
 }

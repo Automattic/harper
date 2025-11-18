@@ -73,17 +73,22 @@ impl ExprLinter for AllIntentsAndPurposes {
             .map(|s| Suggestion::replace_with_match_case_str(s, whole_span.get_content(src)))
             .collect::<Vec<_>>();
 
+        let message = format!(
+            "The correct form is '{} all intents and purposes'.",
+            prep_text.iter().collect::<String>().to_ascii_lowercase()
+        );
+
         Some(Lint {
             span: whole_span,
             lint_kind: LintKind::Nonstandard,
             suggestions: suggs,
-            message: "The time period is redundant because it repeats what's already specified by the AM/PM indicator.".to_owned(),
+            message,
             priority: 50,
         })
     }
 
     fn description(&self) -> &'static str {
-        "Finds redundant am/pm indicators used together with time periods such as 'in the morning' or 'at night'."
+        "Finds and corrects common wrong forms of the phrase 'for all intents and purposes' / 'to all intents and purposes'."
     }
 }
 

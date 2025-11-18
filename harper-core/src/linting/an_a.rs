@@ -2,6 +2,7 @@ use std::borrow::Cow;
 
 use itertools::Itertools;
 
+use crate::char_ext::CharExt;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::{Document, TokenStringExt};
 
@@ -98,7 +99,7 @@ fn to_lower_word(word: &[char]) -> Cow<'_, [char]> {
 fn starts_with_vowel(word: &[char]) -> bool {
     let is_likely_initialism = word.iter().all(|c| !c.is_alphabetic() || c.is_uppercase());
 
-    if is_likely_initialism && !word.is_empty() {
+    if is_likely_initialism && !word.is_empty() && !is_likely_acronym(word) {
         return matches!(
             word[0],
             'A' | 'E' | 'F' | 'H' | 'I' | 'L' | 'M' | 'N' | 'O' | 'R' | 'S' | 'X'
@@ -107,6 +108,10 @@ fn starts_with_vowel(word: &[char]) -> bool {
 
     let word = to_lower_word(word);
     let word = word.as_ref();
+
+    if matches!(word, ['e', 'u', 'l', 'e', ..]) {
+        return true;
+    }
 
     if matches!(
         word,
@@ -191,6 +196,18 @@ fn starts_with_vowel(word: &[char]) -> bool {
     )
 }
 
+fn is_likely_acronym(word: &[char]) -> bool {
+    // If it's three letters or longer, and the first two letters are not consonants, the initialism might be an acronym.
+    // (Like MAC, NASA, LAN, etc.)
+    word.get(..3).is_some_and(|first_chars| {
+        first_chars
+            .iter()
+            .take(2)
+            .fold(0, |acc, char| acc + !char.is_vowel() as u8)
+            < 2
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::AnA;
@@ -209,6 +226,12 @@ mod tests {
     #[test]
     fn detects_llm_hyphen_as_vowel() {
         assert_lint_count("Here is a LLM-based system.", AnA, 1);
+    }
+
+    #[test]
+    fn detects_euler_as_vowel() {
+        assert_lint_count("This is an Euler brick.", AnA, 0);
+        assert_lint_count("The graph has an Eulerian tour.", AnA, 0);
     }
 
     #[test]
@@ -288,5 +311,24 @@ mod tests {
     #[test]
     fn disallow_a_mp_and_a_mp3() {
         assert_lint_count("a MP and a MP3?", AnA, 2);
+    }
+
+    #[test]
+    fn recognize_acronyms() {
+        // a
+        assert_lint_count("using a MAC address", AnA, 0);
+        assert_lint_count("a NASA spacecraft", AnA, 0);
+        assert_lint_count("a NAT", AnA, 0);
+        assert_lint_count("a REST API", AnA, 0);
+        assert_lint_count("a LIBERO", AnA, 0);
+        assert_lint_count("a README", AnA, 0);
+        assert_lint_count("a LAN", AnA, 0);
+
+        // an
+        assert_lint_count("an RA message", AnA, 0);
+        assert_lint_count("an SI unit", AnA, 0);
+        assert_lint_count("he is an MA of both Oxford and Cambridge", AnA, 0);
+        assert_lint_count("in an FA Cup 6th Round match", AnA, 0);
+        assert_lint_count("a AM transmitter", AnA, 1);
     }
 }

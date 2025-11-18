@@ -17,7 +17,7 @@ use super::dictionary::Dictionary;
 /// A basic dictionary that allows words to be added after instantiating.
 /// This is useful for user and file dictionaries that may change at runtime.
 ///
-/// For immutable use-cases, such as the curated dictionary, prefer [`super::FstDictionary`],
+/// For immutable use-cases that require fuzzy lookups, such as the curated dictionary, prefer [`super::FstDictionary`],
 /// as it is much faster.
 ///
 /// To combine the contents of multiple dictionaries, regardless of type, use
@@ -108,7 +108,7 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_lexeme_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
         self.word_map
             .get_with_chars(word)
             .map(|v| Cow::Borrowed(&v.metadata))
@@ -123,9 +123,9 @@ impl Dictionary for MutableDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_lexeme_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
         let chars: CharString = word.chars().collect();
-        self.get_lexeme_metadata(&chars)
+        self.get_word_metadata(&chars)
     }
 
     fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
@@ -188,7 +188,7 @@ impl Dictionary for MutableDictionary {
             .map(|(word, edit_distance)| FuzzyMatchResult {
                 word,
                 edit_distance,
-                metadata: self.get_lexeme_metadata(word).unwrap(),
+                metadata: self.get_word_metadata(word).unwrap(),
             })
             .collect()
     }
@@ -235,6 +235,34 @@ impl Dictionary for MutableDictionary {
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
         self.word_map.get(id).map(|w| w.canonical_spelling.as_ref())
     }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        let mut found = Vec::new();
+
+        for word in self.words_iter() {
+            if let Some(item_prefix) = word.get(0..prefix.len())
+                && item_prefix == prefix
+            {
+                found.push(Cow::Borrowed(word));
+            }
+        }
+
+        found
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        let mut found = Vec::new();
+
+        for item in self.words_iter() {
+            if let Some(item_prefix) = word.get(0..item.len())
+                && item_prefix == item
+            {
+                found.push(Cow::Borrowed(item));
+            }
+        }
+
+        found
+    }
 }
 
 impl From<MutableDictionary> for FstDictionary {
@@ -251,10 +279,13 @@ impl From<MutableDictionary> for FstDictionary {
 
 #[cfg(test)]
 mod tests {
+    use std::borrow::Cow;
+
     use hashbrown::HashSet;
     use itertools::Itertools;
 
     use crate::spell::{Dictionary, MutableDictionary};
+    use crate::{DictWordMetadata, char_string::char_string};
 
     #[test]
     fn curated_contains_no_duplicates() {
@@ -275,23 +306,15 @@ mod tests {
     #[test]
     fn this_is_determiner() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_lexeme_metadata_str("this")
-                .unwrap()
-                .is_determiner()
-        );
-        assert!(
-            dict.get_lexeme_metadata_str("This")
-                .unwrap()
-                .is_determiner()
-        );
+        assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
+        assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
     }
 
     #[test]
     fn several_is_quantifier() {
         let dict = MutableDictionary::curated();
         assert!(
-            dict.get_lexeme_metadata_str("several")
+            dict.get_word_metadata_str("several")
                 .unwrap()
                 .is_quantifier()
         );
@@ -300,47 +323,27 @@ mod tests {
     #[test]
     fn few_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_lexeme_metadata_str("few").unwrap().is_quantifier());
+        assert!(dict.get_word_metadata_str("few").unwrap().is_quantifier());
     }
 
     #[test]
     fn fewer_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_lexeme_metadata_str("fewer")
-                .unwrap()
-                .is_quantifier()
-        );
+        assert!(dict.get_word_metadata_str("fewer").unwrap().is_quantifier());
     }
 
     #[test]
     fn than_is_conjunction() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_lexeme_metadata_str("than")
-                .unwrap()
-                .is_conjunction()
-        );
-        assert!(
-            dict.get_lexeme_metadata_str("Than")
-                .unwrap()
-                .is_conjunction()
-        );
+        assert!(dict.get_word_metadata_str("than").unwrap().is_conjunction());
+        assert!(dict.get_word_metadata_str("Than").unwrap().is_conjunction());
     }
 
     #[test]
     fn herself_is_pronoun() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_lexeme_metadata_str("herself")
-                .unwrap()
-                .is_pronoun()
-        );
-        assert!(
-            dict.get_lexeme_metadata_str("Herself")
-                .unwrap()
-                .is_pronoun()
-        );
+        assert!(dict.get_word_metadata_str("herself").unwrap().is_pronoun());
+        assert!(dict.get_word_metadata_str("Herself").unwrap().is_pronoun());
     }
 
     #[test]
@@ -352,7 +355,7 @@ mod tests {
     #[test]
     fn im_is_common() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_lexeme_metadata_str("I'm").unwrap().common);
+        assert!(dict.get_word_metadata_str("I'm").unwrap().common);
     }
 
     #[test]
@@ -373,8 +376,8 @@ mod tests {
     fn there_is_not_a_pronoun() {
         let dict = MutableDictionary::curated();
 
-        assert!(!dict.get_lexeme_metadata_str("there").unwrap().is_nominal());
-        assert!(!dict.get_lexeme_metadata_str("there").unwrap().is_pronoun());
+        assert!(!dict.get_word_metadata_str("there").unwrap().is_nominal());
+        assert!(!dict.get_word_metadata_str("there").unwrap().is_pronoun());
     }
 
     #[test]
@@ -400,7 +403,7 @@ mod tests {
     fn curated_contains_possessive_abandonment() {
         assert!(
             MutableDictionary::curated()
-                .get_lexeme_metadata_str("abandonment's")
+                .get_word_metadata_str("abandonment's")
                 .unwrap()
                 .is_possessive_noun()
         )
@@ -410,7 +413,7 @@ mod tests {
     fn has_is_not_a_nominal() {
         let dict = MutableDictionary::curated();
 
-        let has = dict.get_lexeme_metadata_str("has");
+        let has = dict.get_word_metadata_str("has");
         assert!(has.is_some());
 
         assert!(!has.unwrap().is_nominal())
@@ -420,7 +423,7 @@ mod tests {
     fn is_is_linking_verb() {
         let dict = MutableDictionary::curated();
 
-        let is = dict.get_lexeme_metadata_str("is");
+        let is = dict.get_word_metadata_str("is");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_linking_verb());
@@ -444,16 +447,47 @@ mod tests {
     fn apart_is_not_noun() {
         let dict = MutableDictionary::curated();
 
-        assert!(!dict.get_lexeme_metadata_str("apart").unwrap().is_noun());
+        assert!(!dict.get_word_metadata_str("apart").unwrap().is_noun());
     }
 
     #[test]
     fn be_is_verb_lemma() {
         let dict = MutableDictionary::curated();
 
-        let is = dict.get_lexeme_metadata_str("be");
+        let is = dict.get_word_metadata_str("be");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_verb_lemma());
+    }
+
+    #[test]
+    fn gets_prefixes_as_expected() {
+        let mut dict = MutableDictionary::new();
+        dict.append_word_str("predict", DictWordMetadata::default());
+        dict.append_word_str("prelude", DictWordMetadata::default());
+        dict.append_word_str("preview", DictWordMetadata::default());
+        dict.append_word_str("dwight", DictWordMetadata::default());
+
+        let with_prefix = dict.find_words_with_prefix(char_string!("pre").as_slice());
+
+        assert_eq!(with_prefix.len(), 3);
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("predict").into_vec())));
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("prelude").into_vec())));
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("preview").into_vec())));
+    }
+
+    #[test]
+    fn gets_common_prefixes_as_expected() {
+        let mut dict = MutableDictionary::new();
+        dict.append_word_str("pre", DictWordMetadata::default());
+        dict.append_word_str("prep", DictWordMetadata::default());
+        dict.append_word_str("dwight", DictWordMetadata::default());
+
+        let with_prefix =
+            dict.find_words_with_common_prefix(char_string!("preposition").as_slice());
+
+        assert_eq!(with_prefix.len(), 2);
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("pre").into_vec())));
+        assert!(with_prefix.contains(&Cow::Owned(char_string!("prep").into_vec())));
     }
 }

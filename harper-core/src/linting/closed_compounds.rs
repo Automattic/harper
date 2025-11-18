@@ -36,7 +36,6 @@ pub fn lint_group() -> LintGroup {
         "Insofar"         => ("in so far", "insofar"),
         "Instead"         => ("in stead", "instead"),
         "Intact"          => ("in tact", "intact"),
-        "Into"            => ("in to", "into"),
         "Itself"          => ("it self", "itself"),
         "Laptop"          => ("lap top", "laptop"),
         "Middleware"      => ("middle ware", "middleware"),

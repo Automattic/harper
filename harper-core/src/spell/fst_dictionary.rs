@@ -54,7 +54,7 @@ impl FstDictionary {
         (*DICT).clone()
     }
 
-    /// Construct a new [`FstDictionary`] using a word list as a source.
+    /// Construct a new [`FstDictionary`] using a wordlist as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
     pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {
         words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
@@ -121,12 +121,12 @@ impl Dictionary for FstDictionary {
         self.mutable_dict.contains_word_str(word)
     }
 
-    fn get_lexeme_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.mutable_dict.get_lexeme_metadata(word)
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.mutable_dict.get_word_metadata(word)
     }
 
-    fn get_lexeme_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        self.mutable_dict.get_lexeme_metadata_str(word)
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        self.mutable_dict.get_word_metadata_str(word)
     }
 
     fn fuzzy_match(
@@ -213,6 +213,14 @@ impl Dictionary for FstDictionary {
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
         self.mutable_dict.get_word_from_id(id)
     }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.mutable_dict.find_words_with_prefix(prefix)
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.mutable_dict.find_words_with_common_prefix(word)
+    }
 }
 
 #[cfg(test)]
@@ -256,10 +264,7 @@ mod tests {
             dbg!(&misspelled_lower);
 
             assert!(!misspelled_word.is_empty());
-            assert!(
-                dict.word_map.contains_key(misspelled_word)
-                    || dict.word_map.contains_key(misspelled_lower)
-            );
+            assert!(dict.word_map.contains_key(misspelled_word));
         }
     }
 
@@ -283,7 +288,7 @@ mod tests {
     fn on_is_not_nominal() {
         let dict = FstDictionary::curated();
 
-        assert!(!dict.get_lexeme_metadata_str("on").unwrap().is_nominal());
+        assert!(!dict.get_word_metadata_str("on").unwrap().is_nominal());
     }
 
     #[test]
@@ -316,7 +321,7 @@ mod tests {
         for contraction in contractions {
             dbg!(contraction);
             assert!(
-                dict.get_lexeme_metadata_str(contraction)
+                dict.get_word_metadata_str(contraction)
                     .unwrap()
                     .derived_from
                     .is_none()
@@ -329,7 +334,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_lexeme_metadata_str("llamas")
+            dict.get_word_metadata_str("llamas")
                 .unwrap()
                 .derived_from
                 .unwrap(),
@@ -342,7 +347,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_lexeme_metadata_str("cats")
+            dict.get_word_metadata_str("cats")
                 .unwrap()
                 .derived_from
                 .unwrap(),
@@ -355,7 +360,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_lexeme_metadata_str("unhappy")
+            dict.get_word_metadata_str("unhappy")
                 .unwrap()
                 .derived_from
                 .unwrap(),
@@ -368,7 +373,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_lexeme_metadata_str("quickly")
+            dict.get_word_metadata_str("quickly")
                 .unwrap()
                 .derived_from
                 .unwrap(),

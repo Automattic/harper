@@ -1,5 +1,5 @@
 import { Animate, CheckboxControl } from '@wordpress/components';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLinter } from './LinterProvider';
 
 export default function LintSettingRow({

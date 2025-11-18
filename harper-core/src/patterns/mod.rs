@@ -8,12 +8,14 @@
 use crate::{Document, LSend, Span, Token};
 
 mod any_pattern;
+mod derived_from;
 mod implies_quantity;
 mod indefinite_article;
 mod inflection_of_be;
 mod invert;
 mod modal_verb;
 mod nominal_phrase;
+mod prepositional_preceder;
 mod upos_set;
 mod whitespace_pattern;
 mod within_edit_distance;
@@ -21,12 +23,14 @@ mod word;
 mod word_set;
 
 pub use any_pattern::AnyPattern;
+pub use derived_from::DerivedFrom;
 pub use implies_quantity::ImpliesQuantity;
 pub use indefinite_article::IndefiniteArticle;
 pub use inflection_of_be::InflectionOfBe;
 pub use invert::Invert;
 pub use modal_verb::ModalVerb;
 pub use nominal_phrase::NominalPhrase;
+pub use prepositional_preceder::{PrepositionalPrecederPattern, prepositional_preceder};
 pub use upos_set::UPOSSet;
 pub use whitespace_pattern::WhitespacePattern;
 pub use within_edit_distance::WithinEditDistance;

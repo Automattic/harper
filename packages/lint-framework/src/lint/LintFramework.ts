@@ -3,7 +3,7 @@ import computeLintBoxes from './computeLintBoxes';
 import { isVisible } from './domUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
-import type { UnpackedLint } from './unpackLint';
+import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
 
@@ -18,34 +18,35 @@ export default class LintFramework {
 	private popupHandler: PopupHandler;
 	private targets: Set<Node>;
 	private scrollableAncestors: Set<HTMLElement>;
-	private scrollPositions: Map<HTMLElement, { left: number; top: number }>;
 	private lintRequested = false;
 	private renderRequested = false;
-	private lastLints: { target: HTMLElement; lints: UnpackedLint[] }[] = [];
-	private lastBoxes: IgnorableLintBox[] = [];
+	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
+	private lastLintBoxes: IgnorableLintBox[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
-	/** Scroll handler used to register/deregister scroll listeners. */
-	private scrollEventCallback: (ev: Event) => void;
 
 	/** Function used to fetch lints for a given text/domain. */
-	private lintProvider: (text: string, domain: string) => Promise<UnpackedLint[]>;
+	private lintProvider: (text: string, domain: string) => Promise<UnpackedLintGroups>;
 	/** Actions wired by host environment (extension/app). */
 	private actions: {
 		ignoreLint?: (hash: string) => Promise<void>;
 		getActivationKey?: () => Promise<ActivationKey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
+		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 	};
 
 	constructor(
-		lintProvider: (text: string, domain: string) => Promise<UnpackedLint[]>,
+		lintProvider: (text: string, domain: string) => Promise<UnpackedLintGroups>,
 		actions: {
 			ignoreLint?: (hash: string) => Promise<void>;
 			getActivationKey?: () => Promise<ActivationKey>;
 			openOptions?: () => Promise<void>;
 			addToUserDictionary?: (words: string[]) => Promise<void>;
+			reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+			setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 		},
 	) {
 		this.lintProvider = lintProvider;
@@ -55,19 +56,15 @@ export default class LintFramework {
 			getActivationKey: actions.getActivationKey,
 			openOptions: actions.openOptions,
 			addToUserDictionary: actions.addToUserDictionary,
+			reportError: actions.reportError,
+			setRuleEnabled: actions.setRuleEnabled,
 		});
 		this.targets = new Set();
 		this.scrollableAncestors = new Set();
-		this.scrollPositions = new Map();
 		this.lastLints = [];
-		this.lastBoxes = [];
 
 		this.updateEventCallback = () => {
 			this.update();
-		};
-
-		this.scrollEventCallback = (ev: Event) => {
-			this.onAncestorScroll(ev);
 		};
 
 		const timeoutCallback = () => {
@@ -111,7 +108,7 @@ export default class LintFramework {
 			this.onScreenTargets().map(async (target) => {
 				if (!document.contains(target)) {
 					this.targets.delete(target);
-					return { target: null as HTMLElement | null, lints: [] as UnpackedLint[] };
+					return { target: null as HTMLElement | null, lints: {} };
 				}
 
 				const text =
@@ -120,11 +117,11 @@ export default class LintFramework {
 						: target.textContent;
 
 				if (!text || text.length > 120000) {
-					return { target: null as HTMLElement | null, lints: [] as UnpackedLint[] };
+					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				const lints = await this.lintProvider(text, window.location.hostname);
-				return { target: target as HTMLElement, lints };
+				const lintsBySource = await this.lintProvider(text, window.location.hostname);
+				return { target: target as HTMLElement, lints: lintsBySource };
 			}),
 		);
 
@@ -151,6 +148,11 @@ export default class LintFramework {
 		}
 	}
 
+	/** Return the last known ignorable lint boxes rendered on-screen. */
+	public getLastIgnorableLintBoxes(): IgnorableLintBox[] {
+		return this.lastLintBoxes;
+	}
+
 	private attachTargetListeners(target: Node) {
 		for (const event of INPUT_EVENTS) {
 			target.addEventListener(event, this.updateEventCallback);
@@ -170,15 +172,7 @@ export default class LintFramework {
 		for (const el of scrollableAncestors) {
 			if (!this.scrollableAncestors.has(el as HTMLElement)) {
 				this.scrollableAncestors.add(el as HTMLElement);
-				// Initialize scroll position tracking
-				const scroller = el as HTMLElement;
-				this.scrollPositions.set(scroller, {
-					left: scroller.scrollLeft,
-					top: scroller.scrollTop,
-				});
-
-				// Listen for scroll with immediate highlight shift
-				(el as HTMLElement).addEventListener('scroll', this.scrollEventCallback, {
+				(el as HTMLElement).addEventListener('scroll', this.updateEventCallback, {
 					capture: true,
 					passive: true,
 				});
@@ -198,47 +192,6 @@ export default class LintFramework {
 		}
 	}
 
-	/**
-	 * Handle scrolls on tracked ancestor elements by shifting the last-rendered
-	 * boxes immediately by the scroll delta, then schedule a full recompute.
-	 */
-	private onAncestorScroll(ev: Event) {
-		const scroller = ev.target as HTMLElement | null;
-		if (!scroller) return;
-
-		const prev = this.scrollPositions.get(scroller);
-		const current = { left: scroller.scrollLeft, top: scroller.scrollTop };
-		if (!prev) {
-			this.scrollPositions.set(scroller, current);
-			this.updateEventCallback();
-			return;
-		}
-
-		const dx = current.left - prev.left;
-		const dy = current.top - prev.top;
-
-		// Update stored position immediately
-		this.scrollPositions.set(scroller, current);
-
-		if ((dx !== 0 || dy !== 0) && this.lastBoxes.length > 0) {
-			// Shift only boxes whose source is within this scroller
-			const adjusted: IgnorableLintBox[] = this.lastBoxes.map((b) => {
-				const sourceEl = b.source as any as HTMLElement;
-				if (sourceEl && scroller.contains(sourceEl)) {
-					return { ...b, x: b.x - dx, y: b.y - dy };
-				}
-				return b;
-			});
-
-			// Render immediately so highlights track content without visible lag
-			this.highlights.renderLintBoxes(adjusted);
-			this.popupHandler.updateLintBoxes(adjusted);
-		}
-
-		// Continue with normal update to recompute accurate layout
-		this.updateEventCallback();
-	}
-
 	private requestRender() {
 		if (this.renderRequested) {
 			return;
@@ -249,13 +202,16 @@ export default class LintFramework {
 		requestAnimationFrame(() => {
 			const boxes = this.lastLints.flatMap(({ target, lints }) =>
 				target
-					? lints.flatMap((l) =>
-							computeLintBoxes(target, l as any, { ignoreLint: this.actions.ignoreLint }),
+					? Object.entries(lints).flatMap(([ruleName, ls]) =>
+							ls.flatMap((l) =>
+								computeLintBoxes(target, l as any, ruleName, {
+									ignoreLint: this.actions.ignoreLint,
+								}),
+							),
 						)
 					: [],
 			);
-			// Save for immediate scroll adjustments
-			this.lastBoxes = boxes;
+			this.lastLintBoxes = boxes;
 			this.highlights.renderLintBoxes(boxes);
 			this.popupHandler.updateLintBoxes(boxes);
 
