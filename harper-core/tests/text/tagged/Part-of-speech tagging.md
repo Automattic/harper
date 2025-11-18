@@ -26,8 +26,8 @@
 #
 > Once  performed by      hand    , POS  tagging is  now        done      in      the context of computational
 # NSg/C VP/J      NSg/J/P NSg/VB+ . NSg+ NSg/Vg  VL3 NPr/VB/J/C NSg/VPp/J NPr/J/P D   N🅪Sg/VB P  J
-> linguistics , using   algorithms which associate discrete terms   , as    well     as    hidden
-# Nᴹ+         . Nᴹ/Vg/J NPl+       I/C+  NSg/VB/J+ J        NPl/V3+ . NSg/R NSg/VB/J NSg/R VB/J
+> linguistics , using   algorithms which associate discrete terms   , as    well       as    hidden
+# Nᴹ+         . Nᴹ/Vg/J NPl+       I/C+  NSg/VB/J+ J        NPl/V3+ . NSg/R NSg/VB/J/R NSg/R VB/J
 > parts  of speech   , by      a   set       of descriptive tags    . POS  - tagging algorithms fall     into
 # NPl/V3 P  N🅪Sg/VB+ . NSg/J/P D/P NPr/VBP/J P  NSg/J       NPl/V3+ . NSg+ . NSg/Vg  NPl+       N🅪Sg/VB+ P
 > two distinctive groups  : rule    - based and  stochastic . E. Brill's tagger , one        of the
@@ -116,8 +116,8 @@
 # R        VP/J      Nᴹ/Vg/J J/R  NPr/VB/J/P NPl       . NSg/I NSg/R ?      C/P NSg+     . NSg/VB+ .
 > Type    = common   , Gender     = masculine , Number      = singular , Case       = accusative , Animate
 # NSg/VB+ . NSg/VB/J . N🅪Sg/VB/J+ . NSg/J     . N🅪Sg/VB/JC+ . NSg/J    . NPr🅪Sg/VB+ . NSg/J      . VB/J
-> = no    .
-# . NPr/P .
+> = no       .
+# . NPr/Dq/P .
 >
 #
 > The most         popular " tag    set       " for POS  tagging for American English      is  probably the
@@ -147,7 +147,7 @@
 > as    Inuit languages may     be      virtually impossible . At    the other    extreme , Petrov et
 # NSg/R NPr/J NPl/V3+   NPr/VXB NSg/VXB R         NSg/J      . NSg/P D   NSg/VB/J NSg/J   . ?      ?
 > al. have    proposed a   " universal " tag     set       , with 12 categories ( for example , no
-# ?   NSg/VXB VP/J     D/P . NSg/J     . NSg/VB+ NPr/VBP/J . P    #  NPl+       . C/P NSg/VB+ . NPr/P
+# ?   NSg/VXB VP/J     D/P . NSg/J     . NSg/VB+ NPr/VBP/J . P    #  NPl+       . C/P NSg/VB+ . NPr/Dq/P
 > subtypes of nouns  , verbs   , punctuation , and  so        on  ) . Whether a   very small    set       of
 # NPl      P  NPl/V3 . NPl/V3+ . Nᴹ+         . VB/C NSg/I/J/C J/P . . I/C     D/P J/R  NPr/VB/J NPr/VBP/J P
 > very broad tags    or    a   much         larger set       of more            precise ones    is  preferable , depends
@@ -352,8 +352,8 @@
 # NPl/V3 P  Nᴹ/Vg/J+   . I/Ddem+ . NPr/J/P NSg/VB . VP/J       D   N🅪Sg   VB/C NSg/VB   P
 > computerized language analysis and  encouraged researchers to find   ways to
 # VP/J         N🅪Sg/VB+ N🅪Sg+    VB/C VP/J       NPl+        P  NSg/VB NPl+ P
-> separate other    pieces  as    well     . Markov Models  became the standard method  for the
-# NSg/VB/J NSg/VB/J NPl/V3+ NSg/R NSg/VB/J . NPr    NPl/V3+ VPt    D   NSg/J    NSg/VB+ C/P D
+> separate other    pieces  as    well       . Markov Models  became the standard method  for the
+# NSg/VB/J NSg/VB/J NPl/V3+ NSg/R NSg/VB/J/R . NPr    NPl/V3+ VPt    D   NSg/J    NSg/VB+ C/P D
 > part      - of - speech   assignment .
 # NSg/VB/J+ . P  . N🅪Sg/VB+ NSg+       .
 >
@@ -380,8 +380,8 @@
 # N🅪Sg      . NSg        NPl/V3  P  NPl/V3+ NSg/VB NSg/I/C/Ddem+ VB  R          NSg/J   P
 > those  human    linguists would expect ; and  the differences themselves sometimes
 # I/Ddem NSg/VB/J NPl+      VXB   VB     . VB/C D   NPl/VB+     IPl+       R
-> suggest valuable new      insights .
-# VB      NSg/J    NSg/VB/J NPl+     .
+> suggest valuable new   insights .
+# VB      NSg/J    NSg/J NPl+     .
 >
 #
 > These   two  categories can     be      further subdivided into rule    - based , stochastic , and

@@ -915,8 +915,8 @@ Message: |
      412 | advisable to go with Edgar Atheling to meet William and offer him the crown.
          |                            ^~~~~~~~ Did you mean to spell `Atheling` this way?
 Suggest:
-  - Replace with: “Steeling”
   - Replace with: “Theming”
+  - Replace with: “Steeling”
 
 
 
@@ -1028,7 +1028,7 @@ Message: |
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
-  - Replace with: “WC”
+  - Replace with: “WI”
 
 
 
@@ -1152,8 +1152,8 @@ Message: |
          |                                                     ^~~~~ Did you mean to spell `arrum` this way?
 Suggest:
   - Replace with: “arum”
-  - Replace with: “album”
-  - Replace with: “alum”
+  - Replace with: “atrium”
+  - Replace with: “argue”
 
 
 
@@ -1223,7 +1223,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      692 | below!” (a loud crash)—“Now, who did that?—It was Bill, I fancy—Who’s to go down
          |                                                                 ^~~~~ The canonical dictionary spelling is `who's`.
@@ -1983,7 +1983,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
     1582 | “Who’s making personal remarks now?” the Hatter asked triumphantly.
          |  ^~~~~ The canonical dictionary spelling is `who's`.
@@ -2364,9 +2364,9 @@ Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |   ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “This”
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
 
 
 
@@ -2376,8 +2376,8 @@ Message: |
          |                                                              ^~~ Did you mean to spell `tis` this way?
     1986 | love, that makes the world go round!’”
 Suggest:
-  - Replace with: “tic”
   - Replace with: “this”
+  - Replace with: “tic”
   - Replace with: “ti's”
 
 
@@ -2388,8 +2388,8 @@ Message: |
          |                                                                         ^~~ Did you mean to spell `tis` this way?
     1986 | love, that makes the world go round!’”
 Suggest:
-  - Replace with: “tic”
   - Replace with: “this”
+  - Replace with: “tic”
   - Replace with: “ti's”
 
 
@@ -2943,8 +2943,8 @@ Message: |
          |                     ^~~~ Did you mean to spell `Dinn` this way?
 Suggest:
   - Replace with: “Din”
+  - Replace with: “Dine”
   - Replace with: “Ding”
-  - Replace with: “Diann”
 
 
 
@@ -3085,9 +3085,9 @@ Message: |
     2418 | “Stand up and repeat ‘’Tis the voice of the sluggard,’” said the Gryphon.
          |                        ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “This”
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
 
 
 
@@ -3112,9 +3112,9 @@ Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
          |     ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “This”
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
 
 
 
@@ -3207,9 +3207,9 @@ Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H'm”
-  - Replace with: “Ha”
-  - Replace with: “Ham”
+  - Replace with: “Him”
+  - Replace with: “Ho”
+  - Replace with: “Am”
 
 
 
@@ -3236,9 +3236,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
+  - Replace with: “So”
   - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “Son”
 
 
 
@@ -3278,9 +3278,9 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
+  - Replace with: “So”
   - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “Son”
 
 
 
@@ -3310,9 +3310,9 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
+  - Replace with: “So”
   - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “Son”
 
 
 
@@ -3374,9 +3374,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
+  - Replace with: “So”
   - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “Son”
 
 
 
@@ -3416,9 +3416,9 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
+  - Replace with: “So”
   - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “Son”
 
 
 
@@ -3448,9 +3448,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
+  - Replace with: “So”
   - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “Son”
 
 
 
@@ -3543,9 +3543,9 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
+  - Replace with: “So”
   - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “Son”
 
 
 

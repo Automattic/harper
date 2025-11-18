@@ -1,6 +1,4 @@
 // *************************************************************************************************
-//  File: RogueScheduler.kt
-//
 //  A diminutive but fully-formed demonstration of idiomatic Kotlin.
 //
 //  1. Defines a sealed algebraic hierarchy to represent the discrete states of a task

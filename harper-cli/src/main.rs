@@ -28,6 +28,7 @@ use harper_python::PythonParser;
 
 use harper_stats::Stats;
 use serde::Serialize;
+use serde_json::Value;
 
 mod input;
 use input::Input;
@@ -91,7 +92,12 @@ enum Args {
         annotation_type: AnnotationType,
     },
     /// Get the metadata associated with one or more words.
-    Metadata { words: Vec<String> },
+    Metadata {
+        words: Vec<String>,
+        /// Only show the part-of-speech flags and emojis, not the full JSON
+        #[arg(short, long)]
+        brief: bool,
+    },
     /// Get all the forms of a word using the affixes.
     Forms { line: String },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
@@ -161,6 +167,11 @@ enum Args {
         /// The directory containing the dictionary and affixes.
         dir: PathBuf,
     },
+    /// Audit the `dictionary.dict` file.
+    AuditDictionary {
+        /// The directory containing the dictionary and affixes.
+        dir: PathBuf,
+    },
     /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
     /// As long as there's either an open or hyphenated spelling.
     Compounds,
@@ -219,12 +230,18 @@ fn main() -> anyhow::Result<()> {
                 linter.set_all_rules_to(Some(false));
 
                 for rule in rules {
+                    if !linter.contains_key(&rule) {
+                        eprintln!("Warning: Cannot enable unknown rule '{}'.", &rule);
+                    }
                     linter.config.set_rule_enabled(rule, true);
                 }
             }
 
             if let Some(rules) = ignore {
                 for rule in rules {
+                    if !linter.contains_key(&rule) {
+                        eprintln!("Warning: Cannot disable unknown rule '{}'.", &rule);
+                    }
                     linter.config.set_rule_enabled(rule, false);
                 }
             }
@@ -366,14 +383,41 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Metadata { words } => {
-            let mut results = BTreeMap::new();
+        Args::Metadata { words, brief } => {
+            type PosPredicate = fn(&DictWordMetadata) -> bool;
+
+            const POS: &[(&str, PosPredicate)] = &[
+                ("N📦", |m| m.is_noun() && !m.is_proper_noun()),
+                ("O📛", DictWordMetadata::is_proper_noun),
+                ("V🏃", DictWordMetadata::is_verb),
+                ("J🌈", DictWordMetadata::is_adjective),
+                ("R🤷", DictWordMetadata::is_adverb),
+                ("C🔗", DictWordMetadata::is_conjunction),
+                ("D👉", DictWordMetadata::is_determiner),
+                ("P📥", |m| m.preposition),
+                ("I👤", DictWordMetadata::is_pronoun),
+            ];
+
             for word in words {
-                let metadata = dictionary.get_word_metadata_str(&word);
-                results.insert(word, metadata);
+                let meta = dictionary.get_word_metadata_str(&word);
+                let (flags, emojis) = meta.as_ref().map_or_else(
+                    || (String::new(), String::new()),
+                    |md| {
+                        POS.iter()
+                            .filter(|&(_, pred)| pred(md))
+                            .map(|(syms, _)| {
+                                let mut ch = syms.chars();
+                                (ch.next().unwrap(), ch.next().unwrap())
+                            })
+                            .unzip()
+                    },
+                );
+
+                let json = brief.then(String::new).unwrap_or_else(|| {
+                    format!("\n{}", serde_json::to_string_pretty(&meta).unwrap())
+                });
+                println!("{}: {} {}{}", word, flags, emojis, json);
             }
-            let json = serde_json::to_string_pretty(&results).unwrap();
-            println!("{json}");
             Ok(())
         }
         Args::SummarizeLintRecord { file } => {
@@ -548,8 +592,6 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::RenameFlag { old, new, dir } => {
-            use serde_json::Value;
-
             let dict_path = dir.join("dictionary.dict");
             let affixes_path = dir.join("annotations.json");
 
@@ -665,6 +707,129 @@ fn main() -> anyhow::Result<()> {
             println!("Successfully renamed flag '{old}' to '{new}'");
             println!("  Description: {description}");
             println!("  Backups created at:\n    {backup_dict}\n    {backup_affixes}");
+
+            Ok(())
+        }
+        Args::AuditDictionary { dir } => {
+            let annotations_path = dir.join("annotations.json");
+            let annotations_content = fs::read_to_string(&annotations_path)
+                .map_err(|e| anyhow!("Failed to read annotations: {e}"))?;
+            let annotations_json: Value = serde_json::from_str(&annotations_content)
+                .map_err(|e| anyhow!("Failed to parse annotations.json: {e}"))?;
+
+            let annotations = annotations_json
+                .as_object()
+                .ok_or_else(|| anyhow!("annotations.json is not an object"))?;
+
+            let (affixes, properties) = ["affixes", "properties"]
+                .iter()
+                .map(|key| {
+                    annotations
+                        .get(*key)
+                        .and_then(Value::as_object)
+                        .ok_or_else(|| {
+                            anyhow!("Missing or invalid '{key}' key in annotations.json")
+                        })
+                })
+                .collect::<Result<Vec<_>, _>>()
+                .map(|v| (v[0], v[1]))?;
+
+            let all_keys = affixes.keys().chain(properties.keys()).collect::<Vec<_>>();
+
+            let mut annotation_flag_count: HashMap<char, u32> = all_keys
+                .iter()
+                .filter_map(|key| key.chars().next()) // Get first char of each key
+                .map(|c| (c, 0))
+                .collect();
+
+            // let mut duplicate_flag_total = 0;
+            let mut duplicate_flags = std::collections::HashMap::new();
+            let mut unknown_flags = std::collections::HashMap::new();
+            let mut unused_flag_total = 0;
+
+            let dict_path = dir.join("dictionary.dict");
+            let dict_content = fs::read_to_string(&dict_path)
+                .map_err(|e| anyhow!("Failed to read dictionary: {e}"))?;
+
+            for (line_num, line) in dict_content.lines().enumerate() {
+                if line.is_empty()
+                    || line.starts_with('#')
+                    || line.chars().all(|c| c.is_ascii_digit())
+                {
+                    continue;
+                }
+
+                let (entry_part, _comment_part) =
+                    line.split_once('#').map_or((line, ""), |(e, c)| (e, c));
+
+                if let Some((lexeme, rest)) = entry_part.split_once('/') {
+                    let (annotation, _whitespace) = match rest.split_once([' ', '\t']) {
+                        Some((a, _)) => (a, &rest[a.len()..]),
+                        None => (rest, ""),
+                    };
+
+                    let mut seen_flags = hashbrown::HashSet::new();
+
+                    for flag in annotation.chars() {
+                        if !seen_flags.insert(flag) {
+                            eprintln!(
+                                "Warning: Line {}: Duplicate annotation flag '{}' in entry: {}/{}",
+                                line_num + 1,
+                                flag,
+                                lexeme,
+                                annotation
+                            );
+                            // duplicate_flag_total += 1;
+                            *duplicate_flags.entry(flag).or_insert(0) += 1;
+                        }
+                        if !annotation_flag_count.contains_key(&flag) {
+                            eprintln!(
+                                "Warning: Line {}: Unknown annotation flag '{}' in entry: {}/{}",
+                                line_num + 1,
+                                flag,
+                                lexeme,
+                                annotation
+                            );
+                            *unknown_flags.entry(flag).or_insert(0) += 1;
+                        } else {
+                            *annotation_flag_count.get_mut(&flag).unwrap() += 1;
+                        }
+                    }
+                }
+            }
+
+            for (flag, count) in annotation_flag_count {
+                if count == 0 {
+                    eprintln!("Warning: Unused annotation flag '{}'", flag);
+                    unused_flag_total += 1;
+                }
+            }
+
+            let duplicate_flag_total = duplicate_flags.values().sum::<usize>();
+            let unknown_flag_total = unknown_flags.values().sum::<usize>();
+
+            if duplicate_flag_total > 0 || unknown_flag_total > 0 || unused_flag_total > 0 {
+                eprintln!("\nAudit found issues:");
+                if duplicate_flag_total > 0 {
+                    eprintln!(
+                        "  - {} duplicate flags found in {} entries",
+                        duplicate_flags.len(),
+                        duplicate_flag_total
+                    );
+                }
+                if !unknown_flags.is_empty() {
+                    let total_unknown = unknown_flags.values().sum::<usize>();
+                    eprintln!(
+                        "  - {} unknown flags found in {} entries",
+                        unknown_flags.len(),
+                        total_unknown
+                    );
+                }
+                if unused_flag_total > 0 {
+                    eprintln!("  - {} unused flags found", unused_flag_total);
+                }
+                std::process::exit(1);
+            }
 
             Ok(())
         }
@@ -833,7 +998,7 @@ fn load_file(
                 Box::new(comment_parser)
             } else {
                 println!(
-                    "Warning: could not detect language ID; falling back to PlainEnglish parser."
+                    "Warning: Could not detect language ID; falling back to PlainEnglish parser."
                 );
                 Box::new(PlainEnglish)
             }

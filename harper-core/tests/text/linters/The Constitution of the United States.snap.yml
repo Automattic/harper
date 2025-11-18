@@ -20,8 +20,8 @@ Message: |
        7 | promote the general Welfare, and secure the Blessings of Liberty to ourselves
 Suggest:
   - Replace with: “defense”
-  - Replace with: “decency”
-  - Replace with: “deface”
+  - Replace with: “defended”
+  - Replace with: “defect”
 
 
 
@@ -42,8 +42,8 @@ Message: |
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
   - Replace with: “In”
+  - Replace with: “Id”
   - Replace with: “IC”
-  - Replace with: “IE”
 
 
 
@@ -736,7 +736,7 @@ Message: |
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
-  - Replace with: “facts”
+  - Replace with: “faith”
 
 
 
@@ -802,7 +802,7 @@ Message: |
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
-  - Replace with: “facts”
+  - Replace with: “faith”
 
 
 
@@ -882,7 +882,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      338 | #### SubSection. 1.
          |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
@@ -960,7 +960,14 @@ Message: |
      367 | and such person shall act accordingly until a President or Vice President shall
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      368 | have qualified.The Congress may by law provide for the case of the death of any
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ~~~~~~~~~~~~~~~ This sentence is 101 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     368 | have qualified.The Congress may by law provide for the case of the death of any
+         |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      369 | of the persons from whom the House of Representatives may choose a President
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      370 | whenever the right of choice shall have devolved upon them, and for the case of
@@ -968,7 +975,7 @@ Message: |
      371 | the death of any of the persons from whom the Senate may choose a Vice
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      372 | President whenever the right of choice shall have devolved upon them.]The
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 167 words long.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
 
 
 
@@ -1003,7 +1010,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      388 | #### SubSection. 2
          |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
@@ -1057,7 +1064,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      406 | #### SubSection 3.
          |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
@@ -1226,7 +1233,7 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      446 | #### SubSection 4.
          |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
@@ -1297,7 +1304,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      460 | #### SubSection 5.
          |      ^~~~~~~~~~ The canonical dictionary spelling is `subsection`.
@@ -1727,9 +1734,9 @@ Message: |
      663 | ## Article. V.
          |             ^~ Did you mean to spell `V.` this way?
 Suggest:
-  - Replace with: “Vs.”
-  - Replace with: “Vb”
   - Replace with: “Vi”
+  - Replace with: “Va”
+  - Replace with: “Vs.”
 
 
 

@@ -30,6 +30,14 @@ pub trait CharStringExt {
     /// Only normalizes the left side to lowercase and avoids allocations.
     fn eq_any_ignore_ascii_case_chars(&self, others: &[&[char]]) -> bool;
 
+    /// Case-insensitive check if the string starts with the given ASCII prefix.
+    /// The prefix is assumed to be lowercase.
+    fn starts_with_ignore_ascii_case_str(&self, prefix: &str) -> bool;
+
+    /// Case-insensitive check if the string starts with any of the given ASCII prefixes.
+    /// The prefixes are assumed to be lowercase.
+    fn starts_with_any_ignore_ascii_case_str(&self, prefixes: &[&str]) -> bool;
+
     /// Case-insensitive check if the string ends with the given ASCII suffix.
     /// The suffix is assumed to be lowercase.
     fn ends_with_ignore_ascii_case_chars(&self, suffix: &[char]) -> bool;
@@ -37,6 +45,9 @@ pub trait CharStringExt {
     /// Case-insensitive check if the string ends with the given ASCII suffix.
     /// The suffix is assumed to be lowercase.
     fn ends_with_ignore_ascii_case_str(&self, suffix: &str) -> bool;
+
+    /// Check if the string contains any vowels
+    fn contains_vowel(&self) -> bool;
 }
 
 impl CharStringExt for [char] {
@@ -94,6 +105,23 @@ impl CharStringExt for [char] {
             .any(|chars| self.eq_ignore_ascii_case_chars(chars))
     }
 
+    fn starts_with_ignore_ascii_case_str(&self, prefix: &str) -> bool {
+        let prefix_len = prefix.len();
+        if self.len() < prefix_len {
+            return false;
+        }
+        self.iter()
+            .take(prefix_len)
+            .zip(prefix.chars())
+            .all(|(a, b)| a.to_ascii_lowercase() == b)
+    }
+
+    fn starts_with_any_ignore_ascii_case_str(&self, prefixes: &[&str]) -> bool {
+        prefixes
+            .iter()
+            .any(|prefix| self.starts_with_ignore_ascii_case_str(prefix))
+    }
+
     fn ends_with_ignore_ascii_case_str(&self, suffix: &str) -> bool {
         let suffix_len = suffix.len();
         if self.len() < suffix_len {
@@ -118,6 +146,10 @@ impl CharStringExt for [char] {
             .rev()
             .zip(suffix.iter())
             .all(|(a, b)| a.to_ascii_lowercase() == *b)
+    }
+
+    fn contains_vowel(&self) -> bool {
+        self.iter().any(|c| c.is_vowel())
     }
 }
 
