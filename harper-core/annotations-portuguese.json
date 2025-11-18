@@ -1,426 +1,426 @@
 {
-  "affixes": {
-    "S": {
-      "#": "'-(i)(e)s' plural suffix",
-      "kind": "suffix",
-      "cross_product": true,
-      "replacements": [
-        {
-          "remove": "",
-          "add": "s",
-          "condition": "[aáeéiíoóuú]"
-        },
-        {
-          "remove": "",
-          "add": "es",
-          "condition": "[rz]"
-        },
-        {
-          "metadata_condition": {
-            "stress": "Oxitona"
-          },
-          "remove": "",
-          "add": "es",
-          "condition": "[s]"
-        },
-        {
-          "remove": "l",
-          "add": "is",
-          "condition": "[l]"
-        }
-      ],
-      "target": [
-        {
-          "if_base": {
-            "noun": {}
-          },
-          "metadata": {
-            "noun": {
-              "is_plural": true
-            }
-          }
-        },
-        {
-          "if_base": {
-            "noun": {}
-          },
-          "metadata": {
-            "stress": "Oxitona"
-          }
-        },
-        {
-          "if_base": {
-            "verb": {}
-          },
-          "metadata": {
-            "verb": {
-              "verb_form": "THIRD_PERSON_SINGULAR"
-            }
-          }
-        }
-      ],
-      "base_metadata": {}
-    },
-    "n": {
-      "#": "nominalization suffixes: -ion, -ication, -en",
-      "kind": "suffix",
-      "cross_product": true,
-      "replacements": [
-        {
-          "remove": "",
-          "add": "",
-          "condition": "[aei]r"
-        },
-        {
-          "remove": "y",
-          "add": "ication",
-          "condition": "y"
-        },
-        {
-          "remove": "",
-          "add": "en",
-          "condition": "[^ey]"
-        }
-      ],
-      "target": [],
-      "base_metadata": {}
-    },
-    "^": {
-      "#": "'-(i)est' superlative suffix",
-      "//": "mnemonic: the topmost is the best. see also 'u' which marks a superlative form",
-      "kind": "suffix",
-      "cross_product": false,
-      "replacements": [
-        {
-          "remove": "",
-          "add": "st",
-          "condition": "e"
-        },
-        {
-          "remove": "y",
-          "add": "iest",
-          "condition": "[^aeiou]y"
-        },
-        {
-          "remove": "",
-          "add": "est",
-          "condition": "[aeiou]y"
-        },
-        {
-          "remove": "",
-          "add": "est",
-          "condition": "[^ey]"
-        }
-      ],
-      "target": [
-        {
-          "if_base": {
-            "adjective": {}
-          },
-          "metadata": {
-            "adjective": {
-              "degree": "Superlative"
-            }
-          }
-        }
-      ],
-      "base_metadata": {}
-    },
-    ">": {
-      "#": "'-(i)er' comparative suffix; agent suffix. see also 'c' which marks a comparative form",
-      "//": "mnemonic: greater than is better",
-      "kind": "suffix",
-      "cross_product": true,
-      "replacements": [
-        {
-          "remove": "",
-          "add": "r",
-          "condition": "e"
-        },
-        {
-          "remove": "y",
-          "add": "ier",
-          "condition": "[^aeiou]y"
-        },
-        {
-          "remove": "",
-          "add": "er",
-          "condition": "[aeiou]y"
-        },
-        {
-          "remove": "",
-          "add": "er",
-          "condition": "[^ey]"
-        }
-      ],
-      "target": [
-        {
-          "if_base": {
-            "adjective": {}
-          },
-          "metadata": {
-            "adjective": {
-              "degree": "Comparative"
-            }
-          }
-        },
-        {
-          "if_base": {
-            "verb": {}
-          },
-          "metadata": {
-            "noun": {
-              "//": "TODO: agent noun: run -> runner"
-            }
-          }
-        }
-      ],
-      "base_metadata": {}
-    },
-    "U": {
-      "#": "'un-' prefix",
-      "kind": "prefix",
-      "cross_product": true,
-      "replacements": [
-        {
-          "remove": "",
-          "add": "un",
-          "condition": "."
-        }
-      ],
-      "target": [],
-      "base_metadata": {}
-    },
-    "p": {
-      "#": "'-(i)ness' suffix",
-      "kind": "suffix",
-      "cross_product": true,
-      "replacements": [
-        {
-          "remove": "y",
-          "add": "iness",
-          "condition": "[^aeiou]y"
-        },
-        {
-          "remove": "",
-          "add": "ness",
-          "condition": "[aeiou]y"
-        },
-        {
-          "remove": "",
-          "add": "ness",
-          "condition": "[^y]"
-        }
-      ],
-      "target": [],
-      "base_metadata": {},
-      "rename_ok": true
-    },
-    "z": {
-      "#": "'-ings' suffix",
-      "kind": "suffix",
-      "cross_product": true,
-      "replacements": [
-        {
-          "remove": "e",
-          "add": "ings",
-          "condition": "e"
-        },
-        {
-          "remove": "",
-          "add": "ings",
-          "condition": "[^e]"
-        }
-      ],
-      "target": [],
-      "base_metadata": {},
-      "rename_ok": true
-    },
-    "g": {
-      "#": "-'s possessive suffix; contraction of 'has' and 'is",
-      "//": "mnemonic: 'genitive' is a similar concept to 'possessive'",
-      "kind": "suffix",
-      "cross_product": true,
-      "replacements": [
-        {
-          "remove": "",
-          "add": "'s",
-          "condition": "."
-        }
-      ],
-      "target": [
-        {
-          "metadata": {
-            "noun": {
-              "is_possessive": true
-            }
-          }
-        }
-      ],
-      "base_metadata": {
-        "noun": {}
-      }
-    },
-    "Z": {
-      "#": "'-(i)(e)rs' suffix",
-      "kind": "suffix",
-      "cross_product": true,
-      "replacements": [
-        {
-          "remove": "",
-          "add": "rs",
-          "condition": "e"
-        },
-        {
-          "remove": "y",
-          "add": "iers",
-          "condition": "[^aeiou]y"
-        },
-        {
-          "remove": "",
-          "add": "ers",
-          "condition": "[aeiou]y"
-        },
-        {
-          "remove": "",
-          "add": "ers",
-          "condition": "[^ey]"
-        }
-      ],
-      "target": [],
-      "base_metadata": {},
-      "rename_ok": true
-    }
-  },
-  "properties": {
-    "I": {
-      "#": "pronoun property",
-      "metadata": {
-        "pronoun": {}
-      }
-    },
-    "a": {
-      "#": "personal pronoun property",
-      "//": "'personal' means 'grammatical person', not 'human'",
-      "metadata": {
-        "pronoun": {
-          "is_personal": true
-        }
-      }
-    },
-    "1": {
-      "#": "first-person property",
-      "metadata": {
-        "pronoun": {
-          "person": "First"
-        }
-      }
-    },
-    "s": {
-      "#": "subject case property",
-      "metadata": {
-        "pronoun": {
-          "is_subject": true
-        }
-      }
-    },
-    ".": {
-      "#": "singular pronoun property",
-      "//": "mnemonic: one dot",
-      "metadata": {
-        "pronoun": {
-          "is_singular": true
-        }
-      }
-    },
-    "~": {
-      "#": "common word property",
-      "metadata": {
-        "common": true
-      },
-      "rename_ok": true
-    },
-    "V": {
-      "#": "verb property",
-      "metadata": {
-        "verb": {}
-      }
-    },
-    "J": {
-      "#": "adjective property",
-      "metadata": {
-        "adjective": {}
-      }
-    },
-    "N": {
-      "#": "noun property",
-      "metadata": {
-        "noun": {}
-      }
-    },
-    "P": {
-      "#": "preposition property",
-      "metadata": {
-        "preposition": true
-      }
-    },
-    "D": {
-      "#": "determiner property",
-      "metadata": {
-        "determiner": {}
-      }
-    },
-    "5": {
-      "#": "possessive determiner property",
-      "//": "mnemonic: 5 looks like an 's'",
-      "metadata": {
-        "determiner": {
-          "is_possessive": true
-        }
-      }
-    },
-    "-": {
-      "#": "oxitona property",
-      "//": "mnemonic: 5 looks like an 's'",
-      "metadata": {
-        "determiner": {
-          "is_possessive": true
-        }
-      }
-    },
-    "=": {
-      "#": "paroxitona property",
-      "//": "mnemonic: 5 looks like an 's'",
-      "metadata": {
-        "determiner": {
-          "is_possessive": true
-        }
-      }
-    },
-    "+": {
-      "#": "proparoxitona property",
-      "//": "mnemonic: 5 looks like an 's'",
-      "metadata": {
-        "determiner": {
-          "is_possessive": true
-        }
-      }
-    },
-    "F": {
-      "#": "feminine property",
-      "metadata": {
-        "noun": {
-          "gender": true
-        }
-      }
-    },
-    "M": {
-      "#": "feminine property",
-      "metadata": {
-        "noun": {
-          "gender": false
-        }
-      }
-    }
-  }
+	"affixes": {
+		"S": {
+			"#": "'-(i)(e)s' plural suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "s",
+					"condition": "[aáeéiíoóuú]"
+				},
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "[rz]"
+				},
+				{
+					"metadata_condition": {
+						"stress": "Oxitona"
+					},
+					"remove": "",
+					"add": "es",
+					"condition": "[s]"
+				},
+				{
+					"remove": "l",
+					"add": "is",
+					"condition": "[l]"
+				}
+			],
+			"target": [
+				{
+					"if_base": {
+						"noun": {}
+					},
+					"metadata": {
+						"noun": {
+							"is_plural": true
+						}
+					}
+				},
+				{
+					"if_base": {
+						"noun": {}
+					},
+					"metadata": {
+						"stress": "Oxitona"
+					}
+				},
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"verb": {
+							"verb_form": "THIRD_PERSON_SINGULAR"
+						}
+					}
+				}
+			],
+			"base_metadata": {}
+		},
+		"n": {
+			"#": "nominalization suffixes: -ion, -ication, -en",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "",
+					"condition": "[aei]r"
+				},
+				{
+					"remove": "y",
+					"add": "ication",
+					"condition": "y"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^ey]"
+				}
+			],
+			"target": [],
+			"base_metadata": {}
+		},
+		"^": {
+			"#": "'-(i)est' superlative suffix",
+			"//": "mnemonic: the topmost is the best. see also 'u' which marks a superlative form",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "e"
+				},
+				{
+					"remove": "y",
+					"add": "iest",
+					"condition": "[^aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[^ey]"
+				}
+			],
+			"target": [
+				{
+					"if_base": {
+						"adjective": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Superlative"
+						}
+					}
+				}
+			],
+			"base_metadata": {}
+		},
+		">": {
+			"#": "'-(i)er' comparative suffix; agent suffix. see also 'c' which marks a comparative form",
+			"//": "mnemonic: greater than is better",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "r",
+					"condition": "e"
+				},
+				{
+					"remove": "y",
+					"add": "ier",
+					"condition": "[^aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "[aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "[^ey]"
+				}
+			],
+			"target": [
+				{
+					"if_base": {
+						"adjective": {}
+					},
+					"metadata": {
+						"adjective": {
+							"degree": "Comparative"
+						}
+					}
+				},
+				{
+					"if_base": {
+						"verb": {}
+					},
+					"metadata": {
+						"noun": {
+							"//": "TODO: agent noun: run -> runner"
+						}
+					}
+				}
+			],
+			"base_metadata": {}
+		},
+		"U": {
+			"#": "'un-' prefix",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "un",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {}
+		},
+		"p": {
+			"#": "'-(i)ness' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "y",
+					"add": "iness",
+					"condition": "[^aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "ness",
+					"condition": "[aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "ness",
+					"condition": "[^y]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"z": {
+			"#": "'-ings' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "e",
+					"add": "ings",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "ings",
+					"condition": "[^e]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"g": {
+			"#": "-'s possessive suffix; contraction of 'has' and 'is",
+			"//": "mnemonic: 'genitive' is a similar concept to 'possessive'",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "'s",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"is_possessive": true
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			}
+		},
+		"Z": {
+			"#": "'-(i)(e)rs' suffix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "rs",
+					"condition": "e"
+				},
+				{
+					"remove": "y",
+					"add": "iers",
+					"condition": "[^aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "ers",
+					"condition": "[aeiou]y"
+				},
+				{
+					"remove": "",
+					"add": "ers",
+					"condition": "[^ey]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		}
+	},
+	"properties": {
+		"I": {
+			"#": "pronoun property",
+			"metadata": {
+				"pronoun": {}
+			}
+		},
+		"a": {
+			"#": "personal pronoun property",
+			"//": "'personal' means 'grammatical person', not 'human'",
+			"metadata": {
+				"pronoun": {
+					"is_personal": true
+				}
+			}
+		},
+		"1": {
+			"#": "first-person property",
+			"metadata": {
+				"pronoun": {
+					"person": "First"
+				}
+			}
+		},
+		"s": {
+			"#": "subject case property",
+			"metadata": {
+				"pronoun": {
+					"is_subject": true
+				}
+			}
+		},
+		".": {
+			"#": "singular pronoun property",
+			"//": "mnemonic: one dot",
+			"metadata": {
+				"pronoun": {
+					"is_singular": true
+				}
+			}
+		},
+		"~": {
+			"#": "common word property",
+			"metadata": {
+				"common": true
+			},
+			"rename_ok": true
+		},
+		"V": {
+			"#": "verb property",
+			"metadata": {
+				"verb": {}
+			}
+		},
+		"J": {
+			"#": "adjective property",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"N": {
+			"#": "noun property",
+			"metadata": {
+				"noun": {}
+			}
+		},
+		"P": {
+			"#": "preposition property",
+			"metadata": {
+				"preposition": true
+			}
+		},
+		"D": {
+			"#": "determiner property",
+			"metadata": {
+				"determiner": {}
+			}
+		},
+		"5": {
+			"#": "possessive determiner property",
+			"//": "mnemonic: 5 looks like an 's'",
+			"metadata": {
+				"determiner": {
+					"is_possessive": true
+				}
+			}
+		},
+		"-": {
+			"#": "oxitona property",
+			"//": "mnemonic: 5 looks like an 's'",
+			"metadata": {
+				"determiner": {
+					"is_possessive": true
+				}
+			}
+		},
+		"=": {
+			"#": "paroxitona property",
+			"//": "mnemonic: 5 looks like an 's'",
+			"metadata": {
+				"determiner": {
+					"is_possessive": true
+				}
+			}
+		},
+		"+": {
+			"#": "proparoxitona property",
+			"//": "mnemonic: 5 looks like an 's'",
+			"metadata": {
+				"determiner": {
+					"is_possessive": true
+				}
+			}
+		},
+		"F": {
+			"#": "feminine property",
+			"metadata": {
+				"noun": {
+					"gender": true
+				}
+			}
+		},
+		"M": {
+			"#": "feminine property",
+			"metadata": {
+				"noun": {
+					"gender": false
+				}
+			}
+		}
+	}
 }
