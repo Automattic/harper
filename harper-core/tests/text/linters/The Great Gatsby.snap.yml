@@ -503,6 +503,14 @@ Message: |
 
 
 
+Lint:    Grammar (127 priority)
+Message: |
+     222 | moment, looking up into my face, promising that there was no one in the world
+         |                                                           ^~~~~~ The word 'no' should not be used before a number.
+     223 | she so much wanted to see. That was a way she had. She hinted in a murmur that
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      236 | speech is an arrangement of notes that will never be played again. Her face was
@@ -1970,6 +1978,14 @@ Suggest:
 
 
 
+Lint:    Grammar (127 priority)
+Message: |
+    1532 | even into groups, knowing that some one would arrest their falls—but no one
+         |                                                                      ^~~~~~ The word 'no' should not be used before a number.
+    1533 | swooned backward on Gatsby, and no French bob touched Gatsby’s shoulder, and no
+
+
+
 Lint:    Capitalization (127 priority)
 Message: |
     1569 | “She had a fight with a man who says he’s her husband,” explained a girl at my
@@ -2141,6 +2157,14 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1743 | blow quietly away.
          | ~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Grammar (127 priority)
+Message: |
+    1755 | from the crowd and imagine that in a few minutes I was going to enter into their
+    1756 | lives, and no one would ever know or disapprove. Sometimes, in my mind, I
+         |            ^~~~~~ The word 'no' should not be used before a number.
 
 
 
@@ -5422,6 +5446,13 @@ Message: |
 
 
 
+Lint:    Grammar (127 priority)
+Message: |
+    3745 | He got up, his eyes still flashing between Gatsby and his wife. No one moved.
+         |                                                                 ^~~~~~ The word 'No' should not be used before a number.
+
+
+
 Lint:    Capitalization (127 priority)
 Message: |
     3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
@@ -5689,6 +5720,15 @@ Suggest:
   - Replace with: “aye”
   - Replace with: “ace”
   - Replace with: “age”
+
+
+
+Lint:    Grammar (127 priority)
+Message: |
+    4027 | splashed to the floor, whereupon Jordan whispered, “Excuse me”—but this time no
+         |                                                                              ^~~
+    4028 | one laughed.
+         | ~~~ The word 'no' should not be used before a number.
 
 
 
@@ -7340,6 +7380,14 @@ Message: |
 
 
 
+Lint:    Grammar (127 priority)
+Message: |
+    5254 | house and didn’t move or breathe or speak, hour upon hour, it grew upon me that
+    5255 | I was responsible, because no one else was interested—interested, I mean, with
+         |                            ^~~~~~ The word 'no' should not be used before a number.
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     5255 | I was responsible, because no one else was interested—interested, I mean, with
@@ -7359,6 +7407,14 @@ Suggest:
   - Replace with: “Waldheim's”
   - Replace with: “Welshmen's”
   - Replace with: “Wolfe's”
+
+
+
+Lint:    Grammar (127 priority)
+Message: |
+    5280 | address on Broadway, and I called Information, but by the time I had the number
+    5281 | it was long after five, and no one answered the phone.
+         |                             ^~~~~~ The word 'no' should not be used before a number.
 
 
 
@@ -7387,6 +7443,14 @@ Message: |
          |                        ^~~~~~~~~ Did you mean `Bolshie`?
 Suggest:
   - Replace with: “Bolshie”
+
+
+
+Lint:    Grammar (127 priority)
+Message: |
+    5308 | neither a wire nor Mr. Wolfshiem arrived; no one arrived except more police and
+         |                                           ^~~~~~ The word 'no' should not be used before a number.
+    5309 | photographers and newspaper men. When the butler brought back Wolfshiem’s answer
 
 
 
@@ -8236,6 +8300,20 @@ Message: |
          |                       ^~~~~~~~~~ Did you mean `lusterless`?
 Suggest:
   - Replace with: “lusterless”
+
+
+
+Lint:    Grammar (127 priority)
+Message: |
+    5698 | But no one knows the woman’s name, and no one cares.
+         |     ^~~~~~ The word 'no' should not be used before a number.
+
+
+
+Lint:    Grammar (127 priority)
+Message: |
+    5698 | But no one knows the woman’s name, and no one cares.
+         |                                        ^~~~~~ The word 'no' should not be used before a number.
 
 
 
