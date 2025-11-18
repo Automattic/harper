@@ -81,7 +81,7 @@ impl ExprLinter for IfWouldve {
 
             Some(Lint {
                 span,
-                lint_kind: LintKind::Usage,
+                lint_kind: LintKind::Nonstandard,
                 suggestions: vec![Suggestion::replace_with_match_case(
                     vec!['h', 'a', 'd'],
                     span.get_content(src),
