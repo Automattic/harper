@@ -92,13 +92,6 @@ pub fn lint_group() -> LintGroup {
             "Corrects `an another` and `a another`.",
             LintKind::Redundancy
         ),
-        "AndIn" => (
-            ["an in"],
-            ["and in"],
-            "Did you mean `and in`?",
-            "Fixes the incorrect phrase `an in` to `and in` for proper conjunction usage.",
-            LintKind::Typo
-        ),
         "AndTheLike" => (
             ["an the like"],
             ["and the like"],
@@ -1222,6 +1215,13 @@ pub fn lint_group() -> LintGroup {
             "Did you mean the definite article?",
             "Fixes especially common misspellings of the word `the`",
             LintKind::Typo
+        ),
+        "RedundantThat" => (
+            ["that that"],
+            ["that"],
+            "Consider whether the second `that` adds meaning in this context.",
+            "There is rarely a situation where `that that` cannot be condensed into a single token.",
+            LintKind::Repetition
         )
     });
 

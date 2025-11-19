@@ -145,15 +145,21 @@ fn parse_inline_tag(tokens: &[Token]) -> Option<usize> {
         return None;
     }
 
+    if tokens.len() <= 3 {
+        return None;
+    }
+
     let mut cursor = 3;
 
-    while !matches!(
-        tokens.get(cursor),
-        Some(Token {
-            kind: TokenKind::Punctuation(Punctuation::CloseCurly),
-            ..
-        })
-    ) {
+    while cursor < tokens.len()
+        && !matches!(
+            tokens.get(cursor),
+            Some(Token {
+                kind: TokenKind::Punctuation(Punctuation::CloseCurly),
+                ..
+            })
+        )
+    {
         cursor += 1;
     }
 

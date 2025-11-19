@@ -250,9 +250,6 @@ fn correct_a_another() {
     );
 }
 
-// AndIn
-// -none-
-
 // AndTheLike
 // -none-
 
@@ -1950,5 +1947,14 @@ fn fixes_teh() {
         "I adore teh light of the moon.",
         lint_group(),
         "I adore the light of the moon.",
+    );
+}
+
+#[test]
+fn issue_2132() {
+    assert_suggestion_result(
+        "I know that that answer is correct",
+        lint_group(),
+        "I know that answer is correct",
     );
 }

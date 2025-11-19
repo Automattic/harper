@@ -116,8 +116,8 @@
 # R        VP/J      Nᴹ/Vg/J J/R  NPr/VB/J/P NPl       . NSg/I NSg/R ?      C/P NSg+     . NSg/VB+ .
 > Type    = common   , Gender     = masculine , Number      = singular , Case       = accusative , Animate
 # NSg/VB+ . NSg/VB/J . N🅪Sg/VB/J+ . NSg/J     . N🅪Sg/VB/JC+ . NSg/J    . NPr🅪Sg/VB+ . NSg/J      . VB/J
-> = no    .
-# . NPr/P .
+> = no       .
+# . NPr/Dq/P .
 >
 #
 > The most         popular " tag    set       " for POS  tagging for American English      is  probably the
@@ -147,7 +147,7 @@
 > as    Inuit languages may     be      virtually impossible . At    the other    extreme , Petrov et
 # NSg/R NPr/J NPl/V3+   NPr/VXB NSg/VXB R         NSg/J      . NSg/P D   NSg/VB/J NSg/J   . ?      ?
 > al. have    proposed a   " universal " tag     set       , with 12 categories ( for example , no
-# ?   NSg/VXB VP/J     D/P . NSg/J     . NSg/VB+ NPr/VBP/J . P    #  NPl+       . C/P NSg/VB+ . NPr/P
+# ?   NSg/VXB VP/J     D/P . NSg/J     . NSg/VB+ NPr/VBP/J . P    #  NPl+       . C/P NSg/VB+ . NPr/Dq/P
 > subtypes of nouns  , verbs   , punctuation , and  so        on  ) . Whether a   very small    set       of
 # NPl      P  NPl/V3 . NPl/V3+ . Nᴹ+         . VB/C NSg/I/J/C J/P . . I/C     D/P J/R  NPr/VB/J NPr/VBP/J P
 > very broad tags    or    a   much         larger set       of more         precise ones is  preferable , depends

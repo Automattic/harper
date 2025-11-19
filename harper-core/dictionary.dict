@@ -1571,7 +1571,7 @@ Buffett/OgS
 Buffy/Og
 Buford/Og
 Bugatti/ONg
-Bugzilla/g
+Bugzilla/Og
 Buick/ONSg
 Bujumbura/Og
 Bukhara/Og
@@ -31668,7 +31668,7 @@ leaseholder/Ng
 leaser/NSg
 leash/NSVdGU
 leash's
-least/~NgJ
+least/~NgJDq
 leastwise/
 leather/~NwgSJV
 leatherette/Ng
@@ -35547,7 +35547,7 @@ nitroglycerine/Nmg!@_
 nitrous/~Ng
 nitwit/NgS
 nix/~NgSVGd
-no/~PNSg
+no/~PNSgDq
 nob/~NSVY
 nobble/VGdSN
 nobelium/Nmg
@@ -52805,6 +52805,7 @@ zymurgy/Ng
 
 0s/~9               # not sure how well "words" starting with numbers are handled
 1s/~9               # not sure how well "words" starting with numbers are handled
+1Password/Og        # password manager
 3D/J                # not sure how well "words" starting with numbers are handled
 AAC/Ng              # audio format
 ACM/Ng
@@ -52833,6 +52834,7 @@ AngularJS/Og
 Anthropic/Og        # AI company
 Archytas/Sg         # !! please check and comment !! we also have archytas
 AArch64/Og          # see also ARM64
+Atlassian/Og        # Company behind Jira, Confluence, Bitbucket
 AutoGPT/Og
 Automattic/Og       # WordPress company
 Automattician/Sg
@@ -52843,14 +52845,17 @@ BCPL/Ng             # old programming language
 BLM/Ng
 BOM/NSg             # Byte Order Mark
 BRICS/              # intergovernmental organization
+BSON/Ng             # binary JSON
 BSP/NSg             # data structure
 BYD/OgS             # Chinese automobile manufacturer
 Bachiyski/Sg
+BadgerDB/Og         # key-value database
 Bezos/O             # Surname, Amazon founder
 Binance/Og
 Bing/Og             # Microsoft product
 Bitbucket/Og        # GitHub alternative
 BitKeeper/Og        # version control
+Bitwarden/Og        # password manager
 BlasterHacks/Sg
 Bluesky/Og
 Boxster/NOSg        # car model
@@ -52872,6 +52877,7 @@ CMake/Sg            # build tool
 CMS/NSg             # content management system
 CMYK                # colour model
 CORS                # web: cross-origin resource sharing
+CSON/Ng             # CoffeeScript Object Notation (JSON like format)
 CPython/Og          # Python implementation
 CQL/N
 CRC/NgS             # cyclic redundancy check
@@ -52882,19 +52888,24 @@ CTF/NSg             # capture the flag
 CVE/NSg             # Common Vulnerabilities and Exposures
 Captcha/OgS
 ChatGPT/Og          # OpenAI product
-ClickHouse/g
+ClickHouse/Og
 Cloudflare/Og
+CloudFront/Og       # CDN service
+CockroachDB/Og      # distributed database
 Codeberg/Og         # GitHub alternative
 Colemak/NgJ
 CommonMark/g
 CompUSA             # retailer
 Conda/Og            # package manager for Python and R
 Corretto/Sg
+Couchbase/Og        # NoSQL database
+CouchDB/Og          # NoSQL database
 Coursera/Og
 Crowdsignal/Og
 Cypher/ONg
 DATETIME/NgS        # dictionaries prefer: datetime
 DBMS/NOSg           # database management system
+DBus/Og             # message bus system
 DCT/NgS             # discrete cosine transform
 DDoS/Ng
 DEI
@@ -52910,6 +52921,8 @@ DOM/NSg             # document object model
 DRM/Ng              # digital rights management
 DSL/NSg             # domain-specific language
 DX/Ng               # developer experience
+Dashlane/Og         # password manager
+DataDog/Og          # monitoring service
 DeepMind/Og
 DeepSeek/Og         # AI company
 Deno/Og
@@ -52941,7 +52954,10 @@ FAT32/Ng            # file system
 FFI/Ng              # foreign function interface
 FFmpeg/Og
 FIDO/NOSg
+FIBA/Ng             # international basketball federation
 FIFA/Ng             # football/soccer association
+FOSDEM/Og           # Free and Open source Software Developers' European Meeting
+FOSS/Og             # free and open-source software
 FOV/Ng              # field of view
 FPGA/NSg            # field-programmable gate array
 FPM/Sg
@@ -52963,11 +52979,14 @@ GPLv2/Og
 GPLv3/Og
 GPT/NSg             # generative pre-trained transformer
 GPU/NS              # graphics processing unit
+GRUB/Og             # Grand Unified Bootloader
 GSM/OJ              # Global System for Mobile Communications
 GTK/O               # GIMP Toolkit
+GUID/Og             # globally unique identifier
 Ganeti/Sg
 Gateron/Sg
 GeForce/Og
+GeoJSON/Og          # geographic data format (JSON based)
 Gerber/Ng           # file format
 Ghidra/Og           # reverse engineering
 GitLab/Sg           # GitHub alternative
@@ -52982,6 +53001,7 @@ GraphQL/Og
 Graphviz/Sg
 Gravatar/Og
 H.265/ONSg          # High Efficiency Video Coding
+HAProxy/Og          # high availability proxy
 HDR/J               # high dynamic range
 HEIC/ONSg           # High Efficiency Image Container
 HEIF/ONSg           # High Efficiency Image Format
@@ -52989,6 +53009,7 @@ HEVC/ONSg           # High Efficiency Video Coding
 HQL/N
 HTML5
 Hasan/OgS           # surname, given name
+HashiCorp/Og        # software company: Consul, Terraform, Vault, etc.
 Hiera/Sg
 Holmdel/Sg
 Hugging Face/Og
