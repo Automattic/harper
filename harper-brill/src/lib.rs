@@ -44,7 +44,7 @@ thread_local! {
 fn uncached_burn_chunker() -> CachedChunker<BurnChunkerCpu> {
     CachedChunker::new(
         BurnChunkerCpu::load_from_bytes_cpu(BURN_CHUNKER_BIN, BURN_CHUNKER_VOCAB, 6, 0.3),
-        NonZero::new(1000).unwrap(),
+        NonZero::new(10000).unwrap(),
     )
 }
 
