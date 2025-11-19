@@ -67,9 +67,21 @@ export function getTextarea(page: Page): Locator {
 	return page.locator('textarea');
 }
 
-export async function testBasicSuggestionTextarea(testPageUrl: string) {
+/** A string or function that resolves to a test page. */
+export type TestPageUrlProvider = string | ((page: Page) => Promise<string>);
+
+async function resolveTestPage(prov: TestPageUrlProvider, page: Page): Promise<string> {
+	if (typeof prov === 'string') {
+		return prov;
+	} else {
+		return await prov(page);
+	}
+}
+
+export async function testBasicSuggestionTextarea(testPageUrl: TestPageUrlProvider) {
 	test('Can apply basic suggestion.', async ({ page }) => {
-		await page.goto(testPageUrl);
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
 
 		await page.waitForTimeout(2000);
 		await page.reload();
@@ -88,9 +100,10 @@ export async function testBasicSuggestionTextarea(testPageUrl: string) {
 	});
 }
 
-export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
+export async function testCanIgnoreTextareaSuggestion(testPageUrl: TestPageUrlProvider) {
 	test('Can ignore suggestion.', async ({ page }) => {
-		await page.goto(testPageUrl);
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
 
 		await page.waitForTimeout(2000);
 		await page.reload();
@@ -116,9 +129,10 @@ export async function testCanIgnoreTextareaSuggestion(testPageUrl: string) {
 	});
 }
 
-export async function testCanBlockRuleTextareaSuggestion(testPageUrl: string) {
+export async function testCanBlockRuleTextareaSuggestion(testPageUrl: TestPageUrlProvider) {
 	test('Can hide with rule block button', async ({ page }) => {
-		await page.goto(testPageUrl);
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
 
 		const editor = getTextarea(page);
 		await replaceEditorContent(editor, 'This is an test.');

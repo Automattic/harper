@@ -92,7 +92,12 @@ enum Args {
         annotation_type: AnnotationType,
     },
     /// Get the metadata associated with one or more words.
-    Metadata { words: Vec<String> },
+    Metadata {
+        words: Vec<String>,
+        /// Only show the part-of-speech flags and emojis, not the full JSON
+        #[arg(short, long)]
+        brief: bool,
+    },
     /// Get all the forms of a word using the affixes.
     Forms { line: String },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
@@ -225,12 +230,18 @@ fn main() -> anyhow::Result<()> {
                 linter.set_all_rules_to(Some(false));
 
                 for rule in rules {
+                    if !linter.contains_key(&rule) {
+                        eprintln!("Warning: Cannot enable unknown rule '{}'.", &rule);
+                    }
                     linter.config.set_rule_enabled(rule, true);
                 }
             }
 
             if let Some(rules) = ignore {
                 for rule in rules {
+                    if !linter.contains_key(&rule) {
+                        eprintln!("Warning: Cannot disable unknown rule '{}'.", &rule);
+                    }
                     linter.config.set_rule_enabled(rule, false);
                 }
             }
@@ -372,14 +383,41 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Metadata { words } => {
-            let mut results = BTreeMap::new();
+        Args::Metadata { words, brief } => {
+            type PosPredicate = fn(&DictWordMetadata) -> bool;
+
+            const POS: &[(&str, PosPredicate)] = &[
+                ("N📦", |m| m.is_noun() && !m.is_proper_noun()),
+                ("O📛", DictWordMetadata::is_proper_noun),
+                ("V🏃", DictWordMetadata::is_verb),
+                ("J🌈", DictWordMetadata::is_adjective),
+                ("R🤷", DictWordMetadata::is_adverb),
+                ("C🔗", DictWordMetadata::is_conjunction),
+                ("D👉", DictWordMetadata::is_determiner),
+                ("P📥", |m| m.preposition),
+                ("I👤", DictWordMetadata::is_pronoun),
+            ];
+
             for word in words {
-                let metadata = dictionary.get_word_metadata_str(&word);
-                results.insert(word, metadata);
+                let meta = dictionary.get_word_metadata_str(&word);
+                let (flags, emojis) = meta.as_ref().map_or_else(
+                    || (String::new(), String::new()),
+                    |md| {
+                        POS.iter()
+                            .filter(|&(_, pred)| pred(md))
+                            .map(|(syms, _)| {
+                                let mut ch = syms.chars();
+                                (ch.next().unwrap(), ch.next().unwrap())
+                            })
+                            .unzip()
+                    },
+                );
+
+                let json = brief.then(String::new).unwrap_or_else(|| {
+                    format!("\n{}", serde_json::to_string_pretty(&meta).unwrap())
+                });
+                println!("{}: {} {}{}", word, flags, emojis, json);
             }
-            let json = serde_json::to_string_pretty(&results).unwrap();
-            println!("{json}");
             Ok(())
         }
         Args::SummarizeLintRecord { file } => {
@@ -960,7 +998,7 @@ fn load_file(
                 Box::new(comment_parser)
             } else {
                 println!(
-                    "Warning: could not detect language ID; falling back to PlainEnglish parser."
+                    "Warning: Could not detect language ID; falling back to PlainEnglish parser."
                 );
                 Box::new(PlainEnglish)
             }
