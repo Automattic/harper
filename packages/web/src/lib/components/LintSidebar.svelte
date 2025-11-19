@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Card } from 'flowbite-svelte';
+import { Button, Card } from 'components';
 import { type IgnorableLintBox, type LintBox, type UnpackedLint } from 'lint-framework';
 import LintCard from '$lib/components/LintCard.svelte';
 
@@ -77,21 +77,27 @@ $: if (openSet.size > 0) {
 	<div class="flex items-center justify-between mb-3">
 		<div class="text-base font-semibold">Problems</div>
 		<div class="flex items-center gap-2">
-			<button
-				class="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#0b0f14]"
+			<Button
+				size="xs"
+				color="light"
+				outline
+				class="text-xs"
 				on:click={toggleAll}
 				aria-label={allOpen ? 'Collapse all lint cards' : 'Open all lint cards'}
 			>
 				{allOpen ? 'Collapse all' : 'Open all'}
-			</button>
-			<button
-				class="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#0b0f14]"
+			</Button>
+			<Button
+				size="xs"
+				color="light"
+				outline
+				class="text-xs"
 				on:click={ignoreAll}
 				disabled={lintBoxes.length === 0}
 				aria-label="Ignore all current lints"
 			>
 				Ignore all
-			</button>
+			</Button>
 		</div>
 	</div>
 	<div class="flex-1 overflow-y-auto pr-1">

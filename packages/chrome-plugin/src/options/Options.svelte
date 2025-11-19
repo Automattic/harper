@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Input, Select } from 'flowbite-svelte';
+import { Button, Input, Select } from 'components';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';

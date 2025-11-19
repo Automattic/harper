@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Badge, Button } from 'flowbite-svelte';
+import { Badge, Button } from 'components';
 
 let { onConfirm }: { onConfirm: () => void } = $props();
 

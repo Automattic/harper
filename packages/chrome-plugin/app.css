@@ -1,6 +1,5 @@
 @import "tailwindcss";
-
-@plugin "flowbite/plugin";
+@import "components/components.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -19,8 +18,6 @@
 	--color-accent-peach: #ffc9b9;
 	--color-accent-sand: #d68c45;
 }
-
-@source "./node_modules/flowbite-svelte/dist";
 
 code {
 	@apply bg-primary-100 rounded p-1;

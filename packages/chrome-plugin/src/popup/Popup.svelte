@@ -1,6 +1,6 @@
 <script lang="ts">
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
-import { Button } from 'flowbite-svelte';
+import { Button } from 'components';
 import Fa from 'svelte-fa';
 import logo from '/logo.png';
 import { main, type PopupState } from '../PopupState';

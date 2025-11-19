@@ -29,6 +29,10 @@ COPY --from=wasm-build /usr/build/harper-wasm/pkg /usr/build/harper-wasm/pkg
 
 RUN pnpm install --shamefully-hoist
 
+WORKDIR /usr/build/packages/components
+RUN pnpm install
+RUN pnpm build
+
 WORKDIR /usr/build/packages/harper.js
 
 RUN pnpm build && ./docs.sh

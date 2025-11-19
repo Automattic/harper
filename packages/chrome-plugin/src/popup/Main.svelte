@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Select, Toggle } from 'flowbite-svelte';
+import { Button, Select, Toggle } from 'components';
 import ProtocolClient from '../ProtocolClient';
 
 let enabled = $state(true);

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "components/components.css";
 
 @layer base {
 	body {

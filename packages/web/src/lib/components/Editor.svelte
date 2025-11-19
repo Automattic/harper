@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Card } from 'flowbite-svelte';
+import { Card } from 'components';
 import { type WorkerLinter } from 'harper.js';
 import {
 	type IgnorableLintBox,

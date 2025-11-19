@@ -46,6 +46,9 @@ importers:
       '@webcomponents/custom-elements':
         specifier: ^1.6.0
         version: 1.6.0
+      components:
+        specifier: workspace:*
+        version: link:../components
       harper.js:
         specifier: workspace:*
         version: link:../harper.js
@@ -86,9 +89,6 @@ importers:
       flowbite:
         specifier: ^3.1.2
         version: 3.1.2(rollup@4.53.3)
-      flowbite-svelte:
-        specifier: ^0.44.18
-        version: 0.44.24(rollup@4.53.3)(svelte@5.21.0)
       gulp:
         specifier: ^5.0.0
         version: 5.0.0
@@ -130,6 +130,10 @@ importers:
         version: 5.4.17(@types/node@22.13.10)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)
 
   packages/components:
+    dependencies:
+      flowbite-svelte:
+        specifier: ^0.44.24
+        version: 0.44.24(rollup@4.53.3)(svelte@5.43.12)
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^7.0.0
@@ -143,9 +147,15 @@ importers:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^6.2.1
         version: 6.2.1(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
+      '@tailwindcss/cli':
+        specifier: ^4.1.16
+        version: 4.1.17
       '@tailwindcss/vite':
         specifier: ^4.1.14
         version: 4.1.17(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
+      flowbite:
+        specifier: ^3.1.2
+        version: 3.1.2(rollup@4.53.3)
       publint:
         specifier: ^0.3.14
         version: 0.3.15
@@ -371,6 +381,9 @@ importers:
       chart.js:
         specifier: ^4.4.8
         version: 4.4.8
+      components:
+        specifier: workspace:*
+        version: link:../components
       drizzle-orm:
         specifier: ^0.44.6
         version: 0.44.6(@libsql/client@0.15.15)(mysql2@3.15.2)
@@ -432,9 +445,6 @@ importers:
       flowbite:
         specifier: ^3.1.2
         version: 3.1.2(rollup@4.35.0)
-      flowbite-svelte:
-        specifier: ^0.44.18
-        version: 0.44.24(rollup@4.35.0)(svelte@5.21.0)
       svelte:
         specifier: ^5.15.0
         version: 5.21.0
@@ -3688,6 +3698,10 @@ packages:
 
   '@swc/types@0.1.19':
     resolution: {integrity: sha512-WkAZaAfj44kh/UFdAQcrMP1I0nwRqpt27u+08LMBYMqmQfwwMofYoMh/48NGkMMRfC4ynpfwRbJuu8ErfNloeA==}
+
+  '@tailwindcss/cli@4.1.17':
+    resolution: {integrity: sha512-jUIxcyUNlCC2aNPnyPEWU/L2/ik3pB4fF3auKGXr8AvN3T3OFESVctFKOBoPZQaZJIeUpPn1uCLp0MRxuek8gg==}
+    hasBin: true
 
   '@tailwindcss/node@4.1.17':
     resolution: {integrity: sha512-csIkHIgLb3JisEFQ0vxr2Y57GUNYh447C8xzwj89U/8fdW8LhProdxvnVH6U8M2Y73QKiTIH+LWbK3V2BBZsAg==}
@@ -15374,7 +15388,6 @@ snapshots:
       '@parcel/watcher-win32-arm64': 2.5.1
       '@parcel/watcher-win32-ia32': 2.5.1
       '@parcel/watcher-win32-x64': 2.5.1
-    optional: true
 
   '@paulirish/trace_engine@0.0.44':
     dependencies:
@@ -16408,6 +16421,16 @@ snapshots:
   '@swc/types@0.1.19':
     dependencies:
       '@swc/counter': 0.1.3
+
+  '@tailwindcss/cli@4.1.17':
+    dependencies:
+      '@parcel/watcher': 2.5.1
+      '@tailwindcss/node': 4.1.17
+      '@tailwindcss/oxide': 4.1.17
+      enhanced-resolve: 5.18.3
+      mri: 1.2.0
+      picocolors: 1.1.1
+      tailwindcss: 4.1.17
 
   '@tailwindcss/node@4.1.17':
     dependencies:
@@ -20045,8 +20068,7 @@ snapshots:
 
   detect-file@1.0.0: {}
 
-  detect-libc@1.0.3:
-    optional: true
+  detect-libc@1.0.3: {}
 
   detect-libc@2.0.2:
     optional: true
@@ -21110,22 +21132,12 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  flowbite-svelte@0.44.24(rollup@4.35.0)(svelte@5.21.0):
-    dependencies:
-      '@floating-ui/dom': 1.6.13
-      apexcharts: 3.54.1
-      flowbite: 2.5.2(rollup@4.35.0)
-      svelte: 5.21.0
-      tailwind-merge: 2.6.0
-    transitivePeerDependencies:
-      - rollup
-
-  flowbite-svelte@0.44.24(rollup@4.53.3)(svelte@5.21.0):
+  flowbite-svelte@0.44.24(rollup@4.53.3)(svelte@5.43.12):
     dependencies:
       '@floating-ui/dom': 1.6.13
       apexcharts: 3.54.1
       flowbite: 2.5.2(rollup@4.53.3)
-      svelte: 5.21.0
+      svelte: 5.43.12
       tailwind-merge: 2.6.0
     transitivePeerDependencies:
       - rollup
@@ -23811,8 +23823,7 @@ snapshots:
   node-addon-api@4.3.0:
     optional: true
 
-  node-addon-api@7.1.1:
-    optional: true
+  node-addon-api@7.1.1: {}
 
   node-domexception@1.0.0:
     optional: true

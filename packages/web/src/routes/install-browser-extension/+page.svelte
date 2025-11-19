@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Textarea } from 'flowbite-svelte';
+import { Textarea } from 'components';
 
 let demoText =
 	'Ths is an text box you can type in.\n\nany other site on the web will work the the same!';
