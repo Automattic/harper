@@ -1,6 +1,6 @@
 use crate::expr::{All, Expr, SequenceExpr, SpelledNumberExpr};
 use crate::linting::{ExprLinter, LintKind, Suggestion};
-use crate::patterns::NominalPhrase;
+use crate::patterns::{NominalPhrase, WordSet};
 use crate::token_string_ext::TokenStringExt;
 use crate::{CharStringExt, Lint, Token};
 
@@ -23,9 +23,12 @@ impl Default for QuantifierNumeralConflict {
                 ),
                 Box::new(
                     SequenceExpr::default().then_unless(SequenceExpr::any_of(vec![
-                        Box::new(SequenceExpr::default().then_word_set(&["all", "any", "every"])),
-                        Box::new(SequenceExpr::fixed_phrase("each one")),
-                        Box::new(SequenceExpr::fixed_phrase("some one")),
+                        Box::new(WordSet::new(&["all", "any", "every"])),
+                        Box::new(
+                            SequenceExpr::word_set(&["each", "no", "some"])
+                                .t_ws()
+                                .t_aco("one"),
+                        ),
                     ])),
                 ),
             ])),

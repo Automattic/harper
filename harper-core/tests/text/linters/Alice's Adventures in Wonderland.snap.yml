@@ -135,23 +135,6 @@ Suggest:
 
 
 
-Lint:    Grammar (127 priority)
-Message: |
-      57 | lessons in the schoolroom, and though this was not a very good opportunity for
-      58 | showing off her knowledge, as there was no one to listen to her, still it was
-         |                                         ^~~~~~ The word 'no' should not be used before a number.
-      59 | good practice to say it over) “—yes, that’s about the right distance—but then I
-
-
-
-Lint:    Grammar (127 priority)
-Message: |
-      65 | downward! The Antipathies, I think—” (she was rather glad there was no one
-         |                                                                     ^~~~~~ The word 'no' should not be used before a number.
-      66 | listening, this time, as it didn’t sound at all the right word) “—but I shall
-
-
-
 Lint:    Agreement (31 priority)
 Message: |
       65 | downward! The Antipathies, I think—” (she was rather glad there was no one
@@ -937,14 +920,6 @@ Suggest:
 
 
 
-Lint:    Grammar (127 priority)
-Message: |
-     430 | Dodo had paused as if it thought that somebody ought to speak, and no one else
-         |                                                                    ^~~~~~ The word 'no' should not be used before a number.
-     431 | seemed inclined to say anything.
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      445 | This question the Dodo could not answer without a great deal of thought, and it
@@ -1690,13 +1665,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1081 | the sky.
          | ~~~~~~~~ This sentence is 49 words long.
-
-
-
-Lint:    Grammar (127 priority)
-Message: |
-    1087 | because they’re making such a noise inside, no one could possibly hear you.” And
-         |                                             ^~~~~~ The word 'no' should not be used before a number.
 
 
 
