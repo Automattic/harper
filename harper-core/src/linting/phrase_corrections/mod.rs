@@ -599,6 +599,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `I does` to `I do`.",
             LintKind::Agreement
         ),
+        "InLieuOf" => (
+            ["in lue of"],
+            ["in lieu of"],
+            "Did you mean `in lieu of`?",
+            "Corrects the misspelling `in lue of` to `in lieu of`.",
+            LintKind::Spelling
+        ),
         "InOfItself" => (
             ["in of itself"],
             ["in itself", "in and of itself"],
