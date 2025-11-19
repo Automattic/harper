@@ -481,8 +481,6 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
-        insert_expr_rule!(NeedToNoun, true);
-        insert_expr_rule!(VerbToAdjective, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
@@ -544,6 +542,7 @@ impl LintGroup {
         insert_expr_rule!(MostOfTheTimes, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_struct_rule!(NailOnTheHead, true);
+        insert_expr_rule!(NeedToNoun, true);
         insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
@@ -607,6 +606,7 @@ impl LintGroup {
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(UseGenitive, false);
+        insert_expr_rule!(VerbToAdjective, true);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(ViceVersa, true);
         insert_expr_rule!(WasAloud, true);
