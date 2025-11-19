@@ -1,5 +1,5 @@
 use crate::linting::tests::{
-    assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+    assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
 };
 
 use super::lint_group;
@@ -809,75 +809,29 @@ fn operative_systems() {
     );
 }
 
+// PassersBy
+#[test]
+fn correct_passerbys() {
+    assert_suggestion_result(
+        "For any passerbys, you may replace visibility: hidden/collapsed with: opacity: 0; pointer-events: none;.",
+        lint_group(),
+        "For any passersby, you may replace visibility: hidden/collapsed with: opacity: 0; pointer-events: none;.",
+    );
+}
+
+#[test]
+fn correct_passer_bys_hyphen() {
+    assert_suggestion_result(
+        "Is there any way for random willing passer-bys to help with this effort?",
+        lint_group(),
+        "Is there any way for random willing passers-by to help with this effort?",
+    );
+}
+
 // Piggyback
 // -none-
 
 // Many to many tests
-
-// ChangeTack
-
-// -change_tack-
-#[test]
-fn change_tact_atomic() {
-    assert_suggestion_result("change tact", lint_group(), "change tack");
-}
-
-#[test]
-fn changed_tacks_atomic() {
-    assert_suggestion_result("changed tacks", lint_group(), "changed tack");
-}
-
-#[test]
-fn changes_tacts_atomic() {
-    assert_suggestion_result("changes tacts", lint_group(), "changes tack");
-}
-
-#[test]
-fn changing_tact_atomic() {
-    assert_suggestion_result("changing tact", lint_group(), "changing tack");
-}
-
-// -change_of_tack-
-#[test]
-fn change_of_tacks_atomic() {
-    assert_suggestion_result("change of tacks", lint_group(), "change of tack");
-}
-
-#[test]
-fn change_of_tact_real_world() {
-    assert_suggestion_result(
-        "Change of tact : come give your concerns - Death Knight",
-        lint_group(),
-        "Change of tack : come give your concerns - Death Knight",
-    );
-}
-
-#[test]
-fn change_of_tacts_real_world() {
-    assert_suggestion_result(
-        "2013.08.15 - A Change of Tacts | Hero MUX Wiki | Fandom",
-        lint_group(),
-        "2013.08.15 - A Change of Tack | Hero MUX Wiki | Fandom",
-    );
-}
-
-#[test]
-fn changing_of_tacks_real_world() {
-    assert_suggestion_result(
-        "Duffy's changing of tacks hidden in her poetry collection ...",
-        lint_group(),
-        "Duffy's changing of tack hidden in her poetry collection ...",
-    );
-}
-
-#[test]
-fn changes_of_tact_real_world() {
-    assert_suggestion_result(
-        "While the notes and the changes of tact started to ...",
-        lint_group(),
-        "While the notes and the changes of tack started to ...",
-    );
-}
 
 // GetRidOf
 
@@ -1130,6 +1084,63 @@ fn corrects_made_it_seemed() {
         "The path made it seemed a bit \"internal\".",
         lint_group(),
         "The path made it seem a bit \"internal\".",
+    );
+}
+
+// NervousWreck
+
+#[test]
+#[ignore = "Harper matches case by letter index as 'How Not to Be a Complete NervoUs wreck in an Interview'"]
+fn correct_nerve_wreck_space_title_case() {
+    assert_suggestion_result(
+        "How Not to Be a Complete Nerve Wreck in an Interview",
+        lint_group(),
+        "How Not to Be a Complete Nervous Wreck in an Interview",
+    );
+}
+
+#[test]
+fn correct_nerve_wreck_space() {
+    assert_suggestion_result(
+        "The nerve wreck you are makes you seem anxious and agitated so your employer will believe the complaints.",
+        lint_group(),
+        "The nervous wreck you are makes you seem anxious and agitated so your employer will believe the complaints.",
+    );
+}
+
+#[test]
+fn correct_nerve_wreck_hyphen() {
+    assert_suggestion_result(
+        "the child receives little education and grows up to be a nerve-wreck",
+        lint_group(),
+        "the child receives little education and grows up to be a nervous wreck",
+    );
+}
+
+#[test]
+fn correct_nerve_wreck_hyphen_plural() {
+    assert_suggestion_result(
+        "This helps us not to become nerve wrecks while looking at the side mirrors",
+        lint_group(),
+        "This helps us not to become nervous wrecks while looking at the side mirrors",
+    );
+}
+
+#[test]
+#[ignore = "We can't detect when the altered form is used for an event rather than a person."]
+fn dont_correct_it_was_a_nerve_wreck() {
+    assert_no_lints(
+        "It was a nerve-wreck, but I was also excited to see what would happen next.",
+        lint_group(),
+    );
+}
+
+#[test]
+#[ignore = "We can't detect when the altered form is used for an event rather than a person."]
+fn dont_correct_so_much_nerve_wreck() {
+    assert_no_lints(
+        "So much nerve wreck for such a simple game ...",
+        lint_group(),
     );
 }
 

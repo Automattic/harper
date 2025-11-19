@@ -5,29 +5,95 @@ export const frontmatter = {
 </script>
 
 <script lang="ts">
-import ChromeLogo from '$lib/ChromeLogo.svelte';
-import CodeLogo from '$lib/CodeLogo.svelte';
-import Editor from '$lib/Editor.svelte';
-import FirefoxLogo from '$lib/FirefoxLogo.svelte';
-import GitHubLogo from '$lib/GitHubLogo.svelte';
-import ObsidianLogo from '$lib/ObsidianLogo.svelte';
-import Logo from '$lib/Logo.svelte';
-import Graph from '$lib/Graph.svelte';
-import Section from '$lib/Section.svelte';
-import EmacsLogo from '$lib/EmacsLogo.svelte';
-import HelixLogo from '$lib/HelixLogo.svelte';
-import NeovimLogo from '$lib/NeovimLogo.svelte';
-import SublimeLogo from '$lib/SublimeLogo.svelte';
-import WordPressLogo from '$lib/WordPressLogo.svelte';
-import ZedLogo from '$lib/ZedLogo.svelte';
-    import EdgeLogo from '$lib/EdgeLogo.svelte';
+import ChromeLogo from '$lib/components/ChromeLogo.svelte';
+import CodeLogo from '$lib/components/CodeLogo.svelte';
+import LazyEditor from '$lib/components/LazyEditor.svelte';
+import FirefoxLogo from '$lib/components/FirefoxLogo.svelte';
+import GitHubLogo from '$lib/components/GitHubLogo.svelte';
+import ObsidianLogo from '$lib/components/ObsidianLogo.svelte';
+import Logo from '$lib/components/Logo.svelte';
+import Graph from '$lib/components/Graph.svelte';
+import Section from '$lib/components/Section.svelte';
+import TestimonialCollection from '$lib/components/TestimonialCollection.svelte';
+import EmacsLogo from '$lib/components/EmacsLogo.svelte';
+import HelixLogo from '$lib/components/HelixLogo.svelte';
+import NeovimLogo from '$lib/components/NeovimLogo.svelte';
+import SublimeLogo from '$lib/components/SublimeLogo.svelte';
+import WordPressLogo from '$lib/components/WordPressLogo.svelte';
+import ZedLogo from '$lib/components/ZedLogo.svelte';
+import EdgeLogo from '$lib/components/EdgeLogo.svelte';
+import { browser } from '$app/environment';
+    import Testimonial from '$lib/components/Testimonial.svelte';
 
 /**
  * @param {string} keyword
  */
-function agentHas(keyword: string) {
-	return navigator.userAgent.toLowerCase().search(keyword.toLowerCase()) > -1;
+function agentHas(keyword: string): boolean | undefined {
+	if (!browser) {
+		return false;
+	}
+
+	return navigator.userAgent.toLowerCase().includes(keyword.toLowerCase());
 }
+
+
+const testimonials = [
+  {
+    authorName: "Rich Edmonds",
+    authorSubtitle: "Lead PC Hardware Editor, XDA Developers",
+    testimonial: "Written in Rust, everything is processed in an instant and I find it neat to see the browser extension highlight words as I type, effectively checking per letter. And no account is required, allowing me to get up and running in no time.",
+    source: "https://www.xda-developers.com/ditched-grammarly-for-this-amazing-open-source-alternative/"
+  },
+  {
+    authorName: "Justin Pot",
+    authorSubtitle: "Tech journalist, Lifehacker",
+    testimonial: "Obsidian is my favorite productivity app, and Harper is a grammar checking tool that works well with it.",
+    source: "https://lifehacker.com/tech/harper-offline-alternative-to-grammarly?test_uuid=02DN02BmbRCcASIX6xMQtY9&test_variant=B"
+  },
+  {
+    authorName: "Filip Cujanovic",
+    authorSubtitle: "Chrome Extension Review",
+    testimonial: "Awesome extension! It's privacy focused, that means that every check it done locally on your computer, there is no server where your data goes! And because of that it's blazingly fast compared to Grammarly.",
+    source: "https://chromewebstore.google.com/detail/private-grammar-checker-h/lodbfhdipoipcjmlebjbgmmgekckhpfb/reviews"
+  },
+  {
+    authorName: "Tim Miller",
+    authorSubtitle: "Author, Obsidian Rocks",
+    testimonial: "Harper is great: it is discreet, fast, powerful, and private.",
+    source: "https://obsidian.rocks/resource-harper/"
+  },
+  {
+    authorName: "Prakash Joshi Pax",
+    authorSubtitle: "Writer, Medium",
+    testimonial: "What I loved about this tool is that it's private, and open source and really fast.",
+    source: "https://beingpax.medium.com/9-new-obsidian-plugins-you-need-to-check-out-today-d55dba29bfb8"
+  },
+  {
+    authorName: "imbolc",
+    authorSubtitle: "Chrome Extension Review",
+    testimonial: "I've been using Harper in Neovim for a long time and am glad to see it as an extension!",
+    source: "https://chromewebstore.google.com/detail/private-grammar-checker-h/lodbfhdipoipcjmlebjbgmmgekckhpfb/reviews"
+
+  },
+  {
+    authorName: "Martijn Gribnau",
+    authorSubtitle: "Software Engineer",
+    testimonial: "What a delightful way to check for flagrant spelling errors in markdown files. Thanks Harper authors!",
+    source: "https://gribnau.dev/posts/harper-cli/"
+  },
+  {
+    authorName: "Chloe Ferguson",
+    authorSubtitle: "Writer, We Are Founders",
+    testimonial: "Harper excels at catching the kinds of mistakes that matter in technical writing – improper capitalization, misspelled words, and awkward phrasing that can make documentation unclear.",
+    source: "https://www.wearefounders.uk/the-grammar-checker-that-actually-gets-developers-meet-harper/"
+  },
+  {
+    authorName: "Rogerio Taques",
+    authorSubtitle: "Chrome Extension Review",
+    testimonial: "I've been using Harper instead of Grammarly for a few months already, and I can't be happier! I can't wait to see the great improvement when this tool reaches version 1.0.0! Great job! I hope that, eventually, it will also support languages other than English.",
+    source: "https://chromewebstore.google.com/detail/private-grammar-checker-h/lodbfhdipoipcjmlebjbgmmgekckhpfb/reviews"
+  },
+];
 </script>
 
 <main class="mx-auto flex w-full max-w-5xl flex-col gap-12 py-12">
@@ -88,7 +154,9 @@ function agentHas(keyword: string) {
 		</div>
 
 		<div class="h-[800px] w-full overflow-hidden rounded-xl border border-neutral-200 shadow-sm dark:border-neutral-800">
-			<Editor />
+      {#if browser}
+			  <LazyEditor />
+      {/if}
 		</div>
 	</div>
 
@@ -108,6 +176,9 @@ function agentHas(keyword: string) {
 		<p>
 			That means you have 100% certainty we don't violate your copyright by training large language
 			models.
+		</p>
+		<p>
+			Harper also intentionally avoids including any kind of generative AI in any part of our processing pipeline.
 		</p>
 		<svelte:fragment slot="aside">
 			<img
@@ -225,6 +296,11 @@ function agentHas(keyword: string) {
 		</svelte:fragment>
 	</Section>
 
+	<Section>
+		<svelte:fragment slot="title">Loved by Thousands</svelte:fragment>
+		<TestimonialCollection testimonials={testimonials} />
+	</Section>
+
 	<Section id="faqs">
 		<svelte:fragment slot="title">FAQs</svelte:fragment>
 		<div class="space-y-4">
@@ -234,7 +310,7 @@ function agentHas(keyword: string) {
 				</summary>
 				<p class="mt-3">
 					Yes. Harper is free in every sense of the word. You don't need a credit card to start using
-					Harper, and the source code is freely available unde the Apache-2.0 license.
+					Harper, and the source code is freely available under the Apache-2.0 license.
 				</p>
 			</details>
 			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">

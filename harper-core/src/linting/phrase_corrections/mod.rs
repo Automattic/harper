@@ -58,10 +58,10 @@ pub fn lint_group() -> LintGroup {
             "Corrects `an` to `and` after `ahead`."
         ),
         "AllOfASudden" => (
-            ["all of the sudden", "all of sudden"],
+            ["all of the sudden", "all of sudden", "all the sudden"],
             ["all of a sudden"],
-            "The phrase is `all of a sudden`, meaning `unexpectedly`.",
-            "Corrects `all of the sudden` to `all of a sudden`.",
+            "Prefer the standard phrasing `all of a sudden`.",
+            "Guides this expression toward the standard `all of a sudden`.",
             LintKind::Nonstandard
         ),
         "ALongTime" => (
@@ -70,6 +70,13 @@ pub fn lint_group() -> LintGroup {
             "Use `a long time` for referring to a duration of time.",
             "Corrects `along time` to `a long time`.",
             LintKind::Grammar
+        ),
+        "Alongside" => (
+            ["along side"],
+            ["alongside"],
+            "Use the single word `alongside`.",
+            "Replaces the spaced form `along side` with `alongside`.",
+            LintKind::WordChoice
         ),
         "AlzheimersDisease" => (
             ["old-timers' disease"],
@@ -84,13 +91,6 @@ pub fn lint_group() -> LintGroup {
             "Use `another` on its own.",
             "Corrects `an another` and `a another`.",
             LintKind::Redundancy
-        ),
-        "AndIn" => (
-            ["an in"],
-            ["and in"],
-            "Did you mean `and in`?",
-            "Fixes the incorrect phrase `an in` to `and in` for proper conjunction usage.",
-            LintKind::Typo
         ),
         "AndTheLike" => (
             ["an the like"],
@@ -334,6 +334,13 @@ pub fn lint_group() -> LintGroup {
             "Use the full verb “want” after negation: “don't want” or “do not want.”",
             "In English, negation still requires the complete verb form (“want”), so avoid truncating it to “wan.”",
             LintKind::Typo
+        ),
+        "EggYolk" => (
+            ["egg yoke"],
+            ["egg yolk"],
+            "Use `egg yolk` when you mean the yellow portion of an egg.",
+            "Corrects the eggcorn `egg yoke`, replacing it with the standard culinary term `egg yolk`.",
+            LintKind::Eggcorn
         ),
         "DontCan" => (
             ["don't can"],
@@ -592,6 +599,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `I does` to `I do`.",
             LintKind::Agreement
         ),
+        "InLieuOf" => (
+            ["in lue of"],
+            ["in lieu of"],
+            "Did you mean `in lieu of`?",
+            "Corrects the misspelling `in lue of` to `in lieu of`.",
+            LintKind::Spelling
+        ),
         "InOfItself" => (
             ["in of itself"],
             ["in itself", "in and of itself"],
@@ -752,6 +766,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects non-standard variants of `low-hanging fruit`.",
             LintKind::Usage
         ),
+        "ManagerialReins" => (
+            ["managerial reigns"],
+            ["managerial reins"],
+            "Swap in `reins` when talking about control of a team or project.",
+            "Corrects the eggcorn `managerial reigns` to the idiomatic `managerial reins`.",
+            LintKind::Eggcorn
+        ),
         "Monumentous" => (
             ["monumentous"],
             ["momentous", "monumental"],
@@ -857,7 +878,7 @@ pub fn lint_group() -> LintGroup {
             ["points of view"],
             "The correct plural is `points of view`.",
             "Corrects pluralizing the wrong noun in `point of view`.",
-            LintKind::Usage
+            LintKind::Grammar
         ),
         "PortAuPrince" => (
             // Note: this lint matches any case but cannot correct wrong case
@@ -890,6 +911,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `preying mantis` to `praying mantis`, ensuring accurate reference to the insect’s characteristic pose.",
             LintKind::Eggcorn
         ),
+        "QuiteMany" => (
+            ["quite many"],
+            ["quite a few"],
+            "Use `quite a few` instead of `quite many`.",
+            "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered non-standard usage.",
+            LintKind::Nonstandard
+        ),
         "RapidFire" => (
             ["rapid fire"],
             ["rapid-fire"],
@@ -907,7 +935,7 @@ pub fn lint_group() -> LintGroup {
         "RedundantIIRC" => (
             ["if IIRC", "IIRC correctly"], ["IIRC"],
             "`IIRC` already means 'if I recall correctly', so adding 'if' or 'correctly' is redundant.",
-            "Flags redundant use of 'if' or 'correctly' with 'IIRC', since 'IIRC' already stands for 'if I recall correctly'.",
+            "Flags redundant use of 'if' or 'correctly' with `IIRC`, since `IIRC` already stands for 'if I recall correctly'.",
             LintKind::Redundancy
         ),
         "RifeWith" => (
@@ -929,7 +957,7 @@ pub fn lint_group() -> LintGroup {
             ["rules of thumb"],
             "The correct plural is `rules of thumb`.",
             "Corrects pluralizing the wrong noun in `rule of thumb`.",
-            LintKind::Usage
+            LintKind::Grammar
         ),
         "SameAs" => (
             ["same then"],
@@ -1089,6 +1117,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `to the manor born` to `to the manner born`, ensuring the intended meaning of being naturally suited to a way of life.",
             LintKind::Eggcorn
         ),
+        "TongueInCheek" => (
+            ["tongue and cheek"],
+            ["tongue in cheek"],
+            "Use `tongue in cheek` for the idiom.",
+            "Corrects the idiom when `and` replaces the needed preposition.",
+            LintKind::WordChoice
+        ),
         "Towards" => (
             ["to towards"],
             ["towards"],
@@ -1175,12 +1210,25 @@ pub fn lint_group() -> LintGroup {
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers.",
             LintKind::Eggcorn
         ),
+        "ToWorryAbout" => (
+            ["to worried about"],
+            ["to worry about", "too worried about"],
+            "Did you mean the progressive form?",
+            "Fixes incorrect use of `to worried about`."
+        ),
         "The" => (
-            ["teh"],
+            ["teh", "te"],
             ["the"],
             "Did you mean the definite article?",
             "Fixes especially common misspellings of the word `the`",
             LintKind::Typo
+        ),
+        "RedundantThat" => (
+            ["that that"],
+            ["that"],
+            "Consider whether the second `that` adds meaning in this context.",
+            "There is rarely a situation where `that that` cannot be condensed into a single token.",
+            LintKind::Repetition
         )
     });
 

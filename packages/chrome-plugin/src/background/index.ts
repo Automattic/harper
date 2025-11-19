@@ -1,10 +1,10 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
 import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
+import type { PopupState } from '../PopupState';
 import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
 	createUnitResponse,
-	type GetActivationKeyRequest,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
@@ -20,6 +20,9 @@ import {
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
+	type OpenReportErrorRequest,
+	type PostFormDataRequest,
+	type PostFormDataResponse,
 	type Request,
 	type Response,
 	type SetActivationKeyRequest,
@@ -40,7 +43,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 	}
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 	handleRequest(request).then(sendResponse);
 
 	return true;
@@ -67,7 +70,6 @@ async function enableDefaultDomains() {
 		'playground.lexical.dev',
 		'discord.com',
 		'www.youtube.com',
-		'www.google.com',
 		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
@@ -92,6 +94,8 @@ async function enableDefaultDomains() {
 		'www.facebook.com',
 		'www.upwork.com',
 		'news.ycombinator.com',
+		'classroom.google.com',
+		'quilljs.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -141,9 +145,13 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetActivationKey();
 		case 'setActivationKey':
 			return handleSetActivationKey(message);
+		case 'openReportError':
+			return handleOpenReportError(message);
 		case 'openOptions':
 			chrome.runtime.openOptionsPage();
-			return createUnitResponse();
+			return Promise.resolve(createUnitResponse());
+		case 'postFormData':
+			return handlePostFormData(message);
 	}
 }
 
@@ -156,9 +164,7 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 	const grouped = await linter.organizedLints(req.text);
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
-			const unpacked = await Promise.all(
-				lints.map((lint) => unpackLint(req.text, lint, linter, source)),
-			);
+			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
 			return [source, unpacked] as const;
 		}),
 	);
@@ -166,7 +172,7 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 	return { kind: 'lints', lints: unpackedBySource };
 }
 
-async function handleGetConfig(req: GetConfigRequest): Promise<GetConfigResponse> {
+async function handleGetConfig(_req: GetConfigRequest): Promise<GetConfigResponse> {
 	return { kind: 'getConfig', config: await getLintConfig() };
 }
 
@@ -182,7 +188,7 @@ async function handleSetDialect(req: SetDialectRequest): Promise<UnitResponse> {
 	return createUnitResponse();
 }
 
-async function handleGetDialect(req: GetDialectRequest): Promise<GetDialectResponse> {
+async function handleGetDialect(_req: GetDialectRequest): Promise<GetDialectResponse> {
 	return { kind: 'getDialect', dialect: await getDialect() };
 }
 
@@ -222,7 +228,7 @@ async function handleGetDomainStatus(
 }
 
 async function handleSetDomainStatus(req: SetDomainStatusRequest): Promise<UnitResponse> {
-	await setDomainEnable(req.domain, req.enabled);
+	await setDomainEnable(req.domain, req.enabled, req.overrideValue);
 
 	return createUnitResponse();
 }
@@ -234,7 +240,7 @@ async function handleSetDefaultStatus(req: SetDefaultStatusRequest): Promise<Uni
 }
 
 async function handleGetLintDescriptions(
-	req: GetLintDescriptionsRequest,
+	_req: GetLintDescriptionsRequest,
 ): Promise<GetLintDescriptionsResponse> {
 	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptionsHTML() };
 }
@@ -271,6 +277,46 @@ async function handleSetActivationKey(req: SetActivationKeyRequest): Promise<Uni
 	await setActivationKey(req.key);
 
 	return createUnitResponse();
+}
+
+async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitResponse> {
+	const popupState: PopupState = {
+		page: 'report-error',
+		example: req.example,
+		rule_id: req.rule_id,
+		feedback: req.feedback,
+	};
+
+	await chrome.storage.local.set({ popupState });
+
+	if (chrome.action?.openPopup) {
+		try {
+			await chrome.action.openPopup();
+		} catch (error) {
+			console.error('Failed to open popup for report error', error);
+		}
+	}
+
+	return createUnitResponse();
+}
+
+async function handlePostFormData(req: PostFormDataRequest): Promise<PostFormDataResponse> {
+	const formData = new FormData();
+	for (const [key, value] of Object.entries(req.formData)) {
+		formData.append(key, value);
+	}
+
+	try {
+		const response = await fetch(req.url, {
+			method: 'POST',
+			body: formData,
+		});
+
+		return { kind: 'postFormData', success: response.ok };
+	} catch (error) {
+		console.error('Failed to post form data', error);
+		return { kind: 'postFormData', success: false };
+	}
 }
 
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
@@ -342,16 +388,27 @@ function formatDomainKey(domain: string): string {
 }
 
 /** Check if Harper has been enabled for a given domain. */
-async function enabledForDomain(domain: string): Promise<boolean> {
+async function enabledForDomain(domain: string): Promise<boolean | null> {
 	const req = await chrome.storage.local.get({
 		[formatDomainKey(domain)]: await enabledByDefault(),
 	});
 	return req[formatDomainKey(domain)];
 }
 
-/** Set whether Harper is enabled for a given domain. */
-async function setDomainEnable(domain: string, status: boolean) {
-	await chrome.storage.local.set({ [formatDomainKey(domain)]: status });
+/** Set whether Harper is enabled for a given domain.
+ *
+ * @param overrideValue dictates whether this should override a previous setting.
+ * */
+async function setDomainEnable(domain: string, status: boolean, overrideValue = true) {
+	let shouldSet = !(await isDomainSet(domain));
+
+	if (overrideValue) {
+		shouldSet = true;
+	}
+
+	if (shouldSet) {
+		await chrome.storage.local.set({ [formatDomainKey(domain)]: status });
+	}
 }
 
 /** Set whether Harper is enabled by default. */

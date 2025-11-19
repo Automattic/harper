@@ -41,9 +41,9 @@ macro_rules! create_test {
     };
 }
 
-create_test!(multiline_comments.cpp, 3);
-create_test!(multiline_comments.ts, 3);
-create_test!(multiline_comments.sol, 3);
+create_test!(multiline_comments.cpp, 4);
+create_test!(multiline_comments.ts, 4);
+create_test!(multiline_comments.sol, 4);
 create_test!(clean.lua, 0);
 create_test!(dirty.lua, 1);
 create_test!(clean.rs, 0);

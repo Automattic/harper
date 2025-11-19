@@ -6,7 +6,7 @@ use crate::{
     patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
 
-use super::{Expr, Optional, Repeating, Step, UnlessStep};
+use super::{Expr, Optional, OwnedExprExt, Repeating, Step, UnlessStep};
 
 #[derive(Default)]
 pub struct SequenceExpr {
@@ -108,6 +108,11 @@ impl SequenceExpr {
 
     // Expressions of more than one token
 
+    /// Match a fixed phrase.
+    pub fn fixed_phrase(phrase: &'static str) -> Self {
+        Self::default().then_fixed_phrase(phrase)
+    }
+
     // Multiple expressions
 
     /// Match the first of multiple expressions.
@@ -173,6 +178,16 @@ impl SequenceExpr {
     /// Match against one or more whitespace tokens.
     pub fn then_whitespace(self) -> Self {
         self.then(WhitespacePattern)
+    }
+
+    /// Match against one or more whitespace tokens.
+    pub fn then_whitespace_or_hyphen(self) -> Self {
+        self.then(WhitespacePattern.or(|tok: &Token, _: &[char]| tok.kind.is_hyphen()))
+    }
+
+    /// Shorthand for [`Self::then_whitespace_or_hyphen`].
+    pub fn t_ws_h(self) -> Self {
+        self.then_whitespace_or_hyphen()
     }
 
     /// Shorthand for [`Self::then_whitespace`].
@@ -277,7 +292,7 @@ impl SequenceExpr {
     }
 
     /// Match a token where either of the two token kind predicates returns true.
-    /// For instance, an adjetive or an adverb.
+    /// For instance, an adjective or an adverb.
     pub fn then_kind_either<F1, F2>(self, pred_is_1: F1, pred_is_2: F2) -> Self
     where
         F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
@@ -359,7 +374,6 @@ impl SequenceExpr {
     {
         self.then(move |tok: &Token, src: &[char]| {
             preds.iter().any(|pred| pred(&tok.kind))
-                // && !words
                 || words
                     .iter()
                     .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
@@ -427,6 +441,8 @@ impl SequenceExpr {
     gen_then_from_is!(auxiliary_verb);
     gen_then_from_is!(linking_verb);
     gen_then_from_is!(verb_lemma);
+    gen_then_from_is!(verb_simple_past_form);
+    gen_then_from_is!(verb_past_participle_form);
 
     // Adjectives
 
@@ -443,8 +459,10 @@ impl SequenceExpr {
 
     gen_then_from_is!(determiner);
     gen_then_from_is!(demonstrative_determiner);
+    gen_then_from_is!(possessive_determiner);
     gen_then_from_is!(quantifier);
     gen_then_from_is!(non_quantifier_determiner);
+    gen_then_from_is!(non_demonstrative_determiner);
 
     /// Push an [`IndefiniteArticle`] to the end of the operation list.
     pub fn then_indefinite_article(self) -> Self {

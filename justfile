@@ -7,7 +7,11 @@ format:
 build-wasm:
   #!/usr/bin/env bash
   cd "{{justfile_directory()}}/harper-wasm"
-  RUSTFLAGS='--cfg getrandom_backend="wasm_js"' wasm-pack build --target web
+  if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
+    wasm-pack build --target web --no-opt
+  else
+    wasm-pack build --target web
+  fi
 
 # Build `harper.js` with all size optimizations available.
 build-harperjs: build-wasm 
@@ -177,7 +181,8 @@ test-vscode:
     mkdir "$bin_dir"
   fi
 
-  cargo build --release
+  echo Building binaries
+  cargo build --release -q
 
   cp "{{justfile_directory()}}/target/release/harper-ls"* "$bin_dir"
 
@@ -203,7 +208,8 @@ package-vscode target="":
   cp LICENSE "$ext_dir"
 
   if [[ -z "{{target}}" ]]; then
-    cargo build --release
+    echo Building binaries
+    cargo build --release -q
 
     if ! [[ -d "$bin_dir" ]]; then
       mkdir "$bin_dir"
@@ -254,7 +260,7 @@ update-vscode-linters:
   just format
 
 # Run Rust formatting and linting.
-check-rust:
+check-rust: auditdictionary
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -285,7 +291,8 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo build --all-targets
+  echo Building binaries
+  cargo build --all-targets -q
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
@@ -302,9 +309,12 @@ dogfood:
     ./target/release/harper-cli lint $file
   done
 
+test-rust:
+  echo Running all Rust tests
+  cargo test -q
+
 # Test everything.
-test: test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
-  cargo test
+test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
 
 # Use `harper-cli` to parse a provided file and print out the resulting tokens.
 parse file:
@@ -368,6 +378,8 @@ userdictoverlap:
 # Get the metadata associated with one or more words in Harper's dictionary as JSON.
 getmetadata *words:
   cargo run --bin harper-cli -- metadata {{words}}
+getmetadata-brief *words:
+  cargo run --bin harper-cli -- metadata --brief {{words}}
 # Get all the forms of a word using the affixes.
 getforms word:
   cargo run --bin harper-cli -- forms {{word}}
@@ -649,3 +661,16 @@ suggestannotation input:
       console.log(`None of the characters of "${input}" are available to use for new annotations, and none of them are OK to be moved to make way for new annotations.`);
     }
   }
+
+# Audit the curated dictionary for any issues.
+alias auditdict := auditdictionary
+
+auditdictionary DIR="harper-core":
+  cargo run --bin harper-cli -- audit-dictionary {{DIR}}
+
+runsnapshots:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd harper-core
+  cargo test -- test_pos_tagger test_most_lints

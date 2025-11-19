@@ -48,7 +48,7 @@ let demoText =
         <Textarea
           rows={10}
           bind:value={demoText}
-          class="w-full rounded-lg border border-base-300 focus:ring-4 focus:ring-primary/30 transition text-xl!"
+          class="w-full rounded-lg border border-base-300 focus:ring-4 focus:ring-primary/30 transition text-xl! dark:text-white"
         />
       </div>
 

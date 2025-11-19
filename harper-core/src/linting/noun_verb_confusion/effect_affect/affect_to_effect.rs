@@ -85,6 +85,18 @@ impl ExprLinter for AffectToEffect {
         let offending_index = *self.map.lookup(0, matched_tokens, source)?;
         let target = &matched_tokens[offending_index];
 
+        let preceding = matched_tokens[..offending_index]
+            .iter()
+            .rfind(|tok| !tok.kind.is_whitespace());
+
+        if preceding.is_some_and(|tok| {
+            (tok.kind.is_pronoun() || tok.kind.is_upos(UPOS::PRON))
+                && !tok.kind.is_possessive_pronoun()
+        }) {
+            // Pronouns like "it" or "they" almost always introduce the verb form ("it affects").
+            return None;
+        }
+
         let token_text = target.span.get_content_string(source);
         let lower = token_text.to_lowercase();
         let replacement = match lower.as_str() {
@@ -204,7 +216,7 @@ fn behaves_like_verb(token: &Token, source: &[char], prev: &[char]) -> bool {
 }
 
 fn is_preceding_context(token: &Token) -> bool {
-    if token.kind.is_adverb() {
+    if token.kind.is_upos(UPOS::ADV) {
         return false;
     }
 

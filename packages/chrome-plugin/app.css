@@ -20,8 +20,17 @@
 	--color-accent-sand: #d68c45;
 }
 
-@source "../node_modules/flowbite-svelte/dist";
+@source "./node_modules/flowbite-svelte/dist";
 
 code {
 	@apply bg-primary-100 rounded p-1;
+}
+
+body {
+	@apply min-h-screen bg-white text-gray-900 transition-colors duration-150;
+}
+
+.dark body,
+body.dark {
+	@apply bg-slate-950 text-slate-100;
 }

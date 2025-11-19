@@ -23,7 +23,7 @@ Message: |
 Suggest:
   - Replace with: “armor”
   - Replace with: “amour”
-  - Replace with: “arbor”
+  - Replace with: “armory”
 
 
 
@@ -58,10 +58,28 @@ Suggest:
 
 Lint:    Capitalization (31 priority)
 Message: |
+     126 | Who's for ice-cream?
+         | ^~~~~ The canonical dictionary spelling is `who's`.
+Suggest:
+  - Replace with: “who's”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
      160 | to account for one's whereabouts.
          | ^~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “To”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     166 | You can't get all your news from the Internet.
+         |                        ^~~~ The canonical dictionary spelling is `news`.
+Suggest:
+  - Replace with: “news”
 
 
 
@@ -87,12 +105,12 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (127 priority)
 Message: |
      243 | His parents got him an in with the company.
-         |                     ^~~~~ Did you mean `and in`?
+         |                     ^~ Did you mean `and in`?
 Suggest:
-  - Replace with: “and in”
+  - Replace with: “and”
 
 
 
@@ -145,8 +163,8 @@ Message: |
          |                                                             ^~~~~~ Did you mean to spell `favour` this way?
 Suggest:
   - Replace with: “favor”
-  - Replace with: “famous”
   - Replace with: “flavor”
+  - Replace with: “flour”
 
 
 
@@ -323,9 +341,9 @@ Message: |
      443 | With their reputation on the line, they decided to fire their PR team.
          |                                                               ^~ Did you mean to spell `PR` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
+  - Replace with: “Pa”
   - Replace with: “Par”
+  - Replace with: “Pre”
 
 
 

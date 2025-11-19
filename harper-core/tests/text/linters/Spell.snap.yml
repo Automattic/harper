@@ -8,6 +8,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+       7 | My favourite color is blu.
+         |                       ^~~ The canonical dictionary spelling is `Blu`.
+Suggest:
+  - Replace with: “Blu”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
        7 | My favourite color is blu.
@@ -101,9 +110,9 @@ Message: |
       13 | At the centre of the theatre I dropped a litre of coke.
          |                                          ^~~~~ Did you mean to spell `litre` this way?
 Suggest:
+  - Replace with: “lithe”
   - Replace with: “lire”
   - Replace with: “lite”
-  - Replace with: “liter”
 
 
 

@@ -17,3 +17,4 @@ onlyBuiltDependencies:
   - esbuild
   - keytar
   - msw
+  - svelte-preprocess

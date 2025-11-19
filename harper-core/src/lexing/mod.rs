@@ -426,7 +426,7 @@ mod tests {
 
     #[test]
     fn lexes_youtube_as_hostname() {
-        let source: Vec<_> = "YouTube.com".chars().collect();
+        let source: Vec<_> = "youtube.com".chars().collect();
         assert_eq!(
             lex_token(&source),
             Some(FoundToken {

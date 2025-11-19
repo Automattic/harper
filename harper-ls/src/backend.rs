@@ -21,6 +21,7 @@ use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDic
 use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
+use harper_jjdescription::JJDescriptionParser;
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
@@ -358,7 +359,15 @@ impl Backend {
                     Some(Box::new(ts_parser))
                 }
             }
-            "literate haskell" | "lhaskell" => {
+            "git-commit" | "gitcommit" => {
+                Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
+            }
+            "html" => Some(Box::new(HtmlParser::default())),
+            "ink" => Some(Box::new(InkParser::default())),
+            "jj-commit" | "jjdescription" => {
+                Some(Box::new(JJDescriptionParser::new(markdown_options)))
+            }
+            "lhaskell" | "literate haskell" => {
                 let parser = LiterateHaskellParser::new_markdown(markdown_options);
 
                 if let Some(new_dict) =
@@ -380,16 +389,12 @@ impl Backend {
                     Some(Box::new(parser))
                 }
             }
-            "ink" => Some(Box::new(InkParser::default())),
+            "mail" => Some(Box::new(PlainEnglish)),
             "markdown" => Some(Box::new(Markdown::new(markdown_options))),
-            "git-commit" | "gitcommit" => {
-                Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
-            }
-            "html" => Some(Box::new(HtmlParser::default())),
-            "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
-            "typst" => Some(Box::new(Typst)),
             "org" => Some(Box::new(OrgMode)),
+            "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "python" => Some(Box::new(PythonParser::default())),
+            "typst" => Some(Box::new(Typst)),
             _ => None,
         };
 
