@@ -216,7 +216,7 @@ fn behaves_like_verb(token: &Token, source: &[char], prev: &[char]) -> bool {
 }
 
 fn is_preceding_context(token: &Token) -> bool {
-    if token.kind.is_adverb() {
+    if token.kind.is_upos(UPOS::ADV) {
         return false;
     }
 
