@@ -667,3 +667,10 @@ alias auditdict := auditdictionary
 
 auditdictionary DIR="harper-core":
   cargo run --bin harper-cli -- audit-dictionary {{DIR}}
+
+runsnapshots:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd harper-core
+  cargo test -- test_pos_tagger test_most_lints
