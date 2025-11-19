@@ -186,18 +186,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      74 | Greek and Latin can be very large; tagging words in agglutinative languages such
-         |                                                     ^~~~~~~~~~~~~ Did you mean to spell `agglutinative` this way?
-      75 | as Inuit languages may be virtually impossible. At the other extreme, Petrov et
-Suggest:
-  - Replace with: “agglutinate”
-  - Replace with: “agglutinating”
-  - Replace with: “agglutination”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       75 | as Inuit languages may be virtually impossible. At the other extreme, Petrov et
          |                                                                       ^~~~~~ Did you mean to spell `Petrov` this way?
       76 | al. have proposed a "universal" tag set, with 12 categories (for example, no
