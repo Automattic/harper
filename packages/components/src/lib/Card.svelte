@@ -5,7 +5,7 @@ let restClass: string | undefined;
 let restProps: Record<string, unknown> = {};
 
 const baseClasses =
-	'rounded-2xl px-4 py-3 shadow-lg backdrop-blur border border-cream-100 dark:border-cream-700';
+	'rounded-xl px-4 py-3 shadow-lg backdrop-blur border border-cream-100 dark:border-cream-700';
 
 $: ({ class: restClass, ...restProps } = $$restProps);
 $: classes = [baseClasses, restClass, className].filter(Boolean).join(' ');

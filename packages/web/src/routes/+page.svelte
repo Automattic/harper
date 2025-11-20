@@ -22,7 +22,7 @@ import SublimeLogo from '$lib/components/SublimeLogo.svelte';
 import WordPressLogo from '$lib/components/WordPressLogo.svelte';
 import ZedLogo from '$lib/components/ZedLogo.svelte';
 import EdgeLogo from '$lib/components/EdgeLogo.svelte';
-import { Link } from 'components';
+import { Card, Link } from 'components';
 import { browser } from '$app/environment';
     import Testimonial from '$lib/components/Testimonial.svelte';
 
@@ -209,76 +209,96 @@ const testimonials = [
 			extensions are amazing.
 		</p>
 		<svelte:fragment slot="aside">
-			<div class="grid gap-4 sm:grid-cols-2">
+			<div class="grid gap-2 sm:grid-cols-2">
 				<Link
 					href="/docs/integrations/obsidian"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
+					class="skew-hover-left"
 				>
-					<ObsidianLogo width="40" height="40" />
-					<span class="font-medium">Obsidian</span>
+					<Card class="flex items-center gap-3">
+						<ObsidianLogo width="40" height="40" />
+						<span class="font-medium">Obsidian</span>
+					</Card>
 				</Link>
 				<Link
 					href="/docs/integrations/visual-studio-code"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
+					class="skew-hover"
 				>
-					<CodeLogo width="40" height="40" />
-					<span class="font-medium">Visual Studio Code</span>
+					<Card class="flex items-center gap-3">
+						<CodeLogo width="40" height="40" />
+						<span class="font-medium">Visual Studio Code</span>
+					</Card>
 				</Link>
 				<Link
 					href="/docs/integrations/neovim"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
+					class="skew-hover"
 				>
-					<NeovimLogo width="40" height="40" />
-					<span class="font-medium">Neovim</span>
+					<Card class="flex items-center gap-3">
+						<NeovimLogo width="40" height="40" />
+						<span class="font-medium">Neovim</span>
+					</Card>
 				</Link>
 				<Link
 					href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
+					class="skew-hover-left"
 				>
-					<ChromeLogo width="40" height="40" />
-					<span class="font-medium">Chrome</span>
+					<Card class="flex items-center gap-3">
+						<ChromeLogo width="40" height="40" />
+						<span class="font-medium">Chrome</span>
+					</Card>
 				</Link>
 				<Link
 					href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
+					class="skew-hover"
 				>
-					<FirefoxLogo width="40" height="40" />
-					<span class="font-medium">Firefox</span>
+					<Card class="flex items-center gap-3">
+						<FirefoxLogo width="40" height="40" />
+						<span class="font-medium">Firefox</span>
+					</Card>
 				</Link>
 				<Link
 					href="/docs/integrations/helix"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
+					class="skew-hover-left"
 				>
-					<HelixLogo width="40" height="40" />
-					<span class="font-medium">Helix</span>
+					<Card class="flex items-center gap-3">
+						<HelixLogo width="40" height="40" />
+						<span class="font-medium">Helix</span>
+					</Card>
 				</Link>
 				<Link
 					href="/docs/integrations/wordpress"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
+					class="skew-hover-left"
 				>
-					<WordPressLogo width="40" height="40" />
-					<span class="font-medium">WordPress</span>
+					<Card class="flex items-center gap-3">
+						<WordPressLogo width="40" height="40" />
+						<span class="font-medium">WordPress</span>
+					</Card>
 				</Link>
 				<Link
 					href="/docs/integrations/zed"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
+					class="skew-hover"
 				>
-					<ZedLogo width="40" height="40" />
-					<span class="font-medium">Zed</span>
+					<Card class="flex items-center gap-3">
+						<ZedLogo width="40" height="40" />
+						<span class="font-medium">Zed</span>
+					</Card>
 				</Link>
 				<Link
 					href="/docs/integrations/emacs"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
+					class="skew-hover-left"
 				>
-					<EmacsLogo width="40" height="40" />
-					<span class="font-medium">Emacs</span>
+					<Card class="flex items-center gap-3">
+						<EmacsLogo width="40" height="40" />
+						<span class="font-medium">Emacs</span>
+					</Card>
 				</Link>
 				<Link
 					href="/docs/integrations/sublime-text"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
+					class="skew-hover"
 				>
-					<SublimeLogo width="40" height="40" />
-					<span class="font-medium">Sublime Text</span>
+					<Card class="flex items-center gap-3">
+						<SublimeLogo width="40" height="40" />
+						<span class="font-medium">Sublime Text</span>
+					</Card>
 				</Link>
 			</div>
 		</svelte:fragment>
@@ -291,9 +311,9 @@ const testimonials = [
 		</p>
 		<p>No network request, no massive language models, no fuss.</p>
 		<svelte:fragment slot="aside">
-			<div class="rounded-xl border border-neutral-200 p-4 shadow-sm dark:border-neutral-800">
+			<Card>
 				<Graph />
-			</div>
+			</Card>
 		</svelte:fragment>
 	</Section>
 
