@@ -29,6 +29,14 @@ pub fn lint_group() -> LintGroup {
         "ToBeHonest"         => ("tbh", "to be honest"),
         "AsFarAsIKnow"       => ("afaik", "as far as I know"),
         "Really"             => ("rly", "really"),
+        "ExplainLikeImFive"  => ("eli5", "explain like i'm five"),
+        "ForWhatItsWorth"    => ("fwiw", "for what it's worth"),
+        "IDontKnow"          => ("idk", "I don't know"),
+        "IfIRecallCorrectly" => ("iirc", "if I recall correctly"),
+        "IfYouKnowYouKnow"   => ("iykyk", "if you know, you know"),
+        "InCaseYouMissedIt"  => ("icymi", "in case you missed it"),
+        "InRealLife"         => ("irl", "in real life"),
+        "PleaseTakeALook"    => ("ptal", "please take a look"),
     });
 
     group.set_all_rules_to(Some(true));
@@ -116,6 +124,87 @@ mod tests {
             "Rly excited for this.",
             lint_group(),
             "Really excited for this.",
+        );
+    }
+
+    #[test]
+    fn issue_2181() {
+        assert_suggestion_result(
+            "AFAIK, we don't currently have an issue for it.",
+            lint_group(),
+            "As far as i know, we don't currently have an issue for it.",
+        );
+    }
+
+    #[test]
+    fn corrects_eli5() {
+        assert_suggestion_result(
+            "Can you eli5 how this works?",
+            lint_group(),
+            "Can you explain like i'm five how this works?",
+        );
+    }
+
+    #[test]
+    fn corrects_fwiw() {
+        assert_suggestion_result(
+            "Fwiw, I think it's a good idea.",
+            lint_group(),
+            "For what it's worth, I think it's a good idea.",
+        );
+    }
+
+    #[test]
+    fn corrects_idk() {
+        assert_suggestion_result(
+            "Idk if I'll make it to the party.",
+            lint_group(),
+            "I don't know if I'll make it to the party.",
+        );
+    }
+
+    #[test]
+    fn corrects_iirc() {
+        assert_suggestion_result(
+            "Iirc, the event starts at 6 PM.",
+            lint_group(),
+            "If i recall correctly, the event starts at 6 PM.",
+        );
+    }
+
+    #[test]
+    fn corrects_iykyk() {
+        assert_suggestion_result(
+            "Iykyk, this place is amazing.",
+            lint_group(),
+            "If you know, you know, this place is amazing.",
+        );
+    }
+
+    #[test]
+    fn corrects_icymi() {
+        assert_suggestion_result(
+            "Icymi, the deadline is tomorrow.",
+            lint_group(),
+            "In case you missed it, the deadline is tomorrow.",
+        );
+    }
+
+    #[test]
+    fn corrects_irl() {
+        assert_suggestion_result(
+            "We should meet irl sometime.",
+            lint_group(),
+            "We should meet in real life sometime.",
+        );
+    }
+
+    #[test]
+    fn corrects_ptal() {
+        assert_suggestion_result(
+            "Ptal at the document I sent.",
+            lint_group(),
+            "Please take a look at the document I sent.",
         );
     }
 }

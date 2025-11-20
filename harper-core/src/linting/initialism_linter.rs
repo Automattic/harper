@@ -37,20 +37,14 @@ impl ExprLinter for InitialismLinter {
         let tok = matched_tokens.first()?;
         let source = tok.span.get_content(source);
 
-        let caps = source
-            .iter()
-            .map(char::is_ascii_uppercase)
-            .chain([false].into_iter().cycle());
-
         let mut expansion_lower = self.expansion_lower.to_owned();
+        let first_letter = &mut expansion_lower[0][0];
 
-        for (word, cap) in expansion_lower.iter_mut().zip(caps) {
-            word[0] = if cap {
-                word[0].to_ascii_uppercase()
-            } else {
-                word[0].to_ascii_lowercase()
-            }
-        }
+        *first_letter = if source[0].is_ascii_uppercase() {
+            first_letter.to_ascii_uppercase()
+        } else {
+            first_letter.to_ascii_lowercase()
+        };
 
         let phrase = Itertools::intersperse_with(expansion_lower.into_iter(), || vec![' '])
             .reduce(|mut left, mut right| {

@@ -2225,6 +2225,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "fuzz"
+version = "0.0.0"
+dependencies = [
+ "harper-comments",
+ "harper-core",
+ "harper-html",
+ "harper-literate-haskell",
+ "harper-typst",
+ "libfuzzer-sys",
+]
+
+[[package]]
 name = "gemm"
 version = "0.17.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2646,7 +2658,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -2679,7 +2691,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2713,7 +2725,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "ammonia",
  "bitflags 2.10.0",
@@ -2751,7 +2763,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2762,7 +2774,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2773,7 +2785,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2784,7 +2796,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2795,7 +2807,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2826,7 +2838,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2844,7 +2856,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2855,7 +2867,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2866,7 +2878,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2885,7 +2897,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.71.0"
+version = "0.72.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -3371,6 +3383,16 @@ name = "libc"
 version = "0.2.174"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1171693293099992e19cddea4e8b849964e9846f4acee11b3948bcc337be8776"
+
+[[package]]
+name = "libfuzzer-sys"
+version = "0.4.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5037190e1f70cbeef565bd267599242926f724d3b8a9f510fd7e0b540cfa4404"
+dependencies = [
+ "arbitrary",
+ "cc",
+]
 
 [[package]]
 name = "libloading"
