@@ -126,6 +126,7 @@ use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
+use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
 use super::quite_quiet::QuiteQuiet;
 use super::quote_spacing::QuoteSpacing;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
@@ -571,6 +572,7 @@ impl LintGroup {
         insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(PronounKnew, true);
         insert_expr_rule!(QuantifierNeedsOf, true);
+        insert_expr_rule!(QuantifierNumeralConflict, true);
         insert_expr_rule!(QuiteQuiet, true);
         insert_struct_rule!(QuoteSpacing, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
