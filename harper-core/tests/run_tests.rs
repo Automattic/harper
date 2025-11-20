@@ -98,4 +98,4 @@ create_test!(issue_2151.md, 4, Dialect::British);
 create_test!(lukas_homework.md, 3, Dialect::American);
 
 // Org mode tests
-create_org_test!(index.org, 40, Dialect::American);
+create_org_test!(index.org, 50, Dialect::American);

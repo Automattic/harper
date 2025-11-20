@@ -21,6 +21,7 @@ use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
+use super::and_in::AndIn;
 use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::ask_no_preposition::AskNoPreposition;
@@ -61,6 +62,7 @@ use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
+use super::go_so_far_as_to::GoSoFarAsTo;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
@@ -70,6 +72,7 @@ use super::hop_hope::HopHope;
 use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
+use super::if_wouldve::IfWouldve;
 use super::in_on_the_cards::InOnTheCards;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
@@ -96,6 +99,7 @@ use super::most_number::MostNumber;
 use super::most_of_the_times::MostOfTheTimes;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
+use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
 use super::no_match_for::NoMatchFor;
 use super::nobody::Nobody;
@@ -149,6 +153,7 @@ use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::then_than::ThenThan;
 use super::theres::Theres;
+use super::theses_these::ThesesThese;
 use super::thing_think::ThingThink;
 use super::though_thought::ThoughThought;
 use super::throw_away::ThrowAway;
@@ -296,10 +301,10 @@ pub struct LintGroup {
     /// We use a binary map here so the ordering is stable.
     expr_linters: BTreeMap<String, Box<dyn ExprLinter>>,
     /// Since [`ExprLinter`]s operate on a chunk-basis, we can store a
-    /// mapping of `Chunk -> Lint` and only re-run the pattern linters
+    /// mapping of `Chunk -> Lint` and only re-run the expr linters
     /// when a chunk changes.
     ///
-    /// Since the pattern linter results also depend on the config, we hash it and pass it as part
+    /// Since the expr linter results also depend on the config, we hash it and pass it as part
     /// of the key.
     chunk_expr_cache: LruCache<(CharString, u64), BTreeMap<String, Vec<Lint>>>,
     hasher_builder: RandomState,
@@ -311,7 +316,7 @@ impl LintGroup {
             config: LintGroupConfig::default(),
             linters: BTreeMap::new(),
             expr_linters: BTreeMap::new(),
-            chunk_expr_cache: LruCache::new(NonZero::new(10000).unwrap()),
+            chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
             hasher_builder: RandomState::default(),
         }
     }
@@ -360,8 +365,8 @@ impl LintGroup {
         let other_linters = std::mem::take(&mut other.linters);
         self.linters.extend(other_linters);
 
-        let other_pattern_linters = std::mem::take(&mut other.expr_linters);
-        self.expr_linters.extend(other_pattern_linters);
+        let other_expr_linters = std::mem::take(&mut other.expr_linters);
+        self.expr_linters.extend(other_expr_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
@@ -461,6 +466,7 @@ impl LintGroup {
         insert_struct_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
+        insert_expr_rule!(AndIn, true);
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(AskNoPreposition, true);
@@ -475,7 +481,6 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
-        insert_expr_rule!(VerbToAdjective, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
@@ -503,6 +508,7 @@ impl LintGroup {
         insert_struct_rule!(ForNoun, true);
         insert_expr_rule!(FreePredicate, true);
         insert_expr_rule!(FriendOfMe, true);
+        insert_expr_rule!(GoSoFarAsTo, true);
         insert_expr_rule!(HavePronoun, true);
         insert_expr_rule!(Hedging, true);
         insert_expr_rule!(HelloGreeting, true);
@@ -511,6 +517,7 @@ impl LintGroup {
         insert_struct_rule!(HowTo, true);
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
+        insert_expr_rule!(IfWouldve, true);
         insert_expr_rule!(InterestedIn, true);
         insert_expr_rule!(ItLooksLikeThat, true);
         insert_struct_rule!(ItsContraction, true);
@@ -535,6 +542,7 @@ impl LintGroup {
         insert_expr_rule!(MostOfTheTimes, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_struct_rule!(NailOnTheHead, true);
+        insert_expr_rule!(NeedToNoun, true);
         insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
@@ -587,6 +595,7 @@ impl LintGroup {
         insert_struct_rule!(TheMy, true);
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(Theres, true);
+        insert_expr_rule!(ThesesThese, true);
         insert_expr_rule!(ThingThink, true);
         insert_expr_rule!(ThoughThought, true);
         insert_expr_rule!(ThrowAway, true);
@@ -597,6 +606,7 @@ impl LintGroup {
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(UseGenitive, false);
+        insert_expr_rule!(VerbToAdjective, true);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(ViceVersa, true);
         insert_expr_rule!(WasAloud, true);
@@ -661,7 +671,7 @@ impl LintGroup {
             }
         }
 
-        // Pattern linters
+        // Expr linters
         for chunk in document.iter_chunks() {
             let Some(chunk_span) = chunk.span() else {
                 continue;

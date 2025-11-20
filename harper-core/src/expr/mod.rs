@@ -154,6 +154,7 @@ where
 
 pub trait OwnedExprExt {
     fn or(self, other: impl Expr + 'static) -> FirstMatchOf;
+    fn and(self, other: impl Expr + 'static) -> All;
     fn or_longest(self, other: impl Expr + 'static) -> LongestMatchOf;
 }
 
@@ -164,6 +165,11 @@ where
     /// Returns an expression that matches either the current one or the expression contained in `other`.
     fn or(self, other: impl Expr + 'static) -> FirstMatchOf {
         FirstMatchOf::new(vec![Box::new(self), Box::new(other)])
+    }
+
+    /// Returns an expression that matches only if both the current one and the expression contained in `other` do.
+    fn and(self, other: impl Expr + 'static) -> All {
+        All::new(vec![Box::new(self), Box::new(other)])
     }
 
     /// Returns an expression that matches the longest of the current one or the expression contained in `other`.

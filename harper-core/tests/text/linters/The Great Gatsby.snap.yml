@@ -4746,6 +4746,17 @@ Message: |
 
 
 
+Lint:    Repetition (31 priority)
+Message: |
+    3135 | uneasy anyhow until he had given them something, realizing in a vague way that
+         |                                                                           ^~~~~
+    3136 | that was all they came for. Mr. Sloane wanted nothing. A lemonade? No, thanks. A
+         | ~~~~ Consider whether the second `that` adds meaning in this context.
+Suggest:
+  - Replace with: “that”
+
+
+
 Lint:    Repetition (127 priority)
 Message: |
     3135 | uneasy anyhow until he had given them something, realizing in a vague way that
