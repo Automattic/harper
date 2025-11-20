@@ -35,14 +35,15 @@
 		"svelte": "^5.0.0"
 	},
 	"dependencies": {
+		"colorjs.io": "^0.5.2",
 		"flowbite-svelte": "^0.44.24"
 	},
 	"devDependencies": {
-		"@tailwindcss/cli": "^4.1.16",
 		"@sveltejs/adapter-auto": "^7.0.0",
 		"@sveltejs/kit": "^2.47.1",
 		"@sveltejs/package": "^2.5.4",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
+		"@tailwindcss/cli": "^4.1.16",
 		"@tailwindcss/vite": "^4.1.14",
 		"flowbite": "^3.1.2",
 		"publint": "^0.3.14",

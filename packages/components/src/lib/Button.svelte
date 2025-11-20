@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'svelte/elements';
+    import { getConstrastingTextColor } from './utils.ts';
 
 	type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 	type ButtonColor = 'primary' | 'light' | 'gray' | 'white' | 'dark';
@@ -71,13 +72,17 @@
 		.filter(Boolean)
 		.join(' ');
 
-  $: colorOverride = colorClasses[color as ButtonColor] == null ? color : undefined;
+	$: colorOverride = colorClasses[color as ButtonColor] == null ? color : undefined;
+	$: colorOverrideText = colorOverride ? getConstrastingTextColor(colorOverride) : undefined;
+	$: inlineStyle = colorOverride
+		? `background-color: ${colorOverride} !important; color: ${colorOverrideText} !important;`
+		: undefined;
 </script>
 
 {#if href}
 	<a
 		class={classes}
-    style={colorOverride ? `background-color: ${colorOverride} !important;` : ""}
+		style={inlineStyle}
 		href={disabled ? undefined : href}
 		aria-disabled={disabled}
 		role={disabled ? 'link' : undefined}
@@ -89,10 +94,13 @@
 		<slot />
 	</a>
 {:else}
-	<button class={classes} type={type} {disabled} {...restProps}
-
-    style={colorOverride ? `background-color: ${colorOverride} !important;` : ""}
-  >
+	<button
+		class={classes}
+		type={type}
+		{disabled}
+		{...restProps}
+		style={inlineStyle}
+	>
 		<slot />
 	</button>
 {/if}
