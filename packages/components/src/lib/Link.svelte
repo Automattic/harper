@@ -11,7 +11,7 @@ export let underline = false;
 let restClass: string | undefined;
 let restProps: Record<string, unknown> = {};
 
-$: baseClasses = 'hover:underline';
+$: baseClasses = 'hover:underline text-primary dark:text-white';
 $: ({ class: restClass, ...restProps } = $$restProps);
 $: classes =
 	[baseClasses, restClass, className, underline ? 'underline' : undefined]

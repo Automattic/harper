@@ -1,12 +1,9 @@
 export {
 	Badge,
-	Card,
 	Checkbox,
 	Fileupload,
-	Input,
 	Label,
 	Radio,
-	Select,
 	Spinner,
 	Table,
 	TableBody,
@@ -14,9 +11,12 @@ export {
 	TableBodyRow,
 	TableHead,
 	TableHeadCell,
-	Textarea,
 	Toggle,
 } from 'flowbite-svelte';
 
 export { default as Button } from './Button.svelte';
+export { default as Card } from './Card.svelte';
+export { default as Input } from './Input.svelte';
 export { default as Link } from './Link.svelte';
+export { default as Select } from './Select.svelte';
+export { default as Textarea } from './Textarea.svelte';
