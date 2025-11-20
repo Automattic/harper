@@ -228,10 +228,10 @@ function reportProblemButton(reportError?: () => Promise<void>): any {
 	);
 }
 
-function styleTag() {
+function styleTag(lintKind: LintKind) {
 	return h('style', { id: 'harper-suggestion-style' }, [
 		`code{
-      background-color:#e3eccf;
+      text-decoration: underline solid ${lintKindColor(lintKind)} 2px;
       padding:0.125rem;
       border-radius:0.25rem
       }
@@ -358,10 +358,16 @@ function styleTag() {
       animation: fadeIn 100ms ease-in-out forwards;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
 
       @media (prefers-color-scheme:dark){
       code{background-color:#1f2d3d;color:#c9d1d9}
@@ -444,6 +450,7 @@ export default function SuggestionBox(
 		top: bottom ? '' : `${top}px`,
 		bottom: bottom ? `${bottom}px` : '',
 		left: `${left}px`,
+		transformOrigin: `${bottom ? 'bottom' : 'top'} left`,
 	};
 
 	return h(
@@ -454,7 +461,7 @@ export default function SuggestionBox(
 			'harper-close-on-escape': new CloseOnEscapeHook(close),
 		},
 		[
-			styleTag(),
+			styleTag(box.lint.lint_kind),
 			header(
 				box.lint.lint_kind_pretty,
 				lintKindColor(box.lint.lint_kind),
