@@ -1,5 +1,6 @@
 <script lang="ts">
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'svelte/elements';
+import Link from './Link.svelte';
 
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 type ButtonColor = 'primary' | 'light' | 'gray' | 'white' | 'dark';
@@ -85,7 +86,7 @@ $: inlineStyle =
 </script>
 
 {#if href}
-	<a
+	<Link
 		class={classes}
 		style={inlineStyle}
 		href={disabled ? undefined : href}
@@ -97,7 +98,7 @@ $: inlineStyle =
 		{...restProps}
 	>
 		<slot />
-	</a>
+	</Link>
 {:else}
 	<button
 		class={classes}

@@ -1,6 +1,7 @@
 <script lang="ts">
 import '../app.css';
 
+import { Link } from 'components';
 import posthog from 'posthog-js';
 import { onMount } from 'svelte';
 import { browser } from '$app/environment';
@@ -39,12 +40,12 @@ let displayName = names[Math.floor(Math.random() * names.length)];
 	</div>
 
 	<div class="w-full flex flex-row justify-center h-12">
-		<a href="https://automattic.com/">
+		<Link href="https://automattic.com/">
 			<div class="flex items-center">
 				An
 				<div class="inline-block"><AutomatticLogo height="32px" width="140px" /></div>
 				{displayName}
 			</div>
-		</a>
+		</Link>
 	</div>
 </div>

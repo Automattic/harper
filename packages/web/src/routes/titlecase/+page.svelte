@@ -1,5 +1,5 @@
 <script>
-import { Textarea } from 'components';
+import { Link, Textarea } from 'components';
 import { binary, WorkerLinter } from 'harper.js';
 import { onMount } from 'svelte';
 import Typed from 'typed.js';
@@ -62,13 +62,13 @@ onMount(() => {
 				<div class="text-sm mb-3">By John Doe, Staff Writer</div>
 
 				<p class="leading-relaxed">
-					<a href="/">Harper</a> ships out-of-the box with everything you need to perform complex operations
+					<Link href="/">Harper</Link> ships out-of-the box with everything you need to perform complex operations
 					on English text at the edge. That includes converting text to title-case.
 				</p>
 
 				<p class="leading-relaxed">
 					Just enter your text in the heading above and it'll be converted to title case following
-					the <a href="https://www.chicagomanualofstyle.org/home.html">Chicago Style</a>. Your
+					the <Link href="https://www.chicagomanualofstyle.org/home.html">Chicago Style</Link>. Your
 					privacy means something. Keep your data where you want it: in your hands and on your
 					device.
 				</p>

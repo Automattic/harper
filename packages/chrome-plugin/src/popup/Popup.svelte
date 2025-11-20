@@ -1,6 +1,6 @@
 <script lang="ts">
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
-import { Button } from 'components';
+import { Button, Link } from 'components';
 import Fa from 'svelte-fa';
 import logo from '/logo.png';
 import { main, type PopupState } from '../PopupState';
@@ -48,9 +48,9 @@ function openSettings() {
   {/if}
 
   <footer class="flex items-center justify-center gap-6 px-3 py-2 text-sm border-t border-gray-100 rounded-b-lg bg-white/60 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-100">
-    <a href="https://github.com/Automattic/harper" target="_blank" rel="noopener" class="text-primary-600 hover:underline">GitHub</a>
-    <a href="https://discord.com/invite/JBqcAaKrzQ" target="_blank" rel="noopener" class="text-primary-600 hover:underline">Discord</a>
-    <a href="https://writewithharper.com" target="_blank" rel="noopener" class="text-primary-600 hover:underline">Discover</a>
-    <button class="text-primary-600 hover:underline" onclick={openSettings}>Settings</button>
+    <Link href="https://github.com/Automattic/harper" target="_blank" rel="noopener" class="text-primary-600">GitHub</Link>
+    <Link href="https://discord.com/invite/JBqcAaKrzQ" target="_blank" rel="noopener" class="text-primary-600">Discord</Link>
+    <Link href="https://writewithharper.com" target="_blank" rel="noopener" class="text-primary-600">Discover</Link>
+    <Button class="text-primary-600 hover:underline" on:click={openSettings}>Settings</Button>
   </footer>
 </div>
