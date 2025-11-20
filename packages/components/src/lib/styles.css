@@ -13,7 +13,7 @@
 	--color-primary-200: #f9d49f;
 	--color-primary-300: #f7be6e;
 	--color-primary-400: #f4a83e;
-	--color-primary-500: #f1920e;
+	--color-primary: #f1920e;
 	--color-primary-600: #c1750b;
 	--color-primary-700: #915808;
 	--color-primary-800: #603b06;
@@ -32,7 +32,7 @@
 	--color-accent-900: #300307;
 	--color-accent-950: #220205;
 
-	--color-cream-50: #fef4e7;
+	--color-cream: #fef4e7; /* simple cream */
 	--color-cream-100: #fce9cf;
 	--color-cream-200: #f9d49f;
 	--color-cream-300: #f7be6e;
@@ -56,7 +56,7 @@
 	--color-champagne-mist-900: #301d03;
 	--color-champagne-mist-950: #221502;
 
-	--color-white-50: #fef5e7;
+	--color-white: #fef5e7; /* simply white */
 	--color-white-100: #fceacf;
 	--color-white-200: #fad59e;
 	--color-white-300: #f7c06e;
@@ -70,5 +70,5 @@
 }
 
 body {
-	@apply bg-white-50 dark:bg-white-900 dark:text-white-50;
+	@apply bg-white dark:bg-white-900 dark:text-white;
 }

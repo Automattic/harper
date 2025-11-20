@@ -26,7 +26,7 @@ function openSettings() {
 </script>
 
 <div class="w-[340px] border border-gray-200 bg-white font-sans flex flex-col rounded-lg shadow-sm select-none dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100">
-  <header class="flex flex-row justify-between items-center gap-2 px-3 py-2 rounded-t-lg bg-gray-50/60 text-gray-900 dark:bg-slate-900/70 dark:text-slate-100">
+  <header class="flex flex-row justify-between items-center gap-2 px-3 py-2 rounded-t-lg">
     <div class="flex flex-row justify-start items-center">
       <img src={logo} alt="Harper logo" class="h-6 w-auto rounded-lg mx-2" />
       <span class="font-semibold text-sm">Harper</span>
@@ -51,6 +51,6 @@ function openSettings() {
     <Link href="https://github.com/Automattic/harper" target="_blank" rel="noopener" class="text-primary">GitHub</Link>
     <Link href="https://discord.com/invite/JBqcAaKrzQ" target="_blank" rel="noopener" class="text-primary">Discord</Link>
     <Link href="https://writewithharper.com" target="_blank" rel="noopener" class="text-primary">Discover</Link>
-    <Link  on:click={openSettings}>Settings</Link>
+    <Link on:click={openSettings}>Settings</Link>
   </footer>
 </div>

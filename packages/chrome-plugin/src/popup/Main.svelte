@@ -46,7 +46,7 @@ function toggleDomainEnabled() {
     <Button
       size="lg"
       class="rounded-full! aspect-square h-16 w-16 p-0 shadow-lg transition-colors flex! flex-row justify-center"
-      color={enabled ? 'var(--color-primary-500)' : 'var(--color-cream-50)'}
+      color={enabled ? 'var(--color-primary)' : 'var(--color-cream-50)'}
       on:click={toggleDomainEnabled}
     >
       <svg
@@ -58,7 +58,7 @@ function toggleDomainEnabled() {
         stroke-width="2"
       >
         <path
-        color={enabled ? 'var(--color-cream-50)' : 'var(--color-primary-500)'}
+        color={enabled ? 'var(--color-cream-50)' : 'var(--color-primary)'}
           stroke-linecap="round"
           stroke-linejoin="round"
           d="M12 5v7m5.657-4.657a8 8 0 11-11.314 0"
