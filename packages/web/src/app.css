@@ -1,46 +1,44 @@
 @import "tailwindcss";
 @import "components/components.css";
 
-@layer base {
-	body {
-		@apply bg-white text-black dark:bg-gray-900 dark:text-white;
-	}
+body {
+	@apply bg-white text-black dark:bg-black dark:text-white;
+}
 
-	ul {
-		@apply list-disc pl-4;
-	}
+ul {
+	@apply list-disc pl-4;
+}
 
-	ol {
-		@apply list-decimal pl-4;
-	}
+ol {
+	@apply list-decimal pl-4;
+}
 
-	h1 {
-		@apply text-4xl font-extrabold tracking-tight lg:text-5xl py-4;
-	}
+h1 {
+	@apply text-4xl font-extrabold tracking-tight lg:text-5xl py-4;
+}
 
-	h2 {
-		@apply text-3xl font-semibold tracking-tight py-4;
-	}
+h2 {
+	@apply text-3xl font-semibold tracking-tight py-4;
+}
 
-	h3 {
-		@apply text-2xl font-semibold tracking-tight py-4;
-	}
+h3 {
+	@apply text-2xl font-semibold tracking-tight py-4;
+}
 
-	h4 {
-		@apply text-xl font-semibold tracking-tight;
-	}
+h4 {
+	@apply text-xl font-semibold tracking-tight;
+}
 
-	p {
-		@apply leading-7 [&:not(:first-child)]:mt-6;
-	}
+p {
+	@apply leading-7 [&:not(:first-child)]:mt-6;
+}
 
-	a {
-		@apply underline-offset-4 underline;
-	}
+a {
+	@apply underline-offset-4 underline;
+}
 
-	blockquote {
-		@apply mt-6 border-l-2 border-gray-200 pl-6 italic dark:border-gray-700;
-	}
+blockquote {
+	@apply mt-6 border-l-2 border-gray-200 pl-6 italic dark:border-gray-700;
 }
 
 * {

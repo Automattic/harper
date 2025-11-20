@@ -73,7 +73,7 @@ $: if (openSet.size > 0) {
 }
 </script>
 
-<Card class="hidden md:flex md:flex-col md:w-1/3 h-full p-5 z-10">
+<Card class="hidden md:flex md:flex-col md:w-1/3 h-full p-5 z-10 bg-white dark:bg-black">
 	<div class="flex items-center justify-between mb-3">
 		<div class="text-base font-semibold">Problems</div>
 		<div class="flex items-center gap-2">

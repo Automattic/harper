@@ -154,7 +154,7 @@ const testimonials = [
 	>
 		</div>
 
-		<div class="h-[800px] w-full overflow-hidden rounded-xl border border-neutral-200 shadow-sm dark:border-neutral-800">
+		<div class="h-[800px] w-full">
       {#if browser}
 			  <LazyEditor />
       {/if}
