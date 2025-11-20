@@ -5,7 +5,7 @@ import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import bookDownSvg from '../assets/bookDownSvg';
 import type { IgnorableLintBox, LintBox } from './Box';
-import lintKindColor from './lintKindColor';
+import { type LintKind, lintKindColor, lintKindTextColor } from './lintKindColor';
 // Decoupled: actions passed in by framework consumer
 import type { UnpackedLint, UnpackedSuggestion } from './unpackLint';
 
@@ -190,6 +190,7 @@ function addToDictionary(
 }
 
 function suggestions(
+	lintKind: LintKind,
 	suggestions: UnpackedSuggestion[],
 	apply: (s: UnpackedSuggestion) => void,
 ): any {
@@ -197,7 +198,13 @@ function suggestions(
 		const label = s.replacement_text !== '' ? s.replacement_text : String(s.kind);
 		const desc = `Replace with "${label}"`;
 		const props = i === 0 ? { hook: new FocusHook() } : {};
-		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc, props);
+		return button(
+			label,
+			{ background: lintKindColor(lintKind), color: lintKindTextColor(lintKind) },
+			() => apply(s),
+			desc,
+			props,
+		);
 	});
 }
 
@@ -458,7 +465,7 @@ export default function SuggestionBox(
 			),
 			body(box.lint.message_html),
 			footer(
-				suggestions(box.lint.suggestions, (v) => {
+				suggestions(box.lint.lint_kind, box.lint.suggestions, (v) => {
 					box.applySuggestion(v);
 					close();
 				}),

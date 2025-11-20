@@ -35,7 +35,6 @@
 		"svelte": "^5.0.0"
 	},
 	"dependencies": {
-		"colorjs.io": "^0.5.2",
 		"flowbite-svelte": "^0.44.24"
 	},
 	"devDependencies": {

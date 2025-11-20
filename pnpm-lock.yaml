@@ -131,9 +131,6 @@ importers:
 
   packages/components:
     dependencies:
-      colorjs.io:
-        specifier: ^0.5.2
-        version: 0.5.2
       flowbite-svelte:
         specifier: ^0.44.24
         version: 0.44.24(rollup@4.53.3)(svelte@5.43.12)
@@ -240,6 +237,9 @@ importers:
       bowser:
         specifier: ^2.12.1
         version: 2.12.1
+      colorjs.io:
+        specifier: ^0.5.2
+        version: 0.5.2
       harper.js:
         specifier: workspace:*
         version: link:../harper.js

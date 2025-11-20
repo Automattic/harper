@@ -1,6 +1,11 @@
 <script lang="ts">
 import { Button } from 'components';
-import { lintKindColor, type UnpackedLint, type UnpackedSuggestion } from 'lint-framework';
+import {
+	lintKindColor,
+	lintKindTextColor,
+	type UnpackedLint,
+	type UnpackedSuggestion,
+} from 'lint-framework';
 import { slide } from 'svelte/transition';
 
 export let lint: UnpackedLint;
@@ -64,6 +69,7 @@ function suggestionText(s: UnpackedSuggestion): string {
             <Button
               size="xs"
               color={lintKindColor(lint.lint_kind)}
+              textColor={lintKindTextColor(lint.lint_kind)}
               class="!px-2 !py-1 text-xs font-semibold"
               title={`Replace with \"${suggestionText(s)}\"`}
               on:click={() => onApply?.(s)}

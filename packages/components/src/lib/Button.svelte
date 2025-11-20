@@ -1,12 +1,12 @@
 <script lang="ts">
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'svelte/elements';
-import { getConstrastingTextColor } from './utils';
 
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 type ButtonColor = 'primary' | 'light' | 'gray' | 'white' | 'dark';
 
 export let size: ButtonSize = 'md';
 export let color: ButtonColor | string = 'primary';
+export let textColor: string | undefined = undefined;
 export let outline = false;
 export let pill = false;
 export let href: AnchorHTMLAttributes['href'] = undefined;
@@ -73,10 +73,15 @@ $: classes = [baseClasses, shapeClass, sizeClass, toneClass, restClass, classNam
 	.join(' ');
 
 $: colorOverride = colorClasses[color as ButtonColor] == null ? color : undefined;
-$: colorOverrideText = colorOverride ? getConstrastingTextColor(colorOverride) : undefined;
-$: inlineStyle = colorOverride
-	? `background-color: ${colorOverride} !important; color: ${colorOverrideText} !important;`
-	: undefined;
+$: inlineStyle =
+	colorOverride || textColor
+		? [
+				colorOverride ? `background-color: ${colorOverride} !important;` : null,
+				textColor ? `color: ${textColor} !important;` : null,
+			]
+				.filter(Boolean)
+				.join(' ')
+		: undefined;
 </script>
 
 {#if href}
