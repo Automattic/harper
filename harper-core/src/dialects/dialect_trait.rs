@@ -83,8 +83,12 @@ where
     /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it
     /// will be the only one enabled.
     #[must_use]
-    fn get_most_used_dialects_from_document(
+    fn get_most_used_dialects_from_document(document: &Document) -> Self;
+
+    fn get_most_used_dialects_from_document_language(
         document: &Document,
-        language: Option<LanguageFamily>,
-    ) -> Self;
+        _language: LanguageFamily,
+    ) -> Self {
+        Self::get_most_used_dialects_from_document(document)
+    }
 }

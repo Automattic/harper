@@ -6,7 +6,7 @@ use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
-use crate::{Document, TokenKind, TokenStringExt, languages::LanguageFamily};
+use crate::{Document, TokenKind, TokenStringExt, dialects::dialect_enum::DialectsEnum};
 
 /// A regional dialect.
 ///
@@ -43,8 +43,7 @@ impl Dialect for PortugueseDialect {
     /// Returns `None` if it fails to find a single dialect that is used the most.
     #[allow(refining_impl_trait_internal)]
     fn try_guess_from_document(document: &Document) -> Option<Self> {
-        Self::try_from(PortugueseDialectFlags::get_most_used_dialects_from_document(document, None))
-            .ok()
+        Self::try_from(PortugueseDialectFlags::get_most_used_dialects_from_document(document)).ok()
     }
 
     /// Tries to get a dialect from its abbreviation. Returns `None` if the abbreviation is not
@@ -154,7 +153,7 @@ impl DialectFlags<PortugueseDialect> for PortugueseDialectFlags {
     /// If multiple dialects are used equally often, they will all be enabled in the returned
     /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it
     /// will be the only one enabled.
-    fn get_most_used_dialects_from_document(document: &Document, _: LanguageFamily) -> Self {
+    fn get_most_used_dialects_from_document(document: &Document) -> Self {
         // Initialize counters.
         let mut dialect_counters: [(PortugueseDialect, usize); PortugueseDialect::COUNT] =
             PortugueseDialect::VARIANTS
@@ -169,7 +168,7 @@ impl DialectFlags<PortugueseDialect> for PortugueseDialectFlags {
                 // If the token is a word, iterate though the dialects in `dialect_counters` and
                 // increment those counters where the word has the respective dialect enabled.
                 dialect_counters.iter_mut().for_each(|(dialect, count)| {
-                    if lexeme_metadata.dialects.is_dialect_enabled(*dialect) {
+                    if lexeme_metadata.dialects.is_dialect_enabled(dialect.into()) {
                         *count += 1;
                     }
                 });

@@ -6,10 +6,7 @@ use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
-use crate::{
-    Document, TokenKind, TokenStringExt,
-    languages::{Language, LanguageFamily},
-};
+use crate::{Document, TokenKind, TokenStringExt};
 
 /// A regional dialect.
 ///
@@ -49,7 +46,6 @@ impl Dialect for EnglishDialect {
     fn try_guess_from_document(document: &Document) -> Option<Self> {
         Self::try_from(EnglishDialectFlags::get_most_used_dialects_from_document(
             document,
-            LanguageFamily::English,
         ))
         .ok()
     }
@@ -168,10 +164,7 @@ impl DialectFlags<EnglishDialect> for EnglishDialectFlags {
     /// will be the only one enabled.
     /// The second parameter is boilerplate because of the definition of the trait having to
     /// be compatible with the DialectsEnum's functions
-    fn get_most_used_dialects_from_document(
-        document: &Document,
-        _: Option<LanguageFamily>,
-    ) -> Self {
+    fn get_most_used_dialects_from_document(document: &Document) -> Self {
         // Initialize counters.
         let mut dialect_counters: [(EnglishDialect, usize); EnglishDialect::COUNT] =
             EnglishDialect::VARIANTS
@@ -186,7 +179,7 @@ impl DialectFlags<EnglishDialect> for EnglishDialectFlags {
                 // If the token is a word, iterate though the dialects in `dialect_counters` and
                 // increment those counters where the word has the respective dialect enabled.
                 dialect_counters.iter_mut().for_each(|(dialect, count)| {
-                    if lexeme_metadata.dialects.is_dialect_enabled(*dialect) {
+                    if lexeme_metadata.dialects.is_dialect_enabled(dialect.into()) {
                         *count += 1;
                     }
                 });

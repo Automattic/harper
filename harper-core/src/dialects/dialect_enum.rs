@@ -1,10 +1,12 @@
+use std::ops::BitOr;
+
 use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumCount, EnumDiscriminants, EnumIter, EnumString, VariantArray};
 
 use crate::{
     Dialect, DialectFlags, EnglishDialect, EnglishDialectFlags,
     dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags},
-    languages::{Language, LanguageFamily},
+    languages::LanguageFamily,
 };
 
 #[derive(
@@ -61,6 +63,7 @@ impl Default for DialectsEnum {
     }
 }
 
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
 pub enum DialectFlagsEnum {
     English(EnglishDialectFlags),
     Portuguese(PortugueseDialectFlags),
@@ -105,18 +108,22 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
         }
     }
 
-    fn get_most_used_dialects_from_document(
+    /// Please use get_most_used_dialects_from_document_language with the DialectsEnum
+    fn get_most_used_dialects_from_document(_document: &crate::Document) -> Self {
+        panic!("Please use get_most_used_dialects_from_document_language with the DialectsEnum");
+    }
+
+    fn get_most_used_dialects_from_document_language(
         document: &crate::Document,
-        language: Option<LanguageFamily>,
+        language: LanguageFamily,
     ) -> Self {
         match language {
-            Some(LanguageFamily::English) => DialectFlagsEnum::English(
-                EnglishDialectFlags::get_most_used_dialects_from_document(document, language),
+            LanguageFamily::English => DialectFlagsEnum::English(
+                EnglishDialectFlags::get_most_used_dialects_from_document(document),
             ),
-            Some(LanguageFamily::Portuguese) => DialectFlagsEnum::Portuguese(
-                PortugueseDialectFlags::get_most_used_dialects_from_document(document, language),
+            LanguageFamily::Portuguese => DialectFlagsEnum::Portuguese(
+                PortugueseDialectFlags::get_most_used_dialects_from_document(document),
             ),
-            None => todo!("Not implemented"),
         }
     }
 }
@@ -141,3 +148,58 @@ impl TryFrom<DialectFlagsEnum> for DialectsEnum {
         }
     }
 }
+
+impl BitOr for DialectFlagsEnum {
+    type Output = DialectFlagsEnum;
+
+    fn bitor(self, rhs: Self) -> Self::Output {
+        match (self, rhs) {
+            (DialectFlagsEnum::English(self_flags), DialectFlagsEnum::English(rhs_flags)) => {
+                DialectFlagsEnum::English(self_flags | rhs_flags)
+            }
+            (DialectFlagsEnum::Portuguese(self_flags), DialectFlagsEnum::Portuguese(rhs_flags)) => {
+                DialectFlagsEnum::Portuguese(self_flags | rhs_flags)
+            }
+            _ => panic!("Trying to BitOr dialect flags of incompatible types"),
+        }
+    }
+}
+
+macro_rules! impl_from_x_for_dialect_enum {
+    ($dialect:ty, $dialect_flag:ty, $variant:ident) => {
+        impl From<$dialect> for DialectsEnum {
+            fn from(value: $dialect) -> Self {
+                Self::$variant(value)
+            }
+        }
+        impl From<&$dialect> for DialectsEnum {
+            fn from(value: &$dialect) -> Self {
+                Self::$variant(value.clone())
+            }
+        }
+        impl From<&mut $dialect> for DialectsEnum {
+            fn from(value: &mut $dialect) -> Self {
+                Self::$variant(value.clone())
+            }
+        }
+
+        impl From<$dialect_flag> for DialectFlagsEnum {
+            fn from(value: $dialect_flag) -> Self {
+                Self::$variant(value)
+            }
+        }
+        impl From<&$dialect_flag> for DialectFlagsEnum {
+            fn from(value: &$dialect_flag) -> Self {
+                Self::$variant(value.clone())
+            }
+        }
+        impl From<&mut $dialect_flag> for DialectFlagsEnum {
+            fn from(value: &mut $dialect_flag) -> Self {
+                Self::$variant(value.clone())
+            }
+        }
+    };
+}
+
+impl_from_x_for_dialect_enum!(EnglishDialect, EnglishDialectFlags, English);
+impl_from_x_for_dialect_enum!(PortugueseDialect, PortugueseDialectFlags, Portuguese);
