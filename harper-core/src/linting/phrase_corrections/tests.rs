@@ -917,6 +917,17 @@ fn corrects_i_does() {
     );
 }
 
+// InLieuOf
+
+#[test]
+fn corrects_in_lue_of() {
+    assert_suggestion_result(
+        "Controller Emulation in lue of Direct Controller binding",
+        lint_group(),
+        "Controller Emulation in lieu of Direct Controller binding",
+    );
+}
+
 // InAndOfItself
 #[test]
 fn detect_atomic_in_of_itself() {
