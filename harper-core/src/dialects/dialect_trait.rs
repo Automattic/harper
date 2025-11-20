@@ -3,9 +3,10 @@ use std::fmt::Debug;
 use std::fmt::Display;
 use std::hash::Hash;
 use std::str::FromStr;
-use strum::{EnumCount, IntoEnumIterator, VariantArray};
+use strum::{EnumCount, IntoEnumIterator};
 
 use crate::Document;
+use crate::languages::LanguageFamily;
 
 pub trait Dialect:
     Debug
@@ -21,7 +22,6 @@ pub trait Dialect:
     + FromStr
     + IntoEnumIterator
     + Display
-    + VariantArray
 {
     type Flags: DialectFlags<Self>;
     /// Tries to guess the dialect used in the document by finding which dialect is used the most.
@@ -83,5 +83,8 @@ where
     /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it
     /// will be the only one enabled.
     #[must_use]
-    fn get_most_used_dialects_from_document(document: &Document) -> Self;
+    fn get_most_used_dialects_from_document(
+        document: &Document,
+        language: Option<LanguageFamily>,
+    ) -> Self;
 }

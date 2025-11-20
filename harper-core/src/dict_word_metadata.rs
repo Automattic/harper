@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
 use strum_macros::EnumIter;
 
+use crate::dialects::dialect_enum_backup::DialectsEnum;
 use crate::dict_word_metadata_orthography::OrthFlags;
 use crate::spell::WordId;
 
@@ -26,7 +27,7 @@ pub struct DictWordMetadata {
     /// If no dialects are defined, it can be assumed that the word is
     /// valid in all dialects of English.
     #[serde(default = "default_default")]
-    pub dialects: EnglishDialectFlags,
+    pub dialects: DialectsEnum,
     /// Orthographic information: letter case, spaces, hyphens, etc.
     #[serde(default = "OrthFlags::empty")]
     pub orth_info: OrthFlags,
@@ -1004,7 +1005,7 @@ pub mod tests {
         #[test]
         fn guess_british_dialect() {
             let document = Document::new_plain_english_curated("Aluminium was used.");
-            let df = EnglishDialectFlags::get_most_used_dialects_from_document(&document);
+            let df = EnglishDialectFlags::get_most_used_dialects_from_document(&document, None);
             assert!(
                 df.is_dialect_enabled_strict(EnglishDialect::British)
                     && !df.is_dialect_enabled_strict(EnglishDialect::American)
@@ -1014,7 +1015,7 @@ pub mod tests {
         #[test]
         fn guess_american_dialect() {
             let document = Document::new_plain_english_curated("Aluminum was used.");
-            let df = EnglishDialectFlags::get_most_used_dialects_from_document(&document);
+            let df = EnglishDialectFlags::get_most_used_dialects_from_document(&document, None);
             assert!(
                 df.is_dialect_enabled_strict(EnglishDialect::American)
                     && !df.is_dialect_enabled_strict(EnglishDialect::British)
