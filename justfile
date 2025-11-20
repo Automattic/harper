@@ -320,9 +320,11 @@ test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-
 parse file:
   cargo run --bin harper-cli -- parse {{file}}
 
-# Lint a provided file using Harper and print the results.
-lint file:
-  cargo run --bin harper-cli -- lint {{file}}
+# Lint provided inputs using Harper and print the results.
+# The inputs can be files, directories, or a string on the command line.
+# If no inputs are provided, lint stdin.
+lint *inputs:
+  cargo run --bin harper-cli -- lint {{inputs}}
 
 # Show the spans of the parsed tokens overlapped in the provided file.
 spans file:

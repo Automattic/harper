@@ -1,0 +1,682 @@
+use either::Either;
+use harper_core::spell::{Dictionary, MergedDictionary, MutableDictionary};
+use hashbrown::HashMap;
+use std::collections::BTreeMap;
+use std::path::{Component, Path, PathBuf};
+use std::sync::Arc;
+use std::{fs, process};
+
+use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
+use harper_core::linting::{Lint, LintGroup, LintKind};
+use harper_core::parsers::MarkdownOptions;
+use harper_core::{Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map};
+
+use crate::input::Input;
+
+/// Sync version of harper-ls/src/dictionary_io@load_dict
+fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
+    let str = fs::read_to_string(path)?;
+
+    let mut dict = MutableDictionary::new();
+    dict.extend_words(
+        str.lines()
+            .map(|l| (l.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
+    );
+
+    Ok(dict)
+}
+
+/// Path version of harper-ls/src/dictionary_io@file_dict_name
+fn file_dict_name(path: &Path) -> PathBuf {
+    let mut rewritten = String::new();
+
+    for seg in path.components() {
+        if !matches!(seg, Component::RootDir) {
+            rewritten.push_str(&seg.as_os_str().to_string_lossy());
+            rewritten.push('%');
+        }
+    }
+
+    rewritten.into()
+}
+
+pub struct LintOptions<'a> {
+    pub count: bool,
+    pub ignore: &'a Option<Vec<String>>,
+    pub only: &'a Option<Vec<String>>,
+    pub dialect: Dialect,
+}
+
+enum ReportStyle {
+    FullAriadneLintReport,
+    BriefCountsOnlyLintReport,
+}
+
+pub fn lint(
+    markdown_options: MarkdownOptions,
+    curated_dictionary: Arc<dyn Dictionary>,
+    inputs: Vec<Input>,
+    lint_options: LintOptions,
+    user_dict_path: PathBuf,
+    // TODO workspace_dict_path?
+    file_dict_path: PathBuf,
+) -> anyhow::Result<()> {
+    let LintOptions {
+        count,
+        ignore,
+        only,
+        dialect,
+    } = lint_options;
+
+    // Zero or more inputs, default to stdin if not provided
+    let all_user_inputs = if inputs.is_empty() {
+        vec![Input::try_from_stdin().unwrap()]
+    } else {
+        inputs
+    };
+
+    // Create merged dictionary with base dictionary
+    let mut curated_plus_user_dict = MergedDictionary::new();
+    curated_plus_user_dict.add_dictionary(Arc::new(curated_dictionary));
+
+    let user_dict_msg = match load_dict(&user_dict_path) {
+        Ok(user_dict) => {
+            curated_plus_user_dict.add_dictionary(Arc::new(user_dict));
+            "Using"
+        }
+        Err(_) => "There is no",
+    };
+    println!(
+        "Note: {user_dict_msg} user dictionary at {}",
+        user_dict_path.display()
+    );
+
+    // The lint stats for all files
+    let mut all_lint_kinds: HashMap<LintKind, usize> = HashMap::new();
+    let mut all_rules: HashMap<String, usize> = HashMap::new();
+    let mut all_lint_kind_rule_pairs: HashMap<(LintKind, String), usize> = HashMap::new();
+    let mut all_spellos: HashMap<String, usize> = HashMap::new();
+
+    // Convert the 'count' flag into a ReportStyle enum
+    let report_mode = match count {
+        true => ReportStyle::BriefCountsOnlyLintReport,
+        false => ReportStyle::FullAriadneLintReport,
+    };
+
+    for user_input in all_user_inputs {
+        let (batch_mode, maybe_dir) = match &user_input {
+            Input::Dir(dir) => (true, std::fs::read_dir(dir).ok()),
+            _ => (false, None),
+        };
+
+        // All the files within this input if it's a Dir, or just this input otherwise.
+        let inputs = if let Some(dir) = maybe_dir {
+            Either::Left(
+                dir.filter_map(Result::ok)
+                    .filter(|entry| entry.file_type().map(|ft| !ft.is_dir()).unwrap_or(false))
+                    .map(|entry| Input::File(entry.path())),
+            )
+        } else {
+            Either::Right(std::iter::once(user_input.clone()))
+        };
+
+        for current_input in inputs {
+            let lint_results = lint_one_input(
+                // Common properties of harper-cli
+                markdown_options,
+                &curated_plus_user_dict,
+                // Passed from the user for the `lint` subcommand
+                &report_mode,
+                LintOptions {
+                    count,
+                    ignore,
+                    only,
+                    dialect,
+                },
+                &file_dict_path,
+                // Are we linting multiple inputs inside a directory?
+                batch_mode,
+                // The current input to be linted
+                current_input,
+            );
+
+            // Update the global stats
+            for (kind, count) in lint_results.0 {
+                *all_lint_kinds.entry(kind).or_insert(0) += count;
+            }
+            for (rule, count) in lint_results.1 {
+                *all_rules.entry(rule).or_insert(0) += count;
+            }
+            for ((kind, rule), count) in lint_results.2 {
+                *all_lint_kind_rule_pairs.entry((kind, rule)).or_insert(0) += count;
+            }
+            for (word, count) in lint_results.3 {
+                *all_spellos.entry(word).or_insert(0) += count;
+            }
+        }
+    }
+
+    final_report(
+        dialect,
+        true,
+        all_lint_kinds,
+        all_rules,
+        all_lint_kind_rule_pairs,
+        all_spellos,
+    );
+
+    process::exit(1);
+}
+
+type LintKindCount = HashMap<LintKind, usize>;
+type LintRuleCount = HashMap<String, usize>;
+type LintKindRulePairCount = HashMap<(LintKind, String), usize>;
+type SpelloCount = HashMap<String, usize>;
+
+struct InputInfo {
+    input: Input,
+    doc: Document,
+    source: String,
+}
+
+fn lint_one_input(
+    // Common properties of harper-cli
+    markdown_options: MarkdownOptions,
+    curated_plus_user_dict: &MergedDictionary,
+    report_mode: &ReportStyle,
+    // Options passed from the user specific to the `lint` subcommand
+    lint_options: LintOptions,
+    file_dict_path: &Path,
+    // Are we linting multiple inputs?
+    batch_mode: bool,
+    // For the current input
+    current_input: Input,
+) -> (
+    LintKindCount,
+    LintRuleCount,
+    LintKindRulePairCount,
+    SpelloCount,
+) {
+    let LintOptions {
+        count: _,
+        ignore,
+        only,
+        dialect,
+    } = lint_options;
+
+    let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();
+    let mut lint_rules: HashMap<String, usize> = HashMap::new();
+    let mut lint_kind_rule_pairs: HashMap<(LintKind, String), usize> = HashMap::new();
+    let mut spellos: HashMap<String, usize> = HashMap::new();
+
+    // Create a new merged dictionary for this input.
+    let mut dictionary = curated_plus_user_dict.clone();
+
+    // If processing a file, try to load its per-file dictionary
+    if let Input::File(ref file) = current_input {
+        let dict_path = file_dict_path.join(file_dict_name(file));
+        if let Ok(file_dictionary) = load_dict(&dict_path) {
+            dictionary.add_dictionary(Arc::new(file_dictionary));
+            println!(
+                "{}: Note: Using per-file dictionary: {}",
+                &current_input.get_identifier(),
+                dict_path.display()
+            );
+        }
+    }
+
+    match current_input.load(batch_mode, markdown_options, &dictionary) {
+        Err(err) => eprintln!("{}", err),
+        Ok((maybe_doc, source)) => {
+            if let Some(doc) = maybe_doc {
+                // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
+                let mut lint_group = LintGroup::new_curated(dictionary.into(), dialect);
+
+                // Turn specified rules on or off
+                configure_lint_group(&mut lint_group, only, ignore);
+
+                // Run the linter, getting back a map of rule name -> lints
+                let mut named_lints = lint_group.organized_lints(&doc);
+
+                // Lint counts, for brief reporting
+                let lint_count_before = named_lints.values().map(|v| v.len()).sum::<usize>();
+                remove_overlaps_map(&mut named_lints);
+                let lint_count_after = named_lints.values().map(|v| v.len()).sum::<usize>();
+
+                // Extract the lint kinds and rules etc. for reporting
+                (lint_kinds, lint_rules) = count_lint_kinds_and_rules(&named_lints);
+                lint_kind_rule_pairs = collect_lint_kind_rule_pairs(&named_lints);
+                spellos = collect_spellos(&named_lints, doc.get_source());
+
+                single_input_report(
+                    &InputInfo {
+                        input: current_input,
+                        doc,
+                        source,
+                    },
+                    // Linting results of this input
+                    &named_lints,
+                    (lint_count_before, lint_count_after),
+                    &lint_kinds,
+                    &lint_rules,
+                    // Reporting arguments
+                    batch_mode,
+                    report_mode,
+                );
+            }
+        }
+    }
+
+    (lint_kinds, lint_rules, lint_kind_rule_pairs, spellos)
+}
+
+fn configure_lint_group(
+    lint_group: &mut LintGroup,
+    only: &Option<Vec<String>>,
+    ignore: &Option<Vec<String>>,
+) {
+    if let Some(rules) = only {
+        lint_group.set_all_rules_to(Some(false));
+
+        for rule in rules {
+            if !lint_group.contains_key(rule) {
+                eprintln!("Warning: Cannot enable unknown rule '{}'.", &rule);
+            }
+            lint_group.config.set_rule_enabled(rule, true);
+        }
+    }
+
+    if let Some(rules) = ignore {
+        for rule in rules {
+            if !lint_group.contains_key(rule) {
+                eprintln!("Warning: Cannot disable unknown rule '{}'.", &rule);
+            }
+            lint_group.config.set_rule_enabled(rule, false);
+        }
+    }
+}
+
+fn count_lint_kinds_and_rules(
+    named_lints: &BTreeMap<String, Vec<Lint>>,
+) -> (HashMap<LintKind, usize>, HashMap<String, usize>) {
+    let mut kinds = HashMap::new();
+    let mut rules = HashMap::new();
+
+    for (rule_name, lints) in named_lints {
+        lints
+            .iter()
+            .for_each(|lint| *kinds.entry(lint.lint_kind).or_insert(0) += 1);
+
+        if !lints.is_empty() {
+            *rules.entry(rule_name.to_string()).or_insert(0) += lints.len();
+        }
+    }
+
+    (kinds, rules)
+}
+
+fn collect_lint_kind_rule_pairs(
+    named_lints: &BTreeMap<String, Vec<Lint>>,
+) -> HashMap<(LintKind, String), usize> {
+    let mut pairs = HashMap::new();
+
+    for (rule_name, lints) in named_lints {
+        for lint in lints {
+            pairs
+                .entry((lint.lint_kind, rule_name.to_string()))
+                .and_modify(|count| *count += 1)
+                .or_insert(1);
+        }
+    }
+
+    pairs
+}
+
+fn collect_spellos(
+    named_lints: &BTreeMap<String, Vec<Lint>>,
+    source: &[char],
+) -> HashMap<String, usize> {
+    named_lints
+        .get("SpellCheck")
+        .into_iter()
+        .flatten()
+        .map(|lint| lint.span.get_content_string(source))
+        .fold(HashMap::new(), |mut acc, spello| {
+            *acc.entry(spello).or_insert(0) += 1;
+            acc
+        })
+}
+
+fn single_input_report(
+    // Properties of the current input
+    input_info: &InputInfo,
+    // Linting results of this input
+    named_lints: &BTreeMap<String, Vec<Lint>>,
+    lint_count: (usize, usize),
+    lint_kinds: &HashMap<LintKind, usize>,
+    lint_rules: &HashMap<String, usize>,
+    // Reporting parameters
+    batch_mode: bool, // If true, we are processing multiple files, which affects how we report
+    report_mode: &ReportStyle,
+) {
+    let InputInfo {
+        input: current_input,
+        doc,
+        source,
+    } = input_info;
+    let (lint_count_before, lint_count_after) = lint_count;
+    // The Ariadne report works poorly for files with very long lines, so suppress it unless only processing one file
+    const MAX_LINE_LEN: usize = 150;
+
+    let mut report_mode = report_mode;
+    let longest = find_longest_doc_line(doc.get_tokens());
+
+    if batch_mode
+        && longest > MAX_LINE_LEN
+        && matches!(report_mode, ReportStyle::FullAriadneLintReport)
+    {
+        report_mode = &ReportStyle::BriefCountsOnlyLintReport;
+        println!(
+            "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
+            &current_input.get_identifier()
+        );
+    }
+
+    // Report the number of lints no matter what report mode we are in
+    println!(
+        "{}: {}",
+        current_input.get_identifier(),
+        match (lint_count_before, lint_count_after) {
+            (0, _) => "No lints found".to_string(),
+            (before, after) if before != after =>
+                format!("{before} lints before overlap removal, {after} after"),
+            (before, _) => format!("{before} lints"),
+        }
+    );
+
+    // If we are in Ariadne mode, print the report
+    if matches!(report_mode, ReportStyle::FullAriadneLintReport) {
+        let primary_color = Color::Magenta;
+
+        let input_identifier = current_input.get_identifier();
+
+        if lint_count_after != 0 {
+            let mut report_builder = Report::build(ReportKind::Advice, &input_identifier, 0);
+
+            for (rule_name, lints) in named_lints {
+                for lint in lints {
+                    let (r, g, b) = rgb_for_lint_kind(Some(&lint.lint_kind));
+                    report_builder = report_builder.with_label(
+                        Label::new((&input_identifier, lint.span.into()))
+                            .with_message(format!(
+                                "{}: {}",
+                                format_args!("[{}::{}]", lint.lint_kind, rule_name)
+                                    .fg(ariadne::Color::Rgb(r, g, b)),
+                                lint.message
+                            ))
+                            .with_color(primary_color),
+                    );
+                }
+            }
+
+            let report = report_builder.finish();
+            report.print((&input_identifier, Source::from(source))).ok();
+        }
+    }
+
+    // Print the more detailed counts for the lint kinds and then for the rules
+    if !lint_kinds.is_empty() {
+        let mut lint_kinds_vec: Vec<_> = lint_kinds.iter().collect();
+        lint_kinds_vec.sort_by_key(|(lk, count)| (std::cmp::Reverse(**count), lk.to_string()));
+
+        let lk_vec: Vec<(Option<String>, String)> = lint_kinds_vec
+            .into_iter()
+            .map(|(lk, c)| {
+                let (r, g, b) = rgb_for_lint_kind(Some(lk));
+                (
+                    Some(format!("\x1b[38;2;{r};{g};{b}m")),
+                    format!("[{lk}: {c}]"),
+                )
+            })
+            .collect();
+
+        println!("lint kinds:");
+        print_formatted_items(lk_vec);
+    }
+
+    if !lint_rules.is_empty() {
+        let mut rules_vec: Vec<_> = lint_rules.iter().collect();
+        rules_vec.sort_by_key(|(rn, count)| (std::cmp::Reverse(**count), rn.to_string()));
+
+        let r_vec: Vec<(Option<String>, String)> = rules_vec
+            .into_iter()
+            .map(|(rn, c)| (None, format!("<{rn}: {c}>")))
+            .collect();
+
+        println!("rules:");
+        print_formatted_items(r_vec);
+    }
+}
+
+fn find_longest_doc_line(toks: &[Token]) -> usize {
+    let mut longest_len_chars = 0;
+    let mut curr_len_chars = 0;
+    let mut current_line_start_tok_idx = 0;
+
+    for (idx, tok) in toks.iter().enumerate() {
+        if matches!(tok.kind, TokenKind::Newline(_))
+            || matches!(tok.kind, TokenKind::ParagraphBreak)
+        {
+            if curr_len_chars > longest_len_chars {
+                longest_len_chars = curr_len_chars;
+            }
+            curr_len_chars = 0;
+            current_line_start_tok_idx = idx + 1;
+        } else if matches!(tok.kind, TokenKind::Unlintable) {
+            // TODO would be more accurate to scan for \n in the tok.span.get_content(src)
+        } else {
+            curr_len_chars += tok.span.len();
+        }
+    }
+
+    if curr_len_chars > longest_len_chars
+        && !toks.is_empty()
+        && current_line_start_tok_idx < toks.len()
+    {
+        longest_len_chars = curr_len_chars;
+    }
+
+    longest_len_chars
+}
+
+fn final_report(
+    dialect: Dialect,
+    batch_mode: bool,
+    all_lint_kinds: HashMap<LintKind, usize>,
+    all_rules: HashMap<String, usize>,
+    all_lint_kind_rule_pairs: HashMap<(LintKind, String), usize>,
+    all_spellos: HashMap<String, usize>,
+) {
+    // The stats summary of all inputs that we only do when there are multiple inputs.
+    if batch_mode {
+        let mut all_files_lint_kind_counts_vec: Vec<(LintKind, _)> =
+            all_lint_kinds.into_iter().collect();
+        all_files_lint_kind_counts_vec
+            .sort_by_key(|(lk, count)| (std::cmp::Reverse(*count), lk.to_string()));
+
+        let lint_kind_counts: Vec<(Option<String>, String)> = all_files_lint_kind_counts_vec
+            .into_iter()
+            .map(|(lint_kind, c)| {
+                let (r, g, b) = rgb_for_lint_kind(Some(&lint_kind));
+                (
+                    Some(format!("\x1b[38;2;{r};{g};{b}m")),
+                    format!("[{lint_kind}: {c}]"),
+                )
+            })
+            .collect();
+
+        if !lint_kind_counts.is_empty() {
+            println!("All files lint kinds:");
+            print_formatted_items(lint_kind_counts);
+        }
+
+        let mut all_files_rule_name_counts_vec: Vec<_> = all_rules.into_iter().collect();
+        all_files_rule_name_counts_vec
+            .sort_by_key(|(rule_name, count)| (std::cmp::Reverse(*count), rule_name.to_string()));
+
+        let rule_name_counts: Vec<(Option<String>, String)> = all_files_rule_name_counts_vec
+            .into_iter()
+            .map(|(rule_name, count)| (None, format!("({rule_name}: {count})")))
+            .collect();
+
+        if !rule_name_counts.is_empty() {
+            println!("All files rule names:");
+            print_formatted_items(rule_name_counts);
+        }
+    }
+
+    // The stats summary of all pairs of lint kind + rule name, whether there is only one input or multiple.
+    let mut lint_kind_rule_pairs: Vec<_> = all_lint_kind_rule_pairs.into_iter().collect();
+    lint_kind_rule_pairs.sort_by(|a, b| {
+        let (a, b) = ((&a.0, &a.1), (&b.0, &b.1));
+        b.1.cmp(a.1)
+            .then_with(|| a.0.0.to_string().cmp(&b.0.0.to_string()))
+            .then_with(|| a.0.1.cmp(&b.0.1))
+    });
+
+    // Format them using their colours
+    let formatted_lint_kind_rule_pairs: Vec<(Option<String>, String)> = lint_kind_rule_pairs
+        .into_iter()
+        .map(|ele| {
+            let (r, g, b) = rgb_for_lint_kind(Some(&ele.0.0));
+            let ansi_prefix = format!("\x1b[38;2;{r};{g};{b}m");
+            (
+                Some(ansi_prefix),
+                format!("«« {} {}·{} »»", ele.1, ele.0.0, ele.0.1),
+            )
+        })
+        .collect();
+
+    if !formatted_lint_kind_rule_pairs.is_empty() {
+        // Print them with line wrapping
+        print_formatted_items(formatted_lint_kind_rule_pairs);
+    }
+
+    if !all_spellos.is_empty() {
+        // Group by lowercase spelling while preserving original case and counts
+        let mut grouped: HashMap<String, Vec<(String, usize)>> = HashMap::new();
+        for (spelling, count) in all_spellos {
+            grouped
+                .entry(spelling.to_lowercase())
+                .or_default()
+                .push((spelling, count));
+        }
+
+        // Create a vector of (lowercase_spelling, variants, total_count)
+        let mut grouped_vec: Vec<_> = grouped
+            .into_iter()
+            .map(|(lower, variants)| {
+                let total: usize = variants.iter().map(|(_, c)| c).sum();
+                (lower, variants, total)
+            })
+            .collect();
+
+        // Sort by total count (descending), then by lowercase spelling
+        grouped_vec.sort_by(|a, b| b.2.cmp(&a.2).then_with(|| a.0.cmp(&b.0)));
+
+        // Flatten the variants back out, but keep track of the group index for coloring
+        let spelling_vec: Vec<(Option<String>, String)> = grouped_vec
+            .into_iter()
+            .enumerate()
+            .flat_map(|(i, (_, variants, _))| {
+                // Sort variants by count (descending) then by original spelling
+                let mut variants = variants;
+                variants.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
+
+                // Choose colour based on group index (rotating through three colours)
+                let (r, g, b) = match i % 3 {
+                    0 => (180, 90, 150), // Magenta
+                    1 => (90, 180, 90),  // Green
+                    _ => (90, 150, 180), // Cyan
+                };
+                let color = format!("\x1b[38;2;{};{};{}m", r, g, b);
+
+                variants
+                    .into_iter()
+                    .map(move |(spelling, c)| (Some(color.clone()), format!("(“{spelling}”: {c})")))
+            })
+            .collect();
+
+        println!("All files Spelling::SpellCheck (For dialect: {})", dialect);
+        print_formatted_items(spelling_vec);
+    }
+}
+
+// Note: This must be kept synchronized with:
+// packages/lint-framework/src/lint/lintKindColor.ts
+// packages/web/src/lib/lintKindColor.ts
+// This can be removed when issue #1991 is resolved.
+fn lint_kind_to_rgb() -> &'static [(LintKind, (u8, u8, u8))] {
+    &[
+        (LintKind::Agreement, (0x22, 0x8B, 0x22)),
+        (LintKind::BoundaryError, (0x8B, 0x45, 0x13)),
+        (LintKind::Capitalization, (0x54, 0x0D, 0x6E)),
+        (LintKind::Eggcorn, (0xFF, 0x8C, 0x00)),
+        (LintKind::Enhancement, (0x0E, 0xAD, 0x69)),
+        (LintKind::Formatting, (0x7D, 0x3C, 0x98)),
+        (LintKind::Grammar, (0x9B, 0x59, 0xB6)),
+        (LintKind::Malapropism, (0xC7, 0x15, 0x85)),
+        (LintKind::Miscellaneous, (0x3B, 0xCE, 0xAC)),
+        (LintKind::Nonstandard, (0x00, 0x8B, 0x8B)),
+        (LintKind::Punctuation, (0xD4, 0x85, 0x0F)),
+        (LintKind::Readability, (0x2E, 0x8B, 0x57)),
+        (LintKind::Redundancy, (0x46, 0x82, 0xB4)),
+        (LintKind::Regionalism, (0xC0, 0x61, 0xCB)),
+        (LintKind::Repetition, (0x00, 0xA6, 0x7C)),
+        (LintKind::Spelling, (0xEE, 0x42, 0x66)),
+        (LintKind::Style, (0xFF, 0xD2, 0x3F)),
+        (LintKind::Typo, (0xFF, 0x6B, 0x35)),
+        (LintKind::Usage, (0x1E, 0x90, 0xFF)),
+        (LintKind::WordChoice, (0x22, 0x8B, 0x22)),
+    ]
+}
+
+fn rgb_for_lint_kind(olk: Option<&LintKind>) -> (u8, u8, u8) {
+    olk.and_then(|lk| {
+        lint_kind_to_rgb()
+            .iter()
+            .find(|(k, _)| k == lk)
+            .map(|(_, color)| *color)
+    })
+    .unwrap_or((0, 0, 0))
+}
+
+fn print_formatted_items(items: impl IntoIterator<Item = (Option<String>, String)>) {
+    let mut first_on_line = true;
+    let mut len_so_far = 0;
+
+    for (ansi, text) in items {
+        let text_len = text.len();
+
+        let mut len_to_add = !first_on_line as usize + text_len;
+
+        let mut before = "";
+        if len_so_far + len_to_add > 120 {
+            before = "\n";
+            len_to_add -= 1; // no space before the first item
+            len_so_far = 0;
+        } else if !first_on_line {
+            before = " ";
+        }
+
+        let (set, reset): (&str, &str) = if let Some(prefix) = ansi.as_ref() {
+            (prefix, "\x1b[0m")
+        } else {
+            ("", "")
+        };
+        print!("{}{}{}{}", before, set, text, reset);
+        len_so_far += len_to_add;
+        first_on_line = false;
+    }
+    println!();
+}
