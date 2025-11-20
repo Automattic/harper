@@ -22,7 +22,7 @@ import SublimeLogo from '$lib/components/SublimeLogo.svelte';
 import WordPressLogo from '$lib/components/WordPressLogo.svelte';
 import ZedLogo from '$lib/components/ZedLogo.svelte';
 import EdgeLogo from '$lib/components/EdgeLogo.svelte';
-import { Card, Link } from 'components';
+import { Card, Collapsible, Link } from 'components';
 import { browser } from '$app/environment';
     import Testimonial from '$lib/components/Testimonial.svelte';
 
@@ -325,47 +325,32 @@ const testimonials = [
 	<Section id="faqs">
 		<svelte:fragment slot="title">FAQs</svelte:fragment>
 		<div class="space-y-4">
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					Is Harper Free?
-				</summary>
-				<p class="mt-3">
+			<Collapsible title="Is Harper Free?">
+				<p>
 					Yes. Harper is free in every sense of the word. You don't need a credit card to start using
 					Harper, and the source code is freely available under the Apache-2.0 license.
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					How Does Harper Work?
-				</summary>
-				<p class="mt-3">
+			</Collapsible>
+			<Collapsible title="How Does Harper Work?">
+				<p>
 					Harper watches your writing and provides instant suggestions when it notices a grammatical
 					error. When you see an underline, it's probably because Harper has something to say.
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					Does Harper Change The Meaning of My Words?
-				</summary>
-				<p class="mt-3">
+			</Collapsible>
+			<Collapsible title="Does Harper Change The Meaning of My Words?">
+				<p>
 					No. Harper will never intentionally suggest an edit that might change your meaning. Harper
 					strives to never make it harder to express your creativity.
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					Is Harper Really Private?
-				</summary>
-				<p class="mt-3">
+			</Collapsible>
+			<Collapsible title="Is Harper Really Private?">
+				<p>
 					Harper is the only widespread and comprehensive grammar checker that is truly private. Your
 					data never leaves your device. Your writing should remain just that: <strong>yours.</strong>
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					How Do I Use or Integrate Harper?
-				</summary>
-				<div class="mt-3">
+			</Collapsible>
+			<Collapsible title="How Do I Use or Integrate Harper?">
+				<div class="space-y-3">
 					<p>
 						That depends on your use case. Do you want to use it within Obsidian? We have an
 						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/obsidian">Obsidian plugin</Link>. Do you want to use it within WordPress? We have a
@@ -383,61 +368,46 @@ const testimonials = [
 						<Link class="text-blue-600 dark:text-blue-400" href="https://crates.io/crates/harper-core">harper-core</Link>.
 					</p>
 				</div>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					What Human Languages Do You Support?
-				</summary>
-				<p class="mt-3">
+			</Collapsible>
+			<Collapsible title="What Human Languages Do You Support?">
+				<p>
 					We currently only support English and its dialects British, American, Canadian, and
 					Australian. Other languages are on the horizon, but we want our English support to be truly
 					amazing before we diversify.
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					What Programming Languages Do You Support?
-				</summary>
-				<p class="mt-3">
-					For <code>harper-ls</code> and our code editor integrations, we support a wide variety of
-					programming languages. You can view all of them over at the
-					<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/language-server#Supported-Languages">harper-ls documentation</Link>.
-					We are entirely open to PRs that add support. If you just want to be able to run grammar checking
-					on your code's comments, you can use
-					<Link class="text-blue-600 dark:text-blue-400" href="https://github.com/Automattic/harper/pull/332">this PR as a model for what to do</Link>.
-				</p>
-				<p class="mt-3">
-					For <code>harper.js</code> and those that use it under the hood like our Obsidian plugin, we
-					support plaintext and/or Markdown.
-				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					Where Did the Name Harper Come From?
-				</summary>
-				<p class="mt-3">
+			</Collapsible>
+			<Collapsible title="What Programming Languages Do You Support?">
+				<div class="space-y-3">
+					<p>
+						For <code>harper-ls</code> and our code editor integrations, we support a wide variety of
+						programming languages. You can view all of them over at the
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/language-server#Supported-Languages">harper-ls documentation</Link>.
+						We are entirely open to PRs that add support. If you just want to be able to run grammar checking
+						on your code's comments, you can use
+						<Link class="text-blue-600 dark:text-blue-400" href="https://github.com/Automattic/harper/pull/332">this PR as a model for what to do</Link>.
+					</p>
+					<p>
+						For <code>harper.js</code> and those that use it under the hood like our Obsidian plugin, we
+						support plaintext and/or Markdown.
+					</p>
+				</div>
+			</Collapsible>
+			<Collapsible title="Where Did the Name Harper Come From?">
+				<p>
 					See <Link class="text-blue-600 dark:text-blue-400" href="https://elijahpotter.dev/articles/naming_harper">this blog post</Link>.
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					Do I Need a GPU?
-				</summary>
-				<div class="mt-3">
-					<p>No. Harper runs on-device, no matter what. There are no special hardware requirements. No GPU, no additional memory, no fuss.</p>
-				</div>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					What Do I Do If My Question Isn't Here?
-				</summary>
-				<p class="mt-3">
+			</Collapsible>
+			<Collapsible title="Do I Need a GPU?">
+				<p>No. Harper runs on-device, no matter what. There are no special hardware requirements. No GPU, no additional memory, no fuss.</p>
+			</Collapsible>
+			<Collapsible title="What Do I Do If My Question Isn't Here?">
+				<p>
 					You can join our
 					<Link class="text-blue-600 dark:text-blue-400" href="https://discord.gg/invite/JBqcAaKrzQ">Discord</Link>
 					and ask your questions there or you can start a discussion over at
 					<Link class="text-blue-600 dark:text-blue-400" href="https://github.com/Automattic/harper/discussions">GitHub</Link>.
 				</p>
-			</details>
+			</Collapsible>
 		</div>
 	</Section>
 
