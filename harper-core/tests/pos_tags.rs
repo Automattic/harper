@@ -248,16 +248,16 @@ fn get_dialect_annotations(word: &DictWordMetadata) -> Vec<&'static str> {
 
     let en_au = word
         .dialects
-        .is_dialect_enabled_strict(EnglishDialect::Australian);
+        .is_dialect_enabled_strict(EnglishDialect::Australian.into());
     let en_ca = word
         .dialects
-        .is_dialect_enabled_strict(EnglishDialect::Canadian);
+        .is_dialect_enabled_strict(EnglishDialect::Canadian.into());
     let en_gb = word
         .dialects
-        .is_dialect_enabled_strict(EnglishDialect::British);
+        .is_dialect_enabled_strict(EnglishDialect::British.into());
     let en_us = word
         .dialects
-        .is_dialect_enabled_strict(EnglishDialect::American);
+        .is_dialect_enabled_strict(EnglishDialect::American.into());
 
     // Dialect groups in alphabetical order
     if en_gb && en_au && en_ca {

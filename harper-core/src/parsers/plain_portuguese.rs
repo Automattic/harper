@@ -1,5 +1,5 @@
 use super::Parser;
-use crate::languages::Language;
+use crate::languages::LanguageFamily;
 use crate::lexing::{FoundToken, lex_token};
 use crate::{Span, Token};
 
@@ -21,7 +21,7 @@ impl Parser for PlainPortuguese {
             }
 
             if let Some(FoundToken { token, next_index }) =
-                lex_token(&source[cursor..], Language::Portuguese)
+                lex_token(&source[cursor..], LanguageFamily::Portuguese)
             {
                 tokens.push(Token {
                     span: Span::new(cursor, cursor + next_index),

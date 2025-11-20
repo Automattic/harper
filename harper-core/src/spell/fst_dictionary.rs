@@ -5,7 +5,7 @@ use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 use std::borrow::Cow;
 use std::{cell::RefCell, sync::Arc};
 
-use crate::languages::Language;
+use crate::languages::LanguageFamily;
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
 use super::Dictionary;
@@ -32,7 +32,7 @@ lazy_static! {
 }
 lazy_static! {
     static ref DICT_PORTUGUESE: Arc<FstDictionary> = Arc::new(
-        (*MutableDictionary::curated_select_language(Language::Portuguese))
+        (*MutableDictionary::curated_select_language(LanguageFamily::Portuguese))
             .clone()
             .into()
     );
@@ -58,10 +58,10 @@ impl PartialEq for FstDictionary {
 impl FstDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
-    pub fn curated_select_language(language: Language) -> Arc<Self> {
+    pub fn curated_select_language(language: LanguageFamily) -> Arc<Self> {
         match language {
-            Language::English => (*DICT).clone(),
-            Language::Portuguese => (*DICT_PORTUGUESE).clone(),
+            LanguageFamily::English => (*DICT).clone(),
+            LanguageFamily::Portuguese => (*DICT_PORTUGUESE).clone(),
         }
     }
     pub fn curated() -> Arc<Self> {

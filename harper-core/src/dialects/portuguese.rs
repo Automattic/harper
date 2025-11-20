@@ -6,7 +6,7 @@ use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
-use crate::{Document, TokenKind, TokenStringExt, dialects::dialect_enum::DialectsEnum};
+use crate::{Document, TokenKind, TokenStringExt};
 
 /// A regional dialect.
 ///
