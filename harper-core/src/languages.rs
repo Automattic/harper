@@ -32,7 +32,23 @@ impl Default for Language {
     }
 }
 
-#[derive(Default, Clone, Debug)]
+#[derive(
+    Default,
+    Debug,
+    Clone,
+    Copy,
+    Serialize,
+    Deserialize,
+    PartialEq,
+    PartialOrd,
+    Eq,
+    Hash,
+    EnumCount,
+    EnumString,
+    EnumIter,
+    Display,
+    EnumDiscriminants,
+)]
 pub enum LanguageFamily {
     #[default]
     English,

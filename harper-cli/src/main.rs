@@ -1,6 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::languages::Language;
+use harper_core::languages::LanguageFamily;
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
@@ -51,8 +51,8 @@ pub struct Cli {
 #[derive(Debug, Args)]
 struct GlobalOpts {
     /// Specify the language to be used.
-    #[arg(short, long, default_value = Language::English.to_string())]
-    language: Language,
+    #[arg(short, long, default_value = LanguageFamily::English.to_string())]
+    language: LanguageFamily,
     /// Specify the dialect.
     #[arg(short, long, default_value = EnglishDialect::American.to_string())]
     dialect: EnglishDialect,
@@ -418,8 +418,8 @@ fn main() -> anyhow::Result<()> {
             let (word, annot) = line_to_parts(&line);
 
             let curated_word_list = match language {
-                Language::English => include_str!("../../harper-core/dictionary.dict"),
-                Language::Portuguese => {
+                LanguageFamily::English => include_str!("../../harper-core/dictionary.dict"),
+                LanguageFamily::Portuguese => {
                     include_str!("../../harper-core/dictionary-portuguese.dict")
                 }
             };
@@ -969,7 +969,7 @@ fn load_file(
     file: &Path,
     markdown_options: MarkdownOptions,
     dictionary: &impl Dictionary,
-    language: Language,
+    language: LanguageFamily,
 ) -> anyhow::Result<(Document, String)> {
     let source = std::fs::read_to_string(file)?;
 
@@ -991,13 +991,13 @@ fn load_file(
                 Box::new(comment_parser)
             } else {
                 match language {
-                    Language::English => {
+                    LanguageFamily::English => {
                         println!(
                             "Warning: could not detect language ID; falling back to PlainEnglish parser."
                         );
                         Box::new(PlainEnglish)
                     }
-                    Language::Portuguese => {
+                    LanguageFamily::Portuguese => {
                         println!(
                             "Warning: could not detect language ID; falling back to PlainPortuguese parser."
                         );
