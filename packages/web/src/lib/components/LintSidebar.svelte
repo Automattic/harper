@@ -80,7 +80,6 @@ $: if (openSet.size > 0) {
 			<Button
 				size="xs"
 				color="light"
-				outline
 				class="text-xs"
 				on:click={toggleAll}
 				aria-label={allOpen ? 'Collapse all lint cards' : 'Open all lint cards'}
@@ -90,7 +89,6 @@ $: if (openSet.size > 0) {
 			<Button
 				size="xs"
 				color="light"
-				outline
 				class="text-xs"
 				on:click={ignoreAll}
 				disabled={lintBoxes.length === 0}

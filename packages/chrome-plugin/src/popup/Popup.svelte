@@ -1,5 +1,5 @@
 <script lang="ts">
-import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Button, Link } from 'components';
 import Fa from 'svelte-fa';
 import logo from '/logo.png';
@@ -33,9 +33,9 @@ function openSettings() {
     </div>
 
     {#if popupState.page != "main"}
-       <Button outline on:click={() => { 
+       <Button on:click={() => { 
           popupState = main();
-       }}><Fa icon={faCaretLeft}/></Button>
+       }}><Fa icon={faArrowLeft}/></Button>
     {/if}
   </header>
 

@@ -45,8 +45,8 @@ function toggleDomainEnabled() {
   <section class="flex flex-row items-center gap-3 py-6">
     <Button
       size="lg"
-      class="rounded-full aspect-square h-16 w-16 p-0 shadow-md transition-colors flex flex-row justify-center"
-      style="background-color: {enabled ? 'var(--color-primary-500)' : '#d1d5db'};"
+      class="rounded-full! aspect-square h-16 w-16 p-0 shadow-md transition-colors flex! flex-row justify-center"
+      color={enabled ? 'var(--color-primary-500)' : 'var(--color-primary-900)'}
       on:click={toggleDomainEnabled}
     >
       <svg
