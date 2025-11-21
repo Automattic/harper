@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Textarea } from 'flowbite-svelte';
+import { Link, Textarea } from 'components';
 
 let demoText =
 	'Ths is an text box you can type in.\n\nany other site on the web will work the the same!';
@@ -66,7 +66,7 @@ let demoText =
         If you work somewhere that isn't on our list of supported sites, you can enable the Chrome extension anyway by opening the Harper extension popup and clicking the power button.
         <br/>
         <br/>
-        Alternatively, <a href="/request-browser-support">let us know</a> which sites you want us to support and we'll add it as soon as we can.
+        Alternatively, <Link href="/request-browser-support">let us know</Link> which sites you want us to support and we'll add it as soon as we can.
       </p>
 
       <img

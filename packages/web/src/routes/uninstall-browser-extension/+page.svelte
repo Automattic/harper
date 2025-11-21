@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Card, Input, Label, Radio } from 'flowbite-svelte';
+import { Button, Card, Input, Label, Radio } from 'components';
 import Isolate from '$lib/components/Isolate.svelte';
 
 const reasons = {
@@ -51,4 +51,3 @@ function handleFormData(e: FormDataEvent) {
     </Card> 
   </div>
 </Isolate>
-
