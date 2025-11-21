@@ -131,6 +131,7 @@ use super::quite_quiet::QuiteQuiet;
 use super::quote_spacing::QuoteSpacing;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
+use super::regular_irregulars::RegularIrregulars;
 use super::repeated_words::RepeatedWords;
 use super::roller_skated::RollerSkated;
 use super::safe_to_save::SafeToSave;
@@ -649,6 +650,12 @@ impl LintGroup {
 
         out.add("MassPlurals", MassPlurals::new(dictionary.clone()));
         out.config.set_rule_enabled("MassPlurals", true);
+
+        out.add(
+            "RegularIrregulars",
+            RegularIrregulars::new(dictionary.clone()),
+        );
+        out.config.set_rule_enabled("RegularIrregulars", true);
 
         out
     }

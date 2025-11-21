@@ -30596,7 +30596,8 @@ jackboot/NSgVd
 jackdaw/NgS
 jacket/~NSgVd
 jackhammer/NgSV
-jackknife/NgSVGd
+jackknife/NgVGd
+jackknifes/Vh
 jackknives/9
 jackpot/~NOVSg
 jackrabbit/NgSV
@@ -31225,7 +31226,8 @@ knicker/NS
 knickerbockers/Ng
 knickers/Ng
 knickknack/NgS
-knife/~NSgVdG
+knife/~NgVdG
+knifes/Vh
 knight/~NgSVdGY
 knighthood/~NwgS
 knightliness/Nmg
@@ -31632,10 +31634,11 @@ leaderboard/NgS
 leaderless/J
 leadership/~NmSg
 leading/~VJNg
-leaf/~NgSVdG
+leaf/~NgVdG
 leafage/Ng
 leafless/J
 leaflet/~NgSVGd
+leafs/Vh
 leafstalk/NgS
 leafy/J>^
 league/~NSgVdG
@@ -31678,6 +31681,7 @@ leaven/NSgVGd
 leavened/VJU
 leavening/VNgJ
 leaver/Ng
+leaves/N9
 leavings/Ng
 lech/~NgSVd>GZ
 lecher/NgV
@@ -32878,7 +32882,7 @@ mammon/Og
 mammoth/~N9gJ
 mammoths/~N0
 mammy/NSg
-man/~NOJYVSU        # removed `8` pronoun, dialectal & complicates lint heuristics
+man/~NOJYVU         # removed pronoun, dialectal & complicates lint heuristics
 man's/~NOJIVW
 manacle/NSgVdG
 manage/~VGd>NSZL
@@ -32962,6 +32966,7 @@ manorial/J
 manosphere/Ng
 manpower/~Ng
 manque/J
+mans/Vh
 mansard/JNgS
 manscape/NgSVdG
 manse/~VNSgXn
