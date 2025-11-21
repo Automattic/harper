@@ -154,18 +154,18 @@ async function exportEnabledDomainsCSV() {
         <img src={logo} alt="Harper logo" class="h-5 w-auto" />
       </div>
       <div class="flex flex-col">
-        <span class="text-sm font-semibold tracking-wide font-serif">Harper</span>
-        <span class="text-xs">Chrome Extension Settings</span>
+        <h1 class="text-base tracking-wide font-serif">Harper</h1>
+        <p class="text-xs">Chrome Extension Settings</p>
       </div>
     </Card>
 
     <!-- ── GENERAL ───────────────────────────── -->
     <Card class="space-y-6">
-      <h3 class="pb-1 text-xs font-semibold uppercase tracking-wider">General</h3>
+      <h2 class="pb-1 text-xs uppercase tracking-wider">General</h2>
 
       <div class="space-y-5">
         <div class="flex items-center justify-between">
-          <span class="font-medium">English Dialect</span>
+          <h3 class="text-sm">English Dialect</h3>
           <Select
             size="sm"
             class="w-44"
@@ -182,8 +182,8 @@ async function exportEnabledDomainsCSV() {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Enable on New Sites by Default</span>
-            <span class="font-light">Can make some apps behave abnormally.</span>
+            <h3 class="text-sm">Enable on New Sites by Default</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Can make some apps behave abnormally.</p>
           </div>
           <input type="checkbox" bind:checked={defaultEnabled} class="h-5 w-5" />
         </div>
@@ -192,8 +192,8 @@ async function exportEnabledDomainsCSV() {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Export Enabled Domains</span>
-            <span class="font-light">Downloads JSON of domains explicitly enabled.</span>
+            <h3 class="text-sm">Export Enabled Domains</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Downloads JSON of domains explicitly enabled.</p>
           </div>
           <Button size="sm" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
         </div>
@@ -202,8 +202,10 @@ async function exportEnabledDomainsCSV() {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Activation Key</span>
-            <span class="font-light">If you're finding that you're accidentally triggering Harper.</span>
+            <h3 class="text-sm">Activation Key</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              If you're finding that you're accidentally triggering Harper.
+            </p>
           </div>
           <Select
             size="sm"
@@ -220,8 +222,8 @@ async function exportEnabledDomainsCSV() {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">User Dictionary</span>
-            <span class="font-light">Each word should be on its own line.</span>
+            <h3 class="text-sm">User Dictionary</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Each word should be on its own line.</p>
           </div>
           <Textarea
             bind:value={userDict}
@@ -234,7 +236,7 @@ async function exportEnabledDomainsCSV() {
     <!-- ── RULES ─────────────────────────────── -->
     <Card class="space-y-4">
       <div class="flex items-center justify-between gap-4">
-        <h3 class="text-xs font-semibold uppercase tracking-wider">Rules</h3>
+        <h2 class="text-xs uppercase tracking-wider">Rules</h2>
         <Input
           bind:value={searchQuery}
           placeholder="Search for a rule…"
@@ -258,7 +260,7 @@ async function exportEnabledDomainsCSV() {
           <!-- rule card sample -->
             <div class="flex items-start justify-between gap-4">
               <div class="space-y-0.5">
-                <p class="font-medium">{key}</p>
+                <h3 class="text-sm">{key}</h3>
                 <p class="text-xs">{@html lintDescriptions[key]}</p>
               </div>
               <Select
