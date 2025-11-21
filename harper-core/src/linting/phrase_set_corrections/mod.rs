@@ -353,6 +353,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
         ),
+        "HolyWar" => (
+            &[
+                (&["holey war", "holly war"], &["holy war"]),
+                (&["holey wars", "holly wars"], &["holy wars"]),
+            ],
+            "Literally for religious conflicts and metaphorically for tech preference debats, the correct spelling is `holy war`.",
+            "Corrects misspellings of `holy war`.",
+            LintKind::Malapropism
+        ),
         "HowItLooksLike" => (
             &[
                 (&["how he looks like"], &["how he looks", "what he looks like"]),
