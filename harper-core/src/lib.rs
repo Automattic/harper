@@ -36,8 +36,10 @@ use std::collections::{BTreeMap, VecDeque};
 
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
+pub use dialects::dialect_enum::{DialectFlagsEnum, DialectsEnum};
 pub use dialects::dialect_trait::{Dialect, DialectFlags};
 pub use dialects::english::{EnglishDialect, EnglishDialectFlags};
+pub use dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags};
 pub use dict_word_metadata::{
     AdverbData, ConjunctionData, Degree, DeterminerData, DictWordMetadata, NounData, PronounData,
     VerbData, VerbForm,

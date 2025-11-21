@@ -18,7 +18,7 @@ use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-use harper_core::{DictWordMetadata, Document, EnglishDialect, IgnoredLints};
+use harper_core::{DialectsEnum, DictWordMetadata, Document, EnglishDialect, IgnoredLints};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
 use harper_jjdescription::JJDescriptionParser;
@@ -260,6 +260,13 @@ impl Backend {
                 config.max_file_length,
                 config.exclude_patterns.clone(),
             )
+        };
+
+        // TODO generalize the creation of the linter for all languages
+
+        let dialect = match dialect {
+            DialectsEnum::English(english_dialect) => english_dialect,
+            _ => EnglishDialect::default(),
         };
 
         let mut doc_lock = self.doc_state.lock().await;
@@ -810,9 +817,14 @@ impl LanguageServer for Backend {
             let mut doc_lock = self.doc_state.lock().await;
             let config_lock = self.config.read().await;
 
+            // TODO generalize for all languages, not only for English dialects
+            let dialect = match config_lock.dialect {
+                DialectsEnum::English(english_dialect) => english_dialect,
+                _ => EnglishDialect::default(),
+            };
             for doc in doc_lock.values_mut() {
                 info!("Constructing new LintGroup for updated configuration.");
-                doc.linter = LintGroup::new_curated(doc.dict.clone(), config_lock.dialect)
+                doc.linter = LintGroup::new_curated(doc.dict.clone(), dialect)
                     .with_lint_config(config_lock.lint_config.clone());
             }
 

@@ -3,7 +3,9 @@ use std::path::{Path, PathBuf};
 use anyhow::{Result, bail};
 use dirs::{config_dir, data_local_dir};
 use globset::{Glob, GlobSet};
-use harper_core::{EnglishDialect, linting::LintGroupConfig, parsers::MarkdownOptions};
+use harper_core::{
+    DialectsEnum, EnglishDialect, linting::LintGroupConfig, parsers::MarkdownOptions,
+};
 use resolve_path::PathResolveExt;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -74,7 +76,7 @@ pub struct Config {
     pub code_action_config: CodeActionConfig,
     pub isolate_english: bool,
     pub markdown_options: MarkdownOptions,
-    pub dialect: EnglishDialect,
+    pub dialect: DialectsEnum,
     /// Maximum length (in bytes) a file can have before it's skipped.
     /// Above this limit, the file will not be linted.
     pub max_file_length: usize,
@@ -223,7 +225,7 @@ impl Default for Config {
             code_action_config: CodeActionConfig::default(),
             isolate_english: false,
             markdown_options: MarkdownOptions::default(),
-            dialect: EnglishDialect::American,
+            dialect: DialectsEnum::English(EnglishDialect::American),
             max_file_length: 120_000,
             exclude_patterns: GlobSet::empty(),
         }

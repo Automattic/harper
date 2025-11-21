@@ -55,13 +55,12 @@ impl Dialect for PortugueseDialect {
     /// use harper_core::PortugueseDialect;
     /// use harper_core::Dialect;
     ///
-    /// let abbrs = ["US", "CA", "AU", "GB"];
+    /// let abbrs = ["PT", "BR", "AF"];
     /// let mut dialects = abbrs.iter().map(|abbr| PortugueseDialect::try_from_abbr(abbr));
     ///
-    /// assert_eq!(Some(PortugueseDialect::American), dialects.next().unwrap()); // US
-    /// assert_eq!(Some(PortugueseDialect::Canadian), dialects.next().unwrap()); // CA
-    /// assert_eq!(Some(PortugueseDialect::Australian), dialects.next().unwrap()); // AU
-    /// assert_eq!(Some(PortugueseDialect::British), dialects.next().unwrap()); // GB
+    /// assert_eq!(Some(PortugueseDialect::European), dialects.next().unwrap()); // US
+    /// assert_eq!(Some(PortugueseDialect::Brazilian), dialects.next().unwrap()); // CA
+    /// assert_eq!(Some(PortugueseDialect::African), dialects.next().unwrap()); // AU
     /// ```
     #[allow(refining_impl_trait_internal)]
     fn try_from_abbr(abbr: &str) -> Option<Self> {
