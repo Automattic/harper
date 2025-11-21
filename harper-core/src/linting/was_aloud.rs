@@ -4,6 +4,7 @@ use crate::TokenStringExt;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::WordSet;
 
 pub struct WasAloud {
@@ -24,6 +25,8 @@ impl Default for WasAloud {
 }
 
 impl ExprLinter for WasAloud {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

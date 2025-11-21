@@ -1,4 +1,5 @@
 use crate::expr::{All, Expr, FixedPhrase, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
 use crate::patterns::WordSet;
 use crate::token_string_ext::TokenStringExt;
@@ -35,6 +36,8 @@ impl Default for AndTheLike {
 }
 
 impl ExprLinter for AndTheLike {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

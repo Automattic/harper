@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -35,6 +36,8 @@ impl Default for TakeSerious {
 }
 
 impl ExprLinter for TakeSerious {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

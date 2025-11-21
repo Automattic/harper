@@ -2,6 +2,7 @@ use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
 use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 
 pub struct Bought {
     expr: Box<dyn Expr>,
@@ -24,6 +25,8 @@ impl Default for Bought {
 }
 
 impl ExprLinter for Bought {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

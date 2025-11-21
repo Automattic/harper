@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, LongestMatchOf, SequenceExpr},
@@ -89,6 +90,8 @@ impl Default for Touristic {
 }
 
 impl ExprLinter for Touristic {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

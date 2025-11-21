@@ -5,6 +5,7 @@ use crate::expr::SequenceExpr;
 use crate::{CharStringExt, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
+use crate::linting::expr_linter::Chunk;
 
 use crate::{Lrc, Token};
 
@@ -53,6 +54,8 @@ impl Default for CompoundNounAfterDetAdj {
 }
 
 impl ExprLinter for CompoundNounAfterDetAdj {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

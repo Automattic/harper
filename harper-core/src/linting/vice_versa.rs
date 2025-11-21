@@ -1,4 +1,5 @@
 use crate::expr::{Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{Token, TokenStringExt};
 
@@ -86,6 +87,8 @@ impl Default for ViceVersa {
 }
 
 impl ExprLinter for ViceVersa {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

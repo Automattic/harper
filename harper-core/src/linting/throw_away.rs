@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{Expr, SequenceExpr},
@@ -22,6 +23,8 @@ impl Default for ThrowAway {
 }
 
 impl ExprLinter for ThrowAway {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

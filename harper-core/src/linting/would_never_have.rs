@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{Expr, FixedPhrase, SequenceExpr},
@@ -37,6 +38,8 @@ impl Default for WouldNeverHave {
 }
 
 impl ExprLinter for WouldNeverHave {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

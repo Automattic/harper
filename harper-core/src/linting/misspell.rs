@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -29,6 +30,8 @@ impl Default for Misspell {
 }
 
 impl ExprLinter for Misspell {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

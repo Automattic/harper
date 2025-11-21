@@ -3,6 +3,7 @@ use crate::expr::{Expr, SequenceExpr};
 use crate::linting::{LintKind, Suggestion};
 
 use super::{ExprLinter, Lint};
+use crate::linting::expr_linter::Chunk;
 
 pub struct AvoidCurses {
     expr: Box<dyn Expr>,
@@ -17,6 +18,8 @@ impl Default for AvoidCurses {
 }
 
 impl ExprLinter for AvoidCurses {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

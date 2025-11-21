@@ -4,6 +4,7 @@ use crate::expr::FixedPhrase;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct OutOfDate {
     expr: Box<dyn Expr>,
@@ -24,6 +25,8 @@ impl Default for OutOfDate {
 }
 
 impl ExprLinter for OutOfDate {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

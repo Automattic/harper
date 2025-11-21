@@ -6,6 +6,7 @@ use crate::patterns::AnyPattern;
 use crate::{CharStringExt, Lrc, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
+use crate::linting::expr_linter::Chunk;
 
 use crate::Token;
 
@@ -52,6 +53,8 @@ impl Default for CompoundNounAfterPossessive {
 }
 
 impl ExprLinter for CompoundNounAfterPossessive {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -5,6 +5,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct WellEducated {
     expr: Box<dyn Expr>,
@@ -31,6 +32,8 @@ impl Default for WellEducated {
 }
 
 impl ExprLinter for WellEducated {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

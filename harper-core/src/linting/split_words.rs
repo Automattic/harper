@@ -7,6 +7,7 @@ use crate::linting::{LintKind, Suggestion};
 use crate::spell::{FstDictionary, TrieDictionary};
 
 use super::{ExprLinter, Lint};
+use crate::linting::expr_linter::Chunk;
 
 pub struct SplitWords {
     dict: Arc<TrieDictionary<Arc<FstDictionary>>>,
@@ -29,6 +30,8 @@ impl Default for SplitWords {
 }
 
 impl ExprLinter for SplitWords {
+    type Unit = Chunk;
+
     fn description(&self) -> &str {
         "Finds missing spaces in improper compound words."
     }

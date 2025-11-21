@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, FixedPhrase, SequenceExpr},
@@ -23,6 +24,8 @@ impl Default for AnotherThingComing {
 }
 
 impl ExprLinter for AnotherThingComing {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -1,4 +1,5 @@
 use crate::dict_word_metadata::VerbFormFlags;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Span, Token,
     expr::{Expr, SequenceExpr},
@@ -81,6 +82,8 @@ impl Default for SingleBe {
 }
 
 impl ExprLinter for SingleBe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

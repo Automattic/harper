@@ -1,6 +1,7 @@
 use crate::Token;
 use crate::char_string::CharStringExt;
 use crate::expr::{Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token_string_ext::TokenStringExt;
 
@@ -41,6 +42,8 @@ impl Default for AllIntentsAndPurposes {
 }
 
 impl ExprLinter for AllIntentsAndPurposes {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

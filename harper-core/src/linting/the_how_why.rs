@@ -1,6 +1,7 @@
 use crate::expr::Expr;
 use crate::expr::FirstMatchOf;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
@@ -60,6 +61,8 @@ impl Default for TheHowWhy {
 }
 
 impl ExprLinter for TheHowWhy {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         &self.expr
     }

@@ -3,6 +3,7 @@ use harper_brill::UPOS;
 use crate::CharStringExt;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     dict_word_metadata::Person,
@@ -57,6 +58,8 @@ impl Default for NominalWants {
 }
 
 impl ExprLinter for NominalWants {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

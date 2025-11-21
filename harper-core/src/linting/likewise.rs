@@ -4,6 +4,7 @@ use crate::expr::SequenceExpr;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct Likewise {
     expr: Box<dyn Expr>,
@@ -30,6 +31,8 @@ impl Default for Likewise {
     }
 }
 impl ExprLinter for Likewise {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

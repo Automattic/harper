@@ -3,6 +3,7 @@ use harper_brill::UPOS;
 use crate::expr::Expr;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::{ModalVerb, UPOSSet, WordSet};
 use crate::{
     Token,
@@ -40,6 +41,8 @@ impl Default for SafeToSave {
 }
 
 impl ExprLinter for SafeToSave {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

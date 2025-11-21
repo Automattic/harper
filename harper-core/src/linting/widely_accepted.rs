@@ -1,5 +1,6 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
@@ -22,6 +23,8 @@ impl Default for WidelyAccepted {
 }
 
 impl ExprLinter for WidelyAccepted {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         &self.expr
     }

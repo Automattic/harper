@@ -3,6 +3,7 @@ use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{Lrc, Punctuation, Token, TokenKind, TokenStringExt, patterns::Word};
 
 pub struct Everyday {
@@ -147,6 +148,8 @@ impl Default for Everyday {
 }
 
 impl ExprLinter for Everyday {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

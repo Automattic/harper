@@ -5,6 +5,7 @@
 
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
@@ -30,6 +31,8 @@ impl Default for OfCourse {
 }
 
 impl ExprLinter for OfCourse {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

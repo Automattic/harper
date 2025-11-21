@@ -7,6 +7,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ForNoun {
     expr: Box<dyn Expr>,
@@ -25,6 +26,8 @@ impl Default for ForNoun {
 }
 
 impl ExprLinter for ForNoun {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

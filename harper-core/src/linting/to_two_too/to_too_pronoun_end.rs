@@ -6,6 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ToTooPronounEnd {
     expr: Box<dyn Expr>,
@@ -47,6 +48,8 @@ impl Default for ToTooPronounEnd {
 }
 
 impl ExprLinter for ToTooPronounEnd {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

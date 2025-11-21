@@ -2,6 +2,7 @@ use std::sync::Arc;
 
 use harper_brill::UPOS;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{Expr, ExprMap, SequenceExpr},
@@ -216,6 +217,8 @@ impl Default for MissingTo {
 }
 
 impl ExprLinter for MissingTo {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

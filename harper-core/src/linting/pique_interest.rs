@@ -3,6 +3,7 @@ use crate::expr::SequenceExpr;
 use crate::{CharString, CharStringExt, Token, char_string::char_string, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct PiqueInterest {
     expr: Box<dyn Expr>,
@@ -42,6 +43,8 @@ impl PiqueInterest {
 }
 
 impl ExprLinter for PiqueInterest {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

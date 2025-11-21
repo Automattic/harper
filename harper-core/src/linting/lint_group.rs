@@ -181,6 +181,7 @@ use super::would_never_have::WouldNeverHave;
 use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
 use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
+use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
     MassPlurals, NounVerbConfusion, closed_compounds, initialisms, phrase_corrections,
@@ -302,7 +303,7 @@ pub struct LintGroup {
     /// We use a binary map here so the ordering is stable.
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
-    expr_linters: BTreeMap<String, Box<dyn ExprLinter>>,
+    expr_linters: BTreeMap<String, Box<dyn ExprLinter<Unit = Chunk>>>,
     /// Since [`ExprLinter`]s operate on a chunk-basis, we can store a
     /// mapping of `Chunk -> Lint` and only re-run the expr linters
     /// when a chunk changes.
@@ -349,13 +350,16 @@ impl LintGroup {
     pub fn add_expr_linter(
         &mut self,
         name: impl AsRef<str>,
-        linter: impl ExprLinter + 'static,
+        // linter: impl ExprLinter + 'static,
+        linter: impl ExprLinter<Unit = Chunk> + 'static,
     ) -> bool {
         if self.contains_key(&name) {
             false
         } else {
             self.expr_linters
-                .insert(name.as_ref().to_string(), Box::new(linter));
+                // .insert(name.as_ref().to_string(), Box::new(linter));
+                // .insert(name.as_ref().to_string(), Box::new(linter) as Box<dyn ExprLinter<ExLiType = ExLiSt>>);
+                .insert(name.as_ref().to_string(), Box::new(linter) as _);
             true
         }
     }

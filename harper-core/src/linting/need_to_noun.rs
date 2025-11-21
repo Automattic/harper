@@ -9,6 +9,7 @@ use crate::patterns::DerivedFrom;
 use crate::patterns::WordSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct NeedToNoun {
     expr: Box<dyn Expr>,
@@ -50,6 +51,8 @@ impl Default for NeedToNoun {
 }
 
 impl ExprLinter for NeedToNoun {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

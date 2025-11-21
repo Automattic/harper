@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
@@ -35,6 +36,8 @@ impl Default for NoMatchFor {
 }
 
 impl ExprLinter for NoMatchFor {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

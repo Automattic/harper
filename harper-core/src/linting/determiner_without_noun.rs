@@ -3,6 +3,7 @@ use crate::expr::SequenceExpr;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct DeterminerWithoutNoun {
     expr: Box<dyn Expr>,
@@ -22,6 +23,8 @@ impl Default for DeterminerWithoutNoun {
 }
 
 impl ExprLinter for DeterminerWithoutNoun {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

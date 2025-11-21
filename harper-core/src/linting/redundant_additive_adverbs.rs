@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
@@ -35,6 +36,8 @@ impl Default for RedundantAdditiveAdverbs {
 }
 
 impl ExprLinter for RedundantAdditiveAdverbs {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

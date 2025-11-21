@@ -8,6 +8,7 @@ use crate::expr::SequenceExpr;
 use crate::{Token, patterns::WordSet};
 
 use crate::Lint;
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
 
 /// See also:
@@ -61,6 +62,8 @@ impl ShouldContract {
 }
 
 impl ExprLinter for ShouldContract {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

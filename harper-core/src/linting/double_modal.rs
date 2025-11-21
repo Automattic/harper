@@ -5,6 +5,7 @@ use crate::{Token, TokenStringExt};
 
 use super::Suggestion;
 use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
 
 pub struct DoubleModal {
     expr: Box<dyn Expr>,
@@ -24,6 +25,8 @@ impl Default for DoubleModal {
 }
 
 impl ExprLinter for DoubleModal {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

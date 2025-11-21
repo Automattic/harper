@@ -4,6 +4,7 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct PossessiveYour {
     expr: Box<dyn Expr>,
@@ -26,6 +27,8 @@ impl Default for PossessiveYour {
 }
 
 impl ExprLinter for PossessiveYour {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

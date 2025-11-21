@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Span, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr},
@@ -66,6 +67,8 @@ impl Default for NounCountability {
 }
 
 impl ExprLinter for NounCountability {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

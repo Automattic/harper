@@ -2,6 +2,7 @@ use crate::CharStringExt;
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::WordSet;
 use crate::{
     Lrc, Token, TokenStringExt,
@@ -57,6 +58,8 @@ impl Default for OnFloor {
 }
 
 impl ExprLinter for OnFloor {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

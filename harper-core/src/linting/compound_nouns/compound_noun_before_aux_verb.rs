@@ -8,6 +8,7 @@ use crate::{CharStringExt, Lrc, TokenStringExt, linting::ExprLinter};
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 
 use crate::Token;
+use crate::linting::expr_linter::Chunk;
 
 /// Two adjacent words separated by whitespace that if joined would be a valid noun.
 pub struct CompoundNounBeforeAuxVerb {
@@ -44,6 +45,8 @@ impl Default for CompoundNounBeforeAuxVerb {
 }
 
 impl ExprLinter for CompoundNounBeforeAuxVerb {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

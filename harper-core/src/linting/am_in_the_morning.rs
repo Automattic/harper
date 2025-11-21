@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Span, Token, TokenStringExt,
     expr::{Expr, FixedPhrase, LongestMatchOf, SequenceExpr},
@@ -40,6 +41,8 @@ impl Default for AmInTheMorning {
 }
 
 impl ExprLinter for AmInTheMorning {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

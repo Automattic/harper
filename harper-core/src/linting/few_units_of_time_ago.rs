@@ -1,6 +1,7 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::expr::TimeUnitExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token,
     linting::{ExprLinter, Lint, Suggestion},
@@ -33,6 +34,8 @@ impl Default for FewUnitsOfTimeAgo {
 }
 
 impl ExprLinter for FewUnitsOfTimeAgo {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -8,6 +8,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint};
+use crate::linting::expr_linter::Chunk;
 
 pub struct OpenTheLight {
     expr: Box<dyn Expr>,
@@ -58,6 +59,8 @@ impl Default for OpenTheLight {
 }
 
 impl ExprLinter for OpenTheLight {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

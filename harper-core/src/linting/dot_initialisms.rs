@@ -4,6 +4,7 @@ use crate::expr::WordExprGroup;
 use hashbrown::HashMap;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 use crate::{Token, TokenStringExt};
 
 pub struct DotInitialisms {
@@ -35,6 +36,8 @@ impl Default for DotInitialisms {
 }
 
 impl ExprLinter for DotInitialisms {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

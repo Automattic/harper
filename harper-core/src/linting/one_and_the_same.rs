@@ -5,6 +5,7 @@ use crate::expr::SequenceExpr;
 use crate::{Lrc, Token, TokenStringExt, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct OneAndTheSame {
     expr: Box<dyn Expr>,
@@ -38,6 +39,8 @@ fn ws_word(word: &'static str) -> SequenceExpr {
 }
 
 impl ExprLinter for OneAndTheSame {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

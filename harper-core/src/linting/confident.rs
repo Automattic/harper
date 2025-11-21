@@ -1,6 +1,7 @@
 use crate::expr::Expr;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{Token, patterns::Word};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -28,6 +29,8 @@ impl Default for Confident {
 }
 
 impl ExprLinter for Confident {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

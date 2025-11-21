@@ -9,6 +9,7 @@ use crate::patterns::UPOSSet;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
 
 pub struct MissingPreposition {
     expr: Box<dyn Expr>,
@@ -41,6 +42,8 @@ impl Default for MissingPreposition {
 }
 
 impl ExprLinter for MissingPreposition {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

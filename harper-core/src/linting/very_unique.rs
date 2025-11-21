@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -25,6 +26,8 @@ impl Default for VeryUnique {
 }
 
 impl ExprLinter for VeryUnique {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

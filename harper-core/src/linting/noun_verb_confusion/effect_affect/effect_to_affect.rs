@@ -2,6 +2,7 @@ use std::sync::Arc;
 
 use harper_brill::UPOS;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenKind,
     expr::{Expr, ExprMap, SequenceExpr},
@@ -40,6 +41,8 @@ impl Default for EffectToAffect {
 }
 
 impl ExprLinter for EffectToAffect {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
