@@ -172,6 +172,7 @@ use super::wordpress_dotcom::WordPressDotcom;
 use super::would_never_have::WouldNeverHave;
 use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
 use super::{ExprLinter, Lint};
+use crate::languages::Language;
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
@@ -179,7 +180,7 @@ use crate::linting::{
     phrase_set_corrections,
 };
 use crate::spell::{Dictionary, MutableDictionary};
-use crate::{CharString, Document, EnglishDialect, TokenStringExt};
+use crate::{CharString, Document, EnglishDialect, PortugueseDialect, TokenStringExt};
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
@@ -210,7 +211,10 @@ pub struct LintGroupConfig {
 #[cached]
 fn curated_config() -> LintGroupConfig {
     // The Dictionary and Dialect do not matter, we're just after the config.
-    let group = LintGroup::new_curated(MutableDictionary::new().into(), EnglishDialect::American);
+    let group = LintGroup::new_curated(
+        MutableDictionary::new().into(),
+        Language::English(EnglishDialect::American),
+    );
     group.config
 }
 
@@ -416,7 +420,17 @@ impl LintGroup {
         self
     }
 
-    pub fn new_curated(
+    pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>, language: Language) -> Self {
+        match language {
+            Language::English(english_dialect) => {
+                Self::new_curated_english(dictionary, english_dialect)
+            }
+            Language::Portuguese(portuguese_dialect) => {
+                Self::new_curated_portuguese(dictionary, portuguese_dialect)
+            }
+        }
+    }
+    pub fn new_curated_english(
         dictionary: Arc<impl Dictionary + 'static>,
         dialect: EnglishDialect,
     ) -> Self {
@@ -644,12 +658,49 @@ impl LintGroup {
         out
     }
 
+    pub fn new_curated_portuguese(
+        dictionary: Arc<impl Dictionary + 'static>,
+        _dialect: PortugueseDialect,
+    ) -> Self {
+        let mut out = Self::empty();
+
+        /// Add a `Linter` to the group, setting it to be enabled by default.
+        macro_rules! insert_struct_rule {
+            ($rule:ident, $default_config:expr) => {
+                out.add(stringify!($rule), $rule::default());
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        /// Add an `ExprLinter` to the group, setting it to be enabled by default.
+        /// While you _can_ pass an `ExprLinter` to `insert_struct_rule`, using this macro instead
+        /// will allow it to use more aggressive caching strategies.
+        macro_rules! insert_expr_rule {
+            ($rule:ident, $default_config:expr) => {
+                out.add_expr_linter(stringify!($rule), $rule::default());
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        out.merge_from(&mut phrase_corrections::lint_group());
+        out.merge_from(&mut phrase_set_corrections::lint_group());
+        out.merge_from(&mut proper_noun_capitalization_linters::lint_group(
+            dictionary.clone(),
+        ));
+        out.merge_from(&mut closed_compounds::lint_group());
+        out.merge_from(&mut initialisms::lint_group());
+
+        out
+    }
+
     /// Create a new curated group with all config values cleared out.
     pub fn new_curated_empty_config(
         dictionary: Arc<impl Dictionary + 'static>,
-        dialect: EnglishDialect,
+        language: Language,
     ) -> Self {
-        let mut group = Self::new_curated(dictionary, dialect);
+        let mut group = Self::new_curated(dictionary, language);
         group.config.clear();
         group
     }
@@ -735,6 +786,7 @@ mod tests {
     use std::sync::Arc;
 
     use super::LintGroup;
+    use crate::languages::Language;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::{Document, EnglishDialect, linting::Linter};
@@ -742,7 +794,7 @@ mod tests {
     fn test_group() -> LintGroup {
         LintGroup::new_curated(
             Arc::new(MutableDictionary::curated()),
-            EnglishDialect::American,
+            Language::English(EnglishDialect::American),
         )
     }
 
@@ -763,7 +815,7 @@ mod tests {
     fn can_get_all_descriptions() {
         let group = LintGroup::new_curated(
             Arc::new(MutableDictionary::default()),
-            EnglishDialect::American,
+            Language::English(EnglishDialect::American),
         );
         group.all_descriptions();
     }
@@ -772,7 +824,7 @@ mod tests {
     fn can_get_all_descriptions_as_html() {
         let group = LintGroup::new_curated(
             Arc::new(MutableDictionary::default()),
-            EnglishDialect::American,
+            Language::English(EnglishDialect::American),
         );
         group.all_descriptions_html();
     }
@@ -795,7 +847,10 @@ mod tests {
 
     #[test]
     fn lint_descriptions_are_clean() {
-        let mut group = LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American);
+        let mut group = LintGroup::new_curated(
+            FstDictionary::curated(),
+            Language::English(EnglishDialect::American),
+        );
         let pairs: Vec<_> = group
             .all_descriptions()
             .into_iter()

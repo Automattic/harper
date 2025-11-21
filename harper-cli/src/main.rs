@@ -1,5 +1,7 @@
 #![doc = include_str!("../README.md")]
 
+use harper_core::DialectsEnum;
+use harper_core::languages::Language;
 use harper_core::languages::LanguageFamily;
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
@@ -55,7 +57,7 @@ struct GlobalOpts {
     language: LanguageFamily,
     /// Specify the dialect.
     #[arg(short, long, default_value = EnglishDialect::American.to_string())]
-    dialect: EnglishDialect,
+    dialect: DialectsEnum,
 }
 
 #[derive(Debug, Subcommand)]
@@ -201,10 +203,18 @@ fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
     let command = cli.command;
     let global_options = cli.global;
-    let language = global_options.language;
+    let language = match (global_options.language, global_options.dialect) {
+        (LanguageFamily::English, DialectsEnum::English(english_dialect)) => {
+            Language::English(english_dialect)
+        }
+        (LanguageFamily::Portuguese, DialectsEnum::Portuguese(portuguese_dialect)) => {
+            Language::Portuguese(portuguese_dialect)
+        }
+        _ => panic!("Dialect doesn't match language"),
+    };
     let markdown_options = MarkdownOptions::default();
 
-    let dictionary = FstDictionary::curated_select_language(language);
+    let dictionary = FstDictionary::curated_select_language(global_options.language);
 
     match command {
         Command::Lint {
@@ -220,7 +230,6 @@ fn main() -> anyhow::Result<()> {
 
             let mut merged_dict = MergedDictionary::new();
 
-            println!("Selected language is {language}");
             merged_dict.add_dictionary(dictionary);
 
             // Attempt to load user dictionary.
@@ -239,9 +248,10 @@ fn main() -> anyhow::Result<()> {
             }
 
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &merged_dict, language)?;
+            let (doc, source) =
+                input.load(markdown_options, &merged_dict, global_options.language)?;
 
-            let mut linter = LintGroup::new_curated(Arc::new(merged_dict), global_options.dialect);
+            let mut linter = LintGroup::new_curated(Arc::new(merged_dict), language);
 
             if let Some(rules) = only {
                 linter.set_all_rules_to(Some(false));
@@ -295,7 +305,7 @@ fn main() -> anyhow::Result<()> {
             let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
 
             // Load the file/text.
-            let (doc, _) = input.load(markdown_options, &dictionary, language)?;
+            let (doc, _) = input.load(markdown_options, &dictionary, global_options.language)?;
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
@@ -312,7 +322,8 @@ fn main() -> anyhow::Result<()> {
             let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
 
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &dictionary, language)?;
+            let (doc, source) =
+                input.load(markdown_options, &dictionary, global_options.language)?;
 
             let primary_color = Color::Blue;
             let secondary_color = Color::Magenta;
@@ -361,7 +372,8 @@ fn main() -> anyhow::Result<()> {
             let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
 
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &dictionary, language)?;
+            let (doc, source) =
+                input.load(markdown_options, &dictionary, global_options.language)?;
 
             let input_identifier = input.get_identifier();
 
@@ -417,7 +429,7 @@ fn main() -> anyhow::Result<()> {
         Command::Forms { line } => {
             let (word, annot) = line_to_parts(&line);
 
-            let curated_word_list = match language {
+            let curated_word_list = match global_options.language {
                 LanguageFamily::English => include_str!("../../harper-core/dictionary.dict"),
                 LanguageFamily::Portuguese => {
                     include_str!("../../harper-core/dictionary-portuguese.dict")
@@ -489,7 +501,8 @@ fn main() -> anyhow::Result<()> {
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(dictionary, EnglishDialect::American);
+            let linter =
+                LintGroup::new_curated(dictionary, Language::English(EnglishDialect::American));
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();
@@ -511,8 +524,12 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Command::MineWords { file } => {
-            let (doc, _source) =
-                load_file(&file, MarkdownOptions::default(), &dictionary, language)?;
+            let (doc, _source) = load_file(
+                &file,
+                MarkdownOptions::default(),
+                &dictionary,
+                global_options.language,
+            )?;
 
             let mut words = HashMap::new();
 
