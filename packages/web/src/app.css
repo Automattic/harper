@@ -96,7 +96,7 @@ p {
 }
 
 a {
-	@apply underline-offset-4;
+	@apply underline-offset-4 text-black dark:text-white;
 }
 
 blockquote {
@@ -105,8 +105,9 @@ blockquote {
 
 * {
 	font-family:
-		Atkinson Hyperlegible,
-		sans-serif;
+		Domine,
+		"IBM Plex Serif",
+		serif;
 }
 
 code {

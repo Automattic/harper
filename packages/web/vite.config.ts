@@ -34,7 +34,7 @@ export default defineConfig(async () => {
 					github: 'https://github.com/automattic/harper',
 					discord: 'https://discord.gg/invite/JBqcAaKrzQ',
 					themeColor: {
-						primary: '#fef4e7',
+						primary: '#f1920e',
 						dark: '#301d03',
 						gradient: {
 							start: '#355280',

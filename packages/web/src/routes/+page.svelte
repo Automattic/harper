@@ -104,7 +104,7 @@ const testimonials = [
 		<div class="space-y-2 text-center">
 			<h1 class="font-bold">Hi. I'm Harper.</h1>
 			<h2>
-				The <strong>Free</strong> Grammar Checker That Respects Your Privacy
+				The <strong class="bg-primary-100 p-1">Free</strong> Grammar Checker That Respects Your Privacy
 			</h2>
 		</div>
 
