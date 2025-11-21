@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "components/components.css";
-@import url("https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Domine:wght@400..700&display=swap");
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -79,4 +79,19 @@ code {
 
 #app {
 	@apply min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-150;
+}
+
+* {
+	font-family:
+		Atkinson Hyperlegible,
+		sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family:
+		Domine,
+		serif;
 }
