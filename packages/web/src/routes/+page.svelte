@@ -24,7 +24,6 @@ import ZedLogo from '$lib/components/ZedLogo.svelte';
 import EdgeLogo from '$lib/components/EdgeLogo.svelte';
 import { Card, Collapsible, Link } from 'components';
 import { browser } from '$app/environment';
-    import Testimonial from '$lib/components/Testimonial.svelte';
 
 /**
  * @param {string} keyword

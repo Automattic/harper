@@ -1,6 +1,68 @@
 @import "tailwindcss";
 @import "components/components.css";
 
+@theme {
+	--color-primary-50: #fef4e7; /* honey bronze */
+	--color-primary-100: #fce9cf;
+	--color-primary-200: #f9d49f;
+	--color-primary-300: #f7be6e;
+	--color-primary-400: #f4a83e;
+	--color-primary: #f1920e;
+	--color-primary-600: #c1750b;
+	--color-primary-700: #915808;
+	--color-primary-800: #603b06;
+	--color-primary-900: #301d03;
+	--color-primary-950: #221402;
+
+	--color-accent-50: #fee7e9; /* hot fuchsia */
+	--color-accent-100: #fccfd3;
+	--color-accent-200: #f99fa6;
+	--color-accent-300: #f76e7a;
+	--color-accent-400: #f43e4d;
+	--color-accent: #f10e21;
+	--color-accent-600: #c10b1a;
+	--color-accent-700: #910814;
+	--color-accent-800: #60060d;
+	--color-accent-900: #300307;
+	--color-accent-950: #220205;
+
+	--color-cream: #fef4e7; /* simple cream */
+	--color-cream-100: #fce9cf;
+	--color-cream-200: #f9d49f;
+	--color-cream-300: #f7be6e;
+	--color-cream-400: #f4a83e;
+	--color-cream-500: #f1920e;
+	--color-cream-600: #c1750b;
+	--color-cream-700: #915808;
+	--color-cream-800: #603b06;
+	--color-cream-900: #301d03;
+	--color-cream-950: #221402;
+
+	--color-champagne-mist-50: #fef4e7;
+	--color-champagne-mist-100: #fce9cf;
+	--color-champagne-mist-200: #fad49e;
+	--color-champagne-mist-300: #f7be6e;
+	--color-champagne-mist-400: #f5a83d;
+	--color-champagne-mist-500: #f2930d;
+	--color-champagne-mist-600: #c2750a;
+	--color-champagne-mist-700: #915808;
+	--color-champagne-mist-800: #613b05;
+	--color-champagne-mist-900: #301d03;
+	--color-champagne-mist-950: #221502;
+
+	--color-white: #fffdfa;
+	--color-white-100: #fceacf;
+	--color-white-200: #fad59e;
+	--color-white-300: #f7c06e;
+	--color-white-400: #f5ab3d;
+	--color-white-500: #f2960d;
+	--color-white-600: #c2780a;
+	--color-white-700: #915a08;
+	--color-white-800: #613c05;
+	--color-white-900: #301e03;
+	--color-white-950: #221502;
+}
+
 body {
 	@apply bg-white text-black dark:bg-black dark:text-white;
 }
