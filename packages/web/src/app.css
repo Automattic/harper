@@ -65,6 +65,10 @@
 
 body {
 	@apply bg-white text-black dark:bg-black dark:text-white;
+
+	font-family:
+		Atkinson Hyperlegible,
+		sans-serif;
 }
 
 ul {
@@ -77,30 +81,22 @@ ol {
 
 h1 {
 	@apply text-4xl font-extrabold tracking-tight lg:text-5xl py-4;
-	font-family:
-		Domine,
-		serif;
+	font-family: Domine, serif;
 }
 
 h2 {
 	@apply text-3xl font-semibold tracking-tight py-4;
-	font-family:
-		Domine,
-		serif;
+	font-family: Domine, serif;
 }
 
 h3 {
 	@apply text-2xl font-semibold tracking-tight py-4;
-	font-family:
-		Domine,
-		serif;
+	font-family: Domine, serif;
 }
 
 h4 {
 	@apply text-xl font-semibold tracking-tight;
-	font-family:
-		Domine,
-		serif;
+	font-family: Domine, serif;
 }
 
 p {
@@ -113,12 +109,6 @@ a {
 
 blockquote {
 	@apply mt-6 border-l-2 border-gray-200 pl-6 italic dark:border-gray-700;
-}
-
-* {
-	font-family:
-		Atkinson Hyperlegible,
-		sans-serif;
 }
 
 code {

@@ -154,7 +154,7 @@ async function exportEnabledDomainsCSV() {
         <img src={logo} alt="Harper logo" class="h-5 w-auto" />
       </div>
       <div class="flex flex-col">
-        <span class="text-sm font-semibold tracking-wide">Harper</span>
+        <span class="text-sm font-semibold tracking-wide font-serif">Harper</span>
         <span class="text-xs">Chrome Extension Settings</span>
       </div>
     </Card>
@@ -256,7 +256,6 @@ async function exportEnabledDomainsCSV() {
       ) as [key, value]}
         <div class="rule-scroll space-y-4 max-h-80 overflow-y-auto pr-1">
           <!-- rule card sample -->
-          <div class="rounded-xl p-3 shadow-md transition">
             <div class="flex items-start justify-between gap-4">
               <div class="space-y-0.5">
                 <p class="font-medium">{key}</p>
@@ -275,7 +274,6 @@ async function exportEnabledDomainsCSV() {
               </Select>
             </div>
           </div>
-        </div>
       {/each}
 
     </Card>

@@ -1,10 +1,12 @@
 @import "tailwindcss";
 @import "components/components.css";
-@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Domine:wght@400..700&display=swap");
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+	--font-sans: "Atkinson Hyperlegible", sans-serif;
+	--font-serif: Domine, serif;
+
 	--color-primary-50: #fef4e7; /* honey bronze */
 	--color-primary-100: #fce9cf;
 	--color-primary-200: #f9d49f;
@@ -66,22 +68,13 @@
 	--color-white-950: #221502;
 }
 
-* {
-	font-family:
-		Domine,
-		"IBM Plex Serif",
-		serif;
-}
-
 code {
 	@apply bg-primary-100 rounded p-1 dark:text-black;
 }
 
 #app {
 	@apply min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-150;
-}
 
-* {
 	font-family:
 		Atkinson Hyperlegible,
 		sans-serif;
@@ -91,7 +84,5 @@ h1,
 h2,
 h3,
 h4 {
-	font-family:
-		Domine,
-		serif;
+	font-family: Domine, serif;
 }
