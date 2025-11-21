@@ -86,8 +86,8 @@
 # D   NSg/J  . NSg/J      . VB/C NSg/J    NPl/V3+ NPr/VXB NSg/VXB VP/J          . NPr/J/R/P NSg/I/J/Dq+
 > languages words   are also marked for   their " case       " ( role as    subject   , object  ,
 # NPl/V3+   NPl/V3+ VB  R/C  VP/J   R/C/P D$+   . NPr🅪Sg/VB+ . . NSg  NSg/R NSg/VB/J+ . NSg/VB+ .
-> etc. ) , grammatical gender     , and  so        on  ; while      verbs   are marked for   tense    , aspect   ,
-# +    . . J+          N🅪Sg/VB/J+ . VB/C NSg/I/J/C J/P . NSg/VB/C/P NPl/V3+ VB  VP/J   R/C/P NSg/VB/J . N🅪Sg/VB+ .
+> etc. ) , grammatical gender     , and  so          on  ; while      verbs   are marked for   tense    , aspect   ,
+# +    . . J+          N🅪Sg/VB/J+ . VB/C NSg/I/J/R/C J/P . NSg/VB/C/P NPl/V3+ VB  VP/J   R/C/P NSg/VB/J . N🅪Sg/VB+ .
 > and  other     things . In        some     tagging systems , different inflections of the same
 # VB/C NSg/VB/J+ NPl+   . NPr/J/R/P I/J/R/Dq NSg/Vg  NPl+    . NSg/J     NPl         P  D   I/J
 > root    word    will    get    different parts  of speech   , resulting in        a   large number     of
@@ -148,8 +148,8 @@
 # NSg/R NPr/J NPl/V3+   NPr/VXB NSg/VXB R         NSg/J      . NSg/P D   NSg/VB/J NSg/J   . ?      ?
 > al. have    proposed a   " universal " tag     set       , with 12 categories ( for   example , no
 # ?   NSg/VXB VP/J     D/P . NSg/J     . NSg/VB+ NPr/VBP/J . P    #  NPl+       . R/C/P NSg/VB+ . NPr/Dq/P
-> subtypes of nouns  , verbs   , punctuation , and  so        on  ) . Whether a   very small    set       of
-# NPl      P  NPl/V3 . NPl/V3+ . Nᴹ+         . VB/C NSg/I/J/C J/P . . I/C     D/P J/R  NPr/VB/J NPr/VBP/J P
+> subtypes of nouns  , verbs   , punctuation , and  so          on  ) . Whether a   very small    set       of
+# NPl      P  NPl/V3 . NPl/V3+ . Nᴹ+         . VB/C NSg/I/J/R/C J/P . . I/C     D/P J/R  NPr/VB/J NPr/VBP/J P
 > very broad tags    or    a   much         larger set       of more         precise ones is  preferable , depends
 # J/R  NSg/J NPl/V3+ NPr/C D/P NSg/I/J/R/Dq JC     NPr/VBP/J P  NPr/I/J/R/Dq VB/J+   NPl+ VL3 J          . NPl/V3
 > on  the purpose  at    hand    . Automatic tagging is  easier on  smaller tag     - sets   .
@@ -174,8 +174,8 @@
 # NSg/J/P+ . #d    . NPr/ISg+ NPl/V3   P  J/P   # . #   . #   NPl/V3 P  Nᴹ/Vg/J/P NPr🅪Sg/VB/J+ Nᴹ/VB N🅪Sg/VB+ .
 > made up         of 500 samples from randomly chosen   publications . Each sample  is  2 , 000
 # VB   NSg/VB/J/P P  #   NPl/V3+ P    R        Nᴹ/VPp/J NPl+         . Dq+  NSg/VB+ VL3 # . #
-> or    more         words   ( ending  at    the first    sentence - end     after 2 , 000 words   , so        that         the
-# NPr/C NPr/I/J/R/Dq NPl/V3+ . Nᴹ/Vg/J NSg/P D   NSg/VB/J NSg/VB+  . NSg/VB+ P     # . #   NPl/V3+ . NSg/I/J/C NSg/I/C/Ddem D
+> or    more         words   ( ending  at    the first    sentence - end     after 2 , 000 words   , so          that         the
+# NPr/C NPr/I/J/R/Dq NPl/V3+ . Nᴹ/Vg/J NSg/P D   NSg/VB/J NSg/VB+  . NSg/VB+ P     # . #   NPl/V3+ . NSg/I/J/R/C NSg/I/C/Ddem D
 > corpus contains only  complete sentences ) .
 # NSg+   V3       J/R/C NSg/VB/J NPl/V3+   . .
 >
@@ -190,8 +190,8 @@
 # NSg/I/J/C/Dq . R/C/P NSg/VB+ . NSg/VB+ NSg/J/C NSg/VB+ NPr/VXB VB    . NSg/C/P NSg/VB+ NSg/J/C NSg/VB+ . R        .
 > cannot . The program got about 70 % correct  . Its     results were    repeatedly reviewed
 # NSg/VB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ NSg/VPt R          VP/J
-> and  corrected by      hand    , and  later users sent   in        errata so        that          by      the late  70 s
-# VB/C VP/J      NSg/J/P NSg/VB+ . VB/C JC    NPl+  NSg/VB NPr/J/R/P NSg    NSg/I/J/C NSg/I/C/Ddem+ NSg/J/P D   NSg/J #  ?
+> and  corrected by      hand    , and  later users sent   in        errata so          that          by      the late  70 s
+# VB/C VP/J      NSg/J/P NSg/VB+ . VB/C JC    NPl+  NSg/VB NPr/J/R/P NSg    NSg/I/J/R/C NSg/I/C/Ddem+ NSg/J/P D   NSg/J #  ?
 > the tagging was nearly perfect  ( allowing for   some     cases   on  which even     human
 # D   NSg/Vg  VPt R      NSg/VB/J . Nᴹ/Vg/J  R/C/P I/J/R/Dq NPl/V3+ J/P I/C+  NSg/VB/J NSg/VB/J+
 > speakers might    not     agree ) .
@@ -209,7 +209,7 @@
 > this    time       ( 2005 ) it       has been    superseded by      larger corpora such  as    the 100
 # I/Ddem+ N🅪Sg/VB/J+ . #    . NPr/ISg+ V3  NSg/VPp VP/J       NSg/J/P JC     NPl+    NSg/I NSg/R D   #
 > million word    British National Corpus , even     though larger corpora are rarely so
-# NSg     NSg/VB+ NPr/J   NSg/J    NSg+   . NSg/VB/J VB/C   JC     NPl+    VB  R      NSg/I/J/C
+# NSg     NSg/VB+ NPr/J   NSg/J    NSg+   . NSg/VB/J VB/C   JC     NPl+    VB  R      NSg/I/J/R/C
 > thoroughly curated .
 # R          VP/J    .
 >
@@ -254,8 +254,8 @@
 #
 > More         advanced ( " higher - order   " ) HMMs learn  the probabilities not     only  of pairs
 # NPr/I/J/R/Dq VP/J     . . NSg/JC . N🅪Sg/VB . . ?    NSg/VB D   NPl+          NSg/R/C J/R/C P  NPl/V3+
-> but     triples or    even     larger sequences . So        , for   example , if    you've just seen    a
-# NSg/C/P NPl/V3  NPr/C NSg/VB/J JC     NPl/V3+   . NSg/I/J/C . R/C/P NSg/VB+ . NSg/C K      J    NSg/VPp D/P
+> but     triples or    even     larger sequences . So          , for   example , if    you've just seen    a
+# NSg/C/P NPl/V3  NPr/C NSg/VB/J JC     NPl/V3+   . NSg/I/J/R/C . R/C/P NSg/VB+ . NSg/C K      J    NSg/VPp D/P
 > noun    followed by      a   verb    , the next    item    may     be      very likely a   preposition ,
 # NSg/VB+ VP/J     NSg/J/P D/P NSg/VB+ . D   NSg/J/P NSg/VB+ NPr/VXB NSg/VXB J/R  NSg/J  D/P NSg/VB      .
 > article , or    noun    , but     much         less       likely another verb    .
@@ -340,8 +340,8 @@
 # Nᴹ/Vg/J+   . D+  N🅪Sg+    VP/J     VPt NSg/JC C/P  D   NSg/J   N🅪Sg     P  J/R
 > sophisticated algorithms that          integrated part     of speech   choice  with many       higher
 # VP/J+         NPl+       NSg/I/C/Ddem+ VP/J       NSg/VB/J P  N🅪Sg/VB+ N🅪Sg/J+ P    NSg/I/J/Dq NSg/JC
-> levels of linguistic analysis : syntax , morphology , semantics , and  so        on  . CLAWS   ,
-# NPl/V3 P  J          N🅪Sg     . Nᴹ+    . Nᴹ+        . NPl+      . VB/C NSg/I/J/C J/P . NPl/V3+ .
+> levels of linguistic analysis : syntax , morphology , semantics , and  so          on  . CLAWS   ,
+# NPl/V3 P  J          N🅪Sg     . Nᴹ+    . Nᴹ+        . NPl+      . VB/C NSg/I/J/R/C J/P . NPl/V3+ .
 > DeRose's and  Church's methods did fail     for   some     of the known cases   where
 # ?        VB/C NSg$     NPl/V3+ VPt NSg/VB/J R/C/P I/J/R/Dq P  D   VPp/J NPl/V3+ NSg/R/C
 > semantics is  required , but     those  proved negligibly rare     . This   convinced many       in
@@ -422,8 +422,8 @@
 # D/P VB/J   NSg        P  J/Dq+   NPl/V3+ VL3 VP/J     . P    NPl/V3+    . NSg/P D   NSg
 > Wiki    . This    comparison uses   the Penn tag     set       on  some     of the Penn Treebank data  ,
 # NSg/VB+ . I/Ddem+ NSg+       NPl/V3 D+  NPr+ NSg/VB+ NPr/VBP/J J/P I/J/R/Dq P  D   NPr+ ?        N🅪Pl+ .
-> so        the results are directly comparable . However , many       significant taggers are
-# NSg/I/J/C D   NPl/V3+ VB  R/C      NSg/J      . C       . NSg/I/J/Dq NSg/J       NPl     VB
+> so          the results are directly comparable . However , many       significant taggers are
+# NSg/I/J/R/C D   NPl/V3+ VB  R/C      NSg/J      . C       . NSg/I/J/Dq NSg/J       NPl     VB
 > not     included ( perhaps because of the labor            involved in        reconfiguring them     for
 # NSg/R/C VP/J     . NSg/R   C/P     P  D   NPr🅪Sg/VB/Am/Au+ VP/J     NPr/J/R/P Nᴹ/Vg/J       NSg/IPl+ R/C/P
 > this   particular dataset ) . Thus , it       should not     be      assumed that         the results

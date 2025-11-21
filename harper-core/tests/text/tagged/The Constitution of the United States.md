@@ -168,8 +168,8 @@
 # NPl      P  D+  NSg/VB/J+ N🅪Sg/VB/J+ VXB   NSg/VXB VP/J    NSg/P D   N🅪Sg       P  D+  NSg/VB/J+
 > Year , of the second   Class      at    the Expiration of the fourth    Year , and  of the
 # NSg+ . P  D   NSg/VB/J N🅪Sg/VB/J+ NSg/P D   N🅪Sg       P  D+  NPr/VB/J+ NSg+ . VB/C P  D
-> third    Class      at    the Expiration of the sixth     Year , so        that         one     third    may     be
-# NSg/VB/J N🅪Sg/VB/J+ NSg/P D   N🅪Sg       P  D+  NSg/VB/J+ NSg+ . NSg/I/J/C NSg/I/C/Ddem NSg/I/J NSg/VB/J NPr/VXB NSg/VXB
+> third    Class      at    the Expiration of the sixth     Year , so          that         one     third    may     be
+# NSg/VB/J N🅪Sg/VB/J+ NSg/P D   N🅪Sg       P  D+  NSg/VB/J+ NSg+ . NSg/I/J/R/C NSg/I/C/Ddem NSg/I/J NSg/VB/J NPr/VXB NSg/VXB
 > chosen   every second    Year ; and  when    vacancies happen in        the representation of
 # Nᴹ/VPp/J Dq+   NSg/VB/J+ NSg+ . VB/C NSg/I/C NPl       VB     NPr/J/R/P D   NSg            P
 > any    State    in        the Senate , the executive authority of such  State    shall issue
@@ -1334,8 +1334,8 @@
 # D+  NPr/VB+  VXB   NSg/VXB N🅪Sg/VB/J+ P  NSg/VB  P  VB/C NSg/VB NSg/I/J/C/Dq NSg/J   NPl/V3 VB/C
 > Regulations respecting the Territory or    other    Property belonging to the United
 # NPl+        Nᴹ/Vg/J    D   N🅪Sg+     NPr/C NSg/VB/J NSg/VB+  N🅪Sg/Vg/J P  D   VP/J
-> States    ; and  nothing  in        this   Constitution shall be      so        construed as    to Prejudice
-# NPrPl/V3+ . VB/C NSg/I/J+ NPr/J/R/P I/Ddem NPr+         VXB   NSg/VXB NSg/I/J/C VP/J      NSg/R P  NSg/VB/J+
+> States    ; and  nothing  in        this   Constitution shall be      so          construed as    to Prejudice
+# NPrPl/V3+ . VB/C NSg/I/J+ NPr/J/R/P I/Ddem NPr+         VXB   NSg/VXB NSg/I/J/R/C VP/J      NSg/R P  NSg/VB/J+
 > any    Claims of the United States    , or    of any    particular State    .
 # I/R/Dq NPl/V3 P  D   VP/J   NPrPl/V3+ . NPr/C P  I/R/Dq NSg/J      N🅪Sg/VB+ .
 >
@@ -1470,8 +1470,8 @@
 #
 > The Ratification of the Conventions of nine States    , shall be      sufficient for   the
 # D   NSg          P  D   NPl         P  NSg+ NPrPl/V3+ . VXB   NSg/VXB J          R/C/P D
-> Establishment of this   Constitution between the States    so        ratifying the Same .
-# NSg           P  I/Ddem NPr          NSg/P   D+  NPrPl/V3+ NSg/I/J/C Nᴹ/Vg/J   D   I/J  .
+> Establishment of this   Constitution between the States    so          ratifying the Same .
+# NSg           P  I/Ddem NPr          NSg/P   D+  NPrPl/V3+ NSg/I/J/R/C Nᴹ/Vg/J   D   I/J  .
 >
 #
 > The Word    " the " , being       interlined between the seventh and  eight Lines  of the

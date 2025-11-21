@@ -126,8 +126,8 @@
 # ISg/#r+ VP/J       NPr/ISg+ NSg/J/P NPr/VB/J+ .
 > By      ' maybe   ' she  means  ' no       ' .
 # NSg/J/P . NSg/J/R . ISg+ NPl/V3 . NPr/Dq/P . .
-> The electricity was cut       off        , so        we   had to read    by      candlelight .
-# D+  Nᴹ+         VPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/C IPl+ VB  P  NSg/VBP NSg/J/P Nᴹ          .
+> The electricity was cut       off        , so          we   had to read    by      candlelight .
+# D+  Nᴹ+         VPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/R/C IPl+ VB  P  NSg/VBP NSg/J/P Nᴹ          .
 > By      the power      vested in        me       , I       now       pronounce you    man      and  wife      .
 # NSg/J/P D+  N🅪Sg/VB/J+ VP/J   NPr/J/R/P NPr/ISg+ . ISg/#r+ NSg/J/R/C NSg/VB    ISgPl+ NPr/VB/J VB/C NSg/VB/J+ .
 > By      Jove ! I       think  she's got it       !
@@ -590,8 +590,8 @@
 # NSg/VB/J+
 >
 #
-> All           the lights  are on  , so        they must   be      home      .
-# NSg/I/J/C/Dq+ D+  NPl/V3+ VB  J/P . NSg/I/J/C IPl+ NSg/VB NSg/VXB NSg/VB/J+ .
+> All           the lights  are on  , so          they must   be      home      .
+# NSg/I/J/C/Dq+ D+  NPl/V3+ VB  J/P . NSg/I/J/R/C IPl+ NSg/VB NSg/VXB NSg/VB/J+ .
 > We   had to ration our food because there was a    war      on  .
 # IPl+ VB  P  NSg/VB D$+ NSg+ C/P     R+    VPt D/P+ N🅪Sg/VB+ J/P .
 > Some     of the cast     went    down        with flu  , but     the show's still    on  .
@@ -620,8 +620,8 @@
 # ?        . ?      NSg/VBP/J D/P Nᴹ/Vg/J  J/P N🅪Sg/VB .
 > If    the player fails  to hit       the ball    on  , it's a   foul     .
 # NSg/C D+  NSg+   NPl/V3 P  NSg/VBP/J D+  NPr/VB+ J/P . +    D/P NSg/VB/J .
-> He       always has to be      on  , it's so        exhausting .
-# NPr/ISg+ R      V3  P  NSg/VXB J/P . +    NSg/I/J/C Nᴹ/Vg/J    .
+> He       always has to be      on  , it's so          exhausting .
+# NPr/ISg+ R      V3  P  NSg/VXB J/P . +    NSg/I/J/R/C Nᴹ/Vg/J    .
 >
 #
 > Adverb
@@ -640,8 +640,8 @@
 # N🅪Sg/VB J/P NSg/VB/J/P+ D+  NSg+    NSg/VB+ .
 > From now       on  things are going   to be      different .
 # P    NSg/J/R/C J/P NPl+   VB  Nᴹ/Vg/J P  NSg/VXB NSg/J     .
-> and  so        on  .
-# VB/C NSg/I/J/C J/P .
+> and  so          on  .
+# VB/C NSg/I/J/R/C J/P .
 > He       rambled on  and  on  .
 # NPr/ISg+ VP/J    J/P VB/C J/P .
 > Ten  years on  , nothing  had changed in        the village .
