@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "components/components.css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
 	--color-primary-50: #fef4e7; /* honey bronze */
 	--color-primary-100: #fce9cf;
