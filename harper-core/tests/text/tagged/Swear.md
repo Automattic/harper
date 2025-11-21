@@ -10,8 +10,8 @@
 # NPl/V3+
 >
 #
-> One         turd      , two turds    .
-# NSg/I/VB/J+ NSg/VB+/B . NSg NPl/V3/B .
+> One      turd      , two turds    .
+# NSg/I/J+ NSg/VB+/B . NSg NPl/V3/B .
 >
 #
 > I       fart     , you're farting   , he       farts    , she  farted .

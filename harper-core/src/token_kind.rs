@@ -170,6 +170,22 @@ impl TokenKind {
         matches!(self, TokenKind::Word(None))
     }
 
+    // Number is-methods
+
+    pub fn is_cardinal_number(&self) -> bool {
+        matches!(self, TokenKind::Number(Number { suffix: None, .. }))
+    }
+
+    pub fn is_ordinal_number(&self) -> bool {
+        matches!(
+            self,
+            TokenKind::Number(Number {
+                suffix: Some(_),
+                ..
+            })
+        )
+    }
+
     // Punctuation and symbol is-methods
 
     pub fn is_open_square(&self) -> bool {

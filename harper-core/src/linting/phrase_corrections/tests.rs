@@ -250,9 +250,6 @@ fn correct_a_another() {
     );
 }
 
-// AndTheLike
-// -none-
-
 // AnotherAn
 #[test]
 fn correct_another_an() {
