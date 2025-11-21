@@ -25,7 +25,7 @@
 	--color-accent-200: #f99fa6;
 	--color-accent-300: #f76e7a;
 	--color-accent-400: #f43e4d;
-	--color-accent-500: #f10e21;
+	--color-accent: #f10e21;
 	--color-accent-600: #c10b1a;
 	--color-accent-700: #910814;
 	--color-accent-800: #60060d;
@@ -56,7 +56,7 @@
 	--color-champagne-mist-900: #301d03;
 	--color-champagne-mist-950: #221502;
 
-	--color-white: #fef5e7; /* simply white */
+	--color-white: #fffdfa;
 	--color-white-100: #fceacf;
 	--color-white-200: #fad59e;
 	--color-white-300: #f7c06e;
