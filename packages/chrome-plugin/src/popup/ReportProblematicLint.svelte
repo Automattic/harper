@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Checkbox, Input, Label } from 'flowbite-svelte';
+import { Button, Checkbox, Input, Label } from 'components';
 import ProtocolClient from '../ProtocolClient';
 
 let {

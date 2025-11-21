@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Spinner } from 'flowbite-svelte';
+import { Spinner } from 'components';
 export let content: string | undefined = undefined;
 
 let editor = import('./Editor.svelte');

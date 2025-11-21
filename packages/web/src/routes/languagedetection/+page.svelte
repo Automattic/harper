@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Select, Textarea } from 'flowbite-svelte';
+import { Select, Textarea } from 'components';
 import { binary, WorkerLinter } from 'harper.js';
 import demoText from '../../../../../demo.md?raw';
 

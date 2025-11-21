@@ -1,4 +1,5 @@
 <script lang="ts">
+import { Link } from 'components';
 import Testimonial from './Testimonial.svelte';
 
 type TestimonialItem = {
@@ -20,13 +21,13 @@ const { class: extraClass = '', ...restProps } = $$restProps;
 >
 	<div class="columns-1 gap-6 sm:columns-2 lg:columns-3">
 		{#each testimonials as item, index (item.authorName + index)}
-			<a href={item.source} class={`block mb-6 break-inside-avoid no-underline ${index % 2 == 0 ? "skew-hover" : "skew-hover-left"}`}>
+			<Link href={item.source} class={`block mb-6 break-inside-avoid ${index % 2 == 0 ? "skew-hover" : "skew-hover-left"}`}>
 				<Testimonial
 					authorName={item.authorName}
 					authorSubtitle={item.authorSubtitle}
 					testimonial={item.testimonial}
 				/>
-			</a>
+			</Link>
 		{/each}
 	</div>
 </section>

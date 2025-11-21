@@ -15,12 +15,15 @@ export function makeExtensionCSP(isDev: boolean): string {
 	const scriptSrc = ["'self'", "'wasm-unsafe-eval'"]; // minimum, cannot add more
 	const objectSrc = ["'self'"]; // standard
 	const connectSrc = ["'self'"]; // WebSocket goes here
+	const styleSrc = ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'];
+	const fontSrc = ["'self'", 'https://fonts.gstatic.com', 'data:'];
 
 	if (isDev) {
 		// `ws://` and `http://` use the same host:port → list both
 		connectSrc.push('http://localhost:5173', 'ws://localhost:5173');
 		// include the 127.0.0.1 loopback in case you switch hosts
 		connectSrc.push('http://127.0.0.1:*', 'ws://127.0.0.1:*');
+		styleSrc.push('http://localhost:5173', 'http://127.0.0.1:*');
 	}
 
 	connectSrc.push('https://writewithharper.com');
@@ -30,6 +33,8 @@ export function makeExtensionCSP(isDev: boolean): string {
 		`script-src ${scriptSrc.join(' ')}`,
 		`object-src ${objectSrc.join(' ')}`,
 		`connect-src ${connectSrc.join(' ')}`,
+		`style-src ${styleSrc.join(' ')}`,
+		`font-src ${fontSrc.join(' ')}`,
 	].join('; ')};`;
 }
 

@@ -22,8 +22,8 @@ import SublimeLogo from '$lib/components/SublimeLogo.svelte';
 import WordPressLogo from '$lib/components/WordPressLogo.svelte';
 import ZedLogo from '$lib/components/ZedLogo.svelte';
 import EdgeLogo from '$lib/components/EdgeLogo.svelte';
+import { Card, Collapsible, Link } from 'components';
 import { browser } from '$app/environment';
-    import Testimonial from '$lib/components/Testimonial.svelte';
 
 /**
  * @param {string} keyword
@@ -104,56 +104,56 @@ const testimonials = [
 		<div class="space-y-2 text-center">
 			<h1 class="font-bold">Hi. I'm Harper.</h1>
 			<h2>
-				The <strong>Free</strong> Grammar Checker That Respects Your Privacy
+				The <strong class="bg-primary-100 dark:bg-primary-800 p-1 inline-block -rotate-1">Free</strong> Grammar Checker That Respects Your Privacy
 			</h2>
 		</div>
 
 		<div
 			class="md:flex md:flex-row grid grid-cols-2 items-center justify-evenly place-items-center gap-2 pt-2 text-center"
 		>
-			<a
+			<Link
 				href="https://github.com/automattic/harper"
 				class="flex flex-row items-center [&>*]:m-2 skew-hover-left"
 			>
 				<GitHubLogo width="40px" height="40px" />GitHub
-			</a>
+			</Link>
 
       {#if agentHas("firefox")}
-	      <a href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/" class="flex flex-row items-center [&>*]:m-2 skew-hover"
-	      	><FirefoxLogo width="40px" height="40px" />Add to Firefox</a
+	      <Link href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/" class="flex flex-row items-center [&>*]:m-2 skew-hover"
+	      	><FirefoxLogo width="40px" height="40px" />Add to Firefox</Link
 	      >
       {:else if agentHas("Edg")}
-	      <a href="https://microsoftedge.microsoft.com/addons/detail/private-grammar-checker-/ihjkkjfembmnjldmdchmadigpmapkpdh" class="flex flex-row items-center [&>*]:m-2 skew-hover-left"
-	      	><EdgeLogo width="40px" height="40px" />Add to Edge</a
+	      <Link href="https://microsoftedge.microsoft.com/addons/detail/private-grammar-checker-/ihjkkjfembmnjldmdchmadigpmapkpdh" class="flex flex-row items-center [&>*]:m-2 skew-hover-left"
+	      	><EdgeLogo width="40px" height="40px" />Add to Edge</Link
 	      >
       {:else}
-	      <a href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 skew-hover"
-	      	><ChromeLogo width="40px" height="40px" />Add to Chrome</a
+	      <Link href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 skew-hover"
+	      	><ChromeLogo width="40px" height="40px" />Add to Chrome</Link
 	      >
       {/if}
-			<a
+			<Link
 				href="https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper"
 				class="flex flex-row items-center [&>*]:m-2 skew-hover-left"
 			>
 				<CodeLogo width="40px" height="40px" />Install in VS Code
-			</a>
-			<a
+			</Link>
+			<Link
 				href="/docs/integrations/obsidian"
 				class="flex flex-row items-center [&>*]:m-2 skew-hover"
 			>
 				<ObsidianLogo width="40px" height="40px" />Install in Obsidian
-			</a>
-      <a href="https://elijahpotter.dev" class="flex flex-row items-center [&>*]:m-2 skew-hover-left"
+			</Link>
+      <Link href="https://elijahpotter.dev" class="flex flex-row items-center [&>*]:m-2 skew-hover-left"
 		><img
 			width="40"
 			height="40"
 			src="/icons/profile.svg"
 			alt="Author"
-		/>Author</a
+		/>Author</Link
 	>
 		</div>
 
-		<div class="h-[800px] w-full overflow-hidden rounded-xl border border-neutral-200 shadow-sm dark:border-neutral-800">
+		<div class="h-[800px] w-full">
       {#if browser}
 			  <LazyEditor />
       {/if}
@@ -193,92 +193,112 @@ const testimonials = [
 		<svelte:fragment slot="title">Native Everywhere</svelte:fragment>
 		<p>
 			Harper is available as a
-			<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/language-server">language server</a>,
-			<a class="text-blue-600 underline dark:text-blue-400" href="/docs/harperjs/introduction">JavaScript library</a>
+			<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/language-server">language server</Link>,
+			<Link class="text-blue-600 dark:text-blue-400" href="/docs/harperjs/introduction">JavaScript library</Link>
 			through WebAssembly, and
-			<a class="text-blue-600 underline dark:text-blue-400" href="https://crates.io/crates/harper-core">Rust crate</a>,
+			<Link class="text-blue-600 dark:text-blue-400" href="https://crates.io/crates/harper-core">Rust crate</Link>,
 			so you can get fantastic grammar checking anywhere you work.
 		</p>
 		<p>
 			That said, we take extra care to make sure the
-			<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/visual-studio-code">Visual Studio Code</a>,
-			<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/neovim">Neovim</a>,
-			<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/obsidian">Obsidian</a>, and
-			<a class="text-blue-600 underline dark:text-blue-400" href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb">Chrome</a>
+			<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/visual-studio-code">Visual Studio Code</Link>,
+			<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/neovim">Neovim</Link>,
+			<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/obsidian">Obsidian</Link>, and
+			<Link class="text-blue-600 dark:text-blue-400" href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb">Chrome</Link>
 			extensions are amazing.
 		</p>
 		<svelte:fragment slot="aside">
-			<div class="grid gap-4 sm:grid-cols-2">
-				<a
+			<div class="grid gap-2 sm:grid-cols-2">
+				<Link
 					href="/docs/integrations/obsidian"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
+					class="skew-hover-left"
 				>
-					<ObsidianLogo width="40" height="40" />
-					<span class="font-medium">Obsidian</span>
-				</a>
-				<a
+					<Card class="flex items-center gap-3">
+						<ObsidianLogo width="40" height="40" />
+						<span class="font-medium">Obsidian</span>
+					</Card>
+				</Link>
+				<Link
 					href="/docs/integrations/visual-studio-code"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
+					class="skew-hover"
 				>
-					<CodeLogo width="40" height="40" />
-					<span class="font-medium">Visual Studio Code</span>
-				</a>
-				<a
+					<Card class="flex items-center gap-3">
+						<CodeLogo width="40" height="40" />
+						<span class="font-medium">Visual Studio Code</span>
+					</Card>
+				</Link>
+				<Link
 					href="/docs/integrations/neovim"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
+					class="skew-hover"
 				>
-					<NeovimLogo width="40" height="40" />
-					<span class="font-medium">Neovim</span>
-				</a>
-				<a
+					<Card class="flex items-center gap-3">
+						<NeovimLogo width="40" height="40" />
+						<span class="font-medium">Neovim</span>
+					</Card>
+				</Link>
+				<Link
 					href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
+					class="skew-hover-left"
 				>
-					<ChromeLogo width="40" height="40" />
-					<span class="font-medium">Chrome</span>
-				</a>
-				<a
+					<Card class="flex items-center gap-3">
+						<ChromeLogo width="40" height="40" />
+						<span class="font-medium">Chrome</span>
+					</Card>
+				</Link>
+				<Link
 					href="https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
+					class="skew-hover"
 				>
-					<FirefoxLogo width="40" height="40" />
-					<span class="font-medium">Firefox</span>
-				</a>
-				<a
+					<Card class="flex items-center gap-3">
+						<FirefoxLogo width="40" height="40" />
+						<span class="font-medium">Firefox</span>
+					</Card>
+				</Link>
+				<Link
 					href="/docs/integrations/helix"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
+					class="skew-hover-left"
 				>
-					<HelixLogo width="40" height="40" />
-					<span class="font-medium">Helix</span>
-				</a>
-				<a
+					<Card class="flex items-center gap-3">
+						<HelixLogo width="40" height="40" />
+						<span class="font-medium">Helix</span>
+					</Card>
+				</Link>
+				<Link
 					href="/docs/integrations/wordpress"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
+					class="skew-hover-left"
 				>
-					<WordPressLogo width="40" height="40" />
-					<span class="font-medium">WordPress</span>
-				</a>
-				<a
+					<Card class="flex items-center gap-3">
+						<WordPressLogo width="40" height="40" />
+						<span class="font-medium">WordPress</span>
+					</Card>
+				</Link>
+				<Link
 					href="/docs/integrations/zed"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
+					class="skew-hover"
 				>
-					<ZedLogo width="40" height="40" />
-					<span class="font-medium">Zed</span>
-				</a>
-				<a
+					<Card class="flex items-center gap-3">
+						<ZedLogo width="40" height="40" />
+						<span class="font-medium">Zed</span>
+					</Card>
+				</Link>
+				<Link
 					href="/docs/integrations/emacs"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover-left"
+					class="skew-hover-left"
 				>
-					<EmacsLogo width="40" height="40" />
-					<span class="font-medium">Emacs</span>
-				</a>
-				<a
+					<Card class="flex items-center gap-3">
+						<EmacsLogo width="40" height="40" />
+						<span class="font-medium">Emacs</span>
+					</Card>
+				</Link>
+				<Link
 					href="/docs/integrations/sublime-text"
-					class="flex items-center gap-3 rounded-lg border border-neutral-200 px-4 py-3 shadow-sm transition hover:shadow-md dark:border-neutral-800 skew-hover"
+					class="skew-hover"
 				>
-					<SublimeLogo width="40" height="40" />
-					<span class="font-medium">Sublime Text</span>
-				</a>
+					<Card class="flex items-center gap-3">
+						<SublimeLogo width="40" height="40" />
+						<span class="font-medium">Sublime Text</span>
+					</Card>
+				</Link>
 			</div>
 		</svelte:fragment>
 	</Section>
@@ -290,9 +310,9 @@ const testimonials = [
 		</p>
 		<p>No network request, no massive language models, no fuss.</p>
 		<svelte:fragment slot="aside">
-			<div class="rounded-xl border border-neutral-200 p-4 shadow-sm dark:border-neutral-800">
+			<Card>
 				<Graph />
-			</div>
+			</Card>
 		</svelte:fragment>
 	</Section>
 
@@ -304,119 +324,89 @@ const testimonials = [
 	<Section id="faqs">
 		<svelte:fragment slot="title">FAQs</svelte:fragment>
 		<div class="space-y-4">
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					Is Harper Free?
-				</summary>
-				<p class="mt-3">
+			<Collapsible title="Is Harper Free?">
+				<p>
 					Yes. Harper is free in every sense of the word. You don't need a credit card to start using
 					Harper, and the source code is freely available under the Apache-2.0 license.
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					How Does Harper Work?
-				</summary>
-				<p class="mt-3">
+			</Collapsible>
+			<Collapsible title="How Does Harper Work?">
+				<p>
 					Harper watches your writing and provides instant suggestions when it notices a grammatical
 					error. When you see an underline, it's probably because Harper has something to say.
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					Does Harper Change The Meaning of My Words?
-				</summary>
-				<p class="mt-3">
+			</Collapsible>
+			<Collapsible title="Does Harper Change The Meaning of My Words?">
+				<p>
 					No. Harper will never intentionally suggest an edit that might change your meaning. Harper
 					strives to never make it harder to express your creativity.
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					Is Harper Really Private?
-				</summary>
-				<p class="mt-3">
+			</Collapsible>
+			<Collapsible title="Is Harper Really Private?">
+				<p>
 					Harper is the only widespread and comprehensive grammar checker that is truly private. Your
 					data never leaves your device. Your writing should remain just that: <strong>yours.</strong>
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					How Do I Use or Integrate Harper?
-				</summary>
-				<div class="mt-3">
+			</Collapsible>
+			<Collapsible title="How Do I Use or Integrate Harper?">
+				<div class="space-y-3">
 					<p>
 						That depends on your use case. Do you want to use it within Obsidian? We have an
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/obsidian">Obsidian plugin</a>. Do you want to use it within WordPress? We have a
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/wordpress">WordPress plugin</a>. Do you want to use it within your Browser? We have a
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/chrome-extension">Chrome extension</a> and a
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/firefox-extension">Firefox plugin</a>. Do you want to use it within your code editor? We have documentation on how you can integrate with
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/visual-studio-code">Visual Studio Code and its forks</a>,
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/neovim">Neovim</a>,
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/helix">Helix</a>,
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/emacs">Emacs</a>,
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/zed">Zed</a> and
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/sublime-text">Sublime Text</a>. If you're using a different code editor, then you can integrate directly with our language server,
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/language-server">harper-ls</a>. Do you want to integrate it in your web app or your JavaScript/TypeScript codebase? You can use
-						<a class="text-blue-600 underline dark:text-blue-400" href="/docs/harperjs/introduction">harper.js</a>. Do you want to integrate it in your Rust program or codebase? You can use
-						<a class="text-blue-600 underline dark:text-blue-400" href="https://crates.io/crates/harper-core">harper-core</a>.
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/obsidian">Obsidian plugin</Link>. Do you want to use it within WordPress? We have a
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/wordpress">WordPress plugin</Link>. Do you want to use it within your Browser? We have a
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/chrome-extension">Chrome extension</Link> and a
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/firefox-extension">Firefox plugin</Link>. Do you want to use it within your code editor? We have documentation on how you can integrate with
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/visual-studio-code">Visual Studio Code and its forks</Link>,
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/neovim">Neovim</Link>,
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/helix">Helix</Link>,
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/emacs">Emacs</Link>,
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/zed">Zed</Link> and
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/sublime-text">Sublime Text</Link>. If you're using a different code editor, then you can integrate directly with our language server,
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/language-server">harper-ls</Link>. Do you want to integrate it in your web app or your JavaScript/TypeScript codebase? You can use
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/harperjs/introduction">harper.js</Link>. Do you want to integrate it in your Rust program or codebase? You can use
+						<Link class="text-blue-600 dark:text-blue-400" href="https://crates.io/crates/harper-core">harper-core</Link>.
 					</p>
 				</div>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					What Human Languages Do You Support?
-				</summary>
-				<p class="mt-3">
+			</Collapsible>
+			<Collapsible title="What Human Languages Do You Support?">
+				<p>
 					We currently only support English and its dialects British, American, Canadian, and
 					Australian. Other languages are on the horizon, but we want our English support to be truly
 					amazing before we diversify.
 				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					What Programming Languages Do You Support?
-				</summary>
-				<p class="mt-3">
-					For <code>harper-ls</code> and our code editor integrations, we support a wide variety of
-					programming languages. You can view all of them over at the
-					<a class="text-blue-600 underline dark:text-blue-400" href="/docs/integrations/language-server#Supported-Languages">harper-ls documentation</a>.
-					We are entirely open to PRs that add support. If you just want to be able to run grammar checking
-					on your code's comments, you can use
-					<a class="text-blue-600 underline dark:text-blue-400" href="https://github.com/Automattic/harper/pull/332">this PR as a model for what to do</a>.
-				</p>
-				<p class="mt-3">
-					For <code>harper.js</code> and those that use it under the hood like our Obsidian plugin, we
-					support plaintext and/or Markdown.
-				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					Where Did the Name Harper Come From?
-				</summary>
-				<p class="mt-3">
-					See <a class="text-blue-600 underline dark:text-blue-400" href="https://elijahpotter.dev/articles/naming_harper">this blog post</a>.
-				</p>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					Do I Need a GPU?
-				</summary>
-				<div class="mt-3">
-					<p>No. Harper runs on-device, no matter what. There are no special hardware requirements. No GPU, no additional memory, no fuss.</p>
+			</Collapsible>
+			<Collapsible title="What Programming Languages Do You Support?">
+				<div class="space-y-3">
+					<p>
+						For <code>harper-ls</code> and our code editor integrations, we support a wide variety of
+						programming languages. You can view all of them over at the
+						<Link class="text-blue-600 dark:text-blue-400" href="/docs/integrations/language-server#Supported-Languages">harper-ls documentation</Link>.
+						We are entirely open to PRs that add support. If you just want to be able to run grammar checking
+						on your code's comments, you can use
+						<Link class="text-blue-600 dark:text-blue-400" href="https://github.com/Automattic/harper/pull/332">this PR as a model for what to do</Link>.
+					</p>
+					<p>
+						For <code>harper.js</code> and those that use it under the hood like our Obsidian plugin, we
+						support plaintext and/or Markdown.
+					</p>
 				</div>
-			</details>
-			<details class="group rounded-lg border border-neutral-200 bg-white p-4 shadow-sm open:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
-				<summary class="cursor-pointer font-semibold marker:text-neutral-400">
-					What Do I Do If My Question Isn't Here?
-				</summary>
-				<p class="mt-3">
-					You can join our
-					<a class="text-blue-600 underline dark:text-blue-400" href="https://discord.gg/invite/JBqcAaKrzQ">Discord</a>
-					and ask your questions there or you can start a discussion over at
-					<a class="text-blue-600 underline dark:text-blue-400" href="https://github.com/Automattic/harper/discussions">GitHub</a>.
+			</Collapsible>
+			<Collapsible title="Where Did the Name Harper Come From?">
+				<p>
+					See <Link class="text-blue-600 dark:text-blue-400" href="https://elijahpotter.dev/articles/naming_harper">this blog post</Link>.
 				</p>
-			</details>
+			</Collapsible>
+			<Collapsible title="Do I Need a GPU?">
+				<p>No. Harper runs on-device, no matter what. There are no special hardware requirements. No GPU, no additional memory, no fuss.</p>
+			</Collapsible>
+			<Collapsible title="What Do I Do If My Question Isn't Here?">
+				<p>
+					You can join our
+					<Link class="text-blue-600 dark:text-blue-400" href="https://discord.gg/invite/JBqcAaKrzQ">Discord</Link>
+					and ask your questions there or you can start a discussion over at
+					<Link class="text-blue-600 dark:text-blue-400" href="https://github.com/Automattic/harper/discussions">GitHub</Link>.
+				</p>
+			</Collapsible>
 		</div>
 	</Section>
 
@@ -425,7 +415,7 @@ const testimonials = [
 		<p>Harper is completely open source under the Apache-2.0 license.</p>
 		<p>
 			Come pay us a visit on
-			<a class="text-blue-600 underline dark:text-blue-400" href="https://github.com/automattic/harper">GitHub</a>.
+			<Link class="text-blue-600 dark:text-blue-400" href="https://github.com/automattic/harper">GitHub</Link>.
 		</p>
 	</Section>
 </main>

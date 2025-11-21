@@ -1,3 +1,5 @@
+import { getContrastingTextColor } from './utils';
+
 // First, define the color map as a constant
 const LINT_KIND_COLORS = {
 	Agreement: '#228B22', // Forest green
@@ -29,10 +31,15 @@ export type LintKind = keyof typeof LINT_KIND_COLORS;
 export const LINT_KINDS = Object.keys(LINT_KIND_COLORS) as LintKind[];
 
 // The main function that uses the map
-export default function lintKindColor(lintKindKey: string): string {
+export function lintKindColor(lintKindKey: string): string {
 	const color = LINT_KIND_COLORS[lintKindKey as LintKind];
 	if (!color) {
 		throw new Error(`Unexpected lint kind: ${lintKindKey}`);
 	}
 	return color;
+}
+
+export function lintKindTextColor(lintKindKeyOrColor: string): 'black' | 'white' {
+	const color = LINT_KIND_COLORS[lintKindKeyOrColor as LintKind] ?? lintKindKeyOrColor;
+	return getContrastingTextColor(color);
 }
