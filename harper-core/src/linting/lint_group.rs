@@ -223,6 +223,11 @@ fn curated_config() -> LintGroupConfig {
 }
 
 impl LintGroupConfig {
+    /// Check if a rule exists in the configuration.
+    pub fn has_rule(&self, key: impl AsRef<str>) -> bool {
+        self.inner.contains_key(key.as_ref())
+    }
+
     pub fn set_rule_enabled(&mut self, key: impl ToString, val: bool) {
         self.inner.insert(key.to_string(), Some(val));
     }
