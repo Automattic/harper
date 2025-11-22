@@ -481,9 +481,7 @@ pub mod tests {
         let transformed_str = transform_nth_str(text, &mut linter, n);
 
         if transformed_str.as_str() != expected_result {
-            panic!(
-                "Expected \"{transformed_str}\" to be \"{expected_result}\" after applying the computed suggestions."
-            );
+            panic!("Expected \"{expected_result}\"\n But got  \"{transformed_str}\"");
         }
 
         // Applying the suggestions should fix all the lints.
