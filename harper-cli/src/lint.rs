@@ -1,15 +1,18 @@
-use either::Either;
-use harper_core::spell::{Dictionary, MergedDictionary, MutableDictionary};
-use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 use std::{fs, process};
 
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
-use harper_core::linting::{Lint, LintGroup, LintKind};
-use harper_core::parsers::MarkdownOptions;
-use harper_core::{Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map};
+use either::Either;
+use hashbrown::HashMap;
+
+use harper_core::{
+    linting::{Lint, LintGroup, LintGroupConfig, LintKind},
+    parsers::MarkdownOptions,
+    spell::{Dictionary, MergedDictionary, MutableDictionary},
+    {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
+};
 
 use crate::input::Input;
 
@@ -75,6 +78,32 @@ pub fn lint(
         inputs
     };
 
+    // Filter out any rules from ignore/only lists that don't exist in the current config
+    // Uses a cached config to avoid expensive linter initialization
+    let config = LintGroupConfig::new_curated();
+    let mut ignore = ignore.clone();
+    let mut only = only.clone();
+
+    if let Some(ref mut only) = only {
+        only.retain(|rule| {
+            if !config.has_rule(rule) {
+                eprintln!("Warning: Cannot enable unknown rule '{}'.", rule);
+                return false;
+            }
+            true
+        });
+    }
+
+    if let Some(ref mut ignore) = ignore {
+        ignore.retain(|rule| {
+            if !config.has_rule(rule) {
+                eprintln!("Warning: Cannot disable unknown rule '{}'.", rule);
+                return false;
+            }
+            true
+        });
+    }
+
     // Create merged dictionary with base dictionary
     let mut curated_plus_user_dict = MergedDictionary::new();
     curated_plus_user_dict.add_dictionary(Arc::new(curated_dictionary));
@@ -129,8 +158,8 @@ pub fn lint(
                 &report_mode,
                 LintOptions {
                     count,
-                    ignore,
-                    only,
+                    ignore: &ignore,
+                    only: &only,
                     dialect,
                 },
                 &file_dict_path,
@@ -210,13 +239,13 @@ fn lint_one_input(
     let mut spellos: HashMap<String, usize> = HashMap::new();
 
     // Create a new merged dictionary for this input.
-    let mut dictionary = curated_plus_user_dict.clone();
+    let mut merged_dictionary = curated_plus_user_dict.clone();
 
     // If processing a file, try to load its per-file dictionary
     if let Input::File(ref file) = current_input {
         let dict_path = file_dict_path.join(file_dict_name(file));
         if let Ok(file_dictionary) = load_dict(&dict_path) {
-            dictionary.add_dictionary(Arc::new(file_dictionary));
+            merged_dictionary.add_dictionary(Arc::new(file_dictionary));
             println!(
                 "{}: Note: Using per-file dictionary: {}",
                 &current_input.get_identifier(),
@@ -225,12 +254,12 @@ fn lint_one_input(
         }
     }
 
-    match current_input.load(batch_mode, markdown_options, &dictionary) {
+    match current_input.load(batch_mode, markdown_options, &merged_dictionary) {
         Err(err) => eprintln!("{}", err),
         Ok((maybe_doc, source)) => {
             if let Some(doc) = maybe_doc {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(dictionary.into(), dialect);
+                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), dialect);
 
                 // Turn specified rules on or off
                 configure_lint_group(&mut lint_group, only, ignore);
@@ -277,22 +306,15 @@ fn configure_lint_group(
 ) {
     if let Some(rules) = only {
         lint_group.set_all_rules_to(Some(false));
-
-        for rule in rules {
-            if !lint_group.contains_key(rule) {
-                eprintln!("Warning: Cannot enable unknown rule '{}'.", &rule);
-            }
-            lint_group.config.set_rule_enabled(rule, true);
-        }
+        rules
+            .iter()
+            .for_each(|rule| lint_group.config.set_rule_enabled(rule, true));
     }
 
     if let Some(rules) = ignore {
-        for rule in rules {
-            if !lint_group.contains_key(rule) {
-                eprintln!("Warning: Cannot disable unknown rule '{}'.", &rule);
-            }
-            lint_group.config.set_rule_enabled(rule, false);
-        }
+        rules
+            .iter()
+            .for_each(|rule| lint_group.config.set_rule_enabled(rule, false));
     }
 }
 
