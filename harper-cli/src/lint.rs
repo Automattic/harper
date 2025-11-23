@@ -59,6 +59,21 @@ struct InputInfo<'a> {
     input: Input,
 }
 
+trait InputPath {
+    fn format_path(&self) -> String;
+}
+
+impl InputPath for InputInfo<'_> {
+    fn format_path(&self) -> String {
+        let child = self.input.get_identifier();
+        if self.parent_input_id.is_empty() {
+            child.into_owned()
+        } else {
+            format!("\x1b[33m{}/\x1b[0m{}", self.parent_input_id, child)
+        }
+    }
+}
+
 pub fn lint(
     markdown_options: MarkdownOptions,
     curated_dictionary: Arc<dyn Dictionary>,
@@ -264,9 +279,8 @@ fn lint_one_input(
         if let Ok(file_dictionary) = load_dict(&dict_path) {
             merged_dictionary.add_dictionary(Arc::new(file_dictionary));
             println!(
-                "{}/{}: Note: Using per-file dictionary: {}",
-                current.parent_input_id,
-                &current.input.get_identifier(),
+                "{}: Note: Using per-file dictionary: {}",
+                current.format_path(),
                 dict_path.display()
             );
         }
@@ -405,14 +419,7 @@ fn single_input_report(
     batch_mode: bool, // If true, we are processing multiple files, which affects how we report
     report_mode: &ReportStyle,
 ) {
-    let FullInputInfo {
-        input: InputInfo {
-            parent_input_id,
-            input: current_input,
-        },
-        doc,
-        source,
-    } = input_info;
+    let FullInputInfo { input, doc, source } = input_info;
     let (lint_count_before, lint_count_after) = lint_count;
     // The Ariadne report works poorly for files with very long lines, so suppress it unless only processing one file
     const MAX_LINE_LEN: usize = 150;
@@ -426,17 +433,15 @@ fn single_input_report(
     {
         report_mode = &ReportStyle::BriefCountsOnlyLintReport;
         println!(
-            "\x1b[33m{}/\x1b[0m{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
-            parent_input_id,
-            &current_input.get_identifier()
+            "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
+            input.format_path()
         );
     }
 
     // Report the number of lints no matter what report mode we are in
     println!(
-        "\x1b[33m{}/\x1b[0m{}: {}",
-        parent_input_id,
-        current_input.get_identifier(),
+        "{}: {}",
+        input.format_path(),
         match (lint_count_before, lint_count_after) {
             (0, _) => "No lints found".to_string(),
             (before, after) if before != after =>
@@ -449,7 +454,7 @@ fn single_input_report(
     if matches!(report_mode, ReportStyle::FullAriadneLintReport) {
         let primary_color = Color::Magenta;
 
-        let input_identifier = current_input.get_identifier();
+        let input_identifier = input.input.get_identifier();
 
         if lint_count_after != 0 {
             let mut report_builder = Report::build(ReportKind::Advice, &input_identifier, 0);
