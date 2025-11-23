@@ -49,10 +49,14 @@ pub struct LintOptions<'a> {
     pub only: &'a Option<Vec<String>>,
     pub dialect: Dialect,
 }
-
 enum ReportStyle {
     FullAriadneLintReport,
     BriefCountsOnlyLintReport,
+}
+
+struct InputInfo<'a> {
+    parent_input_id: &'a str,
+    input: Input,
 }
 
 pub fn lint(
@@ -140,11 +144,15 @@ pub fn lint(
 
         // All the files within this input if it's a Dir, or just this input otherwise.
         let inputs = if let Some(dir) = maybe_dir {
-            Either::Left(
-                dir.filter_map(Result::ok)
-                    .filter(|entry| entry.file_type().map(|ft| !ft.is_dir()).unwrap_or(false))
-                    .map(|entry| Input::File(entry.path())),
-            )
+            let mut entries: Vec<_> = dir
+                .filter_map(Result::ok)
+                .filter(|entry| entry.file_type().map(|ft| !ft.is_dir()).unwrap_or(false))
+                .collect();
+
+            // Sort entries by file name
+            entries.sort_by_key(|entry| entry.file_name());
+
+            Either::Left(entries.into_iter().map(|entry| Input::File(entry.path())))
         } else {
             Either::Right(std::iter::once(user_input.clone()))
         };
@@ -210,11 +218,6 @@ type LintKindCount = HashMap<LintKind, usize>;
 type LintRuleCount = HashMap<String, usize>;
 type LintKindRulePairCount = HashMap<(LintKind, String), usize>;
 type SpelloCount = HashMap<String, usize>;
-
-struct InputInfo<'a> {
-    parent_input_id: &'a str,
-    input: Input,
-}
 
 struct FullInputInfo<'a> {
     input: InputInfo<'a>,
