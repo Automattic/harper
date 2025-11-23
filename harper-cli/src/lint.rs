@@ -149,6 +149,12 @@ pub fn lint(
             Either::Right(std::iter::once(user_input.clone()))
         };
 
+        let parent_input_id = if batch_mode {
+            user_input.get_identifier().to_string()
+        } else {
+            String::new()
+        };
+
         for current_input in inputs {
             let lint_results = lint_one_input(
                 // Common properties of harper-cli
@@ -166,7 +172,10 @@ pub fn lint(
                 // Are we linting multiple inputs inside a directory?
                 batch_mode,
                 // The current input to be linted
-                current_input,
+                InputInfo {
+                    parent_input_id: &parent_input_id,
+                    input: current_input,
+                },
             );
 
             // Update the global stats
@@ -202,8 +211,13 @@ type LintRuleCount = HashMap<String, usize>;
 type LintKindRulePairCount = HashMap<(LintKind, String), usize>;
 type SpelloCount = HashMap<String, usize>;
 
-struct InputInfo {
+struct InputInfo<'a> {
+    parent_input_id: &'a str,
     input: Input,
+}
+
+struct FullInputInfo<'a> {
+    input: InputInfo<'a>,
     doc: Document,
     source: String,
 }
@@ -219,7 +233,7 @@ fn lint_one_input(
     // Are we linting multiple inputs?
     batch_mode: bool,
     // For the current input
-    current_input: Input,
+    current: InputInfo,
 ) -> (
     LintKindCount,
     LintRuleCount,
@@ -242,19 +256,23 @@ fn lint_one_input(
     let mut merged_dictionary = curated_plus_user_dict.clone();
 
     // If processing a file, try to load its per-file dictionary
-    if let Input::File(ref file) = current_input {
+    if let Input::File(ref file) = current.input {
         let dict_path = file_dict_path.join(file_dict_name(file));
         if let Ok(file_dictionary) = load_dict(&dict_path) {
             merged_dictionary.add_dictionary(Arc::new(file_dictionary));
             println!(
-                "{}: Note: Using per-file dictionary: {}",
-                &current_input.get_identifier(),
+                "{}/{}: Note: Using per-file dictionary: {}",
+                current.parent_input_id,
+                &current.input.get_identifier(),
                 dict_path.display()
             );
         }
     }
 
-    match current_input.load(batch_mode, markdown_options, &merged_dictionary) {
+    match current
+        .input
+        .load(batch_mode, markdown_options, &merged_dictionary)
+    {
         Err(err) => eprintln!("{}", err),
         Ok((maybe_doc, source)) => {
             if let Some(doc) = maybe_doc {
@@ -278,8 +296,11 @@ fn lint_one_input(
                 spellos = collect_spellos(&named_lints, doc.get_source());
 
                 single_input_report(
-                    &InputInfo {
-                        input: current_input,
+                    &FullInputInfo {
+                        input: InputInfo {
+                            parent_input_id: current.parent_input_id,
+                            input: current.input,
+                        },
                         doc,
                         source,
                     },
@@ -371,7 +392,7 @@ fn collect_spellos(
 
 fn single_input_report(
     // Properties of the current input
-    input_info: &InputInfo,
+    input_info: &FullInputInfo,
     // Linting results of this input
     named_lints: &BTreeMap<String, Vec<Lint>>,
     lint_count: (usize, usize),
@@ -381,8 +402,11 @@ fn single_input_report(
     batch_mode: bool, // If true, we are processing multiple files, which affects how we report
     report_mode: &ReportStyle,
 ) {
-    let InputInfo {
-        input: current_input,
+    let FullInputInfo {
+        input: InputInfo {
+            parent_input_id,
+            input: current_input,
+        },
         doc,
         source,
     } = input_info;
@@ -399,14 +423,16 @@ fn single_input_report(
     {
         report_mode = &ReportStyle::BriefCountsOnlyLintReport;
         println!(
-            "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
+            "\x1b[33m{}/\x1b[0m{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
+            parent_input_id,
             &current_input.get_identifier()
         );
     }
 
     // Report the number of lints no matter what report mode we are in
     println!(
-        "{}: {}",
+        "\x1b[33m{}/\x1b[0m{}: {}",
+        parent_input_id,
         current_input.get_identifier(),
         match (lint_count_before, lint_count_after) {
             (0, _) => "No lints found".to_string(),
