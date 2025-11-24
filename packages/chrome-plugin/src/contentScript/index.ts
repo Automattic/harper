@@ -41,6 +41,26 @@ const keepAliveCallback = () => {
 
 keepAliveCallback();
 
+function getClosestBlockAncestor(leaf: Node, root: Element): Element | null {
+	let current: Node | null = leaf;
+
+	while (current) {
+		if (current instanceof Element) {
+			if (getComputedStyle(current).display === 'block') {
+				return current;
+			}
+
+			if (current === root) {
+				break;
+			}
+		}
+
+		current = current.parentNode;
+	}
+
+	return null;
+}
+
 function scan() {
 	document.querySelectorAll<HTMLTextAreaElement>('textarea').forEach((element) => {
 		if (
@@ -68,12 +88,22 @@ function scan() {
 	document.querySelectorAll('[data-testid="gutenberg-editor"]').forEach((element) => {
 		const leafs = leafNodes(element);
 
+		const seenBlockContainers = new Set<Element>();
+
 		for (const leaf of leafs) {
-			if (!isVisible(leaf)) {
+			const blockContainer = getClosestBlockAncestor(leaf, element);
+
+			if (!blockContainer || seenBlockContainers.has(blockContainer)) {
 				continue;
 			}
 
-			fw.addTarget(leaf);
+			seenBlockContainers.add(blockContainer);
+
+			if (!isVisible(blockContainer)) {
+				continue;
+			}
+
+			fw.addTarget(blockContainer);
 		}
 	});
 
@@ -88,16 +118,26 @@ function scan() {
 
 		const leafs = leafNodes(element);
 
+		const seenBlockContainers = new Set<Element>();
+
 		for (const leaf of leafs) {
 			if (leaf.parentElement?.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
 				continue;
 			}
 
-			if (!isVisible(leaf)) {
+			const blockContainer = getClosestBlockAncestor(leaf, element);
+
+			if (!blockContainer || seenBlockContainers.has(blockContainer)) {
 				continue;
 			}
 
-			fw.addTarget(leaf);
+			seenBlockContainers.add(blockContainer);
+
+			if (!isVisible(blockContainer)) {
+				continue;
+			}
+
+			fw.addTarget(blockContainer);
 		}
 	});
 }
